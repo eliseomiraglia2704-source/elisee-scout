@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 50" width="160" height="50">
+  <rect width="160" height="50" rx="8" fill="#001C42"/>
+  <!-- TIM emblem -->
+  <rect x="8" y="8" width="34" height="34" rx="4" fill="#004691"/>
+  <!-- Red trigram lines -->
+  <rect x="13" y="16" width="12" height="3" fill="#E21017" rx="1"/>
+  <rect x="13" y="23" width="16" height="3" fill="#E21017" rx="1"/>
+  <rect x="13" y="30" width="20" height="3" fill="#E21017" rx="1"/>
+  <!-- Text -->
+  <text x="50" y="28" font-family="Arial Black, sans-serif" font-weight="900" font-size="17" fill="#FFFFFF">TIM</text>
+  <text x="92" y="28" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="14" fill="#38BDF8">id</text>
+  <text x="50" y="40" font-family="Arial, sans-serif" font-weight="500" font-size="8" fill="#94A3B8" letter-spacing="0.5">TELECOM ITALIA</text>
+</svg>

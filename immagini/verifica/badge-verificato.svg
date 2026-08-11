@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ELISEE SCOUT — Badge VERIFICATO (squadra nel progetto)
+     Stile: cerchio pieno blu + check bianco (riferimento set checkmark) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Verificato">
+  <title>Verificato ELISEE</title>
+  <!-- alone/glow -->
+  <circle cx="32" cy="32" r="30" fill="#1D9BF0" opacity="0.18"/>
+  <!-- filled blue circle -->
+  <circle cx="32" cy="32" r="26" fill="#1D9BF0"/>
+  <!-- subtle inner highlight -->
+  <circle cx="32" cy="32" r="26" fill="url(#vGrad)" opacity="0.35"/>
+  <defs>
+    <linearGradient id="vGrad" x1="16" y1="12" x2="48" y2="52" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <!-- white check -->
+  <path d="M18.5 33.2 L27.2 41.6 L45.8 22.5"
+        fill="none"
+        stroke="#FFFFFF"
+        stroke-width="5.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+</svg>

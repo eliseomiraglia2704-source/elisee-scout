@@ -1,0 +1,18 @@
+ELISEE SCOUT — FIX STRUTTURA 2026-08-06
+=====================================
+URL stabile: http://127.0.0.1:8080/
+( NON usare 8443 )
+
+Cosa e stato risolto:
+1. DOM rotto: 41 ID duplicati (2x account, 2x admin, form Ambassador incollato dentro Admin, modal IA doppio)
+2. Navigazione/click: showEl/hideAllPortals usano display !important; overlay fantasma non bloccano piu i click
+3. Admin: AutoPilot + War Room nella dashboard unica e completa
+4. Server: elisee_up.py su 8080 + watchdog + Task Scheduler EliseeScoutServer + Startup
+5. APRI_SITO.bat e shortcut Desktop aggiornati
+
+Come aprire:
+- Doppio click su "ELISEE SCOUT.lnk" sul Desktop
+- Oppure APRI_SITO.bat nella cartella del sito
+- Oppure http://127.0.0.1:8080/ nel browser
+
+Se vedi ancora la UI vecchia: Ctrl+F5 (hard refresh) una volta.

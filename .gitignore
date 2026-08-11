@@ -1,0 +1,14 @@
+# SSL private keys — never commit
+ssl/key.pem
+ssl/*.key
+ssl/*.pfx
+ssl/*.p12
+
+# Local / OS
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+*.log
+.vercel
+node_modules/

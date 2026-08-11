@@ -1,0 +1,18 @@
+ELISEE SCOUT — Badge di verifica squadre
+========================================
+
+badge-verificato.svg
+  - Cerchio BLU pieno + check BIANCO
+  - Solo se la squadra fa parte del progetto ELISEE
+
+badge-non-verificato.svg
+  - Cerchio GRIGIO + anello tratteggiato + trattino (NON un check)
+  - Squadra non ancora nel progetto
+
+Lista squadre verificate:
+  data/squadre/verified-teams.json
+  { "verifiedIds": ["inter", "napoli"], "verifiedNames": ["ATALANTA"] }
+
+Override locale (browser):
+  localStorage elisee_verified_teams_v1
+  { "ids": ["..."], "names": ["..."] }

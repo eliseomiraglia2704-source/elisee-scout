@@ -1,0 +1,1520 @@
+{
+  "ATALANTA": {
+    "city": "Bergamo",
+    "stadium": "Gewiss Stadium",
+    "capacity": 23439,
+    "source": "manual+wikipedia"
+  },
+  "BOLOGNA": {
+    "city": "Bologna",
+    "stadium": "Stadio Renato Dall'Ara",
+    "capacity": 36532,
+    "source": "manual+wikipedia"
+  },
+  "CAGLIARI": {
+    "city": "Cagliari",
+    "stadium": "Unipol Domus",
+    "capacity": 16416,
+    "source": "manual+wikipedia"
+  },
+  "COMO": {
+    "city": "Como",
+    "stadium": "Stadio Giuseppe Sinigaglia",
+    "capacity": 13602,
+    "source": "manual+wikipedia"
+  },
+  "FIORENTINA": {
+    "city": "Firenze",
+    "stadium": "Stadio Artemio Franchi",
+    "capacity": 43147,
+    "source": "manual+wikipedia"
+  },
+  "FROSINONE": {
+    "city": "Frosinone",
+    "stadium": "Stadio Benito Stirpe",
+    "capacity": 16227,
+    "source": "manual+wikipedia"
+  },
+  "GENOA": {
+    "city": "Genova",
+    "stadium": "Stadio Luigi Ferraris",
+    "capacity": 33205,
+    "source": "manual+wikipedia"
+  },
+  "INTER": {
+    "city": "Milano",
+    "stadium": "Stadio Giuseppe Meazza",
+    "capacity": 75923,
+    "source": "manual+wikipedia"
+  },
+  "JUVENTUS": {
+    "city": "Torino",
+    "stadium": "Allianz Stadium",
+    "capacity": 41660,
+    "source": "manual+wikipedia"
+  },
+  "LAZIO": {
+    "city": "Roma",
+    "stadium": "Stadio Olimpico",
+    "capacity": 70634,
+    "source": "manual+wikipedia"
+  },
+  "LECCE": {
+    "city": "Lecce",
+    "stadium": "Stadio Via del Mare",
+    "capacity": 31533,
+    "source": "manual+wikipedia"
+  },
+  "MILAN": {
+    "city": "Milano",
+    "stadium": "Stadio Giuseppe Meazza",
+    "capacity": 75817,
+    "source": "manual+wikipedia"
+  },
+  "MONZA": {
+    "city": "Monza",
+    "stadium": "U-Power Stadium",
+    "capacity": 17319,
+    "source": "manual+wikipedia"
+  },
+  "NAPOLI": {
+    "city": "Napoli",
+    "stadium": "Stadio Diego Armando Maradona",
+    "capacity": 54726,
+    "source": "manual+wikipedia"
+  },
+  "PARMA": {
+    "city": "Parma",
+    "stadium": "Stadio Ennio Tardini",
+    "capacity": 22352,
+    "source": "manual+wikipedia"
+  },
+  "ROMA": {
+    "city": "Roma",
+    "stadium": "Stadio Olimpico",
+    "capacity": 70634,
+    "source": "manual+wikipedia"
+  },
+  "SASSUOLO": {
+    "city": "Reggio Emilia",
+    "stadium": "Mapei Stadium - Citta del Tricolore",
+    "capacity": 21525,
+    "source": "manual+wikipedia"
+  },
+  "TORINO": {
+    "city": "Torino",
+    "stadium": "Stadio Olimpico Grande Torino",
+    "capacity": 28177,
+    "source": "manual+wikipedia"
+  },
+  "UDINESE": {
+    "city": "Udine",
+    "stadium": "Bluenergy Stadium",
+    "capacity": 25144,
+    "source": "manual+wikipedia"
+  },
+  "VENEZIA": {
+    "city": "Venezia",
+    "stadium": "Stadio Pier Luigi Penzo",
+    "capacity": 11150,
+    "source": "manual+wikipedia"
+  },
+  "AREZZO": {
+    "city": "Arezzo",
+    "stadium": "Stadio Citta di Arezzo",
+    "capacity": 13128,
+    "source": "manual+wikipedia"
+  },
+  "ASCOLI": {
+    "city": "Ascoli Piceno",
+    "stadium": "Stadio Cino e Lillo Del Duca",
+    "capacity": 20460,
+    "source": "manual+wikipedia"
+  },
+  "AVELLINO": {
+    "city": "Avellino",
+    "stadium": "Stadio Partenio-Adriano Lombardi",
+    "capacity": 26308,
+    "source": "manual+wikipedia"
+  },
+  "BENEVENTO": {
+    "city": "Benevento",
+    "stadium": "Stadio Ciro Vigorito",
+    "capacity": 16867,
+    "source": "manual+wikipedia"
+  },
+  "CARRARESE": {
+    "city": "Carrara",
+    "stadium": "Stadio dei Marmi",
+    "capacity": 3500,
+    "source": "manual+wikipedia"
+  },
+  "CATANZARO": {
+    "city": "Catanzaro",
+    "stadium": "Stadio Nicola Ceravolo",
+    "capacity": 14650,
+    "source": "manual+wikipedia"
+  },
+  "CESENA": {
+    "city": "Cesena",
+    "stadium": "Orogel Stadium - Dino Manuzzi",
+    "capacity": 20194,
+    "source": "manual+wikipedia"
+  },
+  "CREMONESE": {
+    "city": "Cremona",
+    "stadium": "Stadio Giovanni Zini",
+    "capacity": 16003,
+    "source": "manual+wikipedia"
+  },
+  "EMPOLI": {
+    "city": "Empoli",
+    "stadium": "Stadio Carlo Castellani",
+    "capacity": 16284,
+    "source": "manual+wikipedia"
+  },
+  "ENTELLA": {
+    "city": "Chiavari",
+    "stadium": "Stadio Comunale di Chiavari",
+    "capacity": 5535,
+    "source": "manual+wikipedia"
+  },
+  "JUVE STABIA": {
+    "city": "Castellammare di Stabia",
+    "stadium": "Stadio Romeo Menti",
+    "capacity": 7620,
+    "source": "manual+wikipedia"
+  },
+  "L.R. VICENZA": {
+    "city": "Vicenza",
+    "stadium": "Stadio Romeo Menti",
+    "capacity": 12000,
+    "source": "manual+wikipedia"
+  },
+  "MANTOVA": {
+    "city": "Mantova",
+    "stadium": "Stadio Danilo Martelli",
+    "capacity": 14884,
+    "source": "manual+wikipedia"
+  },
+  "MODENA": {
+    "city": "Modena",
+    "stadium": "Stadio Alberto Braglia",
+    "capacity": 21092,
+    "source": "manual+wikipedia"
+  },
+  "PADOVA": {
+    "city": "Padova",
+    "stadium": "Stadio Euganeo",
+    "capacity": 32420,
+    "source": "manual+wikipedia"
+  },
+  "PALERMO": {
+    "city": "Palermo",
+    "stadium": "Stadio Renzo Barbera",
+    "capacity": 36365,
+    "source": "manual+wikipedia"
+  },
+  "PISA": {
+    "city": "Pisa",
+    "stadium": "Arena Garibaldi - Romeo Anconetani",
+    "capacity": 12508,
+    "source": "manual+wikipedia"
+  },
+  "SAMPDORIA": {
+    "city": "Genova",
+    "stadium": "Stadio Luigi Ferraris",
+    "capacity": 33205,
+    "source": "manual+wikipedia"
+  },
+  "SÜDTIROL": {
+    "city": "Bolzano",
+    "stadium": "Stadio Druso",
+    "capacity": 5500,
+    "source": "manual+wikipedia"
+  },
+  "VERONA": {
+    "city": "Verona",
+    "stadium": "Stadio Marcantonio Bentegodi",
+    "capacity": 39211,
+    "source": "manual+wikipedia"
+  },
+  "ALBINOLEFFE": {
+    "city": "Zanica",
+    "stadium": "AlbinoLeffe Stadium",
+    "capacity": 1791,
+    "source": "manual+wikipedia"
+  },
+  "ALCIONE MILANO": {
+    "city": "Milano",
+    "stadium": "Arena Civica Gianni Brera",
+    "capacity": 10000,
+    "source": "manual+wikipedia"
+  },
+  "ARZIGNANO": {
+    "city": "Arzignano",
+    "stadium": "Stadio Tommaso Dal Molin",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "BRESCIA": {
+    "city": "Brescia",
+    "stadium": "Stadio Mario Rigamonti",
+    "capacity": 19500,
+    "source": "manual+wikipedia"
+  },
+  "CARPI": {
+    "city": "Carpi",
+    "stadium": "Stadio Sandro Cabassi",
+    "capacity": 5510,
+    "source": "manual+wikipedia"
+  },
+  "CITTADELLA": {
+    "city": "Cittadella",
+    "stadium": "Stadio Pier Cesare Tombolato",
+    "capacity": 7623,
+    "source": "manual+wikipedia"
+  },
+  "DESENZANO": {
+    "city": "Desenzano del Garda",
+    "stadium": "Stadio Tre Stelle",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "DOLOMITI BELLUNESI": {
+    "city": "Belluno",
+    "stadium": "Stadio Comunale di Belluno",
+    "capacity": 2500,
+    "source": "manual+wikipedia"
+  },
+  "FOLGORE CARATESE": {
+    "city": "Carate Brianza",
+    "stadium": "Stadio Comunale di Carate",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "GIANA ERMINIO": {
+    "city": "Gorgonzola",
+    "stadium": "Stadio Città di Gorgonzola",
+    "capacity": 3766,
+    "source": "manual+wikipedia"
+  },
+  "JUVENTUS U23": {
+    "city": "Torino",
+    "stadium": "Juventus Training Center",
+    "capacity": 4000,
+    "source": "manual+wikipedia"
+  },
+  "LECCO": {
+    "city": "Lecco",
+    "stadium": "Stadio Rigamonti-Ceppi",
+    "capacity": 4997,
+    "source": "manual+wikipedia"
+  },
+  "LUMEZZANE": {
+    "city": "Lumezzane",
+    "stadium": "Stadio Tullio Saleri",
+    "capacity": 4150,
+    "source": "manual+wikipedia"
+  },
+  "NOVARA": {
+    "city": "Novara",
+    "stadium": "Stadio Silvio Piola",
+    "capacity": 17875,
+    "source": "manual+wikipedia"
+  },
+  "OSPITALETTO": {
+    "city": "Ospitaletto",
+    "stadium": "Stadio Comunale di Ospitaletto",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "PERGOLETTESE": {
+    "city": "Crema",
+    "stadium": "Stadio Giuseppe Voltini",
+    "capacity": 4095,
+    "source": "manual+wikipedia"
+  },
+  "PRO VERCELLI": {
+    "city": "Vercelli",
+    "stadium": "Stadio Silvio Piola",
+    "capacity": 5500,
+    "source": "manual+wikipedia"
+  },
+  "RENATE": {
+    "city": "Meda",
+    "stadium": "Stadio Città di Meda",
+    "capacity": 3000,
+    "source": "manual+wikipedia"
+  },
+  "TRENTO": {
+    "city": "Trento",
+    "stadium": "Stadio Briamasco",
+    "capacity": 4227,
+    "source": "manual+wikipedia"
+  },
+  "TREVISO": {
+    "city": "Treviso",
+    "stadium": "Stadio Omobono Tenni",
+    "capacity": 10000,
+    "source": "manual+wikipedia"
+  },
+  "ATALANTA U23": {
+    "city": "Bergamo",
+    "stadium": "Centro Sportivo Bortolotti",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "CAMPOBASSO": {
+    "city": "Campobasso",
+    "stadium": "Stadio Nuovo Romagnoli",
+    "capacity": 21800,
+    "source": "manual+wikipedia"
+  },
+  "FORLÌ": {
+    "city": "Forli",
+    "stadium": "Stadio Tullo Morgagni",
+    "capacity": 3505,
+    "source": "manual+wikipedia"
+  },
+  "GROSSETO": {
+    "city": "Grosseto",
+    "stadium": "Stadio Carlo Zecchini",
+    "capacity": 9979,
+    "source": "manual+wikipedia"
+  },
+  "GUBBIO": {
+    "city": "Gubbio",
+    "stadium": "Stadio Pietro Barbetti",
+    "capacity": 5300,
+    "source": "manual+wikipedia"
+  },
+  "GUIDONIA": {
+    "city": "Guidonia Montecelio",
+    "stadium": "Stadio Comunale di Guidonia",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "LATINA": {
+    "city": "Latina",
+    "stadium": "Stadio Domenico Francioni",
+    "capacity": 8000,
+    "source": "manual+wikipedia"
+  },
+  "LIVORNO": {
+    "city": "Livorno",
+    "stadium": "Stadio Armando Picchi",
+    "capacity": 19238,
+    "source": "manual+wikipedia"
+  },
+  "OSTIAMARE": {
+    "city": "Ostia",
+    "stadium": "Stadio Anco Marzio",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "PERUGIA": {
+    "city": "Perugia",
+    "stadium": "Stadio Renato Curi",
+    "capacity": 23625,
+    "source": "manual+wikipedia"
+  },
+  "PESCARA": {
+    "city": "Pescara",
+    "stadium": "Stadio Adriatico - Giovanni Cornacchia",
+    "capacity": 20476,
+    "source": "manual+wikipedia"
+  },
+  "PIANESE": {
+    "city": "Piancastagnaio",
+    "stadium": "Stadio Comunale di Piancastagnaio",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "PINETO": {
+    "city": "Pineto",
+    "stadium": "Stadio Mimmo Pavone",
+    "capacity": 5000,
+    "source": "manual+wikipedia"
+  },
+  "RAVENNA": {
+    "city": "Ravenna",
+    "stadium": "Stadio Bruno Benelli",
+    "capacity": 12020,
+    "source": "manual+wikipedia"
+  },
+  "REGGIANA": {
+    "city": "Reggio Emilia",
+    "stadium": "Mapei Stadium - Citta del Tricolore",
+    "capacity": 21525,
+    "source": "manual+wikipedia"
+  },
+  "SAMBENEDETTESE": {
+    "city": "San Benedetto del Tronto",
+    "stadium": "Stadio Riviera delle Palme",
+    "capacity": 13650,
+    "source": "manual+wikipedia"
+  },
+  "SPEZIA": {
+    "city": "La Spezia",
+    "stadium": "Stadio Alberto Picco",
+    "capacity": 11466,
+    "source": "manual+wikipedia"
+  },
+  "TORRES": {
+    "city": "Sassari",
+    "stadium": "Stadio Vanni Sanna",
+    "capacity": 7480,
+    "source": "manual+wikipedia"
+  },
+  "VADO": {
+    "city": "Vado Ligure",
+    "stadium": "Stadio Ferruccio Chittolina",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "VIS PESARO": {
+    "city": "Pesaro",
+    "stadium": "Stadio Tonino Benelli",
+    "capacity": 4898,
+    "source": "manual+wikipedia"
+  },
+  "ALTAMURA": {
+    "city": "Altamura",
+    "stadium": "Stadio Tonino D'Angelo",
+    "capacity": 800,
+    "source": "manual+wikipedia"
+  },
+  "AUDACE CERIGNOLA": {
+    "city": "Cerignola",
+    "stadium": "Stadio Domenico Monterisi",
+    "capacity": 8000,
+    "source": "manual+wikipedia"
+  },
+  "BARI": {
+    "city": "Bari",
+    "stadium": "Stadio San Nicola",
+    "capacity": 58270,
+    "source": "manual+wikipedia"
+  },
+  "BARLETTA": {
+    "city": "Barletta",
+    "stadium": "Stadio Cosimo Puttilli",
+    "capacity": 7500,
+    "source": "manual+wikipedia"
+  },
+  "CASARANO": {
+    "city": "Casarano",
+    "stadium": "Stadio Giuseppe Capozza",
+    "capacity": 6500,
+    "source": "manual+wikipedia"
+  },
+  "CASERTANA": {
+    "city": "Caserta",
+    "stadium": "Stadio Alberto Pinto",
+    "capacity": 12000,
+    "source": "manual+wikipedia"
+  },
+  "CATANIA": {
+    "city": "Catania",
+    "stadium": "Stadio Angelo Massimino",
+    "capacity": 20266,
+    "source": "manual+wikipedia"
+  },
+  "CAVESE": {
+    "city": "Cava de' Tirreni",
+    "stadium": "Stadio Simonetta Lamberti",
+    "capacity": 15200,
+    "source": "manual+wikipedia"
+  },
+  "COSENZA": {
+    "city": "Cosenza",
+    "stadium": "Stadio San Vito-Gigi Marulla",
+    "capacity": 20987,
+    "source": "manual+wikipedia"
+  },
+  "CROTONE": {
+    "city": "Crotone",
+    "stadium": "Stadio Ezio Scida",
+    "capacity": 16640,
+    "source": "manual+wikipedia"
+  },
+  "FOGGIA": {
+    "city": "Foggia",
+    "stadium": "Stadio Pino Zaccheria",
+    "capacity": 25085,
+    "source": "manual+wikipedia"
+  },
+  "GIUGLIANO": {
+    "city": "Giugliano in Campania",
+    "stadium": "Stadio Alberto De Cristofaro",
+    "capacity": 6044,
+    "source": "manual+wikipedia"
+  },
+  "INTER U23": {
+    "city": "Sesto San Giovanni",
+    "stadium": "Stadio Ernesto Breda",
+    "capacity": 3500,
+    "source": "manual+wikipedia"
+  },
+  "MONOPOLI": {
+    "city": "Monopoli",
+    "stadium": "Stadio Vito Simone Veneziani",
+    "capacity": 6880,
+    "source": "manual+wikipedia"
+  },
+  "PICERNO": {
+    "city": "Picerno",
+    "stadium": "Stadio Donato Curcio",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "POTENZA": {
+    "city": "Potenza",
+    "stadium": "Stadio Alfredo Viviani",
+    "capacity": 6000,
+    "source": "manual+wikipedia"
+  },
+  "SALERNITANA": {
+    "city": "Salerno",
+    "stadium": "Stadio Arechi",
+    "capacity": 37180,
+    "source": "manual+wikipedia"
+  },
+  "SAVOIA": {
+    "city": "Torre Annunziata",
+    "stadium": "Stadio Giraud",
+    "capacity": 10750,
+    "source": "manual+wikipedia"
+  },
+  "SCAFATESE": {
+    "city": "Scafati",
+    "stadium": "Stadio Comunale di Scafati",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "SORRENTO": {
+    "city": "Sorrento",
+    "stadium": "Stadio Italia",
+    "capacity": 3600,
+    "source": "manual+wikipedia"
+  },
+  "AS BIELLESE": {
+    "city": "Biella",
+    "stadium": "Stadio La Marmora-Gagliardi",
+    "capacity": 5000,
+    "source": "manual+wikipedia"
+  },
+  "ASTI": {
+    "city": "Asti",
+    "stadium": "Stadio Comunale di Asti",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "CAIRESE": {
+    "city": "Cairo Montenotte",
+    "stadium": "Stadio Comunale",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "CELLE VARAZZE": {
+    "city": "Celle Ligure",
+    "stadium": "Stadio Comunale",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "CHISOLA": {
+    "city": "None",
+    "stadium": "Stadio Comunale",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "CLUB MILANO": {
+    "city": "Milano",
+    "stadium": "Centro Sportivo",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "DERTHONA FBC": {
+    "city": "Tortona",
+    "stadium": "Stadio Fausto Coppi",
+    "capacity": 2500,
+    "source": "manual+wikipedia"
+  },
+  "GOZZANO": {
+    "city": "Gozzano",
+    "stadium": "Stadio Alfredo d'Albertas",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "IMPERIA": {
+    "city": "Imperia",
+    "stadium": "Stadio Nino Ciccione",
+    "capacity": 3000,
+    "source": "manual+wikipedia"
+  },
+  "LAVAGNESE": {
+    "city": "Lavagna",
+    "stadium": "Stadio Comunale di Lavagna",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "LIGORNA": {
+    "city": "Genova",
+    "stadium": "Stadio Ligorna",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "NOVAROMENTIN": {
+    "city": "Novara",
+    "stadium": "Stadio Comunale",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "SALUZZO": {
+    "city": "Saluzzo",
+    "stadium": "Stadio Comunale di Saluzzo",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "SANREMESE": {
+    "city": "Sanremo",
+    "stadium": "Stadio Comunale di Sanremo",
+    "capacity": 4000,
+    "source": "manual+wikipedia"
+  },
+  "SESTRI LEVANTE": {
+    "city": "Sestri Levante",
+    "stadium": "Stadio Giuseppe Sivori",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "VALENZANA": {
+    "city": "Valenza",
+    "stadium": "Stadio Comunale di Valenza",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "VARESE FC": {
+    "city": "Varese",
+    "stadium": "Stadio Franco Ossola",
+    "capacity": 8213,
+    "source": "manual+wikipedia"
+  },
+  "BRENO": {
+    "city": "Breno",
+    "stadium": "Stadio Comunale di Breno",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "BRUSAPORTO": {
+    "city": "Brusaporto",
+    "stadium": "Stadio Comunale di Brusaporto",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "CALDIERO TERME": {
+    "city": "Caldiero",
+    "stadium": "Stadio Comunale di Caldiero",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "CASTELLANZESE": {
+    "city": "Castellanza",
+    "stadium": "Stadio Comunale di Castellanza",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "CHIEVO": {
+    "city": "Verona",
+    "stadium": "Stadio Marcantonio Bentegodi",
+    "capacity": 39211,
+    "source": "manual+wikipedia"
+  },
+  "CISERANO-BERGAMO": {
+    "city": "Ciserano",
+    "stadium": "Stadio Comunale di Ciserano",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "LEON": {
+    "city": "Leno",
+    "stadium": "Stadio Comunale di Leno",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "MILAN U23": {
+    "city": "Milano",
+    "stadium": "Centro Sportivo Vismara",
+    "capacity": 1200,
+    "source": "manual+wikipedia"
+  },
+  "OLTREPO": {
+    "city": "Stradella",
+    "stadium": "Stadio Comunale",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "PAVIA": {
+    "city": "Pavia",
+    "stadium": "Stadio Pietro Fortunati",
+    "capacity": 4999,
+    "source": "manual+wikipedia"
+  },
+  "REAL CALEPINA": {
+    "city": "Calcio",
+    "stadium": "Stadio Comunale",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "SCANZOROSCIATE": {
+    "city": "Scanzorosciate",
+    "stadium": "Stadio Comunale",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "SONDRIO": {
+    "city": "Sondrio",
+    "stadium": "Stadio Castellina",
+    "capacity": 4000,
+    "source": "manual+wikipedia"
+  },
+  "USD CASATESE": {
+    "city": "Casatenovo",
+    "stadium": "Stadio Comunale",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "VARESINA": {
+    "city": "Venegono Superiore",
+    "stadium": "Stadio Comunale",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "VILLA VALLE": {
+    "city": "Villa d'Alme",
+    "stadium": "Stadio Comunale",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "VOGHERESE": {
+    "city": "Voghera",
+    "stadium": "Stadio Giovanni Parisi",
+    "capacity": 4000,
+    "source": "manual+wikipedia"
+  },
+  "ADRIESE": {
+    "city": "Adria",
+    "stadium": "Stadio Comunale di Adria",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "ALTAVILLA": {
+    "city": "Altavilla Vicentina",
+    "stadium": "Stadio Comunale",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "BASSANO": {
+    "city": "Bassano del Grappa",
+    "stadium": "Stadio Rino Mercante",
+    "capacity": 2952,
+    "source": "manual+wikipedia"
+  },
+  "BRIAN LIGNANO": {
+    "city": "Lignano Sabbiadoro",
+    "stadium": "Stadio Comunale",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "CALVI NOALE": {
+    "city": "Noale",
+    "stadium": "Stadio Comunale di Noale",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "CAMPODARSEGO": {
+    "city": "Campodarsego",
+    "stadium": "Stadio Comunale di Campodarsego",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "CJARLINS MUZANE": {
+    "city": "Muzzana del Turgnano",
+    "stadium": "Stadio Comunale",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "CONEGLIANO": {
+    "city": "Conegliano",
+    "stadium": "Stadio Comunale di Conegliano",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "ESTE": {
+    "city": "Este",
+    "stadium": "Stadio Nuovo Comunale",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "FC OBERMAIS": {
+    "city": "Merano",
+    "stadium": "Stadio Comunale di Merano",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "LEGNAGO SALUS": {
+    "city": "Legnago",
+    "stadium": "Stadio Mario Sandrini",
+    "capacity": 2152,
+    "source": "manual+wikipedia"
+  },
+  "LUPARENSE": {
+    "city": "Lupare",
+    "stadium": "Stadio Comunale",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "MESTRE": {
+    "city": "Venezia",
+    "stadium": "Stadio Francesco Baracca",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "PORTOGRUARO": {
+    "city": "Portogruaro",
+    "stadium": "Stadio Pier Giovanni Mecchia",
+    "capacity": 3335,
+    "source": "manual+wikipedia"
+  },
+  "SAN LUIGI": {
+    "city": "Trieste",
+    "stadium": "Stadio Comunale",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "UNION CLODIENSE": {
+    "city": "Chioggia",
+    "stadium": "Stadio Aldo e Dino Ballarin",
+    "capacity": 3622,
+    "source": "manual+wikipedia"
+  },
+  "VIGASIO": {
+    "city": "Vigasio",
+    "stadium": "Stadio Comunale di Vigasio",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "CITTADELLA VIS MODENA": {
+    "city": "Modena",
+    "stadium": "Stadio Alberto Braglia",
+    "capacity": 21092,
+    "source": "manual+wikipedia"
+  },
+  "CORREGGESE": {
+    "city": "Correggio",
+    "stadium": "Stadio Comunale di Correggio",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "CREMA": {
+    "city": "Crema",
+    "stadium": "Stadio Giuseppe Voltini",
+    "capacity": 4095,
+    "source": "manual+wikipedia"
+  },
+  "IMOLESE": {
+    "city": "Imola",
+    "stadium": "Stadio Romeo Galli",
+    "capacity": 4000,
+    "source": "manual+wikipedia"
+  },
+  "LENTIGIONE": {
+    "city": "Brescello",
+    "stadium": "Stadio Comunale di Lentigione",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "PIACENZA": {
+    "city": "Piacenza",
+    "stadium": "Stadio Leonardo Garilli",
+    "capacity": 21608,
+    "source": "manual+wikipedia"
+  },
+  "PISTOIESE": {
+    "city": "Pistoia",
+    "stadium": "Stadio Marcello Melani",
+    "capacity": 13195,
+    "source": "manual+wikipedia"
+  },
+  "PRO PALAZZOLO": {
+    "city": "Palazzolo sull'Oglio",
+    "stadium": "Stadio Comunale di Palazzolo",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "PRO SESTO": {
+    "city": "Sesto San Giovanni",
+    "stadium": "Stadio Breda",
+    "capacity": 3500,
+    "source": "manual+wikipedia"
+  },
+  "ROVATO VERTOVESE": {
+    "city": "Rovato",
+    "stadium": "Stadio Comunale di Rovato",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "SANGIULIANO CITY": {
+    "city": "San Giuliano Milanese",
+    "stadium": "Stadio Breda",
+    "capacity": 3500,
+    "source": "manual+wikipedia"
+  },
+  "SANT'ANGELO": {
+    "city": "Sant'Angelo Lodigiano",
+    "stadium": "Stadio Comunale",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "SASSO MARCONI": {
+    "city": "Sasso Marconi",
+    "stadium": "Stadio Comunale",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "SCD PROGRESSO": {
+    "city": "Castel Maggiore",
+    "stadium": "Stadio Comunale",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "TREVIGLIESE": {
+    "city": "Treviglio",
+    "stadium": "Stadio Comunale di Treviglio",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "TROPICAL CORIANO": {
+    "city": "Coriano",
+    "stadium": "Stadio Comunale di Coriano",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "TUTTOCUOIO": {
+    "city": "Santa Croce sull'Arno",
+    "stadium": "Stadio Comunale",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "CAMAIORE": {
+    "city": "Camaiore",
+    "stadium": "Stadio Comunale di Camaiore",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "CANNARA": {
+    "city": "Cannara",
+    "stadium": "Stadio Comunale di Cannara",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "FOLIGNO": {
+    "city": "Foligno",
+    "stadium": "Stadio Enzo Blasone",
+    "capacity": 5650,
+    "source": "manual+wikipedia"
+  },
+  "FOLLONICA GAVORRANO": {
+    "city": "Gavorrano",
+    "stadium": "Stadio Romeo Malservisi",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "GHIVIBORGO": {
+    "city": "Gavorrano",
+    "stadium": "Stadio Romeo Malservisi",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "MONTEVARCHI": {
+    "city": "Montevarchi",
+    "stadium": "Stadio Gastone Brilli Peri",
+    "capacity": 7200,
+    "source": "manual+wikipedia"
+  },
+  "ORVIETANA": {
+    "city": "Orvieto",
+    "stadium": "Stadio Luigi Muzi",
+    "capacity": 2500,
+    "source": "manual+wikipedia"
+  },
+  "POGGIBONSI": {
+    "city": "Poggibonsi",
+    "stadium": "Stadio Stefano Lotti",
+    "capacity": 2513,
+    "source": "manual+wikipedia"
+  },
+  "PRATO": {
+    "city": "Prato",
+    "stadium": "Stadio Lungobisenzio",
+    "capacity": 6750,
+    "source": "manual+wikipedia"
+  },
+  "SAN DONATO": {
+    "city": "San Donato Tavarnelle",
+    "stadium": "Stadio Comunale",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "SCANDICCI": {
+    "city": "Scandicci",
+    "stadium": "Stadio Turri",
+    "capacity": 1800,
+    "source": "manual+wikipedia"
+  },
+  "SERAVEZZA POZZI": {
+    "city": "Seravezza",
+    "stadium": "Stadio Comunale di Seravezza",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "SIENA": {
+    "city": "Siena",
+    "stadium": "Stadio Artemio Franchi",
+    "capacity": 15373,
+    "source": "manual+wikipedia"
+  },
+  "TAU": {
+    "city": "Altopascio",
+    "stadium": "Stadio Comunale di Altopascio",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "TERRANUOVA TRAIANA": {
+    "city": "Terranuova Bracciolini",
+    "stadium": "Stadio Comunale",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "TRESTINA": {
+    "city": "Trestina",
+    "stadium": "Stadio Comunale di Trestina",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "VIVI ALTOTEVERE": {
+    "city": "Citta di Castello",
+    "stadium": "Stadio Comunale",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "ANCONA": {
+    "city": "Ancona",
+    "stadium": "Stadio del Conero",
+    "capacity": 23983,
+    "source": "manual+wikipedia"
+  },
+  "ATLETICO ASCOLI": {
+    "city": "Ascoli Piceno",
+    "stadium": "Stadio Cino e Lillo Del Duca",
+    "capacity": 20460,
+    "source": "manual+wikipedia"
+  },
+  "CASTELFIDARDO": {
+    "city": "Castelfidardo",
+    "stadium": "Stadio Comunale di Castelfidardo",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "CHIETI": {
+    "city": "Chieti",
+    "stadium": "Stadio Guido Angelini",
+    "capacity": 12919,
+    "source": "manual+wikipedia"
+  },
+  "FOSSOMBRONE": {
+    "city": "Fossombrone",
+    "stadium": "Stadio Comunale di Fossombrone",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "GIULIANOVA": {
+    "city": "Giulianova",
+    "stadium": "Stadio Rubens Fadini",
+    "capacity": 5625,
+    "source": "manual+wikipedia"
+  },
+  "L'AQUILA": {
+    "city": "L'Aquila",
+    "stadium": "Stadio Gran Sasso d'Italia-Italo Acconcia",
+    "capacity": 6730,
+    "source": "manual+wikipedia"
+  },
+  "MACERATESE": {
+    "city": "Macerata",
+    "stadium": "Stadio Helvia Recina",
+    "capacity": 5830,
+    "source": "manual+wikipedia"
+  },
+  "NOTARESCO CALCIO": {
+    "city": "Notaresco",
+    "stadium": "Stadio Comunale di Notaresco",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "RECANATESE": {
+    "city": "Recanati",
+    "stadium": "Stadio Nicola Tubaldi",
+    "capacity": 3000,
+    "source": "manual+wikipedia"
+  },
+  "SAMMAURESE": {
+    "city": "San Mauro Pascoli",
+    "stadium": "Stadio Comunale di San Mauro",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "SAN MARINO CALCIO": {
+    "city": "Serravalle",
+    "stadium": "San Marino Stadium",
+    "capacity": 6664,
+    "source": "manual+wikipedia"
+  },
+  "SORA": {
+    "city": "Sora",
+    "stadium": "Stadio Claudio Tomei",
+    "capacity": 4000,
+    "source": "manual+wikipedia"
+  },
+  "TERAMO": {
+    "city": "Teramo",
+    "stadium": "Stadio Gaetano Bonolis",
+    "capacity": 7498,
+    "source": "manual+wikipedia"
+  },
+  "TERMOLI": {
+    "city": "Termoli",
+    "stadium": "Stadio Gino Cannarsa",
+    "capacity": 3300,
+    "source": "manual+wikipedia"
+  },
+  "UNIPOMEZIA": {
+    "city": "Pomezia",
+    "stadium": "Stadio Comunale di Pomezia",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "VIGOR SENIGALLIA": {
+    "city": "Senigallia",
+    "stadium": "Stadio Comunale di Senigallia",
+    "capacity": 3000,
+    "source": "manual+wikipedia"
+  },
+  "ALBALONGA": {
+    "city": "Frascati",
+    "stadium": "Stadio Comunale di Frascati",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "ANZIO CALCIO 1924": {
+    "city": "Anzio",
+    "stadium": "Stadio Comunale di Anzio",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "ATL. LODIGIANI": {
+    "city": "Roma",
+    "stadium": "Centro Sportivo Lodigiani",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "BUDONI": {
+    "city": "Budoni",
+    "stadium": "Stadio Comunale di Budoni",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "CASSINO": {
+    "city": "Cassino",
+    "stadium": "Stadio Gino Salveti",
+    "capacity": 3681,
+    "source": "manual+wikipedia"
+  },
+  "FLAMINIA": {
+    "city": "Civita Castellana",
+    "stadium": "Stadio Comunale",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "ISCHIA": {
+    "city": "Ischia",
+    "stadium": "Stadio Vincenzo Mazzella",
+    "capacity": 5000,
+    "source": "manual+wikipedia"
+  },
+  "LATTE DOLCE": {
+    "city": "Sassari",
+    "stadium": "Stadio Vanni Sanna",
+    "capacity": 7480,
+    "source": "manual+wikipedia"
+  },
+  "MONASTIR": {
+    "city": "Monastir",
+    "stadium": "Stadio Comunale di Monastir",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "MONTESPACCATO": {
+    "city": "Roma",
+    "stadium": "Stadio Comunale Montespaccato",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "NOCERINA": {
+    "city": "Nocera Inferiore",
+    "stadium": "Stadio San Francesco d'Assisi",
+    "capacity": 7682,
+    "source": "manual+wikipedia"
+  },
+  "OLBIA": {
+    "city": "Olbia",
+    "stadium": "Stadio Bruno Nespoli",
+    "capacity": 4000,
+    "source": "manual+wikipedia"
+  },
+  "PALMESE 1914": {
+    "city": "Palmi",
+    "stadium": "Stadio Giuseppe Lopresti",
+    "capacity": 3500,
+    "source": "manual+wikipedia"
+  },
+  "REAL MONTEROTONDO": {
+    "city": "Monterotondo",
+    "stadium": "Stadio Comunale",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "SARRABUS OGLIASTRA": {
+    "city": "Muravera",
+    "stadium": "Stadio Comunale",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "TRASTEVERE CALCIO": {
+    "city": "Roma",
+    "stadium": "Stadio Vittorio Bachelet",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "VALMONTONE": {
+    "city": "Valmontone",
+    "stadium": "Stadio Comunale di Valmontone",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "A.C NARDÒ": {
+    "city": "Nardo",
+    "stadium": "Stadio Giovanni Paolo II",
+    "capacity": 5000,
+    "source": "manual+wikipedia"
+  },
+  "ACERRANA": {
+    "city": "Acerra",
+    "stadium": "Stadio Comunale di Acerra",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "AFRAGOLESE": {
+    "city": "Afragola",
+    "stadium": "Stadio Comunale di Afragola",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "CITTA DI FASANO": {
+    "city": "Fasano",
+    "stadium": "Stadio Vito Curlo",
+    "capacity": 3200,
+    "source": "manual+wikipedia"
+  },
+  "FERRANDINA": {
+    "city": "Ferrandina",
+    "stadium": "Stadio Comunale",
+    "capacity": 1000,
+    "source": "manual+wikipedia"
+  },
+  "FIDELIS ANDRIA": {
+    "city": "Andria",
+    "stadium": "Stadio Degli Ulivi",
+    "capacity": 9148,
+    "source": "manual+wikipedia"
+  },
+  "FRANCAVILLA": {
+    "city": "Francavilla in Sinni",
+    "stadium": "Stadio Comunale",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "GRAVINA": {
+    "city": "Gravina in Puglia",
+    "stadium": "Stadio Stefano Vicino",
+    "capacity": 2500,
+    "source": "manual+wikipedia"
+  },
+  "HERACLEA": {
+    "city": "Policoro",
+    "stadium": "Stadio Comunale di Policoro",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "MANFREDONIA": {
+    "city": "Manfredonia",
+    "stadium": "Stadio Miramare",
+    "capacity": 4080,
+    "source": "manual+wikipedia"
+  },
+  "MARTINA CALCIO": {
+    "city": "Martina Franca",
+    "stadium": "Stadio Gian Domenico Tursi",
+    "capacity": 4966,
+    "source": "manual+wikipedia"
+  },
+  "PAGANESE": {
+    "city": "Pagani",
+    "stadium": "Stadio Marcello Torre",
+    "capacity": 5093,
+    "source": "manual+wikipedia"
+  },
+  "POMPEI": {
+    "city": "Pompei",
+    "stadium": "Stadio Comunale di Pompei",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "REAL NORMANNA": {
+    "city": "Bisceglie",
+    "stadium": "Stadio Gustavo Ventura",
+    "capacity": 4000,
+    "source": "manual+wikipedia"
+  },
+  "SARNESE": {
+    "city": "Sarno",
+    "stadium": "Stadio Comunale di Sarno",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "SS NOLA 1925": {
+    "city": "Nola",
+    "stadium": "Stadio Sporting Club",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "VIRTUS FRANCAVILLA": {
+    "city": "Francavilla Fontana",
+    "stadium": "Stadio Giovanni Paolo II",
+    "capacity": 3360,
+    "source": "manual+wikipedia"
+  },
+  "ACR MESSINA": {
+    "city": "Messina",
+    "stadium": "Stadio San Filippo-Franco Scoglio",
+    "capacity": 38722,
+    "source": "manual+wikipedia"
+  },
+  "AS ACIREALE": {
+    "city": "Acireale",
+    "stadium": "Stadio Aci e Galatea",
+    "capacity": 5000,
+    "source": "manual+wikipedia"
+  },
+  "ATHLETIC PALERMO": {
+    "city": "Palermo",
+    "stadium": "Stadio Renzo Barbera",
+    "capacity": 36365,
+    "source": "manual+wikipedia"
+  },
+  "CASTRUMFAVARA": {
+    "city": "Favara",
+    "stadium": "Stadio Comunale di Favara",
+    "capacity": 1500,
+    "source": "manual+wikipedia"
+  },
+  "ENNA": {
+    "city": "Enna",
+    "stadium": "Stadio Generale Gaeta",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "GELA": {
+    "city": "Gela",
+    "stadium": "Stadio Vincenzo Presti",
+    "capacity": 4200,
+    "source": "manual+wikipedia"
+  },
+  "GELBISON": {
+    "city": "Vallo della Lucania",
+    "stadium": "Stadio Giovanni Morra",
+    "capacity": 2500,
+    "source": "manual+wikipedia"
+  },
+  "IGEA VIRTUS": {
+    "city": "Barcellona Pozzo di Gotto",
+    "stadium": "Stadio Carlo D'Alcontres",
+    "capacity": 7000,
+    "source": "manual+wikipedia"
+  },
+  "MILAZZO": {
+    "city": "Milazzo",
+    "stadium": "Stadio Marco Salmeri",
+    "capacity": 2500,
+    "source": "manual+wikipedia"
+  },
+  "NISSA": {
+    "city": "Caltanissetta",
+    "stadium": "Stadio Marco Tomaselli",
+    "capacity": 11000,
+    "source": "manual+wikipedia"
+  },
+  "PATERNÒ": {
+    "city": "Paterno",
+    "stadium": "Stadio Comunale di Paterno",
+    "capacity": 4000,
+    "source": "manual+wikipedia"
+  },
+  "REGGINA": {
+    "city": "Reggio Calabria",
+    "stadium": "Stadio Oreste Granillo",
+    "capacity": 27543,
+    "source": "manual+wikipedia"
+  },
+  "SAMBIASE": {
+    "city": "Lamezia Terme",
+    "stadium": "Stadio Comunale",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "SANCATALDESE": {
+    "city": "San Cataldo",
+    "stadium": "Stadio Comunale di San Cataldo",
+    "capacity": 2000,
+    "source": "manual+wikipedia"
+  },
+  "USD RAGUSA": {
+    "city": "Ragusa",
+    "stadium": "Stadio Aldo Campo",
+    "capacity": 3500,
+    "source": "manual+wikipedia"
+  },
+  "VIBONESE": {
+    "city": "Vibo Valentia",
+    "stadium": "Stadio Luigi Razza",
+    "capacity": 6000,
+    "source": "manual+wikipedia"
+  },
+  "VIGOR LAMEZIA": {
+    "city": "Lamezia Terme",
+    "stadium": "Stadio Guido D'Ippolito",
+    "capacity": 4000,
+    "source": "manual+wikipedia"
+  }
+}

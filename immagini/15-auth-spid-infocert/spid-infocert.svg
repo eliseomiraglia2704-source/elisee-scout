@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 50" width="160" height="50">
+  <rect width="160" height="50" rx="8" fill="#0A192F"/>
+  <!-- InfoCert emblem -->
+  <rect x="8" y="8" width="34" height="34" rx="4" fill="#0055B8"/>
+  <path d="M25 14c-5 0-9 4-9 9s4 9 9 9 9-4 9-9-4-9-9-9zm-1 4h2v3h-2v-3zm0 5h2v5h-2v-5z" fill="#00D2FF"/>
+  <!-- Text -->
+  <text x="48" y="27" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="800" font-size="14" fill="#FFFFFF">Info<tspan fill="#00D2FF">Cert</tspan></text>
+  <text x="110" y="27" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="14" fill="#00D2FF"> ID</text>
+  <text x="48" y="39" font-family="Arial, sans-serif" font-weight="500" font-size="8" fill="#94A3B8" letter-spacing="0.5">TINEXTA GROUP</text>
+</svg>

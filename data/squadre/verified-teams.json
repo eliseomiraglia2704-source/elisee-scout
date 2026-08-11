@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "updatedAt": "2026-08-06",
+  "description": "Squadre che fanno parte del progetto ELISEE SCOUT e possono mostrare il badge Verificato. ID = campo id del catalogo squadre.",
+  "verifiedIds": [],
+  "verifiedNames": []
+}

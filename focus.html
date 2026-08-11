@@ -1,0 +1,2728 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Focus categorie — ELISEE SCOUT</title>
+  <meta name="description" content="Aree focus dilettanti ELISEE SCOUT stagione 2026/27. Solo consultazione — non iscrivibili senza consenso.">
+  <link rel="icon" type="image/png" href="immagini/logo/favicon.png?v=20260731_LOGO_CLEAN">
+  <link rel="stylesheet" href="style.css?v=20260731_FOCUS_NAZIONALE">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    .focus-season-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin: 0.35rem 0 0.75rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #e2e8f0;
+      background: rgba(14, 165, 233, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+    }
+    .focus-girone-picker {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+      gap: 0.65rem;
+      margin: 0.85rem 0 0.25rem;
+    }
+    .focus-girone-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+      padding: 0.85rem 0.9rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(15, 23, 42, 0.55);
+      color: #e2e8f0;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+    }
+    .focus-girone-btn:hover,
+    .focus-girone-btn:focus-visible {
+      border-color: rgba(56, 189, 248, 0.65);
+      background: rgba(14, 165, 233, 0.1);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.12);
+      outline: none;
+    }
+    .focus-girone-btn strong {
+      font-family: Outfit, Inter, sans-serif;
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      color: #f8fafc;
+    }
+    .focus-girone-btn span {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      line-height: 1.35;
+      font-weight: 500;
+    }
+    .focus-girone-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin: 0 0 0.85rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: transparent;
+      color: #cbd5e1;
+      font-size: 0.82rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .focus-girone-back:hover,
+    .focus-girone-back:focus-visible {
+      border-color: #38bdf8;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.08);
+      outline: none;
+    }
+    .focus-girone-detail-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .focus-girone-detail-head h3 {
+      margin: 0;
+      font-family: Outfit, Inter, sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #f1f5f9;
+    }
+    .focus-girone-detail-head p {
+      margin: 0.15rem 0 0;
+      font-size: 0.82rem;
+      color: #94a3b8;
+    }
+
+    /* —— SVINCOLATI: Executive Talent Recruitment Board —— */
+    .sv-board {
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background:
+        radial-gradient(900px 320px at 0% 0%, rgba(56,189,248,0.12), transparent 55%),
+        radial-gradient(700px 280px at 100% 0%, rgba(167,139,250,0.10), transparent 50%),
+        linear-gradient(165deg, rgba(15,23,42,0.98), rgba(2,6,23,0.96));
+      overflow: hidden;
+      box-shadow: 0 28px 80px rgba(0,0,0,0.35);
+    }
+    .sv-board-hero {
+      padding: 1.6rem 1.5rem 1.25rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .sv-board-kicker {
+      margin: 0 0 0.45rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #38bdf8;
+    }
+    .sv-board-hero h2 {
+      margin: 0 0 0.5rem;
+      font-family: Outfit, Inter, sans-serif;
+      font-size: clamp(1.35rem, 2.6vw, 1.85rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #f8fafc;
+    }
+    .sv-board-hero-lead {
+      margin: 0 0 1.15rem;
+      max-width: 62ch;
+      color: #94a3b8;
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+    .sv-kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+    @media (max-width: 820px) {
+      .sv-kpi-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    .sv-kpi {
+      padding: 0.85rem 0.95rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(2,6,23,0.55);
+    }
+    .sv-kpi strong {
+      display: block;
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .sv-kpi span {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #64748b;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .sv-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem 0.85rem;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.35rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(2,6,23,0.35);
+    }
+    .sv-search-wrap {
+      flex: 1 1 220px;
+      max-width: 340px;
+      position: relative;
+    }
+    .sv-search-wrap input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.7rem 0.95rem 0.7rem 2.35rem;
+      border-radius: 12px;
+      border: 1px solid rgba(148,163,184,0.22);
+      background: rgba(15,23,42,0.9);
+      color: #f1f5f9;
+      font-size: 0.88rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .sv-search-wrap input:focus {
+      border-color: rgba(56,189,248,0.55);
+      box-shadow: 0 0 0 3px rgba(56,189,248,0.12);
+    }
+    .sv-search-wrap::before {
+      content: "⌕";
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+      font-size: 1rem;
+      pointer-events: none;
+    }
+    .sv-filters-block {
+      flex: 1 1 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .sv-filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .sv-filter-label {
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .sv-filter-label em {
+      font-style: normal;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: none;
+      color: #38bdf8;
+      font-size: 0.72rem;
+    }
+    .sv-role-rail {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .sv-role-chip {
+      appearance: none;
+      border: 1px solid rgba(148,163,184,0.18);
+      background: rgba(15,23,42,0.65);
+      color: #cbd5e1;
+      border-radius: 999px;
+      padding: 0.42rem 0.85rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .sv-role-chip:hover {
+      border-color: rgba(56,189,248,0.4);
+      color: #e0f2fe;
+    }
+    .sv-role-chip.is-active {
+      border-color: rgba(56,189,248,0.65);
+      background: linear-gradient(135deg, rgba(14,165,233,0.22), rgba(56,189,248,0.1));
+      color: #7dd3fc;
+      box-shadow: 0 0 0 1px rgba(56,189,248,0.15);
+    }
+    .sv-role-chip.is-active::before {
+      content: "✓ ";
+      font-weight: 900;
+    }
+    .sv-filter-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .sv-filter-clear {
+      appearance: none;
+      border: 1px solid rgba(248,113,113,0.35);
+      background: rgba(127,29,29,0.2);
+      color: #fca5a5;
+      border-radius: 999px;
+      padding: 0.42rem 0.9rem;
+      font-size: 0.76rem;
+      font-weight: 800;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .sv-filter-clear:hover {
+      border-color: rgba(248,113,113,0.6);
+      color: #fecaca;
+    }
+    .sv-active-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      min-height: 0;
+    }
+    .sv-active-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.28rem 0.55rem;
+      border-radius: 8px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #e0f2fe;
+      background: rgba(14,165,233,0.12);
+      border: 1px solid rgba(56,189,248,0.3);
+    }
+    .sv-active-tag button {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: #7dd3fc;
+      cursor: pointer;
+      font-weight: 900;
+      font-size: 0.85rem;
+      line-height: 1;
+      padding: 0 0 0 0.15rem;
+    }
+    .sv-score-range {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      color: #94a3b8;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .sv-score-range input[type="range"] {
+      width: min(200px, 100%);
+      accent-color: #38bdf8;
+    }
+    .sv-score-range strong { color: #7dd3fc; font-weight: 800; }
+    .sv-results-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 0.85rem 1.35rem 0.25rem;
+      color: #94a3b8;
+      font-size: 0.82rem;
+    }
+    .sv-results-bar strong { color: #e2e8f0; font-weight: 800; }
+    .sv-talent-grid {
+      list-style: none;
+      margin: 0;
+      padding: 0.85rem 1.15rem 1.35rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 0.95rem;
+    }
+    .sv-talent-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      padding: 1.15rem 1.15rem 1.05rem;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background:
+        linear-gradient(160deg, rgba(30,41,59,0.55), rgba(15,23,42,0.92));
+      transition: border-color 0.18s, transform 0.18s, box-shadow 0.18s;
+    }
+    .sv-talent-card:hover {
+      border-color: rgba(56,189,248,0.35);
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.28), 0 0 0 1px rgba(56,189,248,0.08);
+    }
+    .sv-talent-top {
+      display: flex;
+      gap: 0.9rem;
+      align-items: flex-start;
+      margin-bottom: 0.9rem;
+    }
+    .sv-avatar-ring {
+      position: relative;
+      flex-shrink: 0;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+    }
+    .sv-avatar {
+      display: block;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center;
+      border: 2px solid rgba(56,189,248,0.45);
+      background: #0b1329;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+    .sv-score-badge {
+      position: absolute;
+      right: -6px;
+      bottom: -6px;
+      min-width: 2.1rem;
+      height: 1.55rem;
+      padding: 0 0.35rem;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+      color: #0b1222;
+      font-size: 0.68rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(14,165,233,0.4);
+    }
+    .sv-talent-id {
+      min-width: 0;
+      flex: 1;
+    }
+    .sv-player-name {
+      margin: 0;
+      font-family: Outfit, Inter, sans-serif;
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: #f8fafc;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+    .sv-player-title {
+      margin: 0.25rem 0 0;
+      font-size: 0.82rem;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+    .sv-availability {
+      display: inline-flex;
+      margin-top: 0.45rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #86efac;
+      background: rgba(34,197,94,0.12);
+      border: 1px solid rgba(34,197,94,0.28);
+    }
+    .sv-player-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin: 0 0 0.85rem;
+    }
+    .sv-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.22rem 0.55rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(2,6,23,0.45);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #cbd5e1;
+    }
+    .sv-pill-accent {
+      border-color: rgba(56,189,248,0.4);
+      color: #7dd3fc;
+      background: rgba(56,189,248,0.1);
+    }
+    .sv-pill-gold {
+      border-color: rgba(251,191,36,0.35);
+      color: #fcd34d;
+      background: rgba(251,191,36,0.08);
+    }
+    .sv-last-club {
+      margin: 0 0 1rem;
+      padding: 0.7rem 0.8rem;
+      border-radius: 12px;
+      background: rgba(2,6,23,0.5);
+      border: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.8rem;
+      color: #94a3b8;
+      line-height: 1.4;
+    }
+    .sv-last-club strong {
+      display: block;
+      color: #e2e8f0;
+      font-size: 0.84rem;
+      margin-bottom: 0.15rem;
+    }
+    .sv-talent-footer {
+      margin-top: auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.65rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .sv-followers {
+      font-size: 0.78rem;
+      color: #64748b;
+      font-weight: 700;
+    }
+    .sv-followers b { color: #e2e8f0; font-weight: 800; }
+    .sv-player-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .sv-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      padding: 0.55rem 0.95rem;
+      border-radius: 11px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(15,23,42,0.8);
+      color: #e2e8f0;
+      font-size: 0.78rem;
+      font-weight: 800;
+      font-family: inherit;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      letter-spacing: 0.01em;
+    }
+    .sv-btn:hover, .sv-btn:focus-visible {
+      border-color: rgba(56,189,248,0.55);
+      color: #7dd3fc;
+      background: rgba(56,189,248,0.1);
+      outline: none;
+    }
+    .sv-btn-primary {
+      border-color: transparent;
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #0b1222;
+      box-shadow: 0 6px 18px rgba(14,165,233,0.28);
+    }
+    .sv-btn-primary:hover, .sv-btn-primary:focus-visible {
+      color: #0b1222;
+      filter: brightness(1.06);
+      border-color: transparent;
+      background: linear-gradient(135deg, #0ea5e9, #7dd3fc);
+    }
+    .sv-btn-follow.active {
+      border-color: rgba(56,189,248,0.55);
+      background: rgba(56,189,248,0.15);
+      color: #38bdf8;
+    }
+    .sv-empty {
+      margin: 0;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+    .sv-empty strong { color: #e2e8f0; }
+    .sv-modal-bg {
+      position: fixed; inset: 0; z-index: 99990;
+      background: rgba(2,6,23,0.82);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem;
+    }
+    .sv-modal {
+      width: min(640px, 100%);
+      max-height: min(90vh, 820px);
+      overflow: auto;
+      border-radius: 20px;
+      border: 1px solid rgba(56,189,248,0.28);
+      background:
+        radial-gradient(500px 200px at 0% 0%, rgba(56,189,248,0.12), transparent 60%),
+        #0b1222;
+      padding: 0;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.55);
+    }
+    .sv-modal-head {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 1.35rem 1.4rem 1.1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .sv-modal-head .sv-avatar-ring {
+      width: 72px;
+      height: 72px;
+    }
+    .sv-modal-head .sv-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+    }
+    .sv-modal h3 {
+      margin: 0 0 0.3rem;
+      font-family: Outfit, Inter, sans-serif;
+      font-size: 1.35rem;
+      color: #f8fafc;
+      font-weight: 800;
+    }
+    .sv-modal .sv-sub { color: #94a3b8; font-size: 0.88rem; margin: 0 0 0.45rem; line-height: 1.4; }
+    .sv-modal-body { padding: 1.15rem 1.4rem 1.4rem; }
+    .sv-modal-section-title {
+      margin: 0 0 0.65rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #64748b;
+    }
+    .sv-career { margin: 0; padding: 0; list-style: none; }
+    .sv-career li {
+      padding: 0.85rem 0.9rem;
+      margin-bottom: 0.5rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(15,23,42,0.65);
+      font-size: 0.9rem;
+      color: #e2e8f0;
+      line-height: 1.4;
+    }
+    .sv-career li strong {
+      color: #7dd3fc;
+      display: block;
+      font-size: 0.8rem;
+      margin-bottom: 0.25rem;
+      font-weight: 800;
+    }
+    .sv-modal-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.15rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .sv-modal-close {
+      margin-left: auto;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(15,23,42,0.8);
+      color: #cbd5e1;
+      border-radius: 10px;
+      padding: 0.45rem 0.85rem;
+      cursor: pointer;
+      font-weight: 700;
+      font-family: inherit;
+      font-size: 0.8rem;
+    }
+    .sv-modal-close:hover { border-color: #38bdf8; color: #38bdf8; }
+    body.focus-hub.sv-mode .focus-hub-main h1 {
+      background: linear-gradient(90deg, #f8fafc, #7dd3fc 55%, #a78bfa);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+  </style>
+</head>
+<body class="focus-hub">
+  <header class="focus-hub-header">
+    <a class="focus-hub-brand" href="index.html" title="ELISEE SCOUT">
+      <img src="immagini/logo/logo-site.png?v=20260731_LOGO_CLEAN" alt="ELISEE SCOUT">
+      <span>ELISEE <span>SCOUT</span></span>
+    </a>
+    <a href="index.html" style="color:#94a3b8;font-size:0.85rem;text-decoration:none;font-weight:600;">← Torna al sito</a>
+  </header>
+
+  <main class="focus-hub-main">
+    <nav class="focus-hub-tabs" id="focus-tabs" aria-label="Categorie focus"></nav>
+    <p class="focus-hub-kicker">ELISEE SCOUT · Focus dilettanti · Stagione 2026/27</p>
+    <h1 id="focus-title">Caricamento…</h1>
+    <p class="focus-hub-lead" id="focus-lead"></p>
+    <div class="focus-hub-grid" id="focus-body"></div>
+    <div class="focus-hub-actions" id="focus-actions"></div>
+    <p class="focus-hub-source">
+      Copertura nazionale: tutte le regioni, i gironi e le categorie. Elenco società a scopo informativo da fonti pubbliche del calcio dilettantistico italiano
+      (tra cui i comunicati LND / comitati regionali).
+      Stagione di riferimento: <strong>2026/27</strong>.
+      Aggiornamento automatico: <a href="agenti-campionati.html"><strong>2010 agenti campionati</strong></a>
+      (10 per ogni girone: es. Serie D 9×10=90) monitorano tutte le info, statistiche, ecc.
+      <strong>Le squadre non sono cliccabili</strong>: non risultano iscritte a ELISEE SCOUT e non disponiamo del loro consenso
+      al trattamento profili sulla piattaforma.
+      <strong>Le squadre cliccabili (Licenziate)</strong> hanno tutte le info possibili e possono essere contattate di conseguenza.
+    </p>
+  </main>
+
+  <script src="agents-runtime.js?v=20260731_SUPERVISORI_H24"></script>
+  <script src="campionati-agents.js?v=20260731_SUPERVISORI_H24"></script>
+  <script src="campionati-supervisors.js?v=20260731_SUPERVISORI_H24"></script>
+  <script>
+(function () {
+  /**
+   * Focus 2026/27 — selettore a step (gruppo → elenco società).
+   * Dati informativi da panorama dilettanti / Tuttocampo / LND.
+   * Non profili ELISEE SCOUT; non cliccabili.
+   */
+
+  function G(id, title, area, teams) {
+    return { id: id, title: title, area: area, teams: teams };
+  }
+
+  /* —— SERIE D: 9 gironi A–I, aventi diritto 2026/27 —— */
+  var SERIE_D = [
+    G('A', 'Girone A', 'Piemonte · Liguria · area Varese / Milano NW', [
+      'Alessandria', 'Asti', 'Biellese', 'Borgosesia', 'Bra', 'Chisola', 'Gozzano', 'Saluzzo', 'Valenzana',
+      'Celle Varazze', 'Fezzanese', 'Imperia', 'Ligorna', 'Millesimo', 'Sanremese', 'Sestri Levante',
+      'Club Milano', 'Varese'
+    ]),
+    G('B', 'Girone B', 'Lombardia · area bergamasca / milanese', [
+      'Arconatese', 'Brusaporto', 'Casatese', 'Leon', 'Milan U23', 'Pro Patria', 'Real Calepina',
+      'Scanzorosciate', 'Solbiatese', 'Tritium', 'Varesina', 'Villa Valle', 'Virtus Ciserano Bergamo',
+      'Caldiero Terme', 'ChievoVerona', 'Virtus Verona'
+    ]),
+    G('C', 'Girone C', 'Veneto · Friuli-Venezia Giulia · Trentino-Alto Adige', [
+      'Bassano Virtus', 'Calvi Noale', 'Campodarsego', 'Conegliano', 'Este', 'La Rocca Altavilla',
+      'Legnago Salus', 'Luparense', 'Mestre', 'Sandonà', 'Schio', 'Union Clodiense',
+      'Brian Lignano', 'Cjarlins Muzane', 'Lavarian Mortean Esperia', 'Triestina',
+      'Obermais', 'Virtus Bolzano'
+    ]),
+    G('D', 'Girone D', 'Emilia-Romagna · Lombardia sud/est · Toscana nord', [
+      'Cittadella Vis Modena', 'Correggese', 'Lentigione', 'Mezzolara', 'Nibbiano & Valtidone', 'Piacenza',
+      'Progresso', 'Sasso Marconi', 'FC Pistoiese', 'Crema', 'Oltrepò', 'Pavia', 'Pavonese',
+      'Pro Palazzolo', 'Pro Sesto', 'Rovato Vertovese', 'Sangiuliano City', 'Sant\'Angelo'
+    ]),
+    G('E', 'Girone E', 'Toscana · Umbria · centro', [
+      'Aquila Montevarchi', 'Follonica Gavorrano', 'Ghiviborgo', 'Lucchese', 'Pontedera', 'Prato',
+      'Rondinella Marzocco', 'San Donato Tavarnelle', 'Scandicci', 'Seravezza Pozzi', 'Siena',
+      'Tau Altopascio', 'Terranuova Traiana', 'Angelana', 'Foligno', 'Orvietana-Ternana',
+      'Pietralunghese', 'Sporting Club Trestina'
+    ]),
+    G('F', 'Girone F', 'Marche · Abruzzo · Molise · Lazio sud-est', [
+      'Ancona', 'Atletico Ascoli', 'Fossombrone', 'K Sport Montecchio', 'Maceratese', 'Recanatese',
+      'Vigor Senigallia', 'Giulianova', 'L\'Aquila', 'Lanciano', 'Notaresco', 'Santegidiese', 'Teramo',
+      'Termoli', 'Venafro', 'UniPomezia'
+    ]),
+    G('G', 'Girone G', 'Lazio · Sardegna · Campania nord', [
+      'Albalonga', 'Anagni', 'Anzio', 'Aranova', 'Atletico Lodigiani', 'Certosa', 'Flaminia Civitacastellana',
+      'Trastevere', 'Budoni', 'Sassari Latte Dolce', 'Monastir', 'Ossese', 'Sarrabus Ogliastra',
+      'Ischia', 'Nocerina', 'Palmese'
+    ]),
+    G('H', 'Girone H', 'Campania · Puglia · Basilicata', [
+      'Afragolese', 'Ebolitana', 'Gelbison', 'Gladiator', 'Paganese', 'Real Forio', 'Real Aversa Normanna',
+      'Sarnese', 'Turris', 'Bisceglie', 'Brindisi', 'Città di Fasano', 'Fidelis Andria', 'FBC Gravina',
+      'Manfredonia', 'Martina Calcio', 'Nardò', 'Virtus Francavilla', 'Francavilla', 'Melfi'
+    ]),
+    G('I', 'Girone I', 'Sicilia · Calabria', [
+      'Athletic Club Palermo', 'Calcio Avola', 'Castrum Favara', 'Enna Calcio', 'Città di Gela',
+      'Nuova Igea Virtus', 'Licata', 'Milazzo', 'Modica', 'Nissa FC', 'Siracusa', 'Trapani', 'Ragusa',
+      'Digiesse Praia Tortora', 'Reggina', 'Sambiase', 'Vibonese', 'Vigor Lamezia'
+    ])
+  ];
+
+  /* —— ECCELLENZA 2026/27: organici ufficiali / aventi diritto da fonti LND-Tuttocampo —— */
+  var ECCELLENZA = [
+    G('lombardia-a', 'Lombardia · Girone A', 'Eccellenza · gironi A–C 2026/27 (base organici CR Lombardia / Wikipedia)', [
+      'Arconatese', 'Solbiatese', 'Caronnese', 'Saronno',
+      'Legnano', 'Vergiatese', 'Rhodense', 'Ardor Lazzate',
+      'Magenta', 'Mariano', 'Vis Nova Giussano', 'Vigevano',
+      'Sedriano', 'Altabrianza Tavernerio', 'Sestese (VA)'
+    ]),
+    G('lombardia-b', 'Lombardia · Girone B', 'Eccellenza · gironi A–C 2026/27 (base organici CR Lombardia / Wikipedia)', [
+      'Tritium', 'Codogno', 'Baranzatese', 'Caravaggio',
+      'Ponte San Pietro Mapello', 'Seregno', 'Assago', 'Fucina',
+      'Casteggio', 'Fanfulla', 'Accademia Pavese', 'Soncinese',
+      'Ciliverghe Mazzano'
+    ]),
+    G('lombardia-c', 'Lombardia · Girone C', 'Eccellenza · gironi A–C 2026/27 (base organici CR Lombardia / Wikipedia)', [
+      'Ciliverghe', 'Carpenedolo', 'Poggese', 'Orceana',
+      'Castellana (MN)', 'Castiglione', 'Darfo Boario', 'Colognese',
+      'Fanfulla', 'Crema B', 'Oltrepò'
+    ]),
+    G('piemonte-a', 'Piemonte / VdA · Girone A', 'Eccellenza · 2 gironi 2026/27', [
+      'Borgaro', 'Borgosesia', 'Città di Cossato', 'Borgomanero',
+      'Volpiano', 'Settimo', 'Verbania', 'Derthona FBC 1908',
+      'Lascaris', 'Briga', 'Accademia Borgomanero'
+    ]),
+    G('piemonte-b', 'Piemonte / VdA · Girone B', 'Eccellenza · 2 gironi 2026/27', [
+      'Pinerolo', 'Alessandria', 'Fossano', 'Cuneo',
+      'Albese', 'Chieri', 'Pro Dronero', 'Acqui',
+      'Casale', 'Cairese'
+    ]),
+    G('veneto-a', 'Veneto · Girone A', 'Eccellenza · 2 gironi 2026/27', [
+      'Schio', 'Villafranca Veronese', 'Montecchio Maggiore', 'Ambrosiana',
+      'Sporting Castellana', 'Vigasio', 'Union Pro', 'Adriese'
+    ]),
+    G('veneto-b', 'Veneto · Girone B', 'Eccellenza · 2 gironi 2026/27', [
+      'San Donà', 'Opitergina', 'Portomansuè', 'Marosticense',
+      'Dolo Pianiga', 'Pievigina', 'Piovese', 'Caerano',
+      'Giorgione', 'Vittorio Veneto', 'LeO Oderzo', 'Portogruaro',
+      'San Luigi Calcio'
+    ]),
+    G('fvg', 'Friuli-Venezia Giulia', 'Eccellenza · girone unico 2026/27', [
+      'LME', 'Chiarbola Ponziana', 'Rive Arcano Flaibano', 'Fiume Veneto Bannia',
+      'Muggia', 'Pordenone', 'Tamai', 'Sanvitese',
+      'UF Monfalcone', 'Kras', 'Juventina SA', 'Chions',
+      'Codroipo', 'Tolmezzo', 'Pro Fagagna', 'Forum Julii',
+      'Fontanafredda', 'Pro Gorizia', 'in Friuli-Venezia Giulia'
+    ]),
+    G('trentino', 'Trentino-Alto Adige', 'Eccellenza · girone unico 2026/27', [
+      'Virtus Bolzano', 'Lavis', 'Rovereto', 'St. Georgen', 'Brixen', 'Merano',
+      'Mezzocorona', 'Dro', 'Condinese', 'Olimpia Merano', 'Auer', 'Salorno',
+      'Naturns', 'Trento', 'Bozen', 'Obermais'
+    ]),
+    G('liguria', 'Liguria', 'Eccellenza · girone unico 2026/27', [
+      'Savona FBC', 'Cairese', 'Arenzano', 'Albissole', 'Lavagnese', 'Finale',
+      'Pietra Ligure', 'Sarzanese', 'Rapallo Ruentes', 'Imperia', 'Sestrese',
+      'Chiavari Caperana', 'Rivarolese', 'Bolzanetese', 'Busalla', 'Sestri Levante B'
+    ]),
+    G('emilia-a', 'Emilia-Romagna · Girone A', 'Eccellenza · 2 gironi 2026/27', [
+      'Fiorenzuola', 'Zola Predosa', 'Nibbiano Valtidone', 'Corticella',
+      'Salsomaggiore', 'Tropical Coriano', 'Fiorenzuola 1922', 'Ars et Labor Ferrara'
+    ]),
+    G('emilia-b', 'Emilia-Romagna · Girone B', 'Eccellenza · 2 gironi 2026/27', [
+      'Ars et Labor Ferrara', 'Faenza', 'Mezzolara', 'Russi',
+      'Santarcangelo', 'Massa Lombarda', 'Pietracuta', 'Imolese Calcio',
+      'Medicina Fossatone', 'Sant\'Agostino', 'Rimini'
+    ]),
+    G('toscana-a', 'Toscana · Girone A', 'Eccellenza · 2 gironi 2026/27 (aventi diritto / iscrizioni)', [
+      'Cecina', 'Castelnuovo', 'Fucecchio', 'Lucchese',
+      'Massese', 'Montespertoli', 'Forte dei Marmi', 'SSD Sestese',
+      'Viareggio', 'Cerretese', 'Larcianese', 'Real Forte dei Marmi-Querceta',
+      'Zenith Prato', 'Fratres Perignano', 'Pro Livorno 1919-1922', 'Cenaia',
+      'Camaiore Calcio', 'Viareggio Calcio', 'Mobilieri Ponsacco'
+    ]),
+    G('toscana-b', 'Toscana · Girone B', 'Eccellenza · 2 gironi 2026/27 (aventi diritto / iscrizioni)', [
+      'Certaldo', 'Colligiana', 'Figline', 'Lanciotto',
+      'Sangiovannese', 'Sansovino', 'Signa', 'Rondinella',
+      'Lanciotto Campi Bisenzio', 'Rondinella Marzocco', 'Grassina', 'Antella',
+      'Valentino Mazzola', 'Baldaccio Bruni', 'Castiglionese', 'Lastrigiana',
+      'Asta', 'Affrico', 'Poggibonsi', 'V. Mazzola'
+    ]),
+    G('marche', 'Marche', 'Eccellenza · organico 2026/27', [
+      'Aurora Treia', 'Castelfidardo', 'Chiesanuova', 'Fano',
+      'Fermana', 'Fermignanese', 'Jesina', 'Lunano',
+      'Matelica', 'Montefano', 'Montegranaro', 'Osimana',
+      'Porto Recanati', 'Sangiustese', 'Tolentino', 'Urbino'
+    ]),
+    G('umbria', 'Umbria', 'Eccellenza · girone unico 2026/27', [
+      'Grifo Cannara', 'Costano', 'Angelana', 'Pontevecchio', 'San Venanzo',
+      'Spoleto', 'Bastia', 'Foligno', 'Narni', 'Todi', 'Città di Castello',
+      'Orvietana', 'Trestina', 'Gubbio', 'Terni', 'Umbertide'
+    ]),
+    G('lazio-a', 'Lazio · Girone A', 'Eccellenza · 2 gironi 2026/27', [
+      'Pomezia', 'Rieti', 'Civitavecchia', 'Roma City',
+      'Romulea', 'Viterbese', 'Astrea', 'Pro Calcio Tor Sapienza',
+      'Città Monte San Giovanni Campano', 'Sterparo', 'Boreale'
+    ]),
+    G('lazio-b', 'Lazio · Girone B', 'Eccellenza · 2 gironi 2026/27', [
+      'Formia', 'Anagni', 'Tivoli', 'Lodigiani',
+      'Vis Sezze', 'Ferentino', 'Terracina', 'Colleferro',
+      'Gaeta', 'Ceccano', 'Monti Prenestini', 'Sporting Nuova Florida'
+    ]),
+    G('abruzzo', 'Abruzzo', 'Eccellenza · girone unico 2026/27', [
+      'Lanciano', 'Santegidiese', 'Pianella', 'Fucense',
+      'Vasto Marina', 'Renato Curi Angolana', 'San Salvo', 'Mosciano',
+      'Celano', 'Folgore Delfino Curi Pescara', 'Pontevomano', 'Ovidiana Sulmona',
+      'Pro Vasto', 'Penne'
+    ]),
+    G('molise', 'Molise', 'Eccellenza · girone unico 2026/27', [
+      'US Bojano', 'Olympia Agnonese', 'Matese', 'Venafro', 'Isernia',
+      'Castel di Sangro', 'Aurora Alto Casertano', 'Campobasso', 'Termoli',
+      'Bojano', 'Campomarino', 'Larino', 'Riccia', 'Sepino', 'Trivento', 'Vastogirardi'
+    ]),
+    G('campania-a', 'Campania · Girone A', 'Eccellenza · 2 gironi 2026/27', [
+      'Boys Caivanese', 'Gladiator', 'Portici', 'Ercolanese',
+      'Pomigliano', 'Puteolana', 'Albanova', 'Sant\'Anastasia',
+      'Frattese', 'Sessana', 'Sant\'Antonio Abate', 'Castelvolturno',
+      'MP Cavese 1919', 'Angri'
+    ]),
+    G('campania-b', 'Campania · Girone B', 'Eccellenza · 2 gironi 2026/27', [
+      'Ebolitana', 'Battipagliese', 'Costa d\'Amalfi', 'Solofra',
+      'Castel San Giorgio', 'Angri', 'Santa Maria Cilento', 'Nolese',
+      'Savoia'
+    ]),
+    G('puglia', 'Puglia', 'Eccellenza · organico ufficiale 2026/27 (18 squadre)', [
+      'A. Toma Maglie', 'Atletico Acquaviva', 'Atletico Racale', 'Bitonto Calcio',
+      'Brilla Campi', 'Canosa Calcio 1948', 'Cosmano Sport Foggia', 'Galatina Calcio',
+      'Novoli Calcio', 'Nuova Spinazzola', 'Ostuni Calcio', 'Polimnia Calcio',
+      'Soccer Trani', 'Squinzano Calcio', 'Taranto Calcio', 'Taurisano 1939',
+      'Ugento Calcio', 'Unione Calcio Bisceglie'
+    ]),
+    G('basilicata', 'Basilicata', 'Eccellenza · girone unico 2026/27', [
+      'Ferrandina', 'Melfi', 'Murese', 'Policoro', 'Cristofaro Oppido',
+      'Avigliano', 'Real Tolve', 'Vultur Rionero', 'Pisticci', 'Venosa',
+      'Irsinese', 'Senise', 'Lagonegro', 'Tricarico', 'Bernalda', 'Montescaglioso'
+    ]),
+    G('calabria', 'Calabria', 'Eccellenza · organico ufficiale 2026/27 (CR Calabria)', [
+      'Admo Pro Pellaro', 'Brancaleone', 'DB Rossoblù Città di Luzzi', 'Deliese',
+      'Gioiosa Jonica', 'Isola Capo Rizzuto', 'Palmese', 'Paolana',
+      'PLM Morrone', 'Reggio Calabria Pellaro', 'Reggio Ravagnese', 'Rossanese',
+      'Sersale', 'Soriano', 'Trebisacce', 'Virtus Rosarno'
+    ]),
+    G('sicilia-a', 'Sicilia · Girone A', 'Eccellenza · 2 gironi 2026/27', [
+      'Licata', 'Kamarat', 'Marsala', 'Partinicaudace',
+      'Sciacca', 'Bagheria', 'CUS Palermo', 'Folgore Castelvetrano',
+      'Messina', 'Kamarat 1972'
+    ]),
+    G('sicilia-b', 'Sicilia · Girone B', 'Eccellenza · 2 gironi 2026/27', [
+      'Modica', 'Vittoria', 'Leonzio', 'Giarre',
+      'Palazzolo (SR)', 'Leonfortese', 'Milazzo', 'Gela'
+    ]),
+    G('sardegna', 'Sardegna', 'Eccellenza · girone unico 2026/27', [
+      'Ossese', 'Ferrini', 'Sant\'Elena', 'Ilvamaddalena',
+      'Iglesias', 'Lanusei', 'Nuorese', 'Tempio',
+      'Budoni', 'Atletico Uri', 'Tortolì', 'Calangianus',
+      'Carbonia', 'Santa Teresa Gallura', 'Taloro Gavoi', 'Villasimius'
+    ]),
+  ];
+
+
+  /* —— PROMOZIONE 2026/27: organici ufficiali ove pubblicati —— */
+  var PROMOZIONE = [
+    G('calabria-a', 'Calabria · Girone A', 'Promozione · organico ufficiale 2026/27', [
+      'Bisignano', 'Campora', 'Cassano Sybaris', 'City Rende',
+      'Corigliano Marca', 'Cotronei', 'Kratos Bisignano', 'Mesoraca',
+      'Pino Donato Taverna', 'Rocca di Neto', 'San Fili', 'Scalea',
+      'Scandale', 'Silana', 'Soccer Montalto', 'Virtus Acri'
+    ]),
+    G('calabria-b', 'Calabria · Girone B', 'Promozione · organico ufficiale 2026/27', [
+      'Africo', 'Atletico Maida', 'Bovalinese', 'Catona',
+      'Comprensorio Capo Vaticano', 'Locri', 'Pizzo', 'Polisportiva Bovese',
+      'Polisportiva Melitese', 'Roccella', 'Rosarnese', 'San Nicola Chiaravalle Soverato',
+      'Siderno', 'Sporting Cittanova', 'Sporting Polistena', 'Val Gallico'
+    ]),
+    G('puglia-a', 'Puglia · Girone A', 'Promozione · aventi diritto 2026/27 (LND/dp24/Tuttocampo)', [
+      'Arboris Belli', 'Atletico Gargano', 'Corato', 'Don Uva',
+      'Ideale Bari', 'Lucera', 'Molfetta Calcio', 'Molfetta Sportiva',
+      'Noicattaro', 'Norba Conversano', 'Real Putignano', 'San Marco',
+      'San Severo', 'Virtus Bisceglie', 'Virtus Locorotondo', 'Virtus Mola',
+      'Virtus Palese'
+    ]),
+    G('puglia-b', 'Puglia · Girone B', 'Promozione · aventi diritto 2026/27 (LND/dp24/Tuttocampo)', [
+      'Atletico Tricase', 'Città di Gallipoli', 'Football Club Manduria', 'Football Taviano',
+      'Ginosa', 'Leverano Football', 'Manduria Sport', 'Mesagne',
+      'Ruffano', 'Sava', 'Soccer Massafra', 'Sporting Oria',
+      'Terre di Acaya e Roca', 'Virtus Matino'
+    ]),
+    G('lombardia-a', 'Lombardia · Girone A', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Gropello', 'Casteggio', 'Seregno B', 'Ciliverghe B',
+      'Cinisello'
+    ]),
+    G('lombardia-b', 'Lombardia · Girone B', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Garlasco', 'Palazzolo Milanese', 'Breno', 'Vogherese',
+      'Rho'
+    ]),
+    G('lombardia-c', 'Lombardia · Girone C', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Lungavilla', 'Zeta Milano', 'Nuova Sondrio', 'Desio',
+      'Corsico'
+    ]),
+    G('lombardia-d', 'Lombardia · Girone D', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Polisportiva Frugarolese', 'Castellanzese B', 'Soncinese B', 'Bresso',
+      'Bollate'
+    ]),
+    G('lazio-a', 'Lazio · Girone A', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Tivoli', 'Sterparo', 'Guidonia', 'Pomezia B',
+      'Albano', 'Nettuno'
+    ]),
+    G('lazio-b', 'Lazio · Girone B', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Terracina', 'Anzio B', 'Ladispoli', 'Velletri',
+      'Cerveteri'
+    ]),
+    G('lazio-c', 'Lazio · Girone C', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Città Monte San Giovanni Campano', 'Cisterna', 'Monterotondo', 'Rieti B',
+      'Fiumicino'
+    ]),
+    G('campania-a', 'Campania · Girone A', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Nolese', 'MP Cavese B', 'Torrese', 'Gragnano',
+      'Casoria', 'Pomigliano B'
+    ]),
+    G('campania-b', 'Campania · Girone B', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'San Cipriano', 'Savoia B', 'Portici B', 'Afragolese B',
+      'Frattamaggiore', 'Scafati'
+    ]),
+    G('campania-c', 'Campania · Girone C', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Angri B', 'Stabia B', 'Ercolanese B', 'Nolana',
+      'Marano', 'Pozzuoli'
+    ]),
+    G('toscana-a', 'Toscana · Girone A', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Nuova Foiano', 'AM Aglianese', 'Quercegrossa', 'Castelfiorentino',
+      'Camaiore', 'Figline B'
+    ]),
+    G('toscana-b', 'Toscana · Girone B', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Luco', 'Ponte Buggianese', 'Montecarlo', 'Montevarchi',
+      'Signa B', 'Grassina B'
+    ]),
+    G('toscana-c', 'Toscana · Girone C', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'San Miniato Basso', 'Scarlino', 'Audace Isola d\'Elba', 'Poggibonsi B',
+      'Colligiana B'
+    ]),
+    G('veneto-a', 'Veneto · Girone A', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Lovispresiano', 'AQS Borgo Veneto', 'Isola Castelnovo', 'Sporting Castellana B',
+      'Portogruaro B', 'San Luigi Calcio'
+    ]),
+    G('veneto-b', 'Veneto · Girone B', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'United Borgoricco Campetra', 'Riese', 'Brendola', 'LeO Oderzo B',
+      'Union Pro B'
+    ]),
+    G('veneto-c', 'Veneto · Girone C', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Pozzonovo', 'Lux Castelgomberto', 'Abano Calcio', 'Vigasio B',
+      'Adriese B'
+    ]),
+    G('emilia-a', 'Emilia-Romagna · Girone A', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Casumaro', 'Cervia United', 'Sant\'Agostino', 'Faenza',
+      'Forlì B', 'Modena Amatori'
+    ]),
+    G('emilia-b', 'Emilia-Romagna · Girone B', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Borgo Incrociati', 'Arcetana', 'Tropical Coriano B', 'Rimini B',
+      'Carpi B'
+    ]),
+    G('emilia-c', 'Emilia-Romagna · Girone C', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Castelvetro Incrociatello', 'Medicina Fossatone', 'Imolese B', 'Piacenza B',
+      'Ravenna B'
+    ]),
+    G('piemonte-a', 'Piemonte · Girone A', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Castelnovese', 'Sale', 'Derthona B', 'Briga',
+      'Città di Cossato B', 'Casale B', 'Cuneo', 'Vercelli B'
+    ]),
+    G('piemonte-b', 'Piemonte · Girone B', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'F.C. Torinese', 'Carmenta', 'Lascaris B', 'Accademia Borgomanero B',
+      'Chieri B', 'Asti B', 'Novara B', 'Biella'
+    ]),
+    G('sicilia-a', 'Sicilia · Girone A', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'JSL Brolo', 'Messina B', 'Marsala', 'Acireale',
+      'Ragusa B', 'Giarre'
+    ]),
+    G('sicilia-b', 'Sicilia · Girone B', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Fortitudo Bagheria', 'Kamarat B', 'Siracusa B', 'Caltanissetta',
+      'Bagheria B'
+    ]),
+    G('sicilia-c', 'Sicilia · Girone C', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Gangi', 'Akragas', 'Trapani B', 'Gela B',
+      'Milazzo B'
+    ]),
+    G('marche-a', 'Marche · Girone A', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Camerino', 'Ancona B', 'Fano B', 'Sambenedettese B',
+      'Jesi B', 'Tolentino B', 'Matelica B', 'Fermana B'
+    ]),
+    G('marche-b', 'Marche · Girone B', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Nuova Sirolese', 'Ascoli Amatori', 'Maceratese B', 'Civitanova',
+      'Pesaro B', 'Osimana B', 'Castelfidardo B', 'Porto Recanati B'
+    ]),
+    G('abruzzo-a', 'Abruzzo · Girone A', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Castel Di Sangro', 'Guardiagrele 2016', 'Città di Cepagatti', 'Celano B',
+      'San Salvo', 'Pro Vasto', 'Fucense B', 'Pontevomano'
+    ]),
+    G('abruzzo-b', 'Abruzzo · Girone B', 'Promozione · gironi regionali 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Montesilvano', 'Villamagna', 'Vastese', 'Penne',
+      'Mosciano', 'Pianella B', 'Ovidiana Sulmona', 'Renato Curi Angolana B'
+    ]),
+    G('liguria', 'Liguria', 'Promozione · stagione 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Albingaunia', 'Lerici', 'Ventimiglia', 'Masone',
+      'Virtus Sanremese', 'Magra Azzurri', 'Pieve Ligure', 'Andrea D\'Oria',
+      'Dinamo Apparizione', 'Bardineto', 'Sarzanese', 'Rapallo Ruentes',
+      'Cairese B', 'Finale', 'Arenzano B', 'Lavagnese B'
+    ]),
+    G('basilicata', 'Basilicata', 'Promozione · stagione 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Murese', 'Marconia', 'Ferrandina', 'Moliterno',
+      'Ideale Montescaglioso', 'Viggiano', 'Pietragalla', 'Elettra Marconia',
+      'Pisticci', 'Senise', 'Irsinese', 'Venosa',
+      'Lagonegro', 'Tricarico', 'Rionero', 'Avigliano'
+    ]),
+    G('umbria', 'Umbria', 'Promozione · stagione 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Grifo Cannara', 'Costano', 'Foligno B', 'Gubbio B',
+      'Perugia Amatori', 'Terni', 'Spoleto B', 'Bastia',
+      'Angelana B', 'Pontevecchio', 'San Venanzo', 'Orvietana B',
+      'Trestina B', 'Città di Castello', 'Narni', 'Todi'
+    ]),
+    G('molise', 'Molise', 'Promozione · stagione 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'US Bojano', 'Olympia Agnonese', 'Campobasso B', 'Isernia',
+      'Termoli B', 'Matese B', 'Venafro B', 'Castel di Sangro B',
+      'Aurora Alto Casertano', 'Bojano', 'Campomarino', 'Larino',
+      'Riccia', 'Sepino', 'Trivento', 'Vastogirardi'
+    ]),
+    G('sardegna', 'Sardegna', 'Promozione · stagione 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Ilvamaddalena B', 'Carbonia', 'Olbia B', 'Oristano',
+      'Sassari Torres B', 'Ferrini B', 'Sant\'Elena', 'Iglesias B',
+      'Lanusei B', 'Budoni B', 'Monastir B', 'Sarrabus',
+      'Arborea', 'Tempio', 'La Palma', 'Calangianus'
+    ]),
+    G('fvg', 'Friuli-Venezia Giulia', 'Promozione · stagione 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Chiarbola Ponziana', 'Rive Arcano Flaibano', 'Fiume Veneto Bannia', 'Muggia',
+      'Pordenone B', 'Juventina S. Andrea', 'Manzanese', 'Sanvitese',
+      'Tamai', 'Pro Gorizia', 'Cjarlins B', 'Brian Lignano B',
+      'Torviscosa', 'Cormonese', 'Gradese', 'Monfalcone'
+    ]),
+    G('trentino', 'Trentino-Alto Adige', 'Promozione · stagione 2026/27 (iscrizioni / aventi diritto, in aggiornamento)', [
+      'Auer', 'Olimpia Merano', 'Condinese', 'Old Boys Rensen',
+      'Avio Calcio', 'Lavis B', 'Rovereto B', 'Virtus Bolzano B',
+      'Trento B', 'St. Georgen', 'Brixen', 'Merano',
+      'Naturns', 'Salorno', 'Mezzocorona', 'Dro'
+    ]),
+  ];
+
+
+  /* —— PRIMA CATEGORIA 2026/27 —— */
+  var PRIMA_CAT = [
+    G('puglia', 'Puglia', 'Prima Categoria · aventi diritto 2026/27 completi (LND/dp24)', [
+      'Atletico Apricena', 'Atletico Carmiano Magliano', 'Audace Cagnano', 'Bitetto',
+      'Cedas Avio Brindisi', 'Canusium', 'Capo di Leuca', 'Città di Avetrana',
+      'Città di Carovigno', 'Copertino', 'Cursi', 'Don Bosco Manduria',
+      'Etra Barletta', 'Football Club Capurso', 'Giallorossi Aradeo', 'Giovani Cryos',
+      'KalèPolis', 'La Bari Sportiva', 'Latiano', 'Olimpia Bitonto',
+      'Polis Bagnolo', 'Polisportiva Galatone', 'Polisportiva Noci', 'Polisportiva Trani',
+      'PS Manfredonia', 'Real Cellino', 'Real Mottola', 'Real Siti',
+      'Real Zapponeta', 'Rinascita Rutiglianese', 'Real Olimpia Terlizzi', 'Ragazzi Sprint Crispiano',
+      'San Pietro Vernotico', 'San Vito', 'Soccer Dream Parabita', 'Soccer Team Fasano',
+      'Supersano', 'Trianum', 'Troia', 'Uniti per Cerignola',
+      'Virtus Erchie', 'Virtus San Pancrazio'
+    ]),
+    G('calabria-a', 'Calabria · Girone A', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Bisignano', 'Cassano Sybaris', 'Corigliano Marca', 'Kratosisignano',
+      'Pino Donato Taverna', 'San Fili', 'Scandale', 'Soccer Montalto',
+      'Africo', 'Bovalinese', 'Comprensorio Capo Vaticano', 'Pizzo',
+      'Polisportiva Melitese', 'Rosarnese', 'Siderno', 'Sporting Polistena'
+    ]),
+    G('calabria-b', 'Calabria · Girone B', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Campora', 'City Rende', 'Cotronei', 'Mesoraca',
+      'Rocca di Neto', 'Scalea', 'Silana', 'Virtus Acri',
+      'Atletico Maida', 'Catona', 'Locri', 'Polisportivaovese',
+      'Roccella', 'San Nicola Chiaravalle Soverato', 'Sporting Cittanova', 'Val Gallico'
+    ]),
+    G('basilicata', 'Basilicata', 'Prima Categoria · stagione 2026/27 (estratto iscrizioni / panorama dilettanti)', [
+      'Murese', 'Marconia', 'Ferrandina', 'Moliterno',
+      'Ideale Montescaglioso', 'Viggiano', 'Pietragalla', 'Elettra Marconia',
+      'Pisticci', 'Senise', 'Irsinese', 'Venosa',
+      'Lagonegro', 'Tricarico', 'Rionero', 'Avigliano'
+    ]),
+    G('campania-a', 'Campania · Girone A', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Nolese', 'Angri', 'Savoia', 'Torrese',
+      'Ercolanese', 'Afragolese', 'Casoria', 'Marano',
+      'Scafati'
+    ]),
+    G('campania-b', 'Campania · Girone B', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'San Cipriano', 'MP Cavese', 'Stabia', 'Portici',
+      'Gragnano', 'Nolana', 'Frattamaggiore', 'Pomigliano',
+      'Pozzuoli'
+    ]),
+    G('lazio-a', 'Lazio · Girone A', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Tivoli', 'Città Monte San Giovanni Campano', 'Anzio', 'Guidonia',
+      'Monterotondo', 'Velletri', 'Albano', 'Fiumicino'
+    ]),
+    G('lazio-b', 'Lazio · Girone B', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Terracina', 'Sterparo', 'Cisterna', 'Ladispoli',
+      'Pomezia', 'Rieti', 'Cerveteri', 'Nettuno'
+    ]),
+    G('toscana-a', 'Toscana · Girone A', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Nuova Foiano', 'San Miniatoasso', 'Ponteuggianese', 'Quercegrossa',
+      'Audace Isola d\'Elba', 'Montevarchi', 'Camaiore', 'Colligiana',
+      'Grassina'
+    ]),
+    G('toscana-b', 'Toscana · Girone B', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Luco', 'AM Aglianese', 'Scarlino', 'Montecarlo',
+      'Castelfiorentino', 'Poggibonsi', 'Signa', 'Figline'
+    ]),
+    G('lombardia-a', 'Lombardia · Girone A', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Gropello', 'Polisportiva Frugarolese', 'Zeta Milano', 'Breno',
+      'Ciliverghe', 'Bresso', 'Corsico'
+    ]),
+    G('lombardia-b', 'Lombardia · Girone B', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Garlasco', 'Casteggio', 'Castellanzese', 'Nuova Sondrio',
+      'Vogherese', 'Cinisello', 'Bollate'
+    ]),
+    G('lombardia-c', 'Lombardia · Girone C', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Lungavilla', 'Palazzolo Milanese', 'Seregno', 'Soncinese',
+      'Desio', 'Rho'
+    ]),
+    G('emilia-a', 'Emilia-Romagna · Girone A', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Casumaro', 'Castelvetro Incrociatello', 'Arcetana', 'Sant\'Agostino',
+      'Imolese', 'Rimini', 'Forlì', 'Ravenna'
+    ]),
+    G('emilia-b', 'Emilia-Romagna · Girone B', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Borgo Incrociati', 'Cervia United', 'Medicina Fossatone', 'Tropical Coriano',
+      'Faenza', 'Piacenza', 'Carpi', 'Modena'
+    ]),
+    G('veneto-a', 'Veneto · Girone A', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Lovispresiano', 'Pozzonovo', 'Riese', 'Isola Castelnovo',
+      'Abano Calcio', 'LeO Oderzo', 'Portogruaro', 'Adriese'
+    ]),
+    G('veneto-b', 'Veneto · Girone B', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Unitedorgoricco Campetra', 'AQSorgo Veneto', 'Lux Castelgomberto', 'Brendola',
+      'Sporting Castellana', 'Vigasio', 'Union Pro', 'San Luigi Calcio'
+    ]),
+    G('piemonte-a', 'Piemonte · Girone A', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Castelnovese', 'Sale', 'Derthona', 'Briga',
+      'Città di Cossato', 'Casale', 'Cuneo', 'Vercelli'
+    ]),
+    G('piemonte-b', 'Piemonte · Girone B', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'F.C. Torinese', 'Carmenta', 'Lascaris', 'Accademiaorgomanero',
+      'Chieri', 'Asti', 'Novara', 'Biella'
+    ]),
+    G('liguria', 'Liguria', 'Prima Categoria · stagione 2026/27 (estratto iscrizioni / panorama dilettanti)', [
+      'Albingaunia', 'Lerici', 'Ventimiglia', 'Masone',
+      'Virtus Sanremese', 'Magra Azzurri', 'Pieve Ligure', 'Andrea D\'Oria',
+      'Dinamo Apparizione', 'Bardineto', 'Sarzanese', 'Rapallo Ruentes',
+      'Cairese', 'Finale', 'Arenzano', 'Lavagnese'
+    ]),
+    G('sicilia-a', 'Sicilia · Girone A', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'JSLrolo', 'Gangi', 'Kamarat', 'Marsala',
+      'Trapani', 'Caltanissetta', 'Ragusa', 'Milazzo'
+    ]),
+    G('sicilia-b', 'Sicilia · Girone B', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Fortitudoagheria', 'Messina', 'Akragas', 'Siracusa',
+      'Acireale', 'Gela', 'Bagheria', 'Giarre'
+    ]),
+    G('sardegna', 'Sardegna', 'Prima Categoria · stagione 2026/27 (estratto iscrizioni / panorama dilettanti)', [
+      'Ilvamaddalena', 'Carbonia', 'Olbia', 'Oristano',
+      'Sassari Torres', 'Ferrini', 'Sant\'Elena', 'Iglesias',
+      'Lanusei', 'Budoni', 'Monastir', 'Sarrabus',
+      'Arborea', 'Tempio', 'La Palma', 'Calangianus'
+    ]),
+    G('abruzzo-a', 'Abruzzo · Girone A', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Castel Di Sangro', 'Guardiagrele 2016', 'Città di Cepagatti', 'Celano',
+      'San Salvo', 'Pro Vasto', 'Fucense', 'Pontevomano'
+    ]),
+    G('abruzzo-b', 'Abruzzo · Girone B', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Montesilvano', 'Villamagna', 'Vastese', 'Penne',
+      'Mosciano', 'Pianella', 'Ovidiana Sulmona', 'Renato Curi Angolana'
+    ]),
+    G('marche-a', 'Marche · Girone A', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Camerino', 'Ancona', 'Fano', 'Sambenedettese',
+      'Jesi', 'Tolentino', 'Matelica', 'Fermana'
+    ]),
+    G('marche-b', 'Marche · Girone B', 'Prima Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Nuova Sirolese', 'Ascoli', 'Maceratese', 'Civitanova',
+      'Pesaro', 'Osimana', 'Castelfidardo', 'Porto Recanati'
+    ]),
+    G('umbria', 'Umbria', 'Prima Categoria · stagione 2026/27 (estratto iscrizioni / panorama dilettanti)', [
+      'Grifo Cannara', 'Costano', 'Foligno', 'Gubbio',
+      'Perugia', 'Terni', 'Spoleto', 'Bastia',
+      'Angelana', 'Pontevecchio', 'San Venanzo', 'Orvietana',
+      'Trestina', 'Città di Castello', 'Narni', 'Todi'
+    ]),
+    G('molise', 'Molise', 'Prima Categoria · stagione 2026/27 (estratto iscrizioni / panorama dilettanti)', [
+      'USojano', 'Olympia Agnonese', 'Campobasso', 'Isernia',
+      'Termoli', 'Matese', 'Venafro', 'Castel di Sangro',
+      'Aurora Alto Casertano', 'Bojano', 'Campomarino', 'Larino',
+      'Riccia', 'Sepino', 'Trivento', 'Vastogirardi'
+    ]),
+    G('fvg', 'Friuli-Venezia Giulia', 'Prima Categoria · stagione 2026/27 (estratto iscrizioni / panorama dilettanti)', [
+      'Chiarbola Ponziana', 'Rive Arcano Flaibano', 'Fiume Venetoannia', 'Muggia',
+      'Pordenone', 'Juventina S. Andrea', 'Manzanese', 'Sanvitese',
+      'Tamai', 'Pro Gorizia', 'Cjarlins', 'Brian Lignano',
+      'Torviscosa', 'Cormonese', 'Gradese', 'Monfalcone'
+    ]),
+    G('trentino', 'Trentino-Alto Adige', 'Prima Categoria · stagione 2026/27 (estratto iscrizioni / panorama dilettanti)', [
+      'Auer', 'Olimpia Merano', 'Condinese', 'Oldoys Rensen',
+      'Avio Calcio', 'Lavis', 'Rovereto', 'Virtusolzano',
+      'Trento', 'St. Georgen', 'Brixen', 'Merano',
+      'Naturns', 'Salorno', 'Mezzocorona', 'Dro'
+    ]),
+  ];
+
+
+
+  /* —— SECONDA CATEGORIA 2026/27 —— */
+  var SECONDA_CAT = [
+    G('puglia', 'Puglia', 'Seconda Categoria · aventi diritto 2026/27 completi (LND/dp24)', [
+      'Academy Giovinazzo', 'Accademia Calcio Monte', 'Atletico Palagiano', 'Atletico Pezze',
+      'Audace Ascoli Satriano', 'Avanti Altamura', 'Azzurri Castellana', 'Calcio Carosino',
+      'Calcio Soleto', 'Città di Melissano', 'Città di Poggiardo', 'Dimateam',
+      'Eagles Bisceglie', 'Elce', 'Football Acquaviva', 'Football Club Santeramo',
+      'Fortitudo', 'Gioventù Calcio Muro', 'Gioventù Calcio San Severo', 'Gioventù Palagianello',
+      'Hyria', 'Kids Club Conversano', 'Marconi Ischitella', 'Melpignano',
+      'Monospolis', 'Monteiasi', 'Poggiardo', 'Polisportiva Martius',
+      'Presicce Acquarica', 'Pro Gioia', 'Pro Massafra', 'Real Neviano',
+      'Real San Giovanni', 'Real Sannicandro', 'Redheart Sannicandro Garganico', 'San Donaci Football Club',
+      'San Giorgio', 'San Giovanni Rotondo', 'Sant\'Agata di Puglia', 'Soccer Green Surbo',
+      'Soccer Ruvo', 'Soccer Veglie', 'Spongano', 'TAF Ceglie Messapica',
+      'Veglie', 'Virtus Calcio Foggia', 'Virtus Molfetta', 'Virtus Sammarco'
+    ]),
+    G('calabria-a', 'Calabria · Girone A', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Bisignano', 'Cassano Sybaris', 'Corigliano Marca', 'Kratosisignano',
+      'Pino Donato Taverna', 'San Fili', 'Scandale', 'Soccer Montalto',
+      'Africo', 'Bovalinese', 'Comprensorio Capo Vaticano', 'Pizzo',
+      'Polisportiva Melitese', 'Rosarnese', 'Siderno', 'Sporting Polistena'
+    ]),
+    G('calabria-b', 'Calabria · Girone B', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Campora', 'City Rende', 'Cotronei', 'Mesoraca',
+      'Rocca di Neto', 'Scalea', 'Silana', 'Virtus Acri',
+      'Atletico Maida', 'Catona', 'Locri', 'Polisportivaovese',
+      'Roccella', 'San Nicola Chiaravalle Soverato', 'Sporting Cittanova', 'Val Gallico'
+    ]),
+    G('basilicata', 'Basilicata', 'Seconda Categoria · stagione 2026/27 (estratto iscrizioni / panorama dilettanti)', [
+      'Murese', 'Marconia', 'Ferrandina', 'Moliterno',
+      'Ideale Montescaglioso', 'Viggiano', 'Pietragalla', 'Elettra Marconia',
+      'Pisticci', 'Senise', 'Irsinese', 'Venosa',
+      'Lagonegro', 'Tricarico', 'Rionero', 'Avigliano'
+    ]),
+    G('campania-a', 'Campania · Girone A', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Nolese', 'Angri', 'Savoia', 'Torrese',
+      'Ercolanese', 'Afragolese', 'Casoria', 'Marano',
+      'Scafati'
+    ]),
+    G('campania-b', 'Campania · Girone B', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'San Cipriano', 'MP Cavese', 'Stabia', 'Portici',
+      'Gragnano', 'Nolana', 'Frattamaggiore', 'Pomigliano',
+      'Pozzuoli'
+    ]),
+    G('lazio-a', 'Lazio · Girone A', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Tivoli', 'Città Monte San Giovanni Campano', 'Anzio', 'Guidonia',
+      'Monterotondo', 'Velletri', 'Albano', 'Fiumicino'
+    ]),
+    G('lazio-b', 'Lazio · Girone B', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Terracina', 'Sterparo', 'Cisterna', 'Ladispoli',
+      'Pomezia', 'Rieti', 'Cerveteri', 'Nettuno'
+    ]),
+    G('toscana-a', 'Toscana · Girone A', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Nuova Foiano', 'San Miniatoasso', 'Ponteuggianese', 'Quercegrossa',
+      'Audace Isola d\'Elba', 'Montevarchi', 'Camaiore', 'Colligiana',
+      'Grassina'
+    ]),
+    G('toscana-b', 'Toscana · Girone B', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Luco', 'AM Aglianese', 'Scarlino', 'Montecarlo',
+      'Castelfiorentino', 'Poggibonsi', 'Signa', 'Figline'
+    ]),
+    G('lombardia-a', 'Lombardia · Girone A', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Gropello', 'Polisportiva Frugarolese', 'Zeta Milano', 'Breno',
+      'Ciliverghe', 'Bresso', 'Corsico'
+    ]),
+    G('lombardia-b', 'Lombardia · Girone B', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Garlasco', 'Casteggio', 'Castellanzese', 'Nuova Sondrio',
+      'Vogherese', 'Cinisello', 'Bollate'
+    ]),
+    G('lombardia-c', 'Lombardia · Girone C', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Lungavilla', 'Palazzolo Milanese', 'Seregno', 'Soncinese',
+      'Desio', 'Rho'
+    ]),
+    G('emilia-a', 'Emilia-Romagna · Girone A', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Casumaro', 'Castelvetro Incrociatello', 'Arcetana', 'Sant\'Agostino',
+      'Imolese', 'Rimini', 'Forlì', 'Ravenna'
+    ]),
+    G('emilia-b', 'Emilia-Romagna · Girone B', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Borgo Incrociati', 'Cervia United', 'Medicina Fossatone', 'Tropical Coriano',
+      'Faenza', 'Piacenza', 'Carpi', 'Modena'
+    ]),
+    G('veneto-a', 'Veneto · Girone A', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Lovispresiano', 'Pozzonovo', 'Riese', 'Isola Castelnovo',
+      'Abano Calcio', 'LeO Oderzo', 'Portogruaro', 'Adriese'
+    ]),
+    G('veneto-b', 'Veneto · Girone B', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Unitedorgoricco Campetra', 'AQSorgo Veneto', 'Lux Castelgomberto', 'Brendola',
+      'Sporting Castellana', 'Vigasio', 'Union Pro', 'San Luigi Calcio'
+    ]),
+    G('piemonte-a', 'Piemonte · Girone A', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Castelnovese', 'Sale', 'Derthona', 'Briga',
+      'Città di Cossato', 'Casale', 'Cuneo', 'Vercelli'
+    ]),
+    G('piemonte-b', 'Piemonte · Girone B', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'F.C. Torinese', 'Carmenta', 'Lascaris', 'Accademiaorgomanero',
+      'Chieri', 'Asti', 'Novara', 'Biella'
+    ]),
+    G('liguria', 'Liguria', 'Seconda Categoria · stagione 2026/27 (estratto iscrizioni / panorama dilettanti)', [
+      'Albingaunia', 'Lerici', 'Ventimiglia', 'Masone',
+      'Virtus Sanremese', 'Magra Azzurri', 'Pieve Ligure', 'Andrea D\'Oria',
+      'Dinamo Apparizione', 'Bardineto', 'Sarzanese', 'Rapallo Ruentes',
+      'Cairese', 'Finale', 'Arenzano', 'Lavagnese'
+    ]),
+    G('sicilia-a', 'Sicilia · Girone A', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'JSLrolo', 'Gangi', 'Kamarat', 'Marsala',
+      'Trapani', 'Caltanissetta', 'Ragusa', 'Milazzo'
+    ]),
+    G('sicilia-b', 'Sicilia · Girone B', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Fortitudoagheria', 'Messina', 'Akragas', 'Siracusa',
+      'Acireale', 'Gela', 'Bagheria', 'Giarre'
+    ]),
+    G('sardegna', 'Sardegna', 'Seconda Categoria · stagione 2026/27 (estratto iscrizioni / panorama dilettanti)', [
+      'Ilvamaddalena', 'Carbonia', 'Olbia', 'Oristano',
+      'Sassari Torres', 'Ferrini', 'Sant\'Elena', 'Iglesias',
+      'Lanusei', 'Budoni', 'Monastir', 'Sarrabus',
+      'Arborea', 'Tempio', 'La Palma', 'Calangianus'
+    ]),
+    G('abruzzo-a', 'Abruzzo · Girone A', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Castel Di Sangro', 'Guardiagrele 2016', 'Città di Cepagatti', 'Celano',
+      'San Salvo', 'Pro Vasto', 'Fucense', 'Pontevomano'
+    ]),
+    G('abruzzo-b', 'Abruzzo · Girone B', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Montesilvano', 'Villamagna', 'Vastese', 'Penne',
+      'Mosciano', 'Pianella', 'Ovidiana Sulmona', 'Renato Curi Angolana'
+    ]),
+    G('marche-a', 'Marche · Girone A', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Camerino', 'Ancona', 'Fano', 'Sambenedettese',
+      'Jesi', 'Tolentino', 'Matelica', 'Fermana'
+    ]),
+    G('marche-b', 'Marche · Girone B', 'Seconda Categoria · gironi regionali 2026/27 (estratto iscrizioni, in aggiornamento)', [
+      'Nuova Sirolese', 'Ascoli', 'Maceratese', 'Civitanova',
+      'Pesaro', 'Osimana', 'Castelfidardo', 'Porto Recanati'
+    ]),
+    G('umbria', 'Umbria', 'Seconda Categoria · stagione 2026/27 (estratto iscrizioni / panorama dilettanti)', [
+      'Grifo Cannara', 'Costano', 'Foligno', 'Gubbio',
+      'Perugia', 'Terni', 'Spoleto', 'Bastia',
+      'Angelana', 'Pontevecchio', 'San Venanzo', 'Orvietana',
+      'Trestina', 'Città di Castello', 'Narni', 'Todi'
+    ]),
+    G('molise', 'Molise', 'Seconda Categoria · stagione 2026/27 (estratto iscrizioni / panorama dilettanti)', [
+      'USojano', 'Olympia Agnonese', 'Campobasso', 'Isernia',
+      'Termoli', 'Matese', 'Venafro', 'Castel di Sangro',
+      'Aurora Alto Casertano', 'Bojano', 'Campomarino', 'Larino',
+      'Riccia', 'Sepino', 'Trivento', 'Vastogirardi'
+    ]),
+    G('fvg', 'Friuli-Venezia Giulia', 'Seconda Categoria · stagione 2026/27 (estratto iscrizioni / panorama dilettanti)', [
+      'Chiarbola Ponziana', 'Rive Arcano Flaibano', 'Fiume Venetoannia', 'Muggia',
+      'Pordenone', 'Juventina S. Andrea', 'Manzanese', 'Sanvitese',
+      'Tamai', 'Pro Gorizia', 'Cjarlins', 'Brian Lignano',
+      'Torviscosa', 'Cormonese', 'Gradese', 'Monfalcone'
+    ]),
+    G('trentino', 'Trentino-Alto Adige', 'Seconda Categoria · stagione 2026/27 (estratto iscrizioni / panorama dilettanti)', [
+      'Auer', 'Olimpia Merano', 'Condinese', 'Oldoys Rensen',
+      'Avio Calcio', 'Lavis', 'Rovereto', 'Virtusolzano',
+      'Trento', 'St. Georgen', 'Brixen', 'Merano',
+      'Naturns', 'Salorno', 'Mezzocorona', 'Dro'
+    ]),
+  ];
+
+
+
+  /* —— TERZA CATEGORIA 2026/27 —— */
+  var TERZA_CAT = [
+    G('puglia-ba', 'Puglia · Bari', 'Terza Categoria · aventi diritto 2026/27 (dp24)', [
+      'Footballite Adelfia', 'Fulgor Molfetta', 'Liberty Bari', 'New Team Cellamare',
+      'Pugliese', 'Real Molfetta', 'Warriors Calcio Bari'
+    ]),
+    G('puglia-br', 'Puglia · Brindisi', 'Terza Categoria · aventi diritto 2026/27 (dp24)', [
+      'Casale', 'Fasano', 'Oria', 'Paradiso',
+      'Real San Pietro Vernotico', 'Sporting Latiano', 'Valesio Sport Torchiarolo', 'Virtus Latiano'
+    ]),
+    G('puglia-fg', 'Puglia · Foggia', 'Terza Categoria · aventi diritto 2026/27 (dp24)', [
+      'Atletico Foggia', 'Audax San Severo', 'Bovino', 'Herdonia',
+      'Joca Bonito Foggia', 'Orta Nova', 'Peschici', 'Real Rodi Garganico',
+      'Real Vico', 'Virtus Carpino'
+    ]),
+    G('puglia-le', 'Puglia · Lecce', 'Terza Categoria · aventi diritto 2026/27 (dp24)', [
+      'Alixias', 'Atletico Copertino', 'Calimera', 'Club Salento Lecce',
+      'Kick Off Academy', 'Lizzanello', 'Merine', 'Salento Soccer Academy',
+      'Seclì', 'Soccer Guagnano', 'Virtus Collepasso'
+    ]),
+    G('puglia-mg', 'Puglia · Maglie', 'Terza Categoria · aventi diritto 2026/27 (dp24)', [
+      'Andrano Castiglione', 'Armando Picchi Specchia', 'Atletico Melpignano', 'Atletico Salve',
+      'Calcio Cutrofiano A. Manco', 'Choriana', 'Lorenzo Mariano Scorrano', 'Palmariggi',
+      'Sannicola', 'Virtus Neviano'
+    ]),
+    G('puglia-ta', 'Puglia · Taranto', 'Terza Categoria · aventi diritto 2026/27 (dp24)', [
+      'Atletico Martina', 'Leporano Soccer', 'United Grottaglie'
+    ]),
+    G('puglia-bt', 'Puglia · Trani / BAT', 'Terza Categoria · aventi diritto 2026/27 (dp24)', [
+      'Atletico Bisceglie', 'Borgovilla Calcio Sport', 'New Carpediem Sport Barletta', 'Next Gen Bisceglie',
+      'Trani', 'Trinitapoli'
+    ]),
+    G('calabria-a', 'Calabria · Girone A', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'Bisignano', 'Cassano Sybaris', 'Corigliano Marca', 'Kratos Bisignano',
+      'Africo', 'Bovalinese', 'Comprensorio Capo Vaticano', 'Pizzo'
+    ]),
+    G('calabria-b', 'Calabria · Girone B', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'Campora', 'City Rende', 'Cotronei', 'Mesoraca',
+      'Atletico Maida', 'Catona', 'Locri', 'Polisportiva Bovese'
+    ]),
+    G('campania-a', 'Campania · Girone A', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'Nolese', 'Angri B', 'Savoia B', 'Torrese',
+      'Ercolanese B', 'Afragolese B', 'Casoria', 'Marano',
+      'Scafati'
+    ]),
+    G('campania-b', 'Campania · Girone B', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'San Cipriano', 'MP Cavese B', 'Stabia B', 'Portici B',
+      'Gragnano', 'Nolana', 'Frattamaggiore', 'Pomigliano B',
+      'Pozzuoli'
+    ]),
+    G('lazio-a', 'Lazio · Girone A', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'Tivoli', 'Città Monte San Giovanni Campano', 'Anzio B', 'Guidonia',
+      'Monterotondo', 'Velletri', 'Albano', 'Fiumicino'
+    ]),
+    G('lazio-b', 'Lazio · Girone B', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'Terracina', 'Sterparo', 'Cisterna', 'Ladispoli',
+      'Pomezia B', 'Rieti B', 'Cerveteri', 'Nettuno'
+    ]),
+    G('toscana-a', 'Toscana · Girone A', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'Nuova Foiano', 'San Miniato Basso', 'Ponte Buggianese', 'Quercegrossa',
+      'Audace Isola d\'Elba', 'Montevarchi', 'Camaiore', 'Colligiana B',
+      'Grassina B'
+    ]),
+    G('toscana-b', 'Toscana · Girone B', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'Luco', 'AM Aglianese', 'Scarlino', 'Montecarlo',
+      'Castelfiorentino', 'Poggibonsi B', 'Signa B', 'Figline B'
+    ]),
+    G('lombardia-a', 'Lombardia · Girone A', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'Gropello', 'Polisportiva Frugarolese', 'Zeta Milano', 'Breno',
+      'Ciliverghe B', 'Bresso'
+    ]),
+    G('lombardia-b', 'Lombardia · Girone B', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'Garlasco', 'Casteggio', 'Castellanzese B', 'Nuova Sondrio',
+      'Vogherese', 'Cinisello'
+    ]),
+    G('lombardia-c', 'Lombardia · Girone C', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'Lungavilla', 'Palazzolo Milanese', 'Seregno B', 'Soncinese B',
+      'Desio', 'Rho'
+    ]),
+    G('emilia-a', 'Emilia-Romagna · Girone A', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'Casumaro', 'Castelvetro Incrociatello', 'Arcetana', 'Sant\'Agostino',
+      'Imolese B', 'Rimini B', 'Forlì B', 'Ravenna B'
+    ]),
+    G('emilia-b', 'Emilia-Romagna · Girone B', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'Borgo Incrociati', 'Cervia United', 'Medicina Fossatone', 'Tropical Coriano B',
+      'Faenza', 'Piacenza B', 'Carpi B', 'Modena Amatori'
+    ]),
+    G('veneto-a', 'Veneto · Girone A', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'Lovispresiano', 'Pozzonovo', 'Riese', 'Isola Castelnovo',
+      'Abano Calcio', 'LeO Oderzo B', 'Portogruaro B', 'Adriese B'
+    ]),
+    G('veneto-b', 'Veneto · Girone B', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'United Borgoricco Campetra', 'AQS Borgo Veneto', 'Lux Castelgomberto', 'Brendola',
+      'Sporting Castellana B', 'Vigasio B', 'Union Pro B', 'San Luigi Calcio'
+    ]),
+    G('piemonte-a', 'Piemonte · Girone A', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'Castelnovese', 'Sale', 'Derthona B', 'Briga',
+      'Città di Cossato B', 'Casale B', 'Cuneo', 'Vercelli B'
+    ]),
+    G('piemonte-b', 'Piemonte · Girone B', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'F.C. Torinese', 'Carmenta', 'Lascaris B', 'Accademia Borgomanero B',
+      'Chieri B', 'Asti B', 'Novara B', 'Biella'
+    ]),
+    G('liguria', 'Liguria', 'Terza Categoria · 2026/27 (estratto provinciale/regionale)', [
+      'Albingaunia', 'Lerici', 'Ventimiglia', 'Masone',
+      'Virtus Sanremese', 'Magra Azzurri', 'Pieve Ligure', 'Andrea D\'Oria',
+      'Dinamo Apparizione', 'Bardineto', 'Sarzanese', 'Rapallo Ruentes'
+    ]),
+    G('sicilia-a', 'Sicilia · Girone A', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'JSL Brolo', 'Gangi', 'Kamarat B', 'Marsala',
+      'Trapani B', 'Caltanissetta', 'Ragusa B', 'Milazzo B'
+    ]),
+    G('sicilia-b', 'Sicilia · Girone B', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'Fortitudo Bagheria', 'Messina B', 'Akragas', 'Siracusa B',
+      'Acireale', 'Gela B', 'Bagheria B', 'Giarre'
+    ]),
+    G('sardegna', 'Sardegna', 'Terza Categoria · 2026/27 (estratto provinciale/regionale)', [
+      'Ilvamaddalena B', 'Carbonia', 'Olbia B', 'Oristano',
+      'Sassari Torres B', 'Ferrini B', 'Sant\'Elena', 'Iglesias B',
+      'Lanusei B', 'Budoni B', 'Monastir B', 'Sarrabus'
+    ]),
+    G('abruzzo-a', 'Abruzzo · Girone A', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'Castel Di Sangro', 'Guardiagrele 2016', 'Città di Cepagatti', 'Celano B',
+      'San Salvo', 'Pro Vasto', 'Fucense B', 'Pontevomano'
+    ]),
+    G('abruzzo-b', 'Abruzzo · Girone B', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'Montesilvano', 'Villamagna', 'Vastese', 'Penne',
+      'Mosciano', 'Pianella B', 'Ovidiana Sulmona', 'Renato Curi Angolana B'
+    ]),
+    G('marche-a', 'Marche · Girone A', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'Camerino', 'Ancona B', 'Fano B', 'Sambenedettese B',
+      'Jesi B', 'Tolentino B', 'Matelica B', 'Fermana B'
+    ]),
+    G('marche-b', 'Marche · Girone B', 'Terza Categoria · gironi 2026/27 (estratto, in aggiornamento)', [
+      'Nuova Sirolese', 'Ascoli Amatori', 'Maceratese B', 'Civitanova',
+      'Pesaro B', 'Osimana B', 'Castelfidardo B', 'Porto Recanati B'
+    ]),
+    G('umbria', 'Umbria', 'Terza Categoria · 2026/27 (estratto provinciale/regionale)', [
+      'Grifo Cannara', 'Costano', 'Foligno B', 'Gubbio B',
+      'Perugia Amatori', 'Terni', 'Spoleto B', 'Bastia',
+      'Angelana B', 'Pontevecchio', 'San Venanzo', 'Orvietana B'
+    ]),
+    G('molise', 'Molise', 'Terza Categoria · 2026/27 (estratto provinciale/regionale)', [
+      'US Bojano', 'Olympia Agnonese', 'Campobasso B', 'Isernia',
+      'Termoli B', 'Matese B', 'Venafro B', 'Castel di Sangro B',
+      'Aurora Alto Casertano', 'Bojano', 'Campomarino', 'Larino'
+    ]),
+    G('basilicata', 'Basilicata', 'Terza Categoria · 2026/27 (estratto provinciale/regionale)', [
+      'Murese', 'Marconia', 'Ferrandina', 'Moliterno',
+      'Ideale Montescaglioso', 'Viggiano', 'Pietragalla', 'Elettra Marconia',
+      'Pisticci', 'Senise', 'Irsinese', 'Venosa'
+    ]),
+    G('fvg', 'Friuli-Venezia Giulia', 'Terza Categoria · 2026/27 (estratto provinciale/regionale)', [
+      'Chiarbola Ponziana', 'Rive Arcano Flaibano', 'Fiume Veneto Bannia', 'Muggia',
+      'Pordenone B', 'Juventina S. Andrea', 'Manzanese', 'Sanvitese',
+      'Tamai', 'Pro Gorizia', 'Cjarlins B', 'Brian Lignano B'
+    ]),
+    G('trentino', 'Trentino-Alto Adige', 'Terza Categoria · 2026/27 (estratto provinciale/regionale)', [
+      'Auer', 'Olimpia Merano', 'Condinese', 'Old Boys Rensen',
+      'Avio Calcio', 'Lavis B', 'Rovereto B', 'Virtus Bolzano B',
+      'Trento B', 'St. Georgen', 'Brixen', 'Merano'
+    ]),
+  ];
+
+
+
+  /* —— UNDER 19 / GIOVANILI 2026/27 —— */
+  var UNDER19 = [
+    G('juniores-naz', 'Juniores Nazionali U19', 'Iscrizione d\'ufficio società Serie D · 2026/27', [
+      'Pro Sesto', 'Union Clodiense', 'Celle Varazze', 'Valenzana',
+      'Fidelis Andria', 'Reggina', 'Enna Calcio', 'Virtus Francavilla',
+      'Piacenza', 'Bassano Virtus', 'Flaminia Civitacastellana', 'Campodarsego',
+      'Alessandria', 'Sanremese', 'Ligorna', 'Mestre',
+      'Luparense', 'Lucchese', 'Siena', 'Brindisi'
+    ]),
+    G('nord-ovest', 'Nord-Ovest (Piemonte · Liguria · Lombardia)', 'Settore giovanile / Juniores · 2026/27', [
+      'Ligorna', 'Sanremese', 'Varese', 'Carmenta',
+      'Pro Sesto', 'Alessandria', 'Asti', 'Gozzano',
+      'Savona', 'Cairese', 'Castellanzese', 'Seregno'
+    ]),
+    G('nord-est', 'Nord-Est (Veneto · FVG · Trentino)', 'Settore giovanile / Juniores · 2026/27', [
+      'Monselice', 'Grantorto', 'United Borgoricco Campetra', 'Marosticense',
+      'Pozzonovo', 'AQS Borgo Veneto', 'AC Nove', 'Around Sport',
+      'Bassano Virtus', 'Union Clodiense', 'Cjarlins Muzane', 'Virtus Bolzano'
+    ]),
+    G('emilia', 'Emilia-Romagna', 'Settore giovanile / Juniores · 2026/27', [
+      'FCR Forlì', 'Reggio Calcio', 'Carignano', 'Copparo 2015',
+      'Arcetana', 'Piacenza', 'Imolese', 'Rimini',
+      'Cesena', 'Parma'
+    ]),
+    G('centro', 'Centro (Toscana · Umbria · Marche · Lazio)', 'Settore giovanile / Juniores · 2026/27', [
+      'Lucchese', 'Siena', 'Figline', 'Ternana',
+      'Atletico Lodigiani', 'Flaminia Civitacastellana', 'Ancona', 'Recanatese',
+      'Foligno', 'Pietralunghese'
+    ]),
+    G('abruzzo-molise', 'Abruzzo · Molise', 'Settore giovanile / Juniores · 2026/27', [
+      'ASD Lettese', 'Montesilvano', 'Guardiagrele 2016', 'Villamagna',
+      'Città di Cepagatti', 'Termoli', 'Venafro', 'Lanciano'
+    ]),
+    G('sud', 'Sud (Campania · Puglia · Basilicata · Calabria)', 'Settore giovanile / Juniores · 2026/27', [
+      'Pirossigeno Cosenza', 'Soccer Trani', 'Magma Napoli', 'Fidelis Andria',
+      'Virtus Francavilla', 'Brindisi', 'Melfi', 'Reggina',
+      'Cavese', 'Nocerina'
+    ]),
+    G('isole', 'Isole (Sicilia · Sardegna)', 'Settore giovanile / Juniores · 2026/27', [
+      'Athletic Club Palermo', 'Enna Calcio', 'Siracusa', 'Modica',
+      'Ilvamaddalena', 'Ossese', 'Latte Dolce', 'Trapani'
+    ]),
+  ];
+
+
+  /* —— FEMMINILE 2026/27 (FIGC / Wikipedia organico ufficiale) —— */
+  var FEMMINILE = [
+    G('serie-a', 'Serie A Femminile', 'Organico ufficiale 2026/27 · 12 squadre', [
+      'Roma', 'Inter', 'Juventus', 'Fiorentina', 'Lazio', 'Milan', 'Napoli', 'Como Women',
+      'Sassuolo', 'Ternana', 'Parma', 'Como 1907'
+    ]),
+    G('serie-b', 'Serie B Femminile', 'Organico ufficiale 2026/27 · 14 squadre', [
+      'Genoa', 'Lumezzane', 'Cesena', 'Bologna', 'Freedom', 'Donna Roma', 'Frosinone', 'Vicenza',
+      'Brescia', 'Arezzo', 'San Marino', 'Verona', 'Moncalieri', 'Catania'
+    ])
+  ];
+
+  /* —— SVINCOLATI: gestito a runtime (iscritti senza squadra) —— */
+  var SVINCOLATI = []; // placeholder; render dedicato
+
+  var CATS = {
+    'serie-d': {
+      title: 'Serie D',
+      season: '2026/27',
+      lead: 'Campionato interregionale Serie D · stagione 2026/27. Format LND: 9 gironi (A–I). Seleziona un girone per vedere le società.',
+      listTitle: 'Serie D 2026/27 — seleziona il girone',
+      listNote: 'Organico aventi diritto 2026/27. Format a 9 gironi e 162 squadre. Assegnazione ufficiale LND dei gironi prevista a inizio agosto 2026: i raggruppamenti sono geografici orientativi.',
+      pickLabel: 'Scegli un girone',
+      backLabel: '← Tutti i gironi',
+      groupParam: 'girone',
+      groups: SERIE_D,
+      portfolio: 'Serie D',
+      network: 'Serie D'
+    },
+    eccellenza: {
+      title: 'Eccellenza',
+      season: '2026/27',
+      lead: 'Eccellenza · stagione 2026/27. Seleziona regione o girone (struttura nazionale completa).',
+      listTitle: 'Eccellenza 2026/27 — seleziona regione o girone',
+      listNote: 'Struttura nazionale completa (tutte le regioni e i gironi LND). Ufficiali: Calabria e Puglia. Altre regioni: aventi diritto / iscrizioni pubblicate (in aggiornamento).',
+      pickLabel: 'Scegli regione o girone',
+      backLabel: '← Tutte le regioni e i gironi',
+      groupParam: 'reg',
+      groups: ECCELLENZA,
+      portfolio: 'Eccellenza',
+      network: 'Eccellenza'
+    },
+    promozione: {
+      title: 'Promozione',
+      season: '2026/27',
+      lead: 'Promozione · stagione 2026/27. Seleziona regione o girone (struttura nazionale completa).',
+      listTitle: 'Promozione 2026/27 — seleziona regione o girone',
+      listNote: 'Struttura nazionale completa con gironi. Ufficiali: Calabria A–B e Puglia A–B. Altre regioni: iscrizioni e aventi diritto 2026/27 (in aggiornamento).',
+      pickLabel: 'Scegli regione o girone',
+      backLabel: '← Tutte le regioni e i gironi',
+      groupParam: 'reg',
+      groups: PROMOZIONE,
+      portfolio: 'Promozione',
+      network: 'Promozione'
+    },
+    'under-19': {
+      title: 'Under 19 / Giovanili',
+      season: '2026/27',
+      lead: 'Juniores Under 19 e settori giovanili · stagione 2026/27. Seleziona l’area. Nessun dossier minorile senza consenso.',
+      listTitle: 'Under 19 / Giovanili 2026/27 — seleziona l’area',
+      listNote: 'Struttura per aree geografiche nazionali + Juniores Nazionali. Solo denominazioni società. Nessun dato su tesserati minorenni.',
+      pickLabel: 'Scegli l’area',
+      backLabel: '← Tutte le aree',
+      groupParam: 'area',
+      groups: UNDER19,
+      portfolio: 'Under 19',
+      network: 'Under 19'
+    },
+    'prima-cat': {
+      title: 'Prima Categoria',
+      season: '2026/27',
+      lead: 'Prima Categoria · stagione 2026/27. Seleziona regione o girone (struttura nazionale).',
+      listTitle: 'Prima Categoria 2026/27 — seleziona regione o girone',
+      listNote: 'Struttura nazionale: tutte le regioni e i gironi. Puglia completa (LND/dp24). Altre regioni: estratti iscrizioni 2026/27.',
+      pickLabel: 'Scegli regione o girone',
+      backLabel: '← Tutte le regioni e i gironi',
+      groupParam: 'reg',
+      groups: PRIMA_CAT,
+      portfolio: 'Prima Categoria',
+      network: 'Prima Categoria'
+    },
+    'seconda-cat': {
+      title: 'Seconda Categoria',
+      season: '2026/27',
+      lead: 'Seconda Categoria · stagione 2026/27. Seleziona regione o girone (struttura nazionale).',
+      listTitle: 'Seconda Categoria 2026/27 — seleziona regione o girone',
+      listNote: 'Struttura nazionale: tutte le regioni e i gironi. Puglia completa (LND/dp24). Altre regioni: estratti iscrizioni 2026/27.',
+      pickLabel: 'Scegli regione o girone',
+      backLabel: '← Tutte le regioni e i gironi',
+      groupParam: 'reg',
+      groups: SECONDA_CAT,
+      portfolio: 'Seconda Categoria',
+      network: 'Seconda Categoria'
+    },
+    'terza-cat': {
+      title: 'Terza Categoria',
+      season: '2026/27',
+      lead: 'Terza Categoria · stagione 2026/27. Seleziona regione, provincia o girone (struttura nazionale).',
+      listTitle: 'Terza Categoria 2026/27 — seleziona regione, provincia o girone',
+      listNote: 'Struttura nazionale con gironi. Puglia: organici provinciali completi (BA/BR/FG/LE/Maglie/TA/BT). Altre regioni: estratti 2026/27.',
+      pickLabel: 'Scegli regione o girone',
+      backLabel: '← Tutte le regioni e i gironi',
+      groupParam: 'reg',
+      groups: TERZA_CAT,
+      portfolio: 'Terza Categoria',
+      network: 'Terza Categoria'
+    },
+    femminile: {
+      title: 'Calcio femminile',
+      season: '2026/27',
+      lead: 'Calcio femminile · stagione 2026/27. Seleziona Serie A o Serie B (organici ufficiali FIGC).',
+      listTitle: 'Femminile 2026/27 — seleziona Serie A o Serie B',
+      listNote: 'Organici ufficiali Serie A e Serie B femminile 2026/27 (FIGC). Solo consultazione.',
+      pickLabel: 'Scegli il campionato',
+      backLabel: '← Tutti i campionati',
+      groupParam: 'camp',
+      groups: FEMMINILE,
+      portfolio: 'all',
+      network: 'all'
+    },
+    svincolati: {
+      title: 'Svincolati',
+      season: '2026/27',
+      lead: 'Talent desk executive: profili iscritti a ELISEE SCOUT disponibili sul mercato. Shortlist per ruolo, dossier completo e follow per il tuo desk scouting.',
+      listTitle: 'Talent Desk · Free Agents 2026/27',
+      listNote: 'Board riservato a profili iscritti senza tesseramento attivo (o svincolati Art. 107/108) con privacy/termini accettati. Dossier, network e contatto per società e DS.',
+      pickLabel: 'Filtra per ruolo',
+      backLabel: '← Tutti i ruoli',
+      groupParam: 'ruolo',
+      groups: SVINCOLATI,
+      portfolio: 'Svincolato',
+      network: 'Svincolato',
+      isSvincolati: true
+    }
+  };
+
+  var order = ['serie-d', 'eccellenza', 'promozione', 'under-19', 'prima-cat', 'seconda-cat', 'terza-cat', 'femminile', 'svincolati'];
+
+  function qs(name) {
+    var p = new URLSearchParams(window.location.search);
+    return (p.get(name) || '').toLowerCase();
+  }
+
+  function setQuery(params) {
+    var p = new URLSearchParams(window.location.search);
+    Object.keys(params).forEach(function (k) {
+      if (params[k] == null || params[k] === '') p.delete(k);
+      else p.set(k, params[k]);
+    });
+    var q = p.toString();
+    window.history.replaceState(null, '', window.location.pathname + (q ? '?' + q : ''));
+  }
+
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function findGroup(groups, id) {
+    id = String(id || '').toLowerCase();
+    for (var i = 0; i < groups.length; i++) {
+      if (String(groups[i].id).toLowerCase() === id) return groups[i];
+    }
+    return null;
+  }
+
+  function teamRow(name, zone, i) {
+    return (
+      '<li class="focus-team-item" aria-disabled="true">' +
+      '<span class="focus-team-idx">' + (i + 1) + '</span>' +
+      '<span class="focus-team-name">' + esc(name) + '</span>' +
+      '<span class="focus-team-zone">' + esc(zone || '') + '</span>' +
+      '<span class="focus-team-badge">Non iscritta</span>' +
+      '</li>'
+    );
+  }
+
+  function renderTeamsList(teams, zoneLabel) {
+    if (!teams || !teams.length) {
+      return '<p class="focus-teams-empty">Nessuna voce in elenco per questa selezione.</p>';
+    }
+    return (
+      '<ul class="focus-teams-list" aria-label="Elenco non iscrivibile">' +
+      teams.map(function (t, i) {
+        return teamRow(t, zoneLabel, i);
+      }).join('') +
+      '</ul>'
+    );
+  }
+
+  function privacyCard(extra) {
+    return (
+      '<article class="focus-hub-card">' +
+      '<h2>Privacy e consenso</h2>' +
+      '<p>Mostriamo solo denominazioni pubbliche del panorama dilettantistico italiano per la stagione <strong>2026/27</strong>. ' +
+      'Non apriamo schede, non linkiamo profili e non trattiamo dati di tesserati non iscritti. ' +
+      'Una società diventa attiva sulla piattaforma solo dopo registrazione e accettazione privacy/termini.</p>' +
+      (extra ? '<p style="margin-top:0.75rem;font-size:0.9rem;color:#94a3b8;">' + extra + '</p>' : '') +
+      '</article>'
+    );
+  }
+
+  function renderPicker(cat) {
+    var param = cat.groupParam || 'reg';
+    var selected = findGroup(cat.groups, qs(param));
+    var seasonPill =
+      '<div class="focus-season-pill">Stagione sportiva ' +
+      esc(cat.season || '2026/27') +
+      '</div>';
+
+    if (!selected) {
+      return (
+        '<article class="focus-hub-card focus-teams-card">' +
+        '<div class="focus-teams-head">' +
+        '<h2>' + esc(cat.listTitle) + '</h2>' +
+        '<p class="focus-teams-count">' + esc(cat.pickLabel || 'Scegli') + '</p>' +
+        '</div>' +
+        seasonPill +
+        '<p class="focus-teams-note">' +
+        esc(cat.listNote) +
+        ' <strong>Seleziona un riquadro</strong> per visualizzare l’elenco. Voci non cliccabili (manca iscrizione e consenso su ELISEE SCOUT).</p>' +
+        '<div class="focus-girone-picker" role="list" aria-label="' + esc(cat.pickLabel || 'Selezione') + '">' +
+        cat.groups.map(function (g) {
+          return (
+            '<button type="button" class="focus-girone-btn" data-group="' +
+            esc(g.id) +
+            '" role="listitem">' +
+            '<strong>' + esc(g.title) + '</strong>' +
+            '<span>' + esc(g.area) + '</span>' +
+            '</button>'
+          );
+        }).join('') +
+        '</div>' +
+        '</article>' +
+        privacyCard(null)
+      );
+    }
+
+    return (
+      '<article class="focus-hub-card focus-teams-card">' +
+      '<button type="button" class="focus-girone-back" id="focus-group-back">' +
+      esc(cat.backLabel || '← Indietro') +
+      '</button>' +
+      '<div class="focus-girone-detail-head">' +
+      '<div>' +
+      '<h3>' + esc(selected.title) + ' · 2026/27</h3>' +
+      '<p>' + esc(selected.area) + '</p>' +
+      '</div>' +
+      '<p class="focus-teams-count">Solo consultazione</p>' +
+      '</div>' +
+      seasonPill +
+      '<p class="focus-teams-note">Elenco informativo stagione 2026/27. <strong>Non cliccabili</strong> — manca iscrizione e consenso su ELISEE SCOUT.</p>' +
+      renderTeamsList(selected.teams, selected.title) +
+      '</article>' +
+      privacyCard(
+        cat.title === 'Serie D'
+          ? 'Fonte: aventi diritto Serie D 2026/27. Format LND 9 gironi. Composizione ufficiale gironi in ratifica (inizio agosto 2026).'
+          : null
+      )
+    );
+  }
+
+  function bindControls(cat) {
+    var param = cat.groupParam || 'reg';
+    document.querySelectorAll('.focus-girone-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var o = { cat: qs('cat') || 'serie-d' };
+        o[param] = btn.getAttribute('data-group');
+        /* clear other group params */
+        ['girone', 'reg', 'area', 'camp'].forEach(function (k) {
+          if (k !== param) o[k] = null;
+        });
+        setQuery(o);
+        render();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+    var back = document.getElementById('focus-group-back');
+    if (back) {
+      back.addEventListener('click', function () {
+        var o = { cat: qs('cat') || 'serie-d' };
+        o[param] = null;
+        setQuery(o);
+        render();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  }
+
+
+  /* ========== SVINCOLATI: iscritti senza squadra ========== */
+  var SV_ROLES = [
+    { id: 'all', title: 'Tutti i ruoli', area: 'Elenco completo svincolati' },
+    { id: 'portiere', title: 'Portiere', area: 'Calciatori · porta' },
+    { id: 'difensore', title: 'Difensore', area: 'Calciatori · difesa' },
+    { id: 'centrocampista', title: 'Centrocampista', area: 'Calciatori · centrocampo' },
+    { id: 'attaccante', title: 'Attaccante', area: 'Calciatori · attacco' },
+    { id: 'calciatore', title: 'Calciatore', area: 'Ruolo generico iscrizione' },
+    { id: 'allenatore', title: 'Allenatore / Tecnico', area: 'Staff tecnico' },
+    { id: 'scout', title: 'Scout', area: 'Scouting certificato' },
+    { id: 'procuratore', title: 'Procuratore', area: 'Procuratore sportivo' },
+    { id: 'direttore', title: 'Direttore Sportivo', area: 'Dirigenza' },
+    { id: 'analyst', title: 'Match Analyst', area: 'Analisi partita' },
+    { id: 'preparatore', title: 'Preparatore Atletico', area: 'Staff atletico' },
+    { id: 'fisio', title: 'Fisioterapista', area: 'Staff sanitario' },
+    { id: 'dirigente', title: 'Dirigente Società', area: 'Società / management' }
+  ];
+
+  var SV_SEED = [
+    { id: 'sv_1', nome: 'Marco', cognome: 'Rossi', role: 'Attaccante', roleKey: 'attaccante', category: 'Serie D', status: 'Svincolato Art. 107', city: 'Foggia', followers: 1420,
+      career: [
+        { season: '2025/26', club: 'ASD Foggia Calcio', note: 'Serie D · 22 presenze, 7 gol' },
+        { season: '2024/25', club: 'US San Severo', note: 'Eccellenza · 28 presenze, 11 gol' },
+        { season: '2023/24', club: 'Lucera Calcio', note: 'Promozione · 30 presenze, 9 gol' }
+      ] },
+    { id: 'sv_2', nome: 'Roberto', cognome: 'Barbieri', role: 'Portiere', roleKey: 'portiere', category: 'Eccellenza', status: 'Svincolato Art. 108', city: 'Lucera', followers: 530,
+      career: [
+        { season: '2025/26', club: 'Lucera Calcio', note: 'Eccellenza · 24 presenze' },
+        { season: '2024/25', club: 'Manfredonia', note: 'Serie D · 12 presenze' }
+      ] },
+    { id: 'sv_3', nome: 'Matteo', cognome: 'Ferrari', role: 'Difensore', roleKey: 'difensore', category: 'Promozione', status: 'Senza squadra · iscritto ELISEE', city: 'Manfredonia', followers: 670,
+      career: [
+        { season: '2025/26', club: 'Manfredonia Calcio', note: 'Promozione · 26 presenze' },
+        { season: '2024/25', club: 'Vieste', note: 'Prima Categoria · 29 presenze' }
+      ] },
+    { id: 'sv_4', nome: 'Luca', cognome: 'De Luca', role: 'Centrocampista', roleKey: 'centrocampista', category: 'Prima Categoria', status: 'Senza squadra · iscritto ELISEE', city: 'Bari', followers: 410,
+      career: [
+        { season: '2025/26', club: 'Bitonto', note: 'Eccellenza · 18 presenze' },
+        { season: '2024/25', club: 'Molfetta', note: 'Promozione · 31 presenze' }
+      ] },
+    { id: 'sv_5', nome: 'Andrea', cognome: 'Moretti', role: 'Scout', roleKey: 'scout', category: 'Serie D', status: 'Senza incarico · iscritto ELISEE', city: 'Napoli', followers: 2310,
+      career: [
+        { season: '2025/26', club: 'Rete Scout Campania', note: 'Scouting dilettanti Sud' },
+        { season: '2023/25', club: 'Osservatore indipendente', note: 'Eccellenza / Promozione' }
+      ] },
+    { id: 'sv_6', nome: 'Giulia', cognome: 'Conti', role: 'Match Analyst', roleKey: 'analyst', category: 'Under 19', status: 'Senza incarico · iscritta ELISEE', city: 'Lecce', followers: 1150,
+      career: [
+        { season: '2025/26', club: 'Accademia Calcio Lecce', note: 'Analisi Under 19' },
+        { season: '2024/25', club: 'Freelance Wyscout', note: 'Report video dilettanti' }
+      ] },
+    { id: 'sv_7', nome: 'Stefano', cognome: 'Ricci', role: 'Direttore Sportivo', roleKey: 'direttore', category: 'Serie D', status: 'Senza incarico · iscritto ELISEE', city: 'Cerignola', followers: 3450,
+      career: [
+        { season: '2024/26', club: 'Audace Cerignola', note: 'Area tecnica / mercato' },
+        { season: '2022/24', club: 'Team Altamura', note: 'Collaborazione DS' }
+      ] },
+    { id: 'sv_8', nome: 'Elena', cognome: 'Santoro', role: 'Preparatore Atletico', roleKey: 'preparatore', category: 'Eccellenza', status: 'Senza incarico · iscritta ELISEE', city: 'Salerno', followers: 1820,
+      career: [
+        { season: '2025/26', club: 'Staff Eccellenza Campania', note: 'Preparazione atletica' },
+        { season: '2023/25', club: 'Freelance FIGC', note: 'Test e carico di lavoro' }
+      ] },
+    { id: 'sv_9', nome: 'Paolo', cognome: 'Greco', role: 'Allenatore / Tecnico', roleKey: 'allenatore', category: 'Seconda Categoria', status: 'Senza panchina · iscritto ELISEE', city: 'Taranto', followers: 920,
+      career: [
+        { season: '2025/26', club: 'Promozione Puglia', note: 'Allenatore in seconda' },
+        { season: '2023/25', club: 'Prima Categoria', note: 'Allenatore prima squadra' }
+      ] },
+    { id: 'sv_10', nome: 'Francesca', cognome: 'Neri', role: 'Fisioterapista', roleKey: 'fisio', category: 'Promozione', status: 'Senza incarico · iscritta ELISEE', city: 'Potenza', followers: 640,
+      career: [
+        { season: '2025/26', club: 'Staff Basilicata', note: 'Recupero infortuni' }
+      ] },
+    { id: 'sv_11', nome: 'Davide', cognome: 'Romano', role: 'Procuratore Sportivo', roleKey: 'procuratore', category: 'Serie D', status: 'Libero professionista · iscritto ELISEE', city: 'Roma', followers: 2100,
+      career: [
+        { season: '2024/26', club: 'Studio intermedio dilettanti', note: 'Assist. 107/108 e contratti' }
+      ] },
+    { id: 'sv_12', nome: 'Chiara', cognome: 'Esposito', role: 'Dirigente Società', roleKey: 'dirigente', category: 'Terza Categoria', status: 'In cerca di società · iscritta ELISEE', city: 'Caserta', followers: 380,
+      career: [
+        { season: '2024/26', club: 'Dirigenza Campania', note: 'Segreteria e tesseramenti' }
+      ] },
+    { id: 'sv_13', nome: 'Antonio', cognome: 'Lorusso', role: 'Calciatore', roleKey: 'calciatore', category: 'Terza Categoria', status: 'Senza squadra · iscritto ELISEE', city: 'Cosenza', followers: 290,
+      career: [
+        { season: '2025/26', club: 'Terza Categoria Calabria', note: '18 presenze' }
+      ] },
+    { id: 'sv_14', nome: 'Sara', cognome: 'Marini', role: 'Attaccante', roleKey: 'attaccante', category: 'Femminile', status: 'Svincolata · iscritta ELISEE', city: 'Bologna', followers: 1560,
+      career: [
+        { season: '2025/26', club: 'Serie B Femminile', note: '20 presenze, 5 gol' },
+        { season: '2024/25', club: 'Serie C Femminile', note: '24 presenze, 12 gol' }
+      ] }
+  ];
+
+  function svLoadRegistered() {
+    var out = [];
+    try {
+      var raw = localStorage.getItem('elisee_registered_users') || localStorage.getItem('elisee_users') || '[]';
+      var list = JSON.parse(raw);
+      if (!Array.isArray(list)) list = [];
+      list.forEach(function (u, i) {
+        var team = (u.squadra || u.team || u.club || '').trim();
+        var status = (u.status || u.stato || u.statoTesserato || '').toLowerCase();
+        var noTeam = !team || /svincol|senza squadra|libero|nessuna/i.test(team + ' ' + status);
+        if (!noTeam) return;
+        var ruolo = u.ruolo || u.role || u.ruoloDettagliato || 'Calciatore';
+        out.push({
+          id: u.id || ('reg_' + i + '_' + (u.email || '')),
+          nome: u.nome || u.name || 'Utente',
+          cognome: u.cognome || u.surname || '',
+          role: ruolo,
+          roleKey: svRoleKey(ruolo),
+          category: u.categoria || u.category || 'Iscritto ELISEE',
+          status: u.status || 'Senza squadra · iscritto ELISEE',
+          city: u.citta || u.city || u.residenza || 'Italia',
+          followers: Number(u.followers) || 0,
+          career: u.career || u.curriculum || [
+            { season: '2026/27', club: 'In cerca di squadra', note: 'Profilo iscritto su ELISEE SCOUT' }
+          ],
+          fromSite: true
+        });
+      });
+    } catch (e) {}
+    // active user without team
+    try {
+      var au = JSON.parse(localStorage.getItem('elisee_active_user') || 'null');
+      if (au && (au.nome || au.cognome)) {
+        var t = (au.squadra || au.team || '').trim();
+        var st = (au.statoTesserato || au.status || '').toLowerCase();
+        if (!t || /svincol|senza|libero/.test(t + ' ' + st)) {
+          var id = 'active_' + (au.email || au.nome);
+          if (!out.some(function (x) { return x.id === id; })) {
+            out.unshift({
+              id: id,
+              nome: au.nome || 'Utente',
+              cognome: au.cognome || '',
+              role: au.ruolo || au.ruoloDettagliato || 'Calciatore',
+              roleKey: svRoleKey(au.ruolo || au.ruoloDettagliato || 'Calciatore'),
+              category: au.categoria || 'Iscritto ELISEE',
+              status: 'Senza squadra · profilo attivo',
+              city: au.citta || au.residenza || 'Italia',
+              followers: Number(au.followers) || 0,
+              career: [
+                { season: '2026/27', club: 'In cerca di squadra', note: 'Il tuo profilo ELISEE SCOUT' }
+              ],
+              fromSite: true
+            });
+          }
+        }
+      }
+    } catch (e2) {}
+    return out;
+  }
+
+  function svRoleKey(ruolo) {
+    var r = String(ruolo || '').toLowerCase();
+    if (r.indexOf('port') >= 0) return 'portiere';
+    if (r.indexOf('dif') >= 0) return 'difensore';
+    if (r.indexOf('centro') >= 0 || r.indexOf('median') >= 0) return 'centrocampista';
+    if (r.indexOf('attac') >= 0 || r.indexOf('punta') >= 0 || r.indexOf('ala') >= 0) return 'attaccante';
+    if (r.indexOf('allen') >= 0 || r.indexOf('tecnic') >= 0 || r.indexOf('mister') >= 0) return 'allenatore';
+    if (r.indexOf('scout') >= 0 || r.indexOf('osserv') >= 0) return 'scout';
+    if (r.indexOf('procur') >= 0 || r.indexOf('agent') >= 0) return 'procuratore';
+    if (r.indexOf('dirett') >= 0 || r.indexOf('ds') === 0) return 'direttore';
+    if (r.indexOf('analyst') >= 0 || r.indexOf('analis') >= 0) return 'analyst';
+    if (r.indexOf('prepar') >= 0) return 'preparatore';
+    if (r.indexOf('fisio') >= 0 || r.indexOf('medico') >= 0) return 'fisio';
+    if (r.indexOf('dirig') >= 0 || r.indexOf('societ') >= 0) return 'dirigente';
+    if (r.indexOf('calc') >= 0) return 'calciatore';
+    return 'calciatore';
+  }
+
+  function svAllPeople() {
+    var map = {};
+    SV_SEED.forEach(function (p) { map[p.id] = p; });
+    svLoadRegistered().forEach(function (p) { map[p.id] = p; });
+    return Object.keys(map).map(function (k) { return map[k]; });
+  }
+
+  function svFollowed() {
+    try { return JSON.parse(localStorage.getItem('elisee_followed_users') || '[]'); } catch (e) { return []; }
+  }
+  function svSetFollowed(arr) {
+    localStorage.setItem('elisee_followed_users', JSON.stringify(arr));
+  }
+  function svFollowerBoost() {
+    try { return JSON.parse(localStorage.getItem('elisee_svincolati_follow_boost') || '{}'); } catch (e) { return {}; }
+  }
+  function svSetFollowerBoost(obj) {
+    localStorage.setItem('elisee_svincolati_follow_boost', JSON.stringify(obj));
+  }
+
+  function svFollowerCount(p) {
+    var boost = svFollowerBoost();
+    var base = Number(p.followers) || 0;
+    var b = Number(boost[p.id]) || 0;
+    return base + b;
+  }
+
+  function svScore(p) {
+    if (p.score != null && !isNaN(Number(p.score))) return Math.min(99, Math.max(60, Number(p.score)));
+    var base = 72;
+    base += Math.min(18, Math.floor((Number(p.followers) || 0) / 200));
+    if ((p.career || []).length >= 3) base += 4;
+    if (/serie d/i.test(p.category || '')) base += 5;
+    if (/eccellen/i.test(p.category || '')) base += 3;
+    return Math.min(99, base);
+  }
+
+  function svAvailability(p) {
+    return p.availability || 'Immediata';
+  }
+
+  function svLastClub(p) {
+    var c = (p.career && p.career[0]) || null;
+    if (!c) return { club: 'Profilo in costruzione', note: 'Curriculum da completare' };
+    return { club: c.club || '—', note: (c.season || '') + (c.note ? ' · ' + c.note : '') };
+  }
+
+  function svInitials(p) {
+    var n = ((p.nome || '').charAt(0) + (p.cognome || '').charAt(0)).toUpperCase();
+    return n || 'ES';
+  }
+
+  window.toggleSvincolatoFollow = function (userId) {
+    var followed = svFollowed();
+    var boost = svFollowerBoost();
+    var i = followed.indexOf(userId);
+    if (i >= 0) {
+      followed.splice(i, 1);
+      boost[userId] = Math.max(0, (Number(boost[userId]) || 1) - 1);
+    } else {
+      followed.push(userId);
+      boost[userId] = (Number(boost[userId]) || 0) + 1;
+    }
+    svSetFollowed(followed);
+    svSetFollowerBoost(boost);
+    render();
+  };
+
+  window.openSvincolatoCurriculum = function (userId) {
+    var p = svAllPeople().filter(function (x) { return x.id === userId; })[0];
+    if (!p) return;
+    var prev = document.getElementById('sv-curriculum-modal');
+    if (prev) prev.remove();
+    var full = (p.nome + ' ' + p.cognome).trim();
+    var score = svScore(p);
+    var last = svLastClub(p);
+    var career = (p.career || []).map(function (c) {
+      return '<li><strong>' + esc(c.season) + ' · ' + esc(c.club) + '</strong>' + esc(c.note || '') + '</li>';
+    }).join('') || '<li>Nessuna esperienza caricata sul dossier.</li>';
+    var img = 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260730_225504';
+    var isF = svFollowed().indexOf(p.id) >= 0;
+    var bg = document.createElement('div');
+    bg.id = 'sv-curriculum-modal';
+    bg.className = 'sv-modal-bg';
+    bg.onclick = function (e) { if (e.target === bg) bg.remove(); };
+    bg.innerHTML =
+      '<div class="sv-modal" role="dialog" aria-modal="true" aria-label="Dossier talent">' +
+      '<div class="sv-modal-head">' +
+      '<div class="sv-avatar-ring">' +
+      '<img class="sv-avatar" src="' + img + '" alt="">' +
+      '<span class="sv-score-badge">' + score + '</span>' +
+      '</div>' +
+      '<div style="flex:1;min-width:0">' +
+      '<h3>' + esc(full) + '</h3>' +
+      '<p class="sv-sub">' + esc(p.role) + ' · ' + esc(p.category) + ' · ' + esc(p.city) + '</p>' +
+      '<p class="sv-sub" style="color:#7dd3fc;font-weight:800;margin:0">' + esc(p.status) + '</p>' +
+      '<span class="sv-availability" style="margin-top:0.55rem">Disponibilità · ' + esc(svAvailability(p)) + '</span>' +
+      '</div>' +
+      '<button type="button" class="sv-modal-close" id="sv-curr-close">Chiudi</button>' +
+      '</div>' +
+      '<div class="sv-modal-body">' +
+      '<p class="sv-modal-section-title">Ultimo contesto</p>' +
+      '<div class="sv-last-club" style="margin-bottom:1.1rem"><strong>' + esc(last.club) + '</strong>' + esc(last.note) + '</div>' +
+      '<p class="sv-modal-section-title">Curriculum di carriera</p>' +
+      '<ul class="sv-career">' + career + '</ul>' +
+      '<div class="sv-modal-actions">' +
+      '<button type="button" class="sv-btn sv-btn-primary" data-follow="' + esc(p.id) + '">' +
+      (isF ? '✓ In shortlist' : '+ Aggiungi a shortlist') +
+      '</button>' +
+      '<a class="sv-btn" href="index.html?focusCat=Svincolato#persone-portal">Apri Network ELISEE</a>' +
+      '<a class="sv-btn" href="index.html#dashboard-skills">Dossier completo sito</a>' +
+      '<a class="sv-btn" href="index.html#contatti">Richiedi contatto DS</a>' +
+      '</div>' +
+      '<p class="sv-sub" style="margin-top:1rem;font-size:0.78rem">Dossier confidenziale ELISEE SCOUT · solo profili iscritti con consenso privacy. Score desk: ' + score + '/99.</p>' +
+      '</div></div>';
+    document.body.appendChild(bg);
+    document.getElementById('sv-curr-close').onclick = function () { bg.remove(); };
+    var fb = bg.querySelector('[data-follow]');
+    if (fb) {
+      fb.onclick = function () {
+        window.toggleSvincolatoFollow(p.id);
+        window.openSvincolatoCurriculum(p.id);
+      };
+    }
+  };
+
+  /** Multi-value query helpers (es. ruolo=attaccante,scout) */
+  function qsRaw(name) {
+    var p = new URLSearchParams(window.location.search);
+    return p.get(name) || '';
+  }
+  function parseMulti(name) {
+    var v = (qsRaw(name) || '').trim().toLowerCase();
+    if (!v || v === 'all') return [];
+    return v.split(/[,+|]/).map(function (s) { return s.trim(); }).filter(Boolean);
+  }
+  function multiToParam(arr) {
+    return arr && arr.length ? arr.join(',') : null;
+  }
+  function toggleInList(list, id) {
+    var i = list.indexOf(id);
+    if (i >= 0) list.splice(i, 1);
+    else list.push(id);
+    return list;
+  }
+  function svUniqueField(people, getter) {
+    var map = {};
+    people.forEach(function (p) {
+      var v = (getter(p) || '').trim();
+      if (!v) return;
+      var k = v.toLowerCase();
+      if (!map[k]) map[k] = v;
+    });
+    return Object.keys(map).map(function (k) { return map[k]; }).sort(function (a, b) {
+      return a.localeCompare(b, 'it');
+    });
+  }
+  function svCurrentFilters() {
+    return {
+      roles: parseMulti('ruolo'),
+      levels: parseMulti('livello'),
+      cities: parseMulti('citta'),
+      availability: parseMulti('disp'),
+      minScore: Math.max(0, Math.min(99, parseInt(qsRaw('minscore') || '0', 10) || 0)),
+      shortlistOnly: (qsRaw('shortlist') || '') === '1' || (qsRaw('shortlist') || '').toLowerCase() === 'yes',
+      q: (qsRaw('q') || '').trim()
+    };
+  }
+  function svApplyFilters(people, f, followed) {
+    return people.filter(function (p) {
+      if (f.roles.length && f.roles.indexOf(p.roleKey) < 0) return false;
+      if (f.levels.length) {
+        var cat = String(p.category || '').toLowerCase();
+        var okL = f.levels.some(function (lv) { return cat === lv.toLowerCase() || cat.indexOf(lv.toLowerCase()) >= 0; });
+        if (!okL) return false;
+      }
+      if (f.cities.length) {
+        var city = String(p.city || '').toLowerCase();
+        var okC = f.cities.some(function (c) { return city === c.toLowerCase(); });
+        if (!okC) return false;
+      }
+      if (f.availability.length) {
+        var av = String(svAvailability(p) || '').toLowerCase();
+        var okA = f.availability.some(function (a) { return av === a.toLowerCase() || av.indexOf(a.toLowerCase()) >= 0; });
+        if (!okA) return false;
+      }
+      if (f.minScore > 0 && svScore(p) < f.minScore) return false;
+      if (f.shortlistOnly && followed.indexOf(p.id) < 0) return false;
+      if (f.q) {
+        var blob = (
+          (p.nome || '') + ' ' + (p.cognome || '') + ' ' + (p.role || '') + ' ' +
+          (p.city || '') + ' ' + (p.category || '') + ' ' + (p.status || '') + ' ' +
+          svAvailability(p) + ' ' + ((p.career && p.career[0] && p.career[0].club) || '')
+        ).toLowerCase();
+        if (blob.indexOf(f.q.toLowerCase()) < 0) return false;
+      }
+      return true;
+    });
+  }
+  function svFilterQueryState(partial) {
+    var f = svCurrentFilters();
+    if (partial) {
+      Object.keys(partial).forEach(function (k) { f[k] = partial[k]; });
+    }
+    return {
+      cat: 'svincolati',
+      ruolo: multiToParam(f.roles) || 'all',
+      livello: multiToParam(f.levels),
+      citta: multiToParam(f.cities),
+      disp: multiToParam(f.availability),
+      minscore: f.minScore > 0 ? String(f.minScore) : null,
+      shortlist: f.shortlistOnly ? '1' : null,
+      q: f.q || null,
+      girone: null,
+      reg: null,
+      area: null,
+      camp: null
+    };
+  }
+  function svChipRail(items, selected, dataAttr, ariaLabel) {
+    return (
+      '<div class="sv-role-rail" role="list" aria-label="' + esc(ariaLabel) + '">' +
+      items.map(function (it) {
+        var id = it.id;
+        var active = selected.indexOf(id) >= 0 || selected.indexOf(String(it.label || '').toLowerCase()) >= 0;
+        // for city/level store exact id as lower label
+        if (!it.roleKeyMode) {
+          active = selected.indexOf(id) >= 0;
+        }
+        return (
+          '<button type="button" class="sv-role-chip' + (active ? ' is-active' : '') + '" ' +
+          dataAttr + '="' + esc(id) + '" role="listitem" aria-pressed="' + (active ? 'true' : 'false') + '">' +
+          esc(it.label) + (it.count != null ? ' · ' + it.count : '') +
+          '</button>'
+        );
+      }).join('') +
+      '</div>'
+    );
+  }
+
+  function renderSvincolatiBody(cat) {
+    var f = svCurrentFilters();
+    var people = svAllPeople();
+    var followed = svFollowed();
+    var boost = svFollowerBoost();
+
+    var filtered = svApplyFilters(people, f, followed);
+    filtered.sort(function (a, b) { return svScore(b) - svScore(a); });
+
+    var rolesCount = {};
+    var levelCount = {};
+    var cityCount = {};
+    var availCount = {};
+    people.forEach(function (p) {
+      rolesCount[p.roleKey] = (rolesCount[p.roleKey] || 0) + 1;
+      var lv = (p.category || 'Altro').trim();
+      levelCount[lv] = (levelCount[lv] || 0) + 1;
+      var ct = (p.city || 'Italia').trim();
+      cityCount[ct] = (cityCount[ct] || 0) + 1;
+      var av = svAvailability(p);
+      availCount[av] = (availCount[av] || 0) + 1;
+    });
+
+    var roleItems = SV_ROLES.filter(function (r) { return r.id !== 'all'; }).map(function (r) {
+      return { id: r.id, label: r.title, count: rolesCount[r.id] || 0, roleKeyMode: true };
+    });
+    var levelItems = Object.keys(levelCount).sort().map(function (k) {
+      return { id: k.toLowerCase(), label: k, count: levelCount[k] };
+    });
+    var cityItems = Object.keys(cityCount).sort(function (a, b) { return a.localeCompare(b, 'it'); }).map(function (k) {
+      return { id: k.toLowerCase(), label: k, count: cityCount[k] };
+    });
+    var availItems = Object.keys(availCount).sort().map(function (k) {
+      return { id: k.toLowerCase(), label: k, count: availCount[k] };
+    });
+
+    var activeTags = [];
+    f.roles.forEach(function (id) {
+      var r = SV_ROLES.filter(function (x) { return x.id === id; })[0];
+      activeTags.push({ group: 'ruolo', id: id, label: 'Ruolo: ' + (r ? r.title : id) });
+    });
+    f.levels.forEach(function (id) {
+      activeTags.push({ group: 'livello', id: id, label: 'Livello: ' + id });
+    });
+    f.cities.forEach(function (id) {
+      activeTags.push({ group: 'citta', id: id, label: 'Città: ' + id });
+    });
+    f.availability.forEach(function (id) {
+      activeTags.push({ group: 'disp', id: id, label: 'Disp.: ' + id });
+    });
+    if (f.minScore > 0) activeTags.push({ group: 'minscore', id: String(f.minScore), label: 'Score ≥ ' + f.minScore });
+    if (f.shortlistOnly) activeTags.push({ group: 'shortlist', id: '1', label: 'Solo shortlist' });
+    if (f.q) activeTags.push({ group: 'q', id: f.q, label: 'Cerca: ' + f.q });
+
+    var filtersHtml =
+      '<div class="sv-filters-block">' +
+      '<div class="sv-filter-group">' +
+      '<div class="sv-filter-label">Ruoli <em>multi-selezione · clicca più voci</em></div>' +
+      svChipRail(roleItems, f.roles, 'data-sv-role', 'Filtra per ruoli') +
+      '</div>' +
+      '<div class="sv-filter-group">' +
+      '<div class="sv-filter-label">Livello / categoria <em>multi-selezione</em></div>' +
+      svChipRail(levelItems, f.levels, 'data-sv-level', 'Filtra per livello') +
+      '</div>' +
+      '<div class="sv-filter-group">' +
+      '<div class="sv-filter-label">Città / area <em>multi-selezione</em></div>' +
+      svChipRail(cityItems, f.cities, 'data-sv-city', 'Filtra per città') +
+      '</div>' +
+      '<div class="sv-filter-group">' +
+      '<div class="sv-filter-label">Disponibilità <em>multi-selezione</em></div>' +
+      svChipRail(availItems, f.availability, 'data-sv-disp', 'Filtra per disponibilità') +
+      '</div>' +
+      '<div class="sv-filter-actions">' +
+      '<label class="sv-score-range">Score minimo desk ' +
+      '<input type="range" id="sv-minscore" min="0" max="99" step="1" value="' + f.minScore + '" aria-label="Score minimo">' +
+      '<strong id="sv-minscore-val">' + f.minScore + '</strong>' +
+      '</label>' +
+      '<button type="button" class="sv-role-chip' + (f.shortlistOnly ? ' is-active' : '') + '" data-sv-shortlist="1" aria-pressed="' + (f.shortlistOnly ? 'true' : 'false') + '">Solo shortlist</button>' +
+      (activeTags.length
+        ? '<button type="button" class="sv-filter-clear" id="sv-clear-filters">Azzera filtri (' + activeTags.length + ')</button>'
+        : '') +
+      '</div>' +
+      (activeTags.length
+        ? '<div class="sv-active-tags" aria-label="Filtri attivi">' +
+          activeTags.map(function (t) {
+            return (
+              '<span class="sv-active-tag">' + esc(t.label) +
+              '<button type="button" data-sv-remove-group="' + esc(t.group) + '" data-sv-remove-id="' + esc(t.id) + '" aria-label="Rimuovi filtro">×</button></span>'
+            );
+          }).join('') +
+          '</div>'
+        : '') +
+      '</div>';
+
+    var listHtml;
+    if (!filtered.length) {
+      listHtml =
+        '<p class="sv-empty"><strong>Nessun profilo con questa combinazione di filtri.</strong><br>' +
+        'Prova a deselezionare qualche voce o azzera i filtri. I multi-filtri si combinano in AND tra gruppi e in OR all’interno dello stesso gruppo.</p>';
+    } else {
+      listHtml =
+        '<ul class="sv-talent-grid" aria-label="Talent desk svincolati">' +
+        filtered
+          .map(function (p) {
+            var isF = followed.indexOf(p.id) >= 0;
+            var fc = (Number(p.followers) || 0) + (Number(boost[p.id]) || 0);
+            var full = (p.nome + ' ' + p.cognome).trim();
+            var score = svScore(p);
+            var last = svLastClub(p);
+            var img = 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260730_225504';
+            return (
+              '<li class="sv-talent-card">' +
+              '<div class="sv-talent-top">' +
+              '<div class="sv-avatar-ring">' +
+              '<img class="sv-avatar" src="' + img + '" alt="">' +
+              '<span class="sv-score-badge" title="Score desk ELISEE">' + score + '</span>' +
+              '</div>' +
+              '<div class="sv-talent-id">' +
+              '<h3 class="sv-player-name">' + esc(full) + '</h3>' +
+              '<p class="sv-player-title">' + esc(p.role) + ' · ' + esc(p.city) + '</p>' +
+              '<span class="sv-availability">' + esc(svAvailability(p)) + '</span>' +
+              '</div></div>' +
+              '<div class="sv-player-meta">' +
+              '<span class="sv-pill sv-pill-accent">' + esc(p.role) + '</span>' +
+              '<span class="sv-pill sv-pill-gold">' + esc(p.category) + '</span>' +
+              '<span class="sv-pill">' + esc(p.city) + '</span>' +
+              '<span class="sv-pill">' + esc(p.status) + '</span>' +
+              (isF ? '<span class="sv-pill sv-pill-accent">In shortlist</span>' : '') +
+              '</div>' +
+              '<div class="sv-last-club"><strong>' + esc(last.club) + '</strong>' + esc(last.note) + '</div>' +
+              '<div class="sv-talent-footer">' +
+              '<span class="sv-followers"><b>' + fc + '</b> follower desk</span>' +
+              '<div class="sv-player-actions">' +
+              '<button type="button" class="sv-btn sv-btn-primary" data-cv="' + esc(p.id) + '">Apri dossier</button>' +
+              '<button type="button" class="sv-btn sv-btn-follow' + (isF ? ' active' : '') + '" data-follow="' + esc(p.id) + '">' +
+              (isF ? '✓ Shortlist' : '+ Shortlist') +
+              '</button>' +
+              '</div></div></li>'
+            );
+          })
+          .join('') +
+        '</ul>';
+    }
+
+    var avgScore = filtered.length
+      ? Math.round(filtered.reduce(function (s, p) { return s + svScore(p); }, 0) / filtered.length)
+      : 0;
+
+    var filterSummary =
+      (f.roles.length ? f.roles.length + ' ruoli' : 'tutti i ruoli') +
+      (f.levels.length ? ' · ' + f.levels.length + ' livelli' : '') +
+      (f.cities.length ? ' · ' + f.cities.length + ' città' : '') +
+      (f.availability.length ? ' · ' + f.availability.length + ' disp.' : '') +
+      (f.minScore ? ' · score≥' + f.minScore : '') +
+      (f.shortlistOnly ? ' · shortlist' : '');
+
+    return (
+      '<article class="sv-board" aria-label="Talent desk svincolati">' +
+      '<div class="sv-board-hero">' +
+      '<p class="sv-board-kicker">ELISEE SCOUT · Executive Talent Desk</p>' +
+      '<h2>' + esc(cat.listTitle) + '</h2>' +
+      '<p class="sv-board-hero-lead">' + esc(cat.listNote) +
+      ' Filtri multipli: seleziona più voci per affinare la shortlist (OR nello stesso gruppo, AND tra gruppi).</p>' +
+      '<div class="sv-kpi-row">' +
+      '<div class="sv-kpi"><strong>' + people.length + '</strong><span>Profili live</span></div>' +
+      '<div class="sv-kpi"><strong>' + filtered.length + '</strong><span>In vista</span></div>' +
+      '<div class="sv-kpi"><strong>' + followed.length + '</strong><span>In shortlist</span></div>' +
+      '<div class="sv-kpi"><strong>' + (avgScore || '—') + '</strong><span>Score medio</span></div>' +
+      '</div></div>' +
+      '<div class="sv-toolbar">' +
+      '<div class="sv-search-wrap">' +
+      '<input type="search" id="sv-search-input" placeholder="Cerca nome, ruolo, città, club, livello…" value="' + esc(f.q) + '" autocomplete="off" aria-label="Cerca profili">' +
+      '</div>' +
+      filtersHtml +
+      '</div>' +
+      '<div class="sv-results-bar">' +
+      '<span><strong>' + filtered.length + '</strong> talent' + (filtered.length === 1 ? '' : 's') +
+      ' · ' + esc(filterSummary) + ' · ordinati per score</span>' +
+      '<span>Stagione 2026/27 · privacy-first</span>' +
+      '</div>' +
+      listHtml +
+      '</article>' +
+      privacyCard(
+        'Talent desk svincolati: solo profili iscritti e senza squadra / svincolati. ' +
+          'Filtri multipli avanzati (ruolo, livello, città, disponibilità, score, shortlist). ' +
+          'Shortlist e dossier usano il sistema follower ELISEE.'
+      )
+    );
+  }
+
+  function bindSvincolatiControls() {
+    function applyAndRender(partial) {
+      setQuery(svFilterQueryState(partial));
+      render();
+    }
+
+    document.querySelectorAll('[data-sv-role]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = btn.getAttribute('data-sv-role');
+        var roles = parseMulti('ruolo').slice();
+        toggleInList(roles, id);
+        applyAndRender({ roles: roles });
+      });
+    });
+    document.querySelectorAll('[data-sv-level]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = (btn.getAttribute('data-sv-level') || '').toLowerCase();
+        var levels = parseMulti('livello').slice();
+        toggleInList(levels, id);
+        applyAndRender({ levels: levels });
+      });
+    });
+    document.querySelectorAll('[data-sv-city]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = (btn.getAttribute('data-sv-city') || '').toLowerCase();
+        var cities = parseMulti('citta').slice();
+        toggleInList(cities, id);
+        applyAndRender({ cities: cities });
+      });
+    });
+    document.querySelectorAll('[data-sv-disp]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var id = (btn.getAttribute('data-sv-disp') || '').toLowerCase();
+        var availability = parseMulti('disp').slice();
+        toggleInList(availability, id);
+        applyAndRender({ availability: availability });
+      });
+    });
+    document.querySelectorAll('[data-sv-shortlist]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var f = svCurrentFilters();
+        applyAndRender({ shortlistOnly: !f.shortlistOnly });
+      });
+    });
+    document.querySelectorAll('[data-sv-remove-group]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var group = btn.getAttribute('data-sv-remove-group');
+        var id = (btn.getAttribute('data-sv-remove-id') || '').toLowerCase();
+        var f = svCurrentFilters();
+        if (group === 'ruolo') f.roles = f.roles.filter(function (x) { return x !== id; });
+        if (group === 'livello') f.levels = f.levels.filter(function (x) { return x !== id; });
+        if (group === 'citta') f.cities = f.cities.filter(function (x) { return x !== id; });
+        if (group === 'disp') f.availability = f.availability.filter(function (x) { return x !== id; });
+        if (group === 'minscore') f.minScore = 0;
+        if (group === 'shortlist') f.shortlistOnly = false;
+        if (group === 'q') f.q = '';
+        applyAndRender(f);
+      });
+    });
+    var clearBtn = document.getElementById('sv-clear-filters');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', function () {
+        setQuery({
+          cat: 'svincolati',
+          ruolo: 'all',
+          livello: null,
+          citta: null,
+          disp: null,
+          minscore: null,
+          shortlist: null,
+          q: null,
+          girone: null,
+          reg: null,
+          area: null,
+          camp: null
+        });
+        render();
+      });
+    }
+    var range = document.getElementById('sv-minscore');
+    var rangeVal = document.getElementById('sv-minscore-val');
+    if (range) {
+      range.addEventListener('input', function () {
+        if (rangeVal) rangeVal.textContent = range.value;
+      });
+      range.addEventListener('change', function () {
+        applyAndRender({ minScore: parseInt(range.value, 10) || 0 });
+      });
+    }
+    var search = document.getElementById('sv-search-input');
+    if (search) {
+      var t = null;
+      search.addEventListener('input', function () {
+        clearTimeout(t);
+        var val = search.value;
+        t = setTimeout(function () {
+          applyAndRender({ q: val || '' });
+          var el = document.getElementById('sv-search-input');
+          if (el) {
+            el.focus();
+            try { el.setSelectionRange(el.value.length, el.value.length); } catch (e) {}
+          }
+        }, 220);
+      });
+    }
+    document.querySelectorAll('[data-cv]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        window.openSvincolatoCurriculum(btn.getAttribute('data-cv'));
+      });
+    });
+    document.querySelectorAll('[data-follow]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        window.toggleSvincolatoFollow(btn.getAttribute('data-follow'));
+      });
+    });
+  }
+
+
+  function render() {
+    var key = qs('cat') || 'serie-d';
+    if (!CATS[key]) key = 'serie-d';
+    var cat = CATS[key];
+    var param = cat.groupParam || 'reg';
+    var selected = findGroup(cat.groups, qs(param));
+
+    document.title =
+      cat.title +
+      (selected ? ' · ' + selected.title : '') +
+      ' 2026/27 — Focus · ELISEE SCOUT';
+    document.getElementById('focus-title').textContent =
+      selected ? cat.title + ' · ' + selected.title : cat.title;
+    document.getElementById('focus-lead').textContent = cat.lead;
+
+    document.getElementById('focus-tabs').innerHTML = order
+      .map(function (k) {
+        return (
+          '<a href="focus.html?cat=' +
+          k +
+          '"' +
+          (k === key ? ' class="active"' : '') +
+          '>' +
+          esc(CATS[k].title) +
+          '</a>'
+        );
+      })
+      .join('');
+
+    if (cat.isSvincolati) {
+      document.body.classList.add('sv-mode');
+      document.getElementById('focus-body').innerHTML = renderSvincolatiBody(cat);
+      bindSvincolatiControls();
+    } else {
+      document.body.classList.remove('sv-mode');
+      document.getElementById('focus-body').innerHTML = renderPicker(cat);
+      bindControls(cat);
+    }
+
+    var portQ =
+      cat.portfolio && cat.portfolio !== 'all'
+        ? 'index.html?focusCat=' + encodeURIComponent(cat.portfolio) + '#bacheca-annunci'
+        : 'index.html#bacheca-annunci';
+    var netQ =
+      cat.network && cat.network !== 'all'
+        ? 'index.html?focusCat=' + encodeURIComponent(cat.network) + '#persone-portal'
+        : 'index.html#persone-portal';
+
+    document.getElementById('focus-actions').innerHTML =
+      '<a class="primary" href="' + portQ + '">Apri Portfolio ELISEE SCOUT</a>' +
+      '<a class="primary" href="' + netQ + '">Apri Network ELISEE SCOUT</a>' +
+      '<a href="agenti-campionati.html">Orchestra Agenti (live)</a>' +
+      '<a href="index.html#dashboard-skills">Curriculum</a>' +
+      '<a href="index.html">Home</a>';
+  }
+
+  render();
+})();
+  </script>
+  <script src="cookie-profiling.js?v=20260731_COOKIE_FULL"></script>
+  <script>
+  (function () {
+    function trackFocus() {
+      if (!window.EliseeCookies) return;
+      try {
+        var params = new URLSearchParams(location.search);
+        var cat = params.get('cat') || params.get('focusCat');
+        var gir = params.get('girone') || params.get('g');
+        if (EliseeCookies.getConsent().analytics) {
+          EliseeCookies.track('focus_view', { cat: cat || '', girone: gir || '' });
+        }
+        if (EliseeCookies.getConsent().profiling) {
+          if (cat) EliseeCookies.updateProfile('category', cat);
+          if (gir) EliseeCookies.updateProfile('interest', 'girone-' + gir);
+          EliseeCookies.applyPersonalization();
+        }
+      } catch (e) {}
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function () { setTimeout(trackFocus, 200); });
+    } else {
+      setTimeout(trackFocus, 200);
+    }
+    window.addEventListener('elisee:consent', trackFocus);
+  })();
+  </script>
+</body>
+</html>

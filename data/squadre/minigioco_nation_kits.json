@@ -1,0 +1,198 @@
+{
+  "IT": {
+    "c": "IT",
+    "n": "Italia",
+    "home": "immagini/kits-2d-nazioni/it/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - UEFA/italy1.png",
+    "bytes": 145438
+  },
+  "AR": {
+    "c": "AR",
+    "n": "Argentina",
+    "home": "immagini/kits-2d-nazioni/ar/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - CONMEBOL/argentina1.png",
+    "bytes": 135377
+  },
+  "BR": {
+    "c": "BR",
+    "n": "Brasile",
+    "home": "immagini/kits-2d-nazioni/br/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - CONMEBOL/brazil1.png",
+    "bytes": 194461
+  },
+  "FR": {
+    "c": "FR",
+    "n": "Francia",
+    "home": "immagini/kits-2d-nazioni/fr/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - UEFA/france1.png",
+    "bytes": 142161
+  },
+  "DE": {
+    "c": "DE",
+    "n": "Germania",
+    "home": "immagini/kits-2d-nazioni/de/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - UEFA/germany1.png",
+    "bytes": 92262
+  },
+  "ES": {
+    "c": "ES",
+    "n": "Spagna",
+    "home": "immagini/kits-2d-nazioni/es/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - UEFA/spain1.png",
+    "bytes": 108639
+  },
+  "PT": {
+    "c": "PT",
+    "n": "Portogallo",
+    "home": "immagini/kits-2d-nazioni/pt/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - UEFA/portugal1.png",
+    "bytes": 133263
+  },
+  "EN": {
+    "c": "EN",
+    "n": "Inghilterra",
+    "home": "immagini/kits-2d-nazioni/en/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - UEFA/england1.png",
+    "bytes": 92702
+  },
+  "NL": {
+    "c": "NL",
+    "n": "Paesi Bassi",
+    "home": "immagini/kits-2d-nazioni/nl/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - UEFA/netherlands1.png",
+    "bytes": 159256
+  },
+  "BE": {
+    "c": "BE",
+    "n": "Belgio",
+    "home": "immagini/kits-2d-nazioni/be/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - UEFA/belgium1.png",
+    "bytes": 125148
+  },
+  "HR": {
+    "c": "HR",
+    "n": "Croazia",
+    "home": "immagini/kits-2d-nazioni/hr/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - UEFA/croatia1.png",
+    "bytes": 175628
+  },
+  "PL": {
+    "c": "PL",
+    "n": "Polonia",
+    "home": "immagini/kits-2d-nazioni/pl/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - UEFA/poland1.png",
+    "bytes": 88874
+  },
+  "RS": {
+    "c": "RS",
+    "n": "Serbia",
+    "home": "immagini/kits-2d-nazioni/rs/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - UEFA/serbia1.png",
+    "bytes": 80147
+  },
+  "CH": {
+    "c": "CH",
+    "n": "Svizzera",
+    "home": "immagini/kits-2d-nazioni/ch/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - UEFA/switzerland1.png",
+    "bytes": 83967
+  },
+  "AT": {
+    "c": "AT",
+    "n": "Austria",
+    "home": "immagini/kits-2d-nazioni/at/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - UEFA/austria1.png",
+    "bytes": 77993
+  },
+  "RO": {
+    "c": "RO",
+    "n": "Romania",
+    "home": "immagini/kits-2d-nazioni/ro/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - UEFA/romania1.png",
+    "bytes": 106139
+  },
+  "AL": {
+    "c": "AL",
+    "n": "Albania",
+    "home": "immagini/kits-2d-nazioni/al/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - UEFA/albania1.png",
+    "bytes": 112936
+  },
+  "NG": {
+    "c": "NG",
+    "n": "Nigeria",
+    "home": "immagini/kits-2d-nazioni/ng/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - CAF/nigeria_1.png",
+    "bytes": 209763
+  },
+  "SN": {
+    "c": "SN",
+    "n": "Senegal",
+    "home": "immagini/kits-2d-nazioni/sn/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - CAF/senegal_1.png",
+    "bytes": 99250
+  },
+  "MA": {
+    "c": "MA",
+    "n": "Marocco",
+    "home": "immagini/kits-2d-nazioni/ma/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - CAF/morocco_1.png",
+    "bytes": 92475
+  },
+  "US": {
+    "c": "US",
+    "n": "Stati Uniti",
+    "home": "immagini/kits-2d-nazioni/us/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - CONCACAF/usa1.png",
+    "bytes": 149303
+  },
+  "MX": {
+    "c": "MX",
+    "n": "Messico",
+    "home": "immagini/kits-2d-nazioni/mx/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - CONCACAF/mexico1.png",
+    "bytes": 175745
+  },
+  "UY": {
+    "c": "UY",
+    "n": "Uruguay",
+    "home": "immagini/kits-2d-nazioni/uy/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - CONMEBOL/uruguay1.png",
+    "bytes": 152781
+  },
+  "CL": {
+    "c": "CL",
+    "n": "Cile",
+    "home": "immagini/kits-2d-nazioni/cl/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - CONMEBOL/chile1.png",
+    "bytes": 93117
+  },
+  "CO": {
+    "c": "CO",
+    "n": "Colombia",
+    "home": "immagini/kits-2d-nazioni/co/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - CONMEBOL/colombia1.png",
+    "bytes": 138616
+  },
+  "JP": {
+    "c": "JP",
+    "n": "Giappone",
+    "home": "immagini/kits-2d-nazioni/jp/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - Asia/japan_1.png",
+    "bytes": 184705
+  },
+  "KR": {
+    "c": "KR",
+    "n": "Corea del Sud",
+    "home": "immagini/kits-2d-nazioni/kr/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - Asia/southkorea_1.png",
+    "bytes": 155046
+  },
+  "TR": {
+    "c": "TR",
+    "n": "Turchia",
+    "home": "immagini/kits-2d-nazioni/tr/home.png",
+    "source": "ss_gaming:kits/kit23/Nations - UEFA/turkey1.png",
+    "bytes": 89023
+  }
+}

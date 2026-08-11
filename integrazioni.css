@@ -1,0 +1,75 @@
+﻿/* ELISEE SCOUT — Integrazioni PDF Hub */
+.es-int-root{position:fixed;inset:0;z-index:999990;background:rgba(3,6,12,.96);backdrop-filter:blur(18px);display:none!important;flex-direction:column;color:#e2e8f0;font-family:Inter,system-ui,sans-serif;overflow:hidden;pointer-events:none!important;visibility:hidden}
+.es-int-root.is-open{display:flex!important;pointer-events:auto!important;visibility:visible}
+.es-int-top{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.85rem 1.25rem;border-bottom:1px solid rgba(56,189,248,.22);background:linear-gradient(180deg,#0a1220,#070d18)}
+.es-int-brand{display:flex;align-items:center;gap:.75rem;min-width:0}
+.es-int-brand h2{margin:0;font-family:Outfit,Inter,sans-serif;font-size:1.05rem;font-weight:800;color:#fff}
+.es-int-brand p{margin:.15rem 0 0;font-size:.72rem;color:#94a3b8}
+.es-int-badge{display:inline-flex;padding:.2rem .55rem;border-radius:999px;font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.35);color:#7dd3fc}
+.es-int-close{border:1px solid rgba(248,113,113,.4);background:rgba(239,68,68,.12);color:#fca5a5;border-radius:10px;padding:.45rem .85rem;font-weight:700;cursor:pointer;font-size:.82rem}
+.es-int-close:hover{background:rgba(239,68,68,.22)}
+.es-int-body{flex:1;display:grid;grid-template-columns:240px 1fr;min-height:0}
+@media(max-width:860px){.es-int-body{grid-template-columns:1fr}.es-int-side{display:none}}
+.es-int-side{border-right:1px solid rgba(56,189,248,.15);background:#060b14;padding:.85rem .65rem;overflow-y:auto}
+.es-int-side button{width:100%;text-align:left;display:flex;align-items:flex-start;gap:.55rem;padding:.7rem .75rem;margin-bottom:.35rem;border-radius:12px;border:1px solid transparent;background:transparent;color:#cbd5e1;cursor:pointer}
+.es-int-side button:hover{background:rgba(56,189,248,.08);border-color:rgba(56,189,248,.2)}
+.es-int-side button.is-active{background:rgba(56,189,248,.14);border-color:rgba(56,189,248,.4);color:#fff}
+.es-int-side .es-int-nav-ico{width:28px;height:28px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:rgba(56,189,248,.12);color:#38bdf8;font-size:.85rem}
+.es-int-side strong{display:block;font-size:.82rem;font-weight:700}
+.es-int-side small{display:block;font-size:.68rem;color:#64748b;margin-top:.15rem;line-height:1.3}
+.es-int-main{overflow-y:auto;padding:1.25rem 1.4rem 2.5rem}
+.es-int-panel{display:none}
+.es-int-panel.is-active{display:block}
+.es-int-h{margin:0 0 .35rem;font-family:Outfit,Inter,sans-serif;font-size:1.45rem;font-weight:800;color:#fff}
+.es-int-sub{margin:0 0 1.25rem;color:#94a3b8;font-size:.9rem;line-height:1.5;max-width:72ch}
+.es-int-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.85rem}
+.es-int-card{background:linear-gradient(160deg,rgba(14,22,38,.95),rgba(8,12,22,.98));border:1px solid rgba(56,189,248,.18);border-radius:16px;padding:1.05rem 1.1rem;cursor:pointer;transition:.18s;text-align:left;color:inherit;width:100%}
+.es-int-card:hover{border-color:rgba(56,189,248,.45);transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.es-int-card h3{margin:0 0 .4rem;font-size:.98rem;color:#fff;font-weight:800}
+.es-int-card p{margin:0;font-size:.78rem;color:#94a3b8;line-height:1.45}
+.es-int-card .es-int-tag{display:inline-block;margin-top:.65rem;font-size:.65rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#7dd3fc}
+.es-int-row{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;margin-bottom:1rem}
+.es-int-btn{border:1px solid rgba(56,189,248,.4);background:rgba(2,132,199,.2);color:#e0f2fe;border-radius:10px;padding:.55rem .95rem;font-weight:700;font-size:.82rem;cursor:pointer}
+.es-int-btn:hover{background:rgba(2,132,199,.35)}
+.es-int-btn.primary{background:linear-gradient(135deg,#0284c7,#0369a1);border-color:#38bdf8;color:#fff}
+.es-int-btn.danger{background:rgba(239,68,68,.15);border-color:rgba(248,113,113,.45);color:#fecaca}
+.es-int-btn.ok{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.4);color:#bbf7d0}
+.es-int-btn.ghost{background:transparent;border-color:rgba(148,163,184,.35);color:#cbd5e1}
+.es-int-input,.es-int-select,.es-int-textarea{width:100%;background:#0b1220;border:1px solid rgba(56,189,248,.25);border-radius:10px;color:#e2e8f0;padding:.55rem .75rem;font-size:.85rem;font-family:inherit}
+.es-int-textarea{min-height:90px;resize:vertical}
+.es-int-label{display:block;font-size:.72rem;font-weight:700;color:#94a3b8;margin:0 0 .35rem;letter-spacing:.04em;text-transform:uppercase}
+.es-int-field{margin-bottom:.85rem}
+.es-int-table{width:100%;border-collapse:collapse;font-size:.8rem}
+.es-int-table th,.es-int-table td{border-bottom:1px solid rgba(148,163,184,.12);padding:.55rem .45rem;text-align:left}
+.es-int-table th{color:#7dd3fc;font-size:.7rem;text-transform:uppercase;letter-spacing:.04em}
+.es-int-pill{display:inline-block;padding:.15rem .5rem;border-radius:999px;font-size:.68rem;font-weight:700}
+.es-int-pill.red{background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.35)}
+.es-int-pill.yellow{background:rgba(245,158,11,.15);color:#fcd34d;border:1px solid rgba(245,158,11,.35)}
+.es-int-pill.green{background:rgba(34,197,94,.15);color:#86efac;border:1px solid rgba(34,197,94,.35)}
+.es-int-pill.blue{background:rgba(56,189,248,.12);color:#7dd3fc;border:1px solid rgba(56,189,248,.35)}
+.es-int-box{background:rgba(8,14,24,.9);border:1px solid rgba(56,189,248,.18);border-radius:14px;padding:1rem 1.1rem;margin-bottom:1rem}
+.es-team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.75rem}
+.es-team-card{border:1px solid rgba(56,189,248,.2);border-radius:14px;padding:.9rem;background:#0a1220;cursor:pointer;transition:.18s;text-align:left;color:inherit}
+.es-team-card:hover,.es-team-card.is-selected{border-color:#38bdf8;box-shadow:0 0 0 1px rgba(56,189,248,.35),0 10px 30px rgba(0,0,0,.3);transform:translateY(-2px)}
+.es-team-card .crest{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.85rem;margin-bottom:.55rem;color:#fff}
+.es-team-card h4{margin:0 0 .25rem;font-size:.9rem;color:#fff}
+.es-team-card span{font-size:.72rem;color:#94a3b8}
+.es-path{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0}
+.es-path-node{padding:.4rem .65rem;border-radius:999px;font-size:.72rem;font-weight:700;border:1px solid rgba(148,163,184,.25);color:#94a3b8;background:#0b1220}
+.es-path-node.done{border-color:rgba(34,197,94,.45);color:#86efac;background:rgba(34,197,94,.1)}
+.es-path-node.current{border-color:#38bdf8;color:#e0f2fe;background:rgba(2,132,199,.25);box-shadow:0 0 16px rgba(56,189,248,.25)}
+.es-radar-wrap{display:grid;grid-template-columns:280px 1fr;gap:1.25rem;align-items:start}
+@media(max-width:720px){.es-radar-wrap{grid-template-columns:1fr}}
+.es-radar-canvas{width:260px;height:260px;background:#070d16;border-radius:16px;border:1px solid rgba(56,189,248,.2)}
+.es-bivio{background:linear-gradient(160deg,#0f1a2c,#0a101c);border:1px solid rgba(56,189,248,.3);border-radius:16px;padding:1.15rem;margin-top:.75rem}
+.es-bivio h4{margin:0 0 .5rem;color:#fff;font-size:1rem}
+.es-bivio-opts{display:grid;gap:.5rem;margin-top:.85rem}
+.es-bivio-opts button{text-align:left;padding:.75rem .9rem;border-radius:12px;border:1px solid rgba(56,189,248,.25);background:rgba(2,132,199,.1);color:#e2e8f0;cursor:pointer;font-size:.85rem}
+.es-bivio-opts button:hover{border-color:#38bdf8;background:rgba(2,132,199,.22)}
+.es-kpi-strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.65rem;margin-bottom:1.1rem}
+.es-kpi{background:#0a1220;border:1px solid rgba(56,189,248,.18);border-radius:12px;padding:.75rem}
+.es-kpi .n{font-size:1.35rem;font-weight:800;color:#38bdf8;font-family:Outfit,sans-serif}
+.es-kpi .l{font-size:.68rem;color:#94a3b8;margin-top:.15rem}
+.wr-admin-trigger-card.es-int-admin-card{margin-top:1rem}
+.es-int-nav-chip{display:inline-flex;align-items:center;gap:.35rem;padding:.35rem .75rem;border-radius:999px;border:1px solid rgba(56,189,248,.4);background:rgba(2,132,199,.15);color:#e0f2fe;font-size:.78rem;font-weight:700;cursor:pointer;text-decoration:none}
+.es-int-nav-chip:hover{background:rgba(2,132,199,.28);color:#fff}

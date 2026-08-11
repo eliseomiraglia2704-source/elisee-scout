@@ -1,0 +1,1 @@
+C:\Users\Eliseo Miraglia\AppData\Local\Programs\Python\Python312-embed\python.exe: can't open file 'D:\\UsersData\\Eliseo': [Errno 2] No such file or directory

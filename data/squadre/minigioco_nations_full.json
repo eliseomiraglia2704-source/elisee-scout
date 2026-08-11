@@ -1,0 +1,1746 @@
+[
+  {
+    "n": "Italia",
+    "c": "IT",
+    "o": "immagini/nazioni-loghi/it.png",
+    "f": "🇮🇹",
+    "k": "immagini/kits-2d-nazioni/it/home.png",
+    "slug": "it"
+  },
+  {
+    "n": "Afghanistan",
+    "c": "AF",
+    "o": "https://flagcdn.com/w80/af.png",
+    "f": "🇦🇫",
+    "k": "immagini/kits-2d-nazioni/af/home.png",
+    "slug": "af"
+  },
+  {
+    "n": "Albania",
+    "c": "AL",
+    "o": "immagini/nazioni-loghi/al.png",
+    "f": "🇦🇱",
+    "k": "immagini/kits-2d-nazioni/al/home.png",
+    "slug": "al"
+  },
+  {
+    "n": "Algeria",
+    "c": "DZ",
+    "o": "https://flagcdn.com/w80/dz.png",
+    "f": "🇩🇿",
+    "k": "immagini/kits-2d-nazioni/dz/home.png",
+    "slug": "dz"
+  },
+  {
+    "n": "Americansamoa",
+    "c": "AME",
+    "o": "https://flagcdn.com/w80/ame.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/ame/home.png",
+    "slug": "ame"
+  },
+  {
+    "n": "Andorra",
+    "c": "AD",
+    "o": "https://flagcdn.com/w80/ad.png",
+    "f": "🇦🇩",
+    "k": "immagini/kits-2d-nazioni/ad/home.png",
+    "slug": "ad"
+  },
+  {
+    "n": "Angola",
+    "c": "AO",
+    "o": "https://flagcdn.com/w80/ao.png",
+    "f": "🇦🇴",
+    "k": "immagini/kits-2d-nazioni/ao/home.png",
+    "slug": "ao"
+  },
+  {
+    "n": "Anguilla",
+    "c": "ANG",
+    "o": "https://flagcdn.com/w80/ang.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/ang/home.png",
+    "slug": "ang"
+  },
+  {
+    "n": "Antiguabarbuda",
+    "c": "ANT",
+    "o": "https://flagcdn.com/w80/ant.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/ant/home.png",
+    "slug": "ant"
+  },
+  {
+    "n": "Arabia Saudita",
+    "c": "SA",
+    "o": "https://flagcdn.com/w80/sa.png",
+    "f": "🇸🇦",
+    "k": "immagini/kits-2d-nazioni/sa/home.png",
+    "slug": "sa"
+  },
+  {
+    "n": "Argentina",
+    "c": "AR",
+    "o": "immagini/nazioni-loghi/ar.png",
+    "f": "🇦🇷",
+    "k": "immagini/kits-2d-nazioni/ar/home.png",
+    "slug": "ar"
+  },
+  {
+    "n": "Armenia",
+    "c": "AM",
+    "o": "https://flagcdn.com/w80/am.png",
+    "f": "🇦🇲",
+    "k": "immagini/kits-2d-nazioni/am/home.png",
+    "slug": "am"
+  },
+  {
+    "n": "Aruba",
+    "c": "ARU",
+    "o": "https://flagcdn.com/w80/aru.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/aru/home.png",
+    "slug": "aru"
+  },
+  {
+    "n": "Australia",
+    "c": "AU",
+    "o": "https://flagcdn.com/w80/au.png",
+    "f": "🇦🇺",
+    "k": "immagini/kits-2d-nazioni/au/home.png",
+    "slug": "au"
+  },
+  {
+    "n": "Austria",
+    "c": "AT",
+    "o": "immagini/nazioni-loghi/at.png",
+    "f": "🇦🇹",
+    "k": "immagini/kits-2d-nazioni/at/home.png",
+    "slug": "at"
+  },
+  {
+    "n": "Azerbaigian",
+    "c": "AZ",
+    "o": "https://flagcdn.com/w80/az.png",
+    "f": "🇦🇿",
+    "k": "immagini/kits-2d-nazioni/az/home.png",
+    "slug": "az"
+  },
+  {
+    "n": "Bahamas",
+    "c": "BAH",
+    "o": "https://flagcdn.com/w80/bah.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/bah/home.png",
+    "slug": "bah"
+  },
+  {
+    "n": "Bahrein",
+    "c": "BH",
+    "o": "https://flagcdn.com/w80/bh.png",
+    "f": "🇧🇭",
+    "k": "immagini/kits-2d-nazioni/bh/home.png",
+    "slug": "bh"
+  },
+  {
+    "n": "Bangladesh",
+    "c": "BD",
+    "o": "https://flagcdn.com/w80/bd.png",
+    "f": "🇧🇩",
+    "k": "immagini/kits-2d-nazioni/bd/home.png",
+    "slug": "bd"
+  },
+  {
+    "n": "Barbados",
+    "c": "BAR",
+    "o": "https://flagcdn.com/w80/bar.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/bar/home.png",
+    "slug": "bar"
+  },
+  {
+    "n": "Belgio",
+    "c": "BE",
+    "o": "immagini/nazioni-loghi/be.png",
+    "f": "🇧🇪",
+    "k": "immagini/kits-2d-nazioni/be/home.png",
+    "slug": "be"
+  },
+  {
+    "n": "Belize",
+    "c": "BEL",
+    "o": "https://flagcdn.com/w80/bel.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/bel/home.png",
+    "slug": "bel"
+  },
+  {
+    "n": "Benin",
+    "c": "BJ",
+    "o": "https://flagcdn.com/w80/bj.png",
+    "f": "🇧🇯",
+    "k": "immagini/kits-2d-nazioni/bj/home.png",
+    "slug": "bj"
+  },
+  {
+    "n": "Bermuda",
+    "c": "BER",
+    "o": "https://flagcdn.com/w80/ber.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/ber/home.png",
+    "slug": "ber"
+  },
+  {
+    "n": "Bhutan",
+    "c": "BHU",
+    "o": "https://flagcdn.com/w80/bhu.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/bhu/home.png",
+    "slug": "bhu"
+  },
+  {
+    "n": "Bielorussia",
+    "c": "BY",
+    "o": "https://flagcdn.com/w80/by.png",
+    "f": "🇧🇾",
+    "k": "immagini/kits-2d-nazioni/by/home.png",
+    "slug": "by"
+  },
+  {
+    "n": "Bolivia",
+    "c": "BO",
+    "o": "https://flagcdn.com/w80/bo.png",
+    "f": "🇧🇴",
+    "k": "immagini/kits-2d-nazioni/bo/home.png",
+    "slug": "bo"
+  },
+  {
+    "n": "Bonaire",
+    "c": "BON",
+    "o": "https://flagcdn.com/w80/bon.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/bon/home.png",
+    "slug": "bon"
+  },
+  {
+    "n": "Bosnia ed Erzegovina",
+    "c": "BA",
+    "o": "https://flagcdn.com/w80/ba.png",
+    "f": "🇧🇦",
+    "k": "immagini/kits-2d-nazioni/ba/home.png",
+    "slug": "ba"
+  },
+  {
+    "n": "Botswana",
+    "c": "BOT",
+    "o": "https://flagcdn.com/w80/bot.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/bot/home.png",
+    "slug": "bot"
+  },
+  {
+    "n": "Brasile",
+    "c": "BR",
+    "o": "immagini/nazioni-loghi/br.png",
+    "f": "🇧🇷",
+    "k": "immagini/kits-2d-nazioni/br/home.png",
+    "slug": "br"
+  },
+  {
+    "n": "Britishvirginislands",
+    "c": "BRI",
+    "o": "https://flagcdn.com/w80/bri.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/bri/home.png",
+    "slug": "bri"
+  },
+  {
+    "n": "Brunei",
+    "c": "BRU",
+    "o": "https://flagcdn.com/w80/bru.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/bru/home.png",
+    "slug": "bru"
+  },
+  {
+    "n": "Bulgaria",
+    "c": "BG",
+    "o": "https://flagcdn.com/w80/bg.png",
+    "f": "🇧🇬",
+    "k": "immagini/kits-2d-nazioni/bg/home.png",
+    "slug": "bg"
+  },
+  {
+    "n": "Burkina Faso",
+    "c": "BF",
+    "o": "https://flagcdn.com/w80/bf.png",
+    "f": "🇧🇫",
+    "k": "immagini/kits-2d-nazioni/bf/home.png",
+    "slug": "bf"
+  },
+  {
+    "n": "Burundi",
+    "c": "BUR",
+    "o": "https://flagcdn.com/w80/bur.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/bur/home.png",
+    "slug": "bur"
+  },
+  {
+    "n": "Cambogia",
+    "c": "KH",
+    "o": "https://flagcdn.com/w80/kh.png",
+    "f": "🇰🇭",
+    "k": "immagini/kits-2d-nazioni/kh/home.png",
+    "slug": "kh"
+  },
+  {
+    "n": "Camerun",
+    "c": "CM",
+    "o": "https://flagcdn.com/w80/cm.png",
+    "f": "🇨🇲",
+    "k": "immagini/kits-2d-nazioni/cm/home.png",
+    "slug": "cm"
+  },
+  {
+    "n": "Canada",
+    "c": "CA",
+    "o": "https://flagcdn.com/w80/ca.png",
+    "f": "🇨🇦",
+    "k": "immagini/kits-2d-nazioni/ca/home.png",
+    "slug": "ca"
+  },
+  {
+    "n": "Capo Verde",
+    "c": "CV",
+    "o": "https://flagcdn.com/w80/cv.png",
+    "f": "🇨🇻",
+    "k": "immagini/kits-2d-nazioni/cv/home.png",
+    "slug": "cv"
+  },
+  {
+    "n": "Caymanislands",
+    "c": "CAY",
+    "o": "https://flagcdn.com/w80/cay.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/cay/home.png",
+    "slug": "cay"
+  },
+  {
+    "n": "Central African Republic",
+    "c": "CEN",
+    "o": "https://flagcdn.com/w80/cen.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/cen/home.png",
+    "slug": "cen"
+  },
+  {
+    "n": "Chad",
+    "c": "CHA",
+    "o": "https://flagcdn.com/w80/cha.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/cha/home.png",
+    "slug": "cha"
+  },
+  {
+    "n": "Chinesetaipei",
+    "c": "CHI",
+    "o": "https://flagcdn.com/w80/chi.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/chi/home.png",
+    "slug": "chi"
+  },
+  {
+    "n": "Cile",
+    "c": "CL",
+    "o": "immagini/nazioni-loghi/cl.png",
+    "f": "🇨🇱",
+    "k": "immagini/kits-2d-nazioni/cl/home.png",
+    "slug": "cl"
+  },
+  {
+    "n": "Cina",
+    "c": "CN",
+    "o": "https://flagcdn.com/w80/cn.png",
+    "f": "🇨🇳",
+    "k": "immagini/kits-2d-nazioni/cn/home.png",
+    "slug": "cn"
+  },
+  {
+    "n": "Cipro",
+    "c": "CY",
+    "o": "https://flagcdn.com/w80/cy.png",
+    "f": "🇨🇾",
+    "k": "immagini/kits-2d-nazioni/cy/home.png",
+    "slug": "cy"
+  },
+  {
+    "n": "Colombia",
+    "c": "CO",
+    "o": "immagini/nazioni-loghi/co.png",
+    "f": "🇨🇴",
+    "k": "immagini/kits-2d-nazioni/co/home.png",
+    "slug": "co"
+  },
+  {
+    "n": "Comoros",
+    "c": "COM",
+    "o": "https://flagcdn.com/w80/com.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/com/home.png",
+    "slug": "com"
+  },
+  {
+    "n": "Congo",
+    "c": "CG",
+    "o": "https://flagcdn.com/w80/cg.png",
+    "f": "🇨🇬",
+    "k": "immagini/kits-2d-nazioni/cg/home.png",
+    "slug": "cg"
+  },
+  {
+    "n": "Cookislands",
+    "c": "COO",
+    "o": "https://flagcdn.com/w80/coo.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/coo/home.png",
+    "slug": "coo"
+  },
+  {
+    "n": "Corea del Nord",
+    "c": "KP",
+    "o": "https://flagcdn.com/w80/kp.png",
+    "f": "🇰🇵",
+    "k": "immagini/kits-2d-nazioni/kp/home.png",
+    "slug": "kp"
+  },
+  {
+    "n": "Corea del Sud",
+    "c": "KR",
+    "o": "immagini/nazioni-loghi/kr.png",
+    "f": "🇰🇷",
+    "k": "immagini/kits-2d-nazioni/kr/home.png",
+    "slug": "kr"
+  },
+  {
+    "n": "Costa Rica",
+    "c": "CR",
+    "o": "https://flagcdn.com/w80/cr.png",
+    "f": "🇨🇷",
+    "k": "immagini/kits-2d-nazioni/cr/home.png",
+    "slug": "cr"
+  },
+  {
+    "n": "Costa d'Avorio",
+    "c": "CI",
+    "o": "https://flagcdn.com/w80/ci.png",
+    "f": "🇨🇮",
+    "k": "immagini/kits-2d-nazioni/ci/home.png",
+    "slug": "ci"
+  },
+  {
+    "n": "Croazia",
+    "c": "HR",
+    "o": "immagini/nazioni-loghi/hr.png",
+    "f": "🇭🇷",
+    "k": "immagini/kits-2d-nazioni/hr/home.png",
+    "slug": "hr"
+  },
+  {
+    "n": "Cuba",
+    "c": "CU",
+    "o": "https://flagcdn.com/w80/cu.png",
+    "f": "🇨🇺",
+    "k": "immagini/kits-2d-nazioni/cu/home.png",
+    "slug": "cu"
+  },
+  {
+    "n": "Curaçao",
+    "c": "CW",
+    "o": "https://flagcdn.com/w80/cw.png",
+    "f": "🇨🇼",
+    "k": "immagini/kits-2d-nazioni/cw/home.png",
+    "slug": "cw"
+  },
+  {
+    "n": "Danimarca",
+    "c": "DK",
+    "o": "https://flagcdn.com/w80/dk.png",
+    "f": "🇩🇰",
+    "k": "immagini/kits-2d-nazioni/dk/home.png",
+    "slug": "dk"
+  },
+  {
+    "n": "Djibouti",
+    "c": "DJI",
+    "o": "https://flagcdn.com/w80/dji.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/dji/home.png",
+    "slug": "dji"
+  },
+  {
+    "n": "Dominica",
+    "c": "DOM",
+    "o": "https://flagcdn.com/w80/dom.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/dom/home.png",
+    "slug": "dom"
+  },
+  {
+    "n": "Ecuador",
+    "c": "EC",
+    "o": "https://flagcdn.com/w80/ec.png",
+    "f": "🇪🇨",
+    "k": "immagini/kits-2d-nazioni/ec/home.png",
+    "slug": "ec"
+  },
+  {
+    "n": "Egitto",
+    "c": "EG",
+    "o": "https://flagcdn.com/w80/eg.png",
+    "f": "🇪🇬",
+    "k": "immagini/kits-2d-nazioni/eg/home.png",
+    "slug": "eg"
+  },
+  {
+    "n": "El Salvador",
+    "c": "SV",
+    "o": "https://flagcdn.com/w80/sv.png",
+    "f": "🇸🇻",
+    "k": "immagini/kits-2d-nazioni/sv/home.png",
+    "slug": "sv"
+  },
+  {
+    "n": "Emirati Arabi",
+    "c": "AE",
+    "o": "https://flagcdn.com/w80/ae.png",
+    "f": "🇦🇪",
+    "k": "immagini/kits-2d-nazioni/ae/home.png",
+    "slug": "ae"
+  },
+  {
+    "n": "Equatorial Guinea",
+    "c": "EQU",
+    "o": "https://flagcdn.com/w80/equ.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/equ/home.png",
+    "slug": "equ"
+  },
+  {
+    "n": "Eritrea",
+    "c": "ERI",
+    "o": "https://flagcdn.com/w80/eri.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/eri/home.png",
+    "slug": "eri"
+  },
+  {
+    "n": "Estonia",
+    "c": "EE",
+    "o": "https://flagcdn.com/w80/ee.png",
+    "f": "🇪🇪",
+    "k": "immagini/kits-2d-nazioni/ee/home.png",
+    "slug": "ee"
+  },
+  {
+    "n": "Eswatini",
+    "c": "ESW",
+    "o": "https://flagcdn.com/w80/esw.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/esw/home.png",
+    "slug": "esw"
+  },
+  {
+    "n": "Ethiopia",
+    "c": "ETH",
+    "o": "https://flagcdn.com/w80/eth.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/eth/home.png",
+    "slug": "eth"
+  },
+  {
+    "n": "Figi",
+    "c": "FJ",
+    "o": "https://flagcdn.com/w80/fj.png",
+    "f": "🇫🇯",
+    "k": "immagini/kits-2d-nazioni/fj/home.png",
+    "slug": "fj"
+  },
+  {
+    "n": "Filippine",
+    "c": "PH",
+    "o": "https://flagcdn.com/w80/ph.png",
+    "f": "🇵🇭",
+    "k": "immagini/kits-2d-nazioni/ph/home.png",
+    "slug": "ph"
+  },
+  {
+    "n": "Finlandia",
+    "c": "FI",
+    "o": "https://flagcdn.com/w80/fi.png",
+    "f": "🇫🇮",
+    "k": "immagini/kits-2d-nazioni/fi/home.png",
+    "slug": "fi"
+  },
+  {
+    "n": "Francia",
+    "c": "FR",
+    "o": "immagini/nazioni-loghi/fr.png",
+    "f": "🇫🇷",
+    "k": "immagini/kits-2d-nazioni/fr/home.png",
+    "slug": "fr"
+  },
+  {
+    "n": "Frenchguiana",
+    "c": "FRE",
+    "o": "https://flagcdn.com/w80/fre.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/fre/home.png",
+    "slug": "fre"
+  },
+  {
+    "n": "Gabon",
+    "c": "GA",
+    "o": "https://flagcdn.com/w80/ga.png",
+    "f": "🇬🇦",
+    "k": "immagini/kits-2d-nazioni/ga/home.png",
+    "slug": "ga"
+  },
+  {
+    "n": "Galles",
+    "c": "WLS",
+    "o": "https://flagcdn.com/w80/gb-wls.png",
+    "f": "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
+    "k": "immagini/kits-2d-nazioni/wls/home.png",
+    "slug": "wls"
+  },
+  {
+    "n": "Gambia",
+    "c": "GAM",
+    "o": "https://flagcdn.com/w80/gam.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/gam/home.png",
+    "slug": "gam"
+  },
+  {
+    "n": "Georgia",
+    "c": "GE",
+    "o": "https://flagcdn.com/w80/ge.png",
+    "f": "🇬🇪",
+    "k": "immagini/kits-2d-nazioni/ge/home.png",
+    "slug": "ge"
+  },
+  {
+    "n": "Germania",
+    "c": "DE",
+    "o": "immagini/nazioni-loghi/de.png",
+    "f": "🇩🇪",
+    "k": "immagini/kits-2d-nazioni/de/home.png",
+    "slug": "de"
+  },
+  {
+    "n": "Ghana",
+    "c": "GH",
+    "o": "https://flagcdn.com/w80/gh.png",
+    "f": "🇬🇭",
+    "k": "immagini/kits-2d-nazioni/gh/home.png",
+    "slug": "gh"
+  },
+  {
+    "n": "Giamaica",
+    "c": "JM",
+    "o": "https://flagcdn.com/w80/jm.png",
+    "f": "🇯🇲",
+    "k": "immagini/kits-2d-nazioni/jm/home.png",
+    "slug": "jm"
+  },
+  {
+    "n": "Giappone",
+    "c": "JP",
+    "o": "immagini/nazioni-loghi/jp.png",
+    "f": "🇯🇵",
+    "k": "immagini/kits-2d-nazioni/jp/home.png",
+    "slug": "jp"
+  },
+  {
+    "n": "Giordania",
+    "c": "JO",
+    "o": "https://flagcdn.com/w80/jo.png",
+    "f": "🇯🇴",
+    "k": "immagini/kits-2d-nazioni/jo/home.png",
+    "slug": "jo"
+  },
+  {
+    "n": "Grecia",
+    "c": "GR",
+    "o": "https://flagcdn.com/w80/gr.png",
+    "f": "🇬🇷",
+    "k": "immagini/kits-2d-nazioni/gr/home.png",
+    "slug": "gr"
+  },
+  {
+    "n": "Grenada",
+    "c": "GRE",
+    "o": "https://flagcdn.com/w80/gre.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/gre/home.png",
+    "slug": "gre"
+  },
+  {
+    "n": "Guadalupe",
+    "c": "GUA",
+    "o": "https://flagcdn.com/w80/gua.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/gua/home.png",
+    "slug": "gua"
+  },
+  {
+    "n": "Guam",
+    "c": "GUA",
+    "o": "https://flagcdn.com/w80/guam.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/guam/home.png",
+    "slug": "guam"
+  },
+  {
+    "n": "Guatemala",
+    "c": "GT",
+    "o": "https://flagcdn.com/w80/gt.png",
+    "f": "🇬🇹",
+    "k": "immagini/kits-2d-nazioni/gt/home.png",
+    "slug": "gt"
+  },
+  {
+    "n": "Guinea",
+    "c": "GN",
+    "o": "https://flagcdn.com/w80/gn.png",
+    "f": "🇬🇳",
+    "k": "immagini/kits-2d-nazioni/gn/home.png",
+    "slug": "gn"
+  },
+  {
+    "n": "Guinea Bissau",
+    "c": "GUI",
+    "o": "https://flagcdn.com/w80/gui.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/gui/home.png",
+    "slug": "gui"
+  },
+  {
+    "n": "Guyana",
+    "c": "GUY",
+    "o": "https://flagcdn.com/w80/guy.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/guy/home.png",
+    "slug": "guy"
+  },
+  {
+    "n": "Haiti",
+    "c": "HT",
+    "o": "https://flagcdn.com/w80/ht.png",
+    "f": "🇭🇹",
+    "k": "immagini/kits-2d-nazioni/ht/home.png",
+    "slug": "ht"
+  },
+  {
+    "n": "Honduras",
+    "c": "HN",
+    "o": "https://flagcdn.com/w80/hn.png",
+    "f": "🇭🇳",
+    "k": "immagini/kits-2d-nazioni/hn/home.png",
+    "slug": "hn"
+  },
+  {
+    "n": "Hong Kong",
+    "c": "HK",
+    "o": "https://flagcdn.com/w80/hk.png",
+    "f": "🇭🇰",
+    "k": "immagini/kits-2d-nazioni/hk/home.png",
+    "slug": "hk"
+  },
+  {
+    "n": "India",
+    "c": "IN",
+    "o": "https://flagcdn.com/w80/in.png",
+    "f": "🇮🇳",
+    "k": "immagini/kits-2d-nazioni/in/home.png",
+    "slug": "in"
+  },
+  {
+    "n": "Indonesia",
+    "c": "ID",
+    "o": "https://flagcdn.com/w80/id.png",
+    "f": "🇮🇩",
+    "k": "immagini/kits-2d-nazioni/id/home.png",
+    "slug": "id"
+  },
+  {
+    "n": "Inghilterra",
+    "c": "EN",
+    "o": "immagini/nazioni-loghi/en.png",
+    "f": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "k": "immagini/kits-2d-nazioni/en/home.png",
+    "slug": "en"
+  },
+  {
+    "n": "Iran",
+    "c": "IR",
+    "o": "https://flagcdn.com/w80/ir.png",
+    "f": "🇮🇷",
+    "k": "immagini/kits-2d-nazioni/ir/home.png",
+    "slug": "ir"
+  },
+  {
+    "n": "Iraq",
+    "c": "IQ",
+    "o": "https://flagcdn.com/w80/iq.png",
+    "f": "🇮🇶",
+    "k": "immagini/kits-2d-nazioni/iq/home.png",
+    "slug": "iq"
+  },
+  {
+    "n": "Irlanda",
+    "c": "IE",
+    "o": "https://flagcdn.com/w80/ie.png",
+    "f": "🇮🇪",
+    "k": "immagini/kits-2d-nazioni/ie/home.png",
+    "slug": "ie"
+  },
+  {
+    "n": "Irlanda del Nord",
+    "c": "NX",
+    "o": "https://flagcdn.com/w80/gb-nir.png",
+    "f": "🇬🇧",
+    "k": "immagini/kits-2d-nazioni/nx/home.png",
+    "slug": "nx"
+  },
+  {
+    "n": "Islanda",
+    "c": "IS",
+    "o": "https://flagcdn.com/w80/is.png",
+    "f": "🇮🇸",
+    "k": "immagini/kits-2d-nazioni/is/home.png",
+    "slug": "is"
+  },
+  {
+    "n": "Isole Fær Øer",
+    "c": "FO",
+    "o": "https://flagcdn.com/w80/fo.png",
+    "f": "🇫🇴",
+    "k": "immagini/kits-2d-nazioni/fo/home.png",
+    "slug": "fo"
+  },
+  {
+    "n": "Isole Salomone",
+    "c": "SB",
+    "o": "https://flagcdn.com/w80/sb.png",
+    "f": "🇸🇧",
+    "k": "immagini/kits-2d-nazioni/sb/home.png",
+    "slug": "sb"
+  },
+  {
+    "n": "Israele",
+    "c": "IL",
+    "o": "https://flagcdn.com/w80/il.png",
+    "f": "🇮🇱",
+    "k": "immagini/kits-2d-nazioni/il/home.png",
+    "slug": "il"
+  },
+  {
+    "n": "Kazakistan",
+    "c": "KZ",
+    "o": "https://flagcdn.com/w80/kz.png",
+    "f": "🇰🇿",
+    "k": "immagini/kits-2d-nazioni/kz/home.png",
+    "slug": "kz"
+  },
+  {
+    "n": "Kenya",
+    "c": "KE",
+    "o": "https://flagcdn.com/w80/ke.png",
+    "f": "🇰🇪",
+    "k": "immagini/kits-2d-nazioni/ke/home.png",
+    "slug": "ke"
+  },
+  {
+    "n": "Kirghizistan",
+    "c": "KG",
+    "o": "https://flagcdn.com/w80/kg.png",
+    "f": "🇰🇬",
+    "k": "immagini/kits-2d-nazioni/kg/home.png",
+    "slug": "kg"
+  },
+  {
+    "n": "Kosovo",
+    "c": "XK",
+    "o": "https://flagcdn.com/w80/xk.png",
+    "f": "🇽🇰",
+    "k": "immagini/kits-2d-nazioni/xk/home.png",
+    "slug": "xk"
+  },
+  {
+    "n": "Kuwait",
+    "c": "KW",
+    "o": "https://flagcdn.com/w80/kw.png",
+    "f": "🇰🇼",
+    "k": "immagini/kits-2d-nazioni/kw/home.png",
+    "slug": "kw"
+  },
+  {
+    "n": "Laos",
+    "c": "LA",
+    "o": "https://flagcdn.com/w80/la.png",
+    "f": "🇱🇦",
+    "k": "immagini/kits-2d-nazioni/la/home.png",
+    "slug": "la"
+  },
+  {
+    "n": "Lesotho",
+    "c": "LES",
+    "o": "https://flagcdn.com/w80/les.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/les/home.png",
+    "slug": "les"
+  },
+  {
+    "n": "Lettonia",
+    "c": "LV",
+    "o": "https://flagcdn.com/w80/lv.png",
+    "f": "🇱🇻",
+    "k": "immagini/kits-2d-nazioni/lv/home.png",
+    "slug": "lv"
+  },
+  {
+    "n": "Libano",
+    "c": "LB",
+    "o": "https://flagcdn.com/w80/lb.png",
+    "f": "🇱🇧",
+    "k": "immagini/kits-2d-nazioni/lb/home.png",
+    "slug": "lb"
+  },
+  {
+    "n": "Liberia",
+    "c": "LIB",
+    "o": "https://flagcdn.com/w80/lib.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/lib/home.png",
+    "slug": "lib"
+  },
+  {
+    "n": "Libia",
+    "c": "LY",
+    "o": "https://flagcdn.com/w80/ly.png",
+    "f": "🇱🇾",
+    "k": "immagini/kits-2d-nazioni/ly/home.png",
+    "slug": "ly"
+  },
+  {
+    "n": "Liechtenstein",
+    "c": "LI",
+    "o": "https://flagcdn.com/w80/li.png",
+    "f": "🇱🇮",
+    "k": "immagini/kits-2d-nazioni/li/home.png",
+    "slug": "li"
+  },
+  {
+    "n": "Lituania",
+    "c": "LT",
+    "o": "https://flagcdn.com/w80/lt.png",
+    "f": "🇱🇹",
+    "k": "immagini/kits-2d-nazioni/lt/home.png",
+    "slug": "lt"
+  },
+  {
+    "n": "Lussemburgo",
+    "c": "LU",
+    "o": "https://flagcdn.com/w80/lu.png",
+    "f": "🇱🇺",
+    "k": "immagini/kits-2d-nazioni/lu/home.png",
+    "slug": "lu"
+  },
+  {
+    "n": "Macau",
+    "c": "MAC",
+    "o": "https://flagcdn.com/w80/mac.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/mac/home.png",
+    "slug": "mac"
+  },
+  {
+    "n": "Macedonia del Nord",
+    "c": "MK",
+    "o": "https://flagcdn.com/w80/mk.png",
+    "f": "🇲🇰",
+    "k": "immagini/kits-2d-nazioni/mk/home.png",
+    "slug": "mk"
+  },
+  {
+    "n": "Madagascar",
+    "c": "MG",
+    "o": "https://flagcdn.com/w80/mg.png",
+    "f": "🇲🇬",
+    "k": "immagini/kits-2d-nazioni/mg/home.png",
+    "slug": "mg"
+  },
+  {
+    "n": "Malawi",
+    "c": "MAL",
+    "o": "https://flagcdn.com/w80/mal.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/mal/home.png",
+    "slug": "mal"
+  },
+  {
+    "n": "Malaysia",
+    "c": "MY",
+    "o": "https://flagcdn.com/w80/my.png",
+    "f": "🇲🇾",
+    "k": "immagini/kits-2d-nazioni/my/home.png",
+    "slug": "my"
+  },
+  {
+    "n": "Maldive",
+    "c": "MV",
+    "o": "https://flagcdn.com/w80/mv.png",
+    "f": "🇲🇻",
+    "k": "immagini/kits-2d-nazioni/mv/home.png",
+    "slug": "mv"
+  },
+  {
+    "n": "Mali",
+    "c": "ML",
+    "o": "https://flagcdn.com/w80/ml.png",
+    "f": "🇲🇱",
+    "k": "immagini/kits-2d-nazioni/ml/home.png",
+    "slug": "ml"
+  },
+  {
+    "n": "Marocco",
+    "c": "MA",
+    "o": "immagini/nazioni-loghi/ma.png",
+    "f": "🇲🇦",
+    "k": "immagini/kits-2d-nazioni/ma/home.png",
+    "slug": "ma"
+  },
+  {
+    "n": "Marocco",
+    "c": "MA",
+    "o": "https://flagcdn.com/w80/ma.png",
+    "f": "🇲🇦",
+    "k": "immagini/kits-2d-nazioni/morocco/home.png",
+    "slug": "morocco"
+  },
+  {
+    "n": "Martinique",
+    "c": "MAR",
+    "o": "https://flagcdn.com/w80/mar.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/mar/home.png",
+    "slug": "mar"
+  },
+  {
+    "n": "Mauritania",
+    "c": "MAU",
+    "o": "https://flagcdn.com/w80/mau.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/mau/home.png",
+    "slug": "mau"
+  },
+  {
+    "n": "Mauritius",
+    "c": "MAU",
+    "o": "https://flagcdn.com/w80/mauritius.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/mauritius/home.png",
+    "slug": "mauritius"
+  },
+  {
+    "n": "Messico",
+    "c": "MX",
+    "o": "immagini/nazioni-loghi/mx.png",
+    "f": "🇲🇽",
+    "k": "immagini/kits-2d-nazioni/mx/home.png",
+    "slug": "mx"
+  },
+  {
+    "n": "Moldavia",
+    "c": "MD",
+    "o": "https://flagcdn.com/w80/md.png",
+    "f": "🇲🇩",
+    "k": "immagini/kits-2d-nazioni/md/home.png",
+    "slug": "md"
+  },
+  {
+    "n": "Mongolia",
+    "c": "MN",
+    "o": "https://flagcdn.com/w80/mn.png",
+    "f": "🇲🇳",
+    "k": "immagini/kits-2d-nazioni/mn/home.png",
+    "slug": "mn"
+  },
+  {
+    "n": "Montenegro",
+    "c": "ME",
+    "o": "https://flagcdn.com/w80/me.png",
+    "f": "🇲🇪",
+    "k": "immagini/kits-2d-nazioni/me/home.png",
+    "slug": "me"
+  },
+  {
+    "n": "Montserrat",
+    "c": "MON",
+    "o": "https://flagcdn.com/w80/mon.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/mon/home.png",
+    "slug": "mon"
+  },
+  {
+    "n": "Mozambique",
+    "c": "MOZ",
+    "o": "https://flagcdn.com/w80/moz.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/moz/home.png",
+    "slug": "moz"
+  },
+  {
+    "n": "Myanmar",
+    "c": "MM",
+    "o": "https://flagcdn.com/w80/mm.png",
+    "f": "🇲🇲",
+    "k": "immagini/kits-2d-nazioni/mm/home.png",
+    "slug": "mm"
+  },
+  {
+    "n": "Namibia",
+    "c": "NAM",
+    "o": "https://flagcdn.com/w80/nam.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/nam/home.png",
+    "slug": "nam"
+  },
+  {
+    "n": "Nepal",
+    "c": "NP",
+    "o": "https://flagcdn.com/w80/np.png",
+    "f": "🇳🇵",
+    "k": "immagini/kits-2d-nazioni/np/home.png",
+    "slug": "np"
+  },
+  {
+    "n": "Nicaragua",
+    "c": "NI",
+    "o": "https://flagcdn.com/w80/ni.png",
+    "f": "🇳🇮",
+    "k": "immagini/kits-2d-nazioni/ni/home.png",
+    "slug": "ni"
+  },
+  {
+    "n": "Niger",
+    "c": "NIG",
+    "o": "https://flagcdn.com/w80/nig.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/nig/home.png",
+    "slug": "nig"
+  },
+  {
+    "n": "Nigeria",
+    "c": "NG",
+    "o": "immagini/nazioni-loghi/ng.png",
+    "f": "🇳🇬",
+    "k": "immagini/kits-2d-nazioni/ng/home.png",
+    "slug": "ng"
+  },
+  {
+    "n": "Northernmariana",
+    "c": "NOR",
+    "o": "https://flagcdn.com/w80/nor.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/nor/home.png",
+    "slug": "nor"
+  },
+  {
+    "n": "Norvegia",
+    "c": "NO",
+    "o": "https://flagcdn.com/w80/no.png",
+    "f": "🇳🇴",
+    "k": "immagini/kits-2d-nazioni/no/home.png",
+    "slug": "no"
+  },
+  {
+    "n": "Nuova Caledonia",
+    "c": "NC",
+    "o": "https://flagcdn.com/w80/nc.png",
+    "f": "🇳🇨",
+    "k": "immagini/kits-2d-nazioni/nc/home.png",
+    "slug": "nc"
+  },
+  {
+    "n": "Nuova Zelanda",
+    "c": "NZ",
+    "o": "https://flagcdn.com/w80/nz.png",
+    "f": "🇳🇿",
+    "k": "immagini/kits-2d-nazioni/nz/home.png",
+    "slug": "nz"
+  },
+  {
+    "n": "Oman",
+    "c": "OM",
+    "o": "https://flagcdn.com/w80/om.png",
+    "f": "🇴🇲",
+    "k": "immagini/kits-2d-nazioni/om/home.png",
+    "slug": "om"
+  },
+  {
+    "n": "Paesi Bassi",
+    "c": "NL",
+    "o": "immagini/nazioni-loghi/nl.png",
+    "f": "🇳🇱",
+    "k": "immagini/kits-2d-nazioni/nl/home.png",
+    "slug": "nl"
+  },
+  {
+    "n": "Pakistan",
+    "c": "PK",
+    "o": "https://flagcdn.com/w80/pk.png",
+    "f": "🇵🇰",
+    "k": "immagini/kits-2d-nazioni/pk/home.png",
+    "slug": "pk"
+  },
+  {
+    "n": "Palestina",
+    "c": "PS",
+    "o": "https://flagcdn.com/w80/ps.png",
+    "f": "🇵🇸",
+    "k": "immagini/kits-2d-nazioni/ps/home.png",
+    "slug": "ps"
+  },
+  {
+    "n": "Panama",
+    "c": "PA",
+    "o": "https://flagcdn.com/w80/pa.png",
+    "f": "🇵🇦",
+    "k": "immagini/kits-2d-nazioni/pa/home.png",
+    "slug": "pa"
+  },
+  {
+    "n": "Papua Nuova Guinea",
+    "c": "PG",
+    "o": "https://flagcdn.com/w80/pg.png",
+    "f": "🇵🇬",
+    "k": "immagini/kits-2d-nazioni/pg/home.png",
+    "slug": "pg"
+  },
+  {
+    "n": "Paraguay",
+    "c": "PY",
+    "o": "https://flagcdn.com/w80/py.png",
+    "f": "🇵🇾",
+    "k": "immagini/kits-2d-nazioni/py/home.png",
+    "slug": "py"
+  },
+  {
+    "n": "Perù",
+    "c": "PE",
+    "o": "https://flagcdn.com/w80/pe.png",
+    "f": "🇵🇪",
+    "k": "immagini/kits-2d-nazioni/pe/home.png",
+    "slug": "pe"
+  },
+  {
+    "n": "Polonia",
+    "c": "PL",
+    "o": "immagini/nazioni-loghi/pl.png",
+    "f": "🇵🇱",
+    "k": "immagini/kits-2d-nazioni/pl/home.png",
+    "slug": "pl"
+  },
+  {
+    "n": "Portogallo",
+    "c": "PT",
+    "o": "immagini/nazioni-loghi/pt.png",
+    "f": "🇵🇹",
+    "k": "immagini/kits-2d-nazioni/pt/home.png",
+    "slug": "pt"
+  },
+  {
+    "n": "Puertorico",
+    "c": "PUE",
+    "o": "https://flagcdn.com/w80/pue.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/pue/home.png",
+    "slug": "pue"
+  },
+  {
+    "n": "Qatar",
+    "c": "QA",
+    "o": "https://flagcdn.com/w80/qa.png",
+    "f": "🇶🇦",
+    "k": "immagini/kits-2d-nazioni/qa/home.png",
+    "slug": "qa"
+  },
+  {
+    "n": "RD del Congo",
+    "c": "CD",
+    "o": "https://flagcdn.com/w80/cd.png",
+    "f": "🇨🇩",
+    "k": "immagini/kits-2d-nazioni/cd/home.png",
+    "slug": "cd"
+  },
+  {
+    "n": "RD del Congo",
+    "c": "CD",
+    "o": "https://flagcdn.com/w80/cd.png",
+    "f": "🇨🇩",
+    "k": "immagini/kits-2d-nazioni/dr_congo/home.png",
+    "slug": "dr_congo"
+  },
+  {
+    "n": "Repubblica Ceca",
+    "c": "CZ",
+    "o": "https://flagcdn.com/w80/cz.png",
+    "f": "🇨🇿",
+    "k": "immagini/kits-2d-nazioni/cz/home.png",
+    "slug": "cz"
+  },
+  {
+    "n": "Repubblica Dominicana",
+    "c": "DO",
+    "o": "https://flagcdn.com/w80/do.png",
+    "f": "🇩🇴",
+    "k": "immagini/kits-2d-nazioni/do/home.png",
+    "slug": "do"
+  },
+  {
+    "n": "Romania",
+    "c": "RO",
+    "o": "immagini/nazioni-loghi/ro.png",
+    "f": "🇷🇴",
+    "k": "immagini/kits-2d-nazioni/ro/home.png",
+    "slug": "ro"
+  },
+  {
+    "n": "Russia",
+    "c": "RU",
+    "o": "https://flagcdn.com/w80/ru.png",
+    "f": "🇷🇺",
+    "k": "immagini/kits-2d-nazioni/ru/home.png",
+    "slug": "ru"
+  },
+  {
+    "n": "Rwanda",
+    "c": "RWA",
+    "o": "https://flagcdn.com/w80/rwa.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/rwa/home.png",
+    "slug": "rwa"
+  },
+  {
+    "n": "Saintmartin",
+    "c": "SAI",
+    "o": "https://flagcdn.com/w80/sai.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/sai/home.png",
+    "slug": "sai"
+  },
+  {
+    "n": "Samoa",
+    "c": "WS",
+    "o": "https://flagcdn.com/w80/ws.png",
+    "f": "🇼🇸",
+    "k": "immagini/kits-2d-nazioni/ws/home.png",
+    "slug": "ws"
+  },
+  {
+    "n": "San Marino",
+    "c": "SM",
+    "o": "https://flagcdn.com/w80/sm.png",
+    "f": "🇸🇲",
+    "k": "immagini/kits-2d-nazioni/sm/home.png",
+    "slug": "sm"
+  },
+  {
+    "n": "Sao Tome Principe",
+    "c": "SAO",
+    "o": "https://flagcdn.com/w80/sao.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/sao/home.png",
+    "slug": "sao"
+  },
+  {
+    "n": "Scozia",
+    "c": "SCT",
+    "o": "https://flagcdn.com/w80/gb-sct.png",
+    "f": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+    "k": "immagini/kits-2d-nazioni/sct/home.png",
+    "slug": "sct"
+  },
+  {
+    "n": "Senegal",
+    "c": "SN",
+    "o": "immagini/nazioni-loghi/sn.png",
+    "f": "🇸🇳",
+    "k": "immagini/kits-2d-nazioni/sn/home.png",
+    "slug": "sn"
+  },
+  {
+    "n": "Serbia",
+    "c": "RS",
+    "o": "immagini/nazioni-loghi/rs.png",
+    "f": "🇷🇸",
+    "k": "immagini/kits-2d-nazioni/rs/home.png",
+    "slug": "rs"
+  },
+  {
+    "n": "Seychelles",
+    "c": "SEY",
+    "o": "https://flagcdn.com/w80/sey.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/sey/home.png",
+    "slug": "sey"
+  },
+  {
+    "n": "Sierra Leone",
+    "c": "SIE",
+    "o": "https://flagcdn.com/w80/sie.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/sie/home.png",
+    "slug": "sie"
+  },
+  {
+    "n": "Singapore",
+    "c": "SG",
+    "o": "https://flagcdn.com/w80/sg.png",
+    "f": "🇸🇬",
+    "k": "immagini/kits-2d-nazioni/sg/home.png",
+    "slug": "sg"
+  },
+  {
+    "n": "Sintmaarten",
+    "c": "SIN",
+    "o": "https://flagcdn.com/w80/sin.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/sin/home.png",
+    "slug": "sin"
+  },
+  {
+    "n": "Siria",
+    "c": "SY",
+    "o": "https://flagcdn.com/w80/sy.png",
+    "f": "🇸🇾",
+    "k": "immagini/kits-2d-nazioni/sy/home.png",
+    "slug": "sy"
+  },
+  {
+    "n": "Slovacchia",
+    "c": "SK",
+    "o": "https://flagcdn.com/w80/sk.png",
+    "f": "🇸🇰",
+    "k": "immagini/kits-2d-nazioni/sk/home.png",
+    "slug": "sk"
+  },
+  {
+    "n": "Slovenia",
+    "c": "SI",
+    "o": "https://flagcdn.com/w80/si.png",
+    "f": "🇸🇮",
+    "k": "immagini/kits-2d-nazioni/si/home.png",
+    "slug": "si"
+  },
+  {
+    "n": "Somalia",
+    "c": "SOM",
+    "o": "https://flagcdn.com/w80/som.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/som/home.png",
+    "slug": "som"
+  },
+  {
+    "n": "South Sudan",
+    "c": "SOU",
+    "o": "https://flagcdn.com/w80/sou.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/sou/home.png",
+    "slug": "sou"
+  },
+  {
+    "n": "Spagna",
+    "c": "ES",
+    "o": "immagini/nazioni-loghi/es.png",
+    "f": "🇪🇸",
+    "k": "immagini/kits-2d-nazioni/es/home.png",
+    "slug": "es"
+  },
+  {
+    "n": "Sri Lanka",
+    "c": "LK",
+    "o": "https://flagcdn.com/w80/lk.png",
+    "f": "🇱🇰",
+    "k": "immagini/kits-2d-nazioni/lk/home.png",
+    "slug": "lk"
+  },
+  {
+    "n": "Stati Uniti",
+    "c": "US",
+    "o": "immagini/nazioni-loghi/us.png",
+    "f": "🇺🇸",
+    "k": "immagini/kits-2d-nazioni/us/home.png",
+    "slug": "us"
+  },
+  {
+    "n": "Stkittsnevis",
+    "c": "STK",
+    "o": "https://flagcdn.com/w80/stk.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/stk/home.png",
+    "slug": "stk"
+  },
+  {
+    "n": "Stlucia",
+    "c": "STL",
+    "o": "https://flagcdn.com/w80/stl.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/stl/home.png",
+    "slug": "stl"
+  },
+  {
+    "n": "Stvincentgrenadines",
+    "c": "STV",
+    "o": "https://flagcdn.com/w80/stv.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/stv/home.png",
+    "slug": "stv"
+  },
+  {
+    "n": "Sudafrica",
+    "c": "ZA",
+    "o": "https://flagcdn.com/w80/za.png",
+    "f": "🇿🇦",
+    "k": "immagini/kits-2d-nazioni/za/home.png",
+    "slug": "za"
+  },
+  {
+    "n": "Sudan",
+    "c": "SUD",
+    "o": "https://flagcdn.com/w80/sud.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/sud/home.png",
+    "slug": "sud"
+  },
+  {
+    "n": "Suriname",
+    "c": "SR",
+    "o": "https://flagcdn.com/w80/sr.png",
+    "f": "🇸🇷",
+    "k": "immagini/kits-2d-nazioni/sr/home.png",
+    "slug": "sr"
+  },
+  {
+    "n": "Svezia",
+    "c": "SE",
+    "o": "https://flagcdn.com/w80/se.png",
+    "f": "🇸🇪",
+    "k": "immagini/kits-2d-nazioni/se/home.png",
+    "slug": "se"
+  },
+  {
+    "n": "Svizzera",
+    "c": "CH",
+    "o": "immagini/nazioni-loghi/ch.png",
+    "f": "🇨🇭",
+    "k": "immagini/kits-2d-nazioni/ch/home.png",
+    "slug": "ch"
+  },
+  {
+    "n": "Tagikistan",
+    "c": "TJ",
+    "o": "https://flagcdn.com/w80/tj.png",
+    "f": "🇹🇯",
+    "k": "immagini/kits-2d-nazioni/tj/home.png",
+    "slug": "tj"
+  },
+  {
+    "n": "Tahiti",
+    "c": "PF",
+    "o": "https://flagcdn.com/w80/pf.png",
+    "f": "🇵🇫",
+    "k": "immagini/kits-2d-nazioni/pf/home.png",
+    "slug": "pf"
+  },
+  {
+    "n": "Tanzania",
+    "c": "TAN",
+    "o": "https://flagcdn.com/w80/tan.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/tan/home.png",
+    "slug": "tan"
+  },
+  {
+    "n": "Thailandia",
+    "c": "TH",
+    "o": "https://flagcdn.com/w80/th.png",
+    "f": "🇹🇭",
+    "k": "immagini/kits-2d-nazioni/th/home.png",
+    "slug": "th"
+  },
+  {
+    "n": "Timorleste",
+    "c": "TIM",
+    "o": "https://flagcdn.com/w80/tim.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/tim/home.png",
+    "slug": "tim"
+  },
+  {
+    "n": "Togo",
+    "c": "TG",
+    "o": "https://flagcdn.com/w80/tg.png",
+    "f": "🇹🇬",
+    "k": "immagini/kits-2d-nazioni/tg/home.png",
+    "slug": "tg"
+  },
+  {
+    "n": "Tonga",
+    "c": "TO",
+    "o": "https://flagcdn.com/w80/to.png",
+    "f": "🇹🇴",
+    "k": "immagini/kits-2d-nazioni/to/home.png",
+    "slug": "to"
+  },
+  {
+    "n": "Trinidad e Tobago",
+    "c": "TT",
+    "o": "https://flagcdn.com/w80/tt.png",
+    "f": "🇹🇹",
+    "k": "immagini/kits-2d-nazioni/tt/home.png",
+    "slug": "tt"
+  },
+  {
+    "n": "Tunisia",
+    "c": "TN",
+    "o": "https://flagcdn.com/w80/tn.png",
+    "f": "🇹🇳",
+    "k": "immagini/kits-2d-nazioni/tn/home.png",
+    "slug": "tn"
+  },
+  {
+    "n": "Turchia",
+    "c": "TR",
+    "o": "immagini/nazioni-loghi/tr.png",
+    "f": "🇹🇷",
+    "k": "immagini/kits-2d-nazioni/tr/home.png",
+    "slug": "tr"
+  },
+  {
+    "n": "Turkmenistan",
+    "c": "TM",
+    "o": "https://flagcdn.com/w80/tm.png",
+    "f": "🇹🇲",
+    "k": "immagini/kits-2d-nazioni/tm/home.png",
+    "slug": "tm"
+  },
+  {
+    "n": "Turksandcaicos",
+    "c": "TUR",
+    "o": "https://flagcdn.com/w80/tur.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/tur/home.png",
+    "slug": "tur"
+  },
+  {
+    "n": "Ucraina",
+    "c": "UA",
+    "o": "https://flagcdn.com/w80/ua.png",
+    "f": "🇺🇦",
+    "k": "immagini/kits-2d-nazioni/ua/home.png",
+    "slug": "ua"
+  },
+  {
+    "n": "Uganda",
+    "c": "UG",
+    "o": "https://flagcdn.com/w80/ug.png",
+    "f": "🇺🇬",
+    "k": "immagini/kits-2d-nazioni/ug/home.png",
+    "slug": "ug"
+  },
+  {
+    "n": "Ungheria",
+    "c": "HU",
+    "o": "https://flagcdn.com/w80/hu.png",
+    "f": "🇭🇺",
+    "k": "immagini/kits-2d-nazioni/hu/home.png",
+    "slug": "hu"
+  },
+  {
+    "n": "Uruguay",
+    "c": "UY",
+    "o": "immagini/nazioni-loghi/uy.png",
+    "f": "🇺🇾",
+    "k": "immagini/kits-2d-nazioni/uy/home.png",
+    "slug": "uy"
+  },
+  {
+    "n": "Usvirginislands",
+    "c": "USV",
+    "o": "https://flagcdn.com/w80/usv.png",
+    "f": "🏳️",
+    "k": "immagini/kits-2d-nazioni/usv/home.png",
+    "slug": "usv"
+  },
+  {
+    "n": "Uzbekistan",
+    "c": "UZ",
+    "o": "https://flagcdn.com/w80/uz.png",
+    "f": "🇺🇿",
+    "k": "immagini/kits-2d-nazioni/uz/home.png",
+    "slug": "uz"
+  },
+  {
+    "n": "Vanuatu",
+    "c": "VU",
+    "o": "https://flagcdn.com/w80/vu.png",
+    "f": "🇻🇺",
+    "k": "immagini/kits-2d-nazioni/vu/home.png",
+    "slug": "vu"
+  },
+  {
+    "n": "Venezuela",
+    "c": "VE",
+    "o": "https://flagcdn.com/w80/ve.png",
+    "f": "🇻🇪",
+    "k": "immagini/kits-2d-nazioni/ve/home.png",
+    "slug": "ve"
+  },
+  {
+    "n": "Vietnam",
+    "c": "VN",
+    "o": "https://flagcdn.com/w80/vn.png",
+    "f": "🇻🇳",
+    "k": "immagini/kits-2d-nazioni/vn/home.png",
+    "slug": "vn"
+  },
+  {
+    "n": "Yemen",
+    "c": "YE",
+    "o": "https://flagcdn.com/w80/ye.png",
+    "f": "🇾🇪",
+    "k": "immagini/kits-2d-nazioni/ye/home.png",
+    "slug": "ye"
+  },
+  {
+    "n": "Zambia",
+    "c": "ZM",
+    "o": "https://flagcdn.com/w80/zm.png",
+    "f": "🇿🇲",
+    "k": "immagini/kits-2d-nazioni/zm/home.png",
+    "slug": "zm"
+  },
+  {
+    "n": "Zimbabwe",
+    "c": "ZW",
+    "o": "https://flagcdn.com/w80/zw.png",
+    "f": "🇿🇼",
+    "k": "immagini/kits-2d-nazioni/zw/home.png",
+    "slug": "zw"
+  }
+]

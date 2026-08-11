@@ -1,0 +1,43 @@
+﻿/* ELISEE SCOUT — AutoPilot Mission Control */
+.es-ap-root{position:fixed;inset:0;z-index:999995;display:none!important;flex-direction:column;background:rgba(2,6,14,.97);backdrop-filter:blur(16px);color:#e2e8f0;font-family:Inter,system-ui,sans-serif;pointer-events:none!important;visibility:hidden}
+.es-ap-root.is-open{display:flex!important;pointer-events:auto!important;visibility:visible}
+.es-ap-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.85rem 1.2rem;border-bottom:1px solid rgba(34,197,94,.28);background:linear-gradient(180deg,#071410,#060d18)}
+.es-ap-top h2{margin:0;font-family:Outfit,Inter,sans-serif;font-size:1.1rem;font-weight:800;color:#fff}
+.es-ap-top p{margin:.15rem 0 0;font-size:.72rem;color:#94a3b8}
+.es-ap-badge{display:inline-flex;align-items:center;gap:.35rem;padding:.2rem .55rem;border-radius:999px;font-size:.65rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border:1px solid rgba(34,197,94,.45);background:rgba(34,197,94,.12);color:#86efac}
+.es-ap-badge.off{border-color:rgba(248,113,113,.45);background:rgba(239,68,68,.12);color:#fca5a5}
+.es-ap-close{border:1px solid rgba(148,163,184,.35);background:transparent;color:#cbd5e1;border-radius:10px;padding:.45rem .85rem;font-weight:700;cursor:pointer}
+.es-ap-body{flex:1;overflow:auto;padding:1.15rem 1.25rem 2rem}
+.es-ap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.75rem;margin-bottom:1rem}
+.es-ap-card{background:#0a1220;border:1px solid rgba(56,189,248,.18);border-radius:14px;padding:.9rem 1rem}
+.es-ap-card h3{margin:0 0 .35rem;font-size:.88rem;color:#fff;font-weight:800}
+.es-ap-card .meta{font-size:.72rem;color:#94a3b8;line-height:1.4}
+.es-ap-card .stat{font-size:1.35rem;font-weight:800;color:#38bdf8;font-family:Outfit,sans-serif;margin:.35rem 0}
+.es-ap-card.ok{border-color:rgba(34,197,94,.4)}
+.es-ap-card.warn{border-color:rgba(245,158,11,.45)}
+.es-ap-card.err{border-color:rgba(239,68,68,.45)}
+.es-ap-row{display:flex;flex-wrap:wrap;gap:.55rem;align-items:center;margin-bottom:1rem}
+.es-ap-btn{border:1px solid rgba(56,189,248,.4);background:rgba(2,132,199,.2);color:#e0f2fe;border-radius:10px;padding:.5rem .9rem;font-weight:700;font-size:.8rem;cursor:pointer}
+.es-ap-btn:hover{background:rgba(2,132,199,.35)}
+.es-ap-btn.primary{background:linear-gradient(135deg,#16a34a,#15803d);border-color:#4ade80;color:#fff}
+.es-ap-btn.danger{background:rgba(239,68,68,.15);border-color:rgba(248,113,113,.45);color:#fecaca}
+.es-ap-btn.ghost{background:transparent;border-color:rgba(148,163,184,.35);color:#cbd5e1}
+.es-ap-log{background:#060b14;border:1px solid rgba(56,189,248,.15);border-radius:12px;max-height:280px;overflow:auto;font-family:ui-monospace,Consolas,monospace;font-size:.72rem}
+.es-ap-log div{padding:.35rem .65rem;border-bottom:1px solid rgba(148,163,184,.08);color:#94a3b8}
+.es-ap-log .ok{color:#86efac}
+.es-ap-log .warn{color:#fcd34d}
+.es-ap-log .err{color:#fca5a5}
+.es-ap-log .info{color:#7dd3fc}
+.es-ap-toggle{position:relative;width:46px;height:26px;border-radius:999px;background:#334155;cursor:pointer;border:none;flex-shrink:0}
+.es-ap-toggle.on{background:#16a34a}
+.es-ap-toggle span{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.15s}
+.es-ap-toggle.on span{left:23px}
+.es-ap-fleet-row{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.55rem 0;border-bottom:1px solid rgba(148,163,184,.1)}
+.es-ap-fleet-row:last-child{border-bottom:none}
+.es-ap-chip{position:fixed;right:16px;bottom:16px;z-index:99980;display:flex;align-items:center;gap:.45rem;padding:.55rem .85rem;border-radius:999px;border:1px solid rgba(34,197,94,.45);background:rgba(6,16,12,.92);color:#bbf7d0;font-size:.75rem;font-weight:800;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.45);backdrop-filter:blur(10px)}
+.es-ap-chip .dot{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 10px #22c55e;animation:esApPulse 1.6s infinite}
+.es-ap-chip.off{border-color:rgba(248,113,113,.45);color:#fecaca}
+.es-ap-chip.off .dot{background:#ef4444;box-shadow:0 0 10px #ef4444;animation:none}
+@keyframes esApPulse{0%,100%{opacity:1}50%{opacity:.45}}
+.es-ap-box{background:#0a1220;border:1px solid rgba(56,189,248,.18);border-radius:14px;padding:1rem;margin-bottom:1rem}
+.es-ap-select,.es-ap-input{background:#0b1220;border:1px solid rgba(56,189,248,.25);border-radius:8px;color:#e2e8f0;padding:.4rem .55rem;font-size:.8rem}

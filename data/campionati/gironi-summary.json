@@ -1,0 +1,104 @@
+{
+  "unit": "girone",
+  "rolesPerGirone": 10,
+  "totalGironi": 201,
+  "totalAgents": 2010,
+  "formula": "10 agenti × 201 gironi = 2010",
+  "byCampionato": {
+    "Promozione": {
+      "gironi": 39,
+      "agenti": 390
+    },
+    "Terza Categoria": {
+      "gironi": 37,
+      "agenti": 370
+    },
+    "Prima Categoria": {
+      "gironi": 31,
+      "agenti": 310
+    },
+    "Seconda Categoria": {
+      "gironi": 31,
+      "agenti": 310
+    },
+    "Eccellenza": {
+      "gironi": 28,
+      "agenti": 280
+    },
+    "Serie D": {
+      "gironi": 9,
+      "agenti": 90
+    },
+    "Under 19 / Giovanili": {
+      "gironi": 8,
+      "agenti": 80
+    },
+    "Serie C": {
+      "gironi": 3,
+      "agenti": 30
+    },
+    "Femminile": {
+      "gironi": 2,
+      "agenti": 20
+    },
+    "Serie A": {
+      "gironi": 1,
+      "agenti": 10
+    },
+    "Serie B": {
+      "gironi": 1,
+      "agenti": 10
+    },
+    "Femminile Serie C": {
+      "gironi": 1,
+      "agenti": 10
+    },
+    "Calcio a 5 Serie A": {
+      "gironi": 1,
+      "agenti": 10
+    },
+    "Calcio a 5 Serie A2": {
+      "gironi": 1,
+      "agenti": 10
+    },
+    "Calcio a 5 Serie B": {
+      "gironi": 1,
+      "agenti": 10
+    },
+    "Calcio a 5 Serie C1": {
+      "gironi": 1,
+      "agenti": 10
+    },
+    "Calcio a 5 Serie C2": {
+      "gironi": 1,
+      "agenti": 10
+    },
+    "Quarta Categoria": {
+      "gironi": 1,
+      "agenti": 10
+    },
+    "Amatori": {
+      "gironi": 1,
+      "agenti": 10
+    },
+    "Coppe dilettanti": {
+      "gironi": 1,
+      "agenti": 10
+    },
+    "Tornei": {
+      "gironi": 1,
+      "agenti": 10
+    },
+    "Svincolati / Bacheca": {
+      "gironi": 1,
+      "agenti": 10
+    }
+  },
+  "example": {
+    "Serie D": {
+      "gironi": 9,
+      "agenti": 90,
+      "note": "9 gironi A–I × 10 agenti = 90"
+    }
+  }
+}

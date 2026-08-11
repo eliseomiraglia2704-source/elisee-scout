@@ -1,0 +1,2813 @@
+{
+  "bySlug": {
+    "atalanta": {
+      "slug": "atalanta",
+      "name": "Atalanta",
+      "league": "serie-a",
+      "url": null,
+      "file": "immagini/squadre-loghi/atalanta.png"
+    },
+    "bologna": {
+      "slug": "bologna",
+      "name": "Bologna",
+      "league": "serie-a",
+      "url": null,
+      "file": "immagini/squadre-loghi/bologna.png"
+    },
+    "cagliari": {
+      "slug": "cagliari",
+      "name": "Cagliari",
+      "league": "serie-a",
+      "url": null,
+      "file": "immagini/squadre-loghi/cagliari.png"
+    },
+    "como-1907": {
+      "slug": "como-1907",
+      "name": "Como 1907",
+      "league": "serie-a",
+      "url": null,
+      "file": "immagini/squadre-loghi/como-1907.png"
+    },
+    "fiorentina": {
+      "slug": "fiorentina",
+      "name": "Fiorentina",
+      "league": "serie-a",
+      "url": null,
+      "file": "immagini/squadre-loghi/fiorentina.png"
+    },
+    "frosinone": {
+      "slug": "frosinone",
+      "name": "Frosinone Calcio",
+      "league": "serie-a",
+      "url": null,
+      "file": "immagini/squadre-loghi/frosinone.png"
+    },
+    "genoa": {
+      "slug": "genoa",
+      "name": "Genoa",
+      "league": "serie-a",
+      "url": null,
+      "file": "immagini/squadre-loghi/genoa.png"
+    },
+    "inter": {
+      "slug": "inter",
+      "name": "Inter",
+      "league": "serie-a",
+      "url": null,
+      "file": "immagini/squadre-loghi/inter.png"
+    },
+    "juventus": {
+      "slug": "juventus",
+      "name": "Juventus",
+      "league": "serie-a",
+      "url": null,
+      "file": "immagini/squadre-loghi/juventus.png"
+    },
+    "lazio": {
+      "slug": "lazio",
+      "name": "Lazio",
+      "league": "serie-a",
+      "url": null,
+      "file": "immagini/squadre-loghi/lazio.png"
+    },
+    "lecce": {
+      "slug": "lecce",
+      "name": "Lecce",
+      "league": "serie-a",
+      "url": null,
+      "file": "immagini/squadre-loghi/lecce.png"
+    },
+    "milan": {
+      "slug": "milan",
+      "name": "Milan",
+      "league": "serie-a",
+      "url": null,
+      "file": "immagini/squadre-loghi/milan.png"
+    },
+    "monza": {
+      "slug": "monza",
+      "name": "AC Monza",
+      "league": "serie-a",
+      "url": null,
+      "file": "immagini/squadre-loghi/monza.png"
+    },
+    "napoli": {
+      "slug": "napoli",
+      "name": "Napoli",
+      "league": "serie-a",
+      "url": null,
+      "file": "immagini/squadre-loghi/napoli.png"
+    },
+    "parma": {
+      "slug": "parma",
+      "name": "Parma",
+      "league": "serie-a",
+      "url": null,
+      "file": "immagini/squadre-loghi/parma.png"
+    },
+    "roma": {
+      "slug": "roma",
+      "name": "Roma",
+      "league": "serie-a",
+      "url": null,
+      "file": "immagini/squadre-loghi/roma.png"
+    },
+    "sassuolo": {
+      "slug": "sassuolo",
+      "name": "Sassuolo",
+      "league": "serie-a",
+      "url": null,
+      "file": "immagini/squadre-loghi/sassuolo.png"
+    },
+    "torino": {
+      "slug": "torino",
+      "name": "Torino",
+      "league": "serie-a",
+      "url": null,
+      "file": "immagini/squadre-loghi/torino.png"
+    },
+    "udinese": {
+      "slug": "udinese",
+      "name": "Udinese",
+      "league": "serie-a",
+      "url": null,
+      "file": "immagini/squadre-loghi/udinese.png"
+    },
+    "venezia": {
+      "slug": "venezia",
+      "name": "Venezia",
+      "league": "serie-a",
+      "url": null,
+      "file": "immagini/squadre-loghi/venezia.png"
+    },
+    "arezzo": {
+      "slug": "arezzo",
+      "name": "Arezzo",
+      "league": "serie-b",
+      "url": null,
+      "file": "immagini/squadre-loghi/arezzo.png"
+    },
+    "ascoli": {
+      "slug": "ascoli",
+      "name": "Ascoli",
+      "league": "serie-b",
+      "url": null,
+      "file": "immagini/squadre-loghi/ascoli.png"
+    },
+    "benevento": {
+      "slug": "benevento",
+      "name": "Benevento",
+      "league": "serie-b",
+      "url": null,
+      "file": "immagini/squadre-loghi/benevento.png"
+    },
+    "carrarese": {
+      "slug": "carrarese",
+      "name": "Carrarese Calcio",
+      "league": "serie-b",
+      "url": null,
+      "file": "immagini/squadre-loghi/carrarese.png"
+    },
+    "catanzaro": {
+      "slug": "catanzaro",
+      "name": "Catanzaro",
+      "league": "serie-b",
+      "url": null,
+      "file": "immagini/squadre-loghi/catanzaro.png"
+    },
+    "cesena": {
+      "slug": "cesena",
+      "name": "Cesena FC",
+      "league": "serie-b",
+      "url": null,
+      "file": "immagini/squadre-loghi/cesena.png"
+    },
+    "cremonese": {
+      "slug": "cremonese",
+      "name": "Cremonese",
+      "league": "serie-b",
+      "url": null,
+      "file": "immagini/squadre-loghi/cremonese.png"
+    },
+    "empoli": {
+      "slug": "empoli",
+      "name": "Empoli",
+      "league": "serie-b",
+      "url": null,
+      "file": "immagini/squadre-loghi/empoli.png"
+    },
+    "juve-stabia": {
+      "slug": "juve-stabia",
+      "name": "Juve Stabia",
+      "league": "serie-b",
+      "url": null,
+      "file": "immagini/squadre-loghi/juve-stabia.png"
+    },
+    "mantova-1911": {
+      "slug": "mantova-1911",
+      "name": "Mantova 1911",
+      "league": "serie-b",
+      "url": null,
+      "file": "immagini/squadre-loghi/mantova-1911.png"
+    },
+    "modena": {
+      "slug": "modena",
+      "name": "Modena",
+      "league": "serie-b",
+      "url": null,
+      "file": "immagini/squadre-loghi/modena.png"
+    },
+    "padova": {
+      "slug": "padova",
+      "name": "Padova",
+      "league": "serie-b",
+      "url": null,
+      "file": "immagini/squadre-loghi/padova.png"
+    },
+    "palermo": {
+      "slug": "palermo",
+      "name": "Palermo",
+      "league": "serie-b",
+      "url": null,
+      "file": "immagini/squadre-loghi/palermo.png"
+    },
+    "pisa": {
+      "slug": "pisa",
+      "name": "Pisa",
+      "league": "serie-b",
+      "url": null,
+      "file": "immagini/squadre-loghi/pisa.png"
+    },
+    "sampdoria": {
+      "slug": "sampdoria",
+      "name": "Sampdoria",
+      "league": "serie-b",
+      "url": null,
+      "file": "immagini/squadre-loghi/sampdoria.png"
+    },
+    "suditrol": {
+      "slug": "suditrol",
+      "name": "Suditrol",
+      "league": "serie-b",
+      "url": null,
+      "file": "immagini/squadre-loghi/suditrol.png"
+    },
+    "us-avellino-1912": {
+      "slug": "us-avellino-1912",
+      "name": "US Avellino 1912",
+      "league": "serie-b",
+      "url": null,
+      "file": "immagini/squadre-loghi/us-avellino-1912.png"
+    },
+    "verona": {
+      "slug": "verona",
+      "name": "Hellas Verona",
+      "league": "serie-b",
+      "url": null,
+      "file": "immagini/squadre-loghi/verona.png"
+    },
+    "vicenza": {
+      "slug": "vicenza",
+      "name": "Vicenza",
+      "league": "serie-b",
+      "url": null,
+      "file": "immagini/squadre-loghi/vicenza.png"
+    },
+    "virtus-entella": {
+      "slug": "virtus-entella",
+      "name": "Virtus Entella",
+      "league": "serie-b",
+      "url": null,
+      "file": "immagini/squadre-loghi/virtus-entella.png"
+    },
+    "albinoleffe": {
+      "slug": "albinoleffe",
+      "name": "AlbinoLeffe",
+      "league": "serie-c",
+      "group": "A",
+      "file": "immagini/squadre-loghi/albinoleffe.png"
+    },
+    "alcione": {
+      "slug": "alcione",
+      "name": "Alcione",
+      "league": "serie-c",
+      "group": "A",
+      "file": "immagini/squadre-loghi/alcione.png"
+    },
+    "arzignano-valchiampo": {
+      "slug": "arzignano-valchiampo",
+      "name": "FC Arzignano Valchiampo",
+      "league": "serie-c",
+      "group": "A",
+      "file": "immagini/squadre-loghi/arzignano-valchiampo.png"
+    },
+    "cittadella": {
+      "slug": "cittadella",
+      "name": "Cittadella",
+      "league": "serie-c",
+      "group": "A",
+      "file": "immagini/squadre-loghi/cittadella.png"
+    },
+    "desenzano": {
+      "slug": "desenzano",
+      "name": "Calcio Desenzano",
+      "league": "serie-d",
+      "group": "D",
+      "file": "immagini/squadre-loghi/desenzano.png"
+    },
+    "dolomiti-bellunesi": {
+      "slug": "dolomiti-bellunesi",
+      "name": "Dolomiti Bellunesi",
+      "league": "serie-c",
+      "group": "A",
+      "file": "immagini/squadre-loghi/dolomiti-bellunesi.png"
+    },
+    "folgore-caratese": {
+      "slug": "folgore-caratese",
+      "name": "Folgore Caratese",
+      "league": "serie-d",
+      "group": "B",
+      "file": "immagini/squadre-loghi/folgore-caratese.png"
+    },
+    "giana-erminio": {
+      "slug": "giana-erminio",
+      "name": "Giana Erminio",
+      "league": "serie-c",
+      "group": "A",
+      "file": "immagini/squadre-loghi/giana-erminio.png"
+    },
+    "lecco": {
+      "slug": "lecco",
+      "name": "Lecco",
+      "league": "serie-c",
+      "group": "A",
+      "file": "immagini/squadre-loghi/lecco.png"
+    },
+    "lumezzane": {
+      "slug": "lumezzane",
+      "name": "Lumezzane",
+      "league": "serie-c",
+      "group": "A",
+      "file": "immagini/squadre-loghi/lumezzane.png"
+    },
+    "novara": {
+      "slug": "novara",
+      "name": "Novara",
+      "league": "serie-c",
+      "group": "A",
+      "file": "immagini/squadre-loghi/novara.png"
+    },
+    "ospitaletto": {
+      "slug": "ospitaletto",
+      "name": "Ospitaletto",
+      "league": "serie-c",
+      "group": "A",
+      "file": "immagini/squadre-loghi/ospitaletto.png"
+    },
+    "pergolettese": {
+      "slug": "pergolettese",
+      "name": "Pergolettese",
+      "league": "serie-c",
+      "group": "A",
+      "file": "immagini/squadre-loghi/pergolettese.png"
+    },
+    "pro-vercelli": {
+      "slug": "pro-vercelli",
+      "name": "FC Pro Vercelli 1892",
+      "league": "serie-c",
+      "group": "A",
+      "file": "immagini/squadre-loghi/pro-vercelli.png"
+    },
+    "renate": {
+      "slug": "renate",
+      "name": "Renate",
+      "league": "serie-c",
+      "group": "A",
+      "file": "immagini/squadre-loghi/renate.png"
+    },
+    "trento": {
+      "slug": "trento",
+      "name": "Trento",
+      "league": "serie-c",
+      "group": "A",
+      "file": "immagini/squadre-loghi/trento.png"
+    },
+    "treviso": {
+      "slug": "treviso",
+      "name": "Treviso FBC 1993",
+      "league": "serie-d",
+      "group": "C",
+      "file": "immagini/squadre-loghi/treviso.png"
+    },
+    "union-brescia": {
+      "slug": "union-brescia",
+      "name": "Union Brescia",
+      "league": "serie-c",
+      "group": "A",
+      "file": "immagini/squadre-loghi/union-brescia.png"
+    },
+    "vado": {
+      "slug": "vado",
+      "name": "Vado",
+      "league": "serie-d",
+      "group": "A",
+      "file": "immagini/squadre-loghi/vado.png"
+    },
+    "campobasso": {
+      "slug": "campobasso",
+      "name": "Campobasso",
+      "league": "serie-c",
+      "group": "B",
+      "file": "immagini/squadre-loghi/campobasso.png"
+    },
+    "carpi": {
+      "slug": "carpi",
+      "name": "AC Carpi",
+      "league": "serie-c",
+      "group": "B",
+      "file": "immagini/squadre-loghi/carpi.png"
+    },
+    "forli-fc": {
+      "slug": "forli-fc",
+      "name": "Forlì FC",
+      "league": "serie-c",
+      "group": "B",
+      "file": "immagini/squadre-loghi/forli-fc.png"
+    },
+    "grosseto": {
+      "slug": "grosseto",
+      "name": "US Grosseto 1912",
+      "league": "serie-d",
+      "group": "E",
+      "file": "immagini/squadre-loghi/grosseto.png"
+    },
+    "gubbio": {
+      "slug": "gubbio",
+      "name": "Gubbio",
+      "league": "serie-c",
+      "group": "B",
+      "file": "immagini/squadre-loghi/gubbio.png"
+    },
+    "guidonia-montecelio": {
+      "slug": "guidonia-montecelio",
+      "name": "Guidonia Montecelio",
+      "league": "serie-c",
+      "group": "B",
+      "file": "immagini/squadre-loghi/guidonia-montecelio.png"
+    },
+    "livorno": {
+      "slug": "livorno",
+      "name": "Livorno",
+      "league": "serie-c",
+      "group": "B",
+      "file": "immagini/squadre-loghi/livorno.png"
+    },
+    "ostiamare": {
+      "slug": "ostiamare",
+      "name": "Ostiamare",
+      "league": "serie-d",
+      "group": "F",
+      "file": "immagini/squadre-loghi/ostiamare.png"
+    },
+    "perugia": {
+      "slug": "perugia",
+      "name": "Perugia",
+      "league": "serie-c",
+      "group": "B",
+      "file": "immagini/squadre-loghi/perugia.png"
+    },
+    "pescara": {
+      "slug": "pescara",
+      "name": "Pescara",
+      "league": "serie-c",
+      "group": "B",
+      "file": "immagini/squadre-loghi/pescara.png"
+    },
+    "pianese": {
+      "slug": "pianese",
+      "name": "Pianese",
+      "league": "serie-c",
+      "group": "B",
+      "file": "immagini/squadre-loghi/pianese.png"
+    },
+    "pineto": {
+      "slug": "pineto",
+      "name": "Pineto",
+      "league": "serie-c",
+      "group": "B",
+      "file": "immagini/squadre-loghi/pineto.png"
+    },
+    "ravenna": {
+      "slug": "ravenna",
+      "name": "Ravenna",
+      "league": "serie-c",
+      "group": "B",
+      "file": "immagini/squadre-loghi/ravenna.png"
+    },
+    "reggiana": {
+      "slug": "reggiana",
+      "name": "Reggiana",
+      "league": "serie-c",
+      "group": "B",
+      "file": "immagini/squadre-loghi/reggiana.png"
+    },
+    "sambenedettese": {
+      "slug": "sambenedettese",
+      "name": "Sambenedettese",
+      "league": "serie-c",
+      "group": "B",
+      "file": "immagini/squadre-loghi/sambenedettese.png"
+    },
+    "spezia": {
+      "slug": "spezia",
+      "name": "Spezia",
+      "league": "serie-c",
+      "group": "B",
+      "file": "immagini/squadre-loghi/spezia.png"
+    },
+    "ternana": {
+      "slug": "ternana",
+      "name": "Ternana",
+      "league": "serie-c",
+      "group": "B",
+      "file": "immagini/squadre-loghi/ternana.png"
+    },
+    "torres": {
+      "slug": "torres",
+      "name": "Torres",
+      "league": "serie-c",
+      "group": "B",
+      "file": "immagini/squadre-loghi/torres.png"
+    },
+    "vis-pesaro": {
+      "slug": "vis-pesaro",
+      "name": "Vis Pesaro",
+      "league": "serie-c",
+      "group": "B",
+      "file": "immagini/squadre-loghi/vis-pesaro.png"
+    },
+    "audace-cerignola": {
+      "slug": "audace-cerignola",
+      "name": "Audace Cerignola",
+      "league": "serie-c",
+      "group": "C",
+      "file": "immagini/squadre-loghi/audace-cerignola.png"
+    },
+    "bari": {
+      "slug": "bari",
+      "name": "Bari",
+      "league": "serie-c",
+      "group": "C",
+      "file": "immagini/squadre-loghi/bari.png"
+    },
+    "barletta-1922": {
+      "slug": "barletta-1922",
+      "name": "Barletta 1922",
+      "league": "serie-d",
+      "group": "H",
+      "file": "immagini/squadre-loghi/barletta-1922.png"
+    },
+    "casarano": {
+      "slug": "casarano",
+      "name": "Casarano",
+      "league": "serie-c",
+      "group": "C",
+      "file": "immagini/squadre-loghi/casarano.png"
+    },
+    "casertana": {
+      "slug": "casertana",
+      "name": "Casertana",
+      "league": "serie-c",
+      "group": "C",
+      "file": "immagini/squadre-loghi/casertana.png"
+    },
+    "catania": {
+      "slug": "catania",
+      "name": "Catania",
+      "league": "serie-c",
+      "group": "C",
+      "file": "immagini/squadre-loghi/catania.png"
+    },
+    "cavese": {
+      "slug": "cavese",
+      "name": "Cavese",
+      "league": "serie-c",
+      "group": "C",
+      "file": "immagini/squadre-loghi/cavese.png"
+    },
+    "cosenza": {
+      "slug": "cosenza",
+      "name": "Cosenza",
+      "league": "serie-c",
+      "group": "C",
+      "file": "immagini/squadre-loghi/cosenza.png"
+    },
+    "crotone": {
+      "slug": "crotone",
+      "name": "Crotone",
+      "league": "serie-c",
+      "group": "C",
+      "file": "immagini/squadre-loghi/crotone.png"
+    },
+    "giugliano": {
+      "slug": "giugliano",
+      "name": "Giugliano",
+      "league": "serie-c",
+      "group": "C",
+      "file": "immagini/squadre-loghi/giugliano.png"
+    },
+    "latina": {
+      "slug": "latina",
+      "name": "Latina Calcio 1932",
+      "league": "serie-c",
+      "group": "C",
+      "file": "immagini/squadre-loghi/latina.png"
+    },
+    "monopoli": {
+      "slug": "monopoli",
+      "name": "Monopoli",
+      "league": "serie-c",
+      "group": "C",
+      "file": "immagini/squadre-loghi/monopoli.png"
+    },
+    "az-picerno": {
+      "slug": "az-picerno",
+      "name": "AZ Picerno",
+      "league": "serie-c",
+      "group": "C",
+      "file": "immagini/squadre-loghi/az-picerno.png"
+    },
+    "potenza": {
+      "slug": "potenza",
+      "name": "Potenza",
+      "league": "serie-c",
+      "group": "C",
+      "file": "immagini/squadre-loghi/potenza.png"
+    },
+    "salernitana": {
+      "slug": "salernitana",
+      "name": "Salernitana",
+      "league": "serie-c",
+      "group": "C",
+      "file": "immagini/squadre-loghi/salernitana.png"
+    },
+    "savoia-1908": {
+      "slug": "savoia-1908",
+      "name": "Savoia 1908",
+      "league": "serie-d",
+      "group": "I",
+      "file": "immagini/squadre-loghi/savoia-1908.png"
+    },
+    "scafatese-calcio-1922": {
+      "slug": "scafatese-calcio-1922",
+      "name": "Scafatese Calcio 1922",
+      "league": "serie-d",
+      "group": "G",
+      "file": "immagini/squadre-loghi/scafatese-calcio-1922.png"
+    },
+    "sorrento": {
+      "slug": "sorrento",
+      "name": "Sorrento",
+      "league": "serie-c",
+      "group": "C",
+      "file": "immagini/squadre-loghi/sorrento.png"
+    },
+    "team-altamura": {
+      "slug": "team-altamura",
+      "name": "Team Altamura",
+      "league": "serie-c",
+      "group": "C",
+      "file": "immagini/squadre-loghi/team-altamura.png"
+    },
+    "asti": {
+      "slug": "asti",
+      "name": "Asti",
+      "league": "serie-d",
+      "group": "A",
+      "file": "immagini/squadre-loghi/asti.png"
+    },
+    "biellese": {
+      "slug": "biellese",
+      "name": "Biellese",
+      "league": "serie-d",
+      "group": "A",
+      "file": "immagini/squadre-loghi/biellese.png"
+    },
+    "cairese": {
+      "slug": "cairese",
+      "name": "Cairese",
+      "league": "serie-d",
+      "group": "A",
+      "file": "immagini/squadre-loghi/cairese.png"
+    },
+    "celle-varazze": {
+      "slug": "celle-varazze",
+      "name": "Celle Varazze",
+      "league": "serie-d",
+      "group": "A",
+      "file": "immagini/squadre-loghi/celle-varazze.png"
+    },
+    "chisola": {
+      "slug": "chisola",
+      "name": "Chisola",
+      "league": "serie-d",
+      "group": "A",
+      "file": "immagini/squadre-loghi/chisola.png"
+    },
+    "club-milano": {
+      "slug": "club-milano",
+      "name": "Club Milano",
+      "league": "serie-d",
+      "group": "A",
+      "file": "immagini/squadre-loghi/club-milano.png"
+    },
+    "derthona": {
+      "slug": "derthona",
+      "name": "Derthona",
+      "league": "serie-d",
+      "group": "A",
+      "file": "immagini/squadre-loghi/derthona.png"
+    },
+    "gozzano": {
+      "slug": "gozzano",
+      "name": "Gozzano",
+      "league": "serie-d",
+      "group": "A",
+      "file": "immagini/squadre-loghi/gozzano.png"
+    },
+    "imperia": {
+      "slug": "imperia",
+      "name": "Imperia",
+      "league": "serie-d",
+      "group": "A",
+      "file": "immagini/squadre-loghi/imperia.png"
+    },
+    "lavagnese": {
+      "slug": "lavagnese",
+      "name": "Lavagnese",
+      "league": "serie-d",
+      "group": "A",
+      "file": "immagini/squadre-loghi/lavagnese.png"
+    },
+    "ligorna": {
+      "slug": "ligorna",
+      "name": "Ligorna",
+      "league": "serie-d",
+      "group": "A",
+      "file": "immagini/squadre-loghi/ligorna.png"
+    },
+    "novaromentin": {
+      "slug": "novaromentin",
+      "name": "NovaRomentin",
+      "league": "serie-d",
+      "group": "A",
+      "file": "immagini/squadre-loghi/novaromentin.png"
+    },
+    "saluzzo": {
+      "slug": "saluzzo",
+      "name": "Saluzzo",
+      "league": "serie-d",
+      "group": "A",
+      "file": "immagini/squadre-loghi/saluzzo.png"
+    },
+    "sanremese": {
+      "slug": "sanremese",
+      "name": "Sanremese",
+      "league": "serie-d",
+      "group": "A",
+      "file": "immagini/squadre-loghi/sanremese.png"
+    },
+    "sestri-levante": {
+      "slug": "sestri-levante",
+      "name": "Sestri Levante",
+      "league": "serie-d",
+      "group": "A",
+      "file": "immagini/squadre-loghi/sestri-levante.png"
+    },
+    "valenzana-mado": {
+      "slug": "valenzana-mado",
+      "name": "Valenzana Mado",
+      "league": "serie-d",
+      "group": "A",
+      "file": "immagini/squadre-loghi/valenzana-mado.png"
+    },
+    "varese": {
+      "slug": "varese",
+      "name": "Varese",
+      "league": "serie-d",
+      "group": "A",
+      "file": "immagini/squadre-loghi/varese.png"
+    },
+    "ac-leon": {
+      "slug": "ac-leon",
+      "name": "AC Leon",
+      "league": "serie-d",
+      "group": "B",
+      "file": "immagini/squadre-loghi/ac-leon.png"
+    },
+    "avc-vogherese-1919": {
+      "slug": "avc-vogherese-1919",
+      "name": "AVC Vogherese 1919",
+      "league": "serie-d",
+      "group": "B",
+      "file": "immagini/squadre-loghi/avc-vogherese-1919.png"
+    },
+    "breno": {
+      "slug": "breno",
+      "name": "USD Breno",
+      "league": "serie-d",
+      "group": "B",
+      "file": "immagini/squadre-loghi/breno.png"
+    },
+    "brusaporto": {
+      "slug": "brusaporto",
+      "name": "Calcio Brusaporto",
+      "league": "serie-d",
+      "group": "B",
+      "file": "immagini/squadre-loghi/brusaporto.png"
+    },
+    "caldiero-terme": {
+      "slug": "caldiero-terme",
+      "name": "Calcio Caldiero Terme",
+      "league": "serie-d",
+      "group": "B",
+      "file": "immagini/squadre-loghi/caldiero-terme.png"
+    },
+    "casatese-merate": {
+      "slug": "casatese-merate",
+      "name": "USD Casatese Merate",
+      "league": "serie-d",
+      "group": "B",
+      "file": "immagini/squadre-loghi/casatese-merate.png"
+    },
+    "castellanzese": {
+      "slug": "castellanzese",
+      "name": "USD Castellanzese 1921",
+      "league": "serie-d",
+      "group": "B",
+      "file": "immagini/squadre-loghi/castellanzese.png"
+    },
+    "chievo": {
+      "slug": "chievo",
+      "name": "AC ChievoVerona",
+      "league": "serie-d",
+      "group": "B",
+      "file": "immagini/squadre-loghi/chievo.png"
+    },
+    "oltrepo-fbc": {
+      "slug": "oltrepo-fbc",
+      "name": "Oltrepò FBC",
+      "league": "serie-d",
+      "group": "B",
+      "file": "immagini/squadre-loghi/oltrepo-fbc.png"
+    },
+    "pavia-calcio-1911": {
+      "slug": "pavia-calcio-1911",
+      "name": "Pavia Calcio 1911",
+      "league": "serie-d",
+      "group": "B",
+      "file": "immagini/squadre-loghi/pavia-calcio-1911.png"
+    },
+    "real-calepina": {
+      "slug": "real-calepina",
+      "name": "Real Calepina",
+      "league": "serie-d",
+      "group": "B",
+      "file": "immagini/squadre-loghi/real-calepina.png"
+    },
+    "scanzorosciate": {
+      "slug": "scanzorosciate",
+      "name": "USD Scanzorosciate Calcio",
+      "league": "serie-d",
+      "group": "B",
+      "file": "immagini/squadre-loghi/scanzorosciate.png"
+    },
+    "sondrio-calcio": {
+      "slug": "sondrio-calcio",
+      "name": "Nuova Sondrio Calcio",
+      "league": "serie-d",
+      "group": "B",
+      "file": "immagini/squadre-loghi/sondrio-calcio.png"
+    },
+    "varesina": {
+      "slug": "varesina",
+      "name": "Varesina Calcio",
+      "league": "serie-d",
+      "group": "B",
+      "file": "immagini/squadre-loghi/varesina.png"
+    },
+    "villa-valle": {
+      "slug": "villa-valle",
+      "name": "Villa Valle",
+      "league": "serie-d",
+      "group": "B",
+      "file": "immagini/squadre-loghi/villa-valle.png"
+    },
+    "virtus-ciserano-bergamo-1909": {
+      "slug": "virtus-ciserano-bergamo-1909",
+      "name": "Virtus CiseranoBergamo 1909",
+      "league": "serie-d",
+      "group": "B",
+      "file": "immagini/squadre-loghi/virtus-ciserano-bergamo-1909.png"
+    },
+    "adriese": {
+      "slug": "adriese",
+      "name": "USD Adriese 1906",
+      "league": "serie-d",
+      "group": "C",
+      "file": "immagini/squadre-loghi/adriese.png"
+    },
+    "bassano": {
+      "slug": "bassano",
+      "name": "FC Bassano",
+      "league": "serie-d",
+      "group": "C",
+      "file": "immagini/squadre-loghi/bassano.png"
+    },
+    "brian-lignano": {
+      "slug": "brian-lignano",
+      "name": "Brian Lignano Calcio",
+      "league": "serie-d",
+      "group": "C",
+      "file": "immagini/squadre-loghi/brian-lignano.png"
+    },
+    "calvi-noale": {
+      "slug": "calvi-noale",
+      "name": "FC Calvi Noale",
+      "league": "serie-d",
+      "group": "C",
+      "file": "immagini/squadre-loghi/calvi-noale.png"
+    },
+    "campodarsego": {
+      "slug": "campodarsego",
+      "name": "ACD Campodarsego Calcio",
+      "league": "serie-d",
+      "group": "C",
+      "file": "immagini/squadre-loghi/campodarsego.png"
+    },
+    "cjarlins-muzane": {
+      "slug": "cjarlins-muzane",
+      "name": "ASD Cjarlins Muzane",
+      "league": "serie-d",
+      "group": "C",
+      "file": "immagini/squadre-loghi/cjarlins-muzane.png"
+    },
+    "conegliano": {
+      "slug": "conegliano",
+      "name": "FCD Conegliano 1907",
+      "league": "serie-d",
+      "group": "C",
+      "file": "immagini/squadre-loghi/conegliano.png"
+    },
+    "este": {
+      "slug": "este",
+      "name": "AC Este",
+      "league": "serie-d",
+      "group": "C",
+      "file": "immagini/squadre-loghi/este.png"
+    },
+    "fc-obermais": {
+      "slug": "fc-obermais",
+      "name": "FC Obermais",
+      "league": "serie-d",
+      "group": "C",
+      "file": "immagini/squadre-loghi/fc-obermais.png"
+    },
+    "legnago-salus": {
+      "slug": "legnago-salus",
+      "name": "FC Legnago Salus",
+      "league": "serie-d",
+      "group": "C",
+      "file": "immagini/squadre-loghi/legnago-salus.png"
+    },
+    "luparense": {
+      "slug": "luparense",
+      "name": "Luparense FC",
+      "league": "serie-d",
+      "group": "C",
+      "file": "immagini/squadre-loghi/luparense.png"
+    },
+    "mestre": {
+      "slug": "mestre",
+      "name": "AC Mestre",
+      "league": "serie-d",
+      "group": "C",
+      "file": "immagini/squadre-loghi/mestre.png"
+    },
+    "portogruaro": {
+      "slug": "portogruaro",
+      "name": "Portogruaro Calcio",
+      "league": "serie-d",
+      "group": "C",
+      "file": "immagini/squadre-loghi/portogruaro.png"
+    },
+    "san-luigi": {
+      "slug": "san-luigi",
+      "name": "ASD San Luigi Calcio",
+      "league": "serie-d",
+      "group": "C",
+      "file": "immagini/squadre-loghi/san-luigi.png"
+    },
+    "union-clodiense-chioggia": {
+      "slug": "union-clodiense-chioggia",
+      "name": "Union Clodiense Chioggia FC",
+      "league": "serie-d",
+      "group": "C",
+      "file": "immagini/squadre-loghi/union-clodiense-chioggia.png"
+    },
+    "unione-la-rocca-altavilla": {
+      "slug": "unione-la-rocca-altavilla",
+      "name": "Unione La Rocca Altavilla",
+      "league": "serie-d",
+      "group": "C",
+      "file": "immagini/squadre-loghi/unione-la-rocca-altavilla.png"
+    },
+    "vigasio": {
+      "slug": "vigasio",
+      "name": "AC Vigasio",
+      "league": "serie-d",
+      "group": "C",
+      "file": "immagini/squadre-loghi/vigasio.png"
+    },
+    "cittadella-vis-modena": {
+      "slug": "cittadella-vis-modena",
+      "name": "Cittadella Vis Modena",
+      "league": "serie-d",
+      "group": "D",
+      "file": "immagini/squadre-loghi/cittadella-vis-modena.png"
+    },
+    "correggese": {
+      "slug": "correggese",
+      "name": "Correggese Calcio 1948",
+      "league": "serie-d",
+      "group": "D",
+      "file": "immagini/squadre-loghi/correggese.png"
+    },
+    "crema": {
+      "slug": "crema",
+      "name": "AC Crema 1908",
+      "league": "serie-d",
+      "group": "D",
+      "file": "immagini/squadre-loghi/crema.png"
+    },
+    "imolese": {
+      "slug": "imolese",
+      "name": "Imolese Calcio 1919",
+      "league": "serie-d",
+      "group": "D",
+      "file": "immagini/squadre-loghi/imolese.png"
+    },
+    "lentigione": {
+      "slug": "lentigione",
+      "name": "Lentigione Calcio",
+      "league": "serie-d",
+      "group": "D",
+      "file": "immagini/squadre-loghi/lentigione.png"
+    },
+    "piacenza": {
+      "slug": "piacenza",
+      "name": "Piacenza Calcio 1919",
+      "league": "serie-d",
+      "group": "D",
+      "file": "immagini/squadre-loghi/piacenza.png"
+    },
+    "pistoiese": {
+      "slug": "pistoiese",
+      "name": "FC Pistoiese 1921",
+      "league": "serie-d",
+      "group": "D",
+      "file": "immagini/squadre-loghi/pistoiese.png"
+    },
+    "pro-palazzolo": {
+      "slug": "pro-palazzolo",
+      "name": "FC Pro Palazzolo",
+      "league": "serie-d",
+      "group": "D",
+      "file": "immagini/squadre-loghi/pro-palazzolo.png"
+    },
+    "pro-sesto": {
+      "slug": "pro-sesto",
+      "name": "Pro Sesto 1913",
+      "league": "serie-d",
+      "group": "D",
+      "file": "immagini/squadre-loghi/pro-sesto.png"
+    },
+    "progresso": {
+      "slug": "progresso",
+      "name": "SCD Progresso Calcio",
+      "league": "serie-d",
+      "group": "D",
+      "file": "immagini/squadre-loghi/progresso.png"
+    },
+    "rovato-vertovese": {
+      "slug": "rovato-vertovese",
+      "name": "Rovato Vertovese",
+      "league": "serie-d",
+      "group": "D",
+      "file": "immagini/squadre-loghi/rovato-vertovese.png"
+    },
+    "sangiuliano-city-nova": {
+      "slug": "sangiuliano-city-nova",
+      "name": "FC Sangiuliano City Nova",
+      "league": "serie-d",
+      "group": "D",
+      "file": "immagini/squadre-loghi/sangiuliano-city-nova.png"
+    },
+    "sant-angelo": {
+      "slug": "sant-angelo",
+      "name": "AC Sant&#39;Angelo 1907",
+      "league": "serie-d",
+      "group": "D",
+      "file": "immagini/squadre-loghi/sant-angelo.png"
+    },
+    "sasso-marconi": {
+      "slug": "sasso-marconi",
+      "name": "ASD Sasso Marconi 1924",
+      "league": "serie-d",
+      "group": "D",
+      "file": "immagini/squadre-loghi/sasso-marconi.png"
+    },
+    "trevigliese": {
+      "slug": "trevigliese",
+      "name": "CS Trevigliese",
+      "league": "serie-d",
+      "group": "D",
+      "file": "immagini/squadre-loghi/trevigliese.png"
+    },
+    "tropical-coriano": {
+      "slug": "tropical-coriano",
+      "name": "ASD Tropical Coriano",
+      "league": "serie-d",
+      "group": "D",
+      "file": "immagini/squadre-loghi/tropical-coriano.png"
+    },
+    "tuttocuoio": {
+      "slug": "tuttocuoio",
+      "name": "AC Tuttocuoio 1957 San Miniato",
+      "league": "serie-d",
+      "group": "D",
+      "file": "immagini/squadre-loghi/tuttocuoio.png"
+    },
+    "aquila-montevarchi": {
+      "slug": "aquila-montevarchi",
+      "name": "Aquila Montevarchi 1902",
+      "league": "serie-d",
+      "group": "E",
+      "file": "immagini/squadre-loghi/aquila-montevarchi.png"
+    },
+    "camaiore": {
+      "slug": "camaiore",
+      "name": "Camaiore Calcio",
+      "league": "serie-d",
+      "group": "E",
+      "file": "immagini/squadre-loghi/camaiore.png"
+    },
+    "cannara": {
+      "slug": "cannara",
+      "name": "ASD Cannara",
+      "league": "serie-d",
+      "group": "E",
+      "file": "immagini/squadre-loghi/cannara.png"
+    },
+    "foligno": {
+      "slug": "foligno",
+      "name": "Foligno Calcio 1928",
+      "league": "serie-d",
+      "group": "E",
+      "file": "immagini/squadre-loghi/foligno.png"
+    },
+    "follonica-gavorrano": {
+      "slug": "follonica-gavorrano",
+      "name": "US Follonica Gavorrano",
+      "league": "serie-d",
+      "group": "E",
+      "file": "immagini/squadre-loghi/follonica-gavorrano.png"
+    },
+    "ghiviborgo": {
+      "slug": "ghiviborgo",
+      "name": "Ghiviborgo",
+      "league": "serie-d",
+      "group": "E",
+      "file": "immagini/squadre-loghi/ghiviborgo.png"
+    },
+    "orvietana": {
+      "slug": "orvietana",
+      "name": "Orvietana Calcio",
+      "league": "serie-d",
+      "group": "E",
+      "file": "immagini/squadre-loghi/orvietana.png"
+    },
+    "poggibonsi": {
+      "slug": "poggibonsi",
+      "name": "US Poggibonsi",
+      "league": "serie-d",
+      "group": "E",
+      "file": "immagini/squadre-loghi/poggibonsi.png"
+    },
+    "prato": {
+      "slug": "prato",
+      "name": "AC Prato",
+      "league": "serie-d",
+      "group": "E",
+      "file": "immagini/squadre-loghi/prato.png"
+    },
+    "san-donato-tavarnelle": {
+      "slug": "san-donato-tavarnelle",
+      "name": "San Donato Tavarnelle",
+      "league": "serie-d",
+      "group": "E",
+      "file": "immagini/squadre-loghi/san-donato-tavarnelle.png"
+    },
+    "scandicci": {
+      "slug": "scandicci",
+      "name": "FC Scandicci 1908",
+      "league": "serie-d",
+      "group": "E",
+      "file": "immagini/squadre-loghi/scandicci.png"
+    },
+    "seravezza-pozzi": {
+      "slug": "seravezza-pozzi",
+      "name": "Seravezza Pozzi Calcio",
+      "league": "serie-d",
+      "group": "E",
+      "file": "immagini/squadre-loghi/seravezza-pozzi.png"
+    },
+    "siena": {
+      "slug": "siena",
+      "name": "Siena",
+      "league": "serie-d",
+      "group": "E",
+      "file": "immagini/squadre-loghi/siena.png"
+    },
+    "tau-calcio-altopascio": {
+      "slug": "tau-calcio-altopascio",
+      "name": "Tau Calcio Altopascio",
+      "league": "serie-d",
+      "group": "E",
+      "file": "immagini/squadre-loghi/tau-calcio-altopascio.png"
+    },
+    "terranuova-traiana": {
+      "slug": "terranuova-traiana",
+      "name": "Terranuova Traiana",
+      "league": "serie-d",
+      "group": "E",
+      "file": "immagini/squadre-loghi/terranuova-traiana.png"
+    },
+    "trestina": {
+      "slug": "trestina",
+      "name": "Sporting Club Trestina",
+      "league": "serie-d",
+      "group": "E",
+      "file": "immagini/squadre-loghi/trestina.png"
+    },
+    "vivi-altotevere-sansepolcro": {
+      "slug": "vivi-altotevere-sansepolcro",
+      "name": "Vivi Altotevere Sansepolcro",
+      "league": "serie-d",
+      "group": "E",
+      "file": "immagini/squadre-loghi/vivi-altotevere-sansepolcro.png"
+    },
+    "ancona": {
+      "slug": "ancona",
+      "name": "Ancona",
+      "league": "serie-d",
+      "group": "F",
+      "file": "immagini/squadre-loghi/ancona.png"
+    },
+    "atletico-ascoli": {
+      "slug": "atletico-ascoli",
+      "name": "Atletico Ascoli",
+      "league": "serie-d",
+      "group": "F",
+      "file": "immagini/squadre-loghi/atletico-ascoli.png"
+    },
+    "castelfidardo-calcio": {
+      "slug": "castelfidardo-calcio",
+      "name": "Castelfidardo Calcio",
+      "league": "serie-d",
+      "group": "F",
+      "file": "immagini/squadre-loghi/castelfidardo-calcio.png"
+    },
+    "chieti-fc-1922": {
+      "slug": "chieti-fc-1922",
+      "name": "Chieti FC 1922",
+      "league": "serie-d",
+      "group": "F",
+      "file": "immagini/squadre-loghi/chieti-fc-1922.png"
+    },
+    "fossombrone-calcio": {
+      "slug": "fossombrone-calcio",
+      "name": "Fossombrone Calcio",
+      "league": "serie-d",
+      "group": "F",
+      "file": "immagini/squadre-loghi/fossombrone-calcio.png"
+    },
+    "giulianova-calcio-1924": {
+      "slug": "giulianova-calcio-1924",
+      "name": "Giulianova Calcio 1924",
+      "league": "serie-d",
+      "group": "F",
+      "file": "immagini/squadre-loghi/giulianova-calcio-1924.png"
+    },
+    "laquila-1927": {
+      "slug": "laquila-1927",
+      "name": "L&#39;Aquila 1927",
+      "league": "serie-d",
+      "group": "F",
+      "file": "immagini/squadre-loghi/laquila-1927.png"
+    },
+    "maceratese-1922": {
+      "slug": "maceratese-1922",
+      "name": "Maceratese 1922",
+      "league": "serie-d",
+      "group": "F",
+      "file": "immagini/squadre-loghi/maceratese-1922.png"
+    },
+    "notaresco-calcio-1924": {
+      "slug": "notaresco-calcio-1924",
+      "name": "Notaresco Calcio 1924",
+      "league": "serie-d",
+      "group": "F",
+      "file": "immagini/squadre-loghi/notaresco-calcio-1924.png"
+    },
+    "recanatese": {
+      "slug": "recanatese",
+      "name": "US Recanatese",
+      "league": "serie-d",
+      "group": "F",
+      "file": "immagini/squadre-loghi/recanatese.png"
+    },
+    "sammaurese": {
+      "slug": "sammaurese",
+      "name": "Sammaurese Calcio",
+      "league": "serie-d",
+      "group": "F",
+      "file": "immagini/squadre-loghi/sammaurese.png"
+    },
+    "san-marino-calcio": {
+      "slug": "san-marino-calcio",
+      "name": "San Marino Calcio",
+      "league": "serie-d",
+      "group": "F",
+      "file": "immagini/squadre-loghi/san-marino-calcio.png"
+    },
+    "sora-calcio-1907": {
+      "slug": "sora-calcio-1907",
+      "name": "Sora Calcio 1907",
+      "league": "serie-d",
+      "group": "F",
+      "file": "immagini/squadre-loghi/sora-calcio-1907.png"
+    },
+    "teramo-calcio-1913": {
+      "slug": "teramo-calcio-1913",
+      "name": "Teramo Calcio 1913",
+      "league": "serie-d",
+      "group": "F",
+      "file": null
+    },
+    "termoli-calcio-1920": {
+      "slug": "termoli-calcio-1920",
+      "name": "Termoli Calcio 1920",
+      "league": "serie-d",
+      "group": "F",
+      "file": "immagini/squadre-loghi/termoli-calcio-1920.png"
+    },
+    "unipomezia-1938": {
+      "slug": "unipomezia-1938",
+      "name": "UniPomezia 1938",
+      "league": "serie-d",
+      "group": "F",
+      "file": "immagini/squadre-loghi/unipomezia-1938.png"
+    },
+    "vigor-senigallia": {
+      "slug": "vigor-senigallia",
+      "name": "Vigor Senigallia",
+      "league": "serie-d",
+      "group": "F",
+      "file": "immagini/squadre-loghi/vigor-senigallia.png"
+    },
+    "anzio-calcio-1924": {
+      "slug": "anzio-calcio-1924",
+      "name": "Anzio Calcio 1924",
+      "league": "serie-d",
+      "group": "G",
+      "file": "immagini/squadre-loghi/anzio-calcio-1924.png"
+    },
+    "atletico-lodigiani": {
+      "slug": "atletico-lodigiani",
+      "name": "Atletico Lodigiani",
+      "league": "serie-d",
+      "group": "G",
+      "file": "immagini/squadre-loghi/atletico-lodigiani.png"
+    },
+    "budoni-calcio": {
+      "slug": "budoni-calcio",
+      "name": "Budoni Calcio",
+      "league": "serie-d",
+      "group": "G",
+      "file": "immagini/squadre-loghi/budoni-calcio.png"
+    },
+    "cassino-calcio-1924": {
+      "slug": "cassino-calcio-1924",
+      "name": "Cassino Calcio 1924",
+      "league": "serie-d",
+      "group": "G",
+      "file": "immagini/squadre-loghi/cassino-calcio-1924.png"
+    },
+    "cos-sarrabus-ogliastra": {
+      "slug": "cos-sarrabus-ogliastra",
+      "name": "COS Sarrabus Ogliastra",
+      "league": "serie-d",
+      "group": "G",
+      "file": "immagini/squadre-loghi/cos-sarrabus-ogliastra.png"
+    },
+    "cynthialbalonga": {
+      "slug": "cynthialbalonga",
+      "name": "Cynthialbalonga Calcio",
+      "league": "serie-d",
+      "group": "G",
+      "file": "immagini/squadre-loghi/cynthialbalonga.png"
+    },
+    "flaminia-civita-castellana": {
+      "slug": "flaminia-civita-castellana",
+      "name": "Flaminia Civita Castellana",
+      "league": "serie-d",
+      "group": "G",
+      "file": "immagini/squadre-loghi/flaminia-civita-castellana.png"
+    },
+    "ischia-calcio": {
+      "slug": "ischia-calcio",
+      "name": "Ischia Calcio",
+      "league": "serie-d",
+      "group": "G",
+      "file": "immagini/squadre-loghi/ischia-calcio.png"
+    },
+    "monastir-1983": {
+      "slug": "monastir-1983",
+      "name": "ASD Monastir 1983",
+      "league": "serie-d",
+      "group": "G",
+      "file": "immagini/squadre-loghi/monastir-1983.png"
+    },
+    "montespaccato-calcio": {
+      "slug": "montespaccato-calcio",
+      "name": "Montespaccato Calcio",
+      "league": "serie-d",
+      "group": "G",
+      "file": "immagini/squadre-loghi/montespaccato-calcio.png"
+    },
+    "nocerina-1910": {
+      "slug": "nocerina-1910",
+      "name": "Nocerina 1910",
+      "league": "serie-d",
+      "group": "G",
+      "file": "immagini/squadre-loghi/nocerina-1910.png"
+    },
+    "olbia-calcio-1905": {
+      "slug": "olbia-calcio-1905",
+      "name": "Olbia Calcio 1905",
+      "league": "serie-d",
+      "group": "G",
+      "file": "immagini/squadre-loghi/olbia-calcio-1905.png"
+    },
+    "real-monterotondo": {
+      "slug": "real-monterotondo",
+      "name": "ASD Real Monterotondo",
+      "league": "serie-d",
+      "group": "G",
+      "file": "immagini/squadre-loghi/real-monterotondo.png"
+    },
+    "sassari-calcio-latte-dolce": {
+      "slug": "sassari-calcio-latte-dolce",
+      "name": "Sassari Calcio Latte Dolce",
+      "league": "serie-d",
+      "group": "G",
+      "file": "immagini/squadre-loghi/sassari-calcio-latte-dolce.png"
+    },
+    "trastevere-calcio": {
+      "slug": "trastevere-calcio",
+      "name": "Trastevere Calcio",
+      "league": "serie-d",
+      "group": "G",
+      "file": "immagini/squadre-loghi/trastevere-calcio.png"
+    },
+    "us-palmese-1912": {
+      "slug": "us-palmese-1912",
+      "name": "US Palmese 1912",
+      "league": "serie-d",
+      "group": "G",
+      "file": "immagini/squadre-loghi/us-palmese-1912.png"
+    },
+    "valmontone-1921": {
+      "slug": "valmontone-1921",
+      "name": "Valmontone 1921",
+      "league": "serie-d",
+      "group": "G",
+      "file": "immagini/squadre-loghi/valmontone-1921.png"
+    },
+    "acerrana-1926": {
+      "slug": "acerrana-1926",
+      "name": "Acerrana 1926",
+      "league": "serie-d",
+      "group": "H",
+      "file": "immagini/squadre-loghi/acerrana-1926.png"
+    },
+    "afragolese-1944": {
+      "slug": "afragolese-1944",
+      "name": "Afragolese 1944",
+      "league": "serie-d",
+      "group": "H",
+      "file": "immagini/squadre-loghi/afragolese-1944.png"
+    },
+    "citta-di-fasano": {
+      "slug": "citta-di-fasano",
+      "name": "Città di Fasano",
+      "league": "serie-d",
+      "group": "H",
+      "file": "immagini/squadre-loghi/citta-di-fasano.png"
+    },
+    "fbc-gravina": {
+      "slug": "fbc-gravina",
+      "name": "FBC Gravina",
+      "league": "serie-d",
+      "group": "H",
+      "file": "immagini/squadre-loghi/fbc-gravina.png"
+    },
+    "fc-francavilla": {
+      "slug": "fc-francavilla",
+      "name": "FC Francavilla",
+      "league": "serie-d",
+      "group": "H",
+      "file": "immagini/squadre-loghi/fc-francavilla.png"
+    },
+    "fc-pompei": {
+      "slug": "fc-pompei",
+      "name": "FC Pompei",
+      "league": "serie-d",
+      "group": "H",
+      "file": "immagini/squadre-loghi/fc-pompei.png"
+    },
+    "ferrandina-17890": {
+      "slug": "ferrandina-17890",
+      "name": "Asd Ferrandina 17890",
+      "league": "serie-d",
+      "group": "H",
+      "file": "immagini/squadre-loghi/ferrandina-17890.png"
+    },
+    "fidelis-andria": {
+      "slug": "fidelis-andria",
+      "name": "Fidelis Andria",
+      "league": "serie-d",
+      "group": "H",
+      "file": "immagini/squadre-loghi/fidelis-andria.png"
+    },
+    "heraclea-calcio": {
+      "slug": "heraclea-calcio",
+      "name": "Heraclea Calcio",
+      "league": "serie-d",
+      "group": "H",
+      "file": "immagini/squadre-loghi/heraclea-calcio.png"
+    },
+    "manfredonia-calcio": {
+      "slug": "manfredonia-calcio",
+      "name": "Manfredonia Calcio",
+      "league": "serie-d",
+      "group": "H",
+      "file": "immagini/squadre-loghi/manfredonia-calcio.png"
+    },
+    "martina-calcio-1947": {
+      "slug": "martina-calcio-1947",
+      "name": "Martina Calcio 1947",
+      "league": "serie-d",
+      "group": "H",
+      "file": "immagini/squadre-loghi/martina-calcio-1947.png"
+    },
+    "nardo": {
+      "slug": "nardo",
+      "name": "AC Nardò",
+      "league": "serie-d",
+      "group": "H",
+      "file": "immagini/squadre-loghi/nardo.png"
+    },
+    "nola-1925": {
+      "slug": "nola-1925",
+      "name": "Nola 1925",
+      "league": "serie-d",
+      "group": "H",
+      "file": "immagini/squadre-loghi/nola-1925.png"
+    },
+    "paganese-calcio-1926": {
+      "slug": "paganese-calcio-1926",
+      "name": "Paganese Calcio 1926",
+      "league": "serie-d",
+      "group": "H",
+      "file": "immagini/squadre-loghi/paganese-calcio-1926.png"
+    },
+    "real-normanna": {
+      "slug": "real-normanna",
+      "name": "Real Normanna",
+      "league": "serie-d",
+      "group": "H",
+      "file": "immagini/squadre-loghi/real-normanna.png"
+    },
+    "sarnese-1926": {
+      "slug": "sarnese-1926",
+      "name": "Sarnese 1926",
+      "league": "serie-d",
+      "group": "H",
+      "file": "immagini/squadre-loghi/sarnese-1926.png"
+    },
+    "virtus-francavilla": {
+      "slug": "virtus-francavilla",
+      "name": "Virtus Francavilla",
+      "league": "serie-d",
+      "group": "H",
+      "file": "immagini/squadre-loghi/virtus-francavilla.png"
+    },
+    "acireale-calcio": {
+      "slug": "acireale-calcio",
+      "name": "Acireale Calcio",
+      "league": "serie-d",
+      "group": "I",
+      "file": "immagini/squadre-loghi/acireale-calcio.png"
+    },
+    "acr-messina": {
+      "slug": "acr-messina",
+      "name": "ACR Messina",
+      "league": "serie-d",
+      "group": "I",
+      "file": "immagini/squadre-loghi/acr-messina.png"
+    },
+    "athletic-club-palermo": {
+      "slug": "athletic-club-palermo",
+      "name": "Athletic Club Palermo",
+      "league": "serie-d",
+      "group": "I",
+      "file": "immagini/squadre-loghi/athletic-club-palermo.png"
+    },
+    "castrum-favara": {
+      "slug": "castrum-favara",
+      "name": "Castrum Favara",
+      "league": "serie-d",
+      "group": "I",
+      "file": "immagini/squadre-loghi/castrum-favara.png"
+    },
+    "enna-calcio": {
+      "slug": "enna-calcio",
+      "name": "Enna Calcio",
+      "league": "serie-d",
+      "group": "I",
+      "file": "immagini/squadre-loghi/enna-calcio.png"
+    },
+    "gela-calcio": {
+      "slug": "gela-calcio",
+      "name": "Gela Calcio",
+      "league": "serie-d",
+      "group": "I",
+      "file": "immagini/squadre-loghi/gela-calcio.png"
+    },
+    "gelbison-cilento": {
+      "slug": "gelbison-cilento",
+      "name": "Gelbison Cilento",
+      "league": "serie-d",
+      "group": "I",
+      "file": "immagini/squadre-loghi/gelbison-cilento.png"
+    },
+    "igea-virtus-barcellona": {
+      "slug": "igea-virtus-barcellona",
+      "name": "Igea Virtus Barcellona",
+      "league": "serie-d",
+      "group": "I",
+      "file": "immagini/squadre-loghi/igea-virtus-barcellona.png"
+    },
+    "milazzo": {
+      "slug": "milazzo",
+      "name": "SS Milazzo",
+      "league": "serie-d",
+      "group": "I",
+      "file": "immagini/squadre-loghi/milazzo.png"
+    },
+    "nissa-fc": {
+      "slug": "nissa-fc",
+      "name": "Nissa FC",
+      "league": "serie-d",
+      "group": "I",
+      "file": "immagini/squadre-loghi/nissa-fc.png"
+    },
+    "paterno-calcio": {
+      "slug": "paterno-calcio",
+      "name": "Paternò Calcio",
+      "league": "serie-d",
+      "group": "I",
+      "file": "immagini/squadre-loghi/paterno-calcio.png"
+    },
+    "ragusa-calcio": {
+      "slug": "ragusa-calcio",
+      "name": "Ragusa Calcio",
+      "league": "serie-d",
+      "group": "I",
+      "file": "immagini/squadre-loghi/ragusa-calcio.png"
+    },
+    "reggina": {
+      "slug": "reggina",
+      "name": "Reggina 1914",
+      "league": "serie-d",
+      "group": "I",
+      "file": "immagini/squadre-loghi/reggina.png"
+    },
+    "sambiase-calcio": {
+      "slug": "sambiase-calcio",
+      "name": "Sambiase Calcio",
+      "league": "serie-d",
+      "group": "I",
+      "file": "immagini/squadre-loghi/sambiase-calcio.png"
+    },
+    "sancataldese": {
+      "slug": "sancataldese",
+      "name": "Sancataldese",
+      "league": "serie-d",
+      "group": "I",
+      "file": "immagini/squadre-loghi/sancataldese.png"
+    },
+    "vibonese": {
+      "slug": "vibonese",
+      "name": "Vibonese",
+      "league": "serie-d",
+      "group": "I",
+      "file": "immagini/squadre-loghi/vibonese.png"
+    },
+    "vigor-lamezia": {
+      "slug": "vigor-lamezia",
+      "name": "Vigor Lamezia",
+      "league": "serie-d",
+      "group": "I",
+      "file": "immagini/squadre-loghi/vigor-lamezia.png"
+    }
+  },
+  "structure": {
+    "serie-a": [
+      [
+        "Atalanta",
+        "atalanta"
+      ],
+      [
+        "Bologna",
+        "bologna"
+      ],
+      [
+        "Cagliari",
+        "cagliari"
+      ],
+      [
+        "Como 1907",
+        "como-1907"
+      ],
+      [
+        "Fiorentina",
+        "fiorentina"
+      ],
+      [
+        "Frosinone Calcio",
+        "frosinone"
+      ],
+      [
+        "Genoa",
+        "genoa"
+      ],
+      [
+        "Inter",
+        "inter"
+      ],
+      [
+        "Juventus",
+        "juventus"
+      ],
+      [
+        "Lazio",
+        "lazio"
+      ],
+      [
+        "Lecce",
+        "lecce"
+      ],
+      [
+        "Milan",
+        "milan"
+      ],
+      [
+        "AC Monza",
+        "monza"
+      ],
+      [
+        "Napoli",
+        "napoli"
+      ],
+      [
+        "Parma",
+        "parma"
+      ],
+      [
+        "Roma",
+        "roma"
+      ],
+      [
+        "Sassuolo",
+        "sassuolo"
+      ],
+      [
+        "Torino",
+        "torino"
+      ],
+      [
+        "Udinese",
+        "udinese"
+      ],
+      [
+        "Venezia",
+        "venezia"
+      ]
+    ],
+    "serie-b": [
+      [
+        "Arezzo",
+        "arezzo"
+      ],
+      [
+        "Ascoli",
+        "ascoli"
+      ],
+      [
+        "Benevento",
+        "benevento"
+      ],
+      [
+        "Carrarese Calcio",
+        "carrarese"
+      ],
+      [
+        "Catanzaro",
+        "catanzaro"
+      ],
+      [
+        "Cesena FC",
+        "cesena"
+      ],
+      [
+        "Cremonese",
+        "cremonese"
+      ],
+      [
+        "Empoli",
+        "empoli"
+      ],
+      [
+        "Juve Stabia",
+        "juve-stabia"
+      ],
+      [
+        "Mantova 1911",
+        "mantova-1911"
+      ],
+      [
+        "Modena",
+        "modena"
+      ],
+      [
+        "Padova",
+        "padova"
+      ],
+      [
+        "Palermo",
+        "palermo"
+      ],
+      [
+        "Pisa",
+        "pisa"
+      ],
+      [
+        "Sampdoria",
+        "sampdoria"
+      ],
+      [
+        "Suditrol",
+        "suditrol"
+      ],
+      [
+        "US Avellino 1912",
+        "us-avellino-1912"
+      ],
+      [
+        "Hellas Verona",
+        "verona"
+      ],
+      [
+        "Vicenza",
+        "vicenza"
+      ],
+      [
+        "Virtus Entella",
+        "virtus-entella"
+      ]
+    ],
+    "serie-c": {
+      "A": [
+        {
+          "name": "AlbinoLeffe",
+          "slug": "albinoleffe"
+        },
+        {
+          "name": "Alcione",
+          "slug": "alcione"
+        },
+        {
+          "name": "FC Arzignano Valchiampo",
+          "slug": "arzignano-valchiampo"
+        },
+        {
+          "name": "Cittadella",
+          "slug": "cittadella"
+        },
+        {
+          "name": "Calcio Desenzano",
+          "slug": "desenzano"
+        },
+        {
+          "name": "Dolomiti Bellunesi",
+          "slug": "dolomiti-bellunesi"
+        },
+        {
+          "name": "Folgore Caratese",
+          "slug": "folgore-caratese"
+        },
+        {
+          "name": "Giana Erminio",
+          "slug": "giana-erminio"
+        },
+        {
+          "name": "Lecco",
+          "slug": "lecco"
+        },
+        {
+          "name": "Lumezzane",
+          "slug": "lumezzane"
+        },
+        {
+          "name": "Novara",
+          "slug": "novara"
+        },
+        {
+          "name": "Ospitaletto",
+          "slug": "ospitaletto"
+        },
+        {
+          "name": "Pergolettese",
+          "slug": "pergolettese"
+        },
+        {
+          "name": "FC Pro Vercelli 1892",
+          "slug": "pro-vercelli"
+        },
+        {
+          "name": "Renate",
+          "slug": "renate"
+        },
+        {
+          "name": "Trento",
+          "slug": "trento"
+        },
+        {
+          "name": "Treviso FBC 1993",
+          "slug": "treviso"
+        },
+        {
+          "name": "Union Brescia",
+          "slug": "union-brescia"
+        },
+        {
+          "name": "Vado",
+          "slug": "vado"
+        }
+      ],
+      "B": [
+        {
+          "name": "Campobasso",
+          "slug": "campobasso"
+        },
+        {
+          "name": "AC Carpi",
+          "slug": "carpi"
+        },
+        {
+          "name": "Forlì FC",
+          "slug": "forli-fc"
+        },
+        {
+          "name": "US Grosseto 1912",
+          "slug": "grosseto"
+        },
+        {
+          "name": "Gubbio",
+          "slug": "gubbio"
+        },
+        {
+          "name": "Guidonia Montecelio",
+          "slug": "guidonia-montecelio"
+        },
+        {
+          "name": "Livorno",
+          "slug": "livorno"
+        },
+        {
+          "name": "Ostiamare",
+          "slug": "ostiamare"
+        },
+        {
+          "name": "Perugia",
+          "slug": "perugia"
+        },
+        {
+          "name": "Pescara",
+          "slug": "pescara"
+        },
+        {
+          "name": "Pianese",
+          "slug": "pianese"
+        },
+        {
+          "name": "Pineto",
+          "slug": "pineto"
+        },
+        {
+          "name": "Ravenna",
+          "slug": "ravenna"
+        },
+        {
+          "name": "Reggiana",
+          "slug": "reggiana"
+        },
+        {
+          "name": "Sambenedettese",
+          "slug": "sambenedettese"
+        },
+        {
+          "name": "Spezia",
+          "slug": "spezia"
+        },
+        {
+          "name": "Ternana",
+          "slug": "ternana"
+        },
+        {
+          "name": "Torres",
+          "slug": "torres"
+        },
+        {
+          "name": "Vis Pesaro",
+          "slug": "vis-pesaro"
+        }
+      ],
+      "C": [
+        {
+          "name": "Audace Cerignola",
+          "slug": "audace-cerignola"
+        },
+        {
+          "name": "Bari",
+          "slug": "bari"
+        },
+        {
+          "name": "Barletta 1922",
+          "slug": "barletta-1922"
+        },
+        {
+          "name": "Casarano",
+          "slug": "casarano"
+        },
+        {
+          "name": "Casertana",
+          "slug": "casertana"
+        },
+        {
+          "name": "Catania",
+          "slug": "catania"
+        },
+        {
+          "name": "Cavese",
+          "slug": "cavese"
+        },
+        {
+          "name": "Cosenza",
+          "slug": "cosenza"
+        },
+        {
+          "name": "Crotone",
+          "slug": "crotone"
+        },
+        {
+          "name": "Giugliano",
+          "slug": "giugliano"
+        },
+        {
+          "name": "Latina Calcio 1932",
+          "slug": "latina"
+        },
+        {
+          "name": "Monopoli",
+          "slug": "monopoli"
+        },
+        {
+          "name": "AZ Picerno",
+          "slug": "az-picerno"
+        },
+        {
+          "name": "Potenza",
+          "slug": "potenza"
+        },
+        {
+          "name": "Salernitana",
+          "slug": "salernitana"
+        },
+        {
+          "name": "Savoia 1908",
+          "slug": "savoia-1908"
+        },
+        {
+          "name": "Scafatese Calcio 1922",
+          "slug": "scafatese-calcio-1922"
+        },
+        {
+          "name": "Sorrento",
+          "slug": "sorrento"
+        },
+        {
+          "name": "Team Altamura",
+          "slug": "team-altamura"
+        }
+      ]
+    },
+    "serie-d": {
+      "A": [
+        {
+          "name": "Asti",
+          "slug": "asti"
+        },
+        {
+          "name": "Biellese",
+          "slug": "biellese"
+        },
+        {
+          "name": "Cairese",
+          "slug": "cairese"
+        },
+        {
+          "name": "Celle Varazze",
+          "slug": "celle-varazze"
+        },
+        {
+          "name": "Chisola",
+          "slug": "chisola"
+        },
+        {
+          "name": "Club Milano",
+          "slug": "club-milano"
+        },
+        {
+          "name": "Derthona",
+          "slug": "derthona"
+        },
+        {
+          "name": "Gozzano",
+          "slug": "gozzano"
+        },
+        {
+          "name": "Imperia",
+          "slug": "imperia"
+        },
+        {
+          "name": "Lavagnese",
+          "slug": "lavagnese"
+        },
+        {
+          "name": "Ligorna",
+          "slug": "ligorna"
+        },
+        {
+          "name": "NovaRomentin",
+          "slug": "novaromentin"
+        },
+        {
+          "name": "Saluzzo",
+          "slug": "saluzzo"
+        },
+        {
+          "name": "Sanremese",
+          "slug": "sanremese"
+        },
+        {
+          "name": "Sestri Levante",
+          "slug": "sestri-levante"
+        },
+        {
+          "name": "Vado",
+          "slug": "vado"
+        },
+        {
+          "name": "Valenzana Mado",
+          "slug": "valenzana-mado"
+        },
+        {
+          "name": "Varese",
+          "slug": "varese"
+        }
+      ],
+      "B": [
+        {
+          "name": "AC Leon",
+          "slug": "ac-leon"
+        },
+        {
+          "name": "AVC Vogherese 1919",
+          "slug": "avc-vogherese-1919"
+        },
+        {
+          "name": "USD Breno",
+          "slug": "breno"
+        },
+        {
+          "name": "Calcio Brusaporto",
+          "slug": "brusaporto"
+        },
+        {
+          "name": "Calcio Caldiero Terme",
+          "slug": "caldiero-terme"
+        },
+        {
+          "name": "USD Casatese Merate",
+          "slug": "casatese-merate"
+        },
+        {
+          "name": "USD Castellanzese 1921",
+          "slug": "castellanzese"
+        },
+        {
+          "name": "AC ChievoVerona",
+          "slug": "chievo"
+        },
+        {
+          "name": "Folgore Caratese",
+          "slug": "folgore-caratese"
+        },
+        {
+          "name": "Oltrepò FBC",
+          "slug": "oltrepo-fbc"
+        },
+        {
+          "name": "Pavia Calcio 1911",
+          "slug": "pavia-calcio-1911"
+        },
+        {
+          "name": "Real Calepina",
+          "slug": "real-calepina"
+        },
+        {
+          "name": "USD Scanzorosciate Calcio",
+          "slug": "scanzorosciate"
+        },
+        {
+          "name": "Nuova Sondrio Calcio",
+          "slug": "sondrio-calcio"
+        },
+        {
+          "name": "Varesina Calcio",
+          "slug": "varesina"
+        },
+        {
+          "name": "Villa Valle",
+          "slug": "villa-valle"
+        },
+        {
+          "name": "Virtus CiseranoBergamo 1909",
+          "slug": "virtus-ciserano-bergamo-1909"
+        }
+      ],
+      "C": [
+        {
+          "name": "USD Adriese 1906",
+          "slug": "adriese"
+        },
+        {
+          "name": "FC Bassano",
+          "slug": "bassano"
+        },
+        {
+          "name": "Brian Lignano Calcio",
+          "slug": "brian-lignano"
+        },
+        {
+          "name": "FC Calvi Noale",
+          "slug": "calvi-noale"
+        },
+        {
+          "name": "ACD Campodarsego Calcio",
+          "slug": "campodarsego"
+        },
+        {
+          "name": "ASD Cjarlins Muzane",
+          "slug": "cjarlins-muzane"
+        },
+        {
+          "name": "FCD Conegliano 1907",
+          "slug": "conegliano"
+        },
+        {
+          "name": "AC Este",
+          "slug": "este"
+        },
+        {
+          "name": "FC Obermais",
+          "slug": "fc-obermais"
+        },
+        {
+          "name": "FC Legnago Salus",
+          "slug": "legnago-salus"
+        },
+        {
+          "name": "Luparense FC",
+          "slug": "luparense"
+        },
+        {
+          "name": "AC Mestre",
+          "slug": "mestre"
+        },
+        {
+          "name": "Portogruaro Calcio",
+          "slug": "portogruaro"
+        },
+        {
+          "name": "ASD San Luigi Calcio",
+          "slug": "san-luigi"
+        },
+        {
+          "name": "Treviso FBC 1993",
+          "slug": "treviso"
+        },
+        {
+          "name": "Union Clodiense Chioggia FC",
+          "slug": "union-clodiense-chioggia"
+        },
+        {
+          "name": "Unione La Rocca Altavilla",
+          "slug": "unione-la-rocca-altavilla"
+        },
+        {
+          "name": "AC Vigasio",
+          "slug": "vigasio"
+        }
+      ],
+      "D": [
+        {
+          "name": "Cittadella Vis Modena",
+          "slug": "cittadella-vis-modena"
+        },
+        {
+          "name": "Correggese Calcio 1948",
+          "slug": "correggese"
+        },
+        {
+          "name": "AC Crema 1908",
+          "slug": "crema"
+        },
+        {
+          "name": "Calcio Desenzano",
+          "slug": "desenzano"
+        },
+        {
+          "name": "Imolese Calcio 1919",
+          "slug": "imolese"
+        },
+        {
+          "name": "Lentigione Calcio",
+          "slug": "lentigione"
+        },
+        {
+          "name": "Piacenza Calcio 1919",
+          "slug": "piacenza"
+        },
+        {
+          "name": "FC Pistoiese 1921",
+          "slug": "pistoiese"
+        },
+        {
+          "name": "FC Pro Palazzolo",
+          "slug": "pro-palazzolo"
+        },
+        {
+          "name": "Pro Sesto 1913",
+          "slug": "pro-sesto"
+        },
+        {
+          "name": "SCD Progresso Calcio",
+          "slug": "progresso"
+        },
+        {
+          "name": "Rovato Vertovese",
+          "slug": "rovato-vertovese"
+        },
+        {
+          "name": "FC Sangiuliano City Nova",
+          "slug": "sangiuliano-city-nova"
+        },
+        {
+          "name": "AC Sant&#39;Angelo 1907",
+          "slug": "sant-angelo"
+        },
+        {
+          "name": "ASD Sasso Marconi 1924",
+          "slug": "sasso-marconi"
+        },
+        {
+          "name": "CS Trevigliese",
+          "slug": "trevigliese"
+        },
+        {
+          "name": "ASD Tropical Coriano",
+          "slug": "tropical-coriano"
+        },
+        {
+          "name": "AC Tuttocuoio 1957 San Miniato",
+          "slug": "tuttocuoio"
+        }
+      ],
+      "E": [
+        {
+          "name": "Aquila Montevarchi 1902",
+          "slug": "aquila-montevarchi"
+        },
+        {
+          "name": "Camaiore Calcio",
+          "slug": "camaiore"
+        },
+        {
+          "name": "ASD Cannara",
+          "slug": "cannara"
+        },
+        {
+          "name": "Foligno Calcio 1928",
+          "slug": "foligno"
+        },
+        {
+          "name": "US Follonica Gavorrano",
+          "slug": "follonica-gavorrano"
+        },
+        {
+          "name": "Ghiviborgo",
+          "slug": "ghiviborgo"
+        },
+        {
+          "name": "US Grosseto 1912",
+          "slug": "grosseto"
+        },
+        {
+          "name": "Orvietana Calcio",
+          "slug": "orvietana"
+        },
+        {
+          "name": "US Poggibonsi",
+          "slug": "poggibonsi"
+        },
+        {
+          "name": "AC Prato",
+          "slug": "prato"
+        },
+        {
+          "name": "San Donato Tavarnelle",
+          "slug": "san-donato-tavarnelle"
+        },
+        {
+          "name": "FC Scandicci 1908",
+          "slug": "scandicci"
+        },
+        {
+          "name": "Seravezza Pozzi Calcio",
+          "slug": "seravezza-pozzi"
+        },
+        {
+          "name": "Siena",
+          "slug": "siena"
+        },
+        {
+          "name": "Tau Calcio Altopascio",
+          "slug": "tau-calcio-altopascio"
+        },
+        {
+          "name": "Terranuova Traiana",
+          "slug": "terranuova-traiana"
+        },
+        {
+          "name": "Sporting Club Trestina",
+          "slug": "trestina"
+        },
+        {
+          "name": "Vivi Altotevere Sansepolcro",
+          "slug": "vivi-altotevere-sansepolcro"
+        }
+      ],
+      "F": [
+        {
+          "name": "Ancona",
+          "slug": "ancona"
+        },
+        {
+          "name": "Atletico Ascoli",
+          "slug": "atletico-ascoli"
+        },
+        {
+          "name": "Castelfidardo Calcio",
+          "slug": "castelfidardo-calcio"
+        },
+        {
+          "name": "Chieti FC 1922",
+          "slug": "chieti-fc-1922"
+        },
+        {
+          "name": "Fossombrone Calcio",
+          "slug": "fossombrone-calcio"
+        },
+        {
+          "name": "Giulianova Calcio 1924",
+          "slug": "giulianova-calcio-1924"
+        },
+        {
+          "name": "L&#39;Aquila 1927",
+          "slug": "laquila-1927"
+        },
+        {
+          "name": "Maceratese 1922",
+          "slug": "maceratese-1922"
+        },
+        {
+          "name": "Notaresco Calcio 1924",
+          "slug": "notaresco-calcio-1924"
+        },
+        {
+          "name": "Ostiamare",
+          "slug": "ostiamare"
+        },
+        {
+          "name": "US Recanatese",
+          "slug": "recanatese"
+        },
+        {
+          "name": "Sammaurese Calcio",
+          "slug": "sammaurese"
+        },
+        {
+          "name": "San Marino Calcio",
+          "slug": "san-marino-calcio"
+        },
+        {
+          "name": "Sora Calcio 1907",
+          "slug": "sora-calcio-1907"
+        },
+        {
+          "name": "Teramo Calcio 1913",
+          "slug": "teramo-calcio-1913"
+        },
+        {
+          "name": "Termoli Calcio 1920",
+          "slug": "termoli-calcio-1920"
+        },
+        {
+          "name": "UniPomezia 1938",
+          "slug": "unipomezia-1938"
+        },
+        {
+          "name": "Vigor Senigallia",
+          "slug": "vigor-senigallia"
+        }
+      ],
+      "G": [
+        {
+          "name": "Anzio Calcio 1924",
+          "slug": "anzio-calcio-1924"
+        },
+        {
+          "name": "Atletico Lodigiani",
+          "slug": "atletico-lodigiani"
+        },
+        {
+          "name": "Budoni Calcio",
+          "slug": "budoni-calcio"
+        },
+        {
+          "name": "Cassino Calcio 1924",
+          "slug": "cassino-calcio-1924"
+        },
+        {
+          "name": "COS Sarrabus Ogliastra",
+          "slug": "cos-sarrabus-ogliastra"
+        },
+        {
+          "name": "Cynthialbalonga Calcio",
+          "slug": "cynthialbalonga"
+        },
+        {
+          "name": "Flaminia Civita Castellana",
+          "slug": "flaminia-civita-castellana"
+        },
+        {
+          "name": "Ischia Calcio",
+          "slug": "ischia-calcio"
+        },
+        {
+          "name": "ASD Monastir 1983",
+          "slug": "monastir-1983"
+        },
+        {
+          "name": "Montespaccato Calcio",
+          "slug": "montespaccato-calcio"
+        },
+        {
+          "name": "Nocerina 1910",
+          "slug": "nocerina-1910"
+        },
+        {
+          "name": "Olbia Calcio 1905",
+          "slug": "olbia-calcio-1905"
+        },
+        {
+          "name": "ASD Real Monterotondo",
+          "slug": "real-monterotondo"
+        },
+        {
+          "name": "Sassari Calcio Latte Dolce",
+          "slug": "sassari-calcio-latte-dolce"
+        },
+        {
+          "name": "Scafatese Calcio 1922",
+          "slug": "scafatese-calcio-1922"
+        },
+        {
+          "name": "Trastevere Calcio",
+          "slug": "trastevere-calcio"
+        },
+        {
+          "name": "US Palmese 1912",
+          "slug": "us-palmese-1912"
+        },
+        {
+          "name": "Valmontone 1921",
+          "slug": "valmontone-1921"
+        }
+      ],
+      "H": [
+        {
+          "name": "Acerrana 1926",
+          "slug": "acerrana-1926"
+        },
+        {
+          "name": "Afragolese 1944",
+          "slug": "afragolese-1944"
+        },
+        {
+          "name": "Barletta 1922",
+          "slug": "barletta-1922"
+        },
+        {
+          "name": "Città di Fasano",
+          "slug": "citta-di-fasano"
+        },
+        {
+          "name": "FBC Gravina",
+          "slug": "fbc-gravina"
+        },
+        {
+          "name": "FC Francavilla",
+          "slug": "fc-francavilla"
+        },
+        {
+          "name": "FC Pompei",
+          "slug": "fc-pompei"
+        },
+        {
+          "name": "Asd Ferrandina 17890",
+          "slug": "ferrandina-17890"
+        },
+        {
+          "name": "Fidelis Andria",
+          "slug": "fidelis-andria"
+        },
+        {
+          "name": "Heraclea Calcio",
+          "slug": "heraclea-calcio"
+        },
+        {
+          "name": "Manfredonia Calcio",
+          "slug": "manfredonia-calcio"
+        },
+        {
+          "name": "Martina Calcio 1947",
+          "slug": "martina-calcio-1947"
+        },
+        {
+          "name": "AC Nardò",
+          "slug": "nardo"
+        },
+        {
+          "name": "Nola 1925",
+          "slug": "nola-1925"
+        },
+        {
+          "name": "Paganese Calcio 1926",
+          "slug": "paganese-calcio-1926"
+        },
+        {
+          "name": "Real Normanna",
+          "slug": "real-normanna"
+        },
+        {
+          "name": "Sarnese 1926",
+          "slug": "sarnese-1926"
+        },
+        {
+          "name": "Virtus Francavilla",
+          "slug": "virtus-francavilla"
+        }
+      ],
+      "I": [
+        {
+          "name": "Acireale Calcio",
+          "slug": "acireale-calcio"
+        },
+        {
+          "name": "ACR Messina",
+          "slug": "acr-messina"
+        },
+        {
+          "name": "Athletic Club Palermo",
+          "slug": "athletic-club-palermo"
+        },
+        {
+          "name": "Castrum Favara",
+          "slug": "castrum-favara"
+        },
+        {
+          "name": "Enna Calcio",
+          "slug": "enna-calcio"
+        },
+        {
+          "name": "Gela Calcio",
+          "slug": "gela-calcio"
+        },
+        {
+          "name": "Gelbison Cilento",
+          "slug": "gelbison-cilento"
+        },
+        {
+          "name": "Igea Virtus Barcellona",
+          "slug": "igea-virtus-barcellona"
+        },
+        {
+          "name": "SS Milazzo",
+          "slug": "milazzo"
+        },
+        {
+          "name": "Nissa FC",
+          "slug": "nissa-fc"
+        },
+        {
+          "name": "Paternò Calcio",
+          "slug": "paterno-calcio"
+        },
+        {
+          "name": "Ragusa Calcio",
+          "slug": "ragusa-calcio"
+        },
+        {
+          "name": "Reggina 1914",
+          "slug": "reggina"
+        },
+        {
+          "name": "Sambiase Calcio",
+          "slug": "sambiase-calcio"
+        },
+        {
+          "name": "Sancataldese",
+          "slug": "sancataldese"
+        },
+        {
+          "name": "Savoia 1908",
+          "slug": "savoia-1908"
+        },
+        {
+          "name": "Vibonese",
+          "slug": "vibonese"
+        },
+        {
+          "name": "Vigor Lamezia",
+          "slug": "vigor-lamezia"
+        }
+      ]
+    }
+  }
+}

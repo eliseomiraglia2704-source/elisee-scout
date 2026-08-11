@@ -1,0 +1,1019 @@
+/**
+ * ELISEE SCOUT â€” Selettore Squadre stile EA Sports FC
+ * Catalogo: Serie A/B/C/D + dilettanti. Loghi locali same-origin.
+ */
+(function () {
+  'use strict';
+
+  var TEAMS = [];
+  var LEAGUE_ORDER = [];
+  var CATALOG_READY = false;
+  var CATALOG_LOADING = false;
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260807_STADI18';
+  /** Cache-bust loghi/kit locali */
+  var LOGO_V = '20260807_LATINA';
+  var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
+  var VERIFIED_IDS = {};
+  var VERIFIED_NAMES = {};
+  var BADGE_OK = 'immagini/verifica/badge-verificato.svg';
+  var BADGE_NO = 'immagini/verifica/badge-non-verificato.svg';
+
+  var TEAMS_FALLBACK = [
+    {
+      id: 'napoli',
+      name: 'NAPOLI',
+      country: 'ITALIA',
+      league: 'SERIE A',
+      city: 'NAPOLI',
+      year: '1926',
+      abbr: 'NAP',
+      gender: 'm',
+      pos: 1,
+      pts: 0,
+      played: 0,
+      logo: 'immagini/squadre-loghi/napoli.png',
+      primary: '#12a0d7',
+      secondary: '#ffffff',
+      home: { body: '#12a0d7', sleeve: '#12a0d7' },
+      away: { body: '#ffffff', sleeve: '#12a0d7' }
+    }
+  ];
+
+  var state = {
+    gender: 'm',
+    leagueIndex: 0,
+    index: 0,
+    kit: 'home', // home | away | third | fourth
+    ready: false
+  };
+
+  var KIT_LABELS = {
+    home: 'IN CASA',
+    away: 'OSPITI',
+    third: 'TERZA',
+    fourth: 'QUARTA'
+  };
+
+  /** Slot kit disponibili per la squadra (foto 2D e/o colori). */
+  function kitSlotsFor(team) {
+    var slots = [];
+    if (!team) return [{ key: 'home', url: '', colors: null }];
+    if (team.kitHome) slots.push({ key: 'home', url: team.kitHome });
+    if (team.kitAway) slots.push({ key: 'away', url: team.kitAway });
+    if (team.kitThird) slots.push({ key: 'third', url: team.kitThird });
+    if (team.kitFourth) slots.push({ key: 'fourth', url: team.kitFourth });
+    // senza foto: almeno casa/ospiti a colori
+    if (!slots.length) {
+      slots.push({ key: 'home', url: '', colors: team.home || null });
+      slots.push({ key: 'away', url: '', colors: team.away || null });
+    } else if (slots.length === 1 && team.kitHome && !team.kitAway) {
+      // solo home: tieni comunque un solo slot
+    }
+    return slots;
+  }
+
+  function ensureKitKey(team) {
+    var slots = kitSlotsFor(team);
+    var keys = slots.map(function (s) {
+      return s.key;
+    });
+    if (keys.indexOf(state.kit) < 0) {
+      state.kit = keys[0] || 'home';
+    }
+    return slots;
+  }
+
+  function renderKitDots(slots) {
+    var host = document.querySelector('.es-sq-kit-dots');
+    if (!host) return;
+    var prev = $('es-sq-kit-prev');
+    var next = $('es-sq-kit-next');
+    // ricostruisci solo i pallini tra i bottoni
+    var dots = host.querySelectorAll('.es-sq-dot');
+    for (var i = 0; i < dots.length; i++) {
+      dots[i].parentNode.removeChild(dots[i]);
+    }
+    var insertBefore = next || null;
+    for (var j = 0; j < slots.length; j++) {
+      var span = document.createElement('span');
+      span.className = 'es-sq-dot' + (slots[j].key === state.kit ? ' on' : '');
+      span.setAttribute('data-kit', slots[j].key);
+      span.setAttribute('aria-label', KIT_LABELS[slots[j].key] || slots[j].key);
+      if (insertBefore) host.insertBefore(span, insertBefore);
+      else host.appendChild(span);
+    }
+  }
+
+  function $(id) {
+    return document.getElementById(id);
+  }
+
+  function applyCatalog(data) {
+    if (!data || !Array.isArray(data.teams) || !data.teams.length) return false;
+    TEAMS = data.teams;
+    LEAGUE_ORDER = Array.isArray(data.leagueOrder) ? data.leagueOrder : [];
+    CATALOG_READY = true;
+    try {
+      if (window.EliseeSquadreSelect) {
+        window.EliseeSquadreSelect.catalogStats = data.stats || null;
+      }
+    } catch (e) {}
+    return true;
+  }
+
+  function loadVerifiedList() {
+    return fetch(VERIFIED_URL, { cache: 'no-store', credentials: 'same-origin' })
+      .then(function (r) {
+        if (!r.ok) throw new Error('verified ' + r.status);
+        return r.json();
+      })
+      .then(function (data) {
+        VERIFIED_IDS = {};
+        VERIFIED_NAMES = {};
+        var ids = (data && data.verifiedIds) || [];
+        var names = (data && data.verifiedNames) || [];
+        for (var i = 0; i < ids.length; i++) {
+          if (ids[i]) VERIFIED_IDS[String(ids[i]).toLowerCase()] = true;
+        }
+        for (var j = 0; j < names.length; j++) {
+          if (names[j]) VERIFIED_NAMES[String(names[j]).toUpperCase().trim()] = true;
+        }
+        // merge optional local overrides (admin / futuro)
+        try {
+          var loc = JSON.parse(localStorage.getItem('elisee_verified_teams_v1') || 'null');
+          if (loc && Array.isArray(loc.ids)) {
+            loc.ids.forEach(function (id) {
+              if (id) VERIFIED_IDS[String(id).toLowerCase()] = true;
+            });
+          }
+          if (loc && Array.isArray(loc.names)) {
+            loc.names.forEach(function (nm) {
+              if (nm) VERIFIED_NAMES[String(nm).toUpperCase().trim()] = true;
+            });
+          }
+        } catch (e) {}
+        return true;
+      })
+      .catch(function () {
+        return false;
+      });
+  }
+
+  function isTeamVerified(team) {
+    if (!team) return false;
+    // regola: verificato SOLO se la squadra fa parte del progetto ELISEE
+    if (team.verified === true || team.eliseeVerified === true) return true;
+    if (team.verified === false) return false;
+    var id = String(team.id || '').toLowerCase();
+    var name = String(team.name || '').toUpperCase().trim();
+    if (id && VERIFIED_IDS[id]) return true;
+    if (name && VERIFIED_NAMES[name]) return true;
+    return false;
+  }
+
+  function updateVerifyBadge(team) {
+    var badge = $('es-sq-verify-badge');
+    if (!badge) return;
+    var ok = isTeamVerified(team);
+    badge.src = ok ? BADGE_OK : BADGE_NO;
+    badge.alt = ok ? 'Verificato ELISEE' : 'Non verificato';
+    badge.title = ok
+      ? 'Verificato \u2014 la squadra fa parte del progetto ELISEE SCOUT'
+      : 'Non verificato \u2014 la squadra non fa ancora parte del progetto ELISEE';
+    badge.classList.toggle('is-verified', ok);
+    badge.classList.toggle('is-unverified', !ok);
+    badge.hidden = false;
+  }
+
+  function loadCatalog() {
+    if (CATALOG_READY && TEAMS.length) return Promise.resolve(true);
+    if (CATALOG_LOADING) {
+      return new Promise(function (resolve) {
+        var n = 0;
+        var t = setInterval(function () {
+          n += 1;
+          if (CATALOG_READY || n > 40) {
+            clearInterval(t);
+            resolve(CATALOG_READY);
+          }
+        }, 50);
+      });
+    }
+    CATALOG_LOADING = true;
+    return Promise.all([
+      fetch(CATALOG_URL, { cache: 'no-store', credentials: 'same-origin' }).then(function (r) {
+        if (!r.ok) throw new Error('catalog ' + r.status);
+        return r.json();
+      }),
+      loadVerifiedList()
+    ])
+      .then(function (pair) {
+        if (!applyCatalog(pair[0])) throw new Error('empty');
+        return true;
+      })
+      .catch(function () {
+        if (!TEAMS.length) {
+          TEAMS = TEAMS_FALLBACK.slice();
+          LEAGUE_ORDER = [];
+        }
+        return loadVerifiedList().then(function () {
+          return false;
+        });
+      })
+      .then(function (ok) {
+        CATALOG_LOADING = false;
+        return ok;
+      });
+  }
+
+  function leaguesForGender() {
+    var seen = {};
+    var order = [];
+    function push(lg) {
+      if (!lg || seen[lg]) return;
+      var has = false;
+      for (var i = 0; i < TEAMS.length; i++) {
+        if (TEAMS[i].gender === state.gender && TEAMS[i].league === lg) {
+          has = true;
+          break;
+        }
+      }
+      if (has) {
+        seen[lg] = true;
+        order.push(lg);
+      }
+    }
+    if (LEAGUE_ORDER && LEAGUE_ORDER.length) {
+      LEAGUE_ORDER.forEach(push);
+    }
+    TEAMS.forEach(function (t) {
+      if (t.gender === state.gender) push(t.league);
+    });
+    return order;
+  }
+
+  function currentLeague() {
+    var leagues = leaguesForGender();
+    if (!leagues.length) return '';
+    if (state.leagueIndex < 0) state.leagueIndex = leagues.length - 1;
+    if (state.leagueIndex >= leagues.length) state.leagueIndex = 0;
+    return leagues[state.leagueIndex];
+  }
+
+  function filtered() {
+    var league = currentLeague();
+    return TEAMS.filter(function (t) {
+      return t.gender === state.gender && t.league === league;
+    });
+  }
+
+  function current() {
+    var list = filtered();
+    if (!list.length) return null;
+    if (state.index < 0) state.index = list.length - 1;
+    if (state.index >= list.length) state.index = 0;
+    return list[state.index];
+  }
+
+  function updateStadiumPhoto(team) {
+    var panel = $('es-sq-city-panel');
+    var bg = $('es-sq-city-bg');
+    if (!bg) return;
+    var src = team && team.stadiumImage ? String(team.stadiumImage).trim() : '';
+    if (!src) src = 'immagini/stadi/_default.jpg';
+    var url = src.indexOf('?') >= 0 ? src : src + '?v=14';
+    bg.style.backgroundImage = 'url("' + url.replace(/"/g, '') + '")';
+    bg.onerror = null;
+    if (panel) panel.classList.add('has-stadium-photo');
+    // se l'immagine non carica, fallback default
+    var probe = new Image();
+    probe.onerror = function () {
+      if (src.indexOf('_default') >= 0) return;
+      bg.style.backgroundImage = 'url("immagini/stadi/_default.jpg?v=14")';
+    };
+    probe.src = url;
+  }
+
+  function positionHtml(team) {
+    // Stagione in avvio: classifica a zero (niente punti fittizi)
+    var pts = team && team.pts != null ? Number(team.pts) : 0;
+    var played = team && team.played != null ? Number(team.played) : 0;
+    if (isNaN(pts)) pts = 0;
+    if (isNaN(played)) played = 0;
+    if (played <= 0) {
+      return '<div class="es-sq-pos-meta">0 pt · 0 gare</div>';
+    }
+    var pos = team.pos != null ? team.pos : '—';
+    return (
+      '<div class="es-sq-pos-main">' +
+      '<span class="es-sq-pos-num">' +
+      pos +
+      '°</span>' +
+      '<span class="es-sq-pos-label">in classifica</span>' +
+      '</div>' +
+      '<div class="es-sq-pos-meta">' +
+      pts +
+      ' pt · ' +
+      played +
+      ' gare</div>'
+    );
+  }
+
+  function applyKit(team) {
+    var slots = ensureKitKey(team);
+    var title = $('es-sq-kit-title');
+    if (title) title.textContent = KIT_LABELS[state.kit] || 'IN CASA';
+    renderKitDots(slots);
+
+    var slot = null;
+    for (var i = 0; i < slots.length; i++) {
+      if (slots[i].key === state.kit) {
+        slot = slots[i];
+        break;
+      }
+    }
+    if (!slot) slot = slots[0] || { key: 'home', url: '' };
+
+    var img = $('es-sq-kit-img');
+    var vector = $('es-sq-kit-vector');
+    var kitUrl = (slot && slot.url) || '';
+
+    // 2D real kit photo (home / away / third / fourth)
+    if (img && kitUrl) {
+      img.hidden = false;
+      img.classList.remove('is-hidden');
+      img.alt = (team && team.name ? team.name : '') + ' ' + (KIT_LABELS[slot.key] || 'kit');
+      img.onerror = function () {
+        this.hidden = true;
+        this.classList.add('is-hidden');
+        if (vector) vector.hidden = false;
+      };
+      img.onload = function () {
+        this.hidden = false;
+        this.classList.remove('is-hidden');
+        if (vector) vector.hidden = true;
+      };
+      img.src = logoUrl(kitUrl);
+      if (vector) vector.hidden = true;
+      return;
+    }
+
+    if (img) {
+      img.hidden = true;
+      img.classList.add('is-hidden');
+      try {
+        img.removeAttribute('src');
+      } catch (e) {}
+    }
+    if (vector) vector.hidden = false;
+
+    // Fallback: color blocks
+    var kit = null;
+    if (state.kit === 'away') kit = team && team.away;
+    else if (state.kit === 'home') kit = team && team.home;
+    if (!kit) {
+      var p = (team && team.primary) || '#1e3a5f';
+      var s = (team && team.secondary) || '#ffffff';
+      kit =
+        state.kit === 'away'
+          ? { body: s, sleeve: p }
+          : { body: p, sleeve: p };
+    }
+    var body = $('es-sq-kit-body');
+    var sl = $('es-sq-kit-sleeve-l');
+    var sr = $('es-sq-kit-sleeve-r');
+    if (body) body.style.background = kit.body || (team && team.primary) || '#1e3a5f';
+    if (sl) sl.style.background = kit.sleeve || kit.body || (team && team.primary) || '#1e3a5f';
+    if (sr) sr.style.background = kit.sleeve || kit.body || (team && team.primary) || '#1e3a5f';
+  }
+
+  function showFallback(abbr, team) {
+    var img = $('es-sq-crest-img');
+    var fb = $('es-sq-crest-fallback');
+    if (img) {
+      img.style.display = 'none';
+      try {
+        img.removeAttribute('src');
+      } catch (e) {}
+    }
+    if (fb) {
+      fb.hidden = false;
+      fb.textContent = abbr || 'FC';
+      var p = (team && team.primary) || '#1e3a5f';
+      var s = (team && team.secondary) || '#0f172a';
+      fb.style.background =
+        'radial-gradient(circle at 30% 30%, ' + p + 'cc, ' + s + 'ee 70%, #0f172a)';
+    }
+  }
+
+  /** Logo ufficiale lega da football-logos.cc (file locali) */
+  function leagueLogoPath(leagueName) {
+    var lg = String(leagueName || '').toUpperCase();
+    if (lg.indexOf('FEMMINILE') >= 0) {
+      if (lg.indexOf('SERIE A') >= 0) {
+        return 'immagini/squadre-loghi/serie-a-femminile.png';
+      }
+      if (lg.indexOf('SERIE B') >= 0) {
+        return 'immagini/squadre-loghi/serie-b-femminile.png';
+      }
+      if (lg.indexOf('SERIE C') >= 0) {
+        return 'immagini/squadre-loghi/serie-c-femminile.png';
+      }
+    }
+    if (lg.indexOf('SERIE A') === 0 && lg.indexOf('FEMMINILE') < 0) {
+      return 'immagini/squadre-loghi/serie-a.png';
+    }
+    if (lg.indexOf('SERIE B') === 0 && lg.indexOf('FEMMINILE') < 0) {
+      return 'immagini/squadre-loghi/serie-b.png';
+    }
+    if (lg.indexOf('SERIE C') === 0) {
+      return 'immagini/squadre-loghi/serie-c.png';
+    }
+    if (lg.indexOf('SERIE D') === 0) {
+      return 'immagini/squadre-loghi/serie-d.png';
+    }
+    return '';
+  }
+
+  function updateLeagueLogo(leagueName) {
+    var img = $('es-sq-league-logo');
+    if (!img) return;
+    var src = leagueLogoPath(leagueName);
+    if (!src) {
+      img.hidden = true;
+      img.classList.add('is-hidden');
+      img.removeAttribute('src');
+      img.alt = '';
+      return;
+    }
+    var isWomen = String(leagueName || '').toUpperCase().indexOf('FEMMINILE') >= 0;
+    img.classList.toggle('is-women', isWomen);
+    img.hidden = false;
+    img.classList.remove('is-hidden');
+    img.alt = leagueName + ' logo';
+    img.onerror = function () {
+      this.hidden = true;
+      this.classList.add('is-hidden');
+    };
+    img.onload = function () {
+      this.hidden = false;
+      this.classList.remove('is-hidden');
+    };
+    var bust = logoUrl(src);
+    if (img.getAttribute('src') !== bust) {
+      img.src = bust;
+    }
+  }
+
+  function logoUrl(url) {
+    if (!url) return '';
+    var u = String(url);
+    if (u.indexOf('?') >= 0) return u + '&v=' + LOGO_V;
+    return u + '?v=' + LOGO_V;
+  }
+
+  function showLogo(url, team) {
+    var img = $('es-sq-crest-img');
+    var fb = $('es-sq-crest-fallback');
+    if (!img) return;
+    if (!url) {
+      showFallback(team && team.abbr, team);
+      return;
+    }
+    img.onerror = function () {
+      showFallback(team && team.abbr, team);
+    };
+    img.onload = function () {
+      this.style.display = 'block';
+      if (fb) fb.hidden = true;
+    };
+    img.alt = (team && team.name ? team.name : '') + ' logo';
+    try {
+      img.removeAttribute('crossorigin');
+      img.crossOrigin = null;
+    } catch (e) {}
+    img.referrerPolicy = 'no-referrer';
+    img.src = logoUrl(url);
+    img.style.display = 'block';
+  }
+
+  function render() {
+    var team = current();
+    var nameEl = $('es-sq-team-name');
+    if (!team) {
+      if (nameEl) {
+        nameEl.textContent = CATALOG_LOADING || !TEAMS.length ? 'CARICAMENTO\u2026' : 'NESSUNA SQUADRA';
+      }
+      var leagueEmpty = $('es-sq-league');
+      if (leagueEmpty) leagueEmpty.textContent = currentLeague() || '\u2014';
+      return;
+    }
+
+    var crest = $('es-sq-crest');
+    var starsEl = $('es-sq-stars');
+    var leagueEl = $('es-sq-league');
+    var countryEl = $('es-sq-country');
+    var cityEl = $('es-sq-city');
+    var stadiumEl = $('es-sq-stadium');
+    var capacityEl = $('es-sq-capacity');
+    var abbrEl = $('es-sq-crest-abbr');
+    var yearEl = $('es-sq-crest-year');
+    var counterEl = $('es-sq-counter');
+    var league = currentLeague() || team.league || '';
+
+    if (nameEl) nameEl.textContent = team.name;
+    updateVerifyBadge(team);
+    if (starsEl) starsEl.innerHTML = positionHtml(team);
+    if (leagueEl) {
+      leagueEl.textContent = league;
+      leagueEl.setAttribute('title', league);
+    }
+    updateLeagueLogo(league);
+    if (countryEl) countryEl.textContent = team.country || 'ITALIA';
+    if (cityEl) cityEl.textContent = team.city || '—';
+    if (stadiumEl) {
+      stadiumEl.textContent = team.stadium || 'Stadio non disponibile';
+      stadiumEl.setAttribute('title', team.stadium || '');
+    }
+    if (capacityEl) {
+      var cap = team.capacity;
+      if (cap != null && cap !== '' && !isNaN(Number(cap)) && Number(cap) > 0) {
+        capacityEl.textContent = 'Capienza: ' + Number(cap).toLocaleString('it-IT');
+      } else {
+        capacityEl.textContent = 'Capienza: —';
+      }
+    }
+    updateStadiumPhoto(team);
+    if (abbrEl) abbrEl.textContent = team.abbr || '';
+    if (yearEl) yearEl.textContent = team.year || '';
+
+    var list = filtered();
+    if (counterEl) {
+      // Solo progressione squadre nella categoria (niente "CAT. x/y")
+      counterEl.textContent = list.length ? state.index + 1 + ' / ' + list.length : '';
+    }
+
+    if (crest) {
+      crest.style.background = 'transparent';
+      var img = $('es-sq-crest-img');
+      if (!img) {
+        crest.innerHTML =
+          '<img id="es-sq-crest-img" class="es-sq-crest-img" alt="" />' +
+          '<div class="es-sq-crest-fallback" id="es-sq-crest-fallback" hidden></div>';
+      }
+      showLogo(team.logo || '', team);
+    }
+    applyKit(team);
+  }
+
+  function animThen(fn) {
+    var crest = $('es-sq-crest');
+    if (crest) {
+      crest.classList.add('is-anim');
+      setTimeout(function () {
+        fn();
+        crest.classList.remove('is-anim');
+      }, 140);
+    } else {
+      fn();
+    }
+  }
+
+  function next(dir) {
+    var list = filtered();
+    if (!list.length) return;
+    animThen(function () {
+      state.index = (state.index + dir + list.length) % list.length;
+      state.kit = 'home';
+      render();
+    });
+  }
+
+  function setGender(g) {
+    if (state.gender === g) return;
+    state.gender = g;
+    state.leagueIndex = 0;
+    state.index = 0;
+    state.kit = 'home';
+    render();
+  }
+
+  function nextLeague(dir) {
+    var leagues = leaguesForGender();
+    if (!leagues.length) return;
+    state.leagueIndex = (state.leagueIndex + dir + leagues.length) % leagues.length;
+    state.index = 0;
+    state.kit = 'home';
+    render();
+  }
+
+  function selectLeagueByIndex(idx) {
+    var leagues = leaguesForGender();
+    if (!leagues.length) return;
+    if (idx < 0 || idx >= leagues.length) return;
+    state.leagueIndex = idx;
+    state.index = 0;
+    state.kit = 'home';
+    closeLeaguePicker();
+    render();
+  }
+
+  function selectLeagueByName(name) {
+    var leagues = leaguesForGender();
+    var i = leagues.indexOf(name);
+    if (i < 0) {
+      // match case-insensitive
+      for (var k = 0; k < leagues.length; k++) {
+        if (String(leagues[k]).toLowerCase() === String(name).toLowerCase()) {
+          i = k;
+          break;
+        }
+      }
+    }
+    if (i >= 0) selectLeagueByIndex(i);
+  }
+
+  function isPickerOpen() {
+    var p = $('es-sq-league-picker');
+    return p && !p.hidden && p.classList.contains('is-open');
+  }
+
+  function openLeaguePicker() {
+    var picker = $('es-sq-league-picker');
+    if (!picker) return;
+    buildLeaguePickerList('');
+    picker.hidden = false;
+    picker.removeAttribute('hidden');
+    picker.style.display = 'flex';
+    picker.setAttribute('aria-hidden', 'false');
+    // force reflow then animate
+    void picker.offsetWidth;
+    picker.classList.add('is-open');
+    var search = $('es-sq-league-search');
+    if (search) {
+      search.value = '';
+      setTimeout(function () {
+        try {
+          search.focus();
+        } catch (e) {}
+      }, 80);
+    }
+    var pill = $('es-sq-league-pill');
+    if (pill) pill.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeLeaguePicker() {
+    var picker = $('es-sq-league-picker');
+    if (!picker) return;
+    picker.classList.remove('is-open');
+    picker.setAttribute('aria-hidden', 'true');
+    var pill = $('es-sq-league-pill');
+    if (pill) pill.setAttribute('aria-expanded', 'false');
+    setTimeout(function () {
+      if (picker && !picker.classList.contains('is-open')) {
+        picker.hidden = true;
+        picker.setAttribute('hidden', '');
+        picker.style.display = 'none';
+      }
+    }, 220);
+  }
+
+  function buildLeaguePickerList(filter) {
+    var listEl = $('es-sq-league-list');
+    if (!listEl) return;
+    var leagues = leaguesForGender();
+    var q = String(filter || '')
+      .trim()
+      .toLowerCase();
+    var current = currentLeague();
+    var html = '';
+    var count = 0;
+    for (var i = 0; i < leagues.length; i++) {
+      var lg = leagues[i];
+      if (q && String(lg).toLowerCase().indexOf(q) < 0) continue;
+      count += 1;
+      var logo = leagueLogoPath(lg);
+      var active = lg === current ? ' is-active' : '';
+      // team count in league for current gender
+      var nTeams = 0;
+      for (var t = 0; t < TEAMS.length; t++) {
+        if (TEAMS[t].gender === state.gender && TEAMS[t].league === lg) nTeams += 1;
+      }
+      // Una riga = griglia fissa: logo | nome | count | check (niente stack sovrapposto)
+      html +=
+        '<button type="button" class="es-sq-picker-item' +
+        active +
+        '" role="option" data-league-index="' +
+        i +
+        '" data-league="' +
+        String(lg).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '') +
+        '" aria-selected="' +
+        (lg === current ? 'true' : 'false') +
+        '">' +
+        (logo
+          ? '<img class="es-sq-picker-item-logo' +
+            (String(lg).toUpperCase().indexOf('FEMMINILE') >= 0 ? ' is-women' : '') +
+            '" src="' +
+            logoUrl(logo) +
+            '" alt="" width="28" height="28" loading="lazy" referrerpolicy="no-referrer" />'
+          : '<span class="es-sq-picker-item-badge" aria-hidden="true">' +
+            String(lg).charAt(0) +
+            '</span>') +
+        '<span class="es-sq-picker-item-name">' +
+        lg +
+        '</span>' +
+        '<span class="es-sq-picker-item-meta">' +
+        nTeams +
+        '</span>' +
+        (lg === current
+          ? '<span class="es-sq-picker-item-check" aria-hidden="true">\u2713</span>'
+          : '<span class="es-sq-picker-item-check es-sq-picker-item-check--empty" aria-hidden="true"></span>') +
+        '</button>';
+    }
+    if (!count) {
+      html =
+        '<div class="es-sq-picker-empty">Nessuna categoria trovata. Prova un altro termine.</div>';
+    }
+    listEl.innerHTML = html;
+  }
+
+  function selectTeam() {
+    var team = current();
+    if (!team) return;
+    try {
+      localStorage.setItem(
+        'elisee_selected_squadra',
+        JSON.stringify({
+          id: team.id,
+          name: team.name,
+          league: team.league,
+          city: team.city,
+          stadium: team.stadium || '',
+          capacity: team.capacity != null ? team.capacity : null,
+          pos: team.pos,
+          pts: team.pts,
+          logo: team.logo || '',
+          at: new Date().toISOString()
+        })
+      );
+    } catch (e) {}
+    if (typeof window.showToast === 'function') {
+      window.showToast('Hai scelto ' + team.name, 'success');
+    }
+    document.dispatchEvent(new CustomEvent('elisee:squadra-selected', { detail: team }));
+  }
+
+  function bindOnce(el, ev, fn, key) {
+    if (!el) return;
+    var k = key || ev;
+    if (el.dataset && el.dataset[k + 'Bound'] === '1') return;
+    if (el.dataset) el.dataset[k + 'Bound'] = '1';
+    el.addEventListener(ev, fn);
+  }
+
+  function bindUI() {
+    if (!$('view-squadre') || !$('es-sq-team-name')) return false;
+
+    bindOnce($('es-sq-prev'), 'click', function (e) {
+      e.preventDefault();
+      next(-1);
+    }, 'sq');
+    bindOnce($('es-sq-next'), 'click', function (e) {
+      e.preventDefault();
+      next(1);
+    }, 'sq');
+    bindOnce($('es-sq-league-prev'), 'click', function (e) {
+      e.preventDefault();
+      nextLeague(-1);
+    }, 'sql');
+    bindOnce($('es-sq-league-next'), 'click', function (e) {
+      e.preventDefault();
+      nextLeague(1);
+    }, 'sql');
+
+    // Pillola categoria â†’ apre tabella selezione
+    bindOnce($('es-sq-league-pill'), 'click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (isPickerOpen()) closeLeaguePicker();
+      else openLeaguePicker();
+    }, 'sqlpick');
+
+    bindOnce($('es-sq-picker-close'), 'click', function (e) {
+      e.preventDefault();
+      closeLeaguePicker();
+    }, 'sqlpick');
+    bindOnce($('es-sq-picker-backdrop'), 'click', function (e) {
+      e.preventDefault();
+      closeLeaguePicker();
+    }, 'sqlpick');
+
+    var searchEl = $('es-sq-league-search');
+    if (searchEl && searchEl.dataset.sqlSearchBound !== '1') {
+      searchEl.dataset.sqlSearchBound = '1';
+      searchEl.addEventListener('input', function () {
+        buildLeaguePickerList(searchEl.value);
+      });
+      searchEl.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          closeLeaguePicker();
+        }
+      });
+    }
+
+    var listEl = $('es-sq-league-list');
+    if (listEl && listEl.dataset.sqlListBound !== '1') {
+      listEl.dataset.sqlListBound = '1';
+      listEl.addEventListener('click', function (e) {
+        var btn = e.target.closest('.es-sq-picker-item');
+        if (!btn) return;
+        e.preventDefault();
+        var idx = parseInt(btn.getAttribute('data-league-index'), 10);
+        if (!isNaN(idx)) selectLeagueByIndex(idx);
+      });
+    }
+
+    if (!document.documentElement.dataset.esSqPickerEsc) {
+      document.documentElement.dataset.esSqPickerEsc = '1';
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && isPickerOpen()) {
+          e.preventDefault();
+          closeLeaguePicker();
+        }
+      });
+    }
+
+    document.querySelectorAll('input[name="es-sq-gender"]').forEach(function (r) {
+      bindOnce(
+        r,
+        'change',
+        function () {
+          if (r.checked) setGender(r.value);
+        },
+        'sqg'
+      );
+    });
+
+    function cycleKit(dir) {
+      var team = current();
+      var slots = kitSlotsFor(team);
+      if (!slots.length) return;
+      var keys = slots.map(function (s) {
+        return s.key;
+      });
+      var idx = keys.indexOf(state.kit);
+      if (idx < 0) idx = 0;
+      idx = (idx + dir + keys.length) % keys.length;
+      state.kit = keys[idx];
+      if (team) applyKit(team);
+    }
+    bindOnce(
+      $('es-sq-kit-prev'),
+      'click',
+      function (e) {
+        if (e) e.preventDefault();
+        cycleKit(-1);
+      },
+      'sq'
+    );
+    bindOnce(
+      $('es-sq-kit-next'),
+      'click',
+      function (e) {
+        if (e) e.preventDefault();
+        cycleKit(1);
+      },
+      'sq'
+    );
+    bindOnce($('es-sq-select'), 'click', function (e) {
+      e.preventDefault();
+      selectTeam();
+    }, 'sq');
+    bindOnce(
+      $('es-sq-back-bacheca'),
+      'click',
+      function (e) {
+        e.preventDefault();
+        if (window.switchView) window.switchView('bacheca', '#bacheca-annunci');
+      },
+      'sq'
+    );
+
+    if (!document.documentElement.dataset.esSqKeys) {
+      document.documentElement.dataset.esSqKeys = '1';
+      document.addEventListener('keydown', function (e) {
+        var view = $('view-squadre');
+        if (!view) return;
+        var vis = window.getComputedStyle(view).display;
+        if (vis === 'none') return;
+        // Non intercettare se focus su input/textarea/select
+        var t = e.target;
+        if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) {
+          return;
+        }
+        // â† â†’ = squadra (solo freccia, senza Ctrl/Alt/Meta)
+        if (e.key === 'ArrowLeft' && !e.ctrlKey && !e.altKey && !e.metaKey) {
+          e.preventDefault();
+          next(-1);
+          return;
+        }
+        if (e.key === 'ArrowRight' && !e.ctrlKey && !e.altKey && !e.metaKey) {
+          e.preventDefault();
+          next(1);
+          return;
+        }
+        // â†‘ â†“ LIBERE per lo scroll della pagina (non cambiano categoria)
+        // Categoria: Ctrl+â†‘/â†“ oppure i pulsanti freccia "Categoria" a schermo
+        if ((e.key === 'ArrowUp' || e.key === 'ArrowDown') && (e.ctrlKey || e.altKey)) {
+          e.preventDefault();
+          nextLeague(e.key === 'ArrowUp' ? -1 : 1);
+          return;
+        }
+        if (e.key === 'Enter') {
+          if (t && t.closest && t.closest('button, a')) return;
+          selectTeam();
+        }
+      });
+    }
+
+    state.ready = true;
+    render();
+    return true;
+  }
+
+  function refresh() {
+    return loadCatalog().then(function () {
+      // clamp indexes
+      var leagues = leaguesForGender();
+      if (state.leagueIndex >= leagues.length) state.leagueIndex = 0;
+      var list = filtered();
+      if (state.index >= list.length) state.index = 0;
+      bindUI();
+      render();
+      return true;
+    });
+  }
+
+  function forceShow() {
+    try {
+      var v = $('view-squadre');
+      if (v) {
+        v.style.setProperty('display', 'block', 'important');
+        v.hidden = false;
+        v.style.setProperty('visibility', 'visible', 'important');
+        v.style.setProperty('pointer-events', 'auto', 'important');
+        v.style.setProperty('opacity', '1', 'important');
+      }
+    } catch (e) {}
+    return refresh();
+  }
+
+  document.addEventListener('elisee:view-changed', function (ev) {
+    var v = ev && ev.detail && ev.detail.view;
+    var h = (ev && ev.detail && ev.detail.hash) || '';
+    if (v === 'squadre' || (h && String(h).indexOf('squadre') >= 0)) {
+      setTimeout(function () {
+        forceShow();
+      }, 20);
+    }
+  });
+
+  window.EliseeSquadreSelect = {
+    init: refresh,
+    forceShow: forceShow,
+    refresh: refresh,
+    next: next,
+    nextLeague: nextLeague,
+    selectLeagueByIndex: selectLeagueByIndex,
+    selectLeagueByName: selectLeagueByName,
+    openLeaguePicker: openLeaguePicker,
+    closeLeaguePicker: closeLeaguePicker,
+    select: selectTeam,
+    getSelected: current,
+    isTeamVerified: isTeamVerified,
+    loadCatalog: loadCatalog,
+    get teams() {
+      return TEAMS;
+    },
+    get leagueOrder() {
+      return LEAGUE_ORDER;
+    },
+    get ready() {
+      return CATALOG_READY;
+    }
+  };
+
+  function boot() {
+    refresh();
+    setTimeout(function () {
+      if ((location.hash || '').indexOf('squadre') >= 0) forceShow();
+    }, 150);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();

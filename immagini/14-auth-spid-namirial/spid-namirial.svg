@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 50" width="160" height="50">
+  <rect width="160" height="50" rx="8" fill="#111827"/>
+  <!-- Namirial emblem -->
+  <rect x="8" y="8" width="34" height="34" rx="4" fill="#FF5500"/>
+  <path d="M16 15l7 10v7h4v-7l7-10h-4.5l-4.5 7-4.5-7H16z" fill="#FFFFFF"/>
+  <!-- Text -->
+  <text x="48" y="27" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="800" font-size="14" fill="#FFFFFF">Namirial</text>
+  <text x="110" y="27" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="14" fill="#FF5500"> ID</text>
+  <text x="48" y="39" font-family="Arial, sans-serif" font-weight="500" font-size="8" fill="#94A3B8" letter-spacing="0.5">TRUST TRUSTED SOLUTIONS</text>
+</svg>

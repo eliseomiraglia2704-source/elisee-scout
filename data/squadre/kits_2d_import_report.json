@@ -1,0 +1,1003 @@
+{
+  "zip": "D:\\Download\\sortitoutsi SS Kits Megapack 2026.14.zip",
+  "fmTeams": 96,
+  "matched": 87,
+  "unmatchedFm": [
+    {
+      "fmId": "2201",
+      "name": "Hellas Verona F.C.",
+      "tier": "SERIE A"
+    },
+    {
+      "fmId": "43036943",
+      "name": "Virtus Entella",
+      "tier": "SERIE B"
+    },
+    {
+      "fmId": "2217",
+      "name": "Aurora Pro Patria 1919",
+      "tier": "SERIE C"
+    },
+    {
+      "fmId": "2229",
+      "name": "U.S. Triestina Calcio 1918",
+      "tier": "SERIE C"
+    },
+    {
+      "fmId": "43006436",
+      "name": "Virtusvecomp Verona",
+      "tier": "SERIE C"
+    },
+    {
+      "fmId": "831114",
+      "name": "A.C. Bra",
+      "tier": "SERIE C"
+    },
+    {
+      "fmId": "2227",
+      "name": "Ternana Calcio",
+      "tier": "SERIE C"
+    },
+    {
+      "fmId": "1175",
+      "name": "F.C. Trapani 1905",
+      "tier": "SERIE C"
+    },
+    {
+      "fmId": "3804379",
+      "name": "Siracusa Calcio 1924",
+      "tier": "SERIE C"
+    }
+  ],
+  "noKitFile": [],
+  "extractedFiles": 251,
+  "matchedDetail": [
+    {
+      "fmId": "1099",
+      "fmName": "A.C. Milan",
+      "catalog": "MILAN",
+      "league": "SERIE A",
+      "paths": {
+        "home": "immagini/kits-2d/milan/home.png",
+        "away": "immagini/kits-2d/milan/away.png",
+        "third": "immagini/kits-2d/milan/third.png"
+      }
+    },
+    {
+      "fmId": "1129",
+      "fmName": "A.C.F. Fiorentina",
+      "catalog": "FIORENTINA",
+      "league": "SERIE A",
+      "paths": {
+        "home": "immagini/kits-2d/fiorentina/home.png",
+        "away": "immagini/kits-2d/fiorentina/away.png",
+        "third": "immagini/kits-2d/fiorentina/third.png"
+      }
+    },
+    {
+      "fmId": "1100",
+      "fmName": "A.S. Roma",
+      "catalog": "ROMA",
+      "league": "SERIE A",
+      "paths": {
+        "home": "immagini/kits-2d/roma/home.png",
+        "away": "immagini/kits-2d/roma/away.png",
+        "third": "immagini/kits-2d/roma/third.png"
+      }
+    },
+    {
+      "fmId": "1106",
+      "fmName": "Atalanta Bergamasca Calcio",
+      "catalog": "ATALANTA",
+      "league": "SERIE A",
+      "paths": {
+        "home": "immagini/kits-2d/atalanta/home.png",
+        "away": "immagini/kits-2d/atalanta/away.png",
+        "third": "immagini/kits-2d/atalanta/third.png"
+      }
+    },
+    {
+      "fmId": "1111",
+      "fmName": "Bologna F.C. 1909",
+      "catalog": "BOLOGNA",
+      "league": "SERIE A",
+      "paths": {
+        "home": "immagini/kits-2d/bologna/home.png",
+        "away": "immagini/kits-2d/bologna/away.png",
+        "third": "immagini/kits-2d/bologna/third.png"
+      }
+    },
+    {
+      "fmId": "1114",
+      "fmName": "Cagliari Calcio",
+      "catalog": "CAGLIARI",
+      "league": "SERIE A",
+      "paths": {
+        "home": "immagini/kits-2d/cagliari/home.png",
+        "away": "immagini/kits-2d/cagliari/away.png",
+        "third": "immagini/kits-2d/cagliari/third.png"
+      }
+    },
+    {
+      "fmId": "1123",
+      "fmName": "Como 1907",
+      "catalog": "COMO",
+      "league": "SERIE A",
+      "paths": {
+        "home": "immagini/kits-2d/como/home.png",
+        "away": "immagini/kits-2d/como/away.png"
+      }
+    },
+    {
+      "fmId": "1135",
+      "fmName": "F.C. Internazionale Milano",
+      "catalog": "INTER",
+      "league": "SERIE A",
+      "paths": {
+        "home": "immagini/kits-2d/inter/home.png",
+        "away": "immagini/kits-2d/inter/away.png",
+        "third": "immagini/kits-2d/inter/third.png"
+      }
+    },
+    {
+      "fmId": "1132",
+      "fmName": "Genoa C.F.C.",
+      "catalog": "GENOA",
+      "league": "SERIE A",
+      "paths": {
+        "home": "immagini/kits-2d/genoa/home.png",
+        "away": "immagini/kits-2d/genoa/away.png",
+        "third": "immagini/kits-2d/genoa/third.png"
+      }
+    },
+    {
+      "fmId": "1139",
+      "fmName": "Juventus F.C.",
+      "catalog": "JUVENTUS",
+      "league": "SERIE A",
+      "paths": {
+        "home": "immagini/kits-2d/juventus/home.png",
+        "away": "immagini/kits-2d/juventus/away.png",
+        "third": "immagini/kits-2d/juventus/third.png"
+      }
+    },
+    {
+      "fmId": "1156",
+      "fmName": "Parma Calcio 1913",
+      "catalog": "PARMA",
+      "league": "SERIE A",
+      "paths": {
+        "home": "immagini/kits-2d/parma/home.png",
+        "away": "immagini/kits-2d/parma/away.png",
+        "third": "immagini/kits-2d/parma/third.png"
+      }
+    },
+    {
+      "fmId": "2215",
+      "fmName": "Pisa S.C.",
+      "catalog": "PISA",
+      "league": "SERIE B",
+      "paths": {
+        "home": "immagini/kits-2d/pisa/home.png",
+        "away": "immagini/kits-2d/pisa/away.png",
+        "third": "immagini/kits-2d/pisa/third.png"
+      }
+    },
+    {
+      "fmId": "1140",
+      "fmName": "S.S. Lazio",
+      "catalog": "LAZIO",
+      "league": "SERIE A",
+      "paths": {
+        "home": "immagini/kits-2d/lazio/home.png",
+        "away": "immagini/kits-2d/lazio/away.png",
+        "third": "immagini/kits-2d/lazio/third.png"
+      }
+    },
+    {
+      "fmId": "1150",
+      "fmName": "S.S.C. Napoli",
+      "catalog": "NAPOLI",
+      "league": "SERIE A",
+      "paths": {
+        "home": "immagini/kits-2d/napoli/home.png",
+        "away": "immagini/kits-2d/napoli/away.png",
+        "third": "immagini/kits-2d/napoli/third.png"
+      }
+    },
+    {
+      "fmId": "1174",
+      "fmName": "Torino F.C.",
+      "catalog": "TORINO",
+      "league": "SERIE A",
+      "paths": {
+        "home": "immagini/kits-2d/torino/home.png",
+        "away": "immagini/kits-2d/torino/away.png",
+        "third": "immagini/kits-2d/torino/third.png"
+      }
+    },
+    {
+      "fmId": "1125",
+      "fmName": "U.S. Cremonese",
+      "catalog": "CREMONESE",
+      "league": "SERIE B",
+      "paths": {
+        "home": "immagini/kits-2d/cremonese/home.png",
+        "away": "immagini/kits-2d/cremonese/away.png",
+        "third": "immagini/kits-2d/cremonese/third.png"
+      }
+    },
+    {
+      "fmId": "1141",
+      "fmName": "U.S. Lecce",
+      "catalog": "LECCE",
+      "league": "SERIE A",
+      "paths": {
+        "home": "immagini/kits-2d/lecce/home.png",
+        "away": "immagini/kits-2d/lecce/away.png",
+        "third": "immagini/kits-2d/lecce/third.png"
+      }
+    },
+    {
+      "fmId": "3800256",
+      "fmName": "U.S. Sassuolo Calcio",
+      "catalog": "SASSUOLO",
+      "league": "SERIE A",
+      "paths": {
+        "home": "immagini/kits-2d/sassuolo/home.png",
+        "away": "immagini/kits-2d/sassuolo/away.png",
+        "third": "immagini/kits-2d/sassuolo/third.png"
+      }
+    },
+    {
+      "fmId": "1178",
+      "fmName": "Udinese Calcio",
+      "catalog": "UDINESE",
+      "league": "SERIE A",
+      "paths": {
+        "home": "immagini/kits-2d/udinese/home.png",
+        "away": "immagini/kits-2d/udinese/away.png",
+        "third": "immagini/kits-2d/udinese/third.png"
+      }
+    },
+    {
+      "fmId": "1149",
+      "fmName": "A.C. Monza",
+      "catalog": "MONZA",
+      "league": "SERIE A",
+      "paths": {
+        "home": "immagini/kits-2d/monza/home.png",
+        "away": "immagini/kits-2d/monza/away.png",
+        "third": "immagini/kits-2d/monza/third.png"
+      }
+    },
+    {
+      "fmId": "1164",
+      "fmName": "A.C. Reggiana 1919",
+      "catalog": "REGGIANA",
+      "league": "SERIE C · GIRONE B",
+      "paths": {
+        "home": "immagini/kits-2d/reggiana/home.png",
+        "away": "immagini/kits-2d/reggiana/away.png",
+        "third": "immagini/kits-2d/reggiana/third.png"
+      }
+    },
+    {
+      "fmId": "1154",
+      "fmName": "Calcio Padova",
+      "catalog": "PADOVA",
+      "league": "SERIE B",
+      "paths": {
+        "home": "immagini/kits-2d/padova/home.png",
+        "away": "immagini/kits-2d/padova/away.png",
+        "third": "immagini/kits-2d/padova/third.png"
+      }
+    },
+    {
+      "fmId": "1116",
+      "fmName": "Carrarese Calcio 1908",
+      "catalog": "CARRARESE",
+      "league": "SERIE B",
+      "paths": {
+        "home": "immagini/kits-2d/carrarese/home.png",
+        "away": "immagini/kits-2d/carrarese/away.png",
+        "third": "immagini/kits-2d/carrarese/third.png"
+      }
+    },
+    {
+      "fmId": "1120",
+      "fmName": "Cesena F.C.",
+      "catalog": "CESENA",
+      "league": "SERIE B",
+      "paths": {
+        "home": "immagini/kits-2d/cesena/home.png",
+        "away": "immagini/kits-2d/cesena/away.png",
+        "third": "immagini/kits-2d/cesena/third.png"
+      }
+    },
+    {
+      "fmId": "1158",
+      "fmName": "Delfino Pescara 1936",
+      "catalog": "PESCARA",
+      "league": "SERIE C · GIRONE B",
+      "paths": {
+        "home": "immagini/kits-2d/pescara/home.png",
+        "away": "immagini/kits-2d/pescara/away.png",
+        "third": "immagini/kits-2d/pescara/third.png"
+      }
+    },
+    {
+      "fmId": "1126",
+      "fmName": "Empoli F.C.",
+      "catalog": "EMPOLI",
+      "league": "SERIE B",
+      "paths": {
+        "home": "immagini/kits-2d/empoli/home.png",
+        "away": "immagini/kits-2d/empoli/away.png",
+        "third": "immagini/kits-2d/empoli/third.png"
+      }
+    },
+    {
+      "fmId": "829172",
+      "fmName": "F.C. Südtirol",
+      "catalog": "SÜDTIROL",
+      "league": "SERIE B",
+      "paths": {
+        "home": "immagini/kits-2d/s-dtirol/home.png",
+        "away": "immagini/kits-2d/s-dtirol/away.png",
+        "third": "immagini/kits-2d/s-dtirol/third.png"
+      }
+    },
+    {
+      "fmId": "2199",
+      "fmName": "Frosinone Calcio",
+      "catalog": "FROSINONE",
+      "league": "SERIE A",
+      "paths": {
+        "home": "immagini/kits-2d/frosinone/home.png",
+        "away": "immagini/kits-2d/frosinone/away.png",
+        "third": "immagini/kits-2d/frosinone/third.png"
+      }
+    },
+    {
+      "fmId": "700198",
+      "fmName": "Mantova 1911",
+      "catalog": "MANTOVA",
+      "league": "SERIE B",
+      "paths": {
+        "home": "immagini/kits-2d/mantova/home.png",
+        "away": "immagini/kits-2d/mantova/away.png",
+        "third": "immagini/kits-2d/mantova/third.png"
+      }
+    },
+    {
+      "fmId": "1147",
+      "fmName": "Modena F.C. 2018",
+      "catalog": "MODENA",
+      "league": "SERIE B",
+      "paths": {
+        "home": "immagini/kits-2d/modena/home.png",
+        "away": "immagini/kits-2d/modena/away.png",
+        "third": "immagini/kits-2d/modena/third.png"
+      }
+    },
+    {
+      "fmId": "2194",
+      "fmName": "Palermo F.C.",
+      "catalog": "PALERMO",
+      "league": "SERIE B",
+      "paths": {
+        "home": "immagini/kits-2d/palermo/home.png",
+        "away": "immagini/kits-2d/palermo/away.png",
+        "third": "immagini/kits-2d/palermo/third.png"
+      }
+    },
+    {
+      "fmId": "1138",
+      "fmName": "S.S. Juve Stabia",
+      "catalog": "JUVE STABIA",
+      "league": "SERIE B",
+      "paths": {
+        "home": "immagini/kits-2d/juve-stabia/home.png",
+        "away": "immagini/kits-2d/juve-stabia/away.png"
+      }
+    },
+    {
+      "fmId": "1110",
+      "fmName": "S.S.C. Bari",
+      "catalog": "BARI",
+      "league": "SERIE C · GIRONE C",
+      "paths": {
+        "home": "immagini/kits-2d/bari/home.png",
+        "away": "immagini/kits-2d/bari/away.png",
+        "third": "immagini/kits-2d/bari/third.png"
+      }
+    },
+    {
+      "fmId": "1173",
+      "fmName": "Spezia Calcio",
+      "catalog": "SPEZIA",
+      "league": "SERIE C · GIRONE B",
+      "paths": {
+        "home": "immagini/kits-2d/spezia/home.png",
+        "away": "immagini/kits-2d/spezia/away.png",
+        "third": "immagini/kits-2d/spezia/third.png"
+      }
+    },
+    {
+      "fmId": "1167",
+      "fmName": "U.C. Sampdoria",
+      "catalog": "SAMPDORIA",
+      "league": "SERIE B",
+      "paths": {
+        "home": "immagini/kits-2d/sampdoria/home.png",
+        "away": "immagini/kits-2d/sampdoria/away.png",
+        "third": "immagini/kits-2d/sampdoria/third.png"
+      }
+    },
+    {
+      "fmId": "1108",
+      "fmName": "U.S. Avellino 1912",
+      "catalog": "AVELLINO",
+      "league": "SERIE B",
+      "paths": {
+        "home": "immagini/kits-2d/avellino/home.png",
+        "away": "immagini/kits-2d/avellino/away.png",
+        "third": "immagini/kits-2d/avellino/third.png"
+      }
+    },
+    {
+      "fmId": "1119",
+      "fmName": "U.S. Catanzaro 1929",
+      "catalog": "CATANZARO",
+      "league": "SERIE B",
+      "paths": {
+        "home": "immagini/kits-2d/catanzaro/home.png",
+        "away": "immagini/kits-2d/catanzaro/away.png",
+        "third": "immagini/kits-2d/catanzaro/third.png"
+      }
+    },
+    {
+      "fmId": "1179",
+      "fmName": "Venezia F.C.",
+      "catalog": "VENEZIA",
+      "league": "SERIE A",
+      "paths": {
+        "home": "immagini/kits-2d/venezia/home.png",
+        "away": "immagini/kits-2d/venezia/away.png",
+        "third": "immagini/kits-2d/venezia/third.png"
+      }
+    },
+    {
+      "fmId": "2213",
+      "fmName": "A.C. Ospitaletto",
+      "catalog": "OSPITALETTO",
+      "league": "SERIE C · GIRONE A",
+      "paths": {
+        "home": "immagini/kits-2d/ospitaletto/home.png",
+        "away": "immagini/kits-2d/ospitaletto/away.png",
+        "third": "immagini/kits-2d/ospitaletto/third.png"
+      }
+    },
+    {
+      "fmId": "1413274",
+      "fmName": "A.C. Renate",
+      "catalog": "RENATE",
+      "league": "SERIE C · GIRONE A",
+      "paths": {
+        "home": "immagini/kits-2d/renate/home.png",
+        "away": "immagini/kits-2d/renate/away.png",
+        "third": "immagini/kits-2d/renate/third.png"
+      }
+    },
+    {
+      "fmId": "700059",
+      "fmName": "A.C. Trento 1921",
+      "catalog": "TRENTO",
+      "league": "SERIE C · GIRONE A",
+      "paths": {
+        "home": "immagini/kits-2d/trento/home.png",
+        "away": "immagini/kits-2d/trento/away.png",
+        "third": "immagini/kits-2d/trento/third.png"
+      }
+    },
+    {
+      "fmId": "2195",
+      "fmName": "A.S. Cittadella",
+      "catalog": "CITTADELLA",
+      "league": "SERIE C · GIRONE A",
+      "paths": {
+        "home": "immagini/kits-2d/cittadella/home.png",
+        "away": "immagini/kits-2d/cittadella/away.png",
+        "third": "immagini/kits-2d/cittadella/third.png"
+      }
+    },
+    {
+      "fmId": "7983711",
+      "fmName": "A.S. Giana Erminio",
+      "catalog": "GIANA ERMINIO",
+      "league": "SERIE C · GIRONE A",
+      "paths": {
+        "home": "immagini/kits-2d/giana-erminio/home.png",
+        "away": "immagini/kits-2d/giana-erminio/away.png",
+        "third": "immagini/kits-2d/giana-erminio/third.png"
+      }
+    },
+    {
+      "fmId": "43106513",
+      "fmName": "Alcione Milano S.S.",
+      "catalog": "ALCIONE MILANO",
+      "league": "SERIE C · GIRONE A",
+      "paths": {
+        "home": "immagini/kits-2d/alcione-milano/home.png",
+        "away": "immagini/kits-2d/alcione-milano/away.png",
+        "third": "immagini/kits-2d/alcione-milano/third.png"
+      }
+    },
+    {
+      "fmId": "2205",
+      "fmName": "Calcio Lecco 1912",
+      "catalog": "LECCO",
+      "league": "SERIE C · GIRONE A",
+      "paths": {
+        "home": "immagini/kits-2d/lecco/home.png",
+        "away": "immagini/kits-2d/lecco/away.png",
+        "third": "immagini/kits-2d/lecco/third.png"
+      }
+    },
+    {
+      "fmId": "2000111884",
+      "fmName": "Dolomiti Bellunesi",
+      "catalog": "DOLOMITI BELLUNESI",
+      "league": "SERIE C · GIRONE A",
+      "paths": {
+        "home": "immagini/kits-2d/dolomiti-bellunesi/home.png",
+        "away": "immagini/kits-2d/dolomiti-bellunesi/away.png",
+        "third": "immagini/kits-2d/dolomiti-bellunesi/third.png"
+      }
+    },
+    {
+      "fmId": "43156731",
+      "fmName": "F.C. Arzignano Valchiampo",
+      "catalog": "ARZIGNANO",
+      "league": "SERIE C · GIRONE A",
+      "paths": {
+        "home": "immagini/kits-2d/arzignano/home.png",
+        "away": "immagini/kits-2d/arzignano/away.png"
+      }
+    },
+    {
+      "fmId": "1145",
+      "fmName": "F.C. Lumezzane",
+      "catalog": "LUMEZZANE",
+      "league": "SERIE C · GIRONE A",
+      "paths": {
+        "home": "immagini/kits-2d/lumezzane/home.png",
+        "away": "immagini/kits-2d/lumezzane/away.png",
+        "third": "immagini/kits-2d/lumezzane/third.png"
+      }
+    },
+    {
+      "fmId": "2218",
+      "fmName": "F.C. Pro Vercelli 1892",
+      "catalog": "PRO VERCELLI",
+      "league": "SERIE C · GIRONE A",
+      "paths": {
+        "home": "immagini/kits-2d/pro-vercelli/home.png",
+        "away": "immagini/kits-2d/pro-vercelli/away.png"
+      }
+    },
+    {
+      "fmId": "1181",
+      "fmName": "L.R. Vicenza",
+      "catalog": "L.R. VICENZA",
+      "league": "SERIE B",
+      "paths": {
+        "home": "immagini/kits-2d/l-r-vicenza/home.png",
+        "away": "immagini/kits-2d/l-r-vicenza/away.png",
+        "third": "immagini/kits-2d/l-r-vicenza/third.png"
+      }
+    },
+    {
+      "fmId": "1153",
+      "fmName": "Novara Calcio",
+      "catalog": "NOVARA",
+      "league": "SERIE C · GIRONE A",
+      "paths": {
+        "home": "immagini/kits-2d/novara/home.png",
+        "away": "immagini/kits-2d/novara/away.png",
+        "third": "immagini/kits-2d/novara/third.png"
+      }
+    },
+    {
+      "fmId": "1142",
+      "fmName": "U.C. AlbinoLeffe",
+      "catalog": "ALBINOLEFFE",
+      "league": "SERIE C · GIRONE A",
+      "paths": {
+        "home": "immagini/kits-2d/albinoleffe/home.png",
+        "away": "immagini/kits-2d/albinoleffe/away.png",
+        "third": "immagini/kits-2d/albinoleffe/third.png"
+      }
+    },
+    {
+      "fmId": "43124315",
+      "fmName": "U.S. Pergolettese 1932",
+      "catalog": "PERGOLETTESE",
+      "league": "SERIE C · GIRONE A",
+      "paths": {
+        "home": "immagini/kits-2d/pergolettese/home.png",
+        "away": "immagini/kits-2d/pergolettese/away.png",
+        "third": "immagini/kits-2d/pergolettese/third.png"
+      }
+    },
+    {
+      "fmId": "2000478007",
+      "fmName": "Union Brescia",
+      "catalog": "BRESCIA",
+      "league": "SERIE C · GIRONE A",
+      "paths": {
+        "home": "immagini/kits-2d/brescia/home.png",
+        "away": "immagini/kits-2d/brescia/away.png",
+        "third": "immagini/kits-2d/brescia/third.png"
+      }
+    },
+    {
+      "fmId": "1115",
+      "fmName": "A.C. Carpi",
+      "catalog": "CARPI",
+      "league": "SERIE C · GIRONE A",
+      "paths": {
+        "home": "immagini/kits-2d/carpi/home.png",
+        "away": "immagini/kits-2d/carpi/away.png",
+        "third": "immagini/kits-2d/carpi/third.png"
+      }
+    },
+    {
+      "fmId": "1157",
+      "fmName": "A.C. Perugia Calcio",
+      "catalog": "PERUGIA",
+      "league": "SERIE C · GIRONE B",
+      "paths": {
+        "home": "immagini/kits-2d/perugia/home.png",
+        "away": "immagini/kits-2d/perugia/away.png",
+        "third": "immagini/kits-2d/perugia/third.png"
+      }
+    },
+    {
+      "fmId": "108985",
+      "fmName": "A.S. Gubbio 1910",
+      "catalog": "GUBBIO",
+      "league": "SERIE C · GIRONE B",
+      "paths": {
+        "home": "immagini/kits-2d/gubbio/home.png",
+        "away": "immagini/kits-2d/gubbio/away.png",
+        "third": "immagini/kits-2d/gubbio/third.png"
+      }
+    },
+    {
+      "fmId": "1105",
+      "fmName": "Ascoli Calcio 1898 F.C.",
+      "catalog": "ASCOLI",
+      "league": "SERIE B",
+      "paths": {
+        "home": "immagini/kits-2d/ascoli/home.png",
+        "away": "immagini/kits-2d/ascoli/away.png",
+        "third": "immagini/kits-2d/ascoli/third.png"
+      }
+    },
+    {
+      "fmId": "43204869",
+      "fmName": "Campobasso F.C.",
+      "catalog": "CAMPOBASSO",
+      "league": "SERIE C · GIRONE B",
+      "paths": {
+        "home": "immagini/kits-2d/campobasso/home.png",
+        "away": "immagini/kits-2d/campobasso/away.png",
+        "third": "immagini/kits-2d/campobasso/third.png"
+      }
+    },
+    {
+      "fmId": "2198",
+      "fmName": "Forlì F.C.",
+      "catalog": "FORLÌ",
+      "league": "SERIE C · GIRONE B",
+      "paths": {
+        "home": "immagini/kits-2d/forl/home.png",
+        "away": "immagini/kits-2d/forl/away.png"
+      }
+    },
+    {
+      "fmId": "2000384267",
+      "fmName": "Guidonia Montecelio 1937 Football Club",
+      "catalog": "GUIDONIA",
+      "league": "SERIE C · GIRONE B",
+      "paths": {
+        "home": "immagini/kits-2d/guidonia/home.png",
+        "away": "immagini/kits-2d/guidonia/away.png",
+        "third": "immagini/kits-2d/guidonia/third.png"
+      }
+    },
+    {
+      "fmId": "43007150",
+      "fmName": "Pineto Calcio",
+      "catalog": "PINETO",
+      "league": "SERIE C · GIRONE B",
+      "paths": {
+        "home": "immagini/kits-2d/pineto/home.png",
+        "away": "immagini/kits-2d/pineto/away.png",
+        "third": "immagini/kits-2d/pineto/third.png"
+      }
+    },
+    {
+      "fmId": "1163",
+      "fmName": "Ravenna F.C. 1913",
+      "catalog": "RAVENNA",
+      "league": "SERIE C · GIRONE B",
+      "paths": {
+        "home": "immagini/kits-2d/ravenna/home.png",
+        "away": "immagini/kits-2d/ravenna/away.png",
+        "third": "immagini/kits-2d/ravenna/third.png"
+      }
+    },
+    {
+      "fmId": "2185",
+      "fmName": "S.S. Arezzo",
+      "catalog": "AREZZO",
+      "league": "SERIE B",
+      "paths": {
+        "home": "immagini/kits-2d/arezzo/home.png",
+        "away": "immagini/kits-2d/arezzo/away.png",
+        "third": "immagini/kits-2d/arezzo/third.png"
+      }
+    },
+    {
+      "fmId": "2222",
+      "fmName": "Torres",
+      "catalog": "TORRES",
+      "league": "SERIE C · GIRONE B",
+      "paths": {
+        "home": "immagini/kits-2d/torres/home.png",
+        "away": "immagini/kits-2d/torres/away.png"
+      }
+    },
+    {
+      "fmId": "2216",
+      "fmName": "U.S. Città di Pontedera",
+      "catalog": "ASD PONTEDERA",
+      "league": "ECCELLENZA · TOSCANA · GIRONE A",
+      "paths": {
+        "home": "immagini/kits-2d/asd-pontedera/home.png",
+        "away": "immagini/kits-2d/asd-pontedera/away.png"
+      }
+    },
+    {
+      "fmId": "2206",
+      "fmName": "U.S. Livorno 1915",
+      "catalog": "LIVORNO",
+      "league": "SERIE C · GIRONE B",
+      "paths": {
+        "home": "immagini/kits-2d/livorno/home.png",
+        "away": "immagini/kits-2d/livorno/away.png",
+        "third": "immagini/kits-2d/livorno/third.png"
+      }
+    },
+    {
+      "fmId": "43076616",
+      "fmName": "U.S. Pianese",
+      "catalog": "PIANESE",
+      "league": "SERIE C · GIRONE B",
+      "paths": {
+        "home": "immagini/kits-2d/pianese/home.png",
+        "away": "immagini/kits-2d/pianese/away.png",
+        "third": "immagini/kits-2d/pianese/third.png"
+      }
+    },
+    {
+      "fmId": "700036",
+      "fmName": "U.S. Sambenedettese",
+      "catalog": "SAMBENEDETTESE",
+      "league": "SERIE C · GIRONE B",
+      "paths": {
+        "home": "immagini/kits-2d/sambenedettese/home.png",
+        "away": "immagini/kits-2d/sambenedettese/away.png",
+        "third": "immagini/kits-2d/sambenedettese/third.png"
+      }
+    },
+    {
+      "fmId": "2231",
+      "fmName": "Vis Pesaro dal 1898",
+      "catalog": "VIS PESARO",
+      "league": "SERIE C · GIRONE B",
+      "paths": {
+        "home": "immagini/kits-2d/vis-pesaro/home.png",
+        "away": "immagini/kits-2d/vis-pesaro/away.png",
+        "third": "immagini/kits-2d/vis-pesaro/third.png"
+      }
+    },
+    {
+      "fmId": "43065074",
+      "fmName": "A.Z. Picerno",
+      "catalog": "PICERNO",
+      "league": "SERIE C · GIRONE C",
+      "paths": {
+        "home": "immagini/kits-2d/picerno/home.png",
+        "away": "immagini/kits-2d/picerno/away.png",
+        "third": "immagini/kits-2d/picerno/third.png"
+      }
+    },
+    {
+      "fmId": "2188",
+      "fmName": "Benevento Calcio",
+      "catalog": "BENEVENTO",
+      "league": "SERIE B",
+      "paths": {
+        "home": "immagini/kits-2d/benevento/home.png",
+        "away": "immagini/kits-2d/benevento/away.png",
+        "third": "immagini/kits-2d/benevento/third.png"
+      }
+    },
+    {
+      "fmId": "1131",
+      "fmName": "Calcio Foggia 1920",
+      "catalog": "FOGGIA",
+      "league": "SERIE C · GIRONE C",
+      "paths": {
+        "home": "immagini/kits-2d/foggia/home.png",
+        "away": "immagini/kits-2d/foggia/away.png"
+      }
+    },
+    {
+      "fmId": "1117",
+      "fmName": "Casarano Calcio",
+      "catalog": "CASARANO",
+      "league": "SERIE C · GIRONE C",
+      "paths": {
+        "home": "immagini/kits-2d/casarano/home.png",
+        "away": "immagini/kits-2d/casarano/away.png",
+        "third": "immagini/kits-2d/casarano/third.png"
+      }
+    },
+    {
+      "fmId": "2191",
+      "fmName": "Casertana F.C.",
+      "catalog": "CASERTANA",
+      "league": "SERIE C · GIRONE C",
+      "paths": {
+        "home": "immagini/kits-2d/casertana/home.png",
+        "away": "immagini/kits-2d/casertana/away.png"
+      }
+    },
+    {
+      "fmId": "2193",
+      "fmName": "Catania F.C.",
+      "catalog": "CATANIA",
+      "league": "SERIE C · GIRONE C",
+      "paths": {
+        "home": "immagini/kits-2d/catania/home.png",
+        "away": "immagini/kits-2d/catania/away.png",
+        "third": "immagini/kits-2d/catania/third.png"
+      }
+    },
+    {
+      "fmId": "707648",
+      "fmName": "Cavese 1919",
+      "catalog": "CAVESE",
+      "league": "SERIE C · GIRONE C",
+      "paths": {
+        "home": "immagini/kits-2d/cavese/home.png",
+        "away": "immagini/kits-2d/cavese/away.png",
+        "third": "immagini/kits-2d/cavese/third.png"
+      }
+    },
+    {
+      "fmId": "1124",
+      "fmName": "Cosenza Calcio",
+      "catalog": "COSENZA",
+      "league": "SERIE C · GIRONE C",
+      "paths": {
+        "home": "immagini/kits-2d/cosenza/home.png",
+        "away": "immagini/kits-2d/cosenza/away.png",
+        "third": "immagini/kits-2d/cosenza/third.png"
+      }
+    },
+    {
+      "fmId": "707654",
+      "fmName": "F.C. Crotone",
+      "catalog": "CROTONE",
+      "league": "SERIE C · GIRONE C",
+      "paths": {
+        "home": "immagini/kits-2d/crotone/home.png",
+        "away": "immagini/kits-2d/crotone/away.png",
+        "third": "immagini/kits-2d/crotone/third.png"
+      }
+    },
+    {
+      "fmId": "700060",
+      "fmName": "Latina Calcio 1932",
+      "catalog": "LATINA",
+      "league": "SERIE C · GIRONE B",
+      "paths": {
+        "home": "immagini/kits-2d/latina/home.png",
+        "away": "immagini/kits-2d/latina/away.png",
+        "third": "immagini/kits-2d/latina/third.png"
+      }
+    },
+    {
+      "fmId": "43204872",
+      "fmName": "Potenza Calcio",
+      "catalog": "POTENZA",
+      "league": "SERIE C · GIRONE C",
+      "paths": {
+        "home": "immagini/kits-2d/potenza/home.png",
+        "away": "immagini/kits-2d/potenza/away.png",
+        "third": "immagini/kits-2d/potenza/third.png"
+      }
+    },
+    {
+      "fmId": "43018336",
+      "fmName": "S.S. Audace Cerignola",
+      "catalog": "AUDACE CERIGNOLA",
+      "league": "SERIE C · GIRONE C",
+      "paths": {
+        "home": "immagini/kits-2d/audace-cerignola/home.png",
+        "away": "immagini/kits-2d/audace-cerignola/away.png",
+        "third": "immagini/kits-2d/audace-cerignola/third.png"
+      }
+    },
+    {
+      "fmId": "108986",
+      "fmName": "S.S. Giugliano Calcio 1928",
+      "catalog": "GIUGLIANO",
+      "league": "SERIE C · GIRONE C",
+      "paths": {
+        "home": "immagini/kits-2d/giugliano/home.png",
+        "away": "immagini/kits-2d/giugliano/away.png"
+      }
+    },
+    {
+      "fmId": "7983734",
+      "fmName": "S.S. Monopoli 1966",
+      "catalog": "MONOPOLI",
+      "league": "SERIE C · GIRONE C",
+      "paths": {
+        "home": "immagini/kits-2d/monopoli/home.png",
+        "away": "immagini/kits-2d/monopoli/away.png",
+        "third": "immagini/kits-2d/monopoli/third.png"
+      }
+    },
+    {
+      "fmId": "831366",
+      "fmName": "Sorrento Calcio 1945",
+      "catalog": "SORRENTO",
+      "league": "SERIE C · GIRONE C",
+      "paths": {
+        "home": "immagini/kits-2d/sorrento/home.png",
+        "away": "immagini/kits-2d/sorrento/away.png",
+        "third": "immagini/kits-2d/sorrento/third.png"
+      }
+    },
+    {
+      "fmId": "43267658",
+      "fmName": "Team Altamura",
+      "catalog": "ALTAMURA",
+      "league": "SERIE C · GIRONE C",
+      "paths": {
+        "home": "immagini/kits-2d/altamura/home.png",
+        "away": "immagini/kits-2d/altamura/away.png",
+        "third": "immagini/kits-2d/altamura/third.png"
+      }
+    },
+    {
+      "fmId": "1166",
+      "fmName": "U.S. Salernitana 1919",
+      "catalog": "SALERNITANA",
+      "league": "SERIE C · GIRONE C",
+      "paths": {
+        "home": "immagini/kits-2d/salernitana/home.png",
+        "away": "immagini/kits-2d/salernitana/away.png",
+        "third": "immagini/kits-2d/salernitana/third.png"
+      }
+    }
+  ]
+}

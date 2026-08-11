@@ -1,0 +1,229 @@
+{
+  "saved_at": "2026-08-11T18:25:28.297758+00:00",
+  "running": true,
+  "started_at": "2026-08-09T15:29:12.472650+00:00",
+  "cycles": 1781,
+  "heals": 4,
+  "jobs_ok": 14248,
+  "jobs_fail": 0,
+  "campionati_ticks": 3554,
+  "cfg": {
+    "enabled": true,
+    "auto_start": true,
+    "health_check_sec": 10,
+    "ops_cycle_sec": 20,
+    "campionati_tick_sec": 10,
+    "tuttocampo_interval_sec": 10,
+    "tuttocampo_enabled": true,
+    "stale_after_sec": 35,
+    "auto_heal": true,
+    "fleets": {
+      "platformCluster": true,
+      "campionatiAgents": true,
+      "campionatiSupervisors": true,
+      "gdprSupervisors": true,
+      "warRoomWatch": true,
+      "opsJobs": true,
+      "tuttocampoSync": true
+    },
+    "sizes": {
+      "platformCluster": 715,
+      "campionatiAgents": 2010,
+      "campionatiSupervisors": 402,
+      "gdprSupervisors": 3,
+      "warRoomAgents": 50,
+      "warRoomSupervisors": 100
+    }
+  },
+  "last_health": {
+    "at": "2026-08-11T18:25:28.281179+00:00",
+    "ok": true,
+    "bad": [],
+    "fleets": [
+      {
+        "id": "platformCluster",
+        "name": "Cluster piattaforma",
+        "target": 715,
+        "online": 715,
+        "status": "online",
+        "last_ok": "2026-08-11T18:25:11.186362+00:00",
+        "ops": 1782,
+        "errors": 0,
+        "detail": "hb cycle 1781",
+        "enabled": true,
+        "ok": true,
+        "unit": "units"
+      },
+      {
+        "id": "campionatiAgents",
+        "name": "Agenti campionati",
+        "target": 2010,
+        "online": 2010,
+        "status": "online",
+        "last_ok": "2026-08-11T18:25:18.288262+00:00",
+        "ops": 3554,
+        "errors": 0,
+        "detail": "tick #3553 · latest.json age=0s · keys=7",
+        "enabled": true,
+        "ok": true,
+        "unit": "units"
+      },
+      {
+        "id": "campionatiSupervisors",
+        "name": "Supervisori H24",
+        "target": 402,
+        "online": 402,
+        "status": "online",
+        "last_ok": "2026-08-11T18:25:18.288262+00:00",
+        "ops": 3554,
+        "errors": 0,
+        "detail": "H24 ok · data age 0s",
+        "enabled": true,
+        "ok": true,
+        "unit": "units"
+      },
+      {
+        "id": "gdprSupervisors",
+        "name": "Supervisori GDPR",
+        "target": 3,
+        "online": 3,
+        "status": "online",
+        "last_ok": "2026-08-11T18:25:11.186362+00:00",
+        "ops": 1782,
+        "errors": 0,
+        "detail": "pulse PSUP-01/02/03",
+        "enabled": true,
+        "ok": true,
+        "unit": "units"
+      },
+      {
+        "id": "warRoomWatch",
+        "name": "War Room DOM",
+        "target": 150,
+        "online": 150,
+        "status": "online",
+        "last_ok": "2026-08-11T18:25:11.181439+00:00",
+        "ops": 1782,
+        "errors": 0,
+        "detail": "integrity issues=0",
+        "enabled": true,
+        "ok": true,
+        "unit": "units"
+      },
+      {
+        "id": "opsJobs",
+        "name": "Job operativi backend",
+        "target": 8,
+        "online": 8,
+        "status": "online",
+        "last_ok": "2026-08-11T18:25:11.186362+00:00",
+        "ops": 1782,
+        "errors": 0,
+        "detail": "cycle #1781",
+        "enabled": true,
+        "ok": true,
+        "unit": "units"
+      },
+      {
+        "id": "tuttocampoSync",
+        "name": "Sync Tuttocampo worker",
+        "target": 1,
+        "online": 1,
+        "status": "online",
+        "last_ok": "2026-08-11T18:25:15.033137+00:00",
+        "ops": 1,
+        "errors": 0,
+        "detail": "pid 19208",
+        "enabled": true,
+        "ok": true,
+        "unit": "units"
+      }
+    ]
+  },
+  "last_ops": "2026-08-11T18:25:11.158270+00:00",
+  "last_campionati": "2026-08-11T18:25:28.291180+00:00",
+  "last_tuttocampo": {
+    "started_at": "2026-08-11T17:56:11.813575+00:00",
+    "pid": 19208,
+    "interval": 10
+  },
+  "fleets": {
+    "platformCluster": {
+      "id": "platformCluster",
+      "name": "Cluster piattaforma",
+      "target": 715,
+      "online": 715,
+      "status": "online",
+      "last_ok": "2026-08-11T18:25:11.186362+00:00",
+      "ops": 1782,
+      "errors": 0,
+      "detail": "hb cycle 1781"
+    },
+    "campionatiAgents": {
+      "id": "campionatiAgents",
+      "name": "Agenti campionati",
+      "target": 2010,
+      "online": 2010,
+      "status": "online",
+      "last_ok": "2026-08-11T18:25:28.297758+00:00",
+      "ops": 3555,
+      "errors": 0,
+      "detail": "tick #3554 · latest.json age=0s · keys=7"
+    },
+    "campionatiSupervisors": {
+      "id": "campionatiSupervisors",
+      "name": "Supervisori H24",
+      "target": 402,
+      "online": 402,
+      "status": "online",
+      "last_ok": "2026-08-11T18:25:28.297758+00:00",
+      "ops": 3555,
+      "errors": 0,
+      "detail": "H24 ok · data age 0s"
+    },
+    "gdprSupervisors": {
+      "id": "gdprSupervisors",
+      "name": "Supervisori GDPR",
+      "target": 3,
+      "online": 3,
+      "status": "online",
+      "last_ok": "2026-08-11T18:25:11.186362+00:00",
+      "ops": 1782,
+      "errors": 0,
+      "detail": "pulse PSUP-01/02/03"
+    },
+    "warRoomWatch": {
+      "id": "warRoomWatch",
+      "name": "War Room DOM",
+      "target": 150,
+      "online": 150,
+      "status": "online",
+      "last_ok": "2026-08-11T18:25:11.181439+00:00",
+      "ops": 1782,
+      "errors": 0,
+      "detail": "integrity issues=0"
+    },
+    "opsJobs": {
+      "id": "opsJobs",
+      "name": "Job operativi backend",
+      "target": 8,
+      "online": 8,
+      "status": "online",
+      "last_ok": "2026-08-11T18:25:11.186362+00:00",
+      "ops": 1782,
+      "errors": 0,
+      "detail": "cycle #1781"
+    },
+    "tuttocampoSync": {
+      "id": "tuttocampoSync",
+      "name": "Sync Tuttocampo worker",
+      "target": 1,
+      "online": 1,
+      "status": "online",
+      "last_ok": "2026-08-11T18:25:15.033137+00:00",
+      "ops": 1,
+      "errors": 0,
+      "detail": "pid 19208"
+    }
+  }
+}

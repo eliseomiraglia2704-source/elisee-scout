@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-portrait" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1329" />
+      <stop offset="60%" stop-color="#050814" />
+      <stop offset="100%" stop-color="#020308" />
+    </linearGradient>
+    <radialGradient id="stadium-light" cx="50%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="rgba(56, 189, 248, 0.25)" />
+      <stop offset="100%" stop-color="rgba(56, 189, 248, 0)" />
+    </radialGradient>
+    <linearGradient id="jersey-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#0369a1" />
+    </linearGradient>
+    <filter id="portrait-glow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="800" fill="url(#bg-portrait)" rx="16" />
+  <rect width="600" height="800" fill="url(#stadium-light)" rx="16" />
+  
+  <!-- Geometric Light Lines -->
+  <line x1="0" y1="100" x2="600" y2="700" stroke="rgba(56, 189, 248, 0.08)" stroke-width="2" />
+  <line x1="600" y1="100" x2="0" y2="700" stroke="rgba(56, 189, 248, 0.08)" stroke-width="2" />
+  <circle cx="300" cy="400" r="220" fill="none" stroke="rgba(56, 189, 248, 0.1)" stroke-width="1.5" stroke-dasharray="8 6" />
+
+  <!-- Stylized Athlete Silhouette -->
+  <!-- Shoulders / Torso Jersey -->
+  <path d="M 150 720 Q 300 620 450 720 L 480 800 L 120 800 Z" fill="url(#jersey-grad)" stroke="#38bdf8" stroke-width="2" />
+  
+  <!-- V-Neck -->
+  <polygon points="260,650 300,710 340,650" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5" />
+  
+  <!-- Neck -->
+  <rect x="265" y="550" width="70" height="110" fill="#e2e8f0" rx="10" />
+
+  <!-- Head Outline / Face Silhouette -->
+  <path d="M 230 380 Q 300 320 370 380 Q 380 480 340 540 Q 300 575 260 540 Q 220 480 230 380 Z" fill="#cbd5e1" stroke="#ffffff" stroke-width="2" />
+  
+  <!-- Hair Silhouette -->
+  <path d="M 225 390 Q 300 300 375 390 Q 350 330 300 330 Q 250 330 225 390 Z" fill="#0f172a" />
+
+  <!-- Futuristic Tactical HUD Overlay -->
+  <g transform="translate(70, 70)">
+    <rect x="0" y="0" width="460" height="660" fill="none" stroke="rgba(56, 189, 248, 0.2)" stroke-width="1.5" rx="12" />
+    <path d="M 0 40 L 0 0 L 40 0" stroke="#38bdf8" stroke-width="4" fill="none" />
+    <path d="M 460 40 L 460 0 L 420 0" stroke="#38bdf8" stroke-width="4" fill="none" />
+    <path d="M 0 620 L 0 660 L 40 660" stroke="#38bdf8" stroke-width="4" fill="none" />
+    <path d="M 460 620 L 460 660 L 420 660" stroke="#38bdf8" stroke-width="4" fill="none" />
+
+    <!-- Badges Overlay -->
+    <rect x="25" y="25" width="160" height="34" rx="17" fill="rgba(5, 8, 15, 0.85)" stroke="#38bdf8" stroke-width="1.5" />
+    <circle cx="42" cy="42" r="7" fill="#22c55e" />
+    <text x="58" y="47" fill="#ffffff" font-family="Outfit, sans-serif" font-size="12" font-weight="bold">PROFILO VERIFICATO</text>
+
+    <!-- Bottom Stat Pill -->
+    <rect x="25" y="580" width="410" height="55" rx="12" fill="rgba(10, 15, 29, 0.92)" stroke="rgba(56, 189, 248, 0.4)" filter="url(#portrait-glow)" />
+    <text x="45" y="605" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="15" font-weight="900">MARCO ROSSI</text>
+    <text x="45" y="623" fill="#cbd5e1" font-family="sans-serif" font-size="12">ATTACCANTE CENTRALE · LEGA NAZIONALE DILETTANTI</text>
+    
+    <rect x="340" y="592" width="80" height="32" rx="6" fill="#0284c7" />
+    <text x="380" y="613" fill="#ffffff" font-family="Outfit, sans-serif" font-size="13" font-weight="bold" text-anchor="middle">98.4 SCORE</text>
+  </g>
+</svg>

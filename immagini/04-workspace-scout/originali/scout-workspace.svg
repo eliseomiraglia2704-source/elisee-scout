@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1d" />
+      <stop offset="50%" stop-color="#050811" />
+      <stop offset="100%" stop-color="#020408" />
+    </linearGradient>
+    <linearGradient id="cyan-glow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+    <radialGradient id="pitch-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(56, 189, 248, 0.15)" />
+      <stop offset="100%" stop-color="rgba(56, 189, 248, 0)" />
+    </radialGradient>
+    <filter id="neon-shadow">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bg-grad)" rx="16" />
+  
+  <!-- Subtle Tactical Field Grid -->
+  <rect x="60" y="60" width="680" height="480" fill="none" stroke="rgba(56, 189, 248, 0.12)" stroke-width="1.5" rx="12" />
+  <line x1="400" y1="60" x2="400" y2="540" stroke="rgba(56, 189, 248, 0.12)" stroke-width="1.5" />
+  <circle cx="400" cy="300" r="90" fill="url(#pitch-glow)" stroke="rgba(56, 189, 248, 0.2)" stroke-width="1.5" />
+  <circle cx="400" cy="300" r="4" fill="#38bdf8" />
+
+  <!-- Scouting Tactical Dashboard UI Frame -->
+  <rect x="120" y="110" width="560" height="380" fill="rgba(14, 20, 35, 0.85)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="2" rx="12" filter="url(#neon-shadow)" />
+  
+  <!-- Top Bar -->
+  <path d="M 120 122 A 12 12 0 0 1 132 110 L 668 110 A 12 12 0 0 1 680 122 L 680 150 L 120 150 Z" fill="rgba(2, 132, 199, 0.2)" />
+  <circle cx="150" cy="130" r="5" fill="#ef4444" />
+  <circle cx="168" cy="130" r="5" fill="#f59e0b" />
+  <circle cx="186" cy="130" r="5" fill="#22c55e" />
+  <text x="400" y="134" fill="#38bdf8" font-family="Outfit, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" letter-spacing="1">ELISEE SCOUT — ANALYTICAL ENGINE 3.0</text>
+
+  <!-- Player Radar / Analytics Graphic -->
+  <g transform="translate(240, 330)">
+    <polygon points="0,-100 86,-50 86,50 0,100 -86,50 -86,-50" fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1" />
+    <polygon points="0,-60 51,-30 51,30 0,60 -51,30 -51,-30" fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1" />
+    <!-- Data polygon -->
+    <polygon points="0,-85 75,-40 60,35 -10,80 -70,30 -60,-40" fill="rgba(56, 189, 248, 0.3)" stroke="#38bdf8" stroke-width="2" />
+    <circle cx="0" cy="-85" r="4" fill="#ffffff" />
+    <circle cx="75" cy="-40" r="4" fill="#ffffff" />
+    <circle cx="60" cy="35" r="4" fill="#ffffff" />
+    <circle cx="-10" cy="80" r="4" fill="#ffffff" />
+    <circle cx="-70" cy="30" r="4" fill="#ffffff" />
+    <circle cx="-60" cy="-40" r="4" fill="#ffffff" />
+    
+    <text x="0" y="-112" fill="#cbd5e1" font-family="sans-serif" font-size="11" text-anchor="middle">TOP SPEED (32.8 km/h)</text>
+    <text x="110" y="-45" fill="#cbd5e1" font-family="sans-serif" font-size="11">DRIBBLE % (91%)</text>
+    <text x="80" y="55" fill="#cbd5e1" font-family="sans-serif" font-size="11">PASS (88%)</text>
+    <text x="-120" y="-45" fill="#cbd5e1" font-family="sans-serif" font-size="11">ACC (3.8 m/s²)</text>
+  </g>
+
+  <!-- Side Metrics Card -->
+  <rect x="440" y="180" width="210" height="280" fill="rgba(8, 12, 22, 0.9)" stroke="rgba(56, 189, 248, 0.25)" rx="8" />
+  <text x="460" y="210" fill="#ffffff" font-family="Outfit, sans-serif" font-size="14" font-weight="bold">INDEX ATLETA #994</text>
+  
+  <text x="460" y="240" fill="#94a3b8" font-family="sans-serif" font-size="11">Compatibilità Club</text>
+  <rect x="460" y="248" width="170" height="8" rx="4" fill="rgba(255,255,255,0.1)"/>
+  <rect x="460" y="248" width="163" height="8" rx="4" fill="url(#cyan-glow)"/>
+  <text x="600" y="240" fill="#38bdf8" font-family="sans-serif" font-size="11" font-weight="bold">96%</text>
+
+  <text x="460" y="285" fill="#94a3b8" font-family="sans-serif" font-size="11">Prevenzione Infortuni</text>
+  <rect x="460" y="293" width="170" height="8" rx="4" fill="rgba(255,255,255,0.1)"/>
+  <rect x="460" y="293" width="156" height="8" rx="4" fill="#22c55e"/>
+  <text x="600" y="285" fill="#22c55e" font-family="sans-serif" font-size="11" font-weight="bold">92%</text>
+
+  <text x="460" y="330" fill="#94a3b8" font-family="sans-serif" font-size="11">Certificazione Legale</text>
+  <rect x="460" y="340" width="170" height="28" rx="6" fill="rgba(34, 197, 94, 0.15)" stroke="rgba(34, 197, 94, 0.4)"/>
+  <text x="545" y="358" fill="#22c55e" font-family="sans-serif" font-size="11" font-weight="bold" text-anchor="middle">✓ SVINCOLATO ART. 107</text>
+
+  <rect x="460" y="385" width="170" height="50" rx="8" fill="url(#cyan-glow)"/>
+  <text x="545" y="415" fill="#ffffff" font-family="Outfit, sans-serif" font-size="13" font-weight="bold" text-anchor="middle">DOSSIER SCOUT OK</text>
+</svg>

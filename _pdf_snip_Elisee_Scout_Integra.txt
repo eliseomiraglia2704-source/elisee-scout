@@ -1,0 +1,4251 @@
+Elisee Scout
+Integrazioni tecniche — Documento GDPR / Privacy
+Blocchi di testo da integrare nel documento tecnico, sulla base del feedback ricevuto e in coerenza
+con il modello di Privacy Policy di riferimento (tuttocampo.it). Il presente documento include inoltre
+una sezione di rilettura trasversale e una sezione di spunti di posizionamento/comunicazione emersi
+da un'analisi di casi esterni.
+1. Antifrode e riferimento normativo — pag. 26
+Testo da inserire:
+Riferimenti normativi del sistema antifrode
+Il sistema di controllo antifrode di Elisee Scout opera nel rispetto delle finalità di adempimento di
+obblighi legali ai sensi dell'art. 6, par. 1, lett. c) GDPR, con particolare riferimento alla normativa in
+materia di prevenzione di attività fraudolente e, ove applicabile, al D.Lgs. 231/2007 e successive
+modifiche in materia di antiriciclaggio.
+Nota: gli obblighi antiriciclaggio in senso stretto si applicano solo in presenza di transazioni
+economiche dirette gestite dalla piattaforma. Se i pagamenti (es. abbonamento Premium) sono
+gestiti tramite provider terzi PSD2-compliant, tali obblighi ricadono sul provider; Elisee Scout
+mantiene un ruolo di tracciabilità e conservazione log (minimo 10 anni per obblighi fiscali/legali, in
+analogia a quanto previsto per gli altri obblighi di legge).
+Integrazioni proposte
+
+Gestione dei minori nel sistema antifrode — Va definita esplicitamente la procedura applicata
+quando il profilo sospettato è di un minore: base giuridica del consenso (art. 8 GDPR, soglia dei
+14 anni in Italia), chi riceve la notifica di sospetta frode (il minore, il genitore/tutore, o entrambi) e
+con quali tempistiche.
+
+Valutazione d'impatto (DPIA) — Poiché il sistema antifrode utilizza agenti automatizzati per la
+profilazione dei comportamenti sospetti su una piattaforma che tratta dati di minori, va indicato se
+e quando è stata condotta una DPIA ai sensi dell'art. 35 GDPR, e con quale periodicità di
+revisione.
+
+Data retention differenziata per categoria di dato — Il termine di conservazione di 10 anni
+indicato per analogia fiscale andrebbe affiancato da una tabella che distingua i tempi di
+conservazione per categoria di dato (log di accesso, dati legati a sospetta frode, dati di minori, dati
+di pagamento), con relativa base giuridica per ciascuna categoria.
+
+Canale di segnalazione — Andrebbe previsto un canale dedicato per la segnalazione di sospetti
+(es. falsi osservatori o falsi procuratori), con eventuale riferimento al D.Lgs. 24/2023 qualora
+applicabile alla struttura societaria.
+2. Report semplificato — sezione Privacy Officer
+
+Report generato automaticamente dall'Agente Sicurezza Credenziali, tradotto in linguaggio semplice
+per utenti non tecnici (club, famiglie, dirigenti volontari). Struttura consigliata:
+
+Cosa è successo — descrizione in linguaggio comune (es. “Abbiamo rilevato un tentativo di
+accesso sospetto”)
+
+Cosa abbiamo fatto — azione automatica intrapresa (es. blocco temporaneo, richiesta nuova
+password)
+
+Cosa devi fare tu — azione consigliata all'utente/club/famiglia, se necessaria
+
+Livello di rischio — basso / medio / alto, indicato anche con un colore e non solo a testo
+Il report va reso disponibile nella dashboard del Privacy Officer, con possibilità di esportazione in
+PDF per la condivisione con dirigenti e famiglie non tecnici.
+Integrazioni proposte
+
+Declinazione per destinatario — Il report va differenziato per almeno tre profili: famiglia
+(linguaggio rassicurante, azione chiara), dirigente di club (linguaggio operativo, impatto su più
+profili gestiti), minore titolare di un proprio account, se previsto (linguaggio adeguato all'età).
+
+Canale multicanale, non solo dashboard — Poiché il target "famiglia non tecnica" difficilmente
+accede in autonomia a una dashboard, va previsto un canale push (email, SMS o notifica in-app)
+con lo stesso contenuto semplificato del report, oltre all'esportazione PDF.
+
+Tracciabilità della comunicazione — Va mantenuto un log di chi ha ricevuto il report e quando,
+sia per finalità di accountability GDPR sia in caso di contestazioni successive.
+
+Accessibilità del livello di rischio — L'indicazione del livello di rischio tramite colore va
+affiancata da un'icona e/o etichetta testuale, per garantire l'accessibilità anche a utenti con
+daltonismo o minore dimestichezza digitale.
+3. Blocco attività profilo — pannello Admin
+Nuova funzione da aggiungere al pannello Admin, visibile sulla scheda di ogni profilo utente:
+
+Azione: sospende temporaneamente tutte le attività del profilo (login, upload, messaggistica)
+senza cancellare i dati
+
+Motivazione obbligatoria: menu a tendina con opzioni — sospetto frode, violazione policy,
+richiesta autorità, altro
+
+Log dell'azione: data, ora, admin che l'ha eseguita, motivazione — visibile solo a Privacy
+Officer/Garante
+
+Notifica automatica all'utente, con possibilità di richiedere un riesame
+Integrazioni proposte
+
+SLA sul contraddittorio — La possibilità di richiedere un riesame va accompagnata da
+tempistiche definite: entro quanti giorni l'utente può presentare ricorso ed entro quanti giorni il
+Privacy Officer deve fornire una risposta.
+
+Notifica differenziata minori/adulti — Se il profilo sospeso appartiene a un minore, va esplicitato
+se la notifica viene inviata solo al ragazzo, solo al genitore/tutore, o a entrambi.
+
+
+Proporzionalità del blocco — In alternativa al blocco totale, andrebbero previste gradazioni
+dell'azione (es. sola sospensione della messaggistica) in base alla motivazione selezionata, per
+rendere la misura più proporzionata e difendibile in sede di eventuale verifica del Garante.
+
+Immutabilità del log — Va specificato che il log dell'azione, visibile solo a Privacy
+Officer/Garante, è conservato in modalità non modificabile (write-once), a garanzia della sua
+affidabilità in caso di ispezione.
+
+4. Cinque punti di vista per la rilettura trasversale del documento
+I punti indicati nelle sezioni 1-3 condividono alcune lacune ricorrenti. Si propone di usare questi
+cinque punti di vista come griglia di verifica per l'intero documento tecnico, non solo per le tre sezioni
+sopra riportate:
+
+Giuridico / compliance puro — GDPR, art. 8 sul consenso dei minori, DPIA, D.Lgs. 231/2007 e
+normativa antiriciclaggio.
+
+Utente non tecnico — Famiglie e dirigenti volontari: chiarezza del linguaggio e presenza di canali
+di notifica adeguati, non solo dashboard.
+
+Minore come soggetto specifico — Da trattare come categoria a sé, non come “utente
+generico”, in ogni processo che lo riguarda (antifrode, sospensione profilo, notifiche).
+
+Operativo / SLA — Tempi certi per ogni azione prevista: riesame, risposta del Privacy Officer,
+eventuale escalation.
+
+Difendibilità verso il Garante — Log immutabili, tracciabilità delle comunicazioni, proporzionalità
+delle azioni intraprese.
+5. Spunti di posizionamento e comunicazione (Fase 1
+zero-revenue)
+Sezione non normativa: raccoglie alcuni spunti di comunicazione e crescita organica, utili in
+particolare per l'attrazione dei primi Ambassador non retribuiti in Fase 1, derivati dall'analisi di due
+casi di comunicazione esterni al progetto.
+5.1 Linguaggio e posizionamento
+
+Linguaggio semplice e non tecnico — Il pubblico di riferimento (famiglie, ragazzi, dirigenti di
+società dilettantistiche) non è tecnico. Il principio vale non solo per il report del Privacy Officer, ma
+come regola trasversale per ogni comunicazione verso l'utente finale: se un contenuto non risulta
+comprensibile a una persona priva di competenze tecniche, andrebbe riformulato.
+
+Un problema condiviso attorno a cui aggregare — Per la fase di reclutamento degli
+Ambassador è utile individuare un problema sentito e condiviso dal pubblico di riferimento — ad
+esempio l'invisibilità dei talenti di provincia, o uno scouting che si concentra solo sui grandi centri
+— piuttosto che presentare la piattaforma in termini generici.
+
+Leva della perdita percepita — Nel copy rivolto a club e famiglie, comunicare quanti talenti
+restano invisibili per mancanza di rete può risultare più efficace della sola promessa di un
+vantaggio, specie nel pitch verso gli Ambassador non retribuiti di Fase 1.
+5.2 Crescita organica a budget zero
+In una fase priva di budget e di brand consolidato, un episodio reale e concreto tende a generare più
+adesione spontanea di una presentazione istituzionale del prodotto o della sua complessità
+tecnologica. Per il lancio si suggerisce di privilegiare la narrazione di un caso singolo e autentico (es.
+un ragazzo del dilettantistico notato o aiutato tramite la piattaforma) rispetto a contenuti centrati sulla
+descrizione della piattaforma stessa.
+
+Possibili frasi-innesco per un primo contenuto di lancio:
+
+“Nessuno lo aveva mai visto giocare” — fa leva sull'invisibilità del talento di provincia.
+
+“Il suo unico procuratore era suo padre” — fa leva sull'assenza di rete nel dilettantismo.
+
+“Giocava bene, ma non conosceva nessuno” — mette a fuoco il divario tra talento e rete di
+conoscenze.
+Nota: questi spunti sono di natura comunicativa e non normativa; vanno tenuti separati dal documento
+tecnico GDPR/Privacy e utilizzati eventualmente in un documento di comunicazione/marketing dedicato.
+
+6. Minigioco “Simulatore di Carriera Dilettantistica” — bozza
+concept
+Concept originale che prende spunto dal genere dei simulatori di carriera calcistica a decisioni
+(creazione di un giocatore, percorso a bivi, verdetto finale), riadattato e progettato specificamente
+per il mondo dilettantistico italiano e per la finalità di generare, con consenso separato e revocabile
+dell'utente, un profilo comportamentale visibile a osservatori, direttori sportivi e presidenti di società.
+Fonte di ispirazione: il genere di gioco richiama i simulatori di carriera calcistica online già esistenti, tra cui il
+sito Copero (copero.com.ar e domini correlati). Meccaniche, categorie, testi dei bivi, sistema di tag
+comportamentali e flusso di consenso descritti in questa sezione sono contenuti originali sviluppati per Elisee
+Scout: nessun testo, dato o asset di Copero è stato copiato.
+6.1 Le nove categorie
+A differenza dei simulatori generalisti, che si fermano al professionismo (Serie A/B), il percorso copre
+l'intera piramide del calcio italiano, dal vertice fino alla base del dilettantismo:
+Serie A → Serie B → Serie C → Serie D → Eccellenza → Promozione → Prima Categoria →
+Seconda Categoria → Terza Categoria
+Nota di game design: le probabilità di transizione tra categorie andrebbero calibrate in modo
+asimmetrico — un salto tra categorie dilettantistiche vicine (es. Terza → Seconda Categoria) è un
+evento plausibile quasi ogni stagione simulata, mentre un salto tra categorie lontane (es. Eccellenza
+→ Serie C) dovrebbe restare un evento raro, legato a bivi eccezionali, per mantenere credibilità agli
+occhi di un pubblico che il dilettantismo lo vive realmente.
+6.2 Meccanica di base
+
+Creazione del profilo giocatore: ruolo, piede preferito, società/categoria di partenza.
+
+Percorso a bivi lungo la carriera simulata: ogni bivio propone una situazione realistica del
+dilettantismo italiano.
+
+Ogni scelta viene associata a uno o più tag comportamentali (vedi 6.3).
+
+Al termine del percorso: verdetto narrativo sintetico + profilo comportamentale aggregato.
+6.3 Esempi di bivi e tag comportamentali associati
+Situazioni originali, pensate per il contesto dilettantistico (doppio lavoro, presidenti-mecenati,
+trasferte, gruppo squadra), ciascuna collegata a un tratto rilevabile utile alla lettura da parte di
+osservatori/DS/presidenti:
+
+Il presidente ti chiede di giocare la finale playoff nonostante un affaticamento muscolare.
+— Tag: Gestione del rischio / spirito di sacrificio
+
+Un club di categoria superiore ti offre un ingaggio più alto, ma dovrai lasciare il gruppo
+storico con cui giochi da anni. — Tag: Ambizione vs fedeltà al gruppo
+
+L'allenatore ti chiede di adattarti a un ruolo diverso da quello che preferisci per garantirti il
+posto da titolare. — Tag: Flessibilità / spirito di squadra
+
+Hai un doppio impegno tra lavoro e allenamento in settimana pre-derby: la società non può
+retribuirti per il permesso. — Tag: Gestione della pressione / organizzazione
+
+
+Un compagno di squadra più giovane ti chiede consigli prima di una partita decisiva. —
+Tag: Leadership / mentorship
+
+La squadra è in piena zona retrocessione: il gruppo si divide tra chi vuole cambiare modulo
+e chi vuole restare fedele all'idea dell'allenatore. — Tag: Gestione del conflitto / adattabilità
+
+Ti viene proposto di fare da capitano a metà stagione, subentrando a un compagno
+infortunato. — Tag: Assunzione di responsabilità
+
+Un osservatore è presente allo spareggio promozione: sai che potrebbe essere la tua
+occasione, ma la squadra ha bisogno di un gioco di sacrificio più che di protagonismo
+individuale. — Tag: Gestione della pressione / spirito di squadra vs individualismo
+
+Dopo una sconfitta pesante, il gruppo si ritrova per un confronto acceso negli spogliatoi.
+— Tag: Resilienza / gestione del conflitto
+
+Ti viene offerta la fascia di capitano permanente a fine stagione, ma richiede più
+responsabilità anche fuori dal campo (rapporti con la società, media locali). — Tag:
+Leadership / assunzione di responsabilità
+
+Un infortunio ti tiene fuori per due mesi in un momento decisivo della stagione. — Tag:
+Resilienza / gestione della frustrazione
+
+A fine carriera dilettantistica ti viene chiesto se vuoi restare nel club come collaboratore
+del settore giovanile. — Tag: Attaccamento al territorio / vocazione formativa
+6.4 Output del gioco e visibilità a terzi
+Il minigioco è liberamente accessibile a ogni utente registrato, senza alcun consenso aggiuntivo
+obbligatorio per giocarci: il consenso non può essere condizione di accesso alla funzione stessa, in
+coerenza con l'art. 7 GDPR e il considerando 43 (un consenso reso obbligatorio per usare una
+funzionalità non è validamente prestato). La condivisione del profilo comportamentale generato con
+soggetti terzi (osservatori, direttori sportivi, presidenti di società) è invece regolata da un consenso
+separato, granulare e revocabile in ogni momento.
+6.5 Testo di consenso proposto (opt-in separato, revocabile)
+“Vuoi rendere visibile il tuo profilo comportamentale, generato dal Simulatore di Carriera
+Dilettantistica, a osservatori, direttori sportivi e presidenti di società registrati sulla piattaforma? Il
+profilo li aiuta a farsi un'idea di come affronti le situazioni di squadra, oltre ai tuoi dati sportivi. Puoi
+attivare o disattivare questa visibilità in qualsiasi momento dalle impostazioni del tuo account. Se sei
+minorenne, l'attivazione richiede anche il consenso di un genitore o tutore.”
+Nota: questa sezione va letta insieme ai cinque punti di vista della Sezione 4, in particolare “minore come
+soggetto specifico” e “difendibilità verso il Garante”, poiché il profilo comportamentale generato dal gioco
+costituisce una forma di profilazione ai sensi del GDPR.
+Documento di supporto — da integrare manualmente nei punti indicati del documento tecnico esistente e nel
+codice della piattaforma. Sezioni 4 e 5 aggiunte come rilettura trasversale e come spunti di
+posizionamento/comunicazione. Sezione 6 aggiunta come bozza di concept originale per il minigioco
+“Simulatore di Carriera Dilettantistica”. Sezione 7 aggiunta come specifica tecnica del componente di
+selezione squadra.
+
+7. Componente “Selettore Squadra” — specifica tecnica
+Componente di interfaccia da utilizzare nel Simulatore di Carriera Dilettantistica (Sezione 6) e, se
+utile, in altre aree della piattaforma dove l'utente deve scegliere una squadra. Il pattern di interazione
+— card singola con navigazione a frecce e transizione a scorrimento — prende spunto dalla
+schermata di selezione squadra della modalità carriera di EA Sports FC 26. Il layout, i dati mostrati e
+la logica descritti di seguito sono progettati appositamente per Elisee Scout: nessun asset grafico,
+icona, font o dato di EA Sports FC 26 viene riprodotto o utilizzato; ciò che viene ripreso è unicamente
+il pattern di interazione (selezione categoria seguita da carosello a frecce), che non costituisce
+materiale protetto in sé.
+7.1 Flusso di selezione
+
+Step 1 — Selezione categoria: l'utente sceglie una delle nove categorie (Serie A → Terza
+Categoria, vedi Sezione 6.1).
+
+Step 2 — Carosello squadre: una volta filtrata la categoria, l'utente scorre con le frecce
+sinistra/destra tra le sole squadre di quella categoria, una card alla volta.
+
+Step 3 — Conferma: l'utente conferma la squadra selezionata per proseguire (es. avvio della
+carriera simulata).
+7.2 Contenuto della card
+Ogni card mostra: stemma/logo della squadra, nome squadra, città, categoria di appartenenza. A
+differenza dei modelli di riferimento del genere, la card non include alcuna valutazione o
+punteggio soggettivo della squadra (es. stelle), dato non riproducibile perché elaborato da terzi
+su altre piattaforme. Al suo posto, la card mostra la posizione attuale in classifica, aggiornata in
+tempo reale tramite integrazione con la fonte dati di riferimento (tuttocampo.it), coerente con il
+modello di dati già citato nel documento GDPR/Privacy come riferimento.
+7.3 Animazione
+Transizione a scorrimento orizzontale (slide): alla pressione della freccia destra/sinistra, la card
+corrente esce lateralmente mentre la card successiva/precedente entra dal lato opposto. Pattern di
+interazione standard per caroselli a singolo elemento, implementabile in CSS/JS per il web o con le
+librerie di animazione native della piattaforma mobile (coerente con il restyling Nike/Adidas-inspired
+già discusso per l'app).
+7.4 Dati richiesti per card
+
+Nome squadra
+
+Città
+
+Categoria
+
+Stemma/logo (asset caricato dal club o dalla piattaforma)
+
+Posizione attuale in classifica (fonte: tuttocampo.it, aggiornamento in tempo reale)
+Nota: l'integrazione della classifica in tempo reale va verificata rispetto ai termini d'uso della fonte dati
+(tuttocampo.it) prima dell'implementazione, per assicurarsi che il tipo di consultazione/embedding previsto sia
+consentito.
+
+8. Ulteriori meccaniche ispirate a EA Sports FC 26
+Cinque ulteriori pattern di interazione della modalità Carriera di EA Sports FC 26, presi come
+ispirazione di meccanica/interazione (non di asset grafico, testo o dato) e riadattati con logica e
+contenuti originali per il Simulatore di Carriera Dilettantistica (Sezione 6) e per la piattaforma Elisee
+Scout in generale.
+8.1 Obiettivi stagionali assegnati dal club
+Ispirato agli obiettivi di stagione assegnati dalla società in EA Sports FC 26 (es. risultati minimi da
+raggiungere). Adattamento: il club dilettantistico simulato assegna un obiettivo all'inizio di ogni ciclo
+di gioco (es. “guadagna la maglia da titolare entro i prossimi bivi”, “mantieni il gruppo unito durante
+un periodo di risultati negativi”). Il raggiungimento o meno dell'obiettivo concorre al profilo
+comportamentale finale.
+8.2 Percorso a tappe della carriera
+Ispirato alla rappresentazione a tappe/traguardi della progressione di carriera in EA Sports FC 26.
+Adattamento: la progressione tra le nove categorie (Sezione 6.1) viene mostrata come un percorso
+visuale a nodi, con la tappa attuale evidenziata e le tappe successive/precedenti visibili, al posto di
+un semplice indicatore testuale di categoria.
+8.3 Eventi a comparsa per i bivi decisionali
+Ispirato al formato delle schede evento a comparsa (pop-up con due opzioni di risposta) usato per gli
+episodi random di carriera in EA Sports FC 26. Adattamento: ciascuno dei bivi comportamentali
+descritti in Sezione 6.3 viene presentato come scheda a comparsa — testo della situazione seguito
+da due o tre pulsanti di scelta — con chiusura animata della scheda dopo la decisione dell'utente.
+8.4 Radar dei tratti comportamentali
+Ispirato al grafico radar degli attributi tecnici del giocatore in EA Sports FC 26. Adattamento: poiché
+Elisee Scout non genera né misura attributi tecnici reali, il radar viene applicato ai tratti
+comportamentali rilevati dai bivi (lealtà, leadership, resilienza, gestione della pressione, spirito di
+squadra), aggiornandosi progressivamente a ogni bivio affrontato. Rappresenta la resa visiva
+sintetica del profilo descritto in Sezione 6.4-6.5, da mostrare all'utente e, previo consenso, agli
+osservatori/DS/presidenti abilitati.
+8.5 Riepilogo di fine stagione simulata
+Ispirato alla schermata riassuntiva di fine stagione in EA Sports FC 26. Adattamento: al termine di
+ogni ciclo del Simulatore di Carriera Dilettantistica, una schermata riepiloga i bivi affrontati, l'esito
+dell'obiettivo stagionale (8.1) e l'aggiornamento del radar comportamentale (8.4), offrendo anche un
+invito a iniziare un nuovo ciclo — utile per aumentare la rigiocabilità e, di conseguenza, la ricchezza
+del profilo comportamentale nel tempo.
+Come per la Sezione 7, in tutti i punti sopra l'ispirazione riguarda esclusivamente il pattern di interazione o la
+struttura dell'interfaccia; nessun asset grafico, font, icona, testo o dato di EA Sports FC 26 viene riprodotto o
+incluso nella piattaforma Elisee Scout.
+
+9. Agenti IA operativi — 10 per ciascun punto della Sezione 8
+Agenti dedicati all'esecuzione operativa delle cinque meccaniche descritte nella Sezione 8. Ogni
+agente ha una responsabilità singola e delimitata, per mantenere il sistema modulare e verificabile.
+9.1 — Obiettivi stagionali (rif. 8.1)
+
+Agente Assegnazione Obiettivi — genera l'obiettivo stagionale in base a categoria/contesto del
+club simulato
+
+Agente Difficoltà Dinamica — calibra la difficoltà dell'obiettivo sui bivi già affrontati dall'utente
+
+Agente Monitoraggio Progresso — traccia in tempo reale l'avanzamento verso l'obiettivo
+
+Agente Coerenza Narrativa — assicura che l'obiettivo sia coerente con la categoria/storia
+generata
+
+Agente Valutazione Esito — determina raggiunto/mancato a fine ciclo
+
+Agente Obiettivi Speciali — inserisce obiettivi rari/evento (es. derby, playoff)
+
+Agente Feedback Club — genera il commento simulato della società sull'esito
+
+Agente Bilanciamento Multi-categoria — adatta gli obiettivi alle nove categorie (Sez. 6.1)
+
+Agente Cronologia Obiettivi — archivia lo storico obiettivi per utente
+
+Agente Suggerimento Prossimo Obiettivo — propone il successivo in base ai risultati
+precedenti
+9.2 — Percorso a tappe (rif. 8.2)
+
+Agente Costruzione Percorso — genera la sequenza visuale di tappe categoria per categoria
+
+Agente Posizionamento Tappa Attuale — aggiorna il nodo corrente sul percorso
+
+Agente Transizione Categoria — gestisce la logica di salto tra categorie (probabilità
+asimmetriche, Sez. 6.1)
+
+Agente Eventi su Tappa — collega eventi/bivi specifici a ciascun nodo
+
+Agente Animazione Percorso — gestisce transizioni/animazioni tra nodi
+
+Agente Coerenza Cronologica — mantiene l'ordine logico delle tappe superate
+
+Agente Retrocessione — gestisce l'eventuale discesa di categoria nel percorso
+
+Agente Traguardi Percorso — segnala milestone rilevanti (es. prima promozione)
+
+Agente Sintesi Percorso — genera il riepilogo testuale del percorso fatto
+
+Agente Visualizzazione Percorso — adatta la resa grafica del percorso al dispositivo
+9.3 — Eventi a comparsa / bivi (rif. 8.3)
+
+Agente Selezione Bivio — sceglie il prossimo bivio in base a contesto/categoria
+
+Agente Generazione Testo Bivio — scrive/adatta il testo della situazione (contenuti originali)
+
+Agente Tagging Comportamentale — assegna i tag comportamentali alle opzioni di risposta
+
+Agente Anti-ripetizione — evita di riproporre bivi già affrontati di recente
+
+Agente Bilanciamento Scelte — assicura che le opzioni non siano sbilanciate
+
+Agente Animazione Comparsa — gestisce apertura/chiusura della scheda pop-up
+
+
+Agente Bivi Categoria-specifici — adatta i bivi al contesto della categoria
+
+Agente Coerenza con Obiettivo — collega il bivio all'obiettivo stagionale attivo, quando
+pertinente
+
+Agente Archivio Bivi Utente — registra le scelte fatte per l'output finale
+
+Agente Espansione Contenuti — genera nuovi bivi nel tempo per ampliare la libreria
+9.4 — Radar comportamentale (rif. 8.4)
+
+Agente Calcolo Radar — aggiorna i valori dei tratti comportamentali a ogni bivio
+
+Agente Normalizzazione Punteggi — mantiene i valori su scala comparabile tra utenti
+
+Agente Storico Radar — salva l'evoluzione del radar nel tempo
+
+Agente Rendering Grafico — genera la visualizzazione del radar per l'utente
+
+Agente Confronto Radar — consente confronti tra profili, se richiesto da DS/osservatore
+
+Agente Spiegabilità — genera una spiegazione testuale semplice dei valori del radar
+
+Agente Consenso Visibilità Radar — verifica il consenso attivo prima di mostrare il radar a terzi
+
+Agente Anomalie Radar — segnala pattern anomali (es. troppo poche decisioni per un radar
+affidabile)
+
+Agente Aggiornamento Incrementale — ricalcola il radar in tempo reale senza rigenerarlo da
+zero
+
+Agente Privacy Radar — assicura che il radar non venga esposto senza consenso attivo
+9.5 — Riepilogo di fine stagione (rif. 8.5)
+
+Agente Generazione Riepilogo — compone il testo di sintesi della stagione simulata
+
+Agente Aggregazione Dati Stagione — raccoglie bivi, obiettivo e radar in un unico pacchetto
+
+Agente Invito Rigioco — genera il messaggio di invito a un nuovo ciclo
+
+Agente Highlight Stagione — seleziona il momento/bivio più rilevante da evidenziare
+
+Agente Confronto Stagioni — confronta la stagione conclusa con le precedenti dell'utente
+
+Agente Esportazione Riepilogo — genera una versione condivisibile, coerente con lo stile
+Elisee Graphic Studio
+
+Agente Notifica Fine Stagione — invia la notifica push/in-app di riepilogo pronto
+
+Agente Archiviazione Stagione — salva la stagione conclusa nello storico utente
+
+Agente Suggerimento Prossima Categoria — propone la categoria per il ciclo successivo
+
+Agente Qualità Riepilogo — verifica che il riepilogo generato sia coerente prima di mostrarlo
+
+10. Supervisori IA — 30 per ciascun punto della Sezione 8
+Livello di supervisione trasversale, distinto dagli agenti operativi (Sezione 9): ogni punto della
+Sezione 8 è controllato da 30 Supervisori IA, organizzati in sei cluster funzionali da cinque
+supervisori ciascuno. I cluster sono comuni a tutti i cinque punti; cambia solo l'oggetto specifico
+supervisionato.
+10.1 — Obiettivi stagionali (rif. 8.1)
+A. Qualità output: Supervisore Coerenza Obiettivo · Supervisore Correttezza Obiettivo · Supervisore
+Duplicati Obiettivo · Supervisore Qualità Testo Obiettivo · Supervisore Verifica Esito Obiettivo
+B. Compliance / Privacy: Supervisore Consenso Dati Obiettivo · Supervisore Minori — Obiettivo ·
+Supervisore Retention Dati Obiettivo · Supervisore Base Giuridica Obiettivo · Supervisore Log Compliance
+Obiettivo
+C. Performance / Tecnico: Supervisore Latenza Generazione Obiettivo · Supervisore Errori Runtime
+Obiettivo · Supervisore Carico Agente Obiettivo · Supervisore Fallback Obiettivo · Supervisore
+Sincronizzazione Dati Obiettivo
+D. Contenuto / Narrativa: Supervisore Tono Narrativo Obiettivo · Supervisore Linguaggio Non Tecnico
+Obiettivo · Supervisore Contenuti Impropri Obiettivo · Supervisore Coerenza Categoria Obiettivo ·
+Supervisore Ripetitività Testi Obiettivo
+E. UX / Accessibilità: Supervisore Chiarezza UX Obiettivo · Supervisore Accessibilità Colori/Testo
+Obiettivo · Supervisore Comprensibilità Famiglie Obiettivo · Supervisore Feedback Utente Obiettivo ·
+Supervisore Onboarding Obiettivo
+F. Sicurezza / Anti-abuso: Supervisore Anti-manipolazione Obiettivo · Supervisore Anomalie Statistiche
+Obiettivo · Supervisore Coerenza Multi-sessione Obiettivo · Supervisore Integrità Dati Obiettivo ·
+Supervisore Escalation Anomalie Obiettivo
+10.2 — Percorso a tappe (rif. 8.2)
+A. Qualità output: Supervisore Coerenza Percorso · Supervisore Correttezza Percorso · Supervisore
+Duplicati Percorso · Supervisore Qualità Testo Percorso · Supervisore Verifica Esito Percorso
+B. Compliance / Privacy: Supervisore Consenso Dati Percorso · Supervisore Minori — Percorso ·
+Supervisore Retention Dati Percorso · Supervisore Base Giuridica Percorso · Supervisore Log Compliance
+Percorso
+C. Performance / Tecnico: Supervisore Latenza Generazione Percorso · Supervisore Errori Runtime
+Percorso · Supervisore Carico Agente Percorso · Supervisore Fallback Percorso · Supervisore
+Sincronizzazione Dati Percorso
+D. Contenuto / Narrativa: Supervisore Tono Narrativo Percorso · Supervisore Linguaggio Non Tecnico
+Percorso · Supervisore Contenuti Impropri Percorso · Supervisore Coerenza Categoria Percorso ·
+Supervisore Ripetitività Testi Percorso
+E. UX / Accessibilità: Supervisore Chiarezza UX Percorso · Supervisore Accessibilità Colori/Testo
+Percorso · Supervisore Comprensibilità Famiglie Percorso · Supervisore Feedback Utente Percorso ·
+Supervisore Onboarding Percorso
+F. Sicurezza / Anti-abuso: Supervisore Anti-manipolazione Percorso · Supervisore Anomalie Statistiche
+Percorso · Supervisore Coerenza Multi-sessione Percorso · Supervisore Integrità Dati Percorso ·
+Supervisore Escalation Anomalie Percorso
+
+10.3 — Eventi a comparsa / bivi (rif. 8.3)
+A. Qualità output: Supervisore Coerenza Bivio · Supervisore Correttezza Bivio · Supervisore Duplicati Bivio
+· Supervisore Qualità Testo Bivio · Supervisore Verifica Esito Bivio
+B. Compliance / Privacy: Supervisore Consenso Dati Bivio · Supervisore Minori — Bivio · Supervisore
+Retention Dati Bivio · Supervisore Base Giuridica Bivio · Supervisore Log Compliance Bivio
+C. Performance / Tecnico: Supervisore Latenza Generazione Bivio · Supervisore Errori Runtime Bivio ·
+Supervisore Carico Agente Bivio · Supervisore Fallback Bivio · Supervisore Sincronizzazione Dati Bivio
+D. Contenuto / Narrativa: Supervisore Tono Narrativo Bivio · Supervisore Linguaggio Non Tecnico Bivio ·
+Supervisore Contenuti Impropri Bivio · Supervisore Coerenza Categoria Bivio · Supervisore Ripetitività Testi
+Bivio
+E. UX / Accessibilità: Supervisore Chiarezza UX Bivio · Supervisore Accessibilità Colori/Testo Bivio ·
+Supervisore Comprensibilità Famiglie Bivio · Supervisore Feedback Utente Bivio · Supervisore Onboarding
+Bivio
+F. Sicurezza / Anti-abuso: Supervisore Anti-manipolazione Bivio · Supervisore Anomalie Statistiche Bivio ·
+Supervisore Coerenza Multi-sessione Bivio · Supervisore Integrità Dati Bivio · Supervisore Escalation
+Anomalie Bivio
+10.4 — Radar comportamentale (rif. 8.4)
+A. Qualità output: Supervisore Coerenza Radar · Supervisore Correttezza Radar · Supervisore Duplicati
+Radar · Supervisore Qualità Testo Radar · Supervisore Verifica Esito Radar
+B. Compliance / Privacy: Supervisore Consenso Dati Radar · Supervisore Minori — Radar · Supervisore
+Retention Dati Radar · Supervisore Base Giuridica Radar · Supervisore Log Compliance Radar
+C. Performance / Tecnico: Supervisore Latenza Generazione Radar · Supervisore Errori Runtime Radar ·
+Supervisore Carico Agente Radar · Supervisore Fallback Radar · Supervisore Sincronizzazione Dati Radar
+D. Contenuto / Narrativa: Supervisore Tono Narrativo Radar · Supervisore Linguaggio Non Tecnico Radar
+· Supervisore Contenuti Impropri Radar · Supervisore Coerenza Categoria Radar · Supervisore Ripetitività
+Testi Radar
+E. UX / Accessibilità: Supervisore Chiarezza UX Radar · Supervisore Accessibilità Colori/Testo Radar ·
+Supervisore Comprensibilità Famiglie Radar · Supervisore Feedback Utente Radar · Supervisore
+Onboarding Radar
+F. Sicurezza / Anti-abuso: Supervisore Anti-manipolazione Radar · Supervisore Anomalie Statistiche
+Radar · Supervisore Coerenza Multi-sessione Radar · Supervisore Integrità Dati Radar · Supervisore
+Escalation Anomalie Radar
+10.5 — Riepilogo di fine stagione (rif. 8.5)
+A. Qualità output: Supervisore Coerenza Riepilogo · Supervisore Correttezza Riepilogo · Supervisore
+Duplicati Riepilogo · Supervisore Qualità Testo Riepilogo · Supervisore Verifica Esito Riepilogo
+B. Compliance / Privacy: Supervisore Consenso Dati Riepilogo · Supervisore Minori — Riepilogo ·
+Supervisore Retention Dati Riepilogo · Supervisore Base Giuridica Riepilogo · Supervisore Log Compliance
+Riepilogo
+C. Performance / Tecnico: Supervisore Latenza Generazione Riepilogo · Supervisore Errori Runtime
+Riepilogo · Supervisore Carico Agente Riepilogo · Supervisore Fallback Riepilogo · Supervisore
+Sincronizzazione Dati Riepilogo
+
+D. Contenuto / Narrativa: Supervisore Tono Narrativo Riepilogo · Supervisore Linguaggio Non Tecnico
+Riepilogo · Supervisore Contenuti Impropri Riepilogo · Supervisore Coerenza Categoria Riepilogo ·
+Supervisore Ripetitività Testi Riepilogo
+E. UX / Accessibilità: Supervisore Chiarezza UX Riepilogo · Supervisore Accessibilità Colori/Testo
+Riepilogo · Supervisore Comprensibilità Famiglie Riepilogo · Supervisore Feedback Utente Riepilogo ·
+Supervisore Onboarding Riepilogo
+F. Sicurezza / Anti-abuso: Supervisore Anti-manipolazione Riepilogo · Supervisore Anomalie Statistiche
+Riepilogo · Supervisore Coerenza Multi-sessione Riepilogo · Supervisore Integrità Dati Riepilogo ·
+Supervisore Escalation Anomalie Riepilogo
+Nota: i 150 Supervisori IA (30 × 5 punti) operano in affiancamento ai 50 Agenti operativi della Sezione 9,
+senza sovrapporne le responsabilità: gli agenti eseguono, i supervisori verificano. Il cluster B
+(Compliance/Privacy) di ciascun punto va letto in coerenza con i cinque punti di vista della Sezione 4 e con il
+flusso di consenso descritto in Sezione 6.4-6.5.
+
+11. Nuovo ruolo: Match Analyst
+Ruolo dedicato alla trasformazione dei dati di una partita, anche dilettantistica, in un'analisi tattica
+leggibile e strutturata, utile a scout, direttori sportivi e allenatori per valutare sia la squadra sia i
+singoli giocatori monitorati sulla piattaforma.
+11.1 Struttura del report-tipo (8 blocchi)
+
+1. Tesi di apertura — una frase che sintetizza il punto chiave dell'analisi, non una semplice
+descrizione
+
+2. Contesto — categoria, momento di stagione, eventuale posta in palio
+
+3. Identità di gioco — comportamento della squadra con e senza palla
+
+4. Dati a supporto — statistiche chiave presentate a conferma della lettura tattica
+
+5. Modulo e distribuzione — modulo di base e varianti in fase di possesso/non possesso
+
+6. Giocatori chiave — ruolo funzionale di alcuni giocatori nella meccanica di squadra
+
+7. Vulnerabilità — dove e come la squadra può essere attaccata
+
+8. Conclusione — sintesi finale che richiama la tesi di apertura
+11.2 Competenze richieste
+
+Lettura tattica (moduli, fasi di gioco, principi offensivi/difensivi)
+
+Capacità di collegare dati statistici a un racconto tattico coerente
+
+Scrittura chiara anche per pubblico non tecnico
+
+Adattamento della metodologia al dilettantismo, dove i dati disponibili sono limitati
+11.3 Strumenti a disposizione del Match Analyst
+
+Editor tattico a moduli interattivo — lavagna digitale per posizionare i giocatori su un campo
+virtuale, scegliere il modulo di base e vedere le varianti automatiche in fase di possesso/non
+possesso, disegnare frecce di movimento e salvare più scenari per la stessa partita.
+
+Modello di scheda-partita a 8 blocchi — template strutturato secondo lo schema di 11.1, con
+campi predefiniti da compilare, per rendere i report comparabili tra analisti e nel tempo.
+
+Libreria di dati minimi per il dilettantismo — set essenziale di statistiche raccoglibili anche
+senza tecnologia avanzata (possesso stimato, tiri, recuperi palla, duelli aerei, cartellini), con
+inserimento manuale da tablet/telefono a bordo campo.
+
+Generatore di mappe di calore semplificate — basato su posizioni inserite manualmente
+dall'analista a intervalli regolari, come alternativa realistica al tracking automatico non disponibile
+nel dilettantismo.
+
+Sistema di tag comportamentali/tattici sul giocatore — permette di taggare in tempo reale
+episodi di gara, collegati al radar comportamentale del Simulatore di Carriera (Sezione 8.4).
+
+Comparatore giocatori/squadre — affianca due schede (due giocatori della stessa categoria, o
+due partite della stessa squadra in momenti diversi) evidenziandone le differenze.
+
+Esportatore report — genera la scheda finale in PDF o in formato per i social, coerente con lo
+stile Elisee Graphic Studio, per uso interno o comunicazione esterna.
+
+
+Assistente di scrittura guidata — supporta l'analista nella stesura della narrazione tattica in
+linguaggio chiaro, a partire dai dati inseriti nei blocchi precedenti, evitando gergo eccessivamente
+tecnico quando il report è destinato anche a famiglie/dirigenti non tecnici.
+11.4 Agenti IA operativi a supporto del Match Analyst (10)
+
+Agente Raccolta Dati Minimi — struttura l'inserimento manuale delle statistiche essenziali da
+campo
+
+Agente Generazione Tesi — propone una possibile tesi di apertura in base ai dati raccolti
+
+Agente Compilazione Scheda — popola automaticamente i campi del template a 8 blocchi
+
+Agente Mappa di Calore — elabora le posizioni inserite manualmente in una mappa semplificata
+
+Agente Tagging Episodi — associa i tag comportamentali/tattici agli episodi segnalati durante la
+gara
+
+Agente Confronto Dati — supporta il comparatore giocatori/squadre con calcoli automatici
+
+Agente Editor Tattico — gestisce la logica delle varianti di modulo in possesso/non possesso
+
+Agente Scrittura Guidata — genera una prima bozza di narrazione tattica a partire dai dati
+inseriti
+
+Agente Esportazione Report — produce la versione PDF/social del report finale
+
+Agente Archivio Match Analyst — conserva lo storico dei report prodotti per ogni
+squadra/giocatore
+11.5 Supervisori IA a supporto del Match Analyst (30)
+Stesso schema a sei cluster già adottato in Sezione 10, applicato al ruolo Match Analyst:
+A. Qualità output: Supervisore Coerenza Match Analyst · Supervisore Correttezza Match Analyst ·
+Supervisore Duplicati Match Analyst · Supervisore Qualità Testo Match Analyst · Supervisore Verifica Esito
+Match Analyst
+B. Compliance / Privacy: Supervisore Consenso Dati Match Analyst · Supervisore Minori — Match Analyst
+· Supervisore Retention Dati Match Analyst · Supervisore Base Giuridica Match Analyst · Supervisore Log
+Compliance Match Analyst
+C. Performance / Tecnico: Supervisore Latenza Generazione Match Analyst · Supervisore Errori Runtime
+Match Analyst · Supervisore Carico Agente Match Analyst · Supervisore Fallback Match Analyst ·
+Supervisore Sincronizzazione Dati Match Analyst
+D. Contenuto / Narrativa: Supervisore Tono Narrativo Match Analyst · Supervisore Linguaggio Non
+Tecnico Match Analyst · Supervisore Contenuti Impropri Match Analyst · Supervisore Coerenza Categoria
+Match Analyst · Supervisore Ripetitività Testi Match Analyst
+E. UX / Accessibilità: Supervisore Chiarezza UX Match Analyst · Supervisore Accessibilità Colori/Testo
+Match Analyst · Supervisore Comprensibilità Famiglie Match Analyst · Supervisore Feedback Utente Match
+Analyst · Supervisore Onboarding Match Analyst
+F. Sicurezza / Anti-abuso: Supervisore Anti-manipolazione Match Analyst · Supervisore Anomalie
+Statistiche Match Analyst · Supervisore Coerenza Multi-sessione Match Analyst · Supervisore Integrità Dati
+Match Analyst · Supervisore Escalation Anomalie Match Analyst
+Nota: il cluster B (Compliance/Privacy) del Match Analyst è particolarmente rilevante quando i giocatori
+osservati e taggati sono minorenni, in coerenza con i cinque punti di vista della Sezione 4 e con il flusso di
+consenso già descritto per il profilo comportamentale (Sezione 6.4-6.5).
+
+12. Match Analyst — 100 azioni possibili
+Elenco completo, organizzato in dieci aree operative da dieci azioni ciascuna, di ciò che un Match
+Analyst può fare sulla piattaforma Elisee Scout.
+12.1 Raccolta dati partita
+
+Registrare il possesso palla stimato per tempo di gioco
+
+Annotare il numero di tiri totali e in porta per squadra
+
+Registrare i recuperi palla per zona di campo
+
+Annotare i duelli aerei vinti e persi
+
+Segnare i cartellini gialli e rossi con relativo minuto
+
+Registrare i calci d'angolo a favore e contro
+
+Annotare i cambi effettuati con relativo minuto
+
+Segnare le occasioni da gol create per squadra
+
+Registrare i falli commessi e subiti per zona di campo
+
+Annotare le sostituzioni per infortunio separatamente da quelle tattiche
+12.2 Compilazione report
+
+Compilare il blocco 'tesi di apertura' della scheda-partita
+
+Descrivere il contesto della partita (categoria, giornata, posta in palio)
+
+Descrivere l'identità di gioco della squadra con palla
+
+Descrivere l'identità di gioco della squadra senza palla
+
+Inserire i dati statistici a supporto della lettura tattica
+
+Indicare il modulo di base e le sue varianti
+
+Selezionare i giocatori chiave da evidenziare nel report
+
+Descrivere le vulnerabilità individuate nella squadra osservata
+
+Scrivere la conclusione che richiama la tesi iniziale
+
+Rileggere e correggere il report prima della pubblicazione
+12.3 Editor tattico a moduli
+
+Posizionare i giocatori sul campo virtuale secondo il modulo osservato
+
+Disegnare le frecce di movimento offensivo
+
+Disegnare le frecce di movimento difensivo
+
+Salvare uno scenario tattico per il primo tempo
+
+Salvare uno scenario tattico per il secondo tempo
+
+Creare uno scenario alternativo dopo un cambio modulo
+
+Confrontare due scenari tattici della stessa partita
+
+Esportare lo schema tattico come immagine per il report
+
+Annotare varianti di modulo in fase di possesso
+
+
+Annotare varianti di modulo in fase di non possesso
+12.4 Tagging comportamentale
+
+Taggare un episodio di gestione della pressione
+
+Taggare un episodio di leadership in campo
+
+Taggare un episodio di gestione del rischio
+
+Taggare un episodio di spirito di squadra
+
+Taggare un episodio di resilienza dopo un errore
+
+Collegare un tag comportamentale al giocatore osservato
+
+Rivedere e correggere un tag assegnato per errore
+
+Aggiungere una nota di contesto a un tag comportamentale
+
+Segnalare un pattern ricorrente di comportamento nel tempo
+
+Collegare i tag raccolti al radar comportamentale del giocatore
+12.5 Mappe di calore e dati posizionali
+
+Inserire la posizione del giocatore osservato a intervalli regolari
+
+Generare la mappa di calore semplificata della partita
+
+Confrontare la mappa di calore con quella di una partita precedente
+
+Annotare la zona di campo più frequentata dal giocatore
+
+Segnalare spostamenti anomali rispetto al ruolo abituale
+
+Indicare la profondità media raggiunta in fase offensiva
+
+Indicare l'ampiezza media occupata in fase offensiva
+
+Annotare la posizione media in fase di non possesso
+
+Esportare la mappa di calore per l'inserimento nel report
+
+Archiviare la mappa di calore nello storico del giocatore
+12.6 Comparazione giocatori e squadre
+
+Confrontare due giocatori della stessa categoria e ruolo
+
+Confrontare due partite della stessa squadra in momenti diversi
+
+Confrontare i dati minimi raccolti su due categorie diverse
+
+Evidenziare le differenze principali emerse dal confronto
+
+Generare una sintesi testuale del confronto
+
+Salvare un confronto per riferimento futuro
+
+Condividere un confronto con un altro Match Analyst
+
+Aggiornare un confronto con nuovi dati raccolti
+
+Segnalare un miglioramento significativo tra due periodi
+
+Segnalare un calo di rendimento tra due periodi
+12.7 Comunicazione e condivisione del report
+
+
+Esportare il report finale in formato PDF
+
+Esportare una versione sintetica del report per i social
+
+Condividere il report con il Direttore Sportivo abilitato
+
+Condividere il report con l'osservatore/scout abilitato
+
+Inviare il report al Privacy Officer per verifica, se richiesto
+
+Aggiungere un titolo chiaro e non tecnico al report condiviso
+
+Verificare che il consenso di visibilità sia attivo prima della condivisione
+
+Rispondere a una richiesta di chiarimento su un report inviato
+
+Aggiornare un report già condiviso con dati più recenti
+
+Archiviare la versione condivisa del report
+12.8 Collaborazione con altri ruoli
+
+Coordinarsi con un altro Match Analyst sulla stessa partita
+
+Ricevere indicazioni da un Direttore Sportivo su cosa osservare
+
+Segnalare un giocatore emergente a un osservatore/scout
+
+Rispondere a una domanda di un allenatore su un report
+
+Collaborare con l'Agente Scrittura Guidata per la bozza del report
+
+Verificare un dato con un altro analista prima della pubblicazione
+
+Partecipare a una revisione collettiva dei report della categoria
+
+Segnalare un errore in un report di un collega
+
+Proporre una modifica al template della scheda-partita
+
+Condividere una buona pratica di analisi con altri analisti
+12.9 Gestione storico e archivio
+
+Consultare lo storico dei report prodotti su una squadra
+
+Consultare lo storico dei report prodotti su un giocatore
+
+Archiviare un report a fine stagione
+
+Recuperare un report archiviato per un confronto
+
+Aggiornare l'archivio con i dati dell'ultima giornata
+
+Eliminare una bozza di report non completata
+
+Organizzare i report per categoria e stagione
+
+Verificare la coerenza tra report archiviati nel tempo
+
+Esportare l'intero storico di un giocatore su richiesta autorizzata
+
+Segnalare un'incongruenza tra report archiviati
+12.10 Formazione, qualità e aggiornamento
+
+Aggiornarsi sulle novità del template della scheda-partita
+
+Seguire una revisione di qualità sui propri report
+
+
+Adattare il linguaggio del report al pubblico non tecnico
+
+Adattare la metodologia di analisi al livello della categoria osservata
+
+Verificare la propria analisi rispetto al feedback dei Supervisori IA
+
+Proporre un miglioramento allo strumento di editor tattico
+
+Segnalare un limite dello strumento di raccolta dati minimi
+
+Approfondire un principio tattico poco chiaro prima di scrivere il report
+
+Rivedere un proprio report precedente per individuare margini di miglioramento
+
+Condividere un caso studio interno a scopo formativo per altri analisti
+
+13. Azioni possibili per ruolo — 10 ruoli × 100 azioni
+Per ciascuno dei dieci ruoli principali della piattaforma Elisee Scout, cento azioni possibili,
+organizzate in dieci aree operative da dieci azioni ciascuna. Mille azioni complessive, coerenti con
+quanto già definito nelle sezioni precedenti in tema di consenso, minori e compliance.
+
+13.1 — Calciatore / Utente
+Profilo e account
+
+Creare il proprio profilo giocatore sulla piattaforma
+
+Aggiornare ruolo, piede preferito e dati anagrafici
+
+Caricare la propria società/categoria di appartenenza
+
+Modificare la foto e i dati visibili del profilo
+
+Consultare lo storico delle proprie stagioni
+
+Collegare un genitore/tutore al proprio account, se minorenne
+
+Richiedere la disattivazione temporanea dell'account
+
+Richiedere l'esportazione dei propri dati
+
+Verificare quali dati sono attualmente visibili a terzi
+
+Aggiornare i propri recapiti di contatto
+Simulatore di Carriera
+
+Giocare al Simulatore di Carriera Dilettantistica
+
+Scegliere la categoria di partenza della carriera simulata
+
+Affrontare i bivi decisionali proposti dal gioco
+
+Visualizzare il proprio radar comportamentale
+
+Consultare il riepilogo di fine stagione simulata
+
+Avviare un nuovo ciclo di carriera simulata
+
+Confrontare due proprie stagioni simulate
+
+Condividere il riepilogo di una stagione simulata sui social
+
+Rigiocare un bivio già affrontato in un nuovo ciclo
+
+Segnalare un bivio poco chiaro al supporto della piattaforma
+Consenso e privacy
+
+Attivare il consenso alla visibilità del profilo comportamentale
+
+Disattivare in qualsiasi momento la visibilità del profilo
+
+Consultare il testo di consenso prima di attivarlo
+
+Verificare chi ha visualizzato il proprio profilo comportamentale
+
+Richiedere la cancellazione dei propri dati
+
+Contattare il Privacy Officer per un chiarimento
+
+Ricevere il report semplificato in caso di attività sospetta
+
+Richiedere un riesame in caso di sospensione del profilo
+
+Confermare il consenso genitoriale, se minorenne
+
+Revocare il consenso genitoriale collegato, se applicabile
+
+Visibilità e scouting
+
+Rendere visibile il proprio profilo a osservatori/scout
+
+Consultare quali club hanno visualizzato il proprio profilo
+
+Rispondere a un messaggio di un osservatore/scout
+
+Caricare video o highlight personali, se previsto
+
+Costruire un video highlight di massimo 5 minuti con azioni di partite reali
+
+Generare un curriculum sintetico in PDF con stagioni e club precedenti
+
+Aggiornare le proprie statistiche di partita
+
+Richiedere una verifica dei propri dati statistici
+
+Segnalare un errore nei propri dati pubblicati
+
+Visualizzare i propri report Match Analyst, se condivisi
+
+Confrontare il proprio profilo con quello di una stagione precedente
+
+Impostare notifiche per nuove visualizzazioni del profilo
+Comunicazione con il club
+
+Ricevere comunicazioni dal proprio club tramite la piattaforma
+
+Confermare la propria disponibilità per una convocazione
+
+Segnalare un infortunio al proprio club tramite l'app
+
+Consultare il calendario partite della propria squadra
+
+Ricevere notifiche su convocazioni e allenamenti
+
+Comunicare un cambio di recapiti al proprio club
+
+Visualizzare comunicazioni ufficiali della società
+
+Rispondere a un sondaggio interno del club
+
+Segnalare un problema tecnico riscontrato durante una partita
+
+Richiedere assistenza al club per l'uso della piattaforma
+Community e Ambassador
+
+Seguire il profilo di un Ambassador della piattaforma
+
+Partecipare a un'iniziativa promossa da un Ambassador
+
+Condividere un contenuto della piattaforma sui propri canali
+
+Taggare un allenatore o un compagno in un contenuto
+
+Commentare un contenuto ufficiale di Elisee Scout
+
+Segnalare un contenuto inappropriato nella community
+
+Partecipare a un sondaggio della community
+
+Invitare un compagno di squadra a registrarsi
+
+Consultare le linee guida di comportamento della community
+
+Segnalare un comportamento scorretto di un altro utente
+
+Notifiche e impostazioni
+
+Personalizzare le notifiche ricevute dall'app
+
+Attivare le notifiche push per nuovi messaggi
+
+Disattivare le notifiche non essenziali
+
+Impostare la lingua dell'interfaccia
+
+Consultare la cronologia delle notifiche ricevute
+
+Modificare la password del proprio account
+
+Attivare l'autenticazione a due fattori, se disponibile
+
+Collegare un secondo dispositivo al proprio account
+
+Disconnettere un dispositivo non più in uso
+
+Consultare il registro degli accessi al proprio account
+Supporto e assistenza
+
+Aprire una richiesta di assistenza tecnica
+
+Consultare le domande frequenti della piattaforma
+
+Segnalare un malfunzionamento dell'app
+
+Valutare la qualità dell'assistenza ricevuta
+
+Consultare lo stato di una richiesta di assistenza aperta
+
+Allegare uno screenshot a una segnalazione
+
+Richiedere chiarimenti sulla Privacy Policy
+
+Consultare i termini d'uso della piattaforma
+
+Segnalare un sospetto tentativo di accesso non autorizzato
+
+Richiedere supporto per il collegamento di un tutore
+Sviluppo personale
+
+Consultare l'evoluzione del proprio radar comportamentale nel tempo
+
+Ricevere suggerimenti su aree di miglioramento comportamentale
+
+Confrontare il proprio percorso con obiettivi personali impostati
+
+Impostare un obiettivo personale di crescita sulla piattaforma
+
+Consultare consigli generati in base al proprio profilo
+
+Rivedere le proprie scelte nei bivi passati del simulatore
+
+Richiedere un feedback su una scheda Match Analyst ricevuta
+
+Salvare una scheda Match Analyst tra i preferiti
+
+Confrontare la propria crescita tra due categorie diverse
+
+Consultare uno storico completo del proprio percorso in piattaforma
+Sicurezza account
+
+Verificare le sessioni attive sul proprio account
+
+
+Segnalare un profilo sospetto che imita il proprio
+
+Attivare l'avviso per nuovi accessi da dispositivo sconosciuto
+
+Richiedere il blocco temporaneo del proprio profilo
+
+Confermare l'identità in caso di verifica richiesta
+
+Consultare la cronologia delle modifiche al proprio profilo
+
+Ripristinare l'accesso in caso di account compromesso
+
+Aggiornare le domande di sicurezza dell'account
+
+Collegare un indirizzo email di recupero
+
+Verificare la validità del proprio consenso attivo
+
+13.2 — Famiglia / Tutore
+Collegamento all'account minore
+
+Collegare il proprio account a quello del figlio/a minorenne
+
+Verificare l'identità in fase di collegamento tutore-minore
+
+Consultare i dati visibili sul profilo del minore
+
+Ricevere una notifica per ogni richiesta di consenso relativa al minore
+
+Confermare o rifiutare una richiesta di consenso per conto del minore
+
+Modificare i dati anagrafici del minore, se necessario
+
+Scollegare l'account del minore in caso di errore di collegamento
+
+Aggiungere un secondo tutore collegato allo stesso minore
+
+Consultare la cronologia dei consensi dati per conto del minore
+
+Richiedere assistenza per un problema di collegamento tutore-minore
+Consenso e privacy del minore
+
+Attivare il consenso alla visibilità del profilo comportamentale del minore
+
+Disattivare in qualsiasi momento tale visibilità
+
+Leggere il testo di consenso prima di autorizzarlo
+
+Consultare chi ha visualizzato il profilo del minore
+
+Richiedere la cancellazione dei dati del minore
+
+Contattare il Privacy Officer per un chiarimento su un trattamento dati
+
+Ricevere il report semplificato in caso di attività sospetta sul profilo del minore
+
+Richiedere un riesame in caso di sospensione del profilo del minore
+
+Revocare un consenso precedentemente attivato
+
+Consultare la base giuridica di un trattamento dati che riguarda il minore
+Monitoraggio attività
+
+Consultare le partite giocate/osservate relative al minore
+
+Consultare i report Match Analyst condivisi sul minore, se previsto
+
+Visualizzare l'evoluzione del radar comportamentale del minore
+
+Ricevere una notifica quando un club visualizza il profilo del minore
+
+Consultare lo storico delle stagioni simulate giocate dal minore
+
+Verificare il tempo di utilizzo dell'app da parte del minore
+
+Impostare limiti di utilizzo, se la funzione è disponibile
+
+Ricevere un riepilogo periodico dell'attività del minore
+
+Segnalare un contenuto inappropriato incontrato dal minore
+
+Richiedere il blocco temporaneo del profilo del minore
+
+Comunicazione con il club
+
+Ricevere comunicazioni ufficiali dal club del minore
+
+Confermare la disponibilità del minore per una convocazione
+
+Segnalare un infortunio del minore al club
+
+Consultare il calendario partite della squadra del minore
+
+Comunicare un cambio di recapiti al club
+
+Ricevere notifiche su allenamenti e convocazioni
+
+Rispondere a una comunicazione del dirigente del club
+
+Segnalare un problema logistico (trasferte, orari) al club
+
+Richiedere un colloquio con l'allenatore tramite la piattaforma
+
+Consultare i contatti ufficiali del club
+Assistenza e supporto
+
+Aprire una richiesta di assistenza per conto del minore
+
+Consultare le domande frequenti dedicate alle famiglie
+
+Segnalare un malfunzionamento riscontrato dal minore
+
+Valutare la qualità dell'assistenza ricevuta
+
+Consultare lo stato di una richiesta di assistenza aperta
+
+Richiedere chiarimenti sulla Privacy Policy in linguaggio semplice
+
+Consultare i termini d'uso applicabili al minore
+
+Richiedere supporto per la comprensione di un report ricevuto
+
+Segnalare un sospetto tentativo di accesso non autorizzato
+
+Richiedere la traduzione in linguaggio semplice di una comunicazione tecnica
+Sicurezza dell'account minore
+
+Verificare le sessioni attive sull'account del minore
+
+Segnalare un profilo sospetto che imita quello del minore
+
+Attivare l'avviso per nuovi accessi da dispositivo sconosciuto
+
+Richiedere il blocco temporaneo del profilo del minore
+
+Confermare l'identità in caso di verifica richiesta dal sistema
+
+Consultare la cronologia delle modifiche al profilo del minore
+
+Ripristinare l'accesso in caso di account compromesso
+
+Aggiornare le informazioni di recupero account
+
+Collegare un indirizzo email di recupero per il minore
+
+Verificare la validità dei consensi attivi collegati al minore
+Visibilità verso terzi
+
+Consultare quali osservatori/scout hanno accesso al profilo del minore
+
+
+Revocare l'accesso a un osservatore/scout specifico
+
+Consultare le motivazioni di una richiesta di accesso ricevuta
+
+Approvare una nuova richiesta di visibilità da un club
+
+Rifiutare una richiesta di visibilità ritenuta non opportuna
+
+Consultare lo storico delle richieste di visibilità ricevute
+
+Impostare una scadenza automatica per un consenso attivo
+
+Rinnovare un consenso in scadenza
+
+Consultare le finalità dichiarate di ogni trattamento dati
+
+Richiedere un elenco completo dei soggetti con accesso ai dati del minore
+Community e comunicazione generale
+
+Consultare le linee guida di comportamento della community
+
+Segnalare un contenuto inappropriato nella community
+
+Consultare le iniziative promosse dagli Ambassador
+
+Ricevere comunicazioni generali dalla piattaforma
+
+Personalizzare le notifiche ricevute come tutore
+
+Consultare la cronologia delle notifiche ricevute
+
+Fornire un feedback sulla piattaforma
+
+Partecipare a un sondaggio rivolto alle famiglie
+
+Consultare risorse informative dedicate ai genitori
+
+Contattare il supporto per un chiarimento generale
+Impostazioni account tutore
+
+Modificare la password del proprio account tutore
+
+Attivare l'autenticazione a due fattori, se disponibile
+
+Collegare un secondo dispositivo al proprio account
+
+Disconnettere un dispositivo non più in uso
+
+Consultare il registro degli accessi al proprio account
+
+Aggiornare i propri dati di contatto
+
+Impostare la lingua dell'interfaccia
+
+Gestire le preferenze di comunicazione
+
+Richiedere la chiusura del proprio account tutore
+
+Esportare i propri dati e quelli collegati al minore
+Decisioni e responsabilità genitoriale
+
+Approvare l'iscrizione del minore a un nuovo ciclo del Simulatore di Carriera
+
+Confermare il passaggio del minore a una nuova categoria simulata
+
+Discutere con il minore l'attivazione della visibilità del profilo
+
+
+Valutare insieme al minore un report ricevuto
+
+Autorizzare la partecipazione del minore a un'iniziativa della community
+
+Richiedere un incontro informativo con il Privacy Officer del club
+
+Consultare materiale informativo su GDPR e minori
+
+Verificare periodicamente le impostazioni di privacy del minore
+
+Aggiornare il consenso in caso di cambiamento di categoria o società
+
+Richiedere la disattivazione definitiva dell'account del minore
+
+13.3 — Club / Dirigente
+Gestione profilo società
+
+Creare e aggiornare il profilo del club sulla piattaforma
+
+Caricare lo stemma e i colori sociali del club
+
+Aggiornare la categoria di appartenenza del club
+
+Aggiungere i recapiti ufficiali della società
+
+Consultare lo storico stagioni del club sulla piattaforma
+
+Aggiornare il campo di gioco e le informazioni logistiche
+
+Gestire i ruoli interni assegnati (DS, allenatore, ecc.)
+
+Verificare la correttezza dei dati pubblici del club
+
+Richiedere la verifica ufficiale del profilo del club
+
+Consultare le linee guida per la gestione del profilo
+Gestione rosa e giocatori
+
+Consultare l'elenco dei giocatori tesserati sulla piattaforma
+
+Invitare un nuovo giocatore a registrarsi
+
+Confermare l'appartenenza di un giocatore alla rosa
+
+Consultare i profili comportamentali resi visibili dai giocatori
+
+Ricevere notifiche su nuovi report Match Analyst disponibili
+
+Consultare lo storico partite dei propri giocatori
+
+Segnalare un cambio di ruolo di un giocatore
+
+Confermare la fine del rapporto con un giocatore
+
+Consultare le statistiche aggregate della rosa
+
+Richiedere un report comparativo tra due giocatori della rosa
+Comunicazione con famiglie e giocatori
+
+Inviare comunicazioni ufficiali alle famiglie
+
+Inviare convocazioni tramite la piattaforma
+
+Rispondere a una segnalazione di una famiglia
+
+Condividere il calendario partite con giocatori e famiglie
+
+Comunicare una variazione di orario allenamento
+
+Rispondere a un sondaggio interno
+
+Inviare un avviso di trasferta
+
+Comunicare un'assenza dell'allenatore
+
+Condividere materiale informativo con le famiglie
+
+Raccogliere feedback dalle famiglie tramite sondaggio
+
+Antifrode e sicurezza
+
+Ricevere il report semplificato in caso di attività sospetta
+
+Segnalare un tentativo di accesso sospetto al Privacy Officer
+
+Consultare il livello di rischio comunicato dalla piattaforma
+
+Richiedere assistenza in caso di sospetta frode
+
+Confermare la ricezione di un avviso di sicurezza
+
+Segnalare un profilo sospetto collegato al club
+
+Richiedere un riesame in caso di sospensione di un profilo del club
+
+Consultare le azioni intraprese automaticamente dal sistema antifrode
+
+Aggiornare le credenziali di accesso del club
+
+Verificare l'elenco degli account con accesso al profilo del club
+Match Analyst e report
+
+Richiedere un report Match Analyst su una partita specifica
+
+Consultare i report Match Analyst ricevuti nel tempo
+
+Confrontare due report della stessa squadra in periodi diversi
+
+Condividere un report con il Direttore Sportivo del club
+
+Esportare un report per uso interno
+
+Segnalare un errore in un report ricevuto
+
+Richiedere un approfondimento su un giocatore specifico
+
+Archiviare un report per riferimento futuro
+
+Confrontare i propri report con quelli di un'altra squadra della categoria
+
+Fornire un feedback sulla qualità di un report ricevuto
+Simulatore di Carriera e Ambassador
+
+Consultare in forma aggregata l'uso del Simulatore di Carriera da parte dei propri giocatori
+
+Promuovere il Simulatore di Carriera tra i propri tesserati
+
+Segnalare un Ambassador interessato a collaborare con il club
+
+Partecipare a un'iniziativa promossa da un Ambassador
+
+Condividere un contenuto della piattaforma sui canali del club
+
+Consultare le linee guida per la collaborazione con Ambassador
+
+Richiedere materiale promozionale della piattaforma
+
+Segnalare un'idea di collaborazione alla piattaforma
+
+Consultare i risultati di un'iniziativa promossa dal club
+
+Invitare un altro club a registrarsi sulla piattaforma
+Amministrazione interna
+
+Assegnare permessi a un nuovo dirigente del club
+
+
+Revocare i permessi a un dirigente uscente
+
+Consultare il registro delle azioni svolte dai dirigenti del club
+
+Aggiornare l'organigramma societario sulla piattaforma
+
+Gestire le richieste di supporto interne al club
+
+Consultare lo storico delle comunicazioni inviate dal club
+
+Impostare le notifiche per i dirigenti del club
+
+Consultare la cronologia degli accessi al profilo del club
+
+Richiedere la chiusura del profilo del club
+
+Trasferire la proprietà del profilo club a un nuovo dirigente
+Compliance e privacy
+
+Consultare le finalità dei trattamenti dati relativi al club
+
+Verificare i consensi attivi collegati ai propri tesserati minorenni
+
+Contattare il Privacy Officer per un chiarimento
+
+Consultare la Privacy Policy applicabile al club
+
+Richiedere formazione sul tema privacy/GDPR per i propri dirigenti
+
+Segnalare un dubbio di compliance riscontrato nell'uso della piattaforma
+
+Consultare i tempi di conservazione dei dati del club
+
+Richiedere l'esportazione dei dati del club
+
+Verificare la data dell'ultimo aggiornamento della Privacy Policy
+
+Consultare le responsabilità del club nel trattamento dei dati dei minori tesserati
+Statistiche e analisi di club
+
+Consultare le statistiche aggregate di rendimento del club
+
+Confrontare il rendimento del club tra due stagioni
+
+Consultare la posizione in classifica aggiornata in tempo reale
+
+Esportare le statistiche di club per uso interno
+
+Richiedere un'analisi comparativa con altri club della categoria
+
+Consultare l'andamento dei tesseramenti nel tempo
+
+Consultare l'andamento dell'uso della piattaforma da parte dei tesserati
+
+Richiedere un riepilogo di fine stagione del club
+
+Condividere le statistiche di club con la dirigenza
+
+Archiviare le statistiche di fine stagione
+Supporto e assistenza
+
+Aprire una richiesta di assistenza tecnica per il club
+
+Consultare le domande frequenti dedicate ai club
+
+Segnalare un malfunzionamento riscontrato dal club
+
+
+Valutare la qualità dell'assistenza ricevuta
+
+Consultare lo stato di una richiesta di assistenza aperta
+
+Richiedere una demo delle funzionalità della piattaforma
+
+Richiedere l'attivazione di una nuova funzionalità per il club
+
+Segnalare un suggerimento di miglioramento della piattaforma
+
+Richiedere assistenza per l'onboarding di un nuovo dirigente
+
+Contattare il supporto per un chiarimento contrattuale
+
+13.4 — Direttore Sportivo
+Scouting e valutazione
+
+Consultare i profili dei giocatori visibili nella propria area
+
+Filtrare i giocatori per categoria, ruolo e società
+
+Consultare il radar comportamentale di un giocatore visibile
+
+Richiedere un report Match Analyst su un giocatore specifico
+
+Confrontare due giocatori della stessa categoria
+
+Segnalare un giocatore di interesse a un osservatore/scout
+
+Consultare lo storico partite di un giocatore
+
+Salvare un giocatore tra i profili di interesse
+
+Richiedere l'autorizzazione a contattare un giocatore/famiglia
+
+Consultare le note di scouting collegate a un giocatore
+Comunicazione con club e famiglie
+
+Contattare il club di appartenenza di un giocatore osservato
+
+Contattare la famiglia di un giocatore minorenne, previa autorizzazione
+
+Rispondere a una richiesta di chiarimento da parte di una famiglia
+
+Comunicare l'interesse del proprio club per un giocatore
+
+Organizzare un incontro tramite la piattaforma
+
+Condividere materiale informativo sul proprio club
+
+Aggiornare lo stato di una trattativa in corso
+
+Comunicare l'esito di una valutazione a un club
+
+Richiedere ulteriori dati su un giocatore osservato
+
+Consultare lo storico delle comunicazioni inviate
+Match Analyst e dati
+
+Richiedere un report su una partita specifica
+
+Consultare i report Match Analyst ricevuti nel tempo
+
+Confrontare report di partite diverse dello stesso giocatore
+
+Segnalare un errore in un report ricevuto
+
+Richiedere un approfondimento su un aspetto tattico specifico
+
+Archiviare un report per riferimento futuro
+
+Condividere un report con il presidente del club
+
+Consultare le statistiche minime raccolte su una categoria
+
+Richiedere una mappa di calore relativa a un giocatore osservato
+
+Fornire un feedback sulla qualità di un report ricevuto
+
+Gestione rosa e pianificazione
+
+Consultare le esigenze di rosa comunicate dal club
+
+Pianificare gli osservatori/scout da coinvolgere per una categoria
+
+Assegnare priorità di osservazione a determinati ruoli
+
+Consultare il budget disponibile, se gestito tramite piattaforma
+
+Aggiornare lo stato di una trattativa nel sistema interno
+
+Consultare lo storico dei giocatori già valutati
+
+Segnalare un giocatore già valutato in passato
+
+Coordinarsi con l'allenatore su un profilo specifico
+
+Consultare le disponibilità di categoria per un nuovo inserimento
+
+Archiviare una valutazione conclusa
+Compliance e consenso
+
+Verificare che il consenso di visibilità del profilo sia attivo
+
+Consultare la finalità dichiarata di un trattamento dati
+
+Contattare il Privacy Officer per un chiarimento
+
+Rispettare i limiti di visibilità impostati da un tutore
+
+Segnalare un dubbio di compliance riscontrato
+
+Consultare la Privacy Policy applicabile al proprio ruolo
+
+Richiedere formazione sul tema privacy/GDPR
+
+Consultare le responsabilità del proprio ruolo nel trattamento dati
+
+Verificare la validità di un consenso prima di un contatto
+
+Segnalare la scadenza di un consenso attivo
+Ambassador e community
+
+Collaborare con un Ambassador per un'iniziativa di scouting
+
+Partecipare a un evento promosso dalla piattaforma
+
+Consultare le iniziative attive nella propria area geografica
+
+Segnalare un Ambassador potenziale alla piattaforma
+
+Condividere un'esperienza positiva con la community
+
+Consultare le linee guida di comportamento professionale
+
+Partecipare a un sondaggio rivolto ai Direttori Sportivi
+
+Fornire un feedback sulla qualità dei profili osservati
+
+Segnalare un contenuto inappropriato riscontrato
+
+Invitare un collega Direttore Sportivo a registrarsi
+Amministrazione del proprio account
+
+Aggiornare il proprio profilo professionale
+
+
+Collegarsi a più club, se autorizzato
+
+Gestire le notifiche relative a nuovi profili disponibili
+
+Consultare la cronologia dei propri accessi
+
+Aggiornare la password del proprio account
+
+Attivare l'autenticazione a due fattori, se disponibile
+
+Consultare il registro delle proprie azioni sulla piattaforma
+
+Richiedere la disattivazione temporanea del proprio account
+
+Esportare i propri dati professionali
+
+Verificare i permessi assegnati al proprio ruolo
+Statistiche e reportistica
+
+Consultare statistiche aggregate per categoria
+
+Esportare un report comparativo tra più giocatori
+
+Richiedere un'analisi di tendenza su una categoria
+
+Consultare la posizione in classifica di una squadra osservata
+
+Archiviare un'analisi per uso futuro
+
+Condividere un'analisi con il presidente del club
+
+Confrontare l'andamento di due categorie diverse
+
+Richiedere un riepilogo periodico delle proprie attività di scouting
+
+Consultare l'efficacia delle proprie segnalazioni nel tempo
+
+Esportare uno storico completo delle proprie valutazioni
+Etica e responsabilità professionale
+
+Rispettare i limiti di contatto stabiliti dalla piattaforma
+
+Evitare pressioni indebite su giocatori minorenni
+
+Segnalare un comportamento scorretto di un collega
+
+Consultare il codice etico della piattaforma
+
+Rifiutare un accesso a dati non pertinenti al proprio ruolo
+
+Segnalare un tentativo di aggiramento del consenso
+
+Confermare la correttezza di una segnalazione effettuata
+
+Consultare le conseguenze di una violazione del codice etico
+
+Richiedere chiarimenti su un caso dubbio al Privacy Officer
+
+Partecipare a un percorso di aggiornamento etico-professionale
+Supporto e assistenza
+
+Aprire una richiesta di assistenza tecnica
+
+Consultare le domande frequenti dedicate al proprio ruolo
+
+Segnalare un malfunzionamento riscontrato
+
+
+Valutare la qualità dell'assistenza ricevuta
+
+Consultare lo stato di una richiesta di assistenza aperta
+
+Richiedere una demo delle funzionalità di scouting
+
+Richiedere l'attivazione di una nuova funzionalità
+
+Segnalare un suggerimento di miglioramento
+
+Richiedere assistenza per l'onboarding sulla piattaforma
+
+Contattare il supporto per un chiarimento operativo
+
+13.5 — Osservatore / Scout
+Osservazione sul campo
+
+Programmare l'osservazione di una partita specifica
+
+Registrare note di osservazione durante la partita
+
+Collegare le proprie note a un giocatore specifico
+
+Segnalare un giocatore emergente non ancora monitorato
+
+Consultare il calendario partite di una categoria
+
+Pianificare un percorso di osservazioni multiple
+
+Confermare la presenza a una partita programmata
+
+Annullare un'osservazione programmata
+
+Richiedere informazioni logistiche su un campo da visitare
+
+Archiviare le note di un'osservazione conclusa
+Consultazione profili e dati
+
+Consultare i profili dei giocatori visibili nella propria area
+
+Filtrare i giocatori per categoria, ruolo e zona geografica
+
+Consultare il radar comportamentale di un giocatore visibile
+
+Richiedere un report Match Analyst su un giocatore osservato
+
+Confrontare due giocatori della stessa categoria
+
+Consultare lo storico partite di un giocatore
+
+Salvare un giocatore tra i profili di interesse
+
+Consultare le mappe di calore disponibili su un giocatore
+
+Verificare l'aggiornamento dei dati di un profilo
+
+Segnalare un dato non aggiornato su un profilo
+Segnalazione e collaborazione
+
+Segnalare un giocatore a un Direttore Sportivo
+
+Condividere una valutazione con un collega osservatore
+
+Richiedere una seconda opinione su un giocatore osservato
+
+Partecipare a una revisione collettiva delle segnalazioni
+
+Aggiornare una segnalazione con nuovi dati raccolti
+
+Archiviare una segnalazione conclusa
+
+Consultare lo storico delle proprie segnalazioni
+
+Verificare l'esito di una segnalazione effettuata
+
+Coordinarsi con un Match Analyst su un giocatore specifico
+
+Richiedere l'accesso a un profilo non ancora visibile
+
+Consenso e limiti di accesso
+
+Verificare che il consenso di visibilità del profilo sia attivo
+
+Consultare la finalità dichiarata di un trattamento dati
+
+Contattare il Privacy Officer per un chiarimento
+
+Rispettare i limiti di visibilità impostati da un tutore
+
+Segnalare un dubbio di compliance riscontrato
+
+Consultare la Privacy Policy applicabile al proprio ruolo
+
+Richiedere formazione sul tema privacy/GDPR
+
+Verificare la validità di un consenso prima di un contatto
+
+Segnalare la scadenza di un consenso attivo
+
+Astenersi dal contattare un giocatore senza consenso attivo
+Etica e comportamento professionale
+
+Rispettare i limiti di contatto stabiliti dalla piattaforma
+
+Evitare pressioni indebite su giocatori minorenni
+
+Segnalare un comportamento scorretto di un collega
+
+Consultare il codice etico della piattaforma
+
+Rifiutare un accesso a dati non pertinenti al proprio ruolo
+
+Segnalare un tentativo di aggiramento del consenso
+
+Confermare la correttezza di una segnalazione effettuata
+
+Consultare le conseguenze di una violazione del codice etico
+
+Richiedere chiarimenti su un caso dubbio al Privacy Officer
+
+Partecipare a un percorso di aggiornamento etico-professionale
+Organizzazione del proprio lavoro
+
+Consultare il proprio calendario di osservazioni
+
+Organizzare le proprie note per categoria e zona
+
+Impostare promemoria per partite future
+
+Consultare lo storico delle proprie attività di scouting
+
+Archiviare un ciclo di osservazioni concluso
+
+Esportare le proprie note per uso personale
+
+Consultare la cronologia dei propri accessi
+
+Aggiornare le proprie aree geografiche di competenza
+
+Segnalare un conflitto di programmazione tra due partite
+
+Richiedere supporto logistico per una trasferta di osservazione
+Comunicazione con club e famiglie
+
+Contattare un club per richiedere informazioni su un giocatore
+
+
+Contattare la famiglia di un giocatore minorenne, previa autorizzazione
+
+Rispondere a una richiesta di chiarimento da parte di una famiglia
+
+Comunicare l'interesse per un giocatore a un club terzo
+
+Organizzare un incontro tramite la piattaforma
+
+Condividere materiale informativo sul proprio ruolo
+
+Aggiornare lo stato di un contatto in corso
+
+Comunicare l'esito di una valutazione a un club
+
+Richiedere ulteriori dati su un giocatore osservato
+
+Consultare lo storico delle comunicazioni inviate
+Ambassador e community
+
+Collaborare con un Ambassador per un'iniziativa di scouting
+
+Partecipare a un evento promosso dalla piattaforma
+
+Consultare le iniziative attive nella propria area geografica
+
+Segnalare un Ambassador potenziale alla piattaforma
+
+Condividere un'esperienza positiva con la community
+
+Partecipare a un sondaggio rivolto agli osservatori
+
+Fornire un feedback sulla qualità dei profili osservati
+
+Segnalare un contenuto inappropriato riscontrato
+
+Invitare un collega osservatore a registrarsi
+
+Consultare le linee guida di comportamento della community
+Gestione del proprio account
+
+Aggiornare il proprio profilo professionale
+
+Gestire le notifiche relative a nuovi profili disponibili
+
+Consultare la cronologia dei propri accessi
+
+Aggiornare la password del proprio account
+
+Attivare l'autenticazione a due fattori, se disponibile
+
+Consultare il registro delle proprie azioni sulla piattaforma
+
+Richiedere la disattivazione temporanea del proprio account
+
+Esportare i propri dati professionali
+
+Verificare i permessi assegnati al proprio ruolo
+
+Richiedere la chiusura definitiva del proprio account
+Supporto e assistenza
+
+Aprire una richiesta di assistenza tecnica
+
+Consultare le domande frequenti dedicate al proprio ruolo
+
+Segnalare un malfunzionamento riscontrato
+
+
+Valutare la qualità dell'assistenza ricevuta
+
+Consultare lo stato di una richiesta di assistenza aperta
+
+Richiedere una demo delle funzionalità di scouting
+
+Richiedere l'attivazione di una nuova funzionalità
+
+Segnalare un suggerimento di miglioramento
+
+Richiedere assistenza per l'onboarding sulla piattaforma
+
+Contattare il supporto per un chiarimento operativo
+
+13.6 — Presidente di società
+Governance del club
+
+Consultare la visione d'insieme del club sulla piattaforma
+
+Approvare l'assegnazione di ruoli interni (DS, dirigenti)
+
+Consultare le decisioni prese dai dirigenti delegati
+
+Approvare una comunicazione ufficiale del club
+
+Consultare lo storico delle decisioni societarie registrate
+
+Verificare la conformità del club alla Privacy Policy
+
+Approvare l'adesione a un'iniziativa Ambassador
+
+Consultare il resoconto periodico delle attività del club
+
+Autorizzare l'accesso di un nuovo dirigente alla piattaforma
+
+Revocare l'accesso di un dirigente uscente
+Supervisione economico-organizzativa
+
+Consultare eventuali dati di abbonamento Premium del club
+
+Verificare i costi collegati ai servizi attivati sulla piattaforma
+
+Approvare l'attivazione di una nuova funzionalità a pagamento
+
+Consultare il riepilogo delle attività di scouting del club
+
+Consultare il riepilogo delle attività di Match Analyst richieste
+
+Valutare l'efficacia delle iniziative promosse dal club
+
+Consultare lo storico dei tesseramenti registrati
+
+Approvare una collaborazione con un altro club tramite la piattaforma
+
+Consultare un riepilogo di fine stagione del club
+
+Richiedere un'analisi comparativa con club simili
+Compliance e privacy
+
+Consultare le responsabilità del club nel trattamento dati
+
+Verificare la presenza di un Privacy Officer designato
+
+Consultare i consensi attivi relativi ai tesserati minorenni
+
+Richiedere una verifica di compliance al Privacy Officer
+
+Consultare la Privacy Policy applicabile al club
+
+Richiedere formazione privacy/GDPR per i propri dirigenti
+
+Consultare i tempi di conservazione dei dati del club
+
+Approvare l'esportazione dei dati del club, se richiesta
+
+Consultare l'esito di un'eventuale ispezione o verifica
+
+Verificare la data dell'ultimo aggiornamento della Privacy Policy
+
+Comunicazione istituzionale
+
+Approvare una comunicazione ufficiale verso famiglie e giocatori
+
+Consultare le comunicazioni inviate dai dirigenti del club
+
+Rispondere direttamente a una segnalazione rilevante
+
+Comunicare una decisione societaria importante
+
+Consultare il tono e la chiarezza delle comunicazioni inviate
+
+Approvare un contenuto da condividere sui social del club
+
+Coordinarsi con Elisee Graphic Studio per materiale ufficiale, se applicabile
+
+Consultare il feedback ricevuto dalle famiglie
+
+Approvare la partecipazione a un'iniziativa esterna
+
+Consultare lo storico delle comunicazioni istituzionali
+Rapporti con Ambassador e community
+
+Approvare una collaborazione con un Ambassador
+
+Consultare i risultati di un'iniziativa Ambassador
+
+Partecipare a un evento promosso dalla piattaforma
+
+Segnalare un Ambassador potenziale alla piattaforma
+
+Consultare le linee guida per le collaborazioni non retribuite
+
+Autorizzare la partecipazione del club a un'iniziativa di comunicazione
+
+Consultare le ricadute mediatiche di un'iniziativa passata
+
+Approvare un'intervista o contenuto legato al club
+
+Consultare il regolamento della community della piattaforma
+
+Invitare un altro presidente di società a registrarsi
+Supervisione Match Analyst e scouting
+
+Consultare il resoconto delle attività di Match Analyst del club
+
+Approvare una richiesta di report approfondito
+
+Consultare l'elenco degli osservatori/scout con accesso al club
+
+Revocare l'accesso a un osservatore/scout, se necessario
+
+Consultare i giocatori del club segnalati a osservatori esterni
+
+Approvare la condivisione di un profilo con un club terzo
+
+Consultare le statistiche aggregate di rendimento della rosa
+
+Richiedere un riepilogo dei profili comportamentali della rosa
+
+Consultare l'efficacia delle segnalazioni ricevute nel tempo
+
+Archiviare un ciclo di scouting concluso
+Sicurezza e antifrode
+
+Ricevere il report semplificato in caso di attività sospetta
+
+
+Consultare il livello di rischio comunicato dalla piattaforma
+
+Approvare un'azione di sospensione profilo proposta dal Privacy Officer
+
+Consultare le azioni intraprese automaticamente dal sistema antifrode
+
+Segnalare un tentativo di accesso sospetto
+
+Richiedere un riesame in caso di sospensione di un profilo del club
+
+Verificare l'elenco degli account con accesso amministrativo al club
+
+Aggiornare le credenziali di accesso principali del club
+
+Consultare il registro delle azioni amministrative svolte
+
+Approvare l'adozione di una nuova misura di sicurezza
+Rappresentanza esterna
+
+Rappresentare ufficialmente il club nei rapporti con la piattaforma
+
+Firmare digitalmente un accordo di collaborazione, se previsto
+
+Consultare i termini contrattuali applicabili al club
+
+Comunicare con il team di supporto per questioni istituzionali
+
+Partecipare a un incontro informativo organizzato dalla piattaforma
+
+Consultare aggiornamenti normativi rilevanti per il club
+
+Rappresentare il club in un'eventuale verifica del Garante
+
+Consultare le responsabilità legali associate al proprio ruolo
+
+Delegare formalmente una responsabilità a un dirigente
+
+Revocare una delega precedentemente assegnata
+Pianificazione strategica
+
+Consultare l'andamento generale del club sulla piattaforma
+
+Valutare l'adozione di nuove funzionalità per il club
+
+Pianificare obiettivi di crescita del settore giovanile tramite i dati raccolti
+
+Consultare un'analisi di tendenza pluriennale del club
+
+Confrontare l'andamento del club con altre società della categoria
+
+Valutare l'investimento in ulteriori strumenti di scouting
+
+Consultare i risultati di un'iniziativa di comunicazione passata
+
+Pianificare la partecipazione a eventi futuri della piattaforma
+
+Consultare suggerimenti generati dalla piattaforma per il club
+
+Archiviare la pianificazione strategica di fine stagione
+Supporto e assistenza
+
+Aprire una richiesta di assistenza dedicata al club
+
+Consultare le domande frequenti dedicate ai presidenti
+
+Segnalare un malfunzionamento riscontrato
+
+
+Valutare la qualità dell'assistenza ricevuta
+
+Consultare lo stato di una richiesta di assistenza aperta
+
+Richiedere una demo delle funzionalità avanzate
+
+Richiedere l'attivazione di una nuova funzionalità per il club
+
+Segnalare un suggerimento di miglioramento della piattaforma
+
+Richiedere assistenza per l'onboarding completo del club
+
+Contattare il supporto per un chiarimento contrattuale
+
+13.7 — Privacy Officer
+Gestione dei consensi
+
+Consultare l'elenco dei consensi attivi sulla piattaforma
+
+Verificare la validità di un consenso specifico
+
+Gestire una richiesta di revoca del consenso
+
+Consultare lo storico delle modifiche a un consenso
+
+Verificare la presenza del consenso genitoriale per un minore
+
+Aggiornare il testo di un modulo di consenso, se necessario
+
+Consultare le finalità dichiarate per ciascun trattamento
+
+Segnalare un consenso raccolto in modo non conforme
+
+Archiviare la prova di un consenso raccolto
+
+Verificare la scadenza programmata di un consenso
+Gestione delle segnalazioni antifrode
+
+Consultare i report generati dal sistema antifrode
+
+Tradurre un report tecnico in linguaggio semplice per le famiglie
+
+Approvare l'invio di un report semplificato a un club
+
+Consultare il livello di rischio assegnato a una segnalazione
+
+Richiedere un approfondimento tecnico su una segnalazione
+
+Archiviare una segnalazione risolta
+
+Consultare lo storico delle segnalazioni per un profilo
+
+Escalare una segnalazione a un livello superiore, se necessario
+
+Verificare la coerenza tra segnalazione e azione intrapresa
+
+Comunicare l'esito di una segnalazione all'utente coinvolto
+Sospensione e riesame profili
+
+Consultare una richiesta di sospensione profilo
+
+Approvare la sospensione temporanea di un profilo
+
+Selezionare la motivazione della sospensione dal menu previsto
+
+Notificare automaticamente l'utente della sospensione
+
+Consultare una richiesta di riesame presentata dall'utente
+
+Rispondere a una richiesta di riesame entro i tempi previsti
+
+Consultare il log dell'azione di sospensione
+
+Verificare che il log della sospensione sia immutabile
+
+Ripristinare un profilo dopo un riesame favorevole
+
+Archiviare l'esito definitivo di un riesame
+
+Compliance normativa
+
+Verificare la conformità della piattaforma al GDPR
+
+Consultare la base giuridica di ciascun trattamento dati
+
+Verificare la necessità di una DPIA per una nuova funzionalità
+
+Aggiornare la Privacy Policy in caso di modifiche normative
+
+Consultare i tempi di conservazione per categoria di dato
+
+Verificare la conformità del sistema antifrode alla normativa applicabile
+
+Consultare eventuali obblighi derivanti dal D.Lgs. 231/2007
+
+Preparare la documentazione per un'eventuale verifica del Garante
+
+Consultare le responsabilità dei provider terzi PSD2-compliant
+
+Aggiornare la mappatura dei trattamenti dati della piattaforma
+Tutela dei minori
+
+Verificare i flussi di consenso specifici per gli utenti minorenni
+
+Consultare le notifiche inviate a genitori/tutori
+
+Verificare la corretta applicazione dell'art. 8 GDPR sui minori
+
+Approvare un'eccezione motivata al flusso standard, se necessario
+
+Consultare i reclami relativi a dati di minori
+
+Coordinarsi con un club per un caso relativo a un minore
+
+Verificare la cancellazione dei dati di un minore su richiesta
+
+Consultare l'elenco degli accessi ai dati di un minore
+
+Segnalare un'anomalia nel trattamento dei dati di un minore
+
+Predisporre materiale informativo dedicato alle famiglie
+Comunicazione e trasparenza
+
+Rispondere a una richiesta di chiarimento di un utente
+
+Redigere una comunicazione semplificata su un incidente di sicurezza
+
+Pubblicare un aggiornamento della Privacy Policy
+
+Comunicare una modifica rilevante ai trattamenti dati
+
+Rispondere a una richiesta di accesso ai propri dati (diritto di accesso)
+
+Gestire una richiesta di portabilità dei dati
+
+Gestire una richiesta di cancellazione dei dati (diritto all'oblio)
+
+Fornire spiegazioni sull'uso del profilo comportamentale
+
+Redigere un report semplificato per la dashboard dedicata
+
+Consultare il feedback ricevuto sulle comunicazioni privacy
+Audit e log
+
+Consultare i log delle azioni amministrative svolte sulla piattaforma
+
+
+Verificare l'immutabilità dei log critici
+
+Condurre una verifica periodica sui log di accesso
+
+Segnalare un'anomalia riscontrata nei log
+
+Archiviare un report di audit periodico
+
+Consultare il registro delle attività di trattamento (ROPA)
+
+Aggiornare il registro delle attività di trattamento
+
+Verificare la coerenza tra log e azioni effettivamente svolte
+
+Predisporre un report di audit per la direzione
+
+Consultare lo storico delle verifiche di audit passate
+Formazione e sensibilizzazione
+
+Organizzare una sessione formativa privacy/GDPR per i dirigenti
+
+Predisporre materiale formativo per le famiglie
+
+Predisporre materiale formativo per gli osservatori/scout
+
+Aggiornare il codice etico della piattaforma
+
+Verificare la comprensione del codice etico da parte degli utenti chiave
+
+Organizzare un aggiornamento normativo periodico
+
+Rispondere a domande frequenti relative alla privacy
+
+Consultare il livello di consapevolezza privacy tra gli utenti
+
+Predisporre una guida rapida sul consenso per i nuovi utenti
+
+Aggiornare la documentazione interna in base al feedback ricevuto
+Gestione incidenti
+
+Registrare un incidente di sicurezza rilevato
+
+Valutare la gravità di un incidente rilevato
+
+Notificare un incidente rilevante alle autorità competenti, se dovuto
+
+Comunicare un incidente agli utenti coinvolti
+
+Coordinare la risposta tecnica a un incidente
+
+Archiviare la documentazione relativa a un incidente risolto
+
+Consultare lo storico degli incidenti passati
+
+Aggiornare le procedure interne dopo un incidente
+
+Verificare l'efficacia delle misure correttive adottate
+
+Predisporre un report post-incidente per la direzione
+Supervisione trasversale
+
+Coordinarsi con l'Admin sulle azioni relative ai profili
+
+Coordinarsi con il Match Analyst su casi che coinvolgono minori
+
+Coordinarsi con un Direttore Sportivo su un dubbio di compliance
+
+
+Verificare la conformità di una nuova funzionalità prima del rilascio
+
+Consultare l'elenco delle funzionalità in fase di sviluppo
+
+Approvare una nuova funzionalità dal punto di vista privacy
+
+Richiedere modifiche a una funzionalità non conforme
+
+Consultare le priorità di compliance della piattaforma
+
+Predisporre un piano annuale delle attività privacy
+
+Consultare l'esito delle attività di compliance dell'anno precedente
+
+13.8 — Admin
+Gestione profili utente
+
+Consultare la scheda di ogni profilo utente
+
+Sospendere temporaneamente le attività di un profilo
+
+Selezionare la motivazione della sospensione dal menu previsto
+
+Notificare automaticamente l'utente della sospensione
+
+Ripristinare un profilo dopo un riesame favorevole
+
+Consultare il log delle azioni svolte su un profilo
+
+Verificare l'immutabilità del log di un'azione
+
+Aggiornare i dati tecnici di un profilo, su richiesta autorizzata
+
+Eliminare un profilo su richiesta esplicita dell'utente
+
+Consultare lo storico delle sospensioni gestite
+Gestione ruoli e permessi
+
+Assegnare un ruolo a un nuovo utente della piattaforma
+
+Revocare un ruolo precedentemente assegnato
+
+Consultare l'elenco dei permessi associati a ciascun ruolo
+
+Modificare i permessi di un ruolo esistente
+
+Creare un nuovo ruolo, se necessario
+
+Consultare l'elenco degli utenti con accesso amministrativo
+
+Verificare la conformità dei permessi assegnati al principio di minimizzazione
+
+Rimuovere un accesso amministrativo non più necessario
+
+Consultare lo storico delle modifiche ai permessi
+
+Approvare una richiesta di elevazione di permessi
+Sicurezza tecnica
+
+Monitorare i tentativi di accesso sospetti alla piattaforma
+
+Applicare un blocco temporaneo in caso di attività anomala
+
+Coordinarsi con il Privacy Officer su un incidente di sicurezza
+
+Aggiornare le configurazioni di sicurezza del sistema
+
+Consultare i log tecnici del sistema antifrode
+
+Verificare l'integrità dei dati dopo un'anomalia rilevata
+
+Applicare una patch di sicurezza, se necessario
+
+Consultare lo stato dei backup del sistema
+
+Testare una procedura di ripristino dati
+
+Documentare un intervento tecnico di sicurezza
+
+Gestione contenuti e community
+
+Consultare le segnalazioni di contenuti inappropriati
+
+Rimuovere un contenuto in violazione delle linee guida
+
+Sospendere un account per violazione ripetuta delle regole
+
+Consultare lo storico delle segnalazioni gestite
+
+Aggiornare le linee guida di comportamento della community
+
+Comunicare una decisione di moderazione all'utente coinvolto
+
+Consultare un ricorso presentato contro una decisione di moderazione
+
+Archiviare una decisione di moderazione conclusa
+
+Coordinarsi con un Ambassador su un contenuto segnalato
+
+Verificare la coerenza delle decisioni di moderazione nel tempo
+Supporto tecnico agli utenti
+
+Rispondere a una richiesta di assistenza tecnica
+
+Consultare lo stato di una richiesta di assistenza aperta
+
+Escalare una richiesta complessa al team tecnico
+
+Chiudere una richiesta di assistenza risolta
+
+Consultare le statistiche sulle richieste di assistenza ricevute
+
+Aggiornare le domande frequenti in base alle richieste ricevute
+
+Verificare la qualità di una risposta fornita da un collega
+
+Formare un nuovo membro del team di assistenza
+
+Consultare il tempo medio di risoluzione delle richieste
+
+Predisporre un report periodico sull'assistenza fornita
+Manutenzione della piattaforma
+
+Programmare un intervento di manutenzione tecnica
+
+Comunicare agli utenti un'interruzione programmata del servizio
+
+Verificare il corretto funzionamento dopo un aggiornamento
+
+Consultare i log di errore del sistema
+
+Segnalare un malfunzionamento ricorrente al team di sviluppo
+
+Testare una nuova funzionalità prima del rilascio
+
+Coordinarsi con gli sviluppatori su un bug segnalato
+
+Verificare la compatibilità di un aggiornamento con i dispositivi mobili
+
+Documentare un intervento di manutenzione concluso
+
+Consultare lo storico degli interventi di manutenzione
+Configurazione agenti e supervisori IA
+
+Consultare lo stato operativo degli Agenti IA della piattaforma
+
+
+Consultare lo stato operativo dei Supervisori IA
+
+Segnalare un malfunzionamento di un Agente IA
+
+Segnalare un'anomalia rilevata da un Supervisore IA
+
+Aggiornare la configurazione di un Agente IA, se autorizzato
+
+Consultare i log generati da un Agente IA
+
+Verificare la coerenza tra output di un Agente e relativo Supervisore
+
+Archiviare un report generato da un Supervisore IA
+
+Coordinarsi con il team tecnico su una modifica agli agenti
+
+Consultare le priorità di intervento sugli agenti segnalate dai Supervisori
+Gestione dati e archivi
+
+Consultare i tempi di conservazione applicati ai dati
+
+Eseguire un'esportazione dati su richiesta autorizzata
+
+Eseguire una cancellazione dati su richiesta autorizzata
+
+Verificare l'integrità di un archivio dati
+
+Archiviare un set di dati a fine stagione
+
+Consultare lo storico delle esportazioni effettuate
+
+Verificare la corretta applicazione delle policy di retention
+
+Coordinarsi con il Privacy Officer su una richiesta dati complessa
+
+Documentare un'operazione di gestione dati rilevante
+
+Consultare le statistiche di utilizzo dello storage
+Reportistica amministrativa
+
+Predisporre un report periodico sull'attività della piattaforma
+
+Consultare le statistiche di crescita degli utenti registrati
+
+Consultare le statistiche di utilizzo del Simulatore di Carriera
+
+Consultare le statistiche di utilizzo del Match Analyst
+
+Condividere un report con la direzione del progetto
+
+Archiviare un report amministrativo concluso
+
+Confrontare l'andamento della piattaforma tra due periodi
+
+Segnalare un trend rilevante alla direzione
+
+Predisporre un riepilogo per una revisione trimestrale
+
+Consultare lo storico dei report amministrativi
+Collaborazione trasversale
+
+Coordinarsi con il Privacy Officer sulle azioni relative ai profili
+
+Coordinarsi con un Direttore Sportivo su un problema tecnico
+
+Coordinarsi con un Match Analyst su uno strumento non funzionante
+
+
+Rispondere a una richiesta di un presidente di società
+
+Consultare le priorità operative stabilite dal team di progetto
+
+Partecipare a una revisione periodica delle funzionalità
+
+Segnalare una proposta di miglioramento della piattaforma
+
+Consultare il feedback raccolto da altri ruoli
+
+Coordinarsi con Elisee Graphic Studio su materiale interno, se applicabile
+
+Documentare una decisione amministrativa condivisa con il team
+
+13.9 — Ambassador
+Promozione della piattaforma
+
+Condividere contenuti ufficiali della piattaforma sui propri canali
+
+Presentare la piattaforma a club o famiglie del proprio territorio
+
+Partecipare a un evento di presentazione della piattaforma
+
+Proporre un'iniziativa di promozione territoriale
+
+Consultare il materiale promozionale disponibile
+
+Richiedere nuovo materiale promozionale personalizzato
+
+Segnalare un club potenzialmente interessato alla piattaforma
+
+Segnalare un giocatore la cui storia potrebbe essere raccontata
+
+Partecipare alla realizzazione di un contenuto di lancio
+
+Consultare i risultati della propria attività promozionale
+Collaborazione con club e community
+
+Collaborare con un club per un'iniziativa congiunta
+
+Partecipare a un incontro con dirigenti di un club
+
+Rispondere a domande di famiglie sulla piattaforma
+
+Partecipare a un sondaggio rivolto agli Ambassador
+
+Consultare le linee guida per le collaborazioni non retribuite
+
+Segnalare un feedback ricevuto dalla community
+
+Partecipare a un'iniziativa promossa da un altro Ambassador
+
+Consultare il regolamento della community della piattaforma
+
+Invitare un altro potenziale Ambassador a unirsi
+
+Coordinarsi con un Direttore Sportivo su un'iniziativa di scouting
+Contenuti e comunicazione
+
+Consultare le frasi-innesco suggerite per i contenuti di lancio
+
+Proporre una nuova frase-innesco basata su un caso reale
+
+Collaborare alla sceneggiatura di un contenuto video
+
+Richiedere supporto grafico a Elisee Graphic Studio, se disponibile
+
+Consultare le linee guida di tono e linguaggio della piattaforma
+
+Pubblicare un contenuto coerente con lo stile della piattaforma
+
+Rispondere ai commenti ricevuti su un contenuto pubblicato
+
+Consultare le statistiche di engagement di un proprio contenuto
+
+Archiviare un contenuto pubblicato per riferimento futuro
+
+Segnalare un contenuto esterno rilevante per la piattaforma
+
+Rapporti con la piattaforma
+
+Consultare il proprio profilo Ambassador
+
+Aggiornare la propria biografia pubblica
+
+Consultare lo storico delle proprie collaborazioni
+
+Richiedere un riconoscimento formale per un'iniziativa realizzata
+
+Segnalare un problema riscontrato in una collaborazione
+
+Consultare i termini dell'accordo di collaborazione non retribuita
+
+Richiedere chiarimenti su cosa la piattaforma può e non può offrire in Fase 1
+
+Consultare le prospettive future oltre la Fase 1 zero-revenue
+
+Comunicare la propria disponibilità per una nuova iniziativa
+
+Richiedere la cessazione del proprio ruolo di Ambassador
+Etica e rappresentanza
+
+Rappresentare la piattaforma in modo coerente con i suoi valori
+
+Evitare dichiarazioni non autorizzate a nome della piattaforma
+
+Segnalare un uso improprio del proprio ruolo da parte di terzi
+
+Consultare il codice etico applicabile agli Ambassador
+
+Chiedere approvazione prima di dichiarazioni pubbliche rilevanti
+
+Segnalare un conflitto di interesse potenziale
+
+Confermare l'assenza di compenso nella propria collaborazione, se richiesto
+
+Consultare le linee guida su contenuti riguardanti minori
+
+Evitare la condivisione di dati personali di terzi senza autorizzazione
+
+Richiedere supporto in caso di dubbio etico su un'iniziativa
+Supporto alla crescita organica
+
+Segnalare una storia autentica utile alla narrazione della piattaforma
+
+Collaborare alla raccolta di una testimonianza, previo consenso
+
+Consultare i risultati delle iniziative di crescita organica passate
+
+Proporre un nuovo canale di comunicazione da esplorare
+
+Partecipare a una sessione di brainstorming sui contenuti
+
+Consultare le metriche di crescita legate alla propria attività
+
+Segnalare un'opportunità di visibilità mediatica per la piattaforma
+
+Collaborare con foggiacalcio.zafo o altre pagine affini, se pertinente
+
+Consultare l'andamento generale della Fase 1 zero-revenue
+
+Proporre un obiettivo personale per il periodo successivo
+Formazione e aggiornamento
+
+Partecipare a una sessione informativa sulla piattaforma
+
+
+Consultare gli aggiornamenti principali del progetto Elisee Scout
+
+Approfondire il funzionamento del Simulatore di Carriera
+
+Approfondire il funzionamento del ruolo Match Analyst
+
+Consultare le novità normative rilevanti per il proprio ruolo pubblico
+
+Partecipare a un incontro di allineamento con altri Ambassador
+
+Consultare materiale di approfondimento sul dilettantismo italiano
+
+Aggiornarsi sulle linee guida di comunicazione della piattaforma
+
+Richiedere un confronto diretto con il team di progetto
+
+Consultare i feedback ricevuti sul proprio operato
+Community e networking
+
+Consultare l'elenco degli altri Ambassador attivi
+
+Partecipare a un evento di networking tra Ambassador
+
+Presentare un nuovo contatto utile alla piattaforma
+
+Consultare le esperienze condivise da altri Ambassador
+
+Proporre una collaborazione tra due Ambassador
+
+Segnalare un'esperienza positiva da condividere con la community
+
+Consultare le statistiche generali della community Ambassador
+
+Partecipare a un sondaggio interno tra Ambassador
+
+Richiedere un confronto con un Ambassador più esperto
+
+Offrire supporto a un nuovo Ambassador appena entrato
+Gestione del proprio account
+
+Aggiornare i propri dati di contatto
+
+Gestire le notifiche relative al proprio ruolo
+
+Consultare la cronologia dei propri accessi
+
+Aggiornare la password del proprio account
+
+Collegare i propri canali social al profilo Ambassador
+
+Scollegare un canale social precedentemente collegato
+
+Consultare il registro delle proprie attività sulla piattaforma
+
+Richiedere l'esportazione dei propri dati
+
+Verificare i permessi assegnati al proprio ruolo
+
+Richiedere assistenza per un problema tecnico del proprio account
+Supporto e assistenza
+
+Aprire una richiesta di assistenza dedicata agli Ambassador
+
+Consultare le domande frequenti dedicate al proprio ruolo
+
+Segnalare un malfunzionamento riscontrato
+
+
+Valutare la qualità dell'assistenza ricevuta
+
+Consultare lo stato di una richiesta di assistenza aperta
+
+Richiedere materiale informativo aggiuntivo
+
+Richiedere l'attivazione di un nuovo strumento di collaborazione
+
+Segnalare un suggerimento di miglioramento della piattaforma
+
+Richiedere assistenza per l'onboarding come nuovo Ambassador
+
+Contattare il team di progetto per un chiarimento generale
+
+13.10 — Allenatore
+Gestione della rosa
+
+Consultare l'elenco dei giocatori della propria squadra
+
+Aggiornare il ruolo assegnato a un giocatore
+
+Consultare la disponibilità dei giocatori per la prossima partita
+
+Segnalare un infortunio di un giocatore
+
+Consultare lo storico presenze/assenze agli allenamenti
+
+Comunicare una convocazione tramite la piattaforma
+
+Consultare i profili comportamentali resi visibili dai propri giocatori
+
+Richiedere un report Match Analyst su un proprio giocatore
+
+Confrontare due giocatori della propria rosa
+
+Archiviare le informazioni di fine stagione della rosa
+Pianificazione tattica
+
+Consultare il modulo utilizzato nell'ultima partita
+
+Pianificare il modulo per la prossima partita
+
+Consultare i report Match Analyst relativi alla squadra avversaria
+
+Preparare varianti tattiche in base ai dati disponibili
+
+Consultare le vulnerabilità individuate nella propria squadra
+
+Consultare le vulnerabilità individuate nella squadra avversaria
+
+Salvare uno schema tattico per riferimento futuro
+
+Confrontare due schemi tattici utilizzati in partite diverse
+
+Consultare la mappa di calore di un proprio giocatore
+
+Discutere un report con il Match Analyst della categoria
+Comunicazione con giocatori e famiglie
+
+Comunicare l'orario degli allenamenti
+
+Rispondere a una domanda di un giocatore
+
+Rispondere a una domanda di una famiglia
+
+Comunicare una variazione di programma
+
+Condividere un obiettivo stagionale con la squadra
+
+Fornire un feedback individuale a un giocatore
+
+Comunicare una decisione tecnica a un giocatore
+
+Segnalare un comportamento da valorizzare a una famiglia
+
+Segnalare una criticità comportamentale a una famiglia, con tatto
+
+Consultare lo storico delle comunicazioni inviate alla squadra
+
+Collaborazione con il club
+
+Coordinarsi con il Direttore Sportivo su un giocatore
+
+Segnalare un'esigenza di rosa al club
+
+Consultare le decisioni societarie che riguardano la squadra
+
+Richiedere supporto logistico per una trasferta
+
+Consultare il calendario partite aggiornato
+
+Comunicare la propria disponibilità per un colloquio con una famiglia
+
+Partecipare a una riunione tecnica con la dirigenza
+
+Consultare il budget assegnato alla propria squadra, se condiviso
+
+Segnalare un bisogno di formazione per lo staff tecnico
+
+Archiviare un resoconto di fine stagione per il club
+Sviluppo dei giovani
+
+Consultare il radar comportamentale di un giovane in crescita
+
+Impostare un obiettivo di sviluppo per un giovane giocatore
+
+Monitorare l'evoluzione di un giovane nel tempo
+
+Consultare i bivi affrontati da un giovane nel Simulatore di Carriera
+
+Discutere con la famiglia il percorso di crescita del giovane
+
+Segnalare un giovane meritevole di maggiore attenzione
+
+Confrontare lo sviluppo di due giovani della stessa categoria
+
+Consultare buone pratiche di sviluppo giovanile sulla piattaforma
+
+Richiedere una consulenza a un Direttore Sportivo su un giovane
+
+Archiviare un percorso di sviluppo concluso
+Formazione tecnica personale
+
+Consultare materiale formativo dedicato agli allenatori
+
+Aggiornarsi su nuove metodologie di analisi dati
+
+Partecipare a un confronto con altri allenatori della categoria
+
+Consultare casi studio di analisi tattica sulla piattaforma
+
+Richiedere un approfondimento su uno strumento del Match Analyst
+
+Consultare i feedback ricevuti sul proprio operato tecnico
+
+Aggiornarsi sulle linee guida etiche verso i minori
+
+Partecipare a un percorso di aggiornamento privacy/GDPR
+
+Consultare le novità della piattaforma rilevanti per il proprio ruolo
+
+Condividere una buona pratica con altri allenatori
+Consenso e privacy
+
+Verificare che il consenso di visibilità di un profilo sia attivo prima di usarlo
+
+
+Consultare la finalità dichiarata di un trattamento dati
+
+Contattare il Privacy Officer per un chiarimento
+
+Rispettare i limiti di visibilità impostati da un tutore
+
+Segnalare un dubbio di compliance riscontrato
+
+Consultare la Privacy Policy applicabile al proprio ruolo
+
+Astenersi dal condividere dati di un giocatore senza consenso
+
+Verificare la validità di un consenso prima di una comunicazione
+
+Segnalare la scadenza di un consenso attivo
+
+Consultare le responsabilità del proprio ruolo nel trattamento dati
+Statistiche e valutazione
+
+Consultare le statistiche aggregate della propria squadra
+
+Confrontare il rendimento della squadra tra due periodi
+
+Consultare la posizione in classifica aggiornata in tempo reale
+
+Esportare le statistiche della squadra per uso interno
+
+Richiedere un'analisi comparativa con un'altra squadra della categoria
+
+Consultare l'andamento individuale di un giocatore nel tempo
+
+Richiedere un riepilogo di fine stagione della squadra
+
+Condividere le statistiche di squadra con la dirigenza
+
+Archiviare le statistiche di fine stagione
+
+Consultare un'analisi di tendenza pluriennale della squadra
+Gestione del proprio account
+
+Aggiornare il proprio profilo tecnico
+
+Gestire le notifiche relative alla propria squadra
+
+Consultare la cronologia dei propri accessi
+
+Aggiornare la password del proprio account
+
+Attivare l'autenticazione a due fattori, se disponibile
+
+Consultare il registro delle proprie azioni sulla piattaforma
+
+Richiedere la disattivazione temporanea del proprio account
+
+Esportare i propri dati professionali
+
+Verificare i permessi assegnati al proprio ruolo
+
+Richiedere assistenza per un problema del proprio account
+Supporto e assistenza
+
+Aprire una richiesta di assistenza tecnica
+
+Consultare le domande frequenti dedicate agli allenatori
+
+Segnalare un malfunzionamento riscontrato
+
+
+Valutare la qualità dell'assistenza ricevuta
+
+Consultare lo stato di una richiesta di assistenza aperta
+
+Richiedere una demo delle funzionalità dedicate agli allenatori
+
+Richiedere l'attivazione di una nuova funzionalità
+
+Segnalare un suggerimento di miglioramento della piattaforma
+
+Richiedere assistenza per l'onboarding sulla piattaforma
+
+Contattare il supporto per un chiarimento operativo
+
+13.11 — Fisioterapista
+Gestione clinica del giocatore
+
+Consultare la scheda infortuni di un giocatore della propria società
+
+Registrare un nuovo infortunio segnalato da un giocatore
+
+Aggiornare lo stato di recupero di un infortunio in corso
+
+Consultare lo storico infortuni di un giocatore nel tempo
+
+Segnalare la fine di un percorso di recupero
+
+Annotare il tipo di trattamento applicato
+
+Registrare la durata stimata di assenza dal campo
+
+Consultare eventuali recidive di un infortunio pregresso
+
+Aggiornare il piano di recupero personalizzato
+
+Archiviare la documentazione clinica a fine percorso, nei limiti consentiti
+Comunicazione con lo staff tecnico
+
+Comunicare all'allenatore la disponibilità di un giocatore
+
+Segnalare un giocatore a rischio se schierato
+
+Aggiornare il Direttore Sportivo sui tempi di recupero previsti
+
+Rispondere a una richiesta di chiarimento dell'allenatore
+
+Comunicare una raccomandazione sul carico di lavoro settimanale
+
+Segnalare la necessità di una gestione differenziata in allenamento
+
+Partecipare a una riunione tecnica su un caso specifico
+
+Consultare il calendario partite per pianificare i recuperi
+
+Comunicare un via libera medico per il rientro in gruppo
+
+Archiviare le comunicazioni relative a un singolo caso
+Comunicazione con famiglie
+
+Comunicare a una famiglia lo stato di un infortunio del minore
+
+Rispondere a una domanda di un genitore sul percorso di recupero
+
+Fornire indicazioni post-trattamento in linguaggio semplice
+
+Segnalare la necessità di un consulto medico esterno
+
+Comunicare tempi di recupero aggiornati alla famiglia
+
+Raccogliere informazioni utili dalla famiglia su un episodio
+
+Rispondere a una richiesta di documentazione da parte della famiglia
+
+Comunicare eventuali limitazioni da rispettare fuori dal campo
+
+Coordinarsi con la famiglia su un consulto specialistico
+
+Archiviare le comunicazioni con la famiglia relative a un caso
+
+Consenso e privacy sanitaria
+
+Verificare la presenza di un consenso al trattamento dei dati sanitari
+
+Consultare la finalità dichiarata del trattamento dei dati sanitari
+
+Contattare il Privacy Officer per un chiarimento su un dato sanitario
+
+Astenersi dal condividere dati sanitari senza consenso attivo
+
+Verificare il consenso specifico richiesto per i dati di un minore
+
+Consultare i tempi di conservazione previsti per i dati sanitari
+
+Segnalare un dubbio di compliance riscontrato su un dato sanitario
+
+Richiedere formazione specifica su privacy e dati sanitari
+
+Verificare la validità di un consenso prima di condividere un referto
+
+Consultare le responsabilità del proprio ruolo nel trattamento dei dati sanitari
+Prevenzione infortuni
+
+Consultare lo storico infortuni aggregato della rosa
+
+Individuare pattern ricorrenti di infortunio in una categoria
+
+Proporre un programma di prevenzione personalizzato
+
+Segnalare un giocatore a rischio sulla base dello storico
+
+Consultare i dati minimi raccolti dal Match Analyst su un giocatore
+
+Collegare un episodio di gioco a un possibile rischio fisico
+
+Aggiornare le linee guida di prevenzione della società
+
+Condividere una buona pratica di prevenzione con altri fisioterapisti
+
+Consultare l'andamento infortuni tra due stagioni diverse
+
+Richiedere una consulenza esterna su un caso complesso
+Collaborazione con il Match Analyst
+
+Richiedere dati di carico di gara relativi a un giocatore
+
+Segnalare un episodio di gara collegabile a un infortunio
+
+Consultare la mappa di calore di un giocatore in fase di recupero
+
+Verificare la coerenza tra minutaggio e piano di recupero
+
+Suggerire un'attenzione specifica al Match Analyst su un giocatore
+
+Consultare un report Match Analyst prima di autorizzare il rientro
+
+Confrontare l'intensità di due partite consecutive per lo stesso giocatore
+
+Segnalare un affaticamento ricorrente rilevato nei dati di gara
+
+Coordinarsi sul carico di lavoro in vista di un impegno ravvicinato
+
+Archiviare le note condivise con il Match Analyst su un caso
+Gestione del proprio account
+
+Aggiornare il proprio profilo professionale
+
+
+Consultare la cronologia dei propri accessi
+
+Aggiornare la password del proprio account
+
+Attivare l'autenticazione a due fattori, se disponibile
+
+Consultare il registro delle proprie azioni sulla piattaforma
+
+Richiedere la disattivazione temporanea del proprio account
+
+Esportare i propri dati professionali
+
+Verificare i permessi assegnati al proprio ruolo
+
+Collegarsi a più club, se autorizzato
+
+Richiedere assistenza per un problema del proprio account
+Statistiche e reportistica
+
+Consultare le statistiche aggregate di infortuni della società
+
+Esportare un report periodico sullo stato della rosa
+
+Confrontare l'incidenza infortuni tra due categorie
+
+Richiedere un'analisi di tendenza pluriennale degli infortuni
+
+Condividere un report con la dirigenza del club
+
+Archiviare un report di fine stagione
+
+Consultare l'efficacia dei percorsi di recupero applicati
+
+Segnalare un trend rilevante al Direttore Sportivo
+
+Predisporre un riepilogo per una revisione trimestrale
+
+Consultare lo storico dei propri report
+Formazione e aggiornamento
+
+Consultare materiale formativo dedicato ai fisioterapisti sportivi
+
+Aggiornarsi su nuove metodologie di recupero
+
+Partecipare a un confronto con altri fisioterapisti della categoria
+
+Consultare casi studio disponibili sulla piattaforma
+
+Richiedere un approfondimento su uno strumento della piattaforma
+
+Consultare i feedback ricevuti sul proprio operato
+
+Aggiornarsi sulle linee guida etiche verso i minori
+
+Partecipare a un percorso di aggiornamento privacy/GDPR sanitario
+
+Consultare le novità della piattaforma rilevanti per il proprio ruolo
+
+Condividere una buona pratica con altri fisioterapisti
+Supporto e assistenza
+
+Aprire una richiesta di assistenza tecnica
+
+Consultare le domande frequenti dedicate ai fisioterapisti
+
+Segnalare un malfunzionamento riscontrato
+
+
+Valutare la qualità dell'assistenza ricevuta
+
+Consultare lo stato di una richiesta di assistenza aperta
+
+Richiedere una demo delle funzionalità dedicate al proprio ruolo
+
+Richiedere l'attivazione di una nuova funzionalità
+
+Segnalare un suggerimento di miglioramento della piattaforma
+
+Richiedere assistenza per l'onboarding sulla piattaforma
+
+Contattare il supporto per un chiarimento operativo
+
+13.12 — Procuratore Sportivo
+Identificazione precoce del talento
+
+Consultare i profili di giocatori emergenti visibili nella propria area
+
+Filtrare i giocatori per categoria, ruolo e fascia d'età
+
+Consultare il radar comportamentale di un giocatore visibile
+
+Richiedere un report Match Analyst su un giocatore osservato
+
+Salvare un giocatore tra i profili di interesse
+
+Consultare lo storico partite di un giocatore
+
+Segnalare un giocatore di rara qualità individuata precocemente
+
+Confrontare due giovani della stessa categoria e ruolo
+
+Consultare le mappe di calore disponibili su un giovane osservato
+
+Verificare l'aggiornamento dei dati di un profilo prima di una valutazione
+Gestione della relazione con il giocatore
+
+Avviare un contatto con un giocatore, previo consenso attivo
+
+Avviare un contatto con la famiglia di un giocatore minorenne, previa autorizzazione
+
+Registrare l'inizio di un mandato di rappresentanza
+
+Registrare la conclusione di un mandato di rappresentanza
+
+Consultare lo storico dei propri assistiti
+
+Aggiornare lo stato di un assistito (svincolato, in trattativa, tesserato)
+
+Rispondere a una richiesta di chiarimento di un assistito
+
+Comunicare un aggiornamento periodico a un proprio assistito
+
+Astenersi dal contattare un giocatore già rappresentato da altro procuratore
+
+Archiviare la documentazione di un rapporto concluso
+
+Mantenere la massima riservatezza sui dettagli di una trattativa in corso
+
+Registrare la natura del proprio mandato (Agente del giocatore, Intermediario, doppio mandato)
+
+Chiarire all'assistito che il ruolo del procuratore è creare opportunità, non garantire risultati
+Valorizzazione e logiche di mercato
+
+Consultare le statistiche aggregate utili a stimare il valore di un giocatore
+
+Confrontare il rendimento di un proprio assistito tra due stagioni
+
+Individuare la categoria/club più adatti a valorizzare un assistito
+
+Segnalare un'opportunità di trasferimento a un proprio assistito
+
+Consultare le esigenze di rosa comunicate da un club terzo
+
+Preparare un dossier di presentazione di un proprio assistito
+
+Aggiornare un dossier con dati più recenti
+
+Consultare l'andamento del proprio assistito rispetto a giocatori comparabili
+
+
+Valutare fattori extra-campo rilevanti per la visibilità di un assistito
+
+Archiviare un dossier di presentazione concluso
+
+Utilizzare un report Match Analyst come strumento di tutela pubblica di un assistito criticato
+
+Specializzarsi su una zona geografica specifica del dilettantismo, coerente con il proprio
+radicamento territoriale
+
+Valutare il valore complessivo di un assistito includendo rete di relazioni e narrazione, non solo
+dati tecnici
+Comunicazione con i club
+
+Contattare un club per proporre un proprio assistito
+
+Rispondere a una richiesta di informazioni da parte di un club
+
+Organizzare un incontro tramite la piattaforma
+
+Comunicare l'esito di una trattativa a un proprio assistito
+
+Aggiornare lo stato di una trattativa in corso
+
+Consultare lo storico delle comunicazioni inviate a un club
+
+Comunicare la disponibilità di un proprio assistito a cambiare categoria
+
+Richiedere un incontro con il Direttore Sportivo di un club
+
+Condividere un report Match Analyst con un club interessato
+
+Archiviare l'esito di una trattativa conclusa
+
+Valutare opportunità per un assistito su più campionati, senza limitarsi a un solo paese
+
+Adattare tempi e modalità di contatto alle consuetudini del club/mercato interlocutore
+Gestione della pressione e aspetti mentali
+
+Consultare il radar comportamentale di un proprio assistito
+
+Individuare segnali di difficoltà nella gestione della pressione
+
+Suggerire un percorso di supporto in coordinamento con la famiglia
+
+Consultare i bivi affrontati da un assistito nel Simulatore di Carriera
+
+Valutare la mentalità e la fame agonistica di un giovane osservato come fattore prioritario rispetto
+alla sola qualità tecnica
+
+Confrontare la gestione della pressione tra due propri assistiti
+
+Segnalare un miglioramento nella gestione della pressione nel tempo
+
+Coordinarsi con l'allenatore su un aspetto comportamentale rilevante
+
+Consultare un report Match Analyst per un episodio specifico di gara
+
+Discutere con l'assistito un episodio comportamentale rilevante
+
+Archiviare le osservazioni comportamentali raccolte nel tempo
+Compliance normativa e limiti del ruolo
+
+Consultare la normativa applicabile agli agenti sportivi in Italia
+
+Verificare i limiti di contatto previsti per i giocatori minorenni
+
+
+Consultare le regole FIGC rilevanti per il proprio ruolo
+
+Registrare un mandato in conformità alla normativa vigente
+
+Segnalare un dubbio di compliance riscontrato
+
+Consultare le responsabilità del proprio ruolo nel trattamento dati
+
+Richiedere formazione specifica sulla normativa degli agenti sportivi
+
+Astenersi da un contatto non conforme ai limiti previsti
+
+Consultare l'elenco aggiornato delle regole sul conflitto di interesse
+
+Segnalare un tentativo di aggiramento delle regole da parte di terzi
+Consenso e privacy
+
+Verificare che il consenso di visibilità del profilo sia attivo
+
+Consultare la finalità dichiarata di un trattamento dati
+
+Contattare il Privacy Officer per un chiarimento
+
+Rispettare i limiti di visibilità impostati da un tutore
+
+Segnalare la scadenza di un consenso attivo
+
+Consultare la Privacy Policy applicabile al proprio ruolo
+
+Astenersi dal condividere dati di un giocatore senza consenso attivo
+
+Verificare il consenso genitoriale prima di un contatto con un minore
+
+Richiedere chiarimenti su un caso dubbio al Privacy Officer
+
+Consultare le conseguenze di una violazione delle regole di consenso
+Collaborazione con Match Analyst e altri ruoli
+
+Richiedere un report Match Analyst su un proprio assistito
+
+Richiedere una mappa di calore relativa a un proprio assistito
+
+Coordinarsi con un osservatore/scout su un giocatore di interesse comune
+
+Coordinarsi con un Direttore Sportivo su una trattativa in corso
+
+Consultare il confronto tra due giocatori generato dal comparatore
+
+Segnalare un errore in un report ricevuto
+
+Fornire un feedback sulla qualità di un report ricevuto
+
+Richiedere un approfondimento tattico su un proprio assistito
+
+Coordinarsi con un fisioterapista su un caso di recupero rilevante
+
+Archiviare la collaborazione conclusa con un altro ruolo
+Gestione del proprio account
+
+Aggiornare il proprio profilo professionale
+
+Consultare la cronologia dei propri accessi
+
+Aggiornare la password del proprio account
+
+Attivare l'autenticazione a due fattori, se disponibile
+
+
+Consultare il registro delle proprie azioni sulla piattaforma
+
+Richiedere la disattivazione temporanea del proprio account
+
+Esportare i propri dati professionali
+
+Verificare i permessi assegnati al proprio ruolo
+
+Consultare l'elenco dei propri assistiti attivi
+
+Richiedere assistenza per un problema del proprio account
+Supporto e assistenza
+
+Aprire una richiesta di assistenza tecnica
+
+Consultare le domande frequenti dedicate ai procuratori sportivi
+
+Segnalare un malfunzionamento riscontrato
+
+Valutare la qualità dell'assistenza ricevuta
+
+Consultare lo stato di una richiesta di assistenza aperta
+
+Richiedere una demo delle funzionalità dedicate al proprio ruolo
+
+Richiedere l'attivazione di una nuova funzionalità
+
+Segnalare un suggerimento di miglioramento della piattaforma
+
+Richiedere assistenza per l'onboarding sulla piattaforma
+
+Contattare il supporto per un chiarimento operativo
+Documento di supporto. Sezione 12 aggiunta come elenco completo delle azioni del Match Analyst. Sezione
+13 aggiunta come elenco completo delle azioni per i dieci ruoli principali della piattaforma (1000 azioni totali).
+
+14. Agenti IA operativi per i 10 ruoli della Sezione 13
+Per ciascuno dei dieci ruoli, dieci Agenti IA operativi, uno per ciascuna delle dieci aree già definite in
+Sezione 13 per quel ruolo: ogni agente supporta l'esecuzione delle azioni previste nella propria area.
+
+14.1 — Agenti IA: Calciatore / Utente
+
+Agente Profilo e account — supporta ed esegue le azioni previste nell'area “Profilo e account”
+per il ruolo Calciatore / Utente
+
+Agente Simulatore di Carriera — supporta ed esegue le azioni previste nell'area “Simulatore di
+Carriera” per il ruolo Calciatore / Utente
+
+Agente Consenso e privacy — supporta ed esegue le azioni previste nell'area “Consenso e
+privacy” per il ruolo Calciatore / Utente
+
+Agente Visibilità e scouting — supporta ed esegue le azioni previste nell'area “Visibilità e
+scouting” per il ruolo Calciatore / Utente
+
+Agente Comunicazione con il club — supporta ed esegue le azioni previste nell'area
+“Comunicazione con il club” per il ruolo Calciatore / Utente
+
+Agente Community e Ambassador — supporta ed esegue le azioni previste nell'area
+“Community e Ambassador” per il ruolo Calciatore / Utente
+
+Agente Notifiche e impostazioni — supporta ed esegue le azioni previste nell'area “Notifiche e
+impostazioni” per il ruolo Calciatore / Utente
+
+Agente Supporto e assistenza — supporta ed esegue le azioni previste nell'area “Supporto e
+assistenza” per il ruolo Calciatore / Utente
+
+Agente Sviluppo personale — supporta ed esegue le azioni previste nell'area “Sviluppo
+personale” per il ruolo Calciatore / Utente
+
+Agente Sicurezza account — supporta ed esegue le azioni previste nell'area “Sicurezza
+account” per il ruolo Calciatore / Utente
+
+14.2 — Agenti IA: Famiglia / Tutore
+
+Agente Collegamento all'account minore — supporta ed esegue le azioni previste nell'area
+“Collegamento all'account minore” per il ruolo Famiglia / Tutore
+
+Agente Consenso e privacy del minore — supporta ed esegue le azioni previste nell'area
+“Consenso e privacy del minore” per il ruolo Famiglia / Tutore
+
+Agente Monitoraggio attività — supporta ed esegue le azioni previste nell'area “Monitoraggio
+attività” per il ruolo Famiglia / Tutore
+
+Agente Comunicazione con il club — supporta ed esegue le azioni previste nell'area
+“Comunicazione con il club” per il ruolo Famiglia / Tutore
+
+Agente Assistenza e supporto — supporta ed esegue le azioni previste nell'area “Assistenza e
+supporto” per il ruolo Famiglia / Tutore
+
+Agente Sicurezza dell'account minore — supporta ed esegue le azioni previste nell'area
+“Sicurezza dell'account minore” per il ruolo Famiglia / Tutore
+
+Agente Visibilità verso terzi — supporta ed esegue le azioni previste nell'area “Visibilità verso
+terzi” per il ruolo Famiglia / Tutore
+
+Agente Community e comunicazione generale — supporta ed esegue le azioni previste
+nell'area “Community e comunicazione generale” per il ruolo Famiglia / Tutore
+
+Agente Impostazioni account tutore — supporta ed esegue le azioni previste nell'area
+“Impostazioni account tutore” per il ruolo Famiglia / Tutore
+
+Agente Decisioni e responsabilità genitoriale — supporta ed esegue le azioni previste nell'area
+“Decisioni e responsabilità genitoriale” per il ruolo Famiglia / Tutore
+
+14.3 — Agenti IA: Club / Dirigente
+
+Agente Gestione profilo società — supporta ed esegue le azioni previste nell'area “Gestione
+profilo società” per il ruolo Club / Dirigente
+
+Agente Gestione rosa e giocatori — supporta ed esegue le azioni previste nell'area “Gestione
+rosa e giocatori” per il ruolo Club / Dirigente
+
+Agente Comunicazione con famiglie e giocatori — supporta ed esegue le azioni previste
+nell'area “Comunicazione con famiglie e giocatori” per il ruolo Club / Dirigente
+
+Agente Antifrode e sicurezza — supporta ed esegue le azioni previste nell'area “Antifrode e
+sicurezza” per il ruolo Club / Dirigente
+
+Agente Match Analyst e report — supporta ed esegue le azioni previste nell'area “Match Analyst
+e report” per il ruolo Club / Dirigente
+
+Agente Simulatore di Carriera e Ambassador — supporta ed esegue le azioni previste nell'area
+“Simulatore di Carriera e Ambassador” per il ruolo Club / Dirigente
+
+Agente Amministrazione interna — supporta ed esegue le azioni previste nell'area
+“Amministrazione interna” per il ruolo Club / Dirigente
+
+Agente Compliance e privacy — supporta ed esegue le azioni previste nell'area “Compliance e
+privacy” per il ruolo Club / Dirigente
+
+Agente Statistiche e analisi di club — supporta ed esegue le azioni previste nell'area
+“Statistiche e analisi di club” per il ruolo Club / Dirigente
+
+Agente Supporto e assistenza — supporta ed esegue le azioni previste nell'area “Supporto e
+assistenza” per il ruolo Club / Dirigente
+
+14.4 — Agenti IA: Direttore Sportivo
+
+Agente Scouting e valutazione — supporta ed esegue le azioni previste nell'area “Scouting e
+valutazione” per il ruolo Direttore Sportivo
+
+Agente Comunicazione con club e famiglie — supporta ed esegue le azioni previste nell'area
+“Comunicazione con club e famiglie” per il ruolo Direttore Sportivo
+
+Agente Match Analyst e dati — supporta ed esegue le azioni previste nell'area “Match Analyst e
+dati” per il ruolo Direttore Sportivo
+
+Agente Gestione rosa e pianificazione — supporta ed esegue le azioni previste nell'area
+“Gestione rosa e pianificazione” per il ruolo Direttore Sportivo
+
+Agente Compliance e consenso — supporta ed esegue le azioni previste nell'area “Compliance
+e consenso” per il ruolo Direttore Sportivo
+
+Agente Ambassador e community — supporta ed esegue le azioni previste nell'area
+“Ambassador e community” per il ruolo Direttore Sportivo
+
+Agente Amministrazione del proprio account — supporta ed esegue le azioni previste nell'area
+“Amministrazione del proprio account” per il ruolo Direttore Sportivo
+
+Agente Statistiche e reportistica — supporta ed esegue le azioni previste nell'area “Statistiche e
+reportistica” per il ruolo Direttore Sportivo
+
+Agente Etica e responsabilità professionale — supporta ed esegue le azioni previste nell'area
+“Etica e responsabilità professionale” per il ruolo Direttore Sportivo
+
+Agente Supporto e assistenza — supporta ed esegue le azioni previste nell'area “Supporto e
+assistenza” per il ruolo Direttore Sportivo
+
+14.5 — Agenti IA: Osservatore / Scout
+
+Agente Osservazione sul campo — supporta ed esegue le azioni previste nell'area
+“Osservazione sul campo” per il ruolo Osservatore / Scout
+
+Agente Consultazione profili e dati — supporta ed esegue le azioni previste nell'area
+“Consultazione profili e dati” per il ruolo Osservatore / Scout
+
+Agente Segnalazione e collaborazione — supporta ed esegue le azioni previste nell'area
+“Segnalazione e collaborazione” per il ruolo Osservatore / Scout
+
+Agente Consenso e limiti di accesso — supporta ed esegue le azioni previste nell'area
+“Consenso e limiti di accesso” per il ruolo Osservatore / Scout
+
+Agente Etica e comportamento professionale — supporta ed esegue le azioni previste
+nell'area “Etica e comportamento professionale” per il ruolo Osservatore / Scout
+
+Agente Organizzazione del proprio lavoro — supporta ed esegue le azioni previste nell'area
+“Organizzazione del proprio lavoro” per il ruolo Osservatore / Scout
+
+Agente Comunicazione con club e famiglie — supporta ed esegue le azioni previste nell'area
+“Comunicazione con club e famiglie” per il ruolo Osservatore / Scout
+
+Agente Ambassador e community — supporta ed esegue le azioni previste nell'area
+“Ambassador e community” per il ruolo Osservatore / Scout
+
+Agente Gestione del proprio account — supporta ed esegue le azioni previste nell'area
+“Gestione del proprio account” per il ruolo Osservatore / Scout
+
+Agente Supporto e assistenza — supporta ed esegue le azioni previste nell'area “Supporto e
+assistenza” per il ruolo Osservatore / Scout
+
+14.6 — Agenti IA: Presidente di società
+
+Agente Governance del club — supporta ed esegue le azioni previste nell'area “Governance del
+club” per il ruolo Presidente di società
+
+Agente Supervisione economico-organizzativa — supporta ed esegue le azioni previste
+nell'area “Supervisione economico-organizzativa” per il ruolo Presidente di società
+
+Agente Compliance e privacy — supporta ed esegue le azioni previste nell'area “Compliance e
+privacy” per il ruolo Presidente di società
+
+Agente Comunicazione istituzionale — supporta ed esegue le azioni previste nell'area
+“Comunicazione istituzionale” per il ruolo Presidente di società
+
+Agente Rapporti con Ambassador e community — supporta ed esegue le azioni previste
+nell'area “Rapporti con Ambassador e community” per il ruolo Presidente di società
+
+Agente Supervisione Match Analyst e scouting — supporta ed esegue le azioni previste
+nell'area “Supervisione Match Analyst e scouting” per il ruolo Presidente di società
+
+Agente Sicurezza e antifrode — supporta ed esegue le azioni previste nell'area “Sicurezza e
+antifrode” per il ruolo Presidente di società
+
+Agente Rappresentanza esterna — supporta ed esegue le azioni previste nell'area
+“Rappresentanza esterna” per il ruolo Presidente di società
+
+Agente Pianificazione strategica — supporta ed esegue le azioni previste nell'area
+“Pianificazione strategica” per il ruolo Presidente di società
+
+Agente Supporto e assistenza — supporta ed esegue le azioni previste nell'area “Supporto e
+assistenza” per il ruolo Presidente di società
+
+14.7 — Agenti IA: Privacy Officer
+
+Agente Gestione dei consensi — supporta ed esegue le azioni previste nell'area “Gestione dei
+consensi” per il ruolo Privacy Officer
+
+Agente Gestione delle segnalazioni antifrode — supporta ed esegue le azioni previste nell'area
+“Gestione delle segnalazioni antifrode” per il ruolo Privacy Officer
+
+Agente Sospensione e riesame profili — supporta ed esegue le azioni previste nell'area
+“Sospensione e riesame profili” per il ruolo Privacy Officer
+
+Agente Compliance normativa — supporta ed esegue le azioni previste nell'area “Compliance
+normativa” per il ruolo Privacy Officer
+
+Agente Tutela dei minori — supporta ed esegue le azioni previste nell'area “Tutela dei minori”
+per il ruolo Privacy Officer
+
+Agente Comunicazione e trasparenza — supporta ed esegue le azioni previste nell'area
+“Comunicazione e trasparenza” per il ruolo Privacy Officer
+
+Agente Audit e log — supporta ed esegue le azioni previste nell'area “Audit e log” per il ruolo
+Privacy Officer
+
+Agente Formazione e sensibilizzazione — supporta ed esegue le azioni previste nell'area
+“Formazione e sensibilizzazione” per il ruolo Privacy Officer
+
+Agente Gestione incidenti — supporta ed esegue le azioni previste nell'area “Gestione incidenti”
+per il ruolo Privacy Officer
+
+Agente Supervisione trasversale — supporta ed esegue le azioni previste nell'area
+“Supervisione trasversale” per il ruolo Privacy Officer
+
+14.8 — Agenti IA: Admin
+
+Agente Gestione profili utente — supporta ed esegue le azioni previste nell'area “Gestione
+profili utente” per il ruolo Admin
+
+Agente Gestione ruoli e permessi — supporta ed esegue le azioni previste nell'area “Gestione
+ruoli e permessi” per il ruolo Admin
+
+Agente Sicurezza tecnica — supporta ed esegue le azioni previste nell'area “Sicurezza tecnica”
+per il ruolo Admin
+
+Agente Gestione contenuti e community — supporta ed esegue le azioni previste nell'area
+“Gestione contenuti e community” per il ruolo Admin
+
+Agente Supporto tecnico agli utenti — supporta ed esegue le azioni previste nell'area
+“Supporto tecnico agli utenti” per il ruolo Admin
+
+Agente Manutenzione della piattaforma — supporta ed esegue le azioni previste nell'area
+“Manutenzione della piattaforma” per il ruolo Admin
+
+Agente Configurazione agenti e supervisori IA — supporta ed esegue le azioni previste
+nell'area “Configurazione agenti e supervisori IA” per il ruolo Admin
+
+Agente Gestione dati e archivi — supporta ed esegue le azioni previste nell'area “Gestione dati
+e archivi” per il ruolo Admin
+
+Agente Reportistica amministrativa — supporta ed esegue le azioni previste nell'area
+“Reportistica amministrativa” per il ruolo Admin
+
+Agente Collaborazione trasversale — supporta ed esegue le azioni previste nell'area
+“Collaborazione trasversale” per il ruolo Admin
+
+14.9 — Agenti IA: Ambassador
+
+Agente Promozione della piattaforma — supporta ed esegue le azioni previste nell'area
+“Promozione della piattaforma” per il ruolo Ambassador
+
+Agente Collaborazione con club e community — supporta ed esegue le azioni previste
+nell'area “Collaborazione con club e community” per il ruolo Ambassador
+
+Agente Contenuti e comunicazione — supporta ed esegue le azioni previste nell'area
+“Contenuti e comunicazione” per il ruolo Ambassador
+
+Agente Rapporti con la piattaforma — supporta ed esegue le azioni previste nell'area “Rapporti
+con la piattaforma” per il ruolo Ambassador
+
+Agente Etica e rappresentanza — supporta ed esegue le azioni previste nell'area “Etica e
+rappresentanza” per il ruolo Ambassador
+
+Agente Supporto alla crescita organica — supporta ed esegue le azioni previste nell'area
+“Supporto alla crescita organica” per il ruolo Ambassador
+
+Agente Formazione e aggiornamento — supporta ed esegue le azioni previste nell'area
+“Formazione e aggiornamento” per il ruolo Ambassador
+
+Agente Community e networking — supporta ed esegue le azioni previste nell'area “Community
+e networking” per il ruolo Ambassador
+
+Agente Gestione del proprio account — supporta ed esegue le azioni previste nell'area
+“Gestione del proprio account” per il ruolo Ambassador
+
+Agente Supporto e assistenza — supporta ed esegue le azioni previste nell'area “Supporto e
+assistenza” per il ruolo Ambassador
+
+14.10 — Agenti IA: Allenatore
+
+Agente Gestione della rosa — supporta ed esegue le azioni previste nell'area “Gestione della
+rosa” per il ruolo Allenatore
+
+Agente Pianificazione tattica — supporta ed esegue le azioni previste nell'area “Pianificazione
+tattica” per il ruolo Allenatore
+
+Agente Comunicazione con giocatori e famiglie — supporta ed esegue le azioni previste
+nell'area “Comunicazione con giocatori e famiglie” per il ruolo Allenatore
+
+Agente Collaborazione con il club — supporta ed esegue le azioni previste nell'area
+“Collaborazione con il club” per il ruolo Allenatore
+
+Agente Sviluppo dei giovani — supporta ed esegue le azioni previste nell'area “Sviluppo dei
+giovani” per il ruolo Allenatore
+
+Agente Formazione tecnica personale — supporta ed esegue le azioni previste nell'area
+“Formazione tecnica personale” per il ruolo Allenatore
+
+Agente Consenso e privacy — supporta ed esegue le azioni previste nell'area “Consenso e
+privacy” per il ruolo Allenatore
+
+Agente Statistiche e valutazione — supporta ed esegue le azioni previste nell'area “Statistiche e
+valutazione” per il ruolo Allenatore
+
+Agente Gestione del proprio account — supporta ed esegue le azioni previste nell'area
+“Gestione del proprio account” per il ruolo Allenatore
+
+Agente Supporto e assistenza — supporta ed esegue le azioni previste nell'area “Supporto e
+assistenza” per il ruolo Allenatore
+
+14.11 — Agenti IA: Fisioterapista
+
+Agente Gestione clinica del giocatore — supporta ed esegue le azioni previste nell'area
+“Gestione clinica del giocatore” per il ruolo Fisioterapista
+
+Agente Comunicazione con lo staff tecnico — supporta ed esegue le azioni previste nell'area
+“Comunicazione con lo staff tecnico” per il ruolo Fisioterapista
+
+Agente Comunicazione con famiglie — supporta ed esegue le azioni previste nell'area
+“Comunicazione con famiglie” per il ruolo Fisioterapista
+
+Agente Consenso e privacy sanitaria — supporta ed esegue le azioni previste nell'area
+“Consenso e privacy sanitaria” per il ruolo Fisioterapista
+
+Agente Prevenzione infortuni — supporta ed esegue le azioni previste nell'area “Prevenzione
+infortuni” per il ruolo Fisioterapista
+
+Agente Collaborazione con il Match Analyst — supporta ed esegue le azioni previste nell'area
+“Collaborazione con il Match Analyst” per il ruolo Fisioterapista
+
+Agente Gestione del proprio account — supporta ed esegue le azioni previste nell'area
+“Gestione del proprio account” per il ruolo Fisioterapista
+
+Agente Statistiche e reportistica — supporta ed esegue le azioni previste nell'area “Statistiche e
+reportistica” per il ruolo Fisioterapista
+
+Agente Formazione e aggiornamento — supporta ed esegue le azioni previste nell'area
+“Formazione e aggiornamento” per il ruolo Fisioterapista
+
+Agente Supporto e assistenza — supporta ed esegue le azioni previste nell'area “Supporto e
+assistenza” per il ruolo Fisioterapista
+
+14.12 — Agenti IA: Procuratore Sportivo
+
+Agente Identificazione precoce del talento — supporta ed esegue le azioni previste nell'area
+“Identificazione precoce del talento” per il ruolo Procuratore Sportivo
+
+Agente Gestione della relazione con il giocatore — supporta ed esegue le azioni previste
+nell'area “Gestione della relazione con il giocatore” per il ruolo Procuratore Sportivo
+
+Agente Valorizzazione e logiche di mercato — supporta ed esegue le azioni previste nell'area
+“Valorizzazione e logiche di mercato” per il ruolo Procuratore Sportivo
+
+Agente Comunicazione con i club — supporta ed esegue le azioni previste nell'area
+“Comunicazione con i club” per il ruolo Procuratore Sportivo
+
+Agente Gestione della pressione e aspetti mentali — supporta ed esegue le azioni previste
+nell'area “Gestione della pressione e aspetti mentali” per il ruolo Procuratore Sportivo
+
+Agente Compliance normativa e limiti del ruolo — supporta ed esegue le azioni previste
+nell'area “Compliance normativa e limiti del ruolo” per il ruolo Procuratore Sportivo
+
+Agente Consenso e privacy — supporta ed esegue le azioni previste nell'area “Consenso e
+privacy” per il ruolo Procuratore Sportivo
+
+Agente Collaborazione con Match Analyst e altri ruoli — supporta ed esegue le azioni previste
+nell'area “Collaborazione con Match Analyst e altri ruoli” per il ruolo Procuratore Sportivo
+
+Agente Gestione del proprio account — supporta ed esegue le azioni previste nell'area
+“Gestione del proprio account” per il ruolo Procuratore Sportivo
+
+Agente Supporto e assistenza — supporta ed esegue le azioni previste nell'area “Supporto e
+assistenza” per il ruolo Procuratore Sportivo
+
+15. Supervisori IA per i 10 ruoli della Sezione 13
+Per ciascuno dei dieci ruoli, trenta Supervisori IA, organizzati secondo lo stesso schema a sei cluster
+già utilizzato nelle Sezioni 10 e 11.5 (Qualità output, Compliance/Privacy, Performance/Tecnico,
+Contenuto/Narrativa, UX/Accessibilità, Sicurezza/Anti-abuso), applicato in questo caso all'insieme
+delle azioni del ruolo anziché a una singola meccanica.
+15.1 — Supervisori IA: Calciatore / Utente
+A. Qualità output: Supervisore Coerenza Calciatore / Utente · Supervisore Correttezza Calciatore / Utente ·
+Supervisore Duplicati Calciatore / Utente · Supervisore Qualità Testo Calciatore / Utente · Supervisore Verifica
+Esito Calciatore / Utente
+B. Compliance / Privacy: Supervisore Consenso Dati Calciatore / Utente · Supervisore Minori — Calciatore /
+Utente · Supervisore Retention Dati Calciatore / Utente · Supervisore Base Giuridica Calciatore / Utente ·
+Supervisore Log Compliance Calciatore / Utente
+C. Performance / Tecnico: Supervisore Latenza Generazione Calciatore / Utente · Supervisore Errori
+Runtime Calciatore / Utente · Supervisore Carico Agente Calciatore / Utente · Supervisore Fallback Calciatore
+/ Utente · Supervisore Sincronizzazione Dati Calciatore / Utente
+D. Contenuto / Narrativa: Supervisore Tono Narrativo Calciatore / Utente · Supervisore Linguaggio Non
+Tecnico Calciatore / Utente · Supervisore Contenuti Impropri Calciatore / Utente · Supervisore Coerenza
+Categoria Calciatore / Utente · Supervisore Ripetitività Testi Calciatore / Utente
+E. UX / Accessibilità: Supervisore Chiarezza UX Calciatore / Utente · Supervisore Accessibilità Colori/Testo
+Calciatore / Utente · Supervisore Comprensibilità Famiglie Calciatore / Utente · Supervisore Feedback Utente
+Calciatore / Utente · Supervisore Onboarding Calciatore / Utente
+F. Sicurezza / Anti-abuso: Supervisore Anti-manipolazione Calciatore / Utente · Supervisore Anomalie
+Statistiche Calciatore / Utente · Supervisore Coerenza Multi-sessione Calciatore / Utente · Supervisore
+Integrità Dati Calciatore / Utente · Supervisore Escalation Anomalie Calciatore / Utente
+15.2 — Supervisori IA: Famiglia / Tutore
+A. Qualità output: Supervisore Coerenza Famiglia / Tutore · Supervisore Correttezza Famiglia / Tutore ·
+Supervisore Duplicati Famiglia / Tutore · Supervisore Qualità Testo Famiglia / Tutore · Supervisore Verifica
+Esito Famiglia / Tutore
+B. Compliance / Privacy: Supervisore Consenso Dati Famiglia / Tutore · Supervisore Minori — Famiglia /
+Tutore · Supervisore Retention Dati Famiglia / Tutore · Supervisore Base Giuridica Famiglia / Tutore ·
+Supervisore Log Compliance Famiglia / Tutore
+C. Performance / Tecnico: Supervisore Latenza Generazione Famiglia / Tutore · Supervisore Errori Runtime
+Famiglia / Tutore · Supervisore Carico Agente Famiglia / Tutore · Supervisore Fallback Famiglia / Tutore ·
+Supervisore Sincronizzazione Dati Famiglia / Tutore
+D. Contenuto / Narrativa: Supervisore Tono Narrativo Famiglia / Tutore · Supervisore Linguaggio Non
+Tecnico Famiglia / Tutore · Supervisore Contenuti Impropri Famiglia / Tutore · Supervisore Coerenza
+Categoria Famiglia / Tutore · Supervisore Ripetitività Testi Famiglia / Tutore
+E. UX / Accessibilità: Supervisore Chiarezza UX Famiglia / Tutore · Supervisore Accessibilità Colori/Testo
+Famiglia / Tutore · Supervisore Comprensibilità Famiglie Famiglia / Tutore · Supervisore Feedback Utente
+Famiglia / Tutore · Supervisore Onboarding Famiglia / Tutore
+F. Sicurezza / Anti-abuso: Supervisore Anti-manipolazione Famiglia / Tutore · Supervisore Anomalie
+Statistiche Famiglia / Tutore · Supervisore Coerenza Multi-sessione Famiglia / Tutore · Supervisore Integrità
+Dati Famiglia / Tutore · Supervisore Escalation Anomalie Famiglia / Tutore
+
+15.3 — Supervisori IA: Club / Dirigente
+A. Qualità output: Supervisore Coerenza Club / Dirigente · Supervisore Correttezza Club / Dirigente ·
+Supervisore Duplicati Club / Dirigente · Supervisore Qualità Testo Club / Dirigente · Supervisore Verifica Esito
+Club / Dirigente
+B. Compliance / Privacy: Supervisore Consenso Dati Club / Dirigente · Supervisore Minori — Club / Dirigente
+· Supervisore Retention Dati Club / Dirigente · Supervisore Base Giuridica Club / Dirigente · Supervisore Log
+Compliance Club / Dirigente
+C. Performance / Tecnico: Supervisore Latenza Generazione Club / Dirigente · Supervisore Errori Runtime
+Club / Dirigente · Supervisore Carico Agente Club / Dirigente · Supervisore Fallback Club / Dirigente ·
+Supervisore Sincronizzazione Dati Club / Dirigente
+D. Contenuto / Narrativa: Supervisore Tono Narrativo Club / Dirigente · Supervisore Linguaggio Non Tecnico
+Club / Dirigente · Supervisore Contenuti Impropri Club / Dirigente · Supervisore Coerenza Categoria Club /
+Dirigente · Supervisore Ripetitività Testi Club / Dirigente
+E. UX / Accessibilità: Supervisore Chiarezza UX Club / Dirigente · Supervisore Accessibilità Colori/Testo
+Club / Dirigente · Supervisore Comprensibilità Famiglie Club / Dirigente · Supervisore Feedback Utente Club /
+Dirigente · Supervisore Onboarding Club / Dirigente
+F. Sicurezza / Anti-abuso: Supervisore Anti-manipolazione Club / Dirigente · Supervisore Anomalie
+Statistiche Club / Dirigente · Supervisore Coerenza Multi-sessione Club / Dirigente · Supervisore Integrità Dati
+Club / Dirigente · Supervisore Escalation Anomalie Club / Dirigente
+15.4 — Supervisori IA: Direttore Sportivo
+A. Qualità output: Supervisore Coerenza Direttore Sportivo · Supervisore Correttezza Direttore Sportivo ·
+Supervisore Duplicati Direttore Sportivo · Supervisore Qualità Testo Direttore Sportivo · Supervisore Verifica
+Esito Direttore Sportivo
+B. Compliance / Privacy: Supervisore Consenso Dati Direttore Sportivo · Supervisore Minori — Direttore
+Sportivo · Supervisore Retention Dati Direttore Sportivo · Supervisore Base Giuridica Direttore Sportivo ·
+Supervisore Log Compliance Direttore Sportivo
+C. Performance / Tecnico: Supervisore Latenza Generazione Direttore Sportivo · Supervisore Errori Runtime
+Direttore Sportivo · Supervisore Carico Agente Direttore Sportivo · Supervisore Fallback Direttore Sportivo ·
+Supervisore Sincronizzazione Dati Direttore Sportivo
+D. Contenuto / Narrativa: Supervisore Tono Narrativo Direttore Sportivo · Supervisore Linguaggio Non
+Tecnico Direttore Sportivo · Supervisore Contenuti Impropri Direttore Sportivo · Supervisore Coerenza
+Categoria Direttore Sportivo · Supervisore Ripetitività Testi Direttore Sportivo
+E. UX / Accessibilità: Supervisore Chiarezza UX Direttore Sportivo · Supervisore Accessibilità Colori/Testo
+Direttore Sportivo · Supervisore Comprensibilità Famiglie Direttore Sportivo · Supervisore Feedback Utente
+Direttore Sportivo · Supervisore Onboarding Direttore Sportivo
+F. Sicurezza / Anti-abuso: Supervisore Anti-manipolazione Direttore Sportivo · Supervisore Anomalie
+Statistiche Direttore Sportivo · Supervisore Coerenza Multi-sessione Direttore Sportivo · Supervisore Integrità
+Dati Direttore Sportivo · Supervisore Escalation Anomalie Direttore Sportivo
+15.5 — Supervisori IA: Osservatore / Scout
+A. Qualità output: Supervisore Coerenza Osservatore / Scout · Supervisore Correttezza Osservatore / Scout
+· Supervisore Duplicati Osservatore / Scout · Supervisore Qualità Testo Osservatore / Scout · Supervisore
+Verifica Esito Osservatore / Scout
+B. Compliance / Privacy: Supervisore Consenso Dati Osservatore / Scout · Supervisore Minori —
+Osservatore / Scout · Supervisore Retention Dati Osservatore / Scout · Supervisore Base Giuridica
+
+Osservatore / Scout · Supervisore Log Compliance Osservatore / Scout
+C. Performance / Tecnico: Supervisore Latenza Generazione Osservatore / Scout · Supervisore Errori
+Runtime Osservatore / Scout · Supervisore Carico Agente Osservatore / Scout · Supervisore Fallback
+Osservatore / Scout · Supervisore Sincronizzazione Dati Osservatore / Scout
+D. Contenuto / Narrativa: Supervisore Tono Narrativo Osservatore / Scout · Supervisore Linguaggio Non
+Tecnico Osservatore / Scout · Supervisore Contenuti Impropri Osservatore / Scout · Supervisore Coerenza
+Categoria Osservatore / Scout · Supervisore Ripetitività Testi Osservatore / Scout
+E. UX / Accessibilità: Supervisore Chiarezza UX Osservatore / Scout · Supervisore Accessibilità Colori/Testo
+Osservatore / Scout · Supervisore Comprensibilità Famiglie Osservatore / Scout · Supervisore Feedback
+Utente Osservatore / Scout · Supervisore Onboarding Osservatore / Scout
+F. Sicurezza / Anti-abuso: Supervisore Anti-manipolazione Osservatore / Scout · Supervisore Anomalie
+Statistiche Osservatore / Scout · Supervisore Coerenza Multi-sessione Osservatore / Scout · Supervisore
+Integrità Dati Osservatore / Scout · Supervisore Escalation Anomalie Osservatore / Scout
+15.6 — Supervisori IA: Presidente di società
+A. Qualità output: Supervisore Coerenza Presidente di società · Supervisore Correttezza Presidente di
+società · Supervisore Duplicati Presidente di società · Supervisore Qualità Testo Presidente di società ·
+Supervisore Verifica Esito Presidente di società
+B. Compliance / Privacy: Supervisore Consenso Dati Presidente di società · Supervisore Minori —
+Presidente di società · Supervisore Retention Dati Presidente di società · Supervisore Base Giuridica
+Presidente di società · Supervisore Log Compliance Presidente di società
+C. Performance / Tecnico: Supervisore Latenza Generazione Presidente di società · Supervisore Errori
+Runtime Presidente di società · Supervisore Carico Agente Presidente di società · Supervisore Fallback
+Presidente di società · Supervisore Sincronizzazione Dati Presidente di società
+D. Contenuto / Narrativa: Supervisore Tono Narrativo Presidente di società · Supervisore Linguaggio Non
+Tecnico Presidente di società · Supervisore Contenuti Impropri Presidente di società · Supervisore Coerenza
+Categoria Presidente di società · Supervisore Ripetitività Testi Presidente di società
+E. UX / Accessibilità: Supervisore Chiarezza UX Presidente di società · Supervisore Accessibilità
+Colori/Testo Presidente di società · Supervisore Comprensibilità Famiglie Presidente di società · Supervisore
+Feedback Utente Presidente di società · Supervisore Onboarding Presidente di società
+F. Sicurezza / Anti-abuso: Supervisore Anti-manipolazione Presidente di società · Supervisore Anomalie
+Statistiche Presidente di società · Supervisore Coerenza Multi-sessione Presidente di società · Supervisore
+Integrità Dati Presidente di società · Supervisore Escalation Anomalie Presidente di società
+15.7 — Supervisori IA: Privacy Officer
+A. Qualità output: Supervisore Coerenza Privacy Officer · Supervisore Correttezza Privacy Officer ·
+Supervisore Duplicati Privacy Officer · Supervisore Qualità Testo Privacy Officer · Supervisore Verifica Esito
+Privacy Officer
+B. Compliance / Privacy: Supervisore Consenso Dati Privacy Officer · Supervisore Minori — Privacy Officer ·
+Supervisore Retention Dati Privacy Officer · Supervisore Base Giuridica Privacy Officer · Supervisore Log
+Compliance Privacy Officer
+C. Performance / Tecnico: Supervisore Latenza Generazione Privacy Officer · Supervisore Errori Runtime
+Privacy Officer · Supervisore Carico Agente Privacy Officer · Supervisore Fallback Privacy Officer ·
+Supervisore Sincronizzazione Dati Privacy Officer
+D. Contenuto / Narrativa: Supervisore Tono Narrativo Privacy Officer · Supervisore Linguaggio Non Tecnico
+Privacy Officer · Supervisore Contenuti Impropri Privacy Officer · Supervisore Coerenza Categoria Privacy
+Officer · Supervisore Ripetitività Testi Privacy Officer
+
+E. UX / Accessibilità: Supervisore Chiarezza UX Privacy Officer · Supervisore Accessibilità Colori/Testo
+Privacy Officer · Supervisore Comprensibilità Famiglie Privacy Officer · Supervisore Feedback Utente Privacy
+Officer · Supervisore Onboarding Privacy Officer
+F. Sicurezza / Anti-abuso: Supervisore Anti-manipolazione Privacy Officer · Supervisore Anomalie Statistiche
+Privacy Officer · Supervisore Coerenza Multi-sessione Privacy Officer · Supervisore Integrità Dati Privacy
+Officer · Supervisore Escalation Anomalie Privacy Officer
+15.8 — Supervisori IA: Admin
+A. Qualità output: Supervisore Coerenza Admin · Supervisore Correttezza Admin · Supervisore Duplicati
+Admin · Supervisore Qualità Testo Admin · Supervisore Verifica Esito Admin
+B. Compliance / Privacy: Supervisore Consenso Dati Admin · Supervisore Minori — Admin · Supervisore
+Retention Dati Admin · Supervisore Base Giuridica Admin · Supervisore Log Compliance Admin
+C. Performance / Tecnico: Supervisore Latenza Generazione Admin · Supervisore Errori Runtime Admin ·
+Supervisore Carico Agente Admin · Supervisore Fallback Admin · Supervisore Sincronizzazione Dati Admin
+D. Contenuto / Narrativa: Supervisore Tono Narrativo Admin · Supervisore Linguaggio Non Tecnico Admin ·
+Supervisore Contenuti Impropri Admin · Supervisore Coerenza Categoria Admin · Supervisore Ripetitività
+Testi Admin
+E. UX / Accessibilità: Supervisore Chiarezza UX Admin · Supervisore Accessibilità Colori/Testo Admin ·
+Supervisore Comprensibilità Famiglie Admin · Supervisore Feedback Utente Admin · Supervisore Onboarding
+Admin
+F. Sicurezza / Anti-abuso: Supervisore Anti-manipolazione Admin · Supervisore Anomalie Statistiche Admin ·
+Supervisore Coerenza Multi-sessione Admin · Supervisore Integrità Dati Admin · Supervisore Escalation
+Anomalie Admin
+15.9 — Supervisori IA: Ambassador
+A. Qualità output: Supervisore Coerenza Ambassador · Supervisore Correttezza Ambassador · Supervisore
+Duplicati Ambassador · Supervisore Qualità Testo Ambassador · Supervisore Verifica Esito Ambassador
+B. Compliance / Privacy: Supervisore Consenso Dati Ambassador · Supervisore Minori — Ambassador ·
+Supervisore Retention Dati Ambassador · Supervisore Base Giuridica Ambassador · Supervisore Log
+Compliance Ambassador
+C. Performance / Tecnico: Supervisore Latenza Generazione Ambassador · Supervisore Errori Runtime
+Ambassador · Supervisore Carico Agente Ambassador · Supervisore Fallback Ambassador · Supervisore
+Sincronizzazione Dati Ambassador
+D. Contenuto / Narrativa: Supervisore Tono Narrativo Ambassador · Supervisore Linguaggio Non Tecnico
+Ambassador · Supervisore Contenuti Impropri Ambassador · Supervisore Coerenza Categoria Ambassador ·
+Supervisore Ripetitività Testi Ambassador
+E. UX / Accessibilità: Supervisore Chiarezza UX Ambassador · Supervisore Accessibilità Colori/Testo
+Ambassador · Supervisore Comprensibilità Famiglie Ambassador · Supervisore Feedback Utente Ambassador
+· Supervisore Onboarding Ambassador
+F. Sicurezza / Anti-abuso: Supervisore Anti-manipolazione Ambassador · Supervisore Anomalie Statistiche
+Ambassador · Supervisore Coerenza Multi-sessione Ambassador · Supervisore Integrità Dati Ambassador ·
+Supervisore Escalation Anomalie Ambassador
+15.10 — Supervisori IA: Allenatore
+A. Qualità output: Supervisore Coerenza Allenatore · Supervisore Correttezza Allenatore · Supervisore
+Duplicati Allenatore · Supervisore Qualità Testo Allenatore · Supervisore Verifica Esito Allenatore
+
+B. Compliance / Privacy: Supervisore Consenso Dati Allenatore · Supervisore Minori — Allenatore ·
+Supervisore Retention Dati Allenatore · Supervisore Base Giuridica Allenatore · Supervisore Log Compliance
+Allenatore
+C. Performance / Tecnico: Supervisore Latenza Generazione Allenatore · Supervisore Errori Runtime
+Allenatore · Supervisore Carico Agente Allenatore · Supervisore Fallback Allenatore · Supervisore
+Sincronizzazione Dati Allenatore
+D. Contenuto / Narrativa: Supervisore Tono Narrativo Allenatore · Supervisore Linguaggio Non Tecnico
+Allenatore · Supervisore Contenuti Impropri Allenatore · Supervisore Coerenza Categoria Allenatore ·
+Supervisore Ripetitività Testi Allenatore
+E. UX / Accessibilità: Supervisore Chiarezza UX Allenatore · Supervisore Accessibilità Colori/Testo
+Allenatore · Supervisore Comprensibilità Famiglie Allenatore · Supervisore Feedback Utente Allenatore ·
+Supervisore Onboarding Allenatore
+F. Sicurezza / Anti-abuso: Supervisore Anti-manipolazione Allenatore · Supervisore Anomalie Statistiche
+Allenatore · Supervisore Coerenza Multi-sessione Allenatore · Supervisore Integrità Dati Allenatore ·
+Supervisore Escalation Anomalie Allenatore
+15.11 — Supervisori IA: Fisioterapista
+A. Qualità output: Supervisore Coerenza Fisioterapista · Supervisore Correttezza Fisioterapista · Supervisore
+Duplicati Fisioterapista · Supervisore Qualità Testo Fisioterapista · Supervisore Verifica Esito Fisioterapista
+B. Compliance / Privacy: Supervisore Consenso Dati Fisioterapista · Supervisore Minori — Fisioterapista ·
+Supervisore Retention Dati Fisioterapista · Supervisore Base Giuridica Fisioterapista · Supervisore Log
+Compliance Fisioterapista
+C. Performance / Tecnico: Supervisore Latenza Generazione Fisioterapista · Supervisore Errori Runtime
+Fisioterapista · Supervisore Carico Agente Fisioterapista · Supervisore Fallback Fisioterapista · Supervisore
+Sincronizzazione Dati Fisioterapista
+D. Contenuto / Narrativa: Supervisore Tono Narrativo Fisioterapista · Supervisore Linguaggio Non Tecnico
+Fisioterapista · Supervisore Contenuti Impropri Fisioterapista · Supervisore Coerenza Categoria Fisioterapista
+· Supervisore Ripetitività Testi Fisioterapista
+E. UX / Accessibilità: Supervisore Chiarezza UX Fisioterapista · Supervisore Accessibilità Colori/Testo
+Fisioterapista · Supervisore Comprensibilità Famiglie Fisioterapista · Supervisore Feedback Utente
+Fisioterapista · Supervisore Onboarding Fisioterapista
+F. Sicurezza / Anti-abuso: Supervisore Anti-manipolazione Fisioterapista · Supervisore Anomalie Statistiche
+Fisioterapista · Supervisore Coerenza Multi-sessione Fisioterapista · Supervisore Integrità Dati Fisioterapista ·
+Supervisore Escalation Anomalie Fisioterapista
+15.12 — Supervisori IA: Procuratore Sportivo
+A. Qualità output: Supervisore Coerenza Procuratore Sportivo · Supervisore Correttezza Procuratore
+Sportivo · Supervisore Duplicati Procuratore Sportivo · Supervisore Qualità Testo Procuratore Sportivo ·
+Supervisore Verifica Esito Procuratore Sportivo
+B. Compliance / Privacy: Supervisore Consenso Dati Procuratore Sportivo · Supervisore Minori —
+Procuratore Sportivo · Supervisore Retention Dati Procuratore Sportivo · Supervisore Base Giuridica
+Procuratore Sportivo · Supervisore Log Compliance Procuratore Sportivo
+C. Performance / Tecnico: Supervisore Latenza Generazione Procuratore Sportivo · Supervisore Errori
+Runtime Procuratore Sportivo · Supervisore Carico Agente Procuratore Sportivo · Supervisore Fallback
+Procuratore Sportivo · Supervisore Sincronizzazione Dati Procuratore Sportivo
+D. Contenuto / Narrativa: Supervisore Tono Narrativo Procuratore Sportivo · Supervisore Linguaggio Non
+Tecnico Procuratore Sportivo · Supervisore Contenuti Impropri Procuratore Sportivo · Supervisore Coerenza
+
+Categoria Procuratore Sportivo · Supervisore Ripetitività Testi Procuratore Sportivo
+E. UX / Accessibilità: Supervisore Chiarezza UX Procuratore Sportivo · Supervisore Accessibilità
+Colori/Testo Procuratore Sportivo · Supervisore Comprensibilità Famiglie Procuratore Sportivo · Supervisore
+Feedback Utente Procuratore Sportivo · Supervisore Onboarding Procuratore Sportivo
+F. Sicurezza / Anti-abuso: Supervisore Anti-manipolazione Procuratore Sportivo · Supervisore Anomalie
+Statistiche Procuratore Sportivo · Supervisore Coerenza Multi-sessione Procuratore Sportivo · Supervisore
+Integrità Dati Procuratore Sportivo · Supervisore Escalation Anomalie Procuratore Sportivo
+Documento di supporto. Sezione 14 aggiunta come elenco dei 100 Agenti IA operativi (10 per ciascuno dei
+10 ruoli). Sezione 15 aggiunta come elenco dei 300 Supervisori IA (30 per ciascuno dei 10 ruoli), a
+completamento della struttura di agenti e supervisione definita nelle sezioni precedenti.
+
+16. Specifica di automazione trasversale — Agenti e Supervisori IA
+Requisito trasversale applicabile a tutti gli Agenti IA e a tutti i Supervisori IA del progetto Elisee
+Scout, non solo a quelli elencati nel presente documento (Sezioni 9, 10, 11.4, 11.5, 14, 15), ma a
+qualunque Agente IA e Supervisore IA esistente o futuro nell'intero progetto: ciascuno deve operare
+in autonomia operativa entro il perimetro del proprio ruolo, senza richiedere intervento manuale per
+l'esecuzione ordinaria dei propri compiti, nel rispetto dei limiti di consenso e privacy definiti nelle
+Sezioni 4 e 6.
+Ambito di applicazione: questa sezione è una specifica di governance valida per l'intero progetto Elisee
+Scout, non un elenco chiuso. Ogni nuovo Agente IA o Supervisore IA introdotto in futuro, in qualunque
+documento o parte del progetto, eredita automaticamente i requisiti descritti in 16.1 e 16.3, e resta soggetto
+ai limiti descritti in 16.2, senza bisogno di essere ricopiato qui.
+16.1 Requisiti minimi di autonomia per ogni agente
+
+Esecuzione end-to-end del proprio compito — l'agente porta a termine l'azione di propria
+competenza senza passaggi manuali intermedi, salvo i casi in cui il compito stesso preveda una
+conferma umana esplicita (es. consenso di un minore o del tutore).
+
+Gestione autonoma degli errori ricorrenti — l'agente riconosce gli errori più comuni relativi al
+proprio compito e applica una correzione o un nuovo tentativo automatico, prima di segnalare
+l'anomalia a un Supervisore IA.
+
+Aggiornamento continuo sui dati disponibili — l'agente utilizza sempre i dati più recenti
+disponibili sulla piattaforma per il proprio compito, senza richiedere un aggiornamento manuale
+dei dati di partenza.
+
+Comunicazione automatica dell'esito — l'agente notifica in autonomia l'esito della propria
+azione al ruolo interessato (utente, club, Privacy Officer, ecc.), secondo i canali già previsti nelle
+sezioni precedenti.
+
+Rispetto automatico dei limiti di consenso — l'agente verifica in autonomia, prima di ogni
+azione che coinvolga dati personali, la presenza di un consenso valido e attivo, astenendosi
+dall'agire in sua assenza.
+
+Escalation automatica verso i Supervisori IA — quando un'azione richiede una verifica che
+eccede il proprio perimetro (es. anomalia, contenuto dubbio, dato incoerente), l'agente inoltra
+automaticamente il caso al Supervisore IA del cluster competente, senza attendere una richiesta
+esterna.
+
+Apprendimento dai casi gestiti — l'agente aggiorna il proprio comportamento sulla base
+dell'esito dei casi già gestiti e del feedback ricevuto dai Supervisori IA, entro i limiti stabiliti dal
+proprio ambito di competenza.
+16.2 Requisiti minimi di autonomia per ogni Supervisore IA
+
+Verifica continua senza richiesta esplicita — il supervisore controlla in autonomia l'operato
+degli agenti di propria competenza secondo un ciclo regolare, senza attendere una segnalazione
+manuale per avviare la verifica.
+
+Rilevamento automatico delle anomalie — il supervisore riconosce da solo gli scostamenti
+rispetto ai parametri attesi del proprio cluster (qualità, compliance, performance, contenuto, UX,
+sicurezza) e li segnala senza intervento umano.
+
+
+Blocco automatico in caso di violazione grave — quando rileva una violazione grave (es.
+mancanza di consenso, dato di un minore esposto senza autorizzazione), il supervisore può
+sospendere in autonomia l'azione dell'agente coinvolto, in attesa di verifica umana.
+
+Escalation automatica ai livelli superiori — il supervisore inoltra automaticamente al Privacy
+Officer o all'Admin competente i casi che eccedono la propria capacità di risoluzione autonoma.
+
+Reportistica periodica automatica — il supervisore genera in autonomia report periodici sullo
+stato degli agenti supervisionati, senza che sia necessaria una richiesta manuale per ogni report.
+
+Aggiornamento dei propri criteri di verifica — il supervisore affina nel tempo i propri criteri di
+controllo sulla base dei casi gestiti, entro i limiti stabiliti dal proprio cluster di appartenenza.
+16.3 Limiti dell'autonomia (invariati rispetto alle sezioni precedenti)
+L'autonomia operativa descritta in 16.1 e 16.2 non modifica i limiti già stabiliti nel documento: nessun
+agente e nessun supervisore, per quanto autonomi, possono da soli attivare un consenso per conto
+dell'utente, sospendere definitivamente un profilo senza il passaggio previsto dal Privacy Officer
+(Sezione 2-3), rendere visibile un profilo comportamentale a terzi in assenza di consenso attivo
+(Sezione 6.4-6.5), o sostituirsi a una decisione che il documento riserva esplicitamente a un ruolo
+umano. L'automazione riguarda l'esecuzione e la verifica operativa, non l'eliminazione dei controlli e
+dei consensi già definiti.
+Nota: questa sezione è una specifica di governance trasversale e vale per l'intero progetto Elisee Scout —
+copre quindi anche eventuali Agenti IA e Supervisori IA descritti in altri documenti o sviluppati
+successivamente, non solo quelli elencati nelle Sezioni 9, 10, 11.4, 11.5, 14 e 15 del presente PDF.
+
+17. Educazione delle famiglie e prevenzione truffe nello scouting
+giovanile
+Contenuto informativo, non normativo, da rendere disponibile alle famiglie sulla piattaforma, con lo
+scopo di dare aspettative realistiche sul percorso calcistico giovanile e aiutare a riconoscere
+proposte poco serie o potenzialmente fraudolente. Coerente con il principio di linguaggio semplice
+già adottato altrove nel documento.
+17.1 Aspettative realistiche sul percorso professionistico
+Solo una minima percentuale dei ragazzi che iniziano un percorso calcistico giovanile arriva al
+professionismo: la grande maggioranza costruisce comunque un buon percorso da dilettante o si
+indirizza verso altri ambiti. La piattaforma dovrebbe comunicare con chiarezza che il valore del
+percorso non coincide solo con l'eventuale approdo al professionismo, incoraggiando famiglie e
+ragazzi a non concentrarsi esclusivamente su questo esito.
+17.2 Priorità corretta: crescita del ragazzo prima dell'aspetto economico
+
+La crescita personale e sportiva del ragazzo (ambiente adatto, minuti di gioco, serenità) viene
+prima di qualunque vantaggio economico legato a un trasferimento
+
+Un trasferimento motivato principalmente da ragioni economiche, senza considerare il contesto di
+crescita, va segnalato come scelta rischiosa per lo sviluppo del ragazzo
+
+La continuità degli studi va sempre incoraggiata parallelamente al percorso sportivo
+
+Il talento tecnico da solo non basta: contesto, visibilità e occasioni contano quanto la qualità
+individuale
+
+Il contributo del procuratore va inquadrato correttamente: la qualità oggettiva del calciatore resta il
+fattore predominante, l'intermediazione può accompagnare ma non sostituire il merito sportivo
+17.3 Segnali da riconoscere per evitare proposte poco serie
+
+Richieste economiche sproporzionate — chi propone al ragazzo o alla famiglia costi elevati in
+cambio di garanzie di successo va guardato con sospetto: nel settore giovanile serio i costi si
+limitano di norma a rimborsi ed eventuali commissioni su trasferimenti effettivi
+
+Promesse di risultato certo — nessun operatore serio può garantire che un percorso giovanile
+porti al professionismo: chi lo promette con certezza sta probabilmente esagerando o ingannando
+la famiglia
+
+Assenza di trasparenza sul ruolo ricoperto — un procuratore o intermediario serio chiarisce fin
+da subito la natura del proprio mandato (Sezione 13.12) e non nasconde per chi sta
+effettivamente lavorando
+
+Pressione a decidere in fretta — la scelta finale spetta sempre al giocatore o alla famiglia: chi
+esercita pressione per una decisione immediata non sta agendo nell'interesse del ragazzo
+
+Richiesta di pagamento anticipato per provini o inserimenti — un pattern di truffa ricorrente
+consiste nel richiedere alle famiglie somme (tipicamente alcune centinaia di euro) in cambio della
+promessa di un provino o di un inserimento in un club: un operatore serio non chiede pagamenti di
+questo tipo, e non fa firmare alcun accordo formale al ragazzo finché non è lui stesso, o la
+famiglia, a chiederlo esplicitamente, salvo gli obblighi di legge previsti per il professionismo
+
+17.4 Cosa contraddistingue un buon rapporto procuratore-giocatore
+Un rapporto di rappresentanza sano si basa su relazione diretta e trasparente, difesa dell'interesse
+del giocatore anche quando questo comporta scelte scomode verso i club, e competenza costruita
+nel tempo. La piattaforma può utilizzare questi criteri come riferimento nella Sezione 13.12 e nella
+comunicazione informativa verso le famiglie, senza esprimere giudizi su singoli operatori del settore.
+Nota: questa sezione è pensata come materiale informativo per famiglie e giovani utenti, in linguaggio
+semplice, e va tenuta distinta dal contenuto tecnico-normativo del documento GDPR/Privacy (Sezioni 1-4).
+

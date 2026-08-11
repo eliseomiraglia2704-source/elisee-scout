@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 50" width="160" height="50">
+  <rect width="160" height="50" rx="8" fill="#002D5A"/>
+  <!-- Intesa Sanpaolo emblem -->
+  <rect x="8" y="8" width="34" height="34" rx="4" fill="#008050"/>
+  <path d="M15 32V18h3.5v11H29v3H15zm7.5-6h7v-3h-7v3zm7.5-8V32h3.5V18H30z" fill="#FFFFFF"/>
+  <circle cx="25" cy="22" r="3" fill="#E65100"/>
+  <!-- Text -->
+  <text x="48" y="27" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="800" font-size="14" fill="#FFFFFF">INTESA</text>
+  <text x="105" y="27" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="14" fill="#38BDF8">ID</text>
+  <text x="48" y="39" font-family="Arial, sans-serif" font-weight="500" font-size="8" fill="#94A3B8" letter-spacing="0.5">SANPAOLO</text>
+</svg>

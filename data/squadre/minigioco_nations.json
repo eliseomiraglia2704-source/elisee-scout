@@ -1,0 +1,170 @@
+[
+  {
+    "c": "IT",
+    "n": "Italia",
+    "o": "immagini/nazioni-loghi/it.png",
+    "ok": true
+  },
+  {
+    "c": "AR",
+    "n": "Argentina",
+    "o": "immagini/nazioni-loghi/ar.png",
+    "ok": true
+  },
+  {
+    "c": "BR",
+    "n": "Brasile",
+    "o": "immagini/nazioni-loghi/br.png",
+    "ok": true
+  },
+  {
+    "c": "FR",
+    "n": "Francia",
+    "o": "immagini/nazioni-loghi/fr.png",
+    "ok": true
+  },
+  {
+    "c": "DE",
+    "n": "Germania",
+    "o": "immagini/nazioni-loghi/de.png",
+    "ok": true
+  },
+  {
+    "c": "ES",
+    "n": "Spagna",
+    "o": "immagini/nazioni-loghi/es.png",
+    "ok": true
+  },
+  {
+    "c": "PT",
+    "n": "Portogallo",
+    "o": "immagini/nazioni-loghi/pt.png",
+    "ok": true
+  },
+  {
+    "c": "EN",
+    "n": "Inghilterra",
+    "o": "immagini/nazioni-loghi/en.png",
+    "ok": true
+  },
+  {
+    "c": "NL",
+    "n": "Paesi Bassi",
+    "o": "immagini/nazioni-loghi/nl.png",
+    "ok": true
+  },
+  {
+    "c": "BE",
+    "n": "Belgio",
+    "o": "immagini/nazioni-loghi/be.png",
+    "ok": true
+  },
+  {
+    "c": "HR",
+    "n": "Croazia",
+    "o": "immagini/nazioni-loghi/hr.png",
+    "ok": true
+  },
+  {
+    "c": "PL",
+    "n": "Polonia",
+    "o": "immagini/nazioni-loghi/pl.png",
+    "ok": true
+  },
+  {
+    "c": "RS",
+    "n": "Serbia",
+    "o": "immagini/nazioni-loghi/rs.png",
+    "ok": true
+  },
+  {
+    "c": "CH",
+    "n": "Svizzera",
+    "o": "immagini/nazioni-loghi/ch.png",
+    "ok": true
+  },
+  {
+    "c": "AT",
+    "n": "Austria",
+    "o": "immagini/nazioni-loghi/at.png",
+    "ok": true
+  },
+  {
+    "c": "RO",
+    "n": "Romania",
+    "o": "immagini/nazioni-loghi/ro.png",
+    "ok": true
+  },
+  {
+    "c": "AL",
+    "n": "Albania",
+    "o": "immagini/nazioni-loghi/al.png",
+    "ok": true
+  },
+  {
+    "c": "NG",
+    "n": "Nigeria",
+    "o": "immagini/nazioni-loghi/ng.png",
+    "ok": true
+  },
+  {
+    "c": "SN",
+    "n": "Senegal",
+    "o": "immagini/nazioni-loghi/sn.png",
+    "ok": true
+  },
+  {
+    "c": "MA",
+    "n": "Marocco",
+    "o": "immagini/nazioni-loghi/ma.png",
+    "ok": true
+  },
+  {
+    "c": "US",
+    "n": "Stati Uniti",
+    "o": "immagini/nazioni-loghi/us.png",
+    "ok": true
+  },
+  {
+    "c": "MX",
+    "n": "Messico",
+    "o": "immagini/nazioni-loghi/mx.png",
+    "ok": true
+  },
+  {
+    "c": "UY",
+    "n": "Uruguay",
+    "o": "immagini/nazioni-loghi/uy.png",
+    "ok": true
+  },
+  {
+    "c": "CL",
+    "n": "Cile",
+    "o": "immagini/nazioni-loghi/cl.png",
+    "ok": true
+  },
+  {
+    "c": "CO",
+    "n": "Colombia",
+    "o": "immagini/nazioni-loghi/co.png",
+    "ok": true
+  },
+  {
+    "c": "JP",
+    "n": "Giappone",
+    "o": "immagini/nazioni-loghi/jp.png",
+    "ok": true
+  },
+  {
+    "c": "KR",
+    "n": "Corea del Sud",
+    "o": "immagini/nazioni-loghi/kr.png",
+    "ok": true
+  },
+  {
+    "c": "TR",
+    "n": "Turchia",
+    "o": "immagini/nazioni-loghi/tr.png",
+    "ok": true
+  }
+]

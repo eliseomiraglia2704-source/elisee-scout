@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenti Campionati Tuttocampo · ELISEE SCOUT</title>
+  <meta name="description" content="Flotta pubblica ELISEE SCOUT: 2010 agenti IA — 10 per ogni girone di ogni campionato (es. Serie D 9 gironi × 10 = 90). Aggiornano organici, calendari, classifiche e statistiche da Tuttocampo.">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <link rel="icon" type="image/png" href="immagini/logo/favicon.png?v=20260731_LOGO_CLEAN">
+  <link rel="stylesheet" href="style.css?v=20260731_FOCUS_NAZIONALE">
+  <style>
+    body.campionati-agents-page {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(56,189,248,0.12), transparent 55%),
+                  radial-gradient(900px 500px at 90% 0%, rgba(34,197,94,0.10), transparent 50%),
+                  #020617;
+      color: #e2e8f0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+    .ca-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid rgba(148,163,184,0.18);
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      background: rgba(2,6,23,0.82);
+      z-index: 20;
+    }
+    .ca-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+    .ca-brand img { width: 36px; height: 36px; border-radius: 8px; }
+    .ca-brand span span { color: #38bdf8; }
+    .ca-nav { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .ca-nav a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+    .ca-nav a:hover { color: #fff; border-color: rgba(56,189,248,0.35); background: rgba(56,189,248,0.08); }
+    .ca-main { max-width: 1180px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+    #campionati-agents-public .ca-hero {
+      margin-bottom: 1.75rem;
+      padding: 1.5rem 1.4rem;
+      border-radius: 18px;
+      border: 1px solid rgba(56,189,248,0.22);
+      background: linear-gradient(145deg, rgba(15,23,42,0.95), rgba(2,6,23,0.9));
+    }
+    #campionati-agents-public .ca-kicker {
+      margin: 0 0 0.4rem;
+      color: #38bdf8;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    #campionati-agents-public h1 {
+      margin: 0 0 0.65rem;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    #campionati-agents-public .ca-lead {
+      margin: 0 0 1.25rem;
+      color: #94a3b8;
+      line-height: 1.55;
+      max-width: 70ch;
+    }
+    #campionati-agents-public .ca-lead a { color: #38bdf8; }
+    #campionati-agents-public .ca-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.75rem;
+    }
+    #campionati-agents-public .ca-stats > div {
+      padding: 0.85rem 0.9rem;
+      border-radius: 12px;
+      background: rgba(15,23,42,0.85);
+      border: 1px solid rgba(148,163,184,0.15);
+    }
+    #campionati-agents-public .ca-stats strong {
+      display: block;
+      font-size: 1.45rem;
+      color: #fff;
+      font-weight: 900;
+    }
+    #campionati-agents-public .ca-stats span {
+      color: #94a3b8;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    #campionati-agents-public .ca-family { margin-bottom: 1.5rem; }
+    #campionati-agents-public .ca-family-title {
+      margin: 0 0 0.75rem;
+      color: #e2e8f0;
+      font-size: 1.05rem;
+    }
+    #campionati-agents-public .ca-family-title small {
+      color: #64748b;
+      font-weight: 600;
+      font-size: 0.82rem;
+    }
+    #campionati-agents-public .ca-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    #campionati-agents-public .ca-card {
+      padding: 1rem 1.05rem;
+      border-radius: 14px;
+      border: 1px solid rgba(148,163,184,0.16);
+      background: rgba(15,23,42,0.75);
+    }
+    #campionati-agents-public .ca-card h3 {
+      margin: 0 0 0.5rem;
+      color: #fff;
+      font-size: 1.05rem;
+    }
+    #campionati-agents-public .ca-metric {
+      margin: 0 0 0.35rem;
+      color: #e2e8f0;
+    }
+    #campionati-agents-public .ca-metric strong { color: #22c55e; font-size: 1.25rem; }
+    #campionati-agents-public .ca-sub {
+      margin: 0.2rem 0;
+      color: #94a3b8;
+      font-size: 0.82rem;
+      line-height: 1.4;
+    }
+    #campionati-agents-public .ca-panel {
+      margin-bottom: 1.5rem;
+      padding: 1.1rem 1.15rem;
+      border-radius: 16px;
+      border: 1px solid rgba(148,163,184,0.14);
+      background: rgba(15,23,42,0.65);
+    }
+    #campionati-agents-public .ca-panel h2 {
+      margin: 0 0 0.85rem;
+      color: #fff;
+      font-size: 1.15rem;
+    }
+    #campionati-agents-public .ca-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      max-height: 360px;
+      overflow: auto;
+    }
+    #campionati-agents-public .ca-feed-row {
+      display: grid;
+      grid-template-columns: 70px 120px 130px 1fr 70px;
+      gap: 0.5rem;
+      align-items: center;
+      font-size: 0.8rem;
+      padding: 0.45rem 0.55rem;
+      border-radius: 8px;
+      background: rgba(2,6,23,0.55);
+      border: 1px solid rgba(148,163,184,0.08);
+    }
+    #campionati-agents-public .ca-time { color: #64748b; }
+    #campionati-agents-public .ca-agent { color: #38bdf8; font-weight: 700; }
+    #campionati-agents-public .ca-cat { color: #cbd5e1; font-weight: 600; }
+    #campionati-agents-public .ca-act { color: #94a3b8; }
+    #campionati-agents-public .ca-act em { color: #22c55e; font-style: normal; }
+    #campionati-agents-public .ca-st { text-align: right; font-weight: 800; text-transform: uppercase; font-size: 0.72rem; }
+    #campionati-agents-public .ca-st-ok { color: #22c55e; }
+    #campionati-agents-public .ca-st-warn { color: #f59e0b; }
+    #campionati-agents-public .ca-st-error { color: #f87171; }
+    #campionati-agents-public .ca-table-wrap { overflow: auto; max-height: 520px; }
+    #campionati-agents-public .ca-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+    #campionati-agents-public .ca-table th,
+    #campionati-agents-public .ca-table td {
+      text-align: left;
+      padding: 0.55rem 0.6rem;
+      border-bottom: 1px solid rgba(148,163,184,0.12);
+      vertical-align: top;
+    }
+    #campionati-agents-public .ca-table th {
+      position: sticky;
+      top: 0;
+      background: #0f172a;
+      color: #94a3b8;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    #campionati-agents-public .ca-url {
+      color: #64748b;
+      max-width: 280px;
+      word-break: break-all;
+      font-size: 0.74rem;
+    }
+    .ca-summary-box {
+      margin: 0 0 1.5rem;
+      padding: 1.15rem 1.2rem;
+      border-radius: 16px;
+      border: 1px solid rgba(34,197,94,0.28);
+      background: rgba(34,197,94,0.08);
+    }
+    .ca-summary-box h2 { margin: 0 0 0.6rem; color: #fff; font-size: 1.15rem; }
+    .ca-summary-box ul { margin: 0; padding-left: 1.15rem; color: #cbd5e1; line-height: 1.55; }
+    .ca-summary-box li { margin: 0.25rem 0; }
+    .ca-summary-box strong { color: #fff; }
+    @media (max-width: 800px) {
+      #campionati-agents-public .ca-feed-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.25rem 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body class="campionati-agents-page">
+  <header class="ca-top">
+    <a class="ca-brand" href="index.html">
+      <img src="immagini/logo/logo-site.png?v=20260731_LOGO_CLEAN" alt="ELISEE SCOUT">
+      <span>ELISEE <span>SCOUT</span></span>
+    </a>
+    <nav class="ca-nav" aria-label="Navigazione">
+      <a href="index.html">Home</a>
+      <a href="focus.html">Focus campionati</a>
+      <a href="agenti-campionati.html" aria-current="page">Agenti campionati</a>
+    </nav>
+  </header>
+
+  <main class="ca-main">
+    <section class="ca-summary-box" id="ca-riepilogo-pubblico">
+      <h2>Riepilogo pubblico flotta</h2>
+      <ul>
+        <li><strong>Unità di assegnazione = GIRONE</strong> (non la sola categoria)</li>
+        <li><strong>Esempio Serie D:</strong> 9 gironi (A–I) × 10 agenti = <strong>90 agenti</strong> solo per Serie D</li>
+        <li><strong>Stesso schema</strong> per ogni girone di ogni campionato (Eccellenza, Promozione, Prima, Seconda, Terza, …)</li>
+        <li><strong>Gironi coperti: 201</strong></li>
+        <li><strong>Agenti campionati: 2010</strong> (10 × 201 gironi)</li>
+        <li><strong>Supervisori H24: 402</strong> (2 × 201 gironi — Primary + Backup)</li>
+        <li><strong>Cluster totale ELISEE: 3127</strong> (715 piattaforma + 2010 agenti + 402 supervisori)</li>
+        <li>Fonte: <strong>tuttocampo.it</strong> · ciclo continuo su organici, calendari, classifiche, statistiche</li>
+        <li>Worker: <code>python workers/tuttocampo_sync.py</code></li>
+      </ul>
+      <table style="width:100%;margin-top:1rem;border-collapse:collapse;font-size:0.88rem;color:#cbd5e1">
+        <thead>
+          <tr style="color:#94a3b8;text-align:left">
+            <th style="padding:0.4rem 0.5rem;border-bottom:1px solid rgba(148,163,184,0.2)">Campionato</th>
+            <th style="padding:0.4rem 0.5rem;border-bottom:1px solid rgba(148,163,184,0.2)">Gironi</th>
+            <th style="padding:0.4rem 0.5rem;border-bottom:1px solid rgba(148,163,184,0.2)">Agenti (×10)</th>
+          </tr>
+        </thead>
+        <tbody id="ca-breakdown-body">
+          <tr><td style="padding:0.35rem 0.5rem">Serie D</td><td>9</td><td><strong>90</strong></td></tr>
+          <tr><td style="padding:0.35rem 0.5rem">Eccellenza</td><td>28</td><td><strong>280</strong></td></tr>
+          <tr><td style="padding:0.35rem 0.5rem">Promozione</td><td>39</td><td><strong>390</strong></td></tr>
+          <tr><td style="padding:0.35rem 0.5rem">Prima Categoria</td><td>31</td><td><strong>310</strong></td></tr>
+          <tr><td style="padding:0.35rem 0.5rem">Seconda Categoria</td><td>31</td><td><strong>310</strong></td></tr>
+          <tr><td style="padding:0.35rem 0.5rem">Terza Categoria</td><td>37</td><td><strong>370</strong></td></tr>
+          <tr><td style="padding:0.35rem 0.5rem">Under 19 / Giovanili</td><td>8</td><td><strong>80</strong></td></tr>
+          <tr><td style="padding:0.35rem 0.5rem">Femminile (A+B)</td><td>2</td><td><strong>20</strong></td></tr>
+          <tr><td style="padding:0.35rem 0.5rem">Serie A / B / C + C5 + altro</td><td>16</td><td><strong>160</strong></td></tr>
+          <tr style="border-top:1px solid rgba(34,197,94,0.35)">
+            <td style="padding:0.5rem;color:#fff;font-weight:800">TOTALE</td>
+            <td style="padding:0.5rem;color:#fff;font-weight:800">201</td>
+            <td style="padding:0.5rem;color:#22c55e;font-weight:900">2010</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div id="campionati-agents-public" aria-live="polite">
+      <p style="color:#94a3b8">Avvio flotta agenti…</p>
+    </div>
+  </main>
+
+  <script src="agents-runtime.js?v=20260731_SUPERVISORI_H24"></script>
+  <script src="campionati-agents.js?v=20260731_SUPERVISORI_H24"></script>
+  <script src="campionati-supervisors.js?v=20260731_SUPERVISORI_H24"></script>
+  <script>
+    // Refresh UI ogni pochi secondi
+    setInterval(function () {
+      if (window.EliseeCampionatiAgents) window.EliseeCampionatiAgents.renderPublic();
+    }, 2500);
+  </script>
+</body>
+</html>
