@@ -9,9 +9,9 @@
   var LEAGUE_ORDER = [];
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260812_TOUCHSWIPE_FIX';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260812_FORCE_FULL_KITS_NOCACHE';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260812_TOUCHSWIPE_FIX';
+  var LOGO_V = '20260812_FORCE_FULL_KITS_NOCACHE';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -268,33 +268,14 @@
     }
     CATALOG_LOADING = true;
 
-    // Fast mobile cache check
+    // Force fresh network fetch, purge legacy cache
     try {
-      var cached = sessionStorage.getItem('elisee_catalog_cache_v2');
-      if (cached) {
-        var parsed = JSON.parse(cached);
-        if (applyCatalog(parsed)) {
-          CATALOG_LOADING = false;
-          fetch(CATALOG_URL, { cache: 'default', credentials: 'same-origin' })
-            .then(function (r) {
-              return r.ok ? r.json() : null;
-            })
-            .then(function (fresh) {
-              if (fresh) {
-                applyCatalog(fresh);
-                sessionStorage.setItem('elisee_catalog_cache_v2', JSON.stringify(fresh));
-              }
-            })
-            .catch(function () {});
-          return loadVerifiedList().then(function () {
-            return true;
-          });
-        }
-      }
+      sessionStorage.removeItem('elisee_catalog_cache_v2');
+      sessionStorage.removeItem('elisee_cat_fast_v1');
     } catch (e) {}
 
     return Promise.all([
-      fetch(CATALOG_URL, { cache: 'default', credentials: 'same-origin' }).then(function (r) {
+      fetch(CATALOG_URL, { cache: 'no-store', credentials: 'same-origin' }).then(function (r) {
         if (!r.ok) throw new Error('catalog ' + r.status);
         return r.json();
       }),
@@ -302,9 +283,6 @@
     ])
       .then(function (pair) {
         if (!applyCatalog(pair[0])) throw new Error('empty');
-        try {
-          sessionStorage.setItem('elisee_catalog_cache_v2', JSON.stringify(pair[0]));
-        } catch (e) {}
         return true;
       })
       .catch(function () {
@@ -437,22 +415,28 @@
 
     // 2D real kit photo (home / away / third / fourth / goalkeeper / apparel)
     if (img && kitUrl) {
+      var targetSrc = logoUrl(kitUrl);
+      img.dataset.currentSrc = targetSrc;
       img.hidden = false;
       img.classList.remove('is-hidden');
       img.decoding = 'async';
       img.alt = (team && team.name ? team.name : '') + ' ' + (slot.label || getKitLabel(slot.key));
+
       img.onerror = function () {
+        if (this.dataset.currentSrc !== targetSrc) return;
         this.hidden = true;
         this.classList.add('is-hidden');
         if (vector) vector.hidden = false;
       };
       img.onload = function () {
+        if (this.dataset.currentSrc !== targetSrc) return;
         this.hidden = false;
         this.classList.remove('is-hidden');
         if (vector) vector.hidden = true;
       };
-      img.src = logoUrl(kitUrl);
+
       if (vector) vector.hidden = true;
+      img.src = targetSrc;
       return;
     }
 

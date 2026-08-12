@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-08-12T06:56:58.952360+00:00",
+  "updatedAt": "2026-08-12T07:02:22.744097+00:00",
   "source": "https://www.tuttocampo.it",
   "worker": "tuttocampo_sync.py",
   "categories": {
@@ -23,6 +23,11 @@
           "updatedAt": "2026-08-12T06:56:48.826680+00:00",
           "source": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
           "extracted": 0
+        },
+        {
+          "updatedAt": "2026-08-12T07:01:32.590568+00:00",
+          "source": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
+          "extracted": 0
         }
       ],
       "scorers": [],
@@ -30,10 +35,10 @@
       "discipline": [],
       "market": [],
       "meta": {
-        "lastSync": "2026-08-12T06:56:58.210449+00:00",
+        "lastSync": "2026-08-12T07:01:32.590568+00:00",
         "source": "https://www.tuttocampo.it",
         "errors": 0,
-        "ok": 10,
+        "ok": 13,
         "urls": [
           {
             "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Squadre",
@@ -94,6 +99,24 @@
             "status": "ok",
             "teams": 0,
             "at": "2026-08-12T06:56:58.210449+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T07:01:12.575513+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/FemminileSerieB/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T07:01:22.580566+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T07:01:32.590568+00:00"
           }
         ]
       }
@@ -108,36 +131,36 @@
       "discipline": [],
       "market": [
         {
-          "updatedAt": "2026-08-12T06:48:07.546322+00:00",
+          "updatedAt": "2026-08-12T06:57:08.842479+00:00",
           "source": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-12T06:52:17.798919+00:00",
+          "updatedAt": "2026-08-12T06:57:22.155576+00:00",
           "source": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-12T06:52:27.812736+00:00",
+          "updatedAt": "2026-08-12T06:57:32.194842+00:00",
           "source": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-12T06:52:37.790926+00:00",
+          "updatedAt": "2026-08-12T07:01:42.598344+00:00",
           "source": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-12T06:56:58.833505+00:00",
-          "source": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
+          "updatedAt": "2026-08-12T07:01:52.600122+00:00",
+          "source": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
           "extracted": 0
         }
       ],
       "meta": {
-        "lastSync": "2026-08-12T06:56:58.833505+00:00",
+        "lastSync": "2026-08-12T07:01:52.600122+00:00",
         "source": "https://www.tuttocampo.it",
         "errors": 0,
-        "ok": 7,
+        "ok": 12,
         "urls": [
           {
             "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
@@ -180,6 +203,36 @@
             "status": "ok",
             "teams": 0,
             "at": "2026-08-12T06:56:58.833505+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T06:57:08.842479+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T06:57:22.155576+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T06:57:32.194842+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T07:01:42.598344+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T07:01:52.600122+00:00"
           }
         ]
       }
@@ -209,17 +262,33 @@
           "updatedAt": "2026-08-12T06:53:17.863350+00:00",
           "source": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Classifica",
           "extracted": 0
+        },
+        {
+          "updatedAt": "2026-08-12T06:57:42.344557+00:00",
+          "source": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Classifica",
+          "extracted": 0
+        },
+        {
+          "updatedAt": "2026-08-12T07:02:22.624080+00:00",
+          "source": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Classifica",
+          "extracted": 0
         }
       ],
-      "scorers": [],
+      "scorers": [
+        {
+          "updatedAt": "2026-08-12T06:58:02.361773+00:00",
+          "source": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Marcatori",
+          "extracted": 0
+        }
+      ],
       "stats": {},
       "discipline": [],
       "market": [],
       "meta": {
-        "lastSync": "2026-08-12T06:53:17.863350+00:00",
+        "lastSync": "2026-08-12T07:02:22.624080+00:00",
         "source": "https://www.tuttocampo.it",
         "errors": 1,
-        "ok": 7,
+        "ok": 13,
         "urls": [
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Squadre",
@@ -268,6 +337,42 @@
             "status": "ok",
             "teams": 0,
             "at": "2026-08-12T06:53:17.863350+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T06:57:42.344557+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/SerieD/GironeB/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T06:57:52.351813+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Marcatori",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T06:58:02.361773+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T07:02:02.604665+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/SerieD/GironeB/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T07:02:12.618118+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T07:02:22.624080+00:00"
           }
         ]
       }
@@ -314,16 +419,21 @@
           "updatedAt": "2026-08-12T06:54:27.925365+00:00",
           "source": "https://www.tuttocampo.it/Toscana/Eccellenza/GironeA/Marcatori",
           "extracted": 0
+        },
+        {
+          "updatedAt": "2026-08-12T06:58:52.386553+00:00",
+          "source": "https://www.tuttocampo.it/Toscana/Eccellenza/GironeA/Marcatori",
+          "extracted": 0
         }
       ],
       "stats": {},
       "discipline": [],
       "market": [],
       "meta": {
-        "lastSync": "2026-08-12T06:54:27.925365+00:00",
+        "lastSync": "2026-08-12T06:58:52.386553+00:00",
         "source": "https://www.tuttocampo.it",
         "errors": 0,
-        "ok": 11,
+        "ok": 16,
         "urls": [
           {
             "url": "https://www.tuttocampo.it/Puglia/Eccellenza/GironeA/Squadre",
@@ -390,6 +500,36 @@
             "status": "ok",
             "teams": 0,
             "at": "2026-08-12T06:54:27.925365+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/Eccellenza/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T06:58:12.363257+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Calabria/Eccellenza/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T06:58:22.369740+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/Eccellenza/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T06:58:32.377546+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Calabria/Eccellenza/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T06:58:42.382020+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Toscana/Eccellenza/GironeA/Marcatori",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T06:58:52.386553+00:00"
           }
         ]
       }
@@ -419,6 +559,11 @@
           "updatedAt": "2026-08-12T06:55:08.106141+00:00",
           "source": "https://www.tuttocampo.it/Calabria/Promozione/GironeB/Classifica",
           "extracted": 0
+        },
+        {
+          "updatedAt": "2026-08-12T06:59:52.434669+00:00",
+          "source": "https://www.tuttocampo.it/Calabria/Promozione/GironeB/Classifica",
+          "extracted": 0
         }
       ],
       "scorers": [],
@@ -426,10 +571,10 @@
       "discipline": [],
       "market": [],
       "meta": {
-        "lastSync": "2026-08-12T06:55:08.106141+00:00",
+        "lastSync": "2026-08-12T06:59:52.434669+00:00",
         "source": "https://www.tuttocampo.it",
         "errors": 0,
-        "ok": 10,
+        "ok": 16,
         "urls": [
           {
             "url": "https://www.tuttocampo.it/Puglia/Promozione/GironeA/Squadre",
@@ -490,6 +635,42 @@
             "status": "ok",
             "teams": 0,
             "at": "2026-08-12T06:55:08.106141+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/Promozione/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T06:59:02.395721+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/Promozione/GironeB/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T06:59:12.397748+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Calabria/Promozione/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T06:59:22.407958+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/Promozione/GironeB/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T06:59:32.409643+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Calabria/Promozione/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T06:59:42.417690+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Calabria/Promozione/GironeB/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T06:59:52.434669+00:00"
           }
         ]
       }
@@ -508,6 +689,11 @@
           "updatedAt": "2026-08-12T06:55:18.179096+00:00",
           "source": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
           "extracted": 0
+        },
+        {
+          "updatedAt": "2026-08-12T07:00:02.441440+00:00",
+          "source": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
+          "extracted": 0
         }
       ],
       "scorers": [],
@@ -515,10 +701,10 @@
       "discipline": [],
       "market": [],
       "meta": {
-        "lastSync": "2026-08-12T06:55:18.179096+00:00",
+        "lastSync": "2026-08-12T07:00:12.450419+00:00",
         "source": "https://www.tuttocampo.it",
         "errors": 0,
-        "ok": 3,
+        "ok": 5,
         "urls": [
           {
             "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
@@ -537,6 +723,18 @@
             "status": "ok",
             "teams": 0,
             "at": "2026-08-12T06:55:18.179096+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T07:00:02.441440+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T07:00:12.450419+00:00"
           }
         ]
       }
@@ -555,6 +753,11 @@
           "updatedAt": "2026-08-12T06:55:38.200144+00:00",
           "source": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
           "extracted": 0
+        },
+        {
+          "updatedAt": "2026-08-12T07:00:22.461540+00:00",
+          "source": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
+          "extracted": 0
         }
       ],
       "scorers": [],
@@ -562,10 +765,10 @@
       "discipline": [],
       "market": [],
       "meta": {
-        "lastSync": "2026-08-12T06:55:38.200144+00:00",
+        "lastSync": "2026-08-12T07:00:32.465287+00:00",
         "source": "https://www.tuttocampo.it",
         "errors": 0,
-        "ok": 4,
+        "ok": 6,
         "urls": [
           {
             "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
@@ -590,6 +793,18 @@
             "status": "ok",
             "teams": 0,
             "at": "2026-08-12T06:55:38.200144+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T07:00:22.461540+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T07:00:32.465287+00:00"
           }
         ]
       }
@@ -613,6 +828,11 @@
           "updatedAt": "2026-08-12T06:56:18.176159+00:00",
           "source": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
           "extracted": 0
+        },
+        {
+          "updatedAt": "2026-08-12T07:00:42.485237+00:00",
+          "source": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
+          "extracted": 0
         }
       ],
       "scorers": [],
@@ -620,10 +840,10 @@
       "discipline": [],
       "market": [],
       "meta": {
-        "lastSync": "2026-08-12T06:56:18.176159+00:00",
+        "lastSync": "2026-08-12T07:00:52.481002+00:00",
         "source": "https://www.tuttocampo.it",
         "errors": 0,
-        "ok": 5,
+        "ok": 7,
         "urls": [
           {
             "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
@@ -654,6 +874,18 @@
             "status": "ok",
             "teams": 0,
             "at": "2026-08-12T06:56:18.176159+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T07:00:42.485237+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T07:00:52.481002+00:00"
           }
         ]
       }
@@ -682,6 +914,11 @@
           "updatedAt": "2026-08-12T06:56:38.181593+00:00",
           "source": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
           "extracted": 0
+        },
+        {
+          "updatedAt": "2026-08-12T07:01:02.574926+00:00",
+          "source": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
+          "extracted": 0
         }
       ],
       "scorers": [],
@@ -689,10 +926,10 @@
       "discipline": [],
       "market": [],
       "meta": {
-        "lastSync": "2026-08-12T06:56:38.181593+00:00",
+        "lastSync": "2026-08-12T07:01:02.574926+00:00",
         "source": "https://www.tuttocampo.it",
         "errors": 0,
-        "ok": 7,
+        "ok": 8,
         "urls": [
           {
             "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
@@ -735,17 +972,23 @@
             "status": "ok",
             "teams": 0,
             "at": "2026-08-12T06:56:38.181593+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-12T07:01:02.574926+00:00"
           }
         ]
       }
     }
   },
-  "cycle": 105,
+  "cycle": 152,
   "lastTick": {
-    "at": "2026-08-12T06:56:58.952360+00:00",
-    "cursor": 26,
+    "at": "2026-08-12T07:02:22.744097+00:00",
+    "cursor": 2,
     "processed": [
-      "svincolati:ok:0"
+      "serie-d:ok:0"
     ],
     "phase": "done",
     "intervalMode": "rotate-10s"

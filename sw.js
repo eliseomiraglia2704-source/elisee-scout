@@ -3,7 +3,7 @@
    - MAI servire HTML al posto di JS/CSS (causa "Unexpected token <")
    - Fallback HTML solo per navigazioni pagina
 */
-const CACHE = 'elisee-scout-shell-v6-safe';
+const CACHE = 'elisee-scout-v20260812-kits90';
 const PRECACHE = [
   '/',
   '/index.html',
@@ -19,7 +19,9 @@ const PRECACHE = [
   '/ai-gdpr-monitor.js',
   '/war-room-runtime.js',
   '/campionati-agents.js',
-  '/campionati-supervisors.js'
+  '/campionati-supervisors.js',
+  '/squadre-select.css',
+  '/squadre-select.js'
 ];
 
 function isHtmlPath(path) {
@@ -36,8 +38,7 @@ function isAssetPath(path) {
     path.endsWith('.svg') ||
     path.endsWith('.webp') ||
     path.endsWith('.woff') ||
-    path.endsWith('.woff2') ||
-    path.endsWith('.json')
+    path.endsWith('.woff2')
   );
 }
 
