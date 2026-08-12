@@ -9,9 +9,9 @@
   var LEAGUE_ORDER = [];
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260812_SUPER_FAST_MOBILE';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260812_FORCE_RELOAD_BUILD';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260812_SUPER_FAST_MOBILE';
+  var LOGO_V = '20260812_FORCE_RELOAD_BUILD';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
