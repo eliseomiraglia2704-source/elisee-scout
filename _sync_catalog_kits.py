@@ -44,10 +44,12 @@ LABEL_MAP = {
     "goalkeeper-home": "PORTIERE (CASA)",
     "gk": "PORTIERE (CASA)",
     "goalkeeper-away": "PORTIERE (OSPITI)",
+    "goalkeeper away": "PORTIERE (OSPITI)",
     "gk-away": "PORTIERE (OSPITI)",
     "goalkeeper-third": "PORTIERE (TERZA)",
     "gk-third": "PORTIERE (TERZA)",
     "polo": "POLO",
+    "polo-style": "POLO (STYLE)",
     "polo-white": "POLO (BIANCA)",
     "polo-black": "POLO (NERA)",
     "polo-blue": "POLO (BLU)",
@@ -58,6 +60,7 @@ LABEL_MAP = {
     "pre-season": "PRE-SEASON",
     "pre-season-home": "PRE-SEASON (CASA)",
     "pre-season-away": "PRE-SEASON (OSPITI)",
+    "pre-stagione": "PRE-STAGIONE",
     "training": "ALLENAMENTO",
     "training-1": "ALLENAMENTO 1",
     "training-2": "ALLENAMENTO 2",
@@ -65,12 +68,12 @@ LABEL_MAP = {
 }
 
 def format_label(stem):
-    k = stem.lower()
+    k = stem.lower().strip().replace(" ", "-").replace("_", "-")
     if k in LABEL_MAP:
         return LABEL_MAP[k]
-    cleaned = k.replace("-", " ").replace("_", " ").upper()
-    cleaned = cleaned.replace("GOALKEEPER", "PORTIERE").replace("GK", "PORTIERE")
-    return cleaned
+    label = k.replace("-", " ").upper()
+    label = label.replace("GOALKEEPER", "PORTIERE").replace("GK", "PORTIERE")
+    return label
 
 PRIORITY = [
     "home", "away", "third", "fourth", "fifth",

@@ -9,9 +9,9 @@
   var LEAGUE_ORDER = [];
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260812_GENOA_SYNC';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260812_NAPOLI_UDINESE_SYNC';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260812_GENOA_SYNC';
+  var LOGO_V = '20260812_NAPOLI_UDINESE_SYNC';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -57,10 +57,12 @@
     'goalkeeper-home': 'PORTIERE (CASA)',
     'gk': 'PORTIERE (CASA)',
     'goalkeeper-away': 'PORTIERE (OSPITI)',
+    'goalkeeper away': 'PORTIERE (OSPITI)',
     'gk-away': 'PORTIERE (OSPITI)',
     'goalkeeper-third': 'PORTIERE (TERZA)',
     'gk-third': 'PORTIERE (TERZA)',
     'polo': 'POLO',
+    'polo-style': 'POLO (STYLE)',
     'polo-white': 'POLO (BIANCA)',
     'polo-black': 'POLO (NERA)',
     'polo-blue': 'POLO (BLU)',
@@ -71,6 +73,7 @@
     'pre-season': 'PRE-SEASON',
     'pre-season-home': 'PRE-SEASON (CASA)',
     'pre-season-away': 'PRE-SEASON (OSPITI)',
+    'pre-stagione': 'PRE-STAGIONE',
     'training': 'ALLENAMENTO',
     'training-1': 'ALLENAMENTO 1',
     'training-2': 'ALLENAMENTO 2',
@@ -80,7 +83,7 @@
   function getKitLabel(key, fallbackLabel) {
     if (fallbackLabel) return fallbackLabel;
     if (!key) return 'IN CASA';
-    var k = String(key).toLowerCase().trim();
+    var k = String(key).toLowerCase().trim().replace(/[\s_]+/g, '-');
     if (KIT_LABELS[k]) return KIT_LABELS[k];
     var cleaned = k.replace(/[-_]+/g, ' ').toUpperCase();
     cleaned = cleaned.replace('GOALKEEPER', 'PORTIERE').replace('GK', 'PORTIERE');
