@@ -8934,3 +8934,38 @@
 {"id": "2f06495122a9", "t": "2026-08-12T20:55:16.250535+00:00", "level": "info", "msg": "Ops cycle #3510 · events:no-bridge · blocks:no-bridge · art22:no-bridge · integrity:issues 0 · campionati_file:age 0s", "meta": null, "source": "backend"}
 {"id": "2ea10297e5ab", "t": "2026-08-12T20:55:56.768183+00:00", "level": "info", "msg": "Ops cycle #3512 · events:no-bridge · blocks:no-bridge · art22:no-bridge · integrity:issues 0 · campionati_file:age 0s", "meta": null, "source": "backend"}
 {"id": "ff76c4ec10e3", "t": "2026-08-12T20:55:57.183582+00:00", "level": "ok", "msg": "Health OK · flotte abilitate online", "meta": null, "source": "backend"}
+{"id": "fa4a45d0bfe2", "t": "2026-08-12T20:56:07.304006+00:00", "level": "ok", "msg": "Health OK · flotte abilitate online", "meta": null, "source": "backend"}
+{"id": "ce13e98e671c", "t": "2026-08-12T20:56:31.946460+00:00", "level": "info", "msg": "bridge events,blocks,art22,kpi", "meta": null, "source": "backend"}
+{"id": "e2980a443770", "t": "2026-08-12T20:56:37.803185+00:00", "level": "info", "msg": "Ops cycle #3514 · events:no-bridge · blocks:no-bridge · art22:no-bridge · integrity:issues 0 · campionati_file:age 1s", "meta": null, "source": "backend"}
+{"id": "686b9d40a254", "t": "2026-08-12T20:57:17.990161+00:00", "level": "info", "msg": "Ops cycle #3516 · events:no-bridge · blocks:no-bridge · art22:no-bridge · integrity:issues 0 · campionati_file:age 1s", "meta": null, "source": "backend"}
+{"id": "f1a58441405f", "t": "2026-08-12T20:57:27.946585+00:00", "level": "ok", "msg": "Campionati tick #7020 · ok · age=1s", "meta": null, "source": "backend"}
+{"id": "7d786131a847", "t": "2026-08-12T20:57:58.237398+00:00", "level": "info", "msg": "Ops cycle #3518 · events:no-bridge · blocks:no-bridge · art22:no-bridge · integrity:issues 0 · campionati_file:age 1s", "meta": null, "source": "backend"}
+{"id": "84dd88582631", "t": "2026-08-12T20:58:32.210037+00:00", "level": "info", "msg": "bridge events,blocks,art22,kpi", "meta": null, "source": "backend"}
+{"id": "b8d4cf405602", "t": "2026-08-12T20:58:38.455923+00:00", "level": "info", "msg": "Ops cycle #3520 · events:no-bridge · blocks:no-bridge · art22:no-bridge · integrity:issues 0 · campionati_file:age 1s", "meta": null, "source": "backend"}
+{"id": "12f609006ccf", "t": "2026-08-12T20:58:48.033013+00:00", "level": "ok", "msg": "Health OK · flotte abilitate online", "meta": null, "source": "backend"}
+{"id": "fb4babcb4453", "t": "2026-08-12T20:58:58.059172+00:00", "level": "ok", "msg": "Health OK · flotte abilitate online", "meta": null, "source": "backend"}
+{"id": "96164b4c3ff8", "t": "2026-08-12T20:59:18.606349+00:00", "level": "info", "msg": "Ops cycle #3522 · events:no-bridge · blocks:no-bridge · art22:no-bridge · integrity:issues 0 · campionati_file:age 1s", "meta": null, "source": "backend"}
+{"id": "3c1a0796eed2", "t": "2026-08-12T20:59:59.015592+00:00", "level": "info", "msg": "Ops cycle #3524 · events:no-bridge · blocks:no-bridge · art22:no-bridge · integrity:issues 0 · campionati_file:age 2s", "meta": null, "source": "backend"}
+{"id": "c83a212f5f9c", "t": "2026-08-12T21:00:31.899860+00:00", "level": "info", "msg": "bridge events,blocks,art22,kpi", "meta": null, "source": "backend"}
+{"id": "25e2f06f21be", "t": "2026-08-12T21:00:39.577896+00:00", "level": "info", "msg": "Ops cycle #3526 · events:no-bridge · blocks:no-bridge · art22:no-bridge · integrity:issues 0 · campionati_file:age 2s", "meta": null, "source": "backend"}
+{"id": "2ff1b18e6e45", "t": "2026-08-12T21:01:19.727217+00:00", "level": "info", "msg": "Ops cycle #3528 · events:no-bridge · blocks:no-bridge · art22:no-bridge · integrity:issues 0 · campionati_file:age 2s", "meta": null, "source": "backend"}
+{"id": "c14fd67b4c15", "t": "2026-08-12T21:01:28.651404+00:00", "level": "ok", "msg": "Health OK · flotte abilitate online", "meta": null, "source": "backend"}
+{"id": "30e1c4668978", "t": "2026-08-12T21:01:38.705760+00:00", "level": "ok", "msg": "Health OK · flotte abilitate online", "meta": null, "source": "backend"}
+{"id": "3b0859f2d9a8", "t": "2026-08-12T21:02:00.770925+00:00", "level": "info", "msg": "Ops cycle #3530 · events:no-bridge · blocks:no-bridge · art22:no-bridge · integrity:issues 0 · campionati_file:age 1s", "meta": null, "source": "backend"}
+{"id": "4507a0ef06c8", "t": "2026-08-12T21:02:30.105058+00:00", "level": "ok", "msg": "Campionati tick #7050 · ok · age=3s", "meta": null, "source": "backend"}
+{"id": "8ce68ddea961", "t": "2026-08-12T21:02:31.714419+00:00", "level": "info", "msg": "bridge events,blocks,art22,kpi", "meta": null, "source": "backend"}
+{"id": "80e13d6b4ce8", "t": "2026-08-12T21:02:41.621613+00:00", "level": "info", "msg": "Ops cycle #3532 · events:no-bridge · blocks:no-bridge · art22:no-bridge · integrity:issues 0 · campionati_file:age 4s", "meta": null, "source": "backend"}
+{"id": "cb0644944ad6", "t": "2026-08-12T21:03:22.653122+00:00", "level": "info", "msg": "Ops cycle #3534 · events:no-bridge · blocks:no-bridge · art22:no-bridge · integrity:issues 0 · campionati_file:age 5s", "meta": null, "source": "backend"}
+{"id": "20eb19f44d80", "t": "2026-08-12T21:04:03.040360+00:00", "level": "info", "msg": "Ops cycle #3536 · events:no-bridge · blocks:no-bridge · art22:no-bridge · integrity:issues 0 · campionati_file:age 3s", "meta": null, "source": "backend"}
+{"id": "cf31b79d84a4", "t": "2026-08-12T21:04:11.624257+00:00", "level": "info", "msg": "bridge events,blocks,art22,kpi", "meta": null, "source": "backend"}
+{"id": "e2ded31956dd", "t": "2026-08-12T21:04:11.714256+00:00", "level": "ok", "msg": "Health OK · flotte abilitate online", "meta": null, "source": "backend"}
+{"id": "53ba40aaa132", "t": "2026-08-12T21:04:21.811242+00:00", "level": "ok", "msg": "Health OK · flotte abilitate online", "meta": null, "source": "backend"}
+{"id": "e13be85d94e1", "t": "2026-08-12T21:04:43.700744+00:00", "level": "info", "msg": "Ops cycle #3538 · events:no-bridge · blocks:no-bridge · art22:no-bridge · integrity:issues 0 · campionati_file:age 4s", "meta": null, "source": "backend"}
+{"id": "a04f10ab189b", "t": "2026-08-12T21:05:25.213835+00:00", "level": "info", "msg": "Ops cycle #3540 · events:no-bridge · blocks:no-bridge · art22:no-bridge · integrity:issues 0 · campionati_file:age 0s", "meta": null, "source": "backend"}
+{"id": "fd7dfdfe58d5", "t": "2026-08-12T21:06:05.716098+00:00", "level": "info", "msg": "Ops cycle #3542 · events:no-bridge · blocks:no-bridge · art22:no-bridge · integrity:issues 0 · campionati_file:age 0s", "meta": null, "source": "backend"}
+{"id": "a9e0413b2301", "t": "2026-08-12T21:06:32.612063+00:00", "level": "info", "msg": "bridge events,blocks,art22,kpi", "meta": null, "source": "backend"}
+{"id": "985bd421b2ac", "t": "2026-08-12T21:06:45.859087+00:00", "level": "info", "msg": "Ops cycle #3544 · events:no-bridge · blocks:no-bridge · art22:no-bridge · integrity:issues 0 · campionati_file:age 0s", "meta": null, "source": "backend"}
+{"id": "b26366df284e", "t": "2026-08-12T21:06:53.066782+00:00", "level": "ok", "msg": "Health OK · flotte abilitate online", "meta": null, "source": "backend"}
+{"id": "ba9f10ead415", "t": "2026-08-12T21:07:03.115220+00:00", "level": "ok", "msg": "Health OK · flotte abilitate online", "meta": null, "source": "backend"}
+{"id": "c48127423a8a", "t": "2026-08-12T21:07:26.434585+00:00", "level": "info", "msg": "Ops cycle #3546 · events:no-bridge · blocks:no-bridge · art22:no-bridge · integrity:issues 0 · campionati_file:age 0s", "meta": null, "source": "backend"}
+{"id": "7fab7f66568f", "t": "2026-08-12T21:07:33.474763+00:00", "level": "ok", "msg": "Campionati tick #7080 · ok · age=4s", "meta": null, "source": "backend"}
