@@ -123,14 +123,31 @@ if KITS_DIR.exists():
 
             # Backward-compatible single kit properties
             file_dict = {f.stem.lower(): f"immagini/kits-2d/{fname}/{f.name}" for f in image_files}
-            for stem, key in [
-                ("home", "kitHome"),
-                ("away", "kitAway"),
-                ("third", "kitThird"),
-                ("fourth", "kitFourth"),
-                ("goalkeeper", "kitGoalkeeper"),
-                ("gk", "kitGoalkeeper")
-            ]:
+            prop_map = {
+                "home": "kitHome",
+                "away": "kitAway",
+                "third": "kitThird",
+                "fourth": "kitFourth",
+                "fifth": "kitFifth",
+                "goalkeeper": "kitGoalkeeper",
+                "gk": "kitGoalkeeper",
+                "goalkeeper-away": "kitGoalkeeperAway",
+                "gk-away": "kitGoalkeeperAway",
+                "goalkeeper-third": "kitGoalkeeperThird",
+                "gk-third": "kitGoalkeeperThird",
+                "polo": "kitPolo",
+                "pre-match": "kitPreMatch",
+                "pre-match-home": "kitPreMatchHome",
+                "pre-match-away": "kitPreMatchAway",
+                "pre-season": "kitPreSeason",
+                "pre-season-home": "kitPreSeasonHome",
+                "pre-season-away": "kitPreSeasonAway",
+                "training": "kitTraining",
+                "training-1": "kitTraining1",
+                "training-2": "kitTraining2",
+                "training-3": "kitTraining3"
+            }
+            for stem, key in prop_map.items():
                 if stem in file_dict:
                     team[key] = file_dict[stem]
 

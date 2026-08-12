@@ -374,6 +374,9 @@
   flex-direction: column;
   align-items: center;
   min-height: 0;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
 }
 .es-sq-panel-label {
   font-size: 0.72rem;

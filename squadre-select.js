@@ -9,9 +9,9 @@
   var LEAGUE_ORDER = [];
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260812_TITLE_FAST';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260812_TOUCHSWIPE_FIX';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260812_TITLE_FAST';
+  var LOGO_V = '20260812_TOUCHSWIPE_FIX';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -110,6 +110,15 @@
       if (team.kitFourth) slots.push({ key: 'fourth', label: 'QUARTA', url: team.kitFourth });
       if (team.kitGoalkeeper) slots.push({ key: 'goalkeeper', label: 'PORTIERE (CASA)', url: team.kitGoalkeeper });
       else if (team.kitGk) slots.push({ key: 'goalkeeper', label: 'PORTIERE (CASA)', url: team.kitGk });
+      if (team.kitGoalkeeperAway) slots.push({ key: 'goalkeeper-away', label: 'PORTIERE (OSPITI)', url: team.kitGoalkeeperAway });
+      if (team.kitGoalkeeperThird) slots.push({ key: 'goalkeeper-third', label: 'PORTIERE (TERZA)', url: team.kitGoalkeeperThird });
+      if (team.kitPreMatch) slots.push({ key: 'pre-match', label: 'PRE-MATCH', url: team.kitPreMatch });
+      if (team.kitPreMatchHome) slots.push({ key: 'pre-match-home', label: 'PRE-MATCH (CASA)', url: team.kitPreMatchHome });
+      if (team.kitPreMatchAway) slots.push({ key: 'pre-match-away', label: 'PRE-MATCH (OSPITI)', url: team.kitPreMatchAway });
+      if (team.kitPolo) slots.push({ key: 'polo', label: 'POLO', url: team.kitPolo });
+      if (team.kitTraining) slots.push({ key: 'training', label: 'ALLENAMENTO', url: team.kitTraining });
+      if (team.kitTraining2) slots.push({ key: 'training-2', label: 'ALLENAMENTO 2', url: team.kitTraining2 });
+      if (team.kitPreSeasonHome) slots.push({ key: 'pre-season-home', label: 'PRE-SEASON (CASA)', url: team.kitPreSeasonHome });
       if (team.kitFifth) slots.push({ key: 'fifth', label: 'QUINTA', url: team.kitFifth });
     }
 
@@ -861,6 +870,45 @@
     el.addEventListener(ev, fn);
   }
 
+  function addSwipeSupport(el, onSwipeLeft, onSwipeRight) {
+    if (!el) return;
+    if (el.dataset && el.dataset.swipeBound === '1') return;
+    if (el.dataset) el.dataset.swipeBound = '1';
+
+    var startX = 0;
+    var startY = 0;
+    var distX = 0;
+    var distY = 0;
+
+    el.addEventListener('touchstart', function (e) {
+      if (!e.touches || !e.touches.length) return;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      distX = 0;
+      distY = 0;
+    }, { passive: true });
+
+    el.addEventListener('touchmove', function (e) {
+      if (!e.touches || !e.touches.length) return;
+      distX = e.touches[0].clientX - startX;
+      distY = e.touches[0].clientY - startY;
+    }, { passive: true });
+
+    el.addEventListener('touchend', function () {
+      if (Math.abs(distX) >= 28 && Math.abs(distX) > Math.abs(distY) * 1.1) {
+        if (distX < 0) {
+          if (typeof onSwipeLeft === 'function') onSwipeLeft();
+        } else {
+          if (typeof onSwipeRight === 'function') onSwipeRight();
+        }
+      }
+      startX = 0;
+      startY = 0;
+      distX = 0;
+      distY = 0;
+    }, { passive: true });
+  }
+
   function bindUI() {
     if (!$('view-squadre') || !$('es-sq-team-name')) return false;
 
@@ -980,6 +1028,20 @@
       e.preventDefault();
       selectTeam();
     }, 'sq');
+    // Supporto Touch Swipe su dispositivi mobile (trascinamento con le dita per voltare divisa/club)
+    var kitPanel = document.querySelector('.es-sq-kit-panel');
+    if (kitPanel) {
+      addSwipeSupport(kitPanel, function () { cycleKit(1); }, function () { cycleKit(-1); });
+    }
+    var kitImg = $('es-sq-kit-img');
+    if (kitImg && kitImg.parentNode) {
+      addSwipeSupport(kitImg.parentNode, function () { cycleKit(1); }, function () { cycleKit(-1); });
+    }
+    var mainCard = document.querySelector('.es-sq-main');
+    if (mainCard) {
+      addSwipeSupport(mainCard, function () { next(1); }, function () { next(-1); });
+    }
+
     bindOnce(
       $('es-sq-back-bacheca'),
       'click',
