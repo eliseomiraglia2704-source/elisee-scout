@@ -1,12 +1,12 @@
 {
-  "saved_at": "2026-08-12T20:07:21.410125+00:00",
+  "saved_at": "2026-08-12T20:44:03.572477+00:00",
   "running": true,
   "started_at": "2026-08-09T15:29:12.472650+00:00",
-  "cycles": 3369,
+  "cycles": 3477,
   "heals": 6,
-  "jobs_ok": 26952,
+  "jobs_ok": 27816,
   "jobs_fail": 0,
-  "campionati_ticks": 6724,
+  "campionati_ticks": 6940,
   "cfg": {
     "enabled": true,
     "auto_start": true,
@@ -36,7 +36,7 @@
     }
   },
   "last_health": {
-    "at": "2026-08-12T20:07:20.790303+00:00",
+    "at": "2026-08-12T20:44:00.524936+00:00",
     "ok": true,
     "bad": [],
     "fleets": [
@@ -46,10 +46,10 @@
         "target": 715,
         "online": 715,
         "status": "online",
-        "last_ok": "2026-08-12T20:07:04.745530+00:00",
-        "ops": 3370,
+        "last_ok": "2026-08-12T20:43:43.287001+00:00",
+        "ops": 3477,
         "errors": 0,
-        "detail": "hb cycle 3369",
+        "detail": "hb cycle 3476",
         "enabled": true,
         "ok": true,
         "unit": "units"
@@ -60,10 +60,10 @@
         "target": 2010,
         "online": 2010,
         "status": "online",
-        "last_ok": "2026-08-12T20:07:11.372528+00:00",
-        "ops": 6724,
+        "last_ok": "2026-08-12T20:43:57.083973+00:00",
+        "ops": 6941,
         "errors": 0,
-        "detail": "tick #6723 · latest.json age=0s · keys=7",
+        "detail": "tick #6940 · latest.json age=1s · keys=7",
         "enabled": true,
         "ok": true,
         "unit": "units"
@@ -74,10 +74,10 @@
         "target": 402,
         "online": 402,
         "status": "online",
-        "last_ok": "2026-08-12T20:07:11.372528+00:00",
-        "ops": 6724,
+        "last_ok": "2026-08-12T20:43:57.083973+00:00",
+        "ops": 6941,
         "errors": 0,
-        "detail": "H24 ok · data age 0s",
+        "detail": "H24 ok · data age 1s",
         "enabled": true,
         "ok": true,
         "unit": "units"
@@ -88,8 +88,8 @@
         "target": 3,
         "online": 3,
         "status": "online",
-        "last_ok": "2026-08-12T20:07:04.745530+00:00",
-        "ops": 3370,
+        "last_ok": "2026-08-12T20:43:43.287001+00:00",
+        "ops": 3477,
         "errors": 0,
         "detail": "pulse PSUP-01/02/03",
         "enabled": true,
@@ -102,8 +102,8 @@
         "target": 150,
         "online": 150,
         "status": "online",
-        "last_ok": "2026-08-12T20:07:04.725530+00:00",
-        "ops": 3370,
+        "last_ok": "2026-08-12T20:43:43.164111+00:00",
+        "ops": 3477,
         "errors": 0,
         "detail": "integrity issues=0",
         "enabled": true,
@@ -116,10 +116,10 @@
         "target": 8,
         "online": 8,
         "status": "online",
-        "last_ok": "2026-08-12T20:07:04.745530+00:00",
-        "ops": 3370,
+        "last_ok": "2026-08-12T20:43:43.287001+00:00",
+        "ops": 3477,
         "errors": 0,
-        "detail": "cycle #3369",
+        "detail": "cycle #3476",
         "enabled": true,
         "ok": true,
         "unit": "units"
@@ -130,7 +130,7 @@
         "target": 1,
         "online": 1,
         "status": "online",
-        "last_ok": "2026-08-12T20:07:09.453901+00:00",
+        "last_ok": "2026-08-12T20:43:52.827137+00:00",
         "ops": 1,
         "errors": 0,
         "detail": "pid 17676",
@@ -140,8 +140,8 @@
       }
     ]
   },
-  "last_ops": "2026-08-12T20:07:04.675530+00:00",
-  "last_campionati": "2026-08-12T20:07:21.403460+00:00",
+  "last_ops": "2026-08-12T20:44:03.371948+00:00",
+  "last_campionati": "2026-08-12T20:43:57.033968+00:00",
   "last_tuttocampo": {
     "started_at": "2026-08-12T17:56:18.720675+00:00",
     "pid": 17676,
@@ -154,10 +154,10 @@
       "target": 715,
       "online": 715,
       "status": "online",
-      "last_ok": "2026-08-12T20:07:04.745530+00:00",
-      "ops": 3370,
+      "last_ok": "2026-08-12T20:44:03.572477+00:00",
+      "ops": 3478,
       "errors": 0,
-      "detail": "hb cycle 3369"
+      "detail": "hb cycle 3477"
     },
     "campionatiAgents": {
       "id": "campionatiAgents",
@@ -165,10 +165,10 @@
       "target": 2010,
       "online": 2010,
       "status": "online",
-      "last_ok": "2026-08-12T20:07:21.410125+00:00",
-      "ops": 6725,
+      "last_ok": "2026-08-12T20:43:57.083973+00:00",
+      "ops": 6941,
       "errors": 0,
-      "detail": "tick #6724 · latest.json age=0s · keys=7"
+      "detail": "tick #6940 · latest.json age=1s · keys=7"
     },
     "campionatiSupervisors": {
       "id": "campionatiSupervisors",
@@ -176,10 +176,10 @@
       "target": 402,
       "online": 402,
       "status": "online",
-      "last_ok": "2026-08-12T20:07:21.410125+00:00",
-      "ops": 6725,
+      "last_ok": "2026-08-12T20:43:57.083973+00:00",
+      "ops": 6941,
       "errors": 0,
-      "detail": "H24 ok · data age 0s"
+      "detail": "H24 ok · data age 1s"
     },
     "gdprSupervisors": {
       "id": "gdprSupervisors",
@@ -187,8 +187,8 @@
       "target": 3,
       "online": 3,
       "status": "online",
-      "last_ok": "2026-08-12T20:07:04.745530+00:00",
-      "ops": 3370,
+      "last_ok": "2026-08-12T20:44:03.572477+00:00",
+      "ops": 3478,
       "errors": 0,
       "detail": "pulse PSUP-01/02/03"
     },
@@ -198,8 +198,8 @@
       "target": 150,
       "online": 150,
       "status": "online",
-      "last_ok": "2026-08-12T20:07:04.725530+00:00",
-      "ops": 3370,
+      "last_ok": "2026-08-12T20:44:03.471946+00:00",
+      "ops": 3478,
       "errors": 0,
       "detail": "integrity issues=0"
     },
@@ -209,10 +209,10 @@
       "target": 8,
       "online": 8,
       "status": "online",
-      "last_ok": "2026-08-12T20:07:04.745530+00:00",
-      "ops": 3370,
+      "last_ok": "2026-08-12T20:44:03.572477+00:00",
+      "ops": 3478,
       "errors": 0,
-      "detail": "cycle #3369"
+      "detail": "cycle #3477"
     },
     "tuttocampoSync": {
       "id": "tuttocampoSync",
@@ -220,7 +220,7 @@
       "target": 1,
       "online": 1,
       "status": "online",
-      "last_ok": "2026-08-12T20:07:09.453901+00:00",
+      "last_ok": "2026-08-12T20:43:52.827137+00:00",
       "ops": 1,
       "errors": 0,
       "detail": "pid 17676"

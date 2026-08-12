@@ -9,9 +9,9 @@
   var LEAGUE_ORDER = [];
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260812_NAPOLI_UDINESE_SYNC';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260812_ULTRA_FAST_0MS';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260812_NAPOLI_UDINESE_SYNC';
+  var LOGO_V = '20260812_ULTRA_FAST_0MS';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -690,18 +690,37 @@
     }
     applyKit(team);
     preloadAllKitsForCurrentCategory();
+    preloadLogosForCategory();
+  }
+
+  function preloadLogosForCategory() {
+    try {
+      var list = filtered();
+      if (!list || !list.length) return;
+      for (var i = 0; i < list.length; i++) {
+        var logo = list[i].logo;
+        if (logo) {
+          var fullLogo = logoUrl(logo);
+          if (!PRELOAD_CACHE[fullLogo]) {
+            var img = new Image();
+            img.decoding = 'async';
+            img.src = fullLogo;
+            PRELOAD_CACHE[fullLogo] = img;
+          }
+        }
+      }
+    } catch (e) {}
   }
 
   function animThen(fn) {
+    // Rendere istantaneo l'aggiornamento dello stato (0ms latenza)
+    fn();
     var crest = $('es-sq-crest');
     if (crest) {
       crest.classList.add('is-anim');
       setTimeout(function () {
-        fn();
         crest.classList.remove('is-anim');
-      }, 140);
-    } else {
-      fn();
+      }, 90);
     }
   }
 
