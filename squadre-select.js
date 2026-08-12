@@ -9,9 +9,9 @@
   var LEAGUE_ORDER = [];
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260812_FORCE_FULL_KITS_NOCACHE';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260812_INSTANT_RAM_KITS';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260812_FORCE_FULL_KITS_NOCACHE';
+  var LOGO_V = '20260812_INSTANT_RAM_KITS';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -81,6 +81,41 @@
     var cleaned = k.replace(/[-_]+/g, ' ').toUpperCase();
     cleaned = cleaned.replace('GOALKEEPER', 'PORTIERE').replace('GK', 'PORTIERE');
     return cleaned;
+  }
+
+  var PRELOAD_CACHE = {};
+
+  function preloadKitsForTeam(team) {
+    if (!team) return;
+    var slots = kitSlotsFor(team);
+    for (var i = 0; i < slots.length; i++) {
+      var url = slots[i].url;
+      if (url) {
+        var fullUrl = logoUrl(url);
+        if (!PRELOAD_CACHE[fullUrl]) {
+          var img = new Image();
+          img.decoding = 'async';
+          img.src = fullUrl;
+          PRELOAD_CACHE[fullUrl] = img;
+        }
+      }
+    }
+  }
+
+  function preloadAllKitsForCurrentCategory() {
+    try {
+      var list = filtered();
+      if (!list || !list.length) return;
+      var idx = state.index;
+      preloadKitsForTeam(list[idx]);
+      if (list[idx + 1]) preloadKitsForTeam(list[idx + 1]);
+      if (list[idx - 1]) preloadKitsForTeam(list[idx - 1]);
+      setTimeout(function () {
+        for (var k = 0; k < list.length; k++) {
+          preloadKitsForTeam(list[k]);
+        }
+      }, 300);
+    } catch (e) {}
   }
 
   /** Slot kit disponibili per la squadra (foto 2D e/o colori). */
@@ -647,6 +682,7 @@
       showLogo(team.logo || '', team);
     }
     applyKit(team);
+    preloadAllKitsForCurrentCategory();
   }
 
   function animThen(fn) {
