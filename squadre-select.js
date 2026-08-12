@@ -9,9 +9,9 @@
   var LEAGUE_ORDER = [];
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260812_INSTANT_RAM_KITS';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260812_GENOA_SYNC';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260812_INSTANT_RAM_KITS';
+  var LOGO_V = '20260812_GENOA_SYNC';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -61,6 +61,10 @@
     'goalkeeper-third': 'PORTIERE (TERZA)',
     'gk-third': 'PORTIERE (TERZA)',
     'polo': 'POLO',
+    'polo-white': 'POLO (BIANCA)',
+    'polo-black': 'POLO (NERA)',
+    'polo-blue': 'POLO (BLU)',
+    'polo-red': 'POLO (ROSSA)',
     'pre-match': 'PRE-MATCH',
     'pre-match-home': 'PRE-MATCH (CASA)',
     'pre-match-away': 'PRE-MATCH (OSPITI)',
