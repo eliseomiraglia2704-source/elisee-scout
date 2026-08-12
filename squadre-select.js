@@ -9,9 +9,9 @@
   var LEAGUE_ORDER = [];
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260812_ULTRA_FAST_0MS';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260812_SUPER_FAST_MOBILE';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260812_ULTRA_FAST_0MS';
+  var LOGO_V = '20260812_SUPER_FAST_MOBILE';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -109,19 +109,20 @@
     }
   }
 
-  function preloadAllKitsForCurrentCategory() {
+  function preloadNeighborKits() {
     try {
       var list = filtered();
       if (!list || !list.length) return;
       var idx = state.index;
+      // Pre-carica la squadra corrente subito
       preloadKitsForTeam(list[idx]);
-      if (list[idx + 1]) preloadKitsForTeam(list[idx + 1]);
-      if (list[idx - 1]) preloadKitsForTeam(list[idx - 1]);
+      // Pre-carica la squadra successiva e precedente in modo graduale (senza intasare la rete mobile)
+      var nextTeam = list[(idx + 1) % list.length];
+      var prevTeam = list[(idx - 1 + list.length) % list.length];
       setTimeout(function () {
-        for (var k = 0; k < list.length; k++) {
-          preloadKitsForTeam(list[k]);
-        }
-      }, 300);
+        if (nextTeam) preloadKitsForTeam(nextTeam);
+        if (prevTeam) preloadKitsForTeam(prevTeam);
+      }, 80);
     } catch (e) {}
   }
 
@@ -689,8 +690,7 @@
       showLogo(team.logo || '', team);
     }
     applyKit(team);
-    preloadAllKitsForCurrentCategory();
-    preloadLogosForCategory();
+    preloadNeighborKits();
   }
 
   function preloadLogosForCategory() {
