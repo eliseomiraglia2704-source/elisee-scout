@@ -9,9 +9,9 @@
   var LEAGUE_ORDER = [];
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260812_SYNC_NEWKITS';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260812_TITLE_FAST';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260812_SYNC_NEWKITS';
+  var LOGO_V = '20260812_TITLE_FAST';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -258,8 +258,34 @@
       });
     }
     CATALOG_LOADING = true;
+
+    // Fast mobile cache check
+    try {
+      var cached = sessionStorage.getItem('elisee_catalog_cache_v2');
+      if (cached) {
+        var parsed = JSON.parse(cached);
+        if (applyCatalog(parsed)) {
+          CATALOG_LOADING = false;
+          fetch(CATALOG_URL, { cache: 'default', credentials: 'same-origin' })
+            .then(function (r) {
+              return r.ok ? r.json() : null;
+            })
+            .then(function (fresh) {
+              if (fresh) {
+                applyCatalog(fresh);
+                sessionStorage.setItem('elisee_catalog_cache_v2', JSON.stringify(fresh));
+              }
+            })
+            .catch(function () {});
+          return loadVerifiedList().then(function () {
+            return true;
+          });
+        }
+      }
+    } catch (e) {}
+
     return Promise.all([
-      fetch(CATALOG_URL, { cache: 'no-store', credentials: 'same-origin' }).then(function (r) {
+      fetch(CATALOG_URL, { cache: 'default', credentials: 'same-origin' }).then(function (r) {
         if (!r.ok) throw new Error('catalog ' + r.status);
         return r.json();
       }),
@@ -267,6 +293,9 @@
     ])
       .then(function (pair) {
         if (!applyCatalog(pair[0])) throw new Error('empty');
+        try {
+          sessionStorage.setItem('elisee_catalog_cache_v2', JSON.stringify(pair[0]));
+        } catch (e) {}
         return true;
       })
       .catch(function () {
@@ -401,6 +430,7 @@
     if (img && kitUrl) {
       img.hidden = false;
       img.classList.remove('is-hidden');
+      img.decoding = 'async';
       img.alt = (team && team.name ? team.name : '') + ' ' + (slot.label || getKitLabel(slot.key));
       img.onerror = function () {
         this.hidden = true;
@@ -547,6 +577,7 @@
       if (fb) fb.hidden = true;
     };
     img.alt = (team && team.name ? team.name : '') + ' logo';
+    img.decoding = 'async';
     try {
       img.removeAttribute('crossorigin');
       img.crossOrigin = null;
