@@ -9,9 +9,9 @@
   var LEAGUE_ORDER = [];
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260807_STADI18';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260812_SYNC_NEWKITS';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260807_LATINA';
+  var LOGO_V = '20260812_SYNC_NEWKITS';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -48,26 +48,75 @@
   };
 
   var KIT_LABELS = {
-    home: 'IN CASA',
-    away: 'OSPITI',
-    third: 'TERZA',
-    fourth: 'QUARTA'
+    'home': 'IN CASA',
+    'away': 'OSPITI',
+    'third': 'TERZA',
+    'fourth': 'QUARTA',
+    'fifth': 'QUINTA',
+    'goalkeeper': 'PORTIERE (CASA)',
+    'goalkeeper-home': 'PORTIERE (CASA)',
+    'gk': 'PORTIERE (CASA)',
+    'goalkeeper-away': 'PORTIERE (OSPITI)',
+    'gk-away': 'PORTIERE (OSPITI)',
+    'goalkeeper-third': 'PORTIERE (TERZA)',
+    'gk-third': 'PORTIERE (TERZA)',
+    'polo': 'POLO',
+    'pre-match': 'PRE-MATCH',
+    'pre-match-home': 'PRE-MATCH (CASA)',
+    'pre-match-away': 'PRE-MATCH (OSPITI)',
+    'pre-season': 'PRE-SEASON',
+    'pre-season-home': 'PRE-SEASON (CASA)',
+    'pre-season-away': 'PRE-SEASON (OSPITI)',
+    'training': 'ALLENAMENTO',
+    'training-1': 'ALLENAMENTO 1',
+    'training-2': 'ALLENAMENTO 2',
+    'training-3': 'ALLENAMENTO 3'
   };
+
+  function getKitLabel(key, fallbackLabel) {
+    if (fallbackLabel) return fallbackLabel;
+    if (!key) return 'IN CASA';
+    var k = String(key).toLowerCase().trim();
+    if (KIT_LABELS[k]) return KIT_LABELS[k];
+    var cleaned = k.replace(/[-_]+/g, ' ').toUpperCase();
+    cleaned = cleaned.replace('GOALKEEPER', 'PORTIERE').replace('GK', 'PORTIERE');
+    return cleaned;
+  }
 
   /** Slot kit disponibili per la squadra (foto 2D e/o colori). */
   function kitSlotsFor(team) {
     var slots = [];
-    if (!team) return [{ key: 'home', url: '', colors: null }];
-    if (team.kitHome) slots.push({ key: 'home', url: team.kitHome });
-    if (team.kitAway) slots.push({ key: 'away', url: team.kitAway });
-    if (team.kitThird) slots.push({ key: 'third', url: team.kitThird });
-    if (team.kitFourth) slots.push({ key: 'fourth', url: team.kitFourth });
-    // senza foto: almeno casa/ospiti a colori
+    if (!team) return [{ key: 'home', label: 'IN CASA', url: '', colors: null }];
+
+    // 1. Se la squadra ha l'elenco completo 'kits' (es. 10 divise/capi)
+    if (Array.isArray(team.kits) && team.kits.length) {
+      for (var k = 0; k < team.kits.length; k++) {
+        var item = team.kits[k];
+        if (item && item.url) {
+          slots.push({
+            key: item.key || 'kit-' + k,
+            label: getKitLabel(item.key, item.label),
+            url: item.url
+          });
+        }
+      }
+    }
+
+    // 2. Fallback proprietà singole
     if (!slots.length) {
-      slots.push({ key: 'home', url: '', colors: team.home || null });
-      slots.push({ key: 'away', url: '', colors: team.away || null });
-    } else if (slots.length === 1 && team.kitHome && !team.kitAway) {
-      // solo home: tieni comunque un solo slot
+      if (team.kitHome) slots.push({ key: 'home', label: 'IN CASA', url: team.kitHome });
+      if (team.kitAway) slots.push({ key: 'away', label: 'OSPITI', url: team.kitAway });
+      if (team.kitThird) slots.push({ key: 'third', label: 'TERZA', url: team.kitThird });
+      if (team.kitFourth) slots.push({ key: 'fourth', label: 'QUARTA', url: team.kitFourth });
+      if (team.kitGoalkeeper) slots.push({ key: 'goalkeeper', label: 'PORTIERE (CASA)', url: team.kitGoalkeeper });
+      else if (team.kitGk) slots.push({ key: 'goalkeeper', label: 'PORTIERE (CASA)', url: team.kitGk });
+      if (team.kitFifth) slots.push({ key: 'fifth', label: 'QUINTA', url: team.kitFifth });
+    }
+
+    // 3. Senza foto: almeno casa/ospiti a colori
+    if (!slots.length) {
+      slots.push({ key: 'home', label: 'IN CASA', url: '', colors: team.home || null });
+      slots.push({ key: 'away', label: 'OSPITI', url: '', colors: team.away || null });
     }
     return slots;
   }
@@ -86,21 +135,30 @@
   function renderKitDots(slots) {
     var host = document.querySelector('.es-sq-kit-dots');
     if (!host) return;
-    var prev = $('es-sq-kit-prev');
     var next = $('es-sq-kit-next');
-    // ricostruisci solo i pallini tra i bottoni
     var dots = host.querySelectorAll('.es-sq-dot');
     for (var i = 0; i < dots.length; i++) {
       dots[i].parentNode.removeChild(dots[i]);
     }
     var insertBefore = next || null;
     for (var j = 0; j < slots.length; j++) {
-      var span = document.createElement('span');
-      span.className = 'es-sq-dot' + (slots[j].key === state.kit ? ' on' : '');
-      span.setAttribute('data-kit', slots[j].key);
-      span.setAttribute('aria-label', KIT_LABELS[slots[j].key] || slots[j].key);
-      if (insertBefore) host.insertBefore(span, insertBefore);
-      else host.appendChild(span);
+      (function (slotObj) {
+        var span = document.createElement('span');
+        span.className = 'es-sq-dot' + (slotObj.key === state.kit ? ' on' : '');
+        span.setAttribute('data-kit', slotObj.key);
+        span.setAttribute('aria-label', slotObj.label || getKitLabel(slotObj.key));
+        span.setAttribute('title', slotObj.label || getKitLabel(slotObj.key));
+        span.style.cursor = 'pointer';
+        span.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          state.kit = slotObj.key;
+          var team = current();
+          if (team) applyKit(team);
+        });
+        if (insertBefore) host.insertBefore(span, insertBefore);
+        else host.appendChild(span);
+      })(slots[j]);
     }
   }
 
@@ -321,8 +379,6 @@
 
   function applyKit(team) {
     var slots = ensureKitKey(team);
-    var title = $('es-sq-kit-title');
-    if (title) title.textContent = KIT_LABELS[state.kit] || 'IN CASA';
     renderKitDots(slots);
 
     var slot = null;
@@ -332,17 +388,20 @@
         break;
       }
     }
-    if (!slot) slot = slots[0] || { key: 'home', url: '' };
+    if (!slot) slot = slots[0] || { key: 'home', label: 'IN CASA', url: '' };
+
+    var title = $('es-sq-kit-title');
+    if (title) title.textContent = slot.label || getKitLabel(slot.key);
 
     var img = $('es-sq-kit-img');
     var vector = $('es-sq-kit-vector');
     var kitUrl = (slot && slot.url) || '';
 
-    // 2D real kit photo (home / away / third / fourth)
+    // 2D real kit photo (home / away / third / fourth / goalkeeper / apparel)
     if (img && kitUrl) {
       img.hidden = false;
       img.classList.remove('is-hidden');
-      img.alt = (team && team.name ? team.name : '') + ' ' + (KIT_LABELS[slot.key] || 'kit');
+      img.alt = (team && team.name ? team.name : '') + ' ' + (slot.label || getKitLabel(slot.key));
       img.onerror = function () {
         this.hidden = true;
         this.classList.add('is-hidden');

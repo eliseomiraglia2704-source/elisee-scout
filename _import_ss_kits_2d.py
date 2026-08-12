@@ -19,8 +19,8 @@ from pathlib import Path
 
 from PIL import Image
 
-ROOT = Path(r"D:\UsersData\Eliseo Miraglia\Desktop\ELISEE SCOUT SITO")
-ZIP_PATH = Path(r"D:\Download\sortitoutsi SS Kits Megapack 2026.14.zip")
+ROOT = Path(__file__).resolve().parent
+ZIP_PATH = Path.home() / "Downloads" / "sortitoutsi SS Kits Megapack 2026.14.zip"
 ZIP_PREFIX = "sortitoutsi SS Kits Megapack 2026.14/graphics/kits/"
 OUT_KITS = ROOT / "immagini" / "kits-2d"
 CAT = ROOT / "data" / "squadre" / "catalog.json"

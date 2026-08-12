@@ -4,9 +4,10 @@ from __future__ import annotations
 import json, re, hashlib
 from pathlib import Path
 
-ROOT = Path(r"D:\UsersData\Eliseo Miraglia\Desktop\ELISEE SCOUT SITO")
+ROOT = Path(__file__).resolve().parent
 OUT = ROOT / "data" / "squadre" / "catalog.json"
 LOGO_DIR = ROOT / "immagini" / "squadre-loghi"
+KITS_DIR = ROOT / "immagini" / "kits-2d"
 LOGO_DIR.mkdir(parents=True, exist_ok=True)
 OUT.parent.mkdir(parents=True, exist_ok=True)
 
