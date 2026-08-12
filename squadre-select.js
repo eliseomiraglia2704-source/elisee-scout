@@ -9,9 +9,9 @@
   var LEAGUE_ORDER = [];
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260812_ULTRA_OPTIMIZED_PNG';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260813_VENEZIA_SYNC';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260812_ULTRA_OPTIMIZED_PNG';
+  var LOGO_V = '20260813_VENEZIA_SYNC';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -70,10 +70,12 @@
     'pre-match': 'PRE-MATCH',
     'pre-match-home': 'PRE-MATCH (CASA)',
     'pre-match-away': 'PRE-MATCH (OSPITI)',
+    'pre-partita': 'PRE-PARTITA',
     'pre-season': 'PRE-SEASON',
     'pre-season-home': 'PRE-SEASON (CASA)',
     'pre-season-away': 'PRE-SEASON (OSPITI)',
     'pre-stagione': 'PRE-STAGIONE',
+    'travel-shirt': 'MAGLIA VIAGGIO',
     'training': 'ALLENAMENTO',
     'training-1': 'ALLENAMENTO 1',
     'training-2': 'ALLENAMENTO 2',
