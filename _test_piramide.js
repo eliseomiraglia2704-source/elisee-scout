@@ -12,8 +12,11 @@ var assert = require('assert');
 var root = __dirname;
 var ctx = { window: {}, console: console };
 vm.createContext(ctx);
+vm.runInContext(fs.readFileSync(path.join(root, 'piramide-italia.js'), 'utf8'), ctx);
 vm.runInContext(fs.readFileSync(path.join(root, 'club-storia.js'), 'utf8'), ctx);
 var S = ctx.window.EliseeClubStoria;
+var PIR = ctx.window.EliseePiramide;
+assert.ok(PIR, 'EliseePiramide non caricato');
 assert.ok(S, 'EliseeClubStoria non caricato');
 
 var clubs = JSON.parse(fs.readFileSync(path.join(root, 'data/squadre/minigioco_clubs.json'), 'utf8'));
@@ -204,12 +207,31 @@ if (worst['VIVI ALTOTEVERE'] < 3) fail('Vivi sopra la C');
 
 /* 8b. Retrocessione C→D tiene il girone D vero */
 var scaf = Object.assign({}, find('SCAFATESE'), { catalogDGirone: find('SCAFATESE').dg || 'G' });
-var mestre = find('MESTRE');
-var mestreC = S.labelFor(Object.assign({}, mestre), 3);
-if (!/GIRONE A/i.test(mestreC)) fail('Mestre promossa da D Gir. C deve andare in C Gir. A (Nord), got ' + mestreC);
+function expectC(name, letter, why) {
+  var club = Object.assign({}, find(name));
+  var got = S.labelFor(club, 3, false);
+  if (!new RegExp('GIRONE ' + letter, 'i').test(got)) {
+    fail(name + ' in C deve essere Gir. ' + letter + ' (' + why + '), got ' + got);
+  }
+  if (PIR.serieCGironeForClub(club) !== letter) {
+    fail(name + ' serieCGironeForClub=' + PIR.serieCGironeForClub(club) + ' atteso ' + letter);
+  }
+}
+expectC('MESTRE', 'A', 'Veneto = Nord');
+expectC('SPEZIA', 'A', 'Liguria = Nord');
+expectC('ENTELLA', 'A', 'Liguria = Nord');
+expectC('EMPOLI', 'B', 'Toscana = Centro');
+expectC('CARRARESE', 'B', 'Toscana = Centro');
+expectC('SIENA', 'B', 'Toscana = Centro');
+expectC('ROMA', 'B', 'Lazio = Centro');
+expectC('BARI', 'C', 'Puglia = Sud');
+expectC('NAPOLI', 'C', 'Campania = Sud');
+expectC('ATHLETIC PALERMO', 'C', 'Sicilia = Sud');
+expectC('IGEA VIRTUS', 'C', 'Sicilia = Sud');
+expectC('CAGLIARI', 'C', 'Sardegna = Sud');
+expectC('CAMPOBASSO', 'C', 'Molise = Sud');
 var igea = find('IGEA VIRTUS');
-var igeaC = S.labelFor(Object.assign({}, igea), 3);
-if (!/GIRONE C/i.test(igeaC)) fail('Igea Virtus (Sicilia, D Gir. I) deve salire in C Gir. C, got ' + igeaC);
+var igeaC = S.labelFor(Object.assign({}, igea), 3, false);
 var scafD = S.labelFor(scaf, 4);
 if (!/GIRONE G/i.test(scafD)) fail('Scafatese retrocessa deve andare in D Gir. G, got ' + scafD);
 var ath = find('ATHLETIC PALERMO');

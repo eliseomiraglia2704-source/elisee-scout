@@ -1268,7 +1268,7 @@
         '<button type="button" class="es-mg-btn-full ghost" id="es-mg-back">Indietro</button>' +
         '<button type="button" class="es-mg-help-round" id="es-mg-help" aria-label="Informazioni">?</button>' +
         '</div>' +
-        '<p class="es-mg-help-pop" id="es-mg-help-pop" hidden>Piramide: Serie C ha 3 gironi (A, B, C) e il vincitore di ciascuno sale in Serie B. Serie D ha i gironi A–I e il vincitore di ciascuno sale in Serie C. Overall da 49, +8 / −4 a stagione in base a rendimento ed età.</p>' +
+        '<p class="es-mg-help-pop" id="es-mg-help-pop" hidden>Serie C: Girone A Nord, Girone B Centro, Girone C Sud. Chi sale o scende in C entra subito nel girone della propria area. Serie D: gironi A–I, il vincitore sale in C nel girone geografico giusto. Overall da 49, +8 / −4 a stagione.</p>' +
         (isAccountLogged()
           ? '<div class="es-mg-save-opt" id="es-mg-save-opt">' +
             '<p class="es-mg-save-label">Salva la partita sul tuo account</p>' +
@@ -1616,19 +1616,15 @@
     return out;
   }
 
-  function labelForItalianTier(club, t) {
+  function labelForItalianTier(club, t, atStart) {
+    if (t === 3 && !atStart && typeof window !== 'undefined' && window.EliseePiramide && window.EliseePiramide.labelSerieC) {
+      return window.EliseePiramide.labelSerieC(club);
+    }
     if (typeof window !== 'undefined' && window.EliseeClubStoria && window.EliseeClubStoria.labelFor) {
-      return window.EliseeClubStoria.labelFor(club, t);
+      return window.EliseeClubStoria.labelFor(club, t, atStart);
     }
     if (t === 1) return 'SERIE A';
     if (t === 2) return 'SERIE B';
-    if (club && club.catalogT != null && Number(club.catalogT) === Number(t) && club.catalogL) {
-      if (t === 3) {
-        var keep = String(club.catalogL).toUpperCase().match(/GIR(?:ONE|\.)\s*([ABC])/);
-        return 'SERIE C · GIRONE ' + (keep ? keep[1] : 'A');
-      }
-      return club.catalogL;
-    }
     if (t === 3) return 'SERIE C · GIRONE A';
     return 'SERIE D · GIRONE A';
   }

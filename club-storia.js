@@ -367,25 +367,28 @@
     return 'C';
   }
 
-  function labelFor(club, destT) {
+  function piramide() {
+    return (typeof window !== 'undefined' && window.EliseePiramide) ? window.EliseePiramide : null;
+  }
+
+  function labelFor(club, destT, atStart) {
     destT = Number(destT);
     var catL = club && (club.catalogL || club.l);
     var catT = club && club.catalogT;
     var dGir = club && (club.catalogDGirone || club.dg);
-    if (catT != null && Number(catT) === destT && catL) {
-      if (destT === 3) {
-        return 'SERIE C · GIRONE ' + serieCGirone(parseGirone(catL) || 'A');
-      }
-      return catL;
-    }
+    var Pira = piramide();
     if (destT === 1) return 'SERIE A';
     if (destT === 2) return 'SERIE B';
     if (destT === 3) {
-      if (Number(catT) === 4 || dGir) {
-        return 'SERIE C · GIRONE ' + dGironeToSerieC(parseGirone(catL) || dGir || 'A');
+      if (atStart && catT === 3 && catL) {
+        var g0 = parseGirone(catL);
+        return 'SERIE C · GIRONE ' + (g0 && 'ABC'.indexOf(g0) >= 0 ? g0 : 'A');
       }
-      return 'SERIE C · GIRONE ' + serieCGirone(parseGirone(catL) || 'A');
+      if (Pira && Pira.labelSerieC) return Pira.labelSerieC(club);
+      return 'SERIE C · GIRONE ' + dGironeToSerieC(parseGirone(catL) || dGir || 'A');
     }
+    if (atStart && catT === 4 && catL) return catL;
+    if (Pira && Pira.labelSerieD) return Pira.labelSerieD(club);
     if (dGir && 'ABCDEFGHI'.indexOf(String(dGir).toUpperCase()) >= 0) {
       return 'SERIE D · GIRONE ' + String(dGir).toUpperCase();
     }
@@ -403,7 +406,7 @@
     if (dest < s.ceil) dest = s.ceil;
     if (dest > s.floor) dest = s.floor;
     if (atStart && catT != null && catT >= s.ceil && catT <= s.floor) dest = catT;
-    return { t: dest, l: labelFor(club, dest) };
+    return { t: dest, l: labelFor(club, dest, !!atStart) };
   }
 
   function legalTier(club, tier) {

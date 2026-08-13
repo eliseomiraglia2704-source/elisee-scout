@@ -14,6 +14,7 @@ var TROPHY_DIR = path.join(ROOT, 'immagini', 'minigioco', 'loghi-trofei');
 
 var ctx = { window: {}, console: console };
 vm.createContext(ctx);
+vm.runInContext(fs.readFileSync(path.join(ROOT, 'piramide-italia.js'), 'utf8'), ctx);
 vm.runInContext(fs.readFileSync(path.join(ROOT, 'club-storia.js'), 'utf8'), ctx);
 vm.runInContext(fs.readFileSync(path.join(ROOT, 'piramide-italia.js'), 'utf8'), ctx);
 var S = ctx.window.EliseeClubStoria;
@@ -304,6 +305,12 @@ function inspectOffer(simId, age, o, atStart) {
   if (Number(o.t) === 3) {
     var g = parseG(o.l);
     if (g && 'ABC'.indexOf(g) < 0) noteErr(simId, 'girone-C-illegale', o.n + ' ' + o.l);
+    if (!atStart && PIR && PIR.serieCGironeForClub) {
+      var geo = PIR.serieCGironeForClub(o);
+      if (g && geo && g !== geo) {
+        noteErr(simId, 'girone-C-geografia', o.n + ' in ' + o.l + ' ma area vuole Gir. ' + geo);
+      }
+    }
   }
   if (o.n === 'MODENA' && Number(o.t) === 1) noteErr(simId, 'modena-A', 'Modena in Serie A età ' + age);
   if (o.n === 'CALDIERO TERME' && Number(o.t) < 3) noteErr(simId, 'caldiero-alto', o.l);
