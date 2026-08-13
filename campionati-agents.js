@@ -2,6 +2,9 @@
  * ELISEE SCOUT — Flotta Agenti Campionati (Tuttocampo)
  *
  * UNITÀ = GIRONE (non la sola categoria).
+ * CERVELLO: window.EliseePiramide.BRAIN
+ *   Serie C: vincitore di ogni girone (A Nord, B Centro, C Sud) → Serie B.
+ *   Serie D: vincitore di ogni girone A–I → Serie C.
  * Esempio: Serie D ha 9 gironi (A–I) → 9 × 10 = 90 agenti solo per Serie D.
  *
  * Totale: 10 ruoli × 201 gironi = 2010 agenti campionati.

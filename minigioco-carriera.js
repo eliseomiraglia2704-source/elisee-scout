@@ -3030,7 +3030,7 @@
     var transferBoxTitle = isFirstStep ? 'OFFERTA DAL SETTORE GIOVANILE' : 'Finestra di mercato';
     var transferBoxDesc = isFirstStep
       ? 'Anche le big hanno il settore giovanile. Puoi firmare per una Primavera di Serie A o per un club di categoria più bassa, e poi restare a crescere oppure cambiare.'
-      : 'Puoi restare o cambiare. In Serie C il vincitore di ogni girone (A, B, C) sale in Serie B; in Serie D il vincitore di ogni girone sale in Serie C.';
+      : '';
 
     // Club display in player card
     var isCurrentFree = last.isFree || last.club === 'Svincolato';
@@ -3067,7 +3067,7 @@
       leftBottom =
         '<div class="es-mg-transfer es-mg-cantera-box' + (animateNew ? ' slide-up' : '') + '">' +
         '<h3>' + transferBoxTitle + '</h3>' +
-        '<p>' + transferBoxDesc + '</p>' +
+        (transferBoxDesc ? '<p>' + transferBoxDesc + '</p>' : '') +
         '<div class="es-mg-offers es-mg-offers-grid">' + offerHtml + '</div></div>';
     }
     openShell(

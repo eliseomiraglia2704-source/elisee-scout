@@ -178,12 +178,25 @@
     }
   };
 
+  var BRAIN = {
+    id: 'elisee-piramide-italia',
+    role: 'cervello-pensante',
+    mercatoUi: false,
+    rules: [
+      'In Serie C il vincitore di ogni girone (A, B, C) sale in Serie B.',
+      'In Serie D il vincitore di ogni girone (A–I) sale in Serie C.',
+      'Serie C Girone A = Nord Italia. Girone B = Centro Italia. Girone C = Sud Italia.',
+      'Chi sale o scende in Serie C entra subito nel girone geografico della propria area.',
+      'Unita di promozione = il girone, non la categoria intera.'
+    ],
+    summary:
+      'In Serie C il vincitore di ogni girone (A, B, C) sale in Serie B; in Serie D il vincitore di ogni girone sale in Serie C.'
+  };
+
   function summaryText() {
-    return (
-      'Serie C: Girone A Nord Italia, Girone B Centro Italia, Girone C Sud Italia. ' +
-      'Chi sale o scende in C entra subito nel girone della propria area. ' +
-      'Serie D: gironi A–I, il vincitore sale in C nel girone geografico giusto.'
-    );
+    return BRAIN.summary + ' ' +
+      'Serie C: Girone A Nord, Girone B Centro, Girone C Sud. ' +
+      'Chi sale o scende in C entra nel girone della propria area.';
   }
 
   function promoteLabel(fromLeague, girone) {
@@ -203,6 +216,7 @@
     SERIE_C_GIRONI: SERIE_C_GIRONI,
     SERIE_D_GIRONI: SERIE_D_GIRONI,
     RULES: RULES,
+    BRAIN: BRAIN,
     summaryText: summaryText,
     promoteLabel: promoteLabel,
     parseGirone: parseGirone,
