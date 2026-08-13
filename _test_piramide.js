@@ -64,6 +64,9 @@ function mustLegal(name, tier) {
 }
 mustLegal('MODENA', 2);
 mustIllegal('MODENA', 1);
+mustLegal('FOGGIA', 3);
+mustIllegal('FOGGIA', 2);
+mustIllegal('FOGGIA', 1);
 mustLegal('CALDIERO TERME', 4);
 mustIllegal('CALDIERO TERME', 1);
 mustIllegal('CALDIERO TERME', 2);

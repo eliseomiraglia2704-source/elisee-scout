@@ -133,7 +133,7 @@
   put(['REGGIANA'], { a: 3, b: 10, c: 20, d: 7 });
   put(['COSENZA'], { a: 0, b: 10, c: 22, d: 8 });
   put(['CROTONE'], { a: 3, b: 10, c: 20, d: 7 });
-  put(['FOGGIA'], { a: 4, b: 8, c: 18, d: 10 });
+  put(['FOGGIA'], { a: 0, b: 0, c: 28, d: 12 });
   put(['LIVORNO'], { a: 8, b: 10, c: 12, d: 10 });
   put(['CITTADELLA'], { a: 0, b: 16, c: 22, d: 2 });
   put(['LATINA'], { a: 0, b: 6, c: 22, d: 12 });
@@ -285,6 +285,7 @@
   lock(['INTER', 'MILAN', 'JUVENTUS', 'NAPOLI', 'ROMA', 'LAZIO', 'ATALANTA'], 1, 1);
   lock(['FIORENTINA', 'BOLOGNA', 'TORINO', 'UDINESE'], 1, 2);
   lock(['MODENA'], 2, 3);
+  lock(['FOGGIA'], 3, 4);
   lock(
     ['CALDIERO TERME', 'VIVI ALTOTEVERE', 'FERRANDINA', 'ATHLETIC PALERMO', 'TAU'],
     3,
