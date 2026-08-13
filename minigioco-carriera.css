@@ -2476,23 +2476,26 @@ button.es-mg-hub-menubar:focus {
 .es-mg-offers-grid {
   display: grid !important;
   grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  gap: 0.7rem !important;
+  gap: 0.55rem !important;
   align-items: stretch !important;
 }
 
 .es-mg-offer {
   display: grid !important;
-  grid-template-rows: 2.9em 56px 1.4em auto !important;
+  grid-template-rows: 2.75em 52px 1.35em 2.55em !important;
+  grid-template-columns: minmax(0, 1fr) !important;
   align-items: center !important;
   justify-items: center !important;
   background: rgba(255, 255, 255, 0.04) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-radius: 12px !important;
-  padding: 0.65rem 0.4rem 0.6rem !important;
+  padding: 0.55rem 0.35rem 0.45rem !important;
   text-align: center !important;
+  min-width: 0 !important;
   min-height: 0 !important;
-  height: auto !important;
+  height: 100% !important;
   overflow: hidden !important;
+  box-sizing: border-box !important;
   transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
 }
 
@@ -2516,14 +2519,18 @@ button.es-mg-hub-menubar:focus {
 }
 
 .es-mg-offer-title b {
-  display: block !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
   color: #fff !important;
-  font-size: 0.82rem !important;
+  font-size: 0.72rem !important;
   font-weight: 800 !important;
-  margin-top: 0.12rem !important;
-  white-space: nowrap !important;
+  margin-top: 0.08rem !important;
+  line-height: 1.15 !important;
+  max-height: 1.7em !important;
   overflow: hidden !important;
-  text-overflow: ellipsis !important;
+  word-break: break-word !important;
+  hyphens: auto !important;
 }
 
 .es-mg-offer-logo-wrap {
@@ -2563,10 +2570,12 @@ button.es-mg-hub-menubar:focus {
   flex-wrap: nowrap !important;
   align-items: center !important;
   justify-content: flex-start !important;
-  gap: 0.2rem !important;
+  gap: 0.15rem !important;
   width: 100% !important;
-  min-height: 1.5em !important;
-  padding-top: 0.2rem !important;
+  min-height: 0 !important;
+  max-height: 2.55em !important;
+  padding-top: 0.1rem !important;
+  overflow: hidden !important;
 }
 .es-mg-offer .es-mg-league-logo-img {
   width: 14px !important;
@@ -2579,13 +2588,14 @@ button.es-mg-hub-menubar:focus {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 0.2rem !important;
-  font-size: 0.6rem !important;
+  gap: 0.15rem !important;
+  font-size: 0.56rem !important;
   font-weight: 700 !important;
   color: #38bdf8 !important;
   margin: 0 !important;
   white-space: nowrap !important;
   width: 100% !important;
+  max-width: 100% !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
 }

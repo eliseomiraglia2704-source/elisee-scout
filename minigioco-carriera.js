@@ -2993,13 +2993,9 @@
         if (o.isPromoted) {
           var promoTxt = 'Promossa';
           if (o.promotedFromGirone && o.promotedFromTier === 3) {
-            promoTxt = (_PIR && _PIR.promoteLabel)
-              ? _PIR.promoteLabel('C', o.promotedFromGirone)
-              : ('Vince C Gir. ' + o.promotedFromGirone + ' \u2192 B');
+            promoTxt = 'C\u2192B Gir. ' + String(o.promotedFromGirone).toUpperCase();
           } else if (o.promotedFromGirone && o.promotedFromTier === 4) {
-            promoTxt = (_PIR && _PIR.promoteLabel)
-              ? _PIR.promoteLabel('D', o.promotedFromGirone)
-              : ('Vince D Gir. ' + o.promotedFromGirone + ' \u2192 C');
+            promoTxt = 'D\u2192C Gir. ' + String(o.promotedFromGirone).toUpperCase();
           }
           extraBadge += '<span class="es-mg-offer-badge-up">' + promoTxt + '</span>';
         } else if (o.isRelegated) {
