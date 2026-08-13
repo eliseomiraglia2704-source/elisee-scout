@@ -2500,10 +2500,10 @@ button.es-mg-hub-menubar:focus {
 }
 
 .es-mg-offer:hover {
-  background: rgba(56, 189, 248, 0.1) !important;
-  border-color: rgba(56, 189, 248, 0.4) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+  border-color: rgba(255, 244, 214, 0.78) !important;
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 0 0 2px rgba(255, 236, 179, 0.35), 0 10px 22px rgba(0, 0, 0, 0.35) !important;
 }
 
 .es-mg-offer-title {
@@ -2732,6 +2732,109 @@ button.es-mg-hub-menubar:focus {
   width: 40px;
   height: 40px;
 }
+
+/* ===== ANIMAZIONI COPERO (dal video di riferimento) ===== */
+.es-mg-ovr-big.cred {
+  background: linear-gradient(145deg, #ef4444, #991b1b);
+  color: #fff;
+  box-shadow: 0 0 18px rgba(239, 68, 68, 0.35);
+}
+.es-mg-ovr-big.cblue {
+  background: linear-gradient(145deg, #38bdf8, #0369a1);
+  color: #fff;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.4);
+}
+.es-mg-ovr-pill.cred { background: #b91c1c; color: #fecaca; }
+.es-mg-ovr-pill.cblue { background: #0369a1; color: #e0f2fe; }
+.es-mg-age-pill.cbronze { background: #78350f; color: #fde68a; }
+.es-mg-age-pill.corange { background: #c2410c; color: #ffedd5; }
+.es-mg-age-pill.cred { background: #b91c1c; color: #fecaca; }
+.es-mg-age-pill.cblue { background: #0284c7; color: #e0f2fe; }
+.es-mg-age-pill.cyellow,
+.es-mg-age-pill.cgold { background: #ca8a04; color: #1c1917; }
+
+.es-mg-ovr-big.is-pop {
+  animation: esMgOvrPop 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes esMgOvrPop {
+  0% { transform: scale(0.72); filter: brightness(1.6); }
+  55% { transform: scale(1.12); }
+  100% { transform: scale(1); filter: none; }
+}
+
+.es-mg-row.is-current {
+  animation: esMgCurrentGlow 1.6s ease-in-out 1;
+}
+@keyframes esMgCurrentGlow {
+  0%, 100% { box-shadow: none; }
+  40% { box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.45), 0 0 16px rgba(56, 189, 248, 0.18); }
+}
+.es-mg-row.is-new {
+  animation: esMgRowIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.es-mg-row.is-new:nth-last-child(2) { animation-delay: 0.08s; }
+.es-mg-row.is-new:nth-last-child(3) { animation-delay: 0.04s; }
+@keyframes esMgRowIn {
+  from { opacity: 0; transform: translateX(-18px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+.es-mg-offer:hover {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border-color: rgba(255, 244, 214, 0.78) !important;
+  box-shadow: 0 0 0 2px rgba(255, 236, 179, 0.35), 0 10px 22px rgba(0, 0, 0, 0.35) !important;
+  transform: translateY(-3px) scale(1.02) !important;
+}
+.es-mg-offer.is-picked {
+  animation: esMgOfferPick 0.48s cubic-bezier(0.16, 1, 0.3, 1) both;
+  pointer-events: none !important;
+}
+@keyframes esMgOfferPick {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.06); box-shadow: 0 0 0 3px rgba(255, 236, 179, 0.7), 0 0 28px rgba(56, 189, 248, 0.35); }
+  100% { transform: scale(0.96); opacity: 0.72; }
+}
+
+.es-mg-season-flash {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: radial-gradient(ellipse at center, rgba(56, 189, 248, 0.16), transparent 62%);
+  animation: esMgFlash 0.7s ease forwards;
+}
+@keyframes esMgFlash {
+  0% { opacity: 0; }
+  25% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.es-mg-vitrina-item {
+  animation: esMgTrophyIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.es-mg-vitrina-item:nth-child(2) { animation-delay: 0.07s; }
+.es-mg-vitrina-item:nth-child(3) { animation-delay: 0.14s; }
+@keyframes esMgTrophyIn {
+  from { opacity: 0; transform: translateY(-10px) scale(0.6); }
+  to { opacity: 1; transform: none; }
+}
+
+.es-mg-dilemma-card:hover {
+  border-color: rgba(255, 244, 214, 0.7);
+  box-shadow: 0 0 0 2px rgba(255, 236, 179, 0.28);
+  transform: translateY(-3px) scale(1.015);
+}
+
+.es-mg-tot-stat b.is-tick,
+.es-mg-player-side b.is-tick {
+  animation: esMgTick 0.35s ease;
+}
+@keyframes esMgTick {
+  0% { transform: scale(1.25); color: #7dd3fc; }
+  100% { transform: none; }
+}
+
+.es-mg-root.is-resolving .es-mg-offer { pointer-events: none; }
 
 .es-mg-sum-awards-row .es-mg-trophy-img {
   width: 38px;

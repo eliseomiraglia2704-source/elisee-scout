@@ -2943,11 +2943,13 @@
               : '') +
             '<span>' + esc(h.club) + (h.suspended ? ' <small class="es-mg-suspend-badge">Sospeso</small>' : '') + (h.isLoan ? ' <small class="es-mg-loan-badge">Prestito</small>' : '') + cupsSvgHtml + '</span>';
         var prevOvr = idx > 0 ? p.history[idx - 1].ovr : h.ovr;
-        var ageTone = h.ovr > prevOvr ? ' up' : (h.ovr < prevOvr ? ' down' : '');
+        var ageTone = ' c' + ovrColor(h.ovr);
+        var newRows = animateNew ? Math.max(1, stepYears()) : 0;
+        var isFresh = animateNew && !isFreeRow && idx >= p.history.length - newRows;
 
         return (
           '<div class="es-mg-row' +
-          (isLast && animateNew ? ' is-new' : '') +
+          (isFresh ? ' is-new' : '') +
           (isLast ? ' is-current' : '') +
           '">' +
           '<div class="es-mg-row-age"><span class="es-mg-age-pill' + ageTone + '">' + h.age + '</span></div>' +
@@ -3070,12 +3072,13 @@
     }
     openShell(
       '<button type="button" class="es-mg-float-close" id="es-mg-x">Chiudi</button>' +
+        (animateNew ? '<div class="es-mg-season-flash" aria-hidden="true"></div>' : '') +
         '<div class="es-mg-career">' +
         '<div class="es-mg-career-board">' +
         '<div class="es-mg-career-left">' +
         '<div class="es-mg-player-card' + (animateNew ? ' pop' : '') + '">' +
         '<div class="es-mg-player-card-top">' +
-        '<div class="es-mg-ovr-big c' + ovrColor(p.ovr) + '"><span>OVR</span><strong>' + p.ovr + '</strong></div>' +
+        '<div class="es-mg-ovr-big c' + ovrColor(p.ovr) + (animateNew ? ' is-pop' : '') + '" id="es-mg-ovr-big"><span>OVR</span><strong id="es-mg-ovr-num">' + p.ovr + '</strong></div>' +
         '<div class="es-mg-player-meta">' +
         '<div class="es-mg-player-tags">' +
         '<span class="es-mg-tag">' + flagOf(p.nationCode) + ' ' + esc(p.nationCode || 'IT') + '</span>' +
@@ -3093,9 +3096,9 @@
         '</div>' +
         /* Totali carriera con icona campetto da calcio per PJ */
         '<div class="es-mg-tot-stats">' +
-        '<div class="es-mg-tot-stat"><span class="es-mg-tot-lab">PR</span><b>' + PITCH_SVG + ' ' + totApps + '</b></div>' +
-        '<div class="es-mg-tot-stat"><span class="es-mg-tot-lab">GOL</span><b>⚽ ' + totGoals + '</b></div>' +
-        '<div class="es-mg-tot-stat"><span class="es-mg-tot-lab">ASS</span><b>🅐 ' + totAssists + '</b></div>' +
+        '<div class="es-mg-tot-stat"><span class="es-mg-tot-lab">PR</span><b>' + PITCH_SVG + ' <span id="es-mg-tot-apps">' + totApps + '</span></b></div>' +
+        '<div class="es-mg-tot-stat"><span class="es-mg-tot-lab">GOL</span><b>⚽ <span id="es-mg-tot-gls">' + totGoals + '</span></b></div>' +
+        '<div class="es-mg-tot-stat"><span class="es-mg-tot-lab">ASS</span><b>🅐 <span id="es-mg-tot-ast">' + totAssists + '</span></b></div>' +
         '</div>' +
         /* Vitrina dei trofei in stile Copero */
         '<div class="es-mg-vitrina-container">' + vitrinaHtml + '</div>' +
@@ -3230,19 +3233,26 @@
       btn.onclick = function () {
         var idx = parseInt(btn.getAttribute('data-idx'), 10);
         var offer = offers[idx];
-        if (!offer) return;
-        
-        // Applica sim e club scelto
-        seasonSim(p, offer);
-        
-        save(LS.career, p);
-        renderCareer(true);
-        
-        // scroll timeline
+        if (!offer || (root.classList && root.classList.contains('is-resolving'))) return;
+        root.classList.add('is-resolving');
+        btn.classList.add('is-picked');
+        var prevOvr = p.ovr;
+        var prevApps = totApps;
+        var prevG = totGoals;
+        var prevA = totAssists;
         setTimeout(function () {
-          var tl = document.getElementById('es-mg-timeline');
-          if (tl) tl.scrollTop = tl.scrollHeight;
-        }, 80);
+          seasonSim(p, offer);
+          save(LS.career, p);
+          renderCareer(true);
+          tickNumber(document.getElementById('es-mg-ovr-num'), prevOvr, p.ovr, 480);
+          tickNumber(document.getElementById('es-mg-tot-apps'), prevApps, p.history.reduce(function (a, b) { return a + (b.apps || 0); }, 0), 520);
+          tickNumber(document.getElementById('es-mg-tot-gls'), prevG, p.history.reduce(function (a, b) { return a + (b.goals || 0); }, 0), 520);
+          tickNumber(document.getElementById('es-mg-tot-ast'), prevA, p.history.reduce(function (a, b) { return a + (b.assists || 0); }, 0), 520);
+          setTimeout(function () {
+            var tl = document.getElementById('es-mg-timeline');
+            if (tl) tl.scrollTop = tl.scrollHeight;
+          }, 80);
+        }, 280);
       };
     });
     setTimeout(function () {
@@ -3252,10 +3262,31 @@
   }
 
   function ovrColor(o) {
-    if (o >= 85) return 'gold';
-    if (o >= 75) return 'yellow';
-    if (o >= 65) return 'orange';
+    o = Number(o) || 0;
+    if (o >= 72) return 'blue';
+    if (o >= 54) return 'red';
+    if (o >= 48) return 'orange';
     return 'bronze';
+  }
+
+  function tickNumber(el, from, to, ms) {
+    if (!el) return;
+    from = Number(from) || 0;
+    to = Number(to) || 0;
+    if (from === to) {
+      el.textContent = String(to);
+      return;
+    }
+    var start = Date.now();
+    el.classList.add('is-tick');
+    function step() {
+      var p = Math.min(1, (Date.now() - start) / (ms || 420));
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = String(Math.round(from + (to - from) * eased));
+      if (p < 1) requestAnimationFrame(step);
+      else el.classList.remove('is-tick');
+    }
+    requestAnimationFrame(step);
   }
   function flagOf(code) {
     var n = NATIONS.find(function (x) {
