@@ -2860,6 +2860,7 @@
   // ---------- CAREER ----------
   function renderCareer(animateNew) {
     state.step = 'career';
+    if (root && root.classList) root.classList.remove('is-resolving');
     var p = state.player || load(LS.career, null);
     if (!p) {
       renderLanding();
@@ -3233,7 +3234,8 @@
       btn.onclick = function () {
         var idx = parseInt(btn.getAttribute('data-idx'), 10);
         var offer = offers[idx];
-        if (!offer || (root.classList && root.classList.contains('is-resolving'))) return;
+        if (!offer) return;
+        if (root.classList && root.classList.contains('is-resolving')) return;
         root.classList.add('is-resolving');
         btn.classList.add('is-picked');
         var prevOvr = p.ovr;
@@ -3241,13 +3243,17 @@
         var prevG = totGoals;
         var prevA = totAssists;
         setTimeout(function () {
-          seasonSim(p, offer);
-          save(LS.career, p);
-          renderCareer(true);
-          tickNumber(document.getElementById('es-mg-ovr-num'), prevOvr, p.ovr, 480);
-          tickNumber(document.getElementById('es-mg-tot-apps'), prevApps, p.history.reduce(function (a, b) { return a + (b.apps || 0); }, 0), 520);
-          tickNumber(document.getElementById('es-mg-tot-gls'), prevG, p.history.reduce(function (a, b) { return a + (b.goals || 0); }, 0), 520);
-          tickNumber(document.getElementById('es-mg-tot-ast'), prevA, p.history.reduce(function (a, b) { return a + (b.assists || 0); }, 0), 520);
+          try {
+            seasonSim(p, offer);
+            save(LS.career, p);
+            renderCareer(true);
+            tickNumber(document.getElementById('es-mg-ovr-num'), prevOvr, p.ovr, 480);
+            tickNumber(document.getElementById('es-mg-tot-apps'), prevApps, p.history.reduce(function (a, b) { return a + (b.apps || 0); }, 0), 520);
+            tickNumber(document.getElementById('es-mg-tot-gls'), prevG, p.history.reduce(function (a, b) { return a + (b.goals || 0); }, 0), 520);
+            tickNumber(document.getElementById('es-mg-tot-ast'), prevA, p.history.reduce(function (a, b) { return a + (b.assists || 0); }, 0), 520);
+          } catch (errPick) {
+            if (root && root.classList) root.classList.remove('is-resolving');
+          }
           setTimeout(function () {
             var tl = document.getElementById('es-mg-timeline');
             if (tl) tl.scrollTop = tl.scrollHeight;

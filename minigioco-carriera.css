@@ -1416,6 +1416,7 @@ button.es-mg-hub-menubar:focus {
   border-right: 1px solid rgba(255, 255, 255, 0.06);
   overflow-x: hidden;
   overflow-y: auto;
+  justify-content: flex-start;
 }
 .es-mg-career-right {
   padding: 0.85rem 0.9rem 0.75rem;
@@ -1758,6 +1759,7 @@ button.es-mg-hub-menubar:focus {
   border-radius: 16px;
   padding: 0.9rem;
   flex-shrink: 0;
+  margin-top: auto;
 }
 .es-mg-transfer.slide-up {
   animation: esMgSlideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -2382,7 +2384,7 @@ button.es-mg-hub-menubar:focus {
   border-radius: 16px !important;
   padding: 1rem 0.95rem 1.05rem !important;
   flex-shrink: 0 !important;
-  margin-top: 0.55rem;
+  margin-top: auto !important;
 }
 
 .es-mg-cantera-box h3 {
