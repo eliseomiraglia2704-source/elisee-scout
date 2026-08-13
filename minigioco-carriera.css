@@ -1360,16 +1360,16 @@ button.es-mg-hub-menubar:focus {
 /* ===== CAREER BOARD (struttura Copero, contenuti Elisee) ===== */
 .es-mg-float-close {
   position: absolute;
-  top: 0.65rem;
-  right: 0.85rem;
+  top: 0.5rem;
+  right: 0.7rem;
   z-index: 30;
   border: 0;
   background: #e8eef5;
   color: #0f172a;
   font-weight: 800;
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   border-radius: 999px;
-  padding: 0.4rem 0.9rem;
+  padding: 0.28rem 0.72rem;
   cursor: pointer;
 }
 .es-mg-float-close:hover {
@@ -1381,7 +1381,7 @@ button.es-mg-hub-menubar:focus {
   overflow: hidden;
   width: 100%;
   margin: 0 auto;
-  padding: 0.9rem 2.2rem 1.1rem;
+  padding: 2.4rem 3.6rem 1.1rem 2.2rem;
   display: flex;
   justify-content: center;
   align-items: stretch;
@@ -2173,7 +2173,7 @@ button.es-mg-hub-menubar:focus {
   .es-mg-career {
     max-width: none !important;
     width: 100% !important;
-    padding: 0.9rem 2.2rem 1.1rem !important;
+    padding: 2.4rem 3.6rem 1.1rem 2.2rem !important;
   }
 }
 
@@ -2600,7 +2600,7 @@ button.es-mg-hub-menubar:focus {
   justify-content: flex-end !important;
   align-items: center !important;
   margin-bottom: 0.45rem !important;
-  padding-right: 0.2rem !important;
+  padding-right: 0.15rem !important;
 }
 
 .es-mg-tot-icon-blue {
