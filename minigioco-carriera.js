@@ -1781,6 +1781,7 @@
       c.failed = false;
       c.failedFrom = 0;
       c.rebuild = '';
+      c._evoFrom = Number(c.t);
     });
     if (window.EliseeClubStoria && window.EliseeClubStoria.maybeFail) {
       (state.clubs || []).forEach(function (c) {
@@ -1794,7 +1795,11 @@
         return Number(c.t) === t && isItalianPyramid(c);
       });
     }
+    function stillIdle(c) {
+      return c && !c.justPromoted && !c.justRelegated && !c.justFailed && !c.failed;
+    }
     function move(c, t, up, fromGirone, isFail) {
+      if (!isFail && !stillIdle(c)) return;
       if (isFail) {
         t = failLandingTier(c);
         if (!isLegalTier(c, t)) {
@@ -1835,8 +1840,8 @@
       });
     }
     function promoteGironeWinner(fromTier, letter, toTier) {
-      var g = poolGirone(fromTier, letter).filter(function (c) { return isLegalTier(c, toTier); });
-      if (!g.length) g = pool(fromTier).filter(function (c) { return !c.justPromoted && isLegalTier(c, toTier); });
+      var g = poolGirone(fromTier, letter).filter(function (c) { return stillIdle(c) && isLegalTier(c, toTier); });
+      if (!g.length) g = pool(fromTier).filter(function (c) { return stillIdle(c) && isLegalTier(c, toTier); });
       var pick = weightedPickN(g, 1, function (c) {
         if (typeof window !== 'undefined' && window.EliseeClubStoria) {
           return window.EliseeClubStoria.promoteWeight(c, fromTier);
@@ -1848,34 +1853,60 @@
         attachGironeWinnerTrophy(pick, fromTier, letter);
       }
     }
-    weightedPickN(pool(2).filter(function (c) { return isLegalTier(c, 1); }), 2, function (c) {
+    weightedPickN(pool(2).filter(function (c) { return stillIdle(c) && isLegalTier(c, 1); }), 2, function (c) {
       return (window.EliseeClubStoria ? window.EliseeClubStoria.promoteWeight(c, 2) : 0.1) * 100;
     }).forEach(function (c) { move(c, 1, true); });
-    weightedPickN(pool(1).filter(function (c) { return !c.failed && isLegalTier(c, 2); }), 3, function (c) {
+    weightedPickN(pool(1).filter(function (c) { return stillIdle(c) && isLegalTier(c, 2); }), 3, function (c) {
       return (window.EliseeClubStoria ? window.EliseeClubStoria.relegateWeight(c, 1) : 0) * 100;
     }).forEach(function (c) { move(c, 2, false); });
     SERIE_C_GIRONI.forEach(function (g) {
       promoteGironeWinner(3, g, 2);
     });
-    weightedPickN(pool(2).filter(function (c) { return !c.justPromoted && !c.failed && isLegalTier(c, 3); }), SERIE_C_GIRONI.length, function (c) {
+    weightedPickN(pool(2).filter(function (c) { return stillIdle(c) && isLegalTier(c, 3); }), SERIE_C_GIRONI.length, function (c) {
       return (window.EliseeClubStoria ? window.EliseeClubStoria.relegateWeight(c, 2) : 0.1) * 100;
     }).forEach(function (c) { move(c, 3, false); });
     SERIE_D_GIRONI.forEach(function (g) {
       promoteGironeWinner(4, g, 3);
     });
     SERIE_C_GIRONI.forEach(function (g) {
-      var gPool = poolGirone(3, g).filter(function (c) { return !c.justPromoted && isLegalTier(c, 4); });
+      var gPool = poolGirone(3, g).filter(function (c) { return stillIdle(c) && isLegalTier(c, 4); });
       var nDown = 3;
       weightedPickN(gPool, nDown, function (c) {
         return (window.EliseeClubStoria ? window.EliseeClubStoria.relegateWeight(c, 3) : 0.1) * 100;
       }).forEach(function (c) { move(c, 4, false); });
     });
-    weightedPickN(pool(4).filter(function (c) { return !c.justPromoted && !c.failed && isLegalTier(c, 5); }), 4, function (c) {
+    weightedPickN(pool(4).filter(function (c) { return stillIdle(c) && isLegalTier(c, 5); }), 4, function (c) {
       return (window.EliseeClubStoria ? window.EliseeClubStoria.relegateWeight(c, 4) : 0.08) * 100;
     }).forEach(function (c) { move(c, 5, false); });
-    weightedPickN(pool(5).filter(function (c) { return isLegalTier(c, 4); }), 4, function (c) {
+    weightedPickN(pool(5).filter(function (c) { return stillIdle(c) && isLegalTier(c, 4); }), 4, function (c) {
       return (window.EliseeClubStoria ? window.EliseeClubStoria.promoteWeight(c, 5) : 0.12) * 100;
     }).forEach(function (c) { move(c, 4, true); });
+    (state.clubs || []).forEach(function (c) {
+      var from = Number(c._evoFrom);
+      var now = Number(c.t);
+      if (from && now - from > 1 && !c.justFailed) {
+        c.t = from;
+        if (applyFailLanding(c)) {
+          c.failed = true;
+          c.justFailed = true;
+          c.failedFrom = from;
+          c.justPromoted = false;
+          c.justRelegated = true;
+          if (!c.rebuild) c.rebuild = Math.random() < 0.3 ? 'forte' : 'debole';
+        } else {
+          c.t = Math.min(from + 1, 5);
+          c.l = labelForItalianTier(c, c.t);
+          c.justRelegated = true;
+          c.justPromoted = false;
+        }
+      } else if (from && from - now > 1 && !c.justFailed) {
+        c.t = from - 1;
+        c.l = labelForItalianTier(c, c.t);
+        c.justPromoted = true;
+        c.justRelegated = false;
+      }
+      delete c._evoFrom;
+    });
     repairClubTiers();
   }
 
@@ -2762,7 +2793,21 @@
       var stay = Object.assign({}, cur);
       stay.isStay = true;
       stampSeasonMoveBadge(stay);
-      if (cur.failed) stay.failed = true;
+      if (cur.failed || cur.justFailed) stay.failed = true;
+      var playedT = last ? clubLeagueTier({ l: last.league, t: last.t }) : 0;
+      var nowT = clubLeagueTier(stay);
+      if (playedT && nowT >= playedT + 2) {
+        stay.failed = true;
+        stay.justFailed = true;
+        stay.isRelegated = false;
+        stay.isPromoted = false;
+        if (!stay.rebuild) stay.rebuild = cur.rebuild || 'debole';
+        if (cur && !cur.failed) {
+          cur.failed = true;
+          cur.justFailed = true;
+          cur.rebuild = stay.rebuild;
+        }
+      }
       if (isYouthContext(p, stay, p.age)) stay.isYouth = true;
       offers.push(stay);
     }
