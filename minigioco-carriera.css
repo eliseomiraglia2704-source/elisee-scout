@@ -2470,7 +2470,8 @@ button.es-mg-hub-menubar:focus {
   background: rgba(248, 113, 113, 0.18);
   color: #fca5a5;
 }
-.es-mg-offer-badge-fail {
+.es-mg-offer-badge-fail,
+.es-mg-fail-badge {
   background: rgba(127, 29, 29, 0.55);
   color: #fecaca;
   font-size: 0.56rem;
@@ -2478,6 +2479,10 @@ button.es-mg-hub-menubar:focus {
   padding: 0.1rem 0.4rem;
   border-radius: 4px;
   letter-spacing: 0.04em;
+}
+.es-mg-fail-badge {
+  margin-left: 0.3rem;
+  vertical-align: middle;
 }
 .es-mg-offer-odds {
   font-size: 0.52rem;

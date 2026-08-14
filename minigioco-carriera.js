@@ -891,6 +891,7 @@
       c.promotedFromTier = 0;
       c.failed = false;
       c.failedFrom = 0;
+      c.rebuild = '';
     });
   }
 
@@ -995,6 +996,13 @@
     (state.clubs || []).forEach(function (c) {
       if (c.homeTier == null) c.homeTier = Number(c.t) || clubLeagueTier(c);
       clampClubToHistory(c);
+      var now = clubLeagueTier(c);
+      var cat = c.catalogT != null ? Number(c.catalogT) : now;
+      if (!c.failed && c.justPromoted && cat && now >= cat + 1) {
+        c.failed = true;
+        c.failedFrom = cat;
+        if (!c.rebuild) c.rebuild = 'debole';
+      }
     });
   }
 
@@ -1615,6 +1623,8 @@
     if (club.isLoan) out.isLoan = true;
     if (club.isStay) out.isStay = true;
     if (club.isPromoted) out.isPromoted = true;
+    if (found.failed) out.failed = true;
+    if (found.rebuild) out.rebuild = found.rebuild;
     if (club.isRelegated) out.isRelegated = true;
     return out;
   }
@@ -1730,9 +1740,12 @@
       if (isFail) {
         c.failed = true;
         c.failedFrom = fromTier;
-      } else if (up) {
+        var historic = /PARMA|FIORENTINA|NAPOLI|PALERMO|SIENA|CATANIA|AREZZO|CESENA|REGGINA|BARI/.test(String(c.n || '').toUpperCase());
+        c.rebuild = Math.random() < (historic ? 0.48 : 0.3) ? 'forte' : 'debole';
+      } else if (up && c.failed && Number(t) <= (c.failedFrom || 1)) {
         c.failed = false;
         c.failedFrom = 0;
+        c.rebuild = '';
       }
       if (up) {
         c.promotedFromGirone = fromG;
@@ -1821,7 +1834,8 @@
         pg: c.promotedFromGirone || '',
         pt: c.promotedFromTier || 0,
         fl: !!c.failed,
-        ff: c.failedFrom || 0
+        ff: c.failedFrom || 0,
+        rb: c.rebuild || ''
       };
     });
   }
@@ -1850,6 +1864,7 @@
       c.promotedFromTier = r.pt || 0;
       c.failed = !!r.fl;
       c.failedFrom = r.ff || 0;
+      c.rebuild = r.rb || '';
       guardClub(c, false);
     });
   }
@@ -2442,6 +2457,8 @@
         trophies: seasonTrophyKeys.length,
         trophyList: seasonTrophyKeys,
         isLoan: !!(selectedOffer && selectedOffer.isLoan),
+        failed: !!(club && club.failed),
+        rebuild: (club && club.rebuild) || '',
         isFree: false,
         suspended: !!(p.eventMods && p.eventMods.suspended)
       };
@@ -3029,7 +3046,7 @@
             (h.logo
               ? '<img src="' + esc(h.logo) + '" alt="" class="es-mg-club-logo" onerror="this.style.display=\'none\'" />'
               : '') +
-            '<span>' + esc(h.club) + (h.suspended ? ' <small class="es-mg-suspend-badge">Sospeso</small>' : '') + (h.isLoan ? ' <small class="es-mg-loan-badge">Prestito</small>' : '') + cupsSvgHtml + '</span>';
+            '<span>' + esc(h.club) + (h.suspended ? ' <small class="es-mg-suspend-badge">Sospeso</small>' : '') + (h.isLoan ? ' <small class="es-mg-loan-badge">Prestito</small>' : '') + (h.failed ? ' <small class="es-mg-fail-badge">Fallita' + (h.rebuild === 'forte' ? ' · progetto forte' : h.rebuild === 'debole' ? ' · progetto debole' : '') + '</small>' : '') + cupsSvgHtml + '</span>';
         var prevOvr = idx > 0 ? p.history[idx - 1].ovr : h.ovr;
         var ageTone = ' c' + ovrColor(h.ovr);
         var newRows = animateNew ? Math.max(1, stepYears()) : 0;
@@ -3082,6 +3099,9 @@
         else if (!stay && !isFirstStep) extraBadge += '<span class="es-mg-offer-badge-buy">Acquisto</span>';
         if (o.failed) {
           extraBadge += '<span class="es-mg-offer-badge-fail">Fallita</span>';
+          extraBadge += o.rebuild === 'forte'
+            ? '<span class="es-mg-offer-badge-up">Progetto forte</span>'
+            : '<span class="es-mg-offer-badge-down">Progetto debole</span>';
         } else if (o.isPromoted) {
           extraBadge += '<span class="es-mg-offer-badge-up" title="Promossa">Promossa</span>';
         } else if (o.isRelegated) {
