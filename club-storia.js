@@ -313,8 +313,8 @@
       if (P[k].floor < dest) P[k].floor = dest;
     });
   }
-  addFail(['FIORENTINA', 'NAPOLI', 'TORINO'], 3, 0.01);
-  addFail(['PARMA', 'PALERMO', 'BARI', 'CATANIA', 'SIENA', 'CESENA', 'ANCONA', 'REGGINA', 'CHIEVO'], 4, 0.016);
+  addFail(['FIORENTINA', 'NAPOLI', 'TORINO'], 4, 0.01);
+  addFail(['PARMA', 'PALERMO', 'BARI', 'CATANIA', 'SIENA', 'CESENA', 'ANCONA', 'REGGINA', 'CHIEVO', 'FROSINONE'], 4, 0.016);
   addFail(['MONZA', 'VENEZIA', 'PADOVA', 'VICENZA', 'AVELLINO', 'MANTOVA', 'LIVORNO', 'PERUGIA', 'SALERNITANA'], 4, 0.012);
   addFail(['COMO', 'AREZZO', 'VARESE FC', 'VARESE', 'PISTOIESE', 'PRATO'], 5, 0.014);
   addFail(['FOGGIA', 'MESSINA', 'ACR MESSINA', 'TARANTO', 'TERNANA'], 4, 0.014);
@@ -550,12 +550,15 @@
     dGironeToSerieC: dGironeToSerieC,
     maybeFail: function (club) {
       var s = profile(club);
-      if (!s.fail || (club && club.failed)) return null;
+      if (club && club.failed) return null;
       var now = Number(club && club.t) || s.home;
-      if (now >= (s.failDest || 4)) return null;
+      if (now >= 4) return null;
+      if (!s.fail) return null;
       if (Math.random() > (s.failChance || 0.01)) return null;
-      var dest = s.failDest || Math.min(s.floor, now + 2);
-      if (dest < now + 2) dest = Math.min(s.floor, now + 2);
+      var dest = 4;
+      if ((s.failDest || 4) >= 5 && s.floor >= 5 && Math.random() < 0.4) dest = 5;
+      if (dest > s.floor) dest = s.floor >= 4 ? 4 : s.floor;
+      if (dest < 4 && s.floor >= 4) dest = 4;
       if (dest <= now) return null;
       return { dest: dest, from: now };
     },

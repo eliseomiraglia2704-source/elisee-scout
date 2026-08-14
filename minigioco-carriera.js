@@ -888,6 +888,7 @@
       c.homeTier = destT;
       c.justPromoted = false;
       c.justRelegated = false;
+      c.justFailed = false;
       c.promotedFromGirone = '';
       c.promotedFromTier = 0;
       c.failed = false;
@@ -993,17 +994,57 @@
     return /JUVENTUS|INTER|MILAN|NAPOLI|ROMA|LAZIO|ATALANTA|FIORENTINA|BARCELONA|REAL MADRID|BAYERN|MANCHESTER|LIVERPOOL|CHELSEA|ARSENAL|PSG|AJAX|BENFICA|PORTO|SPORTING/.test(n);
   }
 
+  function failLandingTier(c) {
+    var floor = 5;
+    if (typeof window !== 'undefined' && window.EliseeClubStoria && window.EliseeClubStoria.profile) {
+      floor = Number(window.EliseeClubStoria.profile(c).floor) || 5;
+    }
+    var dest = 4;
+    if (floor >= 5 && Math.random() < 0.38) dest = 5;
+    if (dest > floor) dest = floor >= 4 ? 4 : floor;
+    if (dest < 4 && isLegalTier(c, 4)) dest = 4;
+    else if (dest < 4 && isLegalTier(c, 5)) dest = 5;
+    return dest;
+  }
+
+  function applyFailLanding(c) {
+    if (!c) return false;
+    var dest = failLandingTier(c);
+    if (!isLegalTier(c, dest)) {
+      if (isLegalTier(c, 4)) dest = 4;
+      else if (isLegalTier(c, 5)) dest = 5;
+      else return false;
+    }
+    c.t = dest;
+    c.l = labelForItalianTier(c, dest);
+    c.justPromoted = false;
+    c.justRelegated = true;
+    return true;
+  }
+
   function repairClubTiers() {
     (state.clubs || []).forEach(function (c) {
       if (c.homeTier == null) c.homeTier = Number(c.t) || clubLeagueTier(c);
+      if (c.failed && clubLeagueTier(c) < 4) applyFailLanding(c);
       clampClubToHistory(c);
-      var now = clubLeagueTier(c);
-      var cat = c.catalogT != null ? Number(c.catalogT) : now;
-      if (!c.failed && c.justPromoted && cat && now >= cat + 1) {
-        c.failed = true;
-        c.failedFrom = cat;
-        if (!c.rebuild) c.rebuild = 'debole';
+      if (c.failed && clubLeagueTier(c) < 4) applyFailLanding(c);
+    });
+  }
+
+  function scrubHistoryFailMarks(p) {
+    if (!p || !p.history) return;
+    var prev = null;
+    p.history.forEach(function (h) {
+      if (!h) return;
+      if (
+        h.failed &&
+        prev &&
+        prev.failed &&
+        String(prev.club || '').toUpperCase() === String(h.club || '').toUpperCase()
+      ) {
+        h.failed = false;
       }
+      prev = h;
     });
   }
 
@@ -1648,7 +1689,8 @@
     /* Promossa/Retro: solo il movimento di QUESTA stagione, non il ricordo del contratto. */
     out.isPromoted = !!found.justPromoted;
     out.isRelegated = !!found.justRelegated;
-    if (found.failed) out.failed = true;
+    out.failed = !!found.justFailed || !!found.failed;
+    out.justFailed = !!found.justFailed;
     if (found.rebuild) out.rebuild = found.rebuild;
     return out;
   }
@@ -1735,10 +1777,10 @@
     (state.clubs || []).forEach(function (c) {
       c.justPromoted = false;
       c.justRelegated = false;
-      if (!c.failed) {
-        c.failed = false;
-        c.failedFrom = 0;
-      }
+      c.justFailed = false;
+      c.failed = false;
+      c.failedFrom = 0;
+      c.rebuild = '';
     });
     if (window.EliseeClubStoria && window.EliseeClubStoria.maybeFail) {
       (state.clubs || []).forEach(function (c) {
@@ -1753,7 +1795,16 @@
       });
     }
     function move(c, t, up, fromGirone, isFail) {
-      if (!isLegalTier(c, t)) return;
+      if (isFail) {
+        t = failLandingTier(c);
+        if (!isLegalTier(c, t)) {
+          if (isLegalTier(c, 4)) t = 4;
+          else if (isLegalTier(c, 5)) t = 5;
+          else return;
+        }
+      } else if (!isLegalTier(c, t)) {
+        return;
+      }
       var fromTier = Number(c.t);
       if (!isFail && Math.abs(t - fromTier) > 1) return;
       var fromG = fromGirone || clubGironeLetter(c);
@@ -1763,13 +1814,12 @@
       c.justRelegated = !up;
       if (isFail) {
         c.failed = true;
+        c.justFailed = true;
         c.failedFrom = fromTier;
-        var historic = /PARMA|FIORENTINA|NAPOLI|PALERMO|SIENA|CATANIA|AREZZO|CESENA|REGGINA|BARI/.test(String(c.n || '').toUpperCase());
+        var historic = /PARMA|FIORENTINA|NAPOLI|PALERMO|SIENA|CATANIA|AREZZO|CESENA|REGGINA|BARI|FROSINONE/.test(String(c.n || '').toUpperCase());
         c.rebuild = Math.random() < (historic ? 0.48 : 0.3) ? 'forte' : 'debole';
-      } else if (up && c.failed && Number(t) <= (c.failedFrom || 1)) {
-        c.failed = false;
-        c.failedFrom = 0;
-        c.rebuild = '';
+        c.justPromoted = false;
+        c.justRelegated = true;
       }
       if (up) {
         c.promotedFromGirone = fromG;
@@ -1855,6 +1905,7 @@
         l: c.l,
         jp: !!c.justPromoted,
         jr: !!c.justRelegated,
+        jf: !!c.justFailed,
         pg: c.promotedFromGirone || '',
         pt: c.promotedFromTier || 0,
         fl: !!c.failed,
@@ -1884,11 +1935,13 @@
         : (r.l || labelForItalianTier(c, want));
       c.justPromoted = !!r.jp;
       c.justRelegated = !!r.jr;
+      c.justFailed = !!r.jf || !!r.fl;
       c.promotedFromGirone = r.pg || '';
       c.promotedFromTier = r.pt || 0;
-      c.failed = !!r.fl;
+      c.failed = !!r.fl || !!r.jf;
       c.failedFrom = r.ff || 0;
       c.rebuild = r.rb || '';
+      if (c.failed && clubLeagueTier(c) < 4) applyFailLanding(c);
       guardClub(c, false);
     });
   }
@@ -2483,8 +2536,8 @@
         trophies: seasonTrophyKeys.length,
         trophyList: seasonTrophyKeys,
         isLoan: !!(selectedOffer && selectedOffer.isLoan),
-        failed: !!(club && club.failed),
-        rebuild: (club && club.rebuild) || '',
+        failed: false,
+        rebuild: '',
         isFree: false,
         suspended: !!(p.eventMods && p.eventMods.suspended)
       };
@@ -2517,6 +2570,10 @@
       evolveItalianLeagues();
       repairClubTiers();
       club = liveClub(club) || club;
+      if (club && club.justFailed) {
+        row.failed = true;
+        row.rebuild = club.rebuild || '';
+      }
       prevTier = clubLeagueTier(club);
       firstClub = false;
     }
@@ -3013,6 +3070,7 @@
     } else {
       restoreLeagueBoard(p);
       repairClubTiers();
+      scrubHistoryFailMarks(p);
     }
     if (p.club && !p.club.isFree) {
       p.club = liveClub(p.club) || p.club;
