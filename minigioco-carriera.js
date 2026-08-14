@@ -2412,8 +2412,25 @@
     return CAREER_EVENTS[0];
   }
 
-  function pickCareerEvent() {
-    return CAREER_EVENTS[rand(0, CAREER_EVENTS.length - 1)].id;
+  function pickCareerEvent(p) {
+    p = p || state.player || {};
+    var used = p.seenDilemmas || [];
+    var last = p.lastDilemmaId || '';
+    var pool = CAREER_EVENTS.filter(function (e) {
+      return used.indexOf(e.id) < 0;
+    });
+    if (!pool.length) {
+      pool = CAREER_EVENTS.filter(function (e) {
+        return e.id !== last;
+      });
+      used = [];
+    }
+    if (!pool.length) pool = CAREER_EVENTS.slice();
+    var ev = pool[rand(0, pool.length - 1)];
+    p.seenDilemmas = used.concat([ev.id]);
+    p.lastDilemmaId = ev.id;
+    p.lastDilemmaAge = p.age;
+    return ev.id;
   }
 
   function renderDilemmaBox(ev, animateNew) {
@@ -2578,8 +2595,16 @@
       firstClub = false;
     }
     p.eventMods = null;
-    if (!fromDilemma && p.age < 37 && p.age >= 17 && Math.random() < 0.35) {
-      p.pendingDilemma = pickCareerEvent();
+    var yearsSince = p.lastDilemmaAge ? p.age - p.lastDilemmaAge : 99;
+    var dilemmaChance = state.mode === 'intense' ? 0.16 : state.mode === 'express' ? 0.1 : 0.13;
+    if (
+      !fromDilemma &&
+      p.age >= 18 &&
+      p.age < 36 &&
+      yearsSince >= 3 &&
+      Math.random() < dilemmaChance
+    ) {
+      p.pendingDilemma = pickCareerEvent(p);
     } else {
       p.pendingDilemma = null;
     }
