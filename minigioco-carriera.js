@@ -994,6 +994,44 @@
     return /JUVENTUS|INTER|MILAN|NAPOLI|ROMA|LAZIO|ATALANTA|FIORENTINA|BARCELONA|REAL MADRID|BAYERN|MANCHESTER|LIVERPOOL|CHELSEA|ARSENAL|PSG|AJAX|BENFICA|PORTO|SPORTING/.test(n);
   }
 
+  function isAcademyProspect(p) {
+    return !!(p && p.academyOrigin && (p.age || 16) <= 22);
+  }
+
+  function isTopClubOfTier(c, t) {
+    if (!c || c.world) return false;
+    var n = String(c.n || '').toUpperCase();
+    var want = Number(t);
+    if (clubLeagueTier(c) !== want) return false;
+    if (want === 2) {
+      return (
+        /PALERMO|PARMA|SAMPDORIA|GENOA|VERONA|BARI|SPEZIA|PISA|BRESCIA|CREMONESE|SALERNITANA|VENEZIA|MONZA|EMPOLI|LECCE|SASSUOLO|FROSINONE|CAGLIARI|TORINO|UDINESE|BOLOGNA|NAPOLI|FIORENTINA/.test(n) ||
+        clubPrestige(c) >= 0.86 ||
+        (c.catalogT != null && Number(c.catalogT) <= 2)
+      );
+    }
+    if (want === 3) {
+      return (
+        /PADOVA|VICENZA|AVELLINO|CATANZARO|CESENA|FOGGIA|BENEVENTO|PERUGIA|PESCARA|REGGIANA|COSENZA|SUDTIROL|MANTOVA|ASCOLI|JUVE STABIA|SPEZIA|BARI|PALERMO|PARMA|SALERNITANA|REGGINA/.test(n) ||
+        (c.catalogT != null && Number(c.catalogT) <= 2) ||
+        clubPrestige(c) >= 0.8
+      );
+    }
+    return isBigYouthClub(c);
+  }
+
+  function takeTopOfTier(used, t) {
+    var pool = (state.clubs || []).filter(function (c) {
+      return c && c.n && !used[c.n] && isTopClubOfTier(c, t);
+    });
+    if (!pool.length) return null;
+    pool.sort(function (a, b) {
+      return clubPrestige(b) - clubPrestige(a);
+    });
+    var c = takeUniqueClub(used, pool.slice(0, Math.min(8, pool.length)));
+    return c ? Object.assign({}, c) : null;
+  }
+
   function failLandingTier(c) {
     var floor = 5;
     if (typeof window !== 'undefined' && window.EliseeClubStoria && window.EliseeClubStoria.profile) {
@@ -2229,8 +2267,8 @@
     var par = tier === 1 ? 78 : tier === 2 ? 68 : tier === 3 ? 60 : 54;
     var rel = ovr - par;
     var apps = 24 + Math.round(rel * 0.55);
-    if (age <= 17) apps -= 10;
-    else if (age <= 19) apps -= 4;
+    if (age <= 17) apps -= isAcademyProspect(p) ? 6 : 10;
+    else if (age <= 19) apps -= isAcademyProspect(p) ? 1 : 4;
     else if (age >= 35) apps -= 8;
     else if (age >= 33) apps -= 4;
     apps += rand(-4, 4);
@@ -2511,6 +2549,7 @@
     var delta = 0;
     if (youth) {
       if (apps >= 10) delta += 1;
+      if (p.academyOrigin && age <= 21) delta += 1;
     } else if (apps >= 30) delta += 1;
     else if (apps >= 20) delta += 0;
     else if (apps >= 12) delta -= 1;
@@ -2520,8 +2559,10 @@
     else if (perf >= 1) delta += 1;
     else if (perf <= -5) delta -= 2;
     else if (perf <= -2) delta -= 1;
-    if (age <= 22) delta += rand(1, 3);
-    else if (age <= 25) delta += rand(0, 2);
+    if (age <= 22) {
+      delta += p.academyOrigin ? rand(2, 3) : rand(1, 3);
+      if (p.academyOrigin && age <= 19 && Math.random() < 0.55) delta += 1;
+    } else if (age <= 25) delta += p.academyOrigin ? rand(1, 2) : rand(0, 2);
     else if (age <= 31) delta += rand(-1, 1);
     if (age >= 34) {
       if (Math.random() < 0.8) delta = -rand(2, 4);
@@ -2551,6 +2592,10 @@
     for (var y = 0; y < years; y++) {
       var seasonAge = firstClub ? 16 + y : ((p.age || 16) + 1);
       club = liveClub(club) || club;
+      if (firstClub && y === 0 && selectedOffer && selectedOffer.isYouth && isBigYouthClub(selectedOffer)) {
+        p.academyOrigin = true;
+        p.academyClub = selectedOffer.n || '';
+      }
       var newTier = clubLeagueTier(club);
       var dropping = newTier > prevTier;
       var stats = seasonPerformance(p, club, seasonAge);
@@ -2733,6 +2778,9 @@
     var max = maxOvrForClub(c);
     var youth = opts && opts.allowYouth && isBigYouthClub(c) && (p.age || 16) <= 19;
     if (youth) min = Math.max(45, min - 24);
+    if (opts && opts.academyPath && isAcademyProspect(p) && clubLeagueTier(c) >= 2) {
+      min = Math.min(min, 50);
+    }
     if (opts && opts.stay) return true;
     if (o < min) return false;
     if (o > max) return false;
@@ -2827,6 +2875,12 @@
       var side = jump !== 0 ? clampTier(curT + jump) : clampTier(curT + (Math.random() < 0.45 ? 1 : 0));
       if (side !== band[0] && Math.abs(side - curT) <= 1) band.push(side);
     }
+    if (isAcademyProspect(p)) {
+      band = band.filter(function (t) { return t <= 3; });
+      if (curT === 1 && band.indexOf(2) < 0) band.push(2);
+      if (curT === 1 && (p.ovr || 49) < 56 && band.indexOf(3) < 0) band.push(3);
+      if (!band.length) band = [2];
+    }
 
     var promoPool = (state.clubs || []).filter(function (c) {
       if (!c.justPromoted || !c.n || used[c.n]) return false;
@@ -2839,6 +2893,23 @@
       if (pc) {
         pc = stampSeasonMoveBadge(Object.assign({}, pc));
         offers.push(pc);
+      }
+    }
+
+    if (isAcademyProspect(p) && offers.length < 3) {
+      if (curT === 1 || jump > 0) {
+        var topB = takeTopOfTier(used, 2);
+        if (topB) {
+          topB.isLoan = (p.age || 16) <= 21;
+          offers.push(topB);
+        }
+      }
+      if (offers.length < 3 && (curT >= 2 || (p.ovr || 49) < 56)) {
+        var topC = takeTopOfTier(used, 3);
+        if (topC) {
+          topC.isLoan = (p.age || 16) <= 21 && curT === 1;
+          offers.push(topC);
+        }
       }
     }
 
@@ -2882,7 +2953,15 @@
     var safe = (tiers && tiers.length) ? tiers.slice() : [4];
     while (offers.length < need && i < 16) {
       var t = safe[Math.min(i, safe.length - 1)];
-      var pool = p ? poolFits(p, t, used, { allowYouth: (p.age || 16) <= 19 }) : clubsByTier(t);
+      if (p && isAcademyProspect(p) && (t === 2 || t === 3)) {
+        var topPick = takeTopOfTier(used, t);
+        if (topPick) {
+          offers.push(topPick);
+          i++;
+          continue;
+        }
+      }
+      var pool = p ? poolFits(p, t, used, { allowYouth: (p.age || 16) <= 19, academyPath: isAcademyProspect(p) }) : clubsByTier(t);
       var c = takeUniqueClub(used, pool);
       if (!c && i >= safe.length) {
         var near = safe[0];
