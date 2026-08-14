@@ -3300,7 +3300,7 @@
         done();
         return;
       }
-      var steps = 11 + rand(0, 4);
+      var steps = 5 + rand(0, 2);
       if (winOk && steps % 2 === 0) steps++;
       if (!winOk && steps % 2 === 1) steps++;
       var i = 0;
@@ -3314,10 +3314,10 @@
           bad.classList.toggle('is-pulse', !winOk);
           ok.classList.toggle('is-win', !!winOk);
           bad.classList.toggle('is-win', !winOk);
-          setTimeout(done, 750);
+          setTimeout(done, 220);
           return;
         }
-        setTimeout(tick, 110 + i * 48);
+        setTimeout(tick, 55);
       }
       tick();
     }
