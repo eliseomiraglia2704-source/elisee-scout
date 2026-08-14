@@ -1277,9 +1277,7 @@
         '<div class="es-mg-landing-actions">' +
         '<button type="button" class="es-mg-btn-full primary" id="es-mg-start">Inizia carriera</button>' +
         '<button type="button" class="es-mg-btn-full ghost" id="es-mg-back">Indietro</button>' +
-        '<button type="button" class="es-mg-help-round" id="es-mg-help" aria-label="Informazioni">?</button>' +
         '</div>' +
-        '<p class="es-mg-help-pop" id="es-mg-help-pop" hidden>Serie C: Girone A Nord, Girone B Centro, Girone C Sud. Chi sale o scende in C entra subito nel girone della propria area. Serie D: gironi A–I, il vincitore sale in C nel girone geografico giusto. Overall da 49, +8 / −4 a stagione.</p>' +
         (isAccountLogged()
           ? '<div class="es-mg-save-opt" id="es-mg-save-opt">' +
             '<p class="es-mg-save-label">Salva la partita sul tuo account</p>' +
@@ -1304,13 +1302,6 @@
         goAfterLanding();
       });
     };
-    var help = document.getElementById('es-mg-help');
-    var pop = document.getElementById('es-mg-help-pop');
-    if (help && pop) {
-      help.onclick = function () {
-        pop.hidden = !pop.hidden;
-      };
-    }
     root.querySelectorAll('.es-mg-mode').forEach(function (btn) {
       btn.onclick = function () {
         state.mode = btn.getAttribute('data-mode') || 'normal';
