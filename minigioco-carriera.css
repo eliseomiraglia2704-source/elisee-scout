@@ -3290,14 +3290,45 @@ button.es-mg-hub-menubar:focus {
     align-items: center;
   }
   .es-mg-landing-copy .es-mg-kicker,
-  .es-mg-landing-copy .es-mg-modes-center,
-  .es-mg-landing-actions {
+  .es-mg-landing-copy .es-mg-modes-center {
     align-self: center;
     justify-content: center;
   }
+  .es-mg-landing-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 50px;
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+    gap: 0.55rem;
+    align-items: stretch;
+    align-self: center;
+  }
   .es-mg-landing-actions .es-mg-btn-full {
     width: 100%;
-    max-width: 280px;
+    max-width: none;
+    min-width: 0;
+    margin: 0;
+  }
+  .es-mg-landing-actions #es-mg-start {
+    grid-column: 1 / -1;
+  }
+  .es-mg-landing-actions #es-mg-back {
+    grid-column: 1;
+  }
+  .es-mg-landing-actions #es-mg-help {
+    grid-column: 2;
+    width: 50px;
+    height: 50px;
+    min-height: 50px;
+    align-self: stretch;
+    justify-self: end;
+  }
+  .es-mg-help-pop {
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
   }
   .es-mg-hub {
     padding: 4.1rem 0.75rem max(1rem, env(safe-area-inset-bottom));
