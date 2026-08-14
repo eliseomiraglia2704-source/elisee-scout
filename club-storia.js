@@ -99,7 +99,7 @@
   put(['VENEZIA'], { a: 5, b: 12, c: 15, d: 8 });
   put(['SASSUOLO'], { a: 11, b: 10, c: 13, d: 6 });
   put(['PARMA'], { a: 20, b: 8, c: 6, d: 6 });
-  put(['MONZA'], { a: 3, b: 8, c: 16, d: 13 });
+  put(['MONZA'], { a: 8, b: 20, c: 0, d: 0 });
   put(['COMO'], { a: 4, b: 8, c: 10, d: 18 });
   put(['FROSINONE'], { a: 4, b: 12, c: 20, d: 4 });
 
@@ -284,6 +284,11 @@
   }
   lock(['INTER', 'MILAN', 'JUVENTUS', 'NAPOLI', 'ROMA', 'LAZIO', 'ATALANTA'], 1, 1);
   lock(['FIORENTINA', 'BOLOGNA', 'TORINO', 'UDINESE'], 1, 2);
+  lock(
+    ['MONZA', 'COMO', 'SASSUOLO', 'PARMA', 'VENEZIA', 'FROSINONE', 'CAGLIARI', 'GENOA', 'LECCE', 'EMPOLI', 'VERONA', 'SAMPDORIA'],
+    1,
+    2
+  );
   lock(['MODENA'], 2, 3);
   lock(['FOGGIA'], 3, 4);
   lock(
