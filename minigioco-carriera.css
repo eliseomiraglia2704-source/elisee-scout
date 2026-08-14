@@ -2502,7 +2502,7 @@ button.es-mg-hub-menubar:focus {
 
 .es-mg-offer {
   display: grid !important;
-  grid-template-rows: 2.75em 52px 1.35em 2.55em !important;
+  grid-template-rows: 2.6em 50px 1.3em 2.85em !important;
   grid-template-columns: minmax(0, 1fr) !important;
   align-items: center !important;
   justify-items: center !important;
@@ -2590,12 +2590,18 @@ button.es-mg-hub-menubar:focus {
   flex-wrap: nowrap !important;
   align-items: center !important;
   justify-content: flex-start !important;
-  gap: 0.15rem !important;
+  gap: 0.18rem !important;
   width: 100% !important;
   min-height: 0 !important;
-  max-height: 2.55em !important;
-  padding-top: 0.1rem !important;
+  padding-top: 0.08rem !important;
+  overflow: visible !important;
+}
+.es-mg-offer-badges > span {
+  white-space: nowrap !important;
+  max-width: 100% !important;
   overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  line-height: 1.2 !important;
 }
 .es-mg-offer .es-mg-league-logo-img {
   width: 14px !important;
