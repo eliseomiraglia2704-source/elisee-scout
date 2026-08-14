@@ -3200,7 +3200,7 @@
           else if (o.isLoan) badges.push('<span class="es-mg-offer-badge-loan">Prestito</span>');
           else if (!stay && !isFirstStep) badges.push('<span class="es-mg-offer-badge-buy">Acquisto</span>');
           if (o.isPromoted) badges.push('<span class="es-mg-offer-badge-up">Promossa</span>');
-          else if (o.isRelegated) badges.push('<span class="es-mg-offer-badge-down">Retro</span>');
+          else if (o.isRelegated) badges.push('<span class="es-mg-offer-badge-down">Retrocessa</span>');
           else if (o.isJumpUp) badges.push('<span class="es-mg-offer-badge-up">Salto</span>');
           else if (o.isJumpDown) badges.push('<span class="es-mg-offer-badge-down">Calo</span>');
         }
