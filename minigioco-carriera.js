@@ -2042,7 +2042,7 @@
       return 0.02;
     }
     var tier = clubLeagueTier(club);
-    var o = Math.max(40, Math.min(92, Number(ovr) || 49));
+    var o = Math.max(40, Math.min(94, Number(ovr) || 49));
     var a = Number(age) || 20;
     var ageMul = 1;
     if (a <= 18) ageMul = 0.72;
@@ -2099,6 +2099,7 @@
       surname: (state.surname || '').trim(),
       foot: state.foot === 'left' ? 'left' : 'right',
       ovr: ovr,
+      hiddenPot: 74 + rand(0, 5),
       valueM: 0.025,
       number: num,
       club: freeClub,
@@ -2540,37 +2541,79 @@
     return html;
   }
 
+  function careerPotential(p, club) {
+    var pot = Number(p && p.hiddenPot);
+    if (!(pot >= 60)) {
+      pot = 74 + rand(0, 5);
+      if (p && p.academyOrigin) pot = Math.max(pot, 80 + rand(0, 3));
+    }
+    var best = Number(p && p.ovr) || 49;
+    var aGood = 0;
+    (p && p.history ? p.history : []).forEach(function (h) {
+      if (!h) return;
+      if (h.ovr > best) best = h.ovr;
+      if (clubLeagueTier({ l: h.league, t: h.t }) === 1 && (h.apps || 0) >= 18) aGood += 1;
+    });
+    if (clubLeagueTier(club) === 1) pot = Math.max(pot, 84);
+    if (aGood >= 1) pot = Math.max(pot, 86);
+    if (aGood >= 3 && best >= 76) pot = Math.max(pot, 89);
+    if (aGood >= 5 && best >= 82) pot = Math.max(pot, 92);
+    if (aGood >= 7 && best >= 86) pot = 94;
+    pot = Math.min(94, pot);
+    if (p) p.hiddenPot = pot;
+    return pot;
+  }
+
   function ovrDeltaFromSeason(p, club, stats, dropping, age) {
-    var apps = stats.apps;
-    var ga = stats.goals + stats.assists;
-    var exp = expectedGA(p.position, apps);
+    var apps = stats.apps || 0;
+    var ga = (stats.goals || 0) + (stats.assists || 0);
+    var exp = expectedGA(p.position, Math.max(apps, 1));
     var perf = ga - exp;
     var youth = isYouthContext(p, club, age);
+    var ovr = Number(p.ovr) || 49;
+    var pot = careerPotential(p, club);
+    var gap = pot - ovr;
     var delta = 0;
-    if (youth) {
-      if (apps >= 10) delta += 1;
-      if (p.academyOrigin && age <= 21) delta += 1;
-    } else if (apps >= 30) delta += 1;
-    else if (apps >= 20) delta += 0;
-    else if (apps >= 12) delta -= 1;
-    else delta -= 2;
-    if (perf >= 6) delta += 3;
-    else if (perf >= 3) delta += 2;
-    else if (perf >= 1) delta += 1;
-    else if (perf <= -5) delta -= 2;
-    else if (perf <= -2) delta -= 1;
-    if (age <= 22) {
-      delta += p.academyOrigin ? rand(2, 3) : rand(1, 3);
-      if (p.academyOrigin && age <= 19 && Math.random() < 0.55) delta += 1;
-    } else if (age <= 25) delta += p.academyOrigin ? rand(1, 2) : rand(0, 2);
-    else if (age <= 31) delta += rand(-1, 1);
-    if (age >= 34) {
-      if (Math.random() < 0.8) delta = -rand(2, 4);
-      else delta = Math.min(0, delta);
-    } else if (age >= 32) {
-      delta = Math.min(0, delta);
+    if (age <= 19) {
+      if (gap >= 20) delta = rand(3, 5);
+      else if (gap >= 10) delta = rand(2, 4);
+      else delta = rand(1, 2);
+    } else if (age <= 22) {
+      if (gap >= 15) delta = rand(2, 4);
+      else if (gap >= 6) delta = rand(1, 3);
+      else delta = Math.random() < 0.55 ? 1 : 0;
+    } else if (age <= 25) {
+      if (gap >= 12) delta = rand(2, 3);
+      else if (gap >= 5) delta = rand(1, 2);
+      else if (gap > 0) delta = Math.random() < 0.6 ? 1 : 0;
+    } else if (age <= 28) {
+      if (gap >= 8) delta = rand(1, 2);
+      else if (gap > 0) delta = Math.random() < 0.5 ? 1 : 0;
+    } else if (age <= 31) {
+      if (gap > 2 && Math.random() < 0.35) delta = 1;
     }
+    if (youth && apps >= 10) delta += 1;
+    else if (!youth && apps >= 28 && perf >= 2) delta += 1;
+    else if (!youth && apps < 8 && age < 32) delta -= 1;
+    if (perf >= 5) delta += 1;
+    else if (perf <= -5) delta -= 1;
+    if (age >= 34) delta = -rand(2, 4);
+    else if (age >= 32) delta = Math.min(-1, delta);
     if (dropping) delta = Math.min(0, delta);
+    if (ovr + delta > pot) {
+      if (
+        clubLeagueTier(club) === 1 &&
+        apps >= 26 &&
+        perf >= 3 &&
+        pot < 94 &&
+        Math.random() < 0.22
+      ) {
+        p.hiddenPot = Math.min(94, pot + 1);
+        delta = Math.min(delta, p.hiddenPot - ovr);
+      } else {
+        delta = Math.min(delta, Math.max(0, pot - ovr));
+      }
+    }
     if (delta > 8) delta = 8;
     if (delta < -4) delta = -4;
     return delta;
@@ -2595,6 +2638,7 @@
       if (firstClub && y === 0 && selectedOffer && selectedOffer.isYouth && isBigYouthClub(selectedOffer)) {
         p.academyOrigin = true;
         p.academyClub = selectedOffer.n || '';
+        p.hiddenPot = Math.max(Number(p.hiddenPot) || 0, 80 + rand(0, 4));
       }
       var newTier = clubLeagueTier(club);
       var dropping = newTier > prevTier;
@@ -2615,7 +2659,7 @@
         newOvr += p.eventMods.ovrBonus;
       }
       if (newOvr < 40) newOvr = 40;
-      if (newOvr > 92) newOvr = 92;
+      if (newOvr > 94) newOvr = 94;
       var seasonTrophyKeys = generateSeasonTrophies(p, club, newOvr, stats, seasonAge);
       var row = {
         age: seasonAge,
@@ -2865,7 +2909,7 @@
     if (jump < -1) jump = -1;
     var par = leagueParOvr(cur);
     var center = curT;
-    if ((p.ovr || 49) >= par + 7) center = clampTier(curT - 1);
+    if ((p.ovr || 49) >= par + 4) center = clampTier(curT - 1);
     else if ((p.ovr || 49) <= par - 8) center = clampTier(curT + 1);
     var target = clampTier(center + jump);
     if (Math.abs(target - curT) > 1) target = clampTier(curT + (target < curT ? -1 : 1));
