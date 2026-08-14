@@ -1826,13 +1826,11 @@ button.es-mg-hub-menubar:focus {
   min-height: 128px;
 }
 .es-mg-offer:hover {
-  border-color: #7dd3fc;
-  background: #222830;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+  border-color: rgba(255, 244, 214, 0.55);
+  background: #1c1c24;
 }
 .es-mg-offer:active {
-  transform: scale(0.98);
+  transform: none;
 }
 .es-mg-offer-title {
   font-size: 0.72rem;
@@ -2543,9 +2541,9 @@ button.es-mg-hub-menubar:focus {
 
 .es-mg-offer:hover {
   background: rgba(255, 255, 255, 0.07) !important;
-  border-color: rgba(255, 244, 214, 0.78) !important;
+  border-color: rgba(125, 211, 252, 0.55) !important;
   transform: none !important;
-  box-shadow: 0 0 0 2px rgba(255, 236, 179, 0.35) !important;
+  box-shadow: none !important;
 }
 
 .es-mg-offer-title {
@@ -2862,9 +2860,9 @@ button.es-mg-hub-menubar:focus {
 
 .es-mg-offer:hover {
   background: rgba(255, 255, 255, 0.07) !important;
-  border-color: rgba(255, 244, 214, 0.78) !important;
-  box-shadow: 0 0 0 2px rgba(255, 236, 179, 0.35), 0 10px 22px rgba(0, 0, 0, 0.35) !important;
-  transform: translateY(-3px) scale(1.02) !important;
+  border-color: rgba(125, 211, 252, 0.55) !important;
+  box-shadow: none !important;
+  transform: none !important;
 }
 .es-mg-offer.is-picked {
   animation: esMgOfferPick 0.48s cubic-bezier(0.16, 1, 0.3, 1) both;
