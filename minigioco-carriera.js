@@ -1654,10 +1654,11 @@
     var out = Object.assign({}, found);
     if (club.isLoan) out.isLoan = true;
     if (club.isStay) out.isStay = true;
-    if (club.isPromoted) out.isPromoted = true;
+    /* Promossa/Retro: solo il movimento di QUESTA stagione, non il ricordo del contratto. */
+    out.isPromoted = !!found.justPromoted;
+    out.isRelegated = !!found.justRelegated;
     if (found.failed) out.failed = true;
     if (found.rebuild) out.rebuild = found.rebuild;
-    if (club.isRelegated) out.isRelegated = true;
     return out;
   }
 
@@ -2501,6 +2502,10 @@
       p.age = seasonAge;
       p.ovr = newOvr;
       p.club = club;
+      if (p.club) {
+        p.club.isPromoted = false;
+        p.club.isRelegated = false;
+      }
       p.valueM = calcRealisticValueM(newOvr, seasonAge, club);
       p.lastForm = seasonFormScore(p, club, stats, seasonAge);
       p.lastJump = jumpFromForm(p.lastForm, seasonAge);
@@ -2562,11 +2567,18 @@
     return out;
   }
 
+  function stampSeasonMoveBadge(o) {
+    if (!o) return o;
+    o.isPromoted = !!o.justPromoted;
+    o.isRelegated = !!o.justRelegated;
+    return o;
+  }
+
   function sanitizeOfferClub(c) {
     if (!c) return c;
     var out = Object.assign({}, c);
     guardClub(out, false);
-    return out;
+    return stampSeasonMoveBadge(out);
   }
 
   function assertStartOffer(o) {
@@ -2676,8 +2688,7 @@
       used[cur.n] = true;
       var stay = Object.assign({}, cur);
       stay.isStay = true;
-      if (cur.justPromoted) stay.isPromoted = true;
-      if (cur.justRelegated) stay.isRelegated = true;
+      stampSeasonMoveBadge(stay);
       if (cur.failed) stay.failed = true;
       if (isYouthContext(p, stay, p.age)) stay.isYouth = true;
       offers.push(stay);
@@ -2708,8 +2719,7 @@
     if (promoPool.length && offers.length < 3 && jump <= 0) {
       var pc = takeUniqueClub(used, promoPool);
       if (pc) {
-        pc = Object.assign({}, pc);
-        pc.isPromoted = true;
+        pc = stampSeasonMoveBadge(Object.assign({}, pc));
         offers.push(pc);
       }
     }
