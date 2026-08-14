@@ -1,6 +1,13 @@
 # Agenti Campionati · unità = GIRONE
 
-## Regola
+## Piramide (regola fondamentale)
+
+- **Serie C** = 3 gironi (A, B, C). Il vincitore del Girone A, del Girone B e del Girone C sale in **Serie B**.
+- **Serie D** = gironi A–I. Il vincitore di **ogni** girone sale in **Serie C**.
+
+Fonte unica nel sito: `piramide-italia.js` (`window.EliseePiramide`).
+
+## Regola agenti
 **10 agenti per ogni girone di ogni campionato.**
 
 ### Esempio Serie D (come nello screenshot Focus)

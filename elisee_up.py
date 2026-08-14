@@ -23,15 +23,17 @@ import urllib.request
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import parse_qs, unquote, urlparse
+from urllib.parse import parse_qs, quote, unquote, urlencode, urlparse
 
 ROOT = Path(__file__).resolve().parent
 os.chdir(ROOT)
 sys.path.insert(0, str(ROOT / "workers"))
 
 PORT = int(os.environ.get("ELISEE_PORT", "8080"))
+OAUTH_BRIDGE_PORT = int(os.environ.get("ELISEE_OAUTH_BRIDGE_PORT", "3000"))
 HOST = "127.0.0.1"
 LOG = ROOT / "data" / "autopilot" / "elisee_up.log"
+OAUTH_BRIDGE_UP = False
 
 try:
     from autopilot_engine import get_engine  # type: ignore
@@ -179,6 +181,11 @@ class Handler(SimpleHTTPRequestHandler):
     def _api(self) -> bool:
         parsed = urlparse(self.path)
         path = (parsed.path or "/").rstrip("/") or "/"
+        qs = parse_qs(parsed.query or "")
+        # Google/Supabase può tornare su /?code=... — va scambiato SUBITO
+        if self.command.upper() in ("GET", "HEAD") and (qs.get("code") or [""])[0]:
+            if path in ("/", "/index.html", "/auth/callback"):
+                return self._oauth_callback()
         # Proxy generico anti-CORS (Tuttocampo / loghi)
         if path == "/api/proxy" and self.command in ("GET", "HEAD"):
             qs = parse_qs(parsed.query or "")
@@ -188,6 +195,8 @@ class Handler(SimpleHTTPRequestHandler):
                 self._json(400, {"ok": False, "error": "missing_url"})
                 return True
             return self._proxy_fetch(target)
+        if path.startswith("/api/auth") or path == "/auth/callback":
+            return self._auth_api(path, self.command.upper())
         if not path.startswith("/api/autopilot"):
             return False
         if get_engine is None:
@@ -273,8 +282,9 @@ class Handler(SimpleHTTPRequestHandler):
         if self._api():
             return
         # default document
-        if self.path in ("", "/"):
-            self.path = "/index.html"
+        parsed = urlparse(self.path)
+        if parsed.path in ("", "/"):
+            self.path = "/index.html" + (("?" + parsed.query) if parsed.query else "")
         try:
             super().do_GET()
         except Exception:
@@ -283,12 +293,218 @@ class Handler(SimpleHTTPRequestHandler):
     def do_HEAD(self) -> None:
         if self._api():
             return
-        if self.path in ("", "/"):
-            self.path = "/index.html"
+        parsed = urlparse(self.path)
+        if parsed.path in ("", "/"):
+            self.path = "/index.html" + (("?" + parsed.query) if parsed.query else "")
         try:
             super().do_HEAD()
         except Exception:
             pass
+
+    def _bearer(self) -> str:
+        h = self.headers.get("Authorization") or self.headers.get("authorization") or ""
+        if h.lower().startswith("bearer "):
+            return h[7:].strip()
+        return ""
+
+    def _auth_api(self, path: str, method: str) -> bool:
+        try:
+            from auth_store import (
+                build_google_oauth_url,
+                finish_supabase_session,
+                get_user_by_token,
+                login_email,
+                login_or_register_google,
+                login_or_register_supabase_token,
+                public_auth_config,
+                register_email,
+                revoke_token,
+                save_google_client_id,
+                set_password,
+            )
+        except Exception as e:
+            self._json(503, {"ok": False, "error": "auth_store_unavailable", "detail": str(e)})
+            return True
+        try:
+            if path == "/api/auth/config" and method in ("GET", "HEAD"):
+                self._json(200, public_auth_config())
+                return True
+            if path == "/api/auth/oauth/google" and method in ("GET", "HEAD"):
+                return self._start_google_oauth()
+            if path == "/auth/callback" and method in ("GET", "HEAD"):
+                return self._oauth_callback()
+            if path == "/api/auth/oauth/finish" and method == "POST":
+                body = self._read_json_body()
+                status, payload = finish_supabase_session(
+                    str(body.get("code") or ""),
+                    str(body.get("state") or body.get("es_state") or "") or None,
+                )
+                self._json(status, payload)
+                return True
+            if path == "/api/auth/me" and method in ("GET", "HEAD"):
+                user = get_user_by_token(self._bearer())
+                if not user:
+                    self._json(401, {"ok": False, "error": "non_autenticato"})
+                    return True
+                self._json(200, {"ok": True, "user": user})
+                return True
+            if path == "/api/auth/register" and method == "POST":
+                code, payload = register_email(self._read_json_body())
+                self._json(code, payload)
+                return True
+            if path == "/api/auth/login" and method == "POST":
+                code, payload = login_email(self._read_json_body())
+                self._json(code, payload)
+                return True
+            if path == "/api/auth/google" and method == "POST":
+                body = self._read_json_body()
+                code, payload = login_or_register_google(str(body.get("idToken") or ""), body)
+                self._json(code, payload)
+                return True
+            if path == "/api/auth/logout" and method == "POST":
+                revoke_token(self._bearer())
+                self._json(200, {"ok": True})
+                return True
+            if path == "/api/auth/set-password" and method == "POST":
+                body = self._read_json_body()
+                code, payload = set_password(self._bearer(), str(body.get("password") or ""))
+                self._json(code, payload)
+                return True
+            if path == "/api/auth/supabase" and method == "POST":
+                body = self._read_json_body()
+                code, payload = login_or_register_supabase_token(
+                    str(body.get("accessToken") or body.get("access_token") or ""),
+                    body,
+                )
+                self._json(code, payload)
+                return True
+            if path == "/api/auth/config" and method == "POST":
+                body = self._read_json_body()
+                code, payload = save_google_client_id(str(body.get("googleClientId") or ""))
+                self._json(code, payload)
+                return True
+            self._json(404, {"ok": False, "error": "unknown_auth_endpoint", "path": path})
+            return True
+        except Exception as e:
+            log("auth_api: " + str(e))
+            self._json(500, {"ok": False, "error": str(e)})
+            return True
+
+    def _site_origin(self) -> str:
+        host = (self.headers.get("Host") or f"{HOST}:{PORT}").split(",")[0].strip()
+        if "localhost:3000" in host or host.endswith(":3000"):
+            return f"http://{HOST}:{PORT}"
+        if host:
+            return "http://" + host
+        return f"http://{HOST}:{PORT}"
+
+    def _append_query(self, url: str, extra: dict) -> str:
+        """Metti SEMPRE i query param prima del fragment.
+        Mai produrre #hero?elisee_token=... (il browser lo tratta come hash)."""
+        raw = (url or "").strip() or "/"
+        frag = ""
+        if "#" in raw:
+            raw, frag = raw.split("#", 1)
+            frag = frag.split("?", 1)[0]
+        query = ""
+        if "?" in raw:
+            raw, query = raw.split("?", 1)
+        qs = parse_qs(query, keep_blank_values=False)
+        for key, val in extra.items():
+            if val is None or val == "":
+                qs.pop(key, None)
+            else:
+                qs[key] = [str(val)]
+        clean_q = urlencode({k: v[0] for k, v in qs.items() if v}, doseq=False)
+        out = raw + (("?" + clean_q) if clean_q else "")
+        if frag:
+            out += "#" + frag.lstrip("#")
+        return out
+
+    def _safe_return_to(self, raw: str) -> str:
+        origin = f"http://{HOST}:{PORT}"
+        raw = (raw or "").strip()
+        if not raw:
+            return origin + "/"
+        if raw.startswith("/") and not raw.startswith("//"):
+            raw = origin + raw
+        try:
+            p = urlparse(raw)
+        except Exception:
+            return origin + "/"
+        if p.scheme in ("http", "https") and p.hostname in ("127.0.0.1", "localhost"):
+            qs = parse_qs(p.query or "")
+            for junk in (
+                "code",
+                "state",
+                "es_state",
+                "elisee_token",
+                "elisee_oauth_error",
+                "needsPassword",
+            ):
+                qs.pop(junk, None)
+            clean_q = urlencode({k: v[0] for k, v in qs.items() if v}, doseq=False)
+            path = p.path or "/"
+            frag = (p.fragment or "").split("?", 1)[0].lstrip("#")
+            blocked = ("minigioco", "dossier", "account", "admin")
+            if any(bit in frag.lower() for bit in blocked):
+                frag = "hero"
+            out = f"{p.scheme}://{p.hostname}{(':' + str(p.port)) if p.port else ''}{path}"
+            if clean_q:
+                out += "?" + clean_q
+            if frag:
+                out += "#" + frag
+            return out
+        return origin + "/"
+
+    def _redirect(self, location: str) -> bool:
+        self.send_response(302)
+        self.send_header("Location", location)
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+        return True
+
+    def _start_google_oauth(self) -> bool:
+        from auth_store import build_google_oauth_url
+
+        parsed = urlparse(self.path)
+        qs = parse_qs(parsed.query or "")
+        next_url = (qs.get("next") or [""])[0]
+        return_to = self._safe_return_to(next_url)
+        # Google/Supabase in questo progetto torna su 127.0.0.1:8080/?code=
+        redirect_to = f"http://{HOST}:{PORT}/"
+        code, payload = build_google_oauth_url(redirect_to, return_to)
+        if code != 200 or not payload.get("url"):
+            err = quote(str(payload.get("error") or "oauth_start_fail"))
+            return self._redirect(self._append_query(return_to, {"elisee_oauth_error": err}))
+        return self._redirect(str(payload["url"]))
+
+    def _oauth_callback(self) -> bool:
+        from auth_store import finish_supabase_session
+
+        parsed = urlparse(self.path)
+        qs = parse_qs(parsed.query or "")
+        err = (qs.get("error_description") or qs.get("error") or [""])[0]
+        origin = f"http://{HOST}:{PORT}"
+        if err:
+            return self._redirect(origin + "/index.html?elisee_oauth_error=" + quote(err))
+        code = (qs.get("code") or [""])[0]
+        state = (qs.get("es_state") or qs.get("state") or [""])[0]
+        if not code:
+            return self._redirect(origin + "/index.html?elisee_oauth_error=" + quote("Accesso Google annullato."))
+        status, payload = finish_supabase_session(code, state)
+        if status != 200 or not payload.get("token"):
+            msg = str(payload.get("error") or "oauth_callback_fail")
+            return self._redirect(origin + "/index.html?elisee_oauth_error=" + quote(msg))
+        return_to = self._safe_return_to(str(payload.get("returnTo") or (origin + "/")))
+        loc = self._append_query(
+            return_to,
+            {
+                "elisee_token": str(payload.get("token") or ""),
+                "needsPassword": "1" if payload.get("needsPassword") else "0",
+            },
+        )
+        return self._redirect(loc)
 
     def do_POST(self) -> None:
         if self._api():
@@ -310,6 +526,22 @@ class Server(ThreadingHTTPServer):
         super().server_bind()
 
 
+def start_oauth_bridge() -> None:
+    global OAUTH_BRIDGE_UP
+    if OAUTH_BRIDGE_UP:
+        return
+    try:
+        bridge = Server((HOST, OAUTH_BRIDGE_PORT), partial(Handler, directory=str(ROOT)))
+    except OSError as e:
+        log(f"oauth bridge skip port {OAUTH_BRIDGE_PORT}: {e}")
+        OAUTH_BRIDGE_UP = False
+        return
+    t = threading.Thread(target=bridge.serve_forever, kwargs={"poll_interval": 0.5}, daemon=True)
+    t.start()
+    OAUTH_BRIDGE_UP = True
+    log(f"OAUTH BRIDGE http://localhost:{OAUTH_BRIDGE_PORT}/auth/callback")
+
+
 def run_once() -> None:
     # avvia engine autopilot se disponibile
     if get_engine is not None:
@@ -319,6 +551,7 @@ def run_once() -> None:
         except Exception as e:
             log(f"engine warn: {e}")
 
+    start_oauth_bridge()
     httpd = Server((HOST, PORT), partial(Handler, directory=str(ROOT)))
     log(f"LISTENING http://{HOST}:{PORT}/  cwd={ROOT}")
     try:

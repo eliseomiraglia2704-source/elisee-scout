@@ -412,7 +412,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     setT('dossier-user-name', hasUser ? `${user.nome} ${user.cognome}` : '[Nessun Utente Registrato]', '[Nessun Utente Registrato]');
-    setT('dossier-user-role', hasUser ? (user.ruoloDettagliato || 'Ruolo non specificato') : '[In attesa di compilazione dati reali]', '[In attesa di compilazione dati reali]');
+    setT('dossier-site-role', user.ruolo || user.role, 'Da specificare');
+    setT('dossier-user-role', hasUser ? (user.ruolo || user.ruoloDettagliato || 'Ruolo non specificato') : '[In attesa di compilazione]', '[In attesa di compilazione]');
     setT('dossier-user-fullname', hasUser ? `${user.cognome} ${user.nome}` : 'Non inserito', 'Non inserito');
     setT('dossier-user-username', user.username ? `@${user.username}` : '@utente', '@utente');
     setT('dossier-user-bio', user.bio, 'Nessuna biografia inserita');
@@ -438,8 +439,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const imgEl = document.getElementById('dossier-user-img');
     const noImgBox = document.getElementById('dossier-no-img-box');
     if (imgEl && noImgBox) {
-      if (user.fotoUrl && user.fotoUrl.trim()) {
-        imgEl.src = user.fotoUrl;
+      const livePhoto = (window.getStoredProfilePhoto && window.getStoredProfilePhoto(null, user)) || user.fotoUrl || '';
+      if (livePhoto && String(livePhoto).trim()) {
+        imgEl.src = livePhoto;
         imgEl.style.display = 'block';
         noImgBox.style.display = 'none';
       } else if (hasUser) {
@@ -489,6 +491,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    if (typeof window.applyRoleDossierInterface === 'function') {
+      window.applyRoleDossierInterface(user);
+    }
     if (window.lucide) lucide.createIcons();
   }
 
@@ -6549,6 +6554,24 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       if (opts === true) opts = { noHistory: true };
       opts = opts || {};
+      if (viewType === 'minigioco' || (targetHash && String(targetHash).indexOf('minigioco') >= 0)) {
+        try {
+          document.querySelectorAll('.nav-link').forEach(function (l) { l.classList.remove('active'); });
+          var mgLink = document.querySelector('.nav-link[data-view="minigioco"]');
+          if (mgLink) mgLink.classList.add('active');
+        } catch (_) {}
+        try {
+          if (window.EliseeMinigioco && typeof window.EliseeMinigioco.open === 'function') {
+            window.EliseeMinigioco.open();
+          } else if (typeof window.openMinigiocoCarriera === 'function') {
+            window.openMinigiocoCarriera();
+          }
+        } catch (mgErr) {
+          console.error('minigioco open', mgErr);
+        }
+        setHashSafe(targetHash || '#minigioco-carriera', opts);
+        return true;
+      }
       forceCloseBlockingOverlays(true);
 
       if (window.EliseeAICluster && typeof window.EliseeAICluster.logEvent === 'function') {
@@ -7245,6 +7268,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (_switchViewNavLock) return;
     const hash = window.location.hash || '';
     const noHist = { noHistory: true };
+    if (hash !== '#area-riservata' && document.body.classList.contains('ar-screen-open') && typeof window.closeAreaRiservataModal === 'function') {
+      window.closeAreaRiservataModal({ skipHash: true });
+    }
     if (hash === '#about') {
       switchView('about', '#about', noHist);
     } else if (hash === '#dashboard-skills') {
@@ -7263,8 +7289,21 @@ document.addEventListener('DOMContentLoaded', () => {
       switchView('admin', '#admin-portal', noHist);
     } else if (hash === '#user-dossier-portal') {
       switchView('user-dossier', '#user-dossier-portal', noHist);
+    } else if (hash.indexOf('minigioco') >= 0) {
+      if (window.EliseeMinigioco && typeof window.EliseeMinigioco.open === 'function') {
+        window.EliseeMinigioco.open();
+      } else if (typeof window.openMinigiocoCarriera === 'function') {
+        window.openMinigiocoCarriera();
+      }
+    } else if (hash === '#area-riservata') {
+      if (typeof window.openAreaRiservataModal === 'function') window.openAreaRiservataModal();
     } else if (hash === '#hero' || hash === '#' || hash === '') {
+      if (document.body.classList.contains('ar-screen-open') && typeof window.closeAreaRiservataModal === 'function') {
+        window.closeAreaRiservataModal({ skipHash: true });
+      }
       switchView('home', '#hero', noHist);
+    } else if (document.body.classList.contains('ar-screen-open') && typeof window.closeAreaRiservataModal === 'function') {
+      window.closeAreaRiservataModal({ skipHash: true });
     }
   }
 
@@ -7309,6 +7348,13 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (viewType === 'home' || targetHash === '#hero') {
         e.preventDefault();
         switchView('home', '#hero');
+      } else if (viewType === 'minigioco' || (targetHash && String(targetHash).indexOf('minigioco') >= 0)) {
+        e.preventDefault();
+        if (window.EliseeMinigioco && typeof window.EliseeMinigioco.open === 'function') {
+          window.EliseeMinigioco.open();
+        } else if (typeof window.openMinigiocoCarriera === 'function') {
+          window.openMinigiocoCarriera();
+        }
       }
     }
   });
@@ -7331,6 +7377,10 @@ document.addEventListener('DOMContentLoaded', () => {
     switchView('admin', '#admin-portal');
   } else if (currentHash === '#user-dossier-portal') {
     switchView('user-dossier', '#user-dossier-portal');
+  } else if (currentHash === '#area-riservata') {
+    if (typeof window.openAreaRiservataModal === 'function') {
+      setTimeout(function () { window.openAreaRiservataModal(); }, 0);
+    }
   } else if (savedView) {
     switchView(savedView, savedHash || '#hero');
   } else {
@@ -7417,7 +7467,14 @@ document.addEventListener('DOMContentLoaded', () => {
   bindPortalButton(btnEnterAdminPortal, 'admin', '#admin-portal');
 
   const btnNavAccedi = document.getElementById('btn-nav-accedi');
-  bindPortalButton(btnNavAccedi, 'account', '#account-portal');
+  if (btnNavAccedi && !btnNavAccedi.dataset.loginBound) {
+    btnNavAccedi.dataset.loginBound = '1';
+    btnNavAccedi.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
+    });
+  }
 
   if (formAdminLogin) {
     formAdminLogin.addEventListener('submit', (e) => {
@@ -7788,7 +7845,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="pf-job-desc">${job.description}</p>
           </div>
           <button type="button" class="btn btn-outline-pill pf-job-cta" onclick="openCandidateModal('${job.title.replace(/'/g, "\\'")}')">
-            Candidati
+            ${window.isSpectatorRole && window.isSpectatorRole(window.getActiveSiteRole()) ? 'Solo lettura' : 'Candidati'}
           </button>
         </article>
       `).join('');
@@ -8102,7 +8159,96 @@ document.addEventListener('DOMContentLoaded', () => {
 // GLOBAL FUNCTIONS (callable from inline HTML)
 // =====================================================================
 
+function isMinigiocoOverlayOpen() {
+  const root = document.getElementById('es-mg-root');
+  if (!root) return false;
+  if (root.classList && root.classList.contains('is-open')) return true;
+  const d = (root.style && root.style.display) || '';
+  return d === 'flex' || d === 'block';
+}
+
+function viewFromHashValue(hash) {
+  const h = String(hash || '');
+  if (h.indexOf('minigioco') >= 0) return 'minigioco';
+  if (h.indexOf('dashboard-skills') >= 0) return 'pillars';
+  if (h.indexOf('bacheca') >= 0 || h.indexOf('persone') >= 0) return 'bacheca';
+  if (h.indexOf('ambassador') >= 0) return 'ambassador';
+  if (h.indexOf('account') >= 0) return 'account';
+  if (h.indexOf('admin') >= 0) return 'admin';
+  if (h.indexOf('dossier') >= 0) return 'user-dossier';
+  if (h.indexOf('squadre') >= 0) return 'squadre';
+  if (h.indexOf('about') >= 0) return 'about';
+  return 'home';
+}
+
+function isContentAuthReturn(view, hash) {
+  const v = String(view || '');
+  const h = String(hash || '');
+  if (v === 'minigioco' || h.indexOf('minigioco') >= 0) return false;
+  if (v === 'account' || v === 'admin' || v === 'user-dossier') return false;
+  if (h.indexOf('account') >= 0 || h.indexOf('admin') >= 0 || h.indexOf('dossier') >= 0) return false;
+  return (
+    v === 'about' ||
+    v === 'pillars' ||
+    v === 'bacheca' ||
+    v === 'ambassador' ||
+    v === 'squadre' ||
+    h.indexOf('about') >= 0 ||
+    h.indexOf('dashboard-skills') >= 0 ||
+    h.indexOf('bacheca') >= 0 ||
+    h.indexOf('ambassador') >= 0 ||
+    h.indexOf('squadre') >= 0
+  );
+}
+
+window.rememberAuthReturn = function () {
+  let dest = { view: 'home', hash: '#hero' };
+  if (isMinigiocoOverlayOpen()) {
+    dest = { view: 'minigioco', hash: '#minigioco-carriera' };
+  } else {
+    let hash = String(location.hash || '');
+    let view = '';
+    try { view = localStorage.getItem('elisee_view') || ''; } catch (_) {}
+    view = view || viewFromHashValue(hash);
+    if (isContentAuthReturn(view, hash)) {
+      dest = { view: view, hash: hash || '#hero' };
+    } else {
+      dest = { view: 'home', hash: '#hero' };
+    }
+  }
+  try {
+    sessionStorage.setItem('elisee_auth_return', JSON.stringify(dest));
+  } catch (_) {}
+  return dest;
+};
+
+window.restoreAuthReturn = function () {
+  let dest = { view: 'home', hash: '#hero' };
+  try {
+    const raw = sessionStorage.getItem('elisee_auth_return');
+    if (raw) dest = JSON.parse(raw) || dest;
+    sessionStorage.removeItem('elisee_auth_return');
+  } catch (_) {}
+  if (dest.view === 'minigioco') {
+    if (window.EliseeMinigioco && typeof EliseeMinigioco.open === 'function') {
+      EliseeMinigioco.open();
+    }
+    return dest;
+  }
+  if (!isContentAuthReturn(dest.view, dest.hash)) {
+    dest = { view: 'home', hash: '#hero' };
+  }
+  if (window.EliseeMinigioco && typeof EliseeMinigioco.close === 'function') {
+    try { EliseeMinigioco.close(); } catch (_) {}
+  }
+  if (typeof window.switchView === 'function') {
+    window.switchView(dest.view || 'home', dest.hash || '#hero');
+  }
+  return dest;
+};
+
 window.openRegistrazioneModal = function() {
+  window.rememberAuthReturn();
   const modal = document.getElementById('modal-registrazione');
   if (modal) {
     modal.classList.add('is-open', 'open', 'active');
@@ -8152,6 +8298,453 @@ function clearRegError() {
   const box = document.getElementById('reg-error-box');
   if (box) box.style.display = 'none';
 }
+
+function displayNameFromUser(user) {
+  if (!user || typeof user !== 'object') return '';
+  const full = String((user.nome || '') + ' ' + (user.cognome || '')).trim();
+  if (full) return full;
+  if (user.username) return String(user.username);
+  if (user.email) return String(user.email).split('@')[0];
+  return '';
+}
+
+window.showAuthLoadingScreen = function (label) {
+  let el = document.getElementById('elisee-auth-loading');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'elisee-auth-loading';
+    document.body.appendChild(el);
+  }
+  el.innerHTML =
+    '<div style="text-align:center;padding:2rem;">' +
+    '<img src="immagini/logo/logo-site.png?v=20260731_LOGO" alt="ELISEE SCOUT" style="width:64px;height:64px;object-fit:contain;display:block;margin:0 auto 1rem;">' +
+    '<div style="width:42px;height:42px;margin:0 auto 1rem;border-radius:50%;border:3px solid rgba(56,189,248,0.2);border-top-color:#38bdf8;animation:esAuthSpin 0.7s linear infinite;"></div>' +
+    '<p style="color:#fff;font-family:Outfit,sans-serif;font-weight:800;letter-spacing:0.04em;font-size:1.05rem;margin:0 0 0.35rem;">Registrazione completata</p>' +
+    '<p id="elisee-auth-loading-sub" style="color:#94a3b8;font-size:0.84rem;margin:0;"></p>' +
+    '</div>';
+  if (!document.getElementById('es-auth-spin-kf')) {
+    const s = document.createElement('style');
+    s.id = 'es-auth-spin-kf';
+    s.textContent = '@keyframes esAuthSpin{to{transform:rotate(360deg)}}';
+    document.head.appendChild(s);
+  }
+  const sub = document.getElementById('elisee-auth-loading-sub');
+  if (sub) sub.textContent = label || 'Preparazione del profilo…';
+  el.classList.add('is-on');
+  el.style.cssText =
+    'display:flex !important;align-items:center !important;justify-content:center !important;' +
+    'position:fixed !important;inset:0 !important;z-index:2147483000 !important;' +
+    'background:rgba(4,10,20,0.9) !important;backdrop-filter:blur(16px) !important;' +
+    'visibility:visible !important;opacity:1 !important;pointer-events:auto !important;';
+  document.body.style.overflow = 'hidden';
+};
+
+window.hideAuthLoadingScreen = function () {
+  const el = document.getElementById('elisee-auth-loading');
+  if (el) {
+    el.classList.remove('is-on');
+    el.style.cssText = 'display:none !important;';
+  }
+  const regOpen = document.getElementById('modal-registrazione');
+  const accOpen = document.getElementById('modal-accesso-unificato');
+  const stillModal =
+    (regOpen && regOpen.classList.contains('is-open')) ||
+    (accOpen && accOpen.classList.contains('is-open'));
+  if (!stillModal) document.body.style.overflow = '';
+};
+
+window.paintLoggedInUser = function (user) {
+  const name = displayNameFromUser(user) || 'Account';
+  try {
+    localStorage.setItem('elisee_user_auth', 'true');
+    if (user && typeof user === 'object') {
+      localStorage.setItem('elisee_active_user', JSON.stringify(user));
+      localStorage.setItem('elisee_user_data', JSON.stringify(user));
+    }
+  } catch (_) {}
+  if (typeof window.applySpectatorMode === 'function') window.applySpectatorMode(user);
+  if (typeof window.updateNavbarUserUI === 'function') {
+    try { window.updateNavbarUserUI(); } catch (_) {}
+  }
+  const out = document.getElementById('nav-logged-out-actions');
+  const inn = document.getElementById('nav-logged-in-actions');
+  const nameEl = document.getElementById('user-name-display');
+  const fullEl = document.getElementById('user-dropdown-name-full');
+  const emailEl = document.getElementById('user-dropdown-email');
+  if (out) {
+    out.hidden = true;
+    out.style.setProperty('display', 'none', 'important');
+  }
+  if (inn) {
+    inn.hidden = false;
+    inn.style.setProperty('display', 'flex', 'important');
+    inn.style.setProperty('visibility', 'visible', 'important');
+    inn.style.setProperty('opacity', '1', 'important');
+  }
+  if (nameEl) nameEl.textContent = name;
+  if (fullEl) fullEl.textContent = name;
+  if (emailEl && user && user.email) emailEl.textContent = user.email;
+  const actions =
+    document.querySelector('.es-mg-hub-top-actions') ||
+    document.querySelector('.es-mg-top-actions');
+  if (actions) {
+    const auth = document.getElementById('es-mg-hub-auth');
+    if (auth) auth.remove();
+    let chip = document.getElementById('es-mg-user-chip');
+    if (!chip) {
+      chip = document.createElement('div');
+      chip.id = 'es-mg-user-chip';
+      chip.className = 'es-mg-user-chip';
+      const closeBtn = document.getElementById('es-mg-x');
+      if (closeBtn && closeBtn.parentNode === actions) actions.insertBefore(chip, closeBtn);
+      else actions.appendChild(chip);
+    }
+    chip.textContent = name;
+  }
+  try {
+    document.dispatchEvent(new CustomEvent('elisee:user-revealed', { detail: { user: user, name: name } }));
+  } catch (_) {}
+  if (typeof updateDossierView === 'function') {
+    try { updateDossierView(); } catch (_) {}
+  }
+  return name;
+};
+
+window.SITE_ROLES = [
+  { id: 'Calciatore', label: 'Calciatore' },
+  { id: 'Portiere', label: 'Portiere' },
+  { id: 'Allenatore', label: 'Allenatore / Tecnico' },
+  { id: 'Scout', label: 'Scout' },
+  { id: 'Procuratore', label: 'Procuratore sportivo' },
+  { id: 'Direttore', label: 'Direttore sportivo' },
+  { id: 'Match Analyst', label: 'Match Analyst' },
+  { id: 'Preparatore', label: 'Preparatore atletico' },
+  { id: 'Fisioterapista', label: 'Fisioterapista' },
+  { id: 'Societa', label: 'Dirigente societa' },
+  { id: 'Spettatore', label: 'Spettatore', noDocument: true, noApplications: true }
+];
+
+window.isSpectatorRole = function (userOrRole) {
+  const raw = typeof userOrRole === 'string'
+    ? userOrRole
+    : ((userOrRole && (userOrRole.ruolo || userOrRole.role)) || '');
+  return String(raw).trim().toLowerCase() === 'spettatore';
+};
+
+window.getActiveSiteRole = function () {
+  try {
+    const u = JSON.parse(localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data') || '{}') || {};
+    return String((u && (u.ruolo || u.role)) || '').trim();
+  } catch (_) {
+    return '';
+  }
+};
+
+window.applySpectatorMode = function (user) {
+  const spec = window.isSpectatorRole(user || window.getActiveSiteRole());
+  try { document.body.classList.toggle('role-spettatore', spec); } catch (_) {}
+  if (typeof window.filterAndRenderJobs === 'function') {
+    try { window.filterAndRenderJobs(); } catch (_) {}
+  }
+};
+
+window.onSiteRoleSelectChange = function (value) {
+  const hint = document.getElementById('scegli-ruolo-hint');
+  if (!hint) return;
+  if (window.isSpectatorRole(value)) {
+    hint.style.display = 'block';
+  } else {
+    hint.style.display = 'none';
+  }
+};
+
+window.blockSpectatorApplication = function (kind) {
+  if (!window.isSpectatorRole(window.getActiveSiteRole())) return false;
+  const msg = kind === 'badge'
+    ? 'Lo Spettatore non deve allegare il documento di identita.'
+    : 'Il ruolo Spettatore puo navigare e interagire, ma non puo inviare candidature di lavoro o di recruitment.';
+  if (typeof window.showToast === 'function') window.showToast(msg, 'error');
+  else alert(msg);
+  return true;
+};
+
+function rolePanelRows(role) {
+  const commonB = [
+    ['Badge di verifica', 'In attesa'],
+    ['Selfie anti-fake', 'In attesa'],
+    ['Revisione governance', 'In attesa'],
+    ['DPIA Art. 35', 'Conforme GDPR']
+  ];
+  const map = {
+    Calciatore: {
+      aTitle: 'Prestazione e GPS',
+      a: [['Statistiche stagione', 'Non inserite'], ['Ruolo in campo', 'Non inserito'], ['Caratteristiche fisiche', 'Non inserite'], ['Dispositivo GPS', 'Nessun dispositivo'], ['Top speed', 'Non rilevata'], ['Distanza gara', 'Non rilevata']],
+      bTitle: 'Sanita e privacy',
+      b: [['Certificato medico', 'Non caricato'], ['Consenso biometrici', 'Da registrare']].concat(commonB)
+    },
+    Portiere: {
+      aTitle: 'Prestazione portiere',
+      a: [['Parate / gol subiti', 'Non inseriti'], ['Uscite alte', 'Non rilevate'], ['Distribuzione palla', 'Non rilevata'], ['GPS portiere', 'Nessun dispositivo']],
+      bTitle: 'Sanita e privacy',
+      b: [['Certificato medico', 'Non caricato']].concat(commonB)
+    },
+    Allenatore: {
+      aTitle: 'Staff tecnico',
+      a: [['Licenza FIGC', 'Non caricata'], ['Modulo preferito', 'Da definire'], ['Filosofia di gioco', 'Non inserita'], ['Squadra attuale', 'Senza squadra'], ['Obiettivo stagione', 'Da impostare']],
+      bTitle: 'Documenti e verifica',
+      b: [['Tesserino tecnico', 'Non caricato']].concat(commonB)
+    },
+    Scout: {
+      aTitle: 'Attivita di scouting',
+      a: [['Zona di osservazione', 'Non impostata'], ['Report aperti', '0'], ['Profili osservati', '0'], ['Ultimo sopralluogo', 'Nessuno']],
+      bTitle: 'Verifica scout',
+      b: [['Badge scout', 'Da richiedere']].concat(commonB)
+    },
+    Procuratore: {
+      aTitle: 'Portafoglio e trattative',
+      a: [['Assistiti attivi', '0'], ['Trattative in corso', '0'], ['Contratti in scadenza', '0'], ['Mandato deposito', 'Non caricato']],
+      bTitle: 'Compliance',
+      b: [['Iscrizione albo', 'Da verificare']].concat(commonB)
+    },
+    Direttore: {
+      aTitle: 'Direzione sportiva',
+      a: [['Club di riferimento', 'Non associato'], ['Organico seguito', '0'], ['Finestra di mercato', 'Chiusa'], ['Budget indicativo', 'Non inserito']],
+      bTitle: 'Governance club',
+      b: [['Nomina societaria', 'Non caricata']].concat(commonB)
+    },
+    'Match Analyst': {
+      aTitle: 'Analisi e video',
+      a: [['Match report aperti', '0'], ['Clip tattiche', '0'], ['KPI ultimi 5 match', 'Non calcolati'], ['Software analisi', 'Non indicato']],
+      bTitle: 'Verifica analyst',
+      b: [['Portfolio analisi', 'Non caricato']].concat(commonB)
+    },
+    Preparatore: {
+      aTitle: 'Preparazione atletica',
+      a: [['Atleti seguiti', '0'], ['Carico settimanale', 'Non impostato'], ['Sedute GPS', '0'], ['Protocollo prevenzione', 'Non definito']],
+      bTitle: 'Sanita staff',
+      b: [['Certificazione preparatore', 'Non caricata']].concat(commonB)
+    },
+    Fisioterapista: {
+      aTitle: 'Area sanitaria',
+      a: [['Atleti in cura', '0'], ['Infortuni aperti', '0'], ['Piani di recupero', '0'], ['Ultimo referto', 'Nessuno']],
+      bTitle: 'Privacy sanitaria',
+      b: [['Consenso sanitario', 'Da registrare']].concat(commonB)
+    },
+    Societa: {
+      aTitle: 'Area societa',
+      a: [['Denominazione club', 'Non inserita'], ['Categoria', 'Non indicata'], ['Organigramma', 'Incompleto'], ['Comunicati', '0']],
+      bTitle: 'Compliance societaria',
+      b: [['Visura / affiliazione', 'Non caricata']].concat(commonB)
+    },
+    Spettatore: {
+      aTitle: 'Navigazione e interazione',
+      a: [
+        ['Accesso al sito', 'Libero'],
+        ['Consulta profili e ruoli', 'Consentito'],
+        ['Bacheca e network', 'Interazione aperta'],
+        ['Minigioco e contenuti', 'Disponibili']
+      ],
+      bTitle: 'Limiti spettatore',
+      b: [
+        ['Documento di identita', 'Non richiesto'],
+        ['Candidature di lavoro', 'Non consentite'],
+        ['Candidature recruitment', 'Non consentite'],
+        ['Interazione con altri ruoli', 'Consentita']
+      ]
+    }
+  };
+  return map[role] || map.Calciatore;
+}
+
+window.applyRoleDossierInterface = function (user) {
+  const role = (user && (user.ruolo || user.role)) || '';
+  const spec = rolePanelRows(role);
+  window.applySpectatorMode(user);
+  const badgeBtn = document.getElementById('btn-richiedi-badge');
+  if (badgeBtn) badgeBtn.style.display = window.isSpectatorRole(user) ? 'none' : '';
+  const aTitle = document.getElementById('dossier-panel-a-title');
+  const bTitle = document.getElementById('dossier-panel-b-title');
+  const aList = document.getElementById('dossier-panel-a-list');
+  const bList = document.getElementById('dossier-panel-b-list');
+  const fill = function (ul, rows) {
+    if (!ul) return;
+    ul.innerHTML = rows.map(function (r) {
+      return '<li><span>' + r[0] + '</span><strong>' + r[1] + '</strong></li>';
+    }).join('');
+  };
+  if (aTitle) aTitle.textContent = spec.aTitle;
+  if (bTitle) bTitle.textContent = spec.bTitle;
+  fill(aList, spec.a);
+  fill(bList, spec.b);
+};
+
+window.needsSiteRole = function (user) {
+  if (!user) return false;
+  try {
+    if (localStorage.getItem('elisee_site_role_confirmed') === '1') return false;
+  } catch (_) {}
+  if (user.siteRoleConfirmed && String(user.ruolo || user.role || '').trim()) return false;
+  return true;
+};
+
+window.openSiteRoleModal = function () {
+  const modal = document.getElementById('modal-scegli-ruolo');
+  if (!modal) return;
+  modal.style.setProperty('display', 'flex', 'important');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeSiteRoleModal = function () {
+  const modal = document.getElementById('modal-scegli-ruolo');
+  if (modal) modal.style.setProperty('display', 'none', 'important');
+};
+
+window.confirmSiteRole = function () {
+  const sel = document.getElementById('scegli-ruolo-select');
+  const err = document.getElementById('scegli-ruolo-err');
+  const val = sel ? sel.value : '';
+  if (!val) {
+    if (err) { err.style.display = 'block'; err.textContent = 'Devi selezionare un ruolo per continuare.'; }
+    return;
+  }
+  if (err) err.style.display = 'none';
+  let user = {};
+  try { user = JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {}; } catch (_) {}
+  user.ruolo = val;
+  user.role = val;
+  user.siteRoleConfirmed = true;
+  user.needsIdentityDocument = !window.isSpectatorRole(val);
+  user.canApplyJobs = !window.isSpectatorRole(val);
+  try {
+    localStorage.setItem('elisee_active_user', JSON.stringify(user));
+    localStorage.setItem('elisee_user_data', JSON.stringify(user));
+    const pp = JSON.parse(localStorage.getItem('elisee_profilo_personale') || '{}') || {};
+    pp.ruolo = val;
+    localStorage.setItem('elisee_profilo_personale', JSON.stringify(pp));
+  } catch (_) {}
+  try { localStorage.setItem('elisee_site_role_confirmed', '1'); } catch (_) {}
+  window.closeSiteRoleModal();
+  document.body.style.overflow = '';
+  if (typeof window.paintLoggedInUser === 'function') window.paintLoggedInUser(user);
+  if (typeof updateDossierView === 'function') updateDossierView();
+  if (window.isSpectatorRole(val)) {
+    if (typeof window.restoreAuthReturn === 'function') window.restoreAuthReturn();
+    else if (typeof window.switchView === 'function') window.switchView('home', '#hero');
+    if (typeof window.showToast === 'function') {
+      window.showToast('Accesso Spettatore attivo: puoi navigare e interagire, senza candidature.', 'success');
+    }
+  } else if (typeof window.switchView === 'function') {
+    window.switchView('user-dossier', '#user-dossier-portal');
+  }
+};
+
+window.ensureSiteRole = function (user) {
+  if (window.needsSiteRole(user)) window.openSiteRoleModal();
+};
+
+window.revealRegisteredUser = function (user, after) {
+  const name = displayNameFromUser(user) || 'Account';
+  if (typeof window.closeRegistrazioneModal === 'function') window.closeRegistrazioneModal();
+  if (typeof window.closeAccessoModal === 'function') window.closeAccessoModal();
+  window.showAuthLoadingScreen('Profilo di ' + name + ' in arrivo…');
+  setTimeout(function () {
+    window.paintLoggedInUser(user);
+    window.hideAuthLoadingScreen();
+    if (window.needsSiteRole(user)) {
+      window.openSiteRoleModal();
+    } else if (typeof window.restoreAuthReturn === 'function') {
+      window.restoreAuthReturn();
+    }
+    if (typeof after === 'function') after(user, name);
+  }, 850);
+};
+
+(function applyPendingGoogleSession() {
+  const pending = window.__ELISEE_PENDING_AUTH;
+  if (!pending || pending.done) return;
+  if (pending.user) {
+    pending.done = true;
+    window.revealRegisteredUser(pending.user);
+  }
+})();
+
+window.EliseeAuth = {
+  applySession: function (user, token) {
+    if (!user) return;
+    localStorage.setItem('elisee_user_auth', 'true');
+    localStorage.setItem('elisee_active_user', JSON.stringify(user));
+    localStorage.setItem('elisee_user_data', JSON.stringify(user));
+    if (token) localStorage.setItem('elisee_auth_token', token);
+  },
+  clearSession: function () {
+    localStorage.removeItem('elisee_user_auth');
+    localStorage.removeItem('elisee_active_user');
+    localStorage.removeItem('elisee_user_data');
+    localStorage.removeItem('elisee_auth_token');
+  },
+  api: function (path, body, method) {
+    const headers = { 'Content-Type': 'application/json' };
+    const tok = localStorage.getItem('elisee_auth_token');
+    if (tok) headers.Authorization = 'Bearer ' + tok;
+    return fetch(path, {
+      method: method || (body ? 'POST' : 'GET'),
+      headers: headers,
+      body: body ? JSON.stringify(body) : undefined,
+      credentials: 'same-origin'
+    }).then(function (r) {
+      return r.json().then(function (data) {
+        if (!r.ok || data.ok === false) {
+          const err = new Error(data.error || ('http_' + r.status));
+          err.payload = data;
+          throw err;
+        }
+        return data;
+      });
+    });
+  },
+  register: function (payload) {
+    return window.EliseeAuth.api('/api/auth/register', payload).then(function (res) {
+      window.EliseeAuth.applySession(res.user, res.token);
+      return res;
+    });
+  },
+  login: function (email, password) {
+    return window.EliseeAuth.api('/api/auth/login', { email: email, password: password }).then(function (res) {
+      window.EliseeAuth.applySession(res.user, res.token);
+      return res;
+    });
+  },
+  google: function (idToken, extras) {
+    const body = Object.assign({ idToken: idToken }, extras || {});
+    return window.EliseeAuth.api('/api/auth/google', body).then(function (res) {
+      window.EliseeAuth.applySession(res.user, res.token);
+      return res;
+    });
+  },
+  setPassword: function (password) {
+    return window.EliseeAuth.api('/api/auth/set-password', { password: password }).then(function (res) {
+      if (res.user) window.EliseeAuth.applySession(res.user, localStorage.getItem('elisee_auth_token'));
+      return res;
+    });
+  },
+  restore: function () {
+    if (window.__ELISEE_PENDING_AUTH && window.__ELISEE_PENDING_AUTH.token) {
+      return Promise.resolve(null);
+    }
+    const tok = localStorage.getItem('elisee_auth_token');
+    if (!tok) return Promise.resolve(null);
+    return window.EliseeAuth.api('/api/auth/me').then(function (res) {
+      window.EliseeAuth.applySession(res.user, tok);
+      if (typeof window.paintLoggedInUser === 'function') window.paintLoggedInUser(res.user);
+      if (window.needsSiteRole && window.needsSiteRole(res.user) && window.openSiteRoleModal) {
+        window.openSiteRoleModal();
+      }
+      return res.user;
+    }).catch(function () {
+      return null;
+    });
+  }
+};
 
 /** Email di conferma (client demo): salva bozza + apre client email se possibile */
 function queueRegistrationConfirmEmail(userData) {
@@ -8315,69 +8908,45 @@ window.submitRegistrazione = function (e) {
       registratoIl: new Date().toISOString()
     };
 
-    localStorage.setItem('elisee_user_data', JSON.stringify(userData));
+    const btnReg = document.getElementById('reg-submit') || document.querySelector('#modal-registrazione button[type="submit"]');
+    if (btnReg) btnReg.disabled = true;
 
-    // Attiva cookie/profilazione/marketing se accettati in registrazione
-    try {
-      if (window.EliseeCookies) {
-        const wantProfile = !!(cookieEl && cookieEl.checked);
-        const wantMarketing = !!(newsEl && newsEl.checked);
-        EliseeCookies.saveConsent({
-          analytics: true,
-          profiling: wantProfile,
-          marketing: wantMarketing || wantProfile
-        }, 'registration');
-        EliseeCookies.track('registration_complete', {
-          ruolo: ruolo,
-          profiling: wantProfile,
-          newsletter: wantMarketing
-        });
-        if (wantProfile) {
-          EliseeCookies.updateProfile('role', ruolo);
-          EliseeCookies.updateProfile('interest', 'iscrizione');
-        }
+    EliseeAuth.register({
+      nome: nome,
+      cognome: cognome,
+      email: email,
+      password: pass,
+      dob: dob,
+      ruolo: ruolo,
+      consents: {
+        tos: !!(tosEl && tosEl.checked),
+        privacy: !!(privacyEl && privacyEl.checked),
+        cookie: !!(cookieEl && cookieEl.checked),
+        newsletter: !!(newsEl && newsEl.checked),
+        art22HumanReview: !!(art22El && art22El.checked)
       }
-      if (userData.consents.art22HumanReview && window.EliseeAiGdpr) {
-        EliseeAiGdpr.enqueueArt22(userData, 'Iscrizione: richiesta Art. 22 (non decisioni esclusivamente automatizzate + intervento umano)');
-      }
-    } catch (e) { /* ignore */ }
-    localStorage.setItem('elisee_user_auth', 'true');
-    localStorage.setItem('elisee_active_user', JSON.stringify(userData));
-    try {
-      const list = JSON.parse(localStorage.getItem('elisee_registered_users') || '[]');
-      const arr = Array.isArray(list) ? list : [];
-      const withoutDup = arr.filter((u) => (u.email || '').toLowerCase() !== email.toLowerCase());
-      withoutDup.unshift(userData);
-      localStorage.setItem('elisee_registered_users', JSON.stringify(withoutDup.slice(0, 200)));
-    } catch (err) {
-      console.warn('registered_users', err);
-    }
-
-    queueRegistrationConfirmEmail(userData);
-
-    if (typeof window.closeRegistrazioneModal === 'function') {
-      window.closeRegistrazioneModal();
-    }
-
-    if (typeof window.showToastNotification === 'function') {
-      window.showToastNotification(
-        `Profilo creato, ${nome}! Email di conferma preparata per ${email}.`
-      );
-    }
-
-    alert(
-      `✅ Benvenuto/a su ELISEE SCOUT, ${nome}!\n\n` +
-        `Il tuo profilo come "${ruolo}" è stato creato.\n` +
-        `Risulti senza squadra: sei visibile in Focus → Svincolati.\n\n` +
-        `Ti abbiamo preparato l’email di conferma (con Informativa Privacy e GDPR in calce) per ${email}.`
-    );
-
-    // Porta l'utente nell'area account / dossier se disponibile
-    try {
-      if (typeof window.switchView === 'function') {
-        window.switchView('user-dossier', '#user-dossier-portal');
-      }
-    } catch (_) {}
+    }).then(function (res) {
+      if (btnReg) btnReg.disabled = false;
+      const created = res.user || { nome: nome, cognome: cognome, email: email, ruolo: ruolo };
+      created.ruolo = created.ruolo || ruolo;
+      created.role = created.ruolo;
+      created.siteRoleConfirmed = false;
+      try {
+        localStorage.setItem('elisee_active_user', JSON.stringify(created));
+      } catch (_) {}
+      window.revealRegisteredUser(created);
+    }).catch(function (err) {
+      if (btnReg) btnReg.disabled = false;
+      const code = (err && err.payload && err.payload.error) || (err && err.message) || '';
+      const map = {
+        email_gia_registrata: 'Questa email è già registrata. Accedi con la tua password.',
+        password_corta: 'La password deve avere almeno 8 caratteri.',
+        email_non_valida: 'Indirizzo email non valido.',
+        ruolo_obbligatorio: 'Seleziona un ruolo.',
+        nome_cognome_obbligatori: 'Inserisci nome e cognome.'
+      };
+      showRegError(map[code] || ('Registrazione non riuscita: ' + code));
+    });
 
     return false;
   } catch (err) {
@@ -8391,6 +8960,17 @@ window.submitRegistrazione = function (e) {
 
 // Bind sicuro anche se l'inline onsubmit fallisce
 document.addEventListener('DOMContentLoaded', function () {
+  try {
+    if (window.consumeEliseeOAuthReturn) window.consumeEliseeOAuthReturn();
+  } catch (_) {}
+  try {
+    if (new URLSearchParams(location.search || '').get('accesso') === '1' && window.openAccessoModal) {
+      window.openAccessoModal('email');
+    }
+  } catch (_) {}
+  try {
+    if (window.EliseeAuth && typeof EliseeAuth.restore === 'function') EliseeAuth.restore();
+  } catch (_) {}
   const form = document.getElementById('form-registrazione');
   if (form && !form.dataset.boundReg) {
     form.dataset.boundReg = '1';
@@ -8549,7 +9129,8 @@ window.filterNews = function(cat) {
 // =====================================================================
 let _accessoProvider = 'email'; // 'google' | 'apple' | 'spid' | 'email'
 
-function openAccessoModal(provider, iconHtml, label) {
+window.openAccessoModal = function openAccessoModal(provider, iconHtml, label) {
+  window.rememberAuthReturn();
   _accessoProvider = provider;
   const modal = document.getElementById('modal-accesso-unificato');
   if (!modal) return;
@@ -8558,7 +9139,7 @@ function openAccessoModal(provider, iconHtml, label) {
   modal.style.setProperty('pointer-events', 'auto', 'important');
   modal.style.setProperty('visibility', 'visible', 'important');
   modal.style.setProperty('opacity', '1', 'important');
-  modal.style.setProperty('z-index', '99997', 'important');
+  modal.style.setProperty('z-index', '2000001', 'important');
   document.body.style.overflow = 'hidden';
 
   // Aggiorna header badge
@@ -8619,7 +9200,8 @@ function resetAccessoForm() {
     if (el) el.style.display = 'none';
   });
   const btn = document.getElementById('accesso-submit-btn');
-  if (btn) { btn.disabled = false; btn.innerHTML = 'ACCEDI &rarr;'; btn.style.opacity = '1'; }
+  if (btn) { btn.disabled = false; btn.innerHTML = 'Accedi con password'; btn.style.opacity = '1'; }
+  if (typeof window.showAccessoMethod === 'function') window.showAccessoMethod('email');
 }
 
 // Apri da SPID provider selection → torna al form email+password
@@ -8640,7 +9222,8 @@ window.selectSpidProvider = function(name, color) {
 
 // ==== ALIAS — bottoni hero aprono modal unificato con loghi ufficiali SVG e ombra ====
 window.openGoogleModal = function() {
-  openAccessoModal('google', '<img src="immagini/07-auth-google/google-logo.svg?v=20260730_225504" style="width:22px; height:22px; vertical-align:middle; filter:drop-shadow(0 3px 6px rgba(0,0,0,0.5)) drop-shadow(0 0 8px rgba(66,133,244,0.6));">', 'Google');
+  if (window.startEliseeGoogleOAuth) window.startEliseeGoogleOAuth();
+  else openAccessoModal('email');
 };
 window.closeGoogleModal = window.closeAccessoModal;
 window.openAppleModal = function() {
@@ -8742,112 +9325,233 @@ function finalizeSocialRegistration(provider, profile) {
 
   setRegSocialButtonsBusy(false);
   setRegSocialStatus('');
-  if (typeof window.closeRegistrazioneModal === 'function') window.closeRegistrazioneModal();
-
-  if (typeof window.showToastNotification === 'function') {
-    window.showToastNotification(
-      'Profilo creato con ' + userData.provider + ': ' + userData.nome
-    );
-  }
-
-  alert(
-    '✅ Benvenuto/a su ELISEE SCOUT, ' +
-      userData.nome +
-      '!\n\n' +
-      'Account creato tramite ' +
-      userData.provider +
-      '.\n' +
-      'Email: ' +
-      userData.email +
-      '\n' +
-      'Ruolo: ' +
-      userData.ruolo +
-      '\n\n' +
-      'Sei senza squadra: visibile in Focus → Svincolati.\n' +
-      'Email di conferma preparata (Privacy/GDPR in calce).'
-  );
-
-  try {
-    if (typeof window.switchView === 'function') {
-      window.switchView('user-dossier', '#user-dossier-portal');
-    }
-  } catch (_) {}
+  window.revealRegisteredUser(userData);
 }
 
-function runSocialRegistrazione(provider) {
-  try {
-    if (typeof clearRegError === 'function') clearRegError();
-    setRegSocialStatus('');
+function loadGoogleGis() {
+  return new Promise(function (resolve, reject) {
+    if (window.google && google.accounts && google.accounts.id) {
+      resolve();
+      return;
+    }
+    const existing = document.querySelector('script[data-elisee-gis]');
+    if (existing) {
+      existing.addEventListener('load', function () { resolve(); });
+      existing.addEventListener('error', function () { reject(new Error('gis_load')); });
+      return;
+    }
+    const s = document.createElement('script');
+    s.src = 'https://accounts.google.com/gsi/client';
+    s.async = true;
+    s.defer = true;
+    s.setAttribute('data-elisee-gis', '1');
+    s.onload = function () { resolve(); };
+    s.onerror = function () { reject(new Error('gis_load')); };
+    document.head.appendChild(s);
+  });
+}
 
-    const tosEl = document.getElementById('reg-tos');
-    const privacyEl = document.getElementById('reg-privacy');
-    // Per social: se non spuntati, li spunta automaticamente e informa (flusso OAuth tipico)
-    if (tosEl && !tosEl.checked) tosEl.checked = true;
-    if (privacyEl && !privacyEl.checked) privacyEl.checked = true;
-
-    // Prefill da form se l'utente ha già digitato dati
-    const formNome = (document.getElementById('reg-nome') || {}).value || '';
-    const formCognome = (document.getElementById('reg-cognome') || {}).value || '';
-    const formEmail = (document.getElementById('reg-email') || {}).value || '';
-    const formDob = (document.getElementById('reg-dob') || {}).value || '';
-    const formRuolo = (document.getElementById('reg-ruolo') || {}).value || 'Calciatore';
-
-    const label = provider === 'google' ? 'Google' : 'Apple';
-    setRegSocialButtonsBusy(true);
-    setRegSocialStatus('Connessione sicura a ' + label + ' in corso…');
-
-    // Simula redirect OAuth (in produzione: GIS / Apple JS SDK)
-    setTimeout(function () {
-      setRegSocialStatus('Autorizzazione ' + label + ' ricevuta. Creazione profilo ELISEE…');
-
-      setTimeout(function () {
-        let nome = formNome.trim();
-        let cognome = formCognome.trim();
-        let email = formEmail.trim();
-
-        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          // identità demo se non c'è email nel form
-          if (provider === 'google') {
-            email = 'utente.google@gmail.com';
-            if (!nome) nome = 'Utente';
-            if (!cognome) cognome = 'Google';
-          } else {
-            email = 'utente.apple@icloud.com';
-            if (!nome) nome = 'Utente';
-            if (!cognome) cognome = 'Apple';
-          }
-        } else {
-          if (!nome) nome = email.split('@')[0].split(/[._-]/)[0] || 'Utente';
-          if (!cognome) cognome = email.split('@')[0].split(/[._-]/)[1] || label;
-          // capitalizza
-          nome = nome.charAt(0).toUpperCase() + nome.slice(1);
-          cognome = cognome.charAt(0).toUpperCase() + cognome.slice(1);
-        }
-
-        finalizeSocialRegistration(provider, {
-          nome: nome,
-          cognome: cognome,
-          email: email,
-          dob: formDob,
-          ruolo: formRuolo || 'Calciatore'
-        });
-      }, 900);
-    }, 1100);
-  } catch (err) {
-    console.error('runSocialRegistrazione', err);
-    setRegSocialButtonsBusy(false);
-    setRegSocialStatus(
-      'Errore registrazione ' + (provider === 'google' ? 'Google' : 'Apple') + ': ' + (err.message || err),
-      true
-    );
+function showGooglePasswordStep(user) {
+  const box = document.getElementById('reg-google-password-step');
+  const hello = document.getElementById('reg-google-pw-hello');
+  const setup = document.getElementById('reg-google-setup');
+  if (setup) setup.style.display = 'none';
+  if (hello) {
+    hello.textContent =
+      'Ciao ' +
+      ((user && (user.nome || user.email)) || '') +
+      '. Imposta una password di almeno 8 caratteri per accedere anche con email.';
   }
+  if (box) box.style.display = 'block';
+}
+
+function finishGoogleSession(user) {
+  setRegSocialButtonsBusy(false);
+  setRegSocialStatus('');
+  window.revealRegisteredUser(user || {});
+}
+
+window.completeGooglePassword = function () {
+  const a = (document.getElementById('reg-google-password') || {}).value || '';
+  const b = (document.getElementById('reg-google-password2') || {}).value || '';
+  if (a.length < 8) {
+    setRegSocialStatus('La password deve avere almeno 8 caratteri.', true);
+    return;
+  }
+  if (a !== b) {
+    setRegSocialStatus('Le due password non coincidono.', true);
+    return;
+  }
+  window.EliseeAuth.setPassword(a).then(function (res) {
+    setRegSocialStatus('');
+    finishGoogleSession(res.user || {});
+  }).catch(function (err) {
+    setRegSocialStatus('Impossibile salvare la password: ' + ((err && err.message) || 'errore'), true);
+  });
+};
+
+window.saveGoogleClientIdAndStart = function () {
+  const inp = document.getElementById('reg-google-client-id');
+  const val = ((inp && inp.value) || '').trim();
+  if (!val || val.indexOf('apps.googleusercontent.com') < 0) {
+    setRegSocialStatus('Incolla un Client ID Google valido (…apps.googleusercontent.com).', true);
+    return;
+  }
+  fetch('/api/auth/config', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ googleClientId: val }),
+    credentials: 'same-origin'
+  })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (!data || !data.ok) throw new Error((data && data.error) || 'config');
+      const setup = document.getElementById('reg-google-setup');
+      if (setup) setup.style.display = 'none';
+      runRealGoogleAuth();
+    })
+    .catch(function (err) {
+      setRegSocialStatus('Client ID non salvato: ' + ((err && err.message) || 'errore'), true);
+    });
+};
+
+function handleGoogleCredential(resp) {
+  if (!resp || !resp.credential) {
+    setRegSocialButtonsBusy(false);
+    setRegSocialStatus('Autorizzazione Google annullata.', true);
+    return;
+  }
+  const extras = {
+    nome: ((document.getElementById('reg-nome') || {}).value || '').trim(),
+    cognome: ((document.getElementById('reg-cognome') || {}).value || '').trim(),
+    ruolo: ((document.getElementById('reg-ruolo') || {}).value || 'Calciatore').trim(),
+    dob: ((document.getElementById('reg-dob') || {}).value || '').trim(),
+    consents: { tos: true, privacy: true }
+  };
+  window.EliseeAuth.google(resp.credential, extras).then(function (res) {
+    setRegSocialButtonsBusy(false);
+    setRegSocialStatus('');
+    if (res.needsPassword) {
+      showGooglePasswordStep(res.user || {});
+      return;
+    }
+    finishGoogleSession(res.user || {});
+  }).catch(function (err) {
+    setRegSocialButtonsBusy(false);
+    setRegSocialStatus('Google non verificato: ' + ((err && err.message) || 'errore'), true);
+  });
+}
+
+function runRealGoogleAuth() {
+  if (typeof clearRegError === 'function') clearRegError();
+  setRegSocialStatus('Connessione a Google in corso…');
+  setRegSocialButtonsBusy(true);
+  const setup = document.getElementById('reg-google-setup');
+  fetch('/api/auth/config', { credentials: 'same-origin' })
+    .then(function (r) { return r.json(); })
+    .then(function (cfg) {
+      if (!cfg || !cfg.googleClientId) {
+        setRegSocialButtonsBusy(false);
+        setRegSocialStatus('Per registrarti con Google serve un Client ID OAuth (una volta sola).');
+        if (setup) setup.style.display = 'block';
+        return;
+      }
+      if (setup) setup.style.display = 'none';
+      return loadGoogleGis().then(function () {
+        google.accounts.id.initialize({
+          client_id: cfg.googleClientId,
+          callback: handleGoogleCredential,
+          auto_select: false,
+          ux_mode: 'popup'
+        });
+        google.accounts.id.prompt(function (n) {
+          if (n && ((n.isNotDisplayed && n.isNotDisplayed()) || (n.isSkippedMoment && n.isSkippedMoment()))) {
+            const host = document.getElementById('btn-reg-google');
+            if (host) {
+              host.innerHTML = '';
+              google.accounts.id.renderButton(host, {
+                theme: 'outline',
+                size: 'large',
+                text: 'continue_with',
+                width: 280
+              });
+            }
+          }
+        });
+        setRegSocialStatus('Scegli l’account Google. Poi imposterai una password di 8 caratteri.');
+        setRegSocialButtonsBusy(false);
+      });
+    })
+    .catch(function (err) {
+      setRegSocialButtonsBusy(false);
+      setRegSocialStatus('Impossibile avviare Google: ' + ((err && err.message) || 'errore'), true);
+    });
 }
 
 window.registerWithGoogle = function () {
-  runSocialRegistrazione('google');
+  if (window.startEliseeGoogleOAuth) window.startEliseeGoogleOAuth();
+};
+
+window.completeGoogleSimpleRegister = function () {
+  const email = ((document.getElementById('reg-google-email') || {}).value || '').trim().toLowerCase();
+  const pass = (document.getElementById('reg-google-password') || {}).value || '';
+  const pass2 = (document.getElementById('reg-google-password2') || {}).value || '';
+  const nomeForm = ((document.getElementById('reg-nome') || {}).value || '').trim();
+  const cognomeForm = ((document.getElementById('reg-cognome') || {}).value || '').trim();
+  const ruolo = ((document.getElementById('reg-ruolo') || {}).value || 'Calciatore').trim() || 'Calciatore';
+  const dob = ((document.getElementById('reg-dob') || {}).value || '').trim();
+
+  if (!email || !/^[^\s@]+@(gmail\.com|googlemail\.com)$/i.test(email)) {
+    setRegSocialStatus('Inserisci una email Gmail valida (es. nome@gmail.com).', true);
+    return;
+  }
+  if (pass.length < 8) {
+    setRegSocialStatus('La password deve avere almeno 8 caratteri.', true);
+    return;
+  }
+  if (pass !== pass2) {
+    setRegSocialStatus('Le due password non coincidono.', true);
+    return;
+  }
+
+  const local = email.split('@')[0] || 'utente';
+  const bits = local.split(/[._\-]+/);
+  const nome = nomeForm || (bits[0] ? bits[0].charAt(0).toUpperCase() + bits[0].slice(1) : 'Utente');
+  const cognome = cognomeForm || (bits[1] ? bits[1].charAt(0).toUpperCase() + bits[1].slice(1) : 'Google');
+
+  setRegSocialButtonsBusy(true);
+  setRegSocialStatus('Creazione account in corso…');
+  window.EliseeAuth.register({
+    nome: nome,
+    cognome: cognome,
+    email: email,
+    password: pass,
+    dob: dob,
+    ruolo: ruolo,
+    provider: 'google',
+    consents: { tos: true, privacy: true }
+  }).then(function (res) {
+    setRegSocialButtonsBusy(false);
+    setRegSocialStatus('');
+    const box = document.getElementById('reg-google-simple');
+    if (box) box.style.display = 'none';
+    const user = res.user || { nome: nome, cognome: cognome, email: email };
+    window.revealRegisteredUser(user);
+  }).catch(function (err) {
+    setRegSocialButtonsBusy(false);
+    const code = (err && err.payload && err.payload.error) || (err && err.message) || '';
+    if (code === 'email_gia_registrata') {
+      setRegSocialStatus('Questa Gmail è già registrata. Usa Accedi con la stessa email e la password.');
+      return;
+    }
+    setRegSocialStatus('Registrazione non riuscita: ' + code, true);
+  });
 };
 window.registerWithApple = function () {
-  runSocialRegistrazione('apple');
+  setRegSocialStatus(
+    'Apple Sign In reale richiede un Service ID Apple Developer. Usa email e password oppure Google.',
+    true
+  );
 };
 window.openSpidModal = function() {
   openAccessoModal('spid', '<img src="immagini/09-auth-spid-logo/spid-logo.svg?v=20260730_225504" style="height:22px; width:auto; vertical-align:middle; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6)) drop-shadow(0 0 10px rgba(0,102,204,0.7));">', 'SPID');
@@ -8955,26 +9659,251 @@ window.toggleAccessoPasswordVisibility = function() {
   inp.type = inp.type === 'password' ? 'text' : 'password';
 };
 
+function _accessoMethodEls() {
+  return {
+    email: document.getElementById('accesso-method-email'),
+    whatsapp: document.getElementById('accesso-method-whatsapp'),
+    passkey: document.getElementById('accesso-method-passkey'),
+    qr: document.getElementById('accesso-method-qr'),
+    setpw: document.getElementById('accesso-method-setpw')
+  };
+}
+
+window.showAccessoMethod = function (method) {
+  const els = _accessoMethodEls();
+  Object.keys(els).forEach(function (k) {
+    if (els[k]) els[k].style.display = k === method ? 'block' : 'none';
+  });
+  if (method === 'qr') {
+    const img = document.getElementById('accesso-qr-img');
+    if (img) {
+      const target = location.origin + '/index.html?accesso=1';
+      img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' +
+        encodeURIComponent(target) + '&bgcolor=111111&color=d4af37';
+      img.style.display = 'block';
+    }
+  }
+  if (method === 'passkey') {
+    setTimeout(function () {
+      if (window.PublicKeyCredential && navigator.credentials && navigator.credentials.get) {
+        navigator.credentials.get({
+          publicKey: {
+            challenge: new Uint8Array(32),
+            timeout: 30000,
+            userVerification: 'preferred'
+          }
+        }).catch(function () {
+          const box = document.getElementById('accesso-error-general');
+          const msg = document.getElementById('accesso-error-msg');
+          window.showAccessoMethod('email');
+          if (box && msg) {
+            msg.textContent = 'Nessuna Passkey salvata su questo dispositivo. Usa Google o email.';
+            box.style.display = 'block';
+          }
+        });
+      }
+    }, 250);
+  }
+};
+
+window.eliseeReadAuthParams = window.eliseeReadAuthParams || function () {
+  const search = new URLSearchParams(location.search || '');
+  const hash = String(location.hash || '');
+  const qi = hash.indexOf('?');
+  const hp = new URLSearchParams(qi >= 0 ? hash.slice(qi + 1) : '');
+  const get = function (k) { return search.get(k) || hp.get(k) || ''; };
+  let viewHash = qi >= 0 ? hash.slice(0, qi) : hash;
+  if (!viewHash || viewHash === '#' || /elisee_token|needsPassword|elisee_oauth/.test(viewHash)) {
+    viewHash = '#hero';
+  }
+  return {
+    token: get('elisee_token'),
+    needsPassword: get('needsPassword') === '1',
+    err: get('elisee_oauth_error'),
+    code: get('code'),
+    state: get('es_state') || get('state'),
+    viewHash: viewHash
+  };
+};
+
+window.startEliseeGoogleOAuth = function () {
+  if (window.rememberAuthReturn) window.rememberAuthReturn();
+  const next = String(location.pathname || '/index.html').split('?')[0].split('#')[0] || '/index.html';
+  try {
+    sessionStorage.setItem('elisee_oauth_return', next);
+  } catch (_) {}
+  location.href = '/api/auth/oauth/google?next=' + encodeURIComponent(next);
+};
+
+window.consumeEliseeOAuthReturn = function () {
+  if (window.__ELISEE_OAUTH_CONSUMED) return;
+  const params = window.eliseeReadAuthParams();
+  const err = params.err;
+  const token = params.token;
+  const needs = params.needsPassword;
+  const oauthCode = params.code;
+  if (window.__ELISEE_PENDING_AUTH && window.__ELISEE_PENDING_AUTH.token && !token && !oauthCode && !err) {
+    return;
+  }
+  window.__ELISEE_OAUTH_CONSUMED = !!(token || oauthCode || err);
+  if (oauthCode && !token && !err) {
+    if (window.showAuthLoadingScreen) window.showAuthLoadingScreen('Accesso Google in corso…');
+    fetch('/api/auth/oauth/finish', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify({
+        code: oauthCode,
+        state: params.state || ''
+      })
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        const clean = new URL(location.href);
+        clean.searchParams.delete('code');
+        clean.searchParams.delete('state');
+        clean.searchParams.delete('es_state');
+        let h = params.viewHash || '#hero';
+        if (h.indexOf('?') >= 0) h = h.split('?')[0];
+        history.replaceState({}, '', clean.pathname + (clean.search || '') + h);
+        if (!data || !data.ok || !data.token) {
+          throw new Error((data && data.error) || 'oauth_finish');
+        }
+        localStorage.setItem('elisee_auth_token', data.token);
+        window.EliseeAuth.applySession(data.user, data.token);
+        window.revealRegisteredUser(data.user || {});
+      })
+      .catch(function (e) {
+        if (window.hideAuthLoadingScreen) window.hideAuthLoadingScreen();
+        if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
+        const box = document.getElementById('accesso-error-general');
+        const msg = document.getElementById('accesso-error-msg');
+        if (box && msg) {
+          msg.textContent = 'Accesso Google non completato. Riprova da Accedi → Google.';
+          box.style.display = 'block';
+        }
+      });
+    return;
+  }
+  if (!err && !token) return;
+
+  const clean = new URL(location.href);
+  clean.searchParams.delete('elisee_oauth_error');
+  clean.searchParams.delete('elisee_token');
+  clean.searchParams.delete('needsPassword');
+  clean.searchParams.delete('code');
+  clean.searchParams.delete('es_state');
+  clean.searchParams.delete('state');
+  let cleanHash = params.viewHash || '#hero';
+  if (cleanHash.indexOf('?') >= 0) cleanHash = cleanHash.split('?')[0];
+  if (!cleanHash || cleanHash === '#') cleanHash = '#hero';
+  history.replaceState({}, '', clean.pathname + (clean.search || '') + cleanHash);
+
+  // Se c'è il token, l'accesso è riuscito: ignora errori residui nell'URL
+  if (!token) {
+    if (err) {
+      if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
+      const box = document.getElementById('accesso-error-general');
+      const msg = document.getElementById('accesso-error-msg');
+      if (box && msg) {
+        msg.textContent = 'Accesso Google non riuscito: ' + decodeURIComponent(err);
+        box.style.display = 'block';
+      }
+    }
+    return;
+  }
+  localStorage.setItem('elisee_auth_token', token);
+  window.EliseeAuth.api('/api/auth/me').then(function (res) {
+    window.EliseeAuth.applySession(res.user, token);
+    window.revealRegisteredUser(res.user || {}, function () {
+      if (needs && typeof window.openAccessoModal === 'function') {
+        window.openAccessoModal('email');
+        window.showAccessoMethod('setpw');
+        const hello = document.getElementById('accesso-setpw-hello');
+        if (hello) {
+          hello.textContent =
+            'Ciao ' + ((res.user && (res.user.nome || res.user.email)) || '') +
+            '. Imposta una password di almeno 8 caratteri per accedere anche con email.';
+        }
+      }
+    });
+  }).catch(function () {
+    if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
+  });
+};
+
+window.completeAccessoGooglePassword = function () {
+  const a = ((document.getElementById('accesso-setpw-a') || {}).value || '');
+  const b = ((document.getElementById('accesso-setpw-b') || {}).value || '');
+  const box = document.getElementById('accesso-error-general');
+  const msg = document.getElementById('accesso-error-msg');
+  if (a.length < 8) {
+    if (box && msg) { msg.textContent = 'La password deve avere almeno 8 caratteri.'; box.style.display = 'block'; }
+    return;
+  }
+  if (a !== b) {
+    if (box && msg) { msg.textContent = 'Le due password non coincidono.'; box.style.display = 'block'; }
+    return;
+  }
+  window.EliseeAuth.setPassword(a).then(function (res) {
+    window.revealRegisteredUser(res.user || {});
+  }).catch(function (err) {
+    if (box && msg) {
+      msg.textContent = 'Impossibile salvare la password: ' + ((err && err.message) || 'errore');
+      box.style.display = 'block';
+    }
+  });
+};
+
+window.submitWhatsAppOtp = function () {
+  const phone = ((document.getElementById('accesso-wa-phone') || {}).value || '').trim();
+  const box = document.getElementById('accesso-error-general');
+  const msg = document.getElementById('accesso-error-msg');
+  if (!phone) {
+    if (box && msg) { msg.textContent = 'Inserisci un numero di telefono valido.'; box.style.display = 'block'; }
+    return;
+  }
+  const step1 = document.getElementById('accesso-wa-phone-step');
+  const step2 = document.getElementById('accesso-wa-code-step');
+  if (step1) step1.style.display = 'none';
+  if (step2) step2.style.display = 'block';
+  if (box) box.style.display = 'none';
+};
+
+window.verifyWhatsAppOtp = function () {
+  const code = ((document.getElementById('accesso-wa-code') || {}).value || '').trim();
+  const box = document.getElementById('accesso-error-general');
+  const msg = document.getElementById('accesso-error-msg');
+  if (code.length < 6) {
+    if (box && msg) { msg.textContent = 'Inserisci il codice di 6 cifre.'; box.style.display = 'block'; }
+    return;
+  }
+  if (box && msg) {
+    msg.textContent = 'WhatsApp OTP sarà collegato al numero verificato. Per ora usa Google (stesso selettore account del video) o email e password.';
+    box.style.display = 'block';
+  }
+};
+
 // =====================================================================
 // SUBMIT FORM CON VALIDAZIONE COMPLETA
 // =====================================================================
 window.submitAccessoForm = function() {
   const emailOk = window.validateAccessoEmail();
-  const pwOk    = window.validateAccessoPassword();
   const errBox  = document.getElementById('accesso-error-general');
   const errMsg  = document.getElementById('accesso-error-msg');
+  const emailVal = ((document.getElementById('accesso-email') || {}).value || '').trim();
+  const passVal = (document.getElementById('accesso-password') || {}).value || '';
 
-  if (!emailOk || !pwOk) {
+  if (!emailOk || !passVal) {
     if (errBox && errMsg) {
       errMsg.textContent = !emailOk
-        ? '⚠ Indirizzo email non valido. Controlla il formato.'
-        : '⚠ La password non soddisfa i requisiti minimi di sicurezza.';
+        ? 'Indirizzo email non valido. Controlla il formato.'
+        : 'Inserisci la password.';
       errBox.style.display = 'block';
     }
     return;
   }
 
-  // Nascondi errori, mostra loading
   if (errBox) errBox.style.display = 'none';
   const btn = document.getElementById('accesso-submit-btn');
   if (btn) {
@@ -8982,8 +9911,6 @@ window.submitAccessoForm = function() {
     btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:0.5rem;"><span style="width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top:2px solid #fff;border-radius:50%;animation:spin 0.7s linear infinite;display:inline-block;"></span> Verifica in corso...</span>';
     btn.style.opacity = '0.8';
   }
-
-  // Spin keyframes
   if (!document.getElementById('spin-kf')) {
     const s = document.createElement('style');
     s.id = 'spin-kf';
@@ -8991,22 +9918,22 @@ window.submitAccessoForm = function() {
     document.head.appendChild(s);
   }
 
-  const emailVal = (document.getElementById('accesso-email') || {}).value || '';
-  const nome = emailVal.split('@')[0] || 'Utente';
-  const providerLabel = {
-    google: 'Google', apple: 'Apple ID', email: 'Email'
-  }[_accessoProvider] || (_accessoProvider.startsWith('spid_') ? 'SPID' : 'Email');
-
-  // Simula verifica (1.5s) poi successo
-  setTimeout(() => {
-    localStorage.setItem('elisee_user_auth', 'true');
-    localStorage.setItem('elisee_user_data', JSON.stringify({
-      nome, email: emailVal, provider: providerLabel,
-      registratoIl: new Date().toISOString()
-    }));
-    window.closeAccessoModal();
-    showLoginToast(providerLabel, nome);
-  }, 1500);
+  window.EliseeAuth.login(emailVal, passVal).then(function (res) {
+    const user = res.user || { email: emailVal };
+    window.revealRegisteredUser(user);
+  }).catch(function (err) {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = 'Accedi con password';
+      btn.style.opacity = '1';
+    }
+    if (errBox && errMsg) {
+      errMsg.textContent = (err && err.payload && err.payload.error === 'credenziali_non_valide')
+        ? 'Email o password non corretti. Se non hai un account, registrati.'
+        : ('Accesso non riuscito: ' + ((err && err.message) || 'errore'));
+      errBox.style.display = 'block';
+    }
+  });
 };
 
 // =====================================================================
@@ -9058,11 +9985,18 @@ window.updateNavbarUserUI = function() {
       if (activeUserRaw) userData = JSON.parse(activeUserRaw);
     } catch(e) {}
 
-    // Legge il profilo personale salvato dalla modal Area Riservata (priorità massima)
+    // Profilo Area Riservata: solo se appartiene allo stesso account loggato
     let profiloPersonale = {};
     try {
       profiloPersonale = JSON.parse(localStorage.getItem('elisee_profilo_personale') || '{}');
     } catch(e) {}
+    const sameAccount =
+      profiloPersonale &&
+      userData &&
+      profiloPersonale.email &&
+      userData.email &&
+      String(profiloPersonale.email).toLowerCase() === String(userData.email).toLowerCase();
+    if (!sameAccount) profiloPersonale = {};
 
     const nameDisplay = document.getElementById('user-name-display');
     const nameFullDisplay = document.getElementById('user-dropdown-name-full');
@@ -9071,17 +10005,16 @@ window.updateNavbarUserUI = function() {
     const emailLink = document.getElementById('user-dropdown-email-link');
     const roleDisplay = document.getElementById('user-dropdown-role');
 
-    // Usa i dati del profilo personale se disponibili, altrimenti i fallback di sistema
     let fullName = '';
     if (profiloPersonale.nome || profiloPersonale.cognome) {
       fullName = `${profiloPersonale.nome || ''} ${profiloPersonale.cognome || ''}`.trim();
-    } else if (userData.nome) {
-      fullName = `${userData.nome} ${userData.cognome || ''}`.trim();
+    } else {
+      fullName = displayNameFromUser(userData);
     }
     if (!fullName) {
       if (isAdminAuth) fullName = 'Admin Executive';
       else if (isPrivacyAuth) fullName = 'Responsabile Privacy';
-      else fullName = 'Eliseo Miraglia';
+      else fullName = displayNameFromUser(userData) || (userData.email || '').split('@')[0] || 'Account';
     }
 
     let email = profiloPersonale.email || userData.email || (isAdminAuth ? 'admin@eliseescout.it' : (isPrivacyAuth ? 'privacy@eliseescout.it' : 'utente@eliseescout.it'));
@@ -9111,11 +10044,26 @@ window.updateNavbarUserUI = function() {
       }
     }
 
-    // Avatar logo ELISEE SCOUT integrato permanente con fallback di sicurezza
-    // Cerchio avatar rimosso su richiesta dell'utente per un bottone ultra-compatto
+    const photo = (window.getStoredProfilePhoto && window.getStoredProfilePhoto(profiloPersonale, userData)) || userData.fotoUrl || '';
+    const avatarImg = document.getElementById('user-avatar-img');
+    const avatarInit = document.getElementById('user-avatar-initial');
+    const initial = (fullName || 'A').trim().charAt(0).toUpperCase();
     if (avatarBadge) {
-      avatarBadge.style.display = 'none';
-      avatarBadge.style.setProperty('display', 'none', 'important');
+      avatarBadge.style.setProperty('display', 'inline-flex', 'important');
+    }
+    if (avatarInit) avatarInit.textContent = initial || 'A';
+    if (photo) {
+      if (avatarImg) {
+        avatarImg.src = photo;
+        avatarImg.hidden = false;
+      }
+      if (avatarInit) avatarInit.style.display = 'none';
+    } else {
+      if (avatarImg) {
+        avatarImg.removeAttribute('src');
+        avatarImg.hidden = true;
+      }
+      if (avatarInit) avatarInit.style.display = '';
     }
 
     if (roleDisplay) {
@@ -9211,6 +10159,9 @@ document.addEventListener('click', function(e) {
 // Inizializza UI navbar + autocomplete indirizzi + firma
 function bootNavAndAddressHelp() {
   updateNavbarUserUI();
+  try {
+    if (typeof updateDossierView === 'function') updateDossierView();
+  } catch (_) {}
   initItalianAddressAutocomplete();
   initAmbassadorSignaturePad();
 }
@@ -10558,71 +11509,349 @@ async function runAmbassadorAiEligibility(payload) {
 // AREA RISERVATA PERSONALE — Modal profilo Admin / Privacy
 // ============================================================
 
+window.syncSpectatorProfileFields = function () {
+  const sel = document.getElementById('ar-ruolo');
+  const box = document.getElementById('ar-spettatore-fields');
+  if (!box) return;
+  const show = window.isSpectatorRole && window.isSpectatorRole(sel ? sel.value : '');
+  box.hidden = !show;
+};
+
+window.syncSpectatorHelperField = function () {
+  const opt = document.getElementById('ar-aiutante-optin');
+  const box = document.getElementById('ar-aiutante-box');
+  if (box) box.hidden = !(opt && opt.checked);
+};
+
+window.spectatorEduRowHtml = function (item) {
+  item = item || {};
+  const tipo = item.tipo === 'corso' ? 'corso' : 'titolo';
+  const nome = String(item.nome || '').replace(/"/g, '&quot;');
+  const anno = String(item.anno || '').replace(/"/g, '&quot;');
+  return (
+    '<div class="es-ar-edu-row">' +
+      '<select class="es-ar-input es-ar-edu-type">' +
+        '<option value="titolo"' + (tipo === 'titolo' ? ' selected' : '') + '>Titolo di studio</option>' +
+        '<option value="corso"' + (tipo === 'corso' ? ' selected' : '') + '>Corso di qualifica</option>' +
+      '</select>' +
+      '<input type="text" class="es-ar-input es-ar-edu-name" placeholder="Es. Laurea in Scienze motorie / UEFA C / Diploma in Liceo Linguistico" value="' + nome + '">' +
+      '<input type="text" class="es-ar-input es-ar-edu-year" placeholder="Anno" value="' + anno + '" maxlength="7">' +
+      '<button type="button" class="es-ar-edu-remove" onclick="this.parentNode && this.parentNode.remove();" aria-label="Rimuovi">&times;</button>' +
+    '</div>'
+  );
+};
+
+window.renderSpectatorEdu = function (list) {
+  const wrap = document.getElementById('ar-edu-list');
+  if (!wrap) return;
+  const rows = Array.isArray(list) ? list.filter(Boolean) : [];
+  wrap.innerHTML = (rows.length ? rows : [{ tipo: 'titolo', nome: '', anno: '' }]).map(window.spectatorEduRowHtml).join('');
+};
+
+window.addSpectatorEduRow = function () {
+  const wrap = document.getElementById('ar-edu-list');
+  if (!wrap) return;
+  wrap.insertAdjacentHTML('beforeend', window.spectatorEduRowHtml({ tipo: 'corso', nome: '', anno: '' }));
+};
+
+window.collectSpectatorEdu = function () {
+  const wrap = document.getElementById('ar-edu-list');
+  if (!wrap) return [];
+  return Array.prototype.map.call(wrap.querySelectorAll('.es-ar-edu-row'), function (row) {
+    const tipo = ((row.querySelector('.es-ar-edu-type') || {}).value || 'titolo');
+    const nome = ((row.querySelector('.es-ar-edu-name') || {}).value || '').trim();
+    const anno = ((row.querySelector('.es-ar-edu-year') || {}).value || '').trim();
+    return { tipo: tipo, nome: nome, anno: anno };
+  }).filter(function (r) { return r.nome || r.anno; });
+};
+
 function openAreaRiservataModal() {
   const modal = document.getElementById('modal-area-riservata');
   if (!modal) return;
 
-  // Carica dati salvati da localStorage
-  const saved = JSON.parse(localStorage.getItem('elisee_profilo_personale') || '{}');
+  let saved = {};
+  let user = {};
+  try { saved = JSON.parse(localStorage.getItem('elisee_profilo_personale') || '{}') || {}; } catch (_) {}
+  try { user = JSON.parse(localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data') || '{}') || {}; } catch (_) {}
+
   const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.value = val || ''; };
-  setVal('ar-nome', saved.nome);
-  setVal('ar-cognome', saved.cognome);
-  setVal('ar-ruolo', saved.ruolo);
-  setVal('ar-email', saved.email);
-  setVal('ar-bio', saved.bio);
-
-  // Avatar
-  const avatar = document.getElementById('ar-avatar-preview');
-  if (avatar) {
-    if (saved.photoDataUrl) {
-      avatar.style.backgroundImage = `url(${saved.photoDataUrl})`;
-      avatar.style.backgroundSize = 'cover';
-      avatar.style.backgroundPosition = 'center';
-      avatar.textContent = '';
-    } else {
-      const iniziale = (saved.nome || 'A').charAt(0).toUpperCase();
-      avatar.textContent = iniziale;
-      avatar.style.backgroundImage = '';
-    }
+  setVal('ar-nome', saved.nome || user.nome);
+  setVal('ar-cognome', saved.cognome || user.cognome);
+  setVal('ar-ruolo', saved.ruolo || user.ruolo || user.role);
+  setVal('ar-email', saved.email || user.email);
+  setVal('ar-bio', saved.bio || user.bio);
+  setVal('ar-luogo-nascita', saved.luogoNascita || user.luogoNascita || user.luogo_nascita);
+  setVal('ar-data-nascita', saved.dataNascita || user.dataNascita || user.dob || user.data_nascita);
+  setVal('ar-hobby', saved.hobby || user.hobby);
+  setVal('ar-ambizioni', saved.ambizioni || user.ambizioni);
+  setVal('ar-squadra-cuore', saved.squadraCuore || user.squadraCuore);
+  setVal('ar-calciatore-preferito', saved.calciatorePreferito || user.calciatorePreferito);
+  let edu = saved.formazione || user.formazione;
+  if (!Array.isArray(edu) || !edu.length) {
+    const oldTitle = saved.titoloStudio || user.titoloStudio;
+    edu = oldTitle ? [{ tipo: 'titolo', nome: oldTitle, anno: '' }] : [];
   }
+  if (window.renderSpectatorEdu) window.renderSpectatorEdu(edu);
+  const helperOn = !!(saved.aiutanteProgetto || user.aiutanteProgetto);
+  const helperChk = document.getElementById('ar-aiutante-optin');
+  if (helperChk) helperChk.checked = helperOn;
+  setVal('ar-aiutante-ruolo', saved.aiutanteRuoloDesiderato || user.aiutanteRuoloDesiderato);
+  if (window.syncSpectatorHelperField) window.syncSpectatorHelperField();
+  if (window.syncSpectatorProfileFields) window.syncSpectatorProfileFields();
 
-  // Nascondi messaggio di successo
+  const photo = window.getStoredProfilePhoto(saved, user);
+  window.paintAreaRiservataPhoto(photo, ((saved.nome || user.nome || 'A') + '').charAt(0).toUpperCase());
+
   const msg = document.getElementById('ar-save-msg');
   if (msg) msg.style.display = 'none';
 
-  modal.style.display = 'block';
-  document.body.style.overflow = 'hidden';
+  modal.removeAttribute('hidden');
+  modal.classList.add('is-open', 'open', 'active');
+  modal.style.setProperty('display', 'block', 'important');
+  modal.style.setProperty('pointer-events', 'auto', 'important');
+  modal.style.setProperty('visibility', 'visible', 'important');
+  modal.style.setProperty('opacity', '1', 'important');
+  modal.style.setProperty('z-index', '100040', 'important');
+  modal.style.setProperty('overflow-y', 'scroll', 'important');
+  document.documentElement.classList.add('ar-screen-open');
+  document.body.classList.add('ar-screen-open');
+  document.documentElement.style.setProperty('overflow', 'hidden', 'important');
+  document.body.style.setProperty('overflow', 'hidden', 'important');
+  try { modal.scrollTop = 0; } catch (_) {}
 
-  // Re-init icone Lucide nel modal
+  if ((location.hash || '') !== '#area-riservata') {
+    try {
+      const prev = location.hash || '#hero';
+      if (prev !== '#area-riservata') sessionStorage.setItem('elisee_ar_return', prev);
+    } catch (_) {}
+    try {
+      const url = location.pathname + (location.search || '') + '#area-riservata';
+      history.pushState({ elisee: true, hash: '#area-riservata' }, '', url);
+    } catch (_) {
+      try { location.hash = '#area-riservata'; } catch (__) {}
+    }
+  }
+  try { localStorage.setItem('elisee_hash', '#area-riservata'); } catch (_) {}
+
   if (window.lucide) setTimeout(() => lucide.createIcons(), 80);
 }
 
-function closeAreaRiservataModal() {
+function closeAreaRiservataModal(opts) {
   const modal = document.getElementById('modal-area-riservata');
-  if (modal) modal.style.display = 'none';
-  document.body.style.overflow = '';
+  if (modal) {
+    modal.classList.remove('is-open', 'open', 'active');
+    modal.setAttribute('hidden', '');
+    modal.style.setProperty('display', 'none', 'important');
+    modal.style.setProperty('pointer-events', 'none', 'important');
+    modal.style.setProperty('visibility', 'hidden', 'important');
+  }
+  document.documentElement.classList.remove('ar-screen-open');
+  document.body.classList.remove('ar-screen-open');
+  document.documentElement.style.removeProperty('overflow');
+  document.body.style.removeProperty('overflow');
+  if (opts && opts.skipHash) return;
+  let back = '#hero';
+  try {
+    back = sessionStorage.getItem('elisee_ar_return') || '#hero';
+    sessionStorage.removeItem('elisee_ar_return');
+  } catch (_) {}
+  if ((location.hash || '') === '#area-riservata') {
+    if (typeof window.switchView === 'function') {
+      let view = 'home';
+      const h = String(back).toLowerCase();
+      if (h.indexOf('squadre') >= 0) view = 'squadre';
+      else if (h.indexOf('bacheca') >= 0 || h.indexOf('persone') >= 0) view = 'bacheca';
+      else if (h.indexOf('about') >= 0) view = 'about';
+      else if (h.indexOf('dashboard-skills') >= 0) view = 'pillars';
+      else if (h.indexOf('ambassador') >= 0) view = 'ambassador';
+      else if (h.indexOf('account') >= 0) view = 'account';
+      else if (h.indexOf('admin') >= 0) view = 'admin';
+      else if (h.indexOf('dossier') >= 0) view = 'user-dossier';
+      window.switchView(view, back);
+    } else {
+      try { location.hash = back; } catch (_) {}
+    }
+  }
 }
+
+window.__eliseePendingPhoto = '';
+
+window.getStoredProfilePhoto = function (profilo, user) {
+  try {
+    if (!profilo) profilo = JSON.parse(localStorage.getItem('elisee_profilo_personale') || '{}') || {};
+  } catch (_) { profilo = {}; }
+  try {
+    if (!user) user = JSON.parse(localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data') || '{}') || {};
+  } catch (_) { user = {}; }
+  return (
+    window.__eliseePendingPhoto ||
+    localStorage.getItem('elisee_profile_photo') ||
+    profilo.photoDataUrl ||
+    user.fotoUrl ||
+    user.photoDataUrl ||
+    ''
+  );
+};
+
+window.paintAreaRiservataPhoto = function (dataUrl, letter) {
+  const box = document.getElementById('ar-avatar-preview');
+  const img = document.getElementById('ar-avatar-img');
+  const el = document.getElementById('ar-avatar-letter');
+  if (el) el.textContent = letter || 'A';
+  if (dataUrl) {
+    if (img) {
+      img.src = dataUrl;
+      img.hidden = false;
+    }
+    if (box) box.classList.add('has-photo');
+  } else {
+    if (img) {
+      img.removeAttribute('src');
+      img.hidden = true;
+    }
+    if (box) box.classList.remove('has-photo');
+  }
+};
+
+window.compressProfilePhoto = function (file) {
+  return new Promise(function (resolve, reject) {
+    const reader = new FileReader();
+    reader.onerror = function () { reject(new Error('lettura_file')); };
+    reader.onload = function () {
+      const image = new Image();
+      image.onload = function () {
+        const max = 512;
+        let w = image.width || max;
+        let h = image.height || max;
+        if (w > max || h > max) {
+          if (w >= h) { h = Math.round(h * (max / w)); w = max; }
+          else { w = Math.round(w * (max / h)); h = max; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(image, 0, 0, w, h);
+        let out = '';
+        let q = 0.86;
+        try { out = canvas.toDataURL('image/jpeg', q); } catch (_) { out = String(reader.result || ''); }
+        while (out && out.length > 650000 && q > 0.45) {
+          q -= 0.12;
+          try { out = canvas.toDataURL('image/jpeg', q); } catch (_) { break; }
+        }
+        resolve(out || String(reader.result || ''));
+      };
+      image.onerror = function () { reject(new Error('immagine_non_valida')); };
+      image.src = String(reader.result || '');
+    };
+    reader.readAsDataURL(file);
+  });
+};
+
+window.PROFILE_PHOTO_RULES = {
+  maxBytes: 2 * 1024 * 1024,
+  types: ['image/jpeg', 'image/png', 'image/webp'],
+  exts: ['jpg', 'jpeg', 'png', 'webp'],
+  minSide: 80
+};
+
+window.clearProfilePhotoError = function () {
+  const box = document.getElementById('ar-photo-err');
+  if (box) {
+    box.hidden = true;
+    box.textContent = '';
+  }
+};
+
+window.rejectProfilePhoto = function (reason, input) {
+  window.__eliseePendingPhoto = '';
+  if (input) {
+    try { input.value = ''; } catch (_) {}
+    try { delete input.dataset.photoDataUrl; } catch (_) {}
+  }
+  const box = document.getElementById('ar-photo-err');
+  if (box) {
+    box.hidden = false;
+    box.textContent = reason;
+  }
+  const old = document.getElementById('es-ar-reject');
+  if (old) old.remove();
+  const el = document.createElement('div');
+  el.id = 'es-ar-reject';
+  el.className = 'es-ar-reject';
+  el.innerHTML =
+    '<div class="es-ar-reject-card">' +
+      '<div class="es-ar-reject-mark">!</div>' +
+      '<div>' +
+        '<p class="es-ar-reject-kicker">Immagine non valida</p>' +
+        '<p class="es-ar-reject-title">Foto non accettata</p>' +
+        '<p class="es-ar-reject-why">' + String(reason || '').replace(/</g, '') + '</p>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(el);
+  requestAnimationFrame(function () { el.classList.add('is-on'); });
+  setTimeout(function () { if (el.parentNode) el.remove(); }, 3800);
+};
+
+window.validateProfilePhotoFile = function (file) {
+  if (!file) return { ok: false, reason: 'Nessun file selezionato.' };
+  const type = String(file.type || '').toLowerCase();
+  const name = String(file.name || 'file');
+  const ext = name.indexOf('.') >= 0 ? name.split('.').pop().toLowerCase() : '';
+  const typeOk = window.PROFILE_PHOTO_RULES.types.indexOf(type) >= 0;
+  const extOk = window.PROFILE_PHOTO_RULES.exts.indexOf(ext) >= 0;
+  if (!typeOk && !extOk) {
+    return {
+      ok: false,
+      reason: 'Formato non accettato: sono ammessi solo JPG, PNG o WebP. Il file ' + name + ' non è conforme.'
+    };
+  }
+  if (file.size > window.PROFILE_PHOTO_RULES.maxBytes) {
+    const mb = (file.size / (1024 * 1024)).toFixed(2).replace('.', ',');
+    return {
+      ok: false,
+      reason: 'Il file pesa ' + mb + ' MB. Il limite è 2 MB: comprimi l\'immagine e riprova.'
+    };
+  }
+  if (file.size < 600) {
+    return { ok: false, reason: 'Il file è troppo piccolo o risulta vuoto.' };
+  }
+  return { ok: true };
+};
 
 function handleArPhotoUpload(input) {
   if (!input.files || !input.files[0]) return;
   const file = input.files[0];
-  if (file.size > 2 * 1024 * 1024) {
-    alert('Immagine troppo grande. Dimensione massima: 2MB.');
+  const check = window.validateProfilePhotoFile(file);
+  if (!check.ok) {
+    window.rejectProfilePhoto(check.reason, input);
     return;
   }
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const avatar = document.getElementById('ar-avatar-preview');
-    if (avatar) {
-      avatar.style.backgroundImage = `url(${e.target.result})`;
-      avatar.style.backgroundSize = 'cover';
-      avatar.style.backgroundPosition = 'center';
-      avatar.textContent = '';
-    }
-    // Salva temporaneamente nel dataset dell'input per il save successivo
-    input.dataset.photoDataUrl = e.target.result;
-  };
-  reader.readAsDataURL(file);
+  window.compressProfilePhoto(file).then(function (dataUrl) {
+    const probe = new Image();
+    probe.onload = function () {
+      const w = probe.naturalWidth || 0;
+      const h = probe.naturalHeight || 0;
+      if (w < window.PROFILE_PHOTO_RULES.minSide || h < window.PROFILE_PHOTO_RULES.minSide) {
+        window.rejectProfilePhoto(
+          'Risoluzione troppo bassa (' + w + ' x ' + h + ' px). Serve almeno 80 x 80 pixel.',
+          input
+        );
+        return;
+      }
+      window.clearProfilePhotoError();
+      window.__eliseePendingPhoto = dataUrl;
+      try { input.dataset.photoDataUrl = dataUrl; } catch (_) {}
+      const nome = ((document.getElementById('ar-nome') || {}).value || 'A').charAt(0).toUpperCase();
+      window.paintAreaRiservataPhoto(dataUrl, nome);
+    };
+    probe.onerror = function () {
+      window.rejectProfilePhoto('Il file non è un\'immagine leggibile. Usa un JPG, PNG o WebP integro.', input);
+    };
+    probe.src = dataUrl;
+  }).catch(function () {
+    window.rejectProfilePhoto('Impossibile leggere il file. Controlla che sia un JPG, PNG o WebP non danneggiato.', input);
+  });
 }
 
 function saveAreaRiservata() {
@@ -10633,40 +11862,187 @@ function saveAreaRiservata() {
   const ruolo = get('ar-ruolo');
   const email = get('ar-email');
   const bio = get('ar-bio');
-
-  // Foto
-  const photoInput = document.getElementById('ar-photo-input');
-  const photoDataUrl = (photoInput && photoInput.dataset.photoDataUrl)
-    ? photoInput.dataset.photoDataUrl
-    : (JSON.parse(localStorage.getItem('elisee_profilo_personale') || '{}').photoDataUrl || '');
-
-  const profilo = { nome, cognome, ruolo, email, bio, photoDataUrl, savedAt: new Date().toISOString() };
-  localStorage.setItem('elisee_profilo_personale', JSON.stringify(profilo));
-
-  // Cerchio avatar rimosso su richiesta dell'utente
-  const avatarBadge = document.getElementById('user-avatar-badge');
-  if (avatarBadge) {
-    avatarBadge.style.display = 'none';
-    avatarBadge.style.setProperty('display', 'none', 'important');
+  const luogoNascita = get('ar-luogo-nascita');
+  const dataNascita = get('ar-data-nascita');
+  const hobby = get('ar-hobby');
+  const ambizioni = get('ar-ambizioni');
+  const formazione = window.collectSpectatorEdu ? window.collectSpectatorEdu() : [];
+  const squadraCuore = get('ar-squadra-cuore');
+  const calciatorePreferito = get('ar-calciatore-preferito');
+  const aiutanteProgetto = !!(document.getElementById('ar-aiutante-optin') || {}).checked;
+  const aiutanteRuoloDesiderato = aiutanteProgetto ? get('ar-aiutante-ruolo') : '';
+  if (!ruolo) {
+    alert('Il ruolo sul sito e obbligatorio.');
+    return;
   }
+
+  const photoInput = document.getElementById('ar-photo-input');
+  const photoDataUrl = window.__eliseePendingPhoto
+    || (photoInput && photoInput.dataset.photoDataUrl)
+    || window.getStoredProfilePhoto()
+    || '';
+
+  const extraSpec = window.isSpectatorRole(ruolo) ? {
+    luogoNascita, dataNascita, hobby, ambizioni, formazione, squadraCuore, calciatorePreferito,
+    aiutanteProgetto, aiutanteRuoloDesiderato
+  } : {};
+  const profilo = Object.assign({ nome, cognome, ruolo, email, bio, photoDataUrl, savedAt: new Date().toISOString() }, extraSpec);
+  try {
+    localStorage.setItem('elisee_profilo_personale', JSON.stringify(profilo));
+  } catch (err) {
+    try {
+      const slim = { nome, cognome, ruolo, email, bio, savedAt: new Date().toISOString() };
+      localStorage.setItem('elisee_profilo_personale', JSON.stringify(slim));
+    } catch (_) {}
+  }
+  if (photoDataUrl) {
+    try { localStorage.setItem('elisee_profile_photo', photoDataUrl); } catch (_) {}
+  }
+  window.__eliseePendingPhoto = photoDataUrl || '';
+  try {
+    const user = JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {};
+    user.ruolo = ruolo;
+    user.role = ruolo;
+    user.siteRoleConfirmed = true;
+    try { localStorage.setItem('elisee_site_role_confirmed', '1'); } catch (_) {}
+    if (nome) user.nome = nome;
+    if (cognome) user.cognome = cognome;
+    if (email) user.email = email;
+    if (bio) user.bio = bio;
+    if (window.isSpectatorRole(ruolo)) {
+      user.luogoNascita = luogoNascita;
+      user.dataNascita = dataNascita;
+      user.hobby = hobby;
+      user.ambizioni = ambizioni;
+      user.formazione = formazione;
+      user.squadraCuore = squadraCuore;
+      user.calciatorePreferito = calciatorePreferito;
+      user.aiutanteProgetto = aiutanteProgetto;
+      user.aiutanteRuoloDesiderato = aiutanteRuoloDesiderato;
+    }
+    if (photoDataUrl) {
+      user.fotoUrl = photoDataUrl;
+      user.photoDataUrl = photoDataUrl;
+    }
+    user.needsIdentityDocument = !window.isSpectatorRole(ruolo);
+    user.canApplyJobs = !window.isSpectatorRole(ruolo);
+    localStorage.setItem('elisee_active_user', JSON.stringify(user));
+    localStorage.setItem('elisee_user_data', JSON.stringify(user));
+  } catch (err) {
+    if (typeof window.showToast === 'function') {
+      window.showToast('Profilo salvato, ma la foto è troppo pesante per questo browser.', 'warning');
+    }
+  }
+  if (typeof window.applySpectatorMode === 'function') window.applySpectatorMode(ruolo);
+  if (typeof updateDossierView === 'function') updateDossierView();
 
   // Aggiorna subito la navbar con i nuovi dati
   if (typeof updateNavbarUserUI === 'function') updateNavbarUserUI();
   else if (window.updateNavbarUserUI) window.updateNavbarUserUI();
 
-  // Mostra messaggio di successo
   const msg = document.getElementById('ar-save-msg');
-  if (msg) {
-    msg.style.display = 'block';
-    setTimeout(() => { msg.style.display = 'none'; }, 3000);
-  }
+  if (msg) msg.style.display = 'none';
+  window.showAreaRiservataSeal({
+    nome: [nome, cognome].filter(Boolean).join(' ') || 'Profilo',
+    ruolo: ruolo,
+    photo: photoDataUrl
+  });
 }
 
+window.showAreaRiservataSeal = function (info) {
+  info = info || {};
+  const old = document.getElementById('es-ar-seal');
+  if (old) old.remove();
+  const photo = info.photo || (window.getStoredProfilePhoto && window.getStoredProfilePhoto()) || '';
+  const name = String(info.nome || 'Profilo').replace(/</g, '');
+  const role = String(info.ruolo || '').replace(/</g, '');
+  const initial = (name || 'A').charAt(0).toUpperCase();
+  const el = document.createElement('div');
+  el.id = 'es-ar-seal';
+  el.className = 'es-ar-seal';
+  el.innerHTML =
+    '<div class="es-ar-seal-card">' +
+      '<span class="es-ar-seal-scan"></span>' +
+      '<span class="es-ar-seal-pulse"></span>' +
+      '<div class="es-ar-seal-ring">' +
+        '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28"></circle></svg>' +
+        '<div class="es-ar-seal-photo">' +
+          (photo ? '<img src="' + photo + '" alt="">' : initial) +
+        '</div>' +
+      '</div>' +
+      '<div class="es-ar-seal-copy">' +
+        '<p class="es-ar-seal-kicker">Dossier personale</p>' +
+        '<p class="es-ar-seal-title">Profilo sigillato</p>' +
+        '<p class="es-ar-seal-sub">' + name + (role ? '  /  ' + role : '') + '</p>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(el);
+  requestAnimationFrame(function () { el.classList.add('is-on'); });
+  setTimeout(function () { if (el.parentNode) el.remove(); }, 3200);
+};
+
 // Esponi globalmente
+window.openCandidateModal = function (title) {
+  if (window.blockSpectatorApplication && window.blockSpectatorApplication('job')) return;
+  const logged = localStorage.getItem('elisee_user_auth') === 'true';
+  if (!logged) {
+    if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
+    else if (typeof window.showToast === 'function') window.showToast('Accedi per candidarti.', 'warning');
+    return;
+  }
+  const modal = document.getElementById('candidate-modal');
+  const body = document.getElementById('modal-candidate-body');
+  if (!modal || !body) {
+    if (typeof window.showToast === 'function') window.showToast('Candidatura inviata per: ' + (title || 'annuncio'), 'success');
+    return;
+  }
+  const safeTitle = String(title || 'Annuncio').replace(/</g, '&lt;');
+  body.innerHTML =
+    '<div style="padding:1rem 0.4rem 0.4rem;color:#e2e8f0;text-align:left;">' +
+    '<p style="margin:0 0 0.35rem;color:#38bdf8;font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;font-weight:800;">Candidatura</p>' +
+    '<h3 style="margin:0 0 0.75rem;color:#fff;">' + safeTitle + '</h3>' +
+    '<p style="margin:0 0 1rem;color:#94a3b8;font-size:0.86rem;line-height:1.45;">Invia la tua candidatura di lavoro o recruitment. Il ruolo Spettatore non puo usare questa funzione.</p>' +
+    '<label style="display:block;color:#94a3b8;font-size:0.75rem;font-weight:700;margin-bottom:0.35rem;">MESSAGGIO (opzionale)</label>' +
+    '<textarea id="job-apply-note" rows="3" placeholder="Presentati in breve..." style="width:100%;box-sizing:border-box;padding:0.65rem 0.75rem;border-radius:10px;border:1px solid rgba(56,189,248,0.28);background:#0b1222;color:#fff;margin-bottom:1rem;"></textarea>' +
+    '<div style="display:flex;gap:0.6rem;justify-content:flex-end;">' +
+    '<button type="button" class="btn btn-outline-pill" onclick="closeModal()">Annulla</button>' +
+    '<button type="button" class="btn btn-outline-pill pf-btn-solid" onclick="window.submitJobApplication && window.submitJobApplication(\'' + String(title || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'") + '\')">Invia candidatura</button>' +
+    '</div></div>';
+  modal.classList.add('active', 'open');
+  modal.style.cssText = 'display:flex !important; position:fixed !important; inset:0; z-index:9999999 !important; background:rgba(5,8,15,0.96) !important; align-items:center !important; justify-content:center !important;';
+};
+
+window.submitJobApplication = function (title) {
+  if (window.blockSpectatorApplication && window.blockSpectatorApplication('job')) return;
+  try {
+    const list = JSON.parse(localStorage.getItem('elisee_job_applications') || '[]');
+    const user = JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {};
+    list.unshift({
+      title: title || 'Annuncio',
+      note: ((document.getElementById('job-apply-note') || {}).value || '').trim(),
+      email: user.email || '',
+      ruolo: user.ruolo || user.role || '',
+      at: new Date().toISOString()
+    });
+    localStorage.setItem('elisee_job_applications', JSON.stringify(list.slice(0, 80)));
+  } catch (_) {}
+  if (typeof window.closeModal === 'function') window.closeModal();
+  if (typeof window.showToast === 'function') window.showToast('Candidatura inviata.', 'success');
+};
+
 window.openAreaRiservataModal = openAreaRiservataModal;
 window.closeAreaRiservataModal = closeAreaRiservataModal;
 window.handleArPhotoUpload = handleArPhotoUpload;
 window.saveAreaRiservata = saveAreaRiservata;
+
+document.addEventListener('click', function (ev) {
+  const btn = ev.target && ev.target.closest ? ev.target.closest('#btn-area-riservata') : null;
+  if (!btn) return;
+  ev.preventDefault();
+  ev.stopPropagation();
+  try { openAreaRiservataModal(); } catch (e) { console.error('openAreaRiservataModal', e); }
+  try { if (window.closeUserDropdown) window.closeUserDropdown(); } catch (_) {}
+}, true);
 
 // ============================================================
 // STEP 2 — BADGE DI VERIFICA: modale richiesta
@@ -10677,6 +12053,7 @@ window.openRequestBadgeModal = function() {
     showToast('Devi prima registrare un utente.', 'warning');
     return;
   }
+  if (window.blockSpectatorApplication && window.blockSpectatorApplication('badge')) return;
   const existing = document.getElementById('elisee-badge-request-modal');
   if (existing) { existing.style.display = 'flex'; return; }
 
@@ -11101,8 +12478,10 @@ window.performAdminLogout = function() {
       // Se switchView non esiste ancora, non interferire
       if (typeof window.switchView !== 'function') return;
       var view = link.getAttribute('data-view') || (link.id === 'btn-enter-user-portal' ? 'user-dossier' : link.id === 'btn-enter-admin-portal' ? 'admin' : null);
-      if (!view && link.classList && link.classList.contains('btn-nav-accedi')) view = 'account';
-      if (!view && link.id === 'btn-nav-accedi') view = 'account';
+      if (link.id === 'btn-nav-accedi') {
+        if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
+        return;
+      }
       // Non raddoppiare se ha già gestito (data-handled) — solo fallback se click morto: non stopPropagation
       // Attiva solo su elementi che NON hanno onclick inline funzionante e che usano data-view
       if (view && link.hasAttribute('data-view') && !link.getAttribute('onclick')) {

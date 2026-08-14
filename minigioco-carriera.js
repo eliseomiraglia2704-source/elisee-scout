@@ -357,8 +357,9 @@
   }
 
   function goAfterLanding() {
-    if (isWide()) renderIdentity();
-    else renderNation();
+    /* Stesso schermo identità su tutti i dispositivi: su mobile
+       le 3 colonne si impilano via CSS, niente flusso spezzato. */
+    renderIdentity();
   }
 
   var root = null;

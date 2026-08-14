@@ -44,7 +44,8 @@
     leagueIndex: 0,
     index: 0,
     kit: 'home', // home | away | third | fourth
-    ready: false
+    ready: false,
+    focusZone: 'team' // team | kit
   };
 
   var KIT_LABELS = {
@@ -440,9 +441,107 @@
     );
   }
 
+  function slotByOffset(slots, key, delta) {
+    if (!slots || !slots.length) return null;
+    var idx = 0;
+    for (var i = 0; i < slots.length; i++) {
+      if (slots[i].key === key) {
+        idx = i;
+        break;
+      }
+    }
+    return slots[(idx + delta + slots.length) % slots.length];
+  }
+
+  function setGhostKit(btnId, imgId, slot, team) {
+    var btn = $(btnId);
+    var img = $(imgId);
+    if (!btn || !img) return;
+    if (!slot || !slot.url) {
+      btn.hidden = true;
+      btn.style.removeProperty('--kit-src');
+      try {
+        img.removeAttribute('src');
+      } catch (e) {}
+      return;
+    }
+    var targetSrc = logoUrl(slot.url);
+    btn.style.setProperty('--kit-src', 'url("' + String(targetSrc).replace(/"/g, '') + '")');
+    img.dataset.currentSrc = targetSrc;
+    img.alt = ((team && team.name) || '') + ' ' + (slot.label || getKitLabel(slot.key));
+    img.onerror = function () {
+      if (this.dataset.currentSrc !== targetSrc) return;
+      btn.hidden = true;
+    };
+    img.onload = function () {
+      if (this.dataset.currentSrc !== targetSrc) return;
+      btn.hidden = false;
+    };
+    img.src = targetSrc;
+    btn.hidden = false;
+    btn.setAttribute('data-kit', slot.key);
+    btn.setAttribute('title', slot.label || getKitLabel(slot.key));
+  }
+
+  function updateKitGhosts(team, slots) {
+    var stage = document.getElementById('es-sq-kit-stage');
+    if (!slots || slots.length < 2) {
+      if (stage) stage.classList.add('is-solo');
+      setGhostKit('es-sq-kit-ghost-prev', 'es-sq-kit-prev-img', null, team);
+      setGhostKit('es-sq-kit-ghost-next', 'es-sq-kit-next-img', null, team);
+      return;
+    }
+    if (stage) stage.classList.remove('is-solo');
+    setGhostKit('es-sq-kit-ghost-prev', 'es-sq-kit-prev-img', slotByOffset(slots, state.kit, -1), team);
+    setGhostKit('es-sq-kit-ghost-next', 'es-sq-kit-next-img', slotByOffset(slots, state.kit, 1), team);
+  }
+
+  function playKitShift(dir) {
+    var stage = document.getElementById('es-sq-kit-stage');
+    if (!stage) return;
+    stage.classList.remove('is-kit-shift-prev', 'is-kit-shift-next');
+    void stage.offsetWidth;
+    stage.classList.add(dir < 0 ? 'is-kit-shift-prev' : 'is-kit-shift-next');
+    clearTimeout(playKitShift._t);
+    playKitShift._t = setTimeout(function () {
+      stage.classList.remove('is-kit-shift-prev', 'is-kit-shift-next');
+    }, 240);
+  }
+
+  function syncGoldRing() {
+    var card = document.querySelector('.es-sq-main');
+    var svg = $('es-sq-gold-svg');
+    var rect = $('es-sq-gold-rect');
+    if (!card || !svg || !rect) return;
+    var w = Math.max(120, card.clientWidth || 400);
+    var h = Math.max(160, card.clientHeight || 420);
+    svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+    var pad = 3;
+    rect.setAttribute('x', pad);
+    rect.setAttribute('y', pad);
+    rect.setAttribute('width', Math.max(20, w - pad * 2));
+    rect.setAttribute('height', Math.max(20, h - pad * 2));
+    rect.setAttribute('rx', 18);
+    rect.setAttribute('ry', 18);
+  }
+
+  function playGoldSweep() {
+    var card = document.querySelector('.es-sq-main');
+    if (!card) return;
+    syncGoldRing();
+    card.classList.remove('is-gold-sweep');
+    void card.offsetWidth;
+    card.classList.add('is-gold-sweep');
+    clearTimeout(playGoldSweep._t);
+    playGoldSweep._t = setTimeout(function () {
+      if (card) card.classList.remove('is-gold-sweep');
+    }, 720);
+  }
+
   function applyKit(team) {
     var slots = ensureKitKey(team);
     renderKitDots(slots);
+    updateKitGhosts(team, slots);
 
     var slot = null;
     for (var i = 0; i < slots.length; i++) {
@@ -735,6 +834,7 @@
       state.index = (state.index + dir + list.length) % list.length;
       state.kit = 'home';
       render();
+      playGoldSweep();
     });
   }
 
@@ -745,6 +845,7 @@
     state.index = 0;
     state.kit = 'home';
     render();
+    playGoldSweep();
   }
 
   function nextLeague(dir) {
@@ -754,6 +855,7 @@
     state.index = 0;
     state.kit = 'home';
     render();
+    playGoldSweep();
   }
 
   function selectLeagueByIndex(idx) {
@@ -765,6 +867,7 @@
     state.kit = 'home';
     closeLeaguePicker();
     render();
+    playGoldSweep();
   }
 
   function selectLeagueByName(name) {
@@ -790,6 +893,10 @@
   function openLeaguePicker() {
     var picker = $('es-sq-league-picker');
     if (!picker) return;
+    // fuori dalla card (overflow:hidden) così la lista può scendere tutta
+    if (picker.parentNode !== document.body) {
+      document.body.appendChild(picker);
+    }
     buildLeaguePickerList('');
     picker.hidden = false;
     picker.removeAttribute('hidden');
@@ -884,6 +991,58 @@
         '<div class="es-sq-picker-empty">Nessuna categoria trovata. Prova un altro termine.</div>';
     }
     listEl.innerHTML = html;
+    setPickerCursor(getPickerCursorIndex(), false);
+  }
+
+  function pickerItems() {
+    var list = $('es-sq-league-list');
+    if (!list) return [];
+    return Array.prototype.slice.call(list.querySelectorAll('.es-sq-picker-item'));
+  }
+
+  function getPickerCursorIndex() {
+    var items = pickerItems();
+    var i;
+    for (i = 0; i < items.length; i++) {
+      if (items[i].classList.contains('is-cursor')) return i;
+    }
+    for (i = 0; i < items.length; i++) {
+      if (items[i].classList.contains('is-active')) return i;
+    }
+    return items.length ? 0 : -1;
+  }
+
+  function setPickerCursor(idx, scroll) {
+    var items = pickerItems();
+    if (!items.length) return;
+    if (idx < 0) idx = 0;
+    if (idx >= items.length) idx = items.length - 1;
+    for (var i = 0; i < items.length; i++) {
+      items[i].classList.toggle('is-cursor', i === idx);
+    }
+    if (scroll !== false && items[idx] && items[idx].scrollIntoView) {
+      try {
+        items[idx].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      } catch (e) {
+        items[idx].scrollIntoView(false);
+      }
+    }
+  }
+
+  function movePickerCursor(dir) {
+    var items = pickerItems();
+    if (!items.length) return;
+    var cur = getPickerCursorIndex();
+    if (cur < 0) cur = 0;
+    setPickerCursor(cur + dir, true);
+  }
+
+  function confirmPickerCursor() {
+    var items = pickerItems();
+    var i = getPickerCursorIndex();
+    if (i < 0 || !items[i]) return;
+    var idx = parseInt(items[i].getAttribute('data-league-index'), 10);
+    if (!isNaN(idx)) selectLeagueByIndex(idx);
   }
 
   function selectTeam() {
@@ -1006,6 +1165,24 @@
         if (e.key === 'Escape') {
           e.preventDefault();
           closeLeaguePicker();
+          return;
+        }
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          e.stopPropagation();
+          movePickerCursor(1);
+          return;
+        }
+        if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          e.stopPropagation();
+          movePickerCursor(-1);
+          return;
+        }
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          e.stopPropagation();
+          confirmPickerCursor();
         }
       });
     }
@@ -1013,6 +1190,13 @@
     var listEl = $('es-sq-league-list');
     if (listEl && listEl.dataset.sqlListBound !== '1') {
       listEl.dataset.sqlListBound = '1';
+      listEl.addEventListener('mouseover', function (e) {
+        var btn = e.target.closest('.es-sq-picker-item');
+        if (!btn) return;
+        var items = pickerItems();
+        var i = items.indexOf(btn);
+        if (i >= 0) setPickerCursor(i, false);
+      });
       listEl.addEventListener('click', function (e) {
         var btn = e.target.closest('.es-sq-picker-item');
         if (!btn) return;
@@ -1043,6 +1227,38 @@
       );
     });
 
+    function setFocusZone(zone) {
+      state.focusZone = zone === 'kit' ? 'kit' : 'team';
+      var kitEl = document.querySelector('.es-sq-kit-panel');
+      var mainEl = document.querySelector('.es-sq-main');
+      if (kitEl) kitEl.classList.toggle('is-focused', state.focusZone === 'kit');
+      if (mainEl) mainEl.classList.toggle('is-focused', state.focusZone === 'team');
+    }
+
+    function focusKitPanel() {
+      var kitEl = document.querySelector('.es-sq-kit-panel');
+      setFocusZone('kit');
+      if (kitEl && typeof kitEl.focus === 'function') {
+        try {
+          kitEl.focus({ preventScroll: true });
+        } catch (err) {
+          kitEl.focus();
+        }
+      }
+    }
+
+    function focusTeamPanel() {
+      var mainEl = document.querySelector('.es-sq-main');
+      setFocusZone('team');
+      if (mainEl && typeof mainEl.focus === 'function') {
+        try {
+          mainEl.focus({ preventScroll: true });
+        } catch (err) {
+          mainEl.focus();
+        }
+      }
+    }
+
     function cycleKit(dir) {
       var team = current();
       var slots = kitSlotsFor(team);
@@ -1054,6 +1270,7 @@
       if (idx < 0) idx = 0;
       idx = (idx + dir + keys.length) % keys.length;
       state.kit = keys[idx];
+      playKitShift(dir);
       if (team) applyKit(team);
     }
     bindOnce(
@@ -1074,6 +1291,24 @@
       },
       'sq'
     );
+    bindOnce(
+      $('es-sq-kit-ghost-prev'),
+      'click',
+      function (e) {
+        if (e) e.preventDefault();
+        cycleKit(-1);
+      },
+      'sqgprev'
+    );
+    bindOnce(
+      $('es-sq-kit-ghost-next'),
+      'click',
+      function (e) {
+        if (e) e.preventDefault();
+        cycleKit(1);
+      },
+      'sqgnext'
+    );
     bindOnce($('es-sq-select'), 'click', function (e) {
       e.preventDefault();
       selectTeam();
@@ -1082,6 +1317,12 @@
     var kitPanel = document.querySelector('.es-sq-kit-panel');
     if (kitPanel) {
       addSwipeSupport(kitPanel, function () { cycleKit(1); }, function () { cycleKit(-1); });
+      bindOnce(kitPanel, 'pointerdown', function () {
+        focusKitPanel();
+      }, 'kitfocus');
+      bindOnce(kitPanel, 'focus', function () {
+        setFocusZone('kit');
+      }, 'kitfocusin');
     }
     var kitImg = $('es-sq-kit-img');
     if (kitImg && kitImg.parentNode) {
@@ -1090,6 +1331,12 @@
     var mainCard = document.querySelector('.es-sq-main');
     if (mainCard) {
       addSwipeSupport(mainCard, function () { next(1); }, function () { next(-1); });
+      bindOnce(mainCard, 'pointerdown', function () {
+        focusTeamPanel();
+      }, 'teamfocus');
+      bindOnce(mainCard, 'focus', function () {
+        setFocusZone('team');
+      }, 'teamfocusin');
     }
 
     bindOnce(
@@ -1109,20 +1356,49 @@
         if (!view) return;
         var vis = window.getComputedStyle(view).display;
         if (vis === 'none') return;
+        // Picker categorie aperto: ↑ ↓ spostano categoria per categoria
+        if (isPickerOpen()) {
+          if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            e.stopPropagation();
+            movePickerCursor(1);
+            return;
+          }
+          if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            e.stopPropagation();
+            movePickerCursor(-1);
+            return;
+          }
+          if (e.key === 'Enter') {
+            var tPick = e.target;
+            if (tPick && tPick.closest && tPick.closest('.es-sq-picker-item')) return;
+            e.preventDefault();
+            confirmPickerCursor();
+            return;
+          }
+          if (e.key === 'Escape') {
+            e.preventDefault();
+            closeLeaguePicker();
+            return;
+          }
+        }
         // Non intercettare se focus su input/textarea/select
         var t = e.target;
         if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) {
           return;
         }
-        // â† â†’ = squadra (solo freccia, senza Ctrl/Alt/Meta)
+        // ← → = squadra, oppure divise se la sezione Divisa ha il focus
         if (e.key === 'ArrowLeft' && !e.ctrlKey && !e.altKey && !e.metaKey) {
           e.preventDefault();
-          next(-1);
+          if (state.focusZone === 'kit') cycleKit(-1);
+          else next(-1);
           return;
         }
         if (e.key === 'ArrowRight' && !e.ctrlKey && !e.altKey && !e.metaKey) {
           e.preventDefault();
-          next(1);
+          if (state.focusZone === 'kit') cycleKit(1);
+          else next(1);
           return;
         }
         // â†‘ â†“ LIBERE per lo scroll della pagina (non cambiano categoria)
@@ -1141,6 +1417,13 @@
 
     state.ready = true;
     render();
+    syncGoldRing();
+    if (!document.documentElement.dataset.esSqGoldResize) {
+      document.documentElement.dataset.esSqGoldResize = '1';
+      window.addEventListener('resize', function () {
+        syncGoldRing();
+      });
+    }
     return true;
   }
 

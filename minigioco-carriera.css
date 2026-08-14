@@ -3091,6 +3091,359 @@ button.es-mg-hub-menubar:focus {
   .es-mg-sum-clubs { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* ==========================================================================
+   MOBILE / TABLET — niente tagli, stesso look Copero, tutto allineato
+   ========================================================================== */
+.es-mg-root {
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+@media (max-width: 959px) {
+  .es-mg-identity {
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.7rem 0.75rem 0.55rem;
+    max-width: 100%;
+    width: 100%;
+  }
+  .es-mg-identity-title {
+    font-size: clamp(1.15rem, 5vw, 1.45rem);
+    margin-bottom: 0.65rem;
+  }
+  .es-mg-identity-grid {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    min-height: 0;
+    gap: 0.7rem;
+  }
+  .es-mg-id-col {
+    overflow: visible;
+    flex: 0 0 auto;
+    min-height: 0;
+    padding: 0.7rem 0.75rem 0.8rem;
+  }
+  .es-mg-id-fields {
+    margin-top: 0.85rem;
+    grid-template-columns: minmax(0, 1fr) 72px;
+  }
+  .es-mg-kit-photo {
+    width: min(132px, 46vw);
+  }
+  .es-mg-input,
+  .es-mg-search {
+    font-size: 16px;
+  }
+  .es-mg-nation-grid-wide {
+    max-height: min(42vh, 280px);
+    min-height: 160px;
+    overflow-y: auto;
+  }
+  .es-mg-field-wrap-wide {
+    min-height: 0;
+    margin-top: 0.15rem;
+  }
+  .es-mg-field-wrap-wide .es-mg-field {
+    width: min(100%, 280px);
+    max-width: 280px;
+    height: auto;
+    max-height: none;
+    min-height: 300px;
+    aspect-ratio: 0.72;
+  }
+  .es-mg-pos-btn {
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 0.7rem !important;
+  }
+  .es-mg-identity-foot {
+    position: sticky;
+    bottom: 0;
+    z-index: 6;
+    background: linear-gradient(180deg, rgba(10, 10, 12, 0) 0%, #0a0a0c 28%);
+    padding: 0.85rem 0 max(0.55rem, env(safe-area-inset-bottom));
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+  .es-mg-identity-foot .es-mg-btn-half {
+    min-width: 0;
+    flex: 1 1 140px;
+    max-width: none;
+    margin: 0 !important;
+  }
+  .es-mg-step {
+    padding: 0.85rem 0.85rem max(1rem, env(safe-area-inset-bottom));
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .es-mg-field-wrap {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 859px) {
+  .es-mg-top {
+    padding: 0.55rem 0.7rem;
+    padding-top: max(0.55rem, env(safe-area-inset-top));
+  }
+  .es-mg-float-close {
+    top: max(0.4rem, env(safe-area-inset-top));
+    right: max(0.45rem, env(safe-area-inset-right));
+    padding: 0.34rem 0.78rem;
+    font-size: 0.72rem;
+  }
+  .es-mg-career {
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch;
+    align-items: flex-start !important;
+    padding: max(2.15rem, calc(env(safe-area-inset-top) + 1.7rem)) 0.65rem max(0.7rem, env(safe-area-inset-bottom)) 0.65rem !important;
+    width: 100% !important;
+    max-width: none !important;
+  }
+  .es-mg-career-board {
+    grid-template-columns: 1fr;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    border-radius: 16px;
+  }
+  .es-mg-career-left {
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 0.85rem 0.75rem 1rem;
+    overflow: visible;
+  }
+  .es-mg-career-right {
+    padding: 0.6rem 0.6rem 0.7rem;
+    min-height: 240px;
+  }
+  .es-mg-player-card-top {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.5rem;
+    align-items: start;
+  }
+  .es-mg-player-name {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    line-height: 1.2;
+  }
+  .es-mg-player-club {
+    flex-wrap: wrap;
+    font-size: 0.92rem;
+  }
+  .es-mg-offers,
+  .es-mg-offers-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0.45rem !important;
+  }
+  .es-mg-offer {
+    grid-template-rows: auto 52px auto auto !important;
+    padding: 0.48rem 0.35rem 0.5rem !important;
+    min-height: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .es-mg-offer-title {
+    min-height: 0;
+    white-space: normal;
+    overflow: visible;
+  }
+  .es-mg-offer-badges {
+    overflow: visible !important;
+  }
+  .es-mg-dilemma-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .es-mg-dilemma-photo,
+  .es-mg-dilemma-photo img,
+  .es-mg-dilemma-card img {
+    height: 110px;
+  }
+  .es-mg-timeline-head,
+  .es-mg-row {
+    grid-template-columns: 28px minmax(0, 1fr) 32px 26px 26px 26px;
+    gap: 0.18rem;
+  }
+  .es-mg-natbar {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.25rem 0.6rem;
+  }
+  .es-mg-landing {
+    padding: 0.75rem 0.85rem max(1rem, env(safe-area-inset-bottom));
+    align-items: flex-start;
+  }
+  .es-mg-landing-split {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+  .es-mg-landing-copy,
+  .es-mg-landing-copy .es-mg-title-center,
+  .es-mg-landing-copy .es-mg-desc-center,
+  .es-mg-landing-copy .es-mg-hint-center {
+    text-align: center;
+    align-items: center;
+  }
+  .es-mg-landing-copy .es-mg-kicker,
+  .es-mg-landing-copy .es-mg-modes-center,
+  .es-mg-landing-actions {
+    align-self: center;
+    justify-content: center;
+  }
+  .es-mg-landing-actions .es-mg-btn-full {
+    width: 100%;
+    max-width: 280px;
+  }
+  .es-mg-hub {
+    padding: 4.1rem 0.75rem max(1rem, env(safe-area-inset-bottom));
+  }
+  .es-mg-hub-card {
+    width: 100%;
+    max-width: 100%;
+  }
+  .es-mg-career-end-btns .es-mg-btn-full {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .es-mg-player-card-top {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .es-mg-player-side {
+    grid-column: 1 / -1;
+    text-align: left;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1rem;
+    font-size: 0.7rem;
+  }
+  .es-mg-ovr-big {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+  }
+  .es-mg-ovr-big strong {
+    font-size: 1.3rem;
+  }
+  .es-mg-offers,
+  .es-mg-offers-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .es-mg-offer {
+    grid-template-columns: 64px minmax(0, 1fr) auto !important;
+    grid-template-rows: auto auto !important;
+    justify-items: stretch !important;
+    text-align: left !important;
+    padding: 0.55rem 0.6rem !important;
+    column-gap: 0.55rem !important;
+    row-gap: 0.18rem !important;
+    align-items: center !important;
+  }
+  .es-mg-offer-title {
+    grid-column: 2;
+    grid-row: 1;
+    text-align: left;
+    justify-self: start;
+    width: 100%;
+  }
+  .es-mg-offer-title b {
+    display: block;
+    text-align: left;
+  }
+  .es-mg-offer-logo-wrap {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    justify-self: center;
+    align-self: center;
+    width: 52px !important;
+    height: 52px !important;
+  }
+  .es-mg-offer-league {
+    grid-column: 2;
+    grid-row: 2;
+    justify-content: flex-start !important;
+    text-align: left !important;
+  }
+  .es-mg-offer-badges {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    align-items: flex-end !important;
+    width: auto !important;
+  }
+  .es-mg-dilemma-grid {
+    grid-template-columns: 1fr;
+  }
+  .es-mg-dilemma-photo,
+  .es-mg-dilemma-photo img,
+  .es-mg-dilemma-card img {
+    height: 140px;
+  }
+  .es-mg-timeline-head,
+  .es-mg-row {
+    grid-template-columns: 26px minmax(0, 1fr) 30px 24px 24px 24px;
+    font-size: 0.66rem;
+  }
+  .es-mg-row {
+    padding: 0.22rem 0.28rem;
+    min-height: 28px;
+  }
+  .es-mg-sum-clubs {
+    grid-template-columns: 1fr 1fr;
+  }
+  .es-mg-intro-logo {
+    flex-direction: column;
+    gap: 0.45rem;
+    padding: 0 1rem;
+  }
+  .es-mg-intro-word {
+    white-space: normal;
+    text-align: center;
+    font-size: clamp(1.45rem, 8vw, 2.1rem);
+  }
+  .es-mg-brand-text {
+    max-width: 46vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (max-width: 380px) {
+  .es-mg-career {
+    padding-left: 0.45rem !important;
+    padding-right: 0.45rem !important;
+  }
+  .es-mg-identity,
+  .es-mg-career-left,
+  .es-mg-career-right {
+    padding-left: 0.55rem;
+    padding-right: 0.55rem;
+  }
+  .es-mg-offer {
+    grid-template-columns: 58px minmax(0, 1fr) !important;
+  }
+  .es-mg-offer-badges {
+    grid-column: 2;
+    grid-row: 3;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    gap: 0.25rem !important;
+  }
+  .es-mg-timeline-head,
+  .es-mg-row {
+    grid-template-columns: 24px minmax(0, 1fr) 28px 22px 22px 22px;
+    gap: 0.12rem;
+  }
+}
+
 
 
 
