@@ -2470,6 +2470,24 @@ button.es-mg-hub-menubar:focus {
   background: rgba(248, 113, 113, 0.18);
   color: #fca5a5;
 }
+.es-mg-offer-badge-fail {
+  background: rgba(127, 29, 29, 0.55);
+  color: #fecaca;
+  font-size: 0.56rem;
+  font-weight: 900;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+}
+.es-mg-offer-odds {
+  font-size: 0.52rem;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.02em;
+}
+.is-fail-offer {
+  border-color: rgba(248, 113, 113, 0.45) !important;
+}
 .is-promo-offer {
   border-color: rgba(74, 222, 128, 0.35) !important;
 }

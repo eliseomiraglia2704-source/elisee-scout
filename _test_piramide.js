@@ -66,8 +66,8 @@ mustLegal('MODENA', 2);
 mustIllegal('MODENA', 1);
 mustLegal('MONZA', 1);
 mustLegal('MONZA', 2);
-mustIllegal('MONZA', 3);
-mustIllegal('MONZA', 4);
+mustLegal('MONZA', 4);
+mustIllegal('INTER', 4);
 mustLegal('FOGGIA', 3);
 mustIllegal('FOGGIA', 2);
 mustIllegal('FOGGIA', 1);
@@ -81,7 +81,8 @@ mustIllegal('UDINESE', 4);
 mustIllegal('VIVI ALTOTEVERE', 1);
 mustIllegal('VIVI ALTOTEVERE', 2);
 mustIllegal('INTER', 2);
-mustIllegal('JUVENTUS', 2);
+mustLegal('JUVENTUS', 2);
+mustIllegal('JUVENTUS', 3);
 
 /* 3. Catalogo sempre dentro il range */
 var check = S.selfCheck(clubs);

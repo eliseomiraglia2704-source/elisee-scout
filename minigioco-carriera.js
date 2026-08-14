@@ -889,6 +889,8 @@
       c.justRelegated = false;
       c.promotedFromGirone = '';
       c.promotedFromTier = 0;
+      c.failed = false;
+      c.failedFrom = 0;
     });
   }
 
@@ -1587,6 +1589,7 @@
 
   function clubLeagueTier(club) {
     var league = String((club && (club.l || club.league)) || '').toUpperCase();
+    if (league.indexOf('ECCELLENZA') >= 0) return 5;
     if (league.indexOf('SERIE D') >= 0) return 4;
     if (league.indexOf('SERIE C') >= 0) return 3;
     if (league.indexOf('SERIE B') >= 0) return 2;
@@ -1626,13 +1629,14 @@
     if (t === 1) return 'SERIE A';
     if (t === 2) return 'SERIE B';
     if (t === 3) return 'SERIE C · GIRONE A';
+    if (t === 5) return 'ECCELLENZA';
     return 'SERIE D · GIRONE A';
   }
 
   function isItalianPyramid(club) {
     if (!club || club.world) return false;
     var l = String(club.l || '').toUpperCase();
-    return l.indexOf('SERIE') >= 0;
+    return l.indexOf('SERIE') >= 0 || l.indexOf('ECCELLENZA') >= 0;
   }
 
   var _PIR = (typeof window !== 'undefined' && window.EliseePiramide) ? window.EliseePiramide : null;
@@ -1697,20 +1701,39 @@
     (state.clubs || []).forEach(function (c) {
       c.justPromoted = false;
       c.justRelegated = false;
+      if (!c.failed) {
+        c.failed = false;
+        c.failedFrom = 0;
+      }
     });
+    if (window.EliseeClubStoria && window.EliseeClubStoria.maybeFail) {
+      (state.clubs || []).forEach(function (c) {
+        if (!isItalianPyramid(c) || c.failed) return;
+        var hit = window.EliseeClubStoria.maybeFail(c);
+        if (hit) move(c, hit.dest, false, '', true);
+      });
+    }
     function pool(t) {
       return (state.clubs || []).filter(function (c) {
         return Number(c.t) === t && isItalianPyramid(c);
       });
     }
-    function move(c, t, up, fromGirone) {
+    function move(c, t, up, fromGirone, isFail) {
       if (!isLegalTier(c, t)) return;
       var fromTier = Number(c.t);
+      if (!isFail && Math.abs(t - fromTier) > 1) return;
       var fromG = fromGirone || clubGironeLetter(c);
       c.t = t;
       c.l = labelForItalianTier(c, t);
       c.justPromoted = !!up;
       c.justRelegated = !up;
+      if (isFail) {
+        c.failed = true;
+        c.failedFrom = fromTier;
+      } else if (up) {
+        c.failed = false;
+        c.failedFrom = 0;
+      }
       if (up) {
         c.promotedFromGirone = fromG;
         c.promotedFromTier = fromTier;
@@ -1741,13 +1764,13 @@
     weightedPickN(pool(2).filter(function (c) { return isLegalTier(c, 1); }), 2, function (c) {
       return (window.EliseeClubStoria ? window.EliseeClubStoria.promoteWeight(c, 2) : 0.1) * 100;
     }).forEach(function (c) { move(c, 1, true); });
-    weightedPickN(pool(1).filter(function (c) { return isLegalTier(c, 2); }), 3, function (c) {
+    weightedPickN(pool(1).filter(function (c) { return !c.failed && isLegalTier(c, 2); }), 3, function (c) {
       return (window.EliseeClubStoria ? window.EliseeClubStoria.relegateWeight(c, 1) : 0) * 100;
     }).forEach(function (c) { move(c, 2, false); });
     SERIE_C_GIRONI.forEach(function (g) {
       promoteGironeWinner(3, g, 2);
     });
-    weightedPickN(pool(2).filter(function (c) { return !c.justPromoted && isLegalTier(c, 3); }), SERIE_C_GIRONI.length, function (c) {
+    weightedPickN(pool(2).filter(function (c) { return !c.justPromoted && !c.failed && isLegalTier(c, 3); }), SERIE_C_GIRONI.length, function (c) {
       return (window.EliseeClubStoria ? window.EliseeClubStoria.relegateWeight(c, 2) : 0.1) * 100;
     }).forEach(function (c) { move(c, 3, false); });
     SERIE_D_GIRONI.forEach(function (g) {
@@ -1760,6 +1783,12 @@
         return (window.EliseeClubStoria ? window.EliseeClubStoria.relegateWeight(c, 3) : 0.1) * 100;
       }).forEach(function (c) { move(c, 4, false); });
     });
+    weightedPickN(pool(4).filter(function (c) { return !c.justPromoted && !c.failed && isLegalTier(c, 5); }), 4, function (c) {
+      return (window.EliseeClubStoria ? window.EliseeClubStoria.relegateWeight(c, 4) : 0.08) * 100;
+    }).forEach(function (c) { move(c, 5, false); });
+    weightedPickN(pool(5).filter(function (c) { return isLegalTier(c, 4); }), 4, function (c) {
+      return (window.EliseeClubStoria ? window.EliseeClubStoria.promoteWeight(c, 5) : 0.12) * 100;
+    }).forEach(function (c) { move(c, 4, true); });
     repairClubTiers();
   }
 
@@ -1790,7 +1819,9 @@
         jp: !!c.justPromoted,
         jr: !!c.justRelegated,
         pg: c.promotedFromGirone || '',
-        pt: c.promotedFromTier || 0
+        pt: c.promotedFromTier || 0,
+        fl: !!c.failed,
+        ff: c.failedFrom || 0
       };
     });
   }
@@ -1817,6 +1848,8 @@
       c.justRelegated = !!r.jr;
       c.promotedFromGirone = r.pg || '';
       c.promotedFromTier = r.pt || 0;
+      c.failed = !!r.fl;
+      c.failedFrom = r.ff || 0;
       guardClub(c, false);
     });
   }
@@ -2151,7 +2184,7 @@
 
   function clampTier(t) {
     if (t < 1) return 1;
-    if (t > 4) return 4;
+    if (t > 5) return 5;
     return t;
   }
 
@@ -2646,6 +2679,7 @@
     l = String(l || '').trim();
     if (!l) return '';
     var upper = l.toUpperCase();
+    if (upper.indexOf('ECCELLENZA') === 0) return 'Eccellenza';
     if (upper.indexOf('SERIE A') === 0) return 'Serie A';
     if (upper.indexOf('SERIE B') === 0) return 'Serie B';
     
@@ -2993,6 +3027,9 @@
         if (o.isYouth) extraBadge += '<span class="es-mg-offer-badge-youth">Settore giovanile</span>';
         else if (o.isLoan) extraBadge += '<span class="es-mg-offer-badge-loan">PRESTITO</span>';
         else if (!stay && !isFirstStep) extraBadge += '<span class="es-mg-offer-badge-buy">ACQUISTO</span>';
+        if (o.failed) {
+          extraBadge += '<span class="es-mg-offer-badge-fail">FALLITA</span>';
+        }
         if (o.isPromoted) {
           var promoTxt = 'Promossa';
           if (o.promotedFromGirone && o.promotedFromTier === 3) {
@@ -3012,15 +3049,21 @@
         } else if (o.isJumpDown) {
           extraBadge += '<span class="es-mg-offer-badge-down">Calo di categoria</span>';
         }
+        if (window.EliseeClubStoria && window.EliseeClubStoria.odds && !o.world) {
+          var od = window.EliseeClubStoria.odds(o, clubLeagueTier(o));
+          extraBadge += '<span class="es-mg-offer-odds" title="Probabilità storica in questo campionato">↑' +
+            Math.round(od.promo * 100) + '% ↓' + Math.round(od.rel * 100) + '%</span>';
+        }
+        var failLine = o.failed ? ('Fallita · ora ' + formattedLeague) : formattedLeague;
         return (
-          '<button type="button" class="es-mg-offer' + (o.isLoan ? ' is-loan-offer' : '') + (o.isPromoted ? ' is-promo-offer' : '') + '" data-idx="' + i + '">' +
+          '<button type="button" class="es-mg-offer' + (o.isLoan ? ' is-loan-offer' : '') + (o.isPromoted ? ' is-promo-offer' : '') + (o.failed ? ' is-fail-offer' : '') + '" data-idx="' + i + '">' +
           '<span class="es-mg-offer-title">' + btnTitle + ' <b>' + esc(o.n) + '</b></span>' +
           '<span class="es-mg-offer-logo-wrap">' +
           (o.o
             ? '<img src="' + esc(o.o) + '" alt="" class="es-mg-offer-logo" onerror="this.style.display=\'none\'" />'
             : '<span class="es-mg-offer-fallback"><span class="es-mg-qmark">?</span></span>') +
           '</span>' +
-          '<span class="es-mg-offer-league">' + leagueLogoTag + ' ' + esc(formattedLeague) + '</span>' +
+          '<span class="es-mg-offer-league">' + leagueLogoTag + ' ' + esc(failLine) + '</span>' +
           '<span class="es-mg-offer-badges">' + extraBadge + '</span>' +
           '</button>'
         );

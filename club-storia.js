@@ -34,28 +34,29 @@
     var b = Math.max(0, Number(seasons.b) || 0);
     var c = Math.max(0, Number(seasons.c) || 0);
     var d = Math.max(0, Number(seasons.d) || 0);
-    var tot = a + b + c + d || 1;
-    var counts = [0, a, b, c, d];
+    var e = Math.max(0, Number(seasons.e) || 0);
+    var tot = a + b + c + d + e || 1;
+    var counts = [0, a, b, c, d, e];
     var home = 4;
     var best = -1;
     var t;
-    for (t = 1; t <= 4; t++) {
+    for (t = 1; t <= 5; t++) {
       if (counts[t] >= best) {
         best = counts[t];
         home = t;
       }
     }
-    var ceil = 4;
-    for (t = 1; t <= 4; t++) {
+    var ceil = 5;
+    for (t = 1; t <= 5; t++) {
       if (counts[t] > 0) {
         ceil = t;
         break;
       }
     }
-    if (a === 0 && b === 0 && ceil === 4) ceil = 3;
+    if (a === 0 && b === 0 && ceil >= 4) ceil = Math.min(ceil, 3);
 
-    var floor = 4;
-    for (t = 4; t >= 1; t--) {
+    var floor = e >= 3 ? 5 : 4;
+    for (t = 5; t >= 1; t--) {
       if (counts[t] >= 3) {
         floor = t;
         break;
@@ -76,7 +77,10 @@
       rel: rel,
       promo: promo,
       stay: stay,
-      seasons: { a: a, b: b, c: c, d: d }
+      seasons: { a: a, b: b, c: c, d: d, e: e },
+      fail: false,
+      failDest: 0,
+      failChance: 0
     };
   }
 
@@ -86,9 +90,9 @@
   put(['NAPOLI'], { a: 36, b: 4, c: 0, d: 0 });
   put(['LAZIO'], { a: 37, b: 3, c: 0, d: 0 });
   put(['ATALANTA'], { a: 30, b: 10, c: 0, d: 0 });
-  put(['FIORENTINA'], { a: 34, b: 6, c: 0, d: 0 });
+  put(['FIORENTINA'], { a: 32, b: 6, c: 2, d: 0 });
   put(['BOLOGNA'], { a: 28, b: 12, c: 0, d: 0 });
-  put(['TORINO'], { a: 30, b: 10, c: 0, d: 0 });
+  put(['TORINO'], { a: 28, b: 10, c: 2, d: 0 });
   put(['UDINESE'], { a: 36, b: 4, c: 0, d: 0 });
   put(['GENOA'], { a: 20, b: 16, c: 4, d: 0 });
   put(['CAGLIARI'], { a: 24, b: 16, c: 0, d: 0 });
@@ -98,9 +102,9 @@
   put(['LECCE'], { a: 16, b: 14, c: 10, d: 0 });
   put(['VENEZIA'], { a: 5, b: 12, c: 15, d: 8 });
   put(['SASSUOLO'], { a: 11, b: 10, c: 13, d: 6 });
-  put(['PARMA'], { a: 20, b: 8, c: 6, d: 6 });
-  put(['MONZA'], { a: 8, b: 20, c: 0, d: 0 });
-  put(['COMO'], { a: 4, b: 8, c: 10, d: 18 });
+  put(['PARMA'], { a: 18, b: 8, c: 6, d: 8 });
+  put(['MONZA'], { a: 4, b: 10, c: 14, d: 12 });
+  put(['COMO'], { a: 4, b: 8, c: 10, d: 14, e: 4 });
   put(['FROSINONE'], { a: 4, b: 12, c: 20, d: 4 });
 
   /* —— Serie B / yo-yo A-B-C —— */
@@ -240,7 +244,7 @@
   put(['PORDENONE'], { a: 0, b: 6, c: 16, d: 18 });
 
   /* —— Serie D di paese: possono vincere il girone (→ C), mai B/A —— */
-  var VILLAGE = { a: 0, b: 0, c: 2, d: 38 };
+  var VILLAGE = { a: 0, b: 0, c: 2, d: 30, e: 8 };
   put([
     'AS BIELLESE', 'ASTI', 'CAIRESE', 'CELLE VARAZZE', 'CHISOLA', 'CLUB MILANO',
     'IMPERIA', 'LAVAGNESE', 'NOVAROMENTIN', 'SALUZZO', 'VALENZANA',
@@ -282,14 +286,14 @@
       P[k] = spec;
     });
   }
-  lock(['INTER', 'MILAN', 'JUVENTUS', 'NAPOLI', 'ROMA', 'LAZIO', 'ATALANTA'], 1, 1);
-  lock(['FIORENTINA', 'BOLOGNA', 'TORINO', 'UDINESE'], 1, 2);
-  lock(
-    ['MONZA', 'COMO', 'SASSUOLO', 'PARMA', 'VENEZIA', 'FROSINONE', 'CAGLIARI', 'GENOA', 'LECCE', 'EMPOLI', 'VERONA', 'SAMPDORIA'],
-    1,
-    2
-  );
-  lock(['MODENA'], 2, 3);
+  lock(['INTER', 'MILAN', 'ROMA', 'LAZIO', 'ATALANTA'], 1, 1);
+  lock(['JUVENTUS'], 1, 2);
+  lock(['UDINESE', 'BOLOGNA', 'CAGLIARI', 'SAMPDORIA'], 1, 2);
+  lock(['NAPOLI', 'FIORENTINA', 'TORINO'], 1, 3);
+  lock(['GENOA', 'VERONA', 'EMPOLI', 'LECCE', 'SASSUOLO'], 1, 3);
+  lock(['PARMA', 'MONZA', 'VENEZIA', 'FROSINONE'], 1, 4);
+  lock(['COMO'], 1, 5);
+  lock(['MODENA'], 2, 4);
   lock(['FOGGIA'], 3, 4);
   lock(
     ['CALDIERO TERME', 'VIVI ALTOTEVERE', 'FERRANDINA', 'ATHLETIC PALERMO', 'TAU'],
@@ -298,6 +302,33 @@
   );
   lock(['JUVENTUS U23', 'INTER U23', 'ATALANTA U23'], 3, 3);
   lock(['MILAN U23'], 3, 4);
+
+  function addFail(names, dest, chance) {
+    names.forEach(function (n) {
+      var k = keyOf(n);
+      if (!P[k]) return;
+      P[k].fail = true;
+      P[k].failDest = dest;
+      P[k].failChance = chance;
+      if (P[k].floor < dest) P[k].floor = dest;
+    });
+  }
+  addFail(['FIORENTINA', 'NAPOLI', 'TORINO'], 3, 0.01);
+  addFail(['PARMA', 'PALERMO', 'BARI', 'CATANIA', 'SIENA', 'CESENA', 'ANCONA', 'REGGINA', 'CHIEVO'], 4, 0.016);
+  addFail(['MONZA', 'VENEZIA', 'PADOVA', 'VICENZA', 'AVELLINO', 'MANTOVA', 'LIVORNO', 'PERUGIA', 'SALERNITANA'], 4, 0.012);
+  addFail(['COMO', 'AREZZO', 'VARESE FC', 'VARESE', 'PISTOIESE', 'PRATO'], 5, 0.014);
+  addFail(['FOGGIA', 'MESSINA', 'ACR MESSINA', 'TARANTO', 'TERNANA'], 4, 0.014);
+
+  function setHome(names, home) {
+    names.forEach(function (n) {
+      var k = keyOf(n);
+      if (P[k]) P[k].home = home;
+    });
+  }
+  setHome(
+    ['MONZA', 'COMO', 'SASSUOLO', 'PARMA', 'VENEZIA', 'FROSINONE', 'LECCE', 'EMPOLI', 'GENOA', 'VERONA'],
+    1
+  );
 
   function keyOf(name) {
     return String(name || '')
@@ -352,6 +383,12 @@
       if (spec.home < spec.ceil) spec.home = spec.ceil;
       if (spec.home > spec.floor) spec.home = spec.floor;
     }
+    var stored = lookup(n);
+    if (stored) {
+      spec.fail = !!stored.fail;
+      spec.failDest = stored.failDest || 0;
+      spec.failChance = stored.failChance || 0;
+    }
     return spec;
   }
 
@@ -385,6 +422,7 @@
     var Pira = piramide();
     if (destT === 1) return 'SERIE A';
     if (destT === 2) return 'SERIE B';
+    if (destT === 5) return 'ECCELLENZA';
     if (destT === 3) {
       if (atStart && catT === 3 && catL) {
         var g0 = parseGirone(catL);
@@ -424,18 +462,19 @@
   function clampTierOf(club, current) {
     var s = profile(club);
     var now = Number(current);
-    if (!(now >= 1 && now <= 4)) now = s.home;
+    if (!(now >= 1 && now <= 5)) now = s.home;
+    if (club && club.failed && now >= s.ceil && now <= s.floor) return now;
     if (now < s.ceil || now > s.floor) return s.home;
     return now;
   }
 
   function rawWeights(club, fromTier) {
     var s = profile(club);
-    var se = s.seasons || { a: 0, b: 0, c: 0, d: 0 };
-    var counts = [0, se.a || 0, se.b || 0, se.c || 0, se.d || 0];
+    var se = s.seasons || { a: 0, b: 0, c: 0, d: 0, e: 0 };
+    var counts = [0, se.a || 0, se.b || 0, se.c || 0, se.d || 0, se.e || 0];
     var t = Number(fromTier) || s.home;
     var canUp = t > 1 && (t - 1) >= s.ceil;
-    var canDown = t < 4 && (t + 1) <= s.floor;
+    var canDown = t < 5 && (t + 1) <= s.floor;
     var bounce = t > s.home ? 5 : 0.35;
     var overreach = t < s.home ? 5 : 0.35;
     var promo = canUp ? counts[t - 1] + bounce : 0;
@@ -509,6 +548,30 @@
     parseGirone: parseGirone,
     serieCGirone: serieCGirone,
     dGironeToSerieC: dGironeToSerieC,
+    maybeFail: function (club) {
+      var s = profile(club);
+      if (!s.fail || (club && club.failed)) return null;
+      var now = Number(club && club.t) || s.home;
+      if (now >= (s.failDest || 4)) return null;
+      if (Math.random() > (s.failChance || 0.01)) return null;
+      var dest = s.failDest || Math.min(s.floor, now + 2);
+      if (dest < now + 2) dest = Math.min(s.floor, now + 2);
+      if (dest <= now) return null;
+      return { dest: dest, from: now };
+    },
+    leagueOdds: function (clubs, tier) {
+      var list = (clubs || []).filter(function (c) { return Number(c.t) === tier && !c.world; });
+      if (!list.length) return { promo: 0, stay: 1, rel: 0, n: 0 };
+      var p = 0, s = 0, r = 0;
+      list.forEach(function (c) {
+        var o = odds(c, tier);
+        p += o.promo;
+        s += o.stay;
+        r += o.rel;
+      });
+      var n = list.length;
+      return { promo: p / n, stay: s / n, rel: r / n, n: n };
+    },
     selfCheck: selfCheck,
     HARD: HARD
   };

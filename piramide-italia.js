@@ -187,7 +187,11 @@
       'In Serie D il vincitore di ogni girone (A–I) sale in Serie C.',
       'Serie C Girone A = Nord Italia. Girone B = Centro Italia. Girone C = Sud Italia.',
       'Chi sale o scende in Serie C entra subito nel girone geografico della propria area.',
-      'Unita di promozione = il girone, non la categoria intera.'
+      'Unita di promozione = il girone, non la categoria intera.',
+      'Ogni club si muove di una sola categoria a stagione, in base alla propria storia.',
+      'Un top club puo scendere di 2 o 3 categorie in un colpo solo solo se e fallito.',
+      'Se un club fallisce va indicato FALLITA e si mostra la categoria in cui riparte.',
+      'Serie D ed Eccellenza sono possibili solo se la storia del club lo consente.'
     ],
     summary:
       'In Serie C il vincitore di ogni girone (A, B, C) sale in Serie B; in Serie D il vincitore di ogni girone sale in Serie C.'
