@@ -3093,31 +3093,22 @@
         o = isFirstStep ? assertStartOffer(Object.assign({}, o)) : sanitizeOfferClub(o);
         var formattedLeague = shortLeague(o.l, o.n);
         var leagueLogoTag = getLeagueLogoImg(o.l);
-        var extraBadge = '';
-        if (o.isYouth) extraBadge += '<span class="es-mg-offer-badge-youth">Giovanili</span>';
-        else if (o.isLoan) extraBadge += '<span class="es-mg-offer-badge-loan">Prestito</span>';
-        else if (!stay && !isFirstStep) extraBadge += '<span class="es-mg-offer-badge-buy">Acquisto</span>';
+        var badges = [];
         if (o.failed) {
-          extraBadge += '<span class="es-mg-offer-badge-fail">Fallita</span>';
-          extraBadge += o.rebuild === 'forte'
+          badges.push('<span class="es-mg-offer-badge-fail">Fallita</span>');
+          badges.push(o.rebuild === 'forte'
             ? '<span class="es-mg-offer-badge-up">Progetto forte</span>'
-            : '<span class="es-mg-offer-badge-down">Progetto debole</span>';
-        } else if (o.isPromoted) {
-          extraBadge += '<span class="es-mg-offer-badge-up" title="Promossa">Promossa</span>';
-        } else if (o.isRelegated) {
-          extraBadge += '<span class="es-mg-offer-badge-down">Retro</span>';
-        } else if (o.isJumpUp) {
-          extraBadge += '<span class="es-mg-offer-badge-up">Salto</span>';
-        } else if (o.isJumpDown) {
-          extraBadge += '<span class="es-mg-offer-badge-down">Calo</span>';
+            : '<span class="es-mg-offer-badge-down">Progetto debole</span>');
+        } else {
+          if (o.isYouth) badges.push('<span class="es-mg-offer-badge-youth">Giovanili</span>');
+          else if (o.isLoan) badges.push('<span class="es-mg-offer-badge-loan">Prestito</span>');
+          else if (!stay && !isFirstStep) badges.push('<span class="es-mg-offer-badge-buy">Acquisto</span>');
+          if (o.isPromoted) badges.push('<span class="es-mg-offer-badge-up">Promossa</span>');
+          else if (o.isRelegated) badges.push('<span class="es-mg-offer-badge-down">Retro</span>');
+          else if (o.isJumpUp) badges.push('<span class="es-mg-offer-badge-up">Salto</span>');
+          else if (o.isJumpDown) badges.push('<span class="es-mg-offer-badge-down">Calo</span>');
         }
-        if (window.EliseeClubStoria && window.EliseeClubStoria.odds && !o.world && !o.isStay) {
-          var od = window.EliseeClubStoria.odds(o, clubLeagueTier(o));
-          if (od.promo + od.rel > 0.02) {
-            extraBadge += '<span class="es-mg-offer-odds" title="Probabilità storica in questo campionato">↑' +
-              Math.round(od.promo * 100) + '% ↓' + Math.round(od.rel * 100) + '%</span>';
-          }
-        }
+        var extraBadge = badges.slice(0, 2).join('');
         var failLine = o.failed ? ('Fallita · ora ' + formattedLeague) : formattedLeague;
         return (
           '<button type="button" class="es-mg-offer' + (o.isLoan ? ' is-loan-offer' : '') + (o.isPromoted ? ' is-promo-offer' : '') + (o.failed ? ' is-fail-offer' : '') + '" data-idx="' + i + '">' +
