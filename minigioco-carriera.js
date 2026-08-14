@@ -3042,11 +3042,14 @@
         var isFreeRow = h.isFree || h.club === 'Svincolato';
         var clubContent = isFreeRow
           ? '<span class="es-mg-free-tag"><span class="es-mg-qmark">?</span> Svincolato</span>'
-          : (loanMove ? '<span class="es-mg-transfer-icon" title="Prestito">↳</span>' : '') +
+          : (loanMove || h.isLoan ? '<span class="es-mg-transfer-icon" title="Prestito">↳</span>' : '') +
             (h.logo
               ? '<img src="' + esc(h.logo) + '" alt="" class="es-mg-club-logo" onerror="this.style.display=\'none\'" />'
               : '') +
-            '<span>' + esc(h.club) + (h.suspended ? ' <small class="es-mg-suspend-badge">Sospeso</small>' : '') + (h.isLoan ? ' <small class="es-mg-loan-badge">Prestito</small>' : '') + (h.failed ? ' <small class="es-mg-fail-badge">Fallita' + (h.rebuild === 'forte' ? ' · progetto forte' : h.rebuild === 'debole' ? ' · progetto debole' : '') + '</small>' : '') + cupsSvgHtml + '</span>';
+            '<span class="es-mg-row-clubname" title="' + esc(h.club) + '">' + esc(h.club) + '</span>' +
+            (h.suspended ? '<span class="es-mg-row-mark is-sus" title="Sospeso">S</span>' : '') +
+            (h.failed ? '<span class="es-mg-row-mark is-fail" title="Fallita' + (h.rebuild === 'forte' ? ' · progetto forte' : h.rebuild === 'debole' ? ' · progetto debole' : '') + '">F</span>' : '') +
+            cupsSvgHtml;
         var prevOvr = idx > 0 ? p.history[idx - 1].ovr : h.ovr;
         var ageTone = ' c' + ovrColor(h.ovr);
         var newRows = animateNew ? Math.max(1, stepYears()) : 0;
