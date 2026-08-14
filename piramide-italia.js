@@ -191,7 +191,8 @@
       'Ogni club si muove di una sola categoria a stagione, in base alla propria storia.',
       'Un top club puo scendere di 2 o 3 categorie in un colpo solo solo se e fallito.',
       'Se un club fallisce va indicato FALLITA e si mostra la categoria in cui riparte.',
-      'Serie D ed Eccellenza sono possibili solo se la storia del club lo consente.'
+      'Serie D ed Eccellenza sono possibili solo se la storia del club lo consente.',
+      'Le 3 offerte di mercato devono stare nello stesso piano del giocatore (OVR + categoria). Vietato mescolare un top europeo con C/D.'
     ],
     summary:
       'In Serie C il vincitore di ogni girone (A, B, C) sale in Serie B; in Serie D il vincitore di ogni girone sale in Serie C.'

@@ -2171,14 +2171,12 @@
   }
 
   function jumpFromForm(score, age) {
-    if (age >= 34 && Math.random() < 0.8) {
-      return Math.random() < 0.45 ? 2 : 1;
-    }
-    if (score >= 5) return Math.random() < 0.55 ? -2 : -1;
-    if (score >= 3) return -1;
-    if (score >= 1) return Math.random() < 0.28 ? -1 : 0;
-    if (score <= -3) return Math.random() < 0.5 ? 2 : 1;
-    if (score <= -1) return 1;
+    if (age >= 34 && Math.random() < 0.75) return 1;
+    if (score >= 5) return -1;
+    if (score >= 3) return Math.random() < 0.7 ? -1 : 0;
+    if (score >= 1) return Math.random() < 0.22 ? -1 : 0;
+    if (score <= -3) return 1;
+    if (score <= -1) return Math.random() < 0.65 ? 1 : 0;
     return 0;
   }
 
@@ -2531,6 +2529,58 @@
     return o;
   }
 
+  function minOvrForClub(c) {
+    if (!c) return 50;
+    var n = String(c.n || '').toUpperCase();
+    if (c.world) {
+      if (/REAL MADRID|BARCELONA|BAYERN|MANCHESTER CITY|LIVERPOOL|PSG/.test(n)) return 84;
+      if (/ARSENAL|CHELSEA|MANCHESTER UNITED|ATLETICO|TOTTENHAM|BAYER|NAPOLI/.test(n)) return 80;
+      return 76;
+    }
+    var t = clubLeagueTier(c);
+    var pr = clubPrestige(c);
+    if (t === 1) return pr >= 1.3 ? 76 : pr >= 1.05 ? 70 : 64;
+    if (t === 2) return 58;
+    if (t === 3) return 50;
+    if (t === 4) return 46;
+    return 44;
+  }
+
+  function maxOvrForClub(c) {
+    if (!c) return 90;
+    if (c.world) return 94;
+    var t = clubLeagueTier(c);
+    if (t === 1) return 94;
+    if (t === 2) return 78;
+    if (t === 3) return 68;
+    if (t === 4) return 60;
+    return 54;
+  }
+
+  function playerFitsClub(p, c, opts) {
+    if (!c || !p) return false;
+    if (c.world && (p.age || 16) < 21) return false;
+    if (c.world && clubLeagueTier(p.club) > 1) return false;
+    var o = Number(p.ovr) || 49;
+    var min = minOvrForClub(c);
+    var max = maxOvrForClub(c);
+    var youth = opts && opts.allowYouth && isBigYouthClub(c) && (p.age || 16) <= 19;
+    if (youth) min = Math.max(45, min - 24);
+    if (opts && opts.stay) return true;
+    if (o < min) return false;
+    if (o > max) return false;
+    return true;
+  }
+
+  function poolFits(p, tier, used, opts) {
+    return (state.clubs || []).filter(function (c) {
+      if (!c || !c.n || used[c.n]) return false;
+      if (clubLeagueTier(c) !== Number(tier)) return false;
+      if (!isLegalTier(c, Number(tier)) && !c.world) return false;
+      return playerFitsClub(p, c, opts);
+    });
+  }
+
   function transferOffers(p) {
     var last = p.history[p.history.length - 1];
     var isFirstStep = isUnsignedRow(last);
@@ -2539,8 +2589,9 @@
 
     if (isFirstStep) {
       resetClubsToCatalog();
-      var aPool = clubsByCatalogTier(1).filter(isBigYouthClub);
-      if (!aPool.length) aPool = clubsByCatalogTier(1);
+      var aPool = clubsByCatalogTier(1).filter(function (c) {
+        return isBigYouthClub(c) && !c.world;
+      });
       var a = takeUniqueClub(used, aPool);
       if (a) {
         a = Object.assign({}, a);
@@ -2550,18 +2601,17 @@
         offers.push(a);
       }
       var mid = takeUniqueClub(used, clubsByCatalogTier(2));
-      if (!mid) mid = takeUniqueClub(used, clubsByCatalogTier(3));
       if (mid) {
         mid = Object.assign({}, mid);
-        mid.t = mid.catalogT != null ? mid.catalogT : clubLeagueTier(mid);
+        mid.t = 2;
         mid.l = mid.catalogL || mid.l;
         mid.isYouth = false;
         offers.push(mid);
       }
-      var low = takeUniqueClub(used, clubsByCatalogTier(4));
+      var low = takeUniqueClub(used, clubsByCatalogTier(3));
       if (low) {
         low = Object.assign({}, low);
-        low.t = 4;
+        low.t = 3;
         low.l = low.catalogL || low.l;
         low.isYouth = false;
         offers.push(low);
@@ -2577,60 +2627,59 @@
       stay.isStay = true;
       if (cur.justPromoted) stay.isPromoted = true;
       if (cur.justRelegated) stay.isRelegated = true;
+      if (cur.failed) stay.failed = true;
       if (isYouthContext(p, stay, p.age)) stay.isYouth = true;
       offers.push(stay);
     }
 
     var jump = typeof p.lastJump === 'number' ? p.lastJump : jumpFromForm(p.lastForm || 0, p.age);
-    if (p.age >= 34 && Math.random() < 0.8) {
-      jump = Math.max(jump, Math.random() < 0.45 ? 2 : 1);
+    if (jump > 1) jump = 1;
+    if (jump < -1) jump = -1;
+    var par = leagueParOvr(cur);
+    var center = curT;
+    if ((p.ovr || 49) >= par + 7) center = clampTier(curT - 1);
+    else if ((p.ovr || 49) <= par - 8) center = clampTier(curT + 1);
+    var target = clampTier(center + jump);
+    if (Math.abs(target - curT) > 1) target = clampTier(curT + (target < curT ? -1 : 1));
+
+    var band = [curT, target].filter(function (t, i, arr) { return arr.indexOf(t) === i; });
+    if (band.length === 1) {
+      var side = jump !== 0 ? clampTier(curT + jump) : clampTier(curT + (Math.random() < 0.45 ? 1 : 0));
+      if (side !== band[0] && Math.abs(side - curT) <= 1) band.push(side);
     }
-    var target = clampTier(curT + jump);
-    var alt = jump < 0
-      ? clampTier(target - 1)
-      : jump > 0
-        ? clampTier(target + 1)
-        : clampTier(curT + (Math.random() < 0.5 ? -1 : 1));
-    if (alt === target) alt = clampTier(target + (jump <= 0 ? 1 : -1));
 
     var promoPool = (state.clubs || []).filter(function (c) {
-      return c.justPromoted && c.n && !used[c.n] && isLegalTier(c, clubLeagueTier(c));
+      if (!c.justPromoted || !c.n || used[c.n]) return false;
+      var t = clubLeagueTier(c);
+      if (band.indexOf(t) < 0) return false;
+      return playerFitsClub(p, c, { allowYouth: true });
     });
     if (promoPool.length && offers.length < 3 && jump <= 0) {
       var pc = takeUniqueClub(used, promoPool);
       if (pc) {
         pc = Object.assign({}, pc);
         pc.isPromoted = true;
-        if (jump <= -2) pc.isDoubleJump = true;
         offers.push(pc);
       }
     }
 
-    var want = [target, alt];
-    var filled = fillOffersFromTiers(used, offers, 3, want);
+    var filled = fillOffersFromTiers(used, offers, 3, band, p);
     filled.forEach(function (o) {
       if (o.isStay) return;
       var t = clubLeagueTier(o);
-      if (t <= curT - 2) o.isDoubleJump = true;
-      else if (t >= curT + 2) o.isDoubleDrop = true;
-      else if (t < curT) o.isJumpUp = true;
+      if (t < curT) o.isJumpUp = true;
       else if (t > curT) o.isJumpDown = true;
       o.isYouth = t === 1 && isBigYouthClub(o) && isYouthContext(p, o, p.age);
-      if (o.isYouth) {
-        o.isLoan = false;
-      } else if (p.age <= 21 && t < curT) {
-        o.isLoan = true;
-      } else if (p.age <= 23 && t <= curT && p.ovr < leagueParOvr(o) - 8) {
-        o.isLoan = Math.random() < 0.6;
-      } else {
-        o.isLoan = false;
-      }
+      if (o.isYouth) o.isLoan = false;
+      else if (p.age <= 21 && t < curT) o.isLoan = true;
+      else if (p.age <= 23 && t <= curT && p.ovr < leagueParOvr(o) - 8) o.isLoan = Math.random() < 0.55;
+      else o.isLoan = false;
     });
     return filled.map(sanitizeOfferClub);
   }
 
   function fillFirstOffers(used, offers) {
-    var order = [1, 2, 4, 3];
+    var order = [1, 2, 3];
     var i = 0;
     while (offers.length < 3 && i < 12) {
       var c = takeUniqueClub(used, clubsByCatalogTier(order[Math.min(i, order.length - 1)]));
@@ -2638,6 +2687,7 @@
         i++;
         continue;
       }
+      if (c.world) continue;
       c = Object.assign({}, c);
       c.t = c.catalogT != null ? c.catalogT : clubLeagueTier(c);
       c.l = c.catalogL || c.l;
@@ -2648,15 +2698,18 @@
     return offers.slice(0, 3);
   }
 
-  function fillOffersFromTiers(used, offers, need, tiers) {
+  function fillOffersFromTiers(used, offers, need, tiers, p) {
     var i = 0;
-    while (offers.length < need && i < 12) {
-      var t = (tiers && tiers[Math.min(i, tiers.length - 1)]) || 4;
-      var c = takeUniqueClub(used, clubsByTier(t));
-      if (!c) c = takeUniqueClub(used, clubsByTier(Math.min(4, t + 1)));
-      if (!c) c = takeUniqueClub(used, state.clubs);
-      if (!c) break;
-      offers.push(c);
+    var safe = (tiers && tiers.length) ? tiers.slice() : [4];
+    while (offers.length < need && i < 16) {
+      var t = safe[Math.min(i, safe.length - 1)];
+      var pool = p ? poolFits(p, t, used, { allowYouth: (p.age || 16) <= 19 }) : clubsByTier(t);
+      var c = takeUniqueClub(used, pool);
+      if (!c && i >= safe.length) {
+        var near = safe[0];
+        c = takeUniqueClub(used, p ? poolFits(p, near, used, { allowYouth: true }) : clubsByTier(near));
+      }
+      if (c) offers.push(c);
       i++;
     }
     return offers.slice(0, need);
