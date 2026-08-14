@@ -1355,10 +1355,30 @@
     );
   }
 
+  function liveSurname() {
+    var sn = document.getElementById('es-mg-surname');
+    if (sn) return String(sn.value || '').trim();
+    return String(state.surname || '').trim();
+  }
+
+  function identityReady() {
+    return !!(liveSurname().length >= 2 && state.foot && state.nation && state.position);
+  }
+
+  function refreshConfirmBtn() {
+    var btn = document.getElementById('es-mg-confirm');
+    if (!btn) return;
+    var ok = identityReady();
+    btn.disabled = !ok;
+    btn.setAttribute('aria-disabled', ok ? 'false' : 'true');
+    btn.classList.toggle('is-ready', ok);
+    btn.title = ok ? 'Avvia la carriera' : 'Completa cognome, piede, nazionalità e ruolo';
+  }
+
   function renderIdentity(focusSel) {
     state.step = 'identity';
     var num = state.number || 10;
-    var canConfirm = !!(state.nation && state.position);
+    var canConfirm = identityReady();
     openShell(
       topBar() +
         '<div class="es-mg-identity">' +
@@ -1417,9 +1437,12 @@
     bindClose();
     document.getElementById('es-mg-back').onclick = renderLanding;
     document.getElementById('es-mg-confirm').onclick = function () {
-      if (!state.nation || !state.position) return;
       syncIdentityInputs();
-      createPlayer();
+      if (!identityReady()) {
+        refreshConfirmBtn();
+        return;
+      }
+      if (!createPlayer()) return;
       renderCareer(true);
     };
     bindIdentityControls(focusSel);
@@ -1450,9 +1473,14 @@
       }
     }
     if (sn) {
-      sn.oninput = paintJersey;
+      sn.oninput = function () {
+        paintJersey();
+        state.surname = String(sn.value || '').trim();
+        refreshConfirmBtn();
+      };
       sn.onblur = function () {
         state.surname = String(sn.value || '').trim();
+        refreshConfirmBtn();
       };
     }
     if (nu) {
@@ -1583,7 +1611,10 @@
     bindClose();
     document.getElementById('es-mg-back').onclick = renderNation;
     document.getElementById('es-mg-confirm').onclick = function () {
-      if (!state.position) return;
+      if (!identityReady()) {
+        renderIdentity('#es-mg-surname');
+        return;
+      }
       createPlayer();
       renderCareer(true);
     };
@@ -1932,6 +1963,7 @@
   }
 
   function createPlayer() {
+    if (!identityReady()) return false;
     resetClubsToCatalog();
     var starters = clubsByCatalogTier(3).concat(clubsByCatalogTier(4));
     if (!starters.length) starters = clubsByCatalogTier(2);
@@ -1949,7 +1981,7 @@
       posLabel: posLabel(state.position),
       nation: state.nation,
       nationCode: state.nationCode,
-      surname: (state.surname || '').trim() || 'Giocatore',
+      surname: (state.surname || '').trim(),
       foot: state.foot === 'left' ? 'left' : 'right',
       ovr: ovr,
       valueM: 0.025,
@@ -1976,6 +2008,7 @@
     };
     save(LS.career, state.player);
     save(LS.consent, true);
+    return true;
   }
 
   var TROPHY_DIR = 'immagini/minigioco/loghi-trofei/';
