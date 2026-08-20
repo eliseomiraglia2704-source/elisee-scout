@@ -9,9 +9,9 @@
   var LEAGUE_ORDER = [];
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260820_SCFD4';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260820_KITSALL';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260820_MEDA1';
+  var LOGO_V = '20260820_KITSALL';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -86,8 +86,29 @@
     'training-2': 'ALLENAMENTO 2',
     'training-3': 'ALLENAMENTO 3',
     'training-goalkeeper': 'ALLENAMENTO PORTIERE',
-    'training-gk': 'ALLENAMENTO PORTIERE'
+    'training-gk': 'ALLENAMENTO PORTIERE',
+    'training-staff': 'ALLENAMENTO STAFF',
+    'training-home': 'ALLENAMENTO (CASA)',
+    'training-away': 'ALLENAMENTO (OSPITI)',
+    'training-third': 'ALLENAMENTO (TERZA)',
+    'winter-training': 'ALLENAMENTO INVERNALE',
+    'winter-training-goalkeeper': 'ALLENAMENTO INVERNALE PORTIERE',
+    'winter-training-staff': 'ALLENAMENTO INVERNALE STAFF',
+    't-shirt': 'T-SHIRT',
+    't-shirt-2': 'T-SHIRT 2',
+    'goalkeper-away': 'PORTIERE (OSPITI)',
+    'trining': 'ALLENAMENTO'
   };
+
+  var KIT_ORDER = [
+    'home', 'away', 'third', 'fourth', 'fifth',
+    'goalkeeper', 'goalkeeper-home', 'goalkeeper-away', 'goalkeeper-third',
+    'pre-match', 'pre-match-home', 'pre-match-away', 'pre-match-third',
+    'polo', 'polo-1', 'polo-2', 'polo-white', 'polo-black',
+    'training', 'training-1', 'training-2', 'training-3',
+    'training-home', 'training-away', 'training-third',
+    'training-goalkeeper', 'training-staff'
+  ];
 
   function getKitLabel(key, fallbackLabel) {
     if (fallbackLabel) return fallbackLabel;
@@ -138,47 +159,84 @@
   /** Slot kit disponibili per la squadra (foto 2D e/o colori). */
   function kitSlotsFor(team) {
     var slots = [];
+    var seenKey = {};
+    var seenUrl = {};
     if (!team) return [{ key: 'home', label: 'IN CASA', url: '', colors: null }];
 
-    // 1. Se la squadra ha l'elenco completo 'kits' (es. 10 divise/capi)
+    function normKey(key) {
+      return String(key || '')
+        .toLowerCase()
+        .trim()
+        .replace(/[\s_]+/g, '-')
+        .replace(/-+/g, '-');
+    }
+
+    function addSlot(key, label, url, colors) {
+      var k = normKey(key);
+      var u = String(url || '').replace(/\\/g, '/');
+      if (!k && !u) return;
+      if (!k) k = 'kit-' + slots.length;
+      if (seenKey[k]) return;
+      if (u && seenUrl[u]) return;
+      seenKey[k] = true;
+      if (u) seenUrl[u] = true;
+      slots.push({
+        key: k,
+        label: getKitLabel(k, label),
+        url: u,
+        colors: colors || null
+      });
+    }
+
     if (Array.isArray(team.kits) && team.kits.length) {
-      for (var k = 0; k < team.kits.length; k++) {
-        var item = team.kits[k];
-        if (item && item.url) {
-          slots.push({
-            key: item.key || 'kit-' + k,
-            label: getKitLabel(item.key, item.label),
-            url: item.url
-          });
+      for (var i = 0; i < team.kits.length; i++) {
+        var item = team.kits[i];
+        if (item && (item.url || item.key)) {
+          addSlot(item.key || 'kit-' + i, item.label, item.url);
         }
       }
     }
 
-    // 2. Fallback proprietà singole
-    if (!slots.length) {
-      if (team.kitHome) slots.push({ key: 'home', label: 'IN CASA', url: team.kitHome });
-      if (team.kitAway) slots.push({ key: 'away', label: 'OSPITI', url: team.kitAway });
-      if (team.kitThird) slots.push({ key: 'third', label: 'TERZA', url: team.kitThird });
-      if (team.kitFourth) slots.push({ key: 'fourth', label: 'QUARTA', url: team.kitFourth });
-      if (team.kitGoalkeeper) slots.push({ key: 'goalkeeper', label: 'PORTIERE (CASA)', url: team.kitGoalkeeper });
-      else if (team.kitGk) slots.push({ key: 'goalkeeper', label: 'PORTIERE (CASA)', url: team.kitGk });
-      if (team.kitGoalkeeperAway) slots.push({ key: 'goalkeeper-away', label: 'PORTIERE (OSPITI)', url: team.kitGoalkeeperAway });
-      if (team.kitGoalkeeperThird) slots.push({ key: 'goalkeeper-third', label: 'PORTIERE (TERZA)', url: team.kitGoalkeeperThird });
-      if (team.kitPreMatch) slots.push({ key: 'pre-match', label: 'PRE-MATCH', url: team.kitPreMatch });
-      if (team.kitPreMatchHome) slots.push({ key: 'pre-match-home', label: 'PRE-MATCH (CASA)', url: team.kitPreMatchHome });
-      if (team.kitPreMatchAway) slots.push({ key: 'pre-match-away', label: 'PRE-MATCH (OSPITI)', url: team.kitPreMatchAway });
-      if (team.kitPolo) slots.push({ key: 'polo', label: 'POLO', url: team.kitPolo });
-      if (team.kitTraining) slots.push({ key: 'training', label: 'ALLENAMENTO', url: team.kitTraining });
-      if (team.kitTraining2) slots.push({ key: 'training-2', label: 'ALLENAMENTO 2', url: team.kitTraining2 });
-      if (team.kitPreSeasonHome) slots.push({ key: 'pre-season-home', label: 'PRE-SEASON (CASA)', url: team.kitPreSeasonHome });
-      if (team.kitFifth) slots.push({ key: 'fifth', label: 'QUINTA', url: team.kitFifth });
+    var extras = [
+      ['home', team.kitHome],
+      ['away', team.kitAway],
+      ['third', team.kitThird],
+      ['fourth', team.kitFourth],
+      ['fifth', team.kitFifth],
+      ['goalkeeper', team.kitGoalkeeper || team.kitGk],
+      ['goalkeeper-away', team.kitGoalkeeperAway],
+      ['goalkeeper-third', team.kitGoalkeeperThird],
+      ['pre-match', team.kitPreMatch],
+      ['pre-match-home', team.kitPreMatchHome],
+      ['pre-match-away', team.kitPreMatchAway],
+      ['pre-match-third', team.kitPreMatchThird],
+      ['polo', team.kitPolo],
+      ['polo-2', team.kitPolo2],
+      ['training', team.kitTraining],
+      ['training-1', team.kitTraining1],
+      ['training-2', team.kitTraining2],
+      ['training-3', team.kitTraining3],
+      ['training-staff', team.kitTrainingStaff],
+      ['training-goalkeeper', team.kitTrainingGoalkeeper],
+      ['pre-season-home', team.kitPreSeasonHome]
+    ];
+    for (var e = 0; e < extras.length; e++) {
+      if (extras[e][1]) addSlot(extras[e][0], '', extras[e][1]);
     }
 
-    // 3. Senza foto: almeno casa/ospiti a colori
     if (!slots.length) {
-      slots.push({ key: 'home', label: 'IN CASA', url: '', colors: team.home || null });
-      slots.push({ key: 'away', label: 'OSPITI', url: '', colors: team.away || null });
+      addSlot('home', 'IN CASA', '', team.home || null);
+      addSlot('away', 'OSPITI', '', team.away || null);
     }
+
+    slots.sort(function (a, b) {
+      var ia = KIT_ORDER.indexOf(a.key);
+      var ib = KIT_ORDER.indexOf(b.key);
+      if (ia < 0) ia = 80;
+      if (ib < 0) ib = 80;
+      if (ia !== ib) return ia - ib;
+      return String(a.label).localeCompare(String(b.label));
+    });
     return slots;
   }
 

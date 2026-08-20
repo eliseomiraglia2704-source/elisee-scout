@@ -44,11 +44,13 @@ LABEL_MAP = {
     "goalkeeper-home": "PORTIERE (CASA)",
     "gk": "PORTIERE (CASA)",
     "goalkeeper-away": "PORTIERE (OSPITI)",
-    "goalkeeper away": "PORTIERE (OSPITI)",
     "gk-away": "PORTIERE (OSPITI)",
+    "goalkeper-away": "PORTIERE (OSPITI)",
     "goalkeeper-third": "PORTIERE (TERZA)",
     "gk-third": "PORTIERE (TERZA)",
     "polo": "POLO",
+    "polo-1": "POLO",
+    "polo-2": "POLO 2",
     "polo-style": "POLO (STYLE)",
     "polo-white": "POLO (BIANCA)",
     "polo-black": "POLO (NERA)",
@@ -65,14 +67,40 @@ LABEL_MAP = {
     "pre-stagione": "PRE-STAGIONE",
     "retro": "MAGLIA RETRO",
     "travel-shirt": "MAGLIA VIAGGIO",
+    "t-shirt": "T-SHIRT",
+    "t-shirt-2": "T-SHIRT 2",
     "training": "ALLENAMENTO",
+    "trining": "ALLENAMENTO",
     "training-1": "ALLENAMENTO 1",
     "training-2": "ALLENAMENTO 2",
-    "training-3": "ALLENAMENTO 3"
+    "training-3": "ALLENAMENTO 3",
+    "training-home": "ALLENAMENTO (CASA)",
+    "training-away": "ALLENAMENTO (OSPITI)",
+    "training-third": "ALLENAMENTO (TERZA)",
+    "training-goalkeeper": "ALLENAMENTO PORTIERE",
+    "training-gk": "ALLENAMENTO PORTIERE",
+    "training-staff": "ALLENAMENTO STAFF",
+    "winter-training": "ALLENAMENTO INVERNALE",
+    "winter-training-goalkeeper": "ALLENAMENTO INVERNALE PORTIERE",
+    "winter-training-staff": "ALLENAMENTO INVERNALE STAFF",
 }
 
+STEM_ALIAS = {
+    "gk": "goalkeeper",
+    "gk-away": "goalkeeper-away",
+    "gk-third": "goalkeeper-third",
+    "goalkeper-away": "goalkeeper-away",
+    "trining": "training",
+}
+
+
+def norm_stem(stem):
+    s = (stem or "").lower().strip().replace("_", "-").replace(" ", "-")
+    s = re.sub(r"-+", "-", s).strip("-")
+    return STEM_ALIAS.get(s, s)
+
 def format_label(stem):
-    k = stem.lower().strip().replace(" ", "-").replace("_", "-")
+    k = norm_stem(stem)
     if k in LABEL_MAP:
         return LABEL_MAP[k]
     label = k.replace("-", " ").upper()
@@ -81,13 +109,16 @@ def format_label(stem):
 
 PRIORITY = [
     "home", "away", "third", "fourth", "fifth",
-    "goalkeeper", "goalkeeper-home", "gk", "goalkeeper-away", "gk-away", "goalkeeper-third", "gk-third",
-    "pre-match-home", "pre-match-away", "pre-match",
-    "polo", "training", "training-1", "training-2", "training-3"
+    "goalkeeper", "goalkeeper-home", "goalkeeper-away", "goalkeeper-third",
+    "pre-match-home", "pre-match-away", "pre-match", "pre-match-third",
+    "polo", "polo-1", "polo-2", "polo-white", "polo-black",
+    "training", "training-1", "training-2", "training-3",
+    "training-home", "training-away", "training-third",
+    "training-goalkeeper", "training-staff",
 ]
 
 def get_prio(stem):
-    s = stem.lower()
+    s = norm_stem(stem)
     if s in PRIORITY:
         return PRIORITY.index(s)
     return 100
@@ -117,7 +148,7 @@ if KITS_DIR.exists():
             
             kits_list = []
             for img in image_files:
-                stem = img.stem.lower()
+                stem = norm_stem(img.stem)
                 rel_path = f"immagini/kits-2d/{fname}/{img.name}"
                 kits_list.append({
                     "key": stem,
@@ -133,7 +164,7 @@ if KITS_DIR.exists():
                 print(f"Club {team['name']} ({fname}): {len(kits_list)} divise/capi -> [{keys_str}]")
 
             # Backward-compatible single kit properties
-            file_dict = {f.stem.lower(): f"immagini/kits-2d/{fname}/{f.name}" for f in image_files}
+            file_dict = {norm_stem(f.stem): f"immagini/kits-2d/{fname}/{f.name}" for f in image_files}
             prop_map = {
                 "home": "kitHome",
                 "away": "kitAway",
@@ -141,22 +172,25 @@ if KITS_DIR.exists():
                 "fourth": "kitFourth",
                 "fifth": "kitFifth",
                 "goalkeeper": "kitGoalkeeper",
-                "gk": "kitGoalkeeper",
+                "goalkeeper-home": "kitGoalkeeper",
                 "goalkeeper-away": "kitGoalkeeperAway",
-                "gk-away": "kitGoalkeeperAway",
                 "goalkeeper-third": "kitGoalkeeperThird",
-                "gk-third": "kitGoalkeeperThird",
                 "polo": "kitPolo",
+                "polo-1": "kitPolo",
+                "polo-2": "kitPolo2",
                 "pre-match": "kitPreMatch",
                 "pre-match-home": "kitPreMatchHome",
                 "pre-match-away": "kitPreMatchAway",
+                "pre-match-third": "kitPreMatchThird",
                 "pre-season": "kitPreSeason",
                 "pre-season-home": "kitPreSeasonHome",
                 "pre-season-away": "kitPreSeasonAway",
                 "training": "kitTraining",
                 "training-1": "kitTraining1",
                 "training-2": "kitTraining2",
-                "training-3": "kitTraining3"
+                "training-3": "kitTraining3",
+                "training-staff": "kitTrainingStaff",
+                "training-goalkeeper": "kitTrainingGoalkeeper",
             }
             for stem, key in prop_map.items():
                 if stem in file_dict:
