@@ -507,3 +507,159 @@ body.layout-portfolio .es-sp select:disabled {
   text-transform: none !important;
 }
 .es-sp-save:hover { background: #1d4ed8 !important; }
+
+/* Campanella header + tab Notifiche (tutti i ruoli) */
+#nav-logged-in-actions {
+  align-items: center;
+  gap: 0.45rem;
+}
+.es-nav-bell {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(56, 189, 248, 0.45);
+  background: rgba(2, 132, 199, 0.18);
+  color: #7dd3fc;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+.es-nav-bell:hover {
+  background: rgba(2, 132, 199, 0.32);
+  border-color: rgba(56, 189, 248, 0.8);
+}
+.es-nav-bell.is-on {
+  background: rgba(56, 189, 248, 0.22);
+  color: #fff;
+}
+.es-nav-bell-dot,
+.es-user-tab-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 0 2px #071224;
+}
+.es-user-tab-dot {
+  top: 4px;
+  right: 2px;
+  box-shadow: 0 0 0 2px #f4f7fb;
+}
+
+.es-user-tabs {
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+  margin: 0 0 1.2rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid #d7e4ee;
+}
+.es-user-tab {
+  position: relative;
+  border: 0;
+  background: transparent;
+  color: #8aa0b3;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.2rem 0 0.45rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-transform: none !important;
+}
+.es-user-tab.is-on {
+  color: #0b4f7a;
+  box-shadow: inset 0 -2px 0 #0b4f7a;
+}
+#user-dossier-view-group:not(.is-player-area):not(.is-staff-area):not(.is-notifs-area) .es-user-tabs {
+  border-bottom-color: rgba(255,255,255,0.12);
+}
+#user-dossier-view-group:not(.is-player-area):not(.is-staff-area):not(.is-notifs-area) .es-user-tab {
+  color: #94a3b8;
+}
+#user-dossier-view-group:not(.is-player-area):not(.is-staff-area):not(.is-notifs-area) .es-user-tab.is-on {
+  color: #7dd3fc;
+  box-shadow: inset 0 -2px 0 #38bdf8;
+}
+
+#user-dossier-view-group.is-notifs-area,
+#user-dossier-view-group.is-notifs-area #user-dossier-portal,
+body.es-notifs-on #user-dossier-view-group,
+body.es-notifs-on #user-dossier-portal {
+  background: #f3f5f7 !important;
+  color-scheme: light;
+}
+#user-dossier-view-group.is-notifs-area .pf-page-bg,
+#user-dossier-view-group.is-notifs-area .pf-page-shade {
+  display: none !important;
+}
+#user-dossier-view-group.is-notifs-area .pf-page-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  color: #111827;
+}
+
+.es-un {
+  min-height: 52vh;
+  padding: 0.15rem 0 3rem;
+}
+.es-un-title,
+body.layout-portfolio .es-un-title {
+  margin: 0 0 0.45rem;
+  font-size: 1.28rem;
+  font-weight: 800;
+  color: #111827 !important;
+  text-transform: none !important;
+  letter-spacing: -0.02em !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
+}
+.es-un-empty {
+  margin: 0;
+  color: #111827 !important;
+  font-size: 0.98rem;
+  font-weight: 500;
+}
+.es-un-list {
+  list-style: none;
+  margin: 0.85rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.es-un-item {
+  background: #fff;
+  border: 1.5px solid #d7e4ee;
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  color: #10263d;
+}
+.es-un-item.is-unread {
+  border-color: #8ec4e0;
+  box-shadow: 0 0 0 2px rgba(47, 126, 172, 0.08);
+}
+.es-un-item strong {
+  display: block;
+  font-size: 0.92rem;
+  color: #0b4f7a;
+  margin-bottom: 0.2rem;
+}
+.es-un-item p {
+  margin: 0;
+  font-size: 0.86rem;
+  color: #334155;
+  line-height: 1.4;
+}
+.es-un-item time {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  color: #8aa0b3;
+}

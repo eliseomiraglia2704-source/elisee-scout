@@ -275,14 +275,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
-  <link rel="stylesheet" href="style.css?v=20260820_STAFF1">
+  <link rel="stylesheet" href="style.css?v=20260820_NOTIF1">
   <link rel="stylesheet" href="integrazioni.css?v=20260806_NOCORS">
   <link rel="preload" as="video" href="immagini/minigioco/intro.mp4?v=20260813_HQ2">
   <link rel="stylesheet" href="minigioco-carriera.css?v=20260814_TRIAL2">
   <link rel="stylesheet" href="autopilot.css?v=20260806_NOCORS">
   <link rel="stylesheet" href="squadre-select.css?v=20260814_KITFC3">
   <link rel="stylesheet" href="manager.css?v=20260820_MGR1">
-  <link rel="stylesheet" href="player-profile.css?v=20260820_STAFF1">
+  <link rel="stylesheet" href="player-profile.css?v=20260820_NOTIF1">
   <script>
     /* Boot OAuth: token in search O in hash (#hero?elisee_token=...). La sessione vince sempre. */
     (function () {
@@ -1494,6 +1494,14 @@
 
         <!-- Stato Loggato (bottone utente compatto e pulito senza cerchio avatar) -->
         <div id="nav-logged-in-actions" style="display:none; position:relative;">
+          <button type="button" class="es-nav-bell" id="btn-nav-notifs" title="Notifiche" aria-label="Notifiche"
+            onclick="event.preventDefault();event.stopPropagation();if(window.openUserNotifications){window.openUserNotifications();}return false;">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9"/>
+              <path d="M10 20a2 2 0 0 0 4 0"/>
+            </svg>
+            <span class="es-nav-bell-dot" id="es-nav-bell-dot" hidden></span>
+          </button>
           <button type="button" onclick="toggleUserDropdown()" id="btn-user-profile" style="display:flex; align-items:center; gap:0.5rem; background:rgba(2,132,199,0.18); border:1.5px solid rgba(56,189,248,0.45); padding:0.22rem 0.7rem 0.22rem 0.22rem; border-radius:20px; cursor:pointer; transition:all 0.2s;">
             <div id="user-avatar-badge"><img id="user-avatar-img" alt="" hidden><span id="user-avatar-initial">E</span></div>
             <span id="user-name-display" style="color:#ffffff; font-family:'Outfit', 'Inter', sans-serif !important; font-weight:800 !important; font-size:0.84rem; max-width:240px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; letter-spacing:0.02em;">
@@ -1514,6 +1522,9 @@
             </div>
             <a href="#" id="btn-area-riservata" onclick="event.preventDefault(); event.stopPropagation(); if(window.openAreaRiservataModal){ window.openAreaRiservataModal(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="user-cog" style="width:16px; height:16px; color:#38bdf8;"></i> La Mia Area Riservata
+            </a>
+            <a href="#user-notifiche" id="btn-dropdown-notifs" onclick="event.preventDefault(); event.stopPropagation(); if(window.openUserNotifications){ window.openUserNotifications(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
+              <i data-lucide="bell" style="width:16px; height:16px; color:#38bdf8;"></i> Notifiche
             </a>
             <a href="#admin-portal" onclick="if(window.switchView){ window.switchView('admin', '#admin-portal'); } closeUserDropdown(); return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="layout-dashboard" style="width:16px; height:16px; color:#38bdf8;"></i> Control Center
@@ -2686,6 +2697,24 @@
         <div class="pf-page-bg" aria-hidden="true"></div>
         <div class="pf-page-shade" aria-hidden="true"></div>
         <div class="container pf-page-inner">
+
+          <nav class="es-user-tabs" id="es-user-tabs" aria-label="Area utente">
+            <button type="button" class="es-user-tab is-on" data-tab="profile" id="es-user-tab-profile">Profilo</button>
+            <button type="button" class="es-user-tab" data-tab="notifs" id="es-user-tab-notifs">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9"/>
+                <path d="M10 20a2 2 0 0 0 4 0"/>
+              </svg>
+              Notifiche
+              <span class="es-user-tab-dot" id="es-user-tab-dot" hidden></span>
+            </button>
+          </nav>
+
+          <div id="es-user-notifs" class="es-un" hidden>
+            <h1 class="es-un-title">Notifiche</h1>
+            <p class="es-un-empty" id="es-user-notifs-empty">Nessuna notifica da mostrare.</p>
+            <ul class="es-un-list" id="es-user-notifs-list" hidden></ul>
+          </div>
 
           <div id="es-player-profile" class="es-pp" hidden>
             <div class="es-pp-top">
@@ -4419,8 +4448,8 @@
   </script>
   <script src="squadre-select.js?v=20260820_VERW1"></script>
   <script src="manager-runtime.js?v=20260820_MGR1"></script>
-  <script src="app.js?v=20260820_STAFF1"></script>
-  <script src="player-profile.js?v=20260820_STAFF1"></script>
+  <script src="app.js?v=20260820_NOTIF1"></script>
+  <script src="player-profile.js?v=20260820_NOTIF1"></script>
   <script>
     /* FORCED INLINE HOT-PATCH: Overrides PDF export, specific report HTML & modal close functions instantly at runtime */
     (function() {

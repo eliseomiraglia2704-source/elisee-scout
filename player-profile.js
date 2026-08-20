@@ -969,48 +969,177 @@
     root.addEventListener('change', scheduleStaffSave);
   }
 
+  function notifsStoreKey(user) {
+    user = user || readUser();
+    return 'elisee_user_notifications:' + String((user && (user.email || user.id || user.username)) || 'anon').toLowerCase();
+  }
+
+  window.EliseeUserNotifs = {
+    tab: 'profile',
+    list: function (user) {
+      try {
+        var rows = JSON.parse(localStorage.getItem(notifsStoreKey(user)) || '[]');
+        return Array.isArray(rows) ? rows : [];
+      } catch (_) { return []; }
+    },
+    save: function (rows, user) {
+      try { localStorage.setItem(notifsStoreKey(user), JSON.stringify(rows || [])); } catch (_) {}
+    },
+    unreadCount: function (user) {
+      return this.list(user).filter(function (n) { return !n.read; }).length;
+    },
+    push: function (item, user) {
+      var rows = this.list(user);
+      rows.unshift({
+        id: (item && item.id) || ('n-' + Date.now()),
+        title: (item && item.title) || 'Notifica',
+        body: (item && item.body) || '',
+        at: (item && item.at) || new Date().toISOString(),
+        read: !!(item && item.read)
+      });
+      if (rows.length > 80) rows.length = 80;
+      this.save(rows, user);
+      this.render(user);
+      this.paintBadges(user);
+      return rows[0];
+    },
+    markAllRead: function (user) {
+      var rows = this.list(user).map(function (n) { return Object.assign({}, n, { read: true }); });
+      this.save(rows, user);
+      this.render(user);
+      this.paintBadges(user);
+    },
+    paintBadges: function (user) {
+      var n = this.unreadCount(user);
+      var dot = document.getElementById('es-nav-bell-dot');
+      var tabDot = document.getElementById('es-user-tab-dot');
+      if (dot) dot.hidden = n < 1;
+      if (tabDot) tabDot.hidden = n < 1;
+    },
+    render: function (user) {
+      var empty = document.getElementById('es-user-notifs-empty');
+      var list = document.getElementById('es-user-notifs-list');
+      if (!empty || !list) return;
+      var rows = this.list(user);
+      if (!rows.length) {
+        empty.hidden = false;
+        empty.textContent = 'Nessuna notifica da mostrare.';
+        list.hidden = true;
+        list.innerHTML = '';
+        return;
+      }
+      empty.hidden = true;
+      list.hidden = false;
+      list.innerHTML = rows.map(function (n) {
+        var when = '';
+        try {
+          when = new Date(n.at).toLocaleString('it-IT', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        } catch (_) { when = ''; }
+        return '<li class="es-un-item' + (n.read ? '' : ' is-unread') + '">' +
+          '<strong>' + esc(n.title || 'Notifica') + '</strong>' +
+          (n.body ? '<p>' + esc(n.body) + '</p>' : '') +
+          (when ? '<time>' + esc(when) + '</time>' : '') +
+          '</li>';
+      }).join('');
+    },
+    applyTab: function () {
+      var profileBtn = document.getElementById('es-user-tab-profile');
+      var notifsBtn = document.getElementById('es-user-tab-notifs');
+      var bell = document.getElementById('btn-nav-notifs');
+      if (profileBtn) profileBtn.classList.toggle('is-on', this.tab !== 'notifs');
+      if (notifsBtn) notifsBtn.classList.toggle('is-on', this.tab === 'notifs');
+      if (bell) bell.classList.toggle('is-on', this.tab === 'notifs');
+      if (typeof window.syncPlayerProfileView === 'function') window.syncPlayerProfileView();
+    },
+    showProfile: function () {
+      this.tab = 'profile';
+      this.applyTab();
+    },
+    showNotifs: function () {
+      this.tab = 'notifs';
+      this.markAllRead();
+      this.applyTab();
+    },
+    bind: function () {
+      var tabs = document.getElementById('es-user-tabs');
+      if (tabs && !tabs.dataset.bound) {
+        tabs.dataset.bound = '1';
+        tabs.addEventListener('click', function (e) {
+          var btn = e.target.closest('.es-user-tab');
+          if (!btn) return;
+          if (btn.getAttribute('data-tab') === 'notifs') window.EliseeUserNotifs.showNotifs();
+          else window.EliseeUserNotifs.showProfile();
+        });
+      }
+      this.paintBadges();
+      this.render();
+    }
+  };
+
+  window.openUserNotifications = function () {
+    window.__esOpenNotifs = true;
+    window.EliseeUserNotifs.tab = 'notifs';
+    if (typeof window.switchView === 'function') window.switchView('user-dossier', '#user-dossier-portal');
+    setTimeout(function () { window.EliseeUserNotifs.showNotifs(); }, 20);
+  };
+
   window.syncPlayerProfileView = function (user) {
     user = window.applyStaffIdentity(user || readUser());
     var isPlayer = window.isPlayerSiteRole(user);
     var isStaff = window.isStaffSiteRole(user);
+    var notifsOn = window.EliseeUserNotifs && window.EliseeUserNotifs.tab === 'notifs';
     var group = document.getElementById('user-dossier-view-group');
     var portal = document.getElementById('user-dossier-portal');
     var profile = document.getElementById('es-player-profile');
     var staff = document.getElementById('es-staff-profile');
     var legacy = document.getElementById('dossier-legacy');
-    var light = isPlayer || isStaff;
+    var notifs = document.getElementById('es-user-notifs');
+    var light = isPlayer || isStaff || notifsOn;
     if (group) {
-      group.classList.toggle('is-player-area', isPlayer);
-      group.classList.toggle('is-staff-area', isStaff);
+      group.classList.toggle('is-player-area', isPlayer && !notifsOn);
+      group.classList.toggle('is-staff-area', isStaff && !notifsOn);
+      group.classList.toggle('is-notifs-area', notifsOn);
     }
     if (portal) {
-      portal.classList.toggle('is-player-area', isPlayer);
-      portal.classList.toggle('is-staff-area', isStaff);
+      portal.classList.toggle('is-player-area', isPlayer && !notifsOn);
+      portal.classList.toggle('is-staff-area', isStaff && !notifsOn);
+      portal.classList.toggle('is-notifs-area', notifsOn);
     }
     try {
-      document.body.classList.toggle('es-player-on', light && group && group.style.display !== 'none');
-      document.body.classList.toggle('es-staff-on', isStaff && group && group.style.display !== 'none');
+      var vis = group && group.style.display !== 'none';
+      document.body.classList.toggle('es-player-on', light && vis);
+      document.body.classList.toggle('es-staff-on', isStaff && vis && !notifsOn);
+      document.body.classList.toggle('es-notifs-on', notifsOn && vis);
     } catch (_) {}
+    if (notifs) {
+      notifs.hidden = !notifsOn;
+      if (notifsOn) notifs.removeAttribute('hidden');
+    }
     if (profile) {
-      profile.hidden = !isPlayer;
-      if (isPlayer) profile.removeAttribute('hidden');
+      profile.hidden = !isPlayer || notifsOn;
+      if (isPlayer && !notifsOn) profile.removeAttribute('hidden');
     }
     if (staff) {
-      staff.hidden = !isStaff;
-      if (isStaff) staff.removeAttribute('hidden');
+      staff.hidden = !isStaff || notifsOn;
+      if (isStaff && !notifsOn) staff.removeAttribute('hidden');
     }
     if (legacy) {
-      legacy.hidden = light;
-      if (light) legacy.setAttribute('hidden', '');
+      var hideLegacy = isPlayer || isStaff || notifsOn;
+      legacy.hidden = hideLegacy;
+      if (hideLegacy) legacy.setAttribute('hidden', '');
       else legacy.removeAttribute('hidden');
     }
     if (isPlayer) {
       bind();
-      if (!filling) fillForm(user);
+      if (!filling && !notifsOn) fillForm(user);
     }
     if (isStaff) {
       bindStaff();
-      if (!staffFilling) fillStaffForm(user);
+      if (!staffFilling && !notifsOn) fillStaffForm(user);
+    }
+    if (window.EliseeUserNotifs) {
+      window.EliseeUserNotifs.render(user);
+      window.EliseeUserNotifs.paintBadges(user);
     }
   };
 
@@ -1102,10 +1231,20 @@
   function attachHooks() {
     wrap('applyRoleDossierInterface', function (user) { window.syncPlayerProfileView(user); });
     wrap('switchView', function (view) {
-      if (view === 'user-dossier') setTimeout(function () { window.syncPlayerProfileView(); }, 0);
-      else try {
+      if (view === 'user-dossier') {
+        if (window.EliseeUserNotifs) {
+          if (window.__esOpenNotifs) {
+            window.EliseeUserNotifs.tab = 'notifs';
+            window.__esOpenNotifs = false;
+          } else {
+            window.EliseeUserNotifs.tab = 'profile';
+          }
+        }
+        setTimeout(function () { window.syncPlayerProfileView(); }, 0);
+      } else try {
         document.body.classList.remove('es-player-on');
         document.body.classList.remove('es-staff-on');
+        document.body.classList.remove('es-notifs-on');
       } catch (_) {}
     });
     wrap('confirmSiteRole', function () {
@@ -1157,6 +1296,7 @@
 
   function boot() {
     bind();
+    if (window.EliseeUserNotifs) window.EliseeUserNotifs.bind();
     attachHooks();
     setTimeout(attachHooks, 0);
     setTimeout(attachHooks, 400);
