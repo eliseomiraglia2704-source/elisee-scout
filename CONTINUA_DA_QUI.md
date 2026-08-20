@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-20**
-Ultimo fatto: Pannello TC Manager sul sito (iscrizioni link, quote, comunicazioni ruolo, calendario/presenze, documenti/scadenze, profilo atleta, soci/verbali).
-Feature precedente: Scopri solo in account (`4c2827c`).
+Ultimo fatto: Pannello TC Manager con panoramica di tutte le aree (iscrizioni, quote, ruoli, calendario, documenti, atleti, soci). Ingresso da Squadre, menu account e tab utente.
+Feature precedente: primo rilascio pannello TC (`f00eb09`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

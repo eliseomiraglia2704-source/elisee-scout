@@ -152,7 +152,7 @@
       if (role === 'Genitore') return ['atleti', 'quote', 'docs', 'calendario'];
       return ['atleti', 'quote', 'docs', 'calendario'];
     }
-    return ['iscrizioni', 'quote', 'comms', 'calendario', 'docs', 'atleti', 'soci'];
+    return ['home', 'iscrizioni', 'quote', 'comms', 'calendario', 'docs', 'atleti', 'soci'];
   }
 
   function render() {
@@ -168,6 +168,7 @@
     var tabBar = $('es-tc-tabs');
     if (tabBar) {
       var labels = {
+        home: 'Panoramica',
         iscrizioni: 'Iscrizioni',
         quote: 'Quote',
         comms: 'Comunicazioni',
@@ -184,7 +185,8 @@
     var body = $('es-tc-body');
     if (!body) return;
     var html = '';
-    if (UI.tab === 'iscrizioni') html = viewIscrizioni(st, team);
+    if (UI.tab === 'home') html = viewHome(st, team);
+    else if (UI.tab === 'iscrizioni') html = viewIscrizioni(st, team);
     else if (UI.tab === 'quote') html = viewQuote(st);
     else if (UI.tab === 'comms') html = viewComms(st);
     else if (UI.tab === 'calendario' || UI.tab === 'presenze') html = viewCal(st);
@@ -193,6 +195,28 @@
     else html = viewSoci(st, team);
     body.innerHTML = html;
     runReminders(st, team);
+  }
+
+  function viewHome(st, team) {
+    var pending = st.enrollments.filter(function (e) { return e.status === 'pending'; }).length;
+    var unpaid = st.fees.filter(function (f) { return !f.paidAt; }).length;
+    var cards = [
+      ['iscrizioni', 'Iscrizioni', 'Modulo online condivisibile via link al posto dei cartacei. Anagrafica completa di atleti/tesserati dal form.', pending + ' in attesa · ' + st.members.length + ' in anagrafica'],
+      ['quote', 'Pagamenti e quote', 'Incasso quote nel pannello, storico per tesserato, promemoria automatici per scadenze e insoluti.', unpaid + ' aperte · ' + st.fees.length + ' nello storico'],
+      ['comms', 'Comunicazioni e ruoli', 'Email verso atleti, genitori, allenatori. Aree riservate: ognuno vede solo la sua sezione.', st.comms.length + ' invii'],
+      ['calendario', 'Calendario e presenze', 'Allenamenti, provini, eventi scouting. Presenze/assenze per sessione.', st.events.length + ' attività'],
+      ['docs', 'Documenti e scadenze', 'Archivio moduli precompilati, caricamento dal sito, scadenzario certificati medici e rinnovi quote.', st.docs.length + ' file'],
+      ['atleti', 'Profilo atleta', 'Storico attività e prestazioni, agganciato al dossier scouting Elisee se l’email coincide.', st.members.filter(function (m) { return m.role === 'Atleta'; }).length + ' atleti'],
+      ['soci', 'Soci e verbali', 'Registro soci digitale e generazione automatica dei verbali di assemblea.', st.minutes.length + ' verbali']
+    ];
+    var html = '<p class="es-tc-muted" style="margin:0 0 1rem">Pannello società per <strong>' + esc(team.name || '') + '</strong>. Tutto lato sito, come TC Manager.</p>';
+    html += '<div class="es-tc-grid">';
+    cards.forEach(function (c) {
+      html += '<button type="button" class="es-tc-card" data-tc-tab="' + c[0] + '" style="text-align:left;cursor:pointer;width:100%;font:inherit;color:inherit">';
+      html += '<h2>' + esc(c[1]) + '</h2><p class="es-tc-muted">' + esc(c[2]) + '</p><p class="es-tc-ok">' + esc(c[3]) + '</p></button>';
+    });
+    html += '</div>';
+    return html;
   }
 
   function viewIscrizioni(st, team) {
@@ -558,6 +582,10 @@
       dest.forEach(function (m) { notify(sub, body, m.email); });
       st.comms.unshift({ id: uid('c'), role: role, subject: sub, body: body, count: dest.length, at: nowIso() });
       put(UI.team, st);
+      var mails = dest.map(function (m) { return m.email; }).filter(Boolean).join(',');
+      if (mails) {
+        try { window.location.href = 'mailto:' + mails + '?subject=' + encodeURIComponent(sub) + '&body=' + encodeURIComponent(body); } catch (_) {}
+      }
       toast('Comunicazione inviata a ' + dest.length + ' destinatari.');
       render(); return;
     }
