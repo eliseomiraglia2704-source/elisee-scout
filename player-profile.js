@@ -154,6 +154,16 @@
     return v === 'giocatore' || v === 'calciatore' || v === 'portiere';
   };
 
+  window.isTifosoSiteRole = function (userOrRole) {
+    if (userOrRole && typeof userOrRole === 'object') {
+      if (window.isStaffSiteRole(userOrRole) || window.isPlayerSiteRole(userOrRole)) return false;
+    }
+    var raw = typeof userOrRole === 'string'
+      ? userOrRole
+      : ((userOrRole && (userOrRole.ruolo || userOrRole.role || userOrRole.siteRoleFamily)) || (window.getActiveSiteRole && window.getActiveSiteRole()) || '');
+    return String(raw).trim().toLowerCase() === 'tifoso';
+  };
+
   window.isStaffSiteRole = function (userOrRole) {
     if (typeof userOrRole === 'string') {
       var s = userOrRole.trim().toLowerCase();
@@ -1100,28 +1110,33 @@
     user = window.applyStaffIdentity(user || readUser());
     var isPlayer = window.isPlayerSiteRole(user);
     var isStaff = window.isStaffSiteRole(user);
+    var isTifoso = window.isTifosoSiteRole(user);
     var notifsOn = window.EliseeUserNotifs && window.EliseeUserNotifs.tab === 'notifs';
     var group = document.getElementById('user-dossier-view-group');
     var portal = document.getElementById('user-dossier-portal');
     var profile = document.getElementById('es-player-profile');
     var staff = document.getElementById('es-staff-profile');
+    var tifoso = document.getElementById('es-tifoso-profile');
     var legacy = document.getElementById('dossier-legacy');
     var notifs = document.getElementById('es-user-notifs');
-    var light = isPlayer || isStaff || notifsOn;
+    var light = isPlayer || isStaff || isTifoso || notifsOn;
     if (group) {
       group.classList.toggle('is-player-area', isPlayer && !notifsOn);
       group.classList.toggle('is-staff-area', isStaff && !notifsOn);
+      group.classList.toggle('is-tifoso-area', isTifoso && !notifsOn);
       group.classList.toggle('is-notifs-area', notifsOn);
     }
     if (portal) {
       portal.classList.toggle('is-player-area', isPlayer && !notifsOn);
       portal.classList.toggle('is-staff-area', isStaff && !notifsOn);
+      portal.classList.toggle('is-tifoso-area', isTifoso && !notifsOn);
       portal.classList.toggle('is-notifs-area', notifsOn);
     }
     try {
       var vis = group && group.style.display !== 'none';
       document.body.classList.toggle('es-player-on', light && vis);
       document.body.classList.toggle('es-staff-on', isStaff && vis && !notifsOn);
+      document.body.classList.toggle('es-tifoso-on', isTifoso && vis && !notifsOn);
       document.body.classList.toggle('es-notifs-on', notifsOn && vis);
     } catch (_) {}
     if (notifs) {
@@ -1136,8 +1151,12 @@
       staff.hidden = !isStaff || notifsOn;
       if (isStaff && !notifsOn) staff.removeAttribute('hidden');
     }
+    if (tifoso) {
+      tifoso.hidden = !isTifoso || notifsOn;
+      if (isTifoso && !notifsOn) tifoso.removeAttribute('hidden');
+    }
     if (legacy) {
-      var hideLegacy = isPlayer || isStaff || notifsOn;
+      var hideLegacy = isPlayer || isStaff || isTifoso || notifsOn;
       legacy.hidden = hideLegacy;
       if (hideLegacy) legacy.setAttribute('hidden', '');
       else legacy.removeAttribute('hidden');
@@ -1153,6 +1172,19 @@
         } else {
           if (dash) dash.hidden = true;
           if (host) host.classList.remove('es-pd-on');
+        }
+      } catch (_) {}
+    }
+    if (isTifoso) {
+      try {
+        var td = document.getElementById('es-td');
+        var th = document.getElementById('es-tifoso-profile');
+        if (!notifsOn && window.EliseeTifosoDash && window.EliseeTifosoDash.render) {
+          window.EliseeTifosoDash.render(user);
+        } else {
+          if (td) td.hidden = true;
+          if (th) th.classList.remove('es-tf-on');
+          if (group) group.classList.remove('is-tf-dash');
         }
       } catch (_) {}
     }
