@@ -286,7 +286,7 @@
   <link rel="stylesheet" href="manager.css?v=20260820_XI1">
   <link rel="stylesheet" href="player-profile.css?v=20260820_SEGUO1">
   <link rel="stylesheet" href="scopri-profili.css?v=20260820_SEGUO1">
-  <link rel="stylesheet" href="messaggi.css?v=20260820_SEGUO1">
+  <link rel="stylesheet" href="messaggi.css?v=20260820_MSG1">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
@@ -3261,21 +3261,43 @@
     </div>
 
     <div id="view-messaggi" style="display:none;">
-      <section id="messaggi-portal" class="es-msg">
-        <div id="es-msg-inbox">
-          <p class="es-msg-empty" id="es-msg-empty">Nessun thread disponibile.</p>
-          <ul class="es-msg-list" id="es-msg-list" hidden></ul>
-        </div>
-        <div id="es-msg-thread" class="es-msg-thread" hidden>
-          <div class="es-msg-head">
-            <button type="button" class="es-msg-back" id="es-msg-back" aria-label="Torna ai thread">‹</button>
-            <h2 id="es-msg-peer">Conversazione</h2>
+      <section id="messaggi-portal" class="es-msg pf-page">
+        <div class="pf-page-bg" aria-hidden="true"></div>
+        <div class="pf-page-shade" aria-hidden="true"></div>
+        <div class="container pf-page-inner">
+          <header class="pf-header">
+            <div class="pf-header-text">
+              <p class="portfolio-kicker">Messaggi</p>
+              <h1 class="pf-title">Conversazioni B2B</h1>
+              <p class="pf-lead">Scrivi a club, staff, giocatori e società. I thread restano tra voi, distinti dalle notifiche di sistema.</p>
+            </div>
+            <div class="pf-header-actions">
+              <button type="button" class="btn btn-outline-pill" onclick="if(window.switchView){window.switchView('scopri','#scopri-portal');}">Scopri profili</button>
+            </div>
+          </header>
+          <div class="es-msg-shell" id="es-msg-shell">
+            <aside id="es-msg-inbox" class="es-msg-inbox">
+              <p class="es-msg-col-label">Thread</p>
+              <p class="es-msg-empty" id="es-msg-empty">Nessuna conversazione. Apri un profilo da Scopri o dalla Bacheca e tocca Messaggia.</p>
+              <ul class="es-msg-list" id="es-msg-list" hidden></ul>
+            </aside>
+            <div id="es-msg-thread" class="es-msg-thread">
+              <div class="es-msg-idle" id="es-msg-idle">
+                <p>Seleziona un thread a sinistra, oppure avvia un contatto da Scopri.</p>
+              </div>
+              <div class="es-msg-chat" id="es-msg-chat" hidden>
+                <div class="es-msg-head">
+                  <button type="button" class="es-msg-back" id="es-msg-back" aria-label="Torna ai thread">‹</button>
+                  <h2 id="es-msg-peer">Conversazione</h2>
+                </div>
+                <div class="es-msg-bubbles" id="es-msg-bubbles"></div>
+                <form class="es-msg-compose" id="es-msg-form">
+                  <input type="text" id="es-msg-input" placeholder="Scrivi un messaggio…" autocomplete="off" maxlength="2000">
+                  <button type="submit">Invia</button>
+                </form>
+              </div>
+            </div>
           </div>
-          <div class="es-msg-bubbles" id="es-msg-bubbles"></div>
-          <form class="es-msg-compose" id="es-msg-form">
-            <input type="text" id="es-msg-input" placeholder="Scrivi un messaggio…" autocomplete="off" maxlength="2000">
-            <button type="submit">Invia</button>
-          </form>
         </div>
       </section>
     </div>
@@ -4670,7 +4692,7 @@
   <script src="app.js?v=20260820_VF1"></script>
   <script src="player-profile.js?v=20260820_FORM1"></script>
   <script src="scopri-profili.js?v=20260820_FORM1"></script>
-  <script src="messaggi.js?v=20260820_FORM1"></script>
+  <script src="messaggi.js?v=20260820_MSG1"></script>
   <script src="mappa-club.js?v=20260820_FORM1"></script>
   <script src="chi-segui.js?v=20260820_FORM1"></script>
   <script src="verifica-account.js?v=20260820_VF1"></script>

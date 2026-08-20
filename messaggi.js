@@ -137,13 +137,22 @@
       this.activeId = '';
       var empty = document.getElementById('es-msg-empty');
       var list = document.getElementById('es-msg-list');
-      var thread = document.getElementById('es-msg-thread');
       var inbox = document.getElementById('es-msg-inbox');
-      if (thread) thread.hidden = true;
+      var shell = document.getElementById('es-msg-shell');
+      var idle = document.getElementById('es-msg-idle');
+      var chat = document.getElementById('es-msg-chat');
+      if (shell) shell.classList.remove('is-thread');
       if (inbox) inbox.hidden = false;
+      if (idle) idle.hidden = false;
+      if (chat) chat.hidden = true;
       var rows = isLogged() ? myThreads() : [];
       if (!rows.length) {
-        if (empty) { empty.hidden = false; empty.textContent = 'Nessun thread disponibile.'; }
+        if (empty) {
+          empty.hidden = false;
+          empty.textContent = isLogged()
+            ? 'Nessuna conversazione. Apri un profilo da Scopri o dalla Bacheca e tocca Messaggia.'
+            : 'Accedi per vedere i tuoi thread B2B.';
+        }
         if (list) { list.hidden = true; list.innerHTML = ''; }
         this.paintBadges();
         return;
@@ -173,11 +182,15 @@
       this.markRead(id);
       t = load().threads[id];
       var inbox = document.getElementById('es-msg-inbox');
-      var thread = document.getElementById('es-msg-thread');
+      var shell = document.getElementById('es-msg-shell');
+      var idle = document.getElementById('es-msg-idle');
+      var chat = document.getElementById('es-msg-chat');
       var nameEl = document.getElementById('es-msg-peer');
       var box = document.getElementById('es-msg-bubbles');
-      if (inbox) inbox.hidden = true;
-      if (thread) thread.hidden = false;
+      if (shell) shell.classList.add('is-thread');
+      if (inbox) inbox.hidden = false;
+      if (idle) idle.hidden = true;
+      if (chat) chat.hidden = false;
       var p = peerOf(t);
       if (nameEl) nameEl.textContent = p.name;
       var k = meKey();

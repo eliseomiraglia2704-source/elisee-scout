@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-20**
-Ultimo fatto: dopo **Seleziona squadra**, loading 2s con foto stadio della squadra e logo che pulsa, poi si apre la formazione XI.
-Feature precedente: regola anti-fake 30 giorni (`5158f89`).
+Ultimo fatto: area Messaggi allineata al tema dark del sito (layout a due colonne, niente fondo bianco Club-and-Player).
+Feature precedente: loading stadio 2s (`50f4efd`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -142,3 +142,4 @@ Se `elisee_up.py` era già avviato, riavviarlo: login locale rifiuta gli account
 - **2026-08-20** — Corretto italiano mojibake in Ambassador e `index.html` (`66d33c0`).
 - **2026-08-20** — Anti-fake: 30 giorni per allegare documenti (CI + selfie). Banner + notifiche ogni 2 giorni. Scaduto → account chiuso, login bloccato. Tifoso escluso. File: `verifica-account.js` / `.css`, `workers/auth_store.py` (`sync_verify_docs`), `elisee_up.py` `POST /api/auth/verify-docs`. Cache `VF1`.
 - **2026-08-20** — Seleziona squadra: overlay 2s stadio della squadra (`stadiumImage`) + logo pulsante, poi formazione. `squadre-select.js` / `.css`, cache `STAD1`.
+- **2026-08-20** — Messaggi B2B: tema dark, header pf-page, shell inbox|chat. `messaggi.css` / `.js`, cache `MSG1`.
