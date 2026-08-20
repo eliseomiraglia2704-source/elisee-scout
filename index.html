@@ -275,7 +275,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
-  <link rel="stylesheet" href="style.css?v=20260814_MOB">
+  <link rel="stylesheet" href="style.css?v=20260820_ROLE1">
   <link rel="stylesheet" href="integrazioni.css?v=20260806_NOCORS">
   <link rel="preload" as="video" href="immagini/minigioco/intro.mp4?v=20260813_HQ2">
   <link rel="stylesheet" href="minigioco-carriera.css?v=20260814_TRIAL2">
@@ -1038,21 +1038,7 @@
               <input type="date" id="reg-dob" required style="width:100%; padding:0.7rem 0.9rem; border-radius:9px; background:#0b1222; border:1.5px solid rgba(56,189,248,0.3); color:#ffffff; font-size:0.9rem; box-sizing:border-box; outline:none; color-scheme:dark;" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
             </div>
             <div>
-              <label style="display:block; color:#94a3b8; font-size:0.78rem; font-weight:600; margin-bottom:0.35rem; text-transform:uppercase; letter-spacing:0.04em;">Ruolo / Figura *</label>
-              <select id="reg-ruolo" required style="width:100%; padding:0.7rem 0.9rem; border-radius:9px; background:#0b1222; border:1.5px solid rgba(56,189,248,0.3); color:#ffffff; font-size:0.87rem; box-sizing:border-box; outline:none;" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
-                <option value="">-- seleziona --</option>
-                <option value="Calciatore">âš½ Calciatore</option>
-                <option value="Portiere">ðŸ§¤ Portiere</option>
-                <option value="Allenatore">ðŸ“‹ Allenatore / Tecnico</option>
-                <option value="Scout">ðŸ” Scout Certificato</option>
-                <option value="Procuratore">ðŸ¤ Procuratore Sportivo</option>
-                <option value="Direttore">ðŸ’¼ Direttore Sportivo</option>
-                <option value="Match Analyst">ðŸ“Š Match Analyst</option>
-                <option value="Preparatore">ðŸ‹ï¸ Preparatore Atletico</option>
-                <option value="Fisioterapista">ðŸ©º Fisioterapista Sportivo</option>
-                <option value="Societa">ðŸŸï¸ Dirigente SocietÃ </option>
-                <option value="Spettatore">Spettatore</option>
-              </select>
+              <input type="hidden" id="reg-ruolo" value="">
             </div>
           </div>
           <div style="margin-bottom:0.75rem;">
@@ -1109,28 +1095,47 @@
     }
   </style>
 
-  <div id="modal-scegli-ruolo" style="display:none; position:fixed; inset:0; z-index:2147483010; background:rgba(0,0,0,0.86); backdrop-filter:blur(12px); align-items:center; justify-content:center; padding:1rem;">
-    <div style="width:100%; max-width:460px; background:linear-gradient(160deg,#07101e,#0b1730); border:1.5px solid rgba(56,189,248,0.4); border-radius:18px; padding:1.5rem 1.4rem 1.35rem; box-shadow:0 30px 70px rgba(0,0,0,0.65);">
-      <h2 style="margin:0 0 0.4rem; color:#fff; font-size:1.2rem; font-weight:800;">Ruolo obbligatorio</h2>
-      <p style="margin:0 0 1rem; color:#94a3b8; font-size:0.86rem; line-height:1.45;">Specifica il ruolo che svolgerai su ELISEE SCOUT. Ogni ruolo apre un'interfaccia diversa.</p>
-      <label style="display:block; color:#cbd5e1; font-size:0.78rem; font-weight:700; margin-bottom:0.35rem;">RUOLO SUL SITO *</label>
-      <select id="scegli-ruolo-select" onchange="if(window.onSiteRoleSelectChange) window.onSiteRoleSelectChange(this.value);" style="width:100%; box-sizing:border-box; padding:0.75rem 0.85rem; border-radius:10px; border:1px solid rgba(56,189,248,0.35); background:#0b1222; color:#fff; margin-bottom:0.75rem;">
-        <option value="">-- seleziona --</option>
-        <option value="Calciatore">Calciatore</option>
-        <option value="Portiere">Portiere</option>
-        <option value="Allenatore">Allenatore / Tecnico</option>
-        <option value="Scout">Scout</option>
-        <option value="Procuratore">Procuratore sportivo</option>
-        <option value="Direttore">Direttore sportivo</option>
-        <option value="Match Analyst">Match Analyst</option>
-        <option value="Preparatore">Preparatore atletico</option>
-        <option value="Fisioterapista">Fisioterapista</option>
-        <option value="Societa">Dirigente societa</option>
-        <option value="Spettatore">Spettatore</option>
-      </select>
-      <p id="scegli-ruolo-hint" style="display:none; margin:0 0 0.75rem; color:#7dd3fc; font-size:0.78rem; line-height:1.45; background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.22); border-radius:10px; padding:0.65rem 0.75rem;">Lo Spettatore naviga il sito e puo interagire con tutti gli altri ruoli. Non deve allegare il documento di identita. Non puo inviare candidature di lavoro o di recruitment.</p>
-      <p id="scegli-ruolo-err" style="display:none; color:#f87171; font-size:0.8rem; margin:0 0 0.7rem;"></p>
-      <button type="button" onclick="window.confirmSiteRole && window.confirmSiteRole();" style="width:100%; padding:0.85rem; border:0; border-radius:999px; background:linear-gradient(180deg,#38bdf8,#0284c7); color:#fff; font-weight:800; cursor:pointer;">Conferma ruolo e continua</button>
+  <div id="modal-scegli-ruolo" class="es-role-pick" style="display:none;">
+    <div class="es-role-pick-sheet" role="dialog" aria-labelledby="es-role-pick-title">
+      <h1 class="es-role-pick-brand">Elisee <span>Scout</span></h1>
+      <h2 id="es-role-pick-title">Scegli come vuoi usare Elisee Scout</h2>
+      <p class="es-role-pick-sub">Ogni ruolo offre un'esperienza diversa</p>
+      <input type="hidden" id="scegli-ruolo-select" value="">
+      <div class="es-role-pick-list" id="es-role-pick-list" role="listbox" aria-label="Ruolo sul sito">
+        <button type="button" class="es-role-card" data-role="Ente" role="option">
+          <span class="es-role-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+          </span>
+          <span class="es-role-txt"><small>Sono un</small><strong>ENTE</strong></span>
+        </button>
+        <button type="button" class="es-role-card" data-role="Squadra" role="option">
+          <span class="es-role-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><rect x="4" y="7" width="16" height="14" rx="2"/><path d="M4 12h16"/></svg>
+          </span>
+          <span class="es-role-txt"><small>Sono una</small><strong>SQUADRA</strong></span>
+        </button>
+        <button type="button" class="es-role-card" data-role="Giocatore" role="option">
+          <span class="es-role-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 19.5c1.2-3.2 3.6-4.8 6.5-4.8s5.3 1.6 6.5 4.8"/></svg>
+          </span>
+          <span class="es-role-txt"><small>Sono un</small><strong>GIOCATORE</strong></span>
+        </button>
+        <button type="button" class="es-role-card" data-role="Staff" role="option">
+          <span class="es-role-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="2.6"/><circle cx="16" cy="9" r="2.2"/><path d="M4.5 18.5c.9-2.6 2.7-4 5-4s4.1 1.4 5 4M13.5 18.2c.5-1.6 1.6-2.6 3.2-2.6 1.5 0 2.5.8 3.1 2.2"/></svg>
+          </span>
+          <span class="es-role-txt"><small>Sono un Membro</small><strong>STAFF</strong></span>
+        </button>
+        <button type="button" class="es-role-card" data-role="Tifoso" role="option">
+          <span class="es-role-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8.5" cy="8" r="2.5"/><circle cx="15.5" cy="8" r="2.5"/><path d="M3.8 18.5c.9-2.7 2.7-4.1 4.7-4.1s3.8 1.4 4.7 4.1M11 18.5c.9-2.7 2.7-4.1 4.5-4.1s3.6 1.4 4.5 4.1"/></svg>
+          </span>
+          <span class="es-role-txt"><small>Sono un</small><strong>TIFOSO</strong></span>
+        </button>
+      </div>
+      <p id="scegli-ruolo-hint" class="es-role-hint" hidden>Il Tifoso naviga e interagisce. Non deve allegare il documento di identità e non può inviare candidature.</p>
+      <p id="scegli-ruolo-err" class="es-role-err" hidden>Seleziona un ruolo per continuare.</p>
+      <button type="button" class="es-role-continue" id="es-role-continue" onclick="window.confirmSiteRole && window.confirmSiteRole();">Continua</button>
     </div>
   </div>
 
@@ -4101,7 +4106,7 @@
   </script>
   <script src="squadre-select.js?v=20260820_VERW1"></script>
   <script src="manager-runtime.js?v=20260820_MGR1"></script>
-  <script src="app.js?v=20260814_MOB"></script>
+  <script src="app.js?v=20260820_ROLE1"></script>
   <script>
     /* FORCED INLINE HOT-PATCH: Overrides PDF export, specific report HTML & modal close functions instantly at runtime */
     (function() {

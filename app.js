@@ -8411,15 +8411,12 @@ window.paintLoggedInUser = function (user) {
 };
 
 window.SITE_ROLES = [
+  { id: 'Ente', label: 'Ente' },
+  { id: 'Squadra', label: 'Squadra' },
+  { id: 'Giocatore', label: 'Giocatore' },
+  { id: 'Staff', label: 'Staff' },
+  { id: 'Tifoso', label: 'Tifoso', noDocument: true, noApplications: true },
   { id: 'Calciatore', label: 'Calciatore' },
-  { id: 'Portiere', label: 'Portiere' },
-  { id: 'Allenatore', label: 'Allenatore / Tecnico' },
-  { id: 'Scout', label: 'Scout' },
-  { id: 'Procuratore', label: 'Procuratore sportivo' },
-  { id: 'Direttore', label: 'Direttore sportivo' },
-  { id: 'Match Analyst', label: 'Match Analyst' },
-  { id: 'Preparatore', label: 'Preparatore atletico' },
-  { id: 'Fisioterapista', label: 'Fisioterapista' },
   { id: 'Societa', label: 'Dirigente societa' },
   { id: 'Spettatore', label: 'Spettatore', noDocument: true, noApplications: true }
 ];
@@ -8428,7 +8425,8 @@ window.isSpectatorRole = function (userOrRole) {
   const raw = typeof userOrRole === 'string'
     ? userOrRole
     : ((userOrRole && (userOrRole.ruolo || userOrRole.role)) || '');
-  return String(raw).trim().toLowerCase() === 'spettatore';
+  var v = String(raw).trim().toLowerCase();
+  return v === 'spettatore' || v === 'tifoso';
 };
 
 window.getActiveSiteRole = function () {
@@ -8452,10 +8450,25 @@ window.onSiteRoleSelectChange = function (value) {
   const hint = document.getElementById('scegli-ruolo-hint');
   if (!hint) return;
   if (window.isSpectatorRole(value)) {
+    hint.hidden = false;
     hint.style.display = 'block';
   } else {
+    hint.hidden = true;
     hint.style.display = 'none';
   }
+};
+
+window.pickSiteRoleCard = function (role) {
+  const sel = document.getElementById('scegli-ruolo-select');
+  if (sel) sel.value = role || '';
+  document.querySelectorAll('.es-role-card').forEach(function (btn) {
+    btn.classList.toggle('is-on', btn.getAttribute('data-role') === role);
+  });
+  const go = document.getElementById('es-role-continue');
+  if (go) go.classList.toggle('is-ready', !!role);
+  const err = document.getElementById('scegli-ruolo-err');
+  if (err) { err.hidden = true; err.style.display = 'none'; }
+  if (window.onSiteRoleSelectChange) window.onSiteRoleSelectChange(role || '');
 };
 
 window.blockSpectatorApplication = function (kind) {
@@ -8536,6 +8549,36 @@ function rolePanelRows(role) {
       bTitle: 'Compliance societaria',
       b: [['Visura / affiliazione', 'Non caricata']].concat(commonB)
     },
+    Ente: {
+      aTitle: 'Ente e territorio',
+      a: [['Denominazione ente', 'Non inserita'], ['Competenze / gironi', 'Da definire'], ['Società affiliate', '0'], ['Comunicati', '0']],
+      bTitle: 'Governance ente',
+      b: [['Atto costitutivo', 'Non caricato']].concat(commonB)
+    },
+    Squadra: {
+      aTitle: 'Area societa',
+      a: [['Denominazione club', 'Non inserita'], ['Categoria', 'Non indicata'], ['Organigramma', 'Incompleto'], ['Comunicati', '0']],
+      bTitle: 'Compliance societaria',
+      b: [['Visura / affiliazione', 'Non caricata']].concat(commonB)
+    },
+    Giocatore: {
+      aTitle: 'Prestazione e GPS',
+      a: [['Statistiche stagione', 'Non inserite'], ['Ruolo in campo', 'Non inserito'], ['Caratteristiche fisiche', 'Non inserite'], ['Dispositivo GPS', 'Nessun dispositivo']],
+      bTitle: 'Sanita e privacy',
+      b: [['Certificato medico', 'Non caricato']].concat(commonB)
+    },
+    Staff: {
+      aTitle: 'Staff tecnico',
+      a: [['Ruolo nello staff', 'Da definire'], ['Squadra attuale', 'Senza squadra'], ['Licenza / tesserino', 'Non caricato'], ['Obiettivo stagione', 'Da impostare']],
+      bTitle: 'Documenti e verifica',
+      b: [['Tesserino tecnico', 'Non caricato']].concat(commonB)
+    },
+    Tifoso: {
+      aTitle: 'Navigazione e interazione',
+      a: [['Accesso al sito', 'Libero'], ['Consulta profili e ruoli', 'Consentito'], ['Bacheca e network', 'Interazione aperta'], ['Minigioco e contenuti', 'Disponibili']],
+      bTitle: 'Limiti tifoso',
+      b: [['Documento di identita', 'Non richiesto'], ['Candidature di lavoro', 'Non consentite'], ['Candidature recruitment', 'Non consentite'], ['Interazione con altri ruoli', 'Consentita']]
+    },
     Spettatore: {
       aTitle: 'Navigazione e interazione',
       a: [
@@ -8592,6 +8635,15 @@ window.openSiteRoleModal = function () {
   if (!modal) return;
   modal.style.setProperty('display', 'flex', 'important');
   document.body.style.overflow = 'hidden';
+  const list = document.getElementById('es-role-pick-list');
+  if (list && !list.dataset.bound) {
+    list.dataset.bound = '1';
+    list.addEventListener('click', function (e) {
+      const card = e.target.closest('.es-role-card');
+      if (!card) return;
+      window.pickSiteRoleCard(card.getAttribute('data-role'));
+    });
+  }
 };
 
 window.closeSiteRoleModal = function () {
@@ -8604,10 +8656,14 @@ window.confirmSiteRole = function () {
   const err = document.getElementById('scegli-ruolo-err');
   const val = sel ? sel.value : '';
   if (!val) {
-    if (err) { err.style.display = 'block'; err.textContent = 'Devi selezionare un ruolo per continuare.'; }
+    if (err) {
+      err.hidden = false;
+      err.style.display = 'block';
+      err.textContent = 'Seleziona un ruolo per continuare.';
+    }
     return;
   }
-  if (err) err.style.display = 'none';
+  if (err) { err.hidden = true; err.style.display = 'none'; }
   let user = {};
   try { user = JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {}; } catch (_) {}
   user.ruolo = val;
@@ -8631,7 +8687,7 @@ window.confirmSiteRole = function () {
     if (typeof window.restoreAuthReturn === 'function') window.restoreAuthReturn();
     else if (typeof window.switchView === 'function') window.switchView('home', '#hero');
     if (typeof window.showToast === 'function') {
-      window.showToast('Accesso Spettatore attivo: puoi navigare e interagire, senza candidature.', 'success');
+      window.showToast('Accesso Tifoso attivo: puoi navigare e interagire, senza candidature.', 'success');
     }
   } else if (typeof window.switchView === 'function') {
     window.switchView('user-dossier', '#user-dossier-portal');
@@ -8845,11 +8901,7 @@ window.submitRegistrazione = function (e) {
       if (dobEl) dobEl.focus();
       return false;
     }
-    if (!ruolo) {
-      showRegError('Seleziona un ruolo / figura.');
-      if (ruoloEl) ruoloEl.focus();
-      return false;
-    }
+    /* Il ruolo si sceglie nella schermata successiva (Ente / Squadra / Giocatore / Staff / Tifoso). */
     if (pass.length < 8) {
       showRegError('La password deve essere di almeno 8 caratteri.');
       passEl.focus();
