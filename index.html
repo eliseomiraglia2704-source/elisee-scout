@@ -288,6 +288,7 @@
   <link rel="stylesheet" href="player-profile.css?v=20260820_MKT1">
   <link rel="stylesheet" href="player-dash.css?v=20260820_PD1">
   <link rel="stylesheet" href="coach-dash.css?v=20260820_CD1">
+  <link rel="stylesheet" href="ds-dash.css?v=20260820_DS1">
   <link rel="stylesheet" href="scopri-profili.css?v=20260820_DARK1">
   <link rel="stylesheet" href="messaggi.css?v=20260820_DARK1">
   <link rel="stylesheet" href="mercato-hub.css?v=20260820_MKT2">
@@ -3120,7 +3121,7 @@
 
           <div id="es-staff-profile" class="es-pp es-sp" hidden>
             <div class="es-sp-top">
-              <button type="button" class="es-sp-backtitle" onclick="if(window.EliseeCoachDash){window.EliseeCoachDash.render();} return false;">Dashboard</button>
+              <button type="button" class="es-sp-backtitle" onclick="if(window.EliseeDsDash&amp;&amp;window.EliseeDsDash.isDs&amp;&amp;window.EliseeDsDash.isDs()){window.EliseeDsDash.render();}else if(window.EliseeCoachDash){window.EliseeCoachDash.render();} return false;">Dashboard</button>
               <button type="button" class="es-sp-backtitle" onclick="if(window.switchView){window.switchView('account','#account-portal');} return false;">
                 <span aria-hidden="true">‹</span> Il mio profilo Staff
               </button>
@@ -4925,9 +4926,10 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="app.js?v=20260820_PD1"></script>
-  <script src="player-profile.js?v=20260820_CD1"></script>
+  <script src="player-profile.js?v=20260820_DS1"></script>
   <script src="player-dash.js?v=20260820_PD1"></script>
   <script src="coach-dash.js?v=20260820_CD1"></script>
+  <script src="ds-dash.js?v=20260820_DS1"></script>
   <script src="scopri-profili.js?v=20260820_MKT1"></script>
   <script src="messaggi.js?v=20260820_MSG1"></script>
   <script src="mercato-hub.js?v=20260820_MKT2"></script>

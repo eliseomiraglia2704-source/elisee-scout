@@ -1162,14 +1162,18 @@
       try { if (window.EliseeMercato && window.EliseeMercato.paintStaffCard) window.EliseeMercato.paintStaffCard(); } catch (_) {}
       try {
         var cd = document.getElementById('es-cd');
+        var dsd = document.getElementById('es-dsd');
         var sh = document.getElementById('es-staff-profile');
         var grp = document.getElementById('user-dossier-view-group');
-        if (!notifsOn && window.EliseeCoachDash && window.EliseeCoachDash.isCoach && window.EliseeCoachDash.isCoach(user)) {
+        if (!notifsOn && window.EliseeDsDash && window.EliseeDsDash.isDs && window.EliseeDsDash.isDs(user)) {
+          window.EliseeDsDash.render(user);
+        } else if (!notifsOn && window.EliseeCoachDash && window.EliseeCoachDash.isCoach && window.EliseeCoachDash.isCoach(user)) {
           window.EliseeCoachDash.render(user);
         } else {
           if (cd) cd.hidden = true;
-          if (sh) sh.classList.remove('es-pd-on');
-          if (grp) grp.classList.remove('is-coach-dash');
+          if (dsd) dsd.hidden = true;
+          if (sh) { sh.classList.remove('es-pd-on'); sh.classList.remove('es-ds-on'); }
+          if (grp) { grp.classList.remove('is-coach-dash'); grp.classList.remove('is-ds-dash'); }
         }
       } catch (_) {}
     }

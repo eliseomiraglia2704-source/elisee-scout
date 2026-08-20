@@ -39,6 +39,7 @@ Se il push dà 403 (account Git `sfondiitaliani23-svg`), pubblica comunque su Ve
 - Pubblica candidatura: riservata ai profili Club. Form a due blocchi (Cosa offriamo / Cosa richiediamo) + opzione IA che candida in automatico i profili compatibili.
 - Area giocatore: dashboard analitica v3.0 (`player-dash.js`) al posto del solo form. Navbar macroaree su una riga.
 - Area Allenatore: dashboard Discorso Allenatore (`coach-dash.js`) se il ruolo staff è Allenatore.
+- Area Direttore Sportivo: dashboard DS (`ds-dash.js`) se il ruolo staff è Direttore sportivo. Rail: Secret List.
 
 ## Skill
 
