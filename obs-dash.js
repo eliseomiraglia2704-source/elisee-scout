@@ -1,11 +1,11 @@
-/* Dashboard Staff Medico — Medico sociale */
+/* Dashboard Osservatore — Scout / Osservatore */
 (function () {
   var AXES = [
-    'Idoneità Sportiva', 'Prevenzione Infortuni', 'Gestione Emergenze', 'Coordinamento Fisioterapia',
-    'Monitoraggio Carichi', 'Aggiornamento Protocolli', 'Precisione Dati', 'Tempestività Interventi'
+    'Precisione Valutazioni', 'Partite Visionate', 'Segnalazioni Convertite', 'Copertura Categorie Giovanili',
+    'Analisi Video', 'Tempestività Report', 'Rete Contatti Procuratori', 'Conoscenza Mercato'
   ];
-  var V2025 = [88, 92, 94, 94, 85, 93, 87, 91];
-  var V2023 = [74, 78, 80, 81, 70, 79, 73, 77];
+  var V2025 = [92, 90, 85, 88, 91, 87, 93, 94];
+  var V2023 = [78, 76, 70, 74, 79, 73, 80, 81];
 
   function esc(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -13,18 +13,18 @@
   function userObj() {
     try { return JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {}; } catch (_) { return {}; }
   }
-  function isMedico(u) {
+  function isObs(u) {
     u = u || userObj();
     var blob = [u.staffRole, u.ruoloDettagliato, u.ruolo, u.role, u.staffProfile && u.staffProfile.fieldRole]
       .filter(Boolean).join(' ').toLowerCase();
-    return /medico sociale|staff medico|\bmedico\b/.test(blob);
+    return /scout\s*\/\s*osservatore|\bosservatore\b|\bscout\b/.test(blob);
   }
-  function medName(u) {
-    return [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Medico sociale';
+  function obsName(u) {
+    return [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Osservatore';
   }
   function initials(name) {
-    var p = String(name || 'MS').trim().split(/\s+/);
-    return ((p[0] || 'M').charAt(0) + (p[1] || p[0] || 'S').charAt(0)).toUpperCase();
+    var p = String(name || 'OS').trim().split(/\s+/);
+    return ((p[0] || 'O').charAt(0) + (p[1] || p[0] || 'S').charAt(0)).toUpperCase();
   }
   function photoOf(u) {
     try {
@@ -54,7 +54,7 @@
   }
   function radarSvg() {
     var cx = 220, cy = 210, r = 150, n = AXES.length;
-    var html = '<svg viewBox="0 0 440 430" role="img" aria-label="Analisi attività sanitaria">';
+    var html = '<svg viewBox="0 0 440 430" role="img" aria-label="Analisi attività di scouting">';
     html += wedge(cx, cy, r, -Math.PI / 2, 0, 'rgba(74,222,128,0.16)');
     html += wedge(cx, cy, r, 0, Math.PI / 2, 'rgba(248,113,113,0.18)');
     html += wedge(cx, cy, r, Math.PI / 2, Math.PI, 'rgba(250,204,21,0.16)');
@@ -110,138 +110,137 @@
     return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">' + d + '</svg>';
   }
   function hideOthers() {
-    ['es-cd', 'es-dsd', 'es-prd', 'es-vd', 'es-fd', 'es-mad', 'es-od'].forEach(function (id) {
+    ['es-cd', 'es-dsd', 'es-prd', 'es-vd', 'es-fd', 'es-mad', 'es-md'].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.hidden = true;
     });
     var g = document.getElementById('user-dossier-view-group');
-    if (g) g.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-fisio-dash', 'is-ma-dash', 'is-obs-dash');
+    if (g) g.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-fisio-dash', 'is-ma-dash', 'is-med-dash');
   }
 
   function html(user) {
-    var name = medName(user);
+    var name = obsName(user);
     var ph = photoOf(user);
     var ava = ph
       ? '<img src="' + esc(ph) + '" alt="">'
       : '<div class="es-pd-ph">' + esc(initials(name)) + '</div>';
     return '<aside class="es-pd-rail">' +
-      '<button type="button" data-md="home" title="Home">' + ico('<path d="M4 10.5 12 4l8 6.5V20H4z"/>') + '</button>' +
-      '<button type="button" class="is-on" data-md="dash" title="Dashboard">' + ico('<circle cx="12" cy="8" r="3"/><path d="M5 20c1.5-4 4-6 7-6s5.5 2 7 6"/>') + '</button>' +
-      '<button type="button" data-md="album" title="Album">' + ico('<rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 15l4-3 3 2 5-5 4 4"/>') + '</button>' +
-      '<button type="button" data-md="msgs" title="Messaggi">' + ico('<path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/>') + '</button>' +
-      '<button type="button" class="es-pd-rail-end" data-md="edit" title="Anagrafica">' + ico('<circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>') + '</button>' +
+      '<button type="button" data-ob="home" title="Home">' + ico('<path d="M4 10.5 12 4l8 6.5V20H4z"/>') + '</button>' +
+      '<button type="button" class="is-on" data-ob="dash" title="Dashboard">' + ico('<circle cx="12" cy="8" r="3"/><path d="M5 20c1.5-4 4-6 7-6s5.5 2 7 6"/>') + '</button>' +
+      '<button type="button" data-ob="secret" title="Secret List">' + ico('<rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 15l4-3 3 2 5-5 4 4"/>') + '</button>' +
+      '<button type="button" data-ob="msgs" title="Messaggi">' + ico('<path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/>') + '</button>' +
+      '<button type="button" class="es-pd-rail-end" data-ob="edit" title="Anagrafica">' + ico('<circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>') + '</button>' +
       '</aside><div class="es-pd-body">' +
-      '<div class="es-pd-head"><h1>Elisee Scout — Dashboard Staff Medico</h1>' +
-      '<strong>Medico sociale: ' + esc(name.toUpperCase()) + '</strong></div>' +
+      '<div class="es-pd-head"><h1>Elisee Scout — Dashboard Osservatore</h1>' +
+      '<strong>Osservatore: ' + esc(name.toUpperCase()) + '</strong></div>' +
       '<div class="es-pd-grid">' +
 
-      '<section class="es-pd-card es-pd-indice"><h2>Profilo Medico</h2>' +
+      '<section class="es-pd-card es-pd-indice"><h2>Profilo Osservatore</h2>' +
       '<div class="es-pd-who">' + ava + '<div><b style="color:#fff">' + esc(name) + '</b>' +
-      '<div style="font-size:0.72rem;color:#94a3b8">Staff sanitario</div></div></div>' +
-      '<div class="es-pd-metric"><span>Competenza diagnostica</span><b>89%</b></div>' +
-      '<div class="es-pd-metric"><span>Gestione emergenze</span><b>94%</b></div>' +
-      '<div class="es-pd-metric"><span>Prevenzione infortuni</span><b>96%</b></div>' +
-      '<div class="es-pd-metric"><span>Coordinamento staff sanitario</span><b>92%</b></div>' +
-      '<div class="es-pd-metric"><span>Affidabilità idoneità</span><b>78%</b></div></section>' +
+      '<div style="font-size:0.72rem;color:#94a3b8">Scout / Osservatore</div></div></div>' +
+      '<div class="es-pd-metric"><span>Capacità di valutazione</span><b>92%</b></div>' +
+      '<div class="es-pd-metric"><span>Copertura territoriale</span><b>85%</b></div>' +
+      '<div class="es-pd-metric"><span>Precisione segnalazioni</span><b>88%</b></div>' +
+      '<div class="es-pd-metric"><span>Rete di contatti</span><b>94%</b></div>' +
+      '<div class="es-pd-metric"><span>Affidabilità report</span><b>91%</b></div></section>' +
 
       '<section class="es-pd-card es-pd-radar">' +
-      '<div class="es-pd-radar-tools"><span>Seleziona dati radar</span><span>Analisi attività sanitaria</span></div>' +
+      '<div class="es-pd-radar-tools"><span>Seleziona dati radar</span><span>Analisi attività di scouting</span></div>' +
       radarSvg() + '</section>' +
 
-      '<section class="es-pd-card es-pd-comply"><h2>Verifica &amp; Compliance sanitaria</h2>' +
-      '<div class="es-pd-ok"><span>Laurea in Medicina</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Specializzazione Medicina dello Sport</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Iscrizione Albo</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Corso Primo Soccorso Avanzato</span><b>100%</b></div>' +
+      '<section class="es-pd-card es-pd-comply"><h2>Verifica &amp; Compliance Osservatore</h2>' +
+      '<div class="es-pd-ok"><span>Tessera FIGC Osservatore</span><b>100%</b></div>' +
+      '<div class="es-pd-ok"><span>Corso Scouting completo</span><b>100%</b></div>' +
       '<div class="es-pd-ok"><span>Tutela minori (ID)</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Conformità protocolli FIGC/CONI</span><b>100%</b></div></section>' +
+      '<div class="es-pd-ok"><span>Conformità normativa trasferimenti</span><b>100%</b></div>' +
+      '<div class="es-pd-ok"><span>Verifica identità</span><b>100%</b></div></section>' +
 
-      '<section class="es-pd-card es-pd-storico"><h2>Andamento sanitario</h2>' +
+      '<section class="es-pd-card es-pd-storico"><h2>Andamento scouting</h2>' +
       '<div class="es-pd-sparks">' +
-      '<figure>' + spark([32, 40, 48, 55, 64, 74, 86], '#38bdf8') + '<figcaption>Visite idoneità</figcaption></figure>' +
-      '<figure>' + spark([70, 62, 55, 48, 42, 38, 34], '#f87171') + '<figcaption>Infortuni gestiti</figcaption></figure>' +
-      '<figure>' + spark([20, 28, 32, 40, 48, 58, 70], '#facc15') + '<figcaption>Interventi d\'urgenza</figcaption></figure>' +
-      '<figure>' + spark([48, 55, 60, 66, 74, 82, 90], '#4ade80') + '<figcaption>Stagione</figcaption></figure>' +
+      '<figure>' + spark([32, 40, 48, 55, 64, 74, 86], '#38bdf8') + '<figcaption>Segnalazioni confermate</figcaption></figure>' +
+      '<figure>' + spark([28, 36, 44, 52, 60, 72, 84], '#4ade80') + '<figcaption>Giocatori segnalati</figcaption></figure>' +
+      '<figure>' + spark([20, 28, 32, 40, 48, 58, 70], '#facc15') + '<figcaption>Partite visionate</figcaption></figure>' +
+      '<figure>' + spark([48, 55, 60, 66, 74, 82, 90], '#22d3ee') + '<figcaption>Stagione</figcaption></figure>' +
       '</div></section>' +
 
-      '<section class="es-pd-card es-pd-mercato"><h2>Indice di efficienza sanitaria</h2>' +
-      '<p class="es-med-grade">8,5/10 <small>+5,5%</small></p>' +
-      '<div class="es-pd-mrow"><span>Valutazione società</span><b>Ottima</b></div>' +
-      '<div class="es-pd-mrow"><span>Trend idoneità squadra</span><b>Crescente</b></div>' +
-      '<div class="es-pd-mrow"><span>Richieste di consulenza esterna</span><b>Attive</b></div>' +
+      '<section class="es-pd-card es-pd-mercato"><h2>Indice di efficacia scouting</h2>' +
+      '<p class="es-obs-grade">8,5/10 <small>+5,5%</small></p>' +
+      '<div class="es-pd-mrow"><span>Valutazione direzione sportiva</span><b>Ottima</b></div>' +
+      '<div class="es-pd-mrow"><span>Trend segnalazioni confermate</span><b>Crescente</b></div>' +
+      '<div class="es-pd-mrow"><span>Richieste di approfondimento</span><b>5</b></div>' +
       '<div class="es-pd-mrow"><span>Scadenza contratto</span><b>30/06/2028</b></div>' +
       '<div class="es-pd-mrow"><span>Trattative aperte</span><b>Nessuna</b></div></section>' +
 
-      '<section class="es-pd-card es-pd-registro"><h2>Registro visite mediche</h2>' +
-      '<table class="es-pd-table"><thead><tr><th>Giocatore</th><th>Tipo visita</th><th>Esito</th><th>Prossima</th></tr></thead><tbody>' +
-      '<tr><td>vs. Notaresco</td><td>Idoneità</td><td>Favorevole</td><td>01/01/2027 <i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Vastese</td><td>Idoneità</td><td>Favorevole</td><td>01/01/2027 <i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Chieti</td><td>Idoneità</td><td>Favorevole</td><td>01/01/2027 <i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Termoli</td><td>Idoneità</td><td>Favorevole</td><td>01/01/2027 <i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Campobasso</td><td>Idoneità</td><td>Favorevole</td><td>01/01/2027 <i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Castelfidardo</td><td>Idoneità</td><td>In corso</td><td>01/01/2029 <i class="es-pd-dot y"></i></td></tr>' +
+      '<section class="es-pd-card es-pd-registro"><h2>Registro segnalazioni</h2>' +
+      '<table class="es-pd-table"><thead><tr><th>Giocatore</th><th>Club</th><th>Cat.</th><th>Esito</th></tr></thead><tbody>' +
+      '<tr><td>vs. Notaresco</td><td>Notaresco</td><td>U19</td><td>Positivo <i class="es-pd-dot g"></i></td></tr>' +
+      '<tr><td>vs. Vastese</td><td>Vastese</td><td>U19</td><td>Positivo <i class="es-pd-dot g"></i></td></tr>' +
+      '<tr><td>vs. Chieti</td><td>Chieti</td><td>U17</td><td>Molto positivo <i class="es-pd-dot g"></i></td></tr>' +
+      '<tr><td>vs. Termoli</td><td>Chieti</td><td>U17</td><td>Molto positivo <i class="es-pd-dot g"></i></td></tr>' +
+      '<tr><td>vs. Campobasso</td><td>Campobasso</td><td>U19</td><td>Positivo <i class="es-pd-dot g"></i></td></tr>' +
+      '<tr><td>vs. Castelfidardo</td><td>Castelfidardo</td><td>U18</td><td>In valutazione <i class="es-pd-dot y"></i></td></tr>' +
       '</tbody></table></section>' +
 
       '<section class="es-pd-card es-pd-trend"><h2>2023 vs 2024 vs 2025</h2>' +
       trendSvg() +
-      '<button type="button" class="es-pd-edit" data-md="edit">Modifica anagrafica</button>' +
+      '<button type="button" class="es-pd-edit" data-ob="edit">Modifica anagrafica</button>' +
       '</section>' +
       '</div></div>';
   }
 
   function bind(host) {
-    if (!host || host.dataset.mdBound === '1') return;
-    host.dataset.mdBound = '1';
+    if (!host || host.dataset.obBound === '1') return;
+    host.dataset.obBound = '1';
     host.addEventListener('click', function (e) {
-      var b = e.target.closest('[data-md]');
+      var b = e.target.closest('[data-ob]');
       if (!b) return;
-      var k = b.getAttribute('data-md');
+      var k = b.getAttribute('data-ob');
       if (k === 'home' && window.switchView) window.switchView('home', '#hero');
-      if (k === 'album' && window.openChiSegui) window.openChiSegui();
+      if (k === 'secret' && window.openSecretList) window.openSecretList();
       if (k === 'msgs' && window.openUserMessages) window.openUserMessages();
       if (k === 'edit') {
-        host.classList.remove('es-med-on');
-        var dash = document.getElementById('es-md');
+        host.classList.remove('es-obs-on');
+        var dash = document.getElementById('es-od');
         if (dash) dash.hidden = true;
         var g = document.getElementById('user-dossier-view-group');
-        if (g) g.classList.remove('is-med-dash');
+        if (g) g.classList.remove('is-obs-dash');
       }
     });
   }
 
   function render(user) {
     user = user || userObj();
-    if (!isMedico(user)) return;
+    if (!isObs(user)) return;
     hideOthers();
     var host = document.getElementById('es-staff-profile');
     var group = document.getElementById('user-dossier-view-group');
     if (!host) return;
-    var box = document.getElementById('es-md');
+    var box = document.getElementById('es-od');
     if (!box) {
       box = document.createElement('div');
-      box.id = 'es-md';
+      box.id = 'es-od';
       box.className = 'es-pd';
       host.insertBefore(box, host.firstChild);
     }
     box.innerHTML = html(user);
     box.hidden = false;
-    host.classList.add('es-med-on');
-    host.classList.remove('es-pd-on', 'es-ds-on', 'es-pres-on', 'es-vice-on', 'es-fisio-on', 'es-ma-on', 'es-obs-on');
+    host.classList.add('es-obs-on');
+    host.classList.remove('es-pd-on', 'es-ds-on', 'es-pres-on', 'es-vice-on', 'es-fisio-on', 'es-ma-on', 'es-med-on');
     if (group) {
-      group.classList.add('is-med-dash');
-      group.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-fisio-dash', 'is-ma-dash', 'is-obs-dash');
+      group.classList.add('is-obs-dash');
+      group.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-fisio-dash', 'is-ma-dash', 'is-med-dash');
     }
     bind(host);
   }
 
-  window.EliseeMedDash = { render: render, isMedico: isMedico };
+  window.EliseeObsDash = { render: render, isObs: isObs };
 
   document.addEventListener('elisee:view-changed', function (e) {
     var d = e && e.detail;
     if (d && d.view === 'user-dossier') {
       try {
         var u = userObj();
-        if (isMedico(u)) render(u);
+        if (isObs(u)) render(u);
       } catch (_) {}
     }
   });

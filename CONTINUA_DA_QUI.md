@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-20**
-Ultimo fatto: Area Tifoso = dashboard passione sportiva, tessera, registro presenze.
+Ultimo fatto: Area Osservatore = dashboard scouting, segnalazioni, Secret List.
 Feature precedente: Hub Mercato B2B (`cb9d60d`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -60,7 +60,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Dashboard Tifoso: passione, tessera, registro presenze |
+| (questo) | Dashboard Osservatore: scouting, segnalazioni, Secret List |
+| `feb1016` | Dashboard Tifoso: passione, tessera, registro presenze |
 | `ad90ff2` | Dashboard Staff Medico: visite, idoneità, compliance |
 | `2b4c64c` | Dashboard Match Analyst: report, video, scouting avversari |
 | `c0b1ad6` | Dashboard Fisioterapista |
@@ -126,6 +127,7 @@ Nota Vercel: lo store manager è su `/tmp` (effimero). In locale `state.json` è
 | Dashboard Match Analyst | `ma-dash.js` / `.css` — report, video, scouting |
 | Dashboard Staff Medico | `med-dash.js` / `.css` — visite, idoneità, compliance |
 | Dashboard Tifoso | `tifoso-dash.js` / `.css` — passione, tessera, presenze |
+| Dashboard Osservatore | `obs-dash.js` / `.css` — scouting, segnalazioni |
 | Scopri / follow | `scopri-profili.js` / `.css` |
 | Messaggi | `messaggi.js` / `.css` |
 | Mappa | `mappa-club.js` / `.css` |
@@ -155,6 +157,8 @@ Staff Medico: se ruolo staff è Medico sociale, dashboard visite mediche, idonei
 
 Tifoso: se il ruolo sito è Tifoso, dashboard passione sportiva (stadio, social, merchandising, trasferte), tessera del tifoso e registro presenze. Distinta da Giocatore e Staff. Cache `TF1`.
 
+Osservatore: se ruolo staff è Scout / Osservatore, dashboard scouting (valutazioni, partite visionate, segnalazioni), distinta dal DS. Rail Secret List. Cache `OB1`.
+
 Schede tecniche: da ogni annuncio in Bacheca → pulsante **Schede tecniche**. Le schede IA restano nella candidatura (`#schede-tecniche`), non via e-mail. Club: lista, scheda completa, confronto (fino a 3), stati (nuova / in valutazione / shortlist / scartata). Cache `ST1`.
 
 Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
@@ -163,6 +167,7 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-20** — Dashboard Osservatore (Scout): scouting, segnalazioni, Secret List. Cache `OB1`.
 - **2026-08-20** — Dashboard Tifoso: passione sportiva, tessera, registro presenze. Cache `TF1`.
 - **2026-08-20** — Dashboard Staff Medico (Medico sociale): visite, idoneità, compliance sanitaria. Cache `MD1`.
 - **2026-08-20** — Dashboard Match Analyst: report, video, scouting avversari, registro analisi partite. Cache `MA1`.
