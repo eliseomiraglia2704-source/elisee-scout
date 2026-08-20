@@ -275,13 +275,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
-  <link rel="stylesheet" href="style.css?v=20260820_ROLE1">
+  <link rel="stylesheet" href="style.css?v=20260820_PLAY1">
   <link rel="stylesheet" href="integrazioni.css?v=20260806_NOCORS">
   <link rel="preload" as="video" href="immagini/minigioco/intro.mp4?v=20260813_HQ2">
   <link rel="stylesheet" href="minigioco-carriera.css?v=20260814_TRIAL2">
   <link rel="stylesheet" href="autopilot.css?v=20260806_NOCORS">
   <link rel="stylesheet" href="squadre-select.css?v=20260814_KITFC3">
   <link rel="stylesheet" href="manager.css?v=20260820_MGR1">
+  <link rel="stylesheet" href="player-profile.css?v=20260820_PLAY1">
   <script>
     /* Boot OAuth: token in search O in hash (#hero?elisee_token=...). La sessione vince sempre. */
     (function () {
@@ -2686,6 +2687,192 @@
         <div class="pf-page-shade" aria-hidden="true"></div>
         <div class="container pf-page-inner">
 
+          <div id="es-player-profile" class="es-pp" hidden>
+            <div class="es-pp-top">
+              <h1 class="es-pp-title">Il mio profilo Player</h1>
+              <button type="button" class="es-pp-back" onclick="if(window.switchView){window.switchView('account','#account-portal');} return false;">Area account</button>
+            </div>
+
+            <section class="es-pp-card">
+              <div class="es-pp-avatar-row">
+                <div class="es-pp-avatar" id="es-pp-avatar">
+                  <img id="es-pp-photo-img" alt="Foto profilo" hidden>
+                  <svg id="es-pp-photo-fallback" class="es-pp-silhouette" viewBox="0 0 80 80" aria-hidden="true">
+                    <circle cx="40" cy="40" r="40" fill="#e6eef4"/>
+                    <circle cx="40" cy="30" r="13" fill="#9aafbe"/>
+                    <path d="M18 68c3.2-14.5 11.8-22 22-22s18.8 7.5 22 22" fill="#9aafbe"/>
+                  </svg>
+                </div>
+                <div class="es-pp-avatar-actions">
+                  <button type="button" class="es-pp-link" id="es-pp-photo-btn">Cambia foto</button>
+                  <input type="file" id="es-pp-photo-input" accept="image/jpeg,image/png,image/webp" hidden>
+                  <p class="es-pp-hint" id="es-pp-photo-err" hidden></p>
+                </div>
+              </div>
+
+              <label class="es-pp-field">
+                <span>Nome e cognome <i>*</i></span>
+                <input type="text" id="es-pp-fullname" placeholder="Es. Mario Rossi" autocomplete="name">
+              </label>
+
+              <div class="es-pp-grid2">
+                <label class="es-pp-field">
+                  <span>Anno di nascita <i>*</i></span>
+                  <select id="es-pp-birthyear"></select>
+                </label>
+                <label class="es-pp-field">
+                  <span>Nazionalità <i>*</i></span>
+                  <select id="es-pp-nation"></select>
+                </label>
+              </div>
+
+              <div class="es-pp-grid2">
+                <label class="es-pp-field">
+                  <span>Sport <i>*</i></span>
+                  <select id="es-pp-sport"></select>
+                </label>
+                <label class="es-pp-field">
+                  <span>Ruolo <i>*</i></span>
+                  <select id="es-pp-role"></select>
+                  <small class="es-pp-hint">I ruoli dipendono dallo sport selezionato</small>
+                </label>
+              </div>
+
+              <label class="es-pp-field">
+                <span>Biografia</span>
+                <textarea id="es-pp-bio" rows="4" maxlength="600" placeholder="Presentati in poche righe: caratteristiche, obiettivi, percorso."></textarea>
+              </label>
+
+              <div class="es-pp-grid2">
+                <label class="es-pp-field">
+                  <span>Altezza</span>
+                  <div class="es-pp-suffix">
+                    <input type="number" id="es-pp-height" min="130" max="230" step="1" inputmode="numeric" placeholder="cm">
+                    <em>cm</em>
+                  </div>
+                </label>
+                <label class="es-pp-field">
+                  <span>Peso</span>
+                  <div class="es-pp-suffix">
+                    <input type="number" id="es-pp-weight" min="35" max="150" step="1" inputmode="numeric" placeholder="kg">
+                    <em>kg</em>
+                  </div>
+                </label>
+              </div>
+
+              <label class="es-pp-field">
+                <span>Mano/Piede</span>
+                <select id="es-pp-foot">
+                  <option value="">Seleziona</option>
+                  <option value="Destro">Destro</option>
+                  <option value="Sinistro">Sinistro</option>
+                  <option value="Ambidestro">Ambidestro</option>
+                </select>
+              </label>
+            </section>
+
+            <section class="es-pp-card">
+              <div class="es-pp-sec-head">
+                <h2>Esperienze passate</h2>
+                <button type="button" class="es-pp-add" id="es-pp-exp-add">+ aggiungi</button>
+              </div>
+              <div class="es-pp-table-wrap">
+                <table class="es-pp-table">
+                  <thead>
+                    <tr>
+                      <th>Stagione</th>
+                      <th>Sport</th>
+                      <th>Club</th>
+                      <th>Ruolo</th>
+                      <th>Categoria</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="es-pp-exp-body"></tbody>
+                </table>
+              </div>
+              <p class="es-pp-empty" id="es-pp-exp-empty">Nessuna esperienza. Premi + aggiungi per inserire club e stagioni.</p>
+            </section>
+
+            <section class="es-pp-card">
+              <h2>Zona di interesse</h2>
+              <p class="es-pp-lead">In quali zone geografiche sei disponibile a giocare?</p>
+              <label class="es-pp-field">
+                <span>Paese</span>
+                <select id="es-pp-country"></select>
+              </label>
+              <div class="es-pp-localita" id="es-pp-localita">
+                <p class="es-pp-sub">Località</p>
+                <div class="es-pp-grid3">
+                  <label class="es-pp-field">
+                    <span>Regione</span>
+                    <select id="es-pp-region"></select>
+                  </label>
+                  <label class="es-pp-field">
+                    <span>Provincia</span>
+                    <select id="es-pp-province"></select>
+                  </label>
+                  <label class="es-pp-field">
+                    <span>Comune</span>
+                    <input type="text" id="es-pp-comune" list="es-pp-comuni-list" placeholder="Comune" autocomplete="off">
+                    <datalist id="es-pp-comuni-list"></datalist>
+                  </label>
+                </div>
+              </div>
+              <label class="es-pp-field" id="es-pp-city-wrap" hidden>
+                <span>Città</span>
+                <input type="text" id="es-pp-city" placeholder="Città">
+              </label>
+            </section>
+
+            <section class="es-pp-card">
+              <h2>Social</h2>
+              <label class="es-pp-field">
+                <span>Instagram</span>
+                <input type="text" id="es-pp-ig" placeholder="@username oppure URL">
+              </label>
+              <label class="es-pp-field">
+                <span>Facebook</span>
+                <input type="text" id="es-pp-fb" placeholder="Profilo o pagina">
+              </label>
+              <label class="es-pp-field">
+                <span>TikTok</span>
+                <input type="text" id="es-pp-tt" placeholder="@username">
+              </label>
+              <label class="es-pp-field">
+                <span>X</span>
+                <input type="text" id="es-pp-x" placeholder="@username">
+              </label>
+            </section>
+
+            <section class="es-pp-card">
+              <h2>Notifiche</h2>
+              <label class="es-pp-switch">
+                <input type="checkbox" id="es-pp-n-opp" checked>
+                <span class="es-pp-knob" aria-hidden="true"></span>
+                <span>Opportunità nella zona di interesse</span>
+              </label>
+              <label class="es-pp-switch">
+                <input type="checkbox" id="es-pp-n-msg" checked>
+                <span class="es-pp-knob" aria-hidden="true"></span>
+                <span>Messaggi da società e staff</span>
+              </label>
+              <label class="es-pp-switch">
+                <input type="checkbox" id="es-pp-n-email" checked>
+                <span class="es-pp-knob" aria-hidden="true"></span>
+                <span>Email di servizio</span>
+              </label>
+              <label class="es-pp-switch">
+                <input type="checkbox" id="es-pp-n-mkt">
+                <span class="es-pp-knob" aria-hidden="true"></span>
+                <span>Comunicazioni promozionali</span>
+              </label>
+            </section>
+
+            <button type="button" class="es-pp-save" id="es-pp-save">Salva profilo</button>
+          </div>
+
+          <div id="dossier-legacy">
           <header class="pf-header">
             <div class="pf-header-text">
               <p class="portfolio-kicker">Dossier</p>
@@ -2781,6 +2968,8 @@
               </button>
             </div>
           </div>
+
+          </div><!-- /#dossier-legacy -->
 
         </div><!-- /.container -->
       </section>
@@ -4106,7 +4295,8 @@
   </script>
   <script src="squadre-select.js?v=20260820_VERW1"></script>
   <script src="manager-runtime.js?v=20260820_MGR1"></script>
-  <script src="app.js?v=20260820_ROLE1"></script>
+  <script src="app.js?v=20260820_PLAY1"></script>
+  <script src="player-profile.js?v=20260820_PLAY1"></script>
   <script>
     /* FORCED INLINE HOT-PATCH: Overrides PDF export, specific report HTML & modal close functions instantly at runtime */
     (function() {

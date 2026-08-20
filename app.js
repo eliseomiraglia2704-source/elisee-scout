@@ -103,7 +103,9 @@ document.addEventListener('DOMContentLoaded', () => {
   window.saveActiveUser = function(updatedUser) {
     localStorage.setItem('elisee_active_user', JSON.stringify(updatedUser));
     if (typeof window.renderActiveDashboard === 'function') window.renderActiveDashboard();
-    updateDossierView();
+    if (typeof window.updateDossierView === 'function') window.updateDossierView();
+    else if (typeof updateDossierView === 'function') updateDossierView();
+    if (typeof window.syncPlayerProfileView === 'function') window.syncPlayerProfileView(updatedUser);
   };
 
   function getApprovalStep() {
@@ -494,6 +496,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof window.applyRoleDossierInterface === 'function') {
       window.applyRoleDossierInterface(user);
     }
+    if (typeof window.syncPlayerProfileView === 'function') {
+      window.syncPlayerProfileView(user);
+    }
+    window.updateDossierView = updateDossierView;
     if (window.lucide) lucide.createIcons();
   }
 
