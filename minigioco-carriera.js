@@ -12,7 +12,8 @@
     consent: 'elisee_career_consent_v1',
     publishPref: 'elisee_career_publish_pref_v1',
     savePref: 'elisee_career_save_pref_v1',
-    publicFeed: 'elisee_career_public_feed_v1'
+    publicFeed: 'elisee_career_public_feed_v1',
+    identity: 'elisee_career_identity_v1'
   };
 
   var state = {
@@ -27,6 +28,9 @@
     player: null,
     clubs: null,
     nationFilter: '',
+    trialFilter: '',
+    trialClub: null,
+    trialResult: null,
     publishPublic: false,
     saveToAccount: true
   };
@@ -210,6 +214,9 @@
     // rimuovi duplicati per codice
     return arr.findIndex(function(x) { return x.c === n.c; }) === i;
   });
+  NATIONS.forEach(function (n) {
+    n.o = 'immagini/nazioni-loghi/' + String(n.c || '').toLowerCase() + '.png';
+  });
 
   // pitch positions (top = attack); etichette IT richieste (id EN per logica)
   var POSITIONS = [
@@ -311,7 +318,7 @@
         var logo = n.o
           ? '<img class="es-mg-nation-logo" src="' +
             esc(n.o) +
-            '?v=20260807" alt="" width="28" height="28" loading="lazy" onerror="this.style.display=\'none\';var s=this.nextElementSibling;if(s)s.hidden=false;" />' +
+            '?v=20260814_CAP" alt="" width="28" height="28" loading="lazy" onerror="this.style.display=\'none\';var s=this.nextElementSibling;if(s)s.hidden=false;" />' +
             '<span class="es-mg-flag" hidden>' +
             (n.f || '') +
             '</span>'
@@ -578,6 +585,105 @@
     } catch (e) {}
   }
 
+  function rememberedSurname() {
+    try {
+      var pref = load(LS.identity, null);
+      if (pref && String(pref.surname || '').trim().length >= 2) {
+        return String(pref.surname).trim();
+      }
+    } catch (e) {}
+    try {
+      var saved = load(LS.career, null);
+      if (saved && String(saved.surname || '').trim().length >= 2) {
+        return String(saved.surname).trim();
+      }
+    } catch (e2) {}
+    try {
+      var u = getActiveAccount() || {};
+      if (String(u.cognome || '').trim().length >= 2) return String(u.cognome).trim();
+    } catch (e3) {}
+    return '';
+  }
+
+  function rememberSurname(name) {
+    name = String(name || '').trim();
+    if (name.length < 2) return;
+    state.surname = name;
+    rememberIdentity();
+  }
+
+  function rememberIdentity() {
+    try {
+      var prev = load(LS.identity, {}) || {};
+      if (typeof prev !== 'object' || !prev) prev = {};
+      var sn = String(state.surname || '').trim();
+      if (sn.length >= 2) prev.surname = sn;
+      if (state.number) prev.number = state.number;
+      if (state.foot) prev.foot = state.foot;
+      if (state.nation) prev.nation = state.nation;
+      if (state.nationCode) prev.nationCode = state.nationCode;
+      if (state.position) prev.position = state.position;
+      saveRaw(LS.identity, prev);
+    } catch (e) {}
+  }
+
+  function hydrateIdentity() {
+    var pref = null;
+    try {
+      pref = load(LS.identity, null);
+    } catch (e) {
+      pref = null;
+    }
+    if (!pref || typeof pref !== 'object') pref = {};
+    if (String(state.surname || '').trim().length < 2) {
+      var s = rememberedSurname();
+      if (s) state.surname = s;
+    }
+    if (pref.number && !state._idHydrated) {
+      var n = parseInt(pref.number, 10);
+      if (!isNaN(n) && n >= 1 && n <= 99) state.number = n;
+    }
+    if (pref.foot && !state._idHydrated) state.foot = pref.foot === 'left' ? 'left' : 'right';
+    if (pref.nation && !state._idHydrated) {
+      state.nation = pref.nation;
+      state.nationCode = pref.nationCode || state.nationCode;
+    }
+    if (!state.position && pref.position) state.position = pref.position;
+    state._idHydrated = true;
+  }
+
+  function liveSavedCareer() {
+    var saved = null;
+    try {
+      saved = state.player && state.player.history && state.player.history.length
+        ? state.player
+        : load(LS.career, null);
+    } catch (e) {
+      saved = null;
+    }
+    if (!saved || !saved.history || !saved.history.length) return null;
+    if ((saved.age || 16) >= 38) return null;
+    return saved;
+  }
+
+  function savedCareerLabel(p) {
+    if (!p) return '';
+    var club = (p.club && p.club.n) || (p.history && p.history.length ? p.history[p.history.length - 1].club : '');
+    var bits = [(p.surname || 'Giocatore') + ', ' + (p.age || 16) + ' anni'];
+    if (club && club !== 'Svincolato') bits.push(club);
+    bits.push('OVR ' + (p.ovr || 49));
+    return bits.join(' · ');
+  }
+
+  function wipeCareerSave() {
+    state.player = null;
+    try {
+      localStorage.removeItem(LS.career);
+      var ak = accountCareerKey();
+      if (ak) localStorage.removeItem(ak);
+    } catch (e) {}
+  }
+
   function getPublicCareers() {
     var feed = load(LS.publicFeed, []);
     if (!Array.isArray(feed)) return [];
@@ -810,7 +916,7 @@
       cb(state.clubs);
       return;
     }
-    fetch('data/squadre/minigioco_clubs.json?v=20260814_QA10', { cache: 'no-store' })
+    fetch('data/squadre/minigioco_clubs.json?v=20260817_DLOGO', { cache: 'no-store' })
       .then(function (r) {
         return r.json();
       })
@@ -894,6 +1000,7 @@
       c.failed = false;
       c.failedFrom = 0;
       c.rebuild = '';
+      c.isLoan = false;
     });
   }
 
@@ -987,8 +1094,64 @@
     return c;
   }
 
+  var U23_PARENTS = {
+    'JUVENTUS U23': 'JUVENTUS',
+    'INTER U23': 'INTER',
+    'MILAN U23': 'MILAN',
+    'MILAN FUTURO': 'MILAN',
+    'ATALANTA U23': 'ATALANTA'
+  };
+
+  function isU23Club(c) {
+    var n = String((c && c.n) || c || '').toUpperCase();
+    return /U23|NEXT GEN|UNDER 23|FUTURO/.test(n);
+  }
+
+  function u23ParentName(c) {
+    var n = String((c && c.n) || c || '').toUpperCase().replace(/\s+/g, ' ').trim();
+    if (U23_PARENTS[n]) return U23_PARENTS[n];
+    var stripped = n.replace(/\s*(U23|NEXT GEN|UNDER 23|FUTURO)\s*/g, ' ').replace(/\s+/g, ' ').trim();
+    return stripped && stripped !== n ? stripped : '';
+  }
+
+  function findFirstTeam(u23) {
+    var parent = u23ParentName(u23);
+    if (!parent) return null;
+    var hit = (state.clubs || []).filter(function (c) {
+      return c && String(c.n || '').toUpperCase() === parent && !isU23Club(c);
+    })[0];
+    return hit || null;
+  }
+
+  function canCallUpFromU23(p, u23) {
+    if (!p || !isU23Club(u23)) return false;
+    var age = p.age || 16;
+    var ovr = Number(p.ovr) || 49;
+    if (age > 24) return false;
+    var tier = clubLeagueTier(u23);
+    if (tier >= 4) return age <= 21 && ovr >= 58;
+    if (age <= 21 && ovr >= 56) return true;
+    if (age <= 23 && ovr >= 60) return true;
+    if (age <= 24 && ovr >= 64) return true;
+    return (p.lastForm || 0) >= 3 && age <= 23;
+  }
+
+  function makeCallUpOffer(p, u23, used) {
+    var first = findFirstTeam(u23);
+    if (!first || (used && used[first.n])) return null;
+    var out = Object.assign({}, liveClub(first) || first);
+    out.isCallUp = true;
+    out.isYouth = false;
+    out.isLoan = false;
+    out.isJumpUp = true;
+    out.isU23 = false;
+    if (used) used[out.n] = true;
+    return out;
+  }
+
   function isBigYouthClub(c) {
     if (!c) return false;
+    if (isU23Club(c)) return false;
     if (c.world) return true;
     var n = String(c.n || '').toUpperCase();
     return /JUVENTUS|INTER|MILAN|NAPOLI|ROMA|LAZIO|ATALANTA|FIORENTINA|BARCELONA|REAL MADRID|BAYERN|MANCHESTER|LIVERPOOL|CHELSEA|ARSENAL|PSG|AJAX|BENFICA|PORTO|SPORTING/.test(n);
@@ -1150,7 +1313,7 @@
     var logged = isAccountLogged();
     var concept =
       '<div class="es-mg-hub-concept">' +
-      '<p>I dati della carriera vengono <strong>salvati</strong> e trasformati in <strong>statistiche</strong>: i nostri <strong>agenti IA</strong> si attivano subito, le elaborano e le presentano in automatico alle <strong>società e ai club</strong> già iscritti o che si iscriveranno, in modo che possano vederle sia le <strong>stesse figure interne al club</strong>, sia quelle <strong>attualmente svincolate</strong> — Direttori Sportivi, Fisioterapisti, Direttori Tecnici, Match Analyst, Amministratore Delegato (AD) / Direttore Generale (DG), Allenatore in seconda, Preparatore dei portieri, Team Manager e Addetto stampa / Social Media Manager.</p>' +
+      '<p>La carriera si <strong>salva</strong> e può essere vista da club e staff iscritti.</p>' +
       '</div>';
     if (logged) {
       return (
@@ -1159,13 +1322,13 @@
         '<input type="checkbox" id="es-mg-publish-check"' +
         (state.publishPublic ? ' checked' : '') +
         ' />' +
-        '<span>Salva e rendi <strong>pubblica</strong> questa carriera sul mio account <em>prima di iniziare</em>, visibile a club, staff interno e figure svincolate.</span>' +
+        '<span>Rendi <strong>pubblica</strong> la carriera sul mio account.</span>' +
         '</label>'
       );
     }
     return (
       concept +
-      '<p class="es-mg-hub-publish-hint">Accedi o registrati per <strong>salvare</strong> la carriera sul tuo account e renderla <strong>pubblica già prima di iniziare</strong>.</p>'
+      '<p class="es-mg-hub-publish-hint">Accedi per salvare la carriera sul tuo account.</p>'
     );
   }
 
@@ -1173,6 +1336,8 @@
   function renderHub() {
     state.step = 'hub';
     state.publishPublic = loadPublishPref();
+    hydrateIdentity();
+    var savedNow = liveSavedCareer();
     var idn = notifyAgentsUserStatus('apertura hub Carriera Giocatore');
     activateCareerAgents('apertura hub Carriera Giocatore');
     var authBtns = !idn.logged
@@ -1195,18 +1360,33 @@
         '</span>' +
         '<span class="es-mg-hub-title">Carriera Giocatore</span>' +
         '<span class="es-mg-hub-tags">Serie D (A–I) → Serie C (A/B/C) → Serie B · Top 10 mondiali</span>' +
-        '<span class="es-mg-hub-desc">Regola fondamentale: in <strong>Serie C</strong> ci sono 3 gironi (A, B, C): chi vince il proprio girone sale in <strong>Serie B</strong>. In <strong>Serie D</strong> vale lo stesso per ogni girone (A–I): il vincitore sale in <strong>Serie C</strong>. Poi puoi arrivare in Serie A e nei 10 campionati top mondiali.</span>' +
+        '<span class="es-mg-hub-desc">In <strong>Serie D</strong> e <strong>Serie C</strong> sale chi vince il girone. Poi Serie B, Serie A e i top mondiali.</span>' +
         publishBlockHtml() +
         '</div>' +
         '<div class="es-mg-hub-card is-empty" id="es-mg-hub-slot" aria-disabled="true" aria-label="Slot giochi in arrivo">' +
         '<span class="es-mg-hub-empty" aria-hidden="true"></span>' +
         '</div>' +
         '</div>' +
-        '<div class="es-mg-hub-playwrap">' +
-        '<div class="es-mg-hub-playcol">' +
-        '<button type="button" class="es-mg-hub-play" id="es-mg-hub-play">Gioca</button>' +
+        '<div class="es-mg-hub-playwrap' + (savedNow ? ' is-split' : '') + '">' +
+        (savedNow
+          ? '<div class="es-mg-hub-playcol">' +
+            '<button type="button" class="es-mg-hub-play" id="es-mg-hub-continue">Continua</button>' +
+            '<span class="es-mg-hub-continue-meta">' + esc(savedCareerLabel(savedNow)) + '</span>' +
+            '</div>' +
+            '<div class="es-mg-hub-playcol">' +
+            '<button type="button" class="es-mg-hub-play es-mg-hub-play-ghost" id="es-mg-hub-new">Nuova carriera</button>' +
+            '</div>'
+          : '<div class="es-mg-hub-playcol">' +
+            '<button type="button" class="es-mg-hub-play" id="es-mg-hub-play">Gioca</button>' +
+            '</div>') +
         '</div>' +
-        '</div>' +
+        '<div class="es-mg-confirm-mask" id="es-mg-new-mask" hidden>' +
+        '<div class="es-mg-confirm-box" role="dialog" aria-modal="true">' +
+        '<p>Vuoi davvero cancellare <strong>' + esc(savedNow ? savedCareerLabel(savedNow) : 'questa carriera') + '</strong>?</p>' +
+        '<div class="es-mg-confirm-btns">' +
+        '<button type="button" class="es-mg-btn-half ghost" id="es-mg-new-no">No</button>' +
+        '<button type="button" class="es-mg-btn-half primary" id="es-mg-new-yes">Sì, nuova carriera</button>' +
+        '</div></div></div>' +
         '</div>'
     );
     bindClose();
@@ -1233,24 +1413,70 @@
         e.stopPropagation();
       });
     }
-    function enterCareer() {
+    function enterNewCareer() {
       activateCareerAgents('avvio simulazione carriera');
+      hydrateIdentity();
       loadClubs(function () {
         renderLanding();
       });
     }
+    function continueCareer() {
+      var saved = liveSavedCareer();
+      if (!saved) {
+        enterNewCareer();
+        return;
+      }
+      activateCareerAgents('ripresa carriera');
+      state.player = saved;
+      if (saved.mode) state.mode = saved.mode;
+      if (saved.position) state.position = saved.position;
+      if (saved.nation) state.nation = saved.nation;
+      if (saved.nationCode) state.nationCode = saved.nationCode;
+      if (saved.surname) rememberSurname(saved.surname);
+      loadClubs(function () {
+        renderCareer(false);
+      });
+    }
+    function askNewCareer() {
+      if (!liveSavedCareer()) {
+        enterNewCareer();
+        return;
+      }
+      var mask = document.getElementById('es-mg-new-mask');
+      if (mask) mask.hidden = false;
+    }
     var career = document.getElementById('es-mg-hub-career');
     var play = document.getElementById('es-mg-hub-play');
+    var cont = document.getElementById('es-mg-hub-continue');
+    var neu = document.getElementById('es-mg-hub-new');
+    var noBtn = document.getElementById('es-mg-new-no');
+    var yesBtn = document.getElementById('es-mg-new-yes');
     if (career) {
-      career.onclick = enterCareer;
+      career.onclick = savedNow ? continueCareer : enterNewCareer;
       career.onkeydown = function (e) {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          enterCareer();
+          if (savedNow) continueCareer();
+          else enterNewCareer();
         }
       };
     }
-    if (play) play.onclick = enterCareer;
+    if (play) play.onclick = enterNewCareer;
+    if (cont) cont.onclick = continueCareer;
+    if (neu) neu.onclick = askNewCareer;
+    if (noBtn) {
+      noBtn.onclick = function () {
+        var mask = document.getElementById('es-mg-new-mask');
+        if (mask) mask.hidden = true;
+      };
+    }
+    if (yesBtn) {
+      yesBtn.onclick = function () {
+        wipeCareerSave();
+        hydrateIdentity();
+        enterNewCareer();
+      };
+    }
     bindHubAuthButtons();
   }
 
@@ -1448,6 +1674,7 @@
 
   function renderIdentity(focusSel) {
     state.step = 'identity';
+    hydrateIdentity();
     var num = state.number || 10;
     var canConfirm = identityReady();
     openShell(
@@ -1509,14 +1736,156 @@
     document.getElementById('es-mg-back').onclick = renderLanding;
     document.getElementById('es-mg-confirm').onclick = function () {
       syncIdentityInputs();
+      rememberIdentity();
       if (!identityReady()) {
         refreshConfirmBtn();
         return;
       }
       if (!createPlayer()) return;
-      renderCareer(true);
+      loadClubs(function () {
+        renderTrial();
+      });
     };
     bindIdentityControls(focusSel);
+  }
+
+  function trialChance(club) {
+    if (!club) return 0;
+    if (club.world) return 0.07;
+    if (isU23Club(club)) return 0.44;
+    var t = clubLeagueTier(club);
+    if (t >= 4) return 0.7;
+    if (t === 3) return 0.56;
+    if (t === 2) return 0.38;
+    if (isBigYouthClub(club)) return 0.22;
+    return 0.14;
+  }
+
+  function trialClubListHtml() {
+    var q = String(state.trialFilter || '').toLowerCase();
+    var list = (state.clubs || []).filter(function (c) {
+      if (!c || !c.n || c.isFree) return false;
+      if (q && String(c.n).toLowerCase().indexOf(q) < 0) return false;
+      return true;
+    });
+    list = list.slice(0, 48);
+    if (!list.length) return '<div class="es-mg-muted">Nessuna squadra trovata.</div>';
+    return list.map(function (c) {
+      var on = state.trialClub && state.trialClub.n === c.n ? ' is-on' : '';
+      return (
+        '<button type="button" class="es-mg-trial-club' + on + '" data-club="' + esc(c.n) + '">' +
+        (c.o ? '<img src="' + esc(c.o) + '" alt="" class="es-mg-trial-logo" onerror="this.style.display=\'none\'">' : '<span class="es-mg-trial-logo"></span>') +
+        '<span class="es-mg-trial-txt">' +
+        '<span class="es-mg-trial-name">' + esc(c.n) + '</span>' +
+        '<span class="es-mg-trial-lg">' + esc(shortLeague(c.l, c.n) || c.l || '') + '</span>' +
+        '</span></button>'
+      );
+    }).join('');
+  }
+
+  function renderTrial() {
+    state.step = 'trial';
+    if (!state.clubs || !state.clubs.length) {
+      renderCareer(false);
+      return;
+    }
+    var picked = state.trialClub;
+    var result = state.trialResult;
+    var body;
+    if (result) {
+      var ok = !!result.ok;
+      body =
+        '<div class="es-mg-trial-result ' + (ok ? 'is-ok' : 'is-bad') + '">' +
+        (result.club && result.club.o
+          ? '<img src="' + esc(result.club.o) + '" alt="" class="es-mg-trial-result-logo">'
+          : '') +
+        '<h3>' + (ok ? 'Provino superato' : 'Provino non superato') + '</h3>' +
+        '<p>' + (ok
+          ? (result.club.n + ' ti prende dopo ' + result.weeks + ' settiman' + (result.weeks === 1 ? 'a' : 'e') + '. La carriera parte da qui.')
+          : (result.club.n + ' non ti ha preso. Restano le tre offerte da svincolato.')) +
+        '</p>' +
+        '<button type="button" class="es-mg-btn-full primary" id="es-mg-trial-go">' +
+        (ok ? 'Inizia la carriera' : 'Vedi le offerte') +
+        '</button></div>';
+    } else {
+      body =
+        '<div class="es-mg-search-wrap">' +
+        '<input type="search" class="es-mg-search" id="es-mg-trial-q" placeholder="Cerca una squadra" value="' +
+        esc(state.trialFilter || '') +
+        '" /></div>' +
+        '<div class="es-mg-trial-list" id="es-mg-trial-list">' + trialClubListHtml() + '</div>' +
+        '<div class="es-mg-trial-actions">' +
+        '<button type="button" class="es-mg-btn-half ghost" id="es-mg-trial-skip">Salta, vai alle offerte</button>' +
+        '<button type="button" class="es-mg-btn-half primary" id="es-mg-trial-run"' +
+        (picked ? '' : ' disabled') +
+        '>Fai il provino' + (picked ? ' a ' + esc(picked.n) : '') + '</button>' +
+        '</div>';
+    }
+    openShell(
+      topBar() +
+        '<div class="es-mg-trial">' +
+        '<h2 class="es-mg-identity-title">Provino</h2>' +
+        '<p class="es-mg-trial-lead">Da svincolato puoi fare 1 o 2 settimane di provino in una squadra a scelta. Se ti prendono, parti da lì. Altrimenti resti svincolato con le tre offerte classiche.</p>' +
+        body +
+        '</div>'
+    );
+    bindClose();
+    var q = document.getElementById('es-mg-trial-q');
+    if (q) {
+      q.oninput = function () {
+        state.trialFilter = q.value;
+        var list = document.getElementById('es-mg-trial-list');
+        if (list) list.innerHTML = trialClubListHtml();
+        bindTrialClubs();
+      };
+    }
+    function bindTrialClubs() {
+      root.querySelectorAll('.es-mg-trial-club').forEach(function (btn) {
+        btn.onclick = function () {
+          var name = btn.getAttribute('data-club');
+          var found = (state.clubs || []).filter(function (c) {
+            return c && c.n === name;
+          })[0];
+          state.trialClub = found ? Object.assign({}, found) : null;
+          renderTrial();
+        };
+      });
+    }
+    bindTrialClubs();
+    var skip = document.getElementById('es-mg-trial-skip');
+    if (skip) skip.onclick = function () {
+      state.trialClub = null;
+      state.trialResult = null;
+      renderCareer(false);
+    };
+    var run = document.getElementById('es-mg-trial-run');
+    if (run) run.onclick = function () {
+      if (!state.trialClub) return;
+      var weeks = Math.random() < 0.55 ? 1 : 2;
+      var ok = Math.random() < trialChance(state.trialClub);
+      state.trialResult = { club: state.trialClub, weeks: weeks, ok: ok };
+      renderTrial();
+    };
+    var go = document.getElementById('es-mg-trial-go');
+    if (go) go.onclick = function () {
+      var res = state.trialResult;
+      var club = res && res.club;
+      state.trialResult = null;
+      state.trialClub = null;
+      if (res && res.ok && club && state.player) {
+        club = Object.assign({}, club);
+        club.isLoan = false;
+        if (clubLeagueTier(club) === 1 && isBigYouthClub(club) && !isU23Club(club) && (state.player.ovr || 49) < 60) {
+          club.isYouth = true;
+        }
+        seasonSim(state.player, club);
+        save(LS.career, state.player);
+        renderCareer(true);
+        return;
+      }
+      if (state.player) state.player.trialFailed = res && res.club ? res.club.n : '';
+      renderCareer(false);
+    };
   }
 
   function syncIdentityInputs() {
@@ -1547,10 +1916,12 @@
       sn.oninput = function () {
         paintJersey();
         state.surname = String(sn.value || '').trim();
+        rememberSurname(state.surname);
         refreshConfirmBtn();
       };
       sn.onblur = function () {
         state.surname = String(sn.value || '').trim();
+        rememberSurname(state.surname);
         refreshConfirmBtn();
       };
     }
@@ -1565,6 +1936,7 @@
       btn.onclick = function () {
         syncIdentityInputs();
         state.foot = btn.getAttribute('data-foot') || 'right';
+        rememberIdentity();
         renderIdentity('#es-mg-surname');
       };
     });
@@ -1581,6 +1953,7 @@
         syncIdentityInputs();
         state.nation = btn.getAttribute('data-n');
         state.nationCode = btn.getAttribute('data-c');
+        rememberIdentity();
         renderIdentity();
       };
     });
@@ -1588,6 +1961,7 @@
       btn.onclick = function () {
         syncIdentityInputs();
         state.position = btn.getAttribute('data-pos');
+        rememberIdentity();
         renderIdentity();
       };
     });
@@ -1996,6 +2370,12 @@
       var want = Number(r.t);
       if (!isLegalTier(c, want)) {
         guardClub(c, false);
+        c.justPromoted = false;
+        c.justRelegated = false;
+        c.justFailed = false;
+        c.failed = false;
+        c.failedFrom = 0;
+        c.rebuild = '';
         return;
       }
       c.t = want;
@@ -2018,11 +2398,15 @@
   function clubPrestige(club) {
     var n = String((club && club.n) || '').toUpperCase();
     if (!n || n === 'SVINCOLATO') return 0.35;
+    if (isU23Club(club)) {
+      var tU = clubLeagueTier(club);
+      return tU === 3 ? 0.62 : 0.5;
+    }
     var table = [
       ['REAL MADRID', 1.62], ['BARCELONA', 1.58], ['BAYERN', 1.55], ['MANCHESTER CITY', 1.58],
       ['LIVERPOOL', 1.48], ['PSG', 1.5], ['JUVENTUS', 1.52], ['INTER', 1.48], ['MILAN', 1.46],
       ['NAPOLI', 1.38], ['ROMA', 1.3], ['LAZIO', 1.26], ['ATALANTA', 1.24], ['FIORENTINA', 1.16],
-      ['SAMPORIA', 1.08], ['TORINO', 1.1], ['BOLOGNA', 1.12], ['UDINESE', 1.02],
+      ['SAMPDORIA', 1.08], ['TORINO', 1.1], ['BOLOGNA', 1.12], ['UDINESE', 1.02],
       ['GENOA', 1.04], ['CAGLIARI', 1.0], ['LECCE', 0.96], ['EMPOLI', 0.94],
       ['ASCOLI', 0.82], ['REGGIANA', 0.8], ['PRO SESTO', 0.68], ['PESCARA', 0.84],
       ['PALERMO', 0.9], ['PARMA', 0.92], ['VENEZIA', 0.88], ['BARI', 0.86]
@@ -2096,7 +2480,11 @@
       posLabel: posLabel(state.position),
       nation: state.nation,
       nationCode: state.nationCode,
-      surname: (state.surname || '').trim(),
+      surname: (function () {
+        var sn = (state.surname || '').trim();
+        rememberSurname(sn);
+        return sn;
+      })(),
       foot: state.foot === 'left' ? 'left' : 'right',
       ovr: ovr,
       hiddenPot: 74 + rand(0, 5),
@@ -2120,8 +2508,22 @@
       caps: 0,
       natGoals: 0,
       natAst: 0,
+      u19Caps: 0,
+      u19Goals: 0,
+      u21Caps: 0,
+      u21Goals: 0,
+      contractYears: 0,
+      wageWeek: 0,
+      frozenOffers: null,
+      pendingDeal: null,
+      pendingRoleChange: null,
+      pendingCaptain: null,
+      isCaptain: false,
+      captainClub: '',
+      roleChanged: false,
       mode: state.mode
     };
+    rememberIdentity();
     save(LS.career, state.player);
     save(LS.consent, true);
     return true;
@@ -2225,6 +2627,22 @@
     return '';
   }
 
+  function clubTrophyPower(club) {
+    if (!club) return 0.12;
+    var n = String(club.n || '').toUpperCase();
+    if (isU23Club(club)) return 0.1;
+    if (/REAL MADRID|BARCELONA|BAYERN|MANCHESTER CITY|LIVERPOOL|PSG/.test(n)) return 0.94;
+    if (/JUVENTUS|INTER|MILAN|ARSENAL|CHELSEA|ATLETICO|NAPOLI/.test(n)) return 0.82;
+    if (/TOTTENHAM|DORTMUND|LEIPZIG|BENFICA|PORTO|AJAX|ATLÉTICO/.test(n)) return 0.7;
+    if (/ROMA|LAZIO|ATALANTA|FIORENTINA|SEVILLA|LEVERKUSEN|MILAN/.test(n)) return 0.58;
+    var t = clubLeagueTier(club);
+    var pr = clubPrestige(club);
+    if (club.world || t === 1) return Math.min(0.62, 0.28 + (pr - 0.9) * 0.4);
+    if (t === 2) return 0.2 + (pr >= 0.86 ? 0.08 : 0);
+    if (t === 3) return 0.16;
+    return 0.14;
+  }
+
   function generateSeasonTrophies(p, club, newOvr, stats, age) {
     var trophies = [];
     var league = String((club && (club.l || club.league)) || '');
@@ -2233,30 +2651,37 @@
     var ga = ((stats && stats.goals) || 0) + ((stats && stats.assists) || 0);
     var title = leagueTitleKey(league);
     var cup = leagueCupKey(league);
-    var titleChance = tier === 4 ? 0.08 : tier === 3 ? 0.06 : tier === 2 ? 0.04 : 0.03;
-    if (newOvr >= (tier === 1 ? 86 : tier === 2 ? 74 : tier === 3 ? 64 : 58) && apps >= 24 && Math.random() < titleChance) {
-      if (title) trophies.push(title);
+    var power = clubTrophyPower(club);
+    if (p && p.isCaptain) power = Math.min(1, power + 0.04);
+    if (apps < 8 || (p && p.eventMods && p.eventMods.suspended)) return trophies;
+    var titleChance = (tier === 1 ? 0.055 : tier === 2 ? 0.08 : 0.11) + power * (tier === 1 ? 0.22 : 0.12);
+    if (title && Math.random() < titleChance) trophies.push(title);
+    var cupChance = 0.08 + power * 0.12;
+    if (cup && Math.random() < cupChance) {
+      trophies.push(cup);
+      if (cup === 'coppa_italia' && Math.random() < 0.28 + power * 0.15) trophies.push('supercoppa_italia');
+      if (cup === 'coppa_serie_c' && Math.random() < 0.22) trophies.push('supercoppa_serie_c');
     }
-    if (apps >= 18 && Math.random() < (tier === 1 ? 0.05 : 0.08)) {
-      if (cup) trophies.push(cup);
-      if (cup === 'coppa_italia' && Math.random() < 0.25) trophies.push('supercoppa_italia');
-      if (cup === 'coppa_serie_c' && Math.random() < 0.2) trophies.push('supercoppa_serie_c');
+    if (tier === 1 || (club && club.world)) {
+      var cl = power * 0.22;
+      if ((newOvr || 49) < 68) cl *= 0.5;
+      if (apps < 16) cl *= 0.55;
+      if (Math.random() < cl) {
+        trophies.push('champions_league');
+        if (Math.random() < 0.32) trophies.push('supercoppa_euro');
+        if (Math.random() < 0.22) trophies.push('club_world_cup');
+      } else if (Math.random() < 0.08 + power * 0.1) {
+        trophies.push('europa_league');
+      } else if (Math.random() < 0.07 + (1 - power) * 0.05) {
+        trophies.push('conference_league');
+      }
     }
-    if (tier === 1 && newOvr >= 87 && apps >= 26 && Math.random() < 0.04) {
-      trophies.push('champions_league');
-      if (Math.random() < 0.35) trophies.push('supercoppa_euro');
-      if (Math.random() < 0.25) trophies.push('club_world_cup');
-    } else if (tier === 1 && newOvr >= 82 && Math.random() < 0.05) {
-      trophies.push('europa_league');
-    } else if (tier === 1 && newOvr >= 76 && Math.random() < 0.05) {
-      trophies.push('conference_league');
-    }
-    if (newOvr >= 90 && ga >= 20 && Math.random() < 0.03) trophies.push('ballon_dor');
-    if (newOvr >= 86 && ga >= 14 && Math.random() < 0.04) trophies.push('player_of_year');
+    if (newOvr >= 88 && ga >= 18 && Math.random() < 0.045) trophies.push('ballon_dor');
+    if (newOvr >= 84 && ga >= 12 && Math.random() < 0.055) trophies.push('player_of_year');
     var year = seasonYearOf(age);
-    if ((p.caps || 0) >= 8 && newOvr >= 84) {
-      if (year % 4 === 2 && Math.random() < 0.12) trophies.push('world_cup');
-      if (year % 4 === 0 && Math.random() < 0.12) trophies.push('euro_cup');
+    if ((p.caps || 0) >= 8 && newOvr >= 82) {
+      if (year % 4 === 2 && Math.random() < 0.16) trophies.push('world_cup');
+      if (year % 4 === 0 && Math.random() < 0.16) trophies.push('euro_cup');
     }
     return trophies;
   }
@@ -2552,11 +2977,12 @@
     (p && p.history ? p.history : []).forEach(function (h) {
       if (!h) return;
       if (h.ovr > best) best = h.ovr;
-      if (clubLeagueTier({ l: h.league, t: h.t }) === 1 && (h.apps || 0) >= 18) aGood += 1;
+      if (clubLeagueTier({ l: h.league, t: h.t }) === 1 && (h.apps || 0) >= 16) aGood += 1;
     });
-    if (clubLeagueTier(club) === 1) pot = Math.max(pot, 84);
-    if (aGood >= 1) pot = Math.max(pot, 86);
-    if (aGood >= 3 && best >= 76) pot = Math.max(pot, 89);
+    if (clubLeagueTier(club) === 1) pot = Math.max(pot, 86);
+    if (aGood >= 1) pot = Math.max(pot, 88);
+    if (aGood >= 2 && best >= 76) pot = Math.max(pot, 89);
+    if (aGood >= 3 && best >= 80) pot = Math.max(pot, 90);
     if (aGood >= 5 && best >= 82) pot = Math.max(pot, 92);
     if (aGood >= 7 && best >= 86) pot = 94;
     pot = Math.min(94, pot);
@@ -2587,10 +3013,11 @@
       else if (gap >= 5) delta = rand(1, 2);
       else if (gap > 0) delta = Math.random() < 0.6 ? 1 : 0;
     } else if (age <= 28) {
-      if (gap >= 8) delta = rand(1, 2);
-      else if (gap > 0) delta = Math.random() < 0.5 ? 1 : 0;
+      if (gap >= 6) delta = rand(1, 2);
+      else if (gap > 0) delta = Math.random() < 0.72 ? 1 : 0;
     } else if (age <= 31) {
-      if (gap > 2 && Math.random() < 0.35) delta = 1;
+      if (gap >= 4) delta = Math.random() < 0.58 ? 1 : 0;
+      else if (gap > 0) delta = Math.random() < 0.48 ? 1 : 0;
     }
     if (youth && apps >= 10) delta += 1;
     else if (!youth && apps >= 28 && perf >= 2) delta += 1;
@@ -2603,10 +3030,10 @@
     if (ovr + delta > pot) {
       if (
         clubLeagueTier(club) === 1 &&
-        apps >= 26 &&
-        perf >= 3 &&
+        apps >= 22 &&
+        perf >= 2 &&
         pot < 94 &&
-        Math.random() < 0.22
+        Math.random() < 0.32
       ) {
         p.hiddenPot = Math.min(94, pot + 1);
         delta = Math.min(delta, p.hiddenPot - ovr);
@@ -2631,6 +3058,17 @@
       p.ovr += p.ovrRestore;
       p.ovrRestore = 0;
     }
+    if (isPendingFailMarket(p)) {
+      applyFailMarketMove(p, selectedOffer);
+    }
+    if (selectedOffer) {
+      if (typeof selectedOffer.signedWage === 'number') p.wageWeek = selectedOffer.signedWage;
+      else if (selectedOffer.deal) p.wageWeek = selectedOffer.deal.wage;
+      if (typeof selectedOffer.signedYears === 'number') p.contractYears = selectedOffer.signedYears;
+      else if (selectedOffer.deal) p.contractYears = selectedOffer.deal.years;
+    }
+    p.frozenOffers = null;
+    p.pendingDeal = null;
 
     for (var y = 0; y < years; y++) {
       var seasonAge = firstClub ? 16 + y : ((p.age || 16) + 1);
@@ -2683,6 +3121,10 @@
       p.age = seasonAge;
       p.ovr = newOvr;
       p.club = club;
+      if (p.isCaptain && p.captainClub && String((club && club.n) || '').toUpperCase() !== String(p.captainClub).toUpperCase()) {
+        p.isCaptain = false;
+        p.captainClub = '';
+      }
       if (p.club) {
         p.club.isPromoted = false;
         p.club.isRelegated = false;
@@ -2695,7 +3137,7 @@
       if (
         !suspended &&
         seasonAge >= 21 &&
-        newOvr >= 80 &&
+        newOvr >= 78 &&
         newTier === 1 &&
         !isYouthContext(p, club, seasonAge) &&
         Math.random() < 0.18
@@ -2704,29 +3146,68 @@
         if (/ST|LW|RW|CAM/.test(p.position) && Math.random() < 0.4) p.natGoals = (p.natGoals || 0) + 1;
         if (Math.random() < 0.35) p.natAst = (p.natAst || 0) + 1;
       }
+      awardYouthCaps(p, club, stats, seasonAge, newOvr, newTier);
       evolveItalianLeagues();
       repairClubTiers();
       club = liveClub(club) || club;
+      row.recap = seasonRecapText(club, stats, {
+        callUp: !!(selectedOffer && selectedOffer.isCallUp && y === 0)
+      });
+      if (p.contractYears > 0) p.contractYears -= 1;
       if (club && club.justFailed) {
         row.failed = true;
         row.rebuild = club.rebuild || '';
+        row.clubMoved = true;
+        p.pendingDilemma = null;
+        p.pendingRoleChange = null;
+        prevTier = clubLeagueTier(club);
+        firstClub = false;
+        break;
+      }
+      if (club && (club.justPromoted || club.justRelegated)) {
+        row.clubMoved = true;
+        row.promoted = !!club.justPromoted;
+        row.relegated = !!club.justRelegated;
+        p.pendingDilemma = null;
+        p.pendingRoleChange = null;
+        prevTier = clubLeagueTier(club);
+        firstClub = false;
+        break;
       }
       prevTier = clubLeagueTier(club);
       firstClub = false;
     }
     p.eventMods = null;
-    var yearsSince = p.lastDilemmaAge ? p.age - p.lastDilemmaAge : 99;
-    var dilemmaChance = state.mode === 'intense' ? 0.16 : state.mode === 'express' ? 0.1 : 0.13;
-    if (
-      !fromDilemma &&
-      p.age >= 18 &&
-      p.age < 36 &&
-      yearsSince >= 3 &&
-      Math.random() < dilemmaChance
-    ) {
-      p.pendingDilemma = pickCareerEvent(p);
-    } else {
+    var lastRow = p.history[p.history.length - 1];
+    if (lastRow && (lastRow.failed || lastRow.clubMoved)) {
       p.pendingDilemma = null;
+      p.pendingRoleChange = null;
+      p.pendingCaptain = null;
+    } else {
+      maybeQueueCaptain(p);
+      if (p.pendingCaptain) {
+        p.pendingDilemma = null;
+        p.pendingRoleChange = null;
+      } else {
+      maybeQueueRoleChange(p);
+      if (p.pendingRoleChange) {
+        p.pendingDilemma = null;
+      } else {
+        var yearsSince = p.lastDilemmaAge ? p.age - p.lastDilemmaAge : 99;
+        var dilemmaChance = state.mode === 'intense' ? 0.16 : state.mode === 'express' ? 0.1 : 0.13;
+        if (
+          !fromDilemma &&
+          p.age >= 18 &&
+          p.age < 36 &&
+          yearsSince >= 3 &&
+          Math.random() < dilemmaChance
+        ) {
+          p.pendingDilemma = pickCareerEvent(p);
+        } else {
+          p.pendingDilemma = null;
+        }
+      }
+      }
     }
     snapshotLeagueBoard(p);
   }
@@ -2770,7 +3251,20 @@
   function sanitizeOfferClub(c) {
     if (!c) return c;
     var out = Object.assign({}, c);
+    var keepFail = !!(out.failed || out.justFailed);
+    var failT = Number(out.t);
+    var failL = out.l;
+    var rebuild = out.rebuild;
     guardClub(out, false);
+    if (keepFail) {
+      out.failed = true;
+      out.justFailed = !!c.justFailed || !!out.justFailed;
+      if (rebuild) out.rebuild = rebuild;
+      if (failT >= 4) {
+        out.t = failT;
+        out.l = failL || labelForItalianTier(out, failT);
+      }
+    }
     return stampSeasonMoveBadge(out);
   }
 
@@ -2781,7 +3275,8 @@
       o.t = Number(o.catalogT);
       o.l = o.catalogL || labelForItalianTier(o, o.t);
     }
-    o.isYouth = Number(o.t) === 1 && isBigYouthClub(o);
+    o.isYouth = Number(o.t) === 1 && isBigYouthClub(o) && !isU23Club(o);
+    o.isLoan = false;
     return o;
   }
 
@@ -2831,6 +3326,415 @@
     return true;
   }
 
+  function lastPlayedTier(p) {
+    var last = p && p.history && p.history[p.history.length - 1];
+    if (!last) return 0;
+    return clubLeagueTier({ l: last.league, t: last.t });
+  }
+
+  function isPendingFailMarket(p) {
+    if (!p || !p.history || !p.history.length) return false;
+    var last = p.history[p.history.length - 1];
+    if (!last || last.failSettled || isUnsignedRow(last)) return false;
+    if (last.failed) return true;
+    var club = liveClub(p.club) || p.club;
+    if (club && (club.justFailed || club.failed)) return true;
+    var playedT = lastPlayedTier(p);
+    var nowT = clubLeagueTier(club);
+    return !!(playedT && nowT >= playedT + 2);
+  }
+
+  function failMarketTargetOvr(p, offer) {
+    var cur = Number(p && p.ovr) || 49;
+    var destMax = maxOvrForClub(offer);
+    var destMin = minOvrForClub(offer);
+    var destPar = leagueParOvr(offer);
+    var destT = clubLeagueTier(offer);
+    if (destT >= 5) destPar = Math.min(destPar, 48);
+    else if (destT >= 4) destPar = Math.min(destPar, 52);
+    var stay = !!(offer && (offer.isStay || offer.failed));
+    var target;
+    if (stay) {
+      target = Math.min(destPar - 2, destMax - 6);
+      if (offer && offer.rebuild === 'forte') target = Math.min(destPar + 2, destMax - 3);
+      var floorDrop = offer && offer.rebuild === 'forte' ? 8 : 12;
+      if (target > cur - floorDrop) target = cur - floorDrop;
+    } else if (cur > destMax) {
+      target = destMax - 1;
+    } else if (cur < destMin) {
+      target = destMin;
+    } else if (cur > destPar + 6) {
+      target = Math.max(destPar + 4, destMax - 3);
+    } else {
+      target = cur;
+    }
+    if (target < destMin) target = destMin;
+    if (target > destMax) target = destMax;
+    if (target < 40) target = 40;
+    if (target > 94) target = 94;
+    return Math.round(target);
+  }
+
+  function failMarketValue(p, offer, newOvr) {
+    var v = calcRealisticValueM(newOvr, (p && p.age) || 20, offer);
+    if (offer && (offer.isStay || offer.failed)) {
+      v = Math.round(v * 0.42 * 1000) / 1000;
+      var floor = clubLeagueTier(offer) >= 4 ? 0.008 : 0.015;
+      if (v < floor) v = floor;
+    }
+    return v;
+  }
+
+  function failMarketPreview(p, offer) {
+    var fromOvr = Number(p && p.ovr) || 49;
+    var fromValue = Number(p && p.valueM);
+    if (!(fromValue > 0)) fromValue = calcRealisticValueM(fromOvr, (p && p.age) || 20, p && p.club);
+    var ovr = failMarketTargetOvr(p, offer);
+    return {
+      ovr: ovr,
+      value: failMarketValue(p, offer, ovr),
+      fromOvr: fromOvr,
+      fromValue: fromValue
+    };
+  }
+
+  function applyFailMarketMove(p, offer) {
+    var hit = failMarketPreview(p, offer);
+    p.ovr = hit.ovr;
+    p.valueM = hit.value;
+    var last = p.history && p.history[p.history.length - 1];
+    if (last) last.failSettled = true;
+    return hit;
+  }
+
+  function pickFailMarketClub(used, t) {
+    var top = takeTopOfTier(used, t);
+    if (top && !top.failed && !top.justFailed && !top.world) return Object.assign({}, top);
+    var pool = clubsByTier(t).filter(function (c) {
+      return c && c.n && !used[c.n] && !c.world && !c.failed && !c.justFailed && isItalianPyramid(c);
+    });
+    var c = takeUniqueClub(used, pool);
+    return c ? Object.assign({}, c) : null;
+  }
+
+  function fillFailMarketOffers(p, stay, used) {
+    var offers = [stay];
+    if (isU23Club(stay)) {
+      var failCall = makeCallUpOffer(p, stay, used);
+      if (failCall) offers.push(failCall);
+    }
+    var landT = clubLeagueTier(stay);
+    var fromT = Number(stay.failedFrom) || lastPlayedTier(p) || landT;
+    var want = [];
+    if (fromT <= 2 && landT >= 4) {
+      want.push(3, 2);
+    } else {
+      if (landT > 1) want.push(landT - 1);
+      want.push(landT);
+    }
+    var i;
+    for (i = 0; i < want.length && offers.length < 3; i++) {
+      var c = pickFailMarketClub(used, clampTier(want[i]));
+      if (!c) continue;
+      c = stampSeasonMoveBadge(c);
+      c.isLoan = false;
+      c.failOffer = true;
+      if (clubLeagueTier(c) < landT) c.isJumpUp = true;
+      else if (clubLeagueTier(c) > landT) c.isJumpDown = true;
+      offers.push(sanitizeOfferClub(c));
+    }
+    var fallback = [3, 4, 2, 5, 1];
+    for (i = 0; offers.length < 3 && i < fallback.length; i++) {
+      if (want.indexOf(fallback[i]) >= 0) continue;
+      var extra = pickFailMarketClub(used, fallback[i]);
+      if (!extra) continue;
+      extra = stampSeasonMoveBadge(extra);
+      extra.isLoan = false;
+      extra.failOffer = true;
+      offers.push(sanitizeOfferClub(extra));
+    }
+    return offers.slice(0, 3);
+  }
+
+  function weeklyWage(ovr, age, club, opts) {
+    opts = opts || {};
+    var tier = clubLeagueTier(club);
+    var o = Number(ovr) || 49;
+    var a = Number(age) || 20;
+    var base;
+    if (opts.isYouth) base = 70 + Math.max(0, o - 45) * 6;
+    else if (club && club.isFree) base = 0;
+    else if (tier >= 5) base = 110 + Math.max(0, o - 44) * 9;
+    else if (tier === 4) base = 180 + Math.max(0, o - 45) * 16;
+    else if (tier === 3) base = 480 + Math.max(0, o - 50) * 38;
+    else if (tier === 2) base = 1800 + Math.pow(Math.max(0, o - 58), 1.35) * 70;
+    else base = 4200 + Math.pow(Math.max(0, o - 64), 1.55) * 200 * clubPrestige(club);
+    if (a <= 18) base *= 0.52;
+    else if (a <= 21) base *= 0.72;
+    else if (a >= 34) base *= 0.68;
+    if (opts.isLoan) base *= 0.55;
+    if (club && (club.failed || club.justFailed)) base *= 0.42;
+    if (base <= 0) return 0;
+    return Math.max(50, Math.round(base / 10) * 10);
+  }
+
+  function offerContractYears(p, offer) {
+    if (!offer) return 2;
+    if (offer.isLoan || offer.isYouth) return 1;
+    var a = (p && p.age) || 16;
+    if (a <= 18) return 3;
+    if (a <= 23) return 4;
+    if (a <= 29) return 3;
+    if (a <= 33) return 2;
+    return 1;
+  }
+
+  function attachOfferDeal(p, offer) {
+    if (!offer) return offer;
+    var open = weeklyWage(p.ovr, p.age, offer, offer);
+    var years = offerContractYears(p, offer);
+    var buy = !offer.isStay && !offer.isLoan;
+    offer.deal = {
+      wage: open,
+      years: years,
+      minWage: Math.max(50, Math.round(open * 0.82 / 10) * 10),
+      maxWage: Math.round(open * (offer.isStay ? 1.18 : buy ? 1.38 : 1.16) / 10) * 10,
+      minYears: 1,
+      maxYears: offer.isLoan || offer.isYouth ? 1 : 5
+    };
+    return offer;
+  }
+
+  function formatWage(w) {
+    w = Math.round(Number(w) || 0);
+    if (w <= 0) return '0/sett';
+    if (w >= 1000) {
+      var k = w / 1000;
+      var t = k >= 10 || w % 1000 === 0 ? String(Math.round(k)) : k.toFixed(1).replace('.', ',');
+      return t + 'K/sett';
+    }
+    return w + '/sett';
+  }
+
+  function offerPreview(p, offer) {
+    if (isPendingFailMarket(p)) return failMarketPreview(p, offer);
+    var fromOvr = Number(p && p.ovr) || 49;
+    var fromValue = Number(p && p.valueM);
+    if (!(fromValue > 0)) fromValue = calcRealisticValueM(fromOvr, (p && p.age) || 16, p && p.club);
+    var ovr = fromOvr;
+    if (offer && !offer.isStay && !offer.isYouth && !offer.isLoan) {
+      var destMax = maxOvrForClub(offer);
+      if (ovr > destMax) ovr = destMax;
+    }
+    return {
+      fromOvr: fromOvr,
+      ovr: ovr,
+      fromValue: fromValue,
+      value: calcRealisticValueM(ovr, (p && p.age) || 16, offer)
+    };
+  }
+
+  function getMarketOffers(p) {
+    if (p.frozenOffers && p.frozenOffers.length) {
+      var curClub = liveClub(p.club) || p.club;
+      var stayFr = null;
+      var hasCall = false;
+      var iFr;
+      for (iFr = 0; iFr < p.frozenOffers.length; iFr++) {
+        if (p.frozenOffers[iFr] && p.frozenOffers[iFr].isStay) stayFr = p.frozenOffers[iFr];
+        if (p.frozenOffers[iFr] && p.frozenOffers[iFr].isCallUp) hasCall = true;
+      }
+      var staleStay = stayFr && curClub && clubLeagueTier(stayFr) !== clubLeagueTier(curClub);
+      var missCall = isU23Club(curClub) && canCallUpFromU23(p, curClub) && !hasCall;
+      if (!staleStay && !missCall) return p.frozenOffers;
+      p.frozenOffers = null;
+    }
+    var offers = transferOffers(p);
+    offers.forEach(function (o) {
+      attachOfferDeal(p, o);
+      if (
+        o.isStay &&
+        (p.contractYears > 0) &&
+        !o.failed &&
+        !isPendingFailMarket(p)
+      ) {
+        o.deal.years = p.contractYears;
+        o.deal.wage = p.wageWeek || o.deal.wage;
+        o.deal.maxYears = p.contractYears;
+        o.deal.maxWage = o.deal.wage;
+        o.existingContract = true;
+      }
+    });
+    p.frozenOffers = offers;
+    return offers;
+  }
+
+  function startDeal(p, offer) {
+    attachOfferDeal(p, offer);
+    var cap = isCaptainOf(p, offer);
+    if (cap && offer.deal) {
+      offer.deal.maxWage = offer.deal.wage;
+    }
+    return {
+      offer: offer,
+      wage: offer.deal.wage,
+      years: offer.deal.years,
+      round: 0,
+      maxRounds: offer.isStay || offer.isYouth || cap ? 2 : 3,
+      status: 'open',
+      captainLock: cap,
+      note: cap
+        ? 'Sei il capitano: lo stipendio è quello chiesto dal club, niente aumenti.'
+        : offer.isCallUp
+          ? 'Salto dalla seconda squadra alla prima. Puoi accettare o trattare l\'ingaggio.'
+          : offer.isStay
+            ? 'Rinnovo: puoi accettare o chiedere un po\' di più.'
+            : 'Il club ha fatto un\'offerta. Accetta o contrattare.'
+    };
+  }
+
+  function resolveDealAsk(dealState, kind) {
+    var offer = dealState.offer || {};
+    var spec = offer.deal || {};
+    var wage = Number(dealState.wage) || spec.wage || 100;
+    var years = Number(dealState.years) || spec.years || 2;
+    var maxW = spec.maxWage || Math.round(wage * 1.3);
+    var maxY = spec.maxYears || 5;
+    var round = (dealState.round || 0) + 1;
+    var maxR = dealState.maxRounds || 3;
+    var note = '';
+    var status = 'open';
+    if (kind === 'money') {
+      if (dealState.captainLock) {
+        return {
+          offer: offer,
+          wage: wage,
+          years: years,
+          round: dealState.round || 0,
+          maxRounds: maxR,
+          status: 'open',
+          captainLock: true,
+          note: 'Da capitano non puoi chiedere di più: resti alle condizioni del club.'
+        };
+      }
+      var want = Math.round(wage * 1.18 / 10) * 10;
+      if (want <= maxW) {
+        wage = want;
+        note = 'Il club accetta l\'aumento.';
+        status = 'open';
+      } else if (round < maxR) {
+        wage = maxW;
+        note = 'Il club non va oltre: ultima offerta ' + formatWage(maxW) + '.';
+      } else {
+        status = 'withdrawn';
+        note = 'Trattativa saltata: il club ritira l\'offerta.';
+      }
+    } else if (kind === 'years') {
+      if (years < maxY) {
+        years += 1;
+        note = 'Il club accetta un anno in più.';
+      } else if (round >= maxR) {
+        status = 'withdrawn';
+        note = 'Trattativa saltata: troppe richieste.';
+      } else {
+        note = 'Il club non allunga oltre ' + maxY + ' anni.';
+      }
+    }
+    return {
+      offer: offer,
+      wage: wage,
+      years: years,
+      round: round,
+      maxRounds: maxR,
+      status: status,
+      captainLock: !!dealState.captainLock,
+      note: note
+    };
+  }
+
+  var ROLE_SHIFT = {
+    LB: { id: 'LM', from: 'TS', to: 'ES' },
+    RB: { id: 'RM', from: 'TD', to: 'ED' },
+    CB: { id: 'CDM', from: 'DC', to: 'MED' },
+    CDM: { id: 'CM', from: 'MED', to: 'CC' },
+    CM: { id: 'CAM', from: 'CC', to: 'TRQ' },
+    LM: { id: 'LW', from: 'ES', to: 'AS' },
+    RM: { id: 'RW', from: 'ED', to: 'AD' },
+    CAM: { id: 'ST', from: 'TRQ', to: 'ATT' },
+    LW: { id: 'ST', from: 'AS', to: 'ATT' },
+    RW: { id: 'ST', from: 'AD', to: 'ATT' }
+  };
+
+  function isCaptainOf(p, offer) {
+    if (!p || !p.isCaptain || !p.captainClub || !offer) return false;
+    return String(offer.n || '').toUpperCase() === String(p.captainClub || '').toUpperCase();
+  }
+
+  function maybeQueueCaptain(p) {
+    if (!p || p.pendingCaptain || p.pendingRoleChange || p.pendingDilemma) return;
+    var clubName = p.club && p.club.n;
+    if (!clubName || clubName === 'Svincolato') return;
+    if (p.isCaptain && String(p.captainClub || '').toUpperCase() === String(clubName).toUpperCase()) return;
+    var age = p.age || 16;
+    if (age < 23 || age > 34) return;
+    var appsHere = 0;
+    (p.history || []).forEach(function (h) {
+      if (h && String(h.club || '').toUpperCase() === String(clubName).toUpperCase()) {
+        appsHere += h.apps || 0;
+      }
+    });
+    if (appsHere < 35) return;
+    if (Math.random() > 0.16) return;
+    p.pendingCaptain = { club: clubName };
+  }
+
+  function maybeQueueRoleChange(p) {
+    if (!p || p.roleChanged || p.pendingRoleChange) return;
+    var age = p.age || 16;
+    if (age < 23 || age > 28) return;
+    if (p.position === 'GK' || !ROLE_SHIFT[p.position]) return;
+    var apps = (p.history || []).reduce(function (a, h) { return a + (h && h.apps ? h.apps : 0); }, 0);
+    if (apps < 80) return;
+    if (Math.random() > 0.12) return;
+    p.pendingRoleChange = ROLE_SHIFT[p.position];
+  }
+
+  function seasonRecapText(club, stats, extra) {
+    extra = extra || {};
+    var apps = (stats && stats.apps) || 0;
+    var role = apps >= 26 ? 'Titolare' : apps >= 16 ? 'In rosa' : 'Poco utilizzato';
+    var move;
+    if (extra.callUp) move = 'passato in prima squadra';
+    else if (club && club.justFailed) move = 'il club è fallito';
+    else if (club && club.justPromoted) move = 'il club è stato promosso';
+    else if (club && club.justRelegated) move = 'il club è retrocesso';
+    else move = 'il club è rimasto in ' + shortLeague((club && club.l) || '', (club && club.n) || '');
+    return role + ', ' + apps + ' partite, ' + move;
+  }
+
+  function awardYouthCaps(p, club, stats, age, newOvr, newTier) {
+    var apps = (stats && stats.apps) || 0;
+    if (apps < 8 || (p.eventMods && p.eventMods.suspended)) return;
+    if (age <= 19 && newOvr >= 52 && Math.random() < 0.28) {
+      p.u19Caps = (p.u19Caps || 0) + rand(1, 3);
+      if (Math.random() < 0.22) p.u19Goals = (p.u19Goals || 0) + 1;
+    }
+    if (age >= 18 && age <= 21 && newOvr >= 58 && (newTier <= 3 || newOvr >= 64) && Math.random() < 0.2) {
+      p.u21Caps = (p.u21Caps || 0) + rand(1, 2);
+      if (Math.random() < 0.18) p.u21Goals = (p.u21Goals || 0) + 1;
+    }
+  }
+
+  function nationalBarText(p) {
+    var bits = [];
+    if ((p.caps || 0) > 0) {
+      bits.push(p.caps + ' pres. naz. · ⚽ ' + (p.natGoals || 0) + ' · 🅐 ' + (p.natAst || 0));
+    }
+    if ((p.u21Caps || 0) > 0) bits.push('U21 ' + p.u21Caps + ' pres.');
+    if ((p.u19Caps || 0) > 0) bits.push('U19 ' + p.u19Caps + ' pres.');
+    return bits.length ? bits.join(' · ') : 'Nazionale: non convocato';
+  }
+
   function poolFits(p, tier, used, opts) {
     return (state.clubs || []).filter(function (c) {
       if (!c || !c.n || used[c.n]) return false;
@@ -2857,6 +3761,7 @@
         a.t = 1;
         a.l = a.catalogL || a.l || 'SERIE A';
         a.isYouth = true;
+        a.isLoan = false;
         offers.push(a);
       }
       var mid = takeUniqueClub(used, clubsByCatalogTier(2));
@@ -2865,6 +3770,7 @@
         mid.t = 2;
         mid.l = mid.catalogL || mid.l;
         mid.isYouth = false;
+        mid.isLoan = false;
         offers.push(mid);
       }
       var low = takeUniqueClub(used, clubsByCatalogTier(3));
@@ -2873,6 +3779,7 @@
         low.t = 3;
         low.l = low.catalogL || low.l;
         low.isYouth = false;
+        low.isLoan = false;
         offers.push(low);
       }
       return fillFirstOffers(used, offers).map(assertStartOffer);
@@ -2900,8 +3807,20 @@
           cur.rebuild = stay.rebuild;
         }
       }
-      if (isYouthContext(p, stay, p.age)) stay.isYouth = true;
+      if (isU23Club(stay)) {
+        stay.isU23 = true;
+        stay.isYouth = false;
+      } else if (isYouthContext(p, stay, p.age)) {
+        stay.isYouth = true;
+      }
       offers.push(stay);
+      if (isPendingFailMarket(p) || stay.failed) {
+        return fillFailMarketOffers(p, stay, used);
+      }
+      if (isU23Club(cur) && canCallUpFromU23(p, cur) && offers.length < 3) {
+        var callUp = makeCallUpOffer(p, cur, used);
+        if (callUp) offers.push(callUp);
+      }
     }
 
     var jump = typeof p.lastJump === 'number' ? p.lastJump : jumpFromForm(p.lastForm || 0, p.age);
@@ -2960,10 +3879,16 @@
     var filled = fillOffersFromTiers(used, offers, 3, band, p);
     filled.forEach(function (o) {
       if (o.isStay) return;
+      if (o.isCallUp) {
+        o.isYouth = false;
+        o.isLoan = false;
+        o.isJumpUp = true;
+        return;
+      }
       var t = clubLeagueTier(o);
       if (t < curT) o.isJumpUp = true;
       else if (t > curT) o.isJumpDown = true;
-      o.isYouth = t === 1 && isBigYouthClub(o) && isYouthContext(p, o, p.age);
+      o.isYouth = t === 1 && isBigYouthClub(o) && isYouthContext(p, o, p.age) && !isU23Club(o);
       if (o.isYouth) o.isLoan = false;
       else if (p.age <= 21 && t < curT) o.isLoan = true;
       else if (p.age <= 23 && t <= curT && p.ovr < leagueParOvr(o) - 8) o.isLoan = Math.random() < 0.55;
@@ -2986,6 +3911,7 @@
       c.t = c.catalogT != null ? c.catalogT : clubLeagueTier(c);
       c.l = c.catalogL || c.l;
       c.isYouth = Number(c.t) === 1 && isBigYouthClub(c);
+      c.isLoan = false;
       offers.push(c);
       i++;
     }
@@ -3123,12 +4049,45 @@
   var PITCH_SVG = '<svg class="es-mg-icon-pitch" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:2px;"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="12" y1="4" x2="12" y2="20"></line><circle cx="12" cy="12" r="3"></circle></svg>';
 
   function clubCardTone(name) {
-    var s = String(name || '');
+    var n = String(name || '').toUpperCase();
+    var map = [
+      ['MILAN', 'linear-gradient(180deg,#6e1822 0%,#2a0a10 100%)'],
+      ['INTER', 'linear-gradient(180deg,#12305f 0%,#0a162c 100%)'],
+      ['JUVENTUS', 'linear-gradient(180deg,#2c2c2c 0%,#111111 100%)'],
+      ['NAPOLI', 'linear-gradient(180deg,#0f4e8a 0%,#0a2444 100%)'],
+      ['ROMA', 'linear-gradient(180deg,#6b1d1d 0%,#2a0e0e 100%)'],
+      ['LAZIO', 'linear-gradient(180deg,#1a4a7a 0%,#0c2238 100%)'],
+      ['ATALANTA', 'linear-gradient(180deg,#173a6b 0%,#0b1628 100%)'],
+      ['FIORENTINA', 'linear-gradient(180deg,#4a2a78 0%,#1c1233 100%)'],
+      ['SAMPDORIA', 'linear-gradient(180deg,#143a6b 0%,#0b1a30 100%)'],
+      ['TORINO', 'linear-gradient(180deg,#6b1c24 0%,#2a0c10 100%)'],
+      ['BOLOGNA', 'linear-gradient(180deg,#6b1824 0%,#1f0a10 100%)'],
+      ['UDINESE', 'linear-gradient(180deg,#1c3a38 0%,#0c1818 100%)'],
+      ['EMPOLI', 'linear-gradient(180deg,#1a3f73 0%,#0c1c34 100%)'],
+      ['PARMA', 'linear-gradient(180deg,#3a2e12 0%,#1a1408 100%)'],
+      ['GENOA', 'linear-gradient(180deg,#6b1820 0%,#220a0e 100%)'],
+      ['CAGLIARI', 'linear-gradient(180deg,#6b1c1c 0%,#240c0c 100%)'],
+      ['LECCE', 'linear-gradient(180deg,#5a4a12 0%,#241c08 100%)'],
+      ['MONACO', 'linear-gradient(180deg,#6b1820 0%,#2a0c10 100%)'],
+      ['DORTMUND', 'linear-gradient(180deg,#5a4308 0%,#1c1606 100%)'],
+      ['MONTERREY', 'linear-gradient(180deg,#14283f 0%,#0a1420 100%)'],
+      ['ATLETICO', 'linear-gradient(180deg,#6b1824 0%,#240a10 100%)'],
+      ['AVELLINO', 'linear-gradient(180deg,#145232 0%,#0a2416 100%)'],
+      ['CATANZARO', 'linear-gradient(180deg,#5a2a10 0%,#241208 100%)'],
+      ['MODENA', 'linear-gradient(180deg,#4a3a0c 0%,#1c1606 100%)'],
+      ['ASCOLI', 'linear-gradient(180deg,#3a3010 0%,#161208 100%)'],
+      ['PALERMO', 'linear-gradient(180deg,#4a1a4a 0%,#1c0c1c 100%)'],
+      ['CHIEVO', 'linear-gradient(180deg,#4a3a0c 0%,#1a1606 100%)']
+    ];
+    var i;
+    for (i = 0; i < map.length; i++) {
+      if (n.indexOf(map[i][0]) >= 0) return map[i][1];
+    }
     var h = 0;
-    for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+    for (i = 0; i < n.length; i++) h = (h * 31 + n.charCodeAt(i)) >>> 0;
     var hues = [350, 220, 150, 0, 270, 30, 200, 340, 210, 25, 195];
     var hue = hues[h % hues.length];
-    return 'linear-gradient(180deg, hsla(' + hue + ',42%,18%,1), hsla(' + hue + ',38%,9%,1))';
+    return 'linear-gradient(180deg, hsla(' + hue + ',48%,16%,1), hsla(' + hue + ',42%,8%,1))';
   }
 
   function renderCareerSummary() {
@@ -3176,15 +4135,23 @@
       }).join('');
       return (
         '<div class="es-mg-sum-club" style="background:' + clubCardTone(c.name) + '">' +
-        (c.logo ? '<img src="' + esc(c.logo) + '" alt="" onerror="this.style.display=\'none\'">' : '<div style="height:54px"></div>') +
+        (c.logo
+          ? '<img class="es-mg-sum-club-mark" src="' + esc(c.logo) + '" alt="" aria-hidden="true">'
+          : '') +
+        '<div class="es-mg-sum-club-top">' +
+        (c.logo
+          ? '<img class="es-mg-sum-club-logo" src="' + esc(c.logo) + '" alt="" onerror="this.style.display=\'none\'">'
+          : '<div class="es-mg-sum-club-logo"></div>') +
         '<div class="es-mg-sum-club-name">' + esc(c.name) + '</div>' +
+        '</div>' +
+        '<div class="es-mg-sum-club-bottom">' +
         '<div class="es-mg-sum-club-stats">' +
         '<div><span>PR</span><b>' + c.apps + '</b></div>' +
         '<div><span>GOL</span><b>' + c.goals + '</b></div>' +
         '<div><span>ASS</span><b>' + c.assists + '</b></div>' +
         '</div>' +
-        (cups ? '<div class="es-mg-sum-awards-row">' + cups + '</div>' : '') +
-        '</div>'
+        (cups ? '<div class="es-mg-sum-club-cups">' + cups + '</div>' : '') +
+        '</div></div>'
       );
     }).join('');
     var userChip = '';
@@ -3201,16 +4168,18 @@
         '<div class="es-mg-sum-board">' +
         '<div class="es-mg-sum-top">' +
         '<div class="es-mg-sum-card es-mg-sum-player">' +
+        '<div class="es-mg-sum-player-head">' +
+        '<div>' +
         '<p class="es-mg-sum-kicker">Carriera conclusa</p>' +
         '<h2 class="es-mg-sum-name">' + esc(p.surname || 'Giocatore') + '</h2>' +
-        '<div class="es-mg-sum-player-row">' +
-        '<div>' +
-        '<span class="es-mg-tag">#' + p.number + '</span> ' +
+        '<div class="es-mg-sum-tags">' +
+        '<span class="es-mg-tag">#' + p.number + '</span>' +
         '<span class="es-mg-tag green">' + esc(p.posLabel || posLabel(p.position) || '') + '</span>' +
-        '<div class="es-mg-sum-val" style="margin-top:0.55rem">VALORE<b>\u20ac' + formatValue(p.valueM) + '</b></div>' +
-        '</div>' +
+        '</div></div>' +
+        '<div class="es-mg-sum-player-meta">' +
+        '<div class="es-mg-sum-val">VALORE<b>\u20ac' + formatValue(p.valueM) + '</b></div>' +
         '<div class="es-mg-sum-ovr c' + ovrColor(p.ovr) + '"><span>OVR</span><strong>' + p.ovr + '</strong></div>' +
-        '</div>' +
+        '</div></div>' +
         '<div class="es-mg-sum-stats">' +
         '<div><span>PR</span><b>' + totApps + '</b></div>' +
         '<div><span>GOL</span><b>' + totGoals + '</b></div>' +
@@ -3218,12 +4187,15 @@
         '</div></div>' +
         '<div class="es-mg-sum-card es-mg-sum-nat">' +
         '<p class="es-mg-sum-kicker">Nazionale</p>' +
-        '<h2 class="es-mg-sum-name" style="font-size:1.25rem">' + flagOf(p.nationCode) + ' ' + esc(p.nation || 'Italia') + '</h2>' +
+        '<h2 class="es-mg-sum-name es-mg-sum-nat-name">' + flagOf(p.nationCode) + ' ' + esc(p.nation || 'Italia') + '</h2>' +
         '<div class="es-mg-sum-stats">' +
         '<div><span>PR</span><b>' + (p.caps || 0) + '</b></div>' +
         '<div><span>GOL</span><b>' + (p.natGoals || 0) + '</b></div>' +
         '<div><span>ASS</span><b>' + (p.natAst || 0) + '</b></div>' +
         '</div>' +
+        ((p.u21Caps || p.u19Caps)
+          ? '<div class="es-mg-sum-youthcaps">U21 ' + (p.u21Caps || 0) + ' · U19 ' + (p.u19Caps || 0) + '</div>'
+          : '') +
         '<div class="es-mg-sum-empty">Vetrina vuota</div>' +
         '</div>' +
         '<div class="es-mg-sum-card es-mg-sum-awards">' +
@@ -3239,8 +4211,10 @@
     var restart = document.getElementById('es-mg-restart');
     if (restart) {
       restart.onclick = function () {
-        state.player = null;
+        if (!window.confirm('Vuoi davvero cancellare ' + savedCareerLabel(p) + '?')) return;
+        wipeCareerSave();
         state.position = null;
+        hydrateIdentity();
         renderLanding();
       };
     }
@@ -3270,14 +4244,14 @@
       clampClubToHistory(p.club);
     }
     if (!isFirstStep && state.clubs && state.clubs.length) snapshotLeagueBoard(p);
-    if ((p.age || 16) < 21 || (p.ovr || 0) < 78) {
+    if ((p.age || 16) < 21) {
       p.caps = 0;
       p.natGoals = 0;
       p.natAst = 0;
     }
     p.valueM = calcRealisticValueM(p.ovr, p.age, p.club);
     var last = lastPre;
-    var offers = transferOffers(p);
+    var offers = getMarketOffers(p);
     
     var totApps = p.history.reduce(function (a, b) { return a + (b.apps || 0); }, 0);
     var totGoals = p.history.reduce(function (a, b) { return a + (b.goals || 0); }, 0);
@@ -3335,7 +4309,8 @@
             '<span class="es-mg-row-clubname" title="' + esc(h.club) + '">' + esc(h.club) + '</span>' +
             (h.suspended ? '<span class="es-mg-row-mark is-sus" title="Sospeso">S</span>' : '') +
             (h.failed ? '<span class="es-mg-row-mark is-fail" title="Fallita' + (h.rebuild === 'forte' ? ' · progetto forte' : h.rebuild === 'debole' ? ' · progetto debole' : '') + '">F</span>' : '') +
-            cupsSvgHtml;
+            cupsSvgHtml +
+            (h.recap ? '<span class="es-mg-row-recap">' + esc(h.recap) + '</span>' : '');
         var prevOvr = idx > 0 ? p.history[idx - 1].ovr : h.ovr;
         var ageTone = ' c' + ovrColor(h.ovr);
         var newRows = animateNew ? Math.max(1, stepYears()) : 0;
@@ -3359,7 +4334,15 @@
 
     if (p.age < 38) {
       var nextAge = (p.age || 16) + 1;
-      var pendingTxt = p.pendingDilemma && !isFirstStep ? 'Decisione di carriera\u2026' : 'Scegliendo squadra\u2026';
+      var pendingTxt = p.pendingDeal
+        ? 'In trattativa\u2026'
+        : p.pendingCaptain && !isFirstStep
+          ? 'Fascia di capitano\u2026'
+          : p.pendingRoleChange && !isFirstStep
+            ? 'Cambio ruolo\u2026'
+            : p.pendingDilemma && !isFirstStep
+              ? 'Decisione di carriera\u2026'
+              : 'Scegliendo squadra\u2026';
       rows +=
         '<div class="es-mg-row is-pending">' +
         '<div class="es-mg-row-age">' + nextAge + '</div>' +
@@ -3369,6 +4352,7 @@
         '</div>';
     }
 
+    var failMkt = !isFirstStep && isPendingFailMarket(p);
     var offerHtml = offers
       .map(function (o, i) {
         var stay = !!(o.isStay || (p.club && o.n === p.club.n && !isFirstStep));
@@ -3376,10 +4360,13 @@
           ? 'Firma per'
           : stay
             ? 'Resta a'
-            : o.isLoan
-              ? 'In prestito a'
-              : 'Acquisto:';
+            : o.isCallUp
+              ? 'Prima squadra'
+              : o.isLoan
+                ? 'In prestito a'
+                : 'Acquisto:';
         o = isFirstStep ? assertStartOffer(Object.assign({}, o)) : sanitizeOfferClub(o);
+        if (isFirstStep) o.isLoan = false;
         var formattedLeague = shortLeague(o.l, o.n);
         var leagueLogoTag = getLeagueLogoImg(o.l);
         var badges = [];
@@ -3389,7 +4376,11 @@
             ? '<span class="es-mg-offer-badge-up">Progetto forte</span>'
             : '<span class="es-mg-offer-badge-down">Progetto debole</span>');
         } else {
-          if (o.isYouth) badges.push('<span class="es-mg-offer-badge-youth">Giovanili</span>');
+          if (o.isCallUp) badges.push('<span class="es-mg-offer-badge-up">Salto in A</span>');
+          else if (isCaptainOf(p, o) && stay) badges.push('<span class="es-mg-offer-badge-up">Capitano</span>');
+          else if (o.existingContract) badges.push('<span class="es-mg-offer-badge-youth">In contratto</span>');
+          else if (isU23Club(o)) badges.push('<span class="es-mg-offer-badge-u23">Seconda squadra</span>');
+          else if (o.isYouth) badges.push('<span class="es-mg-offer-badge-youth">Giovanili</span>');
           else if (o.isLoan) badges.push('<span class="es-mg-offer-badge-loan">Prestito</span>');
           else if (!stay && !isFirstStep) badges.push('<span class="es-mg-offer-badge-buy">Acquisto</span>');
           if (o.isPromoted) badges.push('<span class="es-mg-offer-badge-up">Promossa</span>');
@@ -3399,8 +4390,21 @@
         }
         var extraBadge = badges.slice(0, 2).join('');
         var failLine = o.failed ? ('Fallita · ora ' + formattedLeague) : formattedLeague;
+        var prevw = offerPreview(p, o);
+        var dO = prevw.ovr - prevw.fromOvr;
+        var dV = prevw.value - prevw.fromValue;
+        var oCls = dO < 0 ? 'is-down' : dO > 0 ? 'is-up' : 'is-flat';
+        var vCls = dV < 0 ? 'is-down' : dV > 0 ? 'is-up' : 'is-flat';
+        if (!o.deal) attachOfferDeal(p, o);
+        var deal = o.deal || {};
+        var adjustHtml =
+          '<span class="es-mg-offer-adjust">' +
+          '<span class="' + oCls + '">OVR ' + prevw.fromOvr + ' \u2192 ' + prevw.ovr + '</span>' +
+          '<span class="' + vCls + '">\u20ac' + formatValue(prevw.fromValue) + ' \u2192 \u20ac' + formatValue(prevw.value) + '</span>' +
+          '<span class="is-flat">' + (deal.years || 1) + ' anni · €' + formatWage(deal.wage) + '</span>' +
+          '</span>';
         return (
-          '<button type="button" class="es-mg-offer' + (o.isLoan ? ' is-loan-offer' : '') + (o.isPromoted ? ' is-promo-offer' : '') + (o.failed ? ' is-fail-offer' : '') + '" data-idx="' + i + '">' +
+          '<button type="button" class="es-mg-offer' + (o.isLoan ? ' is-loan-offer' : '') + (o.isPromoted ? ' is-promo-offer' : '') + (o.failed ? ' is-fail-offer' : '') + (failMkt && !stay ? ' is-fail-alt' : '') + '" data-idx="' + i + '">' +
           '<span class="es-mg-offer-title">' + btnTitle + ' <b>' + esc(o.n) + '</b></span>' +
           '<span class="es-mg-offer-logo-wrap">' +
           (o.o
@@ -3409,16 +4413,21 @@
           '</span>' +
           '<span class="es-mg-offer-league">' + leagueLogoTag + ' ' + esc(failLine) + '</span>' +
           '<span class="es-mg-offer-badges">' + extraBadge + '</span>' +
+          adjustHtml +
           '</button>'
         );
       })
       .join('');
 
     // Titolo e descrizione del box trasferimenti
-    var transferBoxTitle = isFirstStep ? 'OFFERTA DAL SETTORE GIOVANILE' : 'Finestra di mercato';
+    var transferBoxTitle = isFirstStep ? 'OFFERTA DAL SETTORE GIOVANILE' : failMkt ? 'Squadra fallita' : 'Finestra di mercato';
     var transferBoxDesc = isFirstStep
-      ? 'Anche le big hanno il settore giovanile. Puoi firmare per una Primavera di Serie A o per un club di categoria più bassa, e poi restare a crescere oppure cambiare.'
-      : '';
+      ? (p.trialFailed
+          ? ('Il provino a ' + p.trialFailed + ' non è andato a buon fine. Ecco tre offerte da svincolato.')
+          : 'Anche le big hanno il settore giovanile. Puoi firmare per una Primavera di Serie A o per un club di categoria più bassa, e poi restare a crescere oppure cambiare.')
+      : failMkt
+        ? 'La società è fallita. Se resti, overall e valore crollano. Altrimenti regola overall e prezzo sulle offerte delle altre competizioni.'
+        : '';
 
     // Club display in player card
     var isCurrentFree = last.isFree || last.club === 'Svincolato';
@@ -3438,6 +4447,61 @@
         userChip = '<div class="es-mg-user-chip">' + String(nn).replace(/</g, '') + '</div>';
       }
     } catch (eChip) {}
+    function renderDealBox(deal, animate) {
+      var o = deal.offer || {};
+      var title = o.isStay ? 'Rinnovo contratto' : o.isLoan ? 'Trattativa prestito' : 'Trattativa';
+      return (
+        '<div class="es-mg-transfer es-mg-cantera-box es-mg-deal-box' + (animate ? ' slide-up' : '') + '">' +
+        '<h3>' + title + '</h3>' +
+        '<p>Contratto con <strong>' + esc(o.n || 'Club') + '</strong></p>' +
+        '<div class="es-mg-deal-terms">' +
+        '<span>' + (deal.years || 1) + ' anni</span>' +
+        '<span>€' + formatWage(deal.wage) + '</span>' +
+        '</div>' +
+        (deal.note ? '<p class="es-mg-deal-note">' + esc(deal.note) + '</p>' : '') +
+        (deal.status === 'withdrawn'
+          ? '<div class="es-mg-deal-actions"><button type="button" class="es-mg-btn-half ghost" id="es-mg-deal-back">Altre offerte</button></div>'
+          : '<div class="es-mg-deal-actions">' +
+            '<button type="button" class="es-mg-btn-half primary" id="es-mg-deal-ok">Accetta</button>' +
+            (deal.captainLock
+              ? ''
+              : '<button type="button" class="es-mg-btn-half ghost" id="es-mg-deal-money">Chiedi più soldi</button>') +
+            '<button type="button" class="es-mg-btn-half ghost" id="es-mg-deal-years">Chiedi +1 anno</button>' +
+            '<button type="button" class="es-mg-btn-half ghost" id="es-mg-deal-no">Rifiuta</button>' +
+            '</div>') +
+        '</div>'
+      );
+    }
+    function renderCaptainBox(cap, animate) {
+      return (
+        '<div class="es-mg-dilemma' + (animate ? ' slide-up' : '') + '" id="es-mg-cap-box">' +
+        '<h3>Fascia di capitano</h3>' +
+        '<p><strong>' + esc(cap.club || '') + '</strong> ti offre la fascia. Se accetti, resti alle condizioni del club: <strong>niente aumento di stipendio</strong>.</p>' +
+        '<div class="es-mg-dilemma-grid">' +
+        '<button type="button" class="es-mg-dilemma-card" data-captain="yes">' +
+        '<span class="es-mg-dilemma-name">Accetta la fascia</span>' +
+        '<span class="es-mg-dilemma-pill">Capitano, stipendio del club</span></button>' +
+        '<button type="button" class="es-mg-dilemma-card" data-captain="no">' +
+        '<span class="es-mg-dilemma-name">Rifiuta</span>' +
+        '<span class="es-mg-dilemma-pill is-mute">Restano le trattative normali</span></button>' +
+        '</div></div>'
+      );
+    }
+    function renderRoleBox(shift, animate) {
+      return (
+        '<div class="es-mg-dilemma' + (animate ? ' slide-up' : '') + '" id="es-mg-role-box">' +
+        '<h3>Cambio ruolo</h3>' +
+        '<p>L\'allenatore ti vede meglio da <strong>' + esc(shift.to) + '</strong> invece che da ' + esc(shift.from) + '.</p>' +
+        '<div class="es-mg-dilemma-grid">' +
+        '<button type="button" class="es-mg-dilemma-card" data-role="keep">' +
+        '<span class="es-mg-dilemma-name">Resta ' + esc(shift.from) + '</span>' +
+        '<span class="es-mg-dilemma-pill is-mute">Nessun cambio</span></button>' +
+        '<button type="button" class="es-mg-dilemma-card" data-role="change">' +
+        '<span class="es-mg-dilemma-name">Diventa ' + esc(shift.to) + '</span>' +
+        '<span class="es-mg-dilemma-pill">Nuovo ruolo in campo</span></button>' +
+        '</div></div>'
+      );
+    }
     var leftBottom;
     if (p.age >= 38) {
       leftBottom =
@@ -3449,11 +4513,17 @@
         '<button type="button" class="es-mg-btn-full primary" id="es-mg-summary">Vedi riepilogo</button>' +
         '<button type="button" class="es-mg-btn-full ghost" id="es-mg-restart">Gioca di nuovo</button>' +
         '</div></div></div>';
+    } else if (p.pendingDeal && p.pendingDeal.offer) {
+      leftBottom = renderDealBox(p.pendingDeal, animateNew);
+    } else if (p.pendingCaptain && !isFirstStep) {
+      leftBottom = renderCaptainBox(p.pendingCaptain, animateNew);
+    } else if (p.pendingRoleChange && !isFirstStep) {
+      leftBottom = renderRoleBox(p.pendingRoleChange, animateNew);
     } else if (p.pendingDilemma && !isFirstStep) {
       leftBottom = renderDilemmaBox(careerEventById(p.pendingDilemma), animateNew);
     } else {
       leftBottom =
-        '<div class="es-mg-transfer es-mg-cantera-box' + (animateNew ? ' slide-up' : '') + '">' +
+        '<div class="es-mg-transfer es-mg-cantera-box' + (animateNew ? ' slide-up' : '') + (failMkt ? ' is-fail-market' : '') + '">' +
         '<h3>' + transferBoxTitle + '</h3>' +
         (transferBoxDesc ? '<p>' + transferBoxDesc + '</p>' : '') +
         '<div class="es-mg-offers es-mg-offers-grid">' + offerHtml + '</div></div>';
@@ -3472,6 +4542,7 @@
         '<span class="es-mg-tag">' + flagOf(p.nationCode) + ' ' + esc(p.nationCode || 'IT') + '</span>' +
         '<span class="es-mg-tag green">#' + p.number + '</span>' +
         '<span class="es-mg-tag green" title="' + esc(p.posLabel || posLabel(p.position) || p.position) + '">' + esc(p.posLabel || posLabel(p.position) || p.position) + '</span>' +
+        (p.isCaptain ? '<span class="es-mg-tag green" title="Capitano">C</span>' : '') +
         (p.foot ? '<span class="es-mg-tag">' + (p.foot === 'left' ? 'Piede sinistro' : 'Piede destro') + '</span>' : '') +
         '</div>' +
         '<div class="es-mg-player-name">' + esc(p.surname || 'Giocatore') + '</div>' +
@@ -3480,6 +4551,12 @@
         '<div class="es-mg-player-side">' +
         '<div>ETÀ <b>' + p.age + '</b></div>' +
         '<div>VALORE <b>€' + formatValue(p.valueM) + '</b></div>' +
+        (p.wageWeek
+          ? '<div>INGAGGIO <b>€' + formatWage(p.wageWeek) + '</b></div>'
+          : '') +
+        (p.contractYears
+          ? '<div>CONTRATTO <b>' + p.contractYears + (p.contractYears === 1 ? ' anno' : ' anni') + '</b></div>'
+          : '') +
         '</div>' +
         '</div>' +
         /* Totali carriera con icona campetto da calcio per PJ */
@@ -3505,20 +4582,45 @@
         '<div class="es-mg-timeline" id="es-mg-timeline">' + rows + '</div>' +
         '<div class="es-mg-natbar">' +
         '<span>' + flagOf(p.nationCode) + ' ' + esc(p.nation) + '</span>' +
-        '<span>' + ((p.caps || 0) > 0
-          ? (p.caps + ' pres. naz. · ⚽ ' + (p.natGoals || 0) + ' · 🅐 ' + (p.natAst || 0))
-          : 'Nazionale: non convocato') + '</span>' +
+        '<span>' + esc(nationalBarText(p)) + '</span>' +
         '</div>' +
         '</div></div></div>'
     );
     bindClose();
+    function playPickedOffer(offer) {
+      if (root.classList && root.classList.contains('is-resolving')) return;
+      root.classList.add('is-resolving');
+      var prevOvr = p.ovr;
+      var prevApps = totApps;
+      var prevG = totGoals;
+      var prevA = totAssists;
+      setTimeout(function () {
+        try {
+          seasonSim(p, offer);
+          save(LS.career, p);
+          renderCareer(true);
+          tickNumber(document.getElementById('es-mg-ovr-num'), prevOvr, p.ovr, 480);
+          tickNumber(document.getElementById('es-mg-tot-apps'), prevApps, p.history.reduce(function (a, b) { return a + (b.apps || 0); }, 0), 520);
+          tickNumber(document.getElementById('es-mg-tot-gls'), prevG, p.history.reduce(function (a, b) { return a + (b.goals || 0); }, 0), 520);
+          tickNumber(document.getElementById('es-mg-tot-ast'), prevA, p.history.reduce(function (a, b) { return a + (b.assists || 0); }, 0), 520);
+        } catch (errPick) {
+          if (root && root.classList) root.classList.remove('is-resolving');
+        }
+        setTimeout(function () {
+          var tl = document.getElementById('es-mg-timeline');
+          if (tl) tl.scrollTop = tl.scrollHeight;
+        }, 80);
+      }, 220);
+    }
+    function confirmWipeAndRestart() {
+      if (!window.confirm('Vuoi davvero cancellare ' + savedCareerLabel(p) + '?')) return;
+      wipeCareerSave();
+      state.position = null;
+      hydrateIdentity();
+      renderLanding();
+    }
     var restart = document.getElementById('es-mg-restart');
-    if (restart)
-      restart.onclick = function () {
-        state.player = null;
-        state.position = null;
-        renderLanding();
-      };
+    if (restart) restart.onclick = confirmWipeAndRestart;
     var summary = document.getElementById('es-mg-summary');
     if (summary) {
       summary.onclick = function () {
@@ -3577,6 +4679,8 @@
 
     root.querySelectorAll('.es-mg-dilemma-card').forEach(function (btn) {
       btn.onclick = function () {
+        if (btn.getAttribute('data-role')) return;
+        if (btn.getAttribute('data-captain')) return;
         if (btn.getAttribute('data-busy') === '1') return;
         var choice = btn.getAttribute('data-choice');
         if (choice === 'spin-no') {
@@ -3623,29 +4727,87 @@
         var offer = offers[idx];
         if (!offer) return;
         if (root.classList && root.classList.contains('is-resolving')) return;
-        root.classList.add('is-resolving');
-        btn.classList.add('is-picked');
-        var prevOvr = p.ovr;
-        var prevApps = totApps;
-        var prevG = totGoals;
-        var prevA = totAssists;
-        setTimeout(function () {
-          try {
-            seasonSim(p, offer);
-            save(LS.career, p);
-            renderCareer(true);
-            tickNumber(document.getElementById('es-mg-ovr-num'), prevOvr, p.ovr, 480);
-            tickNumber(document.getElementById('es-mg-tot-apps'), prevApps, p.history.reduce(function (a, b) { return a + (b.apps || 0); }, 0), 520);
-            tickNumber(document.getElementById('es-mg-tot-gls'), prevG, p.history.reduce(function (a, b) { return a + (b.goals || 0); }, 0), 520);
-            tickNumber(document.getElementById('es-mg-tot-ast'), prevA, p.history.reduce(function (a, b) { return a + (b.assists || 0); }, 0), 520);
-          } catch (errPick) {
-            if (root && root.classList) root.classList.remove('is-resolving');
-          }
-          setTimeout(function () {
-            var tl = document.getElementById('es-mg-timeline');
-            if (tl) tl.scrollTop = tl.scrollHeight;
-          }, 80);
-        }, 280);
+        var stay = !!(offer.isStay || (p.club && offer.n === p.club.n && !isFirstStep));
+        var skipNego = stay && (p.contractYears > 0) && !offer.failed && !isPendingFailMarket(p);
+        if (skipNego) {
+          btn.classList.add('is-picked');
+          playPickedOffer(offer);
+          return;
+        }
+        attachOfferDeal(p, offer);
+        p.pendingDeal = startDeal(p, offer);
+        save(LS.career, p);
+        renderCareer(false);
+      };
+    });
+    var dealOk = document.getElementById('es-mg-deal-ok');
+    var dealMoney = document.getElementById('es-mg-deal-money');
+    var dealYears = document.getElementById('es-mg-deal-years');
+    var dealNo = document.getElementById('es-mg-deal-no');
+    var dealBack = document.getElementById('es-mg-deal-back');
+    if (dealOk && p.pendingDeal) {
+      dealOk.onclick = function () {
+        var d = p.pendingDeal;
+        var offer = d.offer;
+        offer.signedWage = d.wage;
+        offer.signedYears = d.years;
+        p.pendingDeal = null;
+        playPickedOffer(offer);
+      };
+    }
+    if (dealMoney && p.pendingDeal) {
+      dealMoney.onclick = function () {
+        p.pendingDeal = resolveDealAsk(p.pendingDeal, 'money');
+        if (p.pendingDeal.status === 'withdrawn') {
+          p.frozenOffers = (p.frozenOffers || []).filter(function (o) {
+            return o.n !== (p.pendingDeal.offer && p.pendingDeal.offer.n);
+          });
+        }
+        save(LS.career, p);
+        renderCareer(false);
+      };
+    }
+    if (dealYears && p.pendingDeal) {
+      dealYears.onclick = function () {
+        p.pendingDeal = resolveDealAsk(p.pendingDeal, 'years');
+        if (p.pendingDeal.status === 'withdrawn') {
+          p.frozenOffers = (p.frozenOffers || []).filter(function (o) {
+            return o.n !== (p.pendingDeal.offer && p.pendingDeal.offer.n);
+          });
+        }
+        save(LS.career, p);
+        renderCareer(false);
+      };
+    }
+    function backToOffers() {
+      p.pendingDeal = null;
+      save(LS.career, p);
+      renderCareer(false);
+    }
+    if (dealNo) dealNo.onclick = backToOffers;
+    if (dealBack) dealBack.onclick = backToOffers;
+    root.querySelectorAll('[data-captain]').forEach(function (btn) {
+      btn.onclick = function () {
+        if (btn.getAttribute('data-captain') === 'yes' && p.pendingCaptain) {
+          p.isCaptain = true;
+          p.captainClub = p.pendingCaptain.club || (p.club && p.club.n) || '';
+        }
+        p.pendingCaptain = null;
+        save(LS.career, p);
+        renderCareer(false);
+      };
+    });
+    root.querySelectorAll('[data-role]').forEach(function (btn) {
+      btn.onclick = function () {
+        var shift = p.pendingRoleChange;
+        if (btn.getAttribute('data-role') === 'change' && shift) {
+          p.position = shift.id;
+          p.posLabel = posLabel(shift.id);
+          p.roleChanged = true;
+        }
+        p.pendingRoleChange = null;
+        save(LS.career, p);
+        renderCareer(false);
       };
     });
     setTimeout(function () {
@@ -3690,7 +4852,7 @@
       return (
         '<img class="es-mg-inline-logo" src="' +
         esc(n.o) +
-        '?v=20260807" alt="" width="18" height="18" onerror="this.outerHTML=\'' +
+        '?v=20260814_CAP" alt="" width="18" height="18" onerror="this.outerHTML=\'' +
         (n.f || '') +
         '\'" />'
       );
@@ -3712,8 +4874,10 @@
         if (saved.mode) state.mode = saved.mode;
         if (saved.position) state.position = saved.position;
         if (saved.nation) state.nation = saved.nation;
+        if (saved.surname) rememberSurname(saved.surname);
       }
     } catch (e) {}
+    hydrateIdentity();
     rememberPrevPage();
     playOpenIntro(function () {
       try {
@@ -3732,8 +4896,10 @@
         if (saved.mode) state.mode = saved.mode;
         if (saved.position) state.position = saved.position;
         if (saved.nation) state.nation = saved.nation;
+        if (saved.surname) rememberSurname(saved.surname);
       }
     } catch (e) {}
+    hydrateIdentity();
     loadClubs(function () {
       renderLanding();
     });
@@ -3746,7 +4912,32 @@
     openCareer: openCareer,
     close: close,
     getPublicCareers: getPublicCareers,
-    version: '2026-08-13_HUB'
+    failMarket: {
+      pending: isPendingFailMarket,
+      preview: failMarketPreview,
+      targetOvr: failMarketTargetOvr,
+      apply: applyFailMarketMove
+    },
+    identity: {
+      remember: rememberSurname,
+      hydrate: hydrateIdentity,
+      load: rememberedSurname
+    },
+    deal: {
+      wage: weeklyWage,
+      years: offerContractYears,
+      attach: attachOfferDeal,
+      start: startDeal,
+      ask: resolveDealAsk,
+      preview: offerPreview,
+      formatWage: formatWage
+    },
+    u23: {
+      isU23: isU23Club,
+      parent: u23ParentName,
+      canCallUp: canCallUpFromU23
+    },
+    version: '2026-08-14_TRIAL'
   };
 
   document.addEventListener('elisee:user-revealed', function () {

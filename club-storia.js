@@ -187,7 +187,7 @@
 
   /* —— U23: bloccate in C (o D→C). Mai A/B. —— */
   put(['JUVENTUS U23', 'INTER U23', 'ATALANTA U23'], U23_C);
-  put(['MILAN U23'], U23_D);
+  put(['MILAN U23', 'MILAN FUTURO'], U23_D);
 
   /* —— Serie D con passato C/B/A —— */
   put(['SIENA'], { a: 8, b: 8, c: 10, d: 14 });
@@ -236,11 +236,20 @@
   put(['DERTHONA FBC', 'DERTHONA'], { a: 0, b: 0, c: 10, d: 30 });
   put(['VIGOR LAMEZIA'], { a: 0, b: 0, c: 10, d: 30 });
   put(['GELBISON'], { a: 0, b: 0, c: 8, d: 32 });
-  put(['SS NOLA 1925', 'NOLA'], { a: 0, b: 2, c: 10, d: 28 });
+  put(['SS NOLA 1925', 'NOLA', 'TURRIS'], { a: 0, b: 2, c: 10, d: 28 });
   put(['TARANTO'], { a: 0, b: 6, c: 18, d: 16 });
-  put(['TERNANA'], { a: 0, b: 16, c: 20, d: 4 });
+  put(['TERNANA', 'NUOVA TERNANA'], { a: 0, b: 16, c: 20, d: 4 });
   put(['SPAL'], { a: 3, b: 14, c: 16, d: 7 });
   put(['TRIESTINA'], { a: 0, b: 10, c: 18, d: 12 });
+  put(['ALESSANDRIA'], { a: 13, b: 21, c: 8, d: 6 });
+  put(['LUCCHESE'], { a: 8, b: 12, c: 14, d: 8 });
+  put(['TRAPANI'], { a: 0, b: 4, c: 16, d: 12 });
+  put(['SIRACUSA'], { a: 0, b: 2, c: 16, d: 14 });
+  put(['PRO PATRIA'], { a: 10, b: 12, c: 14, d: 6 });
+  put(['PONTEDERA'], { a: 0, b: 0, c: 18, d: 16 });
+  put(['BRA'], { a: 0, b: 0, c: 12, d: 20 });
+  put(['VIRTUS VERONA'], { a: 0, b: 0, c: 16, d: 16 });
+  put(['FIORENZUOLA'], { a: 0, b: 0, c: 12, d: 20 });
   put(['PORDENONE'], { a: 0, b: 6, c: 16, d: 18 });
 
   /* —— Serie D di paese: possono vincere il girone (→ C), mai B/A —— */
@@ -255,21 +264,32 @@
     'CJARLINS MUZANE', 'CONEGLIANO', 'ESTE', 'FC OBERMAIS', 'LUPARENSE',
     'SAN LUIGI', 'VIGASIO',
     'CITTADELLA VIS MODENA', 'CORREGGESE', 'CREMA', 'LENTIGIONE', 'PRO PALAZZOLO',
-    'ROVATO VERTOVESE', 'SANTANGELO', 'SANT\'ANGELO', 'SASSO MARCONI',
+    'ROVATO', 'ROVATO VERTOVESE', 'SANTANGELO', 'SANT\'ANGELO', 'SASSO MARCONI',
     'SCD PROGRESSO', 'TREVIGLIESE', 'TROPICAL CORIANO', 'TUTTOCUOIO',
+    'BORGOSESIA', 'FEZZANESE', 'LASCARIS', 'MILLESIMO',
+    'NIBBIANO & VALTIDONE', 'PAVONESE', 'TRITIUM',
+    'LME', 'SANDONÀ', 'SANDONA', 'CALCIO SCHIO', 'VIRTUS BOLZANO',
+    'ARCONATESE', 'SOLBIATESE', 'USD CASATESE',
+    'GRASSINA', 'MEZZOLARA', 'RONDINELLA',
+    'ANGELANA', 'K-SPORT MONTECCHIO', 'PIETRALUNGHESE', 'SANTEGIDIESE',
+    'ARANOVA', 'VIGOR CAMPAGNANO', 'CITTÀ DI ANAGNI', 'OSSESE', 'VENAFRO',
+    'BISCEGLIE', 'EBOLITANA', 'GLADIATOR', 'MELFI 1929', 'REAL FORIO',
+    'CALCIO AVOLA', 'DIGIESSE', 'LICATA', 'MODICA',
     'CAMAIORE', 'CANNARA', 'GHIVIBORGO', 'ORVIETANA', 'POGGIBONSI', 'SCANDICCI',
     'SERAVEZZA POZZI', 'TAU', 'TERRANUOVA TRAIANA', 'TRESTINA', 'VIVI ALTOTEVERE',
     'ATLETICO ASCOLI', 'CASTELFIDARDO', 'FOSSOMBRONE', 'NOTARESCO CALCIO',
     'SAMMAURESE', 'SAN MARINO CALCIO', 'SORA', 'TERMOLI', 'UNIPOMEZIA',
     'VIGOR SENIGALLIA',
-    'ALBALONGA', 'ANZIO CALCIO 1924', 'BUDONI', 'FLAMINIA', 'LATTE DOLCE',
+    'ALBALONGA', 'ANZIO CALCIO 1924', 'ATL. LODIGIANI', 'ATLETICO LODIGIANI',
+    'BUDONI', 'FLAMINIA', 'LATTE DOLCE',
     'MONASTIR', 'MONTESPACCATO', 'REAL MONTEROTONDO', 'SARRABUS OGLIASTRA',
     'TRASTEVERE CALCIO', 'VALMONTONE',
     'AC NARDO', 'A.C NARDO', 'A.C NARDÒ', 'NARDO', 'ACERRANA', 'AFRAGOLESE',
     'CITTA DI FASANO', 'FERRANDINA', 'FRANCAVILLA', 'GRAVINA', 'HERACLEA',
-    'POMPEI', 'REAL NORMANNA', 'SARNESE',
-    'ATHLETIC PALERMO', 'ENNA', 'IGEA VIRTUS', 'MILAZZO', 'NISSA', 'PATERNO',
-    'PATERNÒ', 'SAMBIASE', 'SANCATALDESE'
+    'POMPEI', 'REAL NORMANNA', 'REAL AVERSA', 'SARNESE', 'PALMESE', 'BRINDISI',
+    'ATHLETIC PALERMO', 'CASTRUMFAVARA', 'ENNA', 'IGEA VIRTUS', 'MILAZZO', 'NISSA', 'PATERNO',
+    'PATERNÒ', 'RAGUSA', 'SAMBIASE', 'SANCATALDESE', 'LANCIANO FC',
+    'REAL FORIO', 'BISCEGLIE'
   ], VILLAGE);
 
   /* Lucchetti espliciti: non dipendono dai pesi e non si possono bypassare. */
@@ -286,8 +306,7 @@
       P[k] = spec;
     });
   }
-  lock(['INTER', 'MILAN', 'ROMA', 'LAZIO', 'ATALANTA'], 1, 1);
-  lock(['JUVENTUS'], 1, 2);
+  lock(['INTER', 'MILAN', 'JUVENTUS', 'ROMA', 'LAZIO', 'ATALANTA'], 1, 1);
   lock(['UDINESE', 'BOLOGNA', 'CAGLIARI', 'SAMPDORIA'], 1, 2);
   lock(['NAPOLI', 'FIORENTINA', 'TORINO'], 1, 3);
   lock(['GENOA', 'VERONA', 'EMPOLI', 'LECCE', 'SASSUOLO'], 1, 3);
@@ -301,7 +320,7 @@
     4
   );
   lock(['JUVENTUS U23', 'INTER U23', 'ATALANTA U23'], 3, 3);
-  lock(['MILAN U23'], 3, 4);
+  lock(['MILAN U23', 'MILAN FUTURO'], 3, 4);
 
   function addFail(names, dest, chance) {
     names.forEach(function (n) {

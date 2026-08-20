@@ -48,7 +48,7 @@ assert.strictEqual(find('CALDIERO TERME').t, 4, 'Caldiero deve essere Serie D');
 assert.ok(/SERIE D/i.test(find('CALDIERO TERME').l), 'Caldiero label D');
 assert.ok(/GIRONE B/i.test(find('CALDIERO TERME').l), 'Caldiero Girone B');
 assert.strictEqual(find('UDINESE').t, 1, 'Udinese deve essere Serie A');
-assert.strictEqual(find('VIVI ALTOTEVERE').t, 4, 'Vivi deve essere Serie D');
+assert.strictEqual(find('SAN DONATO').t, 4, 'San Donato deve essere Serie D');
 assert.strictEqual(find('INTER').t, 1);
 
 /* 2. Lucchetti storia */
@@ -78,10 +78,10 @@ mustLegal('UDINESE', 1);
 mustLegal('UDINESE', 2);
 mustIllegal('UDINESE', 3);
 mustIllegal('UDINESE', 4);
-mustIllegal('VIVI ALTOTEVERE', 1);
-mustIllegal('VIVI ALTOTEVERE', 2);
+mustIllegal('SAN DONATO', 1);
+mustIllegal('SAN DONATO', 2);
 mustIllegal('INTER', 2);
-mustLegal('JUVENTUS', 2);
+mustIllegal('JUVENTUS', 2);
 mustIllegal('JUVENTUS', 3);
 
 /* 3. Catalogo sempre dentro il range */
@@ -96,7 +96,7 @@ clubs.forEach(function (c) {
 });
 
 /* 5. Avvio carriera: enforce(atStart) = catalogo */
-['MODENA', 'CALDIERO TERME', 'UDINESE', 'VIVI ALTOTEVERE', 'TAU', 'FERRANDINA'].forEach(function (n) {
+['MODENA', 'CALDIERO TERME', 'UDINESE', 'SAN DONATO', 'TAU', 'GRAVINA'].forEach(function (n) {
   var c = Object.assign({}, find(n), { t: 1, l: 'SERIE A' });
   var en = S.enforce(c, 1, true);
   assert.strictEqual(en.t, find(n).t, n + ' all\'avvio deve tornare al catalogo, non A');
@@ -194,7 +194,7 @@ function evolve() {
   });
 }
 
-var watch = ['UDINESE', 'INTER', 'MODENA', 'CALDIERO TERME', 'VIVI ALTOTEVERE', 'FIORENTINA', 'JUVENTUS'];
+var watch = ['UDINESE', 'INTER', 'MODENA', 'CALDIERO TERME', 'SAN DONATO', 'FIORENTINA', 'JUVENTUS'];
 var worst = {};
 watch.forEach(function (n) { worst[n] = find(n).t; });
 for (var s = 0; s < 80; s++) {
@@ -211,7 +211,7 @@ if (worst.MODENA < 2) fail('Modena è salita in A');
 if (worst.MODENA === 1) fail('Modena in A');
 if (find('MODENA').t === 1) fail('Modena finisce in A');
 if (worst['CALDIERO TERME'] < 3) fail('Caldiero sopra la C');
-if (worst['VIVI ALTOTEVERE'] < 3) fail('Vivi sopra la C');
+if (worst['SAN DONATO'] < 3) fail('San Donato sopra la C');
 
 /* 8b. Retrocessione C→D tiene il girone D vero */
 var scaf = Object.assign({}, find('SCAFATESE'), { catalogDGirone: find('SCAFATESE').dg || 'G' });

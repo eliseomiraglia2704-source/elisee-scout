@@ -1,0 +1,1786 @@
+{
+  "player": {
+    "surname": "Miraglia",
+    "number": 27,
+    "position": "TS",
+    "posLabel": "Terzino sinistro",
+    "nation": "Italia"
+  },
+  "catalog": {
+    "clubs": 247,
+    "duplicates": [],
+    "missingLogos": [],
+    "wrongLogos": [],
+    "betterLogos": [
+      {
+        "n": "ENTELLA",
+        "now": "immagini/squadre-loghi/virtus-entella.png",
+        "better": "immagini/squadre-loghi/entella.png",
+        "l": "SERIE B"
+      },
+      {
+        "n": "MONTESPACCATO",
+        "now": "immagini/squadre-loghi/montespaccato-calcio.png",
+        "better": "immagini/squadre-loghi/montespaccato.png",
+        "l": "SERIE D · GIRONE G"
+      },
+      {
+        "n": "ATHLETIC PALERMO",
+        "now": "immagini/squadre-loghi/athletic-club-palermo.png",
+        "better": "immagini/squadre-loghi/palermo.png",
+        "l": "SERIE D · GIRONE I"
+      }
+    ],
+    "sharedLogos": [],
+    "gironiC": [],
+    "gironiD": []
+  },
+  "competitions": {
+    "missingLeagueLogos": [],
+    "trophyReuse": []
+  },
+  "simulations": [
+    {
+      "id": 1,
+      "identity": "Miraglia #27 TS",
+      "seasons": [
+        {
+          "age": 16,
+          "club": "GHIVIBORGO",
+          "league": "SERIE D · GIRONE E",
+          "logo": "immagini/squadre-loghi/ghiviborgo.png",
+          "youth": false
+        },
+        {
+          "age": 17,
+          "club": "GHIVIBORGO",
+          "league": "SERIE D · GIRONE E",
+          "logo": "immagini/squadre-loghi/ghiviborgo.png",
+          "ovr": 51
+        },
+        {
+          "age": 18,
+          "club": "GHIVIBORGO",
+          "league": "SERIE D · GIRONE E",
+          "logo": "immagini/squadre-loghi/ghiviborgo.png",
+          "ovr": 51
+        },
+        {
+          "age": 19,
+          "club": "PESCARA",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/pescara.png",
+          "ovr": 53
+        },
+        {
+          "age": 20,
+          "club": "FOLIGNO",
+          "league": "SERIE D · GIRONE E",
+          "logo": "immagini/squadre-loghi/foligno.png",
+          "ovr": 53
+        },
+        {
+          "age": 21,
+          "club": "SAVOIA",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/savoia-1908.png",
+          "ovr": 53
+        },
+        {
+          "age": 22,
+          "club": "VARESE FC",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/varese.png",
+          "ovr": 55
+        },
+        {
+          "age": 23,
+          "club": "VARESE FC",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/varese.png",
+          "ovr": 55
+        },
+        {
+          "age": 24,
+          "club": "SANCATALDESE",
+          "league": "SERIE D · GIRONE I",
+          "logo": "immagini/squadre-loghi/sancataldese.png",
+          "ovr": 57
+        },
+        {
+          "age": 25,
+          "club": "GELA",
+          "league": "SERIE D · GIRONE I",
+          "logo": "immagini/squadre-loghi/gela-calcio.png",
+          "ovr": 59
+        },
+        {
+          "age": 26,
+          "club": "CASERTANA",
+          "league": "SERIE D · GIRONE H",
+          "logo": "immagini/squadre-loghi/casertana.png",
+          "ovr": 61
+        },
+        {
+          "age": 27,
+          "club": "SCANDICCI",
+          "league": "SERIE D · GIRONE E",
+          "logo": "immagini/squadre-loghi/scandicci.png",
+          "ovr": 63
+        },
+        {
+          "age": 28,
+          "club": "GRAVINA",
+          "league": "SERIE D · GIRONE H",
+          "logo": "immagini/squadre-loghi/fbc-gravina.png",
+          "ovr": 65
+        },
+        {
+          "age": 29,
+          "club": "PRATO",
+          "league": "SERIE D · GIRONE E",
+          "logo": "immagini/squadre-loghi/prato.png",
+          "ovr": 65
+        },
+        {
+          "age": 30,
+          "club": "PRATO",
+          "league": "SERIE D · GIRONE E",
+          "logo": "immagini/squadre-loghi/prato.png",
+          "ovr": 67
+        },
+        {
+          "age": 31,
+          "club": "ATHLETIC PALERMO",
+          "league": "SERIE D · GIRONE I",
+          "logo": "immagini/squadre-loghi/athletic-club-palermo.png",
+          "ovr": 69
+        },
+        {
+          "age": 32,
+          "club": "SESTRI LEVANTE",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/sestri-levante.png",
+          "ovr": 71
+        },
+        {
+          "age": 33,
+          "club": "CESENA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/cesena.png",
+          "ovr": 71
+        },
+        {
+          "age": 34,
+          "club": "CESENA",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/cesena.png",
+          "ovr": 73
+        },
+        {
+          "age": 35,
+          "club": "SÜDTIROL",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/suditrol.png",
+          "ovr": 75
+        },
+        {
+          "age": 36,
+          "club": "SÜDTIROL",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/suditrol.png",
+          "ovr": 77
+        },
+        {
+          "age": 37,
+          "club": "SÜDTIROL",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/suditrol.png",
+          "ovr": 79
+        },
+        {
+          "age": 38,
+          "club": "CROTONE",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/crotone.png",
+          "ovr": 79
+        }
+      ],
+      "offersSeen": 69,
+      "final": {
+        "age": 38,
+        "club": "CROTONE",
+        "league": "SERIE B",
+        "ovr": 79
+      }
+    },
+    {
+      "id": 2,
+      "identity": "Miraglia #27 TS",
+      "seasons": [
+        {
+          "age": 16,
+          "club": "MILAN U23",
+          "league": "SERIE D · GIRONE B",
+          "logo": "immagini/squadre-loghi/milan.png",
+          "youth": false
+        },
+        {
+          "age": 17,
+          "club": "MILAN U23",
+          "league": "SERIE D · GIRONE B",
+          "logo": "immagini/squadre-loghi/milan.png",
+          "ovr": 51
+        },
+        {
+          "age": 18,
+          "club": "MILAN U23",
+          "league": "SERIE D · GIRONE B",
+          "logo": "immagini/squadre-loghi/milan.png",
+          "ovr": 53
+        },
+        {
+          "age": 19,
+          "club": "RAVENNA",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/ravenna.png",
+          "ovr": 55
+        },
+        {
+          "age": 20,
+          "club": "MARTINA CALCIO",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/martina-calcio-1947.png",
+          "ovr": 57
+        },
+        {
+          "age": 21,
+          "club": "PORTOGRUARO",
+          "league": "SERIE D · GIRONE C",
+          "logo": "immagini/squadre-loghi/portogruaro.png",
+          "ovr": 59
+        },
+        {
+          "age": 22,
+          "club": "MACERATESE",
+          "league": "SERIE D · GIRONE F",
+          "logo": "immagini/squadre-loghi/maceratese-1922.png",
+          "ovr": 61
+        },
+        {
+          "age": 23,
+          "club": "GELA",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/gela-calcio.png",
+          "ovr": 63
+        },
+        {
+          "age": 24,
+          "club": "REGGIANA",
+          "league": "SERIE D · GIRONE B",
+          "logo": "immagini/squadre-loghi/reggiana.png",
+          "ovr": 63
+        },
+        {
+          "age": 25,
+          "club": "SAVOIA",
+          "league": "SERIE D · GIRONE I",
+          "logo": "immagini/squadre-loghi/savoia-1908.png",
+          "ovr": 65
+        },
+        {
+          "age": 26,
+          "club": "ASTI",
+          "league": "SERIE D · GIRONE A",
+          "logo": "immagini/squadre-loghi/asti.png",
+          "ovr": 67
+        },
+        {
+          "age": 27,
+          "club": "COMO",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/como-1907.png",
+          "ovr": 69
+        },
+        {
+          "age": 28,
+          "club": "SCAFATESE",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/scafatese-calcio-1922.png",
+          "ovr": 71
+        },
+        {
+          "age": 29,
+          "club": "SCAFATESE",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/scafatese-calcio-1922.png",
+          "ovr": 73
+        },
+        {
+          "age": 30,
+          "club": "CITTADELLA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/cittadella.png",
+          "ovr": 75
+        },
+        {
+          "age": 31,
+          "club": "MILAN",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/milan.png",
+          "ovr": 77
+        },
+        {
+          "age": 32,
+          "club": "MILAN",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/milan.png",
+          "ovr": 77
+        },
+        {
+          "age": 33,
+          "club": "BENEVENTO",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/benevento.png",
+          "ovr": 79
+        },
+        {
+          "age": 34,
+          "club": "BENEVENTO",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/benevento.png",
+          "ovr": 81
+        },
+        {
+          "age": 35,
+          "club": "SESTRI LEVANTE",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/sestri-levante.png",
+          "ovr": 81
+        },
+        {
+          "age": 36,
+          "club": "SESTRI LEVANTE",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/sestri-levante.png",
+          "ovr": 81
+        },
+        {
+          "age": 37,
+          "club": "VIGASIO",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/vigasio.png",
+          "ovr": 81
+        },
+        {
+          "age": 38,
+          "club": "ATALANTA U23",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/atalanta.png",
+          "ovr": 83
+        }
+      ],
+      "offersSeen": 69,
+      "final": {
+        "age": 38,
+        "club": "ATALANTA U23",
+        "league": "SERIE C · GIRONE A",
+        "ovr": 83
+      }
+    },
+    {
+      "id": 3,
+      "identity": "Miraglia #27 TS",
+      "seasons": [
+        {
+          "age": 16,
+          "club": "TERAMO",
+          "league": "SERIE D · GIRONE F",
+          "logo": "immagini/squadre-loghi/teramo-calcio-1913.png",
+          "youth": false
+        },
+        {
+          "age": 17,
+          "club": "PICERNO",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/az-picerno.png",
+          "ovr": 49
+        },
+        {
+          "age": 18,
+          "club": "PICERNO",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/az-picerno.png",
+          "ovr": 49
+        },
+        {
+          "age": 19,
+          "club": "AVELLINO",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/us-avellino-1912.png",
+          "ovr": 49
+        },
+        {
+          "age": 20,
+          "club": "SS NOLA 1925",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/nola-1925.png",
+          "ovr": 49
+        },
+        {
+          "age": 21,
+          "club": "CASERTANA",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/casertana.png",
+          "ovr": 51
+        },
+        {
+          "age": 22,
+          "club": "TREVISO",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/treviso.png",
+          "ovr": 51
+        },
+        {
+          "age": 23,
+          "club": "TREVISO",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/treviso.png",
+          "ovr": 53
+        },
+        {
+          "age": 24,
+          "club": "CHIETI",
+          "league": "SERIE D · GIRONE F",
+          "logo": "immagini/squadre-loghi/chieti-fc-1922.png",
+          "ovr": 55
+        },
+        {
+          "age": 25,
+          "club": "SAN MARINO CALCIO",
+          "league": "SERIE D · GIRONE F",
+          "logo": "immagini/squadre-loghi/san-marino-calcio.png",
+          "ovr": 57
+        },
+        {
+          "age": 26,
+          "club": "SAN MARINO CALCIO",
+          "league": "SERIE D · GIRONE F",
+          "logo": "immagini/squadre-loghi/san-marino-calcio.png",
+          "ovr": 59
+        },
+        {
+          "age": 27,
+          "club": "PINETO",
+          "league": "SERIE D · GIRONE H",
+          "logo": "immagini/squadre-loghi/pineto.png",
+          "ovr": 61
+        },
+        {
+          "age": 28,
+          "club": "REAL NORMANNA",
+          "league": "SERIE D · GIRONE H",
+          "logo": "immagini/squadre-loghi/real-normanna.png",
+          "ovr": 63
+        },
+        {
+          "age": 29,
+          "club": "REAL NORMANNA",
+          "league": "SERIE D · GIRONE H",
+          "logo": "immagini/squadre-loghi/real-normanna.png",
+          "ovr": 65
+        },
+        {
+          "age": 30,
+          "club": "CITTADELLA VIS MODENA",
+          "league": "SERIE D · GIRONE D",
+          "logo": "immagini/squadre-loghi/cittadella-vis-modena.png",
+          "ovr": 67
+        },
+        {
+          "age": 31,
+          "club": "CANNARA",
+          "league": "SERIE D · GIRONE E",
+          "logo": "immagini/squadre-loghi/cannara.png",
+          "ovr": 69
+        },
+        {
+          "age": 32,
+          "club": "SAN MARINO CALCIO",
+          "league": "SERIE D · GIRONE F",
+          "logo": "immagini/squadre-loghi/san-marino-calcio.png",
+          "ovr": 69
+        },
+        {
+          "age": 33,
+          "club": "SAN MARINO CALCIO",
+          "league": "SERIE D · GIRONE F",
+          "logo": "immagini/squadre-loghi/san-marino-calcio.png",
+          "ovr": 71
+        },
+        {
+          "age": 34,
+          "club": "SAN MARINO CALCIO",
+          "league": "SERIE D · GIRONE F",
+          "logo": "immagini/squadre-loghi/san-marino-calcio.png",
+          "ovr": 73
+        },
+        {
+          "age": 35,
+          "club": "SAN MARINO CALCIO",
+          "league": "SERIE D · GIRONE F",
+          "logo": "immagini/squadre-loghi/san-marino-calcio.png",
+          "ovr": 75
+        },
+        {
+          "age": 36,
+          "club": "VIRTUS FRANCAVILLA",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/virtus-francavilla.png",
+          "ovr": 77
+        },
+        {
+          "age": 37,
+          "club": "FC OBERMAIS",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/fc-obermais.png",
+          "ovr": 79
+        },
+        {
+          "age": 38,
+          "club": "FC OBERMAIS",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/fc-obermais.png",
+          "ovr": 81
+        }
+      ],
+      "offersSeen": 69,
+      "final": {
+        "age": 38,
+        "club": "FC OBERMAIS",
+        "league": "SERIE C · GIRONE A",
+        "ovr": 81
+      }
+    },
+    {
+      "id": 4,
+      "identity": "Miraglia #27 TS",
+      "seasons": [
+        {
+          "age": 16,
+          "club": "INTER",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/inter.png",
+          "youth": true
+        },
+        {
+          "age": 17,
+          "club": "CATANZARO",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/catanzaro.png",
+          "ovr": 49
+        },
+        {
+          "age": 18,
+          "club": "MONZA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/monza.png",
+          "ovr": 51
+        },
+        {
+          "age": 19,
+          "club": "SALUZZO",
+          "league": "SERIE D · GIRONE A",
+          "logo": "immagini/squadre-loghi/saluzzo.png",
+          "ovr": 53
+        },
+        {
+          "age": 20,
+          "club": "VIVI ALTOTEVERE",
+          "league": "SERIE D · GIRONE E",
+          "logo": "immagini/squadre-loghi/vivi-altotevere-sansepolcro.png",
+          "ovr": 55
+        },
+        {
+          "age": 21,
+          "club": "VIVI ALTOTEVERE",
+          "league": "SERIE D · GIRONE E",
+          "logo": "immagini/squadre-loghi/vivi-altotevere-sansepolcro.png",
+          "ovr": 55
+        },
+        {
+          "age": 22,
+          "club": "SANGIULIANO CITY",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/sangiuliano-city-nova.png",
+          "ovr": 55
+        },
+        {
+          "age": 23,
+          "club": "SANGIULIANO CITY",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/sangiuliano-city-nova.png",
+          "ovr": 55
+        },
+        {
+          "age": 24,
+          "club": "OLBIA",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/olbia-calcio-1905.png",
+          "ovr": 57
+        },
+        {
+          "age": 25,
+          "club": "VALENZANA",
+          "league": "SERIE D · GIRONE A",
+          "logo": "immagini/squadre-loghi/valenzana-mado.png",
+          "ovr": 57
+        },
+        {
+          "age": 26,
+          "club": "VALENZANA",
+          "league": "SERIE D · GIRONE A",
+          "logo": "immagini/squadre-loghi/valenzana-mado.png",
+          "ovr": 59
+        },
+        {
+          "age": 27,
+          "club": "FOLIGNO",
+          "league": "SERIE D · GIRONE E",
+          "logo": "immagini/squadre-loghi/foligno.png",
+          "ovr": 61
+        },
+        {
+          "age": 28,
+          "club": "MONZA",
+          "league": "SERIE D · GIRONE B",
+          "logo": "immagini/squadre-loghi/monza.png",
+          "ovr": 63
+        },
+        {
+          "age": 29,
+          "club": "MACERATESE",
+          "league": "SERIE D · GIRONE F",
+          "logo": "immagini/squadre-loghi/maceratese-1922.png",
+          "ovr": 63
+        },
+        {
+          "age": 30,
+          "club": "MONTESPACCATO",
+          "league": "SERIE D · GIRONE G",
+          "logo": "immagini/squadre-loghi/montespaccato-calcio.png",
+          "ovr": 63
+        },
+        {
+          "age": 31,
+          "club": "TUTTOCUOIO",
+          "league": "SERIE D · GIRONE D",
+          "logo": "immagini/squadre-loghi/tuttocuoio.png",
+          "ovr": 65
+        },
+        {
+          "age": 32,
+          "club": "SAMBIASE",
+          "league": "SERIE D · GIRONE I",
+          "logo": "immagini/squadre-loghi/sambiase-calcio.png",
+          "ovr": 67
+        },
+        {
+          "age": 33,
+          "club": "CAMPODARSEGO",
+          "league": "SERIE D · GIRONE C",
+          "logo": "immagini/squadre-loghi/campodarsego.png",
+          "ovr": 69
+        },
+        {
+          "age": 34,
+          "club": "AFRAGOLESE",
+          "league": "SERIE D · GIRONE H",
+          "logo": "immagini/squadre-loghi/afragolese-1944.png",
+          "ovr": 69
+        },
+        {
+          "age": 35,
+          "club": "JUVENTUS U23",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/juventus.png",
+          "ovr": 71
+        },
+        {
+          "age": 36,
+          "club": "VIBONESE",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/vibonese.png",
+          "ovr": 73
+        },
+        {
+          "age": 37,
+          "club": "CATANIA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/catania.png",
+          "ovr": 75
+        },
+        {
+          "age": 38,
+          "club": "NOVAROMENTIN",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/novaromentin.png",
+          "ovr": 77
+        }
+      ],
+      "offersSeen": 69,
+      "final": {
+        "age": 38,
+        "club": "NOVAROMENTIN",
+        "league": "SERIE C · GIRONE A",
+        "ovr": 77
+      }
+    },
+    {
+      "id": 5,
+      "identity": "Miraglia #27 TS",
+      "seasons": [
+        {
+          "age": 16,
+          "club": "MODENA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/modena.png",
+          "youth": false
+        },
+        {
+          "age": 17,
+          "club": "OLBIA",
+          "league": "SERIE D · GIRONE G",
+          "logo": "immagini/squadre-loghi/olbia-calcio-1905.png",
+          "ovr": 51
+        },
+        {
+          "age": 18,
+          "club": "OLBIA",
+          "league": "SERIE D · GIRONE G",
+          "logo": "immagini/squadre-loghi/olbia-calcio-1905.png",
+          "ovr": 53
+        },
+        {
+          "age": 19,
+          "club": "SCANDICCI",
+          "league": "SERIE D · GIRONE E",
+          "logo": "immagini/squadre-loghi/scandicci.png",
+          "ovr": 53
+        },
+        {
+          "age": 20,
+          "club": "CITTADELLA VIS MODENA",
+          "league": "SERIE D · GIRONE D",
+          "logo": "immagini/squadre-loghi/cittadella-vis-modena.png",
+          "ovr": 55
+        },
+        {
+          "age": 21,
+          "club": "REGGIANA",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/reggiana.png",
+          "ovr": 57
+        },
+        {
+          "age": 22,
+          "club": "SAN DONATO",
+          "league": "SERIE D · GIRONE E",
+          "logo": "immagini/squadre-loghi/san-donato-tavarnelle.png",
+          "ovr": 59
+        },
+        {
+          "age": 23,
+          "club": "SAN DONATO",
+          "league": "SERIE D · GIRONE E",
+          "logo": "immagini/squadre-loghi/san-donato-tavarnelle.png",
+          "ovr": 61
+        },
+        {
+          "age": 24,
+          "club": "SAN DONATO",
+          "league": "SERIE D · GIRONE E",
+          "logo": "immagini/squadre-loghi/san-donato-tavarnelle.png",
+          "ovr": 63
+        },
+        {
+          "age": 25,
+          "club": "SAN DONATO",
+          "league": "SERIE D · GIRONE E",
+          "logo": "immagini/squadre-loghi/san-donato-tavarnelle.png",
+          "ovr": 63
+        },
+        {
+          "age": 26,
+          "club": "AFRAGOLESE",
+          "league": "SERIE D · GIRONE H",
+          "logo": "immagini/squadre-loghi/afragolese-1944.png",
+          "ovr": 65
+        },
+        {
+          "age": 27,
+          "club": "VIVI ALTOTEVERE",
+          "league": "SERIE D · GIRONE E",
+          "logo": "immagini/squadre-loghi/vivi-altotevere-sansepolcro.png",
+          "ovr": 65
+        },
+        {
+          "age": 28,
+          "club": "OLBIA",
+          "league": "SERIE D · GIRONE G",
+          "logo": "immagini/squadre-loghi/olbia-calcio-1905.png",
+          "ovr": 65
+        },
+        {
+          "age": 29,
+          "club": "OLBIA",
+          "league": "SERIE D · GIRONE G",
+          "logo": "immagini/squadre-loghi/olbia-calcio-1905.png",
+          "ovr": 67
+        },
+        {
+          "age": 30,
+          "club": "AVELLINO",
+          "league": "SERIE D · GIRONE H",
+          "logo": "immagini/squadre-loghi/us-avellino-1912.png",
+          "ovr": 67
+        },
+        {
+          "age": 31,
+          "club": "AVELLINO",
+          "league": "SERIE D · GIRONE H",
+          "logo": "immagini/squadre-loghi/us-avellino-1912.png",
+          "ovr": 67
+        },
+        {
+          "age": 32,
+          "club": "VALENZANA",
+          "league": "SERIE D · GIRONE A",
+          "logo": "immagini/squadre-loghi/valenzana-mado.png",
+          "ovr": 69
+        },
+        {
+          "age": 33,
+          "club": "VALENZANA",
+          "league": "SERIE D · GIRONE A",
+          "logo": "immagini/squadre-loghi/valenzana-mado.png",
+          "ovr": 69
+        },
+        {
+          "age": 34,
+          "club": "SALERNITANA",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/salernitana.png",
+          "ovr": 71
+        },
+        {
+          "age": 35,
+          "club": "MONASTIR",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/monastir-1983.png",
+          "ovr": 73
+        },
+        {
+          "age": 36,
+          "club": "BUDONI",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/budoni-calcio.png",
+          "ovr": 75
+        },
+        {
+          "age": 37,
+          "club": "LIVORNO",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/livorno.png",
+          "ovr": 77
+        },
+        {
+          "age": 38,
+          "club": "LIVORNO",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/livorno.png",
+          "ovr": 79
+        }
+      ],
+      "offersSeen": 69,
+      "final": {
+        "age": 38,
+        "club": "LIVORNO",
+        "league": "SERIE B",
+        "ovr": 79
+      }
+    },
+    {
+      "id": 6,
+      "identity": "Miraglia #27 TS",
+      "seasons": [
+        {
+          "age": 16,
+          "club": "MODENA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/modena.png",
+          "youth": false
+        },
+        {
+          "age": 17,
+          "club": "SÜDTIROL",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/suditrol.png",
+          "ovr": 51
+        },
+        {
+          "age": 18,
+          "club": "SÜDTIROL",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/suditrol.png",
+          "ovr": 53
+        },
+        {
+          "age": 19,
+          "club": "VARESINA",
+          "league": "SERIE D · GIRONE B",
+          "logo": "immagini/squadre-loghi/varesina.png",
+          "ovr": 55
+        },
+        {
+          "age": 20,
+          "club": "VARESINA",
+          "league": "SERIE D · GIRONE B",
+          "logo": "immagini/squadre-loghi/varesina.png",
+          "ovr": 57
+        },
+        {
+          "age": 21,
+          "club": "VARESINA",
+          "league": "SERIE D · GIRONE B",
+          "logo": "immagini/squadre-loghi/varesina.png",
+          "ovr": 59
+        },
+        {
+          "age": 22,
+          "club": "OLBIA",
+          "league": "SERIE D · GIRONE G",
+          "logo": "immagini/squadre-loghi/olbia-calcio-1905.png",
+          "ovr": 59
+        },
+        {
+          "age": 23,
+          "club": "OLBIA",
+          "league": "SERIE D · GIRONE G",
+          "logo": "immagini/squadre-loghi/olbia-calcio-1905.png",
+          "ovr": 59
+        },
+        {
+          "age": 24,
+          "club": "CISERANO-BERGAMO",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/virtus-ciserano-bergamo-1909.png",
+          "ovr": 61
+        },
+        {
+          "age": 25,
+          "club": "CISERANO-BERGAMO",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/virtus-ciserano-bergamo-1909.png",
+          "ovr": 63
+        },
+        {
+          "age": 26,
+          "club": "TUTTOCUOIO",
+          "league": "SERIE D · GIRONE D",
+          "logo": "immagini/squadre-loghi/tuttocuoio.png",
+          "ovr": 65
+        },
+        {
+          "age": 27,
+          "club": "LIGORNA",
+          "league": "SERIE D · GIRONE A",
+          "logo": "immagini/squadre-loghi/ligorna.png",
+          "ovr": 67
+        },
+        {
+          "age": 28,
+          "club": "LIGORNA",
+          "league": "SERIE D · GIRONE A",
+          "logo": "immagini/squadre-loghi/ligorna.png",
+          "ovr": 67
+        },
+        {
+          "age": 29,
+          "club": "LIGORNA",
+          "league": "SERIE D · GIRONE A",
+          "logo": "immagini/squadre-loghi/ligorna.png",
+          "ovr": 69
+        },
+        {
+          "age": 30,
+          "club": "LIGORNA",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/ligorna.png",
+          "ovr": 71
+        },
+        {
+          "age": 31,
+          "club": "PADOVA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/padova.png",
+          "ovr": 73
+        },
+        {
+          "age": 32,
+          "club": "INTER",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/inter.png",
+          "ovr": 75
+        },
+        {
+          "age": 33,
+          "club": "INTER",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/inter.png",
+          "ovr": 77
+        },
+        {
+          "age": 34,
+          "club": "TERAMO",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/teramo-calcio-1913.png",
+          "ovr": 79
+        },
+        {
+          "age": 35,
+          "club": "TERAMO",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/teramo-calcio-1913.png",
+          "ovr": 81
+        },
+        {
+          "age": 36,
+          "club": "TERAMO",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/teramo-calcio-1913.png",
+          "ovr": 81
+        },
+        {
+          "age": 37,
+          "club": "TERAMO",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/teramo-calcio-1913.png",
+          "ovr": 83
+        },
+        {
+          "age": 38,
+          "club": "MILAN",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/milan.png",
+          "ovr": 85
+        }
+      ],
+      "offersSeen": 69,
+      "final": {
+        "age": 38,
+        "club": "MILAN",
+        "league": "SERIE A",
+        "ovr": 85
+      }
+    },
+    {
+      "id": 7,
+      "identity": "Miraglia #27 TS",
+      "seasons": [
+        {
+          "age": 16,
+          "club": "NAPOLI",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/napoli.png",
+          "youth": true
+        },
+        {
+          "age": 17,
+          "club": "FROSINONE",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/frosinone.png",
+          "ovr": 51
+        },
+        {
+          "age": 18,
+          "club": "FROSINONE",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/frosinone.png",
+          "ovr": 53
+        },
+        {
+          "age": 19,
+          "club": "TORINO",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/torino.png",
+          "ovr": 53
+        },
+        {
+          "age": 20,
+          "club": "LAZIO",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/lazio.png",
+          "ovr": 53
+        },
+        {
+          "age": 21,
+          "club": "BOLOGNA",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/bologna.png",
+          "ovr": 55
+        },
+        {
+          "age": 22,
+          "club": "BOLOGNA",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/bologna.png",
+          "ovr": 55
+        },
+        {
+          "age": 23,
+          "club": "JUVENTUS",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/juventus.png",
+          "ovr": 55
+        },
+        {
+          "age": 24,
+          "club": "ATALANTA",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/atalanta.png",
+          "ovr": 57
+        },
+        {
+          "age": 25,
+          "club": "BOLOGNA",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/bologna.png",
+          "ovr": 59
+        },
+        {
+          "age": 26,
+          "club": "BOLOGNA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/bologna.png",
+          "ovr": 59
+        },
+        {
+          "age": 27,
+          "club": "BOLOGNA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/bologna.png",
+          "ovr": 59
+        },
+        {
+          "age": 28,
+          "club": "GENOA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/genoa.png",
+          "ovr": 59
+        },
+        {
+          "age": 29,
+          "club": "BRESCIA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/union-brescia.png",
+          "ovr": 59
+        },
+        {
+          "age": 30,
+          "club": "CREMONESE",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/cremonese.png",
+          "ovr": 61
+        },
+        {
+          "age": 31,
+          "club": "LECCO",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/lecco.png",
+          "ovr": 61
+        },
+        {
+          "age": 32,
+          "club": "LECCO",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/lecco.png",
+          "ovr": 61
+        },
+        {
+          "age": 33,
+          "club": "LECCO",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/lecco.png",
+          "ovr": 61
+        },
+        {
+          "age": 34,
+          "club": "LECCO",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/lecco.png",
+          "ovr": 61
+        },
+        {
+          "age": 35,
+          "club": "GIULIANOVA",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/giulianova-calcio-1924.png",
+          "ovr": 61
+        },
+        {
+          "age": 36,
+          "club": "GIULIANOVA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/giulianova-calcio-1924.png",
+          "ovr": 61
+        },
+        {
+          "age": 37,
+          "club": "NOCERINA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/nocerina-1910.png",
+          "ovr": 63
+        },
+        {
+          "age": 38,
+          "club": "NOCERINA",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/nocerina-1910.png",
+          "ovr": 63
+        }
+      ],
+      "offersSeen": 69,
+      "final": {
+        "age": 38,
+        "club": "NOCERINA",
+        "league": "SERIE C · GIRONE C",
+        "ovr": 63
+      }
+    },
+    {
+      "id": 8,
+      "identity": "Miraglia #27 TS",
+      "seasons": [
+        {
+          "age": 16,
+          "club": "SAMPDORIA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/sampdoria.png",
+          "youth": false
+        },
+        {
+          "age": 17,
+          "club": "SAMPDORIA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/sampdoria.png",
+          "ovr": 51
+        },
+        {
+          "age": 18,
+          "club": "VENEZIA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/venezia.png",
+          "ovr": 53
+        },
+        {
+          "age": 19,
+          "club": "VENEZIA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/venezia.png",
+          "ovr": 55
+        },
+        {
+          "age": 20,
+          "club": "VENEZIA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/venezia.png",
+          "ovr": 57
+        },
+        {
+          "age": 21,
+          "club": "TRENTO",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/trento.png",
+          "ovr": 57
+        },
+        {
+          "age": 22,
+          "club": "TRENTO",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/trento.png",
+          "ovr": 59
+        },
+        {
+          "age": 23,
+          "club": "OLBIA",
+          "league": "SERIE D · GIRONE G",
+          "logo": "immagini/squadre-loghi/olbia-calcio-1905.png",
+          "ovr": 61
+        },
+        {
+          "age": 24,
+          "club": "VIS PESARO",
+          "league": "SERIE D · GIRONE E",
+          "logo": "immagini/squadre-loghi/vis-pesaro.png",
+          "ovr": 61
+        },
+        {
+          "age": 25,
+          "club": "VIGOR SENIGALLIA",
+          "league": "SERIE D · GIRONE F",
+          "logo": "immagini/squadre-loghi/vigor-senigallia.png",
+          "ovr": 63
+        },
+        {
+          "age": 26,
+          "club": "VIGOR SENIGALLIA",
+          "league": "SERIE D · GIRONE F",
+          "logo": "immagini/squadre-loghi/vigor-senigallia.png",
+          "ovr": 63
+        },
+        {
+          "age": 27,
+          "club": "MONTESPACCATO",
+          "league": "SERIE D · GIRONE G",
+          "logo": "immagini/squadre-loghi/montespaccato-calcio.png",
+          "ovr": 65
+        },
+        {
+          "age": 28,
+          "club": "REAL NORMANNA",
+          "league": "SERIE D · GIRONE H",
+          "logo": "immagini/squadre-loghi/real-normanna.png",
+          "ovr": 67
+        },
+        {
+          "age": 29,
+          "club": "CESENA",
+          "league": "SERIE D · GIRONE B",
+          "logo": "immagini/squadre-loghi/cesena.png",
+          "ovr": 69
+        },
+        {
+          "age": 30,
+          "club": "CESENA",
+          "league": "SERIE D · GIRONE B",
+          "logo": "immagini/squadre-loghi/cesena.png",
+          "ovr": 71
+        },
+        {
+          "age": 31,
+          "club": "CESENA",
+          "league": "SERIE D · GIRONE B",
+          "logo": "immagini/squadre-loghi/cesena.png",
+          "ovr": 73
+        },
+        {
+          "age": 32,
+          "club": "INTER U23",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/inter.png",
+          "ovr": 75
+        },
+        {
+          "age": 33,
+          "club": "CREMONESE",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/cremonese.png",
+          "ovr": 75
+        },
+        {
+          "age": 34,
+          "club": "LAZIO",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/lazio.png",
+          "ovr": 77
+        },
+        {
+          "age": 35,
+          "club": "BARI",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/bari.png",
+          "ovr": 79
+        },
+        {
+          "age": 36,
+          "club": "PALERMO",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/palermo.png",
+          "ovr": 79
+        },
+        {
+          "age": 37,
+          "club": "JUVENTUS",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/juventus.png",
+          "ovr": 79
+        },
+        {
+          "age": 38,
+          "club": "MILAN",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/milan.png",
+          "ovr": 79
+        }
+      ],
+      "offersSeen": 69,
+      "final": {
+        "age": 38,
+        "club": "MILAN",
+        "league": "SERIE A",
+        "ovr": 79
+      }
+    },
+    {
+      "id": 9,
+      "identity": "Miraglia #27 TS",
+      "seasons": [
+        {
+          "age": 16,
+          "club": "CATANZARO",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/catanzaro.png",
+          "youth": false
+        },
+        {
+          "age": 17,
+          "club": "PALERMO",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/palermo.png",
+          "ovr": 49
+        },
+        {
+          "age": 18,
+          "club": "LATINA",
+          "league": "SERIE C · GIRONE B",
+          "logo": "immagini/squadre-loghi/latina.png",
+          "ovr": 51
+        },
+        {
+          "age": 19,
+          "club": "REGGINA",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/reggina.png",
+          "ovr": 53
+        },
+        {
+          "age": 20,
+          "club": "REGGINA",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/reggina.png",
+          "ovr": 55
+        },
+        {
+          "age": 21,
+          "club": "REGGINA",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/reggina.png",
+          "ovr": 55
+        },
+        {
+          "age": 22,
+          "club": "LIVORNO",
+          "league": "SERIE D · GIRONE E",
+          "logo": "immagini/squadre-loghi/livorno.png",
+          "ovr": 57
+        },
+        {
+          "age": 23,
+          "club": "INTER U23",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/inter.png",
+          "ovr": 57
+        },
+        {
+          "age": 24,
+          "club": "PESCARA",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/pescara.png",
+          "ovr": 59
+        },
+        {
+          "age": 25,
+          "club": "HERACLEA",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/heraclea-calcio.png",
+          "ovr": 61
+        },
+        {
+          "age": 26,
+          "club": "CLUB MILANO",
+          "league": "SERIE D · GIRONE A",
+          "logo": "immagini/squadre-loghi/club-milano.png",
+          "ovr": 63
+        },
+        {
+          "age": 27,
+          "club": "ALTAMURA",
+          "league": "SERIE D · GIRONE H",
+          "logo": "immagini/squadre-loghi/team-altamura.png",
+          "ovr": 65
+        },
+        {
+          "age": 28,
+          "club": "ALTAMURA",
+          "league": "SERIE D · GIRONE H",
+          "logo": "immagini/squadre-loghi/team-altamura.png",
+          "ovr": 67
+        },
+        {
+          "age": 29,
+          "club": "TRASTEVERE CALCIO",
+          "league": "SERIE D · GIRONE G",
+          "logo": "immagini/squadre-loghi/trastevere-calcio.png",
+          "ovr": 67
+        },
+        {
+          "age": 30,
+          "club": "GENOA",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/genoa.png",
+          "ovr": 69
+        },
+        {
+          "age": 31,
+          "club": "CAGLIARI",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/cagliari.png",
+          "ovr": 71
+        },
+        {
+          "age": 32,
+          "club": "CAGLIARI",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/cagliari.png",
+          "ovr": 73
+        },
+        {
+          "age": 33,
+          "club": "CAGLIARI",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/cagliari.png",
+          "ovr": 75
+        },
+        {
+          "age": 34,
+          "club": "CAGLIARI",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/cagliari.png",
+          "ovr": 77
+        },
+        {
+          "age": 35,
+          "club": "ROMA",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/roma.png",
+          "ovr": 77
+        },
+        {
+          "age": 36,
+          "club": "ROMA",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/roma.png",
+          "ovr": 79
+        },
+        {
+          "age": 37,
+          "club": "EMPOLI",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/empoli.png",
+          "ovr": 79
+        },
+        {
+          "age": 38,
+          "club": "UDINESE",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/udinese.png",
+          "ovr": 81
+        }
+      ],
+      "offersSeen": 69,
+      "final": {
+        "age": 38,
+        "club": "UDINESE",
+        "league": "SERIE B",
+        "ovr": 81
+      }
+    },
+    {
+      "id": 10,
+      "identity": "Miraglia #27 TS",
+      "seasons": [
+        {
+          "age": 16,
+          "club": "ENTELLA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/virtus-entella.png",
+          "youth": false
+        },
+        {
+          "age": 17,
+          "club": "ENTELLA",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/virtus-entella.png",
+          "ovr": 49
+        },
+        {
+          "age": 18,
+          "club": "RAVENNA",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/ravenna.png",
+          "ovr": 49
+        },
+        {
+          "age": 19,
+          "club": "MONZA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/monza.png",
+          "ovr": 49
+        },
+        {
+          "age": 20,
+          "club": "MONZA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/monza.png",
+          "ovr": 49
+        },
+        {
+          "age": 21,
+          "club": "PARMA",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/parma.png",
+          "ovr": 49
+        },
+        {
+          "age": 22,
+          "club": "ROMA",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/roma.png",
+          "ovr": 49
+        },
+        {
+          "age": 23,
+          "club": "ROMA",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/roma.png",
+          "ovr": 51
+        },
+        {
+          "age": 24,
+          "club": "ROMA",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/roma.png",
+          "ovr": 51
+        },
+        {
+          "age": 25,
+          "club": "LAZIO",
+          "league": "SERIE A",
+          "logo": "immagini/squadre-loghi/lazio.png",
+          "ovr": 53
+        },
+        {
+          "age": 26,
+          "club": "CAGLIARI",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/cagliari.png",
+          "ovr": 55
+        },
+        {
+          "age": 27,
+          "club": "CATANIA",
+          "league": "SERIE B",
+          "logo": "immagini/squadre-loghi/catania.png",
+          "ovr": 57
+        },
+        {
+          "age": 28,
+          "club": "MILAN U23",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/milan.png",
+          "ovr": 59
+        },
+        {
+          "age": 29,
+          "club": "MILAN U23",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/milan.png",
+          "ovr": 61
+        },
+        {
+          "age": 30,
+          "club": "CARPI",
+          "league": "SERIE C · GIRONE A",
+          "logo": "immagini/squadre-loghi/carpi.png",
+          "ovr": 61
+        },
+        {
+          "age": 31,
+          "club": "MILAZZO",
+          "league": "SERIE D · GIRONE I",
+          "logo": "immagini/squadre-loghi/milazzo.png",
+          "ovr": 63
+        },
+        {
+          "age": 32,
+          "club": "BARLETTA",
+          "league": "SERIE C · GIRONE C",
+          "logo": "immagini/squadre-loghi/barletta-1922.png",
+          "ovr": 65
+        },
+        {
+          "age": 33,
+          "club": "BARLETTA",
+          "league": "SERIE D · GIRONE H",
+          "logo": "immagini/squadre-loghi/barletta-1922.png",
+          "ovr": 65
+        },
+        {
+          "age": 34,
+          "club": "NOTARESCO CALCIO",
+          "league": "SERIE D · GIRONE F",
+          "logo": "immagini/squadre-loghi/notaresco-calcio-1924.png",
+          "ovr": 65
+        },
+        {
+          "age": 35,
+          "club": "MONASTIR",
+          "league": "SERIE D · GIRONE G",
+          "logo": "immagini/squadre-loghi/monastir-1983.png",
+          "ovr": 65
+        },
+        {
+          "age": 36,
+          "club": "MONASTIR",
+          "league": "SERIE D · GIRONE G",
+          "logo": "immagini/squadre-loghi/monastir-1983.png",
+          "ovr": 65
+        },
+        {
+          "age": 37,
+          "club": "MONASTIR",
+          "league": "SERIE D · GIRONE G",
+          "logo": "immagini/squadre-loghi/monastir-1983.png",
+          "ovr": 65
+        },
+        {
+          "age": 38,
+          "club": "MONASTIR",
+          "league": "SERIE D · GIRONE G",
+          "logo": "immagini/squadre-loghi/monastir-1983.png",
+          "ovr": 67
+        }
+      ],
+      "offersSeen": 69,
+      "final": {
+        "age": 38,
+        "club": "MONASTIR",
+        "league": "SERIE D · GIRONE G",
+        "ovr": 67
+      }
+    }
+  ],
+  "simErrors": [],
+  "uniqueErrors": []
+}

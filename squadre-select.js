@@ -9,9 +9,9 @@
   var LEAGUE_ORDER = [];
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260813_INTER_ROMA_SYNC';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260820_SCFD4';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260813_INTER_ROMA_SYNC';
+  var LOGO_V = '20260820_SCFD4';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -63,6 +63,8 @@
     'goalkeeper-third': 'PORTIERE (TERZA)',
     'gk-third': 'PORTIERE (TERZA)',
     'polo': 'POLO',
+    'polo-1': 'POLO',
+    'polo-2': 'POLO 2',
     'polo-style': 'POLO (STYLE)',
     'polo-white': 'POLO (BIANCA)',
     'polo-black': 'POLO (NERA)',
@@ -82,7 +84,9 @@
     'training': 'ALLENAMENTO',
     'training-1': 'ALLENAMENTO 1',
     'training-2': 'ALLENAMENTO 2',
-    'training-3': 'ALLENAMENTO 3'
+    'training-3': 'ALLENAMENTO 3',
+    'training-goalkeeper': 'ALLENAMENTO PORTIERE',
+    'training-gk': 'ALLENAMENTO PORTIERE'
   };
 
   function getKitLabel(key, fallbackLabel) {
@@ -209,6 +213,17 @@
         span.addEventListener('click', function (e) {
           e.preventDefault();
           e.stopPropagation();
+          var keys = slots.map(function (s) { return s.key; });
+          var from = keys.indexOf(state.kit);
+          var to = keys.indexOf(slotObj.key);
+          if (to === from) return;
+          var dir = 1;
+          if (from >= 0 && to >= 0) {
+            var fwd = (to - from + keys.length) % keys.length;
+            var back = (from - to + keys.length) % keys.length;
+            dir = fwd <= back ? 1 : -1;
+          }
+          playKitShift(dir);
           state.kit = slotObj.key;
           var team = current();
           if (team) applyKit(team);
@@ -353,6 +368,7 @@
     var order = [];
     function push(lg) {
       if (!lg || seen[lg]) return;
+      if (String(lg).toUpperCase().indexOf('(ARCHIVIO)') >= 0) return;
       var has = false;
       for (var i = 0; i < TEAMS.length; i++) {
         if (TEAMS[i].gender === state.gender && TEAMS[i].league === lg) {
@@ -384,9 +400,17 @@
 
   function filtered() {
     var league = currentLeague();
-    return TEAMS.filter(function (t) {
+    var list = TEAMS.filter(function (t) {
       return t.gender === state.gender && t.league === league;
     });
+    list.sort(function (a, b) {
+      var an = String(a && a.name ? a.name : '').toUpperCase();
+      var bn = String(b && b.name ? b.name : '').toUpperCase();
+      if (an < bn) return -1;
+      if (an > bn) return 1;
+      return 0;
+    });
+    return list;
   }
 
   function current() {
@@ -499,13 +523,27 @@
   function playKitShift(dir) {
     var stage = document.getElementById('es-sq-kit-stage');
     if (!stage) return;
+    var srcImg = $('es-sq-kit-img');
+    var leave = $('es-sq-kit-leave');
+    var leaveImg = $('es-sq-kit-leave-img');
+    var title = $('es-sq-kit-title');
+    if (leave && leaveImg && srcImg && srcImg.src && !srcImg.hidden) {
+      leaveImg.src = srcImg.currentSrc || srcImg.src;
+      leave.hidden = false;
+    } else if (leave) {
+      leave.hidden = true;
+    }
     stage.classList.remove('is-kit-shift-prev', 'is-kit-shift-next');
+    if (title) title.classList.remove('is-kit-title-swap');
     void stage.offsetWidth;
-    stage.classList.add(dir < 0 ? 'is-kit-shift-prev' : 'is-kit-shift-next');
+    stage.classList.add(dir < 0 ? 'is-kit-shift-next' : 'is-kit-shift-prev');
+    if (title) title.classList.add('is-kit-title-swap');
     clearTimeout(playKitShift._t);
     playKitShift._t = setTimeout(function () {
       stage.classList.remove('is-kit-shift-prev', 'is-kit-shift-next');
-    }, 240);
+      if (leave) leave.hidden = true;
+      if (title) title.classList.remove('is-kit-title-swap');
+    }, 580);
   }
 
   function syncGoldRing() {
@@ -638,6 +676,12 @@
   function leagueLogoPath(leagueName) {
     var lg = String(leagueName || '').toUpperCase();
     if (lg.indexOf('FEMMINILE') >= 0) {
+      if (lg.indexOf('PRIMAVERA 1') >= 0) {
+        return 'immagini/squadre-loghi/primavera-1-femminile.png';
+      }
+      if (lg.indexOf('PRIMAVERA 2') >= 0) {
+        return 'immagini/squadre-loghi/primavera-2-femminile.png';
+      }
       if (lg.indexOf('SERIE A') >= 0) {
         return 'immagini/squadre-loghi/serie-a-femminile.png';
       }
@@ -659,6 +703,18 @@
     }
     if (lg.indexOf('SERIE D') === 0) {
       return 'immagini/squadre-loghi/serie-d.png';
+    }
+    if (lg.indexOf('PRIMAVERA 1') === 0) {
+      return 'immagini/squadre-loghi/primavera-1.png';
+    }
+    if (lg.indexOf('PRIMAVERA 2') === 0) {
+      return 'immagini/squadre-loghi/primavera-2.png';
+    }
+    if (lg.indexOf('PRIMAVERA 3') === 0) {
+      return 'immagini/squadre-loghi/primavera-3.png';
+    }
+    if (lg.indexOf('PRIMAVERA 4') === 0) {
+      return 'immagini/squadre-loghi/primavera-4.png';
     }
     return '';
   }

@@ -1,68 +1,60 @@
 {
-  "source": "https://www.diretta.it/",
-  "season": "2025/2026–2026/2027",
+  "source": "tuttocampo screenshots 2026/2027",
+  "season": "2026/2027",
   "leagues": {
     "SERIE D · GIRONE A": {
       "count": 18,
       "teams": [
+        "ALESSANDRIA",
         "AS BIELLESE",
         "ASTI",
-        "CAIRESE",
+        "BORGOSESIA",
+        "BRA",
         "CELLE VARAZZE",
         "CHISOLA",
-        "CLUB MILANO",
         "DERTHONA FBC",
+        "FEZZANESE",
         "GOZZANO",
         "IMPERIA",
-        "LAVAGNESE",
+        "LASCARIS",
         "LIGORNA",
-        "NOVAROMENTIN",
+        "MILLESIMO",
         "SALUZZO",
         "SANREMESE",
         "SESTRI LEVANTE",
-        "VADO",
-        "VALENZANA",
-        "VARESE FC"
-      ],
-      "with_logo": 18,
-      "missing_logo": [],
-      "url": "https://www.diretta.it/calcio/italia/serie-d-girone-a/calendario/"
+        "VALENZANA"
+      ]
     },
     "SERIE D · GIRONE B": {
       "count": 18,
       "teams": [
-        "BRENO",
         "BRUSAPORTO",
         "CALDIERO TERME",
-        "CASTELLANZESE",
         "CHIEVO",
         "CISERANO-BERGAMO",
-        "FOLGORE CARATESE",
+        "CLUB MILANO",
+        "FIORENZUOLA",
         "LEON",
-        "MILAN U23",
-        "OLTREPO",
-        "PAVIA",
+        "MILAN FUTURO",
+        "NIBBIANO & VALTIDONE",
+        "PAVONESE",
+        "PIACENZA",
+        "PRO PALAZZOLO",
         "REAL CALEPINA",
+        "ROVATO",
         "SCANZOROSCIATE",
-        "SONDRIO",
-        "USD CASATESE",
-        "VARESINA",
+        "TRITIUM",
         "VILLA VALLE",
-        "VOGHERESE"
-      ],
-      "with_logo": 17,
-      "missing_logo": [
-        "USD CASATESE"
-      ],
-      "url": "https://www.diretta.it/calcio/italia/serie-d-girone-b/calendario/"
+        "VIRTUS VERONA"
+      ]
     },
     "SERIE D · GIRONE C": {
       "count": 18,
       "teams": [
-        "ADRIESE",
         "ALTAVILLA",
         "BASSANO",
         "BRIAN LIGNANO",
+        "CALCIO SCHIO",
         "CALVI NOALE",
         "CAMPODARSEGO",
         "CJARLINS MUZANE",
@@ -70,180 +62,745 @@
         "ESTE",
         "FC OBERMAIS",
         "LEGNAGO SALUS",
+        "LME",
         "LUPARENSE",
         "MESTRE",
-        "PORTOGRUARO",
-        "SAN LUIGI",
-        "TREVISO",
+        "SANDONÀ",
+        "TRIESTINA",
         "UNION CLODIENSE",
-        "VIGASIO"
-      ],
-      "with_logo": 18,
-      "missing_logo": [],
-      "url": "https://www.diretta.it/calcio/italia/serie-d-girone-c/calendario/"
+        "VIRTUS BOLZANO"
+      ]
     },
     "SERIE D · GIRONE D": {
       "count": 18,
       "teams": [
+        "ARCONATESE",
+        "CASTELLANZESE",
         "CITTADELLA VIS MODENA",
         "CORREGGESE",
         "CREMA",
-        "DESENZANO",
-        "IMOLESE",
         "LENTIGIONE",
-        "PIACENZA",
+        "OLTREPO",
+        "PAVIA",
         "PISTOIESE",
-        "PRO PALAZZOLO",
+        "PONTEDERA",
+        "PRO PATRIA",
         "PRO SESTO",
-        "ROVATO VERTOVESE",
-        "SANGIULIANO CITY",
         "SANT'ANGELO",
-        "SASSO MARCONI",
-        "SCD PROGRESSO",
-        "TREVIGLIESE",
+        "SOLBIATESE",
         "TROPICAL CORIANO",
-        "TUTTOCUOIO"
-      ],
-      "with_logo": 18,
-      "missing_logo": [],
-      "url": "https://www.diretta.it/calcio/italia/serie-d-girone-d/calendario/"
+        "USD CASATESE",
+        "VARESE FC",
+        "VARESINA"
+      ]
     },
     "SERIE D · GIRONE E": {
       "count": 18,
       "teams": [
-        "CAMAIORE",
-        "CANNARA",
-        "FOLIGNO",
+        "FLAMINIA",
         "FOLLONICA GAVORRANO",
         "GHIVIBORGO",
-        "GROSSETO",
+        "GRASSINA",
+        "LUCCHESE",
+        "MEZZOLARA",
         "MONTEVARCHI",
-        "ORVIETANA",
-        "POGGIBONSI",
+        "NUOVA TERNANA",
         "PRATO",
+        "RONDINELLA",
         "SAN DONATO",
+        "SASSO MARCONI",
         "SCANDICCI",
+        "SCD PROGRESSO",
         "SERAVEZZA POZZI",
         "SIENA",
         "TAU",
-        "TERRANUOVA TRAIANA",
-        "TRESTINA",
-        "VIVI ALTOTEVERE"
-      ],
-      "with_logo": 18,
-      "missing_logo": [],
-      "url": "https://www.diretta.it/calcio/italia/serie-d-girone-e/calendario/"
+        "TERRANUOVA TRAIANA"
+      ]
     },
     "SERIE D · GIRONE F": {
       "count": 18,
       "teams": [
         "ANCONA",
+        "ANGELANA",
         "ATLETICO ASCOLI",
-        "CASTELFIDARDO",
-        "CHIETI",
+        "FOLIGNO",
         "FOSSOMBRONE",
         "GIULIANOVA",
+        "K-SPORT MONTECCHIO",
+        "LANCIANO FC",
         "L'AQUILA",
         "MACERATESE",
         "NOTARESCO CALCIO",
-        "OSTIAMARE",
+        "PIETRALUNGHESE",
         "RECANATESE",
-        "SAMMAURESE",
-        "SAN MARINO CALCIO",
-        "SORA",
+        "SANTEGIDIESE",
         "TERAMO",
         "TERMOLI",
-        "UNIPOMEZIA",
+        "TRESTINA",
         "VIGOR SENIGALLIA"
-      ],
-      "with_logo": 18,
-      "missing_logo": [],
-      "url": "https://www.diretta.it/calcio/italia/serie-d-girone-f/calendario/"
+      ]
     },
     "SERIE D · GIRONE G": {
       "count": 18,
       "teams": [
+        "AFRAGOLESE",
         "ALBALONGA",
         "ANZIO CALCIO 1924",
+        "ARANOVA",
         "ATL. LODIGIANI",
         "BUDONI",
-        "CASSINO",
-        "FLAMINIA",
-        "ISCHIA",
+        "CITTÀ DI ANAGNI",
+        "GELBISON",
         "LATTE DOLCE",
         "MONASTIR",
-        "MONTESPACCATO",
-        "NOCERINA",
-        "OLBIA",
-        "PALMESE 1914",
-        "REAL MONTEROTONDO",
+        "OSSESE",
+        "PAGANESE",
+        "SARNESE",
         "SARRABUS OGLIASTRA",
-        "SCAFATESE",
         "TRASTEVERE CALCIO",
-        "VALMONTONE"
-      ],
-      "with_logo": 16,
-      "missing_logo": [
-        "ATL. LODIGIANI",
-        "PALMESE 1914"
-      ],
-      "url": "https://www.diretta.it/calcio/italia/serie-d-girone-g/calendario/"
+        "UNIPOMEZIA",
+        "VENAFRO",
+        "VIGOR CAMPAGNANO"
+      ]
     },
     "SERIE D · GIRONE H": {
       "count": 18,
       "teams": [
         "A.C NARDÒ",
-        "ACERRANA",
-        "AFRAGOLESE",
-        "BARLETTA",
-        "CITTA DI FASANO",
-        "FERRANDINA",
+        "BISCEGLIE",
+        "BRINDISI",
+        "EBOLITANA",
         "FIDELIS ANDRIA",
         "FRANCAVILLA",
+        "GLADIATOR",
         "GRAVINA",
-        "HERACLEA",
+        "ISCHIA",
         "MANFREDONIA",
         "MARTINA CALCIO",
-        "PAGANESE",
-        "POMPEI",
-        "REAL NORMANNA",
-        "SARNESE",
-        "SS NOLA 1925",
+        "MELFI 1929",
+        "NOCERINA",
+        "PALMESE",
+        "REAL AVERSA",
+        "REAL FORIO",
+        "TURRIS",
         "VIRTUS FRANCAVILLA"
-      ],
-      "with_logo": 18,
-      "missing_logo": [],
-      "url": "https://www.diretta.it/calcio/italia/serie-d-girone-h/calendario/"
+      ]
     },
     "SERIE D · GIRONE I": {
       "count": 18,
       "teams": [
-        "ACR MESSINA",
-        "AS ACIREALE",
         "ATHLETIC PALERMO",
+        "CALCIO AVOLA",
         "CASTRUMFAVARA",
+        "DIGIESSE",
         "ENNA",
         "GELA",
-        "GELBISON",
         "IGEA VIRTUS",
+        "LICATA",
         "MILAZZO",
+        "MODICA",
         "NISSA",
-        "PATERNÒ",
+        "RAGUSA",
         "REGGINA",
         "SAMBIASE",
-        "SANCATALDESE",
-        "SAVOIA",
-        "USD RAGUSA",
+        "SIRACUSA",
+        "TRAPANI",
         "VIBONESE",
         "VIGOR LAMEZIA"
-      ],
-      "with_logo": 15,
-      "missing_logo": [
-        "AS ACIREALE",
-        "CASTRUMFAVARA",
-        "USD RAGUSA"
-      ],
-      "url": "https://www.diretta.it/calcio/italia/serie-d-girone-i/calendario/"
+      ]
     }
-  }
+  },
+  "created": [
+    [
+      "ALESSANDRIA",
+      "SERIE D · GIRONE A",
+      "(no logo)"
+    ],
+    [
+      "BORGOSESIA",
+      "SERIE D · GIRONE A",
+      "(no logo)"
+    ],
+    [
+      "BRA",
+      "SERIE D · GIRONE A",
+      "(no logo)"
+    ],
+    [
+      "FEZZANESE",
+      "SERIE D · GIRONE A",
+      "(no logo)"
+    ],
+    [
+      "LASCARIS",
+      "SERIE D · GIRONE A",
+      "(no logo)"
+    ],
+    [
+      "MILLESIMO",
+      "SERIE D · GIRONE A",
+      "(no logo)"
+    ],
+    [
+      "FIORENZUOLA",
+      "SERIE D · GIRONE B",
+      "(no logo)"
+    ],
+    [
+      "NIBBIANO & VALTIDONE",
+      "SERIE D · GIRONE B",
+      "(no logo)"
+    ],
+    [
+      "PAVONESE",
+      "SERIE D · GIRONE B",
+      "(no logo)"
+    ],
+    [
+      "TRITIUM",
+      "SERIE D · GIRONE B",
+      "(no logo)"
+    ],
+    [
+      "VIRTUS VERONA",
+      "SERIE D · GIRONE B",
+      "(no logo)"
+    ],
+    [
+      "LME",
+      "SERIE D · GIRONE C",
+      "(no logo)"
+    ],
+    [
+      "SANDONÀ",
+      "SERIE D · GIRONE C",
+      "(no logo)"
+    ],
+    [
+      "TRIESTINA",
+      "SERIE D · GIRONE C",
+      "(no logo)"
+    ],
+    [
+      "VIRTUS BOLZANO",
+      "SERIE D · GIRONE C",
+      "(no logo)"
+    ],
+    [
+      "ARCONATESE",
+      "SERIE D · GIRONE D",
+      "(no logo)"
+    ],
+    [
+      "PONTEDERA",
+      "SERIE D · GIRONE D",
+      "(no logo)"
+    ],
+    [
+      "PRO PATRIA",
+      "SERIE D · GIRONE D",
+      "(no logo)"
+    ],
+    [
+      "SOLBIATESE",
+      "SERIE D · GIRONE D",
+      "(no logo)"
+    ],
+    [
+      "GRASSINA",
+      "SERIE D · GIRONE E",
+      "(no logo)"
+    ],
+    [
+      "LUCCHESE",
+      "SERIE D · GIRONE E",
+      "(no logo)"
+    ],
+    [
+      "MEZZOLARA",
+      "SERIE D · GIRONE E",
+      "(no logo)"
+    ],
+    [
+      "RONDINELLA",
+      "SERIE D · GIRONE E",
+      "(no logo)"
+    ],
+    [
+      "ANGELANA",
+      "SERIE D · GIRONE F",
+      "(no logo)"
+    ],
+    [
+      "K-SPORT MONTECCHIO",
+      "SERIE D · GIRONE F",
+      "(no logo)"
+    ],
+    [
+      "PIETRALUNGHESE",
+      "SERIE D · GIRONE F",
+      "(no logo)"
+    ],
+    [
+      "SANTEGIDIESE",
+      "SERIE D · GIRONE F",
+      "(no logo)"
+    ],
+    [
+      "ARANOVA",
+      "SERIE D · GIRONE G",
+      "(no logo)"
+    ],
+    [
+      "VIGOR CAMPAGNANO",
+      "SERIE D · GIRONE G",
+      "(no logo)"
+    ],
+    [
+      "CITTÀ DI ANAGNI",
+      "SERIE D · GIRONE G",
+      "(no logo)"
+    ],
+    [
+      "OSSESE",
+      "SERIE D · GIRONE G",
+      "(no logo)"
+    ],
+    [
+      "VENAFRO",
+      "SERIE D · GIRONE G",
+      "(no logo)"
+    ],
+    [
+      "BISCEGLIE",
+      "SERIE D · GIRONE H",
+      "(no logo)"
+    ],
+    [
+      "BRINDISI",
+      "SERIE D · GIRONE H",
+      "(no logo)"
+    ],
+    [
+      "EBOLITANA",
+      "SERIE D · GIRONE H",
+      "(no logo)"
+    ],
+    [
+      "GLADIATOR",
+      "SERIE D · GIRONE H",
+      "(no logo)"
+    ],
+    [
+      "MELFI 1929",
+      "SERIE D · GIRONE H",
+      "(no logo)"
+    ],
+    [
+      "REAL FORIO",
+      "SERIE D · GIRONE H",
+      "(no logo)"
+    ],
+    [
+      "CALCIO AVOLA",
+      "SERIE D · GIRONE I",
+      "(no logo)"
+    ],
+    [
+      "DIGIESSE",
+      "SERIE D · GIRONE I",
+      "(no logo)"
+    ],
+    [
+      "LICATA",
+      "SERIE D · GIRONE I",
+      "(no logo)"
+    ],
+    [
+      "MODICA",
+      "SERIE D · GIRONE I",
+      "(no logo)"
+    ],
+    [
+      "TRAPANI",
+      "SERIE D · GIRONE I",
+      "(no logo)"
+    ],
+    [
+      "SIRACUSA",
+      "SERIE D · GIRONE I",
+      "(no logo)"
+    ]
+  ],
+  "renamed": [
+    {
+      "from": "CLUB MILANO",
+      "fromLeague": "SERIE D · GIRONE A",
+      "to": "CLUB MILANO",
+      "toLeague": "SERIE D · GIRONE B"
+    },
+    {
+      "from": "MILAN U23",
+      "fromLeague": "SERIE D · GIRONE B",
+      "to": "MILAN FUTURO",
+      "toLeague": "SERIE D · GIRONE B"
+    },
+    {
+      "from": "PRO PALAZZOLO",
+      "fromLeague": "SERIE D · GIRONE D",
+      "to": "PRO PALAZZOLO",
+      "toLeague": "SERIE D · GIRONE B"
+    },
+    {
+      "from": "PIACENZA",
+      "fromLeague": "SERIE D · GIRONE D",
+      "to": "PIACENZA",
+      "toLeague": "SERIE D · GIRONE B"
+    },
+    {
+      "from": "ROVATO VERTOVESE",
+      "fromLeague": "SERIE D · GIRONE D",
+      "to": "ROVATO",
+      "toLeague": "SERIE D · GIRONE B"
+    },
+    {
+      "from": "CALCIO SCHIO",
+      "fromLeague": "ECCELLENZA · VENETO · GIRONE A",
+      "to": "CALCIO SCHIO",
+      "toLeague": "SERIE D · GIRONE C"
+    },
+    {
+      "from": "USD CASATESE",
+      "fromLeague": "SERIE D · GIRONE B",
+      "to": "USD CASATESE",
+      "toLeague": "SERIE D · GIRONE D"
+    },
+    {
+      "from": "CASTELLANZESE",
+      "fromLeague": "SERIE D · GIRONE B",
+      "to": "CASTELLANZESE",
+      "toLeague": "SERIE D · GIRONE D"
+    },
+    {
+      "from": "OLTREPO",
+      "fromLeague": "SERIE D · GIRONE B",
+      "to": "OLTREPO",
+      "toLeague": "SERIE D · GIRONE D"
+    },
+    {
+      "from": "PAVIA",
+      "fromLeague": "SERIE D · GIRONE B",
+      "to": "PAVIA",
+      "toLeague": "SERIE D · GIRONE D"
+    },
+    {
+      "from": "VARESE FC",
+      "fromLeague": "SERIE D · GIRONE A",
+      "to": "VARESE FC",
+      "toLeague": "SERIE D · GIRONE D"
+    },
+    {
+      "from": "VARESINA",
+      "fromLeague": "SERIE D · GIRONE B",
+      "to": "VARESINA",
+      "toLeague": "SERIE D · GIRONE D"
+    },
+    {
+      "from": "FLAMINIA",
+      "fromLeague": "SERIE D · GIRONE G",
+      "to": "FLAMINIA",
+      "toLeague": "SERIE D · GIRONE E"
+    },
+    {
+      "from": "ORVIETANA",
+      "fromLeague": "SERIE D · GIRONE E",
+      "to": "NUOVA TERNANA",
+      "toLeague": "SERIE D · GIRONE E"
+    },
+    {
+      "from": "SCD PROGRESSO",
+      "fromLeague": "SERIE D · GIRONE D",
+      "to": "SCD PROGRESSO",
+      "toLeague": "SERIE D · GIRONE E"
+    },
+    {
+      "from": "SASSO MARCONI",
+      "fromLeague": "SERIE D · GIRONE D",
+      "to": "SASSO MARCONI",
+      "toLeague": "SERIE D · GIRONE E"
+    },
+    {
+      "from": "FOLIGNO",
+      "fromLeague": "SERIE D · GIRONE E",
+      "to": "FOLIGNO",
+      "toLeague": "SERIE D · GIRONE F"
+    },
+    {
+      "from": "CITTÀ DI LANCIANO",
+      "fromLeague": "ECCELLENZA · ABRUZZO",
+      "to": "LANCIANO FC",
+      "toLeague": "SERIE D · GIRONE F"
+    },
+    {
+      "from": "TRESTINA",
+      "fromLeague": "SERIE D · GIRONE E",
+      "to": "TRESTINA",
+      "toLeague": "SERIE D · GIRONE F"
+    },
+    {
+      "from": "AFRAGOLESE",
+      "fromLeague": "SERIE D · GIRONE H",
+      "to": "AFRAGOLESE",
+      "toLeague": "SERIE D · GIRONE G"
+    },
+    {
+      "from": "GELBISON",
+      "fromLeague": "SERIE D · GIRONE I",
+      "to": "GELBISON",
+      "toLeague": "SERIE D · GIRONE G"
+    },
+    {
+      "from": "PAGANESE",
+      "fromLeague": "SERIE D · GIRONE H",
+      "to": "PAGANESE",
+      "toLeague": "SERIE D · GIRONE G"
+    },
+    {
+      "from": "SARNESE",
+      "fromLeague": "SERIE D · GIRONE H",
+      "to": "SARNESE",
+      "toLeague": "SERIE D · GIRONE G"
+    },
+    {
+      "from": "UNIPOMEZIA",
+      "fromLeague": "SERIE D · GIRONE F",
+      "to": "UNIPOMEZIA",
+      "toLeague": "SERIE D · GIRONE G"
+    },
+    {
+      "from": "ISCHIA",
+      "fromLeague": "SERIE D · GIRONE G",
+      "to": "ISCHIA",
+      "toLeague": "SERIE D · GIRONE H"
+    },
+    {
+      "from": "NOCERINA",
+      "fromLeague": "SERIE D · GIRONE G",
+      "to": "NOCERINA",
+      "toLeague": "SERIE D · GIRONE H"
+    },
+    {
+      "from": "PALMESE 1914",
+      "fromLeague": "SERIE D · GIRONE G",
+      "to": "PALMESE",
+      "toLeague": "SERIE D · GIRONE H"
+    },
+    {
+      "from": "REAL NORMANNA",
+      "fromLeague": "SERIE D · GIRONE H",
+      "to": "REAL AVERSA",
+      "toLeague": "SERIE D · GIRONE H"
+    },
+    {
+      "from": "SS NOLA 1925",
+      "fromLeague": "SERIE D · GIRONE H",
+      "to": "TURRIS",
+      "toLeague": "SERIE D · GIRONE H"
+    },
+    {
+      "from": "USD RAGUSA",
+      "fromLeague": "SERIE D · GIRONE I",
+      "to": "RAGUSA",
+      "toLeague": "SERIE D · GIRONE I"
+    }
+  ],
+  "promotedToC": [
+    [
+      "VADO",
+      "SERIE C · GIRONE A"
+    ],
+    [
+      "FOLGORE CARATESE",
+      "SERIE C · GIRONE A"
+    ],
+    [
+      "TREVISO",
+      "SERIE C · GIRONE A"
+    ],
+    [
+      "DESENZANO",
+      "SERIE C · GIRONE A"
+    ],
+    [
+      "GROSSETO",
+      "SERIE C · GIRONE B"
+    ],
+    [
+      "OSTIAMARE",
+      "SERIE C · GIRONE B"
+    ],
+    [
+      "SCAFATESE",
+      "SERIE C · GIRONE C"
+    ],
+    [
+      "BARLETTA",
+      "SERIE C · GIRONE C"
+    ],
+    [
+      "SAVOIA",
+      "SERIE C · GIRONE C"
+    ]
+  ],
+  "relegatedToEcc": [
+    [
+      "CAIRESE",
+      "ECCELLENZA · LIGURIA"
+    ],
+    [
+      "LAVAGNESE",
+      "ECCELLENZA · LIGURIA"
+    ],
+    [
+      "NOVAROMENTIN",
+      "ECCELLENZA · PIEMONTE / VDA · GIRONE A"
+    ],
+    [
+      "BRENO",
+      "ECCELLENZA · LOMBARDIA · GIRONE C"
+    ],
+    [
+      "SONDRIO",
+      "ECCELLENZA · LOMBARDIA · GIRONE C"
+    ],
+    [
+      "VOGHERESE",
+      "ECCELLENZA · LOMBARDIA · GIRONE A"
+    ],
+    [
+      "ADRIESE",
+      "ECCELLENZA · VENETO · GIRONE A"
+    ],
+    [
+      "PORTOGRUARO",
+      "ECCELLENZA · VENETO · GIRONE B"
+    ],
+    [
+      "SAN LUIGI",
+      "ECCELLENZA · FRIULI-VENEZIA GIULIA"
+    ],
+    [
+      "VIGASIO",
+      "ECCELLENZA · VENETO · GIRONE A"
+    ],
+    [
+      "IMOLESE",
+      "ECCELLENZA · EMILIA-ROMAGNA · GIRONE A"
+    ],
+    [
+      "SANGIULIANO CITY",
+      "ECCELLENZA · LOMBARDIA · GIRONE A"
+    ],
+    [
+      "TREVIGLIESE",
+      "ECCELLENZA · LOMBARDIA · GIRONE A"
+    ],
+    [
+      "TUTTOCUOIO",
+      "ECCELLENZA · TOSCANA · GIRONE A"
+    ],
+    [
+      "CAMAIORE",
+      "ECCELLENZA · TOSCANA · GIRONE A"
+    ],
+    [
+      "CANNARA",
+      "ECCELLENZA · UMBRIA"
+    ],
+    [
+      "POGGIBONSI",
+      "ECCELLENZA · TOSCANA · GIRONE A"
+    ],
+    [
+      "VIVI ALTOTEVERE",
+      "ECCELLENZA · TOSCANA · GIRONE B"
+    ],
+    [
+      "CASTELFIDARDO",
+      "ECCELLENZA · MARCHE"
+    ],
+    [
+      "CHIETI",
+      "ECCELLENZA · ABRUZZO"
+    ],
+    [
+      "SAMMAURESE",
+      "ECCELLENZA · EMILIA-ROMAGNA · GIRONE B"
+    ],
+    [
+      "SAN MARINO CALCIO",
+      "ECCELLENZA · EMILIA-ROMAGNA · GIRONE B"
+    ],
+    [
+      "SORA",
+      "ECCELLENZA · LAZIO · GIRONE B"
+    ],
+    [
+      "CASSINO",
+      "ECCELLENZA · LAZIO · GIRONE B"
+    ],
+    [
+      "MONTESPACCATO",
+      "ECCELLENZA · LAZIO · GIRONE A"
+    ],
+    [
+      "OLBIA",
+      "ECCELLENZA · SARDEGNA"
+    ],
+    [
+      "REAL MONTEROTONDO",
+      "ECCELLENZA · LAZIO · GIRONE A"
+    ],
+    [
+      "VALMONTONE",
+      "ECCELLENZA · LAZIO · GIRONE B"
+    ],
+    [
+      "ACERRANA",
+      "ECCELLENZA · CAMPANIA · GIRONE A"
+    ],
+    [
+      "CITTA DI FASANO",
+      "ECCELLENZA · PUGLIA"
+    ],
+    [
+      "FERRANDINA",
+      "ECCELLENZA · BASILICATA"
+    ],
+    [
+      "HERACLEA",
+      "ECCELLENZA · BASILICATA"
+    ],
+    [
+      "POMPEI",
+      "ECCELLENZA · CAMPANIA · GIRONE B"
+    ],
+    [
+      "ACR MESSINA",
+      "ECCELLENZA · SICILIA · GIRONE B"
+    ],
+    [
+      "AS ACIREALE",
+      "ECCELLENZA · SICILIA · GIRONE B"
+    ],
+    [
+      "PATERNÒ",
+      "ECCELLENZA · SICILIA · GIRONE B"
+    ],
+    [
+      "SANCATALDESE",
+      "ECCELLENZA · SICILIA · GIRONE A"
+    ]
+  ],
+  "leftoverD": []
 }

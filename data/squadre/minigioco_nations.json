@@ -166,5 +166,803 @@
     "n": "Turchia",
     "o": "immagini/nazioni-loghi/tr.png",
     "ok": true
+  },
+  {
+    "c": "SCO",
+    "n": "Scozia",
+    "o": "immagini/nazioni-loghi/sco.png",
+    "ok": true
+  },
+  {
+    "c": "WAL",
+    "n": "Galles",
+    "o": "immagini/nazioni-loghi/wal.png",
+    "ok": true
+  },
+  {
+    "c": "NIR",
+    "n": "Irlanda del Nord",
+    "o": "immagini/nazioni-loghi/nir.png",
+    "ok": true
+  },
+  {
+    "c": "IE",
+    "n": "Irlanda",
+    "o": "",
+    "ok": false
+  },
+  {
+    "c": "HU",
+    "n": "Ungheria",
+    "o": "immagini/nazioni-loghi/hu.png",
+    "ok": true
+  },
+  {
+    "c": "CZ",
+    "n": "Repubblica Ceca",
+    "o": "immagini/nazioni-loghi/cz.png",
+    "ok": true
+  },
+  {
+    "c": "SK",
+    "n": "Slovacchia",
+    "o": "immagini/nazioni-loghi/sk.png",
+    "ok": true
+  },
+  {
+    "c": "SI",
+    "n": "Slovenia",
+    "o": "immagini/nazioni-loghi/si.png",
+    "ok": true
+  },
+  {
+    "c": "GR",
+    "n": "Grecia",
+    "o": "immagini/nazioni-loghi/gr.png",
+    "ok": true
+  },
+  {
+    "c": "BG",
+    "n": "Bulgaria",
+    "o": "immagini/nazioni-loghi/bg.png",
+    "ok": true
+  },
+  {
+    "c": "UA",
+    "n": "Ucraina",
+    "o": "immagini/nazioni-loghi/ua.png",
+    "ok": true
+  },
+  {
+    "c": "RU",
+    "n": "Russia",
+    "o": "immagini/nazioni-loghi/ru.png",
+    "ok": true
+  },
+  {
+    "c": "NO",
+    "n": "Norvegia",
+    "o": "immagini/nazioni-loghi/no.png",
+    "ok": true
+  },
+  {
+    "c": "SE",
+    "n": "Svezia",
+    "o": "immagini/nazioni-loghi/se.png",
+    "ok": true
+  },
+  {
+    "c": "DK",
+    "n": "Danimarca",
+    "o": "immagini/nazioni-loghi/dk.png",
+    "ok": true
+  },
+  {
+    "c": "FI",
+    "n": "Finlandia",
+    "o": "immagini/nazioni-loghi/fi.png",
+    "ok": true
+  },
+  {
+    "c": "IS",
+    "n": "Islanda",
+    "o": "immagini/nazioni-loghi/is.png",
+    "ok": true
+  },
+  {
+    "c": "BA",
+    "n": "Bosnia",
+    "o": "immagini/nazioni-loghi/ba.png",
+    "ok": true
+  },
+  {
+    "c": "ME",
+    "n": "Montenegro",
+    "o": "immagini/nazioni-loghi/me.png",
+    "ok": true
+  },
+  {
+    "c": "MK",
+    "n": "Macedonia del Nord",
+    "o": "immagini/nazioni-loghi/mk.png",
+    "ok": true
+  },
+  {
+    "c": "XK",
+    "n": "Kosovo",
+    "o": "immagini/nazioni-loghi/xk.png",
+    "ok": true
+  },
+  {
+    "c": "CY",
+    "n": "Cipro",
+    "o": "immagini/nazioni-loghi/cy.png",
+    "ok": true
+  },
+  {
+    "c": "LU",
+    "n": "Lussemburgo",
+    "o": "immagini/nazioni-loghi/lu.png",
+    "ok": true
+  },
+  {
+    "c": "MD",
+    "n": "Moldavia",
+    "o": "immagini/nazioni-loghi/md.png",
+    "ok": true
+  },
+  {
+    "c": "BY",
+    "n": "Bielorussia",
+    "o": "immagini/nazioni-loghi/by.png",
+    "ok": true
+  },
+  {
+    "c": "GE",
+    "n": "Georgia",
+    "o": "immagini/nazioni-loghi/ge.png",
+    "ok": true
+  },
+  {
+    "c": "AM",
+    "n": "Armenia",
+    "o": "immagini/nazioni-loghi/am.png",
+    "ok": true
+  },
+  {
+    "c": "AZ",
+    "n": "Azerbaijan",
+    "o": "immagini/nazioni-loghi/az.png",
+    "ok": true
+  },
+  {
+    "c": "IL",
+    "n": "Israele",
+    "o": "immagini/nazioni-loghi/il.png",
+    "ok": true
+  },
+  {
+    "c": "LV",
+    "n": "Lettonia",
+    "o": "immagini/nazioni-loghi/lv.png",
+    "ok": true
+  },
+  {
+    "c": "LT",
+    "n": "Lituania",
+    "o": "immagini/nazioni-loghi/lt.png",
+    "ok": true
+  },
+  {
+    "c": "EE",
+    "n": "Estonia",
+    "o": "immagini/nazioni-loghi/ee.png",
+    "ok": true
+  },
+  {
+    "c": "MT",
+    "n": "Malta",
+    "o": "immagini/nazioni-loghi/mt.png",
+    "ok": true
+  },
+  {
+    "c": "AD",
+    "n": "Andorra",
+    "o": "immagini/nazioni-loghi/ad.png",
+    "ok": true
+  },
+  {
+    "c": "SM",
+    "n": "San Marino",
+    "o": "immagini/nazioni-loghi/sm.png",
+    "ok": true
+  },
+  {
+    "c": "LI",
+    "n": "Liechtenstein",
+    "o": "immagini/nazioni-loghi/li.png",
+    "ok": true
+  },
+  {
+    "c": "GI",
+    "n": "Gibilterra",
+    "o": "immagini/nazioni-loghi/gi.png",
+    "ok": true
+  },
+  {
+    "c": "KZ",
+    "n": "Kazakistan",
+    "o": "immagini/nazioni-loghi/kz.png",
+    "ok": true
+  },
+  {
+    "c": "EC",
+    "n": "Ecuador",
+    "o": "immagini/nazioni-loghi/ec.png",
+    "ok": true
+  },
+  {
+    "c": "PY",
+    "n": "Paraguay",
+    "o": "immagini/nazioni-loghi/py.png",
+    "ok": true
+  },
+  {
+    "c": "BO",
+    "n": "Bolivia",
+    "o": "immagini/nazioni-loghi/bo.png",
+    "ok": true
+  },
+  {
+    "c": "PE",
+    "n": "Perù",
+    "o": "immagini/nazioni-loghi/pe.png",
+    "ok": true
+  },
+  {
+    "c": "VE",
+    "n": "Venezuela",
+    "o": "immagini/nazioni-loghi/ve.png",
+    "ok": true
+  },
+  {
+    "c": "PA",
+    "n": "Panama",
+    "o": "immagini/nazioni-loghi/pa.png",
+    "ok": true
+  },
+  {
+    "c": "CR",
+    "n": "Costa Rica",
+    "o": "immagini/nazioni-loghi/cr.png",
+    "ok": true
+  },
+  {
+    "c": "HN",
+    "n": "Honduras",
+    "o": "immagini/nazioni-loghi/hn.png",
+    "ok": true
+  },
+  {
+    "c": "SV",
+    "n": "El Salvador",
+    "o": "immagini/nazioni-loghi/sv.png",
+    "ok": true
+  },
+  {
+    "c": "GT",
+    "n": "Guatemala",
+    "o": "immagini/nazioni-loghi/gt.png",
+    "ok": true
+  },
+  {
+    "c": "NI",
+    "n": "Nicaragua",
+    "o": "immagini/nazioni-loghi/ni.png",
+    "ok": true
+  },
+  {
+    "c": "JM",
+    "n": "Jamaica",
+    "o": "immagini/nazioni-loghi/jm.png",
+    "ok": true
+  },
+  {
+    "c": "TT",
+    "n": "Trinidad e Tobago",
+    "o": "immagini/nazioni-loghi/tt.png",
+    "ok": true
+  },
+  {
+    "c": "HT",
+    "n": "Haiti",
+    "o": "immagini/nazioni-loghi/ht.png",
+    "ok": true
+  },
+  {
+    "c": "CU",
+    "n": "Cuba",
+    "o": "immagini/nazioni-loghi/cu.png",
+    "ok": true
+  },
+  {
+    "c": "DO",
+    "n": "Rep. Dominicana",
+    "o": "immagini/nazioni-loghi/do.png",
+    "ok": true
+  },
+  {
+    "c": "CA",
+    "n": "Canada",
+    "o": "immagini/nazioni-loghi/ca.png",
+    "ok": true
+  },
+  {
+    "c": "CW",
+    "n": "Curaçao",
+    "o": "immagini/nazioni-loghi/cw.png",
+    "ok": true
+  },
+  {
+    "c": "SR",
+    "n": "Suriname",
+    "o": "immagini/nazioni-loghi/sr.png",
+    "ok": true
+  },
+  {
+    "c": "GY",
+    "n": "Guyana",
+    "o": "immagini/nazioni-loghi/gy.png",
+    "ok": true
+  },
+  {
+    "c": "EG",
+    "n": "Egitto",
+    "o": "immagini/nazioni-loghi/eg.png",
+    "ok": true
+  },
+  {
+    "c": "GH",
+    "n": "Ghana",
+    "o": "immagini/nazioni-loghi/gh.png",
+    "ok": true
+  },
+  {
+    "c": "CI",
+    "n": "Costa d'Avorio",
+    "o": "",
+    "ok": false
+  },
+  {
+    "c": "CM",
+    "n": "Camerun",
+    "o": "immagini/nazioni-loghi/cm.png",
+    "ok": true
+  },
+  {
+    "c": "DZ",
+    "n": "Algeria",
+    "o": "immagini/nazioni-loghi/dz.png",
+    "ok": true
+  },
+  {
+    "c": "TN",
+    "n": "Tunisia",
+    "o": "immagini/nazioni-loghi/tn.png",
+    "ok": true
+  },
+  {
+    "c": "ML",
+    "n": "Mali",
+    "o": "immagini/nazioni-loghi/ml.png",
+    "ok": true
+  },
+  {
+    "c": "BF",
+    "n": "Burkina Faso",
+    "o": "immagini/nazioni-loghi/bf.png",
+    "ok": true
+  },
+  {
+    "c": "GN",
+    "n": "Guinea",
+    "o": "immagini/nazioni-loghi/gn.png",
+    "ok": true
+  },
+  {
+    "c": "CD",
+    "n": "Congo DR",
+    "o": "immagini/nazioni-loghi/cd.png",
+    "ok": true
+  },
+  {
+    "c": "ZM",
+    "n": "Zambia",
+    "o": "immagini/nazioni-loghi/zm.png",
+    "ok": true
+  },
+  {
+    "c": "ZW",
+    "n": "Zimbabwe",
+    "o": "immagini/nazioni-loghi/zw.png",
+    "ok": true
+  },
+  {
+    "c": "TZ",
+    "n": "Tanzania",
+    "o": "immagini/nazioni-loghi/tz.png",
+    "ok": true
+  },
+  {
+    "c": "UG",
+    "n": "Uganda",
+    "o": "immagini/nazioni-loghi/ug.png",
+    "ok": true
+  },
+  {
+    "c": "KE",
+    "n": "Kenya",
+    "o": "immagini/nazioni-loghi/ke.png",
+    "ok": true
+  },
+  {
+    "c": "MZ",
+    "n": "Mozambico",
+    "o": "immagini/nazioni-loghi/mz.png",
+    "ok": true
+  },
+  {
+    "c": "GA",
+    "n": "Gabon",
+    "o": "immagini/nazioni-loghi/ga.png",
+    "ok": true
+  },
+  {
+    "c": "AO",
+    "n": "Angola",
+    "o": "immagini/nazioni-loghi/ao.png",
+    "ok": true
+  },
+  {
+    "c": "ET",
+    "n": "Etiopia",
+    "o": "immagini/nazioni-loghi/et.png",
+    "ok": true
+  },
+  {
+    "c": "SD",
+    "n": "Sudan",
+    "o": "immagini/nazioni-loghi/sd.png",
+    "ok": true
+  },
+  {
+    "c": "LY",
+    "n": "Libia",
+    "o": "immagini/nazioni-loghi/ly.png",
+    "ok": true
+  },
+  {
+    "c": "TG",
+    "n": "Togo",
+    "o": "immagini/nazioni-loghi/tg.png",
+    "ok": true
+  },
+  {
+    "c": "BJ",
+    "n": "Benin",
+    "o": "immagini/nazioni-loghi/bj.png",
+    "ok": true
+  },
+  {
+    "c": "ZA",
+    "n": "Sudafrica",
+    "o": "immagini/nazioni-loghi/za.png",
+    "ok": true
+  },
+  {
+    "c": "CV",
+    "n": "Capo Verde",
+    "o": "immagini/nazioni-loghi/cv.png",
+    "ok": true
+  },
+  {
+    "c": "GQ",
+    "n": "Guinea Equatoriale",
+    "o": "immagini/nazioni-loghi/gq.png",
+    "ok": true
+  },
+  {
+    "c": "GM",
+    "n": "Gambia",
+    "o": "immagini/nazioni-loghi/gm.png",
+    "ok": true
+  },
+  {
+    "c": "SL",
+    "n": "Sierra Leone",
+    "o": "immagini/nazioni-loghi/sl.png",
+    "ok": true
+  },
+  {
+    "c": "LR",
+    "n": "Liberia",
+    "o": "immagini/nazioni-loghi/lr.png",
+    "ok": true
+  },
+  {
+    "c": "MG",
+    "n": "Madagascar",
+    "o": "immagini/nazioni-loghi/mg.png",
+    "ok": true
+  },
+  {
+    "c": "RW",
+    "n": "Ruanda",
+    "o": "immagini/nazioni-loghi/rw.png",
+    "ok": true
+  },
+  {
+    "c": "NA",
+    "n": "Namibia",
+    "o": "immagini/nazioni-loghi/na.png",
+    "ok": true
+  },
+  {
+    "c": "BW",
+    "n": "Botswana",
+    "o": "immagini/nazioni-loghi/bw.png",
+    "ok": true
+  },
+  {
+    "c": "CN",
+    "n": "Cina",
+    "o": "immagini/nazioni-loghi/cn.png",
+    "ok": true
+  },
+  {
+    "c": "SA",
+    "n": "Arabia Saudita",
+    "o": "immagini/nazioni-loghi/sa.png",
+    "ok": true
+  },
+  {
+    "c": "IR",
+    "n": "Iran",
+    "o": "immagini/nazioni-loghi/ir.png",
+    "ok": true
+  },
+  {
+    "c": "IQ",
+    "n": "Iraq",
+    "o": "immagini/nazioni-loghi/iq.png",
+    "ok": true
+  },
+  {
+    "c": "SY",
+    "n": "Siria",
+    "o": "immagini/nazioni-loghi/sy.png",
+    "ok": true
+  },
+  {
+    "c": "JO",
+    "n": "Giordania",
+    "o": "immagini/nazioni-loghi/jo.png",
+    "ok": true
+  },
+  {
+    "c": "AE",
+    "n": "Emirati Arabi",
+    "o": "",
+    "ok": false
+  },
+  {
+    "c": "QA",
+    "n": "Qatar",
+    "o": "immagini/nazioni-loghi/qa.png",
+    "ok": true
+  },
+  {
+    "c": "BH",
+    "n": "Bahrain",
+    "o": "immagini/nazioni-loghi/bh.png",
+    "ok": true
+  },
+  {
+    "c": "KW",
+    "n": "Kuwait",
+    "o": "immagini/nazioni-loghi/kw.png",
+    "ok": true
+  },
+  {
+    "c": "OM",
+    "n": "Oman",
+    "o": "immagini/nazioni-loghi/om.png",
+    "ok": true
+  },
+  {
+    "c": "UZ",
+    "n": "Uzbekistan",
+    "o": "immagini/nazioni-loghi/uz.png",
+    "ok": true
+  },
+  {
+    "c": "IN",
+    "n": "India",
+    "o": "immagini/nazioni-loghi/in.png",
+    "ok": true
+  },
+  {
+    "c": "PK",
+    "n": "Pakistan",
+    "o": "immagini/nazioni-loghi/pk.png",
+    "ok": true
+  },
+  {
+    "c": "BD",
+    "n": "Bangladesh",
+    "o": "immagini/nazioni-loghi/bd.png",
+    "ok": true
+  },
+  {
+    "c": "VN",
+    "n": "Vietnam",
+    "o": "immagini/nazioni-loghi/vn.png",
+    "ok": true
+  },
+  {
+    "c": "TH",
+    "n": "Thailandia",
+    "o": "immagini/nazioni-loghi/th.png",
+    "ok": true
+  },
+  {
+    "c": "ID",
+    "n": "Indonesia",
+    "o": "immagini/nazioni-loghi/id.png",
+    "ok": true
+  },
+  {
+    "c": "PH",
+    "n": "Filippine",
+    "o": "immagini/nazioni-loghi/ph.png",
+    "ok": true
+  },
+  {
+    "c": "MY",
+    "n": "Malaysia",
+    "o": "immagini/nazioni-loghi/my.png",
+    "ok": true
+  },
+  {
+    "c": "SG",
+    "n": "Singapore",
+    "o": "immagini/nazioni-loghi/sg.png",
+    "ok": true
+  },
+  {
+    "c": "MM",
+    "n": "Myanmar",
+    "o": "immagini/nazioni-loghi/mm.png",
+    "ok": true
+  },
+  {
+    "c": "KH",
+    "n": "Cambogia",
+    "o": "immagini/nazioni-loghi/kh.png",
+    "ok": true
+  },
+  {
+    "c": "LB",
+    "n": "Libano",
+    "o": "immagini/nazioni-loghi/lb.png",
+    "ok": true
+  },
+  {
+    "c": "PS",
+    "n": "Palestina",
+    "o": "immagini/nazioni-loghi/ps.png",
+    "ok": true
+  },
+  {
+    "c": "YE",
+    "n": "Yemen",
+    "o": "immagini/nazioni-loghi/ye.png",
+    "ok": true
+  },
+  {
+    "c": "KP",
+    "n": "Corea del Nord",
+    "o": "immagini/nazioni-loghi/kp.png",
+    "ok": true
+  },
+  {
+    "c": "MN",
+    "n": "Mongolia",
+    "o": "immagini/nazioni-loghi/mn.png",
+    "ok": true
+  },
+  {
+    "c": "AF",
+    "n": "Afghanistan",
+    "o": "immagini/nazioni-loghi/af.png",
+    "ok": true
+  },
+  {
+    "c": "NP",
+    "n": "Nepal",
+    "o": "immagini/nazioni-loghi/np.png",
+    "ok": true
+  },
+  {
+    "c": "LK",
+    "n": "Sri Lanka",
+    "o": "immagini/nazioni-loghi/lk.png",
+    "ok": true
+  },
+  {
+    "c": "TJ",
+    "n": "Tagikistan",
+    "o": "immagini/nazioni-loghi/tj.png",
+    "ok": true
+  },
+  {
+    "c": "TM",
+    "n": "Turkmenistan",
+    "o": "immagini/nazioni-loghi/tm.png",
+    "ok": true
+  },
+  {
+    "c": "KG",
+    "n": "Kirghizistan",
+    "o": "immagini/nazioni-loghi/kg.png",
+    "ok": true
+  },
+  {
+    "c": "AU",
+    "n": "Australia",
+    "o": "immagini/nazioni-loghi/au.png",
+    "ok": true
+  },
+  {
+    "c": "NZ",
+    "n": "Nuova Zelanda",
+    "o": "immagini/nazioni-loghi/nz.png",
+    "ok": true
+  },
+  {
+    "c": "FJ",
+    "n": "Fiji",
+    "o": "immagini/nazioni-loghi/fj.png",
+    "ok": true
+  },
+  {
+    "c": "PG",
+    "n": "Papua Nuova Guinea",
+    "o": "immagini/nazioni-loghi/pg.png",
+    "ok": true
+  },
+  {
+    "c": "PF",
+    "n": "Tahiti",
+    "o": "immagini/nazioni-loghi/pf.png",
+    "ok": true
+  },
+  {
+    "c": "VU",
+    "n": "Vanuatu",
+    "o": "immagini/nazioni-loghi/vu.png",
+    "ok": true
+  },
+  {
+    "c": "WS",
+    "n": "Samoa",
+    "o": "immagini/nazioni-loghi/ws.png",
+    "ok": true
+  },
+  {
+    "c": "SB",
+    "n": "Salomone",
+    "o": "immagini/nazioni-loghi/sb.png",
+    "ok": true
   }
 ]

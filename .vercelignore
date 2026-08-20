@@ -1,0 +1,15 @@
+.vercel
+.git
+__pycache__/
+*.pyc
+*.log
+ssl/
+data/auth/
+data/fc26_frames_ref/
+data/fc26_frames_copero/
+data/fc26_frames_copero_new/
+data/tmp_login_vid/
+data/autopilot/
+_tmp_nation_kits/
+*.pdf
+workers/
