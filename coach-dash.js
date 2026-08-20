@@ -219,13 +219,15 @@
     if (vd) vd.hidden = true;
     var mad = document.getElementById('es-mad');
     if (mad) mad.hidden = true;
+    var md = document.getElementById('es-md');
+    if (md) md.hidden = true;
     box.innerHTML = html(user);
     box.hidden = false;
     host.classList.add('es-pd-on');
-    host.classList.remove('es-vice-on', 'es-ma-on');
+    host.classList.remove('es-vice-on', 'es-ma-on', 'es-med-on');
     if (group) {
       group.classList.add('is-coach-dash');
-      group.classList.remove('is-vice-dash', 'is-ma-dash');
+      group.classList.remove('is-vice-dash', 'is-ma-dash', 'is-med-dash');
     }
     bind(host);
   }

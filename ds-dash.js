@@ -185,8 +185,10 @@
     if (cd) cd.hidden = true;
     var mad = document.getElementById('es-mad');
     if (mad) mad.hidden = true;
+    var md = document.getElementById('es-md');
+    if (md) md.hidden = true;
     var g = document.getElementById('user-dossier-view-group');
-    if (g) { g.classList.remove('is-coach-dash'); g.classList.remove('is-ma-dash'); }
+    if (g) { g.classList.remove('is-coach-dash'); g.classList.remove('is-ma-dash'); g.classList.remove('is-med-dash'); }
   }
 
   function bind(host) {
@@ -226,10 +228,10 @@
     box.innerHTML = html(user);
     box.hidden = false;
     host.classList.add('es-ds-on');
-    host.classList.remove('es-pd-on', 'es-ma-on');
+    host.classList.remove('es-pd-on', 'es-ma-on', 'es-med-on');
     if (group) {
       group.classList.add('is-ds-dash');
-      group.classList.remove('is-coach-dash', 'is-ma-dash');
+      group.classList.remove('is-coach-dash', 'is-ma-dash', 'is-med-dash');
     }
     bind(host);
   }

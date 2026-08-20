@@ -1,11 +1,11 @@
-/* Dashboard Fisioterapista — area staff sanitaria */
+/* Dashboard Staff Medico — Medico sociale */
 (function () {
   var AXES = [
-    'Efficacia Trattamenti', 'Prevenzione Infortuni', 'Tempo Medio Recupero', 'Aggiornamento Metodologico',
-    'Comunicazione Staff Medico', 'Gestione Carichi', 'Supporto Psico-Fisico', 'Soddisfazione Giocatori'
+    'Idoneità Sportiva', 'Prevenzione Infortuni', 'Gestione Emergenze', 'Coordinamento Fisioterapia',
+    'Monitoraggio Carichi', 'Aggiornamento Protocolli', 'Precisione Dati', 'Tempestività Interventi'
   ];
-  var V2025 = [88, 92, 90, 94, 85, 93, 87, 91];
-  var V2023 = [74, 78, 76, 80, 72, 81, 73, 77];
+  var V2025 = [88, 92, 94, 94, 85, 93, 87, 91];
+  var V2023 = [74, 78, 80, 81, 70, 79, 73, 77];
 
   function esc(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -13,18 +13,18 @@
   function userObj() {
     try { return JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {}; } catch (_) { return {}; }
   }
-  function isFisio(u) {
+  function isMedico(u) {
     u = u || userObj();
     var blob = [u.staffRole, u.ruoloDettagliato, u.ruolo, u.role, u.staffProfile && u.staffProfile.fieldRole]
       .filter(Boolean).join(' ').toLowerCase();
-    return /fisioterapista/.test(blob);
+    return /medico sociale|staff medico|\bmedico\b/.test(blob);
   }
-  function fisioName(u) {
-    return [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Fisioterapista';
+  function medName(u) {
+    return [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Medico sociale';
   }
   function initials(name) {
-    var p = String(name || 'FT').trim().split(/\s+/);
-    return ((p[0] || 'F').charAt(0) + (p[1] || p[0] || 'T').charAt(0)).toUpperCase();
+    var p = String(name || 'MS').trim().split(/\s+/);
+    return ((p[0] || 'M').charAt(0) + (p[1] || p[0] || 'S').charAt(0)).toUpperCase();
   }
   function photoOf(u) {
     try {
@@ -54,7 +54,7 @@
   }
   function radarSvg() {
     var cx = 220, cy = 210, r = 150, n = AXES.length;
-    var html = '<svg viewBox="0 0 440 430" role="img" aria-label="Analisi attività fisioterapica">';
+    var html = '<svg viewBox="0 0 440 430" role="img" aria-label="Analisi attività sanitaria">';
     html += wedge(cx, cy, r, -Math.PI / 2, 0, 'rgba(74,222,128,0.16)');
     html += wedge(cx, cy, r, 0, Math.PI / 2, 'rgba(248,113,113,0.18)');
     html += wedge(cx, cy, r, Math.PI / 2, Math.PI, 'rgba(250,204,21,0.16)');
@@ -89,9 +89,9 @@
   }
   function trendSvg() {
     var series = {
-      '2023': [58, 64, 68, 70, 74, 78],
-      '2024': [70, 74, 78, 82, 86, 88],
-      '2025': [78, 82, 86, 90, 93, 96]
+      '2023': [58, 64, 68, 72, 76, 80],
+      '2024': [70, 74, 78, 82, 86, 90],
+      '2025': [78, 82, 86, 90, 94, 97]
     };
     var cols = { '2023': '#38bdf8', '2024': '#4ade80', '2025': '#facc15' };
     var w = 240, h = 90;
@@ -110,137 +110,138 @@
     return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">' + d + '</svg>';
   }
   function hideOthers() {
-    ['es-cd', 'es-dsd', 'es-prd', 'es-vd', 'es-mad', 'es-md'].forEach(function (id) {
+    ['es-cd', 'es-dsd', 'es-prd', 'es-vd', 'es-fd', 'es-mad'].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.hidden = true;
     });
     var g = document.getElementById('user-dossier-view-group');
-    if (g) g.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-ma-dash', 'is-med-dash');
+    if (g) g.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-fisio-dash', 'is-ma-dash');
   }
 
   function html(user) {
-    var name = fisioName(user);
+    var name = medName(user);
     var ph = photoOf(user);
     var ava = ph
       ? '<img src="' + esc(ph) + '" alt="">'
       : '<div class="es-pd-ph">' + esc(initials(name)) + '</div>';
     return '<aside class="es-pd-rail">' +
-      '<button type="button" data-ft="home" title="Home">' + ico('<path d="M4 10.5 12 4l8 6.5V20H4z"/>') + '</button>' +
-      '<button type="button" class="is-on" data-ft="dash" title="Dashboard">' + ico('<circle cx="12" cy="8" r="3"/><path d="M5 20c1.5-4 4-6 7-6s5.5 2 7 6"/>') + '</button>' +
-      '<button type="button" data-ft="album" title="Album">' + ico('<rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 15l4-3 3 2 5-5 4 4"/>') + '</button>' +
-      '<button type="button" data-ft="msgs" title="Messaggi">' + ico('<path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/>') + '</button>' +
-      '<button type="button" class="es-pd-rail-end" data-ft="edit" title="Anagrafica">' + ico('<circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>') + '</button>' +
+      '<button type="button" data-md="home" title="Home">' + ico('<path d="M4 10.5 12 4l8 6.5V20H4z"/>') + '</button>' +
+      '<button type="button" class="is-on" data-md="dash" title="Dashboard">' + ico('<circle cx="12" cy="8" r="3"/><path d="M5 20c1.5-4 4-6 7-6s5.5 2 7 6"/>') + '</button>' +
+      '<button type="button" data-md="album" title="Album">' + ico('<rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 15l4-3 3 2 5-5 4 4"/>') + '</button>' +
+      '<button type="button" data-md="msgs" title="Messaggi">' + ico('<path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/>') + '</button>' +
+      '<button type="button" class="es-pd-rail-end" data-md="edit" title="Anagrafica">' + ico('<circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>') + '</button>' +
       '</aside><div class="es-pd-body">' +
-      '<div class="es-pd-head"><h1>Elisee Scout — Dashboard Fisioterapista</h1>' +
-      '<strong>Fisioterapista: ' + esc(name.toUpperCase()) + '</strong></div>' +
+      '<div class="es-pd-head"><h1>Elisee Scout — Dashboard Staff Medico</h1>' +
+      '<strong>Medico sociale: ' + esc(name.toUpperCase()) + '</strong></div>' +
       '<div class="es-pd-grid">' +
 
-      '<section class="es-pd-card es-pd-indice"><h2>Profilo Fisioterapista</h2>' +
+      '<section class="es-pd-card es-pd-indice"><h2>Profilo Medico</h2>' +
       '<div class="es-pd-who">' + ava + '<div><b style="color:#fff">' + esc(name) + '</b>' +
       '<div style="font-size:0.72rem;color:#94a3b8">Staff sanitario</div></div></div>' +
-      '<div class="es-pd-metric"><span>Competenza riabilitativa</span><b>90%</b></div>' +
-      '<div class="es-pd-metric"><span>Prevenzione infortuni</span><b>94%</b></div>' +
-      '<div class="es-pd-metric"><span>Gestione recupero</span><b>96%</b></div>' +
-      '<div class="es-pd-metric"><span>Rapporto con staff medico</span><b>85%</b></div>' +
-      '<div class="es-pd-metric"><span>Affidabilità trattamenti</span><b>78%</b></div></section>' +
+      '<div class="es-pd-metric"><span>Competenza diagnostica</span><b>89%</b></div>' +
+      '<div class="es-pd-metric"><span>Gestione emergenze</span><b>94%</b></div>' +
+      '<div class="es-pd-metric"><span>Prevenzione infortuni</span><b>96%</b></div>' +
+      '<div class="es-pd-metric"><span>Coordinamento staff sanitario</span><b>92%</b></div>' +
+      '<div class="es-pd-metric"><span>Affidabilità idoneità</span><b>78%</b></div></section>' +
 
       '<section class="es-pd-card es-pd-radar">' +
-      '<div class="es-pd-radar-tools"><span>Seleziona dati radar</span><span>Analisi attività fisioterapica</span></div>' +
+      '<div class="es-pd-radar-tools"><span>Seleziona dati radar</span><span>Analisi attività sanitaria</span></div>' +
       radarSvg() + '</section>' +
 
       '<section class="es-pd-card es-pd-comply"><h2>Verifica &amp; Compliance sanitaria</h2>' +
-      '<div class="es-pd-ok"><span>Laurea in fisioterapia</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Iscrizione albo</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Corso primo soccorso</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Tutela minori</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Aggiornamento ECM</span><b>100%</b></div></section>' +
+      '<div class="es-pd-ok"><span>Laurea in Medicina</span><b>100%</b></div>' +
+      '<div class="es-pd-ok"><span>Specializzazione Medicina dello Sport</span><b>100%</b></div>' +
+      '<div class="es-pd-ok"><span>Iscrizione Albo</span><b>100%</b></div>' +
+      '<div class="es-pd-ok"><span>Corso Primo Soccorso Avanzato</span><b>100%</b></div>' +
+      '<div class="es-pd-ok"><span>Tutela minori (ID)</span><b>100%</b></div>' +
+      '<div class="es-pd-ok"><span>Conformità protocolli FIGC/CONI</span><b>100%</b></div></section>' +
 
-      '<section class="es-pd-card es-pd-storico"><h2>Andamento recuperi</h2>' +
+      '<section class="es-pd-card es-pd-storico"><h2>Andamento sanitario</h2>' +
       '<div class="es-pd-sparks">' +
-      '<figure>' + spark([30, 38, 42, 50, 58, 70, 82], '#38bdf8') + '<figcaption>Infortuni trattati</figcaption></figure>' +
-      '<figure>' + spark([80, 74, 68, 60, 52, 44, 38], '#f87171') + '<figcaption>Giorni medi di rec.</figcaption></figure>' +
-      '<figure>' + spark([40, 36, 32, 28, 24, 20, 16], '#facc15') + '<figcaption>Ricadute</figcaption></figure>' +
+      '<figure>' + spark([32, 40, 48, 55, 64, 74, 86], '#38bdf8') + '<figcaption>Visite idoneità</figcaption></figure>' +
+      '<figure>' + spark([70, 62, 55, 48, 42, 38, 34], '#f87171') + '<figcaption>Infortuni gestiti</figcaption></figure>' +
+      '<figure>' + spark([20, 28, 32, 40, 48, 58, 70], '#facc15') + '<figcaption>Interventi d\'urgenza</figcaption></figure>' +
       '<figure>' + spark([48, 55, 60, 66, 74, 82, 90], '#4ade80') + '<figcaption>Stagione</figcaption></figure>' +
       '</div></section>' +
 
       '<section class="es-pd-card es-pd-mercato"><h2>Indice di efficienza sanitaria</h2>' +
-      '<p class="es-fisio-grade">8,5/10 <small>+5,5%</small></p>' +
-      '<div class="es-pd-mrow"><span>Valutazione staff medico</span><b>Ottima</b></div>' +
-      '<div class="es-pd-mrow"><span>Trend infortuni squadra</span><b>In calo</b></div>' +
-      '<div class="es-pd-mrow"><span>Richieste di consulenza</span><b>Attive</b></div>' +
-      '<div class="es-pd-mrow"><span>Scadenza mandato</span><b>30/06/2028</b></div>' +
+      '<p class="es-med-grade">8,5/10 <small>+5,5%</small></p>' +
+      '<div class="es-pd-mrow"><span>Valutazione società</span><b>Ottima</b></div>' +
+      '<div class="es-pd-mrow"><span>Trend idoneità squadra</span><b>Crescente</b></div>' +
+      '<div class="es-pd-mrow"><span>Richieste di consulenza esterna</span><b>Attive</b></div>' +
+      '<div class="es-pd-mrow"><span>Scadenza contratto</span><b>30/06/2028</b></div>' +
       '<div class="es-pd-mrow"><span>Trattative aperte</span><b>Nessuna</b></div></section>' +
 
-      '<section class="es-pd-card es-pd-registro"><h2>Registro trattamenti</h2>' +
-      '<table class="es-pd-table"><thead><tr><th>Giocatore / gara</th><th>Infortunio</th><th>Recupero</th><th></th></tr></thead><tbody>' +
-      '<tr><td>vs. Notaresco</td><td>Muscolare</td><td>2 sett.</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Vastese</td><td>Muscolare</td><td>2 sett.</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Chieti</td><td>Muscolare</td><td>2 sett.</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Termoli</td><td>Muscolare</td><td>2 sett.</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Campobasso</td><td>Muscolare</td><td>2 sett.</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Castelfidardo</td><td>Lesione</td><td>In corso</td><td><i class="es-pd-dot y"></i></td></tr>' +
+      '<section class="es-pd-card es-pd-registro"><h2>Registro visite mediche</h2>' +
+      '<table class="es-pd-table"><thead><tr><th>Giocatore</th><th>Tipo visita</th><th>Esito</th><th>Prossima</th></tr></thead><tbody>' +
+      '<tr><td>vs. Notaresco</td><td>Idoneità</td><td>Favorevole</td><td>01/01/2027 <i class="es-pd-dot g"></i></td></tr>' +
+      '<tr><td>vs. Vastese</td><td>Idoneità</td><td>Favorevole</td><td>01/01/2027 <i class="es-pd-dot g"></i></td></tr>' +
+      '<tr><td>vs. Chieti</td><td>Idoneità</td><td>Favorevole</td><td>01/01/2027 <i class="es-pd-dot g"></i></td></tr>' +
+      '<tr><td>vs. Termoli</td><td>Idoneità</td><td>Favorevole</td><td>01/01/2027 <i class="es-pd-dot g"></i></td></tr>' +
+      '<tr><td>vs. Campobasso</td><td>Idoneità</td><td>Favorevole</td><td>01/01/2027 <i class="es-pd-dot g"></i></td></tr>' +
+      '<tr><td>vs. Castelfidardo</td><td>Idoneità</td><td>In corso</td><td>01/01/2029 <i class="es-pd-dot y"></i></td></tr>' +
       '</tbody></table></section>' +
 
       '<section class="es-pd-card es-pd-trend"><h2>2023 vs 2024 vs 2025</h2>' +
       trendSvg() +
-      '<button type="button" class="es-pd-edit" data-ft="edit">Modifica anagrafica</button>' +
+      '<button type="button" class="es-pd-edit" data-md="edit">Modifica anagrafica</button>' +
       '</section>' +
       '</div></div>';
   }
 
   function bind(host) {
-    if (!host || host.dataset.ftBound === '1') return;
-    host.dataset.ftBound = '1';
+    if (!host || host.dataset.mdBound === '1') return;
+    host.dataset.mdBound = '1';
     host.addEventListener('click', function (e) {
-      var b = e.target.closest('[data-ft]');
+      var b = e.target.closest('[data-md]');
       if (!b) return;
-      var k = b.getAttribute('data-ft');
+      var k = b.getAttribute('data-md');
       if (k === 'home' && window.switchView) window.switchView('home', '#hero');
       if (k === 'album' && window.openChiSegui) window.openChiSegui();
       if (k === 'msgs' && window.openUserMessages) window.openUserMessages();
       if (k === 'edit') {
-        host.classList.remove('es-fisio-on');
-        var dash = document.getElementById('es-fd');
+        host.classList.remove('es-med-on');
+        var dash = document.getElementById('es-md');
         if (dash) dash.hidden = true;
         var g = document.getElementById('user-dossier-view-group');
-        if (g) g.classList.remove('is-fisio-dash');
+        if (g) g.classList.remove('is-med-dash');
       }
     });
   }
 
   function render(user) {
     user = user || userObj();
-    if (!isFisio(user)) return;
+    if (!isMedico(user)) return;
     hideOthers();
     var host = document.getElementById('es-staff-profile');
     var group = document.getElementById('user-dossier-view-group');
     if (!host) return;
-    var box = document.getElementById('es-fd');
+    var box = document.getElementById('es-md');
     if (!box) {
       box = document.createElement('div');
-      box.id = 'es-fd';
+      box.id = 'es-md';
       box.className = 'es-pd';
       host.insertBefore(box, host.firstChild);
     }
     box.innerHTML = html(user);
     box.hidden = false;
-    host.classList.add('es-fisio-on');
-    host.classList.remove('es-pd-on', 'es-ds-on', 'es-pres-on', 'es-vice-on', 'es-ma-on', 'es-med-on');
+    host.classList.add('es-med-on');
+    host.classList.remove('es-pd-on', 'es-ds-on', 'es-pres-on', 'es-vice-on', 'es-fisio-on', 'es-ma-on');
     if (group) {
-      group.classList.add('is-fisio-dash');
-      group.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-ma-dash', 'is-med-dash');
+      group.classList.add('is-med-dash');
+      group.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-fisio-dash', 'is-ma-dash');
     }
     bind(host);
   }
 
-  window.EliseeFisioDash = { render: render, isFisio: isFisio };
+  window.EliseeMedDash = { render: render, isMedico: isMedico };
 
   document.addEventListener('elisee:view-changed', function (e) {
     var d = e && e.detail;
     if (d && d.view === 'user-dossier') {
       try {
         var u = userObj();
-        if (isFisio(u)) render(u);
+        if (isMedico(u)) render(u);
       } catch (_) {}
     }
   });

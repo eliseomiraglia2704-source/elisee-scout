@@ -1167,6 +1167,7 @@
         var vd = document.getElementById('es-vd');
         var fd = document.getElementById('es-fd');
         var mad = document.getElementById('es-mad');
+        var md = document.getElementById('es-md');
         var sh = document.getElementById('es-staff-profile');
         var grp = document.getElementById('user-dossier-view-group');
         if (!notifsOn && window.EliseePresDash && window.EliseePresDash.isPres && window.EliseePresDash.isPres(user)) {
@@ -1175,6 +1176,8 @@
           window.EliseeDsDash.render(user);
         } else if (!notifsOn && window.EliseeFisioDash && window.EliseeFisioDash.isFisio && window.EliseeFisioDash.isFisio(user)) {
           window.EliseeFisioDash.render(user);
+        } else if (!notifsOn && window.EliseeMedDash && window.EliseeMedDash.isMedico && window.EliseeMedDash.isMedico(user)) {
+          window.EliseeMedDash.render(user);
         } else if (!notifsOn && window.EliseeMaDash && window.EliseeMaDash.isMa && window.EliseeMaDash.isMa(user)) {
           window.EliseeMaDash.render(user);
         } else if (!notifsOn && window.EliseeViceDash && window.EliseeViceDash.isVice && window.EliseeViceDash.isVice(user)) {
@@ -1188,8 +1191,9 @@
           if (vd) vd.hidden = true;
           if (fd) fd.hidden = true;
           if (mad) mad.hidden = true;
-          if (sh) { sh.classList.remove('es-pd-on'); sh.classList.remove('es-ds-on'); sh.classList.remove('es-pres-on'); sh.classList.remove('es-vice-on'); sh.classList.remove('es-fisio-on'); sh.classList.remove('es-ma-on'); }
-          if (grp) { grp.classList.remove('is-coach-dash'); grp.classList.remove('is-ds-dash'); grp.classList.remove('is-pres-dash'); grp.classList.remove('is-vice-dash'); grp.classList.remove('is-fisio-dash'); grp.classList.remove('is-ma-dash'); }
+          if (md) md.hidden = true;
+          if (sh) { sh.classList.remove('es-pd-on'); sh.classList.remove('es-ds-on'); sh.classList.remove('es-pres-on'); sh.classList.remove('es-vice-on'); sh.classList.remove('es-fisio-on'); sh.classList.remove('es-ma-on'); sh.classList.remove('es-med-on'); }
+          if (grp) { grp.classList.remove('is-coach-dash'); grp.classList.remove('is-ds-dash'); grp.classList.remove('is-pres-dash'); grp.classList.remove('is-vice-dash'); grp.classList.remove('is-fisio-dash'); grp.classList.remove('is-ma-dash'); grp.classList.remove('is-med-dash'); }
         }
       } catch (_) {}
     }
