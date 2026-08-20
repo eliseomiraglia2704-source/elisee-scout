@@ -369,3 +369,141 @@ body.layout-portfolio .es-pp textarea:focus,
   .es-pp-top { flex-direction: column; }
   .es-pp-table { min-width: 560px; }
 }
+
+/* Staff profile — layout screenshot Club and Player */
+#user-dossier-view-group.is-staff-area,
+#user-dossier-view-group.is-staff-area #user-dossier-portal {
+  background: #f4f7fb !important;
+  color-scheme: light;
+}
+#user-dossier-view-group.is-staff-area .pf-page-bg,
+#user-dossier-view-group.is-staff-area .pf-page-shade,
+#user-dossier-view-group.is-staff-area #dossier-legacy {
+  display: none !important;
+}
+#user-dossier-view-group.is-staff-area .pf-page-inner {
+  max-width: 560px;
+  margin: 0 auto;
+  color: #123a5c;
+}
+.es-sp-top { margin-bottom: 0.85rem; }
+.es-sp-backtitle {
+  border: 0;
+  background: transparent;
+  color: #0b4f7a !important;
+  font-size: 1.28rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  text-transform: none !important;
+  font-family: 'Outfit', 'Inter', system-ui, sans-serif !important;
+}
+.es-sp-backtitle span {
+  font-weight: 500;
+  margin-right: 0.15rem;
+}
+.es-sp-missing {
+  color: #dc2626 !important;
+  font-size: 0.92rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+}
+.es-sp-card {
+  background: #fff;
+  border: 1.5px solid #8ec4e0;
+  border-radius: 16px;
+  padding: 1.05rem 1rem 1.15rem;
+  margin-bottom: 0.95rem;
+}
+.es-sp-card h2,
+body.layout-portfolio .es-sp-card h2 {
+  margin: 0 0 0.85rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0b4f7a !important;
+  text-transform: none !important;
+}
+.es-sp-card h3,
+body.layout-portfolio .es-sp-card h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0b4f7a !important;
+  text-transform: none !important;
+}
+.es-sp-avatar-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.es-sp-avatar {
+  width: 118px;
+  height: 118px;
+  flex-basis: 118px;
+  background: #e8eef3 !important;
+}
+.es-sp-noavatar {
+  color: #9aa8b5;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+.es-sp-photo-btn {
+  width: 100%;
+  border: 0 !important;
+  border-radius: 999px !important;
+  padding: 0.85rem 1rem !important;
+  background: #0d4f73 !important;
+  color: #fff !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+  text-transform: none !important;
+}
+.es-sp-photo-btn:hover { background: #0a3f5c !important; }
+.es-sp-nested {
+  border: 1.5px solid #8ec4e0;
+  border-radius: 14px;
+  padding: 0.9rem 0.85rem 0.35rem;
+  margin-top: 0.35rem;
+}
+.es-sp-exp-card {
+  border: 1.5px solid #8ec4e0;
+  border-radius: 14px;
+  padding: 0.85rem 0.8rem 0.35rem;
+  margin-bottom: 0.75rem;
+  position: relative;
+}
+.es-sp-exp-card .es-pp-x {
+  position: absolute;
+  top: 0.45rem;
+  right: 0.45rem;
+}
+.es-sp select:disabled,
+body.layout-portfolio .es-sp select:disabled {
+  background: #f1f5f8 !important;
+  color: #94a3b8 !important;
+}
+.es-sp-notify .es-pp-switch {
+  justify-content: space-between;
+  margin: 0.15rem 0 0.2rem;
+  font-weight: 600;
+  color: #1c3550 !important;
+}
+.es-sp-notify .es-pp-switch > span:first-child { flex: 1; }
+.es-sp-notify .es-pp-knob { margin-left: auto; }
+.es-sp-save {
+  margin: 0.2rem 0 1.5rem;
+  border: 0 !important;
+  border-radius: 14px !important;
+  padding: 0.78rem 1.35rem !important;
+  background: #2563eb !important;
+  color: #fff !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+  text-transform: none !important;
+}
+.es-sp-save:hover { background: #1d4ed8 !important; }

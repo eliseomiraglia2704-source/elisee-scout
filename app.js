@@ -8438,6 +8438,9 @@ window.isSpectatorRole = function (userOrRole) {
 window.getActiveSiteRole = function () {
   try {
     const u = JSON.parse(localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data') || '{}') || {};
+    if (typeof window.getPreciseSiteRole === 'function') return window.getPreciseSiteRole(u);
+    const precise = (u && (u.staffRole || u.ruoloDettagliato)) || '';
+    if (precise && String(precise).toLowerCase() !== 'staff') return String(precise).trim();
     return String((u && (u.ruolo || u.role)) || '').trim();
   } catch (_) {
     return '';
@@ -8606,7 +8609,28 @@ function rolePanelRows(role) {
 }
 
 window.applyRoleDossierInterface = function (user) {
-  const role = (user && (user.ruolo || user.role)) || '';
+  const raw = (user && (user.staffRole || user.ruoloDettagliato || user.ruolo || user.role)) || '';
+  const aliases = {
+    'Allenatore in seconda': 'Allenatore',
+    'Collaboratore tecnico': 'Allenatore',
+    'Preparatore atletico': 'Preparatore',
+    'Preparatore dei portieri': 'Preparatore',
+    'Match analyst': 'Match Analyst',
+    'Video analyst': 'Match Analyst',
+    'Scout / Osservatore': 'Scout',
+    Osservatore: 'Scout',
+    'Medico sociale': 'Fisioterapista',
+    Nutrizionista: 'Preparatore',
+    'Mental coach': 'Allenatore',
+    'Direttore sportivo': 'Direttore',
+    'Team manager': 'Staff',
+    'Dirigente accompagnatore': 'Staff',
+    Magazziniere: 'Staff',
+    'Segretario sportivo': 'Societa',
+    Statistico: 'Match Analyst',
+    Dirigente: 'Staff'
+  };
+  const role = aliases[raw] || raw;
   const spec = rolePanelRows(role);
   window.applySpectatorMode(user);
   const badgeBtn = document.getElementById('btn-richiedi-badge');
@@ -8632,6 +8656,8 @@ window.needsSiteRole = function (user) {
   try {
     if (localStorage.getItem('elisee_site_role_confirmed') === '1') return false;
   } catch (_) {}
+  if (user.siteRoleFamily && String(user.siteRoleFamily).trim()) return false;
+  if (window.isStaffPreciseRole && window.isStaffPreciseRole(user.ruolo || user.staffRole)) return false;
   if (user.siteRoleConfirmed && String(user.ruolo || user.role || '').trim()) return false;
   return true;
 };
@@ -8674,6 +8700,7 @@ window.confirmSiteRole = function () {
   try { user = JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {}; } catch (_) {}
   user.ruolo = val;
   user.role = val;
+  user.siteRoleFamily = val;
   user.siteRoleConfirmed = true;
   user.needsIdentityDocument = !window.isSpectatorRole(val);
   user.canApplyJobs = !window.isSpectatorRole(val);
@@ -8682,6 +8709,7 @@ window.confirmSiteRole = function () {
     localStorage.setItem('elisee_user_data', JSON.stringify(user));
     const pp = JSON.parse(localStorage.getItem('elisee_profilo_personale') || '{}') || {};
     pp.ruolo = val;
+    pp.siteRoleFamily = val;
     localStorage.setItem('elisee_profilo_personale', JSON.stringify(pp));
   } catch (_) {}
   try { localStorage.setItem('elisee_site_role_confirmed', '1'); } catch (_) {}
@@ -10076,7 +10104,10 @@ window.updateNavbarUserUI = function() {
     }
 
     let email = profiloPersonale.email || userData.email || (isAdminAuth ? 'admin@eliseescout.it' : (isPrivacyAuth ? 'privacy@eliseescout.it' : 'utente@eliseescout.it'));
-    let ruolo = profiloPersonale.ruolo || '';
+    let ruolo = profiloPersonale.staffRole || profiloPersonale.ruolo || userData.staffRole || userData.ruoloDettagliato || userData.ruolo || '';
+    if (String(ruolo).toLowerCase() === 'staff' && (userData.staffRole || profiloPersonale.staffRole)) {
+      ruolo = userData.staffRole || profiloPersonale.staffRole;
+    }
 
     if (nameDisplay) {
       nameDisplay.textContent = fullName;

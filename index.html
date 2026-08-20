@@ -275,14 +275,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
-  <link rel="stylesheet" href="style.css?v=20260820_PLAY1">
+  <link rel="stylesheet" href="style.css?v=20260820_STAFF1">
   <link rel="stylesheet" href="integrazioni.css?v=20260806_NOCORS">
   <link rel="preload" as="video" href="immagini/minigioco/intro.mp4?v=20260813_HQ2">
   <link rel="stylesheet" href="minigioco-carriera.css?v=20260814_TRIAL2">
   <link rel="stylesheet" href="autopilot.css?v=20260806_NOCORS">
   <link rel="stylesheet" href="squadre-select.css?v=20260814_KITFC3">
   <link rel="stylesheet" href="manager.css?v=20260820_MGR1">
-  <link rel="stylesheet" href="player-profile.css?v=20260820_PLAY1">
+  <link rel="stylesheet" href="player-profile.css?v=20260820_STAFF1">
   <script>
     /* Boot OAuth: token in search O in hash (#hero?elisee_token=...). La sessione vince sempre. */
     (function () {
@@ -2872,6 +2872,130 @@
             <button type="button" class="es-pp-save" id="es-pp-save">Salva profilo</button>
           </div>
 
+          <div id="es-staff-profile" class="es-pp es-sp" hidden>
+            <div class="es-sp-top">
+              <button type="button" class="es-sp-backtitle" onclick="if(window.switchView){window.switchView('account','#account-portal');} return false;">
+                <span aria-hidden="true">‹</span> Il mio profilo Staff
+              </button>
+            </div>
+            <p class="es-sp-missing" id="es-sp-missing" hidden></p>
+
+            <section class="es-sp-card">
+              <h2>Avatar</h2>
+              <div class="es-sp-avatar-box">
+                <div class="es-pp-avatar es-sp-avatar" id="es-sp-avatar">
+                  <img id="es-sp-photo-img" alt="Foto profilo" hidden>
+                  <span id="es-sp-photo-fallback" class="es-sp-noavatar">No Avatar</span>
+                </div>
+                <button type="button" class="es-sp-photo-btn" id="es-sp-photo-btn">Cambia foto</button>
+                <input type="file" id="es-sp-photo-input" accept="image/jpeg,image/png,image/webp" hidden>
+                <p class="es-pp-hint" id="es-sp-photo-err" hidden></p>
+              </div>
+            </section>
+
+            <section class="es-sp-card">
+              <label class="es-pp-field">
+                <span>Nome e cognome <i>*</i></span>
+                <input type="text" id="es-sp-fullname" placeholder="Nome e cognome" autocomplete="name">
+              </label>
+              <div class="es-pp-grid2">
+                <label class="es-pp-field">
+                  <span>Anno di nascita <i>*</i></span>
+                  <select id="es-sp-birthyear"></select>
+                  <small class="es-pp-hint">Range: 1930-2012</small>
+                </label>
+                <label class="es-pp-field">
+                  <span>Nazionalità <i>*</i></span>
+                  <select id="es-sp-nation"></select>
+                  <small class="es-pp-hint" id="es-sp-nation-hint"></small>
+                </label>
+              </div>
+              <div class="es-pp-grid2">
+                <label class="es-pp-field">
+                  <span>Sport <i>*</i></span>
+                  <select id="es-sp-sport"></select>
+                </label>
+                <label class="es-pp-field">
+                  <span>Ruolo <i>*</i></span>
+                  <select id="es-sp-role"></select>
+                  <small class="es-pp-hint">I ruoli mostrati dipendono dallo sport scelto.</small>
+                </label>
+              </div>
+              <label class="es-pp-field">
+                <span>Biografia</span>
+                <textarea id="es-sp-bio" rows="4" maxlength="600" placeholder="Biografia"></textarea>
+              </label>
+            </section>
+
+            <section class="es-sp-card">
+              <h2>Esperienze passate</h2>
+              <div id="es-sp-exp-list"></div>
+              <button type="button" class="es-pp-add" id="es-sp-exp-add">+ aggiungi esperienza</button>
+            </section>
+
+            <section class="es-sp-card">
+              <h2>Zona di interesse</h2>
+              <label class="es-pp-field">
+                <span>Paese</span>
+                <select id="es-sp-country"></select>
+                <small class="es-pp-hint" id="es-sp-country-hint"></small>
+              </label>
+              <div class="es-sp-nested" id="es-sp-localita">
+                <h3>Località</h3>
+                <label class="es-pp-field">
+                  <span>Regione</span>
+                  <select id="es-sp-region"></select>
+                </label>
+                <label class="es-pp-field">
+                  <span>Provincia</span>
+                  <select id="es-sp-province"></select>
+                </label>
+                <label class="es-pp-field">
+                  <span>Comune</span>
+                  <select id="es-sp-comune"></select>
+                </label>
+              </div>
+              <label class="es-pp-field" id="es-sp-city-wrap" hidden>
+                <span>Città</span>
+                <input type="text" id="es-sp-city" placeholder="Città">
+              </label>
+            </section>
+
+            <section class="es-sp-card">
+              <h2>Profili social</h2>
+              <p class="es-pp-lead">Inserisci URL completi o semplici @handle.</p>
+              <div class="es-pp-grid2">
+                <label class="es-pp-field">
+                  <span>Instagram</span>
+                  <input type="text" id="es-sp-ig" placeholder="https://instagram.com/">
+                </label>
+                <label class="es-pp-field">
+                  <span>Facebook</span>
+                  <input type="text" id="es-sp-fb" placeholder="https://facebook.com/">
+                </label>
+                <label class="es-pp-field">
+                  <span>TikTok</span>
+                  <input type="text" id="es-sp-tt" placeholder="https://tiktok.com/@">
+                </label>
+                <label class="es-pp-field">
+                  <span>X (Twitter)</span>
+                  <input type="text" id="es-sp-x" placeholder="@tuonome">
+                </label>
+              </div>
+            </section>
+
+            <section class="es-sp-card es-sp-notify">
+              <h2>Notifiche</h2>
+              <label class="es-pp-switch">
+                <span>Email per nuovi messaggi</span>
+                <input type="checkbox" id="es-sp-n-email">
+                <span class="es-pp-knob" aria-hidden="true"></span>
+              </label>
+            </section>
+
+            <button type="button" class="es-sp-save" id="es-sp-save">Salva profilo</button>
+          </div>
+
           <div id="dossier-legacy">
           <header class="pf-header">
             <div class="pf-header-text">
@@ -4295,8 +4419,8 @@
   </script>
   <script src="squadre-select.js?v=20260820_VERW1"></script>
   <script src="manager-runtime.js?v=20260820_MGR1"></script>
-  <script src="app.js?v=20260820_PLAY1"></script>
-  <script src="player-profile.js?v=20260820_PLAY1"></script>
+  <script src="app.js?v=20260820_STAFF1"></script>
+  <script src="player-profile.js?v=20260820_STAFF1"></script>
   <script>
     /* FORCED INLINE HOT-PATCH: Overrides PDF export, specific report HTML & modal close functions instantly at runtime */
     (function() {

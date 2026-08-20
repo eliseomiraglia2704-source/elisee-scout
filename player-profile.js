@@ -81,12 +81,121 @@
       .replace(/"/g, '&quot;');
   }
 
+  var STAFF_ROLES_CALCIO = [
+    'Allenatore', 'Allenatore in seconda', 'Collaboratore tecnico',
+    'Preparatore atletico', 'Preparatore dei portieri',
+    'Match analyst', 'Video analyst', 'Scout / Osservatore',
+    'Fisioterapista', 'Medico sociale', 'Nutrizionista', 'Mental coach',
+    'Direttore sportivo', 'Team manager', 'Dirigente accompagnatore',
+    'Magazziniere', 'Segretario sportivo'
+  ];
+  var STAFF_ROLES_DEFAULT = [
+    'Allenatore', 'Allenatore in seconda', 'Collaboratore tecnico',
+    'Preparatore atletico', 'Match analyst', 'Scout / Osservatore',
+    'Fisioterapista', 'Medico sociale', 'Team manager', 'Dirigente'
+  ];
+  var ALL_STAFF_ROLES = STAFF_ROLES_CALCIO.concat(['Statistico', 'Dirigente']);
+  var ISO = {
+    Italia: 'IT', Francia: 'FR', Germania: 'DE', Spagna: 'ES', Portogallo: 'PT',
+    Inghilterra: 'GB', 'Regno Unito': 'GB', Belgio: 'BE', 'Paesi Bassi': 'NL',
+    Austria: 'AT', Svizzera: 'CH', 'San Marino': 'SM', Albania: 'AL', Romania: 'RO',
+    Croazia: 'HR', Slovenia: 'SI', Argentina: 'AR', Brasile: 'BR', Polonia: 'PL',
+    'Stati Uniti': 'US', Turchia: 'TR', Grecia: 'GR', Svezia: 'SE', Norvegia: 'NO',
+    Danimarca: 'DK', Serbia: 'RS', Ucraina: 'UA', Marocco: 'MA', Tunisia: 'TN',
+    Senegal: 'SN', Nigeria: 'NG', Ghana: 'GH', Camerun: 'CM', Giappone: 'JP',
+    'Corea del Sud': 'KR', Cina: 'CN', Messico: 'MX', Canada: 'CA', Australia: 'AU'
+  };
+
+  function staffRolesFor(sport) {
+    var s = String(sport || '');
+    if (/calcio/i.test(s) || /beach soccer/i.test(s)) return STAFF_ROLES_CALCIO.slice();
+    if (/pallavolo|basket/i.test(s)) {
+      return ['Allenatore', 'Allenatore in seconda', 'Preparatore atletico', 'Scout / Osservatore', 'Fisioterapista', 'Statistico', 'Team manager'];
+    }
+    return STAFF_ROLES_DEFAULT.slice();
+  }
+
+  function isStaffPreciseName(role) {
+    var v = String(role || '').trim().toLowerCase();
+    if (!v || v === 'staff') return false;
+    return ALL_STAFF_ROLES.some(function (x) { return x.toLowerCase() === v; });
+  }
+
+  function identityKey(user) {
+    return String((user && (user.email || user.id || user.username)) || 'anon').trim().toLowerCase();
+  }
+
+  function loadIdentities() {
+    try { return JSON.parse(localStorage.getItem('elisee_role_identity') || '{}') || {}; } catch (_) { return {}; }
+  }
+
+  function storeIdentity(user) {
+    if (!user) return;
+    var map = loadIdentities();
+    var precise = String(user.staffRole || '').trim();
+    if (!precise && isStaffPreciseName(user.ruolo)) precise = user.ruolo;
+    map[identityKey(user)] = {
+      family: user.siteRoleFamily || (isStaffPreciseName(precise) || String(user.ruolo || '').toLowerCase() === 'staff' ? 'Staff' : ''),
+      preciseRole: precise,
+      sport: user.sport || '',
+      complete: !!user.staffProfileComplete
+    };
+    try { localStorage.setItem('elisee_role_identity', JSON.stringify(map)); } catch (_) {}
+  }
+
+  window.isStaffPreciseRole = isStaffPreciseName;
+
   window.isPlayerSiteRole = function (userOrRole) {
+    if (userOrRole && typeof userOrRole === 'object' && window.isStaffSiteRole(userOrRole)) return false;
     var raw = typeof userOrRole === 'string'
       ? userOrRole
       : ((userOrRole && (userOrRole.ruolo || userOrRole.role)) || (window.getActiveSiteRole && window.getActiveSiteRole()) || '');
     var v = String(raw).trim().toLowerCase();
     return v === 'giocatore' || v === 'calciatore' || v === 'portiere';
+  };
+
+  window.isStaffSiteRole = function (userOrRole) {
+    if (typeof userOrRole === 'string') {
+      var s = userOrRole.trim().toLowerCase();
+      return s === 'staff' || isStaffPreciseName(userOrRole);
+    }
+    var user = userOrRole || readUser();
+    if (!user) return false;
+    if (String(user.siteRoleFamily || '').toLowerCase() === 'staff') return true;
+    if (user.staffRole && String(user.staffRole).trim()) return true;
+    var r = String(user.ruolo || user.role || '').trim();
+    return r.toLowerCase() === 'staff' || isStaffPreciseName(r);
+  };
+
+  window.applyStaffIdentity = function (user) {
+    if (!user || typeof user !== 'object') return user;
+    var map = loadIdentities();
+    var saved = map[identityKey(user)] || {};
+    var family = String(user.siteRoleFamily || saved.family || '').trim();
+    var precise = String(user.staffRole || saved.preciseRole || '').trim();
+    var roleNow = String(user.ruolo || user.role || '').trim();
+    if (!family && (roleNow.toLowerCase() === 'staff' || isStaffPreciseName(roleNow))) family = 'Staff';
+    if (!precise && isStaffPreciseName(roleNow)) precise = roleNow;
+    if (family === 'Staff' || isStaffPreciseName(precise) || roleNow.toLowerCase() === 'staff') {
+      user.siteRoleFamily = 'Staff';
+      if (precise && precise.toLowerCase() !== 'staff') {
+        user.staffRole = precise;
+        user.ruoloDettagliato = precise;
+        user.ruolo = precise;
+        user.role = precise;
+        user.staffProfileComplete = true;
+      } else if (!roleNow) {
+        user.ruolo = 'Staff';
+        user.role = 'Staff';
+      }
+    }
+    return user;
+  };
+
+  window.getPreciseSiteRole = function (user) {
+    user = window.applyStaffIdentity(user || readUser());
+    if (user && user.staffRole && String(user.staffRole).toLowerCase() !== 'staff') return String(user.staffRole);
+    return String((user && (user.ruolo || user.role)) || '').trim();
   };
 
   function readUser() {
@@ -103,9 +212,14 @@
       localStorage.setItem('elisee_user_data', JSON.stringify(user));
       var pp = {};
       try { pp = JSON.parse(localStorage.getItem('elisee_profilo_personale') || '{}') || {}; } catch (_) {}
-      pp.nome = user.nome; pp.cognome = user.cognome; pp.ruolo = user.ruolo; pp.bio = user.bio;
+      pp.nome = user.nome; pp.cognome = user.cognome;
+      pp.ruolo = user.staffRole || user.ruoloDettagliato || user.ruolo;
+      pp.siteRoleFamily = user.siteRoleFamily || pp.siteRoleFamily;
+      pp.staffRole = user.staffRole || pp.staffRole;
+      pp.bio = user.bio;
       pp.photoDataUrl = user.fotoUrl || pp.photoDataUrl;
       localStorage.setItem('elisee_profilo_personale', JSON.stringify(pp));
+      storeIdentity(user);
     } catch (_) {}
     if (paint && typeof window.paintLoggedInUser === 'function') {
       try { window.paintLoggedInUser(user); } catch (_) {}
@@ -456,28 +570,447 @@
     filling = false;
   }
 
+  var staffBound = false;
+  var staffFilling = false;
+  var staffSaveTimer = null;
+
+  function nationLabel(n) {
+    return ISO[n] ? (n + ' (' + ISO[n] + ')') : n;
+  }
+  function nationHint(n) {
+    return ISO[n] ? (ISO[n] + ' ' + n + ' (' + ISO[n] + ')') : '';
+  }
+  function fillNationLike(sel, items, current) {
+    if (!sel) return;
+    var html = '<option value="">Seleziona</option>';
+    (items || []).forEach(function (it) {
+      html += '<option value="' + esc(it) + '">' + esc(nationLabel(it)) + '</option>';
+    });
+    sel.innerHTML = html;
+    if (current) sel.value = current;
+    if (current && sel.value !== current) {
+      sel.innerHTML = html + '<option value="' + esc(current) + '">' + esc(nationLabel(current)) + '</option>';
+      sel.value = current;
+    }
+  }
+
+  function staffProfileOf(user) {
+    var p = (user && user.staffProfile) || {};
+    var full = p.fullName || [user.nome, user.cognome].filter(Boolean).join(' ').trim();
+    var year = p.birthYear || '';
+    if (!year && user && user.dataNascita) {
+      var m = String(user.dataNascita).match(/(19|20)\d{2}/);
+      if (m) year = m[0];
+    }
+    var notify = p.notify || {};
+    var prefs = (user && user.preferenzeNotifiche) || {};
+    return {
+      fullName: full,
+      birthYear: String(year || ''),
+      nationality: p.nationality || user.nazionalita || 'Italia',
+      sport: p.sport || user.sport || 'Calcio',
+      fieldRole: p.fieldRole || user.staffRole || (isStaffPreciseName(user.ruoloDettagliato) ? user.ruoloDettagliato : '') || (isStaffPreciseName(user.ruolo) ? user.ruolo : ''),
+      bio: p.bio || user.bio || '',
+      experiences: Array.isArray(p.experiences) ? p.experiences : [],
+      interest: p.interest || { country: 'Italia', region: '', province: '', comune: '', city: '' },
+      social: p.social || { instagram: '', facebook: '', tiktok: '', x: '' },
+      notify: { email: notify.email != null ? !!notify.email : !!prefs.email && prefs.email === true }
+    };
+  }
+
+  function sval(id) {
+    var el = document.getElementById(id);
+    return el ? String(el.value || '').trim() : '';
+  }
+  function schk(id) {
+    var el = document.getElementById(id);
+    return !!(el && el.checked);
+  }
+
+  function refreshStaffLocalita(keep) {
+    var country = sval('es-sp-country') || 'Italia';
+    var loc = document.getElementById('es-sp-localita');
+    var cityWrap = document.getElementById('es-sp-city-wrap');
+    var hint = document.getElementById('es-sp-country-hint');
+    if (hint) hint.textContent = nationHint(country);
+    var isIt = country === 'Italia' || country === 'San Marino';
+    if (loc) loc.hidden = !isIt;
+    if (cityWrap) cityWrap.hidden = isIt;
+    if (!isIt) return;
+    var regionSel = document.getElementById('es-sp-region');
+    var provSel = document.getElementById('es-sp-province');
+    var comSel = document.getElementById('es-sp-comune');
+    var region = (keep && keep.region) || (regionSel && regionSel.value) || '';
+    fillSelect(regionSel, Object.keys(GEO), 'Seleziona', region);
+    var province = (keep && keep.province) || (provSel && provSel.value) || '';
+    var provs = provincesOf(regionSel && regionSel.value);
+    fillSelect(provSel, provs, 'Seleziona', province);
+    if (provSel) provSel.disabled = !provs.length;
+    var comuni = comuniOf(regionSel && regionSel.value, provSel && provSel.value);
+    var comune = (keep && keep.comune) || (comSel && comSel.value) || '';
+    fillSelect(comSel, comuni, 'Seleziona', comune);
+    if (comSel) comSel.disabled = !comuni.length;
+  }
+
+  function syncStaffRoles(sport, current) {
+    fillSelect(document.getElementById('es-sp-role'), staffRolesFor(sport), 'Seleziona ruolo', current);
+  }
+
+  function syncStaffMissing() {
+    var el = document.getElementById('es-sp-missing');
+    if (!el) return;
+    var miss = [];
+    if (!sval('es-sp-fullname')) miss.push('nome e cognome');
+    if (!sval('es-sp-birthyear')) miss.push('anno di nascita');
+    if (!sval('es-sp-nation')) miss.push('nazionalità');
+    if (!sval('es-sp-sport')) miss.push('sport');
+    if (!sval('es-sp-role')) miss.push('ruolo staff');
+    if (!miss.length) {
+      el.hidden = true;
+      el.textContent = '';
+    } else {
+      el.hidden = false;
+      el.textContent = 'Campi mancanti: ' + miss.join(', ') + '.';
+    }
+  }
+
+  function staffExpCard(data) {
+    data = data || {};
+    var wrap = document.createElement('div');
+    wrap.className = 'es-sp-exp-card';
+    wrap.innerHTML =
+      '<button type="button" class="es-pp-x" title="Rimuovi">&times;</button>' +
+      '<div class="es-pp-grid2">' +
+        '<label class="es-pp-field"><span>Stagione</span><select class="es-sp-exp-season"></select></label>' +
+        '<label class="es-pp-field"><span>Sport</span><select class="es-sp-exp-sport"></select></label>' +
+      '</div>' +
+      '<label class="es-pp-field"><span>Club</span><input class="es-sp-exp-club" type="text" placeholder="Es. ASD Carlentini" value="' + esc(data.club || '') + '"></label>' +
+      '<div class="es-pp-grid2">' +
+        '<label class="es-pp-field"><span>Ruolo</span><select class="es-sp-exp-role"></select></label>' +
+        '<label class="es-pp-field"><span>Categoria</span><select class="es-sp-exp-cat"></select></label>' +
+      '</div>';
+    var seasonSel = wrap.querySelector('.es-sp-exp-season');
+    var sportSel = wrap.querySelector('.es-sp-exp-sport');
+    var roleSel = wrap.querySelector('.es-sp-exp-role');
+    var catSel = wrap.querySelector('.es-sp-exp-cat');
+    fillSelect(seasonSel, seasons(), 'Seleziona', data.season || '');
+    fillSelect(sportSel, Object.keys(SPORTS), 'Seleziona', data.sport || '');
+    fillSelect(roleSel, staffRolesFor(sportSel.value || sval('es-sp-sport') || 'Calcio'), 'Seleziona', data.role || '');
+    fillSelect(catSel, CATEGORIES, 'Seleziona', data.category || '');
+    catSel.disabled = !sportSel.value;
+    sportSel.addEventListener('change', function () {
+      fillSelect(roleSel, staffRolesFor(sportSel.value), 'Seleziona', roleSel.value);
+      catSel.disabled = !sportSel.value;
+      scheduleStaffSave();
+    });
+    wrap.querySelector('.es-pp-x').addEventListener('click', function () {
+      var list = document.getElementById('es-sp-exp-list');
+      if (list && list.children.length <= 1) {
+        wrap.querySelectorAll('input,select').forEach(function (el) { el.value = ''; });
+        catSel.disabled = true;
+      } else wrap.remove();
+      scheduleStaffSave();
+    });
+    wrap.querySelectorAll('input,select').forEach(function (el) {
+      el.addEventListener('change', scheduleStaffSave);
+      el.addEventListener('input', scheduleStaffSave);
+    });
+    return wrap;
+  }
+
+  function addStaffExperience(data) {
+    var list = document.getElementById('es-sp-exp-list');
+    if (!list) return;
+    list.appendChild(staffExpCard(data));
+  }
+
+  function collectStaffExperiences() {
+    var out = [];
+    document.querySelectorAll('#es-sp-exp-list .es-sp-exp-card').forEach(function (card) {
+      out.push({
+        season: (card.querySelector('.es-sp-exp-season') || {}).value || '',
+        sport: (card.querySelector('.es-sp-exp-sport') || {}).value || '',
+        club: (card.querySelector('.es-sp-exp-club') || {}).value || '',
+        role: (card.querySelector('.es-sp-exp-role') || {}).value || '',
+        category: (card.querySelector('.es-sp-exp-cat') || {}).value || ''
+      });
+    });
+    return out;
+  }
+
+  function collectStaffProfile() {
+    return {
+      fullName: sval('es-sp-fullname'),
+      birthYear: sval('es-sp-birthyear'),
+      nationality: sval('es-sp-nation'),
+      sport: sval('es-sp-sport'),
+      fieldRole: sval('es-sp-role'),
+      bio: sval('es-sp-bio'),
+      experiences: collectStaffExperiences(),
+      interest: {
+        country: sval('es-sp-country') || 'Italia',
+        region: sval('es-sp-region'),
+        province: sval('es-sp-province'),
+        comune: sval('es-sp-comune'),
+        city: sval('es-sp-city')
+      },
+      social: {
+        instagram: sval('es-sp-ig'),
+        facebook: sval('es-sp-fb'),
+        tiktok: sval('es-sp-tt'),
+        x: sval('es-sp-x')
+      },
+      notify: { email: schk('es-sp-n-email') },
+      names: splitName(sval('es-sp-fullname'))
+    };
+  }
+
+  function applyStaffToUser(user, p, photo) {
+    user.nome = p.names.nome || user.nome || '';
+    user.cognome = p.names.cognome || user.cognome || '';
+    if (p.birthYear) user.dataNascita = p.birthYear;
+    user.nazionalita = p.nationality;
+    user.bio = p.bio;
+    user.sport = p.sport;
+    user.siteRoleFamily = 'Staff';
+    user.preferenzeNotifiche = Object.assign({}, user.preferenzeNotifiche || {}, {
+      email: p.notify.email,
+      push: p.notify.email
+    });
+    if (photo) user.fotoUrl = photo;
+    var complete = !!(p.fullName && p.birthYear && p.nationality && p.sport && p.fieldRole);
+    user.staffProfileComplete = complete;
+    if (p.fieldRole) {
+      user.staffRole = p.fieldRole;
+      user.ruoloDettagliato = p.fieldRole;
+      if (complete) {
+        user.ruolo = p.fieldRole;
+        user.role = p.fieldRole;
+      } else {
+        user.ruolo = 'Staff';
+        user.role = 'Staff';
+      }
+    } else {
+      user.ruolo = 'Staff';
+      user.role = 'Staff';
+    }
+    user.staffProfile = {
+      fullName: p.fullName,
+      birthYear: p.birthYear,
+      nationality: p.nationality,
+      sport: p.sport,
+      fieldRole: p.fieldRole,
+      bio: p.bio,
+      experiences: p.experiences,
+      interest: p.interest,
+      social: p.social,
+      notify: p.notify
+    };
+    storeIdentity(user);
+    return user;
+  }
+
+  function saveStaffNow(opts) {
+    if (staffFilling) return;
+    staffFilling = true;
+    try {
+      var user = window.applyStaffIdentity(readUser());
+      var p = collectStaffProfile();
+      var photo = (window.getStoredProfilePhoto && window.getStoredProfilePhoto(null, user)) || user.fotoUrl || '';
+      applyStaffToUser(user, p, photo);
+      persistUser(user, !!(opts && opts.toast));
+      if (typeof window.updateNavbarUserUI === 'function') {
+        try { window.updateNavbarUserUI(); } catch (_) {}
+      }
+      if (opts && opts.toast && typeof window.showToast === 'function') {
+        var label = user.staffRole || 'Staff';
+        window.showToast(user.staffProfileComplete
+          ? ('Profilo salvato. Da ora verrai riconosciuto come ' + label + '.')
+          : 'Profilo Staff salvato. Completa i campi obbligatori per il riconoscimento del ruolo.', 'success');
+      }
+      syncStaffMissing();
+    } finally {
+      staffFilling = false;
+    }
+  }
+
+  function scheduleStaffSave() {
+    if (staffFilling) return;
+    syncStaffMissing();
+    clearTimeout(staffSaveTimer);
+    staffSaveTimer = setTimeout(function () { saveStaffNow(); }, 450);
+  }
+
+  function paintStaffPhoto(user) {
+    var img = document.getElementById('es-sp-photo-img');
+    var fb = document.getElementById('es-sp-photo-fallback');
+    var src = (window.getStoredProfilePhoto && window.getStoredProfilePhoto(null, user)) || (user && user.fotoUrl) || '';
+    if (img && src) {
+      img.src = src;
+      img.hidden = false;
+      if (fb) fb.hidden = true;
+    } else {
+      if (img) { img.removeAttribute('src'); img.hidden = true; }
+      if (fb) fb.hidden = false;
+    }
+  }
+
+  function fillStaffForm(user) {
+    var root = document.getElementById('es-staff-profile');
+    if (!root) return;
+    staffFilling = true;
+    user = window.applyStaffIdentity(user || readUser());
+    var p = staffProfileOf(user);
+    var yearSel = document.getElementById('es-sp-birthyear');
+    if (yearSel && !yearSel.dataset.ready) {
+      var years = [];
+      for (var i = 2012; i >= 1930; i--) years.push(String(i));
+      fillSelect(yearSel, years, 'Seleziona', p.birthYear);
+      yearSel.dataset.ready = '1';
+    } else if (yearSel) yearSel.value = p.birthYear || '';
+    fillNationLike(document.getElementById('es-sp-nation'), NATIONS, p.nationality || 'Italia');
+    var nh = document.getElementById('es-sp-nation-hint');
+    if (nh) nh.textContent = nationHint(p.nationality || 'Italia');
+    fillSelect(document.getElementById('es-sp-sport'), Object.keys(SPORTS), 'Seleziona', p.sport || 'Calcio');
+    syncStaffRoles(p.sport || 'Calcio', p.fieldRole);
+    var setV = function (id, v) { var el = document.getElementById(id); if (el) el.value = v || ''; };
+    var setC = function (id, v) { var el = document.getElementById(id); if (el) el.checked = !!v; };
+    setV('es-sp-fullname', p.fullName);
+    setV('es-sp-bio', p.bio);
+    fillNationLike(document.getElementById('es-sp-country'), COUNTRIES, (p.interest && p.interest.country) || 'Italia');
+    refreshStaffLocalita(p.interest || {});
+    setV('es-sp-city', (p.interest && p.interest.city) || '');
+    setV('es-sp-ig', (p.social && p.social.instagram) || '');
+    setV('es-sp-fb', (p.social && p.social.facebook) || '');
+    setV('es-sp-tt', (p.social && p.social.tiktok) || '');
+    setV('es-sp-x', (p.social && p.social.x) || '');
+    setC('es-sp-n-email', p.notify.email);
+    var list = document.getElementById('es-sp-exp-list');
+    if (list) {
+      list.innerHTML = '';
+      var exps = p.experiences && p.experiences.length ? p.experiences : [{}];
+      exps.forEach(function (ex) { addStaffExperience(ex); });
+    }
+    paintStaffPhoto(user);
+    syncStaffMissing();
+    staffFilling = false;
+  }
+
+  function onStaffPhoto(file) {
+    var err = document.getElementById('es-sp-photo-err');
+    var showErr = function (msg) {
+      if (err) { err.hidden = false; err.textContent = msg; }
+      if (typeof window.showToast === 'function') window.showToast(msg, 'error');
+    };
+    if (window.validateProfilePhotoFile) {
+      var check = window.validateProfilePhotoFile(file);
+      if (!check.ok) { showErr(check.reason); return; }
+    }
+    var go = window.compressProfilePhoto
+      ? window.compressProfilePhoto(file)
+      : new Promise(function (res, rej) {
+          var r = new FileReader();
+          r.onload = function () { res(r.result); };
+          r.onerror = rej;
+          r.readAsDataURL(file);
+        });
+    go.then(function (dataUrl) {
+      try { localStorage.setItem('elisee_profile_photo', dataUrl); } catch (_) {}
+      window.__eliseePendingPhoto = dataUrl;
+      var user = window.applyStaffIdentity(readUser());
+      user.fotoUrl = dataUrl;
+      persistUser(user);
+      paintStaffPhoto(user);
+      if (err) { err.hidden = true; err.textContent = ''; }
+      if (typeof window.showToast === 'function') window.showToast('Foto aggiornata.', 'success');
+    }).catch(function () {
+      showErr('Impossibile leggere l\'immagine.');
+    });
+  }
+
+  function bindStaff() {
+    if (staffBound) return;
+    var root = document.getElementById('es-staff-profile');
+    if (!root) return;
+    staffBound = true;
+    var photoBtn = document.getElementById('es-sp-photo-btn');
+    var photoInput = document.getElementById('es-sp-photo-input');
+    if (photoBtn && photoInput) {
+      photoBtn.addEventListener('click', function () { photoInput.click(); });
+      photoInput.addEventListener('change', function () {
+        if (photoInput.files && photoInput.files[0]) onStaffPhoto(photoInput.files[0]);
+      });
+    }
+    var sport = document.getElementById('es-sp-sport');
+    if (sport) sport.addEventListener('change', function () {
+      syncStaffRoles(sport.value, '');
+      scheduleStaffSave();
+    });
+    var nation = document.getElementById('es-sp-nation');
+    if (nation) nation.addEventListener('change', function () {
+      var nh = document.getElementById('es-sp-nation-hint');
+      if (nh) nh.textContent = nationHint(nation.value);
+      scheduleStaffSave();
+    });
+    var country = document.getElementById('es-sp-country');
+    if (country) country.addEventListener('change', function () { refreshStaffLocalita(); scheduleStaffSave(); });
+    var region = document.getElementById('es-sp-region');
+    if (region) region.addEventListener('change', function () { refreshStaffLocalita(); scheduleStaffSave(); });
+    var province = document.getElementById('es-sp-province');
+    if (province) province.addEventListener('change', function () { refreshStaffLocalita(); scheduleStaffSave(); });
+    var addBtn = document.getElementById('es-sp-exp-add');
+    if (addBtn) addBtn.addEventListener('click', function () {
+      addStaffExperience({ sport: sval('es-sp-sport') || 'Calcio' });
+      scheduleStaffSave();
+    });
+    var saveBtn = document.getElementById('es-sp-save');
+    if (saveBtn) saveBtn.addEventListener('click', function () { saveStaffNow({ toast: true }); });
+    root.addEventListener('input', scheduleStaffSave);
+    root.addEventListener('change', scheduleStaffSave);
+  }
+
   window.syncPlayerProfileView = function (user) {
-    user = user || readUser();
+    user = window.applyStaffIdentity(user || readUser());
     var isPlayer = window.isPlayerSiteRole(user);
+    var isStaff = window.isStaffSiteRole(user);
     var group = document.getElementById('user-dossier-view-group');
     var portal = document.getElementById('user-dossier-portal');
     var profile = document.getElementById('es-player-profile');
+    var staff = document.getElementById('es-staff-profile');
     var legacy = document.getElementById('dossier-legacy');
-    if (group) group.classList.toggle('is-player-area', isPlayer);
-    if (portal) portal.classList.toggle('is-player-area', isPlayer);
-    try { document.body.classList.toggle('es-player-on', isPlayer && group && group.style.display !== 'none'); } catch (_) {}
+    var light = isPlayer || isStaff;
+    if (group) {
+      group.classList.toggle('is-player-area', isPlayer);
+      group.classList.toggle('is-staff-area', isStaff);
+    }
+    if (portal) {
+      portal.classList.toggle('is-player-area', isPlayer);
+      portal.classList.toggle('is-staff-area', isStaff);
+    }
+    try {
+      document.body.classList.toggle('es-player-on', light && group && group.style.display !== 'none');
+      document.body.classList.toggle('es-staff-on', isStaff && group && group.style.display !== 'none');
+    } catch (_) {}
     if (profile) {
       profile.hidden = !isPlayer;
       if (isPlayer) profile.removeAttribute('hidden');
     }
+    if (staff) {
+      staff.hidden = !isStaff;
+      if (isStaff) staff.removeAttribute('hidden');
+    }
     if (legacy) {
-      legacy.hidden = isPlayer;
-      if (isPlayer) legacy.setAttribute('hidden', '');
+      legacy.hidden = light;
+      if (light) legacy.setAttribute('hidden', '');
       else legacy.removeAttribute('hidden');
     }
     if (isPlayer) {
       bind();
       if (!filling) fillForm(user);
+    }
+    if (isStaff) {
+      bindStaff();
+      if (!staffFilling) fillStaffForm(user);
     }
   };
 
@@ -570,10 +1103,56 @@
     wrap('applyRoleDossierInterface', function (user) { window.syncPlayerProfileView(user); });
     wrap('switchView', function (view) {
       if (view === 'user-dossier') setTimeout(function () { window.syncPlayerProfileView(); }, 0);
-      else try { document.body.classList.remove('es-player-on'); } catch (_) {}
+      else try {
+        document.body.classList.remove('es-player-on');
+        document.body.classList.remove('es-staff-on');
+      } catch (_) {}
     });
-    wrap('confirmSiteRole', function () { setTimeout(function () { window.syncPlayerProfileView(); }, 30); });
-    wrap('paintLoggedInUser', function (user) { window.syncPlayerProfileView(user); });
+    wrap('confirmSiteRole', function () {
+      try {
+        var u = readUser();
+        if (String(u.ruolo || '').toLowerCase() === 'staff') {
+          u.siteRoleFamily = 'Staff';
+          persistUser(u);
+        }
+      } catch (_) {}
+      setTimeout(function () { window.syncPlayerProfileView(); }, 30);
+    });
+    if (typeof window.paintLoggedInUser === 'function' && !window.paintLoggedInUser.__esStaffId) {
+      var prevPaint = window.paintLoggedInUser;
+      window.paintLoggedInUser = function (user) {
+        if (user && typeof user === 'object') user = window.applyStaffIdentity(user);
+        var r = prevPaint.apply(this, arguments.length ? [user].concat([].slice.call(arguments, 1)) : arguments);
+        try { window.syncPlayerProfileView(user); } catch (_) {}
+        return r;
+      };
+      window.paintLoggedInUser.__esStaffId = true;
+      window.paintLoggedInUser.__esPp = true;
+    }
+    if (window.EliseeAuth && typeof window.EliseeAuth.applySession === 'function' && !window.EliseeAuth.applySession.__esStaffId) {
+      var prevApply = window.EliseeAuth.applySession;
+      window.EliseeAuth.applySession = function (user, token) {
+        if (user && typeof user === 'object') {
+          var local = readUser();
+          if (local && user.email && local.email && String(local.email).toLowerCase() === String(user.email).toLowerCase()) {
+            user.staffRole = user.staffRole || local.staffRole;
+            user.staffProfile = user.staffProfile || local.staffProfile;
+            user.siteRoleFamily = user.siteRoleFamily || local.siteRoleFamily;
+            user.staffProfileComplete = user.staffProfileComplete || local.staffProfileComplete;
+            user.playerProfile = user.playerProfile || local.playerProfile;
+          }
+          user = window.applyStaffIdentity(user);
+        }
+        return prevApply.call(this, user, token);
+      };
+      window.EliseeAuth.applySession.__esStaffId = true;
+    }
+    if (typeof window.getActiveSiteRole === 'function' && !window.getActiveSiteRole.__esStaffId) {
+      window.getActiveSiteRole = function () {
+        return window.getPreciseSiteRole(readUser());
+      };
+      window.getActiveSiteRole.__esStaffId = true;
+    }
   }
 
   function boot() {
@@ -587,6 +1166,7 @@
     window.syncPlayerProfileView();
   }
 
+  attachHooks();
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
 })();
