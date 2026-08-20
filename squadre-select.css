@@ -1862,7 +1862,7 @@ button.es-sq-league-pill:active {
 .es-sq-load {
   position: fixed;
   inset: 0;
-  z-index: 200000;
+  z-index: 3000000;
   display: flex;
   align-items: center;
   justify-content: center;

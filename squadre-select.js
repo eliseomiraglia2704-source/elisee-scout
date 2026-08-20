@@ -1167,32 +1167,56 @@
     return src.indexOf('?') >= 0 ? src : src + '?v=14';
   }
 
+  function ensureLoadOverlay() {
+    var el = $('es-sq-load');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'es-sq-load';
+      el.className = 'es-sq-load';
+      el.innerHTML =
+        '<div class="es-sq-load-stadio" id="es-sq-load-stadio" aria-hidden="true"></div>' +
+        '<div class="es-sq-load-veil" aria-hidden="true"></div>' +
+        '<div class="es-sq-load-core">' +
+          '<img id="es-sq-load-logo" alt="">' +
+          '<div id="es-sq-load-fallback" class="es-sq-load-fallback" hidden></div>' +
+          '<p id="es-sq-load-name"></p>' +
+          '<p id="es-sq-load-stadio-name"></p>' +
+        '</div>';
+    }
+    if (el.parentNode !== document.body) document.body.appendChild(el);
+    return el;
+  }
+
   function hideStadiumLoading() {
     var el = $('es-sq-load');
     if (el) {
-      el.classList.remove('is-on');
+      el.classList.remove('is-on', 'is-open', 'open', 'active');
       el.hidden = true;
+      el.setAttribute('hidden', '');
+      el.style.setProperty('display', 'none', 'important');
     }
     document.body.classList.remove('es-sq-loading');
   }
 
   function showStadiumLoading(team, done) {
-    var el = $('es-sq-load');
-    if (!el) {
-      if (typeof done === 'function') done();
-      return;
-    }
+    var el = ensureLoadOverlay();
     var bg = $('es-sq-load-stadio');
     var logo = $('es-sq-load-logo');
     var fb = $('es-sq-load-fallback');
     var name = $('es-sq-load-name');
     var stad = $('es-sq-load-stadio-name');
     var src = stadiumSrc(team);
+    var started = nowMs();
+    function finish() {
+      if (loadTimer) { clearTimeout(loadTimer); loadTimer = null; }
+      if (typeof done === 'function') done();
+      setTimeout(hideStadiumLoading, 80);
+    }
     if (bg) {
       bg.style.backgroundImage = 'url("' + src.replace(/"/g, '') + '")';
       var probe = new Image();
       probe.onerror = function () {
-        if (src.indexOf('_default') >= 0) return;
+        if (String(src).indexOf('_default') >= 0) return;
         bg.style.backgroundImage = 'url("immagini/stadi/_default.jpg?v=14")';
       };
       probe.src = src;
@@ -1201,35 +1225,43 @@
     if (stad) stad.textContent = team.stadium || '';
     if (logo) {
       if (team.logo) {
+        logo.removeAttribute('hidden');
         logo.hidden = false;
         logo.alt = (team.name || '') + ' logo';
         logo.onerror = function () {
           logo.hidden = true;
           if (fb) {
             fb.hidden = false;
+            fb.removeAttribute('hidden');
             fb.textContent = String(team.abbr || team.name || '?').slice(0, 3).toUpperCase();
           }
         };
         logo.src = logoUrl(team.logo);
-        if (fb) fb.hidden = true;
+        if (fb) { fb.hidden = true; fb.setAttribute('hidden', ''); }
       } else {
         logo.hidden = true;
         if (fb) {
           fb.hidden = false;
+          fb.removeAttribute('hidden');
           fb.textContent = String(team.abbr || team.name || '?').slice(0, 3).toUpperCase();
         }
       }
     }
+    el.removeAttribute('hidden');
     el.hidden = false;
-    el.classList.add('is-on');
+    el.classList.add('is-on', 'is-open', 'open');
+    el.style.setProperty('display', 'flex', 'important');
+    el.style.setProperty('visibility', 'visible', 'important');
+    el.style.setProperty('opacity', '1', 'important');
+    el.style.setProperty('pointer-events', 'auto', 'important');
+    el.style.setProperty('z-index', '3000000', 'important');
     document.body.classList.add('es-sq-loading');
     if (loadTimer) clearTimeout(loadTimer);
-    loadTimer = setTimeout(function () {
-      loadTimer = null;
-      hideStadiumLoading();
-      if (typeof done === 'function') done();
-    }, 2000);
+    var wait = Math.max(0, 2000 - (nowMs() - started));
+    loadTimer = setTimeout(finish, wait);
   }
+
+  function nowMs() { return Date.now(); }
 
   function selectTeam() {
     var team = current();
