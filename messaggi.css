@@ -253,9 +253,9 @@ body.layout-portfolio .es-msg-compose input {
   align-items: stretch;
 }
 .es-sc-msg {
-  border: 1.5px solid #8ec4e0 !important;
-  background: #fff !important;
-  color: #0b4f7a !important;
+  border: 1px solid rgba(56, 189, 248, 0.35) !important;
+  background: transparent !important;
+  color: #7dd3fc !important;
   border-radius: 999px !important;
   padding: 0.4rem 0.85rem !important;
   font-weight: 700 !important;

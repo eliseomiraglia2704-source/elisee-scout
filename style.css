@@ -8269,12 +8269,12 @@ main {
   margin-top: 0 !important;
 }
 
-/* Scelta ruolo post-registrazione (layout tipo Club and Player) */
+/* Scelta ruolo post-registrazione */
 .es-role-pick {
   position: fixed;
   inset: 0;
   z-index: 2147483010;
-  background: #f4f7fb;
+  background: #050608;
   align-items: stretch;
   justify-content: center;
   overflow: auto;
@@ -8290,23 +8290,23 @@ main {
   font-size: 2.05rem;
   font-weight: 800;
   letter-spacing: -0.03em;
-  color: #0b4f7a;
+  color: #fff;
 }
 .es-role-pick-brand span {
   font-weight: 500;
   font-style: italic;
-  color: #1d6fa3;
+  color: #38bdf8;
 }
 .es-role-pick-sheet h2 {
   margin: 0 0 0.45rem;
   font-size: 1.28rem;
   font-weight: 800;
-  color: #0b4f7a;
+  color: #fff;
   line-height: 1.25;
 }
 .es-role-pick-sub {
   margin: 0 0 1.35rem;
-  color: #8aa0b3;
+  color: #94a3b8;
   font-size: 0.95rem;
 }
 .es-role-pick-list {
@@ -8320,29 +8320,30 @@ main {
   gap: 0.95rem;
   width: 100%;
   text-align: left;
-  background: #fff;
-  border: 1.5px solid #d7e4ee;
+  background: rgba(12, 18, 32, 0.88);
+  border: 1.5px solid rgba(56, 189, 248, 0.22);
   border-radius: 18px;
   padding: 0.85rem 1rem;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(15, 40, 70, 0.04);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
   transition: border-color 0.15s, box-shadow 0.15s, transform 0.12s;
+  color: #e2e8f0;
 }
 .es-role-card:hover {
-  border-color: #7eb6d8;
-  box-shadow: 0 8px 18px rgba(15, 80, 130, 0.08);
+  border-color: rgba(56, 189, 248, 0.55);
+  box-shadow: 0 8px 18px rgba(56, 189, 248, 0.12);
 }
 .es-role-card.is-on {
-  border-color: #2f7eac;
-  box-shadow: 0 0 0 2px rgba(47, 126, 172, 0.18);
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.22);
 }
 .es-role-ico {
   flex: 0 0 46px;
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  background: #e8f4fb;
-  color: #2f7eac;
+  background: rgba(56, 189, 248, 0.14);
+  color: #7dd3fc;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -8351,22 +8352,22 @@ main {
 .es-role-txt { display: flex; flex-direction: column; gap: 0.05rem; }
 .es-role-txt small {
   font-size: 0.92rem;
-  color: #1c3550;
+  color: #94a3b8;
   font-weight: 600;
 }
 .es-role-txt strong {
   font-size: 1.12rem;
   letter-spacing: 0.02em;
-  color: #10263d;
+  color: #f8fafc;
   font-weight: 800;
 }
 .es-role-hint {
   margin: 0.75rem 0 0;
-  color: #2f7eac;
+  color: #7dd3fc;
   font-size: 0.8rem;
   line-height: 1.45;
-  background: #eef7fc;
-  border: 1px solid #cfe6f4;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.22);
   border-radius: 12px;
   padding: 0.65rem 0.8rem;
   text-align: left;
@@ -8382,7 +8383,7 @@ main {
   border: 0;
   border-radius: 999px;
   padding: 0.95rem 1rem;
-  background: #9db8c8;
+  background: rgba(148, 163, 184, 0.28);
   color: #fff;
   font-size: 1.05rem;
   font-weight: 700;
@@ -8390,6 +8391,7 @@ main {
   transition: background 0.15s, transform 0.12s;
 }
 .es-role-continue.is-ready {
-  background: #4f8eab;
+  background: linear-gradient(135deg, #0284c7, #38bdf8);
+  color: #041018;
 }
-.es-role-continue.is-ready:hover { background: #3d7a96; }
+.es-role-continue.is-ready:hover { filter: brightness(1.06); }
