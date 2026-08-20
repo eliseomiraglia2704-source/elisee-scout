@@ -517,6 +517,9 @@
   };
 
   window.openScopriProfili = function (kind) {
+    if (window.requireEliseeLogin && !window.requireEliseeLogin({ view: 'scopri', hash: '#scopri-portal' })) {
+      return;
+    }
     if (kind) window.EliseeScopri.filterKind = kind;
     window.EliseeScopri.shown = PAGE;
     if (typeof window.switchView === 'function') window.switchView('scopri', '#scopri-portal');

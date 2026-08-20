@@ -714,6 +714,14 @@
           } else if (view === 'user-dossier') {
             show('user-dossier-view-group');
           } else if (view === 'scopri') {
+            var logged = false;
+            try { logged = localStorage.getItem('elisee_user_auth') === 'true'; } catch (e) {}
+            if (window.requireEliseeLogin) {
+              if (!window.requireEliseeLogin({ view: 'scopri', hash: '#scopri-portal' })) return true;
+            } else if (!logged) {
+              if (window.openAccessoModal) window.openAccessoModal('email');
+              return true;
+            }
             show('view-scopri');
             hash = '#scopri-portal';
             setTimeout(function () { try { if (window.EliseeScopri) window.EliseeScopri.render(); } catch (e) {} }, 40);
@@ -1488,7 +1496,6 @@
         <a href="#about" class="nav-link" data-view="about" data-i18n="nav.about" onclick="if(window.switchView){ window.switchView('about'); } return false;">Chi siamo</a>
         <a href="#dashboard-skills" class="nav-link" data-view="pillars" data-i18n="nav.resume" onclick="if(window.switchView){ window.switchView('pillars'); } return false;">Curriculum</a>
         <a href="#bacheca-annunci" class="nav-link" data-view="bacheca" data-i18n="nav.portfolio" onclick="if(window.switchView){ window.switchView('bacheca'); } return false;">Bacheca</a>
-        <a href="#scopri-portal" class="nav-link" data-view="scopri" onclick="if(window.switchView){ window.switchView('scopri','#scopri-portal'); } return false;">Scopri</a>
         <a href="#mappa-portal" class="nav-link" data-view="mappa" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){window.switchView('mappa','#mappa-portal');} return false;">Mappa</a>
         <a href="#seguo-portal" class="nav-link" data-view="seguo" onclick="if(window.openChiSegui){window.openChiSegui();}else if(window.switchView){window.switchView('seguo','#seguo-portal');} return false;">Chi segui</a>
         <a href="#ambassador-portal" class="nav-link nav-link-soft" data-view="ambassador" data-i18n="nav.ambassador" onclick="if(window.switchView){ window.switchView('ambassador'); } return false;">Ambassador</a>
@@ -3277,7 +3284,7 @@
               <p class="pf-lead">Scrivi a club, staff, giocatori e società. I thread restano tra voi, distinti dalle notifiche di sistema.</p>
             </div>
             <div class="pf-header-actions">
-              <button type="button" class="btn btn-outline-pill" onclick="if(window.switchView){window.switchView('scopri','#scopri-portal');}">Scopri profili</button>
+              <button type="button" class="btn btn-outline-pill" onclick="if(window.openScopriProfili){window.openScopriProfili();}else if(window.switchView){window.switchView('scopri','#scopri-portal');}">Scopri profili</button>
             </div>
           </header>
           <div class="es-msg-shell" id="es-msg-shell">
@@ -4694,9 +4701,9 @@
   <script src="manager-runtime.js?v=20260820_XI1"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260820_VF1"></script>
+  <script src="app.js?v=20260820_SCO1"></script>
   <script src="player-profile.js?v=20260820_FORM1"></script>
-  <script src="scopri-profili.js?v=20260820_FORM1"></script>
+  <script src="scopri-profili.js?v=20260820_SCO1"></script>
   <script src="messaggi.js?v=20260820_MSG1"></script>
   <script src="mappa-club.js?v=20260820_FORM1"></script>
   <script src="chi-segui.js?v=20260820_FORM1"></script>

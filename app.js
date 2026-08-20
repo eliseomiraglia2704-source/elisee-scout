@@ -6551,6 +6551,29 @@ document.addEventListener('DOMContentLoaded', () => {
     return el;
   }
 
+  window.isEliseeLoggedIn = function () {
+    try {
+      if (localStorage.getItem('elisee_user_auth') !== 'true') return false;
+      var u = JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {};
+      return !!(u.email || u.id || u.username);
+    } catch (e) {
+      try { return localStorage.getItem('elisee_user_auth') === 'true'; } catch (e2) { return false; }
+    }
+  };
+  window.requireEliseeLogin = function (opts) {
+    if (window.isEliseeLoggedIn()) return true;
+    opts = opts || {};
+    try {
+      sessionStorage.setItem('elisee_auth_return', JSON.stringify({
+        view: opts.view || 'scopri',
+        hash: opts.hash || '#scopri-portal'
+      }));
+    } catch (e) {}
+    if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
+    else if (typeof window.showToast === 'function') window.showToast('Accedi o registrati per usare Scopri.', 'error');
+    return false;
+  };
+
   // Espone subito switchView (prima di altro codice che può fallire)
   window.switchView = function(viewType, targetHash) {
     return switchView(viewType, targetHash);
@@ -6639,9 +6662,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!targetHash) setHashSafe('#messaggi-portal', opts);
         setTimeout(function () { try { if (window.EliseeB2B) window.EliseeB2B.renderInbox(); } catch (e) {} }, 40);
       } else if (viewType === 'scopri' || targetHash === '#scopri-portal') {
+        if (window.requireEliseeLogin && !window.requireEliseeLogin({ view: 'scopri', hash: '#scopri-portal' })) {
+          return false;
+        }
         showEl('view-scopri');
-        const slink = document.querySelector('.nav-link[data-view="scopri"]');
-        if (slink) slink.classList.add('active');
         if (!targetHash) setHashSafe('#scopri-portal', opts);
         setTimeout(function () { try { if (window.EliseeScopri) window.EliseeScopri.render(); } catch (e) {} }, 40);
       } else if (viewType === 'persone' || targetHash === '#persone-portal' || targetHash === '#bacheca-network') {
@@ -8237,11 +8261,13 @@ function isContentAuthReturn(view, hash) {
     v === 'bacheca' ||
     v === 'ambassador' ||
     v === 'squadre' ||
+    v === 'scopri' ||
     h.indexOf('about') >= 0 ||
     h.indexOf('dashboard-skills') >= 0 ||
     h.indexOf('bacheca') >= 0 ||
     h.indexOf('ambassador') >= 0 ||
-    h.indexOf('squadre') >= 0
+    h.indexOf('squadre') >= 0 ||
+    h.indexOf('scopri') >= 0
   );
 }
 
