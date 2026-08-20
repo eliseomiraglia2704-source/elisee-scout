@@ -7925,17 +7925,23 @@ document.addEventListener('DOMContentLoaded', () => {
     var userJobs = [];
     try {
       userJobs = (JSON.parse(localStorage.getItem('elisee_user_jobs') || '[]') || []).map(function (j) {
+        var hx = function (s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+        var offer = [j.incarico, j.compenso, j.durata].filter(Boolean).join(' · ');
+        var req = [j.ruolo, j.esperienza, j.competenze].filter(Boolean).join(' · ');
         return {
           id: j.id || ('user-' + String(j.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-')),
-          title: j.title,
-          role: j.ruolo || 'Generico',
-          club: j.societa || '',
-          location: j.zona || '',
+          title: hx(j.title),
+          role: hx(j.ruolo || 'Generico'),
+          club: hx(j.societa || ''),
+          location: hx(j.zona || ''),
           category: j.category || 'Bacheca',
-          description: j.desc || '',
-          matchScore: 'IA',
+          description: hx(j.desc || offer || ''),
+          offer: hx(offer),
+          req: hx(req),
+          ai: j.ai !== false,
+          matchScore: j.ai === false ? 'Manuale' : 'IA',
           under: false,
-          housing: false,
+          housing: !!(j.benefit && /alloggio|vitto/i.test(j.benefit)),
           svincolato: false
         };
       });
@@ -7969,11 +7975,14 @@ document.addEventListener('DOMContentLoaded', () => {
           <div>
             <div class="pf-job-meta">
               <span class="pf-job-role">${job.role}</span>
+              ${job.ai ? '<span class="pf-job-ai">Selezione IA</span>' : ''}
               <span class="pf-job-score">${job.matchScore}</span>
             </div>
             <h4>${job.title}</h4>
             <p class="pf-job-sub">${job.club} · ${job.location} · ${job.category}</p>
             <p class="pf-job-desc">${job.description}</p>
+            ${job.offer ? '<p class="pf-job-offer"><strong>Cosa offriamo:</strong> ' + job.offer + '</p>' : ''}
+            ${job.req ? '<p class="pf-job-req"><strong>Cosa richiediamo:</strong> ' + job.req + '</p>' : ''}
           </div>
           <div class="pf-job-actions">
             <button type="button" class="btn btn-outline-pill pf-job-cta" onclick="openCandidateModal('${safeTitle}')">
@@ -12792,12 +12801,39 @@ window.performAdminLogout = function() {
     }, false);
   }
 
+  window.canPublishCandidatura = function () {
+    try {
+      if (localStorage.getItem('elisee_admin_auth') === 'true') return true;
+      var u = JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {};
+      var blob = [u.siteRoleFamily, u.ruolo, u.role, u.staffRole, u.ruoloDettagliato].filter(Boolean).join(' ').toLowerCase();
+      return /squadra|club|societ|ente|direttore sportivo/.test(blob);
+    } catch (_) { return false; }
+  };
+
   function openPubblicaAnnuncioModal() {
-    var modal = document.getElementById('modal-pubblica-annuncio');
-    if (!modal) {
-      if (typeof window.showToast === 'function') window.showToast('Modulo pubblica annuncio non trovato', 'error');
+    var logged = false;
+    try { logged = localStorage.getItem('elisee_user_auth') === 'true'; } catch (_) {}
+    if (!logged) {
+      if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
+      else if (typeof window.showToast === 'function') window.showToast('Accedi con un profilo Club per pubblicare.', 'error');
       return;
     }
+    if (!window.canPublishCandidatura()) {
+      if (typeof window.showToast === 'function') window.showToast('Pubblica candidatura è riservata ai profili Club.', 'error');
+      return;
+    }
+    var modal = document.getElementById('modal-pubblica-annuncio');
+    if (!modal) {
+      if (typeof window.showToast === 'function') window.showToast('Modulo pubblica candidatura non trovato', 'error');
+      return;
+    }
+    try {
+      var u = JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {};
+      var soc = document.getElementById('pub-ann-societa');
+      if (soc && !soc.value) {
+        soc.value = u.club || u.squadra || ([u.nome, u.cognome].filter(Boolean).join(' ')) || '';
+      }
+    } catch (_) {}
     modal.classList.add('is-open', 'open', 'active');
     modal.style.setProperty('display', 'flex', 'important');
     modal.style.setProperty('pointer-events', 'auto', 'important');
@@ -12820,38 +12856,56 @@ window.performAdminLogout = function() {
     document.body.style.overflow = '';
   }
 
+  function valPub(id) {
+    return String(((document.getElementById(id) || {}).value) || '').trim();
+  }
+
   function submitPubblicaAnnuncio() {
-    var title = (document.getElementById('pub-ann-title') || {}).value || '';
-    var societa = (document.getElementById('pub-ann-societa') || {}).value || '';
-    var ruolo = (document.getElementById('pub-ann-ruolo') || {}).value || '';
-    var zona = (document.getElementById('pub-ann-zona') || {}).value || '';
-    var desc = (document.getElementById('pub-ann-desc') || {}).value || '';
-    title = title.trim();
-    societa = societa.trim();
-    if (!title || !societa) {
-      if (typeof window.showToast === 'function') window.showToast('Compila titolo e società', 'error');
-      else alert('Compila titolo e società');
+    var title = valPub('pub-ann-title');
+    var societa = valPub('pub-ann-societa');
+    var ruolo = valPub('pub-ann-ruolo');
+    var zona = valPub('pub-ann-zona');
+    if (!title || !societa || !ruolo) {
+      if (typeof window.showToast === 'function') window.showToast('Compila titolo, società e ruolo ricercato.', 'error');
+      else alert('Compila titolo, società e ruolo ricercato.');
       return;
     }
+    var payload = {
+      id: 'user_' + Date.now(),
+      title: title,
+      societa: societa,
+      ruolo: ruolo,
+      zona: zona || 'Italia',
+      incarico: valPub('pub-ann-incarico'),
+      compenso: valPub('pub-ann-compenso'),
+      durata: valPub('pub-ann-durata'),
+      orari: valPub('pub-ann-orari'),
+      benefit: valPub('pub-ann-benefit'),
+      crescita: valPub('pub-ann-crescita'),
+      competenze: valPub('pub-ann-competenze'),
+      esperienza: valPub('pub-ann-esperienza'),
+      qualifiche: valPub('pub-ann-qualifiche'),
+      attitudini: valPub('pub-ann-attitudini'),
+      extra: valPub('pub-ann-extra'),
+      ai: !!(document.getElementById('pub-ann-ai') && document.getElementById('pub-ann-ai').checked),
+      createdAt: new Date().toISOString()
+    };
+    payload.desc = [payload.incarico, payload.compenso, payload.durata].filter(Boolean).join(' · ');
     try {
       var list = JSON.parse(localStorage.getItem('elisee_user_jobs') || '[]');
-      list.unshift({
-        id: 'user_' + Date.now(),
-        title: title,
-        societa: societa,
-        ruolo: ruolo || 'Generico',
-        zona: zona || 'Italia',
-        desc: desc,
-        createdAt: new Date().toISOString()
-      });
+      list.unshift(payload);
       localStorage.setItem('elisee_user_jobs', JSON.stringify(list.slice(0, 50)));
       if (window.EliseeSchede && window.EliseeSchede.ensureJob) {
         window.EliseeSchede.ensureJob({
-          id: list[0].id,
+          id: payload.id,
           title: title,
           club: societa,
-          role: ruolo || 'Generico',
-          location: zona || ''
+          role: ruolo,
+          location: zona || '',
+          skillsReq: payload.competenze,
+          langsReq: payload.extra,
+          extraReq: [payload.esperienza, payload.qualifiche, payload.attitudini, payload.extra].filter(Boolean).join(' '),
+          ai: payload.ai
         });
       }
     } catch (e) {}
@@ -12861,13 +12915,17 @@ window.performAdminLogout = function() {
       if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs();
       var jobs = document.getElementById('jobs-container');
       if (jobs) jobs.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      if (typeof window.showToast === 'function') window.showToast('Annuncio pubblicato. Le schede tecniche IA sono nella candidatura, non in e-mail.', 'success');
+      var msg = payload.ai
+        ? 'Candidatura pubblicata. L’IA ha selezionato i profili compatibili: apri Schede tecniche.'
+        : 'Candidatura pubblicata in Bacheca. L’IA non è attiva: le schede arriveranno dalle candidature.';
+      if (typeof window.showToast === 'function') window.showToast(msg, 'success');
     }, 120);
-    // reset form
-    ['pub-ann-title', 'pub-ann-societa', 'pub-ann-ruolo', 'pub-ann-zona', 'pub-ann-desc'].forEach(function (id) {
+    ['pub-ann-title', 'pub-ann-societa', 'pub-ann-ruolo', 'pub-ann-zona', 'pub-ann-incarico', 'pub-ann-compenso', 'pub-ann-durata', 'pub-ann-orari', 'pub-ann-benefit', 'pub-ann-crescita', 'pub-ann-competenze', 'pub-ann-esperienza', 'pub-ann-qualifiche', 'pub-ann-attitudini', 'pub-ann-extra'].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.value = '';
     });
+    var ai = document.getElementById('pub-ann-ai');
+    if (ai) ai.checked = true;
   }
 
   window.openPubblicaAnnuncioModal = openPubblicaAnnuncioModal;

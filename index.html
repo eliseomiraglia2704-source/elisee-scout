@@ -289,7 +289,7 @@
   <link rel="stylesheet" href="scopri-profili.css?v=20260820_DARK1">
   <link rel="stylesheet" href="messaggi.css?v=20260820_DARK1">
   <link rel="stylesheet" href="mercato-hub.css?v=20260820_MKT2">
-  <link rel="stylesheet" href="schede-tecniche.css?v=20260820_ST2">
+  <link rel="stylesheet" href="schede-tecniche.css?v=20260820_ST3">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
@@ -1627,6 +1627,9 @@
             <a href="#tc-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.EliseeTC){ window.EliseeTC.open(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="clipboard-list" style="width:16px; height:16px; color:#38bdf8;"></i> Pannello TC Manager
             </a>
+            <a href="#bacheca-annunci" onclick="event.preventDefault(); event.stopPropagation(); if(window.switchView){ window.switchView('bacheca','#bacheca-annunci'); } if(window.openPubblicaAnnuncioModal){ window.openPubblicaAnnuncioModal(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
+              <i data-lucide="megaphone" style="width:16px; height:16px; color:#38bdf8;"></i> Pubblica candidatura
+            </a>
             <a href="#seguo-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.openChiSegui){ window.openChiSegui(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="users" style="width:16px; height:16px; color:#38bdf8;"></i> Chi segui
             </a>
@@ -2142,7 +2145,7 @@
               </div>
               <div class="pf-header-actions">
                 <button type="button" class="btn btn-outline-pill" id="btn-bacheca-squadre" data-bacheca-action="squadre" title="Sezione Squadre e profili">Squadre</button>
-                <button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-bacheca-pubblica" data-bacheca-action="pubblica" title="Pubblica un annuncio">Pubblica annuncio</button>
+                <button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-bacheca-pubblica" data-bacheca-action="pubblica" title="Pubblica una candidatura">Pubblica candidatura</button>
                 <button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-bacheca-crea-profilo" data-bacheca-action="crea-profilo" title="Crea il tuo profilo">Crea profilo</button>
               </div>
             </header>
@@ -3597,39 +3600,91 @@
 
 
   
-  <!-- Modal: Pubblica annuncio (Bacheca) -->
+  <!-- Modal: Pubblica candidatura (Club) -->
   <div id="modal-pubblica-annuncio" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="pubblica-annuncio-title">
-    <div class="modal-card" style="max-width:520px; text-align:left;">
+    <div class="modal-card es-pub-card">
       <button type="button" class="modal-close" id="pubblica-annuncio-close" aria-label="Chiudi">&times;</button>
-      <p class="portfolio-kicker" style="margin:0 0 0.35rem;">Bacheca</p>
-      <h3 id="pubblica-annuncio-title" style="font-size:1.35rem; color:#fff; margin:0 0 0.5rem;">Pubblica annuncio</h3>
-      <p style="color:#94a3b8; font-size:0.88rem; margin:0 0 1.25rem; line-height:1.5;">Inserisci i dati dell&rsquo;opportunit&agrave; di reclutamento. L&rsquo;annuncio comparir&agrave; tra le opportunit&agrave; selezionate.</p>
-      <form id="form-pubblica-annuncio" class="pf-form" onsubmit="return false;">
-        <div class="form-group" style="margin-bottom:0.85rem;">
-          <label style="display:block; font-size:0.78rem; color:#94a3b8; margin-bottom:0.35rem;">Titolo *</label>
-          <input type="text" id="pub-ann-title" class="pf-input" required placeholder="Es. Cercasi attaccante Under 2005" style="width:100%;">
+      <p class="portfolio-kicker" style="margin:0 0 0.35rem;">Profilo Club</p>
+      <h3 id="pubblica-annuncio-title">Pubblica candidatura</h3>
+      <p class="es-pub-intro">Compila l’offerta e il profilo ricercato. La richiesta diventa visibile in Bacheca. Con l’IA attiva, i profili più compatibili vengono candidati in automatico e le schede restano qui, senza e-mail.</p>
+      <form id="form-pubblica-annuncio" class="pf-form es-pub-form" onsubmit="return false;">
+        <div class="es-pub-grid2">
+          <label class="es-pub-field">Titolo della richiesta *
+            <input type="text" id="pub-ann-title" class="pf-input" required placeholder="Es. Cercasi attaccante Under 2005">
+          </label>
+          <label class="es-pub-field">Società / Club *
+            <input type="text" id="pub-ann-societa" class="pf-input" required placeholder="Es. ASD Virtus Foggia">
+          </label>
         </div>
-        <div class="form-group" style="margin-bottom:0.85rem;">
-          <label style="display:block; font-size:0.78rem; color:#94a3b8; margin-bottom:0.35rem;">Societ&agrave; / Squadra *</label>
-          <input type="text" id="pub-ann-societa" class="pf-input" required placeholder="Es. ASD Virtus Foggia" style="width:100%;">
-        </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:0.85rem;">
-          <div class="form-group">
-            <label style="display:block; font-size:0.78rem; color:#94a3b8; margin-bottom:0.35rem;">Ruolo</label>
-            <input type="text" id="pub-ann-ruolo" class="pf-input" placeholder="Attaccante" style="width:100%;">
+        <label class="es-pub-field">Zona / sede
+          <input type="text" id="pub-ann-zona" class="pf-input" placeholder="Es. Foggia">
+        </label>
+
+        <fieldset class="es-pub-box">
+          <legend>Cosa offriamo</legend>
+          <p class="es-pub-hint">Descrivi l’opportunità proposta al candidato.</p>
+          <div class="es-pub-grid2">
+            <label class="es-pub-field">Tipologia di incarico
+              <select id="pub-ann-incarico" class="pf-input">
+                <option value="">Seleziona</option>
+                <option>Tesseramento / ingaggio</option>
+                <option>Provino</option>
+                <option>Collaborazione staff</option>
+                <option>Stage / inserimento</option>
+                <option>Consulenza</option>
+              </select>
+            </label>
+            <label class="es-pub-field">Compenso o rimborso
+              <input type="text" id="pub-ann-compenso" class="pf-input" placeholder="Es. rimborso spese, accordo da definire">
+            </label>
+            <label class="es-pub-field">Durata della collaborazione
+              <input type="text" id="pub-ann-durata" class="pf-input" placeholder="Es. stagione 2026/27">
+            </label>
+            <label class="es-pub-field">Orari e giorni
+              <input type="text" id="pub-ann-orari" class="pf-input" placeholder="Es. lun–ven, allenamenti serali">
+            </label>
           </div>
-          <div class="form-group">
-            <label style="display:block; font-size:0.78rem; color:#94a3b8; margin-bottom:0.35rem;">Zona</label>
-            <input type="text" id="pub-ann-zona" class="pf-input" placeholder="Foggia" style="width:100%;">
+          <label class="es-pub-field">Benefit e vantaggi
+            <textarea id="pub-ann-benefit" class="pf-input" rows="2" placeholder="Vitto, alloggio, materiale, copertura infortuni…"></textarea>
+          </label>
+          <label class="es-pub-field">Possibilità di crescita
+            <textarea id="pub-ann-crescita" class="pf-input" rows="2" placeholder="Percorso prima squadra, qualifica, responsabilità…"></textarea>
+          </label>
+        </fieldset>
+
+        <fieldset class="es-pub-box">
+          <legend>Cosa richiediamo / Il profilo che cerchiamo</legend>
+          <p class="es-pub-hint">Descrivi il candidato ideale. L’IA userà questi requisiti per la compatibilità.</p>
+          <div class="es-pub-grid2">
+            <label class="es-pub-field">Ruolo ricercato *
+              <input type="text" id="pub-ann-ruolo" class="pf-input" required placeholder="Es. Attaccante, Match analyst">
+            </label>
+            <label class="es-pub-field">Esperienza minima preferibile
+              <input type="text" id="pub-ann-esperienza" class="pf-input" placeholder="Es. 2 stagioni in Eccellenza">
+            </label>
           </div>
-        </div>
-        <div class="form-group" style="margin-bottom:1.15rem;">
-          <label style="display:block; font-size:0.78rem; color:#94a3b8; margin-bottom:0.35rem;">Descrizione</label>
-          <textarea id="pub-ann-desc" class="pf-input" rows="3" placeholder="Dettagli del provino o dell&rsquo;ingaggio..." style="width:100%; resize:vertical;"></textarea>
-        </div>
-        <div style="display:flex; gap:0.75rem; justify-content:flex-end;">
+          <label class="es-pub-field">Competenze tecniche richieste
+            <textarea id="pub-ann-competenze" class="pf-input" rows="2" placeholder="Es. finalizzazione, 1vs1, costruzione dal basso…"></textarea>
+          </label>
+          <label class="es-pub-field">Qualifiche o certificazioni
+            <input type="text" id="pub-ann-qualifiche" class="pf-input" placeholder="Es. UEFA C, patentino FIGC">
+          </label>
+          <label class="es-pub-field">Caratteristiche personali e attitudinali
+            <textarea id="pub-ann-attitudini" class="pf-input" rows="2" placeholder="Es. serietà, adattabilità, spirito di squadra"></textarea>
+          </label>
+          <label class="es-pub-field">Requisiti aggiuntivi (disponibilità, lingue, domicilio)
+            <textarea id="pub-ann-extra" class="pf-input" rows="2" placeholder="Es. domicilio in Puglia, inglese B1, disponibilità immediata"></textarea>
+          </label>
+        </fieldset>
+
+        <label class="es-pub-ai">
+          <input type="checkbox" id="pub-ann-ai" checked>
+          <span><strong>Attiva selezione IA</strong> — analizza i profili sulla piattaforma, individua i più compatibili e li candida in automatico. Le schede tecniche restano nella candidatura, senza invio e-mail.</span>
+        </label>
+
+        <div class="es-pub-actions">
           <button type="button" class="btn btn-outline-pill" id="pubblica-annuncio-cancel">Annulla</button>
-          <button type="button" class="btn btn-outline-pill pf-btn-solid" id="pubblica-annuncio-submit">Pubblica</button>
+          <button type="button" class="btn btn-outline-pill pf-btn-solid" id="pubblica-annuncio-submit">Pubblica candidatura</button>
         </div>
       </form>
     </div>
@@ -4866,12 +4921,12 @@
   <script src="tc-panel.js?v=20260820_TC2"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260820_ST1"></script>
+  <script src="app.js?v=20260820_ST3"></script>
   <script src="player-profile.js?v=20260820_MKT2"></script>
   <script src="scopri-profili.js?v=20260820_MKT1"></script>
   <script src="messaggi.js?v=20260820_MSG1"></script>
   <script src="mercato-hub.js?v=20260820_MKT2"></script>
-  <script src="schede-tecniche.js?v=20260820_ST2"></script>
+  <script src="schede-tecniche.js?v=20260820_ST3"></script>
   <script src="mappa-club.js?v=20260820_FORM1"></script>
   <script src="chi-segui.js?v=20260820_FORM1"></script>
   <script src="verifica-account.js?v=20260820_VF2"></script>

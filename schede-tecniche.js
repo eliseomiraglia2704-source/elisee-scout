@@ -126,6 +126,11 @@
     if (person.shareContacts) n += 2;
     if (person.cv) n += 2;
     if (person.video) n += 2;
+    var hay = [job && job.skillsReq, job && job.langsReq, job && job.extraReq, job && job.requirements].filter(Boolean).join(' ').toLowerCase();
+    if (hay) {
+      (person.skills || []).forEach(function (sk) { if (hay.indexOf(String(sk).toLowerCase()) >= 0) n += 2; });
+      (person.langs || []).forEach(function (lg) { if (hay.indexOf(String(lg).toLowerCase()) >= 0) n += 2; });
+    }
     n += (String(person.name).length % 5);
     return Math.min(98, n);
   }
@@ -213,13 +218,18 @@
       saveAll(map);
       return map[id];
     }
-    var sheets = pickPool(job).map(function (p) { return sheetFromPerson(p, job, { source: 'ai', id: 'ai-' + id + '-' + slug(p.name) }); });
+    var useAi = job.ai !== false;
+    var sheets = useAi
+      ? pickPool(job).map(function (p) { return sheetFromPerson(p, job, { source: 'ai', id: 'ai-' + id + '-' + slug(p.name) }); })
+      : [];
     map[id] = {
       id: id,
       title: job.title || 'Annuncio',
       club: job.club || job.societa || '',
       role: job.role || job.ruolo || '',
       location: job.location || job.zona || '',
+      requirements: job.requirements || '',
+      ai: useAi,
       sheets: sheets,
       updatedAt: new Date().toISOString()
     };
