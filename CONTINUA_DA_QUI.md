@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-20**
-Ultimo fatto: Area Preparatore Portieri = dashboard tecnica, sessioni, vivaio.
+Ultimo fatto: Area Preparatore Atletico = dashboard fisica, carichi, GPS, prevenzione.
 Feature precedente: Hub Mercato B2B (`cb9d60d`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -60,7 +60,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Dashboard Preparatore Portieri: tecnica, sessioni, vivaio |
+| (questo) | Dashboard Preparatore Atletico: fisica, carichi, GPS, prevenzione |
+| `56c8c5c` | Dashboard Preparatore Portieri: tecnica, sessioni, vivaio |
 | `4a96837` | Dashboard Team Manager: organizzativa, trasferte, pratiche |
 | `7cbfa0f` | Dashboard Osservatore: scouting, segnalazioni, Secret List |
 | `feb1016` | Dashboard Tifoso: passione, tessera, registro presenze |
@@ -132,6 +133,7 @@ Nota Vercel: lo store manager è su `/tmp` (effimero). In locale `state.json` è
 | Dashboard Osservatore | `obs-dash.js` / `.css` — scouting, segnalazioni |
 | Dashboard Team Manager | `tm-dash.js` / `.css` — organizzativa, trasferte |
 | Dashboard Preparatore Portieri | `gk-dash.js` / `.css` — tecnica, sessioni |
+| Dashboard Preparatore Atletico | `at-dash.js` / `.css` — fisica, carichi, GPS |
 | Scopri / follow | `scopri-profili.js` / `.css` |
 | Messaggi | `messaggi.js` / `.css` |
 | Mappa | `mappa-club.js` / `.css` |
@@ -167,6 +169,8 @@ Team Manager: se ruolo staff è Team manager, dashboard organizzativa (trasferte
 
 Preparatore Portieri: se ruolo staff è Preparatore dei portieri, dashboard tecnica (uscite, lavoro sui piedi, vivaio). Distinta da Allenatore e Preparatore atletico. Cache `GK1`.
 
+Preparatore Atletico: se ruolo staff è Preparatore atletico, dashboard fisica (carichi, GPS, prevenzione infortuni). Distinta dal Preparatore dei portieri. Cache `AT1`.
+
 Schede tecniche: da ogni annuncio in Bacheca → pulsante **Schede tecniche**. Le schede IA restano nella candidatura (`#schede-tecniche`), non via e-mail. Club: lista, scheda completa, confronto (fino a 3), stati (nuova / in valutazione / shortlist / scartata). Cache `ST1`.
 
 Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
@@ -175,6 +179,7 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-20** — Dashboard Preparatore Atletico: fisica, carichi, GPS, prevenzione. Cache `AT1`.
 - **2026-08-20** — Dashboard Preparatore Portieri: tecnica, sessioni, vivaio. Cache `GK1`.
 - **2026-08-20** — Dashboard Team Manager: organizzativa, trasferte, pratiche FIGC. Cache `TM1`.
 - **2026-08-20** — Dashboard Osservatore (Scout): scouting, segnalazioni, Secret List. Cache `OB1`.

@@ -227,13 +227,15 @@
     if (tmd) tmd.hidden = true;
     var gk = document.getElementById('es-gk');
     if (gk) gk.hidden = true;
+    var atd = document.getElementById('es-atd');
+    if (atd) atd.hidden = true;
     box.innerHTML = html(user);
     box.hidden = false;
     host.classList.add('es-pd-on');
-    host.classList.remove('es-vice-on', 'es-ma-on', 'es-med-on', 'es-obs-on', 'es-tm-on', 'es-gk-on');
+    host.classList.remove('es-vice-on', 'es-ma-on', 'es-med-on', 'es-obs-on', 'es-tm-on', 'es-gk-on', 'es-at-on');
     if (group) {
       group.classList.add('is-coach-dash');
-      group.classList.remove('is-vice-dash', 'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash');
+      group.classList.remove('is-vice-dash', 'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash', 'is-at-dash');
     }
     bind(host);
   }
