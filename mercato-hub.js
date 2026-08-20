@@ -199,6 +199,7 @@
     });
     saveList(items);
     toast('Aggiunto in Secret List in modalità stealth. Nessuna notifica a atleta, procuratore o altri club.', 'success');
+    try { paintStaffCard(); } catch (_) {}
     return true;
   }
 
@@ -273,29 +274,46 @@
   function dealHtml(d, newest) {
     var kit = kitUrl(d.to);
     var logo = logoUrl(d.to);
+    var last = lastName(d.player);
     return '<article class="es-mk-deal' + (newest ? ' is-new' : '') + '">' +
-      '<div class="es-mk-fifa">' +
-        (kit ? '<div class="es-mk-fifa-kit" style="background-image:url(\'' + esc(kit) + '\')"></div>' : '') +
-        '<div class="es-mk-fifa-meta"><div class="es-mk-ovr">' + ovrOf(d.player) + '</div><div class="es-mk-pos">' + esc(posCode(d.role)) + '</div></div>' +
-        '<div class="es-mk-fifa-name">' + esc(d.player) + '</div>' +
-        '<div class="es-mk-stamp">TRASFERITO</div>' +
-      '</div>' +
-      '<div class="es-mk-deal-body">' +
-        '<h3>' + esc(d.player) + ' ha firmato per ' + esc(d.to) + '</h3>' +
-        '<div class="es-mk-deal-club">' +
-          '<img src="' + esc(logo) + '" alt="" onerror="this.style.display=\'none\'">' +
-          '<span>' + esc(d.to) + '</span>' +
+      '<div class="es-mk-deal-ribbon">Ufficiale · Calciomercato Elisee</div>' +
+      '<div class="es-mk-deal-grid">' +
+        '<div class="es-mk-fifa">' +
+          (kit ? '<div class="es-mk-fifa-kit" style="background-image:url(\'' + esc(kit) + '\')"></div>' : '') +
+          '<div class="es-mk-fifa-meta"><div class="es-mk-ovr">' + ovrOf(d.player) + '</div><div class="es-mk-pos">' + esc(posCode(d.role)) + '</div></div>' +
+          '<div class="es-mk-fifa-name">' + esc(last) + '</div>' +
+          '<div class="es-mk-stamp">TRASFERITO</div>' +
         '</div>' +
-        '<p class="es-mk-deal-meta">' + esc(d.role || 'Calciatore') + ' · da ' + esc(d.from || 'Svincolato') + ' a ' + esc(d.to) +
-        ' · ' + esc(fmtWhen(d.at)) + '</p>' +
+        '<div class="es-mk-kit-hero">' +
+          (kit ? '<img src="' + esc(kit) + '" alt="Maglia ' + esc(d.to) + '" onerror="this.parentNode.style.display=\'none\'">' : '') +
+          '<div class="es-mk-stamp">TRASFERITO</div>' +
+        '</div>' +
+        '<div class="es-mk-deal-body">' +
+          '<p class="es-mk-breaking">Breaking</p>' +
+          '<h3>' + esc(d.player) + ' è un nuovo giocatore</h3>' +
+          '<div class="es-mk-path">' +
+            '<span>' + esc(d.from || 'Svincolato') + '</span><em>→</em>' +
+            '<img src="' + esc(logo) + '" alt="" width="28" height="28" style="width:28px;height:28px;object-fit:contain" onerror="this.style.display=\'none\'">' +
+            '<span>' + esc(d.to) + '</span>' +
+          '</div>' +
+          '<p class="es-mk-deal-meta">' + esc(d.role || 'Calciatore') + ' · ' + esc(fmtWhen(d.at)) + '</p>' +
+        '</div>' +
       '</div></article>';
+  }
+  function lastName(name) {
+    var p = String(name || '').trim().split(/\s+/);
+    return p.length > 1 ? p[p.length - 1] : (p[0] || 'PLAYER');
   }
 
   function renderWall() {
     var root = document.getElementById('es-mk-wall');
     if (!root) return;
     var rows = wallItems().slice().sort(function (a, b) { return String(b.at).localeCompare(String(a.at)); });
-    var html = '<p class="es-mk-live"><i></i> Feed in tempo reale · trattative chiuse sulla piattaforma</p>';
+    var ticker = rows.slice(0, 8).map(function (d) {
+      return 'TRASFERITO  ·  ' + d.player + ' → ' + d.to;
+    }).join('     ★     ');
+    var html = '<p class="es-mk-live"><i></i> Feed in tempo reale · tab notizie di mercato</p>';
+    if (ticker) html += '<div class="es-mk-ticker" aria-hidden="true"><span>' + esc(ticker + '     ★     ' + ticker) + '</span></div>';
     html += '<div class="es-mk-toolbar">' +
       '<button type="button" class="es-mk-btn" id="es-mk-official-open">Ufficializza accordo</button>' +
       '</div>';
@@ -438,10 +456,16 @@
       if (off) {
         var it = myList().filter(function (x) { return x.id === off.getAttribute('data-official'); })[0];
         if (!it) return;
-        var club = window.prompt('Club di destinazione per ufficializzare ' + it.name + ' sul Wall:', '');
-        if (!club) return;
-        officialize({ player: it.name, role: it.role, from: it.status === 'Svincolato' ? 'Svincolato' : (it.city || 'Club precedente'), to: club });
-        saveList(myList().filter(function (x) { return x.id !== it.id; }));
+        tab = 'wall';
+        render();
+        var form = document.getElementById('es-mk-official-form');
+        if (form) {
+          form.hidden = false;
+          if (form.player) form.player.value = it.name;
+          if (form.role) form.role.value = it.role || '';
+          if (form.from) form.from.value = it.status === 'Svincolato' ? 'Svincolato' : (it.status || 'Svincolato');
+          if (form.to) form.to.focus();
+        }
         return;
       }
       if (e.target.closest('#es-mk-official-open')) {
@@ -496,13 +520,27 @@
     }, 30);
   }
 
+  function paintStaffCard() {
+    var card = document.getElementById('es-sp-secret-card');
+    var nEl = document.getElementById('es-sp-secret-n');
+    var tabBtn = document.getElementById('es-user-tab-secret');
+    var ok = canUseSecretList() && isLogged();
+    if (card) card.hidden = !ok;
+    if (nEl) {
+      var n = myList().length;
+      nEl.textContent = n === 0 ? 'Nessun target. Aggiungili in stealth, senza allertare nessuno.' : (n + (n === 1 ? ' target in lista' : ' target in lista'));
+    }
+    if (tabBtn) tabBtn.hidden = !ok;
+  }
+
   window.EliseeMercato = {
     open: openHub,
     addStealth: addStealth,
     canUseSecretList: canUseSecretList,
     alreadyIn: alreadyIn,
     render: render,
-    setTab: setTab
+    setTab: setTab,
+    paintStaffCard: paintStaffCard
   };
   window.openSecretList = function () { openHub('secret'); };
   window.openTransferWall = function () { openHub('wall'); };
@@ -510,6 +548,7 @@
   function boot() {
     bind();
     loadClubs();
+    paintStaffCard();
     document.addEventListener('elisee:view-changed', function (e) {
       var d = e && e.detail;
       var h = String((d && d.hash) || '');

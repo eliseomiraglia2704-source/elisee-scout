@@ -1149,6 +1149,7 @@
     if (isStaff) {
       bindStaff();
       if (!staffFilling && !notifsOn) fillStaffForm(user);
+      try { if (window.EliseeMercato && window.EliseeMercato.paintStaffCard) window.EliseeMercato.paintStaffCard(); } catch (_) {}
     }
     if (window.EliseeUserNotifs) {
       window.EliseeUserNotifs.render(user);

@@ -288,7 +288,7 @@
   <link rel="stylesheet" href="player-profile.css?v=20260820_MKT1">
   <link rel="stylesheet" href="scopri-profili.css?v=20260820_DARK1">
   <link rel="stylesheet" href="messaggi.css?v=20260820_DARK1">
-  <link rel="stylesheet" href="mercato-hub.css?v=20260820_MKT1">
+  <link rel="stylesheet" href="mercato-hub.css?v=20260820_MKT2">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
@@ -2909,7 +2909,7 @@
             </button>
             <button type="button" class="es-user-tab" data-tab="seguo" id="es-user-tab-seguo">Chi segui</button>
             <button type="button" class="es-user-tab" data-tab="scopri" id="es-user-tab-scopri">Scopri</button>
-            <button type="button" class="es-user-tab" data-tab="secret" id="es-user-tab-secret">Secret List</button>
+            <button type="button" class="es-user-tab" data-tab="secret" id="es-user-tab-secret" hidden>Secret List</button>
             <button type="button" class="es-user-tab" data-tab="wall" id="es-user-tab-wall">Wall mercato</button>
             <button type="button" class="es-user-tab" data-tab="tc" id="es-user-tab-tc">TC Manager</button>
           </nav>
@@ -3112,6 +3112,17 @@
               </button>
             </div>
             <p class="es-sp-missing" id="es-sp-missing" hidden></p>
+
+            <section class="es-mk-inprofile" id="es-sp-secret-card" hidden>
+              <p class="es-mk-kicker">Esclusiva Direttore sportivo / Scout</p>
+              <h2>Secret List</h2>
+              <p>Hub Mercato in modalità stealth: i target restano visibili solo a te. Nessuna notifica all’atleta, al procuratore o alle società concorrenti.</p>
+              <p class="es-mk-inprofile-n" id="es-sp-secret-n">0 target in lista</p>
+              <div class="es-mk-inprofile-actions">
+                <button type="button" class="es-mk-btn" onclick="if(window.openSecretList) window.openSecretList();">Apri Hub Mercato</button>
+                <button type="button" class="es-mk-ghost" onclick="if(window.openTransferWall) window.openTransferWall();">Wall trattative</button>
+              </div>
+            </section>
 
             <section class="es-sp-card">
               <h2>Avatar</h2>
@@ -4820,10 +4831,10 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="app.js?v=20260820_MKT1"></script>
-  <script src="player-profile.js?v=20260820_MKT1"></script>
+  <script src="player-profile.js?v=20260820_MKT2"></script>
   <script src="scopri-profili.js?v=20260820_MKT1"></script>
   <script src="messaggi.js?v=20260820_MSG1"></script>
-  <script src="mercato-hub.js?v=20260820_MKT1"></script>
+  <script src="mercato-hub.js?v=20260820_MKT2"></script>
   <script src="mappa-club.js?v=20260820_FORM1"></script>
   <script src="chi-segui.js?v=20260820_FORM1"></script>
   <script src="verifica-account.js?v=20260820_VF2"></script>
