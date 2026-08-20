@@ -281,6 +281,7 @@
   <link rel="stylesheet" href="minigioco-carriera.css?v=20260814_TRIAL2">
   <link rel="stylesheet" href="autopilot.css?v=20260806_NOCORS">
   <link rel="stylesheet" href="squadre-select.css?v=20260814_KITFC3">
+  <link rel="stylesheet" href="manager.css?v=20260820_MGR1">
   <script>
     /* Boot OAuth: token in search O in hash (#hero?elisee_token=...). La sessione vince sempre. */
     (function () {
@@ -2334,6 +2335,7 @@
             </div>
             <div class="es-sq-actions">
               <button type="button" class="btn btn-outline-pill es-sq-select-btn" id="es-sq-select">Seleziona squadra</button>
+              <button type="button" class="btn btn-outline-pill" id="es-sq-mgr-btn">Diventa Manager Elisee Scout</button>
               <button type="button" class="btn btn-outline-pill" id="es-sq-back-bacheca" onclick="if(window.switchView){window.switchView('bacheca','#bacheca-annunci');}">Torna alla Bacheca</button>
             </div>
             <p class="es-sq-meta">← → squadre · frecce Categoria a schermo (o Ctrl+↑/↓) · ↑ ↓ scroll pagina · stile <strong>EA Sports FC</strong></p>
@@ -2479,6 +2481,14 @@
               </button>
             </article>
             <article class="pf-account-card">
+              <div class="pf-account-icon"><i data-lucide="badge-check"></i></div>
+              <h3>Manager Elisee Scout</h3>
+              <p>Come i TC Manager: candidati su una squadra, proponi correzioni a stemma e dati. Lo staff accetta o declina.</p>
+              <button type="button" class="btn btn-outline-pill" onclick="if(window.switchView){window.switchView('squadre','#squadre-portal');} setTimeout(function(){ if(window.EliseeManager) window.EliseeManager.open(); }, 400);">
+                Diventa Manager
+              </button>
+            </article>
+            <article class="pf-account-card">
               <div class="pf-account-icon"><i data-lucide="lock"></i></div>
               <h3>Admin / Responsabile Privacy</h3>
               <p>Ingresso protetto per proprietario piattaforma e Responsabile Privacy (GDPR Art. 30). Autenticazione richiesta.</p>
@@ -2538,6 +2548,9 @@
                 <button type="button" class="gov-btn pf-chip-btn" id="btn-show-privacy">Responsabile Privacy GDPR</button>
                 <button type="button" class="gov-btn pf-chip-btn" id="btn-show-autopilot" style="border-color:rgba(34,197,94,0.45);color:#bbf7d0;" title="Mission Control AutoPilot (solo Admin)">
                   AutoPilot
+                </button>
+                <button type="button" class="gov-btn pf-chip-btn" id="btn-show-manager" title="Candidature e proposte Manager Elisee Scout">
+                  Manager Elisee
                 </button>
               </div>
               <div class="pf-gov-status" style="display:flex; flex-direction:column; align-items:flex-end; gap:0.35rem;">
@@ -4087,6 +4100,7 @@
     })();
   </script>
   <script src="squadre-select.js?v=20260820_VERW1"></script>
+  <script src="manager-runtime.js?v=20260820_MGR1"></script>
   <script src="app.js?v=20260814_MOB"></script>
   <script>
     /* FORCED INLINE HOT-PATCH: Overrides PDF export, specific report HTML & modal close functions instantly at runtime */

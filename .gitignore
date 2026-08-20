@@ -19,6 +19,9 @@ data/auth/users.json
 data/auth/sessions.json
 data/auth/oauth_states.json
 
+# Manager inbox (candidature e proposte)
+data/manager/state.json
+
 # Local temp and reference frames
 data/tmp_login_vid/
 data/fc26_frames_ref/

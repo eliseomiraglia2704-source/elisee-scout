@@ -197,6 +197,8 @@ class Handler(SimpleHTTPRequestHandler):
             return self._proxy_fetch(target)
         if path.startswith("/api/auth") or path == "/auth/callback":
             return self._auth_api(path, self.command.upper())
+        if path.startswith("/api/manager"):
+            return self._manager_api(path, self.command.upper())
         if not path.startswith("/api/autopilot"):
             return False
         if get_engine is None:
@@ -390,6 +392,79 @@ class Handler(SimpleHTTPRequestHandler):
             self._json(500, {"ok": False, "error": str(e)})
             return True
 
+    def _manager_user(self):
+        try:
+            from auth_store import get_user_by_token
+            return get_user_by_token(self._bearer())
+        except Exception:
+            return None
+
+    def _is_admin_req(self) -> bool:
+        key = (self.headers.get("X-Elisee-Admin") or self.headers.get("x-elisee-admin") or "").strip()
+        if key in ("admin123", "1", "true", "admin"):
+            return True
+        # stesso modello dell'area admin attuale
+        return False
+
+    def _manager_api(self, path: str, method: str) -> bool:
+        try:
+            from manager_store import admin_inbox, apply_as_manager, decide, my_view, propose_change
+        except Exception as e:
+            self._json(503, {"ok": False, "error": "manager_store_unavailable", "detail": str(e)})
+            return True
+        if method == "OPTIONS":
+            self.send_response(204)
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Elisee-Admin")
+            self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+            self.end_headers()
+            return True
+        try:
+            user = self._manager_user()
+            if path in ("/api/manager", "/api/manager/me") and method in ("GET", "HEAD"):
+                parsed = urlparse(self.path)
+                qs = parse_qs(parsed.query or "")
+                view = (qs.get("view") or ["me"])[0]
+                if view == "admin":
+                    if not self._is_admin_req():
+                        self._json(401, {"ok": False, "error": "admin_richiesto"})
+                        return True
+                    self._json(200, admin_inbox())
+                    return True
+                email = (qs.get("email") or [""])[0]
+                self._json(200, my_view(user, email))
+                return True
+            if path == "/api/manager" and method == "POST":
+                body = self._read_json_body()
+                action = str(body.get("action") or "").strip()
+                if action == "apply":
+                    code, payload = apply_as_manager(user, body)
+                    self._json(code, payload)
+                    return True
+                if action == "propose":
+                    code, payload = propose_change(user, body)
+                    self._json(code, payload)
+                    return True
+                if action == "decide":
+                    if not self._is_admin_req():
+                        self._json(401, {"ok": False, "error": "admin_richiesto"})
+                        return True
+                    kind = str(body.get("kind") or "proposal")
+                    item_id = str(body.get("id") or "")
+                    accept = bool(body.get("accept"))
+                    comment = str(body.get("comment") or "")
+                    code, payload = decide(kind, item_id, accept, comment)
+                    self._json(code, payload)
+                    return True
+                self._json(400, {"ok": False, "error": "azione_sconosciuta"})
+                return True
+            self._json(404, {"ok": False, "error": "unknown_manager_endpoint", "path": path})
+            return True
+        except Exception as e:
+            log("manager_api: " + str(e))
+            self._json(500, {"ok": False, "error": str(e)})
+            return True
+
     def _site_origin(self) -> str:
         host = (self.headers.get("Host") or f"{HOST}:{PORT}").split(",")[0].strip()
         if "localhost:3000" in host or host.endswith(":3000"):
@@ -510,6 +585,12 @@ class Handler(SimpleHTTPRequestHandler):
         if self._api():
             return
         self.send_error(405, "Method Not Allowed")
+
+    def do_OPTIONS(self) -> None:
+        if self._api():
+            return
+        self.send_response(204)
+        self.end_headers()
 
 
 class Server(ThreadingHTTPServer):
