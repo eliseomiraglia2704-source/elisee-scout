@@ -1,0 +1,14 @@
+/* Dashboard Discorso Allenatore — stesso shell della dash giocatore */
+#user-dossier-view-group.is-staff-area.is-coach-dash .es-user-tabs { display: none !important; }
+#user-dossier-view-group.is-staff-area.is-coach-dash .pf-page-inner {
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+#es-staff-profile.es-pd-on > :not(#es-cd) { display: none !important; }
+.es-cd-grade {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: #4ade80;
+  margin: 0 0 0.35rem;
+}

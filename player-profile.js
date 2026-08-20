@@ -1160,6 +1160,18 @@
       bindStaff();
       if (!staffFilling && !notifsOn) fillStaffForm(user);
       try { if (window.EliseeMercato && window.EliseeMercato.paintStaffCard) window.EliseeMercato.paintStaffCard(); } catch (_) {}
+      try {
+        var cd = document.getElementById('es-cd');
+        var sh = document.getElementById('es-staff-profile');
+        var grp = document.getElementById('user-dossier-view-group');
+        if (!notifsOn && window.EliseeCoachDash && window.EliseeCoachDash.isCoach && window.EliseeCoachDash.isCoach(user)) {
+          window.EliseeCoachDash.render(user);
+        } else {
+          if (cd) cd.hidden = true;
+          if (sh) sh.classList.remove('es-pd-on');
+          if (grp) grp.classList.remove('is-coach-dash');
+        }
+      } catch (_) {}
     }
     if (window.EliseeUserNotifs) {
       window.EliseeUserNotifs.render(user);
