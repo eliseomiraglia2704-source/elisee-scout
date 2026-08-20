@@ -275,16 +275,16 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
-  <link rel="stylesheet" href="style.css?v=20260820_MSG1">
+  <link rel="stylesheet" href="style.css?v=20260820_ADV1">
   <link rel="stylesheet" href="integrazioni.css?v=20260806_NOCORS">
   <link rel="preload" as="video" href="immagini/minigioco/intro.mp4?v=20260813_HQ2">
   <link rel="stylesheet" href="minigioco-carriera.css?v=20260814_TRIAL2">
   <link rel="stylesheet" href="autopilot.css?v=20260806_NOCORS">
   <link rel="stylesheet" href="squadre-select.css?v=20260814_KITFC3">
   <link rel="stylesheet" href="manager.css?v=20260820_MGR1">
-  <link rel="stylesheet" href="player-profile.css?v=20260820_MSG1">
-  <link rel="stylesheet" href="scopri-profili.css?v=20260820_MSG1">
-  <link rel="stylesheet" href="messaggi.css?v=20260820_MSG1">
+  <link rel="stylesheet" href="player-profile.css?v=20260820_ADV1">
+  <link rel="stylesheet" href="scopri-profili.css?v=20260820_ADV1">
+  <link rel="stylesheet" href="messaggi.css?v=20260820_ADV1">
   <script>
     /* Boot OAuth: token in search O in hash (#hero?elisee_token=...). La sessione vince sempre. */
     (function () {
@@ -3191,6 +3191,10 @@
           <button type="button" class="es-sc-chip" data-kind="player">Player</button>
           <button type="button" class="es-sc-chip is-on" data-kind="staff">Staff</button>
         </div>
+        <label class="es-sc-search">
+          <span class="es-sc-search-ico" aria-hidden="true">⌕</span>
+          <input type="search" id="es-sc-q" placeholder="Cerca nome, città, società, ruolo…" autocomplete="off">
+        </label>
         <div class="es-sc-filters">
           <label>Ambito geografico
             <select id="es-sc-geo"></select>
@@ -3199,7 +3203,25 @@
             <select id="es-sc-sport"></select>
           </label>
         </div>
-        <div class="es-sc-count"><i></i> <span><b id="es-sc-count-n">0</b> profili mostrati</span> con i filtri selezionati</div>
+        <div class="es-sc-advbar">
+          <button type="button" class="es-sc-adv-toggle" id="es-sc-adv-toggle">Ricerca avanzata</button>
+          <button type="button" class="es-sc-reset" id="es-sc-reset">Azzera filtri</button>
+        </div>
+        <div class="es-sc-adv" id="es-sc-adv" hidden>
+          <label>Categoria
+            <select id="es-sc-group"></select>
+          </label>
+          <label>Ruolo
+            <select id="es-sc-role"></select>
+          </label>
+          <label>Città
+            <input type="text" id="es-sc-city" placeholder="Es. Roma, Foggia" autocomplete="off">
+          </label>
+          <label class="es-sc-check">
+            <input type="checkbox" id="es-sc-following"> Solo chi seguo
+          </label>
+        </div>
+        <div class="es-sc-count"><i></i> <span><b id="es-sc-count-n">0</b> profili</span> con i filtri selezionati</div>
         <div id="es-sc-list" class="es-sc-list"></div>
       </section>
     </div>
@@ -4525,10 +4547,10 @@
   </script>
   <script src="squadre-select.js?v=20260820_VERW1"></script>
   <script src="manager-runtime.js?v=20260820_MGR1"></script>
-  <script src="app.js?v=20260820_MSG1"></script>
-  <script src="player-profile.js?v=20260820_MSG1"></script>
-  <script src="scopri-profili.js?v=20260820_MSG1"></script>
-  <script src="messaggi.js?v=20260820_MSG1"></script>
+  <script src="app.js?v=20260820_ADV1"></script>
+  <script src="player-profile.js?v=20260820_ADV1"></script>
+  <script src="scopri-profili.js?v=20260820_ADV1"></script>
+  <script src="messaggi.js?v=20260820_ADV1"></script>
   <script>
     /* FORCED INLINE HOT-PATCH: Overrides PDF export, specific report HTML & modal close functions instantly at runtime */
     (function() {

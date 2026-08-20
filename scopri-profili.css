@@ -179,6 +179,99 @@ body.layout-portfolio .es-sc-filters select {
   color: #5a7390;
   padding: 2rem 1rem;
 }
+.es-sc-search {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: #fff;
+  border: 1.5px solid #d7e4ee;
+  border-radius: 14px;
+  padding: 0.15rem 0.85rem;
+  margin-bottom: 0.85rem;
+}
+.es-sc-search-ico { color: #8aa0b3; font-size: 1.1rem; }
+.es-sc-search input,
+body.layout-portfolio .es-sc-search input {
+  flex: 1;
+  border: 0 !important;
+  background: transparent !important;
+  color: #10263d !important;
+  padding: 0.7rem 0 !important;
+  font: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  box-shadow: none !important;
+}
+.es-sc-advbar {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin: 0 0 0.75rem;
+}
+.es-sc-adv-toggle,
+.es-sc-reset,
+.es-sc-more {
+  border: 0;
+  background: transparent;
+  color: #2f7eac;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  padding: 0.2rem 0;
+  text-transform: none !important;
+}
+.es-sc-adv-toggle.is-on { color: #0b4f7a; }
+.es-sc-adv {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+  background: #fff;
+  border: 1.5px solid #d7e4ee;
+  border-radius: 16px;
+  padding: 0.85rem;
+  margin-bottom: 0.85rem;
+}
+.es-sc-adv[hidden] { display: none !important; }
+.es-sc-adv label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #5a7390;
+}
+.es-sc-adv select,
+.es-sc-adv input[type="text"],
+body.layout-portfolio .es-sc-adv select,
+body.layout-portfolio .es-sc-adv input[type="text"] {
+  border: 1.5px solid #d7e4ee !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  color: #10263d !important;
+  padding: 0.6rem 0.75rem !important;
+  font: inherit;
+}
+.es-sc-check {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 0.45rem !important;
+  margin-top: 1.4rem;
+}
+.es-sc-sub {
+  margin: 0.25rem 0 0;
+  color: #6b8296;
+  font-size: 0.86rem;
+}
+.es-sc-card.is-org .es-sc-name { font-size: 0.98rem; }
+.es-sc-more {
+  width: 100%;
+  margin-top: 0.35rem;
+  padding: 0.7rem !important;
+  border: 1.5px solid #8ec4e0 !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+}
+.es-sc-pill { margin-right: 0.25rem; }
 @media (max-width: 520px) {
   .es-sc-filters { grid-template-columns: 1fr; }
   .es-sc-card { grid-template-columns: 46px 1fr; }
