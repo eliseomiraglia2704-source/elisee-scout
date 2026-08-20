@@ -1,5 +1,5 @@
 /**
- * ELISEE SCOUT â€” Selettore Squadre stile EA Sports FC
+ * ELISEE SCOUT — Selettore Squadre stile EA Sports FC
  * Catalogo: Serie A/B/C/D + dilettanti. Loghi locali same-origin.
  */
 (function () {
@@ -1252,7 +1252,7 @@
       nextLeague(1);
     }, 'sql');
 
-    // Pillola categoria â†’ apre tabella selezione
+    // Pillola categoria → apre tabella selezione
     bindOnce($('es-sq-league-pill'), 'click', function (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -1515,8 +1515,8 @@
           else next(1);
           return;
         }
-        // â†‘ â†“ LIBERE per lo scroll della pagina (non cambiano categoria)
-        // Categoria: Ctrl+â†‘/â†“ oppure i pulsanti freccia "Categoria" a schermo
+        // ↑ ↓ LIBERE per lo scroll della pagina (non cambiano categoria)
+        // Categoria: Ctrl+↑/↓ oppure i pulsanti freccia "Categoria" a schermo
         if ((e.key === 'ArrowUp' || e.key === 'ArrowDown') && (e.ctrlKey || e.altKey)) {
           e.preventDefault();
           nextLeague(e.key === 'ArrowUp' ? -1 : 1);

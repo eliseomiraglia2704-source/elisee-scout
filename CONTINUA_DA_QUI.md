@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-20**
-Ultimo commit: `28fe253` — *Tracce in cartella per riprendere da un altro account Grok.*
-Feature precedente: `9021752` — *Utenti suggeriscono modulo/XI; Admin accetta o declina.*
+Ultimo fatto: italiano rotto (mojibake `â€ / Ã / cittÃ`) corretto in Ambassador e in tutto `index.html` + commenti `squadre-select.js`.
+Feature precedente: `9021752` — *Utenti suggeriscono modulo/XI; Admin accetta o declina.* Tracce account Grok: `7ec3186`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -130,14 +130,13 @@ Copia utente Grok: `C:\Users\Eliseo Miraglia\.grok\skills\elisee-scout-deploy\SK
 
 ## Prossimo passo
 
-Nessuna richiesta aperta: l’ultimo task (suggerimenti formazione + Accetta/Declina admin) è **online**.
+Nessuna richiesta aperta. Chiedere a Eliseo cosa fare dopo. Non inventare feature.
 
-Chiedere a Eliseo cosa fare dopo. Non inventare feature.
-
-Se il server locale 8080 era già avviato prima delle patch Python (`elisee_up.py` / `manager_store.py`), riavviarlo per `propose-lineup` in locale.
+Se il server locale 8080 era già avviato prima delle patch Python (`elisee_up.py` / `manager_store.py`), riavviarlo per `propose-lineup` in locale. Per vedere l’italiano corretto in locale: ricarica forzata (Ctrl+F5) su http://127.0.0.1:8080/#ambassador-portal
 
 ---
 
 ## Diario sessioni
 
-- **2026-08-20** — Chiuso suggest modulo/XI + admin (`9021752`). Poi `CONTINUA_DA_QUI.md` + `AGENTS.md` + skill deploy in `.grok/skills/` (`28fe253`) per cambiare account Grok senza perdere il filo. Online: elisee-scout.vercel.app.
+- **2026-08-20** — Chiuso suggest modulo/XI + admin (`9021752`). Poi `CONTINUA_DA_QUI.md` + `AGENTS.md` + skill deploy in `.grok/skills/` (`7ec3186`) per cambiare account Grok senza perdere il filo.
+- **2026-08-20** — Corretto italiano mojibake in Ambassador (idoneità, città, apostrofi, trattini) e ovunque in `index.html`. Cache `?v=20260820_IT1` / SW `elisee-scout-v20260820-it1`.

@@ -386,7 +386,7 @@
 </head>
 <body class="layout-portfolio">
   <script>
-    /* CLICK FIX NUCLEARE â€” spegne SOLO overlay fantasma, non le modal aperte dall'utente */
+    /* CLICK FIX NUCLEARE — spegne SOLO overlay fantasma, non le modal aperte dall'utente */
     (function () {
       function isOpen(el) {
         if (!el) return false;
@@ -402,7 +402,7 @@
             if (cs.visibility === 'hidden' || cs.opacity === '0') return false;
             // modal auth / cookie / intentionally visible panels
             if (el.id && /modal-|cookie|es-ap|es-int|war-room|amb-ai/.test(el.id) && cs.pointerEvents !== 'none') {
-              // se ha opacity > 0 e copre schermo ed Ã¨ visibile â†’ consideralo aperto solo se NON Ã¨ boot fantasma
+              // se ha opacity > 0 e copre schermo ed è visibile → consideralo aperto solo se NON è boot fantasma
               if (el.id === 'ai-cluster-boot') return false;
               if (parseFloat(cs.opacity || '1') > 0.05 && cs.visibility !== 'hidden') return true;
             }
@@ -447,7 +447,7 @@
           ['fullscreen-document-viewer', 'candidate-modal', 'governance-action-modal'].forEach(function (id) {
             var el = document.getElementById(id);
             if (!el || isOpen(el)) return;
-            // se display:none giÃ , skip
+            // se display:none già, skip
             var cs = window.getComputedStyle(el);
             if (cs.display === 'none') {
               el.style.setProperty('pointer-events', 'none', 'important');
@@ -467,7 +467,7 @@
             var covers = el.offsetWidth >= window.innerWidth * 0.85 && el.offsetHeight >= window.innerHeight * 0.85;
             if (!covers) return;
             var invisible = cs.visibility === 'hidden' || parseFloat(cs.opacity || '1') < 0.05 || cs.pointerEvents === 'none';
-            // se trasparente ma pointer-events auto â†’ questo BLOCCA i click
+            // se trasparente ma pointer-events auto → questo BLOCCA i click
             if (cs.pointerEvents !== 'none' && (parseFloat(cs.opacity || '1') < 0.15 || cs.visibility === 'hidden')) {
               hardHide(el);
               return;
@@ -511,7 +511,7 @@
     })();
   </script>
   <script>
-    /* NAV CORE â€” switchView + cronologia browser (indietro/avanti) */
+    /* NAV CORE — switchView + cronologia browser (indietro/avanti) */
     (function () {
       var VIEW_IDS = [
         'view-home', 'view-persone', 'view-about', 'view-pillars', 'view-bacheca',
@@ -754,7 +754,7 @@
         }
       }
 
-      // Espone SUBITO (app.js puÃ² estendere, ma Back resta gestito qui)
+      // Espone SUBITO (app.js può estendere, ma Back resta gestito qui)
       window.switchView = coreSwitchView;
       window.EliseeCoreSwitchView = coreSwitchView;
       window.EliseeApplyHashView = function (hash) {
@@ -855,7 +855,7 @@
       }
       if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bootHash);
       else bootHash();
-      console.info('[ELISEE] nav-core online â€” click navigation ready');
+      console.info('[ELISEE] nav-core online — click navigation ready');
     })();
   </script>
 
@@ -866,13 +866,13 @@
     <div style="max-width:1400px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
       <div style="flex:1; min-width:260px;">
         <p style="color:#e2e8f0; font-size:0.88rem; margin:0; line-height:1.55;">
-          ðŸª <strong style="color:#38bdf8;">ELISEE SCOUT</strong> utilizza cookie tecnici, analitici e di profilazione per migliorare la tua esperienza e personalizzare i contenuti. Leggi lâ€™<a href="cookie-policy.html" style="color:#38bdf8; text-decoration:underline;">informativa estesa sui cookie</a> e lâ€™<a href="privacy-policy.html" style="color:#38bdf8; text-decoration:underline;">informativa sul trattamento dei dati personali</a> (artt. 12 e 13 GDPR).
+          🍪 <strong style="color:#38bdf8;">ELISEE SCOUT</strong> utilizza cookie tecnici, analitici e di profilazione per migliorare la tua esperienza e personalizzare i contenuti. Leggi l’<a href="cookie-policy.html" style="color:#38bdf8; text-decoration:underline;">informativa estesa sui cookie</a> e l’<a href="privacy-policy.html" style="color:#38bdf8; text-decoration:underline;">informativa sul trattamento dei dati personali</a> (artt. 12 e 13 GDPR).
         </p>
       </div>
       <div style="display:flex; gap:0.65rem; flex-wrap:wrap;">
         <button onclick="acceptCookiesOnly()" style="padding:0.6rem 1.2rem; border-radius:20px; background:transparent; color:#94a3b8; border:1px solid rgba(148,163,184,0.4); font-size:0.82rem; cursor:pointer; font-weight:600; white-space:nowrap;">Solo tecnici</button>
         <button type="button" onclick="if(window.EliseeCookies&amp;&amp;EliseeCookies.showPreferencesPanel){EliseeCookies.showPreferencesPanel();}else if(typeof acceptCookiesPartial==='function'){acceptCookiesPartial();}" style="padding:0.6rem 1.2rem; border-radius:20px; background:rgba(2,132,199,0.2); color:#38bdf8; border:1px solid rgba(56,189,248,0.45); font-size:0.82rem; cursor:pointer; font-weight:700; white-space:nowrap;">Gestisci preferenze</button>
-        <button onclick="acceptCookiesAll()" style="padding:0.6rem 1.4rem; border-radius:20px; background:linear-gradient(90deg,#0284c7,#38bdf8); color:#ffffff; border:none; font-size:0.82rem; cursor:pointer; font-weight:800; white-space:nowrap;">âœ“ Accetta tutti</button>
+        <button onclick="acceptCookiesAll()" style="padding:0.6rem 1.4rem; border-radius:20px; background:linear-gradient(90deg,#0284c7,#38bdf8); color:#ffffff; border:none; font-size:0.82rem; cursor:pointer; font-weight:800; white-space:nowrap;">✓ Accetta tutti</button>
       </div>
     </div>
   </div>
@@ -1096,7 +1096,7 @@
             </label>
             <label style="display:flex; align-items:flex-start; gap:0.65rem; cursor:pointer;">
               <input type="checkbox" id="reg-privacy" required style="margin-top:3px; accent-color:#38bdf8; width:16px; height:16px; cursor:pointer;">
-              <span style="color:#94a3b8; font-size:0.8rem; line-height:1.5;">Dichiaro di aver letto lâ€™<a href="privacy-policy.html" target="_blank" style="color:#38bdf8;">informativa sul trattamento dei dati personali (artt. 12 e 13 GDPR)</a> e acconsento al trattamento dei miei dati personali *</span>
+              <span style="color:#94a3b8; font-size:0.8rem; line-height:1.5;">Dichiaro di aver letto l’<a href="privacy-policy.html" target="_blank" style="color:#38bdf8;">informativa sul trattamento dei dati personali (artt. 12 e 13 GDPR)</a> e acconsento al trattamento dei miei dati personali *</span>
             </label>
             <label style="display:flex; align-items:flex-start; gap:0.65rem; cursor:pointer;">
               <input type="checkbox" id="reg-cookie" style="margin-top:3px; accent-color:#38bdf8; width:16px; height:16px; cursor:pointer;">
@@ -1108,18 +1108,18 @@
             </label>
             <label style="display:flex; align-items:flex-start; gap:0.65rem; cursor:pointer; background:rgba(167,139,250,0.08); border:1px solid rgba(167,139,250,0.3); border-radius:10px; padding:0.65rem 0.7rem;">
               <input type="checkbox" id="reg-art22-human" style="margin-top:3px; accent-color:#a78bfa; width:16px; height:16px; cursor:pointer;">
-              <span style="color:#c4b5fd; font-size:0.8rem; line-height:1.5;"><strong style="color:#e9d5ff;">Art. 22 GDPR (opzionale, consigliato):</strong> richiedo di <strong>non essere sottoposto a decisioni basate esclusivamente su trattamento automatizzato</strong> che producano effetti giuridici o incidano in modo analogo su di me (es. scoring matchmaking, ranking, idoneitÃ ). Garantisco il diritto di ottenere <strong>intervento di un operatore umano</strong>, di esprimere la mia opinione e di contestare la decisione. Dettagli nell'<a href="privacy-policy.html#ia-art22" target="_blank" style="color:#38bdf8;">informativa sul trattamento (sezione IA)</a>.</span>
+              <span style="color:#c4b5fd; font-size:0.8rem; line-height:1.5;"><strong style="color:#e9d5ff;">Art. 22 GDPR (opzionale, consigliato):</strong> richiedo di <strong>non essere sottoposto a decisioni basate esclusivamente su trattamento automatizzato</strong> che producano effetti giuridici o incidano in modo analogo su di me (es. scoring matchmaking, ranking, idoneità). Garantisco il diritto di ottenere <strong>intervento di un operatore umano</strong>, di esprimere la mia opinione e di contestare la decisione. Dettagli nell'<a href="privacy-policy.html#ia-art22" target="_blank" style="color:#38bdf8;">informativa sul trattamento (sezione IA)</a>.</span>
             </label>
           </div>
 
           <div id="reg-error-box" style="display:none; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.4); border-radius:10px; padding:0.75rem 1rem; color:#f87171; font-size:0.85rem; margin-bottom:0.75rem;"></div>
 
           <button type="submit" id="btn-crea-profilo-scout" style="width:100%; padding:1rem; background:linear-gradient(135deg,#0284c7,#38bdf8); border:none; border-radius:12px; color:#ffffff; font-weight:900; font-size:1rem; cursor:pointer; letter-spacing:0.05em; box-shadow:0 8px 25px rgba(2,132,199,0.45); transition:opacity 0.2s;">
-            âš½ CREA IL MIO PROFILO SCOUT
+            ⚽ CREA IL MIO PROFILO SCOUT
           </button>
 
           <p style="text-align:center; color:#64748b; font-size:0.78rem; margin-top:1rem; margin-bottom:0;">
-            Hai giÃ  un account? <a href="#" onclick="closeRegistrazioneModal(); switchView('account');" style="color:#38bdf8; font-weight:700;">Accedi qui</a>
+            Hai già un account? <a href="#" onclick="closeRegistrazioneModal(); switchView('account');" style="color:#38bdf8; font-weight:700;">Accedi qui</a>
           </p>
         </form>
       </div>
@@ -1465,7 +1465,7 @@
   </div>
 
   <!-- ================================================================ -->
-  <!-- MODAL: SPID kept only as provider selection â€” opens accesso modal -->
+  <!-- MODAL: SPID kept only as provider selection — opens accesso modal -->
   <!-- (legacy id kept for backward compat) -->
   <div id="modal-google-login" style="display:none;"></div>
   <div id="modal-apple-login" style="display:none;"></div>
@@ -1475,7 +1475,7 @@
     <div class="container navbar portfolio-navbar">
 
       <!-- Logo sito -->
-      <a href="#hero" class="brand-logo site-brand" onclick="if(window.switchView){window.switchView('home','#hero');} return false;" title="ELISEE SCOUT â€” Home">
+      <a href="#hero" class="brand-logo site-brand" onclick="if(window.switchView){window.switchView('home','#hero');} return false;" title="ELISEE SCOUT — Home">
         <img src="immagini/logo/logo-site.png?v=20260731_LOGO_CLEAN" alt="ELISEE SCOUT" class="site-logo-img" width="44" height="44">
         <span class="logo-text-large">ELISEE <span>SCOUT</span></span>
       </a>
@@ -1512,11 +1512,11 @@
                 <i data-lucide="check" class="nav-lang-check"></i>
               </button>
               <button type="button" class="nav-lang-item" data-lang="es" role="option">
-                <span class="nav-lang-name">EspaÃ±ol</span>
+                <span class="nav-lang-name">Español</span>
                 <i data-lucide="check" class="nav-lang-check"></i>
               </button>
               <button type="button" class="nav-lang-item" data-lang="fr" role="option">
-                <span class="nav-lang-name">FranÃ§ais</span>
+                <span class="nav-lang-name">Français</span>
                 <i data-lucide="check" class="nav-lang-check"></i>
               </button>
             </div>
@@ -1637,7 +1637,7 @@
                 ELISEE SCOUT connette calciatori, societa, scout e staff tecnico in Italia con dossier verificati, dati GPS, video highlights e compliance GDPR.
               </p>
               <div class="hero-buttons-row" style="margin-top:1.75rem;">
-                <a href="#about" class="btn btn-outline-pill" data-i18n="home.learnMore" onclick="if(window.switchView){ window.switchView('about'); } return false;">Scopri di piÃ¹</a>
+                <a href="#about" class="btn btn-outline-pill" data-i18n="home.learnMore" onclick="if(window.switchView){ window.switchView('about'); } return false;">Scopri di più</a>
                 <a href="#dashboard-skills" class="btn btn-outline-pill" data-i18n="nav.resume" onclick="if(window.switchView){ window.switchView('pillars'); } return false;">Curriculum</a>
               </div>
             </div>
@@ -1653,7 +1653,7 @@
             <p class="portfolio-kicker" data-i18n="nav.resume">Curriculum</p>
             <h2 class="portfolio-heading">1.386 Pillar / 3127 Agenti IA</h2>
             <p class="portfolio-text portfolio-text-center" data-i18n="home.resumeText">
-              Metriche atletiche, governance anti-fake, badge di verifica e roadmap di conformita pre-lancio.
+              Metriche atletiche, governance anti-fake, badge di verifica e roadmap di conformità pre-lancio.
             </p>
             <div class="portfolio-stat-row">
               <div class="portfolio-stat"><strong>1.386</strong><span data-i18n="home.statPillars">Pillar strategici</span></div>
@@ -1729,7 +1729,7 @@
           </div>
         </section>
 
-        <!-- IDs JS legacy (hidden hosts for live widgets â€” usati da Bacheca/JS) -->
+        <!-- IDs JS legacy (hidden hosts for live widgets — usati da Bacheca/JS) -->
         <div id="home-live-hosts" class="visually-hidden" aria-hidden="true">
           <input type="hidden" id="scout-search-type" value="calciatore">
           <div id="trending-search-list"></div>
@@ -1749,7 +1749,7 @@
       <div id="view-persone" style="display:none;" aria-hidden="true" hidden></div>
 
       <!-- ============================================================ -->
-      <!-- MACRO VIEW: CHI SIAMO â€” layout about portfolio (testo | foto) -->
+      <!-- MACRO VIEW: CHI SIAMO — layout about portfolio (testo | foto) -->
       <!-- ============================================================ -->
       <div id="view-about" style="display: none;">
 
@@ -1765,10 +1765,10 @@
 
               <div class="about-split-body">
                 <p data-i18n="about.bio1">
-                  ELISEE SCOUT Ã¨ la piattaforma di recruitment calcistico nata per digitalizzare il mercato dilettantistico, giovanile e svincolati in Italia.
+                  ELISEE SCOUT è la piattaforma di recruitment calcistico nata per digitalizzare il mercato dilettantistico, giovanile e svincolati in Italia.
                 </p>
                 <p data-i18n="about.bio2">
-                  Connettiamo calciatori, societÃ , scout e staff tecnico con dossier verificati, dati GPS, video highlights e compliance GDPR. La nostra forza Ã¨ la fiducia: zero fake account, opportunitÃ  reali, mai un rischio.
+                  Connettiamo calciatori, società, scout e staff tecnico con dossier verificati, dati GPS, video highlights e compliance GDPR. La nostra forza è la fiducia: zero fake account, opportunità reali, mai un rischio.
                 </p>
               </div>
             </div>
@@ -1780,7 +1780,7 @@
 
           </div>
 
-          <!-- Host nascosto per role tabs JS (compatibilitÃ  app.js) -->
+          <!-- Host nascosto per role tabs JS (compatibilità app.js) -->
           <div class="visually-hidden" aria-hidden="true">
             <button type="button" class="role-tab active" data-role="player"></button>
             <button type="button" class="role-tab" data-role="club"></button>
@@ -1794,8 +1794,8 @@
       </div>
 
       <!-- ============================================================ -->
-      <!-- MACRO VIEW: RESUME / PILLARS â€” layout CV portfolio (3 col)   -->
-      <!-- Skills | Experience timeline | What we do â€” ELISEE SCOUT     -->
+      <!-- MACRO VIEW: RESUME / PILLARS — layout CV portfolio (3 col)   -->
+      <!-- Skills | Experience timeline | What we do — ELISEE SCOUT     -->
       <!-- ============================================================ -->
       <div id="view-pillars" style="display: none;">
         <section id="dashboard-skills" class="resume-page pf-page">
@@ -1898,7 +1898,7 @@
                       <span class="resume-tl-range">Present</span>
                     </div>
                     <div class="resume-tl-body">
-                      <h4 data-i18n="resume.tl1t">ELISEE SCOUT â€” Build piattaforma live</h4>
+                      <h4 data-i18n="resume.tl1t">ELISEE SCOUT — Build piattaforma live</h4>
                       <p class="resume-tl-role" data-i18n="resume.tl1r">Prodotto  /  Governance  /  Fiducia</p>
                       <p data-i18n="resume.tl1p">1.386 pillar, pannello admin anti-fake, badge verifica, dossier atleta e bacheca reclutamento dilettanti.</p>
                     </div>
@@ -1907,12 +1907,12 @@
                   <article class="resume-tl-item">
                     <div class="resume-tl-date">
                       <span class="resume-tl-year">2025</span>
-                      <span class="resume-tl-range">Q2â€“Q4</span>
+                      <span class="resume-tl-range">Q2–Q4</span>
                     </div>
                     <div class="resume-tl-body">
                       <h4 data-i18n="resume.tl2t">Business Plan e 715 Agenti IA</h4>
                       <p class="resume-tl-role" data-i18n="resume.tl2r">Strategia  /  Agenti IA</p>
-                      <p data-i18n="resume.tl2p">Estensione pillar 351â€“1386, agenti di orchestrazione, missione voci del calcio italiano e conformita  pre-lancio.</p>
+                      <p data-i18n="resume.tl2p">Estensione pillar 351–1386, agenti di orchestrazione, missione voci del calcio italiano e conformità pre-lancio.</p>
                     </div>
                   </article>
 
@@ -1922,9 +1922,9 @@
                       <span class="resume-tl-range">Core</span>
                     </div>
                     <div class="resume-tl-body">
-                      <h4 data-i18n="resume.tl3t">Nucleo Pillar 01â€“50</h4>
+                      <h4 data-i18n="resume.tl3t">Nucleo Pillar 01–50</h4>
                       <p class="resume-tl-role" data-i18n="resume.tl3r">MVP Scouting</p>
-                      <p data-i18n="resume.tl3p">Passaporto digitale, svincoli Art. 107/108, video 30s, matchmaking clubâ€“atleta, ricerca Under fuoriquota.</p>
+                      <p data-i18n="resume.tl3p">Passaporto digitale, svincoli Art. 107/108, video 30s, matchmaking club–atleta, ricerca Under fuoriquota.</p>
                     </div>
                   </article>
 
@@ -1936,13 +1936,13 @@
                     <div class="resume-tl-body">
                       <h4 data-i18n="resume.tl4t">Concept marketplace calcio</h4>
                       <p class="resume-tl-role" data-i18n="resume.tl4r">Ricerca  /  Market fit</p>
-                      <p data-i18n="resume.tl4p">Analisi del gap dilettanti/giovanili vs professionismo: WhatsApp e Facebook come â€œmercatoâ€ da digitalizzare.</p>
+                      <p data-i18n="resume.tl4p">Analisi del gap dilettanti/giovanili vs professionismo: WhatsApp e Facebook come “mercato” da digitalizzare.</p>
                     </div>
                   </article>
 
                 </div>
 
-                <h3 class="resume-section-title" data-i18n="resume.edu">Formazione e conformita </h3>
+                <h3 class="resume-section-title" data-i18n="resume.edu">Formazione e conformità</h3>
                 <div class="resume-edu">
                   <p class="resume-edu-main">GDPR Art. 13/30  /  Tutela Minori  /  Riforma dello Sport</p>
                   <p class="resume-edu-sub" data-i18n="resume.eduSub">Roadmap fiscale, privacy, pagamenti e posizione rispetto alla normativa sugli agenti sportivi</p>
@@ -2070,7 +2070,7 @@
       </div>
 
       <!-- ============================================================ -->
-      <!-- PORTFOLIO / BACHECA â€” luxury editorial (no hub infantile)     -->
+      <!-- PORTFOLIO / BACHECA — luxury editorial (no hub infantile)     -->
       <!-- ============================================================ -->
       <div id="view-bacheca" style="display: none;">
         <section id="bacheca-annunci" class="pf-page">
@@ -2173,7 +2173,7 @@
             <div class="pf-layout">
               <div class="pf-main">
                 <div class="pf-section-label">
-                  <span>OpportunitÃ  selezionate</span>
+                  <span>Opportunità selezionate</span>
                   <span class="pf-section-line" aria-hidden="true"></span>
                 </div>
                 <div class="jobs-grid pf-jobs" id="jobs-container"></div>
@@ -2182,7 +2182,7 @@
               <aside class="pf-aside">
                 <div class="pf-aside-card">
                   <h3 class="pf-aside-title">In evidenza</h3>
-                  <p class="pf-aside-text">Profili e societÃ  con maggiore attivitÃ  sul network nelle ultime 24 ore.</p>
+                  <p class="pf-aside-text">Profili e società con maggiore attività sul network nelle ultime 24 ore.</p>
                   <div id="trending-search-list-bacheca" class="pf-aside-list"></div>
                 </div>
                 <div class="pf-aside-card">
@@ -2192,11 +2192,11 @@
                 </div>
                 <div class="pf-aside-card pf-aside-cta">
                   <h3 class="pf-aside-title">Cerca profili e squadre</h3>
-                  <p class="pf-aside-text">Calciatori, staff, scout e societÃ  nella tua zona.</p>
+                  <p class="pf-aside-text">Calciatori, staff, scout e società nella tua zona.</p>
                   <input type="hidden" id="scout-search-type-bacheca" value="calciatore">
                   <div class="pf-search-types">
                     <button type="button" class="btn btn-outline-pill pf-mini" onclick="var e=document.getElementById('scout-search-type')||document.getElementById('scout-search-type-bacheca'); if(e)e.value='calciatore'; if(window.focusBachecaNetwork){window.focusBachecaNetwork('calciatore');}else if(typeof filterPeopleCards==='function'){filterPeopleCards();}">Calciatore</button>
-                    <button type="button" class="btn btn-outline-pill pf-mini" onclick="var e=document.getElementById('scout-search-type')||document.getElementById('scout-search-type-bacheca'); if(e)e.value='squadra'; if(window.focusBachecaNetwork){window.focusBachecaNetwork('squadra');}else if(typeof filterPeopleCards==='function'){filterPeopleCards();}">SocietÃ </button>
+                    <button type="button" class="btn btn-outline-pill pf-mini" onclick="var e=document.getElementById('scout-search-type')||document.getElementById('scout-search-type-bacheca'); if(e)e.value='squadra'; if(window.focusBachecaNetwork){window.focusBachecaNetwork('squadra');}else if(typeof filterPeopleCards==='function'){filterPeopleCards();}">Società</button>
                     <button type="button" class="btn btn-outline-pill pf-mini" onclick="var e=document.getElementById('scout-search-type')||document.getElementById('scout-search-type-bacheca'); if(e)e.value='scout'; if(window.focusBachecaNetwork){window.focusBachecaNetwork('scout');}else if(typeof filterPeopleCards==='function'){filterPeopleCards();}">Scout</button>
                   </div>
                 </div>
@@ -2208,8 +2208,8 @@
               <header class="pf-header" style="margin-bottom:1.25rem;">
                 <div class="pf-header-text">
                   <p class="portfolio-kicker">Persone &amp; Squadre</p>
-                  <h2 class="pf-title" style="font-size:clamp(1.5rem,3vw,2.1rem);">Profili, professioni e societÃ </h2>
-                  <p class="pf-lead">Calciatori, staff, scout, dirigenti e squadre. Cerca, segui e apri il dossier â€” tutto in Bacheca.</p>
+                  <h2 class="pf-title" style="font-size:clamp(1.5rem,3vw,2.1rem);">Profili, professioni e società</h2>
+                  <p class="pf-lead">Calciatori, staff, scout, dirigenti e squadre. Cerca, segui e apri il dossier — tutto in Bacheca.</p>
                 </div>
               </header>
 
@@ -2240,7 +2240,7 @@
                         <div class="dropdown-option" data-value="Preparatore">Preparatore</div>
                         <div class="dropdown-option" data-value="Scout">Scout / Procuratore</div>
                         <div class="dropdown-option" data-value="Direttore">Direttore Sportivo</div>
-                        <div class="dropdown-option" data-value="Squadra">Squadra / SocietÃ </div>
+                        <div class="dropdown-option" data-value="Squadra">Squadra / Società</div>
                       </div>
                     </div>
                   </div>
@@ -2281,7 +2281,7 @@
     </div>
     <!-- /home-views-group: Home | Persone | Chi siamo | Curriculum | Bacheca -->
 
-    <!-- SQUADRE â€” selettore stile EA Sports FC (HTML statico + JS interattivo) -->
+    <!-- SQUADRE — selettore stile EA Sports FC (HTML statico + JS interattivo) -->
     <div id="view-squadre" style="display: none;">
       <section id="squadre-portal" class="pf-page">
         <div class="container pf-page-inner">
@@ -2310,7 +2310,7 @@
                        alt="Non verificato"
                        width="28"
                        height="28"
-                       title="Non verificato â€” la squadra non fa ancora parte del progetto ELISEE" />
+                       title="Non verificato — la squadra non fa ancora parte del progetto ELISEE" />
                 </div>
                 <div class="es-sq-crest-row">
                   <button type="button" class="es-sq-nav-btn" id="es-sq-prev" aria-label="Squadra precedente">
@@ -2462,7 +2462,7 @@
       </section>
     </div>
 
-    <!-- AMBASSADOR â€” luxury editorial (FUORI da home-views-group) -->
+    <!-- AMBASSADOR — luxury editorial (FUORI da home-views-group) -->
     <div id="view-ambassador" style="display: none;">
       <div id="ambassador-view-group">
         <section id="ambassador-portal" class="pf-page">
@@ -2507,7 +2507,7 @@
                   <div class="form-group addr-autocomplete" data-addr-field="amb-address">
                     <label for="amb-address">Indirizzo di residenza *</label>
                     <div class="addr-autocomplete-wrap">
-                      <input type="text" id="amb-address" class="pf-input" placeholder="Inizia a digitare via, CAP o cittÃ â€¦" autocomplete="off" autocapitalize="words" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="amb-address-list" required>
+                      <input type="text" id="amb-address" class="pf-input" placeholder="Inizia a digitare via, CAP o città…" autocomplete="off" autocapitalize="words" spellcheck="false" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="amb-address-list" required>
                       <button type="button" class="addr-geo-btn" id="amb-address-geo" title="Usa la mia posizione" aria-label="Usa la mia posizione">
                         <i data-lucide="map-pin"></i>
                       </button>
@@ -2520,7 +2520,7 @@
                     <p class="sig-hint" id="sig-hint">Disegna la firma nell'area sotto con il <strong>mouse</strong> o il <strong>dito</strong> (touch). Poi premi "Genera e firma contratto".</p>
                     <div class="canvas-wrapper pf-canvas-wrap" id="sig-pad-wrap">
                       <canvas id="sig-canvas" width="600" height="180" aria-label="Area firma elettronica"></canvas>
-                      <div class="sig-placeholder" id="sig-placeholder">âœï¸ Firma qui</div>
+                      <div class="sig-placeholder" id="sig-placeholder">✍️ Firma qui</div>
                       <button type="button" class="btn-clear-sig" id="btn-clear-sig" title="Cancella firma">
                         <i data-lucide="refresh-cw"></i> Pulisci
                       </button>
@@ -2529,15 +2529,15 @@
                     <input type="hidden" id="amb-signature-data" name="signature" value="">
                   </div>
                   <button type="submit" class="btn btn-outline-pill pf-btn-solid" style="width:100%; margin-top:0.5rem;" id="btn-amb-submit">Genera e firma contratto</button>
-                  <p class="amb-ai-note">Prima della firma del contratto, lâ€™<strong>Agente IA IdoneitÃ  Ambassador</strong> verifica se il profilo Ã¨ idoneo. In caso negativo dovrai correggere i dati e riprovare.</p>
+                  <p class="amb-ai-note">Prima della firma del contratto, l’<strong>Agente IA Idoneità Ambassador</strong> verifica se il profilo è idoneo. In caso negativo dovrai correggere i dati e riprovare.</p>
                 </form>
               </div>
 
               <div class="pf-aside-card pf-form-panel">
                 <h3 class="pf-aside-title">Anteprima contratto</h3>
-                <p class="pf-aside-text">Documento legale 6 mesi â€” sbloccato solo se lâ€™agente IA conferma lâ€™idoneitÃ .</p>
+                <p class="pf-aside-text">Documento legale 6 mesi — sbloccato solo se l’agente IA conferma l’idoneità.</p>
                 <div class="contract-scrollable-body pf-contract" id="contract-render-target">
-                  <p class="pf-aside-text" style="text-align:center; margin-top:2rem;">Completa il modulo: lâ€™agente IA valuterÃ  lâ€™idoneitÃ  prima di generare il contratto.</p>
+                  <p class="pf-aside-text" style="text-align:center; margin-top:2rem;">Completa il modulo: l’agente IA valuterà l’idoneità prima di generare il contratto.</p>
                 </div>
               </div>
             </div>
@@ -2547,7 +2547,7 @@
       </div>
     </div>
 
-    <!-- MODAL: Agente IA IdoneitÃ  Ambassador -->
+    <!-- MODAL: Agente IA Idoneità Ambassador -->
     <div id="amb-ai-modal" class="amb-ai-modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="amb-ai-title">
       <div class="amb-ai-backdrop" data-amb-ai-close></div>
       <div class="amb-ai-card">
@@ -2555,13 +2555,13 @@
           <div class="amb-ai-badge"><i data-lucide="bot"></i></div>
           <div>
             <p class="amb-ai-kicker">ELISEE SCOUT  /  Agente IA</p>
-            <h2 id="amb-ai-title">Verifica idoneitÃ  Ambassador</h2>
+            <h2 id="amb-ai-title">Verifica idoneità Ambassador</h2>
           </div>
         </div>
         <div id="amb-ai-body" class="amb-ai-body">
           <div class="amb-ai-loading" id="amb-ai-loading">
             <div class="amb-ai-spinner"></div>
-            <p id="amb-ai-loading-text">Analisi del profilo in corsoâ€¦</p>
+            <p id="amb-ai-loading-text">Analisi del profilo in corso…</p>
             <ul class="amb-ai-steps" id="amb-ai-steps"></ul>
           </div>
           <div class="amb-ai-result" id="amb-ai-result" hidden></div>
@@ -2573,7 +2573,7 @@
       </div>
     </div>
 
-    <!-- ACCOUNT â€” luxury editorial -->
+    <!-- ACCOUNT — luxury editorial -->
     <div id="view-account" style="display: none;">
       <section id="account-portal" class="pf-page">
         <div class="pf-page-bg" aria-hidden="true"></div>
@@ -2629,7 +2629,7 @@
             <div class="pf-account-icon" style="margin:0 auto 1.25rem;"><i data-lucide="lock"></i></div>
             <p class="portfolio-kicker" style="text-align:center;">Governance</p>
             <h1 class="pf-title" style="text-align:center; font-size:1.75rem;">Accesso area riservata</h1>
-            <p class="pf-lead" style="text-align:center; margin:0 auto 1.5rem;">Admin e Responsabile Privacy â€” autenticazione protetta</p>
+            <p class="pf-lead" style="text-align:center; margin:0 auto 1.5rem;">Admin e Responsabile Privacy — autenticazione protetta</p>
 
             <form id="form-admin-login" class="pf-form" action="javascript:void(0);" method="POST" onsubmit="return false;" autocomplete="on">
               <div class="form-group">
@@ -2638,12 +2638,12 @@
               </div>
               <div class="form-group">
                 <label>Password *</label>
-                <input type="password" id="admin-pass" class="pf-input" autocomplete="current-password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" value="admin123" required>
+                <input type="password" id="admin-pass" class="pf-input" autocomplete="current-password" placeholder="••••••••••••" value="admin123" required>
               </div>
               <div class="form-group" style="margin-top:0.35rem;">
                 <label style="text-transform:none; letter-spacing:0; font-size:0.82rem; color:#94a3b8; display:inline-flex; align-items:center; gap:0.5rem; cursor:pointer;">
                   <input type="checkbox" id="admin-remember" checked style="accent-color:var(--accent-primary);">
-                  Salva credenziali (logout dopo 2 mesi di inattivitÃ )
+                  Salva credenziali (logout dopo 2 mesi di inattività)
                 </label>
               </div>
               <div id="admin-login-error-container" style="display:none; margin:0.5rem 0;"></div>
@@ -2691,10 +2691,10 @@
                     <span style="font-size:0.72rem; color:#4ade80; letter-spacing:0.08em; font-weight:bold;">AUTOPILOT  /  SOLO ADMIN</span>
                   </div>
                   <h3 style="margin:0 0 0.4rem; color:#ffffff; font-size:1.35rem; font-weight:900; letter-spacing:-0.01em; display:flex; align-items:center; gap:0.6rem;">
-                    <i data-lucide="cpu" style="color:#4ade80; width:24px; height:24px;"></i> Mission Control â€” AutoPilot IA
+                    <i data-lucide="cpu" style="color:#4ade80; width:24px; height:24px;"></i> Mission Control — AutoPilot IA
                   </h3>
                   <p style="margin:0; color:#cbd5e1; font-size:0.88rem; max-width:650px; line-height:1.5;">
-                    Cabina di regia riservata allâ€™Admin: cluster, campionati, supervisori H24, GDPR, War Room, job operativi e backend 24/7. Sync automatico ogni 10s e auto-heal.
+                    Cabina di regia riservata all’Admin: cluster, campionati, supervisori H24, GDPR, War Room, job operativi e backend 24/7. Sync automatico ogni 10s e auto-heal.
                   </p>
                 </div>
                 <div>
@@ -2714,7 +2714,7 @@
                     <span style="font-size:0.72rem; color:#38bdf8; letter-spacing:0.08em; font-weight:bold;">50 AGENTI  /  100 SUPERVISORI</span>
                   </div>
                   <h3 style="margin:0 0 0.4rem; color:#ffffff; font-size:1.35rem; font-weight:900; letter-spacing:-0.01em; display:flex; align-items:center; gap:0.6rem;">
-                    <i data-lucide="shield-alert" style="color:#38bdf8; width:24px; height:24px;"></i> AI Dev Team â€” War Room
+                    <i data-lucide="shield-alert" style="color:#38bdf8; width:24px; height:24px;"></i> AI Dev Team — War Room
                   </h3>
                   <p style="margin:0; color:#cbd5e1; font-size:0.88rem; max-width:650px; line-height:1.5;">
                     Quartiere generale operativo per monitoraggio, diagnosi e riparazione autonoma del sito.
@@ -2774,7 +2774,7 @@
                 <div class="pf-pipeline-step"><strong>1. Router</strong><span>Intercettazione anomalia</span></div>
                 <div class="pf-pipeline-step"><strong>2. Diagnoser</strong><span>Causa radice</span></div>
                 <div class="pf-pipeline-step"><strong>3. Fixer</strong><span>Riparazione autonoma</span></div>
-                <div class="pf-pipeline-step"><strong>4. Verification</strong><span>Controllo integritÃ </span></div>
+                <div class="pf-pipeline-step"><strong>4. Verification</strong><span>Controllo integrità</span></div>
               </div>
               <div style="display:flex; gap:0.75rem; flex-wrap:wrap; align-items:center; margin-top:1.15rem;">
                 <button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-run-autofix-demo">
@@ -3463,10 +3463,10 @@
 
         <div style="display: flex; align-items: center; gap: 1rem;">
           <span style="font-size: 0.78rem; color: #94a3b8; background: rgba(255, 255, 255, 0.05); padding: 0.35rem 0.75rem; border-radius: 6px;">
-            ðŸ”’ Ispezione Diretta a Schermo
+            🔒 Ispezione Diretta a Schermo
           </span>
           <button type="button" class="btn btn-sm btn-secondary" onclick="closeFullscreenDocumentViewer()" style="font-weight: bold; padding: 0.55rem 1.25rem; color: #fff; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); cursor: pointer;">
-            âœ• CHIUDI SCHERMATA
+            ✕ CHIUDI SCHERMATA
           </button>
         </div>
       </div>
@@ -3500,7 +3500,7 @@
       var badgeTarget = document.getElementById('doc-viewer-badge-target');
 
       if (titleTarget) titleTarget.textContent = "ISPEZIONE DOCUMENTO: MARIO ROSSI";
-      if (badgeTarget) badgeTarget.innerHTML = "NOME FILE: <span style='font-family:monospace; color:#38bdf8;'>CI_Modulo_Rettifica_Mario_Rossi.pdf</span> | STATO AUDIT: <span style='color:#f59e0b;'>IN ATTESA RESPONSABILE PRIVACY ðŸ”’</span>";
+      if (badgeTarget) badgeTarget.innerHTML = "NOME FILE: <span style='font-family:monospace; color:#38bdf8;'>CI_Modulo_Rettifica_Mario_Rossi.pdf</span> | STATO AUDIT: <span style='color:#f59e0b;'>IN ATTESA RESPONSABILE PRIVACY 🔒</span>";
 
       if (paperTarget) {
         paperTarget.innerHTML = `
@@ -3508,7 +3508,7 @@
             
             <!-- WATERMARK SFONDO -->
             <div style="position:absolute; top:40%; left:50%; transform:translate(-50%, -50%) rotate(-30deg); font-size:4.5rem; font-weight:900; color:rgba(2, 132, 199, 0.04); pointer-events:none; white-space:nowrap; text-transform:uppercase;">
-              ELISEE SCOUT â€” AUDIT PRIVACY
+              ELISEE SCOUT — AUDIT PRIVACY
             </div>
 
             <!-- HEADER DOCUMENTO -->
@@ -3520,38 +3520,38 @@
               <div style="text-align:right;">
                 <div style="font-size:0.8rem; font-family:monospace; color:#0284c7; font-weight:bold;">PROTOCOLLO N. #2026-GDPR-1982</div>
                 <div style="font-size:0.78rem; color:#64748b; margin-top:0.2rem;">Data Invio: 29/07/2026 14:20 UTC</div>
-                <div style="font-size:0.75rem; color:#16a34a; font-weight:bold; margin-top:0.2rem;">âœ“ FIRMA DIGITALE VERIFICATA</div>
+                <div style="font-size:0.75rem; color:#16a34a; font-weight:bold; margin-top:0.2rem;">✓ FIRMA DIGITALE VERIFICATA</div>
               </div>
             </div>
 
             <!-- SEZIONE 1: ANAGRAFICA ATLETA -->
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:1.25rem 1.5rem; margin-bottom:1.75rem;">
-              <div style="font-size:0.75rem; font-weight:bold; color:#0284c7; text-transform:uppercase; margin-bottom:0.6rem; letter-spacing:0.05em;">SEZIONE 1 â€” DATI ANAGRAFICI DELL INTERESSATO</div>
+              <div style="font-size:0.75rem; font-weight:bold; color:#0284c7; text-transform:uppercase; margin-bottom:0.6rem; letter-spacing:0.05em;">SEZIONE 1 — DATI ANAGRAFICI DELL'INTERESSATO</div>
               <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; font-size:0.88rem; color:#1e293b;">
                 <div><strong>Nome e Cognome Atleta:</strong> <span style="color:#0f172a; font-weight:bold;">Mario Rossi</span></div>
                 <div><strong>Campo Oggetto della Rettifica:</strong> <span style="color:#0284c7; font-weight:bold;">Indirizzo Residenza & Email</span></div>
                 <div><strong>Codice Identificativo Profilo:</strong> <span style="font-family:monospace;">#USR-2026-891</span></div>
-                <div><strong>ModalitÃ  Trasmissione:</strong> Form Sicuro HTTPS Encrypted</div>
+                <div><strong>Modalità Trasmissione:</strong> Form Sicuro HTTPS Encrypted</div>
               </div>
             </div>
 
             <!-- SEZIONE 2: MOTIVAZIONE GDPR -->
             <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:1.25rem 1.5rem; margin-bottom:1.75rem;">
-              <div style="font-size:0.75rem; font-weight:bold; color:#0284c7; text-transform:uppercase; margin-bottom:0.6rem; letter-spacing:0.05em;">SEZIONE 2 â€” MOTIVAZIONE NORMATIVA & DICHIARAZIONE PRIVACY</div>
+              <div style="font-size:0.75rem; font-weight:bold; color:#0284c7; text-transform:uppercase; margin-bottom:0.6rem; letter-spacing:0.05em;">SEZIONE 2 — MOTIVAZIONE NORMATIVA & DICHIARAZIONE PRIVACY</div>
               <p style="font-size:0.88rem; color:#334155; margin:0; line-height:1.6;">
                 Istruttoria formale depositata dall interessato ai sensi dell Articolo 16 del Regolamento Europeo GDPR.<br>
                 <strong>Descrizione Dettagliata:</strong> <em>"Art. 16 GDPR - Rettifica dati anagrafici su richiesta diretta dell interessato."</em>
               </p>
             </div>
 
-            <!-- SEZIONE 3: ANTEPRIMA VISIVA CARTA D IDENTITÃ€ ELETTRONICA ITALIA -->
+            <!-- SEZIONE 3: ANTEPRIMA VISIVA CARTA D'IDENTITÀ ELETTRONICA ITALIA -->
             <div style="background:#f1f5f9; border:1px solid #cbd5e1; border-radius:12px; padding:1.5rem; margin-bottom:2rem;">
               <div style="font-size:0.75rem; font-weight:800; color:#0284c7; text-transform:uppercase; margin-bottom:1rem; letter-spacing:0.05em; display:flex; align-items:center; justify-content:space-between;">
-                <span>ðŸ“‹ ANTEPRIMA DOCUMENTO D IDENTITÃ€ ALLEGATO (CARTA D IDENTITÃ€ ELETTRONICA ITALIA)</span>
+                <span>📋 ANTEPRIMA DOCUMENTO D'IDENTITÀ ALLEGATO (CARTA D'IDENTITÀ ELETTRONICA ITALIA)</span>
                 <span style="background:#0284c7; color:#fff; font-size:0.7rem; padding:0.2rem 0.6rem; border-radius:4px; font-weight:bold;">ALLEGATO UFFICIALE VERIFICATO</span>
               </div>
 
-              <!-- FACSIMILE CARTA D'IDENTITÃ€ ELETTRONICA -->
+              <!-- FACSIMILE CARTA D'IDENTITÀ ELETTRONICA -->
               <div style="background:linear-gradient(135deg, #e0f2fe, #f0f9ff); border:2px solid #38bdf8; border-radius:10px; padding:1.25rem; box-shadow:0 4px 15px rgba(0,0,0,0.06); display:grid; grid-template-columns:120px 1fr; gap:1.25rem; align-items:center;">
                 
                 <!-- FOTO FORMATO TESSERA DOCUMENTO -->
@@ -3563,28 +3563,28 @@
 
                 <!-- DETTAGLI DOCUMENTO DIGITALE -->
                 <div style="font-size:0.82rem; color:#0f172a; line-height:1.5;">
-                  <div style="font-size:0.95rem; font-weight:900; color:#0284c7; margin-bottom:0.4rem; letter-spacing:0.04em;">REPUBBLICA ITALIANA â€” CARTA D IDENTITÃ€ ELETTRONICA</div>
+                  <div style="font-size:0.95rem; font-weight:900; color:#0284c7; margin-bottom:0.4rem; letter-spacing:0.04em;">REPUBBLICA ITALIANA — CARTA D'IDENTITÀ ELETTRONICA</div>
                   <div><strong>Cognome / Surname:</strong> ROSSI</div>
                   <div><strong>Nome / Name:</strong> MARIO</div>
                   <div><strong>Luogo e Data Nascita:</strong> ROMA (RM) - 14/05/2004</div>
                   <div><strong>Codice Fiscale:</strong> RSSMRA04E14H501Z</div>
                   <div><strong>Numero Documento:</strong> CA 9988210 IT</div>
-                  <div style="margin-top:0.4rem; font-size:0.75rem; color:#16a34a; font-weight:bold; font-family:monospace;">âœ“ DOCUMENTO CONVALIDATO DA SPID / CIE (ART. 16 GDPR)</div>
+                  <div style="margin-top:0.4rem; font-size:0.75rem; color:#16a34a; font-weight:bold; font-family:monospace;">✓ DOCUMENTO CONVALIDATO DA SPID / CIE (ART. 16 GDPR)</div>
                 </div>
 
               </div>
             </div>
 
-            <!-- SEZIONE 4: VERIFICA INTEGRITÃ€ & TIMBRI DI APPROVAZIONE -->
+            <!-- SEZIONE 4: VERIFICA INTEGRITÀ & TIMBRI DI APPROVAZIONE -->
             <div style="display:flex; justify-content:space-between; align-items:center; border-top:2px solid #e2e8f0; padding-top:1.5rem; margin-top:2rem;">
               <div>
-                <div style="font-size:0.72rem; color:#64748b; font-weight:bold; text-transform:uppercase;">IMPRONTA DIGITALE INTEGRITÃ€ SHA-256:</div>
-                <div style="font-size:0.75rem; font-family:monospace; color:#16a34a; font-weight:bold; margin-top:0.2rem;">âœ“ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</div>
+                <div style="font-size:0.72rem; color:#64748b; font-weight:bold; text-transform:uppercase;">IMPRONTA DIGITALE INTEGRITÀ SHA-256:</div>
+                <div style="font-size:0.75rem; font-family:monospace; color:#16a34a; font-weight:bold; margin-top:0.2rem;">✓ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</div>
                 <div style="font-size:0.72rem; color:#64748b; margin-top:0.3rem;">Visibile esclusivamente ad Admin Executive & Responsabile Privacy GDPR</div>
               </div>
 
               <div style="border:2.5px solid #ea580c; border-radius:8px; padding:0.6rem 1.25rem; color:#ea580c; font-weight:bold; font-size:0.78rem; text-align:center; transform:rotate(-2deg); background:rgba(255,255,255,0.9);">
-                RESPONSABILE PRIVACY GDPR<br>AUDIT IN CORSO ðŸ”’
+                RESPONSABILE PRIVACY GDPR<br>AUDIT IN CORSO 🔒
               </div>
             </div>
 
@@ -3634,7 +3634,7 @@
           ticketSla: '#SLA-2026-0044',
           annuncio: '#ANN-2026-1022 (Camp Promozionale Nazionale)',
           convitto: 'Grand Hotel & Campus Sportivo Roma',
-          rimborso: '1200.00 â‚¬',
+          rimborso: '1200.00 €',
           mese: 'Giugno 2026',
           polizza: 'POL-2026-9901 (Infortunio Evento Promozionale)',
           recensione: 'Contestazione referenza promotore del 02/05/2026: riscontro positivo e valutazione aggiornata a 5 stelle.',
@@ -3671,7 +3671,7 @@
           ticketSla: '#SLA-2026-3312',
           annuncio: '#ANN-2026-4401 (Ingaggio Difensore Serie D)',
           convitto: 'Convitto Atleti Civitavecchia',
-          rimborso: '300.00 â‚¬',
+          rimborso: '300.00 €',
           mese: 'Aprile 2026',
           polizza: 'POL-2026-1182 (Distorsione Caviglia)',
           recensione: 'Recensione dell\'11/03/2026 per Matteo Bianchi: valutata non idonea e rimossa da referto.',
@@ -3708,7 +3708,7 @@
           ticketSla: '#SLA-2026-7788',
           annuncio: '#ANN-2026-9011 (Provino Primavera 1)',
           convitto: 'Centro Sportivo Formello Campus',
-          rimborso: '600.00 â‚¬',
+          rimborso: '600.00 €',
           mese: 'Maggio 2026',
           polizza: 'POL-2026-5541 (Risonanza Magnetica Ginocchio)',
           recensione: 'Recensione del 20/05/2026 per Andrea Verdi: rettificata con nota informativa.',
@@ -3745,7 +3745,7 @@
           ticketSla: '#SLA-2026-1190',
           annuncio: '#ANN-2026-3390 (Portiere Titolare Eccellenza)',
           convitto: 'Residenza Atleti Rieti',
-          rimborso: '350.00 â‚¬',
+          rimborso: '350.00 €',
           mese: 'Marzo 2026',
           polizza: 'POL-2026-2290 (Lussazione Dito)',
           recensione: 'Recensione del 05/02/2026 per Luca Moretti: confermata regolare previa verifica.',
@@ -3782,7 +3782,7 @@
         ticketSla: '#SLA-2026-9921',
         annuncio: '#ANN-2026-8812 (Provino Serie D)',
         convitto: 'Residenza Sportiva Campus Lazio Nord',
-        rimborso: '450.00 â‚¬',
+        rimborso: '450.00 €',
         mese: 'Maggio 2026',
         polizza: 'POL-2026-7712 (Rimborso Spese Mediche Provino)',
         recensione: 'Recensione del 14/04/2026 oscurata temporaneamente per verifica contenuto.',
@@ -3891,7 +3891,7 @@
               <div style="width:50px; height:50px; border-radius:50%; background:linear-gradient(135deg, #0284c7, #38bdf8); display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.2rem; font-weight:bold;">MR</div>
               <div>
                 <div style="font-size:0.85rem; font-weight:bold; color:#fff;">Foto Scansionata & Convalidata</div>
-                <div style="font-size:0.75rem; color:#22c55e; font-weight:bold; margin-top:0.2rem;">âœ“ AI Anti-Fake Status: FOTO AUTENTICA AL 100%</div>
+                <div style="font-size:0.75rem; color:#22c55e; font-weight:bold; margin-top:0.2rem;">✓ AI Anti-Fake Status: FOTO AUTENTICA AL 100%</div>
               </div>
             </div>
 
@@ -3913,7 +3913,7 @@
               <input type="text" value="RSSMRC98A01F205X" maxlength="16" style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.95rem; font-family:monospace; text-transform:uppercase; padding:0.65rem; border-radius:8px; width:100%; font-weight:bold; letter-spacing:0.05em;">
             </div>
 
-            <div style="font-size:0.75rem; color:#22c55e; font-weight:bold;">âœ“ Formato valido per l'emissione delle ricevute di rimborso spese trasferta</div>
+            <div style="font-size:0.75rem; color:#22c55e; font-weight:bold;">✓ Formato valido per l'emissione delle ricevute di rimborso spese trasferta</div>
           </div>
         `;
       }
@@ -3949,7 +3949,7 @@
               <input type="email" value="marco.rossi.elisee@gmail.com" style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.9rem; padding:0.6rem; border-radius:8px; width:100%; font-weight:bold;">
             </div>
 
-            <div style="font-size:0.75rem; color:#38bdf8; font-weight:bold;">ðŸ”’ VerrÃ  inviato un codice OTP di conferma al nuovo indirizzo specificato</div>
+            <div style="font-size:0.75rem; color:#38bdf8; font-weight:bold;">🔒 Verrà inviato un codice OTP di conferma al nuovo indirizzo specificato</div>
           </div>
         `;
       }
@@ -4005,13 +4005,13 @@
         `;
       }
 
-      if (titleStr.includes('societÃ ') || titleStr.includes('club')) {
+      if (titleStr.includes('società') || titleStr.includes('club')) {
         return `
           <div style="background:rgba(2,132,199,0.08); border:1px solid rgba(56,189,248,0.3); border-radius:10px; padding:1.1rem; margin-bottom:1.25rem;">
-            <div style="font-size:0.75rem; color:#38bdf8; font-weight:bold; text-transform:uppercase; margin-bottom:0.6rem;">FORM AGGIORNAMENTO SOCIETÃ€ & CLUB APPARTENENZA</div>
+            <div style="font-size:0.75rem; color:#38bdf8; font-weight:bold; text-transform:uppercase; margin-bottom:0.6rem;">FORM AGGIORNAMENTO SOCIETÀ & CLUB APPARTENENZA</div>
             
             <div style="margin-bottom:1rem;">
-              <label style="display:block; font-size:0.8rem; font-weight:bold; color:#cbd5e1; margin-bottom:0.35rem;">Nuova SocietÃ  / Club di Gioco:</label>
+              <label style="display:block; font-size:0.8rem; font-weight:bold; color:#cbd5e1; margin-bottom:0.35rem;">Nuova Società / Club di Gioco:</label>
               <input type="text" value="S.S. Lazio Primavera" style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.9rem; padding:0.6rem; border-radius:8px; width:100%; font-weight:bold;">
             </div>
 
@@ -4098,7 +4098,7 @@
       if (titleStr.includes('raggio') || titleStr.includes('km')) {
         return `
           <div style="background:rgba(2,132,199,0.08); border:1px solid rgba(56,189,248,0.3); border-radius:10px; padding:1.1rem; margin-bottom:1.25rem;">
-            <div style="font-size:0.75rem; color:#38bdf8; font-weight:bold; text-transform:uppercase; margin-bottom:0.6rem;">FORM MODIFICA RAGGIO KM DISPONIBILITÃ€ TRASFERTE</div>
+            <div style="font-size:0.75rem; color:#38bdf8; font-weight:bold; text-transform:uppercase; margin-bottom:0.6rem;">FORM MODIFICA RAGGIO KM DISPONIBILITÀ TRASFERTE</div>
             
             <div style="margin-bottom:1rem;">
               <label style="display:block; font-size:0.8rem; font-weight:bold; color:#cbd5e1; margin-bottom:0.35rem;">Raggio Massimo di Spostamento per Allenamenti:</label>
@@ -4123,7 +4123,7 @@
               <input type="text" value="41.9028, 12.4964" style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.9rem; font-family:monospace; padding:0.6rem; border-radius:8px; width:100%; font-weight:bold;">
             </div>
 
-            <div style="font-size:0.75rem; color:#22c55e; font-weight:bold;">âœ“ Mappa calcolo navette e trasferte sincronizzata</div>
+            <div style="font-size:0.75rem; color:#22c55e; font-weight:bold;">✓ Mappa calcolo navette e trasferte sincronizzata</div>
           </div>
         `;
       }
@@ -4186,16 +4186,16 @@
             <div style="font-size:0.75rem; color:#38bdf8; font-weight:bold; text-transform:uppercase; margin-bottom:0.6rem;">MODULO DI APPROVAZIONE FINALE E BENEPLACITO RESPONSABILE PRIVACY (ART. 18.4 GDPR)</div>
             
             <div style="background:#0f172a; border:1px solid rgba(34,197,94,0.4); border-radius:8px; padding:0.85rem; margin-bottom:1rem;">
-              <div style="font-size:0.75rem; color:#22c55e; font-weight:bold; text-transform:uppercase;">âœ“ BENEPLACITO FINALE CONSOLIDATO NEL DATABASE CENTRALE</div>
+              <div style="font-size:0.75rem; color:#22c55e; font-weight:bold; text-transform:uppercase;">✓ BENEPLACITO FINALE CONSOLIDATO NEL DATABASE CENTRALE</div>
               <div style="font-size:0.85rem; color:#fff; font-weight:bold; margin-top:0.25rem;">Protocollo Responsabile Privacy #GDPR-2026-REG-99182</div>
             </div>
 
             <div style="margin-bottom:1rem;">
               <label style="display:block; font-size:0.8rem; font-weight:bold; color:#cbd5e1; margin-bottom:0.35rem;">Note Convalida Amministratore Executive:</label>
-              <input type="text" value="Rettifica verificata ed approvata in conformita  con la normativa vigente." style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.88rem; padding:0.6rem; border-radius:8px; width:100%; font-weight:bold;">
+              <input type="text" value="Rettifica verificata ed approvata in conformità con la normativa vigente." style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.88rem; padding:0.6rem; border-radius:8px; width:100%; font-weight:bold;">
             </div>
 
-            <div style="font-size:0.78rem; color:#22c55e; font-weight:bold;">âœ“ Certificato di Approvazione Digitale pronto all'emissione</div>
+            <div style="font-size:0.78rem; color:#22c55e; font-weight:bold;">✓ Certificato di Approvazione Digitale pronto all'emissione</div>
           </div>
         `;
       }
@@ -4212,7 +4212,7 @@
                 <input type="text" value="#SLA-2026-9921" style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.88rem; font-family:monospace; padding:0.6rem; border-radius:8px; width:100%; font-weight:bold;">
               </div>
               <div style="flex:1;">
-                <label style="display:block; font-size:0.8rem; font-weight:bold; color:#cbd5e1; margin-bottom:0.35rem;">PrioritÃ  Intervento:</label>
+                <label style="display:block; font-size:0.8rem; font-weight:bold; color:#cbd5e1; margin-bottom:0.35rem;">Priorità Intervento:</label>
                 <select style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.88rem; padding:0.6rem; border-radius:8px; width:100%; font-weight:bold;">
                   <option selected>Urgente (Entro 24 Ore)</option>
                   <option>Critica (Blocco Servizio Immediato)</option>
@@ -4223,7 +4223,7 @@
 
             <div style="margin-bottom:0.5rem;">
               <label style="display:block; font-size:0.8rem; font-weight:bold; color:#cbd5e1; margin-bottom:0.35rem;">Operatore Assegnato:</label>
-              <input type="text" value="Supporto Tecnico H24 â€” Team Executive" style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.88rem; padding:0.6rem; border-radius:8px; width:100%; font-weight:bold;">
+              <input type="text" value="Supporto Tecnico H24 — Team Executive" style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.88rem; padding:0.6rem; border-radius:8px; width:100%; font-weight:bold;">
             </div>
           </div>
         `;
@@ -4262,8 +4262,8 @@
             </div>
 
             <div style="margin-bottom:0.5rem;">
-              <label style="display:block; font-size:0.8rem; font-weight:bold; color:#cbd5e1; margin-bottom:0.35rem;">DifformitÃ  Segnalata:</label>
-              <input type="text" value="Stanze e menÃ¹ non conformi agli accordi stabiliti per gli atleti." style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.88rem; padding:0.6rem; border-radius:8px; width:100%; font-weight:bold;">
+              <label style="display:block; font-size:0.8rem; font-weight:bold; color:#cbd5e1; margin-bottom:0.35rem;">Difformità Segnalata:</label>
+              <input type="text" value="Stanze e menù non conformi agli accordi stabiliti per gli atleti." style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.88rem; padding:0.6rem; border-radius:8px; width:100%; font-weight:bold;">
             </div>
           </div>
         `;
@@ -4276,8 +4276,8 @@
             
             <div style="display:flex; gap:0.75rem; margin-bottom:1rem;">
               <div style="flex:1;">
-                <label style="display:block; font-size:0.8rem; font-weight:bold; color:#cbd5e1; margin-bottom:0.35rem;">Importo Contestato (â‚¬):</label>
-                <input type="text" value="450.00 â‚¬" style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.88rem; font-weight:bold; padding:0.6rem; border-radius:8px; width:100%;">
+                <label style="display:block; font-size:0.8rem; font-weight:bold; color:#cbd5e1; margin-bottom:0.35rem;">Importo Contestato (€):</label>
+                <input type="text" value="450.00 €" style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.88rem; font-weight:bold; padding:0.6rem; border-radius:8px; width:100%;">
               </div>
               <div style="flex:1;">
                 <label style="display:block; font-size:0.8rem; font-weight:bold; color:#cbd5e1; margin-bottom:0.35rem;">Mese Riferimento:</label>
@@ -4302,7 +4302,7 @@
               </select>
             </div>
 
-            <div style="font-size:0.75rem; color:#22c55e; font-weight:bold;">âœ“ Notifica automatica al Garante Minori FIGC inviata</div>
+            <div style="font-size:0.75rem; color:#22c55e; font-weight:bold;">✓ Notifica automatica al Garante Minori FIGC inviata</div>
           </div>
         `;
       }
@@ -4331,7 +4331,7 @@
             
             <div style="margin-bottom:1rem;">
               <label style="display:block; font-size:0.8rem; font-weight:bold; color:#cbd5e1; margin-bottom:0.35rem;">Intermediario / Procuratore Oggetto di Verifica:</label>
-              <input type="text" value="Agente Non Registrato â€” Verifica Registro CONI" style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.88rem; padding:0.6rem; border-radius:8px; width:100%; font-weight:bold;">
+              <input type="text" value="Agente Non Registrato — Verifica Registro CONI" style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.88rem; padding:0.6rem; border-radius:8px; width:100%; font-weight:bold;">
             </div>
           </div>
         `;
@@ -4396,7 +4396,7 @@
             
             <div style="margin-bottom:1rem;">
               <label style="display:block; font-size:0.8rem; font-weight:bold; color:#cbd5e1; margin-bottom:0.35rem;">Azione di Sblocco Nulla Osta:</label>
-              <input type="text" value="Sollecito Digitale Ufficiale inviato alla SocietÃ  di Tesseramento" style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.88rem; padding:0.6rem; border-radius:8px; width:100%; font-weight:bold;">
+              <input type="text" value="Sollecito Digitale Ufficiale inviato alla Società di Tesseramento" style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.88rem; padding:0.6rem; border-radius:8px; width:100%; font-weight:bold;">
             </div>
           </div>
         `;
@@ -4422,7 +4422,7 @@
             
             <div style="margin-bottom:1rem;">
               <label style="display:block; font-size:0.8rem; font-weight:bold; color:#cbd5e1; margin-bottom:0.35rem;">Rating Etico Confermato:</label>
-              <input type="text" value="10/10 â€” Conforme ai Principi Guida dello Sport Giovanile" style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.88rem; padding:0.6rem; border-radius:8px; width:100%; font-weight:bold;">
+              <input type="text" value="10/10 — Conforme ai Principi Guida dello Sport Giovanile" style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.88rem; padding:0.6rem; border-radius:8px; width:100%; font-weight:bold;">
             </div>
           </div>
         `;
@@ -4516,7 +4516,7 @@
           </div>
 
           <div style="margin-bottom:0.5rem;">
-            <label style="display:block; font-size:0.8rem; font-weight:bold; color:#cbd5e1; margin-bottom:0.35rem;">Motivazione Privacy & TracciabilitÃ  Ex Art. 18.4 GDPR:</label>
+            <label style="display:block; font-size:0.8rem; font-weight:bold; color:#cbd5e1; margin-bottom:0.35rem;">Motivazione Privacy & Tracciabilità Ex Art. 18.4 GDPR:</label>
             <input type="text" value="Verifica documentale effettuata con riscontro idoneo." style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.88rem; padding:0.6rem; border-radius:8px; width:100%; font-weight:bold;">
           </div>
         </div>
@@ -4569,11 +4569,11 @@
                 SELEZIONA UTENTE / ATLETA DESTINATARIO DELL'AZIONE: *
               </label>
               <select id="admin-user-select" class="form-control" onchange="onAdminUserSelectChange(this)" style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.9rem; padding:0.7rem; border-radius:8px; width:100%; font-weight:bold;">
-                <option value="1" ${initialUserId === '1' ? 'selected' : ''}>Marco Rossi â€” Attaccante Centrale (CF: RSSMRC98A01F205X)</option>
-                <option value="2" ${initialUserId === '2' ? 'selected' : ''}>Giuseppe Signori â€” Promotore Nazionale Ufficiale</option>
-                <option value="3" ${initialUserId === '3' ? 'selected' : ''}>Matteo Bianchi â€” Difensore Centrale (F.C. Civitavecchia)</option>
-                <option value="4" ${initialUserId === '4' ? 'selected' : ''}>Andrea Verdi â€” Centrocampista (S.S. Lazio Primavera 1)</option>
-                <option value="5" ${initialUserId === '5' ? 'selected' : ''}>Luca Moretti â€” Portiere (Nuova Rieti Calcio)</option>
+                <option value="1" ${initialUserId === '1' ? 'selected' : ''}>Marco Rossi — Attaccante Centrale (CF: RSSMRC98A01F205X)</option>
+                <option value="2" ${initialUserId === '2' ? 'selected' : ''}>Giuseppe Signori — Promotore Nazionale Ufficiale</option>
+                <option value="3" ${initialUserId === '3' ? 'selected' : ''}>Matteo Bianchi — Difensore Centrale (F.C. Civitavecchia)</option>
+                <option value="4" ${initialUserId === '4' ? 'selected' : ''}>Andrea Verdi — Centrocampista (S.S. Lazio Primavera 1)</option>
+                <option value="5" ${initialUserId === '5' ? 'selected' : ''}>Luca Moretti — Portiere (Nuova Rieti Calcio)</option>
               </select>
             </div>
 
@@ -4649,7 +4649,7 @@
       setTimeout(unlock, 2000);
     })();
   </script>
-  <script src="squadre-select.js?v=20260820_XI1"></script>
+  <script src="squadre-select.js?v=20260820_IT1"></script>
   <script src="formazione-squadra.js?v=20260820_XI1"></script>
   <script src="manager-runtime.js?v=20260820_XI1"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -4672,7 +4672,7 @@
         if (titleUpper.includes('SERIE D') || titleUpper.includes('SERIE D 90')) {
           return `
             <div style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); padding:1rem; border-radius:8px; margin-bottom:1.25rem; text-align:left; color:#38bdf8;">
-              <strong>DATABASE CLUSTER SERIE D â€” 9 GIRONI Ã— 10 AGENTI (90 AGENTI + 18 SUPERVISORI = 108 UNITA):</strong><br>
+              <strong>DATABASE CLUSTER SERIE D — 9 GIRONI × 10 AGENTI (90 AGENTI + 18 SUPERVISORI = 108 UNITÀ):</strong><br>
               <span style="font-size:0.8rem; color:#cbd5e1;">Copertura completa in tempo reale per i 9 gironi della Serie D Nazionale LND (Girone A, B, C, D, E, F, G, H, I).</span>
             </div>
             <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.82rem; margin-bottom:1.25rem; background:rgba(15,23,42,0.8); border-radius:8px; overflow:hidden;">
@@ -4680,21 +4680,21 @@
                 <tr style="background:rgba(56,189,248,0.15); color:#38bdf8; border-bottom:1px solid rgba(56,189,248,0.25);">
                   <th style="padding:0.65rem 0.85rem;">Girone Serie D</th>
                   <th style="padding:0.65rem 0.85rem;">Supervisori Primary & Backup</th>
-                  <th style="padding:0.65rem 0.85rem;">Agenti Ruolo (10Ã—Girone)</th>
+                  <th style="padding:0.65rem 0.85rem;">Agenti Ruolo (10×Girone)</th>
                   <th style="padding:0.65rem 0.85rem;">Snapshot Elaborati</th>
-                  <th style="padding:0.65rem 0.85rem;">IntegritÃ  Dati</th>
+                  <th style="padding:0.65rem 0.85rem;">Integrità Dati</th>
                 </tr>
               </thead>
               <tbody style="color:#e2e8f0;">
-                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:0.65rem 0.85rem; font-weight:bold;">Serie D  /  Girone A</td><td style="padding:0.65rem 0.85rem; font-family:monospace; color:#38bdf8;">SV-SERI-A-01 / SV-SERI-A-02</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">10 / 10 OK</td><td style="padding:0.65rem 0.85rem;">1.420 Snapshot</td><td style="padding:0.65rem 0.85rem; color:#22c55e; font-weight:bold;">100.0% OK âœ“</td></tr>
-                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:0.65rem 0.85rem; font-weight:bold;">Serie D  /  Girone B</td><td style="padding:0.65rem 0.85rem; font-family:monospace; color:#38bdf8;">SV-SERI-B-01 / SV-SERI-B-02</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">10 / 10 OK</td><td style="padding:0.65rem 0.85rem;">1.380 Snapshot</td><td style="padding:0.65rem 0.85rem; color:#22c55e; font-weight:bold;">100.0% OK âœ“</td></tr>
-                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:0.65rem 0.85rem; font-weight:bold;">Serie D  /  Girone C</td><td style="padding:0.65rem 0.85rem; font-family:monospace; color:#38bdf8;">SV-SERI-C-01 / SV-SERI-C-02</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">10 / 10 OK</td><td style="padding:0.65rem 0.85rem;">1.450 Snapshot</td><td style="padding:0.65rem 0.85rem; color:#22c55e; font-weight:bold;">100.0% OK âœ“</td></tr>
-                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:0.65rem 0.85rem; font-weight:bold;">Serie D  /  Girone D</td><td style="padding:0.65rem 0.85rem; font-family:monospace; color:#38bdf8;">SV-SERI-D-01 / SV-SERI-D-02</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">10 / 10 OK</td><td style="padding:0.65rem 0.85rem;">1.510 Snapshot</td><td style="padding:0.65rem 0.85rem; color:#22c55e; font-weight:bold;">100.0% OK âœ“</td></tr>
-                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:0.65rem 0.85rem; font-weight:bold;">Serie D  /  Girone E</td><td style="padding:0.65rem 0.85rem; font-family:monospace; color:#38bdf8;">SV-SERI-E-01 / SV-SERI-E-02</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">10 / 10 OK</td><td style="padding:0.65rem 0.85rem;">1.390 Snapshot</td><td style="padding:0.65rem 0.85rem; color:#22c55e; font-weight:bold;">100.0% OK âœ“</td></tr>
-                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:0.65rem 0.85rem; font-weight:bold;">Serie D  /  Girone F</td><td style="padding:0.65rem 0.85rem; font-family:monospace; color:#38bdf8;">SV-SERI-F-01 / SV-SERI-F-02</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">10 / 10 OK</td><td style="padding:0.65rem 0.85rem;">1.410 Snapshot</td><td style="padding:0.65rem 0.85rem; color:#22c55e; font-weight:bold;">100.0% OK âœ“</td></tr>
-                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:0.65rem 0.85rem; font-weight:bold;">Serie D  /  Girone G</td><td style="padding:0.65rem 0.85rem; font-family:monospace; color:#38bdf8;">SV-SERI-G-01 / SV-SERI-G-02</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">10 / 10 OK</td><td style="padding:0.65rem 0.85rem;">1.360 Snapshot</td><td style="padding:0.65rem 0.85rem; color:#22c55e; font-weight:bold;">100.0% OK âœ“</td></tr>
-                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:0.65rem 0.85rem; font-weight:bold;">Serie D  /  Girone H</td><td style="padding:0.65rem 0.85rem; font-family:monospace; color:#38bdf8;">SV-SERI-H-01 / SV-SERI-H-02</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">10 / 10 OK</td><td style="padding:0.65rem 0.85rem;">1.480 Snapshot</td><td style="padding:0.65rem 0.85rem; color:#22c55e; font-weight:bold;">100.0% OK âœ“</td></tr>
-                <tr><td style="padding:0.65rem 0.85rem; font-weight:bold;">Serie D  /  Girone I</td><td style="padding:0.65rem 0.85rem; font-family:monospace; color:#38bdf8;">SV-SERI-I-01 / SV-SERI-I-02</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">10 / 10 OK</td><td style="padding:0.65rem 0.85rem;">1.430 Snapshot</td><td style="padding:0.65rem 0.85rem; color:#22c55e; font-weight:bold;">100.0% OK âœ“</td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:0.65rem 0.85rem; font-weight:bold;">Serie D  /  Girone A</td><td style="padding:0.65rem 0.85rem; font-family:monospace; color:#38bdf8;">SV-SERI-A-01 / SV-SERI-A-02</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">10 / 10 OK</td><td style="padding:0.65rem 0.85rem;">1.420 Snapshot</td><td style="padding:0.65rem 0.85rem; color:#22c55e; font-weight:bold;">100.0% OK ✓</td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:0.65rem 0.85rem; font-weight:bold;">Serie D  /  Girone B</td><td style="padding:0.65rem 0.85rem; font-family:monospace; color:#38bdf8;">SV-SERI-B-01 / SV-SERI-B-02</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">10 / 10 OK</td><td style="padding:0.65rem 0.85rem;">1.380 Snapshot</td><td style="padding:0.65rem 0.85rem; color:#22c55e; font-weight:bold;">100.0% OK ✓</td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:0.65rem 0.85rem; font-weight:bold;">Serie D  /  Girone C</td><td style="padding:0.65rem 0.85rem; font-family:monospace; color:#38bdf8;">SV-SERI-C-01 / SV-SERI-C-02</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">10 / 10 OK</td><td style="padding:0.65rem 0.85rem;">1.450 Snapshot</td><td style="padding:0.65rem 0.85rem; color:#22c55e; font-weight:bold;">100.0% OK ✓</td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:0.65rem 0.85rem; font-weight:bold;">Serie D  /  Girone D</td><td style="padding:0.65rem 0.85rem; font-family:monospace; color:#38bdf8;">SV-SERI-D-01 / SV-SERI-D-02</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">10 / 10 OK</td><td style="padding:0.65rem 0.85rem;">1.510 Snapshot</td><td style="padding:0.65rem 0.85rem; color:#22c55e; font-weight:bold;">100.0% OK ✓</td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:0.65rem 0.85rem; font-weight:bold;">Serie D  /  Girone E</td><td style="padding:0.65rem 0.85rem; font-family:monospace; color:#38bdf8;">SV-SERI-E-01 / SV-SERI-E-02</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">10 / 10 OK</td><td style="padding:0.65rem 0.85rem;">1.390 Snapshot</td><td style="padding:0.65rem 0.85rem; color:#22c55e; font-weight:bold;">100.0% OK ✓</td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:0.65rem 0.85rem; font-weight:bold;">Serie D  /  Girone F</td><td style="padding:0.65rem 0.85rem; font-family:monospace; color:#38bdf8;">SV-SERI-F-01 / SV-SERI-F-02</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">10 / 10 OK</td><td style="padding:0.65rem 0.85rem;">1.410 Snapshot</td><td style="padding:0.65rem 0.85rem; color:#22c55e; font-weight:bold;">100.0% OK ✓</td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:0.65rem 0.85rem; font-weight:bold;">Serie D  /  Girone G</td><td style="padding:0.65rem 0.85rem; font-family:monospace; color:#38bdf8;">SV-SERI-G-01 / SV-SERI-G-02</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">10 / 10 OK</td><td style="padding:0.65rem 0.85rem;">1.360 Snapshot</td><td style="padding:0.65rem 0.85rem; color:#22c55e; font-weight:bold;">100.0% OK ✓</td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:0.65rem 0.85rem; font-weight:bold;">Serie D  /  Girone H</td><td style="padding:0.65rem 0.85rem; font-family:monospace; color:#38bdf8;">SV-SERI-H-01 / SV-SERI-H-02</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">10 / 10 OK</td><td style="padding:0.65rem 0.85rem;">1.480 Snapshot</td><td style="padding:0.65rem 0.85rem; color:#22c55e; font-weight:bold;">100.0% OK ✓</td></tr>
+                <tr><td style="padding:0.65rem 0.85rem; font-weight:bold;">Serie D  /  Girone I</td><td style="padding:0.65rem 0.85rem; font-family:monospace; color:#38bdf8;">SV-SERI-I-01 / SV-SERI-I-02</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">10 / 10 OK</td><td style="padding:0.65rem 0.85rem;">1.430 Snapshot</td><td style="padding:0.65rem 0.85rem; color:#22c55e; font-weight:bold;">100.0% OK ✓</td></tr>
               </tbody>
             </table>
           `;
@@ -4743,7 +4743,7 @@
               <td style="padding:0.65rem 0.85rem;">${roleLabel}</td>
               <td style="padding:0.65rem 0.85rem; color:#22c55e;">10/10 OK</td>
               <td style="padding:0.65rem 0.85rem;">${latMs} ms</td>
-              <td style="padding:0.65rem 0.85rem;"><span class="badge-ok" style="background:#dcfce7; color:#166534; padding:2px 6px; border-radius:4px; font-weight:bold;">ATTIVO H24 âœ“</span></td>
+              <td style="padding:0.65rem 0.85rem;"><span class="badge-ok" style="background:#dcfce7; color:#166534; padding:2px 6px; border-radius:4px; font-weight:bold;">ATTIVO H24 ✓</span></td>
             </tr>`;
           }).join('');
 
@@ -4753,7 +4753,7 @@
               <span style="font-size:0.8rem; color:#cbd5e1;">Registro completo ed ispezionabile di tutti i 402 Supervisori IA Primary (Blu) e Backup (Oro) attivi 24/7 sui 201 gironi d'Italia.</span>
             </div>
             <div style="margin-bottom:1rem;">
-              <input type="text" placeholder="ðŸ” Cerca tra tutti i 402 Supervisori (es. Serie D, Lazio, Lombardia, SV-SERI-A-01)..." onkeyup="var q=this.value.toLowerCase(); document.querySelectorAll('.sv-row-item').forEach(r => { var t = r.getAttribute('data-sv')+' '+r.getAttribute('data-camp'); r.style.display = t.includes(q) ? '' : 'none'; });" style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.82rem; padding:0.5rem 0.85rem; border-radius:6px; width:100%;">
+              <input type="text" placeholder="🔍 Cerca tra tutti i 402 Supervisori (es. Serie D, Lazio, Lombardia, SV-SERI-A-01)..." onkeyup="var q=this.value.toLowerCase(); document.querySelectorAll('.sv-row-item').forEach(r => { var t = r.getAttribute('data-sv')+' '+r.getAttribute('data-camp'); r.style.display = t.includes(q) ? '' : 'none'; });" style="background:#0f172a; border:1px solid #38bdf8; color:#fff; font-size:0.82rem; padding:0.5rem 0.85rem; border-radius:6px; width:100%;">
             </div>
             <div style="max-height:450px; overflow-y:auto; border-radius:8px; border:1px solid rgba(255,255,255,0.1);">
               <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.82rem; background:rgba(15,23,42,0.8);">
@@ -4778,7 +4778,7 @@
         // 3. DEFAULT
         return `
           <div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.25); padding:1rem; border-radius:8px; margin-bottom:1.25rem; text-align:left; color:#e2e8f0;">
-            <strong>DATABASE ACCURATO REGISTRO ESECUZIONE â€” ${optionName.toUpperCase()}:</strong><br>
+            <strong>DATABASE ACCURATO REGISTRO ESECUZIONE — ${optionName.toUpperCase()}:</strong><br>
             <span style="font-size:0.8rem; color:#cbd5e1;">Registro delle operazioni autorizzate e sottoscritte digitalmente con hash di garanzia ex Art. 30 GDPR.</span>
           </div>
           <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.82rem; margin-bottom:1.25rem; background:rgba(15,23,42,0.8); border-radius:8px; overflow:hidden;">
@@ -4792,7 +4792,7 @@
             <tbody style="color:#e2e8f0;">
               <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:0.65rem 0.85rem; font-weight:bold;">ID Pratica Operativa DB</td><td style="padding:0.65rem 0.85rem; color:#38bdf8;">REGISTRATO</td><td style="padding:0.65rem 0.85rem; font-family:monospace;">OPT-${uniqueCode}-2026</td></tr>
               <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:0.65rem 0.85rem; font-weight:bold;">Modulo Operativo "${optionName}"</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">VALIDATO OK</td><td style="padding:0.65rem 0.85rem;">Eseguito con autorizzazione Amministratore Executive</td></tr>
-              <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:0.65rem 0.85rem; font-weight:bold;">ConformitÃ  Normativa Regolamento</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">CONFORME</td><td style="padding:0.65rem 0.85rem;">Regolamento UE 2016/679 & Normativa FIGC LND</td></tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:0.65rem 0.85rem; font-weight:bold;">Conformità Normativa Regolamento</td><td style="padding:0.65rem 0.85rem; color:#22c55e;">CONFORME</td><td style="padding:0.65rem 0.85rem;">Regolamento UE 2016/679 & Normativa FIGC LND</td></tr>
               <tr><td style="padding:0.65rem 0.85rem; font-weight:bold;">Hash di Sicurezza Cifrato SHA-256</td><td style="padding:0.65rem 0.85rem; color:#38bdf8;">SIGILLATO</td><td style="padding:0.65rem 0.85rem; font-family:monospace; font-size:0.75rem;">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</td></tr>
             </tbody>
           </table>
@@ -4830,7 +4830,7 @@
   </script>
   <!-- =====================================================
        MODALI E CONTAINER DINAMICI GLOBALI
-       Richiesti da app.js â€” montati staticamente nel DOM
+       Richiesti da app.js — montati staticamente nel DOM
        ===================================================== -->
 
   <!-- Toast Notification Container -->
@@ -4876,7 +4876,7 @@
             <option value="">Seleziona...</option>
             <option value="access">Diritto di accesso ai dati (Art. 15)</option>
             <option value="erasure">Diritto alla cancellazione (Art. 17)</option>
-            <option value="portability">Diritto alla portabilitÃ  (Art. 20)</option>
+            <option value="portability">Diritto alla portabilità (Art. 20)</option>
             <option value="objection">Diritto di opposizione (Art. 21)</option>
             <option value="breach">Segnalazione violazione dati</option>
             <option value="other">Altro</option>
@@ -4926,7 +4926,7 @@
   <button id="btn-accessibility-contrast" hidden aria-label="Attiva/Disattiva contrasto elevato" title="Contrasto elevato"></button>
 
   <script>
-    /* SW DISABILITATO â€” la cache SW serviva HTML/JS vecchi (Squadre vuota, Unexpected token <) */
+    /* SW DISABILITATO — la cache SW serviva HTML/JS vecchi (Squadre vuota, Unexpected token <) */
     (function () {
       try {
         if ('serviceWorker' in navigator) {
