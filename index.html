@@ -275,12 +275,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
-  <link rel="stylesheet" href="style.css?v=20260820_SEGUO1">
+  <link rel="stylesheet" href="style.css?v=20260820_FORM1">
   <link rel="stylesheet" href="integrazioni.css?v=20260806_NOCORS">
   <link rel="preload" as="video" href="immagini/minigioco/intro.mp4?v=20260813_HQ2">
   <link rel="stylesheet" href="minigioco-carriera.css?v=20260814_TRIAL2">
   <link rel="stylesheet" href="autopilot.css?v=20260806_NOCORS">
-  <link rel="stylesheet" href="squadre-select.css?v=20260814_KITFC3">
+  <link rel="stylesheet" href="squadre-select.css?v=20260820_FORM1">
+  <link rel="stylesheet" href="formazione-squadra.css?v=20260820_FORM1">
   <link rel="stylesheet" href="manager.css?v=20260820_MGR1">
   <link rel="stylesheet" href="player-profile.css?v=20260820_SEGUO1">
   <link rel="stylesheet" href="scopri-profili.css?v=20260820_SEGUO1">
@@ -514,7 +515,7 @@
     (function () {
       var VIEW_IDS = [
         'view-home', 'view-persone', 'view-about', 'view-pillars', 'view-bacheca',
-        'view-squadre', 'view-ambassador', 'view-account', 'view-scopri', 'view-mappa', 'view-messaggi', 'view-seguo', 'admin-view-group', 'user-dossier-view-group',
+        'view-squadre', 'view-formazione', 'view-ambassador', 'view-account', 'view-scopri', 'view-mappa', 'view-messaggi', 'view-seguo', 'admin-view-group', 'user-dossier-view-group',
         'ambassador-view-group', 'home-views-group'
       ];
       var _histLock = false;
@@ -563,6 +564,7 @@
         if (view === 'messaggi') return '#messaggi-portal';
         if (view === 'mappa') return '#mappa-portal';
         if (view === 'seguo') return '#seguo-portal';
+        if (view === 'formazione') return '#formazione-portal';
         if (view === 'area-riservata') return '#area-riservata';
         return '#hero';
       }
@@ -581,6 +583,7 @@
         if (h.indexOf('messaggi') >= 0) return 'messaggi';
         if (h.indexOf('mappa') >= 0) return 'mappa';
         if (h.indexOf('seguo') >= 0) return 'seguo';
+        if (h.indexOf('formazione') >= 0) return 'formazione';
         if (h.indexOf('area-riservata') >= 0) return 'area-riservata';
         if (h.indexOf('minigioco') >= 0) return 'minigioco';
         return 'home';
@@ -725,6 +728,10 @@
             show('view-seguo');
             hash = '#seguo-portal';
             setTimeout(function () { try { if (window.EliseeChiSegui) window.EliseeChiSegui.render(); } catch (e) {} }, 40);
+          } else if (view === 'formazione') {
+            show('view-formazione');
+            hash = '#formazione-portal';
+            setTimeout(function () { try { if (window.EliseeFormazione) window.EliseeFormazione.render(); } catch (e) {} }, 40);
           } else {
             show('home-views-group'); show('view-home'); setActiveNav('home');
             view = 'home';
@@ -2411,6 +2418,39 @@
       </section>
     </div>
     <!-- /view-squadre -->
+
+    <div id="view-formazione" style="display:none;">
+      <section id="formazione-portal" class="es-xi">
+        <div class="es-xi-top">
+          <button type="button" class="es-xi-back" onclick="if(window.switchView) window.switchView('squadre','#squadre-portal');">← Squadre</button>
+          <div class="es-xi-team">
+            <img id="es-xi-logo" alt="" hidden>
+            <div>
+              <h1 id="es-xi-name">Squadra</h1>
+              <small id="es-xi-league"></small>
+            </div>
+          </div>
+          <div class="es-xi-mods">
+            <button type="button" class="es-xi-mod is-on" data-mod="4-3-3">4-3-3</button>
+            <button type="button" class="es-xi-mod" data-mod="4-2-3-1">4-2-3-1</button>
+            <button type="button" class="es-xi-mod" data-mod="4-4-2">4-4-2</button>
+            <button type="button" class="es-xi-mod" data-mod="3-5-2">3-5-2</button>
+          </div>
+        </div>
+        <div class="es-xi-pitch-wrap">
+          <div class="es-xi-pitch">
+            <div class="es-xi-lines"></div>
+            <div class="es-xi-box-t"></div>
+            <div class="es-xi-box-b"></div>
+            <div id="es-xi-slots"></div>
+          </div>
+        </div>
+        <div class="es-xi-panel" id="es-xi-info">
+          <h2>Tocca un giocatore</h2>
+          <p>Scegli un ruolo sul campo. Se sei un Giocatore puoi candidarti in quel posto.</p>
+        </div>
+      </section>
+    </div>
 
     <!-- AMBASSADOR â€” luxury editorial (FUORI da home-views-group) -->
     <div id="view-ambassador" style="display: none;">
@@ -4599,16 +4639,17 @@
       setTimeout(unlock, 2000);
     })();
   </script>
-  <script src="squadre-select.js?v=20260820_VERW1"></script>
+  <script src="squadre-select.js?v=20260820_FORM1"></script>
+  <script src="formazione-squadra.js?v=20260820_FORM1"></script>
   <script src="manager-runtime.js?v=20260820_MGR1"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260820_SEGUO1"></script>
-  <script src="player-profile.js?v=20260820_SEGUO1"></script>
-  <script src="scopri-profili.js?v=20260820_SEGUO1"></script>
-  <script src="messaggi.js?v=20260820_SEGUO1"></script>
-  <script src="mappa-club.js?v=20260820_SEGUO1"></script>
-  <script src="chi-segui.js?v=20260820_SEGUO1"></script>
+  <script src="app.js?v=20260820_FORM1"></script>
+  <script src="player-profile.js?v=20260820_FORM1"></script>
+  <script src="scopri-profili.js?v=20260820_FORM1"></script>
+  <script src="messaggi.js?v=20260820_FORM1"></script>
+  <script src="mappa-club.js?v=20260820_FORM1"></script>
+  <script src="chi-segui.js?v=20260820_FORM1"></script>
   <script>
     /* FORCED INLINE HOT-PATCH: Overrides PDF export, specific report HTML & modal close functions instantly at runtime */
     (function() {

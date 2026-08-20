@@ -1,0 +1,209 @@
+/* Formazione stile videogioco (EA FC) */
+#view-formazione {
+  background: #070b14;
+  min-height: 100vh;
+  color: #e8eef6;
+}
+.es-xi {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 6.6rem 1rem 2.5rem;
+}
+.es-xi-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.es-xi-team {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.es-xi-team img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+.es-xi-team h1 {
+  margin: 0;
+  font-size: 1.35rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.es-xi-team small {
+  display: block;
+  color: #8aa0b8;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.es-xi-back, .es-xi-mod {
+  border: 1.5px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.04);
+  color: #fff;
+  border-radius: 999px;
+  padding: 0.5rem 0.95rem;
+  cursor: pointer;
+  font-weight: 700;
+}
+.es-xi-mods { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.es-xi-mod.is-on {
+  background: #c9a227;
+  border-color: #c9a227;
+  color: #1a1408;
+}
+.es-xi-pitch-wrap {
+  position: relative;
+  margin: 0 auto 1.1rem;
+  max-width: 560px;
+}
+.es-xi-pitch {
+  position: relative;
+  width: 100%;
+  padding-top: 148%;
+  border-radius: 18px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.28)),
+    repeating-linear-gradient(
+      180deg,
+      #1f7a3a 0 28px,
+      #1a6b33 28px 56px
+    );
+  box-shadow: inset 0 0 0 3px rgba(255,255,255,0.22), 0 16px 40px rgba(0,0,0,0.4);
+}
+.es-xi-lines {
+  position: absolute;
+  inset: 4.5%;
+  border: 2px solid rgba(255,255,255,0.45);
+  pointer-events: none;
+}
+.es-xi-lines::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 50%;
+  height: 2px;
+  background: rgba(255,255,255,0.4);
+}
+.es-xi-lines::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 26%;
+  padding-top: 26%;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.es-xi-box-t, .es-xi-box-b {
+  position: absolute;
+  left: 22%;
+  width: 56%;
+  height: 16%;
+  border: 2px solid rgba(255,255,255,0.35);
+  pointer-events: none;
+}
+.es-xi-box-t { top: 0; border-top: 0; }
+.es-xi-box-b { bottom: 0; border-bottom: 0; }
+.es-xi-slot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 76px;
+  text-align: center;
+  cursor: pointer;
+  z-index: 2;
+}
+.es-xi-card {
+  width: 76px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #1c2a44, #0e1626);
+  border: 1.5px solid rgba(255,255,255,0.16);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.35);
+  overflow: hidden;
+  transition: transform 0.15s, border-color 0.15s;
+}
+.es-xi-slot:hover .es-xi-card,
+.es-xi-slot.is-on .es-xi-card {
+  transform: translateY(-4px);
+  border-color: #c9a227;
+}
+.es-xi-slot.is-mine .es-xi-card {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 2px rgba(56,189,248,0.35);
+}
+.es-xi-ovr {
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: #fff;
+  padding: 0.2rem 0 0;
+  line-height: 1;
+}
+.es-xi-pos {
+  font-size: 0.62rem;
+  font-weight: 800;
+  color: #7dd3fc;
+  letter-spacing: 0.06em;
+}
+.es-xi-ava {
+  width: 42px;
+  height: 42px;
+  margin: 0.15rem auto 0.1rem;
+  border-radius: 50%;
+  background: #24344f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.78rem;
+}
+.es-xi-nm {
+  font-size: 0.62rem;
+  font-weight: 800;
+  color: #e2e8f0;
+  padding: 0 0.2rem 0.28rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.es-xi-empty .es-xi-card {
+  background: rgba(8, 20, 12, 0.45);
+  border-style: dashed;
+}
+.es-xi-panel {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 0.9rem 1rem;
+}
+.es-xi-panel h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+}
+.es-xi-panel p { margin: 0 0 0.75rem; color: #94a3b8; font-size: 0.88rem; }
+.es-xi-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.es-xi-actions button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.55rem 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+.es-xi-go { background: #c9a227; color: #1a1408; }
+.es-xi-msg { background: #0d4f73; color: #fff; }
+.es-xi-fol { background: rgba(255,255,255,0.1); color: #fff; }
+.es-xi-bench {
+  display: flex;
+  gap: 0.45rem;
+  overflow-x: auto;
+  margin: 0.85rem 0 1rem;
+  padding-bottom: 0.2rem;
+}
+.es-xi-bench .es-xi-slot { position: relative; transform: none; width: 70px; flex: 0 0 auto; }
+@media (max-width: 640px) {
+  .es-xi-slot { width: 62px; }
+  .es-xi-card { width: 62px; }
+  .es-xi-ava { width: 34px; height: 34px; }
+}

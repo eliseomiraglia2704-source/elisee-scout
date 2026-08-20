@@ -6523,7 +6523,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function hideAllPortals() {
     const ids = [
       'view-home', 'view-persone', 'view-about', 'view-pillars', 'view-bacheca',
-      'view-squadre', 'view-ambassador', 'view-account', 'view-scopri', 'view-mappa', 'view-messaggi', 'view-seguo',
+      'view-squadre', 'view-formazione', 'view-ambassador', 'view-account', 'view-scopri', 'view-mappa', 'view-messaggi', 'view-seguo',
       'admin-view-group', 'user-dossier-view-group', 'ambassador-view-group',
       'home-views-group'
     ];
@@ -6667,6 +6667,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const link = document.querySelector('.nav-link[data-view="pillars"]');
         if (link) link.classList.add('active');
         if (!targetHash) setHashSafe('#dashboard-skills', opts);
+      } else if (viewType === 'formazione' || targetHash === '#formazione-portal') {
+        showEl('view-formazione');
+        if (!targetHash) setHashSafe('#formazione-portal', opts);
+        setTimeout(function () { try { if (window.EliseeFormazione) window.EliseeFormazione.render(); } catch (e) {} }, 40);
       } else if (viewType === 'squadre' || targetHash === '#squadre-portal') {
         showEl('view-squadre');
         const link = document.querySelector('.nav-link[data-view="bacheca"]');
@@ -7317,6 +7321,8 @@ document.addEventListener('DOMContentLoaded', () => {
       switchView('scopri', '#scopri-portal', noHist);
     } else if (hash === '#persone-portal' || hash === '#bacheca-network') {
       switchView('bacheca', '#bacheca-network', noHist);
+    } else if (hash === '#formazione-portal') {
+      switchView('formazione', '#formazione-portal', noHist);
     } else if (hash === '#squadre-portal') {
       switchView('squadre', '#squadre-portal', noHist);
     } else if (hash === '#ambassador-portal') {
