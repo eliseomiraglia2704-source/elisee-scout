@@ -191,8 +191,10 @@
     if (od) od.hidden = true;
     var tmd = document.getElementById('es-tmd');
     if (tmd) tmd.hidden = true;
+    var gk = document.getElementById('es-gk');
+    if (gk) gk.hidden = true;
     var g = document.getElementById('user-dossier-view-group');
-    if (g) { g.classList.remove('is-coach-dash'); g.classList.remove('is-ma-dash'); g.classList.remove('is-med-dash'); g.classList.remove('is-obs-dash'); g.classList.remove('is-tm-dash'); }
+    if (g) { g.classList.remove('is-coach-dash'); g.classList.remove('is-ma-dash'); g.classList.remove('is-med-dash'); g.classList.remove('is-obs-dash'); g.classList.remove('is-tm-dash'); g.classList.remove('is-gk-dash'); }
   }
 
   function bind(host) {
@@ -232,10 +234,10 @@
     box.innerHTML = html(user);
     box.hidden = false;
     host.classList.add('es-ds-on');
-    host.classList.remove('es-pd-on', 'es-ma-on', 'es-med-on', 'es-obs-on', 'es-tm-on');
+    host.classList.remove('es-pd-on', 'es-ma-on', 'es-med-on', 'es-obs-on', 'es-tm-on', 'es-gk-on');
     if (group) {
       group.classList.add('is-ds-dash');
-      group.classList.remove('is-coach-dash', 'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash');
+      group.classList.remove('is-coach-dash', 'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash');
     }
     bind(host);
   }

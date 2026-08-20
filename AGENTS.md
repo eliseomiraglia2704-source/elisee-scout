@@ -47,6 +47,7 @@ Se il push dà 403 (account Git `sfondiitaliani23-svg`), pubblica comunque su Ve
 - Area Direttore Sportivo: dashboard DS (`ds-dash.js`) se il ruolo staff è Direttore sportivo. Rail: Secret List.
 - Area Osservatore: dashboard scouting (`obs-dash.js`) se il ruolo è Scout / Osservatore. Distinta dal DS. Rail: Secret List.
 - Area Team Manager: dashboard organizzativa (`tm-dash.js`) se il ruolo è Team manager.
+- Area Preparatore Portieri: dashboard tecnica (`gk-dash.js`) se il ruolo è Preparatore dei portieri. Distinta da Allenatore e Preparatore atletico.
 - Area Presidente: dashboard Presidenza (`pres-dash.js`) se il ruolo staff è Presidente.
 
 ## Skill

@@ -110,12 +110,12 @@
     return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">' + d + '</svg>';
   }
   function hideOthers() {
-    ['es-cd', 'es-dsd', 'es-prd', 'es-vd', 'es-fd', 'es-md', 'es-od', 'es-tmd'].forEach(function (id) {
+    ['es-cd', 'es-dsd', 'es-prd', 'es-vd', 'es-fd', 'es-md', 'es-od', 'es-tmd', 'es-gk'].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.hidden = true;
     });
     var g = document.getElementById('user-dossier-view-group');
-    if (g) g.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-fisio-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash');
+    if (g) g.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-fisio-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash');
   }
 
   function html(user) {
@@ -225,10 +225,10 @@
     box.innerHTML = html(user);
     box.hidden = false;
     host.classList.add('es-ma-on');
-    host.classList.remove('es-pd-on', 'es-ds-on', 'es-pres-on', 'es-vice-on', 'es-fisio-on', 'es-med-on', 'es-obs-on', 'es-tm-on');
+    host.classList.remove('es-pd-on', 'es-ds-on', 'es-pres-on', 'es-vice-on', 'es-fisio-on', 'es-med-on', 'es-obs-on', 'es-tm-on', 'es-gk-on');
     if (group) {
       group.classList.add('is-ma-dash');
-      group.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-fisio-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash');
+      group.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-fisio-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash');
     }
     bind(host);
   }
