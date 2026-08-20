@@ -46,6 +46,7 @@ Se il push dà 403 (account Git `sfondiitaliani23-svg`), pubblica comunque su Ve
 - Area Tifoso: dashboard passione/presenze (`tifoso-dash.js`) se il ruolo sito è Tifoso. Distinta da Giocatore e Staff.
 - Area Direttore Sportivo: dashboard DS (`ds-dash.js`) se il ruolo staff è Direttore sportivo. Rail: Secret List.
 - Area Osservatore: dashboard scouting (`obs-dash.js`) se il ruolo è Scout / Osservatore. Distinta dal DS. Rail: Secret List.
+- Area Team Manager: dashboard organizzativa (`tm-dash.js`) se il ruolo è Team manager.
 - Area Presidente: dashboard Presidenza (`pres-dash.js`) se il ruolo staff è Presidente.
 
 ## Skill
