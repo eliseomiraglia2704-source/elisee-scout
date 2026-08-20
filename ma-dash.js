@@ -1,11 +1,11 @@
-/* Dashboard Vice Allenatore — Allenatore in seconda */
+/* Dashboard Match Analyst */
 (function () {
   var AXES = [
-    'Preparazione Allenamenti', 'Analisi Video', 'Supporto in Panchina', 'Comunicazione con Staff',
-    'Gestione Sostituzioni', 'Sviluppo Giovani', 'Coordinamento Preparatori', 'Efficacia Correttivi'
+    'Analisi Pre-Partita', 'Analisi Video', 'Report Statistici', 'Scouting Avversari',
+    'Pattern Tattici', 'Supporto Staff Tecnico', 'Precisione Dati', 'Tempestività Consegna'
   ];
   var V2025 = [88, 92, 90, 94, 85, 93, 87, 91];
-  var V2023 = [74, 78, 76, 80, 70, 82, 73, 77];
+  var V2023 = [74, 78, 76, 80, 70, 81, 73, 77];
 
   function esc(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -13,18 +13,18 @@
   function userObj() {
     try { return JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {}; } catch (_) { return {}; }
   }
-  function isVice(u) {
+  function isMa(u) {
     u = u || userObj();
     var blob = [u.staffRole, u.ruoloDettagliato, u.ruolo, u.role, u.staffProfile && u.staffProfile.fieldRole]
       .filter(Boolean).join(' ').toLowerCase();
-    return /allenatore in seconda|vice allenatore/.test(blob);
+    return /match analyst|video analyst/.test(blob);
   }
-  function viceName(u) {
-    return [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Vice Allenatore';
+  function maName(u) {
+    return [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Match Analyst';
   }
   function initials(name) {
-    var p = String(name || 'VA').trim().split(/\s+/);
-    return ((p[0] || 'V').charAt(0) + (p[1] || p[0] || 'A').charAt(0)).toUpperCase();
+    var p = String(name || 'MA').trim().split(/\s+/);
+    return ((p[0] || 'M').charAt(0) + (p[1] || p[0] || 'A').charAt(0)).toUpperCase();
   }
   function photoOf(u) {
     try {
@@ -54,7 +54,7 @@
   }
   function radarSvg() {
     var cx = 220, cy = 210, r = 150, n = AXES.length;
-    var html = '<svg viewBox="0 0 440 430" role="img" aria-label="Analisi contributo tecnico">';
+    var html = '<svg viewBox="0 0 440 430" role="img" aria-label="Analisi attività di match analysis">';
     html += wedge(cx, cy, r, -Math.PI / 2, 0, 'rgba(74,222,128,0.16)');
     html += wedge(cx, cy, r, 0, Math.PI / 2, 'rgba(248,113,113,0.18)');
     html += wedge(cx, cy, r, Math.PI / 2, Math.PI, 'rgba(250,204,21,0.16)');
@@ -89,9 +89,9 @@
   }
   function trendSvg() {
     var series = {
-      '2023': [62, 68, 70, 74, 76, 80],
-      '2024': [72, 75, 80, 84, 86, 88],
-      '2025': [80, 84, 87, 90, 92, 95]
+      '2023': [60, 66, 70, 72, 76, 80],
+      '2024': [72, 76, 80, 84, 87, 90],
+      '2025': [80, 84, 88, 91, 94, 97]
     };
     var cols = { '2023': '#38bdf8', '2024': '#4ade80', '2025': '#facc15' };
     var w = 240, h = 90;
@@ -110,137 +110,137 @@
     return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">' + d + '</svg>';
   }
   function hideOthers() {
-    ['es-cd', 'es-dsd', 'es-prd', 'es-mad'].forEach(function (id) {
+    ['es-cd', 'es-dsd', 'es-prd', 'es-vd', 'es-fd'].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.hidden = true;
     });
     var g = document.getElementById('user-dossier-view-group');
-    if (g) g.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-ma-dash');
+    if (g) g.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-fisio-dash');
   }
 
   function html(user) {
-    var name = viceName(user);
+    var name = maName(user);
     var ph = photoOf(user);
     var ava = ph
       ? '<img src="' + esc(ph) + '" alt="">'
       : '<div class="es-pd-ph">' + esc(initials(name)) + '</div>';
     return '<aside class="es-pd-rail">' +
-      '<button type="button" data-va="home" title="Home">' + ico('<path d="M4 10.5 12 4l8 6.5V20H4z"/>') + '</button>' +
-      '<button type="button" class="is-on" data-va="dash" title="Dashboard">' + ico('<circle cx="12" cy="8" r="3"/><path d="M5 20c1.5-4 4-6 7-6s5.5 2 7 6"/>') + '</button>' +
-      '<button type="button" data-va="album" title="Album">' + ico('<rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 15l4-3 3 2 5-5 4 4"/>') + '</button>' +
-      '<button type="button" data-va="msgs" title="Messaggi">' + ico('<path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/>') + '</button>' +
-      '<button type="button" class="es-pd-rail-end" data-va="edit" title="Anagrafica">' + ico('<circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>') + '</button>' +
+      '<button type="button" data-ma="home" title="Home">' + ico('<path d="M4 10.5 12 4l8 6.5V20H4z"/>') + '</button>' +
+      '<button type="button" class="is-on" data-ma="dash" title="Dashboard">' + ico('<circle cx="12" cy="8" r="3"/><path d="M5 20c1.5-4 4-6 7-6s5.5 2 7 6"/>') + '</button>' +
+      '<button type="button" data-ma="album" title="Album">' + ico('<rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 15l4-3 3 2 5-5 4 4"/>') + '</button>' +
+      '<button type="button" data-ma="msgs" title="Messaggi">' + ico('<path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/>') + '</button>' +
+      '<button type="button" class="es-pd-rail-end" data-ma="edit" title="Anagrafica">' + ico('<circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>') + '</button>' +
       '</aside><div class="es-pd-body">' +
-      '<div class="es-pd-head"><h1>Elisee Scout — Dashboard Vice Allenatore</h1>' +
-      '<strong>Vice allenatore: ' + esc(name.toUpperCase()) + '</strong></div>' +
+      '<div class="es-pd-head"><h1>Elisee Scout — Dashboard Match Analyst</h1>' +
+      '<strong>Match analyst: ' + esc(name.toUpperCase()) + '</strong></div>' +
       '<div class="es-pd-grid">' +
 
-      '<section class="es-pd-card es-pd-indice"><h2>Profilo Vice Allenatore</h2>' +
+      '<section class="es-pd-card es-pd-indice"><h2>Profilo Match Analyst</h2>' +
       '<div class="es-pd-who">' + ava + '<div><b style="color:#fff">' + esc(name) + '</b>' +
-      '<div style="font-size:0.72rem;color:#94a3b8">Allenatore in seconda</div></div></div>' +
-      '<div class="es-pd-metric"><span>Supporto tattico</span><b>90%</b></div>' +
-      '<div class="es-pd-metric"><span>Gestione allenamenti</span><b>94%</b></div>' +
-      '<div class="es-pd-metric"><span>Analisi avversari</span><b>96%</b></div>' +
-      '<div class="es-pd-metric"><span>Rapporto con lo staff</span><b>85%</b></div>' +
-      '<div class="es-pd-metric"><span>Affiancamento giocatori</span><b>78%</b></div></section>' +
+      '<div style="font-size:0.72rem;color:#94a3b8">Staff tecnico</div></div></div>' +
+      '<div class="es-pd-metric"><span>Analisi dati</span><b>88%</b></div>' +
+      '<div class="es-pd-metric"><span>Scouting avversari</span><b>95%</b></div>' +
+      '<div class="es-pd-metric"><span>Competenza software</span><b>95%</b></div>' +
+      '<div class="es-pd-metric"><span>Comunicazione report</span><b>90%</b></div>' +
+      '<div class="es-pd-metric"><span>Precisione statistica</span><b>75%</b></div></section>' +
 
       '<section class="es-pd-card es-pd-radar">' +
-      '<div class="es-pd-radar-tools"><span>Seleziona dati radar</span><span>Analisi contributo tecnico</span></div>' +
+      '<div class="es-pd-radar-tools"><span>Seleziona dati radar</span><span>Analisi attività di match analysis</span></div>' +
       radarSvg() + '</section>' +
 
       '<section class="es-pd-card es-pd-comply"><h2>Verifica &amp; Compliance staff tecnico</h2>' +
-      '<div class="es-pd-ok"><span>Patentino UEFA Pro</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Corso primo soccorso</span><b>100%</b></div>' +
+      '<div class="es-pd-ok"><span>Corso UEFA Match Analysis</span><b>100%</b></div>' +
+      '<div class="es-pd-ok"><span>Certificazione Wyscout</span><b>100%</b></div>' +
+      '<div class="es-pd-ok"><span>Certificazione InStat</span><b>100%</b></div>' +
       '<div class="es-pd-ok"><span>Tutela minori (ID)</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Aggiornamento formativo</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Profilo staff validato</span><b>100%</b></div></section>' +
+      '<div class="es-pd-ok"><span>Aggiornamento formativo</span><b>100%</b></div></section>' +
 
-      '<section class="es-pd-card es-pd-storico"><h2>Andamento collaborazione tecnica</h2>' +
+      '<section class="es-pd-card es-pd-storico"><h2>Andamento analisi</h2>' +
       '<div class="es-pd-sparks">' +
-      '<figure>' + spark([42, 50, 55, 60, 70, 78, 86], '#38bdf8') + '<figcaption>Sessioni</figcaption></figure>' +
-      '<figure>' + spark([30, 38, 46, 52, 62, 74, 84], '#4ade80') + '<figcaption>Correzioni tattiche</figcaption></figure>' +
-      '<figure>' + spark([40, 48, 52, 58, 66, 75, 85], '#facc15') + '<figcaption>Feedback squadra</figcaption></figure>' +
-      '<figure>' + spark([50, 54, 58, 64, 70, 80, 88], '#22d3ee') + '<figcaption>Stagione</figcaption></figure>' +
+      '<figure>' + spark([32, 40, 48, 55, 64, 74, 86], '#38bdf8') + '<figcaption>Report prodotti</figcaption></figure>' +
+      '<figure>' + spark([28, 36, 44, 52, 60, 72, 84], '#4ade80') + '<figcaption>Partite analizzate</figcaption></figure>' +
+      '<figure>' + spark([50, 54, 58, 62, 70, 78, 88], '#facc15') + '<figcaption>Accuratezza previsioni</figcaption></figure>' +
+      '<figure>' + spark([42, 50, 56, 60, 68, 76, 85], '#22d3ee') + '<figcaption>Stagione</figcaption></figure>' +
       '</div></section>' +
 
-      '<section class="es-pd-card es-pd-mercato"><h2>Indice di efficacia tecnica</h2>' +
-      '<p class="es-vice-grade">8,5/10 <small>+5,5%</small></p>' +
-      '<div class="es-pd-mrow"><span>Valutazione staff</span><b>Ottima</b></div>' +
-      '<div class="es-pd-mrow"><span>Trend fiducia allenatore capo</span><b>Crescente</b></div>' +
-      '<div class="es-pd-mrow"><span>Richieste di conferma ruolo</span><b>Attive</b></div>' +
+      '<section class="es-pd-card es-pd-mercato"><h2>Indice di efficacia analitica</h2>' +
+      '<p class="es-ma-grade">8,5/10 <small>+5,5%</small></p>' +
+      '<div class="es-pd-mrow"><span>Valutazione staff tecnico</span><b>Ottima</b></div>' +
+      '<div class="es-pd-mrow"><span>Trend utilizzo report</span><b>Crescente</b></div>' +
+      '<div class="es-pd-mrow"><span>Richieste di consulenza</span><b>Attive</b></div>' +
       '<div class="es-pd-mrow"><span>Scadenza mandato</span><b>30/06/2028</b></div>' +
       '<div class="es-pd-mrow"><span>Trattative aperte</span><b>Nessuna</b></div></section>' +
 
-      '<section class="es-pd-card es-pd-registro"><h2>Registro sessioni</h2>' +
-      '<table class="es-pd-table"><thead><tr><th>Partita</th><th>Tipo</th><th>Focus</th><th></th></tr></thead><tbody>' +
-      '<tr><td>vs. Notaresco</td><td>Tattica</td><td>Posizionamento</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Vastese</td><td>Video</td><td>Diffensive</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Chieti</td><td>Tattica</td><td>Rimesse</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Termoli</td><td>Tattica</td><td>Possesso</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Campobasso</td><td>Tattica</td><td>Diffensivo</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Castelfidardo</td><td>Panchina</td><td>Sostituzioni</td><td><i class="es-pd-dot y"></i></td></tr>' +
+      '<section class="es-pd-card es-pd-registro"><h2>Registro analisi partite</h2>' +
+      '<table class="es-pd-table"><thead><tr><th>Partita</th><th>Focus</th><th>Esito</th><th></th></tr></thead><tbody>' +
+      '<tr><td>vs. Notaresco</td><td>Tattica</td><td>Report consegnato</td><td><i class="es-pd-dot g"></i></td></tr>' +
+      '<tr><td>vs. Vastese</td><td>Tattica</td><td>Report consegnato</td><td><i class="es-pd-dot g"></i></td></tr>' +
+      '<tr><td>vs. Chieti</td><td>Tattica</td><td>Report consegnato</td><td><i class="es-pd-dot g"></i></td></tr>' +
+      '<tr><td>vs. Termoli</td><td>Tattica</td><td>Report consegnato</td><td><i class="es-pd-dot g"></i></td></tr>' +
+      '<tr><td>vs. Campobasso</td><td>Tattica</td><td>Report consegnato</td><td><i class="es-pd-dot g"></i></td></tr>' +
+      '<tr><td>vs. Castelfidardo</td><td>Tattica</td><td>In lavorazione</td><td><i class="es-pd-dot y"></i></td></tr>' +
       '</tbody></table></section>' +
 
       '<section class="es-pd-card es-pd-trend"><h2>2023 vs 2024 vs 2025</h2>' +
       trendSvg() +
-      '<button type="button" class="es-pd-edit" data-va="edit">Modifica anagrafica</button>' +
+      '<button type="button" class="es-pd-edit" data-ma="edit">Modifica anagrafica</button>' +
       '</section>' +
       '</div></div>';
   }
 
   function bind(host) {
-    if (!host || host.dataset.vaBound === '1') return;
-    host.dataset.vaBound = '1';
+    if (!host || host.dataset.maBound === '1') return;
+    host.dataset.maBound = '1';
     host.addEventListener('click', function (e) {
-      var b = e.target.closest('[data-va]');
+      var b = e.target.closest('[data-ma]');
       if (!b) return;
-      var k = b.getAttribute('data-va');
+      var k = b.getAttribute('data-ma');
       if (k === 'home' && window.switchView) window.switchView('home', '#hero');
       if (k === 'album' && window.openChiSegui) window.openChiSegui();
       if (k === 'msgs' && window.openUserMessages) window.openUserMessages();
       if (k === 'edit') {
-        host.classList.remove('es-vice-on');
-        var dash = document.getElementById('es-vd');
+        host.classList.remove('es-ma-on');
+        var dash = document.getElementById('es-mad');
         if (dash) dash.hidden = true;
         var g = document.getElementById('user-dossier-view-group');
-        if (g) g.classList.remove('is-vice-dash');
+        if (g) g.classList.remove('is-ma-dash');
       }
     });
   }
 
   function render(user) {
     user = user || userObj();
-    if (!isVice(user)) return;
+    if (!isMa(user)) return;
     hideOthers();
     var host = document.getElementById('es-staff-profile');
     var group = document.getElementById('user-dossier-view-group');
     if (!host) return;
-    var box = document.getElementById('es-vd');
+    var box = document.getElementById('es-mad');
     if (!box) {
       box = document.createElement('div');
-      box.id = 'es-vd';
+      box.id = 'es-mad';
       box.className = 'es-pd';
       host.insertBefore(box, host.firstChild);
     }
     box.innerHTML = html(user);
     box.hidden = false;
-    host.classList.add('es-vice-on');
-    host.classList.remove('es-pd-on', 'es-ds-on', 'es-pres-on', 'es-ma-on');
+    host.classList.add('es-ma-on');
+    host.classList.remove('es-pd-on', 'es-ds-on', 'es-pres-on', 'es-vice-on', 'es-fisio-on');
     if (group) {
-      group.classList.add('is-vice-dash');
-      group.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-ma-dash');
+      group.classList.add('is-ma-dash');
+      group.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-fisio-dash');
     }
     bind(host);
   }
 
-  window.EliseeViceDash = { render: render, isVice: isVice };
+  window.EliseeMaDash = { render: render, isMa: isMa };
 
   document.addEventListener('elisee:view-changed', function (e) {
     var d = e && e.detail;
     if (d && d.view === 'user-dossier') {
       try {
         var u = userObj();
-        if (isVice(u)) render(u);
+        if (isMa(u)) render(u);
       } catch (_) {}
     }
   });

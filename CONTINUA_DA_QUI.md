@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-20**
-Ultimo fatto: Area Fisioterapista = dashboard sanitaria (trattamenti, recuperi, prevenzione infortuni).
+Ultimo fatto: Area Match Analyst = dashboard report, video, scouting avversari.
 Feature precedente: Hub Mercato B2B (`cb9d60d`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -60,7 +60,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Schede tecniche IA nella candidatura pubblicata |
+| (questo) | Dashboard Match Analyst: report, video, scouting avversari |
+| `c0b1ad6` | Dashboard Fisioterapista |
 | `cb9d60d` | Hub Mercato: Secret List nel profilo DS/Scout + Wall FIFA |
 | `a69b460` | Hub Mercato: Secret List stealth + Wall FIFA |
 | `e1435e4` | Privacy v1.3: Titolare + geo / moderazione / Scheda Tecnica IA |
@@ -120,6 +121,7 @@ Nota Vercel: lo store manager è su `/tmp` (effimero). In locale `state.json` è
 | Pagina unica | `index.html` |
 | Router viste / hash | `app.js` (`switchView`) |
 | Profilo Player/Staff, tab utente | `player-profile.js` / `.css` |
+| Dashboard Match Analyst | `ma-dash.js` / `.css` — report, video, scouting |
 | Scopri / follow | `scopri-profili.js` / `.css` |
 | Messaggi | `messaggi.js` / `.css` |
 | Mappa | `mappa-club.js` / `.css` |
@@ -143,6 +145,8 @@ Copia utente Grok: `C:\Users\Eliseo Miraglia\.grok\skills\elisee-scout-deploy\SK
 
 Nessuna richiesta aperta. Chiedere a Eliseo cosa fare dopo.
 
+Match Analyst: se ruolo staff è Match analyst o Video analyst, al posto del form anagrafica compare la dashboard analitica (radar attività, compliance Wyscout/InStat, registro partite). Cache `MA1`.
+
 Schede tecniche: da ogni annuncio in Bacheca → pulsante **Schede tecniche**. Le schede IA restano nella candidatura (`#schede-tecniche`), non via e-mail. Club: lista, scheda completa, confronto (fino a 3), stati (nuova / in valutazione / shortlist / scartata). Cache `ST1`.
 
 Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
@@ -151,6 +155,7 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-20** — Dashboard Match Analyst: report, video, scouting avversari, registro analisi partite. Cache `MA1`.
 - **2026-08-20** — Dashboard Fisioterapista: attività sanitaria, registro trattamenti, efficienza recuperi. Cache `FT1`.
 - **2026-08-20** — Dashboard Vice Allenatore (Allenatore in seconda): contributo tecnico, registro sessioni. Cache `VA1`.
 - **2026-08-20** — Dashboard Presidenza: governance societaria, valore club, compliance, registro decisioni. Cache `PR1`.
