@@ -326,6 +326,7 @@
       : '<div class="es-sc-actions">' +
           '<button type="button" class="es-sc-follow' + (on ? ' is-on' : '') + '" data-follow="' + esc(p.id) + '">' + (on ? 'Segui già' : 'Segui') + '</button>' +
           '<button type="button" class="es-sc-msg" data-msg="' + esc(p.id) + '" data-msg-name="' + esc(p.name) + '" data-msg-kind="' + esc(p.kind) + '">Messaggia</button>' +
+          (p.kind === 'player' ? '<button type="button" class="es-sc-secret" data-secret="' + esc(p.id) + '" data-secret-name="' + esc(p.name) + '" data-secret-role="' + esc(p.role || '') + '" data-secret-city="' + esc(p.city || '') + '">Secret List</button>' : '') +
           '<button type="button" class="es-cs-their" data-see-follow="' + esc(p.id) + '" data-see-name="' + esc(p.name) + '">Chi segue</button>' +
         '</div>';
     return '<article class="es-sc-card' + (org ? ' is-org' : '') + '" data-id="' + esc(p.id) + '">' +
@@ -457,6 +458,16 @@
         var msg = e.target.closest('[data-msg]');
         if (msg && window.openB2BMessage) {
           window.openB2BMessage(msg.getAttribute('data-msg'), msg.getAttribute('data-msg-name'), msg.getAttribute('data-msg-kind'));
+          return;
+        }
+        var secret = e.target.closest('[data-secret]');
+        if (secret && window.EliseeMercato && window.EliseeMercato.addStealth) {
+          window.EliseeMercato.addStealth({
+            id: secret.getAttribute('data-secret'),
+            name: secret.getAttribute('data-secret-name'),
+            role: secret.getAttribute('data-secret-role'),
+            city: secret.getAttribute('data-secret-city')
+          });
           return;
         }
         var see = e.target.closest('[data-see-follow]');

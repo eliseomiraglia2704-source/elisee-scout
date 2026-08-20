@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-20**
-Ultimo fatto: Informativa privacy v1.3 — punto 3 allineato (chat + area riservata); geolocalizzazione, moderazione messaggi e Scheda Tecnica IA inserite nei punti 4, 6, 7, 14, 15 e 17 (Art. 22).
-Feature precedente: Pannello TC Manager (`6f81fe2`).
+Ultimo fatto: Hub Mercato B2B — Secret List stealth (DS/Scout) e Wall trattative chiuse stile FIFA (card + maglia + TRASFERITO).
+Feature precedente: Informativa privacy v1.3 (`e1435e4`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -60,6 +60,7 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
+| (questo) | Hub Mercato: Secret List stealth + Wall FIFA |
 | `e1435e4` | Privacy v1.3: Titolare + geo / moderazione / Scheda Tecnica IA |
 | `6f81fe2` | Pannello TC: panoramica completa e ingresso dall'area account |
 | `f00eb09` | Pannello TC Manager: iscrizioni, quote, ruoli, calendario, documenti, soci |
@@ -99,6 +100,8 @@ localStorage:
 - `elisee_active_user`, `elisee_user_auth`, `elisee_auth_token`
 - `elisee_social_following`
 - `elisee_b2b_threads_v1`
+- `elisee_secret_lists_v1` — Secret List per DS/Scout (solo locale, stealth)
+- `elisee_transfer_wall_v1` — Wall trattative chiuse
 - `elisee_admin_auth`
 
 Eventi: `elisee:squadra-selected`, `elisee:lineup-official`.
@@ -120,6 +123,7 @@ Nota Vercel: lo store manager è su `/tmp` (effimero). In locale `state.json` è
 | Chi segui | `chi-segui.js` |
 | Seleziona squadra | `squadre-select.js` / `.css` |
 | Formazione XI | `formazione-squadra.js` / `.css` |
+| Hub Mercato | `mercato-hub.js` / `.css` — Secret List + Wall |
 | Manager + admin inbox | `manager-runtime.js`, `manager.css`, `api/manager.js`, `workers/manager_store.py` |
 | Server locale | `elisee_up.py` porta 8080 |
 | SW | `sw.js` |
@@ -135,12 +139,15 @@ Copia utente Grok: `C:\Users\Eliseo Miraglia\.grok\skills\elisee-scout-deploy\SK
 
 Nessuna richiesta aperta. Chiedere a Eliseo cosa fare dopo.
 
-Privacy: `privacy-policy.html` versione **1.3** (20 agosto 2026). Punto 3 = testo completo (e-mail, chat, area riservata). Geolocalizzazione in 4.5 + 6.i; moderazione messaggi in 6.j + 14; Scheda Tecnica IA in 6.k + 7.e + 15.5 + 17 (Art. 22).
+Hub Mercato: `#mercato-hub` Secret List (DS/Scout, stealth, nessuna notifica). `#wall-trasferimenti` Wall pubblico FIFA. Ingresso da navbar, menu account, tab utente, Scopri (pulsante Secret List sui player), homepage.
+
+Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ---
 
 ## Diario sessioni
 
+- **2026-08-20** — Hub Mercato B2B: Secret List stealth per DS/Scout (colonne POR/DIF/CEN/ATT, priorità, note private, zero notifiche) e Wall trattative chiuse stile FIFA (card, maglia, TRASFERITO). File: `mercato-hub.js` / `.css`. Cache `MKT1`.
 - **2026-08-20** — Informativa privacy v1.3: punto 3 (Titolare) con chat e area riservata; geolocalizzazione (punti 4 e 6), moderazione messaggi (punti 6 e 14), Scheda Tecnica IA per Club (punti 6, 7, 15, 17 Art. 22). Numerazione allineata all’indice (14–19). File: `privacy-policy.html`. Cache SW `priv1`.
 - **2026-08-20** — Chiuso suggest modulo/XI + admin (`9021752`). Poi `CONTINUA_DA_QUI.md` + `AGENTS.md` + skill deploy in `.grok/skills/` (`7ec3186`) per cambiare account Grok senza perdere il filo.
 - **2026-08-20** — Corretto italiano mojibake in Ambassador e `index.html` (`66d33c0`).

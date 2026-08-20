@@ -559,6 +559,8 @@ body.layout-portfolio .es-sp select:disabled {
   margin: 0 0 1.2rem;
   padding-bottom: 0.55rem;
   border-bottom: 1px solid rgba(56, 189, 248, 0.22);
+  overflow-x: auto;
+  flex-wrap: nowrap;
 }
 .es-user-tab {
   position: relative;

@@ -34,6 +34,7 @@ Se il push dà 403 (account Git `sfondiitaliani23-svg`), pubblica comunque su Ve
 - Store manager Vercel = `/tmp` (effimero). Locale = `data/manager/state.json`. Il client ha fallback localStorage per le formazioni.
 - Anti-fake: dopo il ruolo (non Tifoso) l’utente ha 30 giorni per allegare documento + selfie. Avvisi continui, poi chiusura automatica (`verifica-account.js`).
 - Pannello TC Manager (`tc-panel.js`): iscrizioni con link, quote, comunicazioni per ruolo, calendario/presenze, documenti/scadenze, profilo atleta, soci/verbali. Modulo pubblico `#iscrizione-portal?team=ID`.
+- Hub Mercato (`mercato-hub.js`): Secret List stealth solo DS/Scout (niente notifiche a atleta/procuratore/club); Wall trattative chiuse stile FIFA (`#mercato-hub`, `#wall-trasferimenti`).
 
 ## Skill
 

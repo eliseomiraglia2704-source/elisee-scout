@@ -285,9 +285,10 @@
   <link rel="stylesheet" href="verifica-account.css?v=20260820_VF2">
   <link rel="stylesheet" href="manager.css?v=20260820_XI1">
   <link rel="stylesheet" href="tc-panel.css?v=20260820_TC2">
-  <link rel="stylesheet" href="player-profile.css?v=20260820_DARK1">
+  <link rel="stylesheet" href="player-profile.css?v=20260820_MKT1">
   <link rel="stylesheet" href="scopri-profili.css?v=20260820_DARK1">
   <link rel="stylesheet" href="messaggi.css?v=20260820_DARK1">
+  <link rel="stylesheet" href="mercato-hub.css?v=20260820_MKT1">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
@@ -517,7 +518,7 @@
     (function () {
       var VIEW_IDS = [
         'view-home', 'view-persone', 'view-about', 'view-pillars', 'view-bacheca',
-        'view-squadre', 'view-formazione', 'view-ambassador', 'view-account', 'view-scopri', 'view-mappa', 'view-messaggi', 'view-seguo', 'view-tc-panel', 'view-iscrizione', 'admin-view-group', 'user-dossier-view-group',
+        'view-squadre', 'view-formazione', 'view-ambassador', 'view-account', 'view-scopri', 'view-mappa', 'view-messaggi', 'view-seguo', 'view-tc-panel', 'view-iscrizione', 'view-mercato', 'admin-view-group', 'user-dossier-view-group',
         'ambassador-view-group', 'home-views-group'
       ];
       var _histLock = false;
@@ -568,6 +569,7 @@
         if (view === 'seguo') return '#seguo-portal';
         if (view === 'formazione') return '#formazione-portal';
         if (view === 'tc') return '#tc-portal';
+        if (view === 'mercato') return '#mercato-hub';
         if (view === 'iscrizione') return '#iscrizione-portal';
         if (view === 'area-riservata') return '#area-riservata';
         return '#hero';
@@ -590,6 +592,7 @@
         if (h.indexOf('formazione') >= 0) return 'formazione';
         if (h.indexOf('iscrizione') >= 0) return 'iscrizione';
         if (h.indexOf('tc-portal') >= 0) return 'tc';
+        if (h.indexOf('wall-trasferimenti') >= 0 || h.indexOf('mercato') >= 0 || h.indexOf('secret-list') >= 0) return 'mercato';
         if (h.indexOf('area-riservata') >= 0) return 'area-riservata';
         if (h.indexOf('minigioco') >= 0) return 'minigioco';
         return 'home';
@@ -750,6 +753,13 @@
             show('view-tc-panel');
             hash = '#tc-portal';
             setTimeout(function () { try { if (window.EliseeTC && window.EliseeTC.render) window.EliseeTC.render(); } catch (e) {} }, 40);
+          } else if (view === 'mercato') {
+            show('view-mercato');
+            setActiveNav('mercato');
+            if (!hash || (String(hash).indexOf('wall') < 0 && String(hash).indexOf('mercato') < 0 && String(hash).indexOf('secret') < 0)) {
+              hash = '#mercato-hub';
+            }
+            setTimeout(function () { try { if (window.EliseeMercato) window.EliseeMercato.render(); } catch (e) {} }, 40);
           } else if (view === 'iscrizione') {
             show('view-iscrizione');
             hash = hash || '#iscrizione-portal';
@@ -1509,6 +1519,7 @@
         <a href="#about" class="nav-link" data-view="about" data-i18n="nav.about" onclick="if(window.switchView){ window.switchView('about'); } return false;">Chi siamo</a>
         <a href="#dashboard-skills" class="nav-link" data-view="pillars" data-i18n="nav.resume" onclick="if(window.switchView){ window.switchView('pillars'); } return false;">Curriculum</a>
         <a href="#bacheca-annunci" class="nav-link" data-view="bacheca" data-i18n="nav.portfolio" onclick="if(window.switchView){ window.switchView('bacheca'); } return false;">Bacheca</a>
+        <a href="#wall-trasferimenti" class="nav-link nav-link-soft" data-view="mercato" onclick="if(window.openTransferWall){window.openTransferWall();}else if(window.switchView){window.switchView('mercato','#wall-trasferimenti');} return false;">Wall mercato</a>
         <a href="#mappa-portal" class="nav-link" data-view="mappa" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){window.switchView('mappa','#mappa-portal');} return false;">Mappa</a>
         <a href="#seguo-portal" class="nav-link" data-view="seguo" onclick="if(window.openChiSegui){window.openChiSegui();}else if(window.switchView){window.switchView('seguo','#seguo-portal');} return false;">Chi segui</a>
         <a href="#ambassador-portal" class="nav-link nav-link-soft" data-view="ambassador" data-i18n="nav.ambassador" onclick="if(window.switchView){ window.switchView('ambassador'); } return false;">Ambassador</a>
@@ -1595,6 +1606,12 @@
             </a>
             <a href="#messaggi-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.openUserMessages){ window.openUserMessages(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="mail" style="width:16px; height:16px; color:#38bdf8;"></i> Messaggi B2B
+            </a>
+            <a href="#mercato-hub" onclick="event.preventDefault(); event.stopPropagation(); if(window.openSecretList){ window.openSecretList(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
+              <i data-lucide="eye-off" style="width:16px; height:16px; color:#facc15;"></i> Secret List
+            </a>
+            <a href="#wall-trasferimenti" onclick="event.preventDefault(); event.stopPropagation(); if(window.openTransferWall){ window.openTransferWall(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
+              <i data-lucide="newspaper" style="width:16px; height:16px; color:#38bdf8;"></i> Wall trattative
             </a>
             <a href="#user-notifiche" id="btn-dropdown-notifs" onclick="event.preventDefault(); event.stopPropagation(); if(window.openUserNotifications){ window.openUserNotifications(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="bell" style="width:16px; height:16px; color:#38bdf8;"></i> Notifiche
@@ -1707,6 +1724,11 @@
                 <span class="portfolio-card-icon"><i data-lucide="users"></i></span>
                 <h3 data-i18n="home.cardNetwork">Scopri profili</h3>
                 <p data-i18n="home.cardNetworkDesc">Segui lo staff, i player e i club. Come un social, con un tap.</p>
+              </article>
+              <article class="portfolio-card" onclick="if(window.openTransferWall){ window.openTransferWall(); } else if(window.switchView){ window.switchView('mercato','#wall-trasferimenti'); }">
+                <span class="portfolio-card-icon"><i data-lucide="newspaper"></i></span>
+                <h3>Wall mercato</h3>
+                <p>Trattative chiuse in tempo reale: card FIFA, nuova maglia e scritta TRASFERITO.</p>
               </article>
               <article class="portfolio-card" onclick="if(window.switchView){ window.switchView('pillars'); }">
                 <span class="portfolio-card-icon"><i data-lucide="activity"></i></span>
@@ -2436,6 +2458,8 @@
               <button type="button" class="btn btn-outline-pill es-sq-select-btn" id="es-sq-select">Seleziona squadra</button>
               <button type="button" class="btn btn-outline-pill" id="es-sq-mgr-btn">Diventa Manager Elisee Scout</button>
               <button type="button" class="btn btn-outline-pill pf-btn-solid" id="es-sq-tc-btn">Pannello TC Manager</button>
+              <button type="button" class="btn btn-outline-pill" onclick="if(window.openSecretList){window.openSecretList();}else if(window.switchView){window.switchView('mercato','#mercato-hub');}">Secret List DS</button>
+              <button type="button" class="btn btn-outline-pill" onclick="if(window.openTransferWall){window.openTransferWall();}">Wall trattative</button>
               <button type="button" class="btn btn-outline-pill" id="es-sq-back-bacheca" onclick="if(window.switchView){window.switchView('bacheca','#bacheca-annunci');}">Torna alla Bacheca</button>
             </div>
             <p class="es-sq-meta">← → squadre · frecce Categoria a schermo (o Ctrl+↑/↓) · ↑ ↓ scroll pagina · stile <strong>EA Sports FC</strong></p>
@@ -2885,6 +2909,8 @@
             </button>
             <button type="button" class="es-user-tab" data-tab="seguo" id="es-user-tab-seguo">Chi segui</button>
             <button type="button" class="es-user-tab" data-tab="scopri" id="es-user-tab-scopri">Scopri</button>
+            <button type="button" class="es-user-tab" data-tab="secret" id="es-user-tab-secret">Secret List</button>
+            <button type="button" class="es-user-tab" data-tab="wall" id="es-user-tab-wall">Wall mercato</button>
             <button type="button" class="es-user-tab" data-tab="tc" id="es-user-tab-tc">TC Manager</button>
           </nav>
 
@@ -3429,6 +3455,43 @@
       </section>
     </div>
 
+    <div id="view-mercato" style="display:none;">
+      <section id="mercato-hub" class="es-mk pf-page">
+        <p class="es-mk-kicker" id="es-mk-kicker">Hub Mercato</p>
+        <h1 class="es-mk-title" id="es-mk-title">Secret List</h1>
+        <p class="es-mk-lead" id="es-mk-lead">Lista riservata stile Football Manager: organizza i target per ruolo e priorità. Inserimento stealth, senza allertare atleta, procuratore o club concorrenti.</p>
+        <div class="es-mk-tabs" role="tablist" aria-label="Hub Mercato">
+          <button type="button" class="es-mk-tab is-on" data-mk="secret">Secret List</button>
+          <button type="button" class="es-mk-tab" data-mk="wall">Wall trattative</button>
+        </div>
+        <div id="es-mk-secret">
+          <p class="es-mk-stealth" id="es-mk-stealth-banner">Modalità stealth · visibile solo a te · zero notifiche esterne</p>
+          <div class="es-mk-lock" id="es-mk-lock" hidden>
+            <h2>Area riservata DS / Scout</h2>
+            <p>La Secret List è un Hub Mercato stealth per Direttori Sportivi e Scout. Cambia ruolo in Staff (Direttore sportivo o Scout) oppure accedi come società.</p>
+          </div>
+          <div id="es-mk-secret-ok">
+            <div class="es-mk-toolbar">
+              <input type="search" id="es-mk-q" placeholder="Cerca target…" autocomplete="off">
+              <select id="es-mk-prio">
+                <option value="">Tutte le priorità</option>
+                <option value="1">Priorità alta</option>
+                <option value="2">Monitoraggio</option>
+                <option value="3">Watch</option>
+              </select>
+              <button type="button" class="es-mk-btn" id="es-mk-add">+ Aggiungi target</button>
+            </div>
+            <div class="es-mk-picker" id="es-mk-picker" hidden>
+              <input type="search" id="es-mk-pick-q" placeholder="Nome, ruolo, città…">
+              <div class="es-mk-pick-list" id="es-mk-pick-list"></div>
+            </div>
+            <div class="es-mk-cols" id="es-mk-cols"></div>
+          </div>
+        </div>
+        <div id="es-mk-wall" hidden></div>
+      </section>
+    </div>
+
   </main>
 
   <footer class="site-footer pf-footer">
@@ -3451,6 +3514,8 @@
             <li><a href="#dashboard-skills" onclick="switchView('pillars'); return false;">Curriculum</a></li>
             <li><a href="#bacheca-annunci" onclick="switchView('bacheca'); return false;">Bacheca</a></li>
             <li><a href="#scopri-portal" onclick="if(window.openScopriProfili){window.openScopriProfili('staff');}else{switchView('scopri','#scopri-portal');} return false;">Scopri profili</a></li>
+            <li><a href="#wall-trasferimenti" onclick="if(window.openTransferWall){window.openTransferWall();}else{switchView('mercato','#wall-trasferimenti');} return false;">Wall mercato</a></li>
+            <li><a href="#mercato-hub" onclick="if(window.openSecretList){window.openSecretList();}else{switchView('mercato','#mercato-hub');} return false;">Secret List</a></li>
             <li><a href="#bacheca-annunci" onclick="switchView('bacheca','#bacheca-network'); return false;">Persone &amp; Squadre</a></li>
             <li><a href="#ambassador-portal" onclick="switchView('ambassador'); return false;">Ambassador</a></li>
           </ul>
@@ -4754,10 +4819,11 @@
   <script src="tc-panel.js?v=20260820_TC2"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260820_TC1"></script>
-  <script src="player-profile.js?v=20260820_TC2"></script>
-  <script src="scopri-profili.js?v=20260820_SCO1"></script>
+  <script src="app.js?v=20260820_MKT1"></script>
+  <script src="player-profile.js?v=20260820_MKT1"></script>
+  <script src="scopri-profili.js?v=20260820_MKT1"></script>
   <script src="messaggi.js?v=20260820_MSG1"></script>
+  <script src="mercato-hub.js?v=20260820_MKT1"></script>
   <script src="mappa-club.js?v=20260820_FORM1"></script>
   <script src="chi-segui.js?v=20260820_FORM1"></script>
   <script src="verifica-account.js?v=20260820_VF2"></script>

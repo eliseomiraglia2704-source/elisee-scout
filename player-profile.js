@@ -1075,6 +1075,10 @@
             if (window.openChiSegui) window.openChiSegui();
           } else if (tab === 'scopri') {
             if (window.openScopriProfili) window.openScopriProfili('staff');
+          } else if (tab === 'secret') {
+            if (window.openSecretList) window.openSecretList();
+          } else if (tab === 'wall') {
+            if (window.openTransferWall) window.openTransferWall();
           } else if (tab === 'tc') {
             if (window.EliseeTC && window.EliseeTC.open) window.EliseeTC.open();
           } else window.EliseeUserNotifs.showProfile();

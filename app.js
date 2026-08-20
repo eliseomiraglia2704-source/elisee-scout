@@ -6524,7 +6524,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ids = [
       'view-home', 'view-persone', 'view-about', 'view-pillars', 'view-bacheca',
       'view-squadre', 'view-formazione', 'view-ambassador', 'view-account', 'view-scopri', 'view-mappa', 'view-messaggi', 'view-seguo',
-      'view-tc-panel', 'view-iscrizione',
+      'view-tc-panel', 'view-iscrizione', 'view-mercato',
       'admin-view-group', 'user-dossier-view-group', 'ambassador-view-group',
       'home-views-group'
     ];
@@ -6673,6 +6673,18 @@ document.addEventListener('DOMContentLoaded', () => {
         showEl('view-tc-panel');
         if (!targetHash) setHashSafe('#tc-portal', opts);
         setTimeout(function () { try { if (window.EliseeTC && window.EliseeTC.render) window.EliseeTC.render(); } catch (e) {} }, 40);
+      } else if (viewType === 'mercato' || (targetHash && (String(targetHash).indexOf('mercato') >= 0 || String(targetHash).indexOf('wall-trasferimenti') >= 0 || String(targetHash).indexOf('secret-list') >= 0))) {
+        showEl('view-mercato');
+        var mkHash = targetHash || '#mercato-hub';
+        if (!targetHash) setHashSafe('#mercato-hub', opts);
+        else setHashSafe(mkHash, opts);
+        setTimeout(function () {
+          try {
+            if (window.EliseeMercato) {
+              window.EliseeMercato.setTab(String(mkHash).indexOf('wall') >= 0 ? 'wall' : 'secret');
+            }
+          } catch (e) {}
+        }, 40);
       } else if (viewType === 'iscrizione' || (targetHash && String(targetHash).indexOf('iscrizione') >= 0)) {
         showEl('view-iscrizione');
         if (targetHash) setHashSafe(targetHash, opts);
@@ -7359,6 +7371,8 @@ document.addEventListener('DOMContentLoaded', () => {
       switchView('formazione', '#formazione-portal', noHist);
     } else if (hash.indexOf('tc-portal') >= 0) {
       switchView('tc', '#tc-portal', noHist);
+    } else if (hash.indexOf('wall-trasferimenti') >= 0 || hash.indexOf('mercato-hub') >= 0 || hash.indexOf('secret-list') >= 0) {
+      switchView('mercato', hash, noHist);
     } else if (hash.indexOf('iscrizione-portal') >= 0) {
       switchView('iscrizione', hash, noHist);
     } else if (hash === '#squadre-portal') {
