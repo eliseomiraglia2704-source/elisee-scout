@@ -17,6 +17,7 @@
     u = u || userObj();
     var blob = [u.staffRole, u.ruoloDettagliato, u.ruolo, u.role, u.staffProfile && u.staffProfile.fieldRole]
       .filter(Boolean).join(' ').toLowerCase();
+    if (/in seconda|vice allenatore/.test(blob)) return false;
     return /allenatore/.test(blob);
   }
   function coachName(u) {
@@ -214,10 +215,16 @@
       box.className = 'es-pd';
       host.insertBefore(box, host.firstChild);
     }
+    var vd = document.getElementById('es-vd');
+    if (vd) vd.hidden = true;
     box.innerHTML = html(user);
     box.hidden = false;
     host.classList.add('es-pd-on');
-    if (group) group.classList.add('is-coach-dash');
+    host.classList.remove('es-vice-on');
+    if (group) {
+      group.classList.add('is-coach-dash');
+      group.classList.remove('is-vice-dash');
+    }
     bind(host);
   }
 
