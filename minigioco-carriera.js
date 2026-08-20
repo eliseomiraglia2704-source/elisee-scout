@@ -1183,9 +1183,14 @@
     return isBigYouthClub(c);
   }
 
-  function takeTopOfTier(used, t) {
+  function takeTopOfTier(used, t, p) {
     var pool = (state.clubs || []).filter(function (c) {
-      return c && c.n && !used[c.n] && isTopClubOfTier(c, t);
+      if (!c || !c.n || used[c.n] || !isTopClubOfTier(c, t)) return false;
+      if (p && !playerFitsClub(p, c, {
+        allowYouth: (p.age || 16) <= 19,
+        academyPath: isAcademyProspect(p)
+      })) return false;
+      return true;
     });
     if (!pool.length) return null;
     pool.sort(function (a, b) {
@@ -3310,17 +3315,20 @@
 
   function playerFitsClub(p, c, opts) {
     if (!c || !p) return false;
-    if (c.world && (p.age || 16) < 21) return false;
+    if (opts && opts.stay) return true;
+    if (opts && opts.callUp) return true;
+    var age = p.age || 16;
+    if (isU23Club(c) && age > 24) return false;
+    if (c.world && age < 21) return false;
     if (c.world && clubLeagueTier(p.club) > 1) return false;
     var o = Number(p.ovr) || 49;
     var min = minOvrForClub(c);
     var max = maxOvrForClub(c);
-    var youth = opts && opts.allowYouth && isBigYouthClub(c) && (p.age || 16) <= 19;
+    var youth = opts && opts.allowYouth && isBigYouthClub(c) && age <= 19 && !isU23Club(c);
     if (youth) min = Math.max(45, min - 24);
     if (opts && opts.academyPath && isAcademyProspect(p) && clubLeagueTier(c) >= 2) {
       min = Math.min(min, 50);
     }
-    if (opts && opts.stay) return true;
     if (o < min) return false;
     if (o > max) return false;
     return true;
@@ -3407,11 +3415,13 @@
     return hit;
   }
 
-  function pickFailMarketClub(used, t) {
-    var top = takeTopOfTier(used, t);
+  function pickFailMarketClub(used, t, p) {
+    var top = takeTopOfTier(used, t, p);
     if (top && !top.failed && !top.justFailed && !top.world) return Object.assign({}, top);
     var pool = clubsByTier(t).filter(function (c) {
-      return c && c.n && !used[c.n] && !c.world && !c.failed && !c.justFailed && isItalianPyramid(c);
+      if (!c || !c.n || used[c.n] || c.world || c.failed || c.justFailed || !isItalianPyramid(c)) return false;
+      if (p && !playerFitsClub(p, c, {})) return false;
+      return true;
     });
     var c = takeUniqueClub(used, pool);
     return c ? Object.assign({}, c) : null;
@@ -3434,7 +3444,7 @@
     }
     var i;
     for (i = 0; i < want.length && offers.length < 3; i++) {
-      var c = pickFailMarketClub(used, clampTier(want[i]));
+      var c = pickFailMarketClub(used, clampTier(want[i]), p);
       if (!c) continue;
       c = stampSeasonMoveBadge(c);
       c.isLoan = false;
@@ -3446,7 +3456,7 @@
     var fallback = [3, 4, 2, 5, 1];
     for (i = 0; offers.length < 3 && i < fallback.length; i++) {
       if (want.indexOf(fallback[i]) >= 0) continue;
-      var extra = pickFailMarketClub(used, fallback[i]);
+      var extra = pickFailMarketClub(used, fallback[i], p);
       if (!extra) continue;
       extra = stampSeasonMoveBadge(extra);
       extra.isLoan = false;
@@ -3861,14 +3871,14 @@
 
     if (isAcademyProspect(p) && offers.length < 3) {
       if (curT === 1 || jump > 0) {
-        var topB = takeTopOfTier(used, 2);
+        var topB = takeTopOfTier(used, 2, p);
         if (topB) {
           topB.isLoan = (p.age || 16) <= 21;
           offers.push(topB);
         }
       }
       if (offers.length < 3 && (curT >= 2 || (p.ovr || 49) < 56)) {
-        var topC = takeTopOfTier(used, 3);
+        var topC = takeTopOfTier(used, 3, p);
         if (topC) {
           topC.isLoan = (p.age || 16) <= 21 && curT === 1;
           offers.push(topC);
@@ -3924,7 +3934,7 @@
     while (offers.length < need && i < 16) {
       var t = safe[Math.min(i, safe.length - 1)];
       if (p && isAcademyProspect(p) && (t === 2 || t === 3)) {
-        var topPick = takeTopOfTier(used, t);
+        var topPick = takeTopOfTier(used, t, p);
         if (topPick) {
           offers.push(topPick);
           i++;
@@ -4937,7 +4947,10 @@
       parent: u23ParentName,
       canCallUp: canCallUpFromU23
     },
-    version: '2026-08-14_TRIAL'
+    fits: playerFitsClub,
+    transferOffers: transferOffers,
+    setClubs: function (list) { state.clubs = list || []; },
+    version: '2026-08-20_MKT2'
   };
 
   document.addEventListener('elisee:user-revealed', function () {
