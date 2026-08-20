@@ -225,7 +225,10 @@
           : esc(initials(p.name));
         var btn = p.isMe
           ? '<button type="button" class="es-sc-follow" disabled>Sei tu</button>'
-          : '<button type="button" class="es-sc-follow' + (on ? ' is-on' : '') + '" data-follow="' + esc(p.id) + '">' + (on ? 'Segui già' : 'Segui') + '</button>';
+          : '<div class="es-sc-actions">' +
+              '<button type="button" class="es-sc-follow' + (on ? ' is-on' : '') + '" data-follow="' + esc(p.id) + '">' + (on ? 'Segui già' : 'Segui') + '</button>' +
+              '<button type="button" class="es-sc-msg" data-msg="' + esc(p.id) + '" data-msg-name="' + esc(p.name) + '" data-msg-kind="' + esc(p.kind) + '">Messaggia</button>' +
+            '</div>';
         var flag = p.nation === 'IT' ? '🇮🇹 IT' : (p.nation || '');
         var line = (p.sport ? p.sport + ' · ' : '') + p.role;
         return '<article class="es-sc-card" data-id="' + esc(p.id) + '">' +
@@ -286,7 +289,11 @@
         var chip = e.target.closest('.es-sc-chip');
         if (chip) { self.setKind(chip.getAttribute('data-kind')); return; }
         var btn = e.target.closest('[data-follow]');
-        if (btn) { self.follow(btn.getAttribute('data-follow')); }
+        if (btn) { self.follow(btn.getAttribute('data-follow')); return; }
+        var msg = e.target.closest('[data-msg]');
+        if (msg && window.openB2BMessage) {
+          window.openB2BMessage(msg.getAttribute('data-msg'), msg.getAttribute('data-msg-name'), msg.getAttribute('data-msg-kind'));
+        }
       });
       var geo = document.getElementById('es-sc-geo');
       var sport = document.getElementById('es-sc-sport');

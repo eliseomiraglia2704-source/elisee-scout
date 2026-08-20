@@ -275,15 +275,16 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
-  <link rel="stylesheet" href="style.css?v=20260820_SCOPRI1">
+  <link rel="stylesheet" href="style.css?v=20260820_MSG1">
   <link rel="stylesheet" href="integrazioni.css?v=20260806_NOCORS">
   <link rel="preload" as="video" href="immagini/minigioco/intro.mp4?v=20260813_HQ2">
   <link rel="stylesheet" href="minigioco-carriera.css?v=20260814_TRIAL2">
   <link rel="stylesheet" href="autopilot.css?v=20260806_NOCORS">
   <link rel="stylesheet" href="squadre-select.css?v=20260814_KITFC3">
   <link rel="stylesheet" href="manager.css?v=20260820_MGR1">
-  <link rel="stylesheet" href="player-profile.css?v=20260820_SCOPRI1">
-  <link rel="stylesheet" href="scopri-profili.css?v=20260820_SCOPRI1">
+  <link rel="stylesheet" href="player-profile.css?v=20260820_MSG1">
+  <link rel="stylesheet" href="scopri-profili.css?v=20260820_MSG1">
+  <link rel="stylesheet" href="messaggi.css?v=20260820_MSG1">
   <script>
     /* Boot OAuth: token in search O in hash (#hero?elisee_token=...). La sessione vince sempre. */
     (function () {
@@ -509,7 +510,7 @@
     (function () {
       var VIEW_IDS = [
         'view-home', 'view-persone', 'view-about', 'view-pillars', 'view-bacheca',
-        'view-squadre', 'view-ambassador', 'view-account', 'view-scopri', 'admin-view-group', 'user-dossier-view-group',
+        'view-squadre', 'view-ambassador', 'view-account', 'view-scopri', 'view-messaggi', 'admin-view-group', 'user-dossier-view-group',
         'ambassador-view-group', 'home-views-group'
       ];
       var _histLock = false;
@@ -555,6 +556,7 @@
         if (view === 'admin') return '#admin-portal';
         if (view === 'user-dossier') return '#user-dossier-portal';
         if (view === 'scopri') return '#scopri-portal';
+        if (view === 'messaggi') return '#messaggi-portal';
         if (view === 'area-riservata') return '#area-riservata';
         return '#hero';
       }
@@ -570,6 +572,7 @@
         if (h.indexOf('admin') >= 0) return 'admin';
         if (h.indexOf('dossier') >= 0) return 'user-dossier';
         if (h.indexOf('scopri') >= 0) return 'scopri';
+        if (h.indexOf('messaggi') >= 0) return 'messaggi';
         if (h.indexOf('area-riservata') >= 0) return 'area-riservata';
         if (h.indexOf('minigioco') >= 0) return 'minigioco';
         return 'home';
@@ -702,6 +705,10 @@
             show('view-scopri');
             hash = '#scopri-portal';
             setTimeout(function () { try { if (window.EliseeScopri) window.EliseeScopri.render(); } catch (e) {} }, 40);
+          } else if (view === 'messaggi') {
+            show('view-messaggi');
+            hash = '#messaggi-portal';
+            setTimeout(function () { try { if (window.EliseeB2B) window.EliseeB2B.renderInbox(); } catch (e) {} }, 40);
           } else {
             show('home-views-group'); show('view-home'); setActiveNav('home');
             view = 'home';
@@ -1502,6 +1509,14 @@
 
         <!-- Stato Loggato (bottone utente compatto e pulito senza cerchio avatar) -->
         <div id="nav-logged-in-actions" style="display:none; position:relative;">
+          <button type="button" class="es-nav-mail" id="btn-nav-msgs" title="Messaggi B2B" aria-label="Messaggi"
+            onclick="event.preventDefault();event.stopPropagation();if(window.openUserMessages){window.openUserMessages();}return false;">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2"/>
+              <path d="M3 7l9 7 9-7"/>
+            </svg>
+            <span class="es-nav-mail-dot" id="es-nav-mail-dot" hidden></span>
+          </button>
           <button type="button" class="es-nav-bell" id="btn-nav-notifs" title="Notifiche" aria-label="Notifiche"
             onclick="event.preventDefault();event.stopPropagation();if(window.openUserNotifications){window.openUserNotifications();}return false;">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1530,6 +1545,9 @@
             </div>
             <a href="#" id="btn-area-riservata" onclick="event.preventDefault(); event.stopPropagation(); if(window.openAreaRiservataModal){ window.openAreaRiservataModal(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="user-cog" style="width:16px; height:16px; color:#38bdf8;"></i> La Mia Area Riservata
+            </a>
+            <a href="#messaggi-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.openUserMessages){ window.openUserMessages(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
+              <i data-lucide="mail" style="width:16px; height:16px; color:#38bdf8;"></i> Messaggi B2B
             </a>
             <a href="#user-notifiche" id="btn-dropdown-notifs" onclick="event.preventDefault(); event.stopPropagation(); if(window.openUserNotifications){ window.openUserNotifications(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="bell" style="width:16px; height:16px; color:#38bdf8;"></i> Notifiche
@@ -2719,6 +2737,10 @@
               Notifiche
               <span class="es-user-tab-dot" id="es-user-tab-dot" hidden></span>
             </button>
+            <button type="button" class="es-user-tab" data-tab="msgs" id="es-user-tab-msgs">
+              Messaggi
+              <span class="es-user-tab-dot" id="es-user-tab-msg-dot" hidden></span>
+            </button>
             <button type="button" class="es-user-tab" data-tab="scopri" id="es-user-tab-scopri">Scopri</button>
           </nav>
 
@@ -3139,6 +3161,26 @@
         </div><!-- /.container -->
       </section>
     </div><!-- /#user-dossier-view-group -->
+
+    <div id="view-messaggi" style="display:none;">
+      <section id="messaggi-portal" class="es-msg">
+        <div id="es-msg-inbox">
+          <p class="es-msg-empty" id="es-msg-empty">Nessun thread disponibile.</p>
+          <ul class="es-msg-list" id="es-msg-list" hidden></ul>
+        </div>
+        <div id="es-msg-thread" class="es-msg-thread" hidden>
+          <div class="es-msg-head">
+            <button type="button" class="es-msg-back" id="es-msg-back" aria-label="Torna ai thread">‹</button>
+            <h2 id="es-msg-peer">Conversazione</h2>
+          </div>
+          <div class="es-msg-bubbles" id="es-msg-bubbles"></div>
+          <form class="es-msg-compose" id="es-msg-form">
+            <input type="text" id="es-msg-input" placeholder="Scrivi un messaggio…" autocomplete="off" maxlength="2000">
+            <button type="submit">Invia</button>
+          </form>
+        </div>
+      </section>
+    </div>
 
     <div id="view-scopri" style="display:none;">
       <section id="scopri-portal" class="es-sc">
@@ -4483,9 +4525,10 @@
   </script>
   <script src="squadre-select.js?v=20260820_VERW1"></script>
   <script src="manager-runtime.js?v=20260820_MGR1"></script>
-  <script src="app.js?v=20260820_SCOPRI1"></script>
-  <script src="player-profile.js?v=20260820_SCOPRI1"></script>
-  <script src="scopri-profili.js?v=20260820_SCOPRI1"></script>
+  <script src="app.js?v=20260820_MSG1"></script>
+  <script src="player-profile.js?v=20260820_MSG1"></script>
+  <script src="scopri-profili.js?v=20260820_MSG1"></script>
+  <script src="messaggi.js?v=20260820_MSG1"></script>
   <script>
     /* FORCED INLINE HOT-PATCH: Overrides PDF export, specific report HTML & modal close functions instantly at runtime */
     (function() {

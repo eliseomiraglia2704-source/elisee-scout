@@ -6523,7 +6523,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function hideAllPortals() {
     const ids = [
       'view-home', 'view-persone', 'view-about', 'view-pillars', 'view-bacheca',
-      'view-squadre', 'view-ambassador', 'view-account', 'view-scopri',
+      'view-squadre', 'view-ambassador', 'view-account', 'view-scopri', 'view-messaggi',
       'admin-view-group', 'user-dossier-view-group', 'ambassador-view-group',
       'home-views-group'
     ];
@@ -6620,7 +6620,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } catch (_) {}
 
-      if (viewType === 'scopri' || targetHash === '#scopri-portal') {
+      if (viewType === 'messaggi' || targetHash === '#messaggi-portal') {
+        showEl('view-messaggi');
+        const mlink = document.querySelector('.nav-link[data-view="messaggi"]');
+        if (mlink) mlink.classList.add('active');
+        if (!targetHash) setHashSafe('#messaggi-portal', opts);
+        setTimeout(function () { try { if (window.EliseeB2B) window.EliseeB2B.renderInbox(); } catch (e) {} }, 40);
+      } else if (viewType === 'scopri' || targetHash === '#scopri-portal') {
         showEl('view-scopri');
         const slink = document.querySelector('.nav-link[data-view="scopri"]');
         if (slink) slink.classList.add('active');
@@ -7289,6 +7295,8 @@ document.addEventListener('DOMContentLoaded', () => {
       switchView('pillars', '#dashboard-skills', noHist);
     } else if (hash === '#bacheca-annunci') {
       switchView('bacheca', '#bacheca-annunci', noHist);
+    } else if (hash === '#messaggi-portal') {
+      switchView('messaggi', '#messaggi-portal', noHist);
     } else if (hash === '#scopri-portal') {
       switchView('scopri', '#scopri-portal', noHist);
     } else if (hash === '#persone-portal' || hash === '#bacheca-network') {
