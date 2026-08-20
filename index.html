@@ -281,8 +281,8 @@
   <link rel="stylesheet" href="minigioco-carriera.css?v=20260814_TRIAL2">
   <link rel="stylesheet" href="autopilot.css?v=20260806_NOCORS">
   <link rel="stylesheet" href="squadre-select.css?v=20260820_FORM1">
-  <link rel="stylesheet" href="formazione-squadra.css?v=20260820_FORM1">
-  <link rel="stylesheet" href="manager.css?v=20260820_MGR1">
+  <link rel="stylesheet" href="formazione-squadra.css?v=20260820_XI1">
+  <link rel="stylesheet" href="manager.css?v=20260820_XI1">
   <link rel="stylesheet" href="player-profile.css?v=20260820_SEGUO1">
   <link rel="stylesheet" href="scopri-profili.css?v=20260820_SEGUO1">
   <link rel="stylesheet" href="messaggi.css?v=20260820_SEGUO1">
@@ -2448,6 +2448,16 @@
         <div class="es-xi-panel" id="es-xi-info">
           <h2>Tocca un giocatore</h2>
           <p>Scegli un ruolo sul campo. Se sei un Giocatore puoi candidarti in quel posto.</p>
+        </div>
+        <div class="es-xi-panel es-xi-suggest">
+          <p id="es-xi-official" class="es-xi-official">Modulo ufficiale: 4-3-3</p>
+          <p class="es-xi-hint">Ogni utente può proporre l’ultimo cambio di modulo o di XI. Lo staff accetta o declina dall’area Admin Elisee Scout.</p>
+          <p id="es-xi-pending" class="es-xi-pending" hidden></p>
+          <label>
+            Nota per lo staff
+            <textarea id="es-xi-note" rows="2" maxlength="400" placeholder="Es. ultimo cambio dopo la Coppa, 4-2-3-1 più coprente"></textarea>
+          </label>
+          <button type="button" class="es-xi-go" id="es-xi-suggest-btn">Suggerisci modulo / formazione</button>
         </div>
       </section>
     </div>
@@ -4639,9 +4649,9 @@
       setTimeout(unlock, 2000);
     })();
   </script>
-  <script src="squadre-select.js?v=20260820_FORM1"></script>
-  <script src="formazione-squadra.js?v=20260820_FORM1"></script>
-  <script src="manager-runtime.js?v=20260820_MGR1"></script>
+  <script src="squadre-select.js?v=20260820_XI1"></script>
+  <script src="formazione-squadra.js?v=20260820_XI1"></script>
+  <script src="manager-runtime.js?v=20260820_XI1"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="app.js?v=20260820_FORM1"></script>

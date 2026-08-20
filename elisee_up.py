@@ -408,7 +408,7 @@ class Handler(SimpleHTTPRequestHandler):
 
     def _manager_api(self, path: str, method: str) -> bool:
         try:
-            from manager_store import admin_inbox, apply_as_manager, decide, my_view, propose_change
+            from manager_store import admin_inbox, apply_as_manager, decide, my_view, official_lineup, propose_change, propose_lineup
         except Exception as e:
             self._json(503, {"ok": False, "error": "manager_store_unavailable", "detail": str(e)})
             return True
@@ -431,6 +431,10 @@ class Handler(SimpleHTTPRequestHandler):
                         return True
                     self._json(200, admin_inbox())
                     return True
+                if view == "official":
+                    team_id = (qs.get("teamId") or [""])[0]
+                    self._json(200, official_lineup(team_id))
+                    return True
                 email = (qs.get("email") or [""])[0]
                 self._json(200, my_view(user, email))
                 return True
@@ -443,6 +447,10 @@ class Handler(SimpleHTTPRequestHandler):
                     return True
                 if action == "propose":
                     code, payload = propose_change(user, body)
+                    self._json(code, payload)
+                    return True
+                if action == "propose-lineup":
+                    code, payload = propose_lineup(user, body)
                     self._json(code, payload)
                     return True
                 if action == "decide":

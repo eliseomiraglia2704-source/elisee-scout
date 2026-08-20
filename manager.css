@@ -113,7 +113,7 @@
 .es-mgr-status.is-declined { color: #f87171; background: rgba(239, 68, 68, 0.12); }
 .es-mgr-admin-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 1rem;
   margin-top: 1rem;
 }

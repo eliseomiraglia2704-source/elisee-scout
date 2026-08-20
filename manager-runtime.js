@@ -24,6 +24,47 @@
   function isAdmin() {
     try { return localStorage.getItem('elisee_admin_auth') === 'true'; } catch (e) { return false; }
   }
+  function localLineups() {
+    try { return JSON.parse(localStorage.getItem('elisee_lineup_proposals') || '[]') || []; } catch (e) { return []; }
+  }
+  function saveLocalLineups(rows) {
+    try { localStorage.setItem('elisee_lineup_proposals', JSON.stringify(rows || [])); } catch (e) {}
+  }
+  function mergeLocalLineups(apiRows) {
+    var out = (apiRows || []).slice();
+    var seen = {};
+    out.forEach(function (r) {
+      if (!r) return;
+      if (r.id) seen[r.id] = 1;
+      if (r.teamId) {
+        seen['t:' + r.teamId + ':' + String(r.email || '').toLowerCase() + ':' + (r.status || '')] = 1;
+      }
+    });
+    localLineups().forEach(function (r) {
+      if (!r) return;
+      if (r.id && seen[r.id]) return;
+      var k = 't:' + r.teamId + ':' + String(r.email || '').toLowerCase() + ':' + (r.status || '');
+      if (seen[k]) return;
+      out.push(r);
+    });
+    return out;
+  }
+  function applyOfficialLocal(row) {
+    if (!row || !row.teamId) return;
+    var official = {
+      teamId: row.teamId,
+      teamName: row.teamName,
+      module: row.module,
+      slots: row.slots || {},
+      updatedAt: new Date().toISOString()
+    };
+    try {
+      var off = JSON.parse(localStorage.getItem('elisee_official_xi') || '{}') || {};
+      off[row.teamId] = official;
+      localStorage.setItem('elisee_official_xi', JSON.stringify(off));
+    } catch (e) {}
+    try { document.dispatchEvent(new CustomEvent('elisee:lineup-official', { detail: official })); } catch (e) {}
+  }
   function headers(admin) {
     var h = { 'Content-Type': 'application/json' };
     var tok = token();
@@ -90,10 +131,20 @@
     var id = ident();
     apiGet('me', id.email).then(function (data) {
       if (data && data.ok) meCache = data;
-      else meCache = { applications: [], proposals: [], teams: [] };
+      else meCache = { applications: [], proposals: [], lineups: [], teams: [] };
+      meCache.lineups = mergeLocalLineups(meCache.lineups || []).filter(function (r) {
+        return !id.email || String(r.email || '').toLowerCase() === String(id.email).toLowerCase();
+      });
       if (then) then(meCache);
     }).catch(function () {
-      meCache = { applications: [], proposals: [], teams: [] };
+      meCache = {
+        applications: [],
+        proposals: [],
+        lineups: mergeLocalLineups([]).filter(function (r) {
+          return !id.email || String(r.email || '').toLowerCase() === String(id.email).toLowerCase();
+        }),
+        teams: []
+      };
       if (then) then(meCache);
     });
   }
@@ -193,7 +244,8 @@
   function myListHtml(me) {
     var apps = (me && me.applications) || [];
     var props = (me && me.proposals) || [];
-    if (!apps.length && !props.length) return '';
+    var lineups = (me && me.lineups) || [];
+    if (!apps.length && !props.length && !lineups.length) return '';
     var html = '<hr style="border:0;border-top:1px solid rgba(148,163,184,0.18);margin:1.1rem 0;">';
     html += '<p class="es-mgr-kicker">Le tue richieste</p>';
     apps.forEach(function (a) {
@@ -205,6 +257,11 @@
       html += '<div class="es-mgr-card"><h4>' + esc(p.teamName) +
         ' <span class="es-mgr-status is-' + esc(p.status) + '">' + statusLabel(p.status) + '</span></h4>' +
         '<p>' + esc(Object.keys(p.changes || {}).join(', ') || 'Modifica') + '</p></div>';
+    });
+    lineups.forEach(function (l) {
+      html += '<div class="es-mgr-card"><h4>' + esc(l.teamName) +
+        ' <span class="es-mgr-status is-' + esc(l.status) + '">' + statusLabel(l.status) + '</span></h4>' +
+        '<p>Formazione · ' + esc(l.previousModule || '—') + ' → ' + esc(l.module || '') + '</p></div>';
     });
     return html;
   }
@@ -296,7 +353,9 @@
       candidatura_gia_inviata: 'Hai già una candidatura in attesa.',
       non_sei_manager: 'Solo i Manager accettati possono proporre modifiche.',
       nessuna_modifica: 'Inserisci almeno un campo da cambiare.',
-      admin_richiesto: 'Serve l\'accesso admin.'
+      admin_richiesto: 'Serve l\'accesso admin.',
+      squadra_o_modulo_mancante: 'Scegli squadra e modulo.',
+      proposta_formazione_gia_inviata: 'Hai già un suggerimento di formazione in attesa per questa squadra.'
     };
     return (res && map[res.error]) || (res && res.error) || 'Invio non riuscito.';
   }
@@ -323,17 +382,25 @@
       }
       adminCache = data;
       var c = data.counts || {};
+      var mergedL = mergeLocalLineups(data.lineups || []);
+      var pendingL = mergedL.filter(function (r) { return r.status === 'pending'; }).length;
       var html = '<div class="es-mgr-admin-grid">';
       html += '<div><p class="es-mgr-kicker">Candidature (' + (c.applicationsPending || 0) + ' in attesa)</p>';
       html += listAdmin(data.applications || [], 'application');
       html += '</div><div><p class="es-mgr-kicker">Proposte modifica (' + (c.proposalsPending || 0) + ' in attesa)</p>';
       html += listAdmin(data.proposals || [], 'proposal');
+      html += '</div><div><p class="es-mgr-kicker">Formazioni / moduli (' + pendingL + ' in attesa)</p>';
+      html += listAdmin(mergedL, 'lineup');
       html += '</div></div>';
       host.innerHTML = html;
       var n = $('stat-mgr-pending');
-      if (n) n.textContent = String((c.applicationsPending || 0) + (c.proposalsPending || 0));
+      if (n) n.textContent = String((c.applicationsPending || 0) + (c.proposalsPending || 0) + pendingL);
     }).catch(function () {
-      host.innerHTML = '<p class="es-mgr-empty">Inbox Manager non raggiungibile da questo host.</p>';
+      var loc = mergeLocalLineups([]);
+      var pendingL = loc.filter(function (r) { return r.status === 'pending'; }).length;
+      host.innerHTML = '<p class="es-mgr-empty">Inbox API non raggiungibile. Mostriamo le proposte formazione locali.</p>' +
+        '<p class="es-mgr-kicker">Formazioni / moduli (' + pendingL + ' in attesa)</p>' +
+        listAdmin(loc, 'lineup');
     });
   }
 
@@ -344,6 +411,11 @@
       if (kind === 'proposal') {
         extra = '<p>' + esc(JSON.stringify(r.changes || {})) + '</p>';
         if (r.note) extra += '<p>Nota: ' + esc(r.note) + '</p>';
+      } else if (kind === 'lineup') {
+        extra = '<p>Modulo: <strong>' + esc(r.previousModule || '—') + '</strong> → <strong>' + esc(r.module || '') + '</strong></p>';
+        extra += '<p>' + esc(r.name || '') + ' · ' + esc(r.email || '') + '</p>';
+        if (r.note) extra += '<p>Nota: ' + esc(r.note) + '</p>';
+        extra += '<p>' + esc((r.createdAt || '').slice(0, 16).replace('T', ' ')) + '</p>';
       } else {
         extra = '<p>' + esc(r.roleAtClub || '') + ' · ' + esc(r.email || '') + '</p><p>' + esc(r.motivation || '') + '</p>';
       }
@@ -361,13 +433,39 @@
 
   function decide(kind, id, accept) {
     var comment = accept ? '' : (window.prompt('Motivo del rifiuto (facoltativo)') || '');
+    var cached = null;
+    if (kind === 'lineup') {
+      cached = mergeLocalLineups((adminCache && adminCache.lineups) || []).filter(function (r) {
+        return r && r.id === id;
+      })[0] || null;
+    }
+    function stampLocal(rowHint) {
+      if (kind !== 'lineup') return;
+      var rows = localLineups().map(function (r) {
+        var same = r.id === id || (rowHint && r.teamId === rowHint.teamId &&
+          String(r.email || '').toLowerCase() === String(rowHint.email || '').toLowerCase() &&
+          r.status === 'pending');
+        if (!same) return r;
+        r.status = accept ? 'accepted' : 'declined';
+        r.adminComment = comment;
+        return r;
+      });
+      saveLocalLineups(rows);
+      if (accept && rowHint) applyOfficialLocal(rowHint);
+    }
     apiPost({ action: 'decide', kind: kind, id: id, accept: !!accept, comment: comment }, true)
       .then(function (res) {
+        stampLocal((res && res.item) || cached);
         if (!res || !res.ok) {
+          if (kind === 'lineup') { renderAdmin(); return; }
           window.alert(errText(res));
           return;
         }
         renderAdmin();
+      })
+      .catch(function () {
+        stampLocal(cached);
+        if (kind === 'lineup') renderAdmin();
       });
   }
 
@@ -427,7 +525,7 @@
         '<div class="wr-admin-trigger-card" style="margin-top:1.25rem;border-color:rgba(56,189,248,0.35);">' +
         '<p class="es-mgr-kicker">Governance squadre</p>' +
         '<h3 style="margin:0 0 0.4rem;color:#fff;">Inbox Manager Elisee Scout</h3>' +
-        '<p style="margin:0 0 0.6rem;color:#cbd5e1;font-size:0.88rem;">Candidature e proposte di modifica: accetta per pubblicare, declina per chiudere.</p>' +
+        '<p style="margin:0 0 0.6rem;color:#cbd5e1;font-size:0.88rem;">Candidature manager, correzioni squadra e suggerimenti di modulo/XI: Accetta per pubblicare, Declina per chiudere.</p>' +
         '<div id="es-mgr-admin-panel"></div></div>';
       var stats = dash.querySelector('[style*="grid-template-columns:repeat(5,1fr)"]');
       if (stats && stats.parentNode) stats.parentNode.insertBefore(box, stats);

@@ -202,6 +202,35 @@
   padding-bottom: 0.2rem;
 }
 .es-xi-bench .es-xi-slot { position: relative; transform: none; width: 70px; flex: 0 0 auto; }
+.es-xi-suggest { margin-top: 0.75rem; }
+.es-xi-official {
+  margin: 0;
+  color: #e2e8f0 !important;
+  font-weight: 700;
+}
+.es-xi-hint { font-size: 0.82rem; color: #94a3b8; }
+.es-xi-pending {
+  margin: 0.35rem 0 0.6rem;
+  font-size: 0.8rem;
+  color: #fbbf24;
+}
+.es-xi-suggest label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin: 0.5rem 0 0.7rem;
+}
+.es-xi-suggest textarea {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.25);
+  color: #e2e8f0;
+  padding: 0.55rem 0.7rem;
+  font: inherit;
+}
 @media (max-width: 640px) {
   .es-xi-slot { width: 62px; }
   .es-xi-card { width: 62px; }

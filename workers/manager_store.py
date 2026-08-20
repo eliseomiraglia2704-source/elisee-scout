@@ -60,6 +60,8 @@ def _state() -> dict:
     st.setdefault("applications", [])
     st.setdefault("proposals", [])
     st.setdefault("managers", [])
+    st.setdefault("lineups", [])
+    st.setdefault("officialLineups", {})
     return st
 
 
@@ -153,13 +155,21 @@ def my_view(user: dict | None, email_hint: str = "") -> dict:
 
     apps = [_public_app(a) for a in st["applications"] if mine(a)]
     props = [_public_prop(p) for p in st["proposals"] if mine(p)]
+    lineups = [_public_lineup(p) for p in st.get("lineups") or [] if mine(p)]
     teams = [
         {"teamId": m.get("teamId"), "teamName": m.get("teamName"), "league": m.get("league") or ""}
         for m in st["managers"]
         if (email and str(m.get("email") or "").lower() == email)
         or (uid and str(m.get("userId") or "") == uid)
     ]
-    return {"ok": True, "applications": apps, "proposals": props, "teams": teams, "fields": FIELD_LABELS}
+    return {
+        "ok": True,
+        "applications": apps,
+        "proposals": props,
+        "lineups": lineups,
+        "teams": teams,
+        "fields": FIELD_LABELS,
+    }
 
 
 def apply_as_manager(user: dict | None, body: dict) -> tuple[int, dict]:
@@ -246,19 +256,89 @@ def propose_change(user: dict | None, body: dict) -> tuple[int, dict]:
     return 200, {"ok": True, "proposal": _public_prop(row)}
 
 
+def _public_lineup(p: dict) -> dict:
+    return {
+        "id": p.get("id"),
+        "teamId": p.get("teamId"),
+        "teamName": p.get("teamName"),
+        "league": p.get("league") or "",
+        "name": p.get("name") or "",
+        "email": p.get("email") or "",
+        "userId": p.get("userId") or "",
+        "module": p.get("module") or "",
+        "previousModule": p.get("previousModule") or "",
+        "slots": p.get("slots") or {},
+        "note": p.get("note") or "",
+        "status": p.get("status") or "pending",
+        "createdAt": p.get("createdAt"),
+        "decidedAt": p.get("decidedAt"),
+        "adminComment": p.get("adminComment") or "",
+        "applied": bool(p.get("applied")),
+    }
+
+
+def propose_lineup(user: dict | None, body: dict) -> tuple[int, dict]:
+    ident = _identity(user, body)
+    team_id = str(body.get("teamId") or "").strip()
+    team_name = str(body.get("teamName") or "").strip()
+    module = str(body.get("module") or "").strip()
+    if not team_id or not module:
+        return 400, {"ok": False, "error": "squadra_o_modulo_mancante"}
+    if not ident["email"] and not ident["name"]:
+        return 400, {"ok": False, "error": "nome_email_obbligatori"}
+    slots = body.get("slots") if isinstance(body.get("slots"), dict) else {}
+    st = _state()
+    for row in st.get("lineups") or []:
+        if row.get("status") != "pending":
+            continue
+        if row.get("teamId") != team_id:
+            continue
+        same = str(row.get("email") or "").lower() == ident["email"]
+        if same:
+            return 409, {"ok": False, "error": "proposta_formazione_gia_inviata"}
+    row = {
+        "id": _uid(),
+        "teamId": team_id,
+        "teamName": team_name or team_id,
+        "league": str(body.get("league") or "").strip(),
+        "module": module,
+        "previousModule": str(body.get("previousModule") or "").strip(),
+        "slots": slots,
+        "note": str(body.get("note") or "").strip(),
+        "status": "pending",
+        "createdAt": _now(),
+        "applied": False,
+        **ident,
+    }
+    st["lineups"].insert(0, row)
+    _save(st)
+    return 200, {"ok": True, "lineup": _public_lineup(row)}
+
+
+def official_lineup(team_id: str) -> dict:
+    st = _state()
+    row = (st.get("officialLineups") or {}).get(str(team_id or ""))
+    if not isinstance(row, dict):
+        return {"ok": True, "official": None}
+    return {"ok": True, "official": row}
+
+
 def admin_inbox() -> dict:
     st = _state()
     pending_a = sum(1 for a in st["applications"] if a.get("status") == "pending")
     pending_p = sum(1 for p in st["proposals"] if p.get("status") == "pending")
+    pending_l = sum(1 for p in st.get("lineups") or [] if p.get("status") == "pending")
     return {
         "ok": True,
         "counts": {
             "applicationsPending": pending_a,
             "proposalsPending": pending_p,
+            "lineupsPending": pending_l,
             "managers": len(st["managers"]),
         },
         "applications": [_public_app(a) for a in st["applications"]],
         "proposals": [_public_prop(p) for p in st["proposals"]],
+        "lineups": [_public_lineup(p) for p in st.get("lineups") or []],
         "managers": st["managers"],
         "fields": FIELD_LABELS,
     }
@@ -290,7 +370,12 @@ def _apply_to_catalog(team_id: str, changes: dict) -> bool:
 
 def decide(kind: str, item_id: str, accept: bool, comment: str = "") -> tuple[int, dict]:
     st = _state()
-    bucket = "applications" if kind == "application" else "proposals"
+    if kind == "lineup":
+        bucket = "lineups"
+    elif kind == "application":
+        bucket = "applications"
+    else:
+        bucket = "proposals"
     rows = st.get(bucket) or []
     row = None
     for r in rows:
@@ -320,6 +405,24 @@ def decide(kind: str, item_id: str, accept: bool, comment: str = "") -> tuple[in
     if accept and kind == "proposal":
         applied = _apply_to_catalog(str(row.get("teamId") or ""), row.get("changes") or {})
         row["applied"] = applied
+    if accept and kind == "lineup":
+        tid = str(row.get("teamId") or "")
+        st.setdefault("officialLineups", {})
+        st["officialLineups"][tid] = {
+            "teamId": tid,
+            "teamName": row.get("teamName") or "",
+            "module": row.get("module") or "4-3-3",
+            "slots": row.get("slots") or {},
+            "updatedAt": _now(),
+            "proposalId": row.get("id"),
+        }
+        row["applied"] = True
+        applied = True
     _save(st)
-    out = _public_app(row) if kind == "application" else _public_prop(row)
+    if kind == "application":
+        out = _public_app(row)
+    elif kind == "lineup":
+        out = _public_lineup(row)
+    else:
+        out = _public_prop(row)
     return 200, {"ok": True, "item": out, "applied": applied}

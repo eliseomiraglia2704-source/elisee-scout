@@ -83,6 +83,18 @@
     var u = user();
     return window.isPlayerSiteRole ? window.isPlayerSiteRole(u) : /giocatore|calciatore|portiere/i.test(String(u.ruolo || ''));
   }
+  function localLineups() {
+    try { return JSON.parse(localStorage.getItem('elisee_lineup_proposals') || '[]') || []; } catch (_) { return []; }
+  }
+  function saveLocalLineups(rows) {
+    try { localStorage.setItem('elisee_lineup_proposals', JSON.stringify(rows || [])); } catch (_) {}
+  }
+  function pendingForTeam(teamId) {
+    var email = meKey();
+    return localLineups().filter(function (r) {
+      return r && r.status === 'pending' && r.teamId === teamId && String(r.email || '').toLowerCase() === email;
+    })[0] || null;
+  }
   function loadXi(teamId) {
     try {
       var all = JSON.parse(localStorage.getItem('elisee_team_xi') || '{}') || {};
@@ -130,22 +142,54 @@
     team: null,
     selected: null,
     module: '4-3-3',
+    officialModule: '4-3-3',
     open: function (team) {
       this.team = team || (window.EliseeSquadreSelect && window.EliseeSquadreSelect.getSelected && window.EliseeSquadreSelect.getSelected());
       if (!this.team) return;
       var saved = loadXi(this.team.id);
-      this.module = saved.module || '4-3-3';
+      this.officialModule = (saved && saved.officialModule) || saved.module || '4-3-3';
+      this.module = this.officialModule;
       this.selected = null;
       if (typeof window.switchView === 'function') window.switchView('formazione', '#formazione-portal');
       var self = this;
-      setTimeout(function () { self.render(); }, 40);
+      this.fetchOfficial(function () { self.render(); });
+    },
+    fetchOfficial: function (done) {
+      var self = this;
+      var team = this.team;
+      if (!team) { if (done) done(); return; }
+      try {
+        var off = JSON.parse(localStorage.getItem('elisee_official_xi') || '{}') || {};
+        if (off[team.id] && off[team.id].module) {
+          self.officialModule = off[team.id].module;
+          self.module = off[team.id].module;
+          if (off[team.id].slots) {
+            var data = loadXi(team.id);
+            data.slots = Object.assign({}, data.slots || {}, off[team.id].slots);
+            data.officialModule = off[team.id].module;
+            saveXi(team.id, data);
+          }
+        }
+      } catch (_) {}
+      fetch('/api/manager?view=official&teamId=' + encodeURIComponent(team.id))
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (res && res.ok && res.official && res.official.module) {
+            self.officialModule = res.official.module;
+            self.module = res.official.module;
+            try {
+              var off = JSON.parse(localStorage.getItem('elisee_official_xi') || '{}') || {};
+              off[team.id] = res.official;
+              localStorage.setItem('elisee_official_xi', JSON.stringify(off));
+            } catch (_) {}
+          }
+          if (done) done();
+        })
+        .catch(function () { if (done) done(); });
     },
     setModule: function (m) {
       if (!MODULES[m] || !this.team) return;
       this.module = m;
-      var data = loadXi(this.team.id);
-      data.module = m;
-      saveXi(this.team.id, data);
       this.render();
     },
     pick: function (slotId) {
@@ -178,6 +222,83 @@
       saveXi(this.team.id, data);
       if (typeof window.showToast === 'function') window.showToast('Sei in campo con ' + this.team.name + '.', 'success');
       this.render();
+    },
+    suggest: function () {
+      var team = this.team;
+      if (!team) return;
+      if (!isLogged()) {
+        if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
+        return;
+      }
+      var existing = pendingForTeam(team.id);
+      if (existing) {
+        if (typeof window.showToast === 'function') {
+          window.showToast('Hai già un suggerimento in attesa per questa squadra (' + existing.module + ').', 'error');
+        }
+        return;
+      }
+      var u = user();
+      var noteEl = document.getElementById('es-xi-note');
+      var note = noteEl ? String(noteEl.value || '').trim() : '';
+      var data = loadXi(team.id);
+      var payload = {
+        action: 'propose-lineup',
+        teamId: team.id,
+        teamName: team.name,
+        league: team.league || '',
+        module: this.module,
+        previousModule: this.officialModule || '4-3-3',
+        slots: data.slots || {},
+        note: note,
+        name: meName(),
+        email: u.email || ''
+      };
+      var localRow = {
+        id: 'loc-' + Date.now(),
+        status: 'pending',
+        createdAt: new Date().toISOString(),
+        teamId: team.id,
+        teamName: team.name,
+        league: team.league || '',
+        module: this.module,
+        previousModule: this.officialModule,
+        slots: data.slots || {},
+        note: note,
+        name: meName(),
+        email: u.email || ''
+      };
+      var self = this;
+      var btn = document.getElementById('es-xi-suggest-btn');
+      if (btn) { btn.disabled = true; btn.textContent = 'Invio…'; }
+      fetch('/api/manager', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (r) { return r.json(); }).then(function (res) {
+        if (res && res.ok && res.lineup) {
+          localRow.id = res.lineup.id;
+          localRow.status = res.lineup.status || 'pending';
+          var loc = localLineups();
+          loc.unshift(localRow);
+          saveLocalLineups(loc);
+          if (typeof window.showToast === 'function') window.showToast('Suggerimento inviato. Lo staff accetta o declina in Admin.', 'success');
+        } else if (res && res.error === 'proposta_formazione_gia_inviata') {
+          if (typeof window.showToast === 'function') window.showToast('Hai già un suggerimento in attesa per questa squadra.', 'error');
+        } else {
+          var locFail = localLineups();
+          locFail.unshift(localRow);
+          saveLocalLineups(locFail);
+          if (typeof window.showToast === 'function') window.showToast('Proposta in coda. Accetta o declina dall\'area Admin.', 'success');
+        }
+      }).catch(function () {
+        var locNet = localLineups();
+        locNet.unshift(localRow);
+        saveLocalLineups(locNet);
+        if (typeof window.showToast === 'function') window.showToast('Proposta in coda locale: accetta o declina dall\'area Admin.', 'success');
+      }).then(function () {
+        if (btn) btn.disabled = false;
+        self.render();
+      });
     },
     render: function () {
       var team = this.team;
@@ -235,6 +356,29 @@
             '<button type="button" class="es-xi-fol" id="es-xi-fol">Segui</button>' +
           '</div>';
       }
+      var banner = document.getElementById('es-xi-official');
+      if (banner) {
+        banner.textContent = this.module === this.officialModule
+          ? ('Modulo ufficiale: ' + this.officialModule)
+          : ('Bozza ' + this.module + ' · ufficiale ' + this.officialModule + ' — invia il suggerimento allo staff');
+      }
+      var pendEl = document.getElementById('es-xi-pending');
+      var pend = pendingForTeam(team.id);
+      if (pendEl) {
+        if (pend) {
+          pendEl.hidden = false;
+          pendEl.textContent = 'Suggerimento in attesa: ' + (pend.module || '') +
+            (pend.previousModule && pend.previousModule !== pend.module ? ' (da ' + pend.previousModule + ')' : '') +
+            '. Lo staff lo valuta in Admin.';
+        } else {
+          pendEl.hidden = true;
+          pendEl.textContent = '';
+        }
+      }
+      var btn = document.getElementById('es-xi-suggest-btn');
+      if (btn && !btn.disabled) {
+        btn.textContent = pend ? 'Suggerimento già in attesa' : 'Suggerisci modulo / formazione';
+      }
     },
     bind: function () {
       var root = document.getElementById('formazione-portal');
@@ -253,7 +397,9 @@
         }
         if (e.target.closest('#es-xi-fol') && window.EliseeScopri && self.team) {
           window.EliseeScopri.follow('club-' + self.team.id);
+          return;
         }
+        if (e.target.closest('#es-xi-suggest-btn')) self.suggest();
       });
     }
   };
@@ -272,6 +418,21 @@
       if (d && (d.view === 'formazione' || (d.hash && String(d.hash).indexOf('formazione') >= 0))) {
         window.EliseeFormazione.render();
       }
+    });
+    document.addEventListener('elisee:lineup-official', function (e) {
+      var d = e && e.detail;
+      var form = window.EliseeFormazione;
+      if (!d || !form.team || d.teamId !== form.team.id) return;
+      form.officialModule = d.module || form.officialModule;
+      form.module = d.module || form.module;
+      if (d.slots) {
+        var data = loadXi(form.team.id);
+        data.slots = Object.assign({}, data.slots || {}, d.slots);
+        data.officialModule = form.officialModule;
+        data.module = form.module;
+        saveXi(form.team.id, data);
+      }
+      form.render();
     });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);

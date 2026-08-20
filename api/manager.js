@@ -18,9 +18,15 @@ function uid() {
 }
 function load() {
   try {
-    return JSON.parse(fs.readFileSync(FILE, 'utf8'));
+    const st = JSON.parse(fs.readFileSync(FILE, 'utf8')) || {};
+    if (!st.applications) st.applications = [];
+    if (!st.proposals) st.proposals = [];
+    if (!st.managers) st.managers = [];
+    if (!st.lineups) st.lineups = [];
+    if (!st.officialLineups) st.officialLineups = {};
+    return st;
   } catch (e) {
-    return { applications: [], proposals: [], managers: [] };
+    return { applications: [], proposals: [], managers: [], lineups: [], officialLineups: {} };
   }
 }
 function save(st) {
@@ -64,13 +70,20 @@ module.exports = async function handler(req, res) {
       if (!isAdmin(req)) return send(res, 401, { ok: false, error: 'admin_richiesto' });
       const pendingA = st.applications.filter((a) => a.status === 'pending').length;
       const pendingP = st.proposals.filter((p) => p.status === 'pending').length;
+      const pendingL = (st.lineups || []).filter((p) => p.status === 'pending').length;
       return send(res, 200, {
         ok: true,
-        counts: { applicationsPending: pendingA, proposalsPending: pendingP, managers: st.managers.length },
+        counts: { applicationsPending: pendingA, proposalsPending: pendingP, lineupsPending: pendingL, managers: st.managers.length },
         applications: st.applications,
         proposals: st.proposals,
+        lineups: st.lineups || [],
         managers: st.managers
       });
+    }
+    if (view === 'official') {
+      const teamId = String(url.searchParams.get('teamId') || '');
+      const official = (st.officialLineups || {})[teamId] || null;
+      return send(res, 200, { ok: true, official: official });
     }
     const email = String(url.searchParams.get('email') || '').toLowerCase();
     const mine = (row) => email && String(row.email || '').toLowerCase() === email;
@@ -78,6 +91,7 @@ module.exports = async function handler(req, res) {
       ok: true,
       applications: st.applications.filter(mine),
       proposals: st.proposals.filter(mine),
+      lineups: (st.lineups || []).filter(mine),
       teams: st.managers.filter(mine).map((m) => ({ teamId: m.teamId, teamName: m.teamName, league: m.league || '' }))
     });
   }
@@ -132,9 +146,37 @@ module.exports = async function handler(req, res) {
     save(st);
     return send(res, 200, { ok: true, proposal: row });
   }
+  if (action === 'propose-lineup') {
+    if (!body.teamId || !body.module) return send(res, 400, { ok: false, error: 'squadra_o_modulo_mancante' });
+    if (!email && !name) return send(res, 400, { ok: false, error: 'nome_email_obbligatori' });
+    const pendingDup = (st.lineups || []).some((r) =>
+      r.status === 'pending' &&
+      r.teamId === body.teamId &&
+      email && String(r.email || '').toLowerCase() === email
+    );
+    if (pendingDup) return send(res, 409, { ok: false, error: 'proposta_formazione_gia_inviata' });
+    const row = {
+      id: uid(),
+      teamId: body.teamId,
+      teamName: body.teamName || body.teamId,
+      league: body.league || '',
+      name, email,
+      module: String(body.module || ''),
+      previousModule: String(body.previousModule || ''),
+      slots: body.slots && typeof body.slots === 'object' ? body.slots : {},
+      note: body.note || '',
+      status: 'pending',
+      createdAt: now(),
+      applied: false
+    };
+    st.lineups.unshift(row);
+    save(st);
+    return send(res, 200, { ok: true, lineup: row });
+  }
   if (action === 'decide') {
     if (!isAdmin(req)) return send(res, 401, { ok: false, error: 'admin_richiesto' });
-    const bucket = body.kind === 'application' ? st.applications : st.proposals;
+    const bucket = body.kind === 'application' ? st.applications
+      : (body.kind === 'lineup' ? st.lineups : st.proposals);
     const row = bucket.find((r) => r.id === body.id);
     if (!row) return send(res, 404, { ok: false, error: 'non_trovata' });
     row.status = body.accept ? 'accepted' : 'declined';
@@ -146,8 +188,20 @@ module.exports = async function handler(req, res) {
         email: row.email, name: row.name, since: now()
       });
     }
+    if (body.accept && body.kind === 'lineup') {
+      if (!st.officialLineups) st.officialLineups = {};
+      st.officialLineups[row.teamId] = {
+        teamId: row.teamId,
+        teamName: row.teamName,
+        module: row.module,
+        slots: row.slots || {},
+        updatedAt: now(),
+        proposalId: row.id
+      };
+      row.applied = true;
+    }
     save(st);
-    return send(res, 200, { ok: true, item: row, applied: false });
+    return send(res, 200, { ok: true, item: row, applied: !!row.applied });
   }
   return send(res, 400, { ok: false, error: 'azione_sconosciuta' });
 };
