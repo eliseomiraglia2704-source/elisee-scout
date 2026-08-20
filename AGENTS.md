@@ -40,6 +40,7 @@ Se il push dà 403 (account Git `sfondiitaliani23-svg`), pubblica comunque su Ve
 - Area giocatore: dashboard analitica v3.0 (`player-dash.js`) al posto del solo form. Navbar macroaree su una riga.
 - Area Allenatore: dashboard Discorso Allenatore (`coach-dash.js`) se il ruolo staff è Allenatore (non in seconda).
 - Area Vice Allenatore: dashboard contributo tecnico (`vice-dash.js`) se il ruolo è Allenatore in seconda / Vice allenatore.
+- Area Fisioterapista: dashboard sanitaria (`fisio-dash.js`) se il ruolo staff è Fisioterapista.
 - Area Direttore Sportivo: dashboard DS (`ds-dash.js`) se il ruolo staff è Direttore sportivo. Rail: Secret List.
 - Area Presidente: dashboard Presidenza (`pres-dash.js`) se il ruolo staff è Presidente.
 
