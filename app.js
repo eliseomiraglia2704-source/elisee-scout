@@ -6524,7 +6524,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ids = [
       'view-home', 'view-persone', 'view-about', 'view-pillars', 'view-bacheca',
       'view-squadre', 'view-formazione', 'view-ambassador', 'view-account', 'view-scopri', 'view-mappa', 'view-messaggi', 'view-seguo',
-      'view-tc-panel', 'view-iscrizione', 'view-mercato',
+      'view-tc-panel', 'view-iscrizione', 'view-mercato', 'view-schede',
       'admin-view-group', 'user-dossier-view-group', 'ambassador-view-group',
       'home-views-group'
     ];
@@ -6673,6 +6673,11 @@ document.addEventListener('DOMContentLoaded', () => {
         showEl('view-tc-panel');
         if (!targetHash) setHashSafe('#tc-portal', opts);
         setTimeout(function () { try { if (window.EliseeTC && window.EliseeTC.render) window.EliseeTC.render(); } catch (e) {} }, 40);
+      } else if (viewType === 'schede' || (targetHash && String(targetHash).indexOf('schede') >= 0)) {
+        showEl('view-schede');
+        if (!targetHash) setHashSafe('#schede-tecniche', opts);
+        else setHashSafe(targetHash, opts);
+        setTimeout(function () { try { if (window.EliseeSchede) window.EliseeSchede.render(); } catch (e) {} }, 40);
       } else if (viewType === 'mercato' || (targetHash && (String(targetHash).indexOf('mercato') >= 0 || String(targetHash).indexOf('wall-trasferimenti') >= 0 || String(targetHash).indexOf('secret-list') >= 0))) {
         showEl('view-mercato');
         var mkHash = targetHash || '#mercato-hub';
@@ -7371,6 +7376,8 @@ document.addEventListener('DOMContentLoaded', () => {
       switchView('formazione', '#formazione-portal', noHist);
     } else if (hash.indexOf('tc-portal') >= 0) {
       switchView('tc', '#tc-portal', noHist);
+    } else if (hash.indexOf('schede') >= 0) {
+      switchView('schede', '#schede-tecniche', noHist);
     } else if (hash.indexOf('wall-trasferimenti') >= 0 || hash.indexOf('mercato-hub') >= 0 || hash.indexOf('secret-list') >= 0) {
       switchView('mercato', hash, noHist);
     } else if (hash.indexOf('iscrizione-portal') >= 0) {
@@ -7806,6 +7813,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const sampleJobs = [
     {
+      id: 'attaccante-centrale-stagione-2026-27',
       title: 'Attaccante centrale — stagione 2026/27',
       role: 'Attaccante',
       club: 'ASD Virtus Foggia',
@@ -7818,6 +7826,7 @@ document.addEventListener('DOMContentLoaded', () => {
       svincolato: true
     },
     {
+      id: 'portiere-reattivo-under-19',
       title: 'Portiere reattivo Under 19',
       role: 'Portiere',
       club: 'Accademia Puglia Calcio',
@@ -7830,6 +7839,7 @@ document.addEventListener('DOMContentLoaded', () => {
       svincolato: false
     },
     {
+      id: 'centrocampista-mezzala-eccellenza',
       title: 'Centrocampista mezzala — Eccellenza',
       role: 'Centrocampista',
       club: 'US San Severo',
@@ -7842,6 +7852,7 @@ document.addEventListener('DOMContentLoaded', () => {
       svincolato: true
     },
     {
+      id: 'match-analyst-staff-tecnico',
       title: 'Match Analyst — staff tecnico',
       role: 'Match Analyst',
       club: 'Network Club Lazio',
@@ -7854,6 +7865,7 @@ document.addEventListener('DOMContentLoaded', () => {
       svincolato: false
     },
     {
+      id: 'difensore-centrale-fuoriquota',
       title: 'Difensore centrale fuoriquota',
       role: 'Difensore',
       club: 'Manfredonia Calcio',
@@ -7866,6 +7878,7 @@ document.addEventListener('DOMContentLoaded', () => {
       svincolato: false
     },
     {
+      id: 'preparatore-atletico',
       title: 'Preparatore atletico',
       role: 'Preparatore Atletico',
       club: 'Foggia In Motion',
@@ -7909,7 +7922,26 @@ document.addEventListener('DOMContentLoaded', () => {
       );
     }
 
-    const filtered = sampleJobs.filter(job => {
+    var userJobs = [];
+    try {
+      userJobs = (JSON.parse(localStorage.getItem('elisee_user_jobs') || '[]') || []).map(function (j) {
+        return {
+          id: j.id || ('user-' + String(j.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-')),
+          title: j.title,
+          role: j.ruolo || 'Generico',
+          club: j.societa || '',
+          location: j.zona || '',
+          category: j.category || 'Bacheca',
+          description: j.desc || '',
+          matchScore: 'IA',
+          under: false,
+          housing: false,
+          svincolato: false
+        };
+      });
+    } catch (_) { userJobs = []; }
+    const allJobs = userJobs.concat(sampleJobs);
+    const filtered = allJobs.filter(job => {
       if (roleVal !== 'all' && job.role !== roleVal) return false;
       if (catVal !== 'all' && job.category !== catVal) return false;
       if (locVal !== 'all' && job.location !== locVal) return false;
@@ -7929,7 +7961,10 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `;
     } else {
-      jobsContainer.innerHTML = filtered.map(job => `
+      jobsContainer.innerHTML = filtered.map(job => {
+        const jid = job.id || String(job.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        const safeTitle = String(job.title || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        return `
         <article class="pf-job-card">
           <div>
             <div class="pf-job-meta">
@@ -7940,11 +7975,15 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="pf-job-sub">${job.club} · ${job.location} · ${job.category}</p>
             <p class="pf-job-desc">${job.description}</p>
           </div>
-          <button type="button" class="btn btn-outline-pill pf-job-cta" onclick="openCandidateModal('${job.title.replace(/'/g, "\\'")}')">
-            ${window.isSpectatorRole && window.isSpectatorRole(window.getActiveSiteRole()) ? 'Solo lettura' : 'Candidati'}
-          </button>
+          <div class="pf-job-actions">
+            <button type="button" class="btn btn-outline-pill pf-job-cta" onclick="openCandidateModal('${safeTitle}')">
+              ${window.isSpectatorRole && window.isSpectatorRole(window.getActiveSiteRole()) ? 'Solo lettura' : 'Candidati'}
+            </button>
+            <button type="button" class="btn btn-outline-pill pf-job-cta" onclick="if(window.openSchedeTecniche)window.openSchedeTecniche({id:'${jid}',title:'${safeTitle}',club:'${String(job.club||'').replace(/'/g, "\\'")}',role:'${String(job.role||'').replace(/'/g, "\\'")}',location:'${String(job.location||'').replace(/'/g, "\\'")}'})">Schede tecniche</button>
+          </div>
         </article>
-      `).join('');
+      `;
+      }).join('');
     }
 
     if (window.lucide) lucide.createIcons();
@@ -12217,9 +12256,16 @@ window.submitJobApplication = function (title) {
       at: new Date().toISOString()
     });
     localStorage.setItem('elisee_job_applications', JSON.stringify(list.slice(0, 80)));
+    if (window.EliseeSchede && window.EliseeSchede.addApplicant) {
+      window.EliseeSchede.addApplicant({
+        id: window.EliseeSchede.jobId(title),
+        title: title,
+        role: user.ruoloDettagliato || user.ruolo || ''
+      }, user, list[0] && list[0].note);
+    }
   } catch (_) {}
   if (typeof window.closeModal === 'function') window.closeModal();
-  if (typeof window.showToast === 'function') window.showToast('Candidatura inviata.', 'success');
+  if (typeof window.showToast === 'function') window.showToast('Candidatura inviata. La scheda tecnica è nella candidatura, non in e-mail.', 'success');
 };
 
 window.openAreaRiservataModal = openAreaRiservataModal;
@@ -12799,25 +12845,23 @@ window.performAdminLogout = function() {
         createdAt: new Date().toISOString()
       });
       localStorage.setItem('elisee_user_jobs', JSON.stringify(list.slice(0, 50)));
+      if (window.EliseeSchede && window.EliseeSchede.ensureJob) {
+        window.EliseeSchede.ensureJob({
+          id: list[0].id,
+          title: title,
+          club: societa,
+          role: ruolo || 'Generico',
+          location: zona || ''
+        });
+      }
     } catch (e) {}
     closePubblicaAnnuncioModal();
     if (typeof window.switchView === 'function') window.switchView('bacheca', '#bacheca-annunci');
     setTimeout(function () {
+      if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs();
       var jobs = document.getElementById('jobs-container');
-      if (jobs) {
-        var card = document.createElement('div');
-        card.className = 'job-card pf-job-card';
-        card.style.cssText = 'padding:1rem;border:1px solid rgba(56,189,248,0.35);border-radius:12px;background:rgba(56,189,248,0.08);margin-bottom:0.75rem;';
-        card.innerHTML = '<div style="font-size:0.72rem;color:#38bdf8;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.35rem;">NUOVO · TU</div>' +
-          '<h4 style="margin:0 0 0.35rem;color:#fff;font-size:1.05rem;">' + title.replace(/</g, '&lt;') + '</h4>' +
-          '<p style="margin:0;color:#94a3b8;font-size:0.85rem;">' + societa.replace(/</g, '&lt;') +
-          (ruolo ? ' · ' + ruolo.replace(/</g, '&lt;') : '') +
-          (zona ? ' · ' + zona.replace(/</g, '&lt;') : '') + '</p>' +
-          (desc ? '<p style="margin:0.5rem 0 0;color:#cbd5e1;font-size:0.84rem;line-height:1.45;">' + desc.replace(/</g, '&lt;') + '</p>' : '');
-        jobs.insertBefore(card, jobs.firstChild);
-        jobs.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-      if (typeof window.showToast === 'function') window.showToast('Annuncio pubblicato in Bacheca', 'success');
+      if (jobs) jobs.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (typeof window.showToast === 'function') window.showToast('Annuncio pubblicato. Le schede tecniche IA sono nella candidatura, non in e-mail.', 'success');
     }, 120);
     // reset form
     ['pub-ann-title', 'pub-ann-societa', 'pub-ann-ruolo', 'pub-ann-zona', 'pub-ann-desc'].forEach(function (id) {

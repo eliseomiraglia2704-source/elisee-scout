@@ -289,6 +289,7 @@
   <link rel="stylesheet" href="scopri-profili.css?v=20260820_DARK1">
   <link rel="stylesheet" href="messaggi.css?v=20260820_DARK1">
   <link rel="stylesheet" href="mercato-hub.css?v=20260820_MKT2">
+  <link rel="stylesheet" href="schede-tecniche.css?v=20260820_ST1">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
@@ -518,7 +519,7 @@
     (function () {
       var VIEW_IDS = [
         'view-home', 'view-persone', 'view-about', 'view-pillars', 'view-bacheca',
-        'view-squadre', 'view-formazione', 'view-ambassador', 'view-account', 'view-scopri', 'view-mappa', 'view-messaggi', 'view-seguo', 'view-tc-panel', 'view-iscrizione', 'view-mercato', 'admin-view-group', 'user-dossier-view-group',
+        'view-squadre', 'view-formazione', 'view-ambassador', 'view-account', 'view-scopri', 'view-mappa', 'view-messaggi', 'view-seguo', 'view-tc-panel', 'view-iscrizione', 'view-mercato', 'view-schede', 'admin-view-group', 'user-dossier-view-group',
         'ambassador-view-group', 'home-views-group'
       ];
       var _histLock = false;
@@ -570,6 +571,7 @@
         if (view === 'formazione') return '#formazione-portal';
         if (view === 'tc') return '#tc-portal';
         if (view === 'mercato') return '#mercato-hub';
+        if (view === 'schede') return '#schede-tecniche';
         if (view === 'iscrizione') return '#iscrizione-portal';
         if (view === 'area-riservata') return '#area-riservata';
         return '#hero';
@@ -593,6 +595,7 @@
         if (h.indexOf('iscrizione') >= 0) return 'iscrizione';
         if (h.indexOf('tc-portal') >= 0) return 'tc';
         if (h.indexOf('wall-trasferimenti') >= 0 || h.indexOf('mercato') >= 0 || h.indexOf('secret-list') >= 0) return 'mercato';
+        if (h.indexOf('schede') >= 0) return 'schede';
         if (h.indexOf('area-riservata') >= 0) return 'area-riservata';
         if (h.indexOf('minigioco') >= 0) return 'minigioco';
         return 'home';
@@ -760,6 +763,11 @@
               hash = '#mercato-hub';
             }
             setTimeout(function () { try { if (window.EliseeMercato) window.EliseeMercato.render(); } catch (e) {} }, 40);
+          } else if (view === 'schede') {
+            show('view-schede');
+            setActiveNav('bacheca');
+            hash = hash || '#schede-tecniche';
+            setTimeout(function () { try { if (window.EliseeSchede) window.EliseeSchede.render(); } catch (e) {} }, 40);
           } else if (view === 'iscrizione') {
             show('view-iscrizione');
             hash = hash || '#iscrizione-portal';
@@ -3503,6 +3511,33 @@
       </section>
     </div>
 
+    <div id="view-schede" style="display:none;">
+      <section id="schede-portal" class="es-st">
+        <p class="es-st-kicker">Candidatura pubblicata</p>
+        <h1 class="es-st-title" id="es-st-title">Schede tecniche</h1>
+        <p class="es-st-lead" id="es-st-lead">Tutti i profili selezionati dall’IA, in un’unica schermata. Niente e-mail: le schede restano qui.</p>
+        <p class="es-st-note">Raccolte nella candidatura · consultazione, confronto e gestione centralizzata</p>
+        <div class="es-st-toolbar">
+          <button type="button" class="es-st-ghost" onclick="if(window.switchView) window.switchView('bacheca','#bacheca-annunci');">← Bacheca</button>
+          <select id="es-st-sort">
+            <option value="match">Ordina per compatibilità</option>
+            <option value="name">Ordina per nome</option>
+          </select>
+          <select id="es-st-filter">
+            <option value="">Tutti gli stati</option>
+            <option value="nuova">Nuova</option>
+            <option value="in valutazione">In valutazione</option>
+            <option value="shortlist">Shortlist</option>
+            <option value="scartata">Scartata</option>
+          </select>
+        </div>
+        <div class="es-st-split">
+          <div class="es-st-list" id="es-st-list"></div>
+          <div id="es-st-detail"></div>
+        </div>
+      </section>
+    </div>
+
   </main>
 
   <footer class="site-footer pf-footer">
@@ -3524,6 +3559,7 @@
             <li><a href="#about" onclick="switchView('about'); return false;">Chi siamo</a></li>
             <li><a href="#dashboard-skills" onclick="switchView('pillars'); return false;">Curriculum</a></li>
             <li><a href="#bacheca-annunci" onclick="switchView('bacheca'); return false;">Bacheca</a></li>
+            <li><a href="#schede-tecniche" onclick="if(window.openSchedeTecniche){window.openSchedeTecniche({id:'attaccante-centrale-stagione-2026-27',title:'Attaccante centrale — stagione 2026/27',club:'ASD Virtus Foggia',role:'Attaccante',location:'Foggia'});} return false;">Schede tecniche</a></li>
             <li><a href="#scopri-portal" onclick="if(window.openScopriProfili){window.openScopriProfili('staff');}else{switchView('scopri','#scopri-portal');} return false;">Scopri profili</a></li>
             <li><a href="#wall-trasferimenti" onclick="if(window.openTransferWall){window.openTransferWall();}else{switchView('mercato','#wall-trasferimenti');} return false;">Wall mercato</a></li>
             <li><a href="#mercato-hub" onclick="if(window.openSecretList){window.openSecretList();}else{switchView('mercato','#mercato-hub');} return false;">Secret List</a></li>
@@ -4830,11 +4866,12 @@
   <script src="tc-panel.js?v=20260820_TC2"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260820_MKT1"></script>
+  <script src="app.js?v=20260820_ST1"></script>
   <script src="player-profile.js?v=20260820_MKT2"></script>
   <script src="scopri-profili.js?v=20260820_MKT1"></script>
   <script src="messaggi.js?v=20260820_MSG1"></script>
   <script src="mercato-hub.js?v=20260820_MKT2"></script>
+  <script src="schede-tecniche.js?v=20260820_ST1"></script>
   <script src="mappa-club.js?v=20260820_FORM1"></script>
   <script src="chi-segui.js?v=20260820_FORM1"></script>
   <script src="verifica-account.js?v=20260820_VF2"></script>

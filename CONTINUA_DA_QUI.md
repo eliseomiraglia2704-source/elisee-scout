@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-20**
-Ultimo fatto: Hub Mercato B2B — Secret List nel profilo DS/Scout + Wall FIFA (card, maglia, TRASFERITO, ticker).
-Feature precedente: Informativa privacy v1.3 (`e1435e4`).
+Ultimo fatto: Schede tecniche IA dentro la candidatura pubblicata (niente email). Club consulta, confronta e gestisce i profili in un’unica schermata.
+Feature precedente: Hub Mercato B2B (`cb9d60d`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -60,6 +60,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
+| (questo) | Schede tecniche IA nella candidatura pubblicata |
+| `cb9d60d` | Hub Mercato: Secret List nel profilo DS/Scout + Wall FIFA |
 | `a69b460` | Hub Mercato: Secret List stealth + Wall FIFA |
 | `e1435e4` | Privacy v1.3: Titolare + geo / moderazione / Scheda Tecnica IA |
 | `6f81fe2` | Pannello TC: panoramica completa e ingresso dall'area account |
@@ -102,6 +104,7 @@ localStorage:
 - `elisee_b2b_threads_v1`
 - `elisee_secret_lists_v1` — Secret List per DS/Scout (solo locale, stealth)
 - `elisee_transfer_wall_v1` — Wall trattative chiuse
+- `elisee_job_sheets_v1` — schede tecniche IA per annuncio
 - `elisee_admin_auth`
 
 Eventi: `elisee:squadra-selected`, `elisee:lineup-official`.
@@ -124,6 +127,7 @@ Nota Vercel: lo store manager è su `/tmp` (effimero). In locale `state.json` è
 | Seleziona squadra | `squadre-select.js` / `.css` |
 | Formazione XI | `formazione-squadra.js` / `.css` |
 | Hub Mercato | `mercato-hub.js` / `.css` — Secret List + Wall |
+| Schede tecniche | `schede-tecniche.js` / `.css` — dentro l’annuncio |
 | Manager + admin inbox | `manager-runtime.js`, `manager.css`, `api/manager.js`, `workers/manager_store.py` |
 | Server locale | `elisee_up.py` porta 8080 |
 | SW | `sw.js` |
@@ -139,7 +143,7 @@ Copia utente Grok: `C:\Users\Eliseo Miraglia\.grok\skills\elisee-scout-deploy\SK
 
 Nessuna richiesta aperta. Chiedere a Eliseo cosa fare dopo.
 
-Hub Mercato: `#mercato-hub` Secret List (DS/Scout, stealth, nessuna notifica). `#wall-trasferimenti` Wall pubblico FIFA. Ingresso da navbar, menu account, tab utente, Scopri (pulsante Secret List sui player), homepage.
+Schede tecniche: da ogni annuncio in Bacheca → pulsante **Schede tecniche**. Le schede IA restano nella candidatura (`#schede-tecniche`), non via e-mail. Club: lista, scheda completa, confronto (fino a 3), stati (nuova / in valutazione / shortlist / scartata). Cache `ST1`.
 
 Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
@@ -147,6 +151,7 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-20** — Schede tecniche IA raccolte nella candidatura pubblicata. File: `schede-tecniche.js` / `.css`. Ingresso da Bacheca. Cache `ST1`.
 - **2026-08-20** — Hub Mercato: Secret List nel profilo Staff DS/Scout; Wall FIFA con ribbon UFFICIALE, maglia, card e ticker. Cache `MKT2`.
 - **2026-08-20** — Hub Mercato B2B: Secret List stealth per DS/Scout (colonne POR/DIF/CEN/ATT, priorità, note private, zero notifiche) e Wall trattative chiuse stile FIFA (card, maglia, TRASFERITO). File: `mercato-hub.js` / `.css`. Cache `MKT1`.
 - **2026-08-20** — Informativa privacy v1.3: punto 3 (Titolare) con chat e area riservata; geolocalizzazione (punti 4 e 6), moderazione messaggi (punti 6 e 14), Scheda Tecnica IA per Club (punti 6, 7, 15, 17 Art. 22). Numerazione allineata all’indice (14–19). File: `privacy-policy.html`. Cache SW `priv1`.
