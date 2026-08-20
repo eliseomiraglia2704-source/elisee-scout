@@ -1145,6 +1145,16 @@
     if (isPlayer) {
       bind();
       if (!filling && !notifsOn) fillForm(user);
+      try {
+        var dash = document.getElementById('es-pd');
+        var host = document.getElementById('es-player-profile');
+        if (!notifsOn && window.EliseePlayerDash && window.EliseePlayerDash.render) {
+          window.EliseePlayerDash.render(user);
+        } else {
+          if (dash) dash.hidden = true;
+          if (host) host.classList.remove('es-pd-on');
+        }
+      } catch (_) {}
     }
     if (isStaff) {
       bindStaff();

@@ -37,6 +37,7 @@ Se il push dà 403 (account Git `sfondiitaliani23-svg`), pubblica comunque su Ve
 - Hub Mercato (`mercato-hub.js`): Secret List stealth solo DS/Scout (niente notifiche a atleta/procuratore/club); Wall trattative chiuse stile FIFA (`#mercato-hub`, `#wall-trasferimenti`).
 - Schede tecniche IA (`schede-tecniche.js`): raccolte nella candidatura pubblicata (`#schede-tecniche`), non via e-mail. Club consulta, confronta e gestisce gli stati.
 - Pubblica candidatura: riservata ai profili Club. Form a due blocchi (Cosa offriamo / Cosa richiediamo) + opzione IA che candida in automatico i profili compatibili.
+- Area giocatore: dashboard analitica v3.0 (`player-dash.js`) al posto del solo form. Navbar macroaree su una riga.
 
 ## Skill
 
