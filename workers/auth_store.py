@@ -127,7 +127,96 @@ def _public_user(u: dict) -> dict:
         "consents": u.get("consents") or {},
         "registratoIl": u.get("createdAt"),
         "username": u.get("username") or (u.get("email") or "").split("@")[0],
+        "roleConfirmedAt": u.get("roleConfirmedAt") or "",
+        "verifyDocsDeadline": u.get("verifyDocsDeadline") or "",
+        "docsAttachedAt": u.get("docsAttachedAt") or "",
+        "badgeVerificaStato": u.get("badgeVerificaStato") or "none",
+        "accountClosed": bool(u.get("accountClosed")),
+        "accountClosedReason": u.get("accountClosedReason") or "",
+        "needsIdentityDocument": bool(u.get("needsIdentityDocument")),
     }
+
+
+GRACE_DAYS = 30
+_SPECTATOR = ("spettatore", "tifoso")
+
+
+def _is_spectator(u: dict) -> bool:
+    r = str(u.get("ruolo") or u.get("role") or "").strip().lower()
+    return r in _SPECTATOR
+
+
+def _docs_ok(u: dict) -> bool:
+    st = str(u.get("badgeVerificaStato") or "").strip().lower()
+    if st in ("pending", "in_review", "approved", "temp_approved"):
+        return True
+    if u.get("docsAttachedAt"):
+        return True
+    if u.get("badgeDocumentUrl") or u.get("badgeSelfieUrl"):
+        return True
+    return False
+
+
+def _ts(iso: str | None) -> float:
+    raw = str(iso or "").strip().replace("Z", "")
+    for fmt in ("%Y-%m-%dT%H:%M:%S", "%Y-%m-%d"):
+        try:
+            return time.mktime(time.strptime(raw[:19] if "T" in fmt else raw[:10], fmt))
+        except Exception:
+            continue
+    return 0.0
+
+
+def _plus_days(iso: str | None, days: int) -> str:
+    base = _ts(iso) or time.time()
+    return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(base + days * 86400))
+
+
+def _apply_verify_rules(u: dict) -> bool:
+    if not isinstance(u, dict):
+        return False
+    before = (
+        u.get("verifyDocsDeadline"),
+        bool(u.get("accountClosed")),
+        u.get("roleConfirmedAt"),
+        u.get("accountClosedReason"),
+    )
+    if u.get("accountClosed") or _is_spectator(u) or _docs_ok(u):
+        return False
+    ruolo = str(u.get("ruolo") or u.get("role") or "").strip()
+    if not ruolo:
+        return False
+    if not u.get("verifyDocsDeadline"):
+        u["roleConfirmedAt"] = u.get("roleConfirmedAt") or _now()
+        u["verifyDocsDeadline"] = _plus_days(_now(), GRACE_DAYS)
+        u["needsIdentityDocument"] = True
+    elif _ts(u.get("verifyDocsDeadline")) and _ts(u.get("verifyDocsDeadline")) <= time.time():
+        u["accountClosed"] = True
+        u["accountClosedAt"] = _now()
+        u["accountClosedReason"] = "docs_timeout"
+        u["statusLegale"] = "closed_docs_timeout"
+    after = (
+        u.get("verifyDocsDeadline"),
+        bool(u.get("accountClosed")),
+        u.get("roleConfirmedAt"),
+        u.get("accountClosedReason"),
+    )
+    return before != after
+
+
+def _replace_user(u: dict) -> None:
+    users = _users()
+    uid = u.get("id")
+    email = str(u.get("email") or "").strip().lower()
+    for i, row in enumerate(users):
+        if (uid and row.get("id") == uid) or (
+            email and str(row.get("email") or "").strip().lower() == email
+        ):
+            users[i] = u
+            _save_users(users)
+            return
+    users.append(u)
+    _save_users(users)
 
 
 def _find_by_email(email: str) -> dict | None:
@@ -161,6 +250,8 @@ def get_user_by_token(token: str) -> dict | None:
     uid = sess.get("userId")
     for u in _users():
         if u.get("id") == uid:
+            if _apply_verify_rules(u):
+                _replace_user(u)
             return _public_user(u)
     return None
 
@@ -229,6 +320,14 @@ def login_email(payload: dict) -> tuple[int, dict]:
     _, digest = _hash_password(password, salt)
     if digest != user.get("password_hash"):
         return 401, {"ok": False, "error": "credenziali_non_valide"}
+    if _apply_verify_rules(user):
+        _replace_user(user)
+    if user.get("accountClosed"):
+        return 403, {
+            "ok": False,
+            "error": "account_chiuso",
+            "reason": user.get("accountClosedReason") or "docs_timeout",
+        }
     token = _create_session(user["id"])
     return 200, {"ok": True, "token": token, "user": _public_user(user)}
 
@@ -332,6 +431,14 @@ def login_or_register_identity(
         if cognome and not user.get("cognome"):
             user["cognome"] = cognome
         _save_users(users)
+    if _apply_verify_rules(user):
+        _replace_user(user)
+    if user.get("accountClosed"):
+        return 403, {
+            "ok": False,
+            "error": "account_chiuso",
+            "reason": user.get("accountClosedReason") or "docs_timeout",
+        }
     token = _create_session(user["id"])
     needs_password = not bool(user.get("password_hash"))
     return 200, {
@@ -340,6 +447,42 @@ def login_or_register_identity(
         "user": _public_user(user),
         "needsPassword": needs_password,
     }
+
+
+def sync_verify_docs(token: str, body: dict | None) -> tuple[int, dict]:
+    body = body or {}
+    pub = get_user_by_token(token)
+    if not pub:
+        return 401, {"ok": False, "error": "non_autenticato"}
+    raw = _find_by_email(str(pub.get("email") or ""))
+    if not raw:
+        return 404, {"ok": False, "error": "utente_non_trovato"}
+    action = str(body.get("action") or "").strip().lower()
+    if action == "start":
+        if body.get("ruolo"):
+            raw["ruolo"] = str(body.get("ruolo")).strip()
+        raw["roleConfirmedAt"] = raw.get("roleConfirmedAt") or _now()
+        if not raw.get("verifyDocsDeadline"):
+            raw["verifyDocsDeadline"] = _plus_days(_now(), GRACE_DAYS)
+        raw["needsIdentityDocument"] = not _is_spectator(raw)
+    elif action == "docs":
+        raw["docsAttachedAt"] = _now()
+        raw["badgeVerificaStato"] = str(body.get("badgeVerificaStato") or "pending")
+    elif action == "close":
+        raw["accountClosed"] = True
+        raw["accountClosedAt"] = _now()
+        raw["accountClosedReason"] = str(body.get("reason") or "docs_timeout")
+        raw["statusLegale"] = "closed_docs_timeout"
+    _apply_verify_rules(raw)
+    _replace_user(raw)
+    if raw.get("accountClosed"):
+        return 403, {
+            "ok": False,
+            "error": "account_chiuso",
+            "reason": raw.get("accountClosedReason") or "docs_timeout",
+            "user": _public_user(raw),
+        }
+    return 200, {"ok": True, "user": _public_user(raw)}
 
 
 def login_or_register_google(id_token: str, extras: dict | None = None) -> tuple[int, dict]:

@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-20**
-Ultimo fatto: italiano rotto (mojibake `â€ / Ã / cittÃ`) corretto in Ambassador e in tutto `index.html` + commenti `squadre-select.js`.
-Feature precedente: `9021752` — *Utenti suggeriscono modulo/XI; Admin accetta o declina.* Tracce account Grok: `7ec3186`.
+Ultimo fatto: regola anti-fake — 30 giorni per allegare i documenti dopo il ruolo, avvisi continui, poi chiusura automatica dell’account.
+Feature precedente: italiano mojibake (`66d33c0`); formazione/moduli (`9021752`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -130,13 +130,14 @@ Copia utente Grok: `C:\Users\Eliseo Miraglia\.grok\skills\elisee-scout-deploy\SK
 
 ## Prossimo passo
 
-Nessuna richiesta aperta. Chiedere a Eliseo cosa fare dopo. Non inventare feature.
+Nessuna richiesta aperta. Chiedere a Eliseo cosa fare dopo.
 
-Se il server locale 8080 era già avviato prima delle patch Python (`elisee_up.py` / `manager_store.py`), riavviarlo per `propose-lineup` in locale. Per vedere l’italiano corretto in locale: ricarica forzata (Ctrl+F5) su http://127.0.0.1:8080/#ambassador-portal
+Se `elisee_up.py` era già avviato, riavviarlo: login locale rifiuta gli account chiusi e `/api/auth/verify-docs` è nuovo.
 
 ---
 
 ## Diario sessioni
 
 - **2026-08-20** — Chiuso suggest modulo/XI + admin (`9021752`). Poi `CONTINUA_DA_QUI.md` + `AGENTS.md` + skill deploy in `.grok/skills/` (`7ec3186`) per cambiare account Grok senza perdere il filo.
-- **2026-08-20** — Corretto italiano mojibake in Ambassador (idoneità, città, apostrofi, trattini) e ovunque in `index.html`. Cache `?v=20260820_IT1` / SW `elisee-scout-v20260820-it1`.
+- **2026-08-20** — Corretto italiano mojibake in Ambassador e `index.html` (`66d33c0`).
+- **2026-08-20** — Anti-fake: 30 giorni per allegare documenti (CI + selfie). Banner + notifiche ogni 2 giorni. Scaduto → account chiuso, login bloccato. Tifoso escluso. File: `verifica-account.js` / `.css`, `workers/auth_store.py` (`sync_verify_docs`), `elisee_up.py` `POST /api/auth/verify-docs`. Cache `VF1`.

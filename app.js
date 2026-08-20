@@ -8868,7 +8868,13 @@ window.EliseeAuth = {
         window.openSiteRoleModal();
       }
       return res.user;
-    }).catch(function () {
+    }).catch(function (err) {
+      if (err && err.payload && err.payload.error === 'account_chiuso') {
+        if (window.EliseeVerify && typeof window.EliseeVerify.closeAccount !== 'undefined') {
+          try { window.EliseeVerify.tick(err.payload.user || { email: '', accountClosed: true }); } catch (_) {}
+        }
+        window.EliseeAuth.clearSession();
+      }
       return null;
     });
   }
@@ -10052,9 +10058,12 @@ window.submitAccessoForm = function() {
       btn.style.opacity = '1';
     }
     if (errBox && errMsg) {
-      errMsg.textContent = (err && err.payload && err.payload.error === 'credenziali_non_valide')
+      var code = err && err.payload && err.payload.error;
+      errMsg.textContent = code === 'credenziali_non_valide'
         ? 'Email o password non corretti. Se non hai un account, registrati.'
-        : ('Accesso non riuscito: ' + ((err && err.message) || 'errore'));
+        : (code === 'account_chiuso'
+          ? 'Questo account è stato chiuso: i documenti di verifica non sono stati allegati entro 30 giorni.'
+          : ('Accesso non riuscito: ' + ((err && err.message) || 'errore')));
       errBox.style.display = 'block';
     }
   });
@@ -12216,7 +12225,7 @@ window.openRequestBadgeModal = function() {
           style="width:100%;padding:0.6rem;background:rgba(255,255,255,0.05);border:1px solid rgba(56,189,248,0.25);border-radius:8px;color:#e2e8f0;font-size:0.85rem;resize:vertical;box-sizing:border-box;"></textarea>
       </div>
       <div style="background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.2);border-radius:10px;padding:0.75rem;margin-bottom:1.25rem;font-size:0.78rem;color:#94a3b8;line-height:1.5;">
-        ℹ️ La richiesta sarà esaminata dal Responsabile della Protezione dei Dati entro 72 ore. Il badge verrà assegnato solo dopo verifica manuale e approvazione (GDPR Art. 5).
+        ℹ️ Hai 30 giorni dalla scelta del ruolo per allegare questi file. Senza documenti, dopo avvisi continui l’account viene chiuso automaticamente. La richiesta è esaminata entro 72 ore (GDPR Art. 5).
       </div>
       <button onclick="window.submitBadgeRequest()"
         style="width:100%;padding:0.85rem;background:linear-gradient(135deg,#0ea5e9,#6366f1);border:none;border-radius:10px;color:#fff;font-size:0.95rem;font-weight:bold;cursor:pointer;">

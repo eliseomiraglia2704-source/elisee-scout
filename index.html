@@ -282,6 +282,7 @@
   <link rel="stylesheet" href="autopilot.css?v=20260806_NOCORS">
   <link rel="stylesheet" href="squadre-select.css?v=20260820_FORM1">
   <link rel="stylesheet" href="formazione-squadra.css?v=20260820_XI1">
+  <link rel="stylesheet" href="verifica-account.css?v=20260820_VF1">
   <link rel="stylesheet" href="manager.css?v=20260820_XI1">
   <link rel="stylesheet" href="player-profile.css?v=20260820_SEGUO1">
   <link rel="stylesheet" href="scopri-profili.css?v=20260820_SEGUO1">
@@ -1137,7 +1138,7 @@
     <div class="es-role-pick-sheet" role="dialog" aria-labelledby="es-role-pick-title">
       <h1 class="es-role-pick-brand">Elisee <span>Scout</span></h1>
       <h2 id="es-role-pick-title">Scegli come vuoi usare Elisee Scout</h2>
-      <p class="es-role-pick-sub">Ogni ruolo offre un'esperienza diversa</p>
+      <p class="es-role-pick-sub">Ogni ruolo offre un'esperienza diversa. Ente, Squadra, Giocatore e Staff hanno 30 giorni per allegare i documenti di verifica.</p>
       <input type="hidden" id="scegli-ruolo-select" value="">
       <div class="es-role-pick-list" id="es-role-pick-list" role="listbox" aria-label="Ruolo sul sito">
         <button type="button" class="es-role-card" data-role="Ente" role="option">
@@ -1471,6 +1472,7 @@
   <div id="modal-apple-login" style="display:none;"></div>
   <div id="modal-spid" style="display:none;"></div>
 
+  <div id="es-verify-banner" class="es-verify-banner" hidden></div>
   <header class="main-header portfolio-header">
     <div class="container navbar portfolio-navbar">
 
@@ -4654,12 +4656,13 @@
   <script src="manager-runtime.js?v=20260820_XI1"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260820_FORM1"></script>
+  <script src="app.js?v=20260820_VF1"></script>
   <script src="player-profile.js?v=20260820_FORM1"></script>
   <script src="scopri-profili.js?v=20260820_FORM1"></script>
   <script src="messaggi.js?v=20260820_FORM1"></script>
   <script src="mappa-club.js?v=20260820_FORM1"></script>
   <script src="chi-segui.js?v=20260820_FORM1"></script>
+  <script src="verifica-account.js?v=20260820_VF1"></script>
   <script>
     /* FORCED INLINE HOT-PATCH: Overrides PDF export, specific report HTML & modal close functions instantly at runtime */
     (function() {

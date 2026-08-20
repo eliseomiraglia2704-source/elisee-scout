@@ -323,6 +323,7 @@ class Handler(SimpleHTTPRequestHandler):
                 revoke_token,
                 save_google_client_id,
                 set_password,
+                sync_verify_docs,
             )
         except Exception as e:
             self._json(503, {"ok": False, "error": "auth_store_unavailable", "detail": str(e)})
@@ -348,6 +349,9 @@ class Handler(SimpleHTTPRequestHandler):
                 if not user:
                     self._json(401, {"ok": False, "error": "non_autenticato"})
                     return True
+                if user.get("accountClosed"):
+                    self._json(403, {"ok": False, "error": "account_chiuso", "user": user})
+                    return True
                 self._json(200, {"ok": True, "user": user})
                 return True
             if path == "/api/auth/register" and method == "POST":
@@ -370,6 +374,11 @@ class Handler(SimpleHTTPRequestHandler):
             if path == "/api/auth/set-password" and method == "POST":
                 body = self._read_json_body()
                 code, payload = set_password(self._bearer(), str(body.get("password") or ""))
+                self._json(code, payload)
+                return True
+            if path == "/api/auth/verify-docs" and method == "POST":
+                body = self._read_json_body()
+                code, payload = sync_verify_docs(self._bearer(), body)
                 self._json(code, payload)
                 return True
             if path == "/api/auth/supabase" and method == "POST":
