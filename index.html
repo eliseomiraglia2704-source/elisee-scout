@@ -280,7 +280,7 @@
   <link rel="preload" as="video" href="immagini/minigioco/intro.mp4?v=20260813_HQ2">
   <link rel="stylesheet" href="minigioco-carriera.css?v=20260814_TRIAL2">
   <link rel="stylesheet" href="autopilot.css?v=20260806_NOCORS">
-  <link rel="stylesheet" href="squadre-select.css?v=20260820_FORM1">
+  <link rel="stylesheet" href="squadre-select.css?v=20260820_STAD1">
   <link rel="stylesheet" href="formazione-squadra.css?v=20260820_XI1">
   <link rel="stylesheet" href="verifica-account.css?v=20260820_VF1">
   <link rel="stylesheet" href="manager.css?v=20260820_XI1">
@@ -2420,6 +2420,17 @@
       </section>
     </div>
     <!-- /view-squadre -->
+
+    <div id="es-sq-load" class="es-sq-load" hidden>
+      <div class="es-sq-load-stadio" id="es-sq-load-stadio" aria-hidden="true"></div>
+      <div class="es-sq-load-veil" aria-hidden="true"></div>
+      <div class="es-sq-load-core">
+        <img id="es-sq-load-logo" alt="">
+        <div id="es-sq-load-fallback" class="es-sq-load-fallback" hidden></div>
+        <p id="es-sq-load-name"></p>
+        <p id="es-sq-load-stadio-name"></p>
+      </div>
+    </div>
 
     <div id="view-formazione" style="display:none;">
       <section id="formazione-portal" class="es-xi">
@@ -4651,7 +4662,7 @@
       setTimeout(unlock, 2000);
     })();
   </script>
-  <script src="squadre-select.js?v=20260820_IT1"></script>
+  <script src="squadre-select.js?v=20260820_STAD1"></script>
   <script src="formazione-squadra.js?v=20260820_XI1"></script>
   <script src="manager-runtime.js?v=20260820_XI1"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

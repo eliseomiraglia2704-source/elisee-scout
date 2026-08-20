@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-20**
-Ultimo fatto: regola anti-fake — 30 giorni per allegare i documenti dopo il ruolo, avvisi continui, poi chiusura automatica dell’account.
-Feature precedente: italiano mojibake (`66d33c0`); formazione/moduli (`9021752`).
+Ultimo fatto: dopo **Seleziona squadra**, loading 2s con foto stadio della squadra e logo che pulsa, poi si apre la formazione XI.
+Feature precedente: regola anti-fake 30 giorni (`5158f89`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -141,3 +141,4 @@ Se `elisee_up.py` era già avviato, riavviarlo: login locale rifiuta gli account
 - **2026-08-20** — Chiuso suggest modulo/XI + admin (`9021752`). Poi `CONTINUA_DA_QUI.md` + `AGENTS.md` + skill deploy in `.grok/skills/` (`7ec3186`) per cambiare account Grok senza perdere il filo.
 - **2026-08-20** — Corretto italiano mojibake in Ambassador e `index.html` (`66d33c0`).
 - **2026-08-20** — Anti-fake: 30 giorni per allegare documenti (CI + selfie). Banner + notifiche ogni 2 giorni. Scaduto → account chiuso, login bloccato. Tifoso escluso. File: `verifica-account.js` / `.css`, `workers/auth_store.py` (`sync_verify_docs`), `elisee_up.py` `POST /api/auth/verify-docs`. Cache `VF1`.
+- **2026-08-20** — Seleziona squadra: overlay 2s stadio della squadra (`stadiumImage`) + logo pulsante, poi formazione. `squadre-select.js` / `.css`, cache `STAD1`.

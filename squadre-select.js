@@ -1159,9 +1159,83 @@
     if (!isNaN(idx)) selectLeagueByIndex(idx);
   }
 
+  var loadTimer = null;
+
+  function stadiumSrc(team) {
+    var src = team && team.stadiumImage ? String(team.stadiumImage).trim() : '';
+    if (!src) src = 'immagini/stadi/_default.jpg';
+    return src.indexOf('?') >= 0 ? src : src + '?v=14';
+  }
+
+  function hideStadiumLoading() {
+    var el = $('es-sq-load');
+    if (el) {
+      el.classList.remove('is-on');
+      el.hidden = true;
+    }
+    document.body.classList.remove('es-sq-loading');
+  }
+
+  function showStadiumLoading(team, done) {
+    var el = $('es-sq-load');
+    if (!el) {
+      if (typeof done === 'function') done();
+      return;
+    }
+    var bg = $('es-sq-load-stadio');
+    var logo = $('es-sq-load-logo');
+    var fb = $('es-sq-load-fallback');
+    var name = $('es-sq-load-name');
+    var stad = $('es-sq-load-stadio-name');
+    var src = stadiumSrc(team);
+    if (bg) {
+      bg.style.backgroundImage = 'url("' + src.replace(/"/g, '') + '")';
+      var probe = new Image();
+      probe.onerror = function () {
+        if (src.indexOf('_default') >= 0) return;
+        bg.style.backgroundImage = 'url("immagini/stadi/_default.jpg?v=14")';
+      };
+      probe.src = src;
+    }
+    if (name) name.textContent = team.name || '';
+    if (stad) stad.textContent = team.stadium || '';
+    if (logo) {
+      if (team.logo) {
+        logo.hidden = false;
+        logo.alt = (team.name || '') + ' logo';
+        logo.onerror = function () {
+          logo.hidden = true;
+          if (fb) {
+            fb.hidden = false;
+            fb.textContent = String(team.abbr || team.name || '?').slice(0, 3).toUpperCase();
+          }
+        };
+        logo.src = logoUrl(team.logo);
+        if (fb) fb.hidden = true;
+      } else {
+        logo.hidden = true;
+        if (fb) {
+          fb.hidden = false;
+          fb.textContent = String(team.abbr || team.name || '?').slice(0, 3).toUpperCase();
+        }
+      }
+    }
+    el.hidden = false;
+    el.classList.add('is-on');
+    document.body.classList.add('es-sq-loading');
+    if (loadTimer) clearTimeout(loadTimer);
+    loadTimer = setTimeout(function () {
+      loadTimer = null;
+      hideStadiumLoading();
+      if (typeof done === 'function') done();
+    }, 2000);
+  }
+
   function selectTeam() {
     var team = current();
     if (!team) return;
+    var overlay = $('es-sq-load');
+    if (overlay && overlay.classList.contains('is-on')) return;
     try {
       localStorage.setItem(
         'elisee_selected_squadra',
@@ -1171,6 +1245,7 @@
           league: team.league,
           city: team.city,
           stadium: team.stadium || '',
+          stadiumImage: team.stadiumImage || '',
           capacity: team.capacity != null ? team.capacity : null,
           pos: team.pos,
           pts: team.pts,
@@ -1179,10 +1254,12 @@
         })
       );
     } catch (e) {}
-    if (typeof window.showToast === 'function') {
-      window.showToast('Hai scelto ' + team.name, 'success');
-    }
-    document.dispatchEvent(new CustomEvent('elisee:squadra-selected', { detail: team }));
+    showStadiumLoading(team, function () {
+      if (typeof window.showToast === 'function') {
+        window.showToast('Hai scelto ' + team.name, 'success');
+      }
+      document.dispatchEvent(new CustomEvent('elisee:squadra-selected', { detail: team }));
+    });
   }
 
   function bindOnce(el, ev, fn, key) {
@@ -1524,6 +1601,8 @@
         }
         if (e.key === 'Enter') {
           if (t && t.closest && t.closest('button, a')) return;
+          var loading = $('es-sq-load');
+          if (loading && loading.classList.contains('is-on')) return;
           selectTeam();
         }
       });

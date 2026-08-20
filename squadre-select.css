@@ -1857,3 +1857,82 @@ button.es-sq-league-pill:active {
   position: relative !important;
 }
 .es-sq-thumbs{display:none!important;height:0!important;margin:0!important;padding:0!important;overflow:hidden!important;}
+
+/* Loading stadio + logo dopo Seleziona squadra (2s) */
+.es-sq-load {
+  position: fixed;
+  inset: 0;
+  z-index: 200000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #070b14;
+}
+.es-sq-load[hidden] { display: none !important; }
+.es-sq-load-stadio {
+  position: absolute;
+  inset: -4%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transform: scale(1.08);
+  animation: es-sq-stadio-ken 2s ease-out forwards;
+}
+.es-sq-load-veil {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(7, 11, 20, 0.18) 0%, rgba(7, 11, 20, 0.72) 72%);
+}
+.es-sq-load-core {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  text-align: center;
+  padding: 1rem;
+}
+.es-sq-load-core img,
+.es-sq-load-fallback {
+  width: min(42vw, 196px);
+  height: min(42vw, 196px);
+  object-fit: contain;
+  filter: drop-shadow(0 10px 32px rgba(0, 0, 0, 0.55));
+  animation: es-sq-logo-pulse 0.85s ease-in-out infinite;
+}
+.es-sq-load-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.55);
+  color: #fff;
+  font-weight: 900;
+  font-size: 2.4rem;
+  letter-spacing: 0.06em;
+}
+.es-sq-load-core p {
+  margin: 0;
+  color: #f8fafc;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7);
+}
+#es-sq-load-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+#es-sq-load-stadio-name {
+  font-size: 0.88rem;
+  color: #e2e8f0;
+  opacity: 0.9;
+}
+@keyframes es-sq-logo-pulse {
+  0%, 100% { transform: scale(0.9); }
+  50% { transform: scale(1.08); }
+}
+@keyframes es-sq-stadio-ken {
+  from { transform: scale(1.08); }
+  to { transform: scale(1); }
+}
+body.es-sq-loading { overflow: hidden; }
