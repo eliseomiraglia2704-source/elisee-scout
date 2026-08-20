@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-20**
-Ultimo fatto: Pannello TC Manager con panoramica di tutte le aree (iscrizioni, quote, ruoli, calendario, documenti, atleti, soci). Ingresso da Squadre, menu account e tab utente.
-Feature precedente: primo rilascio pannello TC (`f00eb09`).
+Ultimo fatto: Informativa privacy v1.3 — punto 3 allineato (chat + area riservata); geolocalizzazione, moderazione messaggi e Scheda Tecnica IA inserite nei punti 4, 6, 7, 14, 15 e 17 (Art. 22).
+Feature precedente: Pannello TC Manager (`6f81fe2`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -60,6 +60,9 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
+| (questo) | Privacy v1.3: Titolare + geo / moderazione / Scheda Tecnica IA |
+| `6f81fe2` | Pannello TC: panoramica completa e ingresso dall'area account |
+| `f00eb09` | Pannello TC Manager: iscrizioni, quote, ruoli, calendario, documenti, soci |
 | `9021752` | Ogni utente suggerisce modulo/XI; Admin Accetta/Declina |
 | `1da5596` | Seleziona squadra apre formazione XI stile videogioco |
 | `aa776ee` | Chi segui / Chi segue, in ogni area utente |
@@ -132,12 +135,13 @@ Copia utente Grok: `C:\Users\Eliseo Miraglia\.grok\skills\elisee-scout-deploy\SK
 
 Nessuna richiesta aperta. Chiedere a Eliseo cosa fare dopo.
 
-Se `elisee_up.py` era già avviato, riavviarlo: login locale rifiuta gli account chiusi e `/api/auth/verify-docs` è nuovo.
+Privacy: `privacy-policy.html` versione **1.3** (20 agosto 2026). Punto 3 = testo completo (e-mail, chat, area riservata). Geolocalizzazione in 4.5 + 6.i; moderazione messaggi in 6.j + 14; Scheda Tecnica IA in 6.k + 7.e + 15.5 + 17 (Art. 22).
 
 ---
 
 ## Diario sessioni
 
+- **2026-08-20** — Informativa privacy v1.3: punto 3 (Titolare) con chat e area riservata; geolocalizzazione (punti 4 e 6), moderazione messaggi (punti 6 e 14), Scheda Tecnica IA per Club (punti 6, 7, 15, 17 Art. 22). Numerazione allineata all’indice (14–19). File: `privacy-policy.html`. Cache SW `priv1`.
 - **2026-08-20** — Chiuso suggest modulo/XI + admin (`9021752`). Poi `CONTINUA_DA_QUI.md` + `AGENTS.md` + skill deploy in `.grok/skills/` (`7ec3186`) per cambiare account Grok senza perdere il filo.
 - **2026-08-20** — Corretto italiano mojibake in Ambassador e `index.html` (`66d33c0`).
 - **2026-08-20** — Anti-fake: 30 giorni per allegare documenti (CI + selfie). Banner + notifiche ogni 2 giorni. Scaduto → account chiuso, login bloccato. Tifoso escluso. File: `verifica-account.js` / `.css`, `workers/auth_store.py` (`sync_verify_docs`), `elisee_up.py` `POST /api/auth/verify-docs`. Cache `VF1`.
