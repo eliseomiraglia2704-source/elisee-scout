@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-20**
-Ultimo fatto: tutte le interfacce utente (Scopri, Chi segui, Mappa, profili, scelta ruolo, Messaggi) allineate ai colori dark della homepage.
-Feature precedente: Messaggi dark (`79dd580`).
+Ultimo fatto: regola anti-fake rinforzata — 30 giorni per i documenti, banner visibile sotto l’header, avvisi ogni 12h, chiusura automatica.
+Feature precedente: tema dark omogeneo (`2e35a26`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -144,3 +144,4 @@ Se `elisee_up.py` era già avviato, riavviarlo: login locale rifiuta gli account
 - **2026-08-20** — Seleziona squadra: overlay 2s stadio della squadra (`stadiumImage`) + logo pulsante, poi formazione. `squadre-select.js` / `.css`, cache `STAD1`.
 - **2026-08-20** — Messaggi B2B: tema dark, header pf-page, shell inbox|chat. `messaggi.css` / `.js`, cache `MSG1`.
 - **2026-08-20** — Omogeneità colori homepage: Scopri, Chi segui, Mappa, Player/Staff, Notifiche, picker ruolo. Cache `DARK1`.
+- **2026-08-20** — Regola 30 giorni documenti resa visibile (banner sotto header, card in dossier, avvisi ogni 12h, chiusura a scadenza). Cache `VF2`.

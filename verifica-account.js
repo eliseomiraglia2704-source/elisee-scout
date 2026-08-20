@@ -1,7 +1,7 @@
 /* ELISEE SCOUT — 30 giorni per allegare i documenti anti-fake, poi chiusura account. */
 (function () {
   var GRACE_MS = 30 * 24 * 60 * 60 * 1000;
-  var WARN_EVERY_MS = 2 * 24 * 60 * 60 * 1000;
+  var WARN_EVERY_MS = 12 * 60 * 60 * 1000;
   var CLOSED_KEY = 'elisee_closed_accounts';
 
   function now() { return Date.now(); }
@@ -128,6 +128,7 @@
       el.hidden = true;
       el.innerHTML = '';
       document.body.classList.remove('es-verify-on');
+      paintCard(u);
       return;
     }
     startClock(u, { fromNow: true });
@@ -142,6 +143,31 @@
         '<span>' + copy.body + '</span>' +
         '<button type="button" class="es-verify-go" id="es-verify-go">Allega documenti</button>' +
       '</div>';
+    paintCard(u);
+  }
+
+  function paintCard(u) {
+    var card = document.getElementById('es-verify-card');
+    var txt = document.getElementById('es-verify-card-text');
+    if (!card) return;
+    if (!u || isSpectator(u) || u.accountClosed) {
+      card.hidden = true;
+      return;
+    }
+    card.hidden = false;
+    if (!txt) return;
+    if (docsOk(u)) {
+      txt.textContent = 'Documenti ricevuti. L’account non verrà chiuso per mancanza file mentre la verifica è in corso.';
+      return;
+    }
+    if (!hasRole(u)) {
+      txt.textContent = 'Dopo la registrazione con un ruolo specifico hai un mese per allegare documento d’identità e selfie. Se dopo avvisi continui i file non arrivano, l’account viene chiuso automaticamente.';
+      return;
+    }
+    var d = daysLeft(startClock(u, { fromNow: !u.verifyDocsDeadline }));
+    txt.textContent = d <= 0
+      ? 'Termine scaduto: senza documenti l’account viene chiuso automaticamente.'
+      : ('Hai ancora ' + d + (d === 1 ? ' giorno' : ' giorni') + ' per allegare documento d’identità e selfie anti-fake. Senza file, dopo avvisi continui, l’account si chiude da solo.');
   }
 
   function closeAccount(u) {
@@ -222,7 +248,7 @@
       enforceClosed(u);
       return u;
     }
-    if (!u.email) {
+    if (!u.email && !u.id) {
       paintBanner(null);
       return u;
     }
@@ -231,7 +257,7 @@
       return u;
     }
     if (docsOk(u)) {
-      paintBanner(null);
+      paintBanner(u);
       return u;
     }
     u = startClock(u, { fromNow: !u.verifyDocsDeadline });
@@ -241,6 +267,7 @@
       return u;
     }
     paintBanner(u);
+    paintCard(u);
     pushWarn(u, !!opts.forceWarn);
     return u;
   }
@@ -275,7 +302,7 @@
 
   function bind() {
     document.addEventListener('click', function (e) {
-      if (e.target && e.target.id === 'es-verify-go') openDocs();
+      if (e.target && (e.target.id === 'es-verify-go' || e.target.id === 'es-verify-card-go')) openDocs();
     });
     document.addEventListener('elisee:user-revealed', function (e) {
       tick((e && e.detail && e.detail.user) || user(), { forceWarn: true });
@@ -327,6 +354,15 @@
         return out;
       };
       window.EliseeAuth.applySession.__esVerify = true;
+    }
+    if (typeof window.paintLoggedInUser === 'function' && !window.paintLoggedInUser.__esVerify) {
+      var prevPaint = window.paintLoggedInUser;
+      window.paintLoggedInUser = function (u) {
+        var out = prevPaint.apply(this, arguments);
+        try { tick(u || user()); } catch (_) {}
+        return out;
+      };
+      window.paintLoggedInUser.__esVerify = true;
     }
     if (window.EliseeAuth.restore && !window.EliseeAuth.restore.__esVerify) {
       var prevRestore = window.EliseeAuth.restore;
