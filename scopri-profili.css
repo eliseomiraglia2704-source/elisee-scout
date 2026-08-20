@@ -1,0 +1,186 @@
+/* Scopri profili — follow staff come social */
+#view-scopri {
+  background: #f7f9fb;
+  min-height: 100vh;
+  color-scheme: light;
+}
+#scopri-portal.es-sc {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 7.25rem 1.15rem 3.5rem;
+  color: #123a5c;
+}
+.es-sc-title,
+body.layout-portfolio .es-sc-title {
+  margin: 0 0 1rem;
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: #0b4f7a !important;
+  text-transform: none !important;
+  letter-spacing: -0.03em !important;
+  font-family: 'Outfit', 'Inter', system-ui, sans-serif !important;
+}
+.es-sc-chips {
+  display: flex;
+  gap: 0.35rem;
+  background: #eef3f7;
+  border-radius: 999px;
+  padding: 0.28rem;
+  margin-bottom: 1rem;
+}
+.es-sc-chip {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  color: #5a7390;
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 0.48rem 0.4rem;
+  border-radius: 999px;
+  cursor: pointer;
+  text-transform: none !important;
+}
+.es-sc-chip.is-on {
+  background: #0d4f73;
+  color: #fff;
+}
+.es-sc-filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+.es-sc-filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #5a7390;
+}
+.es-sc-filters select,
+body.layout-portfolio .es-sc-filters select {
+  border: 1.5px solid #d7e4ee !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  color: #10263d !important;
+  padding: 0.72rem 0.85rem !important;
+  font: inherit;
+  font-size: 0.92rem;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%235a7390' d='M1 1l5 5 5-5'/></svg>") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.85rem center !important;
+  padding-right: 2rem !important;
+}
+.es-sc-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1.5px solid #8ec4e0;
+  border-radius: 999px;
+  padding: 0.42rem 0.85rem;
+  margin-bottom: 1rem;
+  font-size: 0.86rem;
+  color: #0b4f7a;
+  font-weight: 600;
+}
+.es-sc-count b { font-weight: 800; }
+.es-sc-count i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0d4f73;
+  display: inline-block;
+}
+.es-sc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.es-sc-card {
+  display: grid;
+  grid-template-columns: 52px 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  background: #fff;
+  border: 1.5px solid #8ec4e0;
+  border-radius: 18px;
+  padding: 0.85rem 0.9rem;
+}
+.es-sc-ava {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #e8eef3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #5a7390;
+  font-size: 0.92rem;
+}
+.es-sc-ava img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.es-sc-name {
+  margin: 0 0 0.2rem;
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: #0b4f7a;
+  text-transform: none !important;
+  letter-spacing: 0;
+}
+.es-sc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+  font-size: 0.8rem;
+  color: #6b8296;
+}
+.es-sc-pill {
+  display: inline-flex;
+  background: #eef3f7;
+  color: #3d5a70;
+  border-radius: 999px;
+  padding: 0.08rem 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.es-sc-line { width: 100%; }
+.es-sc-follow {
+  border: 1.5px solid #8ec4e0 !important;
+  background: #fff !important;
+  color: #0b4f7a !important;
+  border-radius: 999px !important;
+  padding: 0.45rem 0.95rem !important;
+  font-weight: 700 !important;
+  font-size: 0.88rem !important;
+  cursor: pointer;
+  white-space: nowrap;
+  text-transform: none !important;
+}
+.es-sc-follow.is-on {
+  background: #0d4f73 !important;
+  border-color: #0d4f73 !important;
+  color: #fff !important;
+}
+.es-sc-follow:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.es-sc-empty {
+  text-align: center;
+  color: #5a7390;
+  padding: 2rem 1rem;
+}
+@media (max-width: 520px) {
+  .es-sc-filters { grid-template-columns: 1fr; }
+  .es-sc-card { grid-template-columns: 46px 1fr; }
+  .es-sc-follow { grid-column: 1 / -1; width: 100%; }
+}

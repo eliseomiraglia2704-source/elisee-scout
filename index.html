@@ -275,14 +275,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
-  <link rel="stylesheet" href="style.css?v=20260820_NOTIF1">
+  <link rel="stylesheet" href="style.css?v=20260820_SCOPRI1">
   <link rel="stylesheet" href="integrazioni.css?v=20260806_NOCORS">
   <link rel="preload" as="video" href="immagini/minigioco/intro.mp4?v=20260813_HQ2">
   <link rel="stylesheet" href="minigioco-carriera.css?v=20260814_TRIAL2">
   <link rel="stylesheet" href="autopilot.css?v=20260806_NOCORS">
   <link rel="stylesheet" href="squadre-select.css?v=20260814_KITFC3">
   <link rel="stylesheet" href="manager.css?v=20260820_MGR1">
-  <link rel="stylesheet" href="player-profile.css?v=20260820_NOTIF1">
+  <link rel="stylesheet" href="player-profile.css?v=20260820_SCOPRI1">
+  <link rel="stylesheet" href="scopri-profili.css?v=20260820_SCOPRI1">
   <script>
     /* Boot OAuth: token in search O in hash (#hero?elisee_token=...). La sessione vince sempre. */
     (function () {
@@ -508,7 +509,7 @@
     (function () {
       var VIEW_IDS = [
         'view-home', 'view-persone', 'view-about', 'view-pillars', 'view-bacheca',
-        'view-squadre', 'view-ambassador', 'view-account', 'admin-view-group', 'user-dossier-view-group',
+        'view-squadre', 'view-ambassador', 'view-account', 'view-scopri', 'admin-view-group', 'user-dossier-view-group',
         'ambassador-view-group', 'home-views-group'
       ];
       var _histLock = false;
@@ -553,6 +554,7 @@
         if (view === 'account') return '#account-portal';
         if (view === 'admin') return '#admin-portal';
         if (view === 'user-dossier') return '#user-dossier-portal';
+        if (view === 'scopri') return '#scopri-portal';
         if (view === 'area-riservata') return '#area-riservata';
         return '#hero';
       }
@@ -567,6 +569,7 @@
         if (h.indexOf('account') >= 0) return 'account';
         if (h.indexOf('admin') >= 0) return 'admin';
         if (h.indexOf('dossier') >= 0) return 'user-dossier';
+        if (h.indexOf('scopri') >= 0) return 'scopri';
         if (h.indexOf('area-riservata') >= 0) return 'area-riservata';
         if (h.indexOf('minigioco') >= 0) return 'minigioco';
         return 'home';
@@ -695,6 +698,10 @@
             }
           } else if (view === 'user-dossier') {
             show('user-dossier-view-group');
+          } else if (view === 'scopri') {
+            show('view-scopri');
+            hash = '#scopri-portal';
+            setTimeout(function () { try { if (window.EliseeScopri) window.EliseeScopri.render(); } catch (e) {} }, 40);
           } else {
             show('home-views-group'); show('view-home'); setActiveNav('home');
             view = 'home';
@@ -1449,6 +1456,7 @@
         <a href="#about" class="nav-link" data-view="about" data-i18n="nav.about" onclick="if(window.switchView){ window.switchView('about'); } return false;">Chi siamo</a>
         <a href="#dashboard-skills" class="nav-link" data-view="pillars" data-i18n="nav.resume" onclick="if(window.switchView){ window.switchView('pillars'); } return false;">Curriculum</a>
         <a href="#bacheca-annunci" class="nav-link" data-view="bacheca" data-i18n="nav.portfolio" onclick="if(window.switchView){ window.switchView('bacheca'); } return false;">Bacheca</a>
+        <a href="#scopri-portal" class="nav-link" data-view="scopri" onclick="if(window.switchView){ window.switchView('scopri','#scopri-portal'); } return false;">Scopri</a>
         <a href="#ambassador-portal" class="nav-link nav-link-soft" data-view="ambassador" data-i18n="nav.ambassador" onclick="if(window.switchView){ window.switchView('ambassador'); } return false;">Ambassador</a>
         <a href="#minigioco-carriera" class="nav-link nav-link-soft nav-link-minigioco" id="nav-minigioco" data-view="minigioco" data-i18n="nav.minigame" title="Minigiochi ELISEE" onclick="if(window.EliseeMinigioco&amp;&amp;window.EliseeMinigioco.open){window.EliseeMinigioco.open();return false;} if(window.openMinigiocoCarriera){window.openMinigiocoCarriera();return false;} return false;">Minigioco</a>
       </nav>
@@ -1525,6 +1533,9 @@
             </a>
             <a href="#user-notifiche" id="btn-dropdown-notifs" onclick="event.preventDefault(); event.stopPropagation(); if(window.openUserNotifications){ window.openUserNotifications(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="bell" style="width:16px; height:16px; color:#38bdf8;"></i> Notifiche
+            </a>
+            <a href="#scopri-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.openScopriProfili){ window.openScopriProfili('staff'); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
+              <i data-lucide="user-plus" style="width:16px; height:16px; color:#38bdf8;"></i> Segui lo Staff
             </a>
             <a href="#admin-portal" onclick="if(window.switchView){ window.switchView('admin', '#admin-portal'); } closeUserDropdown(); return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="layout-dashboard" style="width:16px; height:16px; color:#38bdf8;"></i> Control Center
@@ -1621,10 +1632,10 @@
                 <h3 data-i18n="home.cardBacheca">Bacheca Annunci</h3>
                 <p data-i18n="home.cardBachecaDesc">Provini, ingaggi e richieste di staff per dilettanti e giovanili.</p>
               </article>
-              <article class="portfolio-card" onclick="if(window.switchView){ window.switchView('bacheca','#bacheca-network'); } if(window.focusBachecaNetwork){ setTimeout(function(){ window.focusBachecaNetwork(); }, 80); }">
+              <article class="portfolio-card" onclick="if(window.openScopriProfili){ window.openScopriProfili('staff'); } else if(window.switchView){ window.switchView('scopri','#scopri-portal'); }">
                 <span class="portfolio-card-icon"><i data-lucide="users"></i></span>
-                <h3 data-i18n="home.cardNetwork">Network Persone</h3>
-                <p data-i18n="home.cardNetworkDesc">Trova calciatori, allenatori, scout e procuratori nella tua zona.</p>
+                <h3 data-i18n="home.cardNetwork">Scopri profili</h3>
+                <p data-i18n="home.cardNetworkDesc">Segui lo staff, i player e i club. Come un social, con un tap.</p>
               </article>
               <article class="portfolio-card" onclick="if(window.switchView){ window.switchView('pillars'); }">
                 <span class="portfolio-card-icon"><i data-lucide="activity"></i></span>
@@ -2708,6 +2719,7 @@
               Notifiche
               <span class="es-user-tab-dot" id="es-user-tab-dot" hidden></span>
             </button>
+            <button type="button" class="es-user-tab" data-tab="scopri" id="es-user-tab-scopri">Scopri</button>
           </nav>
 
           <div id="es-user-notifs" class="es-un" hidden>
@@ -3128,6 +3140,28 @@
       </section>
     </div><!-- /#user-dossier-view-group -->
 
+    <div id="view-scopri" style="display:none;">
+      <section id="scopri-portal" class="es-sc">
+        <h1 class="es-sc-title">Scopri profili</h1>
+        <div class="es-sc-chips" role="tablist" aria-label="Tipo profilo">
+          <button type="button" class="es-sc-chip" data-kind="ente">ENTE</button>
+          <button type="button" class="es-sc-chip" data-kind="club">Club</button>
+          <button type="button" class="es-sc-chip" data-kind="player">Player</button>
+          <button type="button" class="es-sc-chip is-on" data-kind="staff">Staff</button>
+        </div>
+        <div class="es-sc-filters">
+          <label>Ambito geografico
+            <select id="es-sc-geo"></select>
+          </label>
+          <label>Sport
+            <select id="es-sc-sport"></select>
+          </label>
+        </div>
+        <div class="es-sc-count"><i></i> <span><b id="es-sc-count-n">0</b> profili mostrati</span> con i filtri selezionati</div>
+        <div id="es-sc-list" class="es-sc-list"></div>
+      </section>
+    </div>
+
   </main>
 
   <footer class="site-footer pf-footer">
@@ -3149,6 +3183,7 @@
             <li><a href="#about" onclick="switchView('about'); return false;">Chi siamo</a></li>
             <li><a href="#dashboard-skills" onclick="switchView('pillars'); return false;">Curriculum</a></li>
             <li><a href="#bacheca-annunci" onclick="switchView('bacheca'); return false;">Bacheca</a></li>
+            <li><a href="#scopri-portal" onclick="if(window.openScopriProfili){window.openScopriProfili('staff');}else{switchView('scopri','#scopri-portal');} return false;">Scopri profili</a></li>
             <li><a href="#bacheca-annunci" onclick="switchView('bacheca','#bacheca-network'); return false;">Persone &amp; Squadre</a></li>
             <li><a href="#ambassador-portal" onclick="switchView('ambassador'); return false;">Ambassador</a></li>
           </ul>
@@ -4448,8 +4483,9 @@
   </script>
   <script src="squadre-select.js?v=20260820_VERW1"></script>
   <script src="manager-runtime.js?v=20260820_MGR1"></script>
-  <script src="app.js?v=20260820_NOTIF1"></script>
-  <script src="player-profile.js?v=20260820_NOTIF1"></script>
+  <script src="app.js?v=20260820_SCOPRI1"></script>
+  <script src="player-profile.js?v=20260820_SCOPRI1"></script>
+  <script src="scopri-profili.js?v=20260820_SCOPRI1"></script>
   <script>
     /* FORCED INLINE HOT-PATCH: Overrides PDF export, specific report HTML & modal close functions instantly at runtime */
     (function() {

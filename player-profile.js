@@ -1067,8 +1067,11 @@
         tabs.addEventListener('click', function (e) {
           var btn = e.target.closest('.es-user-tab');
           if (!btn) return;
-          if (btn.getAttribute('data-tab') === 'notifs') window.EliseeUserNotifs.showNotifs();
-          else window.EliseeUserNotifs.showProfile();
+          var tab = btn.getAttribute('data-tab');
+          if (tab === 'notifs') window.EliseeUserNotifs.showNotifs();
+          else if (tab === 'scopri') {
+            if (window.openScopriProfili) window.openScopriProfili('staff');
+          } else window.EliseeUserNotifs.showProfile();
         });
       }
       this.paintBadges();

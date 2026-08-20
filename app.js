@@ -6523,7 +6523,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function hideAllPortals() {
     const ids = [
       'view-home', 'view-persone', 'view-about', 'view-pillars', 'view-bacheca',
-      'view-squadre', 'view-ambassador', 'view-account',
+      'view-squadre', 'view-ambassador', 'view-account', 'view-scopri',
       'admin-view-group', 'user-dossier-view-group', 'ambassador-view-group',
       'home-views-group'
     ];
@@ -6620,7 +6620,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } catch (_) {}
 
-      if (viewType === 'persone' || targetHash === '#persone-portal' || targetHash === '#bacheca-network') {
+      if (viewType === 'scopri' || targetHash === '#scopri-portal') {
+        showEl('view-scopri');
+        const slink = document.querySelector('.nav-link[data-view="scopri"]');
+        if (slink) slink.classList.add('active');
+        if (!targetHash) setHashSafe('#scopri-portal', opts);
+        setTimeout(function () { try { if (window.EliseeScopri) window.EliseeScopri.render(); } catch (e) {} }, 40);
+      } else if (viewType === 'persone' || targetHash === '#persone-portal' || targetHash === '#bacheca-network') {
         // Network unito in Bacheca
         showEl('home-views-group');
         showEl('view-bacheca');
@@ -7283,6 +7289,8 @@ document.addEventListener('DOMContentLoaded', () => {
       switchView('pillars', '#dashboard-skills', noHist);
     } else if (hash === '#bacheca-annunci') {
       switchView('bacheca', '#bacheca-annunci', noHist);
+    } else if (hash === '#scopri-portal') {
+      switchView('scopri', '#scopri-portal', noHist);
     } else if (hash === '#persone-portal' || hash === '#bacheca-network') {
       switchView('bacheca', '#bacheca-network', noHist);
     } else if (hash === '#squadre-portal') {
