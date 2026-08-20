@@ -1,0 +1,38 @@
+# Elisee Scout — istruzioni per qualsiasi agente
+
+Leggi prima **`CONTINUA_DA_QUI.md`**. Quello è lo stato vivo (ultimo commit, cosa è fatto, prossimo passo). Questo file sono le regole fisse.
+
+## Progetto
+
+Cartella: `C:\Users\Eliseo Miraglia\Desktop\ELISEE SCOUT SITO`
+Fallback: `D:\UsersData\Eliseo Miraglia\Desktop\ELISEE SCOUT SITO`
+Pubblico: https://elisee-scout.vercel.app
+GitHub: `eliseomiraglia2704-source/elisee-scout` branch `main`
+Locale: http://127.0.0.1:8080/ (`elisee_up.py`, avvio `APRI_SITO.bat`)
+
+Sito statico HTML/CSS/JS. Non introdurre un bundler o un framework.
+
+## Dopo ogni modifica (obbligatorio)
+
+Eliseo ha chiesto esplicitamente: **salva, pubblica, pusha**, e lascia traccia in cartella così un altro account Grok può riprendere.
+
+1. Aggiorna `CONTINUA_DA_QUI.md` (data, hash, ultimo fatto, diario).
+2. Cache-bust: `?v=` in `index.html` + `CACHE` in `sw.js` se HTML/CSS/JS.
+3. Commit (niente `data/autopilot/*`, `data/auth/*`, `data/manager/state.json`).
+4. `git push origin main`
+5. `vercel --prod` dalla cartella del sito. **Non** usare `--yes`. Timeout ≥ 5 minuti. Attendi alias su https://elisee-scout.vercel.app
+
+Se il push dà 403 (account Git `sfondiitaliani23-svg`), pubblica comunque su Vercel. Username GitHub corretto: `eliseomiraglia2704-source`.
+
+## Stile di lavoro
+
+- Parla italiano con Eliseo.
+- Non rifare le feature elencate in `CONTINUA_DA_QUI.md`.
+- Non inventare il prossimo task: chiedi o aspetta.
+- Commenti nel codice: solo vincoli non ovvi, niente diario di implementazione.
+- Admin Manager: header `X-Elisee-Admin: admin123`.
+- Store manager Vercel = `/tmp` (effimero). Locale = `data/manager/state.json`. Il client ha fallback localStorage per le formazioni.
+
+## Skill
+
+`.grok/skills/elisee-scout-deploy/SKILL.md` — deploy dopo ogni modifica visibile.
