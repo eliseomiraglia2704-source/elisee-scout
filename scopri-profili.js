@@ -326,6 +326,7 @@
       : '<div class="es-sc-actions">' +
           '<button type="button" class="es-sc-follow' + (on ? ' is-on' : '') + '" data-follow="' + esc(p.id) + '">' + (on ? 'Segui già' : 'Segui') + '</button>' +
           '<button type="button" class="es-sc-msg" data-msg="' + esc(p.id) + '" data-msg-name="' + esc(p.name) + '" data-msg-kind="' + esc(p.kind) + '">Messaggia</button>' +
+          '<button type="button" class="es-cs-their" data-see-follow="' + esc(p.id) + '" data-see-name="' + esc(p.name) + '">Chi segue</button>' +
         '</div>';
     return '<article class="es-sc-card' + (org ? ' is-org' : '') + '" data-id="' + esc(p.id) + '">' +
       '<div class="es-sc-ava">' + photo + '</div>' +
@@ -338,6 +339,9 @@
   }
 
   window.EliseeScopri = {
+    allProfiles: catalog,
+    cardHtml: cardHtml,
+    ensureClubs: loadClubs,
     filterKind: 'staff',
     region: '',
     sport: 'all',
@@ -388,6 +392,9 @@
       map[k].ids = ids;
       saveFollowMap(map);
       this.render();
+      if (window.EliseeChiSegui && typeof window.EliseeChiSegui.render === 'function') {
+        try { window.EliseeChiSegui.render(); } catch (_) {}
+      }
       var name = person ? person.name : 'profilo';
       if (typeof window.showToast === 'function') {
         window.showToast(was ? ('Non segui più ' + name + '.') : ('Ora segui ' + name + '.'), 'success');
@@ -450,6 +457,11 @@
         var msg = e.target.closest('[data-msg]');
         if (msg && window.openB2BMessage) {
           window.openB2BMessage(msg.getAttribute('data-msg'), msg.getAttribute('data-msg-name'), msg.getAttribute('data-msg-kind'));
+          return;
+        }
+        var see = e.target.closest('[data-see-follow]');
+        if (see && window.openChiSegui) {
+          window.openChiSegui(see.getAttribute('data-see-follow'), see.getAttribute('data-see-name'));
         }
       });
       var geo = document.getElementById('es-sc-geo');

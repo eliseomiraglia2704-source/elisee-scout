@@ -1071,6 +1071,8 @@
           if (tab === 'notifs') window.EliseeUserNotifs.showNotifs();
           else if (tab === 'msgs') {
             if (window.openUserMessages) window.openUserMessages();
+          } else if (tab === 'seguo') {
+            if (window.openChiSegui) window.openChiSegui();
           } else if (tab === 'scopri') {
             if (window.openScopriProfili) window.openScopriProfili('staff');
           } else window.EliseeUserNotifs.showProfile();

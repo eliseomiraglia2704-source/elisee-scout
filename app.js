@@ -6523,7 +6523,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function hideAllPortals() {
     const ids = [
       'view-home', 'view-persone', 'view-about', 'view-pillars', 'view-bacheca',
-      'view-squadre', 'view-ambassador', 'view-account', 'view-scopri', 'view-mappa', 'view-messaggi',
+      'view-squadre', 'view-ambassador', 'view-account', 'view-scopri', 'view-mappa', 'view-messaggi', 'view-seguo',
       'admin-view-group', 'user-dossier-view-group', 'ambassador-view-group',
       'home-views-group'
     ];
@@ -6620,7 +6620,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } catch (_) {}
 
-      if (viewType === 'mappa' || targetHash === '#mappa-portal') {
+      if (viewType === 'seguo' || targetHash === '#seguo-portal') {
+        showEl('view-seguo');
+        const sl = document.querySelector('.nav-link[data-view="seguo"]');
+        if (sl) sl.classList.add('active');
+        if (!targetHash) setHashSafe('#seguo-portal', opts);
+        setTimeout(function () { try { if (window.EliseeChiSegui) window.EliseeChiSegui.render(); } catch (e) {} }, 40);
+      } else if (viewType === 'mappa' || targetHash === '#mappa-portal') {
         showEl('view-mappa');
         const mapLink = document.querySelector('.nav-link[data-view="mappa"]');
         if (mapLink) mapLink.classList.add('active');
@@ -7301,6 +7307,8 @@ document.addEventListener('DOMContentLoaded', () => {
       switchView('pillars', '#dashboard-skills', noHist);
     } else if (hash === '#bacheca-annunci') {
       switchView('bacheca', '#bacheca-annunci', noHist);
+    } else if (hash === '#seguo-portal') {
+      switchView('seguo', '#seguo-portal', noHist);
     } else if (hash === '#mappa-portal') {
       switchView('mappa', '#mappa-portal', noHist);
     } else if (hash === '#messaggi-portal') {

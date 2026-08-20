@@ -273,6 +273,37 @@ body.layout-portfolio .es-sc-adv input[type="text"] {
 }
 .es-sc-pill { margin-right: 0.25rem; }
 .es-sc-count { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.45rem; }
+.es-cs-empty {
+  text-align: center;
+  padding: 4.5rem 1.2rem 2rem;
+}
+.es-cs-empty h2,
+body.layout-portfolio .es-cs-empty h2 {
+  margin: 0 0 0.45rem;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0b4f7a !important;
+  text-transform: none !important;
+  letter-spacing: -0.03em !important;
+}
+.es-cs-empty p {
+  margin: 0;
+  color: #8aa0b3;
+  font-size: 0.98rem;
+}
+.es-cs-their {
+  display: block;
+  width: 100%;
+  margin: -0.35rem 0 0.75rem;
+  border: 0;
+  background: transparent;
+  color: #2f7eac;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+  text-align: right;
+  text-transform: none !important;
+}
 .es-sc-maplink {
   margin-left: auto;
   border: 0;
