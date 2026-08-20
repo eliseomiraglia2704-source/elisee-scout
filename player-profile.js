@@ -86,13 +86,13 @@
     'Preparatore atletico', 'Preparatore dei portieri',
     'Match analyst', 'Video analyst', 'Scout / Osservatore',
     'Fisioterapista', 'Medico sociale', 'Nutrizionista', 'Mental coach',
-    'Presidente', 'Direttore sportivo', 'Team manager', 'Dirigente accompagnatore',
+    'Presidente', 'Direttore sportivo', 'Team manager', 'Responsabile settore giovanile', 'Dirigente accompagnatore',
     'Magazziniere', 'Segretario sportivo'
   ];
   var STAFF_ROLES_DEFAULT = [
     'Allenatore', 'Allenatore in seconda', 'Collaboratore tecnico',
     'Preparatore atletico', 'Match analyst', 'Scout / Osservatore',
-    'Fisioterapista', 'Medico sociale', 'Team manager', 'Dirigente', 'Presidente'
+    'Fisioterapista', 'Medico sociale', 'Team manager', 'Responsabile settore giovanile', 'Dirigente', 'Presidente'
   ];
   var ALL_STAFF_ROLES = STAFF_ROLES_CALCIO.concat(['Statistico', 'Dirigente']);
   var ISO = {
@@ -1204,6 +1204,7 @@
         var tmd = document.getElementById('es-tmd');
         var gk = document.getElementById('es-gk');
         var atd = document.getElementById('es-atd');
+        var yg = document.getElementById('es-yg');
         var sh = document.getElementById('es-staff-profile');
         var grp = document.getElementById('user-dossier-view-group');
         if (!notifsOn && window.EliseePresDash && window.EliseePresDash.isPres && window.EliseePresDash.isPres(user)) {
@@ -1226,6 +1227,8 @@
           window.EliseeGkDash.render(user);
         } else if (!notifsOn && window.EliseeAtDash && window.EliseeAtDash.isAt && window.EliseeAtDash.isAt(user)) {
           window.EliseeAtDash.render(user);
+        } else if (!notifsOn && window.EliseeYgDash && window.EliseeYgDash.isYg && window.EliseeYgDash.isYg(user)) {
+          window.EliseeYgDash.render(user);
         } else if (!notifsOn && window.EliseeCoachDash && window.EliseeCoachDash.isCoach && window.EliseeCoachDash.isCoach(user)) {
           window.EliseeCoachDash.render(user);
         } else {
@@ -1240,8 +1243,9 @@
           if (tmd) tmd.hidden = true;
           if (gk) gk.hidden = true;
           if (atd) atd.hidden = true;
-          if (sh) { sh.classList.remove('es-pd-on'); sh.classList.remove('es-ds-on'); sh.classList.remove('es-pres-on'); sh.classList.remove('es-vice-on'); sh.classList.remove('es-fisio-on'); sh.classList.remove('es-ma-on'); sh.classList.remove('es-med-on'); sh.classList.remove('es-obs-on'); sh.classList.remove('es-tm-on'); sh.classList.remove('es-gk-on'); sh.classList.remove('es-at-on'); }
-          if (grp) { grp.classList.remove('is-coach-dash'); grp.classList.remove('is-ds-dash'); grp.classList.remove('is-pres-dash'); grp.classList.remove('is-vice-dash'); grp.classList.remove('is-fisio-dash'); grp.classList.remove('is-ma-dash'); grp.classList.remove('is-med-dash'); grp.classList.remove('is-obs-dash'); grp.classList.remove('is-tm-dash'); grp.classList.remove('is-gk-dash'); grp.classList.remove('is-at-dash'); }
+          if (yg) yg.hidden = true;
+          if (sh) { sh.classList.remove('es-pd-on'); sh.classList.remove('es-ds-on'); sh.classList.remove('es-pres-on'); sh.classList.remove('es-vice-on'); sh.classList.remove('es-fisio-on'); sh.classList.remove('es-ma-on'); sh.classList.remove('es-med-on'); sh.classList.remove('es-obs-on'); sh.classList.remove('es-tm-on'); sh.classList.remove('es-gk-on'); sh.classList.remove('es-at-on'); sh.classList.remove('es-yg-on'); }
+          if (grp) { grp.classList.remove('is-coach-dash'); grp.classList.remove('is-ds-dash'); grp.classList.remove('is-pres-dash'); grp.classList.remove('is-vice-dash'); grp.classList.remove('is-fisio-dash'); grp.classList.remove('is-ma-dash'); grp.classList.remove('is-med-dash'); grp.classList.remove('is-obs-dash'); grp.classList.remove('is-tm-dash'); grp.classList.remove('is-gk-dash'); grp.classList.remove('is-at-dash'); grp.classList.remove('is-yg-dash'); }
         }
       } catch (_) {}
     }

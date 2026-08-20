@@ -229,13 +229,15 @@
     if (gk) gk.hidden = true;
     var atd = document.getElementById('es-atd');
     if (atd) atd.hidden = true;
+    var yg = document.getElementById('es-yg');
+    if (yg) yg.hidden = true;
     box.innerHTML = html(user);
     box.hidden = false;
     host.classList.add('es-pd-on');
-    host.classList.remove('es-vice-on', 'es-ma-on', 'es-med-on', 'es-obs-on', 'es-tm-on', 'es-gk-on', 'es-at-on');
+    host.classList.remove('es-vice-on', 'es-ma-on', 'es-med-on', 'es-obs-on', 'es-tm-on', 'es-gk-on', 'es-at-on', 'es-yg-on');
     if (group) {
       group.classList.add('is-coach-dash');
-      group.classList.remove('is-vice-dash', 'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash', 'is-at-dash');
+      group.classList.remove('is-vice-dash', 'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash', 'is-at-dash', 'is-yg-dash');
     }
     bind(host);
   }

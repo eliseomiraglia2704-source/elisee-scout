@@ -110,12 +110,12 @@
     return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">' + d + '</svg>';
   }
   function hideOthers() {
-    ['es-cd', 'es-dsd', 'es-prd', 'es-vd', 'es-mad', 'es-md', 'es-od', 'es-tmd', 'es-gk', 'es-atd'].forEach(function (id) {
+    ['es-cd', 'es-dsd', 'es-prd', 'es-vd', 'es-mad', 'es-md', 'es-od', 'es-tmd', 'es-gk', 'es-atd', 'es-yg'].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.hidden = true;
     });
     var g = document.getElementById('user-dossier-view-group');
-    if (g) g.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash', 'is-at-dash');
+    if (g) g.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash', 'is-at-dash', 'is-yg-dash');
   }
 
   function html(user) {
@@ -225,10 +225,10 @@
     box.innerHTML = html(user);
     box.hidden = false;
     host.classList.add('es-fisio-on');
-    host.classList.remove('es-pd-on', 'es-ds-on', 'es-pres-on', 'es-vice-on', 'es-ma-on', 'es-med-on', 'es-obs-on', 'es-tm-on', 'es-gk-on', 'es-at-on');
+    host.classList.remove('es-pd-on', 'es-ds-on', 'es-pres-on', 'es-vice-on', 'es-ma-on', 'es-med-on', 'es-obs-on', 'es-tm-on', 'es-gk-on', 'es-at-on', 'es-yg-on');
     if (group) {
       group.classList.add('is-fisio-dash');
-      group.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash', 'is-at-dash');
+      group.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash', 'is-at-dash', 'is-yg-dash');
     }
     bind(host);
   }
