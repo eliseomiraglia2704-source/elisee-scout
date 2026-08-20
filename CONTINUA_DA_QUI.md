@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-20**
-Ultimo fatto: Scopri è solo nell’area account, dopo accesso/registrazione. Tolto dalla navbar pubblica.
-Feature precedente: loading stadio 2s (`90c4bea`).
+Ultimo fatto: Pannello TC Manager sul sito (iscrizioni link, quote, comunicazioni ruolo, calendario/presenze, documenti/scadenze, profilo atleta, soci/verbali).
+Feature precedente: Scopri solo in account (`4c2827c`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -147,3 +147,4 @@ Se `elisee_up.py` era già avviato, riavviarlo: login locale rifiuta gli account
 - **2026-08-20** — Regola 30 giorni documenti resa visibile (banner sotto header, card in dossier, avvisi ogni 12h, chiusura a scadenza). Cache `VF2`.
 - **2026-08-20** — Loading stadio 2s rinforzato: overlay su `document.body`, z-index 3e6, poi formazione. Cache `STAD2`.
 - **2026-08-20** — Scopri solo da account loggato (tab utente / menu account). Navbar pubblica senza Scopri. `requireEliseeLogin`. Cache `SCO1`.
+- **2026-08-20** — Pannello TC Manager: `tc-panel.js` / `.css`, `#tc-portal`, modulo pubblico `#iscrizione-portal?team=`. Cache `TC1`.

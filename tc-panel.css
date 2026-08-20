@@ -1,0 +1,140 @@
+/* Pannello TC Manager — operations club, tema homepage */
+#view-tc-panel,
+#view-iscrizione {
+  background: #050608;
+  min-height: 100vh;
+  color-scheme: dark;
+}
+.es-tc {
+  color: #e2e8f0;
+}
+.es-tc [hidden] { display: none !important; }
+.es-tc-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.es-tc-head h1 {
+  margin: 0.2rem 0 0.35rem;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  color: #fff;
+  letter-spacing: -0.03em;
+}
+.es-tc-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.1rem;
+}
+.es-tc-tab {
+  border: 1px solid rgba(56,189,248,0.22);
+  background: rgba(15,23,42,0.65);
+  color: #94a3b8;
+  border-radius: 999px;
+  padding: 0.42rem 0.85rem;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.es-tc-tab.is-on {
+  background: linear-gradient(135deg, #0284c7, #38bdf8);
+  color: #041018;
+  border-color: transparent;
+}
+.es-tc-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 1rem;
+}
+.es-tc-card {
+  background: rgba(12,18,32,0.78);
+  border: 1px solid rgba(56,189,248,0.18);
+  border-radius: 16px;
+  padding: 1rem 1.05rem 1.1rem;
+}
+.es-tc-card h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.02rem;
+  color: #7dd3fc;
+}
+.es-tc-card h3 { margin: 0 0 0.45rem; color: #fff; font-size: 0.95rem; }
+.es-tc-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.es-tc-item {
+  border: 1px solid rgba(148,163,184,0.14);
+  border-radius: 12px;
+  padding: 0.7rem 0.8rem;
+  background: rgba(8,12,22,0.45);
+}
+.es-tc-item p { margin: 0.2rem 0 0; color: #94a3b8; font-size: 0.82rem; }
+.es-tc-item strong { color: #f8fafc; }
+.es-tc-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.55rem; }
+.es-tc-field { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.7rem; }
+.es-tc-field span { font-size: 0.78rem; font-weight: 700; color: #94a3b8; }
+.es-tc-field input,
+.es-tc-field select,
+.es-tc-field textarea {
+  border: 1px solid rgba(56,189,248,0.28);
+  border-radius: 10px;
+  background: rgba(15,23,42,0.9);
+  color: #e2e8f0;
+  padding: 0.55rem 0.7rem;
+  font: inherit;
+}
+.es-tc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
+.es-tc-go {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.55rem 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  background: linear-gradient(135deg, #0284c7, #38bdf8);
+  color: #041018;
+}
+.es-tc-ghost {
+  border: 1px solid rgba(56,189,248,0.3);
+  background: transparent;
+  color: #7dd3fc;
+  border-radius: 999px;
+  padding: 0.45rem 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.es-tc-warn { color: #fbbf24; font-size: 0.82rem; }
+.es-tc-bad { color: #f87171; font-size: 0.82rem; }
+.es-tc-ok { color: #4ade80; font-size: 0.82rem; }
+.es-tc-kicker {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #38bdf8;
+  font-weight: 800;
+  margin: 0;
+}
+.es-tc-muted { color: #94a3b8; font-size: 0.88rem; line-height: 1.45; }
+.es-tc-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+.es-tc-table th, .es-tc-table td {
+  text-align: left;
+  padding: 0.45rem 0.4rem;
+  border-bottom: 1px solid rgba(148,163,184,0.12);
+  color: #cbd5e1;
+}
+.es-tc-table th { color: #7dd3fc; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; }
+.es-tc-share {
+  font-family: ui-monospace, monospace;
+  font-size: 0.78rem;
+  word-break: break-all;
+  color: #7dd3fc;
+  background: rgba(56,189,248,0.08);
+  border-radius: 8px;
+  padding: 0.5rem 0.65rem;
+}
+.es-tc-att { display: flex; gap: 0.35rem; flex-wrap: wrap; }
+.es-tc-att button { font-size: 0.72rem; padding: 0.25rem 0.5rem; }
+@media (max-width: 860px) {
+  .es-tc-grid, .es-tc-row { grid-template-columns: 1fr; }
+}

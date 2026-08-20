@@ -284,6 +284,7 @@
   <link rel="stylesheet" href="formazione-squadra.css?v=20260820_XI1">
   <link rel="stylesheet" href="verifica-account.css?v=20260820_VF2">
   <link rel="stylesheet" href="manager.css?v=20260820_XI1">
+  <link rel="stylesheet" href="tc-panel.css?v=20260820_TC1">
   <link rel="stylesheet" href="player-profile.css?v=20260820_DARK1">
   <link rel="stylesheet" href="scopri-profili.css?v=20260820_DARK1">
   <link rel="stylesheet" href="messaggi.css?v=20260820_DARK1">
@@ -516,7 +517,7 @@
     (function () {
       var VIEW_IDS = [
         'view-home', 'view-persone', 'view-about', 'view-pillars', 'view-bacheca',
-        'view-squadre', 'view-formazione', 'view-ambassador', 'view-account', 'view-scopri', 'view-mappa', 'view-messaggi', 'view-seguo', 'admin-view-group', 'user-dossier-view-group',
+        'view-squadre', 'view-formazione', 'view-ambassador', 'view-account', 'view-scopri', 'view-mappa', 'view-messaggi', 'view-seguo', 'view-tc-panel', 'view-iscrizione', 'admin-view-group', 'user-dossier-view-group',
         'ambassador-view-group', 'home-views-group'
       ];
       var _histLock = false;
@@ -566,6 +567,8 @@
         if (view === 'mappa') return '#mappa-portal';
         if (view === 'seguo') return '#seguo-portal';
         if (view === 'formazione') return '#formazione-portal';
+        if (view === 'tc') return '#tc-portal';
+        if (view === 'iscrizione') return '#iscrizione-portal';
         if (view === 'area-riservata') return '#area-riservata';
         return '#hero';
       }
@@ -585,6 +588,8 @@
         if (h.indexOf('mappa') >= 0) return 'mappa';
         if (h.indexOf('seguo') >= 0) return 'seguo';
         if (h.indexOf('formazione') >= 0) return 'formazione';
+        if (h.indexOf('iscrizione') >= 0) return 'iscrizione';
+        if (h.indexOf('tc-portal') >= 0) return 'tc';
         if (h.indexOf('area-riservata') >= 0) return 'area-riservata';
         if (h.indexOf('minigioco') >= 0) return 'minigioco';
         return 'home';
@@ -741,6 +746,14 @@
             show('view-formazione');
             hash = '#formazione-portal';
             setTimeout(function () { try { if (window.EliseeFormazione) window.EliseeFormazione.render(); } catch (e) {} }, 40);
+          } else if (view === 'tc') {
+            show('view-tc-panel');
+            hash = '#tc-portal';
+            setTimeout(function () { try { if (window.EliseeTC && window.EliseeTC.render) window.EliseeTC.render(); } catch (e) {} }, 40);
+          } else if (view === 'iscrizione') {
+            show('view-iscrizione');
+            hash = hash || '#iscrizione-portal';
+            setTimeout(function () { try { if (window.EliseeTC && window.EliseeTC.paintPublic) window.EliseeTC.paintPublic(); } catch (e) {} }, 40);
           } else {
             show('home-views-group'); show('view-home'); setActiveNav('home');
             view = 'home';
@@ -1586,6 +1599,9 @@
             <a href="#user-notifiche" id="btn-dropdown-notifs" onclick="event.preventDefault(); event.stopPropagation(); if(window.openUserNotifications){ window.openUserNotifications(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="bell" style="width:16px; height:16px; color:#38bdf8;"></i> Notifiche
             </a>
+            <a href="#tc-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.EliseeTC){ window.EliseeTC.open(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
+              <i data-lucide="clipboard-list" style="width:16px; height:16px; color:#38bdf8;"></i> Pannello TC Manager
+            </a>
             <a href="#seguo-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.openChiSegui){ window.openChiSegui(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="users" style="width:16px; height:16px; color:#38bdf8;"></i> Chi segui
             </a>
@@ -2419,6 +2435,7 @@
             <div class="es-sq-actions">
               <button type="button" class="btn btn-outline-pill es-sq-select-btn" id="es-sq-select">Seleziona squadra</button>
               <button type="button" class="btn btn-outline-pill" id="es-sq-mgr-btn">Diventa Manager Elisee Scout</button>
+              <button type="button" class="btn btn-outline-pill" id="es-sq-tc-btn">Pannello TC Manager</button>
               <button type="button" class="btn btn-outline-pill" id="es-sq-back-bacheca" onclick="if(window.switchView){window.switchView('bacheca','#bacheca-annunci');}">Torna alla Bacheca</button>
             </div>
             <p class="es-sq-meta">← → squadre · frecce Categoria a schermo (o Ctrl+↑/↓) · ↑ ↓ scroll pagina · stile <strong>EA Sports FC</strong></p>
@@ -2427,6 +2444,40 @@
       </section>
     </div>
     <!-- /view-squadre -->
+
+    <div id="view-tc-panel" style="display:none;">
+      <section id="tc-portal" class="es-tc pf-page">
+        <div class="pf-page-bg" aria-hidden="true"></div>
+        <div class="pf-page-shade" aria-hidden="true"></div>
+        <div class="container pf-page-inner">
+          <header class="es-tc-head">
+            <div>
+              <p class="es-tc-kicker">TC Manager</p>
+              <h1 id="es-tc-team">Pannello società</h1>
+              <p class="es-tc-muted" id="es-tc-league"></p>
+            </div>
+            <div class="es-tc-actions">
+              <button type="button" class="btn btn-outline-pill" onclick="if(window.switchView) window.switchView('squadre','#squadre-portal');">← Squadre</button>
+            </div>
+          </header>
+          <nav class="es-tc-tabs" id="es-tc-tabs" aria-label="Sezioni pannello"></nav>
+          <div id="es-tc-body"></div>
+        </div>
+      </section>
+    </div>
+
+    <div id="view-iscrizione" style="display:none;">
+      <section id="iscrizione-portal" class="es-tc pf-page">
+        <div class="pf-page-bg" aria-hidden="true"></div>
+        <div class="pf-page-shade" aria-hidden="true"></div>
+        <div class="container pf-page-inner" style="max-width:720px;">
+          <p class="es-tc-kicker">Iscrizione online</p>
+          <h1 id="es-iscr-team">Modulo di iscrizione</h1>
+          <p class="es-tc-muted" id="es-iscr-sub">Al posto del modulo cartaceo: anagrafica completa del tesserato.</p>
+          <form class="es-tc-card" id="es-iscr-form" style="margin-top:1.1rem;"></form>
+        </div>
+      </section>
+    </div>
 
     <div id="es-sq-load" class="es-sq-load" hidden>
       <div class="es-sq-load-stadio" id="es-sq-load-stadio" aria-hidden="true"></div>
@@ -4698,10 +4749,11 @@
   </script>
   <script src="squadre-select.js?v=20260820_STAD2"></script>
   <script src="formazione-squadra.js?v=20260820_XI1"></script>
-  <script src="manager-runtime.js?v=20260820_XI1"></script>
+  <script src="manager-runtime.js?v=20260820_TC1"></script>
+  <script src="tc-panel.js?v=20260820_TC1"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260820_SCO1"></script>
+  <script src="app.js?v=20260820_TC1"></script>
   <script src="player-profile.js?v=20260820_FORM1"></script>
   <script src="scopri-profili.js?v=20260820_SCO1"></script>
   <script src="messaggi.js?v=20260820_MSG1"></script>

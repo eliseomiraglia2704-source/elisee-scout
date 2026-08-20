@@ -6524,6 +6524,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ids = [
       'view-home', 'view-persone', 'view-about', 'view-pillars', 'view-bacheca',
       'view-squadre', 'view-formazione', 'view-ambassador', 'view-account', 'view-scopri', 'view-mappa', 'view-messaggi', 'view-seguo',
+      'view-tc-panel', 'view-iscrizione',
       'admin-view-group', 'user-dossier-view-group', 'ambassador-view-group',
       'home-views-group'
     ];
@@ -6668,6 +6669,15 @@ document.addEventListener('DOMContentLoaded', () => {
         showEl('view-scopri');
         if (!targetHash) setHashSafe('#scopri-portal', opts);
         setTimeout(function () { try { if (window.EliseeScopri) window.EliseeScopri.render(); } catch (e) {} }, 40);
+      } else if (viewType === 'tc' || (targetHash && String(targetHash).indexOf('tc-portal') >= 0)) {
+        showEl('view-tc-panel');
+        if (!targetHash) setHashSafe('#tc-portal', opts);
+        setTimeout(function () { try { if (window.EliseeTC && window.EliseeTC.render) window.EliseeTC.render(); } catch (e) {} }, 40);
+      } else if (viewType === 'iscrizione' || (targetHash && String(targetHash).indexOf('iscrizione') >= 0)) {
+        showEl('view-iscrizione');
+        if (targetHash) setHashSafe(targetHash, opts);
+        else setHashSafe('#iscrizione-portal', opts);
+        setTimeout(function () { try { if (window.EliseeTC && window.EliseeTC.paintPublic) window.EliseeTC.paintPublic(); } catch (e) {} }, 40);
       } else if (viewType === 'persone' || targetHash === '#persone-portal' || targetHash === '#bacheca-network') {
         // Network unito in Bacheca
         showEl('home-views-group');
@@ -7347,6 +7357,10 @@ document.addEventListener('DOMContentLoaded', () => {
       switchView('bacheca', '#bacheca-network', noHist);
     } else if (hash === '#formazione-portal') {
       switchView('formazione', '#formazione-portal', noHist);
+    } else if (hash.indexOf('tc-portal') >= 0) {
+      switchView('tc', '#tc-portal', noHist);
+    } else if (hash.indexOf('iscrizione-portal') >= 0) {
+      switchView('iscrizione', hash, noHist);
     } else if (hash === '#squadre-portal') {
       switchView('squadre', '#squadre-portal', noHist);
     } else if (hash === '#ambassador-portal') {
@@ -8262,12 +8276,14 @@ function isContentAuthReturn(view, hash) {
     v === 'ambassador' ||
     v === 'squadre' ||
     v === 'scopri' ||
+    v === 'tc' ||
     h.indexOf('about') >= 0 ||
     h.indexOf('dashboard-skills') >= 0 ||
     h.indexOf('bacheca') >= 0 ||
     h.indexOf('ambassador') >= 0 ||
     h.indexOf('squadre') >= 0 ||
-    h.indexOf('scopri') >= 0
+    h.indexOf('scopri') >= 0 ||
+    h.indexOf('tc-portal') >= 0
   );
 }
 

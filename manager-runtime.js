@@ -181,6 +181,7 @@
 
       if (mgr) {
         html += '<p class="es-mgr-msg is-ok">Sei Manager Elisee Scout di questa squadra. Puoi proporre una modifica: noi la accettiamo o la decliniamo.</p>';
+        html += '<div class="es-mgr-actions" style="margin-bottom:1rem;"><button type="button" class="btn btn-outline-pill pf-btn-solid" id="es-mgr-open-tc">Apri pannello TC Manager</button></div>';
         html += proposeFormHtml(team);
       } else if (pend) {
         html += '<p class="es-mgr-msg">Candidatura già inviata il ' + esc((pend.createdAt || '').slice(0, 10)) + '. In attesa di accettazione.</p>';
@@ -276,6 +277,13 @@
   }
 
   function bindOverlay(team) {
+    var tcBtn = $('es-mgr-open-tc');
+    if (tcBtn) {
+      tcBtn.onclick = function () {
+        closeOverlay();
+        if (window.EliseeTC && window.EliseeTC.open) window.EliseeTC.open(team);
+      };
+    }
     var apply = $('es-mgr-apply');
     var propose = $('es-mgr-propose');
     if (apply) {
