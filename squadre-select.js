@@ -11,7 +11,7 @@
   var CATALOG_LOADING = false;
   var CATALOG_URL = 'data/squadre/catalog.json?v=20260820_KITSALL';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260820_SESTO1';
+  var LOGO_V = '20260820_NAPW1';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
