@@ -86,13 +86,13 @@
     'Preparatore atletico', 'Preparatore dei portieri',
     'Match analyst', 'Video analyst', 'Scout / Osservatore',
     'Fisioterapista', 'Medico sociale', 'Nutrizionista', 'Mental coach',
-    'Direttore sportivo', 'Team manager', 'Dirigente accompagnatore',
+    'Presidente', 'Direttore sportivo', 'Team manager', 'Dirigente accompagnatore',
     'Magazziniere', 'Segretario sportivo'
   ];
   var STAFF_ROLES_DEFAULT = [
     'Allenatore', 'Allenatore in seconda', 'Collaboratore tecnico',
     'Preparatore atletico', 'Match analyst', 'Scout / Osservatore',
-    'Fisioterapista', 'Medico sociale', 'Team manager', 'Dirigente'
+    'Fisioterapista', 'Medico sociale', 'Team manager', 'Dirigente', 'Presidente'
   ];
   var ALL_STAFF_ROLES = STAFF_ROLES_CALCIO.concat(['Statistico', 'Dirigente']);
   var ISO = {
@@ -1163,17 +1163,21 @@
       try {
         var cd = document.getElementById('es-cd');
         var dsd = document.getElementById('es-dsd');
+        var prd = document.getElementById('es-prd');
         var sh = document.getElementById('es-staff-profile');
         var grp = document.getElementById('user-dossier-view-group');
-        if (!notifsOn && window.EliseeDsDash && window.EliseeDsDash.isDs && window.EliseeDsDash.isDs(user)) {
+        if (!notifsOn && window.EliseePresDash && window.EliseePresDash.isPres && window.EliseePresDash.isPres(user)) {
+          window.EliseePresDash.render(user);
+        } else if (!notifsOn && window.EliseeDsDash && window.EliseeDsDash.isDs && window.EliseeDsDash.isDs(user)) {
           window.EliseeDsDash.render(user);
         } else if (!notifsOn && window.EliseeCoachDash && window.EliseeCoachDash.isCoach && window.EliseeCoachDash.isCoach(user)) {
           window.EliseeCoachDash.render(user);
         } else {
           if (cd) cd.hidden = true;
           if (dsd) dsd.hidden = true;
-          if (sh) { sh.classList.remove('es-pd-on'); sh.classList.remove('es-ds-on'); }
-          if (grp) { grp.classList.remove('is-coach-dash'); grp.classList.remove('is-ds-dash'); }
+          if (prd) prd.hidden = true;
+          if (sh) { sh.classList.remove('es-pd-on'); sh.classList.remove('es-ds-on'); sh.classList.remove('es-pres-on'); }
+          if (grp) { grp.classList.remove('is-coach-dash'); grp.classList.remove('is-ds-dash'); grp.classList.remove('is-pres-dash'); }
         }
       } catch (_) {}
     }

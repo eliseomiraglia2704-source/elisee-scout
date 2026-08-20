@@ -1,0 +1,15 @@
+/* Dashboard Presidenza — stesso shell delle altre dash staff */
+#user-dossier-view-group.is-staff-area.is-pres-dash .es-user-tabs { display: none !important; }
+#user-dossier-view-group.is-staff-area.is-pres-dash .pf-page-inner {
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+#es-staff-profile.es-pres-on > :not(#es-prd) { display: none !important; }
+.es-pr-euro {
+  font-size: 1.28rem;
+  font-weight: 800;
+  color: #4ade80;
+  margin: 0 0 0.35rem;
+}
+.es-pr-euro small { font-size: 0.75rem; color: #86efac; margin-left: 0.35rem; }
