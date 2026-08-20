@@ -272,6 +272,18 @@ body.layout-portfolio .es-sc-adv input[type="text"] {
   background: #fff !important;
 }
 .es-sc-pill { margin-right: 0.25rem; }
+.es-sc-count { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.45rem; }
+.es-sc-maplink {
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: #0b4f7a;
+  font-weight: 800;
+  font-size: 0.82rem;
+  cursor: pointer;
+  text-decoration: underline;
+  text-transform: none !important;
+}
 @media (max-width: 520px) {
   .es-sc-filters { grid-template-columns: 1fr; }
   .es-sc-card { grid-template-columns: 46px 1fr; }

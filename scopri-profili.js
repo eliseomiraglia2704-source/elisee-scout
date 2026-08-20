@@ -3,7 +3,7 @@
   var REGIONS = ['Abruzzo', 'Basilicata', 'Calabria', 'Campania', 'Emilia-Romagna', 'Friuli-Venezia Giulia', 'Lazio', 'Liguria', 'Lombardia', 'Marche', 'Molise', 'Piemonte', 'Puglia', 'Sardegna', 'Sicilia', 'Toscana', 'Trentino-Alto Adige', 'Umbria', "Valle d'Aosta", 'Veneto'];
   var SPORTS = ['Calcio', 'Calcio a 5', 'Calcio a 7', 'Calcio a 8', 'Pallavolo', 'Basket', 'Rugby', 'Tennis'];
   var PAGE = 40;
-  var CLUBS_URL = 'data/squadre/scopri-clubs.json?v=20260820_ADV1';
+  var CLUBS_URL = 'data/squadre/scopri-clubs.json?v=20260820_MAP1';
 
   var STAFF = [
     ['Eklit Farruky', 'Direttore Sportivo', 'Lombardia', 'Milano'],
@@ -237,7 +237,9 @@
           league: c.league || '',
           nation: 'IT',
           followers: 30 + ((String(c.name).length * 11 + i * 7) % 900),
-          photo: c.logo || ''
+          photo: c.logo || '',
+          lat: c.lat,
+          lng: c.lng
         };
       });
       if (done) done();

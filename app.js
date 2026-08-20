@@ -6523,7 +6523,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function hideAllPortals() {
     const ids = [
       'view-home', 'view-persone', 'view-about', 'view-pillars', 'view-bacheca',
-      'view-squadre', 'view-ambassador', 'view-account', 'view-scopri', 'view-messaggi',
+      'view-squadre', 'view-ambassador', 'view-account', 'view-scopri', 'view-mappa', 'view-messaggi',
       'admin-view-group', 'user-dossier-view-group', 'ambassador-view-group',
       'home-views-group'
     ];
@@ -6620,7 +6620,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } catch (_) {}
 
-      if (viewType === 'messaggi' || targetHash === '#messaggi-portal') {
+      if (viewType === 'mappa' || targetHash === '#mappa-portal') {
+        showEl('view-mappa');
+        const mapLink = document.querySelector('.nav-link[data-view="mappa"]');
+        if (mapLink) mapLink.classList.add('active');
+        if (!targetHash) setHashSafe('#mappa-portal', opts);
+        setTimeout(function () { try { if (window.EliseeClubMap) window.EliseeClubMap.refresh(); } catch (e) {} }, 80);
+      } else if (viewType === 'messaggi' || targetHash === '#messaggi-portal') {
         showEl('view-messaggi');
         const mlink = document.querySelector('.nav-link[data-view="messaggi"]');
         if (mlink) mlink.classList.add('active');
@@ -7295,6 +7301,8 @@ document.addEventListener('DOMContentLoaded', () => {
       switchView('pillars', '#dashboard-skills', noHist);
     } else if (hash === '#bacheca-annunci') {
       switchView('bacheca', '#bacheca-annunci', noHist);
+    } else if (hash === '#mappa-portal') {
+      switchView('mappa', '#mappa-portal', noHist);
     } else if (hash === '#messaggi-portal') {
       switchView('messaggi', '#messaggi-portal', noHist);
     } else if (hash === '#scopri-portal') {

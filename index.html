@@ -275,16 +275,20 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
-  <link rel="stylesheet" href="style.css?v=20260820_ADV1">
+  <link rel="stylesheet" href="style.css?v=20260820_MAP1">
   <link rel="stylesheet" href="integrazioni.css?v=20260806_NOCORS">
   <link rel="preload" as="video" href="immagini/minigioco/intro.mp4?v=20260813_HQ2">
   <link rel="stylesheet" href="minigioco-carriera.css?v=20260814_TRIAL2">
   <link rel="stylesheet" href="autopilot.css?v=20260806_NOCORS">
   <link rel="stylesheet" href="squadre-select.css?v=20260814_KITFC3">
   <link rel="stylesheet" href="manager.css?v=20260820_MGR1">
-  <link rel="stylesheet" href="player-profile.css?v=20260820_ADV1">
-  <link rel="stylesheet" href="scopri-profili.css?v=20260820_ADV1">
-  <link rel="stylesheet" href="messaggi.css?v=20260820_ADV1">
+  <link rel="stylesheet" href="player-profile.css?v=20260820_MAP1">
+  <link rel="stylesheet" href="scopri-profili.css?v=20260820_MAP1">
+  <link rel="stylesheet" href="messaggi.css?v=20260820_MAP1">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+  <link rel="stylesheet" href="mappa-club.css?v=20260820_MAP1">
   <script>
     /* Boot OAuth: token in search O in hash (#hero?elisee_token=...). La sessione vince sempre. */
     (function () {
@@ -510,7 +514,7 @@
     (function () {
       var VIEW_IDS = [
         'view-home', 'view-persone', 'view-about', 'view-pillars', 'view-bacheca',
-        'view-squadre', 'view-ambassador', 'view-account', 'view-scopri', 'view-messaggi', 'admin-view-group', 'user-dossier-view-group',
+        'view-squadre', 'view-ambassador', 'view-account', 'view-scopri', 'view-mappa', 'view-messaggi', 'admin-view-group', 'user-dossier-view-group',
         'ambassador-view-group', 'home-views-group'
       ];
       var _histLock = false;
@@ -557,6 +561,7 @@
         if (view === 'user-dossier') return '#user-dossier-portal';
         if (view === 'scopri') return '#scopri-portal';
         if (view === 'messaggi') return '#messaggi-portal';
+        if (view === 'mappa') return '#mappa-portal';
         if (view === 'area-riservata') return '#area-riservata';
         return '#hero';
       }
@@ -573,6 +578,7 @@
         if (h.indexOf('dossier') >= 0) return 'user-dossier';
         if (h.indexOf('scopri') >= 0) return 'scopri';
         if (h.indexOf('messaggi') >= 0) return 'messaggi';
+        if (h.indexOf('mappa') >= 0) return 'mappa';
         if (h.indexOf('area-riservata') >= 0) return 'area-riservata';
         if (h.indexOf('minigioco') >= 0) return 'minigioco';
         return 'home';
@@ -709,6 +715,10 @@
             show('view-messaggi');
             hash = '#messaggi-portal';
             setTimeout(function () { try { if (window.EliseeB2B) window.EliseeB2B.renderInbox(); } catch (e) {} }, 40);
+          } else if (view === 'mappa') {
+            show('view-mappa');
+            hash = '#mappa-portal';
+            setTimeout(function () { try { if (window.EliseeClubMap) window.EliseeClubMap.refresh(); } catch (e) {} }, 80);
           } else {
             show('home-views-group'); show('view-home'); setActiveNav('home');
             view = 'home';
@@ -1464,6 +1474,7 @@
         <a href="#dashboard-skills" class="nav-link" data-view="pillars" data-i18n="nav.resume" onclick="if(window.switchView){ window.switchView('pillars'); } return false;">Curriculum</a>
         <a href="#bacheca-annunci" class="nav-link" data-view="bacheca" data-i18n="nav.portfolio" onclick="if(window.switchView){ window.switchView('bacheca'); } return false;">Bacheca</a>
         <a href="#scopri-portal" class="nav-link" data-view="scopri" onclick="if(window.switchView){ window.switchView('scopri','#scopri-portal'); } return false;">Scopri</a>
+        <a href="#mappa-portal" class="nav-link" data-view="mappa" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){window.switchView('mappa','#mappa-portal');} return false;">Mappa</a>
         <a href="#ambassador-portal" class="nav-link nav-link-soft" data-view="ambassador" data-i18n="nav.ambassador" onclick="if(window.switchView){ window.switchView('ambassador'); } return false;">Ambassador</a>
         <a href="#minigioco-carriera" class="nav-link nav-link-soft nav-link-minigioco" id="nav-minigioco" data-view="minigioco" data-i18n="nav.minigame" title="Minigiochi ELISEE" onclick="if(window.EliseeMinigioco&amp;&amp;window.EliseeMinigioco.open){window.EliseeMinigioco.open();return false;} if(window.openMinigiocoCarriera){window.openMinigiocoCarriera();return false;} return false;">Minigioco</a>
       </nav>
@@ -3162,6 +3173,19 @@
       </section>
     </div><!-- /#user-dossier-view-group -->
 
+    <div id="view-mappa" style="display:none;">
+      <section id="mappa-portal" class="es-map">
+        <div class="es-map-banner">
+          <p><span id="es-map-count">0</span> Club sono già visibili sulla mappa.</p>
+          <a href="#mappa-portal" onclick="event.preventDefault(); if(window.EliseeClubMap) window.EliseeClubMap.setGeo(); return false;">Sei un Club? Imposta la geolocalizzazione</a>
+        </div>
+        <div class="es-map-wrap">
+          <div id="es-map-canvas" role="application" aria-label="Mappa dei club"></div>
+          <button type="button" class="es-map-fs" title="Schermo intero" onclick="if(window.EliseeClubMap) window.EliseeClubMap.toggleFull();">⤢</button>
+        </div>
+      </section>
+    </div>
+
     <div id="view-messaggi" style="display:none;">
       <section id="messaggi-portal" class="es-msg">
         <div id="es-msg-inbox">
@@ -3221,7 +3245,9 @@
             <input type="checkbox" id="es-sc-following"> Solo chi seguo
           </label>
         </div>
-        <div class="es-sc-count"><i></i> <span><b id="es-sc-count-n">0</b> profili</span> con i filtri selezionati</div>
+        <div class="es-sc-count"><i></i> <span><b id="es-sc-count-n">0</b> profili</span> con i filtri selezionati
+          <button type="button" class="es-sc-maplink" onclick="if(window.openClubMap) window.openClubMap();">Vedi sulla mappa</button>
+        </div>
         <div id="es-sc-list" class="es-sc-list"></div>
       </section>
     </div>
@@ -4547,10 +4573,13 @@
   </script>
   <script src="squadre-select.js?v=20260820_VERW1"></script>
   <script src="manager-runtime.js?v=20260820_MGR1"></script>
-  <script src="app.js?v=20260820_ADV1"></script>
-  <script src="player-profile.js?v=20260820_ADV1"></script>
-  <script src="scopri-profili.js?v=20260820_ADV1"></script>
-  <script src="messaggi.js?v=20260820_ADV1"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="app.js?v=20260820_MAP1"></script>
+  <script src="player-profile.js?v=20260820_MAP1"></script>
+  <script src="scopri-profili.js?v=20260820_MAP1"></script>
+  <script src="messaggi.js?v=20260820_MAP1"></script>
+  <script src="mappa-club.js?v=20260820_MAP1"></script>
   <script>
     /* FORCED INLINE HOT-PATCH: Overrides PDF export, specific report HTML & modal close functions instantly at runtime */
     (function() {
