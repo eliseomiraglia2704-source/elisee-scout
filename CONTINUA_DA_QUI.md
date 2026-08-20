@@ -60,7 +60,7 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Hub Mercato: Secret List stealth + Wall FIFA |
+| `a69b460` | Hub Mercato: Secret List stealth + Wall FIFA |
 | `e1435e4` | Privacy v1.3: Titolare + geo / moderazione / Scheda Tecnica IA |
 | `6f81fe2` | Pannello TC: panoramica completa e ingresso dall'area account |
 | `f00eb09` | Pannello TC Manager: iscrizioni, quote, ruoli, calendario, documenti, soci |
