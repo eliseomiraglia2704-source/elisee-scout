@@ -245,6 +245,8 @@
     if (eq) eq.hidden = true;
     var sg = document.getElementById('es-sg');
     if (sg) sg.hidden = true;
+    var bt = document.getElementById('es-bt');
+    if (bt) bt.hidden = true;
     box.innerHTML = html(user);
     box.hidden = false;
     host.classList.add('es-pd-on');

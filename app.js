@@ -8772,6 +8772,8 @@ window.applyRoleDossierInterface = function (user) {
     'Segretario sportivo': 'Societa',
     'Segretario generale / Club Manager': 'Societa',
     'Segretario generale': 'Societa',
+    'Responsabile biglietteria / tifoseria': 'Staff',
+    'Responsabile biglietteria': 'Staff',
     Statistico: 'Match Analyst',
     Dirigente: 'Staff'
   };

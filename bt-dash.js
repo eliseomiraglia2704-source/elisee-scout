@@ -1,11 +1,11 @@
-/* Dashboard Segretario Generale / Club Manager */
+/* Dashboard Responsabile Biglietteria / Rapporti con Tifoseria */
 (function () {
   var AXES = [
-    'Gestione Tesseramenti', 'Adempimenti Federali', 'Gestione Contratti', 'Rapporti con Lega/FIGC',
-    'Organizzazione Archivio', 'Puntualità Scadenze', 'Supporto alla Presidenza', 'Gestione Pratiche Societarie'
+    'Vendita Biglietti', 'Gestione Abbonamenti', 'Rapporti con Club Tifosi', 'Gestione Settori Stadio',
+    'Sicurezza Eventi', 'Gestione Reclami', 'Promozioni Fedeltà', 'Soddisfazione Tifosi'
   ];
-  var V2025 = [90, 94, 85, 93, 94, 94, 93, 85];
-  var V2023 = [76, 80, 70, 79, 80, 80, 79, 70];
+  var V2025 = [88, 90, 94, 85, 87, 93, 94, 91];
+  var V2023 = [74, 76, 80, 70, 73, 79, 80, 77];
 
   function esc(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -13,18 +13,18 @@
   function userObj() {
     try { return JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {}; } catch (_) { return {}; }
   }
-  function isSg(u) {
+  function isBt(u) {
     u = u || userObj();
     var blob = [u.staffRole, u.ruoloDettagliato, u.ruolo, u.role, u.staffProfile && u.staffProfile.fieldRole]
       .filter(Boolean).join(' ').toLowerCase();
-    return /segretario generale|club manager|segretario sportivo/.test(blob);
+    return /biglietteria|rapporti con tifoseria|responsabile tifoseria/.test(blob);
   }
-  function sgName(u) {
-    return [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Segretario generale';
+  function btName(u) {
+    return [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Responsabile biglietteria';
   }
   function initials(name) {
-    var p = String(name || 'SG').trim().split(/\s+/);
-    return ((p[0] || 'S').charAt(0) + (p[1] || p[0] || 'G').charAt(0)).toUpperCase();
+    var p = String(name || 'BT').trim().split(/\s+/);
+    return ((p[0] || 'B').charAt(0) + (p[1] || p[0] || 'T').charAt(0)).toUpperCase();
   }
   function photoOf(u) {
     try {
@@ -54,7 +54,7 @@
   }
   function radarSvg() {
     var cx = 220, cy = 210, r = 150, n = AXES.length;
-    var html = '<svg viewBox="0 0 440 430" role="img" aria-label="Analisi attività amministrativa">';
+    var html = '<svg viewBox="0 0 440 430" role="img" aria-label="Analisi attività biglietteria e tifoseria">';
     html += wedge(cx, cy, r, -Math.PI / 2, 0, 'rgba(74,222,128,0.16)');
     html += wedge(cx, cy, r, 0, Math.PI / 2, 'rgba(248,113,113,0.18)');
     html += wedge(cx, cy, r, Math.PI / 2, Math.PI, 'rgba(250,204,21,0.16)');
@@ -110,137 +110,137 @@
     return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">' + d + '</svg>';
   }
   function hideOthers() {
-    ['es-cd', 'es-dsd', 'es-prd', 'es-vd', 'es-fd', 'es-mad', 'es-md', 'es-od', 'es-tmd', 'es-gk', 'es-atd', 'es-yg', 'es-dg', 'es-ag', 'es-mk', 'es-pr', 'es-nu', 'es-eq', 'es-bt'].forEach(function (id) {
+    ['es-cd', 'es-dsd', 'es-prd', 'es-vd', 'es-fd', 'es-mad', 'es-md', 'es-od', 'es-tmd', 'es-gk', 'es-atd', 'es-yg', 'es-dg', 'es-ag', 'es-mk', 'es-pr', 'es-nu', 'es-eq', 'es-sg'].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.hidden = true;
     });
     var g = document.getElementById('user-dossier-view-group');
-    if (g) g.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-fisio-dash', 'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash', 'is-at-dash', 'is-yg-dash', 'is-dg-dash', 'is-ag-dash', 'is-mk-dash', 'is-pr-dash', 'is-nu-dash', 'is-eq-dash', 'is-bt-dash');
+    if (g) g.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-fisio-dash', 'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash', 'is-at-dash', 'is-yg-dash', 'is-dg-dash', 'is-ag-dash', 'is-mk-dash', 'is-pr-dash', 'is-nu-dash', 'is-eq-dash', 'is-sg-dash');
   }
 
   function html(user) {
-    var name = sgName(user);
+    var name = btName(user);
     var ph = photoOf(user);
     var ava = ph
       ? '<img src="' + esc(ph) + '" alt="">'
       : '<div class="es-pd-ph">' + esc(initials(name)) + '</div>';
     return '<aside class="es-pd-rail">' +
-      '<button type="button" data-sg="home" title="Home">' + ico('<path d="M4 10.5 12 4l8 6.5V20H4z"/>') + '</button>' +
-      '<button type="button" class="is-on" data-sg="dash" title="Dashboard">' + ico('<circle cx="12" cy="8" r="3"/><path d="M5 20c1.5-4 4-6 7-6s5.5 2 7 6"/>') + '</button>' +
-      '<button type="button" data-sg="album" title="Album">' + ico('<rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 15l4-3 3 2 5-5 4 4"/>') + '</button>' +
-      '<button type="button" data-sg="msgs" title="Messaggi">' + ico('<path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/>') + '</button>' +
-      '<button type="button" class="es-pd-rail-end" data-sg="edit" title="Anagrafica">' + ico('<circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>') + '</button>' +
+      '<button type="button" data-bt="home" title="Home">' + ico('<path d="M4 10.5 12 4l8 6.5V20H4z"/>') + '</button>' +
+      '<button type="button" class="is-on" data-bt="dash" title="Dashboard">' + ico('<circle cx="12" cy="8" r="3"/><path d="M5 20c1.5-4 4-6 7-6s5.5 2 7 6"/>') + '</button>' +
+      '<button type="button" data-bt="album" title="Album">' + ico('<rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 15l4-3 3 2 5-5 4 4"/>') + '</button>' +
+      '<button type="button" data-bt="msgs" title="Messaggi">' + ico('<path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/>') + '</button>' +
+      '<button type="button" class="es-pd-rail-end" data-bt="edit" title="Anagrafica">' + ico('<circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>') + '</button>' +
       '</aside><div class="es-pd-body">' +
-      '<div class="es-pd-head"><h1>Elisee Scout — Dashboard Segretario Generale</h1>' +
-      '<strong>Segretario generale/Club Manager: ' + esc(name.toUpperCase()) + '</strong></div>' +
+      '<div class="es-pd-head"><h1>Elisee Scout — Dashboard Biglietteria &amp; Tifoseria</h1>' +
+      '<strong>Responsabile biglietteria: ' + esc(name.toUpperCase()) + '</strong></div>' +
       '<div class="es-pd-grid">' +
 
-      '<section class="es-pd-card es-pd-indice"><h2>Profilo Segretario Generale</h2>' +
+      '<section class="es-pd-card es-pd-indice"><h2>Profilo Responsabile Biglietteria</h2>' +
       '<div class="es-pd-who">' + ava + '<div><b style="color:#fff">' + esc(name) + '</b>' +
-      '<div style="font-size:0.72rem;color:#94a3b8">Segreteria societaria</div></div></div>' +
-      '<div class="es-pd-metric"><span>Gestione amministrativa</span><b>92%</b></div>' +
-      '<div class="es-pd-metric"><span>Conformità normativa</span><b>85%</b></div>' +
-      '<div class="es-pd-metric"><span>Rapporti con Federazione</span><b>96%</b></div>' +
-      '<div class="es-pd-metric"><span>Organizzazione documentale</span><b>94%</b></div>' +
-      '<div class="es-pd-metric"><span>Affidabilità adempimenti</span><b>91%</b></div></section>' +
+      '<div style="font-size:0.72rem;color:#94a3b8">Biglietteria e tifoseria</div></div></div>' +
+      '<div class="es-pd-metric"><span>Gestione vendite</span><b>92%</b></div>' +
+      '<div class="es-pd-metric"><span>Rapporti con tifoseria organizzata</span><b>85%</b></div>' +
+      '<div class="es-pd-metric"><span>Gestione abbonamenti</span><b>96%</b></div>' +
+      '<div class="es-pd-metric"><span>Sicurezza stadio</span><b>94%</b></div>' +
+      '<div class="es-pd-metric"><span>Affidabilità operativa</span><b>91%</b></div></section>' +
 
       '<section class="es-pd-card es-pd-radar">' +
-      '<div class="es-pd-radar-tools"><span>Seleziona dati radar</span><span>Analisi attività amministrativa</span></div>' +
+      '<div class="es-pd-radar-tools"><span>Seleziona dati radar</span><span>Analisi attività biglietteria &amp; tifoseria</span></div>' +
       radarSvg() + '</section>' +
 
-      '<section class="es-pd-card es-pd-comply"><h2>Verifica &amp; Compliance amministrativa</h2>' +
-      '<div class="es-pd-ok"><span>Laurea in Giurisprudenza/Economia</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Corso diritto sportivo</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Conformità GDPR</span><b>100%</b></div>' +
+      '<section class="es-pd-card es-pd-comply"><h2>Verifica &amp; Compliance biglietteria</h2>' +
+      '<div class="es-pd-ok"><span>Corso sicurezza stadi</span><b>100%</b></div>' +
+      '<div class="es-pd-ok"><span>Privacy / tessera del tifoso</span><b>100%</b></div>' +
+      '<div class="es-pd-ok"><span>Gestione ordine pubblico</span><b>100%</b></div>' +
       '<div class="es-pd-ok"><span>Tutela minori (ID)</span><b>100%</b></div>' +
       '<div class="es-pd-ok"><span>Ultima verifica</span><b>10/06/2027</b></div></section>' +
 
-      '<section class="es-pd-card es-pd-storico"><h2>Andamento amministrativo</h2>' +
+      '<section class="es-pd-card es-pd-storico"><h2>Andamento vendite &amp; presenze</h2>' +
       '<div class="es-pd-sparks">' +
-      '<figure>' + spark([30, 38, 46, 56, 66, 78, 90], '#38bdf8') + '<figcaption>Pratiche evase</figcaption></figure>' +
-      '<figure>' + spark([26, 34, 42, 52, 64, 76, 88], '#4ade80') + '<figcaption>Tesseramenti gestiti</figcaption></figure>' +
-      '<figure>' + spark([40, 48, 56, 64, 72, 82, 92], '#facc15') + '<figcaption>Scadenze rispettate</figcaption></figure>' +
+      '<figure>' + spark([28, 36, 44, 54, 66, 78, 90], '#38bdf8') + '<figcaption>Biglietti venduti</figcaption></figure>' +
+      '<figure>' + spark([24, 32, 42, 52, 64, 76, 88], '#4ade80') + '<figcaption>Abbonamenti sottoscritti</figcaption></figure>' +
+      '<figure>' + spark([40, 48, 55, 62, 70, 80, 90], '#facc15') + '<figcaption>Media spettatori</figcaption></figure>' +
       '<figure>' + spark([48, 55, 60, 66, 74, 82, 90], '#22d3ee') + '<figcaption>Stagione</figcaption></figure>' +
       '</div></section>' +
 
-      '<section class="es-pd-card es-pd-mercato"><h2>Indice di efficienza amministrativa</h2>' +
-      '<p class="es-sg-grade">1,7/10 <small>+5,5%</small></p>' +
-      '<div class="es-pd-mrow"><span>Valutazione presidenza</span><b>Ottima</b></div>' +
-      '<div class="es-pd-mrow"><span>Trend puntualità adempimenti</span><b>Crescente</b></div>' +
-      '<div class="es-pd-mrow"><span>Pratiche in corso</span><b>5</b></div>' +
-      '<div class="es-pd-mrow"><span>Scadenza incarico</span><b>30/06/2028</b></div>' +
+      '<section class="es-pd-card es-pd-mercato"><h2>Indice di affluenza</h2>' +
+      '<p class="es-bt-grade">1,7/10 <small>+5,5%</small></p>' +
+      '<div class="es-pd-mrow"><span>Media spettatori</span><b>Alta</b></div>' +
+      '<div class="es-pd-mrow"><span>Trend abbonamenti</span><b>Crescente</b></div>' +
+      '<div class="es-pd-mrow"><span>Richieste settori ospiti</span><b>5</b></div>' +
+      '<div class="es-pd-mrow"><span>Scadenza fornitore ticketing</span><b>30/06/2028</b></div>' +
       '<div class="es-pd-mrow"><span>Trattative aperte</span><b>Nessuna</b></div></section>' +
 
-      '<section class="es-pd-card es-pd-registro"><h2>Registro pratiche societarie</h2>' +
-      '<table class="es-pd-table"><thead><tr><th>Data</th><th>Tipo pratica</th><th>Ente</th><th>Stato</th></tr></thead><tbody>' +
-      '<tr><td>15/07/2026</td><td>Tesseramento A</td><td>FIGC</td><td>Approvato <i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>15/07/2026</td><td>Contratto B</td><td>Lega</td><td>In corso <i class="es-pd-dot y"></i></td></tr>' +
-      '<tr><td>15/07/2026</td><td>Contratto C</td><td>Lega</td><td>In corso <i class="es-pd-dot y"></i></td></tr>' +
-      '<tr><td>15/07/2026</td><td>Contratto D</td><td>Lega</td><td>In corso <i class="es-pd-dot y"></i></td></tr>' +
-      '<tr><td>15/07/2026</td><td>Contratto E</td><td>Lega</td><td>Approvato <i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>16/07/2026</td><td>Contratto A</td><td>Lega</td><td>Approvato <i class="es-pd-dot g"></i></td></tr>' +
+      '<section class="es-pd-card es-pd-registro"><h2>Registro vendite &amp; abbonamenti</h2>' +
+      '<table class="es-pd-table"><thead><tr><th>Partita</th><th>Data</th><th>Settore</th><th>Incasso</th></tr></thead><tbody>' +
+      '<tr><td>vs. Notaresco</td><td>15/07/2026</td><td>Curva Sud</td><td>€ 500k <i class="es-pd-dot g"></i></td></tr>' +
+      '<tr><td>vs. Chieti</td><td>15/07/2026</td><td>Tribuna</td><td>€ 300k <i class="es-pd-dot g"></i></td></tr>' +
+      '<tr><td>vs. Chieti</td><td>15/07/2026</td><td>Curva Sud</td><td>€ 300k <i class="es-pd-dot g"></i></td></tr>' +
+      '<tr><td>vs. Notaresco</td><td>15/07/2026</td><td>Curva Sud</td><td>€ 500k <i class="es-pd-dot g"></i></td></tr>' +
+      '<tr><td>vs. Chieti</td><td>15/07/2026</td><td>Tribuna</td><td>€ 300k <i class="es-pd-dot g"></i></td></tr>' +
+      '<tr><td>vs. Vastese</td><td>22/07/2026</td><td>Tribuna</td><td>In corso <i class="es-pd-dot y"></i></td></tr>' +
       '</tbody></table></section>' +
 
       '<section class="es-pd-card es-pd-trend"><h2>2023 vs 2024 vs 2025</h2>' +
       trendSvg() +
-      '<button type="button" class="es-pd-edit" data-sg="edit">Modifica anagrafica</button>' +
+      '<button type="button" class="es-pd-edit" data-bt="edit">Modifica anagrafica</button>' +
       '</section>' +
       '</div></div>';
   }
 
   function bind(host) {
-    if (!host || host.dataset.sgBound === '1') return;
-    host.dataset.sgBound = '1';
+    if (!host || host.dataset.btBound === '1') return;
+    host.dataset.btBound = '1';
     host.addEventListener('click', function (e) {
-      var b = e.target.closest('[data-sg]');
+      var b = e.target.closest('[data-bt]');
       if (!b) return;
-      var k = b.getAttribute('data-sg');
+      var k = b.getAttribute('data-bt');
       if (k === 'home' && window.switchView) window.switchView('home', '#hero');
       if (k === 'album' && window.openChiSegui) window.openChiSegui();
       if (k === 'msgs' && window.openUserMessages) window.openUserMessages();
       if (k === 'edit') {
-        host.classList.remove('es-sg-on');
-        var dash = document.getElementById('es-sg');
+        host.classList.remove('es-bt-on');
+        var dash = document.getElementById('es-bt');
         if (dash) dash.hidden = true;
         var g = document.getElementById('user-dossier-view-group');
-        if (g) g.classList.remove('is-sg-dash');
+        if (g) g.classList.remove('is-bt-dash');
       }
     });
   }
 
   function render(user) {
     user = user || userObj();
-    if (!isSg(user)) return;
+    if (!isBt(user)) return;
     hideOthers();
     var host = document.getElementById('es-staff-profile');
     var group = document.getElementById('user-dossier-view-group');
     if (!host) return;
-    var box = document.getElementById('es-sg');
+    var box = document.getElementById('es-bt');
     if (!box) {
       box = document.createElement('div');
-      box.id = 'es-sg';
+      box.id = 'es-bt';
       box.className = 'es-pd';
       host.insertBefore(box, host.firstChild);
     }
     box.innerHTML = html(user);
     box.hidden = false;
-    host.classList.add('es-sg-on');
-    host.classList.remove('es-pd-on', 'es-ds-on', 'es-pres-on', 'es-vice-on', 'es-fisio-on', 'es-ma-on', 'es-med-on', 'es-obs-on', 'es-tm-on', 'es-gk-on', 'es-at-on', 'es-yg-on', 'es-dg-on', 'es-ag-on', 'es-mk-on', 'es-pr-on', 'es-nu-on', 'es-eq-on', 'es-bt-on');
+    host.classList.add('es-bt-on');
+    host.classList.remove('es-pd-on', 'es-ds-on', 'es-pres-on', 'es-vice-on', 'es-fisio-on', 'es-ma-on', 'es-med-on', 'es-obs-on', 'es-tm-on', 'es-gk-on', 'es-at-on', 'es-yg-on', 'es-dg-on', 'es-ag-on', 'es-mk-on', 'es-pr-on', 'es-nu-on', 'es-eq-on', 'es-sg-on');
     if (group) {
-      group.classList.add('is-sg-dash');
-      group.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-fisio-dash', 'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash', 'is-at-dash', 'is-yg-dash', 'is-dg-dash', 'is-ag-dash', 'is-mk-dash', 'is-pr-dash', 'is-nu-dash', 'is-eq-dash', 'is-bt-dash');
+      group.classList.add('is-bt-dash');
+      group.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-fisio-dash', 'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash', 'is-at-dash', 'is-yg-dash', 'is-dg-dash', 'is-ag-dash', 'is-mk-dash', 'is-pr-dash', 'is-nu-dash', 'is-eq-dash', 'is-sg-dash');
     }
     bind(host);
   }
 
-  window.EliseeSgDash = { render: render, isSg: isSg };
+  window.EliseeBtDash = { render: render, isBt: isBt };
 
   document.addEventListener('elisee:view-changed', function (e) {
     var d = e && e.detail;
     if (d && d.view === 'user-dossier') {
       try {
         var u = userObj();
-        if (isSg(u)) render(u);
+        if (isBt(u)) render(u);
       } catch (_) {}
     }
   });

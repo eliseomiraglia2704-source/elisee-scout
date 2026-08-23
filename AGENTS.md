@@ -57,6 +57,7 @@ Se il push dà 403 (account Git `sfondiitaliani23-svg`), pubblica comunque su Ve
 - Area Nutrizionista: dashboard nutrizionale (`nu-dash.js`) se il ruolo è Nutrizionista. Distinta da Medico e Fisioterapista.
 - Area Magazziniere: dashboard logistica (`eq-dash.js`) se il ruolo è Magazziniere / Equipment Manager.
 - Area Segretario Generale: dashboard amministrativa (`sg-dash.js`) se il ruolo è Segretario generale / Club Manager. Distinta da Direttore generale e Team manager.
+- Area Biglietteria: dashboard vendite e tifoseria (`bt-dash.js`) se il ruolo è Responsabile biglietteria / tifoseria. Distinta dal Tifoso (ruolo sito).
 - Area Presidente: dashboard Presidenza (`pres-dash.js`) se il ruolo staff è Presidente.
 
 ## Skill
