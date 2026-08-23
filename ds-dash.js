@@ -205,6 +205,8 @@
     if (mk) mk.hidden = true;
     var prb = document.getElementById('es-pr');
     if (prb) prb.hidden = true;
+    var nu = document.getElementById('es-nu');
+    if (nu) nu.hidden = true;
     var g = document.getElementById('user-dossier-view-group');
     if (g) { g.classList.remove('is-coach-dash'); g.classList.remove('is-ma-dash'); g.classList.remove('is-med-dash'); g.classList.remove('is-obs-dash'); g.classList.remove('is-tm-dash'); g.classList.remove('is-gk-dash'); g.classList.remove('is-at-dash'); g.classList.remove('is-yg-dash'); g.classList.remove('is-dg-dash'); }
   }
@@ -246,10 +248,10 @@
     box.innerHTML = html(user);
     box.hidden = false;
     host.classList.add('es-ds-on');
-    host.classList.remove('es-pd-on', 'es-ma-on', 'es-med-on', 'es-obs-on', 'es-tm-on', 'es-gk-on', 'es-at-on', 'es-yg-on', 'es-dg-on');
+    host.classList.remove('es-pd-on', 'es-ma-on', 'es-med-on', 'es-obs-on', 'es-tm-on', 'es-gk-on', 'es-at-on', 'es-yg-on', 'es-dg-on', 'es-nu-on');
     if (group) {
       group.classList.add('is-ds-dash');
-      group.classList.remove('is-coach-dash', 'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash', 'is-at-dash', 'is-yg-dash', 'is-dg-dash');
+      group.classList.remove('is-coach-dash', 'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash', 'is-at-dash', 'is-yg-dash', 'is-dg-dash', 'is-nu-dash');
     }
     bind(host);
   }

@@ -3,8 +3,8 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-08-20**
-Ultimo fatto: Area Ufficio Stampa = dashboard comunicazione, media, comunicati.
+Ultimo aggiornamento: **2026-08-23**
+Ultimo fatto: Area Nutrizionista = dashboard piani alimentari, composizione corporea.
 Feature precedente: Hub Mercato B2B (`cb9d60d`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -60,7 +60,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Dashboard Ufficio Stampa: comunicazione, media, comunicati |
+| (questo) | Dashboard Nutrizionista: piani alimentari, composizione |
+| `0127f31` | Dashboard Ufficio Stampa: comunicazione, media, comunicati |
 | `5adecd3` | Dashboard Marketing: sponsor, brand, partnership |
 | `e3f459f` | Dashboard Procuratore: agente FIFA, portfolio, trattative |
 | `2a0113b` | Dashboard Direttore Generale: direzionale, budget, decisioni |
@@ -104,7 +105,7 @@ File:
 - `manager-runtime.js` / `manager.css` — inbox admin 3 colonne
 - `api/manager.js` — Vercel: `propose-lineup`, `view=official`, `decide` kind `lineup`
 - `workers/manager_store.py` + `elisee_up.py` — stesso contratto in locale (persistenza `data/manager/state.json`, gitignored)
-- Cache attuale: `?v=20260820_XI1`, SW `elisee-scout-v20260820-xi1`
+- Cache attuale: `?v=20260823_NU1`, SW `elisee-scout-v20260823-nu1`
 
 localStorage:
 
@@ -144,6 +145,7 @@ Nota Vercel: lo store manager è su `/tmp` (effimero). In locale `state.json` è
 | Dashboard Procuratore | `ag-dash.js` / `.css` — agente FIFA, portfolio |
 | Dashboard Marketing | `mk-dash.js` / `.css` — sponsor, brand, partnership |
 | Dashboard Ufficio Stampa | `pr-dash.js` / `.css` — comunicazione, media |
+| Dashboard Nutrizionista | `nu-dash.js` / `.css` — piani alimentari |
 | Scopri / follow | `scopri-profili.js` / `.css` |
 | Messaggi | `messaggi.js` / `.css` |
 | Mappa | `mappa-club.js` / `.css` |
@@ -191,6 +193,8 @@ Marketing: se ruolo staff è Responsabile marketing / commerciale, dashboard spo
 
 Ufficio Stampa: se ruolo staff è Responsabile comunicazione / ufficio stampa, dashboard media, comunicati, social. Distinta dal Marketing. Cache `PR2`.
 
+Nutrizionista: se ruolo staff è Nutrizionista, dashboard piani alimentari e composizione corporea. Distinta da Medico e Fisioterapista. Cache `NU1`.
+
 Schede tecniche: da ogni annuncio in Bacheca → pulsante **Schede tecniche**. Le schede IA restano nella candidatura (`#schede-tecniche`), non via e-mail. Club: lista, scheda completa, confronto (fino a 3), stati (nuova / in valutazione / shortlist / scartata). Cache `ST1`.
 
 Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
@@ -199,6 +203,7 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-23** — Dashboard Nutrizionista: piani alimentari, composizione corporea, albo. Cache `NU1`.
 - **2026-08-23** — Dashboard Ufficio Stampa / Comunicazione: media, comunicati, interviste. Cache `PR2`.
 - **2026-08-23** — Dashboard Marketing / Commerciale: sponsor, brand, registro partnership. Cache `MK1`.
 - **2026-08-23** — Dashboard Procuratore / Agente FIFA: portfolio assistiti, trattative, licenza FIFA. Cache `AG1`.
