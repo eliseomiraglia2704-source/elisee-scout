@@ -24,7 +24,9 @@ teams = cat.get("teams", [])
 folder_overrides = {
     "asd-pontedera": "eccellenza-toscana-girone-a-toscana-a-asd-ponted",
     "forl": "forli",
-    "s-dtirol": "sudtirol"
+    "s-dtirol": "sudtirol",
+    "folgore caratese": "folgore-caratese",
+    "milan-futuro": "milan",
 }
 team_by_id = {t["id"]: t for t in teams}
 
@@ -56,6 +58,9 @@ LABEL_MAP = {
     "polo-black": "POLO (NERA)",
     "polo-blue": "POLO (BLU)",
     "polo-red": "POLO (ROSSA)",
+    "polo-staff": "POLO STAFF",
+    "polo-players": "POLO GIOCATORI",
+    "polo-style": "POLO (STYLE)",
     "pre-match": "PRE-MATCH",
     "pre-match-home": "PRE-MATCH (CASA)",
     "pre-match-away": "PRE-MATCH (OSPITI)",
@@ -64,11 +69,17 @@ LABEL_MAP = {
     "pre-season": "PRE-SEASON",
     "pre-season-home": "PRE-SEASON (CASA)",
     "pre-season-away": "PRE-SEASON (OSPITI)",
+    "pre-season-goalkeeper": "PRE-SEASON PORTIERE",
     "pre-stagione": "PRE-STAGIONE",
     "retro": "MAGLIA RETRO",
     "travel-shirt": "MAGLIA VIAGGIO",
     "t-shirt": "T-SHIRT",
     "t-shirt-2": "T-SHIRT 2",
+    "extra-1": "EXTRA 1",
+    "extra-2": "EXTRA 2",
+    "extra-3": "EXTRA 3",
+    "extra-4": "EXTRA 4",
+    "extra-5": "EXTRA 5",
     "training": "ALLENAMENTO",
     "trining": "ALLENAMENTO",
     "training-1": "ALLENAMENTO 1",
@@ -91,7 +102,23 @@ STEM_ALIAS = {
     "gk-third": "goalkeeper-third",
     "goalkeper-away": "goalkeeper-away",
     "trining": "training",
+    "travel-shirt": "travel-shirt",
+    "travelshirt": "travel-shirt",
 }
+
+IMG_EXT = {".png", ".jpg", ".jpeg", ".webp", ".jfif"}
+FALLBACK_KEYS = ["home", "away", "third", "fourth", "fifth"]
+
+
+def is_generic_stem(stem):
+    s = (stem or "").lower()
+    if s.startswith("picsart"):
+        return True
+    if s.startswith("gemini"):
+        return True
+    if re.fullmatch(r"\d+", s):
+        return True
+    return False
 
 
 def norm_stem(stem):
@@ -142,19 +169,44 @@ if KITS_DIR.exists():
         if team:
             matched_folders += 1
             image_files = sorted(
-                [f for f in folder.iterdir() if f.is_file() and f.suffix.lower() in (".png", ".jpg", ".jpeg", ".webp")],
+                [f for f in folder.iterdir() if f.is_file() and f.suffix.lower() in IMG_EXT],
                 key=lambda x: (get_prio(x.stem), x.stem.lower())
             )
-            
+
+            used_keys = set()
             kits_list = []
-            for img in image_files:
-                stem = norm_stem(img.stem)
+            generic_files = []
+
+            def push_kit(key, img):
                 rel_path = f"immagini/kits-2d/{fname}/{img.name}"
                 kits_list.append({
-                    "key": stem,
-                    "label": format_label(stem),
+                    "key": key,
+                    "label": format_label(key),
                     "url": rel_path
                 })
+                used_keys.add(key)
+
+            for img in image_files:
+                stem = norm_stem(img.stem)
+                if is_generic_stem(stem) or stem in used_keys:
+                    generic_files.append(img)
+                    continue
+                push_kit(stem, img)
+                total_indexed_kits += 1
+
+            extra_n = 1
+            for img in generic_files:
+                key = None
+                for cand in FALLBACK_KEYS:
+                    if cand not in used_keys:
+                        key = cand
+                        break
+                if not key:
+                    while f"extra-{extra_n}" in used_keys:
+                        extra_n += 1
+                    key = f"extra-{extra_n}"
+                    extra_n += 1
+                push_kit(key, img)
                 total_indexed_kits += 1
 
             team["kits"] = kits_list
@@ -164,7 +216,7 @@ if KITS_DIR.exists():
                 print(f"Club {team['name']} ({fname}): {len(kits_list)} divise/capi -> [{keys_str}]")
 
             # Backward-compatible single kit properties
-            file_dict = {norm_stem(f.stem): f"immagini/kits-2d/{fname}/{f.name}" for f in image_files}
+            file_dict = {k["key"]: k["url"] for k in kits_list}
             prop_map = {
                 "home": "kitHome",
                 "away": "kitAway",

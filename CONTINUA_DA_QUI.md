@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-23**
-Ultimo fatto: Area Responsabile Biglietteria / Tifoseria = dashboard vendite, abbonamenti, affluenza.
+Ultimo fatto: Selettore squadra = tutti i kit 2D delle cartelle (non solo home/away/third).
 Feature precedente: Hub Mercato B2B (`cb9d60d`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -60,7 +60,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Dashboard Biglietteria: vendite, abbonamenti, affluenza |
+| (questo) | Selettore squadra: tutti i kit 2D in cartella |
+| `1c8f08c` | Dashboard Biglietteria: vendite, abbonamenti, affluenza |
 | `4e0ac99` | Dashboard Segretario Generale: tesseramenti, pratiche, adempimenti |
 | `9750bfa` | Dashboard Magazziniere: inventario, kit, ordini |
 | `9b9242b` | Dashboard Nutrizionista: piani alimentari, composizione |
@@ -108,7 +109,7 @@ File:
 - `manager-runtime.js` / `manager.css` — inbox admin 3 colonne
 - `api/manager.js` — Vercel: `propose-lineup`, `view=official`, `decide` kind `lineup`
 - `workers/manager_store.py` + `elisee_up.py` — stesso contratto in locale (persistenza `data/manager/state.json`, gitignored)
-- Cache attuale: `?v=20260823_BT1`, SW `elisee-scout-v20260823-bt1`
+- Cache attuale: `?v=20260823_KITSALL`, SW `elisee-scout-v20260823-kitsall`
 
 localStorage:
 

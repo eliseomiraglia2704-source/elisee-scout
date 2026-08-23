@@ -9,9 +9,9 @@
   var LEAGUE_ORDER = [];
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260820_KITSALL';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260823_KITSALL';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260820_VERW1';
+  var LOGO_V = '20260823_KITSALL';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -70,6 +70,8 @@
     'polo-black': 'POLO (NERA)',
     'polo-blue': 'POLO (BLU)',
     'polo-red': 'POLO (ROSSA)',
+    'polo-staff': 'POLO STAFF',
+    'polo-players': 'POLO GIOCATORI',
     'pre-match': 'PRE-MATCH',
     'pre-match-home': 'PRE-MATCH (CASA)',
     'pre-match-away': 'PRE-MATCH (OSPITI)',
@@ -78,6 +80,7 @@
     'pre-season': 'PRE-SEASON',
     'pre-season-home': 'PRE-SEASON (CASA)',
     'pre-season-away': 'PRE-SEASON (OSPITI)',
+    'pre-season-goalkeeper': 'PRE-SEASON PORTIERE',
     'pre-stagione': 'PRE-STAGIONE',
     'retro': 'MAGLIA RETRO',
     'travel-shirt': 'MAGLIA VIAGGIO',
@@ -96,6 +99,11 @@
     'winter-training-staff': 'ALLENAMENTO INVERNALE STAFF',
     't-shirt': 'T-SHIRT',
     't-shirt-2': 'T-SHIRT 2',
+    'extra-1': 'EXTRA 1',
+    'extra-2': 'EXTRA 2',
+    'extra-3': 'EXTRA 3',
+    'extra-4': 'EXTRA 4',
+    'extra-5': 'EXTRA 5',
     'goalkeper-away': 'PORTIERE (OSPITI)',
     'trining': 'ALLENAMENTO'
   };
@@ -104,10 +112,12 @@
     'home', 'away', 'third', 'fourth', 'fifth',
     'goalkeeper', 'goalkeeper-home', 'goalkeeper-away', 'goalkeeper-third',
     'pre-match', 'pre-match-home', 'pre-match-away', 'pre-match-third',
-    'polo', 'polo-1', 'polo-2', 'polo-white', 'polo-black',
+    'polo', 'polo-1', 'polo-2', 'polo-white', 'polo-black', 'polo-staff', 'polo-players',
     'training', 'training-1', 'training-2', 'training-3',
     'training-home', 'training-away', 'training-third',
-    'training-goalkeeper', 'training-staff'
+    'training-goalkeeper', 'training-staff',
+    'pre-season', 'pre-season-home', 'pre-season-away', 'pre-season-goalkeeper',
+    'travel-shirt', 'extra-1', 'extra-2', 'extra-3', 'extra-4', 'extra-5'
   ];
 
   function getKitLabel(key, fallbackLabel) {
