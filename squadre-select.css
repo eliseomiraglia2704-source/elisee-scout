@@ -905,6 +905,36 @@
   background: rgba(0, 0, 0, 0.35);
 }
 
+.es-sq-kit-groups {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+  margin: 0.15rem 0 0.45rem;
+  max-width: 100%;
+}
+.es-sq-kit-groups[hidden] { display: none !important; }
+.es-sq-kit-group {
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  background: transparent;
+  color: #94a3b8;
+  border-radius: 999px;
+  padding: 0.22rem 0.62rem;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.es-sq-kit-group:hover {
+  border-color: rgba(56, 189, 248, 0.55);
+  color: #7dd3fc;
+}
+.es-sq-kit-group.is-on {
+  border-color: rgba(56, 189, 248, 0.7);
+  background: rgba(56, 189, 248, 0.16);
+  color: #e0f2fe;
+}
 .es-sq-kit-dots {
   display: flex;
   align-items: center;
