@@ -2535,8 +2535,8 @@
   }
 
   var TROPHY_DIR = 'immagini/minigioco/loghi-trofei/';
-  function trophyImg(file, name) {
-    return TROPHY_DIR + file + '?v=20260813_TROPHY';
+  function trophyImg(file) {
+    return TROPHY_DIR + file + '?v=20260823_TROPHY';
   }
   function trophyIconHtml(key, cls) {
     var t = TROPHIES_MAP[key];
@@ -2547,46 +2547,46 @@
     }
     return '<span class="' + klass + '" title="' + esc(t.name) + '">' + (t.svg || '') + '</span>';
   }
-  // ---------- DEFINIZIONE TROFEI (file in loghi-trofei) ----------
+  // ---------- DEFINIZIONE TROFEI (file in loghi-trofei/Nazione) ----------
   var TROPHIES_MAP = {
-    ballon_dor: { name: "Pallone d'Oro", cat: "Individuale", img: trophyImg('pallone-doro.jpg') },
-    world_cup: { name: "Mondiale FIFA", cat: "Internazionale", img: trophyImg('mondiale.jpg') },
-    euro_cup: { name: "UEFA Europei", cat: "Internazionale", img: trophyImg('europei.jpg') },
-    club_world_cup: { name: "Mondiale per Club", cat: "Internazionale", img: trophyImg('mondiale-club.jpg') },
-    champions_league: { name: "UEFA Champions League", cat: "Europeo", img: trophyImg('champions-league.jpg') },
-    europa_league: { name: "UEFA Europa League", cat: "Europeo", img: trophyImg('europa-league.jpg') },
-    conference_league: { name: "UEFA Conference League", cat: "Europeo", img: trophyImg('conference-league.jpg') },
-    supercoppa_euro: { name: "UEFA Supercoppa", cat: "Europeo", img: trophyImg('supercoppa-uefa.jpg') },
+    ballon_dor: { name: "Pallone d'Oro", cat: "Individuale", img: trophyImg('Internazionali/pallone-doro.png') },
+    world_cup: { name: "Mondiale FIFA", cat: "Internazionale", img: trophyImg('Internazionali/mondiale.png') },
+    euro_cup: { name: "UEFA Europei", cat: "Internazionale", img: trophyImg('Internazionali/europei.png') },
+    club_world_cup: { name: "Mondiale per Club", cat: "Internazionale", img: trophyImg('Internazionali/mondiale-club.png') },
+    champions_league: { name: "UEFA Champions League", cat: "Europeo", img: trophyImg('Internazionali/champions-league.png') },
+    europa_league: { name: "UEFA Europa League", cat: "Europeo", img: trophyImg('Internazionali/europa-league.png') },
+    conference_league: { name: "UEFA Conference League", cat: "Europeo", img: trophyImg('Internazionali/conference-league.png') },
+    supercoppa_euro: { name: "UEFA Supercoppa", cat: "Europeo", img: trophyImg('Internazionali/supercoppa-uefa.png') },
     player_of_year: { name: "Giocatore dell'Anno", cat: "Individuale", img: trophyImg('giocatore-anno.jpg') },
-    serie_a: { name: "Serie A Scudetto", cat: "Nazionale", img: trophyImg('serie-a.jpg') },
-    serie_b: { name: "Serie B Ali della Vittoria", cat: "Nazionale", img: trophyImg('serie-b.jpg') },
-    coppa_italia: { name: "Coppa Italia", cat: "Nazionale", img: trophyImg('coppa-italia.jpg') },
-    supercoppa_italia: { name: "Supercoppa Italia", cat: "Nazionale", img: trophyImg('supercoppa-italia.jpg') },
-    serie_c_a: { name: "Serie C - Girone A", cat: "Lega Pro", img: trophyImg('serie-c-a.jpg') },
-    serie_c_b: { name: "Serie C - Girone B", cat: "Lega Pro", img: trophyImg('serie-c-b.jpg') },
-    serie_c_c: { name: "Serie C - Girone C", cat: "Lega Pro", img: trophyImg('serie-c-c.jpg') },
-    coppa_serie_c: { name: "Coppa Italia Serie C", cat: "Lega Pro", img: trophyImg('coppa-serie-c.jpg') },
-    supercoppa_serie_c: { name: "Supercoppa Serie C", cat: "Lega Pro", img: trophyImg('supercoppa-serie-c.jpg') },
+    serie_a: { name: "Serie A Scudetto", cat: "Nazionale", img: trophyImg('Italia/serie-a.png') },
+    serie_b: { name: "Serie B Ali della Vittoria", cat: "Nazionale", img: trophyImg('Italia/serie-b.png') },
+    coppa_italia: { name: "Coppa Italia", cat: "Nazionale", img: trophyImg('Italia/coppa-italia.png') },
+    supercoppa_italia: { name: "Supercoppa Italia", cat: "Nazionale", img: trophyImg('Italia/supercoppa-italia.png') },
+    serie_c_a: { name: "Serie C - Girone A", cat: "Lega Pro", img: trophyImg('Italia/serie-c-a.png') },
+    serie_c_b: { name: "Serie C - Girone B", cat: "Lega Pro", img: trophyImg('Italia/serie-c-b.png') },
+    serie_c_c: { name: "Serie C - Girone C", cat: "Lega Pro", img: trophyImg('Italia/serie-c-c.png') },
+    coppa_serie_c: { name: "Coppa Italia Serie C", cat: "Lega Pro", img: trophyImg('Italia/coppa-serie-c.png') },
+    supercoppa_serie_c: { name: "Supercoppa Serie C", cat: "Lega Pro", img: trophyImg('Italia/supercoppa-serie-c.png') },
     serie_d: { name: "Serie D Campionato", cat: "Dilettanti", img: trophyImg('serie-d.jpg') },
-    coppa_serie_d: { name: "Coppa Italia Serie D", cat: "Dilettanti", img: trophyImg('coppa-serie-d.jpg') },
-    premier: { name: "Premier League", cat: "Nazionale", img: 'immagini/squadre-loghi/english-premier-league.png?v=20260814_COMP' },
-    laliga: { name: "La Liga", cat: "Nazionale", img: 'immagini/squadre-loghi/la-liga.png?v=20260814_COMP' },
-    bundesliga: { name: "Bundesliga", cat: "Nazionale", img: 'immagini/squadre-loghi/bundesliga.png?v=20260814_COMP' },
-    ligue1: { name: "Ligue 1", cat: "Nazionale", img: 'immagini/squadre-loghi/ligue-1.png?v=20260814_COMP' },
+    coppa_serie_d: { name: "Coppa Italia Serie D", cat: "Dilettanti", img: trophyImg('Italia/coppa-serie-d.png') },
+    premier: { name: "Premier League", cat: "Nazionale", img: trophyImg('Inghilterra/premier-league.png') },
+    laliga: { name: "La Liga", cat: "Nazionale", img: trophyImg('Spagna/la-liga.png') },
+    bundesliga: { name: "Bundesliga", cat: "Nazionale", img: trophyImg('Germania/bundesliga.png') },
+    ligue1: { name: "Ligue 1", cat: "Nazionale", img: trophyImg('Francia/ligue-1.png') },
     primeira: { name: "Primeira Liga", cat: "Nazionale", img: 'immagini/squadre-loghi/primeira-liga.png?v=20260814_COMP' },
     eredivisie: { name: "Eredivisie", cat: "Nazionale", img: 'immagini/squadre-loghi/eredivisie.png?v=20260814_COMP' },
-    brasileirao: { name: "Brasileirao", cat: "Nazionale", img: trophyImg('serie-a.jpg') },
-    liga_arg: { name: "Liga Argentina", cat: "Nazionale", img: trophyImg('serie-a.jpg') },
+    brasileirao: { name: "Brasileirao", cat: "Nazionale", img: trophyImg('Italia/serie-a.png') },
+    liga_arg: { name: "Liga Argentina", cat: "Nazionale", img: trophyImg('Italia/serie-a.png') },
     liga_mx: { name: "Liga MX", cat: "Nazionale", img: 'immagini/squadre-loghi/liga-mx.png?v=20260814_COMP' },
-    fa_cup: { name: "FA Cup", cat: "Nazionale", img: trophyImg('coppa-italia.jpg') },
-    copa_del_rey: { name: "Copa del Rey", cat: "Nazionale", img: trophyImg('coppa-italia.jpg') },
-    dfb_pokal: { name: "DFB Pokal", cat: "Nazionale", img: trophyImg('coppa-italia.jpg') },
-    coupe_france: { name: "Coupe de France", cat: "Nazionale", img: trophyImg('coppa-italia.jpg') },
-    taca_portugal: { name: "Taca de Portugal", cat: "Nazionale", img: trophyImg('coppa-italia.jpg') },
-    knvb_cup: { name: "KNVB Beker", cat: "Nazionale", img: trophyImg('coppa-italia.jpg') },
-    copa_brasil: { name: "Copa do Brasil", cat: "Nazionale", img: trophyImg('coppa-italia.jpg') },
-    copa_argentina: { name: "Copa Argentina", cat: "Nazionale", img: trophyImg('coppa-italia.jpg') },
-    copa_mx: { name: "Copa MX", cat: "Nazionale", img: trophyImg('coppa-italia.jpg') }
+    fa_cup: { name: "FA Cup", cat: "Nazionale", img: trophyImg('Inghilterra/fa-cup.png') },
+    copa_del_rey: { name: "Copa del Rey", cat: "Nazionale", img: trophyImg('Spagna/copa-del-rey-coppa-spagnola.png') },
+    dfb_pokal: { name: "DFB Pokal", cat: "Nazionale", img: trophyImg('Germania/dfb-pokal-coppa-di-germania.png') },
+    coupe_france: { name: "Coupe de France", cat: "Nazionale", img: trophyImg('Francia/coupe-de-france.png') },
+    taca_portugal: { name: "Taca de Portugal", cat: "Nazionale", img: trophyImg('Italia/coppa-italia.png') },
+    knvb_cup: { name: "KNVB Beker", cat: "Nazionale", img: trophyImg('Italia/coppa-italia.png') },
+    copa_brasil: { name: "Copa do Brasil", cat: "Nazionale", img: trophyImg('Italia/coppa-italia.png') },
+    copa_argentina: { name: "Copa Argentina", cat: "Nazionale", img: trophyImg('Italia/coppa-italia.png') },
+    copa_mx: { name: "Copa MX", cat: "Nazionale", img: trophyImg('Italia/coppa-italia.png') }
   };
 
   function seasonYearOf(age) {

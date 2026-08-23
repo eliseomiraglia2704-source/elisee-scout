@@ -1,46 +1,18 @@
 ELISEE SCOUT — loghi trofei
 Cartella: immagini/minigioco/loghi-trofei/
 
-Sostituisci i file tenendo LO STESSO NOME.
-Formato: JPG o PNG, quadrato, coppa 3D su sfondo nero (come la foto di riferimento).
-Se usi PNG, tieni lo stesso nome e cambia solo l'estensione (es. serie-c-a.png).
+Struttura per nazione (PNG su sfondo nero). I file in root .jpg restano solo per dilettanti / giocatore dell'anno.
 
-========================================
-MAGGIORI (gia pronti, puoi sostituirli)
-========================================
-  pallone-doro.jpg
-  mondiale.jpg
-  europei.jpg
-  mondiale-club.jpg
-  champions-league.jpg
-  europa-league.jpg
-  conference-league.jpg
-  supercoppa-uefa.jpg
+  Internazionali/   pallone-doro, mondiale, europei, mondiale-club,
+                    champions-league, europa-league, conference-league, supercoppa-uefa
+  Italia/           serie-a, serie-b, serie-c-a/b/c, coppa-italia, coppe e supercoppe C/D
+  Inghilterra/      premier-league, fa-cup, efl-cup, fa-community-shield
+  Spagna/           la-liga, copa-del-rey-coppa-spagnola, supercopa-de-espana
+  Germania/         bundesliga, dfb-pokal, dfl-supercup
+  Francia/          ligue-1, coupe-de-france
+
+Dilettanti (root, jpg):
+  serie-d.jpg, eccellenza.jpg, promozione.jpg, prima/seconda/terza-categoria.jpg
   giocatore-anno.jpg
-  serie-a.jpg
-  serie-b.jpg
-  coppa-italia.jpg
-  supercoppa-italia.jpg
 
-========================================
-MINORI — ricreali tu e sostituisci questi file
-========================================
-Serie C / Lega Pro
-  serie-c-a.jpg
-  serie-c-b.jpg
-  serie-c-c.jpg
-  coppa-serie-c.jpg
-  supercoppa-serie-c.jpg
-
-Serie D
-  serie-d.jpg
-  coppa-serie-d.jpg
-
-Dilettanti (pronti per quando li vorrai usare)
-  eccellenza.jpg
-  promozione.jpg
-  prima-categoria.jpg
-  seconda-categoria.jpg
-  terza-categoria.jpg
-
-Dopo la sostituzione: ricarica il sito con Ctrl+F5.
+Nomi file: minuscolo, trattini, niente spazi. Il minigioco legge questi path da minigioco-carriera.js.
