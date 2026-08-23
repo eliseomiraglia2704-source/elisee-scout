@@ -51,6 +51,7 @@ Se il push dà 403 (account Git `sfondiitaliani23-svg`), pubblica comunque su Ve
 - Area Preparatore Atletico: dashboard fisica (`at-dash.js`) se il ruolo è Preparatore atletico. Distinta da Preparatore dei portieri.
 - Area Settore Giovanile: dashboard vivaio (`yg-dash.js`) se il ruolo è Responsabile settore giovanile.
 - Area Direttore Generale: dashboard direzionale (`dg-dash.js`) se il ruolo è Direttore generale. Distinta da Presidente e DS.
+- Area Procuratore: dashboard agente FIFA (`ag-dash.js`) se il ruolo è Procuratore / Agente FIFA. Distinta da DS e Osservatore.
 - Area Presidente: dashboard Presidenza (`pres-dash.js`) se il ruolo staff è Presidente.
 
 ## Skill

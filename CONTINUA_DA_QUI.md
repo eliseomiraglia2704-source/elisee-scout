@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-20**
-Ultimo fatto: Area Direttore Generale = dashboard direzionale, budget, decisioni.
+Ultimo fatto: Area Procuratore = dashboard agente FIFA, portfolio, trattative.
 Feature precedente: Hub Mercato B2B (`cb9d60d`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -60,7 +60,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Dashboard Direttore Generale: direzionale, budget, decisioni |
+| (questo) | Dashboard Procuratore: agente FIFA, portfolio, trattative |
+| `2a0113b` | Dashboard Direttore Generale: direzionale, budget, decisioni |
 | `8ea1718` | Trofei minigioco per nazione + maglie home/away |
 | `8d99ff0` | Dashboard Preparatore Atletico: fisica, carichi, GPS, prevenzione |
 | `56c8c5c` | Dashboard Preparatore Portieri: tecnica, sessioni, vivaio |
@@ -138,6 +139,7 @@ Nota Vercel: lo store manager è su `/tmp` (effimero). In locale `state.json` è
 | Dashboard Preparatore Atletico | `at-dash.js` / `.css` — fisica, carichi, GPS |
 | Dashboard Settore Giovanile | `yg-dash.js` / `.css` — vivaio, categorie |
 | Dashboard Direttore Generale | `dg-dash.js` / `.css` — direzionale, budget |
+| Dashboard Procuratore | `ag-dash.js` / `.css` — agente FIFA, portfolio |
 | Scopri / follow | `scopri-profili.js` / `.css` |
 | Messaggi | `messaggi.js` / `.css` |
 | Mappa | `mappa-club.js` / `.css` |
@@ -179,6 +181,8 @@ Settore Giovanile: se ruolo staff è Responsabile settore giovanile, dashboard v
 
 Direttore Generale: se ruolo staff è Direttore generale, dashboard direzionale (strategia, budget, decisioni). Distinta da Presidente e DS. Cache `DG1`.
 
+Procuratore: se ruolo staff è Procuratore / Agente FIFA, dashboard portfolio e trattative. Distinta da DS e Osservatore. Cache `AG1`.
+
 Schede tecniche: da ogni annuncio in Bacheca → pulsante **Schede tecniche**. Le schede IA restano nella candidatura (`#schede-tecniche`), non via e-mail. Club: lista, scheda completa, confronto (fino a 3), stati (nuova / in valutazione / shortlist / scartata). Cache `ST1`.
 
 Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
@@ -187,6 +191,7 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-23** — Dashboard Procuratore / Agente FIFA: portfolio assistiti, trattative, licenza FIFA. Cache `AG1`.
 - **2026-08-23** — Dashboard Direttore Generale: visione strategica, budget, registro decisioni. Distinta da Presidente e DS. Cache `DG1`.
 - **2026-08-23** — Audit cartelle: trofei minigioco in sottocartelle nazione (JS aggiornato); maglie Albinoleffe/Empoli/Juve Stabia rinominate home/away. 14 cartelle kits ancora con nomi Picsart/numerici.
 - **2026-08-20** — Dashboard Responsabile Settore Giovanile: vivaio, categorie, promozioni. Cache `YG1`.

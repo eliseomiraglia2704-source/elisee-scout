@@ -233,6 +233,8 @@
     if (yg) yg.hidden = true;
     var dg = document.getElementById('es-dg');
     if (dg) dg.hidden = true;
+    var ag = document.getElementById('es-ag');
+    if (ag) ag.hidden = true;
     box.innerHTML = html(user);
     box.hidden = false;
     host.classList.add('es-pd-on');
