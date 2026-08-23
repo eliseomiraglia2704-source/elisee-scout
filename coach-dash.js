@@ -235,6 +235,8 @@
     if (dg) dg.hidden = true;
     var ag = document.getElementById('es-ag');
     if (ag) ag.hidden = true;
+    var mk = document.getElementById('es-mk');
+    if (mk) mk.hidden = true;
     box.innerHTML = html(user);
     box.hidden = false;
     host.classList.add('es-pd-on');
