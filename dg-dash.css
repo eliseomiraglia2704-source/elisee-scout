@@ -1,0 +1,15 @@
+/* Dashboard Direttore Generale */
+#user-dossier-view-group.is-staff-area.is-dg-dash .es-user-tabs { display: none !important; }
+#user-dossier-view-group.is-staff-area.is-dg-dash .pf-page-inner {
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+#es-staff-profile.es-dg-on > :not(#es-dg) { display: none !important; }
+.es-dg-grade {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #4ade80;
+  margin: 0 0 0.35rem;
+}
+.es-dg-grade small { font-size: 0.75rem; color: #86efac; margin-left: 0.35rem; }

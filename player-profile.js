@@ -86,13 +86,13 @@
     'Preparatore atletico', 'Preparatore dei portieri',
     'Match analyst', 'Video analyst', 'Scout / Osservatore',
     'Fisioterapista', 'Medico sociale', 'Nutrizionista', 'Mental coach',
-    'Presidente', 'Direttore sportivo', 'Team manager', 'Responsabile settore giovanile', 'Dirigente accompagnatore',
+    'Presidente', 'Direttore generale', 'Direttore sportivo', 'Team manager', 'Responsabile settore giovanile', 'Dirigente accompagnatore',
     'Magazziniere', 'Segretario sportivo'
   ];
   var STAFF_ROLES_DEFAULT = [
     'Allenatore', 'Allenatore in seconda', 'Collaboratore tecnico',
     'Preparatore atletico', 'Match analyst', 'Scout / Osservatore',
-    'Fisioterapista', 'Medico sociale', 'Team manager', 'Responsabile settore giovanile', 'Dirigente', 'Presidente'
+    'Fisioterapista', 'Medico sociale', 'Team manager', 'Responsabile settore giovanile', 'Dirigente', 'Presidente', 'Direttore generale'
   ];
   var ALL_STAFF_ROLES = STAFF_ROLES_CALCIO.concat(['Statistico', 'Dirigente']);
   var ISO = {
@@ -1205,10 +1205,13 @@
         var gk = document.getElementById('es-gk');
         var atd = document.getElementById('es-atd');
         var yg = document.getElementById('es-yg');
+        var dg = document.getElementById('es-dg');
         var sh = document.getElementById('es-staff-profile');
         var grp = document.getElementById('user-dossier-view-group');
         if (!notifsOn && window.EliseePresDash && window.EliseePresDash.isPres && window.EliseePresDash.isPres(user)) {
           window.EliseePresDash.render(user);
+        } else if (!notifsOn && window.EliseeDgDash && window.EliseeDgDash.isDg && window.EliseeDgDash.isDg(user)) {
+          window.EliseeDgDash.render(user);
         } else if (!notifsOn && window.EliseeDsDash && window.EliseeDsDash.isDs && window.EliseeDsDash.isDs(user)) {
           window.EliseeDsDash.render(user);
         } else if (!notifsOn && window.EliseeObsDash && window.EliseeObsDash.isObs && window.EliseeObsDash.isObs(user)) {
@@ -1244,8 +1247,9 @@
           if (gk) gk.hidden = true;
           if (atd) atd.hidden = true;
           if (yg) yg.hidden = true;
-          if (sh) { sh.classList.remove('es-pd-on'); sh.classList.remove('es-ds-on'); sh.classList.remove('es-pres-on'); sh.classList.remove('es-vice-on'); sh.classList.remove('es-fisio-on'); sh.classList.remove('es-ma-on'); sh.classList.remove('es-med-on'); sh.classList.remove('es-obs-on'); sh.classList.remove('es-tm-on'); sh.classList.remove('es-gk-on'); sh.classList.remove('es-at-on'); sh.classList.remove('es-yg-on'); }
-          if (grp) { grp.classList.remove('is-coach-dash'); grp.classList.remove('is-ds-dash'); grp.classList.remove('is-pres-dash'); grp.classList.remove('is-vice-dash'); grp.classList.remove('is-fisio-dash'); grp.classList.remove('is-ma-dash'); grp.classList.remove('is-med-dash'); grp.classList.remove('is-obs-dash'); grp.classList.remove('is-tm-dash'); grp.classList.remove('is-gk-dash'); grp.classList.remove('is-at-dash'); grp.classList.remove('is-yg-dash'); }
+          if (dg) dg.hidden = true;
+          if (sh) { sh.classList.remove('es-pd-on'); sh.classList.remove('es-ds-on'); sh.classList.remove('es-pres-on'); sh.classList.remove('es-vice-on'); sh.classList.remove('es-fisio-on'); sh.classList.remove('es-ma-on'); sh.classList.remove('es-med-on'); sh.classList.remove('es-obs-on'); sh.classList.remove('es-tm-on'); sh.classList.remove('es-gk-on'); sh.classList.remove('es-at-on'); sh.classList.remove('es-yg-on'); sh.classList.remove('es-dg-on'); }
+          if (grp) { grp.classList.remove('is-coach-dash'); grp.classList.remove('is-ds-dash'); grp.classList.remove('is-pres-dash'); grp.classList.remove('is-vice-dash'); grp.classList.remove('is-fisio-dash'); grp.classList.remove('is-ma-dash'); grp.classList.remove('is-med-dash'); grp.classList.remove('is-obs-dash'); grp.classList.remove('is-tm-dash'); grp.classList.remove('is-gk-dash'); grp.classList.remove('is-at-dash'); grp.classList.remove('is-yg-dash'); grp.classList.remove('is-dg-dash'); }
         }
       } catch (_) {}
     }

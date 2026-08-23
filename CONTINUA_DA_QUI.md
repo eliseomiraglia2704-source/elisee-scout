@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-20**
-Ultimo fatto: Controllo cartelle: maglie kits-2d e trofei minigioco riallineati.
+Ultimo fatto: Area Direttore Generale = dashboard direzionale, budget, decisioni.
 Feature precedente: Hub Mercato B2B (`cb9d60d`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -60,7 +60,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Dashboard Settore Giovanile: vivaio, categorie, promozioni |
+| (questo) | Dashboard Direttore Generale: direzionale, budget, decisioni |
+| `8ea1718` | Trofei minigioco per nazione + maglie home/away |
 | `8d99ff0` | Dashboard Preparatore Atletico: fisica, carichi, GPS, prevenzione |
 | `56c8c5c` | Dashboard Preparatore Portieri: tecnica, sessioni, vivaio |
 | `4a96837` | Dashboard Team Manager: organizzativa, trasferte, pratiche |
@@ -136,6 +137,7 @@ Nota Vercel: lo store manager è su `/tmp` (effimero). In locale `state.json` è
 | Dashboard Preparatore Portieri | `gk-dash.js` / `.css` — tecnica, sessioni |
 | Dashboard Preparatore Atletico | `at-dash.js` / `.css` — fisica, carichi, GPS |
 | Dashboard Settore Giovanile | `yg-dash.js` / `.css` — vivaio, categorie |
+| Dashboard Direttore Generale | `dg-dash.js` / `.css` — direzionale, budget |
 | Scopri / follow | `scopri-profili.js` / `.css` |
 | Messaggi | `messaggi.js` / `.css` |
 | Mappa | `mappa-club.js` / `.css` |
@@ -175,6 +177,8 @@ Preparatore Atletico: se ruolo staff è Preparatore atletico, dashboard fisica (
 
 Settore Giovanile: se ruolo staff è Responsabile settore giovanile, dashboard vivaio (categorie, promozioni, famiglie). Ruolo aggiunto in anagrafica. Cache `YG1`.
 
+Direttore Generale: se ruolo staff è Direttore generale, dashboard direzionale (strategia, budget, decisioni). Distinta da Presidente e DS. Cache `DG1`.
+
 Schede tecniche: da ogni annuncio in Bacheca → pulsante **Schede tecniche**. Le schede IA restano nella candidatura (`#schede-tecniche`), non via e-mail. Club: lista, scheda completa, confronto (fino a 3), stati (nuova / in valutazione / shortlist / scartata). Cache `ST1`.
 
 Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
@@ -183,6 +187,7 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-23** — Dashboard Direttore Generale: visione strategica, budget, registro decisioni. Distinta da Presidente e DS. Cache `DG1`.
 - **2026-08-23** — Audit cartelle: trofei minigioco in sottocartelle nazione (JS aggiornato); maglie Albinoleffe/Empoli/Juve Stabia rinominate home/away. 14 cartelle kits ancora con nomi Picsart/numerici.
 - **2026-08-20** — Dashboard Responsabile Settore Giovanile: vivaio, categorie, promozioni. Cache `YG1`.
 - **2026-08-20** — Dashboard Preparatore Atletico: fisica, carichi, GPS, prevenzione. Cache `AT1`.
