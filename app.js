@@ -8768,6 +8768,7 @@ window.applyRoleDossierInterface = function (user) {
     'Team manager': 'Staff',
     'Dirigente accompagnatore': 'Staff',
     Magazziniere: 'Staff',
+    'Magazziniere / Equipment Manager': 'Staff',
     'Segretario sportivo': 'Societa',
     Statistico: 'Match Analyst',
     Dirigente: 'Staff'

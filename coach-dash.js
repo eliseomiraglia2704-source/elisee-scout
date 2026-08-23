@@ -241,6 +241,8 @@
     if (prb) prb.hidden = true;
     var nu = document.getElementById('es-nu');
     if (nu) nu.hidden = true;
+    var eq = document.getElementById('es-eq');
+    if (eq) eq.hidden = true;
     box.innerHTML = html(user);
     box.hidden = false;
     host.classList.add('es-pd-on');

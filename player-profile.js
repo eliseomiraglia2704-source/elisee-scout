@@ -87,7 +87,7 @@
     'Match analyst', 'Video analyst', 'Scout / Osservatore',
     'Fisioterapista', 'Medico sociale', 'Nutrizionista', 'Mental coach',
     'Presidente', 'Direttore generale', 'Direttore sportivo', 'Procuratore / Agente FIFA', 'Responsabile marketing / commerciale', 'Responsabile comunicazione / ufficio stampa', 'Team manager', 'Responsabile settore giovanile', 'Dirigente accompagnatore',
-    'Magazziniere', 'Segretario sportivo'
+    'Magazziniere / Equipment Manager', 'Segretario sportivo'
   ];
   var STAFF_ROLES_DEFAULT = [
     'Allenatore', 'Allenatore in seconda', 'Collaboratore tecnico',
@@ -1210,6 +1210,7 @@
         var mk = document.getElementById('es-mk');
         var pr = document.getElementById('es-pr');
         var nu = document.getElementById('es-nu');
+        var eq = document.getElementById('es-eq');
         var sh = document.getElementById('es-staff-profile');
         var grp = document.getElementById('user-dossier-view-group');
         if (!notifsOn && window.EliseePresDash && window.EliseePresDash.isPres && window.EliseePresDash.isPres(user)) {
@@ -1234,6 +1235,8 @@
           window.EliseeMedDash.render(user);
         } else if (!notifsOn && window.EliseeNuDash && window.EliseeNuDash.isNu && window.EliseeNuDash.isNu(user)) {
           window.EliseeNuDash.render(user);
+        } else if (!notifsOn && window.EliseeEqDash && window.EliseeEqDash.isEq && window.EliseeEqDash.isEq(user)) {
+          window.EliseeEqDash.render(user);
         } else if (!notifsOn && window.EliseeMaDash && window.EliseeMaDash.isMa && window.EliseeMaDash.isMa(user)) {
           window.EliseeMaDash.render(user);
         } else if (!notifsOn && window.EliseeViceDash && window.EliseeViceDash.isVice && window.EliseeViceDash.isVice(user)) {
@@ -1264,8 +1267,9 @@
           if (mk) mk.hidden = true;
           if (pr) pr.hidden = true;
           if (nu) nu.hidden = true;
-          if (sh) { sh.classList.remove('es-pd-on'); sh.classList.remove('es-ds-on'); sh.classList.remove('es-pres-on'); sh.classList.remove('es-vice-on'); sh.classList.remove('es-fisio-on'); sh.classList.remove('es-ma-on'); sh.classList.remove('es-med-on'); sh.classList.remove('es-obs-on'); sh.classList.remove('es-tm-on'); sh.classList.remove('es-gk-on'); sh.classList.remove('es-at-on'); sh.classList.remove('es-yg-on'); sh.classList.remove('es-dg-on'); sh.classList.remove('es-ag-on'); sh.classList.remove('es-mk-on'); sh.classList.remove('es-pr-on'); sh.classList.remove('es-nu-on'); }
-          if (grp) { grp.classList.remove('is-coach-dash'); grp.classList.remove('is-ds-dash'); grp.classList.remove('is-pres-dash'); grp.classList.remove('is-vice-dash'); grp.classList.remove('is-fisio-dash'); grp.classList.remove('is-ma-dash'); grp.classList.remove('is-med-dash'); grp.classList.remove('is-obs-dash'); grp.classList.remove('is-tm-dash'); grp.classList.remove('is-gk-dash'); grp.classList.remove('is-at-dash'); grp.classList.remove('is-yg-dash'); grp.classList.remove('is-dg-dash'); grp.classList.remove('is-ag-dash'); grp.classList.remove('is-mk-dash'); grp.classList.remove('is-pr-dash'); grp.classList.remove('is-nu-dash'); }
+          if (eq) eq.hidden = true;
+          if (sh) { sh.classList.remove('es-pd-on'); sh.classList.remove('es-ds-on'); sh.classList.remove('es-pres-on'); sh.classList.remove('es-vice-on'); sh.classList.remove('es-fisio-on'); sh.classList.remove('es-ma-on'); sh.classList.remove('es-med-on'); sh.classList.remove('es-obs-on'); sh.classList.remove('es-tm-on'); sh.classList.remove('es-gk-on'); sh.classList.remove('es-at-on'); sh.classList.remove('es-yg-on'); sh.classList.remove('es-dg-on'); sh.classList.remove('es-ag-on'); sh.classList.remove('es-mk-on'); sh.classList.remove('es-pr-on'); sh.classList.remove('es-nu-on'); sh.classList.remove('es-eq-on'); }
+          if (grp) { grp.classList.remove('is-coach-dash'); grp.classList.remove('is-ds-dash'); grp.classList.remove('is-pres-dash'); grp.classList.remove('is-vice-dash'); grp.classList.remove('is-fisio-dash'); grp.classList.remove('is-ma-dash'); grp.classList.remove('is-med-dash'); grp.classList.remove('is-obs-dash'); grp.classList.remove('is-tm-dash'); grp.classList.remove('is-gk-dash'); grp.classList.remove('is-at-dash'); grp.classList.remove('is-yg-dash'); grp.classList.remove('is-dg-dash'); grp.classList.remove('is-ag-dash'); grp.classList.remove('is-mk-dash'); grp.classList.remove('is-pr-dash'); grp.classList.remove('is-nu-dash'); grp.classList.remove('is-eq-dash'); }
         }
       } catch (_) {}
     }

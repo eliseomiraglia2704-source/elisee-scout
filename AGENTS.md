@@ -55,6 +55,7 @@ Se il push dà 403 (account Git `sfondiitaliani23-svg`), pubblica comunque su Ve
 - Area Marketing: dashboard commerciale (`mk-dash.js`) se il ruolo è Responsabile marketing / commerciale.
 - Area Ufficio Stampa: dashboard comunicazione (`pr-dash.js`) se il ruolo è Responsabile comunicazione / ufficio stampa.
 - Area Nutrizionista: dashboard nutrizionale (`nu-dash.js`) se il ruolo è Nutrizionista. Distinta da Medico e Fisioterapista.
+- Area Magazziniere: dashboard logistica (`eq-dash.js`) se il ruolo è Magazziniere / Equipment Manager.
 - Area Presidente: dashboard Presidenza (`pres-dash.js`) se il ruolo staff è Presidente.
 
 ## Skill
