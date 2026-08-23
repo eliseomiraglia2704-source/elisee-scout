@@ -86,13 +86,13 @@
     'Preparatore atletico', 'Preparatore dei portieri',
     'Match analyst', 'Video analyst', 'Scout / Osservatore',
     'Fisioterapista', 'Medico sociale', 'Nutrizionista', 'Mental coach',
-    'Presidente', 'Direttore generale', 'Direttore sportivo', 'Procuratore / Agente FIFA', 'Responsabile marketing / commerciale', 'Team manager', 'Responsabile settore giovanile', 'Dirigente accompagnatore',
+    'Presidente', 'Direttore generale', 'Direttore sportivo', 'Procuratore / Agente FIFA', 'Responsabile marketing / commerciale', 'Responsabile comunicazione / ufficio stampa', 'Team manager', 'Responsabile settore giovanile', 'Dirigente accompagnatore',
     'Magazziniere', 'Segretario sportivo'
   ];
   var STAFF_ROLES_DEFAULT = [
     'Allenatore', 'Allenatore in seconda', 'Collaboratore tecnico',
     'Preparatore atletico', 'Match analyst', 'Scout / Osservatore',
-    'Fisioterapista', 'Medico sociale', 'Team manager', 'Responsabile settore giovanile', 'Dirigente', 'Presidente', 'Direttore generale', 'Procuratore / Agente FIFA', 'Responsabile marketing / commerciale'
+    'Fisioterapista', 'Medico sociale', 'Team manager', 'Responsabile settore giovanile', 'Dirigente', 'Presidente', 'Direttore generale', 'Procuratore / Agente FIFA', 'Responsabile marketing / commerciale', 'Responsabile comunicazione / ufficio stampa'
   ];
   var ALL_STAFF_ROLES = STAFF_ROLES_CALCIO.concat(['Statistico', 'Dirigente']);
   var ISO = {
@@ -1208,6 +1208,7 @@
         var dg = document.getElementById('es-dg');
         var ag = document.getElementById('es-ag');
         var mk = document.getElementById('es-mk');
+        var pr = document.getElementById('es-pr');
         var sh = document.getElementById('es-staff-profile');
         var grp = document.getElementById('user-dossier-view-group');
         if (!notifsOn && window.EliseePresDash && window.EliseePresDash.isPres && window.EliseePresDash.isPres(user)) {
@@ -1220,6 +1221,8 @@
           window.EliseeAgDash.render(user);
         } else if (!notifsOn && window.EliseeMkDash && window.EliseeMkDash.isMk && window.EliseeMkDash.isMk(user)) {
           window.EliseeMkDash.render(user);
+        } else if (!notifsOn && window.EliseePrDash && window.EliseePrDash.isPr && window.EliseePrDash.isPr(user)) {
+          window.EliseePrDash.render(user);
         } else if (!notifsOn && window.EliseeObsDash && window.EliseeObsDash.isObs && window.EliseeObsDash.isObs(user)) {
           window.EliseeObsDash.render(user);
         } else if (!notifsOn && window.EliseeTmDash && window.EliseeTmDash.isTm && window.EliseeTmDash.isTm(user)) {
@@ -1256,8 +1259,9 @@
           if (dg) dg.hidden = true;
           if (ag) ag.hidden = true;
           if (mk) mk.hidden = true;
-          if (sh) { sh.classList.remove('es-pd-on'); sh.classList.remove('es-ds-on'); sh.classList.remove('es-pres-on'); sh.classList.remove('es-vice-on'); sh.classList.remove('es-fisio-on'); sh.classList.remove('es-ma-on'); sh.classList.remove('es-med-on'); sh.classList.remove('es-obs-on'); sh.classList.remove('es-tm-on'); sh.classList.remove('es-gk-on'); sh.classList.remove('es-at-on'); sh.classList.remove('es-yg-on'); sh.classList.remove('es-dg-on'); sh.classList.remove('es-ag-on'); sh.classList.remove('es-mk-on'); }
-          if (grp) { grp.classList.remove('is-coach-dash'); grp.classList.remove('is-ds-dash'); grp.classList.remove('is-pres-dash'); grp.classList.remove('is-vice-dash'); grp.classList.remove('is-fisio-dash'); grp.classList.remove('is-ma-dash'); grp.classList.remove('is-med-dash'); grp.classList.remove('is-obs-dash'); grp.classList.remove('is-tm-dash'); grp.classList.remove('is-gk-dash'); grp.classList.remove('is-at-dash'); grp.classList.remove('is-yg-dash'); grp.classList.remove('is-dg-dash'); grp.classList.remove('is-ag-dash'); grp.classList.remove('is-mk-dash'); }
+          if (pr) pr.hidden = true;
+          if (sh) { sh.classList.remove('es-pd-on'); sh.classList.remove('es-ds-on'); sh.classList.remove('es-pres-on'); sh.classList.remove('es-vice-on'); sh.classList.remove('es-fisio-on'); sh.classList.remove('es-ma-on'); sh.classList.remove('es-med-on'); sh.classList.remove('es-obs-on'); sh.classList.remove('es-tm-on'); sh.classList.remove('es-gk-on'); sh.classList.remove('es-at-on'); sh.classList.remove('es-yg-on'); sh.classList.remove('es-dg-on'); sh.classList.remove('es-ag-on'); sh.classList.remove('es-mk-on'); sh.classList.remove('es-pr-on'); }
+          if (grp) { grp.classList.remove('is-coach-dash'); grp.classList.remove('is-ds-dash'); grp.classList.remove('is-pres-dash'); grp.classList.remove('is-vice-dash'); grp.classList.remove('is-fisio-dash'); grp.classList.remove('is-ma-dash'); grp.classList.remove('is-med-dash'); grp.classList.remove('is-obs-dash'); grp.classList.remove('is-tm-dash'); grp.classList.remove('is-gk-dash'); grp.classList.remove('is-at-dash'); grp.classList.remove('is-yg-dash'); grp.classList.remove('is-dg-dash'); grp.classList.remove('is-ag-dash'); grp.classList.remove('is-mk-dash'); grp.classList.remove('is-pr-dash'); }
         }
       } catch (_) {}
     }

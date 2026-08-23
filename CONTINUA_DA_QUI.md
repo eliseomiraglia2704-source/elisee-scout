@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-20**
-Ultimo fatto: Area Marketing / Commerciale = dashboard sponsor, brand, partnership.
+Ultimo fatto: Area Ufficio Stampa = dashboard comunicazione, media, comunicati.
 Feature precedente: Hub Mercato B2B (`cb9d60d`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -60,7 +60,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Dashboard Marketing: sponsor, brand, partnership |
+| (questo) | Dashboard Ufficio Stampa: comunicazione, media, comunicati |
+| `5adecd3` | Dashboard Marketing: sponsor, brand, partnership |
 | `e3f459f` | Dashboard Procuratore: agente FIFA, portfolio, trattative |
 | `2a0113b` | Dashboard Direttore Generale: direzionale, budget, decisioni |
 | `8ea1718` | Trofei minigioco per nazione + maglie home/away |
@@ -142,6 +143,7 @@ Nota Vercel: lo store manager è su `/tmp` (effimero). In locale `state.json` è
 | Dashboard Direttore Generale | `dg-dash.js` / `.css` — direzionale, budget |
 | Dashboard Procuratore | `ag-dash.js` / `.css` — agente FIFA, portfolio |
 | Dashboard Marketing | `mk-dash.js` / `.css` — sponsor, brand, partnership |
+| Dashboard Ufficio Stampa | `pr-dash.js` / `.css` — comunicazione, media |
 | Scopri / follow | `scopri-profili.js` / `.css` |
 | Messaggi | `messaggi.js` / `.css` |
 | Mappa | `mappa-club.js` / `.css` |
@@ -187,6 +189,8 @@ Procuratore: se ruolo staff è Procuratore / Agente FIFA, dashboard portfolio e 
 
 Marketing: se ruolo staff è Responsabile marketing / commerciale, dashboard sponsor, merchandising, partnership. Cache `MK1`.
 
+Ufficio Stampa: se ruolo staff è Responsabile comunicazione / ufficio stampa, dashboard media, comunicati, social. Distinta dal Marketing. Cache `PR2`.
+
 Schede tecniche: da ogni annuncio in Bacheca → pulsante **Schede tecniche**. Le schede IA restano nella candidatura (`#schede-tecniche`), non via e-mail. Club: lista, scheda completa, confronto (fino a 3), stati (nuova / in valutazione / shortlist / scartata). Cache `ST1`.
 
 Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
@@ -195,6 +199,7 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-23** — Dashboard Ufficio Stampa / Comunicazione: media, comunicati, interviste. Cache `PR2`.
 - **2026-08-23** — Dashboard Marketing / Commerciale: sponsor, brand, registro partnership. Cache `MK1`.
 - **2026-08-23** — Dashboard Procuratore / Agente FIFA: portfolio assistiti, trattative, licenza FIFA. Cache `AG1`.
 - **2026-08-23** — Dashboard Direttore Generale: visione strategica, budget, registro decisioni. Distinta da Presidente e DS. Cache `DG1`.

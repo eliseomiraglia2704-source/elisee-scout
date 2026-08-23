@@ -3,7 +3,7 @@
    - MAI servire HTML al posto di JS/CSS (causa "Unexpected token <")
    - Fallback HTML solo per navigazioni pagina
 */
-const CACHE = 'elisee-scout-v20260823-mk1';
+const CACHE = 'elisee-scout-v20260823-pr2';
 const PRECACHE = [
   '/',
   '/index.html',
@@ -43,6 +43,8 @@ const PRECACHE = [
   '/ag-dash.js',
   '/mk-dash.css',
   '/mk-dash.js',
+  '/pr-dash.css',
+  '/pr-dash.js',
   '/schede-tecniche.css',
   '/schede-tecniche.js',
   '/mercato-hub.css',

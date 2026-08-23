@@ -53,6 +53,7 @@ Se il push dà 403 (account Git `sfondiitaliani23-svg`), pubblica comunque su Ve
 - Area Direttore Generale: dashboard direzionale (`dg-dash.js`) se il ruolo è Direttore generale. Distinta da Presidente e DS.
 - Area Procuratore: dashboard agente FIFA (`ag-dash.js`) se il ruolo è Procuratore / Agente FIFA. Distinta da DS e Osservatore.
 - Area Marketing: dashboard commerciale (`mk-dash.js`) se il ruolo è Responsabile marketing / commerciale.
+- Area Ufficio Stampa: dashboard comunicazione (`pr-dash.js`) se il ruolo è Responsabile comunicazione / ufficio stampa.
 - Area Presidente: dashboard Presidenza (`pres-dash.js`) se il ruolo staff è Presidente.
 
 ## Skill
