@@ -243,6 +243,8 @@
     if (nu) nu.hidden = true;
     var eq = document.getElementById('es-eq');
     if (eq) eq.hidden = true;
+    var sg = document.getElementById('es-sg');
+    if (sg) sg.hidden = true;
     box.innerHTML = html(user);
     box.hidden = false;
     host.classList.add('es-pd-on');

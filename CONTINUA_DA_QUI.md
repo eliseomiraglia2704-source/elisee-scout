@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-23**
-Ultimo fatto: Area Magazziniere / Equipment Manager = dashboard inventario, kit, ordini.
+Ultimo fatto: Area Segretario Generale / Club Manager = dashboard tesseramenti, pratiche, adempimenti.
 Feature precedente: Hub Mercato B2B (`cb9d60d`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -60,7 +60,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Dashboard Magazziniere: inventario, kit, ordini |
+| (questo) | Dashboard Segretario Generale: tesseramenti, pratiche, adempimenti |
+| `9750bfa` | Dashboard Magazziniere: inventario, kit, ordini |
 | `9b9242b` | Dashboard Nutrizionista: piani alimentari, composizione |
 | `0127f31` | Dashboard Ufficio Stampa: comunicazione, media, comunicati |
 | `5adecd3` | Dashboard Marketing: sponsor, brand, partnership |
@@ -106,7 +107,7 @@ File:
 - `manager-runtime.js` / `manager.css` — inbox admin 3 colonne
 - `api/manager.js` — Vercel: `propose-lineup`, `view=official`, `decide` kind `lineup`
 - `workers/manager_store.py` + `elisee_up.py` — stesso contratto in locale (persistenza `data/manager/state.json`, gitignored)
-- Cache attuale: `?v=20260823_EQ1`, SW `elisee-scout-v20260823-eq1`
+- Cache attuale: `?v=20260823_SG1`, SW `elisee-scout-v20260823-sg1`
 
 localStorage:
 
@@ -148,6 +149,7 @@ Nota Vercel: lo store manager è su `/tmp` (effimero). In locale `state.json` è
 | Dashboard Ufficio Stampa | `pr-dash.js` / `.css` — comunicazione, media |
 | Dashboard Nutrizionista | `nu-dash.js` / `.css` — piani alimentari |
 | Dashboard Magazziniere | `eq-dash.js` / `.css` — inventario, kit, ordini |
+| Dashboard Segretario Generale | `sg-dash.js` / `.css` — tesseramenti, pratiche |
 | Scopri / follow | `scopri-profili.js` / `.css` |
 | Messaggi | `messaggi.js` / `.css` |
 | Mappa | `mappa-club.js` / `.css` |
@@ -198,6 +200,8 @@ Ufficio Stampa: se ruolo staff è Responsabile comunicazione / ufficio stampa, d
 Nutrizionista: se ruolo staff è Nutrizionista, dashboard piani alimentari e composizione corporea. Distinta da Medico e Fisioterapista. Cache `NU1`.
 
 Magazziniere: se ruolo staff è Magazziniere / Equipment Manager, dashboard inventario, kit gara, ordini fornitori. Cache `EQ1`.
+
+Segretario Generale: se ruolo staff è Segretario generale / Club Manager (anche Segretario sportivo), dashboard tesseramenti, pratiche societarie, adempimenti. Distinta da Direttore generale e Team manager. Cache `SG1`.
 
 Schede tecniche: da ogni annuncio in Bacheca → pulsante **Schede tecniche**. Le schede IA restano nella candidatura (`#schede-tecniche`), non via e-mail. Club: lista, scheda completa, confronto (fino a 3), stati (nuova / in valutazione / shortlist / scartata). Cache `ST1`.
 

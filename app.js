@@ -8770,6 +8770,8 @@ window.applyRoleDossierInterface = function (user) {
     Magazziniere: 'Staff',
     'Magazziniere / Equipment Manager': 'Staff',
     'Segretario sportivo': 'Societa',
+    'Segretario generale / Club Manager': 'Societa',
+    'Segretario generale': 'Societa',
     Statistico: 'Match Analyst',
     Dirigente: 'Staff'
   };

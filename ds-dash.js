@@ -209,6 +209,8 @@
     if (nu) nu.hidden = true;
     var eq = document.getElementById('es-eq');
     if (eq) eq.hidden = true;
+    var sg = document.getElementById('es-sg');
+    if (sg) sg.hidden = true;
     var g = document.getElementById('user-dossier-view-group');
     if (g) { g.classList.remove('is-coach-dash'); g.classList.remove('is-ma-dash'); g.classList.remove('is-med-dash'); g.classList.remove('is-obs-dash'); g.classList.remove('is-tm-dash'); g.classList.remove('is-gk-dash'); g.classList.remove('is-at-dash'); g.classList.remove('is-yg-dash'); g.classList.remove('is-dg-dash'); }
   }
