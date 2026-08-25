@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-25**
-Ultimo fatto: Restyling pixel-perfect icone barra laterale (`es-pd-rail`): sostituite le icone cerchiate (Album/Foto/Secret List e Messaggi/Mail) con vettori SVG Lucide puliti, definiti a 19x19px con `stroke-linecap="round"` e proporzioni perfette su tutte le 22 dashboard. File: `*-dash.js`, `sw.js`. Cache `ICO1`.
-Feature precedente: Azioni e Strumenti per Ruolo integrati direttamente in tutte le 23 aree/dashboard.
+Ultimo fatto: Valorizzazione dashboard analitica con dettagli completi, legenda radar interattiva (2025 vs 2023) e card "Guida Analitica & Legenda Metriche" (spiegazione algoritmo PGB, 12 assi radar, compliance FIGC/GDPR e semaforo prestazionale verde/giallo/rosso). File: `player-dash.js`, `player-dash.css`, `index.html`, `sw.js`. Cache `PD4`/`LEG1`.
+Feature precedente: Restyling pixel-perfect icone barra laterale (`es-pd-rail`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

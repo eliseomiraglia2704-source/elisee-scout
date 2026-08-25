@@ -123,56 +123,97 @@
       '<strong>Giocatore: ' + esc(name.toUpperCase()) + '</strong></div>' +
       '<div class="es-pd-grid">' +
 
-      '<section class="es-pd-card es-pd-indice"><h2>Indice Atleta</h2>' +
+      '<section class="es-pd-card es-pd-indice"><h2>Indice Atleta &amp; Parametri</h2>' +
       '<div class="es-pd-who">' + ava + '<div><b style="color:#fff">' + esc(name) + '</b>' +
-      '<div style="font-size:0.72rem;color:#94a3b8">' + esc((user.playerProfile && user.playerProfile.fieldRole) || user.ruoloDettagliato || 'Calciatore') + '</div></div></div>' +
-      '<div class="es-pd-metric"><span>Compatibilità Club</span><b>90%</b></div>' +
-      '<div class="es-pd-metric"><span>Tackle</span><b>90%</b></div>' +
-      '<div class="es-pd-metric"><span>Precisione Passaggi</span><b>91%</b></div>' +
-      '<div class="es-pd-metric"><span>Passaggi Chiave</span><b>76%</b></div>' +
-      '<div class="es-pd-metric"><span>Cross</span><b>75%</b></div></section>' +
+      '<div style="font-size:0.72rem;color:#38bdf8;font-weight:700">' + esc((user.playerProfile && user.playerProfile.fieldRole) || user.ruoloDettagliato || 'Punta Centrale / Ala') + '</div></div></div>' +
+      '<div class="es-pd-tags">' +
+      '<span class="es-pd-tag">Età: ' + esc(user.eta || '22') + ' anni</span>' +
+      '<span class="es-pd-tag">Piede: ' + esc(user.piede || 'Destro') + '</span>' +
+      '<span class="es-pd-tag">Altezza: ' + esc(user.altezza || '1.83 m') + '</span>' +
+      '<span class="es-pd-tag">Cat: ' + esc(user.categoria || 'Serie D · Girone F') + '</span>' +
+      '</div>' +
+      '<div class="es-pd-metric"><span>Compatibilità Tattica Club</span><b>90%</b></div>' +
+      '<div class="es-pd-metric"><span>Tackle &amp; Contrasti Vinti</span><b>90%</b></div>' +
+      '<div class="es-pd-metric"><span>Precisione Passaggi Chiave</span><b>91%</b></div>' +
+      '<div class="es-pd-metric"><span>Dribbling &amp; 1vs1 Riusciti</span><b>93%</b></div>' +
+      '<div class="es-pd-metric"><span>Recupero &amp; Aggressione Palla</span><b>95%</b></div>' +
+      '<div class="es-pd-metric"><span>Media Voto PGB Stagionale</span><b style="color:#38bdf8">8.1 / 10</b></div></section>' +
 
       '<section class="es-pd-card es-pd-radar">' +
-      '<div class="es-pd-radar-tools"><span>Seleziona dati radar</span><span>Confronto 2023 vs 2025</span></div>' +
+      '<div class="es-pd-radar-tools">' +
+      '<span style="font-weight:800;color:#f8fafc">Radar Prestazioni (12 Parametri)</span>' +
+      '<div class="es-pd-legend-pills">' +
+      '<span class="es-pd-pill-legend" style="color:#38bdf8"><i style="background:#38bdf8"></i> 2025 (Stagione Attuale)</span>' +
+      '<span class="es-pd-pill-legend" style="color:#94a3b8"><i style="background:#64748b"></i> 2023 (Benchmark Storico)</span>' +
+      '</div>' +
+      '</div>' +
       radarSvg() + '</section>' +
 
       '<section class="es-pd-card es-pd-comply"><h2>Certificazione &amp; Compliance del Club</h2>' +
       '<div class="es-pd-ok"><span>Consenso trattamento dati (GDPR)</span><b>100%</b></div>' +
       '<div class="es-pd-ok"><span>Liberatoria immagine e video</span><b>100%</b></div>' +
       '<div class="es-pd-ok"><span>Verifica tutela minori (ID)</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Idoneità agonistica</span><b>Valida</b></div>' +
-      '<div class="es-pd-ok"><span>Profilo validato dal club</span><b>100%</b></div></section>' +
+      '<div class="es-pd-ok"><span>Idoneità agonistica FIGC</span><b style="color:#4ade80">Valida (30/06/2026)</b></div>' +
+      '<div class="es-pd-ok"><span>Profilo validato dal club</span><b>100% Certificato</b></div>' +
+      '<div class="es-pd-ok" style="margin-top:0.4rem;padding-top:0.35rem;border-top:1px solid rgba(148,163,184,0.1)"><span>Anti-Fake &amp; Identità verificata</span><b style="color:#38bdf8">Verificato ✓</b></div></section>' +
 
-      '<section class="es-pd-card es-pd-storico"><h2>Prestazioni Storiche</h2>' +
+      '<section class="es-pd-card es-pd-storico"><h2>Prestazioni Storiche &amp; Trend</h2>' +
       '<div class="es-pd-sparks">' +
-      '<figure>' + spark([40, 48, 45, 62, 70, 78, 88], '#38bdf8') + '<figcaption>Compatibilità</figcaption></figure>' +
-      '<figure>' + spark([50, 55, 52, 60, 66, 74, 80], '#4ade80') + '<figcaption>Passaggi chiave</figcaption></figure>' +
-      '<figure>' + spark([30, 42, 50, 48, 61, 70, 76], '#facc15') + '<figcaption>Tackle</figcaption></figure>' +
-      '<figure>' + spark([44, 40, 55, 58, 63, 72, 84], '#22d3ee') + '<figcaption>Spartine</figcaption></figure>' +
+      '<figure>' + spark([40, 48, 45, 62, 70, 78, 88], '#38bdf8') + '<figcaption>Compatibilità (+48%)</figcaption></figure>' +
+      '<figure>' + spark([50, 55, 52, 60, 66, 74, 80], '#4ade80') + '<figcaption>Passaggi chiave (+30%)</figcaption></figure>' +
+      '<figure>' + spark([30, 42, 50, 48, 61, 70, 76], '#facc15') + '<figcaption>Tackle (+46%)</figcaption></figure>' +
+      '<figure>' + spark([44, 40, 55, 58, 63, 72, 84], '#22d3ee') + '<figcaption>Minuti &amp; Presenze</figcaption></figure>' +
       '</div></section>' +
 
-      '<section class="es-pd-card es-pd-mercato"><h2>Indice di mercato</h2>' +
+      '<section class="es-pd-card es-pd-mercato"><h2>Indice di Mercato &amp; Scouting</h2>' +
       '<p class="es-pd-euro">€ 150.000 <small>+5,5%</small></p>' +
-      '<div class="es-pd-mrow"><span>Indice di visibilità</span><b>90%</b></div>' +
-      '<div class="es-pd-mrow"><span>Trend interesse</span><b>Crescente</b></div>' +
-      '<div class="es-pd-mrow"><span>Trattative in corso</span><b>3</b></div>' +
-      '<div class="es-pd-mrow"><span>Scadenza contratto</span><b>30/06/2026</b></div>' +
-      '<div class="es-pd-mrow"><span>Potenziale rivendita</span><b>Alta</b></div>' +
-      '<div class="es-pd-mrow"><span>Richiesta di mercato</span><b>80%</b></div></section>' +
+      '<div class="es-pd-mrow"><span>Indice di visibilità scout</span><b>90% (Molto Alto)</b></div>' +
+      '<div class="es-pd-mrow"><span>Trend interesse club</span><b>Crescente ↗</b></div>' +
+      '<div class="es-pd-mrow"><span>Trattative &amp; Contatti B2B</span><b>3 Club interessati</b></div>' +
+      '<div class="es-pd-mrow"><span>Scadenza accordo</span><b>30/06/2026</b></div>' +
+      '<div class="es-pd-mrow"><span>Potenziale rivendita futura</span><b style="color:#4ade80">Alta</b></div>' +
+      '<div class="es-pd-mrow"><span>Appetibilità di categoria</span><b>80%</b></div></section>' +
 
-      '<section class="es-pd-card es-pd-registro"><h2>Registro</h2>' +
-      '<table class="es-pd-table"><thead><tr><th>Partita</th><th>G</th><th>A</th><th>PGB</th><th></th></tr></thead><tbody>' +
-      '<tr><td>vs. Notaresco</td><td>1</td><td>0</td><td>8.6</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Vastese</td><td>0</td><td>1</td><td>7.0</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Chieti</td><td>0</td><td>0</td><td>6.5</td><td><i class="es-pd-dot y"></i></td></tr>' +
-      '<tr><td>vs. Termoli</td><td>10</td><td>1</td><td>9.0</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Campobasso</td><td>1</td><td>0</td><td>7.0</td><td><i class="es-pd-dot y"></i></td></tr>' +
-      '<tr><td>vs. Castelfidardo</td><td>0</td><td>0</td><td>7.5</td><td><i class="es-pd-dot g"></i></td></tr>' +
+      '<section class="es-pd-card es-pd-registro"><h2>Registro Match &amp; Voti PGB</h2>' +
+      '<table class="es-pd-table"><thead><tr><th>Partita</th><th>MIN</th><th>G</th><th>A</th><th>PGB</th><th>Esito</th></tr></thead><tbody>' +
+      '<tr><td>vs. Notaresco</td><td>90\'</td><td>1</td><td>0</td><td>8.6</td><td><i class="es-pd-dot g" title="Top Performance ≥ 7.5"></i></td></tr>' +
+      '<tr><td>vs. Vastese</td><td>85\'</td><td>0</td><td>1</td><td>7.0</td><td><i class="es-pd-dot g" title="Top Performance ≥ 7.5"></i></td></tr>' +
+      '<tr><td>vs. Chieti</td><td>72\'</td><td>0</td><td>0</td><td>6.5</td><td><i class="es-pd-dot y" title="Nella Media 6.0-7.4"></i></td></tr>' +
+      '<tr><td>vs. Termoli</td><td>90\'</td><td>2</td><td>1</td><td>9.0</td><td><i class="es-pd-dot g" title="Top Performance ≥ 7.5"></i></td></tr>' +
+      '<tr><td>vs. Campobasso</td><td>90\'</td><td>1</td><td>0</td><td>7.0</td><td><i class="es-pd-dot y" title="Nella Media 6.0-7.4"></i></td></tr>' +
+      '<tr><td>vs. Castelfidardo</td><td>80\'</td><td>0</td><td>0</td><td>7.5</td><td><i class="es-pd-dot g" title="Top Performance ≥ 7.5"></i></td></tr>' +
       '</tbody></table></section>' +
 
-      '<section class="es-pd-card es-pd-trend"><h2>2023 vs 2024 vs 2025</h2>' +
+      '<section class="es-pd-card es-pd-trend"><h2>Crescita Stagionale (2023-2025)</h2>' +
       trendSvg() +
-      '<button type="button" class="es-pd-edit" data-pd="edit">Modifica anagrafica</button>' +
+      '<button type="button" class="es-pd-edit" data-pd="edit">✏️ Modifica Anagrafica Atleta</button>' +
+      '</section>' +
+
+      '<section class="es-pd-card es-pd-guide-card">' +
+      '<div class="es-pd-guide-head">' +
+      '<h2><span>📘</span> Guida Analitica &amp; Legenda Metriche Elisee Scout</h2>' +
+      '<span class="es-pd-guide-badge">Standard Certificato FIGC / GDPR</span>' +
+      '</div>' +
+      '<div class="es-pd-guide-grid">' +
+      '<div class="es-pd-guide-item">' +
+      '<h3><span>💎</span> Indice PGB (Performance Global Benchmark)</h3>' +
+      '<p>Algoritmo proprietario di <b>Match Analysis IA</b> (scala 1-10) che pesa 48 indicatori biometrici e di gioco (duelli, passaggi chiave, tiri, xG, xA, recuperi palla e incisività tattica).</p>' +
+      '</div>' +
+      '<div class="es-pd-guide-item">' +
+      '<h3><span>🎯</span> Radar Comparativo a 12 Assi</h3>' +
+      '<p>Confronta l\'impatto della <b style="color:#38bdf8">Stagione Attuale 2025</b> con il <b style="color:#94a3b8">Benchmark Storico 2023</b> diviso in 4 quadranti: Difesa, Costruzione, Finalizzazione e Dinamismo Atletico.</p>' +
+      '</div>' +
+      '<div class="es-pd-guide-item">' +
+      '<h3><span>🛡️</span> Certificazione &amp; Bollini Anti-Fake</h3>' +
+      '<p>Garanzia di conformità: verifica documento d\'identità, tutela minori (ID genitoriale), idoneità medico-sportiva agonistica valida e liberatoria d\'immagine.</p>' +
+      '</div>' +
+      '<div class="es-pd-guide-item">' +
+      '<h3><span>🚦</span> Indicatori Prestazionali (Bollini Registro)</h3>' +
+      '<p><i class="es-pd-dot g"></i> <b>Verde (PGB ≥ 7.5)</b>: Prestazione eccellente decisiva.<br>' +
+      '<i class="es-pd-dot y"></i> <b>Giallo (PGB 6.0 - 7.4)</b>: Prestazione solida nella media.<br>' +
+      '<i class="es-pd-dot r"></i> <b>Rosso (PGB &lt; 6.0)</b>: Sotto standard di categoria.</p>' +
+      '</div>' +
+      '</div>' +
       '</section>' +
       '</div></div>';
   }
