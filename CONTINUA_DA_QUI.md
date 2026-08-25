@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-25**
-Ultimo fatto: Allineamento perfetto altezza dashboard: calibrato `padding-top: 86px`, spaziatura `es-pd-head` e aggancio `scrollTo(0,0)` istantaneo; ogni area si apre esattamente all'altezza mostrata nello screenshot (titolo e schede subito visibili sotto la navbar). File: `player-dash.css`, `creator-role-switcher.js`, `index.html`, `sw.js`. Cache `PD3`/`CR5`.
-Feature precedente: Dashboard ruoli: corretto padding-top e allineamento di `.es-pd`.
+Ultimo fatto: Azioni e Strumenti per Ruolo integrati direttamente in tutte le 23 aree/dashboard: iniettata card operativa `es-pd-actions-card` con pulsanti interattivi dedicati (Calciatore: consensi/art.22/export/carriera; Scout: live mobile/voice notes/geo/secret list; Allenatore: discorsi AI/lavagna/carichi; Match Analyst: report 8 blocchi/heatmap; DS: trattative/carico/import; Agente, Medico, Dirigenza, Tifoso). File: `role-actions-runtime.js`, `player-dash.css`, `index.html`, `sw.js`. Cache `ACT1`.
+Feature precedente: Allineamento perfetto altezza dashboard.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
