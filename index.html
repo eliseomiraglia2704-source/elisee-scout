@@ -314,7 +314,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
-  <link rel="stylesheet" href="mappa-club.css?v=20260820_DARK1">
+  <link rel="stylesheet" href="mappa-club.css?v=20260826_GEO1">
   <script>
     /* Boot OAuth: token in search O in hash (#hero?elisee_token=...). La sessione vince sempre. */
     (function () {
@@ -3408,7 +3408,7 @@
       <section id="mappa-portal" class="es-map">
         <div class="es-map-banner">
           <p><span id="es-map-count">0</span> Club sono già visibili sulla mappa.</p>
-          <a href="#mappa-portal" onclick="event.preventDefault(); if(window.EliseeClubMap) window.EliseeClubMap.setGeo(); return false;">Sei un Club? Imposta la geolocalizzazione</a>
+          <a href="#mappa-portal" id="es-map-geolink" onclick="event.preventDefault(); if(window.openClubGeoModal){ window.openClubGeoModal(); } else if(window.EliseeClubMap && window.EliseeClubMap.openGeoModal){ window.EliseeClubMap.openGeoModal(); } else if(window.EliseeClubMap){ window.EliseeClubMap.setGeo(); } return false;">Sei un Club? Imposta la geolocalizzazione</a>
         </div>
         <div class="es-map-wrap">
           <div id="es-map-canvas" role="application" aria-label="Mappa dei club"></div>
@@ -4993,7 +4993,7 @@
   <script src="messaggi.js?v=20260820_MSG1"></script>
   <script src="mercato-hub.js?v=20260820_MKT2"></script>
   <script src="schede-tecniche.js?v=20260820_ST3"></script>
-  <script src="mappa-club.js?v=20260820_FORM1"></script>
+  <script src="mappa-club.js?v=20260826_GEO1"></script>
   <script src="chi-segui.js?v=20260820_FORM1"></script>
   <script src="verifica-account.js?v=20260820_VF2"></script>
   <script src="creator-role-switcher.js?v=20260826_CR5"></script>
