@@ -1912,7 +1912,7 @@ button.es-sq-league-pill:active {
 .es-sq-load-veil {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center, rgba(7, 11, 20, 0.18) 0%, rgba(7, 11, 20, 0.72) 72%);
+  background: radial-gradient(ellipse at center, rgba(7, 11, 20, 0.28) 0%, rgba(7, 11, 20, 0.76) 72%);
 }
 .es-sq-load-core {
   position: relative;
@@ -1920,46 +1920,77 @@ button.es-sq-league-pill:active {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.85rem;
   text-align: center;
-  padding: 1rem;
+  padding: 1.5rem;
 }
-.es-sq-load-core img,
-.es-sq-load-fallback {
-  width: min(42vw, 196px);
-  height: min(42vw, 196px);
-  object-fit: contain;
-  filter: drop-shadow(0 10px 32px rgba(0, 0, 0, 0.55));
+.es-sq-load-crest {
+  width: min(46vw, 210px);
+  height: min(46vw, 210px);
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.12), rgba(0, 0, 0, 0.45));
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.65), 0 0 30px rgba(56, 189, 248, 0.25);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
   animation: es-sq-logo-pulse 0.85s ease-in-out infinite;
+  overflow: hidden;
+}
+.es-sq-load-core img#es-sq-load-logo {
+  width: 78%;
+  height: 78%;
+  object-fit: contain;
+  display: block;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.55));
+  user-select: none;
+  pointer-events: none;
+}
+.es-sq-load-core img#es-sq-load-logo[hidden] {
+  display: none !important;
 }
 .es-sq-load-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: rgba(15, 23, 42, 0.55);
+  background: radial-gradient(circle at 30% 30%, rgba(56, 189, 248, 0.45), rgba(15, 23, 42, 0.95));
   color: #fff;
   font-weight: 900;
-  font-size: 2.4rem;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
   letter-spacing: 0.06em;
+  user-select: none;
+  pointer-events: none;
+}
+.es-sq-load-fallback[hidden] {
+  display: none !important;
 }
 .es-sq-load-core p {
   margin: 0;
   color: #f8fafc;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.7);
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.85);
 }
 #es-sq-load-name {
-  font-size: 1.15rem;
-  font-weight: 800;
+  font-size: clamp(1.2rem, 3.2vw, 1.55rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 #es-sq-load-stadio-name {
-  font-size: 0.88rem;
+  font-size: clamp(0.9rem, 2.4vw, 1.05rem);
   color: #e2e8f0;
-  opacity: 0.9;
+  opacity: 0.92;
+  font-weight: 500;
 }
 @keyframes es-sq-logo-pulse {
-  0%, 100% { transform: scale(0.9); }
-  50% { transform: scale(1.08); }
+  0%, 100% { transform: scale(0.92); }
+  50% { transform: scale(1.06); }
 }
 @keyframes es-sq-stadio-ken {
   from { transform: scale(1.08); }

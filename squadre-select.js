@@ -1273,8 +1273,10 @@
         '<div class="es-sq-load-stadio" id="es-sq-load-stadio" aria-hidden="true"></div>' +
         '<div class="es-sq-load-veil" aria-hidden="true"></div>' +
         '<div class="es-sq-load-core">' +
-          '<img id="es-sq-load-logo" alt="">' +
-          '<div id="es-sq-load-fallback" class="es-sq-load-fallback" hidden></div>' +
+          '<div class="es-sq-load-crest" id="es-sq-load-crest">' +
+            '<img id="es-sq-load-logo" alt="">' +
+            '<div id="es-sq-load-fallback" class="es-sq-load-fallback" hidden></div>' +
+          '</div>' +
           '<p id="es-sq-load-name"></p>' +
           '<p id="es-sq-load-stadio-name"></p>' +
         '</div>';
@@ -1323,22 +1325,31 @@
       if (team.logo) {
         logo.removeAttribute('hidden');
         logo.hidden = false;
+        logo.style.display = 'block';
         logo.alt = (team.name || '') + ' logo';
         logo.onerror = function () {
           logo.hidden = true;
+          logo.style.display = 'none';
           if (fb) {
             fb.hidden = false;
             fb.removeAttribute('hidden');
+            fb.style.display = 'flex';
             fb.textContent = String(team.abbr || team.name || '?').slice(0, 3).toUpperCase();
           }
         };
         logo.src = logoUrl(team.logo);
-        if (fb) { fb.hidden = true; fb.setAttribute('hidden', ''); }
+        if (fb) {
+          fb.hidden = true;
+          fb.setAttribute('hidden', '');
+          fb.style.display = 'none';
+        }
       } else {
         logo.hidden = true;
+        logo.style.display = 'none';
         if (fb) {
           fb.hidden = false;
           fb.removeAttribute('hidden');
+          fb.style.display = 'flex';
           fb.textContent = String(team.abbr || team.name || '?').slice(0, 3).toUpperCase();
         }
       }
