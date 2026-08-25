@@ -784,7 +784,207 @@
     });
   }
 
-  // --- 6. MODALI GENERICI RUOLI STAFF (DS, Pres, Medico, Fisio, Prep, Agente, etc.) ---
+  // --- 6. MODALE EVENTI DI SELEZIONE & OPEN DAY CLUB + QR CODE ---
+  function openClubSelectionEventsModal() {
+    var defaultEvents = [
+      {
+        id: 'ev_' + Date.now(),
+        title: 'Open Day Under 17 & Juniores',
+        date: '2026-09-05',
+        time: '15:30',
+        place: 'Centro Sportivo Savini (Campo Sintetico)',
+        fascia: '2008 / 2009 / 2010',
+        limit: 40,
+        adesioni: 18,
+        minors: true,
+        createdAt: new Date().toLocaleDateString('it-IT')
+      }
+    ];
+
+    function getEvents() {
+      try {
+        var raw = localStorage.getItem('elisee_club_selection_events');
+        if (!raw) {
+          localStorage.setItem('elisee_club_selection_events', JSON.stringify(defaultEvents));
+          return defaultEvents;
+        }
+        var parsed = JSON.parse(raw);
+        return Array.isArray(parsed) && parsed.length ? parsed : defaultEvents;
+      } catch (_) {
+        return defaultEvents;
+      }
+    }
+
+    function saveEvents(evs) {
+      try {
+        localStorage.setItem('elisee_club_selection_events', JSON.stringify(evs));
+      } catch (_) {}
+    }
+
+    function renderEventsListHtml(evs) {
+      if (!evs || !evs.length) {
+        return '<p style="color:#94a3b8;font-size:0.8rem;text-align:center;padding:1rem">Nessun evento attivo al momento. Compila il modulo sopra per crearne uno!</p>';
+      }
+      return evs.map(function (ev) {
+        var shareUrl = 'https://elisee-scout.vercel.app/#iscrizione-portal?team=club&event=' + encodeURIComponent(ev.id);
+        var qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=' + encodeURIComponent(shareUrl);
+        var pct = Math.min(100, Math.round(((ev.adesioni || 0) / (ev.limit || 40)) * 100));
+
+        return '<div style="background:rgba(15,23,42,0.85);border:1px solid rgba(56,189,248,0.25);border-radius:12px;padding:0.9rem;margin-bottom:0.85rem;display:flex;flex-direction:column;gap:0.75rem">' +
+          '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.75rem">' +
+            '<div style="flex:1">' +
+              '<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.25rem">' +
+                '<span style="background:rgba(56,189,248,0.15);color:#38bdf8;padding:0.15rem 0.5rem;border-radius:999px;font-size:0.68rem;font-weight:800">CATEGORIA: ' + esc(ev.fascia) + '</span>' +
+                (ev.minors ? '<span style="background:rgba(34,197,94,0.15);color:#4ade80;padding:0.15rem 0.5rem;border-radius:999px;font-size:0.68rem;font-weight:700">CONSENSO MINORI ATTIVO</span>' : '') +
+              '</div>' +
+              '<h4 style="margin:0 0 0.25rem;color:#f8fafc;font-size:0.95rem;font-weight:800">' + esc(ev.title) + '</h4>' +
+              '<div style="font-size:0.75rem;color:#94a3b8">📅 <b>' + esc(ev.date) + (ev.time ? ' ore ' + esc(ev.time) : '') + '</b> · 📍 <b>' + esc(ev.place) + '</b></div>' +
+            '</div>' +
+            '<div style="text-align:center;flex-shrink:0">' +
+              '<img src="' + qrSrc + '" alt="QR Evento" style="width:72px;height:72px;border-radius:8px;background:#fff;padding:3px;box-shadow:0 4px 12px rgba(0,0,0,0.4)">' +
+              '<div style="font-size:0.62rem;color:#7dd3fc;margin-top:2px;font-weight:700">QR ISCRIZIONI</div>' +
+            '</div>' +
+          '</div>' +
+          '<div>' +
+            '<div style="display:flex;justify-content:space-between;font-size:0.72rem;color:#cbd5e1;margin-bottom:0.25rem">' +
+              '<span>Adesioni registrate: <strong style="color:#38bdf8">' + (ev.adesioni || 0) + '</strong> / ' + (ev.limit || 40) + '</span>' +
+              '<span style="color:#94a3b8">' + pct + '% occupazione</span>' +
+            '</div>' +
+            '<div style="background:rgba(56,189,248,0.12);border-radius:6px;height:6px;overflow:hidden">' +
+              '<div style="background:linear-gradient(90deg, #38bdf8, #22c55e);height:100%;width:' + pct + '%"></div>' +
+            '</div>' +
+          '</div>' +
+          '<div style="display:flex;gap:0.5rem;flex-wrap:wrap;border-top:1px solid rgba(148,163,184,0.1);padding-top:0.6rem">' +
+            '<button type="button" class="es-edit-btn-save es-ev-add-join" data-ev-id="' + esc(ev.id) + '" style="font-size:0.72rem;padding:0.35rem 0.7rem;background:#0284c7">➕ +1 Adesione Atleta</button>' +
+            '<button type="button" class="es-edit-btn-cancel es-ev-copy-link" data-ev-url="' + esc(shareUrl) + '" style="font-size:0.72rem;padding:0.35rem 0.7rem;color:#7dd3fc;border-color:rgba(56,189,248,0.4)">📲 Copia Link Modulo</button>' +
+            '<button type="button" class="es-edit-btn-cancel es-ev-del" data-ev-id="' + esc(ev.id) + '" style="font-size:0.72rem;padding:0.35rem 0.7rem;color:#f87171;border-color:rgba(239,68,68,0.3);margin-left:auto">🗑️ Elimina</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    var body = '<div style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);border-radius:10px;padding:0.75rem 0.9rem;margin-bottom:1rem;font-size:0.78rem;color:#cbd5e1;line-height:1.45">' +
+      '<strong style="color:#38bdf8">🎪 Modulo di Gestione Open Day &amp; Selezioni Giovanili:</strong> Crea stage, imposta il limite partecipanti, genera il QR code per le iscrizioni digitali e raccogli il consenso minori a norma FIGC / GDPR.' +
+      '</div>' +
+
+      '<div class="es-edit-grid" style="background:#090d16;border:1px solid rgba(148,163,184,0.12);border-radius:12px;padding:0.9rem">' +
+      '<div class="es-edit-field full"><label>Titolo Stage / Open Day</label><input id="es-ev-new-title" placeholder="Es: Open Day Selettivo Under 17 &amp; Juniores"></div>' +
+      '<div class="es-edit-field"><label>Data Evento</label><input type="date" id="es-ev-new-date" value="2026-09-05"></div>' +
+      '<div class="es-edit-field"><label>Ora Inizio</label><input type="time" id="es-ev-new-time" value="15:30"></div>' +
+      '<div class="es-edit-field"><label>Luogo / Impianto</label><input id="es-ev-new-place" value="Centro Sportivo Comunale - Campo Principale"></div>' +
+      '<div class="es-edit-field"><label>Fascia Età / Annate</label><input id="es-ev-new-fascia" value="2008 / 2009 / 2010"></div>' +
+      '<div class="es-edit-field"><label>Limite Posti Disponibili</label><input type="number" id="es-ev-new-limit" value="40" min="5" max="200"></div>' +
+      '<div class="es-edit-field" style="display:flex;align-items:flex-end;padding-bottom:0.4rem"><label style="display:flex;align-items:center;gap:0.45rem;cursor:pointer;font-size:0.75rem;color:#e0f2fe"><input type="checkbox" id="es-ev-new-minors" checked style="accent-color:#38bdf8;width:16px;height:16px"> Consenso minori obbligatorio</label></div>' +
+      '<div class="es-edit-field full" style="display:flex;gap:0.6rem;margin-top:0.3rem">' +
+        '<button type="button" class="es-edit-btn-cancel" id="es-ev-tpl-btn" style="font-size:0.75rem;padding:0.45rem 0.85rem">📋 Carica Template Standard</button>' +
+        '<button type="button" class="es-edit-btn-save" id="es-ev-create-btn" style="font-size:0.75rem;padding:0.45rem 1rem;background:linear-gradient(135deg,#0284c7,#0369a1)">✨ Crea Evento &amp; Genera QR Code</button>' +
+      '</div>' +
+      '</div>' +
+
+      '<div style="margin-top:1.25rem">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem">' +
+        '<h3 style="margin:0;color:#38bdf8;font-size:0.92rem;font-weight:800">📋 Eventi &amp; Open Day Attivi del Club</h3>' +
+      '</div>' +
+      '<div id="es-ev-list-container">' + renderEventsListHtml(getEvents()) + '</div>' +
+      '</div>';
+
+    var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>';
+
+    var modal = createModalContainer('🎟️ Eventi di Selezione &amp; Open Day Club + QR Code', body, btns);
+
+    function refreshEventsList() {
+      var container = modal.backdrop.querySelector('#es-ev-list-container');
+      if (container) {
+        container.innerHTML = renderEventsListHtml(getEvents());
+        bindListEvents();
+      }
+    }
+
+    function bindListEvents() {
+      modal.backdrop.querySelectorAll('.es-ev-add-join').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var id = btn.getAttribute('data-ev-id');
+          var evs = getEvents();
+          var ev = evs.find(function (x) { return x.id === id; });
+          if (ev) {
+            if (ev.adesioni >= ev.limit) {
+              toast('Limite posti massimo raggiunto per questo evento!', 'error');
+              return;
+            }
+            ev.adesioni = (ev.adesioni || 0) + 1;
+            saveEvents(evs);
+            toast('Adesione registrata (+1 atleta per ' + ev.title + ')');
+            refreshEventsList();
+          }
+        });
+      });
+
+      modal.backdrop.querySelectorAll('.es-ev-copy-link').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var url = btn.getAttribute('data-ev-url');
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(function () {
+              toast('Link iscrizione e QR copiato negli appunti!');
+            });
+          } else {
+            toast('Link iscrizione generato: ' + url);
+          }
+        });
+      });
+
+      modal.backdrop.querySelectorAll('.es-ev-del').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var id = btn.getAttribute('data-ev-id');
+          var evs = getEvents().filter(function (x) { return x.id !== id; });
+          saveEvents(evs);
+          toast('Evento eliminato');
+          refreshEventsList();
+        });
+      });
+    }
+
+    modal.backdrop.querySelector('#es-ev-tpl-btn').addEventListener('click', function () {
+      modal.backdrop.querySelector('#es-ev-new-title').value = 'Stage Selettivo Primavera & Under 19';
+      modal.backdrop.querySelector('#es-ev-new-date').value = '2026-09-12';
+      modal.backdrop.querySelector('#es-ev-new-time').value = '16:00';
+      modal.backdrop.querySelector('#es-ev-new-place').value = 'Stadio Vincenzo Savini - Campo A';
+      modal.backdrop.querySelector('#es-ev-new-fascia').value = '2007 / 2008 / 2009';
+      modal.backdrop.querySelector('#es-ev-new-limit').value = '35';
+      modal.backdrop.querySelector('#es-ev-new-minors').checked = true;
+      toast('Template stage precompilato!');
+    });
+
+    modal.backdrop.querySelector('#es-ev-create-btn').addEventListener('click', function () {
+      var title = (modal.backdrop.querySelector('#es-ev-new-title').value || '').trim();
+      if (!title) {
+        toast('Inserisci il titolo dell\'evento o dello stage', 'error');
+        return;
+      }
+      var newEv = {
+        id: 'ev_' + Date.now(),
+        title: title,
+        date: modal.backdrop.querySelector('#es-ev-new-date').value || '2026-09-05',
+        time: modal.backdrop.querySelector('#es-ev-new-time').value || '15:30',
+        place: modal.backdrop.querySelector('#es-ev-new-place').value || 'Campo Societario',
+        fascia: modal.backdrop.querySelector('#es-ev-new-fascia').value || 'Tutte le categorie',
+        limit: parseInt(modal.backdrop.querySelector('#es-ev-new-limit').value, 10) || 40,
+        adesioni: 0,
+        minors: !!modal.backdrop.querySelector('#es-ev-new-minors').checked,
+        createdAt: new Date().toLocaleDateString('it-IT')
+      };
+
+      var evs = getEvents();
+      evs.unshift(newEv);
+      saveEvents(evs);
+      toast('✨ EVENTO CREATO: QR Code e modulo d\'iscrizione generati con successo!');
+      modal.backdrop.querySelector('#es-ev-new-title').value = '';
+      refreshEventsList();
+    });
+
+    bindListEvents();
+  }
+
+  // --- 7. MODALI GENERICI RUOLI STAFF (DS, Pres, Medico, Fisio, Prep, Agente, etc.) ---
   function openGenericToolModal(title, icon, fields, successMsg) {
     var fieldsHtml = fields.map(function (f) {
       if (f.type === 'textarea') {
@@ -1044,16 +1244,14 @@
         ], 'Accordo preliminare depositato con crittografia!');
         break;
 
-      // Presidente & DG
+      // Presidente, DG, Settore Giovanile, Segretario, DS, TC
       case 'act-pres-event':
       case 'act-dg-event':
       case 'act-tc-event':
       case 'act-yg-openday':
-        openGenericToolModal('Creazione Evento Selezione + QR Code', '🎫', [
-          { label: 'Titolo Evento', val: 'Open Day & Stage Talenti 2026' },
-          { label: 'Data & Luogo', val: '05/09/2026 — Centro Sportivo Savini' },
-          { label: 'QR Code di Accesso Rapido', val: 'GENERATO · Link: #iscrizione-portal' }
-        ], 'Evento e QR Code generati con successo!');
+      case 'act-ds-event':
+      case 'act-sg-event':
+        openClubSelectionEventsModal();
         break;
       case 'act-pres-deleg':
       case 'act-dg-deleg':

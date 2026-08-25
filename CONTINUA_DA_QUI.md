@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Eliminate definitivamente le schermate duplicate e obsolete di "I MIEI STRUMENTI" (Selettore Squadra legacy, Simulatore legacy, Eventi legacy, ecc. precedentemente legati all'overlay `es-int-root`), ora completamente integrate nelle rispettive dashboard di ruolo native e nella navbar. File: `index.html`, `integrazioni-runtime.js`, `integrazioni.css`, `sw.js`. Cache `CLEAN1`.
-Feature precedente: Doppia conferma di validazione per Match Analyst 8 Blocchi e Notifica Sanitaria.
+Ultimo fatto: Inserito e attivato per tutti i ruoli Club e Dirigenza (Presidente, Direttore Generale, Settore Giovanile, Segretario Generale, Direttore Sportivo, TC Manager) lo strumento nativo e interattivo **`🎟️ Eventi di Selezione & Open Day + QR Code Dinamico`**: creazione stage con data, ora, luogo, fasce d'età, limiti capienza, consenso minori obbligatorio, template precompilati, generazione QR Code live e gestione adesioni atleti in tempo reale. File: `role-actions-runtime.js`, `index.html`, `sw.js`. Cache `EV1`.
+Feature precedente: Pulizia e rimozione schermate obsolete di I MIEI STRUMENTI.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
