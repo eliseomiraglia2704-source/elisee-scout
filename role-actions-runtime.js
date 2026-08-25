@@ -42,6 +42,7 @@
       title: 'Azioni possibili — Osservatore / Scout',
       roleName: 'Osservatore/Scout',
       actions: [
+        { label: 'Sezione "Schede tecniche" (Zero E-mail)', id: 'act-scout-hub-schede', icon: '📑' },
         { label: 'Schede tecniche candidati (IA)', id: 'act-scout-schede', icon: '📋' },
         { label: 'Valutazione mobile live match', id: 'act-scout-mobile', icon: '📱' },
         { label: 'Nota vocale in testo IA', id: 'act-scout-voice', icon: '🎙️' },
@@ -54,6 +55,7 @@
       title: 'Azioni possibili — Match Analyst',
       roleName: 'Match Analyst',
       actions: [
+        { label: 'Sezione "Schede tecniche" (Zero E-mail)', id: 'act-ma-hub-schede', icon: '📑' },
         { label: 'Schede tecniche candidati (IA)', id: 'act-ma-schede', icon: '📋' },
         { label: 'Compilare report 8 blocchi', id: 'act-ma-report8', icon: '📝' },
         { label: 'Mappa di calore semplificata', id: 'act-ma-heatmap', icon: '🔥' },
@@ -65,6 +67,7 @@
       title: 'Azioni possibili — Direttore Sportivo',
       roleName: 'Direttore Sportivo',
       actions: [
+        { label: 'Sezione "Schede tecniche" (Zero E-mail)', id: 'act-ds-hub-schede', icon: '📑' },
         { label: 'Pubblica candidatura & recruiting IA', id: 'act-ds-recruit', icon: '📢' },
         { label: 'Schede tecniche candidati (IA)', id: 'act-ds-schede', icon: '📋' },
         { label: 'Guida: Come pubblicare candidatura', id: 'act-ds-guide-pub', icon: '📖' },
@@ -90,6 +93,7 @@
       title: 'Azioni possibili — Presidente / Dirigenza Club',
       roleName: 'Club/Dirigente',
       actions: [
+        { label: 'Sezione "Schede tecniche" (Zero E-mail)', id: 'act-pres-hub-schede', icon: '📑' },
         { label: 'Pubblica candidatura & recruiting IA', id: 'act-pres-recruit', icon: '📢' },
         { label: 'Schede tecniche candidati (IA)', id: 'act-pres-schede', icon: '📋' },
         { label: 'Guida: Come pubblicare candidatura', id: 'act-pres-guide-pub', icon: '📖' },
@@ -104,6 +108,7 @@
       title: 'Azioni possibili — Direttore Generale',
       roleName: 'Club/Dirigente',
       actions: [
+        { label: 'Sezione "Schede tecniche" (Zero E-mail)', id: 'act-dg-hub-schede', icon: '📑' },
         { label: 'Pubblica ricerca staff & recruiting IA', id: 'act-dg-recruit', icon: '📢' },
         { label: 'Schede tecniche candidati (IA)', id: 'act-dg-schede', icon: '📋' },
         { label: 'Guida: Come pubblicare candidatura', id: 'act-dg-guide-pub', icon: '📖' },
@@ -164,6 +169,7 @@
       title: 'Azioni possibili — Settore Giovanile',
       roleName: 'Settore Giovanile',
       actions: [
+        { label: 'Sezione "Schede tecniche" vivaio', id: 'act-yg-hub-schede', icon: '📑' },
         { label: 'Schede tecniche talenti (IA)', id: 'act-yg-schede', icon: '📋' },
         { label: 'Ricerca staff giovanile (IA)', id: 'act-yg-recruit', icon: '📢' },
         { label: 'Guida: Come pubblicare candidatura', id: 'act-yg-guide-pub', icon: '📖' },
@@ -186,6 +192,7 @@
       title: 'Azioni possibili — Segretario Generale',
       roleName: 'Segretario Generale',
       actions: [
+        { label: 'Sezione "Schede tecniche" club', id: 'act-sg-hub-schede', icon: '📑' },
         { label: 'Pubblica posizione aperta (IA)', id: 'act-sg-recruit', icon: '📢' },
         { label: 'Guida: Come pubblicare candidatura', id: 'act-sg-guide-pub', icon: '📖' },
         { label: 'Tesseramenti LND / FIGC', id: 'act-sg-tess', icon: '🏢' },
@@ -243,6 +250,7 @@
       title: 'Azioni possibili — Club (TC Manager)',
       roleName: 'Club/Dirigente',
       actions: [
+        { label: 'Sezione "Schede tecniche" (Zero E-mail)', id: 'act-tc-hub-schede', icon: '📑' },
         { label: 'Schede tecniche candidati (IA)', id: 'act-tc-schede', icon: '📋' },
         { label: 'Pubblica posizione di candidatura (IA)', id: 'act-tc-recruit', icon: '📢' },
         { label: 'Guida: Come pubblicare candidatura', id: 'act-tc-guide-pub', icon: '📖' },
@@ -1359,7 +1367,7 @@
         }
         break;
 
-      // Schede Tecniche Candidati IA
+      // Schede Tecniche Candidati IA & Sezione Schede Tecniche (Zero E-mail)
       case 'act-ds-schede':
       case 'act-scout-schede':
       case 'act-ma-schede':
@@ -1368,12 +1376,20 @@
       case 'act-yg-schede':
       case 'act-ag-schede':
       case 'act-tc-schede':
+      case 'act-ds-hub-schede':
+      case 'act-pres-hub-schede':
+      case 'act-dg-hub-schede':
+      case 'act-yg-hub-schede':
+      case 'act-sg-hub-schede':
+      case 'act-tc-hub-schede':
+      case 'act-scout-hub-schede':
+      case 'act-ma-hub-schede':
         if (typeof window.openSchedeTecniche === 'function') {
           window.openSchedeTecniche('Cercasi attaccante Under 2005');
         } else if (window.switchView) {
           window.switchView('schede', '#schede-tecniche');
         } else {
-          toast('Apertura Schede Tecniche IA dei Candidati');
+          toast('Apertura Sezione Schede Tecniche Centralizzate (Zero E-mail)');
         }
         break;
 

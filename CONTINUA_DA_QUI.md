@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Inserita e attivata la funzione **`📋 Scheda Tecnica del Candidato generata dall'AI`** collocata nei ruoli chiave di Scouting e Dirigenza (Direttore Sportivo, Osservatore / Scout, Match Analyst, Direttore Generale, Presidente, Settore Giovanile, Agente FIFA, TC Manager): visualizzazione completa con dati anagrafici, ruolo, contatti autorizzati, esperienze sportive, certificazioni, competenze specialistiche, lingue, disponibilità, allegati/video e livello di compatibilità calcolato dall'IA con riepilogo punti di forza. File: `schede-tecniche.js`, `role-actions-runtime.js`, `index.html`, `sw.js`. Cache `SCH1`.
-Feature precedente: Guida Operativa Pubblicazione Candidatura.
+Ultimo fatto: Inserita e attivata la **`📑 Sezione "Schede tecniche" della Candidatura (Zero E-mail)`** su tutti i ruoli Club, Dirigenza e Scouting (DS, DG, Presidente, Settore Giovanile, Segretario Generale, TC Manager, Osservatore/Scout, Match Analyst): bacheca centralizzata per consultare, confrontare fino a 3 profili in contemporanea e gestire gli stati (Nuova, In Valutazione, Shortlist, Scartata) di tutte le schede tecniche generate dall'IA per ciascun annuncio pubblicato, eliminando qualsiasi dispersione via e-mail. File: `schede-tecniche.js`, `role-actions-runtime.js`, `index.html`, `sw.js`. Cache `HUB1`.
+Feature precedente: Scheda tecnica del candidato generata dall'AI.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
