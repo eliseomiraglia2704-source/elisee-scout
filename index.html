@@ -734,14 +734,34 @@
             show('admin-view-group');
             var isStaff = false;
             try {
+              var activeUserRaw = localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data');
+              var uEmail = '';
+              if (activeUserRaw) {
+                try {
+                  var pObj = JSON.parse(activeUserRaw);
+                  uEmail = (pObj && (pObj.email || pObj.username || '')) || '';
+                } catch (_) {}
+              }
+              if (!uEmail) uEmail = localStorage.getItem('elisee_user_email') || '';
+              var cleanEmail = String(uEmail).trim().toLowerCase();
+              if (cleanEmail === 'eliseomiraglia2704@gmail.com' || cleanEmail.indexOf('eliseomiraglia2704') >= 0 || cleanEmail === 'elisee.scout@platform-calcio.it') {
+                localStorage.setItem('elisee_admin_auth', 'true');
+              }
               isStaff = localStorage.getItem('elisee_admin_auth') === 'true' ||
                         localStorage.getItem('elisee_privacy_auth') === 'true';
             } catch (e) {}
             var guard = document.getElementById('admin-login-guard');
             var dash = document.getElementById('admin-authenticated-dashboard');
             if (guard && dash) {
-              if (isStaff) { guard.style.display = 'none'; dash.style.display = 'block'; }
-              else { guard.style.display = 'block'; dash.style.display = 'none'; }
+              if (isStaff) {
+                guard.style.display = 'none';
+                dash.style.display = 'block';
+                try { if (typeof renderAdminPanel === 'function') renderAdminPanel(); } catch (_) {}
+                try { if (window.refreshAdminAnalytics) window.refreshAdminAnalytics(); } catch (_) {}
+              } else {
+                guard.style.display = 'block';
+                dash.style.display = 'none';
+              }
             }
           } else if (view === 'user-dossier') {
             show('user-dossier-view-group');
@@ -1656,7 +1676,7 @@
             <a href="#scopri-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.openScopriProfili){ window.openScopriProfili('staff'); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="user-plus" style="width:16px; height:16px; color:#38bdf8;"></i> Segui lo Staff
             </a>
-            <a href="#admin-portal" onclick="if(window.switchView){ window.switchView('admin', '#admin-portal'); } closeUserDropdown(); return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
+            <a href="#admin-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.switchView){ window.switchView('admin', '#admin-portal'); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="layout-dashboard" style="width:16px; height:16px; color:#38bdf8;"></i> Control Center
             </a>
             <div style="border-top:1px solid rgba(255,255,255,0.08); margin:0.4rem 0;"></div>
@@ -4952,7 +4972,7 @@
   <script src="tc-panel.js?v=20260820_TC2"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260826_REC1"></script>
+  <script src="app.js?v=20260826_ADM1"></script>
   <script src="player-profile.js?v=20260823_BT1"></script>
   <script src="player-dash.js?v=20260825_ALL1"></script>
   <script src="coach-dash.js?v=20260825_ALL1"></script>

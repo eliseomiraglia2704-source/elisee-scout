@@ -6808,6 +6808,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       } else if (viewType === 'admin' || targetHash === '#admin-portal') {
         const adminGroup = showEl('admin-view-group');
+        try {
+          const activeUserRaw = localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data');
+          let uEmail = '';
+          if (activeUserRaw) {
+            try {
+              const pObj = JSON.parse(activeUserRaw);
+              uEmail = (pObj && (pObj.email || pObj.username || '')) || '';
+            } catch (_) {}
+          }
+          if (!uEmail) uEmail = localStorage.getItem('elisee_user_email') || '';
+          const cleanEmail = String(uEmail).trim().toLowerCase();
+          if (cleanEmail === 'eliseomiraglia2704@gmail.com' || cleanEmail.includes('eliseomiraglia2704') || cleanEmail === 'elisee.scout@platform-calcio.it') {
+            localStorage.setItem('elisee_admin_auth', 'true');
+          }
+        } catch (_) {}
+
         const isStaff =
           localStorage.getItem('elisee_admin_auth') === 'true' ||
           localStorage.getItem('elisee_privacy_auth') === 'true';
@@ -7519,6 +7535,22 @@ document.addEventListener('DOMContentLoaded', () => {
       console.warn('Impossibile pulire i parametri sensibili dall\'URL:', e);
     }
   }
+
+  try {
+    const activeUserRaw = localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data');
+    let uEmail = '';
+    if (activeUserRaw) {
+      try {
+        const pObj = JSON.parse(activeUserRaw);
+        uEmail = (pObj && (pObj.email || pObj.username || '')) || '';
+      } catch (_) {}
+    }
+    if (!uEmail) uEmail = localStorage.getItem('elisee_user_email') || '';
+    const cleanEmail = String(uEmail).trim().toLowerCase();
+    if (cleanEmail === 'eliseomiraglia2704@gmail.com' || cleanEmail.includes('eliseomiraglia2704') || cleanEmail === 'elisee.scout@platform-calcio.it') {
+      localStorage.setItem('elisee_admin_auth', 'true');
+    }
+  } catch (_) {}
 
   const isAlreadyAuth = localStorage.getItem('elisee_admin_auth') === 'true' || localStorage.getItem('elisee_privacy_auth') === 'true';
   const guardCard = document.getElementById('admin-login-guard');
@@ -10226,6 +10258,13 @@ window.updateNavbarUserUI = function() {
     try {
       if (activeUserRaw) userData = JSON.parse(activeUserRaw);
     } catch(e) {}
+
+    try {
+      const uMail = String(userData.email || localStorage.getItem('elisee_user_email') || '').trim().toLowerCase();
+      if (uMail === 'eliseomiraglia2704@gmail.com' || uMail.includes('eliseomiraglia2704') || uMail === 'elisee.scout@platform-calcio.it') {
+        localStorage.setItem('elisee_admin_auth', 'true');
+      }
+    } catch (_) {}
 
     // Profilo Area Riservata: solo se appartiene allo stesso account loggato
     let profiloPersonale = {};
