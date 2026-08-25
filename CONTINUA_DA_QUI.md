@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-25**
-Ultimo fatto: Simulatore Ruoli Creatore: risolta interferenza minigioco, isolamento totale e rendering istantaneo dell'Area Giocatore (Dashboard analitica v3.0, radar FIFA, performance) e di tutte le altre 22 dashboard attive. File: `creator-role-switcher.js` / `.css`, `index.html`. Cache `CR2`.
-Feature precedente: Simulatore Ruoli Creatore (versione iniziale).
+Ultimo fatto: Risolto bug trigger minigioco su evento `elisee:user-revealed`: rimosso auto-apertura del minigioco (`state.step` impostato a `closed`), rendering diretto garantito per tutte le 23 dashboard attive (Allenatore, Giocatore, Scout, DS, Presidente, ecc.). File: `minigioco-carriera.js`, `creator-role-switcher.js`, `index.html`, `sw.js`. Cache `CR3`/`FIXMG`.
+Feature precedente: Simulatore Ruoli Creatore.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

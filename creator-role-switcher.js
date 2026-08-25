@@ -408,20 +408,45 @@
       window.paintLoggedInUser(updated);
     }
 
+    function renderDirectDashboard(key, u) {
+      if (typeof window.syncPlayerProfileView === 'function') {
+        try { window.syncPlayerProfileView(u); } catch (_) {}
+      }
+      if (key === 'giocatore' && window.EliseePlayerDash && window.EliseePlayerDash.render) window.EliseePlayerDash.render(u);
+      else if (key === 'allenatore' && window.EliseeCoachDash && window.EliseeCoachDash.render) window.EliseeCoachDash.render(u);
+      else if (key === 'vice_allenatore' && window.EliseeViceDash && window.EliseeViceDash.render) window.EliseeViceDash.render(u);
+      else if (key === 'scout' && window.EliseeObsDash && window.EliseeObsDash.render) window.EliseeObsDash.render(u);
+      else if (key === 'match_analyst' && window.EliseeMaDash && window.EliseeMaDash.render) window.EliseeMaDash.render(u);
+      else if (key === 'prep_portieri' && window.EliseeGkDash && window.EliseeGkDash.render) window.EliseeGkDash.render(u);
+      else if (key === 'prep_atletico' && window.EliseeAtDash && window.EliseeAtDash.render) window.EliseeAtDash.render(u);
+      else if (key === 'medico' && window.EliseeMedDash && window.EliseeMedDash.render) window.EliseeMedDash.render(u);
+      else if (key === 'fisioterapista' && window.EliseeFisioDash && window.EliseeFisioDash.render) window.EliseeFisioDash.render(u);
+      else if (key === 'nutrizionista' && window.EliseeNuDash && window.EliseeNuDash.render) window.EliseeNuDash.render(u);
+      else if (key === 'presidente' && window.EliseePresDash && window.EliseePresDash.render) window.EliseePresDash.render(u);
+      else if (key === 'dg' && window.EliseeDgDash && window.EliseeDgDash.render) window.EliseeDgDash.render(u);
+      else if (key === 'ds' && window.EliseeDsDash && window.EliseeDsDash.render) window.EliseeDsDash.render(u);
+      else if (key === 'agente' && window.EliseeAgDash && window.EliseeAgDash.render) window.EliseeAgDash.render(u);
+      else if (key === 'tm' && window.EliseeTmDash && window.EliseeTmDash.render) window.EliseeTmDash.render(u);
+      else if (key === 'settore_giovanile' && window.EliseeYgDash && window.EliseeYgDash.render) window.EliseeYgDash.render(u);
+      else if (key === 'segretario' && window.EliseeSgDash && window.EliseeSgDash.render) window.EliseeSgDash.render(u);
+      else if (key === 'magazziniere' && window.EliseeEqDash && window.EliseeEqDash.render) window.EliseeEqDash.render(u);
+      else if (key === 'biglietteria' && window.EliseeBtDash && window.EliseeBtDash.render) window.EliseeBtDash.render(u);
+      else if (key === 'comunicazione' && window.EliseePrDash && window.EliseePrDash.render) window.EliseePrDash.render(u);
+      else if (key === 'marketing' && window.EliseeMkDash && window.EliseeMkDash.render) window.EliseeMkDash.render(u);
+      else if (key === 'tifoso' && window.EliseeTifosoDash && window.EliseeTifosoDash.render) window.EliseeTifosoDash.render(u);
+    }
+
     // 6. Navigazione mirata alla vista corretta
     if (targetRole.key === 'club_tc') {
       if (typeof window.switchView === 'function') window.switchView('tc', '#tc-portal');
       if (window.EliseeTC && window.EliseeTC.render) window.EliseeTC.render();
     } else {
       if (typeof window.switchView === 'function') window.switchView('user-dossier', '#user-dossier-portal');
+      renderDirectDashboard(targetRole.key, updated);
       setTimeout(function () {
-        if (targetRole.key === 'giocatore' && window.EliseePlayerDash && window.EliseePlayerDash.render) {
-          window.EliseePlayerDash.render(updated);
-        } else if (typeof window.syncPlayerProfileView === 'function') {
-          window.syncPlayerProfileView(updated);
-        }
+        renderDirectDashboard(targetRole.key, updated);
         window.scrollTo(0, 0);
-      }, 50);
+      }, 60);
     }
 
     updateTriggerLabel();

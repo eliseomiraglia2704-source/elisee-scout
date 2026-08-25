@@ -17,7 +17,7 @@
   };
 
   var state = {
-    step: 'hub', // hub | landing | nation | position | identity | career
+    step: 'closed', // closed | hub | landing | nation | position | identity | career
     mode: 'normal', // intense | normal | express
     nation: 'Italia',
     nationCode: 'IT',
@@ -808,6 +808,7 @@
 
   function close() {
     clearIntroTimer();
+    state.step = 'closed';
     if (!root) return;
     root.classList.remove('is-open');
     root.innerHTML = '';
@@ -4954,7 +4955,7 @@
   };
 
   document.addEventListener('elisee:user-revealed', function () {
-    if (state.step === 'hub') {
+    if (root && root.classList.contains('is-open') && state.step === 'hub') {
       try { renderHub(); } catch (e) {}
     }
   });
