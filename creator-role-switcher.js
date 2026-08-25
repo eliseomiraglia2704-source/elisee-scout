@@ -219,7 +219,7 @@
       roles: [
         {
           key: 'club_tc',
-          label: 'Club (Pannello TC Manager)',
+          label: 'Club (Pannello Elisee Manager)',
           family: 'Società',
           staffRole: '',
           icon: '📋',
@@ -241,7 +241,7 @@
     var u = getStoredUser();
     if (window.isTifosoSiteRole && window.isTifosoSiteRole(u)) return { label: 'Tifoso', key: 'tifoso', icon: '🎟️' };
     if (window.isPlayerSiteRole && window.isPlayerSiteRole(u)) return { label: 'Calciatore', key: 'giocatore', icon: '🏃' };
-    if (u && (u.ruolo === 'Società' || u.role === 'Società' || u.siteRoleFamily === 'Società')) return { label: 'Club TC Manager', key: 'club_tc', icon: '🛡️' };
+    if (u && (u.ruolo === 'Società' || u.role === 'Società' || u.siteRoleFamily === 'Società')) return { label: 'Club Elisee Manager', key: 'club_tc', icon: '🛡️' };
     var precise = String(u.staffRole || u.ruoloDettagliato || u.ruolo || u.role || 'Staff').trim();
     return { label: precise || 'Staff', key: 'staff', icon: '👔' };
   }

@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Eliminati i doppioni di **`Messaggi B2B`** e **`Notifiche`** dal menu a tendina utente: rimangono attivi ed evidenti solo ed esclusivamente in alto nella navbar principale (`#btn-nav-msgs` e `#btn-nav-notifs`) con contatore e badge luminosi. File: `index.html`, `app.js`, `sw.js`. Cache `CLEAN1`.
-Feature precedente: Accesso diretto al Control Center per Eliseomiraglia2704@gmail.com.
+Ultimo fatto: Rinomina da **TC Manager** in **`🛡️ Elisee Manager`** e integrazione del regolamento di onboarding con **Mese di prova & Gruppo WhatsApp VIP Club**: form di candidatura con tutti i campi obbligatori (incluso numero telefonico obbligatorio), impegno di 30 giorni alla pubblicazione quotidiana di contenuti con moderazione preventiva degli Admin per verificarne la veridicità, e accesso finale al gruppo WhatsApp esclusivo Elisee Manager (VIP Club). File: `manager-runtime.js`, `tc-panel.js`, `creator-role-switcher.js`, `role-actions-runtime.js`, `index.html`, `sw.js`. Cache `MGR1`.
+Feature precedente: Rimozione doppioni messaggi e notifiche dal dropdown.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

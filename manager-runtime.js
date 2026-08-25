@@ -180,11 +180,11 @@
       html += '<p class="es-mgr-lead">' + esc(team.league || '') + (team.city ? ' · ' + esc(team.city) : '') + '</p>';
 
       if (mgr) {
-        html += '<p class="es-mgr-msg is-ok">Sei Manager Elisee Scout di questa squadra. Puoi proporre una modifica: noi la accettiamo o la decliniamo.</p>';
-        html += '<div class="es-mgr-actions" style="margin-bottom:1rem;"><button type="button" class="btn btn-outline-pill pf-btn-solid" id="es-mgr-open-tc">Apri pannello TC Manager</button></div>';
+        html += '<p class="es-mgr-msg is-ok">Sei <strong>Elisee Manager</strong> ufficiale di questa squadra. Puoi gestire la società e proporre modifiche aggiornate.</p>';
+        html += '<div class="es-mgr-actions" style="margin-bottom:1rem;"><button type="button" class="btn btn-outline-pill pf-btn-solid" id="es-mgr-open-tc">Apri pannello Elisee Manager</button></div>';
         html += proposeFormHtml(team);
       } else if (pend) {
-        html += '<p class="es-mgr-msg">Candidatura già inviata il ' + esc((pend.createdAt || '').slice(0, 10)) + '. In attesa di accettazione.</p>';
+        html += '<p class="es-mgr-msg">Candidatura Elisee Manager già inviata il ' + esc((pend.createdAt || '').slice(0, 10)) + '. Attualmente nel mese di prova sotto valutazione Admin.</p>';
       } else {
         html += applyFormHtml(team, id);
       }
@@ -196,26 +196,56 @@
   }
 
   function applyFormHtml(team, id) {
+    var phone = (user() || {}).telefono || (user() || {}).phone || '';
+    var city = team.city || '';
     return (
       '<form id="es-mgr-apply">' +
-      '<div class="es-mgr-row">' +
-      '<div class="es-mgr-field"><label>Nome e cognome *</label><input name="name" required value="' + esc(id.name) + '"></div>' +
-      '<div class="es-mgr-field"><label>Email *</label><input name="email" type="email" required value="' + esc(id.email) + '"></div>' +
+      '<div class="es-mgr-trial-banner" style="background:linear-gradient(135deg, rgba(2,132,199,0.18), rgba(15,23,42,0.6)); border:1.5px solid rgba(56,189,248,0.45); border-radius:14px; padding:1.1rem 1.25rem; margin-bottom:1.3rem; box-shadow:0 8px 24px rgba(0,0,0,0.3); text-align:left;">' +
+      '<div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.5rem;">' +
+      '<span style="font-size:1.4rem;">👑</span>' +
+      '<h3 style="color:#38bdf8; margin:0; font-size:1rem; font-weight:800; letter-spacing:0.02em;">Candidatura Elisee Manager — Requisiti &amp; Mese di Prova (VIP Club)</h3>' +
+      '</div>' +
+      '<p style="color:#e2e8f0; font-size:0.84rem; line-height:1.5; margin:0 0 0.65rem;">' +
+      'Prima di diventare <strong>Elisee Manager</strong> dovrai compilare tutti i campi richiesti ed effettuare <strong>un mese di prova</strong> (30 giorni di costanza) dove ogni giorno dovrai pubblicare costantemente contenuti per la squadra.' +
+      '</p>' +
+      '<div style="background:rgba(15,23,42,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:0.8rem 1rem; margin-bottom:0.65rem;">' +
+      '<p style="color:#cbd5e1; font-size:0.81rem; line-height:1.45; margin:0 0 0.35rem;">' +
+      '🔍 <strong style="color:#38bdf8;">Moderazione Preventiva Admin:</strong> Tutti i contenuti inviati durante il mese di prova verranno prima inoltrati agli Admin, che ne valuteranno l’accuratezza e veridicità prima di approvarli e pubblicarli.' +
+      '</p>' +
+      '<p style="color:#facc15; font-size:0.81rem; font-weight:700; margin:0;">' +
+      '⏳ <em>«È solo un mese, ma un mese di costanza. Dobbiamo accertarci che il duro lavoro paghi.»</em>' +
+      '</p>' +
+      '</div>' +
+      '<p style="color:#4ade80; font-size:0.82rem; line-height:1.45; margin:0; display:flex; align-items:flex-start; gap:0.45rem;">' +
+      '<span style="font-size:1.1rem; flex-shrink:0;">📲</span>' +
+      '<span><strong>Accesso al Gruppo WhatsApp VIP Club:</strong> Il rilascio del tuo recapito telefonico è obbligatorio. Superato con successo il mese di prova, verrai inserito nel <strong>gruppo WhatsApp esclusivo di Elisee Manager</strong> dove riceverai in tempo reale tutte le nuove informazioni, direttive e anteprime direttamente dagli Admin.</span>' +
+      '</p>' +
       '</div>' +
       '<div class="es-mgr-row">' +
-      '<div class="es-mgr-field"><label>Telefono</label><input name="phone"></div>' +
-      '<div class="es-mgr-field"><label>Ruolo nel club *</label>' +
+      '<div class="es-mgr-field"><label>Nome e cognome *</label><input name="name" required value="' + esc(id.name) + '" placeholder="Es. Mario Rossi"></div>' +
+      '<div class="es-mgr-field"><label>Email account *</label><input name="email" type="email" required value="' + esc(id.email) + '" placeholder="nome@esempio.it"></div>' +
+      '</div>' +
+      '<div class="es-mgr-row">' +
+      '<div class="es-mgr-field"><label style="color:#facc15; font-weight:700;">Numero di Telefono (Obbligatorio per Gruppo WhatsApp VIP) *</label><input name="phone" type="tel" required value="' + esc(phone) + '" placeholder="+39 333 1234567" style="border-color:rgba(250,204,21,0.5);">' +
+      '<small style="color:#94a3b8; font-size:0.72rem; display:block; margin-top:0.25rem;">Usato per l’inserimento nel Gruppo WhatsApp VIP Club al superamento del mese di prova</small></div>' +
+      '<div class="es-mgr-field"><label>Ruolo nel club / Società *</label>' +
       '<select name="roleAtClub" required>' +
-      '<option value="">Seleziona</option>' +
-      '<option>Presidente</option><option>Direttore sportivo</option>' +
-      '<option>Dirigente</option><option>Segretario</option>' +
-      '<option>Allenatore</option><option>Collaboratore</option>' +
-      '<option>Altro</option>' +
+      '<option value="">Seleziona ruolo</option>' +
+      '<option>Presidente / Proprietà</option><option>Direttore Sportivo / Generale</option>' +
+      '<option>Dirigente Accompagnatore</option><option>Segretario Generale</option>' +
+      '<option>Responsabile Settore Giovanile</option><option>Allenatore / Staff Tecnico</option>' +
+      '<option>Match Analyst / Addetto Stampa</option><option>Collaboratore Societario</option>' +
       '</select></div></div>' +
-      '<div class="es-mgr-field"><label>Perché vuoi gestire questa squadra? *</label>' +
-      '<textarea name="motivation" required placeholder="Es. sono il dirigente della società e voglio tenere aggiornati stemma, stadio e dati ufficiali."></textarea></div>' +
+      '<div class="es-mgr-field"><label>Città e Territorio di riferimento *</label><input name="city" required value="' + esc(city) + '" placeholder="Es. Foggia (Puglia)"></div>' +
+      '<div class="es-mgr-field"><label>Perché vuoi diventare Elisee Manager e piano di pubblicazione per i 30 giorni *</label>' +
+      '<textarea name="motivation" required rows="3" placeholder="Descrivi la tua motivazione e disponibilità a pubblicare costantemente contenuti veritieri ogni giorno (risultati, formazioni, news, rose, eventi) durante il mese di prova."></textarea></div>' +
+      '<div class="es-mgr-field" style="margin:1rem 0 1.2rem;">' +
+      '<label style="display:flex; align-items:flex-start; gap:0.6rem; cursor:pointer; color:#e2e8f0; font-size:0.82rem; line-height:1.45;">' +
+      '<input type="checkbox" name="trialAccept" required style="margin-top:0.2rem; width:17px; height:17px; accent-color:#38bdf8; flex-shrink:0;">' +
+      '<span><strong>Dichiaro di accettare il mese di prova</strong> con impegno alla pubblicazione quotidiana dei contenuti sotto verifica preventiva degli Admin e autorizzo l’inserimento del mio recapito telefonico nel <strong>Gruppo WhatsApp Elisee Manager (VIP Club)</strong> a esito positivo.</span>' +
+      '</label></div>' +
       '<div class="es-mgr-actions">' +
-      '<button type="submit" class="btn btn-outline-pill pf-btn-solid">Invia candidatura</button>' +
+      '<button type="submit" class="btn btn-outline-pill pf-btn-solid">Invia Candidatura Elisee Manager</button>' +
       '<button type="button" class="btn btn-outline-pill" data-mgr-close>Chiudi</button>' +
       '</div><p class="es-mgr-msg" id="es-mgr-apply-msg"></p></form>'
     );
@@ -291,6 +321,11 @@
         e.preventDefault();
         var d = formData(apply);
         var msg = $('es-mgr-apply-msg');
+        if (!d.phone || !d.phone.trim()) {
+          msg.className = 'es-mgr-msg is-bad';
+          msg.textContent = 'Il numero di telefono è obbligatorio per l\'accesso al Gruppo WhatsApp VIP Club.';
+          return;
+        }
         apiPost({
           action: 'apply',
           teamId: team.id,
@@ -299,8 +334,10 @@
           name: d.name,
           email: d.email,
           phone: d.phone,
+          city: d.city,
           roleAtClub: d.roleAtClub,
-          motivation: d.motivation
+          motivation: d.motivation,
+          trialMonthAccepted: true
         }).then(function (res) {
           if (!res || !res.ok) {
             msg.className = 'es-mgr-msg is-bad';
@@ -308,7 +345,10 @@
             return;
           }
           msg.className = 'es-mgr-msg is-ok';
-          msg.textContent = 'Candidatura inviata. La revisioniamo e ti aggiorniamo.';
+          msg.textContent = 'Candidatura Elisee Manager registrata! Iniziato il mese di prova (30 giorni di pubblicazione sotto verifica Admin). A superamento della prova verrai aggiunto al Gruppo WhatsApp VIP Club.';
+          if (typeof window.showToast === 'function') {
+            window.showToast('Candidatura inviata! Mese di prova avviato con verifica Admin & accesso WhatsApp VIP.', 'success');
+          }
           loadMe(function () { renderOverlay(); syncBadge(); });
         }).catch(function () {
           msg.className = 'es-mgr-msg is-bad';
@@ -486,8 +526,8 @@
       '<div class="es-mgr-sheet" role="dialog" aria-modal="true">' +
       '<button type="button" class="es-mgr-close" data-mgr-close aria-label="Chiudi">&times;</button>' +
       '<p class="es-mgr-kicker">Elisee Scout</p>' +
-      '<h2>Manager Elisee Scout</h2>' +
-      '<p class="es-mgr-lead">Come i TC Manager di Tuttocampo: proponi correzioni su stemma, stadio e anagrafica. Noi accettiamo o decliniamo.</p>' +
+      '<h2>Elisee Manager</h2>' +
+      '<p class="es-mgr-lead">Candidati come Elisee Manager: 1 mese di prova con pubblicazione costante e verifica Admin. Al superamento, accesso al <strong>Gruppo WhatsApp VIP Club</strong>.</p>' +
       '<div id="es-mgr-body"></div></div>';
     document.body.appendChild(wrap);
     wrap.addEventListener('click', function (e) {
@@ -502,7 +542,7 @@
     btn.type = 'button';
     btn.id = 'es-sq-mgr-btn';
     btn.className = 'btn btn-outline-pill es-sq-mgr-btn';
-    btn.textContent = 'Diventa Manager Elisee Scout';
+    btn.textContent = 'Diventa Elisee Manager';
     btn.onclick = function () { openOverlay(); };
     actions.appendChild(btn);
   }

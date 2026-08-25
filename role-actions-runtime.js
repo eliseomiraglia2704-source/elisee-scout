@@ -247,7 +247,7 @@
       ]
     },
     'club_tc': {
-      title: 'Azioni possibili — Club (TC Manager)',
+      title: 'Azioni possibili — Club (Elisee Manager)',
       roleName: 'Club/Dirigente',
       actions: [
         { label: 'Sezione "Schede tecniche" (Zero E-mail)', id: 'act-tc-hub-schede', icon: '📑' },

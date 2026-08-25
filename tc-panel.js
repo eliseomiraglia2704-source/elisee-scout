@@ -209,7 +209,7 @@
       ['atleti', 'Profilo atleta', 'Storico attività e prestazioni, agganciato al dossier scouting Elisee se l’email coincide.', st.members.filter(function (m) { return m.role === 'Atleta'; }).length + ' atleti'],
       ['soci', 'Soci e verbali', 'Registro soci digitale e generazione automatica dei verbali di assemblea.', st.minutes.length + ' verbali']
     ];
-    var html = '<p class="es-tc-muted" style="margin:0 0 1rem">Pannello società per <strong>' + esc(team.name || '') + '</strong>. Tutto lato sito, come TC Manager.</p>';
+    var html = '<p class="es-tc-muted" style="margin:0 0 1rem">Pannello società per <strong>' + esc(team.name || '') + '</strong>. Tutto integrato in piattaforma — <strong>Elisee Manager</strong>.</p>';
     html += '<div class="es-tc-grid">';
     cards.forEach(function (c) {
       html += '<button type="button" class="es-tc-card" data-tc-tab="' + c[0] + '" style="text-align:left;cursor:pointer;width:100%;font:inherit;color:inherit">';
@@ -650,7 +650,7 @@
       var odg = ($('es-tc-min-odg') || {}).value;
       var del = ($('es-tc-min-del') || {}).value;
       var present = st.members.map(function (m) { return m.nome + ' ' + m.cognome + ' (' + m.role + ')'; }).join(', ');
-      var text = 'VERBALE ASSEMBLEA SOCI\n' + (st.society.name || UI.team.name) + '\nData: ' + date + '\nSede: ' + (st.society.sede || '') + '\n\nPresenti:\n' + (present || '—') + '\n\nOrdine del giorno:\n' + odg + '\n\nDelibere:\n' + del + '\n\nGenerato da Elisee Scout — Pannello TC Manager\n';
+      var text = 'VERBALE ASSEMBLEA SOCI\n' + (st.society.name || UI.team.name) + '\nData: ' + date + '\nSede: ' + (st.society.sede || '') + '\n\nPresenti:\n' + (present || '—') + '\n\nOrdine del giorno:\n' + odg + '\n\nDelibere:\n' + del + '\n\nGenerato da Elisee Scout — Pannello Elisee Manager\n';
       var row = { id: uid('v'), date: date, odg: odg, del: del, text: text, at: nowIso() };
       st.minutes.unshift(row);
       put(UI.team, st);
