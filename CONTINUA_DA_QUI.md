@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Attivato l'accesso diretto automatico al **`⚙️ Control Center Admin`** per l'account **`Eliseomiraglia2704@gmail.com`**: eliminata la schermata di login intermedio con PIN/credenziali; all'apertura del Control Center o di `#admin-portal`, il sistema riconosce istantaneamente l'identità dell'Amministratore Master, convalida la sessione (`elisee_admin_auth = 'true'`) e carica immediatamente la Dashboard di Controllo Governance e Audit. File: `app.js`, `index.html`, `sw.js`. Cache `ADM1`.
-Feature precedente: Confinamento esclusivo Secret List nell'area Scout.
+Ultimo fatto: Eliminati i doppioni di **`Messaggi B2B`** e **`Notifiche`** dal menu a tendina utente: rimangono attivi ed evidenti solo ed esclusivamente in alto nella navbar principale (`#btn-nav-msgs` e `#btn-nav-notifs`) con contatore e badge luminosi. File: `index.html`, `app.js`, `sw.js`. Cache `CLEAN1`.
+Feature precedente: Accesso diretto al Control Center per Eliseomiraglia2704@gmail.com.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
