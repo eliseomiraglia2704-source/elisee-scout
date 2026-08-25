@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-25**
-Ultimo fatto: Dashboard ruoli: corretto padding-top e allineamento di `.es-pd` (+84px sotto la navbar fissa), eliminato il taglio superiore di intestazioni e schede su tutte le 23 dashboard. File: `player-dash.css`, `index.html`, `sw.js`. Cache `PD2`/`CR4`.
-Feature precedente: Risolto bug trigger minigioco su evento `elisee:user-revealed`.
+Ultimo fatto: Allineamento perfetto altezza dashboard: calibrato `padding-top: 86px`, spaziatura `es-pd-head` e aggancio `scrollTo(0,0)` istantaneo; ogni area si apre esattamente all'altezza mostrata nello screenshot (titolo e schede subito visibili sotto la navbar). File: `player-dash.css`, `creator-role-switcher.js`, `index.html`, `sw.js`. Cache `PD3`/`CR5`.
+Feature precedente: Dashboard ruoli: corretto padding-top e allineamento di `.es-pd`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

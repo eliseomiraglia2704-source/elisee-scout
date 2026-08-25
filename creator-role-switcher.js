@@ -440,12 +440,16 @@
     if (targetRole.key === 'club_tc') {
       if (typeof window.switchView === 'function') window.switchView('tc', '#tc-portal');
       if (window.EliseeTC && window.EliseeTC.render) window.EliseeTC.render();
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     } else {
       if (typeof window.switchView === 'function') window.switchView('user-dossier', '#user-dossier-portal');
       renderDirectDashboard(targetRole.key, updated);
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       setTimeout(function () {
         renderDirectDashboard(targetRole.key, updated);
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+        var p = document.getElementById('user-dossier-portal');
+        if (p) p.scrollTop = 0;
       }, 60);
     }
 
