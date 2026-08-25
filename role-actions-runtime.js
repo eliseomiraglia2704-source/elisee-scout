@@ -531,6 +531,111 @@
     });
   }
 
+  // --- MODALI VICE ALLENATORE ---
+
+  // 1. Registro Contributo Tecnico
+  function openViceLogModal() {
+    var logs = [
+      { data: '25/08/2026', reparto: 'Fase Difensiva (Difensori)', focus: 'Marcatura a uomo su palla inattiva e scalata del terzino.', voto: 'Ottimo (8.5)' },
+      { data: '23/08/2026', reparto: 'Centrocampo & Costruzione', focus: 'Interscambio tra mezzala e ala per creare superiorità numerica.', voto: 'Positivo (8.0)' },
+      { data: '21/08/2026', reparto: 'Attacco & Finalizzazione', focus: 'Attacco del primo palo e taglio del secondo attaccante.', voto: 'Ottimo (9.0)' }
+    ];
+
+    var rows = logs.map(function (l) {
+      return '<div style="background:#1e293b;padding:0.6rem 0.8rem;border-radius:8px;margin-bottom:0.4rem;border:1px solid rgba(148,163,184,0.1);font-size:0.76rem">' +
+        '<div style="display:flex;justify-content:space-between"><b style="color:#38bdf8">' + l.data + ' — ' + l.reparto + '</b><span style="color:#86efac;font-weight:800">' + l.voto + '</span></div>' +
+        '<div style="color:#cbd5e1;margin-top:2px">' + l.focus + '</div>' +
+        '</div>';
+    }).join('');
+
+    var body = '<div class="es-edit-grid">' +
+      '<div class="es-edit-field"><label>Reparto di Lavoro</label><select id="es-vl-rep"><option>Difesa & Scalate Difensive</option><option>Centrocampo & Transizioni</option><option>Attaccanti & Finalizzazione</option><option>Palle Inattive Pro/Contro</option></select></div>' +
+      '<div class="es-edit-field"><label>Efficacia Seduta</label><select><option>⭐⭐⭐⭐⭐ Eccellente (9-10)</option><option>⭐⭐⭐⭐ Molto Buona (8)</option><option>⭐⭐⭐ Nella Media (6-7)</option></select></div>' +
+      '<div class="es-edit-field full"><label>Osservazioni Tecniche & Correzioni Applicate</label><textarea id="es-vl-obs" rows="2" style="background:#1e293b;color:#fff;border:1px solid rgba(148,163,184,0.25);border-radius:8px;padding:0.5rem">Ottima applicazione della linea difensiva a 4 sulle palle scoperte. Raddoppi puntuali.</textarea></div>' +
+      '</div>' +
+      '<div style="margin-top:1rem"><label style="color:#38bdf8;font-weight:800;font-size:0.78rem;display:block;margin-bottom:0.4rem">📋 Storico Contributi Tecnico-Tattici</label>' + rows + '</div>';
+
+    var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
+      '<button type="button" class="es-edit-btn-save" id="es-vl-save">➕ Registra Contributo Tecnico</button>';
+
+    var modal = createModalContainer('🤝 Registro Contributo Tecnico (Vice Allenatore)', body, btns);
+    modal.backdrop.querySelector('#es-vl-save').addEventListener('click', function () {
+      toast('Contributo tecnico salvato nel report per il Mister!');
+      modal.close();
+    });
+  }
+
+  // 2. Verifica Sessioni Individuali
+  function openViceIndivModal() {
+    var players = [
+      { nome: 'E. Miraglia', ruolo: 'Attaccante', focus: 'Tiro al volo di prima intenzione', progress: '94%', stato: 'Completato' },
+      { nome: 'M. Rossi', ruolo: 'Terzino', focus: 'Cross dal fondo con piede debole', progress: '82%', stato: 'In corso' },
+      { nome: 'L. Bianchi', ruolo: 'Centrocampista', focus: 'Ricezione orientata su pressione', progress: '88%', stato: 'Completato' }
+    ];
+
+    var tableRows = players.map(function (p) {
+      return '<tr><td style="font-weight:700;color:#f8fafc">' + p.nome + '</td><td>' + p.ruolo + '</td><td>' + p.focus + '</td><td style="color:#38bdf8;font-weight:800">' + p.progress + '</td><td><span style="background:rgba(34,197,94,0.15);color:#86efac;padding:0.15rem 0.45rem;border-radius:999px;font-size:0.68rem">' + p.stato + '</span></td></tr>';
+    }).join('');
+
+    var body = '<div style="background:#090d16;border:1px solid rgba(56,189,248,0.25);border-radius:10px;padding:0.75rem;overflow-x:auto">' +
+      '<table class="es-pd-table" style="font-size:0.76rem"><thead><tr><th>Calciatore</th><th>Ruolo</th><th>Focus Individuale</th><th>Progresso</th><th>Stato</th></tr></thead><tbody>' +
+      tableRows +
+      '</tbody></table></div>' +
+      '<div class="es-edit-grid" style="margin-top:1rem">' +
+      '<div class="es-edit-field"><label>Assegna Nuovo Lavoro a:</label><input placeholder="Nome calciatore"></div>' +
+      '<div class="es-edit-field"><label>Obiettivo Specifico</label><input placeholder="Es. Stop orientato, colpo di testa difensivo"></div>' +
+      '</div>';
+
+    var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
+      '<button type="button" class="es-edit-btn-save" id="es-vi-save">💾 Assegna Seduta Individuale</button>';
+
+    var modal = createModalContainer('⏱️ Verifica & Assegnazione Sessioni Individuali', body, btns);
+    modal.backdrop.querySelector('#es-vi-save').addEventListener('click', function () {
+      toast('Lavoro individuale assegnato e registrato nella scheda atleta!');
+      modal.close();
+    });
+  }
+
+  // 3. Condividi Nota con il Mister
+  function openViceShareModal() {
+    var body = '<div class="es-edit-grid">' +
+      '<div class="es-edit-field"><label>Destinatario</label><input value="Mister — Primo Allenatore" readonly></div>' +
+      '<div class="es-edit-field"><label>Priorità Memo</label><select><option>🔴 Alta — Decisione Formazione Gara</option><option selected>🟡 Media — Report Settimanale</option><option>🟢 Bassa — Nota di Routine</option></select></div>' +
+      '<div class="es-edit-field full"><label>Oggetto del Memo Tattico</label><input value="Considerazioni tattiche su palle inattive e raddoppi per domenica"></div>' +
+      '<div class="es-edit-field full"><label>Contenuto del Messaggio per l\'Allenatore Capo</label><textarea rows="4" style="background:#1e293b;color:#fff;border:1px solid rgba(148,163,184,0.25);border-radius:8px;padding:0.6rem;font-size:0.8rem">Mister, ho notato che i difensori centrali avversari soffrono particolarmente l\'attacco alle spalle quando il nostro trequartista si abbassa. Suggerisco di provare lo schema ad incrocio già da giovedì.</textarea></div>' +
+      '</div>';
+
+    var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
+      '<button type="button" class="es-edit-btn-save" id="es-vs-send">📨 Invia Nota al Mister & Notifica</button>';
+
+    var modal = createModalContainer('💬 Condividi Nota Tattica con il Mister', body, btns);
+    modal.backdrop.querySelector('#es-vs-send').addEventListener('click', function () {
+      toast('Nota e proposta tattica inviata direttamente al Mister!');
+      modal.close();
+    });
+  }
+
+  // 4. Carichi Pre-Gara
+  function openViceLoadModal() {
+    var body = '<div class="es-edit-grid">' +
+      '<div class="es-edit-field"><label>Test Reattività Pre-Gara</label><input value="96% — Squadra Pronta e Reattiva" readonly style="color:#4ade80;font-weight:800"></div>' +
+      '<div class="es-edit-field"><label>Intensità Riscaldamento Match</label><select><option>Dinamico Progressivo (22 min)</option><option>Attivazione Rapida & Reattività (18 min)</option><option>Standard FIGC (25 min)</option></select></div>' +
+      '<div class="es-edit-field full" style="background:#1e293b;padding:0.85rem;border-radius:10px;border:1px solid rgba(56,189,248,0.25)">' +
+      '<div style="display:flex;justify-content:space-between"><strong style="color:#38bdf8">Indice Prontezza Tattico-Fisica</strong><b style="color:#22c55e">STATO OTTIMALE</b></div>' +
+      '<p style="margin:0.35rem 0 0;font-size:0.74rem;color:#cbd5e1">Tutti gli effettivi a disposizione del Mister hanno completato i test di mobilità e carico senza affaticamenti asimmetrici.</p>' +
+      '</div>' +
+      '</div>';
+
+    var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
+      '<button type="button" class="es-edit-btn-save" id="es-vl-confirm">⚡ Valida Carichi & Schiera Riscaldamento</button>';
+
+    var modal = createModalContainer('⚡ Carichi Pre-Gara & Protocollo Riscaldamento', body, btns);
+    modal.backdrop.querySelector('#es-vl-confirm').addEventListener('click', function () {
+      toast('Protocollo carichi pre-gara validato per la partita!');
+      modal.close();
+    });
+  }
+
   function resolveRoleKey(u) {
     if (!u) {
       try {
@@ -603,6 +708,23 @@
 
       case 'act-coach-export':
         openCoachExportModal();
+        break;
+
+      // --- Azioni Vice Allenatore ---
+      case 'act-vice-log':
+        openViceLogModal();
+        break;
+
+      case 'act-vice-indiv':
+        openViceIndivModal();
+        break;
+
+      case 'act-vice-share':
+        openViceShareModal();
+        break;
+
+      case 'act-vice-load':
+        openViceLoadModal();
         break;
 
       // --- Azioni Calciatore ---

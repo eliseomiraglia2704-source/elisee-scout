@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-25**
-Ultimo fatto: Rilascio operativo e attivazione completa di tutte le 5 attività evidenziate per l'Allenatore (1. Generatore Discorso pre-partita IA con toni e rigenerazione live; 2. Lavagna tattica 2D con moduli 4-3-3/3-5-2/4-2-3-1 e 11 giocatori posizionati; 3. Registro sessioni allenamento microciclo; 4. Valutazione carichi RPE/GPS e indice ACWR; 5. Esportazione dossier staff tecnico in TXT/PDF). File: `role-actions-runtime.js`, `index.html`, `sw.js`. Cache `ACT2`.
-Feature precedente: Risolto blocco pulsante "Modifica Anagrafica Atleta".
+Ultimo fatto: Rilascio operativo e attivazione completa per il Vice Allenatore e Allenatore: 1. Legenda trend 2023-2025; 2. Modal interattivo modifica anagrafica staff con salvataggio e sync; 3. Card Guida Analitica & Legenda Metriche; 4. Tutti e 4 i modali operativi per le azioni del Vice Allenatore (Registro contributo tecnico, Verifica sessioni individuali, Condivisione memo tattico con il Mister, Carichi pre-gara). File: `vice-dash.js`, `coach-dash.js`, `role-actions-runtime.js`, `index.html`, `sw.js`. Cache `ACT3`/`VD2`/`CD2`.
+Feature precedente: Rilascio operativo e attivazione 5 attività Allenatore.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

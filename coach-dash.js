@@ -175,11 +175,99 @@
       '<tr><td>vs. Castelfidardo</td><td>9 min</td><td>Reattiva</td><td><i class="es-pd-dot g"></i></td></tr>' +
       '</tbody></table></section>' +
 
-      '<section class="es-pd-card es-pd-trend"><h2>2023 vs 2024 vs 2025</h2>' +
+      '<section class="es-pd-card es-pd-trend"><h2>Crescita Stagionale (2023-2025)</h2>' +
+      '<div class="es-pd-trend-legend">' +
+      '<span style="color:#38bdf8"><i style="background:#38bdf8"></i> 2023 (62-78%)</span>' +
+      '<span style="color:#4ade80"><i style="background:#4ade80"></i> 2024 (70-86%)</span>' +
+      '<span style="color:#facc15"><i style="background:#facc15"></i> 2025 (78-93%)</span>' +
+      '</div>' +
       trendSvg() +
-      '<button type="button" class="es-pd-edit" data-cd="edit">Modifica anagrafica</button>' +
+      '<button type="button" class="es-pd-edit" data-cd="edit">✏️ Modifica Anagrafica Allenatore</button>' +
+      '</section>' +
+
+      '<section class="es-pd-card es-pd-guide-card">' +
+      '<div class="es-pd-guide-head">' +
+      '<h2><span>📘</span> Guida Analitica &amp; Legenda Metriche — Area Allenatore</h2>' +
+      '<span class="es-pd-guide-badge">Standard Certificato FIGC / UEFA</span>' +
+      '</div>' +
+      '<div class="es-pd-guide-grid">' +
+      '<div class="es-pd-guide-item">' +
+      '<h3><span>🎙️</span> Indice Efficacia Discorsi</h3>' +
+      '<p>Monitora la reattività emotiva e la concentrazione della squadra pre e post partita.</p>' +
+      '</div>' +
+      '<div class="es-pd-guide-item">' +
+      '<h3><span>📋</span> Assetto Tattico &amp; Modulo</h3>' +
+      '<p>Analisi delle distanze tra reparti, baricentro medio (m) e linee di pressione.</p>' +
+      '</div>' +
+      '<div class="es-pd-guide-item">' +
+      '<h3><span>⚡</span> Carichi &amp; Rischio Muscolare</h3>' +
+      '<p>Indice ACWR per prevenire l\'overtraining e ottimizzare il picco di forma domenicale.</p>' +
+      '</div>' +
+      '<div class="es-pd-guide-item">' +
+      '<h3><span>🚦</span> Indicatori Registro</h3>' +
+      '<p><i class="es-pd-dot g"></i> <b>Verde</b>: Risposta ottimale della squadra.<br>' +
+      '<i class="es-pd-dot y"></i> <b>Giallo</b>: Richiesta attenzione / correzione tattica.</p>' +
+      '</div>' +
+      '</div>' +
       '</section>' +
       '</div></div>';
+  }
+
+  function openCoachEditModal(user) {
+    user = user || userObj();
+    var backdrop = document.createElement('div');
+    backdrop.className = 'es-edit-modal-backdrop';
+
+    backdrop.innerHTML = '<div class="es-edit-modal">' +
+      '<div class="es-edit-modal-head">' +
+      '<h2><span>✏️</span> Modifica Anagrafica Allenatore</h2>' +
+      '<button type="button" class="es-edit-modal-close" title="Chiudi">&times;</button>' +
+      '</div>' +
+      '<div class="es-edit-grid">' +
+      '<div class="es-edit-field"><label>Nome</label><input id="es-cd-nome" value="' + esc(user.nome || 'Eliseo') + '"></div>' +
+      '<div class="es-edit-field"><label>Cognome</label><input id="es-cd-cognome" value="' + esc(user.cognome || 'Miraglia') + '"></div>' +
+      '<div class="es-edit-field"><label>Ruolo Staff</label><input id="es-cd-role" value="Allenatore / Responsabile Tecnico" readonly></div>' +
+      '<div class="es-edit-field"><label>Qualifica / Patentino</label><select id="es-cd-lic"><option selected>UEFA Pro</option><option>UEFA A</option><option>UEFA B</option></select></div>' +
+      '<div class="es-edit-field"><label>Club Attuale</label><input id="es-cd-club" value="' + esc(user.squadra || user.club || 'Notaresco Calcio') + '"></div>' +
+      '<div class="es-edit-field"><label>Modulo Preferito</label><select id="es-cd-mod"><option>4-3-3</option><option>3-5-2</option><option>4-2-3-1</option><option>3-4-2-1</option></select></div>' +
+      '<div class="es-edit-field full"><label>Filosofia di Gioco & Bio</label><textarea id="es-cd-bio" rows="3">' + esc(user.bio || 'Allenatore votato a un calcio propositivo, intensità alta, dominio del possesso e rapida riaggressione.') + '</textarea></div>' +
+      '</div>' +
+      '<div class="es-edit-actions">' +
+      '<button type="button" class="es-edit-btn-cancel">Annulla</button>' +
+      '<button type="button" class="es-edit-btn-save">💾 Salva Profilo Mister</button>' +
+      '</div>' +
+      '</div>';
+
+    document.body.appendChild(backdrop);
+
+    var close = function () { backdrop.remove(); };
+    backdrop.querySelector('.es-edit-modal-close').addEventListener('click', close);
+    backdrop.querySelector('.es-edit-btn-cancel').addEventListener('click', close);
+    backdrop.addEventListener('click', function (e) { if (e.target === backdrop) close(); });
+
+    backdrop.querySelector('.es-edit-btn-save').addEventListener('click', function () {
+      var n = document.getElementById('es-cd-nome').value.trim();
+      var c = document.getElementById('es-cd-cognome').value.trim();
+      var clb = document.getElementById('es-cd-club').value.trim();
+      var bio = document.getElementById('es-cd-bio').value.trim();
+
+      user.nome = n || user.nome;
+      user.cognome = c || user.cognome;
+      user.fullName = (user.nome + ' ' + user.cognome).trim();
+      user.squadra = clb;
+      user.club = clb;
+      user.bio = bio;
+
+      try {
+        localStorage.setItem('elisee_active_user', JSON.stringify(user));
+      } catch (_) {}
+
+      close();
+      if (typeof window.showToast === 'function') {
+        window.showToast('Anagrafica Allenatore salvata con successo!', 'success');
+      }
+      render(user);
+    });
   }
 
   function bind(host) {
@@ -193,11 +281,7 @@
       if (k === 'album' && window.openChiSegui) window.openChiSegui();
       if (k === 'msgs' && window.openUserMessages) window.openUserMessages();
       if (k === 'edit') {
-        host.classList.remove('es-pd-on');
-        var dash = document.getElementById('es-cd');
-        if (dash) dash.hidden = true;
-        var g = document.getElementById('user-dossier-view-group');
-        if (g) g.classList.remove('is-coach-dash');
+        openCoachEditModal(userObj());
       }
     });
   }

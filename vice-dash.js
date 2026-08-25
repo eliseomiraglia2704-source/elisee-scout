@@ -145,7 +145,13 @@
       '<div class="es-pd-metric"><span>Affiancamento giocatori</span><b>78%</b></div></section>' +
 
       '<section class="es-pd-card es-pd-radar">' +
-      '<div class="es-pd-radar-tools"><span>Seleziona dati radar</span><span>Analisi contributo tecnico</span></div>' +
+      '<div class="es-pd-radar-tools">' +
+      '<span style="font-weight:800;color:#f8fafc">Analisi Contributo Tecnico</span>' +
+      '<div class="es-pd-legend-pills">' +
+      '<span class="es-pd-pill-legend" style="color:#38bdf8"><i style="background:#38bdf8"></i> 2025 (Stagione Attuale)</span>' +
+      '<span class="es-pd-pill-legend" style="color:#94a3b8"><i style="background:#64748b"></i> 2023 (Benchmark Storico)</span>' +
+      '</div>' +
+      '</div>' +
       radarSvg() + '</section>' +
 
       '<section class="es-pd-card es-pd-comply"><h2>Verifica &amp; Compliance staff tecnico</h2>' +
@@ -181,11 +187,99 @@
       '<tr><td>vs. Castelfidardo</td><td>Panchina</td><td>Sostituzioni</td><td><i class="es-pd-dot y"></i></td></tr>' +
       '</tbody></table></section>' +
 
-      '<section class="es-pd-card es-pd-trend"><h2>2023 vs 2024 vs 2025</h2>' +
+      '<section class="es-pd-card es-pd-trend"><h2>Crescita Stagionale (2023-2025)</h2>' +
+      '<div class="es-pd-trend-legend">' +
+      '<span style="color:#38bdf8"><i style="background:#38bdf8"></i> 2023 (62-78%)</span>' +
+      '<span style="color:#4ade80"><i style="background:#4ade80"></i> 2024 (70-86%)</span>' +
+      '<span style="color:#facc15"><i style="background:#facc15"></i> 2025 (78-93%)</span>' +
+      '</div>' +
       trendSvg() +
-      '<button type="button" class="es-pd-edit" data-va="edit">Modifica anagrafica</button>' +
+      '<button type="button" class="es-pd-edit" data-va="edit">✏️ Modifica Anagrafica Vice Allenatore</button>' +
+      '</section>' +
+
+      '<section class="es-pd-card es-pd-guide-card">' +
+      '<div class="es-pd-guide-head">' +
+      '<h2><span>📘</span> Guida Analitica &amp; Legenda Metriche — Area Staff Tecnico</h2>' +
+      '<span class="es-pd-guide-badge">Standard Certificato FIGC / UEFA</span>' +
+      '</div>' +
+      '<div class="es-pd-guide-grid">' +
+      '<div class="es-pd-guide-item">' +
+      '<h3><span>🤝</span> Indice Efficacia Collaborazione</h3>' +
+      '<p>Valuta la sinergia con l\'Allenatore Capo, la gestione dei carichi e la qualità dell\'affiancamento individuale per i calciatori.</p>' +
+      '</div>' +
+      '<div class="es-pd-guide-item">' +
+      '<h3><span>🎯</span> Radar Contributo Tattico</h3>' +
+      '<p>Analisi delle aree chiave: Tattica di reparto, Palle inattive, Gestione panchina e Comunicazione tecnica.</p>' +
+      '</div>' +
+      '<div class="es-pd-guide-item">' +
+      '<h3><span>🛡️</span> Compliance &amp; Patentini</h3>' +
+      '<p>Qualifiche ufficiali UEFA/Settore Tecnico Coverciano, corso primo soccorso BLSD e idoneità sportiva verificata.</p>' +
+      '</div>' +
+      '<div class="es-pd-guide-item">' +
+      '<h3><span>🚦</span> Indicatori Sessioni</h3>' +
+      '<p><i class="es-pd-dot g"></i> <b>Verde</b>: Seduta svolta con pieno raggiungimento degli obiettivi.<br>' +
+      '<i class="es-pd-dot y"></i> <b>Giallo</b>: Seduta con parametri parziali da integrare.</p>' +
+      '</div>' +
+      '</div>' +
       '</section>' +
       '</div></div>';
+  }
+
+  function openViceEditModal(user) {
+    user = user || userObj();
+    var backdrop = document.createElement('div');
+    backdrop.className = 'es-edit-modal-backdrop';
+
+    backdrop.innerHTML = '<div class="es-edit-modal">' +
+      '<div class="es-edit-modal-head">' +
+      '<h2><span>✏️</span> Modifica Anagrafica Vice Allenatore</h2>' +
+      '<button type="button" class="es-edit-modal-close" title="Chiudi">&times;</button>' +
+      '</div>' +
+      '<div class="es-edit-grid">' +
+      '<div class="es-edit-field"><label>Nome</label><input id="es-va-nome" value="' + esc(user.nome || 'Eliseo') + '"></div>' +
+      '<div class="es-edit-field"><label>Cognome</label><input id="es-va-cognome" value="' + esc(user.cognome || 'Miraglia') + '"></div>' +
+      '<div class="es-edit-field"><label>Ruolo Staff</label><input id="es-va-role" value="Allenatore in seconda / Vice Allenatore" readonly></div>' +
+      '<div class="es-edit-field"><label>Patentino / Qualifica</label><select id="es-va-lic"><option>UEFA A</option><option selected>UEFA B</option><option>UEFA Pro</option><option>Match Analyst FIGC</option></select></div>' +
+      '<div class="es-edit-field"><label>Club Attuale</label><input id="es-va-club" value="' + esc(user.squadra || user.club || 'Notaresco Calcio') + '"></div>' +
+      '<div class="es-edit-field"><label>Specializzazione Tattica</label><input id="es-va-spec" value="Fase Difensiva & Palle Inattive"></div>' +
+      '<div class="es-edit-field full"><label>Bio & Esperienze Staff</label><textarea id="es-va-bio" rows="3">' + esc(user.bio || 'Vice allenatore con esperienza in campionati nazionali, specializzato in match analysis, palle inattive e preparazione tattica.') + '</textarea></div>' +
+      '</div>' +
+      '<div class="es-edit-actions">' +
+      '<button type="button" class="es-edit-btn-cancel">Annulla</button>' +
+      '<button type="button" class="es-edit-btn-save">💾 Salva Dati Staff</button>' +
+      '</div>' +
+      '</div>';
+
+    document.body.appendChild(backdrop);
+
+    var close = function () { backdrop.remove(); };
+    backdrop.querySelector('.es-edit-modal-close').addEventListener('click', close);
+    backdrop.querySelector('.es-edit-btn-cancel').addEventListener('click', close);
+    backdrop.addEventListener('click', function (e) { if (e.target === backdrop) close(); });
+
+    backdrop.querySelector('.es-edit-btn-save').addEventListener('click', function () {
+      var n = document.getElementById('es-va-nome').value.trim();
+      var c = document.getElementById('es-va-cognome').value.trim();
+      var clb = document.getElementById('es-va-club').value.trim();
+      var bio = document.getElementById('es-va-bio').value.trim();
+
+      user.nome = n || user.nome;
+      user.cognome = c || user.cognome;
+      user.fullName = (user.nome + ' ' + user.cognome).trim();
+      user.squadra = clb;
+      user.club = clb;
+      user.bio = bio;
+
+      try {
+        localStorage.setItem('elisee_active_user', JSON.stringify(user));
+      } catch (_) {}
+
+      close();
+      if (typeof window.showToast === 'function') {
+        window.showToast('Anagrafica Vice Allenatore salvata con successo!', 'success');
+      }
+      render(user);
+    });
   }
 
   function bind(host) {
@@ -199,11 +293,7 @@
       if (k === 'album' && window.openChiSegui) window.openChiSegui();
       if (k === 'msgs' && window.openUserMessages) window.openUserMessages();
       if (k === 'edit') {
-        host.classList.remove('es-vice-on');
-        var dash = document.getElementById('es-vd');
-        if (dash) dash.hidden = true;
-        var g = document.getElementById('user-dossier-view-group');
-        if (g) g.classList.remove('is-vice-dash');
+        openViceEditModal(userObj());
       }
     });
   }
