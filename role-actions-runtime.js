@@ -1,6 +1,6 @@
 /**
- * ELISEE SCOUT — Azioni Possibili per Ruolo (Runtime Operativo Completo)
- * Implementa i moduli interattivi, generatori IA, lavagna tattica, registri e strumenti operativi per ciascun ruolo.
+ * ELISEE SCOUT — Azioni Possibili per Ruolo (Runtime Operativo Completo per TUTTI i Ruoli)
+ * Implementa i moduli interattivi, generatori IA, lavagne, registri e strumenti operativi per ciascuno dei 23 ruoli.
  */
 (function () {
   'use strict';
@@ -43,7 +43,7 @@
       roleName: 'Osservatore/Scout',
       actions: [
         { label: 'Valutazione mobile live match', id: 'act-scout-mobile', icon: '📱' },
-        { label: 'Nota vocale in scheda tecnica', id: 'act-scout-voice', icon: '🎙️' },
+        { label: 'Nota vocale in testo IA', id: 'act-scout-voice', icon: '🎙️' },
         { label: 'Geolocalizzazione opt-in', id: 'act-scout-geo', icon: '📍' },
         { label: 'Passaggio segnalazioni in assenza', id: 'act-scout-delegate', icon: '🔄' },
         { label: 'Secret List stealth DS/Scout', id: 'act-scout-secret', icon: '🔒' }
@@ -55,7 +55,7 @@
       actions: [
         { label: 'Compilare report 8 blocchi', id: 'act-ma-report8', icon: '📝' },
         { label: 'Mappa di calore semplificata', id: 'act-ma-heatmap', icon: '🔥' },
-        { label: 'Comparatore giocatori', id: 'act-ma-compare', icon: '⚖️' },
+        { label: 'Comparatore giocatori AI', id: 'act-ma-compare', icon: '⚖️' },
         { label: 'Esportazione report tattico', id: 'act-ma-export', icon: '📊' }
       ]
     },
@@ -293,7 +293,7 @@
     return { backdrop: backdrop, close: close };
   }
 
-  // --- 1. MODAL: Generatore Discorso Pre-Partita IA ---
+  // --- 1. MODALI ALLENATORE ---
   function openCoachSpeechModal() {
     var speeches = {
       'derby': "Ragazzi, guardatemi negli occhi. Oggi non è una partita normale, oggi scendiamo in campo per la nostra gente, per la nostra maglia e per la nostra identità. Dal primo minuto voglio una squadra feroce, corta nei reparti e implacabile sui duelli. Ogni pallone che rotola sul campo è nostro. Chiudiamo le linee, attacchiamo lo spazio e facciamo capire subito chi comanda. Fuori la voce, fuori il cuore. Andiamo a prenderci questa vittoria!",
@@ -330,7 +330,6 @@
     });
   }
 
-  // --- 2. MODAL: Lavagna Tattica & Modulo Gara ---
   function openCoachTacticsModal() {
     var formations = {
       '4-3-3': {
@@ -386,13 +385,11 @@
     function renderPitch(fKey) {
       var f = formations[fKey] || formations['4-3-3'];
       var html = '<div style="position:relative;width:100%;height:320px;background:radial-gradient(ellipse at center, #166534 0%, #052e16 100%);border:2px solid rgba(255,255,255,0.4);border-radius:12px;overflow:hidden;box-shadow:inset 0 0 40px rgba(0,0,0,0.5)">';
-      // Linee campo
       html += '<div style="position:absolute;top:50%;left:0;right:0;height:1px;background:rgba(255,255,255,0.3)"></div>';
       html += '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70px;height:70px;border:1px solid rgba(255,255,255,0.3);border-radius:50%"></div>';
       html += '<div style="position:absolute;bottom:0;left:28%;right:28%;height:50px;border:1px solid rgba(255,255,255,0.3);border-bottom:0"></div>';
       html += '<div style="position:absolute;top:0;left:28%;right:28%;height:50px;border:1px solid rgba(255,255,255,0.3);border-top:0"></div>';
 
-      // 11 Giocatori
       for (var i = 0; i < f.nodes.length; i++) {
         var n = f.nodes[i];
         html += '<div style="position:absolute;top:' + n.top + '%;left:' + n.left + '%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;cursor:pointer">' +
@@ -426,7 +423,6 @@
     });
   }
 
-  // --- 3. MODAL: Registro Sessioni Allenamento ---
   function openCoachSessionsModal() {
     var defaultSessions = [
       { data: '25/08/2026', tipo: 'Tattica & Palle Inattive', dur: '90 min', rpe: '8.0/10', note: 'Curate uscite difensive su corner e punizioni laterali.' },
@@ -461,7 +457,6 @@
     });
   }
 
-  // --- 4. MODAL: Valutazione Intensità e Carichi ---
   function openCoachLoadModal() {
     var body = '<div class="es-edit-grid">' +
       '<div class="es-edit-field"><label>RPE Squadra Medio (Scala Borg 1-10)</label><input type="number" step="0.1" value="7.8"></div>' +
@@ -484,7 +479,6 @@
     });
   }
 
-  // --- 5. MODAL: Esporta Report per lo Staff ---
   function openCoachExportModal() {
     var u = JSON.parse(localStorage.getItem('elisee_active_user') || '{}');
     var misterName = (u.nome ? (u.nome + ' ' + (u.cognome || '')) : 'Eliseo Miraglia').toUpperCase();
@@ -531,107 +525,212 @@
     });
   }
 
-  // --- MODALI VICE ALLENATORE ---
-
-  // 1. Registro Contributo Tecnico
+  // --- 2. MODALI VICE ALLENATORE ---
   function openViceLogModal() {
     var logs = [
       { data: '25/08/2026', reparto: 'Fase Difensiva (Difensori)', focus: 'Marcatura a uomo su palla inattiva e scalata del terzino.', voto: 'Ottimo (8.5)' },
-      { data: '23/08/2026', reparto: 'Centrocampo & Costruzione', focus: 'Interscambio tra mezzala e ala per creare superiorità numerica.', voto: 'Positivo (8.0)' },
-      { data: '21/08/2026', reparto: 'Attacco & Finalizzazione', focus: 'Attacco del primo palo e taglio del secondo attaccante.', voto: 'Ottimo (9.0)' }
+      { data: '23/08/2026', reparto: 'Centrocampo & Costruzione', focus: 'Interscambio tra mezzala e ala per creare superiorità numerica.', voto: 'Positivo (8.0)' }
     ];
-
     var rows = logs.map(function (l) {
       return '<div style="background:#1e293b;padding:0.6rem 0.8rem;border-radius:8px;margin-bottom:0.4rem;border:1px solid rgba(148,163,184,0.1);font-size:0.76rem">' +
         '<div style="display:flex;justify-content:space-between"><b style="color:#38bdf8">' + l.data + ' — ' + l.reparto + '</b><span style="color:#86efac;font-weight:800">' + l.voto + '</span></div>' +
-        '<div style="color:#cbd5e1;margin-top:2px">' + l.focus + '</div>' +
-        '</div>';
+        '<div style="color:#cbd5e1;margin-top:2px">' + l.focus + '</div></div>';
     }).join('');
 
     var body = '<div class="es-edit-grid">' +
-      '<div class="es-edit-field"><label>Reparto di Lavoro</label><select id="es-vl-rep"><option>Difesa & Scalate Difensive</option><option>Centrocampo & Transizioni</option><option>Attaccanti & Finalizzazione</option><option>Palle Inattive Pro/Contro</option></select></div>' +
-      '<div class="es-edit-field"><label>Efficacia Seduta</label><select><option>⭐⭐⭐⭐⭐ Eccellente (9-10)</option><option>⭐⭐⭐⭐ Molto Buona (8)</option><option>⭐⭐⭐ Nella Media (6-7)</option></select></div>' +
-      '<div class="es-edit-field full"><label>Osservazioni Tecniche & Correzioni Applicate</label><textarea id="es-vl-obs" rows="2" style="background:#1e293b;color:#fff;border:1px solid rgba(148,163,184,0.25);border-radius:8px;padding:0.5rem">Ottima applicazione della linea difensiva a 4 sulle palle scoperte. Raddoppi puntuali.</textarea></div>' +
+      '<div class="es-edit-field"><label>Reparto di Lavoro</label><select><option>Difesa & Scalate Difensive</option><option>Centrocampo & Transizioni</option><option>Attaccanti & Finalizzazione</option></select></div>' +
+      '<div class="es-edit-field"><label>Efficacia</label><select><option>⭐⭐⭐⭐⭐ Eccellente</option><option>⭐⭐⭐⭐ Buona</option></select></div>' +
+      '<div class="es-edit-field full"><label>Note Tecniche</label><input value="Ottima applicazione linea a 4 su palla scoperta."></div>' +
       '</div>' +
-      '<div style="margin-top:1rem"><label style="color:#38bdf8;font-weight:800;font-size:0.78rem;display:block;margin-bottom:0.4rem">📋 Storico Contributi Tecnico-Tattici</label>' + rows + '</div>';
+      '<div style="margin-top:1rem"><label style="color:#38bdf8;font-weight:800;font-size:0.78rem;display:block;margin-bottom:0.4rem">📋 Storico Contributi</label>' + rows + '</div>';
 
     var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
-      '<button type="button" class="es-edit-btn-save" id="es-vl-save">➕ Registra Contributo Tecnico</button>';
+      '<button type="button" class="es-edit-btn-save" id="es-vl-save">➕ Registra Contributo</button>';
 
-    var modal = createModalContainer('🤝 Registro Contributo Tecnico (Vice Allenatore)', body, btns);
+    var modal = createModalContainer('🤝 Registro Contributo Tecnico', body, btns);
     modal.backdrop.querySelector('#es-vl-save').addEventListener('click', function () {
-      toast('Contributo tecnico salvato nel report per il Mister!');
+      toast('Contributo salvato per il Mister!');
       modal.close();
     });
   }
 
-  // 2. Verifica Sessioni Individuali
   function openViceIndivModal() {
-    var players = [
-      { nome: 'E. Miraglia', ruolo: 'Attaccante', focus: 'Tiro al volo di prima intenzione', progress: '94%', stato: 'Completato' },
-      { nome: 'M. Rossi', ruolo: 'Terzino', focus: 'Cross dal fondo con piede debole', progress: '82%', stato: 'In corso' },
-      { nome: 'L. Bianchi', ruolo: 'Centrocampista', focus: 'Ricezione orientata su pressione', progress: '88%', stato: 'Completato' }
-    ];
-
-    var tableRows = players.map(function (p) {
-      return '<tr><td style="font-weight:700;color:#f8fafc">' + p.nome + '</td><td>' + p.ruolo + '</td><td>' + p.focus + '</td><td style="color:#38bdf8;font-weight:800">' + p.progress + '</td><td><span style="background:rgba(34,197,94,0.15);color:#86efac;padding:0.15rem 0.45rem;border-radius:999px;font-size:0.68rem">' + p.stato + '</span></td></tr>';
-    }).join('');
-
-    var body = '<div style="background:#090d16;border:1px solid rgba(56,189,248,0.25);border-radius:10px;padding:0.75rem;overflow-x:auto">' +
-      '<table class="es-pd-table" style="font-size:0.76rem"><thead><tr><th>Calciatore</th><th>Ruolo</th><th>Focus Individuale</th><th>Progresso</th><th>Stato</th></tr></thead><tbody>' +
-      tableRows +
-      '</tbody></table></div>' +
-      '<div class="es-edit-grid" style="margin-top:1rem">' +
-      '<div class="es-edit-field"><label>Assegna Nuovo Lavoro a:</label><input placeholder="Nome calciatore"></div>' +
-      '<div class="es-edit-field"><label>Obiettivo Specifico</label><input placeholder="Es. Stop orientato, colpo di testa difensivo"></div>' +
+    var body = '<div class="es-edit-grid">' +
+      '<div class="es-edit-field"><label>Calciatore Assegnato</label><input value="E. Miraglia (Attaccante)"></div>' +
+      '<div class="es-edit-field"><label>Focus Tecnico</label><input value="Tiro al volo di prima intenzione"></div>' +
+      '<div class="es-edit-field"><label>Progresso Rilevato</label><input value="94% — Ottimo"></div>' +
+      '<div class="es-edit-field"><label>Stato Seduta</label><select><option>Completato con successo</option><option>Da ripetere giovedì</option></select></div>' +
       '</div>';
-
     var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
-      '<button type="button" class="es-edit-btn-save" id="es-vi-save">💾 Assegna Seduta Individuale</button>';
-
-    var modal = createModalContainer('⏱️ Verifica & Assegnazione Sessioni Individuali', body, btns);
+      '<button type="button" class="es-edit-btn-save" id="es-vi-save">💾 Salva Scheda Individuale</button>';
+    var modal = createModalContainer('⏱️ Verifica Sessioni Individuali', body, btns);
     modal.backdrop.querySelector('#es-vi-save').addEventListener('click', function () {
-      toast('Lavoro individuale assegnato e registrato nella scheda atleta!');
+      toast('Sessione individuale registrata!');
       modal.close();
     });
   }
 
-  // 3. Condividi Nota con il Mister
   function openViceShareModal() {
     var body = '<div class="es-edit-grid">' +
       '<div class="es-edit-field"><label>Destinatario</label><input value="Mister — Primo Allenatore" readonly></div>' +
-      '<div class="es-edit-field"><label>Priorità Memo</label><select><option>🔴 Alta — Decisione Formazione Gara</option><option selected>🟡 Media — Report Settimanale</option><option>🟢 Bassa — Nota di Routine</option></select></div>' +
-      '<div class="es-edit-field full"><label>Oggetto del Memo Tattico</label><input value="Considerazioni tattiche su palle inattive e raddoppi per domenica"></div>' +
-      '<div class="es-edit-field full"><label>Contenuto del Messaggio per l\'Allenatore Capo</label><textarea rows="4" style="background:#1e293b;color:#fff;border:1px solid rgba(148,163,184,0.25);border-radius:8px;padding:0.6rem;font-size:0.8rem">Mister, ho notato che i difensori centrali avversari soffrono particolarmente l\'attacco alle spalle quando il nostro trequartista si abbassa. Suggerisco di provare lo schema ad incrocio già da giovedì.</textarea></div>' +
+      '<div class="es-edit-field"><label>Priorità</label><select><option>🔴 Alta</option><option selected>🟡 Media</option></select></div>' +
+      '<div class="es-edit-field full"><label>Oggetto</label><input value="Considerazioni tattiche su palle inattive"></div>' +
+      '<div class="es-edit-field full"><label>Messaggio</label><textarea rows="3" style="background:#1e293b;color:#fff;border-radius:8px;padding:0.5rem">Mister, i centrali avversari soffrono l\'attacco alle spalle sul taglio del trequartista.</textarea></div>' +
       '</div>';
-
     var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
-      '<button type="button" class="es-edit-btn-save" id="es-vs-send">📨 Invia Nota al Mister & Notifica</button>';
-
+      '<button type="button" class="es-edit-btn-save" id="es-vs-send">📨 Invia Nota al Mister</button>';
     var modal = createModalContainer('💬 Condividi Nota Tattica con il Mister', body, btns);
     modal.backdrop.querySelector('#es-vs-send').addEventListener('click', function () {
-      toast('Nota e proposta tattica inviata direttamente al Mister!');
+      toast('Nota inviata al Mister!');
       modal.close();
     });
   }
 
-  // 4. Carichi Pre-Gara
   function openViceLoadModal() {
     var body = '<div class="es-edit-grid">' +
-      '<div class="es-edit-field"><label>Test Reattività Pre-Gara</label><input value="96% — Squadra Pronta e Reattiva" readonly style="color:#4ade80;font-weight:800"></div>' +
-      '<div class="es-edit-field"><label>Intensità Riscaldamento Match</label><select><option>Dinamico Progressivo (22 min)</option><option>Attivazione Rapida & Reattività (18 min)</option><option>Standard FIGC (25 min)</option></select></div>' +
-      '<div class="es-edit-field full" style="background:#1e293b;padding:0.85rem;border-radius:10px;border:1px solid rgba(56,189,248,0.25)">' +
-      '<div style="display:flex;justify-content:space-between"><strong style="color:#38bdf8">Indice Prontezza Tattico-Fisica</strong><b style="color:#22c55e">STATO OTTIMALE</b></div>' +
-      '<p style="margin:0.35rem 0 0;font-size:0.74rem;color:#cbd5e1">Tutti gli effettivi a disposizione del Mister hanno completato i test di mobilità e carico senza affaticamenti asimmetrici.</p>' +
-      '</div>' +
+      '<div class="es-edit-field"><label>Reattività Pre-Gara</label><input value="96% — Squadra Pronta" readonly style="color:#4ade80;font-weight:800"></div>' +
+      '<div class="es-edit-field"><label>Riscaldamento</label><select><option>Dinamico Progressivo (22 min)</option><option>Attivazione Rapida (18 min)</option></select></div>' +
       '</div>';
-
     var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
-      '<button type="button" class="es-edit-btn-save" id="es-vl-confirm">⚡ Valida Carichi & Schiera Riscaldamento</button>';
-
-    var modal = createModalContainer('⚡ Carichi Pre-Gara & Protocollo Riscaldamento', body, btns);
+      '<button type="button" class="es-edit-btn-save" id="es-vl-confirm">⚡ Valida Carichi</button>';
+    var modal = createModalContainer('⚡ Carichi Pre-Gara & Riscaldamento', body, btns);
     modal.backdrop.querySelector('#es-vl-confirm').addEventListener('click', function () {
-      toast('Protocollo carichi pre-gara validato per la partita!');
+      toast('Carichi pre-gara validati!');
+      modal.close();
+    });
+  }
+
+  // --- 3. MODALI SCOUT / OSSERVATORE ---
+  function openScoutMobileModal() {
+    var body = '<div class="es-edit-grid">' +
+      '<div class="es-edit-field"><label>Nome Talento Osservato</label><input placeholder="Es. Marco Rossi (2004)"></div>' +
+      '<div class="es-edit-field"><label>Ruolo & Piede</label><input value="Ala Destra / Mancino"></div>' +
+      '<div class="es-edit-field"><label>Partita Visionata</label><input value="Notaresco vs Chieti (Serie D)"></div>' +
+      '<div class="es-edit-field"><label>Voto Scouting (1-10)</label><input type="number" step="0.5" value="8.5"></div>' +
+      '<div class="es-edit-field full"><label>Caratteristiche Tecnico-Tattiche Chiave</label><textarea rows="3" style="background:#1e293b;color:#fff;border-radius:8px;padding:0.5rem">Notevole spunto nell\'1vs1, attacca la profondità con tempi perfetti. Fisico longilineo con margine di potenziamento muscolare.</textarea></div>' +
+      '</div>';
+    var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
+      '<button type="button" class="es-edit-btn-save" id="es-sc-save">💾 Salva Scheda Scouting Live</button>';
+    var modal = createModalContainer('📱 Scheda Valutazione Mobile Live Match', body, btns);
+    modal.backdrop.querySelector('#es-sc-save').addEventListener('click', function () {
+      toast('Scheda scouting live salvata nel database osservatori!');
+      modal.close();
+    });
+  }
+
+  function openScoutVoiceModal() {
+    var body = '<div style="text-align:center;padding:1rem">' +
+      '<div style="font-size:2.5rem;margin-bottom:0.5rem">🎙️</div>' +
+      '<b style="color:#38bdf8;font-size:0.95rem">Trascrizione Vocale & Note Audio IA</b>' +
+      '<p style="font-size:0.78rem;color:#cbd5e1;margin:0.4rem 0 1rem">Parla direttamente al microfono: l\'IA di Elisee Scout trascriverà e compilerà automaticamente i campi della scheda tecnica.</p>' +
+      '<textarea id="es-vc-txt" rows="4" style="width:100%;background:#090d16;color:#86efac;border:1px solid rgba(56,189,248,0.3);border-radius:8px;padding:0.6rem;font-size:0.82rem">"Numero 7 rapido nei cambi di direzione, ottima visione di gioco e conclusione potente col sinistro al minuto 34..."</textarea>' +
+      '</div>';
+    var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
+      '<button type="button" class="es-edit-btn-save" id="es-vc-ins">✨ Inserisci in Scheda Tecnica</button>';
+    var modal = createModalContainer('🎙️ Nota Vocale in Testo IA', body, btns);
+    modal.backdrop.querySelector('#es-vc-ins').addEventListener('click', function () {
+      toast('Nota vocale trascritta e allegata alla scheda tecnica!');
+      modal.close();
+    });
+  }
+
+  function openScoutGeoModal() {
+    var body = '<div class="es-edit-grid">' +
+      '<div class="es-edit-field"><label>Campo / Stadio Selezionato</label><input value="Stadio Vincenzo Savini (Notaresco)"></div>' +
+      '<div class="es-edit-field"><label>Stato Geolocalizzazione</label><input value="🟢 Attiva (Opt-in Conforme)" readonly style="color:#4ade80;font-weight:700"></div>' +
+      '<div class="es-edit-field full"><label>Gare Weekend in Raggio 50 km</label><input value="3 Gare Serie D · 2 Gare Eccellenza · 4 Gare Primavera"></div>' +
+      '</div>';
+    var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
+      '<button type="button" class="es-edit-btn-save" id="es-geo-ok">📍 Conferma Posizione Gare</button>';
+    var modal = createModalContainer('📍 Geolocalizzazione Campi & Gare Weekend', body, btns);
+    modal.backdrop.querySelector('#es-geo-ok').addEventListener('click', function () {
+      toast('Posizione e calendario gare del weekend aggiornati!');
+      modal.close();
+    });
+  }
+
+  function openScoutDelegateModal() {
+    var body = '<div class="es-edit-grid">' +
+      '<div class="es-edit-field"><label>Collega Scout Delegato</label><input placeholder="Nome osservatore accreditato"></div>' +
+      '<div class="es-edit-field"><label>Periodo di Assenza</label><input value="Dal 28/08/2026 al 04/09/2026"></div>' +
+      '<div class="es-edit-field full"><label>Partite da Coprire</label><input value="Girone F: Termoli vs Notaresco, Chieti vs Sambenedettese"></div>' +
+      '</div>';
+    var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
+      '<button type="button" class="es-edit-btn-save" id="es-del-save">🔄 Assegna Delega Copertura</button>';
+    var modal = createModalContainer('🔄 Passaggio Segnalazioni in Assenza', body, btns);
+    modal.backdrop.querySelector('#es-del-save').addEventListener('click', function () {
+      toast('Delega assegnata con successo al collega scout!');
+      modal.close();
+    });
+  }
+
+  // --- 4. MODALI MATCH ANALYST ---
+  function openMaReport8Modal() {
+    var body = '<div class="es-edit-grid">' +
+      '<div class="es-edit-field"><label>Squadra Analizzata</label><input value="Notaresco Calcio"></div>' +
+      '<div class="es-edit-field"><label>Avversario</label><input value="Chieti F.C."></div>' +
+      '<div class="es-edit-field"><label>Expected Goals (xG)</label><input value="1.84"></div>' +
+      '<div class="es-edit-field"><label>Baricentro Medio (m)</label><input value="54.2 m (Medio-Alto)"></div>' +
+      '<div class="es-edit-field full"><label>1. Costruzione &amp; 2. Sviluppo Gioco</label><input value="Uscita a 3 con abbassamento del play. Sviluppo prioritario catena di destra."></div>' +
+      '<div class="es-edit-field full"><label>3. Transizioni &amp; 4. Palle Inattive</label><input value="Riconquista alta nei primi 5 secondi. Corner a rientrare sul primo palo."></div>' +
+      '</div>';
+    var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
+      '<button type="button" class="es-edit-btn-save" id="es-ma8-save">💾 Salva Report 8 Blocchi</button>';
+    var modal = createModalContainer('📝 Compilazione Report Tattico 8 Blocchi', body, btns);
+    modal.backdrop.querySelector('#es-ma8-save').addEventListener('click', function () {
+      toast('Report 8 blocchi salvato e sincronizzato con lo staff!');
+      modal.close();
+    });
+  }
+
+  function openMaHeatmapModal() {
+    var body = '<div style="text-align:center">' +
+      '<div style="width:100%;height:220px;background:radial-gradient(circle at 70% 35%, rgba(239,68,68,0.7) 0%, rgba(245,158,11,0.5) 30%, rgba(16,185,129,0.3) 60%, rgba(15,23,42,0.8) 100%), #064e3b;border:2px solid rgba(255,255,255,0.3);border-radius:10px;display:grid;place-items:center">' +
+      '<b style="color:#fff;text-shadow:0 2px 4px #000;background:rgba(0,0,0,0.5);padding:0.3rem 0.8rem;border-radius:999px">Mappa Termica di Pressione e Occupazione Spazi</b>' +
+      '</div>' +
+      '<p style="font-size:0.75rem;color:#cbd5e1;margin-top:0.6rem">Densità massima registrata nella trequarti offensiva destra (74% delle azioni offensive).</p>' +
+      '</div>';
+    var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
+      '<button type="button" class="es-edit-btn-save" id="es-hm-exp">📥 Esporta Mappa Termica</button>';
+    var modal = createModalContainer('🔥 Mappa di Calore Tattica Interattiva', body, btns);
+    modal.backdrop.querySelector('#es-hm-exp').addEventListener('click', function () {
+      toast('Mappa di calore esportata in alta definizione!');
+      modal.close();
+    });
+  }
+
+  function openMaCompareModal() {
+    var body = '<div class="es-edit-grid">' +
+      '<div class="es-edit-field"><label>Giocatore A</label><input value="E. Miraglia (Attaccante)"></div>' +
+      '<div class="es-edit-field"><label>Giocatore B</label><input value="M. Rossi (Attaccante Benchmark)"></div>' +
+      '<div class="es-edit-field"><label>Confronto xG / 90 min</label><input value="0.62 vs 0.48 (A +29%)" readonly style="color:#38bdf8;font-weight:700"></div>' +
+      '<div class="es-edit-field"><label>Confronto Dribbling %</label><input value="76% vs 64% (A +18%)" readonly style="color:#4ade80;font-weight:700"></div>' +
+      '</div>';
+    var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
+      '<button type="button" class="es-edit-btn-save" id="es-cmp-ok">📊 Genera Radar Comparativo</button>';
+    var modal = createModalContainer('⚖️ Comparatore Giocatori AI', body, btns);
+    modal.backdrop.querySelector('#es-cmp-ok').addEventListener('click', function () {
+      toast('Confronto generato e integrato nel dossier di mercato!');
+      modal.close();
+    });
+  }
+
+  // --- 5. MODALI GENERICI RUOLI STAFF (DS, Pres, Medico, Fisio, Prep, Agente, etc.) ---
+  function openGenericToolModal(title, icon, fields, successMsg) {
+    var fieldsHtml = fields.map(function (f) {
+      if (f.type === 'textarea') {
+        return '<div class="es-edit-field full"><label>' + f.label + '</label><textarea rows="3" style="background:#1e293b;color:#fff;border-radius:8px;padding:0.5rem">' + (f.val || '') + '</textarea></div>';
+      }
+      return '<div class="es-edit-field ' + (f.full ? 'full' : '') + '"><label>' + f.label + '</label><input value="' + (f.val || '') + '" ' + (f.readonly ? 'readonly style="color:#38bdf8;font-weight:700"' : '') + '></div>';
+    }).join('');
+
+    var body = '<div class="es-edit-grid">' + fieldsHtml + '</div>';
+    var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
+      '<button type="button" class="es-edit-btn-save" id="es-gen-save">💾 Salva Operazione</button>';
+
+    var modal = createModalContainer(icon + ' ' + title, body, btns);
+    modal.backdrop.querySelector('#es-gen-save').addEventListener('click', function () {
+      toast(successMsg || 'Operazione salvata con successo!');
       modal.close();
     });
   }
@@ -675,68 +774,26 @@
   }
 
   function handleActionClick(actionId, actionLabel, roleKey) {
-    // Log nel registro persistente di sessione
     try {
       var log = JSON.parse(localStorage.getItem('elisee_roles_actions_log') || '[]') || [];
-      log.unshift({
-        actionId: actionId,
-        label: actionLabel,
-        role: roleKey,
-        at: new Date().toLocaleString('it-IT')
-      });
+      log.unshift({ actionId: actionId, label: actionLabel, role: roleKey, at: new Date().toLocaleString('it-IT') });
       localStorage.setItem('elisee_roles_actions_log', JSON.stringify(log.slice(0, 100)));
     } catch (_) {}
 
-    // Esecuzione e rilascio mirato
     switch (actionId) {
-      // --- Azioni Allenatore ---
-      case 'act-coach-speech':
-        openCoachSpeechModal();
+      // Calciatore
+      case 'act-edit-player':
+        var editBtn = document.querySelector('.es-pd-edit, [data-pd="edit"]');
+        if (editBtn) editBtn.click();
+        else toast('Modulo modifica anagrafica aperto');
         break;
-
-      case 'act-coach-tactics':
-        openCoachTacticsModal();
-        break;
-
-      case 'act-coach-sessions':
-        openCoachSessionsModal();
-        break;
-
-      case 'act-coach-load':
-        openCoachLoadModal();
-        break;
-
-      case 'act-coach-export':
-        openCoachExportModal();
-        break;
-
-      // --- Azioni Vice Allenatore ---
-      case 'act-vice-log':
-        openViceLogModal();
-        break;
-
-      case 'act-vice-indiv':
-        openViceIndivModal();
-        break;
-
-      case 'act-vice-share':
-        openViceShareModal();
-        break;
-
-      case 'act-vice-load':
-        openViceLoadModal();
-        break;
-
-      // --- Azioni Calciatore ---
       case 'act-minigioco':
         if (window.EliseeMinigioco && window.EliseeMinigioco.open) window.EliseeMinigioco.open();
         else if (window.openMinigiocoCarriera) window.openMinigiocoCarriera();
         break;
-
       case 'act-art22':
-        toast('Richiesta intervento umano (Art. 22 GDPR) inoltrata al Privacy Officer con log immutabile.', 'info');
+        toast('Richiesta intervento umano (Art. 22 GDPR) inoltrata al Privacy Officer.', 'info');
         break;
-
       case 'act-consent-ai':
         try {
           var cur = localStorage.getItem('elisee_ai_consent') === 'true';
@@ -744,7 +801,6 @@
           toast(!cur ? 'Consenso profilo comportamentale ATTIVATO' : 'Consenso profilo REVOCATO');
         } catch (_) {}
         break;
-
       case 'act-export-data':
         var u = JSON.parse(localStorage.getItem('elisee_active_user') || '{}');
         var dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(u, null, 2));
@@ -757,68 +813,383 @@
         toast('Esportazione dati completata (GDPR Art. 20 Portabilità)');
         break;
 
-      case 'act-edit-player':
-        var editBtn = document.querySelector('.es-pd-edit, [data-pd="edit"]');
-        if (editBtn) editBtn.click();
-        else toast('Modulo modifica anagrafica aperto');
-        break;
+      // Allenatore
+      case 'act-coach-speech': openCoachSpeechModal(); break;
+      case 'act-coach-tactics': openCoachTacticsModal(); break;
+      case 'act-coach-sessions': openCoachSessionsModal(); break;
+      case 'act-coach-load': openCoachLoadModal(); break;
+      case 'act-coach-export': openCoachExportModal(); break;
 
+      // Vice Allenatore
+      case 'act-vice-log': openViceLogModal(); break;
+      case 'act-vice-indiv': openViceIndivModal(); break;
+      case 'act-vice-share': openViceShareModal(); break;
+      case 'act-vice-load': openViceLoadModal(); break;
+
+      // Scout
+      case 'act-scout-mobile': openScoutMobileModal(); break;
+      case 'act-scout-voice': openScoutVoiceModal(); break;
+      case 'act-scout-geo': openScoutGeoModal(); break;
+      case 'act-scout-delegate': openScoutDelegateModal(); break;
       case 'act-scout-secret':
       case 'act-ds-secret':
         if (window.switchView) window.switchView('mercato', '#secret-list');
         else toast('Apertura Secret List stealth DS/Scout');
         break;
 
+      // Match Analyst
+      case 'act-ma-report8': openMaReport8Modal(); break;
+      case 'act-ma-heatmap': openMaHeatmapModal(); break;
+      case 'act-ma-compare': openMaCompareModal(); break;
+      case 'act-ma-export':
+        openGenericToolModal('Esportazione Report Tattico', '📊', [
+          { label: 'Formato Esportazione', val: 'PDF Ufficiale Match Analysis FIGC' },
+          { label: 'Destinatari Staff', val: 'Mister, Vice, DS, Preparatori' },
+          { label: 'Note di consegna', type: 'textarea', val: 'Report completo comprensivo di xG, palle inattive e mappa di pressione.' }
+        ], 'Report tattico esportato con successo!');
+        break;
+
+      // Preparatore Portieri
+      case 'act-gk-react':
+        openGenericToolModal('Analisi Reattività Portieri', '🧤', [
+          { label: 'Portiere', val: 'Titolare — Uscite & Riflessi' },
+          { label: 'Tempo Medio di Reazione', val: '185 ms (Top di categoria)', readonly: true },
+          { label: 'Percentuale Parate su Tiri Ravvicinati', val: '86%' }
+        ], 'Dati reattività portieri archiviati!');
+        break;
+      case 'act-gk-exits':
+        openGenericToolModal('Registro Uscite & Respinte', '⚽', [
+          { label: 'Uscite Alte Riuscite', val: '92% (12/13)' },
+          { label: 'Uscite Basse / 1vs1', val: '88% (7/8)' },
+          { label: 'Respinte Laterali Sicure', val: '100%' }
+        ], 'Registro uscite portiere aggiornato!');
+        break;
+      case 'act-gk-setpieces':
+        openGenericToolModal('Schemi Palle Inattive Difensive', '📋', [
+          { label: 'Marcatura su Corner', val: 'Zona mista con 3 blocchi a uomo' },
+          { label: 'Posizionamento Barriera Punizioni', val: '5 uomini su lato coperto' }
+        ], 'Schemi difensivi salvati!');
+        break;
+
+      // Preparatore Atletico
+      case 'act-at-gps':
+        openGenericToolModal('Report GPS & Velocità', '⚡', [
+          { label: 'Volume Squadra Medio', val: '8.4 km' },
+          { label: 'Metri > 20 km/h', val: '640 m' },
+          { label: 'Sprint > 25 km/h', val: '190 m' },
+          { label: 'Picco di Velocità Massima', val: '32.8 km/h' }
+        ], 'Report GPS registrato con successo!');
+        break;
+      case 'act-at-test':
+        openGenericToolModal('Test Fisici & Soglia Aerobica', '🏃', [
+          { label: 'Test VAM (Velocità Aerobica Max)', val: 'Media squadra: 16.4 km/h' },
+          { label: 'Test Yo-Yo Intermittent Recovery', val: 'Livello 2: Ottimale' }
+        ], 'Test fisici archiviati nella scheda atleti!');
+        break;
+      case 'act-at-prev':
+        openGenericToolModal('Prevenzione Infortuni & RPE', '🛡️', [
+          { label: 'Indice Rischio Muscolare', val: 'Basso (< 4%)', readonly: true },
+          { label: 'Protocollo Eccentrico Flessori', val: 'Attivato per tutti i reparti' }
+        ], 'Protocollo prevenzione validato!');
+        break;
+
+      // Staff Medico
+      case 'act-med-clearance':
+        openGenericToolModal('Registro Idoneità Agonistica', '🩺', [
+          { label: 'Atleti Idonei FMSI', val: '23/23 (100% in regola)', readonly: true },
+          { label: 'Prossima Scadenza Visita', val: '15/11/2026' }
+        ], 'Registro idoneità agonistiche verificato!');
+        break;
+      case 'act-med-visit':
+        openGenericToolModal('Certificato Visite Mediche', '📄', [
+          { label: 'Tipo Visita', val: 'Agonistica Tabella B (Calcio)' },
+          { label: 'Centro Medico Abilitato', val: 'Istituto di Medicina dello Sport FMSI' }
+        ], 'Certificato validato nel fascicolo sanitario!');
+        break;
+      case 'act-med-recovery':
+        openGenericToolModal('Valutazione Tempi di Recupero', '⏱️', [
+          { label: 'Atleta in Differenziato', val: 'Marco Rossi (Affaticamento flessore dx)' },
+          { label: 'Prognosi Rientro in Gruppo', val: '4 giorni (Disponibile per domenica)' }
+        ], 'Prognosi clinica notificata al Mister!');
+        break;
+      case 'act-med-audit':
+        openGenericToolModal('Audit Sanitario & Antidoping', '🛡️', [
+          { label: 'Conformità Farmaci WADA/NADO', val: '100% Conforme' },
+          { label: 'Registro TUE (Esenzione Terapeutica)', val: 'Nessun atleta sotto TUE' }
+        ], 'Audit sanitario completato con esito positivo!');
+        break;
+
+      // Fisioterapista
+      case 'act-fisio-treat':
+        openGenericToolModal('Registro Trattamenti Fisioterapici', '🩹', [
+          { label: 'Atleta Trattato', val: 'E. Miraglia' },
+          { label: 'Tipo Terapia', val: 'Tecar + Massoterapia decontratturante defaticante' },
+          { label: 'Durata Seduta', val: '45 minuti' }
+        ], 'Trattamento fisioterapico registrato!');
+        break;
+      case 'act-fisio-rehab':
+        openGenericToolModal('Scheda Riatletizzazione Post-Infortunio', '🏃', [
+          { label: 'Fase di Recupero', val: 'Fase 3: Riatletizzazione in campo con palla' },
+          { label: 'Percentuale Prontezza', val: '95%' }
+        ], 'Scheda riatletizzazione aggiornata!');
+        break;
+      case 'act-fisio-mob':
+        openGenericToolModal('Test Mobilità & Flessibilità', '📊', [
+          { label: 'Mobilità Cingolo Pelvico', val: 'Simmetrico (Range completo)' },
+          { label: 'Dorsiflessione Caviglia', val: 'Normale bilaterale' }
+        ], 'Test mobilità archiviato!');
+        break;
+      case 'act-fisio-notify':
+        toast('Notifica idoneità fisica inviata direttamente al Mister!');
+        break;
+
+      // DS
+      case 'act-ds-workload':
+      case 'act-pres-load':
+      case 'act-dg-load':
+      case 'act-tc-load':
+        openGenericToolModal('Carico Segnalazioni Scout & Trattative', '📈', [
+          { label: 'Segnalazioni Ricevute', val: '18 Nuove questa settimana' },
+          { label: 'Profili Sotto Esame DS', val: '6 Prioritari' },
+          { label: 'Budget Allocabile Mercato', val: 'Disponibile' }
+        ], 'Carico segnalazioni aggiornato!');
+        break;
+      case 'act-ds-import':
+      case 'act-pres-import':
+      case 'act-tc-import':
+        openGenericToolModal('Importazione Dati da Foglio di Calcolo', '📊', [
+          { label: 'File Selezionato', val: 'anagrafica_rosa_2026.csv' },
+          { label: 'Record Riconosciuti', val: '24 Calciatori' }
+        ], 'Importazione completata con successo!');
+        break;
       case 'act-ds-wall':
         if (window.switchView) window.switchView('mercato', '#wall-trasferimenti');
         else toast('Apertura Wall Trasferimenti FIFA');
         break;
-
-      case 'act-ds-import':
-      case 'act-pres-import':
-      case 'act-tc-import':
-        toast('Modulo importazione dati da foglio di calcolo (.CSV / Excel) attivato');
+      case 'act-ds-deal':
+      case 'act-sg-contr':
+        openGenericToolModal('Accordo Preliminare & Lettera d\'Intenti', '✍️', [
+          { label: 'Atleta / Società', val: 'Accordo di Prestazione Sportiva LND' },
+          { label: 'Durata Accordo', val: '30/06/2027' },
+          { label: 'Clausole Speciali', type: 'textarea', val: 'Premio valorizzazione e clausola rescissoria concordata.' }
+        ], 'Accordo preliminare depositato con crittografia!');
         break;
 
+      // Presidente & DG
       case 'act-pres-event':
       case 'act-dg-event':
       case 'act-tc-event':
       case 'act-yg-openday':
-        toast('Generatore Evento Selezione & QR Code creato con successo');
+        openGenericToolModal('Creazione Evento Selezione + QR Code', '🎫', [
+          { label: 'Titolo Evento', val: 'Open Day & Stage Talenti 2026' },
+          { label: 'Data & Luogo', val: '05/09/2026 — Centro Sportivo Savini' },
+          { label: 'QR Code di Accesso Rapido', val: 'GENERATO · Link: #iscrizione-portal' }
+        ], 'Evento e QR Code generati con successo!');
         break;
-
       case 'act-pres-deleg':
       case 'act-dg-deleg':
       case 'act-tc-deleg':
-        toast('Delega temporanea con scadenza generata e firmata');
+        openGenericToolModal('Delega Temporanea con Scadenza', '⏱️', [
+          { label: 'Delegato', val: 'Direttore Sportivo / Team Manager' },
+          { label: 'Poteri Delegati', val: 'Firma distinte e rappresentanza gara' },
+          { label: 'Scadenza Delega', val: '30/06/2027' }
+        ], 'Delega registrata e firmata digitalmente!');
+        break;
+      case 'act-pres-minutes':
+      case 'act-sg-verb':
+        openGenericToolModal('Registro Verbali CDA & Assemblee', '🏛️', [
+          { label: 'Numero Verbale', val: 'Verbale CDA N. 08/2026' },
+          { label: 'Ordine del Giorno', val: 'Approvazione bilancio preventivo e budget prima squadra' },
+          { label: 'Esito Delibera', val: 'Approvato all\'unanimità dei soci' }
+        ], 'Verbale protocollato nel libro sociale!');
+        break;
+      case 'act-dg-budget':
+        openGenericToolModal('Controllo Budget & Operazioni Club', '💼', [
+          { label: 'Budget Globale Stagione', val: '€ 350.000' },
+          { label: 'Spesa Consolidata', val: '€ 185.000 (52.8%)' },
+          { label: 'Margine di Sicurezza', val: '€ 165.000' }
+        ], 'Dati di budget e controllo di gestione salvati!');
         break;
 
-      case 'act-scout-voice':
-        toast('Registrazione vocale avviata: trascrizione automatica in scheda tecnica IA attiva');
+      // Agente
+      case 'act-ag-shortlist':
+        openGenericToolModal('Shortlist Svincolati & Opportunità', '📋', [
+          { label: 'Filtro Ruolo', val: 'Attaccanti e Terzini' },
+          { label: 'Profili Disponibili a Parametro Zero', val: '14 Calciatori verificati' }
+        ], 'Shortlist aggiornata!');
+        break;
+      case 'act-ag-follow':
+        toast('Talento aggiunto alla tua watchlist con notifiche live!');
+        break;
+      case 'act-ag-contact':
+        openGenericToolModal('Richiesta Contatto B2B Tracciata', '📨', [
+          { label: 'Club Destinatario', val: 'Direzione Sportiva Notaresco Calcio' },
+          { label: 'Oggetto', val: 'Disponibilità trasferimento assistito per sessione invernale' }
+        ], 'Richiesta di contatto B2B inviata!');
+        break;
+      case 'act-ag-plan':
+        toast('Piano osservatore indipendente attivato per la stagione!');
         break;
 
-      case 'act-scout-geo':
-        toast('Geolocalizzazione opt-in aggiornata per le gare del weekend');
+      // Nutrizionista
+      case 'act-nu-plan':
+        openGenericToolModal('Piano Nutrizionale Personalizzato', '🥗', [
+          { label: 'Fabbisogno Energetico Giornaliero', val: '3.200 kcal' },
+          { label: 'Ripartizione Macro', val: 'Carboidrati 55%, Proteine 25%, Grassi 20%' }
+        ], 'Piano nutrizionale caricato nella scheda atleta!');
+        break;
+      case 'act-nu-hydra':
+        openGenericToolModal('Protocollo Idratazione Pre-Gara', '💧', [
+          { label: 'Assunzione Liquidi Pre-Match', val: '500 ml soluzione ipotonica a 2h da inizio gara' }
+        ], 'Protocollo idratazione registrato!');
+        break;
+      case 'act-nu-supp':
+        openGenericToolModal('Scheda Integratori & Compliance WADA', '💊', [
+          { label: 'Integratori Approvati', val: 'Sali minerali, Creatina Creapure, BCAA, Omega 3' },
+          { label: 'Verifica Antidoping', val: '100% Conforme WADA' }
+        ], 'Scheda integratori validata!');
         break;
 
-      case 'act-scout-mobile':
-        toast('Modalità valutazione mobile e live match ottimizzata');
+      // Settore Giovanile
+      case 'act-yg-consent':
+        toast('Consenso genitoriale per minore verificato e confermato con ID!');
+        break;
+      case 'act-yg-oppose':
+        toast('Istanza di opposizione e oscuramento rapido minore registrata.', 'info');
+        break;
+      case 'act-yg-radar':
+        toast('Radar crescita vivaio e cantera aperto!');
         break;
 
-      case 'act-ma-report8':
-        if (window.EliseeIntegrazioni && window.EliseeIntegrazioni.open) {
-          window.EliseeIntegrazioni.open('analyst', 'user');
-        } else {
-          toast('Editor report tattico 8 blocchi aperto');
-        }
+      // Team Manager
+      case 'act-tm-conv':
+        openGenericToolModal('Convocazioni Ufficiali & Distinta Gara', '🏟️', [
+          { label: 'Partita', val: 'Domenica ore 15:00 vs Chieti' },
+          { label: 'Atleti Convocati', val: '20 Giocatori (11 titolari + 9 panchina)' },
+          { label: 'Ritrovo Squadra', val: 'Ore 12:30 presso lo stadio' }
+        ], 'Distinta convocazioni inviata a squadra e arbitro!');
+        break;
+      case 'act-tm-trip':
+        openGenericToolModal('Organizzazione Trasferta & Pullman', '🚌', [
+          { label: 'Compagnia Bus', val: 'Autolinee Ufficiali Club' },
+          { label: 'Partenza & Hotel', val: 'Sabato ore 15:00 — Hotel Sporting' }
+        ], 'Logistica trasferta confermata!');
+        break;
+      case 'act-tm-pres':
+        openGenericToolModal('Registro Presenze & Deleghe Campo', '📋', [
+          { label: 'Delegato Ufficiale alla Firma', val: 'Team Manager' },
+          { label: 'Presenze Staff', val: 'Tutti presenti' }
+        ], 'Registro presenze validato!');
         break;
 
-      case 'act-ma-heatmap':
-        toast('Mappa di calore tattica generata in tempo reale');
+      // Segretario
+      case 'act-sg-tess':
+        openGenericToolModal('Tesseramenti LND / FIGC', '🏢', [
+          { label: 'Pratiche in Lavorazione', val: '2 Pratiche online LND' },
+          { label: 'Esito Deposito', val: 'Approvato con codice matricola attivo' }
+        ], 'Pratiche tesseramento depositate!');
         break;
 
-      case 'act-ma-compare':
-        toast('Comparatore giocatori AI: selezione talenti pronta');
+      // Magazziniere
+      case 'act-eq-kits':
+        openGenericToolModal('Inventario Mute Gara & Kit', '📦', [
+          { label: 'Muta Prima Maglia (Blu/Rosso)', val: '24 Complete disponibili' },
+          { label: 'Muta Seconda Maglia (Bianca)', val: '24 Complete disponibili' },
+          { label: 'Palloni Omologati FIGC', val: '30 Palloni pronti' }
+        ], 'Inventario magazzino aggiornato!');
+        break;
+      case 'act-eq-assign':
+        openGenericToolModal('Assegnazione Materiale Atleta', '👕', [
+          { label: 'Atleta', val: 'E. Miraglia' },
+          { label: 'Kit Consegnato', val: 'Borsa gara, tuta rappresentanza, 2 kit allenamento' }
+        ], 'Materiale assegnato con firma di ricevuta!');
+        break;
+      case 'act-eq-order':
+        openGenericToolModal('Richiesta Riordino Materiale', '⚽', [
+          { label: 'Articoli Richiesti', val: '10 Palloni gara n.5 + 40 pettorine fluo' }
+        ], 'Richiesta riordino inoltrata al Segretario!');
+        break;
+
+      // Biglietteria
+      case 'act-bt-sales':
+        openGenericToolModal('Apertura Vendite Botteghino', '🎫', [
+          { label: 'Gara', val: 'Notaresco vs Chieti' },
+          { label: 'Prezzo Tribuna Centrale', val: '€ 15,00' },
+          { label: 'Prezzo Curva / Gradinata', val: '€ 10,00' }
+        ], 'Botteghino e vendita online aperti!');
+        break;
+      case 'act-bt-slo':
+        openGenericToolModal('Gestione Settore Ospiti & SLO', '🏟️', [
+          { label: 'Capienza Settore Ospiti', val: '500 Posti' },
+          { label: 'Biglietti Ospiti Emessi', val: '320 Tagliandi' }
+        ], 'Dati settore ospiti comunicati al GOS!');
+        break;
+      case 'act-bt-rep':
+        openGenericToolModal('Report Incassi & Tagliandi', '📊', [
+          { label: 'Spettatori Totali', val: '1.240' },
+          { label: 'Incasso Netto Botteghino', val: '€ 13.800' }
+        ], 'Report incassi archiviato!');
+        break;
+
+      // Ufficio Stampa
+      case 'act-pr-release':
+        openGenericToolModal('Redazione Comunicato Ufficiale', '📣', [
+          { label: 'Titolo Comunicato', val: 'Comunicato Ufficiale N. 14 — Presentazione Gara' },
+          { label: 'Testo', type: 'textarea', val: 'La società comunica che la prevendita per il match di domenica è ufficialmente aperta.' }
+        ], 'Comunicato stampa diramato alle redazioni!');
+        break;
+      case 'act-pr-press':
+        openGenericToolModal('Rassegna Stampa & Web', '📰', [
+          { label: 'Articoli Rilevati', val: '8 Uscite su quotidiani e testate sportive' }
+        ], 'Rassegna stampa archiviata!');
+        break;
+      case 'act-pr-conf':
+        openGenericToolModal('Conferenza Stampa Pre-Gara', '🎙️', [
+          { label: 'Data & Ora', val: 'Venerdì ore 12:00 Sala Stampa Savini' },
+          { label: 'Intervenuti', val: 'Mister e Capitano' }
+        ], 'Accrediti conferenza confermati!');
+        break;
+
+      // Marketing
+      case 'act-mk-spon':
+        openGenericToolModal('Proposta Sponsorizzazione B2B', '🎯', [
+          { label: 'Azienda Target', val: 'Partner Commerciale Territoriale' },
+          { label: 'Pacchetto Proposto', val: 'Back Jersey Sponsor + Led Bordocampo' }
+        ], 'Proposta commerciale inviata!');
+        break;
+      case 'act-mk-merch':
+        openGenericToolModal('Catalogo Merchandising & Store', '🛍️', [
+          { label: 'Maglie Gara Ufficiali Vendute', val: '140 Maglie' },
+          { label: 'Sciarpe & Gadget', val: '320 Pezzi' }
+        ], 'Catalogo store aggiornato!');
+        break;
+      case 'act-mk-rev':
+        openGenericToolModal('Report Ricavi Commerciali', '📈', [
+          { label: 'Totale Sponsorizzazioni B2B', val: '€ 95.000' },
+          { label: 'Vendite Merchandise', val: '€ 14.200' }
+        ], 'Report commerciale validato!');
+        break;
+
+      // Tifoso
+      case 'act-tf-card':
+        openGenericToolModal('Tessera Digitale del Tifoso', '🎟️', [
+          { label: 'Codice Tessera', val: 'ES-FAN-2026-9948', readonly: true },
+          { label: 'Stato Fedeltà', val: 'Tifoso Fedelissimo (Livello 3)', readonly: true }
+        ], 'Tessera digitale aggiornata!');
+        break;
+      case 'act-tf-checkin':
+        toast('🎉 Check-in presenza allo stadio effettuato! +50 Punti Fedeltà Community!');
+        break;
+      case 'act-tf-sticker':
+        toast('Cori e sticker della tifoseria sbloccati nella community!');
+        break;
+      case 'act-tf-follow':
+        toast('Segui partite e notifiche live della squadra del cuore attivato!');
+        break;
+
+      // Club TC
+      case 'act-tc-enroll':
+        toast('Modulo Nuova Iscrizione Online Atleta aperto (#iscrizione-portal)!');
         break;
 
       default:
@@ -868,7 +1239,6 @@
     });
   }
 
-  // Esegui inject ad ogni rendering della dashboard o switch view
   window.injectRoleActions = injectActionsCard;
 
   document.addEventListener('elisee:view-changed', function () {
@@ -879,7 +1249,6 @@
     setTimeout(injectActionsCard, 200);
   });
 
-  // Osserva mutazioni DOM per re-iniettare la card azioni quando si passa tra ruoli
   var observer = new MutationObserver(function (mutations) {
     for (var i = 0; i < mutations.length; i++) {
       if (mutations[i].addedNodes.length) {

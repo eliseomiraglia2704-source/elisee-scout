@@ -137,7 +137,7 @@
       '<div class="es-pd-metric"><span>Affidabilità trattative</span><b>92%</b></div></section>' +
 
       '<section class="es-pd-card es-pd-radar">' +
-      '<div class="es-pd-radar-tools"><span>Seleziona dati radar</span><span>Analisi performance dirigenziale</span></div>' +
+      '<div class="es-pd-radar-tools"><span>Seleziona dati radar</span><span>Analisi performance dirigenziale</span><div class="es-pd-legend-pills"><span class="es-pd-pill-legend" style="color:#38bdf8"><i style="background:#38bdf8"></i> 2025 (Stagione Attuale)</span><span class="es-pd-pill-legend" style="color:#94a3b8"><i style="background:#64748b"></i> 2023 (Benchmark Storico)</span></div></div>' +
       radarSvg() + '</section>' +
 
       '<section class="es-pd-card es-pd-comply"><h2>Verifica &amp; Compliance dirigenziale</h2>' +
@@ -217,6 +217,62 @@
     if (g) { g.classList.remove('is-coach-dash'); g.classList.remove('is-ma-dash'); g.classList.remove('is-med-dash'); g.classList.remove('is-obs-dash'); g.classList.remove('is-tm-dash'); g.classList.remove('is-gk-dash'); g.classList.remove('is-at-dash'); g.classList.remove('is-yg-dash'); g.classList.remove('is-dg-dash'); }
   }
 
+
+  function openDsEditModal(user) {
+    user = user || userObj();
+    var backdrop = document.createElement('div');
+    backdrop.className = 'es-edit-modal-backdrop';
+
+    backdrop.innerHTML = '<div class="es-edit-modal">' +
+      '<div class="es-edit-modal-head">' +
+      '<h2><span>✏️</span> Modifica Anagrafica Direttore Sportivo</h2>' +
+      '<button type="button" class="es-edit-modal-close" title="Chiudi">&times;</button>' +
+      '</div>' +
+      '<div class="es-edit-grid">' +
+      '<div class="es-edit-field"><label>Nome</label><input id="es-ds-nome" value="' + esc(user.nome || 'Eliseo') + '"></div>' +
+      '<div class="es-edit-field"><label>Cognome</label><input id="es-ds-cognome" value="' + esc(user.cognome || 'Miraglia') + '"></div>' +
+      '<div class="es-edit-field"><label>Ruolo Ufficiale</label><input id="es-ds-role" value="Direttore Sportivo" readonly></div>' +
+      '<div class="es-edit-field"><label>Club / Organizzazione</label><input id="es-ds-club" value="' + esc(user.squadra || user.club || 'Notaresco Calcio') + '"></div>' +
+      '<div class="es-edit-field full"><label>Bio &amp; Note Operative</label><textarea id="es-ds-bio" rows="3">' + esc(user.bio || 'Profilo accreditato e verificato su Elisee Scout per la stagione 2025/2026.') + '</textarea></div>' +
+      '</div>' +
+      '<div class="es-edit-actions">' +
+      '<button type="button" class="es-edit-btn-cancel">Annulla</button>' +
+      '<button type="button" class="es-edit-btn-save">💾 Salva Anagrafica</button>' +
+      '</div>' +
+      '</div>';
+
+    document.body.appendChild(backdrop);
+
+    var close = function () { backdrop.remove(); };
+    backdrop.querySelector('.es-edit-modal-close').addEventListener('click', close);
+    backdrop.querySelector('.es-edit-btn-cancel').addEventListener('click', close);
+    backdrop.addEventListener('click', function (e) { if (e.target === backdrop) close(); });
+
+    backdrop.querySelector('.es-edit-btn-save').addEventListener('click', function () {
+      var n = document.getElementById('es-ds-nome').value.trim();
+      var c = document.getElementById('es-ds-cognome').value.trim();
+      var clb = document.getElementById('es-ds-club').value.trim();
+      var bio = document.getElementById('es-ds-bio').value.trim();
+
+      user.nome = n || user.nome;
+      user.cognome = c || user.cognome;
+      user.fullName = (user.nome + ' ' + user.cognome).trim();
+      user.squadra = clb;
+      user.club = clb;
+      user.bio = bio;
+
+      try {
+        localStorage.setItem('elisee_active_user', JSON.stringify(user));
+      } catch (_) {}
+
+      close();
+      if (typeof window.showToast === 'function') {
+        window.showToast('Anagrafica Direttore Sportivo salvata con successo!', 'success');
+      }
+      render(user);
+    });
+  }
+
   function bind(host) {
     if (!host || host.dataset.dsBound === '1') return;
     host.dataset.dsBound = '1';
@@ -228,11 +284,7 @@
       if (k === 'secret' && window.openSecretList) window.openSecretList();
       if (k === 'msgs' && window.openUserMessages) window.openUserMessages();
       if (k === 'edit') {
-        host.classList.remove('es-ds-on');
-        var dash = document.getElementById('es-dsd');
-        if (dash) dash.hidden = true;
-        var g = document.getElementById('user-dossier-view-group');
-        if (g) g.classList.remove('is-ds-dash');
+        openDsEditModal(userObj());
       }
     });
   }

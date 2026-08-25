@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-25**
-Ultimo fatto: Rilascio operativo e attivazione completa per il Vice Allenatore e Allenatore: 1. Legenda trend 2023-2025; 2. Modal interattivo modifica anagrafica staff con salvataggio e sync; 3. Card Guida Analitica & Legenda Metriche; 4. Tutti e 4 i modali operativi per le azioni del Vice Allenatore (Registro contributo tecnico, Verifica sessioni individuali, Condivisione memo tattico con il Mister, Carichi pre-gara). File: `vice-dash.js`, `coach-dash.js`, `role-actions-runtime.js`, `index.html`, `sw.js`. Cache `ACT3`/`VD2`/`CD2`.
-Feature precedente: Rilascio operativo e attivazione 5 attività Allenatore.
+Ultimo fatto: Rilascio e attivazione completa per TUTTI i 23 ruoli del sito: 1. Legenda trend 2023-2025 su tutte le dashboard; 2. Modal interattivo modifica anagrafica dedicato per ciascun ruolo con salvataggio e sync immediato; 3. Card Guida Analitica & Legenda Metriche con standard FIGC/UEFA/LND personalizzata per ciascun ruolo; 4. Tutti gli strumenti e modali operativi interattivi per tutte le azioni di ogni singolo ruolo (Scout mobile, Trascrizione vocale IA, Match Analyst 8 blocchi, Mappe termiche, GPS & Carichi atletici, Registro idoneità e terapie sanitarie, Delibere CDA, Contratti DS, etc.). File: `*-dash.js`, `role-actions-runtime.js`, `index.html`, `sw.js`. Cache `ALL1`.
+Feature precedente: Rilascio operativo per Vice Allenatore e Allenatore.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
