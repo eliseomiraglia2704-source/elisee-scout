@@ -1655,9 +1655,6 @@
             <a href="#" id="btn-creator-roles" onclick="event.preventDefault(); event.stopPropagation(); if(window.EliseeCreatorRole){ window.EliseeCreatorRole.open(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#facc15; font-size:0.83rem; font-weight:700; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(250,204,21,0.12)'" onmouseleave="this.style.background='transparent'">
               <span style="font-size:1rem; line-height:1;">⚡</span> Simulatore Ruoli Creatore
             </a>
-            <a href="#wall-trasferimenti" onclick="event.preventDefault(); event.stopPropagation(); if(window.openTransferWall){ window.openTransferWall(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
-              <i data-lucide="newspaper" style="width:16px; height:16px; color:#38bdf8;"></i> Wall trattative
-            </a>
             <a href="#tc-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.EliseeTC){ window.EliseeTC.open(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="clipboard-list" style="width:16px; height:16px; color:#38bdf8;"></i> Pannello Elisee Manager
             </a>
@@ -2178,6 +2175,7 @@
                 <p class="pf-lead">Provini, ingaggi e ruoli tecnici per il calcio dilettantistico e giovanile italiano.</p>
               </div>
               <div class="pf-header-actions">
+                <button type="button" class="btn btn-outline-pill" id="btn-bacheca-wall" onclick="if(window.openTransferWall){window.openTransferWall();}else if(window.switchView){window.switchView('mercato','#wall-trasferimenti');}" title="Wall trattative ufficiali mercato">Wall trattative</button>
                 <button type="button" class="btn btn-outline-pill" id="btn-bacheca-squadre" data-bacheca-action="squadre" title="Sezione Squadre e profili">Squadre</button>
                 <button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-bacheca-pubblica" data-bacheca-action="pubblica" title="Pubblica una candidatura">Pubblica candidatura</button>
                 <button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-bacheca-crea-profilo" data-bacheca-action="crea-profilo" title="Crea il tuo profilo">Crea profilo</button>
@@ -3532,6 +3530,7 @@
         <div class="es-mk-tabs" role="tablist" aria-label="Hub Mercato">
           <button type="button" class="es-mk-tab is-on" data-mk="secret">Secret List</button>
           <button type="button" class="es-mk-tab" data-mk="wall">Wall trattative</button>
+          <button type="button" class="es-mk-tab es-mk-back-bacheca" style="margin-left:auto; background:transparent; border-color:rgba(56,189,248,0.3); color:#38bdf8;" onclick="if(window.switchView) window.switchView('bacheca','#bacheca-annunci');">← Torna alla Bacheca</button>
         </div>
         <div id="es-mk-secret">
           <p class="es-mk-stealth" id="es-mk-stealth-banner">Modalità stealth · visibile solo a te · zero notifiche esterne</p>
