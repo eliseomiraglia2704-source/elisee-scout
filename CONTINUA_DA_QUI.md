@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Inserita e attivata la **`📑 Sezione "Schede tecniche" della Candidatura (Zero E-mail)`** su tutti i ruoli Club, Dirigenza e Scouting (DS, DG, Presidente, Settore Giovanile, Segretario Generale, TC Manager, Osservatore/Scout, Match Analyst): bacheca centralizzata per consultare, confrontare fino a 3 profili in contemporanea e gestire gli stati (Nuova, In Valutazione, Shortlist, Scartata) di tutte le schede tecniche generate dall'IA per ciascun annuncio pubblicato, eliminando qualsiasi dispersione via e-mail. File: `schede-tecniche.js`, `role-actions-runtime.js`, `index.html`, `sw.js`. Cache `HUB1`.
-Feature precedente: Scheda tecnica del candidato generata dall'AI.
+Ultimo fatto: Spostata e confinata la **`🔒 Secret List`** esclusivamente all'interno dell'**Area Scout / Osservatore**: rimossa dal menu a tendina utente generico, dal footer pubblico e dai pulsanti squadra generici. Ora accessibile rigorosamente solo dalla Dashboard Osservatore (`obs-dash.js`), dalle azioni per Scout/DS (`role-actions-runtime.js`) e con blocco di sicurezza B2B stealth. File: `index.html`, `role-actions-runtime.js`, `obs-dash.js`, `sw.js`. Cache `SCT1`.
+Feature precedente: Sezione Schede Tecniche della Candidatura (Zero E-mail).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

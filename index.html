@@ -1638,9 +1638,6 @@
             <a href="#messaggi-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.openUserMessages){ window.openUserMessages(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="mail" style="width:16px; height:16px; color:#38bdf8;"></i> Messaggi B2B
             </a>
-            <a href="#mercato-hub" onclick="event.preventDefault(); event.stopPropagation(); if(window.openSecretList){ window.openSecretList(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
-              <i data-lucide="eye-off" style="width:16px; height:16px; color:#facc15;"></i> Secret List
-            </a>
             <a href="#wall-trasferimenti" onclick="event.preventDefault(); event.stopPropagation(); if(window.openTransferWall){ window.openTransferWall(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="newspaper" style="width:16px; height:16px; color:#38bdf8;"></i> Wall trattative
             </a>
@@ -2493,7 +2490,6 @@
               <button type="button" class="btn btn-outline-pill es-sq-select-btn" id="es-sq-select">Seleziona squadra</button>
               <button type="button" class="btn btn-outline-pill" id="es-sq-mgr-btn">Diventa Manager Elisee Scout</button>
               <button type="button" class="btn btn-outline-pill pf-btn-solid" id="es-sq-tc-btn">Pannello TC Manager</button>
-              <button type="button" class="btn btn-outline-pill" onclick="if(window.openSecretList){window.openSecretList();}else if(window.switchView){window.switchView('mercato','#mercato-hub');}">Secret List DS</button>
               <button type="button" class="btn btn-outline-pill" onclick="if(window.openTransferWall){window.openTransferWall();}">Wall trattative</button>
               <button type="button" class="btn btn-outline-pill" id="es-sq-back-bacheca" onclick="if(window.switchView){window.switchView('bacheca','#bacheca-annunci');}">Torna alla Bacheca</button>
             </div>
@@ -3602,7 +3598,6 @@
             <li><a href="#schede-tecniche" onclick="if(window.openSchedeTecniche){window.openSchedeTecniche({id:'attaccante-centrale-stagione-2026-27',title:'Attaccante centrale — stagione 2026/27',club:'ASD Virtus Foggia',role:'Attaccante',location:'Foggia'});} return false;">Schede tecniche</a></li>
             <li><a href="#scopri-portal" onclick="if(window.openScopriProfili){window.openScopriProfili('staff');}else{switchView('scopri','#scopri-portal');} return false;">Scopri profili</a></li>
             <li><a href="#wall-trasferimenti" onclick="if(window.openTransferWall){window.openTransferWall();}else{switchView('mercato','#wall-trasferimenti');} return false;">Wall mercato</a></li>
-            <li><a href="#mercato-hub" onclick="if(window.openSecretList){window.openSecretList();}else{switchView('mercato','#mercato-hub');} return false;">Secret List</a></li>
             <li><a href="#bacheca-annunci" onclick="switchView('bacheca','#bacheca-network'); return false;">Persone &amp; Squadre</a></li>
             <li><a href="#ambassador-portal" onclick="switchView('ambassador'); return false;">Ambassador</a></li>
           </ul>
@@ -4989,7 +4984,7 @@
   <script src="chi-segui.js?v=20260820_FORM1"></script>
   <script src="verifica-account.js?v=20260820_VF2"></script>
   <script src="creator-role-switcher.js?v=20260825_CR4"></script>
-  <script src="role-actions-runtime.js?v=20260826_HUB1"></script>
+  <script src="role-actions-runtime.js?v=20260826_SCT1"></script>
   <script>
     /* FORCED INLINE HOT-PATCH: Overrides PDF export, specific report HTML & modal close functions instantly at runtime */
     (function() {
