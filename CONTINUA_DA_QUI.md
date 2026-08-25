@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Attivato il flusso con **Modal di Doppia Conferma Obbligatoria di Supervisione Umana & Sicurezza** all'interno del **Match Analyst — Report 8 Blocchi** (Art. 22 GDPR & Step 2 Roadmap AI Scouting: validazione umana obbligatoria prima del deposito ufficiale del report nello staff societario con checkbox di assunzione responsabilità e log immutabile; potenziata generazione automatica della bozza completa per tutte le 8 sezioni tattiche). File: `integrazioni-runtime.js`, `index.html`, `sw.js`. Cache `MA2`.
-Feature precedente: Doppia conferma di sicurezza per notifiche sanitarie e idoneità al Mister.
+Ultimo fatto: Eliminate definitivamente le schermate duplicate e obsolete di "I MIEI STRUMENTI" (Selettore Squadra legacy, Simulatore legacy, Eventi legacy, ecc. precedentemente legati all'overlay `es-int-root`), ora completamente integrate nelle rispettive dashboard di ruolo native e nella navbar. File: `index.html`, `integrazioni-runtime.js`, `integrazioni.css`, `sw.js`. Cache `CLEAN1`.
+Feature precedente: Doppia conferma di validazione per Match Analyst 8 Blocchi e Notifica Sanitaria.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
