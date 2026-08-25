@@ -3,13 +3,13 @@
    Strumento rapido per passare all'istante tra le dashboard attive
    ============================================================ */
 
-/* Floating trigger pill per il creatore */
+/* Floating trigger pill per il creatore — visibile solo ed esclusivamente dopo l'apertura del Simulatore */
 .es-creator-trigger {
   position: fixed;
   bottom: 24px;
   right: 24px;
   z-index: 999990;
-  display: inline-flex;
+  display: none;
   align-items: center;
   gap: 0.55rem;
   background: linear-gradient(135deg, #0f172a 0%, #0369a1 100%);
@@ -27,6 +27,9 @@
   user-select: none;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+}
+.es-creator-trigger.is-visible {
+  display: inline-flex !important;
 }
 .es-creator-trigger:hover {
   transform: translateY(-2px) scale(1.03);

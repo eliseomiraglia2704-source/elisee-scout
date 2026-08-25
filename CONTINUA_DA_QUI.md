@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Attivata la **`📍 Geolocalizzazione Club & Sede`** con modale interattiva (`#es-club-geo-modal`), ricerca automatica tra le squadre del database, rilevamento GPS browser e salvataggio coordinate con animazione pan-to immediata sulla mappa. Coordinati tutti i **2901 club** del Selettore Squadre sulla Mappa (`mappa-club.js`, `mappa-club.css`, `scopri-clubs.json`), con popup arricchiti (stemma, categoria, stadio, città e tasto rapido *Vedi nel Selettore*). File: `mappa-club.js`, `mappa-club.css`, `data/squadre/scopri-clubs.json`, `index.html`, `sw.js`. Cache `GEO1`.
-Feature precedente: Spostamento Wall Trattative nella macroarea Bacheca.
+Ultimo fatto: Confinata la visibilità del badge fluttuante **`⚡ Ruolo Creatore`** (`#es-creator-trigger`): nascosto di default all'avvio e attivato **solo ed esclusivamente dopo l'apertura del Simulatore Ruoli Creatore** dal menu a tendina utente. File: `creator-role-switcher.js`, `creator-role-switcher.css`, `index.html`, `sw.js`. Cache `SIM1`.
+Feature precedente: Geolocalizzazione Club e coordinamento 2901 squadre sulla Mappa.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
