@@ -345,7 +345,28 @@
       updated.anniEsperienza = '12';
     }
 
-    // Salvataggio localStorage unificato
+    // 1. Chiudi categoricamente qualsiasi istanza del minigioco aperta
+    try {
+      if (window.EliseeMinigioco && typeof window.EliseeMinigioco.close === 'function') {
+        window.EliseeMinigioco.close();
+      }
+    } catch (_) {}
+    try {
+      sessionStorage.removeItem('elisee_auth_return');
+      localStorage.removeItem('elisee_auth_return');
+    } catch (_) {}
+    var mgRoot = document.getElementById('es-mg-root');
+    if (mgRoot) {
+      mgRoot.classList.remove('is-open', 'open', 'active');
+      mgRoot.setAttribute('hidden', '');
+      mgRoot.style.setProperty('display', 'none', 'important');
+    }
+    document.documentElement.classList.remove('es-mg-open');
+    document.body.classList.remove('es-mg-open');
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+
+    // 2. Salvataggio localStorage unificato
     try {
       localStorage.setItem('elisee_active_user', JSON.stringify(updated));
       localStorage.setItem('elisee_user_data', JSON.stringify(updated));
@@ -353,7 +374,7 @@
       localStorage.setItem('elisee_creator_sim_role', roleKey);
     } catch (_) {}
 
-    // Sincronizza mappa identità staff
+    // 3. Sincronizza mappa identità staff/ruolo
     try {
       var identities = JSON.parse(localStorage.getItem('elisee_role_identity') || '{}') || {};
       var emKey = String(updated.email || updated.id || 'anon').trim().toLowerCase();
@@ -366,14 +387,17 @@
       localStorage.setItem('elisee_role_identity', JSON.stringify(identities));
     } catch (_) {}
 
-    // Rimuovi classi contrastanti dal contenitore dossier
+    // 4. Ripulisci classi contrastanti da #user-dossier-view-group
     var grp = document.getElementById('user-dossier-view-group');
     if (grp) {
       grp.className = '';
       grp.id = 'user-dossier-view-group';
+      if (targetRole.key === 'giocatore') grp.classList.add('is-player-area');
+      else if (targetRole.key === 'tifoso') grp.classList.add('is-tifoso-area');
+      else if (targetRole.family === 'Staff') grp.classList.add('is-staff-area');
     }
 
-    // Aggiorna interfaccia utente
+    // 5. Aggiorna interfaccia utente
     if (typeof window.saveActiveUser === 'function') {
       window.saveActiveUser(updated);
     }
@@ -384,16 +408,19 @@
       window.paintLoggedInUser(updated);
     }
 
-    // Se è Club, apri il Pannello TC Manager; altrimenti apri la Dashboard del Dossier Utente
+    // 6. Navigazione mirata alla vista corretta
     if (targetRole.key === 'club_tc') {
       if (typeof window.switchView === 'function') window.switchView('tc', '#tc-portal');
       if (window.EliseeTC && window.EliseeTC.render) window.EliseeTC.render();
     } else {
       if (typeof window.switchView === 'function') window.switchView('user-dossier', '#user-dossier-portal');
       setTimeout(function () {
-        if (typeof window.syncPlayerProfileView === 'function') {
+        if (targetRole.key === 'giocatore' && window.EliseePlayerDash && window.EliseePlayerDash.render) {
+          window.EliseePlayerDash.render(updated);
+        } else if (typeof window.syncPlayerProfileView === 'function') {
           window.syncPlayerProfileView(updated);
         }
+        window.scrollTo(0, 0);
       }, 50);
     }
 

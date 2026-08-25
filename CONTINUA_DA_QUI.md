@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-25**
-Ultimo fatto: Simulatore Ruoli Creatore: pillola fluttuante + menu a tendina per passare istantaneamente da un ruolo all'altro vedendo direttamente la dashboard registrata e attiva (post-registrazione) per tutti i 23 ruoli (Giocatore, Allenatore, Scout, DS, Presidente, Medico, Tifoso, TC Club, ecc.). File: `creator-role-switcher.js` / `.css`, `index.html`. Cache `CR1`.
-Feature precedente: Overlay Seleziona squadra: logo e cerchio ora perfettamente sovrapposti e concentrici in `.es-sq-load-crest`.
+Ultimo fatto: Simulatore Ruoli Creatore: risolta interferenza minigioco, isolamento totale e rendering istantaneo dell'Area Giocatore (Dashboard analitica v3.0, radar FIFA, performance) e di tutte le altre 22 dashboard attive. File: `creator-role-switcher.js` / `.css`, `index.html`. Cache `CR2`.
+Feature precedente: Simulatore Ruoli Creatore (versione iniziale).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
