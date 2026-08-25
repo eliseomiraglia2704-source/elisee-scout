@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-25**
-Ultimo fatto: Azioni e Strumenti per Ruolo integrati direttamente in tutte le 23 aree/dashboard: iniettata card operativa `es-pd-actions-card` con pulsanti interattivi dedicati (Calciatore: consensi/art.22/export/carriera; Scout: live mobile/voice notes/geo/secret list; Allenatore: discorsi AI/lavagna/carichi; Match Analyst: report 8 blocchi/heatmap; DS: trattative/carico/import; Agente, Medico, Dirigenza, Tifoso). File: `role-actions-runtime.js`, `player-dash.css`, `index.html`, `sw.js`. Cache `ACT1`.
-Feature precedente: Allineamento perfetto altezza dashboard.
+Ultimo fatto: Restyling pixel-perfect icone barra laterale (`es-pd-rail`): sostituite le icone cerchiate (Album/Foto/Secret List e Messaggi/Mail) con vettori SVG Lucide puliti, definiti a 19x19px con `stroke-linecap="round"` e proporzioni perfette su tutte le 22 dashboard. File: `*-dash.js`, `sw.js`. Cache `ICO1`.
+Feature precedente: Azioni e Strumenti per Ruolo integrati direttamente in tutte le 23 aree/dashboard.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
