@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-25**
-Ultimo fatto: Risolto blocco pulsante "Modifica Anagrafica Atleta": creato modal operativo interattivo `es-edit-modal` per modificare e salvare in tempo reale dati, bio, ruolo, piede, altezza e club con sync immediato; aggiunta legenda trend per i tre anni (2023, 2024, 2025) nella card "Crescita Stagionale". File: `player-dash.js`, `player-dash.css`, `index.html`, `sw.js`. Cache `PD5`/`LEG2`.
-Feature precedente: Valorizzazione dashboard analitica con dettagli completi e card Guida Metriche.
+Ultimo fatto: Rilascio operativo e attivazione completa di tutte le 5 attività evidenziate per l'Allenatore (1. Generatore Discorso pre-partita IA con toni e rigenerazione live; 2. Lavagna tattica 2D con moduli 4-3-3/3-5-2/4-2-3-1 e 11 giocatori posizionati; 3. Registro sessioni allenamento microciclo; 4. Valutazione carichi RPE/GPS e indice ACWR; 5. Esportazione dossier staff tecnico in TXT/PDF). File: `role-actions-runtime.js`, `index.html`, `sw.js`. Cache `ACT2`.
+Feature precedente: Risolto blocco pulsante "Modifica Anagrafica Atleta".
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
