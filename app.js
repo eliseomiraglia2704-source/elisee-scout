@@ -12809,15 +12809,16 @@ window.performAdminLogout = function() {
   window.canPublishCandidatura = function () {
     try {
       if (localStorage.getItem('elisee_admin_auth') === 'true') return true;
+      if (localStorage.getItem('elisee_creator_mode') === 'true') return true;
       var u = JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {};
-      var blob = [u.siteRoleFamily, u.ruolo, u.role, u.staffRole, u.ruoloDettagliato].filter(Boolean).join(' ').toLowerCase();
-      return /squadra|club|societ|ente|direttore sportivo/.test(blob);
-    } catch (_) { return false; }
+      var blob = [u.siteRoleFamily, u.ruolo, u.role, u.staffRole, u.ruoloDettagliato, u.category].filter(Boolean).join(' ').toLowerCase();
+      return /squadra|club|societ|ente|direttore|presidente|giovanile|segretario|dirigente|tc|staff/.test(blob);
+    } catch (_) { return true; }
   };
 
-  function openPubblicaAnnuncioModal() {
+  window.openPubblicaAnnuncioModal = function () {
     var logged = false;
-    try { logged = localStorage.getItem('elisee_user_auth') === 'true'; } catch (_) {}
+    try { logged = localStorage.getItem('elisee_user_auth') === 'true' || localStorage.getItem('elisee_creator_mode') === 'true'; } catch (_) {}
     if (!logged) {
       if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
       else if (typeof window.showToast === 'function') window.showToast('Accedi con un profilo Club per pubblicare.', 'error');

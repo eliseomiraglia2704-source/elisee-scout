@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Inserito e attivato per tutti i ruoli Club e Dirigenza (Presidente, Direttore Generale, Settore Giovanile, Segretario Generale, Direttore Sportivo, TC Manager) lo strumento nativo e interattivo **`🎟️ Eventi di Selezione & Open Day + QR Code Dinamico`**: creazione stage con data, ora, luogo, fasce d'età, limiti capienza, consenso minori obbligatorio, template precompilati, generazione QR Code live e gestione adesioni atleti in tempo reale. File: `role-actions-runtime.js`, `index.html`, `sw.js`. Cache `EV1`.
-Feature precedente: Pulizia e rimozione schermate obsolete di I MIEI STRUMENTI.
+Ultimo fatto: Inserita e attivata l'opzione **`📢 Posizione di Candidatura & Recruiting IA`** collocata strategicamente all'interno di tutti i ruoli Club & Dirigenza (Direttore Sportivo, Direttore Generale, Presidente, Responsabile Settore Giovanile, Segretario Generale, TC Manager): consente di pubblicare annunci di ricerca personale con modulo a due blocchi ("Cosa offriamo" / "Cosa richiediamo / Il profilo che cerchiamo") con intelligenza artificiale che analizza e candida in automatico i profili compatibili raccogliendo le schede tecniche direttamente in piattaforma. File: `app.js`, `role-actions-runtime.js`, `index.html`, `sw.js`. Cache `REC1`.
+Feature precedente: Modulo Eventi di Selezione & Open Day con QR Code Dinamico.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

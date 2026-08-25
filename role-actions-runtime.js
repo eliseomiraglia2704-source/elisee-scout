@@ -63,6 +63,7 @@
       title: 'Azioni possibili — Direttore Sportivo',
       roleName: 'Direttore Sportivo',
       actions: [
+        { label: 'Pubblica candidatura & recruiting IA', id: 'act-ds-recruit', icon: '📢' },
         { label: 'Secret List stealth DS/Scout', id: 'act-ds-secret', icon: '🔒' },
         { label: 'Vedere carico segnalazioni', id: 'act-ds-workload', icon: '📈' },
         { label: 'Import da foglio di calcolo', id: 'act-ds-import', icon: '📊' },
@@ -84,6 +85,7 @@
       title: 'Azioni possibili — Presidente / Dirigenza Club',
       roleName: 'Club/Dirigente',
       actions: [
+        { label: 'Pubblica candidatura & recruiting IA', id: 'act-pres-recruit', icon: '📢' },
         { label: 'Creare evento selezione + QR', id: 'act-pres-event', icon: '🎫' },
         { label: 'Delegato temporaneo con scadenza', id: 'act-pres-deleg', icon: '⏱️' },
         { label: 'Vedere carico segnalazioni', id: 'act-pres-load', icon: '📈' },
@@ -95,6 +97,7 @@
       title: 'Azioni possibili — Direttore Generale',
       roleName: 'Club/Dirigente',
       actions: [
+        { label: 'Pubblica ricerca staff & recruiting IA', id: 'act-dg-recruit', icon: '📢' },
         { label: 'Creare evento selezione + QR', id: 'act-dg-event', icon: '🎫' },
         { label: 'Delegato temporaneo con scadenza', id: 'act-dg-deleg', icon: '⏱️' },
         { label: 'Vedere carico segnalazioni', id: 'act-dg-load', icon: '📈' },
@@ -152,6 +155,7 @@
       title: 'Azioni possibili — Settore Giovanile',
       roleName: 'Settore Giovanile',
       actions: [
+        { label: 'Ricerca staff giovanile (IA)', id: 'act-yg-recruit', icon: '📢' },
         { label: 'Confermare consenso genitoriale', id: 'act-yg-consent', icon: '👨‍👩‍👦' },
         { label: 'Opposizione rapida profilo minore', id: 'act-yg-oppose', icon: '🛡️' },
         { label: 'Crea Open Day Giovanile + QR', id: 'act-yg-openday', icon: '🎫' },
@@ -171,6 +175,7 @@
       title: 'Azioni possibili — Segretario Generale',
       roleName: 'Segretario Generale',
       actions: [
+        { label: 'Pubblica posizione aperta (IA)', id: 'act-sg-recruit', icon: '📢' },
         { label: 'Tesseramenti LND / FIGC', id: 'act-sg-tess', icon: '🏢' },
         { label: 'Registro verbali CDA e assemblee', id: 'act-sg-verb', icon: '🏛️' },
         { label: 'Contratti e accordi economici', id: 'act-sg-contr', icon: '✍️' }
@@ -226,6 +231,7 @@
       title: 'Azioni possibili — Club (TC Manager)',
       roleName: 'Club/Dirigente',
       actions: [
+        { label: 'Pubblica posizione di candidatura (IA)', id: 'act-tc-recruit', icon: '📢' },
         { label: 'Creare evento selezione + QR', id: 'act-tc-event', icon: '🎫' },
         { label: 'Delegato temporaneo con scadenza', id: 'act-tc-deleg', icon: '⏱️' },
         { label: 'Vedere carico segnalazioni', id: 'act-tc-load', icon: '📈' },
@@ -1242,6 +1248,29 @@
           { label: 'Durata Accordo', val: '30/06/2027' },
           { label: 'Clausole Speciali', type: 'textarea', val: 'Premio valorizzazione e clausola rescissoria concordata.' }
         ], 'Accordo preliminare depositato con crittografia!');
+        break;
+
+      // Recruiting & Pubblica Candidatura Club (IA)
+      case 'act-ds-recruit':
+      case 'act-dg-recruit':
+      case 'act-pres-recruit':
+      case 'act-yg-recruit':
+      case 'act-sg-recruit':
+      case 'act-tc-recruit':
+        if (typeof window.openPubblicaAnnuncioModal === 'function') {
+          window.openPubblicaAnnuncioModal();
+        } else {
+          var m = document.getElementById('modal-pubblica-annuncio');
+          if (m) {
+            m.classList.add('is-open', 'open', 'active');
+            m.style.setProperty('display', 'flex', 'important');
+            m.style.setProperty('z-index', '99999', 'important');
+            m.style.setProperty('opacity', '1', 'important');
+            m.style.setProperty('visibility', 'visible', 'important');
+            m.style.setProperty('pointer-events', 'auto', 'important');
+            document.body.style.overflow = 'hidden';
+          }
+        }
         break;
 
       // Presidente, DG, Settore Giovanile, Segretario, DS, TC
