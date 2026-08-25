@@ -185,6 +185,11 @@
       '</tbody></table></section>' +
 
       '<section class="es-pd-card es-pd-trend"><h2>Crescita Stagionale (2023-2025)</h2>' +
+      '<div class="es-pd-trend-legend">' +
+      '<span style="color:#38bdf8"><i style="background:#38bdf8"></i> 2023 (62-78%)</span>' +
+      '<span style="color:#4ade80"><i style="background:#4ade80"></i> 2024 (70-86%)</span>' +
+      '<span style="color:#facc15"><i style="background:#facc15"></i> 2025 (78-93%)</span>' +
+      '</div>' +
       trendSvg() +
       '<button type="button" class="es-pd-edit" data-pd="edit">✏️ Modifica Anagrafica Atleta</button>' +
       '</section>' +
@@ -218,6 +223,110 @@
       '</div></div>';
   }
 
+  function openEditModal(user) {
+    user = user || userObj();
+    var p = user.playerProfile || {};
+    var backdrop = document.createElement('div');
+    backdrop.className = 'es-edit-modal-backdrop';
+    
+    var roleVal = p.fieldRole || user.ruoloDettagliato || 'Punta Centrale';
+    var roles = [
+      'Punta Centrale', 'Seconda Punta', 'Ala Destra', 'Ala Sinistra',
+      'Trequartista', 'Mezzala', 'Regista', 'Mediano',
+      'Terzino Destro', 'Terzino Sinistro', 'Difensore Centrale', 'Portiere'
+    ];
+    
+    var rolesOpts = roles.map(function (r) {
+      return '<option value="' + esc(r) + '"' + (r === roleVal ? ' selected' : '') + '>' + esc(r) + '</option>';
+    }).join('');
+
+    var footVal = p.foot || user.piede || 'Destro';
+    var feet = ['Destro', 'Mancino', 'Ambidestro'];
+    var feetOpts = feet.map(function (f) {
+      return '<option value="' + esc(f) + '"' + (f === footVal ? ' selected' : '') + '>' + esc(f) + '</option>';
+    }).join('');
+
+    backdrop.innerHTML = '<div class="es-edit-modal">' +
+      '<div class="es-edit-modal-head">' +
+      '<h2><span>✏️</span> Modifica Anagrafica &amp; Dati Atleta</h2>' +
+      '<button type="button" class="es-edit-modal-close" title="Chiudi">&times;</button>' +
+      '</div>' +
+      '<div class="es-edit-grid">' +
+      '<div class="es-edit-field"><label>Nome</label><input id="es-ed-nome" value="' + esc(user.nome || 'Eliseo') + '"></div>' +
+      '<div class="es-edit-field"><label>Cognome</label><input id="es-ed-cognome" value="' + esc(user.cognome || 'Miraglia') + '"></div>' +
+      '<div class="es-edit-field"><label>Ruolo in Campo</label><select id="es-ed-role">' + rolesOpts + '</select></div>' +
+      '<div class="es-edit-field"><label>Piede Preferito</label><select id="es-ed-foot">' + feetOpts + '</select></div>' +
+      '<div class="es-edit-field"><label>Età (Anni)</label><input type="number" id="es-ed-eta" value="' + esc(user.eta || '22') + '"></div>' +
+      '<div class="es-edit-field"><label>Altezza (es. 1.83 m)</label><input id="es-ed-altezza" value="' + esc(user.altezza || p.heightCm || '1.83 m') + '"></div>' +
+      '<div class="es-edit-field"><label>Peso (kg)</label><input id="es-ed-peso" value="' + esc(user.peso || p.weightKg || '76 kg') + '"></div>' +
+      '<div class="es-edit-field"><label>Categoria Attuale</label><input id="es-ed-categoria" value="' + esc(user.categoria || 'Serie D · Girone F') + '"></div>' +
+      '<div class="es-edit-field full"><label>Club / Società Attuale</label><input id="es-ed-club" value="' + esc(user.squadra || user.club || 'Notaresco Calcio') + '"></div>' +
+      '<div class="es-edit-field full"><label>Descrizione / Bio Tecnico-Tattica</label><textarea id="es-ed-bio" rows="3">' + esc(p.bio || user.bio || 'Attaccante moderno dotato di grande visione di gioco, tecnica nello stretto e attacco della profondità.') + '</textarea></div>' +
+      '</div>' +
+      '<div class="es-edit-actions">' +
+      '<button type="button" class="es-edit-btn-cancel">Annulla</button>' +
+      '<button type="button" class="es-edit-btn-save">💾 Salva Anagrafica</button>' +
+      '</div>' +
+      '</div>';
+
+    document.body.appendChild(backdrop);
+
+    var close = function () {
+      backdrop.remove();
+    };
+
+    backdrop.querySelector('.es-edit-modal-close').addEventListener('click', close);
+    backdrop.querySelector('.es-edit-btn-cancel').addEventListener('click', close);
+    backdrop.addEventListener('click', function (e) {
+      if (e.target === backdrop) close();
+    });
+
+    backdrop.querySelector('.es-edit-btn-save').addEventListener('click', function () {
+      var n = document.getElementById('es-ed-nome').value.trim();
+      var c = document.getElementById('es-ed-cognome').value.trim();
+      var r = document.getElementById('es-ed-role').value;
+      var f = document.getElementById('es-ed-foot').value;
+      var eta = document.getElementById('es-ed-eta').value.trim();
+      var alt = document.getElementById('es-ed-altezza').value.trim();
+      var peso = document.getElementById('es-ed-peso').value.trim();
+      var cat = document.getElementById('es-ed-categoria').value.trim();
+      var clb = document.getElementById('es-ed-club').value.trim();
+      var bio = document.getElementById('es-ed-bio').value.trim();
+
+      user.nome = n || user.nome;
+      user.cognome = c || user.cognome;
+      user.fullName = (user.nome + ' ' + user.cognome).trim();
+      user.piede = f;
+      user.eta = eta;
+      user.altezza = alt;
+      user.peso = peso;
+      user.categoria = cat;
+      user.squadra = clb;
+      user.club = clb;
+      user.ruoloDettagliato = r;
+      user.bio = bio;
+
+      if (!user.playerProfile) user.playerProfile = {};
+      user.playerProfile.fieldRole = r;
+      user.playerProfile.foot = f;
+      user.playerProfile.heightCm = alt;
+      user.playerProfile.weightKg = peso;
+      user.playerProfile.bio = bio;
+
+      try {
+        localStorage.setItem('elisee_active_user', JSON.stringify(user));
+      } catch (_) {}
+
+      close();
+
+      if (typeof window.showToast === 'function') {
+        window.showToast('Anagrafica atleta salvata con successo!', 'success');
+      }
+
+      render(user);
+    });
+  }
+
   function bind(root) {
     if (!root || root.dataset.bound === '1') return;
     root.dataset.bound = '1';
@@ -229,9 +338,7 @@
       if (k === 'album' && window.openChiSegui) window.openChiSegui();
       if (k === 'msgs' && window.openUserMessages) window.openUserMessages();
       if (k === 'edit') {
-        root.classList.remove('es-pd-on');
-        var dash = document.getElementById('es-pd');
-        if (dash) dash.hidden = true;
+        openEditModal(userObj());
       }
     });
   }

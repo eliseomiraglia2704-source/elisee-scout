@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-25**
-Ultimo fatto: Valorizzazione dashboard analitica con dettagli completi, legenda radar interattiva (2025 vs 2023) e card "Guida Analitica & Legenda Metriche" (spiegazione algoritmo PGB, 12 assi radar, compliance FIGC/GDPR e semaforo prestazionale verde/giallo/rosso). File: `player-dash.js`, `player-dash.css`, `index.html`, `sw.js`. Cache `PD4`/`LEG1`.
-Feature precedente: Restyling pixel-perfect icone barra laterale (`es-pd-rail`).
+Ultimo fatto: Risolto blocco pulsante "Modifica Anagrafica Atleta": creato modal operativo interattivo `es-edit-modal` per modificare e salvare in tempo reale dati, bio, ruolo, piede, altezza e club con sync immediato; aggiunta legenda trend per i tre anni (2023, 2024, 2025) nella card "Crescita Stagionale". File: `player-dash.js`, `player-dash.css`, `index.html`, `sw.js`. Cache `PD5`/`LEG2`.
+Feature precedente: Valorizzazione dashboard analitica con dettagli completi e card Guida Metriche.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
