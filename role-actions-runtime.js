@@ -42,6 +42,7 @@
       title: 'Azioni possibili — Osservatore / Scout',
       roleName: 'Osservatore/Scout',
       actions: [
+        { label: 'Schede tecniche candidati (IA)', id: 'act-scout-schede', icon: '📋' },
         { label: 'Valutazione mobile live match', id: 'act-scout-mobile', icon: '📱' },
         { label: 'Nota vocale in testo IA', id: 'act-scout-voice', icon: '🎙️' },
         { label: 'Geolocalizzazione opt-in', id: 'act-scout-geo', icon: '📍' },
@@ -53,6 +54,7 @@
       title: 'Azioni possibili — Match Analyst',
       roleName: 'Match Analyst',
       actions: [
+        { label: 'Schede tecniche candidati (IA)', id: 'act-ma-schede', icon: '📋' },
         { label: 'Compilare report 8 blocchi', id: 'act-ma-report8', icon: '📝' },
         { label: 'Mappa di calore semplificata', id: 'act-ma-heatmap', icon: '🔥' },
         { label: 'Comparatore giocatori AI', id: 'act-ma-compare', icon: '⚖️' },
@@ -64,6 +66,7 @@
       roleName: 'Direttore Sportivo',
       actions: [
         { label: 'Pubblica candidatura & recruiting IA', id: 'act-ds-recruit', icon: '📢' },
+        { label: 'Schede tecniche candidati (IA)', id: 'act-ds-schede', icon: '📋' },
         { label: 'Guida: Come pubblicare candidatura', id: 'act-ds-guide-pub', icon: '📖' },
         { label: 'Secret List stealth DS/Scout', id: 'act-ds-secret', icon: '🔒' },
         { label: 'Vedere carico segnalazioni', id: 'act-ds-workload', icon: '📈' },
@@ -76,6 +79,7 @@
       title: 'Azioni possibili — Procuratore / Agente FIFA',
       roleName: 'Procuratore',
       actions: [
+        { label: 'Schede tecniche profili (IA)', id: 'act-ag-schede', icon: '📋' },
         { label: 'Shortlist svincolati', id: 'act-ag-shortlist', icon: '📋' },
         { label: 'Segui profilo talento', id: 'act-ag-follow', icon: '⭐' },
         { label: 'Richiesta contatto tracciata', id: 'act-ag-contact', icon: '📨' },
@@ -87,6 +91,7 @@
       roleName: 'Club/Dirigente',
       actions: [
         { label: 'Pubblica candidatura & recruiting IA', id: 'act-pres-recruit', icon: '📢' },
+        { label: 'Schede tecniche candidati (IA)', id: 'act-pres-schede', icon: '📋' },
         { label: 'Guida: Come pubblicare candidatura', id: 'act-pres-guide-pub', icon: '📖' },
         { label: 'Creare evento selezione + QR', id: 'act-pres-event', icon: '🎫' },
         { label: 'Delegato temporaneo con scadenza', id: 'act-pres-deleg', icon: '⏱️' },
@@ -100,6 +105,7 @@
       roleName: 'Club/Dirigente',
       actions: [
         { label: 'Pubblica ricerca staff & recruiting IA', id: 'act-dg-recruit', icon: '📢' },
+        { label: 'Schede tecniche candidati (IA)', id: 'act-dg-schede', icon: '📋' },
         { label: 'Guida: Come pubblicare candidatura', id: 'act-dg-guide-pub', icon: '📖' },
         { label: 'Creare evento selezione + QR', id: 'act-dg-event', icon: '🎫' },
         { label: 'Delegato temporaneo con scadenza', id: 'act-dg-deleg', icon: '⏱️' },
@@ -158,6 +164,7 @@
       title: 'Azioni possibili — Settore Giovanile',
       roleName: 'Settore Giovanile',
       actions: [
+        { label: 'Schede tecniche talenti (IA)', id: 'act-yg-schede', icon: '📋' },
         { label: 'Ricerca staff giovanile (IA)', id: 'act-yg-recruit', icon: '📢' },
         { label: 'Guida: Come pubblicare candidatura', id: 'act-yg-guide-pub', icon: '📖' },
         { label: 'Confermare consenso genitoriale', id: 'act-yg-consent', icon: '👨‍👩‍👦' },
@@ -236,6 +243,7 @@
       title: 'Azioni possibili — Club (TC Manager)',
       roleName: 'Club/Dirigente',
       actions: [
+        { label: 'Schede tecniche candidati (IA)', id: 'act-tc-schede', icon: '📋' },
         { label: 'Pubblica posizione di candidatura (IA)', id: 'act-tc-recruit', icon: '📢' },
         { label: 'Guida: Come pubblicare candidatura', id: 'act-tc-guide-pub', icon: '📖' },
         { label: 'Creare evento selezione + QR', id: 'act-tc-event', icon: '🎫' },
@@ -1348,6 +1356,24 @@
             m.style.setProperty('pointer-events', 'auto', 'important');
             document.body.style.overflow = 'hidden';
           }
+        }
+        break;
+
+      // Schede Tecniche Candidati IA
+      case 'act-ds-schede':
+      case 'act-scout-schede':
+      case 'act-ma-schede':
+      case 'act-dg-schede':
+      case 'act-pres-schede':
+      case 'act-yg-schede':
+      case 'act-ag-schede':
+      case 'act-tc-schede':
+        if (typeof window.openSchedeTecniche === 'function') {
+          window.openSchedeTecniche('Cercasi attaccante Under 2005');
+        } else if (window.switchView) {
+          window.switchView('schede', '#schede-tecniche');
+        } else {
+          toast('Apertura Schede Tecniche IA dei Candidati');
         }
         break;
 

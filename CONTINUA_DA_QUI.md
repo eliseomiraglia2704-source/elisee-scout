@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Inserito e attivato lo strumento **`📖 Guida Operativa: Come Pubblicare una Candidatura (Club & Recruiting IA)`** su tutti i ruoli Club e Dirigenza (DS, Presidente, DG, Settore Giovanile, Segretario Generale, TC Manager): manuale interattivo dettagliato per i due macro-blocchi strategici ("Cosa offriamo" e "Cosa richiediamo") con spiegazione del funzionamento della selezione IA automatica e pulsante di avvio diretto della pubblicazione. File: `role-actions-runtime.js`, `index.html`, `sw.js`. Cache `PUB1`.
-Feature precedente: Posizione di Candidatura & Recruiting IA nei ruoli Club.
+Ultimo fatto: Inserita e attivata la funzione **`📋 Scheda Tecnica del Candidato generata dall'AI`** collocata nei ruoli chiave di Scouting e Dirigenza (Direttore Sportivo, Osservatore / Scout, Match Analyst, Direttore Generale, Presidente, Settore Giovanile, Agente FIFA, TC Manager): visualizzazione completa con dati anagrafici, ruolo, contatti autorizzati, esperienze sportive, certificazioni, competenze specialistiche, lingue, disponibilità, allegati/video e livello di compatibilità calcolato dall'IA con riepilogo punti di forza. File: `schede-tecniche.js`, `role-actions-runtime.js`, `index.html`, `sw.js`. Cache `SCH1`.
+Feature precedente: Guida Operativa Pubblicazione Candidatura.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
