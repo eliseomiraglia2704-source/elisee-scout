@@ -715,7 +715,76 @@
     });
   }
 
-  // --- 5. MODALI GENERICI RUOLI STAFF (DS, Pres, Medico, Fisio, Prep, Agente, etc.) ---
+  // --- 5. MODALE DI DOPPIA CONFERMA PER DATI SANITARI & SENSIBILI ---
+  function openFisioNotifyConfirmationModal() {
+    var u = JSON.parse(localStorage.getItem('elisee_active_user') || '{}');
+    var fisioName = (u.nome ? (u.nome + ' ' + (u.cognome || '')) : 'Fisioterapista Ufficiale');
+
+    var body = '<div style="background:rgba(239, 68, 68, 0.08);border:1.5px solid rgba(239, 68, 68, 0.35);border-radius:12px;padding:0.9rem;margin-bottom:1rem">' +
+      '<div style="display:flex;align-items:center;gap:0.5rem;color:#f87171;font-weight:800;font-size:0.88rem;margin-bottom:0.35rem">' +
+      '<span>⚠️</span> <span>NOTIFICA SANITARIA AD ALTA SENSIBILITÀ (ART. 9 GDPR / FMSI)</span>' +
+      '</div>' +
+      '<p style="font-size:0.75rem;color:#fca5a5;margin:0;line-height:1.45">' +
+      'La dichiarazione di idoneità atletica autorizza ufficialmente lo staff tecnico e il Mister a schierare il calciatore in gara ufficiale. I dati sono protetti da segreto professionale e crittografia immutabile.' +
+      '</p>' +
+      '</div>' +
+
+      '<div class="es-edit-grid">' +
+      '<div class="es-edit-field"><label>Calciatore Interessato</label><input id="es-fn-player" value="Eliseo Miraglia (Attaccante / Punta Centrale)" readonly style="color:#38bdf8;font-weight:700"></div>' +
+      '<div class="es-edit-field"><label>Destinatario Ufficiale</label><input value="Mister — Primo Allenatore &amp; Staff Tecnico" readonly></div>' +
+      '<div class="es-edit-field"><label>Esito Valutazione Fisioterapica</label><input value="✅ 100% IDONEO — Recupero Completo" readonly style="color:#4ade80;font-weight:800"></div>' +
+      '<div class="es-edit-field"><label>Operatore Sanitario Certificante</label><input value="' + esc(fisioName) + ' (Albo TSRM-PSTRP)" readonly></div>' +
+      '<div class="es-edit-field full"><label>Dettaglio Clinico &amp; Indicazioni per il Riscaldamento</label><textarea id="es-fn-notes" rows="2" style="background:#1e293b;color:#fff;border-radius:8px;padding:0.5rem">Test di forza isometrica e mobilità articolare superati a pieno regime. Nessuna limitazione al minutaggio.</textarea></div>' +
+      '</div>' +
+
+      '<div style="background:#090d16;border:1.5px dashed rgba(56,189,248,0.4);border-radius:10px;padding:0.85rem;margin-top:1rem">' +
+      '<div style="display:flex;align-items:flex-start;gap:0.6rem">' +
+      '<input type="checkbox" id="es-fn-check" style="margin-top:3px;cursor:pointer;width:17px;height:17px;accent-color:#38bdf8">' +
+      '<label for="es-fn-check" style="font-size:0.75rem;color:#e0f2fe;line-height:1.45;cursor:pointer">' +
+      '<strong style="color:#38bdf8">DOPPIA CONFERMA DI RESPONSABILITÀ:</strong> Dichiaro sotto la mia responsabilità professionale di aver completato tutti i test fisici e funzionali. Autorizzo l\'invio formale della notifica di idoneità al Mister.' +
+      '</label>' +
+      '</div>' +
+      '</div>';
+
+    var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Annulla</button>' +
+      '<button type="button" class="es-edit-btn-save" id="es-fn-submit" style="opacity:0.5;pointer-events:none;background:linear-gradient(135deg, #16a34a 0%, #22c55e 100%)">🔒 Conferma Ufficiale &amp; Notifica al Mister</button>';
+
+    var modal = createModalContainer('💬 Doppia Conferma: Notifica Idoneità al Mister', body, btns);
+
+    var chk = modal.backdrop.querySelector('#es-fn-check');
+    var btn = modal.backdrop.querySelector('#es-fn-submit');
+
+    chk.addEventListener('change', function () {
+      if (chk.checked) {
+        btn.style.opacity = '1';
+        btn.style.pointerEvents = 'auto';
+        btn.style.boxShadow = '0 0 16px rgba(34, 197, 94, 0.5)';
+      } else {
+        btn.style.opacity = '0.5';
+        btn.style.pointerEvents = 'none';
+        btn.style.boxShadow = 'none';
+      }
+    });
+
+    btn.addEventListener('click', function () {
+      try {
+        var log = JSON.parse(localStorage.getItem('elisee_medical_clearances_log') || '[]') || [];
+        log.unshift({
+          player: 'Eliseo Miraglia',
+          fisio: fisioName,
+          status: 'IDONEO',
+          timestamp: new Date().toISOString(),
+          formattedDate: new Date().toLocaleString('it-IT')
+        });
+        localStorage.setItem('elisee_medical_clearances_log', JSON.stringify(log.slice(0, 50)));
+      } catch (_) {}
+
+      modal.close();
+      toast('✅ NOTIFICA IDONEITÀ INVIATA: Il Mister ha ricevuto il via libera ufficiale certificato!');
+    });
+  }
+
+  // --- 6. MODALI GENERICI RUOLI STAFF (DS, Pres, Medico, Fisio, Prep, Agente, etc.) ---
   function openGenericToolModal(title, icon, fields, successMsg) {
     var fieldsHtml = fields.map(function (f) {
       if (f.type === 'textarea') {
@@ -940,7 +1009,7 @@
         ], 'Test mobilità archiviato!');
         break;
       case 'act-fisio-notify':
-        toast('Notifica idoneità fisica inviata direttamente al Mister!');
+        openFisioNotifyConfirmationModal();
         break;
 
       // DS

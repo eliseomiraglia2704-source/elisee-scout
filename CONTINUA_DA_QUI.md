@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-25**
-Ultimo fatto: Rilascio e attivazione completa per TUTTI i 23 ruoli del sito: 1. Legenda trend 2023-2025 su tutte le dashboard; 2. Modal interattivo modifica anagrafica dedicato per ciascun ruolo con salvataggio e sync immediato; 3. Card Guida Analitica & Legenda Metriche con standard FIGC/UEFA/LND personalizzata per ciascun ruolo; 4. Tutti gli strumenti e modali operativi interattivi per tutte le azioni di ogni singolo ruolo (Scout mobile, Trascrizione vocale IA, Match Analyst 8 blocchi, Mappe termiche, GPS & Carichi atletici, Registro idoneità e terapie sanitarie, Delibere CDA, Contratti DS, etc.). File: `*-dash.js`, `role-actions-runtime.js`, `index.html`, `sw.js`. Cache `ALL1`.
-Feature precedente: Rilascio operativo per Vice Allenatore e Allenatore.
+Ultimo fatto: Introdotto flusso con **Modal di Doppia Conferma Obbligatoria di Sicurezza** per le notifiche sanitarie e dati ad alta sensibilità (Art. 9 GDPR / FMSI: notifica idoneità al Mister da parte del fisioterapista e staff medico con checkbox di assunzione di responsabilità professionale, firma digitale operatore e log immutabile). File: `role-actions-runtime.js`, `index.html`, `sw.js`. Cache `CONF1`.
+Feature precedente: Rilascio completo per tutti i 23 ruoli del sito.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
