@@ -312,6 +312,7 @@
   <link rel="stylesheet" href="messaggi.css?v=20260820_DARK1">
   <link rel="stylesheet" href="mercato-hub.css?v=20260820_MKT2">
   <link rel="stylesheet" href="schede-tecniche.css?v=20260820_ST3">
+  <link rel="stylesheet" href="creator-role-switcher.css?v=20260825_CR1">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
@@ -1632,6 +1633,9 @@
             </div>
             <a href="#" id="btn-area-riservata" onclick="event.preventDefault(); event.stopPropagation(); if(window.openAreaRiservataModal){ window.openAreaRiservataModal(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="user-cog" style="width:16px; height:16px; color:#38bdf8;"></i> La Mia Area Riservata
+            </a>
+            <a href="#" id="btn-creator-roles" onclick="event.preventDefault(); event.stopPropagation(); if(window.EliseeCreatorRole){ window.EliseeCreatorRole.open(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#facc15; font-size:0.83rem; font-weight:700; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(250,204,21,0.12)'" onmouseleave="this.style.background='transparent'">
+              <span style="font-size:1rem; line-height:1;">⚡</span> Simulatore Ruoli Creatore
             </a>
             <a href="#messaggi-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.openUserMessages){ window.openUserMessages(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="mail" style="width:16px; height:16px; color:#38bdf8;"></i> Messaggi B2B
@@ -4987,6 +4991,7 @@
   <script src="mappa-club.js?v=20260820_FORM1"></script>
   <script src="chi-segui.js?v=20260820_FORM1"></script>
   <script src="verifica-account.js?v=20260820_VF2"></script>
+  <script src="creator-role-switcher.js?v=20260825_CR1"></script>
   <script>
     /* FORCED INLINE HOT-PATCH: Overrides PDF export, specific report HTML & modal close functions instantly at runtime */
     (function() {
