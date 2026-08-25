@@ -64,6 +64,7 @@
       roleName: 'Direttore Sportivo',
       actions: [
         { label: 'Pubblica candidatura & recruiting IA', id: 'act-ds-recruit', icon: '📢' },
+        { label: 'Guida: Come pubblicare candidatura', id: 'act-ds-guide-pub', icon: '📖' },
         { label: 'Secret List stealth DS/Scout', id: 'act-ds-secret', icon: '🔒' },
         { label: 'Vedere carico segnalazioni', id: 'act-ds-workload', icon: '📈' },
         { label: 'Import da foglio di calcolo', id: 'act-ds-import', icon: '📊' },
@@ -86,6 +87,7 @@
       roleName: 'Club/Dirigente',
       actions: [
         { label: 'Pubblica candidatura & recruiting IA', id: 'act-pres-recruit', icon: '📢' },
+        { label: 'Guida: Come pubblicare candidatura', id: 'act-pres-guide-pub', icon: '📖' },
         { label: 'Creare evento selezione + QR', id: 'act-pres-event', icon: '🎫' },
         { label: 'Delegato temporaneo con scadenza', id: 'act-pres-deleg', icon: '⏱️' },
         { label: 'Vedere carico segnalazioni', id: 'act-pres-load', icon: '📈' },
@@ -98,6 +100,7 @@
       roleName: 'Club/Dirigente',
       actions: [
         { label: 'Pubblica ricerca staff & recruiting IA', id: 'act-dg-recruit', icon: '📢' },
+        { label: 'Guida: Come pubblicare candidatura', id: 'act-dg-guide-pub', icon: '📖' },
         { label: 'Creare evento selezione + QR', id: 'act-dg-event', icon: '🎫' },
         { label: 'Delegato temporaneo con scadenza', id: 'act-dg-deleg', icon: '⏱️' },
         { label: 'Vedere carico segnalazioni', id: 'act-dg-load', icon: '📈' },
@@ -156,6 +159,7 @@
       roleName: 'Settore Giovanile',
       actions: [
         { label: 'Ricerca staff giovanile (IA)', id: 'act-yg-recruit', icon: '📢' },
+        { label: 'Guida: Come pubblicare candidatura', id: 'act-yg-guide-pub', icon: '📖' },
         { label: 'Confermare consenso genitoriale', id: 'act-yg-consent', icon: '👨‍👩‍👦' },
         { label: 'Opposizione rapida profilo minore', id: 'act-yg-oppose', icon: '🛡️' },
         { label: 'Crea Open Day Giovanile + QR', id: 'act-yg-openday', icon: '🎫' },
@@ -176,6 +180,7 @@
       roleName: 'Segretario Generale',
       actions: [
         { label: 'Pubblica posizione aperta (IA)', id: 'act-sg-recruit', icon: '📢' },
+        { label: 'Guida: Come pubblicare candidatura', id: 'act-sg-guide-pub', icon: '📖' },
         { label: 'Tesseramenti LND / FIGC', id: 'act-sg-tess', icon: '🏢' },
         { label: 'Registro verbali CDA e assemblee', id: 'act-sg-verb', icon: '🏛️' },
         { label: 'Contratti e accordi economici', id: 'act-sg-contr', icon: '✍️' }
@@ -232,6 +237,7 @@
       roleName: 'Club/Dirigente',
       actions: [
         { label: 'Pubblica posizione di candidatura (IA)', id: 'act-tc-recruit', icon: '📢' },
+        { label: 'Guida: Come pubblicare candidatura', id: 'act-tc-guide-pub', icon: '📖' },
         { label: 'Creare evento selezione + QR', id: 'act-tc-event', icon: '🎫' },
         { label: 'Delegato temporaneo con scadenza', id: 'act-tc-deleg', icon: '⏱️' },
         { label: 'Vedere carico segnalazioni', id: 'act-tc-load', icon: '📈' },
@@ -990,7 +996,79 @@
     bindListEvents();
   }
 
-  // --- 7. MODALI GENERICI RUOLI STAFF (DS, Pres, Medico, Fisio, Prep, Agente, etc.) ---
+  // --- 7. MODALE GUIDA: COME PUBBLICARE UNA CANDIDATURA & RECRUITING IA ---
+  function openGuidaPubblicaCandidaturaModal() {
+    var body = '<div style="background:rgba(56,189,248,0.08);border:1.5px solid rgba(56,189,248,0.25);border-radius:12px;padding:0.9rem;margin-bottom:1rem">' +
+      '<div style="display:flex;align-items:center;gap:0.5rem;color:#38bdf8;font-weight:800;font-size:0.9rem;margin-bottom:0.35rem">' +
+        '<span>📢</span> <span>MANUALE PUBBLICAZIONE CANDIDATURE &amp; RICERCA PERSONALE CLUB</span>' +
+      '</div>' +
+      '<p style="font-size:0.76rem;color:#cbd5e1;margin:0;line-height:1.5">' +
+        'Per pubblicare una nuova richiesta di personale, i profili Club devono accedere alla sezione <strong>Pubblica candidatura</strong> e compilare tutti i campi richiesti articolati in due macro-blocchi strategici.' +
+      '</p>' +
+      '</div>' +
+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;margin-bottom:1rem">' +
+        '<div style="background:#090d16;border:1px solid rgba(56,189,248,0.2);border-radius:10px;padding:0.85rem">' +
+          '<h4 style="margin:0 0 0.45rem;color:#38bdf8;font-size:0.85rem;display:flex;align-items:center;gap:0.4rem"><span>🎁</span> 1. Cosa offriamo</h4>' +
+          '<p style="margin:0 0 0.5rem;font-size:0.72rem;color:#94a3b8">Descrivi in dettaglio l\'opportunità proposta al candidato:</p>' +
+          '<ul style="margin:0;padding-left:1.1rem;font-size:0.73rem;color:#e2e8f0;line-height:1.5">' +
+            '<li><b>Tipologia di incarico:</b> Tesseramento, ingaggio, provino, collaborazione staff, stage.</li>' +
+            '<li><b>Compenso o rimborso:</b> Rimborso spese, premio o accordo economico da definire.</li>' +
+            '<li><b>Durata collaborazione:</b> Stagione sportiva 2026/27, pluriennale o breve termine.</li>' +
+            '<li><b>Orari e giorni:</b> Frequenza settimanale e orari degli allenamenti.</li>' +
+            '<li><b>Benefit &amp; Vantaggi:</b> Vitto, alloggio, kit tecnico ufficiale, copertura sanitaria.</li>' +
+            '<li><b>Possibilità di crescita:</b> Prospettiva prima squadra o avanzamento di ruolo.</li>' +
+          '</ul>' +
+        '</div>' +
+
+        '<div style="background:#090d16;border:1px solid rgba(34,197,94,0.2);border-radius:10px;padding:0.85rem">' +
+          '<h4 style="margin:0 0 0.45rem;color:#4ade80;font-size:0.85rem;display:flex;align-items:center;gap:0.4rem"><span>🎯</span> 2. Cosa richiediamo / Il profilo</h4>' +
+          '<p style="margin:0 0 0.5rem;font-size:0.72rem;color:#94a3b8">Specifica i requisiti del candidato ideale per l\'IA:</p>' +
+          '<ul style="margin:0;padding-left:1.1rem;font-size:0.73rem;color:#e2e8f0;line-height:1.5">' +
+            '<li><b>Ruolo ricercato:</b> Ruolo in campo (es. Punta centrale) o nello Staff tecnico.</li>' +
+            '<li><b>Competenze tecniche:</b> Caratteristiche tattiche, atletiche o video-analitiche.</li>' +
+            '<li><b>Esperienza minima:</b> Anni o stagioni preferibili nella categoria.</li>' +
+            '<li><b>Qualifiche &amp; Patentini:</b> UEFA A/B/C, Match Analyst FIGC, Laurea Motoria.</li>' +
+            '<li><b>Caratteristiche attitudinali:</b> Serietà, leadership, disciplina e spirito di squadra.</li>' +
+            '<li><b>Requisiti extra:</b> Disponibilità oraria, lingue parlate o domicilio in zona.</li>' +
+          '</ul>' +
+        '</div>' +
+      '</div>' +
+
+      '<div style="background:rgba(129,140,248,0.08);border:1px solid rgba(129,140,248,0.25);border-radius:10px;padding:0.85rem">' +
+        '<div style="display:flex;align-items:center;gap:0.45rem;color:#a5b4fc;font-weight:800;font-size:0.82rem;margin-bottom:0.25rem">' +
+          '<span>🤖</span> <span>FUNZIONALITÀ SMART: SELEZIONE &amp; CANDIDATURA AUTOMATICA IA</span>' +
+        '</div>' +
+        '<p style="margin:0;font-size:0.73rem;color:#cbd5e1;line-height:1.5">' +
+          'Attivando l\'opzione <strong>Selezione IA</strong>, l\'intelligenza artificiale esamina in tempo reale l\'intero database dei profili iscritti alla piattaforma, confronta le competenze con i requisiti e <strong>candida automaticamente i profili più compatibili</strong>. Le schede tecniche restano archiviate direttamente nella candidatura, senza scambio di e-mail esterne.' +
+        '</p>' +
+      '</div>';
+
+    var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi Guida</button>' +
+      '<button type="button" class="es-edit-btn-save" id="es-guide-open-pub" style="background:linear-gradient(135deg,#0284c7,#0369a1)">🚀 Apri Modulo Pubblica Candidatura</button>';
+
+    var modal = createModalContainer('📖 Come Pubblicare una Candidatura (Guida Club)', body, btns);
+
+    modal.backdrop.querySelector('#es-guide-open-pub').addEventListener('click', function () {
+      modal.close();
+      if (typeof window.openPubblicaAnnuncioModal === 'function') {
+        window.openPubblicaAnnuncioModal();
+      } else {
+        var m = document.getElementById('modal-pubblica-annuncio');
+        if (m) {
+          m.classList.add('is-open', 'open', 'active');
+          m.style.setProperty('display', 'flex', 'important');
+          m.style.setProperty('z-index', '99999', 'important');
+          m.style.setProperty('opacity', '1', 'important');
+          m.style.setProperty('visibility', 'visible', 'important');
+          m.style.setProperty('pointer-events', 'auto', 'important');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+    });
+  }
+
+  // --- 8. MODALI GENERICI RUOLI STAFF (DS, Pres, Medico, Fisio, Prep, Agente, etc.) ---
   function openGenericToolModal(title, icon, fields, successMsg) {
     var fieldsHtml = fields.map(function (f) {
       if (f.type === 'textarea') {
@@ -1271,6 +1349,16 @@
             document.body.style.overflow = 'hidden';
           }
         }
+        break;
+
+      // Guida: Come pubblicare una candidatura
+      case 'act-ds-guide-pub':
+      case 'act-dg-guide-pub':
+      case 'act-pres-guide-pub':
+      case 'act-yg-guide-pub':
+      case 'act-sg-guide-pub':
+      case 'act-tc-guide-pub':
+        openGuidaPubblicaCandidaturaModal();
         break;
 
       // Presidente, DG, Settore Giovanile, Segretario, DS, TC
