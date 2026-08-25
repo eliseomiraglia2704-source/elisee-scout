@@ -10,7 +10,9 @@
 .es-pd {
   display: grid;
   grid-template-columns: 56px 1fr;
-  min-height: calc(100vh - 72px);
+  min-height: 100vh;
+  padding-top: 84px !important;
+  box-sizing: border-box;
   background: #0b1220;
   color: #e2e8f0;
   font-family: 'Outfit', Inter, system-ui, sans-serif;
@@ -21,8 +23,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.85rem 0 1rem;
+  padding: 1rem 0 1.2rem;
   gap: 0.45rem;
+  position: sticky;
+  top: 84px;
+  height: calc(100vh - 84px);
+  box-sizing: border-box;
 }
 .es-pd-rail button {
   width: 36px;
@@ -38,7 +44,11 @@
 .es-pd-rail button.is-on,
 .es-pd-rail button:hover { background: rgba(56, 189, 248, 0.14); color: #7dd3fc; }
 .es-pd-rail .es-pd-rail-end { margin-top: auto; }
-.es-pd-body { padding: 0.85rem 1rem 1.2rem; min-width: 0; }
+.es-pd-body {
+  padding: 1rem 1.4rem 2rem;
+  min-width: 0;
+  box-sizing: border-box;
+}
 .es-pd-head {
   display: flex;
   justify-content: space-between;
