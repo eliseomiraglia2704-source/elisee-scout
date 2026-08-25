@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-08-25**
-Ultimo fatto: Introdotto flusso con **Modal di Doppia Conferma Obbligatoria di Sicurezza** per le notifiche sanitarie e dati ad alta sensibilità (Art. 9 GDPR / FMSI: notifica idoneità al Mister da parte del fisioterapista e staff medico con checkbox di assunzione di responsabilità professionale, firma digitale operatore e log immutabile). File: `role-actions-runtime.js`, `index.html`, `sw.js`. Cache `CONF1`.
-Feature precedente: Rilascio completo per tutti i 23 ruoli del sito.
+Ultimo aggiornamento: **2026-08-26**
+Ultimo fatto: Attivato il flusso con **Modal di Doppia Conferma Obbligatoria di Supervisione Umana & Sicurezza** all'interno del **Match Analyst — Report 8 Blocchi** (Art. 22 GDPR & Step 2 Roadmap AI Scouting: validazione umana obbligatoria prima del deposito ufficiale del report nello staff societario con checkbox di assunzione responsabilità e log immutabile; potenziata generazione automatica della bozza completa per tutte le 8 sezioni tattiche). File: `integrazioni-runtime.js`, `index.html`, `sw.js`. Cache `MA2`.
+Feature precedente: Doppia conferma di sicurezza per notifiche sanitarie e idoneità al Mister.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

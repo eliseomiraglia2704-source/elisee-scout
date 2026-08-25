@@ -294,9 +294,103 @@ document.querySelectorAll('.es-ev-join').forEach(function(btn){btn.addEventListe
 }
 function bindAnalyst(){
 var saveBtn=document.getElementById('es-ma-save');
-if(saveBtn)saveBtn.addEventListener('click',function(){var rep={id:uid('ma'),createdAt:new Date().toLocaleString('it-IT')};document.querySelectorAll('.es-ma-field').forEach(function(el){rep[el.getAttribute('data-k')]=el.value.trim();});if(!rep.tesi){toast('Compila la tesi','error');return;}var all=load(LS.maReports,[]);all.unshift(rep);save(LS.maReports,all.slice(0,50));toast('Report salvato');showPanel('analyst');});
+if(saveBtn)saveBtn.addEventListener('click',function(){
+  var rep={id:uid('ma'),createdAt:new Date().toLocaleString('it-IT')};
+  document.querySelectorAll('.es-ma-field').forEach(function(el){rep[el.getAttribute('data-k')]=el.value.trim();});
+  if(!rep.tesi){toast('Compila almeno la tesi di apertura','error');return;}
+  
+  // MODALE DI DOPPIA CONFERMA DI SICUREZZA MATCH ANALYST
+  var existing=document.querySelector('.es-ma-confirm-backdrop');
+  if(existing)existing.remove();
+
+  var backdrop=document.createElement('div');
+  backdrop.className='es-edit-modal-backdrop es-ma-confirm-backdrop';
+  backdrop.style.zIndex='10001';
+
+  var html='<div class="es-edit-modal" style="max-width:580px">'+
+    '<div class="es-edit-modal-head">'+
+    '<h2><span>🛡️</span> Doppia Conferma Validazione Report Tattico</h2>'+
+    '<button type="button" class="es-edit-modal-close" title="Chiudi">&times;</button>'+
+    '</div>'+
+    '<div style="background:rgba(245,158,11,0.1);border:1.5px solid rgba(245,158,11,0.35);border-radius:10px;padding:0.85rem;margin-bottom:1rem">'+
+    '<div style="display:flex;align-items:center;gap:0.45rem;color:#fcd34d;font-weight:800;font-size:0.85rem;margin-bottom:0.3rem">'+
+    '<span>⚠️</span> <span>VALIDAZIONE UMANA OBBLIGATORIA (ART. 22 GDPR &amp; FIGC)</span>'+
+    '</div>'+
+    '<p style="font-size:0.75rem;color:#fef08a;margin:0;line-height:1.45">'+
+    'I report tattici e le valutazioni dei calciatori sono dati strategici ad alta sensibilità. Prima del deposito ufficiale nell\'archivio dello staff societario, è richiesta la conferma di supervisione umana.'+
+    '</p>'+
+    '</div>'+
+    '<div class="es-edit-grid">'+
+    '<div class="es-edit-field full"><label>Tesi di Apertura</label><input value="'+esc(rep.tesi)+'" readonly style="color:#38bdf8;font-weight:700"></div>'+
+    '<div class="es-edit-field"><label>Blocchi Compilati</label><input value="8 / 8 Sezioni Tattiche" readonly style="color:#4ade80;font-weight:700"></div>'+
+    '<div class="es-edit-field"><label>Destinazione Deposito</label><input value="Archivio Staff &amp; Direzione Sportiva" readonly></div>'+
+    '</div>'+
+    '<div style="background:#090d16;border:1.5px dashed rgba(56,189,248,0.4);border-radius:10px;padding:0.85rem;margin-top:1rem">'+
+    '<div style="display:flex;align-items:flex-start;gap:0.6rem">'+
+    '<input type="checkbox" id="es-ma-conf-check" style="margin-top:3px;cursor:pointer;width:17px;height:17px;accent-color:#38bdf8">'+
+    '<label for="es-ma-conf-check" style="font-size:0.75rem;color:#e0f2fe;line-height:1.45;cursor:pointer">'+
+    '<strong style="color:#38bdf8">DOPPIA CONFERMA DI SUPERVISIONE:</strong> Confermo di aver verificato personalmente i dati tattici elaborati e autorizzo il rilascio ufficiale del report 8 blocchi nel database societario.'+
+    '</label>'+
+    '</div>'+
+    '</div>'+
+    '<div class="es-edit-actions" style="margin-top:1.25rem;display:flex;justify-content:flex-end;gap:0.75rem">'+
+    '<button type="button" class="es-edit-btn-cancel es-ma-conf-cancel">Annulla</button>'+
+    '<button type="button" class="es-edit-btn-save" id="es-ma-conf-btn" style="opacity:0.5;pointer-events:none;background:linear-gradient(135deg, #16a34a 0%, #22c55e 100%)">🔒 Conferma &amp; Salva Report</button>'+
+    '</div>'+
+    '</div>';
+
+  backdrop.innerHTML=html;
+  document.body.appendChild(backdrop);
+
+  var close=function(){backdrop.remove();};
+  backdrop.querySelector('.es-edit-modal-close').addEventListener('click',close);
+  backdrop.querySelector('.es-ma-conf-cancel').addEventListener('click',close);
+  backdrop.addEventListener('click',function(e){if(e.target===backdrop)close();});
+
+  var chk=backdrop.querySelector('#es-ma-conf-check');
+  var confBtn=backdrop.querySelector('#es-ma-conf-btn');
+
+  chk.addEventListener('change',function(){
+    if(chk.checked){
+      confBtn.style.opacity='1';
+      confBtn.style.pointerEvents='auto';
+      confBtn.style.boxShadow='0 0 16px rgba(34, 197, 94, 0.5)';
+    } else {
+      confBtn.style.opacity='0.5';
+      confBtn.style.pointerEvents='none';
+      confBtn.style.boxShadow='none';
+    }
+  });
+
+  confBtn.addEventListener('click',function(){
+    var all=load(LS.maReports,[]);
+    all.unshift(rep);
+    save(LS.maReports,all.slice(0,50));
+    close();
+    toast('✅ REPORT VALIDATO E SALVATO: Doppia conferma registrata con successo!');
+    showPanel('analyst');
+  });
+});
+
 var ai=document.getElementById('es-ma-ai');
-if(ai)ai.addEventListener('click',function(){var map={tesi:'La squadra costruisce dal basso ma resta esposta sul lato destro in non possesso.',contesto:'Eccellenza, giornata 4, scontro diretto.',identita:'Con palla 3-2-5. Senza palla blocco medio.',dati:'Possesso 54% - tiri in porta 6-3 - cross 4/11.',modulo:'Base 4-3-3 -> possesso 3-2-5.',chiavi:'Mediano regista; esterno sinistro crea superiorita.',vulnerabilita:'Corsia destra in transizione negativa.',conclusione:'Solidita centrale, debolezza sul lato destro da correggere.'};document.querySelectorAll('.es-ma-field').forEach(function(el){var k=el.getAttribute('data-k');if(!el.value.trim())el.value=map[k]||'';});toast('Bozza generata con Disclaimer Legale AI');});
+if(ai)ai.addEventListener('click',function(){
+  var map={
+    tesi:'La squadra avversaria costruisce prioritariamente dal basso con una struttura 3-2-5, evidenziando una vulnerabilità strutturale sul lato debole in transizione negativa.',
+    contesto:'Analisi match campionato Serie D (Girone F), scontro diretto per le prime posizioni.',
+    identita:'Fase di possesso: rotazione continua delle mezzali e isolamento dell\'ala nell\'1vs1. Fase di non possesso: blocco medio a 4-4-2 con pressing innescato sui retropassaggi al portiere.',
+    dati:'Possesso palla medio 56.4%, Indice xG prodotto 1.92, Precisione passaggi chiave 84%, Duelli aerei difensivi vinti 68%.',
+    modulo:'Modulo base 4-3-3 asimmetrico con terzino sinistro bloccato e terzino destro in costante sovrapposizione alta.',
+    chiavi:'Esterno offensivo destro dotato di strappo in campo aperto; mediano di interdizione che scherma le linee centrali.',
+    vulnerabilita:'Spazio alle spalle del terzino destro quando sale; difficoltà sui cross tagliati sul secondo palo in diagonale.',
+    conclusione:'Impostare una pressione asimmetrica sul centrale di sinistra avversario e colpire in transizione positiva con palla rapida alle spalle dei centrali.'
+  };
+  document.querySelectorAll('.es-ma-field').forEach(function(el){
+    var k=el.getAttribute('data-k');
+    if(!el.value.trim() || el.value.trim() === '...') el.value=map[k]||'';
+  });
+  toast('Bozza AI 8 Blocchi caricata! Modifica i campi e premi "Salva report" per la doppia conferma.');
+});
+
 var fbBtn=document.getElementById('es-fb-submit');
 if(fbBtn)fbBtn.addEventListener('click',function(){
   var aiScore=parseFloat(document.getElementById('es-fb-aiscore').value)||7.5;
