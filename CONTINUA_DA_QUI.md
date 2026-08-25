@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Confinata la visibilità del badge fluttuante **`⚡ Ruolo Creatore`** (`#es-creator-trigger`): nascosto di default all'avvio e attivato **solo ed esclusivamente dopo l'apertura del Simulatore Ruoli Creatore** dal menu a tendina utente. File: `creator-role-switcher.js`, `creator-role-switcher.css`, `index.html`, `sw.js`. Cache `SIM1`.
-Feature precedente: Geolocalizzazione Club e coordinamento 2901 squadre sulla Mappa.
+Ultimo fatto: Riorganizzazione concettuale radicale tra **`Curriculum`** e **`Chi siamo`**: spostati i contenuti aziendali (roadmap 2023-2026, 715 agenti IA, conformità GDPR Art. 13/30 e Riforma dello Sport, value proposition) in **Chi siamo** (`#about`). Trasformato **Curriculum** (`#dashboard-skills`) in un autentico **Curriculum Sportivo Personale** per l'atleta/utente: header identità reale (`.cv-hero-card`), statistiche di campo (presenze, minuti, gol/assist, Vmax GPS), skill tecniche e atletiche reali, percorso carriera con timeline squadre giocate, player video highlights certificati 30s con telemetria GPS, verifiche profilo individuali e barra CTA di chiusura (Contatta, Secret List, Scarica PDF). Risolto bug spazio vuoto nero. File: `index.html`, `style.css`, `app.js`, `sw.js`. Cache `CV1`.
+Feature precedente: Visibilità condizionale pulsante Ruolo Creatore.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

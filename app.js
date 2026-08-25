@@ -6718,6 +6718,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const link = document.querySelector('.nav-link[data-view="pillars"]');
         if (link) link.classList.add('active');
         if (!targetHash) setHashSafe('#dashboard-skills', opts);
+        try { if (typeof hydrateCurriculumView === 'function') hydrateCurriculumView(); } catch (_) {}
       } else if (viewType === 'formazione' || targetHash === '#formazione-portal') {
         showEl('view-formazione');
         if (!targetHash) setHashSafe('#formazione-portal', opts);
@@ -6946,6 +6947,59 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     renderPeopleCards();
   };
+
+  function hydrateCurriculumView() {
+    try {
+      var u = JSON.parse(localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data') || '{}') || {};
+      var prof = JSON.parse(localStorage.getItem('elisee_profilo_personale') || '{}') || {};
+      
+      var name = (u.nome ? (u.nome + (u.cognome ? ' ' + u.cognome : '')) : (u.name || prof.nome || 'Eliseo Miraglia')).trim();
+      var roleCampo = prof.ruoloCampo || prof.ruolo || u.ruolo || 'Attaccante / Ala Sinistra';
+      var club = prof.squadra || u.squadra || u.club || 'US Foggia 1920';
+      var cat = prof.categoria || u.categoria || 'Serie D (Girone H)';
+      var birth = prof.annoNascita || prof.anno || '2004';
+      var age = prof.eta || '22';
+      var foot = prof.piede || 'Destro';
+      var height = prof.altezza || '183 cm';
+      var weight = prof.peso || '75 kg';
+      var nat = prof.nazionalita || 'Italia';
+
+      var elName = document.getElementById('cv-name');
+      if (elName) elName.textContent = name;
+
+      var elAvatar = document.getElementById('cv-avatar');
+      if (elAvatar) {
+        var parts = name.split(/\s+/);
+        var init = ((parts[0] || 'E')[0] + (parts[1] || parts[0] || 'M')[0]).toUpperCase();
+        elAvatar.textContent = init;
+      }
+
+      var elRole = document.getElementById('cv-role-badge');
+      if (elRole) elRole.textContent = roleCampo;
+
+      var elClub = document.getElementById('cv-club');
+      if (elClub) elClub.textContent = '🏟️ ' + club;
+
+      var elCat = document.getElementById('cv-category');
+      if (elCat) elCat.textContent = '🏆 ' + cat;
+
+      var elBirth = document.getElementById('cv-chip-birth');
+      if (elBirth) elBirth.textContent = '🎂 Nato nel ' + birth + ' (' + age + ' anni)';
+
+      var elFoot = document.getElementById('cv-chip-foot');
+      if (elFoot) elFoot.textContent = '👟 Piede ' + foot;
+
+      var elPhys = document.getElementById('cv-chip-physical');
+      if (elPhys) elPhys.textContent = '📏 ' + height + ' · ' + weight;
+
+      var elNat = document.getElementById('cv-chip-nat');
+      if (elNat) elNat.textContent = '🇮🇹 ' + nat;
+
+    } catch (err) {
+      console.warn('hydrateCurriculumView err', err);
+    }
+  }
+  window.hydrateCurriculumView = hydrateCurriculumView;
 
   function renderPeopleCards() {
     const container = document.getElementById('people-cards-container');
