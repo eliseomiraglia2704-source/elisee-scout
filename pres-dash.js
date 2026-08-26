@@ -726,7 +726,7 @@
               '</div>' +
             '</div>' +
 
-            '<div class="es-pres-standings-card">' +
+            '<div class="es-pres-standings-meta">' +
               '<div class="es-pres-standing-row"><span class="es-pres-standing-highlight">' + esc(data.position) + '</span> · <span>' + esc(data.points) + ' punti</span></div>' +
               '<div class="es-pres-standing-sub">' + esc(data.matchDay) + ' · ' + esc(data.season) + '</div>' +
             '</div>' +

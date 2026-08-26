@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: **Fix Card Gestione Club sbloccate & Bordi rettilinei e dritti (4px)**: 1. *Sbloccate e attivate le card di Gestione Club*: aggiunti gli stili mancanti per `.es-pres-modal-overlay` e `.es-pres-modal-sheet` con z-index elevato `99999999`, backdrop blur e layout centrato; la card *Staff Tecnico* apre direttamente la sub-view `training-center`, la card *Trattative di Mercato* apre il dettaglio negoziazioni con bottone di apertura Hub Mercato, la card *Rating Rosa* apre il breakdown tecnico con CTA per la rosa; 2. *Bordi card rettilinei e dritti*: eliminati tutti i border-radius arrotondati (da `14px`, `10px`, `8px` a `border-radius: 4px !important`) su card, header, frame, tabelle, box e modali in linea con il design enterprise B2B; 3. Attivate anche le card *Settore Giovanile* e *Sviluppo Atleti*. File: `pres-dash.js`, `pres-dash.css`, `index.html`, `sw.js`. Cache `FIX_CARDS1`.
-Feature precedente: Fix navigazione tasto indietro browser nelle schermate di dettaglio.
+Ultimo fatto: **Classifica Header: Rimozione contenitore card (puro testo sobrio)**: Rimosso il riquadro/card (`background`, `border`, `box-shadow`, `padding`) per i dati di classifica in alto a destra nell'header club; ora `2° Posto · 62 punti` e `28ª Giornata · Stagione 2026/27` sono renderizzati come **puro testo pulito e allineato a destra**, perfettamente integrato nel banner senza card sovrapposte. File: `pres-dash.js`, `pres-dash.css`, `index.html`, `sw.js`. Cache `PLAIN_TXT1`.
+Feature precedente: Fix Card Gestione Club sbloccate & Bordi rettilinei e dritti (4px).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
