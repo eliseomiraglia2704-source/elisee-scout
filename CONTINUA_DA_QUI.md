@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Risolto il problema del taglio dell'header superiore nell'**`Area Presidente`** (`pres-dash.css`, `index.html`): aggiunto `padding-top: 86px` a `.es-pres-suite` e `padding-top: 96px` alle schermate di dettaglio `.es-pres-detail-screen` per dare respiro sotto la navbar fissa ed evitare qualsiasi sovrapposizione visiva dello stemma, del nome del club e dei badge. File: `pres-dash.css`, `index.html`, `sw.js`. Cache `PRES_PAD1`.
-Feature precedente: Refactoring minimale Area Presidente.
+Ultimo fatto: Rifinitura completa di tutti i 6 punti dell'**`👑 Area Presidente (Presidential Dashboard B2B)`**: 1. Banner OTP inferiore armonizzato con la palette dark/blu SaaS (`verifica-account.css`); 2. Implementato **Scrollspy in tempo reale** e jump scroll animato con offset sulla barra di navigazione a tab fissa (`pres-dash.js`, `pres-dash.css`); 3. Sostituita l'icona del Centro Allenamento con icona lineare outline **Cronometro / Stopwatch sportivo**; 4. Club branding coerente su *Foggia Calcio 1920 (Serie D · Girone H)* con stemma SVG fallback; 5. Incorniciato lo snippet Classifica in alto a destra con card bordata e ombreggiata; 6. Uniformate tutte le unità di misura numeriche nelle KPI card (`.es-pres-unit`). File: `pres-dash.js`, `pres-dash.css`, `verifica-account.css`, `index.html`, `sw.js`. Cache `PRES_REF2`.
+Feature precedente: Spaziatura padding-top per header superiore.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
