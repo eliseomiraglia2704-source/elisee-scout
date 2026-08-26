@@ -311,7 +311,7 @@
 
             '<div class="es-pres-detail-box">' +
               '<h3>Capienza &amp; Omologazione Impianto</h3>' +
-              '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:8px; padding:1rem; margin-bottom:1.2rem;">' +
+              '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem; margin-bottom:1.2rem;">' +
                 '<div style="font-size:0.75rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Capienza Ufficiale Certificata</div>' +
                 '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8; margin:0.3rem 0;">' + esc(data.office.stadium.capacity) + '</div>' +
                 '<p style="font-size:0.8rem; color:#64748b; margin:0;">Dato anagrafico modificabile solo previa delibera CPV / FIGC.</p>' +
@@ -471,7 +471,7 @@
               '</div>' +
               '<h4 style="font-size:1.2rem; font-weight:800; color:#fff; margin:0 0 0.3rem;">' + esc(sp.main.name) + '</h4>' +
               '<p style="color:#94a3b8; font-size:0.82rem; margin-bottom:0.8rem;">' + esc(sp.main.tier) + '</p>' +
-              '<div style="background:#040810; border-radius:8px; padding:0.75rem; margin-bottom:0.8rem;">' +
+              '<div style="background:#040810; border-radius:4px; padding:0.75rem; margin-bottom:0.8rem;">' +
                 '<div style="font-size:0.72rem; color:#94a3b8;">Valore Contrattuale</div>' +
                 '<div style="font-size:1.3rem; font-weight:800; color:#38bdf8;">' + (canSeeFinances ? esc(sp.main.value) : 'Riservato') + '</div>' +
               '</div>' +
@@ -486,7 +486,7 @@
               '</div>' +
               '<h4 style="font-size:1.2rem; font-weight:800; color:#fff; margin:0 0 0.3rem;">' + esc(sp.tech.name) + '</h4>' +
               '<p style="color:#94a3b8; font-size:0.82rem; margin-bottom:0.8rem;">' + esc(sp.tech.tier) + '</p>' +
-              '<div style="background:#040810; border-radius:8px; padding:0.75rem; margin-bottom:0.8rem;">' +
+              '<div style="background:#040810; border-radius:4px; padding:0.75rem; margin-bottom:0.8rem;">' +
                 '<div style="font-size:0.72rem; color:#94a3b8;">Valore Fornitura / Kit</div>' +
                 '<div style="font-size:1.3rem; font-weight:800; color:#38bdf8;">' + (canSeeFinances ? esc(sp.tech.value) : 'Riservato') + '</div>' +
               '</div>' +
@@ -501,7 +501,7 @@
               '</div>' +
               '<h4 style="font-size:1.2rem; font-weight:800; color:#fff; margin:0 0 0.3rem;">' + esc(sp.facility.name) + '</h4>' +
               '<p style="color:#94a3b8; font-size:0.82rem; margin-bottom:0.8rem;">' + esc(sp.facility.tier) + '</p>' +
-              '<div style="background:#040810; border-radius:8px; padding:0.75rem; margin-bottom:0.8rem;">' +
+              '<div style="background:#040810; border-radius:4px; padding:0.75rem; margin-bottom:0.8rem;">' +
                 '<div style="font-size:0.72rem; color:#94a3b8;">Valore Annuo</div>' +
                 '<div style="font-size:1.3rem; font-weight:800; color:#38bdf8;">' + (canSeeFinances ? esc(sp.facility.value) : 'Riservato') + '</div>' +
               '</div>' +
@@ -616,7 +616,7 @@
               data.competitions.scheduleMatches.map(function (m) {
                 var borderCol = m.status === 'W' ? '#34d399' : (m.status === 'D' ? '#94a3b8' : (m.status === 'L' ? '#ef4444' : '#38bdf8'));
                 return (
-                  '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-left:3px solid ' + borderCol + '; border-radius:8px; padding:0.85rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; cursor:pointer;" class="es-pres-schedule-row">' +
+                  '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-left:3px solid ' + borderCol + '; border-radius:4px; padding:0.85rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; cursor:pointer;" class="es-pres-schedule-row">' +
                     '<div style="display:flex; align-items:center; gap:1rem;">' +
                       '<span class="es-pres-status es-pres-status-neutral" style="font-size:0.7rem;">' + (m.type === 'H' ? 'Casa (H)' : 'Trasferta (A)') + '</span>' +
                       '<div>' +
@@ -664,7 +664,7 @@
             '<div class="es-pres-grid-2">' +
               data.staff.members.map(function (m) {
                 return (
-                  '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:8px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
+                  '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
                     '<div>' +
                       '<div style="font-size:0.92rem; font-weight:700; color:#fff;">' + esc(m.name) + '</div>' +
                       '<div style="font-size:0.75rem; color:#38bdf8; margin-top:0.1rem;">' + esc(m.role) + '</div>' +
@@ -682,7 +682,7 @@
             '<div style="display:flex; flex-direction:column; gap:0.6rem;">' +
               data.trainingWeek.map(function (tw) {
                 return (
-                  '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:8px; padding:0.9rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem;">' +
+                  '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.9rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem;">' +
                     '<div>' +
                       '<div style="font-size:0.95rem; font-weight:700; color:#38bdf8;">' + esc(tw.day) + ' <span style="font-size:0.8rem; color:#94a3b8; font-weight:400;">(' + esc(tw.time) + ')</span></div>' +
                       '<div style="font-size:0.82rem; color:#cbd5e1; margin-top:0.25rem;"><b>Focus seduta:</b> ' + esc(tw.focus) + '</div>' +
@@ -964,7 +964,7 @@
             '</div>' +
 
             // Presidi di Conformità Sobri in linea unica
-            '<div style="background:#090e17; border:1px solid rgba(148,163,184,0.15); border-radius:8px; padding:0.85rem 1.2rem; margin-top:1rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.75rem;">' +
+            '<div style="background:#090e17; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1.2rem; margin-top:1rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.75rem;">' +
               '<div style="font-size:0.82rem; font-weight:600; color:#cbd5e1;">Presidi di Conformità &amp; Sicurezza:</div>' +
               '<div style="font-size:0.82rem; color:#94a3b8;">' +
                 data.governance.trustBadges.map(function (b) { return esc(b); }).join(' · ') +
@@ -1211,56 +1211,125 @@
     window.removeEventListener('scroll', updateScrollspy);
     window.addEventListener('scroll', updateScrollspy, { passive: true });
 
-    // Rating Rosa Card Modal
+    // 1. Rating Rosa Card Modal
     var cardRating = mount.querySelector('#card-pres-rating');
     if (cardRating) {
       cardRating.onclick = function () {
         var html =
           '<p style="color:#cbd5e1; font-size:0.88rem; margin-bottom:1rem;">Analisi tecnica della rosa basata su minutaggio effettivo e parametri federali:</p>' +
           '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem;">' +
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:8px; padding:1rem;">' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem;">' +
               '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">INDICE RENDIMENTO ROSA</div>' +
               '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8;">' + data.squadRating.score + ' <span class="es-pres-unit">/ 100</span></div>' +
             '</div>' +
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:8px; padding:1rem;">' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem;">' +
               '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">VALORE SCOUTING INTERNO</div>' +
               '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8;">' + data.squadRating.marketValue + '</div>' +
             '</div>' +
           '</div>' +
-          '<div style="color:#94a3b8; font-size:0.82rem;">• Età media: <b>' + data.squadRating.avgAge + '</b><br>• Copertura minutaggio: <b>' + data.squadRating.minutesCoverage + '</b><br>• Atleti in organico: <b>' + data.squadRating.totalPlayers + '</b></div>';
+          '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.9rem; margin-bottom:1.2rem;">' +
+            '<div style="color:#cbd5e1; font-size:0.84rem; line-height:1.6;">' +
+              '• <b>Età media rosa:</b> ' + data.squadRating.avgAge + '<br>' +
+              '• <b>Copertura minutaggio titolari:</b> ' + data.squadRating.minutesCoverage + '<br>' +
+              '• <b>Atleti totali in organico:</b> ' + data.squadRating.totalPlayers + ' tesserati FIGC' +
+            '</div>' +
+          '</div>' +
+          '<button type="button" class="es-pres-btn-primary" id="btn-pres-modal-squad" style="width:100%; border-radius:4px;">Gestisci Rosa Atleti &rsaquo;</button>';
         openDetailModal('Rating Rosa & Parametri Tecnici', ICONS.users, html);
+        var bSquad = document.getElementById('btn-pres-modal-squad');
+        if (bSquad) {
+          bSquad.onclick = function() {
+            var m = document.getElementById('es-pres-detail-overlay');
+            if (m) m.remove();
+            openSubView('training-center');
+          };
+        }
       };
     }
 
-    // Trattative Card Modal
+    // 2. Trattative Card Modal
     var cardTransfers = mount.querySelector('#card-pres-transfers');
     if (cardTransfers) {
       cardTransfers.onclick = function () {
         var listHtml = data.transfers.items.map(function (t) {
           return (
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:8px; padding:0.85rem 1rem; margin-bottom:0.6rem; display:flex; justify-content:space-between; align-items:center;">' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; margin-bottom:0.6rem; display:flex; justify-content:space-between; align-items:center;">' +
               '<div><h4 style="font-size:0.95rem; font-weight:700; color:#fff; margin:0;">' + esc(t.player) + ' (' + esc(t.role) + ')</h4><div style="font-size:0.78rem; color:#94a3b8; margin-top:0.15rem;">Club: ' + esc(t.club) + ' · Tipo: ' + esc(t.type) + '</div></div>' +
               '<span class="es-pres-status es-pres-status-ok">' + esc(t.status) + '</span>' +
             '</div>'
           );
         }).join('');
+        listHtml += '<button type="button" class="es-pres-btn-primary" id="btn-pres-modal-hub" style="width:100%; margin-top:0.75rem; border-radius:4px;">Apri Hub Mercato Ufficiale &rsaquo;</button>';
         openDetailModal('Trattative di Mercato & Svincoli', ICONS.arrows, listHtml);
+        var bHub = document.getElementById('btn-pres-modal-hub');
+        if (bHub) {
+          bHub.onclick = function() {
+            var m = document.getElementById('es-pres-detail-overlay');
+            if (m) m.remove();
+            if (typeof window.switchView === 'function') window.switchView('mercato', '#mercato-hub');
+          };
+        }
       };
     }
 
-    // Staff Tecnico Card Modal
+    // 3. Staff Tecnico Card -> Apre schermata completa Centro Sportivo & Staff Tecnico
     var cardStaff = mount.querySelector('#card-pres-staff');
     if (cardStaff) {
       cardStaff.onclick = function () {
-        var listHtml = data.staff.members.map(function (m) {
-          return (
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:8px; padding:0.85rem 1rem; margin-bottom:0.55rem; display:flex; justify-content:space-between; align-items:center;">' +
-              '<div><h5 style="font-size:0.92rem; font-weight:700; color:#fff; margin:0;">' + esc(m.name) + '</h5><div style="font-size:0.75rem; color:#38bdf8;">' + esc(m.role) + ' (' + esc(m.patent) + ') · Scadenza: ' + esc(m.contractExp) + '</div></div>' +
-              '<span class="' + (m.isWarning ? 'es-pres-status es-pres-status-warning' : 'es-pres-status es-pres-status-ok') + '">' + esc(m.status) + '</span>' +
-            '</div>'
-          );
-        }).join('');
-        openDetailModal('Organigramma Staff Tecnico', ICONS.briefcase, listHtml);
+        openSubView('training-center');
+      };
+    }
+
+    // 4. Settore Giovanile Card Modal
+    var cardYouth = mount.querySelector('#card-pres-youth');
+    if (cardYouth) {
+      cardYouth.onclick = function () {
+        var html =
+          '<p style="color:#cbd5e1; font-size:0.88rem; margin-bottom:1rem;">Dati e conformità del vivaio giovanile e quota under:</p>' +
+          '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem;">' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem;">' +
+              '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">UNDER IN PRIMA SQUADRA</div>' +
+              '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8;">' + data.youth.underInRoster + ' <span class="es-pres-unit">atleti</span></div>' +
+            '</div>' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem;">' +
+              '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">TOTALI NEL VIVAIO</div>' +
+              '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8;">' + data.youth.academyTotal + ' <span class="es-pres-unit">giovani</span></div>' +
+            '</div>' +
+          '</div>' +
+          '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.9rem;">' +
+            '<div style="color:#cbd5e1; font-size:0.84rem; line-height:1.6;">' +
+              '• <b>Obbligo regolamentare LND:</b> minimo ' + data.youth.mandatoryLnd + ' in distinta<br>' +
+              '• <b>Under costantemente titolari:</b> ' + data.youth.underStarters + '<br>' +
+              '• <b>Stato conformità:</b> <span style="color:#22c55e; font-weight:700;">100% Conforme alle direttive federali</span>' +
+            '</div>' +
+          '</div>';
+        openDetailModal('Settore Giovanile & Fuoriquota', ICONS.sprout, html);
+      };
+    }
+
+    // 5. Sviluppo Atleti Card Modal
+    var cardDev = mount.querySelector('#card-pres-dev');
+    if (cardDev) {
+      cardDev.onclick = function () {
+        var html =
+          '<p style="color:#cbd5e1; font-size:0.88rem; margin-bottom:1rem;">Schede tecniche di valutazione e progressione atleti:</p>' +
+          '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem; margin-bottom:1rem;">' +
+            '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">SCHEDE TECNICHE ATTIVE</div>' +
+            '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8;">' + data.athleteDevelopment.activeCards + ' <span class="es-pres-unit">schede complete</span></div>' +
+          '</div>' +
+          '<div style="color:#cbd5e1; font-size:0.84rem; line-height:1.6; margin-bottom:1.2rem;">' +
+            'Monitoraggio continuo dei parametri atletici, tecnici e biometrici dei giovani atleti con rating progressivo.' +
+          '</div>' +
+          '<button type="button" class="es-pres-btn-primary" id="btn-pres-modal-schede" style="width:100%; border-radius:4px;">Apri Archivio Schede Tecniche &rsaquo;</button>';
+        openDetailModal('Sviluppo Atleti & Schede Tecniche', ICONS.growth, html);
+        var bSchede = document.getElementById('btn-pres-modal-schede');
+        if (bSchede) {
+          bSchede.onclick = function() {
+            var m = document.getElementById('es-pres-detail-overlay');
+            if (m) m.remove();
+            if (typeof window.switchView === 'function') window.switchView('schede', '#schede-tecniche');
+          };
+        }
       };
     }
 
@@ -1274,11 +1343,11 @@
         }
         var html =
           '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem;">' +
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:8px; padding:1rem;">' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem;">' +
               '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">SALDO CASSA ATTUALE</div>' +
               '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8;">' + data.office.finances.cashBalance + '</div>' +
             '</div>' +
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:8px; padding:1rem;">' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem;">' +
               '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">MONTE INGAGGI MENSILE</div>' +
               '<div style="font-size:1.6rem; font-weight:800; color:#cbd5e1;">' + data.office.finances.monthlyPayroll + '</div>' +
             '</div>' +
@@ -1298,7 +1367,7 @@
       cardMail.onclick = function () {
         var listHtml = data.office.mail.items.map(function (m) {
           return (
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:8px; padding:0.85rem 1rem; margin-bottom:0.6rem;">' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; margin-bottom:0.6rem;">' +
               '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.25rem;"><span style="font-size:0.75rem; font-weight:700; color:#38bdf8;">' + esc(m.from) + '</span><span style="font-size:0.72rem; color:#94a3b8;">' + esc(m.date) + '</span></div>' +
               '<h5 style="font-size:0.92rem; font-weight:700; color:#ffffff; margin:0;">' + esc(m.subject) + '</h5>' +
             '</div>'
