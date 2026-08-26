@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Sviluppate le **`6 Schermate di Dettaglio dell'Area Presidente`** (1. Stadio con tariffe reali, capienza certificata e controlli sicurezza; 2. Statistiche Club a 2 tab con Record di club e Storico di lega; 3. Sponsor a 3 categorie con accordi allegati e bacheca B2B; 4. Classifica ufficiale LND con filtro categoria ed evidenziazione Club; 5. Calendario gare con designazioni arbitrali AIA ufficiali; 6. Centro Allenamento con staff tesserato UEFA/FIGC e piano settimanale reale) con header verde smeraldo e pulsante 'Indietro' coerente. File: `pres-dash.js`, `pres-dash.css`, `index.html`, `sw.js`. Cache `PRES_DET1`.
-Feature precedente: Suite B2B Area Presidente con 6 Macro-sezioni.
+Ultimo fatto: Allineata la modale **`Verifica Email OTP`** (`verifica-account.css`) alla palette del sito Elisee Scout: eliminato il bianco accecante e sostituito con sfondo **Dark Obsidian Glass** (`linear-gradient(180deg, #0f172a 0%, #090e17 100%)`), bordo cyan luminoso, titoli bianchi, caselle cifre scure con focus teal `#0d9488` e pulsante di verifica in gradiente smeraldo. File: `verifica-account.css`, `index.html`, `sw.js`. Cache `OTP3`.
+Feature precedente: 6 Schermate di dettaglio Area Presidente.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
