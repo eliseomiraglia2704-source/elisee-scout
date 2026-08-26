@@ -1,9 +1,11 @@
 /* ============================================================
-   ELISEE SCOUT — Area Presidente (Presidential Hub)
+   ELISEE SCOUT — Area Alta Dirigenza (Executive Hub)
+   Accesso Riservato a: Presidente, Vice Presidente, Direttore Generale, Tesoriere del Club, Segretario Generale
    5 Macro-aree Attive: CLUB | SQUADRA | ALLENAMENTI | PARTITE | LAVAGNA
    Incluso:
-   - Hub Eventi & Tasto + Crea Evento
-   - Car Sharing per Genitori, Atleti & Staff (Trasferte / Allenamenti)
+   - Gestione SQUADRA con + Invita Membri, Membri, Finanze (Contributi), Statistiche
+   - Hub Eventi & + Crea Evento
+   - Car Sharing per Genitori & Trasferte
    - Gestione Ferie/Malattia & Riepilogo Eventi
    - Gestione Presenze con Like (Ci sono) / Dislike (Non ci sono) & Modale Votanti
    - Modale Statistiche Partite & Modale Nuovo Calciatore + Lavagna Tattica
@@ -11,7 +13,7 @@
 (function () {
   'use strict';
 
-  var activeTab = 'allenamenti';
+  var activeTab = 'squadra';
 
   function esc(s) {
     return String(s == null ? '' : s)
@@ -25,29 +27,53 @@
     } catch (_) { return {}; }
   }
 
-  function isPres(u) {
+  function isExecutive(u) {
     u = u || userObj();
     var blob = [u.staffRole, u.ruoloDettagliato, u.ruolo, u.role, u.siteRoleFamily, u.staffProfile && u.staffProfile.fieldRole]
       .filter(Boolean).join(' ').toLowerCase();
-    return /presidente|presidenza|club president/.test(blob);
+    return /presidente|vice presidente|direttore generale|tesoriere|segretario generale|club manager|amministratore|dirigente/.test(blob);
+  }
+
+  function getExecutiveRoleTitle(u) {
+    u = u || userObj();
+    var blob = [u.staffRole, u.ruoloDettagliato, u.ruolo, u.role].filter(Boolean).join(' ').toLowerCase();
+    if (/tesoriere/.test(blob)) return 'Tesoriere del Club | Amministrazione';
+    if (/direttore generale/.test(blob)) return 'Direttore Generale | Vertice Esecutivo';
+    if (/vice presidente/.test(blob)) return 'Vice Presidente | Alta Dirigenza';
+    if (/segretario generale|club manager/.test(blob)) return 'Segretario Generale | Club Manager';
+    return 'Presidente | Admin Club';
   }
 
   function getPresData() {
     var u = userObj();
     var def = {
-      clubName: u.squadra || u.club || 'Elisee',
+      clubName: u.squadra || u.club || 'Foggia',
+      teamCategory: 'Squadra-base',
       matricola: u.matricola || '13943 / FIGC',
       sede: u.sede || 'Viale Giuseppe Mazzini, 35/C Foggia FG',
       stadio: u.stadio || 'Stadio Comunale Pino Zaccheria',
       telefono: u.telefono || '+39 0881 742911',
-      presName: (u.nome ? (u.nome + ' ' + (u.cognome || '')) : (u.name || 'The King')).trim(),
-      presRole: 'Presidente &amp; Proprietario Club',
+      presName: (u.nome ? (u.nome + ' ' + (u.cognome || '')) : (u.name || 'The King (Eliseo Miraglia)')).trim(),
+      presRole: getExecutiveRoleTitle(u),
       presDoc: 'Verificato 100%',
-      presTessera: 'FIGC-PRES-001',
-      presScadenza: 'Vitalizio / Esecutivo',
+      presTessera: 'FIGC-DIR-001',
+      presScadenza: 'Esecutivo / Stagione in corso',
       logoUrl: 'immagini/squadre-loghi/foggia.png',
       teamPhotoUrl: 'immagini/04-workspace-scout/scout-workspace.svg?v=20260730_225504',
+      finances: {
+        balance: 14850.00,
+        feesPaid: 22,
+        feesTotal: 24,
+        sponsorsIncome: 8500.00,
+        monthlyExpenses: 3200.00,
+        transactions: [
+          { date: '25/08/2026', desc: 'Quota iscrizione stagione - Famiglia Fumagalli', type: 'in', amount: 350.00 },
+          { date: '22/08/2026', desc: 'Sponsor Tecnico - Acconto Stagione', type: 'in', amount: 2500.00 },
+          { date: '18/08/2026', desc: 'Materiale sportivo & palloni FIGC', type: 'out', amount: 680.00 }
+        ]
+      },
       roster: [
+        { id: 'p-7', num: 7, name: 'Eliseo Miraglia', role: 'Ala Sinistra', birth: '2004', cert: 'Regolare', status: 'disp', app: 28 },
         { id: 'p-1', num: 1, name: 'Marco Fumagalli', role: 'Portiere', birth: '2001', cert: 'Regolare', status: 'disp', app: 28 },
         { id: 'p-2', num: 2, name: 'Alessandro Silvestro', role: 'Terzino Destro', birth: '2002', cert: 'Regolare', status: 'disp', app: 25 },
         { id: 'p-5', num: 5, name: 'Luigi Carillo', role: 'Difensore Centrale', birth: '1996', cert: 'Regolare', status: 'disp', app: 28 },
@@ -56,12 +82,14 @@
         { id: 'p-8', num: 8, name: 'Moses Odjer', role: 'Mediano', birth: '1996', cert: 'Regolare', status: 'disp', app: 27 },
         { id: 'p-4', num: 4, name: 'Jacopo Petermann', role: 'Regista', birth: '1994', cert: 'Regolare', status: 'disp', app: 26 },
         { id: 'p-10', num: 10, name: 'Diego Peralta', role: 'Trequartista', birth: '1996', cert: 'Regolare', status: 'disp', app: 28 },
-        { id: 'p-7', num: 7, name: 'Eliseo Miraglia', role: 'Ala Sinistra', birth: '2004', cert: 'Regolare', status: 'disp', app: 28 },
         { id: 'p-11', num: 11, name: 'Roberto Ogunseye', role: 'Attaccante Centrale', birth: '1995', cert: 'Regolare', status: 'disp', app: 27 },
         { id: 'p-9', num: 9, name: 'Alexis Ferrante', role: 'Seconda Punta', birth: '1995', cert: 'Regolare', status: 'disp', app: 25 }
       ],
       staffMembers: [
         { id: 'st-pres', name: 'The King (Eliseo Miraglia)', role: 'Presidente' },
+        { id: 'st-vp', name: 'Vice Presidente', role: 'Vice Presidente' },
+        { id: 'st-dg', name: 'Direttore Generale', role: 'Direttore Generale' },
+        { id: 'st-tres', name: 'Tesoriere del Club', role: 'Tesoriere & Amministrazione' },
         { id: 'st-coach', name: 'Allenatore Prima Squadra', role: 'Allenatore' },
         { id: 'st-vice', name: 'Vice Allenatore', role: 'Vice Allenatore' },
         { id: 'st-prep', name: 'Luca Rossi', role: 'Preparatore Atletico' },
@@ -120,7 +148,7 @@
         { name: 'Antonio Gentile', role: 'Fisioterapista', reason: 'Ferie programmate', from: '05/09/2026', to: '08/09/2026', status: 'Approvato' }
       ],
       partite: [
-        { id: 'match-1', date: 'Domenica · Ore 15:00', opponent: 'Elisee vs Taranto', comp: 'Campionato Serie D · Girone H', stadium: 'Stadio Pino Zaccheria', status: 'Prossima Gara', conv: '22 Convocati' }
+        { id: 'match-1', date: 'Domenica · Ore 15:00', opponent: 'Foggia vs Taranto', comp: 'Campionato Serie D · Girone H', stadium: 'Stadio Pino Zaccheria', status: 'Prossima Gara', conv: '22 Convocati' }
       ],
       tacticalSchemes: [
         {
@@ -157,7 +185,7 @@
 
   var TAB_DESCS = {
     club: 'Organizzazione societaria, dirigenti e staff tecnico.',
-    squadra: 'Gestione della rosa, ruoli e dati dei giocatori.',
+    squadra: 'Gestione esecutiva della squadra, membri, finanze e statistiche.',
     allenamenti: 'Pianificazione eventi societari, car sharing genitori e allenamenti.',
     partite: 'Calendario, convocazioni e gestione delle partite.',
     lavagna: 'Strumenti tattici per schemi, analisi e strategie.'
@@ -172,8 +200,8 @@
     var html =
       '<div class="es-mister-hub">' +
         '<div class="es-mister-trial-bar">' +
-          '<div class="es-mister-trial-text"><span>👑</span> Stai operando come Presidente &amp; Vertice Societario.</div>' +
-          '<button type="button" class="es-mister-btn-sub" onclick="if(window.showToast){ window.showToast(\'👑 Accesso Club Master 100% Attivo.\', \'success\'); }">Abbonati</button>' +
+          '<div class="es-mister-trial-text"><span>👑</span> Stai operando come <b>Alta Dirigenza Club</b> (Presidente, Vice, DG, Tesoriere).</div>' +
+          '<button type="button" class="es-mister-btn-sub" onclick="if(window.showToast){ window.showToast(\'👑 Accesso Amministratore Club 100% Attivo.\', \'success\'); }">Abbonati</button>' +
         '</div>' +
 
         '<div class="es-mister-wrap">' +
@@ -181,7 +209,7 @@
             '<div class="es-mister-club-main">' +
               '<div class="es-mister-crest-badge"><img src="' + esc(data.logoUrl) + '" alt="' + esc(data.clubName) + '" onerror="this.src=\'immagini/squadre-loghi/napoli.png\';"></div>' +
               '<div>' +
-                '<div class="es-mister-club-tags"><span class="es-mister-tag es-mister-tag-primary">PRIMA SQUADRA</span><span class="es-mister-tag es-mister-tag-dark">Stagione in corso</span><span class="es-mister-tag es-mister-tag-gold">Presidente | Admin Club</span></div>' +
+                '<div class="es-mister-club-tags"><span class="es-mister-tag es-mister-tag-primary">PRIMA SQUADRA</span><span class="es-mister-tag es-mister-tag-dark">Stagione in corso</span><span class="es-mister-tag es-mister-tag-gold">' + esc(data.presRole) + '</span></div>' +
                 '<h1 class="es-mister-club-title">' + esc(data.clubName) + '</h1>' +
                 '<p class="es-mister-club-desc" id="pres-tab-desc">' + esc(TAB_DESCS[activeTab]) + '</p>' +
               '</div>' +
@@ -190,8 +218,8 @@
 
           '<nav class="es-mister-nav-bar" role="tablist">' +
             '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'club' ? 'is-active' : '') + '" data-tab="club">🛡️ Club</button>' +
-            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'squadra' ? 'is-active' : '') + '" data-tab="squadra">👥 Squadra</button>' +
-            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'allenamenti' ? 'is-active' : '') + '" data-tab="allenamenti">📅 Eventi &amp; Allenamenti</button>' +
+            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'squadra' ? 'is-active' : '') + '" data-tab="squadra">👥 Squadra &amp; Finanze</button>' +
+            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'allenamenti' ? 'is-active' : '') + '" data-tab="allenamenti">📅 Eventi &amp; Car Sharing</button>' +
             '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'partite' ? 'is-active' : '') + '" data-tab="partite">⚽ Partite</button>' +
             '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'lavagna' ? 'is-active' : '') + '" data-tab="lavagna">🖌️ Lavagna</button>' +
           '</nav>' +
@@ -234,7 +262,7 @@
         '</div>' +
         '<div class="es-mister-card-white">' +
           '<div class="es-mister-card-header">' +
-            '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">👑</span><div><h3 class="es-mister-card-title">Staff Tecnico &amp; Presidenza</h3><p class="es-mister-card-sub">Organigramma e nomine del Presidente</p></div></div>' +
+            '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">👑</span><div><h3 class="es-mister-card-title">Alta Dirigenza &amp; Staff</h3><p class="es-mister-card-sub">Organigramma societario completo</p></div></div>' +
             '<button type="button" class="es-mister-circle-btn" id="btn-pres-add-staff">+</button>' +
           '</div>' +
           '<div class="es-mister-staff-box">' +
@@ -246,26 +274,79 @@
     }
 
     if (tab === 'squadra') {
-      var playersHtml = (data.roster || []).map(function (p, idx) {
+      var allMembers = (data.roster || []).concat(data.staffMembers || []);
+      var totalMembersCount = allMembers.length;
+
+      var memberThumbsHtml = (data.roster || []).map(function (m) {
         return (
-          '<div class="es-mister-player-card">' +
-            '<div class="es-mister-player-num">' + p.num + '</div>' +
-            '<div class="es-mister-player-info"><h4 class="es-mister-player-name">' + esc(p.name) + '</h4><div class="es-mister-player-role">' + esc(p.role) + ' · Anno ' + esc(p.birth) + '</div><div style="font-size:0.72rem; color:#64748b;">🟢 Tesserato FIGC · ' + p.app + ' Presenze</div></div>' +
-            '<button type="button" class="es-mister-circle-btn" style="width:30px; height:30px; font-size:0.8rem;" data-pres-edit-player="' + idx + '">✏️</button>' +
+          '<div class="es-member-thumb-card" onclick="if(window.showToast){ window.showToast(\'👤 Scheda atleta: ' + esc(m.name) + ' (' + esc(m.role) + ')\', \'info\'); }">' +
+            '<div class="es-member-thumb-avatar">👤</div>' +
+            '<h5 class="es-member-thumb-name">' + esc(m.name) + '</h5>' +
+            '<div class="es-member-thumb-role">' + esc(m.role) + '</div>' +
           '</div>'
         );
       }).join('');
 
       return (
         '<div class="es-mister-card-white">' +
-          '<div class="es-mister-card-header">' +
-            '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">👥</span><div><h3 class="es-mister-card-title">Squadra</h3><p class="es-mister-card-sub">' + esc(data.clubName) + ' · Prima Squadra (' + (data.roster || []).length + ' Giocatori in rosa)</p></div></div>' +
-            '<div class="es-mister-card-actions">' +
-              '<button type="button" class="es-mister-circle-btn" id="btn-pres-stats" title="Statistiche partite">📊</button>' +
-              '<button type="button" class="es-mister-circle-btn" id="btn-pres-add-player" title="Nuovo calciatore">+</button>' +
+          // Switcher Bar: Foggia · Squadra-base ⇆
+          '<div class="es-club-switcher-bar">' +
+            '<div class="es-club-switch-info">' +
+              '<span style="font-size:1.1rem;">🛡️</span>' +
+              '<div><b style="font-size:0.95rem; color:#0f172a;">' + esc(data.clubName) + '</b> <span class="es-club-switch-badge">' + esc(data.teamCategory) + '</span></div>' +
+            '</div>' +
+            '<button type="button" class="btn btn-outline-pill" id="btn-switch-team" style="padding:0.25rem 0.65rem; font-size:0.85rem; font-weight:800; border:1px solid #cbd5e1;">⇆</button>' +
+          '</div>' +
+
+          // Titolo SQUADRA
+          '<h2 class="es-events-hub-title"><span style="font-size:1.8rem;">🛡️</span> SQUADRA</h2>' +
+
+          // Grande Pulsante Nero + Invita membri
+          '<button type="button" class="es-btn-create-event-big" id="btn-pres-invite-members">' +
+            '<span>+</span> Invita membri' +
+          '</button>' +
+
+          // Sezione Membri
+          '<div class="es-events-section-header">' +
+            '<h3 class="es-events-section-title">Membri</h3>' +
+            '<a class="es-events-view-all-link" id="link-view-all-members">Visualizza tutto</a>' +
+          '</div>' +
+
+          // Carousel Membri
+          '<div class="es-member-carousel">' +
+            memberThumbsHtml +
+          '</div>' +
+
+          // 3 Quick Action Cards: Membri, Finanze, Statistiche
+          '<div class="es-events-quick-grid" style="margin-top:1.2rem;">' +
+            // Card 1: Membri
+            '<div class="es-events-quick-card" id="card-action-members">' +
+              '<div>' +
+                '<div class="es-quick-card-icon">👥</div>' +
+                '<h4 class="es-quick-card-title">Membri</h4>' +
+                '<p class="es-quick-card-sub">' + totalMembersCount + ' Membri nel club</p>' +
+              '</div>' +
+            '</div>' +
+
+            // Card 2: Finanze
+            '<div class="es-events-quick-card" id="card-action-finances">' +
+              '<div>' +
+                '<div class="es-quick-card-icon">€</div>' +
+                '<h4 class="es-quick-card-title">Finanze</h4>' +
+                '<p class="es-quick-card-sub">Gestione contributi &amp; cassa</p>' +
+              '</div>' +
+            '</div>' +
+
+            // Card 3: Statistiche
+            '<div class="es-events-quick-card" id="card-action-stats">' +
+              '<div>' +
+                '<div class="es-quick-card-icon">📊</div>' +
+                '<h4 class="es-quick-card-title">Statistiche</h4>' +
+                '<p class="es-quick-card-sub">Analizza la tua squadra</p>' +
+              '</div>' +
             '</div>' +
           '</div>' +
-          '<div class="es-mister-roster-grid">' + playersHtml + '</div>' +
+
         '</div>'
       );
     }
@@ -300,21 +381,17 @@
 
       return (
         '<div class="es-mister-card-white">' +
-          // Header EVENTI
           '<h2 class="es-events-hub-title"><span style="font-size:1.8rem;">📅</span> EVENTI</h2>' +
 
-          // Grande pulsante nero + Crea evento
           '<button type="button" class="es-btn-create-event-big" id="btn-pres-create-event">' +
             '<span>+</span> Crea evento' +
           '</button>' +
 
-          // Sezione Prossimo Evento
           '<div class="es-events-section-header">' +
             '<h3 class="es-events-section-title">Prossimo evento</h3>' +
             '<a class="es-events-view-all-link" id="link-view-all-events">Visualizza tutto</a>' +
           '</div>' +
 
-          // Card Prossimo Evento (TeamPlus)
           '<div class="es-training-event-card" id="pres-card-' + nextEvent.id + '">' +
             '<div class="es-training-head-banner">' +
               '<div class="es-training-date-block">' +
@@ -341,33 +418,15 @@
             '</div>' +
           '</div>' +
 
-          // 3 Quick Action Cards: Riepilogo, Ferie/Malattia, Car Sharing
           '<div class="es-events-quick-grid">' +
-            // Card 1: Riepilogo evento
             '<div class="es-events-quick-card" id="card-action-summary">' +
-              '<div>' +
-                '<div class="es-quick-card-icon">📅</div>' +
-                '<h4 class="es-quick-card-title">Riepilogo evento</h4>' +
-                '<p class="es-quick-card-sub">' + (data.trainingsList && data.trainingsList.length > 0 ? (data.trainingsList.length + ' eventi in programma') : 'Nessun evento questo mese...') + '</p>' +
-              '</div>' +
+              '<div><div class="es-quick-card-icon">📅</div><h4 class="es-quick-card-title">Riepilogo evento</h4><p class="es-quick-card-sub">' + (data.trainingsList && data.trainingsList.length > 0 ? (data.trainingsList.length + ' eventi in programma') : 'Nessun evento...') + '</p></div>' +
             '</div>' +
-
-            // Card 2: Ferie/Malattia
             '<div class="es-events-quick-card" id="card-action-leaves">' +
-              '<div>' +
-                '<div class="es-quick-card-icon">➕</div>' +
-                '<h4 class="es-quick-card-title">Ferie/Malattia</h4>' +
-                '<p class="es-quick-card-sub">' + (leavesCount > 0 ? (leavesCount + ' assenza registrata') : "Nessun'assenza") + '</p>' +
-              '</div>' +
+              '<div><div class="es-quick-card-icon">➕</div><h4 class="es-quick-card-title">Ferie/Malattia</h4><p class="es-quick-card-sub">' + (leavesCount > 0 ? (leavesCount + ' assenza registrata') : "Nessun'assenza") + '</p></div>' +
             '</div>' +
-
-            // Card 3: Car sharing
             '<div class="es-events-quick-card" id="card-action-carsharing">' +
-              '<div>' +
-                '<div class="es-quick-card-icon">🚗</div>' +
-                '<h4 class="es-quick-card-title">Car sharing</h4>' +
-                '<p class="es-quick-card-sub">' + (carsCount > 0 ? (carsCount + ' auto disponibili questa settimana') : '0 questa settimana') + '</p>' +
-              '</div>' +
+              '<div><div class="es-quick-card-icon">🚗</div><h4 class="es-quick-card-title">Car sharing</h4><p class="es-quick-card-sub">' + (carsCount > 0 ? (carsCount + ' auto disponibili questa settimana') : '0 questa settimana') + '</p></div>' +
             '</div>' +
           '</div>' +
 
@@ -421,7 +480,7 @@
       return (
         '<div class="es-mister-card-white">' +
           '<div class="es-mister-card-header">' +
-            '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">🖌️</span><div><h3 class="es-mister-card-title">Lavagna Tattica</h3><p class="es-mister-card-sub">' + esc(data.clubName) + ' · Prima Squadra (Presidenza)</p></div></div>' +
+            '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">🖌️</span><div><h3 class="es-mister-card-title">Lavagna Tattica</h3><p class="es-mister-card-sub">' + esc(data.clubName) + ' · Prima Squadra (Alta Dirigenza)</p></div></div>' +
             '<div class="es-mister-card-actions">' +
               '<input type="file" id="pres-file-upload" accept="image/png,image/jpeg,application/pdf" style="display:none;">' +
               '<button type="button" class="btn btn-outline-pill" id="btn-pres-upload-file" style="background:#f8fafc; border:1.5px solid #cbd5e1; color:#0f172a; padding:0.55rem 1.15rem; font-weight:800; font-size:0.85rem; display:inline-flex; align-items:center; gap:0.45rem;">📁 Carica immagine / PDF</button>' +
@@ -430,7 +489,7 @@
           '</div>' +
         '</div>' +
         '<div class="es-mister-card-white">' +
-          '<div class="es-mister-card-header" style="margin-bottom:0.6rem;"><div><h3 class="es-mister-card-title" style="font-size:1.15rem;">Libreria immagini</h3><p class="es-mister-card-sub">Immagini create e salvate dalla lavagna tattica o caricate dalla presidenza.</p></div></div>' +
+          '<div class="es-mister-card-header" style="margin-bottom:0.6rem;"><div><h3 class="es-mister-card-title" style="font-size:1.15rem;">Libreria immagini</h3><p class="es-mister-card-sub">Immagini create e salvate dalla lavagna tattica o caricate dai dirigenti.</p></div></div>' +
           galleryHtml +
         '</div>'
       );
@@ -440,7 +499,179 @@
   }
 
   // ============================================================
-  // MODALE CAR SHARING PER GENITORI & STAFF (Screenshot)
+  // MODALE + INVITA MEMBRI (Screenshot)
+  // ============================================================
+  function openInviteMembersModal() {
+    var old = document.getElementById('es-pres-invite-overlay');
+    if (old) old.remove();
+
+    var data = getPresData();
+    var inviteLink = window.location.origin + '/#iscrizione-portal?team=' + encodeURIComponent(data.clubName);
+
+    var modal = document.createElement('div');
+    modal.id = 'es-pres-invite-overlay';
+    modal.className = 'es-pres-stats-modal';
+    modal.innerHTML =
+      '<div class="es-pres-new-player-sheet" style="max-width:540px;" role="dialog" aria-modal="true">' +
+        '<div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.4rem;">' +
+          '<h2 style="font-size:1.45rem; font-weight:900; margin:0; color:#0f172a;">👥 Invita membri nel Club</h2>' +
+          '<button type="button" class="es-tactical-btn-close" id="btn-close-invite">&times;</button>' +
+        '</div>' +
+
+        '<p style="font-size:0.88rem; color:#64748b; margin:0 0 1.2rem; line-height:1.45;">' +
+          'Invia il link di invito ad atleti, genitori, dirigenti o membri dello staff per permettere loro di accedere e interagire con il club ' + esc(data.clubName) + '.' +
+        '</p>' +
+
+        '<div class="es-pres-form-row">' +
+          '<label class="es-pres-form-lbl">RUOLO DA ASSEGNARE</label>' +
+          '<select class="es-pres-form-inp" id="inp-inv-role">' +
+            '<option value="Calciatore">⚽ Calciatore / Atleta</option>' +
+            '<option value="Genitore">👨‍👩‍👦 Genitore Atleta</option>' +
+            '<option value="Staff Tecnico">⏱️ Staff Tecnico (Allenatore, Vice, Preparatore)</option>' +
+            '<option value="Dirigente">👑 Dirigente / Socio Club</option>' +
+          '</select>' +
+        '</div>' +
+
+        '<div class="es-pres-form-row">' +
+          '<label class="es-pres-form-lbl">LINK INVITO ESCLUSIVO</label>' +
+          '<div style="display:flex; gap:0.5rem;">' +
+            '<input type="text" class="es-pres-form-inp" id="inp-inv-link" value="' + esc(inviteLink) + '" readonly style="background:#f8fafc; font-size:0.82rem;">' +
+            '<button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-copy-inv-link" style="background:#0d9488; color:#fff; border:none; padding:0.6rem 1.1rem; font-size:0.85rem; font-weight:800; white-space:nowrap;">Copia</button>' +
+          '</div>' +
+        '</div>' +
+
+        '<div style="display:flex; gap:0.6rem; margin-top:1.4rem;">' +
+          '<button type="button" class="btn btn-outline-pill" id="btn-share-wa" style="flex:1; background:#25d366; color:#fff; border:none; padding:0.75rem; font-weight:800; font-size:0.9rem; display:flex; align-items:center; justify-content:center; gap:0.4rem;">' +
+            '📲 Condividi su WhatsApp' +
+          '</button>' +
+          '<button type="button" class="btn btn-outline-pill" id="btn-share-email" style="flex:1; background:#0f172a; color:#fff; border:none; padding:0.75rem; font-weight:800; font-size:0.9rem; display:flex; align-items:center; justify-content:center; gap:0.4rem;">' +
+            '✉️ Invia per Email' +
+          '</button>' +
+        '</div>' +
+      '</div>';
+
+    document.body.appendChild(modal);
+
+    function close() { modal.remove(); }
+    modal.querySelector('#btn-close-invite').onclick = close;
+    modal.onclick = function (e) { if (e.target === modal) close(); };
+
+    modal.querySelector('#btn-copy-inv-link').onclick = function () {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(inviteLink);
+        if (window.showToast) window.showToast('📋 Link invito copiato negli appunti!', 'success');
+      }
+    };
+
+    modal.querySelector('#btn-share-wa').onclick = function () {
+      var text = encodeURIComponent('Ciao! Unisciti al club ' + data.clubName + ' su Elisee Scout tramite questo link: ' + inviteLink);
+      window.open('https://api.whatsapp.com/send?text=' + text, '_blank');
+    };
+
+    modal.querySelector('#btn-share-email').onclick = function () {
+      var subject = encodeURIComponent('Invito Ufficiale - ' + data.clubName);
+      var body = encodeURIComponent('Sei stato invitato ad unirti alla struttura societaria del club ' + data.clubName + '.\n\nAccedi tramite questo link:\n' + inviteLink);
+      window.location.href = 'mailto:?subject=' + subject + '&body=' + body;
+    };
+  }
+
+  // ============================================================
+  // MODALE € FINANZE (Gestione contributi & cassa)
+  // ============================================================
+  function openFinancesModal() {
+    var old = document.getElementById('es-pres-finances-overlay');
+    if (old) old.remove();
+
+    var data = getPresData();
+    var fin = data.finances || { balance: 14850.00, feesPaid: 22, feesTotal: 24, transactions: [] };
+
+    var txHtml = (fin.transactions || []).map(function (tx) {
+      return (
+        '<div class="es-voter-item" style="margin-bottom:0.55rem;">' +
+          '<div class="es-voter-info">' +
+            '<div class="es-voter-avatar" style="background:' + (tx.type === 'in' ? '#dcfce7; color:#15803d;' : '#fee2e2; color:#b91c1c;') + '">' + (tx.type === 'in' ? '↓' : '↑') + '</div>' +
+            '<div>' +
+              '<h5 class="es-voter-name">' + esc(tx.desc) + '</h5>' +
+              '<div class="es-voter-role">Data: ' + esc(tx.date) + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div style="font-size:1.05rem; font-weight:900; color:' + (tx.type === 'in' ? '#15803d;' : '#b91c1c;') + '">' + (tx.type === 'in' ? '+ € ' : '- € ') + tx.amount.toFixed(2) + '</div>' +
+        '</div>'
+      );
+    }).join('');
+
+    var modal = document.createElement('div');
+    modal.id = 'es-pres-finances-overlay';
+    modal.className = 'es-pres-stats-modal';
+    modal.innerHTML =
+      '<div class="es-pres-stats-sheet" style="max-width:740px;" role="dialog" aria-modal="true">' +
+        '<div style="display:flex; align-items:center; justify-content:space-between; padding-bottom:1rem; border-bottom:1.5px solid #f1f5f9; margin-bottom:1.2rem;">' +
+          '<div style="display:flex; align-items:center; gap:0.75rem;">' +
+            '<span style="font-size:1.8rem; color:#0d9488;">€</span>' +
+            '<div>' +
+              '<h2 style="font-size:1.45rem; font-weight:900; margin:0; color:#0f172a;">Finanze &amp; Gestione Contributi</h2>' +
+              '<p style="font-size:0.84rem; color:#64748b; margin:0.1rem 0 0;">Cassa societaria, quote atleti e sponsorizzazioni (Riservato Tesoriere / Dirigenza)</p>' +
+            '</div>' +
+          '</div>' +
+          '<button type="button" class="es-tactical-btn-close" id="btn-close-finances" style="font-size:1.6rem; cursor:pointer;">&times;</button>' +
+        '</div>' +
+
+        '<div class="es-pres-stats-kpi-row" style="margin-bottom:1.4rem;">' +
+          '<div class="es-pres-kpi-card">' +
+            '<div class="es-pres-kpi-val" style="color:#0d9488;">€ ' + fin.balance.toFixed(2) + '</div>' +
+            '<div class="es-pres-kpi-lbl">Saldo Cassa</div>' +
+          '</div>' +
+          '<div class="es-pres-kpi-card">' +
+            '<div class="es-pres-kpi-val" style="color:#0284c7;">' + fin.feesPaid + ' / ' + fin.feesTotal + '</div>' +
+            '<div class="es-pres-kpi-lbl">Quote In Regola</div>' +
+          '</div>' +
+          '<div class="es-pres-kpi-card">' +
+            '<div class="es-pres-kpi-val" style="color:#f59e0b;">€ ' + (fin.sponsorsIncome || 8500).toFixed(2) + '</div>' +
+            '<div class="es-pres-kpi-lbl">Ricavi Sponsor</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.85rem;">' +
+          '<h3 style="font-size:1.05rem; font-weight:900; color:#0f172a; margin:0;">Ultimi movimenti cassa</h3>' +
+          '<button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-add-transaction" style="background:#0d9488; color:#fff; border:none; padding:0.45rem 1.1rem; font-size:0.84rem; font-weight:800;">+ Registra Movimento</button>' +
+        '</div>' +
+
+        '<div style="max-height:40vh; overflow-y:auto;">' +
+          txHtml +
+        '</div>' +
+      '</div>';
+
+    document.body.appendChild(modal);
+
+    function close() { modal.remove(); }
+    modal.querySelector('#btn-close-finances').onclick = close;
+    modal.onclick = function (e) { if (e.target === modal) close(); };
+
+    modal.querySelector('#btn-add-transaction').onclick = function () {
+      var d = prompt('Descrizione movimento (es. Quota atleta, Spesa medica, Sponsor):', 'Quota Iscrizione');
+      if (d) {
+        var a = parseFloat(prompt('Importo in € (es. 250):', '250')) || 250;
+        var t = confirm('Clicca OK se è un\'ENTRATA (+), o ANNULLA se è un\'USCITA (-)') ? 'in' : 'out';
+        data.finances = data.finances || { balance: 14850, transactions: [] };
+        data.finances.transactions = data.finances.transactions || [];
+        data.finances.transactions.unshift({
+          date: new Date().toLocaleDateString('it-IT'),
+          desc: d,
+          type: t,
+          amount: a
+        });
+        if (t === 'in') data.finances.balance += a;
+        else data.finances.balance -= a;
+        savePresData(data);
+        openFinancesModal();
+        renderHub();
+        if (window.showToast) window.showToast('✅ Movimento contabile registrato nel bilancio societario!', 'success');
+      }
+    };
+  }
+
+  // ============================================================
+  // MODALE CAR SHARING PER GENITORI & TRASFERTE
   // ============================================================
   function openCarSharingModal() {
     var old = document.getElementById('es-pres-carsharing-overlay');
@@ -528,41 +759,33 @@
     modal.onclick = function (e) { if (e.target === modal) close(); };
 
     modal.querySelector('#btn-offer-ride').onclick = function () {
-      openOfferRideModal();
+      var dName = prompt('Nome del Genitore / Autista (es. Mario Rossi):', 'Genitore Atleta');
+      if (!dName) return;
+      var dRole = prompt('Ruolo / Relazione (es. Papà di Luca, Staff Tecnico):', 'Genitore');
+      var dModel = prompt('Modello e Colore Auto (es. Fiat 500L Bianca):', 'Auto Familiare');
+      var dSeats = parseInt(prompt('Quanti posti liberi hai in auto? (es. 3):', '3'), 10) || 3;
+      var dDep = prompt('Punto di ritrovo e partenza (es. Piazzale Grandapulia):', 'Piazzale Centrale');
+      var dTime = prompt('Orario di ritrovo (es. 18:15):', '18:15');
+      var dNotes = prompt('Note (es. Disponibile anche per il ritorno alle 20:45):', 'Passaggio per allenamento');
+
+      data.carSharingPool = data.carSharingPool || [];
+      data.carSharingPool.unshift({
+        id: 'car-' + Date.now(),
+        driverName: dName,
+        driverRole: dRole || 'Genitore',
+        carModel: dModel || 'Automobile',
+        totalSeats: dSeats,
+        departurePoint: dDep || 'Punto di ritrovo',
+        departureTime: dTime || '18:00',
+        destination: 'Stadio Pino Zaccheria',
+        notes: dNotes || '',
+        passengers: []
+      });
+      savePresData(data);
+      openCarSharingModal();
+      renderHub();
+      if (window.showToast) window.showToast('✅ Auto messa a disposizione nel Car Sharing del Club!', 'success');
     };
-  }
-
-  // ============================================================
-  // MODALE OFFRI PASSAGGIO (Genitore / Staff)
-  // ============================================================
-  function openOfferRideModal() {
-    var dName = prompt('Nome del Genitore / Autista (es. Mario Rossi):', 'Genitore Atleta');
-    if (!dName) return;
-    var dRole = prompt('Ruolo / Relazione (es. Papà di Luca, Staff Tecnico):', 'Genitore');
-    var dModel = prompt('Modello e Colore Auto (es. Fiat 500L Bianca):', 'Auto Familiare');
-    var dSeats = parseInt(prompt('Quanti posti liberi hai in auto? (es. 3):', '3'), 10) || 3;
-    var dDep = prompt('Punto di ritrovo e partenza (es. Piazzale Grandapulia):', 'Piazzale Centrale');
-    var dTime = prompt('Orario di ritrovo (es. 18:15):', '18:15');
-    var dNotes = prompt('Note (es. Disponibile anche per il ritorno alle 20:45):', 'Passaggio per allenamento');
-
-    var data = getPresData();
-    data.carSharingPool = data.carSharingPool || [];
-    data.carSharingPool.unshift({
-      id: 'car-' + Date.now(),
-      driverName: dName,
-      driverRole: dRole || 'Genitore',
-      carModel: dModel || 'Automobile',
-      totalSeats: dSeats,
-      departurePoint: dDep || 'Punto di ritrovo',
-      departureTime: dTime || '18:00',
-      destination: 'Stadio Pino Zaccheria',
-      notes: dNotes || '',
-      passengers: []
-    });
-    savePresData(data);
-    openCarSharingModal();
-    renderHub();
-    if (window.showToast) window.showToast('✅ Auto messa a disposizione nel Car Sharing del Club!', 'success');
   }
 
   // Global methods for car sharing booking
@@ -598,7 +821,7 @@
   };
 
   // ============================================================
-  // MODALE + CREA EVENTO (Screenshot)
+  // MODALE + CREA EVENTO
   // ============================================================
   function openCreateEventModal() {
     var old = document.getElementById('es-pres-create-event-overlay');
@@ -633,30 +856,15 @@
             '<input type="text" class="es-pres-form-inp" id="inp-ev-titolo" placeholder="Es. Allenamento o Taranto vs Elisee" value="Allenamento" required>' +
           '</div>' +
 
-          '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">' +
-            '<div class="es-pres-form-row">' +
-              '<label class="es-pres-form-lbl">GIORNO &amp; DATA</label>' +
-              '<input type="text" class="es-pres-form-inp" id="inp-ev-data" placeholder="Es. mar 01/09" value="mar 01/09" required>' +
-            '</div>' +
-            '<div class="es-pres-form-row">' +
-              '<label class="es-pres-form-lbl">CAMPO / LUOGO</label>' +
-              '<input type="text" class="es-pres-form-inp" id="inp-ev-luogo" placeholder="Stadio Pino Zaccheria" value="Stadio Comunale Pino Zaccheria" required>' +
-            '</div>' +
+          '<div style="grid-template-columns:1fr 1fr; gap:0.75rem; display:grid;">' +
+            '<div class="es-pres-form-row"><label class="es-pres-form-lbl">GIORNO &amp; DATA</label><input type="text" class="es-pres-form-inp" id="inp-ev-data" placeholder="Es. mar 01/09" value="mar 01/09" required></div>' +
+            '<div class="es-pres-form-row"><label class="es-pres-form-lbl">CAMPO / LUOGO</label><input type="text" class="es-pres-form-inp" id="inp-ev-luogo" placeholder="Stadio Pino Zaccheria" value="Stadio Comunale Pino Zaccheria" required></div>' +
           '</div>' +
 
-          '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.6rem;">' +
-            '<div class="es-pres-form-row">' +
-              '<label class="es-pres-form-lbl">RITROVO</label>' +
-              '<input type="text" class="es-pres-form-inp" id="inp-ev-ritrovo" placeholder="-:-" value="-:-">' +
-            '</div>' +
-            '<div class="es-pres-form-row">' +
-              '<label class="es-pres-form-lbl">INIZIO</label>' +
-              '<input type="text" class="es-pres-form-inp" id="inp-ev-inizio" placeholder="19:00" value="19:00" required>' +
-            '</div>' +
-            '<div class="es-pres-form-row">' +
-              '<label class="es-pres-form-lbl">FINE</label>' +
-              '<input type="text" class="es-pres-form-inp" id="inp-ev-fine" placeholder="20:30" value="20:30" required>' +
-            '</div>' +
+          '<div style="grid-template-columns:1fr 1fr 1fr; gap:0.6rem; display:grid;">' +
+            '<div class="es-pres-form-row"><label class="es-pres-form-lbl">RITROVO</label><input type="text" class="es-pres-form-inp" id="inp-ev-ritrovo" placeholder="-:-" value="-:-"></div>' +
+            '<div class="es-pres-form-row"><label class="es-pres-form-lbl">INIZIO</label><input type="text" class="es-pres-form-inp" id="inp-ev-inizio" placeholder="19:00" value="19:00" required></div>' +
+            '<div class="es-pres-form-row"><label class="es-pres-form-lbl">FINE</label><input type="text" class="es-pres-form-inp" id="inp-ev-fine" placeholder="20:30" value="20:30" required></div>' +
           '</div>' +
 
           '<div class="es-pres-form-row">' +
@@ -716,7 +924,7 @@
   }
 
   // ============================================================
-  // MODALE FERIE / MALATTIA (Screenshot)
+  // MODALE FERIE / MALATTIA
   // ============================================================
   function openLeavesModal() {
     var data = getPresData();
@@ -878,101 +1086,6 @@
     modal.querySelector('#btn-print-stats').onclick = function () { if (window.print) window.print(); };
   }
 
-  // ============================================================
-  // MODALE NUOVO CALCIATORE
-  // ============================================================
-  function openNewPlayerModal() {
-    var old = document.getElementById('es-pres-new-player-overlay');
-    if (old) old.remove();
-
-    var modal = document.createElement('div');
-    modal.id = 'es-pres-new-player-overlay';
-    modal.className = 'es-pres-stats-modal';
-    modal.innerHTML =
-      '<div class="es-pres-new-player-sheet" role="dialog" aria-modal="true">' +
-        '<div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.4rem;">' +
-          '<h2 style="font-size:1.45rem; font-weight:900; margin:0; color:#0f172a;">Nuovo calciatore</h2>' +
-          '<button type="button" class="es-tactical-btn-close" id="btn-close-new-player">&times;</button>' +
-        '</div>' +
-
-        '<form id="form-new-player">' +
-          '<h4 style="font-size:0.82rem; font-weight:800; color:#0d9488; text-transform:uppercase; letter-spacing:0.04em; margin:0 0 1rem;">DATI CALCIATORE</h4>' +
-
-          '<div class="es-pres-form-row">' +
-            '<label class="es-pres-form-lbl">NOME</label>' +
-            '<input type="text" class="es-pres-form-inp" id="inp-np-nome" placeholder="Nome atleta" required>' +
-          '</div>' +
-
-          '<div class="es-pres-form-row">' +
-            '<label class="es-pres-form-lbl">COGNOME</label>' +
-            '<input type="text" class="es-pres-form-inp" id="inp-np-cognome" placeholder="Cognome atleta" required>' +
-          '</div>' +
-
-          '<div class="es-pres-form-row">' +
-            '<label class="es-pres-form-lbl">DATA DI NASCITA</label>' +
-            '<input type="date" class="es-pres-form-inp" id="inp-np-data" required>' +
-          '</div>' +
-
-          '<div class="es-pres-form-row">' +
-            '<label class="es-pres-form-lbl">RUOLO</label>' +
-            '<select class="es-pres-form-inp" id="inp-np-ruolo" required>' +
-              '<option value="">Seleziona ruolo</option>' +
-              '<option value="Portiere">Portiere</option>' +
-              '<option value="Difensore Centrale">Difensore Centrale</option>' +
-              '<option value="Terzino Destro">Terzino Destro</option>' +
-              '<option value="Terzino Sinistro">Terzino Sinistro</option>' +
-              '<option value="Mediano">Mediano</option>' +
-              '<option value="Mezzala">Mezzala</option>' +
-              '<option value="Trequartista">Trequartista</option>' +
-              '<option value="Ala Destra">Ala Destra</option>' +
-              '<option value="Ala Sinistra">Ala Sinistra</option>' +
-              '<option value="Attaccante Centrale">Attaccante Centrale</option>' +
-              '<option value="Seconda Punta">Seconda Punta</option>' +
-            '</select>' +
-          '</div>' +
-
-          '<div style="display:flex; align-items:center; justify-content:flex-end; gap:0.75rem; margin-top:1.8rem;">' +
-            '<button type="button" class="btn btn-outline-pill" id="btn-cancel-new-player" style="border:1.5px solid #cbd5e1; padding:0.65rem 1.4rem; font-weight:800; font-size:0.92rem;">Annulla</button>' +
-            '<button type="submit" class="btn btn-outline-pill pf-btn-solid" style="background:#facc15; color:#0f172a; border:none; padding:0.65rem 1.6rem; font-weight:900; font-size:0.92rem; box-shadow:0 2px 10px rgba(250,204,21,0.4);">Aggiungi calciatore</button>' +
-          '</div>' +
-        '</form>' +
-      '</div>';
-
-    document.body.appendChild(modal);
-
-    function close() { modal.remove(); }
-    modal.querySelector('#btn-close-new-player').onclick = close;
-    modal.querySelector('#btn-cancel-new-player').onclick = close;
-    modal.onclick = function (e) { if (e.target === modal) close(); };
-
-    modal.querySelector('#form-new-player').onsubmit = function (e) {
-      e.preventDefault();
-      var nome = modal.querySelector('#inp-np-nome').value.trim();
-      var cognome = modal.querySelector('#inp-np-cognome').value.trim();
-      var dataNascita = modal.querySelector('#inp-np-data').value;
-      var ruolo = modal.querySelector('#inp-np-ruolo').value;
-      var birthYear = dataNascita ? dataNascita.split('-')[0] : '2004';
-
-      var data = getPresData();
-      data.roster = data.roster || [];
-      var nextNum = data.roster.length + 1;
-      data.roster.push({
-        id: 'p-' + nextNum,
-        num: nextNum,
-        name: nome + ' ' + cognome,
-        role: ruolo,
-        birth: birthYear,
-        cert: 'Regolare',
-        status: 'disp',
-        app: 0
-      });
-      savePresData(data);
-      close();
-      renderHub();
-      if (window.showToast) window.showToast('✅ Calciatore ' + nome + ' ' + cognome + ' aggiunto alla rosa!', 'success');
-    };
-  }
-
   // Global methods for scheme gallery
   window.viewPresSchemePreview = function () {
     if (window.EliseeCoachDash && typeof window.EliseeCoachDash.openEditor === 'function') {
@@ -987,20 +1100,20 @@
       if (window.jspdf && window.jspdf.jsPDF) {
         var doc = new window.jspdf.jsPDF();
         doc.setFontSize(18);
-        doc.text('ELISEE SCOUT — PRESIDENTIAL HUB', 14, 20);
+        doc.text('ELISEE SCOUT — ALTA DIRIGENZA HUB', 14, 20);
         doc.setFontSize(14);
         doc.text('Direttiva: ' + s.title, 14, 30);
         doc.setFontSize(11);
-        doc.text('Club: ' + data.clubName + ' | Presidente: ' + data.presName, 14, 40);
+        doc.text('Club: ' + data.clubName + ' | Ruolo: ' + data.presRole, 14, 40);
         doc.text('Data: ' + s.date + ' | Categoria: ' + s.type, 14, 48);
         doc.save(s.title.replace(/\s+/g, '_') + '.pdf');
       }
-      if (window.showToast) window.showToast('📥 Download PDF direttiva presidenziale avviato!', 'success');
+      if (window.showToast) window.showToast('📥 Download PDF direttiva societaria avviato!', 'success');
     }
   };
 
   window.deletePresScheme = function (idx) {
-    if (confirm('Vuoi eliminare questo documento dalla libreria presidenziale?')) {
+    if (confirm('Vuoi eliminare questo documento dalla libreria societaria?')) {
       var data = getPresData();
       data.tacticalSchemes.splice(idx, 1);
       savePresData(data);
@@ -1020,11 +1133,49 @@
       });
     });
 
+    // Switcher Team
+    var btnSwitch = mount.querySelector('#btn-switch-team');
+    if (btnSwitch) {
+      btnSwitch.onclick = function () {
+        var data = getPresData();
+        var newCat = prompt('Seleziona categoria/squadra (es. Prima Squadra, Under 19, Primavera, Giovanili):', data.teamCategory);
+        if (newCat) {
+          data.teamCategory = newCat;
+          savePresData(data);
+          renderHub();
+          if (window.showToast) window.showToast('🔄 Squadra attiva: ' + newCat, 'info');
+        }
+      };
+    }
+
+    // Grande Pulsante + Invita membri
+    var btnInvite = mount.querySelector('#btn-pres-invite-members');
+    if (btnInvite) btnInvite.onclick = openInviteMembersModal;
+
+    // Quick Action Cards nella Squadra
+    var cardMembers = mount.querySelector('#card-action-members') || mount.querySelector('#link-view-all-members');
+    if (cardMembers) {
+      cardMembers.onclick = function () {
+        var data = getPresData();
+        alert('Rosa e Staff ' + data.clubName + ' (' + data.teamCategory + '):\n\n' +
+          data.roster.map(function (p) { return '• ' + p.name + ' (' + p.role + ' - ' + p.birth + ')'; }).join('\n') +
+          '\n\nStaff Tecnico:\n' +
+          data.staffMembers.map(function (s) { return '• ' + s.name + ' (' + s.role + ')'; }).join('\n')
+        );
+      };
+    }
+
+    var cardFinances = mount.querySelector('#card-action-finances');
+    if (cardFinances) cardFinances.onclick = openFinancesModal;
+
+    var cardStats = mount.querySelector('#card-action-stats') || mount.querySelector('#btn-pres-match-stats');
+    if (cardStats) cardStats.onclick = openStatsModal;
+
     // Grande Tasto + Crea Evento
     var btnCreateEv = mount.querySelector('#btn-pres-create-event');
     if (btnCreateEv) btnCreateEv.onclick = openCreateEventModal;
 
-    // Quick Action Cards
+    // Quick Action Cards negli Eventi
     var cardCar = mount.querySelector('#card-action-carsharing');
     if (cardCar) cardCar.onclick = openCarSharingModal;
 
@@ -1045,8 +1196,8 @@
         var voteVal = btn.getAttribute('data-vote-val');
         var curUser = userObj();
         var myUserId = curUser.id || 'u-me';
-        var myUserName = (curUser.nome ? (curUser.nome + ' ' + (curUser.cognome || '')) : (curUser.name || 'Presidente')).trim();
-        var myRole = curUser.ruolo || curUser.siteRoleFamily || 'Presidente';
+        var myUserName = (curUser.nome ? (curUser.nome + ' ' + (curUser.cognome || '')) : (curUser.name || 'Dirigente')).trim();
+        var myRole = curUser.ruolo || curUser.siteRoleFamily || 'Alta Dirigenza';
 
         var data = getPresData();
         var train = (data.trainingsList || []).find(function (t) { return t.id === trainId; });
@@ -1080,12 +1231,6 @@
       };
     });
 
-    var btnStats = mount.querySelector('#btn-pres-stats') || mount.querySelector('#btn-pres-match-stats');
-    if (btnStats) btnStats.onclick = openStatsModal;
-
-    var btnAddP = mount.querySelector('#btn-pres-add-player');
-    if (btnAddP) btnAddP.onclick = openNewPlayerModal;
-
     var btnCreate = mount.querySelector('#btn-pres-create-tactic');
     if (btnCreate) {
       btnCreate.onclick = function () {
@@ -1111,7 +1256,7 @@
               id: 'tac-' + Date.now(),
               title: file.name.replace(/\.[^/.]+$/, ''),
               date: new Date().toLocaleDateString('it-IT'),
-              type: isPdf ? 'Documento PDF' : 'Immagine Presidenziale',
+              type: isPdf ? 'Documento PDF' : 'Immagine Dirigenziale',
               preview: isPdf ? 'immagini/04-workspace-scout/scout-workspace.svg?v=20260730_225504' : evt.target.result
             });
             savePresData(data);
@@ -1142,7 +1287,7 @@
     var group = document.getElementById('user-dossier-view-group');
     if (!group) return;
     var u = userObj();
-    if (!force && !isPres(u)) return;
+    if (!force && !isExecutive(u)) return;
 
     group.classList.add('is-pres-dash');
     var staffProfile = document.getElementById('es-staff-profile');
@@ -1169,7 +1314,8 @@
     render: render,
     detach: detach,
     openStats: openStatsModal,
-    openNewPlayer: openNewPlayerModal,
+    openFinances: openFinancesModal,
+    openInvite: openInviteMembersModal,
     openCarSharing: openCarSharingModal,
     openCreateEvent: openCreateEventModal,
     setTab: function (tab) {
@@ -1180,14 +1326,14 @@
 
   function boot() {
     document.addEventListener('elisee:role-changed', function () {
-      if (isPres()) render(true);
+      if (isExecutive()) render(true);
       else detach();
     });
     document.addEventListener('elisee:auth-changed', function () {
-      if (isPres()) render(true);
+      if (isExecutive()) render(true);
       else detach();
     });
-    if (isPres()) render(true);
+    if (isExecutive()) render(true);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);

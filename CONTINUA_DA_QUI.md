@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Implementato nell'**Area Presidente** l'**`Hub Eventi Societari`** (`pres-dash.js`, `pres-dash.css`) con grande pulsante nero **`+ Crea evento`**, **`Car Sharing Club`** per consentire ai genitori e allo staff di offrire passaggi in auto per allenamenti e trasferte e prenotare posti a bordo, gestione **`Ferie / Malattia`** (infortuni e congedi) e **`Riepilogo Eventi`**. File: `pres-dash.js`, `pres-dash.css`, `index.html`, `sw.js`. Cache `CAR1`.
-Feature precedente: Gestione presenze allenamenti Like/Dislike per Coach, Vice e Presidente.
+Ultimo fatto: Estesa l'amministrazione dei servizi esecutivi societari all'**`Alta Dirigenza del Club`** (Presidente, Vice Presidente, Direttore Generale, Tesoriere del Club, Segretario Generale) con switcher squadra, grande tasto **`+ Invita membri`**, carousel tesserati e gestione **`€ Finanze (Contributi & Cassa)`**, **`Car Sharing Genitori`** e **`Hub Eventi`**. File: `pres-dash.js`, `pres-dash.css`, `index.html`, `sw.js`. Cache `EXEC1`.
+Feature precedente: Hub Eventi, + Crea Evento e Car Sharing per Genitori.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

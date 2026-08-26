@@ -338,3 +338,79 @@
   color: #0f172a;
 }
 
+/* ============================================================
+   EXECUTIVE SQUADRA, MEMBRI & FINANZE
+   ============================================================ */
+.es-club-switcher-bar {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 0.55rem 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.1rem;
+}
+.es-club-switch-info {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.es-club-switch-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  background: #e2e8f0;
+  color: #475569;
+  padding: 0.15rem 0.55rem;
+  border-radius: 6px;
+}
+.es-member-carousel {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 0.4rem 0 1rem;
+  scrollbar-width: thin;
+}
+.es-member-thumb-card {
+  flex: 0 0 140px;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1rem 0.75rem 0.85rem;
+  text-align: center;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+.es-member-thumb-card:hover {
+  transform: translateY(-3px);
+  border-color: #94a3b8;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+.es-member-thumb-avatar {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  margin: 0 auto 0.6rem;
+}
+.es-member-thumb-name {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.es-member-thumb-role {
+  font-size: 0.72rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+
