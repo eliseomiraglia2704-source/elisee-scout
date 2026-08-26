@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Implementato nell'**Area Allenatore, Vice Allenatore e Presidente** il sistema interattivo per la **`Gestione Presenze Allenamenti`** (stile TeamPlus) con **Like 👍 ("Ci sono")**, **In forse ❓**, **Dislike 👎 ("Non ci sono")** e icona **👥 Partecipanti** con modale dettagliata che elenca tutti i votanti per Nome, Cognome e Ruolo di atleti e membri dello staff. File: `coach-dash.js`, `coach-dash.css`, `vice-dash.js`, `pres-dash.js`, `index.html`, `sw.js`. Cache `TRN1`.
-Feature precedente: Attivazione Presidential Hub con 5 macro-aree, modali statistiche e nuovo calciatore.
+Ultimo fatto: Implementato nell'**Area Presidente** l'**`Hub Eventi Societari`** (`pres-dash.js`, `pres-dash.css`) con grande pulsante nero **`+ Crea evento`**, **`Car Sharing Club`** per consentire ai genitori e allo staff di offrire passaggi in auto per allenamenti e trasferte e prenotare posti a bordo, gestione **`Ferie / Malattia`** (infortuni e congedi) e **`Riepilogo Eventi`**. File: `pres-dash.js`, `pres-dash.css`, `index.html`, `sw.js`. Cache `CAR1`.
+Feature precedente: Gestione presenze allenamenti Like/Dislike per Coach, Vice e Presidente.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

@@ -1,7 +1,12 @@
 /* ============================================================
    ELISEE SCOUT — Area Presidente (Presidential Hub)
    5 Macro-aree Attive: CLUB | SQUADRA | ALLENAMENTI | PARTITE | LAVAGNA
-   Incluso: Gestione Allenamenti Interattivi con Like (Ci sono), Dislike (Non ci sono) & Modale Votanti
+   Incluso:
+   - Hub Eventi & Tasto + Crea Evento
+   - Car Sharing per Genitori, Atleti & Staff (Trasferte / Allenamenti)
+   - Gestione Ferie/Malattia & Riepilogo Eventi
+   - Gestione Presenze con Like (Ci sono) / Dislike (Non ci sono) & Modale Votanti
+   - Modale Statistiche Partite & Modale Nuovo Calciatore + Lavagna Tattica
    ============================================================ */
 (function () {
   'use strict';
@@ -85,6 +90,35 @@
           }
         }
       ],
+      carSharingPool: [
+        {
+          id: 'car-1',
+          driverName: 'Mario Rossi',
+          driverRole: 'Genitore (Papà di Luca)',
+          carModel: 'Volkswagen Tiguan (Grigio scuro)',
+          totalSeats: 4,
+          departurePoint: 'Piazzale Centro Comm. Grandapulia',
+          departureTime: '18:15',
+          destination: 'Stadio Pino Zaccheria (Allenamento)',
+          notes: 'Disponibile anche per il ritorno alle 20:45',
+          passengers: ['Luca Rossi (2009)', 'Alessandro S. (2009)']
+        },
+        {
+          id: 'car-2',
+          driverName: 'Giuseppe Miraglia',
+          driverRole: 'Genitore / Socio Club',
+          carModel: 'Fiat 500L (Bianca)',
+          totalSeats: 3,
+          departurePoint: 'Viale Europa 12 (Bar Centrale)',
+          departureTime: '18:25',
+          destination: 'Stadio Pino Zaccheria',
+          notes: 'Passaggio diretto verso il campo A',
+          passengers: ['Eliseo Miraglia (2004)']
+        }
+      ],
+      leaveRecords: [
+        { name: 'Antonio Gentile', role: 'Fisioterapista', reason: 'Ferie programmate', from: '05/09/2026', to: '08/09/2026', status: 'Approvato' }
+      ],
       partite: [
         { id: 'match-1', date: 'Domenica · Ore 15:00', opponent: 'Elisee vs Taranto', comp: 'Campionato Serie D · Girone H', stadium: 'Stadio Pino Zaccheria', status: 'Prossima Gara', conv: '22 Convocati' }
       ],
@@ -124,7 +158,7 @@
   var TAB_DESCS = {
     club: 'Organizzazione societaria, dirigenti e staff tecnico.',
     squadra: 'Gestione della rosa, ruoli e dati dei giocatori.',
-    allenamenti: 'Pianificazione e gestione degli allenamenti stagionali.',
+    allenamenti: 'Pianificazione eventi societari, car sharing genitori e allenamenti.',
     partite: 'Calendario, convocazioni e gestione delle partite.',
     lavagna: 'Strumenti tattici per schemi, analisi e strategie.'
   };
@@ -139,7 +173,7 @@
       '<div class="es-mister-hub">' +
         '<div class="es-mister-trial-bar">' +
           '<div class="es-mister-trial-text"><span>👑</span> Stai operando come Presidente &amp; Vertice Societario.</div>' +
-          '<button type="button" class="es-mister-btn-sub" onclick="if(window.showToast){ window.showToast(\'👑 Benvenuto Presidente. Accesso Club Master 100% Attivo.\', \'success\'); }">Abbonati</button>' +
+          '<button type="button" class="es-mister-btn-sub" onclick="if(window.showToast){ window.showToast(\'👑 Accesso Club Master 100% Attivo.\', \'success\'); }">Abbonati</button>' +
         '</div>' +
 
         '<div class="es-mister-wrap">' +
@@ -157,7 +191,7 @@
           '<nav class="es-mister-nav-bar" role="tablist">' +
             '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'club' ? 'is-active' : '') + '" data-tab="club">🛡️ Club</button>' +
             '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'squadra' ? 'is-active' : '') + '" data-tab="squadra">👥 Squadra</button>' +
-            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'allenamenti' ? 'is-active' : '') + '" data-tab="allenamenti">🏃‍♂️ Allenamenti</button>' +
+            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'allenamenti' ? 'is-active' : '') + '" data-tab="allenamenti">📅 Eventi &amp; Allenamenti</button>' +
             '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'partite' ? 'is-active' : '') + '" data-tab="partite">⚽ Partite</button>' +
             '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'lavagna' ? 'is-active' : '') + '" data-tab="lavagna">🖌️ Lavagna</button>' +
           '</nav>' +
@@ -240,56 +274,103 @@
       var curUser = userObj();
       var myUserId = curUser.id || 'u-me';
 
-      var trainCardsHtml = (data.trainingsList || []).map(function (t) {
-        var v = t.votes || {};
-        var yesCount = 0;
-        var maybeCount = 0;
-        var noCount = 0;
+      var nextEvent = (data.trainingsList || [])[0] || {
+        id: 'train-1',
+        day: 'mar',
+        date: '01/09',
+        title: 'Allenamento',
+        focus: 'Seduta Tattica & Pressione Alta',
+        incontro: '-:-',
+        inizio: '19:00',
+        fine: '20:30',
+        votes: {}
+      };
 
-        Object.keys(v).forEach(function (k) {
-          if (v[k].vote === 'yes') yesCount++;
-          else if (v[k].vote === 'maybe') maybeCount++;
-          else if (v[k].vote === 'no') noCount++;
-        });
+      var v = nextEvent.votes || {};
+      var yesCount = 0, maybeCount = 0, noCount = 0;
+      Object.keys(v).forEach(function (k) {
+        if (v[k].vote === 'yes') yesCount++;
+        else if (v[k].vote === 'maybe') maybeCount++;
+        else if (v[k].vote === 'no') noCount++;
+      });
+      var myVote = (v[myUserId] && v[myUserId].vote) || (v['st-pres'] && v['st-pres'].vote);
 
-        var myVote = (v[myUserId] && v[myUserId].vote) || (v['st-pres'] && v['st-pres'].vote);
+      var carsCount = (data.carSharingPool || []).length;
+      var leavesCount = (data.leaveRecords || []).length;
 
-        return (
-          '<div class="es-training-event-card" id="pres-card-' + t.id + '">' +
+      return (
+        '<div class="es-mister-card-white">' +
+          // Header EVENTI
+          '<h2 class="es-events-hub-title"><span style="font-size:1.8rem;">📅</span> EVENTI</h2>' +
+
+          // Grande pulsante nero + Crea evento
+          '<button type="button" class="es-btn-create-event-big" id="btn-pres-create-event">' +
+            '<span>+</span> Crea evento' +
+          '</button>' +
+
+          // Sezione Prossimo Evento
+          '<div class="es-events-section-header">' +
+            '<h3 class="es-events-section-title">Prossimo evento</h3>' +
+            '<a class="es-events-view-all-link" id="link-view-all-events">Visualizza tutto</a>' +
+          '</div>' +
+
+          // Card Prossimo Evento (TeamPlus)
+          '<div class="es-training-event-card" id="pres-card-' + nextEvent.id + '">' +
             '<div class="es-training-head-banner">' +
               '<div class="es-training-date-block">' +
-                '<div class="es-training-day-chip"><span class="es-training-day-txt">' + esc(t.day) + '</span><span class="es-training-date-txt">' + esc(t.date) + '</span></div>' +
+                '<div class="es-training-day-chip"><span class="es-training-day-txt">' + esc(nextEvent.day) + '</span><span class="es-training-date-txt">' + esc(nextEvent.date) + '</span></div>' +
                 '<div style="border-left:1.5px solid rgba(0,0,0,0.15); height:32px; margin:0 0.5rem;"></div>' +
-                '<div><h4 class="es-training-title-txt">' + esc(t.title) + '</h4><div style="font-size:0.75rem; color:#092621; opacity:0.85;">' + esc(t.focus) + '</div></div>' +
+                '<div><h4 class="es-training-title-txt">' + esc(nextEvent.title) + '</h4><div style="font-size:0.75rem; color:#092621; opacity:0.85;">' + esc(nextEvent.focus) + '</div></div>' +
               '</div>' +
               '<span style="font-size:1.4rem; font-weight:800; opacity:0.7;">&rsaquo;</span>' +
             '</div>' +
 
             '<div class="es-training-times-grid">' +
-              '<div class="es-training-time-col"><div class="es-training-time-val">' + esc(t.incontro) + '</div><div class="es-training-time-lbl">Incontro</div></div>' +
-              '<div class="es-training-time-col"><div class="es-training-time-val">' + esc(t.inizio) + '</div><div class="es-training-time-lbl">Inizio</div></div>' +
-              '<div class="es-training-time-col"><div class="es-training-time-val">' + esc(t.fine) + '</div><div class="es-training-time-lbl">Fine</div></div>' +
+              '<div class="es-training-time-col"><div class="es-training-time-val">' + esc(nextEvent.incontro) + '</div><div class="es-training-time-lbl">Incontro</div></div>' +
+              '<div class="es-training-time-col"><div class="es-training-time-val">' + esc(nextEvent.inizio) + '</div><div class="es-training-time-lbl">Inizio</div></div>' +
+              '<div class="es-training-time-col"><div class="es-training-time-val">' + esc(nextEvent.fine) + '</div><div class="es-training-time-lbl">Fine</div></div>' +
             '</div>' +
 
             '<div class="es-training-actions-bar">' +
               '<div class="es-training-vote-group">' +
-                '<button type="button" class="es-training-vote-btn ' + (myVote === 'yes' ? 'is-voted-yes' : '') + '" data-train-id="' + t.id + '" data-vote-val="yes" title="Ci sono (Presente)"><span>👍</span> <span>' + yesCount + '</span></button>' +
-                '<button type="button" class="es-training-vote-btn ' + (myVote === 'maybe' ? 'is-voted-maybe' : '') + '" data-train-id="' + t.id + '" data-vote-val="maybe" title="In forse"><span>❓</span> <span>' + maybeCount + '</span></button>' +
-                '<button type="button" class="es-training-vote-btn ' + (myVote === 'no' ? 'is-voted-no' : '') + '" data-train-id="' + t.id + '" data-vote-val="no" title="Non ci sono (Assente)"><span>👎</span> <span>' + noCount + '</span></button>' +
+                '<button type="button" class="es-training-vote-btn ' + (myVote === 'yes' ? 'is-voted-yes' : '') + '" data-train-id="' + nextEvent.id + '" data-vote-val="yes" title="Ci sono (Presente)"><span>👍</span> <span>' + yesCount + '</span></button>' +
+                '<button type="button" class="es-training-vote-btn ' + (myVote === 'maybe' ? 'is-voted-maybe' : '') + '" data-train-id="' + nextEvent.id + '" data-vote-val="maybe" title="In forse"><span>❓</span> <span>' + maybeCount + '</span></button>' +
+                '<button type="button" class="es-training-vote-btn ' + (myVote === 'no' ? 'is-voted-no' : '') + '" data-train-id="' + nextEvent.id + '" data-vote-val="no" title="Non ci sono (Assente)"><span>👎</span> <span>' + noCount + '</span></button>' +
               '</div>' +
-              '<button type="button" class="es-training-participants-btn" data-open-pres-voters-id="' + t.id + '" title="Vedi tutti coloro che hanno risposto">👥</button>' +
+              '<button type="button" class="es-training-participants-btn" data-open-pres-voters-id="' + nextEvent.id + '" title="Vedi tutti coloro che hanno risposto">👥</button>' +
             '</div>' +
-          '</div>'
-        );
-      }).join('');
-
-      return (
-        '<div class="es-mister-card-white">' +
-          '<div class="es-mister-card-header">' +
-            '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">🏃‍♂️</span><div><h3 class="es-mister-card-title">Prossimi Eventi &amp; Allenamenti</h3><p class="es-mister-card-sub">Controllo presenze prima squadra (Like = Ci sono, Dislike = Non ci sono)</p></div></div>' +
-            '<div class="es-mister-card-actions"><button type="button" class="es-mister-circle-btn" id="btn-pres-add-training" title="Nuovo allenamento">+</button></div>' +
           '</div>' +
-          '<div style="margin-top:1rem;">' + trainCardsHtml + '</div>' +
+
+          // 3 Quick Action Cards: Riepilogo, Ferie/Malattia, Car Sharing
+          '<div class="es-events-quick-grid">' +
+            // Card 1: Riepilogo evento
+            '<div class="es-events-quick-card" id="card-action-summary">' +
+              '<div>' +
+                '<div class="es-quick-card-icon">📅</div>' +
+                '<h4 class="es-quick-card-title">Riepilogo evento</h4>' +
+                '<p class="es-quick-card-sub">' + (data.trainingsList && data.trainingsList.length > 0 ? (data.trainingsList.length + ' eventi in programma') : 'Nessun evento questo mese...') + '</p>' +
+              '</div>' +
+            '</div>' +
+
+            // Card 2: Ferie/Malattia
+            '<div class="es-events-quick-card" id="card-action-leaves">' +
+              '<div>' +
+                '<div class="es-quick-card-icon">➕</div>' +
+                '<h4 class="es-quick-card-title">Ferie/Malattia</h4>' +
+                '<p class="es-quick-card-sub">' + (leavesCount > 0 ? (leavesCount + ' assenza registrata') : "Nessun'assenza") + '</p>' +
+              '</div>' +
+            '</div>' +
+
+            // Card 3: Car sharing
+            '<div class="es-events-quick-card" id="card-action-carsharing">' +
+              '<div>' +
+                '<div class="es-quick-card-icon">🚗</div>' +
+                '<h4 class="es-quick-card-title">Car sharing</h4>' +
+                '<p class="es-quick-card-sub">' + (carsCount > 0 ? (carsCount + ' auto disponibili questa settimana') : '0 questa settimana') + '</p>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+
         '</div>'
       );
     }
@@ -356,6 +437,352 @@
     }
 
     return '';
+  }
+
+  // ============================================================
+  // MODALE CAR SHARING PER GENITORI & STAFF (Screenshot)
+  // ============================================================
+  function openCarSharingModal() {
+    var old = document.getElementById('es-pres-carsharing-overlay');
+    if (old) old.remove();
+
+    var data = getPresData();
+    var cars = data.carSharingPool || [];
+
+    var carsListHtml = cars.length === 0
+      ? '<div style="text-align:center; padding:2rem; color:#94a3b8; font-weight:600;">Nessuna auto o passaggio messo a disposizione per questa settimana.<br>I genitori e lo staff possono aggiungere la propria auto cliccando in basso.</div>'
+      : cars.map(function (c, idx) {
+          var passCount = (c.passengers || []).length;
+          var freeSeats = Math.max(0, c.totalSeats - passCount);
+          var isFull = freeSeats === 0;
+
+          var passChips = (c.passengers || []).map(function (p) {
+            return '<span class="es-passenger-chip">👤 ' + esc(p) + '</span>';
+          }).join('');
+
+          return (
+            '<div class="es-car-item-card">' +
+              '<div class="es-car-header">' +
+                '<div>' +
+                  '<h4 class="es-car-driver-name">🚗 ' + esc(c.driverName) + ' <span class="es-car-driver-tag">' + esc(c.driverRole) + '</span></h4>' +
+                  '<div style="font-size:0.8rem; color:#64748b; margin-top:0.2rem;">🚘 ' + esc(c.carModel) + '</div>' +
+                '</div>' +
+                '<span class="es-car-seats-badge ' + (isFull ? 'is-full' : '') + '">' +
+                  (isFull ? 'Auto al completo (0 posti)' : (freeSeats + ' posti liberi su ' + c.totalSeats)) +
+                '</span>' +
+              '</div>' +
+
+              '<div class="es-car-details-row">' +
+                '<span>📍 <b>Partenza:</b> ' + esc(c.departurePoint) + '</span>' +
+                '<span>⏰ <b>Ore:</b> ' + esc(c.departureTime) + '</span>' +
+                '<span>🎯 <b>Destinazione:</b> ' + esc(c.destination) + '</span>' +
+              '</div>' +
+
+              (c.notes ? ('<div style="font-size:0.8rem; color:#475569; background:#ffffff; border-radius:8px; padding:0.4rem 0.65rem; margin-bottom:0.6rem; border:1px dashed #cbd5e1;">💬 <i>' + esc(c.notes) + '</i></div>') : '') +
+
+              '<div>' +
+                '<div style="font-size:0.75rem; font-weight:800; color:#64748b; text-transform:uppercase;">Passeggeri a bordo (' + passCount + '/' + c.totalSeats + '):</div>' +
+                '<div class="es-car-passengers-list">' + (passChips || '<span style="font-size:0.75rem; color:#94a3b8; font-style:italic;">Nessun passeggero prenotato ancora</span>') + '</div>' +
+              '</div>' +
+
+              '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.9rem;">' +
+                (!isFull ? ('<button type="button" class="btn btn-outline-pill pf-btn-solid" style="background:#0d9488; color:#ffffff; border:none; padding:0.45rem 1.1rem; font-size:0.84rem; font-weight:800;" onclick="window.bookCarSeat(' + idx + ')">🙋‍♂️ Prenota posto a bordo</button>') : '') +
+                '<button type="button" class="btn btn-outline-pill" style="color:#ef4444; border-color:#fca5a5; padding:0.45rem 0.75rem; font-size:0.8rem;" onclick="window.deleteCarItem(' + idx + ')">🗑️</button>' +
+              '</div>' +
+            '</div>'
+          );
+        }).join('');
+
+    var modal = document.createElement('div');
+    modal.id = 'es-pres-carsharing-overlay';
+    modal.className = 'es-pres-stats-modal';
+    modal.innerHTML =
+      '<div class="es-pres-stats-sheet" style="max-width:760px;" role="dialog" aria-modal="true">' +
+        '<div style="display:flex; align-items:center; justify-content:space-between; padding-bottom:1rem; border-bottom:1.5px solid #f1f5f9; margin-bottom:1.2rem;">' +
+          '<div style="display:flex; align-items:center; gap:0.75rem;">' +
+            '<span style="font-size:1.8rem;">🚗</span>' +
+            '<div>' +
+              '<h2 style="font-size:1.45rem; font-weight:900; margin:0; color:#0f172a;">Car Sharing Club &amp; Genitori</h2>' +
+              '<p style="font-size:0.84rem; color:#64748b; margin:0.1rem 0 0;">Condivisione passaggi per allenamenti e trasferte in piena tranquillità</p>' +
+            '</div>' +
+          '</div>' +
+          '<button type="button" class="es-tactical-btn-close" id="btn-close-carsharing" style="font-size:1.6rem; cursor:pointer;">&times;</button>' +
+        '</div>' +
+
+        '<div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;">' +
+          '<h3 style="font-size:1.1rem; font-weight:900; color:#0f172a; margin:0;">Auto disponibili (' + cars.length + ')</h3>' +
+          '<button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-offer-ride" style="background:#000000; color:#ffffff; border:none; padding:0.55rem 1.25rem; font-weight:800; font-size:0.86rem;">' +
+            '🚗 + Offri un passaggio con la tua auto' +
+          '</button>' +
+        '</div>' +
+
+        '<div style="max-height:55vh; overflow-y:auto; padding-right:0.2rem;">' +
+          carsListHtml +
+        '</div>' +
+      '</div>';
+
+    document.body.appendChild(modal);
+
+    function close() { modal.remove(); }
+    modal.querySelector('#btn-close-carsharing').onclick = close;
+    modal.onclick = function (e) { if (e.target === modal) close(); };
+
+    modal.querySelector('#btn-offer-ride').onclick = function () {
+      openOfferRideModal();
+    };
+  }
+
+  // ============================================================
+  // MODALE OFFRI PASSAGGIO (Genitore / Staff)
+  // ============================================================
+  function openOfferRideModal() {
+    var dName = prompt('Nome del Genitore / Autista (es. Mario Rossi):', 'Genitore Atleta');
+    if (!dName) return;
+    var dRole = prompt('Ruolo / Relazione (es. Papà di Luca, Staff Tecnico):', 'Genitore');
+    var dModel = prompt('Modello e Colore Auto (es. Fiat 500L Bianca):', 'Auto Familiare');
+    var dSeats = parseInt(prompt('Quanti posti liberi hai in auto? (es. 3):', '3'), 10) || 3;
+    var dDep = prompt('Punto di ritrovo e partenza (es. Piazzale Grandapulia):', 'Piazzale Centrale');
+    var dTime = prompt('Orario di ritrovo (es. 18:15):', '18:15');
+    var dNotes = prompt('Note (es. Disponibile anche per il ritorno alle 20:45):', 'Passaggio per allenamento');
+
+    var data = getPresData();
+    data.carSharingPool = data.carSharingPool || [];
+    data.carSharingPool.unshift({
+      id: 'car-' + Date.now(),
+      driverName: dName,
+      driverRole: dRole || 'Genitore',
+      carModel: dModel || 'Automobile',
+      totalSeats: dSeats,
+      departurePoint: dDep || 'Punto di ritrovo',
+      departureTime: dTime || '18:00',
+      destination: 'Stadio Pino Zaccheria',
+      notes: dNotes || '',
+      passengers: []
+    });
+    savePresData(data);
+    openCarSharingModal();
+    renderHub();
+    if (window.showToast) window.showToast('✅ Auto messa a disposizione nel Car Sharing del Club!', 'success');
+  }
+
+  // Global methods for car sharing booking
+  window.bookCarSeat = function (idx) {
+    var pName = prompt('Nome e Cognome del ragazzo / passeggero da prenotare a bordo:', 'Atleta');
+    if (pName) {
+      var data = getPresData();
+      var car = (data.carSharingPool || [])[idx];
+      if (car) {
+        car.passengers = car.passengers || [];
+        if (car.passengers.length < car.totalSeats) {
+          car.passengers.push(pName);
+          savePresData(data);
+          openCarSharingModal();
+          renderHub();
+          if (window.showToast) window.showToast('🎉 Posto prenotato con successo per ' + pName + '!', 'success');
+        } else {
+          alert('Questa vettura è già al completo!');
+        }
+      }
+    }
+  };
+
+  window.deleteCarItem = function (idx) {
+    if (confirm('Vuoi rimuovere questo passaggio dal Car Sharing?')) {
+      var data = getPresData();
+      data.carSharingPool.splice(idx, 1);
+      savePresData(data);
+      openCarSharingModal();
+      renderHub();
+      if (window.showToast) window.showToast('🗑️ Passaggio rimosso', 'info');
+    }
+  };
+
+  // ============================================================
+  // MODALE + CREA EVENTO (Screenshot)
+  // ============================================================
+  function openCreateEventModal() {
+    var old = document.getElementById('es-pres-create-event-overlay');
+    if (old) old.remove();
+
+    var modal = document.createElement('div');
+    modal.id = 'es-pres-create-event-overlay';
+    modal.className = 'es-pres-stats-modal';
+    modal.innerHTML =
+      '<div class="es-pres-new-player-sheet" style="max-width:540px;" role="dialog" aria-modal="true">' +
+        '<div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.4rem;">' +
+          '<h2 style="font-size:1.45rem; font-weight:900; margin:0; color:#0f172a;">📅 Crea nuovo evento</h2>' +
+          '<button type="button" class="es-tactical-btn-close" id="btn-close-create-event">&times;</button>' +
+        '</div>' +
+
+        '<form id="form-create-event">' +
+          '<h4 style="font-size:0.82rem; font-weight:800; color:#0d9488; text-transform:uppercase; letter-spacing:0.04em; margin:0 0 1rem;">DETTAGLI EVENTO CLUB</h4>' +
+
+          '<div class="es-pres-form-row">' +
+            '<label class="es-pres-form-lbl">TIPO DI EVENTO</label>' +
+            '<select class="es-pres-form-inp" id="inp-ev-tipo" required>' +
+              '<option value="Allenamento">🏃‍♂️ Allenamento</option>' +
+              '<option value="Partita di Campionato">⚽ Partita di Campionato</option>' +
+              '<option value="Amichevole / Torneo">🏆 Amichevole / Torneo</option>' +
+              '<option value="Trasferta con Car Sharing">🚗 Trasferta di Squadra</option>' +
+              '<option value="Riunione Societaria">📋 Riunione Tecnica / Societaria</option>' +
+            '</select>' +
+          '</div>' +
+
+          '<div class="es-pres-form-row">' +
+            '<label class="es-pres-form-lbl">TITOLO / AVVERSARIO</label>' +
+            '<input type="text" class="es-pres-form-inp" id="inp-ev-titolo" placeholder="Es. Allenamento o Taranto vs Elisee" value="Allenamento" required>' +
+          '</div>' +
+
+          '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">' +
+            '<div class="es-pres-form-row">' +
+              '<label class="es-pres-form-lbl">GIORNO &amp; DATA</label>' +
+              '<input type="text" class="es-pres-form-inp" id="inp-ev-data" placeholder="Es. mar 01/09" value="mar 01/09" required>' +
+            '</div>' +
+            '<div class="es-pres-form-row">' +
+              '<label class="es-pres-form-lbl">CAMPO / LUOGO</label>' +
+              '<input type="text" class="es-pres-form-inp" id="inp-ev-luogo" placeholder="Stadio Pino Zaccheria" value="Stadio Comunale Pino Zaccheria" required>' +
+            '</div>' +
+          '</div>' +
+
+          '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.6rem;">' +
+            '<div class="es-pres-form-row">' +
+              '<label class="es-pres-form-lbl">RITROVO</label>' +
+              '<input type="text" class="es-pres-form-inp" id="inp-ev-ritrovo" placeholder="-:-" value="-:-">' +
+            '</div>' +
+            '<div class="es-pres-form-row">' +
+              '<label class="es-pres-form-lbl">INIZIO</label>' +
+              '<input type="text" class="es-pres-form-inp" id="inp-ev-inizio" placeholder="19:00" value="19:00" required>' +
+            '</div>' +
+            '<div class="es-pres-form-row">' +
+              '<label class="es-pres-form-lbl">FINE</label>' +
+              '<input type="text" class="es-pres-form-inp" id="inp-ev-fine" placeholder="20:30" value="20:30" required>' +
+            '</div>' +
+          '</div>' +
+
+          '<div class="es-pres-form-row">' +
+            '<label class="es-pres-form-lbl">FOCUS / DESCRIZIONE</label>' +
+            '<input type="text" class="es-pres-form-inp" id="inp-ev-focus" placeholder="Focus tecnico e car sharing abilitato" value="Seduta Tattica &amp; Pressione Alta">' +
+          '</div>' +
+
+          '<div style="display:flex; align-items:center; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem;">' +
+            '<button type="button" class="btn btn-outline-pill" id="btn-cancel-create-event" style="border:1.5px solid #cbd5e1; padding:0.65rem 1.4rem; font-weight:800; font-size:0.92rem;">Annulla</button>' +
+            '<button type="submit" class="btn btn-outline-pill pf-btn-solid" style="background:#000000; color:#ffffff; border:none; padding:0.65rem 1.6rem; font-weight:900; font-size:0.92rem;">Pubblica evento</button>' +
+          '</div>' +
+        '</form>' +
+      '</div>';
+
+    document.body.appendChild(modal);
+
+    function close() { modal.remove(); }
+    modal.querySelector('#btn-close-create-event').onclick = close;
+    modal.querySelector('#btn-cancel-create-event').onclick = close;
+    modal.onclick = function (e) { if (e.target === modal) close(); };
+
+    modal.querySelector('#form-create-event').onsubmit = function (e) {
+      e.preventDefault();
+      var tipo = modal.querySelector('#inp-ev-tipo').value;
+      var titolo = modal.querySelector('#inp-ev-titolo').value.trim();
+      var dataStr = modal.querySelector('#inp-ev-data').value.trim();
+      var luogo = modal.querySelector('#inp-ev-luogo').value.trim();
+      var ritrovo = modal.querySelector('#inp-ev-ritrovo').value.trim();
+      var inizio = modal.querySelector('#inp-ev-inizio').value.trim();
+      var fine = modal.querySelector('#inp-ev-fine').value.trim();
+      var focus = modal.querySelector('#inp-ev-focus').value.trim();
+
+      var parts = dataStr.split(' ');
+      var day = parts[0] || 'mar';
+      var date = parts[1] || '01/09';
+
+      var data = getPresData();
+      data.trainingsList = data.trainingsList || [];
+      data.trainingsList.unshift({
+        id: 'ev-' + Date.now(),
+        day: day,
+        date: date,
+        fullDate: dataStr,
+        title: titolo || tipo,
+        incontro: ritrovo || '-:-',
+        inizio: inizio || '19:00',
+        fine: fine || '20:30',
+        campo: luogo,
+        focus: focus,
+        votes: {}
+      });
+      savePresData(data);
+      close();
+      renderHub();
+      if (window.showToast) window.showToast('✅ Evento ' + titolo + ' creato e condiviso con il club!', 'success');
+    };
+  }
+
+  // ============================================================
+  // MODALE FERIE / MALATTIA (Screenshot)
+  // ============================================================
+  function openLeavesModal() {
+    var data = getPresData();
+    var list = data.leaveRecords || [];
+
+    var listHtml = list.length === 0
+      ? '<div style="text-align:center; padding:1.5rem; color:#94a3b8;">Nessun certificato medico o richiesta ferie registrata.</div>'
+      : list.map(function (item) {
+          return (
+            '<div class="es-voter-item" style="margin-bottom:0.6rem;">' +
+              '<div class="es-voter-info">' +
+                '<div class="es-voter-avatar" style="background:#ef4444;">🏥</div>' +
+                '<div>' +
+                  '<h5 class="es-voter-name">' + esc(item.name) + ' (' + esc(item.role) + ')</h5>' +
+                  '<div class="es-voter-role">' + esc(item.reason) + ' · Dal ' + esc(item.from) + ' al ' + esc(item.to) + '</div>' +
+                '</div>' +
+              '</div>' +
+              '<span class="es-voter-badge is-yes">' + esc(item.status) + '</span>' +
+            '</div>'
+          );
+        }).join('');
+
+    var modal = document.createElement('div');
+    modal.id = 'es-pres-leaves-overlay';
+    modal.className = 'es-pres-stats-modal';
+    modal.innerHTML =
+      '<div class="es-voters-modal-sheet" role="dialog" aria-modal="true">' +
+        '<div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem;">' +
+          '<div style="display:flex; align-items:center; gap:0.65rem;">' +
+            '<span style="font-size:1.6rem; color:#ef4444;">➕</span>' +
+            '<div><h3 style="font-size:1.3rem; font-weight:900; margin:0; color:#0f172a;">Registro Ferie &amp; Malattia</h3><p style="font-size:0.82rem; color:#64748b; margin:0;">Certificati medici, infortuni e assenze staff e atleti</p></div>' +
+          '</div>' +
+          '<button type="button" class="es-tactical-btn-close" id="btn-close-leaves">&times;</button>' +
+        '</div>' +
+        '<div>' + listHtml + '</div>' +
+        '<div style="margin-top:1.2rem; text-align:right;">' +
+          '<button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-add-leave" style="background:#0d9488; color:#fff; border:none; padding:0.55rem 1.25rem; font-weight:800; font-size:0.86rem;">+ Registra Assenza / Malattia</button>' +
+        '</div>' +
+      '</div>';
+
+    document.body.appendChild(modal);
+    function close() { modal.remove(); }
+    modal.querySelector('#btn-close-leaves').onclick = close;
+    modal.onclick = function (e) { if (e.target === modal) close(); };
+
+    modal.querySelector('#btn-add-leave').onclick = function () {
+      var n = prompt('Nome persona assente / infortunata:', 'Membro Club');
+      if (n) {
+        var r = prompt('Motivazione (es. Infortunio caviglia, Influenza, Ferie):', 'Infortunio');
+        var d = prompt('Periodo (es. dal 01/09 al 05/09):', 'Prossimi 5 giorni');
+        data.leaveRecords = data.leaveRecords || [];
+        data.leaveRecords.unshift({
+          name: n,
+          role: 'Tesserato',
+          reason: r || 'Indisponibile',
+          from: 'Oggi',
+          to: d || 'Prossimi giorni',
+          status: 'Registrato'
+        });
+        savePresData(data);
+        modal.remove();
+        openLeavesModal();
+        renderHub();
+        if (window.showToast) window.showToast('✅ Assenza registrata nel dossier medico/societario', 'success');
+      }
+    };
   }
 
   // ============================================================
@@ -593,6 +1020,24 @@
       });
     });
 
+    // Grande Tasto + Crea Evento
+    var btnCreateEv = mount.querySelector('#btn-pres-create-event');
+    if (btnCreateEv) btnCreateEv.onclick = openCreateEventModal;
+
+    // Quick Action Cards
+    var cardCar = mount.querySelector('#card-action-carsharing');
+    if (cardCar) cardCar.onclick = openCarSharingModal;
+
+    var cardLeaves = mount.querySelector('#card-action-leaves');
+    if (cardLeaves) cardLeaves.onclick = openLeavesModal;
+
+    var cardSummary = mount.querySelector('#card-action-summary') || mount.querySelector('#link-view-all-events');
+    if (cardSummary) {
+      cardSummary.onclick = function () {
+        if (window.showToast) window.showToast('📅 Panoramica Eventi: ' + (getPresData().trainingsList || []).length + ' eventi attivi.', 'info');
+      };
+    }
+
     // Interazioni Voti Like / Dislike
     mount.querySelectorAll('.es-training-vote-btn').forEach(function (btn) {
       btn.onclick = function () {
@@ -725,6 +1170,8 @@
     detach: detach,
     openStats: openStatsModal,
     openNewPlayer: openNewPlayerModal,
+    openCarSharing: openCarSharingModal,
+    openCreateEvent: openCreateEventModal,
     setTab: function (tab) {
       activeTab = tab;
       renderHub();

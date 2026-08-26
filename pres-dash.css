@@ -165,3 +165,176 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ============================================================
+   EVENTI HUB & CAR SHARING GENITORI / TRASFERTE
+   ============================================================ */
+.es-events-hub-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.85rem;
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: -0.03em;
+  margin: 0 0 1.2rem;
+  text-transform: uppercase;
+}
+.es-btn-create-event-big {
+  width: 100%;
+  background: #000000;
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  padding: 0.95rem 1.5rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.15s ease;
+  margin-bottom: 1.8rem;
+}
+.es-btn-create-event-big:hover {
+  background: #1e293b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.es-events-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+}
+.es-events-section-title {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0;
+}
+.es-events-view-all-link {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #0f172a;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Quick Action Grid (Riepilogo, Ferie, Car Sharing) */
+.es-events-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.es-events-quick-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 1.25rem 1.4rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 120px;
+}
+.es-events-quick-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
+  border-color: #cbd5e1;
+}
+.es-quick-card-icon {
+  font-size: 1.8rem;
+  margin-bottom: 0.6rem;
+  color: #0f172a;
+}
+.es-quick-card-title {
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0 0 0.25rem;
+}
+.es-quick-card-sub {
+  font-size: 0.82rem;
+  color: #64748b;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Modale Car Sharing */
+.es-car-item-card {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1.1rem 1.3rem;
+  margin-bottom: 0.9rem;
+  transition: all 0.15s ease;
+}
+.es-car-item-card:hover {
+  border-color: #94a3b8;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+.es-car-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+.es-car-driver-name {
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0;
+}
+.es-car-driver-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  background: #e0e7ff;
+  color: #3730a3;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  margin-left: 0.4rem;
+}
+.es-car-seats-badge {
+  font-size: 0.8rem;
+  font-weight: 800;
+  background: #dcfce7;
+  color: #166534;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+}
+.es-car-seats-badge.is-full {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.es-car-details-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.82rem;
+  color: #475569;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+.es-car-passengers-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.45rem;
+}
+.es-passenger-chip {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
