@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Implementato il modulo **`💬 COMUNICAZIONI`** con **`+ Crea notizia`**, **`Sondaggi della Squadra`** con votazione in tempo reale, **`💬 Chat Ufficiale di Squadra`** e **`☁️ Cloud Squadra (0/15 MB)`** con permessi differenziati: creazione e amministrazione riservata a Dirigenza e Staff (escluso ai calciatori), mentre lettura notizie, votazione sondaggi, messaggi in chat e download cloud sono accessibili a TUTTI i componenti del club. File: `pres-dash.js`, `pres-dash.css`, `index.html`, `sw.js`. Cache `COMM1`.
-Feature precedente: Estensione servizi esecutivi (Squadra, Invita, Finanze) all'Alta Dirigenza.
+Ultimo fatto: Aggiornata la palette colori del **`Banner Fluttuante Verifica Email OTP`** (`verifica-account.css`) per armonizzarlo al 100% con la palette del sito Elisee Scout (sfondo gradiente dark obsidian `#090e17` & teal `#0d9488` con bordo cyan `#38bdf8`, testo silver e pill button bianco elegante). File: `verifica-account.css`, `index.html`, `sw.js`. Cache `OTP2`.
+Feature precedente: Modulo Comunicazioni con permessi differenziati Staff/Calciatori.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
