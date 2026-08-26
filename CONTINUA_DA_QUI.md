@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: **Stato Vuoto Onesto & Pianificazione Sedute per Piano di Lavoro Settimanale (Centro Sportivo)**: 1. Svuotato `trainingWeek` di default nei dati reali puliti (niente più giorni placeholder pre-impostati); 2. Inserito lo stato vuoto onesto con icona cronometro, spiegazione che il piano viene redatto dall'Allenatore/Preparatore e pulsante `+ Pianifica Seduta di Allenamento` (`#btn-add-first-training-session`); 3. Creata la modale interattiva `openAddTrainingModal` per permettere l'inserimento di sedute reali (giorno, orario, campo, focus seduta e presenze); 4. Resa dinamica anche la card "Centro Allenamento" nella Panoramica principale (mostra "Nessun piano / Da pianificare" se vuoto). File: `pres-dash.js`, `index.html`, `sw.js`. Cache `TRN_EMPTY1`.
-Feature precedente: Rimozione Duplicato & Attivazione Pulsante "Inserisci Primo Membro Staff".
+Ultimo fatto: **Sanitizzazione Automatica Storage & Rimozione Definitiva Sedute Placeholder**: 1. Implementata migrazione automatica e sanitizzazione nello store `elisee_pres_club_master_v3` che elimina retroattivamente dai browser locali qualsiasi residuo dei 4 giorni di allenamento placeholder ("Da rilevare"); 2. I pulsanti *"Azzera Dati"* e *"Passa a Dati Reali"* forzano `trainingWeek: []` pulito al 100%; 3. Schermata Centro Sportivo e Card Panoramica visualizzano lo stato vuoto onesto *"Nessuna seduta programmata / Da pianificare"*. File: `pres-dash.js`, `index.html`, `sw.js`. Cache `NO_TRN_MOCK1`.
+Feature precedente: Stato Vuoto Onesto & Pianificazione Sedute per Piano di Lavoro Settimanale.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

@@ -457,22 +457,34 @@
   function getPresClubData() {
     var u = userObj();
     try {
-      var stored = localStorage.getItem('elisee_pres_club_master_v2');
+      var stored = localStorage.getItem('elisee_pres_club_master_v3') || localStorage.getItem('elisee_pres_club_master_v2');
       if (stored) {
         var parsed = JSON.parse(stored);
-        if (parsed && typeof parsed === 'object') return parsed;
+        if (parsed && typeof parsed === 'object') {
+          // Se la modalità non è demo, rimuove qualsiasi residuo dei vecchi placeholder
+          if (!parsed.isDemoMode) {
+            if (Array.isArray(parsed.trainingWeek) && parsed.trainingWeek.some(function (tw) { return tw.attendance === 'Da rilevare'; })) {
+              parsed.trainingWeek = [];
+              try {
+                localStorage.setItem('elisee_pres_club_master_v3', JSON.stringify(parsed));
+                localStorage.setItem('elisee_pres_club_master_v2', JSON.stringify(parsed));
+              } catch (_) {}
+            }
+          }
+          return parsed;
+        }
       }
     } catch (_) {}
 
-    // Default: se l'utente non ha salvato nulla, parte da Demo o Clean
     var isDemoPreferred = localStorage.getItem('elisee_pres_is_demo_mode') === 'true';
-    return isDemoPreferred ? getDemoDataset(u) : getDemoDataset(u); // Default con demo ma con chiaro toggle
+    return isDemoPreferred ? getDemoDataset(u) : getCleanRealDataset(u);
   }
 
   function savePresClubData(data) {
     try {
       data.lastUpdatedBy = getUserName(userObj());
       data.lastUpdatedAt = getFormattedDateTime();
+      localStorage.setItem('elisee_pres_club_master_v3', JSON.stringify(data));
       localStorage.setItem('elisee_pres_club_master_v2', JSON.stringify(data));
       localStorage.setItem('elisee_pres_is_demo_mode', data.isDemoMode ? 'true' : 'false');
     } catch (_) {}
@@ -1565,6 +1577,11 @@
     if (btnSwitchReal) {
       btnSwitchReal.onclick = function () {
         var clean = getCleanRealDataset(userObj());
+        clean.trainingWeek = [];
+        clean.staff = [];
+        clean.squad = [];
+        clean.sponsors = [];
+        clean.matches = [];
         savePresClubData(clean);
         renderPresidentialSuite();
         if (window.showToast) window.showToast('Passato a modalità Dati Reali del Club!', 'info');
@@ -1574,9 +1591,14 @@
     if (btnResetDemo) {
       btnResetDemo.onclick = function () {
         var clean = getCleanRealDataset(userObj());
+        clean.trainingWeek = [];
+        clean.staff = [];
+        clean.squad = [];
+        clean.sponsors = [];
+        clean.matches = [];
         savePresClubData(clean);
         renderPresidentialSuite();
-        if (window.showToast) window.showToast('Dati demo azzerati con successo.', 'info');
+        if (window.showToast) window.showToast('Tutti i dati sono stati azzerati con successo.', 'info');
       };
     }
     var btnLoadDemo = mount.querySelector('#btn-load-demo');
