@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Attivazione completa in tempo reale del flusso **`Verifica Email OTP a 4 Cifre`** (`verifica-account.js`, `verifica-account.css`, `index.html`): apertura fluida e reattiva della modale Dark Glass, auto-generazione del codice OTP a 4 cifre con toast istantaneo e pillola interattiva "Inserisci subito", avanzamento automatico su digitazione, auto-invio al 4° numero, salvataggio immediato dello stato verificato (`emailVerified: true`) in localStorage, rimozione immediata del banner fluttuante e trigger eventi globali `elisee:email-verified`. File: `verifica-account.js`, `index.html`, `sw.js`. Cache `OTP4`.
-Feature precedente: Profilo compatto e snello per Presidente.
+Ultimo fatto: Refactoring completo dell'**`👑 Area Presidente (Presidential Dashboard B2B)`** verso un design minimale, sobrio e professionale: 1. Sostituite tutte le emoji con icone SVG lineari outline monocolore; 2. Ordinata la navigazione a tab (Panoramica → Gestione Club → Ufficio & Finanze → Competizioni & Risultati → Conformità & Governance); 3. Separato il form profilo personale (dossier utente); 4. Eliminati badge dorati 'a trofeo' a favore di tag flat con colori semantici sobri; 5. Sostituito il banner reward con card di upsell SaaS standard; 6. Rimosso il widget di debug flottante non di produzione. File: `pres-dash.js`, `pres-dash.css`, `creator-role-switcher.js`, `index.html`, `sw.js`. Cache `PRES_SOB1`.
+Feature precedente: Attivazione in tempo reale del flusso verifica OTP.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

@@ -544,28 +544,8 @@
   }
 
   function initTrigger() {
-    var trigger = document.getElementById('es-creator-trigger');
-    if (!trigger) {
-      trigger = document.createElement('button');
-      trigger.type = 'button';
-      trigger.id = 'es-creator-trigger';
-      trigger.className = 'es-creator-trigger';
-      trigger.setAttribute('title', 'Simulatore Ruoli Creatore — Clicca per cambiare ruolo');
-      trigger.innerHTML =
-        '<span class="es-creator-trigger-icon">⚡</span>' +
-        '<span>Ruolo Creatore: <strong id="es-creator-trigger-role" class="es-creator-trigger-role">Caricamento...</strong></span>' +
-        '<span class="es-creator-trigger-x" id="es-creator-trigger-close" title="Nascondi badge" style="margin-left:0.35rem; opacity:0.6; font-size:1.1rem; line-height:1; padding:0 0.2rem;">&times;</span>';
-      document.body.appendChild(trigger);
-      trigger.addEventListener('click', function (e) {
-        if (e.target && (e.target.id === 'es-creator-trigger-close' || e.target.classList.contains('es-creator-trigger-x'))) {
-          e.stopPropagation();
-          trigger.classList.remove('is-visible');
-          return;
-        }
-        openModal();
-      });
-    }
-    updateTriggerLabel();
+    var old = document.getElementById('es-creator-trigger');
+    if (old) old.remove();
   }
 
   // Esponi API globale per il creatore
