@@ -406,10 +406,7 @@
       sponsors: [],
       scouting: [],
       matches: [],
-      deadlines: [
-        { id: 1, task: 'Deposito Bilancio Preventivo Stagionale', date: '2026-10-31', status: 'In scadenza' },
-        { id: 2, task: 'Verifica Idoneità Medico-Sportiva Atleti', date: '2026-09-30', status: 'In scadenza' }
-      ],
+      deadlines: [],
 
       stadium: {
         name: 'Impianto Sportivo Principale',
@@ -469,6 +466,9 @@
           if (!parsed.isDemoMode) {
             if (Array.isArray(parsed.trainingWeek) && parsed.trainingWeek.some(function (tw) { return tw.attendance === 'Da rilevare'; })) {
               parsed.trainingWeek = [];
+            }
+            if (Array.isArray(parsed.deadlines) && parsed.deadlines.some(function (d) { return d.task === 'Deposito Bilancio Preventivo Stagionale'; })) {
+              parsed.deadlines = [];
             }
           }
           if (/eliseo|miraglia/i.test(String(parsed.lastUpdatedBy || ''))) {
@@ -1240,12 +1240,12 @@
               '</div>' +
 
               '<div class="es-pres-card" id="card-pres-gov-deadlines">' +
-                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.bell + '</div><span class="es-pres-status ' + (hasWarningDeadline ? 'es-pres-status-warning' : 'es-pres-status-ok') + '">' + deadlines.length + ' scadenze</span></div>' +
-                '<div><h3 class="es-pres-card-title">Scadenziario Federale</h3><div style="font-size:0.82rem; color:#cbd5e1; display:flex; flex-direction:column; gap:0.35rem; margin-top:0.4rem;">' +
+                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.bell + '</div><span class="es-pres-status ' + (deadlines.length ? (hasWarningDeadline ? 'es-pres-status-warning' : 'es-pres-status-ok') : 'es-pres-status-neutral') + '">' + (deadlines.length ? (deadlines.length + ' scadenze') : '0 scadenze') + '</span></div>' +
+                '<div><h3 class="es-pres-card-title">Scadenziario Federale</h3>' + (deadlines.length ? ('<div style="font-size:0.82rem; color:#cbd5e1; display:flex; flex-direction:column; gap:0.35rem; margin-top:0.4rem;">' +
                   deadlines.slice(0, 3).map(function (d) {
                     return '<div>• <b>' + esc(d.task) + ':</b> <span style="color:' + (d.isWarning ? '#fbbf24' : '#34d399') + ';">' + esc(d.status) + '</span> (' + esc(d.dateText) + ')</div>';
                   }).join('') +
-                '</div></div>' +
+                '</div>') : '<p class="es-pres-card-desc">Nessuna scadenza o termine perentorio federale registrato.</p>') + '</div>' +
                 '<div class="es-pres-card-footer"><span>Monitoraggio Adempimenti</span><span>Dettagli scadenze &rsaquo;</span></div>' +
               '</div>' +
             '</div>' +
@@ -1536,6 +1536,50 @@
     }
   }
 
+  function openAddDeadlineModal(data) {
+    var formHtml =
+      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Registra un nuovo adempimento federale, termine perentorio Co.Vi.So.D o scadenza LND:</p>' +
+      '<form id="form-add-deadline" style="display:flex; flex-direction:column; gap:1rem;">' +
+        '<div class="es-pres-input-group"><label>Descrizione Adempimento / Termine *</label><input type="text" class="es-pres-input-text" id="inp-dl-task" required placeholder="Es. Deposito Fideiussione Bancaria"></div>' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group"><label>Data di Scadenza Perentoria *</label><input type="date" class="es-pres-input-text" id="inp-dl-date" required value="' + new Date().toISOString().split('T')[0] + '"></div>' +
+          '<div class="es-pres-input-group"><label>Organo di Controllo</label><select class="es-pres-input-text" id="sel-dl-org" style="background:#040810; color:#fff;"><option>Co.Vi.So.D</option><option>FIGC - LND</option><option>Settore Tecnico Coverciano</option><option>Comitato Regionale</option></select></div>' +
+        '</div>' +
+        '<div class="es-pres-input-group"><label>Note e Documentazione Richiesta</label><textarea class="es-pres-input-text" id="inp-dl-notes" rows="2" placeholder="Es. Invio tramite PEC e portale LND"></textarea></div>' +
+        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+          '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-dl-modal">Annulla</button>' +
+          '<button type="submit" class="es-pres-btn-primary">Registra Scadenza</button>' +
+        '</div>' +
+      '</form>';
+
+    openDetailModal('Nuova Scadenza Federale & Termine', ICONS.bell, formHtml);
+    var modalOverlay = document.getElementById('es-pres-detail-overlay');
+    var form = document.getElementById('form-add-deadline');
+    var btnCancel = document.getElementById('btn-cancel-dl-modal');
+    if (btnCancel && modalOverlay) btnCancel.onclick = function () { modalOverlay.remove(); };
+
+    if (form) {
+      form.onsubmit = function (e) {
+        e.preventDefault();
+        var task = document.getElementById('inp-dl-task').value.trim();
+        var dt = document.getElementById('inp-dl-date').value;
+
+        data.deadlines = data.deadlines || [];
+        data.deadlines.push({
+          id: Date.now(),
+          task: task,
+          date: dt,
+          status: 'In scadenza'
+        });
+
+        savePresClubData(data);
+        if (modalOverlay) modalOverlay.remove();
+        renderPresidentialSuite();
+        if (window.showToast) window.showToast('Termine ' + task + ' registrato nello scadenziario!', 'success');
+      };
+    }
+  }
+
   // ============================================================
   // GESTIONE SUB-VIEWS & ROUTING (PUSHSTATE / POPSTATE)
   // ============================================================
@@ -1591,6 +1635,7 @@
       btnSwitchReal.onclick = function () {
         var clean = getCleanRealDataset(userObj());
         clean.trainingWeek = [];
+        clean.deadlines = [];
         clean.staff = [];
         clean.squad = [];
         clean.sponsors = [];
@@ -1605,6 +1650,7 @@
       btnResetDemo.onclick = function () {
         var clean = getCleanRealDataset(userObj());
         clean.trainingWeek = [];
+        clean.deadlines = [];
         clean.staff = [];
         clean.squad = [];
         clean.sponsors = [];
@@ -1814,15 +1860,48 @@
     if (cardGovDeadlines) {
       cardGovDeadlines.onclick = function () {
         var deadlines = computeDeadlines(data.deadlines);
-        var listHtml = deadlines.map(function (d) {
-          return (
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; margin-bottom:0.6rem; display:flex; justify-content:space-between; align-items:center;">' +
-              '<div><h4 style="font-size:0.95rem; font-weight:700; color:#fff; margin:0;">' + esc(d.task) + '</h4><div style="font-size:0.78rem; color:#94a3b8; margin-top:0.15rem;">Termine federale: ' + esc(d.dateText) + '</div></div>' +
-              '<span class="' + (d.isWarning ? 'es-pres-status es-pres-status-warning' : 'es-pres-status es-pres-status-ok') + '">' + esc(d.status) + '</span>' +
-            '</div>'
-          );
-        }).join('');
-        openDetailModal('Scadenziario Federale & Termini Perentori', ICONS.bell, listHtml);
+        var html = !deadlines.length ? (
+          '<div class="es-pres-empty-box">' +
+            '<div class="es-pres-empty-icon">' + ICONS.bell + '</div>' +
+            '<h4 class="es-pres-empty-title">Nessuna scadenza federale registrata</h4>' +
+            '<p class="es-pres-empty-desc">Inserisci un nuovo termine perentorio, scadenza Co.Vi.So.D o adempimento LND per monitorarlo in tempo reale.</p>' +
+            '<button type="button" class="es-pres-empty-btn" id="btn-add-first-deadline">' + ICONS.plus + ' Nuova Scadenza Federale</button>' +
+          '</div>'
+        ) : (
+          '<div style="margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center;">' +
+            '<span style="font-size:0.85rem; color:#94a3b8;">' + deadlines.length + ' adempimenti monitorati</span>' +
+            '<button type="button" class="es-pres-btn-primary" id="btn-add-deadline">+ Nuova Scadenza</button>' +
+          '</div>' +
+          '<div style="display:flex; flex-direction:column; gap:0.6rem;">' +
+            deadlines.map(function (d) {
+              return (
+                '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
+                  '<div><h4 style="font-size:0.95rem; font-weight:700; color:#fff; margin:0;">' + esc(d.task) + '</h4><div style="font-size:0.78rem; color:#94a3b8; margin-top:0.15rem;">Termine federale: ' + esc(d.dateText) + '</div></div>' +
+                  '<span class="' + (d.isWarning ? 'es-pres-status es-pres-status-warning' : 'es-pres-status es-pres-status-ok') + '">' + esc(d.status) + '</span>' +
+                '</div>'
+              );
+            }).join('') +
+          '</div>'
+        );
+
+        openDetailModal('Scadenziario Federale & Termini Perentori', ICONS.bell, html);
+
+        var bAddFirst = document.getElementById('btn-add-first-deadline');
+        var bAdd = document.getElementById('btn-add-deadline');
+        if (bAddFirst) {
+          bAddFirst.onclick = function () {
+            var m = document.getElementById('es-pres-detail-overlay');
+            if (m) m.remove();
+            openAddDeadlineModal(data);
+          };
+        }
+        if (bAdd) {
+          bAdd.onclick = function () {
+            var m = document.getElementById('es-pres-detail-overlay');
+            if (m) m.remove();
+            openAddDeadlineModal(data);
+          };
+        }
       };
     }
 

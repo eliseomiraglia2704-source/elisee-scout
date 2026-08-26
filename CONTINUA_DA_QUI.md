@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: **Sostituzione Nome Personale con Admin / Responsabile Privacy**: 1. Rimosso qualsiasi riferimento al nome personale dell'utente nelle schermate, modali e record di provenienza/audit dell'Area Presidente e dell'Area Allenatore; 2. Nelle modali di conformità e tesseramenti la provenienza è ora indicata formalmente come `Responsabile Privacy` o `Admin`; 3. Corretta la formattazione dei titoli modali eliminando il doppio escape che generava `&AMP;`; 4. Sanitizzazione automatica dello storage locale per ridenominare i record salvati in precedenza. File: `pres-dash.js`, `coach-dash.js`, `index.html`, `sw.js`. Cache `ANON_PRIVACY1`.
-Feature precedente: Attivazione Completa di Tutte le Opzioni nell'Area Allenatore (Mister Hub).
+Ultimo fatto: **Rimozione Scadenze Fake & Stato Vuoto Onesto nello Scadenziario Federale (Area Presidente)**: 1. Rimossi i 2 task di scadenza fake/mock inseriti di default (Deposito Bilancio Preventivo, Idoneità Medico-Sportiva); 2. Inserito lo stato vuoto onesto con icona campana, conteggio `0 scadenze` e pulsante `+ Nuova Scadenza Federale` (`#btn-add-first-deadline`); 3. Creata la modale interattiva `openAddDeadlineModal` per permettere la registrazione di termini reali con data perentoria, ente di controllo (Co.Vi.So.D, LND, FIGC) e note; 4. Sanitizzazione automatica retroattiva dello storage locale per azzerare i task di prova vecchi salvati nel browser. File: `pres-dash.js`, `index.html`, `sw.js`. Cache `DEADLINES_REAL1`.
+Feature precedente: Sostituzione Nome Personale con Admin / Responsabile Privacy.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
