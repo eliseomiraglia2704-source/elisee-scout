@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: **Attivazione Modali Interattive per Settore Giovanile & Sviluppo Atleti (Area Presidente)**: 1. Collegate al 100% le card `#card-pres-youth` (Settore Giovanile & Fuoriquota) e `#card-pres-dev` (Sviluppo Atleti), oltre a `#card-pres-staff`; 2. Quando i dati sono vuoti (0 under o 0 schede), il click apre regolarmente la modale con box vuoto onesto, spiegazione dei requisiti federali LND e pulsanti CTA per aggiungere atleti under/schede o aprire l'Hub Schede Tecniche IA; 3. Quando sono presenti atleti o under, mostra l'elenco dettagliato delle prestazioni e lo stato di conformità. File: `pres-dash.js`, `index.html`, `sw.js`. Cache `YOUTH_DEV_ACTIVE1`.
-Feature precedente: Risoluzione Foto Profilo Utente nella Navbar.
+Ultimo fatto: **Integrazione Obblighi Riforma dello Sport (D.Lgs. 36/2021 & D.Lgs. 120/2023) in Conformità & Governance**: 1. Aggiunte 4 nuove card interattive in Governance: *Responsabile Tutela Minori (Safeguarding - art. 33 D.Lgs. 36/2021)*, *MOG & Codice di Condotta*, *Casellario Giudiziale Staff (art. 25-bis DPR 313/2002)* e *Registro Nazionale RAS & Adeguamento Statutario*; 2. Create modali dedicate per ciascun adempimento con gestione delibere, protocolli PEC, verifiche periodiche, audit trail e stati vuoti onesti con CTA; 3. Integrata la selezione della *Tipologia Contrattuale Riforma Sport (Co.co.co. Sportivo, Subordinato, Autonomo P.IVA, Volontario)* e stato casellario nella registrazione staff; 4. Aggiunta evidenza visiva del *Regime di Esenzione IVA (D.Lgs. 36/2021 in vigore dal 01/01/2026)* nella card Finanze & Budget. File: `pres-dash.js`, `index.html`, `sw.js`. Cache `SPORT_REFORM1`.
+Feature precedente: Attivazione Modali Interattive per Settore Giovanile & Sviluppo Atleti (Area Presidente).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

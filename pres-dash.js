@@ -53,9 +53,20 @@
     fileText: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>',
     bell: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>',
     checkShield: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>',
+    userCheck: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>',
+    bookOpen: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>',
+    shieldAlert: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>',
+    landmark: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"></line><line x1="6" y1="18" x2="6" y2="11"></line><line x1="10" y1="18" x2="10" y2="11"></line><line x1="14" y1="18" x2="14" y2="11"></line><line x1="18" y1="18" x2="18" y2="11"></line><polygon points="12 2 20 7 4 7"></polygon></svg>',
     plus: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>',
     clock: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>'
   };
+
+  var CONTRACT_TYPES = [
+    'Co.co.co. Sportivo (D.Lgs. 36/2021)',
+    'Lavoro Subordinato Sportivo',
+    'Lavoro Autonomo con P.IVA',
+    'Volontario Sportivo (D.Lgs. 36/2021)'
+  ];
 
   function esc(s) {
     return String(s == null ? '' : s)
@@ -274,15 +285,47 @@
       ],
 
       staff: [
-        { id: 1, role: 'Allenatore Prima Squadra', name: 'Mario Somma', patent: 'UEFA Pro', contractExp: '30/06/2027', status: 'Regolare', isWarning: false },
-        { id: 2, role: 'Vice Allenatore', name: 'Giuseppe Russo', patent: 'UEFA A', contractExp: '30/06/2027', status: 'Regolare', isWarning: false },
-        { id: 3, role: 'Direttore Sportivo', name: 'Antonio Gentile', patent: 'Dirigente Sportivo FIGC', contractExp: '15/10/2026', status: 'In scadenza (45gg)', isWarning: true },
-        { id: 4, role: 'Preparatore Atletico', name: 'Luca Rossi', patent: 'Preparatore Atletico FIGC', contractExp: '30/06/2027', status: 'Regolare', isWarning: false },
-        { id: 5, role: 'Preparatore Portieri', name: 'Francesco Mancini', patent: 'Allenatore Portieri FIGC', contractExp: '30/06/2027', status: 'Regolare', isWarning: false },
-        { id: 6, role: 'Fisioterapista', name: 'Dott. Alessandro Neri', patent: 'Fisioterapista Albo TSRM/FNOFI', contractExp: '30/06/2027', status: 'Regolare', isWarning: false },
-        { id: 7, role: 'Medico Sociale', name: 'Dott. Valerio Bianchi', patent: 'Medico Sociale FMSI', contractExp: '30/06/2027', status: 'Regolare', isWarning: false },
-        { id: 8, role: 'Match Analyst', name: 'Roberto Esposito', patent: 'Match Analyst FIGC Coverciano', contractExp: '30/06/2027', status: 'Regolare', isWarning: false }
+        { id: 1, role: 'Allenatore Prima Squadra', name: 'Mario Somma', patent: 'UEFA Pro', contractType: 'Co.co.co. Sportivo (D.Lgs. 36/2021)', contractExp: '30/06/2027', penaleStatus: 'Regolare', penaleIssueDate: '10/08/2026', penaleExpiryDate: '10/08/2027', status: 'Regolare', isWarning: false },
+        { id: 2, role: 'Vice Allenatore', name: 'Giuseppe Russo', patent: 'UEFA A', contractType: 'Co.co.co. Sportivo (D.Lgs. 36/2021)', contractExp: '30/06/2027', penaleStatus: 'Regolare', penaleIssueDate: '10/08/2026', penaleExpiryDate: '10/08/2027', status: 'Regolare', isWarning: false },
+        { id: 3, role: 'Direttore Sportivo', name: 'Antonio Gentile', patent: 'Dirigente Sportivo FIGC', contractType: 'Lavoro Subordinato Sportivo', contractExp: '15/10/2026', penaleStatus: 'Regolare', penaleIssueDate: '12/08/2026', penaleExpiryDate: '12/08/2027', status: 'In scadenza (45gg)', isWarning: true },
+        { id: 4, role: 'Preparatore Atletico', name: 'Luca Rossi', patent: 'Preparatore Atletico FIGC', contractType: 'Co.co.co. Sportivo (D.Lgs. 36/2021)', contractExp: '30/06/2027', penaleStatus: 'Regolare', penaleIssueDate: '10/08/2026', penaleExpiryDate: '10/08/2027', status: 'Regolare', isWarning: false },
+        { id: 5, role: 'Preparatore Portieri', name: 'Francesco Mancini', patent: 'Allenatore Portieri FIGC', contractType: 'Co.co.co. Sportivo (D.Lgs. 36/2021)', contractExp: '30/06/2027', penaleStatus: 'Regolare', penaleIssueDate: '10/08/2026', penaleExpiryDate: '10/08/2027', status: 'Regolare', isWarning: false },
+        { id: 6, role: 'Fisioterapista', name: 'Dott. Alessandro Neri', patent: 'Fisioterapista Albo TSRM/FNOFI', contractType: 'Lavoro Autonomo con P.IVA', contractExp: '30/06/2027', penaleStatus: 'Regolare', penaleIssueDate: '14/08/2026', penaleExpiryDate: '14/08/2027', status: 'Regolare', isWarning: false },
+        { id: 7, role: 'Medico Sociale', name: 'Dott. Valerio Bianchi', patent: 'Medico Sociale FMSI', contractType: 'Lavoro Autonomo con P.IVA', contractExp: '30/06/2027', penaleStatus: 'Regolare', penaleIssueDate: '14/08/2026', penaleExpiryDate: '14/08/2027', status: 'Regolare', isWarning: false },
+        { id: 8, role: 'Match Analyst', name: 'Roberto Esposito', patent: 'Match Analyst FIGC Coverciano', contractType: 'Co.co.co. Sportivo (D.Lgs. 36/2021)', contractExp: '30/06/2027', penaleStatus: 'Regolare', penaleIssueDate: '10/08/2026', penaleExpiryDate: '10/08/2027', status: 'Regolare', isWarning: false }
       ],
+
+      safeguarding: {
+        isAppointed: true,
+        officerName: 'Avv. Roberto Santoro',
+        appointmentDate: '15/06/2026',
+        federationNotified: true,
+        notificationProtocol: 'PEC-FIGC-LND-88219/26',
+        contactEmail: 'tutela.minori@foggiacalcio1920.it',
+        lastUpdatedBy: 'Responsabile Privacy',
+        lastUpdatedAt: '26/08/2026 ore 10:00'
+      },
+
+      mog: {
+        isAdopted: true,
+        adoptionDate: '01/07/2026',
+        docName: 'MOG_CodiceCondotta_2026_27.pdf',
+        docUploadedAt: '01/07/2026',
+        publishedChannel: 'Sito Web Ufficiale & Bacheca Stadio',
+        codeOfConductStatus: 'Approvato dal CdA',
+        lastUpdatedBy: 'Responsabile Privacy',
+        lastUpdatedAt: '26/08/2026 ore 10:00'
+      },
+
+      ras: {
+        isRegistered: true,
+        rasCode: 'RAS-FG-2026-9811',
+        registrationDate: '10/09/2024',
+        statuteStatus: 'Adeguato D.Lgs. 36/2021',
+        statuteDeadline: '30/06/2027',
+        lastUpdatedBy: 'Responsabile Privacy',
+        lastUpdatedAt: '26/08/2026 ore 10:00'
+      },
 
       sponsors: [
         { id: 1, name: 'Banca Popolare di Puglia', tier: 'Main Sponsor Maglia', value: '€ 25.000,00', expiry: '30/06/2027', doc: 'Accordo_MainSponsor_2026.pdf', status: 'Attivo', isWarning: false },
@@ -307,7 +350,8 @@
         monthlyPayroll: '€ 18.200,00',
         annualBudget: '€ 240.000,00',
         budgetHealth: 'Bilancio in pareggio (+€ 6.300 di margine)',
-        lastUpdatedBy: 'Eliseo Miraglia (Presidente)',
+        vatRegime: 'Regime di Esenzione IVA (D.Lgs. 36/2021 in vigore dal 01/01/2026 per ASD/SSD)',
+        lastUpdatedBy: 'Presidente',
         lastUpdatedAt: '25/08/2026'
       },
 
@@ -408,6 +452,38 @@
       matches: [],
       deadlines: [],
 
+      safeguarding: {
+        isAppointed: false,
+        officerName: '',
+        appointmentDate: '',
+        federationNotified: false,
+        notificationProtocol: '',
+        contactEmail: '',
+        lastUpdatedBy: '',
+        lastUpdatedAt: ''
+      },
+
+      mog: {
+        isAdopted: false,
+        adoptionDate: '',
+        docName: '',
+        docUploadedAt: '',
+        publishedChannel: '',
+        codeOfConductStatus: 'Non adottato',
+        lastUpdatedBy: '',
+        lastUpdatedAt: ''
+      },
+
+      ras: {
+        isRegistered: false,
+        rasCode: '',
+        registrationDate: '',
+        statuteStatus: 'Da adeguare',
+        statuteDeadline: '2026-12-31',
+        lastUpdatedBy: '',
+        lastUpdatedAt: ''
+      },
+
       stadium: {
         name: 'Impianto Sportivo Principale',
         capacity: '—',
@@ -424,6 +500,7 @@
         monthlyPayroll: '€ 0,00',
         annualBudget: '€ 0,00',
         budgetHealth: 'Budget non ancora impostato',
+        vatRegime: 'Regime di Esenzione IVA (D.Lgs. 36/2021 in vigore dal 01/01/2026 per ASD/SSD)',
         lastUpdatedBy: getUserName(u),
         lastUpdatedAt: getFormattedDateTime()
       },
@@ -1168,7 +1245,7 @@
               '<div class="es-pres-card" id="card-pres-finances" style="grid-column: span 2;">' +
                 '<div class="es-pres-card-top">' +
                   '<div class="es-pres-icon-box">' + ICONS.card + '</div>' +
-                  '<span class="es-pres-status es-pres-status-neutral">Accesso riservato dirigenza</span>' +
+                  '<span class="es-pres-status es-pres-status-ok" style="font-size:0.7rem;">Esenzione IVA 2026</span>' +
                 '</div>' +
                 '<div>' +
                   '<h4 class="es-pres-card-title">Finanze &amp; Budget Societario</h4>' +
@@ -1184,6 +1261,7 @@
                     '<div class="es-pres-card-metric" style="font-size:1.15rem; color:#94a3b8;">Dati protetti da autorizzazione RBAC</div>' +
                     '<p class="es-pres-card-desc">I dati finanziari dettagliati sono visibili esclusivamente al ruolo Presidente e Tesoriere.</p>'
                   )) +
+                  '<div style="font-size:0.75rem; color:#38bdf8; margin-top:0.4rem; font-weight:600;">Regime Fiscale: Esenzione IVA ex D.Lgs. 36/2021 (in vigore dal 01/01/2026 per ASD/SSD)</div>' +
                 '</div>' +
                 '<div class="es-pres-card-footer"><span>Bilancio Club</span><span>' + (canSeeFinances ? 'Apri rendiconto &rsaquo;' : 'Richiedi accesso &rsaquo;') + '</span></div>' +
               '</div>' +
@@ -1223,22 +1301,103 @@
             '</div>' +
           '</section>' +
 
-          // Sezione: Conformità & Governance
+          // Sezione: Conformità & Governance (Riforma dello Sport D.Lgs. 36/2021)
           '<section id="sec-pres-governance">' +
             '<div class="es-pres-section-head">' +
               '<div>' +
                 '<h2 class="es-pres-section-title">' + ICONS.checkShield + ' Conformità &amp; Governance</h2>' +
-                '<p class="es-pres-section-sub">Tesseramenti federali, consensi GDPR Under 18 e scadenze legali del Club</p>' +
+                '<p class="es-pres-section-sub">Riforma dello Sport (D.Lgs. 36/2021), Tutela Minori, MOG, Registro RAS e scadenze legali del Club</p>' +
               '</div>' +
             '</div>' +
 
-            '<div class="es-pres-grid-2">' +
+            '<div class="es-pres-grid-3">' +
+              // 1. Responsabile Tutela Minori (Safeguarding)
+              '<div class="es-pres-card" id="card-pres-gov-safeguarding">' +
+                '<div class="es-pres-card-top">' +
+                  '<div class="es-pres-icon-box">' + ICONS.userCheck + '</div>' +
+                  '<span class="es-pres-status ' + (data.safeguarding && data.safeguarding.isAppointed ? (data.safeguarding.federationNotified ? 'es-pres-status-ok' : 'es-pres-status-warning') : 'es-pres-status-neutral') + '">' +
+                    (data.safeguarding && data.safeguarding.isAppointed ? (data.safeguarding.federationNotified ? 'Nominato &amp; Notificato' : 'Da notificare') : 'Non nominato') +
+                  '</span>' +
+                '</div>' +
+                '<div>' +
+                  '<h3 class="es-pres-card-title">Tutela Minori (Safeguarding)</h3>' +
+                  (data.safeguarding && data.safeguarding.isAppointed ? (
+                    '<div class="es-pres-card-metric" style="font-size:1.15rem; color:#fff;">' + esc(data.safeguarding.officerName) + '</div>' +
+                    '<p class="es-pres-card-desc" style="font-size:0.82rem; line-height:1.5;">• Delibera: <b>' + esc(data.safeguarding.appointmentDate) + '</b><br>• Ente federale: <b>' + (data.safeguarding.federationNotified ? 'Notificato via PEC' : 'In attesa') + '</b><br>• Obbligo art. 33 D.Lgs. 36/2021 assolto.</p>'
+                  ) : (
+                    '<div class="es-pres-card-metric" style="font-size:1.05rem; color:#94a3b8;">Nessun responsabile</div>' +
+                    '<p class="es-pres-card-desc">Obbligo di legge non ancora assolto. Nomina il responsabile per la prevenzione di abusi e violenze.</p>'
+                  )) +
+                '</div>' +
+                '<div class="es-pres-card-footer"><span>Art. 33 D.Lgs. 36/2021</span><span>' + (data.safeguarding && data.safeguarding.isAppointed ? 'Gestisci nomina &rsaquo;' : '+ Nomina responsabile &rsaquo;') + '</span></div>' +
+              '</div>' +
+
+              // 2. MOG e Codice di Condotta
+              '<div class="es-pres-card" id="card-pres-gov-mog">' +
+                '<div class="es-pres-card-top">' +
+                  '<div class="es-pres-icon-box">' + ICONS.bookOpen + '</div>' +
+                  '<span class="es-pres-status ' + (data.mog && data.mog.isAdopted ? 'es-pres-status-ok' : 'es-pres-status-neutral') + '">' +
+                    (data.mog && data.mog.isAdopted ? 'MOG Adottato' : 'Non adottato') +
+                  '</span>' +
+                '</div>' +
+                '<div>' +
+                  '<h3 class="es-pres-card-title">MOG &amp; Codice di Condotta</h3>' +
+                  (data.mog && data.mog.isAdopted ? (
+                    '<div class="es-pres-card-metric" style="font-size:1.15rem; color:#34d399;">Modello Conforme</div>' +
+                    '<p class="es-pres-card-desc" style="font-size:0.82rem; line-height:1.5;">• Approvato il: <b>' + esc(data.mog.adoptionDate) + '</b><br>• Documento: <b>' + esc(data.mog.docName || 'MOG_2026.pdf') + '</b><br>• Presidi di prevenzione e controllo attivi.</p>'
+                  ) : (
+                    '<div class="es-pres-card-metric" style="font-size:1.05rem; color:#94a3b8;">MOG non ancora adottato</div>' +
+                    '<p class="es-pres-card-desc">Documento formale obbligatorio per la tutela dei tesserati e prevenzione illeciti.</p>'
+                  )) +
+                '</div>' +
+                '<div class="es-pres-card-footer"><span>Modello Gestionale</span><span>' + (data.mog && data.mog.isAdopted ? 'Consulta MOG &rsaquo;' : '+ Adotta MOG &rsaquo;') + '</span></div>' +
+              '</div>' +
+
+              // 3. Certificato Casellario Giudiziale Staff
+              '<div class="es-pres-card" id="card-pres-gov-penale">' +
+                '<div class="es-pres-card-top">' +
+                  '<div class="es-pres-icon-box">' + ICONS.shieldAlert + '</div>' +
+                  '<span class="es-pres-status ' + (!data.staff || !data.staff.length ? 'es-pres-status-neutral' : ((data.staff.filter(function(s){ return s.penaleStatus === 'Regolare'; }).length === data.staff.length) ? 'es-pres-status-ok' : 'es-pres-status-warning')) + '">' +
+                    (!data.staff || !data.staff.length ? '0 verifiche' : (data.staff.filter(function(s){ return s.penaleStatus === 'Regolare'; }).length + ' / ' + data.staff.length + ' in regola')) +
+                  '</span>' +
+                '</div>' +
+                '<div>' +
+                  '<h3 class="es-pres-card-title">Casellario Giudiziale Staff</h3>' +
+                  '<div class="es-pres-card-metric">' + (data.staff ? data.staff.filter(function(s){ return s.penaleStatus === 'Regolare'; }).length : 0) + ' <span class="es-pres-unit">certificati validi</span></div>' +
+                  '<p class="es-pres-card-desc" style="font-size:0.82rem; line-height:1.5;">• <b>Staff con minori:</b> ' + (data.staff ? data.staff.length : 0) + ' collaboratori<br>• <b>Da acquisire/rinnovare:</b> ' + (data.staff ? (data.staff.length - data.staff.filter(function(s){ return s.penaleStatus === 'Regolare'; }).length) : 0) + '<br>• Obbligo ex art. 25-bis DPR 313/2002.</p>' +
+                '</div>' +
+                '<div class="es-pres-card-footer"><span>Art. 25-bis DPR 313/2002</span><span>Gestisci casellario &rsaquo;</span></div>' +
+              '</div>' +
+
+              // 4. Iscrizione Registro RAS & Statuto
+              '<div class="es-pres-card" id="card-pres-gov-ras">' +
+                '<div class="es-pres-card-top">' +
+                  '<div class="es-pres-icon-box">' + ICONS.landmark + '</div>' +
+                  '<span class="es-pres-status ' + (data.ras && data.ras.isRegistered ? (data.ras.statuteStatus === 'Adeguato D.Lgs. 36/2021' || data.ras.statuteStatus === 'Adeguato' ? 'es-pres-status-ok' : 'es-pres-status-warning') : 'es-pres-status-neutral') + '">' +
+                    (data.ras && data.ras.isRegistered ? (data.ras.statuteStatus === 'Adeguato D.Lgs. 36/2021' || data.ras.statuteStatus === 'Adeguato' ? 'Iscritto RAS' : 'Statuto da adeguare') : 'Non iscritto') +
+                  '</span>' +
+                '</div>' +
+                '<div>' +
+                  '<h3 class="es-pres-card-title">Registro RAS &amp; Statuto</h3>' +
+                  (data.ras && data.ras.isRegistered ? (
+                    '<div class="es-pres-card-metric" style="font-size:1.15rem; color:#38bdf8;">' + esc(data.ras.rasCode || 'RAS Attivo') + '</div>' +
+                    '<p class="es-pres-card-desc" style="font-size:0.82rem; line-height:1.5;">• Iscritto il: <b>' + esc(data.ras.registrationDate || '—') + '</b><br>• Statuto: <b>' + esc(data.ras.statuteStatus || 'Adeguato') + '</b><br>• Copertura assicurativa collaboratori attiva.</p>'
+                  ) : (
+                    '<div class="es-pres-card-metric" style="font-size:1.05rem; color:#94a3b8;">Non iscritto al RAS</div>' +
+                    '<p class="es-pres-card-desc">Necessaria iscrizione per agevolazioni e copertura assicurativa collaboratori.</p>'
+                  )) +
+                '</div>' +
+                '<div class="es-pres-card-footer"><span>Registro Naz. Sport</span><span>' + (data.ras && data.ras.isRegistered ? 'Dettagli RAS &rsaquo;' : '+ Iscrivi club &rsaquo;') + '</span></div>' +
+              '</div>' +
+
+              // 5. Tesseramenti & Privacy
               '<div class="es-pres-card" id="card-pres-gov-status">' +
                 '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.fileText + '</div><span class="es-pres-status es-pres-status-ok">' + (squadMetrics.totalPlayers ? '100% conforme' : 'In attesa') + '</span></div>' +
-                '<div><h3 class="es-pres-card-title">Tesseramenti &amp; Privacy</h3><p class="es-pres-card-desc" style="font-size:0.85rem; line-height:1.6;">• <b>Tesseramenti Atleti:</b> ' + (squadMetrics.totalPlayers ? (squadMetrics.totalPlayers + ' / ' + squadMetrics.totalPlayers + ' Tesserati FIGC') : 'Nessun atleta registrato') + '<br>• <b>GDPR Minori:</b> Consensi depositati con firma digitale<br>• <b>Certificati BLSD:</b> Staff abilitato</p></div>' +
+                '<div><h3 class="es-pres-card-title">Tesseramenti &amp; Privacy</h3><p class="es-pres-card-desc" style="font-size:0.82rem; line-height:1.5;">• <b>Tesseramenti Atleti:</b> ' + (squadMetrics.totalPlayers ? (squadMetrics.totalPlayers + ' / ' + squadMetrics.totalPlayers + ' Tesserati FIGC') : 'Nessun atleta registrato') + '<br>• <b>GDPR Minori:</b> Consensi depositati con firma digitale<br>• <b>Certificati BLSD:</b> Staff abilitato</p></div>' +
                 '<div class="es-pres-card-footer"><span>Archivio Documentale</span><span>Verifica tessere &rsaquo;</span></div>' +
               '</div>' +
 
+              // 6. Scadenziario Federale
               '<div class="es-pres-card" id="card-pres-gov-deadlines">' +
                 '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.bell + '</div><span class="es-pres-status ' + (deadlines.length ? (hasWarningDeadline ? 'es-pres-status-warning' : 'es-pres-status-ok') : 'es-pres-status-neutral') + '">' + (deadlines.length ? (deadlines.length + ' scadenze') : '0 scadenze') + '</span></div>' +
                 '<div><h3 class="es-pres-card-title">Scadenziario Federale</h3>' + (deadlines.length ? ('<div style="font-size:0.82rem; color:#cbd5e1; display:flex; flex-direction:column; gap:0.35rem; margin-top:0.4rem;">' +
@@ -1322,17 +1481,22 @@
 
   function openAddStaffModal(data) {
     var optionsHtml = OFFICIAL_PATENTS.map(function(p){ return '<option value="' + esc(p) + '">' + esc(p) + '</option>'; }).join('');
+    var contractOptionsHtml = CONTRACT_TYPES.map(function(c){ return '<option value="' + esc(c) + '">' + esc(c) + '</option>'; }).join('');
 
     var formHtml =
-      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Inserisci un nuovo membro dello staff tecnico con qualifica federale riconosciuta:</p>' +
+      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Inserisci un nuovo membro dello staff tecnico con inquadramento Riforma dello Sport (D.Lgs. 36/2021) e qualifica FIGC:</p>' +
       '<form id="form-add-staff" style="display:flex; flex-direction:column; gap:1rem;">' +
         '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
           '<div class="es-pres-input-group"><label>Nome e Cognome *</label><input type="text" class="es-pres-input-text" id="inp-st-name" required placeholder="Es. Giuseppe Rossi"></div>' +
-          '<div class="es-pres-input-group"><label>Incarico / Ruolo Staff *</label><select class="es-pres-input-text" id="sel-st-role" style="background:#040810; color:#fff;"><option>Allenatore Prima Squadra</option><option>Vice Allenatore</option><option>Direttore Sportivo</option><option>Preparatore Atletico</option><option>Preparatore Portieri</option><option>Match Analyst</option><option>Medico Sociale</option><option>Fisioterapista</option><option>Team Manager</option></select></div>' +
+          '<div class="es-pres-input-group"><label>Incarico / Ruolo Staff *</label><select class="es-pres-input-text" id="sel-st-role" style="background:#040810; color:#fff;"><option>Allenatore Prima Squadra</option><option>Vice Allenatore</option><option>Direttore Sportivo</option><option>Preparatore Atletico</option><option>Preparatore Portieri</option><option>Match Analyst</option><option>Medico Sociale</option><option>Fisioterapista</option><option>Team Manager</option><option>Collaboratore Tecnico</option><option>Magazziniere</option></select></div>' +
         '</div>' +
         '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
           '<div class="es-pres-input-group"><label>Qualifica Ufficiale FIGC *</label><select class="es-pres-input-text" id="sel-st-patent" style="background:#040810; color:#fff;">' + optionsHtml + '</select></div>' +
+          '<div class="es-pres-input-group"><label>Tipologia Contratto (D.Lgs. 36/2021) *</label><select class="es-pres-input-text" id="sel-st-contract" style="background:#040810; color:#fff;">' + contractOptionsHtml + '</select></div>' +
+        '</div>' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
           '<div class="es-pres-input-group"><label>Scadenza Contratto</label><input type="date" class="es-pres-input-text" id="inp-st-exp" value="2027-06-30"></div>' +
+          '<div class="es-pres-input-group"><label>Casellario Giudiziale (art. 25-bis DPR 313/2002)</label><select class="es-pres-input-text" id="sel-st-penale" style="background:#040810; color:#fff;"><option value="Regolare">✅ Regolare (Depositato)</option><option value="In attesa">⏳ In attesa di rilascio</option><option value="Da richiedere">⚠️ Da richiedere / Non depositato</option></select></div>' +
         '</div>' +
         '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
           '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-add-st">Annulla</button>' +
@@ -1340,7 +1504,7 @@
         '</div>' +
       '</form>';
 
-    openDetailModal('Inserimento Membro Staff Tecnico', ICONS.briefcase, formHtml);
+    openDetailModal('Inserimento Membro Staff Tecnico &amp; Contrattuale', ICONS.briefcase, formHtml);
     var modalOverlay = document.getElementById('es-pres-detail-overlay');
     var form = document.getElementById('form-add-staff');
     var btnCancel = document.getElementById('btn-cancel-add-st');
@@ -1352,7 +1516,9 @@
         var name = document.getElementById('inp-st-name').value.trim();
         var role = document.getElementById('sel-st-role').value;
         var patent = document.getElementById('sel-st-patent').value;
+        var contract = document.getElementById('sel-st-contract').value;
         var exp = document.getElementById('inp-st-exp').value || '2027-06-30';
+        var penale = document.getElementById('sel-st-penale').value;
 
         data.staff = data.staff || [];
         data.staff.push({
@@ -1360,7 +1526,10 @@
           name: name,
           role: role,
           patent: patent,
+          contractType: contract,
           contractExp: exp,
+          penaleStatus: penale,
+          penaleIssueDate: penale === 'Regolare' ? new Date().toLocaleDateString('it-IT') : '',
           status: 'Regolare',
           isWarning: false
         });
@@ -1373,70 +1542,299 @@
     }
   }
 
-  function openAddMatchModal(data) {
+  function openSafeguardingModal(data) {
+    var cur = data.safeguarding || {};
     var formHtml =
-      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Inserisci una partita di campionato o coppa con risultato ufficiale:</p>' +
-      '<form id="form-add-match" style="display:flex; flex-direction:column; gap:1rem;">' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
-          '<div class="es-pres-input-group"><label>Giornata / Turno *</label><input type="text" class="es-pres-input-text" id="inp-m-round" required placeholder="Es. 29ª Giornata" value="29ª G"></div>' +
-          '<div class="es-pres-input-group"><label>Squadra Avversaria *</label><input type="text" class="es-pres-input-text" id="inp-m-opp" required placeholder="Es. Taranto FC"></div>' +
-        '</div>' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem;">' +
-          '<div class="es-pres-input-group"><label>Data Gara</label><input type="date" class="es-pres-input-text" id="inp-m-date" value="' + new Date().toISOString().split('T')[0] + '"></div>' +
-          '<div class="es-pres-input-group"><label>Casa / Trasferta</label><select class="es-pres-input-text" id="sel-m-type" style="background:#040810; color:#fff;"><option value="H">Casa (Home)</option><option value="A">Trasferta (Away)</option></select></div>' +
-          '<div class="es-pres-input-group"><label>Gara Disputata?</label><select class="es-pres-input-text" id="sel-m-played" style="background:#040810; color:#fff;"><option value="1">Sì, già disputata</option><option value="0">No, futura</option></select></div>' +
+      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Adempimento obbligatorio <b>ex art. 33 D.Lgs. 36/2021</b> — Nomina del Responsabile contro abusi, violenze e discriminazioni su atleti minori:</p>' +
+      '<form id="form-safeguarding" style="display:flex; flex-direction:column; gap:1rem;">' +
+        '<div class="es-pres-input-group">' +
+          '<label>Nome e Cognome del Responsabile Nominato *</label>' +
+          '<input type="text" class="es-pres-input-text" id="inp-sg-name" required placeholder="Es. Avv. Roberto Santoro o Dott.ssa Elena Neri" value="' + esc(cur.officerName || '') + '">' +
         '</div>' +
         '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
-          '<div class="es-pres-input-group"><label>Gol Segnati (Tuo Club)</label><input type="number" class="es-pres-input-text" id="inp-m-gf" value="2" min="0"></div>' +
-          '<div class="es-pres-input-group"><label>Gol Subiti (Avversario)</label><input type="number" class="es-pres-input-text" id="inp-m-ga" value="1" min="0"></div>' +
+          '<div class="es-pres-input-group">' +
+            '<label>Data Delibera di Nomina *</label>' +
+            '<input type="date" class="es-pres-input-text" id="inp-sg-date" required value="' + (cur.appointmentDate ? (cur.appointmentDate.includes('/') ? cur.appointmentDate.split('/').reverse().join('-') : cur.appointmentDate) : new Date().toISOString().split('T')[0]) + '">' +
+          '</div>' +
+          '<div class="es-pres-input-group">' +
+            '<label>Stato Notifica Ente Affiliante (FIGC/LND/EPS) *</label>' +
+            '<select class="es-pres-input-text" id="sel-sg-notif" style="background:#040810; color:#fff;">' +
+              '<option value="1"' + (cur.federationNotified ? ' selected' : '') + '>Comunicato alla Federazione (via PEC / Portale)</option>' +
+              '<option value="0"' + (!cur.federationNotified ? ' selected' : '') + '>Da comunicare all\'Ente Affiliante</option>' +
+            '</select>' +
+          '</div>' +
         '</div>' +
-        '<div class="es-pres-input-group"><label>Arbitro Designato (Sezione AIA)</label><input type="text" class="es-pres-input-text" id="inp-m-ref" placeholder="Es. Sezione AIA Roma 1"></div>' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group">' +
+            '<label>Protocollo / Riferimento Notifica</label>' +
+            '<input type="text" class="es-pres-input-text" id="inp-sg-prot" placeholder="Es. PEC-FIGC-88219/26" value="' + esc(cur.notificationProtocol || '') + '">' +
+          '</div>' +
+          '<div class="es-pres-input-group">' +
+            '<label>Email / Recapito Dedicato Tutela Minori</label>' +
+            '<input type="email" class="es-pres-input-text" id="inp-sg-email" placeholder="tutela.minori@club.it" value="' + esc(cur.contactEmail || '') + '">' +
+          '</div>' +
+        '</div>' +
+        '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem; font-size:0.8rem; color:#cbd5e1;">' +
+          '🔒 <b>Audit Trail:</b> L\'adempimento sarà registrato con marca temporale certificata.' +
+        '</div>' +
         '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
-          '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-add-m">Annulla</button>' +
-          '<button type="submit" class="es-pres-btn-primary">Registra Partita</button>' +
+          '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-sg">Annulla</button>' +
+          '<button type="submit" class="es-pres-btn-primary">Salva Nomina Safeguarding</button>' +
         '</div>' +
       '</form>';
 
-    openDetailModal('Registrazione Risultato Gara', ICONS.calendar, formHtml);
+    openDetailModal('Responsabile Tutela Minori (Safeguarding)', ICONS.userCheck, formHtml);
     var modalOverlay = document.getElementById('es-pres-detail-overlay');
-    var form = document.getElementById('form-add-match');
-    var btnCancel = document.getElementById('btn-cancel-add-m');
+    var form = document.getElementById('form-safeguarding');
+    var btnCancel = document.getElementById('btn-cancel-sg');
     if (btnCancel && modalOverlay) btnCancel.onclick = function () { modalOverlay.remove(); };
 
     if (form) {
       form.onsubmit = function (e) {
         e.preventDefault();
-        var round = document.getElementById('inp-m-round').value.trim();
-        var opp = document.getElementById('inp-m-opp').value.trim();
-        var dt = document.getElementById('inp-m-date').value;
-        var type = document.getElementById('sel-m-type').value;
-        var isPlayed = document.getElementById('sel-m-played').value === '1';
-        var gf = parseInt(document.getElementById('inp-m-gf').value) || 0;
-        var ga = parseInt(document.getElementById('inp-m-ga').value) || 0;
-        var ref = document.getElementById('inp-m-ref').value.trim();
+        var name = document.getElementById('inp-sg-name').value.trim();
+        var dt = document.getElementById('inp-sg-date').value;
+        var notif = document.getElementById('sel-sg-notif').value === '1';
+        var prot = document.getElementById('inp-sg-prot').value.trim();
+        var email = document.getElementById('inp-sg-email').value.trim();
 
-        var st = isPlayed ? (gf > ga ? 'W' : (gf === ga ? 'D' : 'L')) : 'NEXT';
-        var res = isPlayed ? (gf + ' - ' + ga) : '- - -';
-
-        data.matches = data.matches || [];
-        data.matches.push({
-          id: Date.now(),
-          round: round,
-          opponent: opp,
-          date: dt,
-          type: type,
-          isPlayed: isPlayed,
-          goalsFor: gf,
-          goalsAgainst: ga,
-          res: res,
-          status: st,
-          referee: ref
-        });
+        data.safeguarding = {
+          isAppointed: !!name,
+          officerName: name,
+          appointmentDate: dt,
+          federationNotified: notif,
+          notificationProtocol: prot,
+          contactEmail: email,
+          lastUpdatedBy: 'Responsabile Privacy',
+          lastUpdatedAt: getFormattedDateTime()
+        };
 
         savePresClubData(data);
         if (modalOverlay) modalOverlay.remove();
         renderPresidentialSuite();
-        if (window.showToast) window.showToast('Partita vs ' + opp + ' registrata con successo!', 'success');
+        if (window.showToast) window.showToast('Nomina Safeguarding salvata con successo!', 'success');
+      };
+    }
+  }
+
+  function openMogModal(data) {
+    var cur = data.mog || {};
+    var formHtml =
+      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Adozione formale del <b>Modello Organizzativo e di Controllo (MOG)</b> e del <b>Codice di Condotta</b> ai sensi del D.Lgs. 36/2021:</p>' +
+      '<form id="form-mog" style="display:flex; flex-direction:column; gap:1rem;">' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group">' +
+            '<label>Stato Adozione MOG *</label>' +
+            '<select class="es-pres-input-text" id="sel-mog-status" style="background:#040810; color:#fff;">' +
+              '<option value="1"' + (cur.isAdopted ? ' selected' : '') + '>Adottato e Approvato dal CdA</option>' +
+              '<option value="0"' + (!cur.isAdopted ? ' selected' : '') + '>Non ancora adottato / In redazione</option>' +
+            '</select>' +
+          '</div>' +
+          '<div class="es-pres-input-group">' +
+            '<label>Data Delibera Adozione *</label>' +
+            '<input type="date" class="es-pres-input-text" id="inp-mog-date" value="' + (cur.adoptionDate ? (cur.adoptionDate.includes('/') ? cur.adoptionDate.split('/').reverse().join('-') : cur.adoptionDate) : new Date().toISOString().split('T')[0]) + '">' +
+          '</div>' +
+        '</div>' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group">' +
+            '<label>Denominazione File MOG Allegato</label>' +
+            '<input type="text" class="es-pres-input-text" id="inp-mog-file" placeholder="Es. MOG_CodiceCondotta_2026_27.pdf" value="' + esc(cur.docName || '') + '">' +
+          '</div>' +
+          '<div class="es-pres-input-group">' +
+            '<label>Canale di Pubblicazione / Diffusione</label>' +
+            '<input type="text" class="es-pres-input-text" id="inp-mog-channel" placeholder="Es. Sito Web Ufficiale & Bacheca Stadio" value="' + esc(cur.publishedChannel || '') + '">' +
+          '</div>' +
+        '</div>' +
+        '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem; font-size:0.8rem; color:#cbd5e1;">' +
+          '📋 <b>Contenuto Prescritto:</b> Il MOG deve contenere le misure di prevenzione dei rischi, le sanzioni interne e le modalità di segnalazione al Safeguarding Officer nominato.' +
+        '</div>' +
+        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+          '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-mog">Annulla</button>' +
+          '<button type="submit" class="es-pres-btn-primary">Salva MOG &amp; Codice di Condotta</button>' +
+        '</div>' +
+      '</form>';
+
+    openDetailModal('MOG (Modello Organizzativo) &amp; Codice di Condotta', ICONS.bookOpen, formHtml);
+    var modalOverlay = document.getElementById('es-pres-detail-overlay');
+    var form = document.getElementById('form-mog');
+    var btnCancel = document.getElementById('btn-cancel-mog');
+    if (btnCancel && modalOverlay) btnCancel.onclick = function () { modalOverlay.remove(); };
+
+    if (form) {
+      form.onsubmit = function (e) {
+        e.preventDefault();
+        var isAdopted = document.getElementById('sel-mog-status').value === '1';
+        var dt = document.getElementById('inp-mog-date').value;
+        var file = document.getElementById('inp-mog-file').value.trim();
+        var ch = document.getElementById('inp-mog-channel').value.trim();
+
+        data.mog = {
+          isAdopted: isAdopted,
+          adoptionDate: dt,
+          docName: file || (isAdopted ? 'MOG_Adottato_2026.pdf' : ''),
+          publishedChannel: ch || 'Sito Web Ufficiale',
+          codeOfConductStatus: isAdopted ? 'Approvato dal CdA' : 'Non adottato',
+          lastUpdatedBy: 'Responsabile Privacy',
+          lastUpdatedAt: getFormattedDateTime()
+        };
+
+        savePresClubData(data);
+        if (modalOverlay) modalOverlay.remove();
+        renderPresidentialSuite();
+        if (window.showToast) window.showToast('MOG e Codice di Condotta aggiornati!', 'success');
+      };
+    }
+  }
+
+  function openPenaleModal(data) {
+    var staff = data.staff || [];
+    var html =
+      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1rem;">Verifica obbligatoria <b>ex art. 25-bis DPR 313/2002</b> del Certificato Penale del Casellario Giudiziale per tutti i tecnici e collaboratori a contatto con minori:</p>';
+
+    if (!staff.length) {
+      html +=
+        '<div class="es-pres-empty-box">' +
+          '<div class="es-pres-empty-icon">' + ICONS.shieldAlert + '</div>' +
+          '<h4 class="es-pres-empty-title">Nessun membro staff registrato</h4>' +
+          '<p class="es-pres-empty-desc">Inserisci prima i componenti dello staff tecnico per tracciare il deposito dei certificati del casellario giudiziale.</p>' +
+          '<button type="button" class="es-pres-empty-btn" id="btn-add-staff-from-penale">' + ICONS.plus + ' Inserisci Membro Staff</button>' +
+        '</div>';
+    } else {
+      html +=
+        '<div style="display:flex; flex-direction:column; gap:0.75rem; max-height:360px; overflow-y:auto; padding-right:0.3rem; margin-bottom:1.2rem;">' +
+          staff.map(function (s, idx) {
+            var isOk = s.penaleStatus === 'Regolare';
+            return (
+              '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
+                '<div>' +
+                  '<div style="font-weight:700; color:#fff; font-size:0.92rem;">' + esc(s.name) + ' <span style="font-weight:400; color:#94a3b8; font-size:0.8rem;">(' + esc(s.role) + ')</span></div>' +
+                  '<div style="font-size:0.78rem; color:#cbd5e1; margin-top:0.2rem;">Contratto: <b>' + esc(s.contractType || 'Co.co.co. Sportivo') + '</b> · Rilascio: ' + esc(s.penaleIssueDate || 'Non registrata') + '</div>' +
+                '</div>' +
+                '<div style="display:flex; align-items:center; gap:0.6rem;">' +
+                  '<select class="es-penale-select" data-idx="' + idx + '" style="background:#0b1329; color:#fff; border:1px solid rgba(148,163,184,0.3); border-radius:4px; font-size:0.78rem; padding:0.35rem 0.6rem;">' +
+                    '<option value="Regolare"' + (isOk ? ' selected' : '') + '>✅ Regolare (Depositato)</option>' +
+                    '<option value="In attesa"' + (s.penaleStatus === 'In attesa' ? ' selected' : '') + '>⏳ In attesa di rilascio</option>' +
+                    '<option value="Da richiedere"' + (!s.penaleStatus || s.penaleStatus === 'Da richiedere' ? ' selected' : '') + '>⚠️ Da richiedere / Scaduto</option>' +
+                  '</select>' +
+                '</div>' +
+              '</div>'
+            );
+          }).join('') +
+        '</div>' +
+        '<div style="display:flex; justify-content:space-between; align-items:center; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+          '<button type="button" class="es-pres-btn-secondary" id="btn-add-new-staff-penale">+ Aggiungi Membro Staff</button>' +
+          '<button type="button" class="es-pres-btn-primary" id="btn-save-all-penale">Salva Conformità Casellario</button>' +
+        '</div>';
+    }
+
+    openDetailModal('Casellario Giudiziale Staff (art. 25-bis DPR 313/2002)', ICONS.shieldAlert, html);
+    var modalOverlay = document.getElementById('es-pres-detail-overlay');
+
+    var bAdd = document.getElementById('btn-add-staff-from-penale');
+    var bAddNew = document.getElementById('btn-add-new-staff-penale');
+    var onAdd = function () {
+      if (modalOverlay) modalOverlay.remove();
+      openAddStaffModal(data);
+    };
+    if (bAdd) bAdd.onclick = onAdd;
+    if (bAddNew) bAddNew.onclick = onAdd;
+
+    var bSave = document.getElementById('btn-save-all-penale');
+    if (bSave) {
+      bSave.onclick = function () {
+        var selects = document.querySelectorAll('.es-penale-select');
+        selects.forEach(function (sel) {
+          var i = parseInt(sel.getAttribute('data-idx'));
+          if (data.staff[i]) {
+            data.staff[i].penaleStatus = sel.value;
+            if (sel.value === 'Regolare' && !data.staff[i].penaleIssueDate) {
+              data.staff[i].penaleIssueDate = new Date().toLocaleDateString('it-IT');
+            }
+          }
+        });
+        data.lastUpdatedBy = 'Responsabile Privacy';
+        data.lastUpdatedAt = getFormattedDateTime();
+        savePresClubData(data);
+        if (modalOverlay) modalOverlay.remove();
+        renderPresidentialSuite();
+        if (window.showToast) window.showToast('Conformità Casellario Giudiziale aggiornata!', 'success');
+      };
+    }
+  }
+
+  function openRasModal(data) {
+    var cur = data.ras || {};
+    var formHtml =
+      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Iscrizione al <b>Registro Nazionale delle Attività Sportive Dilettantistiche (RAS)</b> e verifica adeguamento statutario D.Lgs. 36/2021:</p>' +
+      '<form id="form-ras" style="display:flex; flex-direction:column; gap:1rem;">' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group">' +
+            '<label>Stato Iscrizione al RAS *</label>' +
+            '<select class="es-pres-input-text" id="sel-ras-reg" style="background:#040810; color:#fff;">' +
+              '<option value="1"' + (cur.isRegistered ? ' selected' : '') + '>Iscritto al Registro Nazionale RAS</option>' +
+              '<option value="0"' + (!cur.isRegistered ? ' selected' : '') + '>Non iscritto / In fase di iscrizione</option>' +
+            '</select>' +
+          '</div>' +
+          '<div class="es-pres-input-group">' +
+            '<label>Codice Univoco Iscrizione RAS *</label>' +
+            '<input type="text" class="es-pres-input-text" id="inp-ras-code" placeholder="Es. RAS-FG-2026-9811" value="' + esc(cur.rasCode || '') + '">' +
+          '</div>' +
+        '</div>' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group">' +
+            '<label>Data Iscrizione / Rinnovo</label>' +
+            '<input type="date" class="es-pres-input-text" id="inp-ras-date" value="' + (cur.registrationDate ? (cur.registrationDate.includes('/') ? cur.registrationDate.split('/').reverse().join('-') : cur.registrationDate) : new Date().toISOString().split('T')[0]) + '">' +
+          '</div>' +
+          '<div class="es-pres-input-group">' +
+            '<label>Adeguamento Statuto D.Lgs. 36/2021 *</label>' +
+            '<select class="es-pres-input-text" id="sel-ras-statute" style="background:#040810; color:#fff;">' +
+              '<option value="Adeguato D.Lgs. 36/2021"' + (cur.statuteStatus === 'Adeguato D.Lgs. 36/2021' || cur.statuteStatus === 'Adeguato' ? ' selected' : '') + '>Statuto Conforme &amp; Adeguato</option>' +
+              '<option value="Da adeguare"' + (cur.statuteStatus === 'Da adeguare' ? ' selected' : '') + '>Da adeguare entro il termine perentorio</option>' +
+            '</select>' +
+          '</div>' +
+        '</div>' +
+        '<div class="es-pres-input-group">' +
+          '<label>Scadenza per Adeguamento Statutario</label>' +
+          '<input type="date" class="es-pres-input-text" id="inp-ras-deadline" value="' + (cur.statuteDeadline ? (cur.statuteDeadline.includes('/') ? cur.statuteDeadline.split('/').reverse().join('-') : cur.statuteDeadline) : '2026-12-31') + '">' +
+        '</div>' +
+        '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem; font-size:0.8rem; color:#cbd5e1;">' +
+          '🏛️ <b>Copertura Assicurativa:</b> L\'iscrizione al RAS è indispensabile per la validità della copertura assicurativa INAIL/federale dei collaboratori sportivi retribuiti.' +
+        '</div>' +
+        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+          '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-ras">Annulla</button>' +
+          '<button type="submit" class="es-pres-btn-primary">Salva Registro RAS</button>' +
+        '</div>' +
+      '</form>';
+
+    openDetailModal('Registro RAS &amp; Adeguamento Statutario', ICONS.landmark, formHtml);
+    var modalOverlay = document.getElementById('es-pres-detail-overlay');
+    var form = document.getElementById('form-ras');
+    var btnCancel = document.getElementById('btn-cancel-ras');
+    if (btnCancel && modalOverlay) btnCancel.onclick = function () { modalOverlay.remove(); };
+
+    if (form) {
+      form.onsubmit = function (e) {
+        e.preventDefault();
+        var isReg = document.getElementById('sel-ras-reg').value === '1';
+        var code = document.getElementById('inp-ras-code').value.trim();
+        var dt = document.getElementById('inp-ras-date').value;
+        var st = document.getElementById('sel-ras-statute').value;
+        var ddl = document.getElementById('inp-ras-deadline').value;
+
+        data.ras = {
+          isRegistered: isReg,
+          rasCode: code,
+          registrationDate: dt,
+          statuteStatus: st,
+          statuteDeadline: ddl,
+          lastUpdatedBy: 'Responsabile Privacy',
+          lastUpdatedAt: getFormattedDateTime()
+        };
+
+        savePresClubData(data);
+        if (modalOverlay) modalOverlay.remove();
+        renderPresidentialSuite();
+        if (window.showToast) window.showToast('Dati Registro RAS salvati con successo!', 'success');
       };
     }
   }
@@ -1454,13 +1852,19 @@
           '<div class="es-pres-input-group"><label>Budget Totale Stagionale (€)</label><input type="text" class="es-pres-input-text" id="inp-fin-bud" value="' + esc(cur.annualBudget || '€ 240.000,00') + '"></div>' +
           '<div class="es-pres-input-group"><label>Stato del Bilancio</label><select class="es-pres-input-text" id="sel-fin-health" style="background:#040810; color:#fff;"><option>Bilancio in pareggio</option><option>Utile d\'esercizio (+ margine)</option><option>Disavanzo controllato</option></select></div>' +
         '</div>' +
+        '<div style="background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.25); border-radius:4px; padding:0.85rem 1rem;">' +
+          '<div style="color:#38bdf8; font-weight:700; font-size:0.85rem; margin-bottom:0.25rem;">ℹ️ Regime Fiscale IVA (Riforma dello Sport):</div>' +
+          '<div style="font-size:0.8rem; color:#cbd5e1; line-height:1.5;">' +
+            'Dal <b>1° Gennaio 2026</b>: le ASD e SSD operano in regime di <b>Esenzione IVA</b> (ex D.Lgs. 36/2021 e s.m.i.) per tutte le attività sportive istituzionali e didattiche.' +
+          '</div>' +
+        '</div>' +
         '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
           '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-edit-fin">Annulla</button>' +
           '<button type="submit" class="es-pres-btn-primary">Salva Rendiconto</button>' +
         '</div>' +
       '</form>';
 
-    openDetailModal('Gestione Finanze & Budget Societario', ICONS.card, formHtml);
+    openDetailModal('Rendiconto Finanziario &amp; Budget Club', ICONS.card, formHtml);
     var modalOverlay = document.getElementById('es-pres-detail-overlay');
     var form = document.getElementById('form-edit-fin');
     var btnCancel = document.getElementById('btn-cancel-edit-fin');
@@ -1469,20 +1873,26 @@
     if (form) {
       form.onsubmit = function (e) {
         e.preventDefault();
+        var cash = document.getElementById('inp-fin-cash').value.trim();
+        var pay = document.getElementById('inp-fin-pay').value.trim();
+        var bud = document.getElementById('inp-fin-bud').value.trim();
+        var health = document.getElementById('sel-fin-health').value;
+
         data.finances = {
           isConfigured: true,
-          cashBalance: document.getElementById('inp-fin-cash').value,
-          monthlyPayroll: document.getElementById('inp-fin-pay').value,
-          annualBudget: document.getElementById('inp-fin-bud').value,
-          budgetHealth: document.getElementById('sel-fin-health').value,
-          lastUpdatedBy: getUserName(userObj()),
+          cashBalance: cash || '€ 0,00',
+          monthlyPayroll: pay || '€ 0,00',
+          annualBudget: bud || '€ 0,00',
+          budgetHealth: health,
+          vatRegime: 'Regime di Esenzione IVA (D.Lgs. 36/2021 in vigore dal 01/01/2026 per ASD/SSD)',
+          lastUpdatedBy: 'Presidente',
           lastUpdatedAt: getFormattedDateTime()
         };
 
         savePresClubData(data);
         if (modalOverlay) modalOverlay.remove();
         renderPresidentialSuite();
-        if (window.showToast) window.showToast('Rendiconto finanziario aggiornato con successo!', 'success');
+        if (window.showToast) window.showToast('Parametri finanziari aggiornati!', 'success');
       };
     }
   }
@@ -2049,6 +2459,34 @@
             openAddDeadlineModal(data);
           };
         }
+      };
+    }
+
+    var cardGovSafeguarding = mount.querySelector('#card-pres-gov-safeguarding');
+    if (cardGovSafeguarding) {
+      cardGovSafeguarding.onclick = function () {
+        openSafeguardingModal(data);
+      };
+    }
+
+    var cardGovMog = mount.querySelector('#card-pres-gov-mog');
+    if (cardGovMog) {
+      cardGovMog.onclick = function () {
+        openMogModal(data);
+      };
+    }
+
+    var cardGovPenale = mount.querySelector('#card-pres-gov-penale');
+    if (cardGovPenale) {
+      cardGovPenale.onclick = function () {
+        openPenaleModal(data);
+      };
+    }
+
+    var cardGovRas = mount.querySelector('#card-pres-gov-ras');
+    if (cardGovRas) {
+      cardGovRas.onclick = function () {
+        openRasModal(data);
       };
     }
 
