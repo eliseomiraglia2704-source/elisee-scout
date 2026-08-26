@@ -45,13 +45,18 @@
       font-weight: 800 !important;
       line-height: 1 !important;
     }
-    #user-avatar-badge img,
-    #user-avatar-img {
+    #user-avatar-badge img:not([hidden]),
+    #user-avatar-img:not([hidden]) {
       display: block !important;
       width: 100% !important;
       height: 100% !important;
       object-fit: cover !important;
       visibility: visible !important;
+    }
+    #user-avatar-badge img[hidden],
+    #user-avatar-img[hidden] {
+      display: none !important;
+      visibility: hidden !important;
     }
     #btn-user-profile {
       display: inline-flex !important;
@@ -5082,7 +5087,7 @@
   <script src="tc-panel.js?v=20260826_TC3"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260826_NAV1"></script>
+  <script src="app.js?v=20260826_AVATAR_FIX1"></script>
   <script src="player-profile.js?v=20260826_PRES_PRF1"></script>
   <script src="player-dash.js?v=20260825_ALL1"></script>
   <script src="coach-dash.js?v=20260826_ANON_PRIVACY1"></script>

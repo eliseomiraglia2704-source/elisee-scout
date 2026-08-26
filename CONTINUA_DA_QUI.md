@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: **Risoluzione Completa Modale & Invio OTP Verifica Email**: 1. Risolto il blocco per cui il clic sul pulsante "Invia codice OTP" nel banner inferiore non apriva la modale (rimossa interferenza di killBlockers e aggiunto event listener delegato); 2. Resa la modale OTP istantaneamente visibile con `z-index: 2147483647`, visualizzazione chiara dell'email destinataria e pillola con codice OTP generato e click rapido per auto-inserimento immediato; 3. Integrato l'endpoint `/api/auth/send-otp` in `elisee_up.py` per tracciamento invii; 4. Applicati bordi rettilinei a 4px su input e pulsanti modale. File: `verifica-account.js`, `verifica-account.css`, `index.html`, `elisee_up.py`, `sw.js`. Cache `OTP_FIX1`.
-Feature precedente: Rimozione Scadenze Fake & Stato Vuoto Onesto nello Scadenziario Federale.
+Ultimo fatto: **Risoluzione Foto Profilo Utente nella Navbar**: 1. Aggiornato il risolutore `window.getStoredProfilePhoto` in `app.js` per recuperare la foto profilo da tutte le chiavi (inclusi avatar personalizzati, metadati Supabase e foto caricata); 2. Aggiunto fallback intelligente alla foto ritratto reale (`immagini/02-chi-siamo-ritratto/about-portrait.jpg`) per il creatore/admin Eliseo Miraglia anziché mostrare la lettera iniziale fissa "E"; 3. Corretto il rendering in `updateNavbarUserUI` e CSS in `index.html` con gestione `onload`/`onerror` e visibilità `img:not([hidden])` per caricamento immediato e pulito. File: `app.js`, `index.html`, `sw.js`. Cache `AVATAR_FIX1`.
+Feature precedente: Risoluzione Completa Modale & Invio OTP Verifica Email.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

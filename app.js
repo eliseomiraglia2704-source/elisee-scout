@@ -10394,12 +10394,22 @@ window.updateNavbarUserUI = function() {
       if (avatarImg) {
         avatarImg.src = photo;
         avatarImg.hidden = false;
+        avatarImg.style.display = 'block';
+        avatarImg.onload = function () {
+          if (avatarInit) avatarInit.style.display = 'none';
+        };
+        avatarImg.onerror = function () {
+          avatarImg.hidden = true;
+          avatarImg.style.display = 'none';
+          if (avatarInit) avatarInit.style.display = '';
+        };
       }
       if (avatarInit) avatarInit.style.display = 'none';
     } else {
       if (avatarImg) {
         avatarImg.removeAttribute('src');
         avatarImg.hidden = true;
+        avatarImg.style.display = 'none';
       }
       if (avatarInit) avatarInit.style.display = '';
     }
@@ -12028,14 +12038,28 @@ window.getStoredProfilePhoto = function (profilo, user) {
   try {
     if (!user) user = JSON.parse(localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data') || '{}') || {};
   } catch (_) { user = {}; }
-  return (
+
+  var photo = (
     window.__eliseePendingPhoto ||
     localStorage.getItem('elisee_profile_photo') ||
-    profilo.photoDataUrl ||
-    user.fotoUrl ||
-    user.photoDataUrl ||
+    localStorage.getItem('elisee_user_avatar') ||
+    localStorage.getItem('elisee_user_photo') ||
+    (profilo && (profilo.photoDataUrl || profilo.foto || profilo.fotoUrl || profilo.photoUrl || profilo.avatar || profilo.picture)) ||
+    (user && (user.fotoUrl || user.foto || user.photoDataUrl || user.photoUrl || user.avatar || user.avatar_url || user.picture || user.profilePhoto || user.image)) ||
+    (user && user.user_metadata && (user.user_metadata.avatar_url || user.user_metadata.picture || user.user_metadata.foto || user.user_metadata.avatar)) ||
     ''
   );
+
+  if (!photo) {
+    var email = String((user && user.email) || (profilo && profilo.email) || localStorage.getItem('elisee_user_email') || '').toLowerCase();
+    var name = String((user && (user.nome || user.name)) || (profilo && (profilo.nome || profilo.name)) || localStorage.getItem('elisee_user_name') || '').toLowerCase();
+    var isAdmin = localStorage.getItem('elisee_admin_auth') === 'true' || (user && user.isCreator);
+    if (isAdmin || email.includes('eliseomiraglia') || name.includes('eliseo') || name.includes('miraglia')) {
+      photo = 'immagini/02-chi-siamo-ritratto/about-portrait.jpg?v=20260730_225504';
+    }
+  }
+
+  return photo || '';
 };
 
 window.paintAreaRiservataPhoto = function (dataUrl, letter) {
