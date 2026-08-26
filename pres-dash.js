@@ -173,15 +173,328 @@
     };
   }
 
-  function computeDeadlines(deadlines) {
+  // ============================================================
+  // TASSONOMIA COMPLETA CALCIO ITALIANO (4 AMBITI & REGIONI)
+  // ============================================================
+  var FOOTBALL_SCOPES = [
+    { id: 'pro', name: 'Professionistico (Co.Vi.So.C. / FIGC)' },
+    { id: 'dilettanti', name: 'Dilettantistico (LND / Comitati Regionali)' },
+    { id: 'giovanile', name: 'Settore Giovanile (SGS / Primavera)' },
+    { id: 'femminile', name: 'Calcio Femminile (Divisione FIGC / LND)' }
+  ];
+
+  var SCOPE_CATEGORIES = {
+    pro: [
+      'Serie A (FIGC / Lega Serie A)',
+      'Serie B (Lega B)',
+      'Serie C / Lega Pro',
+      'Neopromossa in Serie C (dalla Serie D)'
+    ],
+    dilettanti: [
+      'Serie D (Dipartimento Interregionale LND)',
+      'Eccellenza (Comitato Regionale)',
+      'Promozione (Comitato Regionale)',
+      'Prima Categoria (Comitato Regionale)',
+      'Seconda Categoria (Comitato Regionale)',
+      'Terza Categoria (Delegazione Provinciale LND)'
+    ],
+    giovanile: [
+      'Primavera 1 (Lega Serie A)',
+      'Primavera 2 (Lega B)',
+      'Primavera 3 / 4 (Lega Pro)',
+      'Juniores Nazionale (LND)',
+      'Juniores Regionale / Provinciale (SGS / LND)',
+      'Allievi Nazionali / Regionali / Provinciali (SGS)',
+      'Giovanissimi Nazionali / Regionali / Provinciali (SGS)',
+      'Attività di Base / Scuola Calcio Élite (SGS)'
+    ],
+    femminile: [
+      'Serie A Femminile (Divisione Professionistica FIGC)',
+      'Serie B Femminile (Divisione FIGC)',
+      'Serie C Femminile (Dipartimento LND)',
+      'Eccellenza Femminile (Comitato Regionale)',
+      'Promozione Femminile (Comitato Regionale)',
+      'Settore Giovanile Femminile (SGS)'
+    ]
+  };
+
+  var ITALIAN_REGIONS = [
+    'Abruzzo', 'Basilicata', 'Calabria', 'Campania', 'Emilia-Romagna',
+    'Friuli-Venezia Giulia', 'Lazio', 'Liguria', 'Lombardia', 'Marche',
+    'Molise', 'Piemonte-V.d.A.', 'Puglia', 'Sardegna', 'Sicilia',
+    'Toscana', 'Trentino-A.A.', 'Umbria', 'Veneto'
+  ];
+
+  function getDefaultDeadlinesForScope(scopeId, categoryName, regionName) {
+    scopeId = scopeId || 'dilettanti';
+    categoryName = categoryName || '';
+    regionName = regionName || 'Puglia';
+
+    if (scopeId === 'pro') {
+      var isSerieB = /serie b/i.test(categoryName);
+      var isNeopromossa = /neopromossa/i.test(categoryName);
+      var fideiussioneImporto = isSerieB ? '€ 800.000 (Fideiussione Serie B)' : '€ 350.000 (Fideiussione Lega Pro)';
+
+      var list = [
+        {
+          id: 101,
+          task: 'Deposito Bilancio & Licenza Nazionale FIGC (Co.Vi.So.C.)',
+          date: '2026-06-16',
+          status: 'Termine perentorio',
+          authority: 'Co.Vi.So.C. / FIGC',
+          amount: '—',
+          note: 'Mancato rispetto comporta la mancata concessione della Licenza Nazionale 2026/27.'
+        },
+        {
+          id: 102,
+          task: 'Deposito Fideiussione Bancaria a Prima Richiesta',
+          date: '2026-06-16',
+          status: 'Termine perentorio',
+          authority: 'Lega di competenza / Co.Vi.So.C.',
+          amount: fideiussioneImporto,
+          note: 'Garanzia fideiussoria conforme ai requisiti del Manuale Licenze Nazionali 2026/27.'
+        },
+        {
+          id: 103,
+          task: 'Pagamento Emolumenti & Ritenute IRPEF/INPS (Maggio 2026)',
+          date: '2026-06-16',
+          status: 'Termine perentorio',
+          authority: 'Co.Vi.So.C.',
+          amount: 'Tracciamento Mensile',
+          note: 'Certificazione pagamento stipendi atleti e collaboratori gestione sportiva.'
+        },
+        {
+          id: 104,
+          task: 'Deposito Liquidazioni IVA IV Trimestre 2025',
+          date: '2026-07-06',
+          status: 'Termine perentorio',
+          authority: 'Agenzia Entrate / Co.Vi.So.C.',
+          amount: 'Rendiconto Fiscale',
+          note: 'Riservato a società già in possesso di Licenza Nazionale.'
+        }
+      ];
+
+      if (isNeopromossa) {
+        list.push({
+          id: 105,
+          task: 'Liberatorie & Documentazione Aggiuntiva Neopromossa (ex Serie D)',
+          date: '2026-06-16',
+          status: 'Termine perentorio',
+          authority: 'Dipartimento Interregionale LND / Co.Vi.So.C.',
+          amount: 'Liberatorie 100%',
+          note: 'Certificazione estinzione pendenze economiche stagione Serie D 2025/26.'
+        });
+      }
+
+      return list;
+    }
+
+    if (scopeId === 'dilettanti') {
+      var isSerieD = /serie d/i.test(categoryName) || !categoryName;
+      if (isSerieD) {
+        return [
+          {
+            id: 201,
+            task: 'Iscrizione Campionato Nazionale Serie D 2026/27',
+            date: '2026-07-10',
+            status: 'Ore 14:00 (Perentorio)',
+            authority: 'Dipartimento Interregionale LND',
+            amount: '€ 31.000 Fideiussione',
+            note: 'Apertura iscrizioni 3 luglio 2026 ore 09:00 - Chiusura 10 luglio ore 14:00.'
+          },
+          {
+            id: 202,
+            task: 'Deposito Fideiussione Bancaria (€ 31.000 con scad. 12/07/2027)',
+            date: '2026-07-10',
+            status: 'Obbligatorio',
+            authority: 'Dipartimento Interregionale LND',
+            amount: '€ 31.000,00',
+            note: 'Garanzia bancaria a prima richiesta con validità fino al 12 luglio 2027.'
+          },
+          {
+            id: 203,
+            task: 'Integrazione Documentale & Ricorsi Co.Vi.So.D',
+            date: '2026-07-23',
+            status: 'Ore 14:00 (Perentorio)',
+            authority: 'Co.Vi.So.D / LND',
+            amount: '—',
+            note: 'Termine ultimo improrogabile per sanare eventuali rilievi della Commissione.'
+          },
+          {
+            id: 204,
+            task: 'Visite Medico-Sportive Idoneità Agonistica Atleti',
+            date: '2026-09-01',
+            status: 'In vigore',
+            authority: 'FMSI / LND',
+            amount: '—',
+            note: 'Certificati agonistici in corso di validità prima della prima gara ufficiale.'
+          }
+        ];
+      }
+
+      // Categorie Regionali (Eccellenza, Promozione, 1ª/2ª/3ª Categoria)
+      return [
+        {
+          id: 211,
+          task: 'Iscrizione Campionato ' + (categoryName || 'Regionale') + ' (Comitato Regionale ' + regionName + ')',
+          date: '',
+          status: 'Da impostare da Comunicato Ufficiale',
+          authority: 'Comitato Regionale LND ' + regionName,
+          amount: 'Quota Iscrizione LND',
+          note: 'Termine fissato dal Comitato Regionale ' + regionName + '. Inserisci la data dal C.U. di riferimento.'
+        },
+        {
+          id: 212,
+          task: 'Deposito Quota Associativa & Fideiussione Regionale',
+          date: '',
+          status: 'Da impostare da C.U.',
+          authority: 'Comitato Regionale LND ' + regionName,
+          amount: 'Quota C.R. ' + regionName,
+          note: 'Versamento quote di partecipazione e tasse di tesseramento stagionali.'
+        },
+        {
+          id: 213,
+          task: 'Certificati Idoneità Agonistica & Tesseramenti Calciatori',
+          date: '',
+          status: 'Da impostare prima dell\'avvio gare',
+          authority: 'Ufficio Tesseramento LND ' + regionName,
+          amount: '—',
+          note: 'Deposito tessere e consensi GDPR per la rosa atleti della stagione 2026/27.'
+        }
+      ];
+    }
+
+    if (scopeId === 'giovanile') {
+      var isPrimavera = /primavera/i.test(categoryName);
+      if (isPrimavera) {
+        return [
+          {
+            id: 301,
+            task: 'Iscrizione Campionato ' + (categoryName || 'Primavera'),
+            date: '2026-06-16',
+            status: 'Allineato a Prima Squadra',
+            authority: 'Lega Serie A / B / Pro',
+            amount: 'Incluso Licenza',
+            note: 'Segue automaticamente i termini della società professionistica di riferimento.'
+          },
+          {
+            id: 302,
+            task: 'Visite Medico-Sportive & Protocollo Tutela Minori Under',
+            date: '2026-08-15',
+            status: 'Obbligatorio',
+            authority: 'SGS / Divisione Giovanile',
+            amount: '—',
+            note: 'Certificazione medica agonistica e verifica tesseramenti giovani di serie.'
+          }
+        ];
+      }
+
+      // Settore Giovanile e Scolastico / Juniores Regionali
+      return [
+        {
+          id: 311,
+          task: 'Iscrizione Campionati Giovanili SGS (Comitato ' + regionName + ')',
+          date: '',
+          status: 'Da impostare da C.U. Regionale',
+          authority: 'Settore Giovanile e Scolastico (SGS) ' + regionName,
+          amount: 'Quota SGS',
+          note: 'Termine pubblicato dal Comitato Regionale SGS ' + regionName + ' per Juniores, Allievi e Giovanissimi.'
+        },
+        {
+          id: 312,
+          task: 'Verifica Consensi GDPR Minori & Safeguarding Officer',
+          date: '',
+          status: 'In vigore',
+          authority: 'Tutela Minori SGS / FIGC',
+          amount: '—',
+          note: 'Firme digitali dei genitori e nomina responsabile contro abusi D.Lgs. 36/2021.'
+        }
+      ];
+    }
+
+    if (scopeId === 'femminile') {
+      var isSerieAFem = /serie a/i.test(categoryName);
+      if (isSerieAFem) {
+        return [
+          {
+            id: 401,
+            task: 'Licenza Nazionale Divisione Serie A Femminile Professionistica',
+            date: '2026-06-20',
+            status: 'Termine perentorio',
+            authority: 'Divisione Serie A Femminile Professionistica FIGC',
+            amount: 'Fideiussione Divisione',
+            note: 'Regime licenze professionistiche della Divisione Calcio Femminile FIGC.'
+          },
+          {
+            id: 402,
+            task: 'Contratti di Lavoro Sportivo Calciatrici & Staff Tecnico',
+            date: '2026-07-15',
+            status: 'Obbligatorio',
+            authority: 'FIGC / Divisione Professionistica',
+            amount: 'Stipendi / Accordi',
+            note: 'Deposito contratti professionistici di prestazione sportiva.'
+          }
+        ];
+      }
+
+      return [
+        {
+          id: 411,
+          task: 'Iscrizione Campionato ' + (categoryName || 'Femminile') + ' (C.R. ' + regionName + ')',
+          date: '',
+          status: 'Da impostare da C.U. Regionale',
+          authority: 'Dipartimento Femminile LND / C.R. ' + regionName,
+          amount: 'Quota LND Femminile',
+          note: 'Termine comunicato dal Dipartimento Calcio Femminile o dal Comitato Regionale di competenza.'
+        },
+        {
+          id: 412,
+          task: 'Tesseramenti Atlete & Certificati Idoneità FMSI',
+          date: '',
+          status: 'In vigore',
+          authority: 'Comitato LND ' + regionName,
+          amount: '—',
+          note: 'Tesseramento e consensi privacy per atlete maggiorenni e minorenni.'
+        }
+      ];
+    }
+
+    return [];
+  }
+
+  function computeDeadlines(deadlines, regionName) {
     deadlines = deadlines || [];
     var now = new Date();
     now.setHours(0, 0, 0, 0);
 
     return deadlines.map(function (d) {
+      if (!d.date || !String(d.date).trim()) {
+        return {
+          id: d.id,
+          task: d.task,
+          dateText: 'Da impostare dal C.U.',
+          status: 'Da impostare (C.R. ' + (regionName || 'Regione') + ')',
+          authority: d.authority || 'Comitato Regionale LND',
+          amount: d.amount || '—',
+          note: d.note || '',
+          isWarning: true,
+          isEmptyDate: true
+        };
+      }
+
       var targetDate = new Date(d.date);
       if (isNaN(targetDate.getTime())) {
-        return { task: d.task, dateText: d.date, status: d.status || 'Completato', isWarning: false };
+        return {
+          id: d.id,
+          task: d.task,
+          dateText: d.date,
+          status: d.status || 'Completato',
+          authority: d.authority || 'Ente Federale',
+          amount: d.amount || '—',
+          note: d.note || '',
+          isWarning: false,
+          isEmptyDate: false
+        };
       }
       targetDate.setHours(0, 0, 0, 0);
       var diffDays = Math.ceil((targetDate - now) / 86400000);
@@ -205,9 +518,14 @@
       return {
         id: d.id,
         task: d.task,
+        rawDate: d.date,
         dateText: targetDate.toLocaleDateString('it-IT'),
         status: statusText,
-        isWarning: isWarn
+        authority: d.authority || 'FIGC / LND',
+        amount: d.amount || '—',
+        note: d.note || '',
+        isWarning: isWarn,
+        isEmptyDate: false
       };
     });
   }
@@ -252,7 +570,9 @@
       lastUpdatedBy: 'Eliseo Miraglia (Admin Demo)',
       lastUpdatedAt: '26/08/2026 ore 13:30',
       clubName: 'Foggia Calcio 1920',
-      category: 'Serie D · Girone H',
+      footballScope: 'dilettanti',
+      category: 'Serie D (Dipartimento Interregionale LND)',
+      region: 'Puglia',
       season: 'Stagione 2026/27',
       matchDay: '28ª Giornata',
       position: '2° Posto',
@@ -385,12 +705,7 @@
         { id: 7, round: '30ª G', date: '06/09/2026', type: 'A', opponent: 'Matera Calcio', goalsFor: 0, goalsAgainst: 0, res: '- - -', status: 'UPCOMING', isPlayed: false, referee: 'In attesa di designazione' }
       ],
 
-      deadlines: [
-        { id: 1, task: 'Iscrizione Campionato LND 2026/27', date: '2026-07-20', status: 'Completato' },
-        { id: 2, task: 'Deposito Fideiussione Bancaria', date: '2026-07-25', status: 'Completato' },
-        { id: 3, task: 'Rinnovo Idoneità Agonistica Atleti', date: '2026-09-15', status: 'In scadenza' },
-        { id: 4, task: 'Verifica Semestrale Sicurezza Impianto', date: '2026-10-31', status: 'Programmato' }
-      ],
+      deadlines: getDefaultDeadlinesForScope('dilettanti', 'Serie D (Dipartimento Interregionale LND)', 'Puglia'),
 
       trainingWeek: [
         { day: 'Martedì', time: '15:00 - 17:30', pitch: 'Campo A (Erba)', focus: 'Attivazione preventiva, carico aerobico e forza', attendance: '11/11 Presenti' },
@@ -433,7 +748,9 @@
       lastUpdatedBy: getUserName(u),
       lastUpdatedAt: getFormattedDateTime(),
       clubName: clubName,
-      category: u.categoria || 'Serie D · Girone Federale',
+      footballScope: u.footballScope || 'dilettanti',
+      category: u.categoria || 'Serie D (Dipartimento Interregionale LND)',
+      region: u.region || 'Puglia',
       season: 'Stagione 2026/27',
       matchDay: 'In attesa di avvio',
       position: '—',
@@ -450,7 +767,7 @@
       sponsors: [],
       scouting: [],
       matches: [],
-      deadlines: [],
+      deadlines: getDefaultDeadlinesForScope(u.footballScope || 'dilettanti', u.categoria || 'Serie D (Dipartimento Interregionale LND)', u.region || 'Puglia'),
 
       safeguarding: {
         isAppointed: false,
@@ -1029,7 +1346,8 @@
   function renderPresidentialOverview(data) {
     var canSeeFinances = hasFinanceAccess();
     var squadMetrics = computeSquadMetrics(data.squad);
-    var deadlines = computeDeadlines(data.deadlines);
+    var scopeObj = FOOTBALL_SCOPES.find(function(s){ return s.id === (data.footballScope || 'dilettanti'); }) || FOOTBALL_SCOPES[1];
+    var deadlines = computeDeadlines(data.deadlines, data.region || 'Puglia');
     var matchStats = computeCompetitionStats(data.matches);
 
     var hasWarningDeadline = deadlines.some(function (d) { return d.isWarning; });
@@ -1071,6 +1389,49 @@
               '<div class="es-pres-standing-row"><span class="es-pres-standing-highlight">' + (data.position && data.position !== '—' ? esc(data.position) : (matchStats.played ? ('Gare: ' + matchStats.played) : 'Stagione 2026/27')) + '</span> · <span>' + matchStats.pts + ' punti</span></div>' +
               '<div class="es-pres-standing-sub">' + (data.matchDay || '28ª Giornata') + ' · ' + esc(data.season) + '</div>' +
             '</div>' +
+          '</div>' +
+        '</div>' +
+
+        // Selettore Ambito & Categoria Federale (Stagione 2026/27)
+        '<div style="background:#040810; border:1px solid rgba(148,163,184,0.2); border-radius:4px; padding:0.9rem 1.25rem; margin-bottom:1.5rem;">' +
+          '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-bottom:0.75rem;">' +
+            '<div style="display:flex; align-items:center; gap:0.6rem;">' +
+              '<span style="display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; background:rgba(56,189,248,0.15); color:#38bdf8; border-radius:4px; font-size:0.85rem;">🏛️</span>' +
+              '<div>' +
+                '<h4 style="margin:0; font-size:0.92rem; font-weight:700; color:#fff;">Tassonomia Categorie &amp; Ambito Federale (Stagione 2026/2027)</h4>' +
+                '<p style="margin:0; font-size:0.75rem; color:#94a3b8;">Imposta l\'ambito e il comitato di competenza per visualizzare solo le scadenze e i documenti pertinenti</p>' +
+              '</div>' +
+            '</div>' +
+            '<div style="font-size:0.75rem; color:#38bdf8; background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.25); border-radius:4px; padding:4px 9px;">' +
+              'Stagione 2026/27 · Termini Ufficiali Co.Vi.So.C. / LND' +
+            '</div>' +
+          '</div>' +
+          '<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) auto; gap:0.75rem; align-items:end;">' +
+            '<div class="es-pres-input-group" style="margin:0;">' +
+              '<label style="font-size:0.75rem; color:#94a3b8; font-weight:600; margin-bottom:0.3rem;">Ambito Federale *</label>' +
+              '<select class="es-pres-input-text" id="sel-pres-scope" style="background:#080e1e; color:#fff; font-size:0.82rem; padding:0.45rem 0.65rem;">' +
+                FOOTBALL_SCOPES.map(function (sc) {
+                  return '<option value="' + esc(sc.id) + '"' + ((data.footballScope || 'dilettanti') === sc.id ? ' selected' : '') + '>' + esc(sc.name) + '</option>';
+                }).join('') +
+              '</select>' +
+            '</div>' +
+            '<div class="es-pres-input-group" style="margin:0;">' +
+              '<label style="font-size:0.75rem; color:#94a3b8; font-weight:600; margin-bottom:0.3rem;">Categoria di Competenza *</label>' +
+              '<select class="es-pres-input-text" id="sel-pres-cat" style="background:#080e1e; color:#fff; font-size:0.82rem; padding:0.45rem 0.65rem;">' +
+                (SCOPE_CATEGORIES[data.footballScope || 'dilettanti'] || []).map(function (c) {
+                  return '<option value="' + esc(c) + '"' + (data.category === c ? ' selected' : '') + '>' + esc(c) + '</option>';
+                }).join('') +
+              '</select>' +
+            '</div>' +
+            '<div class="es-pres-input-group" style="margin:0;">' +
+              '<label style="font-size:0.75rem; color:#94a3b8; font-weight:600; margin-bottom:0.3rem;">Comitato Regionale (LND / SGS) *</label>' +
+              '<select class="es-pres-input-text" id="sel-pres-reg" style="background:#080e1e; color:#fff; font-size:0.82rem; padding:0.45rem 0.65rem;">' +
+                ITALIAN_REGIONS.map(function (r) {
+                  return '<option value="' + esc(r) + '"' + ((data.region || 'Puglia') === r ? ' selected' : '') + '>C.R. ' + esc(r) + '</option>';
+                }).join('') +
+              '</select>' +
+            '</div>' +
+            '<button type="button" class="es-pres-btn-primary" id="btn-apply-football-scope" style="height:35px; padding:0 14px; font-size:0.8rem; white-space:nowrap;">Applica e Carica Scadenze</button>' +
           '</div>' +
         '</div>' +
 
@@ -1397,15 +1758,24 @@
                 '<div class="es-pres-card-footer"><span>Archivio Documentale</span><span>Verifica tessere &rsaquo;</span></div>' +
               '</div>' +
 
-              // 6. Scadenziario Federale
+              // 6. Scadenziario Federale per Ambito
               '<div class="es-pres-card" id="card-pres-gov-deadlines">' +
-                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.bell + '</div><span class="es-pres-status ' + (deadlines.length ? (hasWarningDeadline ? 'es-pres-status-warning' : 'es-pres-status-ok') : 'es-pres-status-neutral') + '">' + (deadlines.length ? (deadlines.length + ' scadenze') : '0 scadenze') + '</span></div>' +
-                '<div><h3 class="es-pres-card-title">Scadenziario Federale</h3>' + (deadlines.length ? ('<div style="font-size:0.82rem; color:#cbd5e1; display:flex; flex-direction:column; gap:0.35rem; margin-top:0.4rem;">' +
-                  deadlines.slice(0, 3).map(function (d) {
-                    return '<div>• <b>' + esc(d.task) + ':</b> <span style="color:' + (d.isWarning ? '#fbbf24' : '#34d399') + ';">' + esc(d.status) + '</span> (' + esc(d.dateText) + ')</div>';
-                  }).join('') +
-                '</div>') : '<p class="es-pres-card-desc">Nessuna scadenza o termine perentorio federale registrato.</p>') + '</div>' +
-                '<div class="es-pres-card-footer"><span>Monitoraggio Adempimenti</span><span>Dettagli scadenze &rsaquo;</span></div>' +
+                '<div class="es-pres-card-top">' +
+                  '<div class="es-pres-icon-box">' + ICONS.bell + '</div>' +
+                  '<span class="es-pres-status ' + (deadlines.length ? (hasWarningDeadline ? 'es-pres-status-warning' : 'es-pres-status-ok') : 'es-pres-status-neutral') + '">' +
+                    (deadlines.length ? (deadlines.length + ' adempimenti') : '0 scadenze') +
+                  '</span>' +
+                '</div>' +
+                '<div>' +
+                  '<h3 class="es-pres-card-title">Scadenziario Federale</h3>' +
+                  '<div style="font-size:0.75rem; color:#38bdf8; font-weight:600; margin-bottom:0.4rem;">' + esc(scopeObj.name.split(' (')[0]) + ' · ' + esc(data.category || 'Serie D') + '</div>' +
+                  (deadlines.length ? ('<div style="font-size:0.8rem; color:#cbd5e1; display:flex; flex-direction:column; gap:0.35rem;">' +
+                    deadlines.slice(0, 3).map(function (d) {
+                      return '<div>• <b>' + esc(d.task.split(' (')[0]) + ':</b> <span style="color:' + (d.isWarning ? (d.isEmptyDate ? '#94a3b8' : '#fbbf24') : '#34d399') + ';">' + esc(d.status) + '</span>' + (d.amount && d.amount !== '—' ? (' <span style="color:#94a3b8; font-size:0.72rem;">(' + esc(d.amount) + ')</span>') : '') + '</div>';
+                    }).join('') +
+                  '</div>') : '<p class="es-pres-card-desc">Nessuna scadenza o termine perentorio federale registrato.</p>') +
+                '</div>' +
+                '<div class="es-pres-card-footer"><span>Stagione 2026/27</span><span>Gestisci scadenziario &rsaquo;</span></div>' +
               '</div>' +
             '</div>' +
           '</section>' +
@@ -1946,48 +2316,156 @@
     }
   }
 
-  function openAddDeadlineModal(data) {
-    var formHtml =
-      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Registra un nuovo adempimento federale, termine perentorio Co.Vi.So.D o scadenza LND:</p>' +
-      '<form id="form-add-deadline" style="display:flex; flex-direction:column; gap:1rem;">' +
-        '<div class="es-pres-input-group"><label>Descrizione Adempimento / Termine *</label><input type="text" class="es-pres-input-text" id="inp-dl-task" required placeholder="Es. Deposito Fideiussione Bancaria"></div>' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
-          '<div class="es-pres-input-group"><label>Data di Scadenza Perentoria *</label><input type="date" class="es-pres-input-text" id="inp-dl-date" required value="' + new Date().toISOString().split('T')[0] + '"></div>' +
-          '<div class="es-pres-input-group"><label>Organo di Controllo</label><select class="es-pres-input-text" id="sel-dl-org" style="background:#040810; color:#fff;"><option>Co.Vi.So.D</option><option>FIGC - LND</option><option>Settore Tecnico Coverciano</option><option>Comitato Regionale</option></select></div>' +
-        '</div>' +
-        '<div class="es-pres-input-group"><label>Note e Documentazione Richiesta</label><textarea class="es-pres-input-text" id="inp-dl-notes" rows="2" placeholder="Es. Invio tramite PEC e portale LND"></textarea></div>' +
-        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
-          '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-dl-modal">Annulla</button>' +
-          '<button type="submit" class="es-pres-btn-primary">Registra Scadenza</button>' +
-        '</div>' +
-      '</form>';
+  function openDeadlinesManagerModal(data) {
+    data.deadlines = data.deadlines || getDefaultDeadlinesForScope(data.footballScope, data.category, data.region);
+    var computed = computeDeadlines(data.deadlines, data.region || 'Puglia');
+    var scopeObj = FOOTBALL_SCOPES.find(function(s){ return s.id === (data.footballScope || 'dilettanti'); }) || FOOTBALL_SCOPES[1];
 
-    openDetailModal('Nuova Scadenza Federale & Termine', ICONS.bell, formHtml);
+    var html =
+      '<div style="margin-bottom:1rem;">' +
+        '<div style="background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.2); border-radius:4px; padding:0.85rem 1rem; margin-bottom:1rem;">' +
+          '<div style="color:#38bdf8; font-weight:700; font-size:0.85rem; margin-bottom:0.25rem;">ℹ️ Scadenziario Ufficiale Stagione 2026/2027 — Ambito ' + esc(scopeObj.name) + '</div>' +
+          '<div style="font-size:0.78rem; color:#cbd5e1; line-height:1.5;">' +
+            'I termini perentori Co.Vi.So.C., Dipartimento Interregionale e Comitati Regionali LND sono aggiornati per la stagione 2026/27. Puoi modificare ogni singola data o importo per adeguarli al Comunicato Ufficiale del tuo Club.' +
+          '</div>' +
+        '</div>' +
+
+        '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem;">' +
+          '<span style="font-size:0.82rem; color:#94a3b8;"><b>' + computed.length + '</b> adempimenti attivi per <b>' + esc(data.category || 'Serie D') + '</b></span>' +
+          '<div style="display:flex; gap:0.5rem;">' +
+            '<button type="button" class="es-pres-btn-secondary" id="btn-reset-scope-deadlines" style="padding:4px 9px; font-size:0.75rem;">🔄 Ripristina Default Ambito</button>' +
+            '<button type="button" class="es-pres-btn-primary" id="btn-add-custom-deadline" style="padding:4px 10px; font-size:0.75rem;">+ Nuova Scadenza</button>' +
+          '</div>' +
+        '</div>' +
+
+        '<div style="display:flex; flex-direction:column; gap:0.75rem; max-height:380px; overflow-y:auto; padding-right:0.3rem;" id="es-deadlines-list-container">' +
+          data.deadlines.map(function (d, idx) {
+            var comp = computed[idx] || {};
+            return (
+              '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:0.85rem 1rem;" class="es-dl-item" data-idx="' + idx + '">' +
+                '<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:0.75rem; margin-bottom:0.5rem;">' +
+                  '<div style="flex:1;">' +
+                    '<input type="text" class="es-pres-input-text es-dl-task" value="' + esc(d.task) + '" placeholder="Descrizione adempimento" style="font-weight:700; font-size:0.88rem; padding:0.35rem 0.5rem; margin-bottom:0.35rem;">' +
+                    '<div style="display:flex; gap:0.5rem; flex-wrap:wrap; font-size:0.75rem; color:#94a3b8;">' +
+                      '<span>Organo: <input type="text" class="es-pres-input-text es-dl-auth" value="' + esc(d.authority || 'FIGC / LND') + '" style="width:140px; display:inline-block; font-size:0.75rem; padding:2px 4px;"></span>' +
+                      '<span>Importo/Fideiussione: <input type="text" class="es-pres-input-text es-dl-amount" value="' + esc(d.amount || '—') + '" style="width:130px; display:inline-block; font-size:0.75rem; padding:2px 4px;"></span>' +
+                    '</div>' +
+                  '</div>' +
+                  '<button type="button" class="es-dl-btn-remove" data-idx="' + idx + '" style="background:transparent; border:none; color:#f87171; cursor:pointer; font-size:1.1rem;" title="Elimina adempimento">&times;</button>' +
+                '</div>' +
+                '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; align-items:center; border-top:1px solid rgba(148,163,184,0.1); padding-top:0.5rem; margin-top:0.4rem;">' +
+                  '<div>' +
+                    '<label style="font-size:0.7rem; color:#94a3b8; display:block; margin-bottom:0.2rem;">Data Scadenza Perentoria *</label>' +
+                    '<input type="date" class="es-pres-input-text es-dl-date" value="' + esc(d.date || '') + '" style="font-size:0.8rem; padding:0.3rem 0.5rem;">' +
+                  '</div>' +
+                  '<div>' +
+                    '<label style="font-size:0.7rem; color:#94a3b8; display:block; margin-bottom:0.2rem;">Stato / Conto alla Rovescia</label>' +
+                    '<div style="display:flex; align-items:center; gap:0.5rem;">' +
+                      '<span class="' + (comp.isWarning ? (comp.isEmptyDate ? 'es-pres-status es-pres-status-neutral' : 'es-pres-status es-pres-status-warning') : 'es-pres-status es-pres-status-ok') + '" style="font-size:0.75rem;">' +
+                        esc(comp.status) +
+                      '</span>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>' +
+                (d.note ? ('<div style="font-size:0.72rem; color:#94a3b8; margin-top:0.4rem; font-style:italic;">Note: ' + esc(d.note) + '</div>') : '') +
+              '</div>'
+            );
+          }).join('') +
+        '</div>' +
+      '</div>' +
+      '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+        '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-dl-manager">Chiudi</button>' +
+        '<button type="button" class="es-pres-btn-primary" id="btn-save-all-deadlines">Salva Scadenziario Federale</button>' +
+      '</div>';
+
+    openDetailModal('Scadenziario Federale per Ambito (Stagione 2026/27)', ICONS.bell, html);
     var modalOverlay = document.getElementById('es-pres-detail-overlay');
-    var form = document.getElementById('form-add-deadline');
-    var btnCancel = document.getElementById('btn-cancel-dl-modal');
+    var btnCancel = document.getElementById('btn-cancel-dl-manager');
     if (btnCancel && modalOverlay) btnCancel.onclick = function () { modalOverlay.remove(); };
 
-    if (form) {
-      form.onsubmit = function (e) {
-        e.preventDefault();
-        var task = document.getElementById('inp-dl-task').value.trim();
-        var dt = document.getElementById('inp-dl-date').value;
+    // Reset to default
+    var btnReset = document.getElementById('btn-reset-scope-deadlines');
+    if (btnReset) {
+      btnReset.onclick = function () {
+        data.deadlines = getDefaultDeadlinesForScope(data.footballScope, data.category, data.region);
+        savePresClubData(data);
+        if (modalOverlay) modalOverlay.remove();
+        openDeadlinesManagerModal(data);
+        if (window.showToast) window.showToast('Scadenziario reimpostato ai valori ufficiali 2026/27!', 'info');
+      };
+    }
 
+    // Add custom deadline
+    var btnAddCust = document.getElementById('btn-add-custom-deadline');
+    if (btnAddCust) {
+      btnAddCust.onclick = function () {
         data.deadlines = data.deadlines || [];
         data.deadlines.push({
           id: Date.now(),
-          task: task,
-          date: dt,
-          status: 'In scadenza'
+          task: 'Nuovo adempimento ' + (data.region ? ('C.R. ' + data.region) : 'Federale'),
+          date: '',
+          authority: 'Comitato Regionale ' + (data.region || 'LND'),
+          amount: '—',
+          status: 'Da completare',
+          note: 'Inserito manualmente dalla società'
+        });
+        savePresClubData(data);
+        if (modalOverlay) modalOverlay.remove();
+        openDeadlinesManagerModal(data);
+      };
+    }
+
+    // Remove buttons
+    var removeBtns = document.querySelectorAll('.es-dl-btn-remove');
+    removeBtns.forEach(function (b) {
+      b.onclick = function () {
+        var idx = parseInt(b.getAttribute('data-idx'));
+        if (!isNaN(idx) && data.deadlines[idx]) {
+          data.deadlines.splice(idx, 1);
+          savePresClubData(data);
+          if (modalOverlay) modalOverlay.remove();
+          openDeadlinesManagerModal(data);
+        }
+      };
+    });
+
+    // Save all
+    var btnSave = document.getElementById('btn-save-all-deadlines');
+    if (btnSave) {
+      btnSave.onclick = function () {
+        var items = document.querySelectorAll('.es-dl-item');
+        var newDeadlines = [];
+        items.forEach(function (item) {
+          var task = item.querySelector('.es-dl-task').value.trim();
+          var auth = item.querySelector('.es-dl-auth').value.trim();
+          var amt = item.querySelector('.es-dl-amount').value.trim();
+          var dt = item.querySelector('.es-dl-date').value;
+
+          if (task) {
+            newDeadlines.push({
+              id: Date.now() + Math.random(),
+              task: task,
+              authority: auth || 'FIGC / LND',
+              amount: amt || '—',
+              date: dt,
+              status: dt ? 'In scadenza' : 'Da impostare dal C.U.'
+            });
+          }
         });
 
+        data.deadlines = newDeadlines;
+        data.lastUpdatedBy = 'Presidente';
+        data.lastUpdatedAt = getFormattedDateTime();
         savePresClubData(data);
         if (modalOverlay) modalOverlay.remove();
         renderPresidentialSuite();
-        if (window.showToast) window.showToast('Termine ' + task + ' registrato nello scadenziario!', 'success');
+        if (window.showToast) window.showToast('Scadenziario Federale salvato con successo!', 'success');
       };
     }
+  }
+
+  function openAddDeadlineModal(data) {
+    openDeadlinesManagerModal(data);
   }
 
   // ============================================================
@@ -2413,52 +2891,42 @@
       };
     }
 
+    var selScope = mount.querySelector('#sel-pres-scope');
+    var selCat = mount.querySelector('#sel-pres-cat');
+    if (selScope && selCat) {
+      selScope.onchange = function () {
+        var sc = selScope.value;
+        var cats = SCOPE_CATEGORIES[sc] || [];
+        selCat.innerHTML = cats.map(function (c) {
+          return '<option value="' + esc(c) + '">' + esc(c) + '</option>';
+        }).join('');
+      };
+    }
+
+    var btnApplyScope = mount.querySelector('#btn-apply-football-scope');
+    if (btnApplyScope) {
+      btnApplyScope.onclick = function () {
+        var scope = (mount.querySelector('#sel-pres-scope') || {}).value || 'dilettanti';
+        var cat = (mount.querySelector('#sel-pres-cat') || {}).value || 'Serie D (Dipartimento Interregionale LND)';
+        var reg = (mount.querySelector('#sel-pres-reg') || {}).value || 'Puglia';
+
+        data.footballScope = scope;
+        data.category = cat;
+        data.region = reg;
+        data.deadlines = getDefaultDeadlinesForScope(scope, cat, reg);
+        data.lastUpdatedBy = 'Presidente';
+        data.lastUpdatedAt = getFormattedDateTime();
+
+        savePresClubData(data);
+        renderPresidentialSuite();
+        if (window.showToast) window.showToast('Ambito ' + cat + ' applicato! Scadenziario aggiornato.', 'success');
+      };
+    }
+
     var cardGovDeadlines = mount.querySelector('#card-pres-gov-deadlines');
     if (cardGovDeadlines) {
       cardGovDeadlines.onclick = function () {
-        var deadlines = computeDeadlines(data.deadlines);
-        var html = !deadlines.length ? (
-          '<div class="es-pres-empty-box">' +
-            '<div class="es-pres-empty-icon">' + ICONS.bell + '</div>' +
-            '<h4 class="es-pres-empty-title">Nessuna scadenza federale registrata</h4>' +
-            '<p class="es-pres-empty-desc">Inserisci un nuovo termine perentorio, scadenza Co.Vi.So.D o adempimento LND per monitorarlo in tempo reale.</p>' +
-            '<button type="button" class="es-pres-empty-btn" id="btn-add-first-deadline">' + ICONS.plus + ' Nuova Scadenza Federale</button>' +
-          '</div>'
-        ) : (
-          '<div style="margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center;">' +
-            '<span style="font-size:0.85rem; color:#94a3b8;">' + deadlines.length + ' adempimenti monitorati</span>' +
-            '<button type="button" class="es-pres-btn-primary" id="btn-add-deadline">+ Nuova Scadenza</button>' +
-          '</div>' +
-          '<div style="display:flex; flex-direction:column; gap:0.6rem;">' +
-            deadlines.map(function (d) {
-              return (
-                '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
-                  '<div><h4 style="font-size:0.95rem; font-weight:700; color:#fff; margin:0;">' + esc(d.task) + '</h4><div style="font-size:0.78rem; color:#94a3b8; margin-top:0.15rem;">Termine federale: ' + esc(d.dateText) + '</div></div>' +
-                  '<span class="' + (d.isWarning ? 'es-pres-status es-pres-status-warning' : 'es-pres-status es-pres-status-ok') + '">' + esc(d.status) + '</span>' +
-                '</div>'
-              );
-            }).join('') +
-          '</div>'
-        );
-
-        openDetailModal('Scadenziario Federale & Termini Perentori', ICONS.bell, html);
-
-        var bAddFirst = document.getElementById('btn-add-first-deadline');
-        var bAdd = document.getElementById('btn-add-deadline');
-        if (bAddFirst) {
-          bAddFirst.onclick = function () {
-            var m = document.getElementById('es-pres-detail-overlay');
-            if (m) m.remove();
-            openAddDeadlineModal(data);
-          };
-        }
-        if (bAdd) {
-          bAdd.onclick = function () {
-            var m = document.getElementById('es-pres-detail-overlay');
-            if (m) m.remove();
-            openAddDeadlineModal(data);
-          };
-        }
+        openDeadlinesManagerModal(data);
       };
     }
 
