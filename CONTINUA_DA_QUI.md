@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Riorganizzazione concettuale radicale tra **`Curriculum`** e **`Chi siamo`**: spostati i contenuti aziendali (roadmap 2023-2026, 715 agenti IA, conformità GDPR Art. 13/30 e Riforma dello Sport, value proposition) in **Chi siamo** (`#about`). Trasformato **Curriculum** (`#dashboard-skills`) in un autentico **Curriculum Sportivo Personale** per l'atleta/utente: header identità reale (`.cv-hero-card`), statistiche di campo (presenze, minuti, gol/assist, Vmax GPS), skill tecniche e atletiche reali, percorso carriera con timeline squadre giocate, player video highlights certificati 30s con telemetria GPS, verifiche profilo individuali e barra CTA di chiusura (Contatta, Secret List, Scarica PDF). Risolto bug spazio vuoto nero. File: `index.html`, `style.css`, `app.js`, `sw.js`. Cache `CV1`.
-Feature precedente: Visibilità condizionale pulsante Ruolo Creatore.
+Ultimo fatto: Attivata la verifica email con **`Codice OTP a 4 numeri`** per gli utenti registrati che entrano nella propria area: banner fluttuante in basso (`.es-otp-bottom-banner`) con indicazione "Email non verificata" e pulsante "Invia codice OTP" + modale interattiva (`#es-otp-modal-overlay`) con 4 caselle numeriche a scorrimento automatico, simulazione/invio codice OTP e validazione istantanea con aggiornamento stato utente. File: `verifica-account.js`, `verifica-account.css`, `index.html`, `sw.js`. Cache `OTP1`.
+Feature precedente: Riorganizzazione concettuale Curriculum in vero CV sportivo personale.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
