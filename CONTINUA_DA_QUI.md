@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Sviluppo completo della macroarea **`👑 Area Presidente (Presidential Dashboard B2B)`** per club dilettantistici: 1. Header di Stato Club (Logo, Categoria, Posizione, Tesseramento FIGC LND), 2. Gestione Club (Rating Rosa calcolato su età e minutaggio, Trattative mercato, Staff con alert scadenze, Settore Giovanile con fuoriquota LND, Sviluppo Atleti IA), 3. Ufficio Club (Posta societaria, Sponsor con alert rinnovi, Impianti e Campi, Store Merchandising Print-on-Demand, Stadio, Scouting Secret List, Finanze e Budget protette da RBAC), 4. Competizioni (Statistiche, Calendario, Classifica Girone Live), 5. Conformità e Governance (Tesseramenti, GDPR Under 18, Scadenze federali, Badge fiducia), 6. CTA Finali (Passa a Elisee Scout Pro, Richiedi conformità e supporto). File: `pres-dash.js`, `pres-dash.css`, `index.html`, `sw.js`. Cache `PRES_B2B1`.
-Feature precedente: Banner Verifica Email OTP armonizzato con la palette del sito.
+Ultimo fatto: Sviluppate le **`6 Schermate di Dettaglio dell'Area Presidente`** (1. Stadio con tariffe reali, capienza certificata e controlli sicurezza; 2. Statistiche Club a 2 tab con Record di club e Storico di lega; 3. Sponsor a 3 categorie con accordi allegati e bacheca B2B; 4. Classifica ufficiale LND con filtro categoria ed evidenziazione Club; 5. Calendario gare con designazioni arbitrali AIA ufficiali; 6. Centro Allenamento con staff tesserato UEFA/FIGC e piano settimanale reale) con header verde smeraldo e pulsante 'Indietro' coerente. File: `pres-dash.js`, `pres-dash.css`, `index.html`, `sw.js`. Cache `PRES_DET1`.
+Feature precedente: Suite B2B Area Presidente con 6 Macro-sezioni.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

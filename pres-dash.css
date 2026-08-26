@@ -306,47 +306,157 @@
   color: #2dd4bf;
 }
 
-/* Modali B2B Presidential Suite */
-.es-pres-modal-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 999999;
-  background: rgba(4, 10, 15, 0.88);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+/* ============================================================
+   SCHERMATE DI DETTAGLIO: HEADER VERDE SMERALDO + CARD B2B
+   ============================================================ */
+.es-pres-detail-screen {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 4rem;
+  animation: esPresFadeIn 0.22s ease;
+}
+@keyframes esPresFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.es-pres-detail-emerald-header {
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+  border-radius: 20px;
+  padding: 1.8rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 12px 32px rgba(13, 148, 136, 0.35);
+  text-align: center;
+  position: relative;
+}
+.es-pres-detail-emerald-header h2 {
+  font-size: 1.85rem;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0 0 0.4rem;
+  letter-spacing: -0.01em;
+}
+.es-pres-detail-emerald-header p {
+  font-size: 0.95rem;
+  color: #ccfbf1;
+  margin: 0;
+  font-weight: 500;
+}
+
+.es-pres-detail-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.es-pres-detail-box {
+  background: rgba(15, 23, 42, 0.78);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 22px;
+  padding: 1.8rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+.es-pres-detail-box h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 1.2rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  overflow-y: auto;
-  font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+  gap: 0.6rem;
 }
-.es-pres-modal-sheet {
-  background: #0f172a;
-  color: #f8fafc;
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  border-radius: 24px;
-  width: 100%;
-  max-width: 820px;
-  padding: 2rem 2.2rem;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.75), 0 0 24px rgba(13, 148, 136, 0.2);
-  position: relative;
-  max-height: 90vh;
-  overflow-y: auto;
+
+/* Navigazione "Indietro" in basso a sinistra */
+.es-pres-back-footer {
+  margin-top: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
-.es-pres-modal-close-btn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: transparent;
-  border: none;
-  color: #94a3b8;
-  font-size: 1.8rem;
-  line-height: 1;
+.es-pres-btn-back {
+  background: rgba(15, 23, 42, 0.85);
+  color: #ffffff;
+  border: 1.5px solid rgba(148, 163, 184, 0.35);
+  border-radius: 999px;
+  padding: 0.7rem 1.6rem;
+  font-size: 0.92rem;
+  font-weight: 800;
   cursor: pointer;
-  transition: color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  transition: all 0.18s ease;
 }
-.es-pres-modal-close-btn:hover { color: #ffffff; }
+.es-pres-btn-back:hover {
+  background: #1e293b;
+  border-color: #38bdf8;
+  color: #38bdf8;
+  transform: translateX(-3px);
+}
+
+/* Elementi Form e Tabelle nelle schermate di dettaglio */
+.es-pres-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.es-pres-input-group label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+.es-pres-input-text {
+  background: #090e17;
+  border: 1.5px solid rgba(148, 163, 184, 0.25);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.es-pres-input-text:focus {
+  border-color: #0d9488;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.25);
+}
+
+/* Tabella Standings / Classifica */
+.es-pres-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+}
+.es-pres-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.88rem;
+}
+.es-pres-table th {
+  background: rgba(15, 23, 42, 0.9);
+  color: #94a3b8;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+.es-pres-table td {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  color: #cbd5e1;
+}
+.es-pres-table tr.is-my-club td {
+  background: rgba(13, 148, 136, 0.15);
+  color: #ffffff;
+  font-weight: 800;
+  border-top: 1.5px solid #0d9488;
+  border-bottom: 1.5px solid #0d9488;
+}
 
 /* Banner CTA Finale */
 .es-pres-cta-banner {
