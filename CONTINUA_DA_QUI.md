@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: **Attivazione Modale Pratica Variazione Capienza & Omologazione CPV**: Reso attivo e interattivo il pulsante *"Richiedi variazione con verbale CPV"* (`#btn-req-capacity-update`) nella schermata Stadio: 1. Apre una modale enterprise con input nuova capienza certificata, protocollo/verbale CPV, data seduta commissione, tipologia intervento (ampliamento, seggiolini, tornelli), upload file verbale firmato (PDF/JPG/PNG) con visualizzazione nome e dimensione, e note per Questura/FIGC; 2. All'invio aggiorna istantaneamente lo store societario e la capienza a schermo con toast di conferma; 3. Resi attivi anche i bottoni *"Inserisci Nuovo Accordo Sponsor"* e *"Bacheca Opportunità Sponsor B2B"*. File: `pres-dash.js`, `index.html`, `sw.js`. Cache `CPV1`.
-Feature precedente: Audit Completo & Attivazione al 100% di Tutte le Card Dashboard.
+Ultimo fatto: **Architettura Dati Reali, Stati Vuoti Onesti & Provenienza Dati (Area Presidente)**: Implementata architettura dati completa e dinamica per l'Area Presidente: 1. Separazione netta tra Modalità Dati Reali (clean state per il club) e Modalità Dimostrativa con banner dedicato in cima; 2. Calcolo automatico e real-time di Rating Rosa, minutaggi, età media, scadenze federali (`Math.ceil` su data odierna) e statistiche partite; 3. Stati vuoti espliciti su ogni card e sezione con pulsanti di azione diretta (CTA); 4. Form e modali interattive di inserimento dati reali con menu a tendina rigido per qualifiche federali ufficiali FIGC (*UEFA Pro, UEFA A, UEFA B, UEFA C, Preparatore Atletico FIGC, Dirigente Sportivo FIGC, Match Analyst Coverciano, ecc.*); 5. Tracciabilità e provenienza dei dati (*Aggiornato da [Utente] il [Data]*). File: `pres-dash.js`, `pres-dash.css`, `index.html`, `sw.js`. Cache `REAL_DATA1`.
+Feature precedente: Attivazione Modale Pratica Variazione Capienza & Omologazione CPV.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
