@@ -1582,7 +1582,7 @@
         '<div style="background:#040810; border:1px solid rgba(148,163,184,0.2); border-radius:4px; padding:0.9rem 1.25rem; margin-bottom:1.5rem;">' +
           '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-bottom:0.75rem;">' +
             '<div style="display:flex; align-items:center; gap:0.6rem;">' +
-              '<span style="display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; background:rgba(56,189,248,0.15); color:#38bdf8; border-radius:4px; font-size:0.85rem;">🏛️</span>' +
+              '<span style="display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; background:rgba(56,189,248,0.12); color:#38bdf8; border-radius:4px;">' + ICONS.landmark + '</span>' +
               '<div>' +
                 '<h4 style="margin:0; font-size:0.92rem; font-weight:700; color:#fff;">Tassonomia Categorie &amp; Ambito Federale (Stagione 2026/2027)</h4>' +
                 '<p style="margin:0; font-size:0.75rem; color:#94a3b8;">Imposta l\'ambito e il comitato di competenza per visualizzare solo le scadenze e i documenti pertinenti</p>' +
@@ -1957,7 +1957,7 @@
                   '<div style="font-size:0.75rem; color:#38bdf8; font-weight:600; margin-bottom:0.4rem;">' +
                     esc(scopeObj.name.split(' (')[0]) + ' · ' + esc(data.category || 'Serie D') + ' (' + esc(data.activeSeason || '2026/27') + ')' +
                   '</div>' +
-                  (inTransition ? ('<div style="font-size:0.72rem; color:#fde68a; margin-bottom:0.35rem;">⏳ Transizione a ' + esc(getNextSeason(data.activeSeason)) + '</div>') : '') +
+                  (inTransition ? ('<div style="font-size:0.72rem; color:#fde68a; margin-bottom:0.35rem;">Transizione a ' + esc(getNextSeason(data.activeSeason)) + '</div>') : '') +
                   (deadlines.length ? ('<div style="font-size:0.8rem; color:#cbd5e1; display:flex; flex-direction:column; gap:0.35rem;">' +
                     deadlines.slice(0, 3).map(function (d) {
                       if (d.isCompleted) {
@@ -2058,7 +2058,7 @@
         '</div>' +
         '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
           '<div class="es-pres-input-group"><label>Scadenza Contratto</label><input type="date" class="es-pres-input-text" id="inp-st-exp" value="2027-06-30"></div>' +
-          '<div class="es-pres-input-group"><label>Casellario Giudiziale (art. 25-bis DPR 313/2002)</label><select class="es-pres-input-text" id="sel-st-penale" style="background:#040810; color:#fff;"><option value="Regolare">✅ Regolare (Depositato)</option><option value="In attesa">⏳ In attesa di rilascio</option><option value="Da richiedere">⚠️ Da richiedere / Non depositato</option></select></div>' +
+          '<div class="es-pres-input-group"><label>Casellario Giudiziale (art. 25-bis DPR 313/2002)</label><select class="es-pres-input-text" id="sel-st-penale" style="background:#040810; color:#fff;"><option value="Regolare">Regolare (Depositato)</option><option value="In attesa">In attesa di rilascio</option><option value="Da richiedere">Da richiedere / Non depositato</option></select></div>' +
         '</div>' +
         '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
           '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-add-st">Annulla</button>' +
@@ -2274,9 +2274,9 @@
                 '</div>' +
                 '<div style="display:flex; align-items:center; gap:0.6rem;">' +
                   '<select class="es-penale-select" data-idx="' + idx + '" style="background:#0b1329; color:#fff; border:1px solid rgba(148,163,184,0.3); border-radius:4px; font-size:0.78rem; padding:0.35rem 0.6rem;">' +
-                    '<option value="Regolare"' + (isOk ? ' selected' : '') + '>✅ Regolare (Depositato)</option>' +
-                    '<option value="In attesa"' + (s.penaleStatus === 'In attesa' ? ' selected' : '') + '>⏳ In attesa di rilascio</option>' +
-                    '<option value="Da richiedere"' + (!s.penaleStatus || s.penaleStatus === 'Da richiedere' ? ' selected' : '') + '>⚠️ Da richiedere / Scaduto</option>' +
+                    '<option value="Regolare"' + (isOk ? ' selected' : '') + '>Regolare (Depositato)</option>' +
+                    '<option value="In attesa"' + (s.penaleStatus === 'In attesa' ? ' selected' : '') + '>In attesa di rilascio</option>' +
+                    '<option value="Da richiedere"' + (!s.penaleStatus || s.penaleStatus === 'Da richiedere' ? ' selected' : '') + '>Da richiedere / Scaduto</option>' +
                   '</select>' +
                 '</div>' +
               '</div>'
@@ -2360,7 +2360,7 @@
           '<input type="date" class="es-pres-input-text" id="inp-ras-deadline" value="' + (cur.statuteDeadline ? (cur.statuteDeadline.includes('/') ? cur.statuteDeadline.split('/').reverse().join('-') : cur.statuteDeadline) : '2026-12-31') + '">' +
         '</div>' +
         '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem; font-size:0.8rem; color:#cbd5e1;">' +
-          '🏛️ <b>Copertura Assicurativa:</b> L\'iscrizione al RAS è indispensabile per la validità della copertura assicurativa INAIL/federale dei collaboratori sportivi retribuiti.' +
+          '<b>Copertura Assicurativa:</b> L\'iscrizione al RAS è indispensabile per la validità della copertura assicurativa INAIL/federale dei collaboratori sportivi retribuiti.' +
         '</div>' +
         '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
           '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-ras">Annulla</button>' +
@@ -2415,7 +2415,7 @@
           '<div class="es-pres-input-group"><label>Stato del Bilancio</label><select class="es-pres-input-text" id="sel-fin-health" style="background:#040810; color:#fff;"><option>Bilancio in pareggio</option><option>Utile d\'esercizio (+ margine)</option><option>Disavanzo controllato</option></select></div>' +
         '</div>' +
         '<div style="background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.25); border-radius:4px; padding:0.85rem 1rem;">' +
-          '<div style="color:#38bdf8; font-weight:700; font-size:0.85rem; margin-bottom:0.25rem;">ℹ️ Regime Fiscale IVA (Riforma dello Sport):</div>' +
+          '<div style="color:#38bdf8; font-weight:700; font-size:0.85rem; margin-bottom:0.25rem;">Regime Fiscale IVA (Riforma dello Sport):</div>' +
           '<div style="font-size:0.8rem; color:#cbd5e1; line-height:1.5;">' +
             'Dal <b>1° Gennaio 2026</b>: le ASD e SSD operano in regime di <b>Esenzione IVA</b> (ex D.Lgs. 36/2021 e s.m.i.) per tutte le attività sportive istituzionali e didattiche.' +
           '</div>' +
@@ -2568,26 +2568,26 @@
 
     var html =
       '<div style="color:#cbd5e1; font-size:0.88rem; line-height:1.6; margin-bottom:1.2rem;">' +
-        '<div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.25); border-radius:4px; padding:1rem; margin-bottom:1rem;">' +
-          '<h4 style="color:#38bdf8; font-size:0.95rem; font-weight:700; margin:0 0 0.4rem 0;">🌱 Avvio e Roll-over Ufficiale Nuova Stagione Sportiva ' + esc(nxtSeason) + '</h4>' +
-          '<p style="margin:0; font-size:0.8rem; color:#cbd5e1;">' +
-            'Il passaggio alla nuova stagione sportiva permette di preparare i nuovi adempimenti federali mantenendo al 100% l\'integrità dell\'archivio storico.' +
+        '<div style="background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.2); border-radius:4px; padding:0.9rem 1rem; margin-bottom:1rem;">' +
+          '<h4 style="color:#38bdf8; font-size:0.92rem; font-weight:700; margin:0 0 0.35rem 0;">Avvio Stagione Sportiva ' + esc(nxtSeason) + '</h4>' +
+          '<p style="margin:0; font-size:0.78rem; color:#cbd5e1;">' +
+            'Il passaggio alla nuova stagione sportiva prepara le scadenze e i termini federali per la nuova annata mantenendo inalterato l\'archivio storico di conformità.' +
           '</p>' +
         '</div>' +
 
-        '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem; margin-bottom:1rem;">' +
-          '<div style="font-weight:700; color:#fff; font-size:0.85rem; margin-bottom:0.5rem;">Cosa accadrà con l\'avvio della nuova annata:</div>' +
-          '<ul style="margin:0; padding-left:1.2rem; font-size:0.82rem; color:#cbd5e1; display:flex; flex-direction:column; gap:0.4rem;">' +
-            '<li><b>Archiviazione Storico:</b> Le scadenze della <b>' + esc(curSeason) + '</b> verranno congelate nel registro storico di conformità (con lo stato di completamento e le date di deposito registrate).</li>' +
-            '<li><b>Duplicazione Voci Ricorrenti (<b>' + seasonalCount + '</b> adempimenti):</b> Verranno create le nuove voci per la <b>' + esc(nxtSeason) + '</b> in stato <i>"Da completare"</i> con date da impostare dai Comunicati Ufficiali.</li>' +
-            '<li><b>Voci Una Tantum (<b>' + oneOffCount + '</b> adempimenti):</b> Obblighi a validità permanente (es. Safeguarding/Tutela Minori, Statuto RAS, MOG) rimarranno validi senza duplicazioni inutili.</li>' +
+        '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:0.9rem 1rem; margin-bottom:1rem;">' +
+          '<div style="font-weight:700; color:#fff; font-size:0.82rem; margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:0.04em;">Dettaglio Operazioni di Roll-over:</div>' +
+          '<ul style="margin:0; padding-left:1.2rem; font-size:0.8rem; color:#cbd5e1; display:flex; flex-direction:column; gap:0.45rem;">' +
+            '<li><b>Archiviazione Storico:</b> Le scadenze della stagione <b>' + esc(curSeason) + '</b> vengono congelate nel registro storico con il relativo stato di completamento e le date di deposito registrate.</li>' +
+            '<li><b>Duplicazione Voci Ricorrenti (' + seasonalCount + ' adempimenti):</b> Vengono create le nuove voci per la stagione <b>' + esc(nxtSeason) + '</b> in stato <i>"Da completare"</i> con date da impostare dai Comunicati Ufficiali.</li>' +
+            '<li><b>Voci Una Tantum (' + oneOffCount + ' adempimenti):</b> Obblighi a validità continuativa (Safeguarding/Tutela Minori, Statuto RAS, MOG) rimangono validi senza duplicazioni.</li>' +
           '</ul>' +
         '</div>' +
       '</div>' +
 
       '<div style="display:flex; justify-content:flex-end; gap:0.75rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
         '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-season-advance">Annulla</button>' +
-        '<button type="button" class="es-pres-btn-primary" id="btn-confirm-season-advance" style="background:#059669; border-color:#10b981;">Conferma &amp; Apri Stagione ' + esc(nxtSeason) + '</button>' +
+        '<button type="button" class="es-pres-btn-primary" id="btn-confirm-season-advance">Conferma &amp; Apri Stagione ' + esc(nxtSeason) + '</button>' +
       '</div>';
 
     openDetailModal('Transizione Stagionale Federale', ICONS.calendar, html);
@@ -2643,67 +2643,67 @@
     var html =
       '<div style="margin-bottom:1rem;">' +
         // Barra di Selezione Stagione & Storico
-        '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; background:#040810; border:1px solid rgba(148,163,184,0.2); border-radius:4px; padding:0.75rem 1rem; margin-bottom:1rem;">' +
+        '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:0.75rem 1rem; margin-bottom:1rem;">' +
           '<div style="display:flex; align-items:center; gap:0.6rem;">' +
-            '<span style="font-size:0.78rem; color:#94a3b8; font-weight:600;">Stagione Sportiva:</span>' +
+            '<span style="font-size:0.78rem; color:#94a3b8; font-weight:600;">Stagione:</span>' +
             '<select id="sel-deadlines-season-view" style="background:#080e1e; color:#38bdf8; font-weight:700; font-size:0.82rem; border:1px solid rgba(56,189,248,0.3); border-radius:3px; padding:3px 8px;">' +
               allSeasons.map(function (s) {
                 return '<option value="' + esc(s) + '"' + (s === viewingSeason ? ' selected' : '') + '>' +
-                  esc(s) + (s === data.activeSeason ? ' (Attiva)' : ' (Archivio Storico)') +
+                  esc(s) + (s === data.activeSeason ? ' (Attiva)' : ' (Archivio)') +
                 '</option>';
               }).join('') +
             '</select>' +
           '</div>' +
 
           (isActiveSeasonView ? (
-            '<button type="button" class="es-pres-btn-secondary" id="btn-open-advance-season-modal" style="padding:4px 9px; font-size:0.75rem; border-color:rgba(52,211,153,0.35); color:#34d399;">' +
-              '🌱 Avvia Nuova Stagione ' + esc(getNextSeason(data.activeSeason)) + ' &rsaquo;' +
+            '<button type="button" class="es-pres-btn-secondary" id="btn-open-advance-season-modal" style="padding:4px 10px; font-size:0.75rem; border-color:rgba(52,211,153,0.35); color:#34d399;">' +
+              'Avvia Nuova Stagione ' + esc(getNextSeason(data.activeSeason)) + ' &rsaquo;' +
             '</button>'
           ) : (
-            '<span style="font-size:0.75rem; color:#94a3b8; background:rgba(148,163,184,0.1); padding:3px 8px; border-radius:3px;">' +
-              '📖 Modalità Archivio Storico Certificato' +
+            '<span style="font-size:0.75rem; color:#94a3b8; background:rgba(148,163,184,0.08); padding:3px 8px; border-radius:3px; border:1px solid rgba(148,163,184,0.15);">' +
+              'Archivio Storico Certificato' +
             '</span>'
           )) +
         '</div>' +
 
         // Banner Avviso Transizione (se attiva e in periodo transizione)
         (isActiveSeasonView && inTransition ? (
-          '<div style="background:rgba(251,191,36,0.08); border:1px solid rgba(251,191,36,0.25); border-radius:4px; padding:0.65rem 0.9rem; margin-bottom:1rem; font-size:0.78rem; color:#fde68a; line-height:1.5;">' +
-            '⏳ <b>Periodo di Transizione Stagionale:</b> Sei nella finestra di passaggio alla stagione successiva (' + esc(getNextSeason(data.activeSeason)) + '). Puoi verificare i nuovi Comunicati Ufficiali e avviare il roll-over controllato mantenendo l\'archivio.' +
+          '<div style="background:rgba(251,191,36,0.06); border:1px solid rgba(251,191,36,0.2); border-radius:4px; padding:0.65rem 0.9rem; margin-bottom:1rem; font-size:0.78rem; color:#fde68a; line-height:1.5;">' +
+            '<b>Periodo di Transizione Stagionale:</b> È possibile verificare i nuovi Comunicati Ufficiali e avviare il roll-over controllato alla stagione ' + esc(getNextSeason(data.activeSeason)) + ' mantenendo l\'archivio.' +
           '</div>'
         ) : '') +
 
         // Banner di spiegazione modalità
         (isActiveSeasonView ? (
-          '<div style="background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.2); border-radius:4px; padding:0.75rem 1rem; margin-bottom:1rem;">' +
-            '<div style="color:#38bdf8; font-weight:700; font-size:0.85rem; margin-bottom:0.25rem;">ℹ️ Scadenziario Ufficiale Stagione ' + esc(viewingSeason) + ' — Ambito ' + esc(scopeObj.name) + '</div>' +
+          '<div style="background:rgba(56,189,248,0.05); border:1px solid rgba(56,189,248,0.18); border-radius:4px; padding:0.75rem 1rem; margin-bottom:1rem;">' +
+            '<div style="color:#38bdf8; font-weight:700; font-size:0.82rem; margin-bottom:0.25rem;">Scadenziario Ufficiale Stagione ' + esc(viewingSeason) + ' — Ambito ' + esc(scopeObj.name) + '</div>' +
             '<div style="font-size:0.78rem; color:#cbd5e1; line-height:1.5;">' +
-              'Registra l\'assolvimento degli adempimenti con la relativa data reale. Gli adempimenti contrassegnati come <b>Completati</b> escono dalle allerte e non vengono conteggiati tra quelli scaduti o in scadenza.' +
+              'Registra l\'assolvimento degli adempimenti con la relativa data reale. Gli adempimenti contrassegnati come <b>Completati</b> escono dalle allerte e non vengono conteggiati tra quelli pendenti.' +
             '</div>' +
           '</div>'
         ) : (
-          '<div style="background:rgba(148,163,184,0.06); border:1px solid rgba(148,163,184,0.2); border-radius:4px; padding:0.75rem 1rem; margin-bottom:1rem;">' +
-            '<div style="color:#cbd5e1; font-weight:700; font-size:0.85rem; margin-bottom:0.25rem;">📚 Archivio Storico Federale Stagione ' + esc(viewingSeason) + '</div>' +
+          '<div style="background:rgba(148,163,184,0.05); border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:0.75rem 1rem; margin-bottom:1rem;">' +
+            '<div style="color:#cbd5e1; font-weight:700; font-size:0.82rem; margin-bottom:0.25rem;">Archivio Storico Federale Stagione ' + esc(viewingSeason) + '</div>' +
             '<div style="font-size:0.78rem; color:#94a3b8; line-height:1.5;">' +
-              'Questo registro attesta lo stato di conformità con cui il club ha concluso la stagione ' + esc(viewingSeason) + '. I record storici non vengono sovrascritti al cambio di stagione.' +
+              'Questo registro attesta lo stato di conformità con cui il club ha concluso la stagione ' + esc(viewingSeason) + '. I record storici restano immutabili.' +
             '</div>' +
           '</div>'
         )) +
 
         '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem;">' +
-          '<span style="font-size:0.82rem; color:#cbd5e1;">' +
+          '<span style="font-size:0.8rem; color:#cbd5e1;">' +
             '<span style="color:#34d399; font-weight:700;">' + completedCount + ' completati</span> · ' +
             '<span style="color:' + (pendingCount > 0 ? '#fbbf24' : '#94a3b8') + '; font-weight:700;">' + pendingCount + ' da assolvere</span>' +
           '</span>' +
           (isActiveSeasonView ? (
             '<div style="display:flex; gap:0.5rem;">' +
-              '<button type="button" class="es-pres-btn-secondary" id="btn-reset-scope-deadlines" style="padding:4px 9px; font-size:0.75rem;">🔄 Ripristina Default Ambito</button>' +
-              '<button type="button" class="es-pres-btn-primary" id="btn-add-custom-deadline" style="padding:4px 10px; font-size:0.75rem;">+ Nuova Scadenza</button>' +
+              '<button type="button" class="es-pres-btn-secondary" id="btn-reset-scope-deadlines" style="padding:3px 8px; font-size:0.74rem;">Ripristina Default</button>' +
+              '<button type="button" class="es-pres-btn-secondary" id="btn-add-custom-deadline" style="padding:3px 9px; font-size:0.74rem;">+ Nuova Scadenza</button>' +
             '</div>'
           ) : '') +
         '</div>' +
 
-        '<div style="display:flex; flex-direction:column; gap:0.75rem; max-height:390px; overflow-y:auto; padding-right:0.3rem;" id="es-deadlines-list-container">' +
+        '<div style="display:flex; flex-direction:column; gap:0.75rem; max-height:400px; overflow-y:auto; padding-right:0.3rem;" id="es-deadlines-list-container">' +
           (!seasonDeadlines.length ? (
             '<div class="es-pres-empty-box" style="padding:2rem 1rem;">' +
               '<div class="es-pres-empty-icon">' + ICONS.bell + '</div>' +
@@ -2715,74 +2715,84 @@
               var comp = computed[idx] || {};
               var isSeasonal = (d.recurrence || 'seasonal') === 'seasonal';
               return (
-                '<div style="background:#040810; border:1px solid ' + (d.isCompleted ? 'rgba(52,211,153,0.3)' : 'rgba(148,163,184,0.18)') + '; border-radius:4px; padding:0.85rem 1rem;" class="es-dl-item" data-id="' + esc(d.id) + '">' +
-                  // Toggle Completato Banner
-                  (d.isCompleted ? (
-                    '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.25); border-radius:4px; padding:0.45rem 0.75rem; margin-bottom:0.6rem;">' +
-                      '<div style="display:flex; align-items:center; gap:0.5rem; font-size:0.8rem; color:#34d399; font-weight:700;">' +
-                        '<span>✅ Completato</span>' +
-                        (isActiveSeasonView ? (
-                          '<span style="font-size:0.74rem; color:#cbd5e1; font-weight:400;">Data completamento: <input type="date" class="es-pres-input-text es-dl-comp-date" value="' + esc(d.completedDate || new Date().toISOString().split('T')[0]) + '" style="width:130px; display:inline-block; font-size:0.74rem; padding:1px 4px; background:#080e1e; color:#fff; border:1px solid rgba(148,163,184,0.3); border-radius:3px;"></span>'
-                        ) : (
-                          '<span style="font-size:0.74rem; color:#cbd5e1; font-weight:400;">Depositato il: <b>' + esc(d.completedDate || '—') + '</b></span>'
-                        )) +
-                      '</div>' +
-                      (isActiveSeasonView ? (
-                        '<button type="button" class="es-dl-btn-toggle" data-id="' + esc(d.id) + '" data-set="0" style="background:transparent; border:1px solid rgba(148,163,184,0.3); border-radius:3px; color:#cbd5e1; font-size:0.72rem; padding:2px 8px; cursor:pointer;">↩️ Segna come Da Svolgere</button>'
-                      ) : '') +
-                    '</div>'
-                  ) : (
-                    '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; background:rgba(148,163,184,0.05); border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.45rem 0.75rem; margin-bottom:0.6rem;">' +
-                      '<div style="font-size:0.78rem; color:#cbd5e1;">Stato: <b style="color:' + (comp.isWarning ? (comp.isEmptyDate ? '#94a3b8' : '#fbbf24') : '#38bdf8') + ';">' + esc(comp.status) + '</b></div>' +
-                      (isActiveSeasonView ? (
-                        '<button type="button" class="es-dl-btn-toggle" data-id="' + esc(d.id) + '" data-set="1" style="background:#0284c7; border:none; border-radius:3px; color:#fff; font-size:0.74rem; font-weight:700; padding:3px 9px; cursor:pointer;">✅ Segna come Completato</button>'
-                      ) : (
-                        '<span style="font-size:0.72rem; color:#f87171;">Non completato in questa stagione</span>'
-                      )) +
-                    '</div>'
-                  )) +
-
-                  // Header Dati Voce
-                  '<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:0.75rem; margin-bottom:0.5rem;">' +
+                '<div style="background:#040810; border:1px solid ' + (d.isCompleted ? 'rgba(52,211,153,0.22)' : 'rgba(148,163,184,0.18)') + '; border-radius:4px; padding:0.85rem 1rem;" class="es-dl-item" data-id="' + esc(d.id) + '">' +
+                  // Titolo adempimento
+                  '<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:0.75rem; margin-bottom:0.6rem;">' +
                     '<div style="flex:1;">' +
                       (isActiveSeasonView ? (
-                        '<input type="text" class="es-pres-input-text es-dl-task" value="' + esc(d.task) + '" placeholder="Descrizione adempimento" style="font-weight:700; font-size:0.88rem; padding:0.35rem 0.5rem; margin-bottom:0.35rem;">'
+                        '<input type="text" class="es-pres-input-text es-dl-task" value="' + esc(d.task) + '" placeholder="Descrizione adempimento" style="font-weight:700; font-size:0.88rem; padding:0.35rem 0.5rem; width:100%;">'
                       ) : (
-                        '<div style="font-weight:700; font-size:0.9rem; color:#fff; margin-bottom:0.3rem;">' + esc(d.task) + '</div>'
+                        '<div style="font-weight:700; font-size:0.88rem; color:#fff;">' + esc(d.task) + '</div>'
                       )) +
-                      '<div style="display:flex; gap:0.6rem; flex-wrap:wrap; font-size:0.75rem; color:#94a3b8; align-items:center;">' +
-                        '<span>Organo: ' + (isActiveSeasonView ? ('<input type="text" class="es-pres-input-text es-dl-auth" value="' + esc(d.authority || 'FIGC / LND') + '" style="width:140px; display:inline-block; font-size:0.75rem; padding:2px 4px;">') : ('<b>' + esc(d.authority || 'FIGC / LND') + '</b>')) + '</span>' +
-                        '<span>Importo: ' + (isActiveSeasonView ? ('<input type="text" class="es-pres-input-text es-dl-amount" value="' + esc(d.amount || '—') + '" style="width:110px; display:inline-block; font-size:0.75rem; padding:2px 4px;">') : ('<b>' + esc(d.amount || '—') + '</b>')) + '</span>' +
-                        '<span>Ricorrenza: ' + (isActiveSeasonView ? (
-                          '<select class="es-pres-input-text es-dl-rec" style="width:125px; display:inline-block; font-size:0.72rem; padding:1px 3px; background:#080e1e; color:#cbd5e1;">' +
-                            '<option value="seasonal"' + (isSeasonal ? ' selected' : '') + '>🔁 Stagionale</option>' +
-                            '<option value="one_off"' + (!isSeasonal ? ' selected' : '') + '>📌 Una Tantum</option>' +
-                          '</select>'
-                        ) : ('<span style="color:#cbd5e1;">' + (isSeasonal ? '🔁 Stagionale' : '📌 Una Tantum') + '</span>')) + '</span>' +
-                      '</div>' +
                     '</div>' +
                     (isActiveSeasonView ? (
-                      '<button type="button" class="es-dl-btn-remove" data-id="' + esc(d.id) + '" style="background:transparent; border:none; color:#f87171; cursor:pointer; font-size:1.1rem; padding:0 4px;" title="Elimina adempimento">&times;</button>'
+                      '<button type="button" class="es-dl-btn-remove" data-id="' + esc(d.id) + '" style="background:transparent; border:none; color:#94a3b8; font-size:0.74rem; cursor:pointer; text-decoration:underline; padding:2px 4px;" title="Rimuovi voce">Elimina</button>'
                     ) : '') +
                   '</div>' +
 
-                  // Data Termine Perentorio
-                  '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; align-items:center; border-top:1px solid rgba(148,163,184,0.1); padding-top:0.5rem; margin-top:0.4rem;">' +
+                  // Griglia campi standard allineati
+                  '<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:0.6rem; margin-bottom:0.75rem;">' +
                     '<div>' +
-                      '<label style="font-size:0.7rem; color:#94a3b8; display:block; margin-bottom:0.2rem;">Data Scadenza Perentoria Federale</label>' +
+                      '<label style="font-size:0.7rem; color:#94a3b8; display:block; margin-bottom:0.2rem; font-weight:600;">Organo Competente</label>' +
                       (isActiveSeasonView ? (
-                        '<input type="date" class="es-pres-input-text es-dl-date" value="' + esc(d.date || '') + '" style="font-size:0.8rem; padding:0.3rem 0.5rem;">'
+                        '<input type="text" class="es-pres-input-text es-dl-auth" value="' + esc(d.authority || 'FIGC / LND') + '" style="font-size:0.78rem; padding:0.3rem 0.45rem; width:100%;">'
                       ) : (
-                        '<span style="font-size:0.82rem; color:#fff;">' + esc(comp.dateText || d.date || '—') + '</span>'
+                        '<div style="font-size:0.78rem; color:#cbd5e1;">' + esc(d.authority || 'FIGC / LND') + '</div>'
                       )) +
                     '</div>' +
                     '<div>' +
-                      '<label style="font-size:0.7rem; color:#94a3b8; display:block; margin-bottom:0.2rem;">Conformità</label>' +
-                      '<span class="' + (d.isCompleted ? 'es-pres-status es-pres-status-ok' : (comp.isWarning ? (comp.isEmptyDate ? 'es-pres-status es-pres-status-neutral' : 'es-pres-status-warning') : 'es-pres-status-ok')) + '" style="font-size:0.75rem;">' +
-                        (d.isCompleted ? '✅ Assolto' : esc(comp.status)) +
-                      '</span>' +
+                      '<label style="font-size:0.7rem; color:#94a3b8; display:block; margin-bottom:0.2rem; font-weight:600;">Importo / Fideiussione</label>' +
+                      (isActiveSeasonView ? (
+                        '<input type="text" class="es-pres-input-text es-dl-amount" value="' + esc(d.amount || '—') + '" style="font-size:0.78rem; padding:0.3rem 0.45rem; width:100%;">'
+                      ) : (
+                        '<div style="font-size:0.78rem; color:#cbd5e1;">' + esc(d.amount || '—') + '</div>'
+                      )) +
+                    '</div>' +
+                    '<div>' +
+                      '<label style="font-size:0.7rem; color:#94a3b8; display:block; margin-bottom:0.2rem; font-weight:600;">Ricorrenza</label>' +
+                      (isActiveSeasonView ? (
+                        '<select class="es-pres-input-text es-dl-rec" style="font-size:0.78rem; padding:0.3rem 0.45rem; background:#080e1e; color:#cbd5e1; width:100%;">' +
+                          '<option value="seasonal"' + (isSeasonal ? ' selected' : '') + '>Stagionale</option>' +
+                          '<option value="one_off"' + (!isSeasonal ? ' selected' : '') + '>Una Tantum</option>' +
+                        '</select>'
+                      ) : (
+                        '<div style="font-size:0.78rem; color:#cbd5e1;">' + (isSeasonal ? 'Stagionale' : 'Una Tantum') + '</div>'
+                      )) +
+                    '</div>' +
+                    '<div>' +
+                      '<label style="font-size:0.7rem; color:#94a3b8; display:block; margin-bottom:0.2rem; font-weight:600;">Scadenza Perentoria</label>' +
+                      (isActiveSeasonView ? (
+                        '<input type="date" class="es-pres-input-text es-dl-date" value="' + esc(d.date || '') + '" style="font-size:0.78rem; padding:0.3rem 0.45rem; width:100%;">'
+                      ) : (
+                        '<div style="font-size:0.78rem; color:#cbd5e1;">' + esc(comp.dateText || d.date || '—') + '</div>'
+                      )) +
                     '</div>' +
                   '</div>' +
+
+                  // Barra di stato inferiore e azione di completamento
+                  '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; border-top:1px solid rgba(148,163,184,0.1); padding-top:0.5rem; margin-top:0.4rem;">' +
+                    '<div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">' +
+                      '<span class="' + (d.isCompleted ? 'es-pres-status es-pres-status-ok' : (comp.isWarning ? (comp.isEmptyDate ? 'es-pres-status es-pres-status-neutral' : 'es-pres-status-warning') : 'es-pres-status-ok')) + '" style="font-size:0.74rem;">' +
+                        (d.isCompleted ? 'Completato' : esc(comp.status)) +
+                      '</span>' +
+                      (d.isCompleted ? (
+                        isActiveSeasonView ? (
+                          '<span style="font-size:0.74rem; color:#94a3b8;">Data completamento: <input type="date" class="es-pres-input-text es-dl-comp-date" value="' + esc(d.completedDate || new Date().toISOString().split('T')[0]) + '" style="width:125px; display:inline-block; font-size:0.74rem; padding:1px 4px; background:#080e1e; color:#fff; border:1px solid rgba(148,163,184,0.3); border-radius:3px;"></span>'
+                        ) : (
+                          '<span style="font-size:0.74rem; color:#94a3b8;">Depositato in data: <b style="color:#cbd5e1;">' + esc(d.completedDate || '—') + '</b></span>'
+                        )
+                      ) : '') +
+                    '</div>' +
+
+                    (isActiveSeasonView ? (
+                      d.isCompleted ? (
+                        '<button type="button" class="es-pres-btn-secondary es-dl-btn-toggle" data-id="' + esc(d.id) + '" data-set="0" style="padding:3px 8px; font-size:0.72rem;">Segna come Da Svolgere</button>'
+                      ) : (
+                        '<button type="button" class="es-pres-btn-secondary es-dl-btn-toggle" data-id="' + esc(d.id) + '" data-set="1" style="padding:3px 9px; font-size:0.72rem; border-color:rgba(52,211,153,0.35); color:#34d399;">Segna come Completato</button>'
+                      )
+                    ) : '') +
+                  '</div>' +
+
                   (d.note ? ('<div style="font-size:0.72rem; color:#94a3b8; margin-top:0.4rem; font-style:italic;">Note: ' + esc(d.note) + '</div>') : '') +
                 '</div>'
               );
@@ -2869,7 +2879,7 @@
           openDeadlinesManagerModal(data, viewingSeason);
           renderPresidentialSuite();
           if (window.showToast) {
-            window.showToast(isSet ? 'Adempimento segnato come completato!' : 'Adempimento riaperto come da svolgere', 'success');
+            window.showToast(isSet ? 'Adempimento segnato come completato' : 'Adempimento riaperto come da svolgere', 'success');
           }
         }
       };
@@ -2884,7 +2894,7 @@
         if (modalOverlay) modalOverlay.remove();
         openDeadlinesManagerModal(data, data.activeSeason);
         renderPresidentialSuite();
-        if (window.showToast) window.showToast('Scadenziario reimpostato ai valori ufficiali ' + data.activeSeason + '!', 'info');
+        if (window.showToast) window.showToast('Scadenziario reimpostato ai valori ufficiali ' + data.activeSeason, 'info');
       };
     }
 
