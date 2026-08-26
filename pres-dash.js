@@ -284,7 +284,10 @@
     return (
       '<div class="es-pres-detail-screen">' +
         '<div class="es-pres-detail-header">' +
-          '<h2>' + ICONS.building + ' Stadio &amp; Impianto Sportivo</h2>' +
+          '<div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:0.4rem;">' +
+            '<h2>' + ICONS.building + ' Stadio &amp; Impianto Sportivo</h2>' +
+            '<button type="button" class="es-pres-btn-back" data-action="go-back" style="margin:0; padding:6px 14px; font-size:0.8rem; border-radius:6px; background:#040810; border:1px solid rgba(148,163,184,0.25); color:#e2e8f0; cursor:pointer;">&larr; Torna alla Panoramica</button>' +
+          '</div>' +
           '<p>Gestisci i dati anagrafici, le tariffe e le condizioni di sicurezza del tuo impianto sportivo</p>' +
         '</div>' +
 
@@ -347,7 +350,10 @@
     return (
       '<div class="es-pres-detail-screen">' +
         '<div class="es-pres-detail-header">' +
-          '<h2>' + ICONS.barChart + ' Statistiche Club &amp; Storico Campionati</h2>' +
+          '<div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:0.4rem;">' +
+            '<h2>' + ICONS.barChart + ' Statistiche Club &amp; Storico Campionati</h2>' +
+            '<button type="button" class="es-pres-btn-back" data-action="go-back" style="margin:0; padding:6px 14px; font-size:0.8rem; border-radius:6px; background:#040810; border:1px solid rgba(148,163,184,0.25); color:#e2e8f0; cursor:pointer;">&larr; Torna alla Panoramica</button>' +
+          '</div>' +
           '<p>Rendimento statistico ufficiale, record societari e storico posizionamenti in lega</p>' +
         '</div>' +
 
@@ -440,7 +446,10 @@
     return (
       '<div class="es-pres-detail-screen">' +
         '<div class="es-pres-detail-header">' +
-          '<h2>' + ICONS.award + ' Sponsor &amp; Accordi Commerciali</h2>' +
+          '<div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:0.4rem;">' +
+            '<h2>' + ICONS.award + ' Sponsor &amp; Accordi Commerciali</h2>' +
+            '<button type="button" class="es-pres-btn-back" data-action="go-back" style="margin:0; padding:6px 14px; font-size:0.8rem; border-radius:6px; background:#040810; border:1px solid rgba(148,163,184,0.25); color:#e2e8f0; cursor:pointer;">&larr; Torna alla Panoramica</button>' +
+          '</div>' +
           '<p>Gestione partnership, sponsorizzazioni di maglia e spazi pubblicitari</p>' +
         '</div>' +
 
@@ -513,7 +522,10 @@
     return (
       '<div class="es-pres-detail-screen">' +
         '<div class="es-pres-detail-header">' +
-          '<h2>' + ICONS.layers + ' Classifica Ufficiale di Campionato</h2>' +
+          '<div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:0.4rem;">' +
+            '<h2>' + ICONS.layers + ' Classifica Ufficiale di Campionato</h2>' +
+            '<button type="button" class="es-pres-btn-back" data-action="go-back" style="margin:0; padding:6px 14px; font-size:0.8rem; border-radius:6px; background:#040810; border:1px solid rgba(148,163,184,0.25); color:#e2e8f0; cursor:pointer;">&larr; Torna alla Panoramica</button>' +
+          '</div>' +
           '<p>Dati federali ufficiali LND · Aggiornati all\'ultimo referto di gara</p>' +
         '</div>' +
 
@@ -591,7 +603,10 @@
     return (
       '<div class="es-pres-detail-screen">' +
         '<div class="es-pres-detail-header">' +
-          '<h2>' + ICONS.calendar + ' Calendario Gare &amp; Designazioni AIA</h2>' +
+          '<div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:0.4rem;">' +
+            '<h2>' + ICONS.calendar + ' Calendario Gare &amp; Designazioni AIA</h2>' +
+            '<button type="button" class="es-pres-btn-back" data-action="go-back" style="margin:0; padding:6px 14px; font-size:0.8rem; border-radius:6px; background:#040810; border:1px solid rgba(148,163,184,0.25); color:#e2e8f0; cursor:pointer;">&larr; Torna alla Panoramica</button>' +
+          '</div>' +
           '<p>Programmazione incontri, esiti ufficiali e designazioni arbitrali federali</p>' +
         '</div>' +
 
@@ -635,7 +650,10 @@
     return (
       '<div class="es-pres-detail-screen">' +
         '<div class="es-pres-detail-header">' +
-          '<h2>' + ICONS.stopwatch + ' Centro Sportivo &amp; Staff Tecnico</h2>' +
+          '<div style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; margin-bottom:0.4rem;">' +
+            '<h2>' + ICONS.stopwatch + ' Centro Sportivo &amp; Staff Tecnico</h2>' +
+            '<button type="button" class="es-pres-btn-back" data-action="go-back" style="margin:0; padding:6px 14px; font-size:0.8rem; border-radius:6px; background:#040810; border:1px solid rgba(148,163,184,0.25); color:#e2e8f0; cursor:pointer;">&larr; Torna alla Panoramica</button>' +
+          '</div>' +
           '<p>Programma settimanale degli allenamenti, presenze atleti e qualifiche federali staff</p>' +
         '</div>' +
 
@@ -972,11 +990,37 @@
   }
 
   // ============================================================
+  // GESTIONE SUB-VIEW CON STORICO BROWSER (PUSHSTATE & POPSTATE)
+  // ============================================================
+  function openSubView(viewKey, skipHistory) {
+    currentView = viewKey || 'overview';
+    renderPresidentialSuite();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (!skipHistory) {
+      var targetHash = currentView === 'overview' ? '#user-dossier-portal' : '#user-dossier-portal?sub=' + currentView;
+      try {
+        if (window.location.hash !== targetHash) {
+          history.pushState({ elisee: true, hash: targetHash, presSubView: currentView }, '', targetHash);
+        }
+      } catch (_) {}
+    }
+  }
+
+  // ============================================================
   // RENDER PRINCIPALE
   // ============================================================
   function renderPresidentialSuite() {
     var mount = document.getElementById('es-prd');
     if (!mount) return;
+
+    var h = window.location.hash || '';
+    if (h.indexOf('user-dossier') >= 0 && h.indexOf('?sub=') >= 0) {
+      var match = h.match(/[?&]sub=([a-zA-Z0-9_-]+)/);
+      if (match && match[1] && currentView === 'overview') {
+        currentView = match[1];
+      }
+    }
 
     var data = getPresClubData();
 
@@ -1007,10 +1051,13 @@
 
     // Pulsante Indietro (go-back) presente su tutte le 6 schermate di dettaglio
     mount.querySelectorAll('[data-action="go-back"]').forEach(function (btn) {
-      btn.onclick = function () {
-        currentView = 'overview';
-        renderPresidentialSuite();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+      btn.onclick = function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        if (window.location.hash.indexOf('?sub=') >= 0) {
+          window.history.back();
+        } else {
+          openSubView('overview');
+        }
       };
     });
 
@@ -1018,9 +1065,7 @@
     var cardStadium = mount.querySelector('#card-pres-stadium-screen');
     if (cardStadium) {
       cardStadium.onclick = function () {
-        currentView = 'stadium';
-        renderPresidentialSuite();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        openSubView('stadium');
       };
     }
     var btnSaveTickets = mount.querySelector('#btn-save-tickets');
@@ -1045,9 +1090,7 @@
     var cardStats = mount.querySelector('#card-pres-stats-screen');
     if (cardStats) {
       cardStats.onclick = function () {
-        currentView = 'club-stats';
-        renderPresidentialSuite();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        openSubView('club-stats');
       };
     }
     var tabRecords = mount.querySelector('#btn-tab-records');
@@ -1069,9 +1112,7 @@
     var cardSponsors = mount.querySelector('#card-pres-sponsors-screen');
     if (cardSponsors) {
       cardSponsors.onclick = function () {
-        currentView = 'sponsors';
-        renderPresidentialSuite();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        openSubView('sponsors');
       };
     }
     var btnAddSponsor = mount.querySelector('#btn-add-sponsor');
@@ -1091,9 +1132,7 @@
     var cardStandings = mount.querySelector('#card-pres-standings-screen');
     if (cardStandings) {
       cardStandings.onclick = function () {
-        currentView = 'standings';
-        renderPresidentialSuite();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        openSubView('standings');
       };
     }
 
@@ -1101,9 +1140,7 @@
     var cardSchedule = mount.querySelector('#card-pres-schedule-screen');
     if (cardSchedule) {
       cardSchedule.onclick = function () {
-        currentView = 'schedule';
-        renderPresidentialSuite();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        openSubView('schedule');
       };
     }
 
@@ -1111,9 +1148,7 @@
     var cardTraining = mount.querySelector('#card-pres-training-screen');
     if (cardTraining) {
       cardTraining.onclick = function () {
-        currentView = 'training-center';
-        renderPresidentialSuite();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        openSubView('training-center');
       };
     }
 
@@ -1351,6 +1386,21 @@
   };
 
   function boot() {
+    window.addEventListener('popstate', function (e) {
+      var h = window.location.hash || '';
+      if (h.indexOf('user-dossier') >= 0) {
+        var match = h.match(/[?&]sub=([a-zA-Z0-9_-]+)/);
+        var targetSub = match ? match[1] : (e.state && e.state.presSubView ? e.state.presSubView : 'overview');
+        if (currentView !== targetSub) {
+          currentView = targetSub;
+          renderPresidentialSuite();
+        }
+      } else if (currentView !== 'overview') {
+        currentView = 'overview';
+        renderPresidentialSuite();
+      }
+    });
+
     document.addEventListener('elisee:role-changed', function () {
       if (isExecutive()) render(true);
       else detach();

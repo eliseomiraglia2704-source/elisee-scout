@@ -7460,7 +7460,7 @@ document.addEventListener('DOMContentLoaded', () => {
       switchView('account', '#account-portal', noHist);
     } else if (hash === '#admin-portal') {
       switchView('admin', '#admin-portal', noHist);
-    } else if (hash === '#user-dossier-portal') {
+    } else if (hash.indexOf('user-dossier') >= 0) {
       switchView('user-dossier', '#user-dossier-portal', noHist);
     } else if (hash.indexOf('minigioco') >= 0) {
       if (window.EliseeMinigioco && typeof window.EliseeMinigioco.open === 'function') {
