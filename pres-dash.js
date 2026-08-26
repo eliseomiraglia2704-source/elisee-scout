@@ -1767,6 +1767,153 @@
       };
     }
 
+    var cardStaff = mount.querySelector('#card-pres-staff');
+    if (cardStaff) {
+      cardStaff.onclick = function () {
+        var staff = data.staff || [];
+        var html = !staff.length ? (
+          '<div class="es-pres-empty-box">' +
+            '<div class="es-pres-empty-icon">' + ICONS.users + '</div>' +
+            '<h4 class="es-pres-empty-title">Nessun membro staff registrato</h4>' +
+            '<p class="es-pres-empty-desc">Inserisci il mister, il vice, il preparatore atletico e lo staff sanitario abilitato FIGC.</p>' +
+            '<button type="button" class="es-pres-empty-btn" id="btn-add-first-staff-modal">' + ICONS.plus + ' Aggiungi Membro Staff</button>' +
+          '</div>'
+        ) : (
+          '<div style="margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center;">' +
+            '<span style="font-size:0.85rem; color:#94a3b8;">' + staff.length + ' componenti staff registrati</span>' +
+            '<button type="button" class="es-pres-btn-primary" id="btn-add-staff-top">+ Aggiungi Membro</button>' +
+          '</div>' +
+          '<div style="display:flex; flex-direction:column; gap:0.6rem;">' +
+            staff.map(function (s) {
+              return (
+                '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
+                  '<div><h4 style="font-size:0.95rem; font-weight:700; color:#fff; margin:0;">' + esc(s.name) + '</h4><div style="font-size:0.78rem; color:#94a3b8; margin-top:0.15rem;">Ruolo: ' + esc(s.role) + ' · Qualifica: ' + esc(s.patent || 'FIGC') + '</div></div>' +
+                  '<span class="es-pres-status es-pres-status-ok">Contratto Attivo</span>' +
+                '</div>'
+              );
+            }).join('') +
+          '</div>'
+        );
+
+        openDetailModal('Staff Tecnico & Dirigenziale', ICONS.users, html);
+
+        var bAddStaffFirst = document.getElementById('btn-add-first-staff-modal');
+        var bAddStaffTop = document.getElementById('btn-add-staff-top');
+        var onAddStaff = function () {
+          var m = document.getElementById('es-pres-detail-overlay');
+          if (m) m.remove();
+          openAddStaffModal(data);
+        };
+        if (bAddStaffFirst) bAddStaffFirst.onclick = onAddStaff;
+        if (bAddStaffTop) bAddStaffTop.onclick = onAddStaff;
+      };
+    }
+
+    var cardYouth = mount.querySelector('#card-pres-youth');
+    if (cardYouth) {
+      cardYouth.onclick = function () {
+        var squad = data.squad || [];
+        var underPlayers = squad.filter(function (p) {
+          return p.isUnder || (p.age && p.age < 21) || (p.name && /under/i.test(p.name));
+        });
+        var html = !underPlayers.length ? (
+          '<div class="es-pres-empty-box">' +
+            '<div class="es-pres-empty-icon">' + ICONS.sprout + '</div>' +
+            '<h4 class="es-pres-empty-title">Nessun atleta under registrato</h4>' +
+            '<p class="es-pres-empty-desc">La rosa attuale non contiene ancora calciatori fuoriquota. Inserisci giovani atleti per garantire il rispetto dell\'obbligo federale LND (minimo 3 under obbligatori in distinta gara).</p>' +
+            '<button type="button" class="es-pres-empty-btn" id="btn-add-first-under-player">' + ICONS.plus + ' Aggiungi Atleta Under</button>' +
+          '</div>'
+        ) : (
+          '<div style="margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center;">' +
+            '<span style="font-size:0.85rem; color:#94a3b8;">' + underPlayers.length + ' Under in rosa · Obbligo LND rispettato</span>' +
+            '<button type="button" class="es-pres-btn-primary" id="btn-add-under-player">+ Aggiungi Under</button>' +
+          '</div>' +
+          '<div style="display:flex; flex-direction:column; gap:0.6rem;">' +
+            underPlayers.map(function (p) {
+              return (
+                '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
+                  '<div><h4 style="font-size:0.95rem; font-weight:700; color:#fff; margin:0;">' + esc(p.name) + ' (' + esc(p.role) + ')</h4><div style="font-size:0.78rem; color:#94a3b8; margin-top:0.15rem;">Età: ' + (p.age || 'Under') + ' anni · Minuti: ' + (p.minutesPlayed || 0) + '\'</div></div>' +
+                  '<span class="es-pres-status es-pres-status-ok">Under Conforme</span>' +
+                '</div>'
+              );
+            }).join('') +
+          '</div>'
+        );
+
+        openDetailModal('Settore Giovanile & Fuoriquota LND', ICONS.sprout, html);
+
+        var bAddFirst = document.getElementById('btn-add-first-under-player');
+        var bAdd = document.getElementById('btn-add-under-player');
+        if (bAddFirst) {
+          bAddFirst.onclick = function () {
+            var m = document.getElementById('es-pres-detail-overlay');
+            if (m) m.remove();
+            openAddPlayerModal(data);
+          };
+        }
+        if (bAdd) {
+          bAdd.onclick = function () {
+            var m = document.getElementById('es-pres-detail-overlay');
+            if (m) m.remove();
+            openAddPlayerModal(data);
+          };
+        }
+      };
+    }
+
+    var cardDev = mount.querySelector('#card-pres-dev');
+    if (cardDev) {
+      cardDev.onclick = function () {
+        var squad = data.squad || [];
+        var html = !squad.length ? (
+          '<div class="es-pres-empty-box">' +
+            '<div class="es-pres-empty-icon">' + ICONS.growth + '</div>' +
+            '<h4 class="es-pres-empty-title">Nessuna scheda tecnica attiva</h4>' +
+            '<p class="es-pres-empty-desc">Non ci sono atleti registrati in rosa per cui monitorare la progressione fisica, tecnica e tattica.</p>' +
+            '<div style="display:flex; gap:0.6rem; margin-top:0.85rem; justify-content:center;">' +
+              '<button type="button" class="es-pres-empty-btn" id="btn-add-first-player-dev">' + ICONS.plus + ' Aggiungi Primo Atleta</button>' +
+              '<button type="button" class="es-pres-btn-secondary" id="btn-open-schede-tecniche">Apri Schede Tecniche IA &rsaquo;</button>' +
+            '</div>' +
+          '</div>'
+        ) : (
+          '<div style="margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center;">' +
+            '<span style="font-size:0.85rem; color:#94a3b8;">' + squad.length + ' Schede Tecniche e Indici Fisici Attivi</span>' +
+            '<button type="button" class="es-pres-btn-secondary" id="btn-open-schede-tecniche-top">Apri Hub Schede &rsaquo;</button>' +
+          '</div>' +
+          '<div style="display:flex; flex-direction:column; gap:0.6rem;">' +
+            squad.map(function (p) {
+              return (
+                '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
+                  '<div><h4 style="font-size:0.95rem; font-weight:700; color:#fff; margin:0;">' + esc(p.name) + ' (' + esc(p.role) + ')</h4><div style="font-size:0.78rem; color:#94a3b8; margin-top:0.15rem;">Valutazione: € ' + (p.marketValue ? Number(p.marketValue).toLocaleString() : '—') + ' · ' + (p.minutesPlayed || 0) + ' min giocati</div></div>' +
+                  '<span class="es-pres-status es-pres-status-ok">Report Attivo</span>' +
+                '</div>'
+              );
+            }).join('') +
+          '</div>'
+        );
+
+        openDetailModal('Sviluppo Atleti & Schede Tecniche', ICONS.growth, html);
+
+        var bAddDev = document.getElementById('btn-add-first-player-dev');
+        if (bAddDev) {
+          bAddDev.onclick = function () {
+            var m = document.getElementById('es-pres-detail-overlay');
+            if (m) m.remove();
+            openAddPlayerModal(data);
+          };
+        }
+        var bOpenSt = document.getElementById('btn-open-schede-tecniche');
+        var bOpenStTop = document.getElementById('btn-open-schede-tecniche-top');
+        var onOpenSt = function () {
+          var m = document.getElementById('es-pres-detail-overlay');
+          if (m) m.remove();
+          if (typeof window.switchView === 'function') window.switchView('schede', '#schede-tecniche');
+        };
+        if (bOpenSt) bOpenSt.onclick = onOpenSt;
+        if (bOpenStTop) bOpenStTop.onclick = onOpenSt;
+      };
+    }
+
     var cardFinances = mount.querySelector('#card-pres-finances');
     if (cardFinances) {
       cardFinances.onclick = function () {

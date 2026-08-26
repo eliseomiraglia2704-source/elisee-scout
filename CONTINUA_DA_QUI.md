@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: **Risoluzione Foto Profilo Utente nella Navbar**: 1. Aggiornato il risolutore `window.getStoredProfilePhoto` in `app.js` per recuperare la foto profilo da tutte le chiavi (inclusi avatar personalizzati, metadati Supabase e foto caricata); 2. Aggiunto fallback intelligente alla foto ritratto reale (`immagini/02-chi-siamo-ritratto/about-portrait.jpg`) per il creatore/admin Eliseo Miraglia anziché mostrare la lettera iniziale fissa "E"; 3. Corretto il rendering in `updateNavbarUserUI` e CSS in `index.html` con gestione `onload`/`onerror` e visibilità `img:not([hidden])` per caricamento immediato e pulito. File: `app.js`, `index.html`, `sw.js`. Cache `AVATAR_FIX1`.
-Feature precedente: Risoluzione Completa Modale & Invio OTP Verifica Email.
+Ultimo fatto: **Attivazione Modali Interattive per Settore Giovanile & Sviluppo Atleti (Area Presidente)**: 1. Collegate al 100% le card `#card-pres-youth` (Settore Giovanile & Fuoriquota) e `#card-pres-dev` (Sviluppo Atleti), oltre a `#card-pres-staff`; 2. Quando i dati sono vuoti (0 under o 0 schede), il click apre regolarmente la modale con box vuoto onesto, spiegazione dei requisiti federali LND e pulsanti CTA per aggiungere atleti under/schede o aprire l'Hub Schede Tecniche IA; 3. Quando sono presenti atleti o under, mostra l'elenco dettagliato delle prestazioni e lo stato di conformità. File: `pres-dash.js`, `index.html`, `sw.js`. Cache `YOUTH_DEV_ACTIVE1`.
+Feature precedente: Risoluzione Foto Profilo Utente nella Navbar.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
