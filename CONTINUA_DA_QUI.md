@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: **Rimozione Duplicato & Attivazione Pulsante "Inserisci Primo Membro Staff" (Centro Sportivo)**: 1. Rimosso il pulsante duplicato in alto a destra nella schermata Centro Sportivo quando la sezione è vuota, mantenendo solo il pulsante principale centrale; 2. Corretto il binding degli eventi con `querySelectorAll` per rendere attivo al 100% il pulsante evidenziato *"Inserisci Primo Membro Staff"* (`#btn-add-first-staff`) che apre la modale di inserimento con il menu a tendina delle qualifiche federali ufficiali FIGC. File: `pres-dash.js`, `index.html`, `sw.js`. Cache `FIX_BTN1`.
-Feature precedente: Architettura Dati Reali, Stati Vuoti Onesti & Provenienza Dati (Area Presidente).
+Ultimo fatto: **Stato Vuoto Onesto & Pianificazione Sedute per Piano di Lavoro Settimanale (Centro Sportivo)**: 1. Svuotato `trainingWeek` di default nei dati reali puliti (niente più giorni placeholder pre-impostati); 2. Inserito lo stato vuoto onesto con icona cronometro, spiegazione che il piano viene redatto dall'Allenatore/Preparatore e pulsante `+ Pianifica Seduta di Allenamento` (`#btn-add-first-training-session`); 3. Creata la modale interattiva `openAddTrainingModal` per permettere l'inserimento di sedute reali (giorno, orario, campo, focus seduta e presenze); 4. Resa dinamica anche la card "Centro Allenamento" nella Panoramica principale (mostra "Nessun piano / Da pianificare" se vuoto). File: `pres-dash.js`, `index.html`, `sw.js`. Cache `TRN_EMPTY1`.
+Feature precedente: Rimozione Duplicato & Attivazione Pulsante "Inserisci Primo Membro Staff".
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

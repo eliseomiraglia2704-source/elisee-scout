@@ -438,12 +438,7 @@
         items: []
       },
 
-      trainingWeek: [
-        { day: 'Martedì', time: '15:00 - 17:30', pitch: 'Campo Principale', focus: 'Attivazione preventiva e lavoro a secco', attendance: 'Da rilevare' },
-        { day: 'Mercoledì', time: '15:00 - 17:30', pitch: 'Campo Principale', focus: 'Possesso palla e tattica di reparto', attendance: 'Da rilevare' },
-        { day: 'Giovedì', time: '15:00 - 18:00', pitch: 'Campo Principale', focus: 'Partita a tema e simulazione gara', attendance: 'Da rilevare' },
-        { day: 'Venerdì', time: '15:00 - 17:00', pitch: 'Campo Principale', focus: 'Palle inattive e rifinitura', attendance: 'Da rilevare' }
-      ],
+      trainingWeek: [],
 
       clubRecords: {
         mostAppearances: { player: '—', count: 'Nessun record inserito' },
@@ -883,22 +878,39 @@
           '</div>' +
 
           '<div class="es-pres-detail-box">' +
-            '<h3>Piano di Lavoro Settimanale &amp; Presenze</h3>' +
-            '<div style="display:flex; flex-direction:column; gap:0.6rem;">' +
-              (data.trainingWeek || []).map(function (tw) {
-                return (
-                  '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.9rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem;">' +
-                    '<div>' +
-                      '<div style="font-size:0.95rem; font-weight:700; color:#38bdf8;">' + esc(tw.day) + ' <span style="font-size:0.8rem; color:#94a3b8; font-weight:400;">(' + esc(tw.time) + ')</span></div>' +
-                      '<div style="font-size:0.82rem; color:#cbd5e1; margin-top:0.25rem;"><b>Focus seduta:</b> ' + esc(tw.focus) + '</div>' +
-                    '</div>' +
-                    '<div style="text-align:right;">' +
-                      '<span class="es-pres-status es-pres-status-ok">' + esc(tw.attendance) + '</span>' +
-                    '</div>' +
-                  '</div>'
-                );
-              }).join('') +
+            '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">' +
+              '<div>' +
+                '<h3 style="margin:0;">Piano di Lavoro Settimanale &amp; Presenze</h3>' +
+                '<p style="color:#94a3b8; font-size:0.82rem; margin:0.2rem 0 0;">Programmazione sedute sul campo, orari e focus tattico redatto dallo staff.</p>' +
+              '</div>' +
+              (data.trainingWeek && data.trainingWeek.length ? '<button type="button" class="es-pres-btn-primary" id="btn-add-training-session">+ Nuova Seduta</button>' : '') +
             '</div>' +
+
+            (!data.trainingWeek || !data.trainingWeek.length ? (
+              '<div class="es-pres-empty-box">' +
+                '<div class="es-pres-empty-icon">' + ICONS.stopwatch + '</div>' +
+                '<h4 class="es-pres-empty-title">Nessuna seduta programmata</h4>' +
+                '<p class="es-pres-empty-desc">Il piano settimanale viene redatto dall\'Allenatore o dal Preparatore Atletico nella propria Area Riservata, oppure puoi pianificare una seduta ora.</p>' +
+                '<button type="button" class="es-pres-empty-btn" id="btn-add-first-training-session">' + ICONS.plus + ' Pianifica Seduta di Allenamento</button>' +
+              '</div>'
+            ) : (
+              '<div style="display:flex; flex-direction:column; gap:0.6rem;">' +
+                data.trainingWeek.map(function (tw) {
+                  return (
+                    '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.9rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem;">' +
+                      '<div>' +
+                        '<div style="font-size:0.95rem; font-weight:700; color:#38bdf8;">' + esc(tw.day) + ' <span style="font-size:0.8rem; color:#94a3b8; font-weight:400;">(' + esc(tw.time) + ')</span></div>' +
+                        '<div style="font-size:0.82rem; color:#cbd5e1; margin-top:0.25rem;"><b>Focus seduta:</b> ' + esc(tw.focus) + '</div>' +
+                        '<div style="font-size:0.75rem; color:#94a3b8; margin-top:0.15rem;">Ubicazione: ' + esc(tw.pitch || 'Campo Principale') + '</div>' +
+                      '</div>' +
+                      '<div style="text-align:right;">' +
+                        '<span class="es-pres-status es-pres-status-ok">' + esc(tw.attendance || 'Da rilevare') + '</span>' +
+                      '</div>' +
+                    '</div>'
+                  );
+                }).join('') +
+              '</div>'
+            )) +
           '</div>' +
         '</div>' +
 
@@ -1101,8 +1113,8 @@
 
               // Centro Allenamento
               '<div class="es-pres-card" id="card-pres-training-screen">' +
-                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.stopwatch + '</div><span class="es-pres-status es-pres-status-ok">Regolare</span></div>' +
-                '<div><h4 class="es-pres-card-title">Centro Allenamento</h4><div class="es-pres-card-metric">Campo A <span class="es-pres-unit">principale</span></div><p class="es-pres-card-desc">Staff tecnico qualificato e programma settimanale sedute.</p></div>' +
+                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.stopwatch + '</div><span class="es-pres-status ' + (data.trainingWeek && data.trainingWeek.length ? 'es-pres-status-ok' : 'es-pres-status-neutral') + '">' + (data.trainingWeek && data.trainingWeek.length ? (data.trainingWeek.length + ' sedute') : 'Da pianificare') + '</span></div>' +
+                '<div><h4 class="es-pres-card-title">Centro Allenamento</h4><div class="es-pres-card-metric">' + (data.trainingWeek && data.trainingWeek.length ? (data.trainingWeek.length + ' <span class="es-pres-unit">sedute / sett.</span>') : 'Nessun piano') + '</div><p class="es-pres-card-desc">' + (data.trainingWeek && data.trainingWeek.length ? 'Staff tecnico qualificato e programma settimanale sedute.' : 'Pianificazione sedute e staff tecnico in attesa di compilazione.') + '</p></div>' +
                 '<div class="es-pres-card-footer"><span>Sedute &amp; Staff</span><span>Dettagli allenamento &rsaquo;</span></div>' +
               '</div>' +
 
@@ -1450,6 +1462,55 @@
     }
   }
 
+  function openAddTrainingModal(data) {
+    var formHtml =
+      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Pianifica una seduta di allenamento settimanale con orario e focus tattico:</p>' +
+      '<form id="form-add-trn-session" style="display:flex; flex-direction:column; gap:1rem;">' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group"><label>Giorno della Settimana *</label><select class="es-pres-input-text" id="sel-trn-day" style="background:#040810; color:#fff;"><option>Martedì</option><option>Mercoledì</option><option>Giovedì</option><option>Venerdì</option><option>Sabato</option><option>Domenica</option><option>Lunedì</option></select></div>' +
+          '<div class="es-pres-input-group"><label>Fascia Oraria (es. 15:00 - 17:30) *</label><input type="text" class="es-pres-input-text" id="inp-trn-time" value="15:00 - 17:30" required></div>' +
+        '</div>' +
+        '<div class="es-pres-input-group"><label>Campo / Ubicazione</label><input type="text" class="es-pres-input-text" id="inp-trn-pitch" value="Campo A (Erba Naturale)" placeholder="Es. Campo A o Palestra"></div>' +
+        '<div class="es-pres-input-group"><label>Focus della Seduta *</label><textarea class="es-pres-input-text" id="inp-trn-focus" rows="2" required placeholder="Es. Attivazione preventiva, possesso palla e transizioni offensive"></textarea></div>' +
+        '<div class="es-pres-input-group"><label>Stima Presenze</label><input type="text" class="es-pres-input-text" id="inp-trn-att" value="Tutta la rosa convocata" placeholder="Es. 28/28 Presenti"></div>' +
+        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+          '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-trn-modal">Annulla</button>' +
+          '<button type="submit" class="es-pres-btn-primary">Pianifica Seduta</button>' +
+        '</div>' +
+      '</form>';
+
+    openDetailModal('Pianificazione Seduta di Allenamento', ICONS.stopwatch, formHtml);
+    var modalOverlay = document.getElementById('es-pres-detail-overlay');
+    var form = document.getElementById('form-add-trn-session');
+    var btnCancel = document.getElementById('btn-cancel-trn-modal');
+    if (btnCancel && modalOverlay) btnCancel.onclick = function () { modalOverlay.remove(); };
+
+    if (form) {
+      form.onsubmit = function (e) {
+        e.preventDefault();
+        var day = document.getElementById('sel-trn-day').value;
+        var time = document.getElementById('inp-trn-time').value.trim();
+        var pitch = document.getElementById('inp-trn-pitch').value.trim();
+        var focus = document.getElementById('inp-trn-focus').value.trim();
+        var att = document.getElementById('inp-trn-att').value.trim() || 'Presenti';
+
+        data.trainingWeek = data.trainingWeek || [];
+        data.trainingWeek.push({
+          day: day,
+          time: time,
+          pitch: pitch,
+          focus: focus,
+          attendance: att
+        });
+
+        savePresClubData(data);
+        if (modalOverlay) modalOverlay.remove();
+        renderPresidentialSuite();
+        if (window.showToast) window.showToast('Seduta del ' + day + ' aggiunta al piano settimanale!', 'success');
+      };
+    }
+  }
+
   // ============================================================
   // GESTIONE SUB-VIEWS & ROUTING (PUSHSTATE / POPSTATE)
   // ============================================================
@@ -1769,6 +1830,13 @@
       btn.onclick = function (e) {
         if (e) { e.preventDefault(); e.stopPropagation(); }
         openAddMatchModal(data);
+      };
+    });
+
+    mount.querySelectorAll('#btn-add-training-session, #btn-add-first-training-session').forEach(function (btn) {
+      btn.onclick = function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        openAddTrainingModal(data);
       };
     });
 
