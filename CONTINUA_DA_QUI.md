@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Semplificato e snellito il form di modifica del **`Profilo Presidente & Alta Dirigenza`** (`player-profile.js`, `player-profile.css`, `index.html`): rimosse le aree sovraccariche e non pertinenti (nascosto il banner Secret List dal form personale, rimosse le "Esperienze passate" chilometriche da calciatore e la complessa "Zona di interesse" a 4 livelli), lasciando una scheda presidenziale pulita, rapida e focalizzata (Avatar, Dati istituzionali con Ruolo, Biografia societaria, Social, Notifiche e Salva profilo). File: `player-profile.js`, `player-profile.css`, `index.html`, `sw.js`. Cache `PRES_PRF1`.
-Feature precedente: Ottimizzazione copy Secret List.
+Ultimo fatto: Attivazione completa in tempo reale del flusso **`Verifica Email OTP a 4 Cifre`** (`verifica-account.js`, `verifica-account.css`, `index.html`): apertura fluida e reattiva della modale Dark Glass, auto-generazione del codice OTP a 4 cifre con toast istantaneo e pillola interattiva "Inserisci subito", avanzamento automatico su digitazione, auto-invio al 4° numero, salvataggio immediato dello stato verificato (`emailVerified: true`) in localStorage, rimozione immediata del banner fluttuante e trigger eventi globali `elisee:email-verified`. File: `verifica-account.js`, `index.html`, `sw.js`. Cache `OTP4`.
+Feature precedente: Profilo compatto e snello per Presidente.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

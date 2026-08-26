@@ -488,7 +488,7 @@
 
   function openOtpModal(u) {
     u = u || user();
-    var userEmail = (u && u.email) || 'tua email';
+    var userEmail = emailOf(u) || (u && u.email) || 'tua email';
     var old = document.getElementById('es-otp-modal-overlay');
     if (old) old.remove();
 
@@ -504,9 +504,14 @@
     modal.className = 'es-otp-modal-backdrop';
     modal.innerHTML =
       '<div class="es-otp-modal-sheet" role="dialog" aria-modal="true">' +
-        '<button type="button" class="es-otp-close-btn" id="btn-close-otp-modal">&times;</button>' +
-        '<h2 class="es-otp-modal-title">Verifica email</h2>' +
-        '<p class="es-otp-modal-sub">Inserisci il codice OTP di 4 numeri ricevuto via email.</p>' +
+        '<button type="button" class="es-otp-close-btn" id="btn-close-otp-modal" aria-label="Chiudi">&times;</button>' +
+        '<h2 class="es-otp-modal-title">VERIFICA EMAIL</h2>' +
+        '<p class="es-otp-modal-sub">Inserisci il codice OTP di 4 numeri inviato a <b style="color:#38bdf8;">' + esc(userEmail) + '</b>.</p>' +
+        '<div id="otp-pill-code" style="margin:0.2rem auto 1.4rem; display:inline-flex; align-items:center; gap:0.5rem; background:rgba(13,148,136,0.18); border:1px dashed rgba(45,212,191,0.45); border-radius:999px; padding:0.4rem 1.1rem; font-size:0.88rem; color:#2dd4bf; cursor:pointer;" title="Clicca per inserire automaticamente">' +
+          '<span>Codice generato:</span>' +
+          '<strong style="color:#ffffff; font-size:1.1rem; letter-spacing:0.12em;" id="otp-live-display">' + generatedOtp + '</strong>' +
+          '<span style="font-size:0.75rem; color:#38bdf8; text-decoration:underline; font-weight:700;">(Inserisci subito)</span>' +
+        '</div>' +
         '<form id="form-otp-verify">' +
           '<div class="es-otp-inputs-wrap">' +
             '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-0" data-idx="0" autocomplete="one-time-code" autofocus>' +
@@ -526,59 +531,21 @@
     document.body.appendChild(modal);
 
     var inputs = modal.querySelectorAll('.es-otp-digit');
-    inputs.forEach(function (inp, idx) {
-      inp.addEventListener('input', function () {
-        var val = inp.value.replace(/[^0-9]/g, '');
-        inp.value = val ? val.slice(-1) : '';
-        if (val && idx < inputs.length - 1) {
-          inputs[idx + 1].focus();
-        }
-      });
-      inp.addEventListener('keydown', function (e) {
-        if (e.key === 'Backspace' && !inp.value && idx > 0) {
-          inputs[idx - 1].focus();
-        }
-      });
-      inp.addEventListener('paste', function (e) {
-        e.preventDefault();
-        var paste = (e.clipboardData || window.clipboardData).getData('text').replace(/[^0-9]/g, '');
-        if (paste) {
-          for (var i = 0; i < inputs.length; i++) {
-            inputs[i].value = paste[i] || '';
-          }
-          if (inputs[Math.min(paste.length, inputs.length - 1)]) {
-            inputs[Math.min(paste.length, inputs.length - 1)].focus();
-          }
-        }
-      });
-    });
 
     function closeOtp() {
       modal.classList.remove('is-open');
-      setTimeout(function () { if (modal.parentElement) modal.remove(); }, 200);
+      setTimeout(function () { if (modal.parentElement) modal.remove(); }, 220);
     }
 
-    modal.querySelector('#btn-close-otp-modal').onclick = closeOtp;
-    modal.onclick = function (e) { if (e.target === modal) closeOtp(); };
-
-    modal.querySelector('#btn-resend-otp').onclick = function () {
-      var newOtp = Math.floor(1000 + Math.random() * 9000).toString();
-      sessionStorage.setItem('elisee_current_otp', newOtp);
-      inputs.forEach(function (i) { i.value = ''; i.classList.remove('is-error'); });
-      inputs[0].focus();
-      if (window.showToast) {
-        window.showToast('📩 Nuovo codice OTP inviato: ' + newOtp, 'info');
-      }
-    };
-
-    modal.querySelector('#form-otp-verify').onsubmit = function (e) {
-      e.preventDefault();
+    function doVerify() {
       var entered = Array.from(inputs).map(function (i) { return i.value; }).join('');
       var targetOtp = sessionStorage.getItem('elisee_current_otp') || '0000';
 
-      if (entered === targetOtp || entered === '0000' || entered === '1234') {
+      if (entered.length === 4 && (entered === targetOtp || entered === '0000' || entered === '1234')) {
         var currUser = user();
         currUser.emailVerified = true;
+        currUser.isEmailVerified = true;
+        currUser.email_verified = true;
         currUser.emailVerifiedAt = new Date().toISOString();
         saveUser(currUser);
 
@@ -593,6 +560,10 @@
           var evt = new CustomEvent('elisee:email-verified', { detail: { user: currUser } });
           document.dispatchEvent(evt);
         } catch (_) {}
+        try {
+          var evt2 = new CustomEvent('elisee:auth-changed', { detail: { user: currUser } });
+          document.dispatchEvent(evt2);
+        } catch (_) {}
       } else {
         inputs.forEach(function (i) { i.classList.add('is-error'); });
         var errMsg = modal.querySelector('#otp-error-msg');
@@ -602,14 +573,82 @@
         }
         setTimeout(function () {
           inputs.forEach(function (i) { i.classList.remove('is-error'); });
-        }, 1000);
+        }, 1200);
+      }
+    }
+
+    // Auto-fill pill click
+    var pill = modal.querySelector('#otp-pill-code');
+    if (pill) {
+      pill.onclick = function () {
+        var cur = sessionStorage.getItem('elisee_current_otp') || generatedOtp;
+        for (var i = 0; i < inputs.length; i++) {
+          inputs[i].value = cur[i] || '';
+        }
+        doVerify();
+      };
+    }
+
+    inputs.forEach(function (inp, idx) {
+      inp.addEventListener('input', function () {
+        var val = inp.value.replace(/[^0-9]/g, '');
+        inp.value = val ? val.slice(-1) : '';
+        if (val && idx < inputs.length - 1) {
+          inputs[idx + 1].focus();
+        } else if (val && idx === inputs.length - 1) {
+          var allFilled = Array.from(inputs).every(function (i) { return i.value.length > 0; });
+          if (allFilled) {
+            doVerify();
+          }
+        }
+      });
+      inp.addEventListener('keydown', function (e) {
+        if (e.key === 'Backspace' && !inp.value && idx > 0) {
+          inputs[idx - 1].focus();
+        }
+      });
+      inp.addEventListener('paste', function (e) {
+        e.preventDefault();
+        var paste = (e.clipboardData || window.clipboardData).getData('text').replace(/[^0-9]/g, '');
+        if (paste) {
+          for (var i = 0; i < inputs.length; i++) {
+            inputs[i].value = paste[i] || '';
+          }
+          if (paste.length >= 4) {
+            doVerify();
+          } else if (inputs[Math.min(paste.length, inputs.length - 1)]) {
+            inputs[Math.min(paste.length, inputs.length - 1)].focus();
+          }
+        }
+      });
+    });
+
+    modal.querySelector('#btn-close-otp-modal').onclick = closeOtp;
+    modal.onclick = function (e) { if (e.target === modal) closeOtp(); };
+
+    modal.querySelector('#btn-resend-otp').onclick = function () {
+      var newOtp = Math.floor(1000 + Math.random() * 9000).toString();
+      sessionStorage.setItem('elisee_current_otp', newOtp);
+      var disp = modal.querySelector('#otp-live-display');
+      if (disp) disp.textContent = newOtp;
+      inputs.forEach(function (i) { i.value = ''; i.classList.remove('is-error'); });
+      inputs[0].focus();
+      var errMsg = modal.querySelector('#otp-error-msg');
+      if (errMsg) errMsg.style.display = 'none';
+      if (window.showToast) {
+        window.showToast('📩 Nuovo codice OTP inviato: ' + newOtp, 'info');
       }
     };
 
-    requestAnimationFrame(function () {
+    modal.querySelector('#form-otp-verify').onsubmit = function (e) {
+      e.preventDefault();
+      doVerify();
+    };
+
+    setTimeout(function () {
       modal.classList.add('is-open');
       if (inputs[0]) inputs[0].focus();
-    });
+    }, 20);
   }
 
   window.openEmailOtpModal = openOtpModal;
