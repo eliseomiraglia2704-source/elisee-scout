@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: **Eliminazione definitiva dei badge/pill stile videogioco e riordino del blocco header club**: 1. Applicata la **Regola Unica** a due soli tipi di etichetta su tutta la piattaforma: (a) *Attributi identitari* come testo semplice separato da punto medio (`·`) senza bordi né sfondi; (b) *Indicatori di stato numerici/operativi* come box squadrati (4-6px, MAI pillole 999px) con opacità 10-15%, testo normale non maiuscolo e 3 soli significati semantici (verde, ambra, rosso, neutro); 2. Header Club pulito su riga unica con stemma dedicato senza sovrapposizioni e riga sottotitolo (`Serie D · Girone H · Tesseramento attivo FIGC LND · Ruolo: Presidente`); 3. Standings card incorniciata con stile identico a tutte le metriche della dashboard; 4. Estesa la regola a `style.css` (`.focus-chip`, `.cv-hero-role-pill`, `.portal-chip`, ecc.). File: `pres-dash.js`, `pres-dash.css`, `style.css`, `index.html`, `sw.js`. Cache `PRES_NOPILL1`.
-Feature precedente: Rifinitura 6 punti Area Presidente.
+Ultimo fatto: **Correzione specifica: Eliminazione sovrapposizione logo e applicazione esatta badge di stato Jira/SaaS**: 1. *Risolta la sovrapposizione logo/FOGGIA e residuo `>`*: rimosso il payload SVG non escapato nell'inline attribute `onerror` che causava il leaking del testo `FOGGIA>` nel DOM; ora viene renderizzato UN SOLO elemento pulito `img` per il logo con stemma reale Foggia Calcio; 2. *Specifiche esatte badge di stato*: `border-radius: 4px` rigoroso, `border: none !important` (nessun bordo colorato perimetrale), sfondo tenue trasparente al 12% (`rgba(34,197,94,0.12)`, `rgba(245,158,11,0.12)`, `rgba(239,68,68,0.12)`, `rgba(148,163,184,0.12)`), testo a colore pieno con peso `500` in minuscolo naturale e padding compatto `4px 8px`. File: `pres-dash.js`, `pres-dash.css`, `index.html`, `sw.js`. Cache `FIX_LOGO1`.
+Feature precedente: Eliminazione definitiva badge videogioco.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

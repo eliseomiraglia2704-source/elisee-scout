@@ -14,8 +14,6 @@
   var currentView = 'overview'; // 'overview' | 'stadium' | 'club-stats' | 'sponsors' | 'standings' | 'schedule' | 'training-center'
   var statsActiveTab = 'records'; // 'records' | 'history'
 
-  var FOGGIA_LOGO_FALLBACK = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 5 L88 20 L88 55 C88 78 50 95 50 95 C50 95 12 78 12 55 L12 20 Z" fill="%23090e17" stroke="%23dc2626" stroke-width="4"/><path d="M32 20 L32 75 M50 20 L50 88 M68 20 L68 75" stroke="%23dc2626" stroke-width="7"/><rect x="22" y="44" width="56" height="20" rx="4" fill="%23040810" stroke="%2338bdf8" stroke-width="1.5"/><text x="50" y="58" font-family="system-ui,sans-serif" font-size="11" font-weight="900" fill="%23ffffff" text-anchor="middle" letter-spacing="1">FOGGIA</text></svg>';
-
   // Set di icone lineari outline SVG (stile minimale coerente con la navbar)
   var ICONS = {
     shield: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>',
@@ -702,7 +700,7 @@
           '<div class="es-pres-header-inner">' +
             '<div class="es-pres-club-meta-box">' +
               '<div class="es-pres-crest-frame">' +
-                '<img src="' + esc(data.logoUrl) + '" alt="' + esc(data.clubName) + '" onerror="this.onerror=null; this.src=\'' + FOGGIA_LOGO_FALLBACK + '\';">' +
+                '<img src="' + esc(data.logoUrl || 'immagini/squadre-loghi/foggia.png') + '" alt="' + esc(data.clubName) + '" class="es-pres-crest-img">' +
               '</div>' +
               '<div class="es-pres-club-meta-text">' +
                 '<h1 class="es-pres-club-name">' + esc(data.clubName) + '</h1>' +
