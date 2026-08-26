@@ -59,6 +59,7 @@ Se il push dà 403 (account Git `sfondiitaliani23-svg`), pubblica comunque su Ve
 - Area Segretario Generale: dashboard amministrativa (`sg-dash.js`) se il ruolo è Segretario generale / Club Manager. Distinta da Direttore generale e Team manager.
 - Area Biglietteria: dashboard vendite e tifoseria (`bt-dash.js`) se il ruolo è Responsabile biglietteria / tifoseria. Distinta dal Tifoso (ruolo sito).
 - Area Presidente: dashboard Presidenza (`pres-dash.js`) se il ruolo staff è Presidente.
+- Simulatore Ruoli Creatore (`creator-role-switcher.js`, ADMIN ONLY): strumento interno riservato esclusivamente al creatore/admin per QA, test e demo rapida delle 23 dashboard. Non esporre mai a utenti standard.
 
 ## Skill
 

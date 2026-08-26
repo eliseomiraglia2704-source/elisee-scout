@@ -310,7 +310,7 @@
   <link rel="stylesheet" href="messaggi.css?v=20260820_DARK1">
   <link rel="stylesheet" href="mercato-hub.css?v=20260820_MKT2">
   <link rel="stylesheet" href="schede-tecniche.css?v=20260820_ST3">
-  <link rel="stylesheet" href="creator-role-switcher.css?v=20260826_CR6">
+  <link rel="stylesheet" href="creator-role-switcher.css?v=20260826_ADMIN_CR1">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
@@ -1652,9 +1652,6 @@
             <a href="#" id="btn-area-riservata" onclick="event.preventDefault(); event.stopPropagation(); if(window.openAreaRiservataModal){ window.openAreaRiservataModal(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="user-cog" style="width:16px; height:16px; color:#38bdf8;"></i> La Mia Area Riservata
             </a>
-            <a href="#" id="btn-creator-roles" onclick="event.preventDefault(); event.stopPropagation(); if(window.EliseeCreatorRole){ window.EliseeCreatorRole.open(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#facc15; font-size:0.83rem; font-weight:700; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(250,204,21,0.12)'" onmouseleave="this.style.background='transparent'">
-              <span style="font-size:1rem; line-height:1;">⚡</span> Simulatore Ruoli Creatore
-            </a>
             <a href="#tc-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.EliseeTC){ window.EliseeTC.open(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="clipboard-list" style="width:16px; height:16px; color:#38bdf8;"></i> Pannello Elisee Manager
             </a>
@@ -1670,6 +1667,14 @@
             <a href="#admin-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.switchView){ window.switchView('admin', '#admin-portal'); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="layout-dashboard" style="width:16px; height:16px; color:#38bdf8;"></i> Control Center
             </a>
+
+            <!-- Sezione Strumenti Amministratore (Admin Only — non visibile a utenti standard) -->
+            <div id="user-dropdown-admin-section" style="display:none; border-top:1px solid rgba(255,255,255,0.08); margin:0.4rem 0 0; padding-top:0.35rem;">
+              <div style="padding:0.2rem 1rem 0.35rem; font-size:0.68rem; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.04em;">Strumenti Admin</div>
+              <a href="#" id="btn-creator-roles" onclick="event.preventDefault(); event.stopPropagation(); if(window.EliseeCreatorRole){ window.EliseeCreatorRole.open(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.55rem 1rem; color:#38bdf8; font-size:0.82rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
+                <i data-lucide="shield-check" style="width:15px; height:15px; color:#38bdf8;"></i> Simulatore Ruoli Creatore
+              </a>
+            </div>
             <div style="border-top:1px solid rgba(255,255,255,0.08); margin:0.4rem 0;"></div>
             <a href="#" onclick="logoutUser(); return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#f87171; font-size:0.83rem; font-weight:700; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(239,68,68,0.12)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="log-out" style="width:16px; height:16px; color:#f87171;"></i> Disconnetti Account
@@ -5077,7 +5082,7 @@
   <script src="tc-panel.js?v=20260826_TC3"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260826_CV1"></script>
+  <script src="app.js?v=20260826_ADMIN_CR1"></script>
   <script src="player-profile.js?v=20260826_PRES_PRF1"></script>
   <script src="player-dash.js?v=20260825_ALL1"></script>
   <script src="coach-dash.js?v=20260826_TRN1"></script>
@@ -5108,7 +5113,7 @@
   <script src="mappa-club.js?v=20260826_GEO1"></script>
   <script src="chi-segui.js?v=20260820_FORM1"></script>
   <script src="verifica-account.js?v=20260826_OTP4"></script>
-  <script src="creator-role-switcher.js?v=20260826_CR7"></script>
+  <script src="creator-role-switcher.js?v=20260826_ADMIN_CR1"></script>
   <script src="role-actions-runtime.js?v=20260826_SCT1"></script>
   <script>
     /* FORCED INLINE HOT-PATCH: Overrides PDF export, specific report HTML & modal close functions instantly at runtime */

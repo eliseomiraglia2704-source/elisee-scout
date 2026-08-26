@@ -10416,6 +10416,13 @@ window.updateNavbarUserUI = function() {
       }
     }
 
+    // Visibilità strumenti riservati admin
+    const adminSection = document.getElementById('user-dropdown-admin-section');
+    if (adminSection) {
+      const isUserAdmin = isAdminAuth || !!userData.isCreator || userData.role === 'admin' || userData.siteRole === 'admin' || /eliseomiraglia2704|admin@eliseescout\.it|elisee\.scout@platform-calcio\.it/.test(String(userData.email || '').toLowerCase());
+      adminSection.style.display = isUserAdmin ? 'block' : 'none';
+    }
+
     if (loggedOutActions) {
       loggedOutActions.style.display = 'none';
       loggedOutActions.style.setProperty('display', 'none', 'important');

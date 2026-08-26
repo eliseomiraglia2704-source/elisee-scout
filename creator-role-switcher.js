@@ -1,36 +1,64 @@
 /**
- * ELISEE SCOUT — Simulatore Ruoli Creatore
- * Consente al creatore del sito di passare istantaneamente da un ruolo all'altro
- * mostrando direttamente l'area registrata e attiva (dashboard, KPI, moduli e report).
+ * ADMIN ONLY — Strumento di test interno, non visibile agli utenti standard.
+ * ELISEE SCOUT — Simulatore Ruoli Creatore (Impersonate / Role QA Tool)
+ * 
+ * Riservato esclusivamente all'amministratore/creatore della piattaforma (Eliseo)
+ * per entrare rapidamente nelle dashboard attive di ciascun ruolo a scopo di test,
+ * QA, verifica funzionale e demo.
  */
 (function () {
   'use strict';
 
+  // Set di icone lineari outline SVG monocolore (stile minimale enterprise coerente con la piattaforma)
+  var SVG_ICONS = {
+    user: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>',
+    users: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>',
+    coach: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><polyline points="16 11 18 13 22 9"></polyline></svg>',
+    search: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+    chart: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>',
+    shield: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>',
+    stopwatch: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"></circle><path d="M12 9v4l2 2"></path><path d="M12 2v3"></path><path d="M18 5l-1.5 1.5"></path></svg>',
+    activity: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>',
+    heart: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>',
+    briefcase: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>',
+    award: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>',
+    trending: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>',
+    handshake: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 17l-5-5a3 3 0 0 1 0-4.24l1.41-1.41a3 3 0 0 1 4.24 0L14 8"></path><path d="M13 7l5 5a3 3 0 0 1 0 4.24l-1.41 1.41a3 3 0 0 1-4.24 0L10 16"></path></svg>',
+    building: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>',
+    sprout: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"></path><path d="M10 20c0-4 1-7 2-10"></path><path d="M12 10a5 5 0 0 1 5-5c0 3-2 5-5 5"></path><path d="M12 14a5 5 0 0 0-5-5c0 3 2 5 5 5"></path></svg>',
+    fileText: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>',
+    package: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>',
+    ticket: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>',
+    megaphone: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>',
+    target: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>',
+    clipboard: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>'
+  };
+
   var ROLE_CATALOG = [
     {
       group: 'Atleti & Giocatori',
-      icon: '⚽',
+      iconSvg: SVG_ICONS.user,
       roles: [
         {
           key: 'giocatore',
           label: 'Calciatore / Giocatore',
           family: 'Giocatore',
           staffRole: '',
-          icon: '🏃',
+          iconSvg: SVG_ICONS.user,
           desc: 'Dashboard analitica v3.0, radar FIFA, performance e mercato'
         }
       ]
     },
     {
       group: 'Staff Tecnico',
-      icon: '📋',
+      iconSvg: SVG_ICONS.coach,
       roles: [
         {
           key: 'allenatore',
           label: 'Allenatore',
           family: 'Staff',
           staffRole: 'Allenatore',
-          icon: '👔',
+          iconSvg: SVG_ICONS.coach,
           desc: 'Discorso pre-partita, indice efficacia, lavagna e compliance'
         },
         {
@@ -38,7 +66,7 @@
           label: 'Vice Allenatore',
           family: 'Staff',
           staffRole: 'Allenatore in seconda',
-          icon: '🤝',
+          iconSvg: SVG_ICONS.users,
           desc: 'Contributo tecnico, registro sessioni e integrazione mister'
         },
         {
@@ -46,7 +74,7 @@
           label: 'Scout / Osservatore',
           family: 'Staff',
           staffRole: 'Scout / Osservatore',
-          icon: '🔭',
+          iconSvg: SVG_ICONS.search,
           desc: 'Report scouting, Secret List stealth DS/Scout e radar talenti'
         },
         {
@@ -54,7 +82,7 @@
           label: 'Match Analyst',
           family: 'Staff',
           staffRole: 'Match analyst',
-          icon: '📊',
+          iconSvg: SVG_ICONS.chart,
           desc: 'Video analisi, report tattico avversari e breakdown match'
         },
         {
@@ -62,7 +90,7 @@
           label: 'Preparatore Portieri',
           family: 'Staff',
           staffRole: 'Preparatore dei portieri',
-          icon: '🧤',
+          iconSvg: SVG_ICONS.shield,
           desc: 'Analisi reattività estremi difensori, uscite e schemi'
         },
         {
@@ -70,21 +98,21 @@
           label: 'Preparatore Atletico',
           family: 'Staff',
           staffRole: 'Preparatore atletico',
-          icon: '⚡',
+          iconSvg: SVG_ICONS.stopwatch,
           desc: 'Carichi GPS, test fisici, intensità e prevenzione carichi'
         }
       ]
     },
     {
       group: 'Staff Medico & Salute',
-      icon: '🏥',
+      iconSvg: SVG_ICONS.activity,
       roles: [
         {
           key: 'medico',
           label: 'Medico Sociale',
           family: 'Staff',
           staffRole: 'Medico sociale',
-          icon: '🩺',
+          iconSvg: SVG_ICONS.activity,
           desc: 'Registro sanitario, idoneità agonistica e visite mediche'
         },
         {
@@ -92,7 +120,7 @@
           label: 'Fisioterapista',
           family: 'Staff',
           staffRole: 'Fisioterapista',
-          icon: '🩹',
+          iconSvg: SVG_ICONS.activity,
           desc: 'Registro trattamenti fisioterapici, terapie e recuperi'
         },
         {
@@ -100,21 +128,21 @@
           label: 'Nutrizionista',
           family: 'Staff',
           staffRole: 'Nutrizionista',
-          icon: '🥗',
+          iconSvg: SVG_ICONS.activity,
           desc: 'Piani nutrizionali, idratazione gara e supplementi'
         }
       ]
     },
     {
       group: 'Dirigenza & Società',
-      icon: '🏛️',
+      iconSvg: SVG_ICONS.building,
       roles: [
         {
           key: 'presidente',
           label: 'Presidente',
           family: 'Staff',
           staffRole: 'Presidente',
-          icon: '👑',
+          iconSvg: SVG_ICONS.award,
           desc: 'Governance societaria, valore club, compliance e decisioni'
         },
         {
@@ -122,7 +150,7 @@
           label: 'Direttore Generale',
           family: 'Staff',
           staffRole: 'Direttore generale',
-          icon: '💼',
+          iconSvg: SVG_ICONS.briefcase,
           desc: 'Budget direzionale, operazioni, pianificazione e audit'
         },
         {
@@ -130,7 +158,7 @@
           label: 'Direttore Sportivo (DS)',
           family: 'Staff',
           staffRole: 'Direttore sportivo',
-          icon: '📈',
+          iconSvg: SVG_ICONS.trending,
           desc: 'Trattative mercato, Secret List stealth e valore rosa'
         },
         {
@@ -138,7 +166,7 @@
           label: 'Procuratore / Agente FIFA',
           family: 'Staff',
           staffRole: 'Procuratore / Agente FIFA',
-          icon: '🤝',
+          iconSvg: SVG_ICONS.handshake,
           desc: 'Assistiti, mandati federali, rinnovi e clausole'
         },
         {
@@ -146,7 +174,7 @@
           label: 'Team Manager',
           family: 'Staff',
           staffRole: 'Team manager',
-          icon: '🏟️',
+          iconSvg: SVG_ICONS.clipboard,
           desc: 'Logistica gare, presenze, trasferte e coordinamento'
         },
         {
@@ -154,7 +182,7 @@
           label: 'Resp. Settore Giovanile',
           family: 'Staff',
           staffRole: 'Responsabile settore giovanile',
-          icon: '🌱',
+          iconSvg: SVG_ICONS.sprout,
           desc: 'Vivaio, sviluppo talenti, categorie giovanili e campus'
         },
         {
@@ -162,7 +190,7 @@
           label: 'Segretario Generale',
           family: 'Staff',
           staffRole: 'Segretario generale / Club Manager',
-          icon: '🏢',
+          iconSvg: SVG_ICONS.fileText,
           desc: 'Tesseramenti federali, verbali CDA e contratti'
         },
         {
@@ -170,7 +198,7 @@
           label: 'Magazziniere / Equipment',
           family: 'Staff',
           staffRole: 'Magazziniere / Equipment Manager',
-          icon: '📦',
+          iconSvg: SVG_ICONS.package,
           desc: 'Kit gara, materiale tecnico, inventario e logistica magazzino'
         },
         {
@@ -178,7 +206,7 @@
           label: 'Resp. Biglietteria / SLO',
           family: 'Staff',
           staffRole: 'Responsabile biglietteria / tifoseria',
-          icon: '🎫',
+          iconSvg: SVG_ICONS.ticket,
           desc: 'Vendite botteghino, settore ospiti, fidelity e tifoseria'
         },
         {
@@ -186,7 +214,7 @@
           label: 'Ufficio Stampa',
           family: 'Staff',
           staffRole: 'Responsabile comunicazione / ufficio stampa',
-          icon: '📣',
+          iconSvg: SVG_ICONS.megaphone,
           desc: 'Comunicati ufficiali, conferenze, rassegna stampa e media'
         },
         {
@@ -194,35 +222,35 @@
           label: 'Marketing & Commerciale',
           family: 'Staff',
           staffRole: 'Responsabile marketing / commerciale',
-          icon: '🎯',
+          iconSvg: SVG_ICONS.target,
           desc: 'Sponsorizzazioni, licensing, merchandising e revenue club'
         }
       ]
     },
     {
       group: 'Tifosi & Community',
-      icon: '❤️',
+      iconSvg: SVG_ICONS.heart,
       roles: [
         {
           key: 'tifoso',
           label: 'Tifoso / Spettatore',
           family: 'Tifoso',
           staffRole: '',
-          icon: '🎟️',
+          iconSvg: SVG_ICONS.heart,
           desc: 'Passione, presenze stadio, cori, sticker e supporto club'
         }
       ]
     },
     {
       group: 'Società Sportiva',
-      icon: '🛡️',
+      iconSvg: SVG_ICONS.shield,
       roles: [
         {
           key: 'club_tc',
           label: 'Club (Pannello Elisee Manager)',
           family: 'Società',
           staffRole: '',
-          icon: '📋',
+          iconSvg: SVG_ICONS.shield,
           desc: 'Iscrizioni online, quote, soci, presenze e verbali societari'
         }
       ]
@@ -237,13 +265,24 @@
     }
   }
 
+  // Controllo severo dei permessi: accessibile solo dall'amministratore/creatore della piattaforma
+  function isCreatorAdmin() {
+    var u = getStoredUser();
+    var email = String(u.email || localStorage.getItem('elisee_user_email') || '').toLowerCase().trim();
+    return localStorage.getItem('elisee_admin_auth') === 'true' ||
+           !!u.isCreator ||
+           u.role === 'admin' ||
+           u.siteRole === 'admin' ||
+           /eliseomiraglia2704|admin@eliseescout\.it|elisee\.scout@platform-calcio\.it/.test(email);
+  }
+
   function getActiveRoleInfo() {
     var u = getStoredUser();
-    if (window.isTifosoSiteRole && window.isTifosoSiteRole(u)) return { label: 'Tifoso', key: 'tifoso', icon: '🎟️' };
-    if (window.isPlayerSiteRole && window.isPlayerSiteRole(u)) return { label: 'Calciatore', key: 'giocatore', icon: '🏃' };
-    if (u && (u.ruolo === 'Società' || u.role === 'Società' || u.siteRoleFamily === 'Società')) return { label: 'Club Elisee Manager', key: 'club_tc', icon: '🛡️' };
+    if (window.isTifosoSiteRole && window.isTifosoSiteRole(u)) return { label: 'Tifoso', key: 'tifoso', iconSvg: SVG_ICONS.heart };
+    if (window.isPlayerSiteRole && window.isPlayerSiteRole(u)) return { label: 'Calciatore', key: 'giocatore', iconSvg: SVG_ICONS.user };
+    if (u && (u.ruolo === 'Società' || u.role === 'Società' || u.siteRoleFamily === 'Società')) return { label: 'Club Elisee Manager', key: 'club_tc', iconSvg: SVG_ICONS.shield };
     var precise = String(u.staffRole || u.ruoloDettagliato || u.ruolo || u.role || 'Staff').trim();
-    return { label: precise || 'Staff', key: 'staff', icon: '👔' };
+    return { label: precise || 'Staff', key: 'staff', iconSvg: SVG_ICONS.briefcase };
   }
 
   function showToast(msg) {
@@ -254,7 +293,7 @@
       toast.className = 'es-creator-toast';
       document.body.appendChild(toast);
     }
-    toast.innerHTML = '<span>⚡</span> <span>' + msg + '</span>';
+    toast.innerHTML = '<span>' + SVG_ICONS.shield + '</span> <span>' + msg + '</span>';
     toast.classList.add('is-visible');
     clearTimeout(showToast._timer);
     showToast._timer = setTimeout(function () {
@@ -263,6 +302,11 @@
   }
 
   function applyRole(roleKey) {
+    if (!isCreatorAdmin()) {
+      if (window.showToast) window.showToast('Accesso riservato all\'amministratore', 'warning');
+      return;
+    }
+
     var targetRole = null;
     for (var i = 0; i < ROLE_CATALOG.length; i++) {
       for (var j = 0; j < ROLE_CATALOG[i].roles.length; j++) {
@@ -345,7 +389,7 @@
       updated.anniEsperienza = '12';
     }
 
-    // 1. Chiudi categoricamente qualsiasi istanza del minigioco aperta
+    // 1. Chiudi istanza del minigioco se aperta
     try {
       if (window.EliseeMinigioco && typeof window.EliseeMinigioco.close === 'function') {
         window.EliseeMinigioco.close();
@@ -453,15 +497,8 @@
       }, 60);
     }
 
-    updateTriggerLabel();
     closeModal();
-    showToast('Passato all\'area attiva: ' + targetRole.label);
-  }
-
-  function updateTriggerLabel() {
-    var info = getActiveRoleInfo();
-    var labelEl = document.getElementById('es-creator-trigger-role');
-    if (labelEl) labelEl.textContent = info.label;
+    showToast('Passato alla dashboard attiva: ' + targetRole.label);
   }
 
   function renderModal() {
@@ -474,8 +511,8 @@
         '<div class="es-creator-modal" role="dialog" aria-modal="true" aria-labelledby="es-creator-modal-title">' +
           '<div class="es-creator-modal-head">' +
             '<div class="es-creator-modal-title-wrap">' +
-              '<h2 id="es-creator-modal-title">⚡ Simulatore Ruoli Creatore</h2>' +
-              '<p>Seleziona un ruolo per entrare subito nella sua dashboard attiva (post-registrazione)</p>' +
+              '<h2 id="es-creator-modal-title">Simulatore ruoli creatore</h2>' +
+              '<p>Strumento interno riservato all\'amministratore — accesso rapido alle dashboard attive per test e verifica</p>' +
             '</div>' +
             '<button type="button" class="es-creator-modal-close" id="es-creator-modal-close" aria-label="Chiudi">&times;</button>' +
           '</div>' +
@@ -499,13 +536,13 @@
     for (var i = 0; i < ROLE_CATALOG.length; i++) {
       var cat = ROLE_CATALOG[i];
       html += '<div class="es-creator-category">';
-      html += '<div class="es-creator-category-title"><span>' + cat.icon + '</span> <span>' + cat.group + '</span></div>';
+      html += '<div class="es-creator-category-title"><span>' + cat.iconSvg + '</span> <span>' + cat.group + '</span></div>';
       html += '<div class="es-creator-grid">';
       for (var j = 0; j < cat.roles.length; j++) {
         var r = cat.roles[j];
         var isCurrent = (curRole.label.toLowerCase() === r.label.toLowerCase()) || (r.staffRole && curRole.label.toLowerCase() === r.staffRole.toLowerCase());
         html += '<div class="es-creator-card' + (isCurrent ? ' is-active' : '') + '" data-role-key="' + r.key + '">';
-        html += '<div class="es-creator-card-icon">' + r.icon + '</div>';
+        html += '<div class="es-creator-card-icon">' + r.iconSvg + '</div>';
         html += '<div class="es-creator-card-info">';
         html += '<div class="es-creator-card-name">' + r.label + '</div>';
         html += '<div class="es-creator-card-desc">' + r.desc + '</div>';
@@ -531,11 +568,13 @@
   }
 
   function openModal() {
+    if (!isCreatorAdmin()) {
+      if (window.showToast) window.showToast('Accesso riservato all\'amministratore', 'warning');
+      return;
+    }
     renderModal();
     var overlay = document.getElementById('es-creator-modal-overlay');
     if (overlay) overlay.classList.add('is-open');
-    var trigger = document.getElementById('es-creator-trigger');
-    if (trigger) trigger.classList.add('is-visible');
   }
 
   function closeModal() {
@@ -543,23 +582,13 @@
     if (overlay) overlay.classList.remove('is-open');
   }
 
-  function initTrigger() {
-    var old = document.getElementById('es-creator-trigger');
-    if (old) old.remove();
-  }
-
-  // Esponi API globale per il creatore
+  // Esponi API globale (protetta da controllo admin)
   window.EliseeCreatorRole = {
     open: openModal,
     close: closeModal,
     setRole: applyRole,
     getCatalog: function () { return ROLE_CATALOG; },
-    getActive: getActiveRoleInfo
+    getActive: getActiveRoleInfo,
+    isAdmin: isCreatorAdmin
   };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTrigger);
-  } else {
-    initTrigger();
-  }
 })();
