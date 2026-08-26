@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Ottimizzato il box **`Secret List`** nel profilo (`mercato-hub.js`, `index.html`): reso il testo sintetico, incisivo e professionale (senza frasi verbose), con adattamento dinamico del kicker per il ruolo attivo (*Area Scouting Presidenza* per il Presidente, *Esclusiva Direzione Sportiva* per il DS, *Esclusiva Scouting* per lo Scout) e conteggio target pulito. File: `mercato-hub.js`, `index.html`, `sw.js`. Cache `MKT3`.
-Feature precedente: Allineamento palette dark modale OTP.
+Ultimo fatto: Semplificato e snellito il form di modifica del **`Profilo Presidente & Alta Dirigenza`** (`player-profile.js`, `player-profile.css`, `index.html`): rimosse le aree sovraccariche e non pertinenti (nascosto il banner Secret List dal form personale, rimosse le "Esperienze passate" chilometriche da calciatore e la complessa "Zona di interesse" a 4 livelli), lasciando una scheda presidenziale pulita, rapida e focalizzata (Avatar, Dati istituzionali con Ruolo, Biografia societaria, Social, Notifiche e Salva profilo). File: `player-profile.js`, `player-profile.css`, `index.html`, `sw.js`. Cache `PRES_PRF1`.
+Feature precedente: Ottimizzazione copy Secret List.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

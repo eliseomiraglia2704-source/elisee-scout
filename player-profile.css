@@ -508,6 +508,13 @@ body.layout-portfolio .es-sp select:disabled {
 }
 .es-sp-save:hover { background: #0ea5e9 !important; }
 
+/* Profilo snello e compatto per Presidente & Alta Dirigenza */
+#es-staff-profile.is-pres-profile-mode #es-sp-secret-card,
+#es-staff-profile.is-pres-profile-mode #es-sp-exp-section,
+#es-staff-profile.is-pres-profile-mode #es-sp-interest-section {
+  display: none !important;
+}
+
 /* Campanella header + tab Notifiche (tutti i ruoli) */
 #nav-logged-in-actions {
   align-items: center;

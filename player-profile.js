@@ -871,6 +871,18 @@
     staffFilling = true;
     user = window.applyStaffIdentity(user || readUser());
     var p = staffProfileOf(user);
+
+    var blobRole = [user.staffRole, user.ruoloDettagliato, user.ruolo, user.role, user.siteRoleFamily, (p && p.fieldRole)].filter(Boolean).join(' ').toLowerCase();
+    var isPres = /presidente|vice presidente|amministratore|direttore generale/.test(blobRole);
+    root.classList.toggle('is-pres-profile-mode', isPres);
+
+    var secCard = document.getElementById('es-sp-secret-card');
+    if (secCard && isPres) secCard.hidden = true;
+    var expSec = document.getElementById('es-sp-exp-section');
+    if (expSec) expSec.hidden = isPres;
+    var intSec = document.getElementById('es-sp-interest-section');
+    if (intSec) intSec.hidden = isPres;
+
     var yearSel = document.getElementById('es-sp-birthyear');
     if (yearSel && !yearSel.dataset.ready) {
       var years = [];
@@ -887,16 +899,18 @@
     var setC = function (id, v) { var el = document.getElementById(id); if (el) el.checked = !!v; };
     setV('es-sp-fullname', p.fullName);
     setV('es-sp-bio', p.bio);
-    fillNationLike(document.getElementById('es-sp-country'), COUNTRIES, (p.interest && p.interest.country) || 'Italia');
-    refreshStaffLocalita(p.interest || {});
-    setV('es-sp-city', (p.interest && p.interest.city) || '');
+    if (!isPres) {
+      fillNationLike(document.getElementById('es-sp-country'), COUNTRIES, (p.interest && p.interest.country) || 'Italia');
+      refreshStaffLocalita(p.interest || {});
+      setV('es-sp-city', (p.interest && p.interest.city) || '');
+    }
     setV('es-sp-ig', (p.social && p.social.instagram) || '');
     setV('es-sp-fb', (p.social && p.social.facebook) || '');
     setV('es-sp-tt', (p.social && p.social.tiktok) || '');
     setV('es-sp-x', (p.social && p.social.x) || '');
     setC('es-sp-n-email', p.notify.email);
     var list = document.getElementById('es-sp-exp-list');
-    if (list) {
+    if (list && !isPres) {
       list.innerHTML = '';
       var exps = p.experiences && p.experiences.length ? p.experiences : [{}];
       exps.forEach(function (ex) { addStaffExperience(ex); });
