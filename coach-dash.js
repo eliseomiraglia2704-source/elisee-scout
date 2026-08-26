@@ -1,12 +1,17 @@
 /* ============================================================
-   ELISEE SCOUT — Area Allenatore (Mister Hub)
-   5 Macro-aree Attive: CLUB | SQUADRA | ALLENAMENTI | PARTITE | LAVAGNA
-   Incluso: Gestione Allenamenti Interattivi con Like (Ci sono), Dislike (Non ci sono) & Modale Votanti
+   ELISEE SCOUT — AREA ALLENATORE (MISTER HUB)
+   Tutte le Opzioni Attive al 100%: CLUB | SQUADRA | ALLENAMENTI | PARTITE | LAVAGNA
+   - Modali B2B per modifica dati società, staff, rosa, sedute e partite
+   - Gestione Convocazioni e Formazione Pre-Gara (Icona 📋)
+   - Statistiche Rosa & Partite (Icona 📊)
+   - Lavagna Tattica interattiva, esportazione PDF, caricamento e anteprime
+   - Presenze allenamenti con Like/Dislike/Maybe e Modale Votanti
+   - Bordi rettilinei a 4px e persistenza localStorage
    ============================================================ */
 (function () {
   'use strict';
 
-  var activeTab = 'allenamenti'; // default o club | squadra | allenamenti | partite | lavagna
+  var activeTab = 'allenamenti'; // 'club' | 'squadra' | 'allenamenti' | 'partite' | 'lavagna'
   var currentPitchType = 'full';
   var currentElemSize = 'M';
 
@@ -59,11 +64,11 @@
         { id: 'p-9', num: 9, name: 'Alexis Ferrante', role: 'Seconda Punta', birth: '1995', cert: 'Regolare', status: 'disp', app: 24 }
       ],
       staffMembers: [
-        { id: 'st-coach', name: 'Eliseo Miraglia', role: 'Allenatore' },
-        { id: 'st-vice', name: 'Vice Allenatore', role: 'Vice Allenatore' },
-        { id: 'st-prep', name: 'Luca Rossi', role: 'Preparatore Atletico' },
-        { id: 'st-fisio', name: 'Antonio Gentile', role: 'Fisioterapista' },
-        { id: 'st-analyst', name: 'Giuseppe Di Stefano', role: 'Match Analyst' }
+        { id: 'st-coach', name: 'Eliseo Miraglia', role: 'Allenatore', patent: 'UEFA Pro', exp: '30/06/2027' },
+        { id: 'st-vice', name: 'Giuseppe Russo', role: 'Vice Allenatore', patent: 'UEFA A', exp: '30/06/2027' },
+        { id: 'st-prep', name: 'Luca Rossi', role: 'Preparatore Atletico', patent: 'Prep. Atletico FIGC', exp: '30/06/2027' },
+        { id: 'st-fisio', name: 'Antonio Gentile', role: 'Fisioterapista', patent: 'Albo FNOFI', exp: '30/06/2027' },
+        { id: 'st-analyst', name: 'Giuseppe Di Stefano', role: 'Match Analyst', patent: 'Match Analysis Coverciano', exp: '30/06/2027' }
       ],
       trainingsList: [
         {
@@ -105,7 +110,17 @@
         }
       ],
       partite: [
-        { id: 'match-1', date: 'Domenica · Ore 15:00', opponent: 'Foggia vs Taranto', comp: 'Campionato Serie D · Girone H', stadium: 'Stadio Pino Zaccheria', status: 'Prossima Gara', conv: '22 Convocati' }
+        {
+          id: 'match-1',
+          date: 'Domenica · Ore 15:00',
+          fullDate: 'Domenica 6 Settembre 2026',
+          opponent: 'Foggia vs Taranto FC 1927',
+          comp: 'Campionato Serie D · Girone H',
+          stadium: 'Stadio Pino Zaccheria',
+          status: 'Prossima Gara',
+          conv: '22 Convocati',
+          convocatiList: ['Marco Fumagalli', 'Alessandro Silvestro', 'Luigi Carillo', 'Davide Di Pasquale', 'Luca Rizzo Pinna', 'Moses Odjer', 'Jacopo Petermann', 'Diego Peralta', 'Eliseo Miraglia', 'Roberto Ogunseye', 'Alexis Ferrante']
+        }
       ],
       tacticalSchemes: [
         {
@@ -119,16 +134,19 @@
     };
 
     try {
-      var stored = localStorage.getItem('elisee_coach_hub_data');
-      if (stored) return Object.assign(def, JSON.parse(stored));
+      var stored = localStorage.getItem('elisee_coach_hub_data_v2') || localStorage.getItem('elisee_coach_hub_data');
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed && typeof parsed === 'object') return Object.assign(def, parsed);
+      }
     } catch (_) {}
     return def;
   }
 
   function saveCoachData(data) {
     try {
+      localStorage.setItem('elisee_coach_hub_data_v2', JSON.stringify(data));
       localStorage.setItem('elisee_coach_hub_data', JSON.stringify(data));
-      // Sync shared trainings
       if (data.trainingsList) {
         localStorage.setItem('elisee_club_trainings_shared', JSON.stringify(data.trainingsList));
       }
@@ -143,6 +161,9 @@
     lavagna: 'Strumenti tattici per schemi, analisi e strategie.'
   };
 
+  // ============================================================
+  // RENDER DELL'HUB PRINCIPALE
+  // ============================================================
   function renderHub() {
     var mount = document.getElementById('es-cd');
     if (!mount) return;
@@ -154,9 +175,9 @@
         // Top Trial / VIP bar
         '<div class="es-mister-trial-bar">' +
           '<div class="es-mister-trial-text">' +
-            '<span>⚠️</span> Stai utilizzando la versione prova Mister con funzionalità dedicate.' +
+            '<span>⭐</span> Area Mister Ufficiale — Pannello Tecnico Riservato all\'Allenatore.' +
           '</div>' +
-          '<button type="button" class="es-mister-btn-sub" onclick="if(window.showToast){ window.showToast(\'🌟 Abbonamento Mister VIP attivo per il tuo account.\', \'success\'); }">Abbonati</button>' +
+          '<button type="button" class="es-mister-btn-sub" id="btn-coach-vip-status">Profilo Verificato</button>' +
         '</div>' +
 
         '<div class="es-mister-wrap">' +
@@ -164,13 +185,13 @@
           '<div class="es-mister-club-header">' +
             '<div class="es-mister-club-main">' +
               '<div class="es-mister-crest-badge">' +
-                '<img src="' + esc(data.logoUrl) + '" alt="' + esc(data.clubName) + '" onerror="this.src=\'immagini/squadre-loghi/napoli.png\';">' +
+                '<img src="' + esc(data.logoUrl) + '" alt="' + esc(data.clubName) + '" onerror="this.src=\'immagini/squadre-loghi/foggia.png\';">' +
               '</div>' +
               '<div>' +
                 '<div class="es-mister-club-tags">' +
                   '<span class="es-mister-tag es-mister-tag-primary">PRIMA SQUADRA</span>' +
                   '<span class="es-mister-tag es-mister-tag-dark">Stagione in corso</span>' +
-                  '<span class="es-mister-tag es-mister-tag-gold">Allenatore | Admin Club</span>' +
+                  '<span class="es-mister-tag es-mister-tag-gold">Allenatore | Gestione Tecnica</span>' +
                 '</div>' +
                 '<h1 class="es-mister-club-title">' + esc(data.clubName) + '</h1>' +
                 '<p class="es-mister-club-desc" id="mister-tab-desc">' + esc(TAB_DESCS[activeTab]) + '</p>' +
@@ -205,10 +226,10 @@
         '<div class="es-mister-card-white">' +
           '<div class="es-mister-card-header">' +
             '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">🛡️</span><div><h3 class="es-mister-card-title">Club</h3><p class="es-mister-card-sub">Dati società e impianto sportivo</p></div></div>' +
-            '<button type="button" class="es-mister-circle-btn" id="btn-edit-club-data">✏️</button>' +
+            '<button type="button" class="es-mister-circle-btn" id="btn-edit-club-data" title="Modifica dati societari">✏️</button>' +
           '</div>' +
           '<table class="es-mister-info-table">' +
-            '<tr><th>SOCIETÀ</th><td>' + esc(data.clubName) + ' (Admin-716)</td></tr>' +
+            '<tr><th>SOCIETÀ</th><td>' + esc(data.clubName) + '</td></tr>' +
             '<tr><th>MATRICOLA</th><td>' + esc(data.matricola) + '</td></tr>' +
             '<tr><th>SEDE</th><td>' + esc(data.sede) + '</td></tr>' +
             '<tr><th>STADIO</th><td>' + esc(data.stadio) + '</td></tr>' +
@@ -217,21 +238,36 @@
         '</div>' +
         '<div class="es-mister-card-white">' +
           '<div class="es-mister-card-header">' +
-            '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">🖼️</span><div><h3 class="es-mister-card-title">Immagini</h3><p class="es-mister-card-sub">Stemma e foto squadra</p></div></div>' +
+            '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">🖼️</span><div><h3 class="es-mister-card-title">Immagini</h3><p class="es-mister-card-sub">Stemma societario e foto ufficiale rosa</p></div></div>' +
           '</div>' +
           '<div class="es-mister-images-grid">' +
-            '<div class="es-mister-img-box"><div class="es-mister-img-preview"><img src="' + esc(data.logoUrl) + '" alt="Stemma"></div><div style="display:flex; align-items:center; justify-content:space-between; margin-top:0.4rem;"><span style="font-weight:800; font-size:0.88rem;">Stemma</span><button type="button" class="es-mister-circle-btn" style="width:30px; height:30px; font-size:0.85rem;" onclick="if(window.showToast){ window.showToast(\'🖼️ Modifica stemma aperto\', \'info\'); }">✏️</button></div></div>' +
-            '<div class="es-mister-img-box"><div class="es-mister-img-preview"><img src="' + esc(data.teamPhotoUrl) + '" alt="Foto squadra"></div><div style="display:flex; align-items:center; justify-content:space-between; margin-top:0.4rem;"><span style="font-weight:800; font-size:0.88rem;">Foto squadra</span><button type="button" class="es-mister-circle-btn" style="width:30px; height:30px; font-size:0.85rem;" onclick="if(window.showToast){ window.showToast(\'📷 Modifica foto squadra aperto\', \'info\'); }">✏️</button></div></div>' +
+            '<div class="es-mister-img-box"><div class="es-mister-img-preview"><img src="' + esc(data.logoUrl) + '" alt="Stemma"></div><div style="display:flex; align-items:center; justify-content:space-between; margin-top:0.4rem;"><span style="font-weight:800; font-size:0.88rem;">Stemma</span><button type="button" class="es-mister-circle-btn" id="btn-change-crest" style="width:30px; height:30px; font-size:0.85rem;">✏️</button></div></div>' +
+            '<div class="es-mister-img-box"><div class="es-mister-img-preview"><img src="' + esc(data.teamPhotoUrl) + '" alt="Foto squadra"></div><div style="display:flex; align-items:center; justify-content:space-between; margin-top:0.4rem;"><span style="font-weight:800; font-size:0.88rem;">Foto squadra</span><button type="button" class="es-mister-circle-btn" id="btn-change-team-photo" style="width:30px; height:30px; font-size:0.85rem;">✏️</button></div></div>' +
           '</div>' +
+          '<input type="file" id="inp-file-crest" accept="image/*" style="display:none;">' +
+          '<input type="file" id="inp-file-team-photo" accept="image/*" style="display:none;">' +
         '</div>' +
         '<div class="es-mister-card-white">' +
           '<div class="es-mister-card-header">' +
-            '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">⏱️</span><div><h3 class="es-mister-card-title">Staff tecnico</h3><p class="es-mister-card-sub">Allenatori e collaboratori tecnici</p></div></div>' +
-            '<button type="button" class="es-mister-circle-btn" id="btn-add-staff">+</button>' +
+            '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">⏱️</span><div><h3 class="es-mister-card-title">Staff Tecnico</h3><p class="es-mister-card-sub">Allenatore, collaboratori e preparatori</p></div></div>' +
+            '<button type="button" class="es-mister-circle-btn" id="btn-add-staff-coach" title="Aggiungi collaboratore">+</button>' +
           '</div>' +
-          '<div class="es-mister-staff-box">' +
-            '<div class="es-mister-staff-left"><div class="es-mister-staff-avatar">👤</div><div><h4 class="es-mister-staff-name">' + esc(data.coachName) + '</h4><div class="es-mister-staff-role">' + esc(data.coachRole) + '</div><div class="es-mister-staff-meta"><span>Doc: <b>' + esc(data.coachDoc) + '</b></span><span>Tessera: <b>' + esc(data.coachTessera) + '</b></span><span>Scad. cert.: <b>' + esc(data.coachScadenza) + '</b></span></div></div></div>' +
-            '<button type="button" class="es-mister-circle-btn" style="width:34px; height:34px; font-size:0.9rem;">✏️</button>' +
+          '<div style="display:flex; flex-direction:column; gap:0.6rem;">' +
+            (data.staffMembers || []).map(function (st, sIdx) {
+              return (
+                '<div class="es-mister-staff-box">' +
+                  '<div class="es-mister-staff-left">' +
+                    '<div class="es-mister-staff-avatar">👤</div>' +
+                    '<div>' +
+                      '<h4 class="es-mister-staff-name">' + esc(st.name) + '</h4>' +
+                      '<div class="es-mister-staff-role">' + esc(st.role) + ' · Qualifica: <b>' + esc(st.patent || 'FIGC') + '</b></div>' +
+                      '<div class="es-mister-staff-meta"><span>Scadenza: <b>' + esc(st.exp || '30/06/2027') + '</b></span></div>' +
+                    '</div>' +
+                  '</div>' +
+                  '<button type="button" class="es-mister-circle-btn" style="width:32px; height:32px; font-size:0.85rem;" data-edit-staff-idx="' + sIdx + '">✏️</button>' +
+                '</div>'
+              );
+            }).join('') +
           '</div>' +
         '</div>'
       );
@@ -242,8 +278,8 @@
         return (
           '<div class="es-mister-player-card">' +
             '<div class="es-mister-player-num">' + p.num + '</div>' +
-            '<div class="es-mister-player-info"><h4 class="es-mister-player-name">' + esc(p.name) + '</h4><div class="es-mister-player-role">' + esc(p.role) + ' · Anno ' + esc(p.birth) + '</div><div style="font-size:0.72rem; color:#64748b;">🟢 Disponibile · ' + p.app + ' Presenze</div></div>' +
-            '<button type="button" class="es-mister-circle-btn" style="width:30px; height:30px; font-size:0.8rem;" data-edit-player="' + idx + '">✏️</button>' +
+            '<div class="es-mister-player-info"><h4 class="es-mister-player-name">' + esc(p.name) + '</h4><div class="es-mister-player-role">' + esc(p.role) + ' · Anno ' + esc(p.birth) + '</div><div style="font-size:0.72rem; color:#64748b;">🟢 ' + (p.status === 'disp' ? 'Disponibile' : 'Differenziato') + ' · ' + p.app + ' Presenze</div></div>' +
+            '<button type="button" class="es-mister-circle-btn" style="width:30px; height:30px; font-size:0.8rem;" data-edit-player="' + idx + '" title="Modifica atleta">✏️</button>' +
           '</div>'
         );
       }).join('');
@@ -253,8 +289,8 @@
           '<div class="es-mister-card-header">' +
             '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">👥</span><div><h3 class="es-mister-card-title">Squadra</h3><p class="es-mister-card-sub">' + esc(data.clubName) + ' · Prima Squadra (' + (data.roster || []).length + ' Giocatori in rosa)</p></div></div>' +
             '<div class="es-mister-card-actions">' +
-              '<button type="button" class="es-mister-circle-btn" id="btn-stats-roster">📊</button>' +
-              '<button type="button" class="es-mister-circle-btn" id="btn-add-player">+</button>' +
+              '<button type="button" class="es-mister-circle-btn" id="btn-stats-roster" title="Statistiche e ripartizione rosa">📊</button>' +
+              '<button type="button" class="es-mister-circle-btn" id="btn-add-player" title="Aggiungi giocatore in rosa">+</button>' +
             '</div>' +
           '</div>' +
           '<div class="es-mister-roster-grid">' + playersHtml + '</div>' +
@@ -282,7 +318,7 @@
 
         return (
           '<div class="es-training-event-card" id="card-' + t.id + '">' +
-            '<div class="es-training-head-banner">' +
+            '<div class="es-training-head-banner" style="cursor:pointer;" data-open-training-details="' + t.id + '">' +
               '<div class="es-training-date-block">' +
                 '<div class="es-training-day-chip">' +
                   '<span class="es-training-day-txt">' + esc(t.day) + '</span>' +
@@ -350,12 +386,12 @@
     }
 
     if (tab === 'partite') {
-      var matchHtml = (data.partite || []).map(function (m) {
+      var matchHtml = (data.partite || []).map(function (m, mIdx) {
         return (
           '<div class="es-mister-event-card">' +
             '<div class="es-mister-event-date-badge">' + m.date + '</div>' +
             '<div class="es-mister-event-details"><h4 class="es-mister-event-title">' + m.opponent + '</h4><p class="es-mister-event-sub">' + m.comp + ' · 🏟️ ' + m.stadium + '</p><div style="font-size:0.75rem; color:#0284c7; font-weight:700; margin-top:0.3rem;">⚽ ' + m.status + ' (' + m.conv + ')</div></div>' +
-            '<button type="button" class="es-mister-circle-btn" style="width:34px; height:34px; font-size:0.85rem;">📋</button>' +
+            '<button type="button" class="es-mister-circle-btn" style="width:34px; height:34px; font-size:0.85rem;" data-match-convocati="' + mIdx + '" title="Convocazioni e Formazione">📋</button>' +
           '</div>'
         );
       }).join('');
@@ -365,8 +401,8 @@
           '<div class="es-mister-card-header">' +
             '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">⚽</span><div><h3 class="es-mister-card-title">Partite</h3><p class="es-mister-card-sub">' + esc(data.clubName) + ' · Prima Squadra</p></div></div>' +
             '<div class="es-mister-card-actions">' +
-              '<button type="button" class="es-mister-circle-btn" id="btn-stats-match">📊</button>' +
-              '<button type="button" class="es-mister-circle-btn" id="btn-add-match">+</button>' +
+              '<button type="button" class="es-mister-circle-btn" id="btn-stats-match" title="Statistiche Gare">📊</button>' +
+              '<button type="button" class="es-mister-circle-btn" id="btn-add-match" title="Aggiungi Partita">+</button>' +
             '</div>' +
           '</div>' +
           '<div style="margin-top:1rem;">' + matchHtml + '</div>' +
@@ -434,6 +470,506 @@
   }
 
   // ============================================================
+  // MODALI B2B CENTRATE (AREA ALLENATORE)
+  // ============================================================
+  function openCoachModal(title, iconText, contentHtml) {
+    var old = document.getElementById('es-coach-modal-overlay');
+    if (old) old.remove();
+
+    var modal = document.createElement('div');
+    modal.id = 'es-coach-modal-overlay';
+    modal.className = 'es-pres-modal-overlay';
+    modal.innerHTML =
+      '<div class="es-pres-modal-sheet" role="dialog" aria-modal="true" style="border-radius:4px !important; max-width:620px;">' +
+        '<button type="button" class="es-pres-modal-close-btn" id="btn-close-coach-modal" aria-label="Chiudi">&times;</button>' +
+        '<div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:1.2rem; padding-bottom:0.65rem; border-bottom:1px solid rgba(148,163,184,0.15);">' +
+          '<span style="font-size:1.3rem;">' + iconText + '</span>' +
+          '<h2 style="font-size:1.25rem; font-weight:800; color:#ffffff; margin:0;">' + esc(title) + '</h2>' +
+        '</div>' +
+        '<div>' + contentHtml + '</div>' +
+      '</div>';
+
+    document.body.appendChild(modal);
+    function close() { modal.remove(); }
+    modal.querySelector('#btn-close-coach-modal').onclick = close;
+    modal.onclick = function (e) { if (e.target === modal) close(); };
+  }
+
+  // 1. Modale Modifica Dati Club
+  function openEditClubDataModal(data) {
+    var formHtml =
+      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Aggiorna le informazioni anagrafiche e logistiche della società:</p>' +
+      '<form id="form-edit-club" style="display:flex; flex-direction:column; gap:1rem;">' +
+        '<div class="es-pres-input-group"><label>Denominazione Società *</label><input type="text" class="es-pres-input-text" id="inp-c-name" value="' + esc(data.clubName) + '" required></div>' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group"><label>Matricola FIGC *</label><input type="text" class="es-pres-input-text" id="inp-c-mat" value="' + esc(data.matricola) + '" required></div>' +
+          '<div class="es-pres-input-group"><label>Telefono Segreteria</label><input type="text" class="es-pres-input-text" id="inp-c-tel" value="' + esc(data.telefono) + '"></div>' +
+        '</div>' +
+        '<div class="es-pres-input-group"><label>Sede Legale / Operativa</label><input type="text" class="es-pres-input-text" id="inp-c-sede" value="' + esc(data.sede) + '"></div>' +
+        '<div class="es-pres-input-group"><label>Stadio Ufficiale</label><input type="text" class="es-pres-input-text" id="inp-c-stadio" value="' + esc(data.stadio) + '"></div>' +
+        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+          '<button type="button" class="es-pres-btn-secondary" id="btn-c-cancel">Annulla</button>' +
+          '<button type="submit" class="es-pres-btn-primary">Salva Dati Società</button>' +
+        '</div>' +
+      '</form>';
+
+    openCoachModal('Modifica Dati Società & Impianto', '🛡️', formHtml);
+    var overlay = document.getElementById('es-coach-modal-overlay');
+    var form = document.getElementById('form-edit-club');
+    var btnCancel = document.getElementById('btn-c-cancel');
+    if (btnCancel && overlay) btnCancel.onclick = function () { overlay.remove(); };
+
+    if (form) {
+      form.onsubmit = function (e) {
+        e.preventDefault();
+        data.clubName = document.getElementById('inp-c-name').value.trim();
+        data.matricola = document.getElementById('inp-c-mat').value.trim();
+        data.telefono = document.getElementById('inp-c-tel').value.trim();
+        data.sede = document.getElementById('inp-c-sede').value.trim();
+        data.stadio = document.getElementById('inp-c-stadio').value.trim();
+
+        saveCoachData(data);
+        if (overlay) overlay.remove();
+        renderHub();
+        if (window.showToast) window.showToast('Dati societari salvati con successo!', 'success');
+      };
+    }
+  }
+
+  // 2. Modale Aggiungi / Modifica Staff
+  function openAddStaffModal(data, editIdx) {
+    var isEdit = typeof editIdx === 'number' && editIdx >= 0;
+    var current = isEdit ? (data.staffMembers[editIdx] || {}) : {};
+
+    var formHtml =
+      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">' + (isEdit ? 'Modifica le informazioni del membro dello staff:' : 'Inserisci un nuovo collaboratore tecnico o sanitario:') + '</p>' +
+      '<form id="form-staff-coach" style="display:flex; flex-direction:column; gap:1rem;">' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group"><label>Nome e Cognome *</label><input type="text" class="es-pres-input-text" id="inp-st-name" value="' + esc(current.name || '') + '" required placeholder="Es. Marco Rossi"></div>' +
+          '<div class="es-pres-input-group"><label>Incarico Staff *</label><select class="es-pres-input-text" id="sel-st-role" style="background:#040810; color:#fff;"><option ' + (current.role === 'Vice Allenatore' ? 'selected' : '') + '>Vice Allenatore</option><option ' + (current.role === 'Preparatore Atletico' ? 'selected' : '') + '>Preparatore Atletico</option><option ' + (current.role === 'Preparatore Portieri' ? 'selected' : '') + '>Preparatore Portieri</option><option ' + (current.role === 'Match Analyst' ? 'selected' : '') + '>Match Analyst</option><option ' + (current.role === 'Fisioterapista' ? 'selected' : '') + '>Fisioterapista</option><option ' + (current.role === 'Medico Sociale' ? 'selected' : '') + '>Medico Sociale</option><option ' + (current.role === 'Collaboratore Tecnico' ? 'selected' : '') + '>Collaboratore Tecnico</option></select></div>' +
+        '</div>' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group"><label>Qualifica FIGC / Patentino</label><input type="text" class="es-pres-input-text" id="inp-st-pat" value="' + esc(current.patent || 'UEFA B') + '"></div>' +
+          '<div class="es-pres-input-group"><label>Scadenza Contratto</label><input type="date" class="es-pres-input-text" id="inp-st-exp" value="' + (current.exp ? (current.exp.indexOf('/') >= 0 ? '2027-06-30' : current.exp) : '2027-06-30') + '"></div>' +
+        '</div>' +
+        '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+          (isEdit ? '<button type="button" class="es-pres-btn-secondary" id="btn-del-staff" style="color:#f87171; border-color:rgba(239,68,68,0.4);">Rimuovi</button>' : '<div></div>') +
+          '<div style="display:flex; gap:0.6rem;">' +
+            '<button type="button" class="es-pres-btn-secondary" id="btn-st-cancel">Annulla</button>' +
+            '<button type="submit" class="es-pres-btn-primary">' + (isEdit ? 'Salva Modifiche' : 'Aggiungi Staff') + '</button>' +
+          '</div>' +
+        '</div>' +
+      '</form>';
+
+    openCoachModal(isEdit ? 'Modifica Membro Staff' : 'Aggiungi Collaboratore Staff', '⏱️', formHtml);
+    var overlay = document.getElementById('es-coach-modal-overlay');
+    var form = document.getElementById('form-staff-coach');
+    var btnCancel = document.getElementById('btn-st-cancel');
+    var btnDel = document.getElementById('btn-del-staff');
+    if (btnCancel && overlay) btnCancel.onclick = function () { overlay.remove(); };
+
+    if (btnDel) {
+      btnDel.onclick = function () {
+        if (confirm('Sei sicuro di voler rimuovere questo membro dello staff?')) {
+          data.staffMembers.splice(editIdx, 1);
+          saveCoachData(data);
+          if (overlay) overlay.remove();
+          renderHub();
+          if (window.showToast) window.showToast('Membro dello staff rimosso.', 'info');
+        }
+      };
+    }
+
+    if (form) {
+      form.onsubmit = function (e) {
+        e.preventDefault();
+        var name = document.getElementById('inp-st-name').value.trim();
+        var role = document.getElementById('sel-st-role').value;
+        var pat = document.getElementById('inp-st-pat').value.trim();
+        var exp = document.getElementById('inp-st-exp').value;
+
+        data.staffMembers = data.staffMembers || [];
+        if (isEdit) {
+          data.staffMembers[editIdx] = Object.assign(data.staffMembers[editIdx], {
+            name: name,
+            role: role,
+            patent: pat,
+            exp: exp
+          });
+        } else {
+          data.staffMembers.push({
+            id: 'st-' + Date.now(),
+            name: name,
+            role: role,
+            patent: pat,
+            exp: exp
+          });
+        }
+
+        saveCoachData(data);
+        if (overlay) overlay.remove();
+        renderHub();
+        if (window.showToast) window.showToast((isEdit ? 'Staff aggiornato!' : 'Nuovo collaboratore aggiunto!'), 'success');
+      };
+    }
+  }
+
+  // 3. Modale Aggiungi / Modifica Giocatore
+  function openAddPlayerModal(data, editIdx) {
+    var isEdit = typeof editIdx === 'number' && editIdx >= 0;
+    var current = isEdit ? (data.roster[editIdx] || {}) : {};
+
+    var formHtml =
+      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">' + (isEdit ? 'Modifica scheda calciatore:' : 'Inserisci un nuovo atleta nell\'organico della squadra:') + '</p>' +
+      '<form id="form-player-coach" style="display:flex; flex-direction:column; gap:1rem;">' +
+        '<div style="display:grid; grid-template-columns:1fr 2fr; gap:1rem;">' +
+          '<div class="es-pres-input-group"><label>N° Maglia *</label><input type="number" class="es-pres-input-text" id="inp-p-num" value="' + (current.num || ((data.roster || []).length + 1)) + '" required min="1" max="99"></div>' +
+          '<div class="es-pres-input-group"><label>Nome e Cognome *</label><input type="text" class="es-pres-input-text" id="inp-p-name" value="' + esc(current.name || '') + '" required placeholder="Es. Lorenzo Pellegrini"></div>' +
+        '</div>' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group"><label>Ruolo Tattico *</label><select class="es-pres-input-text" id="sel-p-role" style="background:#040810; color:#fff;"><option ' + (current.role === 'Portiere' ? 'selected' : '') + '>Portiere</option><option ' + (current.role === 'Difensore Centrale' ? 'selected' : '') + '>Difensore Centrale</option><option ' + (current.role === 'Terzino Destro' ? 'selected' : '') + '>Terzino Destro</option><option ' + (current.role === 'Terzino Sinistro' ? 'selected' : '') + '>Terzino Sinistro</option><option ' + (current.role === 'Mediano' ? 'selected' : '') + '>Mediano</option><option ' + (current.role === 'Regista' ? 'selected' : '') + '>Regista</option><option ' + (current.role === 'Mezzala' ? 'selected' : '') + '>Mezzala</option><option ' + (current.role === 'Trequartista' ? 'selected' : '') + '>Trequartista</option><option ' + (current.role === 'Ala Destra' ? 'selected' : '') + '>Ala Destra</option><option ' + (current.role === 'Ala Sinistra' ? 'selected' : '') + '>Ala Sinistra</option><option ' + (current.role === 'Punta Centrale' ? 'selected' : '') + '>Punta Centrale</option><option ' + (current.role === 'Seconda Punta' ? 'selected' : '') + '>Seconda Punta</option></select></div>' +
+          '<div class="es-pres-input-group"><label>Anno di Nascita</label><input type="number" class="es-pres-input-text" id="inp-p-birth" value="' + (current.birth || '2004') + '" min="1980" max="2015"></div>' +
+        '</div>' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group"><label>Presenze Stagionali</label><input type="number" class="es-pres-input-text" id="inp-p-app" value="' + (current.app || 0) + '" min="0"></div>' +
+          '<div class="es-pres-input-group"><label>Stato Disponibilità</label><select class="es-pres-input-text" id="sel-p-status" style="background:#040810; color:#fff;"><option value="disp" ' + (current.status === 'disp' ? 'selected' : '') + '>🟢 Disponibile</option><option value="diff" ' + (current.status === 'diff' ? 'selected' : '') + '>🟡 Lavoro Differenziato</option><option value="infortunato" ' + (current.status === 'infortunato' ? 'selected' : '') + '>🔴 Infortunato / Indisponibile</option></select></div>' +
+        '</div>' +
+        '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+          (isEdit ? '<button type="button" class="es-pres-btn-secondary" id="btn-del-player" style="color:#f87171; border-color:rgba(239,68,68,0.4);">Rimuovi dalla Rosa</button>' : '<div></div>') +
+          '<div style="display:flex; gap:0.6rem;">' +
+            '<button type="button" class="es-pres-btn-secondary" id="btn-p-cancel">Annulla</button>' +
+            '<button type="submit" class="es-pres-btn-primary">' + (isEdit ? 'Salva Modifiche' : 'Aggiungi Giocatore') + '</button>' +
+          '</div>' +
+        '</div>' +
+      '</form>';
+
+    openCoachModal(isEdit ? 'Modifica Atleta in Rosa' : 'Aggiungi Nuovo Calciatore', '👥', formHtml);
+    var overlay = document.getElementById('es-coach-modal-overlay');
+    var form = document.getElementById('form-player-coach');
+    var btnCancel = document.getElementById('btn-p-cancel');
+    var btnDel = document.getElementById('btn-del-player');
+    if (btnCancel && overlay) btnCancel.onclick = function () { overlay.remove(); };
+
+    if (btnDel) {
+      btnDel.onclick = function () {
+        if (confirm('Sei sicuro di voler rimuovere ' + current.name + ' dalla rosa?')) {
+          data.roster.splice(editIdx, 1);
+          saveCoachData(data);
+          if (overlay) overlay.remove();
+          renderHub();
+          if (window.showToast) window.showToast('Atleta rimosso dalla rosa.', 'info');
+        }
+      };
+    }
+
+    if (form) {
+      form.onsubmit = function (e) {
+        e.preventDefault();
+        var num = parseInt(document.getElementById('inp-p-num').value) || 1;
+        var name = document.getElementById('inp-p-name').value.trim();
+        var role = document.getElementById('sel-p-role').value;
+        var birth = document.getElementById('inp-p-birth').value;
+        var app = parseInt(document.getElementById('inp-p-app').value) || 0;
+        var status = document.getElementById('sel-p-status').value;
+
+        data.roster = data.roster || [];
+        if (isEdit) {
+          data.roster[editIdx] = Object.assign(data.roster[editIdx], {
+            num: num,
+            name: name,
+            role: role,
+            birth: birth,
+            app: app,
+            status: status
+          });
+        } else {
+          data.roster.push({
+            id: 'p-' + Date.now(),
+            num: num,
+            name: name,
+            role: role,
+            birth: birth,
+            cert: 'Regolare',
+            status: status,
+            app: app
+          });
+        }
+
+        saveCoachData(data);
+        if (overlay) overlay.remove();
+        renderHub();
+        if (window.showToast) window.showToast((isEdit ? 'Scheda atleta salvata!' : 'Giocatore ' + name + ' aggiunto alla rosa!'), 'success');
+      };
+    }
+  }
+
+  // 4. Modale Statistiche Rosa (Icona 📊 in Squadra)
+  function openRosterStatsModal(data) {
+    var roster = data.roster || [];
+    var total = roster.length;
+    var gk = 0, def = 0, mid = 0, att = 0, disp = 0;
+    var sumAge = 0;
+
+    roster.forEach(function (p) {
+      var r = (p.role || '').toLowerCase();
+      if (/portiere/.test(r)) gk++;
+      else if (/terzino|difensore/.test(r)) def++;
+      else if (/mediano|regista|mezzala|trequartista|centro/.test(r)) mid++;
+      else att++;
+
+      if (p.status === 'disp') disp++;
+      var b = parseInt(p.birth);
+      if (b) sumAge += (2026 - b);
+    });
+
+    var avgAge = total ? (sumAge / total).toFixed(1) : '—';
+
+    var html =
+      '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.8rem; margin-bottom:1.2rem;">' +
+        '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:0.9rem; text-align:center;">' +
+          '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">ORGANICO TOTALE</div>' +
+          '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8;">' + total + ' <span style="font-size:0.8rem; font-weight:400;">atleti</span></div>' +
+        '</div>' +
+        '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:0.9rem; text-align:center;">' +
+          '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">ETÀ MEDIA ROSA</div>' +
+          '<div style="font-size:1.6rem; font-weight:800; color:#34d399;">' + avgAge + ' <span style="font-size:0.8rem; font-weight:400;">anni</span></div>' +
+        '</div>' +
+        '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:0.9rem; text-align:center;">' +
+          '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">DISPONIBILI</div>' +
+          '<div style="font-size:1.6rem; font-weight:800; color:#facc15;">' + disp + ' / ' + total + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem; margin-bottom:1.2rem;">' +
+        '<h4 style="font-size:0.88rem; font-weight:800; color:#fff; margin:0 0 0.6rem;">Ripartizione Tattica Ruoli</h4>' +
+        '<div style="display:flex; flex-direction:column; gap:0.4rem; font-size:0.82rem; color:#cbd5e1;">' +
+          '<div style="display:flex; justify-content:space-between;"><span>🧤 Portieri:</span><b>' + gk + '</b></div>' +
+          '<div style="display:flex; justify-content:space-between;"><span>🛡️ Difensori:</span><b>' + def + '</b></div>' +
+          '<div style="display:flex; justify-content:space-between;"><span>👟 Centrocampisti:</span><b>' + mid + '</b></div>' +
+          '<div style="display:flex; justify-content:space-between;"><span>⚽ Attaccanti:</span><b>' + att + '</b></div>' +
+        '</div>' +
+      '</div>' +
+      '<button type="button" class="es-pres-btn-primary" id="btn-close-r-stats" style="width:100%;">Chiudi Statistiche</button>';
+
+    openCoachModal('Analisi Statistica Rosa', '📊', html);
+    var overlay = document.getElementById('es-coach-modal-overlay');
+    var btnClose = document.getElementById('btn-close-r-stats');
+    if (btnClose && overlay) btnClose.onclick = function () { overlay.remove(); };
+  }
+
+  // 5. Modale Aggiungi / Dettaglio Allenamento
+  function openAddTrainingModal(data) {
+    var formHtml =
+      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Pianifica una nuova seduta di allenamento con orario e focus tecnico:</p>' +
+      '<form id="form-train-coach" style="display:flex; flex-direction:column; gap:1rem;">' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group"><label>Titolo Seduta *</label><input type="text" class="es-pres-input-text" id="inp-t-title" value="Allenamento" required></div>' +
+          '<div class="es-pres-input-group"><label>Giorno &amp; Data *</label><input type="text" class="es-pres-input-text" id="inp-t-daydate" value="Martedì · 08/09" required placeholder="Es. Martedì · 08/09"></div>' +
+        '</div>' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.8rem;">' +
+          '<div class="es-pres-input-group"><label>Incontro</label><input type="text" class="es-pres-input-text" id="inp-t-inc" value="18:30"></div>' +
+          '<div class="es-pres-input-group"><label>Inizio Campo *</label><input type="text" class="es-pres-input-text" id="inp-t-start" value="19:00" required></div>' +
+          '<div class="es-pres-input-group"><label>Fine Campo</label><input type="text" class="es-pres-input-text" id="inp-t-end" value="20:30"></div>' +
+        '</div>' +
+        '<div class="es-pres-input-group"><label>Campo / Ubicazione</label><input type="text" class="es-pres-input-text" id="inp-t-pitch" value="Campo A - Stadio Pino Zaccheria"></div>' +
+        '<div class="es-pres-input-group"><label>Focus Tattico &amp; Obiettivo Seduta *</label><textarea class="es-pres-input-text" id="inp-t-focus" rows="2" required placeholder="Es. Lavoro a secco, possesso palla e transizioni veloci">Seduta Tattica &amp; Pressione Alta</textarea></div>' +
+        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+          '<button type="button" class="es-pres-btn-secondary" id="btn-t-cancel">Annulla</button>' +
+          '<button type="submit" class="es-pres-btn-primary">Programma Allenamento</button>' +
+        '</div>' +
+      '</form>';
+
+    openCoachModal('Programmazione Seduta di Allenamento', '🏃‍♂️', formHtml);
+    var overlay = document.getElementById('es-coach-modal-overlay');
+    var form = document.getElementById('form-train-coach');
+    var btnCancel = document.getElementById('btn-t-cancel');
+    if (btnCancel && overlay) btnCancel.onclick = function () { overlay.remove(); };
+
+    if (form) {
+      form.onsubmit = function (e) {
+        e.preventDefault();
+        var title = document.getElementById('inp-t-title').value.trim();
+        var dayDate = document.getElementById('inp-t-daydate').value.trim();
+        var parts = dayDate.split('·');
+        var dayTxt = (parts[0] || 'mar').trim().substring(0, 3).toLowerCase();
+        var dateTxt = (parts[1] || '08/09').trim();
+
+        var inc = document.getElementById('inp-t-inc').value.trim();
+        var start = document.getElementById('inp-t-start').value.trim();
+        var end = document.getElementById('inp-t-end').value.trim();
+        var pitch = document.getElementById('inp-t-pitch').value.trim();
+        var focus = document.getElementById('inp-t-focus').value.trim();
+
+        data.trainingsList = data.trainingsList || [];
+        data.trainingsList.unshift({
+          id: 'train-' + Date.now(),
+          day: dayTxt,
+          date: dateTxt,
+          fullDate: dayDate,
+          title: title,
+          incontro: inc,
+          inizio: start,
+          fine: end,
+          campo: pitch,
+          focus: focus,
+          votes: {}
+        });
+
+        saveCoachData(data);
+        if (overlay) overlay.remove();
+        renderHub();
+        if (window.showToast) window.showToast('Allenamento programmato e condiviso con la squadra!', 'success');
+      };
+    }
+  }
+
+  // 6. Modale Aggiungi Partita
+  function openAddMatchModal(data) {
+    var formHtml =
+      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Inserisci una nuova partita nel calendario ufficiale:</p>' +
+      '<form id="form-match-coach" style="display:flex; flex-direction:column; gap:1rem;">' +
+        '<div class="es-pres-input-group"><label>Incontro / Avversario *</label><input type="text" class="es-pres-input-text" id="inp-m-opp" placeholder="Es. Foggia vs Fidelis Andria" required></div>' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group"><label>Data &amp; Orario *</label><input type="text" class="es-pres-input-text" id="inp-m-date" value="Domenica · Ore 15:00" required></div>' +
+          '<div class="es-pres-input-group"><label>Competizione</label><input type="text" class="es-pres-input-text" id="inp-m-comp" value="Campionato Serie D · Girone H"></div>' +
+        '</div>' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group"><label>Stadio / Ubicazione</label><input type="text" class="es-pres-input-text" id="inp-m-stad" value="Stadio Comunale Pino Zaccheria"></div>' +
+          '<div class="es-pres-input-group"><label>Stato Partita</label><select class="es-pres-input-text" id="sel-m-status" style="background:#040810; color:#fff;"><option>Prossima Gara</option><option>Vinta</option><option>Pareggiata</option><option>Persa</option></select></div>' +
+        '</div>' +
+        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+          '<button type="button" class="es-pres-btn-secondary" id="btn-m-cancel">Annulla</button>' +
+          '<button type="submit" class="es-pres-btn-primary">Registra Partita</button>' +
+        '</div>' +
+      '</form>';
+
+    openCoachModal('Inserisci Partita Ufficiale', '⚽', formHtml);
+    var overlay = document.getElementById('es-coach-modal-overlay');
+    var form = document.getElementById('form-match-coach');
+    var btnCancel = document.getElementById('btn-m-cancel');
+    if (btnCancel && overlay) btnCancel.onclick = function () { overlay.remove(); };
+
+    if (form) {
+      form.onsubmit = function (e) {
+        e.preventDefault();
+        var opp = document.getElementById('inp-m-opp').value.trim();
+        var dt = document.getElementById('inp-m-date').value.trim();
+        var comp = document.getElementById('inp-m-comp').value.trim();
+        var stad = document.getElementById('inp-m-stad').value.trim();
+        var st = document.getElementById('sel-m-status').value;
+
+        data.partite = data.partite || [];
+        data.partite.push({
+          id: 'match-' + Date.now(),
+          date: dt,
+          fullDate: dt,
+          opponent: opp,
+          comp: comp,
+          stadium: stad,
+          status: st,
+          conv: 'In preparazione',
+          convocatiList: []
+        });
+
+        saveCoachData(data);
+        if (overlay) overlay.remove();
+        renderHub();
+        if (window.showToast) window.showToast('Partita inserita nel calendario ufficiale!', 'success');
+      };
+    }
+  }
+
+  // 7. Modale Convocazioni & Formazione Pre-Gara (Icona 📋 in Partite)
+  function openMatchConvocatiModal(match, mIdx, data) {
+    var roster = data.roster || [];
+    var convList = match.convocatiList || [];
+
+    var checkboxesHtml = roster.map(function (p) {
+      var isChecked = convList.indexOf(p.name) >= 0;
+      return (
+        '<label style="display:flex; align-items:center; justify-content:space-between; background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.6rem 0.8rem; cursor:pointer;">' +
+          '<div style="display:flex; align-items:center; gap:0.6rem;">' +
+            '<span style="font-weight:800; color:#38bdf8; width:22px;">' + p.num + '</span>' +
+            '<span style="font-weight:700; color:#fff;">' + esc(p.name) + '</span>' +
+            '<span style="font-size:0.75rem; color:#94a3b8;">(' + esc(p.role) + ')</span>' +
+          '</div>' +
+          '<input type="checkbox" value="' + esc(p.name) + '" ' + (isChecked ? 'checked' : '') + ' class="chk-conv-player" style="accent-color:#0d9488; transform:scale(1.2);">' +
+        '</label>'
+      );
+    }).join('');
+
+    var formHtml =
+      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1rem;">Seleziona i calciatori convocati per <b>' + esc(match.opponent) + '</b>:</p>' +
+      '<form id="form-conv-match" style="display:flex; flex-direction:column; gap:1rem;">' +
+        '<div style="display:flex; flex-direction:column; gap:0.45rem; max-height:280px; overflow-y:auto; padding-right:0.4rem;">' +
+          checkboxesHtml +
+        '</div>' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:0.5rem;">' +
+          '<div class="es-pres-input-group"><label>Modulo Tattico Previsto</label><select class="es-pres-input-text" id="sel-match-mod" style="background:#040810; color:#fff;"><option>4-3-3</option><option>3-5-2</option><option>4-2-3-1</option><option>3-4-2-1</option><option>4-3-1-2</option></select></div>' +
+          '<div class="es-pres-input-group"><label>Note Tecniche Pre-Gara</label><input type="text" class="es-pres-input-text" id="inp-match-notes" placeholder="Es. Ritrovo ore 12:30"></div>' +
+        '</div>' +
+        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+          '<button type="button" class="es-pres-btn-secondary" id="btn-conv-cancel">Annulla</button>' +
+          '<button type="submit" class="es-pres-btn-primary">Salva Distinta &amp; Convocati</button>' +
+        '</div>' +
+      '</form>';
+
+    openCoachModal('Lista Convocati & Distinta Gara', '📋', formHtml);
+    var overlay = document.getElementById('es-coach-modal-overlay');
+    var form = document.getElementById('form-conv-match');
+    var btnCancel = document.getElementById('btn-conv-cancel');
+    if (btnCancel && overlay) btnCancel.onclick = function () { overlay.remove(); };
+
+    if (form) {
+      form.onsubmit = function (e) {
+        e.preventDefault();
+        var selected = [];
+        form.querySelectorAll('.chk-conv-player:checked').forEach(function (chk) {
+          selected.push(chk.value);
+        });
+
+        match.convocatiList = selected;
+        match.conv = selected.length + ' Convocati';
+        saveCoachData(data);
+
+        if (overlay) overlay.remove();
+        renderHub();
+        if (window.showToast) window.showToast('Distinta salvata con ' + selected.length + ' convocati!', 'success');
+      };
+    }
+  }
+
+  // 8. Modale Statistiche Partite (Icona 📊 in Partite)
+  function openMatchStatsModal(data) {
+    var matches = data.partite || [];
+    var total = matches.length;
+
+    var html =
+      '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem;">' +
+        '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem; text-align:center;">' +
+          '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">PARTITE IN PROGRAMMA</div>' +
+          '<div style="font-size:1.8rem; font-weight:800; color:#38bdf8;">' + total + '</div>' +
+        '</div>' +
+        '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem; text-align:center;">' +
+          '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">STATO SQUADRA</div>' +
+          '<div style="font-size:1.2rem; font-weight:800; color:#34d399; margin-top:0.4rem;">Pronta alla Gara</div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem; margin-bottom:1.2rem;">' +
+        '<div style="font-size:0.85rem; color:#cbd5e1; line-height:1.6;">' +
+          '• <b>Prossimo Match:</b> ' + (matches[0] ? esc(matches[0].opponent) : 'Nessuno') + '<br>' +
+          '• <b>Impianto:</b> ' + (matches[0] ? esc(matches[0].stadium) : '—') + '<br>' +
+          '• <b>Stato Convocazioni:</b> ' + (matches[0] ? esc(matches[0].conv) : '—') +
+        '</div>' +
+      '</div>' +
+      '<button type="button" class="es-pres-btn-primary" id="btn-close-m-stats" style="width:100%;">Chiudi</button>';
+
+    openCoachModal('Riepilogo Gare & Calendario', '📊', html);
+    var overlay = document.getElementById('es-coach-modal-overlay');
+    var btnClose = document.getElementById('btn-close-m-stats');
+    if (btnClose && overlay) btnClose.onclick = function () { overlay.remove(); };
+  }
+
+  // ============================================================
   // MODALE VOTANTI / PARTECIPANTI (Icona 👥)
   // ============================================================
   function openVotersModal(trainId) {
@@ -447,7 +983,6 @@
     var votes = train.votes || {};
     var allClubMembers = [];
 
-    // Giocatori
     (data.roster || []).forEach(function (p) {
       var v = votes[p.id] || { vote: 'pending' };
       allClubMembers.push({
@@ -459,7 +994,6 @@
       });
     });
 
-    // Staff
     (data.staffMembers || []).forEach(function (st) {
       var v = votes[st.id] || { vote: 'pending' };
       allClubMembers.push({
@@ -478,9 +1012,9 @@
 
     var modal = document.createElement('div');
     modal.id = 'es-voters-modal-overlay';
-    modal.className = 'es-pres-stats-modal';
+    modal.className = 'es-pres-modal-overlay';
     modal.innerHTML =
-      '<div class="es-voters-modal-sheet" role="dialog" aria-modal="true">' +
+      '<div class="es-voters-modal-sheet" role="dialog" aria-modal="true" style="border-radius:4px !important;">' +
         '<div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;">' +
           '<div>' +
             '<h3 style="font-size:1.3rem; font-weight:900; color:#0f172a; margin:0;">Partecipanti Allenamento</h3>' +
@@ -561,15 +1095,15 @@
     modal.className = 'es-tactical-editor-modal';
     modal.innerHTML =
       '<div class="es-tactical-top-bar">' +
-        '<div class="es-tactical-title">Lavagna tattica</div>' +
+        '<div class="es-tactical-title">Lavagna Tattica Mister</div>' +
         '<div class="es-tactical-size-ctrl">' +
-          '<span class="es-tactical-size-label">Dimensione iniziale elementi</span>' +
+          '<span class="es-tactical-size-label">Dimensione pedine</span>' +
           '<button type="button" class="es-tactical-size-pill ' + (currentElemSize === 'S' ? 'is-active' : '') + '" data-size="S">S</button>' +
           '<button type="button" class="es-tactical-size-pill ' + (currentElemSize === 'M' ? 'is-active' : '') + '" data-size="M">M</button>' +
           '<button type="button" class="es-tactical-size-pill ' + (currentElemSize === 'L' ? 'is-active' : '') + '" data-size="L">L</button>' +
         '</div>' +
         '<div style="display:flex; align-items:center;">' +
-          '<button type="button" class="es-tactical-btn-use" id="btn-save-tactical-image">Usa immagine</button>' +
+          '<button type="button" class="es-tactical-btn-use" id="btn-save-tactical-image">Salva nella Libreria</button>' +
           '<button type="button" class="es-tactical-btn-close" id="btn-close-tactical-editor">&times;</button>' +
         '</div>' +
       '</div>' +
@@ -588,10 +1122,6 @@
             '<div class="es-tactical-pitch-thumb" data-pitch="half-def" title="Mezzo Campo Difesa"><div style="width:100%; height:100%; border:1.5px solid #fff; position:relative;"><div style="position:absolute; top:20%; bottom:20%; right:0; width:35%; border:1.5px solid #fff; border-right:none;"></div></div></div>' +
             '<div class="es-tactical-pitch-thumb" data-pitch="zones" title="Campo a Zone"><div style="width:100%; height:100%; border:1.5px solid #fff; display:grid; grid-template-columns:1fr 2fr 1fr;"><div style="border-right:1px dashed #fff;"></div><div></div><div style="border-left:1px dashed #fff;"></div></div></div>' +
           '</div>' +
-          '<div class="es-tactical-section-head"><span>ZONE</span><span>+</span></div>' +
-          '<div class="es-tactical-section-head"><span>FRECCE</span><span>+</span></div>' +
-          '<div class="es-tactical-section-head"><span>PORTE</span><span>+</span></div>' +
-          '<div class="es-tactical-section-head"><span>TOOLS</span><span>+</span></div>' +
         '</div>' +
         '<div class="es-tactical-center-stage">' +
           '<div class="es-tactical-canvas-wrap" id="editor-pitch-canvas">' +
@@ -626,18 +1156,14 @@
             '<div class="es-tactical-color-dot" style="background:#0284c7;"></div>' +
             '<div class="es-tactical-color-dot" style="background:#0f172a;"></div>' +
           '</div>' +
-          '<div class="es-tactical-section-head"><span>TEAM</span><span>+</span></div>' +
-          '<div class="es-tactical-section-head"><span>GIOCATORI</span><span>-</span></div>' +
+          '<div class="es-tactical-section-head"><span>GIOCATORI TATTICI</span><span>-</span></div>' +
           '<div id="player-silhouettes-list">' +
             '<div class="es-tactical-player-item" data-pose="corsa">🏃 Corsa</div>' +
-            '<div class="es-tactical-player-item" data-pose="tiro">⚽ Tiro</div>' +
-            '<div class="es-tactical-player-item" data-pose="passaggio">👟 Passaggio</div>' +
-            '<div class="es-tactical-player-item" data-pose="contrasto">🛡️ Contrasto</div>' +
-            '<div class="es-tactical-player-item" data-pose="portiere">🧤 Portiere</div>' +
+            '<div class="es-tactical-player-item" data-pose="tiro">⚽ Tiro in porta</div>' +
+            '<div class="es-tactical-player-item" data-pose="passaggio">👟 Passaggio corto</div>' +
+            '<div class="es-tactical-player-item" data-pose="contrasto">🛡️ Contrasto / Duello</div>' +
+            '<div class="es-tactical-player-item" data-pose="portiere">🧤 Presa Portiere</div>' +
           '</div>' +
-          '<div class="es-tactical-section-head"><span>NUMERI</span><span>+</span></div>' +
-          '<div class="es-tactical-section-head"><span>RUOLI</span><span>+</span></div>' +
-          '<div class="es-tactical-section-head"><span>MAGLIE</span><span>+</span></div>' +
         '</div>' +
       '</div>';
 
@@ -704,9 +1230,13 @@
     });
   }
 
+  // ============================================================
+  // EVENT BINDING SU TUTTI I COMPONENTI
+  // ============================================================
   function bindHubEvents() {
     var mount = document.getElementById('es-cd');
     if (!mount) return;
+    var data = getCoachData();
 
     // Tabs click
     mount.querySelectorAll('.es-mister-nav-tab').forEach(function (btn) {
@@ -716,17 +1246,133 @@
       });
     });
 
-    // Interazioni Voti Like / Dislike per gli allenamenti
+    // 1. Modifica dati Club
+    var btnEditClub = mount.querySelector('#btn-edit-club-data');
+    if (btnEditClub) {
+      btnEditClub.onclick = function () { openEditClubDataModal(data); };
+    }
+
+    // 2. Modifica Stemma e Foto Squadra
+    var btnChangeCrest = mount.querySelector('#btn-change-crest');
+    var inpCrest = mount.querySelector('#inp-file-crest');
+    if (btnChangeCrest && inpCrest) {
+      btnChangeCrest.onclick = function () { inpCrest.click(); };
+      inpCrest.onchange = function (e) {
+        var file = e.target.files && e.target.files[0];
+        if (file) {
+          var reader = new FileReader();
+          reader.onload = function (evt) {
+            data.logoUrl = evt.target.result;
+            saveCoachData(data);
+            renderHub();
+            if (window.showToast) window.showToast('Stemma societario aggiornato!', 'success');
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+    }
+
+    var btnChangeTeamPhoto = mount.querySelector('#btn-change-team-photo');
+    var inpTeamPhoto = mount.querySelector('#inp-file-team-photo');
+    if (btnChangeTeamPhoto && inpTeamPhoto) {
+      btnChangeTeamPhoto.onclick = function () { inpTeamPhoto.click(); };
+      inpTeamPhoto.onchange = function (e) {
+        var file = e.target.files && e.target.files[0];
+        if (file) {
+          var reader = new FileReader();
+          reader.onload = function (evt) {
+            data.teamPhotoUrl = evt.target.result;
+            saveCoachData(data);
+            renderHub();
+            if (window.showToast) window.showToast('Foto ufficiale squadra aggiornata!', 'success');
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+    }
+
+    // 3. Aggiungi & Modifica Staff
+    var btnAddStaffCoach = mount.querySelector('#btn-add-staff-coach');
+    if (btnAddStaffCoach) {
+      btnAddStaffCoach.onclick = function () { openAddStaffModal(data); };
+    }
+    mount.querySelectorAll('[data-edit-staff-idx]').forEach(function (btn) {
+      btn.onclick = function () {
+        var idx = parseInt(btn.getAttribute('data-edit-staff-idx'));
+        openAddStaffModal(data, idx);
+      };
+    });
+
+    // 4. Squadra (Roster)
+    var btnStatsRoster = mount.querySelector('#btn-stats-roster');
+    if (btnStatsRoster) {
+      btnStatsRoster.onclick = function () { openRosterStatsModal(data); };
+    }
+    var btnAddPlayer = mount.querySelector('#btn-add-player');
+    if (btnAddPlayer) {
+      btnAddPlayer.onclick = function () { openAddPlayerModal(data); };
+    }
+    mount.querySelectorAll('[data-edit-player]').forEach(function (btn) {
+      btn.onclick = function () {
+        var idx = parseInt(btn.getAttribute('data-edit-player'));
+        openAddPlayerModal(data, idx);
+      };
+    });
+
+    // 5. Allenamenti
+    var btnAddTrain = mount.querySelector('#btn-add-training');
+    if (btnAddTrain) {
+      btnAddTrain.onclick = function () { openAddTrainingModal(data); };
+    }
+    mount.querySelectorAll('[data-open-training-details]').forEach(function (banner) {
+      banner.onclick = function () {
+        var tId = banner.getAttribute('data-open-training-details');
+        var tr = (data.trainingsList || []).find(function(t){ return t.id === tId; });
+        if (tr) {
+          var html =
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem; margin-bottom:1rem;">' +
+              '<h4 style="font-size:1.1rem; font-weight:800; color:#38bdf8; margin:0 0 0.4rem;">' + esc(tr.title) + '</h4>' +
+              '<div style="font-size:0.85rem; color:#cbd5e1; line-height:1.7;">' +
+                '• <b>Data:</b> ' + esc(tr.fullDate || (tr.day + ' ' + tr.date)) + '<br>' +
+                '• <b>Orario:</b> ' + esc(tr.inizio) + ' - ' + esc(tr.fine) + ' (Incontro: ' + esc(tr.incontro) + ')<br>' +
+                '• <b>Campo:</b> ' + esc(tr.campo) + '<br>' +
+                '• <b>Focus Seduta:</b> ' + esc(tr.focus) +
+              '</div>' +
+            '</div>' +
+            '<div style="display:flex; justify-content:space-between; gap:0.6rem;">' +
+              '<button type="button" class="es-pres-btn-secondary" id="btn-del-training" style="color:#f87171; border-color:rgba(239,68,68,0.4);">Elimina Seduta</button>' +
+              '<button type="button" class="es-pres-btn-primary" id="btn-close-train-dt">Chiudi</button>' +
+            '</div>';
+          openCoachModal('Dettaglio Seduta di Allenamento', '🏃‍♂️', html);
+          var overlay = document.getElementById('es-coach-modal-overlay');
+          var bClose = document.getElementById('btn-close-train-dt');
+          var bDel = document.getElementById('btn-del-training');
+          if (bClose && overlay) bClose.onclick = function() { overlay.remove(); };
+          if (bDel) {
+            bDel.onclick = function() {
+              if (confirm('Sei sicuro di voler eliminare questa seduta?')) {
+                data.trainingsList = data.trainingsList.filter(function(t){ return t.id !== tId; });
+                saveCoachData(data);
+                if (overlay) overlay.remove();
+                renderHub();
+                if (window.showToast) window.showToast('Seduta eliminata.', 'info');
+              }
+            };
+          }
+        }
+      };
+    });
+
+    // Interazioni Voti Like / Dislike
     mount.querySelectorAll('.es-training-vote-btn').forEach(function (btn) {
       btn.onclick = function () {
         var trainId = btn.getAttribute('data-train-id');
         var voteVal = btn.getAttribute('data-vote-val');
         var curUser = userObj();
         var myUserId = curUser.id || 'u-me';
-        var myUserName = (curUser.nome ? (curUser.nome + ' ' + (curUser.cognome || '')) : (curUser.name || 'Membro Club')).trim();
-        var myRole = curUser.ruolo || curUser.siteRoleFamily || 'Calciatore';
+        var myUserName = (curUser.nome ? (curUser.nome + ' ' + (curUser.cognome || '')) : (curUser.name || 'Mister')).trim();
+        var myRole = curUser.ruolo || curUser.siteRoleFamily || 'Allenatore';
 
-        var data = getCoachData();
         var train = (data.trainingsList || []).find(function (t) { return t.id === trainId; });
         if (train) {
           train.votes = train.votes || {};
@@ -735,7 +1381,7 @@
             name: myUserName,
             role: myRole,
             vote: voteVal,
-            isStaff: !/calciatore|giocatore/.test(myRole.toLowerCase())
+            isStaff: true
           };
           saveCoachData(data);
           renderHub();
@@ -756,47 +1402,28 @@
       };
     });
 
-    // Aggiungi nuovo allenamento
-    var btnAddTrain = mount.querySelector('#btn-add-training');
-    if (btnAddTrain) {
-      btnAddTrain.onclick = function () {
-        var tTitle = prompt('Titolo evento / allenamento:', 'Allenamento');
-        if (tTitle) {
-          var tDay = prompt('Giorno (es. mar, gio, sab):', 'mar');
-          var tDate = prompt('Data (es. 01/09):', '01/09');
-          var tInizio = prompt('Orario inizio (es. 19:00):', '19:00');
-          var tFine = prompt('Orario fine (es. 20:30):', '20:30');
-          var tFocus = prompt('Focus della seduta:', 'Seduta Tattica & Possesso Palla');
-
-          var data = getCoachData();
-          data.trainingsList = data.trainingsList || [];
-          data.trainingsList.unshift({
-            id: 'train-' + Date.now(),
-            day: tDay || 'lun',
-            date: tDate || '10/09',
-            fullDate: 'Sessione di Allenamento',
-            title: tTitle,
-            incontro: '-:-',
-            inizio: tInizio || '18:30',
-            fine: tFine || '20:00',
-            campo: 'Stadio Pino Zaccheria',
-            focus: tFocus || 'Esercitazioni tecniche',
-            votes: {}
-          });
-          saveCoachData(data);
-          renderHub();
-          if (window.showToast) window.showToast('✅ Nuovo allenamento programmato con successo!', 'success');
-        }
-      };
+    // 6. Partite
+    var btnStatsMatch = mount.querySelector('#btn-stats-match');
+    if (btnStatsMatch) {
+      btnStatsMatch.onclick = function () { openMatchStatsModal(data); };
     }
+    var btnAddMatch = mount.querySelector('#btn-add-match');
+    if (btnAddMatch) {
+      btnAddMatch.onclick = function () { openAddMatchModal(data); };
+    }
+    mount.querySelectorAll('[data-match-convocati]').forEach(function (btn) {
+      btn.onclick = function () {
+        var mIdx = parseInt(btn.getAttribute('data-match-convocati'));
+        var match = (data.partite || [])[mIdx];
+        if (match) openMatchConvocatiModal(match, mIdx, data);
+      };
+    });
 
-    // Crea Immagine -> Apri Editor
+    // 7. Lavagna Tattica
     var btnCreateTactic = mount.querySelector('#btn-create-tactic');
     if (btnCreateTactic) {
       btnCreateTactic.onclick = openTacticalEditor;
     }
-
-    // Carica Immagine / PDF
     var btnUpload = mount.querySelector('#btn-upload-file');
     var fileInput = mount.querySelector('#mister-file-upload');
     if (btnUpload && fileInput) {
@@ -807,7 +1434,6 @@
           var isPdf = file.type === 'application/pdf' || file.name.endsWith('.pdf');
           var reader = new FileReader();
           reader.onload = function (evt) {
-            var data = getCoachData();
             data.tacticalSchemes = data.tacticalSchemes || [];
             data.tacticalSchemes.unshift({
               id: 'tac-' + Date.now(),
@@ -824,23 +1450,44 @@
         }
       };
     }
-
-    // Modifica dati Club
-    var btnEditClub = mount.querySelector('#btn-edit-club-data');
-    if (btnEditClub) {
-      btnEditClub.onclick = function () {
-        var data = getCoachData();
-        var newSede = prompt('Modifica Sede Operativa:', data.sede);
-        if (newSede != null) data.sede = newSede;
-        var newStadio = prompt('Modifica Stadio Ufficiale:', data.stadio);
-        if (newStadio != null) data.stadio = newStadio;
-        saveCoachData(data);
-        renderHub();
-        if (window.showToast) window.showToast('✅ Dati Club salvati con successo!', 'success');
-      };
-    }
   }
 
+  // ============================================================
+  // HELPER GLOBALI PER LA LIBRERIA IMMAGINI
+  // ============================================================
+  window.viewSchemePreview = function (idx) {
+    var data = getCoachData();
+    var s = (data.tacticalSchemes || [])[idx];
+    if (!s) return;
+    var html =
+      '<div style="text-align:center;">' +
+        '<img src="' + esc(s.preview) + '" alt="' + esc(s.title) + '" style="max-width:100%; max-height:60vh; border-radius:4px; border:1px solid rgba(148,163,184,0.2);">' +
+        '<div style="font-size:0.85rem; color:#94a3b8; margin-top:0.75rem;">' + esc(s.type) + ' · Creato il ' + esc(s.date) + '</div>' +
+      '</div>';
+    openCoachModal(s.title, '👁️', html);
+  };
+
+  window.downloadSchemePDF = function (idx) {
+    var data = getCoachData();
+    var s = (data.tacticalSchemes || [])[idx];
+    if (!s) return;
+    window.print();
+    if (window.showToast) window.showToast('Apertura finestra di stampa PDF per ' + s.title, 'info');
+  };
+
+  window.deleteScheme = function (idx) {
+    var data = getCoachData();
+    if (confirm('Sei sicuro di voler eliminare questo schema dalla libreria?')) {
+      data.tacticalSchemes.splice(idx, 1);
+      saveCoachData(data);
+      renderHub();
+      if (window.showToast) window.showToast('Schema rimosso dalla libreria.', 'info');
+    }
+  };
+
+  // ============================================================
+  // MOUNT & BOOTSTRAP
+  // ============================================================
   function render(force) {
     var group = document.getElementById('user-dossier-view-group');
     if (!group) return;
