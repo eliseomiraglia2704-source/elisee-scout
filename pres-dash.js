@@ -854,7 +854,7 @@
                 '<h3 style="margin:0;">Staff Tecnico &amp; Qualifiche Ufficiali FIGC</h3>' +
                 '<p style="color:#94a3b8; font-size:0.82rem; margin:0.2rem 0 0;">Anagrafica reale e patentini federali omologati per la stagione in corso.</p>' +
               '</div>' +
-              '<button type="button" class="es-pres-btn-primary" id="btn-add-staff-member">+ Aggiungi Membro Staff</button>' +
+              (staff.length ? '<button type="button" class="es-pres-btn-primary" id="btn-add-staff-member">+ Aggiungi Membro Staff</button>' : '') +
             '</div>' +
 
             (!staff.length ? (
@@ -1757,16 +1757,24 @@
       };
     }
 
-    // Azioni Schermate Interne
-    var btnAddPlQuick = mount.querySelector('#btn-add-staff-member, #btn-add-first-staff');
-    if (btnAddPlQuick) btnAddPlQuick.onclick = function () { openAddStaffModal(data); };
+    // Azioni Schermate Interne & Stati Vuoti (100% attivi)
+    mount.querySelectorAll('#btn-add-staff-member, #btn-add-first-staff').forEach(function (btn) {
+      btn.onclick = function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        openAddStaffModal(data);
+      };
+    });
 
-    var btnAddMatchQuick = mount.querySelector('#btn-add-match-quick, #btn-add-first-match, #btn-add-schedule-match, #btn-add-first-schedule-match');
-    if (btnAddMatchQuick) btnAddMatchQuick.onclick = function () { openAddMatchModal(data); };
+    mount.querySelectorAll('#btn-add-match-quick, #btn-add-first-match, #btn-add-schedule-match, #btn-add-first-schedule-match').forEach(function (btn) {
+      btn.onclick = function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        openAddMatchModal(data);
+      };
+    });
 
-    var btnAddSp = mount.querySelector('#btn-add-sponsor, #btn-add-first-sponsor');
-    if (btnAddSp) {
-      btnAddSp.onclick = function () {
+    mount.querySelectorAll('#btn-add-sponsor, #btn-add-first-sponsor').forEach(function (btn) {
+      btn.onclick = function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
         var formHtml =
           '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Inserisci un nuovo partner commerciale o sponsor di maglia:</p>' +
           '<form id="form-add-sp-real" style="display:flex; flex-direction:column; gap:1rem;">' +
@@ -1814,7 +1822,7 @@
           };
         }
       };
-    }
+    });
 
     var btnBacheca = mount.querySelector('#btn-bacheca-sponsor');
     if (btnBacheca) {

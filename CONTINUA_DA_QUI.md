@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: **Architettura Dati Reali, Stati Vuoti Onesti & Provenienza Dati (Area Presidente)**: Implementata architettura dati completa e dinamica per l'Area Presidente: 1. Separazione netta tra Modalità Dati Reali (clean state per il club) e Modalità Dimostrativa con banner dedicato in cima; 2. Calcolo automatico e real-time di Rating Rosa, minutaggi, età media, scadenze federali (`Math.ceil` su data odierna) e statistiche partite; 3. Stati vuoti espliciti su ogni card e sezione con pulsanti di azione diretta (CTA); 4. Form e modali interattive di inserimento dati reali con menu a tendina rigido per qualifiche federali ufficiali FIGC (*UEFA Pro, UEFA A, UEFA B, UEFA C, Preparatore Atletico FIGC, Dirigente Sportivo FIGC, Match Analyst Coverciano, ecc.*); 5. Tracciabilità e provenienza dei dati (*Aggiornato da [Utente] il [Data]*). File: `pres-dash.js`, `pres-dash.css`, `index.html`, `sw.js`. Cache `REAL_DATA1`.
-Feature precedente: Attivazione Modale Pratica Variazione Capienza & Omologazione CPV.
+Ultimo fatto: **Rimozione Duplicato & Attivazione Pulsante "Inserisci Primo Membro Staff" (Centro Sportivo)**: 1. Rimosso il pulsante duplicato in alto a destra nella schermata Centro Sportivo quando la sezione è vuota, mantenendo solo il pulsante principale centrale; 2. Corretto il binding degli eventi con `querySelectorAll` per rendere attivo al 100% il pulsante evidenziato *"Inserisci Primo Membro Staff"* (`#btn-add-first-staff`) che apre la modale di inserimento con il menu a tendina delle qualifiche federali ufficiali FIGC. File: `pres-dash.js`, `index.html`, `sw.js`. Cache `FIX_BTN1`.
+Feature precedente: Architettura Dati Reali, Stati Vuoti Onesti & Provenienza Dati (Area Presidente).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
