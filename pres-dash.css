@@ -29,7 +29,9 @@
   color: #f8fafc;
   background: #040810;
   min-height: 100vh;
+  padding-top: 86px !important;
   padding-bottom: 5rem;
+  box-sizing: border-box;
 }
 
 /* 1. Header Identità Club */
@@ -319,8 +321,9 @@
 .es-pres-detail-screen {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 1.5rem 1.5rem 4rem;
+  padding: 96px 1.5rem 4rem !important;
   animation: esPresFadeIn 0.18s ease;
+  box-sizing: border-box;
 }
 @keyframes esPresFadeIn {
   from { opacity: 0; transform: translateY(6px); }
