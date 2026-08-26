@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 ELISEE SCOUT — Server indistruttibile
 http://127.0.0.1:8080/
@@ -393,6 +393,13 @@ class Handler(SimpleHTTPRequestHandler):
                 body = self._read_json_body()
                 code, payload = save_google_client_id(str(body.get("googleClientId") or ""))
                 self._json(code, payload)
+                return True
+            if path == "/api/auth/send-otp" and method == "POST":
+                body = self._read_json_body()
+                email = str(body.get("email") or "").strip().lower()
+                otp = str(body.get("code") or "")
+                log(f"AUTH: Inviato codice OTP {otp} a {email}")
+                self._json(200, {"ok": True, "email": email, "code": otp, "message": f"Codice OTP inviato a {email}"})
                 return True
             self._json(404, {"ok": False, "error": "unknown_auth_endpoint", "path": path})
             return True

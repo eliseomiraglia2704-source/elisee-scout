@@ -280,7 +280,7 @@
   <link rel="stylesheet" href="autopilot.css?v=20260806_NOCORS">
   <link rel="stylesheet" href="squadre-select.css?v=20260825_SQCREST">
   <link rel="stylesheet" href="formazione-squadra.css?v=20260820_XI1">
-  <link rel="stylesheet" href="verifica-account.css?v=20260826_PRES_REF2">
+  <link rel="stylesheet" href="verifica-account.css?v=20260826_OTP_FIX1">
   <link rel="stylesheet" href="manager.css?v=20260820_XI1">
   <link rel="stylesheet" href="tc-panel.css?v=20260820_TC2">
   <link rel="stylesheet" href="player-profile.css?v=20260826_PRES_PRF1">
@@ -415,7 +415,7 @@
     (function () {
       function isOpen(el) {
         if (!el) return false;
-        if (el.classList && (el.classList.contains('is-open') || el.classList.contains('active') || el.classList.contains('open'))) return true;
+        if (el.classList && (el.classList.contains('is-open') || el.classList.contains('active') || el.classList.contains('open') || el.classList.contains('es-otp-modal-backdrop') || el.classList.contains('es-pres-modal-overlay'))) return true;
         // modal aperte via style.display (login/registrazione)
         try {
           var d = (el.style && el.style.display) || '';
@@ -426,7 +426,7 @@
             if (el.hidden) return false;
             if (cs.visibility === 'hidden' || cs.opacity === '0') return false;
             // modal auth / cookie / intentionally visible panels
-            if (el.id && /modal-|cookie|es-ap|es-int|war-room|amb-ai/.test(el.id) && cs.pointerEvents !== 'none') {
+            if (el.id && /modal-|cookie|es-ap|es-int|war-room|amb-ai|es-otp|es-pres/.test(el.id) && cs.pointerEvents !== 'none') {
               // se ha opacity > 0 e copre schermo ed è visibile → consideralo aperto solo se NON è boot fantasma
               if (el.id === 'ai-cluster-boot') return false;
               if (parseFloat(cs.opacity || '1') > 0.05 && cs.visibility !== 'hidden') return true;
@@ -5112,7 +5112,7 @@
   <script src="schede-tecniche.js?v=20260820_ST3"></script>
   <script src="mappa-club.js?v=20260826_GEO1"></script>
   <script src="chi-segui.js?v=20260820_FORM1"></script>
-  <script src="verifica-account.js?v=20260826_OTP4"></script>
+  <script src="verifica-account.js?v=20260826_OTP_FIX1"></script>
   <script src="creator-role-switcher.js?v=20260826_ADMIN_CR1"></script>
   <script src="role-actions-runtime.js?v=20260826_SCT1"></script>
   <script>

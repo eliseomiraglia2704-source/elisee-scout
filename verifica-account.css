@@ -159,10 +159,10 @@ body.es-verify-on .main-header { box-shadow: none; }
 .es-otp-modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(3, 7, 18, 0.85);
+  background: rgba(3, 7, 18, 0.88);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  z-index: 999999;
+  z-index: 2147483647 !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -172,16 +172,16 @@ body.es-verify-on .main-header { box-shadow: none; }
   transition: opacity 0.22s ease;
 }
 .es-otp-modal-backdrop.is-open {
-  opacity: 1;
-  pointer-events: auto;
+  opacity: 1 !important;
+  pointer-events: auto !important;
 }
 .es-otp-modal-sheet {
   background: linear-gradient(180deg, #0f172a 0%, #090e17 100%);
   color: #f8fafc;
   border: 1.5px solid rgba(56, 189, 248, 0.3);
-  border-radius: 24px;
+  border-radius: 4px !important;
   width: 100%;
-  max-width: 440px;
+  max-width: 460px;
   padding: 2.2rem 2rem 2rem;
   text-align: center;
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.85), 0 0 28px rgba(13, 148, 136, 0.25);
@@ -232,7 +232,7 @@ body.es-verify-on .main-header { box-shadow: none; }
   width: 58px;
   height: 64px;
   border: 2px solid rgba(56, 189, 248, 0.3);
-  border-radius: 14px;
+  border-radius: 4px !important;
   font-size: 1.85rem;
   font-weight: 800;
   text-align: center;
@@ -262,7 +262,7 @@ body.es-verify-on .main-header { box-shadow: none; }
   background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
   color: #ffffff;
   border: 1px solid rgba(45, 212, 191, 0.4);
-  border-radius: 14px;
+  border-radius: 4px !important;
   padding: 0.9rem;
   font-size: 1.05rem;
   font-weight: 800;

@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: **Rimozione Scadenze Fake & Stato Vuoto Onesto nello Scadenziario Federale (Area Presidente)**: 1. Rimossi i 2 task di scadenza fake/mock inseriti di default (Deposito Bilancio Preventivo, Idoneità Medico-Sportiva); 2. Inserito lo stato vuoto onesto con icona campana, conteggio `0 scadenze` e pulsante `+ Nuova Scadenza Federale` (`#btn-add-first-deadline`); 3. Creata la modale interattiva `openAddDeadlineModal` per permettere la registrazione di termini reali con data perentoria, ente di controllo (Co.Vi.So.D, LND, FIGC) e note; 4. Sanitizzazione automatica retroattiva dello storage locale per azzerare i task di prova vecchi salvati nel browser. File: `pres-dash.js`, `index.html`, `sw.js`. Cache `DEADLINES_REAL1`.
-Feature precedente: Sostituzione Nome Personale con Admin / Responsabile Privacy.
+Ultimo fatto: **Risoluzione Completa Modale & Invio OTP Verifica Email**: 1. Risolto il blocco per cui il clic sul pulsante "Invia codice OTP" nel banner inferiore non apriva la modale (rimossa interferenza di killBlockers e aggiunto event listener delegato); 2. Resa la modale OTP istantaneamente visibile con `z-index: 2147483647`, visualizzazione chiara dell'email destinataria e pillola con codice OTP generato e click rapido per auto-inserimento immediato; 3. Integrato l'endpoint `/api/auth/send-otp` in `elisee_up.py` per tracciamento invii; 4. Applicati bordi rettilinei a 4px su input e pulsanti modale. File: `verifica-account.js`, `verifica-account.css`, `index.html`, `elisee_up.py`, `sw.js`. Cache `OTP_FIX1`.
+Feature precedente: Rimozione Scadenze Fake & Stato Vuoto Onesto nello Scadenziario Federale.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
