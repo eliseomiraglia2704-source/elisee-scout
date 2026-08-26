@@ -1377,6 +1377,117 @@
       };
     }
 
+    // Store POD Card Modal
+    var cardStore = mount.querySelector('#card-pres-store');
+    if (cardStore) {
+      cardStore.onclick = function () {
+        var html =
+          '<p style="color:#cbd5e1; font-size:0.88rem; margin-bottom:1rem;">Stato del Merchandising ufficiale e vendite Print on Demand (POD):</p>' +
+          '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem;">' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem;">' +
+              '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">ORDINI EVASI</div>' +
+              '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8;">' + data.office.merchandising.ordersCount + ' <span class="es-pres-unit">ordini</span></div>' +
+            '</div>' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem;">' +
+              '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">RICAVI ACCREDITATI</div>' +
+              '<div style="font-size:1.6rem; font-weight:800; color:#34d399;">' + data.office.merchandising.revenue + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.9rem; margin-bottom:1.2rem;">' +
+            '<div style="color:#cbd5e1; font-size:0.84rem; line-height:1.6;">' +
+              '• <b>Maglia Ufficiale Gara Home/Away:</b> Attiva nel catalogo<br>' +
+              '• <b>Kit Allenamento &amp; Sciarpe:</b> Spedizione diretta 48h con zero magazzino<br>' +
+              '• <b>Accredito Royalties:</b> Bonifico automatico fine mese' +
+            '</div>' +
+          '</div>' +
+          '<button type="button" class="es-pres-btn-primary" id="btn-pres-modal-store" style="width:100%; border-radius:4px;">Gestisci Catalogo Merchandising &rsaquo;</button>';
+        openDetailModal('Store Ufficiale &amp; Merchandising POD', ICONS.bag, html);
+        var bStore = document.getElementById('btn-pres-modal-store');
+        if (bStore) {
+          bStore.onclick = function() {
+            if (window.showToast) window.showToast('Catalogo Merchandising Ufficiale aperto', 'info');
+          };
+        }
+      };
+    }
+
+    // Scouting Club Card Modal
+    var cardScouting = mount.querySelector('#card-pres-scouting');
+    if (cardScouting) {
+      cardScouting.onclick = function () {
+        var html =
+          '<p style="color:#cbd5e1; font-size:0.88rem; margin-bottom:1rem;">Attività di monitoraggio talenti e match analysis per la prima squadra:</p>' +
+          '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem;">' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem;">' +
+              '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">PROFILI IN SECRET LIST</div>' +
+              '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8;">' + data.office.scouting.secretListTalents + ' <span class="es-pres-unit">talenti</span></div>' +
+            '</div>' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem;">' +
+              '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">REPORT MATCH ANALYST</div>' +
+              '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8;">' + data.office.scouting.analystReports + ' <span class="es-pres-unit">report</span></div>' +
+            '</div>' +
+          '</div>' +
+          '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.9rem; margin-bottom:1.2rem;">' +
+            '<div style="color:#cbd5e1; font-size:0.84rem; line-height:1.6;">' +
+              '• <b>Secret List Stealth:</b> Visibile solo a Presidente, DS e Scout autorizzati<br>' +
+              '• <b>Radar Talenti:</b> Notifiche su giocatori svincolati o in scadenza<br>' +
+              '• <b>Integrazione Video Analyst:</b> Clip tattiche e schede tecniche allegate' +
+            '</div>' +
+          '</div>' +
+          '<button type="button" class="es-pres-btn-primary" id="btn-pres-modal-scout" style="width:100%; border-radius:4px;">Apri Hub Mercato &amp; Scouting &rsaquo;</button>';
+        openDetailModal('Scouting Club &amp; Secret List', ICONS.search, html);
+        var bScout = document.getElementById('btn-pres-modal-scout');
+        if (bScout) {
+          bScout.onclick = function() {
+            var m = document.getElementById('es-pres-detail-overlay');
+            if (m) m.remove();
+            if (typeof window.switchView === 'function') window.switchView('mercato', '#mercato-hub');
+          };
+        }
+      };
+    }
+
+    // Tesseramenti & Privacy Card Modal
+    var cardGovStatus = mount.querySelector('#card-pres-gov-status');
+    if (cardGovStatus) {
+      cardGovStatus.onclick = function () {
+        var html =
+          '<p style="color:#cbd5e1; font-size:0.88rem; margin-bottom:1rem;">Stato della conformità legale, tesseramenti federali FIGC e consensi privacy:</p>' +
+          '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1.1rem; margin-bottom:1.2rem;">' +
+            '<div style="color:#cbd5e1; font-size:0.88rem; line-height:1.8;">' +
+              '• <b>Tesseramenti Prima Squadra:</b> ' + esc(data.governance.tesseramenti) + '<br>' +
+              '• <b>Consensi GDPR Minori:</b> ' + esc(data.governance.gdprUnder18) + '<br>' +
+              '• <b>Abilitazioni Sanitarie BLSD:</b> 100% dello staff in possesso di brevetto valido<br>' +
+              '• <b>Certificazioni Idoneità Agonistica:</b> Tutte le visite mediche risultano regolari' +
+            '</div>' +
+          '</div>' +
+          '<button type="button" class="es-pres-btn-primary" id="btn-pres-modal-gov" style="width:100%; border-radius:4px;">Verifica Archivio Documentale &rsaquo;</button>';
+        openDetailModal('Tesseramenti Federali &amp; Privacy GDPR', ICONS.fileText, html);
+        var bGov = document.getElementById('btn-pres-modal-gov');
+        if (bGov) {
+          bGov.onclick = function() {
+            if (window.showToast) window.showToast('Archivio Documentale Tesserati aperto', 'info');
+          };
+        }
+      };
+    }
+
+    // Scadenziario Federale Card Modal
+    var cardGovDeadlines = mount.querySelector('#card-pres-gov-deadlines');
+    if (cardGovDeadlines) {
+      cardGovDeadlines.onclick = function () {
+        var listHtml = data.governance.federalDeadlines.map(function (d) {
+          return (
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; margin-bottom:0.6rem; display:flex; justify-content:space-between; align-items:center;">' +
+              '<div><h4 style="font-size:0.95rem; font-weight:700; color:#fff; margin:0;">' + esc(d.task) + '</h4><div style="font-size:0.78rem; color:#94a3b8; margin-top:0.15rem;">Scadenza termine perentorio: ' + esc(d.date) + '</div></div>' +
+              '<span class="' + (d.isWarning ? 'es-pres-status es-pres-status-warning' : 'es-pres-status es-pres-status-ok') + '">' + esc(d.status) + '</span>' +
+            '</div>'
+          );
+        }).join('');
+        openDetailModal('Scadenziario Federale &amp; Adempimenti LND', ICONS.bell, listHtml);
+      };
+    }
+
     // CTA Bottoni
     var btnUpgrade = mount.querySelector('#btn-pres-upgrade-pro');
     if (btnUpgrade) {

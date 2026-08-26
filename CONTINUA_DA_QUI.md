@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: **Classifica Header: Rimozione contenitore card (puro testo sobrio)**: Rimosso il riquadro/card (`background`, `border`, `box-shadow`, `padding`) per i dati di classifica in alto a destra nell'header club; ora `2° Posto · 62 punti` e `28ª Giornata · Stagione 2026/27` sono renderizzati come **puro testo pulito e allineato a destra**, perfettamente integrato nel banner senza card sovrapposte. File: `pres-dash.js`, `pres-dash.css`, `index.html`, `sw.js`. Cache `PLAIN_TXT1`.
-Feature precedente: Fix Card Gestione Club sbloccate & Bordi rettilinei e dritti (4px).
+Ultimo fatto: **Audit Completo & Attivazione al 100% di Tutte le Card Dashboard**: Verificate e collegate tutte le 16 card presenti nell'Area Presidente con azioni e modali informative centrate: 1. *Rating Rosa* (modal breakdown + gestione rosa); 2. *Trattative di Mercato* (modal contratti + Hub Mercato); 3. *Staff Tecnico* (sub-view Centro Sportivo); 4. *Settore Giovanile* (modal vivaio e under); 5. *Sviluppo Atleti* (modal schede tecniche); 6. *Posta* (modal messaggi e comunicati LND); 7. *Sponsor* (sub-view accordi commerciali); 8. *Centro Allenamento* (sub-view piano settimanale); 9. *Store Ufficiale* (modal vendite POD & royalties); 10. *Stadio* (sub-view capienza e tariffe biglietti); 11. *Scouting Club* (modal Secret List & match analysis); 12. *Finanze & Budget* (modal rendiconto e monte ingaggi); 13. *Statistiche Club* (sub-view record storici); 14. *Calendario* (sub-view programmazione gare); 15. *Classifica* (sub-view tabella federale); 16. *Tesseramenti* & *Scadenziario Federale* (modal conformità documentale). File: `pres-dash.js`, `index.html`, `sw.js`. Cache `AUDIT_ALL1`.
+Feature precedente: Classifica Header: Rimozione contenitore card (puro testo sobrio).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
