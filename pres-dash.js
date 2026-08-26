@@ -1,12 +1,12 @@
 /* ============================================================
    ELISEE SCOUT — Area Presidente (Presidential Hub)
    5 Macro-aree Attive: CLUB | SQUADRA | ALLENAMENTI | PARTITE | LAVAGNA
-   Incluso: Modale Statistiche Partite & Modale Nuovo Calciatore + Lavagna Tattica
+   Incluso: Gestione Allenamenti Interattivi con Like (Ci sono), Dislike (Non ci sono) & Modale Votanti
    ============================================================ */
 (function () {
   'use strict';
 
-  var activeTab = 'squadra'; // default squadra o club | squadra | allenamenti | partite | lavagna
+  var activeTab = 'allenamenti';
 
   function esc(s) {
     return String(s == null ? '' : s)
@@ -43,21 +43,47 @@
       logoUrl: 'immagini/squadre-loghi/foggia.png',
       teamPhotoUrl: 'immagini/04-workspace-scout/scout-workspace.svg?v=20260730_225504',
       roster: [
-        { num: 1, name: 'Marco Fumagalli', role: 'Portiere', birth: '2001', cert: 'Regolare', status: 'disp', app: 28 },
-        { num: 2, name: 'Alessandro Silvestro', role: 'Terzino Destro', birth: '2002', cert: 'Regolare', status: 'disp', app: 25 },
-        { num: 5, name: 'Luigi Carillo', role: 'Difensore Centrale', birth: '1996', cert: 'Regolare', status: 'disp', app: 28 },
-        { num: 6, name: 'Davide Di Pasquale', role: 'Difensore Centrale', birth: '1996', cert: 'Regolare', status: 'disp', app: 26 },
-        { num: 3, name: 'Luca Rizzo Pinna', role: 'Terzino Sinistro', birth: '2003', cert: 'Regolare', status: 'disp', app: 24 },
-        { num: 8, name: 'Moses Odjer', role: 'Mediano', birth: '1996', cert: 'Regolare', status: 'disp', app: 27 },
-        { num: 4, name: 'Jacopo Petermann', role: 'Regista', birth: '1994', cert: 'Regolare', status: 'disp', app: 26 },
-        { num: 10, name: 'Diego Peralta', role: 'Trequartista', birth: '1996', cert: 'Regolare', status: 'disp', app: 28 },
-        { num: 7, name: 'Eliseo Miraglia', role: 'Ala Sinistra', birth: '2004', cert: 'Regolare', status: 'disp', app: 28 },
-        { num: 11, name: 'Roberto Ogunseye', role: 'Attaccante Centrale', birth: '1995', cert: 'Regolare', status: 'disp', app: 27 },
-        { num: 9, name: 'Alexis Ferrante', role: 'Seconda Punta', birth: '1995', cert: 'Regolare', status: 'disp', app: 25 }
+        { id: 'p-1', num: 1, name: 'Marco Fumagalli', role: 'Portiere', birth: '2001', cert: 'Regolare', status: 'disp', app: 28 },
+        { id: 'p-2', num: 2, name: 'Alessandro Silvestro', role: 'Terzino Destro', birth: '2002', cert: 'Regolare', status: 'disp', app: 25 },
+        { id: 'p-5', num: 5, name: 'Luigi Carillo', role: 'Difensore Centrale', birth: '1996', cert: 'Regolare', status: 'disp', app: 28 },
+        { id: 'p-6', num: 6, name: 'Davide Di Pasquale', role: 'Difensore Centrale', birth: '1996', cert: 'Regolare', status: 'disp', app: 26 },
+        { id: 'p-3', num: 3, name: 'Luca Rizzo Pinna', role: 'Terzino Sinistro', birth: '2003', cert: 'Regolare', status: 'disp', app: 24 },
+        { id: 'p-8', num: 8, name: 'Moses Odjer', role: 'Mediano', birth: '1996', cert: 'Regolare', status: 'disp', app: 27 },
+        { id: 'p-4', num: 4, name: 'Jacopo Petermann', role: 'Regista', birth: '1994', cert: 'Regolare', status: 'disp', app: 26 },
+        { id: 'p-10', num: 10, name: 'Diego Peralta', role: 'Trequartista', birth: '1996', cert: 'Regolare', status: 'disp', app: 28 },
+        { id: 'p-7', num: 7, name: 'Eliseo Miraglia', role: 'Ala Sinistra', birth: '2004', cert: 'Regolare', status: 'disp', app: 28 },
+        { id: 'p-11', num: 11, name: 'Roberto Ogunseye', role: 'Attaccante Centrale', birth: '1995', cert: 'Regolare', status: 'disp', app: 27 },
+        { id: 'p-9', num: 9, name: 'Alexis Ferrante', role: 'Seconda Punta', birth: '1995', cert: 'Regolare', status: 'disp', app: 25 }
       ],
-      allenamenti: [
-        { id: 'all-1', date: 'Oggi · 15:30', title: 'Seduta Tattica &amp; Pressione Alta', focus: 'Riscaldamento a secco, possesso palla 6v6+2, sviluppo catena laterale e partitella 11v11.', presenze: '21 / 22 Presenti' },
-        { id: 'all-2', date: 'Domani · 10:00', title: 'Fase Difensiva &amp; Palle Inattive', focus: 'Marcatura a zona su corner avversari, calci di punizione a favore, reattività e rapidità su 10m.', presenze: 'Programmato' }
+      staffMembers: [
+        { id: 'st-pres', name: 'The King (Eliseo Miraglia)', role: 'Presidente' },
+        { id: 'st-coach', name: 'Allenatore Prima Squadra', role: 'Allenatore' },
+        { id: 'st-vice', name: 'Vice Allenatore', role: 'Vice Allenatore' },
+        { id: 'st-prep', name: 'Luca Rossi', role: 'Preparatore Atletico' },
+        { id: 'st-fisio', name: 'Antonio Gentile', role: 'Fisioterapista' }
+      ],
+      trainingsList: [
+        {
+          id: 'train-1',
+          day: 'mar',
+          date: '01/09',
+          fullDate: 'Martedì 1 Settembre 2026',
+          title: 'Allenamento',
+          incontro: '-:-',
+          inizio: '19:00',
+          fine: '20:30',
+          campo: 'Campo A - Stadio Pino Zaccheria',
+          focus: 'Seduta Tattica & Pressione Alta',
+          votes: {
+            'p-1': { id: 'p-1', name: 'Marco Fumagalli', role: 'Portiere', vote: 'yes', isStaff: false },
+            'p-7': { id: 'p-7', name: 'Eliseo Miraglia', role: 'Ala Sinistra', vote: 'yes', isStaff: false },
+            'p-5': { id: 'p-5', name: 'Luigi Carillo', role: 'Difensore Centrale', vote: 'yes', isStaff: false },
+            'p-2': { id: 'p-2', name: 'Alessandro Silvestro', role: 'Terzino Destro', vote: 'maybe', isStaff: false },
+            'p-11': { id: 'p-11', name: 'Roberto Ogunseye', role: 'Attaccante Centrale', vote: 'no', isStaff: false },
+            'st-prep': { id: 'st-prep', name: 'Luca Rossi', role: 'Preparatore Atletico', vote: 'yes', isStaff: true },
+            'st-fisio': { id: 'st-fisio', name: 'Antonio Gentile', role: 'Fisioterapista', vote: 'yes', isStaff: true }
+          }
+        }
       ],
       partite: [
         { id: 'match-1', date: 'Domenica · Ore 15:00', opponent: 'Elisee vs Taranto', comp: 'Campionato Serie D · Girone H', stadium: 'Stadio Pino Zaccheria', status: 'Prossima Gara', conv: '22 Convocati' }
@@ -89,6 +115,9 @@
   function savePresData(data) {
     try {
       localStorage.setItem('elisee_pres_hub_data', JSON.stringify(data));
+      if (data.trainingsList) {
+        localStorage.setItem('elisee_club_trainings_shared', JSON.stringify(data.trainingsList));
+      }
     } catch (_) {}
   }
 
@@ -108,34 +137,23 @@
 
     var html =
       '<div class="es-mister-hub">' +
-        // Top Trial / VIP bar
         '<div class="es-mister-trial-bar">' +
-          '<div class="es-mister-trial-text">' +
-            '<span>👑</span> Stai operando come Presidente &amp; Vertice Societario.' +
-          '</div>' +
+          '<div class="es-mister-trial-text"><span>👑</span> Stai operando come Presidente &amp; Vertice Societario.</div>' +
           '<button type="button" class="es-mister-btn-sub" onclick="if(window.showToast){ window.showToast(\'👑 Benvenuto Presidente. Accesso Club Master 100% Attivo.\', \'success\'); }">Abbonati</button>' +
         '</div>' +
 
         '<div class="es-mister-wrap">' +
-          // Header Club Banner
           '<div class="es-mister-club-header">' +
             '<div class="es-mister-club-main">' +
-              '<div class="es-mister-crest-badge">' +
-                '<img src="' + esc(data.logoUrl) + '" alt="' + esc(data.clubName) + '" onerror="this.src=\'immagini/squadre-loghi/napoli.png\';">' +
-              '</div>' +
+              '<div class="es-mister-crest-badge"><img src="' + esc(data.logoUrl) + '" alt="' + esc(data.clubName) + '" onerror="this.src=\'immagini/squadre-loghi/napoli.png\';"></div>' +
               '<div>' +
-                '<div class="es-mister-club-tags">' +
-                  '<span class="es-mister-tag es-mister-tag-primary">PRIMA SQUADRA</span>' +
-                  '<span class="es-mister-tag es-mister-tag-dark">Stagione in corso</span>' +
-                  '<span class="es-mister-tag es-mister-tag-gold">Presidente | Admin Club</span>' +
-                '</div>' +
+                '<div class="es-mister-club-tags"><span class="es-mister-tag es-mister-tag-primary">PRIMA SQUADRA</span><span class="es-mister-tag es-mister-tag-dark">Stagione in corso</span><span class="es-mister-tag es-mister-tag-gold">Presidente | Admin Club</span></div>' +
                 '<h1 class="es-mister-club-title">' + esc(data.clubName) + '</h1>' +
                 '<p class="es-mister-club-desc" id="pres-tab-desc">' + esc(TAB_DESCS[activeTab]) + '</p>' +
               '</div>' +
             '</div>' +
           '</div>' +
 
-          // 5 Nav Tabs
           '<nav class="es-mister-nav-bar" role="tablist">' +
             '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'club' ? 'is-active' : '') + '" data-tab="club">🛡️ Club</button>' +
             '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'squadra' ? 'is-active' : '') + '" data-tab="squadra">👥 Squadra</button>' +
@@ -144,7 +162,6 @@
             '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'lavagna' ? 'is-active' : '') + '" data-tab="lavagna">🖌️ Lavagna</button>' +
           '</nav>' +
 
-          // Content Tab Container
           '<div id="pres-tab-content">' +
             renderTabContent(activeTab, data) +
           '</div>' +
@@ -161,10 +178,7 @@
       return (
         '<div class="es-mister-card-white">' +
           '<div class="es-mister-card-header">' +
-            '<div class="es-mister-card-title-wrap">' +
-              '<span class="es-mister-card-icon">🛡️</span>' +
-              '<div><h3 class="es-mister-card-title">Club</h3><p class="es-mister-card-sub">Dati società e impianto sportivo</p></div>' +
-            '</div>' +
+            '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">🛡️</span><div><h3 class="es-mister-card-title">Club</h3><p class="es-mister-card-sub">Dati società e impianto sportivo</p></div></div>' +
             '<button type="button" class="es-mister-circle-btn" id="btn-pres-edit-club-data">✏️</button>' +
           '</div>' +
           '<table class="es-mister-info-table">' +
@@ -177,20 +191,11 @@
         '</div>' +
         '<div class="es-mister-card-white">' +
           '<div class="es-mister-card-header">' +
-            '<div class="es-mister-card-title-wrap">' +
-              '<span class="es-mister-card-icon">🖼️</span>' +
-              '<div><h3 class="es-mister-card-title">Immagini</h3><p class="es-mister-card-sub">Stemma e foto squadra</p></div>' +
-            '</div>' +
+            '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">🖼️</span><div><h3 class="es-mister-card-title">Immagini</h3><p class="es-mister-card-sub">Stemma e foto squadra</p></div></div>' +
           '</div>' +
           '<div class="es-mister-images-grid">' +
-            '<div class="es-mister-img-box">' +
-              '<div class="es-mister-img-preview"><img src="' + esc(data.logoUrl) + '" alt="Stemma"></div>' +
-              '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:0.4rem;"><span style="font-weight:800; font-size:0.88rem;">Stemma</span><button type="button" class="es-mister-circle-btn" style="width:30px; height:30px; font-size:0.85rem;" onclick="if(window.showToast){ window.showToast(\'🖼️ Modifica stemma aperto\', \'info\'); }">✏️</button></div>' +
-            '</div>' +
-            '<div class="es-mister-img-box">' +
-              '<div class="es-mister-img-preview"><img src="' + esc(data.teamPhotoUrl) + '" alt="Foto squadra"></div>' +
-              '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:0.4rem;"><span style="font-weight:800; font-size:0.88rem;">Foto squadra</span><button type="button" class="es-mister-circle-btn" style="width:30px; height:30px; font-size:0.85rem;" onclick="if(window.showToast){ window.showToast(\'📷 Modifica foto squadra aperto\', \'info\'); }">✏️</button></div>' +
-            '</div>' +
+            '<div class="es-mister-img-box"><div class="es-mister-img-preview"><img src="' + esc(data.logoUrl) + '" alt="Stemma"></div><div style="display:flex; align-items:center; justify-content:space-between; margin-top:0.4rem;"><span style="font-weight:800; font-size:0.88rem;">Stemma</span><button type="button" class="es-mister-circle-btn" style="width:30px; height:30px; font-size:0.85rem;" onclick="if(window.showToast){ window.showToast(\'🖼️ Modifica stemma aperto\', \'info\'); }">✏️</button></div></div>' +
+            '<div class="es-mister-img-box"><div class="es-mister-img-preview"><img src="' + esc(data.teamPhotoUrl) + '" alt="Foto squadra"></div><div style="display:flex; align-items:center; justify-content:space-between; margin-top:0.4rem;"><span style="font-weight:800; font-size:0.88rem;">Foto squadra</span><button type="button" class="es-mister-circle-btn" style="width:30px; height:30px; font-size:0.85rem;" onclick="if(window.showToast){ window.showToast(\'📷 Modifica foto squadra aperto\', \'info\'); }">✏️</button></div></div>' +
           '</div>' +
         '</div>' +
         '<div class="es-mister-card-white">' +
@@ -199,10 +204,7 @@
             '<button type="button" class="es-mister-circle-btn" id="btn-pres-add-staff">+</button>' +
           '</div>' +
           '<div class="es-mister-staff-box">' +
-            '<div class="es-mister-staff-left">' +
-              '<div class="es-mister-staff-avatar" style="background:#facc15; color:#000;">👑</div>' +
-              '<div><h4 class="es-mister-staff-name">' + esc(data.presName) + '</h4><div class="es-mister-staff-role">' + esc(data.presRole) + '</div><div class="es-mister-staff-meta"><span>Doc: <b>' + esc(data.presDoc) + '</b></span><span>Tessera: <b>' + esc(data.presTessera) + '</b></span><span>Status: <b>' + esc(data.presScadenza) + '</b></span></div></div>' +
-            '</div>' +
+            '<div class="es-mister-staff-left"><div class="es-mister-staff-avatar" style="background:#facc15; color:#000;">👑</div><div><h4 class="es-mister-staff-name">' + esc(data.presName) + '</h4><div class="es-mister-staff-role">' + esc(data.presRole) + '</div><div class="es-mister-staff-meta"><span>Doc: <b>' + esc(data.presDoc) + '</b></span><span>Tessera: <b>' + esc(data.presTessera) + '</b></span><span>Status: <b>' + esc(data.presScadenza) + '</b></span></div></div></div>' +
             '<button type="button" class="es-mister-circle-btn" style="width:34px; height:34px; font-size:0.9rem;">✏️</button>' +
           '</div>' +
         '</div>'
@@ -214,11 +216,7 @@
         return (
           '<div class="es-mister-player-card">' +
             '<div class="es-mister-player-num">' + p.num + '</div>' +
-            '<div class="es-mister-player-info">' +
-              '<h4 class="es-mister-player-name">' + esc(p.name) + '</h4>' +
-              '<div class="es-mister-player-role">' + esc(p.role) + ' · Anno ' + esc(p.birth) + '</div>' +
-              '<div style="font-size:0.72rem; color:#64748b;">🟢 Tesserato FIGC · ' + p.app + ' Presenze</div>' +
-            '</div>' +
+            '<div class="es-mister-player-info"><h4 class="es-mister-player-name">' + esc(p.name) + '</h4><div class="es-mister-player-role">' + esc(p.role) + ' · Anno ' + esc(p.birth) + '</div><div style="font-size:0.72rem; color:#64748b;">🟢 Tesserato FIGC · ' + p.app + ' Presenze</div></div>' +
             '<button type="button" class="es-mister-circle-btn" style="width:30px; height:30px; font-size:0.8rem;" data-pres-edit-player="' + idx + '">✏️</button>' +
           '</div>'
         );
@@ -227,10 +225,7 @@
       return (
         '<div class="es-mister-card-white">' +
           '<div class="es-mister-card-header">' +
-            '<div class="es-mister-card-title-wrap">' +
-              '<span class="es-mister-card-icon">👥</span>' +
-              '<div><h3 class="es-mister-card-title">Squadra</h3><p class="es-mister-card-sub">' + esc(data.clubName) + ' · Prima Squadra (' + (data.roster || []).length + ' Giocatori in rosa)</p></div>' +
-            '</div>' +
+            '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">👥</span><div><h3 class="es-mister-card-title">Squadra</h3><p class="es-mister-card-sub">' + esc(data.clubName) + ' · Prima Squadra (' + (data.roster || []).length + ' Giocatori in rosa)</p></div></div>' +
             '<div class="es-mister-card-actions">' +
               '<button type="button" class="es-mister-circle-btn" id="btn-pres-stats" title="Statistiche partite">📊</button>' +
               '<button type="button" class="es-mister-circle-btn" id="btn-pres-add-player" title="Nuovo calciatore">+</button>' +
@@ -242,12 +237,48 @@
     }
 
     if (tab === 'allenamenti') {
-      var allHtml = (data.allenamenti || []).map(function (a) {
+      var curUser = userObj();
+      var myUserId = curUser.id || 'u-me';
+
+      var trainCardsHtml = (data.trainingsList || []).map(function (t) {
+        var v = t.votes || {};
+        var yesCount = 0;
+        var maybeCount = 0;
+        var noCount = 0;
+
+        Object.keys(v).forEach(function (k) {
+          if (v[k].vote === 'yes') yesCount++;
+          else if (v[k].vote === 'maybe') maybeCount++;
+          else if (v[k].vote === 'no') noCount++;
+        });
+
+        var myVote = (v[myUserId] && v[myUserId].vote) || (v['st-pres'] && v['st-pres'].vote);
+
         return (
-          '<div class="es-mister-event-card">' +
-            '<div class="es-mister-event-date-badge">' + a.date + '</div>' +
-            '<div class="es-mister-event-details"><h4 class="es-mister-event-title">' + a.title + '</h4><p class="es-mister-event-sub">' + a.focus + '</p><div style="font-size:0.75rem; color:#0d9488; font-weight:700; margin-top:0.3rem;">📋 Presenze: ' + a.presenze + '</div></div>' +
-            '<button type="button" class="es-mister-circle-btn" style="width:34px; height:34px; font-size:0.85rem;">📝</button>' +
+          '<div class="es-training-event-card" id="pres-card-' + t.id + '">' +
+            '<div class="es-training-head-banner">' +
+              '<div class="es-training-date-block">' +
+                '<div class="es-training-day-chip"><span class="es-training-day-txt">' + esc(t.day) + '</span><span class="es-training-date-txt">' + esc(t.date) + '</span></div>' +
+                '<div style="border-left:1.5px solid rgba(0,0,0,0.15); height:32px; margin:0 0.5rem;"></div>' +
+                '<div><h4 class="es-training-title-txt">' + esc(t.title) + '</h4><div style="font-size:0.75rem; color:#092621; opacity:0.85;">' + esc(t.focus) + '</div></div>' +
+              '</div>' +
+              '<span style="font-size:1.4rem; font-weight:800; opacity:0.7;">&rsaquo;</span>' +
+            '</div>' +
+
+            '<div class="es-training-times-grid">' +
+              '<div class="es-training-time-col"><div class="es-training-time-val">' + esc(t.incontro) + '</div><div class="es-training-time-lbl">Incontro</div></div>' +
+              '<div class="es-training-time-col"><div class="es-training-time-val">' + esc(t.inizio) + '</div><div class="es-training-time-lbl">Inizio</div></div>' +
+              '<div class="es-training-time-col"><div class="es-training-time-val">' + esc(t.fine) + '</div><div class="es-training-time-lbl">Fine</div></div>' +
+            '</div>' +
+
+            '<div class="es-training-actions-bar">' +
+              '<div class="es-training-vote-group">' +
+                '<button type="button" class="es-training-vote-btn ' + (myVote === 'yes' ? 'is-voted-yes' : '') + '" data-train-id="' + t.id + '" data-vote-val="yes" title="Ci sono (Presente)"><span>👍</span> <span>' + yesCount + '</span></button>' +
+                '<button type="button" class="es-training-vote-btn ' + (myVote === 'maybe' ? 'is-voted-maybe' : '') + '" data-train-id="' + t.id + '" data-vote-val="maybe" title="In forse"><span>❓</span> <span>' + maybeCount + '</span></button>' +
+                '<button type="button" class="es-training-vote-btn ' + (myVote === 'no' ? 'is-voted-no' : '') + '" data-train-id="' + t.id + '" data-vote-val="no" title="Non ci sono (Assente)"><span>👎</span> <span>' + noCount + '</span></button>' +
+              '</div>' +
+              '<button type="button" class="es-training-participants-btn" data-open-pres-voters-id="' + t.id + '" title="Vedi tutti coloro che hanno risposto">👥</button>' +
+            '</div>' +
           '</div>'
         );
       }).join('');
@@ -255,12 +286,10 @@
       return (
         '<div class="es-mister-card-white">' +
           '<div class="es-mister-card-header">' +
-            '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">🏃‍♂️</span><div><h3 class="es-mister-card-title">Allenamenti</h3><p class="es-mister-card-sub">' + esc(data.clubName) + ' · Prima Squadra</p></div></div>' +
-            '<div class="es-mister-card-actions">' +
-              '<button type="button" class="es-mister-circle-btn" id="btn-pres-add-training">+</button>' +
-            '</div>' +
+            '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">🏃‍♂️</span><div><h3 class="es-mister-card-title">Prossimi Eventi &amp; Allenamenti</h3><p class="es-mister-card-sub">Controllo presenze prima squadra (Like = Ci sono, Dislike = Non ci sono)</p></div></div>' +
+            '<div class="es-mister-card-actions"><button type="button" class="es-mister-circle-btn" id="btn-pres-add-training" title="Nuovo allenamento">+</button></div>' +
           '</div>' +
-          '<div style="margin-top:1rem;">' + allHtml + '</div>' +
+          '<div style="margin-top:1rem;">' + trainCardsHtml + '</div>' +
         '</div>'
       );
     }
@@ -280,10 +309,7 @@
         '<div class="es-mister-card-white">' +
           '<div class="es-mister-card-header">' +
             '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">⚽</span><div><h3 class="es-mister-card-title">Partite</h3><p class="es-mister-card-sub">' + esc(data.clubName) + ' · Prima Squadra</p></div></div>' +
-            '<div class="es-mister-card-actions">' +
-              '<button type="button" class="es-mister-circle-btn" id="btn-pres-match-stats">📊</button>' +
-              '<button type="button" class="es-mister-circle-btn" id="btn-pres-add-match">+</button>' +
-            '</div>' +
+            '<div class="es-mister-card-actions"><button type="button" class="es-mister-circle-btn" id="btn-pres-match-stats">📊</button><button type="button" class="es-mister-circle-btn" id="btn-pres-add-match">+</button></div>' +
           '</div>' +
           '<div style="margin-top:1rem;">' + matchHtml + '</div>' +
         '</div>'
@@ -298,9 +324,7 @@
             schemes.map(function (s, idx) {
               return (
                 '<div class="es-tactical-card-item">' +
-                  '<div class="es-tactical-card-thumb">' +
-                    '<img src="' + esc(s.preview) + '" alt="' + esc(s.title) + '">' +
-                  '</div>' +
+                  '<div class="es-tactical-card-thumb"><img src="' + esc(s.preview) + '" alt="' + esc(s.title) + '"></div>' +
                   '<h4 style="font-size:0.95rem; font-weight:800; color:#0f172a; margin:0 0 0.2rem;">' + esc(s.title) + '</h4>' +
                   '<div style="font-size:0.75rem; color:#64748b; margin-bottom:0.75rem;">' + esc(s.type) + ' · ' + esc(s.date) + '</div>' +
                   '<div style="display:flex; gap:0.4rem;">' +
@@ -316,31 +340,16 @@
       return (
         '<div class="es-mister-card-white">' +
           '<div class="es-mister-card-header">' +
-            '<div class="es-mister-card-title-wrap">' +
-              '<span class="es-mister-card-icon">🖌️</span>' +
-              '<div>' +
-                '<h3 class="es-mister-card-title">Lavagna Tattica</h3>' +
-                '<p class="es-mister-card-sub">' + esc(data.clubName) + ' · Prima Squadra (Presidenza)</p>' +
-              '</div>' +
-            '</div>' +
+            '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">🖌️</span><div><h3 class="es-mister-card-title">Lavagna Tattica</h3><p class="es-mister-card-sub">' + esc(data.clubName) + ' · Prima Squadra (Presidenza)</p></div></div>' +
             '<div class="es-mister-card-actions">' +
               '<input type="file" id="pres-file-upload" accept="image/png,image/jpeg,application/pdf" style="display:none;">' +
-              '<button type="button" class="btn btn-outline-pill" id="btn-pres-upload-file" style="background:#f8fafc; border:1.5px solid #cbd5e1; color:#0f172a; padding:0.55rem 1.15rem; font-weight:800; font-size:0.85rem; display:inline-flex; align-items:center; gap:0.45rem;">' +
-                '📁 Carica immagine / PDF' +
-              '</button>' +
-              '<button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-pres-create-tactic" style="background:#0d9488; color:#ffffff; border:none; padding:0.55rem 1.25rem; font-weight:800; font-size:0.85rem; display:inline-flex; align-items:center; gap:0.45rem;">' +
-                '🖌️ Crea immagine' +
-              '</button>' +
+              '<button type="button" class="btn btn-outline-pill" id="btn-pres-upload-file" style="background:#f8fafc; border:1.5px solid #cbd5e1; color:#0f172a; padding:0.55rem 1.15rem; font-weight:800; font-size:0.85rem; display:inline-flex; align-items:center; gap:0.45rem;">📁 Carica immagine / PDF</button>' +
+              '<button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-pres-create-tactic" style="background:#0d9488; color:#ffffff; border:none; padding:0.55rem 1.25rem; font-weight:800; font-size:0.85rem; display:inline-flex; align-items:center; gap:0.45rem;">🖌️ Crea immagine</button>' +
             '</div>' +
           '</div>' +
         '</div>' +
         '<div class="es-mister-card-white">' +
-          '<div class="es-mister-card-header" style="margin-bottom:0.6rem;">' +
-            '<div>' +
-              '<h3 class="es-mister-card-title" style="font-size:1.15rem;">Libreria immagini</h3>' +
-              '<p class="es-mister-card-sub">Immagini create e salvate dalla lavagna tattica o caricate dalla presidenza.</p>' +
-            '</div>' +
-          '</div>' +
+          '<div class="es-mister-card-header" style="margin-bottom:0.6rem;"><div><h3 class="es-mister-card-title" style="font-size:1.15rem;">Libreria immagini</h3><p class="es-mister-card-sub">Immagini create e salvate dalla lavagna tattica o caricate dalla presidenza.</p></div></div>' +
           galleryHtml +
         '</div>'
       );
@@ -350,7 +359,7 @@
   }
 
   // ============================================================
-  // MODALE STATISTICHE PARTITE (Screenshot 1)
+  // MODALE STATISTICHE PARTITE
   // ============================================================
   function openStatsModal() {
     var old = document.getElementById('es-pres-stats-modal-overlay');
@@ -365,18 +374,11 @@
     modal.innerHTML =
       '<div class="es-pres-stats-sheet" role="dialog" aria-modal="true">' +
         '<div style="display:flex; align-items:center; justify-content:space-between; padding-bottom:1rem; border-bottom:1.5px solid #f1f5f9;">' +
-          '<div style="display:flex; align-items:center; gap:0.75rem;">' +
-            '<span style="font-size:1.6rem; color:#0d9488;">📊</span>' +
-            '<div>' +
-              '<h2 style="font-size:1.4rem; font-weight:900; margin:0; color:#0f172a;">Statistiche</h2>' +
-              '<p style="font-size:0.84rem; color:#64748b; margin:0.1rem 0 0;">Statistiche partite</p>' +
-            '</div>' +
-          '</div>' +
+          '<div style="display:flex; align-items:center; gap:0.75rem;"><span style="font-size:1.6rem; color:#0d9488;">📊</span><div><h2 style="font-size:1.4rem; font-weight:900; margin:0; color:#0f172a;">Statistiche</h2><p style="font-size:0.84rem; color:#64748b; margin:0.1rem 0 0;">Statistiche partite</p></div></div>' +
           '<button type="button" class="es-tactical-btn-close" id="btn-close-stats-modal" style="font-size:1.6rem; cursor:pointer;">&times;</button>' +
         '</div>' +
 
         '<div class="es-pres-stats-grid">' +
-          // Colonna sinistra filtri & stampa
           '<div>' +
             '<h4 style="font-size:0.88rem; font-weight:800; color:#0f172a; margin:0 0 0.45rem;">Filtri</h4>' +
             '<label style="display:block; font-size:0.75rem; font-weight:800; color:#64748b; margin-bottom:0.3rem;">TORNEI</label>' +
@@ -385,30 +387,17 @@
               '<option value="d">Campionato Serie D</option>' +
               '<option value="coppa">Coppa Italia Serie D</option>' +
             '</select>' +
-            '<button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-print-stats" style="width:100%; background:#0d9488; color:#fff; border:none; padding:0.75rem; font-weight:800; font-size:0.92rem; display:inline-flex; align-items:center; justify-content:center; gap:0.5rem; border-radius:12px;">' +
-              '🖨️ Stampa Statistiche' +
-            '</button>' +
+            '<button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-print-stats" style="width:100%; background:#0d9488; color:#fff; border:none; padding:0.75rem; font-weight:800; font-size:0.92rem; display:inline-flex; align-items:center; justify-content:center; gap:0.5rem; border-radius:12px;">🖨️ Stampa Statistiche</button>' +
           '</div>' +
 
-          // Colonna destra KPI + 3 Riquadri
           '<div>' +
             '<div class="es-pres-stats-kpi-row">' +
-              '<div class="es-pres-kpi-card">' +
-                '<div class="es-pres-kpi-val">' + s.totale.giocate + '</div>' +
-                '<div class="es-pres-kpi-lbl">Partite</div>' +
-              '</div>' +
-              '<div class="es-pres-kpi-card">' +
-                '<div class="es-pres-kpi-val">' + s.totale.pt + '</div>' +
-                '<div class="es-pres-kpi-lbl">Punti</div>' +
-              '</div>' +
-              '<div class="es-pres-kpi-card">' +
-                '<div class="es-pres-kpi-val">' + (s.totale.pt / s.totale.giocate).toFixed(2) + '</div>' +
-                '<div class="es-pres-kpi-lbl">Media Punti</div>' +
-              '</div>' +
+              '<div class="es-pres-kpi-card"><div class="es-pres-kpi-val">' + s.totale.giocate + '</div><div class="es-pres-kpi-lbl">Partite</div></div>' +
+              '<div class="es-pres-kpi-card"><div class="es-pres-kpi-val">' + s.totale.pt + '</div><div class="es-pres-kpi-lbl">Punti</div></div>' +
+              '<div class="es-pres-kpi-card"><div class="es-pres-kpi-val">' + (s.totale.pt / s.totale.giocate).toFixed(2) + '</div><div class="es-pres-kpi-lbl">Media Punti</div></div>' +
             '</div>' +
 
             '<div class="es-pres-stats-triple-box">' +
-              // Box Totale
               '<div class="es-pres-split-box">' +
                 '<h5 class="es-pres-split-title">Totale</h5>' +
                 '<div class="es-pres-mini-stats-grid">' +
@@ -423,7 +412,6 @@
                 '</div>' +
               '</div>' +
 
-              // Box Casa
               '<div class="es-pres-split-box">' +
                 '<h5 class="es-pres-split-title">Casa</h5>' +
                 '<div class="es-pres-mini-stats-grid">' +
@@ -438,7 +426,6 @@
                 '</div>' +
               '</div>' +
 
-              // Box Trasferta
               '<div class="es-pres-split-box">' +
                 '<h5 class="es-pres-split-title">Trasferta</h5>' +
                 '<div class="es-pres-mini-stats-grid">' +
@@ -459,20 +446,13 @@
 
     document.body.appendChild(modal);
 
-    modal.querySelector('#btn-close-stats-modal').onclick = function () {
-      modal.remove();
-    };
-    modal.onclick = function (e) {
-      if (e.target === modal) modal.remove();
-    };
-
-    modal.querySelector('#btn-print-stats').onclick = function () {
-      if (window.print) window.print();
-    };
+    modal.querySelector('#btn-close-stats-modal').onclick = function () { modal.remove(); };
+    modal.onclick = function (e) { if (e.target === modal) modal.remove(); };
+    modal.querySelector('#btn-print-stats').onclick = function () { if (window.print) window.print(); };
   }
 
   // ============================================================
-  // MODALE NUOVO CALCIATORE (Screenshot 2)
+  // MODALE NUOVO CALCIATORE
   // ============================================================
   function openNewPlayerModal() {
     var old = document.getElementById('es-pres-new-player-overlay');
@@ -550,6 +530,7 @@
       data.roster = data.roster || [];
       var nextNum = data.roster.length + 1;
       data.roster.push({
+        id: 'p-' + nextNum,
         num: nextNum,
         name: nome + ' ' + cognome,
         role: ruolo,
@@ -561,9 +542,7 @@
       savePresData(data);
       close();
       renderHub();
-      if (window.showToast) {
-        window.showToast('✅ Calciatore ' + nome + ' ' + cognome + ' aggiunto alla rosa!', 'success');
-      }
+      if (window.showToast) window.showToast('✅ Calciatore ' + nome + ' ' + cognome + ' aggiunto alla rosa!', 'success');
     };
   }
 
@@ -607,7 +586,6 @@
     var mount = document.getElementById('es-prd');
     if (!mount) return;
 
-    // Tabs click
     mount.querySelectorAll('.es-mister-nav-tab').forEach(function (btn) {
       btn.addEventListener('click', function () {
         activeTab = btn.getAttribute('data-tab');
@@ -615,19 +593,54 @@
       });
     });
 
-    // Statistiche Partite (Screenshot 1)
+    // Interazioni Voti Like / Dislike
+    mount.querySelectorAll('.es-training-vote-btn').forEach(function (btn) {
+      btn.onclick = function () {
+        var trainId = btn.getAttribute('data-train-id');
+        var voteVal = btn.getAttribute('data-vote-val');
+        var curUser = userObj();
+        var myUserId = curUser.id || 'u-me';
+        var myUserName = (curUser.nome ? (curUser.nome + ' ' + (curUser.cognome || '')) : (curUser.name || 'Presidente')).trim();
+        var myRole = curUser.ruolo || curUser.siteRoleFamily || 'Presidente';
+
+        var data = getPresData();
+        var train = (data.trainingsList || []).find(function (t) { return t.id === trainId; });
+        if (train) {
+          train.votes = train.votes || {};
+          train.votes[myUserId] = {
+            id: myUserId,
+            name: myUserName,
+            role: myRole,
+            vote: voteVal,
+            isStaff: true
+          };
+          savePresData(data);
+          renderHub();
+
+          var msg = voteVal === 'yes'
+            ? '👍 Hai confermato la presenza: Ci sono!'
+            : (voteVal === 'maybe' ? '❓ Presenza in forse registrata' : '👎 Segnato come non disponibile: Non ci sono');
+          if (window.showToast) window.showToast(msg, voteVal === 'yes' ? 'success' : (voteVal === 'maybe' ? 'warning' : 'info'));
+        }
+      };
+    });
+
+    // Apertura Modale Partecipanti (👥)
+    mount.querySelectorAll('.es-training-participants-btn').forEach(function (btn) {
+      btn.onclick = function () {
+        var trainId = btn.getAttribute('data-open-pres-voters-id');
+        if (window.EliseeCoachDash && typeof window.EliseeCoachDash.openVoters === 'function') {
+          window.EliseeCoachDash.openVoters(trainId);
+        }
+      };
+    });
+
     var btnStats = mount.querySelector('#btn-pres-stats') || mount.querySelector('#btn-pres-match-stats');
-    if (btnStats) {
-      btnStats.onclick = openStatsModal;
-    }
+    if (btnStats) btnStats.onclick = openStatsModal;
 
-    // Nuovo Calciatore (Screenshot 2)
     var btnAddP = mount.querySelector('#btn-pres-add-player');
-    if (btnAddP) {
-      btnAddP.onclick = openNewPlayerModal;
-    }
+    if (btnAddP) btnAddP.onclick = openNewPlayerModal;
 
-    // Crea Immagine -> Apri Editor
     var btnCreate = mount.querySelector('#btn-pres-create-tactic');
     if (btnCreate) {
       btnCreate.onclick = function () {
@@ -637,13 +650,10 @@
       };
     }
 
-    // Carica Immagine / PDF
     var btnUpload = mount.querySelector('#btn-pres-upload-file');
     var fileInput = mount.querySelector('#pres-file-upload');
     if (btnUpload && fileInput) {
-      btnUpload.onclick = function () {
-        fileInput.click();
-      };
+      btnUpload.onclick = function () { fileInput.click(); };
       fileInput.onchange = function (e) {
         var file = e.target.files && e.target.files[0];
         if (file) {
@@ -661,16 +671,13 @@
             });
             savePresData(data);
             renderHub();
-            if (window.showToast) {
-              window.showToast('✅ File ' + file.name + ' importato nella libreria presidenziale!', 'success');
-            }
+            if (window.showToast) window.showToast('✅ File ' + file.name + ' importato nella libreria!', 'success');
           };
           reader.readAsDataURL(file);
         }
       };
     }
 
-    // Modifica Dati Club
     var btnEditClub = mount.querySelector('#btn-pres-edit-club-data');
     if (btnEditClub) {
       btnEditClub.onclick = function () {

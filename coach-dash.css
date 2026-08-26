@@ -701,3 +701,245 @@
     grid-template-columns: 80px 1fr 80px;
   }
 }
+
+/* ============================================================
+   CARD ALLENAMENTO INTERATTIVO: PRESENZE, LIKE / DISLIKE & VOTI
+   ============================================================ */
+.es-training-event-card {
+  background: #ffffff;
+  color: #0f172a;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  margin-bottom: 1.2rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.es-training-event-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+.es-training-head-banner {
+  background: #94b8ad;
+  color: #092621;
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.es-training-date-block {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+.es-training-day-chip {
+  text-align: center;
+  line-height: 1.1;
+}
+.es-training-day-txt {
+  font-size: 1.15rem;
+  font-weight: 900;
+  display: block;
+}
+.es-training-date-txt {
+  font-size: 0.85rem;
+  font-weight: 800;
+  opacity: 0.85;
+}
+.es-training-title-txt {
+  font-size: 1.2rem;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.es-training-times-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 1.1rem 1rem;
+  text-align: center;
+  background: #ffffff;
+}
+.es-training-time-col {
+  border-right: 1px solid #f1f5f9;
+}
+.es-training-time-col:last-child {
+  border-right: none;
+}
+.es-training-time-val {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #0f172a;
+  line-height: 1.1;
+}
+.es-training-time-lbl {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #94a3b8;
+  margin-top: 0.25rem;
+}
+.es-training-actions-bar {
+  border-top: 1px solid #f1f5f9;
+  padding: 0.65rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+}
+.es-training-vote-group {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+}
+.es-training-vote-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0f172a;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  transition: all 0.15s ease;
+}
+.es-training-vote-btn:hover {
+  background: #f1f5f9;
+  transform: scale(1.08);
+}
+.es-training-vote-btn.is-voted-yes {
+  background: #dcfce7;
+  color: #15803d;
+}
+.es-training-vote-btn.is-voted-maybe {
+  background: #fef9c3;
+  color: #a16207;
+}
+.es-training-vote-btn.is-voted-no {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+.es-training-participants-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.35rem;
+  color: #334155;
+  padding: 0.35rem 0.55rem;
+  border-radius: 50%;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.es-training-participants-btn:hover {
+  background: #f1f5f9;
+  color: #0d9488;
+  transform: scale(1.15);
+}
+
+/* Modale Votanti / Partecipanti */
+.es-voters-modal-sheet {
+  background: #ffffff;
+  color: #0f172a;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 640px;
+  padding: 1.8rem 2rem 2.2rem;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.65);
+  position: relative;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+.es-voters-tabs-row {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1.5px solid #f1f5f9;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+}
+.es-voters-tab {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  padding: 0.35rem 0.95rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+.es-voters-tab.is-active {
+  background: #0d9488;
+  color: #ffffff;
+  border-color: #0d9488;
+}
+.es-voters-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.es-voter-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+}
+.es-voter-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.es-voter-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #0f172a;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+.es-voter-name {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+.es-voter-role {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #64748b;
+  margin: 0.1rem 0 0;
+}
+.es-voter-badge {
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+}
+.es-voter-badge.is-yes {
+  background: #dcfce7;
+  color: #166534;
+}
+.es-voter-badge.is-maybe {
+  background: #fef9c3;
+  color: #854d0e;
+}
+.es-voter-badge.is-no {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.es-voter-badge.is-pending {
+  background: #f1f5f9;
+  color: #64748b;
+}
+

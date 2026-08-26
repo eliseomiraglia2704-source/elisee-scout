@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Riprogettata l'**`Area Presidente (Presidential Hub)`** (`pres-dash.js`, `pres-dash.css`) con le 5 macro-aree attive (**Club, Squadra, Allenamenti, Partite, Lavagna**) per il pieno controllo societario + **Modale Statistiche Partite** (filtri tornei, stampa report e riquadri Totale/Casa/Trasferta) + **Modale Nuovo Calciatore** (inserimento atleti in rosa) + **Lavagna Tattica & Import PDF/JPG/PNG**. File: `pres-dash.js`, `pres-dash.css`, `index.html`, `sw.js`. Cache `PRES1`.
-Feature precedente: Allineamento Area Vice Allenatore con 5 macro-aree e lavagna tattica.
+Ultimo fatto: Implementato nell'**Area Allenatore, Vice Allenatore e Presidente** il sistema interattivo per la **`Gestione Presenze Allenamenti`** (stile TeamPlus) con **Like 👍 ("Ci sono")**, **In forse ❓**, **Dislike 👎 ("Non ci sono")** e icona **👥 Partecipanti** con modale dettagliata che elenca tutti i votanti per Nome, Cognome e Ruolo di atleti e membri dello staff. File: `coach-dash.js`, `coach-dash.css`, `vice-dash.js`, `pres-dash.js`, `index.html`, `sw.js`. Cache `TRN1`.
+Feature precedente: Attivazione Presidential Hub con 5 macro-aree, modali statistiche e nuovo calciatore.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
