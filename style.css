@@ -2390,16 +2390,16 @@ select.pf-input {
 .focus-chip {
   display: inline-flex;
   align-items: center;
-  padding: 0.38rem 0.75rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 0.3rem 0.65rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.04);
   color: #cbd5e1;
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: none;
-  letter-spacing: 0.01em;
-  transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease, transform 0.15s ease;
+  letter-spacing: 0;
+  transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
   cursor: pointer;
 }
 
@@ -2494,15 +2494,15 @@ select.pf-input {
   line-height: 1.15;
 }
 .cv-hero-role-pill {
-  background: rgba(56, 189, 248, 0.15);
-  border: 1px solid rgba(56, 189, 248, 0.45);
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.2);
   color: #38bdf8;
-  padding: 0.25rem 0.75rem;
-  border-radius: 999px;
-  font-size: 0.82rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
 }
 .cv-hero-sub {
   color: #94a3b8;
@@ -2864,12 +2864,12 @@ body.focus-hub {
 
 .focus-hub-tabs a {
   padding: 0.35rem 0.7rem;
-  border-radius: 999px;
+  border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   color: #94a3b8;
   text-decoration: none;
   font-size: 0.78rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .focus-hub-tabs a.active,
@@ -7243,16 +7243,16 @@ html {
 .focus-chip {
   display: inline-flex !important;
   align-items: center !important;
-  padding: 0.38rem 0.75rem !important;
-  border-radius: 999px !important;
-  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  padding: 0.3rem 0.65rem !important;
+  border-radius: 6px !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
   background: rgba(255, 255, 255, 0.04) !important;
   color: #cbd5e1 !important;
   font-size: 0.8rem !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
   text-decoration: none !important;
-  letter-spacing: 0.01em !important;
-  transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease, transform 0.15s ease !important;
+  letter-spacing: 0 !important;
+  transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease !important;
   cursor: pointer !important;
 }
 

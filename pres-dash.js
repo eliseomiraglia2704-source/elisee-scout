@@ -1,10 +1,12 @@
 /* ============================================================
    ELISEE SCOUT — AREA PRESIDENTE (PRESIDENTIAL DASHBOARD B2B)
    Gestionale Dirigenziale Sobrio & Professionale
+   - Regola Unica Etichette: Attributo Identitario vs Indicatore di Stato
+   - Blocco Header Pulito su Riga Singola con Stemma e Subtitle Unico
+   - Card Standings Header Incorniciata in Stile Dashboard
    - Navigazione a Tab con Scrollspy in tempo reale & Smooth Scroll
-   - Icone lineari outline SVG (Fischietto/Cronometro per Allenamento)
+   - Icone lineari outline SVG (Cronometro per Centro Allenamento)
    - Metriche con unità di misura uniformi (.es-pres-unit)
-   - Header Identità Club coerente (Foggia Calcio 1920 · Serie D Girone H)
    ============================================================ */
 (function () {
   'use strict';
@@ -254,10 +256,10 @@
           { task: 'Rinnovo Idoneità Agonistica 3 Atleti', status: 'In scadenza entro 20gg', date: '15/09/2026', isWarning: true }
         ],
         trustBadges: [
-          { name: 'GDPR Compliance', desc: 'Dati atleti e minori protetti' },
-          { name: 'FIGC Legal Verified', desc: 'Matricola societaria verificata' },
-          { name: 'Video Scouting Safe', desc: 'Liberatorie immagini depositate' },
-          { name: '2FA Auth Enabled', desc: 'Accesso dirigenziale protetto' }
+          'GDPR Compliance',
+          'FIGC Legal Verified',
+          'Video Scouting Safe',
+          '2FA Auth Enabled'
         ]
       }
     };
@@ -308,7 +310,7 @@
 
             '<div class="es-pres-detail-box">' +
               '<h3>Capienza &amp; Omologazione Impianto</h3>' +
-              '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:10px; padding:1rem; margin-bottom:1.2rem;">' +
+              '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:8px; padding:1rem; margin-bottom:1.2rem;">' +
                 '<div style="font-size:0.75rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Capienza Ufficiale Certificata</div>' +
                 '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8; margin:0.3rem 0;">' + esc(data.office.stadium.capacity) + '</div>' +
                 '<p style="font-size:0.8rem; color:#64748b; margin:0;">Dato anagrafico modificabile solo previa delibera CPV / FIGC.</p>' +
@@ -320,7 +322,7 @@
           '<div class="es-pres-grid-2">' +
             '<div class="es-pres-detail-box">' +
               '<h3>Media Spettatori Stagionale</h3>' +
-              '<div style="font-size:1.8rem; font-weight:800; color:#38bdf8; margin-bottom:0.4rem;">4.850 <span style="font-size:0.95rem; color:#94a3b8; font-weight:500;">spettatori / gara</span></div>' +
+              '<div style="font-size:1.8rem; font-weight:800; color:#38bdf8; margin-bottom:0.4rem;">4.850 <span class="es-pres-unit">spettatori / gara</span></div>' +
               '<p style="color:#cbd5e1; font-size:0.85rem; line-height:1.5;">Calcolata su presenze e biglietti reali registrati nelle 14 partite casalinghe ufficiali.</p>' +
               '<div style="font-size:0.8rem; color:#94a3b8; margin-top:0.6rem;">• Record stagionale: <b>12.450 spettatori</b><br>• Tasso di riempimento medio: <b>19.3%</b></div>' +
             '</div>' +
@@ -328,7 +330,7 @@
             '<div class="es-pres-detail-box">' +
               '<h3>Stato Agibilità &amp; Sicurezza</h3>' +
               '<div style="margin-bottom:0.8rem;">' +
-                '<span class="es-pres-badge es-pres-badge-success">' + esc(data.office.stadium.safetyStatus) + '</span>' +
+                '<span class="es-pres-status es-pres-status-ok">' + esc(data.office.stadium.safetyStatus) + '</span>' +
               '</div>' +
               '<p style="color:#cbd5e1; font-size:0.85rem; line-height:1.5;">• <b>Ultimo Controllo:</b> ' + esc(data.office.stadium.lastInspectionDate) + '<br>• <b>Videosorveglianza:</b> Conforme alle direttive prefettizie<br>• <b>Presidio Sanitario:</b> 2 Postazioni BLSD omologate</p>' +
             '</div>' +
@@ -414,7 +416,7 @@
                           '<td>' + esc(h.league) + '</td>' +
                           '<td style="color:#38bdf8; font-weight:700;">' + esc(h.pos) + '</td>' +
                           '<td><b>' + esc(h.pts) + '</b> pt</td>' +
-                          '<td><span class="es-pres-badge es-pres-badge-neutral">' + esc(h.note) + '</span></td>' +
+                          '<td><span class="es-pres-status es-pres-status-neutral">' + esc(h.note) + '</span></td>' +
                         '</tr>'
                       );
                     }).join('') +
@@ -457,8 +459,8 @@
             // Main Sponsor
             '<div class="es-pres-detail-box">' +
               '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.8rem;">' +
-                '<span class="es-pres-badge es-pres-badge-neutral">Main Sponsor Maglia</span>' +
-                '<span class="es-pres-badge es-pres-badge-success">' + esc(sp.main.status) + '</span>' +
+                '<span class="es-pres-status es-pres-status-neutral">Main Sponsor</span>' +
+                '<span class="es-pres-status es-pres-status-ok">' + esc(sp.main.status) + '</span>' +
               '</div>' +
               '<h4 style="font-size:1.2rem; font-weight:800; color:#fff; margin:0 0 0.3rem;">' + esc(sp.main.name) + '</h4>' +
               '<p style="color:#94a3b8; font-size:0.82rem; margin-bottom:0.8rem;">' + esc(sp.main.tier) + '</p>' +
@@ -472,8 +474,8 @@
             // Tech Sponsor
             '<div class="es-pres-detail-box">' +
               '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.8rem;">' +
-                '<span class="es-pres-badge es-pres-badge-neutral">Sponsor Tecnico</span>' +
-                '<span class="es-pres-badge es-pres-badge-success">' + esc(sp.tech.status) + '</span>' +
+                '<span class="es-pres-status es-pres-status-neutral">Sponsor Tecnico</span>' +
+                '<span class="es-pres-status es-pres-status-ok">' + esc(sp.tech.status) + '</span>' +
               '</div>' +
               '<h4 style="font-size:1.2rem; font-weight:800; color:#fff; margin:0 0 0.3rem;">' + esc(sp.tech.name) + '</h4>' +
               '<p style="color:#94a3b8; font-size:0.82rem; margin-bottom:0.8rem;">' + esc(sp.tech.tier) + '</p>' +
@@ -487,8 +489,8 @@
             // Facility Sponsor
             '<div class="es-pres-detail-box">' +
               '<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.8rem;">' +
-                '<span class="es-pres-badge es-pres-badge-neutral">Sponsor Impianto</span>' +
-                '<span class="es-pres-badge es-pres-badge-warning">' + esc(sp.facility.status) + '</span>' +
+                '<span class="es-pres-status es-pres-status-neutral">Sponsor Impianto</span>' +
+                '<span class="es-pres-status es-pres-status-warning">' + esc(sp.facility.status) + '</span>' +
               '</div>' +
               '<h4 style="font-size:1.2rem; font-weight:800; color:#fff; margin:0 0 0.3rem;">' + esc(sp.facility.name) + '</h4>' +
               '<p style="color:#94a3b8; font-size:0.82rem; margin-bottom:0.8rem;">' + esc(sp.facility.tier) + '</p>' +
@@ -527,7 +529,7 @@
                 '<option>Juniores Under 19 Nazionale</option>' +
               '</select>' +
             '</div>' +
-            '<span class="es-pres-badge es-pres-badge-neutral">Fonte: Comunicato Ufficiale FIGC / LND</span>' +
+            '<span class="es-pres-status es-pres-status-neutral">Fonte: Comunicato Ufficiale FIGC / LND</span>' +
           '</div>' +
 
           '<div class="es-pres-detail-box" style="padding:1rem;">' +
@@ -555,7 +557,7 @@
                         '<td style="font-weight:800; color:' + (row.pos <= 2 ? '#38bdf8' : (row.pos <= 5 ? '#34d399' : '#94a3b8')) + ';">' + row.pos + '</td>' +
                         '<td>' +
                           '<b>' + esc(row.team) + '</b>' +
-                          (isMyTeam ? ' <span class="es-pres-badge es-pres-badge-neutral" style="font-size:0.65rem; margin-left:0.4rem;">Il tuo Club</span>' : '') +
+                          (isMyTeam ? ' <span class="es-pres-status es-pres-status-neutral" style="font-size:0.68rem; margin-left:0.4rem;">Il tuo Club</span>' : '') +
                         '</td>' +
                         '<td style="text-align:center;">' + row.played + '</td>' +
                         '<td style="text-align:center; color:#34d399; font-weight:700;">' + row.won + '</td>' +
@@ -601,9 +603,9 @@
               data.competitions.scheduleMatches.map(function (m) {
                 var borderCol = m.status === 'W' ? '#34d399' : (m.status === 'D' ? '#94a3b8' : (m.status === 'L' ? '#ef4444' : '#38bdf8'));
                 return (
-                  '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-left:3px solid ' + borderCol + '; border-radius:10px; padding:0.85rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; cursor:pointer;" class="es-pres-schedule-row">' +
+                  '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-left:3px solid ' + borderCol + '; border-radius:8px; padding:0.85rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; cursor:pointer;" class="es-pres-schedule-row">' +
                     '<div style="display:flex; align-items:center; gap:1rem;">' +
-                      '<span class="es-pres-badge es-pres-badge-neutral" style="font-size:0.72rem;">' + (m.type === 'H' ? 'CASA (H)' : 'TRASFERTA (A)') + '</span>' +
+                      '<span class="es-pres-status es-pres-status-neutral" style="font-size:0.7rem;">' + (m.type === 'H' ? 'Casa (H)' : 'Trasferta (A)') + '</span>' +
                       '<div>' +
                         '<div style="font-size:0.95rem; font-weight:700; color:#fff;">' + esc(m.round) + ' · vs ' + esc(m.opponent) + '</div>' +
                         '<div style="font-size:0.75rem; color:#94a3b8; margin-top:0.15rem;">' + esc(m.date) + (m.referee ? (' · Arbitro: ' + esc(m.referee)) : '') + '</div>' +
@@ -611,10 +613,10 @@
                     '</div>' +
                     '<div style="display:flex; align-items:center; gap:0.8rem;">' +
                       '<div style="font-size:1.2rem; font-weight:800; color:' + (m.status === 'NEXT' ? '#38bdf8' : '#ffffff') + ';">' + esc(m.res) + '</div>' +
-                      (m.status === 'W' ? '<span class="es-pres-badge es-pres-badge-success">Vittoria</span>' :
-                       m.status === 'D' ? '<span class="es-pres-badge es-pres-badge-neutral">Pareggio</span>' :
-                       m.status === 'L' ? '<span class="es-pres-badge es-pres-badge-danger">Sconfitta</span>' :
-                       '<span class="es-pres-badge es-pres-badge-neutral">Prossima Gara</span>') +
+                      (m.status === 'W' ? '<span class="es-pres-status es-pres-status-ok">Vittoria</span>' :
+                       m.status === 'D' ? '<span class="es-pres-status es-pres-status-neutral">Pareggio</span>' :
+                       m.status === 'L' ? '<span class="es-pres-status es-pres-status-urgent">Sconfitta</span>' :
+                       '<span class="es-pres-status es-pres-status-neutral">Prossima Gara</span>') +
                     '</div>' +
                   '</div>'
                 );
@@ -646,13 +648,13 @@
             '<div class="es-pres-grid-2">' +
               data.staff.members.map(function (m) {
                 return (
-                  '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:10px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
+                  '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:8px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
                     '<div>' +
                       '<div style="font-size:0.92rem; font-weight:700; color:#fff;">' + esc(m.name) + '</div>' +
                       '<div style="font-size:0.75rem; color:#38bdf8; margin-top:0.1rem;">' + esc(m.role) + '</div>' +
                       '<div style="font-size:0.72rem; color:#94a3b8; margin-top:0.15rem;">Qualifica: <b>' + esc(m.patent || 'Patentino FIGC') + '</b></div>' +
                     '</div>' +
-                    '<span class="' + (m.isWarning ? 'es-pres-badge es-pres-badge-warning' : 'es-pres-badge es-pres-badge-success') + '">' + esc(m.status) + '</span>' +
+                    '<span class="' + (m.isWarning ? 'es-pres-status es-pres-status-warning' : 'es-pres-status es-pres-status-ok') + '">' + esc(m.status) + '</span>' +
                   '</div>'
                 );
               }).join('') +
@@ -664,14 +666,14 @@
             '<div style="display:flex; flex-direction:column; gap:0.6rem;">' +
               data.trainingWeek.map(function (tw) {
                 return (
-                  '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:10px; padding:0.9rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem;">' +
+                  '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:8px; padding:0.9rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem;">' +
                     '<div>' +
                       '<div style="font-size:0.95rem; font-weight:700; color:#38bdf8;">' + esc(tw.day) + ' <span style="font-size:0.8rem; color:#94a3b8; font-weight:400;">(' + esc(tw.time) + ')</span></div>' +
                       '<div style="font-size:0.82rem; color:#cbd5e1; margin-top:0.25rem;"><b>Focus seduta:</b> ' + esc(tw.focus) + '</div>' +
                       '<div style="font-size:0.75rem; color:#94a3b8; margin-top:0.15rem;">Ubicazione: ' + esc(tw.pitch) + '</div>' +
                     '</div>' +
                     '<div style="text-align:right;">' +
-                      '<span class="es-pres-badge es-pres-badge-success">' + esc(tw.attendance) + '</span>' +
+                      '<span class="es-pres-status es-pres-status-ok">' + esc(tw.attendance) + '</span>' +
                     '</div>' +
                   '</div>'
                 );
@@ -695,33 +697,22 @@
 
     return (
       '<div class="es-pres-suite">' +
-        // 1. Header Identità Club
+        // 1. Header Identità Club (Nuova struttura pulita su riga unica con stemma dedicato)
         '<div class="es-pres-header-banner">' +
           '<div class="es-pres-header-inner">' +
             '<div class="es-pres-club-meta-box">' +
               '<div class="es-pres-crest-frame">' +
                 '<img src="' + esc(data.logoUrl) + '" alt="' + esc(data.clubName) + '" onerror="this.onerror=null; this.src=\'' + FOGGIA_LOGO_FALLBACK + '\';">' +
               '</div>' +
-              '<div>' +
+              '<div class="es-pres-club-meta-text">' +
                 '<h1 class="es-pres-club-name">' + esc(data.clubName) + '</h1>' +
-                '<div class="es-pres-badges-row">' +
-                  '<span class="es-pres-badge es-pres-badge-neutral">' + esc(data.category) + '</span>' +
-                  '<span class="es-pres-badge es-pres-badge-success">' + esc(data.affiliationStatus) + '</span>' +
-                  '<span class="es-pres-badge es-pres-badge-neutral">' + esc(data.presRole) + '</span>' +
-                '</div>' +
+                '<div class="es-pres-club-subtitle">' + esc(data.category) + ' · ' + esc(data.affiliationStatus) + ' · ' + esc(data.presRole) + '</div>' +
               '</div>' +
             '</div>' +
 
-            '<div class="es-pres-standings-snippet">' +
-              '<div class="es-pres-snippet-col">' +
-                '<div class="es-pres-snippet-val">' + esc(data.position) + '</div>' +
-                '<div class="es-pres-snippet-lbl">' + esc(data.points) + ' Punti</div>' +
-              '</div>' +
-              '<div style="width:1px; height:28px; background:rgba(148,163,184,0.2);"></div>' +
-              '<div class="es-pres-snippet-col">' +
-                '<div class="es-pres-snippet-val" style="color:#ffffff;">' + esc(data.matchDay) + '</div>' +
-                '<div class="es-pres-snippet-lbl">' + esc(data.season) + '</div>' +
-              '</div>' +
+            '<div class="es-pres-standings-card">' +
+              '<div class="es-pres-standing-row"><span class="es-pres-standing-highlight">' + esc(data.position) + '</span> · <span>' + esc(data.points) + ' punti</span></div>' +
+              '<div class="es-pres-standing-sub">' + esc(data.matchDay) + ' · ' + esc(data.season) + '</div>' +
             '</div>' +
           '</div>' +
         '</div>' +
@@ -748,11 +739,11 @@
             '</div>' +
 
             '<div class="es-pres-grid-3">' +
-              // Card Rating Rosa (KPI Sobria)
+              // Card Rating Rosa
               '<div class="es-pres-card" id="card-pres-rating">' +
                 '<div class="es-pres-card-top">' +
                   '<div class="es-pres-icon-box">' + ICONS.users + '</div>' +
-                  '<span class="es-pres-badge es-pres-badge-neutral">Rendimento Rosa</span>' +
+                  '<span class="es-pres-status es-pres-status-neutral">Rendimento rosa</span>' +
                 '</div>' +
                 '<div>' +
                   '<h3 class="es-pres-card-title">Rating Rosa</h3>' +
@@ -767,7 +758,7 @@
               '<div class="es-pres-card" id="card-pres-transfers">' +
                 '<div class="es-pres-card-top">' +
                   '<div class="es-pres-icon-box">' + ICONS.arrows + '</div>' +
-                  '<span class="es-pres-badge es-pres-badge-success">' + data.transfers.activeCount + ' Trattative</span>' +
+                  '<span class="es-pres-status es-pres-status-ok">' + data.transfers.activeCount + ' trattative</span>' +
                 '</div>' +
                 '<div>' +
                   '<h3 class="es-pres-card-title">Trattative di Mercato</h3>' +
@@ -781,7 +772,7 @@
               '<div class="es-pres-card" id="card-pres-staff">' +
                 '<div class="es-pres-card-top">' +
                   '<div class="es-pres-icon-box">' + ICONS.briefcase + '</div>' +
-                  (data.staff.alertExpiring > 0 ? ('<span class="es-pres-badge es-pres-badge-warning">' + data.staff.alertExpiring + ' In scadenza</span>') : '<span class="es-pres-badge es-pres-badge-success">Staff Regolare</span>') +
+                  (data.staff.alertExpiring > 0 ? ('<span class="es-pres-status es-pres-status-warning">' + data.staff.alertExpiring + ' in scadenza</span>') : '<span class="es-pres-status es-pres-status-ok">Staff regolare</span>') +
                 '</div>' +
                 '<div>' +
                   '<h3 class="es-pres-card-title">Staff Tecnico</h3>' +
@@ -797,7 +788,7 @@
               '<div class="es-pres-card" id="card-pres-youth">' +
                 '<div class="es-pres-card-top">' +
                   '<div class="es-pres-icon-box">' + ICONS.sprout + '</div>' +
-                  '<span class="es-pres-badge es-pres-badge-neutral">' + data.youth.underInRoster + ' Under</span>' +
+                  '<span class="es-pres-status es-pres-status-neutral">' + data.youth.underInRoster + ' under</span>' +
                 '</div>' +
                 '<div>' +
                   '<h3 class="es-pres-card-title">Settore Giovanile &amp; Fuoriquota</h3>' +
@@ -811,7 +802,7 @@
               '<div class="es-pres-card" id="card-pres-dev">' +
                 '<div class="es-pres-card-top">' +
                   '<div class="es-pres-icon-box">' + ICONS.growth + '</div>' +
-                  '<span class="es-pres-badge es-pres-badge-success">' + data.athleteDevelopment.activeCards + ' Schede</span>' +
+                  '<span class="es-pres-status es-pres-status-ok">' + data.athleteDevelopment.activeCards + ' schede</span>' +
                 '</div>' +
                 '<div>' +
                   '<h3 class="es-pres-card-title">Sviluppo Atleti</h3>' +
@@ -835,42 +826,42 @@
             '<div class="es-pres-grid-4">' +
               // Posta
               '<div class="es-pres-card" id="card-pres-mail">' +
-                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.mail + '</div><span class="es-pres-badge es-pres-badge-neutral">' + data.office.mail.unread + ' Nuovi</span></div>' +
+                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.mail + '</div><span class="es-pres-status es-pres-status-neutral">' + data.office.mail.unread + ' nuovi</span></div>' +
                 '<div><h4 class="es-pres-card-title">Posta</h4><div class="es-pres-card-metric">' + data.office.mail.unread + ' <span class="es-pres-unit">messaggi non letti</span></div><p class="es-pres-card-desc">Messaggi da agenti FIFA, staff e comunicati federali LND</p></div>' +
                 '<div class="es-pres-card-footer"><span>In arrivo</span><span>Apri posta &rsaquo;</span></div>' +
               '</div>' +
 
               // Sponsor
               '<div class="es-pres-card" id="card-pres-sponsors-screen">' +
-                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.award + '</div>' + (data.office.sponsors.alertExpiring > 0 ? '<span class="es-pres-badge es-pres-badge-warning">1 In scadenza</span>' : '<span class="es-pres-badge es-pres-badge-success">4 Attivi</span>') + '</div>' +
+                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.award + '</div>' + (data.office.sponsors.alertExpiring > 0 ? '<span class="es-pres-status es-pres-status-warning">1 in scadenza</span>' : '<span class="es-pres-status es-pres-status-ok">4 attivi</span>') + '</div>' +
                 '<div><h4 class="es-pres-card-title">Sponsor</h4><div class="es-pres-card-metric">' + data.office.sponsors.totalIncome + ' <span class="es-pres-unit">ricavi annui</span></div><p class="es-pres-card-desc">' + data.office.sponsors.activeCount + ' Partnership commerciali attive per la stagione</p></div>' +
                 '<div class="es-pres-card-footer"><span>Partnership</span><span>Gestione sponsor &rsaquo;</span></div>' +
               '</div>' +
 
-              // Centro Allenamento (Fischietto / Cronometro)
+              // Centro Allenamento (Cronometro)
               '<div class="es-pres-card" id="card-pres-training-screen">' +
-                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.stopwatch + '</div><span class="es-pres-badge es-pres-badge-success">Regolare</span></div>' +
+                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.stopwatch + '</div><span class="es-pres-status es-pres-status-ok">Regolare</span></div>' +
                 '<div><h4 class="es-pres-card-title">Centro Allenamento</h4><div class="es-pres-card-metric">2 <span class="es-pres-unit">campi omologati</span></div><p class="es-pres-card-desc">Staff tecnico qualificato e programma settimanale sedute</p></div>' +
                 '<div class="es-pres-card-footer"><span>Sedute &amp; Staff</span><span>Dettagli allenamento &rsaquo;</span></div>' +
               '</div>' +
 
               // Store POD
               '<div class="es-pres-card" id="card-pres-store">' +
-                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.bag + '</div><span class="es-pres-badge es-pres-badge-neutral">POD Attivo</span></div>' +
+                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.bag + '</div><span class="es-pres-status es-pres-status-neutral">POD attivo</span></div>' +
                 '<div><h4 class="es-pres-card-title">Store Ufficiale</h4><div class="es-pres-card-metric">' + data.office.merchandising.ordersCount + ' <span class="es-pres-unit">ordini evasi</span></div><p class="es-pres-card-desc">Merchandising con produzione e spedizione automatica</p></div>' +
                 '<div class="es-pres-card-footer"><span>Ricavi ' + data.office.merchandising.revenue + '</span><span>Catalogo store &rsaquo;</span></div>' +
               '</div>' +
 
               // Stadio
               '<div class="es-pres-card" id="card-pres-stadium-screen">' +
-                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.building + '</div><span class="es-pres-badge es-pres-badge-neutral">25.085 Posti</span></div>' +
+                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.building + '</div><span class="es-pres-status es-pres-status-neutral">25.085 posti</span></div>' +
                 '<div><h4 class="es-pres-card-title">Stadio</h4><div class="es-pres-card-metric">4.850 <span class="es-pres-unit">spettatori / gara</span></div><p class="es-pres-card-desc">Tariffe biglietti, capienza certificata e agibilità impianto</p></div>' +
                 '<div class="es-pres-card-footer"><span>Pino Zaccheria</span><span>Gestisci impianto &rsaquo;</span></div>' +
               '</div>' +
 
               // Scouting & Secret List
               '<div class="es-pres-card" id="card-pres-scouting">' +
-                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.search + '</div><span class="es-pres-badge es-pres-badge-success">' + data.office.scouting.secretListTalents + ' Talenti</span></div>' +
+                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.search + '</div><span class="es-pres-status es-pres-status-ok">' + data.office.scouting.secretListTalents + ' talenti</span></div>' +
                 '<div><h4 class="es-pres-card-title">Scouting Club</h4><div class="es-pres-card-metric">' + data.office.scouting.secretListTalents + ' <span class="es-pres-unit">profili monitorati</span></div><p class="es-pres-card-desc">' + data.office.scouting.analystReports + ' Report di match analysis archiviati</p></div>' +
                 '<div class="es-pres-card-footer"><span>Secret List</span><span>Visualizza scouting &rsaquo;</span></div>' +
               '</div>' +
@@ -879,7 +870,7 @@
               '<div class="es-pres-card" id="card-pres-finances" style="grid-column: span 2;">' +
                 '<div class="es-pres-card-top">' +
                   '<div class="es-pres-icon-box">' + ICONS.card + '</div>' +
-                  '<span class="es-pres-badge es-pres-badge-neutral">Accesso Riservato Dirigenza</span>' +
+                  '<span class="es-pres-status es-pres-status-neutral">Accesso riservato dirigenza</span>' +
                 '</div>' +
                 '<div>' +
                   '<h4 class="es-pres-card-title">Finanze &amp; Budget Societario</h4>' +
@@ -908,21 +899,21 @@
             '<div class="es-pres-grid-3">' +
               // Statistiche
               '<div class="es-pres-card" id="card-pres-stats-screen">' +
-                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.barChart + '</div><span class="es-pres-badge es-pres-badge-success">' + data.competitions.stats.won + ' Vinte</span></div>' +
+                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.barChart + '</div><span class="es-pres-status es-pres-status-ok">' + data.competitions.stats.won + ' vinte</span></div>' +
                 '<div><h3 class="es-pres-card-title">Statistiche Club &amp; Record</h3><div class="es-pres-card-metric">' + data.competitions.stats.played + ' <span class="es-pres-unit">gare disputate</span></div><p class="es-pres-card-desc">Record presenze, gol, assist, strisce e storico campionati</p></div>' +
                 '<div class="es-pres-card-footer"><span>Trend: 4V · 1N</span><span>Dettaglio statistiche &rsaquo;</span></div>' +
               '</div>' +
 
               // Calendario
               '<div class="es-pres-card" id="card-pres-schedule-screen">' +
-                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.calendar + '</div><span class="es-pres-badge es-pres-badge-neutral">Prossima Gara</span></div>' +
+                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.calendar + '</div><span class="es-pres-status es-pres-status-neutral">Prossima gara</span></div>' +
                 '<div><h3 class="es-pres-card-title">' + esc(data.competitions.nextMatch.opponent) + '</h3><div class="es-pres-card-metric" style="font-size:1.15rem;">Taranto FC <span class="es-pres-unit" style="display:block; margin-top:0.25rem;">30 Ago · Ore 15:00</span></div><p class="es-pres-card-desc">Programmazione gare e designazioni arbitrali ufficiali AIA</p></div>' +
                 '<div class="es-pres-card-footer"><span>Designazioni AIA</span><span>Calendario completo &rsaquo;</span></div>' +
               '</div>' +
 
               // Classifica
               '<div class="es-pres-card" id="card-pres-standings-screen">' +
-                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.layers + '</div><span class="es-pres-badge es-pres-badge-neutral">Girone H</span></div>' +
+                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.layers + '</div><span class="es-pres-status es-pres-status-neutral">Girone H</span></div>' +
                 '<div><h3 class="es-pres-card-title">Classifica Campionato</h3><div class="es-pres-card-metric">' + esc(data.position) + ' <span class="es-pres-unit">(' + data.points + ' pt)</span></div><p class="es-pres-card-desc">' + esc(data.standingGap) + '<br>Tabella federale ufficiale con evidenziazione Club</p></div>' +
                 '<div class="es-pres-card-footer"><span>Live Standings</span><span>Classifica integrale &rsaquo;</span></div>' +
               '</div>' +
@@ -940,13 +931,13 @@
 
             '<div class="es-pres-grid-2">' +
               '<div class="es-pres-card" id="card-pres-gov-status">' +
-                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.fileText + '</div><span class="es-pres-badge es-pres-badge-success">100% Conforme</span></div>' +
+                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.fileText + '</div><span class="es-pres-status es-pres-status-ok">100% conforme</span></div>' +
                 '<div><h3 class="es-pres-card-title">Tesseramenti &amp; Privacy</h3><p class="es-pres-card-desc" style="font-size:0.85rem; line-height:1.6;">• <b>Tesseramenti Atleti:</b> ' + esc(data.governance.tesseramenti) + '<br>• <b>GDPR Minori:</b> ' + esc(data.governance.gdprUnder18) + '<br>• <b>Certificati BLSD Staff:</b> Tutti i membri dello staff tecnico abilitati</p></div>' +
                 '<div class="es-pres-card-footer"><span>Archivio Documentale</span><span>Verifica tessere &rsaquo;</span></div>' +
               '</div>' +
 
               '<div class="es-pres-card" id="card-pres-gov-deadlines">' +
-                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.bell + '</div><span class="es-pres-badge es-pres-badge-warning">1 Scadenza</span></div>' +
+                '<div class="es-pres-card-top"><div class="es-pres-icon-box">' + ICONS.bell + '</div><span class="es-pres-status es-pres-status-warning">1 scadenza</span></div>' +
                 '<div><h3 class="es-pres-card-title">Scadenziario Federale</h3><div style="font-size:0.82rem; color:#cbd5e1; display:flex; flex-direction:column; gap:0.35rem; margin-top:0.4rem;">' +
                   data.governance.federalDeadlines.map(function (d) {
                     return '<div>• <b>' + esc(d.task) + ':</b> <span style="color:' + (d.isWarning ? '#fbbf24' : '#34d399') + ';">' + esc(d.status) + '</span> (' + esc(d.date) + ')</div>';
@@ -956,16 +947,12 @@
               '</div>' +
             '</div>' +
 
-            // Badge di Fiducia Sobri
-            '<div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:0.85rem; margin-top:1rem;">' +
-              data.governance.trustBadges.map(function (b) {
-                return (
-                  '<div style="background:#090e17; border:1px solid rgba(148,163,184,0.15); border-radius:10px; padding:0.85rem; text-align:center;">' +
-                    '<div style="font-size:0.82rem; font-weight:700; color:#ffffff; margin-bottom:0.15rem;">' + esc(b.name) + '</div>' +
-                    '<div style="font-size:0.72rem; color:#94a3b8;">' + esc(b.desc) + '</div>' +
-                  '</div>'
-                );
-              }).join('') +
+            // Presidi di Conformità Sobri in linea unica
+            '<div style="background:#090e17; border:1px solid rgba(148,163,184,0.15); border-radius:8px; padding:0.85rem 1.2rem; margin-top:1rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.75rem;">' +
+              '<div style="font-size:0.82rem; font-weight:600; color:#cbd5e1;">Presidi di Conformità &amp; Sicurezza:</div>' +
+              '<div style="font-size:0.82rem; color:#94a3b8;">' +
+                data.governance.trustBadges.map(function (b) { return esc(b); }).join(' · ') +
+              '</div>' +
             '</div>' +
           '</section>' +
 
@@ -1198,11 +1185,11 @@
         var html =
           '<p style="color:#cbd5e1; font-size:0.88rem; margin-bottom:1rem;">Analisi tecnica della rosa basata su minutaggio effettivo e parametri federali:</p>' +
           '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem;">' +
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:10px; padding:1rem;">' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:8px; padding:1rem;">' +
               '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">INDICE RENDIMENTO ROSA</div>' +
               '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8;">' + data.squadRating.score + ' <span class="es-pres-unit">/ 100</span></div>' +
             '</div>' +
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:10px; padding:1rem;">' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:8px; padding:1rem;">' +
               '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">VALORE SCOUTING INTERNO</div>' +
               '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8;">' + data.squadRating.marketValue + '</div>' +
             '</div>' +
@@ -1218,9 +1205,9 @@
       cardTransfers.onclick = function () {
         var listHtml = data.transfers.items.map(function (t) {
           return (
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:10px; padding:0.85rem 1rem; margin-bottom:0.6rem; display:flex; justify-content:space-between; align-items:center;">' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:8px; padding:0.85rem 1rem; margin-bottom:0.6rem; display:flex; justify-content:space-between; align-items:center;">' +
               '<div><h4 style="font-size:0.95rem; font-weight:700; color:#fff; margin:0;">' + esc(t.player) + ' (' + esc(t.role) + ')</h4><div style="font-size:0.78rem; color:#94a3b8; margin-top:0.15rem;">Club: ' + esc(t.club) + ' · Tipo: ' + esc(t.type) + '</div></div>' +
-              '<span class="es-pres-badge es-pres-badge-success">' + esc(t.status) + '</span>' +
+              '<span class="es-pres-status es-pres-status-ok">' + esc(t.status) + '</span>' +
             '</div>'
           );
         }).join('');
@@ -1234,9 +1221,9 @@
       cardStaff.onclick = function () {
         var listHtml = data.staff.members.map(function (m) {
           return (
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:10px; padding:0.85rem 1rem; margin-bottom:0.55rem; display:flex; justify-content:space-between; align-items:center;">' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:8px; padding:0.85rem 1rem; margin-bottom:0.55rem; display:flex; justify-content:space-between; align-items:center;">' +
               '<div><h5 style="font-size:0.92rem; font-weight:700; color:#fff; margin:0;">' + esc(m.name) + '</h5><div style="font-size:0.75rem; color:#38bdf8;">' + esc(m.role) + ' (' + esc(m.patent) + ') · Scadenza: ' + esc(m.contractExp) + '</div></div>' +
-              '<span class="' + (m.isWarning ? 'es-pres-badge es-pres-badge-warning' : 'es-pres-badge es-pres-badge-success') + '">' + esc(m.status) + '</span>' +
+              '<span class="' + (m.isWarning ? 'es-pres-status es-pres-status-warning' : 'es-pres-status es-pres-status-ok') + '">' + esc(m.status) + '</span>' +
             '</div>'
           );
         }).join('');
@@ -1254,11 +1241,11 @@
         }
         var html =
           '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem;">' +
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:10px; padding:1rem;">' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:8px; padding:1rem;">' +
               '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">SALDO CASSA ATTUALE</div>' +
               '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8;">' + data.office.finances.cashBalance + '</div>' +
             '</div>' +
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:10px; padding:1rem;">' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:8px; padding:1rem;">' +
               '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">MONTE INGAGGI MENSILE</div>' +
               '<div style="font-size:1.6rem; font-weight:800; color:#cbd5e1;">' + data.office.finances.monthlyPayroll + '</div>' +
             '</div>' +
@@ -1278,7 +1265,7 @@
       cardMail.onclick = function () {
         var listHtml = data.office.mail.items.map(function (m) {
           return (
-            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:10px; padding:0.85rem 1rem; margin-bottom:0.6rem;">' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:8px; padding:0.85rem 1rem; margin-bottom:0.6rem;">' +
               '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.25rem;"><span style="font-size:0.75rem; font-weight:700; color:#38bdf8;">' + esc(m.from) + '</span><span style="font-size:0.72rem; color:#94a3b8;">' + esc(m.date) + '</span></div>' +
               '<h5 style="font-size:0.92rem; font-weight:700; color:#ffffff; margin:0;">' + esc(m.subject) + '</h5>' +
             '</div>'

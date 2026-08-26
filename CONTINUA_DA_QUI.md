@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Rifinitura completa di tutti i 6 punti dell'**`👑 Area Presidente (Presidential Dashboard B2B)`**: 1. Banner OTP inferiore armonizzato con la palette dark/blu SaaS (`verifica-account.css`); 2. Implementato **Scrollspy in tempo reale** e jump scroll animato con offset sulla barra di navigazione a tab fissa (`pres-dash.js`, `pres-dash.css`); 3. Sostituita l'icona del Centro Allenamento con icona lineare outline **Cronometro / Stopwatch sportivo**; 4. Club branding coerente su *Foggia Calcio 1920 (Serie D · Girone H)* con stemma SVG fallback; 5. Incorniciato lo snippet Classifica in alto a destra con card bordata e ombreggiata; 6. Uniformate tutte le unità di misura numeriche nelle KPI card (`.es-pres-unit`). File: `pres-dash.js`, `pres-dash.css`, `verifica-account.css`, `index.html`, `sw.js`. Cache `PRES_REF2`.
-Feature precedente: Spaziatura padding-top per header superiore.
+Ultimo fatto: **Eliminazione definitiva dei badge/pill stile videogioco e riordino del blocco header club**: 1. Applicata la **Regola Unica** a due soli tipi di etichetta su tutta la piattaforma: (a) *Attributi identitari* come testo semplice separato da punto medio (`·`) senza bordi né sfondi; (b) *Indicatori di stato numerici/operativi* come box squadrati (4-6px, MAI pillole 999px) con opacità 10-15%, testo normale non maiuscolo e 3 soli significati semantici (verde, ambra, rosso, neutro); 2. Header Club pulito su riga unica con stemma dedicato senza sovrapposizioni e riga sottotitolo (`Serie D · Girone H · Tesseramento attivo FIGC LND · Ruolo: Presidente`); 3. Standings card incorniciata con stile identico a tutte le metriche della dashboard; 4. Estesa la regola a `style.css` (`.focus-chip`, `.cv-hero-role-pill`, `.portal-chip`, ecc.). File: `pres-dash.js`, `pres-dash.css`, `style.css`, `index.html`, `sw.js`. Cache `PRES_NOPILL1`.
+Feature precedente: Rifinitura 6 punti Area Presidente.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
