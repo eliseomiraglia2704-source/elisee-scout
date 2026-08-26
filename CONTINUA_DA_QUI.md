@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Attivata la verifica email con **`Codice OTP a 4 numeri`** per gli utenti registrati che entrano nella propria area: banner fluttuante in basso (`.es-otp-bottom-banner`) con indicazione "Email non verificata" e pulsante "Invia codice OTP" + modale interattiva (`#es-otp-modal-overlay`) con 4 caselle numeriche a scorrimento automatico, simulazione/invio codice OTP e validazione istantanea con aggiornamento stato utente. File: `verifica-account.js`, `verifica-account.css`, `index.html`, `sw.js`. Cache `OTP1`.
-Feature precedente: Riorganizzazione concettuale Curriculum in vero CV sportivo personale.
+Ultimo fatto: Riprogettata e attivata l'intera **`Area Allenatore (Mister Hub)`** con tutte le 5 macro-aree funzionali e interattive: **1. Club** (dati società, impianto sportivo, matricola, sede, stadio, stemma/foto squadra e staff tecnico con doc/tessera/scadenza certificato); **2. Squadra** (rosa completa, ruoli, anno nascita, stato medico, presenze e aggiunta/modifica atleti); **3. Allenamenti** (pianificazione sedute, orari, focus tecnico/tattico e registro presenze); **4. Partite** (calendario gare, convocazioni, risultati e statistiche); **5. Lavagna** (lavagna tattica interattiva con pedine drag & drop, selezione moduli 4-3-3/3-5-2/4-2-3-1 e note tattiche del Mister). File: `coach-dash.js`, `coach-dash.css`, `index.html`, `sw.js`. Cache `MSTR1`.
+Feature precedente: Verifica email con Codice OTP a 4 cifre.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

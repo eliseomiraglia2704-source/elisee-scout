@@ -1,4 +1,8 @@
-/* Dashboard Discorso Allenatore — stesso shell della dash giocatore */
+/* ============================================================
+   ELISEE SCOUT — Area Allenatore (Mister Hub)
+   5 Macro-aree: CLUB | SQUADRA | ALLENAMENTI | PARTITE | LAVAGNA
+   ============================================================ */
+
 #user-dossier-view-group.is-staff-area.is-coach-dash .es-user-tabs { display: none !important; }
 #user-dossier-view-group.is-staff-area.is-coach-dash .pf-page-inner {
   max-width: none !important;
@@ -6,9 +10,525 @@
   padding: 0 !important;
 }
 #es-staff-profile.es-pd-on > :not(#es-cd) { display: none !important; }
-.es-cd-grade {
-  font-size: 1.55rem;
+
+.es-mister-hub {
+  background: #091316;
+  min-height: 100vh;
+  color: #e2e8f0;
+  font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+  padding-bottom: 4rem;
+}
+
+/* Top Trial / VIP Bar */
+.es-mister-trial-bar {
+  background: #141c1b;
+  border-bottom: 1px solid rgba(250, 204, 21, 0.25);
+  padding: 0.65rem 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.86rem;
+  color: #fef08a;
+}
+.es-mister-trial-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+.es-mister-btn-sub {
+  background: #facc15;
+  color: #0f172a;
+  border: none;
+  border-radius: 999px;
+  padding: 0.35rem 1.1rem;
+  font-size: 0.82rem;
   font-weight: 800;
-  color: #4ade80;
-  margin: 0 0 0.35rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(250, 204, 21, 0.35);
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+.es-mister-btn-sub:hover {
+  background: #fde047;
+  transform: scale(1.03);
+}
+
+/* Container */
+.es-mister-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.4rem 1.25rem 2rem;
+}
+
+/* Club Header Banner */
+.es-mister-club-header {
+  background: radial-gradient(circle at 10% 50%, #0d2826 0%, #081717 100%);
+  border: 1px solid rgba(45, 212, 191, 0.25);
+  border-radius: 24px;
+  padding: 1.4rem 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  margin-bottom: 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+.es-mister-club-main {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+.es-mister-crest-badge {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #041010;
+  border: 2px solid rgba(45, 212, 191, 0.4);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  flex-shrink: 0;
+}
+.es-mister-crest-badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.es-mister-club-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 0.35rem;
+}
+.es-mister-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.es-mister-tag-primary {
+  background: rgba(45, 212, 191, 0.2);
+  color: #2dd4bf;
+  border: 1px solid rgba(45, 212, 191, 0.4);
+}
+.es-mister-tag-dark {
+  background: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+.es-mister-tag-gold {
+  background: rgba(250, 204, 21, 0.15);
+  color: #facc15;
+  border: 1px solid rgba(250, 204, 21, 0.35);
+}
+.es-mister-club-title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.es-mister-club-desc {
+  font-size: 0.86rem;
+  color: #94a3b8;
+  margin: 0.3rem 0 0;
+  font-weight: 500;
+}
+
+/* Tab Navigation Bar */
+.es-mister-nav-bar {
+  background: #081313;
+  border: 1px solid rgba(45, 212, 191, 0.2);
+  border-radius: 999px;
+  padding: 0.4rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.6rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.es-mister-nav-tab {
+  background: transparent;
+  color: #94a3b8;
+  border: none;
+  border-radius: 999px;
+  padding: 0.55rem 1.35rem;
+  font-size: 0.86rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+.es-mister-nav-tab:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+}
+.es-mister-nav-tab.is-active {
+  background: #facc15;
+  color: #0f172a;
+  box-shadow: 0 4px 16px rgba(250, 204, 21, 0.35);
+}
+
+/* White Section Cards (like in screenshots) */
+.es-mister-card-white {
+  background: #ffffff;
+  color: #0f172a;
+  border-radius: 20px;
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 1.4rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  position: relative;
+}
+.es-mister-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.1rem;
+}
+.es-mister-card-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.es-mister-card-icon {
+  font-size: 1.4rem;
+  color: #0d9488;
+}
+.es-mister-card-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  line-height: 1.15;
+}
+.es-mister-card-sub {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin: 0.15rem 0 0;
+  font-weight: 500;
+}
+.es-mister-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.es-mister-circle-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #facc15;
+  color: #0f172a;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(250, 204, 21, 0.4);
+  transition: transform 0.18s ease;
+}
+.es-mister-circle-btn:hover {
+  transform: scale(1.08);
+}
+
+/* Info Table Data */
+.es-mister-info-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.es-mister-info-table tr {
+  border-bottom: 1px solid #f1f5f9;
+}
+.es-mister-info-table tr:last-child {
+  border-bottom: none;
+}
+.es-mister-info-table th {
+  text-align: left;
+  padding: 0.75rem 0;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  width: 140px;
+}
+.es-mister-info-table td {
+  padding: 0.75rem 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Staff highlight card (Yellow box from screenshot) */
+.es-mister-staff-box {
+  background: #fef08a;
+  border: 1px solid #fde047;
+  border-radius: 16px;
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.8rem;
+}
+.es-mister-staff-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.es-mister-staff-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #1e293b;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+.es-mister-staff-name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+.es-mister-staff-role {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0d9488;
+  margin: 0.1rem 0 0.35rem;
+}
+.es-mister-staff-meta {
+  font-size: 0.75rem;
+  color: #475569;
+  font-weight: 600;
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+/* Immagini Box Grid */
+.es-mister-images-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+.es-mister-img-box {
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 16px;
+  padding: 1.2rem;
+  text-align: center;
+  position: relative;
+}
+.es-mister-img-preview {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.6rem;
+}
+.es-mister-img-preview img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Roster List / Squadra */
+.es-mister-roster-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.es-mister-player-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.es-mister-player-card:hover {
+  transform: translateY(-2px);
+  border-color: #0d9488;
+}
+.es-mister-player-num {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #0d9488;
+  width: 32px;
+  text-align: center;
+}
+.es-mister-player-info {
+  flex: 1;
+}
+.es-mister-player-name {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+.es-mister-player-role {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #64748b;
+  margin: 0.1rem 0;
+}
+
+/* Allenamenti & Partite List */
+.es-mister-event-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 1rem 1.15rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.es-mister-event-date-badge {
+  background: #0f172a;
+  color: #facc15;
+  border-radius: 10px;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-align: center;
+  min-width: 80px;
+}
+.es-mister-event-details {
+  flex: 1;
+  min-width: 200px;
+}
+.es-mister-event-title {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 0.2rem;
+}
+.es-mister-event-sub {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Lavagna Tattica */
+.es-mister-board-wrap {
+  background: #0d2826;
+  border: 2px solid #2dd4bf;
+  border-radius: 20px;
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+  user-select: none;
+}
+.es-mister-pitch-lines {
+  position: absolute;
+  inset: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  pointer-events: none;
+}
+.es-mister-pitch-center-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.4);
+}
+.es-mister-pitch-center-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.es-mister-pitch-box-left {
+  position: absolute;
+  top: 25%;
+  bottom: 25%;
+  left: 0;
+  width: 18%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-left: none;
+}
+.es-mister-pitch-box-right {
+  position: absolute;
+  top: 25%;
+  bottom: 25%;
+  right: 0;
+  width: 18%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-right: none;
+}
+.es-mister-piece {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #facc15;
+  color: #0f172a;
+  font-weight: 900;
+  font-size: 0.82rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  border: 2px solid #ffffff;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  touch-action: none;
+}
+.es-mister-piece:active {
+  cursor: grabbing;
+  transform: translate(-50%, -50%) scale(1.15);
+}
+.es-mister-piece.is-gk {
+  background: #fb923c;
+}
+.es-mister-piece.is-away {
+  background: #38bdf8;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .es-mister-club-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  .es-mister-club-main {
+    flex-direction: column;
+  }
+  .es-mister-images-grid {
+    grid-template-columns: 1fr;
+  }
 }

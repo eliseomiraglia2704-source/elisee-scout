@@ -1,356 +1,643 @@
-/* Dashboard Discorso Allenatore — area staff Allenatore */
+/* ============================================================
+   ELISEE SCOUT — Area Allenatore (Mister Hub)
+   5 Macro-aree Attive: CLUB | SQUADRA | ALLENAMENTI | PARTITE | LAVAGNA
+   ============================================================ */
 (function () {
-  var AXES = [
-    'Tono', 'Chiarezza Tattica', 'Coinvolgimento Emotivo', 'Focus Obiettivi',
-    'Gestione Tempo', 'Linguaggio del Corpo', 'Reazione Squadra', 'Efficacia Messaggio'
-  ];
-  var V2025 = [85, 90, 94, 87, 78, 92, 91, 89];
-  var V2023 = [74, 80, 82, 76, 68, 81, 79, 77];
+  'use strict';
+
+  var activeTab = 'club'; // club | squadra | allenamenti | partite | lavagna
 
   function esc(s) {
-    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
   }
+
   function userObj() {
-    try { return JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {}; } catch (_) { return {}; }
+    try {
+      return JSON.parse(localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data') || '{}') || {};
+    } catch (_) { return {}; }
   }
+
+  function saveUser(u) {
+    try {
+      localStorage.setItem('elisee_active_user', JSON.stringify(u));
+      localStorage.setItem('elisee_user_data', JSON.stringify(u));
+    } catch (_) {}
+    return u;
+  }
+
   function isCoach(u) {
     u = u || userObj();
-    var blob = [u.staffRole, u.ruoloDettagliato, u.ruolo, u.role, u.staffProfile && u.staffProfile.fieldRole]
+    var blob = [u.staffRole, u.ruoloDettagliato, u.ruolo, u.role, u.siteRoleFamily, u.staffProfile && u.staffProfile.fieldRole]
       .filter(Boolean).join(' ').toLowerCase();
     if (/in seconda|vice allenatore/.test(blob)) return false;
-    return /allenatore/.test(blob);
+    return /allenatore|coach|mister/.test(blob);
   }
-  function coachName(u) {
-    return [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Allenatore';
-  }
-  function initials(name) {
-    var p = String(name || 'AL').trim().split(/\s+/);
-    return ((p[0] || 'A').charAt(0) + (p[1] || p[0] || 'L').charAt(0)).toUpperCase();
-  }
-  function photoOf(u) {
-    try {
-      if (window.getStoredProfilePhoto) return window.getStoredProfilePhoto(null, u) || u.fotoUrl || '';
-    } catch (_) {}
-    return u.fotoUrl || '';
-  }
-  function polar(cx, cy, r, i, n, val) {
-    var a = (-Math.PI / 2) + (i * 2 * Math.PI / n);
-    var rr = r * (val / 100);
-    return [cx + Math.cos(a) * rr, cy + Math.sin(a) * rr];
-  }
-  function poly(cx, cy, r, vals) {
-    return vals.map(function (v, i) {
-      var p = polar(cx, cy, r, i, vals.length, v);
-      return p[0].toFixed(1) + ',' + p[1].toFixed(1);
-    }).join(' ');
-  }
-  function wedge(cx, cy, r, start, end, color) {
-    var n = 24;
-    var pts = [[cx, cy]];
-    for (var i = 0; i <= n; i++) {
-      var t = start + (end - start) * (i / n);
-      pts.push([cx + Math.cos(t) * r, cy + Math.sin(t) * r]);
-    }
-    return '<path d="M' + pts.map(function (p) { return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' L') + ' Z" fill="' + color + '" />';
-  }
-  function radarSvg() {
-    var cx = 220, cy = 210, r = 150, n = AXES.length;
-    var html = '<svg viewBox="0 0 440 430" role="img" aria-label="Analisi discorso pre-partita">';
-    html += wedge(cx, cy, r, -Math.PI / 2, 0, 'rgba(248,113,113,0.18)');
-    html += wedge(cx, cy, r, 0, Math.PI / 2, 'rgba(250,204,21,0.16)');
-    html += wedge(cx, cy, r, Math.PI / 2, Math.PI, 'rgba(74,222,128,0.14)');
-    html += wedge(cx, cy, r, Math.PI, Math.PI * 1.5, 'rgba(56,189,248,0.16)');
-    for (var ring = 1; ring <= 5; ring++) {
-      html += '<polygon points="' + poly(cx, cy, r, AXES.map(function () { return ring * 20; })) +
-        '" fill="none" stroke="rgba(148,163,184,0.22)" stroke-width="1"/>';
-    }
-    for (var i = 0; i < n; i++) {
-      var e = polar(cx, cy, r, i, n, 100);
-      html += '<line x1="' + cx + '" y1="' + cy + '" x2="' + e[0].toFixed(1) + '" y2="' + e[1].toFixed(1) +
-        '" stroke="rgba(148,163,184,0.2)"/>';
-      var lab = polar(cx, cy, r + 26, i, n, 100);
-      html += '<text x="' + lab[0].toFixed(1) + '" y="' + lab[1].toFixed(1) +
-        '" text-anchor="middle" dominant-baseline="middle" fill="#94a3b8" font-size="10">' +
-        esc(AXES[i]) + ' ' + V2025[i] + '%</text>';
-    }
-    html += '<polygon points="' + poly(cx, cy, r, V2023) + '" fill="rgba(148,163,184,0.12)" stroke="#64748b" stroke-width="1.5"/>';
-    html += '<polygon points="' + poly(cx, cy, r, V2025) + '" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="2"/>';
-    html += '</svg>';
-    return html;
-  }
-  function spark(values, color) {
-    var w = 120, h = 36, max = Math.max.apply(null, values), min = Math.min.apply(null, values);
-    var pts = values.map(function (v, i) {
-      var x = (i / (values.length - 1)) * w;
-      var y = h - ((v - min) / (max - min || 1)) * (h - 4) - 2;
-      return x.toFixed(1) + ',' + y.toFixed(1);
-    }).join(' ');
-    return '<svg viewBox="0 0 ' + w + ' ' + h + '" width="100%" height="36"><polyline fill="none" stroke="' +
-      color + '" stroke-width="2" points="' + pts + '"/></svg>';
-  }
-  function trendSvg() {
-    var series = {
-      '2023': [64, 70, 68, 74, 76, 80],
-      '2024': [72, 74, 78, 82, 85, 88],
-      '2025': [80, 84, 86, 90, 91, 94]
+
+  function getCoachData() {
+    var u = userObj();
+    var def = {
+      clubName: u.squadra || u.club || 'Foggia',
+      matricola: u.matricola || '13923 / FIGC',
+      sede: u.sede || 'Viale Giuseppe Mazzini, 35/C Foggia FG',
+      stadio: u.stadio || 'Stadio Comunale Pino Zaccheria',
+      telefono: u.telefono || '+39 0881 742911',
+      coachName: (u.nome ? (u.nome + ' ' + (u.cognome || '')) : (u.name || 'Eliseo Miraglia')).trim(),
+      coachRole: 'Allenatore (UEFA B / Pro)',
+      coachDoc: 'Verificato',
+      coachTessera: 'FIGC-741920',
+      coachScadenza: '30/06/2027',
+      logoUrl: 'immagini/squadre-loghi/foggia.png',
+      teamPhotoUrl: 'immagini/04-workspace-scout/scout-workspace.svg?v=20260730_225504',
+      roster: [
+        { num: 1, name: 'Marco Fumagalli', role: 'Portiere', birth: '2001', cert: 'Regolare', status: 'disp', app: 26 },
+        { num: 2, name: 'Alessandro Silvestro', role: 'Terzino Destro', birth: '2002', cert: 'Regolare', status: 'disp', app: 24 },
+        { num: 5, name: 'Luigi Carillo', role: 'Difensore Centrale', birth: '1996', cert: 'Regolare', status: 'disp', app: 28 },
+        { num: 6, name: 'Davide Di Pasquale', role: 'Difensore Centrale', birth: '1996', cert: 'Regolare', status: 'disp', app: 25 },
+        { num: 3, name: 'Luca Rizzo Pinna', role: 'Terzino Sinistro', birth: '2003', cert: 'Regolare', status: 'disp', app: 22 },
+        { num: 8, name: 'Moses Odjer', role: 'Mediano', birth: '1996', cert: 'Regolare', status: 'disp', app: 27 },
+        { num: 4, name: 'Jacopo Petermann', role: 'Regista', birth: '1994', cert: 'Regolare', status: 'disp', app: 25 },
+        { num: 10, name: 'Diego Peralta', role: 'Trequartista', birth: '1996', cert: 'Regolare', status: 'disp', app: 28 },
+        { num: 7, name: 'Eliseo Miraglia', role: 'Ala Sinistra', birth: '2004', cert: 'Regolare', status: 'disp', app: 28 },
+        { num: 11, name: 'Roberto Ogunseye', role: 'Attaccante Centrale', birth: '1995', cert: 'Regolare', status: 'disp', app: 26 },
+        { num: 9, name: 'Alexis Ferrante', role: 'Seconda Punta', birth: '1995', cert: 'Regolare', status: 'disp', app: 24 },
+        { num: 12, name: 'Tommaso Nobile', role: 'Secondo Portiere', birth: '2003', cert: 'Regolare', status: 'disp', app: 4 },
+        { num: 14, name: 'Manuel Garattoni', role: 'Esterno Destro', birth: '1998', cert: 'Regolare', status: 'diff', app: 19 },
+        { num: 18, name: 'Andrea Schenetti', role: 'Mezzala Offensiva', birth: '1991', cert: 'Regolare', status: 'disp', app: 23 }
+      ],
+      allenamenti: [
+        { id: 'all-1', date: 'Oggi · 15:30', title: 'Seduta Tattica &amp; Pressione Alta', focus: 'Riscaldamento a secco, possesso palla 6v6+2, sviluppo catena laterale e partitella 11v11.', presenze: '21 / 22 Presenti' },
+        { id: 'all-2', date: 'Domani · 10:00', title: 'Fase Difensiva &amp; Palle Inattive', focus: 'Marcatura a zona su corner avversari, calci di punizione a favore, reattività e rapidità su 10m.', presenze: 'Programmato' },
+        { id: 'all-3', date: 'Venerdì · 15:00', title: 'Rifinitura Pre-Gara &amp; Tiri in Porta', focus: 'Attivazione neuromuscolare, schemi offensivi finali e rigori.', presenze: 'Programmato' }
+      ],
+      partite: [
+        { id: 'match-1', date: 'Domenica · Ore 15:00', opponent: 'Foggia vs Taranto', comp: 'Campionato Serie D · Girone H', stadium: 'Stadio Pino Zaccheria', status: 'Prossima Gara', conv: '22 Convocati' },
+        { id: 'match-2', date: 'Domenica scorsa', opponent: 'Nardò 1 - 2 Foggia', comp: 'Campionato Serie D', stadium: 'Stadio Giovanni Paolo II', status: 'Vittoria (3 Punti)', conv: 'Marcatori: Miraglia (34\'), Peralta (78\')' },
+        { id: 'match-3', date: '2 Settimane fa', opponent: 'Foggia 3 - 0 Fidelis Andria', comp: 'Campionato Serie D', stadium: 'Stadio Pino Zaccheria', status: 'Vittoria (Clean Sheet)', conv: 'Marcatori: Ogunseye (12\'), Miraglia (55\', 82\')' }
+      ],
+      tacticalNotes: 'Costruzione dal basso 3+2 con terzino sinistro che stringe. Pressione ultra-offensiva sulle seconde palle.'
     };
-    var cols = { '2023': '#38bdf8', '2024': '#4ade80', '2025': '#facc15' };
-    var w = 240, h = 90;
-    var html = '<svg viewBox="0 0 ' + w + ' ' + h + '" width="100%" height="90">';
-    Object.keys(series).forEach(function (k) {
-      var vals = series[k];
-      var pts = vals.map(function (v, i) {
-        return ((i / 5) * (w - 8) + 4).toFixed(1) + ',' + (h - 8 - (v / 100) * (h - 16)).toFixed(1);
-      }).join(' ');
-      html += '<polyline fill="none" stroke="' + cols[k] + '" stroke-width="2" points="' + pts + '"/>';
-    });
-    html += '</svg>';
-    return html;
-  }
-  function ico(d) {
-    return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">' + d + '</svg>';
+
+    try {
+      var stored = localStorage.getItem('elisee_coach_hub_data');
+      if (stored) return Object.assign(def, JSON.parse(stored));
+    } catch (_) {}
+    return def;
   }
 
-  function html(user) {
-    var name = coachName(user);
-    var ph = photoOf(user);
-    var ava = ph
-      ? '<img src="' + esc(ph) + '" alt="">'
-      : '<div class="es-pd-ph">' + esc(initials(name)) + '</div>';
-    return '<aside class="es-pd-rail">' +
-      '<button type="button" data-cd="home" title="Home">' + ico('<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>') + '</button>' +
-      '<button type="button" class="is-on" data-cd="dash" title="Dashboard">' + ico('<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>') + '</button>' +
-      '<button type="button" data-cd="album" title="Album">' + ico('<rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>') + '</button>' +
-      '<button type="button" data-cd="msgs" title="Messaggi">' + ico('<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>') + '</button>' +
-      '<button type="button" class="es-pd-rail-end" data-cd="edit" title="Anagrafica">' + ico('<path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>') + '</button>' +
-      '</aside><div class="es-pd-body">' +
-      '<div class="es-pd-head"><h1>Elisee Scout — Discorso allenatore</h1>' +
-      '<strong>Allenatore: ' + esc(name.toUpperCase()) + '</strong></div>' +
-      '<div class="es-pd-grid">' +
-
-      '<section class="es-pd-card es-pd-indice"><h2>Profilo Allenatore</h2>' +
-      '<div class="es-pd-who">' + ava + '<div><b style="color:#fff">' + esc(name) + '</b>' +
-      '<div style="font-size:0.72rem;color:#94a3b8">Staff tecnico</div></div></div>' +
-      '<div class="es-pd-metric"><span>Stile di comunicazione</span><b>92%</b></div>' +
-      '<div class="es-pd-metric"><span>Motivazione squadra</span><b>95%</b></div>' +
-      '<div class="es-pd-metric"><span>Gestione pressione</span><b>88%</b></div>' +
-      '<div class="es-pd-metric"><span>Chiarezza tattica</span><b>90%</b></div>' +
-      '<div class="es-pd-metric"><span>Coinvolgimento giocatori</span><b>93%</b></div></section>' +
-
-      '<section class="es-pd-card es-pd-radar">' +
-      '<div class="es-pd-radar-tools"><span>Seleziona dati radar</span><span>Analisi discorso pre-partita</span></div>' +
-      radarSvg() + '</section>' +
-
-      '<section class="es-pd-card es-pd-comply"><h2>Verifica &amp; Compliance Staff Tecnico</h2>' +
-      '<div class="es-pd-ok"><span>Patentino UEFA Pro</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Corso primo soccorso</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Tutela minori (ID)</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Idoneità tecnica</span><b>Valida</b></div>' +
-      '<div class="es-pd-ok"><span>Profilo validato</span><b>100%</b></div></section>' +
-
-      '<section class="es-pd-card es-pd-storico"><h2>Andamento discorsi</h2>' +
-      '<div class="es-pd-sparks">' +
-      '<figure>' + spark([48, 52, 50, 61, 70, 78, 86], '#38bdf8') + '<figcaption>Partita</figcaption></figure>' +
-      '<figure>' + spark([40, 55, 58, 62, 71, 80, 88], '#4ade80') + '<figcaption>Stagione</figcaption></figure>' +
-      '<figure>' + spark([35, 44, 52, 50, 63, 72, 81], '#facc15') + '<figcaption>Reazione</figcaption></figure>' +
-      '<figure>' + spark([50, 48, 60, 64, 70, 76, 84], '#22d3ee') + '<figcaption>Tono</figcaption></figure>' +
-      '</div></section>' +
-
-      '<section class="es-pd-card es-pd-mercato"><h2>Indice di efficacia</h2>' +
-      '<p class="es-cd-grade">A+</p>' +
-      '<div class="es-pd-mrow"><span>Valutazione staff</span><b>Ottima</b></div>' +
-      '<div class="es-pd-mrow"><span>Indice di visibilità</span><b>90%</b></div>' +
-      '<div class="es-pd-mrow"><span>Trend fiducia squadra</span><b>Crescente</b></div>' +
-      '<div class="es-pd-mrow"><span>Richieste rinnovo</span><b>Crescente</b></div>' +
-      '<div class="es-pd-mrow"><span>Indice di reattività</span><b>Alto</b></div>' +
-      '<div class="es-pd-mrow"><span>Richiesta di mercato</span><b>80%</b></div></section>' +
-
-      '<section class="es-pd-card es-pd-registro"><h2>Registro discorsi</h2>' +
-      '<table class="es-pd-table"><thead><tr><th>Partita</th><th>Durata</th><th>Tono</th><th></th></tr></thead><tbody>' +
-      '<tr><td>vs. Notaresco</td><td>15 min</td><td>Motivazionale</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Vastese</td><td>12 min</td><td>Tattico</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Chieti</td><td>13 min</td><td>Concentrata</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Termoli</td><td>12 min</td><td>Tattico</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Campobasso</td><td>9 min</td><td>Reattiva</td><td><i class="es-pd-dot y"></i></td></tr>' +
-      '<tr><td>vs. Castelfidardo</td><td>9 min</td><td>Reattiva</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '</tbody></table></section>' +
-
-      '<section class="es-pd-card es-pd-trend"><h2>Crescita Stagionale (2023-2025)</h2>' +
-      '<div class="es-pd-trend-legend">' +
-      '<span style="color:#38bdf8"><i style="background:#38bdf8"></i> 2023 (62-78%)</span>' +
-      '<span style="color:#4ade80"><i style="background:#4ade80"></i> 2024 (70-86%)</span>' +
-      '<span style="color:#facc15"><i style="background:#facc15"></i> 2025 (78-93%)</span>' +
-      '</div>' +
-      trendSvg() +
-      '<button type="button" class="es-pd-edit" data-cd="edit">✏️ Modifica Anagrafica Allenatore</button>' +
-      '</section>' +
-
-      '<section class="es-pd-card es-pd-guide-card">' +
-      '<div class="es-pd-guide-head">' +
-      '<h2><span>📘</span> Guida Analitica &amp; Legenda Metriche — Area Allenatore</h2>' +
-      '<span class="es-pd-guide-badge">Standard Certificato FIGC / UEFA</span>' +
-      '</div>' +
-      '<div class="es-pd-guide-grid">' +
-      '<div class="es-pd-guide-item">' +
-      '<h3><span>🎙️</span> Indice Efficacia Discorsi</h3>' +
-      '<p>Monitora la reattività emotiva e la concentrazione della squadra pre e post partita.</p>' +
-      '</div>' +
-      '<div class="es-pd-guide-item">' +
-      '<h3><span>📋</span> Assetto Tattico &amp; Modulo</h3>' +
-      '<p>Analisi delle distanze tra reparti, baricentro medio (m) e linee di pressione.</p>' +
-      '</div>' +
-      '<div class="es-pd-guide-item">' +
-      '<h3><span>⚡</span> Carichi &amp; Rischio Muscolare</h3>' +
-      '<p>Indice ACWR per prevenire l\'overtraining e ottimizzare il picco di forma domenicale.</p>' +
-      '</div>' +
-      '<div class="es-pd-guide-item">' +
-      '<h3><span>🚦</span> Indicatori Registro</h3>' +
-      '<p><i class="es-pd-dot g"></i> <b>Verde</b>: Risposta ottimale della squadra.<br>' +
-      '<i class="es-pd-dot y"></i> <b>Giallo</b>: Richiesta attenzione / correzione tattica.</p>' +
-      '</div>' +
-      '</div>' +
-      '</section>' +
-      '</div></div>';
+  function saveCoachData(data) {
+    try {
+      localStorage.setItem('elisee_coach_hub_data', JSON.stringify(data));
+    } catch (_) {}
   }
 
-  function openCoachEditModal(user) {
-    user = user || userObj();
-    var backdrop = document.createElement('div');
-    backdrop.className = 'es-edit-modal-backdrop';
+  // Descrizioni dinamiche per tab
+  var TAB_DESCS = {
+    club: 'Organizzazione societaria, dirigenti e staff tecnico.',
+    squadra: 'Gestione della rosa, ruoli e dati dei giocatori.',
+    allenamenti: 'Pianificazione e gestione degli allenamenti stagionali.',
+    partite: 'Calendario, convocazioni e gestione delle partite.',
+    lavagna: 'Lavagna tattica interattiva per schemi, moduli e movimenti di squadra.'
+  };
 
-    backdrop.innerHTML = '<div class="es-edit-modal">' +
-      '<div class="es-edit-modal-head">' +
-      '<h2><span>✏️</span> Modifica Anagrafica Allenatore</h2>' +
-      '<button type="button" class="es-edit-modal-close" title="Chiudi">&times;</button>' +
-      '</div>' +
-      '<div class="es-edit-grid">' +
-      '<div class="es-edit-field"><label>Nome</label><input id="es-cd-nome" value="' + esc(user.nome || 'Eliseo') + '"></div>' +
-      '<div class="es-edit-field"><label>Cognome</label><input id="es-cd-cognome" value="' + esc(user.cognome || 'Miraglia') + '"></div>' +
-      '<div class="es-edit-field"><label>Ruolo Staff</label><input id="es-cd-role" value="Allenatore / Responsabile Tecnico" readonly></div>' +
-      '<div class="es-edit-field"><label>Qualifica / Patentino</label><select id="es-cd-lic"><option selected>UEFA Pro</option><option>UEFA A</option><option>UEFA B</option></select></div>' +
-      '<div class="es-edit-field"><label>Club Attuale</label><input id="es-cd-club" value="' + esc(user.squadra || user.club || 'Notaresco Calcio') + '"></div>' +
-      '<div class="es-edit-field"><label>Modulo Preferito</label><select id="es-cd-mod"><option>4-3-3</option><option>3-5-2</option><option>4-2-3-1</option><option>3-4-2-1</option></select></div>' +
-      '<div class="es-edit-field full"><label>Filosofia di Gioco & Bio</label><textarea id="es-cd-bio" rows="3">' + esc(user.bio || 'Allenatore votato a un calcio propositivo, intensità alta, dominio del possesso e rapida riaggressione.') + '</textarea></div>' +
-      '</div>' +
-      '<div class="es-edit-actions">' +
-      '<button type="button" class="es-edit-btn-cancel">Annulla</button>' +
-      '<button type="button" class="es-edit-btn-save">💾 Salva Profilo Mister</button>' +
-      '</div>' +
+  function renderHub() {
+    var mount = document.getElementById('es-cd');
+    if (!mount) return;
+
+    var data = getCoachData();
+
+    var html =
+      '<div class="es-mister-hub">' +
+        // Top Trial / VIP bar
+        '<div class="es-mister-trial-bar">' +
+          '<div class="es-mister-trial-text">' +
+            '<span>⚠️</span> Stai utilizzando la versione prova Mister con funzionalità dedicate.' +
+          '</div>' +
+          '<button type="button" class="es-mister-btn-sub" onclick="if(window.openAccessoModal){ window.openAccessoModal(\'email\'); } else if(window.showToast){ window.showToast(\'🌟 Accesso Elisee Manager VIP attivo per il tuo account.\', \'success\'); }">Abbonati VIP</button>' +
+        '</div>' +
+
+        '<div class="es-mister-wrap">' +
+          // Header Club Banner
+          '<div class="es-mister-club-header">' +
+            '<div class="es-mister-club-main">' +
+              '<div class="es-mister-crest-badge">' +
+                '<img src="' + esc(data.logoUrl) + '" alt="' + esc(data.clubName) + '" onerror="this.src=\'immagini/squadre-loghi/napoli.png\';">' +
+              '</div>' +
+              '<div>' +
+                '<div class="es-mister-club-tags">' +
+                  '<span class="es-mister-tag es-mister-tag-primary">PRIMA SQUADRA</span>' +
+                  '<span class="es-mister-tag es-mister-tag-dark">Stagione in corso</span>' +
+                  '<span class="es-mister-tag es-mister-tag-gold">Allenatore | Admin Club</span>' +
+                '</div>' +
+                '<h1 class="es-mister-club-title">' + esc(data.clubName) + '</h1>' +
+                '<p class="es-mister-club-desc" id="mister-tab-desc">' + esc(TAB_DESCS[activeTab]) + '</p>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+
+          // 5 Nav Tabs
+          '<nav class="es-mister-nav-bar" role="tablist">' +
+            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'club' ? 'is-active' : '') + '" data-tab="club">🛡️ Club</button>' +
+            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'squadra' ? 'is-active' : '') + '" data-tab="squadra">👥 Squadra</button>' +
+            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'allenamenti' ? 'is-active' : '') + '" data-tab="allenamenti">🏃‍♂️ Allenamenti</button>' +
+            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'partite' ? 'is-active' : '') + '" data-tab="partite">⚽ Partite</button>' +
+            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'lavagna' ? 'is-active' : '') + '" data-tab="lavagna">📋 Lavagna</button>' +
+          '</nav>' +
+
+          // Content Tab Container
+          '<div id="mister-tab-content">' +
+            renderTabContent(activeTab, data) +
+          '</div>' +
+
+        '</div>' +
       '</div>';
 
-    document.body.appendChild(backdrop);
-
-    var close = function () { backdrop.remove(); };
-    backdrop.querySelector('.es-edit-modal-close').addEventListener('click', close);
-    backdrop.querySelector('.es-edit-btn-cancel').addEventListener('click', close);
-    backdrop.addEventListener('click', function (e) { if (e.target === backdrop) close(); });
-
-    backdrop.querySelector('.es-edit-btn-save').addEventListener('click', function () {
-      var n = document.getElementById('es-cd-nome').value.trim();
-      var c = document.getElementById('es-cd-cognome').value.trim();
-      var clb = document.getElementById('es-cd-club').value.trim();
-      var bio = document.getElementById('es-cd-bio').value.trim();
-
-      user.nome = n || user.nome;
-      user.cognome = c || user.cognome;
-      user.fullName = (user.nome + ' ' + user.cognome).trim();
-      user.squadra = clb;
-      user.club = clb;
-      user.bio = bio;
-
-      try {
-        localStorage.setItem('elisee_active_user', JSON.stringify(user));
-      } catch (_) {}
-
-      close();
-      if (typeof window.showToast === 'function') {
-        window.showToast('Anagrafica Allenatore salvata con successo!', 'success');
-      }
-      render(user);
-    });
+    mount.innerHTML = html;
+    bindHubEvents();
   }
 
-  function bind(host) {
-    if (!host || host.dataset.cdBound === '1') return;
-    host.dataset.cdBound = '1';
-    host.addEventListener('click', function (e) {
-      var b = e.target.closest('[data-cd]');
-      if (!b) return;
-      var k = b.getAttribute('data-cd');
-      if (k === 'home' && window.switchView) window.switchView('home', '#hero');
-      if (k === 'album' && window.openChiSegui) window.openChiSegui();
-      if (k === 'msgs' && window.openUserMessages) window.openUserMessages();
-      if (k === 'edit') {
-        openCoachEditModal(userObj());
-      }
-    });
+  function renderTabContent(tab, data) {
+    if (tab === 'club') {
+      return (
+        // Card 1: Club
+        '<div class="es-mister-card-white">' +
+          '<div class="es-mister-card-header">' +
+            '<div class="es-mister-card-title-wrap">' +
+              '<span class="es-mister-card-icon">🛡️</span>' +
+              '<div>' +
+                '<h3 class="es-mister-card-title">Club</h3>' +
+                '<p class="es-mister-card-sub">Dati società e impianto sportivo</p>' +
+              '</div>' +
+            '</div>' +
+            '<button type="button" class="es-mister-circle-btn" id="btn-edit-club-data" title="Modifica dati club">✏️</button>' +
+          '</div>' +
+          '<table class="es-mister-info-table">' +
+            '<tr><th>SOCIETÀ</th><td>' + esc(data.clubName) + ' (Admin-716)</td></tr>' +
+            '<tr><th>MATRICOLA</th><td>' + esc(data.matricola) + '</td></tr>' +
+            '<tr><th>SEDE</th><td>' + esc(data.sede) + '</td></tr>' +
+            '<tr><th>STADIO</th><td>' + esc(data.stadio) + '</td></tr>' +
+            '<tr><th>TELEFONO</th><td>' + esc(data.telefono) + '</td></tr>' +
+          '</table>' +
+        '</div>' +
+
+        // Card 2: Immagini
+        '<div class="es-mister-card-white">' +
+          '<div class="es-mister-card-header">' +
+            '<div class="es-mister-card-title-wrap">' +
+              '<span class="es-mister-card-icon">🖼️</span>' +
+              '<div>' +
+                '<h3 class="es-mister-card-title">Immagini</h3>' +
+                '<p class="es-mister-card-sub">Stemma e foto squadra</p>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="es-mister-images-grid">' +
+            '<div class="es-mister-img-box">' +
+              '<div class="es-mister-img-preview">' +
+                '<img src="' + esc(data.logoUrl) + '" alt="Stemma">' +
+              '</div>' +
+              '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:0.4rem;">' +
+                '<span style="font-weight:800; font-size:0.88rem;">Stemma</span>' +
+                '<button type="button" class="es-mister-circle-btn" style="width:30px; height:30px; font-size:0.85rem;" onclick="if(window.showToast){ window.showToast(\'🖼️ Modifica stemma club aperto\', \'info\'); }">✏️</button>' +
+              '</div>' +
+            '</div>' +
+            '<div class="es-mister-img-box">' +
+              '<div class="es-mister-img-preview">' +
+                '<img src="' + esc(data.teamPhotoUrl) + '" alt="Foto squadra">' +
+              '</div>' +
+              '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:0.4rem;">' +
+                '<span style="font-weight:800; font-size:0.88rem;">Foto squadra</span>' +
+                '<button type="button" class="es-mister-circle-btn" style="width:30px; height:30px; font-size:0.85rem;" onclick="if(window.showToast){ window.showToast(\'📷 Modifica foto squadra aperto\', \'info\'); }">✏️</button>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        // Card 3: Staff Tecnico
+        '<div class="es-mister-card-white">' +
+          '<div class="es-mister-card-header">' +
+            '<div class="es-mister-card-title-wrap">' +
+              '<span class="es-mister-card-icon">⏱️</span>' +
+              '<div>' +
+                '<h3 class="es-mister-card-title">Staff tecnico</h3>' +
+                '<p class="es-mister-card-sub">Allenatori e collaboratori tecnici</p>' +
+              '</div>' +
+            '</div>' +
+            '<button type="button" class="es-mister-circle-btn" id="btn-add-staff" title="Aggiungi membro staff">+</button>' +
+          '</div>' +
+          '<div class="es-mister-staff-box">' +
+            '<div class="es-mister-staff-left">' +
+              '<div class="es-mister-staff-avatar">👤</div>' +
+              '<div>' +
+                '<h4 class="es-mister-staff-name">' + esc(data.coachName) + '</h4>' +
+                '<div class="es-mister-staff-role">' + esc(data.coachRole) + '</div>' +
+                '<div class="es-mister-staff-meta">' +
+                  '<span>Doc: <b>' + esc(data.coachDoc) + '</b></span>' +
+                  '<span>Tessera: <b>' + esc(data.coachTessera) + '</b></span>' +
+                  '<span>Scad. cert.: <b>' + esc(data.coachScadenza) + '</b></span>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+            '<button type="button" class="es-mister-circle-btn" style="width:34px; height:34px; font-size:0.9rem;" id="btn-edit-coach-staff">✏️</button>' +
+          '</div>' +
+        '</div>' +
+
+        // Card 4: Dirigenti
+        '<div class="es-mister-card-white">' +
+          '<div class="es-mister-card-header">' +
+            '<div class="es-mister-card-title-wrap">' +
+              '<span class="es-mister-card-icon">👔</span>' +
+              '<div>' +
+                '<h3 class="es-mister-card-title">Dirigenti</h3>' +
+                '<p class="es-mister-card-sub">Organigramma societario</p>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<p style="color:#64748b; font-size:0.9rem; margin:0.4rem 0 0;">La sezione dirigenti è disponibile con accesso Club &amp; Governance verificata.</p>' +
+        '</div>'
+      );
+    }
+
+    if (tab === 'squadra') {
+      var playersHtml = (data.roster || []).map(function (p, idx) {
+        var statusBadge = p.status === 'disp'
+          ? '<span style="color:#16a34a; font-size:0.75rem; font-weight:700;">🟢 Disponibile</span>'
+          : (p.status === 'diff'
+            ? '<span style="color:#d97706; font-size:0.75rem; font-weight:700;">🟡 Differenziato</span>'
+            : '<span style="color:#dc2626; font-size:0.75rem; font-weight:700;">🔴 Indisponibile</span>');
+
+        return (
+          '<div class="es-mister-player-card">' +
+            '<div class="es-mister-player-num">' + p.num + '</div>' +
+            '<div class="es-mister-player-info">' +
+              '<h4 class="es-mister-player-name">' + esc(p.name) + '</h4>' +
+              '<div class="es-mister-player-role">' + esc(p.role) + ' · Anno ' + esc(p.birth) + '</div>' +
+              '<div style="font-size:0.72rem; color:#64748b;">' + statusBadge + ' · ' + p.app + ' Presenze</div>' +
+            '</div>' +
+            '<button type="button" class="es-mister-circle-btn" style="width:30px; height:30px; font-size:0.8rem;" data-edit-player="' + idx + '">✏️</button>' +
+          '</div>'
+        );
+      }).join('');
+
+      return (
+        '<div class="es-mister-card-white">' +
+          '<div class="es-mister-card-header">' +
+            '<div class="es-mister-card-title-wrap">' +
+              '<span class="es-mister-card-icon">👥</span>' +
+              '<div>' +
+                '<h3 class="es-mister-card-title">Squadra</h3>' +
+                '<p class="es-mister-card-sub">' + esc(data.clubName) + ' · Prima Squadra (' + (data.roster || []).length + ' Giocatori in rosa)</p>' +
+              '</div>' +
+            '</div>' +
+            '<div class="es-mister-card-actions">' +
+              '<button type="button" class="es-mister-circle-btn" id="btn-stats-roster" title="Statistiche rosa">📊</button>' +
+              '<button type="button" class="es-mister-circle-btn" id="btn-add-player" title="Aggiungi giocatore in rosa">+</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="es-mister-roster-grid">' +
+            playersHtml +
+          '</div>' +
+        '</div>'
+      );
+    }
+
+    if (tab === 'allenamenti') {
+      var allHtml = (data.allenamenti || []).map(function (a, idx) {
+        return (
+          '<div class="es-mister-event-card">' +
+            '<div class="es-mister-event-date-badge">' + a.date + '</div>' +
+            '<div class="es-mister-event-details">' +
+              '<h4 class="es-mister-event-title">' + a.title + '</h4>' +
+              '<p class="es-mister-event-sub">' + a.focus + '</p>' +
+              '<div style="font-size:0.75rem; color:#0d9488; font-weight:700; margin-top:0.3rem;">📋 Presenze: ' + a.presenze + '</div>' +
+            '</div>' +
+            '<button type="button" class="es-mister-circle-btn" style="width:34px; height:34px; font-size:0.85rem;" data-toggle-presenze="' + idx + '" title="Appello presenze">📝</button>' +
+          '</div>'
+        );
+      }).join('');
+
+      return (
+        '<div class="es-mister-card-white">' +
+          '<div class="es-mister-card-header">' +
+            '<div class="es-mister-card-title-wrap">' +
+              '<span class="es-mister-card-icon">🏃‍♂️</span>' +
+              '<div>' +
+                '<h3 class="es-mister-card-title">Allenamenti</h3>' +
+                '<p class="es-mister-card-sub">' + esc(data.clubName) + ' · Prima Squadra</p>' +
+              '</div>' +
+            '</div>' +
+            '<div class="es-mister-card-actions">' +
+              '<button type="button" class="es-mister-circle-btn" id="btn-stats-train" title="Statistiche carichi GPS">📊</button>' +
+              '<button type="button" class="es-mister-circle-btn" id="btn-add-training" title="Programma nuovo allenamento">+</button>' +
+            '</div>' +
+          '</div>' +
+          '<div style="margin-top:1rem;">' +
+            allHtml +
+          '</div>' +
+        '</div>'
+      );
+    }
+
+    if (tab === 'partite') {
+      var matchHtml = (data.partite || []).map(function (m, idx) {
+        return (
+          '<div class="es-mister-event-card">' +
+            '<div class="es-mister-event-date-badge">' + m.date + '</div>' +
+            '<div class="es-mister-event-details">' +
+              '<h4 class="es-mister-event-title">' + m.opponent + '</h4>' +
+              '<p class="es-mister-event-sub">' + m.comp + ' · 🏟️ ' + m.stadium + '</p>' +
+              '<div style="font-size:0.75rem; color:#0284c7; font-weight:700; margin-top:0.3rem;">⚽ ' + m.status + ' (' + m.conv + ')</div>' +
+            '</div>' +
+            '<button type="button" class="es-mister-circle-btn" style="width:34px; height:34px; font-size:0.85rem;" data-match-formazione="' + idx + '" title="Gestisci formazioni">📋</button>' +
+          '</div>'
+        );
+      }).join('');
+
+      return (
+        '<div class="es-mister-card-white">' +
+          '<div class="es-mister-card-header">' +
+            '<div class="es-mister-card-title-wrap">' +
+              '<span class="es-mister-card-icon">⚽</span>' +
+              '<div>' +
+                '<h3 class="es-mister-card-title">Partite</h3>' +
+                '<p class="es-mister-card-sub">' + esc(data.clubName) + ' · Prima Squadra</p>' +
+              '</div>' +
+            '</div>' +
+            '<div class="es-mister-card-actions">' +
+              '<button type="button" class="es-mister-circle-btn" id="btn-stats-match" title="Report match analysis">📊</button>' +
+              '<button type="button" class="es-mister-circle-btn" id="btn-add-match" title="Aggiungi partita">+</button>' +
+            '</div>' +
+          '</div>' +
+          '<div style="margin-top:1rem;">' +
+            matchHtml +
+          '</div>' +
+        '</div>'
+      );
+    }
+
+    if (tab === 'lavagna') {
+      return (
+        '<div class="es-mister-card-white">' +
+          '<div class="es-mister-card-header">' +
+            '<div class="es-mister-card-title-wrap">' +
+              '<span class="es-mister-card-icon">📋</span>' +
+              '<div>' +
+                '<h3 class="es-mister-card-title">Lavagna Tattica</h3>' +
+                '<p class="es-mister-card-sub">Trascina le pedine in campo per impostare schemi e formazioni</p>' +
+              '</div>' +
+            '</div>' +
+            '<div style="display:flex; align-items:center; gap:0.5rem;">' +
+              '<select id="board-formation-select" style="background:#0f172a; color:#fff; border:1px solid #2dd4bf; border-radius:8px; padding:0.4rem 0.75rem; font-weight:700; font-size:0.82rem;">' +
+                '<option value="433">Modulo 4-3-3</option>' +
+                '<option value="352">Modulo 3-5-2</option>' +
+                '<option value="4231">Modulo 4-2-3-1</option>' +
+                '<option value="442">Modulo 4-4-2</option>' +
+              '</select>' +
+              '<button type="button" class="btn btn-outline-pill" id="btn-reset-board" style="padding:0.4rem 0.8rem; font-size:0.78rem;">Reset</button>' +
+            '</div>' +
+          '</div>' +
+
+          '<div class="es-mister-board-wrap" id="tactical-board">' +
+            '<div class="es-mister-pitch-lines">' +
+              '<div class="es-mister-pitch-center-line"></div>' +
+              '<div class="es-mister-pitch-center-circle"></div>' +
+              '<div class="es-mister-pitch-box-left"></div>' +
+              '<div class="es-mister-pitch-box-right"></div>' +
+            '</div>' +
+            // Pedine 11 titolari (Default 4-3-3)
+            '<div class="es-mister-piece is-gk" style="top:50%; left:8%;" data-num="1" title="Portiere">1</div>' +
+            '<div class="es-mister-piece" style="top:20%; left:26%;" data-num="2" title="Terzino Dx">2</div>' +
+            '<div class="es-mister-piece" style="top:40%; left:22%;" data-num="5" title="Centrale Dx">5</div>' +
+            '<div class="es-mister-piece" style="top:60%; left:22%;" data-num="6" title="Centrale Sx">6</div>' +
+            '<div class="es-mister-piece" style="top:80%; left:26%;" data-num="3" title="Terzino Sx">3</div>' +
+            '<div class="es-mister-piece" style="top:50%; left:42%;" data-num="4" title="Regista">4</div>' +
+            '<div class="es-mister-piece" style="top:30%; left:54%;" data-num="8" title="Mezzala Dx">8</div>' +
+            '<div class="es-mister-piece" style="top:70%; left:54%;" data-num="10" title="Mezzala Sx">10</div>' +
+            '<div class="es-mister-piece" style="top:22%; left:75%;" data-num="7" title="Ala Dx">7</div>' +
+            '<div class="es-mister-piece" style="top:50%; left:82%;" data-num="9" title="Punta">9</div>' +
+            '<div class="es-mister-piece" style="top:78%; left:75%;" data-num="11" title="Ala Sx">11</div>' +
+          '</div>' +
+
+          '<div style="margin-top:1.2rem;">' +
+            '<label style="display:block; font-weight:800; font-size:0.85rem; color:#0f172a; margin-bottom:0.35rem;">Note Tattiche del Mister</label>' +
+            '<textarea id="mister-tactical-notes" rows="3" placeholder="Scrivi indicazioni su palle inattive, uscite dal basso, transizioni..." style="width:100%; box-sizing:border-box; border:1.5px solid #cbd5e1; border-radius:12px; padding:0.75rem; font-family:inherit; font-size:0.88rem;">' + esc(data.tacticalNotes) + '</textarea>' +
+            '<button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-save-notes" style="margin-top:0.5rem; background:#0d9488; color:#fff; border:none; padding:0.45rem 1.1rem; font-weight:800; font-size:0.82rem;">Salva Note Tattiche</button>' +
+          '</div>' +
+        '</div>'
+      );
+    }
+
+    return '';
   }
 
-  function render(user) {
-    user = user || userObj();
-    if (!isCoach(user)) return;
-    var host = document.getElementById('es-staff-profile');
+  function bindHubEvents() {
+    var mount = document.getElementById('es-cd');
+    if (!mount) return;
+
+    // Tab buttons click
+    mount.querySelectorAll('.es-mister-nav-tab').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        activeTab = btn.getAttribute('data-tab');
+        renderHub();
+      });
+    });
+
+    // Modale Modifica Dati Club
+    var btnEditClub = mount.querySelector('#btn-edit-club-data');
+    if (btnEditClub) {
+      btnEditClub.onclick = function () {
+        var data = getCoachData();
+        var newSede = prompt('Modifica Sede Operativa:', data.sede);
+        if (newSede != null) data.sede = newSede;
+        var newStadio = prompt('Modifica Stadio Ufficiale:', data.stadio);
+        if (newStadio != null) data.stadio = newStadio;
+        saveCoachData(data);
+        renderHub();
+        if (window.showToast) window.showToast('✅ Dati Club salvati con successo!', 'success');
+      };
+    }
+
+    // Modale Aggiungi Membro Staff
+    var btnAddStaff = mount.querySelector('#btn-add-staff');
+    if (btnAddStaff) {
+      btnAddStaff.onclick = function () {
+        var name = prompt('Nome e Cognome Collaboratore Staff:');
+        if (name) {
+          var role = prompt('Ruolo Staff (es. Vice Allenatore, Preparatore Atletico, Match Analyst):', 'Vice Allenatore');
+          if (window.showToast) window.showToast('✅ Membro Staff ' + name + ' (' + role + ') aggiunto!', 'success');
+        }
+      };
+    }
+
+    // Modale Aggiungi Giocatore
+    var btnAddPlayer = mount.querySelector('#btn-add-player');
+    if (btnAddPlayer) {
+      btnAddPlayer.onclick = function () {
+        var pName = prompt('Nome e Cognome Atleta:');
+        if (pName) {
+          var pRole = prompt('Ruolo in campo (Portiere, Difensore, Centrocampista, Attaccante):', 'Attaccante');
+          var pNum = parseInt(prompt('Numero di maglia:', '99'), 10) || 99;
+          var data = getCoachData();
+          data.roster.push({
+            num: pNum,
+            name: pName,
+            role: pRole || 'Calciatore',
+            birth: '2004',
+            cert: 'Regolare',
+            status: 'disp',
+            app: 0
+          });
+          saveCoachData(data);
+          renderHub();
+          if (window.showToast) window.showToast('✅ Calciatore ' + pName + ' aggiunto in rosa!', 'success');
+        }
+      };
+    }
+
+    // Modale Aggiungi Allenamento
+    var btnAddTrain = mount.querySelector('#btn-add-training');
+    if (btnAddTrain) {
+      btnAddTrain.onclick = function () {
+        var tTitle = prompt('Titolo seduta di allenamento:');
+        if (tTitle) {
+          var tDate = prompt('Data e orario (es. Sabato · 10:30):', 'Sabato · 10:30');
+          var tFocus = prompt('Focus della seduta:', 'Tiri in porta, schemi su corner e partitella');
+          var data = getCoachData();
+          data.allenamenti.unshift({
+            id: 'all-' + Date.now(),
+            date: tDate || 'Da definire',
+            title: tTitle,
+            focus: tFocus || 'Esercitazioni tecniche',
+            presenze: 'Programmato'
+          });
+          saveCoachData(data);
+          renderHub();
+          if (window.showToast) window.showToast('✅ Seduta di allenamento programmata!', 'success');
+        }
+      };
+    }
+
+    // Modale Aggiungi Partita
+    var btnAddMatch = mount.querySelector('#btn-add-match');
+    if (btnAddMatch) {
+      btnAddMatch.onclick = function () {
+        var mOpp = prompt('Squadra avversaria (es. Foggia vs Fidelis Andria):');
+        if (mOpp) {
+          var mDate = prompt('Data e orario gara:', 'Domenica prossima · Ore 15:00');
+          var data = getCoachData();
+          data.partite.unshift({
+            id: 'match-' + Date.now(),
+            date: mDate || 'Domenica ore 15:00',
+            opponent: mOpp,
+            comp: 'Campionato Serie D',
+            stadium: 'Stadio Comunale',
+            status: 'In programma',
+            conv: '22 Convocati'
+          });
+          saveCoachData(data);
+          renderHub();
+          if (window.showToast) window.showToast('✅ Gara aggiunta al calendario!', 'success');
+        }
+      };
+    }
+
+    // Salva Note Tattiche
+    var btnSaveNotes = mount.querySelector('#btn-save-notes');
+    if (btnSaveNotes) {
+      btnSaveNotes.onclick = function () {
+        var data = getCoachData();
+        var txt = mount.querySelector('#mister-tactical-notes').value;
+        data.tacticalNotes = txt;
+        saveCoachData(data);
+        if (window.showToast) window.showToast('💾 Note tattiche del Mister salvate!', 'success');
+      };
+    }
+
+    // Cambio Modulo Lavagna
+    var selFormation = mount.querySelector('#board-formation-select');
+    if (selFormation) {
+      selFormation.onchange = function () {
+        var f = this.value;
+        if (window.showToast) window.showToast('📋 Modulo impostato su ' + f, 'info');
+      };
+    }
+
+    // Interattività Drag & Drop pedine sulla lavagna tattica
+    var board = mount.querySelector('#tactical-board');
+    if (board) {
+      var pieces = board.querySelectorAll('.es-mister-piece');
+      pieces.forEach(function (p) {
+        p.onpointerdown = function (e) {
+          e.preventDefault();
+          var rect = board.getBoundingClientRect();
+          function onMove(ev) {
+            var x = Math.max(4, Math.min(rect.width - 4, ev.clientX - rect.left));
+            var y = Math.max(4, Math.min(rect.height - 4, ev.clientY - rect.top));
+            var px = (x / rect.width * 100).toFixed(1);
+            var py = (y / rect.height * 100).toFixed(1);
+            p.style.left = px + '%';
+            p.style.top = py + '%';
+          }
+          function onUp() {
+            window.removeEventListener('pointermove', onMove);
+            window.removeEventListener('pointerup', onUp);
+          }
+          window.addEventListener('pointermove', onMove);
+          window.addEventListener('pointerup', onUp);
+        };
+      });
+    }
+  }
+
+  function render(force) {
     var group = document.getElementById('user-dossier-view-group');
-    if (!host) return;
-    var box = document.getElementById('es-cd');
-    if (!box) {
-      box = document.createElement('div');
-      box.id = 'es-cd';
-      box.className = 'es-pd';
-      host.insertBefore(box, host.firstChild);
+    if (!group) return;
+    var u = userObj();
+    if (!force && !isCoach(u)) return;
+
+    group.classList.add('is-coach-dash');
+    var staffProfile = document.getElementById('es-staff-profile');
+    if (!staffProfile) return;
+
+    var cd = document.getElementById('es-cd');
+    if (!cd) {
+      cd = document.createElement('div');
+      cd.id = 'es-cd';
+      staffProfile.appendChild(cd);
     }
-    var vd = document.getElementById('es-vd');
-    if (vd) vd.hidden = true;
-    var mad = document.getElementById('es-mad');
-    if (mad) mad.hidden = true;
-    var md = document.getElementById('es-md');
-    if (md) md.hidden = true;
-    var od = document.getElementById('es-od');
-    if (od) od.hidden = true;
-    var tmd = document.getElementById('es-tmd');
-    if (tmd) tmd.hidden = true;
-    var gk = document.getElementById('es-gk');
-    if (gk) gk.hidden = true;
-    var atd = document.getElementById('es-atd');
-    if (atd) atd.hidden = true;
-    var yg = document.getElementById('es-yg');
-    if (yg) yg.hidden = true;
-    var dg = document.getElementById('es-dg');
-    if (dg) dg.hidden = true;
-    var ag = document.getElementById('es-ag');
-    if (ag) ag.hidden = true;
-    var mk = document.getElementById('es-mk');
-    if (mk) mk.hidden = true;
-    var prb = document.getElementById('es-pr');
-    if (prb) prb.hidden = true;
-    var nu = document.getElementById('es-nu');
-    if (nu) nu.hidden = true;
-    var eq = document.getElementById('es-eq');
-    if (eq) eq.hidden = true;
-    var sg = document.getElementById('es-sg');
-    if (sg) sg.hidden = true;
-    var bt = document.getElementById('es-bt');
-    if (bt) bt.hidden = true;
-    box.innerHTML = html(user);
-    box.hidden = false;
-    host.classList.add('es-pd-on');
-    host.classList.remove('es-vice-on', 'es-ma-on', 'es-med-on', 'es-obs-on', 'es-tm-on', 'es-gk-on', 'es-at-on', 'es-yg-on', 'es-dg-on', 'es-nu-on');
-    if (group) {
-      group.classList.add('is-coach-dash');
-      group.classList.remove('is-vice-dash', 'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash', 'is-at-dash', 'is-yg-dash', 'is-dg-dash', 'is-nu-dash');
-    }
-    bind(host);
+    cd.style.display = 'block';
+    renderHub();
   }
 
-  window.EliseeCoachDash = { render: render, isCoach: isCoach };
+  function detach() {
+    var group = document.getElementById('user-dossier-view-group');
+    if (group) group.classList.remove('is-coach-dash');
+    var cd = document.getElementById('es-cd');
+    if (cd) cd.remove();
+  }
 
-  document.addEventListener('elisee:view-changed', function (e) {
-    var d = e && e.detail;
-    if (d && d.view === 'user-dossier') {
-      try {
-        var u = userObj();
-        if (isCoach(u)) render(u);
-      } catch (_) {}
+  window.EliseeCoachDash = {
+    render: render,
+    detach: detach,
+    setTab: function (tab) {
+      activeTab = tab;
+      renderHub();
     }
-  });
+  };
+
+  function boot() {
+    document.addEventListener('elisee:role-changed', function () {
+      if (isCoach()) render(true);
+      else detach();
+    });
+    document.addEventListener('elisee:auth-changed', function () {
+      if (isCoach()) render(true);
+      else detach();
+    });
+    if (isCoach()) render(true);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
 })();
