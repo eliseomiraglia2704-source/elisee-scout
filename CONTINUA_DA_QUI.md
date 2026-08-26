@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Estesa l'amministrazione dei servizi esecutivi societari all'**`Alta Dirigenza del Club`** (Presidente, Vice Presidente, Direttore Generale, Tesoriere del Club, Segretario Generale) con switcher squadra, grande tasto **`+ Invita membri`**, carousel tesserati e gestione **`€ Finanze (Contributi & Cassa)`**, **`Car Sharing Genitori`** e **`Hub Eventi`**. File: `pres-dash.js`, `pres-dash.css`, `index.html`, `sw.js`. Cache `EXEC1`.
-Feature precedente: Hub Eventi, + Crea Evento e Car Sharing per Genitori.
+Ultimo fatto: Implementato il modulo **`💬 COMUNICAZIONI`** con **`+ Crea notizia`**, **`Sondaggi della Squadra`** con votazione in tempo reale, **`💬 Chat Ufficiale di Squadra`** e **`☁️ Cloud Squadra (0/15 MB)`** con permessi differenziati: creazione e amministrazione riservata a Dirigenza e Staff (escluso ai calciatori), mentre lettura notizie, votazione sondaggi, messaggi in chat e download cloud sono accessibili a TUTTI i componenti del club. File: `pres-dash.js`, `pres-dash.css`, `index.html`, `sw.js`. Cache `COMM1`.
+Feature precedente: Estensione servizi esecutivi (Squadra, Invita, Finanze) all'Alta Dirigenza.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
