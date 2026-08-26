@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Implementato nell'Area Allenatore l'editor a tutto schermo per **`Creare e Salvare la Lavagna Tattica`** (scelta layout campi intero/mezzo/zone/3D, selettore taglia S/M/L, pedine trascinabili, sagome giocatori, frecce, zone e strumenti) con **`Libreria Immagini & Schemi Tattici`** e supporto all'**`Importazione diretta di PDF, JPG e PNG`** con anteprima immediata e download PDF. File: `coach-dash.js`, `coach-dash.css`, `index.html`, `sw.js`. Cache `TAC1`.
-Feature precedente: Attivazione 5 macro-aree Area Allenatore.
+Ultimo fatto: Riprogettata l'**`Area Presidente (Presidential Hub)`** (`pres-dash.js`, `pres-dash.css`) con le 5 macro-aree attive (**Club, Squadra, Allenamenti, Partite, Lavagna**) per il pieno controllo societario + **Modale Statistiche Partite** (filtri tornei, stampa report e riquadri Totale/Casa/Trasferta) + **Modale Nuovo Calciatore** (inserimento atleti in rosa) + **Lavagna Tattica & Import PDF/JPG/PNG**. File: `pres-dash.js`, `pres-dash.css`, `index.html`, `sw.js`. Cache `PRES1`.
+Feature precedente: Allineamento Area Vice Allenatore con 5 macro-aree e lavagna tattica.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

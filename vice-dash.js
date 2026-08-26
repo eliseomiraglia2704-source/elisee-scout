@@ -1,337 +1,495 @@
-/* Dashboard Vice Allenatore — Allenatore in seconda */
+/* ============================================================
+   ELISEE SCOUT — Area Vice Allenatore (Mister Hub)
+   5 Macro-aree Attive: CLUB | SQUADRA | ALLENAMENTI | PARTITE | LAVAGNA
+   Incluso: Editor Lavagna Tattica, Salvataggio Schemi & Import PDF/JPG/PNG
+   ============================================================ */
 (function () {
-  var AXES = [
-    'Preparazione Allenamenti', 'Analisi Video', 'Supporto in Panchina', 'Comunicazione con Staff',
-    'Gestione Sostituzioni', 'Sviluppo Giovani', 'Coordinamento Preparatori', 'Efficacia Correttivi'
-  ];
-  var V2025 = [88, 92, 90, 94, 85, 93, 87, 91];
-  var V2023 = [74, 78, 76, 80, 70, 82, 73, 77];
+  'use strict';
+
+  var activeTab = 'lavagna'; // default o club | squadra | allenamenti | partite | lavagna
+  var currentPitchType = 'full';
+  var currentElemSize = 'M';
 
   function esc(s) {
-    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
   }
+
   function userObj() {
-    try { return JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {}; } catch (_) { return {}; }
+    try {
+      return JSON.parse(localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data') || '{}') || {};
+    } catch (_) { return {}; }
   }
+
   function isVice(u) {
     u = u || userObj();
-    var blob = [u.staffRole, u.ruoloDettagliato, u.ruolo, u.role, u.staffProfile && u.staffProfile.fieldRole]
+    var blob = [u.staffRole, u.ruoloDettagliato, u.ruolo, u.role, u.siteRoleFamily, u.staffProfile && u.staffProfile.fieldRole]
       .filter(Boolean).join(' ').toLowerCase();
     return /allenatore in seconda|vice allenatore/.test(blob);
   }
-  function viceName(u) {
-    return [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Vice Allenatore';
-  }
-  function initials(name) {
-    var p = String(name || 'VA').trim().split(/\s+/);
-    return ((p[0] || 'V').charAt(0) + (p[1] || p[0] || 'A').charAt(0)).toUpperCase();
-  }
-  function photoOf(u) {
-    try {
-      if (window.getStoredProfilePhoto) return window.getStoredProfilePhoto(null, u) || u.fotoUrl || '';
-    } catch (_) {}
-    return u.fotoUrl || '';
-  }
-  function polar(cx, cy, r, i, n, val) {
-    var a = (-Math.PI / 2) + (i * 2 * Math.PI / n);
-    var rr = r * (val / 100);
-    return [cx + Math.cos(a) * rr, cy + Math.sin(a) * rr];
-  }
-  function poly(cx, cy, r, vals) {
-    return vals.map(function (v, i) {
-      var p = polar(cx, cy, r, i, vals.length, v);
-      return p[0].toFixed(1) + ',' + p[1].toFixed(1);
-    }).join(' ');
-  }
-  function wedge(cx, cy, r, start, end, color) {
-    var n = 24;
-    var pts = [[cx, cy]];
-    for (var i = 0; i <= n; i++) {
-      var t = start + (end - start) * (i / n);
-      pts.push([cx + Math.cos(t) * r, cy + Math.sin(t) * r]);
-    }
-    return '<path d="M' + pts.map(function (p) { return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' L') + ' Z" fill="' + color + '" />';
-  }
-  function radarSvg() {
-    var cx = 220, cy = 210, r = 150, n = AXES.length;
-    var html = '<svg viewBox="0 0 440 430" role="img" aria-label="Analisi contributo tecnico">';
-    html += wedge(cx, cy, r, -Math.PI / 2, 0, 'rgba(74,222,128,0.16)');
-    html += wedge(cx, cy, r, 0, Math.PI / 2, 'rgba(248,113,113,0.18)');
-    html += wedge(cx, cy, r, Math.PI / 2, Math.PI, 'rgba(250,204,21,0.16)');
-    html += wedge(cx, cy, r, Math.PI, Math.PI * 1.5, 'rgba(56,189,248,0.16)');
-    for (var ring = 1; ring <= 5; ring++) {
-      html += '<polygon points="' + poly(cx, cy, r, AXES.map(function () { return ring * 20; })) +
-        '" fill="none" stroke="rgba(148,163,184,0.22)" stroke-width="1"/>';
-    }
-    for (var i = 0; i < n; i++) {
-      var e = polar(cx, cy, r, i, n, 100);
-      html += '<line x1="' + cx + '" y1="' + cy + '" x2="' + e[0].toFixed(1) + '" y2="' + e[1].toFixed(1) +
-        '" stroke="rgba(148,163,184,0.2)"/>';
-      var lab = polar(cx, cy, r + 26, i, n, 100);
-      html += '<text x="' + lab[0].toFixed(1) + '" y="' + lab[1].toFixed(1) +
-        '" text-anchor="middle" dominant-baseline="middle" fill="#94a3b8" font-size="9">' +
-        esc(AXES[i]) + ' ' + V2025[i] + '%</text>';
-    }
-    html += '<polygon points="' + poly(cx, cy, r, V2023) + '" fill="rgba(148,163,184,0.12)" stroke="#64748b" stroke-width="1.5"/>';
-    html += '<polygon points="' + poly(cx, cy, r, V2025) + '" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="2"/>';
-    html += '</svg>';
-    return html;
-  }
-  function spark(values, color) {
-    var w = 120, h = 36, max = Math.max.apply(null, values), min = Math.min.apply(null, values);
-    var pts = values.map(function (v, i) {
-      var x = (i / (values.length - 1)) * w;
-      var y = h - ((v - min) / (max - min || 1)) * (h - 4) - 2;
-      return x.toFixed(1) + ',' + y.toFixed(1);
-    }).join(' ');
-    return '<svg viewBox="0 0 ' + w + ' ' + h + '" width="100%" height="36"><polyline fill="none" stroke="' +
-      color + '" stroke-width="2" points="' + pts + '"/></svg>';
-  }
-  function trendSvg() {
-    var series = {
-      '2023': [62, 68, 70, 74, 76, 80],
-      '2024': [72, 75, 80, 84, 86, 88],
-      '2025': [80, 84, 87, 90, 92, 95]
+
+  function getViceData() {
+    var u = userObj();
+    var def = {
+      clubName: u.squadra || u.club || 'Foggia',
+      matricola: u.matricola || '13923 / FIGC',
+      sede: u.sede || 'Viale Giuseppe Mazzini, 35/C Foggia FG',
+      stadio: u.stadio || 'Stadio Comunale Pino Zaccheria',
+      telefono: u.telefono || '+39 0881 742911',
+      viceName: (u.nome ? (u.nome + ' ' + (u.cognome || '')) : (u.name || 'Vice Allenatore')).trim(),
+      viceRole: 'Vice Allenatore / Collaboratore Tecnico (UEFA B)',
+      viceDoc: 'Verificato',
+      viceTessera: 'FIGC-882310',
+      viceScadenza: '30/06/2027',
+      logoUrl: 'immagini/squadre-loghi/foggia.png',
+      teamPhotoUrl: 'immagini/04-workspace-scout/scout-workspace.svg?v=20260730_225504',
+      roster: [
+        { num: 1, name: 'Marco Fumagalli', role: 'Portiere', birth: '2001', cert: 'Regolare', status: 'disp', app: 26 },
+        { num: 2, name: 'Alessandro Silvestro', role: 'Terzino Destro', birth: '2002', cert: 'Regolare', status: 'disp', app: 24 },
+        { num: 5, name: 'Luigi Carillo', role: 'Difensore Centrale', birth: '1996', cert: 'Regolare', status: 'disp', app: 28 },
+        { num: 6, name: 'Davide Di Pasquale', role: 'Difensore Centrale', birth: '1996', cert: 'Regolare', status: 'disp', app: 25 },
+        { num: 3, name: 'Luca Rizzo Pinna', role: 'Terzino Sinistro', birth: '2003', cert: 'Regolare', status: 'disp', app: 22 },
+        { num: 8, name: 'Moses Odjer', role: 'Mediano', birth: '1996', cert: 'Regolare', status: 'disp', app: 27 },
+        { num: 4, name: 'Jacopo Petermann', role: 'Regista', birth: '1994', cert: 'Regolare', status: 'disp', app: 25 },
+        { num: 10, name: 'Diego Peralta', role: 'Trequartista', birth: '1996', cert: 'Regolare', status: 'disp', app: 28 },
+        { num: 7, name: 'Eliseo Miraglia', role: 'Ala Sinistra', birth: '2004', cert: 'Regolare', status: 'disp', app: 28 },
+        { num: 11, name: 'Roberto Ogunseye', role: 'Attaccante Centrale', birth: '1995', cert: 'Regolare', status: 'disp', app: 26 },
+        { num: 9, name: 'Alexis Ferrante', role: 'Seconda Punta', birth: '1995', cert: 'Regolare', status: 'disp', app: 24 }
+      ],
+      allenamenti: [
+        { id: 'all-1', date: 'Oggi · 15:30', title: 'Seduta Tattica &amp; Pressione Alta', focus: 'Riscaldamento a secco, possesso palla 6v6+2, sviluppo catena laterale e partitella 11v11.', presenze: '21 / 22 Presenti' },
+        { id: 'all-2', date: 'Domani · 10:00', title: 'Fase Difensiva &amp; Palle Inattive', focus: 'Marcatura a zona su corner avversari, calci di punizione a favore, reattività e rapidità su 10m.', presenze: 'Programmato' }
+      ],
+      partite: [
+        { id: 'match-1', date: 'Domenica · Ore 15:00', opponent: 'Foggia vs Taranto', comp: 'Campionato Serie D · Girone H', stadium: 'Stadio Pino Zaccheria', status: 'Prossima Gara', conv: '22 Convocati' }
+      ],
+      tacticalSchemes: [
+        {
+          id: 'tac-1',
+          title: 'Contributo Tattico: Sviluppo Catena Dx',
+          date: '26/08/2026',
+          type: 'Lavagna Tattica',
+          preview: 'immagini/04-workspace-scout/scout-workspace.svg?v=20260730_225504'
+        },
+        {
+          id: 'tac-2',
+          title: 'Pressing Ultra-Offensivo & Transizioni',
+          date: '24/08/2026',
+          type: 'Sedute di Campo',
+          preview: 'immagini/squadre-loghi/foggia.png'
+        }
+      ]
     };
-    var cols = { '2023': '#38bdf8', '2024': '#4ade80', '2025': '#facc15' };
-    var w = 240, h = 90;
-    var html = '<svg viewBox="0 0 ' + w + ' ' + h + '" width="100%" height="90">';
-    Object.keys(series).forEach(function (k) {
-      var vals = series[k];
-      var pts = vals.map(function (v, i) {
-        return ((i / 5) * (w - 8) + 4).toFixed(1) + ',' + (h - 8 - (v / 100) * (h - 16)).toFixed(1);
-      }).join(' ');
-      html += '<polyline fill="none" stroke="' + cols[k] + '" stroke-width="2" points="' + pts + '"/>';
-    });
-    html += '</svg>';
-    return html;
-  }
-  function ico(d) {
-    return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">' + d + '</svg>';
-  }
-  function hideOthers() {
-    ['es-cd', 'es-dsd', 'es-prd', 'es-mad', 'es-md', 'es-od', 'es-tmd', 'es-gk', 'es-atd', 'es-yg'].forEach(function (id) {
-      var el = document.getElementById(id);
-      if (el) el.hidden = true;
-    });
-    var g = document.getElementById('user-dossier-view-group');
-    if (g) g.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash', 'is-at-dash', 'is-yg-dash');
+
+    try {
+      var stored = localStorage.getItem('elisee_vice_hub_data');
+      if (stored) return Object.assign(def, JSON.parse(stored));
+    } catch (_) {}
+    return def;
   }
 
-  function html(user) {
-    var name = viceName(user);
-    var ph = photoOf(user);
-    var ava = ph
-      ? '<img src="' + esc(ph) + '" alt="">'
-      : '<div class="es-pd-ph">' + esc(initials(name)) + '</div>';
-    return '<aside class="es-pd-rail">' +
-      '<button type="button" data-va="home" title="Home">' + ico('<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>') + '</button>' +
-      '<button type="button" class="is-on" data-va="dash" title="Dashboard">' + ico('<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>') + '</button>' +
-      '<button type="button" data-va="album" title="Album">' + ico('<rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>') + '</button>' +
-      '<button type="button" data-va="msgs" title="Messaggi">' + ico('<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>') + '</button>' +
-      '<button type="button" class="es-pd-rail-end" data-va="edit" title="Anagrafica">' + ico('<path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>') + '</button>' +
-      '</aside><div class="es-pd-body">' +
-      '<div class="es-pd-head"><h1>Elisee Scout — Dashboard Vice Allenatore</h1>' +
-      '<strong>Vice allenatore: ' + esc(name.toUpperCase()) + '</strong></div>' +
-      '<div class="es-pd-grid">' +
-
-      '<section class="es-pd-card es-pd-indice"><h2>Profilo Vice Allenatore</h2>' +
-      '<div class="es-pd-who">' + ava + '<div><b style="color:#fff">' + esc(name) + '</b>' +
-      '<div style="font-size:0.72rem;color:#94a3b8">Allenatore in seconda</div></div></div>' +
-      '<div class="es-pd-metric"><span>Supporto tattico</span><b>90%</b></div>' +
-      '<div class="es-pd-metric"><span>Gestione allenamenti</span><b>94%</b></div>' +
-      '<div class="es-pd-metric"><span>Analisi avversari</span><b>96%</b></div>' +
-      '<div class="es-pd-metric"><span>Rapporto con lo staff</span><b>85%</b></div>' +
-      '<div class="es-pd-metric"><span>Affiancamento giocatori</span><b>78%</b></div></section>' +
-
-      '<section class="es-pd-card es-pd-radar">' +
-      '<div class="es-pd-radar-tools">' +
-      '<span style="font-weight:800;color:#f8fafc">Analisi Contributo Tecnico</span>' +
-      '<div class="es-pd-legend-pills">' +
-      '<span class="es-pd-pill-legend" style="color:#38bdf8"><i style="background:#38bdf8"></i> 2025 (Stagione Attuale)</span>' +
-      '<span class="es-pd-pill-legend" style="color:#94a3b8"><i style="background:#64748b"></i> 2023 (Benchmark Storico)</span>' +
-      '</div>' +
-      '</div>' +
-      radarSvg() + '</section>' +
-
-      '<section class="es-pd-card es-pd-comply"><h2>Verifica &amp; Compliance staff tecnico</h2>' +
-      '<div class="es-pd-ok"><span>Patentino UEFA Pro</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Corso primo soccorso</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Tutela minori (ID)</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Aggiornamento formativo</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Profilo staff validato</span><b>100%</b></div></section>' +
-
-      '<section class="es-pd-card es-pd-storico"><h2>Andamento collaborazione tecnica</h2>' +
-      '<div class="es-pd-sparks">' +
-      '<figure>' + spark([42, 50, 55, 60, 70, 78, 86], '#38bdf8') + '<figcaption>Sessioni</figcaption></figure>' +
-      '<figure>' + spark([30, 38, 46, 52, 62, 74, 84], '#4ade80') + '<figcaption>Correzioni tattiche</figcaption></figure>' +
-      '<figure>' + spark([40, 48, 52, 58, 66, 75, 85], '#facc15') + '<figcaption>Feedback squadra</figcaption></figure>' +
-      '<figure>' + spark([50, 54, 58, 64, 70, 80, 88], '#22d3ee') + '<figcaption>Stagione</figcaption></figure>' +
-      '</div></section>' +
-
-      '<section class="es-pd-card es-pd-mercato"><h2>Indice di efficacia tecnica</h2>' +
-      '<p class="es-vice-grade">8,5/10 <small>+5,5%</small></p>' +
-      '<div class="es-pd-mrow"><span>Valutazione staff</span><b>Ottima</b></div>' +
-      '<div class="es-pd-mrow"><span>Trend fiducia allenatore capo</span><b>Crescente</b></div>' +
-      '<div class="es-pd-mrow"><span>Richieste di conferma ruolo</span><b>Attive</b></div>' +
-      '<div class="es-pd-mrow"><span>Scadenza mandato</span><b>30/06/2028</b></div>' +
-      '<div class="es-pd-mrow"><span>Trattative aperte</span><b>Nessuna</b></div></section>' +
-
-      '<section class="es-pd-card es-pd-registro"><h2>Registro sessioni</h2>' +
-      '<table class="es-pd-table"><thead><tr><th>Partita</th><th>Tipo</th><th>Focus</th><th></th></tr></thead><tbody>' +
-      '<tr><td>vs. Notaresco</td><td>Tattica</td><td>Posizionamento</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Vastese</td><td>Video</td><td>Diffensive</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Chieti</td><td>Tattica</td><td>Rimesse</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Termoli</td><td>Tattica</td><td>Possesso</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Campobasso</td><td>Tattica</td><td>Diffensivo</td><td><i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Castelfidardo</td><td>Panchina</td><td>Sostituzioni</td><td><i class="es-pd-dot y"></i></td></tr>' +
-      '</tbody></table></section>' +
-
-      '<section class="es-pd-card es-pd-trend"><h2>Crescita Stagionale (2023-2025)</h2>' +
-      '<div class="es-pd-trend-legend">' +
-      '<span style="color:#38bdf8"><i style="background:#38bdf8"></i> 2023 (62-78%)</span>' +
-      '<span style="color:#4ade80"><i style="background:#4ade80"></i> 2024 (70-86%)</span>' +
-      '<span style="color:#facc15"><i style="background:#facc15"></i> 2025 (78-93%)</span>' +
-      '</div>' +
-      trendSvg() +
-      '<button type="button" class="es-pd-edit" data-va="edit">✏️ Modifica Anagrafica Vice Allenatore</button>' +
-      '</section>' +
-
-      '<section class="es-pd-card es-pd-guide-card">' +
-      '<div class="es-pd-guide-head">' +
-      '<h2><span>📘</span> Guida Analitica &amp; Legenda Metriche — Area Staff Tecnico</h2>' +
-      '<span class="es-pd-guide-badge">Standard Certificato FIGC / UEFA</span>' +
-      '</div>' +
-      '<div class="es-pd-guide-grid">' +
-      '<div class="es-pd-guide-item">' +
-      '<h3><span>🤝</span> Indice Efficacia Collaborazione</h3>' +
-      '<p>Valuta la sinergia con l\'Allenatore Capo, la gestione dei carichi e la qualità dell\'affiancamento individuale per i calciatori.</p>' +
-      '</div>' +
-      '<div class="es-pd-guide-item">' +
-      '<h3><span>🎯</span> Radar Contributo Tattico</h3>' +
-      '<p>Analisi delle aree chiave: Tattica di reparto, Palle inattive, Gestione panchina e Comunicazione tecnica.</p>' +
-      '</div>' +
-      '<div class="es-pd-guide-item">' +
-      '<h3><span>🛡️</span> Compliance &amp; Patentini</h3>' +
-      '<p>Qualifiche ufficiali UEFA/Settore Tecnico Coverciano, corso primo soccorso BLSD e idoneità sportiva verificata.</p>' +
-      '</div>' +
-      '<div class="es-pd-guide-item">' +
-      '<h3><span>🚦</span> Indicatori Sessioni</h3>' +
-      '<p><i class="es-pd-dot g"></i> <b>Verde</b>: Seduta svolta con pieno raggiungimento degli obiettivi.<br>' +
-      '<i class="es-pd-dot y"></i> <b>Giallo</b>: Seduta con parametri parziali da integrare.</p>' +
-      '</div>' +
-      '</div>' +
-      '</section>' +
-      '</div></div>';
+  function saveViceData(data) {
+    try {
+      localStorage.setItem('elisee_vice_hub_data', JSON.stringify(data));
+    } catch (_) {}
   }
 
-  function openViceEditModal(user) {
-    user = user || userObj();
-    var backdrop = document.createElement('div');
-    backdrop.className = 'es-edit-modal-backdrop';
+  var TAB_DESCS = {
+    club: 'Organizzazione societaria, dirigenti e staff tecnico.',
+    squadra: 'Gestione della rosa, ruoli e dati dei giocatori.',
+    allenamenti: 'Pianificazione e gestione degli allenamenti stagionali.',
+    partite: 'Calendario, convocazioni e gestione delle partite.',
+    lavagna: 'Strumenti tattici per schemi, analisi e strategie.'
+  };
 
-    backdrop.innerHTML = '<div class="es-edit-modal">' +
-      '<div class="es-edit-modal-head">' +
-      '<h2><span>✏️</span> Modifica Anagrafica Vice Allenatore</h2>' +
-      '<button type="button" class="es-edit-modal-close" title="Chiudi">&times;</button>' +
-      '</div>' +
-      '<div class="es-edit-grid">' +
-      '<div class="es-edit-field"><label>Nome</label><input id="es-va-nome" value="' + esc(user.nome || 'Eliseo') + '"></div>' +
-      '<div class="es-edit-field"><label>Cognome</label><input id="es-va-cognome" value="' + esc(user.cognome || 'Miraglia') + '"></div>' +
-      '<div class="es-edit-field"><label>Ruolo Staff</label><input id="es-va-role" value="Allenatore in seconda / Vice Allenatore" readonly></div>' +
-      '<div class="es-edit-field"><label>Patentino / Qualifica</label><select id="es-va-lic"><option>UEFA A</option><option selected>UEFA B</option><option>UEFA Pro</option><option>Match Analyst FIGC</option></select></div>' +
-      '<div class="es-edit-field"><label>Club Attuale</label><input id="es-va-club" value="' + esc(user.squadra || user.club || 'Notaresco Calcio') + '"></div>' +
-      '<div class="es-edit-field"><label>Specializzazione Tattica</label><input id="es-va-spec" value="Fase Difensiva & Palle Inattive"></div>' +
-      '<div class="es-edit-field full"><label>Bio & Esperienze Staff</label><textarea id="es-va-bio" rows="3">' + esc(user.bio || 'Vice allenatore con esperienza in campionati nazionali, specializzato in match analysis, palle inattive e preparazione tattica.') + '</textarea></div>' +
-      '</div>' +
-      '<div class="es-edit-actions">' +
-      '<button type="button" class="es-edit-btn-cancel">Annulla</button>' +
-      '<button type="button" class="es-edit-btn-save">💾 Salva Dati Staff</button>' +
-      '</div>' +
+  function renderHub() {
+    var mount = document.getElementById('es-vd');
+    if (!mount) return;
+
+    var data = getViceData();
+
+    var html =
+      '<div class="es-mister-hub">' +
+        // Top Trial / VIP bar
+        '<div class="es-mister-trial-bar">' +
+          '<div class="es-mister-trial-text">' +
+            '<span>⚠️</span> Stai utilizzando la versione prova Mister (Vice) con funzionalità dedicate.' +
+          '</div>' +
+          '<button type="button" class="es-mister-btn-sub" onclick="if(window.openAccessoModal){ window.openAccessoModal(\'email\'); } else if(window.showToast){ window.showToast(\'🌟 Abbonamento Staff Tecnico VIP attivo per il tuo account.\', \'success\'); }">Abbonati</button>' +
+        '</div>' +
+
+        '<div class="es-mister-wrap">' +
+          // Header Club Banner
+          '<div class="es-mister-club-header">' +
+            '<div class="es-mister-club-main">' +
+              '<div class="es-mister-crest-badge">' +
+                '<img src="' + esc(data.logoUrl) + '" alt="' + esc(data.clubName) + '" onerror="this.src=\'immagini/squadre-loghi/napoli.png\';">' +
+              '</div>' +
+              '<div>' +
+                '<div class="es-mister-club-tags">' +
+                  '<span class="es-mister-tag es-mister-tag-primary">PRIMA SQUADRA</span>' +
+                  '<span class="es-mister-tag es-mister-tag-dark">Stagione in corso</span>' +
+                  '<span class="es-mister-tag es-mister-tag-gold">Vice Allenatore | Staff Tecnico</span>' +
+                '</div>' +
+                '<h1 class="es-mister-club-title">' + esc(data.clubName) + '</h1>' +
+                '<p class="es-mister-club-desc" id="vice-tab-desc">' + esc(TAB_DESCS[activeTab]) + '</p>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+
+          // 5 Nav Tabs
+          '<nav class="es-mister-nav-bar" role="tablist">' +
+            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'club' ? 'is-active' : '') + '" data-tab="club">🛡️ Club</button>' +
+            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'squadra' ? 'is-active' : '') + '" data-tab="squadra">👥 Squadra</button>' +
+            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'allenamenti' ? 'is-active' : '') + '" data-tab="allenamenti">🏃‍♂️ Allenamenti</button>' +
+            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'partite' ? 'is-active' : '') + '" data-tab="partite">⚽ Partite</button>' +
+            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'lavagna' ? 'is-active' : '') + '" data-tab="lavagna">🖌️ Lavagna</button>' +
+          '</nav>' +
+
+          // Content Tab Container
+          '<div id="vice-tab-content">' +
+            renderTabContent(activeTab, data) +
+          '</div>' +
+
+        '</div>' +
       '</div>';
 
-    document.body.appendChild(backdrop);
-
-    var close = function () { backdrop.remove(); };
-    backdrop.querySelector('.es-edit-modal-close').addEventListener('click', close);
-    backdrop.querySelector('.es-edit-btn-cancel').addEventListener('click', close);
-    backdrop.addEventListener('click', function (e) { if (e.target === backdrop) close(); });
-
-    backdrop.querySelector('.es-edit-btn-save').addEventListener('click', function () {
-      var n = document.getElementById('es-va-nome').value.trim();
-      var c = document.getElementById('es-va-cognome').value.trim();
-      var clb = document.getElementById('es-va-club').value.trim();
-      var bio = document.getElementById('es-va-bio').value.trim();
-
-      user.nome = n || user.nome;
-      user.cognome = c || user.cognome;
-      user.fullName = (user.nome + ' ' + user.cognome).trim();
-      user.squadra = clb;
-      user.club = clb;
-      user.bio = bio;
-
-      try {
-        localStorage.setItem('elisee_active_user', JSON.stringify(user));
-      } catch (_) {}
-
-      close();
-      if (typeof window.showToast === 'function') {
-        window.showToast('Anagrafica Vice Allenatore salvata con successo!', 'success');
-      }
-      render(user);
-    });
+    mount.innerHTML = html;
+    bindHubEvents();
   }
 
-  function bind(host) {
-    if (!host || host.dataset.vaBound === '1') return;
-    host.dataset.vaBound = '1';
-    host.addEventListener('click', function (e) {
-      var b = e.target.closest('[data-va]');
-      if (!b) return;
-      var k = b.getAttribute('data-va');
-      if (k === 'home' && window.switchView) window.switchView('home', '#hero');
-      if (k === 'album' && window.openChiSegui) window.openChiSegui();
-      if (k === 'msgs' && window.openUserMessages) window.openUserMessages();
-      if (k === 'edit') {
-        openViceEditModal(userObj());
-      }
-    });
+  function renderTabContent(tab, data) {
+    if (tab === 'club') {
+      return (
+        '<div class="es-mister-card-white">' +
+          '<div class="es-mister-card-header">' +
+            '<div class="es-mister-card-title-wrap">' +
+              '<span class="es-mister-card-icon">🛡️</span>' +
+              '<div><h3 class="es-mister-card-title">Club</h3><p class="es-mister-card-sub">Dati società e impianto sportivo</p></div>' +
+            '</div>' +
+            '<button type="button" class="es-mister-circle-btn" id="btn-edit-club-data">✏️</button>' +
+          '</div>' +
+          '<table class="es-mister-info-table">' +
+            '<tr><th>SOCIETÀ</th><td>' + esc(data.clubName) + ' (Admin-716)</td></tr>' +
+            '<tr><th>MATRICOLA</th><td>' + esc(data.matricola) + '</td></tr>' +
+            '<tr><th>SEDE</th><td>' + esc(data.sede) + '</td></tr>' +
+            '<tr><th>STADIO</th><td>' + esc(data.stadio) + '</td></tr>' +
+            '<tr><th>TELEFONO</th><td>' + esc(data.telefono) + '</td></tr>' +
+          '</table>' +
+        '</div>' +
+        '<div class="es-mister-card-white">' +
+          '<div class="es-mister-card-header">' +
+            '<div class="es-mister-card-title-wrap">' +
+              '<span class="es-mister-card-icon">🖼️</span>' +
+              '<div><h3 class="es-mister-card-title">Immagini</h3><p class="es-mister-card-sub">Stemma e foto squadra</p></div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="es-mister-images-grid">' +
+            '<div class="es-mister-img-box">' +
+              '<div class="es-mister-img-preview"><img src="' + esc(data.logoUrl) + '" alt="Stemma"></div>' +
+              '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:0.4rem;"><span style="font-weight:800; font-size:0.88rem;">Stemma</span><button type="button" class="es-mister-circle-btn" style="width:30px; height:30px; font-size:0.85rem;" onclick="if(window.showToast){ window.showToast(\'🖼️ Modifica stemma aperto\', \'info\'); }">✏️</button></div>' +
+            '</div>' +
+            '<div class="es-mister-img-box">' +
+              '<div class="es-mister-img-preview"><img src="' + esc(data.teamPhotoUrl) + '" alt="Foto squadra"></div>' +
+              '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:0.4rem;"><span style="font-weight:800; font-size:0.88rem;">Foto squadra</span><button type="button" class="es-mister-circle-btn" style="width:30px; height:30px; font-size:0.85rem;" onclick="if(window.showToast){ window.showToast(\'📷 Modifica foto squadra aperto\', \'info\'); }">✏️</button></div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="es-mister-card-white">' +
+          '<div class="es-mister-card-header">' +
+            '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">⏱️</span><div><h3 class="es-mister-card-title">Staff tecnico</h3><p class="es-mister-card-sub">Allenatori e collaboratori tecnici</p></div></div>' +
+            '<button type="button" class="es-mister-circle-btn" id="btn-add-staff">+</button>' +
+          '</div>' +
+          '<div class="es-mister-staff-box">' +
+            '<div class="es-mister-staff-left">' +
+              '<div class="es-mister-staff-avatar">👤</div>' +
+              '<div><h4 class="es-mister-staff-name">' + esc(data.viceName) + '</h4><div class="es-mister-staff-role">' + esc(data.viceRole) + '</div><div class="es-mister-staff-meta"><span>Doc: <b>' + esc(data.viceDoc) + '</b></span><span>Tessera: <b>' + esc(data.viceTessera) + '</b></span><span>Scad. cert.: <b>' + esc(data.viceScadenza) + '</b></span></div></div>' +
+            '</div>' +
+            '<button type="button" class="es-mister-circle-btn" style="width:34px; height:34px; font-size:0.9rem;">✏️</button>' +
+          '</div>' +
+        '</div>'
+      );
+    }
+
+    if (tab === 'squadra') {
+      var playersHtml = (data.roster || []).map(function (p, idx) {
+        return (
+          '<div class="es-mister-player-card">' +
+            '<div class="es-mister-player-num">' + p.num + '</div>' +
+            '<div class="es-mister-player-info">' +
+              '<h4 class="es-mister-player-name">' + esc(p.name) + '</h4>' +
+              '<div class="es-mister-player-role">' + esc(p.role) + ' · Anno ' + esc(p.birth) + '</div>' +
+              '<div style="font-size:0.72rem; color:#64748b;">🟢 Disponibile · ' + p.app + ' Presenze</div>' +
+            '</div>' +
+            '<button type="button" class="es-mister-circle-btn" style="width:30px; height:30px; font-size:0.8rem;" data-edit-player="' + idx + '">✏️</button>' +
+          '</div>'
+        );
+      }).join('');
+
+      return (
+        '<div class="es-mister-card-white">' +
+          '<div class="es-mister-card-header">' +
+            '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">👥</span><div><h3 class="es-mister-card-title">Squadra</h3><p class="es-mister-card-sub">' + esc(data.clubName) + ' · Prima Squadra (' + (data.roster || []).length + ' Giocatori in rosa)</p></div></div>' +
+            '<div class="es-mister-card-actions">' +
+              '<button type="button" class="es-mister-circle-btn" id="btn-stats-roster">📊</button>' +
+              '<button type="button" class="es-mister-circle-btn" id="btn-add-player">+</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="es-mister-roster-grid">' + playersHtml + '</div>' +
+        '</div>'
+      );
+    }
+
+    if (tab === 'allenamenti') {
+      var allHtml = (data.allenamenti || []).map(function (a) {
+        return (
+          '<div class="es-mister-event-card">' +
+            '<div class="es-mister-event-date-badge">' + a.date + '</div>' +
+            '<div class="es-mister-event-details"><h4 class="es-mister-event-title">' + a.title + '</h4><p class="es-mister-event-sub">' + a.focus + '</p><div style="font-size:0.75rem; color:#0d9488; font-weight:700; margin-top:0.3rem;">📋 Presenze: ' + a.presenze + '</div></div>' +
+            '<button type="button" class="es-mister-circle-btn" style="width:34px; height:34px; font-size:0.85rem;">📝</button>' +
+          '</div>'
+        );
+      }).join('');
+
+      return (
+        '<div class="es-mister-card-white">' +
+          '<div class="es-mister-card-header">' +
+            '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">🏃‍♂️</span><div><h3 class="es-mister-card-title">Allenamenti</h3><p class="es-mister-card-sub">' + esc(data.clubName) + ' · Prima Squadra</p></div></div>' +
+            '<div class="es-mister-card-actions">' +
+              '<button type="button" class="es-mister-circle-btn" id="btn-stats-train">📊</button>' +
+              '<button type="button" class="es-mister-circle-btn" id="btn-add-training">+</button>' +
+            '</div>' +
+          '</div>' +
+          '<div style="margin-top:1rem;">' + allHtml + '</div>' +
+        '</div>'
+      );
+    }
+
+    if (tab === 'partite') {
+      var matchHtml = (data.partite || []).map(function (m) {
+        return (
+          '<div class="es-mister-event-card">' +
+            '<div class="es-mister-event-date-badge">' + m.date + '</div>' +
+            '<div class="es-mister-event-details"><h4 class="es-mister-event-title">' + m.opponent + '</h4><p class="es-mister-event-sub">' + m.comp + ' · 🏟️ ' + m.stadium + '</p><div style="font-size:0.75rem; color:#0284c7; font-weight:700; margin-top:0.3rem;">⚽ ' + m.status + ' (' + m.conv + ')</div></div>' +
+            '<button type="button" class="es-mister-circle-btn" style="width:34px; height:34px; font-size:0.85rem;">📋</button>' +
+          '</div>'
+        );
+      }).join('');
+
+      return (
+        '<div class="es-mister-card-white">' +
+          '<div class="es-mister-card-header">' +
+            '<div class="es-mister-card-title-wrap"><span class="es-mister-card-icon">⚽</span><div><h3 class="es-mister-card-title">Partite</h3><p class="es-mister-card-sub">' + esc(data.clubName) + ' · Prima Squadra</p></div></div>' +
+            '<div class="es-mister-card-actions">' +
+              '<button type="button" class="es-mister-circle-btn" id="btn-stats-match">📊</button>' +
+              '<button type="button" class="es-mister-circle-btn" id="btn-add-match">+</button>' +
+            '</div>' +
+          '</div>' +
+          '<div style="margin-top:1rem;">' + matchHtml + '</div>' +
+        '</div>'
+      );
+    }
+
+    if (tab === 'lavagna') {
+      var schemes = data.tacticalSchemes || [];
+      var galleryHtml = schemes.length === 0
+        ? '<div style="text-align:center; padding:2rem; color:#94a3b8; font-weight:600;">Nessuna immagine o schema salvato.<br>Clicca su "Crea immagine" o "Carica immagine / PDF" in alto per iniziare.</div>'
+        : ('<div class="es-tactical-gallery-grid">' +
+            schemes.map(function (s, idx) {
+              return (
+                '<div class="es-tactical-card-item">' +
+                  '<div class="es-tactical-card-thumb">' +
+                    '<img src="' + esc(s.preview) + '" alt="' + esc(s.title) + '">' +
+                  '</div>' +
+                  '<h4 style="font-size:0.95rem; font-weight:800; color:#0f172a; margin:0 0 0.2rem;">' + esc(s.title) + '</h4>' +
+                  '<div style="font-size:0.75rem; color:#64748b; margin-bottom:0.75rem;">' + esc(s.type) + ' · ' + esc(s.date) + '</div>' +
+                  '<div style="display:flex; gap:0.4rem;">' +
+                    '<button type="button" class="btn btn-outline-pill" style="padding:0.3rem 0.65rem; font-size:0.75rem;" onclick="window.viewViceSchemePreview(' + idx + ')">👁️ Apri</button>' +
+                    '<button type="button" class="btn btn-outline-pill" style="padding:0.3rem 0.65rem; font-size:0.75rem;" onclick="window.downloadViceSchemePDF(' + idx + ')">📥 PDF</button>' +
+                    '<button type="button" class="btn btn-outline-pill" style="padding:0.3rem 0.65rem; font-size:0.75rem; color:#ef4444; border-color:#fca5a5;" onclick="window.deleteViceScheme(' + idx + ')">🗑️</button>' +
+                  '</div>' +
+                '</div>'
+              );
+            }).join('') +
+          '</div>');
+
+      return (
+        '<div class="es-mister-card-white">' +
+          '<div class="es-mister-card-header">' +
+            '<div class="es-mister-card-title-wrap">' +
+              '<span class="es-mister-card-icon">🖌️</span>' +
+              '<div>' +
+                '<h3 class="es-mister-card-title">Lavagna Tattica</h3>' +
+                '<p class="es-mister-card-sub">' + esc(data.clubName) + ' · Prima Squadra (Vice Allenatore)</p>' +
+              '</div>' +
+            '</div>' +
+            '<div class="es-mister-card-actions">' +
+              '<input type="file" id="vice-file-upload" accept="image/png,image/jpeg,application/pdf" style="display:none;">' +
+              '<button type="button" class="btn btn-outline-pill" id="btn-vice-upload-file" style="background:#f8fafc; border:1.5px solid #cbd5e1; color:#0f172a; padding:0.55rem 1.15rem; font-weight:800; font-size:0.85rem; display:inline-flex; align-items:center; gap:0.45rem;">' +
+                '📁 Carica immagine / PDF' +
+              '</button>' +
+              '<button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-vice-create-tactic" style="background:#0d9488; color:#ffffff; border:none; padding:0.55rem 1.25rem; font-weight:800; font-size:0.85rem; display:inline-flex; align-items:center; gap:0.45rem;">' +
+                '🖌️ Crea immagine' +
+              '</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="es-mister-card-white">' +
+          '<div class="es-mister-card-header" style="margin-bottom:0.6rem;">' +
+            '<div>' +
+              '<h3 class="es-mister-card-title" style="font-size:1.15rem;">Libreria immagini</h3>' +
+              '<p class="es-mister-card-sub">Immagini create e salvate dalla lavagna tattica o caricate dal vice allenatore.</p>' +
+            '</div>' +
+          '</div>' +
+          galleryHtml +
+        '</div>'
+      );
+    }
+
+    return '';
   }
 
-  function render(user) {
-    user = user || userObj();
-    if (!isVice(user)) return;
-    hideOthers();
-    var host = document.getElementById('es-staff-profile');
+  // Global methods for scheme gallery
+  window.viewViceSchemePreview = function () {
+    if (window.EliseeCoachDash && typeof window.EliseeCoachDash.openEditor === 'function') {
+      window.EliseeCoachDash.openEditor();
+    }
+  };
+
+  window.downloadViceSchemePDF = function (idx) {
+    var data = getViceData();
+    var s = (data.tacticalSchemes || [])[idx];
+    if (s) {
+      if (window.jspdf && window.jspdf.jsPDF) {
+        var doc = new window.jspdf.jsPDF();
+        doc.setFontSize(18);
+        doc.text('ELISEE SCOUT — VICE ALLENATORE HUB', 14, 20);
+        doc.setFontSize(14);
+        doc.text('Schema: ' + s.title, 14, 30);
+        doc.setFontSize(11);
+        doc.text('Club: ' + data.clubName + ' | Vice: ' + data.viceName, 14, 40);
+        doc.text('Data creazione: ' + s.date + ' | Categoria: ' + s.type, 14, 48);
+        doc.save(s.title.replace(/\s+/g, '_') + '.pdf');
+      }
+      if (window.showToast) window.showToast('📥 Download PDF schema avviato!', 'success');
+    }
+  };
+
+  window.deleteViceScheme = function (idx) {
+    if (confirm('Vuoi eliminare questo schema dalla libreria?')) {
+      var data = getViceData();
+      data.tacticalSchemes.splice(idx, 1);
+      saveViceData(data);
+      renderHub();
+      if (window.showToast) window.showToast('🗑️ Schema eliminato', 'info');
+    }
+  };
+
+  function bindHubEvents() {
+    var mount = document.getElementById('es-vd');
+    if (!mount) return;
+
+    // Tabs click
+    mount.querySelectorAll('.es-mister-nav-tab').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        activeTab = btn.getAttribute('data-tab');
+        renderHub();
+      });
+    });
+
+    // Crea Immagine -> Apri Editor
+    var btnCreate = mount.querySelector('#btn-vice-create-tactic');
+    if (btnCreate) {
+      btnCreate.onclick = function () {
+        if (window.EliseeCoachDash && typeof window.EliseeCoachDash.openEditor === 'function') {
+          window.EliseeCoachDash.openEditor();
+        }
+      };
+    }
+
+    // Carica Immagine / PDF
+    var btnUpload = mount.querySelector('#btn-vice-upload-file');
+    var fileInput = mount.querySelector('#vice-file-upload');
+    if (btnUpload && fileInput) {
+      btnUpload.onclick = function () {
+        fileInput.click();
+      };
+      fileInput.onchange = function (e) {
+        var file = e.target.files && e.target.files[0];
+        if (file) {
+          var isPdf = file.type === 'application/pdf' || file.name.endsWith('.pdf');
+          var reader = new FileReader();
+          reader.onload = function (evt) {
+            var data = getViceData();
+            data.tacticalSchemes = data.tacticalSchemes || [];
+            data.tacticalSchemes.unshift({
+              id: 'tac-' + Date.now(),
+              title: file.name.replace(/\.[^/.]+$/, ''),
+              date: new Date().toLocaleDateString('it-IT'),
+              type: isPdf ? 'Documento PDF' : 'Immagine Tattica',
+              preview: isPdf ? 'immagini/04-workspace-scout/scout-workspace.svg?v=20260730_225504' : evt.target.result
+            });
+            saveViceData(data);
+            renderHub();
+            if (window.showToast) {
+              window.showToast('✅ File ' + file.name + ' importato nella libreria immagini!', 'success');
+            }
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+    }
+  }
+
+  function render(force) {
     var group = document.getElementById('user-dossier-view-group');
-    if (!host) return;
-    var box = document.getElementById('es-vd');
-    if (!box) {
-      box = document.createElement('div');
-      box.id = 'es-vd';
-      box.className = 'es-pd';
-      host.insertBefore(box, host.firstChild);
+    if (!group) return;
+    var u = userObj();
+    if (!force && !isVice(u)) return;
+
+    group.classList.add('is-vice-dash');
+    var staffProfile = document.getElementById('es-staff-profile');
+    if (!staffProfile) return;
+
+    var vd = document.getElementById('es-vd');
+    if (!vd) {
+      vd = document.createElement('div');
+      vd.id = 'es-vd';
+      staffProfile.appendChild(vd);
     }
-    box.innerHTML = html(user);
-    box.hidden = false;
-    host.classList.add('es-vice-on');
-    host.classList.remove('es-pd-on', 'es-ds-on', 'es-pres-on', 'es-ma-on', 'es-med-on', 'es-obs-on', 'es-tm-on', 'es-gk-on', 'es-at-on', 'es-yg-on');
-    if (group) {
-      group.classList.add('is-vice-dash');
-      group.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash', 'is-at-dash', 'is-yg-dash');
-    }
-    bind(host);
+    vd.style.display = 'block';
+    renderHub();
   }
 
-  window.EliseeViceDash = { render: render, isVice: isVice };
+  function detach() {
+    var group = document.getElementById('user-dossier-view-group');
+    if (group) group.classList.remove('is-vice-dash');
+    var vd = document.getElementById('es-vd');
+    if (vd) vd.remove();
+  }
 
-  document.addEventListener('elisee:view-changed', function (e) {
-    var d = e && e.detail;
-    if (d && d.view === 'user-dossier') {
-      try {
-        var u = userObj();
-        if (isVice(u)) render(u);
-      } catch (_) {}
+  window.EliseeViceDash = {
+    render: render,
+    detach: detach,
+    setTab: function (tab) {
+      activeTab = tab;
+      renderHub();
     }
-  });
+  };
+
+  function boot() {
+    document.addEventListener('elisee:role-changed', function () {
+      if (isVice()) render(true);
+      else detach();
+    });
+    document.addEventListener('elisee:auth-changed', function () {
+      if (isVice()) render(true);
+      else detach();
+    });
+    if (isVice()) render(true);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
 })();
