@@ -298,8 +298,10 @@
             task: 'Iscrizione Campionato Nazionale Serie D 2026/27',
             date: '2026-07-10',
             status: 'Ore 14:00 (Perentorio)',
+            isCompleted: false,
+            completedDate: '',
             authority: 'Dipartimento Interregionale LND',
-            amount: '€ 31.000 Fideiussione',
+            amount: '—',
             note: 'Apertura iscrizioni 3 luglio 2026 ore 09:00 - Chiusura 10 luglio ore 14:00.'
           },
           {
@@ -307,6 +309,8 @@
             task: 'Deposito Fideiussione Bancaria (€ 31.000 con scad. 12/07/2027)',
             date: '2026-07-10',
             status: 'Obbligatorio',
+            isCompleted: false,
+            completedDate: '',
             authority: 'Dipartimento Interregionale LND',
             amount: '€ 31.000,00',
             note: 'Garanzia bancaria a prima richiesta con validità fino al 12 luglio 2027.'
@@ -316,6 +320,8 @@
             task: 'Integrazione Documentale & Ricorsi Co.Vi.So.D',
             date: '2026-07-23',
             status: 'Ore 14:00 (Perentorio)',
+            isCompleted: false,
+            completedDate: '',
             authority: 'Co.Vi.So.D / LND',
             amount: '—',
             note: 'Termine ultimo improrogabile per sanare eventuali rilievi della Commissione.'
@@ -325,6 +331,8 @@
             task: 'Visite Medico-Sportive Idoneità Agonistica Atleti',
             date: '2026-09-01',
             status: 'In vigore',
+            isCompleted: false,
+            completedDate: '',
             authority: 'FMSI / LND',
             amount: '—',
             note: 'Certificati agonistici in corso di validità prima della prima gara ufficiale.'
@@ -339,6 +347,8 @@
           task: 'Iscrizione Campionato ' + (categoryName || 'Regionale') + ' (Comitato Regionale ' + regionName + ')',
           date: '',
           status: 'Da impostare da Comunicato Ufficiale',
+          isCompleted: false,
+          completedDate: '',
           authority: 'Comitato Regionale LND ' + regionName,
           amount: 'Quota Iscrizione LND',
           note: 'Termine fissato dal Comitato Regionale ' + regionName + '. Inserisci la data dal C.U. di riferimento.'
@@ -348,6 +358,8 @@
           task: 'Deposito Quota Associativa & Fideiussione Regionale',
           date: '',
           status: 'Da impostare da C.U.',
+          isCompleted: false,
+          completedDate: '',
           authority: 'Comitato Regionale LND ' + regionName,
           amount: 'Quota C.R. ' + regionName,
           note: 'Versamento quote di partecipazione e tasse di tesseramento stagionali.'
@@ -357,6 +369,8 @@
           task: 'Certificati Idoneità Agonistica & Tesseramenti Calciatori',
           date: '',
           status: 'Da impostare prima dell\'avvio gare',
+          isCompleted: false,
+          completedDate: '',
           authority: 'Ufficio Tesseramento LND ' + regionName,
           amount: '—',
           note: 'Deposito tessere e consensi GDPR per la rosa atleti della stagione 2026/27.'
@@ -373,6 +387,8 @@
             task: 'Iscrizione Campionato ' + (categoryName || 'Primavera'),
             date: '2026-06-16',
             status: 'Allineato a Prima Squadra',
+            isCompleted: false,
+            completedDate: '',
             authority: 'Lega Serie A / B / Pro',
             amount: 'Incluso Licenza',
             note: 'Segue automaticamente i termini della società professionistica di riferimento.'
@@ -382,6 +398,8 @@
             task: 'Visite Medico-Sportive & Protocollo Tutela Minori Under',
             date: '2026-08-15',
             status: 'Obbligatorio',
+            isCompleted: false,
+            completedDate: '',
             authority: 'SGS / Divisione Giovanile',
             amount: '—',
             note: 'Certificazione medica agonistica e verifica tesseramenti giovani di serie.'
@@ -396,6 +414,8 @@
           task: 'Iscrizione Campionati Giovanili SGS (Comitato ' + regionName + ')',
           date: '',
           status: 'Da impostare da C.U. Regionale',
+          isCompleted: false,
+          completedDate: '',
           authority: 'Settore Giovanile e Scolastico (SGS) ' + regionName,
           amount: 'Quota SGS',
           note: 'Termine pubblicato dal Comitato Regionale SGS ' + regionName + ' per Juniores, Allievi e Giovanissimi.'
@@ -405,6 +425,8 @@
           task: 'Verifica Consensi GDPR Minori & Safeguarding Officer',
           date: '',
           status: 'In vigore',
+          isCompleted: false,
+          completedDate: '',
           authority: 'Tutela Minori SGS / FIGC',
           amount: '—',
           note: 'Firme digitali dei genitori e nomina responsabile contro abusi D.Lgs. 36/2021.'
@@ -421,6 +443,8 @@
             task: 'Licenza Nazionale Divisione Serie A Femminile Professionistica',
             date: '2026-06-20',
             status: 'Termine perentorio',
+            isCompleted: false,
+            completedDate: '',
             authority: 'Divisione Serie A Femminile Professionistica FIGC',
             amount: 'Fideiussione Divisione',
             note: 'Regime licenze professionistiche della Divisione Calcio Femminile FIGC.'
@@ -430,6 +454,8 @@
             task: 'Contratti di Lavoro Sportivo Calciatrici & Staff Tecnico',
             date: '2026-07-15',
             status: 'Obbligatorio',
+            isCompleted: false,
+            completedDate: '',
             authority: 'FIGC / Divisione Professionistica',
             amount: 'Stipendi / Accordi',
             note: 'Deposito contratti professionistici di prestazione sportiva.'
@@ -443,6 +469,8 @@
           task: 'Iscrizione Campionato ' + (categoryName || 'Femminile') + ' (C.R. ' + regionName + ')',
           date: '',
           status: 'Da impostare da C.U. Regionale',
+          isCompleted: false,
+          completedDate: '',
           authority: 'Dipartimento Femminile LND / C.R. ' + regionName,
           amount: 'Quota LND Femminile',
           note: 'Termine comunicato dal Dipartimento Calcio Femminile o dal Comitato Regionale di competenza.'
@@ -452,6 +480,8 @@
           task: 'Tesseramenti Atlete & Certificati Idoneità FMSI',
           date: '',
           status: 'In vigore',
+          isCompleted: false,
+          completedDate: '',
           authority: 'Comitato LND ' + regionName,
           amount: '—',
           note: 'Tesseramento e consensi privacy per atlete maggiorenni e minorenni.'
@@ -468,6 +498,24 @@
     now.setHours(0, 0, 0, 0);
 
     return deadlines.map(function (d) {
+      if (d.isCompleted) {
+        var compDateStr = d.completedDate ? (d.completedDate.includes('-') ? d.completedDate.split('-').reverse().join('/') : d.completedDate) : '';
+        return {
+          id: d.id,
+          task: d.task,
+          rawDate: d.date,
+          dateText: d.date ? (new Date(d.date).toLocaleDateString('it-IT')) : '—',
+          isCompleted: true,
+          completedDate: d.completedDate || '',
+          status: 'Completato' + (compDateStr ? (' il ' + compDateStr) : ''),
+          authority: d.authority || 'FIGC / LND',
+          amount: d.amount || '—',
+          note: d.note || '',
+          isWarning: false,
+          isEmptyDate: false
+        };
+      }
+
       if (!d.date || !String(d.date).trim()) {
         return {
           id: d.id,
@@ -477,6 +525,8 @@
           authority: d.authority || 'Comitato Regionale LND',
           amount: d.amount || '—',
           note: d.note || '',
+          isCompleted: false,
+          completedDate: '',
           isWarning: true,
           isEmptyDate: true
         };
@@ -488,10 +538,12 @@
           id: d.id,
           task: d.task,
           dateText: d.date,
-          status: d.status || 'Completato',
+          status: d.status || 'In scadenza',
           authority: d.authority || 'Ente Federale',
           amount: d.amount || '—',
           note: d.note || '',
+          isCompleted: false,
+          completedDate: '',
           isWarning: false,
           isEmptyDate: false
         };
@@ -524,6 +576,8 @@
         authority: d.authority || 'FIGC / LND',
         amount: d.amount || '—',
         note: d.note || '',
+        isCompleted: false,
+        completedDate: '',
         isWarning: isWarn,
         isEmptyDate: false
       };
@@ -705,7 +759,52 @@
         { id: 7, round: '30ª G', date: '06/09/2026', type: 'A', opponent: 'Matera Calcio', goalsFor: 0, goalsAgainst: 0, res: '- - -', status: 'UPCOMING', isPlayed: false, referee: 'In attesa di designazione' }
       ],
 
-      deadlines: getDefaultDeadlinesForScope('dilettanti', 'Serie D (Dipartimento Interregionale LND)', 'Puglia'),
+      deadlines: [
+        {
+          id: 201,
+          task: 'Iscrizione Campionato Nazionale Serie D 2026/27',
+          date: '2026-07-10',
+          status: 'Completato',
+          isCompleted: true,
+          completedDate: '2026-07-08',
+          authority: 'Dipartimento Interregionale LND',
+          amount: '—',
+          note: 'Iscrizione depositata con successo prima del termine perentorio.'
+        },
+        {
+          id: 202,
+          task: 'Deposito Fideiussione Bancaria (€ 31.000 con scad. 12/07/2027)',
+          date: '2026-07-10',
+          status: 'Completato',
+          isCompleted: true,
+          completedDate: '2026-07-08',
+          authority: 'Dipartimento Interregionale LND',
+          amount: '€ 31.000,00',
+          note: 'Garanzia bancaria a prima richiesta depositata e accettata.'
+        },
+        {
+          id: 203,
+          task: 'Integrazione Documentale & Ricorsi Co.Vi.So.D',
+          date: '2026-07-23',
+          status: 'Completato',
+          isCompleted: true,
+          completedDate: '2026-07-20',
+          authority: 'Co.Vi.So.D / LND',
+          amount: '—',
+          note: 'Nessun rilievo pervenuto, ammissione ufficiale confermata.'
+        },
+        {
+          id: 204,
+          task: 'Visite Medico-Sportive Idoneità Agonistica Atleti',
+          date: '2026-09-01',
+          status: 'In scadenza',
+          isCompleted: false,
+          completedDate: '',
+          authority: 'FMSI / LND',
+          amount: '—',
+          note: 'Certificati agonistici in corso di validità prima della prima gara ufficiale.'
+        }
+      ],
 
       trainingWeek: [
         { day: 'Martedì', time: '15:00 - 17:30', pitch: 'Campo A (Erba)', focus: 'Attivazione preventiva, carico aerobico e forza', attendance: '11/11 Presenti' },
@@ -1350,7 +1449,9 @@
     var deadlines = computeDeadlines(data.deadlines, data.region || 'Puglia');
     var matchStats = computeCompetitionStats(data.matches);
 
-    var hasWarningDeadline = deadlines.some(function (d) { return d.isWarning; });
+    var pendingDeadlines = deadlines.filter(function (d) { return !d.isCompleted; });
+    var hasWarningDeadline = pendingDeadlines.some(function (d) { return d.isWarning; });
+    var completedCount = deadlines.filter(function (d) { return d.isCompleted; }).length;
     var isDemo = data.isDemoMode;
 
     return (
@@ -1762,8 +1863,8 @@
               '<div class="es-pres-card" id="card-pres-gov-deadlines">' +
                 '<div class="es-pres-card-top">' +
                   '<div class="es-pres-icon-box">' + ICONS.bell + '</div>' +
-                  '<span class="es-pres-status ' + (deadlines.length ? (hasWarningDeadline ? 'es-pres-status-warning' : 'es-pres-status-ok') : 'es-pres-status-neutral') + '">' +
-                    (deadlines.length ? (deadlines.length + ' adempimenti') : '0 scadenze') +
+                  '<span class="es-pres-status ' + (!deadlines.length ? 'es-pres-status-neutral' : (pendingDeadlines.length === 0 ? 'es-pres-status-ok' : (hasWarningDeadline ? 'es-pres-status-warning' : 'es-pres-status-ok'))) + '">' +
+                    (!deadlines.length ? '0 scadenze' : (pendingDeadlines.length === 0 ? ('Tutti completati (' + completedCount + '/' + deadlines.length + ')') : (pendingDeadlines.length + ' da assolvere'))) +
                   '</span>' +
                 '</div>' +
                 '<div>' +
@@ -1771,7 +1872,10 @@
                   '<div style="font-size:0.75rem; color:#38bdf8; font-weight:600; margin-bottom:0.4rem;">' + esc(scopeObj.name.split(' (')[0]) + ' · ' + esc(data.category || 'Serie D') + '</div>' +
                   (deadlines.length ? ('<div style="font-size:0.8rem; color:#cbd5e1; display:flex; flex-direction:column; gap:0.35rem;">' +
                     deadlines.slice(0, 3).map(function (d) {
-                      return '<div>• <b>' + esc(d.task.split(' (')[0]) + ':</b> <span style="color:' + (d.isWarning ? (d.isEmptyDate ? '#94a3b8' : '#fbbf24') : '#34d399') + ';">' + esc(d.status) + '</span>' + (d.amount && d.amount !== '—' ? (' <span style="color:#94a3b8; font-size:0.72rem;">(' + esc(d.amount) + ')</span>') : '') + '</div>';
+                      if (d.isCompleted) {
+                        return '<div>• <b>' + esc(d.task.split(' (')[0]) + ':</b> <span style="color:#34d399;">' + esc(d.status) + '</span>' + (d.amount && d.amount !== '—' ? (' <span style="color:#94a3b8; font-size:0.72rem;">(' + esc(d.amount) + ')</span>') : '') + '</div>';
+                      }
+                      return '<div>• <b>' + esc(d.task.split(' (')[0]) + ':</b> <span style="color:' + (d.isWarning ? (d.isEmptyDate ? '#94a3b8' : '#fbbf24') : '#38bdf8') + ';">' + esc(d.status) + '</span>' + (d.amount && d.amount !== '—' ? (' <span style="color:#94a3b8; font-size:0.72rem;">(' + esc(d.amount) + ')</span>') : '') + '</div>';
                     }).join('') +
                   '</div>') : '<p class="es-pres-card-desc">Nessuna scadenza o termine perentorio federale registrato.</p>') +
                 '</div>' +
@@ -2320,51 +2424,73 @@
     data.deadlines = data.deadlines || getDefaultDeadlinesForScope(data.footballScope, data.category, data.region);
     var computed = computeDeadlines(data.deadlines, data.region || 'Puglia');
     var scopeObj = FOOTBALL_SCOPES.find(function(s){ return s.id === (data.footballScope || 'dilettanti'); }) || FOOTBALL_SCOPES[1];
+    var pendingCount = computed.filter(function(c){ return !c.isCompleted; }).length;
+    var completedCount = computed.filter(function(c){ return c.isCompleted; }).length;
 
     var html =
       '<div style="margin-bottom:1rem;">' +
         '<div style="background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.2); border-radius:4px; padding:0.85rem 1rem; margin-bottom:1rem;">' +
           '<div style="color:#38bdf8; font-weight:700; font-size:0.85rem; margin-bottom:0.25rem;">ℹ️ Scadenziario Ufficiale Stagione 2026/2027 — Ambito ' + esc(scopeObj.name) + '</div>' +
           '<div style="font-size:0.78rem; color:#cbd5e1; line-height:1.5;">' +
-            'I termini perentori Co.Vi.So.C., Dipartimento Interregionale e Comitati Regionali LND sono aggiornati per la stagione 2026/27. Puoi modificare ogni singola data o importo per adeguarli al Comunicato Ufficiale del tuo Club.' +
+            'Registra l\'assolvimento degli adempimenti con la relativa data reale. Gli adempimenti contrassegnati come <b>Completati</b> escono dalle allerte e non vengono conteggiati tra quelli scaduti o in scadenza.' +
           '</div>' +
         '</div>' +
 
         '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem;">' +
-          '<span style="font-size:0.82rem; color:#94a3b8;"><b>' + computed.length + '</b> adempimenti attivi per <b>' + esc(data.category || 'Serie D') + '</b></span>' +
+          '<span style="font-size:0.82rem; color:#cbd5e1;">' +
+            '<span style="color:#34d399; font-weight:700;">' + completedCount + ' completati</span> · ' +
+            '<span style="color:' + (pendingCount > 0 ? '#fbbf24' : '#94a3b8') + '; font-weight:700;">' + pendingCount + ' da assolvere</span>' +
+          '</span>' +
           '<div style="display:flex; gap:0.5rem;">' +
             '<button type="button" class="es-pres-btn-secondary" id="btn-reset-scope-deadlines" style="padding:4px 9px; font-size:0.75rem;">🔄 Ripristina Default Ambito</button>' +
             '<button type="button" class="es-pres-btn-primary" id="btn-add-custom-deadline" style="padding:4px 10px; font-size:0.75rem;">+ Nuova Scadenza</button>' +
           '</div>' +
         '</div>' +
 
-        '<div style="display:flex; flex-direction:column; gap:0.75rem; max-height:380px; overflow-y:auto; padding-right:0.3rem;" id="es-deadlines-list-container">' +
+        '<div style="display:flex; flex-direction:column; gap:0.75rem; max-height:390px; overflow-y:auto; padding-right:0.3rem;" id="es-deadlines-list-container">' +
           data.deadlines.map(function (d, idx) {
             var comp = computed[idx] || {};
             return (
-              '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:0.85rem 1rem;" class="es-dl-item" data-idx="' + idx + '">' +
+              '<div style="background:#040810; border:1px solid ' + (d.isCompleted ? 'rgba(52,211,153,0.3)' : 'rgba(148,163,184,0.18)') + '; border-radius:4px; padding:0.85rem 1rem;" class="es-dl-item" data-idx="' + idx + '">' +
+                // Toggle Completato Banner
+                (d.isCompleted ? (
+                  '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; background:rgba(52,211,153,0.08); border:1px solid rgba(52,211,153,0.25); border-radius:4px; padding:0.45rem 0.75rem; margin-bottom:0.6rem;">' +
+                    '<div style="display:flex; align-items:center; gap:0.5rem; font-size:0.8rem; color:#34d399; font-weight:700;">' +
+                      '<span>✅ Completato</span>' +
+                      '<span style="font-size:0.74rem; color:#cbd5e1; font-weight:400;">Data completamento: <input type="date" class="es-pres-input-text es-dl-comp-date" value="' + esc(d.completedDate || new Date().toISOString().split('T')[0]) + '" style="width:130px; display:inline-block; font-size:0.74rem; padding:1px 4px; background:#080e1e; color:#fff; border:1px solid rgba(148,163,184,0.3); border-radius:3px;"></span>' +
+                    '</div>' +
+                    '<button type="button" class="es-dl-btn-toggle" data-idx="' + idx + '" data-set="0" style="background:transparent; border:1px solid rgba(148,163,184,0.3); border-radius:3px; color:#cbd5e1; font-size:0.72rem; padding:2px 8px; cursor:pointer;">↩️ Segna come Da Svolgere</button>' +
+                  '</div>'
+                ) : (
+                  '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; background:rgba(148,163,184,0.05); border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.45rem 0.75rem; margin-bottom:0.6rem;">' +
+                    '<div style="font-size:0.78rem; color:#cbd5e1;">Stato calcolato: <b style="color:' + (comp.isWarning ? (comp.isEmptyDate ? '#94a3b8' : '#fbbf24') : '#38bdf8') + ';">' + esc(comp.status) + '</b></div>' +
+                    '<button type="button" class="es-dl-btn-toggle" data-idx="' + idx + '" data-set="1" style="background:#0284c7; border:none; border-radius:3px; color:#fff; font-size:0.74rem; font-weight:700; padding:3px 9px; cursor:pointer;">✅ Segna come Completato</button>' +
+                  '</div>'
+                )) +
+
+                // Header Dati Voce
                 '<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:0.75rem; margin-bottom:0.5rem;">' +
                   '<div style="flex:1;">' +
                     '<input type="text" class="es-pres-input-text es-dl-task" value="' + esc(d.task) + '" placeholder="Descrizione adempimento" style="font-weight:700; font-size:0.88rem; padding:0.35rem 0.5rem; margin-bottom:0.35rem;">' +
                     '<div style="display:flex; gap:0.5rem; flex-wrap:wrap; font-size:0.75rem; color:#94a3b8;">' +
                       '<span>Organo: <input type="text" class="es-pres-input-text es-dl-auth" value="' + esc(d.authority || 'FIGC / LND') + '" style="width:140px; display:inline-block; font-size:0.75rem; padding:2px 4px;"></span>' +
-                      '<span>Importo/Fideiussione: <input type="text" class="es-pres-input-text es-dl-amount" value="' + esc(d.amount || '—') + '" style="width:130px; display:inline-block; font-size:0.75rem; padding:2px 4px;"></span>' +
+                      '<span>Importo: <input type="text" class="es-pres-input-text es-dl-amount" value="' + esc(d.amount || '—') + '" style="width:110px; display:inline-block; font-size:0.75rem; padding:2px 4px;"></span>' +
                     '</div>' +
                   '</div>' +
-                  '<button type="button" class="es-dl-btn-remove" data-idx="' + idx + '" style="background:transparent; border:none; color:#f87171; cursor:pointer; font-size:1.1rem;" title="Elimina adempimento">&times;</button>' +
+                  '<button type="button" class="es-dl-btn-remove" data-idx="' + idx + '" style="background:transparent; border:none; color:#f87171; cursor:pointer; font-size:1.1rem; padding:0 4px;" title="Elimina adempimento">&times;</button>' +
                 '</div>' +
+
+                // Data Termine Perentorio
                 '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; align-items:center; border-top:1px solid rgba(148,163,184,0.1); padding-top:0.5rem; margin-top:0.4rem;">' +
                   '<div>' +
-                    '<label style="font-size:0.7rem; color:#94a3b8; display:block; margin-bottom:0.2rem;">Data Scadenza Perentoria *</label>' +
+                    '<label style="font-size:0.7rem; color:#94a3b8; display:block; margin-bottom:0.2rem;">Data Scadenza Perentoria Federale</label>' +
                     '<input type="date" class="es-pres-input-text es-dl-date" value="' + esc(d.date || '') + '" style="font-size:0.8rem; padding:0.3rem 0.5rem;">' +
                   '</div>' +
                   '<div>' +
-                    '<label style="font-size:0.7rem; color:#94a3b8; display:block; margin-bottom:0.2rem;">Stato / Conto alla Rovescia</label>' +
-                    '<div style="display:flex; align-items:center; gap:0.5rem;">' +
-                      '<span class="' + (comp.isWarning ? (comp.isEmptyDate ? 'es-pres-status es-pres-status-neutral' : 'es-pres-status es-pres-status-warning') : 'es-pres-status es-pres-status-ok') + '" style="font-size:0.75rem;">' +
-                        esc(comp.status) +
-                      '</span>' +
-                    '</div>' +
+                    '<label style="font-size:0.7rem; color:#94a3b8; display:block; margin-bottom:0.2rem;">Conformità</label>' +
+                    '<span class="' + (d.isCompleted ? 'es-pres-status es-pres-status-ok' : (comp.isWarning ? (comp.isEmptyDate ? 'es-pres-status es-pres-status-neutral' : 'es-pres-status es-pres-status-warning') : 'es-pres-status es-pres-status-ok')) + '" style="font-size:0.75rem;">' +
+                      (d.isCompleted ? '✅ Assolto' : esc(comp.status)) +
+                    '</span>' +
                   '</div>' +
                 '</div>' +
                 (d.note ? ('<div style="font-size:0.72rem; color:#94a3b8; margin-top:0.4rem; font-style:italic;">Note: ' + esc(d.note) + '</div>') : '') +
@@ -2383,6 +2509,53 @@
     var btnCancel = document.getElementById('btn-cancel-dl-manager');
     if (btnCancel && modalOverlay) btnCancel.onclick = function () { modalOverlay.remove(); };
 
+    function syncCurrentItemsFromDom() {
+      var items = document.querySelectorAll('.es-dl-item');
+      items.forEach(function (item) {
+        var idx = parseInt(item.getAttribute('data-idx'));
+        if (!isNaN(idx) && data.deadlines[idx]) {
+          var taskInput = item.querySelector('.es-dl-task');
+          var authInput = item.querySelector('.es-dl-auth');
+          var amtInput = item.querySelector('.es-dl-amount');
+          var dateInput = item.querySelector('.es-dl-date');
+          var compDateInput = item.querySelector('.es-dl-comp-date');
+
+          if (taskInput) data.deadlines[idx].task = taskInput.value.trim();
+          if (authInput) data.deadlines[idx].authority = authInput.value.trim();
+          if (amtInput) data.deadlines[idx].amount = amtInput.value.trim();
+          if (dateInput) data.deadlines[idx].date = dateInput.value;
+          if (compDateInput) data.deadlines[idx].completedDate = compDateInput.value;
+        }
+      });
+    }
+
+    // Toggle completato / da svolgere
+    var toggleBtns = document.querySelectorAll('.es-dl-btn-toggle');
+    toggleBtns.forEach(function (btn) {
+      btn.onclick = function () {
+        syncCurrentItemsFromDom();
+        var idx = parseInt(btn.getAttribute('data-idx'));
+        var isSet = btn.getAttribute('data-set') === '1';
+        if (!isNaN(idx) && data.deadlines[idx]) {
+          data.deadlines[idx].isCompleted = isSet;
+          if (isSet) {
+            data.deadlines[idx].completedDate = data.deadlines[idx].completedDate || new Date().toISOString().split('T')[0];
+          } else {
+            data.deadlines[idx].completedDate = '';
+          }
+          data.lastUpdatedBy = 'Presidente';
+          data.lastUpdatedAt = getFormattedDateTime();
+          savePresClubData(data);
+          if (modalOverlay) modalOverlay.remove();
+          openDeadlinesManagerModal(data);
+          renderPresidentialSuite();
+          if (window.showToast) {
+            window.showToast(isSet ? 'Adempimento segnato come completato!' : 'Adempimento riaperto come da svolgere', 'success');
+          }
+        }
+      };
+    });
+
     // Reset to default
     var btnReset = document.getElementById('btn-reset-scope-deadlines');
     if (btnReset) {
@@ -2391,6 +2564,7 @@
         savePresClubData(data);
         if (modalOverlay) modalOverlay.remove();
         openDeadlinesManagerModal(data);
+        renderPresidentialSuite();
         if (window.showToast) window.showToast('Scadenziario reimpostato ai valori ufficiali 2026/27!', 'info');
       };
     }
@@ -2399,11 +2573,14 @@
     var btnAddCust = document.getElementById('btn-add-custom-deadline');
     if (btnAddCust) {
       btnAddCust.onclick = function () {
+        syncCurrentItemsFromDom();
         data.deadlines = data.deadlines || [];
         data.deadlines.push({
           id: Date.now(),
           task: 'Nuovo adempimento ' + (data.region ? ('C.R. ' + data.region) : 'Federale'),
           date: '',
+          isCompleted: false,
+          completedDate: '',
           authority: 'Comitato Regionale ' + (data.region || 'LND'),
           amount: '—',
           status: 'Da completare',
@@ -2419,12 +2596,14 @@
     var removeBtns = document.querySelectorAll('.es-dl-btn-remove');
     removeBtns.forEach(function (b) {
       b.onclick = function () {
+        syncCurrentItemsFromDom();
         var idx = parseInt(b.getAttribute('data-idx'));
         if (!isNaN(idx) && data.deadlines[idx]) {
           data.deadlines.splice(idx, 1);
           savePresClubData(data);
           if (modalOverlay) modalOverlay.remove();
           openDeadlinesManagerModal(data);
+          renderPresidentialSuite();
         }
       };
     });
@@ -2433,27 +2612,7 @@
     var btnSave = document.getElementById('btn-save-all-deadlines');
     if (btnSave) {
       btnSave.onclick = function () {
-        var items = document.querySelectorAll('.es-dl-item');
-        var newDeadlines = [];
-        items.forEach(function (item) {
-          var task = item.querySelector('.es-dl-task').value.trim();
-          var auth = item.querySelector('.es-dl-auth').value.trim();
-          var amt = item.querySelector('.es-dl-amount').value.trim();
-          var dt = item.querySelector('.es-dl-date').value;
-
-          if (task) {
-            newDeadlines.push({
-              id: Date.now() + Math.random(),
-              task: task,
-              authority: auth || 'FIGC / LND',
-              amount: amt || '—',
-              date: dt,
-              status: dt ? 'In scadenza' : 'Da impostare dal C.U.'
-            });
-          }
-        });
-
-        data.deadlines = newDeadlines;
+        syncCurrentItemsFromDom();
         data.lastUpdatedBy = 'Presidente';
         data.lastUpdatedAt = getFormattedDateTime();
         savePresClubData(data);
