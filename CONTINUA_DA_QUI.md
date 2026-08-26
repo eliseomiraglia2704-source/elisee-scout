@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: **Attivazione Completa di Tutte le Opzioni nell'Area Allenatore (Mister Hub)**: 1. Rese attive e collegate al 100% tutte le 5 sezioni (Club, Squadra, Allenamenti, Partite, Lavagna); 2. Inserite modali B2B per modifica dati societari, stemma/foto rosa, aggiunta e modifica staff, aggiunta e modifica atleti con rimozione, statistiche organico (📊), pianificazione e cancellazione sedute di allenamento (🏃‍♂️), inserimento partite e gestione distinta convocati pre-gara (📋), statistiche gare (📊); 3. Lavagna tattica integrata con visualizzatore anteprima a schermo intero, stampa PDF, eliminazione schemi e caricamento documenti; 4. Applicati bordi rettilinei a 4px su tutte le card, tabelle, modali e pulsanti. File: `coach-dash.js`, `coach-dash.css`, `index.html`, `sw.js`. Cache `COACH_ALL_ACTIVE1`.
-Feature precedente: Sanitizzazione Automatica Storage & Rimozione Definitiva Sedute Placeholder.
+Ultimo fatto: **Sostituzione Nome Personale con Admin / Responsabile Privacy**: 1. Rimosso qualsiasi riferimento al nome personale dell'utente nelle schermate, modali e record di provenienza/audit dell'Area Presidente e dell'Area Allenatore; 2. Nelle modali di conformità e tesseramenti la provenienza è ora indicata formalmente come `Responsabile Privacy` o `Admin`; 3. Corretta la formattazione dei titoli modali eliminando il doppio escape che generava `&AMP;`; 4. Sanitizzazione automatica dello storage locale per ridenominare i record salvati in precedenza. File: `pres-dash.js`, `coach-dash.js`, `index.html`, `sw.js`. Cache `ANON_PRIVACY1`.
+Feature precedente: Attivazione Completa di Tutte le Opzioni nell'Area Allenatore (Mister Hub).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

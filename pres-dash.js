@@ -71,7 +71,11 @@
 
   function getUserName(u) {
     u = u || userObj();
-    return (u.nome ? (u.nome + ' ' + (u.cognome || '')) : (u.name || 'Eliseo Miraglia')).trim();
+    var name = (u.nome ? (u.nome + ' ' + (u.cognome || '')) : (u.name || '')).trim();
+    if (!name || /eliseo|miraglia/i.test(name)) {
+      return 'Admin';
+    }
+    return name;
   }
 
   function isExecutive(u) {
@@ -250,7 +254,7 @@
 
       squad: [
         { id: 1, name: 'Alessandro Silvestro', role: 'Difensore', age: 24, marketValue: 65000, minutesPlayed: 2340, isStarter: true, isUnder: false, tesserato: true, gdpr: true },
-        { id: 2, name: 'Eliseo Miraglia', role: 'Ala Sinistra', age: 22, marketValue: 85000, minutesPlayed: 2150, isStarter: true, isUnder: false, tesserato: true, gdpr: true },
+        { id: 2, name: 'Marco Mancosu', role: 'Ala Sinistra', age: 22, marketValue: 85000, minutesPlayed: 2150, isStarter: true, isUnder: false, tesserato: true, gdpr: true },
         { id: 3, name: 'Marco Carillo', role: 'Difensore Centrale', age: 28, marketValue: 70000, minutesPlayed: 2400, isStarter: true, isUnder: false, tesserato: true, gdpr: true },
         { id: 4, name: 'Luca Rizzo Pinna', role: 'Centrocampista', age: 23, marketValue: 90000, minutesPlayed: 2200, isStarter: true, isUnder: false, tesserato: true, gdpr: true },
         { id: 5, name: 'Davide Petermann', role: 'Regista', age: 29, marketValue: 75000, minutesPlayed: 2100, isStarter: true, isUnder: false, tesserato: true, gdpr: true },
@@ -465,12 +469,21 @@
           if (!parsed.isDemoMode) {
             if (Array.isArray(parsed.trainingWeek) && parsed.trainingWeek.some(function (tw) { return tw.attendance === 'Da rilevare'; })) {
               parsed.trainingWeek = [];
-              try {
-                localStorage.setItem('elisee_pres_club_master_v3', JSON.stringify(parsed));
-                localStorage.setItem('elisee_pres_club_master_v2', JSON.stringify(parsed));
-              } catch (_) {}
             }
           }
+          if (/eliseo|miraglia/i.test(String(parsed.lastUpdatedBy || ''))) {
+            parsed.lastUpdatedBy = 'Responsabile Privacy';
+          }
+          if (/eliseo|miraglia/i.test(String(parsed.presName || ''))) {
+            parsed.presName = 'Presidente';
+          }
+          if (parsed.finances && /eliseo|miraglia/i.test(String(parsed.finances.lastUpdatedBy || ''))) {
+            parsed.finances.lastUpdatedBy = 'Presidente';
+          }
+          try {
+            localStorage.setItem('elisee_pres_club_master_v3', JSON.stringify(parsed));
+            localStorage.setItem('elisee_pres_club_master_v2', JSON.stringify(parsed));
+          } catch (_) {}
           return parsed;
         }
       }
@@ -1688,7 +1701,7 @@
           '<button type="button" class="es-pres-btn-secondary" id="btn-open-hub-in-modal" style="flex:1;">Apri Hub Mercato &rsaquo;</button>' +
         '</div>';
 
-        openDetailModal('Trattative di Mercato &amp; Negoziazioni', ICONS.arrows, listHtml);
+        openDetailModal('Trattative di Mercato & Negoziazioni', ICONS.arrows, listHtml);
         var bHub = document.getElementById('btn-open-hub-in-modal');
         if (bHub) {
           bHub.onclick = function() {
@@ -1760,7 +1773,7 @@
             '</div>' +
           '</div>' +
           '<button type="button" class="es-pres-btn-primary" id="btn-manage-store-modal" style="width:100%;">Gestisci Catalogo Merchandising &rsaquo;</button>';
-        openDetailModal('Store Ufficiale &amp; Merchandising POD', ICONS.bag, html);
+        openDetailModal('Store Ufficiale & Merchandising POD', ICONS.bag, html);
       };
     }
 
@@ -1809,7 +1822,7 @@
             '</div>'
           );
         }).join('');
-        openDetailModal('Scadenziario Federale &amp; Termini Perentori', ICONS.bell, listHtml);
+        openDetailModal('Scadenziario Federale & Termini Perentori', ICONS.bell, listHtml);
       };
     }
 
@@ -1824,11 +1837,11 @@
               '• <b>Tesseramenti Prima Squadra:</b> ' + squad.length + ' Atleti registrati<br>' +
               '• <b>Consensi GDPR Minori:</b> Depositati con firma digitale<br>' +
               '• <b>Abilitazioni BLSD:</b> 100% dello staff abilitato<br>' +
-              '• <b>Provenienza Record:</b> ' + esc(data.lastUpdatedBy) + ' (' + esc(data.lastUpdatedAt) + ')' +
+              '• <b>Provenienza Record:</b> Responsabile Privacy (' + esc(data.lastUpdatedAt) + ')' +
             '</div>' +
           '</div>' +
           '<button type="button" class="es-pres-btn-primary" id="btn-manage-squad-doc" style="width:100%;">Gestisci Organico Atleti &rsaquo;</button>';
-        openDetailModal('Tesseramenti Federali &amp; Privacy GDPR', ICONS.fileText, html);
+        openDetailModal('Tesseramenti Federali & Privacy GDPR', ICONS.fileText, html);
         var bDoc = document.getElementById('btn-manage-squad-doc');
         if (bDoc) {
           bDoc.onclick = function() {

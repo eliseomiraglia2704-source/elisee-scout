@@ -43,7 +43,7 @@
       sede: u.sede || 'Viale Giuseppe Mazzini, 35/C Foggia FG',
       stadio: u.stadio || 'Stadio Comunale Pino Zaccheria',
       telefono: u.telefono || '+39 0881 742911',
-      coachName: (u.nome ? (u.nome + ' ' + (u.cognome || '')) : (u.name || 'Eliseo Miraglia')).trim(),
+      coachName: 'Admin / Staff Tecnico',
       coachRole: 'Allenatore (UEFA B / Pro)',
       coachDoc: 'Verificato',
       coachTessera: 'FIGC-741920',
@@ -59,12 +59,12 @@
         { id: 'p-8', num: 8, name: 'Moses Odjer', role: 'Mediano', birth: '1996', cert: 'Regolare', status: 'disp', app: 27 },
         { id: 'p-4', num: 4, name: 'Jacopo Petermann', role: 'Regista', birth: '1994', cert: 'Regolare', status: 'disp', app: 25 },
         { id: 'p-10', num: 10, name: 'Diego Peralta', role: 'Trequartista', birth: '1996', cert: 'Regolare', status: 'disp', app: 28 },
-        { id: 'p-7', num: 7, name: 'Eliseo Miraglia', role: 'Ala Sinistra', birth: '2004', cert: 'Regolare', status: 'disp', app: 28 },
+        { id: 'p-7', num: 7, name: 'Marco Mancosu', role: 'Ala Sinistra', birth: '2004', cert: 'Regolare', status: 'disp', app: 28 },
         { id: 'p-11', num: 11, name: 'Roberto Ogunseye', role: 'Attaccante Centrale', birth: '1995', cert: 'Regolare', status: 'disp', app: 26 },
         { id: 'p-9', num: 9, name: 'Alexis Ferrante', role: 'Seconda Punta', birth: '1995', cert: 'Regolare', status: 'disp', app: 24 }
       ],
       staffMembers: [
-        { id: 'st-coach', name: 'Eliseo Miraglia', role: 'Allenatore', patent: 'UEFA Pro', exp: '30/06/2027' },
+        { id: 'st-coach', name: 'Admin / Staff Tecnico', role: 'Allenatore', patent: 'UEFA Pro', exp: '30/06/2027' },
         { id: 'st-vice', name: 'Giuseppe Russo', role: 'Vice Allenatore', patent: 'UEFA A', exp: '30/06/2027' },
         { id: 'st-prep', name: 'Luca Rossi', role: 'Preparatore Atletico', patent: 'Prep. Atletico FIGC', exp: '30/06/2027' },
         { id: 'st-fisio', name: 'Antonio Gentile', role: 'Fisioterapista', patent: 'Albo FNOFI', exp: '30/06/2027' },
@@ -119,7 +119,7 @@
           stadium: 'Stadio Pino Zaccheria',
           status: 'Prossima Gara',
           conv: '22 Convocati',
-          convocatiList: ['Marco Fumagalli', 'Alessandro Silvestro', 'Luigi Carillo', 'Davide Di Pasquale', 'Luca Rizzo Pinna', 'Moses Odjer', 'Jacopo Petermann', 'Diego Peralta', 'Eliseo Miraglia', 'Roberto Ogunseye', 'Alexis Ferrante']
+          convocatiList: ['Marco Fumagalli', 'Alessandro Silvestro', 'Luigi Carillo', 'Davide Di Pasquale', 'Luca Rizzo Pinna', 'Moses Odjer', 'Jacopo Petermann', 'Diego Peralta', 'Marco Mancosu', 'Roberto Ogunseye', 'Alexis Ferrante']
         }
       ],
       tacticalSchemes: [
