@@ -522,13 +522,32 @@
 
   function paintStaffCard() {
     var card = document.getElementById('es-sp-secret-card');
+    var kickerEl = document.getElementById('es-sp-secret-kicker');
+    var descEl = document.getElementById('es-sp-secret-desc');
     var nEl = document.getElementById('es-sp-secret-n');
     var tabBtn = document.getElementById('es-user-tab-secret');
     var ok = canUseSecretList() && isLogged();
     if (card) card.hidden = !ok;
+    
+    var u = userObj();
+    var blob = roleBlob(u);
+    if (kickerEl) {
+      if (/presidente|vice presidente|direttore generale|amministratore/.test(blob)) {
+        kickerEl.textContent = 'Area Scouting Presidenza · Secret List';
+      } else if (/direttore sportivo/.test(blob)) {
+        kickerEl.textContent = 'Esclusiva Direzione Sportiva · Secret List';
+      } else if (/scout|osservatore/.test(blob)) {
+        kickerEl.textContent = 'Esclusiva Scouting · Secret List';
+      } else {
+        kickerEl.textContent = 'Secret List Riservata';
+      }
+    }
+    if (descEl) {
+      descEl.textContent = 'Monitora i calciatori di tuo interesse in totale riservatezza: i profili target restano visibili solo a te.';
+    }
     if (nEl) {
       var n = myList().length;
-      nEl.textContent = n === 0 ? 'Nessun target. Aggiungili in stealth, senza allertare nessuno.' : (n + (n === 1 ? ' target in lista' : ' target in lista'));
+      nEl.textContent = n === 0 ? 'Nessun calciatore monitorato al momento.' : (n + (n === 1 ? ' calciatore monitorato' : ' calciatori monitorati'));
     }
     if (tabBtn) tabBtn.hidden = !ok;
   }

@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-26**
-Ultimo fatto: Allineata la modale **`Verifica Email OTP`** (`verifica-account.css`) alla palette del sito Elisee Scout: eliminato il bianco accecante e sostituito con sfondo **Dark Obsidian Glass** (`linear-gradient(180deg, #0f172a 0%, #090e17 100%)`), bordo cyan luminoso, titoli bianchi, caselle cifre scure con focus teal `#0d9488` e pulsante di verifica in gradiente smeraldo. File: `verifica-account.css`, `index.html`, `sw.js`. Cache `OTP3`.
-Feature precedente: 6 Schermate di dettaglio Area Presidente.
+Ultimo fatto: Ottimizzato il box **`Secret List`** nel profilo (`mercato-hub.js`, `index.html`): reso il testo sintetico, incisivo e professionale (senza frasi verbose), con adattamento dinamico del kicker per il ruolo attivo (*Area Scouting Presidenza* per il Presidente, *Esclusiva Direzione Sportiva* per il DS, *Esclusiva Scouting* per lo Scout) e conteggio target pulito. File: `mercato-hub.js`, `index.html`, `sw.js`. Cache `MKT3`.
+Feature precedente: Allineamento palette dark modale OTP.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
