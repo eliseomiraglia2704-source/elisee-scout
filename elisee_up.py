@@ -24,6 +24,10 @@ from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, quote, unquote, urlencode, urlparse
+import base64
+import hashlib
+import hmac
+import random
 
 ROOT = Path(__file__).resolve().parent
 os.chdir(ROOT)
@@ -394,13 +398,108 @@ class Handler(SimpleHTTPRequestHandler):
                 code, payload = save_google_client_id(str(body.get("googleClientId") or ""))
                 self._json(code, payload)
                 return True
-            if path == "/api/auth/send-otp" and method == "POST":
-                body = self._read_json_body()
-                email = str(body.get("email") or "").strip().lower()
-                otp = str(body.get("code") or "")
-                log(f"AUTH: Inviato codice OTP {otp} a {email}")
-                self._json(200, {"ok": True, "email": email, "code": otp, "message": f"Codice OTP inviato a {email}"})
-                return True
+            if (path in ("/api/auth-otp", "/api/auth/otp")) and method in ("GET", "POST"):
+                body = self._read_json_body() if method == "POST" else {}
+                action = str(qs.get("action", [""])[0] or body.get("action") or "").strip()
+                email = str(body.get("email") or qs.get("email", [""])[0] or "").strip().lower()
+                if not email:
+                    self._json(400, {"success": False, "error": "Indirizzo email mancante"})
+                    return True
+                
+                otp_store_file = ROOT / "data" / "auth" / "otp-store.json"
+                otp_store = {}
+                try:
+                    if otp_store_file.exists():
+                        otp_store = json.loads(otp_store_file.read_text(encoding="utf-8"))
+                except Exception:
+                    pass
+
+                now_ts = int(time.time() * 1000)
+
+                if action == "send":
+                    raw_code = str(random.randint(1000, 9999))
+                    secret = os.environ.get("OTP_SECRET", "elisee-scout-otp-secret-salt-2026")
+                    h = hmac.new(secret.encode(), f"{email}:{raw_code}".encode(), hashlib.sha256).hexdigest()
+                    otp_store[email] = {
+                        "codeHash": h,
+                        "expiresAt": now_ts + 600000,
+                        "attempts": 0
+                    }
+                    otp_store_file.parent.mkdir(parents=True, exist_ok=True)
+                    otp_store_file.write_text(json.dumps(otp_store, indent=2), encoding="utf-8")
+                    log(f"AUTH OTP [LOCALE]: Codice per {email} -> {raw_code}")
+                    self._json(200, {"success": True, "message": "Codice OTP generato", "email": email})
+                    return True
+
+                if action == "verify":
+                    code = str(body.get("code") or qs.get("code", [""])[0] or "").strip()
+                    rec = otp_store.get(email)
+                    if not rec or not rec.get("codeHash"):
+                        self._json(400, {"success": False, "error": "Nessun codice attivo per questa email"})
+                        return True
+                    if now_ts > rec.get("expiresAt", 0):
+                        otp_store.pop(email, None)
+                        otp_store_file.write_text(json.dumps(otp_store, indent=2), encoding="utf-8")
+                        self._json(400, {"success": False, "error": "Codice OTP scaduto"})
+                        return True
+                    
+                    secret = os.environ.get("OTP_SECRET", "elisee-scout-otp-secret-salt-2026")
+                    provided_h = hmac.new(secret.encode(), f"{email}:{code}".encode(), hashlib.sha256).hexdigest()
+                    if provided_h != rec.get("codeHash"):
+                        rec["attempts"] = rec.get("attempts", 0) + 1
+                        if rec["attempts"] > 5:
+                            otp_store.pop(email, None)
+                        otp_store_file.write_text(json.dumps(otp_store, indent=2), encoding="utf-8")
+                        self._json(400, {"success": False, "error": f"Codice OTP errato. Tentativi rimasti: {max(0, 5 - rec['attempts'])}"})
+                        return True
+                    
+                    otp_store.pop(email, None)
+                    otp_store_file.write_text(json.dumps(otp_store, indent=2), encoding="utf-8")
+                    self._json(200, {"success": True, "verified": True, "email": email})
+                    return True
+
+            if path in ("/api/auth-admin", "/api/auth/admin"):
+                admin_secret = os.environ.get("ADMIN_SECRET", "admin123")
+                signing_key = os.environ.get("TOKEN_SIGNING_KEY", "elisee-scout-admin-token-key-2026")
+                
+                if method in ("GET", "HEAD"):
+                    auth_h = self.headers.get("Authorization") or ""
+                    token = auth_h.replace("Bearer ", "").strip() if auth_h.startswith("Bearer ") else (self.headers.get("X-Admin-Token") or qs.get("token", [""])[0])
+                    if not token or "." not in token:
+                        self._json(401, {"success": False, "authenticated": False, "error": "Token assente"})
+                        return True
+                    p_b64, sig = token.split(".", 1)
+                    exp_sig = hmac.new(signing_key.encode(), p_b64.encode(), hashlib.sha256).hexdigest()
+                    if sig != exp_sig:
+                        self._json(401, {"success": False, "authenticated": False, "error": "Firma token non valida"})
+                        return True
+                    try:
+                        p = json.loads(base64.b64decode(p_b64 + "==").decode())
+                        if int(time.time() * 1000) > p.get("exp", 0):
+                            self._json(401, {"success": False, "authenticated": False, "error": "Token scaduto"})
+                            return True
+                        self._json(200, {"success": True, "authenticated": True, "role": p.get("role")})
+                        return True
+                    except Exception:
+                        self._json(401, {"success": False, "authenticated": False, "error": "Token malformato"})
+                        return True
+
+                if method == "POST":
+                    body = self._read_json_body()
+                    pin = str(body.get("pin") or body.get("password") or "").strip()
+                    if not pin or pin != admin_secret:
+                        self._json(403, {"success": False, "error": "Master Secret Admin non corretto"})
+                        return True
+                    
+                    now_ts = int(time.time() * 1000)
+                    exp_ts = now_ts + 7200000 # 2 ore
+                    payload_obj = {"sub": "admin", "role": "admin", "iat": now_ts, "exp": exp_ts}
+                    p_b64 = base64.urlsafe_b64encode(json.dumps(payload_obj).encode()).decode().rstrip("=")
+                    sig = hmac.new(signing_key.encode(), p_b64.encode(), hashlib.sha256).hexdigest()
+                    token = f"{p_b64}.{sig}"
+                    self._json(200, {"success": True, "authenticated": True, "token": token, "expiresAt": exp_ts})
+                    return True
+
             self._json(404, {"ok": False, "error": "unknown_auth_endpoint", "path": path})
             return True
         except Exception as e:

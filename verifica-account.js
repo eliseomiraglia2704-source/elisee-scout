@@ -493,24 +493,14 @@
 
   function openOtpModal(u) {
     u = u || user();
-    var userEmail = (u && (u.email || u.user_email)) || localStorage.getItem('elisee_user_email') || 'eliseomiraglia2704@gmail.com';
+    var userEmail = (u && (u.email || u.user_email)) || localStorage.getItem('elisee_user_email') || '';
+    if (!userEmail) {
+      if (window.showToast) window.showToast('Nessun indirizzo email associato all\'account', 'warning');
+      return;
+    }
+
     var old = document.getElementById('es-otp-modal-overlay');
     if (old) old.remove();
-
-    var generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
-    sessionStorage.setItem('elisee_current_otp', generatedOtp);
-
-    try {
-      fetch('/api/auth/send-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: userEmail, code: generatedOtp })
-      }).catch(function () {});
-    } catch (_) {}
-
-    if (window.showToast) {
-      window.showToast('📩 Codice OTP inviato a ' + userEmail + ': ' + generatedOtp + ' (valido 10 min)', 'info');
-    }
 
     var modal = document.createElement('div');
     modal.id = 'es-otp-modal-overlay';
@@ -520,11 +510,9 @@
       '<div class="es-otp-modal-sheet" role="dialog" aria-modal="true" style="border-radius:4px !important;">' +
         '<button type="button" class="es-otp-close-btn" id="btn-close-otp-modal" aria-label="Chiudi">&times;</button>' +
         '<h2 class="es-otp-modal-title">VERIFICA INDIRIZZO EMAIL</h2>' +
-        '<p class="es-otp-modal-sub">Abbiamo generato e inviato il codice OTP a <b style="color:#38bdf8;">' + esc(userEmail) + '</b>.</p>' +
-        '<div id="otp-pill-code" style="margin:0.2rem auto 1.4rem; display:inline-flex; align-items:center; gap:0.6rem; background:rgba(13,148,136,0.18); border:1px dashed rgba(45,212,191,0.5); border-radius:4px; padding:0.5rem 1.1rem; font-size:0.88rem; color:#2dd4bf; cursor:pointer;" title="Clicca per inserire automaticamente">' +
-          '<span>Codice OTP:</span>' +
-          '<strong style="color:#ffffff; font-size:1.15rem; letter-spacing:0.15em;" id="otp-live-display">' + generatedOtp + '</strong>' +
-          '<span style="font-size:0.78rem; color:#38bdf8; text-decoration:underline; font-weight:700;">(Inserisci subito)</span>' +
+        '<p class="es-otp-modal-sub">Abbiamo inviato un codice OTP di sicurezza a 4 cifre a <b style="color:#38bdf8;">' + esc(userEmail) + '</b>. Inseriscilo qui sotto per confermare la titolarità della casella postale.</p>' +
+        '<div style="margin:0.2rem auto 1rem; font-size:0.78rem; color:#94a3b8; text-align:center;">' +
+          'Il codice è valido per 10 minuti. Controlla anche la cartella Spam.' +
         '</div>' +
         '<form id="form-otp-verify">' +
           '<div class="es-otp-inputs-wrap">' +
@@ -538,13 +526,68 @@
             'Non hai ricevuto il codice?' +
             '<button type="button" class="es-otp-resend-btn" id="btn-resend-otp">Invia di nuovo</button>' +
           '</div>' +
-          '<p id="otp-error-msg" style="display:none; color:#ef4444; font-size:0.85rem; font-weight:700; margin:0.8rem 0 0;"></p>' +
+          '<p id="otp-error-msg" style="display:none; color:#ef4444; font-size:0.82rem; font-weight:600; margin:0.8rem 0 0; text-align:center; line-height:1.4;"></p>' +
+          '<p id="otp-info-msg" style="display:none; color:#38bdf8; font-size:0.8rem; margin:0.6rem 0 0; text-align:center;"></p>' +
         '</form>' +
       '</div>';
 
     document.body.appendChild(modal);
 
     var inputs = modal.querySelectorAll('.es-otp-digit');
+    var errMsg = modal.querySelector('#otp-error-msg');
+    var infoMsg = modal.querySelector('#otp-info-msg');
+    var btnSubmit = modal.querySelector('#btn-submit-otp');
+    var btnResend = modal.querySelector('#btn-resend-otp');
+
+    function showFeedback(text, isErr) {
+      if (isErr) {
+        if (infoMsg) infoMsg.style.display = 'none';
+        if (errMsg) {
+          errMsg.textContent = text;
+          errMsg.style.display = 'block';
+        }
+      } else {
+        if (errMsg) errMsg.style.display = 'none';
+        if (infoMsg) {
+          infoMsg.textContent = text;
+          infoMsg.style.display = 'block';
+        }
+      }
+    }
+
+    function sendOtpRequest() {
+      showFeedback('Invio codice in corso...', false);
+      if (btnResend) btnResend.disabled = true;
+
+      fetch('/api/auth-otp?action=send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: userEmail })
+      })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (btnResend) btnResend.disabled = false;
+        if (data.success) {
+          showFeedback('Codice OTP inviato a ' + userEmail, false);
+          if (inputs[0]) inputs[0].focus();
+        } else {
+          showFeedback(data.error || 'Errore durante l\'invio del codice OTP', true);
+        }
+      })
+      .catch(function () {
+        if (btnResend) btnResend.disabled = false;
+        showFeedback('Servizio temporaneamente non disponibile. Riprova tra poco.', true);
+      });
+    }
+
+    sendOtpRequest();
+
+    if (btnResend) {
+      btnResend.onclick = function (e) {
+        e.preventDefault();
+        sendOtpRequest();
+      };
+    }
 
     function closeOtp() {
       modal.classList.remove('is-open');
@@ -555,65 +598,77 @@
 
     function doVerify() {
       var entered = Array.from(inputs).map(function (i) { return i.value; }).join('');
-      var targetOtp = sessionStorage.getItem('elisee_current_otp') || '0000';
-
-      if (entered.length === 4 && (entered === targetOtp || entered === '0000' || entered === '1234' || entered === generatedOtp)) {
-        var currUser = user();
-        currUser.emailVerified = true;
-        currUser.isEmailVerified = true;
-        currUser.email_verified = true;
-        currUser.emailVerifiedAt = new Date().toISOString();
-        saveUser(currUser);
-
-        try {
-          var authU = JSON.parse(localStorage.getItem('elisee_active_user') || '{}');
-          if (authU) {
-            authU.emailVerified = true;
-            authU.isEmailVerified = true;
-            authU.email_verified = true;
-            localStorage.setItem('elisee_active_user', JSON.stringify(authU));
-          }
-        } catch (_) {}
-
-        closeOtp();
-        var banner = document.getElementById('es-otp-bottom-banner');
-        if (banner) banner.remove();
-
-        if (window.showToast) {
-          window.showToast('✅ Indirizzo email verificato con successo!', 'success');
-        }
-
-        try {
-          var evt = new CustomEvent('elisee:email-verified', { detail: { user: currUser } });
-          document.dispatchEvent(evt);
-        } catch (_) {}
-        try {
-          var evt2 = new CustomEvent('elisee:auth-changed', { detail: { user: currUser } });
-          document.dispatchEvent(evt2);
-        } catch (_) {}
-      } else {
-        inputs.forEach(function (i) { i.classList.add('is-error'); });
-        var errMsg = modal.querySelector('#otp-error-msg');
-        if (errMsg) {
-          errMsg.style.display = 'block';
-          errMsg.textContent = 'Codice OTP errato. Inserisci il codice a 4 cifre corretto.';
-        }
-        setTimeout(function () {
-          inputs.forEach(function (i) { i.classList.remove('is-error'); });
-        }, 1200);
+      if (entered.length !== 4) {
+        showFeedback('Inserisci tutte le 4 cifre del codice OTP', true);
+        return;
       }
-    }
 
-    // Auto-fill pill click
-    var pill = modal.querySelector('#otp-pill-code');
-    if (pill) {
-      pill.onclick = function () {
-        var cur = sessionStorage.getItem('elisee_current_otp') || generatedOtp;
-        for (var i = 0; i < inputs.length; i++) {
-          inputs[i].value = cur[i] || '';
+      if (btnSubmit) {
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = 'Verifica in corso...';
+      }
+
+      fetch('/api/auth-otp?action=verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: userEmail, code: entered })
+      })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (btnSubmit) {
+          btnSubmit.disabled = false;
+          btnSubmit.textContent = 'Verifica email';
         }
-        doVerify();
-      };
+
+        if (data.success && data.verified) {
+          var currUser = user();
+          currUser.emailVerified = true;
+          currUser.isEmailVerified = true;
+          currUser.email_verified = true;
+          currUser.emailVerifiedAt = data.verifiedAt || new Date().toISOString();
+          saveUser(currUser);
+
+          try {
+            var authU = JSON.parse(localStorage.getItem('elisee_active_user') || '{}');
+            if (authU) {
+              authU.emailVerified = true;
+              authU.isEmailVerified = true;
+              authU.email_verified = true;
+              localStorage.setItem('elisee_active_user', JSON.stringify(authU));
+            }
+          } catch (_) {}
+
+          closeOtp();
+          var banner = document.getElementById('es-otp-bottom-banner');
+          if (banner) banner.remove();
+
+          if (window.showToast) {
+            window.showToast('Indirizzo email verificato con successo!', 'success');
+          }
+
+          try {
+            var evt = new CustomEvent('elisee:email-verified', { detail: { user: currUser } });
+            document.dispatchEvent(evt);
+          } catch (_) {}
+          try {
+            var evt2 = new CustomEvent('elisee:auth-changed', { detail: { user: currUser } });
+            document.dispatchEvent(evt2);
+          } catch (_) {}
+        } else {
+          inputs.forEach(function (i) { i.classList.add('is-error'); });
+          showFeedback(data.error || 'Codice OTP non valido o scaduto', true);
+          setTimeout(function () {
+            inputs.forEach(function (i) { i.classList.remove('is-error'); });
+          }, 1200);
+        }
+      })
+      .catch(function () {
+        if (btnSubmit) {
+          btnSubmit.disabled = false;
+          btnSubmit.textContent = 'Verifica email';
+        }
+        showFeedback('Errore di connessione al server durante la verifica. Riprova.', true);
+      });
     }
 
     inputs.forEach(function (inp, idx) {
@@ -650,41 +705,19 @@
       });
     });
 
-    var bClose = modal.querySelector('#btn-close-otp-modal');
-    if (bClose) bClose.onclick = closeOtp;
-    modal.onclick = function (e) { if (e.target === modal) closeOtp(); };
-
-    var bResend = modal.querySelector('#btn-resend-otp');
-    if (bResend) {
-      bResend.onclick = function () {
-        var newOtp = Math.floor(1000 + Math.random() * 9000).toString();
-        sessionStorage.setItem('elisee_current_otp', newOtp);
-        var disp = modal.querySelector('#otp-live-display');
-        if (disp) disp.textContent = newOtp;
-        inputs.forEach(function (i) { i.value = ''; i.classList.remove('is-error'); });
-        inputs[0].focus();
-        var errMsg = modal.querySelector('#otp-error-msg');
-        if (errMsg) errMsg.style.display = 'none';
-        try {
-          fetch('/api/auth/send-otp', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: userEmail, code: newOtp })
-          }).catch(function () {});
-        } catch (_) {}
-        if (window.showToast) {
-          window.showToast('📩 Nuovo codice OTP inviato a ' + userEmail + ': ' + newOtp, 'info');
-        }
-      };
-    }
-
-    var fVerify = modal.querySelector('#form-otp-verify');
-    if (fVerify) {
-      fVerify.onsubmit = function (e) {
+    var form = modal.querySelector('#form-otp-verify');
+    if (form) {
+      form.onsubmit = function (e) {
         e.preventDefault();
         doVerify();
       };
     }
+
+    var bClose = modal.querySelector('#btn-close-otp-modal');
+    if (bClose) bClose.onclick = closeOtp;
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeOtp();
+    });
 
     setTimeout(function () {
       if (inputs[0]) inputs[0].focus();

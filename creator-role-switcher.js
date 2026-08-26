@@ -265,15 +265,132 @@
     }
   }
 
-  // Controllo severo dei permessi: accessibile solo dall'amministratore/creatore della piattaforma
+  // Validazione del token crittografico firmato salvato in sessionStorage
+  function getAdminSessionToken() {
+    return sessionStorage.getItem('elisee_admin_session_token') || '';
+  }
+
+  function isTokenValid(token) {
+    if (!token || typeof token !== 'string') return false;
+    var parts = token.split('.');
+    if (parts.length !== 2) return false;
+    try {
+      var jsonStr = atob(parts[0].replace(/-/g, '+').replace(/_/g, '/'));
+      var payload = JSON.parse(jsonStr);
+      if (!payload || !payload.exp || Date.now() > payload.exp) {
+        return false;
+      }
+      return payload.role === 'admin';
+    } catch (_) {
+      return false;
+    }
+  }
+
   function isCreatorAdmin() {
-    var u = getStoredUser();
-    var email = String(u.email || localStorage.getItem('elisee_user_email') || '').toLowerCase().trim();
-    return localStorage.getItem('elisee_admin_auth') === 'true' ||
-           !!u.isCreator ||
-           u.role === 'admin' ||
-           u.siteRole === 'admin' ||
-           /eliseomiraglia2704|admin@eliseescout\.it|elisee\.scout@platform-calcio\.it/.test(email);
+    var token = getAdminSessionToken();
+    return isTokenValid(token);
+  }
+
+  function openAdminAuthModal(onSuccess) {
+    var old = document.getElementById('es-admin-auth-overlay');
+    if (old) old.remove();
+
+    var modal = document.createElement('div');
+    modal.id = 'es-admin-auth-overlay';
+    modal.className = 'es-creator-modal-overlay is-open';
+    modal.style.cssText = 'position:fixed; inset:0; z-index:2147483647 !important; display:flex !important; align-items:center; justify-content:center; background:rgba(3,7,18,0.88); backdrop-filter:blur(10px); padding:1.25rem;';
+    modal.innerHTML =
+      '<div class="es-creator-modal" style="max-width:420px; width:100%; border-radius:4px;" role="dialog" aria-modal="true">' +
+        '<div class="es-creator-modal-head">' +
+          '<div class="es-creator-modal-title-wrap">' +
+            '<h2 style="font-size:1.05rem; font-weight:700; color:#fff; margin:0 0 0.25rem 0;">Autenticazione Master Admin</h2>' +
+            '<p style="font-size:0.78rem; color:#94a3b8; margin:0;">Inserisci la Master Password / PIN per sbloccare gli strumenti di simulazione</p>' +
+          '</div>' +
+          '<button type="button" class="es-creator-modal-close" id="btn-close-admin-auth" aria-label="Chiudi">&times;</button>' +
+        '</div>' +
+        '<div class="es-creator-modal-body" style="padding:1.25rem;">' +
+          '<form id="form-admin-auth-pin">' +
+            '<div style="margin-bottom:1rem;">' +
+              '<label style="display:block; font-size:0.75rem; color:#cbd5e1; font-weight:600; margin-bottom:0.35rem;">Master Secret Admin *</label>' +
+              '<input type="password" id="inp-admin-auth-pin" required autocomplete="current-password" placeholder="Inserisci PIN o Password Master" style="width:100%; background:#080e1e; border:1px solid rgba(148,163,184,0.3); border-radius:4px; color:#fff; padding:0.55rem 0.75rem; font-size:0.88rem; outline:none;">' +
+            '</div>' +
+            '<div id="admin-auth-error-msg" style="display:none; color:#ef4444; font-size:0.8rem; font-weight:600; margin-bottom:0.85rem; line-height:1.4;"></div>' +
+            '<div style="display:flex; justify-content:flex-end; gap:0.75rem;">' +
+              '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-admin-auth" style="padding:0.45rem 0.85rem; font-size:0.8rem;">Annulla</button>' +
+              '<button type="submit" class="es-pres-btn-primary" id="btn-submit-admin-auth" style="padding:0.45rem 1rem; font-size:0.8rem;">Sblocca Strumenti</button>' +
+            '</div>' +
+          '</form>' +
+        '</div>' +
+      '</div>';
+
+    document.body.appendChild(modal);
+
+    var inp = modal.querySelector('#inp-admin-auth-pin');
+    var form = modal.querySelector('#form-admin-auth-pin');
+    var errMsg = modal.querySelector('#admin-auth-error-msg');
+    var btnSubmit = modal.querySelector('#btn-submit-admin-auth');
+    var btnClose = modal.querySelector('#btn-close-admin-auth');
+    var btnCancel = modal.querySelector('#btn-cancel-admin-auth');
+
+    setTimeout(function () { if (inp) inp.focus(); }, 50);
+
+    function closeAuth() {
+      if (modal.parentElement) modal.remove();
+    }
+    if (btnClose) btnClose.onclick = closeAuth;
+    if (btnCancel) btnCancel.onclick = closeAuth;
+
+    if (form) {
+      form.onsubmit = function (e) {
+        e.preventDefault();
+        var pinVal = inp ? inp.value.trim() : '';
+        if (!pinVal) return;
+
+        if (btnSubmit) {
+          btnSubmit.disabled = true;
+          btnSubmit.textContent = 'Verifica in corso...';
+        }
+        if (errMsg) errMsg.style.display = 'none';
+
+        fetch('/api/auth-admin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pin: pinVal })
+        })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (btnSubmit) {
+            btnSubmit.disabled = false;
+            btnSubmit.textContent = 'Sblocca Strumenti';
+          }
+          if (data.success && data.token) {
+            sessionStorage.setItem('elisee_admin_session_token', data.token);
+            closeAuth();
+            if (window.showToast) window.showToast('Autenticazione Admin riuscita', 'success');
+            if (typeof onSuccess === 'function') onSuccess();
+          } else {
+            if (errMsg) {
+              errMsg.textContent = data.error || 'Credenziali di amministrazione non valide';
+              errMsg.style.display = 'block';
+            }
+            if (inp) {
+              inp.value = '';
+              inp.focus();
+            }
+          }
+        })
+        .catch(function () {
+          if (btnSubmit) {
+            btnSubmit.disabled = false;
+            btnSubmit.textContent = 'Sblocca Strumenti';
+          }
+          if (errMsg) {
+            errMsg.textContent = 'Errore di connessione con il server di autenticazione';
+            errMsg.style.display = 'block';
+          }
+        });
+      };
+    }
   }
 
   function getActiveRoleInfo() {
@@ -303,7 +420,9 @@
 
   function applyRole(roleKey) {
     if (!isCreatorAdmin()) {
-      if (window.showToast) window.showToast('Accesso riservato all\'amministratore', 'warning');
+      openAdminAuthModal(function () {
+        applyRole(roleKey);
+      });
       return;
     }
 
@@ -569,7 +688,9 @@
 
   function openModal() {
     if (!isCreatorAdmin()) {
-      if (window.showToast) window.showToast('Accesso riservato all\'amministratore', 'warning');
+      openAdminAuthModal(function () {
+        openModal();
+      });
       return;
     }
     renderModal();
