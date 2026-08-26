@@ -1082,7 +1082,109 @@
     var btnReqCap = mount.querySelector('#btn-req-capacity-update');
     if (btnReqCap) {
       btnReqCap.onclick = function () {
-        if (window.showToast) window.showToast('Modulo allegato verbale CPV aperto per richiesta variazione capienza', 'info');
+        var curCapNum = parseInt(String(data.office.stadium.capacity || '').replace(/\D/g, '')) || 25085;
+        var todayIso = new Date().toISOString().split('T')[0];
+
+        var formHtml =
+          '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem; line-height:1.5;">' +
+            'Compila la pratica ufficiale di variazione capienza o adeguamento agibilità per la trasmissione alla <b>Commissione Provinciale di Vigilanza (CPV)</b> e alla <b>FIGC / LND</b>.' +
+          '</p>' +
+          '<form id="form-pres-cpv-request" style="display:flex; flex-direction:column; gap:1rem;">' +
+            '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+              '<div class="es-pres-input-group">' +
+                '<label>Capienza Attuale Omologata</label>' +
+                '<input type="text" class="es-pres-input-text" value="' + esc(data.office.stadium.capacity) + '" disabled style="opacity:0.7; cursor:not-allowed;">' +
+              '</div>' +
+              '<div class="es-pres-input-group">' +
+                '<label style="color:#38bdf8;">Nuova Capienza Richiesta (Posti) *</label>' +
+                '<input type="number" class="es-pres-input-text" id="inp-cpv-new-capacity" value="' + curCapNum + '" min="100" max="100000" required style="border-color:#38bdf8;">' +
+              '</div>' +
+            '</div>' +
+
+            '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+              '<div class="es-pres-input-group">' +
+                '<label>N° Protocollo / Verbale CPV</label>' +
+                '<input type="text" class="es-pres-input-text" id="inp-cpv-protocol" placeholder="Es. CPV-2026/08-FG" value="CPV-2026/08-FG">' +
+              '</div>' +
+              '<div class="es-pres-input-group">' +
+                '<label>Data Seduta Commissione</label>' +
+                '<input type="date" class="es-pres-input-text" id="inp-cpv-date" value="' + todayIso + '">' +
+              '</div>' +
+            '</div>' +
+
+            '<div class="es-pres-input-group">' +
+              '<label>Motivazione / Tipologia Intervento</label>' +
+              '<select class="es-pres-input-text" id="sel-cpv-reason" style="background:#040810; color:#fff;">' +
+                '<option value="Riapertura settore / Ampliamento agibilità">Riapertura settore / Ampliamento agibilità</option>' +
+                '<option value="Installazione nuovi seggiolini e numerazione posti">Installazione nuovi seggiolini e numerazione posti</option>' +
+                '<option value="Adeguamento varchi di sicurezza e tornelli">Adeguamento varchi di sicurezza e tornelli</option>' +
+                '<option value="Rimodulazione capienza per lavori straordinari">Rimodulazione capienza per lavori straordinari</option>' +
+              '</select>' +
+            '</div>' +
+
+            '<div class="es-pres-input-group">' +
+              '<label>Allegato Verbale Firmato (PDF / Scansione)</label>' +
+              '<div style="background:#040810; border:1px dashed rgba(56,189,248,0.4); border-radius:4px; padding:0.9rem; text-align:center; cursor:pointer;" id="box-cpv-upload">' +
+                '<input type="file" id="file-cpv-doc" accept=".pdf,.png,.jpg,.jpeg" style="display:none;">' +
+                '<div style="font-size:0.85rem; color:#38bdf8; font-weight:600;" id="lbl-cpv-doc-name">&#128196; Seleziona o trascina il Verbale CPV / Prefettura</div>' +
+                '<div style="font-size:0.75rem; color:#64748b; margin-top:0.25rem;">Formati ammessi: PDF, JPG, PNG (Max 15MB)</div>' +
+              '</div>' +
+            '</div>' +
+
+            '<div class="es-pres-input-group">' +
+              '<label>Note Integrative per la Questura / FIGC</label>' +
+              '<textarea class="es-pres-input-text" id="inp-cpv-notes" rows="2" style="resize:vertical;" placeholder="Inserisci eventuali note sul piano di evacuazione e varchi...">Conforme alle prescrizioni della Questura e del Comando Vigili del Fuoco.</textarea>' +
+            '</div>' +
+
+            '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+              '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-cpv-modal">Annulla</button>' +
+              '<button type="submit" class="es-pres-btn-primary" id="btn-submit-cpv-modal">Invia Pratica &amp; Aggiorna Capienza</button>' +
+            '</div>' +
+          '</form>';
+
+        openDetailModal('Richiesta Variazione Capienza & Omologazione CPV', ICONS.building, formHtml);
+
+        var modalOverlay = document.getElementById('es-pres-detail-overlay');
+        var form = document.getElementById('form-pres-cpv-request');
+        var boxUpload = document.getElementById('box-cpv-upload');
+        var fileInp = document.getElementById('file-cpv-doc');
+        var lblDoc = document.getElementById('lbl-cpv-doc-name');
+        var btnCancel = document.getElementById('btn-cancel-cpv-modal');
+
+        if (boxUpload && fileInp) {
+          boxUpload.onclick = function () { fileInp.click(); };
+          fileInp.onchange = function () {
+            if (fileInp.files && fileInp.files[0]) {
+              lblDoc.innerHTML = '&#10003; ' + esc(fileInp.files[0].name) + ' (' + Math.round(fileInp.files[0].size / 1024) + ' KB)';
+              lblDoc.style.color = '#22c55e';
+            }
+          };
+        }
+
+        if (btnCancel && modalOverlay) {
+          btnCancel.onclick = function () { modalOverlay.remove(); };
+        }
+
+        if (form) {
+          form.onsubmit = function (e) {
+            e.preventDefault();
+            var newCapVal = document.getElementById('inp-cpv-new-capacity').value;
+            var numFormatted = Number(newCapVal).toLocaleString('it-IT');
+            var selectedDate = document.getElementById('inp-cpv-date').value || todayIso;
+
+            data.office.stadium.capacity = numFormatted + ' posti certificati';
+            data.office.stadium.lastInspectionDate = selectedDate;
+            data.office.stadium.safetyStatus = 'Omologato CPV / FIGC (' + numFormatted + ' posti)';
+            savePresClubData(data);
+
+            if (modalOverlay) modalOverlay.remove();
+            renderPresidentialSuite();
+
+            if (window.showToast) {
+              window.showToast('Verbale CPV registrato: nuova capienza omologata a ' + numFormatted + ' posti!', 'success');
+            }
+          };
+        }
       };
     }
 
@@ -1118,13 +1220,54 @@
     var btnAddSponsor = mount.querySelector('#btn-add-sponsor');
     if (btnAddSponsor) {
       btnAddSponsor.onclick = function () {
-        if (window.showToast) window.showToast('Modulo inserimento accordo sponsor aperto', 'info');
+        var html =
+          '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Inserisci una nuova partnership o sponsorizzazione commerciale per la stagione:</p>' +
+          '<form id="form-add-sponsor" style="display:flex; flex-direction:column; gap:1rem;">' +
+            '<div class="es-pres-input-group"><label>Azienda / Brand Partner *</label><input type="text" class="es-pres-input-text" id="inp-sp-name" required placeholder="Es. Enel Energia"></div>' +
+            '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+              '<div class="es-pres-input-group"><label>Tipologia Sponsor</label><select class="es-pres-input-text" id="sel-sp-type" style="background:#040810; color:#fff;"><option>Co-Sponsor di Maglia</option><option>Sponsor Tecnico</option><option>Sleeve Sponsor</option><option>Top Sponsor Locale</option></select></div>' +
+              '<div class="es-pres-input-group"><label>Valore Annuo (€)</label><input type="text" class="es-pres-input-text" id="inp-sp-val" placeholder="€ 25.000 / anno" value="€ 25.000 / anno"></div>' +
+            '</div>' +
+            '<div class="es-pres-input-group"><label>Scadenza Accordo</label><input type="date" class="es-pres-input-text" id="inp-sp-exp" value="2027-06-30"></div>' +
+            '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+              '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-sp">Annulla</button>' +
+              '<button type="submit" class="es-pres-btn-primary">Registra Accordo</button>' +
+            '</div>' +
+          '</form>';
+        openDetailModal('Inserimento Nuovo Accordo Sponsor', ICONS.award, html);
+        var m = document.getElementById('es-pres-detail-overlay');
+        var f = document.getElementById('form-add-sponsor');
+        var c = document.getElementById('btn-cancel-sp');
+        if (c && m) c.onclick = function () { m.remove(); };
+        if (f) {
+          f.onsubmit = function (e) {
+            e.preventDefault();
+            if (m) m.remove();
+            if (window.showToast) window.showToast('Nuovo accordo sponsor registrato con successo!', 'success');
+          };
+        }
       };
     }
     var btnBacheca = mount.querySelector('#btn-bacheca-sponsor');
     if (btnBacheca) {
       btnBacheca.onclick = function () {
-        if (window.showToast) window.showToast('Bacheca Opportunità Sponsor B2B aperta', 'info');
+        var html =
+          '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1rem;">Opportunità di visibilità e spazi pubblicitari disponibili per i partner:</p>' +
+          '<div style="display:flex; flex-direction:column; gap:0.6rem; margin-bottom:1.2rem;">' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
+              '<div><div style="font-weight:700; color:#fff;">LED Bordocampo Stadio</div><div style="font-size:0.75rem; color:#94a3b8;">15 Minuti a rotazione durante i match ufficiali</div></div>' +
+              '<span class="es-pres-status es-pres-status-ok">Disponibile</span>' +
+            '</div>' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
+              '<div><div style="font-weight:700; color:#fff;">Backdrop Sala Stampa & Interviste</div><div style="font-size:0.75rem; color:#94a3b8;">Presenza logo in tutte le conferenze post-partita</div></div>' +
+              '<span class="es-pres-status es-pres-status-ok">Disponibile</span>' +
+            '</div>' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
+              '<div><div style="font-weight:700; color:#fff;">Social Matchday Partner</div><div style="font-size:0.75rem; color:#94a3b8;">Naming sponsor grafica formazioni e gol live</div></div>' +
+              '<span class="es-pres-status es-pres-status-neutral">In trattativa</span>' +
+            '</div>' +
+          '</div>';
+        openDetailModal('Bacheca Opportunità Sponsor B2B', ICONS.award, html);
       };
     }
 
