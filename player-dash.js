@@ -678,7 +678,30 @@
     }
     box.innerHTML = html(user);
     box.hidden = false;
+    box.style.display = 'grid';
     host.classList.add('es-pd-on');
+    host.removeAttribute('hidden');
+    host.style.display = 'block';
+
+    // Nascondi tassativamente tutti gli elementi statici/legacy di #es-player-profile
+    for (var i = 0; i < host.children.length; i++) {
+      var child = host.children[i];
+      if (child.id !== 'es-pd') {
+        child.style.setProperty('display', 'none', 'important');
+        child.setAttribute('hidden', '');
+      }
+    }
+
+    // Nascondi anche le altre sezioni (staff, tifoso, legacy, notifs)
+    var staffHost = document.getElementById('es-staff-profile');
+    if (staffHost) { staffHost.hidden = true; staffHost.style.display = 'none'; }
+    var tifosoHost = document.getElementById('es-tifoso-profile');
+    if (tifosoHost) { tifosoHost.hidden = true; tifosoHost.style.display = 'none'; }
+    var legacyHost = document.getElementById('dossier-legacy');
+    if (legacyHost) { legacyHost.hidden = true; legacyHost.style.display = 'none'; }
+    var notifsHost = document.getElementById('es-user-notifs');
+    if (notifsHost) { notifsHost.hidden = true; notifsHost.style.display = 'none'; }
+
     bind(host);
   }
 

@@ -419,12 +419,22 @@
   }
 
   function getActiveRoleInfo() {
+    var savedSimRole = localStorage.getItem('elisee_creator_sim_role');
+    if (savedSimRole) {
+      for (var i = 0; i < ROLE_CATALOG.length; i++) {
+        for (var j = 0; j < ROLE_CATALOG[i].roles.length; j++) {
+          if (ROLE_CATALOG[i].roles[j].key === savedSimRole) {
+            return { label: ROLE_CATALOG[i].roles[j].label, key: savedSimRole, iconSvg: ROLE_CATALOG[i].roles[j].iconSvg };
+          }
+        }
+      }
+    }
     var u = getStoredUser();
     if (window.isTifosoSiteRole && window.isTifosoSiteRole(u)) return { label: 'Tifoso', key: 'tifoso', iconSvg: SVG_ICONS.heart };
-    if (window.isPlayerSiteRole && window.isPlayerSiteRole(u)) return { label: 'Calciatore', key: 'giocatore', iconSvg: SVG_ICONS.user };
+    if (window.isPlayerSiteRole && window.isPlayerSiteRole(u)) return { label: 'Calciatore / Giocatore', key: 'giocatore', iconSvg: SVG_ICONS.user };
     if (u && (u.ruolo === 'Società' || u.role === 'Società' || u.siteRoleFamily === 'Società')) return { label: 'Club Elisee Manager', key: 'club_tc', iconSvg: SVG_ICONS.shield };
-    var precise = String(u.staffRole || u.ruoloDettagliato || u.ruolo || u.role || 'Staff').trim();
-    return { label: precise || 'Staff', key: 'staff', iconSvg: SVG_ICONS.briefcase };
+    var precise = String(u.staffRole || u.ruoloDettagliato || u.ruolo || u.role || 'Allenatore').trim();
+    return { label: precise || 'Allenatore', key: 'allenatore', iconSvg: SVG_ICONS.coach };
   }
 
   function showToast(msg) {
@@ -680,6 +690,7 @@
     if (!body) return;
 
     var curRole = getActiveRoleInfo();
+    var curRoleKey = curRole.key || localStorage.getItem('elisee_creator_sim_role') || 'giocatore';
     var html = '';
 
     for (var i = 0; i < ROLE_CATALOG.length; i++) {
@@ -689,7 +700,7 @@
       html += '<div class="es-creator-grid">';
       for (var j = 0; j < cat.roles.length; j++) {
         var r = cat.roles[j];
-        var isCurrent = (curRole.label.toLowerCase() === r.label.toLowerCase()) || (r.staffRole && curRole.label.toLowerCase() === r.staffRole.toLowerCase());
+        var isCurrent = (r.key === curRoleKey);
         html += '<div class="es-creator-card' + (isCurrent ? ' is-active' : '') + '" data-role-key="' + r.key + '">';
         html += '<div class="es-creator-card-icon">' + r.iconSvg + '</div>';
         html += '<div class="es-creator-card-info">';
@@ -711,7 +722,23 @@
     cards.forEach(function (card) {
       card.addEventListener('click', function () {
         var k = card.getAttribute('data-role-key');
-        if (k) applyRole(k);
+        if (k) {
+          // 1. Rimuovi lo stato attivo e il badge da OGNI card
+          cards.forEach(function (c) {
+            c.classList.remove('is-active');
+            var oldB = c.querySelector('.es-creator-card-badge');
+            if (oldB) oldB.remove();
+          });
+          // 2. Aggiungi lo stato attivo e il badge solo alla card selezionata
+          card.classList.add('is-active');
+          var badge = document.createElement('span');
+          badge.className = 'es-creator-card-badge';
+          badge.textContent = 'Attivo';
+          card.appendChild(badge);
+
+          // 3. Applica il ruolo e renderizza la dashboard
+          applyRole(k);
+        }
       });
     });
   }
