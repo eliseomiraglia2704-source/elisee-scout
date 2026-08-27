@@ -9,9 +9,9 @@
   var LEAGUE_ORDER = [];
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260827_ECC13';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260827_ECCLOGO1';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260827_ECC13';
+  var LOGO_V = '20260827_ECCLOGO1';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};

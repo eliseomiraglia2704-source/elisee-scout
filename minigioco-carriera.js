@@ -917,7 +917,7 @@
       cb(state.clubs);
       return;
     }
-    fetch('data/squadre/minigioco_clubs.json?v=20260827_ECC12', { cache: 'no-store' })
+    fetch('data/squadre/minigioco_clubs.json?v=20260827_ECCLOGO1', { cache: 'no-store' })
       .then(function (r) {
         return r.json();
       })

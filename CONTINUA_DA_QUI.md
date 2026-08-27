@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Ruolo Giornalista / Content Creator**. Sesto ruolo sito (oltre Ente, Squadra, Giocatore, Staff, Tifoso): redazione articoli con tag schede, sondaggi, hub video, funnel geo Città→Nazionale, badge ciano «Stampa / Giornalista Verificato», coda staff prima del feed `#stampa-portal`. Cache `GIORN1`.
-Feature precedente: OTP solo via email.
+Ultimo fatto: **Loghi reali Tuttocampo per tutte le squadre Eccellenza 2026/27** dei 12 gironi aggiunti (Emilia A/B, FVG, Lombardia A/B/C, Marche, Piemonte A/B, Puglia, Trentino, Umbria). Ritagliati dai calendari Tuttocampo e applicati a catalogo, selettore, minigioco e Focus. Cache `ECCLOGO1`.
+Feature precedente: Ruolo Giornalista / Content Creator.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -60,7 +60,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| `b0ec659` | Ruolo Giornalista / Content Creator + feed Stampa + coda staff |
+| (questo) | Loghi Tuttocampo reali per i 12 gironi Eccellenza 2026/27 |
+| `1bce172` | Ruolo Giornalista / Content Creator + feed Stampa + coda staff |
 | `b42605c` | OTP: codice solo via email, digitazione manuale, niente auto-fill |
 | `16d2b79` | Eccellenza 2026/27 nel selettore squadra e nel minigioco carriera |
 | `1d0d408` | Eccellenza: 12 gironi 2026/27 con città e loghi (Focus + catalogo) |
