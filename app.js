@@ -6849,10 +6849,10 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (viewType === 'user-dossier' || targetHash === '#user-dossier-portal') {
         const dossierGroup = showEl('user-dossier-view-group');
         try { updateDossierView(); } catch (err) { console.error('updateDossierView', err); }
-        requestAnimationFrame(() => {
+        requestAnimationFrame(function () {
           window.scrollTo(0, 0);
-          const portal = document.getElementById('user-dossier-portal') || dossierGroup;
-          if (portal) portal.scrollIntoView({ behavior: 'auto', block: 'start' });
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
         });
       } else {
         showEl('home-views-group');

@@ -290,6 +290,12 @@ body.es-staff-on #user-dossier-view-group,
 body.es-tifoso-on #user-dossier-view-group {
   background: var(--bg-primary, #050608) !important;
 }
+#user-dossier-view-group.is-player-area #user-dossier-portal,
+#user-dossier-view-group.is-player-area .pf-page-inner {
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
 
 /* ---------- Allenatore / Vice ---------- */
 .es-mister-hub {

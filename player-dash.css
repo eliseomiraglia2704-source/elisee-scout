@@ -1,10 +1,18 @@
 /* Dashboard analitica giocatore — layout v3.5 professionale B2B */
 #user-dossier-view-group.is-player-area .es-user-tabs { display: none !important; }
+#user-dossier-view-group.is-player-area,
+#user-dossier-view-group.is-player-area #user-dossier-portal {
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
 #user-dossier-view-group.is-player-area .pf-page-inner {
   max-width: none !important;
   margin: 0 !important;
   padding: 0 !important;
+  min-height: 0 !important;
 }
+.es-pd:empty { display: none !important; min-height: 0 !important; }
 #es-player-profile.es-pd-on > :not(#es-pd) { display: none !important; }
 #es-player-profile.es-pd-on {
   display: block !important;

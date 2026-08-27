@@ -266,15 +266,16 @@
     var contractStatus = p.contractStatus || (isMinor ? 'Tesseramento Giovanile FIGC' : 'Sotto contratto (Accordo Economico)');
     var contactPref = p.contactPref || 'Club, Direttori Sportivi e Scout Verificati';
 
-    // Generatore HTML Cruscotto Selettore Stagione
-    var seasonPickerHtml = window.EliseeRatingSystem 
-      ? window.EliseeRatingSystem.renderSeasonPicker(currentSeason)
-      : '<div style="font-size:0.75rem; color:#38bdf8; font-weight:700;">Stagione ' + esc(currentSeason) + '</div>';
-
-    // Generatore HTML Card Valutazione Pubblica
-    var publicRatingCardHtml = window.EliseeRatingSystem
-      ? window.EliseeRatingSystem.renderRatingCard(user, 'giocatore', currentSeason)
-      : '';
+    var seasonPickerHtml = '<div style="font-size:0.75rem; color:#38bdf8; font-weight:700;">Stagione ' + esc(currentSeason) + '</div>';
+    var publicRatingCardHtml = '';
+    try {
+      if (window.EliseeRatingSystem && window.EliseeRatingSystem.renderSeasonPicker) {
+        seasonPickerHtml = window.EliseeRatingSystem.renderSeasonPicker(currentSeason) || seasonPickerHtml;
+      }
+      if (window.EliseeRatingSystem && window.EliseeRatingSystem.renderRatingCard) {
+        publicRatingCardHtml = window.EliseeRatingSystem.renderRatingCard(user, 'giocatore', currentSeason) || '';
+      }
+    } catch (_) {}
 
     // Righe tabella partite
     var matchesRows = '';
@@ -722,8 +723,14 @@
       box.className = 'es-pd';
       host.insertBefore(box, host.firstChild);
     }
-    box.innerHTML = html(user);
+    try {
+      box.innerHTML = html(user);
+    } catch (err) {
+      console.error('EliseePlayerDash html', err);
+      box.innerHTML = '<div class="es-pd-body"><div class="es-pd-head"><h1>Elisee Scout — Profilo atleta</h1></div></div>';
+    }
     revealPlayerShell(host, box);
+    try { window.scrollTo(0, 0); } catch (_) {}
 
     for (var i = 0; i < host.children.length; i++) {
       var child = host.children[i];

@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Calciatore visibile + OTP riparato in barra in basso**: 1) la dashboard Calciatore non viene più coperta da overlay OTP. 2) OTP non è stato rimosso: Invia codice + 4 cifre + Verifica stanno in una barra fissa in basso; send/verify con challenge firmato; dopo verifica la barra sparisce. File: `verifica-account.js`, `verifica-account.css`, `index.html`, `sw.js`. Cache `OTP_BAR1`.
+Ultimo fatto: **Tre fix visibili in locale**: 1) Area Calciatore senza schermata nera (padding/min-height e render protetto). 2) Chip AutoPilot tolto dal viewport, voce nel menu a tendina Admin. 3) OTP: `qs` non definito in `elisee_up.py` `_auth_api` — ora parse_qs. File: `player-dash.js/css`, `app.js`, `dash-luxury.css`, `autopilot-runtime.js`, `autopilot.css`, `index.html`, `elisee_up.py`, `sw.js`. Cache `FIX3`.
 Feature precedente: Tema luxury con palette ottone (scartata).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)

@@ -366,6 +366,8 @@ class Handler(SimpleHTTPRequestHandler):
         except Exception as e:
             self._json(503, {"ok": False, "error": "auth_store_unavailable", "detail": str(e)})
             return True
+        parsed = urlparse(self.path)
+        qs = parse_qs(parsed.query or "")
         try:
             if path == "/api/auth/config" and method in ("GET", "HEAD"):
                 self._json(200, public_auth_config())

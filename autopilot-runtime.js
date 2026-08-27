@@ -966,31 +966,25 @@
 
   function updateFloatingChip() {
     var chip = document.getElementById('es-ap-chip');
-    // Chip solo per Admin autenticato (non in homepage pubblica)
+    if (chip) chip.style.display = 'none';
+    var statusEl = document.getElementById('es-ap-dropdown-status');
+    var item = document.getElementById('btn-dropdown-autopilot');
     if (!isAdminSession()) {
-      if (chip) chip.style.display = 'none';
-      // chiudi pannello se sessione admin terminata
+      if (item) item.style.display = 'none';
       if (uiRoot && uiRoot.classList.contains('is-open')) closeUi();
       return;
     }
-    if (!chip) {
-      chip = document.createElement('button');
-      chip.type = 'button';
-      chip.id = 'es-ap-chip';
-      chip.className = 'es-ap-chip';
-      chip.title = 'Mission Control AutoPilot (Admin)';
-      chip.addEventListener('click', openUi);
-      document.body.appendChild(chip);
-    }
-    chip.style.display = '';
+    if (item) item.style.display = '';
     var on = state.running && state.cfg && state.cfg.enabled;
     var beOn = backendLinked && backendStatus && backendStatus.running;
-    chip.className = 'es-ap-chip' + (on || beOn ? '' : ' off');
-    var label = 'AutoPilot ';
+    var label = '';
     if (beOn) label += 'BE:' + (backendStatus.cycles || 0);
-    if (on) label += (beOn ? ' · ' : '') + 'UI:' + state.cycles;
-    if (!on && !beOn) label += 'OFF';
-    chip.innerHTML = '<span class="dot"></span> ' + label;
+    if (on) label += (label ? ' · ' : '') + 'UI:' + state.cycles;
+    if (!on && !beOn) label = 'OFF';
+    if (statusEl) {
+      statusEl.textContent = label;
+      statusEl.style.color = (on || beOn) ? '#86efac' : '#94a3b8';
+    }
   }
 
   function injectAdminCard() {

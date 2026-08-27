@@ -282,14 +282,14 @@
   <link rel="stylesheet" href="style.css?v=20260826_PRES_NOPILL1">
   <link rel="preload" as="video" href="immagini/minigioco/intro.mp4?v=20260813_HQ2">
   <link rel="stylesheet" href="minigioco-carriera.css?v=20260814_TRIAL2">
-  <link rel="stylesheet" href="autopilot.css?v=20260806_NOCORS">
+  <link rel="stylesheet" href="autopilot.css?v=20260827_FIX3">
   <link rel="stylesheet" href="squadre-select.css?v=20260825_SQCREST">
   <link rel="stylesheet" href="formazione-squadra.css?v=20260820_XI1">
   <link rel="stylesheet" href="verifica-account.css?v=20260827_OTP_BAR1">
   <link rel="stylesheet" href="manager.css?v=20260820_XI1">
   <link rel="stylesheet" href="tc-panel.css?v=20260827_LUX1">
   <link rel="stylesheet" href="player-profile.css?v=20260826_PRES_PRF1">
-  <link rel="stylesheet" href="player-dash.css?v=20260827_LUX1">
+  <link rel="stylesheet" href="player-dash.css?v=20260827_FIX3">
   <link rel="stylesheet" href="coach-dash.css?v=20260827_LUX1">
   <link rel="stylesheet" href="ds-dash.css?v=20260827_LUX1">
   <link rel="stylesheet" href="pres-dash.css?v=20260827_LUX1">
@@ -320,7 +320,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
   <link rel="stylesheet" href="mappa-club.css?v=20260826_GEO1">
-  <link rel="stylesheet" href="dash-luxury.css?v=20260827_LUX3">
+  <link rel="stylesheet" href="dash-luxury.css?v=20260827_FIX3">
   <script>
     /* Boot OAuth: token in search O in hash (#hero?elisee_token=...). La sessione vince sempre. */
     (function () {
@@ -516,8 +516,8 @@
       }
       // Pulisci SOLO cache SW vecchia una volta (non ogni secondo)
       try {
-        if (!sessionStorage.getItem('elisee_sw_purged_v9_otpbar')) {
-          sessionStorage.setItem('elisee_sw_purged_v9_otpbar', '1');
+        if (!sessionStorage.getItem('elisee_sw_purged_v10_fix3')) {
+          sessionStorage.setItem('elisee_sw_purged_v10_fix3', '1');
           if (navigator.serviceWorker) {
             navigator.serviceWorker.getRegistrations().then(function (regs) {
               regs.forEach(function (r) { try { r.unregister(); } catch (e) {} });
@@ -1681,6 +1681,12 @@
               <div style="padding:0.2rem 1rem 0.35rem; font-size:0.68rem; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.04em;">Strumenti Admin</div>
               <a href="#" id="btn-creator-roles" onclick="event.preventDefault(); event.stopPropagation(); if(window.EliseeCreatorRole){ window.EliseeCreatorRole.open(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.55rem 1rem; color:#38bdf8; font-size:0.82rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
                 <i data-lucide="shield-check" style="width:15px; height:15px; color:#38bdf8;"></i> Simulatore Ruoli Creatore
+              </a>
+              <a href="#" id="btn-dropdown-autopilot" onclick="event.preventDefault(); event.stopPropagation(); if(window.EliseeAutoPilot){ window.EliseeAutoPilot.open(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; justify-content:space-between; gap:0.65rem; padding:0.55rem 1rem; color:#e2e8f0; font-size:0.82rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
+                <span style="display:flex; align-items:center; gap:0.65rem;">
+                  <i data-lucide="cpu" style="width:15px; height:15px; color:#38bdf8;"></i> AutoPilot
+                </span>
+                <span id="es-ap-dropdown-status" style="font-size:0.68rem; color:#94a3b8; font-weight:600;"></span>
               </a>
             </div>
             <div style="border-top:1px solid rgba(255,255,255,0.08); margin:0.4rem 0;"></div>
@@ -5058,7 +5064,7 @@
   <script src="campionati-agents.js?v=20260806_STABLE"></script>
   <script src="war-room-runtime.js?v=20260827_BUGFIX1"></script>
   <script src="minigioco-carriera.js?v=20260825_FIXMG"></script>
-  <script src="autopilot-runtime.js?v=20260806_STABLE"></script>
+  <script src="autopilot-runtime.js?v=20260827_FIX3"></script>
   <script>
     /* Emergency unlock: body scroll + overlay fantasma */
     (function(){
@@ -5089,10 +5095,10 @@
   <script src="tc-panel.js?v=20260826_TC3"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260827_BUGFIX1"></script>
+  <script src="app.js?v=20260827_FIX3"></script>
   <script src="player-profile.js?v=20260827_PD_OTP2"></script>
   <script src="public-rating-system.js?v=20260827_LUX1"></script>
-  <script src="player-dash.js?v=20260827_LUX1"></script>
+  <script src="player-dash.js?v=20260827_FIX3"></script>
   <script src="coach-dash.js?v=20260827_LUX1"></script>
   <script src="ds-dash.js?v=20260827_LUX1"></script>
   <script src="pres-dash.js?v=20260827_LUX1"></script>

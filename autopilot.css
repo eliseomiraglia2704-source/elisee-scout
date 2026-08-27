@@ -34,7 +34,8 @@
 .es-ap-toggle.on span{left:23px}
 .es-ap-fleet-row{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.55rem 0;border-bottom:1px solid rgba(148,163,184,.1)}
 .es-ap-fleet-row:last-child{border-bottom:none}
-.es-ap-chip{position:fixed;right:16px;bottom:16px;z-index:99980;display:flex;align-items:center;gap:.45rem;padding:.55rem .85rem;border-radius:999px;border:1px solid rgba(34,197,94,.45);background:rgba(6,16,12,.92);color:#bbf7d0;font-size:.75rem;font-weight:800;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.45);backdrop-filter:blur(10px)}
+.es-ap-chip{display:none !important}
+.es-ap-chip-legacy{position:fixed;right:16px;bottom:16px;z-index:99980;display:none !important}
 .es-ap-chip .dot{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 10px #22c55e;animation:esApPulse 1.6s infinite}
 .es-ap-chip.off{border-color:rgba(248,113,113,.45);color:#fecaca}
 .es-ap-chip.off .dot{background:#ef4444;box-shadow:0 0 10px #ef4444;animation:none}
