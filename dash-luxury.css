@@ -92,9 +92,12 @@
   text-transform: none !important;
 }
 
-.es-pd-card h2 svg {
+.es-pd-card h2 svg,
+.es-pd-head h1 svg {
   color: var(--lx-accent) !important;
   stroke: var(--lx-accent) !important;
+  width: 16px !important;
+  height: 16px !important;
 }
 
 .es-pd-source-badge {

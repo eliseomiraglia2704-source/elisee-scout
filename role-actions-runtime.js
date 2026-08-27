@@ -1676,10 +1676,8 @@
     var roleData = ROLE_ACTIONS_MAP[curRoleKey] || ROLE_ACTIONS_MAP['scout'];
 
     grids.forEach(function (grid) {
-      if (grid.querySelector('.es-pd-actions-card')) {
-        var existing = grid.querySelector('.es-pd-actions-card');
-        existing.remove();
-      }
+      var existing = grid.querySelector('.es-pd-actions-card');
+      if (existing) existing.remove();
 
       var card = document.createElement('section');
       card.className = 'es-pd-card es-pd-actions-card';
@@ -1695,7 +1693,9 @@
       html += '</div>';
 
       card.innerHTML = html;
-      grid.appendChild(card);
+      var slot = grid.querySelector('#es-pd-actions-slot') || document.getElementById('es-pd-actions-slot');
+      if (slot) slot.appendChild(card);
+      else grid.appendChild(card);
 
       var btns = card.querySelectorAll('.es-pd-act-btn');
       btns.forEach(function (b) {

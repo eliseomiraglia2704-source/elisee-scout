@@ -91,6 +91,9 @@ body:has(#es-otp-bottom-banner) .es-pd,
 body:has(#es-otp-bottom-banner) .es-pd-body {
   padding-bottom: 5.5rem;
 }
+body:has(#es-otp-bottom-banner) #elisee-cookie-settings-btn {
+  bottom: 5.75rem !important;
+}
 .es-otp-modal-backdrop,
 #es-otp-modal-overlay {
   display: none !important;

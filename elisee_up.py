@@ -436,8 +436,9 @@ class Handler(SimpleHTTPRequestHandler):
                 return True
             if (path in ("/api/auth-otp", "/api/auth/otp")) and method in ("GET", "POST"):
                 body = self._read_json_body() if method == "POST" else {}
-                action = str(qs.get("action", [""])[0] or body.get("action") or "").strip()
-                email = str(body.get("email") or qs.get("email", [""])[0] or "").strip().lower()
+                otp_qs = parse_qs(urlparse(self.path).query or "")
+                action = str((otp_qs.get("action") or [""])[0] or body.get("action") or "").strip()
+                email = str(body.get("email") or (otp_qs.get("email") or [""])[0] or "").strip().lower()
                 if not email:
                     self._json(400, {"success": False, "error": "Indirizzo email mancante"})
                     return True
@@ -476,8 +477,8 @@ class Handler(SimpleHTTPRequestHandler):
                     return True
 
                 if action == "verify":
-                    code = str(body.get("code") or qs.get("code", [""])[0] or "").strip()
-                    challenge = str(body.get("challenge") or qs.get("challenge", [""])[0] or "").strip()
+                    code = str(body.get("code") or (otp_qs.get("code") or [""])[0] or "").strip()
+                    challenge = str(body.get("challenge") or (otp_qs.get("challenge") or [""])[0] or "").strip()
                     ok, err = _otp_check_challenge(email, code, challenge)
                     if ok:
                         otp_store.pop(email, None)

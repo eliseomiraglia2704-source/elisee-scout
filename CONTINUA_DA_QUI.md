@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Tre fix visibili in locale**: 1) Area Calciatore senza schermata nera (padding/min-height e render protetto). 2) Chip AutoPilot tolto dal viewport, voce nel menu a tendina Admin. 3) OTP: `qs` non definito in `elisee_up.py` `_auth_api` — ora parse_qs. File: `player-dash.js/css`, `app.js`, `dash-luxury.css`, `autopilot-runtime.js`, `autopilot.css`, `index.html`, `elisee_up.py`, `sw.js`. Cache `FIX3`.
+Ultimo fatto: **Cruscotto Calciatore reale + OTP locale**: 1) Ordine card: identità, azioni, scouting | radar, profilo | compliance, gare, trend. 2) Niente mock (no €150k, no 100% fake, no partite Notaresco). 3) Evidenza solo dati veri / stati mancanti. 4) Icona radar non più gigante. 5) OTP: parse_qs nel blocco send + kill processo Python vecchio. Cache `REAL1`.
 Feature precedente: Tema luxury con palette ottone (scartata).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)

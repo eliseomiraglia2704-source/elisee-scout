@@ -306,11 +306,40 @@
   display: inline-block;
 }
 
-.es-pd-radar svg {
+.es-pd-card h2 svg,
+.es-pd-head h1 svg {
+  width: 16px !important;
+  height: 16px !important;
+  flex-shrink: 0;
+}
+.es-pd-radar svg.es-pd-radar-svg {
   width: 100%;
   height: auto;
   max-height: 430px;
   margin: 0 auto;
+}
+.es-pd-empty {
+  color: #94a3b8;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  padding: 0.85rem 0.2rem;
+}
+.es-pd-metric-missing b {
+  color: #64748b !important;
+  font-weight: 500 !important;
+}
+.es-pd-metric-hi b {
+  color: #38bdf8 !important;
+}
+.es-pd-ok.is-warn b {
+  color: #fbbf24 !important;
+}
+.es-pd-ok.is-miss b {
+  color: #64748b !important;
+  font-weight: 500 !important;
+}
+#es-pd-actions-slot {
+  min-height: 0;
 }
 
 /* Sezione Autocompilazione "Il Mio Profilo" */
