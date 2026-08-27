@@ -374,11 +374,30 @@
     return null;
   }
 
+  function eccellenzaHome() {
+    var spec = derive({ a: 0, b: 0, c: 0, d: 6, e: 34 });
+    spec.ceil = 4;
+    spec.floor = 5;
+    spec.home = 5;
+    spec.promo = 0.12;
+    spec.rel = 0;
+    spec.stay = 0.88;
+    return spec;
+  }
+
+  function isEccellenzaClub(club) {
+    var lg = String((club && (club.l || club.league)) || '').toUpperCase();
+    if (lg.indexOf('ECCELLENZA') === 0) return true;
+    var t = Number(club && (club.homeTier != null ? club.homeTier : club.t));
+    return t === 5;
+  }
+
   function fallbackFromHome(home, name) {
     if (isU23Name(name)) return derive(home >= 4 ? U23_D : U23_C);
     if (home <= 1) return derive({ a: 28, b: 10, c: 2, d: 0 });
     if (home === 2) return derive({ a: 4, b: 18, c: 16, d: 2 });
     if (home === 3) return derive({ a: 0, b: 4, c: 24, d: 12 });
+    if (home >= 5) return eccellenzaHome();
     return derive(VILLAGE);
   }
 
@@ -392,9 +411,15 @@
     }
     var hit = lookup(n);
     var home = Number((club && club.homeTier) != null ? club.homeTier : (club && club.t) || 4);
+    if (!hit && isEccellenzaClub(club)) home = 5;
     var spec = hit
       ? Object.assign({ known: true }, hit)
       : Object.assign({ known: false }, fallbackFromHome(home, n));
+    if (!hit && isEccellenzaClub(club)) {
+      spec.ceil = 4;
+      spec.floor = 5;
+      spec.home = 5;
+    }
     var hard = HARD[keyOf(n)];
     if (hard) {
       spec.ceil = hard.ceil;

@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Eccellenza 2026/27: organici reali con città e loghi** su 12 gironi (Emilia A/B, FVG, Lombardia A/B/C, Marche, Piemonte A/B, Puglia, Trentino, Umbria). Catalogo + Focus. Cache `ECC12`.
+Ultimo fatto: **Eccellenza 2026/27 nel selettore squadra e nel minigioco carriera** (12 gironi reali: città + loghi). `minigioco_clubs.json` +200 club t=5. Cache `ECC13`.
 Feature precedente: Tutti i ruoli: stesso ordine professionale e dati reali.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -60,7 +60,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Eccellenza: 12 gironi 2026/27 con città e loghi (Focus + catalogo) |
+| (questo) | Eccellenza 2026/27 nel selettore squadra e nel minigioco carriera |
+| `1d0d408` | Eccellenza: 12 gironi 2026/27 con città e loghi (Focus + catalogo) |
 | (questo) | Selettore squadra: kit raggruppati (Partita/Portiere/Pre-match/Allenamento) |
 | `82552af` | Selettore squadra: tutti i kit 2D in cartella |
 | `1c8f08c` | Dashboard Biglietteria: vendite, abbonamenti, affluenza |

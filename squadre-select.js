@@ -9,9 +9,9 @@
   var LEAGUE_ORDER = [];
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260827_ECC12';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260827_ECC13';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260827_ECC12';
+  var LOGO_V = '20260827_ECC13';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -1144,6 +1144,18 @@
     }, 220);
   }
 
+  function leagueMatchesQuery(lg, q) {
+    if (!q) return true;
+    if (String(lg).toLowerCase().indexOf(q) >= 0) return true;
+    for (var t = 0; t < TEAMS.length; t++) {
+      var team = TEAMS[t];
+      if (team.gender !== state.gender || team.league !== lg) continue;
+      if (String(team.name || '').toLowerCase().indexOf(q) >= 0) return true;
+      if (String(team.city || '').toLowerCase().indexOf(q) >= 0) return true;
+    }
+    return false;
+  }
+
   function buildLeaguePickerList(filter) {
     var listEl = $('es-sq-league-list');
     if (!listEl) return;
@@ -1156,7 +1168,7 @@
     var count = 0;
     for (var i = 0; i < leagues.length; i++) {
       var lg = leagues[i];
-      if (q && String(lg).toLowerCase().indexOf(q) < 0) continue;
+      if (q && !leagueMatchesQuery(lg, q)) continue;
       count += 1;
       var logo = leagueLogoPath(lg);
       var active = lg === current ? ' is-active' : '';

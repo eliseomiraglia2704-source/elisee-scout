@@ -917,7 +917,7 @@
       cb(state.clubs);
       return;
     }
-    fetch('data/squadre/minigioco_clubs.json?v=20260817_DLOGO', { cache: 'no-store' })
+    fetch('data/squadre/minigioco_clubs.json?v=20260827_ECC12', { cache: 'no-store' })
       .then(function (r) {
         return r.json();
       })
@@ -1770,20 +1770,31 @@
   function trialClubListHtml() {
     var q = String(state.trialFilter || '').toLowerCase();
     var list = (state.clubs || []).filter(function (c) {
-      if (!c || !c.n || c.isFree) return false;
-      if (q && String(c.n).toLowerCase().indexOf(q) < 0) return false;
-      return true;
+      if (!c || !c.n || c.isFree || c.world) return false;
+      if (!q) return true;
+      var hay = (c.n + ' ' + (c.l || '') + ' ' + (c.city || '')).toLowerCase();
+      return hay.indexOf(q) >= 0;
     });
-    list = list.slice(0, 48);
+    list.sort(function (a, b) {
+      var at = clubLeagueTier(a);
+      var bt = clubLeagueTier(b);
+      var ap = at >= 5 ? 0 : at === 4 ? 1 : 2;
+      var bp = bt >= 5 ? 0 : bt === 4 ? 1 : 2;
+      if (ap !== bp) return ap - bp;
+      return String(a.n).localeCompare(String(b.n), 'it');
+    });
+    list = list.slice(0, 72);
     if (!list.length) return '<div class="es-mg-muted">Nessuna squadra trovata.</div>';
     return list.map(function (c) {
       var on = state.trialClub && state.trialClub.n === c.n ? ' is-on' : '';
+      var city = c.city ? '<span class="es-mg-trial-city">' + esc(c.city) + '</span>' : '';
       return (
         '<button type="button" class="es-mg-trial-club' + on + '" data-club="' + esc(c.n) + '">' +
         (c.o ? '<img src="' + esc(c.o) + '" alt="" class="es-mg-trial-logo" onerror="this.style.display=\'none\'">' : '<span class="es-mg-trial-logo"></span>') +
         '<span class="es-mg-trial-txt">' +
         '<span class="es-mg-trial-name">' + esc(c.n) + '</span>' +
         '<span class="es-mg-trial-lg">' + esc(shortLeague(c.l, c.n) || c.l || '') + '</span>' +
+        city +
         '</span></button>'
       );
     }).join('');
@@ -1816,7 +1827,7 @@
     } else {
       body =
         '<div class="es-mg-search-wrap">' +
-        '<input type="search" class="es-mg-search" id="es-mg-trial-q" placeholder="Cerca una squadra" value="' +
+        '<input type="search" class="es-mg-search" id="es-mg-trial-q" placeholder="Cerca squadra, città o campionato" value="' +
         esc(state.trialFilter || '') +
         '" /></div>' +
         '<div class="es-mg-trial-list" id="es-mg-trial-list">' + trialClubListHtml() + '</div>' +
@@ -2123,7 +2134,11 @@
     if (t === 1) return 'SERIE A';
     if (t === 2) return 'SERIE B';
     if (t === 3) return 'SERIE C · GIRONE A';
-    if (t === 5) return 'ECCELLENZA';
+    if (t === 5) {
+      var raw = String((club && (club.catalogL || club.l)) || '');
+      if (raw.toUpperCase().indexOf('ECCELLENZA') === 0) return raw;
+      return 'ECCELLENZA';
+    }
     return 'SERIE D · GIRONE A';
   }
 
@@ -3775,23 +3790,23 @@
         a.isLoan = false;
         offers.push(a);
       }
-      var mid = takeUniqueClub(used, clubsByCatalogTier(2));
-      if (mid) {
-        mid = Object.assign({}, mid);
-        mid.t = 2;
-        mid.l = mid.catalogL || mid.l;
-        mid.isYouth = false;
-        mid.isLoan = false;
-        offers.push(mid);
+      var ecc = takeUniqueClub(used, clubsByCatalogTier(5));
+      if (ecc) {
+        ecc = Object.assign({}, ecc);
+        ecc.t = 5;
+        ecc.l = ecc.catalogL || ecc.l;
+        ecc.isYouth = false;
+        ecc.isLoan = false;
+        offers.push(ecc);
       }
-      var low = takeUniqueClub(used, clubsByCatalogTier(3));
-      if (low) {
-        low = Object.assign({}, low);
-        low.t = 3;
-        low.l = low.catalogL || low.l;
-        low.isYouth = false;
-        low.isLoan = false;
-        offers.push(low);
+      var dClub = takeUniqueClub(used, clubsByCatalogTier(4));
+      if (dClub) {
+        dClub = Object.assign({}, dClub);
+        dClub.t = 4;
+        dClub.l = dClub.catalogL || dClub.l;
+        dClub.isYouth = false;
+        dClub.isLoan = false;
+        offers.push(dClub);
       }
       return fillFirstOffers(used, offers).map(assertStartOffer);
     }
@@ -3971,7 +3986,10 @@
     l = String(l || '').trim();
     if (!l) return '';
     var upper = l.toUpperCase();
-    if (upper.indexOf('ECCELLENZA') === 0) return 'Eccellenza';
+    if (upper.indexOf('ECCELLENZA') === 0) {
+      var restE = l.replace(/^ECCELLENZA\s*[·.]\s*/i, '').trim();
+      return restE && restE.toUpperCase() !== 'ECCELLENZA' ? 'Eccellenza · ' + restE : 'Eccellenza';
+    }
     if (upper.indexOf('SERIE A') === 0) return 'Serie A';
     if (upper.indexOf('SERIE B') === 0) return 'Serie B';
     
