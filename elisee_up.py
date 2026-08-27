@@ -44,6 +44,104 @@ def _otp_make_challenge(email: str, code: str, exp: int) -> str:
     return base64.urlsafe_b64encode(raw.encode()).decode().rstrip("=")
 
 
+def _otp_send_email(to_email: str, code: str) -> bool:
+    """Invia l'OTP via email. Mai esporre il codice nella risposta HTTP."""
+    subject = "Il tuo codice di verifica Elisee Scout"
+    text = (
+        f"Il tuo codice OTP di verifica è: {code}\n\n"
+        "Valido 10 minuti. Inseriscilo nella barra di verifica su Elisee Scout.\n\n"
+        "Se non hai richiesto questo codice, ignora il messaggio."
+    )
+    html = (
+        "<p>Il tuo codice OTP di verifica è:</p>"
+        f"<p style='font-size:28px;letter-spacing:8px;font-weight:700'>{code}</p>"
+        "<p>Valido 10 minuti. Inseriscilo nella barra di verifica su Elisee Scout.</p>"
+        "<p>Se non hai richiesto questo codice, ignora il messaggio.</p>"
+    )
+
+    key = (os.environ.get("RESEND_API_KEY") or "").strip()
+    if key:
+        try:
+            payload = json.dumps({
+                "from": "Elisee Scout <verifica@elisee-scout.vercel.app>",
+                "to": [to_email],
+                "subject": subject,
+                "text": text,
+                "html": html,
+            }).encode("utf-8")
+            req = urllib.request.Request(
+                "https://api.resend.com/emails",
+                data=payload,
+                headers={
+                    "Authorization": f"Bearer {key}",
+                    "Content-Type": "application/json",
+                },
+                method="POST",
+            )
+            with urllib.request.urlopen(req, timeout=12) as r:
+                if 200 <= int(getattr(r, "status", 200) or 200) < 300:
+                    return True
+        except Exception:
+            pass
+
+    host = (os.environ.get("SMTP_HOST") or os.environ.get("OTP_SMTP_HOST") or "").strip()
+    user = (os.environ.get("SMTP_USER") or os.environ.get("OTP_SMTP_USER") or "").strip()
+    password = (
+        os.environ.get("SMTP_PASS")
+        or os.environ.get("OTP_SMTP_PASS")
+        or os.environ.get("GMAIL_APP_PASSWORD")
+        or ""
+    ).strip()
+    try:
+        port = int(os.environ.get("SMTP_PORT") or os.environ.get("OTP_SMTP_PORT") or "587")
+    except Exception:
+        port = 587
+    if host and user and password:
+        try:
+            import smtplib
+            from email.mime.multipart import MIMEMultipart
+            from email.mime.text import MIMEText
+            msg = MIMEMultipart("alternative")
+            msg["Subject"] = subject
+            msg["From"] = user
+            msg["To"] = to_email
+            msg.attach(MIMEText(text, "plain", "utf-8"))
+            msg.attach(MIMEText(html, "html", "utf-8"))
+            with smtplib.SMTP(host, port, timeout=12) as smtp:
+                smtp.starttls()
+                smtp.login(user, password)
+                smtp.sendmail(user, [to_email], msg.as_string())
+            return True
+        except Exception:
+            pass
+
+    try:
+        payload = json.dumps({
+            "_subject": subject,
+            "message": text,
+            "_template": "box",
+            "_captcha": "false",
+        }).encode("utf-8")
+        req = urllib.request.Request(
+            "https://formsubmit.co/ajax/" + quote(to_email),
+            data=payload,
+            headers={
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "User-Agent": "EliseeScoutOTP/1.0",
+            },
+            method="POST",
+        )
+        with urllib.request.urlopen(req, timeout=15) as r:
+            body = r.read().decode("utf-8", "replace")
+            if 200 <= int(getattr(r, "status", 200) or 200) < 300:
+                if "error" not in body.lower() or "success" in body.lower():
+                    return True
+    except Exception:
+        pass
+    return False
+
+
 def _otp_check_challenge(email: str, code: str, challenge: str):
     if not challenge:
         return False, "Challenge OTP assente. Richiedi un nuovo codice."
@@ -466,11 +564,18 @@ class Handler(SimpleHTTPRequestHandler):
                     otp_store_file.parent.mkdir(parents=True, exist_ok=True)
                     otp_store_file.write_text(json.dumps(otp_store, indent=2), encoding="utf-8")
                     challenge = _otp_make_challenge(email, raw_code, exp)
+                    emailed = _otp_send_email(email, raw_code)
+                    if not emailed:
+                        self._json(503, {
+                            "success": False,
+                            "error": "Invio email non riuscito. Riprova tra poco: il codice arriva solo via posta elettronica.",
+                            "email": email,
+                        })
+                        return True
                     self._json(200, {
                         "success": True,
-                        "message": "Codice OTP generato. Inseriscilo per confermare l'indirizzo.",
+                        "message": "Codice inviato via email. Aprilo nella casella e inserisci le 4 cifre.",
                         "email": email,
-                        "code": raw_code,
                         "challenge": challenge,
                         "expiresIn": 600,
                     })

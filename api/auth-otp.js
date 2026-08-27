@@ -166,6 +166,8 @@ module.exports = async function handler(req, res) {
     const challenge = makeChallenge(email, rawCode, exp);
 
     let emailed = false;
+    const mailSubject = 'Il tuo codice di verifica Elisee Scout';
+    const mailText = `Il tuo codice OTP di verifica è: ${rawCode}.\n\nValido 10 minuti. Inseriscilo nella barra di verifica su Elisee Scout.\n\nSe non hai richiesto questo codice, ignora il messaggio.`;
     if (process.env.RESEND_API_KEY) {
       try {
         const mailRes = await fetch('https://api.resend.com/emails', {
@@ -175,27 +177,48 @@ module.exports = async function handler(req, res) {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            from: 'Elisee Scout <verifica@elisee-scout.vercel.app>',
+            from: process.env.RESEND_FROM || 'Elisee Scout <verifica@elisee-scout.vercel.app>',
             to: email,
-            subject: 'Il tuo codice di verifica Elisee Scout',
-            text: `Il tuo codice OTP di verifica è: ${rawCode}. Ha una validità di 10 minuti.`
+            subject: mailSubject,
+            text: mailText
+          })
+        });
+        emailed = !!(mailRes && mailRes.ok);
+      } catch (err) {}
+    }
+    if (!emailed) {
+      try {
+        const mailRes = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(email), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            _subject: mailSubject,
+            message: mailText,
+            _template: 'box',
+            _captcha: 'false'
           })
         });
         emailed = !!(mailRes && mailRes.ok);
       } catch (err) {}
     }
 
-    const payload = {
+    if (!emailed) {
+      return sendJson(res, 503, {
+        success: false,
+        error: 'Invio email non riuscito. Riprova tra poco: il codice arriva solo via posta elettronica.',
+        email: email
+      });
+    }
+    return sendJson(res, 200, {
       success: true,
-      message: emailed
-        ? 'Codice di verifica inviato all\'indirizzo email'
-        : 'Codice OTP generato. Inseriscilo per confermare l\'indirizzo.',
+      message: 'Codice inviato via email. Aprilo nella casella e inserisci le 4 cifre.',
       email: email,
       expiresIn: 600,
       challenge: challenge
-    };
-    if (!emailed) payload.code = rawCode;
-    return sendJson(res, 200, payload);
+    });
   }
 
   // --- AZIONE: VERIFICA OTP ---

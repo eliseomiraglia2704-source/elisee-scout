@@ -503,25 +503,21 @@
     }
     var btnSend = document.getElementById('btn-trigger-otp');
     if (btnSend) btnSend.disabled = true;
-    otpFeedback('Invio codice in corso...', false);
+    otpDigits().forEach(function (inp) { inp.value = ''; });
+    otpFeedback('Invio codice in corso all\'indirizzo ' + userEmail + '...', false);
 
     fetch('/api/auth-otp?action=send', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: userEmail })
     })
-    .then(function (res) { return res.json(); })
+    .then(function (res) { return res.json().then(function (data) { data._http = res.status; return data; }); })
     .then(function (data) {
       if (btnSend) btnSend.disabled = false;
+      otpDigits().forEach(function (inp) { inp.value = ''; });
       if (data.success) {
         otpChallenge = data.challenge || '';
-        var feed = data.message || ('Codice inviato a ' + userEmail);
-        if (data.code) {
-          feed = 'Il tuo codice è ' + data.code + '. Premi Verifica.';
-          var digs = String(data.code).split('');
-          otpDigits().forEach(function (inp, idx) { if (digs[idx]) inp.value = digs[idx]; });
-        }
-        otpFeedback(feed, false);
+        otpFeedback('Ti abbiamo inviato un codice a 4 cifre su ' + userEmail + '. Aprilo nella casella e inseriscilo qui.', false);
         var first = document.getElementById('otp-d-0');
         if (first) first.focus();
       } else {
@@ -634,10 +630,10 @@
             '<span>Il codice OTP viene inviato al tuo indirizzo email. Non è un SMS.</span>' +
           '</div>' +
           '<div class="es-otp-inputs-wrap es-otp-inputs-inline">' +
-            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-0" autocomplete="one-time-code">' +
-            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-1">' +
-            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-2">' +
-            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-3">' +
+            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-0" autocomplete="off">' +
+            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-1" autocomplete="off">' +
+            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-2" autocomplete="off">' +
+            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-3" autocomplete="off">' +
           '</div>' +
           '<div class="es-otp-banner-actions">' +
             '<button type="button" class="es-otp-btn-send" id="btn-trigger-otp">Invia codice</button>' +
@@ -653,7 +649,6 @@
 
   function openOtpModal(u) {
     paintOtpBanner(u || user());
-    sendOtpRequest();
   }
 
   window.openEmailOtpModal = openOtpModal;

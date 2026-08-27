@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Eccellenza 2026/27 nel selettore squadra e nel minigioco carriera** (12 gironi reali: città + loghi). `minigioco_clubs.json` +200 club t=5. Cache `ECC13`.
-Feature precedente: Tutti i ruoli: stesso ordine professionale e dati reali.
+Ultimo fatto: **OTP solo via email**. Clic su Invia codice non auto-compila più le 4 cifre e non mostra il codice in pagina. L’utente lo inserisce a mano dalla mail. Cache `OTP_MAIL1`.
+Feature precedente: Eccellenza 2026/27 nel selettore e nel minigioco carriera.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -60,7 +60,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Eccellenza 2026/27 nel selettore squadra e nel minigioco carriera |
+| (questo) | OTP: codice solo via email, digitazione manuale, niente auto-fill |
+| `16d2b79` | Eccellenza 2026/27 nel selettore squadra e nel minigioco carriera |
 | `1d0d408` | Eccellenza: 12 gironi 2026/27 con città e loghi (Focus + catalogo) |
 | (questo) | Selettore squadra: kit raggruppati (Partita/Portiere/Pre-match/Allenamento) |
 | `82552af` | Selettore squadra: tutti i kit 2D in cartella |
