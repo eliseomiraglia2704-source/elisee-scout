@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Routing & Navigazione: Esecuzione Obbligatoria al Caricamento Pagina (DOMContentLoaded / readyState)**: 1. Aggiunto listener esplicito a `DOMContentLoaded` (con fallback su `interactive`/`complete`) in `app.js` e `index.html` per forzare il rendering immediato della sezione/hash iniziale (`window.location.hash || '#hero'`) anche senza la necessità di un evento manuale `hashchange`; 2. Definito alias globale `window.switchSection(hash)` per garantire compatibilità con qualsiasi chiamata diretta; 3. Cache-bust `INIT_ROUTING1`. File: `app.js`, `index.html`, `sw.js`, `CONTINUA_DA_QUI.md`.
-Feature precedente: Selettore Stagione & Sistema di Valutazione Pubblica Multi-Ruolo Strutturata (public-rating-system.js).
+Ultimo fatto: **Sicurezza & Autenticazione: Fix Tolleranza Case-Insensitive Password Master Admin & Toggle Visivo Password**: 1. **Tolleranza Case-Insensitive & Spaziature**: aggiornati `api/auth-admin.js` e `elisee_up.py` affinché la password master accetti `Iemmello9`, `iemmello9`, `IEMMELLO9` e formati con spazi accidentali sia in locale (`127.0.0.1:8080`) che in produzione su Vercel; 2. **Pulsante Mostra/Nascondi Password (Icona Occhio)**: aggiunto pulsante toggle visivo nel campo di input del modale `creator-role-switcher.js` per verificare visivamente i caratteri digitati e prevenire errori di tastiera/autocorrect; 3. **Persistenza Token**: salvataggio del token crittografico validato sia in `sessionStorage` che in `localStorage` per evitare continue richieste di sblocco ad ogni ricaricamento di pagina. File: `api/auth-admin.js`, `elisee_up.py`, `creator-role-switcher.js`, `index.html`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `ADMIN_PWD_EYE1`.
+Feature precedente: Routing & Navigazione: Esecuzione Obbligatoria al Caricamento Pagina (DOMContentLoaded / readyState).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

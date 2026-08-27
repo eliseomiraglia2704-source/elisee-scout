@@ -487,7 +487,14 @@ class Handler(SimpleHTTPRequestHandler):
                 if method == "POST":
                     body = self._read_json_body()
                     pin = str(body.get("pin") or body.get("password") or "").strip()
-                    is_ok = (pin == admin_secret or pin == "Iemmello9" or pin == "admin123")
+                    pin_norm = pin.lower()
+                    sec_norm = admin_secret.strip().lower()
+                    is_ok = (
+                        pin == admin_secret or
+                        pin_norm == sec_norm or
+                        pin_norm == "iemmello9" or
+                        pin_norm == "admin123"
+                    )
                     if not pin or not is_ok:
                         self._json(403, {"success": False, "error": "Master Secret Admin non corretto"})
                         return True

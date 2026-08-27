@@ -267,7 +267,7 @@
 
   // Validazione del token crittografico firmato salvato in sessionStorage
   function getAdminSessionToken() {
-    return sessionStorage.getItem('elisee_admin_session_token') || '';
+    return sessionStorage.getItem('elisee_admin_session_token') || localStorage.getItem('elisee_admin_session_token') || '';
   }
 
   function isTokenValid(token) {
@@ -275,7 +275,9 @@
     var parts = token.split('.');
     if (parts.length !== 2) return false;
     try {
-      var jsonStr = atob(parts[0].replace(/-/g, '+').replace(/_/g, '/'));
+      var b64 = parts[0].replace(/-/g, '+').replace(/_/g, '/');
+      while (b64.length % 4 !== 0) b64 += '=';
+      var jsonStr = decodeURIComponent(escape(atob(b64)));
       var payload = JSON.parse(jsonStr);
       if (!payload || !payload.exp || Date.now() > payload.exp) {
         return false;
@@ -312,7 +314,12 @@
           '<form id="form-admin-auth-pin">' +
             '<div style="margin-bottom:1rem;">' +
               '<label style="display:block; font-size:0.75rem; color:#cbd5e1; font-weight:600; margin-bottom:0.35rem;">Master Secret Admin *</label>' +
-              '<input type="password" id="inp-admin-auth-pin" required autocomplete="current-password" placeholder="Inserisci PIN o Password Master" style="width:100%; background:#080e1e; border:1px solid rgba(148,163,184,0.3); border-radius:4px; color:#fff; padding:0.55rem 0.75rem; font-size:0.88rem; outline:none;">' +
+              '<div style="position:relative; display:flex; align-items:center;">' +
+                '<input type="password" id="inp-admin-auth-pin" required autocomplete="current-password" placeholder="Inserisci PIN o Password Master" style="width:100%; background:#080e1e; border:1px solid rgba(148,163,184,0.3); border-radius:4px; color:#fff; padding:0.55rem 2.4rem 0.55rem 0.75rem; font-size:0.88rem; outline:none; box-sizing:border-box;">' +
+                '<button type="button" id="btn-toggle-show-pwd" style="position:absolute; right:0.5rem; background:transparent; border:0; color:#94a3b8; cursor:pointer; padding:0.25rem; display:flex; align-items:center;" title="Mostra/Nascondi password">' +
+                  '<svg id="icon-eye-open" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' +
+                '</button>' +
+              '</div>' +
             '</div>' +
             '<div id="admin-auth-error-msg" style="display:none; color:#ef4444; font-size:0.8rem; font-weight:600; margin-bottom:0.85rem; line-height:1.4;"></div>' +
             '<div style="display:flex; justify-content:flex-end; gap:0.75rem;">' +
@@ -331,6 +338,19 @@
     var btnSubmit = modal.querySelector('#btn-submit-admin-auth');
     var btnClose = modal.querySelector('#btn-close-admin-auth');
     var btnCancel = modal.querySelector('#btn-cancel-admin-auth');
+    var btnTogglePwd = modal.querySelector('#btn-toggle-show-pwd');
+
+    if (btnTogglePwd && inp) {
+      btnTogglePwd.onclick = function () {
+        if (inp.type === 'password') {
+          inp.type = 'text';
+          btnTogglePwd.style.color = '#38bdf8';
+        } else {
+          inp.type = 'password';
+          btnTogglePwd.style.color = '#94a3b8';
+        }
+      };
+    }
 
     setTimeout(function () { if (inp) inp.focus(); }, 50);
 
@@ -365,6 +385,7 @@
           }
           if (data.success && data.token) {
             sessionStorage.setItem('elisee_admin_session_token', data.token);
+            localStorage.setItem('elisee_admin_session_token', data.token);
             closeAuth();
             if (window.showToast) window.showToast('Autenticazione Admin riuscita', 'success');
             if (typeof onSuccess === 'function') onSuccess();
@@ -374,7 +395,6 @@
               errMsg.style.display = 'block';
             }
             if (inp) {
-              inp.value = '';
               inp.focus();
             }
           }
