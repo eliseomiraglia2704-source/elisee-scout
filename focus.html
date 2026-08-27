@@ -101,6 +101,35 @@
       font-weight: 800;
       color: #f1f5f9;
     }
+    .focus-title-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 0 0 0.75rem;
+    }
+    .focus-hub-main .focus-title-row h1 {
+      margin: 0;
+    }
+    .focus-league-logo {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      flex-shrink: 0;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+    }
+    .focus-league-logo[hidden] {
+      display: none !important;
+    }
+    .focus-hub-tabs a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .focus-tab-logo {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+    }
 
     .focus-team-logo {
       width: 28px;
@@ -701,7 +730,10 @@
   <main class="focus-hub-main">
     <nav class="focus-hub-tabs" id="focus-tabs" aria-label="Categorie focus"></nav>
     <p class="focus-hub-kicker">ELISEE SCOUT · Focus dilettanti · Stagione 2026/27</p>
-    <h1 id="focus-title">Caricamento…</h1>
+    <div class="focus-title-row">
+      <img id="focus-league-logo" class="focus-league-logo" alt="" width="48" height="48" hidden>
+      <h1 id="focus-title">Caricamento…</h1>
+    </div>
     <p class="focus-hub-lead" id="focus-lead"></p>
     <div class="focus-hub-grid" id="focus-body"></div>
     <div class="focus-hub-actions" id="focus-actions"></div>
@@ -1907,7 +1939,8 @@
       groupParam: 'reg',
       groups: ECCELLENZA,
       portfolio: 'Eccellenza',
-      network: 'Eccellenza'
+      network: 'Eccellenza',
+      leagueLogo: 'immagini/squadre-loghi/eccellenza.png'
     },
     promozione: {
       title: 'Promozione',
@@ -2899,15 +2932,35 @@
     document.getElementById('focus-title').textContent =
       selected ? cat.title + ' · ' + selected.title : cat.title;
     document.getElementById('focus-lead').textContent = cat.lead;
+    var leagueLogoEl = document.getElementById('focus-league-logo');
+    if (leagueLogoEl) {
+      if (cat.leagueLogo) {
+        leagueLogoEl.src = cat.leagueLogo + '?v=20260827_ECCLND1';
+        leagueLogoEl.alt = cat.title;
+        leagueLogoEl.hidden = false;
+        leagueLogoEl.removeAttribute('hidden');
+      } else {
+        leagueLogoEl.removeAttribute('src');
+        leagueLogoEl.alt = '';
+        leagueLogoEl.hidden = true;
+        leagueLogoEl.setAttribute('hidden', '');
+      }
+    }
 
     document.getElementById('focus-tabs').innerHTML = order
       .map(function (k) {
+        var tabLogo = CATS[k].leagueLogo
+          ? '<img class="focus-tab-logo" src="' +
+            CATS[k].leagueLogo +
+            '?v=20260827_ECCLND1" alt="" width="16" height="16">'
+          : '';
         return (
           '<a href="focus.html?cat=' +
           k +
           '"' +
           (k === key ? ' class="active"' : '') +
           '>' +
+          tabLogo +
           esc(CATS[k].title) +
           '</a>'
         );
