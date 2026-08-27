@@ -4519,11 +4519,15 @@
     modal.onclick = function (e) { if (e.target === modal) close(); };
   }
 
-  function render(force) {
+  function render(forceOrUser) {
     var group = document.getElementById('user-dossier-view-group');
     if (!group) return;
-    var u = userObj();
-    if (!force && !isExecutive(u)) return;
+    var u = (typeof forceOrUser === 'object' && forceOrUser !== null) ? forceOrUser : userObj();
+    if (!forceOrUser && !isExecutive(u)) return;
+
+    if (typeof window.unmountAllRoleDashboards === 'function') {
+      try { window.unmountAllRoleDashboards('es-prd'); } catch (_) {}
+    }
 
     group.classList.add('is-pres-dash');
     var staffProfile = document.getElementById('es-staff-profile');
@@ -4549,7 +4553,11 @@
     var staffProfile = document.getElementById('es-staff-profile');
     if (staffProfile) staffProfile.classList.remove('es-pres-on');
     var prd = document.getElementById('es-prd');
-    if (prd) prd.remove();
+    if (prd) {
+      prd.hidden = true;
+      prd.setAttribute('hidden', '');
+      prd.style.display = 'none';
+    }
   }
 
   window.EliseePresDash = {

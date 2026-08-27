@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Profilo Presidente: integrazione visiva diretta di tutte le sezioni da PDF ufficiale** — Resi visibili direttamente nella Presidential Suite: Banner Regola Fondamentale Profilo Squadra, Box Kit Maglie Ufficiali (Home/Away/GK), Rosa con Profili Attivi (link Card ufficiale) vs Anteprima Limitata (non cliccabile), Modulo completo Pubblica Candidatura (Cosa Offriamo / Cosa Richiediamo + Opzione AI) e Attività/Permessi/Limiti di Ruolo. Cache `PRES2`.
+Ultimo fatto: **Isolamento completo switch ruoli (Allenatore &harr; Presidente) & fix rendering pulito** — Risolto conflitto DOM e sovrapposizione stili quando si passa da Allenatore a Presidente: `unmountAllRoleDashboards` ora disattiva esplicitamente ogni box e classe del ruolo precedente (`display: none`, rimozione `es-cd-on`, `is-coach-dash`), e `pres-dash.js` monta in modo isolato e ordinato la Presidential Suite con tutte le sezioni dal PDF ufficiale. Cache `ROLECLEAN1`.
 Feature precedente: Scopri profili: riordino e allineamento card profili & pulsanti azione.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)

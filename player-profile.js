@@ -1189,25 +1189,44 @@
       'is-at-dash', 'is-yg-dash', 'is-dg-dash', 'is-ag-dash', 'is-mk-dash',
       'is-pr-dash', 'is-nu-dash', 'is-eq-dash', 'is-sg-dash', 'is-bt-dash', 'is-tf-dash', 'is-gd-dash'
     ];
-    var keepHostClass = keepId === 'es-pd' ? 'es-pd-on' : (keepId === 'es-td' ? 'es-tf-on' : (keepId === 'es-gd' ? 'es-gd-on' : ''));
+    var keepHostMap = {
+      'es-pd': 'es-pd-on',
+      'es-cd': 'es-cd-on',
+      'es-dsd': 'es-ds-on',
+      'es-prd': 'es-pres-on',
+      'es-vd': 'es-vice-on',
+      'es-td': 'es-tf-on',
+      'es-gd': 'es-gd-on'
+    };
+    var keepHostClass = keepId ? (keepHostMap[keepId] || '') : '';
     dashIds.forEach(function (id) {
-      if (keepId && id === keepId) return;
       var el = document.getElementById(id);
       if (!el) return;
-      el.hidden = true;
-      el.setAttribute('hidden', '');
-      el.style.removeProperty('display');
+      if (keepId && id === keepId) {
+        el.hidden = false;
+        el.removeAttribute('hidden');
+        el.style.display = 'block';
+      } else {
+        el.hidden = true;
+        el.setAttribute('hidden', '');
+        el.style.display = 'none';
+      }
     });
     ['es-player-profile', 'es-staff-profile', 'es-tifoso-profile', 'es-giorn-profile'].forEach(function (hid) {
       var h = document.getElementById(hid);
       if (!h) return;
       hostClasses.forEach(function (c) {
-        if (keepHostClass && c === keepHostClass) return;
-        h.classList.remove(c);
+        if (keepHostClass && c === keepHostClass) {
+          h.classList.add(c);
+        } else {
+          h.classList.remove(c);
+        }
       });
     });
     var grp = document.getElementById('user-dossier-view-group');
-    if (grp) groupClasses.forEach(function (c) { grp.classList.remove(c); });
+    if (grp) {
+      groupClasses.forEach(function (c) { grp.classList.remove(c); });
+    }
   };
 
   function setHostVisible(el, on) {
