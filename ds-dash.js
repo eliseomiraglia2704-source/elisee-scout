@@ -58,7 +58,7 @@
     html += wedge(cx, cy, r, -Math.PI / 2, 0, 'rgba(248,113,113,0.18)');
     html += wedge(cx, cy, r, 0, Math.PI / 2, 'rgba(250,204,21,0.16)');
     html += wedge(cx, cy, r, Math.PI / 2, Math.PI, 'rgba(74,222,128,0.14)');
-    html += wedge(cx, cy, r, Math.PI, Math.PI * 1.5, 'rgba(196,176,138,0.16)');
+    html += wedge(cx, cy, r, Math.PI, Math.PI * 1.5, 'rgba(56,189,248,0.16)');
     for (var ring = 1; ring <= 5; ring++) {
       html += '<polygon points="' + poly(cx, cy, r, AXES.map(function () { return ring * 20; })) +
         '" fill="none" stroke="rgba(148,163,184,0.22)" stroke-width="1"/>';
@@ -73,7 +73,7 @@
         esc(AXES[i]) + ' ' + V2025[i] + '%</text>';
     }
     html += '<polygon points="' + poly(cx, cy, r, V2023) + '" fill="rgba(148,163,184,0.12)" stroke="#64748b" stroke-width="1.5"/>';
-    html += '<polygon points="' + poly(cx, cy, r, V2025) + '" fill="rgba(196,176,138,0.12)" stroke="#c4b08a" stroke-width="2"/>';
+    html += '<polygon points="' + poly(cx, cy, r, V2025) + '" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="2"/>';
     html += '</svg>';
     return html;
   }
@@ -93,7 +93,7 @@
       '2024': [70, 72, 78, 82, 86, 88],
       '2025': [76, 82, 85, 90, 93, 96]
     };
-    var cols = { '2023': '#c4b08a', '2024': '#8a9a7a', '2025': '#c4b08a' };
+    var cols = { '2023': '#38bdf8', '2024': '#4ade80', '2025': '#facc15' };
     var w = 240, h = 90;
     var html = '<svg viewBox="0 0 ' + w + ' ' + h + '" width="100%" height="90">';
     Object.keys(series).forEach(function (k) {
@@ -137,7 +137,7 @@
       '<div class="es-pd-metric"><span>Affidabilità trattative</span><b>92%</b></div></section>' +
 
       '<section class="es-pd-card es-pd-radar">' +
-      '<div class="es-pd-radar-tools"><span>Seleziona dati radar</span><span>Analisi performance dirigenziale</span><div class="es-pd-legend-pills"><span class="es-pd-pill-legend" style="color:#c4b08a"><i style="background:#c4b08a"></i> 2025 (Stagione Attuale)</span><span class="es-pd-pill-legend" style="color:#94a3b8"><i style="background:#64748b"></i> 2023 (Benchmark Storico)</span></div></div>' +
+      '<div class="es-pd-radar-tools"><span>Seleziona dati radar</span><span>Analisi performance dirigenziale</span><div class="es-pd-legend-pills"><span class="es-pd-pill-legend" style="color:#38bdf8"><i style="background:#38bdf8"></i> 2025 (Stagione Attuale)</span><span class="es-pd-pill-legend" style="color:#94a3b8"><i style="background:#64748b"></i> 2023 (Benchmark Storico)</span></div></div>' +
       radarSvg() + '</section>' +
 
       '<section class="es-pd-card es-pd-comply"><h2>Verifica &amp; Compliance dirigenziale</h2>' +
@@ -149,10 +149,10 @@
 
       '<section class="es-pd-card es-pd-storico"><h2>Andamento gestionale</h2>' +
       '<div class="es-pd-sparks">' +
-      '<figure>' + spark([40, 52, 48, 60, 72, 80, 88], '#c4b08a') + '<figcaption>Trattative</figcaption></figure>' +
+      '<figure>' + spark([40, 52, 48, 60, 72, 80, 88], '#38bdf8') + '<figcaption>Trattative</figcaption></figure>' +
       '<figure>' + spark([30, 38, 44, 50, 58, 70, 82], '#f87171') + '<figcaption>Budget impiegato</figcaption></figure>' +
-      '<figure>' + spark([42, 50, 55, 52, 64, 74, 86], '#8a9a7a') + '<figcaption>Stagione</figcaption></figure>' +
-      '<figure>' + spark([20, 28, 35, 48, 55, 68, 78], '#c4b08a') + '<figcaption>Plusvalenze</figcaption></figure>' +
+      '<figure>' + spark([42, 50, 55, 52, 64, 74, 86], '#4ade80') + '<figcaption>Stagione</figcaption></figure>' +
+      '<figure>' + spark([20, 28, 35, 48, 55, 68, 78], '#facc15') + '<figcaption>Plusvalenze</figcaption></figure>' +
       '</div></section>' +
 
       '<section class="es-pd-card es-pd-mercato"><h2>Indice di performance DS</h2>' +

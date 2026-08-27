@@ -58,7 +58,7 @@
     html += wedge(cx, cy, r, -Math.PI / 2, 0, 'rgba(74,222,128,0.16)');
     html += wedge(cx, cy, r, 0, Math.PI / 2, 'rgba(248,113,113,0.18)');
     html += wedge(cx, cy, r, Math.PI / 2, Math.PI, 'rgba(250,204,21,0.16)');
-    html += wedge(cx, cy, r, Math.PI, Math.PI * 1.5, 'rgba(196,176,138,0.16)');
+    html += wedge(cx, cy, r, Math.PI, Math.PI * 1.5, 'rgba(56,189,248,0.16)');
     for (var ring = 1; ring <= 5; ring++) {
       html += '<polygon points="' + poly(cx, cy, r, AXES.map(function () { return ring * 20; })) +
         '" fill="none" stroke="rgba(148,163,184,0.22)" stroke-width="1"/>';
@@ -73,7 +73,7 @@
         esc(AXES[i]) + ' ' + V2025[i] + '%</text>';
     }
     html += '<polygon points="' + poly(cx, cy, r, V2023) + '" fill="rgba(148,163,184,0.12)" stroke="#64748b" stroke-width="1.5"/>';
-    html += '<polygon points="' + poly(cx, cy, r, V2025) + '" fill="rgba(196,176,138,0.12)" stroke="#c4b08a" stroke-width="2"/>';
+    html += '<polygon points="' + poly(cx, cy, r, V2025) + '" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="2"/>';
     html += '</svg>';
     return html;
   }
@@ -93,7 +93,7 @@
       '2024': [70, 74, 78, 82, 86, 90],
       '2025': [78, 82, 86, 90, 94, 97]
     };
-    var cols = { '2023': '#c4b08a', '2024': '#8a9a7a', '2025': '#c4b08a' };
+    var cols = { '2023': '#38bdf8', '2024': '#4ade80', '2025': '#facc15' };
     var w = 240, h = 90;
     var html = '<svg viewBox="0 0 ' + w + ' ' + h + '" width="100%" height="90">';
     Object.keys(series).forEach(function (k) {
@@ -142,7 +142,7 @@
       '<div class="es-pd-metric"><span>Presenza social club</span><b>91%</b></div></section>' +
 
       '<section class="es-pd-card es-pd-radar">' +
-      '<div class="es-pd-radar-tools"><span>Seleziona dati radar</span><span>Analisi attività di comunicazione</span><div class="es-pd-legend-pills"><span class="es-pd-pill-legend" style="color:#c4b08a"><i style="background:#c4b08a"></i> 2025 (Stagione Attuale)</span><span class="es-pd-pill-legend" style="color:#94a3b8"><i style="background:#64748b"></i> 2023 (Benchmark Storico)</span></div></div>' +
+      '<div class="es-pd-radar-tools"><span>Seleziona dati radar</span><span>Analisi attività di comunicazione</span><div class="es-pd-legend-pills"><span class="es-pd-pill-legend" style="color:#38bdf8"><i style="background:#38bdf8"></i> 2025 (Stagione Attuale)</span><span class="es-pd-pill-legend" style="color:#94a3b8"><i style="background:#64748b"></i> 2023 (Benchmark Storico)</span></div></div>' +
       radarSvg() + '</section>' +
 
       '<section class="es-pd-card es-pd-comply"><h2>Verifica &amp; Compliance comunicazione</h2>' +
@@ -154,9 +154,9 @@
 
       '<section class="es-pd-card es-pd-storico"><h2>Andamento comunicativo</h2>' +
       '<div class="es-pd-sparks">' +
-      '<figure>' + spark([28, 36, 44, 52, 60, 72, 86], '#c4b08a') + '<figcaption>Comunicati emessi</figcaption></figure>' +
-      '<figure>' + spark([24, 32, 40, 50, 62, 74, 88], '#8a9a7a') + '<figcaption>Follower social</figcaption></figure>' +
-      '<figure>' + spark([20, 28, 36, 46, 56, 68, 82], '#c4b08a') + '<figcaption>Interazioni media</figcaption></figure>' +
+      '<figure>' + spark([28, 36, 44, 52, 60, 72, 86], '#38bdf8') + '<figcaption>Comunicati emessi</figcaption></figure>' +
+      '<figure>' + spark([24, 32, 40, 50, 62, 74, 88], '#4ade80') + '<figcaption>Follower social</figcaption></figure>' +
+      '<figure>' + spark([20, 28, 36, 46, 56, 68, 82], '#facc15') + '<figcaption>Interazioni media</figcaption></figure>' +
       '<figure>' + spark([48, 55, 60, 66, 74, 82, 90], '#22d3ee') + '<figcaption>Stagione</figcaption></figure>' +
       '</div></section>' +
 

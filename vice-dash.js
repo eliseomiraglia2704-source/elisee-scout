@@ -295,7 +295,7 @@
         return (
           '<div class="es-mister-event-card">' +
             '<div class="es-mister-event-date-badge">' + m.date + '</div>' +
-            '<div class="es-mister-event-details"><h4 class="es-mister-event-title">' + m.opponent + '</h4><p class="es-mister-event-sub">' + m.comp + ' · 🏟️ ' + m.stadium + '</p><div style="font-size:0.75rem; color:#8a7a58; font-weight:700; margin-top:0.3rem;">⚽ ' + m.status + ' (' + m.conv + ')</div></div>' +
+            '<div class="es-mister-event-details"><h4 class="es-mister-event-title">' + m.opponent + '</h4><p class="es-mister-event-sub">' + m.comp + ' · 🏟️ ' + m.stadium + '</p><div style="font-size:0.75rem; color:#0284c7; font-weight:700; margin-top:0.3rem;">⚽ ' + m.status + ' (' + m.conv + ')</div></div>' +
             '<button type="button" class="es-mister-circle-btn" style="width:34px; height:34px; font-size:0.85rem;">📋</button>' +
           '</div>'
         );
@@ -340,7 +340,7 @@
             '<div class="es-mister-card-actions">' +
               '<input type="file" id="vice-file-upload" accept="image/png,image/jpeg,application/pdf" style="display:none;">' +
               '<button type="button" class="btn btn-outline-pill" id="btn-vice-upload-file" style="background:#f8fafc; border:1.5px solid #cbd5e1; color:#0f172a; padding:0.55rem 1.15rem; font-weight:800; font-size:0.85rem; display:inline-flex; align-items:center; gap:0.45rem;">📁 Carica immagine / PDF</button>' +
-              '<button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-vice-create-tactic" style="background:#a8946c; color:#ffffff; border:none; padding:0.55rem 1.25rem; font-weight:800; font-size:0.85rem; display:inline-flex; align-items:center; gap:0.45rem;">🖌️ Crea immagine</button>' +
+              '<button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-vice-create-tactic" style="background:#0d9488; color:#ffffff; border:none; padding:0.55rem 1.25rem; font-weight:800; font-size:0.85rem; display:inline-flex; align-items:center; gap:0.45rem;">🖌️ Crea immagine</button>' +
             '</div>' +
           '</div>' +
         '</div>' +

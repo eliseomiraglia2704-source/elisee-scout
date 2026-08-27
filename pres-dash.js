@@ -1118,7 +1118,7 @@
               '<h3>Capienza &amp; Omologazione Impianto</h3>' +
               '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem; margin-bottom:1.2rem;">' +
                 '<div style="font-size:0.75rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Capienza Ufficiale Certificata</div>' +
-                '<div style="font-size:1.6rem; font-weight:800; color:#c4b08a; margin:0.3rem 0;">' + esc(data.stadium.capacity) + '</div>' +
+                '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8; margin:0.3rem 0;">' + esc(data.stadium.capacity) + '</div>' +
                 '<p style="font-size:0.8rem; color:#64748b; margin:0;">Verbale CPV di riferimento: <b>' + esc(data.stadium.cpvProtocol || 'Non registrato') + '</b></p>' +
               '</div>' +
               '<button type="button" class="es-pres-btn-secondary" id="btn-req-capacity-update">Richiedi variazione con verbale CPV</button>' +
@@ -1169,8 +1169,8 @@
 
         '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-bottom:1.5rem;">' +
           '<div style="display:flex; gap:0.5rem;">' +
-            '<button type="button" class="es-pres-btn-secondary ' + (statsActiveTab === 'records' ? 'is-active' : '') + '" id="btn-tab-records" style="' + (statsActiveTab === 'records' ? 'background:#8a7a58; color:#fff; border-color:#8a7a58;' : '') + '">Record di Club</button>' +
-            '<button type="button" class="es-pres-btn-secondary ' + (statsActiveTab === 'history' ? 'is-active' : '') + '" id="btn-tab-history" style="' + (statsActiveTab === 'history' ? 'background:#8a7a58; color:#fff; border-color:#8a7a58;' : '') + '">Partite Registrate</button>' +
+            '<button type="button" class="es-pres-btn-secondary ' + (statsActiveTab === 'records' ? 'is-active' : '') + '" id="btn-tab-records" style="' + (statsActiveTab === 'records' ? 'background:#0284c7; color:#fff; border-color:#0284c7;' : '') + '">Record di Club</button>' +
+            '<button type="button" class="es-pres-btn-secondary ' + (statsActiveTab === 'history' ? 'is-active' : '') + '" id="btn-tab-history" style="' + (statsActiveTab === 'history' ? 'background:#0284c7; color:#fff; border-color:#0284c7;' : '') + '">Partite Registrate</button>' +
           '</div>' +
           '<button type="button" class="es-pres-btn-primary" id="btn-add-match-quick">+ Registra Risultato Partita</button>' +
         '</div>' +
@@ -1180,19 +1180,19 @@
             '<div class="es-pres-grid-3">' +
               '<div class="es-pres-detail-box">' +
                 '<h3>Gare Disputate</h3>' +
-                '<div style="font-size:1.6rem; font-weight:800; color:#c4b08a;">' + matchStats.played + '</div>' +
+                '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8;">' + matchStats.played + '</div>' +
                 '<p style="color:#94a3b8; font-size:0.85rem; margin-top:0.3rem;">' + matchStats.won + ' Vinte · ' + matchStats.drawn + ' Pareggiate · ' + matchStats.lost + ' Perse</p>' +
               '</div>' +
 
               '<div class="es-pres-detail-box">' +
                 '<h3>Gol Fatti / Subiti</h3>' +
-                '<div style="font-size:1.6rem; font-weight:800; color:#8a9a7a;">' + matchStats.gf + ' / ' + matchStats.ga + '</div>' +
+                '<div style="font-size:1.6rem; font-weight:800; color:#34d399;">' + matchStats.gf + ' / ' + matchStats.ga + '</div>' +
                 '<p style="color:#94a3b8; font-size:0.85rem; margin-top:0.3rem;">Differenza reti: ' + matchStats.gd + '</p>' +
               '</div>' +
 
               '<div class="es-pres-detail-box">' +
                 '<h3>Punti Conquistati</h3>' +
-                '<div style="font-size:1.6rem; font-weight:800; color:#c4b08a;">' + matchStats.pts + ' pt</div>' +
+                '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8;">' + matchStats.pts + ' pt</div>' +
                 '<p style="color:#94a3b8; font-size:0.85rem; margin-top:0.3rem;">Media: ' + (matchStats.played ? (matchStats.pts / matchStats.played).toFixed(2) : '0') + ' pt/gara</p>' +
               '</div>' +
             '</div>'
@@ -1218,7 +1218,7 @@
                             '<td>' + esc(m.date) + '</td>' +
                             '<td>' + (m.type === 'H' ? 'Casa' : 'Trasferta') + '</td>' +
                             '<td><b>' + esc(m.opponent) + '</b></td>' +
-                            '<td style="font-weight:700; color:#c4b08a;">' + esc(m.res || (m.goalsFor + ' - ' + m.goalsAgainst)) + '</td>' +
+                            '<td style="font-weight:700; color:#38bdf8;">' + esc(m.res || (m.goalsFor + ' - ' + m.goalsAgainst)) + '</td>' +
                             '<td><span class="es-pres-status ' + (m.status === 'W' ? 'es-pres-status-ok' : (m.status === 'L' ? 'es-pres-status-urgent' : 'es-pres-status-neutral')) + '">' + (m.status === 'W' ? 'Vittoria' : (m.status === 'L' ? 'Sconfitta' : (m.status === 'D' ? 'Pareggio' : 'Programmata'))) + '</span></td>' +
                           '</tr>'
                         );
@@ -1280,9 +1280,9 @@
                     '<h4 style="font-size:1.2rem; font-weight:800; color:#fff; margin:0 0 0.3rem;">' + esc(sp.name) + '</h4>' +
                     '<div style="background:#040810; border-radius:4px; padding:0.75rem; margin:0.8rem 0;">' +
                       '<div style="font-size:0.72rem; color:#94a3b8;">Valore Contrattuale</div>' +
-                      '<div style="font-size:1.3rem; font-weight:800; color:#c4b08a;">' + esc(sp.value) + '</div>' +
+                      '<div style="font-size:1.3rem; font-weight:800; color:#38bdf8;">' + esc(sp.value) + '</div>' +
                     '</div>' +
-                    '<div style="font-size:0.78rem; color:#cbd5e1;">• Scadenza: <b>' + esc(sp.expiry) + '</b><br>• Documento: <span style="color:#c4b08a;">' + esc(sp.doc || 'Contratto_Firmato.pdf') + '</span></div>' +
+                    '<div style="font-size:0.78rem; color:#cbd5e1;">• Scadenza: <b>' + esc(sp.expiry) + '</b><br>• Documento: <span style="color:#38bdf8;">' + esc(sp.doc || 'Contratto_Firmato.pdf') + '</span></div>' +
                   '</div>'
                 );
               }).join('') +
@@ -1331,22 +1331,22 @@
             '<div class="es-pres-detail-box" style="padding:1rem;">' +
               '<div class="es-pres-table-wrap">' +
                 '<table class="es-pres-table">' +
-                  '<thead><tr><th style="width:45px;">Pos</th><th>Squadra</th><th style="text-align:center;">G</th><th style="text-align:center;">V</th><th style="text-align:center;">P</th><th style="text-align:center;">S</th><th style="text-align:center;">GF</th><th style="text-align:center;">GS</th><th style="text-align:center;">DR</th><th style="text-align:center; color:#c4b08a;">PT</th></tr></thead>' +
+                  '<thead><tr><th style="width:45px;">Pos</th><th>Squadra</th><th style="text-align:center;">G</th><th style="text-align:center;">V</th><th style="text-align:center;">P</th><th style="text-align:center;">S</th><th style="text-align:center;">GF</th><th style="text-align:center;">GS</th><th style="text-align:center;">DR</th><th style="text-align:center; color:#38bdf8;">PT</th></tr></thead>' +
                   '<tbody>' +
                     standings.map(function (row) {
                       var isMyTeam = row.isUser;
                       return (
                         '<tr class="' + (isMyTeam ? 'is-my-club' : '') + '">' +
-                          '<td style="font-weight:800; color:' + (row.pos <= 2 ? '#c4b08a' : (row.pos <= 5 ? '#8a9a7a' : '#94a3b8')) + ';">' + row.pos + '</td>' +
+                          '<td style="font-weight:800; color:' + (row.pos <= 2 ? '#38bdf8' : (row.pos <= 5 ? '#34d399' : '#94a3b8')) + ';">' + row.pos + '</td>' +
                           '<td><b>' + esc(row.team) + '</b>' + (isMyTeam ? ' <span class="es-pres-status es-pres-status-neutral" style="font-size:0.68rem; margin-left:0.4rem;">Il tuo Club</span>' : '') + '</td>' +
                           '<td style="text-align:center;">' + row.played + '</td>' +
-                          '<td style="text-align:center; color:#8a9a7a; font-weight:700;">' + row.won + '</td>' +
+                          '<td style="text-align:center; color:#34d399; font-weight:700;">' + row.won + '</td>' +
                           '<td style="text-align:center; color:#94a3b8;">' + row.drawn + '</td>' +
                           '<td style="text-align:center; color:#f87171;">' + row.lost + '</td>' +
                           '<td style="text-align:center;">' + row.gf + '</td>' +
                           '<td style="text-align:center;">' + row.ga + '</td>' +
-                          '<td style="text-align:center; color:' + (String(row.gd).startsWith('+') ? '#8a9a7a' : '#f87171') + ';">' + row.gd + '</td>' +
-                          '<td style="text-align:center; font-size:1.05rem; font-weight:800; color:#c4b08a;">' + row.pts + '</td>' +
+                          '<td style="text-align:center; color:' + (String(row.gd).startsWith('+') ? '#34d399' : '#f87171') + ';">' + row.gd + '</td>' +
+                          '<td style="text-align:center; font-size:1.05rem; font-weight:800; color:#38bdf8;">' + row.pts + '</td>' +
                         '</tr>'
                       );
                     }).join('') +
@@ -1395,7 +1395,7 @@
             '<div class="es-pres-detail-box" style="padding:1.2rem;">' +
               '<div style="display:flex; flex-direction:column; gap:0.6rem;">' +
                 matches.map(function (m) {
-                  var borderCol = m.status === 'W' ? '#8a9a7a' : (m.status === 'D' ? '#94a3b8' : (m.status === 'L' ? '#ef4444' : '#c4b08a'));
+                  var borderCol = m.status === 'W' ? '#34d399' : (m.status === 'D' ? '#94a3b8' : (m.status === 'L' ? '#ef4444' : '#38bdf8'));
                   return (
                     '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-left:3px solid ' + borderCol + '; border-radius:4px; padding:0.85rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem;">' +
                       '<div style="display:flex; align-items:center; gap:1rem;">' +
@@ -1406,7 +1406,7 @@
                         '</div>' +
                       '</div>' +
                       '<div style="display:flex; align-items:center; gap:0.8rem;">' +
-                        '<div style="font-size:1.2rem; font-weight:800; color:' + (!m.isPlayed ? '#c4b08a' : '#ffffff') + ';">' + esc(m.res || (m.isPlayed ? (m.goalsFor + ' - ' + m.goalsAgainst) : '- - -')) + '</div>' +
+                        '<div style="font-size:1.2rem; font-weight:800; color:' + (!m.isPlayed ? '#38bdf8' : '#ffffff') + ';">' + esc(m.res || (m.isPlayed ? (m.goalsFor + ' - ' + m.goalsAgainst) : '- - -')) + '</div>' +
                         (m.status === 'W' ? '<span class="es-pres-status es-pres-status-ok">Vittoria</span>' :
                          m.status === 'D' ? '<span class="es-pres-status es-pres-status-neutral">Pareggio</span>' :
                          m.status === 'L' ? '<span class="es-pres-status es-pres-status-urgent">Sconfitta</span>' :
@@ -1465,7 +1465,7 @@
                     '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; display:flex; justify-content:space-between; align-items:center;">' +
                       '<div>' +
                         '<div style="font-size:0.92rem; font-weight:700; color:#fff;">' + esc(m.name) + '</div>' +
-                        '<div style="font-size:0.75rem; color:#c4b08a; margin-top:0.1rem;">' + esc(m.role) + '</div>' +
+                        '<div style="font-size:0.75rem; color:#38bdf8; margin-top:0.1rem;">' + esc(m.role) + '</div>' +
                         '<div style="font-size:0.72rem; color:#94a3b8; margin-top:0.15rem;">Qualifica: <b>' + esc(m.patent || 'Patentino FIGC') + '</b></div>' +
                       '</div>' +
                       '<span class="' + (m.isWarning ? 'es-pres-status es-pres-status-warning' : 'es-pres-status es-pres-status-ok') + '">' + esc(m.status || 'Regolare') + '</span>' +
@@ -1498,7 +1498,7 @@
                   return (
                     '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.9rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem;">' +
                       '<div>' +
-                        '<div style="font-size:0.95rem; font-weight:700; color:#c4b08a;">' + esc(tw.day) + ' <span style="font-size:0.8rem; color:#94a3b8; font-weight:400;">(' + esc(tw.time) + ')</span></div>' +
+                        '<div style="font-size:0.95rem; font-weight:700; color:#38bdf8;">' + esc(tw.day) + ' <span style="font-size:0.8rem; color:#94a3b8; font-weight:400;">(' + esc(tw.time) + ')</span></div>' +
                         '<div style="font-size:0.82rem; color:#cbd5e1; margin-top:0.25rem;"><b>Focus seduta:</b> ' + esc(tw.focus) + '</div>' +
                         '<div style="font-size:0.75rem; color:#94a3b8; margin-top:0.15rem;">Ubicazione: ' + esc(tw.pitch || 'Campo Principale') + '</div>' +
                       '</div>' +
@@ -1583,13 +1583,13 @@
         '<div style="background:#040810; border:1px solid rgba(148,163,184,0.2); border-radius:4px; padding:0.9rem 1.25rem; margin-bottom:1.5rem;">' +
           '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-bottom:0.75rem;">' +
             '<div style="display:flex; align-items:center; gap:0.6rem;">' +
-              '<span style="display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; background:rgba(196,176,138,0.12); color:#c4b08a; border-radius:4px;">' + ICONS.landmark + '</span>' +
+              '<span style="display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; background:rgba(56,189,248,0.12); color:#38bdf8; border-radius:4px;">' + ICONS.landmark + '</span>' +
               '<div>' +
                 '<h4 style="margin:0; font-size:0.92rem; font-weight:700; color:#fff;">Tassonomia Categorie &amp; Ambito Federale (Stagione 2026/2027)</h4>' +
                 '<p style="margin:0; font-size:0.75rem; color:#94a3b8;">Imposta l\'ambito e il comitato di competenza per visualizzare solo le scadenze e i documenti pertinenti</p>' +
               '</div>' +
             '</div>' +
-            '<div style="font-size:0.75rem; color:#c4b08a; background:rgba(196,176,138,0.08); border:1px solid rgba(196,176,138,0.25); border-radius:4px; padding:4px 9px;">' +
+            '<div style="font-size:0.75rem; color:#38bdf8; background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.25); border-radius:4px; padding:4px 9px;">' +
               'Stagione 2026/27 · Termini Ufficiali Co.Vi.So.C. / LND' +
             '</div>' +
           '</div>' +
@@ -1809,7 +1809,7 @@
                     '<div class="es-pres-card-metric" style="font-size:1.15rem; color:#94a3b8;">Dati protetti da autorizzazione RBAC</div>' +
                     '<p class="es-pres-card-desc">I dati finanziari dettagliati sono visibili esclusivamente al ruolo Presidente e Tesoriere.</p>'
                   )) +
-                  '<div style="font-size:0.75rem; color:#c4b08a; margin-top:0.4rem; font-weight:600;">Regime Fiscale: Esenzione IVA ex D.Lgs. 36/2021 (in vigore dal 01/01/2026 per ASD/SSD)</div>' +
+                  '<div style="font-size:0.75rem; color:#38bdf8; margin-top:0.4rem; font-weight:600;">Regime Fiscale: Esenzione IVA ex D.Lgs. 36/2021 (in vigore dal 01/01/2026 per ASD/SSD)</div>' +
                 '</div>' +
                 '<div class="es-pres-card-footer"><span>Bilancio Club</span><span>' + (canSeeFinances ? 'Apri rendiconto &rsaquo;' : 'Richiedi accesso &rsaquo;') + '</span></div>' +
               '</div>' +
@@ -1891,7 +1891,7 @@
                 '<div>' +
                   '<h3 class="es-pres-card-title">MOG &amp; Codice di Condotta</h3>' +
                   (data.mog && data.mog.isAdopted ? (
-                    '<div class="es-pres-card-metric" style="font-size:1.15rem; color:#8a9a7a;">Modello Conforme</div>' +
+                    '<div class="es-pres-card-metric" style="font-size:1.15rem; color:#34d399;">Modello Conforme</div>' +
                     '<p class="es-pres-card-desc" style="font-size:0.82rem; line-height:1.5;">• Approvato il: <b>' + esc(data.mog.adoptionDate) + '</b><br>• Documento: <b>' + esc(data.mog.docName || 'MOG_2026.pdf') + '</b><br>• Presidi di prevenzione e controllo attivi.</p>'
                   ) : (
                     '<div class="es-pres-card-metric" style="font-size:1.05rem; color:#94a3b8;">MOG non ancora adottato</div>' +
@@ -1928,7 +1928,7 @@
                 '<div>' +
                   '<h3 class="es-pres-card-title">Registro RAS &amp; Statuto</h3>' +
                   (data.ras && data.ras.isRegistered ? (
-                    '<div class="es-pres-card-metric" style="font-size:1.15rem; color:#c4b08a;">' + esc(data.ras.rasCode || 'RAS Attivo') + '</div>' +
+                    '<div class="es-pres-card-metric" style="font-size:1.15rem; color:#38bdf8;">' + esc(data.ras.rasCode || 'RAS Attivo') + '</div>' +
                     '<p class="es-pres-card-desc" style="font-size:0.82rem; line-height:1.5;">• Iscritto il: <b>' + esc(data.ras.registrationDate || '—') + '</b><br>• Statuto: <b>' + esc(data.ras.statuteStatus || 'Adeguato') + '</b><br>• Copertura assicurativa collaboratori attiva.</p>'
                   ) : (
                     '<div class="es-pres-card-metric" style="font-size:1.05rem; color:#94a3b8;">Non iscritto al RAS</div>' +
@@ -1955,16 +1955,16 @@
                 '</div>' +
                 '<div>' +
                   '<h3 class="es-pres-card-title">Scadenziario Federale</h3>' +
-                  '<div style="font-size:0.75rem; color:#c4b08a; font-weight:600; margin-bottom:0.4rem;">' +
+                  '<div style="font-size:0.75rem; color:#38bdf8; font-weight:600; margin-bottom:0.4rem;">' +
                     esc(scopeObj.name.split(' (')[0]) + ' · ' + esc(data.category || 'Serie D') + ' (' + esc(data.activeSeason || '2026/27') + ')' +
                   '</div>' +
                   (inTransition ? ('<div style="font-size:0.72rem; color:#fde68a; margin-bottom:0.35rem;">Transizione a ' + esc(getNextSeason(data.activeSeason)) + '</div>') : '') +
                   (deadlines.length ? ('<div style="font-size:0.8rem; color:#cbd5e1; display:flex; flex-direction:column; gap:0.35rem;">' +
                     deadlines.slice(0, 3).map(function (d) {
                       if (d.isCompleted) {
-                        return '<div>• <b>' + esc(d.task.split(' (')[0]) + ':</b> <span style="color:#8a9a7a;">' + esc(d.status) + '</span>' + (d.amount && d.amount !== '—' ? (' <span style="color:#94a3b8; font-size:0.72rem;">(' + esc(d.amount) + ')</span>') : '') + '</div>';
+                        return '<div>• <b>' + esc(d.task.split(' (')[0]) + ':</b> <span style="color:#34d399;">' + esc(d.status) + '</span>' + (d.amount && d.amount !== '—' ? (' <span style="color:#94a3b8; font-size:0.72rem;">(' + esc(d.amount) + ')</span>') : '') + '</div>';
                       }
-                      return '<div>• <b>' + esc(d.task.split(' (')[0]) + ':</b> <span style="color:' + (d.isWarning ? (d.isEmptyDate ? '#94a3b8' : '#c4b08a') : '#c4b08a') + ';">' + esc(d.status) + '</span>' + (d.amount && d.amount !== '—' ? (' <span style="color:#94a3b8; font-size:0.72rem;">(' + esc(d.amount) + ')</span>') : '') + '</div>';
+                      return '<div>• <b>' + esc(d.task.split(' (')[0]) + ':</b> <span style="color:' + (d.isWarning ? (d.isEmptyDate ? '#94a3b8' : '#fbbf24') : '#38bdf8') + ';">' + esc(d.status) + '</span>' + (d.amount && d.amount !== '—' ? (' <span style="color:#94a3b8; font-size:0.72rem;">(' + esc(d.amount) + ')</span>') : '') + '</div>';
                     }).join('') +
                   '</div>') : '<p class="es-pres-card-desc">Nessuna scadenza o termine perentorio federale registrato.</p>') +
                 '</div>' +
@@ -2415,8 +2415,8 @@
           '<div class="es-pres-input-group"><label>Budget Totale Stagionale (€)</label><input type="text" class="es-pres-input-text" id="inp-fin-bud" value="' + esc(cur.annualBudget || '€ 240.000,00') + '"></div>' +
           '<div class="es-pres-input-group"><label>Stato del Bilancio</label><select class="es-pres-input-text" id="sel-fin-health" style="background:#040810; color:#fff;"><option>Bilancio in pareggio</option><option>Utile d\'esercizio (+ margine)</option><option>Disavanzo controllato</option></select></div>' +
         '</div>' +
-        '<div style="background:rgba(196,176,138,0.06); border:1px solid rgba(196,176,138,0.25); border-radius:4px; padding:0.85rem 1rem;">' +
-          '<div style="color:#c4b08a; font-weight:700; font-size:0.85rem; margin-bottom:0.25rem;">Regime Fiscale IVA (Riforma dello Sport):</div>' +
+        '<div style="background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.25); border-radius:4px; padding:0.85rem 1rem;">' +
+          '<div style="color:#38bdf8; font-weight:700; font-size:0.85rem; margin-bottom:0.25rem;">Regime Fiscale IVA (Riforma dello Sport):</div>' +
           '<div style="font-size:0.8rem; color:#cbd5e1; line-height:1.5;">' +
             'Dal <b>1° Gennaio 2026</b>: le ASD e SSD operano in regime di <b>Esenzione IVA</b> (ex D.Lgs. 36/2021 e s.m.i.) per tutte le attività sportive istituzionali e didattiche.' +
           '</div>' +
@@ -2569,8 +2569,8 @@
 
     var html =
       '<div style="color:#cbd5e1; font-size:0.88rem; line-height:1.6; margin-bottom:1.2rem;">' +
-        '<div style="background:rgba(196,176,138,0.06); border:1px solid rgba(196,176,138,0.2); border-radius:4px; padding:0.9rem 1rem; margin-bottom:1rem;">' +
-          '<h4 style="color:#c4b08a; font-size:0.92rem; font-weight:700; margin:0 0 0.35rem 0;">Avvio Stagione Sportiva ' + esc(nxtSeason) + '</h4>' +
+        '<div style="background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.2); border-radius:4px; padding:0.9rem 1rem; margin-bottom:1rem;">' +
+          '<h4 style="color:#38bdf8; font-size:0.92rem; font-weight:700; margin:0 0 0.35rem 0;">Avvio Stagione Sportiva ' + esc(nxtSeason) + '</h4>' +
           '<p style="margin:0; font-size:0.78rem; color:#cbd5e1;">' +
             'Il passaggio alla nuova stagione sportiva prepara le scadenze e i termini federali per la nuova annata mantenendo inalterato l\'archivio storico di conformità.' +
           '</p>' +
@@ -2647,7 +2647,7 @@
         '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:0.75rem 1rem; margin-bottom:1rem;">' +
           '<div style="display:flex; align-items:center; gap:0.6rem;">' +
             '<span style="font-size:0.78rem; color:#94a3b8; font-weight:600;">Stagione:</span>' +
-            '<select id="sel-deadlines-season-view" style="background:#080e1e; color:#c4b08a; font-weight:700; font-size:0.82rem; border:1px solid rgba(196,176,138,0.3); border-radius:3px; padding:3px 8px;">' +
+            '<select id="sel-deadlines-season-view" style="background:#080e1e; color:#38bdf8; font-weight:700; font-size:0.82rem; border:1px solid rgba(56,189,248,0.3); border-radius:3px; padding:3px 8px;">' +
               allSeasons.map(function (s) {
                 return '<option value="' + esc(s) + '"' + (s === viewingSeason ? ' selected' : '') + '>' +
                   esc(s) + (s === data.activeSeason ? ' (Attiva)' : ' (Archivio)') +
@@ -2657,7 +2657,7 @@
           '</div>' +
 
           (isActiveSeasonView ? (
-            '<button type="button" class="es-pres-btn-secondary" id="btn-open-advance-season-modal" style="padding:4px 10px; font-size:0.75rem; border-color:rgba(138,154,122,0.35); color:#8a9a7a;">' +
+            '<button type="button" class="es-pres-btn-secondary" id="btn-open-advance-season-modal" style="padding:4px 10px; font-size:0.75rem; border-color:rgba(52,211,153,0.35); color:#34d399;">' +
               'Avvia Nuova Stagione ' + esc(getNextSeason(data.activeSeason)) + ' &rsaquo;' +
             '</button>'
           ) : (
@@ -2676,8 +2676,8 @@
 
         // Banner di spiegazione modalità
         (isActiveSeasonView ? (
-          '<div style="background:rgba(196,176,138,0.05); border:1px solid rgba(196,176,138,0.18); border-radius:4px; padding:0.75rem 1rem; margin-bottom:1rem;">' +
-            '<div style="color:#c4b08a; font-weight:700; font-size:0.82rem; margin-bottom:0.25rem;">Scadenziario Ufficiale Stagione ' + esc(viewingSeason) + ' — Ambito ' + esc(scopeObj.name) + '</div>' +
+          '<div style="background:rgba(56,189,248,0.05); border:1px solid rgba(56,189,248,0.18); border-radius:4px; padding:0.75rem 1rem; margin-bottom:1rem;">' +
+            '<div style="color:#38bdf8; font-weight:700; font-size:0.82rem; margin-bottom:0.25rem;">Scadenziario Ufficiale Stagione ' + esc(viewingSeason) + ' — Ambito ' + esc(scopeObj.name) + '</div>' +
             '<div style="font-size:0.78rem; color:#cbd5e1; line-height:1.5;">' +
               'Registra l\'assolvimento degli adempimenti con la relativa data reale. Gli adempimenti contrassegnati come <b>Completati</b> escono dalle allerte e non vengono conteggiati tra quelli pendenti.' +
             '</div>' +
@@ -2693,8 +2693,8 @@
 
         '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem;">' +
           '<span style="font-size:0.8rem; color:#cbd5e1;">' +
-            '<span style="color:#8a9a7a; font-weight:700;">' + completedCount + ' completati</span> · ' +
-            '<span style="color:' + (pendingCount > 0 ? '#c4b08a' : '#94a3b8') + '; font-weight:700;">' + pendingCount + ' da assolvere</span>' +
+            '<span style="color:#34d399; font-weight:700;">' + completedCount + ' completati</span> · ' +
+            '<span style="color:' + (pendingCount > 0 ? '#fbbf24' : '#94a3b8') + '; font-weight:700;">' + pendingCount + ' da assolvere</span>' +
           '</span>' +
           (isActiveSeasonView ? (
             '<div style="display:flex; gap:0.5rem;">' +
@@ -2716,7 +2716,7 @@
               var comp = computed[idx] || {};
               var isSeasonal = (d.recurrence || 'seasonal') === 'seasonal';
               return (
-                '<div style="background:#040810; border:1px solid ' + (d.isCompleted ? 'rgba(138,154,122,0.22)' : 'rgba(148,163,184,0.18)') + '; border-radius:4px; padding:0.85rem 1rem;" class="es-dl-item" data-id="' + esc(d.id) + '">' +
+                '<div style="background:#040810; border:1px solid ' + (d.isCompleted ? 'rgba(52,211,153,0.22)' : 'rgba(148,163,184,0.18)') + '; border-radius:4px; padding:0.85rem 1rem;" class="es-dl-item" data-id="' + esc(d.id) + '">' +
                   // Titolo adempimento
                   '<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:0.75rem; margin-bottom:0.6rem;">' +
                     '<div style="flex:1;">' +
@@ -2789,7 +2789,7 @@
                       d.isCompleted ? (
                         '<button type="button" class="es-pres-btn-secondary es-dl-btn-toggle" data-id="' + esc(d.id) + '" data-set="0" style="padding:3px 8px; font-size:0.72rem;">Segna come Da Svolgere</button>'
                       ) : (
-                        '<button type="button" class="es-pres-btn-secondary es-dl-btn-toggle" data-id="' + esc(d.id) + '" data-set="1" style="padding:3px 9px; font-size:0.72rem; border-color:rgba(138,154,122,0.35); color:#8a9a7a;">Segna come Completato</button>'
+                        '<button type="button" class="es-pres-btn-secondary es-dl-btn-toggle" data-id="' + esc(d.id) + '" data-set="1" style="padding:3px 9px; font-size:0.72rem; border-color:rgba(52,211,153,0.35); color:#34d399;">Segna come Completato</button>'
                       )
                     ) : '') +
                   '</div>' +
@@ -3318,7 +3318,7 @@
           items.map(function (m) {
             return (
               '<div style="background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.85rem 1rem; margin-bottom:0.6rem;">' +
-                '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.25rem;"><span style="font-size:0.75rem; font-weight:700; color:#c4b08a;">' + esc(m.from) + '</span><span style="font-size:0.72rem; color:#94a3b8;">' + esc(m.date) + '</span></div>' +
+                '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.25rem;"><span style="font-size:0.75rem; font-weight:700; color:#38bdf8;">' + esc(m.from) + '</span><span style="font-size:0.72rem; color:#94a3b8;">' + esc(m.date) + '</span></div>' +
                 '<h5 style="font-size:0.92rem; font-weight:700; color:#ffffff; margin:0;">' + esc(m.subject) + '</h5>' +
               '</div>'
             );
@@ -3337,11 +3337,11 @@
           '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem;">' +
             '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem;">' +
               '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">ORDINI EVASI</div>' +
-              '<div style="font-size:1.6rem; font-weight:800; color:#c4b08a;">' + mer.ordersCount + ' <span class="es-pres-unit">ordini</span></div>' +
+              '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8;">' + mer.ordersCount + ' <span class="es-pres-unit">ordini</span></div>' +
             '</div>' +
             '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem;">' +
               '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">RICAVI ACCREDITATI</div>' +
-              '<div style="font-size:1.6rem; font-weight:800; color:#8a9a7a;">' + mer.revenue + '</div>' +
+              '<div style="font-size:1.6rem; font-weight:800; color:#34d399;">' + mer.revenue + '</div>' +
             '</div>' +
           '</div>' +
           '<button type="button" class="es-pres-btn-primary" id="btn-manage-store-modal" style="width:100%;">Gestisci Catalogo Merchandising &rsaquo;</button>';
@@ -3587,8 +3587,8 @@
                 '<input type="text" class="es-pres-input-text" value="' + esc(data.stadium.capacity) + '" disabled style="opacity:0.7; cursor:not-allowed;">' +
               '</div>' +
               '<div class="es-pres-input-group">' +
-                '<label style="color:#c4b08a;">Nuova Capienza Richiesta (Posti) *</label>' +
-                '<input type="number" class="es-pres-input-text" id="inp-cpv-new-capacity" value="' + curCapNum + '" min="100" max="100000" required style="border-color:#c4b08a;">' +
+                '<label style="color:#38bdf8;">Nuova Capienza Richiesta (Posti) *</label>' +
+                '<input type="number" class="es-pres-input-text" id="inp-cpv-new-capacity" value="' + curCapNum + '" min="100" max="100000" required style="border-color:#38bdf8;">' +
               '</div>' +
             '</div>' +
 
@@ -3615,9 +3615,9 @@
 
             '<div class="es-pres-input-group">' +
               '<label>Allegato Verbale Firmato (PDF / Scansione)</label>' +
-              '<div style="background:#040810; border:1px dashed rgba(196,176,138,0.4); border-radius:4px; padding:0.9rem; text-align:center; cursor:pointer;" id="box-cpv-upload">' +
+              '<div style="background:#040810; border:1px dashed rgba(56,189,248,0.4); border-radius:4px; padding:0.9rem; text-align:center; cursor:pointer;" id="box-cpv-upload">' +
                 '<input type="file" id="file-cpv-doc" accept=".pdf,.png,.jpg,.jpeg" style="display:none;">' +
-                '<div style="font-size:0.85rem; color:#c4b08a; font-weight:600;" id="lbl-cpv-doc-name">&#128196; Seleziona o trascina il Verbale CPV / Prefettura</div>' +
+                '<div style="font-size:0.85rem; color:#38bdf8; font-weight:600;" id="lbl-cpv-doc-name">&#128196; Seleziona o trascina il Verbale CPV / Prefettura</div>' +
                 '<div style="font-size:0.75rem; color:#64748b; margin-top:0.25rem;">Formati ammessi: PDF, JPG, PNG (Max 15MB)</div>' +
               '</div>' +
             '</div>' +
@@ -3731,7 +3731,7 @@
       '<div class="es-pres-modal-sheet" role="dialog" aria-modal="true">' +
         '<button type="button" class="es-pres-modal-close-btn" id="btn-close-pres-detail" aria-label="Chiudi">&times;</button>' +
         '<div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:1.2rem; padding-bottom:0.65rem; border-bottom:1px solid rgba(148,163,184,0.15);">' +
-          '<span style="color:#c4b08a;">' + iconSvg + '</span>' +
+          '<span style="color:#38bdf8;">' + iconSvg + '</span>' +
           '<h2 style="font-size:1.3rem; font-weight:800; color:#ffffff; margin:0;">' + esc(title) + '</h2>' +
         '</div>' +
         '<div>' + contentHtml + '</div>' +

@@ -335,8 +335,8 @@
       '<div class="es-edit-field"><label>Tipo di Partita</label><select id="es-sp-type"><option value="derby">Derby regionale ad alta tensione</option><option value="vertice">Scontro al vertice / Alta classifica</option><option value="riscatto">Partita di riscatto e orgoglio</option><option value="generale">Gara di campionato standard</option></select></div>' +
       '<div class="es-edit-field"><label>Tono Motivazionale</label><select id="es-sp-tone"><option>Grinta & Furore Agonistico (Feroce)</option><option>Lucidità Tattica & Freddezza</option><option>Ispirazionale & Cuore</option></select></div>' +
       '<div class="es-edit-field"><label>Focus Tattico Principale</label><input id="es-sp-focus" value="Aggressione alta + Transizione rapida"></div>' +
-      '<div class="es-edit-field full" style="margin-top:0.5rem"><div style="display:flex;justify-content:space-between;align-items:center"><label style="color:#c4b08a;font-weight:800">🎙️ Discorso Pre-Partita Generato dall\'IA</label><button type="button" class="es-pd-act-btn" id="es-sp-gen" style="padding:0.25rem 0.65rem;font-size:0.72rem">⚡ Rigenera Discorso</button></div>' +
-      '<textarea id="es-sp-out" rows="6" style="margin-top:0.4rem;width:100%;font-size:0.85rem;line-height:1.5;color:#e0f2fe;background:#090d16;border:1px solid rgba(196,176,138,0.3);border-radius:10px;padding:0.75rem">' + speeches.derby + '</textarea>' +
+      '<div class="es-edit-field full" style="margin-top:0.5rem"><div style="display:flex;justify-content:space-between;align-items:center"><label style="color:#38bdf8;font-weight:800">🎙️ Discorso Pre-Partita Generato dall\'IA</label><button type="button" class="es-pd-act-btn" id="es-sp-gen" style="padding:0.25rem 0.65rem;font-size:0.72rem">⚡ Rigenera Discorso</button></div>' +
+      '<textarea id="es-sp-out" rows="6" style="margin-top:0.4rem;width:100%;font-size:0.85rem;line-height:1.5;color:#e0f2fe;background:#090d16;border:1px solid rgba(56,189,248,0.3);border-radius:10px;padding:0.75rem">' + speeches.derby + '</textarea>' +
       '</div></div>';
 
     var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
@@ -421,7 +421,7 @@
       for (var i = 0; i < f.nodes.length; i++) {
         var n = f.nodes[i];
         html += '<div style="position:absolute;top:' + n.top + '%;left:' + n.left + '%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;cursor:pointer">' +
-          '<div style="width:24px;height:24px;border-radius:50%;background:#8a7a58;color:#fff;border:1.5px solid #fff;display:grid;place-items:center;font-size:10px;font-weight:900;box-shadow:0 2px 6px rgba(0,0,0,0.4)">' + n.num + '</div>' +
+          '<div style="width:24px;height:24px;border-radius:50%;background:#0284c7;color:#fff;border:1.5px solid #fff;display:grid;place-items:center;font-size:10px;font-weight:900;box-shadow:0 2px 6px rgba(0,0,0,0.4)">' + n.num + '</div>' +
           '<span style="font-size:9px;color:#f8fafc;font-weight:700;margin-top:2px;background:rgba(0,0,0,0.6);padding:0 3px;border-radius:3px">' + n.pos + '</span>' +
           '</div>';
       }
@@ -460,8 +460,8 @@
 
     var listHtml = defaultSessions.map(function (s) {
       return '<div style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0.75rem;background:#1e293b;border:1px solid rgba(148,163,184,0.1);border-radius:8px;margin-bottom:0.45rem;font-size:0.78rem">' +
-        '<div><b style="color:#c4b08a">' + s.data + '</b> — <span style="color:#f8fafc;font-weight:700">' + s.tipo + '</span> <span style="color:#94a3b8">(' + s.dur + ')</span><div style="font-size:0.72rem;color:#cbd5e1;margin-top:2px">' + s.note + '</div></div>' +
-        '<span style="background:rgba(196,176,138,0.15);color:#d4c4a8;padding:0.2rem 0.5rem;border-radius:999px;font-weight:800;font-size:0.72rem">RPE ' + s.rpe + '</span>' +
+        '<div><b style="color:#38bdf8">' + s.data + '</b> — <span style="color:#f8fafc;font-weight:700">' + s.tipo + '</span> <span style="color:#94a3b8">(' + s.dur + ')</span><div style="font-size:0.72rem;color:#cbd5e1;margin-top:2px">' + s.note + '</div></div>' +
+        '<span style="background:rgba(56,189,248,0.15);color:#7dd3fc;padding:0.2rem 0.5rem;border-radius:999px;font-weight:800;font-size:0.72rem">RPE ' + s.rpe + '</span>' +
         '</div>';
     }).join('');
 
@@ -472,7 +472,7 @@
       '<div class="es-edit-field"><label>Intensità Prevista (RPE 1-10)</label><input type="number" step="0.5" value="7.5"></div>' +
       '<div class="es-edit-field full"><label>Note Operative per lo Staff</label><input value="Attivazione a secco con il Prof. poi 40 min di modulo 11vs0."></div>' +
       '</div>' +
-      '<div style="margin-top:1.1rem"><label style="color:#c4b08a;font-weight:800;font-size:0.78rem;margin-bottom:0.4rem;display:block">📋 Registro Sedute Recenti Microciclo</label>' + listHtml + '</div>';
+      '<div style="margin-top:1.1rem"><label style="color:#38bdf8;font-weight:800;font-size:0.78rem;margin-bottom:0.4rem;display:block">📋 Registro Sedute Recenti Microciclo</label>' + listHtml + '</div>';
 
     var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
       '<button type="button" class="es-edit-btn-save" id="es-ses-add">➕ Registra Nuova Seduta nel Log</button>';
@@ -491,8 +491,8 @@
       '<div class="es-edit-field"><label>Volume Totale Medio (km/giocatore)</label><input value="8.4 km"></div>' +
       '<div class="es-edit-field"><label>Metri ad Alta Intensità (>20 km/h)</label><input value="640 m"></div>' +
       '<div class="es-edit-field"><label>Sprint Massimali (>25 km/h)</label><input value="190 m"></div>' +
-      '<div class="es-edit-field full" style="background:#1e293b;padding:0.85rem;border-radius:10px;border:1px solid rgba(196,176,138,0.25);margin-top:0.4rem">' +
-      '<div style="display:flex;justify-content:space-between;align-items:center"><b style="color:#c4b08a;font-size:0.82rem">Indice ACWR (Acute:Chronic Workload Ratio)</b><span style="background:#22c55e;color:#fff;font-weight:900;padding:0.2rem 0.6rem;border-radius:999px;font-size:0.75rem">1.12 · ZONA OTTIMALE</span></div>' +
+      '<div class="es-edit-field full" style="background:#1e293b;padding:0.85rem;border-radius:10px;border:1px solid rgba(56,189,248,0.25);margin-top:0.4rem">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center"><b style="color:#38bdf8;font-size:0.82rem">Indice ACWR (Acute:Chronic Workload Ratio)</b><span style="background:#22c55e;color:#fff;font-weight:900;padding:0.2rem 0.6rem;border-radius:999px;font-size:0.75rem">1.12 · ZONA OTTIMALE</span></div>' +
       '<p style="margin:0.4rem 0 0;font-size:0.74rem;color:#cbd5e1;line-height:1.45">Rapporto tra carico acuto settimanale e carico cronico a 28 giorni perfettamente calibrato. Rischio infortuni muscolari minimo (&lt; 4%).</p>' +
       '</div></div>';
 
@@ -511,10 +511,10 @@
     var u = JSON.parse(localStorage.getItem('elisee_active_user') || '{}');
     var misterName = (u.nome ? (u.nome + ' ' + (u.cognome || '')) : 'Eliseo Miraglia').toUpperCase();
 
-    var body = '<div style="background:#090d16;border:1px solid rgba(196,176,138,0.3);border-radius:12px;padding:1rem;color:#cbd5e1;font-size:0.78rem;line-height:1.6">' +
+    var body = '<div style="background:#090d16;border:1px solid rgba(56,189,248,0.3);border-radius:12px;padding:1rem;color:#cbd5e1;font-size:0.78rem;line-height:1.6">' +
       '<div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(148,163,184,0.15);padding-bottom:0.5rem;margin-bottom:0.75rem">' +
-      '<strong style="color:#c4b08a;font-size:0.95rem">ELISEE SCOUT — DOSSIER STAFF TECNICO</strong>' +
-      '<span style="color:#a8b49c;font-weight:700">STAGIONE 2025/2026</span>' +
+      '<strong style="color:#38bdf8;font-size:0.95rem">ELISEE SCOUT — DOSSIER STAFF TECNICO</strong>' +
+      '<span style="color:#86efac;font-weight:700">STAGIONE 2025/2026</span>' +
       '</div>' +
       '<p><b>Responsabile Tecnico:</b> ' + misterName + '<br>' +
       '<b>Squadra / Categoria:</b> Notaresco Calcio · Serie D (Girone F)<br>' +
@@ -522,7 +522,7 @@
       '<b>Indice Efficacia Staff:</b> A+ (94% Valutazione Rosa)<br>' +
       '<b>Stato Atletico Globale:</b> RPE 7.8 · ACWR 1.12 (Ottimale)<br>' +
       '<b>Disponibilità Giocatori:</b> 22/23 Idonei (1 in differenziato)</p>' +
-      '<div style="background:rgba(196,176,138,0.08);padding:0.6rem;border-radius:8px;color:#d4c4a8;font-size:0.72rem">' +
+      '<div style="background:rgba(56,189,248,0.08);padding:0.6rem;border-radius:8px;color:#7dd3fc;font-size:0.72rem">' +
       '✓ Documento conforme a standard FIGC / LND e crittografia Anti-Fake Elisee Scout.' +
       '</div>' +
       '</div>';
@@ -561,7 +561,7 @@
     ];
     var rows = logs.map(function (l) {
       return '<div style="background:#1e293b;padding:0.6rem 0.8rem;border-radius:8px;margin-bottom:0.4rem;border:1px solid rgba(148,163,184,0.1);font-size:0.76rem">' +
-        '<div style="display:flex;justify-content:space-between"><b style="color:#c4b08a">' + l.data + ' — ' + l.reparto + '</b><span style="color:#a8b49c;font-weight:800">' + l.voto + '</span></div>' +
+        '<div style="display:flex;justify-content:space-between"><b style="color:#38bdf8">' + l.data + ' — ' + l.reparto + '</b><span style="color:#86efac;font-weight:800">' + l.voto + '</span></div>' +
         '<div style="color:#cbd5e1;margin-top:2px">' + l.focus + '</div></div>';
     }).join('');
 
@@ -570,7 +570,7 @@
       '<div class="es-edit-field"><label>Efficacia</label><select><option>⭐⭐⭐⭐⭐ Eccellente</option><option>⭐⭐⭐⭐ Buona</option></select></div>' +
       '<div class="es-edit-field full"><label>Note Tecniche</label><input value="Ottima applicazione linea a 4 su palla scoperta."></div>' +
       '</div>' +
-      '<div style="margin-top:1rem"><label style="color:#c4b08a;font-weight:800;font-size:0.78rem;display:block;margin-bottom:0.4rem">📋 Storico Contributi</label>' + rows + '</div>';
+      '<div style="margin-top:1rem"><label style="color:#38bdf8;font-weight:800;font-size:0.78rem;display:block;margin-bottom:0.4rem">📋 Storico Contributi</label>' + rows + '</div>';
 
     var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
       '<button type="button" class="es-edit-btn-save" id="es-vl-save">➕ Registra Contributo</button>';
@@ -616,7 +616,7 @@
 
   function openViceLoadModal() {
     var body = '<div class="es-edit-grid">' +
-      '<div class="es-edit-field"><label>Reattività Pre-Gara</label><input value="96% — Squadra Pronta" readonly style="color:#8a9a7a;font-weight:800"></div>' +
+      '<div class="es-edit-field"><label>Reattività Pre-Gara</label><input value="96% — Squadra Pronta" readonly style="color:#4ade80;font-weight:800"></div>' +
       '<div class="es-edit-field"><label>Riscaldamento</label><select><option>Dinamico Progressivo (22 min)</option><option>Attivazione Rapida (18 min)</option></select></div>' +
       '</div>';
     var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
@@ -649,9 +649,9 @@
   function openScoutVoiceModal() {
     var body = '<div style="text-align:center;padding:1rem">' +
       '<div style="font-size:2.5rem;margin-bottom:0.5rem">🎙️</div>' +
-      '<b style="color:#c4b08a;font-size:0.95rem">Trascrizione Vocale & Note Audio IA</b>' +
+      '<b style="color:#38bdf8;font-size:0.95rem">Trascrizione Vocale & Note Audio IA</b>' +
       '<p style="font-size:0.78rem;color:#cbd5e1;margin:0.4rem 0 1rem">Parla direttamente al microfono: l\'IA di Elisee Scout trascriverà e compilerà automaticamente i campi della scheda tecnica.</p>' +
-      '<textarea id="es-vc-txt" rows="4" style="width:100%;background:#090d16;color:#a8b49c;border:1px solid rgba(196,176,138,0.3);border-radius:8px;padding:0.6rem;font-size:0.82rem">"Numero 7 rapido nei cambi di direzione, ottima visione di gioco e conclusione potente col sinistro al minuto 34..."</textarea>' +
+      '<textarea id="es-vc-txt" rows="4" style="width:100%;background:#090d16;color:#86efac;border:1px solid rgba(56,189,248,0.3);border-radius:8px;padding:0.6rem;font-size:0.82rem">"Numero 7 rapido nei cambi di direzione, ottima visione di gioco e conclusione potente col sinistro al minuto 34..."</textarea>' +
       '</div>';
     var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
       '<button type="button" class="es-edit-btn-save" id="es-vc-ins">✨ Inserisci in Scheda Tecnica</button>';
@@ -665,7 +665,7 @@
   function openScoutGeoModal() {
     var body = '<div class="es-edit-grid">' +
       '<div class="es-edit-field"><label>Campo / Stadio Selezionato</label><input value="Stadio Vincenzo Savini (Notaresco)"></div>' +
-      '<div class="es-edit-field"><label>Stato Geolocalizzazione</label><input value="🟢 Attiva (Opt-in Conforme)" readonly style="color:#8a9a7a;font-weight:700"></div>' +
+      '<div class="es-edit-field"><label>Stato Geolocalizzazione</label><input value="🟢 Attiva (Opt-in Conforme)" readonly style="color:#4ade80;font-weight:700"></div>' +
       '<div class="es-edit-field full"><label>Gare Weekend in Raggio 50 km</label><input value="3 Gare Serie D · 2 Gare Eccellenza · 4 Gare Primavera"></div>' +
       '</div>';
     var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
@@ -731,8 +731,8 @@
     var body = '<div class="es-edit-grid">' +
       '<div class="es-edit-field"><label>Giocatore A</label><input value="E. Miraglia (Attaccante)"></div>' +
       '<div class="es-edit-field"><label>Giocatore B</label><input value="M. Rossi (Attaccante Benchmark)"></div>' +
-      '<div class="es-edit-field"><label>Confronto xG / 90 min</label><input value="0.62 vs 0.48 (A +29%)" readonly style="color:#c4b08a;font-weight:700"></div>' +
-      '<div class="es-edit-field"><label>Confronto Dribbling %</label><input value="76% vs 64% (A +18%)" readonly style="color:#8a9a7a;font-weight:700"></div>' +
+      '<div class="es-edit-field"><label>Confronto xG / 90 min</label><input value="0.62 vs 0.48 (A +29%)" readonly style="color:#38bdf8;font-weight:700"></div>' +
+      '<div class="es-edit-field"><label>Confronto Dribbling %</label><input value="76% vs 64% (A +18%)" readonly style="color:#4ade80;font-weight:700"></div>' +
       '</div>';
     var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi</button>' +
       '<button type="button" class="es-edit-btn-save" id="es-cmp-ok">📊 Genera Radar Comparativo</button>';
@@ -758,18 +758,18 @@
       '</div>' +
 
       '<div class="es-edit-grid">' +
-      '<div class="es-edit-field"><label>Calciatore Interessato</label><input id="es-fn-player" value="Eliseo Miraglia (Attaccante / Punta Centrale)" readonly style="color:#c4b08a;font-weight:700"></div>' +
+      '<div class="es-edit-field"><label>Calciatore Interessato</label><input id="es-fn-player" value="Eliseo Miraglia (Attaccante / Punta Centrale)" readonly style="color:#38bdf8;font-weight:700"></div>' +
       '<div class="es-edit-field"><label>Destinatario Ufficiale</label><input value="Mister — Primo Allenatore &amp; Staff Tecnico" readonly></div>' +
-      '<div class="es-edit-field"><label>Esito Valutazione Fisioterapica</label><input value="✅ 100% IDONEO — Recupero Completo" readonly style="color:#8a9a7a;font-weight:800"></div>' +
+      '<div class="es-edit-field"><label>Esito Valutazione Fisioterapica</label><input value="✅ 100% IDONEO — Recupero Completo" readonly style="color:#4ade80;font-weight:800"></div>' +
       '<div class="es-edit-field"><label>Operatore Sanitario Certificante</label><input value="' + esc(fisioName) + ' (Albo TSRM-PSTRP)" readonly></div>' +
       '<div class="es-edit-field full"><label>Dettaglio Clinico &amp; Indicazioni per il Riscaldamento</label><textarea id="es-fn-notes" rows="2" style="background:#1e293b;color:#fff;border-radius:8px;padding:0.5rem">Test di forza isometrica e mobilità articolare superati a pieno regime. Nessuna limitazione al minutaggio.</textarea></div>' +
       '</div>' +
 
-      '<div style="background:#090d16;border:1.5px dashed rgba(196,176,138,0.4);border-radius:10px;padding:0.85rem;margin-top:1rem">' +
+      '<div style="background:#090d16;border:1.5px dashed rgba(56,189,248,0.4);border-radius:10px;padding:0.85rem;margin-top:1rem">' +
       '<div style="display:flex;align-items:flex-start;gap:0.6rem">' +
-      '<input type="checkbox" id="es-fn-check" style="margin-top:3px;cursor:pointer;width:17px;height:17px;accent-color:#c4b08a">' +
+      '<input type="checkbox" id="es-fn-check" style="margin-top:3px;cursor:pointer;width:17px;height:17px;accent-color:#38bdf8">' +
       '<label for="es-fn-check" style="font-size:0.75rem;color:#e0f2fe;line-height:1.45;cursor:pointer">' +
-      '<strong style="color:#c4b08a">DOPPIA CONFERMA DI RESPONSABILITÀ:</strong> Dichiaro sotto la mia responsabilità professionale di aver completato tutti i test fisici e funzionali. Autorizzo l\'invio formale della notifica di idoneità al Mister.' +
+      '<strong style="color:#38bdf8">DOPPIA CONFERMA DI RESPONSABILITÀ:</strong> Dichiaro sotto la mia responsabilità professionale di aver completato tutti i test fisici e funzionali. Autorizzo l\'invio formale della notifica di idoneità al Mister.' +
       '</label>' +
       '</div>' +
       '</div>';
@@ -858,41 +858,41 @@
         var qrSrc = 'https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=' + encodeURIComponent(shareUrl);
         var pct = Math.min(100, Math.round(((ev.adesioni || 0) / (ev.limit || 40)) * 100));
 
-        return '<div style="background:rgba(15,23,42,0.85);border:1px solid rgba(196,176,138,0.25);border-radius:12px;padding:0.9rem;margin-bottom:0.85rem;display:flex;flex-direction:column;gap:0.75rem">' +
+        return '<div style="background:rgba(15,23,42,0.85);border:1px solid rgba(56,189,248,0.25);border-radius:12px;padding:0.9rem;margin-bottom:0.85rem;display:flex;flex-direction:column;gap:0.75rem">' +
           '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.75rem">' +
             '<div style="flex:1">' +
               '<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.25rem">' +
-                '<span style="background:rgba(196,176,138,0.15);color:#c4b08a;padding:0.15rem 0.5rem;border-radius:999px;font-size:0.68rem;font-weight:800">CATEGORIA: ' + esc(ev.fascia) + '</span>' +
-                (ev.minors ? '<span style="background:rgba(34,197,94,0.15);color:#8a9a7a;padding:0.15rem 0.5rem;border-radius:999px;font-size:0.68rem;font-weight:700">CONSENSO MINORI ATTIVO</span>' : '') +
+                '<span style="background:rgba(56,189,248,0.15);color:#38bdf8;padding:0.15rem 0.5rem;border-radius:999px;font-size:0.68rem;font-weight:800">CATEGORIA: ' + esc(ev.fascia) + '</span>' +
+                (ev.minors ? '<span style="background:rgba(34,197,94,0.15);color:#4ade80;padding:0.15rem 0.5rem;border-radius:999px;font-size:0.68rem;font-weight:700">CONSENSO MINORI ATTIVO</span>' : '') +
               '</div>' +
               '<h4 style="margin:0 0 0.25rem;color:#f8fafc;font-size:0.95rem;font-weight:800">' + esc(ev.title) + '</h4>' +
               '<div style="font-size:0.75rem;color:#94a3b8">📅 <b>' + esc(ev.date) + (ev.time ? ' ore ' + esc(ev.time) : '') + '</b> · 📍 <b>' + esc(ev.place) + '</b></div>' +
             '</div>' +
             '<div style="text-align:center;flex-shrink:0">' +
               '<img src="' + qrSrc + '" alt="QR Evento" style="width:72px;height:72px;border-radius:8px;background:#fff;padding:3px;box-shadow:0 4px 12px rgba(0,0,0,0.4)">' +
-              '<div style="font-size:0.62rem;color:#d4c4a8;margin-top:2px;font-weight:700">QR ISCRIZIONI</div>' +
+              '<div style="font-size:0.62rem;color:#7dd3fc;margin-top:2px;font-weight:700">QR ISCRIZIONI</div>' +
             '</div>' +
           '</div>' +
           '<div>' +
             '<div style="display:flex;justify-content:space-between;font-size:0.72rem;color:#cbd5e1;margin-bottom:0.25rem">' +
-              '<span>Adesioni registrate: <strong style="color:#c4b08a">' + (ev.adesioni || 0) + '</strong> / ' + (ev.limit || 40) + '</span>' +
+              '<span>Adesioni registrate: <strong style="color:#38bdf8">' + (ev.adesioni || 0) + '</strong> / ' + (ev.limit || 40) + '</span>' +
               '<span style="color:#94a3b8">' + pct + '% occupazione</span>' +
             '</div>' +
-            '<div style="background:rgba(196,176,138,0.12);border-radius:6px;height:6px;overflow:hidden">' +
-              '<div style="background:linear-gradient(90deg, #c4b08a, #22c55e);height:100%;width:' + pct + '%"></div>' +
+            '<div style="background:rgba(56,189,248,0.12);border-radius:6px;height:6px;overflow:hidden">' +
+              '<div style="background:linear-gradient(90deg, #38bdf8, #22c55e);height:100%;width:' + pct + '%"></div>' +
             '</div>' +
           '</div>' +
           '<div style="display:flex;gap:0.5rem;flex-wrap:wrap;border-top:1px solid rgba(148,163,184,0.1);padding-top:0.6rem">' +
-            '<button type="button" class="es-edit-btn-save es-ev-add-join" data-ev-id="' + esc(ev.id) + '" style="font-size:0.72rem;padding:0.35rem 0.7rem;background:#8a7a58">➕ +1 Adesione Atleta</button>' +
-            '<button type="button" class="es-edit-btn-cancel es-ev-copy-link" data-ev-url="' + esc(shareUrl) + '" style="font-size:0.72rem;padding:0.35rem 0.7rem;color:#d4c4a8;border-color:rgba(196,176,138,0.4)">📲 Copia Link Modulo</button>' +
+            '<button type="button" class="es-edit-btn-save es-ev-add-join" data-ev-id="' + esc(ev.id) + '" style="font-size:0.72rem;padding:0.35rem 0.7rem;background:#0284c7">➕ +1 Adesione Atleta</button>' +
+            '<button type="button" class="es-edit-btn-cancel es-ev-copy-link" data-ev-url="' + esc(shareUrl) + '" style="font-size:0.72rem;padding:0.35rem 0.7rem;color:#7dd3fc;border-color:rgba(56,189,248,0.4)">📲 Copia Link Modulo</button>' +
             '<button type="button" class="es-edit-btn-cancel es-ev-del" data-ev-id="' + esc(ev.id) + '" style="font-size:0.72rem;padding:0.35rem 0.7rem;color:#f87171;border-color:rgba(239,68,68,0.3);margin-left:auto">🗑️ Elimina</button>' +
           '</div>' +
         '</div>';
       }).join('');
     }
 
-    var body = '<div style="background:rgba(196,176,138,0.08);border:1px solid rgba(196,176,138,0.25);border-radius:10px;padding:0.75rem 0.9rem;margin-bottom:1rem;font-size:0.78rem;color:#cbd5e1;line-height:1.45">' +
-      '<strong style="color:#c4b08a">🎪 Modulo di Gestione Open Day &amp; Selezioni Giovanili:</strong> Crea stage, imposta il limite partecipanti, genera il QR code per le iscrizioni digitali e raccogli il consenso minori a norma FIGC / GDPR.' +
+    var body = '<div style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);border-radius:10px;padding:0.75rem 0.9rem;margin-bottom:1rem;font-size:0.78rem;color:#cbd5e1;line-height:1.45">' +
+      '<strong style="color:#38bdf8">🎪 Modulo di Gestione Open Day &amp; Selezioni Giovanili:</strong> Crea stage, imposta il limite partecipanti, genera il QR code per le iscrizioni digitali e raccogli il consenso minori a norma FIGC / GDPR.' +
       '</div>' +
 
       '<div class="es-edit-grid" style="background:#090d16;border:1px solid rgba(148,163,184,0.12);border-radius:12px;padding:0.9rem">' +
@@ -902,16 +902,16 @@
       '<div class="es-edit-field"><label>Luogo / Impianto</label><input id="es-ev-new-place" value="Centro Sportivo Comunale - Campo Principale"></div>' +
       '<div class="es-edit-field"><label>Fascia Età / Annate</label><input id="es-ev-new-fascia" value="2008 / 2009 / 2010"></div>' +
       '<div class="es-edit-field"><label>Limite Posti Disponibili</label><input type="number" id="es-ev-new-limit" value="40" min="5" max="200"></div>' +
-      '<div class="es-edit-field" style="display:flex;align-items:flex-end;padding-bottom:0.4rem"><label style="display:flex;align-items:center;gap:0.45rem;cursor:pointer;font-size:0.75rem;color:#e0f2fe"><input type="checkbox" id="es-ev-new-minors" checked style="accent-color:#c4b08a;width:16px;height:16px"> Consenso minori obbligatorio</label></div>' +
+      '<div class="es-edit-field" style="display:flex;align-items:flex-end;padding-bottom:0.4rem"><label style="display:flex;align-items:center;gap:0.45rem;cursor:pointer;font-size:0.75rem;color:#e0f2fe"><input type="checkbox" id="es-ev-new-minors" checked style="accent-color:#38bdf8;width:16px;height:16px"> Consenso minori obbligatorio</label></div>' +
       '<div class="es-edit-field full" style="display:flex;gap:0.6rem;margin-top:0.3rem">' +
         '<button type="button" class="es-edit-btn-cancel" id="es-ev-tpl-btn" style="font-size:0.75rem;padding:0.45rem 0.85rem">📋 Carica Template Standard</button>' +
-        '<button type="button" class="es-edit-btn-save" id="es-ev-create-btn" style="font-size:0.75rem;padding:0.45rem 1rem;background:linear-gradient(135deg,#8a7a58,#0369a1)">✨ Crea Evento &amp; Genera QR Code</button>' +
+        '<button type="button" class="es-edit-btn-save" id="es-ev-create-btn" style="font-size:0.75rem;padding:0.45rem 1rem;background:linear-gradient(135deg,#0284c7,#0369a1)">✨ Crea Evento &amp; Genera QR Code</button>' +
       '</div>' +
       '</div>' +
 
       '<div style="margin-top:1.25rem">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem">' +
-        '<h3 style="margin:0;color:#c4b08a;font-size:0.92rem;font-weight:800">📋 Eventi &amp; Open Day Attivi del Club</h3>' +
+        '<h3 style="margin:0;color:#38bdf8;font-size:0.92rem;font-weight:800">📋 Eventi &amp; Open Day Attivi del Club</h3>' +
       '</div>' +
       '<div id="es-ev-list-container">' + renderEventsListHtml(getEvents()) + '</div>' +
       '</div>';
@@ -1014,8 +1014,8 @@
 
   // --- 7. MODALE GUIDA: COME PUBBLICARE UNA CANDIDATURA & RECRUITING IA ---
   function openGuidaPubblicaCandidaturaModal() {
-    var body = '<div style="background:rgba(196,176,138,0.08);border:1.5px solid rgba(196,176,138,0.25);border-radius:12px;padding:0.9rem;margin-bottom:1rem">' +
-      '<div style="display:flex;align-items:center;gap:0.5rem;color:#c4b08a;font-weight:800;font-size:0.9rem;margin-bottom:0.35rem">' +
+    var body = '<div style="background:rgba(56,189,248,0.08);border:1.5px solid rgba(56,189,248,0.25);border-radius:12px;padding:0.9rem;margin-bottom:1rem">' +
+      '<div style="display:flex;align-items:center;gap:0.5rem;color:#38bdf8;font-weight:800;font-size:0.9rem;margin-bottom:0.35rem">' +
         '<span>📢</span> <span>MANUALE PUBBLICAZIONE CANDIDATURE &amp; RICERCA PERSONALE CLUB</span>' +
       '</div>' +
       '<p style="font-size:0.76rem;color:#cbd5e1;margin:0;line-height:1.5">' +
@@ -1024,8 +1024,8 @@
       '</div>' +
 
       '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;margin-bottom:1rem">' +
-        '<div style="background:#090d16;border:1px solid rgba(196,176,138,0.2);border-radius:10px;padding:0.85rem">' +
-          '<h4 style="margin:0 0 0.45rem;color:#c4b08a;font-size:0.85rem;display:flex;align-items:center;gap:0.4rem"><span>🎁</span> 1. Cosa offriamo</h4>' +
+        '<div style="background:#090d16;border:1px solid rgba(56,189,248,0.2);border-radius:10px;padding:0.85rem">' +
+          '<h4 style="margin:0 0 0.45rem;color:#38bdf8;font-size:0.85rem;display:flex;align-items:center;gap:0.4rem"><span>🎁</span> 1. Cosa offriamo</h4>' +
           '<p style="margin:0 0 0.5rem;font-size:0.72rem;color:#94a3b8">Descrivi in dettaglio l\'opportunità proposta al candidato:</p>' +
           '<ul style="margin:0;padding-left:1.1rem;font-size:0.73rem;color:#e2e8f0;line-height:1.5">' +
             '<li><b>Tipologia di incarico:</b> Tesseramento, ingaggio, provino, collaborazione staff, stage.</li>' +
@@ -1038,7 +1038,7 @@
         '</div>' +
 
         '<div style="background:#090d16;border:1px solid rgba(34,197,94,0.2);border-radius:10px;padding:0.85rem">' +
-          '<h4 style="margin:0 0 0.45rem;color:#8a9a7a;font-size:0.85rem;display:flex;align-items:center;gap:0.4rem"><span>🎯</span> 2. Cosa richiediamo / Il profilo</h4>' +
+          '<h4 style="margin:0 0 0.45rem;color:#4ade80;font-size:0.85rem;display:flex;align-items:center;gap:0.4rem"><span>🎯</span> 2. Cosa richiediamo / Il profilo</h4>' +
           '<p style="margin:0 0 0.5rem;font-size:0.72rem;color:#94a3b8">Specifica i requisiti del candidato ideale per l\'IA:</p>' +
           '<ul style="margin:0;padding-left:1.1rem;font-size:0.73rem;color:#e2e8f0;line-height:1.5">' +
             '<li><b>Ruolo ricercato:</b> Ruolo in campo (es. Punta centrale) o nello Staff tecnico.</li>' +
@@ -1061,7 +1061,7 @@
       '</div>';
 
     var btns = '<button type="button" class="es-edit-btn-cancel es-act-btn-close">Chiudi Guida</button>' +
-      '<button type="button" class="es-edit-btn-save" id="es-guide-open-pub" style="background:linear-gradient(135deg,#8a7a58,#0369a1)">🚀 Apri Modulo Pubblica Candidatura</button>';
+      '<button type="button" class="es-edit-btn-save" id="es-guide-open-pub" style="background:linear-gradient(135deg,#0284c7,#0369a1)">🚀 Apri Modulo Pubblica Candidatura</button>';
 
     var modal = createModalContainer('📖 Come Pubblicare una Candidatura (Guida Club)', body, btns);
 
@@ -1090,7 +1090,7 @@
       if (f.type === 'textarea') {
         return '<div class="es-edit-field full"><label>' + f.label + '</label><textarea rows="3" style="background:#1e293b;color:#fff;border-radius:8px;padding:0.5rem">' + (f.val || '') + '</textarea></div>';
       }
-      return '<div class="es-edit-field ' + (f.full ? 'full' : '') + '"><label>' + f.label + '</label><input value="' + (f.val || '') + '" ' + (f.readonly ? 'readonly style="color:#c4b08a;font-weight:700"' : '') + '></div>';
+      return '<div class="es-edit-field ' + (f.full ? 'full' : '') + '"><label>' + f.label + '</label><input value="' + (f.val || '') + '" ' + (f.readonly ? 'readonly style="color:#38bdf8;font-weight:700"' : '') + '></div>';
     }).join('');
 
     var body = '<div class="es-edit-grid">' + fieldsHtml + '</div>';
@@ -1683,13 +1683,13 @@
 
       var card = document.createElement('section');
       card.className = 'es-pd-card es-pd-actions-card';
-      var html = '<div class="es-pd-card-header"><h2><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c4b08a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> <span>' + roleData.title + '</span></h2><span class="es-pd-source-badge es-pd-source-ia">Strumenti Operativi</span></div>';
+      var html = '<div class="es-pd-card-header"><h2><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> <span>' + roleData.title + '</span></h2><span class="es-pd-source-badge es-pd-source-ia">Strumenti Operativi</span></div>';
       html += '<div class="es-pd-actions-list" style="display:flex; flex-direction:column; gap:0.45rem; margin-top:0.35rem;">';
       for (var i = 0; i < roleData.actions.length; i++) {
         var act = roleData.actions[i];
         var iconHtml = getLinearSvgIcon(act.icon || act.id);
         html += '<button type="button" class="es-pd-act-btn" data-act-id="' + act.id + '" data-act-label="' + act.label + '" style="display:flex; align-items:center; gap:0.5rem; background:rgba(15,23,42,0.6); border:1px solid rgba(148,163,184,0.14); border-radius:4px; padding:0.45rem 0.65rem; color:#cbd5e1; font-size:0.75rem; text-align:left; cursor:pointer; transition:all 0.15s ease;">';
-        html += '<span style="color:#c4b08a; display:flex; align-items:center; flex-shrink:0;">' + iconHtml + '</span> <span style="font-weight:600;">' + esc(act.label) + '</span>';
+        html += '<span style="color:#38bdf8; display:flex; align-items:center; flex-shrink:0;">' + iconHtml + '</span> <span style="font-weight:600;">' + esc(act.label) + '</span>';
         html += '</button>';
       }
       html += '</div>';

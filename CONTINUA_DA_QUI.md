@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Tema luxury professionale su tutte le dashboard ruolo**: rimosso lo stile da videogioco (cyan neon, pillole FIFA, oro UTA, emoji nelle tab). Palette charcoal / avorio / ottone, titoli Cormorant Garamond, card rettilinee, metriche da report. File: `dash-luxury.css` (caricato per ultimo), `*-dash.js` (colori), `coach-dash.js` / `vice-dash.js` (tab senza emoji), `public-rating-system.js`, `index.html`, `sw.js`. Cache `LUX1`.
-Feature precedente: Calciatore visibile + OTP riparato.
+Ultimo fatto: **Dashboard ruolo professionali sulla palette ufficiale**: fondo `#050608`, accento `#38bdf8` / `#0284c7`, testi bianchi/slate, font Outfit+Inter (variabili `:root` di `style.css`). Tolto l’ottone/avorio introdotto per errore. Resta il layout pulito (niente pillole FIFA/oro UTA). File: `dash-luxury.css`, `*-dash.js` ripristinati sui colori originali, `coach-dash.js` / `vice-dash.js`, `index.html`, `sw.js`. Cache `LUX2`.
+Feature precedente: Tema luxury con palette ottone (scartata).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -110,7 +110,7 @@ File:
 - `manager-runtime.js` / `manager.css` — inbox admin 3 colonne
 - `api/manager.js` — Vercel: `propose-lineup`, `view=official`, `decide` kind `lineup`
 - `workers/manager_store.py` + `elisee_up.py` — stesso contratto in locale (persistenza `data/manager/state.json`, gitignored)
-- Cache attuale: `?v=20260827_LUX1`, SW `elisee-scout-v20260827-lux1`
+- Cache attuale: `?v=20260827_LUX2`, SW `elisee-scout-v20260827-lux2`
 
 localStorage:
 
@@ -217,6 +217,7 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-27** — Palette ufficiale ripristinata sulle dashboard ruolo (`#050608` + `#38bdf8`). Layout professionale, colori di progetto. Cache `LUX2`.
 - **2026-08-27** — Tema luxury su tutte le interfacce ruolo (Calciatore, staff, tifoso, TC, mister). Niente neon da videogioco. Cache `LUX1`.
 - **2026-08-27** — Calciatore: cruscotto visibile (niente schermata nera). OTP riparato, non disattivato: niente bypass Eliseo, challenge firmato, banner in basso. Cache `PD_OTP2`.
 - **2026-08-27** — Bugfix routing dashboard: leftover viste al cambio ruolo, Presidente che apriva DG/SG, Calciatore che lasciava `display:none` sullo staff, login admin senza verifica password, doppio popstate. War Room riattivata. Cache `BUGFIX1`.
