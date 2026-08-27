@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Logo Ufficiale Fidentina Borgo San Donnino HD integrato** — Scaricato e configurato il logo originale in alta definizione per la Fidentina Borgo San Donnino (`ecc-fidentina-borgo-san-donnino.png`, `fidentina-borgo-san-donnino.png`, `borgo-san-donnino.png`) nel catalogo loghi societari `immagini/squadre-loghi/`.
+Ultimo fatto: **Logo Ufficiale Futura Fornovo Medesano HD integrato** — Scaricato e configurato il logo originale in altissima definizione per la Futura Fornovo Medesano (`ecc-futura-fornovo-medesano.png`, `futura-fornovo-medesano.png`, `fornovo-medesano.png`) nel catalogo loghi societari `immagini/squadre-loghi/`.
 Feature precedente: Scopri profili: riordino e allineamento card profili & pulsanti azione.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
