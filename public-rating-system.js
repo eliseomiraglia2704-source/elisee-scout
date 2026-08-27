@@ -265,11 +265,11 @@
       return '<div class="es-rating-field-block" style="background:rgba(15,23,42,0.6); border:1px solid rgba(148,163,184,0.12); border-radius:4px; padding:0.65rem 0.85rem; margin-bottom:0.65rem;">' +
         '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.25rem;">' +
           '<label style="font-size:0.78rem; font-weight:700; color:#f1f5f9;">' + esc(c.label) + '</label>' +
-          '<span id="val-disp-' + esc(c.key) + '" style="font-size:0.85rem; font-weight:800; color:#38bdf8;">4 / 5</span>' +
+          '<span id="val-disp-' + esc(c.key) + '" style="font-size:0.85rem; font-weight:800; color:#c4b08a;">4 / 5</span>' +
         '</div>' +
         '<div style="font-size:0.68rem; color:#94a3b8; margin-bottom:0.45rem;">' + esc(c.desc) + '</div>' +
         '<div style="display:flex; gap:0.5rem; align-items:center;">' +
-          '<input type="range" class="es-rating-slider" id="inp-score-' + esc(c.key) + '" min="1" max="5" step="1" value="4" style="flex:1; accent-color:#38bdf8; cursor:pointer;" data-key="' + esc(c.key) + '">' +
+          '<input type="range" class="es-rating-slider" id="inp-score-' + esc(c.key) + '" min="1" max="5" step="1" value="4" style="flex:1; accent-color:#c4b08a; cursor:pointer;" data-key="' + esc(c.key) + '">' +
           '<div style="display:flex; justify-content:space-between; width:100%; font-size:0.65rem; color:#64748b;"><span>1 (Insufficiente)</span><span>3 (Nella Media)</span><span>5 (Eccellente)</span></div>' +
         '</div>' +
       '</div>';
@@ -280,13 +280,13 @@
         '<div class="es-creator-modal-head">' +
           '<div class="es-creator-modal-title-wrap">' +
             '<h2 style="font-size:1.05rem; font-weight:700; color:#fff; margin:0 0 0.25rem 0;">Valutazione Strutturata: ' + esc(subjectName) + '</h2>' +
-            '<p style="font-size:0.75rem; color:#94a3b8; margin:0;">Stagione: <b style="color:#38bdf8;">' + esc(season) + '</b> · I giudizi sono anonimi verso il soggetto e strutturati su criteri oggettivi</p>' +
+            '<p style="font-size:0.75rem; color:#94a3b8; margin:0;">Stagione: <b style="color:#c4b08a;">' + esc(season) + '</b> · I giudizi sono anonimi verso il soggetto e strutturati su criteri oggettivi</p>' +
           '</div>' +
           '<button type="button" class="es-creator-modal-close" id="btn-close-rating-modal" aria-label="Chiudi">&times;</button>' +
         '</div>' +
         '<div class="es-creator-modal-body" style="padding:1.2rem; max-height:75vh; overflow-y:auto;">' +
-          '<div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:4px; padding:0.6rem 0.75rem; margin-bottom:0.9rem; font-size:0.7rem; color:#cbd5e1; line-height:1.4;">' +
-            '<b style="color:#38bdf8;">Trasparenza &amp; Tutela B2B:</b> Non sono ammessi commenti di testo libero. La tua valutazione contribuisce all\'indice di percezione pubblica aggregato per supportare decisioni sportive consapevoli.' +
+          '<div style="background:rgba(196,176,138,0.08); border:1px solid rgba(196,176,138,0.2); border-radius:4px; padding:0.6rem 0.75rem; margin-bottom:0.9rem; font-size:0.7rem; color:#cbd5e1; line-height:1.4;">' +
+            '<b style="color:#c4b08a;">Trasparenza &amp; Tutela B2B:</b> Non sono ammessi commenti di testo libero. La tua valutazione contribuisce all\'indice di percezione pubblica aggregato per supportare decisioni sportive consapevoli.' +
           '</div>' +
           '<form id="form-submit-rating">' +
             criteriaHtml +
@@ -422,14 +422,14 @@
       return '<option value="' + s + '"' + (s === activeSeason ? ' selected' : '') + '>Stagione ' + s + (s === DEFAULT_SEASON ? ' (Attuale)' : '') + '</option>';
     }).join('');
 
-    return '<div class="es-season-picker-widget" style="display:inline-flex; align-items:center; gap:0.35rem; background:#080e1e; border:1px solid rgba(56,189,248,0.3); border-radius:4px; padding:0.25rem 0.45rem;">' +
-      '<button type="button" class="es-season-nav-btn" data-nav-season="' + (prevSeason || '') + '" ' + (!prevSeason ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : '') + ' title="Stagione precedente" style="background:transparent; border:0; color:#38bdf8; cursor:pointer; padding:0.2rem 0.35rem; display:grid; place-items:center; font-size:0.75rem;">' +
+    return '<div class="es-season-picker-widget" style="display:inline-flex; align-items:center; gap:0.35rem; background:#080e1e; border:1px solid rgba(196,176,138,0.3); border-radius:4px; padding:0.25rem 0.45rem;">' +
+      '<button type="button" class="es-season-nav-btn" data-nav-season="' + (prevSeason || '') + '" ' + (!prevSeason ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : '') + ' title="Stagione precedente" style="background:transparent; border:0; color:#c4b08a; cursor:pointer; padding:0.2rem 0.35rem; display:grid; place-items:center; font-size:0.75rem;">' +
         '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>' +
       '</button>' +
-      '<select class="es-season-select-dropdown" style="background:transparent; border:0; color:#f1f5f9; font-size:0.75rem; font-weight:700; outline:none; cursor:pointer; font-family:Outfit,sans-serif;">' +
+      '<select class="es-season-select-dropdown" style="background:transparent; border:0; color:#f1f5f9; font-size:0.75rem; font-weight:700; outline:none; cursor:pointer; font-family:'Cormorant Garamond',serif;">' +
         optionsHtml +
       '</select>' +
-      '<button type="button" class="es-season-nav-btn" data-nav-season="' + (nextSeason || '') + '" ' + (!nextSeason ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : '') + ' title="Stagione successiva" style="background:transparent; border:0; color:#38bdf8; cursor:pointer; padding:0.2rem 0.35rem; display:grid; place-items:center; font-size:0.75rem;">' +
+      '<button type="button" class="es-season-nav-btn" data-nav-season="' + (nextSeason || '') + '" ' + (!nextSeason ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : '') + ' title="Stagione successiva" style="background:transparent; border:0; color:#c4b08a; cursor:pointer; padding:0.2rem 0.35rem; display:grid; place-items:center; font-size:0.75rem;">' +
         '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>' +
       '</button>' +
     '</div>';
@@ -443,11 +443,11 @@
     if (summary.isMinor) {
       return '<section class="es-pd-card es-pd-rating-card">' +
         '<div class="es-pd-card-header">' +
-          '<h2><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> <span>Percezione Community &amp; Rating</span></h2>' +
+          '<h2><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c4b08a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> <span>Percezione Community &amp; Rating</span></h2>' +
           '<span class="es-pd-source-badge es-pd-source-staff">Tutela Minori FIGC</span>' +
         '</div>' +
-        '<div style="background:rgba(56,189,248,0.06); border:1px dashed rgba(56,189,248,0.25); border-radius:4px; padding:0.75rem; text-align:center;">' +
-          '<div style="font-size:0.78rem; font-weight:700; color:#38bdf8; margin-bottom:0.25rem;">Valutazione Pubblica Non Attiva</div>' +
+        '<div style="background:rgba(196,176,138,0.06); border:1px dashed rgba(196,176,138,0.25); border-radius:4px; padding:0.75rem; text-align:center;">' +
+          '<div style="font-size:0.78rem; font-weight:700; color:#c4b08a; margin-bottom:0.25rem;">Valutazione Pubblica Non Attiva</div>' +
           '<div style="font-size:0.7rem; color:#94a3b8; line-height:1.4;">Nel rigoroso rispetto delle normative di tutela dei minori (Under 18) e conformità GDPR, le valutazioni della community aperta non sono consentite. Le valutazioni tecniche sono riservate allo staff federale certificato.</div>' +
         '</div>' +
       '</section>';
@@ -459,22 +459,22 @@
       return '<div style="margin-bottom:0.45rem;">' +
         '<div style="display:flex; justify-content:space-between; font-size:0.72rem; margin-bottom:0.15rem;">' +
           '<span style="color:#cbd5e1;">' + esc(c.label) + '</span>' +
-          '<b style="color:#38bdf8;">' + score.toFixed(1) + ' / 5.0</b>' +
+          '<b style="color:#c4b08a;">' + score.toFixed(1) + ' / 5.0</b>' +
         '</div>' +
         '<div style="background:rgba(148,163,184,0.12); border-radius:2px; height:4px; overflow:hidden;">' +
-          '<div style="background:#38bdf8; width:' + pct + '%; height:100%;"></div>' +
+          '<div style="background:#c4b08a; width:' + pct + '%; height:100%;"></div>' +
         '</div>' +
       '</div>';
     }).join('');
 
     return '<section class="es-pd-card es-pd-rating-card">' +
       '<div class="es-pd-card-header">' +
-        '<h2><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <span>Percezione Community &amp; Rating B2B</span></h2>' +
+        '<h2><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#c4b08a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> <span>Percezione Community &amp; Rating B2B</span></h2>' +
         '<span class="es-pd-source-badge es-pd-source-user">Opinione Aggregata</span>' +
       '</div>' +
       '<div style="display:flex; justify-content:space-between; align-items:center; background:rgba(15,23,42,0.6); border:1px solid rgba(148,163,184,0.12); border-radius:4px; padding:0.6rem 0.85rem; margin-bottom:0.65rem;">' +
         '<div>' +
-          '<div style="font-size:1.35rem; font-weight:800; color:#fbbf24; line-height:1;">' + summary.overallAverage.toFixed(1) + ' <small style="font-size:0.75rem; color:#94a3b8; font-weight:500;">/ 5.0</small></div>' +
+          '<div style="font-size:1.35rem; font-weight:800; color:#c4b08a; line-height:1;">' + summary.overallAverage.toFixed(1) + ' <small style="font-size:0.75rem; color:#94a3b8; font-weight:500;">/ 5.0</small></div>' +
           '<div style="font-size:0.68rem; color:#94a3b8; margin-top:0.25rem;">Media calcolata su <b style="color:#f1f5f9;">' + summary.totalVotes + ' valutazioni</b> verificate</div>' +
         '</div>' +
         '<div style="font-size:0.65rem; color:#64748b; text-align:right;">Stagione ' + esc(season) + '<br>Valutazioni strutturate</div>' +

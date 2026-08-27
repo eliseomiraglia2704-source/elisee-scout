@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Calciatore visibile + OTP riparato (non rimosso)**: 1. Dashboard Calciatore: `unmountAllRoleDashboards` non nasconde più `#es-pd` mentre la si monta (keepId); CSS `#es-player-profile.es-pd-on #es-pd` forza il cruscotto (radar 3 serie, stagione, clip, valutazioni) anche se resta `hidden`. 2. OTP: rimosso il bypass creatore/Eliseo; verifica reale con challenge firmato (funziona su Vercel serverless senza store condiviso); banner in basso, non overlay sulla dashboard; Invia codice + Verifica. File: `player-dash.js`, `player-dash.css`, `player-profile.js`, `verifica-account.js`, `verifica-account.css`, `creator-role-switcher.js`, `api/auth-otp.js`, `elisee_up.py`, `index.html`, `sw.js`. Cache `PD_OTP2`.
-Feature precedente: Dashboard Calciatore & OTP bypass (errato).
+Ultimo fatto: **Tema luxury professionale su tutte le dashboard ruolo**: rimosso lo stile da videogioco (cyan neon, pillole FIFA, oro UTA, emoji nelle tab). Palette charcoal / avorio / ottone, titoli Cormorant Garamond, card rettilinee, metriche da report. File: `dash-luxury.css` (caricato per ultimo), `*-dash.js` (colori), `coach-dash.js` / `vice-dash.js` (tab senza emoji), `public-rating-system.js`, `index.html`, `sw.js`. Cache `LUX1`.
+Feature precedente: Calciatore visibile + OTP riparato.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -110,7 +110,7 @@ File:
 - `manager-runtime.js` / `manager.css` — inbox admin 3 colonne
 - `api/manager.js` — Vercel: `propose-lineup`, `view=official`, `decide` kind `lineup`
 - `workers/manager_store.py` + `elisee_up.py` — stesso contratto in locale (persistenza `data/manager/state.json`, gitignored)
-- Cache attuale: `?v=20260827_PD_OTP2`, SW `elisee-scout-v20260827-pd-otp2`
+- Cache attuale: `?v=20260827_LUX1`, SW `elisee-scout-v20260827-lux1`
 
 localStorage:
 
@@ -217,6 +217,7 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-27** — Tema luxury su tutte le interfacce ruolo (Calciatore, staff, tifoso, TC, mister). Niente neon da videogioco. Cache `LUX1`.
 - **2026-08-27** — Calciatore: cruscotto visibile (niente schermata nera). OTP riparato, non disattivato: niente bypass Eliseo, challenge firmato, banner in basso. Cache `PD_OTP2`.
 - **2026-08-27** — Bugfix routing dashboard: leftover viste al cambio ruolo, Presidente che apriva DG/SG, Calciatore che lasciava `display:none` sullo staff, login admin senza verifica password, doppio popstate. War Room riattivata. Cache `BUGFIX1`.
 - **2026-08-23** — Dashboard Nutrizionista: piani alimentari, composizione corporea, albo. Cache `NU1`.

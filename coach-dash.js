@@ -175,7 +175,7 @@
         // Top Trial / VIP bar
         '<div class="es-mister-trial-bar">' +
           '<div class="es-mister-trial-text">' +
-            '<span>⭐</span> Area Mister Ufficiale — Pannello Tecnico Riservato all\'Allenatore.' +
+            'Area tecnica riservata all\'allenatore' +
           '</div>' +
           '<button type="button" class="es-mister-btn-sub" id="btn-coach-vip-status">Profilo Verificato</button>' +
         '</div>' +
@@ -201,11 +201,11 @@
 
           // 5 Nav Tabs
           '<nav class="es-mister-nav-bar" role="tablist">' +
-            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'club' ? 'is-active' : '') + '" data-tab="club">🛡️ Club</button>' +
-            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'squadra' ? 'is-active' : '') + '" data-tab="squadra">👥 Squadra</button>' +
-            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'allenamenti' ? 'is-active' : '') + '" data-tab="allenamenti">🏃‍♂️ Allenamenti</button>' +
-            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'partite' ? 'is-active' : '') + '" data-tab="partite">⚽ Partite</button>' +
-            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'lavagna' ? 'is-active' : '') + '" data-tab="lavagna">🖌️ Lavagna</button>' +
+            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'club' ? 'is-active' : '') + '" data-tab="club">Club</button>' +
+            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'squadra' ? 'is-active' : '') + '" data-tab="squadra">Squadra</button>' +
+            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'allenamenti' ? 'is-active' : '') + '" data-tab="allenamenti">Allenamenti</button>' +
+            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'partite' ? 'is-active' : '') + '" data-tab="partite">Partite</button>' +
+            '<button type="button" class="es-mister-nav-tab ' + (activeTab === 'lavagna' ? 'is-active' : '') + '" data-tab="lavagna">Lavagna</button>' +
           '</nav>' +
 
           // Content Tab Container
@@ -390,7 +390,7 @@
         return (
           '<div class="es-mister-event-card">' +
             '<div class="es-mister-event-date-badge">' + m.date + '</div>' +
-            '<div class="es-mister-event-details"><h4 class="es-mister-event-title">' + m.opponent + '</h4><p class="es-mister-event-sub">' + m.comp + ' · 🏟️ ' + m.stadium + '</p><div style="font-size:0.75rem; color:#0284c7; font-weight:700; margin-top:0.3rem;">⚽ ' + m.status + ' (' + m.conv + ')</div></div>' +
+            '<div class="es-mister-event-details"><h4 class="es-mister-event-title">' + m.opponent + '</h4><p class="es-mister-event-sub">' + m.comp + ' · 🏟️ ' + m.stadium + '</p><div style="font-size:0.75rem; color:#8a7a58; font-weight:700; margin-top:0.3rem;">⚽ ' + m.status + ' (' + m.conv + ')</div></div>' +
             '<button type="button" class="es-mister-circle-btn" style="width:34px; height:34px; font-size:0.85rem;" data-match-convocati="' + mIdx + '" title="Convocazioni e Formazione">📋</button>' +
           '</div>'
         );
@@ -448,7 +448,7 @@
               '<button type="button" class="btn btn-outline-pill" id="btn-upload-file" style="background:#f8fafc; border:1.5px solid #cbd5e1; color:#0f172a; padding:0.55rem 1.15rem; font-weight:800; font-size:0.85rem; display:inline-flex; align-items:center; gap:0.45rem;">' +
                 '📁 Carica immagine / PDF' +
               '</button>' +
-              '<button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-create-tactic" style="background:#0d9488; color:#ffffff; border:none; padding:0.55rem 1.25rem; font-weight:800; font-size:0.85rem; display:inline-flex; align-items:center; gap:0.45rem;">' +
+              '<button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-create-tactic" style="background:#a8946c; color:#ffffff; border:none; padding:0.55rem 1.25rem; font-weight:800; font-size:0.85rem; display:inline-flex; align-items:center; gap:0.45rem;">' +
                 '🖌️ Crea immagine' +
               '</button>' +
             '</div>' +
@@ -728,15 +728,15 @@
       '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.8rem; margin-bottom:1.2rem;">' +
         '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:0.9rem; text-align:center;">' +
           '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">ORGANICO TOTALE</div>' +
-          '<div style="font-size:1.6rem; font-weight:800; color:#38bdf8;">' + total + ' <span style="font-size:0.8rem; font-weight:400;">atleti</span></div>' +
+          '<div style="font-size:1.6rem; font-weight:800; color:#c4b08a;">' + total + ' <span style="font-size:0.8rem; font-weight:400;">atleti</span></div>' +
         '</div>' +
         '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:0.9rem; text-align:center;">' +
           '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">ETÀ MEDIA ROSA</div>' +
-          '<div style="font-size:1.6rem; font-weight:800; color:#34d399;">' + avgAge + ' <span style="font-size:0.8rem; font-weight:400;">anni</span></div>' +
+          '<div style="font-size:1.6rem; font-weight:800; color:#8a9a7a;">' + avgAge + ' <span style="font-size:0.8rem; font-weight:400;">anni</span></div>' +
         '</div>' +
         '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:0.9rem; text-align:center;">' +
           '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">DISPONIBILI</div>' +
-          '<div style="font-size:1.6rem; font-weight:800; color:#facc15;">' + disp + ' / ' + total + '</div>' +
+          '<div style="font-size:1.6rem; font-weight:800; color:#c4b08a;">' + disp + ' / ' + total + '</div>' +
         '</div>' +
       '</div>' +
       '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem; margin-bottom:1.2rem;">' +
@@ -888,11 +888,11 @@
       return (
         '<label style="display:flex; align-items:center; justify-content:space-between; background:#040810; border:1px solid rgba(148,163,184,0.15); border-radius:4px; padding:0.6rem 0.8rem; cursor:pointer;">' +
           '<div style="display:flex; align-items:center; gap:0.6rem;">' +
-            '<span style="font-weight:800; color:#38bdf8; width:22px;">' + p.num + '</span>' +
+            '<span style="font-weight:800; color:#c4b08a; width:22px;">' + p.num + '</span>' +
             '<span style="font-weight:700; color:#fff;">' + esc(p.name) + '</span>' +
             '<span style="font-size:0.75rem; color:#94a3b8;">(' + esc(p.role) + ')</span>' +
           '</div>' +
-          '<input type="checkbox" value="' + esc(p.name) + '" ' + (isChecked ? 'checked' : '') + ' class="chk-conv-player" style="accent-color:#0d9488; transform:scale(1.2);">' +
+          '<input type="checkbox" value="' + esc(p.name) + '" ' + (isChecked ? 'checked' : '') + ' class="chk-conv-player" style="accent-color:#a8946c; transform:scale(1.2);">' +
         '</label>'
       );
     }).join('');
@@ -947,11 +947,11 @@
       '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem;">' +
         '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem; text-align:center;">' +
           '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">PARTITE IN PROGRAMMA</div>' +
-          '<div style="font-size:1.8rem; font-weight:800; color:#38bdf8;">' + total + '</div>' +
+          '<div style="font-size:1.8rem; font-weight:800; color:#c4b08a;">' + total + '</div>' +
         '</div>' +
         '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem; text-align:center;">' +
           '<div style="font-size:0.72rem; color:#94a3b8; font-weight:700;">STATO SQUADRA</div>' +
-          '<div style="font-size:1.2rem; font-weight:800; color:#34d399; margin-top:0.4rem;">Pronta alla Gara</div>' +
+          '<div style="font-size:1.2rem; font-weight:800; color:#8a9a7a; margin-top:0.4rem;">Pronta alla Gara</div>' +
         '</div>' +
       '</div>' +
       '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem; margin-bottom:1.2rem;">' +
@@ -1073,7 +1073,7 @@
           '<div class="es-voter-info">' +
             '<div class="es-voter-avatar">' + ava + '</div>' +
             '<div>' +
-              '<h5 class="es-voter-name">' + esc(m.name) + (m.isStaff ? ' <small style="color:#0d9488; font-weight:800;">[Staff]</small>' : '') + '</h5>' +
+              '<h5 class="es-voter-name">' + esc(m.name) + (m.isStaff ? ' <small style="color:#a8946c; font-weight:800;">[Staff]</small>' : '') + '</h5>' +
               '<div class="es-voter-role">' + esc(m.role) + '</div>' +
             '</div>' +
           '</div>' +
@@ -1112,8 +1112,8 @@
           '<div class="es-tactical-color-row">' +
             '<div class="es-tactical-color-dot is-selected" style="background:#22c55e;" data-color="#22c55e"></div>' +
             '<div class="es-tactical-color-dot" style="background:#ef4444;" data-color="#ef4444"></div>' +
-            '<div class="es-tactical-color-dot" style="background:#0284c7;" data-color="#0284c7"></div>' +
-            '<div class="es-tactical-color-dot" style="background:#facc15;" data-color="#facc15"></div>' +
+            '<div class="es-tactical-color-dot" style="background:#8a7a58;" data-color="#8a7a58"></div>' +
+            '<div class="es-tactical-color-dot" style="background:#c4b08a;" data-color="#c4b08a"></div>' +
           '</div>' +
           '<div class="es-tactical-section-head"><span>CAMPI</span><span>-</span></div>' +
           '<div id="pitch-selectors">' +
@@ -1151,9 +1151,9 @@
         '</div>' +
         '<div class="es-tactical-side-right">' +
           '<div class="es-tactical-color-row">' +
-            '<div class="es-tactical-color-dot is-selected" style="background:#0d9488;"></div>' +
+            '<div class="es-tactical-color-dot is-selected" style="background:#a8946c;"></div>' +
             '<div class="es-tactical-color-dot" style="background:#ef4444;"></div>' +
-            '<div class="es-tactical-color-dot" style="background:#0284c7;"></div>' +
+            '<div class="es-tactical-color-dot" style="background:#8a7a58;"></div>' +
             '<div class="es-tactical-color-dot" style="background:#0f172a;"></div>' +
           '</div>' +
           '<div class="es-tactical-section-head"><span>GIOCATORI TATTICI</span><span>-</span></div>' +
@@ -1331,7 +1331,7 @@
         if (tr) {
           var html =
             '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:4px; padding:1rem; margin-bottom:1rem;">' +
-              '<h4 style="font-size:1.1rem; font-weight:800; color:#38bdf8; margin:0 0 0.4rem;">' + esc(tr.title) + '</h4>' +
+              '<h4 style="font-size:1.1rem; font-weight:800; color:#c4b08a; margin:0 0 0.4rem;">' + esc(tr.title) + '</h4>' +
               '<div style="font-size:0.85rem; color:#cbd5e1; line-height:1.7;">' +
                 '• <b>Data:</b> ' + esc(tr.fullDate || (tr.day + ' ' + tr.date)) + '<br>' +
                 '• <b>Orario:</b> ' + esc(tr.inizio) + ' - ' + esc(tr.fine) + ' (Incontro: ' + esc(tr.incontro) + ')<br>' +

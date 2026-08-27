@@ -181,7 +181,7 @@
   function radarSvg(dataset) {
     if (!dataset || !dataset.hasData) {
       return '<div style="background:rgba(15,23,42,0.5); border:1px dashed rgba(148,163,184,0.2); border-radius:4px; padding:3rem 1.5rem; text-align:center; color:#94a3b8; font-size:0.82rem;">' +
-        '<div style="font-weight:700; color:#38bdf8; margin-bottom:0.4rem;">Nessun dato registrato per la ' + esc(currentSeason) + '</div>' +
+        '<div style="font-weight:700; color:#c4b08a; margin-bottom:0.4rem;">Nessun dato registrato per la ' + esc(currentSeason) + '</div>' +
         '<div>La rilevazione delle prestazioni e il tracciamento video sono attivi a partire dalle stagioni successive.</div>' +
         '</div>';
     }
@@ -192,9 +192,9 @@
     var league = dataset.leagueAvg;
 
     var html = '<svg viewBox="0 0 440 430" role="img" aria-label="Radar prestazioni">';
-    html += wedge(cx, cy, r, -Math.PI / 2, 0, 'rgba(56,189,248,0.08)');
-    html += wedge(cx, cy, r, 0, Math.PI / 2, 'rgba(52,211,153,0.06)');
-    html += wedge(cx, cy, r, Math.PI / 2, Math.PI, 'rgba(251,191,36,0.06)');
+    html += wedge(cx, cy, r, -Math.PI / 2, 0, 'rgba(196,176,138,0.08)');
+    html += wedge(cx, cy, r, 0, Math.PI / 2, 'rgba(138,154,122,0.06)');
+    html += wedge(cx, cy, r, Math.PI / 2, Math.PI, 'rgba(196,176,138,0.06)');
     html += wedge(cx, cy, r, Math.PI, Math.PI * 1.5, 'rgba(148,163,184,0.06)');
     
     for (var ring = 1; ring <= 5; ring++) {
@@ -208,16 +208,16 @@
         '" stroke="rgba(148,163,184,0.18)"/>';
       var lab = polar(cx, cy, r + 20, i, n, 100);
       html += '<text x="' + lab[0].toFixed(1) + '" y="' + lab[1].toFixed(1) +
-        '" text-anchor="middle" dominant-baseline="middle" fill="#94a3b8" font-size="8.5" font-family="Outfit,sans-serif" style="cursor:pointer;" class="es-pd-radar-axis-label" data-axis-name="' + esc(AXES[i]) + '">' +
+        '" text-anchor="middle" dominant-baseline="middle" fill="#9a948c" font-size="8.5" font-family="Inter,sans-serif" style="cursor:pointer;" class="es-pd-radar-axis-label" data-axis-name="' + esc(AXES[i]) + '">' +
         esc(AXES[i]) + ' ' + primary[i] + '%</text>';
     }
     
     // Serie 3: Media Girone
-    html += '<polygon points="' + poly(cx, cy, r, league) + '" fill="rgba(52,211,153,0.08)" stroke="#34d399" stroke-dasharray="3,3" stroke-width="1.5"/>';
+    html += '<polygon points="' + poly(cx, cy, r, league) + '" fill="rgba(138,154,122,0.08)" stroke="#8a9a7a" stroke-dasharray="3,3" stroke-width="1.5"/>';
     // Serie 2: Benchmark Storico
     html += '<polygon points="' + poly(cx, cy, r, benchmark) + '" fill="rgba(148,163,184,0.08)" stroke="#64748b" stroke-width="1.5"/>';
     // Serie 1: Stagione Selezionata
-    html += '<polygon points="' + poly(cx, cy, r, primary) + '" fill="rgba(56,189,248,0.14)" stroke="#38bdf8" stroke-width="2"/>';
+    html += '<polygon points="' + poly(cx, cy, r, primary) + '" fill="rgba(196,176,138,0.14)" stroke="#c4b08a" stroke-width="2"/>';
     
     html += '</svg>';
     return html;
@@ -230,7 +230,7 @@
       '2025': [78, 82, 85, 88, 90, 93],
       '2026': [84, 88, 89, 92, 94, 96]
     };
-    var cols = { '2023': '#64748b', '2024': '#34d399', '2025': '#fbbf24', '2026': '#38bdf8' };
+    var cols = { '2023': '#64748b', '2024': '#8a9a7a', '2025': '#c4b08a', '2026': '#c4b08a' };
     var w = 240, h = 85;
     var html = '<svg viewBox="0 0 ' + w + ' ' + h + '" width="100%" height="85">';
     Object.keys(series).forEach(function (k) {
@@ -269,7 +269,7 @@
     // Generatore HTML Cruscotto Selettore Stagione
     var seasonPickerHtml = window.EliseeRatingSystem 
       ? window.EliseeRatingSystem.renderSeasonPicker(currentSeason)
-      : '<div style="font-size:0.75rem; color:#38bdf8; font-weight:700;">Stagione ' + esc(currentSeason) + '</div>';
+      : '<div style="font-size:0.75rem; color:#c4b08a; font-weight:700;">Stagione ' + esc(currentSeason) + '</div>';
 
     // Generatore HTML Card Valutazione Pubblica
     var publicRatingCardHtml = window.EliseeRatingSystem
@@ -313,7 +313,7 @@
             '<span class="es-pd-source-badge es-pd-source-ia">Dato Certificato IA</span>' +
           '</div>' +
           '<div class="es-pd-who">' + ava + '<div><b style="color:#fff">' + esc(name) + '</b>' +
-            '<div style="font-size:0.72rem;color:#38bdf8;font-weight:700">' + esc((p.fieldRole) || user.ruoloDettagliato || 'Punta Centrale') + '</div>' +
+            '<div style="font-size:0.72rem;color:#c4b08a;font-weight:700">' + esc((p.fieldRole) || user.ruoloDettagliato || 'Punta Centrale') + '</div>' +
             '<div style="font-size:0.68rem;color:#94a3b8;">Ruoli sec: ' + esc(secRoles) + '</div>' +
           '</div></div>' +
           '<div class="es-pd-tags">' +
@@ -328,7 +328,7 @@
             '<div class="es-pd-metric-row" data-metric-name="Precisione Passaggi Chiave"><span>Precisione Passaggi Chiave <span class="has-clip">' + ICONS.video + ' Clip</span></span><b>' + sData.metrics.passaggi + '</b></div>' +
             '<div class="es-pd-metric-row" data-metric-name="Dribbling & 1vs1 Riusciti"><span>Dribbling &amp; 1vs1 Riusciti <span class="has-clip">' + ICONS.video + ' Clip</span></span><b>' + sData.metrics.dribbling + '</b></div>' +
             '<div class="es-pd-metric-row" data-metric-name="Recupero & Aggressione Palla"><span>Recupero &amp; Aggressione Palla</span><b>' + sData.metrics.recupero + '</b></div>' +
-            '<div class="es-pd-metric-row" style="margin-top:0.4rem; padding-top:0.35rem; border-top:1px solid rgba(148,163,184,0.1);"><span>Media Voto PGB (' + esc(currentSeason) + ')</span><b style="color:#38bdf8">' + sData.pgbAvg + '</b></div>'
+            '<div class="es-pd-metric-row" style="margin-top:0.4rem; padding-top:0.35rem; border-top:1px solid rgba(148,163,184,0.1);"><span>Media Voto PGB (' + esc(currentSeason) + ')</span><b style="color:#c4b08a">' + sData.pgbAvg + '</b></div>'
           ) : (
             '<div style="color:#94a3b8; font-size:0.75rem; padding:0.5rem 0;">Dati non disponibili per la stagione ' + esc(currentSeason) + '</div>'
           )) +
@@ -341,16 +341,16 @@
             '<span class="es-pd-source-badge es-pd-source-staff">Tracking B2B</span>' +
           '</div>' +
           (isMinor ? (
-            '<div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:4px; padding:0.6rem 0.75rem; margin-bottom:0.65rem;">' +
-              '<div style="font-size:0.75rem; font-weight:700; color:#38bdf8;">Percorso di Formazione Giovanile (Under 18)</div>' +
+            '<div style="background:rgba(196,176,138,0.08); border:1px solid rgba(196,176,138,0.2); border-radius:4px; padding:0.6rem 0.75rem; margin-bottom:0.65rem;">' +
+              '<div style="font-size:0.75rem; font-weight:700; color:#c4b08a;">Percorso di Formazione Giovanile (Under 18)</div>' +
               '<div style="font-size:0.68rem; color:#94a3b8; margin-top:0.2rem;">Conformità Art. 12 Safeguarding &amp; Tutela Minori FIGC. Nessuna quotazione economica ammessa.</div>' +
             '</div>' +
-            '<div class="es-pd-metric-row"><span>Club &amp; Osservatori Accreditati</span><b style="color:#38bdf8;">3 Società interessate</b></div>' +
+            '<div class="es-pd-metric-row"><span>Club &amp; Osservatori Accreditati</span><b style="color:#c4b08a;">3 Società interessate</b></div>' +
             '<div class="es-pd-metric-row"><span>Richieste Provino Ufficiali</span><b>2 Inviti depositati</b></div>' +
-            '<div class="es-pd-metric-row"><span>Consenso Genitoriale ID</span><b style="color:#34d399;">Verificato &amp; Conforme</b></div>'
+            '<div class="es-pd-metric-row"><span>Consenso Genitoriale ID</span><b style="color:#8a9a7a;">Verificato &amp; Conforme</b></div>'
           ) : (
             '<div style="margin-bottom:0.55rem;">' +
-              '<div style="font-size:1.25rem; font-weight:800; color:#34d399;">€ 150.000 <small style="font-size:0.7rem; color:#94a3b8; font-weight:500;">(Stima Tecnica)</small></div>' +
+              '<div style="font-size:1.25rem; font-weight:800; color:#8a9a7a;">€ 150.000 <small style="font-size:0.7rem; color:#94a3b8; font-weight:500;">(Stima Tecnica)</small></div>' +
               '<div style="font-size:0.65rem; color:#64748b; margin-top:0.15rem;">Fonte: Stima parametrica basata su minutaggio, presenze, serie di appartenenza e PGB medio.</div>' +
             '</div>' +
             '<div class="es-pd-metric-row"><span>Indice di Visibilità Scout</span><b>Alto (88%)</b></div>' +
@@ -374,9 +374,9 @@
           '<div class="es-pd-radar-tools">' +
             '<span style="font-size:0.7rem; color:#94a3b8;">Clicca su un parametro per aprire clip video e contesto gara</span>' +
             '<div class="es-pd-legend-pills">' +
-              '<span class="es-pd-pill-legend" style="color:#38bdf8;"><i style="background:#38bdf8;"></i> ' + esc(currentSeason) + '</span>' +
+              '<span class="es-pd-pill-legend" style="color:#c4b08a;"><i style="background:#c4b08a;"></i> ' + esc(currentSeason) + '</span>' +
               '<span class="es-pd-pill-legend" style="color:#94a3b8;"><i style="background:#64748b;"></i> Benchmark</span>' +
-              '<span class="es-pd-pill-legend" style="color:#34d399;"><i style="background:#34d399;"></i> Media Girone</span>' +
+              '<span class="es-pd-pill-legend" style="color:#8a9a7a;"><i style="background:#8a9a7a;"></i> Media Girone</span>' +
             '</div>' +
           '</div>' +
           radarSvg(sData) +
@@ -404,7 +404,7 @@
               '</div>' +
               '<div class="es-pd-profile-item">' +
                 '<label>Stato Contrattuale</label>' +
-                '<div class="val" style="font-weight:600; color:#38bdf8;">' + esc(contractStatus) + '</div>' +
+                '<div class="val" style="font-weight:600; color:#c4b08a;">' + esc(contractStatus) + '</div>' +
               '</div>' +
             '</div>' +
             '<div class="es-pd-profile-item">' +
@@ -427,9 +427,9 @@
           '<div class="es-pd-ok"><span>Consenso trattamento dati (GDPR)</span><b>100%</b></div>' +
           '<div class="es-pd-ok"><span>Liberatoria immagine e video</span><b>100%</b></div>' +
           '<div class="es-pd-ok"><span>Verifica tutela minori (ID)</span><b>100%</b></div>' +
-          '<div class="es-pd-ok"><span>Idoneità agonistica FIGC</span><b style="color:#34d399">Valida (30/06/2027)</b></div>' +
+          '<div class="es-pd-ok"><span>Idoneità agonistica FIGC</span><b style="color:#8a9a7a">Valida (30/06/2027)</b></div>' +
           '<div class="es-pd-ok"><span>Profilo validato dal club</span><b>100% Certificato</b></div>' +
-          '<div class="es-pd-ok" style="margin-top:0.4rem;padding-top:0.35rem;border-top:1px solid rgba(148,163,184,0.1)"><span>Anti-Fake &amp; Identità</span><b style="color:#38bdf8">Verificato ' + ICONS.check + '</b></div>' +
+          '<div class="es-pd-ok" style="margin-top:0.4rem;padding-top:0.35rem;border-top:1px solid rgba(148,163,184,0.1)"><span>Anti-Fake &amp; Identità</span><b style="color:#c4b08a">Verificato ' + ICONS.check + '</b></div>' +
         '</section>' +
 
         // Card 7: Registro Match & Voti PGB della Stagione Selezionata
@@ -451,9 +451,9 @@
           '</div>' +
           '<div style="display:flex; justify-content:space-between; font-size:0.68rem; color:#94a3b8; margin-bottom:0.4rem;">' +
             '<span style="color:#64748b;">23/24 (62-78%)</span>' +
-            '<span style="color:#34d399;">24/25 (70-86%)</span>' +
-            '<span style="color:#fbbf24;">25/26 (78-93%)</span>' +
-            '<span style="color:#38bdf8;">26/27 (84-96%)</span>' +
+            '<span style="color:#8a9a7a;">24/25 (70-86%)</span>' +
+            '<span style="color:#c4b08a;">25/26 (78-93%)</span>' +
+            '<span style="color:#c4b08a;">26/27 (84-96%)</span>' +
           '</div>' +
           trendSvg() +
         '</section>' +
