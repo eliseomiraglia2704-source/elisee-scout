@@ -1,0 +1,928 @@
+/* Card calciatore collezionabile, Album, heatmap, GPS MVP, candidatura geo. */
+(function () {
+  'use strict';
+
+  var HEAT_KEY = 'elisee_player_heatmap';
+  var GPS_KEY = 'elisee_gps_sessions';
+  var VID_KEY = 'elisee_player_highlights';
+  var APPLY_KEY = 'elisee_smart_applications';
+  var live = null;
+  var heatRange = { form: '4-3-3', cells: {} };
+
+  var CITY_GEO = {
+    Foggia: ['Foggia', 'Puglia'], Lucera: ['Foggia', 'Puglia'], 'San Severo': ['Foggia', 'Puglia'],
+    Manfredonia: ['Foggia', 'Puglia'], Cerignola: ['Foggia', 'Puglia'], Bari: ['Bari', 'Puglia'],
+    Lecce: ['Lecce', 'Puglia'], Taranto: ['Taranto', 'Puglia'], Brindisi: ['Brindisi', 'Puglia'],
+    Roma: ['Roma', 'Lazio'], Latina: ['Latina', 'Lazio'], Frosinone: ['Frosinone', 'Lazio'],
+    Napoli: ['Napoli', 'Campania'], Salerno: ['Salerno', 'Campania'], Caserta: ['Caserta', 'Campania'],
+    Milano: ['Milano', 'Lombardia'], Bergamo: ['Bergamo', 'Lombardia'], Brescia: ['Brescia', 'Lombardia'],
+    Torino: ['Torino', 'Piemonte'], Cuneo: ['Cuneo', 'Piemonte'], Genova: ['Genova', 'Liguria'],
+    Bologna: ['Bologna', 'Emilia-Romagna'], Firenze: ['Firenze', 'Toscana'], Venezia: ['Venezia', 'Veneto'],
+    Verona: ['Verona', 'Veneto'], Padova: ['Padova', 'Veneto'], Palermo: ['Palermo', 'Sicilia'],
+    Catania: ['Catania', 'Sicilia'], Cagliari: ['Cagliari', 'Sardegna'], Perugia: ['Perugia', 'Umbria'],
+    Ancona: ['Ancona', 'Marche'], Pescara: ['Pescara', 'Abruzzo'], Campobasso: ['Campobasso', 'Molise'],
+    Potenza: ['Potenza', 'Basilicata'], Catanzaro: ['Catanzaro', 'Calabria'], Udine: ['Udine', 'Friuli-Venezia Giulia'],
+    Trento: ['Trento', 'Trentino-Alto Adige']
+  };
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function userObj() {
+    try { return JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {}; } catch (_) { return {}; }
+  }
+  function meKey(u) {
+    u = u || userObj();
+    return String(u.email || u.id || '').trim().toLowerCase() || 'anon';
+  }
+  function storeGet(key) {
+    try { return JSON.parse(localStorage.getItem(key) || '{}') || {}; } catch (_) { return {}; }
+  }
+  function storeSet(key, val) {
+    try { localStorage.setItem(key, JSON.stringify(val)); } catch (_) {}
+  }
+  function nameOf(u) {
+    return [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Calciatore';
+  }
+  function initials(name) {
+    var p = String(name || 'C').trim().split(/\s+/);
+    return ((p[0] || 'C').charAt(0) + (p[1] || p[0] || 'C').charAt(0)).toUpperCase();
+  }
+  function photoOf(u) {
+    try {
+      if (window.getStoredProfilePhoto) return window.getStoredProfilePhoto(null, u) || u.fotoUrl || '';
+    } catch (_) {}
+    return u.fotoUrl || '';
+  }
+  function ageOf(u) {
+    var p = u.playerProfile || {};
+    if (u.eta) return String(u.eta);
+    var y = p.birthYear;
+    if (!y && u.dataNascita) {
+      var m = String(u.dataNascita).match(/(19|20)\d{2}/);
+      if (m) y = m[0];
+    }
+    var n = parseInt(y, 10);
+    if (n > 1900) return String(new Date().getFullYear() - n);
+    return '';
+  }
+  function roleOf(u) {
+    var p = u.playerProfile || {};
+    return String(p.fieldRole || u.ruoloDettagliato || u.ruolo || '').trim();
+  }
+  function clubOf(u) {
+    return String(u.squadra || u.club || u.squadraCuore || '').trim();
+  }
+  function isFree(u) {
+    var p = u.playerProfile || {};
+    var st = String(p.contractStatus || '').toLowerCase();
+    if (/svincol|libero|senza vincolo/.test(st)) return true;
+    if (p.availTransfer === true && !clubOf(u)) return true;
+    return !clubOf(u);
+  }
+  function footOf(u) {
+    var p = u.playerProfile || {};
+    return String(p.foot || u.piede || '').trim();
+  }
+  function toast(msg, kind) {
+    if (typeof window.showToast === 'function') window.showToast(msg, kind || 'success');
+  }
+
+  function badgesOf(u) {
+    var p = u.playerProfile || {};
+    if (Array.isArray(p.attitudeBadges) && p.attitudeBadges.length) return p.attitudeBadges.slice(0, 4);
+    var r = roleOf(u).toLowerCase();
+    var out = [];
+    if (/ala|esterno|terzino/.test(r)) out.push('Velocità');
+    if (/centravanti|punta|attacc/.test(r)) out.push('Finalizzazione');
+    if (/difens|centrale|mediano/.test(r)) out.push('Lettura');
+    if (/portier/.test(r)) out.push('Reattività');
+    if (/trequartista|mezzala|centrocamp/.test(r)) out.push('Visione');
+    if (!out.length) out.push('Atleta');
+    if (isFree(u)) out.push('Cerca squadra');
+    return out.slice(0, 3);
+  }
+
+  function cityOf(u) {
+    return String(u.citta || u.city || u.comune || '').trim();
+  }
+  function geoOfCity(name) {
+    var g = CITY_GEO[name];
+    if (g) return { city: name, prov: g[0], reg: g[1] };
+    return { city: name, prov: '', reg: '' };
+  }
+  function userGeo(u) {
+    u = u || userObj();
+    var city = cityOf(u);
+    var g = geoOfCity(city);
+    return {
+      city: city,
+      prov: String(u.provincia || g.prov || '').trim(),
+      reg: String(u.regione || g.reg || '').trim()
+    };
+  }
+  function jobGeo(job) {
+    var loc = String((job && (job.location || job.city || job.citta)) || '').trim();
+    var g = geoOfCity(loc);
+    return {
+      city: loc,
+      prov: String((job && (job.provincia || job.province)) || g.prov || '').trim(),
+      reg: String((job && (job.regione || job.region)) || g.reg || '').trim()
+    };
+  }
+  function geoTier(job, u) {
+    var ug = userGeo(u);
+    var jg = jobGeo(job);
+    if (ug.city && jg.city && ug.city.toLowerCase() === jg.city.toLowerCase()) return 1;
+    if (ug.prov && jg.prov && ug.prov.toLowerCase() === jg.prov.toLowerCase()) return 2;
+    if (ug.reg && jg.reg && ug.reg.toLowerCase() === jg.reg.toLowerCase()) return 3;
+    return 4;
+  }
+  var TIER_LABEL = { 1: 'Città · km 0', 2: 'Provincia', 3: 'Regione', 4: "Resto d'Italia" };
+
+  function statsOf(u) {
+    var p = u.playerProfile || {};
+    var m = Array.isArray(p.matches) ? p.matches : (Array.isArray(u.matches) ? u.matches : []);
+    var g = 0, a = 0, min = 0, pres = m.length, yc = 0;
+    m.forEach(function (x) {
+      g += Number(x.g || x.gol || 0);
+      a += Number(x.a || x.assist || 0);
+      var mm = parseInt(String(x.min || x.minuti || '0'), 10);
+      if (!isNaN(mm)) min += mm;
+      yc += Number(x.yc || x.gialli || 0);
+    });
+    return { g: g, a: a, pres: pres, min: min, yc: yc };
+  }
+
+  function cardHtml(u, opts) {
+    opts = opts || {};
+    var name = nameOf(u);
+    var ph = photoOf(u);
+    var free = isFree(u);
+    var club = clubOf(u);
+    var photo = ph
+      ? '<img src="' + esc(ph) + '" alt="">'
+      : '<div class="es-pc-ph">' + esc(initials(name)) + '</div>';
+    var meta = '';
+    if (ageOf(u)) meta += '<span>' + esc(ageOf(u)) + ' anni</span>';
+    if (roleOf(u)) meta += '<span>' + esc(roleOf(u)) + '</span>';
+    if (footOf(u)) meta += '<span>Piede ' + esc(footOf(u)) + '</span>';
+    var badges = badgesOf(u).map(function (b) {
+      return '<span class="es-pc-badge">' + esc(b) + '</span>';
+    }).join('');
+    return '<article class="es-pc-card" id="es-pc-card" tabindex="0" role="button" aria-label="Apri Card di ' + esc(name) + '">' +
+      '<div class="es-pc-card-top">' +
+        '<span class="es-pc-status' + (free ? ' is-free' : '') + '">' +
+          (free ? 'Svincolato / Cerca squadra' : 'Tesserato') +
+        '</span>' + photo +
+      '</div>' +
+      '<div class="es-pc-body">' +
+        '<h2 class="es-pc-name">' + esc(name) + '</h2>' +
+        '<p class="es-pc-club">' + esc(club || 'Nessuna società associata') + '</p>' +
+        '<div class="es-pc-meta">' + meta + '</div>' +
+        '<div class="es-pc-badges">' + badges + '</div>' +
+        (opts.hideHint ? '' : '<div class="es-pc-hint">Tocca la Card per l’analisi tattica</div>') +
+      '</div></article>';
+  }
+
+  var ROWS = 8, COLS = 6;
+  function roleSeeds(role, form) {
+    var r = String(role || '').toLowerCase();
+    var f = String(form || '4-3-3');
+    var cells = {};
+    function add(row, col, w) {
+      var k = row + '-' + col;
+      cells[k] = (cells[k] || 0) + w;
+    }
+    var midC = 2.5;
+    if (/portier/.test(r)) {
+      add(7, 2, 8); add(7, 3, 8); add(6, 2, 4); add(6, 3, 4);
+    } else if (/difensore centrale|centrale/.test(r) && !/centrocamp|mezzala|trequartista/.test(r)) {
+      add(6, 2, 7); add(6, 3, 7); add(5, 2, 5); add(5, 3, 5);
+    } else if (/terzino dest|ala dest|esterno dest/.test(r)) {
+      add(4, 5, 6); add(3, 5, 7); add(2, 5, f.indexOf('4-3-3') >= 0 ? 8 : 5); add(3, 4, 4);
+    } else if (/terzino sin|ala sin|esterno sin/.test(r)) {
+      add(4, 0, 6); add(3, 0, 7); add(2, 0, f.indexOf('4-3-3') >= 0 ? 8 : 5); add(3, 1, 4);
+    } else if (/mediano|regista/.test(r)) {
+      add(4, 2, 7); add(4, 3, 7); add(5, 2, 5); add(5, 3, 5);
+    } else if (/mezzala|centrocamp/.test(r)) {
+      add(3, 2, 6); add(3, 3, 6); add(4, 1, 4); add(4, 4, 4); add(2, 2, 5);
+    } else if (/trequartista|seconda punta/.test(r)) {
+      add(2, 2, 7); add(2, 3, 7); add(1, 2, 5); add(1, 3, 5);
+    } else if (/centravanti|punta|attacc/.test(r)) {
+      add(0, 2, 8); add(0, 3, 8); add(1, 2, 6); add(1, 3, 6); add(0, 1, 3); add(0, 4, 3);
+    } else {
+      add(3, 2, 5); add(3, 3, 5); add(4, 2, 4); add(4, 3, 4);
+    }
+    return cells;
+  }
+
+  function heatGet(u) {
+    var map = storeGet(HEAT_KEY);
+    var cur = map[meKey(u)] || {};
+    return {
+      form: cur.form || '4-3-3',
+      role: cur.role || roleOf(u),
+      cells: cur.cells && Object.keys(cur.cells).length ? cur.cells : roleSeeds(roleOf(u), cur.form || '4-3-3')
+    };
+  }
+  function heatSave(u, data) {
+    var map = storeGet(HEAT_KEY);
+    map[meKey(u)] = data;
+    storeSet(HEAT_KEY, map);
+  }
+
+  function pitchSvg(cells, interactive) {
+    var w = 360, h = 520;
+    var pad = 14;
+    var cw = (w - pad * 2) / COLS;
+    var ch = (h - pad * 2) / ROWS;
+    var max = 1;
+    Object.keys(cells || {}).forEach(function (k) {
+      if (cells[k] > max) max = cells[k];
+    });
+    var html = '<svg class="es-pc-pitch" viewBox="0 0 ' + w + ' ' + h + '" role="img" aria-label="Heatmap campo">';
+    html += '<rect x="0" y="0" width="' + w + '" height="' + h + '" fill="#166534"/>';
+    html += '<rect x="' + pad + '" y="' + pad + '" width="' + (w - pad * 2) + '" height="' + (h - pad * 2) + '" fill="none" stroke="#ecfdf5" stroke-width="2"/>';
+    html += '<line x1="' + pad + '" y1="' + (h / 2) + '" x2="' + (w - pad) + '" y2="' + (h / 2) + '" stroke="#ecfdf5" stroke-width="1.5"/>';
+    html += '<circle cx="' + (w / 2) + '" cy="' + (h / 2) + '" r="42" fill="none" stroke="#ecfdf5" stroke-width="1.5"/>';
+    html += '<rect x="' + (w / 2 - 70) + '" y="' + pad + '" width="140" height="70" fill="none" stroke="#ecfdf5"/>';
+    html += '<rect x="' + (w / 2 - 70) + '" y="' + (h - pad - 70) + '" width="140" height="70" fill="none" stroke="#ecfdf5"/>';
+    var r, c;
+    for (r = 0; r < ROWS; r++) {
+      for (c = 0; c < COLS; c++) {
+        var val = (cells && cells[r + '-' + c]) || 0;
+        var a = val ? (0.12 + 0.72 * (val / max)) : 0;
+        var x = pad + c * cw;
+        var y = pad + r * ch;
+        html += '<rect class="es-pc-cell" data-r="' + r + '" data-c="' + c + '" x="' + x.toFixed(1) + '" y="' + y.toFixed(1) +
+          '" width="' + (cw - 1).toFixed(1) + '" height="' + (ch - 1).toFixed(1) +
+          '" fill="rgba(56,189,248,' + a.toFixed(2) + ')" stroke="rgba(255,255,255,0.08)" stroke-width="0.6"/>';
+      }
+    }
+    html += '</svg>';
+    return html;
+  }
+
+  function fmPitch(u) {
+    var primary = roleOf(u) || 'Ruolo non dichiarato';
+    var p = u.playerProfile || {};
+    var sec = String(p.secondaryRoles || '').trim();
+    var adapted = String(p.adaptedRole || '').trim();
+    function pin(label, cls, x, y) {
+      return '<div style="position:absolute;left:' + x + '%;top:' + y + '%;transform:translate(-50%,-50%);font-size:0.68rem;font-weight:800;padding:0.22rem 0.45rem;border-radius:999px;background:' + cls + ';color:#041018;white-space:nowrap;">' + esc(label) + '</div>';
+    }
+    function pos(role) {
+      var r = String(role || '').toLowerCase();
+      if (/portier/.test(r)) return [50, 90];
+      if (/centrale/.test(r) && /dif/.test(r)) return [50, 76];
+      if (/terzino dest/.test(r)) return [84, 70];
+      if (/terzino sin/.test(r)) return [16, 70];
+      if (/mediano|regista/.test(r)) return [50, 58];
+      if (/mezzala dest/.test(r)) return [70, 48];
+      if (/mezzala sin/.test(r)) return [30, 48];
+      if (/mezzala|centrocamp/.test(r)) return [50, 48];
+      if (/trequartista/.test(r)) return [50, 34];
+      if (/ala dest|esterno dest/.test(r)) return [86, 24];
+      if (/ala sin|esterno sin/.test(r)) return [14, 24];
+      if (/seconda punta/.test(r)) return [50, 22];
+      if (/centravanti|punta|attacc/.test(r)) return [50, 14];
+      return [50, 42];
+    }
+    var a = pos(primary);
+    var html = '<div style="position:relative;background:#166534;border-radius:12px;min-height:280px;border:1px solid rgba(255,255,255,0.12);">';
+    html += pin(primary || 'Ruolo 1', '#38bdf8', a[0], a[1]);
+    if (sec) {
+      var b = pos(sec.split(',')[0]);
+      html += pin(sec.split(',')[0], '#7dd3fc', Math.min(90, b[0] + 8), b[1]);
+    }
+    if (adapted) {
+      var c = pos(adapted);
+      html += pin(adapted, '#fde68a', c[0], Math.max(10, c[1] - 8));
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function videosOf(u) {
+    var map = storeGet(VID_KEY);
+    return map[meKey(u)] || [];
+  }
+  function saveVideos(u, list) {
+    var map = storeGet(VID_KEY);
+    map[meKey(u)] = list.slice(0, 12);
+    storeSet(VID_KEY, map);
+  }
+
+  function detailHtml(u) {
+    var st = statsOf(u);
+    var heat = heatGet(u);
+    var vids = videosOf(u);
+    var vlist = vids.length
+      ? vids.map(function (v) {
+          return '<a href="' + esc(v.url) + '" target="_blank" rel="noopener">' + esc(v.title || v.url) + '</a>';
+        }).join('')
+      : '<div class="es-pd-empty">Nessun highlight. Incolla un link YouTube / Veo / Hudl.</div>';
+    return '<button type="button" class="es-pc-close" data-pc="close">Chiudi</button>' +
+      '<h2>Card · vista tattica</h2>' +
+      '<p class="lead">Heatmap, ruoli in stile Football Manager, numeri di carriera e Highlight Video Hub.</p>' +
+      '<div class="es-pc-stats">' +
+        '<div class="es-pc-stat"><b>' + st.g + '</b><span>Gol</span></div>' +
+        '<div class="es-pc-stat"><b>' + st.a + '</b><span>Assist</span></div>' +
+        '<div class="es-pc-stat"><b>' + st.pres + '</b><span>Presenze</span></div>' +
+        '<div class="es-pc-stat"><b>' + st.min + '</b><span>Minuti</span></div>' +
+        '<div class="es-pc-stat"><b>' + st.yc + '</b><span>Cartellini</span></div>' +
+      '</div>' +
+      '<div class="es-pc-fm">' +
+        '<div><h3 style="margin:0 0 0.45rem;font-size:0.9rem;color:#fff;">Heatmap</h3>' + pitchSvg(heat.cells, false) + '</div>' +
+        '<div><h3 style="margin:0 0 0.45rem;font-size:0.9rem;color:#fff;">Ruoli (primario / secondario / adattato)</h3>' + fmPitch(u) + '</div>' +
+      '</div>' +
+      '<h3 style="margin:1rem 0 0.4rem;font-size:0.9rem;color:#fff;">Highlight Video Hub</h3>' +
+      '<div class="es-pc-video-row">' +
+        '<input id="es-pc-vid-url" placeholder="https://… clip highlight" />' +
+        '<button type="button" class="es-pc-btn" data-pc="add-video">Aggiungi</button>' +
+      '</div>' +
+      '<div class="es-pc-list" id="es-pc-vid-list">' + vlist + '</div>';
+  }
+
+  function overlay() {
+    var el = document.getElementById('es-pc-overlay');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'es-pc-overlay';
+      el.className = 'es-pc-overlay';
+      el.innerHTML = '<div class="es-pc-sheet" id="es-pc-sheet"></div>';
+      document.body.appendChild(el);
+      el.addEventListener('click', function (e) {
+        if (e.target === el) closeOverlay();
+      });
+    }
+    return el;
+  }
+  function openSheet(html) {
+    var el = overlay();
+    var sheet = document.getElementById('es-pc-sheet');
+    if (sheet) sheet.innerHTML = html;
+    el.classList.add('is-on');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeOverlay() {
+    var el = document.getElementById('es-pc-overlay');
+    if (el) el.classList.remove('is-on');
+    document.body.style.overflow = '';
+  }
+
+  function heatmapEditor(u) {
+    heatRange = heatGet(u);
+    openSheet(
+      '<button type="button" class="es-pc-close" data-pc="close">Chiudi</button>' +
+      '<h2>Heatmap intelligente a fine gara</h2>' +
+      '<p class="lead">Generazione automatica da ruolo e modulo, oppure tocca le zone in cui hai spinto, crossato o recuperato palla.</p>' +
+      '<div class="es-pc-form">' +
+        '<select id="es-pc-form">' +
+          ['4-3-3', '4-2-3-1', '4-4-2', '3-5-2', '3-4-3'].map(function (f) {
+            return '<option' + (heatRange.form === f ? ' selected' : '') + '>' + f + '</option>';
+          }).join('') +
+        '</select>' +
+        '<button type="button" class="es-pc-btn" data-pc="heat-auto">Genera dal modulo</button>' +
+        '<button type="button" class="es-pc-btn" data-pc="heat-save">Salva heatmap</button>' +
+      '</div>' +
+      '<div id="es-pc-heat-pitch">' + pitchSvg(heatRange.cells, true) + '</div>'
+    );
+  }
+
+  function haversine(a, b) {
+    var R = 6371000;
+    var dLat = (b.lat - a.lat) * Math.PI / 180;
+    var dLng = (b.lng - a.lng) * Math.PI / 180;
+    var s = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(a.lat * Math.PI / 180) * Math.cos(b.lat * Math.PI / 180) *
+      Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    return 2 * R * Math.atan2(Math.sqrt(s), Math.sqrt(1 - s));
+  }
+  function gpsList(u) {
+    var map = storeGet(GPS_KEY);
+    return map[meKey(u)] || [];
+  }
+  function gpsSaveList(u, list) {
+    var map = storeGet(GPS_KEY);
+    map[meKey(u)] = list.slice(0, 80);
+    storeSet(GPS_KEY, map);
+  }
+  function sessionStats(pts) {
+    var dist = 0, vmax = 0, sprints = 0, acc = 0, inSprint = false;
+    var i;
+    for (i = 1; i < pts.length; i++) {
+      var d = haversine(pts[i - 1], pts[i]);
+      dist += d;
+      var dt = Math.max(0.5, (pts[i].t - pts[i - 1].t) / 1000);
+      var sp = pts[i].speed != null ? pts[i].speed : d / dt;
+      if (sp > vmax) vmax = sp;
+      if (sp >= 5.5) {
+        if (!inSprint) { sprints += 1; inSprint = true; }
+      } else inSprint = false;
+      var prev = pts[i - 1].speed != null ? pts[i - 1].speed : 0;
+      if (sp - prev > 1.4) acc += 1;
+    }
+    var dur = pts.length > 1 ? (pts[pts.length - 1].t - pts[0].t) / 1000 : 0;
+    return {
+      distKm: dist / 1000,
+      vmaxKmh: vmax * 3.6,
+      sprints: sprints,
+      acc: acc,
+      durMin: dur / 60,
+      hid: dist * 0.18 / 1000
+    };
+  }
+  function speedChart(pts) {
+    if (!pts || pts.length < 2) return '<div class="es-pd-empty">Nessun picco registrato.</div>';
+    var w = 520, h = 110;
+    var speeds = pts.map(function (p, i) {
+      if (p.speed != null) return p.speed * 3.6;
+      if (!i) return 0;
+      var dt = Math.max(0.5, (p.t - pts[i - 1].t) / 1000);
+      return (haversine(pts[i - 1], p) / dt) * 3.6;
+    });
+    var max = Math.max.apply(null, speeds.concat([8]));
+    var d = speeds.map(function (v, i) {
+      var x = (i / (speeds.length - 1)) * (w - 8) + 4;
+      var y = h - 8 - (v / max) * (h - 16);
+      return x.toFixed(1) + ',' + y.toFixed(1);
+    }).join(' ');
+    var imax = 0;
+    speeds.forEach(function (v, i) { if (v > speeds[imax]) imax = i; });
+    return '<svg viewBox="0 0 ' + w + ' ' + h + '" width="100%" height="110">' +
+      '<polyline fill="none" stroke="#38bdf8" stroke-width="2" points="' + d + '"/>' +
+      '</svg>' +
+      '<div style="font-size:0.78rem;color:#7dd3fc;font-weight:700;">Velocità massima: ' +
+      speeds[imax].toFixed(1) + ' km/h — campione ' + (imax + 1) + '</div>';
+  }
+  function gpsPathSvg(pts) {
+    if (!pts || pts.length < 2) return '<div class="es-pd-empty">Nessun percorso.</div>';
+    var lats = pts.map(function (p) { return p.lat; });
+    var lngs = pts.map(function (p) { return p.lng; });
+    var minLa = Math.min.apply(null, lats), maxLa = Math.max.apply(null, lats);
+    var minLo = Math.min.apply(null, lngs), maxLo = Math.max.apply(null, lngs);
+    var w = 360, h = 520, pad = 18;
+    function xy(p) {
+      var x = pad + ((p.lng - minLo) / (maxLo - minLo || 1)) * (w - pad * 2);
+      var y = pad + (1 - (p.lat - minLa) / (maxLa - minLa || 1)) * (h - pad * 2);
+      return x.toFixed(1) + ',' + y.toFixed(1);
+    }
+    return '<svg class="es-pc-pitch" viewBox="0 0 ' + w + ' ' + h + '">' +
+      '<rect width="' + w + '" height="' + h + '" fill="#166534"/>' +
+      '<polyline fill="none" stroke="#38bdf8" stroke-width="2.4" points="' + pts.map(xy).join(' ') + '"/>' +
+      '</svg>';
+  }
+  function filterSessions(list, range) {
+    var now = Date.now();
+    var span = range === 'week' ? 7 * 864e5 : range === 'month' ? 31 * 864e5 : range === 'season' ? 200 * 864e5 : 0;
+    if (!span) return list.slice(0, 1);
+    return list.filter(function (s) { return now - s.start < span; });
+  }
+  function gpsPanel(u, range) {
+    range = range || 'session';
+    var list = gpsList(u).slice().sort(function (a, b) { return b.start - a.start; });
+    var view = filterSessions(list, range);
+    var pts = [];
+    view.forEach(function (s) { pts = pts.concat(s.points || []); });
+    var st = sessionStats(pts);
+    var liveNote = live ? '<div class="es-pd-empty" style="color:#6ee7b7;">Sessione in corso — ' + live.points.length + ' campioni.</div>' : '';
+    return '<button type="button" class="es-pc-close" data-pc="close">Chiudi</button>' +
+      '<h2>GPS · prestazioni fisiche</h2>' +
+      '<p class="lead">Fase 1 MVP: GPS dello smartphone. Premi Inizia allenamento, porta il telefono con te, poi ferma la sessione.</p>' +
+      liveNote +
+      '<div class="es-pc-form">' +
+        (live
+          ? '<button type="button" class="es-pc-btn" data-pc="gps-stop">Termina allenamento</button>'
+          : '<button type="button" class="es-pc-btn" data-pc="gps-start">Inizia allenamento</button>') +
+      '</div>' +
+      '<div class="es-pc-hist" id="es-pc-gps-range">' +
+        '<button type="button" data-range="session"' + (range === 'session' ? ' class="is-on"' : '') + '>Allenamento</button>' +
+        '<button type="button" data-range="week"' + (range === 'week' ? ' class="is-on"' : '') + '>Settimana</button>' +
+        '<button type="button" data-range="month"' + (range === 'month' ? ' class="is-on"' : '') + '>Mese</button>' +
+        '<button type="button" data-range="season"' + (range === 'season' ? ' class="is-on"' : '') + '>Stagione</button>' +
+      '</div>' +
+      '<div class="es-pc-kpi">' +
+        '<div class="es-pc-stat"><b>' + st.distKm.toFixed(2) + '</b><span>Km percorsi</span></div>' +
+        '<div class="es-pc-stat"><b>' + st.hid.toFixed(2) + '</b><span>Km alta intensità</span></div>' +
+        '<div class="es-pc-stat"><b>' + st.vmaxKmh.toFixed(1) + '</b><span>Vmax km/h</span></div>' +
+        '<div class="es-pc-stat"><b>' + st.sprints + '</b><span>Sprint</span></div>' +
+      '</div>' +
+      '<div class="es-pc-kpi">' +
+        '<div class="es-pc-stat"><b>' + st.acc + '</b><span>Accelerazioni</span></div>' +
+        '<div class="es-pc-stat"><b>' + st.durMin.toFixed(1) + '</b><span>Minuti netti</span></div>' +
+      '</div>' +
+      '<h3 style="margin:0.6rem 0 0.35rem;font-size:0.88rem;color:#fff;">Grafico velocità</h3>' + speedChart(pts) +
+      '<h3 style="margin:0.85rem 0 0.35rem;font-size:0.88rem;color:#fff;">Percorso sul campo</h3>' + gpsPathSvg(pts);
+  }
+
+  function startGps(u) {
+    if (!navigator.geolocation) {
+      toast('GPS non disponibile su questo dispositivo.', 'error');
+      return;
+    }
+    live = { points: [], start: Date.now(), watch: null };
+    live.watch = navigator.geolocation.watchPosition(function (pos) {
+      var c = pos.coords;
+      live.points.push({
+        t: Date.now(),
+        lat: c.latitude,
+        lng: c.longitude,
+        speed: c.speed != null && c.speed >= 0 ? c.speed : null
+      });
+      if (live.points.length > 4000) live.points = live.points.slice(-4000);
+      refreshGpsTool();
+    }, function () {
+      toast('Permesso GPS negato o posizione non disponibile.', 'error');
+      live = null;
+    }, { enableHighAccuracy: true, maximumAge: 1000, timeout: 15000 });
+    toast('Allenamento avviato. Tieni il telefono con te.');
+    openSheet(gpsPanel(u, 'session'));
+  }
+  function stopGps(u) {
+    if (!live) return;
+    try { if (live.watch != null) navigator.geolocation.clearWatch(live.watch); } catch (_) {}
+    var sess = {
+      id: 'gps-' + live.start,
+      start: live.start,
+      end: Date.now(),
+      points: live.points.slice(),
+      stats: sessionStats(live.points)
+    };
+    var list = gpsList(u);
+    list.unshift(sess);
+    gpsSaveList(u, list);
+    live = null;
+    toast('Sessione GPS salvata nello storico.');
+    openSheet(gpsPanel(u, 'session'));
+    refreshGpsTool();
+  }
+
+  function dossierHtml(u, job) {
+    var st = statsOf(u);
+    var heat = heatGet(u);
+    var last = gpsList(u)[0];
+    var gs = last && last.stats ? last.stats : null;
+    var vids = videosOf(u);
+    return '<button type="button" class="es-pc-close" data-pc="close">Chiudi</button>' +
+      '<h2>Candidati Ora · scheda tecnica</h2>' +
+      '<p class="lead">Un tap invia al club un dossier già compilato: Card, heatmap, ruoli, stats, GPS e highlight. Niente email manuale.</p>' +
+      cardHtml(u, { hideHint: true }) +
+      '<p style="margin:0.8rem 0 0.35rem;color:#94a3b8;font-size:0.82rem;"><strong style="color:#fff;">Annuncio:</strong> ' +
+      esc((job && (job.title || job)) || '') + '</p>' +
+      '<div class="es-pc-stats">' +
+        '<div class="es-pc-stat"><b>' + st.g + '</b><span>Gol</span></div>' +
+        '<div class="es-pc-stat"><b>' + st.a + '</b><span>Assist</span></div>' +
+        '<div class="es-pc-stat"><b>' + st.pres + '</b><span>Presenze</span></div>' +
+        '<div class="es-pc-stat"><b>' + (gs ? gs.distKm.toFixed(1) : '—') + '</b><span>Km medi GPS</span></div>' +
+        '<div class="es-pc-stat"><b>' + (gs ? gs.vmaxKmh.toFixed(1) : '—') + '</b><span>Vmax</span></div>' +
+      '</div>' +
+      pitchSvg(heat.cells, false) +
+      '<p style="font-size:0.78rem;color:#94a3b8;">Highlight: ' + (vids.length ? vids.length + ' clip' : 'nessuna clip') + '</p>' +
+      '<div class="es-pc-form">' +
+        '<button type="button" class="es-pc-btn" data-pc="confirm-apply" data-title="' +
+        esc((job && job.title) || job || '') + '">Conferma e invia dossier</button>' +
+      '</div>';
+  }
+
+  function confirmApply(title) {
+    var u = userObj();
+    var list;
+    try { list = JSON.parse(localStorage.getItem('elisee_job_applications') || '[]'); } catch (_) { list = []; }
+    var heat = heatGet(u);
+    var st = statsOf(u);
+    var rec = {
+      title: title,
+      note: 'Dossier Card automatico',
+      email: u.email || '',
+      ruolo: roleOf(u),
+      at: new Date().toISOString(),
+      dossier: {
+        name: nameOf(u),
+        club: clubOf(u),
+        free: isFree(u),
+        role: roleOf(u),
+        foot: footOf(u),
+        stats: st,
+        heatmap: heat.cells,
+        gps: (gpsList(u)[0] && gpsList(u)[0].stats) || null,
+        videos: videosOf(u)
+      }
+    };
+    list.unshift(rec);
+    try { localStorage.setItem('elisee_job_applications', JSON.stringify(list.slice(0, 80))); } catch (_) {}
+    var smart = storeGet(APPLY_KEY);
+    var arr = smart[meKey(u)] || [];
+    arr.unshift(rec);
+    smart[meKey(u)] = arr.slice(0, 40);
+    storeSet(APPLY_KEY, smart);
+    if (window.EliseeSchede && window.EliseeSchede.addApplicant) {
+      try {
+        window.EliseeSchede.addApplicant({
+          id: window.EliseeSchede.jobId ? window.EliseeSchede.jobId(title) : title,
+          title: title,
+          role: roleOf(u)
+        }, u, 'Dossier Card automatico');
+      } catch (_) {}
+    }
+    closeOverlay();
+    toast('Candidatura inviata. Dossier Card nella scheda tecnica, non via e-mail.');
+  }
+
+  function toolsHtml() {
+    return '<div class="es-pc-tools">' +
+      '<button type="button" class="es-pc-tool" data-pc="open-card"><b>Apri la Card</b><span>Fronte figurina + vista tattica, stats e video hub.</span></button>' +
+      '<button type="button" class="es-pc-tool" data-pc="heatmap"><b>Heatmap fine gara</b><span>Auto da modulo, oppure tocca le zone sul campo.</span></button>' +
+      '<button type="button" class="es-pc-tool" id="es-pc-gps-tool" data-pc="gps"><b>' +
+        (live ? 'GPS in corso' : 'Inizia allenamento') +
+      '</b><span>Tracciamento GPS dello smartphone · MVP Fase 1.</span></button>' +
+      '<button type="button" class="es-pc-tool" data-pc="jobs"><b>Cerca squadra</b><span>Annunci a imbuto: città, provincia, regione, Italia.</span></button>' +
+      '</div>';
+  }
+  function refreshGpsTool() {
+    var btn = document.getElementById('es-pc-gps-tool');
+    if (!btn) return;
+    btn.classList.toggle('is-live', !!live);
+    var b = btn.querySelector('b');
+    if (b) b.textContent = live ? 'GPS in corso' : 'Inizia allenamento';
+  }
+
+  function slotHtml(u) {
+    return '<div class="es-pc-wrap">' +
+      cardHtml(u) +
+      '<div class="es-pc-side">' +
+        '<p style="margin:0;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:#38bdf8;font-weight:800;">Asset digitale</p>' +
+        '<h2 style="margin:0.15rem 0 0.35rem;font-family:Outfit,Inter,sans-serif;font-size:1.15rem;color:#fff;">La tua Card collezionabile</h2>' +
+        '<p style="margin:0 0 0.55rem;color:#94a3b8;font-size:0.84rem;line-height:1.45;">Identità, status contrattuale e numeri in un solo oggetto. Chi ti aggiunge all’Album colleziona questa Card.</p>' +
+        toolsHtml() +
+      '</div></div>';
+  }
+
+  function mountDash(box, user) {
+    if (!box) return;
+    var slot = box.querySelector('#es-pc-slot');
+    if (!slot) {
+      var body = box.querySelector('.es-pd-body');
+      if (!body) return;
+      slot = document.createElement('div');
+      slot.id = 'es-pc-slot';
+      var head = body.querySelector('.es-pd-head');
+      if (head && head.nextSibling) body.insertBefore(slot, head.nextSibling);
+      else body.insertBefore(slot, body.firstChild);
+    }
+    slot.innerHTML = slotHtml(user || userObj());
+    refreshGpsTool();
+  }
+
+  function albumFollowLabel(p, on) {
+    if (p && p.kind === 'player') return on ? "Nell'Album" : "Aggiungi all'Album";
+    return on ? 'Segui già' : 'Segui';
+  }
+
+  function patchScopri() {
+    if (!window.EliseeScopri || !window.EliseeScopri.cardHtml) return;
+    var orig = window.EliseeScopri.cardHtml;
+    window.EliseeScopri.cardHtml = function (p, followed) {
+      var html = orig(p, followed);
+      if (!p || p.kind !== 'player') return html;
+      var on = (followed || []).indexOf(p.id) >= 0;
+      return html
+        .replace(/>Segui già</g, '>' + albumFollowLabel(p, true) + '<')
+        .replace(/>Segui</g, '>' + albumFollowLabel(p, false) + '<')
+        .replace(/>Chi segue</g, ">Vedi Album</");
+    };
+    var fol = window.EliseeScopri.follow;
+    if (typeof fol === 'function') {
+      window.EliseeScopri.follow = function (id) {
+        var catalog = window.EliseeScopri.allProfiles ? window.EliseeScopri.allProfiles() : [];
+        var person = catalog.filter(function (p) { return p.id === id; })[0];
+        var before = typeof window.showToast === 'function' ? window.showToast : null;
+        if (person && person.kind === 'player' && before) {
+          window.showToast = function (msg, kind) {
+            if (/segui/i.test(String(msg))) {
+              var on = /Ora segui/i.test(msg);
+              msg = on ? ('Card di ' + person.name + " aggiunta all'Album.") : ('Card rimossa dall\'Album.');
+            }
+            return before(msg, kind);
+          };
+        }
+        var out = fol.call(window.EliseeScopri, id);
+        if (before) window.showToast = before;
+        return out;
+      };
+    }
+  }
+
+  function patchChiSegui() {
+    if (!window.EliseeChiSegui) return;
+    var origRender = window.EliseeChiSegui.render;
+    window.EliseeChiSegui.render = function () {
+      origRender.call(window.EliseeChiSegui);
+      var title = document.getElementById('es-cs-title');
+      var emptyS = document.getElementById('es-cs-empty-sub');
+      var mine = window.EliseeChiSegui.isMe;
+      var kind = window.EliseeChiSegui.kind;
+      if (title) {
+        if (mine) title.textContent = kind === 'player' ? 'Il tuo Album' : 'Album · Chi hai in rete';
+        else title.textContent = 'Album di ' + (window.EliseeChiSegui.ownerName || 'questo profilo');
+      }
+      if (emptyS && mine) {
+        emptyS.textContent = kind === 'player'
+          ? 'Nessuna Card nell’Album. Da Scopri profili usa Aggiungi all’Album.'
+          : 'Nessun profilo in questa categoria dell’Album.';
+      }
+    };
+    var origMine = window.EliseeChiSegui.openMine;
+    window.EliseeChiSegui.openMine = function () {
+      var u = userObj();
+      if (window.isPlayerSiteRole && window.isPlayerSiteRole(u)) {
+        window.EliseeChiSegui.kind = 'player';
+      }
+      return origMine.call(window.EliseeChiSegui);
+    };
+  }
+
+  function injectFunnel() {
+    var bar = document.querySelector('#bacheca-annunci .pf-toolbar');
+    if (!bar || document.getElementById('es-pc-geo-funnel')) return;
+    var box = document.createElement('div');
+    box.id = 'es-pc-geo-funnel';
+    box.className = 'es-pc-funnel';
+    box.innerHTML =
+      '<button type="button" data-geo="1"><b>1 · Città</b><span>Club della tua città</span></button>' +
+      '<button type="button" data-geo="2"><b>2 · Provincia</b><span>Spostamenti quotidiani</span></button>' +
+      '<button type="button" data-geo="3"><b>3 · Regione</b><span>Categorie superiori</span></button>' +
+      '<button type="button" data-geo="4"><b>4 · Italia</b><span>Esperienze fuori sede</span></button>';
+    bar.appendChild(box);
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-geo]');
+      if (!b) return;
+      var v = b.getAttribute('data-geo');
+      var on = b.classList.contains('is-on');
+      box.querySelectorAll('[data-geo]').forEach(function (x) { x.classList.remove('is-on'); });
+      window.EliseePlayerCard.geoFilter = on ? 0 : Number(v);
+      if (!on) b.classList.add('is-on');
+      if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs();
+    });
+  }
+
+  function sortJobs(jobs) {
+    var u = userObj();
+    var tier = window.EliseePlayerCard.geoFilter || 0;
+    var scored = (jobs || []).map(function (j) {
+      var t = geoTier(j, u);
+      return { j: j, t: t };
+    });
+    if (tier) scored = scored.filter(function (x) { return x.t === tier; });
+    scored.sort(function (a, b) { return a.t - b.t; });
+    return scored.map(function (x) {
+      x.j._geoTier = x.t;
+      x.j._geoLabel = TIER_LABEL[x.t];
+      return x.j;
+    });
+  }
+
+  function smartApply(title, job) {
+    var u = userObj();
+    if (window.blockSpectatorApplication && window.blockSpectatorApplication('job')) return;
+    var logged = localStorage.getItem('elisee_user_auth') === 'true';
+    if (!logged) {
+      if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
+      else toast('Accedi per candidarti.', 'warning');
+      return;
+    }
+    if (window.isPlayerSiteRole && window.isPlayerSiteRole(u)) {
+      openSheet(dossierHtml(u, job || { title: title }));
+      return;
+    }
+    if (typeof window._eliseeOpenCandidateOrig === 'function') {
+      window._eliseeOpenCandidateOrig(title);
+    }
+  }
+
+  function onClick(e) {
+    var t = e.target.closest('[data-pc]');
+    if (!t) {
+      if (e.target.closest('#es-pc-card')) {
+        openSheet(detailHtml(userObj()));
+      }
+      return;
+    }
+    var k = t.getAttribute('data-pc');
+    var u = userObj();
+    if (k === 'close') { closeOverlay(); return; }
+    if (k === 'open-card') { openSheet(detailHtml(u)); return; }
+    if (k === 'heatmap') { heatmapEditor(u); return; }
+    if (k === 'gps') { openSheet(gpsPanel(u, 'session')); return; }
+    if (k === 'gps-start') { startGps(u); return; }
+    if (k === 'gps-stop') { stopGps(u); return; }
+    if (k === 'jobs') {
+      if (window.switchView) window.switchView('bacheca', '#bacheca-annunci');
+      setTimeout(injectFunnel, 80);
+      return;
+    }
+    if (k === 'heat-auto') {
+      var form = (document.getElementById('es-pc-form') || {}).value || '4-3-3';
+      heatRange.form = form;
+      heatRange.role = roleOf(u);
+      heatRange.cells = roleSeeds(roleOf(u), form);
+      var hold = document.getElementById('es-pc-heat-pitch');
+      if (hold) hold.innerHTML = pitchSvg(heatRange.cells, true);
+      return;
+    }
+    if (k === 'heat-save') {
+      heatSave(u, heatRange);
+      toast('Heatmap salvata sulla Card.');
+      return;
+    }
+    if (k === 'add-video') {
+      var inp = document.getElementById('es-pc-vid-url');
+      var url = inp ? String(inp.value || '').trim() : '';
+      if (!url) return;
+      var list = videosOf(u);
+      list.unshift({ url: url, title: 'Highlight', at: Date.now() });
+      saveVideos(u, list);
+      openSheet(detailHtml(u));
+      toast('Clip aggiunta al Video Hub.');
+      return;
+    }
+    if (k === 'confirm-apply') {
+      confirmApply(t.getAttribute('data-title') || '');
+    }
+  }
+
+  function onOverlayClick(e) {
+    var cell = e.target.closest('.es-pc-cell');
+    if (cell && document.getElementById('es-pc-heat-pitch')) {
+      var r = cell.getAttribute('data-r');
+      var c = cell.getAttribute('data-c');
+      var key = r + '-' + c;
+      heatRange.cells = heatRange.cells || {};
+      heatRange.cells[key] = (heatRange.cells[key] || 0) + 1;
+      var hold = document.getElementById('es-pc-heat-pitch');
+      if (hold) hold.innerHTML = pitchSvg(heatRange.cells, true);
+      return;
+    }
+    var rng = e.target.closest('[data-range]');
+    if (rng) {
+      openSheet(gpsPanel(userObj(), rng.getAttribute('data-range')));
+    }
+  }
+
+  window.EliseePlayerCard = {
+    geoFilter: 0,
+    mountDash: mountDash,
+    cardHtml: cardHtml,
+    geoTier: geoTier,
+    sortJobs: sortJobs,
+    smartApply: smartApply,
+    injectFunnel: injectFunnel
+  };
+
+  function boot() {
+    patchScopri();
+    patchChiSegui();
+    document.addEventListener('click', onClick);
+    document.addEventListener('click', onOverlayClick);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && document.activeElement && document.activeElement.id === 'es-pc-card') {
+        openSheet(detailHtml(userObj()));
+      }
+      if (e.key === 'Escape') closeOverlay();
+    });
+    injectFunnel();
+    if (typeof window.filterAndRenderJobs === 'function') {
+      try { window.filterAndRenderJobs(); } catch (_) {}
+    }
+    var box = document.getElementById('es-pd');
+    if (box) {
+      try { mountDash(box, userObj()); } catch (_) {}
+    }
+    document.addEventListener('elisee:view-changed', function (ev) {
+      var d = ev && ev.detail;
+      if (d && (d.view === 'bacheca' || (d.hash && String(d.hash).indexOf('bacheca') >= 0))) {
+        injectFunnel();
+      }
+      if (d && (d.view === 'user-dossier' || (d.hash && String(d.hash).indexOf('dossier') >= 0))) {
+        var dash = document.getElementById('es-pd');
+        if (dash) {
+          try { mountDash(dash, userObj()); } catch (_) {}
+        }
+      }
+    });
+    if (typeof window.openCandidateModal === 'function' && !window._eliseeOpenCandidateOrig) {
+      window._eliseeOpenCandidateOrig = window.openCandidateModal;
+      window.openCandidateModal = function (title) {
+        var u = userObj();
+        if (window.isPlayerSiteRole && window.isPlayerSiteRole(u)) {
+          window.EliseePlayerCard.smartApply(title, { title: title });
+          return;
+        }
+        window._eliseeOpenCandidateOrig(title);
+      };
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();

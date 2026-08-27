@@ -357,6 +357,7 @@
           seasonPickerHtml +
         '</div>' +
       '</div>' +
+      '<div id="es-pc-slot"></div>' +
 
       '<div class="es-pd-grid">' +
 
@@ -808,6 +809,9 @@
 
     bind(host);
     revealPlayerShell(host, box);
+    if (window.EliseePlayerCard && typeof window.EliseePlayerCard.mountDash === 'function') {
+      try { window.EliseePlayerCard.mountDash(box, user); } catch (_) {}
+    }
   }
 
   window.EliseePlayerDash = { 

@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Logo ufficiale LND Terza Categoria 2026** (Wikimedia `Terza_Categoria_Logo_2026.png`) come logo della competizione: selettore squadra, picker campionati, minigioco carriera, header e tab Focus. File locale `immagini/squadre-loghi/terza-categoria.png`. Cache `TCATLND1`.
-Feature precedente: Logo ufficiale LND Seconda Categoria 2026.
+Ultimo fatto: **Profilo Calciatore da PDF** — Card collezionabile, Album al posto di Segui, heatmap fine gara, GPS MVP smartphone, candidatura a imbuto geografico e dossier automatico. Cache `CARD1`.
+Feature precedente: Logo ufficiale LND Terza Categoria 2026.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -60,7 +60,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Logo ufficiale LND Terza Categoria 2026 (competizione) su selettore, minigioco, Focus |
+| (questo) | Profilo Calciatore: Card, Album, heatmap, GPS MVP, candidatura geo |
+| `5f5eea1` | Logo ufficiale LND Terza Categoria 2026 (competizione) su selettore, minigioco, Focus |
 | `307b5fa` | Logo ufficiale LND Seconda Categoria 2026 (competizione) su selettore, minigioco, Focus |
 | `8edbf14` | Logo ufficiale LND Prima Categoria 2026 (competizione) su selettore, minigioco, Focus |
 | `aaa1a4b` | Logo ufficiale LND Promozione 2026 (competizione) su selettore, minigioco, Focus |
@@ -120,7 +121,7 @@ File:
 - `manager-runtime.js` / `manager.css` — inbox admin 3 colonne
 - `api/manager.js` — Vercel: `propose-lineup`, `view=official`, `decide` kind `lineup`
 - `workers/manager_store.py` + `elisee_up.py` — stesso contratto in locale (persistenza `data/manager/state.json`, gitignored)
-- Cache attuale: `?v=20260827_TCATLND1`, SW `elisee-scout-v20260827-tcatlnd1`
+- Cache attuale: `?v=20260827_CARD1`, SW `elisee-scout-v20260827-card1`
 
 ### Giornalista / Content Creator (sito, non app)
 
@@ -161,6 +162,16 @@ Wiring: `leagueLogoPath` in `squadre-select.js`, `getLeagueLogoImg` in `minigioc
 Non è lo stemma delle società: è il marchio ufficiale LND 2026 (3 bianco su pentagono arancione, scritta LND).
 Fonte Wikimedia Commons `File:Terza_Categoria_Logo_2026.png` (PD-textlogo). Salvato in `immagini/squadre-loghi/terza-categoria.png`.
 Wiring: `leagueLogoPath` in `squadre-select.js`, `getLeagueLogoImg` in `minigioco-carriera.js`, header/tab Focus (`CATS['terza-cat'].leagueLogo`). Cache `TCATLND1`.
+
+### Profilo Calciatore (PDF 2026-08-27)
+
+Da `presentazione_profilo_calciatore_*.pdf`. Sito, non app nativa.
+- **Card collezionabile** in cima alla dashboard calciatore (`player-card.js` / `.css`): foto, età, ruolo, piede, status tesserato/svincolato, badge attitudine. Tap → vista tattica (heatmap, ruoli FM, stats, Video Hub).
+- **Album** al posto di Segui per i profili Player. Nav «Album». Storage invariato: `elisee_social_following`.
+- **Heatmap fine gara**: auto da ruolo+modulo (4-3-3, 4-2-3-1, …) o tocco zone. `elisee_player_heatmap`.
+- **GPS MVP smartphone**: Inizia/Termina allenamento, km, vmax, sprint, acc, grafico, percorso, storico Allenamento→Settimana→Mese→Stagione. `elisee_gps_sessions`. Fase 2 hardware non implementata.
+- **Candidatura smart**: imbuto Città/Provincia/Regione/Italia sulla Bacheca; **Candidati Ora** invia dossier Card (non email). `elisee_job_applications` + `elisee_smart_applications`.
+File: `player-card.js` / `player-card.css`. Cache `CARD1`.
 
 localStorage:
 
@@ -267,6 +278,7 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-27** — Profilo Calciatore da PDF: Card collezionabile, Album, heatmap fine gara, GPS MVP, candidatura a imbuto + dossier. Cache `CARD1`.
 - **2026-08-27** — Logo ufficiale Terza Categoria 2026 (LND) come logo campionato: selettore, minigioco, Focus. File `immagini/squadre-loghi/terza-categoria.png`. Cache `TCATLND1`.
 - **2026-08-27** — Logo ufficiale Seconda Categoria 2026 (LND) come logo campionato: selettore, minigioco, Focus. File `immagini/squadre-loghi/seconda-categoria.png`. Cache `SCATLND1`.
 - **2026-08-27** — Logo ufficiale Prima Categoria 2026 (LND) come logo campionato: selettore, minigioco, Focus. File `immagini/squadre-loghi/prima-categoria.png`. Cache `PCATLND1`.

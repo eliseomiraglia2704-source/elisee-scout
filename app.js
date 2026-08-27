@@ -8029,6 +8029,45 @@ document.addEventListener('DOMContentLoaded', () => {
       under: false,
       housing: false,
       svincolato: false
+    },
+    {
+      id: 'centrocampista-prima-categoria-foggia',
+      title: 'Cercasi Centrocampista per Prima Categoria',
+      role: 'Centrocampista',
+      club: 'ASD Lucera Calcio',
+      location: 'Lucera',
+      category: 'Prima Categoria',
+      description: 'Mezzala con inserimenti e recupero palla. Dossier Card e heatmap benvenuti.',
+      matchScore: 'Match 95%',
+      under: false,
+      housing: false,
+      svincolato: true
+    },
+    {
+      id: 'attaccante-prima-categoria-bari',
+      title: 'Attaccante Prima Categoria — Bari',
+      role: 'Attaccante',
+      club: 'Polisportiva Bari Nord',
+      location: 'Bari',
+      category: 'Prima Categoria',
+      description: 'Punta mobile per il girone pugliese. Trasferte provinciali.',
+      matchScore: 'Match 88%',
+      under: false,
+      housing: false,
+      svincolato: true
+    },
+    {
+      id: 'difensore-seconda-categoria-roma',
+      title: 'Difensore centrale — Seconda Categoria Lazio',
+      role: 'Difensore',
+      club: 'Atletico Roma Dilettanti',
+      location: 'Roma',
+      category: 'Seconda Categoria',
+      description: 'Fuori sede possibile. Richiesta disponibilità immediata.',
+      matchScore: 'Match 84%',
+      under: false,
+      housing: true,
+      svincolato: true
     }
   ];
 
@@ -8087,7 +8126,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     } catch (_) { userJobs = []; }
     const allJobs = userJobs.concat(sampleJobs);
-    const filtered = allJobs.filter(job => {
+    var filtered = allJobs.filter(job => {
       if (roleVal !== 'all' && job.role !== roleVal) return false;
       if (catVal !== 'all' && job.category !== catVal) return false;
       if (locVal !== 'all' && job.location !== locVal) return false;
@@ -8096,6 +8135,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (isSvincolato && !job.svincolato) return false;
       return true;
     });
+    if (window.EliseePlayerCard && typeof window.EliseePlayerCard.sortJobs === 'function') {
+      filtered = window.EliseePlayerCard.sortJobs(filtered);
+    }
 
     if (filtered.length === 0) {
       jobsContainer.innerHTML = `
@@ -8118,6 +8160,7 @@ document.addEventListener('DOMContentLoaded', () => {
               ${job.ai ? '<span class="pf-job-ai">Selezione IA</span>' : ''}
               <span class="pf-job-score">${job.matchScore}</span>
             </div>
+            ${job._geoLabel ? '<span class="es-pc-job-tier">' + job._geoLabel + '</span>' : ''}
             <h4>${job.title}</h4>
             <p class="pf-job-sub">${job.club} · ${job.location} · ${job.category}</p>
             <p class="pf-job-desc">${job.description}</p>
@@ -8126,7 +8169,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <div class="pf-job-actions">
             <button type="button" class="btn btn-outline-pill pf-job-cta" onclick="openCandidateModal('${safeTitle}')">
-              ${window.isSpectatorRole && window.isSpectatorRole(window.getActiveSiteRole()) ? 'Solo lettura' : 'Candidati'}
+              ${window.isSpectatorRole && window.isSpectatorRole(window.getActiveSiteRole()) ? 'Solo lettura' : 'Candidati Ora'}
             </button>
             <button type="button" class="btn btn-outline-pill pf-job-cta" onclick="if(window.openSchedeTecniche)window.openSchedeTecniche({id:'${jid}',title:'${safeTitle}',club:'${String(job.club||'').replace(/'/g, "\\'")}',role:'${String(job.role||'').replace(/'/g, "\\'")}',location:'${String(job.location||'').replace(/'/g, "\\'")}'})">Schede tecniche</button>
           </div>

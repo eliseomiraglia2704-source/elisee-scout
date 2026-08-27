@@ -290,6 +290,7 @@
   <link rel="stylesheet" href="tc-panel.css?v=20260827_LUX1">
   <link rel="stylesheet" href="player-profile.css?v=20260826_PRES_PRF1">
   <link rel="stylesheet" href="player-dash.css?v=20260827_REAL1">
+  <link rel="stylesheet" href="player-card.css?v=20260827_CARD1">
   <link rel="stylesheet" href="coach-dash.css?v=20260827_LUX1">
   <link rel="stylesheet" href="ds-dash.css?v=20260827_LUX1">
   <link rel="stylesheet" href="pres-dash.css?v=20260827_LUX1">
@@ -1588,7 +1589,7 @@
         <a href="#bacheca-annunci" class="nav-link" data-view="bacheca" data-i18n="nav.portfolio" onclick="if(window.switchView){ window.switchView('bacheca'); } return false;">Bacheca</a>
         <a href="#stampa-portal" class="nav-link" data-view="stampa" onclick="if(window.openStampaFeed){window.openStampaFeed();}else if(window.switchView){window.switchView('stampa','#stampa-portal');} return false;">Stampa</a>
         <a href="#mappa-portal" class="nav-link" data-view="mappa" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){window.switchView('mappa','#mappa-portal');} return false;">Mappa</a>
-        <a href="#seguo-portal" class="nav-link" data-view="seguo" onclick="if(window.openChiSegui){window.openChiSegui();}else if(window.switchView){window.switchView('seguo','#seguo-portal');} return false;">Chi segui</a>
+        <a href="#seguo-portal" class="nav-link" data-view="seguo" onclick="if(window.openChiSegui){window.openChiSegui();}else if(window.switchView){window.switchView('seguo','#seguo-portal');} return false;">Album</a>
         <a href="#ambassador-portal" class="nav-link nav-link-soft" data-view="ambassador" data-i18n="nav.ambassador" onclick="if(window.switchView){ window.switchView('ambassador'); } return false;">Ambassador</a>
         <a href="#minigioco-carriera" class="nav-link nav-link-soft nav-link-minigioco" id="nav-minigioco" data-view="minigioco" data-i18n="nav.minigame" title="Minigiochi ELISEE" onclick="if(window.EliseeMinigioco&amp;&amp;window.EliseeMinigioco.open){window.EliseeMinigioco.open();return false;} if(window.openMinigiocoCarriera){window.openMinigiocoCarriera();return false;} return false;">Minigioco</a>
       </nav>
@@ -1678,7 +1679,7 @@
               <i data-lucide="megaphone" style="width:16px; height:16px; color:#38bdf8;"></i> Pubblica candidatura
             </a>
             <a href="#seguo-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.openChiSegui){ window.openChiSegui(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
-              <i data-lucide="users" style="width:16px; height:16px; color:#38bdf8;"></i> Chi segui
+              <i data-lucide="users" style="width:16px; height:16px; color:#38bdf8;"></i> Album
             </a>
             <a href="#scopri-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.openScopriProfili){ window.openScopriProfili('staff'); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="user-plus" style="width:16px; height:16px; color:#38bdf8;"></i> Segui lo Staff
@@ -2365,6 +2366,9 @@
                       <div class="dropdown-option" data-value="Serie D">Serie D</div>
                       <div class="dropdown-option" data-value="Eccellenza">Eccellenza</div>
                       <div class="dropdown-option" data-value="Promozione">Promozione</div>
+                      <div class="dropdown-option" data-value="Prima Categoria">Prima Categoria</div>
+                      <div class="dropdown-option" data-value="Seconda Categoria">Seconda Categoria</div>
+                      <div class="dropdown-option" data-value="Terza Categoria">Terza Categoria</div>
                       <div class="dropdown-option" data-value="Under 19">Under 19</div>
                       <div class="dropdown-option" data-value="Under 17">Under 17</div>
                     </div>
@@ -2381,6 +2385,8 @@
                     <div class="dropdown-options-menu">
                       <div class="dropdown-option selected" data-value="all">Tutte le zone</div>
                       <div class="dropdown-option" data-value="Foggia">Foggia</div>
+                      <div class="dropdown-option" data-value="Lucera">Lucera</div>
+                      <div class="dropdown-option" data-value="Bari">Bari</div>
                       <div class="dropdown-option" data-value="Roma">Roma</div>
                       <div class="dropdown-option" data-value="Milano">Milano</div>
                       <div class="dropdown-option" data-value="Napoli">Napoli</div>
@@ -3099,7 +3105,7 @@
               Messaggi
               <span class="es-user-tab-dot" id="es-user-tab-msg-dot" hidden></span>
             </button>
-            <button type="button" class="es-user-tab" data-tab="seguo" id="es-user-tab-seguo">Chi segui</button>
+            <button type="button" class="es-user-tab" data-tab="seguo" id="es-user-tab-seguo">Album</button>
             <button type="button" class="es-user-tab" data-tab="scopri" id="es-user-tab-scopri">Scopri</button>
             <button type="button" class="es-user-tab" data-tab="secret" id="es-user-tab-secret" hidden>Secret List</button>
             <button type="button" class="es-user-tab" data-tab="wall" id="es-user-tab-wall">Wall mercato</button>
@@ -3621,7 +3627,7 @@
 
     <div id="view-seguo" style="display:none;">
       <section id="seguo-portal" class="es-sc es-cs">
-        <h1 class="es-sc-title" id="es-cs-title">Chi segui</h1>
+        <h1 class="es-sc-title" id="es-cs-title">Album</h1>
         <div class="es-sc-chips" id="es-cs-chips" role="tablist" aria-label="Tipo seguito">
           <button type="button" class="es-sc-chip is-on" data-kind="ente">ENTE</button>
           <button type="button" class="es-sc-chip" data-kind="club">Club</button>
@@ -3630,7 +3636,7 @@
         </div>
         <div class="es-cs-empty" id="es-cs-empty">
           <h2 id="es-cs-empty-title">Nessun profilo</h2>
-          <p id="es-cs-empty-sub">Non stai seguendo nessun profilo.</p>
+          <p id="es-cs-empty-sub">Nessuna Card nel tuo Album.</p>
         </div>
         <div id="es-cs-list" class="es-sc-list" hidden></div>
       </section>
@@ -5124,11 +5130,11 @@
   <script src="tc-panel.js?v=20260826_TC3"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260827_GIORN1"></script>
+  <script src="app.js?v=20260827_CARD1"></script>
   <script src="player-profile.js?v=20260827_GIORN1"></script>
   <script src="public-rating-system.js?v=20260827_LUX1"></script>
   <script src="dash-real.js?v=20260827_REAL2"></script>
-  <script src="player-dash.js?v=20260827_GIORN1"></script>
+  <script src="player-dash.js?v=20260827_CARD1"></script>
   <script src="coach-dash.js?v=20260827_REAL2"></script>
   <script src="ds-dash.js?v=20260827_REAL2"></script>
   <script src="pres-dash.js?v=20260827_REAL2"></script>
@@ -5151,12 +5157,13 @@
   <script src="bt-dash.js?v=20260827_REAL2"></script>
   <script src="tifoso-dash.js?v=20260827_REAL2"></script>
   <script src="giorn-dash.js?v=20260827_GIORN1"></script>
-  <script src="scopri-profili.js?v=20260827_GIORN1"></script>
+  <script src="scopri-profili.js?v=20260827_CARD1"></script>
   <script src="messaggi.js?v=20260820_MSG1"></script>
   <script src="mercato-hub.js?v=20260826_MKT3"></script>
   <script src="schede-tecniche.js?v=20260820_ST3"></script>
   <script src="mappa-club.js?v=20260826_GEO1"></script>
-  <script src="chi-segui.js?v=20260820_FORM1"></script>
+  <script src="chi-segui.js?v=20260827_CARD1"></script>
+  <script src="player-card.js?v=20260827_CARD1"></script>
   <script src="verifica-account.js?v=20260827_GIORN1"></script>
   <script src="creator-role-switcher.js?v=20260827_GIORN1"></script>
   <script src="role-actions-runtime.js?v=20260827_GIORN1"></script>

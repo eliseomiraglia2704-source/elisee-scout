@@ -78,7 +78,7 @@
       var owner = this.ownerId || meKey();
       var mine = !this.ownerId || this.ownerId === meKey();
       this.isMe = mine;
-      if (title) title.textContent = mine ? 'Chi segui' : ('Chi segue ' + (this.ownerName || 'questo profilo'));
+      if (title) title.textContent = mine ? 'Album' : ('Album di ' + (this.ownerName || 'questo profilo'));
       document.querySelectorAll('#es-cs-chips .es-sc-chip').forEach(function (b) {
         b.classList.toggle('is-on', b.getAttribute('data-kind') === window.EliseeChiSegui.kind);
       });
@@ -89,8 +89,8 @@
         if (emptyT) emptyT.textContent = 'Nessun profilo';
         if (emptyS) {
           emptyS.textContent = mine
-            ? 'Non stai seguendo nessun profilo.'
-            : 'Questo profilo non segue nessuno in questa categoria.';
+            ? 'Nessuna Card nel tuo Album.'
+            : 'Nessuna Card in questa categoria dell’Album.';
         }
         if (list) { list.hidden = true; list.innerHTML = ''; }
         return;
@@ -105,7 +105,7 @@
         if (window.EliseeScopri && typeof window.EliseeScopri.cardHtml === 'function') {
           list.innerHTML = rows.map(function (p) {
             return window.EliseeScopri.cardHtml(p, followedMine) +
-              '<button type="button" class="es-cs-their" data-see-follow="' + esc(p.id) + '" data-see-name="' + esc(p.name) + '">Vedi chi segue</button>';
+              '<button type="button" class="es-cs-their" data-see-follow="' + esc(p.id) + '" data-see-name="' + esc(p.name) + '">Vedi Album</button>';
           }).join('');
         } else {
           list.innerHTML = rows.map(function (p) {
