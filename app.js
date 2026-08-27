@@ -8169,7 +8169,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <div class="pf-job-actions">
             <button type="button" class="btn btn-outline-pill pf-job-cta" onclick="openCandidateModal('${safeTitle}')">
-              ${window.isSpectatorRole && window.isSpectatorRole(window.getActiveSiteRole()) ? 'Solo lettura' : 'Candidati Ora'}
+              ${window.isSpectatorRole && window.isSpectatorRole(window.getActiveSiteRole()) ? 'Solo lettura' : ((window.EliseeDsHub && window.EliseeDsHub.isDs && window.EliseeDsHub.isDs()) ? 'Riservato ai calciatori' : 'Candidati Ora')}
             </button>
             <button type="button" class="btn btn-outline-pill pf-job-cta" onclick="if(window.openSchedeTecniche)window.openSchedeTecniche({id:'${jid}',title:'${safeTitle}',club:'${String(job.club||'').replace(/'/g, "\\'")}',role:'${String(job.role||'').replace(/'/g, "\\'")}',location:'${String(job.location||'').replace(/'/g, "\\'")}'})">Schede tecniche</button>
           </div>

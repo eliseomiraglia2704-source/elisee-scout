@@ -11,9 +11,9 @@
   ];
   var STATUSES = ['Svincolato', 'In scadenza', 'Tesserato', 'In trattativa'];
   var PRIOS = [
-    { id: '1', label: 'Priorità alta' },
-    { id: '2', label: 'Monitoraggio' },
-    { id: '3', label: 'Watch' }
+    { id: '1', label: 'Obiettivo A' },
+    { id: '2', label: 'Obiettivo B' },
+    { id: '3', label: "Svincolato d'emergenza" }
   ];
   var clubCache = [];
   var tab = 'secret';

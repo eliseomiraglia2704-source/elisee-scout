@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Profilo Calciatore da PDF** — Card collezionabile, Album al posto di Segui, heatmap fine gara, GPS MVP smartphone, candidatura a imbuto geografico e dossier automatico. Cache `CARD1`.
-Feature precedente: Logo ufficiale LND Terza Categoria 2026.
+Ultimo fatto: **Profilo Direttore Sportivo da PDF** — hub B2B (anagrafica, badge, geo), annunci, Album scouting, Secret List stealth (Obiettivo A/B/emergenza), Wall trattative, candidature in entrata, AI Scouting Advisor con Match Index. Cache `DS1`.
+Feature precedente: Profilo Calciatore da PDF (Card, Album, heatmap, GPS).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -60,7 +60,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Profilo Calciatore: Card, Album, heatmap, GPS MVP, candidatura geo |
+| (questo) | Profilo DS: hub B2B, Secret List, Wall, AI Advisor Match Index |
+| `a57a6f9` | Profilo Calciatore: Card, Album, heatmap, GPS MVP, candidatura geo |
 | `5f5eea1` | Logo ufficiale LND Terza Categoria 2026 (competizione) su selettore, minigioco, Focus |
 | `307b5fa` | Logo ufficiale LND Seconda Categoria 2026 (competizione) su selettore, minigioco, Focus |
 | `8edbf14` | Logo ufficiale LND Prima Categoria 2026 (competizione) su selettore, minigioco, Focus |
@@ -121,7 +122,7 @@ File:
 - `manager-runtime.js` / `manager.css` — inbox admin 3 colonne
 - `api/manager.js` — Vercel: `propose-lineup`, `view=official`, `decide` kind `lineup`
 - `workers/manager_store.py` + `elisee_up.py` — stesso contratto in locale (persistenza `data/manager/state.json`, gitignored)
-- Cache attuale: `?v=20260827_CARD1`, SW `elisee-scout-v20260827-card1`
+- Cache attuale: `?v=20260827_DS1`, SW `elisee-scout-v20260827-ds1`
 
 ### Giornalista / Content Creator (sito, non app)
 
@@ -172,6 +173,16 @@ Da `presentazione_profilo_calciatore_*.pdf`. Sito, non app nativa.
 - **GPS MVP smartphone**: Inizia/Termina allenamento, km, vmax, sprint, acc, grafico, percorso, storico Allenamento→Settimana→Mese→Stagione. `elisee_gps_sessions`. Fase 2 hardware non implementata.
 - **Candidatura smart**: imbuto Città/Provincia/Regione/Italia sulla Bacheca; **Candidati Ora** invia dossier Card (non email). `elisee_job_applications` + `elisee_smart_applications`.
 File: `player-card.js` / `player-card.css`. Cache `CARD1`.
+
+### Profilo Direttore Sportivo (PDF 2026-08-27)
+
+Da `profilo_direttore_sportivo_*.pdf`. Sito, non app nativa.
+- Hub B2B in cima alla dashboard DS (`ds-hub.js` / `.css`): anagrafica, ruolo ufficiale, club oppure «In cerca di progetto / Consulente indipendente», badge FIGC/Scout/Dirigente, geo operativa.
+- Strumenti: pubblica posizione aperta, candidature in entrata, database scouting, Album, Secret List stealth, Wall trattative, messaggi, AI Advisor.
+- Secret List: priorità **Obiettivo A / Obiettivo B / Svincolato d’emergenza**. Nessuna notifica all’atleta.
+- Limiti: il DS non si candida agli annunci calciatori e non ha heatmap/GPS propri.
+- AI Scouting Advisor: brief testuale → Match Index % (anagrafica, status, heatmap/ruoli, GPS). Azioni: Secret List, Contatta, Album, Scarta.
+File: `ds-hub.js` / `ds-hub.css`. Cache `DS1`.
 
 localStorage:
 
@@ -278,6 +289,7 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-27** — Profilo Direttore Sportivo da PDF: hub B2B, Album scouting, Secret List, Wall, AI Advisor Match Index. Cache `DS1`.
 - **2026-08-27** — Profilo Calciatore da PDF: Card collezionabile, Album, heatmap fine gara, GPS MVP, candidatura a imbuto + dossier. Cache `CARD1`.
 - **2026-08-27** — Logo ufficiale Terza Categoria 2026 (LND) come logo campionato: selettore, minigioco, Focus. File `immagini/squadre-loghi/terza-categoria.png`. Cache `TCATLND1`.
 - **2026-08-27** — Logo ufficiale Seconda Categoria 2026 (LND) come logo campionato: selettore, minigioco, Focus. File `immagini/squadre-loghi/seconda-categoria.png`. Cache `SCATLND1`.

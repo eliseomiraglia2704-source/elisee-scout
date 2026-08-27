@@ -785,6 +785,7 @@
 
   function smartApply(title, job) {
     var u = userObj();
+    if (window.EliseeDsHub && typeof window.EliseeDsHub.blockApply === 'function' && window.EliseeDsHub.blockApply()) return;
     if (window.blockSpectatorApplication && window.blockSpectatorApplication('job')) return;
     var logged = localStorage.getItem('elisee_user_auth') === 'true';
     if (!logged) {

@@ -146,7 +146,10 @@
       '<div class="es-edit-field"><label>Nome</label><input id="es-ds-nome" value="' + esc(user.nome || '') + '"></div>' +
       '<div class="es-edit-field"><label>Cognome</label><input id="es-ds-cognome" value="' + esc(user.cognome || '') + '"></div>' +
       '<div class="es-edit-field"><label>Ruolo Ufficiale</label><input id="es-ds-role" value="Direttore Sportivo" readonly></div>' +
-      '<div class="es-edit-field"><label>Club / Organizzazione</label><input id="es-ds-club" value="' + esc(user.squadra || user.club || '') + '"></div>' +
+      '<div class="es-edit-field"><label>Club / Organizzazione</label><input id="es-ds-club" value="' + esc(user.squadra || user.club || '') + '" placeholder="Vuoto = consulente indipendente"></div>' +
+      '<div class="es-edit-field"><label>Città operativa</label><input id="es-ds-city" value="' + esc(user.citta || user.city || '') + '"></div>' +
+      '<div class="es-edit-field"><label>Provincia</label><input id="es-ds-prov" value="' + esc(user.provincia || '') + '"></div>' +
+      '<div class="es-edit-field"><label>Regione</label><input id="es-ds-reg" value="' + esc(user.regione || '') + '"></div>' +
       '<div class="es-edit-field full"><label>Bio &amp; Note Operative</label><textarea id="es-ds-bio" rows="3">' + esc(user.bio || '') + '</textarea></div>' +
       '</div>' +
       '<div class="es-edit-actions">' +
@@ -167,6 +170,9 @@
       var c = document.getElementById('es-ds-cognome').value.trim();
       var clb = document.getElementById('es-ds-club').value.trim();
       var bio = document.getElementById('es-ds-bio').value.trim();
+      var city = (document.getElementById('es-ds-city') || {}).value || '';
+      var prov = (document.getElementById('es-ds-prov') || {}).value || '';
+      var reg = (document.getElementById('es-ds-reg') || {}).value || '';
 
       user.nome = n || user.nome;
       user.cognome = c || user.cognome;
@@ -174,6 +180,11 @@
       user.squadra = clb;
       user.club = clb;
       user.bio = bio;
+      user.citta = String(city).trim();
+      user.city = user.citta;
+      user.provincia = String(prov).trim();
+      user.regione = String(reg).trim();
+      user.dsStatus = clb ? 'club' : 'In cerca di progetto / Consulente indipendente';
 
       try {
         localStorage.setItem('elisee_active_user', JSON.stringify(user));
@@ -196,6 +207,11 @@
       var k = b.getAttribute('data-ds');
       if (k === 'home' && window.switchView) window.switchView('home', '#hero');
       if (k === 'secret' && window.openSecretList) window.openSecretList();
+      if (k === 'wall' && window.openTransferWall) window.openTransferWall();
+      if (k === 'album' && window.openChiSegui) {
+        if (window.EliseeChiSegui) window.EliseeChiSegui.kind = 'player';
+        window.openChiSegui();
+      }
       if (k === 'msgs' && window.openUserMessages) window.openUserMessages();
       if (k === 'edit') {
         openDsEditModal(userObj());
@@ -219,6 +235,9 @@
     }
     box.innerHTML = html(user);
     box.hidden = false;
+    if (window.EliseeDsHub && typeof window.EliseeDsHub.mount === 'function') {
+      try { window.EliseeDsHub.mount(box, user); } catch (_) {}
+    }
     host.classList.add('es-ds-on');
     host.classList.remove('es-pd-on', 'es-ma-on', 'es-med-on', 'es-obs-on', 'es-tm-on', 'es-gk-on', 'es-at-on', 'es-yg-on', 'es-dg-on', 'es-nu-on');
     if (group) {
