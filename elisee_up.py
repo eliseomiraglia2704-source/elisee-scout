@@ -113,7 +113,7 @@ class Handler(SimpleHTTPRequestHandler):
         self.send_header("Pragma", "no-cache")
         self.send_header("Expires", "0")
         self.send_header("X-Elisee-Server", "up")
-        self.send_header("X-Elisee-Build", "20260806_NOCORS")
+        self.send_header("X-Elisee-Build", "20260827_LUX3")
         super().end_headers()
 
     def handle_one_request(self) -> None:

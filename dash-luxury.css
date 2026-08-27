@@ -59,9 +59,9 @@
 
 .es-pd-head h1 {
   font-family: var(--lx-heading) !important;
-  font-size: 1.05rem !important;
+  font-size: 1.28rem !important;
   font-weight: 700 !important;
-  letter-spacing: 0.04em !important;
+  letter-spacing: -0.02em !important;
   text-transform: none !important;
   color: var(--lx-text) !important;
 }
@@ -77,8 +77,9 @@
 .es-pd-card {
   background: var(--lx-card) !important;
   border: 1px solid var(--lx-line) !important;
+  border-left: 2px solid var(--lx-accent) !important;
   border-radius: 10px !important;
-  padding: 1.15rem 1.2rem !important;
+  padding: 1.25rem 1.3rem !important;
   box-shadow: none !important;
 }
 

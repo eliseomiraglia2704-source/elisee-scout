@@ -320,7 +320,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
   <link rel="stylesheet" href="mappa-club.css?v=20260826_GEO1">
-  <link rel="stylesheet" href="dash-luxury.css?v=20260827_LUX2">
+  <link rel="stylesheet" href="dash-luxury.css?v=20260827_LUX3">
   <script>
     /* Boot OAuth: token in search O in hash (#hero?elisee_token=...). La sessione vince sempre. */
     (function () {
@@ -516,8 +516,8 @@
       }
       // Pulisci SOLO cache SW vecchia una volta (non ogni secondo)
       try {
-        if (!sessionStorage.getItem('elisee_sw_purged_v6_jsfix')) {
-          sessionStorage.setItem('elisee_sw_purged_v6_jsfix', '1');
+        if (!sessionStorage.getItem('elisee_sw_purged_v8_lux2')) {
+          sessionStorage.setItem('elisee_sw_purged_v8_lux2', '1');
           if (navigator.serviceWorker) {
             navigator.serviceWorker.getRegistrations().then(function (regs) {
               regs.forEach(function (r) { try { r.unregister(); } catch (e) {} });

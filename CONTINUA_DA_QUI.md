@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Dashboard ruolo professionali sulla palette ufficiale**: fondo `#050608`, accento `#38bdf8` / `#0284c7`, testi bianchi/slate, font Outfit+Inter (variabili `:root` di `style.css`). Tolto l’ottone/avorio introdotto per errore. Resta il layout pulito (niente pillole FIFA/oro UTA). File: `dash-luxury.css`, `*-dash.js` ripristinati sui colori originali, `coach-dash.js` / `vice-dash.js`, `index.html`, `sw.js`. Cache `LUX2`.
+Ultimo fatto: **Locale 8080 + palette ufficiale visibile**: server riavviato (`cwd` Desktop Elisee Scout), cache `LUX3`, SW purge `v8`. `dash-luxury.css` usa `#050608` + `#38bdf8`. Se il browser resta sulla tab aperta non vede nulla: serve Ctrl+F5. File: `dash-luxury.css`, `index.html`, `sw.js`, `elisee_up.py`. Cache `LUX3`.
 Feature precedente: Tema luxury con palette ottone (scartata).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
