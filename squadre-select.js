@@ -9,9 +9,9 @@
   var LEAGUE_ORDER = [];
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260827_PROMLND1';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260827_PCATLND1';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260827_PROMLND1';
+  var LOGO_V = '20260827_PCATLND1';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -859,6 +859,9 @@
     }
     if (lg.indexOf('PROMOZIONE') === 0) {
       return 'immagini/squadre-loghi/promozione.png';
+    }
+    if (lg.indexOf('PRIMA CATEGORIA') === 0) {
+      return 'immagini/squadre-loghi/prima-categoria.png';
     }
     if (lg.indexOf('PRIMAVERA 1') === 0) {
       return 'immagini/squadre-loghi/primavera-1.png';

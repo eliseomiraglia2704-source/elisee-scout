@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Logo ufficiale LND Promozione 2026** (Wikimedia `Promozione_Logo_2026.svg`) come logo della competizione: selettore squadra, picker campionati, minigioco carriera, header e tab Focus. File locale `immagini/squadre-loghi/promozione.png`. Cache `PROMLND1`.
-Feature precedente: Logo ufficiale LND Eccellenza 2026.
+Ultimo fatto: **Logo ufficiale LND Prima Categoria 2026** (Wikimedia `Prima_Categoria_Logo_2026.png`) come logo della competizione: selettore squadra, picker campionati, minigioco carriera, header e tab Focus. File locale `immagini/squadre-loghi/prima-categoria.png`. Cache `PCATLND1`.
+Feature precedente: Logo ufficiale LND Promozione 2026.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -60,7 +60,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Logo ufficiale LND Promozione 2026 (competizione) su selettore, minigioco, Focus |
+| (questo) | Logo ufficiale LND Prima Categoria 2026 (competizione) su selettore, minigioco, Focus |
+| `aaa1a4b` | Logo ufficiale LND Promozione 2026 (competizione) su selettore, minigioco, Focus |
 | `3d24fbc` | Logo ufficiale LND Eccellenza 2026 (competizione) su selettore, minigioco, Focus |
 | `06f3c12` | Loghi Tuttocampo reali per i 12 gironi Eccellenza 2026/27 |
 | `1bce172` | Ruolo Giornalista / Content Creator + feed Stampa + coda staff |
@@ -117,7 +118,7 @@ File:
 - `manager-runtime.js` / `manager.css` — inbox admin 3 colonne
 - `api/manager.js` — Vercel: `propose-lineup`, `view=official`, `decide` kind `lineup`
 - `workers/manager_store.py` + `elisee_up.py` — stesso contratto in locale (persistenza `data/manager/state.json`, gitignored)
-- Cache attuale: `?v=20260827_PROMLND1`, SW `elisee-scout-v20260827-promlnd1`
+- Cache attuale: `?v=20260827_PCATLND1`, SW `elisee-scout-v20260827-pcatlnd1`
 
 ### Giornalista / Content Creator (sito, non app)
 
@@ -140,6 +141,12 @@ Wiring: `leagueLogoPath` in `squadre-select.js`, `getLeagueLogoImg` in `minigioc
 Non è lo stemma delle società: è il marchio ufficiale LND 2026 (P bianca su pentagono viola, scritta LND).
 Fonte Wikimedia Commons `File:Promozione_Logo_2026.svg` (PD-textlogo). Salvato in `immagini/squadre-loghi/promozione.png`.
 Wiring: `leagueLogoPath` in `squadre-select.js`, `getLeagueLogoImg` in `minigioco-carriera.js`, header/tab Focus (`CATS.promozione.leagueLogo`). Cache `PROMLND1`.
+
+### Logo competizione Prima Categoria 2026 (LND)
+
+Non è lo stemma delle società: è il marchio ufficiale LND 2026 (1 bianco su pentagono arancione, scritta LND).
+Fonte Wikimedia Commons `File:Prima_Categoria_Logo_2026.png` (PD-textlogo). Salvato in `immagini/squadre-loghi/prima-categoria.png`.
+Wiring: `leagueLogoPath` in `squadre-select.js`, `getLeagueLogoImg` in `minigioco-carriera.js`, header/tab Focus (`CATS['prima-cat'].leagueLogo`). Cache `PCATLND1`.
 
 localStorage:
 
@@ -246,6 +253,7 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-27** — Logo ufficiale Prima Categoria 2026 (LND) come logo campionato: selettore, minigioco, Focus. File `immagini/squadre-loghi/prima-categoria.png`. Cache `PCATLND1`.
 - **2026-08-27** — Logo ufficiale Promozione 2026 (LND) come logo campionato: selettore, minigioco, Focus. File `immagini/squadre-loghi/promozione.png`. Cache `PROMLND1`.
 - **2026-08-27** — Logo ufficiale Eccellenza 2026 (LND) come logo campionato: selettore, minigioco, Focus. File `immagini/squadre-loghi/eccellenza.png`. Cache `ECCLND1`.
 - **2026-08-27** — Palette ufficiale ripristinata sulle dashboard ruolo (`#050608` + `#38bdf8`). Layout professionale, colori di progetto. Cache `LUX2`.
