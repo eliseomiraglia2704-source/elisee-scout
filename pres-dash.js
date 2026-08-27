@@ -91,10 +91,9 @@
 
   function isExecutive(u) {
     u = u || userObj();
-    var blob = [u.staffRole, u.ruoloDettagliato, u.ruolo, u.role, u.siteRoleFamily, u.staffProfile && u.staffProfile.fieldRole]
-      .filter(Boolean).join(' ').toLowerCase();
-    if (/vice\s*presidente|direttore generale|direttore sportivo|segretario generale|club manager/.test(blob)) return false;
-    return /\bpresidente\b/.test(blob);
+    var primary = String(u.staffRole || u.ruoloDettagliato || (u.staffProfile && u.staffProfile.fieldRole) || u.ruolo || u.role || '').trim().toLowerCase();
+    if (/vice\s*presidente|direttore generale|direttore sportivo|segretario generale|club manager/.test(primary)) return false;
+    return /\bpresidente\b/.test(primary);
   }
 
   function hasFinanceAccess(u) {

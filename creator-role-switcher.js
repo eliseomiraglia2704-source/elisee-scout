@@ -578,15 +578,15 @@
       updated.role = 'Staff';
       updated.staffRole = targetRole.staffRole;
       updated.ruoloDettagliato = targetRole.staffRole;
+      updated.fieldRole = targetRole.staffRole;
       updated.staffProfileComplete = true;
       updated.profileCompleted = true;
       updated.licenza = targetRole.staffRole === 'Allenatore' ? 'UEFA Pro' : 'Federale';
       updated.anniEsperienza = '12';
+      updated.staffProfile = {
+        fieldRole: targetRole.staffRole
+      };
     }
-
-    updated.staffProfile = Object.assign({}, cur.staffProfile || {}, {
-      fieldRole: updated.staffRole || updated.ruoloDettagliato || ''
-    });
 
     // 1. Chiudi istanza del minigioco se aperta
     try {

@@ -15,8 +15,7 @@
   }
   function isSg(u) {
     u = u || userObj();
-    var blob = [u.staffRole, u.ruoloDettagliato, u.ruolo, u.role, u.staffProfile && u.staffProfile.fieldRole]
-      .filter(Boolean).join(' ').toLowerCase();
+    var blob = String(u.staffRole || u.ruoloDettagliato || (u.staffProfile && u.staffProfile.fieldRole) || u.ruolo || u.role || '').trim().toLowerCase();
     return /segretario generale|club manager|segretario sportivo/.test(blob);
   }
   function sgName(u) {

@@ -29,8 +29,7 @@
 
   function isCoach(u) {
     u = u || userObj();
-    var blob = [u.staffRole, u.ruoloDettagliato, u.ruolo, u.role, u.siteRoleFamily, u.staffProfile && u.staffProfile.fieldRole]
-      .filter(Boolean).join(' ').toLowerCase();
+    var blob = String(u.staffRole || u.ruoloDettagliato || (u.staffProfile && u.staffProfile.fieldRole) || u.ruolo || u.role || '').trim().toLowerCase();
     if (/in seconda|vice allenatore/.test(blob)) return false;
     return /allenatore|coach|mister/.test(blob);
   }

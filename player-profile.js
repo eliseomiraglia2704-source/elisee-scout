@@ -224,7 +224,7 @@
     var map = loadIdentities();
     var saved = map[identityKey(user)] || {};
     var family = String(user.siteRoleFamily || saved.family || '').trim();
-    var precise = String(user.staffRole || (family === 'Staff' ? saved.preciseRole : '') || '').trim();
+    var precise = String(user.staffRole || user.ruoloDettagliato || (family === 'Staff' ? saved.preciseRole : '') || '').trim();
     var roleStr = String(user.ruolo || user.role || '').trim();
     if (!family && (roleStr.toLowerCase() === 'staff' || isStaffPreciseName(roleStr))) family = 'Staff';
     if (!precise && isStaffPreciseName(roleStr)) precise = roleStr;
@@ -236,6 +236,15 @@
         user.ruolo = precise;
         user.role = precise;
         user.staffProfileComplete = true;
+        if (saved.preciseRole !== precise) {
+          map[identityKey(user)] = {
+            family: 'Staff',
+            preciseRole: precise,
+            sport: user.sport || 'Calcio',
+            complete: true
+          };
+          try { localStorage.setItem('elisee_role_identity', JSON.stringify(map)); } catch (_) {}
+        }
       } else if (!roleStr) {
         user.ruolo = 'Staff';
         user.role = 'Staff';

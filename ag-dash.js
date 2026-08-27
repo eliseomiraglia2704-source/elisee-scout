@@ -15,8 +15,7 @@
   }
   function isAg(u) {
     u = u || userObj();
-    var blob = [u.staffRole, u.ruoloDettagliato, u.ruolo, u.role, u.siteRoleFamily, u.staffProfile && u.staffProfile.fieldRole]
-      .filter(Boolean).join(' ').toLowerCase();
+    var blob = String(u.staffRole || u.ruoloDettagliato || (u.staffProfile && u.staffProfile.fieldRole) || u.ruolo || u.role || '').trim().toLowerCase();
     return /procuratore|agente fifa|agente sportivo/.test(blob);
   }
   function agName(u) {

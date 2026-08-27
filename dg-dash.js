@@ -15,9 +15,9 @@
   }
   function isDg(u) {
     u = u || userObj();
-    var blob = [u.staffRole, u.ruoloDettagliato, u.ruolo, u.role, u.staffProfile && u.staffProfile.fieldRole]
-      .filter(Boolean).join(' ').toLowerCase();
-    return /direttore generale/.test(blob);
+    var primary = String(u.staffRole || u.ruoloDettagliato || (u.staffProfile && u.staffProfile.fieldRole) || u.ruolo || u.role || '').trim().toLowerCase();
+    if (/direttore sportivo|\bds\b|presidente/.test(primary) && !/direttore generale/.test(primary)) return false;
+    return /direttore generale/.test(primary);
   }
   function dgName(u) {
     return [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Direttore generale';
