@@ -10,11 +10,11 @@
       title: 'Azioni possibili — Calciatore / Utente',
       roleName: 'Calciatore/Utente',
       actions: [
-        { label: 'Aggiornare ruolo e piede preferito', id: 'act-edit-player', icon: '⚡' },
-        { label: 'Attivare consenso profilo comportamentale', id: 'act-consent-ai', icon: '🔒' },
-        { label: 'Richiedere intervento umano (art. 22)', id: 'act-art22', icon: '🛡️' },
-        { label: 'Esportare i propri dati', id: 'act-export-data', icon: '📥' },
-        { label: 'Simulatore Carriera Dilettantistica', id: 'act-minigioco', icon: '🎮' }
+        { label: 'Aggiornare anagrafica e preferenze', id: 'act-edit-player', icon: 'edit' },
+        { label: 'Attivare consenso profilo comportamentale', id: 'act-consent-ai', icon: 'lock' },
+        { label: 'Richiedere intervento umano (art. 22)', id: 'act-art22', icon: 'shield' },
+        { label: 'Esportare i propri dati (GDPR)', id: 'act-export-data', icon: 'download' },
+        { label: 'Percorso di Crescita Proiettato (IA Career Projection)', id: 'act-minigioco', icon: 'activity' }
       ]
     },
     'allenatore': {
@@ -1624,6 +1624,50 @@
     }
   }
 
+  function getLinearSvgIcon(iconOrId) {
+    if (typeof iconOrId === 'string' && iconOrId.indexOf('<svg') !== -1) {
+      return iconOrId;
+    }
+    var key = String(iconOrId || '').toLowerCase();
+    if (key.indexOf('edit') !== -1 || key === '✍️' || key === '📝' || key === '✏️') {
+      return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
+    }
+    if (key.indexOf('lock') !== -1 || key === '🔒' || key.indexOf('secret') !== -1) {
+      return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+    }
+    if (key.indexOf('shield') !== -1 || key === '🛡️' || key.indexOf('art22') !== -1) {
+      return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>';
+    }
+    if (key.indexOf('export') !== -1 || key === '📥' || key === 'download' || key === '📄') {
+      return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
+    }
+    if (key.indexOf('minigioco') !== -1 || key.indexOf('activity') !== -1 || key === '🎮' || key === '⚡') {
+      return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>';
+    }
+    if (key.indexOf('speech') !== -1 || key.indexOf('voice') !== -1 || key === '🎙️') {
+      return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>';
+    }
+    if (key.indexOf('tactics') !== -1 || key.indexOf('schede') !== -1 || key === '📋' || key === '📑') {
+      return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>';
+    }
+    if (key.indexOf('time') !== -1 || key.indexOf('sessions') !== -1 || key === '⏱️') {
+      return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+    }
+    if (key.indexOf('mobile') !== -1 || key === '📱') {
+      return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>';
+    }
+    if (key.indexOf('geo') !== -1 || key === '📍') {
+      return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
+    }
+    if (key.indexOf('share') !== -1 || key === '💬' || key === '📨') {
+      return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';
+    }
+    if (key.indexOf('deal') !== -1 || key.indexOf('wall') !== -1 || key === '🤝') {
+      return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>';
+    }
+    return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12 14 14"/></svg>';
+  }
+
   function injectActionsCard() {
     var grids = document.querySelectorAll('.es-pd-grid');
     if (!grids.length) return;
@@ -1639,12 +1683,13 @@
 
       var card = document.createElement('section');
       card.className = 'es-pd-card es-pd-actions-card';
-      var html = '<h2><span>⚡</span> <span>' + roleData.title + '</span></h2>';
-      html += '<div class="es-pd-actions-list">';
+      var html = '<div class="es-pd-card-header"><h2><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> <span>' + roleData.title + '</span></h2><span class="es-pd-source-badge es-pd-source-ia">Strumenti Operativi</span></div>';
+      html += '<div class="es-pd-actions-list" style="display:flex; flex-direction:column; gap:0.45rem; margin-top:0.35rem;">';
       for (var i = 0; i < roleData.actions.length; i++) {
         var act = roleData.actions[i];
-        html += '<button type="button" class="es-pd-act-btn" data-act-id="' + act.id + '" data-act-label="' + act.label + '">';
-        html += '<span>' + act.icon + '</span> <span>' + act.label + '</span>';
+        var iconHtml = getLinearSvgIcon(act.icon || act.id);
+        html += '<button type="button" class="es-pd-act-btn" data-act-id="' + act.id + '" data-act-label="' + act.label + '" style="display:flex; align-items:center; gap:0.5rem; background:rgba(15,23,42,0.6); border:1px solid rgba(148,163,184,0.14); border-radius:4px; padding:0.45rem 0.65rem; color:#cbd5e1; font-size:0.75rem; text-align:left; cursor:pointer; transition:all 0.15s ease;">';
+        html += '<span style="color:#38bdf8; display:flex; align-items:center; flex-shrink:0;">' + iconHtml + '</span> <span style="font-weight:600;">' + esc(act.label) + '</span>';
         html += '</button>';
       }
       html += '</div>';
