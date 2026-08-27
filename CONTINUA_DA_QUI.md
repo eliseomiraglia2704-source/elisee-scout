@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Logo Ufficiale Calcio Zola Predosa HD integrato** — Scaricato e configurato il logo originale in alta definizione per il Calcio Zola Predosa (`ecc-calcio-zola-predosa.png`, `calcio-zola-predosa.png`, `zola-predosa.png`) nel catalogo loghi societari `immagini/squadre-loghi/`.
+Ultimo fatto: **Logo Ufficiale Campagnola HD integrato** — Scaricato e configurato il logo originale in alta definizione per la Campagnola (`ecc-campagnola.png` e `campagnola.png`) nel catalogo loghi societari `immagini/squadre-loghi/`.
 Feature precedente: Scopri profili: riordino e allineamento card profili & pulsanti azione.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
