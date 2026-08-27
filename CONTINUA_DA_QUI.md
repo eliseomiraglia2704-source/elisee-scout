@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Logo Ufficiale Fratta Terme HD integrato** — Scaricato e configurato il logo originale in alta definizione per il Fratta Terme (`ecc-fratta-terme.png` e `fratta-terme.png`) nel catalogo loghi societari `immagini/squadre-loghi/`.
+Ultimo fatto: **Loghi Ufficiali Eccellenza Girone B HD integrati** — Scaricati e configurati i loghi originali in alta definizione per tutte le squadre (Futball Cava Ronco, Imolese, Massa Lombarda, Medicina Fossatone, Osteria Grande, Pietracuta, Rimini, Russi, Sammaurese, San Marino, Sanpaimola, Santarcangelo, Savignanese, Valsanterno, Vis Novafeltria) nel catalogo loghi societari `immagini/squadre-loghi/`.
 Feature precedente: Scopri profili: riordino e allineamento card profili & pulsanti azione.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
