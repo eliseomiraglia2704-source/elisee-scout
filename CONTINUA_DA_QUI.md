@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Bugfix switch ruoli (Direttore Sportivo &rarr; Presidente)** — Risolto conflitto `isExecutive`/`isDs` e concatenazione campi ruolo: rimosso parsing dirty blob a favore di primary role check su tutte le dashboard, sincronizzata mappa identità in `player-profile.js` e sanificato `creator-role-switcher.js`. Cache `ROLEFIX1`.
-Feature precedente: Profilo Presidente da PDF (Guida operativa, Maglie ufficiali, Rosa Profilo Attivo vs Anteprima, Deleghe, Wall FIFA).
+Ultimo fatto: **Scopri profili: filtro Categorie calcio al posto di Sport** — Sostituito il selettore "Sport / Tutti gli sport" con il filtro "Categoria / Tutte le categorie" (Serie A, Serie B, Serie C, Serie D, Eccellenza, Promozione, 1ª/2ª/3ª Categoria, Primavera, Juniores, Allievi, Giovanissimi, Femminile, Amatori). Cache `CAT1`.
+Feature precedente: Bugfix switch ruoli (DS &rarr; Presidente: eliminato dirty blob e sincronizzato ruolo primario).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -60,7 +60,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Bugfix switch ruoli (DS &rarr; Presidente): eliminato dirty blob e sincronizzato ruolo primario |
+| (questo) | Scopri profili: filtro Categoria calcio (Serie A -> Terza Categoria / Giovanili / Femminile) al posto di Sport |
+| `f36a53a` | Bugfix switch ruoli (DS &rarr; Presidente): eliminato dirty blob e sincronizzato ruolo primario |
 | `245ff85` | Profilo Presidente da PDF: Guida operativa, Maglie ufficiali, Rosa Profilo Attivo vs Anteprima, Deleghe, Wall FIFA |
 | `0e8c89a` | Profilo DS: hub B2B, Secret List, Wall, AI Advisor Match Index |
 | `a57a6f9` | Profilo Calciatore: Card, Album, heatmap, GPS MVP, candidatura geo |
@@ -291,6 +292,7 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-27** — Scopri profili: sostituito il selettore "Sport / Tutti gli sport" con il filtro "Categoria / Tutte le categorie" (Serie A, Serie B, Serie C, Serie D, Eccellenza, Promozione, 1ª/2ª/3ª Categoria, Primavera, Juniores, Allievi, Giovanissimi, Femminile, Amatori). Cache `CAT1`.
 - **2026-08-27** — Bugfix switch ruoli (DS &rarr; Presidente): risolto blocco e leftover dashboard Direttore Sportivo quando si passa a Presidente; rimosso parsing `blob` concatenato e adottato `primary` role check, ripulito `creator-role-switcher.js` e allineato `applyStaffIdentity` in `player-profile.js`. Cache `ROLEFIX1`.
 - **2026-08-27** — Profilo Presidente da PDF: Guida operativa societaria (5 pag.), dati club & foto 3 maglie ufficiali (Home/Away/GK), gestione Rosa con distinzione Profilo Attivo (link Card completa) vs Non Registrato (Anteprima Limitata), organigramma deleghe, ufficializzazione mercato sul Wall FIFA, CTA Pubblica Candidatura. Cache `PRES1`.
 - **2026-08-27** — Profilo Direttore Sportivo da PDF: hub B2B, Album scouting, Secret List, Wall, AI Advisor Match Index. Cache `DS1`.

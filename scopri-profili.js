@@ -1,7 +1,28 @@
 /* Scopri profili — follow Ente / Club / Player / Staff + ricerca avanzata */
 (function () {
   var REGIONS = ['Abruzzo', 'Basilicata', 'Calabria', 'Campania', 'Emilia-Romagna', 'Friuli-Venezia Giulia', 'Lazio', 'Liguria', 'Lombardia', 'Marche', 'Molise', 'Piemonte', 'Puglia', 'Sardegna', 'Sicilia', 'Toscana', 'Trentino-Alto Adige', 'Umbria', "Valle d'Aosta", 'Veneto'];
-  var SPORTS = ['Calcio', 'Calcio a 5', 'Calcio a 7', 'Calcio a 8', 'Pallavolo', 'Basket', 'Rugby', 'Tennis'];
+  var CATEGORIES = [
+    'Serie A',
+    'Serie B',
+    'Serie C',
+    'Serie D',
+    'Eccellenza',
+    'Promozione',
+    'Prima Categoria',
+    'Seconda Categoria',
+    'Terza Categoria',
+    'Primavera',
+    'Juniores Nazionali',
+    'Juniores Regionali',
+    'Allievi Nazionali',
+    'Allievi Regionali',
+    'Giovanissimi',
+    'Femminile Serie A',
+    'Femminile Serie B',
+    'Femminile Serie C',
+    'Femminile Eccellenza',
+    'Amatori / CSI'
+  ];
   var PAGE = 40;
   var CLUBS_URL = 'data/squadre/scopri-clubs.json?v=20260820_MAP1';
 
@@ -258,9 +279,7 @@
     var kind = s.filterKind || 'staff';
     var q = norm(s.q);
     var region = s.region || '';
-    var sportSel = s.sport || 'all';
-    var sportVal = sportSel === 'mine' ? mySport() : sportSel;
-    var group = s.group || '';
+    var catSel = norm(s.category || s.group || '');
     var role = norm(s.role);
     var city = norm(s.city);
     var onlyF = !!s.followingOnly;
@@ -269,12 +288,26 @@
       if (kind && p.kind !== kind) return false;
       if (onlyF && followed.indexOf(p.id) < 0) return false;
       if (region && p.region !== region) return false;
-      if (sportSel !== 'all' && p.sport && p.sport !== sportVal) return false;
-      if (group && p.group !== group && p.role !== group) return false;
+      if (catSel) {
+        var hayCat = norm([p.group, p.league, p.category, p.role].filter(Boolean).join(' '));
+        if (hayCat.indexOf(catSel) < 0) {
+          if (catSel.indexOf('femminil') >= 0 && hayCat.indexOf('femminil') >= 0) {
+            // match
+          } else if (catSel.indexOf('alliev') >= 0 && hayCat.indexOf('alliev') >= 0) {
+            // match
+          } else if (catSel.indexOf('giovanissim') >= 0 && hayCat.indexOf('giovanissim') >= 0) {
+            // match
+          } else if (catSel.indexOf('juniores') >= 0 && hayCat.indexOf('junior') >= 0) {
+            // match
+          } else {
+            return false;
+          }
+        }
+      }
       if (role && norm(p.role).indexOf(role) < 0) return false;
       if (city && norm(p.city).indexOf(city) < 0) return false;
       if (q) {
-        var hay = norm([p.name, p.city, p.role, p.sport, p.league, p.group, p.region].join(' '));
+        var hay = norm([p.name, p.city, p.role, p.league, p.group, p.region].join(' '));
         if (hay.indexOf(q) < 0) return false;
       }
       return true;
@@ -320,8 +353,8 @@
       : esc(initials(p.name));
     var org = p.kind === 'club' || p.kind === 'ente';
     var sub = org
-      ? ((p.city || p.region || '') + (p.sport ? ' · ' + p.sport : '') + (p.group ? ' · ' + p.group : ''))
-      : ((p.sport ? p.sport + ' · ' : '') + (p.role || '') + (p.city ? ' · ' + p.city : ''));
+      ? ((p.city || p.region || '') + (p.group || p.league ? ' · ' + (p.group || p.league) : ''))
+      : ((p.role ? p.role + ' · ' : '') + (p.city ? p.city : (p.region || '')));
     var btn = p.isMe
       ? '<button type="button" class="es-sc-follow" disabled>Sei tu</button>'
       : '<div class="es-sc-actions">' +
@@ -346,9 +379,10 @@
     ensureClubs: loadClubs,
     filterKind: 'staff',
     region: '',
+    category: '',
+    group: '',
     sport: 'all',
     q: '',
-    group: '',
     role: '',
     city: '',
     followingOnly: false,
@@ -418,20 +452,21 @@
     resetAdv: function () {
       this.q = '';
       this.region = '';
-      this.sport = 'all';
+      this.category = '';
       this.group = '';
+      this.sport = 'all';
       this.role = '';
       this.city = '';
       this.followingOnly = false;
       this.shown = PAGE;
       var q = document.getElementById('es-sc-q');
       var geo = document.getElementById('es-sc-geo');
-      var sport = document.getElementById('es-sc-sport');
+      var cat = document.getElementById('es-sc-category') || document.getElementById('es-sc-sport');
       var city = document.getElementById('es-sc-city');
       var fol = document.getElementById('es-sc-following');
       if (q) q.value = '';
       if (geo) geo.value = '';
-      if (sport) sport.value = 'all';
+      if (cat) cat.value = '';
       if (city) city.value = '';
       if (fol) fol.checked = false;
       this.render();
@@ -477,17 +512,22 @@
         }
       });
       var geo = document.getElementById('es-sc-geo');
-      var sport = document.getElementById('es-sc-sport');
+      var cat = document.getElementById('es-sc-category') || document.getElementById('es-sc-sport');
       if (geo) {
         geo.innerHTML = '<option value="">Tutta Italia</option>' + REGIONS.map(function (r) {
           return '<option value="' + esc(r) + '">' + esc(r) + '</option>';
         }).join('');
         geo.addEventListener('change', function () { self.region = geo.value; self.shown = PAGE; self.render(); });
       }
-      if (sport) {
-        sport.innerHTML = '<option value="all">Tutti gli sport</option><option value="mine">Il mio sport</option>' +
-          SPORTS.map(function (s) { return '<option value="' + esc(s) + '">' + esc(s) + '</option>'; }).join('');
-        sport.addEventListener('change', function () { self.sport = sport.value; self.shown = PAGE; self.render(); });
+      if (cat) {
+        cat.innerHTML = '<option value="">Tutte le categorie</option>' +
+          CATEGORIES.map(function (c) { return '<option value="' + esc(c) + '">' + esc(c) + '</option>'; }).join('');
+        cat.addEventListener('change', function () {
+          self.category = cat.value;
+          self.group = cat.value;
+          self.shown = PAGE;
+          self.render();
+        });
       }
       var q = document.getElementById('es-sc-q');
       if (q) {
