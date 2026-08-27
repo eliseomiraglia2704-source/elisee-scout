@@ -246,6 +246,16 @@
         { label: 'Segui partite della squadra del cuore', id: 'act-tf-follow', icon: '⚽' }
       ]
     },
+    'giornalista': {
+      title: 'Azioni possibili — Giornalista / Content Creator',
+      roleName: 'Giornalista',
+      actions: [
+        { label: 'Scrivi un articolo con tag schede', id: 'act-gd-article', icon: '✍️' },
+        { label: 'Apri un sondaggio sul territorio', id: 'act-gd-poll', icon: '📊' },
+        { label: 'Carica un video in hub media', id: 'act-gd-video', icon: '🎥' },
+        { label: 'Apri il feed Stampa', id: 'act-gd-feed', icon: '📰' }
+      ]
+    },
     'club_tc': {
       title: 'Azioni possibili — Club (Elisee Manager)',
       roleName: 'Club/Dirigente',
@@ -1113,6 +1123,7 @@
     var sim = localStorage.getItem('elisee_creator_sim_role');
     if (sim && ROLE_ACTIONS_MAP[sim]) return sim;
 
+    if (window.isGiornalistaSiteRole && window.isGiornalistaSiteRole(u)) return 'giornalista';
     if (window.isTifosoSiteRole && window.isTifosoSiteRole(u)) return 'tifoso';
     if (window.isPlayerSiteRole && window.isPlayerSiteRole(u)) return 'giocatore';
     if (u && (u.ruolo === 'Società' || u.role === 'Società' || u.siteRoleFamily === 'Società')) return 'club_tc';
@@ -1611,6 +1622,17 @@
         break;
       case 'act-tf-follow':
         toast('Segui partite e notifiche live della squadra del cuore attivato!');
+        break;
+
+      case 'act-gd-article':
+      case 'act-gd-poll':
+      case 'act-gd-video':
+        if (window.EliseeGiornDash && window.EliseeGiornDash.render) window.EliseeGiornDash.render();
+        else if (window.switchView) window.switchView('user-dossier', '#user-dossier-portal');
+        break;
+      case 'act-gd-feed':
+        if (window.openStampaFeed) window.openStampaFeed();
+        else if (window.switchView) window.switchView('stampa', '#stampa-portal');
         break;
 
       // Club TC

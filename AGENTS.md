@@ -44,6 +44,7 @@ Se il push dà 403 (account Git `sfondiitaliani23-svg`), pubblica comunque su Ve
 - Area Match Analyst: dashboard report/video/scouting (`ma-dash.js`) se il ruolo è Match analyst o Video analyst.
 - Area Staff Medico: dashboard sanitaria (`med-dash.js`) se il ruolo è Medico sociale.
 - Area Tifoso: dashboard passione/presenze (`tifoso-dash.js`) se il ruolo sito è Tifoso. Distinta da Giocatore e Staff.
+- Area Giornalista / Content Creator: ruolo sito (`giorn-dash.js`) distinto da Ufficio Stampa del club. Articoli con tag schede giocatore/club, funnel geo Città→Nazionale, sondaggi, hub video. Pubblicazione solo dopo coda staff (In attesa / Approvato / Rifiutato) e solo con badge ciano «Stampa / Giornalista Verificato». Feed pubblico `#stampa-portal`. È un sito, non un’app.
 - Area Direttore Sportivo: dashboard DS (`ds-dash.js`) se il ruolo staff è Direttore sportivo. Rail: Secret List.
 - Area Osservatore: dashboard scouting (`obs-dash.js`) se il ruolo è Scout / Osservatore. Distinta dal DS. Rail: Secret List.
 - Area Team Manager: dashboard organizzativa (`tm-dash.js`) se il ruolo è Team manager.
@@ -59,7 +60,7 @@ Se il push dà 403 (account Git `sfondiitaliani23-svg`), pubblica comunque su Ve
 - Area Segretario Generale: dashboard amministrativa (`sg-dash.js`) se il ruolo è Segretario generale / Club Manager. Distinta da Direttore generale e Team manager.
 - Area Biglietteria: dashboard vendite e tifoseria (`bt-dash.js`) se il ruolo è Responsabile biglietteria / tifoseria. Distinta dal Tifoso (ruolo sito).
 - Area Presidente: dashboard Presidenza (`pres-dash.js`) se il ruolo staff è Presidente.
-- Simulatore Ruoli Creatore (`creator-role-switcher.js`, ADMIN ONLY): strumento interno riservato esclusivamente al creatore/admin per QA, test e demo rapida delle 23 dashboard. Non esporre mai a utenti standard.
+- Simulatore Ruoli Creatore (`creator-role-switcher.js`, ADMIN ONLY): strumento interno riservato esclusivamente al creatore/admin per QA, test e demo rapida delle dashboard di ruolo. Non esporre mai a utenti standard.
 
 ## Skill
 

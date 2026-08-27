@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **OTP solo via email**. Clic su Invia codice non auto-compila più le 4 cifre e non mostra il codice in pagina. L’utente lo inserisce a mano dalla mail. Cache `OTP_MAIL1`.
-Feature precedente: Eccellenza 2026/27 nel selettore e nel minigioco carriera.
+Ultimo fatto: **Ruolo Giornalista / Content Creator**. Sesto ruolo sito (oltre Ente, Squadra, Giocatore, Staff, Tifoso): redazione articoli con tag schede, sondaggi, hub video, funnel geo Città→Nazionale, badge ciano «Stampa / Giornalista Verificato», coda staff prima del feed `#stampa-portal`. Cache `GIORN1`.
+Feature precedente: OTP solo via email.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -49,7 +49,7 @@ Online: Vercel (progetto `eliseeshop/elisee-scout`), API serverless in `api/`.
 Catalogo squadre: `data/squadre/catalog.json` (~2901 team). Kit in `team.kits[]`.
 Club slim per mappa/scopri: `data/squadre/scopri-clubs.json`.
 
-Auth: localStorage + `/api/auth/*`, PBKDF2. Ruoli in registrazione: **ENTE, SQUADRA, GIOCATORE, STAFF, TIFOSO**.
+Auth: localStorage + `/api/auth/*`, PBKDF2. Ruoli in registrazione: **ENTE, SQUADRA, GIOCATORE, STAFF, TIFOSO, GIORNALISTA**.
 Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client admin).
 
 ---
@@ -60,7 +60,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | OTP: codice solo via email, digitazione manuale, niente auto-fill |
+| `b0ec659` | Ruolo Giornalista / Content Creator + feed Stampa + coda staff |
+| `b42605c` | OTP: codice solo via email, digitazione manuale, niente auto-fill |
 | `16d2b79` | Eccellenza 2026/27 nel selettore squadra e nel minigioco carriera |
 | `1d0d408` | Eccellenza: 12 gironi 2026/27 con città e loghi (Focus + catalogo) |
 | (questo) | Selettore squadra: kit raggruppati (Partita/Portiere/Pre-match/Allenamento) |
@@ -113,7 +114,17 @@ File:
 - `manager-runtime.js` / `manager.css` — inbox admin 3 colonne
 - `api/manager.js` — Vercel: `propose-lineup`, `view=official`, `decide` kind `lineup`
 - `workers/manager_store.py` + `elisee_up.py` — stesso contratto in locale (persistenza `data/manager/state.json`, gitignored)
-- Cache attuale: `?v=20260827_LUX2`, SW `elisee-scout-v20260827-lux2`
+- Cache attuale: `?v=20260827_GIORN1`, SW `elisee-scout-v20260827-giorn1`
+
+### Giornalista / Content Creator (sito, non app)
+
+Ruolo famiglia **Giornalista** in `modal-scegli-ruolo`. Non è Ufficio Stampa del club (`pr-dash.js`).
+- Badge ciano **Stampa / Giornalista Verificato** solo con `badgeVerificaStato=approved`.
+- Articoli con tag scheda giocatore/club, funnel geo Città → Provincia → Regione → Nazionale.
+- Sondaggi e hub video (pre/post, acquisti, rubrica settimanale).
+- Invio in coda «In attesa di approvazione»; staff/admin approva o rifiuta con checklist + note.
+- Feed pubblico `#stampa-portal` (nav **Stampa**).
+File: `giorn-dash.js` / `giorn-dash.css`.
 
 localStorage:
 

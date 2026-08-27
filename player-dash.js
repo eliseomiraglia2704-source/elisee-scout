@@ -799,6 +799,8 @@
     if (staffHost) { staffHost.hidden = true; staffHost.style.setProperty('display', 'none', 'important'); }
     var tifosoHost = document.getElementById('es-tifoso-profile');
     if (tifosoHost) { tifosoHost.hidden = true; tifosoHost.style.setProperty('display', 'none', 'important'); }
+    var giornHost = document.getElementById('es-giorn-profile');
+    if (giornHost) { giornHost.hidden = true; giornHost.style.setProperty('display', 'none', 'important'); }
     var legacyHost = document.getElementById('dossier-legacy');
     if (legacyHost) { legacyHost.hidden = true; legacyHost.style.setProperty('display', 'none', 'important'); }
     var notifsHost = document.getElementById('es-user-notifs');

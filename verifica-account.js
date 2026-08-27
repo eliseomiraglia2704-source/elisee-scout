@@ -435,6 +435,10 @@
           hint.hidden = false;
           hint.style.display = 'block';
           hint.textContent = 'Il Tifoso naviga e interagisce. Non deve allegare il documento di identità e non può inviare candidature.';
+        } else if (String(value || '').toLowerCase() === 'giornalista') {
+          hint.hidden = false;
+          hint.style.display = 'block';
+          hint.textContent = 'Il Giornalista ha 30 giorni per i documenti anti-fake. Solo con badge Stampa / Giornalista Verificato può inviare articoli, sondaggi e video in pubblicazione.';
         } else if (value) {
           hint.hidden = false;
           hint.style.display = 'block';

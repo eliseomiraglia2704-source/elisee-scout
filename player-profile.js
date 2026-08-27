@@ -147,6 +147,7 @@
 
   window.isPlayerSiteRole = function (userOrRole) {
     if (userOrRole && typeof userOrRole === 'object' && window.isStaffSiteRole(userOrRole)) return false;
+    if (userOrRole && typeof userOrRole === 'object' && window.isGiornalistaSiteRole(userOrRole)) return false;
     var raw = typeof userOrRole === 'string'
       ? userOrRole
       : ((userOrRole && (userOrRole.ruolo || userOrRole.role)) || (window.getActiveSiteRole && window.getActiveSiteRole()) || '');
@@ -154,9 +155,21 @@
     return v === 'giocatore' || v === 'calciatore' || v === 'portiere';
   };
 
+  window.isGiornalistaSiteRole = function (userOrRole) {
+    if (userOrRole && typeof userOrRole === 'object') {
+      var fam = String(userOrRole.siteRoleFamily || '').trim().toLowerCase();
+      if (fam === 'staff' || fam === 'giocatore' || fam === 'tifoso') return false;
+      if (fam === 'giornalista') return true;
+      var rawO = String(userOrRole.ruolo || userOrRole.role || '').trim().toLowerCase();
+      return rawO === 'giornalista' || rawO.indexOf('content creator') >= 0;
+    }
+    var vg = String(userOrRole || '').trim().toLowerCase();
+    return vg === 'giornalista' || vg.indexOf('content creator') >= 0;
+  };
+
   window.isTifosoSiteRole = function (userOrRole) {
     if (userOrRole && typeof userOrRole === 'object') {
-      if (window.isStaffSiteRole(userOrRole) || window.isPlayerSiteRole(userOrRole)) return false;
+      if (window.isStaffSiteRole(userOrRole) || window.isPlayerSiteRole(userOrRole) || window.isGiornalistaSiteRole(userOrRole)) return false;
     }
     var raw = typeof userOrRole === 'string'
       ? userOrRole
@@ -167,10 +180,13 @@
   window.isStaffSiteRole = function (userOrRole) {
     if (typeof userOrRole === 'string') {
       var s = userOrRole.trim().toLowerCase();
+      if (s === 'giornalista' || s.indexOf('content creator') >= 0) return false;
       return s === 'staff' || isStaffPreciseName(userOrRole);
     }
     var user = userOrRole || readUser();
     if (!user) return false;
+    var famStaff = String(user.siteRoleFamily || '').toLowerCase();
+    if (famStaff === 'giornalista' || famStaff === 'tifoso' || famStaff === 'giocatore') return false;
     if (String(user.siteRoleFamily || '').toLowerCase() === 'staff') return true;
     if (user.staffRole && String(user.staffRole).trim()) return true;
     var r = String(user.ruolo || user.role || '').trim();
@@ -183,8 +199,9 @@
     // Se l'utente è esplicitamente un Giocatore, Tifoso o Società, NON forzare lo staff da vecchie identità
     var famNow = String(user.siteRoleFamily || '').trim().toLowerCase();
     var roleNow = String(user.ruolo || user.role || '').trim().toLowerCase();
-    if (famNow === 'giocatore' || famNow === 'tifoso' || famNow === 'società' || famNow === 'societa' ||
-        roleNow === 'giocatore' || roleNow === 'calciatore' || roleNow === 'portiere' || roleNow === 'tifoso') {
+    if (famNow === 'giocatore' || famNow === 'tifoso' || famNow === 'giornalista' || famNow === 'società' || famNow === 'societa' ||
+        roleNow === 'giocatore' || roleNow === 'calciatore' || roleNow === 'portiere' || roleNow === 'tifoso' ||
+        roleNow === 'giornalista' || roleNow.indexOf('content creator') >= 0) {
       if (famNow === 'giocatore' || roleNow === 'giocatore' || roleNow === 'calciatore' || roleNow === 'portiere') {
         user.siteRoleFamily = 'Giocatore';
         user.ruolo = 'Giocatore';
@@ -194,6 +211,11 @@
         user.siteRoleFamily = 'Tifoso';
         user.ruolo = 'Tifoso';
         user.role = 'Tifoso';
+        user.staffRole = '';
+      } else if (famNow === 'giornalista' || roleNow === 'giornalista' || roleNow.indexOf('content creator') >= 0) {
+        user.siteRoleFamily = 'Giornalista';
+        user.ruolo = 'Giornalista';
+        user.role = 'Giornalista';
         user.staffRole = '';
       }
       return user;
@@ -206,7 +228,7 @@
     var roleStr = String(user.ruolo || user.role || '').trim();
     if (!family && (roleStr.toLowerCase() === 'staff' || isStaffPreciseName(roleStr))) family = 'Staff';
     if (!precise && isStaffPreciseName(roleStr)) precise = roleStr;
-    if (family === 'Staff' || (isStaffPreciseName(precise) && famNow !== 'giocatore' && famNow !== 'tifoso') || roleStr.toLowerCase() === 'staff') {
+    if (family === 'Staff' || (isStaffPreciseName(precise) && famNow !== 'giocatore' && famNow !== 'tifoso' && famNow !== 'giornalista') || roleStr.toLowerCase() === 'staff') {
       user.siteRoleFamily = 'Staff';
       if (precise && precise.toLowerCase() !== 'staff') {
         user.staffRole = precise;
@@ -1144,21 +1166,21 @@
     var dashIds = [
       'es-pd', 'es-cd', 'es-dsd', 'es-prd', 'es-vd', 'es-fd', 'es-mad', 'es-md',
       'es-od', 'es-tmd', 'es-gk', 'es-atd', 'es-yg', 'es-dg', 'es-ag', 'es-mk',
-      'es-pr', 'es-nu', 'es-eq', 'es-sg', 'es-bt', 'es-td'
+      'es-pr', 'es-nu', 'es-eq', 'es-sg', 'es-bt', 'es-td', 'es-gd'
     ];
     var hostClasses = [
       'es-pd-on', 'es-cd-on', 'es-ds-on', 'es-pres-on', 'es-vice-on', 'es-fisio-on',
       'es-ma-on', 'es-med-on', 'es-obs-on', 'es-tm-on', 'es-gk-on', 'es-at-on',
       'es-yg-on', 'es-dg-on', 'es-ag-on', 'es-mk-on', 'es-pr-on', 'es-nu-on',
-      'es-eq-on', 'es-sg-on', 'es-bt-on', 'es-tf-on'
+      'es-eq-on', 'es-sg-on', 'es-bt-on', 'es-tf-on', 'es-gd-on'
     ];
     var groupClasses = [
       'is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-fisio-dash',
       'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash',
       'is-at-dash', 'is-yg-dash', 'is-dg-dash', 'is-ag-dash', 'is-mk-dash',
-      'is-pr-dash', 'is-nu-dash', 'is-eq-dash', 'is-sg-dash', 'is-bt-dash', 'is-tf-dash'
+      'is-pr-dash', 'is-nu-dash', 'is-eq-dash', 'is-sg-dash', 'is-bt-dash', 'is-tf-dash', 'is-gd-dash'
     ];
-    var keepHostClass = keepId === 'es-pd' ? 'es-pd-on' : (keepId === 'es-td' ? 'es-tf-on' : '');
+    var keepHostClass = keepId === 'es-pd' ? 'es-pd-on' : (keepId === 'es-td' ? 'es-tf-on' : (keepId === 'es-gd' ? 'es-gd-on' : ''));
     dashIds.forEach(function (id) {
       if (keepId && id === keepId) return;
       var el = document.getElementById(id);
@@ -1167,7 +1189,7 @@
       el.setAttribute('hidden', '');
       el.style.removeProperty('display');
     });
-    ['es-player-profile', 'es-staff-profile', 'es-tifoso-profile'].forEach(function (hid) {
+    ['es-player-profile', 'es-staff-profile', 'es-tifoso-profile', 'es-giorn-profile'].forEach(function (hid) {
       var h = document.getElementById(hid);
       if (!h) return;
       hostClasses.forEach(function (c) {
@@ -1197,27 +1219,31 @@
     var isPlayer = window.isPlayerSiteRole(user);
     var isStaff = window.isStaffSiteRole(user);
     var isTifoso = window.isTifosoSiteRole(user);
+    var isGiorn = window.isGiornalistaSiteRole(user);
     var notifsOn = window.EliseeUserNotifs && window.EliseeUserNotifs.tab === 'notifs';
     var group = document.getElementById('user-dossier-view-group');
     var portal = document.getElementById('user-dossier-portal');
     var profile = document.getElementById('es-player-profile');
     var staff = document.getElementById('es-staff-profile');
     var tifoso = document.getElementById('es-tifoso-profile');
+    var giorn = document.getElementById('es-giorn-profile');
     var legacy = document.getElementById('dossier-legacy');
     var notifs = document.getElementById('es-user-notifs');
-    var light = isPlayer || isStaff || isTifoso || notifsOn;
-    var keepDash = (!notifsOn && isPlayer) ? 'es-pd' : ((!notifsOn && isTifoso) ? 'es-td' : null);
+    var light = isPlayer || isStaff || isTifoso || isGiorn || notifsOn;
+    var keepDash = (!notifsOn && isPlayer) ? 'es-pd' : ((!notifsOn && isTifoso) ? 'es-td' : ((!notifsOn && isGiorn) ? 'es-gd' : null));
     try { window.unmountAllRoleDashboards(keepDash); } catch (_) {}
     if (group) {
       group.classList.toggle('is-player-area', isPlayer && !notifsOn);
       group.classList.toggle('is-staff-area', isStaff && !notifsOn);
       group.classList.toggle('is-tifoso-area', isTifoso && !notifsOn);
+      group.classList.toggle('is-giorn-area', isGiorn && !notifsOn);
       group.classList.toggle('is-notifs-area', notifsOn);
     }
     if (portal) {
       portal.classList.toggle('is-player-area', isPlayer && !notifsOn);
       portal.classList.toggle('is-staff-area', isStaff && !notifsOn);
       portal.classList.toggle('is-tifoso-area', isTifoso && !notifsOn);
+      portal.classList.toggle('is-giorn-area', isGiorn && !notifsOn);
       portal.classList.toggle('is-notifs-area', notifsOn);
     }
     try {
@@ -1225,14 +1251,16 @@
       document.body.classList.toggle('es-player-on', light && vis);
       document.body.classList.toggle('es-staff-on', isStaff && vis && !notifsOn);
       document.body.classList.toggle('es-tifoso-on', isTifoso && vis && !notifsOn);
+      document.body.classList.toggle('es-giorn-on', isGiorn && vis && !notifsOn);
       document.body.classList.toggle('es-notifs-on', notifsOn && vis);
     } catch (_) {}
     setHostVisible(notifs, !!notifsOn);
     setHostVisible(profile, isPlayer && !notifsOn);
     setHostVisible(staff, isStaff && !notifsOn);
     setHostVisible(tifoso, isTifoso && !notifsOn);
+    setHostVisible(giorn, isGiorn && !notifsOn);
     if (legacy) {
-      var hideLegacy = isPlayer || isStaff || isTifoso || notifsOn;
+      var hideLegacy = isPlayer || isStaff || isTifoso || isGiorn || notifsOn;
       setHostVisible(legacy, !hideLegacy);
     }
     if (isPlayer) {
@@ -1256,6 +1284,19 @@
           if (td) td.hidden = true;
           if (th) th.classList.remove('es-tf-on');
           if (group) group.classList.remove('is-tf-dash');
+        }
+      } catch (_) {}
+    }
+    if (isGiorn) {
+      try {
+        var gd = document.getElementById('es-gd');
+        var gh = document.getElementById('es-giorn-profile');
+        if (!notifsOn && window.EliseeGiornDash && window.EliseeGiornDash.render) {
+          window.EliseeGiornDash.render(user);
+        } else {
+          if (gd) gd.hidden = true;
+          if (gh) gh.classList.remove('es-gd-on');
+          if (group) group.classList.remove('is-gd-dash');
         }
       } catch (_) {}
     }
@@ -1459,6 +1500,8 @@
       } else try {
         document.body.classList.remove('es-player-on');
         document.body.classList.remove('es-staff-on');
+        document.body.classList.remove('es-tifoso-on');
+        document.body.classList.remove('es-giorn-on');
         document.body.classList.remove('es-notifs-on');
       } catch (_) {}
     });

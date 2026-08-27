@@ -6523,7 +6523,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function hideAllPortals() {
     const ids = [
       'view-home', 'view-persone', 'view-about', 'view-pillars', 'view-bacheca',
-      'view-squadre', 'view-formazione', 'view-ambassador', 'view-account', 'view-scopri', 'view-mappa', 'view-messaggi', 'view-seguo',
+      'view-squadre', 'view-formazione', 'view-ambassador', 'view-account', 'view-scopri', 'view-mappa', 'view-stampa', 'view-messaggi', 'view-seguo',
       'view-tc-panel', 'view-iscrizione', 'view-mercato', 'view-schede',
       'admin-view-group', 'user-dossier-view-group', 'ambassador-view-group',
       'home-views-group'
@@ -6650,6 +6650,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (sl) sl.classList.add('active');
         if (!targetHash) setHashSafe('#seguo-portal', opts);
         setTimeout(function () { try { if (window.EliseeChiSegui) window.EliseeChiSegui.render(); } catch (e) {} }, 40);
+      } else if (viewType === 'stampa' || targetHash === '#stampa-portal') {
+        showEl('view-stampa');
+        const stLink = document.querySelector('.nav-link[data-view="stampa"]');
+        if (stLink) stLink.classList.add('active');
+        if (!targetHash) setHashSafe('#stampa-portal', opts);
+        setTimeout(function () { try { if (window.EliseeGiornDash && window.EliseeGiornDash.renderFeed) window.EliseeGiornDash.renderFeed(); } catch (e) {} }, 40);
       } else if (viewType === 'mappa' || targetHash === '#mappa-portal') {
         showEl('view-mappa');
         const mapLink = document.querySelector('.nav-link[data-view="mappa"]');
@@ -7434,6 +7440,8 @@ document.addEventListener('DOMContentLoaded', () => {
       switchView('bacheca', '#bacheca-annunci', noHist);
     } else if (hash === '#seguo-portal') {
       switchView('seguo', '#seguo-portal', noHist);
+    } else if (hash === '#stampa-portal') {
+      switchView('stampa', '#stampa-portal', noHist);
     } else if (hash === '#mappa-portal') {
       switchView('mappa', '#mappa-portal', noHist);
     } else if (hash === '#messaggi-portal') {
@@ -8453,6 +8461,7 @@ function viewFromHashValue(hash) {
   if (h.indexOf('admin') >= 0) return 'admin';
   if (h.indexOf('dossier') >= 0) return 'user-dossier';
   if (h.indexOf('squadre') >= 0) return 'squadre';
+  if (h.indexOf('stampa') >= 0) return 'stampa';
   if (h.indexOf('about') >= 0) return 'about';
   return 'home';
 }
@@ -8696,6 +8705,7 @@ window.SITE_ROLES = [
   { id: 'Giocatore', label: 'Giocatore' },
   { id: 'Staff', label: 'Staff' },
   { id: 'Tifoso', label: 'Tifoso', noDocument: true, noApplications: true },
+  { id: 'Giornalista', label: 'Giornalista / Content Creator', noApplications: true },
   { id: 'Calciatore', label: 'Calciatore' },
   { id: 'Societa', label: 'Dirigente societa' },
   { id: 'Spettatore', label: 'Spettatore', noDocument: true, noApplications: true }
@@ -8877,6 +8887,12 @@ function rolePanelRows(role) {
         ['Candidature recruitment', 'Non consentite'],
         ['Interazione con altri ruoli', 'Consentita']
       ]
+    },
+    Giornalista: {
+      aTitle: 'Redazione e copertura',
+      a: [['Articoli con tag schede', 'Da pubblicare'], ['Sondaggi e dibattiti', '0'], ['Hub video', 'Vuoto'], ['Copertura geo', 'Città → Nazionale']],
+      bTitle: 'Badge stampa',
+      b: [['Stampa / Giornalista Verificato', 'In attesa'], ['Coda staff', 'Obbligatoria prima del feed'], ['Checklist editoriale', 'Tono, fonti, rispetto, verità']].concat(commonB)
     }
   };
   return map[role] || map.Calciatore;
@@ -8907,7 +8923,10 @@ window.applyRoleDossierInterface = function (user) {
     'Responsabile biglietteria / tifoseria': 'Staff',
     'Responsabile biglietteria': 'Staff',
     Statistico: 'Match Analyst',
-    Dirigente: 'Staff'
+    Dirigente: 'Staff',
+    Giornalista: 'Giornalista',
+    'Giornalista / Content Creator': 'Giornalista',
+    'Content Creator': 'Giornalista'
   };
   const role = aliases[raw] || raw;
   const spec = rolePanelRows(role);
@@ -8982,7 +9001,11 @@ window.confirmSiteRole = function () {
   user.siteRoleFamily = val;
   user.siteRoleConfirmed = true;
   user.needsIdentityDocument = !window.isSpectatorRole(val);
-  user.canApplyJobs = !window.isSpectatorRole(val);
+  user.canApplyJobs = !window.isSpectatorRole(val) && String(val).toLowerCase() !== 'giornalista';
+  if (String(val).toLowerCase() === 'giornalista') {
+    user.siteRoleFamily = 'Giornalista';
+    user.pressVerified = false;
+  }
   try {
     localStorage.setItem('elisee_active_user', JSON.stringify(user));
     localStorage.setItem('elisee_user_data', JSON.stringify(user));
@@ -9004,6 +9027,9 @@ window.confirmSiteRole = function () {
     }
   } else if (typeof window.switchView === 'function') {
     window.switchView('user-dossier', '#user-dossier-portal');
+    if (String(val).toLowerCase() === 'giornalista' && typeof window.showToast === 'function') {
+      window.showToast('Area Giornalista attiva. Per pubblicare serve il badge Stampa / Giornalista Verificato.', 'success');
+    }
   }
 };
 
@@ -12340,7 +12366,8 @@ function saveAreaRiservata() {
       user.photoDataUrl = photoDataUrl;
     }
     user.needsIdentityDocument = !window.isSpectatorRole(ruolo);
-    user.canApplyJobs = !window.isSpectatorRole(ruolo);
+    user.canApplyJobs = !window.isSpectatorRole(ruolo) && String(ruolo).toLowerCase() !== 'giornalista';
+    if (String(ruolo).toLowerCase() === 'giornalista') user.siteRoleFamily = 'Giornalista';
     localStorage.setItem('elisee_active_user', JSON.stringify(user));
     localStorage.setItem('elisee_user_data', JSON.stringify(user));
   } catch (err) {

@@ -242,6 +242,20 @@
       ]
     },
     {
+      group: 'Stampa & Media',
+      iconSvg: SVG_ICONS.fileText,
+      roles: [
+        {
+          key: 'giornalista',
+          label: 'Giornalista / Content Creator',
+          family: 'Giornalista',
+          staffRole: '',
+          iconSvg: SVG_ICONS.fileText,
+          desc: 'Articoli, sondaggi, hub video e badge Stampa verificato'
+        }
+      ]
+    },
+    {
       group: 'Società Sportiva',
       iconSvg: SVG_ICONS.shield,
       roles: [
@@ -430,6 +444,7 @@
       }
     }
     var u = getStoredUser();
+    if (window.isGiornalistaSiteRole && window.isGiornalistaSiteRole(u)) return { label: 'Giornalista / Content Creator', key: 'giornalista', iconSvg: SVG_ICONS.fileText };
     if (window.isTifosoSiteRole && window.isTifosoSiteRole(u)) return { label: 'Tifoso', key: 'tifoso', iconSvg: SVG_ICONS.heart };
     if (window.isPlayerSiteRole && window.isPlayerSiteRole(u)) return { label: 'Calciatore / Giocatore', key: 'giocatore', iconSvg: SVG_ICONS.user };
     if (u && (u.ruolo === 'Società' || u.role === 'Società' || u.siteRoleFamily === 'Società')) return { label: 'Club Elisee Manager', key: 'club_tc', iconSvg: SVG_ICONS.shield };
@@ -544,6 +559,18 @@
       updated.ruoloDettagliato = 'Tifoso';
       updated.staffProfileComplete = false;
       updated.profileCompleted = true;
+    } else if (targetRole.key === 'giornalista') {
+      updated.siteRoleFamily = 'Giornalista';
+      updated.ruolo = 'Giornalista';
+      updated.role = 'Giornalista';
+      updated.staffRole = '';
+      updated.ruoloDettagliato = 'Giornalista / Content Creator';
+      updated.staffProfileComplete = false;
+      updated.profileCompleted = true;
+      updated.pressVerified = true;
+      updated.pressOutlet = updated.pressOutlet || 'Elisee Scout Press';
+      updated.canApplyJobs = false;
+      updated.needsIdentityDocument = true;
     } else {
       // Qualsiasi ruolo di staff
       updated.siteRoleFamily = 'Staff';

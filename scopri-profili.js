@@ -152,6 +152,7 @@
       else if (family.indexOf('squadra') >= 0 || family.indexOf('club') >= 0 || family.indexOf('societ') >= 0) kind = 'club';
       else if (family.indexOf('giocatore') >= 0 || family.indexOf('calciatore') >= 0 || family.indexOf('player') >= 0) kind = 'player';
       else if (family.indexOf('tifoso') >= 0) return null;
+      else if (family.indexOf('giornalista') >= 0 || family.indexOf('content creator') >= 0) kind = 'staff';
       var pp = u.staffProfile || u.playerProfile || {};
       var interest = pp.interest || {};
       var role = u.staffRole || u.ruoloDettagliato || pp.fieldRole || u.ruolo || kindLabel(kind);

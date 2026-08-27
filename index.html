@@ -298,6 +298,7 @@
   <link rel="stylesheet" href="ma-dash.css?v=20260827_LUX1">
   <link rel="stylesheet" href="med-dash.css?v=20260827_LUX1">
   <link rel="stylesheet" href="tifoso-dash.css?v=20260827_LUX1">
+  <link rel="stylesheet" href="giorn-dash.css?v=20260827_GIORN1">
   <link rel="stylesheet" href="obs-dash.css?v=20260827_LUX1">
   <link rel="stylesheet" href="tm-dash.css?v=20260827_LUX1">
   <link rel="stylesheet" href="gk-dash.css?v=20260827_LUX1">
@@ -594,6 +595,7 @@
         if (view === 'scopri') return '#scopri-portal';
         if (view === 'messaggi') return '#messaggi-portal';
         if (view === 'mappa') return '#mappa-portal';
+        if (view === 'stampa') return '#stampa-portal';
         if (view === 'seguo') return '#seguo-portal';
         if (view === 'formazione') return '#formazione-portal';
         if (view === 'tc') return '#tc-portal';
@@ -617,6 +619,7 @@
         if (h.indexOf('scopri') >= 0) return 'scopri';
         if (h.indexOf('messaggi') >= 0) return 'messaggi';
         if (h.indexOf('mappa') >= 0) return 'mappa';
+        if (h.indexOf('stampa') >= 0) return 'stampa';
         if (h.indexOf('seguo') >= 0) return 'seguo';
         if (h.indexOf('formazione') >= 0) return 'formazione';
         if (h.indexOf('iscrizione') >= 0) return 'iscrizione';
@@ -1027,6 +1030,7 @@
                   <option value="Fisioterapista">Fisioterapista</option>
                   <option value="Societa">Dirigente societa</option>
                   <option value="Spettatore">Spettatore</option>
+                  <option value="Giornalista">Giornalista / Content Creator</option>
                 </select>
               </div>
               <div class="es-ar-span">
@@ -1226,7 +1230,7 @@
     <div class="es-role-pick-sheet" role="dialog" aria-labelledby="es-role-pick-title">
       <h1 class="es-role-pick-brand">Elisee <span>Scout</span></h1>
       <h2 id="es-role-pick-title">Scegli come vuoi usare Elisee Scout</h2>
-      <p class="es-role-pick-sub">Ogni ruolo offre un'esperienza diversa. Ente, Squadra, Giocatore e Staff hanno 30 giorni per allegare i documenti di verifica.</p>
+      <p class="es-role-pick-sub">Ogni ruolo offre un'esperienza diversa. Ente, Squadra, Giocatore, Staff e Giornalista hanno 30 giorni per allegare i documenti di verifica.</p>
       <input type="hidden" id="scegli-ruolo-select" value="">
       <div class="es-role-pick-list" id="es-role-pick-list" role="listbox" aria-label="Ruolo sul sito">
         <button type="button" class="es-role-card" data-role="Ente" role="option">
@@ -1258,6 +1262,12 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8.5" cy="8" r="2.5"/><circle cx="15.5" cy="8" r="2.5"/><path d="M3.8 18.5c.9-2.7 2.7-4.1 4.7-4.1s3.8 1.4 4.7 4.1M11 18.5c.9-2.7 2.7-4.1 4.5-4.1s3.6 1.4 4.5 4.1"/></svg>
           </span>
           <span class="es-role-txt"><small>Sono un</small><strong>TIFOSO</strong></span>
+        </button>
+        <button type="button" class="es-role-card" data-role="Giornalista" role="option">
+          <span class="es-role-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h12v14H4z"/><path d="M16 8h4v11h-4"/><path d="M7 9h6M7 12h6M7 15h4"/></svg>
+          </span>
+          <span class="es-role-txt"><small>Sono un</small><strong>GIORNALISTA</strong></span>
         </button>
       </div>
       <p id="scegli-ruolo-hint" class="es-role-hint" hidden>Il Tifoso naviga e interagisce. Non deve allegare il documento di identità e non può inviare candidature.</p>
@@ -1576,6 +1586,7 @@
         <a href="#about" class="nav-link" data-view="about" data-i18n="nav.about" onclick="if(window.switchView){ window.switchView('about'); } return false;">Chi siamo</a>
         <a href="#dashboard-skills" class="nav-link" data-view="pillars" data-i18n="nav.resume" onclick="if(window.switchView){ window.switchView('pillars'); } return false;">Curriculum</a>
         <a href="#bacheca-annunci" class="nav-link" data-view="bacheca" data-i18n="nav.portfolio" onclick="if(window.switchView){ window.switchView('bacheca'); } return false;">Bacheca</a>
+        <a href="#stampa-portal" class="nav-link" data-view="stampa" onclick="if(window.openStampaFeed){window.openStampaFeed();}else if(window.switchView){window.switchView('stampa','#stampa-portal');} return false;">Stampa</a>
         <a href="#mappa-portal" class="nav-link" data-view="mappa" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){window.switchView('mappa','#mappa-portal');} return false;">Mappa</a>
         <a href="#seguo-portal" class="nav-link" data-view="seguo" onclick="if(window.openChiSegui){window.openChiSegui();}else if(window.switchView){window.switchView('seguo','#seguo-portal');} return false;">Chi segui</a>
         <a href="#ambassador-portal" class="nav-link nav-link-soft" data-view="ambassador" data-i18n="nav.ambassador" onclick="if(window.switchView){ window.switchView('ambassador'); } return false;">Ambassador</a>
@@ -1790,6 +1801,11 @@
                 <span class="portfolio-card-icon"><i data-lucide="newspaper"></i></span>
                 <h3>Wall mercato</h3>
                 <p>Trattative chiuse in tempo reale: card FIFA, nuova maglia e scritta TRASFERITO.</p>
+              </article>
+              <article class="portfolio-card" onclick="if(window.openStampaFeed){ window.openStampaFeed(); } else if(window.switchView){ window.switchView('stampa','#stampa-portal'); }">
+                <span class="portfolio-card-icon"><i data-lucide="pen-line"></i></span>
+                <h3>Stampa locale</h3>
+                <p>Articoli, sondaggi e video del territorio, dopo approvazione dello staff.</p>
               </article>
               <article class="portfolio-card" onclick="if(window.switchView){ window.switchView('pillars'); }">
                 <span class="portfolio-card-icon"><i data-lucide="activity"></i></span>
@@ -3427,6 +3443,15 @@
             </div>
           </div>
 
+          <div id="es-giorn-profile" class="es-pp" hidden>
+            <div class="es-pp-top">
+              <h1 class="es-pp-title">Il mio profilo Giornalista</h1>
+              <button type="button" class="es-pp-back" onclick="if(window.EliseeGiornDash){window.EliseeGiornDash.render();} return false;">Redazione</button>
+              <button type="button" class="es-pp-back" onclick="if(window.switchView){window.switchView('account','#account-portal');} return false;">Area account</button>
+              <button type="button" class="es-pp-back" onclick="if(window.openEditUserModal){openEditUserModal();} return false;">Modifica profilo</button>
+            </div>
+          </div>
+
           <div id="dossier-legacy">
           <header class="pf-header">
             <div class="pf-header-text">
@@ -3534,6 +3559,10 @@
         </div><!-- /.container -->
       </section>
     </div><!-- /#user-dossier-view-group -->
+
+    <div id="view-stampa" style="display:none;">
+      <section id="stampa-portal" class="es-stampa"></section>
+    </div>
 
     <div id="view-mappa" style="display:none;">
       <section id="mappa-portal" class="es-map">
@@ -5095,11 +5124,11 @@
   <script src="tc-panel.js?v=20260826_TC3"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260827_FIX3"></script>
-  <script src="player-profile.js?v=20260827_PD_OTP2"></script>
+  <script src="app.js?v=20260827_GIORN1"></script>
+  <script src="player-profile.js?v=20260827_GIORN1"></script>
   <script src="public-rating-system.js?v=20260827_LUX1"></script>
   <script src="dash-real.js?v=20260827_REAL2"></script>
-  <script src="player-dash.js?v=20260827_REAL2"></script>
+  <script src="player-dash.js?v=20260827_GIORN1"></script>
   <script src="coach-dash.js?v=20260827_REAL2"></script>
   <script src="ds-dash.js?v=20260827_REAL2"></script>
   <script src="pres-dash.js?v=20260827_REAL2"></script>
@@ -5121,15 +5150,16 @@
   <script src="sg-dash.js?v=20260827_REAL2"></script>
   <script src="bt-dash.js?v=20260827_REAL2"></script>
   <script src="tifoso-dash.js?v=20260827_REAL2"></script>
-  <script src="scopri-profili.js?v=20260820_MKT1"></script>
+  <script src="giorn-dash.js?v=20260827_GIORN1"></script>
+  <script src="scopri-profili.js?v=20260827_GIORN1"></script>
   <script src="messaggi.js?v=20260820_MSG1"></script>
   <script src="mercato-hub.js?v=20260826_MKT3"></script>
   <script src="schede-tecniche.js?v=20260820_ST3"></script>
   <script src="mappa-club.js?v=20260826_GEO1"></script>
   <script src="chi-segui.js?v=20260820_FORM1"></script>
-  <script src="verifica-account.js?v=20260827_OTP_MAIL1"></script>
-  <script src="creator-role-switcher.js?v=20260827_PD_OTP2"></script>
-  <script src="role-actions-runtime.js?v=20260827_REAL2"></script>
+  <script src="verifica-account.js?v=20260827_GIORN1"></script>
+  <script src="creator-role-switcher.js?v=20260827_GIORN1"></script>
+  <script src="role-actions-runtime.js?v=20260827_GIORN1"></script>
   <script>
     /* FORCED INLINE HOT-PATCH: Overrides PDF export, specific report HTML & modal close functions instantly at runtime */
     (function() {
