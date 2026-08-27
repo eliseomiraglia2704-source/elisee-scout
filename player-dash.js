@@ -572,8 +572,8 @@
         '<button type="button" class="es-edit-modal-close" title="Chiudi">&times;</button>' +
       '</div>' +
       '<div class="es-edit-grid">' +
-        '<div class="es-edit-field"><label>Nome</label><input id="es-ed-nome" value="' + esc(user.nome || 'Eliseo') + '"></div>' +
-        '<div class="es-edit-field"><label>Cognome</label><input id="es-ed-cognome" value="' + esc(user.cognome || 'Miraglia') + '"></div>' +
+        '<div class="es-edit-field"><label>Nome</label><input id="es-ed-nome" value="' + esc(user.nome || '') + '"></div>' +
+        '<div class="es-edit-field"><label>Cognome</label><input id="es-ed-cognome" value="' + esc(user.cognome || '') + '"></div>' +
         '<div class="es-edit-field"><label>Ruolo Principale</label><select id="es-ed-role">' + rolesOpts + '</select></div>' +
         '<div class="es-edit-field"><label>Ruoli Secondari Giocabili</label><input id="es-ed-sec-roles" placeholder="es. Ala Sinistra, Trequartista" value="' + esc(p.secondaryRoles || 'Ala Sinistra, Trequartista') + '"></div>' +
         '<div class="es-edit-field"><label>Piede Preferito</label><select id="es-ed-foot">' + feetOpts + '</select></div>' +
@@ -581,7 +581,7 @@
         '<div class="es-edit-field"><label>Altezza</label><input id="es-ed-altezza" value="' + esc(user.altezza || p.heightCm || '1.83 m') + '"></div>' +
         '<div class="es-edit-field"><label>Peso</label><input id="es-ed-peso" value="' + esc(user.peso || p.weightKg || '76 kg') + '"></div>' +
         '<div class="es-edit-field"><label>Categoria Attuale</label><input id="es-ed-categoria" value="' + esc(user.categoria || 'Serie D · Girone F') + '"></div>' +
-        '<div class="es-edit-field"><label>Club / Società Attuale</label><input id="es-ed-club" value="' + esc(user.squadra || user.club || 'Notaresco Calcio') + '"></div>' +
+        '<div class="es-edit-field"><label>Club / Società Attuale</label><input id="es-ed-club" value="' + esc(user.squadra || user.club || '') + '"></div>' +
         '<div class="es-edit-field"><label>Stato Contrattuale Dichiarato</label><select id="es-ed-contract">' + contractOpts + '</select></div>' +
         '<div class="es-edit-field"><label>Preferenze di Contatto</label><select id="es-ed-contact-pref">' + contactOpts + '</select></div>' +
         '<div class="es-edit-field full"><label>Disponibilità per Provini / Trasferimento</label>' +

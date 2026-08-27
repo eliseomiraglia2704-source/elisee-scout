@@ -38,103 +38,27 @@
   function getCoachData() {
     var u = userObj();
     var def = {
-      clubName: u.squadra || u.club || 'Foggia',
-      matricola: u.matricola || '13923 / FIGC',
-      sede: u.sede || 'Viale Giuseppe Mazzini, 35/C Foggia FG',
-      stadio: u.stadio || 'Stadio Comunale Pino Zaccheria',
-      telefono: u.telefono || '+39 0881 742911',
-      coachName: 'Admin / Staff Tecnico',
-      coachRole: 'Allenatore (UEFA B / Pro)',
-      coachDoc: 'Verificato',
-      coachTessera: 'FIGC-741920',
-      coachScadenza: '30/06/2027',
-      logoUrl: 'immagini/squadre-loghi/foggia.png',
-      teamPhotoUrl: 'immagini/04-workspace-scout/scout-workspace.svg?v=20260730_225504',
-      roster: [
-        { id: 'p-1', num: 1, name: 'Marco Fumagalli', role: 'Portiere', birth: '2001', cert: 'Regolare', status: 'disp', app: 26 },
-        { id: 'p-2', num: 2, name: 'Alessandro Silvestro', role: 'Terzino Destro', birth: '2002', cert: 'Regolare', status: 'disp', app: 24 },
-        { id: 'p-5', num: 5, name: 'Luigi Carillo', role: 'Difensore Centrale', birth: '1996', cert: 'Regolare', status: 'disp', app: 28 },
-        { id: 'p-6', num: 6, name: 'Davide Di Pasquale', role: 'Difensore Centrale', birth: '1996', cert: 'Regolare', status: 'disp', app: 25 },
-        { id: 'p-3', num: 3, name: 'Luca Rizzo Pinna', role: 'Terzino Sinistro', birth: '2003', cert: 'Regolare', status: 'disp', app: 22 },
-        { id: 'p-8', num: 8, name: 'Moses Odjer', role: 'Mediano', birth: '1996', cert: 'Regolare', status: 'disp', app: 27 },
-        { id: 'p-4', num: 4, name: 'Jacopo Petermann', role: 'Regista', birth: '1994', cert: 'Regolare', status: 'disp', app: 25 },
-        { id: 'p-10', num: 10, name: 'Diego Peralta', role: 'Trequartista', birth: '1996', cert: 'Regolare', status: 'disp', app: 28 },
-        { id: 'p-7', num: 7, name: 'Marco Mancosu', role: 'Ala Sinistra', birth: '2004', cert: 'Regolare', status: 'disp', app: 28 },
-        { id: 'p-11', num: 11, name: 'Roberto Ogunseye', role: 'Attaccante Centrale', birth: '1995', cert: 'Regolare', status: 'disp', app: 26 },
-        { id: 'p-9', num: 9, name: 'Alexis Ferrante', role: 'Seconda Punta', birth: '1995', cert: 'Regolare', status: 'disp', app: 24 }
-      ],
-      staffMembers: [
-        { id: 'st-coach', name: 'Admin / Staff Tecnico', role: 'Allenatore', patent: 'UEFA Pro', exp: '30/06/2027' },
-        { id: 'st-vice', name: 'Giuseppe Russo', role: 'Vice Allenatore', patent: 'UEFA A', exp: '30/06/2027' },
-        { id: 'st-prep', name: 'Luca Rossi', role: 'Preparatore Atletico', patent: 'Prep. Atletico FIGC', exp: '30/06/2027' },
-        { id: 'st-fisio', name: 'Antonio Gentile', role: 'Fisioterapista', patent: 'Albo FNOFI', exp: '30/06/2027' },
-        { id: 'st-analyst', name: 'Giuseppe Di Stefano', role: 'Match Analyst', patent: 'Match Analysis Coverciano', exp: '30/06/2027' }
-      ],
-      trainingsList: [
-        {
-          id: 'train-1',
-          day: 'mar',
-          date: '01/09',
-          fullDate: 'Martedì 1 Settembre 2026',
-          title: 'Allenamento',
-          incontro: '-:-',
-          inizio: '19:00',
-          fine: '20:30',
-          campo: 'Campo A - Stadio Pino Zaccheria',
-          focus: 'Seduta Tattica & Pressione Alta',
-          votes: {
-            'p-1': { id: 'p-1', name: 'Marco Fumagalli', role: 'Portiere', vote: 'yes', isStaff: false },
-            'p-7': { id: 'p-7', name: 'Eliseo Miraglia', role: 'Ala Sinistra', vote: 'yes', isStaff: false },
-            'p-5': { id: 'p-5', name: 'Luigi Carillo', role: 'Difensore Centrale', vote: 'yes', isStaff: false },
-            'p-2': { id: 'p-2', name: 'Alessandro Silvestro', role: 'Terzino Destro', vote: 'maybe', isStaff: false },
-            'p-11': { id: 'p-11', name: 'Roberto Ogunseye', role: 'Attaccante Centrale', vote: 'no', isStaff: false },
-            'st-prep': { id: 'st-prep', name: 'Luca Rossi', role: 'Preparatore Atletico', vote: 'yes', isStaff: true },
-            'st-fisio': { id: 'st-fisio', name: 'Antonio Gentile', role: 'Fisioterapista', vote: 'yes', isStaff: true }
-          }
-        },
-        {
-          id: 'train-2',
-          day: 'gio',
-          date: '03/09',
-          fullDate: 'Giovedì 3 Settembre 2026',
-          title: 'Allenamento',
-          incontro: '14:30',
-          inizio: '15:00',
-          fine: '17:00',
-          campo: 'Campo B - Centro Sportivo',
-          focus: 'Fase Difensiva & Palle Inattive',
-          votes: {
-            'p-7': { id: 'p-7', name: 'Eliseo Miraglia', role: 'Ala Sinistra', vote: 'yes', isStaff: false },
-            'p-1': { id: 'p-1', name: 'Marco Fumagalli', role: 'Portiere', vote: 'yes', isStaff: false }
-          }
-        }
-      ],
-      partite: [
-        {
-          id: 'match-1',
-          date: 'Domenica · Ore 15:00',
-          fullDate: 'Domenica 6 Settembre 2026',
-          opponent: 'Foggia vs Taranto FC 1927',
-          comp: 'Campionato Serie D · Girone H',
-          stadium: 'Stadio Pino Zaccheria',
-          status: 'Prossima Gara',
-          conv: '22 Convocati',
-          convocatiList: ['Marco Fumagalli', 'Alessandro Silvestro', 'Luigi Carillo', 'Davide Di Pasquale', 'Luca Rizzo Pinna', 'Moses Odjer', 'Jacopo Petermann', 'Diego Peralta', 'Marco Mancosu', 'Roberto Ogunseye', 'Alexis Ferrante']
-        }
-      ],
-      tacticalSchemes: [
-        {
-          id: 'tac-1',
-          title: 'Costruzione 3+2 & Pressione Alta',
-          date: '26/08/2026',
-          type: 'Lavagna Tattica',
-          preview: 'immagini/04-workspace-scout/scout-workspace.svg?v=20260730_225504'
-        }
-      ]
+      clubName: u.squadra || u.club || '',
+      matricola: u.matricola || '',
+      sede: u.sede || u.residenza || '',
+      stadio: u.stadio || '',
+      telefono: u.telefono || '',
+      coachName: [u.nome, u.cognome].filter(Boolean).join(' ').trim() || 'Allenatore',
+      coachRole: u.staffRole || 'Allenatore',
+      coachDoc: (u.docsAttachedAt || u.badgeDocumentUrl) ? 'Documenti allegati' : 'Da completare',
+      coachTessera: u.tessera || '',
+      coachScadenza: u.scadenzaContratto || '',
+      logoUrl: u.logoUrl || '',
+      teamPhotoUrl: '',
+      roster: [],
+      staffMembers: [],
+      trainingsList: [],
+      partite: [],
+      tacticalSchemes: []
     };
 
     try {
-      var stored = localStorage.getItem('elisee_coach_hub_data_v2') || localStorage.getItem('elisee_coach_hub_data');
+      var stored = localStorage.getItem('elisee_coach_hub_data_v3');
       if (stored) {
         var parsed = JSON.parse(stored);
         if (parsed && typeof parsed === 'object') return Object.assign(def, parsed);
@@ -145,7 +69,7 @@
 
   function saveCoachData(data) {
     try {
-      localStorage.setItem('elisee_coach_hub_data_v2', JSON.stringify(data));
+      localStorage.setItem('elisee_coach_hub_data_v3', JSON.stringify(data));
       localStorage.setItem('elisee_coach_hub_data', JSON.stringify(data));
       if (data.trainingsList) {
         localStorage.setItem('elisee_club_trainings_shared', JSON.stringify(data.trainingsList));

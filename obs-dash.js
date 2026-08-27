@@ -116,75 +116,19 @@
   }
 
   function html(user) {
-    var name = obsName(user);
-    var ph = photoOf(user);
-    var ava = ph
-      ? '<img src="' + esc(ph) + '" alt="">'
-      : '<div class="es-pd-ph">' + esc(initials(name)) + '</div>';
-    return '<aside class="es-pd-rail">' +
-      '<button type="button" data-ob="home" title="Home">' + ico('<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>') + '</button>' +
-      '<button type="button" class="is-on" data-ob="dash" title="Dashboard">' + ico('<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>') + '</button>' +
-      '<button type="button" data-ob="secret" title="Secret List">' + ico('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="11" r="2.5"/>') + '</button>' +
-      '<button type="button" data-ob="msgs" title="Messaggi">' + ico('<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>') + '</button>' +
-      '<button type="button" class="es-pd-rail-end" data-ob="edit" title="Anagrafica">' + ico('<path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>') + '</button>' +
-      '</aside><div class="es-pd-body">' +
-      '<div class="es-pd-head"><h1>Elisee Scout — Dashboard Osservatore</h1>' +
-      '<strong>Osservatore: ' + esc(name.toUpperCase()) + '</strong></div>' +
-      '<div class="es-pd-grid">' +
-
-      '<section class="es-pd-card es-pd-indice"><h2>Profilo Osservatore</h2>' +
-      '<div class="es-pd-who">' + ava + '<div><b style="color:#fff">' + esc(name) + '</b>' +
-      '<div style="font-size:0.72rem;color:#94a3b8">Scout / Osservatore</div></div></div>' +
-      '<div class="es-pd-metric"><span>Capacità di valutazione</span><b>92%</b></div>' +
-      '<div class="es-pd-metric"><span>Copertura territoriale</span><b>85%</b></div>' +
-      '<div class="es-pd-metric"><span>Precisione segnalazioni</span><b>88%</b></div>' +
-      '<div class="es-pd-metric"><span>Rete di contatti</span><b>94%</b></div>' +
-      '<div class="es-pd-metric"><span>Affidabilità report</span><b>91%</b></div></section>' +
-
-      '<section class="es-pd-card es-pd-radar">' +
-      '<div class="es-pd-radar-tools"><span>Seleziona dati radar</span><span>Analisi attività di scouting</span><div class="es-pd-legend-pills"><span class="es-pd-pill-legend" style="color:#38bdf8"><i style="background:#38bdf8"></i> 2025 (Stagione Attuale)</span><span class="es-pd-pill-legend" style="color:#94a3b8"><i style="background:#64748b"></i> 2023 (Benchmark Storico)</span></div></div>' +
-      radarSvg() + '</section>' +
-
-      '<section class="es-pd-card es-pd-comply"><h2>Verifica &amp; Compliance Osservatore</h2>' +
-      '<div class="es-pd-ok"><span>Tessera FIGC Osservatore</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Corso Scouting completo</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Tutela minori (ID)</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Conformità normativa trasferimenti</span><b>100%</b></div>' +
-      '<div class="es-pd-ok"><span>Verifica identità</span><b>100%</b></div></section>' +
-
-      '<section class="es-pd-card es-pd-storico"><h2>Andamento scouting</h2>' +
-      '<div class="es-pd-sparks">' +
-      '<figure>' + spark([32, 40, 48, 55, 64, 74, 86], '#38bdf8') + '<figcaption>Segnalazioni confermate</figcaption></figure>' +
-      '<figure>' + spark([28, 36, 44, 52, 60, 72, 84], '#4ade80') + '<figcaption>Giocatori segnalati</figcaption></figure>' +
-      '<figure>' + spark([20, 28, 32, 40, 48, 58, 70], '#facc15') + '<figcaption>Partite visionate</figcaption></figure>' +
-      '<figure>' + spark([48, 55, 60, 66, 74, 82, 90], '#22d3ee') + '<figcaption>Stagione</figcaption></figure>' +
-      '</div></section>' +
-
-      '<section class="es-pd-card es-pd-mercato"><h2>Indice di efficacia scouting</h2>' +
-      '<p class="es-obs-grade">8,5/10 <small>+5,5%</small></p>' +
-      '<div class="es-pd-mrow"><span>Valutazione direzione sportiva</span><b>Ottima</b></div>' +
-      '<div class="es-pd-mrow"><span>Trend segnalazioni confermate</span><b>Crescente</b></div>' +
-      '<div class="es-pd-mrow"><span>Richieste di approfondimento</span><b>5</b></div>' +
-      '<div class="es-pd-mrow"><span>Scadenza contratto</span><b>30/06/2028</b></div>' +
-      '<div class="es-pd-mrow"><span>Trattative aperte</span><b>Nessuna</b></div></section>' +
-
-      '<section class="es-pd-card es-pd-registro"><h2>Registro segnalazioni</h2>' +
-      '<table class="es-pd-table"><thead><tr><th>Giocatore</th><th>Club</th><th>Cat.</th><th>Esito</th></tr></thead><tbody>' +
-      '<tr><td>vs. Notaresco</td><td>Notaresco</td><td>U19</td><td>Positivo <i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Vastese</td><td>Vastese</td><td>U19</td><td>Positivo <i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Chieti</td><td>Chieti</td><td>U17</td><td>Molto positivo <i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Termoli</td><td>Chieti</td><td>U17</td><td>Molto positivo <i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Campobasso</td><td>Campobasso</td><td>U19</td><td>Positivo <i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>vs. Castelfidardo</td><td>Castelfidardo</td><td>U18</td><td>In valutazione <i class="es-pd-dot y"></i></td></tr>' +
-      '</tbody></table></section>' +
-
-      '<section class="es-pd-card es-pd-trend"><h2>2023 vs 2024 vs 2025</h2>' +
-      trendSvg() +
-      '<button type="button" class="es-pd-edit" data-ob="edit">Modifica anagrafica</button>' +
-      '</section>' +
-      '</div></div>';
+    return window.EliseeDashReal.shell({
+      user: user,
+      title: 'Elisee Scout — Dashboard Osservatore',
+      roleLabel: 'Osservatore / Scout',
+      attr: 'obs',
+      extraRail: 'secret',
+      radarTitle: 'Quadro scouting',
+      workTitle: 'Segnalazioni',
+      workEmpty: 'Nessuna segnalazione registrata.',
+      registroTitle: 'Registro osservazioni',
+      registroHeaders: ['Data', 'Soggetto', 'Esito']
+    });
   }
-
 
   function openObsEditModal(user) {
     user = user || userObj();
@@ -197,11 +141,11 @@
       '<button type="button" class="es-edit-modal-close" title="Chiudi">&times;</button>' +
       '</div>' +
       '<div class="es-edit-grid">' +
-      '<div class="es-edit-field"><label>Nome</label><input id="es-obs-nome" value="' + esc(user.nome || 'Eliseo') + '"></div>' +
-      '<div class="es-edit-field"><label>Cognome</label><input id="es-obs-cognome" value="' + esc(user.cognome || 'Miraglia') + '"></div>' +
+      '<div class="es-edit-field"><label>Nome</label><input id="es-obs-nome" value="' + esc(user.nome || '') + '"></div>' +
+      '<div class="es-edit-field"><label>Cognome</label><input id="es-obs-cognome" value="' + esc(user.cognome || '') + '"></div>' +
       '<div class="es-edit-field"><label>Ruolo Ufficiale</label><input id="es-obs-role" value="Osservatore / Scout" readonly></div>' +
-      '<div class="es-edit-field"><label>Club / Organizzazione</label><input id="es-obs-club" value="' + esc(user.squadra || user.club || 'Notaresco Calcio') + '"></div>' +
-      '<div class="es-edit-field full"><label>Bio &amp; Note Operative</label><textarea id="es-obs-bio" rows="3">' + esc(user.bio || 'Profilo accreditato e verificato su Elisee Scout per la stagione 2025/2026.') + '</textarea></div>' +
+      '<div class="es-edit-field"><label>Club / Organizzazione</label><input id="es-obs-club" value="' + esc(user.squadra || user.club || '') + '"></div>' +
+      '<div class="es-edit-field full"><label>Bio &amp; Note Operative</label><textarea id="es-obs-bio" rows="3">' + esc(user.bio || '') + '</textarea></div>' +
       '</div>' +
       '<div class="es-edit-actions">' +
       '<button type="button" class="es-edit-btn-cancel">Annulla</button>' +

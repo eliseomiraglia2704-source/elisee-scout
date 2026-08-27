@@ -116,75 +116,19 @@
   }
 
   function html(user) {
-    var name = nuName(user);
-    var ph = photoOf(user);
-    var ava = ph
-      ? '<img src="' + esc(ph) + '" alt="">'
-      : '<div class="es-pd-ph">' + esc(initials(name)) + '</div>';
-    return '<aside class="es-pd-rail">' +
-      '<button type="button" data-nu="home" title="Home">' + ico('<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>') + '</button>' +
-      '<button type="button" class="is-on" data-nu="dash" title="Dashboard">' + ico('<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>') + '</button>' +
-      '<button type="button" data-nu="album" title="Album">' + ico('<rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>') + '</button>' +
-      '<button type="button" data-nu="msgs" title="Messaggi">' + ico('<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>') + '</button>' +
-      '<button type="button" class="es-pd-rail-end" data-nu="edit" title="Anagrafica">' + ico('<path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/>') + '</button>' +
-      '</aside><div class="es-pd-body">' +
-      '<div class="es-pd-head"><h1>Elisee Scout — Dashboard Nutrizionista</h1>' +
-      '<strong>Nutrizionista: ' + esc(name.toUpperCase()) + '</strong></div>' +
-      '<div class="es-pd-grid">' +
-
-      '<section class="es-pd-card es-pd-indice"><h2>Profilo Nutrizionista</h2>' +
-      '<div class="es-pd-who">' + ava + '<div><b style="color:#fff">' + esc(name) + '</b>' +
-      '<div style="font-size:0.72rem;color:#94a3b8">Staff sanitario</div></div></div>' +
-      '<div class="es-pd-metric"><span>Competenza scientifica</span><b>92%</b></div>' +
-      '<div class="es-pd-metric"><span>Personalizzazione piani alimentari</span><b>85%</b></div>' +
-      '<div class="es-pd-metric"><span>Monitoraggio composizione corporea</span><b>96%</b></div>' +
-      '<div class="es-pd-metric"><span>Rapporto con staff medico</span><b>94%</b></div>' +
-      '<div class="es-pd-metric"><span>Educazione alimentare squadra</span><b>91%</b></div></section>' +
-
-      '<section class="es-pd-card es-pd-radar">' +
-      '<div class="es-pd-radar-tools"><span>Seleziona dati radar</span><span>Analisi attività nutrizionale</span><div class="es-pd-legend-pills"><span class="es-pd-pill-legend" style="color:#38bdf8"><i style="background:#38bdf8"></i> 2025 (Stagione Attuale)</span><span class="es-pd-pill-legend" style="color:#94a3b8"><i style="background:#64748b"></i> 2023 (Benchmark Storico)</span></div></div>' +
-      radarSvg() + '</section>' +
-
-      '<div class="es-nu-side">' +
-      '<section class="es-pd-card"><h2>Giocatori in gestione</h2><p class="es-nu-num">24</p></section>' +
-      '<section class="es-pd-card"><h2>Piani alimentari attivi</h2><p class="es-nu-num">22</p></section>' +
-      '<section class="es-pd-card"><h2>Valutazione</h2><p class="es-nu-grade">1,7/10 <small>+5,5%</small></p></section>' +
-      '<section class="es-pd-card"><h2>Andamento composizione corporea</h2>' +
-      trendSvg() +
-      '<div class="es-nu-legend"><span><i style="background:#38bdf8"></i>2023</span>' +
-      '<span><i style="background:#4ade80"></i>2024</span>' +
-      '<span><i style="background:#facc15"></i>2025</span></div></section>' +
-      '</div>' +
-
-      '<div class="es-nu-bottom">' +
-      '<section class="es-pd-card"><h2>Compliance sanitaria</h2>' +
-      '<div class="es-nu-check"><span>Laurea in Scienze della Nutrizione</span><b>✓</b></div>' +
-      '<div class="es-nu-check"><span>Iscrizione all\'Albo</span><b>✓</b></div>' +
-      '<div class="es-nu-check"><span>Protocollo antidoping</span><b>✓</b></div>' +
-      '<div class="es-nu-check"><span>Tutela minori</span><b>✓</b></div></section>' +
-
-      '<section class="es-pd-card"><h2>Registro giocatori</h2>' +
-      '<table class="es-pd-table"><thead><tr><th>Giocatore</th><th>Piano</th><th>Aggiornato</th></tr></thead><tbody>' +
-      '<tr><td>Rossi</td><td>Ipercalorico</td><td>15/07 <i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>Bianchi</td><td>Ipercalorico</td><td>15/07 <i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>Verdi</td><td>Ipercalorico</td><td>15/07 <i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>Neri</td><td>Ipercalorico</td><td>22/07 <i class="es-pd-dot g"></i></td></tr>' +
-      '<tr><td>Blu</td><td>Ipocalorico</td><td>In corso <i class="es-pd-dot y"></i></td></tr>' +
-      '</tbody></table></section>' +
-
-      '<section class="es-pd-card"><h2>Prossimi controlli composizione</h2>' +
-      '<div class="es-nu-when"><b>18:00</b><span>DEXA squadra</span></div>' +
-      '<div class="es-nu-when"><b>09:30</b><span>Plicometria primavera</span></div></section>' +
-
-      '<section class="es-pd-card"><h2>Alimentazione pre-partita</h2>' +
-      '<div class="es-pd-mrow"><span>3h pre-match</span><b>Pasto completo</b></div>' +
-      '<div class="es-pd-mrow"><span>60\' pre-match</span><b>Idratazione</b></div>' +
-      '<div class="es-pd-mrow"><span>30\' post-match</span><b>Recupero</b></div>' +
-      '<button type="button" class="es-pd-edit" data-nu="edit">Modifica anagrafica</button>' +
-      '</section>' +
-      '</div></div></div>';
+    return window.EliseeDashReal.shell({
+      user: user,
+      title: 'Elisee Scout — Dashboard Nutrizionista',
+      roleLabel: 'Nutrizionista',
+      attr: 'nu',
+      extraRail: '',
+      radarTitle: 'Quadro nutrizionale',
+      workTitle: 'Piani alimentari',
+      workEmpty: 'Nessun piano alimentare sul profilo.',
+      registroTitle: 'Registro piani',
+      registroHeaders: ['Atleta', 'Piano', 'Stato']
+    });
   }
-
 
   function openNuEditModal(user) {
     user = user || userObj();
@@ -197,11 +141,11 @@
       '<button type="button" class="es-edit-modal-close" title="Chiudi">&times;</button>' +
       '</div>' +
       '<div class="es-edit-grid">' +
-      '<div class="es-edit-field"><label>Nome</label><input id="es-nu-nome" value="' + esc(user.nome || 'Eliseo') + '"></div>' +
-      '<div class="es-edit-field"><label>Cognome</label><input id="es-nu-cognome" value="' + esc(user.cognome || 'Miraglia') + '"></div>' +
+      '<div class="es-edit-field"><label>Nome</label><input id="es-nu-nome" value="' + esc(user.nome || '') + '"></div>' +
+      '<div class="es-edit-field"><label>Cognome</label><input id="es-nu-cognome" value="' + esc(user.cognome || '') + '"></div>' +
       '<div class="es-edit-field"><label>Ruolo Ufficiale</label><input id="es-nu-role" value="Nutrizionista" readonly></div>' +
-      '<div class="es-edit-field"><label>Club / Organizzazione</label><input id="es-nu-club" value="' + esc(user.squadra || user.club || 'Notaresco Calcio') + '"></div>' +
-      '<div class="es-edit-field full"><label>Bio &amp; Note Operative</label><textarea id="es-nu-bio" rows="3">' + esc(user.bio || 'Profilo accreditato e verificato su Elisee Scout per la stagione 2025/2026.') + '</textarea></div>' +
+      '<div class="es-edit-field"><label>Club / Organizzazione</label><input id="es-nu-club" value="' + esc(user.squadra || user.club || '') + '"></div>' +
+      '<div class="es-edit-field full"><label>Bio &amp; Note Operative</label><textarea id="es-nu-bio" rows="3">' + esc(user.bio || '') + '</textarea></div>' +
       '</div>' +
       '<div class="es-edit-actions">' +
       '<button type="button" class="es-edit-btn-cancel">Annulla</button>' +

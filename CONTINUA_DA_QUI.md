@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Cruscotto Calciatore reale + OTP locale**: 1) Ordine card: identità, azioni, scouting | radar, profilo | compliance, gare, trend. 2) Niente mock (no €150k, no 100% fake, no partite Notaresco). 3) Evidenza solo dati veri / stati mancanti. 4) Icona radar non più gigante. 5) OTP: parse_qs nel blocco send + kill processo Python vecchio. Cache `REAL1`.
+Ultimo fatto: **Tutti i ruoli: stesso ordine professionale e dati reali**. Shell `dash-real.js`: identità → azioni → quadro → compliance → registro vuoto se non c’è attività. Tolti mock 92%/Notaresco/€ fake dalle 18 dashboard staff+tifoso; allenatore/vice senza rosa Foggia di default. Cache `REAL2`.
 Feature precedente: Tema luxury con palette ottone (scartata).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
