@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Logo Ufficiale Futura Fornovo Medesano HD integrato** — Scaricato e configurato il logo originale in altissima definizione per la Futura Fornovo Medesano (`ecc-futura-fornovo-medesano.png`, `futura-fornovo-medesano.png`, `fornovo-medesano.png`) nel catalogo loghi societari `immagini/squadre-loghi/`.
+Ultimo fatto: **Logo Ufficiale Medolla San Felice HD integrato** — Scaricato e configurato il logo originale in alta definizione per il Medolla San Felice (`ecc-medolla-san-felice.png`, `medolla-san-felice.png`, `san-felice.png`) nel catalogo loghi societari `immagini/squadre-loghi/`.
 Feature precedente: Scopri profili: riordino e allineamento card profili & pulsanti azione.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
