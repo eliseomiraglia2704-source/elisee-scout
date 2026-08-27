@@ -917,7 +917,7 @@
       cb(state.clubs);
       return;
     }
-    fetch('data/squadre/minigioco_clubs.json?v=20260827_SCATLND1', { cache: 'no-store' })
+    fetch('data/squadre/minigioco_clubs.json?v=20260827_TCATLND1', { cache: 'no-store' })
       .then(function (r) {
         return r.json();
       })
@@ -4053,6 +4053,9 @@
     } else if (l.indexOf('SECONDA CATEGORIA') >= 0) {
       src = 'immagini/squadre-loghi/seconda-categoria.png';
       alt = 'Seconda Categoria';
+    } else if (l.indexOf('TERZA CATEGORIA') >= 0) {
+      src = 'immagini/squadre-loghi/terza-categoria.png';
+      alt = 'Terza Categoria';
     } else if (l.indexOf('PREMIER') >= 0) {
       src = 'immagini/squadre-loghi/english-premier-league.png';
       alt = 'Premier League';
@@ -4079,7 +4082,7 @@
       return (
         '<img class="es-mg-league-logo-img" src="' +
         esc(src) +
-        '?v=20260827_SCATLND1" alt="' +
+        '?v=20260827_TCATLND1" alt="' +
         esc(alt) +
         '" onerror="this.style.display=\'none\';" />'
       );

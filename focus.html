@@ -2008,7 +2008,8 @@
       groupParam: 'reg',
       groups: TERZA_CAT,
       portfolio: 'Terza Categoria',
-      network: 'Terza Categoria'
+      network: 'Terza Categoria',
+      leagueLogo: 'immagini/squadre-loghi/terza-categoria.png'
     },
     femminile: {
       title: 'Calcio femminile',
@@ -2938,7 +2939,7 @@
     var leagueLogoEl = document.getElementById('focus-league-logo');
     if (leagueLogoEl) {
       if (cat.leagueLogo) {
-        leagueLogoEl.src = cat.leagueLogo + '?v=20260827_SCATLND1';
+        leagueLogoEl.src = cat.leagueLogo + '?v=20260827_TCATLND1';
         leagueLogoEl.alt = cat.title;
         leagueLogoEl.hidden = false;
         leagueLogoEl.removeAttribute('hidden');
@@ -2955,7 +2956,7 @@
         var tabLogo = CATS[k].leagueLogo
           ? '<img class="focus-tab-logo" src="' +
             CATS[k].leagueLogo +
-            '?v=20260827_SCATLND1" alt="" width="16" height="16">'
+            '?v=20260827_TCATLND1" alt="" width="16" height="16">'
           : '';
         return (
           '<a href="focus.html?cat=' +

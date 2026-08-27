@@ -9,9 +9,9 @@
   var LEAGUE_ORDER = [];
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260827_SCATLND1';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260827_TCATLND1';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260827_SCATLND1';
+  var LOGO_V = '20260827_TCATLND1';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -865,6 +865,9 @@
     }
     if (lg.indexOf('SECONDA CATEGORIA') === 0) {
       return 'immagini/squadre-loghi/seconda-categoria.png';
+    }
+    if (lg.indexOf('TERZA CATEGORIA') === 0) {
+      return 'immagini/squadre-loghi/terza-categoria.png';
     }
     if (lg.indexOf('PRIMAVERA 1') === 0) {
       return 'immagini/squadre-loghi/primavera-1.png';
