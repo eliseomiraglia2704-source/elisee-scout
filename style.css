@@ -2926,7 +2926,7 @@ body.focus-hub {
 
 .focus-team-item {
   display: grid;
-  grid-template-columns: 2rem 1fr auto auto;
+  grid-template-columns: 2rem 2.2rem 1fr auto auto;
   gap: 0.65rem;
   align-items: center;
   padding: 0.7rem 0.9rem;
@@ -2934,6 +2934,35 @@ body.focus-hub {
   cursor: default;
   user-select: none;
   pointer-events: none; /* non cliccabile */
+}
+
+.focus-team-logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.04);
+}
+
+.focus-team-logo-empty {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(148,163,184,0.12);
+}
+
+.focus-team-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.focus-team-city {
+  color: #94a3b8;
+  font-size: 0.72rem;
+  font-weight: 500;
 }
 
 .focus-team-item:last-child {
@@ -2980,16 +3009,16 @@ body.focus-hub {
 
 @media (max-width: 640px) {
   .focus-team-item {
-    grid-template-columns: 1.5rem 1fr;
+    grid-template-columns: 1.5rem 2rem 1fr;
     gap: 0.25rem 0.55rem;
   }
   .focus-team-zone {
-    grid-column: 2;
+    grid-column: 3;
     text-align: left;
     max-width: none;
   }
   .focus-team-badge {
-    grid-column: 2;
+    grid-column: 3;
     justify-self: start;
   }
 }

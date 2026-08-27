@@ -6,7 +6,7 @@
   <title>Elisee Scout</title>
   <meta name="description" content="Aree focus dilettanti ELISEE SCOUT stagione 2026/27. Solo consultazione — non iscrivibili senza consenso.">
   <link rel="icon" type="image/png" href="immagini/logo/favicon.png?v=20260731_LOGO_CLEAN">
-  <link rel="stylesheet" href="style.css?v=20260731_FOCUS_NAZIONALE">
+  <link rel="stylesheet" href="style.css?v=20260827_ECC12">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     .focus-season-pill {
@@ -100,6 +100,32 @@
       font-size: 1.15rem;
       font-weight: 800;
       color: #f1f5f9;
+    }
+
+    .focus-team-logo {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.04);
+    }
+    .focus-team-logo-empty {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: rgba(148,163,184,0.12);
+    }
+    .focus-team-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+      min-width: 0;
+    }
+    .focus-team-city {
+      color: #94a3b8;
+      font-size: 0.72rem;
+      font-weight: 500;
     }
     .focus-girone-detail-head p {
       margin: 0.15rem 0 0;
@@ -692,7 +718,7 @@
   </main>
 
   <script src="agents-runtime.js?v=20260731_SUPERVISORI_H24"></script>
-  <script src="campionati-agents.js?v=20260731_SUPERVISORI_H24"></script>
+  <script src="campionati-agents.js?v=20260827_ECC12"></script>
   <script src="campionati-supervisors.js?v=20260731_SUPERVISORI_H24"></script>
   <script>
 (function () {
@@ -759,32 +785,95 @@
 
   /* —— ECCELLENZA 2026/27: organici ufficiali / aventi diritto da fonti LND-Tuttocampo —— */
   var ECCELLENZA = [
-    G('lombardia-a', 'Lombardia · Girone A', 'Eccellenza · gironi A–C 2026/27 (base organici CR Lombardia / Wikipedia)', [
-      'Arconatese', 'Solbiatese', 'Caronnese', 'Saronno',
-      'Legnano', 'Vergiatese', 'Rhodense', 'Ardor Lazzate',
-      'Magenta', 'Mariano', 'Vis Nova Giussano', 'Vigevano',
-      'Sedriano', 'Altabrianza Tavernerio', 'Sestese (VA)'
+    G('lombardia-a', 'Lombardia · Girone A', 'Eccellenza · gironi A–C ufficiali 2026/27 (CR Lombardia)', [
+      { name: 'Ardor Lazzate', city: 'Lazzate', logo: 'immagini/squadre-loghi/ecc-lombardia-a-ardor-lazzate.svg' },
+      { name: 'Assago', city: 'Assago', logo: 'immagini/squadre-loghi/ecc-lombardia-a-assago.svg' },
+      { name: 'Aurora Cantalupo', city: 'Cerro Maggiore', logo: 'immagini/squadre-loghi/ecc-lombardia-a-aurora-cantalupo.svg' },
+      { name: 'Baranzatese', city: 'Baranzate', logo: 'immagini/squadre-loghi/ecc-lombardia-a-baranzatese.svg' },
+      { name: 'Barona', city: 'Milano', logo: 'immagini/squadre-loghi/ecc-lombardia-a-barona.svg' },
+      { name: 'Accademy Calvairate', city: 'Milano', logo: 'immagini/squadre-loghi/ecc-lombardia-a-accademy-calvairate.svg' },
+      { name: 'Besnatese', city: 'Besnate', logo: 'immagini/squadre-loghi/ecc-lombardia-a-besnatese.svg' },
+      { name: 'Caronnese', city: 'Caronno Pertusella', logo: 'immagini/squadre-loghi/caronnese-scf.png' },
+      { name: 'Legnano', city: 'Legnano', logo: 'immagini/squadre-loghi/ecc-lombardia-a-legnano.svg' },
+      { name: 'Lentatese', city: 'Lentate sul Seveso', logo: 'immagini/squadre-loghi/ecc-lombardia-a-lentatese.svg' },
+      { name: 'Magenta', city: 'Magenta', logo: 'immagini/squadre-loghi/ecc-lombardia-a-magenta.svg' },
+      { name: 'Rhodense', city: 'Rho', logo: 'immagini/squadre-loghi/ecc-lombardia-a-rhodense.svg' },
+      { name: 'Saronno', city: 'Saronno', logo: 'immagini/squadre-loghi/ecc-lombardia-a-saronno.svg' },
+      { name: 'Sedriano', city: 'Sedriano', logo: 'immagini/squadre-loghi/fc-sedriano.png' },
+      { name: 'Tribiano', city: 'Tribiano', logo: 'immagini/squadre-loghi/ecc-lombardia-a-tribiano.svg' },
+      { name: 'Vergiatese', city: 'Vergiate', logo: 'immagini/squadre-loghi/ecc-lombardia-a-vergiatese.svg' },
     ]),
-    G('lombardia-b', 'Lombardia · Girone B', 'Eccellenza · gironi A–C 2026/27 (base organici CR Lombardia / Wikipedia)', [
-      'Tritium', 'Codogno', 'Baranzatese', 'Caravaggio',
-      'Ponte San Pietro Mapello', 'Seregno', 'Assago', 'Fucina',
-      'Casteggio', 'Fanfulla', 'Accademia Pavese', 'Soncinese',
-      'Ciliverghe Mazzano'
+    G('lombardia-b', 'Lombardia · Girone B', 'Eccellenza · gironi A–C ufficiali 2026/27 (CR Lombardia)', [
+      { name: 'Arcellasco', city: 'Erba', logo: 'immagini/squadre-loghi/ecc-lombardia-b-arcellasco.svg' },
+      { name: 'Caravaggio', city: 'Caravaggio', logo: 'immagini/squadre-loghi/ecc-lombardia-b-caravaggio.svg' },
+      { name: 'Cisanese', city: 'Cisano Bergamasco', logo: 'immagini/squadre-loghi/ecc-lombardia-b-cisanese.svg' },
+      { name: 'Città di Albino', city: 'Albino', logo: 'immagini/squadre-loghi/ecc-lombardia-b-citta-di-albino.svg' },
+      { name: 'Franco Scarioni', city: 'Milano', logo: 'immagini/squadre-loghi/ecc-lombardia-b-franco-scarioni.svg' },
+      { name: 'Juvenes United', city: 'Casnigo', logo: 'immagini/squadre-loghi/ecc-lombardia-b-juvenes-united.svg' },
+      { name: 'Lemine Almenno', city: 'Almenno San Salvatore', logo: 'immagini/squadre-loghi/ecc-lombardia-b-lemine-almenno.svg' },
+      { name: 'Luciano Manara', city: 'Barzanò', logo: 'immagini/squadre-loghi/ecc-lombardia-b-luciano-manara.svg' },
+      { name: 'Muggiò', city: 'Muggiò', logo: 'immagini/squadre-loghi/ecc-lombardia-b-muggio.svg' },
+      { name: 'Olginatese', city: 'Olginate', logo: 'immagini/squadre-loghi/ecc-lombardia-b-olginatese.svg' },
+      { name: 'Ponte San Pietro Mapello', city: 'Ponte San Pietro', logo: 'immagini/squadre-loghi/ecc-lombardia-b-ponte-san-pietro-mapello.svg' },
+      { name: 'Seregno', city: 'Seregno', logo: 'immagini/squadre-loghi/ecc-lombardia-b-seregno.svg' },
+      { name: 'Nuova Sondrio', city: 'Sondrio', logo: 'immagini/squadre-loghi/ecc-lombardia-b-nuova-sondrio.svg' },
+      { name: 'Trevigliese', city: 'Treviglio', logo: 'immagini/squadre-loghi/trevigliese.png' },
+      { name: 'Vis Nova Giussano', city: 'Giussano', logo: 'immagini/squadre-loghi/ecc-lombardia-b-vis-nova-giussano.svg' },
+      { name: 'Zingonia Verdellino', city: 'Verdellino', logo: 'immagini/squadre-loghi/ecc-lombardia-b-zingonia-verdellino.svg' },
     ]),
-    G('lombardia-c', 'Lombardia · Girone C', 'Eccellenza · gironi A–C 2026/27 (base organici CR Lombardia / Wikipedia)', [
-      'Ciliverghe', 'Carpenedolo', 'Poggese', 'Orceana',
-      'Castellana (MN)', 'Castiglione', 'Darfo Boario', 'Colognese',
-      'Fanfulla', 'Crema B', 'Oltrepò'
+    G('lombardia-c', 'Lombardia · Girone C', 'Eccellenza · gironi A–C ufficiali 2026/27 (CR Lombardia)', [
+      { name: 'Breno', city: 'Breno', logo: 'immagini/squadre-loghi/breno.png' },
+      { name: 'Carpenedolo BSV Garda', city: 'Carpenedolo', logo: 'immagini/squadre-loghi/ecc-lombardia-c-carpenedolo-bsv-garda.svg' },
+      { name: 'Sporting Castellana', city: 'Castel Goffredo', logo: 'immagini/squadre-loghi/ecc-lombardia-c-sporting-castellana.svg' },
+      { name: 'Castiglione', city: 'Castiglione delle Stiviere', logo: 'immagini/squadre-loghi/ecc-lombardia-c-castiglione.svg' },
+      { name: 'Cellatica', city: 'Cellatica', logo: 'immagini/squadre-loghi/ecc-lombardia-c-cellatica.svg' },
+      { name: 'Ciliverghe Mazzano', city: 'Mazzano', logo: 'immagini/squadre-loghi/ecc-lombardia-c-ciliverghe-mazzano.svg' },
+      { name: 'Codogno', city: 'Codogno', logo: 'immagini/squadre-loghi/ecc-lombardia-c-codogno.svg' },
+      { name: 'Offanenghese', city: 'Offanengo', logo: 'immagini/squadre-loghi/ecc-lombardia-c-offanenghese.svg' },
+      { name: 'Orceana', city: 'Orzinuovi', logo: 'immagini/squadre-loghi/ecc-lombardia-c-orceana.svg' },
+      { name: 'Pianico', city: 'Pianico', logo: 'immagini/squadre-loghi/ecc-lombardia-c-pianico.svg' },
+      { name: 'Poggese', city: 'Poggio Rusco', logo: 'immagini/squadre-loghi/ecc-lombardia-c-poggese.svg' },
+      { name: 'San Pancrazio', city: 'Palazzolo sull\'Oglio', logo: 'immagini/squadre-loghi/ecc-lombardia-c-san-pancrazio.svg' },
+      { name: 'Soncinese', city: 'Soncino', logo: 'immagini/squadre-loghi/ecc-lombardia-c-soncinese.svg' },
+      { name: 'Sported Maris', city: 'Cremona', logo: 'immagini/squadre-loghi/ecc-lombardia-c-sported-maris.svg' },
+      { name: 'Torre de\' Roveri', city: 'Torre de\' Roveri', logo: 'immagini/squadre-loghi/ecc-lombardia-c-torre-de-roveri.svg' },
+      { name: 'Verolese', city: 'Verolanuova', logo: 'immagini/squadre-loghi/ecc-lombardia-c-verolese.svg' },
     ]),
-    G('piemonte-a', 'Piemonte / VdA · Girone A', 'Eccellenza · 2 gironi 2026/27', [
-      'Borgaro', 'Borgosesia', 'Città di Cossato', 'Borgomanero',
-      'Volpiano', 'Settimo', 'Verbania', 'Derthona FBC 1908',
-      'Lascaris', 'Briga', 'Accademia Borgomanero'
+    G('piemonte-a', 'Piemonte / VdA · Girone A', 'Eccellenza · organico ufficiale 2026/27 (16 squadre)', [
+      { name: 'Accademia Borgomanero', city: 'Borgomanero', logo: 'immagini/squadre-loghi/ecc-piemonte-a-accademia-borgomanero.svg' },
+      { name: 'Autovip San Mauro', city: 'San Mauro Torinese', logo: 'immagini/squadre-loghi/ecc-piemonte-a-autovip-san-mauro.svg' },
+      { name: 'Aygreville', city: 'Aymavilles', logo: 'immagini/squadre-loghi/ecc-piemonte-a-aygreville.svg' },
+      { name: 'Baveno Stresa', city: 'Baveno', logo: 'immagini/squadre-loghi/ecc-piemonte-a-baveno-stresa.svg' },
+      { name: 'Borgaro', city: 'Borgaro Torinese', logo: 'immagini/squadre-loghi/ecc-piemonte-a-borgaro.svg' },
+      { name: 'Briga', city: 'Briga Novarese', logo: 'immagini/squadre-loghi/ecc-piemonte-a-briga.svg' },
+      { name: 'Casale', city: 'Casale Monferrato', logo: 'immagini/squadre-loghi/ecc-piemonte-a-casale.svg' },
+      { name: 'Druentina', city: 'Druento', logo: 'immagini/squadre-loghi/ecc-piemonte-a-druentina.svg' },
+      { name: 'Dufour Varallo', city: 'Varallo', logo: 'immagini/squadre-loghi/ecc-piemonte-a-dufour-varallo.svg' },
+      { name: 'Fulgor Chiavazzese', city: 'Biella', logo: 'immagini/squadre-loghi/ecc-piemonte-a-fulgor-chiavazzese.svg' },
+      { name: 'Pro Eureka', city: 'Settimo Torinese', logo: 'immagini/squadre-loghi/ecc-piemonte-a-pro-eureka.svg' },
+      { name: 'Quincinetto Tavagnasco', city: 'Quincinetto', logo: 'immagini/squadre-loghi/ecc-piemonte-a-quincinetto-tavagnasco.svg' },
+      { name: 'Rivarolese', city: 'Rivarolo Canavese', logo: 'immagini/squadre-loghi/ecc-piemonte-a-rivarolese.svg' },
+      { name: 'Settimo', city: 'Settimo Torinese', logo: 'immagini/squadre-loghi/ecc-piemonte-a-settimo.svg' },
+      { name: 'Sparta Novaromentino', city: 'Novara', logo: 'immagini/squadre-loghi/novaromentin.png' },
+      { name: 'Volpiano Pianese', city: 'Volpiano', logo: 'immagini/squadre-loghi/pianese.png' },
     ]),
-    G('piemonte-b', 'Piemonte / VdA · Girone B', 'Eccellenza · 2 gironi 2026/27', [
-      'Pinerolo', 'Alessandria', 'Fossano', 'Cuneo',
-      'Albese', 'Chieri', 'Pro Dronero', 'Acqui',
-      'Casale', 'Cairese'
+    G('piemonte-b', 'Piemonte / VdA · Girone B', 'Eccellenza · organico ufficiale 2026/27 (16 squadre)', [
+      { name: 'Albese', city: 'Alba', logo: 'immagini/squadre-loghi/ecc-piemonte-b-albese.svg' },
+      { name: 'Csf Carmagnola', city: 'Carmagnola', logo: 'immagini/squadre-loghi/ecc-piemonte-b-csf-carmagnola.svg' },
+      { name: 'Cheraschese', city: 'Cherasco', logo: 'immagini/squadre-loghi/ecc-piemonte-b-cheraschese.svg' },
+      { name: 'Cuneo 1905 Olmo', city: 'Cuneo', logo: 'immagini/squadre-loghi/ecc-piemonte-b-cuneo-1905-olmo.svg' },
+      { name: 'Chieri', city: 'Chieri', logo: 'immagini/squadre-loghi/ecc-piemonte-b-chieri.svg' },
+      { name: 'Fossano', city: 'Fossano', logo: 'immagini/squadre-loghi/ecc-piemonte-b-fossano.svg' },
+      { name: 'Giovanile Centallo', city: 'Centallo', logo: 'immagini/squadre-loghi/ecc-piemonte-b-giovanile-centallo.svg' },
+      { name: 'Gaviese', city: 'Gavi', logo: 'immagini/squadre-loghi/ecc-piemonte-b-gaviese.svg' },
+      { name: 'Monregale', city: 'Mondovì', logo: 'immagini/squadre-loghi/ecc-piemonte-b-monregale.svg' },
+      { name: 'Moretta', city: 'Moretta', logo: 'immagini/squadre-loghi/ecc-piemonte-b-moretta.svg' },
+      { name: 'Ovadese', city: 'Ovada', logo: 'immagini/squadre-loghi/ecc-piemonte-b-ovadese.svg' },
+      { name: 'Pro Dronero', city: 'Dronero', logo: 'immagini/squadre-loghi/ecc-piemonte-b-pro-dronero.svg' },
+      { name: 'Pro Villafranca', city: 'Villafranca d\'Asti', logo: 'immagini/squadre-loghi/ecc-piemonte-b-pro-villafranca.svg' },
+      { name: 'San Domenico Savio Asti', city: 'Asti', logo: 'immagini/squadre-loghi/ecc-piemonte-b-san-domenico-savio-asti.svg' },
+      { name: 'Spartak San Damiano', city: 'San Damiano d\'Asti', logo: 'immagini/squadre-loghi/ecc-piemonte-b-spartak-san-damiano.svg' },
+      { name: 'Vanchiglia', city: 'Torino', logo: 'immagini/squadre-loghi/ecc-piemonte-b-vanchiglia.svg' },
     ]),
     G('veneto-a', 'Veneto · Girone A', 'Eccellenza · 2 gironi 2026/27', [
       'Schio', 'Villafranca Veronese', 'Montecchio Maggiore', 'Ambrosiana',
@@ -796,31 +885,88 @@
       'Giorgione', 'Vittorio Veneto', 'LeO Oderzo', 'Portogruaro',
       'San Luigi Calcio'
     ]),
-    G('fvg', 'Friuli-Venezia Giulia', 'Eccellenza · girone unico 2026/27', [
-      'LME', 'Chiarbola Ponziana', 'Rive Arcano Flaibano', 'Fiume Veneto Bannia',
-      'Muggia', 'Pordenone', 'Tamai', 'Sanvitese',
-      'UF Monfalcone', 'Kras', 'Juventina SA', 'Chions',
-      'Codroipo', 'Tolmezzo', 'Pro Fagagna', 'Forum Julii',
-      'Fontanafredda', 'Pro Gorizia', 'in Friuli-Venezia Giulia'
+    G('fvg', 'Friuli-Venezia Giulia', 'Eccellenza · girone unico ufficiale 2026/27 (18 squadre)', [
+      { name: 'Azzurra Premariacco', city: 'Premariacco', logo: 'immagini/squadre-loghi/ecc-fvg-azzurra-premariacco.svg' },
+      { name: 'Teor', city: 'Teor', logo: 'immagini/squadre-loghi/ecc-fvg-teor.svg' },
+      { name: 'Casarsa', city: 'Casarsa della Delizia', logo: 'immagini/squadre-loghi/ecc-fvg-casarsa.svg' },
+      { name: 'Chions', city: 'Chions', logo: 'immagini/squadre-loghi/ecc-fvg-chions.svg' },
+      { name: 'Fontanafredda', city: 'Fontanafredda', logo: 'immagini/squadre-loghi/ecc-fvg-fontanafredda.svg' },
+      { name: 'Forum Julii', city: 'Cividale del Friuli', logo: 'immagini/squadre-loghi/ecc-fvg-forum-julii.svg' },
+      { name: 'Juventina Sant\'Andrea', city: 'Gorizia', logo: 'immagini/squadre-loghi/ecc-fvg-juventina-sant-andrea.svg' },
+      { name: 'Muggia', city: 'Muggia', logo: 'immagini/squadre-loghi/ecc-fvg-muggia.svg' },
+      { name: 'Kras Repen', city: 'Monrupino', logo: 'immagini/squadre-loghi/ecc-fvg-kras-repen.svg' },
+      { name: 'Pordenone', city: 'Pordenone', logo: 'immagini/squadre-loghi/ecc-fvg-pordenone.svg' },
+      { name: 'Codroipo', city: 'Codroipo', logo: 'immagini/squadre-loghi/ecc-fvg-codroipo.svg' },
+      { name: 'Tamai', city: 'Brugnera', logo: 'immagini/squadre-loghi/ecc-fvg-tamai.svg' },
+      { name: 'Pro Fagagna', city: 'Fagagna', logo: 'immagini/squadre-loghi/ecc-fvg-pro-fagagna.svg' },
+      { name: 'Pro Gorizia', city: 'Gorizia', logo: 'immagini/squadre-loghi/ecc-fvg-pro-gorizia.svg' },
+      { name: 'San Luigi', city: 'Trieste', logo: 'immagini/squadre-loghi/san-luigi.png' },
+      { name: 'Sanvitese', city: 'San Vito al Tagliamento', logo: 'immagini/squadre-loghi/ecc-fvg-sanvitese.svg' },
+      { name: 'Tolmezzo Carnia', city: 'Tolmezzo', logo: 'immagini/squadre-loghi/ecc-fvg-tolmezzo-carnia.svg' },
+      { name: 'UF Monfalcone', city: 'Monfalcone', logo: 'immagini/squadre-loghi/ecc-fvg-uf-monfalcone.svg' },
     ]),
-    G('trentino', 'Trentino-Alto Adige', 'Eccellenza · girone unico 2026/27', [
-      'Virtus Bolzano', 'Lavis', 'Rovereto', 'St. Georgen', 'Brixen', 'Merano',
-      'Mezzocorona', 'Dro', 'Condinese', 'Olimpia Merano', 'Auer', 'Salorno',
-      'Naturns', 'Trento', 'Bozen', 'Obermais'
+    G('trentino', 'Trentino-Alto Adige', 'Eccellenza · girone unico ufficiale 2026/27 (16 squadre)', [
+      { name: 'Ahrntal', city: 'Valle Aurina', logo: 'immagini/squadre-loghi/ecc-trentino-ahrntal.svg' },
+      { name: 'Anaune Val Di Non', city: 'Cles', logo: 'immagini/squadre-loghi/ecc-trentino-anaune-val-di-non.svg' },
+      { name: 'Benacense', city: 'Riva del Garda', logo: 'immagini/squadre-loghi/ecc-trentino-benacense.svg' },
+      { name: 'Mori Santo Stefano', city: 'Mori', logo: 'immagini/squadre-loghi/ecc-trentino-mori-santo-stefano.svg' },
+      { name: 'Brunico Bruneck', city: 'Brunico', logo: 'immagini/squadre-loghi/ecc-trentino-brunico-bruneck.svg' },
+      { name: 'Comano Terme Fiavè', city: 'Comano Terme', logo: 'immagini/squadre-loghi/ecc-trentino-comano-terme-fiave.svg' },
+      { name: 'Levico Terme', city: 'Levico Terme', logo: 'immagini/squadre-loghi/ecc-trentino-levico-terme.svg' },
+      { name: 'Union Trento Ravinense', city: 'Trento', logo: 'immagini/squadre-loghi/ecc-trentino-union-trento-ravinense.svg' },
+      { name: 'Naturns', city: 'Naturno', logo: 'immagini/squadre-loghi/ecc-trentino-naturns.svg' },
+      { name: 'Tramin Fussball', city: 'Termeno', logo: 'immagini/squadre-loghi/ecc-trentino-tramin-fussball.svg' },
+      { name: 'Rovereto', city: 'Rovereto', logo: 'immagini/squadre-loghi/ecc-trentino-rovereto.svg' },
+      { name: 'St. Georgen', city: 'San Giorgio', logo: 'immagini/squadre-loghi/ecc-trentino-st-georgen.svg' },
+      { name: 'St. Pauls', city: 'Appiano', logo: 'immagini/squadre-loghi/ecc-trentino-st-pauls.svg' },
+      { name: 'Partschins Raiffeisen', city: 'Parcines', logo: 'immagini/squadre-loghi/ecc-trentino-partschins-raiffeisen.svg' },
+      { name: 'Vipo Trento', city: 'Trento', logo: 'immagini/squadre-loghi/ecc-trentino-vipo-trento.svg' },
+      { name: 'Bozner', city: 'Bolzano', logo: 'immagini/squadre-loghi/ecc-trentino-bozner.svg' },
     ]),
     G('liguria', 'Liguria', 'Eccellenza · girone unico 2026/27', [
       'Savona FBC', 'Cairese', 'Arenzano', 'Albissole', 'Lavagnese', 'Finale',
       'Pietra Ligure', 'Sarzanese', 'Rapallo Ruentes', 'Imperia', 'Sestrese',
       'Chiavari Caperana', 'Rivarolese', 'Bolzanetese', 'Busalla', 'Sestri Levante B'
     ]),
-    G('emilia-a', 'Emilia-Romagna · Girone A', 'Eccellenza · 2 gironi 2026/27', [
-      'Fiorenzuola', 'Zola Predosa', 'Nibbiano Valtidone', 'Corticella',
-      'Salsomaggiore', 'Tropical Coriano', 'Fiorenzuola 1922', 'Ars et Labor Ferrara'
+    G('emilia-a', 'Emilia-Romagna · Girone A', 'Eccellenza · organico ufficiale 2026/27 (18 squadre)', [
+      { name: 'Agazzanese', city: 'Agazzano', logo: 'immagini/squadre-loghi/ecc-emilia-a-agazzanese.svg' },
+      { name: 'Arcetana', city: 'Scandiano', logo: 'immagini/squadre-loghi/ecc-emilia-a-arcetana.svg' },
+      { name: 'Ars et Labor Ferrara', city: 'Ferrara', logo: 'immagini/squadre-loghi/ecc-emilia-a-ars-et-labor-ferrara.svg' },
+      { name: 'Atletic CDR Mutina', city: 'Castelfranco Emilia', logo: 'immagini/squadre-loghi/ecc-emilia-a-atletic-cdr-mutina.svg' },
+      { name: 'Bobbiese', city: 'Bobbio', logo: 'immagini/squadre-loghi/ecc-emilia-a-bobbiese.svg' },
+      { name: 'Brescello Piccardo', city: 'Brescello', logo: 'immagini/squadre-loghi/ecc-emilia-a-brescello-piccardo.svg' },
+      { name: 'Campagnola', city: 'Campagnola Emilia', logo: 'immagini/squadre-loghi/ecc-emilia-a-campagnola.svg' },
+      { name: 'Castellana Fontana', city: 'Castel San Giovanni', logo: 'immagini/squadre-loghi/ecc-emilia-a-castellana-fontana.svg' },
+      { name: 'Castellarano', city: 'Castellarano', logo: 'immagini/squadre-loghi/ecc-emilia-a-castellarano.svg' },
+      { name: 'Fidentina Borgo San Donnino', city: 'Fidenza', logo: 'immagini/squadre-loghi/ecc-emilia-a-fidentina-borgo-san-donnino.svg' },
+      { name: 'Futura Fornovo Medesano', city: 'Fornovo di Taro', logo: 'immagini/squadre-loghi/ecc-emilia-a-futura-fornovo-medesano.svg' },
+      { name: 'Medolla San Felice', city: 'Medolla', logo: 'immagini/squadre-loghi/ecc-emilia-a-medolla-san-felice.svg' },
+      { name: 'Pontenurese', city: 'Pontenure', logo: 'immagini/squadre-loghi/ecc-emilia-a-pontenurese.svg' },
+      { name: 'Rolo Fabbrico', city: 'Rolo', logo: 'immagini/squadre-loghi/ecc-emilia-a-rolo-fabbrico.svg' },
+      { name: 'Sant\'Agostino', city: 'Sant\'Agostino', logo: 'immagini/squadre-loghi/ecc-emilia-a-sant-agostino.svg' },
+      { name: 'Vianese Calcio', city: 'Viano', logo: 'immagini/squadre-loghi/ecc-emilia-a-vianese-calcio.svg' },
+      { name: 'Vis Cittadella', city: 'Modena', logo: 'immagini/squadre-loghi/cittadella.png' },
+      { name: 'Calcio Zola Predosa', city: 'Zola Predosa', logo: 'immagini/squadre-loghi/ecc-emilia-a-calcio-zola-predosa.svg' },
     ]),
-    G('emilia-b', 'Emilia-Romagna · Girone B', 'Eccellenza · 2 gironi 2026/27', [
-      'Ars et Labor Ferrara', 'Faenza', 'Mezzolara', 'Russi',
-      'Santarcangelo', 'Massa Lombarda', 'Pietracuta', 'Imolese Calcio',
-      'Medicina Fossatone', 'Sant\'Agostino', 'Rimini'
+    G('emilia-b', 'Emilia-Romagna · Girone B', 'Eccellenza · organico ufficiale 2026/27 (18 squadre)', [
+      { name: 'Castenaso Calcio', city: 'Castenaso', logo: 'immagini/squadre-loghi/ecc-emilia-b-castenaso-calcio.svg' },
+      { name: 'Comacchiese', city: 'Comacchio', logo: 'immagini/squadre-loghi/ecc-emilia-b-comacchiese.svg' },
+      { name: 'Fratta Terme', city: 'Bertinoro', logo: 'immagini/squadre-loghi/ecc-emilia-b-fratta-terme.svg' },
+      { name: 'Futball Cava Ronco', city: 'Forlì', logo: 'immagini/squadre-loghi/ecc-emilia-b-futball-cava-ronco.svg' },
+      { name: 'Imolese', city: 'Imola', logo: 'immagini/squadre-loghi/imolese.png' },
+      { name: 'Massa Lombarda', city: 'Massa Lombarda', logo: 'immagini/squadre-loghi/ecc-emilia-b-massa-lombarda.svg' },
+      { name: 'Medicina Fossatone', city: 'Medicina', logo: 'immagini/squadre-loghi/ecc-emilia-b-medicina-fossatone.svg' },
+      { name: 'Osteria Grande', city: 'Castel San Pietro Terme', logo: 'immagini/squadre-loghi/ecc-emilia-b-osteria-grande.svg' },
+      { name: 'Pietracuta', city: 'San Leo', logo: 'immagini/squadre-loghi/ecc-emilia-b-pietracuta.svg' },
+      { name: 'Rimini', city: 'Rimini', logo: 'immagini/squadre-loghi/ecc-emilia-b-rimini.svg' },
+      { name: 'Russi', city: 'Russi', logo: 'immagini/squadre-loghi/ecc-emilia-b-russi.svg' },
+      { name: 'Sammaurese', city: 'San Mauro Pascoli', logo: 'immagini/squadre-loghi/sammaurese.png' },
+      { name: 'San Marino', city: 'Acquaviva', logo: 'immagini/squadre-loghi/san-marino-academy.png' },
+      { name: 'Sanpaimola', city: 'Conselice', logo: 'immagini/squadre-loghi/ecc-emilia-b-sanpaimola.svg' },
+      { name: 'Savignanese', city: 'Savignano sul Rubicone', logo: 'immagini/squadre-loghi/ecc-emilia-b-savignanese.svg' },
+      { name: 'Santarcangelo', city: 'Santarcangelo di Romagna', logo: 'immagini/squadre-loghi/ecc-emilia-b-santarcangelo.svg' },
+      { name: 'Valsanterno', city: 'Borgo Tossignano', logo: 'immagini/squadre-loghi/ecc-emilia-b-valsanterno.svg' },
+      { name: 'Vis Novafeltria', city: 'Novafeltria', logo: 'immagini/squadre-loghi/ecc-emilia-b-vis-novafeltria.svg' },
     ]),
     G('toscana-a', 'Toscana · Girone A', 'Eccellenza · 2 gironi 2026/27 (aventi diritto / iscrizioni)', [
       'Cecina', 'Castelnuovo', 'Fucecchio', 'Lucchese',
@@ -836,16 +982,41 @@
       'Valentino Mazzola', 'Baldaccio Bruni', 'Castiglionese', 'Lastrigiana',
       'Asta', 'Affrico', 'Poggibonsi', 'V. Mazzola'
     ]),
-    G('marche', 'Marche', 'Eccellenza · organico 2026/27', [
-      'Aurora Treia', 'Castelfidardo', 'Chiesanuova', 'Fano',
-      'Fermana', 'Fermignanese', 'Jesina', 'Lunano',
-      'Matelica', 'Montefano', 'Montegranaro', 'Osimana',
-      'Porto Recanati', 'Sangiustese', 'Tolentino', 'Urbino'
+    G('marche', 'Marche', 'Eccellenza · organico ufficiale 2026/27 (16 squadre)', [
+      { name: 'Aurora Treia', city: 'Treia', logo: 'immagini/squadre-loghi/ecc-marche-aurora-treia.svg' },
+      { name: 'Castelfidardo', city: 'Castelfidardo', logo: 'immagini/squadre-loghi/castelfidardo-calcio.png' },
+      { name: 'Chiesanuova', city: 'Treia', logo: 'immagini/squadre-loghi/ecc-marche-chiesanuova.svg' },
+      { name: 'Fano', city: 'Fano', logo: 'immagini/squadre-loghi/ecc-marche-fano.svg' },
+      { name: 'Fermana', city: 'Fermo', logo: 'immagini/squadre-loghi/ecc-marche-fermana.svg' },
+      { name: 'Fermignanese', city: 'Fermignano', logo: 'immagini/squadre-loghi/ecc-marche-fermignanese.svg' },
+      { name: 'Jesina', city: 'Jesi', logo: 'immagini/squadre-loghi/ecc-marche-jesina.svg' },
+      { name: 'Lunano', city: 'Lunano', logo: 'immagini/squadre-loghi/ecc-marche-lunano.svg' },
+      { name: 'Matelica', city: 'Matelica', logo: 'immagini/squadre-loghi/ecc-marche-matelica.svg' },
+      { name: 'Montefano', city: 'Montefano', logo: 'immagini/squadre-loghi/ecc-marche-montefano.svg' },
+      { name: 'Montegranaro', city: 'Montegranaro', logo: 'immagini/squadre-loghi/ecc-marche-montegranaro.svg' },
+      { name: 'Osimana', city: 'Osimo', logo: 'immagini/squadre-loghi/ecc-marche-osimana.svg' },
+      { name: 'Sangiustese', city: 'Monte San Giusto', logo: 'immagini/squadre-loghi/ecc-marche-sangiustese.svg' },
+      { name: 'Tolentino', city: 'Tolentino', logo: 'immagini/squadre-loghi/ecc-marche-tolentino.svg' },
+      { name: 'Trodica', city: 'Morrovalle', logo: 'immagini/squadre-loghi/ecc-marche-trodica.svg' },
+      { name: 'Urbino', city: 'Urbino', logo: 'immagini/squadre-loghi/ecc-marche-urbino.svg' },
     ]),
-    G('umbria', 'Umbria', 'Eccellenza · girone unico 2026/27', [
-      'Grifo Cannara', 'Costano', 'Angelana', 'Pontevecchio', 'San Venanzo',
-      'Spoleto', 'Bastia', 'Foligno', 'Narni', 'Todi', 'Città di Castello',
-      'Orvietana', 'Trestina', 'Gubbio', 'Terni', 'Umbertide'
+    G('umbria', 'Umbria', 'Eccellenza · girone unico ufficiale 2026/27 (16 squadre)', [
+      { name: 'Agape Pierantonio Umbertide', city: 'Umbertide', logo: 'immagini/squadre-loghi/ecc-umbria-agape-pierantonio-umbertide.svg' },
+      { name: 'Padule 1976', city: 'Gubbio', logo: 'immagini/squadre-loghi/ecc-umbria-padule-1976.svg' },
+      { name: 'Cannara', city: 'Cannara', logo: 'immagini/squadre-loghi/cannara.png' },
+      { name: 'Bastia 1924', city: 'Bastia Umbra', logo: 'immagini/squadre-loghi/ecc-umbria-bastia-1924.svg' },
+      { name: 'Ellera Calcio', city: 'Corciano', logo: 'immagini/squadre-loghi/ecc-umbria-ellera-calcio.svg' },
+      { name: 'Terni Football Club', city: 'Terni', logo: 'immagini/squadre-loghi/ecc-umbria-terni-football-club.svg' },
+      { name: 'Montone', city: 'Montone', logo: 'immagini/squadre-loghi/ecc-umbria-montone.svg' },
+      { name: 'Pontevecchio', city: 'Perugia', logo: 'immagini/squadre-loghi/ecc-umbria-pontevecchio.svg' },
+      { name: 'Narnese Calcio', city: 'Narni', logo: 'immagini/squadre-loghi/ecc-umbria-narnese-calcio.svg' },
+      { name: 'Nuova Alba', city: 'San Martino in Campo', logo: 'immagini/squadre-loghi/nuova-alba.png' },
+      { name: 'Olympia Thyrus S. Valentino', city: 'Terni', logo: 'immagini/squadre-loghi/ecc-umbria-olympia-thyrus-s-valentino.svg' },
+      { name: 'Tavernelle Calcio', city: 'Panicale', logo: 'immagini/squadre-loghi/ecc-umbria-tavernelle-calcio.svg' },
+      { name: 'Torgiano Calcio', city: 'Torgiano', logo: 'immagini/squadre-loghi/ecc-umbria-torgiano-calcio.svg' },
+      { name: 'Atletico BMG', city: 'Bevagna', logo: 'immagini/squadre-loghi/ecc-umbria-atletico-bmg.svg' },
+      { name: 'Vivi Altotevere Sansepolcro', city: 'Sansepolcro', logo: 'immagini/squadre-loghi/vivi-altotevere-sansepolcro.png' },
+      { name: 'Spoleto', city: 'Spoleto', logo: 'immagini/squadre-loghi/ecc-umbria-spoleto.svg' },
     ]),
     G('lazio-a', 'Lazio · Girone A', 'Eccellenza · 2 gironi 2026/27', [
       'Pomezia', 'Rieti', 'Civitavecchia', 'Roma City',
@@ -880,11 +1051,24 @@
       'Savoia'
     ]),
     G('puglia', 'Puglia', 'Eccellenza · organico ufficiale 2026/27 (18 squadre)', [
-      'A. Toma Maglie', 'Atletico Acquaviva', 'Atletico Racale', 'Bitonto Calcio',
-      'Brilla Campi', 'Canosa Calcio 1948', 'Cosmano Sport Foggia', 'Galatina Calcio',
-      'Novoli Calcio', 'Nuova Spinazzola', 'Ostuni Calcio', 'Polimnia Calcio',
-      'Soccer Trani', 'Squinzano Calcio', 'Taranto Calcio', 'Taurisano 1939',
-      'Ugento Calcio', 'Unione Calcio Bisceglie'
+      { name: 'Atletico Acquaviva', city: 'Acquaviva delle Fonti', logo: 'immagini/squadre-loghi/ecc-puglia-atletico-acquaviva.svg' },
+      { name: 'Atletico Racale', city: 'Racale', logo: 'immagini/squadre-loghi/ecc-puglia-atletico-racale.svg' },
+      { name: 'Bitonto Calcio', city: 'Bitonto', logo: 'immagini/squadre-loghi/ecc-puglia-bitonto-calcio.svg' },
+      { name: 'Brilla Campi', city: 'Campi Salentina', logo: 'immagini/squadre-loghi/ecc-puglia-brilla-campi.svg' },
+      { name: 'Canosa Calcio 1948', city: 'Canosa di Puglia', logo: 'immagini/squadre-loghi/ecc-puglia-canosa-calcio-1948.svg' },
+      { name: 'Cosmano Sport Foggia', city: 'Foggia', logo: 'immagini/squadre-loghi/foggia.png' },
+      { name: 'Galatina Calcio', city: 'Galatina', logo: 'immagini/squadre-loghi/ecc-puglia-galatina-calcio.svg' },
+      { name: 'Novoli Calcio', city: 'Novoli', logo: 'immagini/squadre-loghi/ecc-puglia-novoli-calcio.svg' },
+      { name: 'Nuova Spinazzola', city: 'Spinazzola', logo: 'immagini/squadre-loghi/ecc-puglia-nuova-spinazzola.svg' },
+      { name: 'Ostuni Calcio', city: 'Ostuni', logo: 'immagini/squadre-loghi/ecc-puglia-ostuni-calcio.svg' },
+      { name: 'Polimnia Calcio', city: 'Polignano a Mare', logo: 'immagini/squadre-loghi/ecc-puglia-polimnia-calcio.svg' },
+      { name: 'Soccer Trani', city: 'Trani', logo: 'immagini/squadre-loghi/ecc-puglia-soccer-trani.svg' },
+      { name: 'Squinzano Calcio', city: 'Squinzano', logo: 'immagini/squadre-loghi/ecc-puglia-squinzano-calcio.svg' },
+      { name: 'Taranto Calcio', city: 'Taranto', logo: 'immagini/squadre-loghi/ecc-puglia-taranto-calcio.svg' },
+      { name: 'Taurisano 1939', city: 'Taurisano', logo: 'immagini/squadre-loghi/ecc-puglia-taurisano-1939.svg' },
+      { name: 'A. Toma Maglie', city: 'Maglie', logo: 'immagini/squadre-loghi/ecc-puglia-a-toma-maglie.svg' },
+      { name: 'Ugento Calcio', city: 'Ugento', logo: 'immagini/squadre-loghi/ecc-puglia-ugento-calcio.svg' },
+      { name: 'Unione Calcio Bisceglie', city: 'Bisceglie', logo: 'immagini/squadre-loghi/bisceglie.png' },
     ]),
     G('basilicata', 'Basilicata', 'Eccellenza · girone unico 2026/27', [
       'Ferrandina', 'Melfi', 'Murese', 'Policoro', 'Cristofaro Oppido',
@@ -1852,12 +2036,23 @@
     return null;
   }
 
-  function teamRow(name, zone, i) {
+  function teamRow(t, zone, i) {
+    var name = (t && typeof t === 'object') ? (t.name || '') : String(t || '');
+    var city = (t && typeof t === 'object') ? (t.city || '') : '';
+    var logo = (t && typeof t === 'object') ? (t.logo || '') : '';
+    var zoneText = city || zone || '';
+    var logoHtml = logo
+      ? '<img class="focus-team-logo" src="' + esc(logo) + '" alt="" width="28" height="28">'
+      : '<span class="focus-team-logo focus-team-logo-empty" aria-hidden="true"></span>';
     return (
       '<li class="focus-team-item" aria-disabled="true">' +
       '<span class="focus-team-idx">' + (i + 1) + '</span>' +
+      logoHtml +
+      '<span class="focus-team-meta">' +
       '<span class="focus-team-name">' + esc(name) + '</span>' +
-      '<span class="focus-team-zone">' + esc(zone || '') + '</span>' +
+      (city ? '<span class="focus-team-city">' + esc(city) + '</span>' : '') +
+      '</span>' +
+      '<span class="focus-team-zone">' + esc(zoneText) + '</span>' +
       '<span class="focus-team-badge">Non iscritta</span>' +
       '</li>'
     );
