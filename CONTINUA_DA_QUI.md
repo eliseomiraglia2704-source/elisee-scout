@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Routing & Dashboard: Fix Badge Attivo Istantaneo, Smontaggio Completo Viste Residue & Rendering Pulito Calciatore**: 1. **Badge Attivo Istantaneo**: in `creator-role-switcher.js`, al click su qualsiasi card del simulatore viene rimosso lo stato `is-active` e il badge da tutte le card e applicato esclusivamente alla card cliccata, con matching per chiave univoca (`r.key === curRoleKey`); 2. **Smontaggio Completo Form Residui (Bug 3)**: in `player-dash.js`, all'apertura della dashboard calciatore vengono nascosti con `display: none !important` tutti gli elementi statici/legacy di `#es-player-profile` e smontate le viste staff/tifoso/notifiche; 3. **Rendering Immediato Sezione Dati Analitici (Bug 2)**: assicurata visibilità con `display: grid` e layout attivo senza attese asincrone. File: `player-dash.js`, `creator-role-switcher.js`, `player-profile.js`, `index.html`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `UNMOUNT_CLEAN1`.
-Feature precedente: Simulatore Ruoli Creatore: Risoluzione Blocco Cambio Ruolo & Sincronizzazione Dinamica Dashboard.
+Ultimo fatto: **Test di Isolamento: Disattivazione Temporanea War Room Runtime (`war-room-runtime.js`)**: disattivato temporaneamente l'import di `war-room-runtime.js` in `index.html` per verificare ed escludere eventuali interferenze o race condition di manipolazione del DOM in tempo reale durante i cambi di dashboard nel Simulatore Ruoli Creatore. File: `index.html`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `TEST_ISOLATION_WARROOM1`.
+Feature precedente: Routing & Dashboard: Fix Badge Attivo Istantaneo, Smontaggio Completo Viste Residue & Rendering Pulito Calciatore.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
