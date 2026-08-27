@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Isolamento completo switch ruoli (Allenatore &harr; Presidente) & fix rendering pulito** — Risolto conflitto DOM e sovrapposizione stili quando si passa da Allenatore a Presidente: `unmountAllRoleDashboards` ora disattiva esplicitamente ogni box e classe del ruolo precedente (`display: none`, rimozione `es-cd-on`, `is-coach-dash`), e `pres-dash.js` monta in modo isolato e ordinato la Presidential Suite con tutte le sezioni dal PDF ufficiale. Cache `ROLECLEAN1`.
+Ultimo fatto: **Logo Ufficiale Agazzanese HD integrato** — Scaricato e configurato il logo originale in alta definizione per l'Agazzanese (`ecc-agazzanese.png` e `agazzanese.png`) nel catalogo loghi societari `immagini/squadre-loghi/`.
 Feature precedente: Scopri profili: riordino e allineamento card profili & pulsanti azione.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
