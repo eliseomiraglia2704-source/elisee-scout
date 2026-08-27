@@ -1994,7 +1994,8 @@
       groupParam: 'reg',
       groups: SECONDA_CAT,
       portfolio: 'Seconda Categoria',
-      network: 'Seconda Categoria'
+      network: 'Seconda Categoria',
+      leagueLogo: 'immagini/squadre-loghi/seconda-categoria.png'
     },
     'terza-cat': {
       title: 'Terza Categoria',
@@ -2937,7 +2938,7 @@
     var leagueLogoEl = document.getElementById('focus-league-logo');
     if (leagueLogoEl) {
       if (cat.leagueLogo) {
-        leagueLogoEl.src = cat.leagueLogo + '?v=20260827_PCATLND1';
+        leagueLogoEl.src = cat.leagueLogo + '?v=20260827_SCATLND1';
         leagueLogoEl.alt = cat.title;
         leagueLogoEl.hidden = false;
         leagueLogoEl.removeAttribute('hidden');
@@ -2954,7 +2955,7 @@
         var tabLogo = CATS[k].leagueLogo
           ? '<img class="focus-tab-logo" src="' +
             CATS[k].leagueLogo +
-            '?v=20260827_PCATLND1" alt="" width="16" height="16">'
+            '?v=20260827_SCATLND1" alt="" width="16" height="16">'
           : '';
         return (
           '<a href="focus.html?cat=' +
