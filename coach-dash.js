@@ -35,7 +35,7 @@
     u = u || userObj();
     var primary = String(u.staffRole || u.ruoloDettagliato || (u.staffProfile && u.staffProfile.fieldRole) || u.ruolo || u.role || '').trim().toLowerCase();
     if (/in seconda|vice allenatore/.test(primary)) return false;
-    return /allenatore|coach|mister/.test(primary);
+    return /allenatore|coach|mister|tecnico/.test(primary) || primary === 'staff';
   }
 
   function getCoachData() {
@@ -216,14 +216,25 @@
   // ============================================================
   // RENDER DELL'HUB PRINCIPALE ALLENATORE
   // ============================================================
-  function renderHub() {
+  function renderHub(user) {
+    user = user || userObj();
+    if (!isCoach(user)) return;
+    if (typeof window.unmountAllRoleDashboards === 'function') {
+      try { window.unmountAllRoleDashboards('es-cd'); } catch (_) {}
+    }
+    var sh = document.getElementById('es-staff-profile');
+    if (!sh) return;
     var mount = document.getElementById('es-cd');
-    if (!mount) return;
+    if (!mount) {
+      mount = document.createElement('div');
+      mount.id = 'es-cd';
+      mount.className = 'es-pd';
+      sh.insertBefore(mount, sh.firstChild);
+    }
     mount.hidden = false;
     mount.removeAttribute('hidden');
     mount.style.display = 'block';
-    var sh = document.getElementById('es-staff-profile');
-    if (sh) sh.classList.add('es-cd-on');
+    sh.classList.add('es-cd-on');
     var grp = document.getElementById('user-dossier-view-group');
     if (grp) grp.classList.add('is-coach-dash');
 

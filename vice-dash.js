@@ -144,14 +144,25 @@
   // ============================================================
   // RENDER DELL'HUB PRINCIPALE VICE ALLENATORE
   // ============================================================
-  function renderHub() {
+  function renderHub(user) {
+    user = user || userObj();
+    if (!isVice(user)) return;
+    if (typeof window.unmountAllRoleDashboards === 'function') {
+      try { window.unmountAllRoleDashboards('es-vd'); } catch (_) {}
+    }
+    var sh = document.getElementById('es-staff-profile');
+    if (!sh) return;
     var mount = document.getElementById('es-vd');
-    if (!mount) return;
+    if (!mount) {
+      mount = document.createElement('div');
+      mount.id = 'es-vd';
+      mount.className = 'es-pd';
+      sh.insertBefore(mount, sh.firstChild);
+    }
     mount.hidden = false;
     mount.removeAttribute('hidden');
     mount.style.display = 'block';
-    var sh = document.getElementById('es-staff-profile');
-    if (sh) sh.classList.add('es-vice-on');
+    sh.classList.add('es-vice-on');
     var grp = document.getElementById('user-dossier-view-group');
     if (grp) grp.classList.add('is-vice-dash');
 

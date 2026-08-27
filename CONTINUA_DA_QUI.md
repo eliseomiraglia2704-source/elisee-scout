@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Profilo Allenatore & Vice Allenatore da PDF ufficiale** — Implementazione completa: collegamento diretto bidirezionale Mister/Vice, Moduli & Mappa Posizionale FM (motore Heatmap), Formazione XI (Top 11) con apertura Player Card e Condivisione Story Social 9:16 (Instagram/TikTok), Hub Esercitazioni Privato/Pubblico, Bacheca Trofei Palmarès, Dashboard GPS Squadra, Analisi Heatmap Sovrapposta e Segnalazioni Calciomercato al DS. Cache `COACH1`.
+Ultimo fatto: **Profilo Allenatore & Vice Allenatore: fix montaggio DOM automatico e cache COACH2** — Assicurata la creazione dinamica di `#es-cd` e `#es-vd` in `#es-staff-profile`, garantito rendering istantaneo da simulatore ruoli e dashboard, collegati tutti i moduli (Mister/Vice, FM Pitch, Top 11 con Player Card e Story 9:16, Hub Esercizi, Palmarès, GPS, Wishlist DS). Cache `COACH2`.
 Feature precedente: Scopri profili: riordino e allineamento card profili & pulsanti azione.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
