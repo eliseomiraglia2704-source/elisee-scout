@@ -9,6 +9,7 @@
   margin: 0 !important;
   padding: 0 !important;
 }
+#es-staff-profile.es-cd-on > :not(#es-cd),
 #es-staff-profile.es-pd-on > :not(#es-cd) { display: none !important; }
 
 .es-mister-hub {

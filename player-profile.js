@@ -1140,6 +1140,53 @@
     setTimeout(function () { window.EliseeUserNotifs.showNotifs(); }, 20);
   };
 
+  window.unmountAllRoleDashboards = function () {
+    var dashIds = [
+      'es-pd', 'es-cd', 'es-dsd', 'es-prd', 'es-vd', 'es-fd', 'es-mad', 'es-md',
+      'es-od', 'es-tmd', 'es-gk', 'es-atd', 'es-yg', 'es-dg', 'es-ag', 'es-mk',
+      'es-pr', 'es-nu', 'es-eq', 'es-sg', 'es-bt', 'es-td'
+    ];
+    var hostClasses = [
+      'es-pd-on', 'es-cd-on', 'es-ds-on', 'es-pres-on', 'es-vice-on', 'es-fisio-on',
+      'es-ma-on', 'es-med-on', 'es-obs-on', 'es-tm-on', 'es-gk-on', 'es-at-on',
+      'es-yg-on', 'es-dg-on', 'es-ag-on', 'es-mk-on', 'es-pr-on', 'es-nu-on',
+      'es-eq-on', 'es-sg-on', 'es-bt-on', 'es-tf-on'
+    ];
+    var groupClasses = [
+      'is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-fisio-dash',
+      'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash',
+      'is-at-dash', 'is-yg-dash', 'is-dg-dash', 'is-ag-dash', 'is-mk-dash',
+      'is-pr-dash', 'is-nu-dash', 'is-eq-dash', 'is-sg-dash', 'is-bt-dash', 'is-tf-dash'
+    ];
+    dashIds.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.hidden = true;
+      el.setAttribute('hidden', '');
+      el.style.removeProperty('display');
+    });
+    ['es-player-profile', 'es-staff-profile', 'es-tifoso-profile'].forEach(function (hid) {
+      var h = document.getElementById(hid);
+      if (!h) return;
+      hostClasses.forEach(function (c) { h.classList.remove(c); });
+    });
+    var grp = document.getElementById('user-dossier-view-group');
+    if (grp) groupClasses.forEach(function (c) { grp.classList.remove(c); });
+  };
+
+  function setHostVisible(el, on) {
+    if (!el) return;
+    if (on) {
+      el.hidden = false;
+      el.removeAttribute('hidden');
+      el.style.removeProperty('display');
+    } else {
+      el.hidden = true;
+      el.setAttribute('hidden', '');
+      el.style.display = 'none';
+    }
+  }
+
   window.syncPlayerProfileView = function (user) {
     user = window.applyStaffIdentity(user || readUser());
     var isPlayer = window.isPlayerSiteRole(user);
@@ -1154,6 +1201,7 @@
     var legacy = document.getElementById('dossier-legacy');
     var notifs = document.getElementById('es-user-notifs');
     var light = isPlayer || isStaff || isTifoso || notifsOn;
+    try { window.unmountAllRoleDashboards(); } catch (_) {}
     if (group) {
       group.classList.toggle('is-player-area', isPlayer && !notifsOn);
       group.classList.toggle('is-staff-area', isStaff && !notifsOn);
@@ -1173,27 +1221,13 @@
       document.body.classList.toggle('es-tifoso-on', isTifoso && vis && !notifsOn);
       document.body.classList.toggle('es-notifs-on', notifsOn && vis);
     } catch (_) {}
-    if (notifs) {
-      notifs.hidden = !notifsOn;
-      if (notifsOn) notifs.removeAttribute('hidden');
-    }
-    if (profile) {
-      profile.hidden = !isPlayer || notifsOn;
-      if (isPlayer && !notifsOn) profile.removeAttribute('hidden');
-    }
-    if (staff) {
-      staff.hidden = !isStaff || notifsOn;
-      if (isStaff && !notifsOn) staff.removeAttribute('hidden');
-    }
-    if (tifoso) {
-      tifoso.hidden = !isTifoso || notifsOn;
-      if (isTifoso && !notifsOn) tifoso.removeAttribute('hidden');
-    }
+    setHostVisible(notifs, !!notifsOn);
+    setHostVisible(profile, isPlayer && !notifsOn);
+    setHostVisible(staff, isStaff && !notifsOn);
+    setHostVisible(tifoso, isTifoso && !notifsOn);
     if (legacy) {
       var hideLegacy = isPlayer || isStaff || isTifoso || notifsOn;
-      legacy.hidden = hideLegacy;
-      if (hideLegacy) legacy.setAttribute('hidden', '');
-      else legacy.removeAttribute('hidden');
+      setHostVisible(legacy, !hideLegacy);
     }
     if (isPlayer) {
       bind();

@@ -1497,6 +1497,8 @@
     group.classList.add('is-coach-dash');
     var staffProfile = document.getElementById('es-staff-profile');
     if (!staffProfile) return;
+    staffProfile.classList.add('es-cd-on');
+    staffProfile.classList.remove('es-pd-on', 'es-ds-on', 'es-pres-on', 'es-vice-on');
 
     var cd = document.getElementById('es-cd');
     if (!cd) {
@@ -1504,6 +1506,8 @@
       cd.id = 'es-cd';
       staffProfile.appendChild(cd);
     }
+    cd.hidden = false;
+    cd.removeAttribute('hidden');
     cd.style.display = 'block';
     renderHub();
   }
@@ -1511,13 +1515,22 @@
   function detach() {
     var group = document.getElementById('user-dossier-view-group');
     if (group) group.classList.remove('is-coach-dash');
+    var staffProfile = document.getElementById('es-staff-profile');
+    if (staffProfile) {
+      staffProfile.classList.remove('es-cd-on');
+      staffProfile.classList.remove('es-pd-on');
+    }
     var cd = document.getElementById('es-cd');
-    if (cd) cd.remove();
+    if (cd) {
+      cd.hidden = true;
+      cd.style.removeProperty('display');
+    }
   }
 
   window.EliseeCoachDash = {
     render: render,
     detach: detach,
+    isCoach: isCoach,
     openEditor: openTacticalEditor,
     openVoters: openVotersModal,
     setTab: function (tab) {

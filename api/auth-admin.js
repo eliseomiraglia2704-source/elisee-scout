@@ -180,9 +180,7 @@ module.exports = async function handler(req, res) {
 
     const isMatch = (
       pinClean === correctSecret ||
-      pinNorm === secretNorm ||
-      pinNorm === 'iemmello9' ||
-      pinNorm === 'admin123'
+      pinNorm === secretNorm
     );
 
     if (!isMatch) {

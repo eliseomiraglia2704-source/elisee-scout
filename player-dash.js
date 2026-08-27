@@ -667,6 +667,10 @@
 
   function render(user) {
     user = user || userObj();
+    if (window.isPlayerSiteRole && !window.isPlayerSiteRole(user)) return;
+    if (typeof window.unmountAllRoleDashboards === 'function') {
+      try { window.unmountAllRoleDashboards(); } catch (_) {}
+    }
     var host = document.getElementById('es-player-profile');
     if (!host) return;
     var box = document.getElementById('es-pd');

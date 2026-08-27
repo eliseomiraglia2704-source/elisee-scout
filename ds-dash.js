@@ -181,40 +181,9 @@
   }
 
   function hideCoach() {
-    var cd = document.getElementById('es-cd');
-    if (cd) cd.hidden = true;
-    var mad = document.getElementById('es-mad');
-    if (mad) mad.hidden = true;
-    var md = document.getElementById('es-md');
-    if (md) md.hidden = true;
-    var od = document.getElementById('es-od');
-    if (od) od.hidden = true;
-    var tmd = document.getElementById('es-tmd');
-    if (tmd) tmd.hidden = true;
-    var gk = document.getElementById('es-gk');
-    if (gk) gk.hidden = true;
-    var atd = document.getElementById('es-atd');
-    if (atd) atd.hidden = true;
-    var yg = document.getElementById('es-yg');
-    if (yg) yg.hidden = true;
-    var dg = document.getElementById('es-dg');
-    if (dg) dg.hidden = true;
-    var ag = document.getElementById('es-ag');
-    if (ag) ag.hidden = true;
-    var mk = document.getElementById('es-mk');
-    if (mk) mk.hidden = true;
-    var prb = document.getElementById('es-pr');
-    if (prb) prb.hidden = true;
-    var nu = document.getElementById('es-nu');
-    if (nu) nu.hidden = true;
-    var eq = document.getElementById('es-eq');
-    if (eq) eq.hidden = true;
-    var sg = document.getElementById('es-sg');
-    if (sg) sg.hidden = true;
-    var bt = document.getElementById('es-bt');
-    if (bt) bt.hidden = true;
-    var g = document.getElementById('user-dossier-view-group');
-    if (g) { g.classList.remove('is-coach-dash'); g.classList.remove('is-ma-dash'); g.classList.remove('is-med-dash'); g.classList.remove('is-obs-dash'); g.classList.remove('is-tm-dash'); g.classList.remove('is-gk-dash'); g.classList.remove('is-at-dash'); g.classList.remove('is-yg-dash'); g.classList.remove('is-dg-dash'); }
+    if (typeof window.unmountAllRoleDashboards === "function") {
+      window.unmountAllRoleDashboards();
+    }
   }
 
 

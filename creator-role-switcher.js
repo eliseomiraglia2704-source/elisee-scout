@@ -433,8 +433,22 @@
     if (window.isTifosoSiteRole && window.isTifosoSiteRole(u)) return { label: 'Tifoso', key: 'tifoso', iconSvg: SVG_ICONS.heart };
     if (window.isPlayerSiteRole && window.isPlayerSiteRole(u)) return { label: 'Calciatore / Giocatore', key: 'giocatore', iconSvg: SVG_ICONS.user };
     if (u && (u.ruolo === 'Società' || u.role === 'Società' || u.siteRoleFamily === 'Società')) return { label: 'Club Elisee Manager', key: 'club_tc', iconSvg: SVG_ICONS.shield };
-    var precise = String(u.staffRole || u.ruoloDettagliato || u.ruolo || u.role || 'Allenatore').trim();
-    return { label: precise || 'Allenatore', key: 'allenatore', iconSvg: SVG_ICONS.coach };
+    var precise = String((u && (u.staffRole || u.ruoloDettagliato || u.ruolo || u.role)) || '').trim().toLowerCase();
+    var exact = null;
+    var fuzzy = null;
+    for (var i = 0; i < ROLE_CATALOG.length; i++) {
+      for (var j = 0; j < ROLE_CATALOG[i].roles.length; j++) {
+        var r = ROLE_CATALOG[i].roles[j];
+        if (!r.staffRole) continue;
+        var sr = String(r.staffRole).toLowerCase();
+        var lb = String(r.label).toLowerCase();
+        if (precise === sr || precise === lb || precise === r.key) exact = r;
+        else if (!fuzzy && precise && (sr.indexOf(precise) >= 0 || precise.indexOf(sr) >= 0 || lb.indexOf(precise) >= 0)) fuzzy = r;
+      }
+    }
+    var mapped = exact || fuzzy;
+    if (mapped) return { label: mapped.label, key: mapped.key, iconSvg: mapped.iconSvg };
+    return { label: precise || 'Staff', key: '', iconSvg: SVG_ICONS.briefcase };
   }
 
   function showToast(msg) {
@@ -473,11 +487,11 @@
     }
     if (!targetRole) return;
 
-    var cur = getStoredUser();
+    var cur = getStoredUser() || {};
     var nowIso = new Date().toISOString();
 
-    // Costruiamo un profilo utente completo e attivo per Eliseo
-    var updated = {
+    // Costruiamo un profilo utente completo e attivo per Eliseo (mantieni i campi già presenti)
+    var updated = Object.assign({}, cur, {
       id: cur.id || 'eliseo_creator',
       nome: cur.nome || 'Eliseo',
       cognome: cur.cognome || 'Miraglia',
@@ -487,15 +501,15 @@
       antiFakeVerified: true,
       badgeVerificaStato: 'approved',
       docsAttachedAt: cur.docsAttachedAt || nowIso,
-      badgeDocumentUrl: 'data:simulated/doc',
-      badgeSelfieUrl: 'data:simulated/selfie',
+      badgeDocumentUrl: cur.badgeDocumentUrl || 'data:simulated/doc',
+      badgeSelfieUrl: cur.badgeSelfieUrl || 'data:simulated/selfie',
       isCreator: true,
-      sport: 'Calcio',
-      squadraCuore: 'Atalanta',
-      club: 'Atalanta',
+      sport: cur.sport || 'Calcio',
+      squadraCuore: cur.squadraCuore || cur.club || 'Atalanta',
+      club: cur.club || cur.squadraCuore || 'Atalanta',
       created_at: cur.created_at || nowIso,
       updated_at: nowIso
-    };
+    });
 
     if (targetRole.key === 'club_tc') {
       updated.siteRoleFamily = 'Società';
@@ -543,6 +557,10 @@
       updated.anniEsperienza = '12';
     }
 
+    updated.staffProfile = Object.assign({}, cur.staffProfile || {}, {
+      fieldRole: updated.staffRole || updated.ruoloDettagliato || ''
+    });
+
     // 1. Chiudi istanza del minigioco se aperta
     try {
       if (window.EliseeMinigioco && typeof window.EliseeMinigioco.close === 'function') {
@@ -585,7 +603,10 @@
       localStorage.setItem('elisee_role_identity', JSON.stringify(identities));
     } catch (_) {}
 
-    // 4. Ripulisci classi contrastanti da #user-dossier-view-group
+    // 4. Smonta tutte le dashboard residue prima di montare il nuovo ruolo
+    try {
+      if (typeof window.unmountAllRoleDashboards === 'function') window.unmountAllRoleDashboards();
+    } catch (_) {}
     var grp = document.getElementById('user-dossier-view-group');
     if (grp) {
       grp.className = '';

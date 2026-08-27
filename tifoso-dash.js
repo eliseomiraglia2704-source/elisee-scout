@@ -255,6 +255,9 @@
   function render(user) {
     user = user || userObj();
     if (!isTifoso(user)) return;
+    if (typeof window.unmountAllRoleDashboards === 'function') {
+      try { window.unmountAllRoleDashboards(); } catch (_) {}
+    }
     var host = document.getElementById('es-tifoso-profile');
     var group = document.getElementById('user-dossier-view-group');
     if (!host) return;

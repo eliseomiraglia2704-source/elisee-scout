@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Test di Isolamento: Disattivazione Temporanea War Room Runtime (`war-room-runtime.js`)**: disattivato temporaneamente l'import di `war-room-runtime.js` in `index.html` per verificare ed escludere eventuali interferenze o race condition di manipolazione del DOM in tempo reale durante i cambi di dashboard nel Simulatore Ruoli Creatore. File: `index.html`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `TEST_ISOLATION_WARROOM1`.
-Feature precedente: Routing & Dashboard: Fix Badge Attivo Istantaneo, Smontaggio Completo Viste Residue & Rendering Pulito Calciatore.
+Ultimo fatto: **Fix bug dashboard e accesso admin**: smontaggio completo delle viste residue al cambio ruolo (`unmountAllRoleDashboards`), host player/staff/tifoso con `display` inline pulito, `isPres` solo Presidente (non ruba più DG/SG), export `isCoach`/`isVice`, classi `es-cd-on`/`es-vice-on`, War Room riattivata, login Control Center via `/api/auth-admin` (niente password vuota / `admin123`), un solo listener Back/Forward. Cache `BUGFIX1`.
+Feature precedente: Test di Isolamento War Room Runtime.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -110,7 +110,7 @@ File:
 - `manager-runtime.js` / `manager.css` — inbox admin 3 colonne
 - `api/manager.js` — Vercel: `propose-lineup`, `view=official`, `decide` kind `lineup`
 - `workers/manager_store.py` + `elisee_up.py` — stesso contratto in locale (persistenza `data/manager/state.json`, gitignored)
-- Cache attuale: `?v=20260823_KITGRP`, SW `elisee-scout-v20260823-kitgrp`
+- Cache attuale: `?v=20260827_BUGFIX1`, SW `elisee-scout-v20260827_bugfix1`
 
 localStorage:
 
@@ -217,6 +217,7 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-27** — Bugfix routing dashboard: leftover viste al cambio ruolo, Presidente che apriva DG/SG, Calciatore che lasciava `display:none` sullo staff, login admin senza verifica password, doppio popstate. War Room riattivata. Cache `BUGFIX1`.
 - **2026-08-23** — Dashboard Nutrizionista: piani alimentari, composizione corporea, albo. Cache `NU1`.
 - **2026-08-23** — Dashboard Ufficio Stampa / Comunicazione: media, comunicati, interviste. Cache `PR2`.
 - **2026-08-23** — Dashboard Marketing / Commerciale: sponsor, brand, registro partnership. Cache `MK1`.

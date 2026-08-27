@@ -93,7 +93,8 @@
     u = u || userObj();
     var blob = [u.staffRole, u.ruoloDettagliato, u.ruolo, u.role, u.siteRoleFamily, u.staffProfile && u.staffProfile.fieldRole]
       .filter(Boolean).join(' ').toLowerCase();
-    return /presidente|vice presidente|direttore generale|tesoriere|segretario generale|club manager|amministratore|dirigente/.test(blob);
+    if (/vice\s*presidente|direttore generale|direttore sportivo|segretario generale|club manager/.test(blob)) return false;
+    return /\bpresidente\b/.test(blob);
   }
 
   function hasFinanceAccess(u) {
@@ -3760,6 +3761,8 @@
       prd.id = 'es-prd';
       staffProfile.appendChild(prd);
     }
+    prd.hidden = false;
+    prd.removeAttribute('hidden');
     prd.style.display = 'block';
     renderPresidentialSuite();
   }

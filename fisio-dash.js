@@ -110,12 +110,9 @@
     return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">' + d + '</svg>';
   }
   function hideOthers() {
-    ['es-cd', 'es-dsd', 'es-prd', 'es-vd', 'es-mad', 'es-md', 'es-od', 'es-tmd', 'es-gk', 'es-atd', 'es-yg'].forEach(function (id) {
-      var el = document.getElementById(id);
-      if (el) el.hidden = true;
-    });
-    var g = document.getElementById('user-dossier-view-group');
-    if (g) g.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-ma-dash', 'is-med-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash', 'is-at-dash', 'is-yg-dash');
+    if (typeof window.unmountAllRoleDashboards === "function") {
+      window.unmountAllRoleDashboards();
+    }
   }
 
   function html(user) {

@@ -454,6 +454,7 @@
     group.classList.add('is-vice-dash');
     var staffProfile = document.getElementById('es-staff-profile');
     if (!staffProfile) return;
+    staffProfile.classList.add('es-vice-on');
 
     var vd = document.getElementById('es-vd');
     if (!vd) {
@@ -461,6 +462,8 @@
       vd.id = 'es-vd';
       staffProfile.appendChild(vd);
     }
+    vd.hidden = false;
+    vd.removeAttribute('hidden');
     vd.style.display = 'block';
     renderHub();
   }
@@ -468,13 +471,19 @@
   function detach() {
     var group = document.getElementById('user-dossier-view-group');
     if (group) group.classList.remove('is-vice-dash');
+    var staffProfile = document.getElementById('es-staff-profile');
+    if (staffProfile) staffProfile.classList.remove('es-vice-on');
     var vd = document.getElementById('es-vd');
-    if (vd) vd.remove();
+    if (vd) {
+      vd.hidden = true;
+      vd.style.removeProperty('display');
+    }
   }
 
   window.EliseeViceDash = {
     render: render,
     detach: detach,
+    isVice: isVice,
     setTab: function (tab) {
       activeTab = tab;
       renderHub();

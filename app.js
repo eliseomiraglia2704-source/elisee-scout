@@ -7480,9 +7480,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Indietro/Avanti browser (pushState) + hash legacy
-  window.addEventListener('popstate', applyViewFromBrowserHistory);
-  window.addEventListener('hashchange', applyViewFromBrowserHistory);
+  // Indietro/Avanti: un solo listener (index.html chiama window.switchView).
+  // Qui solo il boot iniziale, senza secondo popstate/hashchange.
 
   // Forza il render della sezione iniziale al caricamento della pagina (DOMContentLoaded)
   document.addEventListener('DOMContentLoaded', function () {
@@ -7583,8 +7582,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   updateDossierView();
 
-  const validAdminKeys = ['admin', 'eliseo', 'elisee', 'eliseo2704', 'miraglia', 'garante', 'privacy', 'amministratore', 'executive', 'scout', '2704'];
-
   const urlParams = new URLSearchParams(window.location.search);
   const urlUser = urlParams.get('username');
   const urlPass = urlParams.get('password');
@@ -7595,10 +7592,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (adminUserEl) adminUserEl.value = urlUser;
     if (adminPassEl && urlPass) adminPassEl.value = urlPass;
 
-    const isAllowed = validAdminKeys.some(key => urlUser.toLowerCase().includes(key));
-    if (isAllowed) {
-      localStorage.setItem('elisee_admin_auth', 'true');
-    }
+    // Solo precompila i campi; l'accesso passa dal form (Master Password).
   }
 
   // PULIZIA IMMEDIATA E RIMOZIONE CREDENZIALI DALLA BARRA DEGLI INDIRIZZI URL (SECURITY EXCLUSION)
@@ -7700,9 +7694,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const remember = document.getElementById('admin-remember')?.checked;
       const errorContainer = document.getElementById('admin-login-error-container');
 
-      const isAllowed = validAdminKeys.some(key => userVal.includes(key));
-
-      if (!isAllowed || !passVal) {
+      if (!passVal) {
         if (errorContainer) {
           errorContainer.style.display = 'block';
           errorContainer.innerHTML = `
@@ -7710,7 +7702,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <i data-lucide="shield-alert" style="width:20px; height:20px; flex-shrink:0; margin-top:2px;"></i>
               <div>
                 <strong>ACCESSO NEGATO:</strong><br/>
-                Impossibile accedere all'account "<strong>${userVal || 'non specificato'}</strong>". Credenziali errate o autorizzazioni non concesse dall'Amministratore Governance.
+                Inserisci la Master Password di amministrazione.
               </div>
             </div>
           `;
@@ -7721,35 +7713,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (errorContainer) errorContainer.style.display = 'none';
 
-      if (userVal.includes('privacy') || userVal.includes('garante')) {
-        localStorage.setItem('elisee_privacy_auth', 'true');
-        localStorage.removeItem('elisee_admin_auth');
-      } else {
-        localStorage.setItem('elisee_admin_auth', 'true');
-        localStorage.removeItem('elisee_privacy_auth');
-      }
-
-      if (remember) {
-        updateActivity();
-      }
-
-      // Mostra HUD cluster IA solo a staff
-      document.dispatchEvent(new CustomEvent('elisee:auth-changed', { detail: { role: 'staff' } }));
-      if (window.EliseeAICluster && window.EliseeAICluster.refreshVisibility) {
-        window.EliseeAICluster.refreshVisibility();
-      }
-
-      const gCard = document.getElementById('admin-login-guard');
-      const aDash = document.getElementById('admin-authenticated-dashboard');
-      if (gCard && aDash) {
-        gCard.style.display = 'none';
-        aDash.style.display = 'block';
-        renderAdminPanel();
-        try { if (window.refreshAdminAnalytics) window.refreshAdminAnalytics(); } catch(e) {}
-      }
-      if (typeof window.updateNavbarUserUI === 'function') {
-        window.updateNavbarUserUI();
-      }
+      fetch('/api/auth-admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pin: passVal, username: userVal })
+      }).then(function (res) { return res.json(); }).then(function (data) {
+        if (!data || !data.success || !data.token) {
+          if (errorContainer) {
+            errorContainer.style.display = 'block';
+            errorContainer.innerHTML = `
+              <div style="background:rgba(239, 68, 68, 0.15); border:1px solid rgba(239, 68, 68, 0.4); border-radius:8px; padding:0.85rem 1rem; color:#ef4444; font-size:0.85rem; text-align:left; display:flex; align-items:flex-start; gap:0.6rem;">
+                <i data-lucide="shield-alert" style="width:20px; height:20px; flex-shrink:0; margin-top:2px;"></i>
+                <div>
+                  <strong>ACCESSO NEGATO:</strong><br/>
+                  ${String((data && data.error) || 'Master Password non valida.').replace(/[<>&]/g, '')}
+                </div>
+              </div>
+            `;
+            if (window.lucide) lucide.createIcons();
+          }
+          return;
+        }
+        try {
+          sessionStorage.setItem('elisee_admin_session_token', data.token);
+          localStorage.setItem('elisee_admin_session_token', data.token);
+        } catch (_) {}
+        if (userVal.includes('privacy') || userVal.includes('garante')) {
+          localStorage.setItem('elisee_privacy_auth', 'true');
+          localStorage.removeItem('elisee_admin_auth');
+        } else {
+          localStorage.setItem('elisee_admin_auth', 'true');
+          localStorage.removeItem('elisee_privacy_auth');
+        }
+        if (remember) {
+          updateActivity();
+        }
+        document.dispatchEvent(new CustomEvent('elisee:auth-changed', { detail: { role: 'staff' } }));
+        if (window.EliseeAICluster && window.EliseeAICluster.refreshVisibility) {
+          window.EliseeAICluster.refreshVisibility();
+        }
+        const gCard = document.getElementById('admin-login-guard');
+        const aDash = document.getElementById('admin-authenticated-dashboard');
+        if (gCard && aDash) {
+          gCard.style.display = 'none';
+          aDash.style.display = 'block';
+          renderAdminPanel();
+          try { if (window.refreshAdminAnalytics) window.refreshAdminAnalytics(); } catch(e) {}
+        }
+        if (typeof window.updateNavbarUserUI === 'function') {
+          window.updateNavbarUserUI();
+        }
+      }).catch(function () {
+        if (errorContainer) {
+          errorContainer.style.display = 'block';
+          errorContainer.innerHTML = `
+            <div style="background:rgba(239, 68, 68, 0.15); border:1px solid rgba(239, 68, 68, 0.4); border-radius:8px; padding:0.85rem 1rem; color:#ef4444; font-size:0.85rem; text-align:left;">
+              <strong>ERRORE DI RETE:</strong> impossibile verificare la Master Password.
+            </div>
+          `;
+        }
+      });
     });
   }
 
@@ -7759,6 +7782,8 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.removeItem('elisee_privacy_auth');
       localStorage.removeItem('elisee_user_auth');
       localStorage.removeItem('elisee_active_user');
+      localStorage.removeItem('elisee_admin_session_token');
+      try { sessionStorage.removeItem('elisee_admin_session_token'); } catch (_) {}
       document.dispatchEvent(new CustomEvent('elisee:auth-changed', { detail: { role: 'public' } }));
       if (window.EliseeAICluster && window.EliseeAICluster.refreshVisibility) {
         window.EliseeAICluster.refreshVisibility();
