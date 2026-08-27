@@ -352,24 +352,35 @@
       ? '<img src="' + esc(p.photo) + '" alt="" onerror="this.remove()">'
       : esc(initials(p.name));
     var org = p.kind === 'club' || p.kind === 'ente';
-    var sub = org
-      ? ((p.city || p.region || '') + (p.group || p.league ? ' · ' + (p.group || p.league) : ''))
-      : ((p.role ? p.role + ' · ' : '') + (p.city ? p.city : (p.region || '')));
+    
+    var sub = '';
+    if (p.kind === 'ente') {
+      sub = (p.role || 'Ente / Federazione') + (p.city ? ' · ' + p.city : (p.region ? ' · ' + p.region : ''));
+    } else if (p.kind === 'club') {
+      sub = (p.city ? p.city : (p.region || '')) + (p.group || p.league ? ' · ' + (p.group || p.league) : '');
+    } else {
+      sub = (p.role ? p.role : 'Profilo') + (p.city ? ' · ' + p.city : (p.region ? ' · ' + p.region : ''));
+    }
+
     var btn = p.isMe
-      ? '<button type="button" class="es-sc-follow" disabled>Sei tu</button>'
+      ? '<div class="es-sc-actions"><button type="button" class="es-sc-msg" disabled style="opacity:0.6;">Sei tu</button></div>'
       : '<div class="es-sc-actions">' +
-          '<button type="button" class="es-sc-follow' + (on ? ' is-on' : '') + '" data-follow="' + esc(p.id) + '">' + (on ? 'Segui già' : 'Segui') + '</button>' +
+          '<button type="button" class="es-sc-follow' + (on ? ' is-on' : '') + '" data-follow="' + esc(p.id) + '">' + (on ? '✓ Segui già' : '+ Segui') + '</button>' +
           '<button type="button" class="es-sc-msg" data-msg="' + esc(p.id) + '" data-msg-name="' + esc(p.name) + '" data-msg-kind="' + esc(p.kind) + '">Messaggia</button>' +
           (p.kind === 'player' ? '<button type="button" class="es-sc-secret" data-secret="' + esc(p.id) + '" data-secret-name="' + esc(p.name) + '" data-secret-role="' + esc(p.role || '') + '" data-secret-city="' + esc(p.city || '') + '">Secret List</button>' : '') +
           '<button type="button" class="es-cs-their" data-see-follow="' + esc(p.id) + '" data-see-name="' + esc(p.name) + '">Chi segue</button>' +
         '</div>';
+
     return '<article class="es-sc-card' + (org ? ' is-org' : '') + '" data-id="' + esc(p.id) + '">' +
-      '<div class="es-sc-ava">' + photo + '</div>' +
-      '<div>' +
-        '<h3 class="es-sc-name">' + esc(p.name) + '</h3>' +
-        (org ? '' : '<span class="es-sc-pill">' + esc(kindLabel(p.kind)) + '</span> ') +
-        '<p class="es-sc-sub">' + esc(sub.replace(/^\s·\s/, '')) + '</p>' +
-      '</div>' + btn +
+      '<div class="es-sc-main-info">' +
+        '<div class="es-sc-ava">' + photo + '</div>' +
+        '<div class="es-sc-text-box">' +
+          '<h3 class="es-sc-name">' + esc(p.name) + '</h3>' +
+          (org ? '' : '<span class="es-sc-pill">' + esc(kindLabel(p.kind)) + '</span> ') +
+          '<p class="es-sc-sub">' + esc(sub.replace(/^\s*·\s*/, '')) + '</p>' +
+        '</div>' +
+      '</div>' +
+      btn +
     '</article>';
   }
 
