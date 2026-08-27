@@ -1572,9 +1572,17 @@
               '</div>' +
             '</div>' +
 
-            '<div class="es-pres-standings-meta">' +
-              '<div class="es-pres-standing-row"><span class="es-pres-standing-highlight">' + (data.position && data.position !== '—' ? esc(data.position) : (matchStats.played ? ('Gare: ' + matchStats.played) : 'Stagione 2026/27')) + '</span> · <span>' + matchStats.pts + ' punti</span></div>' +
-              '<div class="es-pres-standing-sub">' + (data.matchDay || '28ª Giornata') + ' · ' + esc(data.season) + '</div>' +
+            '<div style="display:flex; flex-direction:column; align-items:flex-end; gap:0.6rem;">' +
+              '<div class="es-pres-standings-meta" style="margin:0;">' +
+                '<div class="es-pres-standing-row"><span class="es-pres-standing-highlight">' + (data.position && data.position !== '—' ? esc(data.position) : (matchStats.played ? ('Gare: ' + matchStats.played) : 'Stagione 2026/27')) + '</span> · <span>' + matchStats.pts + ' punti</span></div>' +
+                '<div class="es-pres-standing-sub">' + (data.matchDay || '28ª Giornata') + ' · ' + esc(data.season) + '</div>' +
+              '</div>' +
+              '<div style="display:flex; gap:0.45rem; flex-wrap:wrap; justify-content:flex-end;">' +
+                '<button type="button" class="es-pres-btn-secondary" id="btn-pres-guide" style="padding:4px 9px; font-size:0.75rem; border-color:rgba(56,189,248,0.4); color:#38bdf8;">📖 Guida Operativa</button>' +
+                '<button type="button" class="es-pres-btn-secondary" id="btn-pres-edit-club" style="padding:4px 9px; font-size:0.75rem;">🛡️ Dati Club &amp; Maglie</button>' +
+                '<button type="button" class="es-pres-btn-secondary" id="btn-pres-organigramma" style="padding:4px 9px; font-size:0.75rem;">👥 Organigramma</button>' +
+                '<button type="button" class="es-pres-btn-primary" id="btn-pres-publish-job" style="padding:4px 11px; font-size:0.75rem; background:linear-gradient(135deg,#0284c7,#059669);">📢 Pubblica Candidatura</button>' +
+              '</div>' +
             '</div>' +
           '</div>' +
         '</div>' +
@@ -1981,17 +1989,546 @@
   // FORM & MODALI INTERATTIVE DI INSERIMENTO DATI
   // ============================================================
 
+
+  // ============================================================
+  // SPECIFICA PDF 2026-08-27: PROFILO PRESIDENTE — GUIDA & GESTIONE CLUB
+  // ============================================================
+
+  // 1. GUIDA OPERATIVA ALLA GESTIONE DELLA SOCIETÀ SPORTIVA (PAG. 1-5 PDF)
+  function openGuidaPresidenteModal() {
+    var body =
+      '<div style="background:rgba(56,189,248,0.07); border:1.5px solid rgba(56,189,248,0.3); border-radius:8px; padding:1rem 1.2rem; margin-bottom:1.2rem;">' +
+        '<div style="display:flex; align-items:center; gap:0.6rem; color:#38bdf8; font-weight:800; font-size:1rem; margin-bottom:0.4rem;">' +
+          '<span>' + ICONS.shield + '</span> <span>PROFILO PRESIDENTE — GUIDA OPERATIVA UFFICIALE</span>' +
+        '</div>' +
+        '<p style="font-size:0.82rem; color:#cbd5e1; margin:0; line-height:1.5;">' +
+          'Il Profilo Presidente è l\'account istituzionale con i massimi permessi di gestione sulla società sportiva. Regola fondamentale: <b>Il Profilo Squadra non è un account autonomo e non può esistere senza un Profilo Presidente associato</b>, che ne è il titolare e responsabile legale sulla piattaforma.' +
+        '</p>' +
+      '</div>' +
+
+      '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem;">' +
+        '<div style="background:#040810; border:1px solid rgba(56,189,248,0.2); border-radius:6px; padding:1rem;">' +
+          '<h4 style="margin:0 0 0.5rem; color:#38bdf8; font-size:0.9rem; display:flex; align-items:center; gap:0.4rem;">' +
+            '<span>' + ICONS.building + '</span> 1. Creazione e Gestione Profilo Squadra' +
+          '</h4>' +
+          '<ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.55; display:flex; flex-direction:column; gap:0.35rem;">' +
+            '<li><b>Nome Ufficiale Squadra:</b> es. A.S.D. Foggia Calcio 1920.</li>' +
+            '<li><b>Logo / Stemma Societario:</b> Crest aziendale ad alta risoluzione.</li>' +
+            '<li><b>Città & Sede:</b> Geolocalizzazione (Città, Provincia, Regione) per indicizzazione ricerche a imbuto.</li>' +
+            '<li><b>Foto Maglie Ufficiali:</b> Kit da gara (Prima Maglia, Seconda Maglia, Portiere) utilizzati per personalizzare la grafica delle Card dei tesserati.</li>' +
+            '<li><b>Inserimento Rosa Generale:</b> Lista di tutti i calciatori componenti la prima squadra e/o settore giovanile.</li>' +
+          '</ul>' +
+        '</div>' +
+
+        '<div style="background:#040810; border:1px solid rgba(34,197,94,0.2); border-radius:6px; padding:1rem;">' +
+          '<h4 style="margin:0 0 0.5rem; color:#34d399; font-size:0.9rem; display:flex; align-items:center; gap:0.4rem;">' +
+            '<span>' + ICONS.users + '</span> 2. Collegamento Rosa con i Profili Atleti' +
+          '</h4>' +
+          '<ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.55; display:flex; flex-direction:column; gap:0.35rem;">' +
+            '<li><b>Giocatori già Registrati (Profilo Attivo):</b> Il sistema crea un link diretto con la sua Card ufficiale (Fronte/Retro, Heatmap, Dati GPS, Video). La Card indossa automaticamente i colori della maglia ufficiale caricata dalla società.</li>' +
+            '<li><b>Giocatori NON Registrati (Anteprima Limitata):</b> Viene mostrata solo una scheda sintetica e <b>non cliccabile</b> con Nome, Cognome, Ruolo e N° maglia. Contatti e schede avanzate rimangono bloccati finché l\'atleta non crea o rivendica il suo profilo.</li>' +
+          '</ul>' +
+        '</div>' +
+      '</div>' +
+
+      '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.2rem;">' +
+        '<div style="background:#040810; border:1px solid rgba(148,163,184,0.2); border-radius:6px; padding:1rem;">' +
+          '<h4 style="margin:0 0 0.5rem; color:#fff; font-size:0.9rem; display:flex; align-items:center; gap:0.4rem;">' +
+            '<span>' + ICONS.briefcase + '</span> 3. Attività e Permessi del Presidente' +
+          '</h4>' +
+          '<ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.55; display:flex; flex-direction:column; gap:0.35rem;">' +
+            '<li><b>Gestione Organigramma:</b> Delega dei permessi e invito nel team per Segretario, Direttore Sportivo, Allenatore e Match Analyst.</li>' +
+            '<li><b>Ufficializzazione Mercato:</b> Approvazione finale dei trasferimenti e pubblicazione sul Wall delle Trattative Chiuse con grafica UFFICIALE e Card maglia.</li>' +
+          '</ul>' +
+        '</div>' +
+
+        '<div style="background:#040810; border:1px solid rgba(239,68,68,0.25); border-radius:6px; padding:1rem;">' +
+          '<h4 style="margin:0 0 0.5rem; color:#f87171; font-size:0.9rem; display:flex; align-items:center; gap:0.4rem;">' +
+            '<span>' + ICONS.shieldAlert + '</span> 4. Limiti di Ruolo del Presidente' +
+          '</h4>' +
+          '<ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.55; display:flex; flex-direction:column; gap:0.35rem;">' +
+            '<li><b>Nessuna Candidatura Calciatore:</b> Il Presidente non può candidarsi come calciatore alle offerte di ingaggio.</li>' +
+            '<li><b>Nessun Profilo Squadra Duplicato:</b> La squadra è univocamente legata alla figura presidenziale e legale.</li>' +
+          '</ul>' +
+        '</div>' +
+      '</div>' +
+
+      '<div style="background:rgba(129,140,248,0.08); border:1px solid rgba(129,140,248,0.25); border-radius:6px; padding:1rem;">' +
+        '<div style="display:flex; align-items:center; gap:0.5rem; color:#a5b4fc; font-weight:800; font-size:0.88rem; margin-bottom:0.35rem;">' +
+          '<span>🤖</span> <span>5. COME PUBBLICARE UNA CANDIDATURA & RECLUTAMENTO IA</span>' +
+        '</div>' +
+        '<p style="margin:0; font-size:0.78rem; color:#cbd5e1; line-height:1.55;">' +
+          'Il club pubblica la ricerca compilando le sezioni <b>Cosa offriamo</b> (incarico, compenso/rimborso, durata, orari, benefit, crescita) e <b>Cosa richiediamo / Il profilo che cerchiamo</b> (ruolo, competenze tecniche, esperienza, qualifiche, attitudini, requisiti extra). Attivando l\'<b>Opzione AI</b>, il sistema analizza i profili iscritti e candida automaticamente i più compatibili, archiviando le schede tecniche direttamente nell\'annuncio.' +
+        '</p>' +
+      '</div>';
+
+    openDetailModal('Guida Operativa Presidente & Gestione Società', ICONS.shield, body);
+  }
+
+  // 2. MODALE DATI SOCIETARI & FOTO MAGLIE UFFICIALI (PAG. 3 PDF)
+  function openEditClubProfileModal(data) {
+    var kits = data.kits || {
+      home: 'immagini/squadre-kits/foggia-home.png',
+      away: 'immagini/squadre-kits/foggia-away.png',
+      gk: 'immagini/squadre-kits/foggia-gk.png'
+    };
+
+    var formHtml =
+      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem; line-height:1.5;">' +
+        'Compila e aggiorna i dati ufficiali del Club, la sede operativa e carica le foto delle <b>Maglie Ufficiali</b> che vestiranno le Card dei tesserati della tua rosa:' +
+      '</p>' +
+      '<form id="form-edit-club-profile" style="display:flex; flex-direction:column; gap:1rem;">' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group">' +
+            '<label>Nome Ufficiale della Squadra *</label>' +
+            '<input type="text" class="es-pres-input-text" id="inp-club-name" required value="' + esc(data.clubName) + '" placeholder="Es. A.S.D. Foggia Calcio">' +
+          '</div>' +
+          '<div class="es-pres-input-group">' +
+            '<label>URL Logo / Stemma Societario (Crest) *</label>' +
+            '<input type="text" class="es-pres-input-text" id="inp-club-logo" required value="' + esc(data.logoUrl || 'immagini/squadre-loghi/foggia.png') + '" placeholder="Percorso o URL logo">' +
+          '</div>' +
+        '</div>' +
+
+        '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group">' +
+            '<label>Città Sede *</label>' +
+            '<input type="text" class="es-pres-input-text" id="inp-club-city" required value="' + esc(data.city || 'Foggia') + '" placeholder="Es. Foggia">' +
+          '</div>' +
+          '<div class="es-pres-input-group">' +
+            '<label>Provincia *</label>' +
+            '<input type="text" class="es-pres-input-text" id="inp-club-prov" required value="' + esc(data.province || data.region || 'Foggia') + '" placeholder="Es. Foggia">' +
+          '</div>' +
+          '<div class="es-pres-input-group">' +
+            '<label>Regione *</label>' +
+            '<select class="es-pres-input-text" id="sel-club-reg" style="background:#040810; color:#fff;">' +
+              ITALIAN_REGIONS.map(function(r){ return '<option value="' + esc(r) + '"' + ((data.region || 'Puglia') === r ? ' selected' : '') + '>Regione ' + esc(r) + '</option>'; }).join('') +
+            '</select>' +
+          '</div>' +
+        '</div>' +
+
+        '<div style="background:#040810; border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:1rem;">' +
+          '<h4 style="margin:0 0 0.6rem; color:#38bdf8; font-size:0.88rem; display:flex; align-items:center; gap:0.4rem;">' +
+            '<span>🎽</span> Foto Maglie Ufficiali (per Card Tesserati)' +
+          '</h4>' +
+          '<p style="margin:0 0 0.85rem; font-size:0.76rem; color:#94a3b8;">I colori e le maglie caricate personalizzano automaticamente la visualizzazione grafica delle Card dei tuoi calciatori:</p>' +
+          '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.85rem;">' +
+            '<div class="es-pres-input-group">' +
+              '<label style="font-size:0.75rem; color:#e2e8f0;">Prima Maglia (Home)</label>' +
+              '<input type="text" class="es-pres-input-text" id="inp-kit-home" value="' + esc(kits.home || 'immagini/squadre-kits/foggia-home.png') + '" placeholder="URL Maglia Casa">' +
+            '</div>' +
+            '<div class="es-pres-input-group">' +
+              '<label style="font-size:0.75rem; color:#e2e8f0;">Seconda Maglia (Away)</label>' +
+              '<input type="text" class="es-pres-input-text" id="inp-kit-away" value="' + esc(kits.away || 'immagini/squadre-kits/foggia-away.png') + '" placeholder="URL Maglia Trasferta">' +
+            '</div>' +
+            '<div class="es-pres-input-group">' +
+              '<label style="font-size:0.75rem; color:#e2e8f0;">Maglia Portiere (GK)</label>' +
+              '<input type="text" class="es-pres-input-text" id="inp-kit-gk" value="' + esc(kits.gk || 'immagini/squadre-kits/foggia-gk.png') + '" placeholder="URL Maglia Portiere">' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+          '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-club-profile">Annulla</button>' +
+          '<button type="submit" class="es-pres-btn-primary">Salva Dati Societari & Maglie</button>' +
+        '</div>' +
+      '</form>';
+
+    openDetailModal('Scheda Societaria & Maglie Ufficiali', ICONS.building, formHtml);
+    var modalOverlay = document.getElementById('es-pres-detail-overlay');
+    var form = document.getElementById('form-edit-club-profile');
+    var btnCancel = document.getElementById('btn-cancel-club-profile');
+    if (btnCancel && modalOverlay) btnCancel.onclick = function () { modalOverlay.remove(); };
+
+    if (form) {
+      form.onsubmit = function (e) {
+        e.preventDefault();
+        data.clubName = document.getElementById('inp-club-name').value.trim() || data.clubName;
+        data.logoUrl = document.getElementById('inp-club-logo').value.trim() || data.logoUrl;
+        data.city = document.getElementById('inp-club-city').value.trim() || 'Foggia';
+        data.province = document.getElementById('inp-club-prov').value.trim() || data.city;
+        data.region = document.getElementById('sel-club-reg').value;
+        data.kits = {
+          home: document.getElementById('inp-kit-home').value.trim(),
+          away: document.getElementById('inp-kit-away').value.trim(),
+          gk: document.getElementById('inp-kit-gk').value.trim()
+        };
+        savePresClubData(data);
+        if (modalOverlay) modalOverlay.remove();
+        renderPresidentialSuite();
+        if (window.showToast) window.showToast('Dati ufficiali del club e maglie aggiornati!', 'success');
+      };
+    }
+  }
+
+  // 3. GESTORE DELLA ROSA GENERALE (PROFILI ATTIVI VS ANTEPRIMA LIMITATA - PAG. 3 PDF)
+  function openSquadManagerModal(data) {
+    var squad = data.squad || [];
+    var regCount = squad.filter(function(p){ return p.isRegistered !== false; }).length;
+    var unregCount = squad.length - regCount;
+
+    var html =
+      '<div style="background:#040810; border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:0.9rem 1.1rem; margin-bottom:1.1rem;">' +
+        '<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">' +
+          '<div>' +
+            '<h4 style="margin:0; font-size:0.95rem; color:#fff; font-weight:700;">Rosa Ufficiale: ' + squad.length + ' Atleti Registrati</h4>' +
+            '<p style="margin:0.2rem 0 0; font-size:0.76rem; color:#cbd5e1;">' +
+              '<span style="color:#22c55e; font-weight:700;">' + regCount + ' Profili Attivi (Card completa)</span> · ' +
+              '<span style="color:#f59e0b; font-weight:700;">' + unregCount + ' Anteprime Limitate (Non registrati)</span>' +
+            '</p>' +
+          '</div>' +
+          '<button type="button" class="es-pres-btn-primary" id="btn-add-player-from-squad-mgr">+ Inserisci Nuovo Calciatore</button>' +
+        '</div>' +
+      '</div>' +
+
+      '<div style="background:rgba(56,189,248,0.04); border:1px solid rgba(56,189,248,0.18); border-radius:6px; padding:0.75rem 1rem; margin-bottom:1rem; font-size:0.77rem; color:#cbd5e1; line-height:1.5;">' +
+        '💡 <b>Regola Collegamento Card (Specifica PDF):</b> Cliccando su un atleta con <b>Profilo Attivo</b> accedi alla sua Card completa (Fronte/Retro, Heatmap, GPS, Highlight) con maglia ufficiale. Per gli atleti <b>Non Registrati</b> è visibile solo l\'anteprima sintetica non cliccabile (dati e contatti bloccati).' +
+      '</div>';
+
+    if (!squad.length) {
+      html +=
+        '<div class="es-pres-empty-box">' +
+          '<div class="es-pres-empty-icon">' + ICONS.users + '</div>' +
+          '<h4 class="es-pres-empty-title">Nessun calciatore presente in rosa</h4>' +
+          '<p class="es-pres-empty-desc">Inserisci i componenti della prima squadra e del settore giovanile per collegare le Card o creare le anteprime limitate.</p>' +
+          '<button type="button" class="es-pres-empty-btn" id="btn-add-first-squad-player">' + ICONS.plus + ' Aggiungi Primo Calciatore</button>' +
+        '</div>';
+    } else {
+      html +=
+        '<div style="display:flex; flex-direction:column; gap:0.65rem; max-height:420px; overflow-y:auto; padding-right:0.3rem;" id="es-squad-list-box">' +
+          squad.map(function (p, idx) {
+            var isReg = p.isRegistered !== false;
+            var numStr = p.number ? ('N° ' + p.number + ' · ') : '';
+            return (
+              '<div style="background:#040810; border:1px solid ' + (isReg ? 'rgba(34,197,94,0.25)' : 'rgba(245,158,11,0.25)') + '; border-radius:6px; padding:0.85rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem;">' +
+                '<div style="flex:1 1 240px;">' +
+                  '<div style="display:flex; align-items:center; gap:0.6rem;">' +
+                    '<span style="display:inline-block; width:28px; height:28px; border-radius:4px; background:' + (isReg ? 'rgba(34,197,94,0.15)' : 'rgba(245,158,11,0.15)') + '; color:' + (isReg ? '#22c55e' : '#f59e0b') + '; font-weight:800; font-size:0.85rem; line-height:28px; text-align:center;">' + (p.number || (idx + 1)) + '</span>' +
+                    '<div>' +
+                      '<h4 style="margin:0; font-size:0.95rem; font-weight:700; color:#fff;">' + esc(p.name) + '</h4>' +
+                      '<div style="font-size:0.76rem; color:#94a3b8; margin-top:0.15rem;">' + numStr + esc(p.role) + ' · ' + (p.age || 22) + ' anni · ' + (p.isUnder ? '<b style="color:#38bdf8;">Under</b>' : 'Over') + '</div>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>' +
+
+                '<div style="display:flex; align-items:center; gap:0.6rem;">' +
+                  (isReg ? (
+                    '<span class="es-pres-status es-pres-status-ok" style="font-size:0.72rem;">Profilo Attivo</span>' +
+                    '<button type="button" class="es-pres-btn-primary es-btn-open-player-card" data-idx="' + idx + '" style="padding:4px 10px; font-size:0.75rem;">Visualizza Card &rsaquo;</button>'
+                  ) : (
+                    '<span class="es-pres-status es-pres-status-warning" style="font-size:0.72rem;" title="Anteprima limitata non cliccabile finché l'atleta non crea l'account">Non Registrato (Anteprima Limitata)</span>'
+                  )) +
+                  '<button type="button" class="es-dl-btn-remove es-btn-remove-player" data-idx="' + idx + '" style="background:transparent; border:none; color:#94a3b8; font-size:0.72rem; cursor:pointer; text-decoration:underline;" title="Rimuovi dalla rosa">Rimuovi</button>' +
+                '</div>' +
+              '</div>'
+            );
+          }).join('') +
+        '</div>';
+    }
+
+    openDetailModal('Rosa Generale della Squadra & Collegamento Card', ICONS.users, html);
+
+    var bAddTop = document.getElementById('btn-add-player-from-squad-mgr');
+    var bAddFirst = document.getElementById('btn-add-first-squad-player');
+    var onAdd = function () {
+      var m = document.getElementById('es-pres-detail-overlay');
+      if (m) m.remove();
+      openAddPlayerModal(data);
+    };
+    if (bAddTop) bAddTop.onclick = onAdd;
+    if (bAddFirst) bAddFirst.onclick = onAdd;
+
+    // Click sui profili attivi per aprire la Card completa
+    document.querySelectorAll('.es-btn-open-player-card').forEach(function (btn) {
+      btn.onclick = function () {
+        var idx = parseInt(btn.getAttribute('data-idx'));
+        var p = squad[idx];
+        if (p) openPlayerCardModal(p, data);
+      };
+    });
+
+    // Rimuovi atleta
+    document.querySelectorAll('.es-btn-remove-player').forEach(function (btn) {
+      btn.onclick = function () {
+        var idx = parseInt(btn.getAttribute('data-idx'));
+        if (!isNaN(idx) && squad[idx]) {
+          var removedName = squad[idx].name;
+          squad.splice(idx, 1);
+          data.squad = squad;
+          savePresClubData(data);
+          openSquadManagerModal(data);
+          renderPresidentialSuite();
+          if (window.showToast) window.showToast('Atleta ' + removedName + ' rimosso dalla rosa.', 'info');
+        }
+      };
+    });
+  }
+
+  // 4. MODALE CARD CALCIATORE (FRONTE/RETRO, HEATMAP, GPS, HIGHLIGHT - PAG. 3 PDF)
+  function openPlayerCardModal(player, clubData) {
+    clubData = clubData || getPresClubData();
+    var kits = clubData.kits || {};
+    var kitHome = kits.home || 'immagini/squadre-kits/foggia-home.png';
+    var logoUrl = clubData.logoUrl || 'immagini/squadre-loghi/foggia.png';
+    var rating = player.rating || (78 + (player.id ? (player.id % 12) : 5));
+
+    var cardHtml =
+      '<div style="display:flex; flex-direction:column; gap:1.2rem;">' +
+        '<div style="display:grid; grid-template-columns:260px 1fr; gap:1.5rem; align-items:start; flex-wrap:wrap;">' +
+          // Visual Card Calciatore (Fronte con colori maglia societaria)
+          '<div style="background:linear-gradient(145deg, #090e17, #040810); border:1.5px solid rgba(56,189,248,0.4); border-radius:12px; padding:1.25rem; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.8); position:relative; overflow:hidden;">' +
+            '<div style="position:absolute; top:8px; left:12px; font-weight:800; font-size:1.4rem; color:#38bdf8;">' + rating + '<div style="font-size:0.65rem; color:#94a3b8; font-weight:700;">OVR</div></div>' +
+            '<div style="position:absolute; top:8px; right:12px; width:34px; height:34px;"><img src="' + esc(logoUrl) + '" alt="" style="max-width:100%; max-height:100%; object-fit:contain;"></div>' +
+            '<div style="width:110px; height:110px; margin:1.2rem auto 0.75rem; border-radius:50%; background:rgba(56,189,248,0.1); border:2px solid rgba(56,189,248,0.3); display:flex; align-items:center; justify-content:center; overflow:hidden;">' +
+              '<img src="' + esc(player.photoUrl || kitHome) + '" alt="" style="max-width:85%; max-height:85%; object-fit:contain;">' +
+            '</div>' +
+            '<h3 style="margin:0; font-size:1.15rem; color:#fff; font-weight:800;">' + esc(player.name) + '</h3>' +
+            '<div style="font-size:0.8rem; color:#38bdf8; font-weight:700; margin-top:0.2rem;">' + esc(player.role) + ' · N° ' + (player.number || '10') + '</div>' +
+            '<div style="font-size:0.75rem; color:#94a3b8; margin-top:0.3rem;">' + esc(clubData.clubName) + '</div>' +
+            '<div style="margin-top:0.85rem; padding-top:0.75rem; border-top:1px solid rgba(148,163,184,0.15); display:grid; grid-template-columns:1fr 1fr; gap:0.4rem; font-size:0.75rem; color:#cbd5e1;">' +
+              '<div>PAC <b>' + (75 + (player.id % 15)) + '</b></div>' +
+              '<div>SHO <b>' + (70 + (player.id % 18)) + '</b></div>' +
+              '<div>PAS <b>' + (72 + (player.id % 14)) + '</b></div>' +
+              '<div>DRI <b>' + (76 + (player.id % 16)) + '</b></div>' +
+            '</div>' +
+          '</div>' +
+
+          // Dati Tattici: Heatmap, Performance GPS & Video Highlight
+          '<div style="display:flex; flex-direction:column; gap:1rem;">' +
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:6px; padding:1rem;">' +
+              '<h4 style="margin:0 0 0.4rem; font-size:0.88rem; color:#38bdf8; display:flex; align-items:center; gap:0.4rem;">' +
+                '<span>📍</span> Heatmap &amp; Presidio Tattico di Ruolo' +
+              '</h4>' +
+              '<p style="margin:0; font-size:0.78rem; color:#cbd5e1; line-height:1.5;">' +
+                'Copertura intensiva della corsia di competenza e dell\'area avversaria. Dati allineati al modulo tattico societario (4-3-3).' +
+              '</p>' +
+            '</div>' +
+
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:6px; padding:1rem;">' +
+              '<h4 style="margin:0 0 0.4rem; font-size:0.88rem; color:#34d399; display:flex; align-items:center; gap:0.4rem;">' +
+                '<span>⚡</span> Metriche Fisiche &amp; GPS' +
+              '</h4>' +
+              '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; font-size:0.78rem; color:#cbd5e1;">' +
+                '<div>• Velocità di picco: <b style="color:#fff;">30.4 km/h</b></div>' +
+                '<div>• Distanza media/gara: <b style="color:#fff;">10.2 km</b></div>' +
+                '<div>• Sprint ad alta intensità: <b style="color:#fff;">38 / match</b></div>' +
+                '<div>• Minutaggio totale: <b style="color:#fff;">' + (player.minutesPlayed || 1800) + ' min</b></div>' +
+              '</div>' +
+            '</div>' +
+
+            '<div style="background:#040810; border:1px solid rgba(148,163,184,0.18); border-radius:6px; padding:1rem;">' +
+              '<h4 style="margin:0 0 0.4rem; font-size:0.88rem; color:#a5b4fc; display:flex; align-items:center; gap:0.4rem;">' +
+                '<span>🎬</span> Video Highlight &amp; Scheda Analitica' +
+              '</h4>' +
+              '<p style="margin:0; font-size:0.78rem; color:#cbd5e1;">' +
+                'Reel video azioni salienti, gol e assist archiviati nel dossier dell\'atleta.' +
+              '</p>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div style="display:flex; justify-content:space-between; align-items:center; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+          '<span style="font-size:0.75rem; color:#22c55e;">&#10003; Atleta tesserato e collegato alla maglia ufficiale ' + esc(clubData.clubName) + '</span>' +
+          '<button type="button" class="es-pres-btn-secondary" id="btn-back-to-squad-mgr">&larr; Torna alla Rosa</button>' +
+        '</div>' +
+      '</div>';
+
+    openDetailModal('Card Calciatore — ' + player.name, ICONS.card, cardHtml);
+    var bBack = document.getElementById('btn-back-to-squad-mgr');
+    if (bBack) {
+      bBack.onclick = function () {
+        var m = document.getElementById('es-pres-detail-overlay');
+        if (m) m.remove();
+        openSquadManagerModal(clubData);
+      };
+    }
+  }
+
+  // 5. GESTIONE ORGANIGRAMMA & DELEGHE SOCIETARIE (PAG. 4 PDF)
+  function openOrganigrammaDelegheModal(data) {
+    var staff = data.staff || [];
+
+    var html =
+      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem; line-height:1.5;">' +
+        'Delega i permessi operativi sulla piattaforma e invita nel team societario le figure chiave del Club (<b>Segretario Generale</b>, <b>Direttore Sportivo</b>, <b>Allenatore</b>, <b>Match Analyst</b>):' +
+      '</p>' +
+
+      '<div style="display:flex; flex-direction:column; gap:0.75rem; margin-bottom:1.2rem;">' +
+        '<div style="background:#040810; border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:0.9rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">' +
+          '<div>' +
+            '<div style="font-size:0.92rem; font-weight:700; color:#fff;">Segretario Generale / Club Manager</div>' +
+            '<div style="font-size:0.76rem; color:#94a3b8; margin-top:0.15rem;">Permessi: Gestione anagrafica rosa, pratiche tesseramento LND e scadenze societarie.</div>' +
+          '</div>' +
+          '<span class="es-pres-status es-pres-status-ok">Delega Attiva</span>' +
+        '</div>' +
+
+        '<div style="background:#040810; border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:0.9rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">' +
+          '<div>' +
+            '<div style="font-size:0.92rem; font-weight:700; color:#fff;">Direttore Sportivo (DS)</div>' +
+            '<div style="font-size:0.76rem; color:#94a3b8; margin-top:0.15rem;">Permessi: Secret List, AI Scouting Advisor, trattative di mercato e candidature bacheca.</div>' +
+          '</div>' +
+          '<span class="es-pres-status es-pres-status-ok">Delega Attiva</span>' +
+        '</div>' +
+
+        '<div style="background:#040810; border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:0.9rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">' +
+          '<div>' +
+            '<div style="font-size:0.92rem; font-weight:700; color:#fff;">Allenatore Prima Squadra</div>' +
+            '<div style="font-size:0.76rem; color:#94a3b8; margin-top:0.15rem;">Permessi: Modulo tattico, piano settimanale allenamenti, convocazioni e discorso pre-gara.</div>' +
+          '</div>' +
+          '<span class="es-pres-status es-pres-status-ok">Delega Attiva</span>' +
+        '</div>' +
+
+        '<div style="background:#040810; border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:0.9rem 1.1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">' +
+          '<div>' +
+            '<div style="font-size:0.92rem; font-weight:700; color:#fff;">Match Analyst / Video Analyst</div>' +
+            '<div style="font-size:0.76rem; color:#94a3b8; margin-top:0.15rem;">Permessi: Caricamento video analisi, report avversari e tracciamento GPS.</div>' +
+          '</div>' +
+          '<span class="es-pres-status es-pres-status-ok">Delega Attiva</span>' +
+        '</div>' +
+      '</div>' +
+
+      '<div style="display:flex; justify-content:space-between; align-items:center; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+        '<button type="button" class="es-pres-btn-primary" id="btn-invite-staff-member">+ Invita Nuovo Membro nel Team</button>' +
+        '<button type="button" class="es-pres-btn-secondary" id="btn-close-organigramma">Chiudi</button>' +
+      '</div>';
+
+    openDetailModal('Organigramma Societario & Deleghe Permessi', ICONS.briefcase, html);
+    var bClose = document.getElementById('btn-close-organigramma');
+    if (bClose) {
+      bClose.onclick = function () {
+        var m = document.getElementById('es-pres-detail-overlay');
+        if (m) m.remove();
+      };
+    }
+    var bInv = document.getElementById('btn-invite-staff-member');
+    if (bInv) {
+      bInv.onclick = function () {
+        var m = document.getElementById('es-pres-detail-overlay');
+        if (m) m.remove();
+        openAddStaffModal(data);
+      };
+    }
+  }
+
+  // 6. UFFICIALIZZAZIONE OPERAZIONI DI MERCATO SUL WALL (PAG. 4 PDF)
+  function openOfficializeTransferModal(data) {
+    var clubName = data.clubName || 'Foggia Calcio';
+    var formHtml =
+      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem; line-height:1.5;">' +
+        'Come Presidente, approva ufficialmente il trasferimento per pubblicare la notizia sul <b>Wall delle Trattative Chiuse</b> (feed ufficiale stile FIFA) con grafica <b>UFFICIALE</b> e la Card aggiornata:' +
+      '</p>' +
+      '<form id="form-officialize-transfer" style="display:flex; flex-direction:column; gap:1rem;">' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group">' +
+            '<label>Nome e Cognome Calciatore *</label>' +
+            '<input type="text" class="es-pres-input-text" id="inp-off-player" required placeholder="Es. Simone De Rosa">' +
+          '</div>' +
+          '<div class="es-pres-input-group">' +
+            '<label>Ruolo in Campo *</label>' +
+            '<input type="text" class="es-pres-input-text" id="inp-off-role" required placeholder="Es. Ala Destra">' +
+          '</div>' +
+        '</div>' +
+
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group">' +
+            '<label>Club di Provenienza / Status *</label>' +
+            '<input type="text" class="es-pres-input-text" id="inp-off-from" required placeholder="Es. Fidelis Andria o Svincolato">' +
+          '</div>' +
+          '<div class="es-pres-input-group">' +
+            '<label>Nuovo Club (Acquirente) *</label>' +
+            '<input type="text" class="es-pres-input-text" id="inp-off-to" required value="' + esc(clubName) + '">' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="es-pres-input-group">' +
+          '<label>Tipologia Trasferimento</label>' +
+          '<select class="es-pres-input-text" id="sel-off-type" style="background:#040810; color:#fff;">' +
+            '<option value="Acquisto a titolo definitivo">Acquisto a titolo definitivo</option>' +
+            '<option value="Prestito annuale con diritto">Prestito annuale con diritto</option>' +
+            '<option value="Tesseramento calciatore svincolato">Tesseramento calciatore svincolato</option>' +
+            '<option value="Rinnovo contrattuale">Rinnovo contrattuale</option>' +
+          '</select>' +
+        '</div>' +
+
+        '<div style="background:rgba(34,197,94,0.06); border:1px solid rgba(34,197,94,0.25); border-radius:6px; padding:0.85rem 1rem; font-size:0.78rem; color:#cbd5e1;">' +
+          '📢 <b>Impatto Community & Social:</b> L\'ufficialità sarà visibile sul Wall (#wall-trasferimenti) per tutti i tifosi, i giornalisti e gli scout della piattaforma.' +
+        '</div>' +
+
+        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
+          '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-off">Annulla</button>' +
+          '<button type="submit" class="es-pres-btn-primary" style="background:linear-gradient(135deg,#0284c7,#059669);">🚀 Ufficializza &amp; Pubblica sul Wall</button>' +
+        '</div>' +
+      '</form>';
+
+    openDetailModal('Ufficializzazione Operazione di Mercato', ICONS.arrows, formHtml);
+    var modalOverlay = document.getElementById('es-pres-detail-overlay');
+    var form = document.getElementById('form-officialize-transfer');
+    var btnCancel = document.getElementById('btn-cancel-off');
+    if (btnCancel && modalOverlay) btnCancel.onclick = function () { modalOverlay.remove(); };
+
+    if (form) {
+      form.onsubmit = function (e) {
+        e.preventDefault();
+        var pl = document.getElementById('inp-off-player').value.trim();
+        var role = document.getElementById('inp-off-role').value.trim();
+        var from = document.getElementById('inp-off-from').value.trim();
+        var to = document.getElementById('inp-off-to').value.trim();
+        var type = document.getElementById('sel-off-type').value;
+
+        // Aggiungi a trattative societarie
+        data.transfers = data.transfers || [];
+        data.transfers.unshift({
+          id: Date.now(),
+          player: pl,
+          role: role,
+          club: from,
+          status: 'UFFICIALE',
+          type: type
+        });
+        savePresClubData(data);
+
+        // Aggiungi al Wall pubblico (elisee_transfer_wall_v1)
+        try {
+          var wall = JSON.parse(localStorage.getItem('elisee_transfer_wall_v1') || '[]');
+          wall.unshift({
+            id: 'wall-' + Date.now(),
+            name: pl,
+            role: role,
+            fromClub: from,
+            toClub: to,
+            toClubName: to,
+            date: new Date().toISOString(),
+            fee: type,
+            likes: 12,
+            official: true
+          });
+          localStorage.setItem('elisee_transfer_wall_v1', JSON.stringify(wall.slice(0, 30)));
+        } catch (_) {}
+
+        if (modalOverlay) modalOverlay.remove();
+        renderPresidentialSuite();
+        if (window.showToast) window.showToast('Operazione ' + pl + ' ufficializzata e pubblicata sul Wall!', 'success');
+      };
+    }
+  }
+
   function openAddPlayerModal(data) {
     var formHtml =
-      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Inserisci un nuovo atleta nell\'organico ufficiale del club per calcolare i parametri reali:</p>' +
+      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Inserisci un atleta nella <b>Rosa Ufficiale del Club</b> selezionando la tipologia di collegamento:</p>' +
       '<form id="form-add-player" style="display:flex; flex-direction:column; gap:1rem;">' +
+        '<div style="background:#040810; border:1px solid rgba(56,189,248,0.25); border-radius:6px; padding:0.85rem 1rem;">' +
+          '<label style="font-size:0.78rem; color:#38bdf8; font-weight:700; display:block; margin-bottom:0.35rem;">Tipologia Collegamento Profilo (Specifica PDF) *</label>' +
+          '<select class="es-pres-input-text" id="sel-pl-reg-type" style="background:#080e1e; color:#fff; font-weight:600;">' +
+            '<option value="registered">🟢 Giocatore già Registrato su Elisee Scout (Profilo Attivo & Card completa)</option>' +
+            '<option value="unregistered">⚪ Giocatore NON Registrato (Anteprima Limitata non cliccabile)</option>' +
+          '</select>' +
+        '</div>' +
         '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
           '<div class="es-pres-input-group"><label>Nome e Cognome Atleta *</label><input type="text" class="es-pres-input-text" id="inp-pl-name" required placeholder="Es. Marco Rossi"></div>' +
           '<div class="es-pres-input-group"><label>Ruolo Principale *</label><select class="es-pres-input-text" id="sel-pl-role" style="background:#040810; color:#fff;"><option>Portiere</option><option>Difensore Centrale</option><option>Terzino Destro</option><option>Terzino Sinistro</option><option>Centrocampista / Regista</option><option>Mezzala</option><option>Ala Destra</option><option>Ala Sinistra</option><option>Punta Centrale</option></select></div>' +
         '</div>' +
         '<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group"><label>Numero Maglia</label><input type="number" class="es-pres-input-text" id="inp-pl-num" value="10" min="1" max="99"></div>' +
           '<div class="es-pres-input-group"><label>Età (Anni) *</label><input type="number" class="es-pres-input-text" id="inp-pl-age" value="22" min="15" max="45" required></div>' +
-          '<div class="es-pres-input-group"><label>Minutaggio Giocato</label><input type="number" class="es-pres-input-text" id="inp-pl-min" value="1200" min="0" max="4000"></div>' +
           '<div class="es-pres-input-group"><label>Valore Mercato (€)</label><input type="number" class="es-pres-input-text" id="inp-pl-val" value="50000" min="1000"></div>' +
         '</div>' +
         '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
@@ -2019,17 +2556,21 @@
         var min = parseInt(document.getElementById('inp-pl-min').value) || 0;
         var val = parseFloat(document.getElementById('inp-pl-val').value) || 25000;
         var isStarter = document.getElementById('sel-pl-starter').value === '1';
+        var regType = (document.getElementById('sel-pl-reg-type') || {}).value || 'registered';
+        var num = parseInt((document.getElementById('inp-pl-num') || {}).value) || (data.squad ? data.squad.length + 1 : 1);
 
         data.squad = data.squad || [];
         data.squad.push({
           id: Date.now(),
           name: name,
           role: role,
+          number: num,
           age: age,
           marketValue: val,
-          minutesPlayed: min,
+          minutesPlayed: min || 1200,
           isStarter: isStarter,
           isUnder: age <= 21,
+          isRegistered: regType === 'registered',
           tesserato: true,
           gdpr: true
         });
@@ -3092,11 +3633,41 @@
     var cardStaff = mount.querySelector('#card-pres-staff');
     if (cardStaff) cardStaff.onclick = function () { openSubView('training-center'); };
 
+    // Top Header Buttons
+    var btnPresGuide = mount.querySelector('#btn-pres-guide');
+    if (btnPresGuide) btnPresGuide.onclick = openGuidaPresidenteModal;
+
+    var btnPresClub = mount.querySelector('#btn-pres-edit-club');
+    if (btnPresClub) btnPresClub.onclick = function () { openEditClubProfileModal(data); };
+
+    var btnPresOrg = mount.querySelector('#btn-pres-organigramma');
+    if (btnPresOrg) btnPresOrg.onclick = function () { openOrganigrammaDelegheModal(data); };
+
+    var btnPresPubJob = mount.querySelector('#btn-pres-publish-job');
+    if (btnPresPubJob) {
+      btnPresPubJob.onclick = function () {
+        if (typeof window.openPubblicaAnnuncioModal === 'function') {
+          window.openPubblicaAnnuncioModal();
+        } else {
+          var m = document.getElementById('modal-pubblica-annuncio');
+          if (m) {
+            m.classList.add('is-open', 'open', 'active');
+            m.style.setProperty('display', 'flex', 'important');
+            m.style.setProperty('z-index', '99999', 'important');
+            m.style.setProperty('opacity', '1', 'important');
+            m.style.setProperty('visibility', 'visible', 'important');
+            m.style.setProperty('pointer-events', 'auto', 'important');
+            document.body.style.overflow = 'hidden';
+          }
+        }
+      };
+    }
+
     // Modali Card
     var cardRating = mount.querySelector('#card-pres-rating');
     if (cardRating) {
       cardRating.onclick = function () {
-        openAddPlayerModal(data);
+        openSquadManagerModal(data);
       };
     }
 
@@ -3121,12 +3692,21 @@
           }).join('')
         );
 
-        listHtml += '<div style="display:flex; gap:0.6rem; margin-top:1rem;">' +
-          '<button type="button" class="es-pres-btn-primary" id="btn-add-transfer-in-modal" style="flex:1;">+ Nuova Trattativa</button>' +
-          '<button type="button" class="es-pres-btn-secondary" id="btn-open-hub-in-modal" style="flex:1;">Apri Hub Mercato &rsaquo;</button>' +
+        listHtml += '<div style="display:flex; gap:0.6rem; margin-top:1rem; flex-wrap:wrap;">' +
+          '<button type="button" class="es-pres-btn-primary" id="btn-add-transfer-in-modal" style="flex:1 1 140px;">+ Nuova Trattativa</button>' +
+          '<button type="button" class="es-pres-btn-primary" id="btn-officialize-in-modal" style="flex:1 1 160px; background:linear-gradient(135deg,#0284c7,#059669);">🚀 Ufficializza sul Wall</button>' +
+          '<button type="button" class="es-pres-btn-secondary" id="btn-open-hub-in-modal" style="flex:1 1 140px;">Apri Hub Mercato &rsaquo;</button>' +
         '</div>';
 
         openDetailModal('Trattative di Mercato & Negoziazioni', ICONS.arrows, listHtml);
+        var bOff = document.getElementById('btn-officialize-in-modal');
+        if (bOff) {
+          bOff.onclick = function () {
+            var m = document.getElementById('es-pres-detail-overlay');
+            if (m) m.remove();
+            openOfficializeTransferModal(data);
+          };
+        }
         var bHub = document.getElementById('btn-open-hub-in-modal');
         if (bHub) {
           bHub.onclick = function() {
