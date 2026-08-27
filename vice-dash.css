@@ -1,12 +1,914 @@
 /* ============================================================
-   ELISEE SCOUT — Area Vice Allenatore (Mister Hub)
-   5 Macro-aree: CLUB | SQUADRA | ALLENAMENTI | PARTITE | LAVAGNA
+   ELISEE SCOUT — AREA ALLENATORE & VICE ALLENATORE
+   Stile Luxury Dark, Rettilineo 4px / 6px, Conformità Ufficiale
    ============================================================ */
 
+#user-dossier-view-group.is-staff-area.is-coach-dash .es-user-tabs,
 #user-dossier-view-group.is-staff-area.is-vice-dash .es-user-tabs { display: none !important; }
+
+#user-dossier-view-group.is-staff-area.is-coach-dash .pf-page-inner,
 #user-dossier-view-group.is-staff-area.is-vice-dash .pf-page-inner {
   max-width: none !important;
   margin: 0 !important;
   padding: 0 !important;
 }
+
+#es-staff-profile.es-cd-on > :not(#es-cd),
 #es-staff-profile.es-vice-on > :not(#es-vd) { display: none !important; }
+
+.es-coach-hub {
+  background: #06090e;
+  min-height: 100vh;
+  color: #e2e8f0;
+  font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+  padding-bottom: 4rem;
+}
+
+/* Top Bar */
+.es-coach-top-bar {
+  background: #090e17;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.es-coach-top-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.es-coach-badge-gold {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.es-coach-top-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+.es-coach-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.es-coach-status-tag {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+.es-coach-status-tag.is-busy {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+.es-coach-status-tag.is-disp {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+.es-coach-btn-guida {
+  background: transparent;
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.es-coach-btn-guida:hover {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: #38bdf8;
+}
+
+/* Container */
+.es-coach-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 2rem;
+}
+
+/* Header Card */
+.es-coach-header-card {
+  background: #090e17;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 6px;
+  padding: 1.4rem 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+.es-coach-header-main {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex: 1 1 auto;
+}
+.es-coach-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+.es-coach-avatar-box {
+  width: 76px;
+  height: 76px;
+  border-radius: 6px;
+  background: #040810;
+  border: 2px solid rgba(56, 189, 248, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #38bdf8;
+}
+.es-coach-avatar-tag {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0284c7;
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.es-coach-header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.es-coach-tags-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.es-coach-name-title {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+.es-coach-lead-desc {
+  margin: 0;
+  font-size: 0.86rem;
+  color: #94a3b8;
+  max-width: 680px;
+  line-height: 1.4;
+}
+.es-coach-header-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* Navbar */
+.es-coach-navbar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #090e17;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 6px;
+  padding: 0.4rem;
+  margin-bottom: 1.25rem;
+  overflow-x: auto;
+}
+.es-coach-navbtn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #94a3b8;
+  padding: 0.55rem 1rem;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.es-coach-navbtn:hover {
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.04);
+}
+.es-coach-navbtn.is-active {
+  background: #0284c7;
+  color: #ffffff;
+  border-color: #0284c7;
+}
+
+/* Grids & Cards */
+.es-coach-content-area {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.es-coach-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+@media (max-width: 860px) {
+  .es-coach-grid-2 { grid-template-columns: 1fr; }
+}
+.es-coach-card {
+  background: #090e17;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 6px;
+  padding: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.es-coach-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+  padding-bottom: 0.75rem;
+}
+.es-coach-card-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.es-coach-card-icon {
+  font-size: 1.35rem;
+}
+.es-coach-card-title-wrap h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+.es-coach-card-title-wrap p {
+  margin: 0.15rem 0 0;
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+.es-coach-action-btn {
+  background: transparent;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.es-coach-action-btn:hover {
+  background: rgba(56, 189, 248, 0.12);
+}
+
+/* Info Table */
+.es-coach-info-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+}
+.es-coach-info-table th {
+  text-align: left;
+  padding: 0.55rem 0.65rem;
+  color: #94a3b8;
+  font-weight: 700;
+  font-size: 0.75rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+  width: 38%;
+}
+.es-coach-info-table td {
+  padding: 0.55rem 0.65rem;
+  color: #f8fafc;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+/* Tags */
+.es-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+.es-tag-blue { background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+.es-tag-green { background: rgba(34, 197, 94, 0.12); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+.es-tag-gold { background: rgba(245, 158, 11, 0.12); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+.es-tag-red { background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+.es-tag-dark { background: #040810; color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.2); }
+
+/* Buttons */
+.es-btn-primary {
+  background: #0284c7;
+  color: #ffffff;
+  border: 1px solid #0284c7;
+  padding: 7px 16px;
+  border-radius: 4px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.es-btn-primary:hover { background: #0369a1; }
+.es-btn-secondary {
+  background: rgba(148, 163, 184, 0.08);
+  color: #e2e8f0;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  padding: 7px 14px;
+  border-radius: 4px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.es-btn-secondary:hover { border-color: #38bdf8; color: #38bdf8; }
+
+/* Vice Box Highlight */
+.es-coach-vice-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: #040810;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 4px;
+  padding: 1rem;
+}
+.es-coach-vice-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  background: #0369a1;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+.es-coach-vice-info {
+  flex: 1 1 auto;
+}
+.es-coach-vice-name {
+  margin: 0 0 0.2rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+.es-coach-vice-sub {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+.es-coach-empty-box {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  background: #040810;
+  border: 1px dashed rgba(148, 163, 184, 0.25);
+  border-radius: 4px;
+}
+
+/* Trofei Palmares */
+.es-coach-trofei-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.es-coach-trofeo-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  background: #040810;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 4px;
+  padding: 0.9rem;
+  position: relative;
+}
+.es-coach-trofeo-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+.es-coach-trofeo-content {
+  flex: 1 1 auto;
+}
+.es-coach-trofeo-title {
+  margin: 0 0 0.3rem;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+.es-coach-trofeo-meta {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 0.35rem;
+}
+.es-coach-trofeo-notes {
+  margin: 0;
+  font-size: 0.76rem;
+  color: #94a3b8;
+}
+.es-coach-trofeo-del {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.es-coach-trofeo-del:hover { color: #f87171; }
+
+/* Limits Grid */
+.es-coach-limits-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 768px) {
+  .es-coach-limits-grid { grid-template-columns: 1fr; }
+}
+.es-coach-limit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: #040810;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 4px;
+  padding: 0.85rem;
+  font-size: 0.82rem;
+  color: #cbd5e1;
+}
+.es-coach-limit-icon.is-ok { color: #4ade80; font-weight: 800; font-size: 1.1rem; }
+.es-coach-limit-icon.is-warn { font-size: 1.1rem; }
+
+/* Football Manager Realistic Pitch */
+.es-fm-pitch {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  background: linear-gradient(180deg, #14532d 0%, #166534 50%, #14532d 100%);
+  border: 2px solid #22c55e;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.es-fm-pitch-lines {
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  pointer-events: none;
+}
+.es-fm-pitch-lines::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.35);
+}
+.es-fm-pitch-lines::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70px;
+  height: 70px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+}
+.es-fm-pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.es-fm-pin-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #0284c7;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ffffff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+.es-fm-pin-lbl {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 1px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+/* Interactive Top 11 Pitch */
+.es-top11-container {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 1.25rem;
+}
+@media (max-width: 900px) {
+  .es-top11-container { grid-template-columns: 1fr; }
+}
+.es-fm-card-pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.es-fm-card-pin:hover {
+  transform: translate(-50%, -55%) scale(1.08);
+}
+.es-fm-card-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #38bdf8;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+.es-fm-card-badge {
+  background: rgba(4, 8, 16, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 4px;
+  padding: 2px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  white-space: nowrap;
+}
+.es-fm-card-name {
+  font-size: 0.72rem;
+  color: #ffffff;
+}
+.es-fm-card-role {
+  font-size: 0.65rem;
+  color: #38bdf8;
+}
+
+.es-top11-bench-panel {
+  background: #040810;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 4px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.es-top11-bench-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.es-top11-bench-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #090e17;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.es-top11-bench-item:hover {
+  border-color: #38bdf8;
+  background: #0d1525;
+}
+.es-top11-bench-num {
+  font-weight: 800;
+  color: #38bdf8;
+  width: 20px;
+}
+
+/* Exercises Hub */
+.es-exercises-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1rem;
+}
+.es-exercise-card {
+  background: #040810;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 4px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.es-exercise-card.is-public { border-left: 3px solid #22c55e; }
+.es-exercise-card.is-private { border-left: 3px solid #f59e0b; }
+.es-exercise-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.es-exercise-title {
+  margin: 0;
+  font-size: 0.96rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+.es-exercise-desc {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+.es-exercise-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+  padding-top: 0.5rem;
+}
+
+/* Vice Specializations Grid */
+.es-vice-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+.es-vice-spec-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: #040810;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 4px;
+  padding: 1rem;
+}
+.es-vice-spec-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+.es-vice-spec-info h4 {
+  margin: 0 0 0.3rem;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+/* Stat Box */
+.es-coach-stat-box {
+  flex: 1;
+  background: #040810;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 4px;
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.es-coach-stat-num {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #38bdf8;
+}
+.es-coach-stat-lbl {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #94a3b8;
+  margin-top: 0.2rem;
+}
+.es-coach-quote-box {
+  background: #040810;
+  border-left: 3px solid #38bdf8;
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  font-size: 0.84rem;
+  color: #cbd5e1;
+}
+
+/* GPS Heatmap Overlay */
+.es-heatmap-overlay-wrap {
+  width: 100%;
+  height: 220px;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+.es-heatmap-pitch-bg {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 30% 50%, rgba(239, 68, 68, 0.6) 0%, rgba(245, 158, 11, 0.4) 35%, rgba(16, 185, 129, 0.2) 70%, transparent 100%), #0d2818;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.es-heatmap-badge-text {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+/* Social Story 9:16 Preview */
+.es-story-preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.es-story-card {
+  width: 280px;
+  height: 480px;
+  background: linear-gradient(180deg, #090e17 0%, #031526 100%);
+  border: 2px solid #38bdf8;
+  border-radius: 12px;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 16px 36px rgba(0,0,0,0.8);
+}
+.es-story-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.es-story-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #040810;
+  border: 1px solid #38bdf8;
+  overflow: hidden;
+  padding: 2px;
+}
+.es-story-logo img { width: 100%; height: 100%; object-fit: contain; }
+.es-story-club-title { margin: 0; font-size: 0.95rem; font-weight: 800; color: #fff; }
+.es-story-matchday-tag { font-size: 0.65rem; color: #fbbf24; font-weight: 800; }
+.es-story-pitch-box {
+  background: rgba(2, 132, 199, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 6px;
+  padding: 0.6rem;
+}
+.es-story-modulo-tag {
+  text-align: center;
+  font-weight: 900;
+  color: #38bdf8;
+  font-size: 0.8rem;
+  margin-bottom: 0.4rem;
+}
+.es-story-players-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.es-story-player-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: #f8fafc;
+}
+.es-story-p-num { font-weight: 800; color: #38bdf8; width: 22px; }
+.es-story-p-name { flex: 1; font-weight: 700; }
+.es-story-p-pos { color: #94a3b8; font-size: 0.65rem; }
+.es-story-footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: #94a3b8;
+  font-weight: 700;
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+  padding-top: 0.5rem;
+}
+
+/* Roster Grid */
+.es-roster-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.85rem;
+}
+.es-roster-player-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #040810;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 4px;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.es-roster-player-card:hover {
+  border-color: #38bdf8;
+  background: #0d1525;
+}
+.es-roster-num-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  background: #0284c7;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.es-roster-player-info { flex: 1; min-width: 0; }
+.es-roster-player-name {
+  margin: 0 0 0.15rem;
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.es-roster-player-meta { font-size: 0.76rem; color: #94a3b8; }
+
+/* Trainings List */
+.es-trainings-list, .es-matches-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.es-training-card, .es-match-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: #040810;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 4px;
+  padding: 0.9rem 1rem;
+  flex-wrap: wrap;
+}
+.es-training-date-box {
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  background: #090e17;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.es-training-date-d { font-size: 1.1rem; font-weight: 900; color: #38bdf8; line-height: 1; }
+.es-training-date-m { font-size: 0.65rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; }
+.es-training-main, .es-match-main { flex: 1; min-width: 220px; }
+.es-training-title, .es-match-vs { margin: 0 0 0.2rem; font-size: 0.96rem; font-weight: 800; color: #ffffff; }
+.es-training-desc, .es-match-details { margin: 0; font-size: 0.78rem; color: #94a3b8; }
+.es-match-league { font-size: 0.7rem; font-weight: 800; color: #fbbf24; text-transform: uppercase; margin-bottom: 2px; }
+
+/* Tactical Board Frame */
+.es-tactical-board-frame {
+  width: 100%;
+  height: 320px;
+  background: #040810;
+  border: 1px dashed rgba(56, 189, 248, 0.3);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+}
