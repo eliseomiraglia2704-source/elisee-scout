@@ -427,8 +427,7 @@ class Handler(SimpleHTTPRequestHandler):
                     }
                     otp_store_file.parent.mkdir(parents=True, exist_ok=True)
                     otp_store_file.write_text(json.dumps(otp_store, indent=2), encoding="utf-8")
-                    log(f"AUTH OTP [LOCALE]: Codice per {email} -> {raw_code}")
-                    self._json(200, {"success": True, "message": "Codice OTP generato", "email": email})
+                    self._json(200, {"success": True, "message": "Codice OTP generato", "email": email, "code": raw_code})
                     return True
 
                 if action == "verify":

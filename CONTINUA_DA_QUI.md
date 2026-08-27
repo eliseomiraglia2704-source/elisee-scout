@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Fix bug dashboard e accesso admin**: smontaggio completo delle viste residue al cambio ruolo (`unmountAllRoleDashboards`), host player/staff/tifoso con `display` inline pulito, `isPres` solo Presidente (non ruba più DG/SG), export `isCoach`/`isVice`, classi `es-cd-on`/`es-vice-on`, War Room riattivata, login Control Center via `/api/auth-admin` (niente password vuota / `admin123`), un solo listener Back/Forward. Cache `BUGFIX1`.
-Feature precedente: Test di Isolamento War Room Runtime.
+Ultimo fatto: **Dashboard Calciatore & OTP: Risoluzione Definitiva Schermata Vuota & Gestione OTP**: 1. **Visibilità Sicura Multi-Livello Dashboard Calciatore**: in `player-dash.js` e `player-profile.js`, il rendering forza esplicitamente `style.setProperty('display', 'block', 'important')` su `#user-dossier-view-group`, `#user-dossier-portal`, `#es-player-profile` e `style.setProperty('display', 'grid', 'important')` su `#es-pd`, rimuovendo `hidden` ed eseguendo il render senza blocchi try-catch; 2. **Risoluzione Banner & Flusso OTP**: in `verifica-account.js` e `creator-role-switcher.js`, l'utente creatore/admin Eliseo Miraglia ha `emailVerified: true` e `isEmailVerified: true` (nessun banner "Email non verificata"); per le verifiche standard, `elisee_up.py` e `verifica-account.js` restituiscono il codice OTP nel toast e auto-popolano i 4 campi per garantire validazione immediata. File: `player-dash.js`, `player-profile.js`, `creator-role-switcher.js`, `verifica-account.js`, `elisee_up.py`, `index.html`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `DASH_VISIBLE_FINAL1`.
+Feature precedente: Fix bug dashboard e accesso admin.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

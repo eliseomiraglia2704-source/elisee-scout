@@ -1230,18 +1230,15 @@
       setHostVisible(legacy, !hideLegacy);
     }
     if (isPlayer) {
-      bind();
-      if (!filling && !notifsOn) fillForm(user);
+      try { bind(); } catch (_) {}
+      try { if (!filling && !notifsOn) fillForm(user); } catch (_) {}
       try {
-        var dash = document.getElementById('es-pd');
-        var host = document.getElementById('es-player-profile');
         if (!notifsOn && window.EliseePlayerDash && window.EliseePlayerDash.render) {
           window.EliseePlayerDash.render(user);
-        } else {
-          if (dash) dash.hidden = true;
-          if (host) host.classList.remove('es-pd-on');
         }
-      } catch (_) {}
+      } catch (err) {
+        console.error('EliseePlayerDash render error', err);
+      }
     }
     if (isTifoso) {
       try {

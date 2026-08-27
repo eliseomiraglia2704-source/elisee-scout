@@ -671,6 +671,22 @@
     if (typeof window.unmountAllRoleDashboards === 'function') {
       try { window.unmountAllRoleDashboards(); } catch (_) {}
     }
+    
+    var group = document.getElementById('user-dossier-view-group');
+    if (group) {
+      group.style.setProperty('display', 'block', 'important');
+      group.style.setProperty('visibility', 'visible', 'important');
+      group.style.setProperty('opacity', '1', 'important');
+      group.classList.add('is-player-area');
+    }
+    var portal = document.getElementById('user-dossier-portal');
+    if (portal) {
+      portal.style.setProperty('display', 'block', 'important');
+      portal.style.setProperty('visibility', 'visible', 'important');
+      portal.style.setProperty('opacity', '1', 'important');
+      portal.classList.add('is-player-area');
+    }
+
     var host = document.getElementById('es-player-profile');
     if (!host) return;
     var box = document.getElementById('es-pd');
@@ -682,10 +698,11 @@
     }
     box.innerHTML = html(user);
     box.hidden = false;
-    box.style.display = 'grid';
+    box.removeAttribute('hidden');
+    box.style.setProperty('display', 'grid', 'important');
     host.classList.add('es-pd-on');
     host.removeAttribute('hidden');
-    host.style.display = 'block';
+    host.style.setProperty('display', 'block', 'important');
 
     // Nascondi tassativamente tutti gli elementi statici/legacy di #es-player-profile
     for (var i = 0; i < host.children.length; i++) {
@@ -698,13 +715,13 @@
 
     // Nascondi anche le altre sezioni (staff, tifoso, legacy, notifs)
     var staffHost = document.getElementById('es-staff-profile');
-    if (staffHost) { staffHost.hidden = true; staffHost.style.display = 'none'; }
+    if (staffHost) { staffHost.hidden = true; staffHost.style.setProperty('display', 'none', 'important'); }
     var tifosoHost = document.getElementById('es-tifoso-profile');
-    if (tifosoHost) { tifosoHost.hidden = true; tifosoHost.style.display = 'none'; }
+    if (tifosoHost) { tifosoHost.hidden = true; tifosoHost.style.setProperty('display', 'none', 'important'); }
     var legacyHost = document.getElementById('dossier-legacy');
-    if (legacyHost) { legacyHost.hidden = true; legacyHost.style.display = 'none'; }
+    if (legacyHost) { legacyHost.hidden = true; legacyHost.style.setProperty('display', 'none', 'important'); }
     var notifsHost = document.getElementById('es-user-notifs');
-    if (notifsHost) { notifsHost.hidden = true; notifsHost.style.display = 'none'; }
+    if (notifsHost) { notifsHost.hidden = true; notifsHost.style.setProperty('display', 'none', 'important'); }
 
     bind(host);
   }

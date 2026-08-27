@@ -498,6 +498,8 @@
       email: cur.email || 'eliseo.miraglia@eliseescout.it',
       username: cur.username || 'eliseo_miraglia',
       verified: true,
+      emailVerified: true,
+      isEmailVerified: true,
       antiFakeVerified: true,
       badgeVerificaStato: 'approved',
       docsAttachedAt: cur.docsAttachedAt || nowIso,
