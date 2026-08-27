@@ -7484,6 +7484,27 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('popstate', applyViewFromBrowserHistory);
   window.addEventListener('hashchange', applyViewFromBrowserHistory);
 
+  // Forza il render della sezione iniziale al caricamento della pagina (DOMContentLoaded)
+  document.addEventListener('DOMContentLoaded', function () {
+    applyViewFromBrowserHistory();
+  });
+  if (document.readyState === 'interactive' || document.readyState === 'complete') {
+    applyViewFromBrowserHistory();
+  }
+
+  // Alias globale per compatibilità
+  window.switchSection = function (hash) {
+    var h = hash || window.location.hash || '#hero';
+    if (window.EliseeApplyHashView) {
+      window.EliseeApplyHashView(h);
+    } else {
+      if (h !== window.location.hash) {
+        try { history.replaceState(null, '', h); } catch (_) { window.location.hash = h; }
+      }
+      applyViewFromBrowserHistory();
+    }
+  };
+
   document.addEventListener('click', (e) => {
     // Non intercettare i bottoni del bivio Account (hanno handler dedicati)
     if (e.target.closest('#btn-enter-user-portal, #btn-enter-admin-portal')) {

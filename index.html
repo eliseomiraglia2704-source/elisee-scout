@@ -931,16 +931,18 @@
         }
       }, true);
 
-      // Hash iniziale
+      // Hash iniziale — Forza il render al caricamento della pagina (DOMContentLoaded)
       function bootHash() {
         try {
-          var h = (location.hash || '').toLowerCase();
-          if (!h || h === '#' || h === '#hero') return;
-          coreSwitchView(null, h);
+          var h = window.location.hash || '#hero';
+          coreSwitchView(viewFromHash(h), h, { noHistory: true });
         } catch (e) {}
       }
-      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bootHash);
-      else bootHash();
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bootHash);
+      } else {
+        bootHash();
+      }
       console.info('[ELISEE] nav-core online — click navigation ready');
     })();
   </script>
@@ -5087,7 +5089,7 @@
   <script src="tc-panel.js?v=20260826_TC3"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260826_AVATAR_FIX1"></script>
+  <script src="app.js?v=20260827_INIT_ROUTING1"></script>
   <script src="player-profile.js?v=20260826_PRES_PRF1"></script>
   <script src="public-rating-system.js?v=20260827_RATING_SYS1"></script>
   <script src="player-dash.js?v=20260827_PLAYER_DASH_PRO2"></script>
