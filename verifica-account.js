@@ -445,18 +445,174 @@
     }
   }
 
-  // ============================================================
-  // SISTEMA VERIFICA EMAIL CON CODICE OTP (4 NUMERI)
+  function otpEsc(s) {
+    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
   function isOtpVerified(u) {
     if (!u) return false;
-    if (u.emailVerifiedAt && (u.emailVerified || u.isEmailVerified || u.email_verified)) return true;
-    return false;
+    return !!(u.emailVerifiedAt && (u.emailVerified || u.isEmailVerified || u.email_verified));
+  }
+
+  function killOtpOverlay() {
+    var ids = ['es-otp-modal-overlay', 'es-otp-modal'];
+    ids.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.remove();
+    });
+    document.querySelectorAll('.es-otp-modal-backdrop').forEach(function (el) { el.remove(); });
+  }
+
+  var otpChallenge = '';
+  var otpBound = false;
+
+  function otpEmailOf(u) {
+    u = u || user();
+    return String((u && (u.email || u.user_email)) || localStorage.getItem('elisee_user_email') || '').trim().toLowerCase();
+  }
+
+  function otpFeedback(text, isErr) {
+    var errMsg = document.getElementById('otp-error-msg');
+    var infoMsg = document.getElementById('otp-info-msg');
+    if (isErr) {
+      if (infoMsg) { infoMsg.style.display = 'none'; infoMsg.setAttribute('hidden', ''); }
+      if (errMsg) {
+        errMsg.textContent = text;
+        errMsg.removeAttribute('hidden');
+        errMsg.style.display = 'block';
+      }
+    } else {
+      if (errMsg) { errMsg.style.display = 'none'; errMsg.setAttribute('hidden', ''); }
+      if (infoMsg) {
+        infoMsg.textContent = text;
+        infoMsg.removeAttribute('hidden');
+        infoMsg.style.display = 'block';
+      }
+    }
+  }
+
+  function otpDigits() {
+    return document.querySelectorAll('#es-otp-bottom-banner .es-otp-digit');
+  }
+
+  function sendOtpRequest() {
+    var userEmail = otpEmailOf();
+    if (!userEmail) {
+      otpFeedback('Nessun indirizzo email associato all\'account', true);
+      return;
+    }
+    var btnSend = document.getElementById('btn-trigger-otp');
+    if (btnSend) btnSend.disabled = true;
+    otpFeedback('Invio codice in corso...', false);
+
+    fetch('/api/auth-otp?action=send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: userEmail })
+    })
+    .then(function (res) { return res.json(); })
+    .then(function (data) {
+      if (btnSend) btnSend.disabled = false;
+      if (data.success) {
+        otpChallenge = data.challenge || '';
+        var feed = data.message || ('Codice inviato a ' + userEmail);
+        if (data.code) {
+          feed = 'Il tuo codice è ' + data.code + '. Premi Verifica.';
+          var digs = String(data.code).split('');
+          otpDigits().forEach(function (inp, idx) { if (digs[idx]) inp.value = digs[idx]; });
+        }
+        otpFeedback(feed, false);
+        var first = document.getElementById('otp-d-0');
+        if (first) first.focus();
+      } else {
+        otpFeedback(data.error || 'Errore durante l\'invio del codice OTP', true);
+      }
+    })
+    .catch(function () {
+      if (btnSend) btnSend.disabled = false;
+      otpFeedback('Servizio temporaneamente non disponibile. Riprova.', true);
+    });
+  }
+
+  function doVerifyOtp() {
+    var userEmail = otpEmailOf();
+    var inputs = otpDigits();
+    var entered = Array.prototype.map.call(inputs, function (i) { return i.value; }).join('');
+    if (entered.length !== 4) {
+      otpFeedback('Inserisci tutte le 4 cifre del codice OTP', true);
+      return;
+    }
+    var btnSubmit = document.getElementById('btn-submit-otp');
+    if (btnSubmit) {
+      btnSubmit.disabled = true;
+      btnSubmit.textContent = 'Verifica...';
+    }
+    fetch('/api/auth-otp?action=verify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: userEmail, code: entered, challenge: otpChallenge })
+    })
+    .then(function (res) { return res.json(); })
+    .then(function (data) {
+      if (btnSubmit) {
+        btnSubmit.disabled = false;
+        btnSubmit.textContent = 'Verifica';
+      }
+      if (data.success && data.verified) {
+        var currUser = user() || {};
+        currUser.emailVerified = true;
+        currUser.isEmailVerified = true;
+        currUser.email_verified = true;
+        currUser.emailVerifiedAt = data.verifiedAt || new Date().toISOString();
+        saveUser(currUser);
+        killOtpOverlay();
+        var banner = document.getElementById('es-otp-bottom-banner');
+        if (banner) banner.remove();
+        if (window.showToast) window.showToast('Indirizzo email verificato.', 'success');
+        try { document.dispatchEvent(new CustomEvent('elisee:email-verified', { detail: { user: currUser } })); } catch (_) {}
+        try { document.dispatchEvent(new CustomEvent('elisee:auth-changed', { detail: { user: currUser } })); } catch (_) {}
+      } else {
+        otpFeedback(data.error || 'Codice OTP non valido o scaduto', true);
+      }
+    })
+    .catch(function () {
+      if (btnSubmit) {
+        btnSubmit.disabled = false;
+        btnSubmit.textContent = 'Verifica';
+      }
+      otpFeedback('Errore di connessione. Riprova.', true);
+    });
+  }
+
+  function bindOtpBanner(root) {
+    if (!root || root.dataset.otpBound === '1') return;
+    root.dataset.otpBound = '1';
+    var inputs = root.querySelectorAll('.es-otp-digit');
+    inputs.forEach(function (inp, idx) {
+      inp.addEventListener('input', function () {
+        var val = inp.value.replace(/[^0-9]/g, '');
+        inp.value = val ? val.slice(-1) : '';
+        if (val && idx < inputs.length - 1) inputs[idx + 1].focus();
+      });
+      inp.addEventListener('keydown', function (e) {
+        if (e.key === 'Backspace' && !inp.value && idx > 0) inputs[idx - 1].focus();
+      });
+      inp.addEventListener('paste', function (e) {
+        e.preventDefault();
+        var paste = ((e.clipboardData || window.clipboardData).getData('text') || '').replace(/[^0-9]/g, '');
+        for (var i = 0; i < inputs.length; i++) inputs[i].value = paste[i] || '';
+      });
+    });
+    var send = root.querySelector('#btn-trigger-otp');
+    if (send) send.addEventListener('click', function (e) { e.preventDefault(); sendOtpRequest(); });
+    var verify = root.querySelector('#btn-submit-otp');
+    if (verify) verify.addEventListener('click', function (e) { e.preventDefault(); doVerifyOtp(); });
   }
 
   function paintOtpBanner(u) {
     u = u || user();
+    killOtpOverlay();
     var existing = document.getElementById('es-otp-bottom-banner');
-    
     var isAuth = false;
     try {
       isAuth = localStorage.getItem('elisee_user_auth') === 'true' && !!(u && (u.email || u.id));
@@ -464,8 +620,6 @@
 
     if (!isAuth || isOtpVerified(u) || (u && u.accountClosed)) {
       if (existing) existing.remove();
-      var leftover = document.getElementById('es-otp-modal-overlay');
-      if (leftover) leftover.remove();
       return;
     }
 
@@ -474,274 +628,33 @@
       existing.id = 'es-otp-bottom-banner';
       existing.className = 'es-otp-bottom-banner';
       existing.innerHTML =
-        '<div class="es-otp-banner-inner">' +
+        '<div class="es-otp-banner-inner es-otp-banner-flow">' +
           '<div class="es-otp-banner-text">' +
             '<strong>Email non verificata</strong>' +
-            '<span>Verifica il tuo indirizzo email per sbloccare tutte le funzionalità.</span>' +
+            '<span>Il codice OTP viene inviato al tuo indirizzo email. Non è un SMS.</span>' +
           '</div>' +
-          '<button type="button" class="es-otp-btn-send" id="btn-trigger-otp">Invia codice OTP</button>' +
+          '<div class="es-otp-inputs-wrap es-otp-inputs-inline">' +
+            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-0" autocomplete="one-time-code">' +
+            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-1">' +
+            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-2">' +
+            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-3">' +
+          '</div>' +
+          '<div class="es-otp-banner-actions">' +
+            '<button type="button" class="es-otp-btn-send" id="btn-trigger-otp">Invia codice</button>' +
+            '<button type="button" class="es-otp-btn-verify" id="btn-submit-otp">Verifica</button>' +
+          '</div>' +
+          '<p id="otp-error-msg" hidden></p>' +
+          '<p id="otp-info-msg" hidden></p>' +
         '</div>';
       document.body.appendChild(existing);
-    }
-    
-    var btn = existing.querySelector('#btn-trigger-otp');
-    if (btn) {
-      btn.onclick = function (e) {
-        if (e) { e.preventDefault(); e.stopPropagation(); }
-        openOtpModal(user());
-      };
+      bindOtpBanner(existing);
     }
   }
 
   function openOtpModal(u) {
-    u = u || user();
-    var userEmail = (u && (u.email || u.user_email)) || localStorage.getItem('elisee_user_email') || '';
-    if (!userEmail) {
-      if (window.showToast) window.showToast('Nessun indirizzo email associato all\'account', 'warning');
-      return;
-    }
-
-    var old = document.getElementById('es-otp-modal-overlay');
-    if (old) old.remove();
-
-    var modal = document.createElement('div');
-    modal.id = 'es-otp-modal-overlay';
-    modal.className = 'es-otp-modal-backdrop is-open';
-    modal.style.cssText = 'position:fixed; inset:0; z-index:2147483647 !important; display:flex !important; align-items:center; justify-content:center; opacity:1 !important; pointer-events:auto !important; background:rgba(3,7,18,0.88); backdrop-filter:blur(10px); padding:1.25rem;';
-    modal.innerHTML =
-      '<div class="es-otp-modal-sheet" role="dialog" aria-modal="true" style="border-radius:4px !important;">' +
-        '<button type="button" class="es-otp-close-btn" id="btn-close-otp-modal" aria-label="Chiudi">&times;</button>' +
-        '<h2 class="es-otp-modal-title">VERIFICA INDIRIZZO EMAIL</h2>' +
-        '<p class="es-otp-modal-sub">Inserisci il codice OTP a 4 cifre per <b style="color:#38bdf8;">' + esc(userEmail) + '</b> e conferma la titolarità della casella postale.</p>' +
-        '<div style="margin:0.2rem auto 1rem; font-size:0.78rem; color:#94a3b8; text-align:center;">' +
-          'Il codice OTP viene inviato al tuo indirizzo email. Non è un SMS. Valido 10 minuti.' +
-        '</div>' +
-        '<form id="form-otp-verify">' +
-          '<div class="es-otp-inputs-wrap">' +
-            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-0" data-idx="0" autocomplete="one-time-code" autofocus>' +
-            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-1" data-idx="1">' +
-            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-2" data-idx="2">' +
-            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-3" data-idx="3">' +
-          '</div>' +
-          '<button type="submit" class="es-otp-btn-verify" id="btn-submit-otp" style="border-radius:4px !important;">Verifica email</button>' +
-          '<div class="es-otp-resend-row">' +
-            'Non hai ricevuto il codice?' +
-            '<button type="button" class="es-otp-resend-btn" id="btn-resend-otp">Invia di nuovo</button>' +
-          '</div>' +
-          '<p id="otp-error-msg" style="display:none; color:#ef4444; font-size:0.82rem; font-weight:600; margin:0.8rem 0 0; text-align:center; line-height:1.4;"></p>' +
-          '<p id="otp-info-msg" style="display:none; color:#38bdf8; font-size:0.8rem; margin:0.6rem 0 0; text-align:center;"></p>' +
-        '</form>' +
-      '</div>';
-
-    document.body.appendChild(modal);
-
-    var inputs = modal.querySelectorAll('.es-otp-digit');
-    var errMsg = modal.querySelector('#otp-error-msg');
-    var infoMsg = modal.querySelector('#otp-info-msg');
-    var btnSubmit = modal.querySelector('#btn-submit-otp');
-    var btnResend = modal.querySelector('#btn-resend-otp');
-
-    function showFeedback(text, isErr) {
-      if (isErr) {
-        if (infoMsg) infoMsg.style.display = 'none';
-        if (errMsg) {
-          errMsg.textContent = text;
-          errMsg.style.display = 'block';
-        }
-      } else {
-        if (errMsg) errMsg.style.display = 'none';
-        if (infoMsg) {
-          infoMsg.textContent = text;
-          infoMsg.style.display = 'block';
-        }
-      }
-    }
-
-    var otpChallenge = '';
-
-    function sendOtpRequest() {
-      showFeedback('Invio codice in corso...', false);
-      if (btnResend) btnResend.disabled = true;
-
-      fetch('/api/auth-otp?action=send', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: userEmail })
-      })
-      .then(function (res) { return res.json(); })
-      .then(function (data) {
-        if (btnResend) btnResend.disabled = false;
-        if (data.success) {
-          otpChallenge = data.challenge || '';
-          var feedText = data.message || ('Codice OTP inviato a ' + userEmail);
-          if (data.code) {
-            feedText = 'Il tuo codice è ' + data.code + '. Inseriscilo e premi Verifica email.';
-            var digs = String(data.code).split('');
-            inputs.forEach(function (inp, idx) { if (digs[idx]) inp.value = digs[idx]; });
-          }
-          showFeedback(feedText, false);
-          if (inputs[0]) inputs[0].focus();
-        } else {
-          showFeedback(data.error || 'Errore durante l\'invio del codice OTP', true);
-        }
-      })
-      .catch(function () {
-        if (btnResend) btnResend.disabled = false;
-        showFeedback('Servizio temporaneamente non disponibile. Riprova tra poco.', true);
-      });
-    }
-
+    paintOtpBanner(u || user());
     sendOtpRequest();
-
-    if (btnResend) {
-      btnResend.onclick = function (e) {
-        e.preventDefault();
-        sendOtpRequest();
-      };
-    }
-
-    function closeOtp() {
-      modal.classList.remove('is-open');
-      modal.style.opacity = '0';
-      modal.style.pointerEvents = 'none';
-      setTimeout(function () { if (modal.parentElement) modal.remove(); }, 150);
-    }
-
-    function doVerify() {
-      var entered = Array.from(inputs).map(function (i) { return i.value; }).join('');
-      if (entered.length !== 4) {
-        showFeedback('Inserisci tutte le 4 cifre del codice OTP', true);
-        return;
-      }
-
-      if (btnSubmit) {
-        btnSubmit.disabled = true;
-        btnSubmit.textContent = 'Verifica in corso...';
-      }
-
-      fetch('/api/auth-otp?action=verify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: userEmail, code: entered, challenge: otpChallenge })
-      })
-      .then(function (res) { return res.json(); })
-      .then(function (data) {
-        if (btnSubmit) {
-          btnSubmit.disabled = false;
-          btnSubmit.textContent = 'Verifica email';
-        }
-
-        if (data.success && data.verified) {
-          var currUser = user();
-          currUser.emailVerified = true;
-          currUser.isEmailVerified = true;
-          currUser.email_verified = true;
-          currUser.emailVerifiedAt = data.verifiedAt || new Date().toISOString();
-          saveUser(currUser);
-
-          try {
-            var authU = JSON.parse(localStorage.getItem('elisee_active_user') || '{}');
-            if (authU) {
-              authU.emailVerified = true;
-              authU.isEmailVerified = true;
-              authU.email_verified = true;
-              authU.emailVerifiedAt = currUser.emailVerifiedAt;
-              localStorage.setItem('elisee_active_user', JSON.stringify(authU));
-            }
-          } catch (_) {}
-
-          closeOtp();
-          var banner = document.getElementById('es-otp-bottom-banner');
-          if (banner) banner.remove();
-
-          if (window.showToast) {
-            window.showToast('Indirizzo email verificato con successo!', 'success');
-          }
-
-          try {
-            var evt = new CustomEvent('elisee:email-verified', { detail: { user: currUser } });
-            document.dispatchEvent(evt);
-          } catch (_) {}
-          try {
-            var evt2 = new CustomEvent('elisee:auth-changed', { detail: { user: currUser } });
-            document.dispatchEvent(evt2);
-          } catch (_) {}
-        } else {
-          inputs.forEach(function (i) { i.classList.add('is-error'); });
-          showFeedback(data.error || 'Codice OTP non valido o scaduto', true);
-          setTimeout(function () {
-            inputs.forEach(function (i) { i.classList.remove('is-error'); });
-          }, 1200);
-        }
-      })
-      .catch(function () {
-        if (btnSubmit) {
-          btnSubmit.disabled = false;
-          btnSubmit.textContent = 'Verifica email';
-        }
-        showFeedback('Errore di connessione al server durante la verifica. Riprova.', true);
-      });
-    }
-
-    inputs.forEach(function (inp, idx) {
-      inp.addEventListener('input', function () {
-        var val = inp.value.replace(/[^0-9]/g, '');
-        inp.value = val ? val.slice(-1) : '';
-        if (val && idx < inputs.length - 1) {
-          inputs[idx + 1].focus();
-        } else if (val && idx === inputs.length - 1) {
-          inputs[idx].focus();
-        }
-      });
-      inp.addEventListener('keydown', function (e) {
-        if (e.key === 'Backspace' && !inp.value && idx > 0) {
-          inputs[idx - 1].focus();
-        }
-      });
-      inp.addEventListener('paste', function (e) {
-        e.preventDefault();
-        var paste = (e.clipboardData || window.clipboardData).getData('text').replace(/[^0-9]/g, '');
-        if (paste) {
-          for (var i = 0; i < inputs.length; i++) {
-            inputs[i].value = paste[i] || '';
-          }
-          if (paste.length >= 4) {
-            if (inputs[3]) inputs[3].focus();
-          } else if (inputs[Math.min(paste.length, inputs.length - 1)]) {
-            inputs[Math.min(paste.length, inputs.length - 1)].focus();
-          }
-        }
-      });
-    });
-
-    var form = modal.querySelector('#form-otp-verify');
-    if (form) {
-      form.onsubmit = function (e) {
-        e.preventDefault();
-        doVerify();
-      };
-    }
-
-    var bClose = modal.querySelector('#btn-close-otp-modal');
-    if (bClose) bClose.onclick = closeOtp;
-    modal.addEventListener('click', function (e) {
-      if (e.target === modal) closeOtp();
-    });
-
-    setTimeout(function () {
-      if (inputs[0]) inputs[0].focus();
-    }, 50);
   }
-
-  // Delegated global click for bottom banner button
-  document.addEventListener('click', function (e) {
-    var btn = e.target && e.target.closest('#btn-trigger-otp, .es-otp-btn-send');
-    if (btn) {
-      e.preventDefault();
-      e.stopPropagation();
-      openOtpModal(user());
-    }
-  });
 
   window.openEmailOtpModal = openOtpModal;
   window.paintEmailOtpBanner = paintOtpBanner;

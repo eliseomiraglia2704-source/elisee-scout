@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Locale 8080 + palette ufficiale visibile**: server riavviato (`cwd` Desktop Elisee Scout), cache `LUX3`, SW purge `v8`. `dash-luxury.css` usa `#050608` + `#38bdf8`. Se il browser resta sulla tab aperta non vede nulla: serve Ctrl+F5. File: `dash-luxury.css`, `index.html`, `sw.js`, `elisee_up.py`. Cache `LUX3`.
+Ultimo fatto: **Calciatore visibile + OTP riparato in barra in basso**: 1) la dashboard Calciatore non viene più coperta da overlay OTP. 2) OTP non è stato rimosso: Invia codice + 4 cifre + Verifica stanno in una barra fissa in basso; send/verify con challenge firmato; dopo verifica la barra sparisce. File: `verifica-account.js`, `verifica-account.css`, `index.html`, `sw.js`. Cache `OTP_BAR1`.
 Feature precedente: Tema luxury con palette ottone (scartata).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)

@@ -91,17 +91,58 @@ body:has(#es-otp-bottom-banner) .es-pd,
 body:has(#es-otp-bottom-banner) .es-pd-body {
   padding-bottom: 5.5rem;
 }
+.es-otp-modal-backdrop,
+#es-otp-modal-overlay {
+  display: none !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+}
 .es-otp-bottom-banner {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
+  top: auto;
   z-index: 4000;
   background: #090e17;
   border-top: 1px solid rgba(56, 189, 248, 0.25);
   box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.65);
   animation: esOtpSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
+.es-otp-banner-flow {
+  flex-wrap: wrap;
+  row-gap: 0.55rem;
+}
+.es-otp-inputs-inline {
+  margin: 0 !important;
+  gap: 0.4rem !important;
+}
+.es-otp-inputs-inline .es-otp-digit {
+  width: 42px !important;
+  height: 46px !important;
+  font-size: 1.25rem !important;
+}
+.es-otp-banner-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.es-otp-banner-actions .es-otp-btn-verify {
+  width: auto;
+  padding: 0.55rem 1.2rem;
+  font-size: 0.88rem;
+  margin: 0;
+}
+#es-otp-bottom-banner #otp-error-msg,
+#es-otp-bottom-banner #otp-info-msg {
+  width: 100%;
+  margin: 0;
+  text-align: left;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+#es-otp-bottom-banner #otp-error-msg { color: #ef4444; }
+#es-otp-bottom-banner #otp-info-msg { color: #38bdf8; }
 @keyframes esOtpSlideUp {
   from { transform: translateY(100%); }
   to { transform: translateY(0); }

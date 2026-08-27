@@ -285,7 +285,7 @@
   <link rel="stylesheet" href="autopilot.css?v=20260806_NOCORS">
   <link rel="stylesheet" href="squadre-select.css?v=20260825_SQCREST">
   <link rel="stylesheet" href="formazione-squadra.css?v=20260820_XI1">
-  <link rel="stylesheet" href="verifica-account.css?v=20260827_PD_OTP2">
+  <link rel="stylesheet" href="verifica-account.css?v=20260827_OTP_BAR1">
   <link rel="stylesheet" href="manager.css?v=20260820_XI1">
   <link rel="stylesheet" href="tc-panel.css?v=20260827_LUX1">
   <link rel="stylesheet" href="player-profile.css?v=20260826_PRES_PRF1">
@@ -516,8 +516,8 @@
       }
       // Pulisci SOLO cache SW vecchia una volta (non ogni secondo)
       try {
-        if (!sessionStorage.getItem('elisee_sw_purged_v8_lux2')) {
-          sessionStorage.setItem('elisee_sw_purged_v8_lux2', '1');
+        if (!sessionStorage.getItem('elisee_sw_purged_v9_otpbar')) {
+          sessionStorage.setItem('elisee_sw_purged_v9_otpbar', '1');
           if (navigator.serviceWorker) {
             navigator.serviceWorker.getRegistrations().then(function (regs) {
               regs.forEach(function (r) { try { r.unregister(); } catch (e) {} });
@@ -5120,7 +5120,7 @@
   <script src="schede-tecniche.js?v=20260820_ST3"></script>
   <script src="mappa-club.js?v=20260826_GEO1"></script>
   <script src="chi-segui.js?v=20260820_FORM1"></script>
-  <script src="verifica-account.js?v=20260827_PD_OTP2"></script>
+  <script src="verifica-account.js?v=20260827_OTP_BAR1"></script>
   <script src="creator-role-switcher.js?v=20260827_PD_OTP2"></script>
   <script src="role-actions-runtime.js?v=20260827_LUX1"></script>
   <script>
