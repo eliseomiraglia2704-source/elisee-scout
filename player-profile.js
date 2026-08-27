@@ -179,14 +179,34 @@
 
   window.applyStaffIdentity = function (user) {
     if (!user || typeof user !== 'object') return user;
+
+    // Se l'utente è esplicitamente un Giocatore, Tifoso o Società, NON forzare lo staff da vecchie identità
+    var famNow = String(user.siteRoleFamily || '').trim().toLowerCase();
+    var roleNow = String(user.ruolo || user.role || '').trim().toLowerCase();
+    if (famNow === 'giocatore' || famNow === 'tifoso' || famNow === 'società' || famNow === 'societa' ||
+        roleNow === 'giocatore' || roleNow === 'calciatore' || roleNow === 'portiere' || roleNow === 'tifoso') {
+      if (famNow === 'giocatore' || roleNow === 'giocatore' || roleNow === 'calciatore' || roleNow === 'portiere') {
+        user.siteRoleFamily = 'Giocatore';
+        user.ruolo = 'Giocatore';
+        user.role = 'Giocatore';
+        user.staffRole = '';
+      } else if (famNow === 'tifoso' || roleNow === 'tifoso') {
+        user.siteRoleFamily = 'Tifoso';
+        user.ruolo = 'Tifoso';
+        user.role = 'Tifoso';
+        user.staffRole = '';
+      }
+      return user;
+    }
+
     var map = loadIdentities();
     var saved = map[identityKey(user)] || {};
     var family = String(user.siteRoleFamily || saved.family || '').trim();
-    var precise = String(user.staffRole || saved.preciseRole || '').trim();
-    var roleNow = String(user.ruolo || user.role || '').trim();
-    if (!family && (roleNow.toLowerCase() === 'staff' || isStaffPreciseName(roleNow))) family = 'Staff';
-    if (!precise && isStaffPreciseName(roleNow)) precise = roleNow;
-    if (family === 'Staff' || isStaffPreciseName(precise) || roleNow.toLowerCase() === 'staff') {
+    var precise = String(user.staffRole || (family === 'Staff' ? saved.preciseRole : '') || '').trim();
+    var roleStr = String(user.ruolo || user.role || '').trim();
+    if (!family && (roleStr.toLowerCase() === 'staff' || isStaffPreciseName(roleStr))) family = 'Staff';
+    if (!precise && isStaffPreciseName(roleStr)) precise = roleStr;
+    if (family === 'Staff' || (isStaffPreciseName(precise) && famNow !== 'giocatore' && famNow !== 'tifoso') || roleStr.toLowerCase() === 'staff') {
       user.siteRoleFamily = 'Staff';
       if (precise && precise.toLowerCase() !== 'staff') {
         user.staffRole = precise;
@@ -194,7 +214,7 @@
         user.ruolo = precise;
         user.role = precise;
         user.staffProfileComplete = true;
-      } else if (!roleNow) {
+      } else if (!roleStr) {
         user.ruolo = 'Staff';
         user.role = 'Staff';
       }

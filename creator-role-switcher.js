@@ -277,14 +277,19 @@
     try {
       var b64 = parts[0].replace(/-/g, '+').replace(/_/g, '/');
       while (b64.length % 4 !== 0) b64 += '=';
-      var jsonStr = decodeURIComponent(escape(atob(b64)));
+      var jsonStr = atob(b64);
       var payload = JSON.parse(jsonStr);
       if (!payload || !payload.exp || Date.now() > payload.exp) {
         return false;
       }
-      return payload.role === 'admin';
+      return payload.role === 'admin' || payload.sub === 'admin';
     } catch (_) {
-      return false;
+      try {
+        var payload2 = JSON.parse(decodeURIComponent(escape(atob(b64))));
+        return !!(payload2 && payload2.exp && Date.now() <= payload2.exp && (payload2.role === 'admin' || payload2.sub === 'admin'));
+      } catch (e2) {
+        return false;
+      }
     }
   }
 
@@ -635,6 +640,11 @@
         if (p) p.scrollTop = 0;
       }, 60);
     }
+
+    try {
+      document.dispatchEvent(new CustomEvent('elisee:role-changed', { detail: { user: updated, roleKey: targetRole.key } }));
+      document.dispatchEvent(new CustomEvent('elisee:view-changed', { detail: { view: 'user-dossier', user: updated } }));
+    } catch (_) {}
 
     closeModal();
     showToast('Passato alla dashboard attiva: ' + targetRole.label);
