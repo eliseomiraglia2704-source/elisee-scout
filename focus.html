@@ -1953,7 +1953,8 @@
       groupParam: 'reg',
       groups: PROMOZIONE,
       portfolio: 'Promozione',
-      network: 'Promozione'
+      network: 'Promozione',
+      leagueLogo: 'immagini/squadre-loghi/promozione.png'
     },
     'under-19': {
       title: 'Under 19 / Giovanili',
@@ -2935,7 +2936,7 @@
     var leagueLogoEl = document.getElementById('focus-league-logo');
     if (leagueLogoEl) {
       if (cat.leagueLogo) {
-        leagueLogoEl.src = cat.leagueLogo + '?v=20260827_ECCLND1';
+        leagueLogoEl.src = cat.leagueLogo + '?v=20260827_PROMLND1';
         leagueLogoEl.alt = cat.title;
         leagueLogoEl.hidden = false;
         leagueLogoEl.removeAttribute('hidden');
@@ -2952,7 +2953,7 @@
         var tabLogo = CATS[k].leagueLogo
           ? '<img class="focus-tab-logo" src="' +
             CATS[k].leagueLogo +
-            '?v=20260827_ECCLND1" alt="" width="16" height="16">'
+            '?v=20260827_PROMLND1" alt="" width="16" height="16">'
           : '';
         return (
           '<a href="focus.html?cat=' +
