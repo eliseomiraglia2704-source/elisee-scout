@@ -33,6 +33,40 @@ ROOT = Path(__file__).resolve().parent
 os.chdir(ROOT)
 sys.path.insert(0, str(ROOT / "workers"))
 
+
+def _otp_secret() -> str:
+    return os.environ.get("OTP_SECRET", "elisee-scout-otp-secret-salt-2026")
+
+
+def _otp_make_challenge(email: str, code: str, exp: int) -> str:
+    h = hmac.new(_otp_secret().encode(), f"{email}:{code}:{exp}".encode(), hashlib.sha256).hexdigest()
+    raw = json.dumps({"e": email, "x": exp, "h": h}, separators=(",", ":"))
+    return base64.urlsafe_b64encode(raw.encode()).decode().rstrip("=")
+
+
+def _otp_check_challenge(email: str, code: str, challenge: str):
+    if not challenge:
+        return False, "Challenge OTP assente. Richiedi un nuovo codice."
+    pad = "=" * ((4 - len(challenge) % 4) % 4)
+    try:
+        data = json.loads(base64.urlsafe_b64decode((challenge + pad).encode()).decode())
+    except Exception:
+        return False, "Challenge OTP non valido. Richiedi un nuovo codice."
+    if str(data.get("e") or "").lower() != email:
+        return False, "Challenge OTP non valido. Richiedi un nuovo codice."
+    now_ts = int(time.time() * 1000)
+    try:
+        exp = int(data.get("x") or 0)
+    except Exception:
+        exp = 0
+    if not exp or now_ts > exp:
+        return False, "Codice OTP scaduto"
+    expected = hmac.new(_otp_secret().encode(), f"{email}:{code}:{exp}".encode(), hashlib.sha256).hexdigest()
+    given = str(data.get("h") or "")
+    if len(expected) != len(given) or not hmac.compare_digest(expected, given):
+        return False, "Codice OTP errato"
+    return True, None
+
 PORT = int(os.environ.get("ELISEE_PORT", "8080"))
 OAUTH_BRIDGE_PORT = int(os.environ.get("ELISEE_OAUTH_BRIDGE_PORT", "3000"))
 HOST = "127.0.0.1"
@@ -420,21 +454,48 @@ class Handler(SimpleHTTPRequestHandler):
                     raw_code = str(random.randint(1000, 9999))
                     secret = os.environ.get("OTP_SECRET", "elisee-scout-otp-secret-salt-2026")
                     h = hmac.new(secret.encode(), f"{email}:{raw_code}".encode(), hashlib.sha256).hexdigest()
+                    exp = now_ts + 600000
                     otp_store[email] = {
                         "codeHash": h,
-                        "expiresAt": now_ts + 600000,
+                        "expiresAt": exp,
                         "attempts": 0
                     }
                     otp_store_file.parent.mkdir(parents=True, exist_ok=True)
                     otp_store_file.write_text(json.dumps(otp_store, indent=2), encoding="utf-8")
-                    self._json(200, {"success": True, "message": "Codice OTP generato", "email": email, "code": raw_code})
+                    challenge = _otp_make_challenge(email, raw_code, exp)
+                    self._json(200, {
+                        "success": True,
+                        "message": "Codice OTP generato. Inseriscilo per confermare l'indirizzo.",
+                        "email": email,
+                        "code": raw_code,
+                        "challenge": challenge,
+                        "expiresIn": 600,
+                    })
                     return True
 
                 if action == "verify":
                     code = str(body.get("code") or qs.get("code", [""])[0] or "").strip()
+                    challenge = str(body.get("challenge") or qs.get("challenge", [""])[0] or "").strip()
+                    ok, err = _otp_check_challenge(email, code, challenge)
+                    if ok:
+                        otp_store.pop(email, None)
+                        try:
+                            otp_store_file.write_text(json.dumps(otp_store, indent=2), encoding="utf-8")
+                        except Exception:
+                            pass
+                        self._json(200, {
+                            "success": True,
+                            "verified": True,
+                            "email": email,
+                            "verifiedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                        })
+                        return True
+                    if err and ("errato" in err or "scaduto" in err):
+                        self._json(400, {"success": False, "error": err})
+                        return True
                     rec = otp_store.get(email)
                     if not rec or not rec.get("codeHash"):
-                        self._json(400, {"success": False, "error": "Nessun codice attivo per questa email"})
+                        self._json(400, {"success": False, "error": err or "Nessun codice attivo per questa email"})
                         return True
                     if now_ts > rec.get("expiresAt", 0):
                         otp_store.pop(email, None)
@@ -454,7 +515,7 @@ class Handler(SimpleHTTPRequestHandler):
                     
                     otp_store.pop(email, None)
                     otp_store_file.write_text(json.dumps(otp_store, indent=2), encoding="utf-8")
-                    self._json(200, {"success": True, "verified": True, "email": email})
+                    self._json(200, {"success": True, "verified": True, "email": email, "verifiedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())})
                     return True
 
             if path in ("/api/auth-admin", "/api/auth/admin") or path.startswith("/api/auth-admin"):

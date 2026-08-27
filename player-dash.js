@@ -665,26 +665,52 @@
     });
   }
 
-  function render(user) {
-    user = user || userObj();
-    if (window.isPlayerSiteRole && !window.isPlayerSiteRole(user)) return;
-    if (typeof window.unmountAllRoleDashboards === 'function') {
-      try { window.unmountAllRoleDashboards(); } catch (_) {}
-    }
-    
+  function revealPlayerShell(host, box) {
     var group = document.getElementById('user-dossier-view-group');
     if (group) {
+      group.hidden = false;
+      group.removeAttribute('hidden');
       group.style.setProperty('display', 'block', 'important');
       group.style.setProperty('visibility', 'visible', 'important');
       group.style.setProperty('opacity', '1', 'important');
       group.classList.add('is-player-area');
+      group.classList.remove('is-staff-area', 'is-tifoso-area', 'is-notifs-area');
     }
     var portal = document.getElementById('user-dossier-portal');
     if (portal) {
+      portal.hidden = false;
+      portal.removeAttribute('hidden');
       portal.style.setProperty('display', 'block', 'important');
       portal.style.setProperty('visibility', 'visible', 'important');
       portal.style.setProperty('opacity', '1', 'important');
       portal.classList.add('is-player-area');
+      portal.classList.remove('is-staff-area', 'is-tifoso-area', 'is-notifs-area');
+    }
+    if (host) {
+      host.hidden = false;
+      host.removeAttribute('hidden');
+      host.classList.add('es-pd-on');
+      host.style.setProperty('display', 'block', 'important');
+      host.style.setProperty('visibility', 'visible', 'important');
+      host.style.setProperty('opacity', '1', 'important');
+    }
+    if (box) {
+      box.hidden = false;
+      box.removeAttribute('hidden');
+      box.style.setProperty('display', 'grid', 'important');
+      box.style.setProperty('visibility', 'visible', 'important');
+      box.style.setProperty('opacity', '1', 'important');
+    }
+  }
+
+  function render(user) {
+    user = user || userObj();
+    if (window.applyStaffIdentity) {
+      try { user = window.applyStaffIdentity(user) || user; } catch (_) {}
+    }
+    if (window.isPlayerSiteRole && !window.isPlayerSiteRole(user)) return;
+    if (typeof window.unmountAllRoleDashboards === 'function') {
+      try { window.unmountAllRoleDashboards('es-pd'); } catch (_) {}
     }
 
     var host = document.getElementById('es-player-profile');
@@ -697,14 +723,8 @@
       host.insertBefore(box, host.firstChild);
     }
     box.innerHTML = html(user);
-    box.hidden = false;
-    box.removeAttribute('hidden');
-    box.style.setProperty('display', 'grid', 'important');
-    host.classList.add('es-pd-on');
-    host.removeAttribute('hidden');
-    host.style.setProperty('display', 'block', 'important');
+    revealPlayerShell(host, box);
 
-    // Nascondi tassativamente tutti gli elementi statici/legacy di #es-player-profile
     for (var i = 0; i < host.children.length; i++) {
       var child = host.children[i];
       if (child.id !== 'es-pd') {
@@ -713,7 +733,6 @@
       }
     }
 
-    // Nascondi anche le altre sezioni (staff, tifoso, legacy, notifs)
     var staffHost = document.getElementById('es-staff-profile');
     if (staffHost) { staffHost.hidden = true; staffHost.style.setProperty('display', 'none', 'important'); }
     var tifosoHost = document.getElementById('es-tifoso-profile');
@@ -724,6 +743,7 @@
     if (notifsHost) { notifsHost.hidden = true; notifsHost.style.setProperty('display', 'none', 'important'); }
 
     bind(host);
+    revealPlayerShell(host, box);
   }
 
   window.EliseePlayerDash = { 

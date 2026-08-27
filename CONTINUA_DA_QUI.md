@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Dashboard Calciatore & OTP: Risoluzione Definitiva Schermata Vuota & Gestione OTP**: 1. **Visibilità Sicura Multi-Livello Dashboard Calciatore**: in `player-dash.js` e `player-profile.js`, il rendering forza esplicitamente `style.setProperty('display', 'block', 'important')` su `#user-dossier-view-group`, `#user-dossier-portal`, `#es-player-profile` e `style.setProperty('display', 'grid', 'important')` su `#es-pd`, rimuovendo `hidden` ed eseguendo il render senza blocchi try-catch; 2. **Risoluzione Banner & Flusso OTP**: in `verifica-account.js` e `creator-role-switcher.js`, l'utente creatore/admin Eliseo Miraglia ha `emailVerified: true` e `isEmailVerified: true` (nessun banner "Email non verificata"); per le verifiche standard, `elisee_up.py` e `verifica-account.js` restituiscono il codice OTP nel toast e auto-popolano i 4 campi per garantire validazione immediata. File: `player-dash.js`, `player-profile.js`, `creator-role-switcher.js`, `verifica-account.js`, `elisee_up.py`, `index.html`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `DASH_VISIBLE_FINAL1`.
-Feature precedente: Fix bug dashboard e accesso admin.
+Ultimo fatto: **Calciatore visibile + OTP riparato (non rimosso)**: 1. Dashboard Calciatore: `unmountAllRoleDashboards` non nasconde più `#es-pd` mentre la si monta (keepId); CSS `#es-player-profile.es-pd-on #es-pd` forza il cruscotto (radar 3 serie, stagione, clip, valutazioni) anche se resta `hidden`. 2. OTP: rimosso il bypass creatore/Eliseo; verifica reale con challenge firmato (funziona su Vercel serverless senza store condiviso); banner in basso, non overlay sulla dashboard; Invia codice + Verifica. File: `player-dash.js`, `player-dash.css`, `player-profile.js`, `verifica-account.js`, `verifica-account.css`, `creator-role-switcher.js`, `api/auth-otp.js`, `elisee_up.py`, `index.html`, `sw.js`. Cache `PD_OTP2`.
+Feature precedente: Dashboard Calciatore & OTP bypass (errato).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -110,7 +110,7 @@ File:
 - `manager-runtime.js` / `manager.css` — inbox admin 3 colonne
 - `api/manager.js` — Vercel: `propose-lineup`, `view=official`, `decide` kind `lineup`
 - `workers/manager_store.py` + `elisee_up.py` — stesso contratto in locale (persistenza `data/manager/state.json`, gitignored)
-- Cache attuale: `?v=20260827_BUGFIX1`, SW `elisee-scout-v20260827_bugfix1`
+- Cache attuale: `?v=20260827_PD_OTP2`, SW `elisee-scout-v20260827-pd-otp2`
 
 localStorage:
 
@@ -217,6 +217,7 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-27** — Calciatore: cruscotto visibile (niente schermata nera). OTP riparato, non disattivato: niente bypass Eliseo, challenge firmato, banner in basso. Cache `PD_OTP2`.
 - **2026-08-27** — Bugfix routing dashboard: leftover viste al cambio ruolo, Presidente che apriva DG/SG, Calciatore che lasciava `display:none` sullo staff, login admin senza verifica password, doppio popstate. War Room riattivata. Cache `BUGFIX1`.
 - **2026-08-23** — Dashboard Nutrizionista: piani alimentari, composizione corporea, albo. Cache `NU1`.
 - **2026-08-23** — Dashboard Ufficio Stampa / Comunicazione: media, comunicati, interviste. Cache `PR2`.

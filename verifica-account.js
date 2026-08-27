@@ -449,10 +449,8 @@
   // SISTEMA VERIFICA EMAIL CON CODICE OTP (4 NUMERI)
   function isOtpVerified(u) {
     if (!u) return false;
-    if (u.isCreator || u.emailVerified || u.isEmailVerified) return true;
-    var em = String(u.email || u.user_email || '').toLowerCase().trim();
-    if (em.indexOf('eliseo') !== -1 || em.indexOf('miraglia') !== -1 || em === 'eliseo.miraglia@eliseescout.it') return true;
-    return !!(u.emailVerified || u.isEmailVerified);
+    if (u.emailVerifiedAt && (u.emailVerified || u.isEmailVerified || u.email_verified)) return true;
+    return false;
   }
 
   function paintOtpBanner(u) {
@@ -464,8 +462,10 @@
       isAuth = localStorage.getItem('elisee_user_auth') === 'true' && !!(u && (u.email || u.id));
     } catch (_) {}
 
-    if (!isAuth || isOtpVerified(u) || u.accountClosed) {
+    if (!isAuth || isOtpVerified(u) || (u && u.accountClosed)) {
       if (existing) existing.remove();
+      var leftover = document.getElementById('es-otp-modal-overlay');
+      if (leftover) leftover.remove();
       return;
     }
 
@@ -512,9 +512,9 @@
       '<div class="es-otp-modal-sheet" role="dialog" aria-modal="true" style="border-radius:4px !important;">' +
         '<button type="button" class="es-otp-close-btn" id="btn-close-otp-modal" aria-label="Chiudi">&times;</button>' +
         '<h2 class="es-otp-modal-title">VERIFICA INDIRIZZO EMAIL</h2>' +
-        '<p class="es-otp-modal-sub">Abbiamo inviato un codice OTP di sicurezza a 4 cifre a <b style="color:#38bdf8;">' + esc(userEmail) + '</b>. Inseriscilo qui sotto per confermare la titolarità della casella postale.</p>' +
+        '<p class="es-otp-modal-sub">Inserisci il codice OTP a 4 cifre per <b style="color:#38bdf8;">' + esc(userEmail) + '</b> e conferma la titolarità della casella postale.</p>' +
         '<div style="margin:0.2rem auto 1rem; font-size:0.78rem; color:#94a3b8; text-align:center;">' +
-          'Il codice è valido per 10 minuti. Controlla anche la cartella Spam.' +
+          'Il codice OTP viene inviato al tuo indirizzo email. Non è un SMS. Valido 10 minuti.' +
         '</div>' +
         '<form id="form-otp-verify">' +
           '<div class="es-otp-inputs-wrap">' +
@@ -557,6 +557,8 @@
       }
     }
 
+    var otpChallenge = '';
+
     function sendOtpRequest() {
       showFeedback('Invio codice in corso...', false);
       if (btnResend) btnResend.disabled = true;
@@ -570,9 +572,10 @@
       .then(function (data) {
         if (btnResend) btnResend.disabled = false;
         if (data.success) {
-          var feedText = 'Codice OTP inviato a ' + userEmail;
+          otpChallenge = data.challenge || '';
+          var feedText = data.message || ('Codice OTP inviato a ' + userEmail);
           if (data.code) {
-            feedText += ' (Codice: ' + data.code + ')';
+            feedText = 'Il tuo codice è ' + data.code + '. Inseriscilo e premi Verifica email.';
             var digs = String(data.code).split('');
             inputs.forEach(function (inp, idx) { if (digs[idx]) inp.value = digs[idx]; });
           }
@@ -619,7 +622,7 @@
       fetch('/api/auth-otp?action=verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: userEmail, code: entered })
+        body: JSON.stringify({ email: userEmail, code: entered, challenge: otpChallenge })
       })
       .then(function (res) { return res.json(); })
       .then(function (data) {
@@ -642,6 +645,7 @@
               authU.emailVerified = true;
               authU.isEmailVerified = true;
               authU.email_verified = true;
+              authU.emailVerifiedAt = currUser.emailVerifiedAt;
               localStorage.setItem('elisee_active_user', JSON.stringify(authU));
             }
           } catch (_) {}
@@ -686,10 +690,7 @@
         if (val && idx < inputs.length - 1) {
           inputs[idx + 1].focus();
         } else if (val && idx === inputs.length - 1) {
-          var allFilled = Array.from(inputs).every(function (i) { return i.value.length > 0; });
-          if (allFilled) {
-            doVerify();
-          }
+          inputs[idx].focus();
         }
       });
       inp.addEventListener('keydown', function (e) {
@@ -705,7 +706,7 @@
             inputs[i].value = paste[i] || '';
           }
           if (paste.length >= 4) {
-            doVerify();
+            if (inputs[3]) inputs[3].focus();
           } else if (inputs[Math.min(paste.length, inputs.length - 1)]) {
             inputs[Math.min(paste.length, inputs.length - 1)].focus();
           }

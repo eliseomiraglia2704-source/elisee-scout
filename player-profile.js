@@ -1140,7 +1140,7 @@
     setTimeout(function () { window.EliseeUserNotifs.showNotifs(); }, 20);
   };
 
-  window.unmountAllRoleDashboards = function () {
+  window.unmountAllRoleDashboards = function (keepId) {
     var dashIds = [
       'es-pd', 'es-cd', 'es-dsd', 'es-prd', 'es-vd', 'es-fd', 'es-mad', 'es-md',
       'es-od', 'es-tmd', 'es-gk', 'es-atd', 'es-yg', 'es-dg', 'es-ag', 'es-mk',
@@ -1158,7 +1158,9 @@
       'is-at-dash', 'is-yg-dash', 'is-dg-dash', 'is-ag-dash', 'is-mk-dash',
       'is-pr-dash', 'is-nu-dash', 'is-eq-dash', 'is-sg-dash', 'is-bt-dash', 'is-tf-dash'
     ];
+    var keepHostClass = keepId === 'es-pd' ? 'es-pd-on' : (keepId === 'es-td' ? 'es-tf-on' : '');
     dashIds.forEach(function (id) {
+      if (keepId && id === keepId) return;
       var el = document.getElementById(id);
       if (!el) return;
       el.hidden = true;
@@ -1168,7 +1170,10 @@
     ['es-player-profile', 'es-staff-profile', 'es-tifoso-profile'].forEach(function (hid) {
       var h = document.getElementById(hid);
       if (!h) return;
-      hostClasses.forEach(function (c) { h.classList.remove(c); });
+      hostClasses.forEach(function (c) {
+        if (keepHostClass && c === keepHostClass) return;
+        h.classList.remove(c);
+      });
     });
     var grp = document.getElementById('user-dossier-view-group');
     if (grp) groupClasses.forEach(function (c) { grp.classList.remove(c); });
@@ -1201,7 +1206,8 @@
     var legacy = document.getElementById('dossier-legacy');
     var notifs = document.getElementById('es-user-notifs');
     var light = isPlayer || isStaff || isTifoso || notifsOn;
-    try { window.unmountAllRoleDashboards(); } catch (_) {}
+    var keepDash = (!notifsOn && isPlayer) ? 'es-pd' : ((!notifsOn && isTifoso) ? 'es-td' : null);
+    try { window.unmountAllRoleDashboards(keepDash); } catch (_) {}
     if (group) {
       group.classList.toggle('is-player-area', isPlayer && !notifsOn);
       group.classList.toggle('is-staff-area', isStaff && !notifsOn);

@@ -6,6 +6,16 @@
   padding: 0 !important;
 }
 #es-player-profile.es-pd-on > :not(#es-pd) { display: none !important; }
+#es-player-profile.es-pd-on {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+#es-player-profile.es-pd-on #es-pd {
+  display: grid !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
 
 .es-pd {
   display: grid;

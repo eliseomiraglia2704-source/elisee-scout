@@ -87,12 +87,16 @@ body.es-verify-on .main-header { box-shadow: none; }
 /* ============================================================
    BANNER FLUTTUANTE BOTTOM: EMAIL NON VERIFICATA (OTP)
    ============================================================ */
+body:has(#es-otp-bottom-banner) .es-pd,
+body:has(#es-otp-bottom-banner) .es-pd-body {
+  padding-bottom: 5.5rem;
+}
 .es-otp-bottom-banner {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 99998;
+  z-index: 4000;
   background: #090e17;
   border-top: 1px solid rgba(56, 189, 248, 0.25);
   box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.65);
