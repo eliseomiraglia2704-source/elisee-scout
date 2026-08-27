@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Logo Ufficiale Agazzanese HD integrato** — Scaricato e configurato il logo originale in alta definizione per l'Agazzanese (`ecc-agazzanese.png` e `agazzanese.png`) nel catalogo loghi societari `immagini/squadre-loghi/`.
+Ultimo fatto: **Logo Ufficiale Arcetana HD integrato** — Scaricato e configurato il logo originale in alta definizione per l'Arcetana (`ecc-arcetana.png` e `arcetana.png`) nel catalogo loghi societari `immagini/squadre-loghi/`.
 Feature precedente: Scopri profili: riordino e allineamento card profili & pulsanti azione.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
