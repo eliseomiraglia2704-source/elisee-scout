@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Aggiornato Logo Ufficiale Chions** — Scaricato e integrato in alta risoluzione PNG (`immagini/squadre-loghi/ecc-chions.png` e `chions.png`) il logo ufficiale del Chions (Eccellenza Friuli-Venezia Giulia) da sorgente Tuttocampo.
+Ultimo fatto: **Aggiornati Loghi Ufficiali Chions, Codroipo e Fontanafredda** — Scaricati e integrati in alta risoluzione PNG con trasparenza i loghi ufficiali di Chions, Codroipo e Fontanafredda (Eccellenza Friuli-Venezia Giulia) da sorgente Tuttocampo.
 Feature precedente: Aggiornato Logo Ufficiale Casarsa.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Aggiornati Loghi Ufficiali Codroipo e Fontanafredda:
+  - Scaricati e convertiti in RGBA i loghi di Codroipo (`immagini/squadre-loghi/ecc-codroipo.png`, `codroipo.png`) e Fontanafredda (`immagini/squadre-loghi/ecc-fontanafredda.png`, `fontanafredda.png`) da Tuttocampo. Cache `LOGOS5`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Chions:
   - Scaricato e convertito in RGBA il logo del Chions da Tuttocampo in `immagini/squadre-loghi/ecc-chions.png` e `chions.png`. Cache `LOGOCHI1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Casarsa:
