@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Aggiornato Logo Ufficiale Teor** — Scaricato e integrato in formato RGBA PNG (`immagini/squadre-loghi/ecc-teor.png` e `teor.png`) il logo ufficiale del Teor (Eccellenza Friuli-Venezia Giulia) da sorgente LND FVG.
-Feature precedente: Aggiornato Logo Ufficiale Tamai.
+Ultimo fatto: **Aggiornato Logo Ufficiale Tolmezzo Carnia** — Scaricato e integrato in formato RGBA PNG (`immagini/squadre-loghi/ecc-tolmezzo-carnia.png` e `tolmezzo-carnia.png`) il logo ufficiale del Tolmezzo Carnia (Eccellenza Friuli-Venezia Giulia) da sorgente LND FVG.
+Feature precedente: Aggiornato Logo Ufficiale Teor.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Aggiornato Logo Ufficiale Tolmezzo Carnia:
+  - Scaricato e integrato in RGBA il logo del Tolmezzo Carnia da LND FVG in `immagini/squadre-loghi/ecc-tolmezzo-carnia.png` e `tolmezzo-carnia.png`. Cache `LOGOTOL1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Teor:
   - Scaricato e integrato in RGBA il logo del Teor da LND FVG in `immagini/squadre-loghi/ecc-teor.png` e `teor.png`. Cache `LOGOTEO1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Tamai:
