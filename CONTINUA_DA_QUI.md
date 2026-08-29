@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Aggiornato Logo Ufficiale Sedriano** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-sedriano.png`, `sedriano.png`) il logo ufficiale del Sedriano (Eccellenza Lombardia) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Saronno.
+Ultimo fatto: **Aggiornato Logo Ufficiale Tribiano** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-tribiano.png`, `tribiano.png`) il logo ufficiale del Tribiano (Eccellenza Lombardia).
+Feature precedente: Aggiornato Logo Ufficiale Sedriano.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Aggiornato Logo Ufficiale Tribiano:
+  - Scaricato e integrato in RGBA (805x999px) il logo del Tribiano in `immagini/squadre-loghi/ecc-tribiano.png` e `tribiano.png`. Cache `LOGOTRIB1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Sedriano:
   - Scaricato e integrato in RGBA (709x720px) il logo del Sedriano da Tuttocampo in `immagini/squadre-loghi/ecc-sedriano.png` e `sedriano.png`. Cache `LOGOSEDR1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Saronno:
