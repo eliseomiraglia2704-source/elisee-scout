@@ -2445,6 +2445,18 @@
     return 0.48;
   }
 
+  var CATEGORY_OVR_RANGES = {
+    1: { name: 'Serie A', min: 76, max: 93, label: 'min. 76 / max. 93' },
+    2: { name: 'Serie B', min: 59, max: 75, label: 'min. 59 / max. 75' },
+    3: { name: 'Serie C', min: 43, max: 58, label: 'min. 43 / max. 58' },
+    4: { name: 'Serie D', min: 30, max: 42, label: 'min. 30 / max. 42' },
+    5: { name: 'Eccellenza', min: 24, max: 29, label: 'min. 24 / max. 29' },
+    6: { name: 'Promozione', min: 19, max: 23, label: 'min. 19 / max. 23' },
+    7: { name: 'Prima Categoria', min: 12, max: 18, label: 'min. 12 / max. 18' },
+    8: { name: 'Seconda Categoria', min: 5, max: 11, label: 'min. 5 / max. 11' },
+    9: { name: 'Terza Categoria', min: 0, max: 4, label: 'min. 0 / max. 4' }
+  };
+
   var CATEGORY_PRICE_RANGES = {
     1: { name: 'Serie A', min: 5.0, max: 150.0, minLabel: '5 Mln.€', maxLabel: '150 Mln.€' },
     2: { name: 'Serie B', min: 0.250, max: 4.90, minLabel: '250 mila€', maxLabel: '4,9 Mln.€' },
@@ -2845,7 +2857,8 @@
 
   function leagueParOvr(club) {
     var tier = clubLeagueTier(club);
-    return tier === 1 ? 78 : tier === 2 ? 68 : tier === 3 ? 60 : 54;
+    var r = CATEGORY_OVR_RANGES[tier] || CATEGORY_OVR_RANGES[4];
+    return Math.round((r.min + r.max) / 2);
   }
 
   function isYouthContext(p, club, age) {
@@ -3397,31 +3410,26 @@
   }
 
   function minOvrForClub(c) {
-    if (!c) return 50;
+    if (!c) return 30;
     var n = String(c.n || '').toUpperCase();
     if (c.world) {
-      if (/REAL MADRID|BARCELONA|BAYERN|MANCHESTER CITY|LIVERPOOL|PSG/.test(n)) return 84;
+      if (/REAL MADRID|BARCELONA|BAYERN|MANCHESTER CITY|LIVERPOOL|PSG/.test(n)) return 86;
       if (/ARSENAL|CHELSEA|MANCHESTER UNITED|ATLETICO|TOTTENHAM|BAYER|NAPOLI/.test(n)) return 80;
       return 76;
     }
     var t = clubLeagueTier(c);
+    var r = CATEGORY_OVR_RANGES[t] || CATEGORY_OVR_RANGES[4];
     var pr = clubPrestige(c);
-    if (t === 1) return pr >= 1.3 ? 76 : pr >= 1.05 ? 70 : 64;
-    if (t === 2) return 58;
-    if (t === 3) return 50;
-    if (t === 4) return 46;
-    return 44;
+    if (t === 1) return pr >= 1.3 ? 84 : pr >= 1.05 ? 80 : 76;
+    return r.min;
   }
 
   function maxOvrForClub(c) {
-    if (!c) return 90;
+    if (!c) return 93;
     if (c.world) return 94;
     var t = clubLeagueTier(c);
-    if (t === 1) return 94;
-    if (t === 2) return 78;
-    if (t === 3) return 68;
-    if (t === 4) return 60;
-    return 54;
+    var r = CATEGORY_OVR_RANGES[t] || CATEGORY_OVR_RANGES[4];
+    return r.max;
   }
 
   function playerFitsClub(p, c, opts) {
@@ -4957,9 +4965,10 @@
 
   function ovrColor(o) {
     o = Number(o) || 0;
-    if (o >= 72) return 'blue';
-    if (o >= 54) return 'red';
-    if (o >= 48) return 'orange';
+    if (o >= 76) return 'blue';
+    if (o >= 59) return 'red';
+    if (o >= 43) return 'orange';
+    if (o >= 30) return 'green';
     return 'bronze';
   }
 

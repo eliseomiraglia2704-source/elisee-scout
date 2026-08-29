@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Tetto Stimato Minimo e Massimo di Prezzo per Categoria** — Configurate e implementate le fasce di quotazione e valutazione economica per tutte le 9 categorie della piramide calcistica (Serie A min. 5M / max. 150M, Serie B min. 250k / max. 4,9M, Serie C min. 50k / max. 249k, Serie D min. 9,9k / max. 49k, Eccellenza min. 900€ / max. 10k, Promozione min. 450€ / max. 899€, Prima Categoria min. 300€ / max. 449€, Seconda Categoria min. 100€ / max. 299€, Terza Categoria min. 10€ / max. 100€) in `piramide-italia.js` (`CATEGORY_PRICE_RANGES`) e `minigioco-carriera.js` (`calcRealisticValueM`, `formatValue`).
-Feature precedente: Nomenclatura Ufficiale & Mappatura Completa Trofei per Nazione e Premi Individuali.
+Ultimo fatto: **Parametri di Crescita Overall (OVR) Giocatore/Giocatrice per Categoria** — Integrata la scala ufficiale di overall per tutte le 9 categorie (Serie A min. 76 / max. 93, Serie B min. 59 / max. 75, Serie C min. 43 / max. 58, Serie D min. 30 / max. 42, Eccellenza min. 24 / max. 29, Promozione min. 19 / max. 23, Prima Categoria min. 12 / max. 18, Seconda Categoria min. 5 / max. 11, Terza Categoria min. 0 / max. 4) in `piramide-italia.js` (`CATEGORY_OVR_RANGES`) e `minigioco-carriera.js` (`minOvrForClub`, `maxOvrForClub`, `leagueParOvr`, `ovrColor`).
+Feature precedente: Tetto Stimato Minimo e Massimo di Prezzo per Categoria.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,19 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Parametri di Crescita Overall (OVR) Giocatore/Giocatrice per Categoria:
+  - Definita la scala ufficiale dei valori di Overall (min / max) per le 9 categorie:
+    - **Serie A**: min. 76 / max. 93
+    - **Serie B**: min. 59 / max. 75
+    - **Serie C**: min. 43 / max. 58
+    - **Serie D**: min. 30 / max. 42
+    - **Eccellenza**: min. 24 / max. 29
+    - **Promozione**: min. 19 / max. 23
+    - **Prima Categoria**: min. 12 / max. 18
+    - **Seconda Categoria**: min. 5 / max. 11
+    - **Terza Categoria**: min. 0 / max. 4
+  - Esportato `EliseePiramide.CATEGORY_OVR_RANGES` in `piramide-italia.js`.
+  - Aggiornati `CATEGORY_OVR_RANGES`, `minOvrForClub`, `maxOvrForClub`, `leagueParOvr` e i colori badge `ovrColor` (76+ blu, 59+ rosso, 43+ arancio, 30+ verde, bronzo dilettanti) in `minigioco-carriera.js`. Cache `OVR1`.
 - **2026-08-29** — Tetto Stimato Minimo e Massimo di Prezzo per Categoria:
   - Definita la tabella ufficiale dei tetti di valutazione economica per tutte le 9 categorie:
     - **Serie A**: min. 5 Mln.€ / max. 150 Mln.€

@@ -245,6 +245,18 @@
     'terza-cat': { name: 'Terza Categoria', min: 10, max: 100, minM: 0.00001, maxM: 0.0001, label: 'min. 100€ / max. 100€' }
   };
 
+  var CATEGORY_OVR_RANGES = {
+    'serie-a': { name: 'Serie A', min: 76, max: 93, label: 'min. 76 / max. 93' },
+    'serie-b': { name: 'Serie B', min: 59, max: 75, label: 'min. 59 / max. 75' },
+    'serie-c': { name: 'Serie C', min: 43, max: 58, label: 'min. 43 / max. 58' },
+    'serie-d': { name: 'Serie D', min: 30, max: 42, label: 'min. 30 / max. 42' },
+    'eccellenza': { name: 'Eccellenza', min: 24, max: 29, label: 'min. 24 / max. 29' },
+    'promozione': { name: 'Promozione', min: 19, max: 23, label: 'min. 19 / max. 23' },
+    'prima-cat': { name: 'Prima Categoria', min: 12, max: 18, label: 'min. 12 / max. 18' },
+    'seconda-cat': { name: 'Seconda Categoria', min: 5, max: 11, label: 'min. 5 / max. 11' },
+    'terza-cat': { name: 'Terza Categoria', min: 0, max: 4, label: 'min. 0 / max. 4' }
+  };
+
   root.EliseePiramide = {
     SERIE_C_GIRONI: SERIE_C_GIRONI,
     SERIE_D_GIRONI: SERIE_D_GIRONI,
@@ -260,6 +272,7 @@
     labelSerieC: labelSerieC,
     labelSerieD: labelSerieD,
     keyOf: keyOf,
-    CATEGORY_PRICE_RANGES: CATEGORY_PRICE_RANGES
+    CATEGORY_PRICE_RANGES: CATEGORY_PRICE_RANGES,
+    CATEGORY_OVR_RANGES: CATEGORY_OVR_RANGES
   };
 })(typeof window !== 'undefined' ? window : this);
