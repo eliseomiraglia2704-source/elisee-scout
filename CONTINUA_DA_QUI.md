@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Fix Pulsante Chiudi Minigioco (Chiusura pulita verso Home/Dashboard senza uscire da Chrome)** — Rimosso il `history.back()` in `leaveMinigioco` che causava la chiusura dell'app e il ritorno alla schermata iniziale/scheda di Google Chrome su mobile; ora il pulsante "Chiudi" chiude l'overlay del minigioco, ripristina lo scroll e riporta in modo pulito e immediato alla home del sito (`#hero`) o alla dashboard precedente via `window.switchView`.
-Feature precedente: Cap Rigido Overall per Categoria (Fix Eccellenza max 29 OVR).
+Ultimo fatto: **Nuovo Flusso Provino Minigioco a Due Fasi (Selezione Categoria Piramide & Genere -> Scelta Squadra)** — All'avvio della carriera, la schermata Provino non mostra più una lista generica disordinata: ora l'utente visualizza innanzitutto il selettore Maschile (9 Categorie: Serie A, Serie B, Serie C, Serie D, Eccellenza, Promozione, Prima, Seconda, Terza Categoria) e Femminile (6 Categorie: Serie A, Serie B, Serie C, Eccellenza, Promozione, Primavera Femminile); selezionata la categoria desiderata, compaiono le relative squadre con ricerca dedicata, girone e logo, permettendo di scegliere la squadra ed eseguire il provino o avviare direttamente la carriera con OVR perfettamente allineato.
+Feature precedente: Fix Pulsante Chiudi Minigioco (Chiusura pulita verso Home/Dashboard senza uscire da Chrome).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,13 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Nuovo Flusso Provino Minigioco a Due Fasi (Selezione Categoria Piramide & Genere -> Scelta Squadra):
+  - Riprogettata la schermata del Provino per non mostrare squadre alla rinfusa, ma guidare l'utente prima nella scelta della Categoria calcistica:
+    - **Calcio Maschile**: Serie A, Serie B, Serie C, Serie D, Eccellenza, Promozione, Prima Categoria, Seconda Categoria, Terza Categoria (tutte e 9 le divisioni ufficiali).
+    - **Calcio Femminile**: Serie A Femminile, Serie B Femminile, Serie C Femminile, Eccellenza Femminile, Promozione Femminile, Primavera Femminile.
+  - Caricato il catalogo completo (`data/squadre/catalog.json` ~2894 squadre) per popolare tutte le categorie con loghi, gironi e città.
+  - Creata interfaccia a schede grafiche (`.es-mg-cat-grid`, `.es-mg-cat-card`, `.es-mg-gender-tabs`) con indicazione di divisione, numero squadre e range OVR ufficiale.
+  - Selezionata la categoria, l'utente visualizza l'elenco filtrato delle squadre con barra di ricerca, può cambiare categoria liberamente o sostenere il provino con la squadra scelta. In caso di esito positivo la carriera parte con l'OVR tarato sulla categoria. Cache `CATPROV1`.
 - **2026-08-29** — Fix Pulsante Chiudi Minigioco (Chiusura pulita verso Home/Dashboard senza uscire da Chrome):
   - Rimosso il meccanismo `history.back()` in `leaveMinigioco` che su Google Chrome mobile faceva uscire dalla web app chiudendo la scheda o tornando alla home di Chrome.
   - La chiusura del minigioco ora chiude l'overlay (`close()`), sblocca lo scroll e ripristina la vista attiva del sito (`home`, `#hero` o dashboard utente) tramite `window.switchView` in modo fluido e sicuro. Cache `CLOSEFIX1`.

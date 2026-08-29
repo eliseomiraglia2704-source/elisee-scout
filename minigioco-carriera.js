@@ -28,6 +28,8 @@
     player: null,
     clubs: null,
     nationFilter: '',
+    trialGender: 'm', // 'm' | 'f'
+    trialCategory: null, // null | number
     trialFilter: '',
     trialClub: null,
     trialResult: null,
@@ -909,41 +911,94 @@
 
   // ---------- LOAD CLUBS ----------
   function loadClubs(cb) {
-    if (state.clubs && state.catalogByName && Object.keys(state.catalogByName).length) {
-      cb(state.clubs);
+    if (state.clubs && state.clubs.length > 500 && state.catalogByName && Object.keys(state.catalogByName).length > 100) {
+      if (typeof cb === 'function') cb(state.clubs);
       return;
     }
-    fetch('data/squadre/minigioco_clubs.json?v=20260827_TCATLND1', { cache: 'no-store' })
+    fetch('data/squadre/catalog.json?v=20260827_TCATLND1', { cache: 'no-store' })
       .then(function (r) {
         return r.json();
       })
       .then(function (data) {
-        state.clubs = mergeWorldClubs(Array.isArray(data) ? data : []);
+        var rawTeams = Array.isArray(data) ? data : (data && data.teams ? data.teams : []);
+        var list = rawTeams.map(function (t) {
+          var l = String(t.league || t.l || '').toUpperCase();
+          var isF = t.gender === 'f' || l.indexOf('FEMMINILE') >= 0;
+          var g = isF ? 'f' : 'm';
+          var tier = 5;
+          if (t.t != null && typeof t.t === 'number') {
+            tier = t.t;
+          } else if (isF) {
+            if (l.indexOf('SERIE A') >= 0) tier = 1;
+            else if (l.indexOf('SERIE B') >= 0) tier = 2;
+            else if (l.indexOf('SERIE C') >= 0) tier = 3;
+            else if (l.indexOf('ECCELLENZA') >= 0) tier = 4;
+            else if (l.indexOf('PROMOZIONE') >= 0) tier = 5;
+            else if (l.indexOf('PRIMAVERA') >= 0) tier = 6;
+          } else {
+            if (l.indexOf('SERIE A') >= 0) tier = 1;
+            else if (l.indexOf('SERIE B') >= 0) tier = 2;
+            else if (l.indexOf('SERIE C') >= 0) tier = 3;
+            else if (l.indexOf('SERIE D') >= 0) tier = 4;
+            else if (l.indexOf('ECCELLENZA') >= 0) tier = 5;
+            else if (l.indexOf('PROMOZIONE') >= 0) tier = 6;
+            else if (l.indexOf('PRIMA CATEGORIA') >= 0) tier = 7;
+            else if (l.indexOf('SECONDA CATEGORIA') >= 0) tier = 8;
+            else if (l.indexOf('TERZA CATEGORIA') >= 0) tier = 9;
+            else if (l.indexOf('PRIMAVERA') >= 0) tier = 2;
+          }
+          return {
+            n: t.name || t.n,
+            l: t.league || t.l || '',
+            o: t.logo || t.o || '',
+            city: t.city || '',
+            t: tier,
+            g: g,
+            homeTier: tier,
+            catalogT: tier,
+            catalogL: t.league || t.l || ''
+          };
+        });
+        state.clubs = mergeWorldClubs(list);
         rememberCatalog(state.clubs);
         if (state.player && !playerIsUnsigned(state.player)) restoreLeagueBoard(state.player);
         else resetClubsToCatalog();
         repairClubTiers();
-        cb(state.clubs);
+        if (typeof cb === 'function') cb(state.clubs);
       })
       .catch(function () {
-        state.clubs = mergeWorldClubs([
-          { n: 'JUVENTUS', l: 'SERIE A', o: 'immagini/squadre-loghi/juventus.png', t: 1 },
-          { n: 'MILAN', l: 'SERIE A', o: 'immagini/squadre-loghi/milan.png', t: 1 },
-          { n: 'INTER', l: 'SERIE A', o: 'immagini/squadre-loghi/inter.png', t: 1 },
-          { n: 'NAPOLI', l: 'SERIE A', o: 'immagini/squadre-loghi/napoli.png', t: 1 },
-          { n: 'ROMA', l: 'SERIE A', o: 'immagini/squadre-loghi/roma.png', t: 1 },
-          { n: 'PALERMO', l: 'SERIE B', o: 'immagini/squadre-loghi/palermo.png', t: 2 },
-          { n: 'BARI', l: 'SERIE B', o: 'immagini/squadre-loghi/bari.png', t: 2 },
-          { n: 'PADOVA', l: 'SERIE B', o: 'immagini/squadre-loghi/padova.png', t: 2 },
-          { n: 'CATANZARO', l: 'SERIE B', o: 'immagini/squadre-loghi/catanzaro.png', t: 2 },
-          { n: 'PERUGIA', l: 'SERIE C · GIRONE B', o: 'immagini/squadre-loghi/perugia.png', t: 3 },
-          { n: 'LATINA', l: 'SERIE C · GIRONE B', o: 'immagini/squadre-loghi/latina.png', t: 3 }
-        ]);
-        rememberCatalog(state.clubs);
-        if (state.player && !playerIsUnsigned(state.player)) restoreLeagueBoard(state.player);
-        else resetClubsToCatalog();
-        repairClubTiers();
-        cb(state.clubs);
+        fetch('data/squadre/minigioco_clubs.json?v=20260827_TCATLND1', { cache: 'no-store' })
+          .then(function (r) {
+            return r.json();
+          })
+          .then(function (data) {
+            state.clubs = mergeWorldClubs(Array.isArray(data) ? data : []);
+            rememberCatalog(state.clubs);
+            if (state.player && !playerIsUnsigned(state.player)) restoreLeagueBoard(state.player);
+            else resetClubsToCatalog();
+            repairClubTiers();
+            if (typeof cb === 'function') cb(state.clubs);
+          })
+          .catch(function () {
+            state.clubs = mergeWorldClubs([
+              { n: 'JUVENTUS', l: 'SERIE A', o: 'immagini/squadre-loghi/juventus.png', t: 1, g: 'm' },
+              { n: 'MILAN', l: 'SERIE A', o: 'immagini/squadre-loghi/milan.png', t: 1, g: 'm' },
+              { n: 'INTER', l: 'SERIE A', o: 'immagini/squadre-loghi/inter.png', t: 1, g: 'm' },
+              { n: 'NAPOLI', l: 'SERIE A', o: 'immagini/squadre-loghi/napoli.png', t: 1, g: 'm' },
+              { n: 'ROMA', l: 'SERIE A', o: 'immagini/squadre-loghi/roma.png', t: 1, g: 'm' },
+              { n: 'PALERMO', l: 'SERIE B', o: 'immagini/squadre-loghi/palermo.png', t: 2, g: 'm' },
+              { n: 'BARI', l: 'SERIE B', o: 'immagini/squadre-loghi/bari.png', t: 2, g: 'm' },
+              { n: 'PADOVA', l: 'SERIE B', o: 'immagini/squadre-loghi/padova.png', t: 2, g: 'm' },
+              { n: 'CATANZARO', l: 'SERIE B', o: 'immagini/squadre-loghi/catanzaro.png', t: 2, g: 'm' },
+              { n: 'PERUGIA', l: 'SERIE C · GIRONE B', o: 'immagini/squadre-loghi/perugia.png', t: 3, g: 'm' },
+              { n: 'LATINA', l: 'SERIE C · GIRONE B', o: 'immagini/squadre-loghi/latina.png', t: 3, g: 'm' }
+            ]);
+            rememberCatalog(state.clubs);
+            if (state.player && !playerIsUnsigned(state.player)) restoreLeagueBoard(state.player);
+            else resetClubsToCatalog();
+            repairClubTiers();
+            if (typeof cb === 'function') cb(state.clubs);
+          });
       });
   }
 
@@ -1751,37 +1806,98 @@
     bindIdentityControls(focusSel);
   }
 
+  var MALE_CATEGORIES = [
+    { id: 1, name: 'Serie A', sub: '1ª Divisione Professionistica', badge: '1ª DIV', ovr: '76 – 93', icon: '🏆', color: '#38bdf8' },
+    { id: 2, name: 'Serie B', sub: '2ª Divisione Professionistica', badge: '2ª DIV', ovr: '59 – 75', icon: '⚽', color: '#ef4444' },
+    { id: 3, name: 'Serie C', sub: '3ª Divisione Professionistica (Gironi A/B/C)', badge: '3ª DIV', ovr: '43 – 58', icon: '🛡️', color: '#f97316' },
+    { id: 4, name: 'Serie D', sub: '4ª Divisione Nazionale LND (9 Gironi)', badge: '4ª DIV', ovr: '30 – 42', icon: '⚡', color: '#22c55e' },
+    { id: 5, name: 'Eccellenza', sub: '5ª Divisione Regionale LND', badge: '5ª DIV', ovr: '24 – 29', icon: '⭐', color: '#ca8a04' },
+    { id: 6, name: 'Promozione', sub: '6ª Divisione Regionale LND', badge: '6ª DIV', ovr: '19 – 23', icon: '🎯', color: '#a855f7' },
+    { id: 7, name: 'Prima Categoria', sub: '7ª Divisione Regionale/Provinciale', badge: '7ª DIV', ovr: '12 – 18', icon: '📍', color: '#06b6d4' },
+    { id: 8, name: 'Seconda Categoria', sub: '8ª Divisione Provinciale', badge: '8ª DIV', ovr: '5 – 11', icon: '🔰', color: '#64748b' },
+    { id: 9, name: 'Terza Categoria', sub: '9ª Divisione Provinciale', badge: '9ª DIV', ovr: '0 – 4', icon: '🌱', color: '#475569' }
+  ];
+
+  var FEMALE_CATEGORIES = [
+    { id: 1, name: 'Serie A Femminile', sub: '1ª Divisione Femminile Professionistica', badge: '1ª DIV', ovr: '76 – 93', icon: '👑', color: '#ec4899' },
+    { id: 2, name: 'Serie B Femminile', sub: '2ª Divisione Femminile Nazionale', badge: '2ª DIV', ovr: '59 – 75', icon: '✨', color: '#f43f5e' },
+    { id: 3, name: 'Serie C Femminile', sub: '3ª Divisione Femminile (Gironi Nazionali)', badge: '3ª DIV', ovr: '43 – 58', icon: '🌸', color: '#fb7185' },
+    { id: 4, name: 'Eccellenza Femminile', sub: 'Campionati Regionali Femminili', badge: '4ª DIV', ovr: '24 – 29', icon: '🌺', color: '#e879f9' },
+    { id: 5, name: 'Promozione Femminile', sub: 'Campionati Territoriali Femminili', badge: '5ª DIV', ovr: '19 – 23', icon: '🌷', color: '#d946ef' },
+    { id: 6, name: 'Primavera Femminile', sub: 'Settore Giovanile Femminile U19', badge: 'U19', ovr: '50 – 68', icon: '🎀', color: '#c084fc' }
+  ];
+
   function trialChance(club) {
     if (!club) return 0;
     if (club.world) return 0.07;
     if (isU23Club(club)) return 0.44;
     var t = clubLeagueTier(club);
-    if (t >= 4) return 0.7;
-    if (t === 3) return 0.56;
-    if (t === 2) return 0.38;
-    if (isBigYouthClub(club)) return 0.22;
-    return 0.14;
+    if (t >= 5) return 0.85;
+    if (t === 4) return 0.72;
+    if (t === 3) return 0.58;
+    if (t === 2) return 0.42;
+    if (isBigYouthClub(club)) return 0.25;
+    return 0.18;
+  }
+
+  function trialCategoryGridHtml() {
+    var isFem = state.trialGender === 'f';
+    var cats = isFem ? FEMALE_CATEGORIES : MALE_CATEGORIES;
+    var counts = {};
+    (state.clubs || []).forEach(function (c) {
+      if (!c || !c.n || c.isFree || c.world) return;
+      var cFem = c.g === 'f' || String(c.l || '').toUpperCase().indexOf('FEMMINILE') >= 0;
+      if (isFem !== cFem) return;
+      var t = Number(c.t) || clubLeagueTier(c);
+      counts[t] = (counts[t] || 0) + 1;
+    });
+
+    return (
+      '<div class="es-mg-cat-grid">' +
+      cats.map(function (cat) {
+        var numTeams = counts[cat.id] || (isFem ? 12 : 20);
+        return (
+          '<button type="button" class="es-mg-cat-card" data-cat="' + cat.id + '" style="--cat-color:' + cat.color + '">' +
+          '<div class="es-mg-cat-top">' +
+          '<span class="es-mg-cat-icon">' + cat.icon + '</span>' +
+          '<span class="es-mg-cat-badge">' + cat.badge + '</span>' +
+          '</div>' +
+          '<div class="es-mg-cat-name">' + esc(cat.name) + '</div>' +
+          '<div class="es-mg-cat-sub">' + esc(cat.sub) + '</div>' +
+          '<div class="es-mg-cat-footer">' +
+          '<span class="es-mg-cat-ovr">OVR <b>' + cat.ovr + '</b></span>' +
+          '<span class="es-mg-cat-teams">' + numTeams + ' squadre</span>' +
+          '</div>' +
+          '</button>'
+        );
+      }).join('') +
+      '</div>'
+    );
   }
 
   function trialClubListHtml() {
-    var q = String(state.trialFilter || '').toLowerCase();
+    var q = String(state.trialFilter || '').toLowerCase().trim();
+    var isFem = state.trialGender === 'f';
+    var catId = state.trialCategory;
+
     var list = (state.clubs || []).filter(function (c) {
       if (!c || !c.n || c.isFree || c.world) return false;
+      var cFem = c.g === 'f' || String(c.l || '').toUpperCase().indexOf('FEMMINILE') >= 0;
+      if (isFem !== cFem) return false;
+      var t = Number(c.t) || clubLeagueTier(c);
+      if (catId != null && t !== catId) return false;
       if (!q) return true;
       var hay = (c.n + ' ' + (c.l || '') + ' ' + (c.city || '')).toLowerCase();
       return hay.indexOf(q) >= 0;
     });
+
     list.sort(function (a, b) {
-      var at = clubLeagueTier(a);
-      var bt = clubLeagueTier(b);
-      var ap = at >= 5 ? 0 : at === 4 ? 1 : 2;
-      var bp = bt >= 5 ? 0 : bt === 4 ? 1 : 2;
-      if (ap !== bp) return ap - bp;
       return String(a.n).localeCompare(String(b.n), 'it');
     });
-    list = list.slice(0, 72);
-    if (!list.length) return '<div class="es-mg-muted">Nessuna squadra trovata.</div>';
-    return list.map(function (c) {
+
+    if (!list.length) return '<div class="es-mg-muted" style="padding:1.5rem;text-align:center;color:#94a3b8;">Nessuna squadra trovata per i criteri selezionati.</div>';
+
+    return list.slice(0, 160).map(function (c) {
       var on = state.trialClub && state.trialClub.n === c.n ? ' is-on' : '';
       var city = c.city ? '<span class="es-mg-trial-city">' + esc(c.city) + '</span>' : '';
       return (
@@ -1799,11 +1915,18 @@
   function renderTrial() {
     state.step = 'trial';
     if (!state.clubs || !state.clubs.length) {
-      renderCareer(false);
+      loadClubs(function () {
+        renderTrial();
+      });
       return;
     }
     var picked = state.trialClub;
     var result = state.trialResult;
+    var isFem = state.trialGender === 'f';
+    var catId = state.trialCategory;
+    var cats = isFem ? FEMALE_CATEGORIES : MALE_CATEGORIES;
+    var currentCatObj = cats.filter(function (c) { return c.id === catId; })[0];
+
     var body;
     if (result) {
       var ok = !!result.ok;
@@ -1812,37 +1935,112 @@
         (result.club && result.club.o
           ? '<img src="' + esc(result.club.o) + '" alt="" class="es-mg-trial-result-logo">'
           : '') +
-        '<h3>' + (ok ? 'Provino superato' : 'Provino non superato') + '</h3>' +
+        '<h3>' + (ok ? '🎉 Provino superato!' : '❌ Provino non superato') + '</h3>' +
         '<p>' + (ok
-          ? (result.club.n + ' ti prende dopo ' + result.weeks + ' settiman' + (result.weeks === 1 ? 'a' : 'e') + '. La carriera parte da qui.')
-          : (result.club.n + ' non ti ha preso. Restano le tre offerte da svincolato.')) +
+          ? ('<strong>' + esc(result.club.n) + '</strong> ti prende dopo ' + result.weeks + ' settiman' + (result.weeks === 1 ? 'a' : 'e') + ' di provino! Inizierai la carriera con questa squadra.')
+          : ('<strong>' + esc(result.club.n) + '</strong> non ti ha tesserato. Puoi scegliere un\'altra squadra/categoria oppure procedere con le tre offerte da svincolato.')) +
         '</p>' +
-        '<button type="button" class="es-mg-btn-full primary" id="es-mg-trial-go">' +
-        (ok ? 'Inizia la carriera' : 'Vedi le offerte') +
-        '</button></div>';
-    } else {
+        '<div class="es-mg-trial-actions" style="justify-content:center;">' +
+        (ok
+          ? '<button type="button" class="es-mg-btn-full primary" id="es-mg-trial-go">Inizia la carriera</button>'
+          : '<button type="button" class="es-mg-btn-half ghost" id="es-mg-trial-retry">Scegli altra squadra</button>' +
+            '<button type="button" class="es-mg-btn-half primary" id="es-mg-trial-go">Vedi le offerte</button>') +
+        '</div></div>';
+    } else if (catId == null) {
+      /* FASE 1: Selezione Genere e Categoria */
       body =
+        '<div class="es-mg-gender-tabs">' +
+        '<button type="button" class="es-mg-gender-tab' + (!isFem ? ' is-on' : '') + '" data-gender="m">⚽ Calcio Maschile (9 Categorie)</button>' +
+        '<button type="button" class="es-mg-gender-tab is-fem' + (isFem ? ' is-on' : '') + '" data-gender="f">👩 Calcio Femminile (6 Categorie)</button>' +
+        '</div>' +
+        trialCategoryGridHtml() +
+        '<div class="es-mg-trial-actions" style="margin-top:1rem;">' +
+        '<button type="button" class="es-mg-btn-full ghost" id="es-mg-trial-skip">Salta provino, vai alle offerte</button>' +
+        '</div>';
+    } else {
+      /* FASE 2: Selezione Squadra nella Categoria Scelta */
+      body =
+        '<div class="es-mg-cat-selected-bar">' +
+        '<div class="es-mg-cat-selected-info">' +
+        '<span style="font-size:1.3rem;">' + (currentCatObj ? currentCatObj.icon : '⚽') + '</span>' +
+        '<div>' +
+        '<div class="es-mg-cat-selected-name">' + esc(currentCatObj ? currentCatObj.name : 'Categoria') + '</div>' +
+        '<div class="es-mg-cat-selected-ovr">Overall categoria: ' + esc(currentCatObj ? currentCatObj.ovr : '') + '</div>' +
+        '</div></div>' +
+        '<button type="button" class="es-mg-btn-change-cat" id="es-mg-trial-back-cat">← Cambia Categoria</button>' +
+        '</div>' +
         '<div class="es-mg-search-wrap">' +
-        '<input type="search" class="es-mg-search" id="es-mg-trial-q" placeholder="Cerca squadra, città o campionato" value="' +
+        '<input type="search" class="es-mg-search" id="es-mg-trial-q" placeholder="Cerca squadra in ' + esc(currentCatObj ? currentCatObj.name : '') + ', città o girone..." value="' +
         esc(state.trialFilter || '') +
         '" /></div>' +
         '<div class="es-mg-trial-list" id="es-mg-trial-list">' + trialClubListHtml() + '</div>' +
         '<div class="es-mg-trial-actions">' +
-        '<button type="button" class="es-mg-btn-half ghost" id="es-mg-trial-skip">Salta, vai alle offerte</button>' +
+        '<button type="button" class="es-mg-btn-half ghost" id="es-mg-trial-back-cat2">← Categorie</button>' +
+        '<button type="button" class="es-mg-btn-half ghost" id="es-mg-trial-skip">Salta alle offerte</button>' +
         '<button type="button" class="es-mg-btn-half primary" id="es-mg-trial-run"' +
         (picked ? '' : ' disabled') +
         '>Fai il provino' + (picked ? ' a ' + esc(picked.n) : '') + '</button>' +
         '</div>';
     }
+
     openShell(
       topBar() +
         '<div class="es-mg-trial">' +
-        '<h2 class="es-mg-identity-title">Provino</h2>' +
-        '<p class="es-mg-trial-lead">Da svincolato puoi fare 1 o 2 settimane di provino in una squadra a scelta. Se ti prendono, parti da lì. Altrimenti resti svincolato con le tre offerte classiche.</p>' +
+        '<h2 class="es-mg-identity-title">' + (catId == null ? 'Provino · Scegli la Categoria' : ('Provino · ' + esc(currentCatObj ? currentCatObj.name : 'Squadre'))) + '</h2>' +
+        '<p class="es-mg-trial-lead">' +
+        (catId == null
+          ? 'Seleziona se competere nel Calcio Maschile o Femminile, quindi scegli la categoria di partenza per sostenere il tuo provino.'
+          : 'Scegli la squadra in cui vuoi sostenere 1 o 2 settimane di provino. Se superi il provino, la tua carriera inizierà da qui!') +
+        '</p>' +
         body +
         '</div>'
     );
     bindClose();
+
+    // 1. Switch genere
+    root.querySelectorAll('.es-mg-gender-tab').forEach(function (btn) {
+      btn.onclick = function () {
+        var g = btn.getAttribute('data-gender');
+        state.trialGender = g;
+        state.trialCategory = null;
+        state.trialClub = null;
+        state.trialFilter = '';
+        renderTrial();
+      };
+    });
+
+    // 2. Click categoria
+    root.querySelectorAll('.es-mg-cat-card').forEach(function (btn) {
+      btn.onclick = function () {
+        var cid = parseInt(btn.getAttribute('data-cat'), 10);
+        state.trialCategory = cid;
+        state.trialClub = null;
+        state.trialFilter = '';
+        renderTrial();
+      };
+    });
+
+    // 3. Torna a categorie
+    var backCat = document.getElementById('es-mg-trial-back-cat');
+    if (backCat) {
+      backCat.onclick = function () {
+        state.trialCategory = null;
+        state.trialClub = null;
+        state.trialFilter = '';
+        renderTrial();
+      };
+    }
+    var backCat2 = document.getElementById('es-mg-trial-back-cat2');
+    if (backCat2) {
+      backCat2.onclick = function () {
+        state.trialCategory = null;
+        state.trialClub = null;
+        state.trialFilter = '';
+        renderTrial();
+      };
+    }
+
+    // 4. Ricerca squadra
     var q = document.getElementById('es-mg-trial-q');
     if (q) {
       q.oninput = function () {
@@ -1852,6 +2050,8 @@
         bindTrialClubs();
       };
     }
+
+    // 5. Click squadra
     function bindTrialClubs() {
       root.querySelectorAll('.es-mg-trial-club').forEach(function (btn) {
         btn.onclick = function () {
@@ -1865,40 +2065,67 @@
       });
     }
     bindTrialClubs();
+
+    // 6. Salta alle offerte da svincolato
     var skip = document.getElementById('es-mg-trial-skip');
-    if (skip) skip.onclick = function () {
-      state.trialClub = null;
-      state.trialResult = null;
-      renderCareer(false);
-    };
+    if (skip) {
+      skip.onclick = function () {
+        state.trialClub = null;
+        state.trialResult = null;
+        state.trialCategory = null;
+        renderCareer(false);
+      };
+    }
+
+    // 7. Riprova da esito provino
+    var retry = document.getElementById('es-mg-trial-retry');
+    if (retry) {
+      retry.onclick = function () {
+        state.trialResult = null;
+        state.trialClub = null;
+        renderTrial();
+      };
+    }
+
+    // 8. Esegui provino
     var run = document.getElementById('es-mg-trial-run');
-    if (run) run.onclick = function () {
-      if (!state.trialClub) return;
-      var weeks = Math.random() < 0.55 ? 1 : 2;
-      var ok = Math.random() < trialChance(state.trialClub);
-      state.trialResult = { club: state.trialClub, weeks: weeks, ok: ok };
-      renderTrial();
-    };
+    if (run) {
+      run.onclick = function () {
+        if (!state.trialClub) return;
+        var weeks = Math.random() < 0.55 ? 1 : 2;
+        var ok = Math.random() < trialChance(state.trialClub);
+        state.trialResult = { club: state.trialClub, weeks: weeks, ok: ok };
+        renderTrial();
+      };
+    }
+
+    // 9. Procedi a inizio carriera
     var go = document.getElementById('es-mg-trial-go');
-    if (go) go.onclick = function () {
-      var res = state.trialResult;
-      var club = res && res.club;
-      state.trialResult = null;
-      state.trialClub = null;
-      if (res && res.ok && club && state.player) {
-        club = Object.assign({}, club);
-        club.isLoan = false;
-        if (clubLeagueTier(club) === 1 && isBigYouthClub(club) && !isU23Club(club) && (state.player.ovr || 49) < 60) {
-          club.isYouth = true;
+    if (go) {
+      go.onclick = function () {
+        var res = state.trialResult;
+        var club = res && res.club;
+        state.trialResult = null;
+        state.trialClub = null;
+        state.trialCategory = null;
+        if (res && res.ok && club && state.player) {
+          club = Object.assign({}, club);
+          club.isLoan = false;
+          var tier = clubLeagueTier(club);
+          var r = CATEGORY_OVR_RANGES[tier] || CATEGORY_OVR_RANGES[4];
+          state.player.ovr = Math.min(r.max, Math.max(r.min, Math.round(r.min + (r.max - r.min) * 0.45)));
+          if (clubLeagueTier(club) === 1 && isBigYouthClub(club) && !isU23Club(club) && (state.player.ovr || 49) < 60) {
+            club.isYouth = true;
+          }
+          seasonSim(state.player, club);
+          save(LS.career, state.player);
+          renderCareer(true);
+          return;
         }
-        seasonSim(state.player, club);
-        save(LS.career, state.player);
-        renderCareer(true);
-        return;
-      }
-      if (state.player) state.player.trialFailed = res && res.club ? res.club.n : '';
-      renderCareer(false);
-    };
+        if (state.player) state.player.trialFailed = res && res.club ? res.club.n : '';
+        renderCareer(false);
+      };
+    }
   }
 
   function syncIdentityInputs() {
