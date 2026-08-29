@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Aggiornato Logo Ufficiale UF Monfalcone** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-uf-monfalcone.png`, `uf-monfalcone.png`, `monfalcone.png`) il logo ufficiale dell'UF Monfalcone (Eccellenza Friuli-Venezia Giulia) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Tolmezzo Carnia.
+Ultimo fatto: **Aggiornato Logo Ufficiale Accademy Calvairate** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-accademy-calvairate.png`, `accademy-calvairate.png`, `calvairate.png`) il logo ufficiale dell'Accademy Calvairate (Eccellenza Lombardia) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale UF Monfalcone.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Aggiornato Logo Ufficiale Accademy Calvairate:
+  - Scaricato e integrato in RGBA (852x1000px) il logo dell'Accademy Calvairate da Tuttocampo in `immagini/squadre-loghi/ecc-accademy-calvairate.png`, `accademy-calvairate.png` e `calvairate.png`. Cache `LOGOCALV1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale UF Monfalcone:
   - Scaricato e integrato in RGBA (1095x1200px) il logo dell'UF Monfalcone da Tuttocampo in `immagini/squadre-loghi/ecc-uf-monfalcone.png`, `uf-monfalcone.png` e `monfalcone.png`. Cache `LOGOMONF1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Tolmezzo Carnia:
