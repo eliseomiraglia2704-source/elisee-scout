@@ -2565,39 +2565,71 @@
   }
   // ---------- DEFINIZIONE TROFEI (file in loghi-trofei/Nazione) ----------
   var TROPHIES_MAP = {
-    ballon_dor: { name: "Pallone d'Oro", cat: "Individuale", img: trophyImg('Internazionali/pallone-doro.png') },
-    world_cup: { name: "Mondiale FIFA", cat: "Internazionale", img: trophyImg('Internazionali/mondiale.png') },
-    euro_cup: { name: "UEFA Europei", cat: "Internazionale", img: trophyImg('Internazionali/europei.png') },
-    club_world_cup: { name: "Mondiale per Club", cat: "Internazionale", img: trophyImg('Internazionali/mondiale-club.png') },
-    champions_league: { name: "UEFA Champions League", cat: "Europeo", img: trophyImg('Internazionali/champions-league.png') },
-    europa_league: { name: "UEFA Europa League", cat: "Europeo", img: trophyImg('Internazionali/europa-league.png') },
-    conference_league: { name: "UEFA Conference League", cat: "Europeo", img: trophyImg('Internazionali/conference-league.png') },
-    supercoppa_euro: { name: "UEFA Supercoppa", cat: "Europeo", img: trophyImg('Internazionali/supercoppa-uefa.png') },
-    player_of_year: { name: "Giocatore dell'Anno", cat: "Individuale", img: trophyImg('giocatore-anno.jpg') },
-    serie_a: { name: "Serie A Scudetto", cat: "Nazionale", img: trophyImg('Italia/serie-a.png') },
-    serie_b: { name: "Serie B Ali della Vittoria", cat: "Nazionale", img: trophyImg('Italia/serie-b.png') },
-    coppa_italia: { name: "Coppa Italia", cat: "Nazionale", img: trophyImg('Italia/coppa-italia.png') },
-    supercoppa_italia: { name: "Supercoppa Italia", cat: "Nazionale", img: trophyImg('Italia/supercoppa-italia.png') },
-    serie_c_a: { name: "Serie C - Girone A", cat: "Lega Pro", img: trophyImg('Italia/serie-c-a.png') },
-    serie_c_b: { name: "Serie C - Girone B", cat: "Lega Pro", img: trophyImg('Italia/serie-c-b.png') },
-    serie_c_c: { name: "Serie C - Girone C", cat: "Lega Pro", img: trophyImg('Italia/serie-c-c.png') },
-    coppa_serie_c: { name: "Coppa Italia Serie C", cat: "Lega Pro", img: trophyImg('Italia/coppa-serie-c.png') },
-    supercoppa_serie_c: { name: "Supercoppa Serie C", cat: "Lega Pro", img: trophyImg('Italia/supercoppa-serie-c.png') },
-    serie_d: { name: "Serie D Campionato", cat: "Dilettanti", img: trophyImg('serie-d.jpg') },
-    coppa_serie_d: { name: "Coppa Italia Serie D", cat: "Dilettanti", img: trophyImg('Italia/coppa-serie-d.png') },
-    premier: { name: "Premier League", cat: "Nazionale", img: trophyImg('Inghilterra/premier-league.png') },
-    laliga: { name: "La Liga", cat: "Nazionale", img: trophyImg('Spagna/la-liga.png') },
-    bundesliga: { name: "Bundesliga", cat: "Nazionale", img: trophyImg('Germania/bundesliga.png') },
-    ligue1: { name: "Ligue 1", cat: "Nazionale", img: trophyImg('Francia/ligue-1.png') },
+    // ITALIA
+    supercoppa_italia: { name: "Supercoppa Italia", cat: "Nazionale", nazione: "Italia", img: trophyImg('Italia/supercoppa-italia.png') },
+    coppa_italia: { name: "Coppa Italia", cat: "Nazionale", nazione: "Italia", img: trophyImg('Italia/coppa-italia.png') },
+    motm_serie_a: { name: "Man Of the Match Serie A", cat: "Individuale", nazione: "Italia", img: trophyImg('Italia/man-of-the-match-serie-a.png') },
+    serie_a: { name: "Serie A", cat: "Nazionale", nazione: "Italia", img: trophyImg('Italia/serie-a.png') },
+    serie_b: { name: "Serie B", cat: "Nazionale", nazione: "Italia", img: trophyImg('Italia/serie-b.png') },
+    supercoppa_serie_c: { name: "Supercoppa di Serie C", cat: "Lega Pro", nazione: "Italia", img: trophyImg('Italia/supercoppa-serie-c.png') },
+    coppa_serie_c: { name: "Coppa Italia Serie C", cat: "Lega Pro", nazione: "Italia", img: trophyImg('Italia/coppa-serie-c.png') },
+    serie_c: { name: "Serie C", cat: "Lega Pro", nazione: "Italia", img: trophyImg('Italia/serie-c-a.png') },
+    serie_c_a: { name: "Serie C (Girone A)", cat: "Lega Pro", nazione: "Italia", img: trophyImg('Italia/serie-c-a.png') },
+    serie_c_b: { name: "Serie C (Girone B)", cat: "Lega Pro", nazione: "Italia", img: trophyImg('Italia/serie-c-b.png') },
+    serie_c_c: { name: "Serie C (Girone C)", cat: "Lega Pro", nazione: "Italia", img: trophyImg('Italia/serie-c-c.png') },
+    supercoppa_serie_d: { name: "Supercoppa di Serie D", cat: "Dilettanti", nazione: "Italia", img: trophyImg('Italia/coppa-serie-d.png') },
+    coppa_serie_d: { name: "Coppa Italia Serie D", cat: "Dilettanti", nazione: "Italia", img: trophyImg('Italia/coppa-serie-d.png') },
+    serie_d: { name: "Serie D", cat: "Dilettanti", nazione: "Italia", img: trophyImg('serie-d.jpg') },
+    coppa_eccellenza: { name: "Coppa Eccellenza", cat: "Dilettanti", nazione: "Italia", img: trophyImg('Italia/coppa-eccellenza.png') },
+    eccellenza: { name: "Eccellenza", cat: "Dilettanti", nazione: "Italia", img: trophyImg('eccellenza.jpg') },
+    promozione: { name: "Promozione", cat: "Dilettanti", nazione: "Italia", img: trophyImg('promozione.jpg') },
+    prima_categoria: { name: "Prima Categoria", cat: "Dilettanti", nazione: "Italia", img: trophyImg('prima-categoria.jpg') },
+    seconda_categoria: { name: "Seconda Categoria", cat: "Dilettanti", nazione: "Italia", img: trophyImg('seconda-categoria.jpg') },
+    terza_categoria: { name: "Terza Categoria", cat: "Dilettanti", nazione: "Italia", img: trophyImg('terza-categoria.jpg') },
+
+    // MONDO / INTERNAZIONALI
+    ballon_dor: { name: "Pallone d'oro", desc: "Miglior giocatore che ha avuto più prestazioni ottimali in tutta la stagione calcistica", cat: "Individuale", nazione: "Mondo", img: trophyImg('Internazionali/pallone-doro.png') },
+    scarpa_doro: { name: "Scarpa d'oro", desc: "Miglior realizzatore di tutti i top campionati", cat: "Individuale", nazione: "Mondo", img: trophyImg('Internazionali/scarpa-doro.png') },
+    world_cup: { name: "Mondiali", cat: "Internazionale", nazione: "Mondo", img: trophyImg('Internazionali/mondiale.png') },
+    euro_cup: { name: "Europei", cat: "Internazionale", nazione: "Mondo", img: trophyImg('Internazionali/europei.png') },
+    club_world_cup: { name: "Mondiale per Club", cat: "Internazionale", nazione: "Mondo", img: trophyImg('Internazionali/mondiale-club.png') },
+    champions_league: { name: "Champions League", cat: "Europeo", nazione: "Mondo", img: trophyImg('Internazionali/champions-league.png') },
+    europa_league: { name: "Europa League", cat: "Europeo", nazione: "Mondo", img: trophyImg('Internazionali/europa-league.png') },
+    conference_league: { name: "Conference League", cat: "Europeo", nazione: "Mondo", img: trophyImg('Internazionali/conference-league.png') },
+    supercoppa_uefa: { name: "Supercoppa UEFA", cat: "Europeo", nazione: "Mondo", img: trophyImg('Internazionali/supercoppa-uefa.png') },
+    supercoppa_euro: { name: "Supercoppa UEFA", cat: "Europeo", nazione: "Mondo", img: trophyImg('Internazionali/supercoppa-uefa.png') },
+    guanto_doro: { name: "Guanto d'oro", desc: "Miglior portiere", cat: "Individuale", nazione: "Mondo", img: trophyImg('Internazionali/guanto-doro.png') },
+    motm_cl: { name: "Man Of the Match Champions League", desc: "Migliore in campo della UEFA Champions League", cat: "Individuale", nazione: "Mondo", img: trophyImg('Internazionali/man-of-the-match (Migliore-in-campo-della-uefa-champions-league).png') },
+    motm_world_cup: { name: "Michelob ULTRA Superior Player of the Match", desc: "Migliore in campo di una gara dei mondiali", cat: "Individuale", nazione: "Mondo", img: trophyImg('Internazionali/Michelob ULTRA Superior-player-of-the-match -trophy.png') },
+    player_of_year: { name: "Giocatore dell'Anno", cat: "Individuale", nazione: "Mondo", img: trophyImg('giocatore-anno.jpg') },
+
+    // FRANCIA
+    ligue1: { name: "Ligue 1", cat: "Nazionale", nazione: "Francia", img: trophyImg('Francia/ligue-1.png') },
+    coupe_france: { name: "Coupe De France", cat: "Nazionale", nazione: "Francia", img: trophyImg('Francia/coupe-de-france.png') },
+
+    // GERMANIA
+    bundesliga: { name: "Bundesliga", cat: "Nazionale", nazione: "Germania", img: trophyImg('Germania/bundesliga.png') },
+    dfb_pokal: { name: "DFB Pokal (Coppa di Germania)", cat: "Nazionale", nazione: "Germania", img: trophyImg('Germania/dfb-pokal-coppa-di-germania.png') },
+    dfl_supercup: { name: "DFL Supercup (Supercoppa di Germania)", cat: "Nazionale", nazione: "Germania", img: trophyImg('Germania/dfl-supercup-supercoppa-di-germania.png') },
+
+    // INGHILTERRA
+    efl_cup: { name: "EFL Cup", cat: "Nazionale", nazione: "Inghilterra", img: trophyImg('Inghilterra/efl-cup.png') },
+    fa_community_shield: { name: "FA Community Shield", cat: "Nazionale", nazione: "Inghilterra", img: trophyImg('Inghilterra/fa-community-shield.png') },
+    fa_cup: { name: "FA Cup", cat: "Nazionale", nazione: "Inghilterra", img: trophyImg('Inghilterra/fa-cup.png') },
+    motm_premier: { name: "Man Of The Match Premier League", cat: "Individuale", nazione: "Inghilterra", img: trophyImg('Inghilterra/man-of-the-match-premier-league.png') },
+    premier: { name: "Premier League", cat: "Nazionale", nazione: "Inghilterra", img: trophyImg('Inghilterra/premier-league.png') },
+
+    // SPAGNA
+    copa_del_rey: { name: "Copa del Rey (Coppa Spagnola)", cat: "Nazionale", nazione: "Spagna", img: trophyImg('Spagna/copa-del-rey-coppa-spagnola.png') },
+    laliga: { name: "La Liga", cat: "Nazionale", nazione: "Spagna", img: trophyImg('Spagna/la-liga.png') },
+    supercopa_espana: { name: "Supercopa de Espana", cat: "Nazionale", nazione: "Spagna", img: trophyImg('Spagna/supercopa-de-espana.png') },
+
+    // ALTRI MONDIALI / CAMPIONATI
     primeira: { name: "Primeira Liga", cat: "Nazionale", img: 'immagini/squadre-loghi/primeira-liga.png?v=20260814_COMP' },
     eredivisie: { name: "Eredivisie", cat: "Nazionale", img: 'immagini/squadre-loghi/eredivisie.png?v=20260814_COMP' },
     brasileirao: { name: "Brasileirao", cat: "Nazionale", img: trophyImg('Italia/serie-a.png') },
     liga_arg: { name: "Liga Argentina", cat: "Nazionale", img: trophyImg('Italia/serie-a.png') },
     liga_mx: { name: "Liga MX", cat: "Nazionale", img: 'immagini/squadre-loghi/liga-mx.png?v=20260814_COMP' },
-    fa_cup: { name: "FA Cup", cat: "Nazionale", img: trophyImg('Inghilterra/fa-cup.png') },
-    copa_del_rey: { name: "Copa del Rey", cat: "Nazionale", img: trophyImg('Spagna/copa-del-rey-coppa-spagnola.png') },
-    dfb_pokal: { name: "DFB Pokal", cat: "Nazionale", img: trophyImg('Germania/dfb-pokal-coppa-di-germania.png') },
-    coupe_france: { name: "Coupe de France", cat: "Nazionale", img: trophyImg('Francia/coupe-de-france.png') },
     taca_portugal: { name: "Taca de Portugal", cat: "Nazionale", img: trophyImg('Italia/coppa-italia.png') },
     knvb_cup: { name: "KNVB Beker", cat: "Nazionale", img: trophyImg('Italia/coppa-italia.png') },
     copa_brasil: { name: "Copa do Brasil", cat: "Nazionale", img: trophyImg('Italia/coppa-italia.png') },
@@ -2628,6 +2660,11 @@
       return 'serie_c_a';
     }
     if (u.indexOf('SERIE D') >= 0) return 'serie_d';
+    if (u.indexOf('ECCELLENZA') >= 0) return 'eccellenza';
+    if (u.indexOf('PROMOZIONE') >= 0) return 'promozione';
+    if (u.indexOf('PRIMA CATEGORIA') >= 0) return 'prima_categoria';
+    if (u.indexOf('SECONDA CATEGORIA') >= 0) return 'seconda_categoria';
+    if (u.indexOf('TERZA CATEGORIA') >= 0) return 'terza_categoria';
     return '';
   }
 
@@ -2645,6 +2682,7 @@
     if (u.indexOf('SERIE A') >= 0 || u.indexOf('SERIE B') >= 0) return 'coppa_italia';
     if (u.indexOf('SERIE C') >= 0) return 'coppa_serie_c';
     if (u.indexOf('SERIE D') >= 0) return 'coppa_serie_d';
+    if (u.indexOf('ECCELLENZA') >= 0) return 'coppa_eccellenza';
     return '';
   }
 
@@ -2669,40 +2707,83 @@
     var league = String((club && (club.l || club.league)) || '');
     var tier = clubLeagueTier(club);
     var apps = (stats && stats.apps) || 0;
-    var ga = ((stats && stats.goals) || 0) + ((stats && stats.assists) || 0);
+    var goals = (stats && stats.goals) || 0;
+    var ga = goals + ((stats && stats.assists) || 0);
+    var isGK = (p && p.position === 'GK');
     var title = leagueTitleKey(league);
     var cup = leagueCupKey(league);
     var power = clubTrophyPower(club);
     if (p && p.isCaptain) power = Math.min(1, power + 0.04);
     if (apps < 8 || (p && p.eventMods && p.eventMods.suspended)) return trophies;
+
     var titleChance = (tier === 1 ? 0.055 : tier === 2 ? 0.08 : 0.11) + power * (tier === 1 ? 0.22 : 0.12);
-    if (title && Math.random() < titleChance) trophies.push(title);
+    if (title && Math.random() < titleChance) {
+      trophies.push(title);
+      // Supercoppe / tornei collegati
+      if (title === 'premier' && Math.random() < 0.35) trophies.push('fa_community_shield');
+      if (title === 'laliga' && Math.random() < 0.35) trophies.push('supercopa_espana');
+      if (title === 'bundesliga' && Math.random() < 0.35) trophies.push('dfl_supercup');
+      if (title === 'serie_a' && Math.random() < 0.35) trophies.push('supercoppa_italia');
+      if (/serie_c/.test(title) && Math.random() < 0.30) trophies.push('supercoppa_serie_c');
+      if (title === 'serie_d' && Math.random() < 0.25) trophies.push('supercoppa_serie_d');
+    }
+
     var cupChance = 0.08 + power * 0.12;
     if (cup && Math.random() < cupChance) {
       trophies.push(cup);
-      if (cup === 'coppa_italia' && Math.random() < 0.28 + power * 0.15) trophies.push('supercoppa_italia');
-      if (cup === 'coppa_serie_c' && Math.random() < 0.22) trophies.push('supercoppa_serie_c');
+      if (cup === 'coppa_italia' && Math.random() < 0.28 + power * 0.15 && trophies.indexOf('supercoppa_italia') < 0) trophies.push('supercoppa_italia');
+      if (cup === 'coppa_serie_c' && Math.random() < 0.22 && trophies.indexOf('supercoppa_serie_c') < 0) trophies.push('supercoppa_serie_c');
+      if (cup === 'coppa_serie_d' && Math.random() < 0.20 && trophies.indexOf('supercoppa_serie_d') < 0) trophies.push('supercoppa_serie_d');
+      if (cup === 'dfb_pokal' && Math.random() < 0.30 && trophies.indexOf('dfl_supercup') < 0) trophies.push('dfl_supercup');
+      if (cup === 'copa_del_rey' && Math.random() < 0.30 && trophies.indexOf('supercopa_espana') < 0) trophies.push('supercopa_espana');
+      if (cup === 'fa_cup') {
+        if (Math.random() < 0.35 && trophies.indexOf('fa_community_shield') < 0) trophies.push('fa_community_shield');
+        if (Math.random() < 0.28) trophies.push('efl_cup');
+      }
     }
+
     if (tier === 1 || (club && club.world)) {
       var cl = power * 0.22;
       if ((newOvr || 49) < 68) cl *= 0.5;
       if (apps < 16) cl *= 0.55;
       if (Math.random() < cl) {
         trophies.push('champions_league');
-        if (Math.random() < 0.32) trophies.push('supercoppa_euro');
+        if (Math.random() < 0.32) trophies.push('supercoppa_uefa');
         if (Math.random() < 0.22) trophies.push('club_world_cup');
+        if (newOvr >= 80 && Math.random() < 0.25) trophies.push('motm_cl');
       } else if (Math.random() < 0.08 + power * 0.1) {
         trophies.push('europa_league');
       } else if (Math.random() < 0.07 + (1 - power) * 0.05) {
         trophies.push('conference_league');
       }
+
+      // Man of the Match di campionato
+      if (title === 'serie_a' && newOvr >= 78 && Math.random() < 0.20) trophies.push('motm_serie_a');
+      if (title === 'premier' && newOvr >= 80 && Math.random() < 0.20) trophies.push('motm_premier');
+
+      // Scarpa d'oro per capocannoniere top
+      if (!isGK && goals >= 24 && newOvr >= 85 && Math.random() < 0.12) {
+        trophies.push('scarpa_doro');
+      }
+      // Guanto d'oro per portieri
+      if (isGK && newOvr >= 84 && apps >= 28 && Math.random() < 0.15) {
+        trophies.push('guanto_doro');
+      }
     }
-    if (newOvr >= 88 && ga >= 18 && Math.random() < 0.045) trophies.push('ballon_dor');
-    if (newOvr >= 84 && ga >= 12 && Math.random() < 0.055) trophies.push('player_of_year');
+
+    // Pallone d'Oro / Giocatore dell'anno
+    if (newOvr >= 88 && (ga >= 18 || (isGK && newOvr >= 90)) && Math.random() < 0.045) trophies.push('ballon_dor');
+    if (newOvr >= 84 && (ga >= 12 || (isGK && newOvr >= 86)) && Math.random() < 0.055) trophies.push('player_of_year');
+
     var year = seasonYearOf(age);
     if ((p.caps || 0) >= 8 && newOvr >= 82) {
-      if (year % 4 === 2 && Math.random() < 0.16) trophies.push('world_cup');
-      if (year % 4 === 0 && Math.random() < 0.16) trophies.push('euro_cup');
+      if (year % 4 === 2 && Math.random() < 0.16) {
+        trophies.push('world_cup');
+        if (newOvr >= 85 && Math.random() < 0.30) trophies.push('motm_world_cup');
+      }
+      if (year % 4 === 0 && Math.random() < 0.16) {
+        trophies.push('euro_cup');
+      }
     }
     return trophies;
   }

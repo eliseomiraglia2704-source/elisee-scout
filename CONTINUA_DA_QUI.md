@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-08-27**
-Ultimo fatto: **Loghi Ufficiali Eccellenza Girone B HD integrati** — Scaricati e configurati i loghi originali in alta definizione per tutte le squadre (Futball Cava Ronco, Imolese, Massa Lombarda, Medicina Fossatone, Osteria Grande, Pietracuta, Rimini, Russi, Sammaurese, San Marino, Sanpaimola, Santarcangelo, Savignanese, Valsanterno, Vis Novafeltria) nel catalogo loghi societari `immagini/squadre-loghi/`.
-Feature precedente: Scopri profili: riordino e allineamento card profili & pulsanti azione.
+Ultimo aggiornamento: **2026-08-29**
+Ultimo fatto: **Nomenclatura Ufficiale & Mappatura Completa Trofei per Nazione e Premi Individuali** — Mappati e configurati tutti i trofei ufficiali divisi per Nazione (Italia, Mondo/Internazionali, Francia, Germania, Inghilterra, Spagna), premi individuali (Pallone d'Oro, Scarpa d'Oro, Guanto d'Oro, Michelob ULTRA Superior Player of the Match, MOTM Serie A/Premier/UCL) con assegnazione e percorsi icona in `minigioco-carriera.js` e `immagini/minigioco/loghi-trofei/README.txt`.
+Feature precedente: Loghi Ufficiali Eccellenza Girone B HD integrati.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,14 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Nomenclatura Ufficiale & Mappatura Completa Trofei per Nazione e Premi Individuali:
+  - **Italia**: Supercoppa Italia, Coppa Italia, Man Of the Match Serie A, Serie A, Serie B, Supercoppa di Serie C, Coppa Italia Serie C, Serie C, Supercoppa di Serie D, Coppa Italia Serie D, Serie D, Coppa Eccellenza (più dilettanti Promozione, 1ª/2ª/3ª Categoria).
+  - **Mondo / Internazionali**: Pallone d'oro (Miglior giocatore con più prestazioni ottimali nella stagione), Scarpa d'oro (Miglior realizzatore top campionati), Mondiali, Europei, Mondiale per Club, Champions League, Europa League, Conference League, Supercoppa UEFA, Guanto d'oro (miglior portiere), Man Of the Match Champions League, Michelob ULTRA Superior Player of the Match (Migliore in campo gara mondiali), Giocatore dell'Anno.
+  - **Francia**: Ligue 1, Coupe De France.
+  - **Germania**: Bundesliga, DFB Pokal (Coppa di Germania), DFL Supercup (Supercoppa di Germania).
+  - **Inghilterra**: EFL Cup, FA Community Shield, FA Cup, Man Of The Match Premier League, Premier League.
+  - **Spagna**: Copa del Rey (Coppa Spagnola), La Liga, Supercopa de Espana.
+  - Integrazione completa in `TROPHIES_MAP`, simulazione stagioni e vetrina palmarès in `minigioco-carriera.js` e documentazione ufficiale in `immagini/minigioco/loghi-trofei/README.txt`. Cache `TROPHIES1`.
 - **2026-08-27** — Profilo Allenatore & Profilo Vice Allenatore da PDF ufficiale (`Profilo_Allenatore_Vice_Allenatore_260827_203503.pdf`):
   - **Allenatore**: Dati ufficiali, qualifica UEFA, status Disponibile/Club, collegamento diretto bidirezionale con il Vice Allenatore, Moduli Preferiti (Principale/Secondario) con Mappa Posizionale FM (motore Heatmap), Formazione della Settimana (Top 11) con apertura Player Card al click sui calciatori schierati e condivisione Story Social 9:16 (Instagram / TikTok), Hub Esercitazioni Pre-Partita con toggle Privato/Pubblico, Bacheca Digitale Trofei Palmarès, Dashboard GPS Squadra, Analisi Heatmap Tattica Sovrapposta e Segnalazioni Calciomercato al DS (Wishlist).
   - **Vice Allenatore**: Dati e licenza UEFA B / Collaboratore, collegamento diretto con l'Allenatore Capo (Mister), Aree di Specializzazione Tecnica (Palle inattive, Difesa/Reparti, Match analysis, Riscaldamento), Schede Workstation operative pre-seduta, Palmarès di Staff, Bozza Formazione della Settimana, Co-Gestione GPS con alert fatica e Analisi Heatmap individuali. Cache `COACH1`.
