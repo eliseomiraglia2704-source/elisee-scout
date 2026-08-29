@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Aggiornato Logo Ufficiale Tolmezzo Carnia** — Scaricato e integrato in formato RGBA PNG (`immagini/squadre-loghi/ecc-tolmezzo-carnia.png` e `tolmezzo-carnia.png`) il logo ufficiale del Tolmezzo Carnia (Eccellenza Friuli-Venezia Giulia) da sorgente LND FVG.
-Feature precedente: Aggiornato Logo Ufficiale Teor.
+Ultimo fatto: **Aggiornato Logo Ufficiale UF Monfalcone** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-uf-monfalcone.png`, `uf-monfalcone.png`, `monfalcone.png`) il logo ufficiale dell'UF Monfalcone (Eccellenza Friuli-Venezia Giulia) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Tolmezzo Carnia.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Aggiornato Logo Ufficiale UF Monfalcone:
+  - Scaricato e integrato in RGBA (1095x1200px) il logo dell'UF Monfalcone da Tuttocampo in `immagini/squadre-loghi/ecc-uf-monfalcone.png`, `uf-monfalcone.png` e `monfalcone.png`. Cache `LOGOMONF1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Tolmezzo Carnia:
   - Scaricato e integrato in RGBA il logo del Tolmezzo Carnia da LND FVG in `immagini/squadre-loghi/ecc-tolmezzo-carnia.png` e `tolmezzo-carnia.png`. Cache `LOGOTOL1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Teor:
