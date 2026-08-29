@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Aggiornato Logo Ufficiale Sanvitese** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-sanvitese.png` e `sanvitese.png`) il logo ufficiale della Sanvitese (Eccellenza Friuli-Venezia Giulia) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale San Luigi.
+Ultimo fatto: **Aggiornato Logo Ufficiale Tamai** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-tamai.png` e `tamai.png`) il logo ufficiale del Tamai (Eccellenza Friuli-Venezia Giulia) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Sanvitese.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Aggiornato Logo Ufficiale Tamai:
+  - Scaricato e integrato in RGBA (999x1000px) il logo del Tamai da Tuttocampo in `immagini/squadre-loghi/ecc-tamai.png` e `tamai.png`. Cache `LOGOTAM1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Sanvitese:
   - Scaricato e integrato in RGBA (567x720px) il logo della Sanvitese da Tuttocampo in `immagini/squadre-loghi/ecc-sanvitese.png` e `sanvitese.png`. Cache `LOGOSANV1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale San Luigi:
