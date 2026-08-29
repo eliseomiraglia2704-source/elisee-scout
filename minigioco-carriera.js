@@ -809,41 +809,37 @@
   function close() {
     clearIntroTimer();
     state.step = 'closed';
-    if (!root) return;
-    root.classList.remove('is-open');
-    root.innerHTML = '';
-    try {
-      root.style.removeProperty('display');
-      root.style.removeProperty('visibility');
-      root.style.removeProperty('opacity');
-      root.style.removeProperty('pointer-events');
-    } catch (e) {}
+    if (root) {
+      root.classList.remove('is-open');
+      root.innerHTML = '';
+      try {
+        root.style.setProperty('display', 'none', 'important');
+        root.style.setProperty('visibility', 'hidden', 'important');
+        root.style.setProperty('opacity', '0', 'important');
+        root.style.setProperty('pointer-events', 'none', 'important');
+      } catch (e) {}
+    }
     lockPageScroll(false);
   }
 
   function leaveMinigioco() {
     close();
-    var h = String(location.hash || '');
-    if (h.indexOf('minigioco') >= 0) {
-      try {
-        if (window.history && window.history.length > 1) {
-          history.back();
-          return;
-        }
-      } catch (e) {}
-    }
     var view = 'home';
     var hash = '#hero';
     try {
       view = sessionStorage.getItem('elisee_mg_prev_view') || 'home';
       hash = sessionStorage.getItem('elisee_mg_prev_hash') || '#hero';
     } catch (e2) {}
-    if (view === 'minigioco') {
+    if (!view || view === 'minigioco') {
       view = 'home';
       hash = '#hero';
     }
     if (typeof window.switchView === 'function') {
       window.switchView(view, hash);
+    } else {
+      try {
+        location.hash = hash;
+      } catch (e3) {}
     }
   }
 
