@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Aggiornato Logo Ufficiale Aurora Cantalupo** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-aurora-cantalupo.png`, `aurora-cantalupo.png`, `cantalupo.png`) il logo ufficiale dell'Aurora Cantalupo (Eccellenza Lombardia) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Assago.
+Ultimo fatto: **Aggiornato Logo Ufficiale Baranzatese** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-baranzatese.png`, `baranzatese.png`) il logo ufficiale della Baranzatese (Eccellenza Lombardia) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Aurora Cantalupo.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Aggiornato Logo Ufficiale Baranzatese:
+  - Scaricato e integrato in RGBA (1200x1395px) il logo della Baranzatese da Tuttocampo in `immagini/squadre-loghi/ecc-baranzatese.png` e `baranzatese.png`. Cache `LOGOBAR1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Aurora Cantalupo:
   - Scaricato e integrato in RGBA (654x724px) il logo dell'Aurora Cantalupo da Tuttocampo in `immagini/squadre-loghi/ecc-aurora-cantalupo.png`, `aurora-cantalupo.png` e `cantalupo.png`. Cache `LOGOCANT1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Assago:
