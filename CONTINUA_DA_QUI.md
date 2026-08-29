@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Aggiornato Logo Ufficiale Assago** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-assago.png`, `assago.png`) il logo ufficiale dell'Assago (Eccellenza Lombardia) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Ardor Lazzate.
+Ultimo fatto: **Aggiornato Logo Ufficiale Aurora Cantalupo** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-aurora-cantalupo.png`, `aurora-cantalupo.png`, `cantalupo.png`) il logo ufficiale dell'Aurora Cantalupo (Eccellenza Lombardia) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Assago.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Aggiornato Logo Ufficiale Aurora Cantalupo:
+  - Scaricato e integrato in RGBA (654x724px) il logo dell'Aurora Cantalupo da Tuttocampo in `immagini/squadre-loghi/ecc-aurora-cantalupo.png`, `aurora-cantalupo.png` e `cantalupo.png`. Cache `LOGOCANT1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Assago:
   - Scaricato e integrato in RGBA (658x1000px) il logo dell'Assago da Tuttocampo in `immagini/squadre-loghi/ecc-assago.png` e `assago.png`. Cache `LOGOASS1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Ardor Lazzate:
