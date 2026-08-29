@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Aggiornato Logo Ufficiale Forum Julii** — Scaricato e integrato in alta risoluzione PNG con trasparenza (`immagini/squadre-loghi/ecc-forum-julii.png` e `forum-julii.png`) il logo ufficiale del Forum Julii (Eccellenza Friuli-Venezia Giulia) da sorgente Tuttocampo.
-Feature precedente: Aggiornati Loghi Ufficiali Chions, Codroipo e Fontanafredda.
+Ultimo fatto: **Aggiornato Logo Ufficiale Juventina Sant'Andrea** — Scaricato e integrato in formato RGBA PNG (`immagini/squadre-loghi/ecc-juventina-sant-andrea.png` e `juventina-sant-andrea.png`) il logo ufficiale della Juventina Sant'Andrea (Eccellenza Friuli-Venezia Giulia) da sorgente LND FVG.
+Feature precedente: Aggiornato Logo Ufficiale Forum Julii.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Aggiornato Logo Ufficiale Juventina Sant'Andrea:
+  - Scaricato e integrato in RGBA il logo della Juventina Sant'Andrea da LND FVG in `immagini/squadre-loghi/ecc-juventina-sant-andrea.png` e `juventina-sant-andrea.png`. Cache `LOGOJUV1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Forum Julii:
   - Scaricato e integrato in RGBA il logo del Forum Julii da Tuttocampo in `immagini/squadre-loghi/ecc-forum-julii.png` e `forum-julii.png`. Cache `LOGOFJ1`.
 - **2026-08-29** — Aggiornati Loghi Ufficiali Codroipo e Fontanafredda:
