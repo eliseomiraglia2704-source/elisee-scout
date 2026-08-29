@@ -3175,6 +3175,26 @@
     return delta;
   }
 
+  function repairCareerOvrAndTier(p) {
+    if (!p) return;
+    if (p.history && p.history.length) {
+      p.history.forEach(function (h) {
+        if (!h) return;
+        var hTier = clubLeagueTier({ l: h.league, t: h.t, n: h.club });
+        var hR = CATEGORY_OVR_RANGES[hTier] || CATEGORY_OVR_RANGES[4];
+        if (h.ovr > hR.max) h.ovr = hR.max;
+        if (h.ovr < hR.min && !h.isFree && h.club !== 'Svincolato') h.ovr = hR.min;
+      });
+    }
+    if (p.club && !p.club.isFree && p.club.n !== 'Svincolato') {
+      var curTier = clubLeagueTier(p.club);
+      var curRange = CATEGORY_OVR_RANGES[curTier] || CATEGORY_OVR_RANGES[4];
+      if (p.ovr > curRange.max) p.ovr = curRange.max;
+      if (p.ovr < curRange.min) p.ovr = curRange.min;
+    }
+    p.valueM = calcRealisticValueM(p.ovr, p.age, p.club);
+  }
+
   function seasonSim(p, selectedOffer) {
     var years = stepYears();
     var last = p.history[p.history.length - 1];
@@ -3225,8 +3245,11 @@
       if (p.eventMods && typeof p.eventMods.ovrBonus === 'number') {
         newOvr += p.eventMods.ovrBonus;
       }
-      if (newOvr < 40) newOvr = 40;
-      if (newOvr > 94) newOvr = 94;
+      var tierRange = CATEGORY_OVR_RANGES[newTier] || CATEGORY_OVR_RANGES[4];
+      if (newOvr > tierRange.max) newOvr = tierRange.max;
+      if (newOvr < tierRange.min && !club.isFree && club.n !== 'Svincolato') newOvr = tierRange.min;
+      if (newOvr < 0) newOvr = 0;
+      if (newOvr > 93) newOvr = 93;
       var seasonTrophyKeys = generateSeasonTrophies(p, club, newOvr, stats, seasonAge);
       var row = {
         age: seasonAge,
@@ -3588,23 +3611,27 @@
   function weeklyWage(ovr, age, club, opts) {
     opts = opts || {};
     var tier = clubLeagueTier(club);
-    var o = Number(ovr) || 49;
+    var o = Number(ovr) || 25;
     var a = Number(age) || 20;
     var base;
-    if (opts.isYouth) base = 70 + Math.max(0, o - 45) * 6;
+    if (opts.isYouth) base = 30 + Math.max(0, o - 20) * 3;
     else if (club && club.isFree) base = 0;
-    else if (tier >= 5) base = 110 + Math.max(0, o - 44) * 9;
-    else if (tier === 4) base = 180 + Math.max(0, o - 45) * 16;
-    else if (tier === 3) base = 480 + Math.max(0, o - 50) * 38;
-    else if (tier === 2) base = 1800 + Math.pow(Math.max(0, o - 58), 1.35) * 70;
-    else base = 4200 + Math.pow(Math.max(0, o - 64), 1.55) * 200 * clubPrestige(club);
+    else if (tier >= 9) base = 10;
+    else if (tier === 8) base = 15 + Math.max(0, o - 5) * 2;
+    else if (tier === 7) base = 25 + Math.max(0, o - 12) * 3;
+    else if (tier === 6) base = 40 + Math.max(0, o - 19) * 4;
+    else if (tier === 5) base = 60 + Math.max(0, o - 24) * 5;
+    else if (tier === 4) base = 120 + Math.max(0, o - 30) * 10;
+    else if (tier === 3) base = 350 + Math.max(0, o - 43) * 25;
+    else if (tier === 2) base = 1500 + Math.pow(Math.max(0, o - 59), 1.35) * 60;
+    else base = 4200 + Math.pow(Math.max(0, o - 76), 1.55) * 200 * clubPrestige(club);
     if (a <= 18) base *= 0.52;
     else if (a <= 21) base *= 0.72;
     else if (a >= 34) base *= 0.68;
     if (opts.isLoan) base *= 0.55;
     if (club && (club.failed || club.justFailed)) base *= 0.42;
     if (base <= 0) return 0;
-    return Math.max(50, Math.round(base / 10) * 10);
+    return Math.max(10, Math.round(base / 5) * 5);
   }
 
   function offerContractYears(p, offer) {
@@ -4244,6 +4271,7 @@
       renderLanding();
       return;
     }
+    repairCareerOvrAndTier(p);
     var totApps = (p.history || []).reduce(function (a, b) { return a + (b.apps || 0); }, 0);
     var totGoals = (p.history || []).reduce(function (a, b) { return a + (b.goals || 0); }, 0);
     var totAssists = (p.history || []).reduce(function (a, b) { return a + (b.assists || 0); }, 0);
@@ -4385,6 +4413,7 @@
       restoreLeagueBoard(p);
       repairClubTiers();
       scrubHistoryFailMarks(p);
+      repairCareerOvrAndTier(p);
     }
     if (p.club && !p.club.isFree) {
       p.club = liveClub(p.club) || p.club;
@@ -4396,6 +4425,7 @@
       p.natGoals = 0;
       p.natAst = 0;
     }
+    repairCareerOvrAndTier(p);
     p.valueM = calcRealisticValueM(p.ovr, p.age, p.club);
     var last = lastPre;
     var offers = getMarketOffers(p);

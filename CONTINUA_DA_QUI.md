@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Parametri di Crescita Overall (OVR) Giocatore/Giocatrice per Categoria** — Integrata la scala ufficiale di overall per tutte le 9 categorie (Serie A min. 76 / max. 93, Serie B min. 59 / max. 75, Serie C min. 43 / max. 58, Serie D min. 30 / max. 42, Eccellenza min. 24 / max. 29, Promozione min. 19 / max. 23, Prima Categoria min. 12 / max. 18, Seconda Categoria min. 5 / max. 11, Terza Categoria min. 0 / max. 4) in `piramide-italia.js` (`CATEGORY_OVR_RANGES`) e `minigioco-carriera.js` (`minOvrForClub`, `maxOvrForClub`, `leagueParOvr`, `ovrColor`).
-Feature precedente: Tetto Stimato Minimo e Massimo di Prezzo per Categoria.
+Ultimo fatto: **Cap Rigido Overall per Categoria (Fix Eccellenza max 29 OVR)** — Risolto il bug per cui un calciatore in Eccellenza (o altre categorie dilettantistiche) poteva accumulare fino a 75/76 di OVR e stipendi/valori da professionista: introdotta la funzione automatica di riparazione e clamping `repairCareerOvrAndTier` (vincola lo storico e il valore attuale a max 29 OVR in Eccellenza, max 42 in D, max 58 in C, ecc., riallineando valore a max 10k e ingaggio settimanale realistico dilettanti) sia al render che nella simulazione annuale `seasonSim`.
+Feature precedente: Parametri di Crescita Overall (OVR) Giocatore/Giocatrice per Categoria.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,10 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Cap Rigido Overall per Categoria (Fix Eccellenza max 29 OVR):
+  - Risolto il bug documentato con screenshot (calciatore del Nuova Spinazzola in Eccellenza che arrivava a OVR 75/76 e valore 61K anziché rimanere nel range dilettanti 24-29).
+  - Implementata la funzione `repairCareerOvrAndTier` che corregge e vincola automaticamente le carriere salvate (anche pregresse) e ogni stagione simulata (`seasonSim`) ai tetti min/max della categoria della squadra.
+  - Aggiornato calcolo ingaggi `weeklyWage` e valore economico parametrato alla categoria. Cache `ECCFIX1`.
 - **2026-08-29** — Parametri di Crescita Overall (OVR) Giocatore/Giocatrice per Categoria:
   - Definita la scala ufficiale dei valori di Overall (min / max) per le 9 categorie:
     - **Serie A**: min. 76 / max. 93
