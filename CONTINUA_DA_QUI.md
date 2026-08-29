@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Nuovo Flusso Provino Minigioco a Due Fasi (Selezione Categoria Piramide & Genere -> Scelta Squadra)** — All'avvio della carriera, la schermata Provino non mostra più una lista generica disordinata: ora l'utente visualizza innanzitutto il selettore Maschile (9 Categorie: Serie A, Serie B, Serie C, Serie D, Eccellenza, Promozione, Prima, Seconda, Terza Categoria) e Femminile (6 Categorie: Serie A, Serie B, Serie C, Eccellenza, Promozione, Primavera Femminile); selezionata la categoria desiderata, compaiono le relative squadre con ricerca dedicata, girone e logo, permettendo di scegliere la squadra ed eseguire il provino o avviare direttamente la carriera con OVR perfettamente allineato.
-Feature precedente: Fix Pulsante Chiudi Minigioco (Chiusura pulita verso Home/Dashboard senza uscire da Chrome).
+Ultimo fatto: **Aggiornato Logo Ufficiale Azzurra Premariacco** — Scaricato e integrato in alta risoluzione PNG (`immagini/squadre-loghi/ecc-azzurra-premariacco.png` e `azzurra-premariacco.png`) il logo ufficiale dell'Azzurra Premariacco (Eccellenza Friuli-Venezia Giulia) da sorgente Tuttocampo.
+Feature precedente: Nuovo Flusso Provino Minigioco a Due Fasi (Selezione Categoria Piramide & Genere -> Scelta Squadra).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Aggiornato Logo Ufficiale Azzurra Premariacco:
+  - Scaricato e integrato il logo ad alta risoluzione (1500x1500px trasparente) dell'Azzurra Premariacco da Tuttocampo in `immagini/squadre-loghi/ecc-azzurra-premariacco.png` e `azzurra-premariacco.png`. Cache `LOGOAZZ1`.
 - **2026-08-29** — Nuovo Flusso Provino Minigioco a Due Fasi (Selezione Categoria Piramide & Genere -> Scelta Squadra):
   - Riprogettata la schermata del Provino per non mostrare squadre alla rinfusa, ma guidare l'utente prima nella scelta della Categoria calcistica:
     - **Calcio Maschile**: Serie A, Serie B, Serie C, Serie D, Eccellenza, Promozione, Prima Categoria, Seconda Categoria, Terza Categoria (tutte e 9 le divisioni ufficiali).
