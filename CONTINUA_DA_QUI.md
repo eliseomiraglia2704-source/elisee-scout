@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Aggiornato Logo Ufficiale Azzurra Premariacco** — Scaricato e integrato in alta risoluzione PNG (`immagini/squadre-loghi/ecc-azzurra-premariacco.png` e `azzurra-premariacco.png`) il logo ufficiale dell'Azzurra Premariacco (Eccellenza Friuli-Venezia Giulia) da sorgente Tuttocampo.
-Feature precedente: Nuovo Flusso Provino Minigioco a Due Fasi (Selezione Categoria Piramide & Genere -> Scelta Squadra).
+Ultimo fatto: **Aggiornato Logo Ufficiale Casarsa** — Scaricato e integrato in alta risoluzione PNG (`immagini/squadre-loghi/ecc-casarsa.png` e `casarsa.png`) il logo ufficiale del Casarsa (Eccellenza Friuli-Venezia Giulia) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Azzurra Premariacco.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Aggiornato Logo Ufficiale Casarsa:
+  - Scaricato e integrato il logo ad alta risoluzione (756x1000px trasparente) del Casarsa da Tuttocampo in `immagini/squadre-loghi/ecc-casarsa.png` e `casarsa.png`. Cache `LOGOCAS1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Azzurra Premariacco:
   - Scaricato e integrato il logo ad alta risoluzione (1500x1500px trasparente) dell'Azzurra Premariacco da Tuttocampo in `immagini/squadre-loghi/ecc-azzurra-premariacco.png` e `azzurra-premariacco.png`. Cache `LOGOAZZ1`.
 - **2026-08-29** — Nuovo Flusso Provino Minigioco a Due Fasi (Selezione Categoria Piramide & Genere -> Scelta Squadra):
