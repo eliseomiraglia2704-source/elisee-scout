@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Aggiornato Logo Ufficiale Caronnese** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-caronnese.png`, `caronnese.png`, `caronnese-scf.png`) il logo ufficiale della Caronnese (Eccellenza Lombardia e Serie C Femminile) da Wikimedia.
-Feature precedente: Aggiornato Logo Ufficiale Besnatese.
+Ultimo fatto: **Aggiornato Logo Ufficiale Legnano** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-legnano.png`, `legnano.png`) il logo ufficiale del Legnano da Wikimedia.
+Feature precedente: Aggiornato Logo Ufficiale Caronnese.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Aggiornato Logo Ufficiale Legnano:
+  - Scaricato e integrato in RGBA (1280x1280px) il logo del Legnano da Wikimedia in `immagini/squadre-loghi/ecc-legnano.png` e `legnano.png`. Cache `LOGOLEGN1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Caronnese:
   - Scaricato e integrato in RGBA (639x959px) il logo della Caronnese da Wikimedia in `immagini/squadre-loghi/ecc-caronnese.png`, `caronnese.png` e `caronnese-scf.png`. Cache `LOGOCARON1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Besnatese:
