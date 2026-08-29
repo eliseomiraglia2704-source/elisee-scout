@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Aggiornato Logo Ufficiale Tribiano** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-tribiano.png`, `tribiano.png`) il logo ufficiale del Tribiano (Eccellenza Lombardia).
-Feature precedente: Aggiornato Logo Ufficiale Sedriano.
+Ultimo fatto: **Aggiornato Logo Ufficiale Vergiatese** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-vergiatese.png`, `vergiatese.png`) il logo ufficiale della Vergiatese (Eccellenza Lombardia) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Tribiano.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Aggiornato Logo Ufficiale Vergiatese:
+  - Scaricato e integrato in RGBA (700x1000px) il logo della Vergiatese da Tuttocampo in `immagini/squadre-loghi/ecc-vergiatese.png` e `vergiatese.png`. Cache `LOGOVERG1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Tribiano:
   - Scaricato e integrato in RGBA (805x999px) il logo del Tribiano in `immagini/squadre-loghi/ecc-tribiano.png` e `tribiano.png`. Cache `LOGOTRIB1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Sedriano:
