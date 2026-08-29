@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Aggiornato Logo Ufficiale Pro Fagagna** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-pro-fagagna.png` e `pro-fagagna.png`) il logo ufficiale della Pro Fagagna (Eccellenza Friuli-Venezia Giulia) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Pordenone.
+Ultimo fatto: **Aggiornato Logo Ufficiale Pro Gorizia** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-pro-gorizia.png` e `pro-gorizia.png`) il logo ufficiale della Pro Gorizia (Eccellenza Friuli-Venezia Giulia) da Wikimedia.
+Feature precedente: Aggiornato Logo Ufficiale Pro Fagagna.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Aggiornato Logo Ufficiale Pro Gorizia:
+  - Scaricato e integrato in RGBA (1323x1500px) il logo della Pro Gorizia da Wikimedia in `immagini/squadre-loghi/ecc-pro-gorizia.png` e `pro-gorizia.png`. Cache `LOGOPG1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Pro Fagagna:
   - Scaricato e integrato in RGBA (811x1000px) il logo della Pro Fagagna da Tuttocampo in `immagini/squadre-loghi/ecc-pro-fagagna.png` e `pro-fagagna.png`. Cache `LOGOPF1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Pordenone:
