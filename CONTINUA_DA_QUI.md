@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Aggiornato Logo Ufficiale Kras Repen** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-kras-repen.png` e `kras-repen.png`) il logo ufficiale del Kras Repen (Eccellenza Friuli-Venezia Giulia) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Juventina Sant'Andrea.
+Ultimo fatto: **Aggiornato Logo Ufficiale Muggia** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-muggia.png` e `muggia.png`) il logo ufficiale del Muggia (Eccellenza Friuli-Venezia Giulia) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Kras Repen.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Aggiornato Logo Ufficiale Muggia:
+  - Scaricato e integrato in RGBA (507x720px) il logo del Muggia da Tuttocampo in `immagini/squadre-loghi/ecc-muggia.png` e `muggia.png`. Cache `LOGOMUG1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Kras Repen:
   - Scaricato e integrato in RGBA (1300x1301px) il logo del Kras Repen da Tuttocampo in `immagini/squadre-loghi/ecc-kras-repen.png` e `kras-repen.png`. Cache `LOGOKRAS1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Juventina Sant'Andrea:
