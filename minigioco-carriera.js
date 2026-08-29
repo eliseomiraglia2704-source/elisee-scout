@@ -2090,6 +2090,10 @@
 
   function clubLeagueTier(club) {
     var league = String((club && (club.l || club.league)) || '').toUpperCase();
+    if (league.indexOf('TERZA CATEGORIA') >= 0) return 9;
+    if (league.indexOf('SECONDA CATEGORIA') >= 0) return 8;
+    if (league.indexOf('PRIMA CATEGORIA') >= 0) return 7;
+    if (league.indexOf('PROMOZIONE') >= 0) return 6;
     if (league.indexOf('ECCELLENZA') >= 0) return 5;
     if (league.indexOf('SERIE D') >= 0) return 4;
     if (league.indexOf('SERIE C') >= 0) return 3;
@@ -2097,7 +2101,6 @@
     if (league.indexOf('SERIE A') >= 0) return 1;
     if (/PREMIER LEAGUE|LA LIGA|BUNDESLIGA|LIGUE 1|PRIMEIRA LIGA|EREDIVISIE|BRASILEIRAO|LIGA ARGENTINA|LIGA MX/.test(league)) return 1;
     if (/CHAMPIONSHIP|SEGUNDA|LIGUE 2|2\.\s*BUNDESLIGA/.test(league)) return 2;
-    if (/TERZA CATEGORIA|ECCELLENZA|PROMOZIONE/.test(league)) return 4;
     return (club && club.t) ? Number(club.t) : 4;
   }
 
@@ -2442,39 +2445,50 @@
     return 0.48;
   }
 
+  var CATEGORY_PRICE_RANGES = {
+    1: { name: 'Serie A', min: 5.0, max: 150.0, minLabel: '5 Mln.€', maxLabel: '150 Mln.€' },
+    2: { name: 'Serie B', min: 0.250, max: 4.90, minLabel: '250 mila€', maxLabel: '4,9 Mln.€' },
+    3: { name: 'Serie C', min: 0.050, max: 0.249, minLabel: '50 mila€', maxLabel: '249 mila€' },
+    4: { name: 'Serie D', min: 0.0099, max: 0.049, minLabel: '9,9 mila€', maxLabel: '49 mila€' },
+    5: { name: 'Eccellenza', min: 0.00090, max: 0.010, minLabel: '900€', maxLabel: '10 mila€' },
+    6: { name: 'Promozione', min: 0.00045, max: 0.000899, minLabel: '450€', maxLabel: '899€' },
+    7: { name: 'Prima Categoria', min: 0.00030, max: 0.000449, minLabel: '300€', maxLabel: '449€' },
+    8: { name: 'Seconda Categoria', min: 0.00010, max: 0.000299, minLabel: '100€', maxLabel: '299€' },
+    9: { name: 'Terza Categoria', min: 0.00001, max: 0.000100, minLabel: '10€', maxLabel: '100€' }
+  };
+
   function calcRealisticValueM(ovr, age, club) {
     if (!club || club.isFree || String(club.n || '') === 'Svincolato') {
-      return 0.02;
+      return 0.00005; // 50€ base per svincolato
     }
     var tier = clubLeagueTier(club);
-    var o = Math.max(40, Math.min(94, Number(ovr) || 49));
+    var range = CATEGORY_PRICE_RANGES[tier] || CATEGORY_PRICE_RANGES[4];
+    var minVal = range.min;
+    var maxVal = range.max;
+
+    var o = Math.max(40, Math.min(99, Number(ovr) || 50));
     var a = Number(age) || 20;
+
+    // Modificatore per età
     var ageMul = 1;
-    if (a <= 18) ageMul = 0.72;
-    else if (a <= 22) ageMul = 1.05;
-    else if (a <= 27) ageMul = 1.1;
-    else if (a <= 30) ageMul = 1;
-    else if (a <= 33) ageMul = 0.68;
-    else ageMul = Math.max(0.28, 0.5 - (a - 33) * 0.05);
-    var v;
-    if (tier >= 4) {
-      v = 0.02 + ((o - 45) / 25) * 0.05 * ageMul;
-      if (v > 0.075) v = 0.075;
-      if (v < 0.015) v = 0.015;
-    } else if (tier === 3) {
-      v = 0.04 + ((o - 48) / 26) * 0.1 * ageMul;
-      if (v > 0.15) v = 0.15;
-      if (v < 0.025) v = 0.025;
-    } else if (tier === 2) {
-      v = 0.12 + Math.pow(Math.max(0, o - 55) / 28, 1.55) * 2.5 * ageMul;
-      if (v > 3) v = 3;
-      if (v < 0.08) v = 0.08;
-    } else {
-      v = 0.35 + Math.pow(Math.max(0, o - 60) / 32, 2.05) * 72 * ageMul * clubPrestige(club);
-      if (v > 90) v = 90;
-      if (v < 0.2) v = 0.2;
-    }
-    return Math.round(v * 1000) / 1000;
+    if (a <= 18) ageMul = 0.88;
+    else if (a <= 23) ageMul = 1.06;
+    else if (a <= 28) ageMul = 1.10;
+    else if (a <= 31) ageMul = 1.0;
+    else if (a <= 34) ageMul = 0.90;
+    else ageMul = Math.max(0.72, 0.86 - (a - 34) * 0.035);
+
+    // Parametro medio OVR per tier
+    var parOvr = tier === 1 ? 78 : tier === 2 ? 68 : tier === 3 ? 60 : tier === 4 ? 54 : tier === 5 ? 50 : 46;
+    var ovrProg = Math.max(0, Math.min(1, (o - (parOvr - 15)) / 30));
+
+    var prestigeMul = (tier === 1) ? clubPrestige(club) : 1;
+    var v = minVal + (maxVal - minVal) * Math.pow(ovrProg, 1.35) * ageMul * (0.9 + 0.1 * prestigeMul);
+
+    if (v < minVal) v = minVal;
+    if (v > maxVal) v = maxVal;
+
+    return Math.round(v * 1000000) / 1000000;
   }
 
   function isUnsignedRow(rec) {
@@ -4986,8 +5000,18 @@
   }
 
   function formatValue(m) {
-    if (m >= 1) return (Math.round(m * 10) / 10).toString().replace('.', ',') + 'M';
-    return Math.round(m * 1000) + 'K';
+    var valEur = Math.round((Number(m) || 0) * 1000000);
+    if (valEur >= 1000000) {
+      var mln = valEur / 1000000;
+      var str = (Math.round(mln * 10) / 10).toString().replace('.', ',');
+      return str + ' Mln.€';
+    }
+    if (valEur >= 1000) {
+      var k = valEur / 1000;
+      var strK = (Math.round(k * 10) / 10).toString().replace('.', ',');
+      return strK + ' mila€';
+    }
+    return Math.max(10, valEur) + '€';
   }
 
   function open() {

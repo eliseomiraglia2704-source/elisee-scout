@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Nomenclatura Ufficiale & Mappatura Completa Trofei per Nazione e Premi Individuali** — Mappati e configurati tutti i trofei ufficiali divisi per Nazione (Italia, Mondo/Internazionali, Francia, Germania, Inghilterra, Spagna), premi individuali (Pallone d'Oro, Scarpa d'Oro, Guanto d'Oro, Michelob ULTRA Superior Player of the Match, MOTM Serie A/Premier/UCL) con assegnazione e percorsi icona in `minigioco-carriera.js` e `immagini/minigioco/loghi-trofei/README.txt`.
-Feature precedente: Loghi Ufficiali Eccellenza Girone B HD integrati.
+Ultimo fatto: **Tetto Stimato Minimo e Massimo di Prezzo per Categoria** — Configurate e implementate le fasce di quotazione e valutazione economica per tutte le 9 categorie della piramide calcistica (Serie A min. 5M / max. 150M, Serie B min. 250k / max. 4,9M, Serie C min. 50k / max. 249k, Serie D min. 9,9k / max. 49k, Eccellenza min. 900€ / max. 10k, Promozione min. 450€ / max. 899€, Prima Categoria min. 300€ / max. 449€, Seconda Categoria min. 100€ / max. 299€, Terza Categoria min. 10€ / max. 100€) in `piramide-italia.js` (`CATEGORY_PRICE_RANGES`) e `minigioco-carriera.js` (`calcRealisticValueM`, `formatValue`).
+Feature precedente: Nomenclatura Ufficiale & Mappatura Completa Trofei per Nazione e Premi Individuali.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,19 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Tetto Stimato Minimo e Massimo di Prezzo per Categoria:
+  - Definita la tabella ufficiale dei tetti di valutazione economica per tutte le 9 categorie:
+    - **Serie A**: min. 5 Mln.€ / max. 150 Mln.€
+    - **Serie B**: min. 250 mila€ / max. 4,9 Mln.€
+    - **Serie C**: min. 50 mila€ / max. 249 mila€
+    - **Serie D**: min. 9,9 mila€ / max. 49 mila€
+    - **Eccellenza**: min. 900€ / max. 10 mila€
+    - **Promozione**: min. 450€ / max. 899€
+    - **Prima Categoria**: min. 300€ / max. 449€
+    - **Seconda Categoria**: min. 100€ / max. 299€
+    - **Terza Categoria**: min. 10€ / max. 100€
+  - Esportato `EliseePiramide.CATEGORY_PRICE_RANGES` in `piramide-italia.js`.
+  - Aggiornato calcolo valore dinamico `calcRealisticValueM` e formattatore `formatValue` (Mln.€, mila€, €) in `minigioco-carriera.js`. Cache `VAL1`.
 - **2026-08-29** — Nomenclatura Ufficiale & Mappatura Completa Trofei per Nazione e Premi Individuali:
   - **Italia**: Supercoppa Italia, Coppa Italia, Man Of the Match Serie A, Serie A, Serie B, Supercoppa di Serie C, Coppa Italia Serie C, Serie C, Supercoppa di Serie D, Coppa Italia Serie D, Serie D, Coppa Eccellenza (più dilettanti Promozione, 1ª/2ª/3ª Categoria).
   - **Mondo / Internazionali**: Pallone d'oro (Miglior giocatore con più prestazioni ottimali nella stagione), Scarpa d'oro (Miglior realizzatore top campionati), Mondiali, Europei, Mondiale per Club, Champions League, Europa League, Conference League, Supercoppa UEFA, Guanto d'oro (miglior portiere), Man Of the Match Champions League, Michelob ULTRA Superior Player of the Match (Migliore in campo gara mondiali), Giocatore dell'Anno.

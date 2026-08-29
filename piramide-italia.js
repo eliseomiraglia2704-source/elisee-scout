@@ -233,6 +233,18 @@
     return 'Vincitore girone ' + g;
   }
 
+  var CATEGORY_PRICE_RANGES = {
+    'serie-a': { name: 'Serie A', min: 5000000, max: 150000000, minM: 5.0, maxM: 150.0, label: 'min. 5 Mln.€ / max. 150 Mln.€' },
+    'serie-b': { name: 'Serie B', min: 250000, max: 4900000, minM: 0.25, maxM: 4.9, label: 'min. 250 mila€ / max. 4,9 Mln.€' },
+    'serie-c': { name: 'Serie C', min: 50000, max: 249000, minM: 0.05, maxM: 0.249, label: 'min. 50 mila€ / max. 249 mila€' },
+    'serie-d': { name: 'Serie D', min: 9900, max: 49000, minM: 0.0099, maxM: 0.049, label: 'min. 9,9 mila€ / max. 49 mila€' },
+    'eccellenza': { name: 'Eccellenza', min: 900, max: 10000, minM: 0.0009, maxM: 0.010, label: 'min. 900€ / max. 10 mila€' },
+    'promozione': { name: 'Promozione', min: 450, max: 899, minM: 0.00045, maxM: 0.000899, label: 'min. 450€ / max. 899€' },
+    'prima-cat': { name: 'Prima Categoria', min: 300, max: 449, minM: 0.0003, maxM: 0.000449, label: 'min. 300€ / max. 449€' },
+    'seconda-cat': { name: 'Seconda Categoria', min: 100, max: 299, minM: 0.0001, maxM: 0.000299, label: 'min. 100€ / max. 299€' },
+    'terza-cat': { name: 'Terza Categoria', min: 10, max: 100, minM: 0.00001, maxM: 0.0001, label: 'min. 100€ / max. 100€' }
+  };
+
   root.EliseePiramide = {
     SERIE_C_GIRONI: SERIE_C_GIRONI,
     SERIE_D_GIRONI: SERIE_D_GIRONI,
@@ -247,6 +259,7 @@
     serieCGironeFromD: serieCGironeFromD,
     labelSerieC: labelSerieC,
     labelSerieD: labelSerieD,
-    keyOf: keyOf
+    keyOf: keyOf,
+    CATEGORY_PRICE_RANGES: CATEGORY_PRICE_RANGES
   };
 })(typeof window !== 'undefined' ? window : this);
