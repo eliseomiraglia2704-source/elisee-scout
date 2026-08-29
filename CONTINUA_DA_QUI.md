@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Aggiornato Logo Ufficiale Barona** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-barona.png`, `barona.png`) il logo ufficiale del Barona (Eccellenza Lombardia) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Baranzatese.
+Ultimo fatto: **Aggiornato Logo Ufficiale Besnatese** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-besnatese.png`, `besnatese.png`) il logo ufficiale della Besnatese (Eccellenza Lombardia) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Barona.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Aggiornato Logo Ufficiale Besnatese:
+  - Scaricato e integrato in RGBA (841x1000px) il logo della Besnatese da Tuttocampo in `immagini/squadre-loghi/ecc-besnatese.png` e `besnatese.png`. Cache `LOGOBESN1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Barona:
   - Scaricato e integrato in RGBA (1053x1500px) il logo del Barona da Tuttocampo in `immagini/squadre-loghi/ecc-barona.png` e `barona.png`. Cache `LOGOBARONA1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Baranzatese:
