@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Aggiornato Logo Ufficiale Muggia** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-muggia.png` e `muggia.png`) il logo ufficiale del Muggia (Eccellenza Friuli-Venezia Giulia) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Kras Repen.
+Ultimo fatto: **Aggiornato Logo Ufficiale Pordenone** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-pordenone.png` e `pordenone.png`) il logo ufficiale del Pordenone da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Muggia.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Aggiornato Logo Ufficiale Pordenone:
+  - Scaricato e integrato in RGBA (500x500px) il logo del Pordenone da Tuttocampo in `immagini/squadre-loghi/ecc-pordenone.png` e `pordenone.png`. Cache `LOGOPOR1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Muggia:
   - Scaricato e integrato in RGBA (507x720px) il logo del Muggia da Tuttocampo in `immagini/squadre-loghi/ecc-muggia.png` e `muggia.png`. Cache `LOGOMUG1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Kras Repen:
