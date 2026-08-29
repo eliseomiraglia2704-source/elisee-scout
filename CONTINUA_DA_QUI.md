@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-29**
-Ultimo fatto: **Aggiornato Logo Ufficiale Rhodense** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-rhodense.png`, `rhodense.png`) il logo ufficiale della Rhodense (Eccellenza Lombardia) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Magenta.
+Ultimo fatto: **Aggiornato Logo Ufficiale Saronno** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-saronno.png`, `saronno.png`) il logo ufficiale del Saronno (Eccellenza Lombardia) da Wikimedia.
+Feature precedente: Aggiornato Logo Ufficiale Rhodense.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-29** — Aggiornato Logo Ufficiale Saronno:
+  - Scaricato e integrato in RGBA (517x807px) il logo del Saronno da Wikimedia in `immagini/squadre-loghi/ecc-saronno.png` e `saronno.png`. Cache `LOGOSAR1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Rhodense:
   - Scaricato e integrato in RGBA (688x1000px) il logo della Rhodense da Tuttocampo in `immagini/squadre-loghi/ecc-rhodense.png` e `rhodense.png`. Cache `LOGORHO1`.
 - **2026-08-29** — Aggiornato Logo Ufficiale Magenta:
