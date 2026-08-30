@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Tolentino** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-tolentino.png`, `tolentino.png`) il logo ufficiale dell'U.S. Tolentino 1919 (Eccellenza Marche) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Sangiustese.
+Ultimo fatto: **Aggiornato Logo Ufficiale Trodica** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-trodica.png`, `trodica.png`) il logo ufficiale del Trodica Calcio (Eccellenza Marche) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Tolentino.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Trodica:
+  - Scaricato e integrato in RGBA (1080x1499px) il logo del Trodica da Tuttocampo in `immagini/squadre-loghi/ecc-trodica.png` e `trodica.png`. Cache `LOGOTROD1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Tolentino:
   - Scaricato e integrato in RGBA (1246x1500px) il logo del Tolentino da Tuttocampo in `immagini/squadre-loghi/ecc-tolentino.png` e `tolentino.png`. Cache `LOGOTOL1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Sangiustese:
