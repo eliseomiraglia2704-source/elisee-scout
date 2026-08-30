@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Olginatese** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-olginatese.png`, `olginatese.png`) il logo ufficiale dell'U.S.D. Olginatese 1968 (Eccellenza Lombardia Girone B) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Nuova Sondrio.
+Ultimo fatto: **Aggiornato Logo Ufficiale Ponte San Pietro Mapello** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-ponte-san-pietro-mapello.png`, `ponte-san-pietro-mapello.png`) il logo ufficiale dell'A.C. Ponte San Pietro Mapello (Eccellenza Lombardia Girone B) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Olginatese.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Ponte San Pietro Mapello:
+  - Scaricato e integrato in RGBA (755x1000px) il logo del Ponte San Pietro Mapello da Tuttocampo in `immagini/squadre-loghi/ecc-ponte-san-pietro-mapello.png` e `ponte-san-pietro-mapello.png`. Cache `LOGOPON1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Olginatese:
   - Scaricato e integrato in RGBA (686x1000px) il logo dell'Olginatese da Tuttocampo in `immagini/squadre-loghi/ecc-olginatese.png` e `olginatese.png`. Cache `LOGOOLG1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Nuova Sondrio:
