@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale San Pancrazio** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-san-pancrazio.png`, `san-pancrazio.png`) il logo ufficiale del San Pancrazio Calcio (Eccellenza Lombardia Girone C) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Poggese.
+Ultimo fatto: **Aggiornato Logo Ufficiale Soncinese** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-soncinese.png`, `soncinese.png`) il logo ufficiale dell'U.S. Soncinese (Eccellenza Lombardia Girone C) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale San Pancrazio.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Soncinese:
+  - Scaricato e integrato in RGBA (601x720px) il logo della Soncinese da Tuttocampo in `immagini/squadre-loghi/ecc-soncinese.png` e `soncinese.png`. Cache `LOGOSONC1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale San Pancrazio:
   - Scaricato e integrato in RGBA (1000x1000px) il logo del San Pancrazio da Tuttocampo in `immagini/squadre-loghi/ecc-san-pancrazio.png` e `san-pancrazio.png`. Cache `LOGOSAN1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Poggese:
