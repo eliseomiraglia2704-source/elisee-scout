@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Eccellenza Molise 2026/27** — girone unico ufficiale 15 squadre da Tuttocampo (nomi completi + città + loghi).
-Feature precedente: Eccellenza Lazio Girone A 2026/27.
+Ultimo fatto: **Eccellenza Toscana Girone A 2026/27** — organico ufficiale 16 squadre da Tuttocampo (nomi completi + città + loghi).
+Feature precedente: Eccellenza Molise 2026/27.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -58,6 +58,7 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 Flusso recente, dal più nuovo:
 
+- **Eccellenza Toscana Girone A 2026/27** (16 squadre): Belvedere Calcio (Grosseto), Pietrasanta, Camaiore, Real Cerretese (Cerreto Guidi), Castelnuovo Garfagnana, Real Forte Querceta (Forte dei Marmi), Fratres Perignano (Perignano), San Giuliano (San Giuliano Terme), Fucecchio, Sporting Cecina (Cecina), Lampo Meridien (Lamporecchio), Tuttocuoio (San Miniato), Larcianese (Larciano), Viareggio, Mobilieri Ponsacco (Ponsacco), Zenith Prato (Prato). Cache `ECCTOSA1`.
 - **Eccellenza Molise 2026/27** (girone unico, 15 squadre): Aesernia Fraterna, FC Matese, Alife, Olympia Agnonese, Atletico Torremaggiore, Pietramontecorvino, Aurora Alto Casertano, Real Guglionesi, Bojano, San Leucio, CNC Sporting, Sesto Campano, Calcio Montenero, United Alife, Castel di Sangro. Cache `ECCMOL1`.
 - **Eccellenza Lazio Girone A 2026/27** (18 squadre): Astrea, Grifone Gialloverde, Atletico Ardea, Luiss, Boreale, Montespaccato, Borgo Palidoro, Cavese 1919 (in Tuttocampo «MP Cavese»), Campus Eur, Ottavia, Civitavecchia, Real Monterotondo, Colleferro, Sorianese, FC Rieti, Tivoli Calcio, Fregene, W3 Maccarese. Cache `ECCLAZA1`.
 - **Eccellenza Campania Girone A 2026/27** (18 squadre): Albanova 64, Portici 1906, Boys Caivanese, Virtus Puteolana, Castel Volturno, Quarto 2012, Ercolanese 1924, Rangers Qualiano, FC Pompei, Real Bacoli Sibilla, Il Punto di Svolta, Real Casoria, Marianella, Real Grazzanise, Polisportiva Gricignano, Santa Maria la Carità, Pomigliano 1920, Virtus Stabia. Cache `ECCCAMPA1`.
@@ -77,7 +78,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Eccellenza Molise 2026/27: organico ufficiale 15 squadre, città e loghi Tuttocampo |
+| (questo) | Eccellenza Toscana Girone A 2026/27: organico ufficiale 16 squadre, città e loghi Tuttocampo |
+| `f5f29cf` | Eccellenza Molise 2026/27: organico ufficiale 15 squadre, città e loghi Tuttocampo |
 | `736f44c` | Eccellenza Lazio Girone A 2026/27: organico ufficiale 18 squadre, città e loghi Tuttocampo |
 | `52414d0` | Eccellenza Campania Girone A 2026/27: organico ufficiale 18 squadre, città e loghi Tuttocampo |
 | `585f41d` | Eccellenza Abruzzo 2026/27: organico ufficiale 18 squadre, città e loghi Tuttocampo |
@@ -272,7 +274,7 @@ Copia utente Grok: `C:\Users\Eliseo Miraglia\.grok\skills\elisee-scout-deploy\SK
 
 ## Prossimo passo
 
-Nessuna richiesta aperta. Chiedere a Eliseo cosa fare dopo.
+Eliseo manda uno screenshot Tuttocampo Classifica alla volta. Non inventare il prossimo girone. Completati: Campania A/B, Lazio A/B, Abruzzo, Molise, Toscana A. In attesa del prossimo (es. Toscana B).
 
 Match Analyst: se ruolo staff è Match analyst o Video analyst, al posto del form anagrafica compare la dashboard analitica (radar attività, compliance Wyscout/InStat, registro partite). Cache `MA1`.
 

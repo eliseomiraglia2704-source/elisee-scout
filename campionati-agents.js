@@ -84,7 +84,7 @@
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'liguria', title: 'Liguria', area: 'Eccellenza · girone unico 2026/27' },
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'emilia-a', title: 'Emilia-Romagna · Girone A', area: 'Eccellenza · organico ufficiale 2026/27 (18 squadre)' },
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'emilia-b', title: 'Emilia-Romagna · Girone B', area: 'Eccellenza · organico ufficiale 2026/27 (18 squadre)' },
-    { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'toscana-a', title: 'Toscana · Girone A', area: 'Eccellenza · 2 gironi 2026/27 (aventi diritto / iscrizioni)' },
+    { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'toscana-a', title: 'Toscana · Girone A', area: 'Eccellenza · organico ufficiale 2026/27 (16 squadre)' },
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'toscana-b', title: 'Toscana · Girone B', area: 'Eccellenza · 2 gironi 2026/27 (aventi diritto / iscrizioni)' },
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'marche', title: 'Marche', area: 'Eccellenza · organico ufficiale 2026/27 (16 squadre)' },
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'umbria', title: 'Umbria', area: 'Eccellenza · girone unico ufficiale 2026/27 (16 squadre)' },
