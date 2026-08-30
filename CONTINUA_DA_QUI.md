@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Vis Nova Giussano** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-vis-nova-giussano.png`, `vis-nova-giussano.png`) il logo ufficiale dell'A.S. Vis Nova Giussano (Eccellenza Lombardia Girone B) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Trevigliese.
+Ultimo fatto: **Aggiornato Logo Ufficiale Zingonia Verdellino** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-zingonia-verdellino.png`, `zingonia-verdellino.png`) il logo ufficiale dello Zingonia Verdellino (Eccellenza Lombardia Girone B) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Vis Nova Giussano.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Zingonia Verdellino:
+  - Scaricato e integrato in RGBA (738x871px) il logo dello Zingonia Verdellino da Tuttocampo in `immagini/squadre-loghi/ecc-zingonia-verdellino.png` e `zingonia-verdellino.png`. Cache `LOGOZIN1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Vis Nova Giussano:
   - Scaricato e integrato in RGBA (858x1000px) il logo del Vis Nova Giussano da Tuttocampo in `immagini/squadre-loghi/ecc-vis-nova-giussano.png` e `vis-nova-giussano.png`. Cache `LOGOVIS1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Trevigliese:
