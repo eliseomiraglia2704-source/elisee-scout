@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Lemine Almenno** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-lemine-almenno.png`, `lemine-almenno.png`) il logo ufficiale del Lemine Almenno (Eccellenza Lombardia Girone B) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Juvenes United.
+Ultimo fatto: **Aggiornato Logo Ufficiale Luciano Manara** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-luciano-manara.png`, `luciano-manara.png`) il logo ufficiale del Luciano Manara (Eccellenza Lombardia Girone B) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Lemine Almenno.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Luciano Manara:
+  - Scaricato e integrato in RGBA (622x1000px) il logo del Luciano Manara da Tuttocampo in `immagini/squadre-loghi/ecc-luciano-manara.png` e `luciano-manara.png`. Cache `LOGOMAN1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Lemine Almenno:
   - Scaricato e integrato in RGBA (592x829px) il logo del Lemine Almenno da Tuttocampo in `immagini/squadre-loghi/ecc-lemine-almenno.png` e `lemine-almenno.png`. Cache `LOGOLEM1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Juvenes United:
