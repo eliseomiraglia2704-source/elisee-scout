@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Separazione Rigorosa Carriere Maschili e Femminili nel Minigioco** — Aggiunta scelta esplicita e visibile del Genere (⚽ Calcio Maschile vs 👩 Calcio Femminile) in fase di configurazione identità e provino, isolamento completo al 100% di squadre, campionati, offerte giovanili, calciomercato e trofei (nessuna squadra femminile in carriera maschile e viceversa).
-Feature precedente: Aggiornato Logo Ufficiale Urbino (Completata Eccellenza Marche 100%).
+Ultimo fatto: **Eccellenza Campania Gir. B + Lazio Gir. B 2026/27** — organico ufficiale Tuttocampo (18+18 squadre) al posto dei placeholder, loghi ritagliati dalle classifiche, Focus/catalogo/minigioco. In parallelo: interfacce XI/selettore/mercato/minigioco allineate alla homepage (niente oro EA/FIFA).
+Feature precedente: Separazione rigorosa carriere maschili e femminili nel minigioco.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -58,6 +58,11 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 Flusso recente, dal più nuovo:
 
+- **Eccellenza Campania Girone B + Lazio Girone B 2026/27** (Tuttocampo):
+  - Campania B: Agerola, Alta Hirpinia, Apice, Battipagliese, Città di Campagna, Città di Pontecagnano, Città di Solofra, Costa d'Amalfi, Telese Terme, Heraclea, LMM Montemiletto, Poggio de Marinis, Rossoblù Castel San Giorgio, Salernum Baronissi, San Vito Positano, Sanseverinese, Sporting Ponte, US Angri.
+  - Lazio B: Alatri, Arce 1932, Cassino, Città di Formia, Città Monte San Giovanni Campano, Ferentino, Lodigiani, Lupa Frascati, Polisportiva Gaeta, Pomezia, Real San Basilio, Roccasecca, Roma City, Salaria FC, SS Romulea, Sterparo, Terracina, Vis Sezze.
+  - Rimossi i placeholder (Città di Napoli/Roma/Latina, ecc.). File: `catalog.json`, `focus.html`, `minigioco_clubs.json`, `campionati-agents.js`, `immagini/squadre-loghi/ecc-*.png`. Cache `ECCB1`.
+- **UI homepage, niente videogioco**: formazione XI senza oro EA; selettore squadra anello sky non gold; Wall mercato senza carte FIFA oro; minigioco hub/categorie/OVR sulla palette `#38bdf8`.
 - **Separazione Rigorosa Carriere Maschili e Femminili Minigioco** (`minigioco-carriera.js`):
   - Scelta esplicita del Genere di carriera (`⚽ Maschile` / `👩 Femminile`) nella schermata di definizione identità e nelle schede del provino.
   - Salvataggio e persistenza del genere nel profilo giocatore.
@@ -68,7 +73,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Profilo Allenatore & Vice Allenatore da PDF: collegamento diretto Mister/Vice, Moduli FM, Top 11 con Story 9:16, Hub Esercizi, Palmarès, GPS, Wishlist DS |
+| (questo) | Eccellenza Campania B + Lazio B 2026/27 da Tuttocampo; UI XI/selettore/mercato/minigioco allineate alla homepage |
+| `3db4114` | Separazione rigorosa carriere maschili e femminili minigioco |
 | `d2d990e` | Scopri profili: riordino e allineamento card profili & pulsanti azione (+ Segui / Messaggia / Chi segue) |
 | `245ff85` | Profilo Presidente da PDF: Guida operativa, Maglie ufficiali, Rosa Profilo Attivo vs Anteprima, Deleghe, Wall FIFA |
 | `0e8c89a` | Profilo DS: hub B2B, Secret List, Wall, AI Advisor Match Index |
@@ -300,6 +306,7 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Eccellenza Campania Gir. B e Lazio Gir. B 2026/27 da classifiche Tuttocampo (18+18, loghi RGBA). Catalogo, Focus, minigioco. UI: rimosso stile EA/FIFA da formazione, selettore, Wall mercato, hub minigioco. Cache `ECCB1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Urbino (Completata Eccellenza Marche 100%):
   - Scaricato e integrato in RGBA (720x720px) il logo dell'Urbino da Tuttocampo in `immagini/squadre-loghi/ecc-urbino.png` e `urbino.png`. Cache `LOGOURB1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Trodica:

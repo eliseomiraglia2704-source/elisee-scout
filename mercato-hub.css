@@ -291,11 +291,11 @@ body.layout-portfolio .es-mk-toolbar input {
 }
 .es-mk-deal.is-new { box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4), 0 16px 48px rgba(2, 132, 199, 0.22); }
 .es-mk-deal-ribbon {
-  background: linear-gradient(90deg, #b45309, #facc15, #fde68a);
-  color: #1a1204;
-  font-weight: 900;
+  background: linear-gradient(90deg, #0284c7, #38bdf8);
+  color: #041018;
+  font-weight: 800;
   font-size: 0.68rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 0.38rem 1rem;
 }
@@ -314,11 +314,14 @@ body.layout-portfolio .es-mk-toolbar input {
   position: relative;
   aspect-ratio: 3 / 4.15;
   border-radius: 14px;
-  background: linear-gradient(165deg, #f5d76e 0%, #c9a227 38%, #8a6a12 100%);
+  background:
+    radial-gradient(circle at 20% 10%, rgba(56, 189, 248, 0.18), transparent 46%),
+    linear-gradient(165deg, #0b1220 0%, #050608 55%, #021018 100%);
   padding: 0.45rem 0.4rem 0.35rem;
-  color: #1a1204;
+  color: #e2e8f0;
   overflow: hidden;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(56, 189, 248, 0.32);
 }
 .es-mk-fifa::before {
   content: '';

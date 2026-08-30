@@ -41,9 +41,9 @@
   gap: 0.75rem;
 }
 .es-coach-badge-gold {
-  background: rgba(245, 158, 11, 0.15);
-  color: #fbbf24;
-  border: 1px solid rgba(245, 158, 11, 0.35);
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.35);
   padding: 3px 10px;
   border-radius: 4px;
   font-size: 0.75rem;

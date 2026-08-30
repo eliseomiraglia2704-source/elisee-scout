@@ -1,8 +1,8 @@
-/* Formazione stile videogioco (EA FC) */
+/* Formazione XI — stesso linguaggio visivo della homepage */
 #view-formazione {
-  background: #070b14;
+  background: #050608;
   min-height: 100vh;
-  color: #e8eef6;
+  color: #e2e8f0;
 }
 .es-xi {
   max-width: 980px;
@@ -51,9 +51,9 @@
 }
 .es-xi-mods { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 .es-xi-mod.is-on {
-  background: #c9a227;
-  border-color: #c9a227;
-  color: #1a1408;
+  background: linear-gradient(135deg, #0284c7, #38bdf8);
+  border-color: #38bdf8;
+  color: #041018;
 }
 .es-xi-pitch-wrap {
   position: relative;
@@ -64,16 +64,17 @@
   position: relative;
   width: 100%;
   padding-top: 148%;
-  border-radius: 18px;
+  border-radius: 16px;
   overflow: hidden;
   background:
-    linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.28)),
+    linear-gradient(180deg, rgba(5, 8, 16, 0.35), rgba(5, 8, 16, 0.55)),
     repeating-linear-gradient(
       180deg,
-      #1f7a3a 0 28px,
-      #1a6b33 28px 56px
+      #0d3a28 0 28px,
+      #0a3222 28px 56px
     );
-  box-shadow: inset 0 0 0 3px rgba(255,255,255,0.22), 0 16px 40px rgba(0,0,0,0.4);
+  box-shadow: inset 0 0 0 1px rgba(56, 189, 248, 0.22), 0 16px 40px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(56, 189, 248, 0.18);
 }
 .es-xi-lines {
   position: absolute;
@@ -118,9 +119,9 @@
 }
 .es-xi-card {
   width: 76px;
-  border-radius: 10px;
-  background: linear-gradient(180deg, #1c2a44, #0e1626);
-  border: 1.5px solid rgba(255,255,255,0.16);
+  border-radius: 12px;
+  background: rgba(12, 18, 32, 0.92);
+  border: 1px solid rgba(56, 189, 248, 0.22);
   box-shadow: 0 8px 16px rgba(0,0,0,0.35);
   overflow: hidden;
   transition: transform 0.15s, border-color 0.15s;
@@ -128,7 +129,7 @@
 .es-xi-slot:hover .es-xi-card,
 .es-xi-slot.is-on .es-xi-card {
   transform: translateY(-4px);
-  border-color: #c9a227;
+  border-color: #38bdf8;
 }
 .es-xi-slot.is-mine .es-xi-card {
   border-color: #38bdf8;
@@ -191,7 +192,7 @@
   font-weight: 800;
   cursor: pointer;
 }
-.es-xi-go { background: #c9a227; color: #1a1408; }
+.es-xi-go { background: linear-gradient(135deg, #0284c7, #38bdf8); color: #041018; }
 .es-xi-msg { background: #0d4f73; color: #fff; }
 .es-xi-fol { background: rgba(255,255,255,0.1); color: #fff; }
 .es-xi-bench {

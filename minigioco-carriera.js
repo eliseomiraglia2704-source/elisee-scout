@@ -937,7 +937,7 @@
       if (typeof cb === 'function') cb(state.clubs);
       return;
     }
-    fetch('data/squadre/catalog.json?v=20260827_TCATLND1', { cache: 'no-store' })
+    fetch('data/squadre/catalog.json?v=20260830_ECCB1', { cache: 'no-store' })
       .then(function (r) {
         return r.json();
       })
@@ -990,7 +990,7 @@
         if (typeof cb === 'function') cb(state.clubs);
       })
       .catch(function () {
-        fetch('data/squadre/minigioco_clubs.json?v=20260827_TCATLND1', { cache: 'no-store' })
+        fetch('data/squadre/minigioco_clubs.json?v=20260830_ECCB1', { cache: 'no-store' })
           .then(function (r) {
             return r.json();
           })
@@ -1857,7 +1857,7 @@
     { id: 2, name: 'Serie B', sub: '2ª Divisione Professionistica', badge: '2ª DIV', ovr: '59 – 75', icon: '⚽', color: '#ef4444' },
     { id: 3, name: 'Serie C', sub: '3ª Divisione Professionistica (Gironi A/B/C)', badge: '3ª DIV', ovr: '43 – 58', icon: '🛡️', color: '#f97316' },
     { id: 4, name: 'Serie D', sub: '4ª Divisione Nazionale LND (9 Gironi)', badge: '4ª DIV', ovr: '30 – 42', icon: '⚡', color: '#22c55e' },
-    { id: 5, name: 'Eccellenza', sub: '5ª Divisione Regionale LND', badge: '5ª DIV', ovr: '24 – 29', icon: '⭐', color: '#ca8a04' },
+    { id: 5, name: 'Eccellenza', sub: '5ª Divisione Regionale LND', badge: '5ª DIV', ovr: '24 – 29', icon: '⭐', color: '#38bdf8' },
     { id: 6, name: 'Promozione', sub: '6ª Divisione Regionale LND', badge: '6ª DIV', ovr: '19 – 23', icon: '🎯', color: '#a855f7' },
     { id: 7, name: 'Prima Categoria', sub: '7ª Divisione Regionale/Provinciale', badge: '7ª DIV', ovr: '12 – 18', icon: '📍', color: '#06b6d4' },
     { id: 8, name: 'Seconda Categoria', sub: '8ª Divisione Provinciale', badge: '8ª DIV', ovr: '5 – 11', icon: '🔰', color: '#64748b' },
@@ -1911,7 +1911,7 @@
           '<div class="es-mg-cat-name">' + esc(cat.name) + '</div>' +
           '<div class="es-mg-cat-sub">' + esc(cat.sub) + '</div>' +
           '<div class="es-mg-cat-footer">' +
-          '<span class="es-mg-cat-ovr">OVR <b>' + cat.ovr + '</b></span>' +
+          '<span class="es-mg-cat-ovr">Livello <b>' + cat.ovr + '</b></span>' +
           '<span class="es-mg-cat-teams">' + numTeams + ' squadre</span>' +
           '</div>' +
           '</button>'

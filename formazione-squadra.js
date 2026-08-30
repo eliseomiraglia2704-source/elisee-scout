@@ -347,7 +347,7 @@
       if (panel) {
         var mine = claimed && claimed.userKey === me;
         panel.innerHTML = '<h2>' + esc(p.name) + ' · ' + slot.l + '</h2>' +
-          '<p>OVR ' + (p.ovr || claimed && claimed.ovr || '—') + ' · ' + esc(team.name) + ' · modulo ' + esc(this.module) + '</p>' +
+          '<p>Valutazione ' + (p.ovr || claimed && claimed.ovr || '—') + ' · ' + esc(team.name) + ' · modulo ' + esc(this.module) + '</p>' +
           '<div class="es-xi-actions">' +
             (mine
               ? '<button type="button" class="es-xi-fol" disabled>Sei tu in campo</button>'
