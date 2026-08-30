@@ -19,6 +19,8 @@
   var state = {
     step: 'closed', // closed | hub | landing | nation | position | identity | career
     mode: 'normal', // intense | normal | express
+    gender: 'm', // 'm' | 'f'
+    trialGender: 'm', // 'm' | 'f'
     nation: 'Italia',
     nationCode: 'IT',
     position: null,
@@ -28,7 +30,6 @@
     player: null,
     clubs: null,
     nationFilter: '',
-    trialGender: 'm', // 'm' | 'f'
     trialCategory: null, // null | number
     trialFilter: '',
     trialClub: null,
@@ -251,52 +252,67 @@
     return p ? p.label : id || '—';
   }
 
-  var TOP_WORLD_CLUBS = [
-    { n: 'MANCHESTER CITY', l: 'PREMIER LEAGUE', o: 'immagini/squadre-loghi/manchester-city.png', t: 1, world: 1 },
-    { n: 'LIVERPOOL', l: 'PREMIER LEAGUE', o: 'immagini/squadre-loghi/liverpool.png', t: 1, world: 1 },
-    { n: 'ARSENAL', l: 'PREMIER LEAGUE', o: 'immagini/squadre-loghi/arsenal.png', t: 1, world: 1 },
-    { n: 'CHELSEA', l: 'PREMIER LEAGUE', o: 'immagini/squadre-loghi/chelsea.png', t: 1, world: 1 },
-    { n: 'MANCHESTER UNITED', l: 'PREMIER LEAGUE', o: 'immagini/squadre-loghi/manchester-united.png', t: 1, world: 1 },
-    { n: 'TOTTENHAM', l: 'PREMIER LEAGUE', o: 'immagini/squadre-loghi/tottenham-hotspur.png', t: 1, world: 1 },
-    { n: 'NEWCASTLE', l: 'PREMIER LEAGUE', o: 'immagini/squadre-loghi/newcastle-united.png', t: 1, world: 1 },
-    { n: 'REAL MADRID', l: 'LA LIGA', o: 'immagini/squadre-loghi/real-madrid.png', t: 1, world: 1 },
-    { n: 'BARCELONA', l: 'LA LIGA', o: 'immagini/squadre-loghi/barcelona.png', t: 1, world: 1 },
-    { n: 'ATLETICO MADRID', l: 'LA LIGA', o: 'immagini/squadre-loghi/atletico-madrid.png', t: 1, world: 1 },
-    { n: 'ATHLETIC CLUB', l: 'LA LIGA', o: 'immagini/squadre-loghi/athletic-club.png', t: 1, world: 1 },
-    { n: 'REAL SOCIEDAD', l: 'LA LIGA', o: 'immagini/squadre-loghi/real-sociedad.png', t: 1, world: 1 },
-    { n: 'VILLARREAL', l: 'LA LIGA', o: 'immagini/squadre-loghi/villarreal.png', t: 1, world: 1 },
-    { n: 'BAYERN MONACO', l: 'BUNDESLIGA', o: 'immagini/squadre-loghi/bayern-munich.png', t: 1, world: 1 },
-    { n: 'BORUSSIA DORTMUND', l: 'BUNDESLIGA', o: 'immagini/squadre-loghi/borussia-dortmund.png', t: 1, world: 1 },
-    { n: 'RB LEIPZIG', l: 'BUNDESLIGA', o: 'immagini/squadre-loghi/rb-leipzig.png', t: 1, world: 1 },
-    { n: 'BAYER LEVERKUSEN', l: 'BUNDESLIGA', o: 'immagini/squadre-loghi/bayer-leverkusen.png', t: 1, world: 1 },
-    { n: 'EINTRACHT FRANCOFORTE', l: 'BUNDESLIGA', o: 'immagini/squadre-loghi/eintracht-frankfurt.png', t: 1, world: 1 },
-    { n: 'PSG', l: 'LIGUE 1', o: 'immagini/squadre-loghi/paris-saint-germain.png', t: 1, world: 1 },
-    { n: 'OLYMPIQUE MARSEILLE', l: 'LIGUE 1', o: 'immagini/squadre-loghi/olympique-marseille.png', t: 1, world: 1 },
-    { n: 'MONACO', l: 'LIGUE 1', o: 'immagini/squadre-loghi/as-monaco.png', t: 1, world: 1 },
-    { n: 'LYON', l: 'LIGUE 1', o: 'immagini/squadre-loghi/olympique-lyonnais.png', t: 1, world: 1 },
-    { n: 'LILLE', l: 'LIGUE 1', o: 'immagini/squadre-loghi/lille.png', t: 1, world: 1 },
-    { n: 'BENFICA', l: 'PRIMEIRA LIGA', o: 'immagini/squadre-loghi/benfica.png', t: 1, world: 1 },
-    { n: 'PORTO', l: 'PRIMEIRA LIGA', o: 'immagini/squadre-loghi/fc-porto.png', t: 1, world: 1 },
-    { n: 'SPORTING CP', l: 'PRIMEIRA LIGA', o: 'immagini/squadre-loghi/sporting-cp.png', t: 1, world: 1 },
-    { n: 'BRAGA', l: 'PRIMEIRA LIGA', o: 'immagini/squadre-loghi/sc-braga.png', t: 1, world: 1 },
-    { n: 'AJAX', l: 'EREDIVISIE', o: 'immagini/squadre-loghi/ajax.png', t: 1, world: 1 },
-    { n: 'PSV', l: 'EREDIVISIE', o: 'immagini/squadre-loghi/psv.png', t: 1, world: 1 },
-    { n: 'FEYENOORD', l: 'EREDIVISIE', o: 'immagini/squadre-loghi/feyenoord.png', t: 1, world: 1 },
-    { n: 'AZ ALKMAAR', l: 'EREDIVISIE', o: 'immagini/squadre-loghi/az-alkmaar.png', t: 1, world: 1 },
-    { n: 'FLAMENGO', l: 'BRASILEIRAO', o: 'immagini/squadre-loghi/flamengo.png', t: 1, world: 1 },
-    { n: 'PALMEIRAS', l: 'BRASILEIRAO', o: 'immagini/squadre-loghi/palmeiras.png', t: 1, world: 1 },
-    { n: 'SAO PAULO', l: 'BRASILEIRAO', o: 'immagini/squadre-loghi/sao-paulo.png', t: 1, world: 1 },
-    { n: 'CORINTHIANS', l: 'BRASILEIRAO', o: 'immagini/squadre-loghi/corinthians.png', t: 1, world: 1 },
-    { n: 'FLUMINENSE', l: 'BRASILEIRAO', o: 'immagini/squadre-loghi/fluminense.png', t: 1, world: 1 },
-    { n: 'BOCA JUNIORS', l: 'LIGA ARGENTINA', o: 'immagini/squadre-loghi/boca-juniors.png', t: 1, world: 1 },
-    { n: 'RIVER PLATE', l: 'LIGA ARGENTINA', o: 'immagini/squadre-loghi/river-plate.png', t: 1, world: 1 },
-    { n: 'RACING CLUB', l: 'LIGA ARGENTINA', o: 'immagini/squadre-loghi/racing-club.png', t: 1, world: 1 },
-    { n: 'INDEPENDIENTE', l: 'LIGA ARGENTINA', o: 'immagini/squadre-loghi/independiente.png', t: 1, world: 1 },
-    { n: 'CLUB AMERICA', l: 'LIGA MX', o: 'immagini/squadre-loghi/club-america.png', t: 1, world: 1 },
-    { n: 'CHIVAS', l: 'LIGA MX', o: 'immagini/squadre-loghi/chivas.png', t: 1, world: 1 },
-    { n: 'MONTERREY', l: 'LIGA MX', o: 'immagini/squadre-loghi/monterrey.png', t: 1, world: 1 },
-    { n: 'TIGRES', l: 'LIGA MX', o: 'immagini/squadre-loghi/tigres.png', t: 1, world: 1 }
+  var TOP_WORLD_MALE_CLUBS = [
+    { n: 'MANCHESTER CITY', l: 'PREMIER LEAGUE', o: 'immagini/squadre-loghi/manchester-city.png', t: 1, world: 1, g: 'm' },
+    { n: 'LIVERPOOL', l: 'PREMIER LEAGUE', o: 'immagini/squadre-loghi/liverpool.png', t: 1, world: 1, g: 'm' },
+    { n: 'ARSENAL', l: 'PREMIER LEAGUE', o: 'immagini/squadre-loghi/arsenal.png', t: 1, world: 1, g: 'm' },
+    { n: 'CHELSEA', l: 'PREMIER LEAGUE', o: 'immagini/squadre-loghi/chelsea.png', t: 1, world: 1, g: 'm' },
+    { n: 'MANCHESTER UNITED', l: 'PREMIER LEAGUE', o: 'immagini/squadre-loghi/manchester-united.png', t: 1, world: 1, g: 'm' },
+    { n: 'TOTTENHAM', l: 'PREMIER LEAGUE', o: 'immagini/squadre-loghi/tottenham-hotspur.png', t: 1, world: 1, g: 'm' },
+    { n: 'NEWCASTLE', l: 'PREMIER LEAGUE', o: 'immagini/squadre-loghi/newcastle-united.png', t: 1, world: 1, g: 'm' },
+    { n: 'REAL MADRID', l: 'LA LIGA', o: 'immagini/squadre-loghi/real-madrid.png', t: 1, world: 1, g: 'm' },
+    { n: 'BARCELONA', l: 'LA LIGA', o: 'immagini/squadre-loghi/barcelona.png', t: 1, world: 1, g: 'm' },
+    { n: 'ATLETICO MADRID', l: 'LA LIGA', o: 'immagini/squadre-loghi/atletico-madrid.png', t: 1, world: 1, g: 'm' },
+    { n: 'ATHLETIC CLUB', l: 'LA LIGA', o: 'immagini/squadre-loghi/athletic-club.png', t: 1, world: 1, g: 'm' },
+    { n: 'REAL SOCIEDAD', l: 'LA LIGA', o: 'immagini/squadre-loghi/real-sociedad.png', t: 1, world: 1, g: 'm' },
+    { n: 'VILLARREAL', l: 'LA LIGA', o: 'immagini/squadre-loghi/villarreal.png', t: 1, world: 1, g: 'm' },
+    { n: 'BAYERN MONACO', l: 'BUNDESLIGA', o: 'immagini/squadre-loghi/bayern-munich.png', t: 1, world: 1, g: 'm' },
+    { n: 'BORUSSIA DORTMUND', l: 'BUNDESLIGA', o: 'immagini/squadre-loghi/borussia-dortmund.png', t: 1, world: 1, g: 'm' },
+    { n: 'RB LEIPZIG', l: 'BUNDESLIGA', o: 'immagini/squadre-loghi/rb-leipzig.png', t: 1, world: 1, g: 'm' },
+    { n: 'BAYER LEVERKUSEN', l: 'BUNDESLIGA', o: 'immagini/squadre-loghi/bayer-leverkusen.png', t: 1, world: 1, g: 'm' },
+    { n: 'EINTRACHT FRANCOFORTE', l: 'BUNDESLIGA', o: 'immagini/squadre-loghi/eintracht-frankfurt.png', t: 1, world: 1, g: 'm' },
+    { n: 'PSG', l: 'LIGUE 1', o: 'immagini/squadre-loghi/paris-saint-germain.png', t: 1, world: 1, g: 'm' },
+    { n: 'OLYMPIQUE MARSEILLE', l: 'LIGUE 1', o: 'immagini/squadre-loghi/olympique-marseille.png', t: 1, world: 1, g: 'm' },
+    { n: 'MONACO', l: 'LIGUE 1', o: 'immagini/squadre-loghi/as-monaco.png', t: 1, world: 1, g: 'm' },
+    { n: 'LYON', l: 'LIGUE 1', o: 'immagini/squadre-loghi/olympique-lyonnais.png', t: 1, world: 1, g: 'm' },
+    { n: 'LILLE', l: 'LIGUE 1', o: 'immagini/squadre-loghi/lille.png', t: 1, world: 1, g: 'm' },
+    { n: 'BENFICA', l: 'PRIMEIRA LIGA', o: 'immagini/squadre-loghi/benfica.png', t: 1, world: 1, g: 'm' },
+    { n: 'PORTO', l: 'PRIMEIRA LIGA', o: 'immagini/squadre-loghi/fc-porto.png', t: 1, world: 1, g: 'm' },
+    { n: 'SPORTING CP', l: 'PRIMEIRA LIGA', o: 'immagini/squadre-loghi/sporting-cp.png', t: 1, world: 1, g: 'm' },
+    { n: 'BRAGA', l: 'PRIMEIRA LIGA', o: 'immagini/squadre-loghi/sc-braga.png', t: 1, world: 1, g: 'm' },
+    { n: 'AJAX', l: 'EREDIVISIE', o: 'immagini/squadre-loghi/ajax.png', t: 1, world: 1, g: 'm' },
+    { n: 'PSV', l: 'EREDIVISIE', o: 'immagini/squadre-loghi/psv.png', t: 1, world: 1, g: 'm' },
+    { n: 'FEYENOORD', l: 'EREDIVISIE', o: 'immagini/squadre-loghi/feyenoord.png', t: 1, world: 1, g: 'm' },
+    { n: 'AZ ALKMAAR', l: 'EREDIVISIE', o: 'immagini/squadre-loghi/az-alkmaar.png', t: 1, world: 1, g: 'm' },
+    { n: 'FLAMENGO', l: 'BRASILEIRAO', o: 'immagini/squadre-loghi/flamengo.png', t: 1, world: 1, g: 'm' },
+    { n: 'PALMEIRAS', l: 'BRASILEIRAO', o: 'immagini/squadre-loghi/palmeiras.png', t: 1, world: 1, g: 'm' },
+    { n: 'SAO PAULO', l: 'BRASILEIRAO', o: 'immagini/squadre-loghi/sao-paulo.png', t: 1, world: 1, g: 'm' },
+    { n: 'CORINTHIANS', l: 'BRASILEIRAO', o: 'immagini/squadre-loghi/corinthians.png', t: 1, world: 1, g: 'm' },
+    { n: 'FLUMINENSE', l: 'BRASILEIRAO', o: 'immagini/squadre-loghi/fluminense.png', t: 1, world: 1, g: 'm' },
+    { n: 'BOCA JUNIORS', l: 'LIGA ARGENTINA', o: 'immagini/squadre-loghi/boca-juniors.png', t: 1, world: 1, g: 'm' },
+    { n: 'RIVER PLATE', l: 'LIGA ARGENTINA', o: 'immagini/squadre-loghi/river-plate.png', t: 1, world: 1, g: 'm' },
+    { n: 'RACING CLUB', l: 'LIGA ARGENTINA', o: 'immagini/squadre-loghi/racing-club.png', t: 1, world: 1, g: 'm' },
+    { n: 'INDEPENDIENTE', l: 'LIGA ARGENTINA', o: 'immagini/squadre-loghi/independiente.png', t: 1, world: 1, g: 'm' },
+    { n: 'CLUB AMERICA', l: 'LIGA MX', o: 'immagini/squadre-loghi/club-america.png', t: 1, world: 1, g: 'm' },
+    { n: 'CHIVAS', l: 'LIGA MX', o: 'immagini/squadre-loghi/chivas.png', t: 1, world: 1, g: 'm' },
+    { n: 'MONTERREY', l: 'LIGA MX', o: 'immagini/squadre-loghi/monterrey.png', t: 1, world: 1, g: 'm' },
+    { n: 'TIGRES', l: 'LIGA MX', o: 'immagini/squadre-loghi/tigres.png', t: 1, world: 1, g: 'm' }
   ];
+
+  var TOP_WORLD_FEMALE_CLUBS = [
+    { n: 'BARCELONA FEMENÍ', l: 'LIGA F', o: 'immagini/squadre-loghi/barcelona.png', t: 1, world: 1, g: 'f' },
+    { n: 'OLYMPIQUE LYONNAIS FÉMININ', l: 'PREMIÈRE LIGUE', o: 'immagini/squadre-loghi/olympique-lyonnais.png', t: 1, world: 1, g: 'f' },
+    { n: 'CHELSEA WOMEN', l: 'WOMEN\'S SUPER LEAGUE', o: 'immagini/squadre-loghi/chelsea.png', t: 1, world: 1, g: 'f' },
+    { n: 'ARSENAL WOMEN', l: 'WOMEN\'S SUPER LEAGUE', o: 'immagini/squadre-loghi/arsenal.png', t: 1, world: 1, g: 'f' },
+    { n: 'MANCHESTER CITY WOMEN', l: 'WOMEN\'S SUPER LEAGUE', o: 'immagini/squadre-loghi/manchester-city.png', t: 1, world: 1, g: 'f' },
+    { n: 'PSG FÉMININ', l: 'PREMIÈRE LIGUE', o: 'immagini/squadre-loghi/paris-saint-germain.png', t: 1, world: 1, g: 'f' },
+    { n: 'BAYERN FRAUEN', l: 'FRAUEN-BUNDESLIGA', o: 'immagini/squadre-loghi/bayern-munich.png', t: 1, world: 1, g: 'f' },
+    { n: 'WOLFSBURG FRAUEN', l: 'FRAUEN-BUNDESLIGA', o: 'immagini/squadre-loghi/wolfsburg.png', t: 1, world: 1, g: 'f' },
+    { n: 'REAL MADRID FEMENINO', l: 'LIGA F', o: 'immagini/squadre-loghi/real-madrid.png', t: 1, world: 1, g: 'f' },
+    { n: 'ATLETICO MADRID FEMENINO', l: 'LIGA F', o: 'immagini/squadre-loghi/atletico-madrid.png', t: 1, world: 1, g: 'f' }
+  ];
+
+  var TOP_WORLD_CLUBS = TOP_WORLD_MALE_CLUBS.concat(TOP_WORLD_FEMALE_CLUBS);
 
   function mergeWorldClubs(list) {
     var have = {};
@@ -622,6 +638,8 @@
       if (sn.length >= 2) prev.surname = sn;
       if (state.number) prev.number = state.number;
       if (state.foot) prev.foot = state.foot;
+      if (state.gender) prev.gender = state.gender;
+      if (state.trialGender) prev.gender = state.trialGender;
       if (state.nation) prev.nation = state.nation;
       if (state.nationCode) prev.nationCode = state.nationCode;
       if (state.position) prev.position = state.position;
@@ -646,6 +664,10 @@
       if (!isNaN(n) && n >= 1 && n <= 99) state.number = n;
     }
     if (pref.foot && !state._idHydrated) state.foot = pref.foot === 'left' ? 'left' : 'right';
+    if (pref.gender && !state._idHydrated) {
+      state.gender = pref.gender === 'f' ? 'f' : 'm';
+      state.trialGender = state.gender;
+    }
     if (pref.nation && !state._idHydrated) {
       state.nation = pref.nation;
       state.nationCode = pref.nationCode || state.nationCode;
@@ -923,7 +945,8 @@
         var rawTeams = Array.isArray(data) ? data : (data && data.teams ? data.teams : []);
         var list = rawTeams.map(function (t) {
           var l = String(t.league || t.l || '').toUpperCase();
-          var isF = t.gender === 'f' || l.indexOf('FEMMINILE') >= 0;
+          var nUpper = String(t.name || t.n || '').toUpperCase();
+          var isF = t.gender === 'f' || l.indexOf('FEMMINIL') >= 0 || nUpper.indexOf(' WOMEN') >= 0 || nUpper.indexOf(' FEMMINIL') >= 0;
           var g = isF ? 'f' : 'm';
           var tier = 5;
           if (t.t != null && typeof t.t === 'number') {
@@ -1056,10 +1079,13 @@
     });
   }
 
-  function clubsByCatalogTier(t) {
+  function clubsByCatalogTier(t, gender) {
     var want = Number(t);
+    var targetG = gender || (state.player && state.player.gender) || state.trialGender || 'm';
     return (state.clubs || []).filter(function (c) {
       if (!c || c.world) return false;
+      var cG = c.g === 'f' ? 'f' : 'm';
+      if (cG !== targetG) return false;
       var cat = c.catalogT != null ? Number(c.catalogT) : Number(c.homeTier);
       return cat === want;
     });
@@ -1236,8 +1262,12 @@
   }
 
   function takeTopOfTier(used, t, p) {
+    var pGender = (p && p.gender) || state.trialGender || 'm';
     var pool = (state.clubs || []).filter(function (c) {
-      if (!c || !c.n || used[c.n] || !isTopClubOfTier(c, t)) return false;
+      if (!c || !c.n || used[c.n]) return false;
+      var cG = c.g === 'f' ? 'f' : 'm';
+      if (cG !== pGender) return false;
+      if (pGender === 'm' && !isTopClubOfTier(c, t)) return false;
       if (p && !playerFitsClub(p, c, {
         allowYouth: (p.age || 16) <= 19,
         academyPath: isAcademyProspect(p)
@@ -1306,9 +1336,12 @@
     });
   }
 
-  function clubsByTier(t) {
+  function clubsByTier(t, gender) {
     var want = Number(t);
+    var targetG = gender || (state.player && state.player.gender) || state.trialGender || 'm';
     return (state.clubs || []).filter(function (c) {
+      var cG = c.g === 'f' ? 'f' : 'm';
+      if (cG !== targetG) return false;
       return clubLeagueTier(c) === want && isLegalTier(c, want);
     });
   }
@@ -1763,6 +1796,19 @@
         (state.foot === 'right' ? ' is-on' : '') +
         '" data-foot="right">Destro</button>' +
         '</div></div>' +
+        '<div class="es-mg-gender-wrap" style="margin-top:0.75rem;">' +
+        '<span class="es-mg-field-lab-txt">TIPO CARRIERA</span>' +
+        '<div class="es-mg-gender-btns" role="group" style="display:flex;gap:0.4rem;">' +
+        '<button type="button" class="es-mg-gender-toggle es-mg-foot' +
+        (state.trialGender !== 'f' ? ' is-on' : '') +
+        '" data-gender="m" style="flex:1;">⚽ Maschile</button>' +
+        '<button type="button" class="es-mg-gender-toggle es-mg-foot' +
+        (state.trialGender === 'f' ? ' is-on is-fem' : '') +
+        '" data-gender="f" style="flex:1;">👩 Femminile</button>' +
+        '</div>' +
+        '<div class="es-mg-gender-sub" style="font-size:0.72rem;color:#94a3b8;margin-top:0.3rem;line-height:1.25;">' +
+        (state.trialGender === 'f' ? '🌸 Carriera Femminile: campionati e squadre solo femminili.' : '⚽ Carriera Maschile: campionati e squadre solo maschili.') +
+        '</div></div>' +
         '</section>' +
         /* col 2 — Nazionalità */
         '<section class="es-mg-id-col es-mg-id-nation">' +
@@ -2000,11 +2046,13 @@
     // 1. Switch genere
     root.querySelectorAll('.es-mg-gender-tab').forEach(function (btn) {
       btn.onclick = function () {
-        var g = btn.getAttribute('data-gender');
+        var g = btn.getAttribute('data-gender') || 'm';
         state.trialGender = g;
+        state.gender = g;
         state.trialCategory = null;
         state.trialClub = null;
         state.trialFilter = '';
+        rememberIdentity();
         renderTrial();
       };
     });
@@ -2172,10 +2220,21 @@
         if (!isNaN(n)) state.number = Math.min(99, Math.max(1, n));
       };
     }
-    root.querySelectorAll('.es-mg-foot').forEach(function (btn) {
+    root.querySelectorAll('.es-mg-foot:not(.es-mg-gender-toggle)').forEach(function (btn) {
       btn.onclick = function () {
         syncIdentityInputs();
         state.foot = btn.getAttribute('data-foot') || 'right';
+        rememberIdentity();
+        renderIdentity('#es-mg-surname');
+      };
+    });
+    root.querySelectorAll('.es-mg-gender-toggle').forEach(function (btn) {
+      btn.onclick = function () {
+        syncIdentityInputs();
+        state.trialGender = btn.getAttribute('data-gender') || 'm';
+        state.gender = state.trialGender;
+        state.trialCategory = null;
+        state.trialClub = null;
         rememberIdentity();
         renderIdentity('#es-mg-surname');
       };
@@ -2450,8 +2509,10 @@
       });
     }
     function pool(t) {
+      var pGender = (state.player && state.player.gender) || state.trialGender || 'm';
       return (state.clubs || []).filter(function (c) {
-        return Number(c.t) === t && isItalianPyramid(c);
+        var cG = c.g === 'f' ? 'f' : 'm';
+        return cG === pGender && Number(c.t) === t && isItalianPyramid(c);
       });
     }
     function stillIdle(c) {
@@ -2734,17 +2795,19 @@
   function createPlayer() {
     if (!identityReady()) return false;
     resetClubsToCatalog();
-    var starters = clubsByCatalogTier(3).concat(clubsByCatalogTier(4));
-    if (!starters.length) starters = clubsByCatalogTier(2);
-    if (!starters.length) starters = state.clubs || [];
+    var pGender = state.gender || state.trialGender || 'm';
+    var starters = clubsByCatalogTier(3, pGender).concat(clubsByCatalogTier(4, pGender));
+    if (!starters.length) starters = clubsByCatalogTier(2, pGender);
+    if (!starters.length) starters = (state.clubs || []).filter(function (c) { return (c.g === 'f' ? 'f' : 'm') === pGender; });
     var ovr = startOvr();
     var age = 16;
     var num = parseInt(state.number, 10);
     if (isNaN(num) || num < 1 || num > 99) num = rand(2, 99);
     
     // Inizializza come SVINCOLATO (Libre) a 16 anni
-    var freeClub = { n: 'Svincolato', l: 'In cerca della 1ª squadra', o: '', t: 4, isFree: true };
+    var freeClub = { n: 'Svincolato', l: 'In cerca della 1ª squadra', o: '', t: pGender === 'f' ? 3 : 4, isFree: true, g: pGender };
     state.player = {
+      gender: pGender,
       age: age,
       position: state.position,
       posLabel: posLabel(state.position),
@@ -2836,6 +2899,20 @@
     seconda_categoria: { name: "Seconda Categoria", cat: "Dilettanti", nazione: "Italia", img: trophyImg('seconda-categoria.jpg') },
     terza_categoria: { name: "Terza Categoria", cat: "Dilettanti", nazione: "Italia", img: trophyImg('terza-categoria.jpg') },
 
+    // FEMMINILE ITALIA & INTERNAZIONALE
+    serie_a_femminile: { name: "Serie A Femminile", cat: "Nazionale", nazione: "Italia", img: trophyImg('Italia/serie-a.png') },
+    serie_b_femminile: { name: "Serie B Femminile", cat: "Nazionale", nazione: "Italia", img: trophyImg('Italia/serie-b.png') },
+    serie_c_femminile: { name: "Serie C Femminile", cat: "Lega Pro", nazione: "Italia", img: trophyImg('Italia/serie-c-a.png') },
+    eccellenza_femminile: { name: "Eccellenza Femminile", cat: "Dilettanti", nazione: "Italia", img: trophyImg('eccellenza.jpg') },
+    promozione_femminile: { name: "Promozione Femminile", cat: "Dilettanti", nazione: "Italia", img: trophyImg('promozione.jpg') },
+    primavera_femminile: { name: "Primavera Femminile", cat: "Giovanili", nazione: "Italia", img: trophyImg('prima-categoria.jpg') },
+    coppa_italia_femminile: { name: "Coppa Italia Femminile", cat: "Nazionale", nazione: "Italia", img: trophyImg('Italia/coppa-italia.png') },
+    supercoppa_femminile: { name: "Supercoppa Italiana Femminile", cat: "Nazionale", nazione: "Italia", img: trophyImg('Italia/supercoppa-italia.png') },
+    womens_champions_league: { name: "Women's Champions League", cat: "Europeo", nazione: "Mondo", img: trophyImg('Internazionali/champions-league.png') },
+    ballon_dor_feminin: { name: "Ballon d'Or Féminin", cat: "Individuale", nazione: "Mondo", img: trophyImg('Internazionali/pallone-doro.png') },
+    world_cup_women: { name: "Mondiali Femminili", cat: "Internazionale", nazione: "Mondo", img: trophyImg('Internazionali/mondiale.png') },
+    euro_cup_women: { name: "Europei Femminili", cat: "Internazionale", nazione: "Mondo", img: trophyImg('Internazionali/europei.png') },
+
     // MONDO / INTERNAZIONALI
     ballon_dor: { name: "Pallone d'oro", desc: "Miglior giocatore che ha avuto più prestazioni ottimali in tutta la stagione calcistica", cat: "Individuale", nazione: "Mondo", img: trophyImg('Internazionali/pallone-doro.png') },
     scarpa_doro: { name: "Scarpa d'oro", desc: "Miglior realizzatore di tutti i top campionati", cat: "Individuale", nazione: "Mondo", img: trophyImg('Internazionali/scarpa-doro.png') },
@@ -2890,8 +2967,18 @@
     return 2026 + Math.max(0, (age || 16) - 16);
   }
 
-  function leagueTitleKey(league) {
+  function leagueTitleKey(league, gender) {
     var u = String(league || '').toUpperCase();
+    var isF = gender === 'f' || u.indexOf('FEMMINIL') >= 0;
+    if (isF) {
+      if (u.indexOf('SERIE A') >= 0) return 'serie_a_femminile';
+      if (u.indexOf('SERIE B') >= 0) return 'serie_b_femminile';
+      if (u.indexOf('SERIE C') >= 0) return 'serie_c_femminile';
+      if (u.indexOf('ECCELLENZA') >= 0) return 'eccellenza_femminile';
+      if (u.indexOf('PROMOZIONE') >= 0) return 'promozione_femminile';
+      if (u.indexOf('PRIMAVERA') >= 0) return 'primavera_femminile';
+      return 'serie_a_femminile';
+    }
     if (u.indexOf('PREMIER') >= 0) return 'premier';
     if (u.indexOf('LA LIGA') >= 0) return 'laliga';
     if (u.indexOf('BUNDESLIGA') >= 0) return 'bundesliga';
@@ -2917,8 +3004,13 @@
     return '';
   }
 
-  function leagueCupKey(league) {
+  function leagueCupKey(league, gender) {
     var u = String(league || '').toUpperCase();
+    var isF = gender === 'f' || u.indexOf('FEMMINIL') >= 0;
+    if (isF) {
+      if (u.indexOf('SERIE A') >= 0 || u.indexOf('SERIE B') >= 0) return 'coppa_italia_femminile';
+      return '';
+    }
     if (u.indexOf('PREMIER') >= 0) return 'fa_cup';
     if (u.indexOf('LA LIGA') >= 0) return 'copa_del_rey';
     if (u.indexOf('BUNDESLIGA') >= 0) return 'dfb_pokal';
@@ -2948,19 +3040,21 @@
     if (club.world || t === 1) return Math.min(0.62, 0.28 + (pr - 0.9) * 0.4);
     if (t === 2) return 0.2 + (pr >= 0.86 ? 0.08 : 0);
     if (t === 3) return 0.16;
-    return 0.14;
+    return 0.1;
   }
 
   function generateSeasonTrophies(p, club, newOvr, stats, age) {
     var trophies = [];
-    var league = String((club && (club.l || club.league)) || '');
+    if (!club) return trophies;
+    var isF = (p && p.gender === 'f') || (club && club.g === 'f');
+    var league = club.l || club.league || '';
     var tier = clubLeagueTier(club);
     var apps = (stats && stats.apps) || 0;
     var goals = (stats && stats.goals) || 0;
     var ga = goals + ((stats && stats.assists) || 0);
     var isGK = (p && p.position === 'GK');
-    var title = leagueTitleKey(league);
-    var cup = leagueCupKey(league);
+    var title = leagueTitleKey(league, isF ? 'f' : 'm');
+    var cup = leagueCupKey(league, isF ? 'f' : 'm');
     var power = clubTrophyPower(club);
     if (p && p.isCaptain) power = Math.min(1, power + 0.04);
     if (apps < 8 || (p && p.eventMods && p.eventMods.suspended)) return trophies;
@@ -2973,6 +3067,7 @@
       if (title === 'laliga' && Math.random() < 0.35) trophies.push('supercopa_espana');
       if (title === 'bundesliga' && Math.random() < 0.35) trophies.push('dfl_supercup');
       if (title === 'serie_a' && Math.random() < 0.35) trophies.push('supercoppa_italia');
+      if (title === 'serie_a_femminile' && Math.random() < 0.35) trophies.push('supercoppa_femminile');
       if (/serie_c/.test(title) && Math.random() < 0.30) trophies.push('supercoppa_serie_c');
       if (title === 'serie_d' && Math.random() < 0.25) trophies.push('supercoppa_serie_d');
     }
@@ -2981,6 +3076,7 @@
     if (cup && Math.random() < cupChance) {
       trophies.push(cup);
       if (cup === 'coppa_italia' && Math.random() < 0.28 + power * 0.15 && trophies.indexOf('supercoppa_italia') < 0) trophies.push('supercoppa_italia');
+      if (cup === 'coppa_italia_femminile' && Math.random() < 0.28 + power * 0.15 && trophies.indexOf('supercoppa_femminile') < 0) trophies.push('supercoppa_femminile');
       if (cup === 'coppa_serie_c' && Math.random() < 0.22 && trophies.indexOf('supercoppa_serie_c') < 0) trophies.push('supercoppa_serie_c');
       if (cup === 'coppa_serie_d' && Math.random() < 0.20 && trophies.indexOf('supercoppa_serie_d') < 0) trophies.push('supercoppa_serie_d');
       if (cup === 'dfb_pokal' && Math.random() < 0.30 && trophies.indexOf('dfl_supercup') < 0) trophies.push('dfl_supercup');
@@ -2996,13 +3092,13 @@
       if ((newOvr || 49) < 68) cl *= 0.5;
       if (apps < 16) cl *= 0.55;
       if (Math.random() < cl) {
-        trophies.push('champions_league');
-        if (Math.random() < 0.32) trophies.push('supercoppa_uefa');
-        if (Math.random() < 0.22) trophies.push('club_world_cup');
-        if (newOvr >= 80 && Math.random() < 0.25) trophies.push('motm_cl');
-      } else if (Math.random() < 0.08 + power * 0.1) {
+        trophies.push(isF ? 'womens_champions_league' : 'champions_league');
+        if (!isF && Math.random() < 0.32) trophies.push('supercoppa_uefa');
+        if (!isF && Math.random() < 0.22) trophies.push('club_world_cup');
+        if (!isF && newOvr >= 80 && Math.random() < 0.25) trophies.push('motm_cl');
+      } else if (!isF && Math.random() < 0.08 + power * 0.1) {
         trophies.push('europa_league');
-      } else if (Math.random() < 0.07 + (1 - power) * 0.05) {
+      } else if (!isF && Math.random() < 0.07 + (1 - power) * 0.05) {
         trophies.push('conference_league');
       }
 
@@ -3021,8 +3117,8 @@
     }
 
     // Pallone d'Oro / Giocatore dell'anno
-    if (newOvr >= 88 && (ga >= 18 || (isGK && newOvr >= 90)) && Math.random() < 0.045) trophies.push('ballon_dor');
-    if (newOvr >= 84 && (ga >= 12 || (isGK && newOvr >= 86)) && Math.random() < 0.055) trophies.push('player_of_year');
+    if (newOvr >= 88 && (ga >= 18 || (isGK && newOvr >= 90)) && Math.random() < 0.045) trophies.push(isF ? 'ballon_dor_feminin' : 'ballon_dor');
+    if (!isF && newOvr >= 84 && (ga >= 12 || (isGK && newOvr >= 86)) && Math.random() < 0.055) trophies.push('player_of_year');
 
     var year = seasonYearOf(age);
     if ((p.caps || 0) >= 8 && newOvr >= 82) {
@@ -3597,8 +3693,12 @@
     return c;
   }
 
-  function fillOffers(used, offers, need) {
-    var all = state.clubs || [];
+  function fillOffers(used, offers, need, p) {
+    var pGender = (p && p.gender) || state.trialGender || 'm';
+    var all = (state.clubs || []).filter(function (c) {
+      var cG = c.g === 'f' ? 'f' : 'm';
+      return cG === pGender;
+    });
     while (offers.length < need) {
       var extra = takeUniqueClub(used, all);
       if (!extra) break;
@@ -3680,6 +3780,9 @@
 
   function playerFitsClub(p, c, opts) {
     if (!c || !p) return false;
+    var pGender = (p && p.gender) || state.trialGender || 'm';
+    var cGender = (c && c.g === 'f') ? 'f' : 'm';
+    if (pGender !== cGender) return false;
     if (opts && opts.stay) return true;
     if (opts && opts.callUp) return true;
     var age = p.age || 16;
@@ -3781,10 +3884,13 @@
   }
 
   function pickFailMarketClub(used, t, p) {
+    var pGender = (p && p.gender) || state.trialGender || 'm';
     var top = takeTopOfTier(used, t, p);
-    if (top && !top.failed && !top.justFailed && !top.world) return Object.assign({}, top);
-    var pool = clubsByTier(t).filter(function (c) {
+    if (top && !top.failed && !top.justFailed && !top.world && (top.g === 'f' ? 'f' : 'm') === pGender) return Object.assign({}, top);
+    var pool = clubsByTier(t, pGender).filter(function (c) {
       if (!c || !c.n || used[c.n] || c.world || c.failed || c.justFailed || !isItalianPyramid(c)) return false;
+      var cG = c.g === 'f' ? 'f' : 'm';
+      if (cG !== pGender) return false;
       if (p && !playerFitsClub(p, c, {})) return false;
       return true;
     });
@@ -4106,17 +4212,21 @@
 
   function nationalBarText(p) {
     var bits = [];
+    var isF = (p && p.gender === 'f');
     if ((p.caps || 0) > 0) {
-      bits.push(p.caps + ' pres. naz. · ⚽ ' + (p.natGoals || 0) + ' · 🅐 ' + (p.natAst || 0));
+      bits.push(p.caps + (isF ? ' pres. naz. femm.' : ' pres. naz.') + ' · ⚽ ' + (p.natGoals || 0) + ' · 🅐 ' + (p.natAst || 0));
     }
-    if ((p.u21Caps || 0) > 0) bits.push('U21 ' + p.u21Caps + ' pres.');
+    if ((p.u21Caps || 0) > 0) bits.push((isF ? 'U23 ' : 'U21 ') + p.u21Caps + ' pres.');
     if ((p.u19Caps || 0) > 0) bits.push('U19 ' + p.u19Caps + ' pres.');
-    return bits.length ? bits.join(' · ') : 'Nazionale: non convocato';
+    return bits.length ? bits.join(' · ') : (isF ? 'Nazionale Femminile: non convocata' : 'Nazionale: non convocato');
   }
 
   function poolFits(p, tier, used, opts) {
+    var pGender = (p && p.gender) || state.trialGender || 'm';
     return (state.clubs || []).filter(function (c) {
       if (!c || !c.n || used[c.n]) return false;
+      var cG = c.g === 'f' ? 'f' : 'm';
+      if (cG !== pGender) return false;
       if (clubLeagueTier(c) !== Number(tier)) return false;
       if (!isLegalTier(c, Number(tier)) && !c.world) return false;
       return playerFitsClub(p, c, opts);
@@ -4128,40 +4238,43 @@
     var isFirstStep = isUnsignedRow(last);
     var used = {};
     var offers = [];
+    var pGender = (p && p.gender) || state.trialGender || 'm';
 
     if (isFirstStep) {
       resetClubsToCatalog();
-      var aPool = clubsByCatalogTier(1).filter(function (c) {
-        return isBigYouthClub(c) && !c.world;
+      var aPool = clubsByCatalogTier(1, pGender).filter(function (c) {
+        return (isBigYouthClub(c) || pGender === 'f') && !c.world;
       });
       var a = takeUniqueClub(used, aPool);
       if (a) {
         a = Object.assign({}, a);
         a.t = 1;
-        a.l = a.catalogL || a.l || 'SERIE A';
+        a.l = a.catalogL || a.l || (pGender === 'f' ? 'SERIE A FEMMINILE' : 'SERIE A');
         a.isYouth = true;
         a.isLoan = false;
         offers.push(a);
       }
-      var ecc = takeUniqueClub(used, clubsByCatalogTier(5));
+      var eccTier = pGender === 'f' ? 4 : 5;
+      var ecc = takeUniqueClub(used, clubsByCatalogTier(eccTier, pGender));
       if (ecc) {
         ecc = Object.assign({}, ecc);
-        ecc.t = 5;
+        ecc.t = eccTier;
         ecc.l = ecc.catalogL || ecc.l;
         ecc.isYouth = false;
         ecc.isLoan = false;
         offers.push(ecc);
       }
-      var dClub = takeUniqueClub(used, clubsByCatalogTier(4));
+      var dTier = pGender === 'f' ? 3 : 4;
+      var dClub = takeUniqueClub(used, clubsByCatalogTier(dTier, pGender));
       if (dClub) {
         dClub = Object.assign({}, dClub);
-        dClub.t = 4;
+        dClub.t = dTier;
         dClub.l = dClub.catalogL || dClub.l;
         dClub.isYouth = false;
         dClub.isLoan = false;
         offers.push(dClub);
       }
-      return fillFirstOffers(used, offers).map(assertStartOffer);
+      return fillFirstOffers(used, offers, p).map(assertStartOffer);
     }
 
     var cur = liveClub(p.club) || p.club;
@@ -4226,6 +4339,8 @@
 
     var promoPool = (state.clubs || []).filter(function (c) {
       if (!c.justPromoted || !c.n || used[c.n]) return false;
+      var cG = c.g === 'f' ? 'f' : 'm';
+      if (cG !== pGender) return false;
       var t = clubLeagueTier(c);
       if (band.indexOf(t) < 0) return false;
       return playerFitsClub(p, c, { allowYouth: true });
@@ -4276,11 +4391,13 @@
     return filled.map(sanitizeOfferClub);
   }
 
-  function fillFirstOffers(used, offers) {
-    var order = [1, 2, 3];
+  function fillFirstOffers(used, offers, p) {
+    var pGender = (p && p.gender) || state.trialGender || 'm';
+    var order = pGender === 'f' ? [1, 2, 3, 4] : [1, 2, 3];
     var i = 0;
-    while (offers.length < 3 && i < 12) {
-      var c = takeUniqueClub(used, clubsByCatalogTier(order[Math.min(i, order.length - 1)]));
+    while (offers.length < 3 && i < 16) {
+      var pool = clubsByCatalogTier(order[Math.min(i, order.length - 1)], pGender);
+      var c = takeUniqueClub(used, pool);
       if (!c) {
         i++;
         continue;
@@ -4289,7 +4406,7 @@
       c = Object.assign({}, c);
       c.t = c.catalogT != null ? c.catalogT : clubLeagueTier(c);
       c.l = c.catalogL || c.l;
-      c.isYouth = Number(c.t) === 1 && isBigYouthClub(c);
+      c.isYouth = Number(c.t) === 1 && (isBigYouthClub(c) || pGender === 'f');
       c.isLoan = false;
       offers.push(c);
       i++;
@@ -4944,6 +5061,7 @@
         '<span class="es-mg-tag green" title="' + esc(p.posLabel || posLabel(p.position) || p.position) + '">' + esc(p.posLabel || posLabel(p.position) || p.position) + '</span>' +
         (p.isCaptain ? '<span class="es-mg-tag green" title="Capitano">C</span>' : '') +
         (p.foot ? '<span class="es-mg-tag">' + (p.foot === 'left' ? 'Piede sinistro' : 'Piede destro') + '</span>' : '') +
+        (p.gender === 'f' ? '<span class="es-mg-tag is-fem" style="background:#ec4899;color:#fff;border-color:#db2777;">👩 Femminile</span>' : '<span class="es-mg-tag" style="background:#0284c7;color:#fff;border-color:#0369a1;">⚽ Maschile</span>') +
         '</div>' +
         '<div class="es-mg-player-name">' + esc(p.surname || 'Giocatore') + '</div>' +
         clubDisplayCard +

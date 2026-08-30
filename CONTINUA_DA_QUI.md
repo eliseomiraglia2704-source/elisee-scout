@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Urbino (Completata Eccellenza Marche 100%)** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-urbino.png`, `urbino.png`) il logo ufficiale dell'Urbino Calcio (Eccellenza Marche) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Trodica.
+Ultimo fatto: **Separazione Rigorosa Carriere Maschili e Femminili nel Minigioco** — Aggiunta scelta esplicita e visibile del Genere (⚽ Calcio Maschile vs 👩 Calcio Femminile) in fase di configurazione identità e provino, isolamento completo al 100% di squadre, campionati, offerte giovanili, calciomercato e trofei (nessuna squadra femminile in carriera maschile e viceversa).
+Feature precedente: Aggiornato Logo Ufficiale Urbino (Completata Eccellenza Marche 100%).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -57,6 +57,14 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 ## Stato attuale (fatto, non rifare)
 
 Flusso recente, dal più nuovo:
+
+- **Separazione Rigorosa Carriere Maschili e Femminili Minigioco** (`minigioco-carriera.js`):
+  - Scelta esplicita del Genere di carriera (`⚽ Maschile` / `👩 Femminile`) nella schermata di definizione identità e nelle schede del provino.
+  - Salvataggio e persistenza del genere nel profilo giocatore.
+  - Isolamento totale di tutti i pool di squadre: `clubsByCatalogTier`, `clubsByTier`, `poolFits`, `playerFitsClub`, `transferOffers`, `fillFirstOffers`, `fillOffersFromTiers`, `pickFailMarketClub`, `evolveItalianLeagues`.
+  - Nessuna squadra femminile potrà mai apparire nelle offerte di una carriera maschile e viceversa.
+  - Badge genere dedicato nella card del giocatore (`⚽ Maschile` / `👩 Femminile`).
+  - Trofei differenziati (Serie A Femminile, Coppa Italia Femminile, Supercoppa Femminile, Women's Champions League, Ballon d'Or Féminin, Mondiali/Europei Femminili) e dicitura convocazioni nazionali dedicata.
 
 | Commit | Cosa |
 |---|---|
