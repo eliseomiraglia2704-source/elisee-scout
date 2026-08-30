@@ -937,7 +937,7 @@
       if (typeof cb === 'function') cb(state.clubs);
       return;
     }
-    fetch('data/squadre/catalog.json?v=20260830_ECCVENA1', { cache: 'no-store' })
+    fetch('data/squadre/catalog.json?v=20260830_ALPHALEAGUES', { cache: 'no-store' })
       .then(function (r) {
         return r.json();
       })

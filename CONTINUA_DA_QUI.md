@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Regole Giovanili U19/U20/Primavera e Seconde Squadre U23 nel Minigioco Carriera** — limite età rigido (U19 <= 19, U20/Primavera <= 20, U23 <= 23; overage non possono entrare/restare), campionati Primavera isolati dalla piramide senior, seconde squadre U23 con tetto massimo di promozione Serie B (mai Serie A).
-Feature precedente: Eccellenza Veneto Girone B 2026/27.
+Ultimo fatto: **Ordinamento Alfabetico Regionale Campionati Dilettantistici** — ordinamento alfabetico rigoroso per regione di tutte le categorie dilettantistiche (Eccellenza, Promozione, Prima Categoria, Seconda Categoria, Terza Categoria) in `catalog.json` e modale "Scegli categoria".
+Feature precedente: Regole Giovanili U19/U20/Primavera e Seconde Squadre U23 nel Minigioco Carriera.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
