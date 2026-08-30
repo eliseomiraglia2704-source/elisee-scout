@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Eccellenza Veneto Girone B 2026/27** — organico ufficiale 16 squadre da Tuttocampo (nomi completi + città + loghi).
-Feature precedente: Eccellenza Veneto Girone A 2026/27.
+Ultimo fatto: **Regole Giovanili U19/U20/Primavera e Seconde Squadre U23 nel Minigioco Carriera** — limite età rigido (U19 <= 19, U20/Primavera <= 20, U23 <= 23; overage non possono entrare/restare), campionati Primavera isolati dalla piramide senior, seconde squadre U23 con tetto massimo di promozione Serie B (mai Serie A).
+Feature precedente: Eccellenza Veneto Girone B 2026/27.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

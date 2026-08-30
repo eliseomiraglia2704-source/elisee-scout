@@ -319,8 +319,8 @@
     3,
     4
   );
-  lock(['JUVENTUS U23', 'INTER U23', 'ATALANTA U23'], 3, 3);
-  lock(['MILAN U23', 'MILAN FUTURO'], 3, 4);
+  lock(['JUVENTUS U23', 'INTER U23', 'ATALANTA U23', 'JUVENTUS NEXT GEN'], 2, 4);
+  lock(['MILAN U23', 'MILAN FUTURO'], 2, 4);
 
   function addFail(names, dest, chance) {
     names.forEach(function (n) {
@@ -361,13 +361,23 @@
   }
 
   function isU23Name(name) {
-    return /U23|PRIMAVERA|NEXT GEN|UNDER 23/.test(keyOf(name));
+    return /U23|NEXT GEN|UNDER 23|FUTURO/.test(keyOf(name));
+  }
+
+  function isYouthName(name) {
+    return /\b(U19|U20|UNDER 19|UNDER 20|PRIMAVERA|JUNIORES|BERRETTI|ALLIEVI)\b/.test(keyOf(name));
   }
 
   function lookup(name) {
     var k = keyOf(name);
     if (!k) return null;
     if (P[k]) return P[k];
+    if (isYouthName(k)) {
+      return {
+        home: 10, floor: 10, ceil: 10, rel: 0, promo: 0, stay: 1,
+        seasons: { a: 0, b: 0, c: 0, d: 0, e: 0 }, known: true
+      };
+    }
     if (isU23Name(k)) return derive(U23_C);
     var stripped = k.replace(/^(AS |AC |US |SSD |FBC |FC |ASD |SS |ACR |LR )/, '');
     if (stripped !== k && P[stripped]) return P[stripped];
@@ -486,6 +496,10 @@
   }
 
   function enforce(club, proposedT, atStart) {
+    var n = club && (club.n || club.name);
+    if (isYouthName(n)) {
+      return { t: 10, l: (club && (club.catalogL || club.l)) || 'PRIMAVERA 1' };
+    }
     var s = profile(club);
     var catT = club && club.catalogT != null ? Number(club.catalogT) : null;
     var dest;
@@ -498,8 +512,11 @@
   }
 
   function legalTier(club, tier) {
-    var s = profile(club);
+    var n = club && (club.n || club.name);
     var t = Number(tier);
+    if (isYouthName(n)) return t === 10;
+    if (isU23Name(n)) return t >= 2 && t <= 4;
+    var s = profile(club);
     return t >= s.ceil && t <= s.floor;
   }
 

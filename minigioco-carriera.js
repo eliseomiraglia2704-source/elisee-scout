@@ -952,14 +952,16 @@
           if (t.t != null && typeof t.t === 'number') {
             tier = t.t;
           } else if (isF) {
-            if (l.indexOf('SERIE A') >= 0) tier = 1;
+            if (l.indexOf('PRIMAVERA') >= 0 || l.indexOf('JUNIORES') >= 0 || nUpper.indexOf(' U19') >= 0 || nUpper.indexOf(' U20') >= 0) tier = 10;
+            else if (l.indexOf('SERIE A') >= 0) tier = 1;
             else if (l.indexOf('SERIE B') >= 0) tier = 2;
             else if (l.indexOf('SERIE C') >= 0) tier = 3;
             else if (l.indexOf('ECCELLENZA') >= 0) tier = 4;
             else if (l.indexOf('PROMOZIONE') >= 0) tier = 5;
-            else if (l.indexOf('PRIMAVERA') >= 0) tier = 6;
+            else tier = 5;
           } else {
-            if (l.indexOf('SERIE A') >= 0) tier = 1;
+            if (l.indexOf('PRIMAVERA') >= 0 || l.indexOf('JUNIORES') >= 0 || nUpper.indexOf(' U19') >= 0 || nUpper.indexOf(' U20') >= 0) tier = 10;
+            else if (l.indexOf('SERIE A') >= 0) tier = 1;
             else if (l.indexOf('SERIE B') >= 0) tier = 2;
             else if (l.indexOf('SERIE C') >= 0) tier = 3;
             else if (l.indexOf('SERIE D') >= 0) tier = 4;
@@ -968,7 +970,7 @@
             else if (l.indexOf('PRIMA CATEGORIA') >= 0) tier = 7;
             else if (l.indexOf('SECONDA CATEGORIA') >= 0) tier = 8;
             else if (l.indexOf('TERZA CATEGORIA') >= 0) tier = 9;
-            else if (l.indexOf('PRIMAVERA') >= 0) tier = 2;
+            else tier = 5;
           }
           return {
             n: t.name || t.n,
@@ -1126,11 +1128,18 @@
   }
 
   function isLegalTier(c, destTier) {
+    if (!c) return false;
+    var t = Number(destTier);
+    if (isYouthClub(c)) return false;
+    if (isU23Club(c)) {
+      if (t === 1) return false; // Seconde squadre U23 possono salire massimo in Serie B (tier 2), mai Serie A (tier 1)
+      if (t < 2 || t > 4) return false;
+      return true;
+    }
     if (typeof window !== 'undefined' && window.EliseeClubStoria && window.EliseeClubStoria.legalTier) {
       return window.EliseeClubStoria.legalTier(c, destTier);
     }
     var st = clubStoria(c);
-    var t = Number(destTier);
     return t >= st.ceil && t <= st.floor;
   }
 
@@ -1139,7 +1148,7 @@
   }
 
   function guardClub(c, atStart) {
-    if (!c || c.world || c.isFree) return c;
+    if (!c || c.world || c.isFree || isYouthClub(c)) return c;
     var now = clubLeagueTier(c);
     var dest = now;
     var S = typeof window !== 'undefined' ? window.EliseeClubStoria : null;
@@ -1174,6 +1183,7 @@
 
   var U23_PARENTS = {
     'JUVENTUS U23': 'JUVENTUS',
+    'JUVENTUS NEXT GEN': 'JUVENTUS',
     'INTER U23': 'INTER',
     'MILAN U23': 'MILAN',
     'MILAN FUTURO': 'MILAN',
@@ -1185,6 +1195,32 @@
     return /U23|NEXT GEN|UNDER 23|FUTURO/.test(n);
   }
 
+  function isYouthClub(c) {
+    if (!c) return false;
+    if (isU23Club(c)) return false;
+    var n = String((c && c.n) || c || '').toUpperCase();
+    var l = String((c && (c.l || c.league)) || '').toUpperCase();
+    if (/\b(U19|U20|UNDER\s*19|UNDER\s*20|PRIMAVERA|JUNIORES|BERRETTI|ALLIEVI)\b/.test(n)) return true;
+    if (l.indexOf('PRIMAVERA') >= 0 || l.indexOf('JUNIORES') >= 0 || l.indexOf('UNDER 19') >= 0 || l.indexOf('UNDER 20') >= 0) return true;
+    return false;
+  }
+
+  function isU19Club(c) {
+    if (!c) return false;
+    if (isU23Club(c)) return false;
+    var n = String((c && c.n) || c || '').toUpperCase();
+    var l = String((c && (c.l || c.league)) || '').toUpperCase();
+    return /\b(U19|UNDER\s*19)\b/.test(n) || l.indexOf('U19') >= 0 || l.indexOf('UNDER 19') >= 0;
+  }
+
+  function isU20Club(c) {
+    if (!c) return false;
+    if (isU23Club(c)) return false;
+    var n = String((c && c.n) || c || '').toUpperCase();
+    var l = String((c && (c.l || c.league)) || '').toUpperCase();
+    return /\b(U20|UNDER\s*20)\b/.test(n) || l.indexOf('U20') >= 0 || l.indexOf('UNDER 20') >= 0;
+  }
+
   function u23ParentName(c) {
     var n = String((c && c.n) || c || '').toUpperCase().replace(/\s+/g, ' ').trim();
     if (U23_PARENTS[n]) return U23_PARENTS[n];
@@ -1192,11 +1228,16 @@
     return stripped && stripped !== n ? stripped : '';
   }
 
-  function findFirstTeam(u23) {
-    var parent = u23ParentName(u23);
-    if (!parent) return null;
+  function findFirstTeam(youthOrU23) {
+    if (!youthOrU23) return null;
+    var parent = u23ParentName(youthOrU23);
+    var n = String((youthOrU23 && youthOrU23.n) || youthOrU23 || '').toUpperCase().replace(/\s+/g, ' ').trim();
+    if (!parent) {
+      parent = n.replace(/\s*(U19|U20|UNDER\s*19|UNDER\s*20|PRIMAVERA|JUNIORES|BERRETTI|ALLIEVI)\s*/g, ' ').replace(/\s+/g, ' ').trim();
+    }
+    if (!parent || parent === n) return null;
     var hit = (state.clubs || []).filter(function (c) {
-      return c && String(c.n || '').toUpperCase() === parent && !isU23Club(c);
+      return c && String(c.n || '').toUpperCase() === parent && !isYouthClub(c) && !isU23Club(c);
     })[0];
     return hit || null;
   }
@@ -1263,10 +1304,13 @@
 
   function takeTopOfTier(used, t, p) {
     var pGender = (p && p.gender) || state.trialGender || 'm';
+    var age = (p && p.age) || 16;
     var pool = (state.clubs || []).filter(function (c) {
       if (!c || !c.n || used[c.n]) return false;
       var cG = c.g === 'f' ? 'f' : 'm';
       if (cG !== pGender) return false;
+      if (isYouthClub(c) && (age > 20 || (isU19Club(c) && age > 19))) return false;
+      if (isU23Club(c) && age > 23) return false;
       if (pGender === 'm' && !isTopClubOfTier(c, t)) return false;
       if (p && !playerFitsClub(p, c, {
         allowYouth: (p.age || 16) <= 19,
@@ -1339,9 +1383,12 @@
   function clubsByTier(t, gender) {
     var want = Number(t);
     var targetG = gender || (state.player && state.player.gender) || state.trialGender || 'm';
+    var age = (state.player && state.player.age) || 16;
     return (state.clubs || []).filter(function (c) {
       var cG = c.g === 'f' ? 'f' : 'm';
       if (cG !== targetG) return false;
+      if (isYouthClub(c) && (age > 20 || (isU19Club(c) && age > 19))) return false;
+      if (isU23Club(c) && age > 23) return false;
       return clubLeagueTier(c) === want && isLegalTier(c, want);
     });
   }
@@ -1870,7 +1917,7 @@
     { id: 3, name: 'Serie C Femminile', sub: '3ª Divisione Femminile (Gironi Nazionali)', badge: '3ª DIV', ovr: '43 – 58', icon: '🌸', color: '#fb7185' },
     { id: 4, name: 'Eccellenza Femminile', sub: 'Campionati Regionali Femminili', badge: '4ª DIV', ovr: '24 – 29', icon: '🌺', color: '#e879f9' },
     { id: 5, name: 'Promozione Femminile', sub: 'Campionati Territoriali Femminili', badge: '5ª DIV', ovr: '19 – 23', icon: '🌷', color: '#d946ef' },
-    { id: 6, name: 'Primavera Femminile', sub: 'Settore Giovanile Femminile U19', badge: 'U19', ovr: '50 – 68', icon: '🎀', color: '#c084fc' }
+    { id: 10, name: 'Primavera Femminile', sub: 'Settore Giovanile Femminile U19', badge: 'U19', ovr: '50 – 68', icon: '🎀', color: '#c084fc' }
   ];
 
   function trialChance(club) {
@@ -2371,6 +2418,7 @@
   }
 
   function clubLeagueTier(club) {
+    if (isYouthClub(club)) return 10;
     var league = String((club && (club.l || club.league)) || '').toUpperCase();
     if (league.indexOf('TERZA CATEGORIA') >= 0) return 9;
     if (league.indexOf('SECONDA CATEGORIA') >= 0) return 8;
@@ -2428,9 +2476,9 @@
   }
 
   function isItalianPyramid(club) {
-    if (!club || club.world) return false;
+    if (!club || club.world || isYouthClub(club)) return false;
     var l = String(club.l || '').toUpperCase();
-    return l.indexOf('SERIE') >= 0 || l.indexOf('ECCELLENZA') >= 0;
+    return l.indexOf('SERIE') >= 0 || l.indexOf('ECCELLENZA') >= 0 || l.indexOf('PROMOZIONE') >= 0 || l.indexOf('PRIMA CATEGORIA') >= 0 || l.indexOf('SECONDA CATEGORIA') >= 0 || l.indexOf('TERZA CATEGORIA') >= 0;
   }
 
   var _PIR = (typeof window !== 'undefined' && window.EliseePiramide) ? window.EliseePiramide : null;
@@ -2573,7 +2621,7 @@
         attachGironeWinnerTrophy(pick, fromTier, letter);
       }
     }
-    weightedPickN(pool(2).filter(function (c) { return stillIdle(c) && isLegalTier(c, 1); }), 2, function (c) {
+    weightedPickN(pool(2).filter(function (c) { return stillIdle(c) && isLegalTier(c, 1) && !isU23Club(c); }), 2, function (c) {
       return (window.EliseeClubStoria ? window.EliseeClubStoria.promoteWeight(c, 2) : 0.1) * 100;
     }).forEach(function (c) { move(c, 1, true); });
     weightedPickN(pool(1).filter(function (c) { return stillIdle(c) && isLegalTier(c, 2); }), 3, function (c) {
@@ -3750,7 +3798,7 @@
       o.t = Number(o.catalogT);
       o.l = o.catalogL || labelForItalianTier(o, o.t);
     }
-    o.isYouth = Number(o.t) === 1 && isBigYouthClub(o) && !isU23Club(o);
+    o.isYouth = Number(o.t) === 10 || isYouthClub(o);
     o.isLoan = false;
     return o;
   }
@@ -3783,10 +3831,24 @@
     var pGender = (p && p.gender) || state.trialGender || 'm';
     var cGender = (c && c.g === 'f') ? 'f' : 'm';
     if (pGender !== cGender) return false;
-    if (opts && opts.stay) return true;
-    if (opts && opts.callUp) return true;
     var age = p.age || 16;
-    if (isU23Club(c) && age > 24) return false;
+
+    // Regola 1: Under 19 / Under 20 / Primavera solo se l'età lo permette
+    if (isYouthClub(c)) {
+      if (isU19Club(c) && age > 19) return false;
+      if (age > 20) return false;
+    }
+    // Regola U23: massimo 23 anni
+    if (isU23Club(c) && age > 23) return false;
+
+    // Se si è oltre l'età consentita, non è permesso nemmeno il rinnovo/permanenza (stay)
+    if (opts && opts.stay) {
+      if (isYouthClub(c) && (age > 20 || (isU19Club(c) && age > 19))) return false;
+      if (isU23Club(c) && age > 23) return false;
+      return true;
+    }
+    if (opts && opts.callUp) return true;
+
     if (c.world && age < 21) return false;
     if (c.world && clubLeagueTier(p.club) > 1) return false;
     var o = Number(p.ovr) || 49;
@@ -3885,12 +3947,15 @@
 
   function pickFailMarketClub(used, t, p) {
     var pGender = (p && p.gender) || state.trialGender || 'm';
+    var age = (p && p.age) || 16;
     var top = takeTopOfTier(used, t, p);
     if (top && !top.failed && !top.justFailed && !top.world && (top.g === 'f' ? 'f' : 'm') === pGender) return Object.assign({}, top);
     var pool = clubsByTier(t, pGender).filter(function (c) {
       if (!c || !c.n || used[c.n] || c.world || c.failed || c.justFailed || !isItalianPyramid(c)) return false;
       var cG = c.g === 'f' ? 'f' : 'm';
       if (cG !== pGender) return false;
+      if (isYouthClub(c) && (age > 20 || (isU19Club(c) && age > 19))) return false;
+      if (isU23Club(c) && age > 23) return false;
       if (p && !playerFitsClub(p, c, {})) return false;
       return true;
     });
@@ -4223,10 +4288,13 @@
 
   function poolFits(p, tier, used, opts) {
     var pGender = (p && p.gender) || state.trialGender || 'm';
+    var age = (p && p.age) || 16;
     return (state.clubs || []).filter(function (c) {
       if (!c || !c.n || used[c.n]) return false;
       var cG = c.g === 'f' ? 'f' : 'm';
       if (cG !== pGender) return false;
+      if (isYouthClub(c) && (age > 20 || (isU19Club(c) && age > 19))) return false;
+      if (isU23Club(c) && age > 23) return false;
       if (clubLeagueTier(c) !== Number(tier)) return false;
       if (!isLegalTier(c, Number(tier)) && !c.world) return false;
       return playerFitsClub(p, c, opts);
@@ -4242,14 +4310,14 @@
 
     if (isFirstStep) {
       resetClubsToCatalog();
-      var aPool = clubsByCatalogTier(1, pGender).filter(function (c) {
-        return (isBigYouthClub(c) || pGender === 'f') && !c.world;
+      var youthPool = clubsByCatalogTier(10, pGender).filter(function (c) {
+        return !c.world;
       });
-      var a = takeUniqueClub(used, aPool);
+      var a = takeUniqueClub(used, youthPool);
       if (a) {
         a = Object.assign({}, a);
-        a.t = 1;
-        a.l = a.catalogL || a.l || (pGender === 'f' ? 'SERIE A FEMMINILE' : 'SERIE A');
+        a.t = 10;
+        a.l = a.catalogL || a.l || (pGender === 'f' ? 'PRIMAVERA FEMMINILE' : 'PRIMAVERA 1');
         a.isYouth = true;
         a.isLoan = false;
         offers.push(a);
@@ -4279,7 +4347,11 @@
 
     var cur = liveClub(p.club) || p.club;
     var curT = clubLeagueTier(cur);
-    if (cur && cur.n) {
+    var age = p.age || 16;
+    var isOverYouth = isYouthClub(cur) && (age > 20 || (isU19Club(cur) && age > 19));
+    var isOverU23 = isU23Club(cur) && age > 23;
+
+    if (cur && cur.n && !isOverYouth && !isOverU23) {
       used[cur.n] = true;
       var stay = Object.assign({}, cur);
       stay.isStay = true;
@@ -4313,6 +4385,13 @@
         var callUp = makeCallUpOffer(p, cur, used);
         if (callUp) offers.push(callUp);
       }
+    } else if (cur && cur.n && (isOverYouth || isOverU23)) {
+      used[cur.n] = true;
+      var parentClub = findFirstTeam(cur);
+      if (parentClub && !used[parentClub.n]) {
+        var callUpOffer = makeCallUpOffer(p, cur, used);
+        if (callUpOffer) offers.push(callUpOffer);
+      }
     }
 
     var jump = typeof p.lastJump === 'number' ? p.lastJump : jumpFromForm(p.lastForm || 0, p.age);
@@ -4341,9 +4420,11 @@
       if (!c.justPromoted || !c.n || used[c.n]) return false;
       var cG = c.g === 'f' ? 'f' : 'm';
       if (cG !== pGender) return false;
+      if (isYouthClub(c) && (age > 20 || (isU19Club(c) && age > 19))) return false;
+      if (isU23Club(c) && age > 23) return false;
       var t = clubLeagueTier(c);
       if (band.indexOf(t) < 0) return false;
-      return playerFitsClub(p, c, { allowYouth: true });
+      return playerFitsClub(p, c, { allowYouth: age <= 19 });
     });
     if (promoPool.length && offers.length < 3 && jump <= 0) {
       var pc = takeUniqueClub(used, promoPool);
@@ -4393,7 +4474,7 @@
 
   function fillFirstOffers(used, offers, p) {
     var pGender = (p && p.gender) || state.trialGender || 'm';
-    var order = pGender === 'f' ? [1, 2, 3, 4] : [1, 2, 3];
+    var order = pGender === 'f' ? [10, 4, 3, 2] : [10, 5, 4, 3];
     var i = 0;
     while (offers.length < 3 && i < 16) {
       var pool = clubsByCatalogTier(order[Math.min(i, order.length - 1)], pGender);
@@ -4406,7 +4487,7 @@
       c = Object.assign({}, c);
       c.t = c.catalogT != null ? c.catalogT : clubLeagueTier(c);
       c.l = c.catalogL || c.l;
-      c.isYouth = Number(c.t) === 1 && (isBigYouthClub(c) || pGender === 'f');
+      c.isYouth = Number(c.t) === 10 || isYouthClub(c);
       c.isLoan = false;
       offers.push(c);
       i++;
@@ -4417,6 +4498,7 @@
   function fillOffersFromTiers(used, offers, need, tiers, p) {
     var i = 0;
     var safe = (tiers && tiers.length) ? tiers.slice() : [4];
+    var age = (p && p.age) || 16;
     while (offers.length < need && i < 16) {
       var t = safe[Math.min(i, safe.length - 1)];
       if (p && isAcademyProspect(p) && (t === 2 || t === 3)) {
@@ -4427,11 +4509,11 @@
           continue;
         }
       }
-      var pool = p ? poolFits(p, t, used, { allowYouth: (p.age || 16) <= 19, academyPath: isAcademyProspect(p) }) : clubsByTier(t);
+      var pool = p ? poolFits(p, t, used, { allowYouth: age <= 19, academyPath: isAcademyProspect(p) }) : clubsByTier(t);
       var c = takeUniqueClub(used, pool);
       if (!c && i >= safe.length) {
         var near = safe[0];
-        c = takeUniqueClub(used, p ? poolFits(p, near, used, { allowYouth: true }) : clubsByTier(near));
+        c = takeUniqueClub(used, p ? poolFits(p, near, used, { allowYouth: age <= 19 }) : clubsByTier(near));
       }
       if (c) offers.push(c);
       i++;
