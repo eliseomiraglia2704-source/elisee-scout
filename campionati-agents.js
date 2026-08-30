@@ -88,7 +88,7 @@
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'toscana-b', title: 'Toscana · Girone B', area: 'Eccellenza · 2 gironi 2026/27 (aventi diritto / iscrizioni)' },
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'marche', title: 'Marche', area: 'Eccellenza · organico ufficiale 2026/27 (16 squadre)' },
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'umbria', title: 'Umbria', area: 'Eccellenza · girone unico ufficiale 2026/27 (16 squadre)' },
-    { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'lazio-a', title: 'Lazio · Girone A', area: 'Eccellenza · 2 gironi 2026/27' },
+    { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'lazio-a', title: 'Lazio · Girone A', area: 'Eccellenza · organico ufficiale 2026/27 (18 squadre)' },
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'lazio-b', title: 'Lazio · Girone B', area: 'Eccellenza · organico ufficiale 2026/27 (18 squadre)' },
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'abruzzo', title: 'Abruzzo', area: 'Eccellenza · organico ufficiale 2026/27 (18 squadre)' },
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'molise', title: 'Molise', area: 'Eccellenza · girone unico 2026/27' },
