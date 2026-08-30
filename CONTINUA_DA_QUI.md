@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Montefano** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-montefano.png`, `montefano.png`) il logo ufficiale della S.S.D. Montefano Calcio (Eccellenza Marche) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Matelica.
+Ultimo fatto: **Aggiornato Logo Ufficiale Montegranaro** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-montegranaro.png`, `montegranaro.png`) il logo ufficiale del Montegranaro Calcio (Eccellenza Marche) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Montefano.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Montegranaro:
+  - Scaricato e integrato in RGBA (643x1000px) il logo del Montegranaro da Tuttocampo in `immagini/squadre-loghi/ecc-montegranaro.png` e `montegranaro.png`. Cache `LOGOMONTEG1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Montefano:
   - Scaricato e integrato in RGBA (1000x1000px) il logo del Montefano da Tuttocampo in `immagini/squadre-loghi/ecc-montefano.png` e `montefano.png`. Cache `LOGOMONT1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Matelica:
