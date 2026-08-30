@@ -77,7 +77,7 @@
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'lombardia-c', title: 'Lombardia · Girone C', area: 'Eccellenza · gironi A–C ufficiali 2026/27 (CR Lombardia)' },
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'piemonte-a', title: 'Piemonte / VdA · Girone A', area: 'Eccellenza · organico ufficiale 2026/27 (16 squadre)' },
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'piemonte-b', title: 'Piemonte / VdA · Girone B', area: 'Eccellenza · organico ufficiale 2026/27 (16 squadre)' },
-    { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'veneto-a', title: 'Veneto · Girone A', area: 'Eccellenza · 2 gironi 2026/27' },
+    { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'veneto-a', title: 'Veneto · Girone A', area: 'Eccellenza · organico ufficiale 2026/27 (16 squadre)' },
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'veneto-b', title: 'Veneto · Girone B', area: 'Eccellenza · 2 gironi 2026/27' },
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'fvg', title: 'Friuli-Venezia Giulia', area: 'Eccellenza · girone unico ufficiale 2026/27 (18 squadre)' },
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'trentino', title: 'Trentino-Alto Adige', area: 'Eccellenza · girone unico ufficiale 2026/27 (16 squadre)' },
