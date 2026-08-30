@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Seregno** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-seregno.png`, `seregno.png`) il logo ufficiale del 1913 Seregno Calcio (Eccellenza Lombardia Girone B) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Ponte San Pietro Mapello.
+Ultimo fatto: **Aggiornato Logo Ufficiale Trevigliese** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-trevigliese.png`, `trevigliese.png`) il logo ufficiale della C.S. Trevigliese (Eccellenza Lombardia Girone B) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Seregno.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Trevigliese:
+  - Scaricato e integrato in RGBA (620x811px) il logo della Trevigliese da Tuttocampo in `immagini/squadre-loghi/ecc-trevigliese.png` e `trevigliese.png`. Cache `LOGOTREV1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Seregno:
   - Scaricato e integrato in RGBA (718x720px) il logo del Seregno da Tuttocampo in `immagini/squadre-loghi/ecc-seregno.png` e `seregno.png`. Cache `LOGOSER1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Ponte San Pietro Mapello:
