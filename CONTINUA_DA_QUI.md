@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Muggiò** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-muggio.png`, `muggio.png`) il logo ufficiale del F.B.C.D. Muggiò 1984 (Eccellenza Lombardia Girone B) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Luciano Manara.
+Ultimo fatto: **Aggiornato Logo Ufficiale Nuova Sondrio** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-nuova-sondrio.png`, `nuova-sondrio.png`) il logo ufficiale della Nuova Sondrio Calcio (Eccellenza Lombardia Girone B) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Muggiò.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Nuova Sondrio:
+  - Scaricato e integrato in RGBA (707x686px) il logo della Nuova Sondrio da Tuttocampo in `immagini/squadre-loghi/ecc-nuova-sondrio.png` e `nuova-sondrio.png`. Cache `LOGOSON1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Muggiò:
   - Scaricato e integrato in RGBA (500x500px) il logo del Muggiò da Tuttocampo in `immagini/squadre-loghi/ecc-muggio.png` e `muggio.png`. Cache `LOGOMUG1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Luciano Manara:
