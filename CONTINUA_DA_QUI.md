@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Zingonia Verdellino** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-zingonia-verdellino.png`, `zingonia-verdellino.png`) il logo ufficiale dello Zingonia Verdellino (Eccellenza Lombardia Girone B) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Vis Nova Giussano.
+Ultimo fatto: **Aggiornato Logo Ufficiale Breno** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-breno.png`, `breno.png`) il logo ufficiale dell'U.S. Breno (Eccellenza Lombardia Girone C) da sorgente web.
+Feature precedente: Aggiornato Logo Ufficiale Zingonia Verdellino.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Breno:
+  - Scaricato e integrato in RGBA (205x246px) il logo del Breno in `immagini/squadre-loghi/ecc-breno.png` e `breno.png`. Cache `LOGOBRE1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Zingonia Verdellino:
   - Scaricato e integrato in RGBA (738x871px) il logo dello Zingonia Verdellino da Tuttocampo in `immagini/squadre-loghi/ecc-zingonia-verdellino.png` e `zingonia-verdellino.png`. Cache `LOGOZIN1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Vis Nova Giussano:
