@@ -90,7 +90,7 @@
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'umbria', title: 'Umbria', area: 'Eccellenza · girone unico ufficiale 2026/27 (16 squadre)' },
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'lazio-a', title: 'Lazio · Girone A', area: 'Eccellenza · 2 gironi 2026/27' },
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'lazio-b', title: 'Lazio · Girone B', area: 'Eccellenza · organico ufficiale 2026/27 (18 squadre)' },
-    { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'abruzzo', title: 'Abruzzo', area: 'Eccellenza · girone unico 2026/27' },
+    { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'abruzzo', title: 'Abruzzo', area: 'Eccellenza · organico ufficiale 2026/27 (18 squadre)' },
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'molise', title: 'Molise', area: 'Eccellenza · girone unico 2026/27' },
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'campania-a', title: 'Campania · Girone A', area: 'Eccellenza · 2 gironi 2026/27' },
     { campionatoId: 'eccellenza', campionato: 'Eccellenza', gironeId: 'campania-b', title: 'Campania · Girone B', area: 'Eccellenza · organico ufficiale 2026/27 (18 squadre)' },

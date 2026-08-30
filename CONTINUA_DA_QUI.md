@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Eccellenza Campania Gir. B + Lazio Gir. B 2026/27** — organico ufficiale Tuttocampo (18+18 squadre) al posto dei placeholder, loghi ritagliati dalle classifiche, Focus/catalogo/minigioco. In parallelo: interfacce XI/selettore/mercato/minigioco allineate alla homepage (niente oro EA/FIFA).
-Feature precedente: Separazione rigorosa carriere maschili e femminili nel minigioco.
+Ultimo fatto: **Eccellenza Abruzzo 2026/27** — girone unico ufficiale 18 squadre da Tuttocampo (nomi completi + città + loghi). Rimossi placeholder L'Aquila/Pescara/Teramo.
+Feature precedente: Eccellenza Campania Gir. B + Lazio Gir. B 2026/27.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -58,6 +58,7 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 Flusso recente, dal più nuovo:
 
+- **Eccellenza Abruzzo 2026/27** (girone unico, 18 squadre): Bacigalupo Vasto Marina, Mosciano, Celano, Ovidiana Sulmona, Chieti 1922, Pontevomano, Forza e Coraggio Avezzano, Pro Vasto, Folgore Delfino Curi, Rosetana, Francavilla 1927, San Giovanni Teatino, Fucense Trasacco, San Salvo, Montesilvano 1954, Torrese, Montorio 88, Virtus Cupello. Cache `ECCABR1`.
 - **Eccellenza Campania Girone B + Lazio Girone B 2026/27** (Tuttocampo):
   - Campania B: Agerola, Alta Hirpinia, Apice, Battipagliese, Città di Campagna, Città di Pontecagnano, Città di Solofra, Costa d'Amalfi, Telese Terme, Heraclea, LMM Montemiletto, Poggio de Marinis, Rossoblù Castel San Giorgio, Salernum Baronissi, San Vito Positano, Sanseverinese, Sporting Ponte, US Angri.
   - Lazio B: Alatri, Arce 1932, Cassino, Città di Formia, Città Monte San Giovanni Campano, Ferentino, Lodigiani, Lupa Frascati, Polisportiva Gaeta, Pomezia, Real San Basilio, Roccasecca, Roma City, Salaria FC, SS Romulea, Sterparo, Terracina, Vis Sezze.
@@ -73,7 +74,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Eccellenza Campania B + Lazio B 2026/27 da Tuttocampo; UI XI/selettore/mercato/minigioco allineate alla homepage |
+| (questo) | Eccellenza Abruzzo 2026/27: organico ufficiale 18 squadre, città e loghi Tuttocampo |
+| `d671502` | Eccellenza Campania B + Lazio B 2026/27 da Tuttocampo; UI XI/selettore/mercato/minigioco allineate alla homepage |
 | `3db4114` | Separazione rigorosa carriere maschili e femminili minigioco |
 | `d2d990e` | Scopri profili: riordino e allineamento card profili & pulsanti azione (+ Segui / Messaggia / Chi segue) |
 | `245ff85` | Profilo Presidente da PDF: Guida operativa, Maglie ufficiali, Rosa Profilo Attivo vs Anteprima, Deleghe, Wall FIFA |
@@ -306,6 +308,7 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Eccellenza Abruzzo 2026/27 (girone unico 18 squadre): nomi ufficiali, città, loghi Tuttocampo. Cache `ECCABR1`.
 - **2026-08-30** — Eccellenza Campania Gir. B e Lazio Gir. B 2026/27 da classifiche Tuttocampo (18+18, loghi RGBA). Catalogo, Focus, minigioco. UI: rimosso stile EA/FIFA da formazione, selettore, Wall mercato, hub minigioco. Cache `ECCB1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Urbino (Completata Eccellenza Marche 100%):
   - Scaricato e integrato in RGBA (720x720px) il logo dell'Urbino da Tuttocampo in `immagini/squadre-loghi/ecc-urbino.png` e `urbino.png`. Cache `LOGOURB1`.
