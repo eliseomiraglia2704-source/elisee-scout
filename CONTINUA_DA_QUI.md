@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Jesina** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-jesina.png`, `jesina.png`) il logo ufficiale della Jesina Calcio (Eccellenza Marche) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Fermignanese.
+Ultimo fatto: **Aggiornato Logo Ufficiale Lunano** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-lunano.png`, `lunano.png`) il logo ufficiale del Lunano Calcio (Eccellenza Marche) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Jesina.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Lunano:
+  - Scaricato e integrato in RGBA (624x1000px) il logo del Lunano da Tuttocampo in `immagini/squadre-loghi/ecc-lunano.png` e `lunano.png`. Cache `LOGOLUN1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Jesina:
   - Scaricato e integrato in RGBA (735x994px) il logo della Jesina da Tuttocampo in `immagini/squadre-loghi/ecc-jesina.png` e `jesina.png`. Cache `LOGOJES1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Fermignanese:
