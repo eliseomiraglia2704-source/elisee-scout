@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Aurora Treia** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-aurora-treia.png`, `aurora-treia.png`) il logo ufficiale dell'U.S.D. Aurora Treia (Eccellenza Marche) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Verolese.
+Ultimo fatto: **Aggiornato Logo Ufficiale Castelfidardo** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-castelfidardo.png`, `castelfidardo.png`) il logo ufficiale del G.S.D. Castelfidardo (Eccellenza Marche) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Aurora Treia.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Castelfidardo:
+  - Scaricato e integrato in RGBA (434x720px) il logo del Castelfidardo da Tuttocampo in `immagini/squadre-loghi/ecc-castelfidardo.png` e `castelfidardo.png`. Cache `LOGOCFID1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Aurora Treia:
   - Scaricato e integrato in RGBA (1493x1500px) il logo dell'Aurora Treia da Tuttocampo in `immagini/squadre-loghi/ecc-aurora-treia.png` e `aurora-treia.png`. Cache `LOGOAUR1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Verolese:
