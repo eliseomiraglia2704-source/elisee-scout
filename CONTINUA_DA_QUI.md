@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Ciliverghe Mazzano** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-ciliverghe-mazzano.png`, `ciliverghe-mazzano.png`) il logo ufficiale del Ciliverghe Calcio Mazzano (Eccellenza Lombardia Girone C) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Cellatica.
+Ultimo fatto: **Aggiornato Logo Ufficiale Codogno** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-codogno.png`, `codogno.png`) il logo ufficiale dell'R.C. Codogno 1908 (Eccellenza Lombardia Girone C) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Ciliverghe Mazzano.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Codogno:
+  - Scaricato e integrato in RGBA (447x558px) il logo del Codogno da Tuttocampo in `immagini/squadre-loghi/ecc-codogno.png` e `codogno.png`. Cache `LOGOCOD1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Ciliverghe Mazzano:
   - Scaricato e integrato in RGBA (499x499px) il logo del Ciliverghe Mazzano da Tuttocampo in `immagini/squadre-loghi/ecc-ciliverghe-mazzano.png` e `ciliverghe-mazzano.png`. Cache `LOGOCIL1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Cellatica:
