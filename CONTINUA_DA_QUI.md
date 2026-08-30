@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Orceana** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-orceana.png`, `orceana.png`) il logo ufficiale dell'A.C. Orceana Calcio (Eccellenza Lombardia Girone C) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Offanenghese.
+Ultimo fatto: **Aggiornato Logo Ufficiale Pianico** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-pianico.png`, `pianico.png`) il logo ufficiale dell'U.S. Pianico (Eccellenza Lombardia Girone C) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Orceana.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Pianico:
+  - Scaricato e integrato in RGBA (1051x1500px) il logo del Pianico da Tuttocampo in `immagini/squadre-loghi/ecc-pianico.png` e `pianico.png`. Cache `LOGOPIA1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Orceana:
   - Scaricato e integrato in RGBA (586x720px) il logo dell'Orceana da Tuttocampo in `immagini/squadre-loghi/ecc-orceana.png` e `orceana.png`. Cache `LOGOORC1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Offanenghese:
