@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Sangiustese** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-sangiustese.png`, `sangiustese.png`) il logo ufficiale della Sangiustese VP (Eccellenza Marche) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Fano (Nuova Versione).
+Ultimo fatto: **Aggiornato Logo Ufficiale Tolentino** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-tolentino.png`, `tolentino.png`) il logo ufficiale dell'U.S. Tolentino 1919 (Eccellenza Marche) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Sangiustese.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Tolentino:
+  - Scaricato e integrato in RGBA (1246x1500px) il logo del Tolentino da Tuttocampo in `immagini/squadre-loghi/ecc-tolentino.png` e `tolentino.png`. Cache `LOGOTOL1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Sangiustese:
   - Scaricato e integrato in RGBA (819x888px) il logo della Sangiustese da Tuttocampo in `immagini/squadre-loghi/ecc-sangiustese.png` e `sangiustese.png`. Cache `LOGOSANG1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Fano (Nuova Versione):
