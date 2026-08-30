@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Franco Scarioni** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-franco-scarioni.png`, `franco-scarioni.png`) il logo ufficiale del Franco Scarioni (Eccellenza Lombardia Girone B) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Città di Albino.
+Ultimo fatto: **Aggiornato Logo Ufficiale Juvenes United** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-juvenes-united.png`, `juvenes-united.png`) il logo ufficiale del Juvenes United (Eccellenza Lombardia Girone B) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Franco Scarioni.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Juvenes United:
+  - Scaricato e integrato in RGBA (227x227px) il logo del Juvenes United da Tuttocampo in `immagini/squadre-loghi/ecc-juvenes-united.png` e `juvenes-united.png`. Cache `LOGOJUV1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Franco Scarioni:
   - Scaricato e integrato in RGBA (1000x1000px) il logo del Franco Scarioni da Tuttocampo in `immagini/squadre-loghi/ecc-franco-scarioni.png` e `franco-scarioni.png`. Cache `LOGOSCAR1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Città di Albino:
