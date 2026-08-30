@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Castiglione** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-castiglione.png`, `castiglione.png`) il logo ufficiale del F.C. Castiglione (Eccellenza Lombardia Girone C) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Carpenedolo BSV Garda.
+Ultimo fatto: **Aggiornato Logo Ufficiale Cellatica** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-cellatica.png`, `cellatica.png`) il logo ufficiale del Cellatica Calcio (Eccellenza Lombardia Girone C) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Castiglione.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Cellatica:
+  - Scaricato e integrato in RGBA (796x927px) il logo del Cellatica da Tuttocampo in `immagini/squadre-loghi/ecc-cellatica.png` e `cellatica.png`. Cache `LOGOCEL1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Castiglione:
   - Scaricato e integrato in RGBA (1239x1500px) il logo del Castiglione da Tuttocampo in `immagini/squadre-loghi/ecc-castiglione.png` e `castiglione.png`. Cache `LOGOCAS1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Carpenedolo BSV Garda:
