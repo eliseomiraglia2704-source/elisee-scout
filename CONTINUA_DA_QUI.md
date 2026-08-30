@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Codogno** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-codogno.png`, `codogno.png`) il logo ufficiale dell'R.C. Codogno 1908 (Eccellenza Lombardia Girone C) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Ciliverghe Mazzano.
+Ultimo fatto: **Aggiornato Logo Ufficiale Offanenghese** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-offanenghese.png`, `offanenghese.png`) il logo ufficiale dell'U.S. Offanenghese (Eccellenza Lombardia Girone C) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Codogno.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Offanenghese:
+  - Scaricato e integrato in RGBA (751x1000px) il logo dell'Offanenghese da Tuttocampo in `immagini/squadre-loghi/ecc-offanenghese.png` e `offanenghese.png`. Cache `LOGOOFF1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Codogno:
   - Scaricato e integrato in RGBA (447x558px) il logo del Codogno da Tuttocampo in `immagini/squadre-loghi/ecc-codogno.png` e `codogno.png`. Cache `LOGOCOD1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Ciliverghe Mazzano:
