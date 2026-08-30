@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Chiesanuova** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-chiesanuova.png`, `chiesanuova.png`) il logo ufficiale del Chiesanuova Calcio (Eccellenza Marche) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Castelfidardo.
+Ultimo fatto: **Aggiornato Logo Ufficiale Fano** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-fano.png`, `fano.png`) il logo ufficiale dell'Alma Juventus Fano 1906 (Eccellenza Marche) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Chiesanuova.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Fano:
+  - Scaricato e integrato in RGBA (633x720px) il logo del Fano da Tuttocampo in `immagini/squadre-loghi/ecc-fano.png` e `fano.png`. Cache `LOGOFAN1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Chiesanuova:
   - Scaricato e integrato in RGBA (1370x1500px) il logo del Chiesanuova da Tuttocampo in `immagini/squadre-loghi/ecc-chiesanuova.png` e `chiesanuova.png`. Cache `LOGOCHIE1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Castelfidardo:
