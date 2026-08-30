@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Cisanese** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-cisanese.png`, `cisanese.png`) il logo ufficiale dell'U.S.D. Cisanese (Eccellenza Lombardia Girone B) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Caravaggio.
+Ultimo fatto: **Aggiornato Logo Ufficiale Città di Albino** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-citta-di-albino.png`, `citta-di-albino.png`) il logo ufficiale del Città di Albino (Eccellenza Lombardia Girone B) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Cisanese.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Città di Albino:
+  - Scaricato e integrato in RGBA (624x1000px) il logo del Città di Albino da Tuttocampo in `immagini/squadre-loghi/ecc-citta-di-albino.png` e `citta-di-albino.png`. Cache `LOGOALB1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Cisanese:
   - Scaricato e integrato in RGBA (798x1000px) il logo della Cisanese da Tuttocampo in `immagini/squadre-loghi/ecc-cisanese.png` e `cisanese.png`. Cache `LOGOCIS1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Caravaggio:
