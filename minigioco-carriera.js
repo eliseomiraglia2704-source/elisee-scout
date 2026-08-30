@@ -937,7 +937,7 @@
       if (typeof cb === 'function') cb(state.clubs);
       return;
     }
-    fetch('data/squadre/catalog.json?v=20260830_ECCLAZA1', { cache: 'no-store' })
+    fetch('data/squadre/catalog.json?v=20260830_ECCMOL1', { cache: 'no-store' })
       .then(function (r) {
         return r.json();
       })
@@ -990,7 +990,7 @@
         if (typeof cb === 'function') cb(state.clubs);
       })
       .catch(function () {
-        fetch('data/squadre/minigioco_clubs.json?v=20260830_ECCLAZA1', { cache: 'no-store' })
+        fetch('data/squadre/minigioco_clubs.json?v=20260830_ECCMOL1', { cache: 'no-store' })
           .then(function (r) {
             return r.json();
           })
