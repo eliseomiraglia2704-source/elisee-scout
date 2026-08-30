@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Sported Maris** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-sported-maris.png`, `sported-maris.png`) il logo ufficiale dello Sported Maris (Eccellenza Lombardia Girone C) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Soncinese.
+Ultimo fatto: **Aggiornato Logo Ufficiale Sporting Castellana** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-sporting-castellana.png`, `sporting-castellana.png`) il logo ufficiale dello Sporting Castellana (Eccellenza Lombardia Girone C) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Sported Maris.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Sporting Castellana:
+  - Scaricato e integrato in RGBA (989x1000px) il logo dello Sporting Castellana da Tuttocampo in `immagini/squadre-loghi/ecc-sporting-castellana.png` e `sporting-castellana.png`. Cache `LOGOSCAS1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Sported Maris:
   - Scaricato e integrato in RGBA (613x720px) il logo dello Sported Maris da Tuttocampo in `immagini/squadre-loghi/ecc-sported-maris.png` e `sported-maris.png`. Cache `LOGOSPO1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Soncinese:
