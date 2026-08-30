@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Aggiornato Logo Ufficiale Sporting Castellana** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-sporting-castellana.png`, `sporting-castellana.png`) il logo ufficiale dello Sporting Castellana (Eccellenza Lombardia Girone C) da sorgente Tuttocampo.
-Feature precedente: Aggiornato Logo Ufficiale Sported Maris.
+Ultimo fatto: **Aggiornato Logo Ufficiale Torre de' Roveri** — Scaricato e integrato in alta risoluzione PNG trasparente (`immagini/squadre-loghi/ecc-torre-de-roveri.png`, `torre-de-roveri.png`) il logo ufficiale del Torre de' Roveri Calcio (Eccellenza Lombardia Girone C) da sorgente Tuttocampo.
+Feature precedente: Aggiornato Logo Ufficiale Sporting Castellana.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -292,6 +292,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
+- **2026-08-30** — Aggiornato Logo Ufficiale Torre de' Roveri:
+  - Scaricato e integrato in RGBA (1000x1000px) il logo del Torre de' Roveri da Tuttocampo in `immagini/squadre-loghi/ecc-torre-de-roveri.png` e `torre-de-roveri.png`. Cache `LOGOTOR1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Sporting Castellana:
   - Scaricato e integrato in RGBA (989x1000px) il logo dello Sporting Castellana da Tuttocampo in `immagini/squadre-loghi/ecc-sporting-castellana.png` e `sporting-castellana.png`. Cache `LOGOSCAS1`.
 - **2026-08-30** — Aggiornato Logo Ufficiale Sported Maris:
