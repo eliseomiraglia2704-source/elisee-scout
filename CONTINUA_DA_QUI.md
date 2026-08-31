@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Aggiornamento Logo Pontevecchio (Eccellenza Umbria)** — Scaricato e applicato il logo ufficiale in alta risoluzione in `immagini/squadre-loghi/ecc-pontevecchio.png`.
+Ultimo fatto: **Aggiornamento Batch 14 Loghi Eccellenza (Umbria & Abruzzo)** — Scaricati e applicati i loghi ufficiali in alta risoluzione per: Pontevecchio, Spoleto, Tavernelle Calcio, Terni Football Club, Torgiano Calcio, Vivi Altotevere Sansepolcro, Bacigalupo Vasto Marina, Celano, Chieti 1922, Folgore Delfino Curi, Forza e Coraggio Avezzano, Francavilla 1927, Fucense Trasacco, Montesilvano 1954.
 Feature precedente: Aggiornamento Logo Padule 1976 (Eccellenza Umbria).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
