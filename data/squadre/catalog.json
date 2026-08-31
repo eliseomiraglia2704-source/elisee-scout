@@ -83418,16 +83418,16 @@
       "pts": 0,
       "played": 0,
       "logo": "immagini/squadre-loghi/ecc-albese.png",
-      "primary": "#2f28b4",
-      "secondary": "#d0d74b",
-      "accent": "#ffffff",
+      "primary": "#3fb8e3",
+      "secondary": "#ffffff",
+      "accent": "#445a81",
       "home": {
-        "body": "#2f28b4",
-        "sleeve": "#2f28b4"
+        "body": "#3fb8e3",
+        "sleeve": "#ffffff"
       },
       "away": {
-        "body": "#d0d74b",
-        "sleeve": "#2f28b4"
+        "body": "#ffffff",
+        "sleeve": "#3fb8e3"
       },
       "stadium": "",
       "capacity": null,
