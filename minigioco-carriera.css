@@ -3135,8 +3135,41 @@ button.es-mg-hub-menubar:focus {
   align-items: center;
   justify-content: space-between;
 }
+.es-mg-cat-icon-wrap,
 .es-mg-cat-icon {
-  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 3px;
+  box-sizing: border-box;
+}
+.es-mg-cat-logo-img {
+  width: 100%;
+  height: 100%;
+  max-width: 26px;
+  max-height: 26px;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5));
+}
+.es-mg-cat-selected-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 3px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+.es-mg-cat-selected-icon .es-mg-cat-logo-img {
+  max-width: 28px;
+  max-height: 28px;
 }
 .es-mg-cat-badge {
   font-size: 0.65rem;

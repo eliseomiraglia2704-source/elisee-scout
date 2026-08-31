@@ -10303,7 +10303,7 @@
       "pos": 2,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/bisceglie.png",
+      "logo": "immagini/squadre-loghi/unione-calcio-bisceglie.png",
       "primary": "#c0378a",
       "secondary": "#3fc875",
       "accent": "#ffffff",
@@ -10319,7 +10319,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/unione-calcio-bisceglie.png"
     },
     {
       "id": "brindisi",
@@ -15117,7 +15118,7 @@
       "pos": 2,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/taranto.png",
       "primary": "#59d373",
       "secondary": "#a62c8c",
       "accent": "#ffffff",
@@ -15132,7 +15133,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/taranto.png"
     },
     {
       "id": "promozione-puglia-girone-a-puglia-a-fc-lecce-2",
@@ -15291,7 +15293,7 @@
       "pos": 8,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/soccer-trani.png",
       "primary": "#5688b6",
       "secondary": "#a97749",
       "accent": "#ffffff",
@@ -15306,7 +15308,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/soccer-trani.png"
     },
     {
       "id": "promozione-puglia-girone-a-puglia-a-pro-molfetta",
@@ -15349,7 +15352,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/bitonto.png",
       "primary": "#aa8b58",
       "secondary": "#5574a7",
       "accent": "#ffffff",
@@ -15364,7 +15367,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/bitonto.png"
     },
     {
       "id": "promozione-puglia-girone-a-puglia-a-fc-monopoli",
@@ -15581,7 +15585,7 @@
       "pos": 2,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/taranto.png",
       "primary": "#c3442f",
       "secondary": "#3cbbd0",
       "accent": "#ffffff",
@@ -15596,7 +15600,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/taranto.png"
     },
     {
       "id": "promozione-puglia-girone-b-puglia-b-fc-lecce-2",
@@ -15755,7 +15760,7 @@
       "pos": 8,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/soccer-trani.png",
       "primary": "#94378d",
       "secondary": "#6bc872",
       "accent": "#ffffff",
@@ -15770,7 +15775,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/soccer-trani.png"
     },
     {
       "id": "promozione-puglia-girone-b-puglia-b-pro-molfetta",
@@ -15813,7 +15819,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/bitonto.png",
       "primary": "#303fda",
       "secondary": "#cfc025",
       "accent": "#ffffff",
@@ -15828,7 +15834,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/bitonto.png"
     },
     {
       "id": "promozione-puglia-girone-b-puglia-b-fc-monopoli",
@@ -24948,7 +24955,7 @@
       "pos": 5,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/cuneo-1905-olmo.png",
       "primary": "#343f66",
       "secondary": "#cbc099",
       "accent": "#ffffff",
@@ -24963,7 +24970,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/cuneo-1905-olmo.png"
     },
     {
       "id": "promozione-piemonte-girone-a-piemonte-a-us-verce",
@@ -25093,7 +25101,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/chieri.png",
       "primary": "#92c230",
       "secondary": "#6d3dcf",
       "accent": "#ffffff",
@@ -25108,7 +25116,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/chieri.png"
     },
     {
       "id": "promozione-piemonte-girone-a-piemonte-a-virtus-m",
@@ -25412,7 +25421,7 @@
       "pos": 5,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/cuneo-1905-olmo.png",
       "primary": "#423f72",
       "secondary": "#bdc08d",
       "accent": "#ffffff",
@@ -25427,7 +25436,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/cuneo-1905-olmo.png"
     },
     {
       "id": "promozione-piemonte-girone-b-piemonte-b-us-verce",
@@ -25557,7 +25567,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/chieri.png",
       "primary": "#6b656a",
       "secondary": "#949a95",
       "accent": "#ffffff",
@@ -25572,7 +25582,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/chieri.png"
     },
     {
       "id": "promozione-piemonte-girone-b-piemonte-b-virtus-m",
@@ -32285,7 +32296,7 @@
       "pos": 2,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/taranto.png",
       "primary": "#a62c6d",
       "secondary": "#59d392",
       "accent": "#ffffff",
@@ -32300,7 +32311,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/taranto.png"
     },
     {
       "id": "prima-categoria-puglia-puglia-asd-lecce-2",
@@ -32459,7 +32471,7 @@
       "pos": 8,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/soccer-trani.png",
       "primary": "#624145",
       "secondary": "#9dbeba",
       "accent": "#ffffff",
@@ -32474,7 +32486,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/soccer-trani.png"
     },
     {
       "id": "prima-categoria-puglia-puglia-atletico-molfetta",
@@ -32517,7 +32530,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/bitonto.png",
       "primary": "#3f934e",
       "secondary": "#c06cb1",
       "accent": "#ffffff",
@@ -32532,7 +32545,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/bitonto.png"
     },
     {
       "id": "prima-categoria-puglia-puglia-asd-monopoli-10",
@@ -39274,7 +39288,7 @@
       "pos": 5,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/cuneo-1905-olmo.png",
       "primary": "#686330",
       "secondary": "#979ccf",
       "accent": "#ffffff",
@@ -39289,7 +39303,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/cuneo-1905-olmo.png"
     },
     {
       "id": "prima-categoria-piemonte-girone-a-piemonte-a-us--f48f",
@@ -39419,7 +39434,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/chieri.png",
       "primary": "#aa352d",
       "secondary": "#55cad2",
       "accent": "#ffffff",
@@ -39434,7 +39449,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/chieri.png"
     },
     {
       "id": "prima-categoria-piemonte-girone-a-piemonte-a-vir-f48f-prima-categoria-piemonte",
@@ -39680,7 +39696,7 @@
       "pos": 5,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/cuneo-1905-olmo.png",
       "primary": "#c7745d",
       "secondary": "#388ba2",
       "accent": "#ffffff",
@@ -39695,7 +39711,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/cuneo-1905-olmo.png"
     },
     {
       "id": "prima-categoria-piemonte-girone-b-piemonte-b-us--37ce",
@@ -39825,7 +39842,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/chieri.png",
       "primary": "#724a9a",
       "secondary": "#8db565",
       "accent": "#ffffff",
@@ -39840,7 +39857,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/chieri.png"
     },
     {
       "id": "prima-categoria-piemonte-girone-b-piemonte-b-vir-37ce-prima-categoria-piemonte",
@@ -44871,7 +44889,7 @@
       "pos": 2,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/taranto.png",
       "primary": "#3a37d9",
       "secondary": "#c5c826",
       "accent": "#ffffff",
@@ -44886,7 +44904,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/taranto.png"
     },
     {
       "id": "seconda-categoria-puglia-puglia-asd-lecce-2",
@@ -45045,7 +45064,7 @@
       "pos": 8,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/soccer-trani.png",
       "primary": "#5b5ba0",
       "secondary": "#a4a45f",
       "accent": "#ffffff",
@@ -45060,7 +45079,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/soccer-trani.png"
     },
     {
       "id": "seconda-categoria-puglia-puglia-atletico-molfett",
@@ -45103,7 +45123,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/bitonto.png",
       "primary": "#b72955",
       "secondary": "#48d6aa",
       "accent": "#ffffff",
@@ -45118,7 +45138,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/bitonto.png"
     },
     {
       "id": "seconda-categoria-puglia-puglia-asd-monopoli-10",
@@ -51860,7 +51881,7 @@
       "pos": 5,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/cuneo-1905-olmo.png",
       "primary": "#652d44",
       "secondary": "#9ad2bb",
       "accent": "#ffffff",
@@ -51875,7 +51896,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/cuneo-1905-olmo.png"
     },
     {
       "id": "seconda-categoria-piemonte-girone-a-piemonte-a-u-33d6-seconda-categoria-piemon",
@@ -52005,7 +52027,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/chieri.png",
       "primary": "#2f2c2f",
       "secondary": "#d0d3d0",
       "accent": "#ffffff",
@@ -52020,7 +52042,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/chieri.png"
     },
     {
       "id": "seconda-categoria-piemonte-girone-a-piemonte-a-v-33d6-seconda-categoria-piemon",
@@ -52266,7 +52289,7 @@
       "pos": 5,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/cuneo-1905-olmo.png",
       "primary": "#4a38c3",
       "secondary": "#b5c73c",
       "accent": "#ffffff",
@@ -52281,7 +52304,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/cuneo-1905-olmo.png"
     },
     {
       "id": "seconda-categoria-piemonte-girone-b-piemonte-b-u-6b2d-seconda-categoria-piemon",
@@ -52411,7 +52435,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/chieri.png",
       "primary": "#d4cf58",
       "secondary": "#2b30a7",
       "accent": "#ffffff",
@@ -52426,7 +52450,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/chieri.png"
     },
     {
       "id": "seconda-categoria-piemonte-girone-b-piemonte-b-v-6b2d-seconda-categoria-piemon",
@@ -57457,7 +57482,7 @@
       "pos": 2,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/taranto.png",
       "primary": "#516833",
       "secondary": "#ae97cc",
       "accent": "#ffffff",
@@ -57472,7 +57497,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/taranto.png"
     },
     {
       "id": "terza-categoria-puglia-bari-puglia-ba-polisporti",
@@ -57631,7 +57657,7 @@
       "pos": 8,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/soccer-trani.png",
       "primary": "#34a829",
       "secondary": "#cb57d6",
       "accent": "#ffffff",
@@ -57646,7 +57672,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/soccer-trani.png"
     },
     {
       "id": "terza-categoria-puglia-bari-puglia-ba-sporting-m",
@@ -57689,7 +57716,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/bitonto.png",
       "primary": "#7bd453",
       "secondary": "#842bac",
       "accent": "#ffffff",
@@ -57704,7 +57731,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/bitonto.png"
     },
     {
       "id": "terza-categoria-puglia-bari-puglia-ba-polisporti-092e-terza-categoria-puglia-b",
@@ -57805,7 +57833,7 @@
       "pos": 2,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/taranto.png",
       "primary": "#59752e",
       "secondary": "#a68ad1",
       "accent": "#ffffff",
@@ -57820,7 +57848,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/taranto.png"
     },
     {
       "id": "terza-categoria-puglia-brindisi-puglia-br-polisp",
@@ -57979,7 +58008,7 @@
       "pos": 8,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/soccer-trani.png",
       "primary": "#382da4",
       "secondary": "#c7d25b",
       "accent": "#ffffff",
@@ -57994,7 +58023,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/soccer-trani.png"
     },
     {
       "id": "terza-categoria-puglia-brindisi-puglia-br-sporti-71cc-terza-categoria-puglia-b",
@@ -58037,7 +58067,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/bitonto.png",
       "primary": "#383c2e",
       "secondary": "#c7c3d1",
       "accent": "#ffffff",
@@ -58052,7 +58082,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/bitonto.png"
     },
     {
       "id": "terza-categoria-puglia-brindisi-puglia-br-polisp-71cc-terza-categoria-puglia-b",
@@ -58153,7 +58184,7 @@
       "pos": 2,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/taranto.png",
       "primary": "#726b5d",
       "secondary": "#8d94a2",
       "accent": "#ffffff",
@@ -58168,7 +58199,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/taranto.png"
     },
     {
       "id": "terza-categoria-puglia-foggia-puglia-fg-polispor",
@@ -58327,7 +58359,7 @@
       "pos": 8,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/soccer-trani.png",
       "primary": "#775883",
       "secondary": "#88a77c",
       "accent": "#ffffff",
@@ -58342,7 +58374,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/soccer-trani.png"
     },
     {
       "id": "terza-categoria-puglia-foggia-puglia-fg-sporting-5cde-terza-categoria-puglia-f",
@@ -58385,7 +58418,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/bitonto.png",
       "primary": "#703168",
       "secondary": "#8fce97",
       "accent": "#ffffff",
@@ -58400,7 +58433,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/bitonto.png"
     },
     {
       "id": "terza-categoria-puglia-foggia-puglia-fg-polispor-5cde-terza-categoria-puglia-f",
@@ -58501,7 +58535,7 @@
       "pos": 2,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/taranto.png",
       "primary": "#798162",
       "secondary": "#867e9d",
       "accent": "#ffffff",
@@ -58516,7 +58550,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/taranto.png"
     },
     {
       "id": "terza-categoria-puglia-lecce-puglia-le-polisport",
@@ -58675,7 +58710,7 @@
       "pos": 8,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/soccer-trani.png",
       "primary": "#9a882a",
       "secondary": "#6577d5",
       "accent": "#ffffff",
@@ -58690,7 +58725,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/soccer-trani.png"
     },
     {
       "id": "terza-categoria-puglia-lecce-puglia-le-sporting--acba-terza-categoria-puglia-l",
@@ -58733,7 +58769,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/bitonto.png",
       "primary": "#3e6da3",
       "secondary": "#c1925c",
       "accent": "#ffffff",
@@ -58748,7 +58784,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/bitonto.png"
     },
     {
       "id": "terza-categoria-puglia-lecce-puglia-le-polisport-acba-terza-categoria-puglia-l",
@@ -58849,7 +58886,7 @@
       "pos": 2,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/taranto.png",
       "primary": "#2e964e",
       "secondary": "#d169b1",
       "accent": "#ffffff",
@@ -58864,7 +58901,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/taranto.png"
     },
     {
       "id": "terza-categoria-puglia-maglie-puglia-mg-polispor",
@@ -59023,7 +59061,7 @@
       "pos": 8,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/soccer-trani.png",
       "primary": "#549544",
       "secondary": "#ab6abb",
       "accent": "#ffffff",
@@ -59038,7 +59076,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/soccer-trani.png"
     },
     {
       "id": "terza-categoria-puglia-maglie-puglia-mg-sporting-106b-terza-categoria-puglia-m",
@@ -59081,7 +59120,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/bitonto.png",
       "primary": "#703e47",
       "secondary": "#8fc1b8",
       "accent": "#ffffff",
@@ -59096,7 +59135,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/bitonto.png"
     },
     {
       "id": "terza-categoria-puglia-maglie-puglia-mg-polispor-106b-terza-categoria-puglia-m",
@@ -59197,7 +59237,7 @@
       "pos": 2,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/taranto.png",
       "primary": "#71584a",
       "secondary": "#8ea7b5",
       "accent": "#ffffff",
@@ -59212,7 +59252,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/taranto.png"
     },
     {
       "id": "terza-categoria-puglia-taranto-puglia-ta-polispo",
@@ -59371,7 +59412,7 @@
       "pos": 8,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/soccer-trani.png",
       "primary": "#70579b",
       "secondary": "#8fa864",
       "accent": "#ffffff",
@@ -59386,7 +59427,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/soccer-trani.png"
     },
     {
       "id": "terza-categoria-puglia-taranto-puglia-ta-sportin-11b3-terza-categoria-puglia-t",
@@ -59429,7 +59471,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/bitonto.png",
       "primary": "#2c535e",
       "secondary": "#d3aca1",
       "accent": "#ffffff",
@@ -59444,7 +59486,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/bitonto.png"
     },
     {
       "id": "terza-categoria-puglia-taranto-puglia-ta-polispo-11b3-terza-categoria-puglia-t",
@@ -59545,7 +59588,7 @@
       "pos": 2,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/taranto.png",
       "primary": "#962a30",
       "secondary": "#69d5cf",
       "accent": "#ffffff",
@@ -59560,7 +59603,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/taranto.png"
     },
     {
       "id": "terza-categoria-puglia-trani-bat-puglia-bt-polis",
@@ -59719,7 +59763,7 @@
       "pos": 8,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/soccer-trani.png",
       "primary": "#90aad2",
       "secondary": "#6f552d",
       "accent": "#ffffff",
@@ -59734,7 +59778,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/soccer-trani.png"
     },
     {
       "id": "terza-categoria-puglia-trani-bat-puglia-bt-sport-f8d1-terza-categoria-puglia-t",
@@ -59777,7 +59822,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/bitonto.png",
       "primary": "#6b922b",
       "secondary": "#946dd4",
       "accent": "#ffffff",
@@ -59792,7 +59837,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/bitonto.png"
     },
     {
       "id": "terza-categoria-puglia-trani-bat-puglia-bt-polis-f8d1-terza-categoria-puglia-t",
@@ -65200,7 +65246,7 @@
       "pos": 5,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/cuneo-1905-olmo.png",
       "primary": "#68d14c",
       "secondary": "#972eb3",
       "accent": "#ffffff",
@@ -65215,7 +65261,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/cuneo-1905-olmo.png"
     },
     {
       "id": "terza-categoria-piemonte-girone-a-piemonte-a-us--6b66",
@@ -65345,7 +65392,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/chieri.png",
       "primary": "#7db04a",
       "secondary": "#824fb5",
       "accent": "#ffffff",
@@ -65360,7 +65407,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/chieri.png"
     },
     {
       "id": "terza-categoria-piemonte-girone-a-piemonte-a-vir-6b66-terza-categoria-piemonte",
@@ -65548,7 +65596,7 @@
       "pos": 5,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/cuneo-1905-olmo.png",
       "primary": "#4e46c6",
       "secondary": "#b1b939",
       "accent": "#ffffff",
@@ -65563,7 +65611,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/cuneo-1905-olmo.png"
     },
     {
       "id": "terza-categoria-piemonte-girone-b-piemonte-b-us--62bb",
@@ -65693,7 +65742,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "",
+      "logo": "immagini/squadre-loghi/chieri.png",
       "primary": "#acc865",
       "secondary": "#53379a",
       "accent": "#ffffff",
@@ -65708,7 +65757,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/chieri.png"
     },
     {
       "id": "terza-categoria-piemonte-girone-b-piemonte-b-vir-62bb-terza-categoria-piemonte",
@@ -83446,7 +83496,7 @@
       "pos": 2,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-csf-carmagnola.png",
+      "logo": "immagini/squadre-loghi/csf-carmagnola.png",
       "primary": "#b25d3c",
       "secondary": "#4da2c3",
       "accent": "#ffffff",
@@ -83461,7 +83511,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/csf-carmagnola.png"
     },
     {
       "id": "ecc-piemonte-b-cheraschese",
@@ -83504,7 +83555,7 @@
       "pos": 4,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-cuneo-1905-olmo.png",
+      "logo": "immagini/squadre-loghi/cuneo-1905-olmo.png",
       "primary": "#613b9b",
       "secondary": "#9ec464",
       "accent": "#ffffff",
@@ -83519,7 +83570,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/cuneo-1905-olmo.png"
     },
     {
       "id": "ecc-piemonte-b-chieri",
@@ -83533,7 +83585,7 @@
       "pos": 5,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-chieri.png",
+      "logo": "immagini/squadre-loghi/chieri.png",
       "primary": "#4f3cc4",
       "secondary": "#b0c33b",
       "accent": "#ffffff",
@@ -83548,7 +83600,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/chieri.png"
     },
     {
       "id": "ecc-piemonte-b-fossano",
@@ -83562,7 +83615,7 @@
       "pos": 6,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-fossano.png",
+      "logo": "immagini/squadre-loghi/fossano.png",
       "primary": "#8b463d",
       "secondary": "#74b9c2",
       "accent": "#ffffff",
@@ -83577,7 +83630,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/fossano.png"
     },
     {
       "id": "ecc-piemonte-b-giovanile-centallo",
@@ -83591,7 +83645,7 @@
       "pos": 7,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-giovanile-centallo.png",
+      "logo": "immagini/squadre-loghi/giovanile-centallo.png",
       "primary": "#c64329",
       "secondary": "#39bcd6",
       "accent": "#ffffff",
@@ -83606,7 +83660,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/giovanile-centallo.png"
     },
     {
       "id": "ecc-piemonte-b-gaviese",
@@ -83620,7 +83675,7 @@
       "pos": 8,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-gaviese.png",
+      "logo": "immagini/squadre-loghi/gaviese.png",
       "primary": "#369542",
       "secondary": "#c96abd",
       "accent": "#ffffff",
@@ -83635,7 +83690,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/gaviese.png"
     },
     {
       "id": "ecc-piemonte-b-monregale",
@@ -83649,7 +83705,7 @@
       "pos": 9,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-monregale.png",
+      "logo": "immagini/squadre-loghi/monregale.png",
       "primary": "#4b5682",
       "secondary": "#b4a97d",
       "accent": "#ffffff",
@@ -83664,7 +83720,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/monregale.png"
     },
     {
       "id": "ecc-piemonte-b-moretta",
@@ -83678,7 +83735,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-moretta.png",
+      "logo": "immagini/squadre-loghi/moretta.png",
       "primary": "#af44ab",
       "secondary": "#50bb54",
       "accent": "#ffffff",
@@ -83693,7 +83750,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/moretta.png"
     },
     {
       "id": "ecc-piemonte-b-ovadese",
@@ -83707,7 +83765,7 @@
       "pos": 11,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-ovadese.png",
+      "logo": "immagini/squadre-loghi/ovadese.png",
       "primary": "#723570",
       "secondary": "#8dca8f",
       "accent": "#ffffff",
@@ -83722,7 +83780,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/ovadese.png"
     },
     {
       "id": "ecc-piemonte-b-pro-dronero",
@@ -83736,7 +83795,7 @@
       "pos": 12,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-pro-dronero.png",
+      "logo": "immagini/squadre-loghi/pro-dronero.png",
       "primary": "#6a4899",
       "secondary": "#95b766",
       "accent": "#ffffff",
@@ -83751,7 +83810,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/pro-dronero.png"
     },
     {
       "id": "ecc-piemonte-b-pro-villafranca",
@@ -83765,7 +83825,7 @@
       "pos": 13,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-pro-villafranca.png",
+      "logo": "immagini/squadre-loghi/pro-villafranca.png",
       "primary": "#6f9439",
       "secondary": "#906bc6",
       "accent": "#ffffff",
@@ -83780,7 +83840,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/pro-villafranca.png"
     },
     {
       "id": "ecc-piemonte-b-san-domenico-savio-asti",
@@ -83794,7 +83855,7 @@
       "pos": 14,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-san-domenico-savio-asti.png",
+      "logo": "immagini/squadre-loghi/san-domenico-savio-asti.png",
       "primary": "#393f60",
       "secondary": "#c6c09f",
       "accent": "#ffffff",
@@ -83809,7 +83870,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/san-domenico-savio-asti.png"
     },
     {
       "id": "ecc-piemonte-b-spartak-san-damiano",
@@ -83823,7 +83885,7 @@
       "pos": 15,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-spartak-san-damiano.png",
+      "logo": "immagini/squadre-loghi/spartak-san-damiano.png",
       "primary": "#81c8b9",
       "secondary": "#7e3746",
       "accent": "#ffffff",
@@ -83838,7 +83900,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/spartak-san-damiano.png"
     },
     {
       "id": "ecc-piemonte-b-vanchiglia",
@@ -83852,7 +83915,7 @@
       "pos": 16,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-vanchiglia.png",
+      "logo": "immagini/squadre-loghi/vanchiglia.png",
       "primary": "#66c255",
       "secondary": "#993daa",
       "accent": "#ffffff",
@@ -83867,7 +83930,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/vanchiglia.png"
     },
     {
       "id": "ecc-puglia-atletico-acquaviva",
@@ -83881,7 +83945,7 @@
       "pos": 1,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-atletico-acquaviva.png",
+      "logo": "immagini/squadre-loghi/atletico-acquaviva.png",
       "primary": "#3e9260",
       "secondary": "#c16d9f",
       "accent": "#ffffff",
@@ -83896,7 +83960,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/atletico-acquaviva.png"
     },
     {
       "id": "ecc-puglia-atletico-racale",
@@ -83910,7 +83975,7 @@
       "pos": 2,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-atletico-racale.png",
+      "logo": "immagini/squadre-loghi/atletico-racale.png",
       "primary": "#9656c1",
       "secondary": "#69a93e",
       "accent": "#ffffff",
@@ -83925,7 +83990,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/atletico-racale.png"
     },
     {
       "id": "ecc-puglia-bitonto-calcio",
@@ -83939,7 +84005,7 @@
       "pos": 3,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-bitonto-calcio.png",
+      "logo": "immagini/squadre-loghi/bitonto.png",
       "primary": "#596373",
       "secondary": "#a69c8c",
       "accent": "#ffffff",
@@ -83954,7 +84020,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/bitonto.png"
     },
     {
       "id": "ecc-puglia-brilla-campi",
@@ -83968,7 +84035,7 @@
       "pos": 4,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-brilla-campi.png",
+      "logo": "immagini/squadre-loghi/brilla-campi.png",
       "primary": "#6f7154",
       "secondary": "#908eab",
       "accent": "#ffffff",
@@ -83983,7 +84050,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/brilla-campi.png"
     },
     {
       "id": "ecc-puglia-canosa-calcio-1948",
@@ -83997,7 +84065,7 @@
       "pos": 5,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-canosa-calcio-1948.png",
+      "logo": "immagini/squadre-loghi/canosa.png",
       "primary": "#323f5d",
       "secondary": "#cdc0a2",
       "accent": "#ffffff",
@@ -84012,7 +84080,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/canosa.png"
     },
     {
       "id": "ecc-puglia-cosmano-sport-foggia",
@@ -84026,7 +84095,7 @@
       "pos": 6,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-cosmano-sport-foggia.png",
+      "logo": "immagini/squadre-loghi/cosmano-sport-foggia.png",
       "primary": "#af6e35",
       "secondary": "#5091ca",
       "accent": "#ffffff",
@@ -84041,7 +84110,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/cosmano-sport-foggia.png"
     },
     {
       "id": "ecc-puglia-galatina-calcio",
@@ -84055,7 +84125,7 @@
       "pos": 7,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-galatina-calcio.png",
+      "logo": "immagini/squadre-loghi/galatina.png",
       "primary": "#88d84e",
       "secondary": "#7727b1",
       "accent": "#ffffff",
@@ -84070,7 +84140,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/galatina.png"
     },
     {
       "id": "ecc-puglia-novoli-calcio",
@@ -84084,7 +84155,7 @@
       "pos": 8,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-novoli-calcio.png",
+      "logo": "immagini/squadre-loghi/novoli.png",
       "primary": "#ae978c",
       "secondary": "#516873",
       "accent": "#ffffff",
@@ -84099,7 +84170,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/novoli.png"
     },
     {
       "id": "ecc-puglia-nuova-spinazzola",
@@ -84113,7 +84185,7 @@
       "pos": 9,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-nuova-spinazzola.png",
+      "logo": "immagini/squadre-loghi/nuova-spinazzola.png",
       "primary": "#504d2d",
       "secondary": "#afb2d2",
       "accent": "#ffffff",
@@ -84128,7 +84200,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/nuova-spinazzola.png"
     },
     {
       "id": "ecc-puglia-ostuni-calcio",
@@ -84142,7 +84215,7 @@
       "pos": 10,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-ostuni-calcio.png",
+      "logo": "immagini/squadre-loghi/ostuni.png",
       "primary": "#ba2c52",
       "secondary": "#45d3ad",
       "accent": "#ffffff",
@@ -84157,7 +84230,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/ostuni.png"
     },
     {
       "id": "ecc-puglia-polimnia-calcio",
@@ -84171,7 +84245,7 @@
       "pos": 11,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-polimnia-calcio.png",
+      "logo": "immagini/squadre-loghi/polimnia.png",
       "primary": "#35cd8f",
       "secondary": "#ca3270",
       "accent": "#ffffff",
@@ -84186,7 +84260,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/polimnia.png"
     },
     {
       "id": "ecc-puglia-soccer-trani",
@@ -84200,7 +84275,7 @@
       "pos": 12,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-soccer-trani.png",
+      "logo": "immagini/squadre-loghi/soccer-trani.png",
       "primary": "#60ae97",
       "secondary": "#9f5168",
       "accent": "#ffffff",
@@ -84215,7 +84290,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/soccer-trani.png"
     },
     {
       "id": "ecc-puglia-squinzano-calcio",
@@ -84229,7 +84305,7 @@
       "pos": 13,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-squinzano-calcio.png",
+      "logo": "immagini/squadre-loghi/squinzano.png",
       "primary": "#514d4c",
       "secondary": "#aeb2b3",
       "accent": "#ffffff",
@@ -84244,7 +84320,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/squinzano.png"
     },
     {
       "id": "ecc-puglia-taranto-calcio",
@@ -84258,7 +84335,7 @@
       "pos": 14,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-taranto-calcio.png",
+      "logo": "immagini/squadre-loghi/taranto.png",
       "primary": "#885a75",
       "secondary": "#77a58a",
       "accent": "#ffffff",
@@ -84273,7 +84350,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/taranto.png"
     },
     {
       "id": "ecc-puglia-taurisano-1939",
@@ -84287,7 +84365,7 @@
       "pos": 15,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-taurisano-1939.png",
+      "logo": "immagini/squadre-loghi/taurisano.png",
       "primary": "#9493c5",
       "secondary": "#6b6c3a",
       "accent": "#ffffff",
@@ -84302,7 +84380,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/taurisano.png"
     },
     {
       "id": "ecc-puglia-a-toma-maglie",
@@ -84316,7 +84395,7 @@
       "pos": 16,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-a-toma-maglie.png",
+      "logo": "immagini/squadre-loghi/toma-maglie.png",
       "primary": "#5dc568",
       "secondary": "#a23a97",
       "accent": "#ffffff",
@@ -84331,7 +84410,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/toma-maglie.png"
     },
     {
       "id": "ecc-puglia-ugento-calcio",
@@ -84345,7 +84425,7 @@
       "pos": 17,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-ugento-calcio.png",
+      "logo": "immagini/squadre-loghi/ugento.png",
       "primary": "#4c4c4c",
       "secondary": "#b3b3b3",
       "accent": "#ffffff",
@@ -84360,7 +84440,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/ugento.png"
     },
     {
       "id": "ecc-puglia-unione-calcio-bisceglie",
@@ -84374,7 +84455,7 @@
       "pos": 18,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-unione-calcio-bisceglie.png",
+      "logo": "immagini/squadre-loghi/unione-calcio-bisceglie.png",
       "primary": "#916b36",
       "secondary": "#6e94c9",
       "accent": "#ffffff",
@@ -84389,7 +84470,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/unione-calcio-bisceglie.png"
     },
     {
       "id": "ecc-trentino-ahrntal",
@@ -89681,7 +89763,7 @@
       "pos": 14,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/ecc-villafranca-veronese.png",
+      "logo": "immagini/squadre-loghi/villafranca-veronese.png",
       "primary": "#bc43be",
       "secondary": "#43bc41",
       "accent": "#ffffff",
@@ -89696,7 +89778,8 @@
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
-      "stadiumImageSource": "default"
+      "stadiumImageSource": "default",
+      "logoUrl": "immagini/squadre-loghi/villafranca-veronese.png"
     },
     {
       "id": "ecc-veneto-a-mestrino-united",

@@ -1899,25 +1899,39 @@
     bindIdentityControls(focusSel);
   }
 
+  function maleSymbolSvg(w, h, color) {
+    w = w || 18;
+    h = h || 18;
+    color = color || '#2563eb';
+    return '<svg viewBox="0 0 100 100" width="' + w + '" height="' + h + '" style="vertical-align:middle;display:inline-block;flex-shrink:0;" aria-hidden="true"><path fill="' + color + '" d="M58 10 h32 v32 h-10 v-14.94 L58.54 48.52 a28 28 0 1 1 -7.07 -7.07 L72.94 20 H58 V10 z M38 34 a18 18 0 1 0 0 36 a18 18 0 0 0 0 -36 z"/></svg>';
+  }
+
+  function femaleSymbolSvg(w, h, color) {
+    w = w || 18;
+    h = h || 18;
+    color = color || '#e11d48';
+    return '<svg viewBox="0 0 100 100" width="' + w + '" height="' + h + '" style="vertical-align:middle;display:inline-block;flex-shrink:0;" aria-hidden="true"><path fill="' + color + '" d="M50 10 a28 28 0 0 1 7.07 55.08 V72 h14 v10 H57.07 v12 h-14.14 V82 H28.93 V72 h14 V65.08 A28 28 0 0 1 50 10 z M50 20 a18 18 0 1 0 0 36 a18 18 0 0 0 0 -36 z"/></svg>';
+  }
+
   var MALE_CATEGORIES = [
-    { id: 1, name: 'Serie A', sub: '1ª Divisione Professionistica', badge: '1ª DIV', ovr: '76 – 93', icon: '🏆', color: '#38bdf8' },
-    { id: 2, name: 'Serie B', sub: '2ª Divisione Professionistica', badge: '2ª DIV', ovr: '59 – 75', icon: '⚽', color: '#ef4444' },
-    { id: 3, name: 'Serie C', sub: '3ª Divisione Professionistica (Gironi A/B/C)', badge: '3ª DIV', ovr: '43 – 58', icon: '🛡️', color: '#f97316' },
-    { id: 4, name: 'Serie D', sub: '4ª Divisione Nazionale LND (9 Gironi)', badge: '4ª DIV', ovr: '30 – 42', icon: '⚡', color: '#22c55e' },
-    { id: 5, name: 'Eccellenza', sub: '5ª Divisione Regionale LND', badge: '5ª DIV', ovr: '24 – 29', icon: '⭐', color: '#38bdf8' },
-    { id: 6, name: 'Promozione', sub: '6ª Divisione Regionale LND', badge: '6ª DIV', ovr: '19 – 23', icon: '🎯', color: '#a855f7' },
-    { id: 7, name: 'Prima Categoria', sub: '7ª Divisione Regionale/Provinciale', badge: '7ª DIV', ovr: '12 – 18', icon: '📍', color: '#06b6d4' },
-    { id: 8, name: 'Seconda Categoria', sub: '8ª Divisione Provinciale', badge: '8ª DIV', ovr: '5 – 11', icon: '🔰', color: '#64748b' },
-    { id: 9, name: 'Terza Categoria', sub: '9ª Divisione Provinciale', badge: '9ª DIV', ovr: '0 – 4', icon: '🌱', color: '#475569' }
+    { id: 1, name: 'Serie A', sub: '1ª Divisione Professionistica', badge: '1ª DIV', ovr: '76 – 93', logo: 'immagini/squadre-loghi/serie-a.png', color: '#38bdf8' },
+    { id: 2, name: 'Serie B', sub: '2ª Divisione Professionistica', badge: '2ª DIV', ovr: '59 – 75', logo: 'immagini/squadre-loghi/serie-b.png', color: '#ef4444' },
+    { id: 3, name: 'Serie C', sub: '3ª Divisione Professionistica (Gironi A/B/C)', badge: '3ª DIV', ovr: '43 – 58', logo: 'immagini/squadre-loghi/serie-c.png', color: '#f97316' },
+    { id: 4, name: 'Serie D', sub: '4ª Divisione Nazionale LND (9 Gironi)', badge: '4ª DIV', ovr: '30 – 42', logo: 'immagini/squadre-loghi/serie-d.png', color: '#22c55e' },
+    { id: 5, name: 'Eccellenza', sub: '5ª Divisione Regionale LND', badge: '5ª DIV', ovr: '24 – 29', logo: 'immagini/squadre-loghi/eccellenza.png', color: '#38bdf8' },
+    { id: 6, name: 'Promozione', sub: '6ª Divisione Regionale LND', badge: '6ª DIV', ovr: '19 – 23', logo: 'immagini/squadre-loghi/promozione.png', color: '#a855f7' },
+    { id: 7, name: 'Prima Categoria', sub: '7ª Divisione Regionale/Provinciale', badge: '7ª DIV', ovr: '12 – 18', logo: 'immagini/squadre-loghi/prima-categoria.png', color: '#06b6d4' },
+    { id: 8, name: 'Seconda Categoria', sub: '8ª Divisione Provinciale', badge: '8ª DIV', ovr: '5 – 11', logo: 'immagini/squadre-loghi/seconda-categoria.png', color: '#64748b' },
+    { id: 9, name: 'Terza Categoria', sub: '9ª Divisione Provinciale', badge: '9ª DIV', ovr: '0 – 4', logo: 'immagini/squadre-loghi/terza-categoria.png', color: '#475569' }
   ];
 
   var FEMALE_CATEGORIES = [
-    { id: 1, name: 'Serie A Femminile', sub: '1ª Divisione Femminile Professionistica', badge: '1ª DIV', ovr: '76 – 93', icon: '👑', color: '#ec4899' },
-    { id: 2, name: 'Serie B Femminile', sub: '2ª Divisione Femminile Nazionale', badge: '2ª DIV', ovr: '59 – 75', icon: '✨', color: '#f43f5e' },
-    { id: 3, name: 'Serie C Femminile', sub: '3ª Divisione Femminile (Gironi Nazionali)', badge: '3ª DIV', ovr: '43 – 58', icon: '🌸', color: '#fb7185' },
-    { id: 4, name: 'Eccellenza Femminile', sub: 'Campionati Regionali Femminili', badge: '4ª DIV', ovr: '24 – 29', icon: '🌺', color: '#e879f9' },
-    { id: 5, name: 'Promozione Femminile', sub: 'Campionati Territoriali Femminili', badge: '5ª DIV', ovr: '19 – 23', icon: '🌷', color: '#d946ef' },
-    { id: 10, name: 'Primavera Femminile', sub: 'Settore Giovanile Femminile U19', badge: 'U19', ovr: '50 – 68', icon: '🎀', color: '#c084fc' }
+    { id: 1, name: 'Serie A Femminile', sub: '1ª Divisione Femminile Professionistica', badge: '1ª DIV', ovr: '76 – 93', logo: 'immagini/squadre-loghi/serie-a-femminile.png', color: '#ec4899' },
+    { id: 2, name: 'Serie B Femminile', sub: '2ª Divisione Femminile Nazionale', badge: '2ª DIV', ovr: '59 – 75', logo: 'immagini/squadre-loghi/serie-b-femminile.png', color: '#f43f5e' },
+    { id: 3, name: 'Serie C Femminile', sub: '3ª Divisione Femminile (Gironi Nazionali)', badge: '3ª DIV', ovr: '43 – 58', logo: 'immagini/squadre-loghi/serie-c-femminile.png', color: '#fb7185' },
+    { id: 4, name: 'Eccellenza Femminile', sub: 'Campionati Regionali Femminili', badge: '4ª DIV', ovr: '24 – 29', logo: 'immagini/squadre-loghi/eccellenza.png', color: '#e879f9' },
+    { id: 5, name: 'Promozione Femminile', sub: 'Campionati Territoriali Femminili', badge: '5ª DIV', ovr: '19 – 23', logo: 'immagini/squadre-loghi/promozione.png', color: '#d946ef' },
+    { id: 10, name: 'Primavera Femminile', sub: 'Settore Giovanile Femminile U19', badge: 'U19', ovr: '50 – 68', logo: 'immagini/squadre-loghi/serie-a-femminile.png', color: '#c084fc' }
   ];
 
   function trialChance(club) {
@@ -1949,10 +1963,13 @@
       '<div class="es-mg-cat-grid">' +
       cats.map(function (cat) {
         var numTeams = counts[cat.id] || (isFem ? 12 : 20);
+        var logoImgHtml = cat.logo
+          ? '<img src="' + cat.logo + '" alt="' + esc(cat.name) + '" class="es-mg-cat-logo-img" onerror="this.style.display=\'none\';" />'
+          : '<span class="es-mg-cat-icon">' + (cat.icon || '⚽') + '</span>';
         return (
           '<button type="button" class="es-mg-cat-card" data-cat="' + cat.id + '" style="--cat-color:' + cat.color + '">' +
           '<div class="es-mg-cat-top">' +
-          '<span class="es-mg-cat-icon">' + cat.icon + '</span>' +
+          '<span class="es-mg-cat-icon-wrap">' + logoImgHtml + '</span>' +
           '<span class="es-mg-cat-badge">' + cat.badge + '</span>' +
           '</div>' +
           '<div class="es-mg-cat-name">' + esc(cat.name) + '</div>' +
@@ -2043,8 +2060,8 @@
       /* FASE 1: Selezione Genere e Categoria */
       body =
         '<div class="es-mg-gender-tabs">' +
-        '<button type="button" class="es-mg-gender-tab' + (!isFem ? ' is-on' : '') + '" data-gender="m">⚽ Calcio Maschile (9 Categorie)</button>' +
-        '<button type="button" class="es-mg-gender-tab is-fem' + (isFem ? ' is-on' : '') + '" data-gender="f">👩 Calcio Femminile (6 Categorie)</button>' +
+        '<button type="button" class="es-mg-gender-tab' + (!isFem ? ' is-on' : '') + '" data-gender="m">' + maleSymbolSvg(18, 18, !isFem ? '#041019' : '#2563eb') + ' Calcio Maschile (9 Categorie)</button>' +
+        '<button type="button" class="es-mg-gender-tab is-fem' + (isFem ? ' is-on' : '') + '" data-gender="f">' + femaleSymbolSvg(18, 18, isFem ? '#ffffff' : '#e11d48') + ' Calcio Femminile (6 Categorie)</button>' +
         '</div>' +
         trialCategoryGridHtml() +
         '<div class="es-mg-trial-actions" style="margin-top:1rem;">' +
@@ -2052,10 +2069,13 @@
         '</div>';
     } else {
       /* FASE 2: Selezione Squadra nella Categoria Scelta */
+      var catLogoHeader = currentCatObj && currentCatObj.logo
+        ? '<img src="' + currentCatObj.logo + '" class="es-mg-cat-logo-img" alt="" />'
+        : (currentCatObj ? currentCatObj.icon : '⚽');
       body =
         '<div class="es-mg-cat-selected-bar">' +
         '<div class="es-mg-cat-selected-info">' +
-        '<span style="font-size:1.3rem;">' + (currentCatObj ? currentCatObj.icon : '⚽') + '</span>' +
+        '<span class="es-mg-cat-selected-icon">' + catLogoHeader + '</span>' +
         '<div>' +
         '<div class="es-mg-cat-selected-name">' + esc(currentCatObj ? currentCatObj.name : 'Categoria') + '</div>' +
         '<div class="es-mg-cat-selected-ovr">Overall categoria: ' + esc(currentCatObj ? currentCatObj.ovr : '') + '</div>' +
@@ -2461,18 +2481,40 @@
     if (t === 3 && !atStart && typeof window !== 'undefined' && window.EliseePiramide && window.EliseePiramide.labelSerieC) {
       return window.EliseePiramide.labelSerieC(club);
     }
+    if (t === 4 && !atStart && typeof window !== 'undefined' && window.EliseePiramide && window.EliseePiramide.labelSerieD) {
+      return window.EliseePiramide.labelSerieD(club);
+    }
     if (typeof window !== 'undefined' && window.EliseeClubStoria && window.EliseeClubStoria.labelFor) {
       return window.EliseeClubStoria.labelFor(club, t, atStart);
     }
     if (t === 1) return 'SERIE A';
     if (t === 2) return 'SERIE B';
     if (t === 3) return 'SERIE C · GIRONE A';
+    if (t === 4) {
+      // Fallback geolocation for Serie D when EliseePiramide not available
+      var cName4 = String((club && (club.n || club.name || club.city)) || '').toUpperCase();
+      var cLeague4 = String((club && (club.catalogL || club.l)) || '').toUpperCase();
+      var dGirone = 'A';
+      if (cLeague4.indexOf('PUGLIA') >= 0 || cLeague4.indexOf('BASILICATA') >= 0 || cLeague4.indexOf('CAMPANIA') >= 0) dGirone = 'H';
+      else if (cLeague4.indexOf('CALABRIA') >= 0 || cLeague4.indexOf('SICILIA') >= 0) dGirone = 'I';
+      else if (cLeague4.indexOf('LAZIO') >= 0 || cLeague4.indexOf('SARDEGNA') >= 0) dGirone = 'G';
+      else if (cLeague4.indexOf('TOSCANA') >= 0 || cLeague4.indexOf('UMBRIA') >= 0) dGirone = 'E';
+      else if (cLeague4.indexOf('MARCHE') >= 0 || cLeague4.indexOf('ABRUZZO') >= 0) dGirone = 'F';
+      else if (cLeague4.indexOf('EMILIA') >= 0 || cLeague4.indexOf('ROMAGNA') >= 0) dGirone = 'D';
+      else if (cLeague4.indexOf('VENETO') >= 0 || cLeague4.indexOf('FRIULI') >= 0 || cLeague4.indexOf('TRENTINO') >= 0) dGirone = 'C';
+      else if (cLeague4.indexOf('LOMBARDIA') >= 0) dGirone = 'B';
+      else if (cLeague4.indexOf('PIEMONTE') >= 0 || cLeague4.indexOf('LIGURIA') >= 0 || cLeague4.indexOf('VALLE D') >= 0) dGirone = 'A';
+      else if (/TORINO|CUNEO|FOSSANO|CHIERI|CARMAGNOLA|DRONERO|ASTI|NOVARA|VERCELLI|MONREGALE|MORETTA|OVADA|VANCHIGLIA|GAVI/.test(cName4)) dGirone = 'A';
+      else if (/BARI|FOGGIA|TARANTO|LECCE|BRINDISI|ANDRIA|BITONTO|TRANI|CERIGNOLA|ALTAMURA|FRANCAVILLA|FASANO|UGENTO|TAURISANO|SQUINZANO|NOVOLI|GALATINA|CANOSA|RACALE|ACQUAVIVA|MAGLIE|SPINAZZOLA|OSTUNI|POLIMNIA/.test(cName4)) dGirone = 'H';
+      else if (/CATANIA|PALERMO|MESSINA|SIRACUSA|TRAPANI|RAGUSA|COSENZA|CROTONE|CATANZARO|REGGIO CALABRIA|LAMEZIA/.test(cName4)) dGirone = 'I';
+      return 'SERIE D · GIRONE ' + dGirone;
+    }
     if (t === 5) {
       var raw = String((club && (club.catalogL || club.l)) || '');
       if (raw.toUpperCase().indexOf('ECCELLENZA') === 0) return raw;
       return 'ECCELLENZA';
     }
-    return 'SERIE D · GIRONE A';
+    return 'ECCELLENZA';
   }
 
   function isItalianPyramid(club) {
@@ -5143,7 +5185,7 @@
         '<span class="es-mg-tag green" title="' + esc(p.posLabel || posLabel(p.position) || p.position) + '">' + esc(p.posLabel || posLabel(p.position) || p.position) + '</span>' +
         (p.isCaptain ? '<span class="es-mg-tag green" title="Capitano">C</span>' : '') +
         (p.foot ? '<span class="es-mg-tag">' + (p.foot === 'left' ? 'Piede sinistro' : 'Piede destro') + '</span>' : '') +
-        (p.gender === 'f' ? '<span class="es-mg-tag is-fem" style="background:#ec4899;color:#fff;border-color:#db2777;">👩 Femminile</span>' : '<span class="es-mg-tag" style="background:#0284c7;color:#fff;border-color:#0369a1;">⚽ Maschile</span>') +
+        (p.gender === 'f' ? '<span class="es-mg-tag is-fem" style="background:#ec4899;color:#fff;border-color:#db2777;">' + femaleSymbolSvg(15, 15, '#fff') + ' Femminile</span>' : '<span class="es-mg-tag" style="background:#0284c7;color:#fff;border-color:#0369a1;">' + maleSymbolSvg(15, 15, '#fff') + ' Maschile</span>') +
         '</div>' +
         '<div class="es-mg-player-name">' + esc(p.surname || 'Giocatore') + '</div>' +
         clubDisplayCard +

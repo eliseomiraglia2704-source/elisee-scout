@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-08-30T17:04:36.709305+00:00",
+  "updatedAt": "2026-08-31T08:07:54.408443+00:00",
   "source": "https://www.tuttocampo.it",
   "worker": "tuttocampo_sync.py",
   "categories": {
@@ -18,81 +18,81 @@
       "groups": [],
       "calendar": [
         {
-          "updatedAt": "2026-08-29T21:50:45.028916+00:00",
+          "updatedAt": "2026-08-31T02:16:46.947861+00:00",
           "source": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Calendario",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:55:25.237785+00:00",
+          "updatedAt": "2026-08-31T02:21:27.206253+00:00",
           "source": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Calendario",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:00:05.415908+00:00",
+          "updatedAt": "2026-08-31T02:26:07.410858+00:00",
           "source": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Calendario",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:04:45.553170+00:00",
+          "updatedAt": "2026-08-31T02:30:47.525211+00:00",
           "source": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Calendario",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:09:25.645804+00:00",
+          "updatedAt": "2026-08-31T02:35:27.714366+00:00",
           "source": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Calendario",
           "extracted": 0
         }
       ],
       "standings": [
         {
-          "updatedAt": "2026-08-29T21:50:35.018743+00:00",
+          "updatedAt": "2026-08-31T02:16:36.938058+00:00",
           "source": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:55:15.234509+00:00",
+          "updatedAt": "2026-08-31T02:21:17.196186+00:00",
           "source": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:59:55.407701+00:00",
+          "updatedAt": "2026-08-31T02:25:57.401966+00:00",
           "source": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:04:35.552172+00:00",
+          "updatedAt": "2026-08-31T02:30:37.514866+00:00",
           "source": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:09:15.638624+00:00",
+          "updatedAt": "2026-08-31T02:35:17.712751+00:00",
           "source": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Classifica",
           "extracted": 0
         }
       ],
       "scorers": [
         {
-          "updatedAt": "2026-08-29T21:50:55.036528+00:00",
+          "updatedAt": "2026-08-31T02:16:56.949840+00:00",
           "source": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Marcatori",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:55:35.239419+00:00",
+          "updatedAt": "2026-08-31T02:21:37.207108+00:00",
           "source": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Marcatori",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:00:15.425191+00:00",
+          "updatedAt": "2026-08-31T02:26:17.418487+00:00",
           "source": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Marcatori",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:04:55.554437+00:00",
+          "updatedAt": "2026-08-31T02:30:57.535685+00:00",
           "source": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Marcatori",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:09:35.651612+00:00",
+          "updatedAt": "2026-08-31T02:35:37.721421+00:00",
           "source": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Marcatori",
           "extracted": 0
         }
@@ -101,190 +101,190 @@
       "discipline": [],
       "market": [],
       "meta": {
-        "lastSync": "2026-08-30T17:02:43.525613+00:00",
+        "lastSync": "2026-08-31T08:04:53.983050+00:00",
         "source": "https://www.tuttocampo.it",
-        "errors": 589,
-        "ok": 251,
+        "errors": 657,
+        "ok": 384,
         "urls": [
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:34:57.706265+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/SerieD/GironeB/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:35:07.712152+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:35:17.712751+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Calendario",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:35:27.714366+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Marcatori",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:35:37.721421+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Squadre",
             "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:38:37.761251+00:00"
+            "error": "<urlopen error [Errno 11001] getaddrinfo failed>",
+            "at": "2026-08-31T07:45:15.230611+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeB/Squadre",
             "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:38:47.770377+00:00"
+            "error": "<urlopen error [Errno 11001] getaddrinfo failed>",
+            "at": "2026-08-31T07:45:37.672935+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:38:57.778369+00:00"
+            "at": "2026-08-31T07:45:52.826964+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Calendario",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:39:07.786562+00:00"
+            "at": "2026-08-31T07:46:02.829126+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Marcatori",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:39:17.792275+00:00"
+            "at": "2026-08-31T07:46:12.836054+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:43:22.769343+00:00"
+            "at": "2026-08-31T07:50:13.132383+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeB/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:43:32.786177+00:00"
+            "at": "2026-08-31T07:50:23.141434+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:43:42.789267+00:00"
+            "at": "2026-08-31T07:50:33.144582+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Calendario",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:43:52.798526+00:00"
+            "at": "2026-08-31T07:50:43.145881+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Marcatori",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:44:02.809710+00:00"
+            "at": "2026-08-31T07:50:53.154256+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:48:02.929913+00:00"
+            "at": "2026-08-31T07:54:53.409464+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeB/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:48:12.939648+00:00"
+            "at": "2026-08-31T07:55:03.413838+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:48:22.954462+00:00"
+            "at": "2026-08-31T07:55:13.414534+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Calendario",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:48:32.971548+00:00"
+            "at": "2026-08-31T07:55:23.415511+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Marcatori",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:48:42.974764+00:00"
+            "at": "2026-08-31T07:55:33.422931+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:52:43.124564+00:00"
+            "at": "2026-08-31T07:59:33.640712+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeB/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:52:53.133318+00:00"
+            "at": "2026-08-31T07:59:43.647797+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:53:03.133444+00:00"
+            "at": "2026-08-31T07:59:53.755310+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Calendario",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:53:13.142421+00:00"
+            "at": "2026-08-31T08:00:03.760604+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Marcatori",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:53:23.146684+00:00"
+            "at": "2026-08-31T08:00:13.771889+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:57:23.298635+00:00"
+            "at": "2026-08-31T08:04:13.962405+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeB/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:57:33.310674+00:00"
+            "at": "2026-08-31T08:04:23.968796+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:57:43.319832+00:00"
+            "at": "2026-08-31T08:04:33.981529+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Calendario",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:57:53.331553+00:00"
+            "at": "2026-08-31T08:04:43.982183+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Marcatori",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:58:03.341999+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:02:03.512340+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/SerieD/GironeB/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:02:13.515925+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:02:23.523417+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Calendario",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:02:33.524620+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/SerieD/GironeA/Marcatori",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:02:43.525613+00:00"
+            "at": "2026-08-31T08:04:53.983050+00:00"
           }
         ]
       }
@@ -307,81 +307,81 @@
       "groups": [],
       "calendar": [
         {
-          "updatedAt": "2026-08-29T21:46:54.816336+00:00",
+          "updatedAt": "2026-08-31T02:17:36.971762+00:00",
           "source": "https://www.tuttocampo.it/Lazio/Eccellenza/GironeA/Calendario",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:51:35.078045+00:00",
+          "updatedAt": "2026-08-31T02:22:17.249262+00:00",
           "source": "https://www.tuttocampo.it/Lazio/Eccellenza/GironeA/Calendario",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:56:15.277755+00:00",
+          "updatedAt": "2026-08-31T02:26:57.428981+00:00",
           "source": "https://www.tuttocampo.it/Lazio/Eccellenza/GironeA/Calendario",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:00:55.432975+00:00",
+          "updatedAt": "2026-08-31T02:31:37.565849+00:00",
           "source": "https://www.tuttocampo.it/Lazio/Eccellenza/GironeA/Calendario",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:05:35.564044+00:00",
+          "updatedAt": "2026-08-31T02:36:17.745400+00:00",
           "source": "https://www.tuttocampo.it/Lazio/Eccellenza/GironeA/Calendario",
           "extracted": 0
         }
       ],
       "standings": [
         {
-          "updatedAt": "2026-08-29T21:51:25.074792+00:00",
+          "updatedAt": "2026-08-31T02:17:26.957381+00:00",
           "source": "https://www.tuttocampo.it/Lombardia/Eccellenza/GironeA/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:56:05.270599+00:00",
+          "updatedAt": "2026-08-31T02:22:07.248485+00:00",
           "source": "https://www.tuttocampo.it/Lombardia/Eccellenza/GironeA/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:00:45.429408+00:00",
+          "updatedAt": "2026-08-31T02:26:47.428148+00:00",
           "source": "https://www.tuttocampo.it/Lombardia/Eccellenza/GironeA/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:05:25.563558+00:00",
+          "updatedAt": "2026-08-31T02:31:27.554155+00:00",
           "source": "https://www.tuttocampo.it/Lombardia/Eccellenza/GironeA/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:10:05.664564+00:00",
+          "updatedAt": "2026-08-31T02:36:07.737586+00:00",
           "source": "https://www.tuttocampo.it/Lombardia/Eccellenza/GironeA/Classifica",
           "extracted": 0
         }
       ],
       "scorers": [
         {
-          "updatedAt": "2026-08-29T21:47:04.823414+00:00",
+          "updatedAt": "2026-08-31T02:13:06.296806+00:00",
           "source": "https://www.tuttocampo.it/Toscana/Eccellenza/GironeA/Marcatori",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:51:45.091171+00:00",
+          "updatedAt": "2026-08-31T02:17:46.974908+00:00",
           "source": "https://www.tuttocampo.it/Toscana/Eccellenza/GironeA/Marcatori",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:56:25.284281+00:00",
+          "updatedAt": "2026-08-31T02:22:27.256967+00:00",
           "source": "https://www.tuttocampo.it/Toscana/Eccellenza/GironeA/Marcatori",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:01:05.440435+00:00",
+          "updatedAt": "2026-08-31T02:27:07.429426+00:00",
           "source": "https://www.tuttocampo.it/Toscana/Eccellenza/GironeA/Marcatori",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:05:45.570108+00:00",
+          "updatedAt": "2026-08-31T02:31:47.571745+00:00",
           "source": "https://www.tuttocampo.it/Toscana/Eccellenza/GironeA/Marcatori",
           "extracted": 0
         }
@@ -390,190 +390,190 @@
       "discipline": [],
       "market": [],
       "meta": {
-        "lastSync": "2026-08-30T17:03:33.575912+00:00",
+        "lastSync": "2026-08-31T08:05:44.007034+00:00",
         "source": "https://www.tuttocampo.it",
-        "errors": 585,
-        "ok": 252,
+        "errors": 655,
+        "ok": 382,
         "urls": [
           {
             "url": "https://www.tuttocampo.it/Puglia/Eccellenza/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:39:27.799004+00:00"
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:35:47.725403+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/Eccellenza/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:39:37.799465+00:00"
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:35:57.728654+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lombardia/Eccellenza/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:39:47.809044+00:00"
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:36:07.737586+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lazio/Eccellenza/GironeA/Calendario",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:39:57.810067+00:00"
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:36:17.745400+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Toscana/Eccellenza/GironeA/Marcatori",
             "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:40:07.817124+00:00"
+            "error": "<urlopen error [WinError 10013] Tentativo di accesso al socket con modalità non consentite dalle rispettive autorizzazioni di accesso>",
+            "at": "2026-08-31T02:36:27.755847+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/Eccellenza/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:44:12.819764+00:00"
+            "at": "2026-08-31T07:46:22.842068+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/Eccellenza/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:44:22.828920+00:00"
+            "at": "2026-08-31T07:46:32.843228+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lombardia/Eccellenza/GironeA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:44:32.837654+00:00"
+            "at": "2026-08-31T07:46:42.845829+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lazio/Eccellenza/GironeA/Calendario",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:44:42.844817+00:00"
+            "at": "2026-08-31T07:46:52.850832+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Toscana/Eccellenza/GironeA/Marcatori",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:44:52.850266+00:00"
+            "at": "2026-08-31T07:47:02.871172+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/Eccellenza/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:48:52.983783+00:00"
+            "at": "2026-08-31T07:51:03.162386+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/Eccellenza/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:49:02.993662+00:00"
+            "at": "2026-08-31T07:51:13.170641+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lombardia/Eccellenza/GironeA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:49:12.997359+00:00"
+            "at": "2026-08-31T07:51:23.175208+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lazio/Eccellenza/GironeA/Calendario",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:49:22.997950+00:00"
+            "at": "2026-08-31T07:51:33.182721+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Toscana/Eccellenza/GironeA/Marcatori",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:49:33.002075+00:00"
+            "at": "2026-08-31T07:51:43.189208+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/Eccellenza/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:53:33.153479+00:00"
+            "at": "2026-08-31T07:55:43.424191+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/Eccellenza/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:53:43.157697+00:00"
+            "at": "2026-08-31T07:55:53.429831+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lombardia/Eccellenza/GironeA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:53:53.171855+00:00"
+            "at": "2026-08-31T07:56:03.432491+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lazio/Eccellenza/GironeA/Calendario",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:54:03.174176+00:00"
+            "at": "2026-08-31T07:56:13.435283+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Toscana/Eccellenza/GironeA/Marcatori",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:54:13.175638+00:00"
+            "at": "2026-08-31T07:56:23.442075+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/Eccellenza/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:58:13.349264+00:00"
+            "at": "2026-08-31T08:00:23.779892+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/Eccellenza/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:58:23.354345+00:00"
+            "at": "2026-08-31T08:00:33.785240+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lombardia/Eccellenza/GironeA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:58:33.362359+00:00"
+            "at": "2026-08-31T08:00:43.787825+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lazio/Eccellenza/GironeA/Calendario",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:58:43.371373+00:00"
+            "at": "2026-08-31T08:00:53.797892+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Toscana/Eccellenza/GironeA/Marcatori",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:58:53.372331+00:00"
+            "at": "2026-08-31T08:01:03.810042+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/Eccellenza/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:02:53.536917+00:00"
+            "at": "2026-08-31T08:05:03.986772+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/Eccellenza/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:03:03.541846+00:00"
+            "at": "2026-08-31T08:05:13.988186+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lombardia/Eccellenza/GironeA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:03:13.542897+00:00"
+            "at": "2026-08-31T08:05:23.998073+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lazio/Eccellenza/GironeA/Calendario",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:03:23.558856+00:00"
+            "at": "2026-08-31T08:05:34.004854+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Toscana/Eccellenza/GironeA/Marcatori",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:03:33.575912+00:00"
+            "at": "2026-08-31T08:05:44.007034+00:00"
           }
         ]
       }
@@ -592,54 +592,54 @@
       "groups": [],
       "calendar": [
         {
-          "updatedAt": "2026-08-29T21:47:54.867983+00:00",
+          "updatedAt": "2026-08-31T02:13:56.327065+00:00",
           "source": "https://www.tuttocampo.it/Lombardia/Promozione/GironeA/Calendario",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:52:35.128909+00:00",
+          "updatedAt": "2026-08-31T02:18:37.000567+00:00",
           "source": "https://www.tuttocampo.it/Lombardia/Promozione/GironeA/Calendario",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:57:15.330167+00:00",
+          "updatedAt": "2026-08-31T02:23:17.296904+00:00",
           "source": "https://www.tuttocampo.it/Lombardia/Promozione/GironeA/Calendario",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:01:55.465551+00:00",
+          "updatedAt": "2026-08-31T02:27:57.447187+00:00",
           "source": "https://www.tuttocampo.it/Lombardia/Promozione/GironeA/Calendario",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:06:35.593723+00:00",
+          "updatedAt": "2026-08-31T02:32:37.592077+00:00",
           "source": "https://www.tuttocampo.it/Lombardia/Promozione/GironeA/Calendario",
           "extracted": 0
         }
       ],
       "standings": [
         {
-          "updatedAt": "2026-08-29T21:47:44.858014+00:00",
+          "updatedAt": "2026-08-31T02:13:46.317280+00:00",
           "source": "https://www.tuttocampo.it/Calabria/Promozione/GironeB/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:52:25.121665+00:00",
+          "updatedAt": "2026-08-31T02:18:26.999983+00:00",
           "source": "https://www.tuttocampo.it/Calabria/Promozione/GironeB/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:57:05.325505+00:00",
+          "updatedAt": "2026-08-31T02:23:07.288510+00:00",
           "source": "https://www.tuttocampo.it/Calabria/Promozione/GironeB/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:01:45.464392+00:00",
+          "updatedAt": "2026-08-31T02:27:47.439728+00:00",
           "source": "https://www.tuttocampo.it/Calabria/Promozione/GironeB/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:06:25.584512+00:00",
+          "updatedAt": "2026-08-31T02:32:27.591613+00:00",
           "source": "https://www.tuttocampo.it/Calabria/Promozione/GironeB/Classifica",
           "extracted": 0
         }
@@ -649,190 +649,190 @@
       "discipline": [],
       "market": [],
       "meta": {
-        "lastSync": "2026-08-30T17:04:25.093441+00:00",
+        "lastSync": "2026-08-31T08:06:34.037243+00:00",
         "source": "https://www.tuttocampo.it",
-        "errors": 579,
-        "ok": 251,
+        "errors": 646,
+        "ok": 379,
         "urls": [
           {
             "url": "https://www.tuttocampo.it/Puglia/Promozione/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:40:22.614090+00:00"
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:31:57.573572+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/Promozione/GironeB/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:40:32.623453+00:00"
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:32:07.582127+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/Promozione/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:40:42.625814+00:00"
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:32:17.583209+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/Promozione/GironeB/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:40:52.630668+00:00"
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:32:27.591613+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lombardia/Promozione/GironeA/Calendario",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:41:02.639836+00:00"
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:32:37.592077+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/Promozione/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:45:02.850493+00:00"
+            "at": "2026-08-31T07:47:12.877259+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/Promozione/GironeB/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:45:12.864082+00:00"
+            "at": "2026-08-31T07:47:22.887023+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/Promozione/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:45:22.865537+00:00"
+            "at": "2026-08-31T07:47:32.890582+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/Promozione/GironeB/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:45:32.866164+00:00"
+            "at": "2026-08-31T07:47:42.894766+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lombardia/Promozione/GironeA/Calendario",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:45:42.866944+00:00"
+            "at": "2026-08-31T07:47:52.974465+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/Promozione/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:49:43.008691+00:00"
+            "at": "2026-08-31T07:51:53.194087+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/Promozione/GironeB/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:49:53.010148+00:00"
+            "at": "2026-08-31T07:52:03.232670+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/Promozione/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:50:03.011438+00:00"
+            "at": "2026-08-31T07:52:13.239449+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/Promozione/GironeB/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:50:13.019099+00:00"
+            "at": "2026-08-31T07:52:23.240052+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lombardia/Promozione/GironeA/Calendario",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:50:23.028061+00:00"
+            "at": "2026-08-31T07:52:33.251145+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/Promozione/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:54:23.182074+00:00"
+            "at": "2026-08-31T07:56:33.449385+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/Promozione/GironeB/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:54:33.195239+00:00"
+            "at": "2026-08-31T07:56:43.452557+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/Promozione/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:54:43.203847+00:00"
+            "at": "2026-08-31T07:56:53.458592+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/Promozione/GironeB/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:54:53.208252+00:00"
+            "at": "2026-08-31T07:57:03.471034+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lombardia/Promozione/GironeA/Calendario",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:55:03.209145+00:00"
+            "at": "2026-08-31T07:57:13.479220+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/Promozione/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:59:03.390345+00:00"
+            "at": "2026-08-31T08:01:13.823765+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/Promozione/GironeB/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:59:13.398389+00:00"
+            "at": "2026-08-31T08:01:23.830966+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/Promozione/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:59:23.410115+00:00"
+            "at": "2026-08-31T08:01:33.833462+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/Promozione/GironeB/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:59:33.414641+00:00"
+            "at": "2026-08-31T08:01:43.835729+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lombardia/Promozione/GironeA/Calendario",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:59:43.421205+00:00"
+            "at": "2026-08-31T08:01:53.838009+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/Promozione/GironeA/Squadre",
             "status": "error",
-            "error": "<urlopen error [Errno 11001] getaddrinfo failed>",
-            "at": "2026-08-30T17:03:43.577695+00:00"
+            "error": "HTTP Error 403: Forbidden",
+            "at": "2026-08-31T08:05:54.013314+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/Promozione/GironeB/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:03:55.071755+00:00"
+            "at": "2026-08-31T08:06:04.022685+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/Promozione/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:04:05.074149+00:00"
+            "at": "2026-08-31T08:06:14.026663+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/Promozione/GironeB/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:04:15.085096+00:00"
+            "at": "2026-08-31T08:06:24.028655+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lombardia/Promozione/GironeA/Calendario",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:04:25.093441+00:00"
+            "at": "2026-08-31T08:06:34.037243+00:00"
           }
         ]
       }
@@ -843,27 +843,27 @@
       "calendar": [],
       "standings": [
         {
-          "updatedAt": "2026-08-29T21:48:14.888974+00:00",
+          "updatedAt": "2026-08-31T02:14:16.336203+00:00",
           "source": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:52:55.144521+00:00",
+          "updatedAt": "2026-08-31T02:18:57.023791+00:00",
           "source": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:57:35.347346+00:00",
+          "updatedAt": "2026-08-31T02:23:37.309673+00:00",
           "source": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:02:15.475803+00:00",
+          "updatedAt": "2026-08-31T02:28:17.448727+00:00",
           "source": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:06:55.596491+00:00",
+          "updatedAt": "2026-08-31T02:32:57.600564+00:00",
           "source": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
           "extracted": 0
         }
@@ -873,190 +873,190 @@
       "discipline": [],
       "market": [],
       "meta": {
-        "lastSync": "2026-08-30T17:04:35.106728+00:00",
+        "lastSync": "2026-08-31T08:06:54.054385+00:00",
         "source": "https://www.tuttocampo.it",
-        "errors": 230,
-        "ok": 101,
+        "errors": 257,
+        "ok": 153,
         "urls": [
           {
+            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:50:39.595943+00:00"
+          },
+          {
             "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T15:54:21.991754+00:00"
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:50:49.605478+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:55:21.276802+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:55:31.285149+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:00:01.441432+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:00:11.444448+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:04:45.862508+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:04:55.869046+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:09:26.004161+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:09:36.005615+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:14:06.330281+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:14:16.336203+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:18:47.010528+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:18:57.023791+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:23:27.302189+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:23:37.309673+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:28:07.448299+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:28:17.448727+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:32:47.599738+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:32:57.600564+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T15:58:52.204895+00:00"
+            "at": "2026-08-31T07:48:02.982295+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T15:59:02.215500+00:00"
+            "at": "2026-08-31T07:48:13.045657+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:03:36.335842+00:00"
+            "at": "2026-08-31T07:52:43.254523+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:03:46.340437+00:00"
+            "at": "2026-08-31T07:52:53.260731+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:08:16.568842+00:00"
+            "at": "2026-08-31T07:57:23.502608+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:08:26.571597+00:00"
+            "at": "2026-08-31T07:57:33.505240+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:12:56.803591+00:00"
+            "at": "2026-08-31T08:02:03.848329+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:13:06.806647+00:00"
+            "at": "2026-08-31T08:02:13.875675+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:17:37.007428+00:00"
+            "at": "2026-08-31T08:06:44.045394+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:17:47.015548+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:22:19.447765+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:22:29.457304+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:26:59.669608+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:27:09.689263+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:31:39.896501+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:31:49.903353+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:36:27.675880+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:36:37.676765+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:41:12.648671+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:41:22.664431+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:45:52.874843+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:46:02.882243+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:50:33.033043+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:50:43.038752+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:55:13.222784+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:55:23.223855+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:59:53.437927+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/JunioresRegionaliU19/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:00:03.447596+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/JunioresNazionaliU19/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:04:35.106728+00:00"
+            "at": "2026-08-31T08:06:54.054385+00:00"
           }
         ]
       }
@@ -1067,27 +1067,27 @@
       "calendar": [],
       "standings": [
         {
-          "updatedAt": "2026-08-29T21:48:34.899300+00:00",
+          "updatedAt": "2026-08-31T02:14:36.351746+00:00",
           "source": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:53:15.170108+00:00",
+          "updatedAt": "2026-08-31T02:19:17.036895+00:00",
           "source": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:57:55.350749+00:00",
+          "updatedAt": "2026-08-31T02:23:57.315748+00:00",
           "source": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:02:35.487084+00:00",
+          "updatedAt": "2026-08-31T02:28:37.465899+00:00",
           "source": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:07:15.598822+00:00",
+          "updatedAt": "2026-08-31T02:33:17.614520+00:00",
           "source": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
           "extracted": 0
         }
@@ -1097,190 +1097,190 @@
       "discipline": [],
       "market": [],
       "meta": {
-        "lastSync": "2026-08-30T17:00:23.454599+00:00",
+        "lastSync": "2026-08-31T08:07:14.072361+00:00",
         "source": "https://www.tuttocampo.it",
-        "errors": 230,
-        "ok": 100,
+        "errors": 258,
+        "ok": 152,
         "urls": [
           {
             "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T15:54:31.992253+00:00"
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:50:59.613118+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T15:54:41.995409+00:00"
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:51:09.619468+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:55:41.285857+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:55:51.286580+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:00:21.446120+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:00:31.446857+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:05:05.870121+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:05:15.877681+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:09:46.006188+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:09:56.006857+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:14:26.340263+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:14:36.351746+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:19:07.032143+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:19:17.036895+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:23:47.315227+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:23:57.315748+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:28:27.460919+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:28:37.465899+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:33:07.605288+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:33:17.614520+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T15:59:12.229316+00:00"
+            "at": "2026-08-31T07:48:23.059074+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T15:59:22.236493+00:00"
+            "at": "2026-08-31T07:48:33.060153+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:03:56.341778+00:00"
+            "at": "2026-08-31T07:53:03.272008+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:04:06.351633+00:00"
+            "at": "2026-08-31T07:53:13.274656+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:08:36.572500+00:00"
+            "at": "2026-08-31T07:57:43.513223+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:08:46.579577+00:00"
+            "at": "2026-08-31T07:57:53.516948+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:13:16.814913+00:00"
+            "at": "2026-08-31T08:02:23.877641+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:13:26.821301+00:00"
+            "at": "2026-08-31T08:02:33.885132+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:17:57.027199+00:00"
+            "at": "2026-08-31T08:07:04.057128+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:18:07.033259+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:22:39.463376+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:22:49.465129+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:27:19.695825+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:27:29.704079+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:31:59.910981+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:32:09.913994+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:36:47.677547+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:36:57.682742+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:41:32.670819+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:41:42.682026+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:46:12.893198+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:46:22.894822+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:50:53.046130+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:51:03.060400+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:55:33.225124+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:55:43.228477+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/PrimaCategoria/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:00:13.448345+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Calabria/PrimaCategoria/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:00:23.454599+00:00"
+            "at": "2026-08-31T08:07:14.072361+00:00"
           }
         ]
       }
@@ -1291,27 +1291,27 @@
       "calendar": [],
       "standings": [
         {
-          "updatedAt": "2026-08-29T21:48:54.912350+00:00",
+          "updatedAt": "2026-08-31T02:14:56.365615+00:00",
           "source": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:53:35.174577+00:00",
+          "updatedAt": "2026-08-31T02:19:37.048141+00:00",
           "source": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:58:15.355016+00:00",
+          "updatedAt": "2026-08-31T02:24:17.323628+00:00",
           "source": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:02:55.498309+00:00",
+          "updatedAt": "2026-08-31T02:28:57.470222+00:00",
           "source": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:07:35.601656+00:00",
+          "updatedAt": "2026-08-31T02:33:37.616251+00:00",
           "source": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
           "extracted": 0
         }
@@ -1321,190 +1321,190 @@
       "discipline": [],
       "market": [],
       "meta": {
-        "lastSync": "2026-08-30T17:00:43.463999+00:00",
+        "lastSync": "2026-08-31T08:07:34.095267+00:00",
         "source": "https://www.tuttocampo.it",
-        "errors": 229,
-        "ok": 101,
+        "errors": 256,
+        "ok": 154,
         "urls": [
           {
             "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T15:54:52.004269+00:00"
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:51:19.668012+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T15:55:02.019589+00:00"
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:51:29.670440+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:56:01.287563+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:56:11.300072+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:00:41.447357+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:00:51.448119+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:05:25.878040+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:05:35.878976+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:10:06.016962+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:10:16.040396+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:14:46.361514+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:14:56.365615+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:19:27.043584+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:19:37.048141+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:24:07.323163+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:24:17.323628+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:28:47.469621+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:28:57.470222+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:33:27.615042+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:33:37.616251+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T15:59:32.247925+00:00"
+            "at": "2026-08-31T07:48:43.060732+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T15:59:42.263681+00:00"
+            "at": "2026-08-31T07:48:53.062630+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:04:16.360373+00:00"
+            "at": "2026-08-31T07:53:23.276992+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:04:26.368390+00:00"
+            "at": "2026-08-31T07:53:33.295350+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:08:56.597959+00:00"
+            "at": "2026-08-31T07:58:03.545831+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:09:06.609591+00:00"
+            "at": "2026-08-31T07:58:13.556355+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:13:36.827558+00:00"
+            "at": "2026-08-31T08:02:43.899162+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:13:46.829944+00:00"
+            "at": "2026-08-31T08:02:53.917902+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:18:17.038574+00:00"
+            "at": "2026-08-31T08:07:24.083527+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:18:27.047846+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:22:59.465619+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:23:09.473849+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:27:39.712372+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:27:49.727239+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:32:19.928920+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:32:29.936864+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:37:07.699170+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:37:17.707997+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:41:52.687023+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:42:02.696977+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:46:32.900662+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:46:42.901039+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:51:13.068950+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:51:23.069909+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:55:53.234084+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:56:03.240296+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/SecondaCategoria/GironeA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:00:33.461006+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Lombardia/SecondaCategoria/GironeA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:00:43.463999+00:00"
+            "at": "2026-08-31T08:07:34.095267+00:00"
           }
         ]
       }
@@ -1515,27 +1515,27 @@
       "calendar": [],
       "standings": [
         {
-          "updatedAt": "2026-08-29T21:49:14.924335+00:00",
+          "updatedAt": "2026-08-31T02:15:16.793660+00:00",
           "source": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:53:55.189084+00:00",
+          "updatedAt": "2026-08-31T02:19:57.066873+00:00",
           "source": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:58:35.367858+00:00",
+          "updatedAt": "2026-08-31T02:24:37.340644+00:00",
           "source": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:03:15.510299+00:00",
+          "updatedAt": "2026-08-31T02:29:17.474028+00:00",
           "source": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:07:55.608566+00:00",
+          "updatedAt": "2026-08-31T02:33:57.656267+00:00",
           "source": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
           "extracted": 0
         }
@@ -1545,190 +1545,190 @@
       "discipline": [],
       "market": [],
       "meta": {
-        "lastSync": "2026-08-30T17:01:03.468585+00:00",
+        "lastSync": "2026-08-31T08:07:54.113801+00:00",
         "source": "https://www.tuttocampo.it",
-        "errors": 229,
-        "ok": 101,
+        "errors": 255,
+        "ok": 155,
         "urls": [
           {
             "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T15:55:12.033911+00:00"
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:51:39.671344+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T15:55:22.043625+00:00"
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:51:49.672198+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:56:21.307606+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:56:31.311138+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:01:01.449880+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:01:11.450517+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:05:45.879767+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:05:55.884845+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:10:26.040998+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:10:36.042138+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:15:06.791772+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:15:16.793660+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:19:47.056117+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:19:57.066873+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:24:27.339900+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:24:37.340644+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:29:07.473591+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:29:17.474028+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:33:47.623658+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:33:57.656267+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T15:59:52.274911+00:00"
+            "at": "2026-08-31T07:49:03.071596+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:00:02.279101+00:00"
+            "at": "2026-08-31T07:49:13.073618+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:04:36.379486+00:00"
+            "at": "2026-08-31T07:53:43.323220+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:04:46.388906+00:00"
+            "at": "2026-08-31T07:53:53.331195+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:09:16.610953+00:00"
+            "at": "2026-08-31T07:58:23.576059+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:09:26.615435+00:00"
+            "at": "2026-08-31T07:58:33.589145+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:13:56.838219+00:00"
+            "at": "2026-08-31T08:03:03.918800+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:14:06.845186+00:00"
+            "at": "2026-08-31T08:03:13.933599+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:18:37.049773+00:00"
+            "at": "2026-08-31T08:07:44.104257+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:18:47.063428+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:23:19.483075+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:23:29.492085+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:27:59.730598+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:28:09.738930+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:32:39.939067+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:32:49.954268+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:37:27.719399+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:37:37.726413+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:42:12.710915+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:42:22.721445+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:46:52.905734+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:47:02.907807+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:51:33.079663+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:51:43.085209+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:56:13.240550+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:56:23.241501+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/TerzaCategoria/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:00:53.464556+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Lazio/TerzaCategoria/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:01:03.468585+00:00"
+            "at": "2026-08-31T08:07:54.113801+00:00"
           }
         ]
       }
@@ -1739,27 +1739,27 @@
       "calendar": [],
       "standings": [
         {
-          "updatedAt": "2026-08-29T21:49:44.956432+00:00",
+          "updatedAt": "2026-08-31T02:15:46.870036+00:00",
           "source": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:54:25.209464+00:00",
+          "updatedAt": "2026-08-31T02:20:27.147223+00:00",
           "source": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T21:59:05.392188+00:00",
+          "updatedAt": "2026-08-31T02:25:07.368312+00:00",
           "source": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:03:45.532278+00:00",
+          "updatedAt": "2026-08-31T02:29:47.495082+00:00",
           "source": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:08:25.617870+00:00",
+          "updatedAt": "2026-08-31T02:34:27.665509+00:00",
           "source": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
           "extracted": 0
         }
@@ -1769,190 +1769,190 @@
       "discipline": [],
       "market": [],
       "meta": {
-        "lastSync": "2026-08-30T17:01:33.483287+00:00",
+        "lastSync": "2026-08-31T08:03:43.937661+00:00",
         "source": "https://www.tuttocampo.it",
-        "errors": 344,
-        "ok": 151,
+        "errors": 381,
+        "ok": 231,
         "urls": [
           {
             "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:18:57.064212+00:00"
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:10:46.047546+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/FemminileSerieB/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:19:07.072254+00:00"
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:10:56.058297+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:19:17.074499+00:00"
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:11:06.059248+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:15:26.799219+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/FemminileSerieB/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:15:36.801733+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:15:46.870036+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:20:07.075709+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/FemminileSerieB/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:20:17.134615+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:20:27.147223+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:24:47.350322+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/FemminileSerieB/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:24:57.354541+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:25:07.368312+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:29:27.479461+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/FemminileSerieB/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:29:37.486986+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:29:47.495082+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:34:07.656589+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/FemminileSerieB/Squadre",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:34:17.665131+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:34:27.665509+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:23:39.494315+00:00"
+            "at": "2026-08-31T07:49:23.092288+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/FemminileSerieB/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:23:49.506302+00:00"
+            "at": "2026-08-31T07:49:33.097532+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:23:59.512712+00:00"
+            "at": "2026-08-31T07:49:43.114092+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:28:19.740285+00:00"
+            "at": "2026-08-31T07:54:03.336299+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/FemminileSerieB/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:28:29.757690+00:00"
+            "at": "2026-08-31T07:54:13.343412+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:28:39.767635+00:00"
+            "at": "2026-08-31T07:54:23.362751+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:32:59.959030+00:00"
+            "at": "2026-08-31T07:58:43.605200+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/FemminileSerieB/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:33:09.968005+00:00"
+            "at": "2026-08-31T07:58:53.627345+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:33:19.981935+00:00"
+            "at": "2026-08-31T07:59:03.634110+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:37:47.727932+00:00"
+            "at": "2026-08-31T08:03:23.934479+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/FemminileSerieB/Squadre",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:37:57.736046+00:00"
+            "at": "2026-08-31T08:03:33.936449+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:38:07.743860+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:42:32.724476+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/FemminileSerieB/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:42:42.724884+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:42:52.741716+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:47:12.913530+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/FemminileSerieB/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:47:22.915420+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:47:32.921265+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:51:53.094516+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/FemminileSerieB/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:52:03.095590+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:52:13.096288+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:56:33.260413+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/FemminileSerieB/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:56:43.263774+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:56:53.265324+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:01:13.474964+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/FemminileSerieB/Squadre",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:01:23.475633+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/FemminileSerieA/Classifica",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:01:33.483287+00:00"
+            "at": "2026-08-31T08:03:43.937661+00:00"
           }
         ]
       }
@@ -1967,227 +1967,227 @@
       "discipline": [],
       "market": [
         {
-          "updatedAt": "2026-08-29T21:59:25.394378+00:00",
+          "updatedAt": "2026-08-31T02:25:27.388025+00:00",
           "source": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:03:55.540597+00:00",
+          "updatedAt": "2026-08-31T02:29:57.504663+00:00",
           "source": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:04:05.544364+00:00",
+          "updatedAt": "2026-08-31T02:30:07.506257+00:00",
           "source": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:08:35.626903+00:00",
+          "updatedAt": "2026-08-31T02:34:37.686195+00:00",
           "source": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
           "extracted": 0
         },
         {
-          "updatedAt": "2026-08-29T22:08:45.636005+00:00",
+          "updatedAt": "2026-08-31T02:34:47.692578+00:00",
           "source": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
           "extracted": 0
         }
       ],
       "meta": {
-        "lastSync": "2026-08-30T17:01:53.504986+00:00",
+        "lastSync": "2026-08-31T08:04:03.949888+00:00",
         "source": "https://www.tuttocampo.it",
-        "errors": 228,
-        "ok": 102,
+        "errors": 254,
+        "ok": 154,
         "urls": [
           {
             "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T15:56:02.066236+00:00"
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:47:48.306275+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:47:59.525292+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
             "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T15:56:12.077740+00:00"
+            "error": "<urlopen error [Errno 11001] getaddrinfo failed>",
+            "at": "2026-08-31T01:52:29.681701+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:52:41.158091+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:57:11.322557+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T01:57:21.329077+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:01:51.486003+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:02:01.495042+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:06:35.908756+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:06:45.909267+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:11:16.060828+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:11:26.062034+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:15:56.870763+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:16:06.933886+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:20:37.154709+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:20:47.168207+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:25:17.375079+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:25:27.388025+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:29:57.504663+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:30:07.506257+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:34:37.686195+00:00"
+          },
+          {
+            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
+            "status": "ok",
+            "teams": 0,
+            "at": "2026-08-31T02:34:47.692578+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:00:46.212503+00:00"
+            "at": "2026-08-31T07:49:53.121855+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:00:56.220107+00:00"
+            "at": "2026-08-31T07:50:03.131568+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:05:26.411486+00:00"
+            "at": "2026-08-31T07:54:33.378609+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:05:36.412431+00:00"
+            "at": "2026-08-31T07:54:43.390579+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:10:06.648116+00:00"
+            "at": "2026-08-31T07:59:13.634749+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:10:16.652943+00:00"
+            "at": "2026-08-31T07:59:23.639443+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:14:46.863064+00:00"
+            "at": "2026-08-31T08:03:53.946015+00:00"
           },
           {
             "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
             "status": "error",
             "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:14:56.882287+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:19:27.081980+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:19:37.085904+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:24:09.515218+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:24:19.525346+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:28:49.773642+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:28:59.774609+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:33:29.987272+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:33:40.000437+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:38:17.756016+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:38:27.756763+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:43:02.751906+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:43:12.762421+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:47:42.922205+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:47:52.929034+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:52:23.101092+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:52:33.117102+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:57:03.280744+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T16:57:13.287336+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Puglia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:01:43.488132+00:00"
-          },
-          {
-            "url": "https://www.tuttocampo.it/Italia/BachecaAnnunciCalcio",
-            "status": "error",
-            "error": "HTTP Error 403: Forbidden",
-            "at": "2026-08-30T17:01:53.504986+00:00"
+            "at": "2026-08-31T08:04:03.949888+00:00"
           }
         ]
       }
     }
   },
-  "cycle": 4655,
+  "cycle": 5767,
   "lastTick": {
-    "at": "2026-08-30T17:04:36.709305+00:00",
-    "cursor": 15,
+    "at": "2026-08-31T08:07:54.408443+00:00",
+    "cursor": 22,
     "processed": [
-      "under-19:err"
+      "terza-cat:err"
     ],
     "phase": "done",
     "intervalMode": "rotate-10s"

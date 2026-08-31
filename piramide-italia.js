@@ -157,14 +157,37 @@
     if (dGir && SERIE_D_GIRONI.indexOf(String(dGir).toUpperCase()) >= 0) {
       return String(dGir).toUpperCase();
     }
-    var catL = club && (club.catalogL || club.l);
+    var catL = String((club && (club.catalogL || club.l)) || '').toUpperCase();
     var catT = club && club.catalogT;
     if (Number(catT) === 4) {
       var g = parseGirone(catL);
       if (g && SERIE_D_GIRONI.indexOf(g) >= 0) return g;
     }
+    // Analisi da testo campionato regionale (es. Eccellenza Piemonte -> Girone A)
+    if (catL.indexOf('PIEMONTE') >= 0 || catL.indexOf('LIGURIA') >= 0 || catL.indexOf('VALLE D') >= 0) return 'A';
+    if (catL.indexOf('LOMBARDIA') >= 0) return 'B';
+    if (catL.indexOf('VENETO') >= 0 || catL.indexOf('FRIULI') >= 0 || catL.indexOf('TRENTINO') >= 0) return 'C';
+    if (catL.indexOf('EMILIA') >= 0 || catL.indexOf('ROMAGNA') >= 0) return 'D';
+    if (catL.indexOf('TOSCANA') >= 0 || catL.indexOf('UMBRIA') >= 0) return 'E';
+    if (catL.indexOf('MARCHE') >= 0 || catL.indexOf('ABRUZZO') >= 0 || catL.indexOf('MOLISE') >= 0) return 'F';
+    if (catL.indexOf('LAZIO') >= 0 || catL.indexOf('SARDEGNA') >= 0) return 'G';
+    if (catL.indexOf('PUGLIA') >= 0 || catL.indexOf('BASILICATA') >= 0) return 'H';
+    if (catL.indexOf('CALABRIA') >= 0 || catL.indexOf('SICILIA') >= 0) return 'I';
+    if (catL.indexOf('CAMPANIA') >= 0) return 'H';
+
+    var cName = String((club && (club.n || club.name || club.city)) || '').toUpperCase();
+    if (/POTENZA|MATERA|BARI|FOGGIA|TARANTO|LECCE|BRINDISI|ANDRIA|BITONTO|NARDO|GALLIPOLI|TRANI|CERIGNOLA|ALTAMURA|FRANCAVILLA|FASANO|MANFREDONIA|MELFI|GRAVINA|CASARANO|UGENTO|TAURISANO|SQUINZANO|NOVOLI|GALATINA|CANOSA|CAMPI|RACALE|ACQUAVIVA|MAGLIE|SPINAZZOLA|OSTUNI|POLIMNIA/.test(cName)) return 'H';
+    if (/REGGINA|CATANIA|MESSINA|PALERMO|TRAPANI|SIRACUSA|COSENZA|CROTONE|CATANZARO|VIBONESE|LAMEZIA|SAMBIASE|ACIREALE|GELA|ENNA|RAGUSA|LICATA|NISSA|MILAZZO/.test(cName)) return 'I';
+    if (/TORINO|CUNEO|CHIERI|FOSSANO|ALBA|ALESSANDRIA|ASTI|NOVARA|VERCELLI|BIELLA|CARMAGNOLA|CENTALLO|MONREGALE|MORETTA|OVADA|DRONERO|VILLAFRANCA|VANCHIGLIA|SAN DAMIANO|SAVIO|GAVI|SAVONA|GENOVA|SANREMO|IMPERIA|LA SPEZIA/.test(cName)) return 'A';
+    if (/MILANO|BERGAMO|BRESCIA|MONZA|COMO|LECCO|CREMONA|PAVIA|VARESE|LODI|MANTOVA|SONDRIO/.test(cName)) return 'B';
+    if (/VENEZIA|VERONA|PADOVA|VICENZA|TREVISO|BELLUNO|ROVIGO|TRENTO|BOLZANO|TRIESTE|UDINE|PORDENONE|GORIZIA/.test(cName)) return 'C';
+    if (/BOLOGNA|PARMA|MODENA|REGGIO EMILIA|FERRARA|RAVENNA|FORLI|CESENA|RIMINI|PIACENZA/.test(cName)) return 'D';
+    if (/FIRENZE|PISA|LIVORNO|LUCCA|SIENA|AREZZO|GROSSETO|PISTOIA|PERUGIA|TERNI/.test(cName)) return 'E';
+    if (/ANCONA|PESARO|MACERATA|ASCOLI|FERMO|L'AQUILA|PESCARA|CHIETI|TERAMO|CAMPOBASSO|ISERNIA/.test(cName)) return 'F';
+    if (/ROMA|LATINA|FROSINONE|VITERBO|RIETI|CAGLIARI|SASSARI|OLBIA|NUORO|ORISTANO/.test(cName)) return 'G';
+
     var area = areaOf(club);
-    if (area === 'nord') return 'B';
+    if (area === 'nord') return 'A';
     if (area === 'centro') return 'E';
     return 'H';
   }

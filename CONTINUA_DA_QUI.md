@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Aggiornato Logo Ufficiale Cheraschese** — scaricato e integrato in alta risoluzione RGBA (668x1034px) da Tuttocampo in `immagini/squadre-loghi/ecc-cheraschese.png`, `cheraschese.png`, `cheraschese-1904.png` e `cherasco.png`. Colori sociali allineati nel catalogo (`catalog.json`).
+Ultimo fatto: **Minigioco: simboli SVG genere, loghi competizioni nelle categorie, fix girone Serie D, fix club-storia selfCheck/stayWeight; loghi HD Eccellenza Piemonte e Puglia aggiornati; commit/push/deploy recuperati dopo errori API 429**.
 Feature precedente: Aggiornato Logo Ufficiale Albese.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -81,7 +81,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Aggiornato logo ufficiale Cheraschese (668x1034px RGBA) da Tuttocampo e colori sociali |
+| (questo) | Minigioco: simboli SVG genere, loghi competizioni categorie, fix girone Serie D/piramide-italia, fix selfCheck/stayWeight club-storia; loghi HD Eccellenza Piemonte e Puglia |
+| `7f2645e` | Aggiornato logo ufficiale Cheraschese (668x1034px RGBA) da Tuttocampo e colori sociali |
 | `4837a5b` | Aggiornato logo ufficiale Albese (1094x1500px RGBA) da Tuttocampo e colori sociali (Iniziato Girone B) |
 | `f729d0e` | Aggiornato logo ufficiale Volpiano Pianese (650x662px RGBA) da Tuttocampo e colori sociali (Girone A completo) |
 | `5e8e684` | Aggiornato logo ufficiale Sparta Novaromentino (1000x996px RGBA) da Tuttocampo e colori sociali |
@@ -340,8 +341,13 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 
 ## Diario sessioni
 
-- **2026-08-31** — Aggiornato Logo Ufficiale Cheraschese:
-  - Scaricato e integrato in RGBA (668x1034px) il logo della Cheraschese da Tuttocampo in `immagini/squadre-loghi/ecc-cheraschese.png`, `cheraschese.png`, `cheraschese-1904.png` e `cherasco.png`. Allineati colori sociali ufficiali (nero-bianco con finiture oro) nel catalogo. Cache `CHERASCHESE1`.
+- **2026-08-31** — Minigioco + piramide + club-storia: fix recuperati dopo errori API 429:
+  - `minigioco-carriera.js`: sostituiti emoji genere (⚽/👩) con simboli SVG inline maschio/femmina; loghi competizione reali nelle schede categoria (al posto delle icone emoji); fix label Serie D per girone corretto (non sempre 'A'); femminile: aggiunta Eccellenza/Promozione Femminile con colori corretti.
+  - `piramide-italia.js`: algoritmo girone Serie D migliorato — usa regione dalla stringa campionato, poi geo per nome città, poi fallback area nord/centro/sud.
+  - `club-storia.js`: aggiunte funzioni `stayWeight` e `selfCheck` mancanti (bloccavano caricamento JS).
+  - Loghi HD Eccellenza Piemonte (Chieri, Fossano, Cuneo 1905 Olmo, CSF Carmagnola, Pro Dronero, Pro Villafranca, Monregale, Moretta, Gaviese, Vanchiglia, Spartak San Damiano, Ovadese, San Domenico Savio Asti) e Puglia (Atletico Acquaviva, Atletico Racale, Brilla Campi, Cosmano Sport Foggia, Nuova Spinazzola, Soccer Trani, Unione Calcio Bisceglie).
+  - Cache `GENDERSVG1`.
+
 
 - **2026-08-31** — Aggiornato Logo Ufficiale Albese (Inizio Girone B):
   - Scaricato e integrato in RGBA (1094x1500px) il logo dell'Albese da Tuttocampo in `immagini/squadre-loghi/ecc-albese.png`, `albese.png`, `albese-calcio.png` e `alba.png`. Allineati colori sociali ufficiali (bianco-azzurro / bluceleste) nel catalogo. Cache `ALBESE1`.

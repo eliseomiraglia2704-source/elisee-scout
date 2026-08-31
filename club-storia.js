@@ -559,6 +559,130 @@
     return rawWeights(club, fromTier).rel;
   }
 
+  /**
+   * SEASONAL BIAS 2026/27 — basato sui dati di classifica a 2ª giornata.
+   * Moltiplicatori applicati ai pesi derivati dalla storia del club.
+   * promo > 1 = più probabilità di salire; rel > 1 = più probabilità di scendere.
+   * Regola bonus risalita: applica promoBonus ai club retrocessi "non favoriti"
+   * che nella stagione corrente ripartono dalla categoria inferiore.
+   */
+  var SEASONAL_BIAS = {
+    /* ======= SERIE B 2026/27 ======= */
+    'SASSUOLO':   { promo: 2.8, rel: 0.4 },
+    'PISA':       { promo: 2.4, rel: 0.5 },
+    'SPEZIA':     { promo: 0.8, rel: 1.8 }, // neopromossa da C — bonus risalita se retrocede
+    'CREMONESE':  { promo: 2.2, rel: 0.6 },
+    'CATANZARO':  { promo: 2.0, rel: 0.6 },
+    'SPAL':       { promo: 0.9, rel: 1.5 },
+    'CESENA':     { promo: 1.8, rel: 0.7 },
+    'SUDTIROL':   { promo: 1.6, rel: 0.8 },
+    'PALERMO':    { promo: 1.4, rel: 0.9 },
+    'JUVE STABIA': { promo: 1.4, rel: 0.9 },
+    'PADOVA':     { promo: 1.6, rel: 0.9 },
+    'REGGIANA':   { promo: 1.2, rel: 0.9 },
+    'BRESCIA':    { promo: 1.2, rel: 1.0 },
+    'MODENA':     { promo: 1.0, rel: 1.1 },
+    'ASCOLI':     { promo: 0.9, rel: 1.3 },
+    'SALERNITANA': { promo: 0.8, rel: 1.4 }, // bonus risalita verso A (ex-A)
+    'BARI':       { promo: 0.8, rel: 1.6 }, // bonus risalita verso A (ex-A)
+    'AVELLINO':   { promo: 0.7, rel: 1.6 },
+    'MANTOVA':    { promo: 0.6, rel: 1.8 },
+    'FROSINONE':  { promo: 0.6, rel: 1.7 },
+
+    /* ======= SERIE C GIRONE A 2026/27 ======= */
+    'UNION BRESCIA': { promo: 1.8, rel: 0.4 },
+    'ALCIONE MILANO': { promo: 1.4, rel: 0.4 },
+    'JUVENTUS U23':  { promo: 0.5, rel: 0.4 },  // U23 = strutturale
+    'JUVENTUS NEXT GEN': { promo: 0.5, rel: 0.4 },
+    'DOLOMITI BELLUNESI': { promo: 1.0, rel: 0.5 },
+    'ARZIGNANO':    { promo: 1.4, rel: 0.4 },
+    'CITTADELLA':   { promo: 2.0, rel: 0.3 },  // blasone B, bonus risalita
+    'OSPITALETTO':  { promo: 0.5, rel: 2.2 },
+    'ALBINOLEFFE':  { promo: 0.8, rel: 0.8 },
+    'TRENTO':       { promo: 0.9, rel: 0.8 },
+    'LUMEZZANE':    { promo: 0.5, rel: 1.8 },
+    'DESENZANO':    { promo: 0.4, rel: 1.6 },
+    'LECCO':        { promo: 1.4, rel: 1.0 },  // bonus risalita (ex-B)
+    'PRO VERCELLI': { promo: 1.4, rel: 0.9 },  // bonus risalita (blasone storico)
+    'CARPI':        { promo: 0.8, rel: 1.2 },
+    'FOLGORE CARATESE': { promo: 0.4, rel: 1.8 },
+    'TREVISO':      { promo: 0.8, rel: 1.6 },
+    'NOVARA':       { promo: 1.4, rel: 0.9 },  // bonus risalita (ex-A)
+    'RENATE':       { promo: 0.4, rel: 1.6 },
+    'GIANA ERMINIO': { promo: 0.4, rel: 1.6 },
+    'PERGOLETTESE': { promo: 0.3, rel: 2.4 },
+
+    /* ======= SERIE C GIRONE B 2026/27 ======= */
+    'PERUGIA':      { promo: 2.4, rel: 0.3 },  // blasone A/B
+    'SPEZIA':       { promo: 2.6, rel: 0.2 },  // blasone A/B, bonus risalita
+    'REGGIANA':     { promo: 2.0, rel: 0.3 },
+    'PESCARA':      { promo: 1.8, rel: 0.4 },
+    'GROSSETO':     { promo: 1.6, rel: 0.4 },
+    'RAVENNA':      { promo: 1.4, rel: 0.4 },
+    'LIVORNO':      { promo: 1.4, rel: 0.4 },
+    'TORRES':       { promo: 1.4, rel: 0.5 },
+    'CAMPOBASSO':   { promo: 1.0, rel: 0.5 },
+    'ATALANTA U23': { promo: 0.5, rel: 0.4 },  // U23 strutturale
+    'PINETO':       { promo: 0.9, rel: 0.6 },
+    'FORLI':        { promo: 0.8, rel: 0.5 },
+    'FORLÌ':        { promo: 0.8, rel: 0.5 },
+    'VADO':         { promo: 0.5, rel: 0.5 },
+    'SAMBENEDETTESE': { promo: 0.8, rel: 1.4 },
+    'VIS PESARO':   { promo: 0.8, rel: 1.5 },
+    'LATINA':       { promo: 0.8, rel: 1.5 },
+    'PIANESE':      { promo: 0.4, rel: 1.6 },
+    'GUBBIO':       { promo: 0.7, rel: 1.6 },
+    'GUIDONIA':     { promo: 0.3, rel: 2.2 },
+    'OSTIAMARE':    { promo: 0.3, rel: 2.4 },
+
+    /* ======= SERIE C GIRONE C 2026/27 ======= */
+    'BARI':         { promo: 2.8, rel: 0.2 },  // blasone B/A, bonus risalita immediata
+    'CATANIA':      { promo: 2.4, rel: 0.4 },  // blasone A
+    'SALERNITANA':  { promo: 2.2, rel: 0.3 },  // blasone A/B
+    'COSENZA':      { promo: 1.8, rel: 0.4 },  // blasone B
+    'FOGGIA':       { promo: 1.8, rel: 0.3 },
+    'SORRENTO':     { promo: 1.6, rel: 0.4 },
+    'POTENZA':      { promo: 1.4, rel: 0.4 },
+    'AZ PICERNO':   { promo: 1.4, rel: 0.4 },
+    'PICERNO':      { promo: 1.4, rel: 0.4 },
+    'CASERTANA':    { promo: 1.4, rel: 0.4 },
+    'ALTAMURA':     { promo: 1.4, rel: 0.5 },
+    'BARLETTA':     { promo: 1.0, rel: 0.5 },
+    'MONOPOLI':     { promo: 0.8, rel: 0.7 },
+    'AUDACE CERIGNOLA': { promo: 0.8, rel: 0.7 },
+    'INTER U23':    { promo: 0.5, rel: 0.4 },  // U23 strutturale
+    'CAVESE':       { promo: 0.8, rel: 0.6 },
+    'CASARANO':     { promo: 0.5, rel: 0.5 },
+    'GIUGLIANO':    { promo: 0.8, rel: 1.4 },
+    'SCAFATESE':    { promo: 0.3, rel: 1.8 },
+    'SAVOIA':       { promo: 0.7, rel: 1.6 },
+    'CROTONE':      { promo: 0.4, rel: 2.8 }   // penalizzazione -6 punti
+  };
+
+  function seasonalBias(club) {
+    var n = keyOf((club && (club.n || club.name)) || '');
+    return SEASONAL_BIAS[n] || null;
+  }
+
+  function rawWeights(club, fromTier) {
+    var s = profile(club);
+    var se = s.seasons || { a: 0, b: 0, c: 0, d: 0, e: 0 };
+    var counts = [0, se.a || 0, se.b || 0, se.c || 0, se.d || 0, se.e || 0];
+    var t = Number(fromTier) || s.home;
+    var canUp = t > 1 && (t - 1) >= s.ceil;
+    var canDown = t < 5 && (t + 1) <= s.floor;
+    var bounce = t > s.home ? 5 : 0.35;
+    var overreach = t < s.home ? 5 : 0.35;
+    var promo = canUp ? counts[t - 1] + bounce : 0;
+    var rel = canDown ? counts[t + 1] + overreach : 0;
+    var stay = (counts[t] + 1) * (t === s.home ? 1.45 : 0.75);
+    var bias = seasonalBias(club);
+    if (bias) {
+      if (bias.promo != null) promo = promo * bias.promo;
+      if (bias.rel != null) rel = rel * bias.rel;
+    }
+    return { promo: Math.max(0, promo), stay: Math.max(0.01, stay), rel: Math.max(0, rel) };
+  }
   function stayWeight(club, fromTier) {
     return rawWeights(club, fromTier).stay;
   }
