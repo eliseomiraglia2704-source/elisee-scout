@@ -364,6 +364,42 @@
   // Pavia Calcio
   put(['PAVIA', 'PAVIA CALCIO', 'FC PAVIA 1911'], { a: 0, b: 4, c: 14, d: 22 });
 
+  /* —— Girone E Serie D: profili storici 2026/27 —— */
+  // Siena: storia illustre (Serie A/B/C)
+  put(['SIENA', 'ACN SIENA 1904', 'ROBUR SIENA'], { a: 9, b: 13, c: 12, d: 6 });
+  // Lucchese: blasone storico (Serie A/B/C)
+  put(['LUCCHESE', 'LUCCHESE 1905', 'AS LUCCHESE LIBERTAS'], { a: 8, b: 19, c: 11, d: 2 });
+  // Ghiviborgo
+  put(['GHIVIBORGO', 'GHIVIZZANO BORGOAMOZZANO'], { a: 0, b: 0, c: 2, d: 28, e: 10 });
+  // Progresso (SCD Progresso)
+  put(['PROGRESSO', 'SCD PROGRESSO', 'SCD PROGRESSO CALCIO'], { a: 0, b: 0, c: 2, d: 24, e: 14 });
+  // Scandicci
+  put(['SCANDICCI', 'SCANDICCI CALCIO'], { a: 0, b: 0, c: 0, d: 26, e: 14 });
+  // Tau Calcio
+  put(['TAU', 'TAU CALCIO', 'TAU CALCIO ALTOPASCIO'], { a: 0, b: 0, c: 2, d: 24, e: 14 });
+  // San Donato Tavarnelle
+  put(['SAN DONATO', 'SAN DONATO TAVARNELLE'], { a: 0, b: 0, c: 6, d: 26, e: 8 });
+  // Mezzolara
+  put(['MEZZOLARA', 'MEZZOLARA CALCIO'], { a: 0, b: 0, c: 0, d: 26, e: 14 });
+  // Prato
+  put(['PRATO', 'AC PRATO', 'AC PRATO 1908'], { a: 0, b: 6, c: 22, d: 12 });
+  // Seravezza Pozzi
+  put(['SERAVEZZA POZZI', 'SERAVEZZA', 'SERAVEZZA POZZI CALCIO'], { a: 0, b: 0, c: 0, d: 26, e: 14 });
+  // Rondinella Marzocco
+  put(['RONDINELLA', 'RONDINELLA MARZOCCO'], { a: 0, b: 0, c: 4, d: 22, e: 14 });
+  // Grassina
+  put(['GRASSINA', 'USD GRASSINA'], { a: 0, b: 0, c: 0, d: 18, e: 22 });
+  // Sasso Marconi
+  put(['SASSO MARCONI', 'SASSO MARCONI 1924'], { a: 0, b: 0, c: 0, d: 20, e: 20 });
+  // Flaminia Civita Castellana
+  put(['FLAMINIA', 'FLAMINIA CIVITA CASTELLANA', 'CALCIO FLAMINIA'], { a: 0, b: 0, c: 0, d: 24, e: 16 });
+  // Terranuova Traiana
+  put(['TERRANUOVA TRAIANA'], { a: 0, b: 0, c: 0, d: 18, e: 22 });
+  // Follonica Gavorrano
+  put(['FOLLONICA GAVORRANO', 'GAVORRANO'], { a: 0, b: 0, c: 6, d: 26, e: 8 });
+  // Aquila Montevarchi
+  put(['MONTEVARCHI', 'AQUILA MONTEVARCHI', 'AQUILA 1902 MONTEVARCHI'], { a: 0, b: 1, c: 14, d: 25 });
+
   /* —— Serie D di paese: possono vincere il girone (→ C), mai B/A —— */
   var VILLAGE = { a: 0, b: 0, c: 2, d: 30, e: 8 };
   put([
@@ -462,6 +498,16 @@
      'LENTIGIONE', 'CORREGGESE', 'ARCONATESE', 'SOLBIATESE',
      'VARESINA', 'OLTREPO', 'OLTREPO FBC', 'CASATESE', 'USD CASATESE',
      'CASTELLANZESE', 'TROPICAL CORIANO', 'SANTANGELO', 'SANT\'ANGELO'],
+    3, 4
+  );
+  /* Girone E Serie D 2026/27 — club senza storia in B/A: ceiling C */
+  lock(
+    ['GHIVIBORGO', 'GHIVIZZANO BORGOAMOZZANO', 'PROGRESSO', 'SCD PROGRESSO',
+     'SCANDICCI', 'TAU', 'TAU CALCIO', 'TAU CALCIO ALTOPASCIO',
+     'SAN DONATO', 'SAN DONATO TAVARNELLE', 'MEZZOLARA', 'SERAVEZZA POZZI',
+     'SERAVEZZA', 'RONDINELLA', 'RONDINELLA MARZOCCO', 'GRASSINA',
+     'SASSO MARCONI', 'FLAMINIA', 'FLAMINIA CIVITA CASTELLANA',
+     'TERRANUOVA TRAIANA', 'FOLLONICA GAVORRANO', 'GAVORRANO'],
     3, 4
   );
 
