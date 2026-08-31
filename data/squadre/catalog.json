@@ -83331,16 +83331,16 @@
       "pts": 0,
       "played": 0,
       "logo": "immagini/squadre-loghi/ecc-settimo.png",
-      "primary": "#682853",
-      "secondary": "#97d7ac",
-      "accent": "#ffffff",
+      "primary": "#512385",
+      "secondary": "#ffffff",
+      "accent": "#fec801",
       "home": {
-        "body": "#682853",
-        "sleeve": "#682853"
+        "body": "#512385",
+        "sleeve": "#512385"
       },
       "away": {
-        "body": "#97d7ac",
-        "sleeve": "#682853"
+        "body": "#ffffff",
+        "sleeve": "#512385"
       },
       "stadium": "",
       "capacity": null,
