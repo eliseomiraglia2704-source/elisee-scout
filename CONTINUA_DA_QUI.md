@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Aggiornato Logo Ufficiale Albese** — scaricato e integrato in alta risoluzione RGBA (1094x1500px) da Tuttocampo in `immagini/squadre-loghi/ecc-albese.png`, `albese.png`, `albese-calcio.png` e `alba.png`. Colori sociali allineati nel catalogo (`catalog.json`). Iniziato Girone B Eccellenza Piemonte / VDA!
-Feature precedente: Aggiornato Logo Ufficiale Volpiano Pianese.
+Ultimo fatto: **Aggiornato Logo Ufficiale Cheraschese** — scaricato e integrato in alta risoluzione RGBA (668x1034px) da Tuttocampo in `immagini/squadre-loghi/ecc-cheraschese.png`, `cheraschese.png`, `cheraschese-1904.png` e `cherasco.png`. Colori sociali allineati nel catalogo (`catalog.json`).
+Feature precedente: Aggiornato Logo Ufficiale Albese.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -81,6 +81,7 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
+| (questo) | Aggiornato logo ufficiale Cheraschese (668x1034px RGBA) da Tuttocampo e colori sociali |
 | `4837a5b` | Aggiornato logo ufficiale Albese (1094x1500px RGBA) da Tuttocampo e colori sociali (Iniziato Girone B) |
 | `f729d0e` | Aggiornato logo ufficiale Volpiano Pianese (650x662px RGBA) da Tuttocampo e colori sociali (Girone A completo) |
 | `5e8e684` | Aggiornato logo ufficiale Sparta Novaromentino (1000x996px RGBA) da Tuttocampo e colori sociali |
@@ -338,6 +339,9 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-08-31** — Aggiornato Logo Ufficiale Cheraschese:
+  - Scaricato e integrato in RGBA (668x1034px) il logo della Cheraschese da Tuttocampo in `immagini/squadre-loghi/ecc-cheraschese.png`, `cheraschese.png`, `cheraschese-1904.png` e `cherasco.png`. Allineati colori sociali ufficiali (nero-bianco con finiture oro) nel catalogo. Cache `CHERASCHESE1`.
 
 - **2026-08-31** — Aggiornato Logo Ufficiale Albese (Inizio Girone B):
   - Scaricato e integrato in RGBA (1094x1500px) il logo dell'Albese da Tuttocampo in `immagini/squadre-loghi/ecc-albese.png`, `albese.png`, `albese-calcio.png` e `alba.png`. Allineati colori sociali ufficiali (bianco-azzurro / bluceleste) nel catalogo. Cache `ALBESE1`.

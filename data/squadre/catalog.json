@@ -83476,16 +83476,16 @@
       "pts": 0,
       "played": 0,
       "logo": "immagini/squadre-loghi/ecc-cheraschese.png",
-      "primary": "#43473b",
-      "secondary": "#bcb8c4",
-      "accent": "#ffffff",
+      "primary": "#000000",
+      "secondary": "#ffffff",
+      "accent": "#cea433",
       "home": {
-        "body": "#43473b",
-        "sleeve": "#43473b"
+        "body": "#000000",
+        "sleeve": "#000000"
       },
       "away": {
-        "body": "#bcb8c4",
-        "sleeve": "#43473b"
+        "body": "#ffffff",
+        "sleeve": "#000000"
       },
       "stadium": "",
       "capacity": null,
