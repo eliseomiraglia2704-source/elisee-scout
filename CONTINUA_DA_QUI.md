@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Aggiornato Logo Ufficiale Briga** — scaricato e integrato in alta risoluzione RGBA (562x563px) da Tuttocampo in `immagini/squadre-loghi/ecc-briga.png`, `briga.png` e `briga-calcio.png`. Colori sociali allineati nel catalogo (`catalog.json`).
-Feature precedente: Aggiornato Logo Ufficiale Borgaro.
+Ultimo fatto: **Aggiornato Logo Ufficiale Casale** — scaricato e integrato in alta risoluzione RGBA (708x1000px) da Tuttocampo in `immagini/squadre-loghi/ecc-casale.png`, `casale.png`, `casale-fbc.png` e `casale-calcio.png`. Colori sociali allineati nel catalogo (`catalog.json`).
+Feature precedente: Aggiornato Logo Ufficiale Briga.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -81,6 +81,7 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
+| (questo) | Aggiornato logo ufficiale Casale (708x1000px RGBA) da Tuttocampo e colori sociali |
 | `8445240` | Aggiornato logo ufficiale Briga (562x563px RGBA) da Tuttocampo e colori sociali |
 | `aacc199` | Aggiornato logo ufficiale Borgaro (800x784px RGBA) da Tuttocampo e colori sociali |
 | `0ccffdc` | Aggiornato logo ufficiale Baveno Stresa (571x703px RGBA) da Tuttocampo e colori sociali |
@@ -327,6 +328,9 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-08-31** — Aggiornato Logo Ufficiale Casale:
+  - Scaricato e integrato in RGBA (708x1000px) il logo del Casale da Tuttocampo in `immagini/squadre-loghi/ecc-casale.png`, `casale.png`, `casale-fbc.png` e `casale-calcio.png`. Allineati colori sociali ufficiali (nerostellato) nel catalogo. Cache `CASALE1`.
 
 - **2026-08-31** — Aggiornato Logo Ufficiale Briga:
   - Scaricato e integrato in RGBA (562x563px) il logo del Briga da Tuttocampo in `immagini/squadre-loghi/ecc-briga.png`, `briga.png` e `briga-calcio.png`. Allineati colori sociali ufficiali (azzurro-bianco-rosso) nel catalogo. Cache `BRIGA1`.

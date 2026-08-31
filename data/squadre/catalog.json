@@ -83128,16 +83128,16 @@
       "pts": 0,
       "played": 0,
       "logo": "immagini/squadre-loghi/ecc-casale.png",
-      "primary": "#4f6b76",
-      "secondary": "#b09489",
+      "primary": "#000000",
+      "secondary": "#ffffff",
       "accent": "#ffffff",
       "home": {
-        "body": "#4f6b76",
-        "sleeve": "#4f6b76"
+        "body": "#000000",
+        "sleeve": "#000000"
       },
       "away": {
-        "body": "#b09489",
-        "sleeve": "#4f6b76"
+        "body": "#ffffff",
+        "sleeve": "#000000"
       },
       "stadium": "",
       "capacity": null,
