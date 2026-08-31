@@ -51,6 +51,52 @@ body.es-mg-open::-webkit-scrollbar {
   height: auto !important;
   background: transparent !important;
 }
+/* Eccezione: griglia categorie deve essere scrollabile */
+.es-mg-cat-grid {
+  scrollbar-width: thin !important;
+  -ms-overflow-style: auto !important;
+}
+.es-mg-cat-grid::-webkit-scrollbar {
+  display: block !important;
+  width: 5px !important;
+  background: rgba(255,255,255,0.05) !important;
+  border-radius: 4px !important;
+}
+.es-mg-cat-grid::-webkit-scrollbar-thumb {
+  background: rgba(56,189,248,0.35) !important;
+  border-radius: 4px !important;
+}
+/* Eccezione: lista squadre nel provino deve essere scrollabile */
+.es-mg-trial-list {
+  scrollbar-width: thin !important;
+  -ms-overflow-style: auto !important;
+}
+.es-mg-trial-list::-webkit-scrollbar {
+  display: block !important;
+  width: 5px !important;
+  background: rgba(255,255,255,0.04) !important;
+  border-radius: 4px !important;
+}
+.es-mg-trial-list::-webkit-scrollbar-thumb {
+  background: rgba(56,189,248,0.28) !important;
+  border-radius: 4px !important;
+}
+/* Eccezione: griglia regioni Eccellenza deve essere scrollabile */
+.es-mg-region-grid {
+  scrollbar-width: thin !important;
+  -ms-overflow-style: auto !important;
+}
+.es-mg-region-grid::-webkit-scrollbar {
+  display: block !important;
+  width: 5px !important;
+  background: rgba(255,255,255,0.04) !important;
+  border-radius: 4px !important;
+}
+.es-mg-region-grid::-webkit-scrollbar-thumb {
+  background: rgba(56,189,248,0.28) !important;
+  border-radius: 4px !important;
+}
+
 .es-mg-root.is-open {
   display: flex !important;
   visibility: visible !important;
@@ -3096,9 +3142,12 @@ button.es-mg-hub-menubar:focus {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 0.65rem;
-  max-height: min(58vh, 480px);
+  max-height: min(62vh, 520px);
   overflow-y: auto;
-  padding: 2px;
+  padding: 2px 6px 2px 2px;
+  /* indicatore visivo scroll in basso */
+  mask-image: linear-gradient(to bottom, black calc(100% - 32px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 32px), transparent 100%);
 }
 .es-mg-cat-card {
   background: rgba(255, 255, 255, 0.025);
@@ -3260,12 +3309,99 @@ button.es-mg-hub-menubar:focus {
   flex-direction: column;
   align-items: stretch;
   gap: 0.28rem;
-  max-height: min(48vh, 420px);
+  max-height: min(52vh, 460px);
   overflow: auto;
   background: #121216;
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 14px;
   padding: 0.45rem;
+}
+
+/* ===== GRIGLIA REGIONI (Eccellenza / categorie regionali) ===== */
+.es-mg-region-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+  gap: 0.55rem;
+  max-height: min(62vh, 520px);
+  overflow-y: auto;
+  padding: 2px 6px 2px 2px;
+  mask-image: linear-gradient(to bottom, black calc(100% - 28px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 28px), transparent 100%);
+}
+.es-mg-region-card {
+  background: rgba(255, 255, 255, 0.030);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 12px;
+  padding: 0.75rem 0.8rem;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+}
+.es-mg-region-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--rc-color, #38bdf8);
+  opacity: 0.8;
+}
+.es-mg-region-card:hover {
+  background: rgba(56, 189, 248, 0.07);
+  border-color: rgba(56, 189, 248, 0.4);
+  transform: translateY(-1px);
+}
+.es-mg-region-card.is-on {
+  background: rgba(56, 189, 248, 0.14);
+  border-color: rgba(56, 189, 248, 0.55);
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.3);
+}
+.es-mg-region-flag {
+  font-size: 1.5rem;
+  line-height: 1;
+  margin-bottom: 0.15rem;
+}
+.es-mg-region-name {
+  color: #f1f5f9;
+  font-weight: 800;
+  font-size: 0.85rem;
+  line-height: 1.2;
+}
+.es-mg-region-count {
+  color: #64748b;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+.es-mg-region-gironi {
+  color: #38bdf8;
+  font-size: 0.68rem;
+  font-weight: 600;
+  margin-top: 0.1rem;
+}
+.es-mg-region-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background: #131317;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 0.55rem 0.85rem;
+  margin-bottom: 0.65rem;
+}
+.es-mg-region-bar-name {
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+.es-mg-region-bar-sub {
+  font-size: 0.72rem;
+  color: #38bdf8;
+  font-weight: 700;
 }
 .es-mg-trial-club {
   display: flex !important;

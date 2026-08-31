@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Simulazione e Integrazione Serie D Girone I 2026/27 (Serie D Completa al 100% Gironi A-I)** — Calcolo e assegnazione probabilità di promozione / salvezza / retrocessione, penalizzazioni federali iniziali (-7 Siracusa, -5 Trapani, -1 Gela), bonus risalita ex-C (Reggina 1914, Siracusa, Trapani 1905, Vibonese) e vincoli geografici/lock HARD in `club-storia.js` (Ragusa, Milazzo, Licata Calcio, Sambiase, Athletic Club Palermo, Modica, Nissa F.C., Enna Calcio, Calcio Avola, Nuova Igea Virtus, Castrum Favara, Digiesse Sala Consilina). Cache `SERIEDI1`.
+Ultimo fatto: **Griglia Regioni Eccellenza + Fix Scroll Categorie nel Minigioco Carriera** — Aggiunto step intermedio (Fase 1.5) con griglia a card delle 20 regioni italiane per Eccellenza/Promozione/categorie regionali (tier ≥ 5): seleziona regione → vedi squadre filtrate. Scroll abilitato su griglia categorie, lista squadre e griglia regioni. Cache `REGIONGRID1`.
 Feature precedente: Aggiornato Logo Ufficiale Albese.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)

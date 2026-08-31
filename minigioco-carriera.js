@@ -31,6 +31,7 @@
     clubs: null,
     nationFilter: '',
     trialCategory: null, // null | number
+    trialRegion: null,   // null | string (es. 'PUGLIA')
     trialFilter: '',
     trialClub: null,
     trialResult: null,
@@ -1985,6 +1986,100 @@
     );
   }
 
+  /* ---- Mappa regioni italiane (per Eccellenza e categorie regionali) ---- */
+  var IT_REGIONS = [
+    { n: 'Piemonte',           e: '🏔️', col: '#22c55e', k: ['PIEMONTE'] },
+    { n: 'Valle d'Aosta',      e: '⛰️', col: '#16a34a', k: ['VALLE'] },
+    { n: 'Lombardia',          e: '🏙️', col: '#2563eb', k: ['LOMBARDIA'] },
+    { n: 'Trentino-A.A.',      e: '🏔️', col: '#0891b2', k: ['TRENTINO','ALTO ADIGE','TRENTINO-ALTO ADIGE','VDA'] },
+    { n: 'Veneto',             e: '🚣', col: '#0284c7', k: ['VENETO'] },
+    { n: 'Friuli-V.G.',        e: '🏰', col: '#0ea5e9', k: ['FRIULI','FRIULI-VENEZIA'] },
+    { n: 'Liguria',            e: '⛵', col: '#06b6d4', k: ['LIGURIA'] },
+    { n: 'Emilia-Romagna',     e: '🍝', col: '#f97316', k: ['EMILIA','EMILIA-ROMAGNA','ROMAGNA'] },
+    { n: 'Toscana',            e: '🌿', col: '#16a34a', k: ['TOSCANA'] },
+    { n: 'Umbria',             e: '🌾', col: '#65a30d', k: ['UMBRIA'] },
+    { n: 'Marche',             e: '🏛️', col: '#84cc16', k: ['MARCHE'] },
+    { n: 'Lazio',              e: '🏛️', col: '#eab308', k: ['LAZIO'] },
+    { n: 'Abruzzo',            e: '🏔️', col: '#f59e0b', k: ['ABRUZZO'] },
+    { n: 'Molise',             e: '🌻', col: '#d97706', k: ['MOLISE'] },
+    { n: 'Campania',           e: '🌋', col: '#ef4444', k: ['CAMPANIA'] },
+    { n: 'Puglia',             e: '🫒', col: '#dc2626', k: ['PUGLIA'] },
+    { n: 'Basilicata',         e: '🏔️', col: '#c2410c', k: ['BASILICATA'] },
+    { n: 'Calabria',           e: '🌊', col: '#b91c1c', k: ['CALABRIA'] },
+    { n: 'Sicilia',            e: '☀️', col: '#f97316', k: ['SICILIA'] },
+    { n: 'Sardegna',           e: '🏝️', col: '#7c3aed', k: ['SARDEGNA'] }
+  ];
+
+  /* Estrae la chiave regione da c.l (es. "Eccellenza · PUGLIA · Girone A" → "PUGLIA") */
+  function clubRegionKey(c) {
+    var l = String(c.l || '').toUpperCase();
+    /* rimuovi prefisso categoria */
+    l = l.replace(/^(ECCELLENZA|PROMOZIONE|PRIMA CATEGORIA|SECONDA CATEGORIA|TERZA CATEGORIA)[\s·.\-]*/i, '');
+    /* prendi la prima parola significativa */
+    var parts = l.split(/[·.\-,/\s]+/);
+    /* cerca match nelle keys delle regioni */
+    for (var ri = 0; ri < IT_REGIONS.length; ri++) {
+      for (var ki = 0; ki < IT_REGIONS[ri].k.length; ki++) {
+        var kw = IT_REGIONS[ri].k[ki].toUpperCase();
+        if (l.indexOf(kw) >= 0) return IT_REGIONS[ri].n;
+      }
+    }
+    /* fallback: usa la prima parola */
+    return parts[0] || 'Altro';
+  }
+
+  /* Tier regionali: tier >= 5 */
+  function isRegionalTier(tid) { return tid != null && Number(tid) >= 5; }
+
+  function trialRegionGridHtml() {
+    var isFem = state.trialGender === 'f';
+    var catId = state.trialCategory;
+    /* conta club per regione */
+    var counts = {};
+    var gironiMap = {}; // regione → Set gironi
+    (state.clubs || []).forEach(function(c) {
+      if (!c || !c.n || c.isFree || c.world) return;
+      var cFem = c.g === 'f' || String(c.l || '').toUpperCase().indexOf('FEMMINILE') >= 0;
+      if (isFem !== cFem) return;
+      var t = Number(c.t) || clubLeagueTier(c);
+      if (t !== catId) return;
+      var rk = clubRegionKey(c);
+      counts[rk] = (counts[rk] || 0) + 1;
+      /* estrai girone se presente */
+      var gm = String(c.l || '').match(/GIRONE\s+([A-Z])/i);
+      if (gm) {
+        if (!gironiMap[rk]) gironiMap[rk] = {};
+        gironiMap[rk][gm[1].toUpperCase()] = true;
+      }
+    });
+
+    /* ordina regioni per conteggio desc */
+    var regions = IT_REGIONS.filter(function(r) { return counts[r.n] > 0; });
+    /* aggiungi eventuali regioni non mappate */
+    Object.keys(counts).forEach(function(k) {
+      if (!regions.some(function(r) { return r.n === k; })) {
+        regions.push({ n: k, e: '📍', col: '#64748b', k: [] });
+      }
+    });
+    regions.sort(function(a, b) { return (counts[b.n] || 0) - (counts[a.n] || 0); });
+
+    if (!regions.length) return '<div class="es-mg-muted" style="padding:1rem;color:#94a3b8;text-align:center;">Nessuna squadra in questa categoria.</div>';
+
+    return '<div class="es-mg-region-grid">' +
+      regions.map(function(r) {
+        var n = counts[r.n] || 0;
+        var gKeys = gironiMap[r.n] ? Object.keys(gironiMap[r.n]).sort() : [];
+        var girStr = gKeys.length ? 'Gironi: ' + gKeys.join(', ') : '';
+        return '<button type="button" class="es-mg-region-card" data-region="' + esc(r.n) + '" style="--rc-color:' + r.col + '">' +
+          '<div class="es-mg-region-flag">' + r.e + '</div>' +
+          '<div class="es-mg-region-name">' + esc(r.n) + '</div>' +
+          '<div class="es-mg-region-count">' + n + ' squadr' + (n === 1 ? 'a' : 'e') + '</div>' +
+          (girStr ? '<div class="es-mg-region-gironi">' + esc(girStr) + '</div>' : '') +
+          '</button>';
+      }).join('') +
+      '</div>';
+  }
+
   function trialClubListHtml() {
     var q = String(state.trialFilter || '').toLowerCase().trim();
     var isFem = state.trialGender === 'f';
@@ -1996,6 +2091,10 @@
       if (isFem !== cFem) return false;
       var t = Number(c.t) || clubLeagueTier(c);
       if (catId != null && t !== catId) return false;
+      /* filtro regione: solo per tier regionali */
+      if (isRegionalTier(catId) && state.trialRegion) {
+        if (clubRegionKey(c) !== state.trialRegion) return false;
+      }
       if (!q) return true;
       var hay = (c.n + ' ' + (c.l || '') + ' ' + (c.city || '')).toLowerCase();
       return hay.indexOf(q) >= 0;
@@ -2067,28 +2166,56 @@
         '<div class="es-mg-trial-actions" style="margin-top:1rem;">' +
         '<button type="button" class="es-mg-btn-full ghost" id="es-mg-trial-skip">Salta provino, vai alle offerte</button>' +
         '</div>';
-    } else {
-      /* FASE 2: Selezione Squadra nella Categoria Scelta */
-      var catLogoHeader = currentCatObj && currentCatObj.logo
+    } else if (isRegionalTier(catId) && !state.trialRegion) {
+      /* FASE 1.5: Selezione Regione (solo per Eccellenza / categorie regionali) */
+      var catLogoRegion = currentCatObj && currentCatObj.logo
         ? '<img src="' + currentCatObj.logo + '" class="es-mg-cat-logo-img" alt="" />'
         : (currentCatObj ? currentCatObj.icon : '⚽');
       body =
         '<div class="es-mg-cat-selected-bar">' +
         '<div class="es-mg-cat-selected-info">' +
-        '<span class="es-mg-cat-selected-icon">' + catLogoHeader + '</span>' +
+        '<span class="es-mg-cat-selected-icon">' + catLogoRegion + '</span>' +
         '<div>' +
         '<div class="es-mg-cat-selected-name">' + esc(currentCatObj ? currentCatObj.name : 'Categoria') + '</div>' +
-        '<div class="es-mg-cat-selected-ovr">Overall categoria: ' + esc(currentCatObj ? currentCatObj.ovr : '') + '</div>' +
+        '<div class="es-mg-cat-selected-ovr">Scegli la regione</div>' +
         '</div></div>' +
-        '<button type="button" class="es-mg-btn-change-cat" id="es-mg-trial-back-cat">← Cambia Categoria</button>' +
+        '<button type="button" class="es-mg-btn-change-cat" id="es-mg-trial-back-cat">← Categorie</button>' +
+        '</div>' +
+        trialRegionGridHtml() +
+        '<div class="es-mg-trial-actions" style="margin-top:0.75rem;">' +
+        '<button type="button" class="es-mg-btn-full ghost" id="es-mg-trial-skip">Salta alle offerte</button>' +
+        '</div>';
+    } else {
+      /* FASE 2: Selezione Squadra nella Categoria Scelta */
+      var catLogoHeader = currentCatObj && currentCatObj.logo
+        ? '<img src="' + currentCatObj.logo + '" class="es-mg-cat-logo-img" alt="" />'
+        : (currentCatObj ? currentCatObj.icon : '⚽');
+      /* barra con regione se tier regionale */
+      var regionSubLabel = (isRegionalTier(catId) && state.trialRegion)
+        ? esc(state.trialRegion)
+        : 'Overall categoria: ' + esc(currentCatObj ? currentCatObj.ovr : '');
+      body =
+        '<div class="es-mg-cat-selected-bar">' +
+        '<div class="es-mg-cat-selected-info">' +
+        '<span class="es-mg-cat-selected-icon">' + catLogoHeader + '</span>' +
+        '<div>' +
+        '<div class="es-mg-cat-selected-name">' + esc(currentCatObj ? currentCatObj.name : 'Categoria') + (isRegionalTier(catId) && state.trialRegion ? ' · ' + esc(state.trialRegion) : '') + '</div>' +
+        '<div class="es-mg-cat-selected-ovr">' + regionSubLabel + '</div>' +
+        '</div></div>' +
+        '<div style="display:flex;gap:0.4rem;">' +
+        (isRegionalTier(catId) && state.trialRegion
+          ? '<button type="button" class="es-mg-btn-change-cat" id="es-mg-trial-back-region">← Regioni</button>'
+          : '') +
+        '<button type="button" class="es-mg-btn-change-cat" id="es-mg-trial-back-cat">← Categorie</button>' +
+        '</div>' +
         '</div>' +
         '<div class="es-mg-search-wrap">' +
-        '<input type="search" class="es-mg-search" id="es-mg-trial-q" placeholder="Cerca squadra in ' + esc(currentCatObj ? currentCatObj.name : '') + ', città o girone..." value="' +
+        '<input type="search" class="es-mg-search" id="es-mg-trial-q" placeholder="Cerca squadra in ' + esc(currentCatObj ? currentCatObj.name : '') + (isRegionalTier(catId) && state.trialRegion ? ' · ' + esc(state.trialRegion) : '') + ', città o girone..." value="' +
         esc(state.trialFilter || '') +
         '" /></div>' +
         '<div class="es-mg-trial-list" id="es-mg-trial-list">' + trialClubListHtml() + '</div>' +
         '<div class="es-mg-trial-actions">' +
-        '<button type="button" class="es-mg-btn-half ghost" id="es-mg-trial-back-cat2">← Categorie</button>' +
+        '<button type="button" class="es-mg-btn-half ghost" id="es-mg-trial-back-cat2">' + (isRegionalTier(catId) && state.trialRegion ? '← Regioni' : '← Categorie') + '</button>' +
         '<button type="button" class="es-mg-btn-half ghost" id="es-mg-trial-skip">Salta alle offerte</button>' +
         '<button type="button" class="es-mg-btn-half primary" id="es-mg-trial-run"' +
         (picked ? '' : ' disabled') +
@@ -2140,6 +2267,7 @@
     if (backCat) {
       backCat.onclick = function () {
         state.trialCategory = null;
+        state.trialRegion = null;
         state.trialClub = null;
         state.trialFilter = '';
         renderTrial();
@@ -2148,12 +2276,39 @@
     var backCat2 = document.getElementById('es-mg-trial-back-cat2');
     if (backCat2) {
       backCat2.onclick = function () {
-        state.trialCategory = null;
+        /* se siamo in tier regionale torna alla selezione regione, altrimenti alle categorie */
+        if (isRegionalTier(state.trialCategory) && state.trialRegion) {
+          state.trialRegion = null;
+          state.trialClub = null;
+          state.trialFilter = '';
+        } else {
+          state.trialCategory = null;
+          state.trialRegion = null;
+          state.trialClub = null;
+          state.trialFilter = '';
+        }
+        renderTrial();
+      };
+    }
+    var backRegion = document.getElementById('es-mg-trial-back-region');
+    if (backRegion) {
+      backRegion.onclick = function () {
+        state.trialRegion = null;
         state.trialClub = null;
         state.trialFilter = '';
         renderTrial();
       };
     }
+
+    // 3b. Click regione
+    root.querySelectorAll('.es-mg-region-card').forEach(function (btn) {
+      btn.onclick = function () {
+        state.trialRegion = btn.getAttribute('data-region') || null;
+        state.trialClub = null;
+        state.trialFilter = '';
+        renderTrial();
+      };
+    });
 
     // 4. Ricerca squadra
     var q = document.getElementById('es-mg-trial-q');
@@ -2188,6 +2343,7 @@
         state.trialClub = null;
         state.trialResult = null;
         state.trialCategory = null;
+        state.trialRegion = null;
         renderCareer(false);
       };
     }
