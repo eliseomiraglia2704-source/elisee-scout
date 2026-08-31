@@ -83244,16 +83244,16 @@
       "pts": 0,
       "played": 0,
       "logo": "immagini/squadre-loghi/ecc-pro-eureka.png",
-      "primary": "#d58d9d",
-      "secondary": "#2a7262",
-      "accent": "#ffffff",
+      "primary": "#0c0045",
+      "secondary": "#ffffff",
+      "accent": "#ef0000",
       "home": {
-        "body": "#d58d9d",
-        "sleeve": "#d58d9d"
+        "body": "#0c0045",
+        "sleeve": "#ffffff"
       },
       "away": {
-        "body": "#2a7262",
-        "sleeve": "#d58d9d"
+        "body": "#ffffff",
+        "sleeve": "#0c0045"
       },
       "stadium": "",
       "capacity": null,
