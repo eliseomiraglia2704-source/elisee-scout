@@ -1987,28 +1987,70 @@
     );
   }
 
+  /* ---- SVG icons per le regioni italiane ---- */
+  function regionSvgIcon(regionName, color) {
+    var c = color || '#38bdf8';
+    var icons = {
+      'Piemonte':       '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="6,26 16,6 26,26" fill="' + c + '" opacity="0.25"/><polygon points="10,26 16,11 22,26" fill="' + c + '" opacity="0.6"/><polygon points="13,26 16,16 19,26" fill="' + c + '"/><rect x="14" y="26" width="4" height="3" rx="1" fill="' + c + '" opacity="0.4"/></svg>',
+      'Valle d\'Aosta': '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="6,28 16,4 26,28" fill="' + c + '" opacity="0.2"/><polygon points="9,28 16,9 23,28" fill="' + c + '" opacity="0.5"/><polygon points="13,28 16,14 19,28" fill="' + c + '"/><circle cx="16" cy="7" r="2" fill="white" opacity="0.7"/></svg>',
+      'Lombardia':      '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="10" width="24" height="14" rx="2" fill="' + c + '" opacity="0.25"/><rect x="8" y="13" width="4" height="8" rx="1" fill="' + c + '" opacity="0.8"/><rect x="14" y="11" width="4" height="10" rx="1" fill="' + c + '"/><rect x="20" y="14" width="4" height="7" rx="1" fill="' + c + '" opacity="0.7"/></svg>',
+      'Trentino-A.A.':  '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="4,28 16,3 28,28" fill="' + c + '" opacity="0.2"/><polygon points="8,28 16,8 24,28" fill="' + c + '" opacity="0.5"/><polygon points="12,28 16,13 20,28" fill="' + c + '"/><line x1="16" y1="3" x2="16" y2="28" stroke="white" stroke-width="1" opacity="0.4"/></svg>',
+      'Veneto':         '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 18 Q8 10 16 10 Q24 10 28 18 Q24 26 16 26 Q8 26 4 18Z" fill="' + c + '" opacity="0.3"/><path d="M8 18 Q12 14 16 14 Q20 14 24 18 Q20 22 16 22 Q12 22 8 18Z" fill="' + c + '"/><circle cx="16" cy="18" r="2" fill="white" opacity="0.7"/></svg>',
+      'Friuli-V.G.':    '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="4,8 28,8 22,28 10,28" fill="' + c + '" opacity="0.2"/><polygon points="8,8 24,8 20,22 12,22" fill="' + c + '" opacity="0.5"/><rect x="14" y="8" width="4" height="20" fill="' + c + '" opacity="0.7"/><polygon points="4,8 14,8 12,14 4,14" fill="' + c + '"/></svg>',
+      'Liguria':        '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 20 Q10 14 16 16 Q22 18 28 20" stroke="' + c + '" stroke-width="2.5" fill="none" opacity="0.6"/><path d="M4 22 Q10 16 16 18 Q22 20 28 22 L28 28 L4 28Z" fill="' + c + '" opacity="0.3"/><path d="M5 22 Q11 17 16 19 Q21 21 27 22" stroke="' + c + '" stroke-width="1.5" fill="none"/></svg>',
+      'Emilia-Romagna': '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="10" width="26" height="12" rx="2" fill="' + c + '" opacity="0.25"/><rect x="3" y="12" width="26" height="8" rx="1" fill="' + c + '" opacity="0.5"/><path d="M3 16 Q8 13 13 16 Q18 19 23 16 Q26 14 29 16" stroke="white" stroke-width="1.5" fill="none" opacity="0.6"/></svg>',
+      'Toscana':        '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="16" cy="16" rx="12" ry="8" fill="' + c + '" opacity="0.2"/><path d="M6 18 Q10 10 16 10 Q22 10 26 16 Q22 24 16 24 Q10 24 6 18Z" fill="' + c + '" opacity="0.5"/><circle cx="14" cy="16" r="3" fill="' + c + '"/><circle cx="20" cy="15" r="2" fill="' + c + '" opacity="0.7"/></svg>',
+      'Umbria':         '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="16" cy="18" rx="10" ry="9" fill="' + c + '" opacity="0.25"/><ellipse cx="14" cy="17" rx="6" ry="7" fill="' + c + '" opacity="0.6"/><circle cx="14" cy="17" r="3" fill="' + c + '"/><circle cx="20" cy="18" r="4" fill="' + c + '" opacity="0.4"/></svg>',
+      'Marche':         '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="8,6 24,6 28,26 4,26" fill="' + c + '" opacity="0.2"/><polygon points="10,8 22,8 25,24 7,24" fill="' + c + '" opacity="0.5"/><path d="M28 10 Q24 16 22 24" stroke="' + c + '" stroke-width="2" fill="none"/></svg>',
+      'Lazio':          '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="6,6 26,6 28,22 16,28 4,22" fill="' + c + '" opacity="0.2"/><polygon points="9,9 23,9 25,21 16,26 7,21" fill="' + c + '" opacity="0.5"/><circle cx="16" cy="16" r="4" fill="' + c + '"/></svg>',
+      'Abruzzo':        '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="4,28 16,8 28,28" fill="' + c + '" opacity="0.2"/><polygon points="8,28 16,12 24,28" fill="' + c + '" opacity="0.5"/><polygon points="12,28 16,17 20,28" fill="' + c + '"/><path d="M28 20 Q24 22 20 24" stroke="' + c + '" stroke-width="2" fill="none" opacity="0.7"/></svg>',
+      'Molise':         '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="10" width="16" height="14" rx="3" fill="' + c + '" opacity="0.25"/><rect x="10" y="12" width="12" height="10" rx="2" fill="' + c + '" opacity="0.6"/><circle cx="16" cy="17" r="3" fill="' + c + '"/></svg>',
+      'Campania':       '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="16,4 20,14 30,14 22,20 25,30 16,24 7,30 10,20 2,14 12,14" fill="' + c + '" opacity="0.2"/><polygon points="16,8 19,16 27,16 21,20 23,28 16,23 9,28 11,20 5,16 13,16" fill="' + c + '" opacity="0.6"/><circle cx="16" cy="18" r="3" fill="' + c + '"/></svg>',
+      'Puglia':         '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 4 L8 18 Q8 24 14 26 Q18 28 20 24 L24 20 L20 18 L22 12 L14 10 L12 4Z" fill="' + c + '" opacity="0.3"/><path d="M10 6 L10 17 Q10 22 14 24 Q17 26 19 23 L22 20 L19 18 L20 14 L14 12 L13 6Z" fill="' + c + '" opacity="0.7"/><circle cx="21" cy="20" r="2" fill="' + c + '"/></svg>',
+      'Basilicata':     '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="4,14 28,10 24,28 4,28" fill="' + c + '" opacity="0.25"/><polygon points="6,15 26,12 22,26 6,26" fill="' + c + '" opacity="0.6"/><polygon points="8,16 22,14 20,24 8,24" fill="' + c + '" opacity="0.8"/></svg>',
+      'Calabria':       '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 4 Q18 4 20 8 Q22 12 20 18 Q22 22 20 28 Q14 30 12 26 Q10 22 12 18 Q10 12 12 8Z" fill="' + c + '" opacity="0.25"/><path d="M14 6 Q17 6 19 10 Q21 14 19 19 Q20 22 19 27 Q14 28 13 25 Q11 21 13 18 Q11 14 13 10Z" fill="' + c + '" opacity="0.7"/><path d="M19 26 Q22 24 24 26" stroke="' + c + '" stroke-width="2" fill="none" opacity="0.6"/></svg>',
+      'Sicilia':        '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="4,20 16,10 28,14 26,24 10,26" fill="' + c + '" opacity="0.25"/><polygon points="6,20 16,12 26,16 24,23 10,24" fill="' + c + '" opacity="0.6"/><circle cx="16" cy="18" r="4" fill="' + c + '"/><circle cx="24" cy="14" r="2" fill="' + c + '" opacity="0.5"/></svg>',
+      'Sardegna':       '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 4 Q18 5 20 10 Q22 15 20 20 Q18 26 14 28 Q10 26 10 20 Q8 14 10 9Z" fill="' + c + '" opacity="0.25"/><path d="M14 6 Q17 7 18 11 Q20 16 18 21 Q17 25 14 27 Q11 25 11 21 Q10 16 11 10Z" fill="' + c + '" opacity="0.7"/><circle cx="16" cy="16" r="2.5" fill="' + c + '"/></svg>'
+    };
+    return icons[regionName] || ('<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="10" fill="' + c + '" opacity="0.3"/><circle cx="16" cy="16" r="5" fill="' + c + '"/></svg>');
+  }
+
+  /* SVG per le lettere dei gironi (A-I) */
+  function gironeSvgIcon(letter, color) {
+    var c = color || '#38bdf8';
+    return '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+      '<circle cx="16" cy="16" r="13" fill="' + c + '" opacity="0.15"/>' +
+      '<circle cx="16" cy="16" r="10" stroke="' + c + '" stroke-width="1.5" fill="none" opacity="0.5"/>' +
+      '<line x1="16" y1="3" x2="16" y2="6" stroke="' + c + '" stroke-width="2" opacity="0.7"/>' +
+      '<line x1="16" y1="26" x2="16" y2="29" stroke="' + c + '" stroke-width="2" opacity="0.7"/>' +
+      '<line x1="3" y1="16" x2="6" y2="16" stroke="' + c + '" stroke-width="2" opacity="0.7"/>' +
+      '<line x1="26" y1="16" x2="29" y2="16" stroke="' + c + '" stroke-width="2" opacity="0.7"/>' +
+      '<text x="16" y="21" text-anchor="middle" font-size="12" font-weight="bold" font-family="Arial,sans-serif" fill="' + c + '">' + (letter || 'G') + '</text>' +
+      '</svg>';
+  }
+
   /* ---- Mappa regioni italiane (per Eccellenza e categorie regionali) ---- */
   var IT_REGIONS = [
-    { n: 'Piemonte',           e: '🏔️', col: '#22c55e', k: ['PIEMONTE'] },
-    { n: 'Valle d\'Aosta',      e: '⛰️', col: '#16a34a', k: ['VALLE'] },
-    { n: 'Lombardia',          e: '🏙️', col: '#2563eb', k: ['LOMBARDIA'] },
-    { n: 'Trentino-A.A.',      e: '🏔️', col: '#0891b2', k: ['TRENTINO','ALTO ADIGE','TRENTINO-ALTO ADIGE','VDA'] },
-    { n: 'Veneto',             e: '🚣', col: '#0284c7', k: ['VENETO'] },
-    { n: 'Friuli-V.G.',        e: '🏰', col: '#0ea5e9', k: ['FRIULI','FRIULI-VENEZIA'] },
-    { n: 'Liguria',            e: '⛵', col: '#06b6d4', k: ['LIGURIA'] },
-    { n: 'Emilia-Romagna',     e: '🍝', col: '#f97316', k: ['EMILIA','EMILIA-ROMAGNA','ROMAGNA'] },
-    { n: 'Toscana',            e: '🌿', col: '#16a34a', k: ['TOSCANA'] },
-    { n: 'Umbria',             e: '🌾', col: '#65a30d', k: ['UMBRIA'] },
-    { n: 'Marche',             e: '🏛️', col: '#84cc16', k: ['MARCHE'] },
-    { n: 'Lazio',              e: '🏛️', col: '#eab308', k: ['LAZIO'] },
-    { n: 'Abruzzo',            e: '🏔️', col: '#f59e0b', k: ['ABRUZZO'] },
-    { n: 'Molise',             e: '🌻', col: '#d97706', k: ['MOLISE'] },
-    { n: 'Campania',           e: '🌋', col: '#ef4444', k: ['CAMPANIA'] },
-    { n: 'Puglia',             e: '🫒', col: '#dc2626', k: ['PUGLIA'] },
-    { n: 'Basilicata',         e: '🏔️', col: '#c2410c', k: ['BASILICATA'] },
-    { n: 'Calabria',           e: '🌊', col: '#b91c1c', k: ['CALABRIA'] },
-    { n: 'Sicilia',            e: '☀️', col: '#f97316', k: ['SICILIA'] },
-    { n: 'Sardegna',           e: '🏝️', col: '#7c3aed', k: ['SARDEGNA'] }
+    { n: 'Piemonte',           e: 'Piemonte',       col: '#22c55e', k: ['PIEMONTE'] },
+    { n: 'Valle d\'Aosta',      e: 'Valle d\'Aosta', col: '#16a34a', k: ['VALLE'] },
+    { n: 'Lombardia',          e: 'Lombardia',      col: '#2563eb', k: ['LOMBARDIA'] },
+    { n: 'Trentino-A.A.',      e: 'Trentino-A.A.', col: '#0891b2', k: ['TRENTINO','ALTO ADIGE','TRENTINO-ALTO ADIGE','VDA'] },
+    { n: 'Veneto',             e: 'Veneto',         col: '#0284c7', k: ['VENETO'] },
+    { n: 'Friuli-V.G.',        e: 'Friuli-V.G.',    col: '#0ea5e9', k: ['FRIULI','FRIULI-VENEZIA'] },
+    { n: 'Liguria',            e: 'Liguria',        col: '#06b6d4', k: ['LIGURIA'] },
+    { n: 'Emilia-Romagna',     e: 'Emilia-Romagna', col: '#f97316', k: ['EMILIA','EMILIA-ROMAGNA','ROMAGNA'] },
+    { n: 'Toscana',            e: 'Toscana',        col: '#16a34a', k: ['TOSCANA'] },
+    { n: 'Umbria',             e: 'Umbria',         col: '#65a30d', k: ['UMBRIA'] },
+    { n: 'Marche',             e: 'Marche',         col: '#84cc16', k: ['MARCHE'] },
+    { n: 'Lazio',              e: 'Lazio',          col: '#eab308', k: ['LAZIO'] },
+    { n: 'Abruzzo',            e: 'Abruzzo',        col: '#f59e0b', k: ['ABRUZZO'] },
+    { n: 'Molise',             e: 'Molise',         col: '#d97706', k: ['MOLISE'] },
+    { n: 'Campania',           e: 'Campania',       col: '#ef4444', k: ['CAMPANIA'] },
+    { n: 'Puglia',             e: 'Puglia',         col: '#dc2626', k: ['PUGLIA'] },
+    { n: 'Basilicata',         e: 'Basilicata',     col: '#c2410c', k: ['BASILICATA'] },
+    { n: 'Calabria',           e: 'Calabria',       col: '#b91c1c', k: ['CALABRIA'] },
+    { n: 'Sicilia',            e: 'Sicilia',        col: '#f97316', k: ['SICILIA'] },
+    { n: 'Sardegna',           e: 'Sardegna',       col: '#7c3aed', k: ['SARDEGNA'] }
   ];
 
   /* Estrae la chiave regione da c.l (es. "Eccellenza · PUGLIA · Girone A" → "PUGLIA") */
@@ -2073,17 +2115,25 @@
     var catId = state.trialCategory;
     var gironi = categoryGironiList(catId, isFem);
 
-    var GIR_META = {
+    var SERIE_C_META = {
       'A': { desc: 'Nord · Nord-Ovest', color: '#38bdf8', icon: '⚡' },
       'B': { desc: 'Centro · Adriatico', color: '#a855f7', icon: '🔥' },
-      'C': { desc: 'Sud · Isole', color: '#f97316', icon: '☀️' },
-      'D': { desc: 'Nord-Est & Romagna', color: '#22c55e', icon: '🏔️' },
-      'E': { desc: 'Toscana & Umbria', color: '#06b6d4', icon: '🌿' },
-      'F': { desc: 'Marche, Abruzzo & Molise', color: '#eab308', icon: '🌾' },
-      'G': { desc: 'Lazio & Sardegna', color: '#ec4899', icon: '🏝️' },
-      'H': { desc: 'Puglia, Basilicata & Campania', color: '#ef4444', icon: '🌋' },
-      'I': { desc: 'Calabria & Sicilia', color: '#f59e0b', icon: '🌊' }
+      'C': { desc: 'Sud · Isole', color: '#f97316', icon: '☀️' }
     };
+
+    var SERIE_D_META = {
+      'A': { desc: 'Piemonte, Liguria, VDA & Lombardia', color: '#38bdf8', icon: '⚡' },
+      'B': { desc: 'Lombardia & Veneto', color: '#a855f7', icon: '🔥' },
+      'C': { desc: 'Veneto, Friuli-V.G. & Trentino-A.A.', color: '#06b6d4', icon: '🏰' },
+      'D': { desc: 'Emilia-Romagna, Toscana & Lombardia', color: '#22c55e', icon: '🌲' },
+      'E': { desc: 'Toscana, Umbria & Lazio', color: '#84cc16', icon: '🌿' },
+      'F': { desc: 'Marche, Abruzzo, Molise & Lazio', color: '#eab308', icon: '🌾' },
+      'G': { desc: 'Lazio, Sardegna & Campania', color: '#ec4899', icon: '🏝️' },
+      'H': { desc: 'Puglia, Basilicata & Campania', color: '#ef4444', icon: '🌋' },
+      'I': { desc: 'Calabria, Sicilia & Campania', color: '#f97316', icon: '☀️' }
+    };
+
+    var metaSource = catId === 4 ? SERIE_D_META : SERIE_C_META;
 
     if (!gironi.length) {
       return '<div class="es-mg-muted" style="padding:1rem;color:#94a3b8;text-align:center;">Nessun girone disponibile in questa categoria.</div>';
@@ -2094,12 +2144,12 @@
       gironi.map(function (item) {
         var g = item.g;
         var n = item.count;
-        var meta = GIR_META[g] || { desc: 'Girone ' + g, color: '#38bdf8', icon: '⚽' };
+        var meta = metaSource[g] || { desc: 'Girone ' + g, color: '#38bdf8', icon: '⚽' };
         return (
           '<button type="button" class="es-mg-girone-card" data-girone="' + esc(g) + '" style="--gir-color:' + meta.color + '">' +
           '<div class="es-mg-girone-top">' +
           '<span class="es-mg-girone-badge">GIRONE ' + esc(g) + '</span>' +
-          '<span class="es-mg-girone-icon">' + meta.icon + '</span>' +
+          '<span class="es-mg-girone-icon">' + gironeSvgIcon(g, meta.color) + '</span>' +
           '</div>' +
           '<div class="es-mg-girone-title">Girone ' + esc(g) + '</div>' +
           '<div class="es-mg-girone-desc">' + esc(meta.desc) + '</div>' +
@@ -2154,7 +2204,7 @@
         var gKeys = gironiMap[r.n] ? Object.keys(gironiMap[r.n]).sort() : [];
         var girStr = gKeys.length ? 'Gironi: ' + gKeys.join(', ') : '';
         return '<button type="button" class="es-mg-region-card" data-region="' + esc(r.n) + '" style="--rc-color:' + r.col + '">' +
-          '<div class="es-mg-region-flag">' + r.e + '</div>' +
+          '<div class="es-mg-region-flag">' + regionSvgIcon(r.n, r.col) + '</div>' +
           '<div class="es-mg-region-name">' + esc(r.n) + '</div>' +
           '<div class="es-mg-region-count">' + n + ' squadr' + (n === 1 ? 'a' : 'e') + '</div>' +
           (girStr ? '<div class="es-mg-region-gironi">' + esc(girStr) + '</div>' : '') +
@@ -2357,10 +2407,14 @@
     var pageTitle = catId == null
       ? 'Provino · Scegli la Categoria'
       : (isGironeTier(catId, isFem) && !state.trialGirone
-        ? ('Provino · ' + esc(currentCatObj ? currentCatObj.name : 'Serie C') + ' · Gironi')
-        : (isRegionalTier(catId) && !state.trialRegion
-          ? ('Provino · ' + esc(currentCatObj ? currentCatObj.name : 'Categoria') + ' · Regioni')
-          : ('Provino · ' + esc(currentCatObj ? currentCatObj.name : 'Squadre'))));
+        ? ('Provino · ' + esc(currentCatObj ? currentCatObj.name : 'Campionato') + ' · Gironi')
+        : (isGironeTier(catId, isFem) && state.trialGirone
+          ? ('Provino · ' + esc(currentCatObj ? currentCatObj.name : 'Campionato') + ' · Girone ' + esc(state.trialGirone))
+          : (isRegionalTier(catId) && !state.trialRegion
+            ? ('Provino · ' + esc(currentCatObj ? currentCatObj.name : 'Categoria') + ' · Regioni')
+            : (isRegionalTier(catId) && state.trialRegion
+              ? ('Provino · ' + esc(currentCatObj ? currentCatObj.name : 'Categoria') + ' · ' + esc(state.trialRegion))
+              : ('Provino · ' + esc(currentCatObj ? currentCatObj.name : 'Squadre'))))));
 
     openShell(
       topBar() +
