@@ -83070,16 +83070,16 @@
       "pts": 0,
       "played": 0,
       "logo": "immagini/squadre-loghi/ecc-borgaro.png",
-      "primary": "#7ece5e",
-      "secondary": "#8131a1",
-      "accent": "#ffffff",
+      "primary": "#194880",
+      "secondary": "#ffffff",
+      "accent": "#ffd700",
       "home": {
-        "body": "#7ece5e",
-        "sleeve": "#7ece5e"
+        "body": "#194880",
+        "sleeve": "#194880"
       },
       "away": {
-        "body": "#8131a1",
-        "sleeve": "#7ece5e"
+        "body": "#ffffff",
+        "sleeve": "#194880"
       },
       "stadium": "",
       "capacity": null,

@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Aggiornato Logo Ufficiale Baveno Stresa** — scaricato e integrato in alta risoluzione RGBA (571x703px) da Tuttocampo in `immagini/squadre-loghi/ecc-baveno-stresa.png`, `baveno-stresa.png`, `baveno.png`, `stresa.png` e `ecc-baveno.png`. Colori sociali allineati nel catalogo (`catalog.json`).
-Feature precedente: Aggiornato Logo Ufficiale Aygreville.
+Ultimo fatto: **Aggiornato Logo Ufficiale Borgaro** — scaricato e integrato in alta risoluzione RGBA (800x784px) da Tuttocampo in `immagini/squadre-loghi/ecc-borgaro.png`, `borgaro.png`, `borgaro-nobis.png` e `ecc-borgaro-nobis.png`. Colori sociali allineati nel catalogo (`catalog.json`).
+Feature precedente: Aggiornato Logo Ufficiale Baveno Stresa.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -81,6 +81,7 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
+| (questo) | Aggiornato logo ufficiale Borgaro (800x784px RGBA) da Tuttocampo e colori sociali |
 | `0ccffdc` | Aggiornato logo ufficiale Baveno Stresa (571x703px RGBA) da Tuttocampo e colori sociali |
 | `1f154f4` | Aggiornato logo ufficiale Aygreville (836x720px RGBA) da Tuttocampo e colori sociali |
 | `db3960d` | Aggiornato logo ufficiale Autovip San Mauro (979x1000px RGBA) da Tuttocampo e colori sociali |
@@ -325,6 +326,9 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-08-31** — Aggiornato Logo Ufficiale Borgaro:
+  - Scaricato e integrato in RGBA (800x784px) il logo del Borgaro da Tuttocampo in `immagini/squadre-loghi/ecc-borgaro.png`, `borgaro.png`, `borgaro-nobis.png` e `ecc-borgaro-nobis.png`. Allineati colori sociali ufficiali (blu-bianco-oro) nel catalogo. Cache `BORGARO1`.
 
 - **2026-08-31** — Aggiornato Logo Ufficiale Baveno Stresa:
   - Scaricato e integrato in RGBA (571x703px) il logo del Baveno Stresa da Tuttocampo in `immagini/squadre-loghi/ecc-baveno-stresa.png`, `baveno-stresa.png`, `baveno.png`, `stresa.png` e `ecc-baveno.png`. Allineati colori sociali ufficiali (biancoblu) nel catalogo. Cache `BAVENO1`.
