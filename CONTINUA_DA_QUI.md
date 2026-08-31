@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Pulsante "Indietro" Top Bar Minigioco Carriera** — Sostituita la dicitura "Chiudi" con "Indietro" nei pulsanti di navigazione ed esito della top bar e float-close del minigioco (`minigioco-carriera.js`). Cache `INDIETRO1`.
-Feature precedente: Promozione Automatica Garantita per Tutti i Campionati & Distinzione AS Bisceglie 1913 / Unione Calcio Bisceglie.
+Ultimo fatto: **Realismo Trofei Minigioco Carriera** — Corretta la funzione `generateSeasonTrophies`: Coppa Italia molto più difficile per neopromosse (1° anno in A: ~2-7% vs il vecchio 11%+); Champions League impossibile al 1° anno, bloccata al 2° (power minimo 0.50), rarissima al 3°; Mondiale per Club solo con power ≥ 0.75 + OVR ≥ 84; Europa League richiede ≥2 stagioni in A; Conference League accessibile ma rara. Aggiunto dedup lista squadre per risolvere Pro Sesto duplicati visivi. Cache `REALISMTROPHIES1`.
+Feature precedente: Pulsante "Indietro" Top Bar Minigioco Carriera.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

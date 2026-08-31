@@ -2247,6 +2247,15 @@
       return String(a.n).localeCompare(String(b.n), 'it');
     });
 
+    /* Dedup per nome: previene duplicati visivi se state.clubs contiene voci ripetute */
+    var seen = {};
+    list = list.filter(function (c) {
+      var key = String(c.n).toUpperCase();
+      if (seen[key]) return false;
+      seen[key] = true;
+      return true;
+    });
+
     if (!list.length) return '<div class="es-mg-muted" style="padding:1.5rem;text-align:center;color:#94a3b8;">Nessuna squadra trovata per i criteri selezionati.</div>';
 
     return list.slice(0, 500).map(function (c) {
@@ -3531,10 +3540,22 @@
     if (p && p.isCaptain) power = Math.min(1, power + 0.04);
     if (apps < 8 || (p && p.eventMods && p.eventMods.suspended)) return trophies;
 
+    /* Stagioni consecutive in Serie A (serve per sbloccare coppe europee realisticamente) */
+    var seasonsInA = 0;
+    if (p && p.history) {
+      var hist = p.history;
+      for (var hi = hist.length - 1; hi >= 0; hi--) {
+        var row = hist[hi];
+        if (!row || !row.club) break;
+        var rTier = row.tier || clubLeagueTierByLabel(row.league || '');
+        if (rTier === 1) { seasonsInA++; } else { break; }
+      }
+    }
+
     var titleChance = (tier === 1 ? 0.055 : tier === 2 ? 0.08 : 0.11) + power * (tier === 1 ? 0.22 : 0.12);
     if (title && Math.random() < titleChance) {
       trophies.push(title);
-      // Supercoppe / tornei collegati
+      /* Supercoppe / tornei collegati */
       if (title === 'premier' && Math.random() < 0.35) trophies.push('fa_community_shield');
       if (title === 'laliga' && Math.random() < 0.35) trophies.push('supercopa_espana');
       if (title === 'bundesliga' && Math.random() < 0.35) trophies.push('dfl_supercup');
@@ -3544,7 +3565,16 @@
       if (title === 'serie_d' && Math.random() < 0.25) trophies.push('supercoppa_serie_d');
     }
 
-    var cupChance = 0.08 + power * 0.12;
+    /* Coppa Italia: solo se tier <= 2 (A o B partecipano); prob ridotta per squadre deboli.
+       Una neopromossa in A (power ~0.28) ha ~3% di chance, una big storica (power 0.8+) ~15%. */
+    var cupChance;
+    if (cup === 'coppa_italia' || cup === 'coppa_italia_femminile') {
+      /* Neopromosse: penalità se è il 1° anno in Serie A */
+      var seasonsMalus = seasonsInA <= 1 ? 0.45 : (seasonsInA <= 2 ? 0.70 : 1.0);
+      cupChance = (0.02 + power * 0.13) * seasonsMalus;
+    } else {
+      cupChance = 0.08 + power * 0.12;
+    }
     if (cup && Math.random() < cupChance) {
       trophies.push(cup);
       if (cup === 'coppa_italia' && Math.random() < 0.28 + power * 0.15 && trophies.indexOf('supercoppa_italia') < 0) trophies.push('supercoppa_italia');
@@ -3560,35 +3590,47 @@
     }
 
     if (tier === 1 || (club && club.world)) {
-      var cl = power * 0.22;
-      if ((newOvr || 49) < 68) cl *= 0.5;
-      if (apps < 16) cl *= 0.55;
-      if (Math.random() < cl) {
+      /* Champions League: impossible per neopromosse (<2 stagioni in A) e squadre deboli.
+         Prob: elite big (power 0.94) ~20%; big storiche (0.82) ~13%; mid-A (0.58) ~5%;
+         neopromossa (0.28, 1a stagione) → 0% (bloccata da seasonsInA); 2a stagione ~2%. */
+      var clBase = power * 0.22;
+      if ((newOvr || 49) < 68) clBase *= 0.4;
+      if (apps < 16) clBase *= 0.55;
+      /* Neopromosse: blocco duro per i primi 2 anni */
+      if (seasonsInA <= 1) clBase = 0;
+      else if (seasonsInA <= 2) clBase *= 0.35;
+      else if (seasonsInA <= 3) clBase *= 0.65;
+      /* Serve power minimo 0.5 per sognare la CL */
+      if (power < 0.50) clBase = 0;
+      if (Math.random() < clBase) {
         trophies.push(isF ? 'womens_champions_league' : 'champions_league');
         if (!isF && Math.random() < 0.32) trophies.push('supercoppa_uefa');
-        if (!isF && Math.random() < 0.22) trophies.push('club_world_cup');
+        /* Mondiale per Club: solo squadre di altissimo livello (power elite + OVR >= 84) */
+        if (!isF && power >= 0.75 && newOvr >= 84 && Math.random() < 0.18) trophies.push('club_world_cup');
         if (!isF && newOvr >= 80 && Math.random() < 0.25) trophies.push('motm_cl');
-      } else if (!isF && Math.random() < 0.08 + power * 0.1) {
+      } else if (!isF && seasonsInA >= 2 && Math.random() < 0.06 + power * 0.08) {
+        /* Europa League: almeno 2 stagioni in A */
         trophies.push('europa_league');
-      } else if (!isF && Math.random() < 0.07 + (1 - power) * 0.05) {
+      } else if (!isF && seasonsInA >= 1 && Math.random() < 0.06 + (1 - power) * 0.04) {
+        /* Conference League: accessibile anche al 1° anno ma rara */
         trophies.push('conference_league');
       }
 
-      // Man of the Match di campionato
+      /* Man of the Match di campionato */
       if (title === 'serie_a' && newOvr >= 78 && Math.random() < 0.20) trophies.push('motm_serie_a');
       if (title === 'premier' && newOvr >= 80 && Math.random() < 0.20) trophies.push('motm_premier');
 
-      // Scarpa d'oro per capocannoniere top
+      /* Scarpa d'oro per capocannoniere top */
       if (!isGK && goals >= 24 && newOvr >= 85 && Math.random() < 0.12) {
         trophies.push('scarpa_doro');
       }
-      // Guanto d'oro per portieri
+      /* Guanto d'oro per portieri */
       if (isGK && newOvr >= 84 && apps >= 28 && Math.random() < 0.15) {
         trophies.push('guanto_doro');
       }
     }
 
-    // Pallone d'Oro / Giocatore dell'anno
+    /* Pallone d'Oro / Giocatore dell'anno */
     if (newOvr >= 88 && (ga >= 18 || (isGK && newOvr >= 90)) && Math.random() < 0.045) trophies.push(isF ? 'ballon_dor_feminin' : 'ballon_dor');
     if (!isF && newOvr >= 84 && (ga >= 12 || (isGK && newOvr >= 86)) && Math.random() < 0.055) trophies.push('player_of_year');
 
@@ -3603,6 +3645,17 @@
       }
     }
     return trophies;
+  }
+
+  /* Helper: ricava il tier dal label campionato (fallback per storia) */
+  function clubLeagueTierByLabel(label) {
+    var u = String(label || '').toUpperCase();
+    if (u.indexOf('SERIE A') >= 0) return 1;
+    if (u.indexOf('SERIE B') >= 0) return 2;
+    if (u.indexOf('SERIE C') >= 0) return 3;
+    if (u.indexOf('SERIE D') >= 0) return 4;
+    if (u.indexOf('ECCELLENZA') >= 0) return 5;
+    return 6;
   }
 
   function seasonPerformance(p, club, age) {
