@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Aggiornato Logo Ufficiale Dufour Varallo** — scaricato e integrato in alta risoluzione RGBA (1300x1479px) da Tuttocampo in `immagini/squadre-loghi/ecc-dufour-varallo.png`, `dufour-varallo.png`, `dufour.png`, `varallo.png` e `ecc-varallo.png`. Colori sociali allineati nel catalogo (`catalog.json`).
-Feature precedente: Aggiornato Logo Ufficiale Druentina.
+Ultimo fatto: **Aggiornato Logo Ufficiale Fulgor Chiavazzese** — scaricato e integrato in alta risoluzione RGBA (444x562px) da Tuttocampo in `immagini/squadre-loghi/ecc-fulgor-chiavazzese.png`, `fulgor-chiavazzese.png`, `chiavazzese.png`, `fulgor.png` e `ecc-chiavazzese.png`. Colori sociali allineati nel catalogo (`catalog.json`).
+Feature precedente: Aggiornato Logo Ufficiale Dufour Varallo.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -81,6 +81,7 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
+| (questo) | Aggiornato logo ufficiale Fulgor Chiavazzese (444x562px RGBA) da Tuttocampo e colori sociali |
 | `23f19bd` | Aggiornato logo ufficiale Dufour Varallo (1300x1479px RGBA) da Tuttocampo e colori sociali |
 | `a87cce5` | Aggiornato logo ufficiale Druentina (535x720px RGBA) da Tuttocampo e colori sociali |
 | `53e5734` | Aggiornato logo ufficiale Casale (708x1000px RGBA) da Tuttocampo e colori sociali |
@@ -330,6 +331,9 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-08-31** — Aggiornato Logo Ufficiale Fulgor Chiavazzese:
+  - Scaricato e integrato in RGBA (444x562px) il logo della Fulgor Chiavazzese da Tuttocampo in `immagini/squadre-loghi/ecc-fulgor-chiavazzese.png`, `fulgor-chiavazzese.png`, `chiavazzese.png`, `fulgor.png` e `ecc-chiavazzese.png`. Allineati colori sociali ufficiali (blu-rosso) nel catalogo. Cache `FULGOR1`.
 
 - **2026-08-31** — Aggiornato Logo Ufficiale Dufour Varallo:
   - Scaricato e integrato in RGBA (1300x1479px) il logo del Dufour Varallo da Tuttocampo in `immagini/squadre-loghi/ecc-dufour-varallo.png`, `dufour-varallo.png`, `dufour.png`, `varallo.png` e `ecc-varallo.png`. Allineati colori sociali ufficiali (neroverde) nel catalogo. Cache `DUFOUR1`.

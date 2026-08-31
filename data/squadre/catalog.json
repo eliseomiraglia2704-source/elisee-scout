@@ -83215,16 +83215,16 @@
       "pts": 0,
       "played": 0,
       "logo": "immagini/squadre-loghi/ecc-fulgor-chiavazzese.png",
-      "primary": "#4c4d5f",
-      "secondary": "#b3b2a0",
+      "primary": "#041d44",
+      "secondary": "#a10015",
       "accent": "#ffffff",
       "home": {
-        "body": "#4c4d5f",
-        "sleeve": "#4c4d5f"
+        "body": "#041d44",
+        "sleeve": "#a10015"
       },
       "away": {
-        "body": "#b3b2a0",
-        "sleeve": "#4c4d5f"
+        "body": "#ffffff",
+        "sleeve": "#041d44"
       },
       "stadium": "",
       "capacity": null,
