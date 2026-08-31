@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-08-30**
-Ultimo fatto: **Ordinamento Alfabetico Regionale Campionati Dilettantistici** — ordinamento alfabetico rigoroso per regione di tutte le categorie dilettantistiche (Eccellenza, Promozione, Prima Categoria, Seconda Categoria, Terza Categoria) in `catalog.json` e modale "Scegli categoria".
-Feature precedente: Regole Giovanili U19/U20/Primavera e Seconde Squadre U23 nel Minigioco Carriera.
+Ultimo aggiornamento: **2026-08-31**
+Ultimo fatto: **Aggiornato Logo Ufficiale Accademia Borgomanero** — scaricato e integrato in alta risoluzione RGBA (1291x1500px) da Tuttocampo in `immagini/squadre-loghi/ecc-accademia-borgomanero.png`, `accademia-borgomanero.png`, `borgomanero.png` e `ecc-borgomanero.png`. Colori sociali allineati nel catalogo (`catalog.json`).
+Feature precedente: Ordinamento Alfabetico Regionale Campionati Dilettantistici.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -321,6 +321,9 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-08-31** — Aggiornato Logo Ufficiale Accademia Borgomanero:
+  - Scaricato e integrato in RGBA (1291x1500px) il logo dell'Accademia Borgomanero da Tuttocampo in `immagini/squadre-loghi/ecc-accademia-borgomanero.png`, `accademia-borgomanero.png`, `borgomanero.png` e `ecc-borgomanero.png`. Allineati colori sociali ufficiali nel catalogo. Cache `BORGO1`.
 
 - **2026-08-30** — Eccellenza Molise 2026/27 (girone unico 15 squadre): nomi ufficiali, città, loghi Tuttocampo. Cache `ECCMOL1`.
 - **2026-08-30** — Eccellenza Lazio Girone A 2026/27 (18 squadre): nomi ufficiali, città, loghi Tuttocampo. Cache `ECCLAZA1`.

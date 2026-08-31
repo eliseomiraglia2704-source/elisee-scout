@@ -82954,16 +82954,16 @@
       "pts": 0,
       "played": 0,
       "logo": "immagini/squadre-loghi/ecc-accademia-borgomanero.png",
-      "primary": "#916c5a",
-      "secondary": "#6e93a5",
+      "primary": "#244aad",
+      "secondary": "#dc2626",
       "accent": "#ffffff",
       "home": {
-        "body": "#916c5a",
-        "sleeve": "#916c5a"
+        "body": "#244aad",
+        "sleeve": "#dc2626"
       },
       "away": {
-        "body": "#6e93a5",
-        "sleeve": "#916c5a"
+        "body": "#ffffff",
+        "sleeve": "#244aad"
       },
       "stadium": "",
       "capacity": null,
