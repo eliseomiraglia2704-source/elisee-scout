@@ -3322,20 +3322,30 @@ button.es-mg-hub-menubar:focus {
 
 .es-mg-trial-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 0.6rem;
-  max-height: min(58vh, 520px);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.5rem;
+  max-height: min(60vh, 540px);
   overflow-y: auto;
   background: #101014;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
-  padding: 0.75rem;
+  padding: 0.65rem;
 }
-@media (max-width: 600px) {
+@media (max-width: 1100px) {
   .es-mg-trial-list {
-    grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
-    gap: 0.45rem;
-    padding: 0.5rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (max-width: 860px) {
+  .es-mg-trial-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 580px) {
+  .es-mg-trial-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4rem;
+    padding: 0.45rem;
   }
 }
 
@@ -3568,7 +3578,7 @@ button.es-mg-hub-menubar:focus {
   flex-direction: row !important;
   align-items: center !important;
   justify-content: flex-start !important;
-  gap: 0.65rem !important;
+  gap: 0.5rem !important;
   width: 100% !important;
   max-width: 100% !important;
   box-sizing: border-box !important;
@@ -3577,30 +3587,30 @@ button.es-mg-hub-menubar:focus {
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   background: rgba(255, 255, 255, 0.03) !important;
   color: #f8fafc !important;
-  border-radius: 12px !important;
-  padding: 0.6rem 0.75rem !important;
-  min-height: 54px !important;
+  border-radius: 10px !important;
+  padding: 0.45rem 0.55rem !important;
+  min-height: 48px !important;
   cursor: pointer;
   transition: all 0.18s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
 }
 .es-mg-trial-club:hover {
   background: rgba(56, 189, 248, 0.08) !important;
   border-color: rgba(56, 189, 248, 0.45) !important;
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4), 0 0 12px rgba(56, 189, 248, 0.15) !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4), 0 0 10px rgba(56, 189, 248, 0.15) !important;
 }
 .es-mg-trial-club.is-on {
   background: rgba(56, 189, 248, 0.18) !important;
   border-color: rgba(56, 189, 248, 0.75) !important;
-  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.5), 0 6px 20px rgba(56, 189, 248, 0.28) !important;
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.5), 0 6px 18px rgba(56, 189, 248, 0.28) !important;
 }
 .es-mg-trial-logo {
-  width: 38px !important;
-  height: 38px !important;
+  width: 32px !important;
+  height: 32px !important;
   object-fit: contain;
-  flex: 0 0 38px;
-  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
+  flex: 0 0 32px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
   transition: transform 0.18s ease;
 }
 .es-mg-trial-club:hover .es-mg-trial-logo {
@@ -3619,8 +3629,8 @@ button.es-mg-hub-menubar:focus {
   display: block !important;
   color: #ffffff !important;
   font-weight: 800 !important;
-  font-size: 0.85rem !important;
-  line-height: 1.25 !important;
+  font-size: 0.8rem !important;
+  line-height: 1.2 !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -3628,10 +3638,10 @@ button.es-mg-hub-menubar:focus {
 }
 .es-mg-trial-lg {
   display: block !important;
-  font-size: 0.68rem !important;
+  font-size: 0.65rem !important;
   color: #7dd3fc !important;
   font-weight: 700 !important;
-  line-height: 1.25 !important;
+  line-height: 1.2 !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -3639,10 +3649,10 @@ button.es-mg-hub-menubar:focus {
 }
 .es-mg-trial-city {
   display: block !important;
-  font-size: 0.66rem !important;
+  font-size: 0.62rem !important;
   color: #94a3b8 !important;
   font-weight: 500 !important;
-  line-height: 1.25 !important;
+  line-height: 1.2 !important;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

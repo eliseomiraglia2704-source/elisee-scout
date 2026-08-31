@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Visualizzazione Squadre a Griglia Orizzontale A-Z da Sinistra a Destra** — Sostituita la lista verticale delle squadre con una griglia responsive (`display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr))`) ordinata rigorosamente in ordine alfabetico A-Z per tutte le categorie, campionati, gironi e regioni (`minigioco-carriera.css` & `minigioco-carriera.js`). Cache `TEAMGRID1`.
-Feature precedente: Loghi Regioni Bianco Brillante & Ordinamento Alfabetico A-Z Minigioco.
+Ultimo fatto: **Griglia Squadre a 5 Colonne Orizzontali Minigioco** — Impostata la visualizzazione a 5 squadre per riga (`grid-template-columns: repeat(5, minmax(0, 1fr))`) per ottimizzare e compattare gli spazi su tutte le categorie, campionati, gironi e regioni (`minigioco-carriera.css`). Cache `5COLSGRID1`.
+Feature precedente: Visualizzazione Squadre a Griglia Orizzontale A-Z da Sinistra a Destra.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
