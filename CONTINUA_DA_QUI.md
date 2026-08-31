@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Realismo Trofei Minigioco Carriera** — Corretta la funzione `generateSeasonTrophies`: Coppa Italia molto più difficile per neopromosse (1° anno in A: ~2-7% vs il vecchio 11%+); Champions League impossibile al 1° anno, bloccata al 2° (power minimo 0.50), rarissima al 3°; Mondiale per Club solo con power ≥ 0.75 + OVR ≥ 84; Europa League richiede ≥2 stagioni in A; Conference League accessibile ma rara. Aggiunto dedup lista squadre per risolvere Pro Sesto duplicati visivi. Cache `REALISMTROPHIES1`.
-Feature precedente: Pulsante "Indietro" Top Bar Minigioco Carriera.
+Ultimo aggiornamento: **2026-09-01**
+Ultimo fatto: **Primavera 1 e 2 nel Minigioco Carriera** — Implementati Tier 11 (Primavera 1) e Tier 12 (Primavera 2). Aggiunta tabella `YOUTH_ACADEMY_POWER` (forza vivai indipendente dalla prima squadra), funzione `youthClubPower()`, logica `generateYouthSeasonOutcome()` (promozione P2→P1, retrocessione, trofei Scudetto Primavera / Coppa Primavera). Aggiornati `CATEGORY_OVR_RANGES`, `CATEGORY_PRICE_RANGES`, `MALE_CATEGORIES`. Popolato `minigioco_clubs.json` con 48 club: 16 P1 (tier 11, elite), 16 P2-Girone A (Sampdoria, Cremonese, Südtirol…), 16 P2-Girone B (Napoli, Bari, Salernitana…). Cache `PRIMAVERA-TIERS`.
+Feature precedente: **Realismo Trofei Minigioco** — Coppa Italia più difficile per neopromosse, CL impossibile al 1° anno, dedup squadre.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

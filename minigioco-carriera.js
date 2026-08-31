@@ -1150,7 +1150,8 @@
   }
 
   function guardClub(c, atStart) {
-    if (!c || c.world || c.isFree || isYouthClub(c)) return c;
+    /* Tier 11 (Primavera 1) e 12 (Primavera 2): gestiti da youthClubPower, non dalla storia seniores */
+    if (!c || c.world || c.isFree || isYouthClub(c) || Number(c.t) === 11 || Number(c.t) === 12) return c;
     var now = clubLeagueTier(c);
     var dest = now;
     var S = typeof window !== 'undefined' ? window.EliseeClubStoria : null;
@@ -1924,7 +1925,9 @@
     { id: 6, name: 'Promozione', sub: '6ª Divisione Regionale LND', badge: '6ª DIV', ovr: '19 – 23', logo: 'immagini/squadre-loghi/promozione.png', color: '#a855f7' },
     { id: 7, name: 'Prima Categoria', sub: '7ª Divisione Regionale/Provinciale', badge: '7ª DIV', ovr: '12 – 18', logo: 'immagini/squadre-loghi/prima-categoria.png', color: '#06b6d4' },
     { id: 8, name: 'Seconda Categoria', sub: '8ª Divisione Provinciale', badge: '8ª DIV', ovr: '5 – 11', logo: 'immagini/squadre-loghi/seconda-categoria.png', color: '#64748b' },
-    { id: 9, name: 'Terza Categoria', sub: '9ª Divisione Provinciale', badge: '9ª DIV', ovr: '0 – 4', logo: 'immagini/squadre-loghi/terza-categoria.png', color: '#475569' }
+    { id: 9, name: 'Terza Categoria', sub: '9ª Divisione Provinciale', badge: '9ª DIV', ovr: '0 – 4', logo: 'immagini/squadre-loghi/terza-categoria.png', color: '#475569' },
+    { id: 11, name: 'Primavera 1', sub: 'Campionato Giovanile U19/20 · Vertice Nazionale', badge: 'PRIM 1', ovr: '50 – 68', logo: 'immagini/squadre-loghi/serie-a.png', color: '#facc15', isYouth: true },
+    { id: 12, name: 'Primavera 2', sub: 'Campionato Giovanile U19/20 · Gironi A/B', badge: 'PRIM 2', ovr: '40 – 55', logo: 'immagini/squadre-loghi/serie-b.png', color: '#fb923c', isYouth: true }
   ];
 
   var FEMALE_CATEGORIES = [
@@ -3211,27 +3214,33 @@
   }
 
   var CATEGORY_OVR_RANGES = {
-    1: { name: 'Serie A', min: 76, max: 93, label: 'min. 76 / max. 93' },
-    2: { name: 'Serie B', min: 59, max: 75, label: 'min. 59 / max. 75' },
-    3: { name: 'Serie C', min: 43, max: 58, label: 'min. 43 / max. 58' },
-    4: { name: 'Serie D', min: 30, max: 42, label: 'min. 30 / max. 42' },
-    5: { name: 'Eccellenza', min: 24, max: 29, label: 'min. 24 / max. 29' },
-    6: { name: 'Promozione', min: 19, max: 23, label: 'min. 19 / max. 23' },
-    7: { name: 'Prima Categoria', min: 12, max: 18, label: 'min. 12 / max. 18' },
-    8: { name: 'Seconda Categoria', min: 5, max: 11, label: 'min. 5 / max. 11' },
-    9: { name: 'Terza Categoria', min: 0, max: 4, label: 'min. 0 / max. 4' }
+    1:  { name: 'Serie A',            min: 76, max: 93, label: 'min. 76 / max. 93' },
+    2:  { name: 'Serie B',            min: 59, max: 75, label: 'min. 59 / max. 75' },
+    3:  { name: 'Serie C',            min: 43, max: 58, label: 'min. 43 / max. 58' },
+    4:  { name: 'Serie D',            min: 30, max: 42, label: 'min. 30 / max. 42' },
+    5:  { name: 'Eccellenza',         min: 24, max: 29, label: 'min. 24 / max. 29' },
+    6:  { name: 'Promozione',         min: 19, max: 23, label: 'min. 19 / max. 23' },
+    7:  { name: 'Prima Categoria',    min: 12, max: 18, label: 'min. 12 / max. 18' },
+    8:  { name: 'Seconda Categoria',  min:  5, max: 11, label: 'min. 5 / max. 11'  },
+    9:  { name: 'Terza Categoria',    min:  0, max:  4, label: 'min. 0 / max. 4'   },
+    /* Campionati giovanili — l'OVR riflette il livello del singolo prospetto */
+    11: { name: 'Primavera 1',        min: 50, max: 68, label: 'min. 50 / max. 68' },
+    12: { name: 'Primavera 2',        min: 40, max: 55, label: 'min. 40 / max. 55' }
   };
 
   var CATEGORY_PRICE_RANGES = {
-    1: { name: 'Serie A', min: 5.0, max: 150.0, minLabel: '5 Mln.€', maxLabel: '150 Mln.€' },
-    2: { name: 'Serie B', min: 0.250, max: 4.90, minLabel: '250 mila€', maxLabel: '4,9 Mln.€' },
-    3: { name: 'Serie C', min: 0.050, max: 0.249, minLabel: '50 mila€', maxLabel: '249 mila€' },
-    4: { name: 'Serie D', min: 0.0099, max: 0.049, minLabel: '9,9 mila€', maxLabel: '49 mila€' },
-    5: { name: 'Eccellenza', min: 0.00090, max: 0.010, minLabel: '900€', maxLabel: '10 mila€' },
-    6: { name: 'Promozione', min: 0.00045, max: 0.000899, minLabel: '450€', maxLabel: '899€' },
-    7: { name: 'Prima Categoria', min: 0.00030, max: 0.000449, minLabel: '300€', maxLabel: '449€' },
-    8: { name: 'Seconda Categoria', min: 0.00010, max: 0.000299, minLabel: '100€', maxLabel: '299€' },
-    9: { name: 'Terza Categoria', min: 0.00001, max: 0.000100, minLabel: '10€', maxLabel: '100€' }
+    1:  { name: 'Serie A',           min: 5.0,     max: 150.0,    minLabel: '5 Mln.€',   maxLabel: '150 Mln.€'  },
+    2:  { name: 'Serie B',           min: 0.250,   max: 4.90,     minLabel: '250 mila€', maxLabel: '4,9 Mln.€'  },
+    3:  { name: 'Serie C',           min: 0.050,   max: 0.249,    minLabel: '50 mila€',  maxLabel: '249 mila€'  },
+    4:  { name: 'Serie D',           min: 0.0099,  max: 0.049,    minLabel: '9,9 mila€', maxLabel: '49 mila€'   },
+    5:  { name: 'Eccellenza',        min: 0.00090, max: 0.010,    minLabel: '900€',       maxLabel: '10 mila€'   },
+    6:  { name: 'Promozione',        min: 0.00045, max: 0.000899, minLabel: '450€',       maxLabel: '899€'       },
+    7:  { name: 'Prima Categoria',   min: 0.00030, max: 0.000449, minLabel: '300€',       maxLabel: '449€'       },
+    8:  { name: 'Seconda Categoria', min: 0.00010, max: 0.000299, minLabel: '100€',       maxLabel: '299€'       },
+    9:  { name: 'Terza Categoria',   min: 0.00001, max: 0.000100, minLabel: '10€',        maxLabel: '100€'       },
+    /* Primavera: ingaggio simbolico — stipendi base giovani */
+    11: { name: 'Primavera 1',       min: 0.00050, max: 0.002,    minLabel: '500€',       maxLabel: '2.000€'     },
+    12: { name: 'Primavera 2',       min: 0.00020, max: 0.000499, minLabel: '200€',       maxLabel: '499€'       }
   };
 
   function calcRealisticValueM(ovr, age, club) {
@@ -3508,6 +3517,53 @@
     return '';
   }
 
+  /* ── YOUTH ACADEMY POWER ─────────────────────────────────────────────────────
+     Forza del settore giovanile, indipendente dalla prima squadra.
+     Scala 0.0 – 1.0 (1.0 = vivaio elite mondiale, 0.1 = minimo).
+     Usata da youthClubPower() per simulare promozioni/retrocessioni Primavera.
+  ─────────────────────────────────────────────────────────────────────────── */
+  var YOUTH_ACADEMY_POWER = [
+    /* Vivai Elite (Primavera 1 storici, molti nazionali prodotti) */
+    ['ATALANTA',     0.94], ['INTER',        0.92], ['JUVENTUS',    0.90],
+    ['MILAN',        0.88], ['ROMA',         0.86], ['FIORENTINA',  0.84],
+    ['SAMPDORIA',    0.82], ['LAZIO',        0.80], ['NAPOLI',      0.82],
+    ['TORINO',       0.78], ['BOLOGNA',      0.76], ['UDINESE',     0.74],
+    /* Vivai Medi-Alti (competitivi in P1/P2) */
+    ['CREMONESE',    0.72], ['SÜDTIROL',     0.70], ['SUDTIROL',    0.70],
+    ['VICENZA',      0.68], ['L.R. VICENZA', 0.68], ['REGGIANA',    0.66],
+    ['VENEZIA',      0.65], ['PISA',         0.64], ['SPEZIA',      0.64],
+    ['FROSINONE',    0.63], ['PESCARA',      0.62], ['PERUGIA',     0.62],
+    ['PALERMO',      0.61], ['BARI',         0.68], ['SALERNITANA', 0.66],
+    ['PARMA',        0.70], ['GENOA',        0.72], ['CAGLIARI',    0.68],
+    ['LECCE',        0.60], ['EMPOLI',       0.65], ['VERONA',      0.63],
+    ['SASSUOLO',     0.70], ['CESENA',       0.58], ['MONZA',       0.60],
+    ['COMO',         0.58], ['BRESCIA',      0.62], ['CATANZARO',   0.60],
+    ['COSENZA',      0.58], ['BENEVENTO',    0.58], ['AVELLINO',    0.56],
+    ['PADOVA',       0.62], ['CITTADELLA',   0.60], ['MODENA',      0.60],
+    ['MANTOVA',      0.58], ['ASCOLI',       0.52], ['MONOPOLI',    0.46],
+    ['LATINA',       0.42], ['LECCO',        0.45], ['RENATE',      0.40],
+    ['ENTELLA',      0.44], ['VIRTUS ENTELLA',0.44], ['PRO VERCELLI',0.48],
+    ['UNION BRESCIA',0.42]
+  ];
+
+  /* Ritorna la forza accademia youth di un club (0.1 – 0.94).
+     Usa YOUTH_ACADEMY_POWER; fallback su tier della prima squadra. */
+  function youthClubPower(club) {
+    if (!club) return 0.10;
+    /* Usa il campo dedicato se già impostato in catalogo (es. yp: 0.72) */
+    if (typeof club.yp === 'number') return club.yp;
+    var n = String(club.n || '').toUpperCase().replace(/\s*(U19|U20|PRIMAVERA|PRIM\.?)\s*/g, ' ').trim();
+    for (var i = 0; i < YOUTH_ACADEMY_POWER.length; i++) {
+      if (n.indexOf(YOUTH_ACADEMY_POWER[i][0]) >= 0) return YOUTH_ACADEMY_POWER[i][1];
+    }
+    /* Fallback: usa il tier della prima squadra come proxy */
+    var t = clubLeagueTier(club);
+    if (t === 1) return 0.62;
+    if (t === 2) return 0.50;
+    if (t === 3) return 0.40;
+    return 0.30;
+  }
+
   function clubTrophyPower(club) {
     if (!club) return 0.12;
     var n = String(club.n || '').toUpperCase();
@@ -3527,9 +3583,13 @@
   function generateSeasonTrophies(p, club, newOvr, stats, age) {
     var trophies = [];
     if (!club) return trophies;
+    /* — PERCORSO GIOVANILE: tier 11 (Primavera 1) e 12 (Primavera 2) — */
+    var tier = clubLeagueTier(club);
+    if (tier === 11 || tier === 12) {
+      return generateYouthSeasonOutcome(p, club, newOvr, stats, age, tier);
+    }
     var isF = (p && p.gender === 'f') || (club && club.g === 'f');
     var league = club.l || club.league || '';
-    var tier = clubLeagueTier(club);
     var apps = (stats && stats.apps) || 0;
     var goals = (stats && stats.goals) || 0;
     var ga = goals + ((stats && stats.assists) || 0);
@@ -3650,6 +3710,8 @@
   /* Helper: ricava il tier dal label campionato (fallback per storia) */
   function clubLeagueTierByLabel(label) {
     var u = String(label || '').toUpperCase();
+    if (u.indexOf('PRIMAVERA 1') >= 0 || u.indexOf('PRIM 1') >= 0) return 11;
+    if (u.indexOf('PRIMAVERA 2') >= 0 || u.indexOf('PRIM 2') >= 0) return 12;
     if (u.indexOf('SERIE A') >= 0) return 1;
     if (u.indexOf('SERIE B') >= 0) return 2;
     if (u.indexOf('SERIE C') >= 0) return 3;
@@ -3658,11 +3720,82 @@
     return 6;
   }
 
+  /* ── YOUTH SEASON OUTCOME (Primavera 1 e Primavera 2) ────────────────────────────
+     Sostituisce generateSeasonTrophies per i tier giovanili.
+     Determina:
+       - Trofei: scudetto_primavera (P1), coppa_primavera (P1/P2)
+       - Movimento di categoria: promozione P2→P1, retrocessione P1→P2 o P2→P3
+     La probabilità è basata su youthClubPower (vivaio) + OVR giocatore,
+     senza considerare i criteri seniores (storia prima squadra).
+  ─────────────────────────────────────────────────────────────────────────── */
+  function generateYouthSeasonOutcome(p, club, newOvr, stats, age, tier) {
+    var trophies = [];
+    var apps = (stats && stats.apps) || 0;
+    if (apps < 5) return trophies; /* troppo poco giocato */
+
+    var yp = youthClubPower(club); /* forza vivaio 0.1–0.94 */
+    /* Contributo individuale del prospetto: OVR relativo al range P1/P2 */
+    var ovrRef = tier === 11 ? 60 : 48; /* media OVR per tier */
+    var ovrBonus = Math.max(-0.15, Math.min(0.20, (newOvr - ovrRef) / 80));
+    var strength = Math.max(0.05, Math.min(0.99, yp + ovrBonus));
+
+    if (tier === 11) {
+      /* — Primavera 1 —
+         Nessuna promozione (vertice). Solo playoff Scudetto e retrocessione. */
+      var playoffChance = 0.10 + strength * 0.35; /* qualificazione top-6 playoff */
+      if (Math.random() < playoffChance) {
+        trophies.push('primavera_playoff');
+        /* Scudetto Primavera: vinto solo dalle elite */
+        if (strength >= 0.75 && Math.random() < 0.20 + (strength - 0.75) * 0.30) {
+          trophies.push('scudetto_primavera');
+        }
+      }
+      /* Coppa Italia Primavera */
+      if (Math.random() < 0.04 + strength * 0.10) trophies.push('coppa_primavera');
+      /* Retrocessione in Primavera 2: vivaio debole o prospetto fuori livello */
+      var relChance = Math.max(0, 0.28 - strength * 0.28);
+      if (Math.random() < relChance) {
+        trophies.push('_youth_relegation_to_12'); /* marker interno: retrocede P2 */
+        if (club) { club.t = 12; club.l = (club.l || '').replace('PRIMAVERA 1', 'PRIMAVERA 2 · GIRONE A'); }
+      }
+    } else {
+      /* — Primavera 2 (Gironi A / B) —
+         Promozione in P1 tramite piazzamento/playoff; retrocessione in P3. */
+      /* Promozione in Primavera 1 */
+      var promoChance = 0.05 + strength * 0.40;
+      /* Penalizzazione per primo anno in P2 */
+      var seasonsInP2 = 0;
+      if (p && p.history) {
+        for (var hi2 = p.history.length - 1; hi2 >= 0; hi2--) {
+          var r2 = p.history[hi2];
+          if (!r2 || !r2.club) break;
+          var r2tier = r2.tier || clubLeagueTierByLabel(r2.league || '');
+          if (r2tier === 12) { seasonsInP2++; } else { break; }
+        }
+      }
+      if (seasonsInP2 === 0) promoChance *= 0.70; /* primo anno: leggermente più difficile */
+      if (Math.random() < promoChance) {
+        trophies.push('primavera2_promozione'); /* promosso in Primavera 1 */
+        if (club) { club.t = 11; club.l = 'PRIMAVERA 1'; club.justPromoted = true; }
+      }
+      /* Coppa Primavera 2 */
+      if (Math.random() < 0.05 + strength * 0.10) trophies.push('coppa_primavera_2');
+      /* Retrocessione in Primavera 3 */
+      var rel2Chance = Math.max(0, 0.30 - strength * 0.30);
+      if (Math.random() < rel2Chance) {
+        trophies.push('_youth_relegation_to_p3'); /* marker interno: retrocede P3 */
+      }
+    }
+    return trophies;
+  }
+
   function seasonPerformance(p, club, age) {
     var pos = p.position || 'CM';
     var ovr = p.ovr;
     var tier = clubLeagueTier(club);
-    var par = tier === 1 ? 78 : tier === 2 ? 68 : tier === 3 ? 60 : 54;
+    /* Par OVR per tier: aggiunto supporto Primavera 1/2 */
+    var par = tier === 1 ? 78 : tier === 2 ? 68 : tier === 3 ? 60
+            : tier === 11 ? 58 : tier === 12 ? 46 : 54;
     var rel = ovr - par;
     var apps = 24 + Math.round(rel * 0.55);
     if (age <= 17) apps -= isAcademyProspect(p) ? 6 : 10;
