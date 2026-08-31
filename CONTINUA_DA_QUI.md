@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Promozione Automatica Garantita per Tutti i Campionati & Distinzione AS Bisceglie 1913 / Unione Calcio Bisceglie** — Implementata la logica di promozione diretta (tier - 1) su qualsiasi vittoria di campionato (Terza/Seconda/Prima Categoria, Promozione, Eccellenza, Serie D, Serie C, Serie B, campionati femminili ed esteri). Distinti in catalogo, pesi storici e loghi HD l'AS Bisceglie 1913 (Serie D Girone H, nerazzurro stellato, logo ufficiale 921x1287px) e l'Unione Calcio Bisceglie (Eccellenza Puglia, azzurro-granata, fondata 2012). Cache `PROMOALLTIERS1`.
-Feature precedente: Griglia Squadre a 5 Colonne Orizzontali Minigioco.
+Ultimo fatto: **Pulsante "Indietro" Top Bar Minigioco Carriera** — Sostituita la dicitura "Chiudi" con "Indietro" nei pulsanti di navigazione ed esito della top bar e float-close del minigioco (`minigioco-carriera.js`). Cache `INDIETRO1`.
+Feature precedente: Promozione Automatica Garantita per Tutti i Campionati & Distinzione AS Bisceglie 1913 / Unione Calcio Bisceglie.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

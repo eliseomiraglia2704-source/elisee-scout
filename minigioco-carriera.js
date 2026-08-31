@@ -892,7 +892,7 @@
       '</div>' +
       '<div class="es-mg-top-actions">' +
       (rightExtra || '') +
-      '<button type="button" class="es-mg-close" id="es-mg-x">Chiudi</button>' +
+      '<button type="button" class="es-mg-close" id="es-mg-x">Indietro</button>' +
       '</div></div>'
     );
   }
@@ -917,7 +917,7 @@
       '</button>' +
       '<div class="es-mg-hub-top-actions">' +
       (extraRight || '') +
-      '<button type="button" class="es-mg-close" id="es-mg-x">Chiudi</button>' +
+      '<button type="button" class="es-mg-close" id="es-mg-x">Indietro</button>' +
       '</div></div>'
     );
   }
@@ -5209,7 +5209,7 @@
       }
     } catch (e0) {}
     openShell(
-      '<button type="button" class="es-mg-float-close" id="es-mg-x">Chiudi</button>' +
+      '<button type="button" class="es-mg-float-close" id="es-mg-x">Indietro</button>' +
         '<div class="es-mg-sum">' +
         '<div class="es-mg-sum-board">' +
         '<div class="es-mg-sum-top">' +
@@ -5577,7 +5577,7 @@
         '<div class="es-mg-offers es-mg-offers-grid">' + offerHtml + '</div></div>';
     }
     openShell(
-      '<button type="button" class="es-mg-float-close" id="es-mg-x">Chiudi</button>' +
+      '<button type="button" class="es-mg-float-close" id="es-mg-x">Indietro</button>' +
         (animateNew ? '<div class="es-mg-season-flash" aria-hidden="true"></div>' : '') +
         '<div class="es-mg-career">' +
         '<div class="es-mg-career-board">' +
