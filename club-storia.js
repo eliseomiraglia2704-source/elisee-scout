@@ -436,6 +436,40 @@
   // K-Sport Montecchio
   put(['K-SPORT MONTECCHIO', 'MONTECCHIO GALLO'], { a: 0, b: 0, c: 0, d: 16, e: 24 });
 
+  /* —— Girone G Serie D: profili storici 2026/27 —— */
+  // Gelbison: reduce da Serie C recente
+  put(['GELBISON', 'GELBISON CILENTO', 'ASD GELBISON'], { a: 0, b: 0, c: 8, d: 32 });
+  // Paganese: blasone storico tra i professionisti (ex Serie C1/C2)
+  put(['PAGANESE', 'PAGANESE CALCIO 1926'], { a: 0, b: 0, c: 20, d: 20 });
+  // Sassari Latte Dolce
+  put(['LATTE DOLCE', 'SASSARI LATTE DOLCE', 'LATTE DOLCE CALCIO'], { a: 0, b: 0, c: 2, d: 26, e: 12 });
+  // Albalonga
+  put(['ALBALONGA', 'CYNTHIALBALONGA', 'ALBALONGA CALCIO'], { a: 0, b: 0, c: 0, d: 26, e: 14 });
+  // Trastevere
+  put(['TRASTEVERE', 'TRASTEVERE CALCIO'], { a: 0, b: 0, c: 2, d: 26, e: 12 });
+  // Ossese
+  put(['OSSESE', 'POL OSSESE'], { a: 0, b: 0, c: 0, d: 24, e: 16 });
+  // UniPomezia
+  put(['UNIPOMEZIA', 'UNI POMEZIA', 'UNIPOMEZIA 1938'], { a: 0, b: 0, c: 0, d: 24, e: 16 });
+  // Anzio Calcio
+  put(['ANZIO CALCIO', 'ANZIO CALCIO 1924', 'ANZIO'], { a: 0, b: 0, c: 0, d: 26, e: 14 });
+  // Sarnese
+  put(['SARNESE', 'SARNESE 1926', 'POL SARNESE'], { a: 0, b: 0, c: 2, d: 24, e: 14 });
+  // Città di Anagni
+  put(['CITTA DI ANAGNI', 'CITTÀ DI ANAGNI', 'ANAGNI CALCIO'], { a: 0, b: 0, c: 0, d: 22, e: 18 });
+  // Afragolese
+  put(['AFRAGOLESE', 'AFRAGOLESE 1944'], { a: 0, b: 0, c: 4, d: 22, e: 14 });
+  // Aranova
+  put(['ARANOVA', 'ASD ARANOVA'], { a: 0, b: 0, c: 0, d: 20, e: 20 });
+  // Atletico Terme Fiuggi
+  put(['ATLETICO TERME FIUGGI', 'ATLETICO FIUGGI', 'FIUGGI'], { a: 0, b: 0, c: 0, d: 22, e: 18 });
+  // Monastir
+  put(['MONASTIR', 'MONASTIR KOSMOTO'], { a: 0, b: 0, c: 0, d: 18, e: 22 });
+  // Venafro
+  put(['VENAFRO', 'US VENAFRO'], { a: 0, b: 0, c: 0, d: 20, e: 20 });
+  // Budoni
+  put(['BUDONI', 'POL BUDONI CALCIO'], { a: 0, b: 0, c: 0, d: 18, e: 22 });
+
   /* —— Serie D di paese: possono vincere il girone (→ C), mai B/A —— */
   var VILLAGE = { a: 0, b: 0, c: 2, d: 30, e: 8 };
   put([
@@ -552,6 +586,15 @@
      'SPORTING CLUB TRESTINA', 'FOSSOMBRONE', 'FORSEMPRONESE',
      'VIGOR SENIGALLIA', 'SENIGALLIA', 'ATLETICO ASCOLI', 'SANTEGIDIESE',
      'PIETRALUNGHESE', 'POL PIETRALUNGHESE', 'ANGELANA', 'K-SPORT MONTECCHIO'],
+    3, 4
+  );
+  /* Girone G Serie D 2026/27 — club senza storia in B/A: ceiling C */
+  lock(
+    ['LATTE DOLCE', 'SASSARI LATTE DOLCE', 'ALBALONGA', 'CYNTHIALBALONGA',
+     'TRASTEVERE', 'TRASTEVERE CALCIO', 'OSSESE', 'UNIPOMEZIA', 'UNI POMEZIA',
+     'ANZIO CALCIO', 'ANZIO CALCIO 1924', 'SARNESE', 'CITTA DI ANAGNI',
+     'CITTÀ DI ANAGNI', 'AFRAGOLESE', 'ARANOVA', 'ATLETICO TERME FIUGGI',
+     'ATLETICO FIUGGI', 'MONASTIR', 'VENAFRO', 'BUDONI'],
     3, 4
   );
 
