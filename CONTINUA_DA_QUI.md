@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Simulazione e Integrazione Serie D Girone C 2026/27** — Calcolo e assegnazione probabilità di promozione / salvezza / retrocessione, bonus risalita ex-C (Triestina, Union Clodiense, Legnago Salus) e vincoli geografici/lock HARD in `club-storia.js` (Mestre, Cjarlins Muzane, Bassano Virtus, Conegliano, Luparense, Este, Sandonà, Calcio Schio, Calvi Noale, Campodarsego, Brian Lignano, LME, Maia Alta). Cache `SERIEDC1`.
+Ultimo fatto: **Simulazione e Integrazione Serie D Girone D 2026/27** — Calcolo e assegnazione probabilità di promozione / salvezza / retrocessione, bonus risalita ex-C (Pro Patria, Pontedera, Pro Sesto) e vincoli geografici/lock HARD in `club-storia.js` (Varese, Cittadella Vis Modena, Crema 1908, FC Pistoiese, Lentigione, Correggese, Arconatese, Solbiatese, Varesina, Oltrepò FBC, Casatese, Castellanzese, Tropical Coriano, Sant'Angelo, Pavia Calcio). Cache `SERIEDD1`.
 Feature precedente: Aggiornato Logo Ufficiale Albese.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -81,6 +81,7 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
+| (questo) | Serie D Girone D 2026/27: quote promozione/salvezza/retrocessione, bonus risalita, vincoli e lock `club-storia.js` |
 | `7e5d317` | Serie D Girone C 2026/27: quote promozione/salvezza/retrocessione, bonus risalita, vincoli e lock `club-storia.js` |
 | `187c95d` | Serie D Girone A & B 2026/27: calcolo probabilità promozione/salvezza/retrocessione, bonus risalita, vincoli e lock `club-storia.js` |
 | `66c056d` | Minigioco: simboli SVG genere, loghi categorie, fix girone Serie D/piramide-italia, fix selfCheck/stayWeight club-storia; loghi HD Eccellenza Piemonte e Puglia |
@@ -342,6 +343,13 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-08-31** — Motore Simulazione Serie D 2026/27 (Girone D):
+  - Calcolo e assegnazione bande probabilità Promozione / Salvezza / Retrocessione per tutte le 18 squadre di Serie D Girone D (Lombardia/Emilia-Romagna/Toscana).
+  - Applicazione vincolo geografico Serie C (Girone A Lombardia / Girone B Centro-Toscana-Emilia) e retrocessione Eccellenza regionale.
+  - Regola speciale *Bonus Risalita* per Pro Patria (Alta), Pontedera (Alta), Pro Sesto (Media).
+  - Integrazione pesi storici reali, alias e lucchetti rigidi (HARD ceiling C) in `club-storia.js`.
+  - Cache `SERIEDD1`.
 
 - **2026-08-31** — Motore Simulazione Serie D 2026/27 (Girone C):
   - Calcolo e assegnazione bande probabilità Promozione / Salvezza / Retrocessione per tutte le 16 squadre di Serie D Girone C (Triveneto/Friuli/Trentino-Alto Adige).

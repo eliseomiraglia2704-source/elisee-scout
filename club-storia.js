@@ -326,6 +326,44 @@
   // Maia Alta (FC Obermais)
   put(['MAIA ALTA', 'FC OBERMAIS', 'OBERMAIS', 'DFK OBERMAIS'], { a: 0, b: 0, c: 0, d: 14, e: 26 });
 
+  /* —— Girone D Serie D: profili storici 2026/27 —— */
+  // Pro Patria: storia illustre (Serie A/B/C)
+  put(['PRO PATRIA', 'AURORA PRO PATRIA 1919', 'PRO PATRIA 1919'], { a: 12, b: 14, c: 14, d: 6 });
+  // Pontedera: storia recente di Serie C stabile
+  put(['PONTEDERA', 'US CITTA DI PONTEDERA', 'US PONTEDERA'], { a: 0, b: 0, c: 18, d: 16 });
+  // Varese: blasone storico (Serie A/B)
+  put(['VARESE', 'VARESE FC', 'CITTA DI VARESE'], { a: 7, b: 21, c: 10, d: 8 });
+  // Cittadella Vis Modena
+  put(['CITTADELLA VIS MODENA', 'VIS MODENA'], { a: 0, b: 0, c: 2, d: 24, e: 14 });
+  // Crema 1908
+  put(['CREMA', 'CREMA 1908', 'AC CREMA 1908'], { a: 0, b: 0, c: 4, d: 28, e: 8 });
+  // Pro Sesto: reduce da Serie C recente
+  put(['PRO SESTO', 'PRO SESTO 1913'], { a: 0, b: 4, c: 16, d: 20 });
+  // FC Pistoiese: piazza storica (ex Serie A/B)
+  put(['PISTOIESE', 'FC PISTOIESE', 'US PISTOIESE 1921'], { a: 1, b: 19, c: 14, d: 8 });
+  // Lentigione
+  put(['LENTIGIONE', 'LENTIGIONE CALCIO'], { a: 0, b: 0, c: 0, d: 28, e: 12 });
+  // Correggese
+  put(['CORREGGESE', 'CORREGGESE CALCIO 1948'], { a: 0, b: 0, c: 0, d: 26, e: 14 });
+  // Arconatese
+  put(['ARCONATESE', 'GS ARCONATESE 1926'], { a: 0, b: 0, c: 0, d: 26, e: 14 });
+  // Solbiatese
+  put(['SOLBIATESE', 'SOLBIATESE CALCIO 1911'], { a: 0, b: 0, c: 4, d: 24, e: 12 });
+  // Varesina
+  put(['VARESINA', 'VARESINA SPORT'], { a: 0, b: 0, c: 0, d: 24, e: 16 });
+  // Oltrepò FBC
+  put(['OLTREPO', 'OLTREPO FBC', 'OLTREPOVOGHERA'], { a: 0, b: 0, c: 0, d: 20, e: 20 });
+  // Casatese
+  put(['CASATESE', 'USD CASATESE', 'CASATESE MERATE'], { a: 0, b: 0, c: 0, d: 24, e: 16 });
+  // Castellanzese
+  put(['CASTELLANZESE', 'USD CASTELLANZESE 1921'], { a: 0, b: 0, c: 0, d: 22, e: 18 });
+  // Tropical Coriano
+  put(['TROPICAL CORIANO'], { a: 0, b: 0, c: 0, d: 18, e: 22 });
+  // Sant'Angelo
+  put(['SANTANGELO', 'SANT\'ANGELO', 'ASD SANT\'ANGELO'], { a: 0, b: 0, c: 2, d: 22, e: 16 });
+  // Pavia Calcio
+  put(['PAVIA', 'PAVIA CALCIO', 'FC PAVIA 1911'], { a: 0, b: 4, c: 14, d: 22 });
+
   /* —— Serie D di paese: possono vincere il girone (→ C), mai B/A —— */
   var VILLAGE = { a: 0, b: 0, c: 2, d: 30, e: 8 };
   put([
@@ -416,6 +454,14 @@
     ['CJARLINS MUZANE', 'CJARLINS', 'CONEGLIANO', 'LUPARENSE',
      'ESTE', 'SANDONA', 'SANDONÀ', 'CALCIO SCHIO', 'CALVI NOALE',
      'CAMPODARSEGO', 'BRIAN LIGNANO', 'LME', 'MAIA ALTA', 'FC OBERMAIS'],
+    3, 4
+  );
+  /* Girone D Serie D 2026/27 — club senza storia in B/A: ceiling C */
+  lock(
+    ['CITTADELLA VIS MODENA', 'VIS MODENA', 'CREMA', 'CREMA 1908',
+     'LENTIGIONE', 'CORREGGESE', 'ARCONATESE', 'SOLBIATESE',
+     'VARESINA', 'OLTREPO', 'OLTREPO FBC', 'CASATESE', 'USD CASATESE',
+     'CASTELLANZESE', 'TROPICAL CORIANO', 'SANTANGELO', 'SANT\'ANGELO'],
     3, 4
   );
 
