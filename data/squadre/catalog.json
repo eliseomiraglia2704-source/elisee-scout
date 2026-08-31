@@ -83186,16 +83186,16 @@
       "pts": 0,
       "played": 0,
       "logo": "immagini/squadre-loghi/ecc-dufour-varallo.png",
-      "primary": "#562da7",
-      "secondary": "#a9d258",
+      "primary": "#035c46",
+      "secondary": "#000000",
       "accent": "#ffffff",
       "home": {
-        "body": "#562da7",
-        "sleeve": "#562da7"
+        "body": "#035c46",
+        "sleeve": "#000000"
       },
       "away": {
-        "body": "#a9d258",
-        "sleeve": "#562da7"
+        "body": "#ffffff",
+        "sleeve": "#035c46"
       },
       "stadium": "",
       "capacity": null,

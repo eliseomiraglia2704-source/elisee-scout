@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Aggiornato Logo Ufficiale Druentina** — scaricato e integrato in alta risoluzione RGBA (535x720px) da Tuttocampo in `immagini/squadre-loghi/ecc-druentina.png`, `druentina.png`, `druento.png` e `ecc-druento.png`. Colori sociali allineati nel catalogo (`catalog.json`).
-Feature precedente: Aggiornato Logo Ufficiale Casale.
+Ultimo fatto: **Aggiornato Logo Ufficiale Dufour Varallo** — scaricato e integrato in alta risoluzione RGBA (1300x1479px) da Tuttocampo in `immagini/squadre-loghi/ecc-dufour-varallo.png`, `dufour-varallo.png`, `dufour.png`, `varallo.png` e `ecc-varallo.png`. Colori sociali allineati nel catalogo (`catalog.json`).
+Feature precedente: Aggiornato Logo Ufficiale Druentina.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -81,6 +81,7 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
+| (questo) | Aggiornato logo ufficiale Dufour Varallo (1300x1479px RGBA) da Tuttocampo e colori sociali |
 | `a87cce5` | Aggiornato logo ufficiale Druentina (535x720px RGBA) da Tuttocampo e colori sociali |
 | `53e5734` | Aggiornato logo ufficiale Casale (708x1000px RGBA) da Tuttocampo e colori sociali |
 | `8445240` | Aggiornato logo ufficiale Briga (562x563px RGBA) da Tuttocampo e colori sociali |
@@ -329,6 +330,9 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-08-31** — Aggiornato Logo Ufficiale Dufour Varallo:
+  - Scaricato e integrato in RGBA (1300x1479px) il logo del Dufour Varallo da Tuttocampo in `immagini/squadre-loghi/ecc-dufour-varallo.png`, `dufour-varallo.png`, `dufour.png`, `varallo.png` e `ecc-varallo.png`. Allineati colori sociali ufficiali (neroverde) nel catalogo. Cache `DUFOUR1`.
 
 - **2026-08-31** — Aggiornato Logo Ufficiale Druentina:
   - Scaricato e integrato in RGBA (535x720px) il logo della Druentina da Tuttocampo in `immagini/squadre-loghi/ecc-druentina.png`, `druentina.png`, `druento.png` e `ecc-druento.png`. Allineati colori sociali ufficiali (rossoblù) nel catalogo. Cache `DRUENTINA1`.
