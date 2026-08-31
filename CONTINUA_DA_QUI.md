@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Aggiornato Logo Ufficiale Settimo** — scaricato e integrato in alta risoluzione RGBA (1500x1313px) da Tuttocampo in `immagini/squadre-loghi/ecc-settimo.png`, `settimo.png`, `settimo-calcio.png` e `settimo-torinese.png`. Colori sociali allineati nel catalogo (`catalog.json`).
-Feature precedente: Aggiornato Logo Ufficiale Rivarolese.
+Ultimo fatto: **Aggiornato Logo Ufficiale Sparta Novaromentino** — scaricato e integrato in alta risoluzione RGBA (1000x996px) da Tuttocampo in `immagini/squadre-loghi/ecc-sparta-novaromentino.png`, `sparta-novaromentino.png`, `novaromentino.png` e `sparta-novara.png`. Colori sociali allineati nel catalogo (`catalog.json`).
+Feature precedente: Aggiornato Logo Ufficiale Settimo.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -81,6 +81,7 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
+| (questo) | Aggiornato logo ufficiale Sparta Novaromentino (1000x996px RGBA) da Tuttocampo e colori sociali |
 | `cdb983a` | Aggiornato logo ufficiale Settimo (1500x1313px RGBA) da Tuttocampo e colori sociali |
 | `7ed2704` | Aggiornato logo ufficiale Rivarolese (1166x1500px RGBA) da Tuttocampo e colori sociali |
 | `61946d7` | Aggiornato logo ufficiale Quincinetto Tavagnasco (1098x1339px RGBA) da Tuttocampo e colori sociali |
@@ -335,6 +336,9 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-08-31** — Aggiornato Logo Ufficiale Sparta Novaromentino:
+  - Scaricato e integrato in RGBA (1000x996px) il logo dello Sparta Novaromentino da Tuttocampo in `immagini/squadre-loghi/ecc-sparta-novaromentino.png`, `sparta-novaromentino.png`, `novaromentino.png` e `sparta-novara.png`. Allineati colori sociali ufficiali (nero-verde-bianco) nel catalogo. Cache `SPARTA1`.
 
 - **2026-08-31** — Aggiornato Logo Ufficiale Settimo:
   - Scaricato e integrato in RGBA (1500x1313px) il logo del Settimo da Tuttocampo in `immagini/squadre-loghi/ecc-settimo.png`, `settimo.png`, `settimo-calcio.png` e `settimo-torinese.png`. Allineati colori sociali ufficiali (viola-bianco) nel catalogo. Cache `SETTIMO1`.

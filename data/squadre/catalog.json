@@ -83360,16 +83360,16 @@
       "pts": 0,
       "played": 0,
       "logo": "immagini/squadre-loghi/ecc-sparta-novaromentino.png",
-      "primary": "#73a66a",
-      "secondary": "#8c5995",
+      "primary": "#1b1c1b",
+      "secondary": "#01a43f",
       "accent": "#ffffff",
       "home": {
-        "body": "#73a66a",
-        "sleeve": "#73a66a"
+        "body": "#1b1c1b",
+        "sleeve": "#01a43f"
       },
       "away": {
-        "body": "#8c5995",
-        "sleeve": "#73a66a"
+        "body": "#ffffff",
+        "sleeve": "#1b1c1b"
       },
       "stadium": "",
       "capacity": null,
