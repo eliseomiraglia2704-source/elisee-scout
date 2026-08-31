@@ -81,7 +81,7 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Aggiornato logo ufficiale Albese (1094x1500px RGBA) da Tuttocampo e colori sociali (Iniziato Girone B) |
+| `4837a5b` | Aggiornato logo ufficiale Albese (1094x1500px RGBA) da Tuttocampo e colori sociali (Iniziato Girone B) |
 | `f729d0e` | Aggiornato logo ufficiale Volpiano Pianese (650x662px RGBA) da Tuttocampo e colori sociali (Girone A completo) |
 | `5e8e684` | Aggiornato logo ufficiale Sparta Novaromentino (1000x996px RGBA) da Tuttocampo e colori sociali |
 | `cdb983a` | Aggiornato logo ufficiale Settimo (1500x1313px RGBA) da Tuttocampo e colori sociali |
