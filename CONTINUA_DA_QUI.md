@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Loghi Regioni Bianco Brillante & Ordinamento Alfabetico A-Z Minigioco** — Convertite tutte le sagome PNG delle 20 regioni in bianco puro con trasparenza + filtro CSS glow (`filter: brightness(0) invert(1)`), ordinamento delle schede regionali A-Z (`minigioco-carriera.js`). Cache `REGIONALPHAWHT1`.
-Feature precedente: Integrazione Immagini Ufficiali Regioni Minigioco.
+Ultimo fatto: **Visualizzazione Squadre a Griglia Orizzontale A-Z da Sinistra a Destra** — Sostituita la lista verticale delle squadre con una griglia responsive (`display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr))`) ordinata rigorosamente in ordine alfabetico A-Z per tutte le categorie, campionati, gironi e regioni (`minigioco-carriera.css` & `minigioco-carriera.js`). Cache `TEAMGRID1`.
+Feature precedente: Loghi Regioni Bianco Brillante & Ordinamento Alfabetico A-Z Minigioco.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

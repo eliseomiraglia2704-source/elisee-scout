@@ -2249,7 +2249,7 @@
 
     if (!list.length) return '<div class="es-mg-muted" style="padding:1.5rem;text-align:center;color:#94a3b8;">Nessuna squadra trovata per i criteri selezionati.</div>';
 
-    return list.slice(0, 160).map(function (c) {
+    return list.slice(0, 500).map(function (c) {
       var on = state.trialClub && state.trialClub.n === c.n ? ' is-on' : '';
       var city = c.city ? '<span class="es-mg-trial-city">' + esc(c.city) + '</span>' : '';
       return (
