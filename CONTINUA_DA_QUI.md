@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Minigioco: simboli SVG genere, loghi competizioni nelle categorie, fix girone Serie D, fix club-storia selfCheck/stayWeight; loghi HD Eccellenza Piemonte e Puglia aggiornati; commit/push/deploy recuperati dopo errori API 429**.
+Ultimo fatto: **Simulazione e Integrazione Serie D Girone A & Girone B 2026/27** — Calcolo e assegnazione probabilità di promozione / salvezza / retrocessione, bonus risalita ex-C e vincoli geografici/lock in `club-storia.js` (ChievoVerona, Milan Futuro, Virtus Verona, Piacenza, Fiorenzuola, Leon, Alessandria, Sestri Levante, Asti, Sanremese, Bra, ecc.). Cache `SERIEDB1`.
 Feature precedente: Aggiornato Logo Ufficiale Albese.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -81,6 +81,7 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
+| (questo) | Serie D Girone A & B 2026/27: calcolo probabilità promozione/salvezza/retrocessione, bonus risalita, vincoli e lock `club-storia.js` |
 | `66c056d` | Minigioco: simboli SVG genere, loghi categorie, fix girone Serie D/piramide-italia, fix selfCheck/stayWeight club-storia; loghi HD Eccellenza Piemonte e Puglia |
 | `7f2645e` | Aggiornato logo ufficiale Cheraschese (668x1034px RGBA) da Tuttocampo e colori sociali |
 | `4837a5b` | Aggiornato logo ufficiale Albese (1094x1500px RGBA) da Tuttocampo e colori sociali (Iniziato Girone B) |
@@ -340,6 +341,13 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-08-31** — Motore Simulazione Serie D 2026/27 (Gironi A e B):
+  - Calcolo e assegnazione bande probabilità Promozione / Salvezza / Retrocessione per tutti i club di Serie D Girone A e Girone B.
+  - Applicazione vincolo geografico per la destinazione Serie C e Serie D (in caso di retrocessione).
+  - Regola speciale *Bonus Risalita* per i club retrocessi non favoriti (Milan Futuro, Sestri Levante, Virtus Verona, Fiorenzuola, Caldiero Terme, Bra, Sanremese).
+  - Integrazione pesi storici reali, alias e lucchetti rigidi (HARD ceiling C) in `club-storia.js`.
+  - Cache `SERIEDB1`.
 
 - **2026-08-31** — Minigioco + piramide + club-storia: fix recuperati dopo errori API 429:
   - `minigioco-carriera.js`: sostituiti emoji genere (⚽/👩) con simboli SVG inline maschio/femmina; loghi competizione reali nelle schede categoria (al posto delle icone emoji); fix label Serie D per girone corretto (non sempre 'A'); femminile: aggiunta Eccellenza/Promozione Femminile con colori corretti.

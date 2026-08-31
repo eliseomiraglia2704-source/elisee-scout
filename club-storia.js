@@ -252,6 +252,46 @@
   put(['FIORENZUOLA'], { a: 0, b: 0, c: 12, d: 20 });
   put(['PORDENONE'], { a: 0, b: 6, c: 16, d: 18 });
 
+  /* —— Girone A Serie D: profili storici 2026/27 —— */
+  // Biellese 1902: storico club piemontese (fondato 1902), ex serie B/C; oggi stabilizzato in D/Eccellenza
+  put(['AS BIELLESE 1902', 'BIELLESE 1902', 'BIELLESE'], { a: 0, b: 4, c: 10, d: 26 });
+  // Ligorna 1922: tradizione ligure, frequentatore regolare della D con puntate in C
+  put(['LIGORNA', 'LIGORNA 1922', 'US LIGORNA'], { a: 0, b: 0, c: 8, d: 32 });
+  // Borgosesia: realtà vercellese, storia decente in D ma non di vertice
+  put(['BORGOSESIA', 'AS BORGOSESIA'], { a: 0, b: 0, c: 4, d: 36 });
+  // Fezzanese: realtà spezzina, alternanza D/Eccellenza Liguria
+  put(['FEZZANESE', 'FC FEZZANESE'], { a: 0, b: 0, c: 2, d: 28, e: 10 });
+  // Lascaris: piccola realtà torinese, prevalentemente D/Eccellenza Piemonte
+  put(['LASCARIS', 'ASD LASCARIS'], { a: 0, b: 0, c: 1, d: 20, e: 19 });
+  // Millesimo: piccola realtà savonese, alternanza Eccellenza/D
+  put(['MILLESIMO', 'ASD MILLESIMO'], { a: 0, b: 0, c: 0, d: 14, e: 26 });
+  // Valenzana Mado: piccola realtà alessandrina, D recente
+  put(['VALENZANA MADO', 'VALENZANA'], { a: 0, b: 0, c: 1, d: 18, e: 21 });
+
+  /* —— Girone B Serie D: profili storici 2026/27 —— */
+  // ChievoVerona: storia illustre (Serie A/B), ripartito con ambizioni di risalita immediata
+  put(['CHIEVO', 'CHIEVOVERONA', 'A.C. CHIEVOVERONA', 'AC CHIEVOVERONA'], { a: 17, b: 10, c: 5, d: 8 });
+  // Piacenza: blasone storico prestigioso (Serie A/B), consolidato
+  put(['PIACENZA', 'PIACENZA CALCIO', 'PIACENZA CALCIO 1919'], { a: 8, b: 18, c: 10, d: 4 });
+  // Pro Palazzolo: club bresciano solido
+  put(['PRO PALAZZOLO', 'AC PALAZZOLO', 'PALAZZOLO'], { a: 0, b: 0, c: 4, d: 32, e: 4 });
+  // Tritium: tradizione con anni in C, oggi in D
+  put(['TRITIUM', 'TRITIUM CALCIO 1908'], { a: 0, b: 0, c: 6, d: 30, e: 4 });
+  // Leon: progetto brianzolo in forte crescita
+  put(['LEON', 'AC LEON', 'LEON MONZA E BRIANZA'], { a: 0, b: 0, c: 2, d: 24, e: 14 });
+  // Real Calepina: bergamasca organizzata
+  put(['REAL CALEPINA', 'REAL CALEPINA FC'], { a: 0, b: 0, c: 0, d: 26, e: 14 });
+  // Rovato: bresciana stabile
+  put(['ROVATO', 'ROVATO VERTOVESE', 'ROVATO CALCIO'], { a: 0, b: 0, c: 0, d: 22, e: 18 });
+  // Scanzorosciate: bergamasca
+  put(['SCANZOROSCIATE', 'USD SCANZOROSCIATE'], { a: 0, b: 0, c: 0, d: 22, e: 18 });
+  // Virtus CiseranoBergamo
+  put(['VIRTUS CISERA', 'VIRTUS CISERANOBERGAMO', 'CISERANO-BERGAMO', 'CISERANO'], { a: 0, b: 0, c: 1, d: 25, e: 14 });
+  // Villa Valle
+  put(['VILLA VALLE', 'VILLAVALLE', 'VILLA D ALME VALLE BREMBANA'], { a: 0, b: 0, c: 0, d: 20, e: 20 });
+  // Nibbiano & Valtidone
+  put(['NIBBIANO & VALTIDONE', 'NIBBIANO VALTIDONE', 'NIBBIANO'], { a: 0, b: 0, c: 0, d: 10, e: 30 });
+
   /* —— Serie D di paese: possono vincere il girone (→ C), mai B/A —— */
   var VILLAGE = { a: 0, b: 0, c: 2, d: 30, e: 8 };
   put([
@@ -321,6 +361,22 @@
   );
   lock(['JUVENTUS U23', 'INTER U23', 'ATALANTA U23', 'JUVENTUS NEXT GEN'], 2, 4);
   lock(['MILAN U23', 'MILAN FUTURO'], 2, 4);
+  /* Girone A Serie D 2026/27 — club senza storia in B/A: ceiling C */
+  lock(
+    ['BORGOSESIA', 'AS BORGOSESIA', 'FEZZANESE', 'FC FEZZANESE',
+     'LASCARIS', 'ASD LASCARIS', 'MILLESIMO', 'ASD MILLESIMO',
+     'VALENZANA MADO', 'CHISOLA', 'CELLE VARAZZE',
+     'LIGORNA', 'LIGORNA 1922', 'US LIGORNA', 'GOZZANO'],
+    3, 4
+  );
+  /* Girone B Serie D 2026/27 — club senza storia in B/A: ceiling C */
+  lock(
+    ['LEON', 'REAL CALEPINA', 'ROVATO', 'ROVATO VERTOVESE',
+     'PRO PALAZZOLO', 'TRITIUM', 'SCANZOROSCIATE', 'VIRTUS CISERA',
+     'VIRTUS CISERANOBERGAMO', 'CISERANO-BERGAMO', 'VILLA VALLE',
+     'CLUB MILANO', 'NIBBIANO & VALTIDONE', 'NIBBIANO VALTIDONE'],
+    3, 4
+  );
 
   function addFail(names, dest, chance) {
     names.forEach(function (n) {
