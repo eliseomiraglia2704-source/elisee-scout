@@ -83302,16 +83302,16 @@
       "pts": 0,
       "played": 0,
       "logo": "immagini/squadre-loghi/ecc-rivarolese.png",
-      "primary": "#70b69f",
-      "secondary": "#8f4960",
+      "primary": "#952f4e",
+      "secondary": "#000000",
       "accent": "#ffffff",
       "home": {
-        "body": "#70b69f",
-        "sleeve": "#70b69f"
+        "body": "#952f4e",
+        "sleeve": "#000000"
       },
       "away": {
-        "body": "#8f4960",
-        "sleeve": "#70b69f"
+        "body": "#ffffff",
+        "sleeve": "#952f4e"
       },
       "stadium": "",
       "capacity": null,
