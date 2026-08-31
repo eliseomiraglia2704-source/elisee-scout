@@ -3,7 +3,7 @@
    - MAI servire HTML al posto di JS/CSS (causa "Unexpected token <")
    - Fallback HTML solo per navigazioni pagina
 */
-const CACHE = 'elisee-scout-v20260831-gironi-d-svg';
+const CACHE = 'elisee-scout-v20260831-gironi-clean-badges';
 const PRECACHE = [
   '/',
   '/index.html',

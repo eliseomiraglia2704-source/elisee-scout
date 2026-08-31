@@ -2151,7 +2151,6 @@
           '<span class="es-mg-girone-badge">GIRONE ' + esc(g) + '</span>' +
           '<span class="es-mg-girone-icon">' + gironeSvgIcon(g, meta.color) + '</span>' +
           '</div>' +
-          '<div class="es-mg-girone-title">Girone ' + esc(g) + '</div>' +
           '<div class="es-mg-girone-desc">' + esc(meta.desc) + '</div>' +
           '<div class="es-mg-girone-footer">' +
           '<span class="es-mg-girone-count">' + n + ' squadr' + (n === 1 ? 'a' : 'e') + '</span>' +

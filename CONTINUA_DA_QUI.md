@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **SVG Icone Geografiche per Regioni e Gironi nel Minigioco Carriera** — Sostituite tutte le emoji nelle card delle regioni italiane (Eccellenza/Promozione) e nelle card dei gironi (Serie C, Serie D) con SVG inline che rappresentano forme/silhouette geografiche della regione o bussola con lettera del girone. Stili CSS aggiornati. Cache `gironi-d-svg`.
-Feature precedente: Suddivisione preliminare nei 9 Gironi per la Serie D nel Minigioco Carriera.
+Ultimo fatto: **Pulizia Grafica Card Gironi nel Minigioco Carriera** — Rimosso il titolo duplicato grande in bianco "Girone A/B/C..." mantenendo solo il badge in alto "GIRONE X" e l'icona circolare SVG bussola/girone con descrizione e conteggio. Cache `gironi-clean-badges`.
+Feature precedente: SVG Icone Geografiche per Regioni e Gironi nel Minigioco Carriera.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
