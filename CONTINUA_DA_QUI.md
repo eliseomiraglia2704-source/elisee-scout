@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Integrazione Immagini Ufficiali Regioni Minigioco** — Integrate tutte le 20 immagini PNG/JPG delle regioni italiane in `immagini/regioni-svg/` direttamente nella selezione regionale del minigioco carriera (`minigioco-carriera.js` & `minigioco-carriera.css`). Cache `REGIONIMG1`.
-Feature precedente: Aggiornamento Logo Torrese (Eccellenza Abruzzo).
+Ultimo fatto: **Loghi Regioni Bianco Brillante & Ordinamento Alfabetico A-Z Minigioco** — Convertite tutte le sagome PNG delle 20 regioni in bianco puro con trasparenza + filtro CSS glow (`filter: brightness(0) invert(1)`), ordinamento delle schede regionali A-Z (`minigioco-carriera.js`). Cache `REGIONALPHAWHT1`.
+Feature precedente: Integrazione Immagini Ufficiali Regioni Minigioco.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

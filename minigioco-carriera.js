@@ -1990,7 +1990,7 @@
   /* ---- Mappa immagini delle regioni italiane (da immagini/regioni-svg/) ---- */
   var REGION_IMG_MAP = {
     'Piemonte': 'immagini/regioni-svg/piemonte.png',
-    'Valle d\'Aosta': 'immagini/regioni-svg/valle-daosta.jpg',
+    'Valle d\'Aosta': 'immagini/regioni-svg/valle-daosta.png',
     'Lombardia': 'immagini/regioni-svg/lombardia.png',
     'Trentino-A.A.': 'immagini/regioni-svg/trentino-alto-adige.png',
     'Veneto': 'immagini/regioni-svg/veneto.png',
@@ -2199,7 +2199,8 @@
         regions.push({ n: k, e: '📍', col: '#64748b', k: [] });
       }
     });
-    regions.sort(function(a, b) { return (counts[b.n] || 0) - (counts[a.n] || 0); });
+    /* ordina regioni in ordine alfabetico A-Z */
+    regions.sort(function(a, b) { return String(a.n).localeCompare(String(b.n), 'it'); });
 
     if (!regions.length) return '<div class="es-mg-muted" style="padding:1rem;color:#94a3b8;text-align:center;">Nessuna squadra in questa categoria.</div>';
 
