@@ -506,6 +506,42 @@
   // Gladiator
   put(['GLADIATOR', 'GLADIATOR 1924'], { a: 0, b: 0, c: 2, d: 22, e: 16 });
 
+  /* —— Girone I Serie D: profili storici 2026/27 —— */
+  // Reggina 1914: blasone storico illustre (Serie A/B)
+  put(['REGGINA', 'REGGINA 1914', 'LFA REGGIO CALABRIA', 'REGGIO CALABRIA'], { a: 9, b: 23, c: 6, d: 2 });
+  // Siracusa: piazza storica importante (Serie B/C) - penalizzazione -7
+  put(['SIRACUSA', 'SIRACUSA CALCIO 1924', 'SIRACUSA CALCIO'], { a: 0, b: 7, c: 24, d: 9 });
+  // Trapani 1905: storia gloriosa recente (Serie B/C) - penalizzazione -5
+  put(['TRAPANI', 'TRAPANI 1905', 'FC TRAPANI 1905'], { a: 0, b: 5, c: 24, d: 11 });
+  // Vibonese: reduce da Serie C recente
+  put(['VIBONESE', 'US VIBONESE CALCIO'], { a: 0, b: 0, c: 14, d: 26 });
+  // Ragusa
+  put(['RAGUSA', 'RAGUSA CALCIO'], { a: 0, b: 0, c: 4, d: 26, e: 10 });
+  // Milazzo
+  put(['MILAZZO', 'SS MILAZZO'], { a: 0, b: 0, c: 6, d: 24, e: 10 });
+  // Licata Calcio: piazza storica (ex Serie B)
+  put(['LICATA', 'LICATA CALCIO'], { a: 0, b: 2, c: 14, d: 24 });
+  // Sambiase
+  put(['SAMBIASE', 'ASD SAMBIASE', 'SAMBIASE LAMEZIA 1923'], { a: 0, b: 0, c: 0, d: 24, e: 16 });
+  // Athletic Club Palermo
+  put(['ATHLETIC PALERMO', 'ATHLETIC CLUB PALERMO'], { a: 0, b: 0, c: 0, d: 20, e: 20 });
+  // Modica
+  put(['MODICA', 'MODICA CALCIO'], { a: 0, b: 0, c: 2, d: 24, e: 14 });
+  // Gela: tradizione (ex Serie C) - penalizzazione -1
+  put(['GELA', 'GELA CALCIO', 'CITTA DI GELA'], { a: 0, b: 0, c: 12, d: 24, e: 4 });
+  // Nissa F.C.
+  put(['NISSA', 'NISSA FC', 'NISSA F.C.'], { a: 0, b: 0, c: 4, d: 24, e: 12 });
+  // Enna Calcio
+  put(['ENNA', 'ENNA CALCIO'], { a: 0, b: 0, c: 2, d: 22, e: 16 });
+  // Calcio Avola
+  put(['CALCIO AVOLA', 'AVOLA'], { a: 0, b: 0, c: 0, d: 18, e: 22 });
+  // Nuova Igea Virtus: piazza storica (ex Serie C)
+  put(['IGEA VIRTUS', 'NUOVA IGEA VIRTUS', 'IGEA VIRTUS BARCELLONA'], { a: 0, b: 0, c: 10, d: 24, e: 6 });
+  // Castrum Favara
+  put(['CASTRUMFAVARA', 'CASTRUM FAVARA', 'PRO FAVARA'], { a: 0, b: 0, c: 0, d: 18, e: 22 });
+  // Digiesse Sala Consilina
+  put(['DIGIESSE', 'DIGIESSE SALA CONSILINA', 'SALA CONSILINA'], { a: 0, b: 0, c: 0, d: 16, e: 24 });
+
   /* —— Serie D di paese: possono vincere il girone (→ C), mai B/A —— */
   var VILLAGE = { a: 0, b: 0, c: 2, d: 30, e: 8 };
   put([
@@ -640,6 +676,14 @@
      'REAL FORIO', 'REAL AVERSA', 'REAL NORMANNA', 'PALMESE',
      'GRAVINA', 'FBC GRAVINA', 'MELFI', 'MELFI 1929', 'MANFREDONIA',
      'ISCHIA', 'EBOLITANA', 'GLADIATOR', 'BISCEGLIE'],
+    3, 4
+  );
+  /* Girone I Serie D 2026/27 — club senza storia in B/A: ceiling C */
+  lock(
+    ['VIBONESE', 'RAGUSA', 'MILAZZO', 'SAMBIASE', 'ATHLETIC PALERMO',
+     'ATHLETIC CLUB PALERMO', 'MODICA', 'GELA', 'NISSA', 'NISSA FC',
+     'ENNA', 'CALCIO AVOLA', 'IGEA VIRTUS', 'NUOVA IGEA VIRTUS',
+     'CASTRUMFAVARA', 'CASTRUM FAVARA', 'DIGIESSE', 'DIGIESSE SALA CONSILINA'],
     3, 4
   );
 
