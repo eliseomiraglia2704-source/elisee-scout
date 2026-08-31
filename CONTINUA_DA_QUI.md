@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Pulizia Grafica Card Gironi nel Minigioco Carriera** — Rimosso il titolo duplicato grande in bianco "Girone A/B/C..." mantenendo solo il badge in alto "GIRONE X" e l'icona circolare SVG bussola/girone con descrizione e conteggio. Cache `gironi-clean-badges`.
-Feature precedente: SVG Icone Geografiche per Regioni e Gironi nel Minigioco Carriera.
+Ultimo fatto: **Aggiornamento Logo Ahrntal (Eccellenza Trentino-Alto Adige)** — Scaricato e applicato il logo ufficiale in alta risoluzione in `immagini/squadre-loghi/ecc-ahrntal.png`.
+Feature precedente: Pulizia Grafica Card Gironi nel Minigioco Carriera.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
