@@ -83157,16 +83157,16 @@
       "pts": 0,
       "played": 0,
       "logo": "immagini/squadre-loghi/ecc-druentina.png",
-      "primary": "#52b361",
-      "secondary": "#ad4c9e",
+      "primary": "#ed1a24",
+      "secondary": "#203f9a",
       "accent": "#ffffff",
       "home": {
-        "body": "#52b361",
-        "sleeve": "#52b361"
+        "body": "#ed1a24",
+        "sleeve": "#203f9a"
       },
       "away": {
-        "body": "#ad4c9e",
-        "sleeve": "#52b361"
+        "body": "#ffffff",
+        "sleeve": "#ed1a24"
       },
       "stadium": "",
       "capacity": null,
