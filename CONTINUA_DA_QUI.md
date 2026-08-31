@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Aggiornamento Logo Montorio 88 (Eccellenza Abruzzo)** — Scaricato e applicato il logo ufficiale in alta risoluzione in `immagini/squadre-loghi/ecc-montorio-88.png`.
+Ultimo fatto: **Batch 9 Loghi Abruzzo + Cartella SVG Regioni** — Scaricati loghi: Mosciano, Ovidiana Sulmona, Pontevomano, Pro Vasto, Rosetana, San Giovanni Teatino, San Salvo, Torrese, Virtus Cupello. Creata cartella `immagini/regioni-svg/` con 20 SVG placeholder delle regioni italiane (Sicilia, Basilicata, Liguria, Sardegna, Lombardia, Emilia-Romagna, Campania, Lazio, Piemonte, Veneto, Toscana, Friuli-V.G., Abruzzo, Calabria, Marche, Molise, Puglia, Trentino-A.A., Umbria, Valle d'Aosta). Sostituisci i file SVG con sagome geografiche precise.
 Feature precedente: Batch 14 Loghi Eccellenza (Umbria + Abruzzo).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
