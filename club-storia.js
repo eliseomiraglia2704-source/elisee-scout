@@ -400,6 +400,42 @@
   // Aquila Montevarchi
   put(['MONTEVARCHI', 'AQUILA MONTEVARCHI', 'AQUILA 1902 MONTEVARCHI'], { a: 0, b: 1, c: 14, d: 25 });
 
+  /* —— Girone F Serie D: profili storici 2026/27 —— */
+  // Teramo: piazza storica abruzzese (Serie C/B)
+  put(['TERAMO', 'SSD TERAMO CALCIO', 'CITTA DI TERAMO 1913'], { a: 0, b: 2, c: 22, d: 16 });
+  // Ancona: blasone storico illustre (Serie A/B/C)
+  put(['ANCONA', 'US ANCONA', 'US ANCONA 1905', 'ANCONA 1905'], { a: 2, b: 21, c: 11, d: 6 });
+  // L'Aquila 1927: piazza storica (ex Serie B/C)
+  put(['LAQUILA', 'L AQUILA', 'L\'AQUILA', 'L\'AQUILA 1927', 'LAQUILA 1927'], { a: 0, b: 3, c: 16, d: 21 });
+  // Recanatese: reduce da Serie C recente
+  put(['RECANATESE', 'US RECANATESE'], { a: 0, b: 0, c: 8, d: 32 });
+  // Maceratese: piazza marchigiana storica (ex Serie C)
+  put(['MACERATESE', 'SS MACERATESE 1922'], { a: 0, b: 1, c: 14, d: 25 });
+  // Notaresco
+  put(['NOTARESCO CALCIO', 'NOTARESCO', 'SN NOTARESCO'], { a: 0, b: 0, c: 0, d: 28, e: 12 });
+  // Sporting Club Trestina
+  put(['TRESTINA', 'SPORTING CLUB TRESTINA'], { a: 0, b: 0, c: 0, d: 26, e: 14 });
+  // Fossombrone
+  put(['FOSSOMBRONE', 'FORSEMPRONESE', 'FORSEMPRONESE 1949'], { a: 0, b: 0, c: 0, d: 26, e: 14 });
+  // Giulianova: tradizione (ex Serie C)
+  put(['GIULIANOVA', 'REAL GIULIANOVA'], { a: 0, b: 0, c: 12, d: 24, e: 4 });
+  // Vigor Senigallia
+  put(['VIGOR SENIGALLIA', 'SENIGALLIA'], { a: 0, b: 0, c: 2, d: 24, e: 14 });
+  // Atletico Ascoli
+  put(['ATLETICO ASCOLI'], { a: 0, b: 0, c: 0, d: 24, e: 16 });
+  // Foligno 1928: piazza storica umbra (ex Serie C)
+  put(['FOLIGNO', 'FOLIGNO 1928', 'FOLIGNO CALCIO'], { a: 0, b: 0, c: 10, d: 24, e: 6 });
+  // Santegidiese
+  put(['SANTEGIDIESE', 'SANTEGIDIESE 1948'], { a: 0, b: 0, c: 0, d: 20, e: 20 });
+  // Pol. Pietralunghese
+  put(['PIETRALUNGHESE', 'POL PIETRALUNGHESE'], { a: 0, b: 0, c: 0, d: 18, e: 22 });
+  // Angelana
+  put(['ANGELANA', 'ASD ANGELANA 1930'], { a: 0, b: 0, c: 0, d: 18, e: 22 });
+  // Lanciano FC: nobile decaduta (ex Serie B/C)
+  put(['LANCIANO FC', 'LANCIANO', 'VIRTUS LANCIANO'], { a: 0, b: 4, c: 14, d: 22 });
+  // K-Sport Montecchio
+  put(['K-SPORT MONTECCHIO', 'MONTECCHIO GALLO'], { a: 0, b: 0, c: 0, d: 16, e: 24 });
+
   /* —— Serie D di paese: possono vincere il girone (→ C), mai B/A —— */
   var VILLAGE = { a: 0, b: 0, c: 2, d: 30, e: 8 };
   put([
@@ -508,6 +544,14 @@
      'SERAVEZZA', 'RONDINELLA', 'RONDINELLA MARZOCCO', 'GRASSINA',
      'SASSO MARCONI', 'FLAMINIA', 'FLAMINIA CIVITA CASTELLANA',
      'TERRANUOVA TRAIANA', 'FOLLONICA GAVORRANO', 'GAVORRANO'],
+    3, 4
+  );
+  /* Girone F Serie D 2026/27 — club senza storia in B/A: ceiling C */
+  lock(
+    ['NOTARESCO CALCIO', 'NOTARESCO', 'SN NOTARESCO', 'TRESTINA',
+     'SPORTING CLUB TRESTINA', 'FOSSOMBRONE', 'FORSEMPRONESE',
+     'VIGOR SENIGALLIA', 'SENIGALLIA', 'ATLETICO ASCOLI', 'SANTEGIDIESE',
+     'PIETRALUNGHESE', 'POL PIETRALUNGHESE', 'ANGELANA', 'K-SPORT MONTECCHIO'],
     3, 4
   );
 
