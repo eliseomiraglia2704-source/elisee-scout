@@ -83389,16 +83389,16 @@
       "pts": 0,
       "played": 0,
       "logo": "immagini/squadre-loghi/ecc-volpiano-pianese.png",
-      "primary": "#8ea29d",
-      "secondary": "#715d62",
+      "primary": "#3b15c0",
+      "secondary": "#ffffff",
       "accent": "#ffffff",
       "home": {
-        "body": "#8ea29d",
-        "sleeve": "#8ea29d"
+        "body": "#3b15c0",
+        "sleeve": "#ffffff"
       },
       "away": {
-        "body": "#715d62",
-        "sleeve": "#8ea29d"
+        "body": "#ffffff",
+        "sleeve": "#3b15c0"
       },
       "stadium": "",
       "capacity": null,

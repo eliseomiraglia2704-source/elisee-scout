@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Aggiornato Logo Ufficiale Sparta Novaromentino** — scaricato e integrato in alta risoluzione RGBA (1000x996px) da Tuttocampo in `immagini/squadre-loghi/ecc-sparta-novaromentino.png`, `sparta-novaromentino.png`, `novaromentino.png` e `sparta-novara.png`. Colori sociali allineati nel catalogo (`catalog.json`).
-Feature precedente: Aggiornato Logo Ufficiale Settimo.
+Ultimo fatto: **Aggiornato Logo Ufficiale Volpiano Pianese** — scaricato e integrato in alta risoluzione RGBA (650x662px) da Tuttocampo in `immagini/squadre-loghi/ecc-volpiano-pianese.png`, `volpiano-pianese.png`, `volpiano.png` e `ecc-volpiano.png`. Colori sociali allineati nel catalogo (`catalog.json`). Completa tutti i 16 loghi ufficiali HD del Girone A di Eccellenza Piemonte / VDA!
+Feature precedente: Aggiornato Logo Ufficiale Sparta Novaromentino.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -81,6 +81,7 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
+| (questo) | Aggiornato logo ufficiale Volpiano Pianese (650x662px RGBA) da Tuttocampo e colori sociali (Girone A completo) |
 | `5e8e684` | Aggiornato logo ufficiale Sparta Novaromentino (1000x996px RGBA) da Tuttocampo e colori sociali |
 | `cdb983a` | Aggiornato logo ufficiale Settimo (1500x1313px RGBA) da Tuttocampo e colori sociali |
 | `7ed2704` | Aggiornato logo ufficiale Rivarolese (1166x1500px RGBA) da Tuttocampo e colori sociali |
@@ -336,6 +337,9 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-08-31** — Aggiornato Logo Ufficiale Volpiano Pianese (Tutto il Girone A completato):
+  - Scaricato e integrato in RGBA (650x662px) il logo del Volpiano Pianese da Tuttocampo in `immagini/squadre-loghi/ecc-volpiano-pianese.png`, `volpiano-pianese.png`, `volpiano.png` e `ecc-volpiano.png`. Allineati colori sociali ufficiali (blu-bianco) nel catalogo. Completato al 100% l'aggiornamento loghi HD di tutte le 16 squadre di Eccellenza Girone A. Cache `VOLPIANO1`.
 
 - **2026-08-31** — Aggiornato Logo Ufficiale Sparta Novaromentino:
   - Scaricato e integrato in RGBA (1000x996px) il logo dello Sparta Novaromentino da Tuttocampo in `immagini/squadre-loghi/ecc-sparta-novaromentino.png`, `sparta-novaromentino.png`, `novaromentino.png` e `sparta-novara.png`. Allineati colori sociali ufficiali (nero-verde-bianco) nel catalogo. Cache `SPARTA1`.
