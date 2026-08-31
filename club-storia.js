@@ -292,6 +292,40 @@
   // Nibbiano & Valtidone
   put(['NIBBIANO & VALTIDONE', 'NIBBIANO VALTIDONE', 'NIBBIANO'], { a: 0, b: 0, c: 0, d: 10, e: 30 });
 
+  /* —— Girone C Serie D: profili storici 2026/27 —— */
+  // Triestina: blasone storico prestigioso (Serie A/B/C), rosa superiore
+  put(['TRIESTINA', 'US TRIESTINA CALCIO 1918', 'TRIESTINA CALCIO'], { a: 28, b: 22, c: 18, d: 8 });
+  // Union Clodiense: reduce dalla Serie C
+  put(['UNION CLODIENSE', 'UNION CLODIENSE CHIOGGIA'], { a: 0, b: 0, c: 8, d: 32 });
+  // Mestre: piazza storica veneta
+  put(['MESTRE', 'AC MESTRE'], { a: 0, b: 2, c: 12, d: 26 });
+  // Legnago Salus: reduce da Serie C recente
+  put(['LEGNAGO SALUS', 'LEGNAGO'], { a: 0, b: 0, c: 14, d: 26 });
+  // Cjarlins Muzane: realtà friulana solida
+  put(['CJARLINS MUZANE', 'CJARLINS'], { a: 0, b: 0, c: 2, d: 28, e: 10 });
+  // Bassano Virtus / Bassano
+  put(['BASSANO', 'BASSANO VIRTUS', 'FC BASSANO 1903'], { a: 0, b: 0, c: 16, d: 24 });
+  // Conegliano
+  put(['CONEGLIANO', 'CONEGLIANO 1907'], { a: 0, b: 0, c: 2, d: 26, e: 12 });
+  // Luparense
+  put(['LUPARENSE', 'LUPARENSE FC'], { a: 0, b: 0, c: 0, d: 28, e: 12 });
+  // Este
+  put(['ESTE', 'AC ESTE'], { a: 0, b: 0, c: 0, d: 28, e: 12 });
+  // Sandonà
+  put(['SANDONA', 'SANDONÀ', 'SANDONA 1922'], { a: 0, b: 0, c: 4, d: 26, e: 10 });
+  // Calcio Schio
+  put(['CALCIO SCHIO', 'SCHIO'], { a: 0, b: 0, c: 2, d: 22, e: 16 });
+  // Calvi Noale
+  put(['CALVI NOALE'], { a: 0, b: 0, c: 0, d: 20, e: 20 });
+  // Campodarsego
+  put(['CAMPODARSEGO'], { a: 0, b: 0, c: 2, d: 28, e: 10 });
+  // Brian Lignano
+  put(['BRIAN LIGNANO', 'BRIAN LIGNANO CALCIO'], { a: 0, b: 0, c: 0, d: 18, e: 22 });
+  // LME
+  put(['LME', 'L.M.E.'], { a: 0, b: 0, c: 0, d: 12, e: 28 });
+  // Maia Alta (FC Obermais)
+  put(['MAIA ALTA', 'FC OBERMAIS', 'OBERMAIS', 'DFK OBERMAIS'], { a: 0, b: 0, c: 0, d: 14, e: 26 });
+
   /* —— Serie D di paese: possono vincere il girone (→ C), mai B/A —— */
   var VILLAGE = { a: 0, b: 0, c: 2, d: 30, e: 8 };
   put([
@@ -375,6 +409,13 @@
      'PRO PALAZZOLO', 'TRITIUM', 'SCANZOROSCIATE', 'VIRTUS CISERA',
      'VIRTUS CISERANOBERGAMO', 'CISERANO-BERGAMO', 'VILLA VALLE',
      'CLUB MILANO', 'NIBBIANO & VALTIDONE', 'NIBBIANO VALTIDONE'],
+    3, 4
+  );
+  /* Girone C Serie D 2026/27 — club senza storia in B/A: ceiling C */
+  lock(
+    ['CJARLINS MUZANE', 'CJARLINS', 'CONEGLIANO', 'LUPARENSE',
+     'ESTE', 'SANDONA', 'SANDONÀ', 'CALCIO SCHIO', 'CALVI NOALE',
+     'CAMPODARSEGO', 'BRIAN LIGNANO', 'LME', 'MAIA ALTA', 'FC OBERMAIS'],
     3, 4
   );
 

@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Simulazione e Integrazione Serie D Girone A & Girone B 2026/27** — Calcolo e assegnazione probabilità di promozione / salvezza / retrocessione, bonus risalita ex-C e vincoli geografici/lock in `club-storia.js` (ChievoVerona, Milan Futuro, Virtus Verona, Piacenza, Fiorenzuola, Leon, Alessandria, Sestri Levante, Asti, Sanremese, Bra, ecc.). Cache `SERIEDB1`.
+Ultimo fatto: **Simulazione e Integrazione Serie D Girone C 2026/27** — Calcolo e assegnazione probabilità di promozione / salvezza / retrocessione, bonus risalita ex-C (Triestina, Union Clodiense, Legnago Salus) e vincoli geografici/lock HARD in `club-storia.js` (Mestre, Cjarlins Muzane, Bassano Virtus, Conegliano, Luparense, Este, Sandonà, Calcio Schio, Calvi Noale, Campodarsego, Brian Lignano, LME, Maia Alta). Cache `SERIEDC1`.
 Feature precedente: Aggiornato Logo Ufficiale Albese.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -81,6 +81,7 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
+| (questo) | Serie D Girone C 2026/27: quote promozione/salvezza/retrocessione, bonus risalita, vincoli e lock `club-storia.js` |
 | `187c95d` | Serie D Girone A & B 2026/27: calcolo probabilità promozione/salvezza/retrocessione, bonus risalita, vincoli e lock `club-storia.js` |
 | `66c056d` | Minigioco: simboli SVG genere, loghi categorie, fix girone Serie D/piramide-italia, fix selfCheck/stayWeight club-storia; loghi HD Eccellenza Piemonte e Puglia |
 | `7f2645e` | Aggiornato logo ufficiale Cheraschese (668x1034px RGBA) da Tuttocampo e colori sociali |
@@ -341,6 +342,13 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-08-31** — Motore Simulazione Serie D 2026/27 (Girone C):
+  - Calcolo e assegnazione bande probabilità Promozione / Salvezza / Retrocessione per tutte le 16 squadre di Serie D Girone C (Triveneto/Friuli/Trentino-Alto Adige).
+  - Applicazione vincolo geografico Serie C (Girone A/B Nord-Est) e retrocessione Eccellenza regionale.
+  - Regola speciale *Bonus Risalita* per Triestina (Alta), Union Clodiense (Alta), Legnago Salus (Media).
+  - Integrazione pesi storici reali, alias e lucchetti rigidi (HARD ceiling C) in `club-storia.js`.
+  - Cache `SERIEDC1`.
 
 - **2026-08-31** — Motore Simulazione Serie D 2026/27 (Gironi A e B):
   - Calcolo e assegnazione bande probabilità Promozione / Salvezza / Retrocessione per tutti i club di Serie D Girone A e Girone B.
