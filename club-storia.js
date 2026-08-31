@@ -470,6 +470,42 @@
   // Budoni
   put(['BUDONI', 'POL BUDONI CALCIO'], { a: 0, b: 0, c: 0, d: 18, e: 22 });
 
+  /* —— Girone H Serie D: profili storici 2026/27 —— */
+  // Turris: storia importante tra i professionisti (Serie C)
+  put(['TURRIS', 'SS TURRIS CALCIO', 'TURRIS CALCIO'], { a: 0, b: 0, c: 20, d: 20 });
+  // Fidelis Andria: piazza storica (Serie B/C)
+  put(['FIDELIS ANDRIA', 'ANDRIA', 'FIDELIS ANDRIA 2018'], { a: 0, b: 6, c: 18, d: 16 });
+  // Nocerina: piazza storica caldissima (Serie B/C)
+  put(['NOCERINA', 'ASD NOCERINA 1910', 'NOCERINA 1910'], { a: 0, b: 3, c: 22, d: 15 });
+  // Brindisi: storia professionistica (Serie B/C)
+  put(['BRINDISI', 'BRINDISI FC', 'FOOTBALL BRINDISI 1912'], { a: 0, b: 6, c: 14, d: 20 });
+  // Bisceglie: reduce da Serie C recente
+  put(['BISCEGLIE', 'AS BISCEGLIE', 'AS BISCEGLIE 1913'], { a: 0, b: 0, c: 8, d: 32 });
+  // Martina: piazza storica (ex Serie C)
+  put(['MARTINA', 'MARTINA CALCIO', 'MARTINA FRANCA'], { a: 0, b: 0, c: 12, d: 28 });
+  // Francavilla (Virtus Francavilla / Francavilla)
+  put(['FRANCAVILLA', 'VIRTUS FRANCAVILLA', 'FC FRANCAVILLA'], { a: 0, b: 0, c: 12, d: 28 });
+  // Nardò
+  put(['NARDO', 'AC NARDO', 'A.C NARDO', 'A.C NARDÒ', 'AC NARDÒ'], { a: 0, b: 0, c: 4, d: 32, e: 4 });
+  // Real Forio
+  put(['REAL FORIO', 'REAL FORIO 2014'], { a: 0, b: 0, c: 0, d: 22, e: 18 });
+  // Real Aversa (Real Normanna)
+  put(['REAL AVERSA', 'REAL NORMANNA', 'AVERSA NORMANNA'], { a: 0, b: 0, c: 8, d: 26, e: 6 });
+  // Palmese
+  put(['PALMESE', 'US PALMESE 1914'], { a: 0, b: 0, c: 4, d: 24, e: 12 });
+  // FBC Gravina
+  put(['GRAVINA', 'FBC GRAVINA'], { a: 0, b: 0, c: 0, d: 26, e: 14 });
+  // Melfi 1929: tradizione lucana (ex Serie C)
+  put(['MELFI', 'MELFI 1929', 'AS MELFI'], { a: 0, b: 0, c: 14, d: 24, e: 2 });
+  // Manfredonia: piazza storica pugliese (ex Serie C)
+  put(['MANFREDONIA', 'MANFREDONIA CALCIO 1932'], { a: 0, b: 0, c: 8, d: 28, e: 4 });
+  // Ischia: tradizione isolana (ex Serie C)
+  put(['ISCHIA', 'ISCHIA CALCIO', 'ISCHIA ISOLAVERDE'], { a: 0, b: 0, c: 12, d: 24, e: 4 });
+  // Ebolitana
+  put(['EBOLITANA', 'EBOLITANA CALCIO 1925'], { a: 0, b: 0, c: 2, d: 22, e: 16 });
+  // Gladiator
+  put(['GLADIATOR', 'GLADIATOR 1924'], { a: 0, b: 0, c: 2, d: 22, e: 16 });
+
   /* —— Serie D di paese: possono vincere il girone (→ C), mai B/A —— */
   var VILLAGE = { a: 0, b: 0, c: 2, d: 30, e: 8 };
   put([
@@ -595,6 +631,15 @@
      'ANZIO CALCIO', 'ANZIO CALCIO 1924', 'SARNESE', 'CITTA DI ANAGNI',
      'CITTÀ DI ANAGNI', 'AFRAGOLESE', 'ARANOVA', 'ATLETICO TERME FIUGGI',
      'ATLETICO FIUGGI', 'MONASTIR', 'VENAFRO', 'BUDONI'],
+    3, 4
+  );
+  /* Girone H Serie D 2026/27 — club senza storia in B/A: ceiling C */
+  lock(
+    ['MARTINA', 'MARTINA CALCIO', 'FRANCAVILLA', 'VIRTUS FRANCAVILLA',
+     'FC FRANCAVILLA', 'NARDO', 'AC NARDO', 'A.C NARDO', 'A.C NARDÒ',
+     'REAL FORIO', 'REAL AVERSA', 'REAL NORMANNA', 'PALMESE',
+     'GRAVINA', 'FBC GRAVINA', 'MELFI', 'MELFI 1929', 'MANFREDONIA',
+     'ISCHIA', 'EBOLITANA', 'GLADIATOR', 'BISCEGLIE'],
     3, 4
   );
 

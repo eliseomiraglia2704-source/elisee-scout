@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Simulazione e Integrazione Serie D Girone G 2026/27** — Calcolo e assegnazione probabilità di promozione / salvezza / retrocessione, bonus risalita ex-C (Gelbison, Paganese) e vincoli geografici/lock HARD in `club-storia.js` (Sassari Latte Dolce, Albalonga, Trastevere, Ossese, UniPomezia, Anzio Calcio, Sarnese, Città di Anagni, Afragolese, Aranova, Atletico Terme Fiuggi, Monastir, Venafro, Budoni). Cache `SERIEDG1`.
+Ultimo fatto: **Simulazione e Integrazione Serie D Girone H 2026/27** — Calcolo e assegnazione probabilità di promozione / salvezza / retrocessione, bonus risalita ex-C (Turris, Fidelis Andria, Brindisi, Bisceglie, Francavilla) e vincoli geografici/lock HARD in `club-storia.js` (Nocerina, Martina, Nardò, Real Forio, Real Aversa, Palmese, FBC Gravina, Melfi 1929, Manfredonia, Ischia, Ebolitana, Gladiator). Cache `SERIEDH1`.
 Feature precedente: Aggiornato Logo Ufficiale Albese.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -81,6 +81,7 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
+| (questo) | Serie D Girone H 2026/27: quote promozione/salvezza/retrocessione, bonus risalita, vincoli e lock `club-storia.js` |
 | `3520323` | Serie D Girone G 2026/27: quote promozione/salvezza/retrocessione, bonus risalita, vincoli e lock `club-storia.js` |
 | `d0af3bb` | Serie D Girone F 2026/27: quote promozione/salvezza/retrocessione, bonus risalita, vincoli e lock `club-storia.js` |
 | `44e3a1b` | Serie D Girone E 2026/27: quote promozione/salvezza/retrocessione, bonus risalita, vincoli e lock `club-storia.js` |
@@ -346,6 +347,13 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-08-31** — Motore Simulazione Serie D 2026/27 (Girone H):
+  - Calcolo e assegnazione bande probabilità Promozione / Salvezza / Retrocessione per tutte le 17 squadre di Serie D Girone H (Puglia/Campania/Basilicata).
+  - Applicazione vincolo geografico naturale Serie C (Girone C Sud) e retrocessione Eccellenza regionale.
+  - Regola speciale *Bonus Risalita* per Turris (Alta), Fidelis Andria (Alta), Brindisi (Media-Alta), Bisceglie (Media), Francavilla (Media).
+  - Integrazione pesi storici reali, alias e lucchetti rigidi (HARD ceiling C) in `club-storia.js`.
+  - Cache `SERIEDH1`.
 
 - **2026-08-31** — Motore Simulazione Serie D 2026/27 (Girone G):
   - Calcolo e assegnazione bande probabilità Promozione / Salvezza / Retrocessione per tutte le 16 squadre di Serie D Girone G (Lazio/Sardegna/Campania/Molise).
