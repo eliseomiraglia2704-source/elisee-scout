@@ -83041,16 +83041,16 @@
       "pts": 0,
       "played": 0,
       "logo": "immagini/squadre-loghi/ecc-baveno-stresa.png",
-      "primary": "#52a7d1",
-      "secondary": "#ad582e",
-      "accent": "#ffffff",
+      "primary": "#415aa4",
+      "secondary": "#ffffff",
+      "accent": "#1e3a8a",
       "home": {
-        "body": "#52a7d1",
-        "sleeve": "#52a7d1"
+        "body": "#415aa4",
+        "sleeve": "#ffffff"
       },
       "away": {
-        "body": "#ad582e",
-        "sleeve": "#52a7d1"
+        "body": "#ffffff",
+        "sleeve": "#415aa4"
       },
       "stadium": "",
       "capacity": null,
