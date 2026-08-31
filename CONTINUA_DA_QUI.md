@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Aggiornato Logo Ufficiale Pro Eureka** — scaricato e integrato in alta risoluzione RGBA (391x429px) da Tuttocampo in `immagini/squadre-loghi/ecc-pro-eureka.png`, `pro-eureka.png` e `pro-eureka-settimo.png`. Colori sociali allineati nel catalogo (`catalog.json`).
-Feature precedente: Aggiornato Logo Ufficiale Fulgor Chiavazzese.
+Ultimo fatto: **Aggiornato Logo Ufficiale Quincinetto Tavagnasco** — scaricato e integrato in alta risoluzione RGBA (1098x1339px) da Tuttocampo in `immagini/squadre-loghi/ecc-quincinetto-tavagnasco.png`, `quincinetto-tavagnasco.png`, `quincinetto.png`, `quinci-tava.png` e `ecc-quincitava.png`. Colori sociali allineati nel catalogo (`catalog.json`).
+Feature precedente: Aggiornato Logo Ufficiale Pro Eureka.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -81,6 +81,7 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
+| (questo) | Aggiornato logo ufficiale Quincinetto Tavagnasco (1098x1339px RGBA) da Tuttocampo e colori sociali |
 | `47a5078` | Aggiornato logo ufficiale Pro Eureka (391x429px RGBA) da Tuttocampo e colori sociali |
 | `8909bf5` | Aggiornato logo ufficiale Fulgor Chiavazzese (444x562px RGBA) da Tuttocampo e colori sociali |
 | `23f19bd` | Aggiornato logo ufficiale Dufour Varallo (1300x1479px RGBA) da Tuttocampo e colori sociali |
@@ -332,6 +333,9 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-08-31** — Aggiornato Logo Ufficiale Quincinetto Tavagnasco:
+  - Scaricato e integrato in RGBA (1098x1339px) il logo del Quincinetto Tavagnasco da Tuttocampo in `immagini/squadre-loghi/ecc-quincinetto-tavagnasco.png`, `quincinetto-tavagnasco.png`, `quincinetto.png`, `quinci-tava.png` e `ecc-quincitava.png`. Allineati colori sociali ufficiali (nerostellati / nerobianco) nel catalogo. Cache `QUINCITAVA1`.
 
 - **2026-08-31** — Aggiornato Logo Ufficiale Pro Eureka:
   - Scaricato e integrato in RGBA (391x429px) il logo del Pro Eureka da Tuttocampo in `immagini/squadre-loghi/ecc-pro-eureka.png`, `pro-eureka.png` e `pro-eureka-settimo.png`. Allineati colori sociali ufficiali (blucerchiato / blu-bianco-rosso-oro) nel catalogo. Cache `PROEUREKA1`.

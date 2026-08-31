@@ -83273,16 +83273,16 @@
       "pts": 0,
       "played": 0,
       "logo": "immagini/squadre-loghi/ecc-quincinetto-tavagnasco.png",
-      "primary": "#4b844c",
-      "secondary": "#b47bb3",
+      "primary": "#000000",
+      "secondary": "#ffffff",
       "accent": "#ffffff",
       "home": {
-        "body": "#4b844c",
-        "sleeve": "#4b844c"
+        "body": "#000000",
+        "sleeve": "#000000"
       },
       "away": {
-        "body": "#b47bb3",
-        "sleeve": "#4b844c"
+        "body": "#ffffff",
+        "sleeve": "#000000"
       },
       "stadium": "",
       "capacity": null,
