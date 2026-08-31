@@ -1,4 +1,4 @@
-# ELISEE SCOUT — aggiorna-immagini.ps1
+# ELISEE SCOUT - aggiorna-immagini.ps1
 # Quando l'utente mette file nuovi (anche con nome tipo "image (6).jpg"),
 # questo script:
 #  1) li rinomina al nome ufficiale della cartella
@@ -48,10 +48,24 @@ function Get-ImageFiles($dir) {
     Where-Object { $ImageExt -contains $_.Extension }
 }
 
-Write-Host "=== ELISEE SCOUT — aggiorna immagini ==="
-Write-Host "Site: $SiteRoot"
-Write-Host "Img:  $ImgRoot"
-Write-Host "Token cache: $Token"
+function Check-JSFiles {
+    param([string]$RootPath)
+    Write-Host "=== Controllo sintassi JavaScript ==="
+    $jsFiles = Get-ChildItem -Path $RootPath -Recurse -Include *.js -File -ErrorAction SilentlyContinue
+    foreach ($file in $jsFiles) {
+        try {
+            node --check $file.FullName
+            Write-Host ("OK    " + $file.FullName)
+        } catch {
+            Write-Host ("ERR   " + $file.FullName + " - " + $_.Exception.Message)
+        }
+    }
+}
+
+Write-Host "=== ELISEE SCOUT - aggiorna immagini ==="
+Write-Host ("Site: " + $SiteRoot)
+Write-Host ("Img:  " + $ImgRoot)
+Write-Host ("Token cache: " + $Token)
 Write-Host ""
 
 foreach ($folder in $Canon.Keys) {
@@ -67,31 +81,25 @@ foreach ($folder in $Canon.Keys) {
   $expectedBase = [System.IO.Path]::GetFileNameWithoutExtension($expected)
   $expectedExt = [System.IO.Path]::GetExtension($expected).ToLowerInvariant()
 
-  # File immagine nella root della cartella (non in sottocartelle)
   $rootImgs = Get-ImageFiles $dir
 
-  # Anche bozze in modifiche/ e corrente/ se più recenti
   $modImgs = @()
   $modDir = Join-Path $dir "modifiche"
   if (Test-Path $modDir) { $modImgs = @(Get-ImageFiles $modDir) }
 
-  # Scegli il candidato "nuovo": il più recente tra root + modifiche
   $candidates = @($rootImgs) + @($modImgs)
   if ($candidates.Count -eq 0) {
-    $Report.Add("SKIP  $folder — nessun file immagine")
+    $Report.Add("SKIP  " + $folder + " - nessun file immagine")
     continue
   }
 
   $newest = $candidates | Sort-Object LastWriteTime -Descending | Select-Object -First 1
   $destPath = Join-Path $dir $expected
 
-  # Se l'estensione del nuovo file differisce (es. png al posto di jpg), adatta il nome canonico
   $newExt = $newest.Extension.ToLowerInvariant()
   $finalName = $expected
   if ($newExt -ne $expectedExt -and $newExt -in @(".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg")) {
-    # Per foto: accetta jpg/png/webp al posto del default; per svg resta svg se possibile
     if ($expectedExt -eq ".svg" -and $newExt -ne ".svg") {
-      # SVG sostituito da raster: usa estensione reale e aggiorneremo i riferimenti
       $finalName = $expectedBase + $newExt
     } elseif ($expectedExt -ne ".svg") {
       $finalName = $expectedBase + $(if ($newExt -eq ".jpeg") { ".jpg" } else { $newExt })
@@ -99,10 +107,8 @@ foreach ($folder in $Canon.Keys) {
     $destPath = Join-Path $dir $finalName
   }
 
-  # Se il file più recente non è già al nome giusto, rinomina/copia
   if ($newest.FullName -ne $destPath) {
     if (Test-Path $destPath) {
-      # Backup del precedente in originali/ se non esiste ancora un backup con timestamp
       $bakName = "{0}.prev-{1}{2}" -f $expectedBase, (Get-Date -Format "yyyyMMdd_HHmmss"), ([System.IO.Path]::GetExtension($destPath))
       $bakPath = Join-Path (Join-Path $dir "originali") $bakName
       if (-not (Test-Path (Join-Path $dir "originali"))) {
@@ -111,10 +117,8 @@ foreach ($folder in $Canon.Keys) {
       Copy-Item $destPath $bakPath -Force
     }
     Copy-Item $newest.FullName $destPath -Force
-    # Rimuovi file root "sporchi" (image (6).jpg ecc.) se diversi dal canonico
     foreach ($extra in $rootImgs) {
       if ($extra.FullName -ne $destPath -and $extra.Name -ne $finalName) {
-        # sposta in modifiche/ come archivio
         $arch = Join-Path (Join-Path $dir "modifiche") $extra.Name
         if (-not (Test-Path (Join-Path $dir "modifiche"))) {
           New-Item -ItemType Directory -Path (Join-Path $dir "modifiche") -Force | Out-Null
@@ -124,65 +128,42 @@ foreach ($folder in $Canon.Keys) {
         }
       }
     }
-    $Report.Add("OK    $folder : $($newest.Name)  →  $finalName")
+    $Report.Add("OK    " + $folder + " : " + $newest.Name + " -> " + $finalName)
   } else {
-    $Report.Add("OK    $folder : $finalName (già corretto)")
+    $Report.Add("OK    " + $folder + " : " + $finalName + " (gia corretto)")
   }
 
-  # Sync corrente/
   $corrDir = Join-Path $dir "corrente"
   if (-not (Test-Path $corrDir)) { New-Item -ItemType Directory -Path $corrDir -Force | Out-Null }
-  Copy-Item $destPath (Join-Path $corrDir $finalName) -Force
+  try {
+    Copy-Item $destPath (Join-Path $corrDir $finalName) -Force
+  } catch {
+    # File in uso dal server o non sovrascrivibile al momento
+  }
 
-  # Se l'estensione è cambiata rispetto al default, registra per aggiornare i path nel codice
   if ($finalName -ne $expected) {
-    $Report.Add("NOTE  $folder : estensione cambiata ($expected → $finalName) — aggiornare riferimenti codice se serve")
+    $Report.Add("NOTE  " + $folder + " : estensione cambiata da " + $expected + " a " + $finalName)
   }
 }
+
+Check-JSFiles -RootPath $SiteRoot
 
 # --- Cache-bust nei file del sito ---
 function Update-CacheBust([string]$filePath, [string]$token) {
-  if (-not (Test-Path $filePath)) { return $false }
-  $content = Get-Content -Path $filePath -Raw -Encoding UTF8
-  $orig = $content
+    if (-not (Test-Path $filePath)) { return $false }
+    $content = Get-Content -Path $filePath -Raw -Encoding UTF8
+    $orig = $content
 
-  # Sostituisci ?v=... su path immagini/
-  $content = [regex]::Replace($content, '(immagini/[^"''?\s]+)\?v=[^"''&\s]*', "`$1?v=$token")
+    $content = $content -replace '(?<=immagini/[a-zA-Z0-9_\-\./]+)\?v=[a-zA-Z0-9_]+', "?v=$token"
+    $content = $content -replace '(?<=(style\.css|app\.js|i18n\.js))\?v=[a-zA-Z0-9_]+', "?v=$token"
 
-  # Aggiungi ?v= se manca su path immagini noti (src/url)
-  $content = [regex]::Replace(
-    $content,
-    '(src|href)=(["''])(immagini/[^"'']+\.(?:jpg|jpeg|png|svg|webp|gif))\2',
-    { param($m)
-      $attr = $m.Groups[1].Value
-      $q = $m.Groups[2].Value
-      $path = $m.Groups[3].Value
-      if ($path -match '\?v=') { return $m.Value }
-      return "$attr=$q$path`?v=$token$q"
+    if ($content -ne $orig) {
+        Set-Content -Path $filePath -Value $content -Encoding UTF8 -NoNewline
+        return $true
     }
-  )
-  $content = [regex]::Replace(
-    $content,
-    "url\((['""]?)(immagini/[^)'""]+\.(?:jpg|jpeg|png|svg|webp|gif))(?:\?v=[^)'""]*)?\1\)",
-    { param($m)
-      $q = $m.Groups[1].Value
-      $path = $m.Groups[2].Value
-      return "url($q$path`?v=$token$q)"
-    }
-  )
-
-  # Cache bust style.css / app.js / i18n.js in index
-  $content = [regex]::Replace($content, '(style\.css|app\.js|i18n\.js)\?v=[^"''&]+', "`$1?v=$token")
-
-  if ($content -ne $orig) {
-    Set-Content -Path $filePath -Value $content -Encoding UTF8 -NoNewline
-    return $true
-  }
-  return $false
+    return $false
 }
 
-# Path canonici attesi nel codice (per fix estensione se needed)
-# Forza i nomi standard nei riferimenti (jpg di default)
 $replacements = @{
   "immagini/01-home-hero/hero-workspace." = "immagini/01-home-hero/hero-workspace.jpg"
   "immagini/02-chi-siamo-ritratto/about-portrait." = "immagini/02-chi-siamo-ritratto/about-portrait.jpg"
@@ -191,29 +172,26 @@ $replacements = @{
 foreach ($rel in @("index.html", "style.css", "app.js")) {
   $fp = Join-Path $SiteRoot $rel
   if (Update-CacheBust $fp $Token) {
-    $Report.Add("BUST  $rel → ?v=$Token")
+    $Report.Add("BUST  " + $rel + " -> ?v=" + $Token)
   } else {
-    # Forza almeno un bump su style.css link e immagini note
     if (Test-Path $fp) {
-      $c = Get-Content $fp -Raw -Encoding UTF8
-      $c2 = $c -replace '\?v=\d{8}_\d{6}', "?v=$Token"
-      $c2 = $c2 -replace '\?v=\d+(?=["''])', "?v=$Token"
+      $c = Get-Content -Path $fp -Raw -Encoding UTF8
+      $c2 = $c -replace '\?v=[a-zA-Z0-9_]+', "?v=$Token"
       if ($c2 -ne $c) {
         Set-Content -Path $fp -Value $c2 -Encoding UTF8 -NoNewline
-        $Report.Add("BUST  $rel → ?v=$Token (fallback)")
+        $Report.Add("BUST  " + $rel + " -> ?v=" + $Token + " (fallback)")
       } else {
-        $Report.Add("SKIP  $rel — nessuna modifica cache")
+        $Report.Add("SKIP  " + $rel + " - nessuna modifica cache")
       }
     }
   }
 }
 
-# Scrivi token
 Set-Content -Path (Join-Path $ImgRoot ".cache-bust") -Value $Token -Encoding ASCII
 
 Write-Host ""
 Write-Host "=== REPORT ==="
-$Report | ForEach-Object { Write-Host $_ }
+foreach ($r in $Report) { Write-Host $r }
 Write-Host ""
-Write-Host "Fatto. Token: $Token"
+Write-Host ("Fatto. Token: " + $Token)
 Write-Host "Ricarica il browser con Ctrl+F5"

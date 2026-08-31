@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Griglia Regioni Eccellenza + Fix Scroll Categorie nel Minigioco Carriera** — Aggiunto step intermedio (Fase 1.5) con griglia a card delle 20 regioni italiane per Eccellenza/Promozione/categorie regionali (tier ≥ 5): seleziona regione → vedi squadre filtrate. Scroll abilitato su griglia categorie, lista squadre e griglia regioni. Cache `REGIONGRID1`.
-Feature precedente: Aggiornato Logo Ufficiale Albese.
+Ultimo fatto: **Suddivisione preliminare nei 3 Gironi per la Serie C nel Minigioco Carriera** — Cliccando su Serie C nel provino, compare prima lo step di selezione tra i tre gironi (Girone A, Girone B, Girone C) con card grafiche dedicate (descrizione geografica, badge, conteggio 20 squadre per girone). Selezionando il girone desiderato, viene mostrato l'elenco filtrato delle sole squadre appartenenti a quel girone, con pulsanti di ritorno `← Gironi` e `← Categorie`. Cache `gironi-c`.
+Feature precedente: Griglia Regioni Eccellenza + Fix Scroll Categorie nel Minigioco Carriera.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
