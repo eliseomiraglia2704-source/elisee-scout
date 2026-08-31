@@ -81,7 +81,7 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Aggiornato logo ufficiale Briga (562x563px RGBA) da Tuttocampo e colori sociali |
+| `8445240` | Aggiornato logo ufficiale Briga (562x563px RGBA) da Tuttocampo e colori sociali |
 | `aacc199` | Aggiornato logo ufficiale Borgaro (800x784px RGBA) da Tuttocampo e colori sociali |
 | `0ccffdc` | Aggiornato logo ufficiale Baveno Stresa (571x703px RGBA) da Tuttocampo e colori sociali |
 | `1f154f4` | Aggiornato logo ufficiale Aygreville (836x720px RGBA) da Tuttocampo e colori sociali |
