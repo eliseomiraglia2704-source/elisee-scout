@@ -83099,16 +83099,16 @@
       "pts": 0,
       "played": 0,
       "logo": "immagini/squadre-loghi/ecc-briga.png",
-      "primary": "#d1543a",
-      "secondary": "#2eabc5",
+      "primary": "#1d67c6",
+      "secondary": "#fe0000",
       "accent": "#ffffff",
       "home": {
-        "body": "#d1543a",
-        "sleeve": "#d1543a"
+        "body": "#1d67c6",
+        "sleeve": "#fe0000"
       },
       "away": {
-        "body": "#2eabc5",
-        "sleeve": "#d1543a"
+        "body": "#ffffff",
+        "sleeve": "#1d67c6"
       },
       "stadium": "",
       "capacity": null,
