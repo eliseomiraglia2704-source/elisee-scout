@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Aggiornamento Logo Brunico Bruneck (Eccellenza Trentino-Alto Adige)** — Scaricato e applicato il logo ufficiale in alta risoluzione in `immagini/squadre-loghi/ecc-brunico-bruneck.png`.
-Feature precedente: Aggiornamento Logo Bozner (Eccellenza Trentino-Alto Adige).
+Ultimo fatto: **Aggiornamento Logo Comano Terme Fiavè (Eccellenza Trentino-Alto Adige)** — Scaricato e applicato il logo ufficiale in alta risoluzione in `immagini/squadre-loghi/ecc-comano-terme-fiave.png`.
+Feature precedente: Aggiornamento Logo Brunico Bruneck (Eccellenza Trentino-Alto Adige).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
