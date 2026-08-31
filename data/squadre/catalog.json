@@ -83012,16 +83012,16 @@
       "pts": 0,
       "played": 0,
       "logo": "immagini/squadre-loghi/ecc-aygreville.png",
-      "primary": "#688847",
-      "secondary": "#9777b8",
-      "accent": "#ffffff",
+      "primary": "#fe0000",
+      "secondary": "#000000",
+      "accent": "#c99e50",
       "home": {
-        "body": "#688847",
-        "sleeve": "#688847"
+        "body": "#fe0000",
+        "sleeve": "#000000"
       },
       "away": {
-        "body": "#9777b8",
-        "sleeve": "#688847"
+        "body": "#ffffff",
+        "sleeve": "#fe0000"
       },
       "stadium": "",
       "capacity": null,
