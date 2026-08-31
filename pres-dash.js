@@ -1630,176 +1630,176 @@
         '</div>' +
 
         // 2. Barra di Navigazione Interna a Tab
-        '
-        <!-- 0. REGOLA FONDAMENTALE PROFILO SQUADRA (PAG. 1 PDF) -->
-        <div style="background:rgba(2,132,199,0.09); border:1.5px solid #0284c7; border-radius:6px; padding:1.1rem 1.4rem; margin-bottom:1.5rem;">
-          <div style="display:flex; align-items:center; gap:0.6rem; color:#38bdf8; font-weight:800; font-size:1.05rem; margin-bottom:0.4rem;">
-            <span>🛡️</span> <span>REGOLA FONDAMENTALE: IL PROFILO SQUADRA</span>
-          </div>
-          <p style="font-size:0.86rem; color:#e2e8f0; margin:0; line-height:1.55;">
-            <b>Il Profilo Squadra non è un account autonomo e non può esistere senza un Profilo Presidente associato.</b> Il Presidente è il titolare e responsabile legale della scheda societaria sulla piattaforma. Insieme al Segretario (o collaboratore amministrativo delegato), compila e aggiorna i dati ufficiali, le foto delle maglie ufficiali e la rosa generale.
-          </p>
-        </div>
+        '' +
+        '<!-- 0. REGOLA FONDAMENTALE PROFILO SQUADRA (PAG. 1 PDF) -->' +
+'        <div style="background:rgba(2,132,199,0.09); border:1.5px solid #0284c7; border-radius:6px; padding:1.1rem 1.4rem; margin-bottom:1.5rem;">' +
+'          <div style="display:flex; align-items:center; gap:0.6rem; color:#38bdf8; font-weight:800; font-size:1.05rem; margin-bottom:0.4rem;">' +
+'            <span>🛡️</span> <span>REGOLA FONDAMENTALE: IL PROFILO SQUADRA</span>' +
+'          </div>' +
+'          <p style="font-size:0.86rem; color:#e2e8f0; margin:0; line-height:1.55;">' +
+'            <b>Il Profilo Squadra non è un account autonomo e non può esistere senza un Profilo Presidente associato.</b> Il Presidente è il titolare e responsabile legale della scheda societaria sulla piattaforma. Insieme al Segretario (o collaboratore amministrativo delegato), compila e aggiorna i dati ufficiali, le foto delle maglie ufficiali e la rosa generale.' +
+'          </p>' +
+'        </div>' +
+'' +
+'        <!-- 1. GESTIONE PROFILO SQUADRA & FOTO MAGLIE UFFICIALI (PAG. 2-3 PDF) -->' +
+'        <div style="background:#090e17; border:1px solid rgba(56,189,248,0.22); border-radius:6px; padding:1.25rem; margin-bottom:1.5rem;">' +
+'          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-bottom:1rem; border-bottom:1px solid rgba(148,163,184,0.12); padding-bottom:0.65rem;">' +
+'            <div>' +
+'              <h3 style="margin:0; font-size:1.05rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:0.5rem;">' +
+'                <span>👕</span> Foto Maglie Ufficiali (Kit da Gara che vestono le Card dei Tesserati)' +
+'              </h3>' +
+'              <p style="margin:0.2rem 0 0; font-size:0.78rem; color:#94a3b8;">' +
+'                Le maglie ufficiali caricate dal Presidente/Segretario personalizzano in tempo reale la grafica delle Card dei calciatori registrati.' +
+'              </p>' +
+'            </div>' +
+'            <button type="button" class="es-pres-btn-primary" id="btn-quick-edit-club-kits" style="font-size:0.8rem; padding:6px 14px;">✏️ Aggiorna Dati Club &amp; Maglie</button>' +
+'          </div>' +
+'' +
+'          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1rem;">' +
+'            <!-- Kit Casa -->' +
+'            <div style="background:#040810; border:1px solid rgba(56,189,248,0.2); border-radius:4px; padding:0.9rem; text-align:center;">' +
+'              <div style="font-size:0.75rem; font-weight:800; color:#38bdf8; text-transform:uppercase; margin-bottom:0.5rem;">Prima Maglia (Home)</div>' +
+'              <div style="height:110px; display:flex; align-items:center; justify-content:center; background:#080e1e; border-radius:4px; margin-bottom:0.6rem; overflow:hidden;">' +
+'                <img src="' + esc((data.kits && data.kits.home) || 'immagini/squadre-kits/foggia-home.png') + '" style="max-height:95px; object-fit:contain;" alt="Home Kit">' +
+'              </div>' +
+'              <span class="es-pres-status es-pres-status-ok" style="font-size:0.72rem;">✓ Attiva su Card Ufficiali</span>' +
+'            </div>' +
+'            <!-- Kit Trasferta -->' +
+'            <div style="background:#040810; border:1px solid rgba(56,189,248,0.2); border-radius:4px; padding:0.9rem; text-align:center;">' +
+'              <div style="font-size:0.75rem; font-weight:800; color:#38bdf8; text-transform:uppercase; margin-bottom:0.5rem;">Seconda Maglia (Away)</div>' +
+'              <div style="height:110px; display:flex; align-items:center; justify-content:center; background:#080e1e; border-radius:4px; margin-bottom:0.6rem; overflow:hidden;">' +
+'                <img src="' + esc((data.kits && data.kits.away) || 'immagini/squadre-kits/foggia-away.png') + '" style="max-height:95px; object-fit:contain;" alt="Away Kit">' +
+'              </div>' +
+'              <span class="es-pres-status es-pres-status-ok" style="font-size:0.72rem;">✓ Attiva su Card Ufficiali</span>' +
+'            </div>' +
+'            <!-- Kit Portiere -->' +
+'            <div style="background:#040810; border:1px solid rgba(56,189,248,0.2); border-radius:4px; padding:0.9rem; text-align:center;">' +
+'              <div style="font-size:0.75rem; font-weight:800; color:#38bdf8; text-transform:uppercase; margin-bottom:0.5rem;">Maglia Portiere (GK)</div>' +
+'              <div style="height:110px; display:flex; align-items:center; justify-content:center; background:#080e1e; border-radius:4px; margin-bottom:0.6rem; overflow:hidden;">' +
+'                <img src="' + esc((data.kits && data.kits.gk) || 'immagini/squadre-kits/foggia-gk.png') + '" style="max-height:95px; object-fit:contain;" alt="GK Kit">' +
+'              </div>' +
+'              <span class="es-pres-status es-pres-status-ok" style="font-size:0.72rem;">✓ Attiva su Card Ufficiali</span>' +
+'            </div>' +
+'          </div>' +
+'        </div>' +
+'' +
+'        <!-- 2. COLLEGAMENTO DELLA ROSA: PROFILO ATTIVO VS ANTEPRIMA LIMITATA (PAG. 3 PDF) -->' +
+'        <div style="background:#090e17; border:1px solid rgba(56,189,248,0.22); border-radius:6px; padding:1.25rem; margin-bottom:1.5rem;">' +
+'          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-bottom:0.85rem; border-bottom:1px solid rgba(148,163,184,0.12); padding-bottom:0.65rem;">' +
+'            <div>' +
+'              <h3 style="margin:0; font-size:1.05rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:0.5rem;">' +
+'                <span>👥</span> Collegamento Rosa con i Profili Atleti' +
+'              </h3>' +
+'              <p style="margin:0.2rem 0 0; font-size:0.78rem; color:#94a3b8;">' +
+'                Distinzione tra atleti con <b>Profilo Attivo</b> (link Card ufficiale completo) e atleti con <b>Anteprima Limitata</b> (non registrati, scheda sintetica non cliccabile).' +
+'              </p>' +
+'            </div>' +
+'            <button type="button" class="es-pres-btn-primary" id="btn-quick-manage-squad-top" style="font-size:0.8rem; padding:6px 14px;">👥 Gestisci &amp; Inserisci Calciatori</button>' +
+'          </div>' +
+'' +
+'          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">' +
+'            <div style="background:#040810; border:1px solid rgba(34,197,94,0.25); border-radius:4px; padding:0.9rem;">' +
+'              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">' +
+'                <span style="font-size:0.82rem; font-weight:800; color:#22c55e;">1. GIOCATORI REGISTRATI (PROFILO ATTIVO)</span>' +
+'                <span class="es-pres-status es-pres-status-ok">' + (data.squad ? data.squad.filter(function(p){return p.isRegistered!==false;}).length : 0) + ' Atleti</span>' +
+'              </div>' +
+'              <p style="font-size:0.76rem; color:#cbd5e1; margin:0; line-height:1.45;">' +
+'                Il sistema riconosce l\'atleta presente nel database e crea un <b>collegamento diretto (link)</b> con la sua Card ufficiale (Fronte/Retro, Heatmap, Dati GPS, Video). La Card indossa automaticamente i colori della foto maglia ufficiale della società.' +
+'              </p>' +
+'            </div>' +
+'' +
+'            <div style="background:#040810; border:1px solid rgba(245,158,11,0.25); border-radius:4px; padding:0.9rem;">' +
+'              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">' +
+'                <span style="font-size:0.82rem; font-weight:800; color:#fbbf24;">2. GIOCATORI NON REGISTRATI (ANTEPRIMA LIMITATA)</span>' +
+'                <span class="es-pres-status es-pres-status-warning">' + (data.squad ? data.squad.filter(function(p){return p.isRegistered===false;}).length : 0) + ' Atleti</span>' +
+'              </div>' +
+'              <p style="font-size:0.76rem; color:#cbd5e1; margin:0; line-height:1.45;">' +
+'                Mostrata solo una scheda di anteprima sintetica e <b>non cliccabile</b> con Nome e Cognome. Informazioni dettagliate (contatti, dati fisici, video) non sono accessibili né modificabili dalla società finché l\'atleta non crea e rivendica il proprio profilo.' +
+'              </p>' +
+'            </div>' +
+'          </div>' +
+'        </div>' +
+'' +
+'        <!-- 3. COME PUBBLICARE UNA CANDIDATURA (PAG. 4-5 PDF) -->' +
+'        <div id="sec-pres-candidatura-direct" style="background:#090e17; border:1.5px solid rgba(2,132,199,0.4); border-radius:6px; padding:1.35rem; margin-bottom:1.5rem;">' +
+'          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-bottom:1rem; border-bottom:1px solid rgba(148,163,184,0.15); padding-bottom:0.75rem;">' +
+'            <div>' +
+'              <span class="es-tag es-tag-blue" style="margin-bottom:0.3rem;">📢 Modulo Istituzionale Club</span>' +
+'              <h3 style="margin:0; font-size:1.15rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:0.5rem;">' +
+'                <span>📢</span> Come Pubblicare una Candidatura (Richiesta Personale / Staff / Calciatori)' +
+'              </h3>' +
+'              <p style="margin:0.2rem 0 0; font-size:0.8rem; color:#94a3b8;">' +
+'                Compila i due blocchi ufficiali (<b>Cosa Offriamo</b> / <b>Cosa Richiediamo</b>) con opzione di <b>Scouting AI Automatico</b>.' +
+'              </p>' +
+'            </div>' +
+'            <button type="button" class="es-pres-btn-primary" id="btn-open-candidatura-modal-now" style="font-size:0.84rem; padding:7px 16px; background:linear-gradient(135deg,#0284c7,#059669);">+ Nuova Pubblicazione Candidatura</button>' +
+'          </div>' +
+'' +
+'          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.25rem; margin-bottom:1rem;">' +
+'            <!-- Blocco Cosa Offriamo -->' +
+'            <div style="background:#040810; border:1px solid rgba(56,189,248,0.25); border-radius:4px; padding:1rem;">' +
+'              <h4 style="margin:0 0 0.5rem; color:#38bdf8; font-size:0.92rem; font-weight:800;">🟡 Cosa Offriamo</h4>' +
+'              <ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.6; display:flex; flex-direction:column; gap:0.25rem;">' +
+'                <li>• <b>Tipologia di incarico:</b> Contratto Federale, Accordo Sportivo, Stage Tecnico.</li>' +
+'                <li>• <b>Eventuale compenso o rimborso spese:</b> Indennità fissa mensile / premi.</li>' +
+'                <li>• <b>Durata della collaborazione:</b> Stagione 2026/2027 o pluriennale.</li>' +
+'                <li>• <b>Orari e giorni di lavoro:</b> Sedute pomeridiane + gara ufficiale.</li>' +
+'                <li>• <b>Benefit e vantaggi offerti:</b> Alloggio, vitto, abbigliamento, convenzioni.</li>' +
+'                <li>• <b>Possibilità di crescita professionale:</b> Percorso tecnico nel club.</li>' +
+'              </ul>' +
+'            </div>' +
+'' +
+'            <!-- Blocco Cosa Richiediamo -->' +
+'            <div style="background:#040810; border:1px solid rgba(34,197,94,0.25); border-radius:4px; padding:1rem;">' +
+'              <h4 style="margin:0 0 0.5rem; color:#34d399; font-size:0.92rem; font-weight:800;">🔵 Cosa Richiediamo / Il Profilo che Cerchiamo</h4>' +
+'              <ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.6; display:flex; flex-direction:column; gap:0.25rem;">' +
+'                <li>• <b>Ruolo ricercato:</b> Calciatore, Allenatore, Match Analyst, Preparatore, Medico.</li>' +
+'                <li>• <b>Competenze tecniche richieste:</b> Requisiti di campo e tattici.</li>' +
+'                <li>• <b>Esperienza minima preferibile:</b> Anni di militanza in categoria.</li>' +
+'                <li>• <b>Qualifiche o certificazioni necessarie:</b> Patentini UEFA / FIGC / Albi.</li>' +
+'                <li>• <b>Caratteristiche personali e attitudinali:</b> Leadership, serietà, motivazione.</li>' +
+'                <li>• <b>Requisiti aggiuntivi:</b> Disponibilità trasferte, domicilio in zona.</li>' +
+'              </ul>' +
+'            </div>' +
+'          </div>' +
+'' +
+'          <!-- Opzione AI Scouting -->' +
+'          <div style="background:rgba(99,102,241,0.08); border:1px solid rgba(99,102,241,0.3); border-radius:4px; padding:0.85rem 1rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.8rem;">' +
+'            <div style="display:flex; align-items:center; gap:0.6rem;">' +
+'              <span style="font-size:1.4rem;">🤖</span>' +
+'              <div>' +
+'                <b style="color:#a5b4fc; font-size:0.86rem;">Opzione AI (Candidatura Automatica Intelligente):</b>' +
+'                <p style="margin:0; font-size:0.76rem; color:#cbd5e1;">Il sistema analizza tutti i profili del sito, individua i più compatibili e li candida in automatico archiviando le schede tecniche nell\'annuncio.</p>' +
+'              </div>' +
+'            </div>' +
+'            <button type="button" class="es-pres-btn-primary" id="btn-open-candidatura-modal-now-2" style="font-size:0.78rem; padding:5px 12px; background:#4f46e5;">Compila &amp; Pubblica con AI &rsaquo;</button>' +
+'          </div>' +
+'        </div>' +
+'' +
+'        <!-- 4. ATTIVITÀ, PERMESSI & LIMITI DI RUOLO (PAG. 3-4 PDF) -->' +
+'        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.25rem; margin-bottom:1.5rem;">' +
+'          <div style="background:#090e17; border:1px solid rgba(56,189,248,0.2); border-radius:6px; padding:1.1rem;">' +
+'            <h4 style="margin:0 0 0.5rem; color:#38bdf8; font-size:0.92rem; font-weight:800; display:flex; align-items:center; gap:0.4rem;">' +
+'              <span>⚖️</span> Attività e Permessi Ufficiali del Presidente' +
+'            </h4>' +
+'            <ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.55; display:flex; flex-direction:column; gap:0.35rem;">' +
+'              <li>• <b>Gestione Organigramma:</b> Delega dei permessi e invito nel team per Segretario, Direttore Sportivo, Allenatore e Match Analyst.</li>' +
+'              <li>• <b>Ufficializzazione Mercato:</b> Approvazione finale dei trasferimenti e pubblicazione automatica della notizia sul <b>Wall delle Trattative Chiuse</b> (con la Card del giocatore aggiornata e grafica UFFICIALE).</li>' +
+'            </ul>' +
+'          </div>' +
+'' +
+'          <div style="background:#090e17; border:1px solid rgba(239,68,68,0.25); border-radius:6px; padding:1.1rem;">' +
+'            <h4 style="margin:0 0 0.5rem; color:#f87171; font-size:0.92rem; font-weight:800; display:flex; align-items:center; gap:0.4rem;">' +
+'              <span>🚫</span> Limiti Istituzionali di Ruolo del Presidente' +
+'            </h4>' +
+'            <ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.55; display:flex; flex-direction:column; gap:0.35rem;">' +
+'              <li>• <b>Nessuna Candidatura Calciatore:</b> Non può candidarsi come calciatore alle offerte di ingaggio.</li>' +
+'              <li>• <b>Nessun Profilo Squadra Duplicato:</b> Non può creare un Profilo Squadra duplicato o scollegato dalla figura presidenziale e legale.</li>' +
+'            </ul>' +
+'          </div>' +
+'        </div>'+
 
-        <!-- 1. GESTIONE PROFILO SQUADRA & FOTO MAGLIE UFFICIALI (PAG. 2-3 PDF) -->
-        <div style="background:#090e17; border:1px solid rgba(56,189,248,0.22); border-radius:6px; padding:1.25rem; margin-bottom:1.5rem;">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-bottom:1rem; border-bottom:1px solid rgba(148,163,184,0.12); padding-bottom:0.65rem;">
-            <div>
-              <h3 style="margin:0; font-size:1.05rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:0.5rem;">
-                <span>👕</span> Foto Maglie Ufficiali (Kit da Gara che vestono le Card dei Tesserati)
-              </h3>
-              <p style="margin:0.2rem 0 0; font-size:0.78rem; color:#94a3b8;">
-                Le maglie ufficiali caricate dal Presidente/Segretario personalizzano in tempo reale la grafica delle Card dei calciatori registrati.
-              </p>
-            </div>
-            <button type="button" class="es-pres-btn-primary" id="btn-quick-edit-club-kits" style="font-size:0.8rem; padding:6px 14px;">✏️ Aggiorna Dati Club &amp; Maglie</button>
-          </div>
-
-          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:1rem;">
-            <!-- Kit Casa -->
-            <div style="background:#040810; border:1px solid rgba(56,189,248,0.2); border-radius:4px; padding:0.9rem; text-align:center;">
-              <div style="font-size:0.75rem; font-weight:800; color:#38bdf8; text-transform:uppercase; margin-bottom:0.5rem;">Prima Maglia (Home)</div>
-              <div style="height:110px; display:flex; align-items:center; justify-content:center; background:#080e1e; border-radius:4px; margin-bottom:0.6rem; overflow:hidden;">
-                <img src="' + esc((data.kits && data.kits.home) || 'immagini/squadre-kits/foggia-home.png') + '" style="max-height:95px; object-fit:contain;" alt="Home Kit">
-              </div>
-              <span class="es-pres-status es-pres-status-ok" style="font-size:0.72rem;">✓ Attiva su Card Ufficiali</span>
-            </div>
-            <!-- Kit Trasferta -->
-            <div style="background:#040810; border:1px solid rgba(56,189,248,0.2); border-radius:4px; padding:0.9rem; text-align:center;">
-              <div style="font-size:0.75rem; font-weight:800; color:#38bdf8; text-transform:uppercase; margin-bottom:0.5rem;">Seconda Maglia (Away)</div>
-              <div style="height:110px; display:flex; align-items:center; justify-content:center; background:#080e1e; border-radius:4px; margin-bottom:0.6rem; overflow:hidden;">
-                <img src="' + esc((data.kits && data.kits.away) || 'immagini/squadre-kits/foggia-away.png') + '" style="max-height:95px; object-fit:contain;" alt="Away Kit">
-              </div>
-              <span class="es-pres-status es-pres-status-ok" style="font-size:0.72rem;">✓ Attiva su Card Ufficiali</span>
-            </div>
-            <!-- Kit Portiere -->
-            <div style="background:#040810; border:1px solid rgba(56,189,248,0.2); border-radius:4px; padding:0.9rem; text-align:center;">
-              <div style="font-size:0.75rem; font-weight:800; color:#38bdf8; text-transform:uppercase; margin-bottom:0.5rem;">Maglia Portiere (GK)</div>
-              <div style="height:110px; display:flex; align-items:center; justify-content:center; background:#080e1e; border-radius:4px; margin-bottom:0.6rem; overflow:hidden;">
-                <img src="' + esc((data.kits && data.kits.gk) || 'immagini/squadre-kits/foggia-gk.png') + '" style="max-height:95px; object-fit:contain;" alt="GK Kit">
-              </div>
-              <span class="es-pres-status es-pres-status-ok" style="font-size:0.72rem;">✓ Attiva su Card Ufficiali</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 2. COLLEGAMENTO DELLA ROSA: PROFILO ATTIVO VS ANTEPRIMA LIMITATA (PAG. 3 PDF) -->
-        <div style="background:#090e17; border:1px solid rgba(56,189,248,0.22); border-radius:6px; padding:1.25rem; margin-bottom:1.5rem;">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-bottom:0.85rem; border-bottom:1px solid rgba(148,163,184,0.12); padding-bottom:0.65rem;">
-            <div>
-              <h3 style="margin:0; font-size:1.05rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:0.5rem;">
-                <span>👥</span> Collegamento Rosa con i Profili Atleti
-              </h3>
-              <p style="margin:0.2rem 0 0; font-size:0.78rem; color:#94a3b8;">
-                Distinzione tra atleti con <b>Profilo Attivo</b> (link Card ufficiale completo) e atleti con <b>Anteprima Limitata</b> (non registrati, scheda sintetica non cliccabile).
-              </p>
-            </div>
-            <button type="button" class="es-pres-btn-primary" id="btn-quick-manage-squad-top" style="font-size:0.8rem; padding:6px 14px;">👥 Gestisci &amp; Inserisci Calciatori</button>
-          </div>
-
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
-            <div style="background:#040810; border:1px solid rgba(34,197,94,0.25); border-radius:4px; padding:0.9rem;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
-                <span style="font-size:0.82rem; font-weight:800; color:#22c55e;">1. GIOCATORI REGISTRATI (PROFILO ATTIVO)</span>
-                <span class="es-pres-status es-pres-status-ok">' + (data.squad ? data.squad.filter(function(p){return p.isRegistered!==false;}).length : 0) + ' Atleti</span>
-              </div>
-              <p style="font-size:0.76rem; color:#cbd5e1; margin:0; line-height:1.45;">
-                Il sistema riconosce l\'atleta presente nel database e crea un <b>collegamento diretto (link)</b> con la sua Card ufficiale (Fronte/Retro, Heatmap, Dati GPS, Video). La Card indossa automaticamente i colori della foto maglia ufficiale della società.
-              </p>
-            </div>
-
-            <div style="background:#040810; border:1px solid rgba(245,158,11,0.25); border-radius:4px; padding:0.9rem;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
-                <span style="font-size:0.82rem; font-weight:800; color:#fbbf24;">2. GIOCATORI NON REGISTRATI (ANTEPRIMA LIMITATA)</span>
-                <span class="es-pres-status es-pres-status-warning">' + (data.squad ? data.squad.filter(function(p){return p.isRegistered===false;}).length : 0) + ' Atleti</span>
-              </div>
-              <p style="font-size:0.76rem; color:#cbd5e1; margin:0; line-height:1.45;">
-                Mostrata solo una scheda di anteprima sintetica e <b>non cliccabile</b> con Nome e Cognome. Informazioni dettagliate (contatti, dati fisici, video) non sono accessibili né modificabili dalla società finché l\'atleta non crea e rivendica il proprio profilo.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 3. COME PUBBLICARE UNA CANDIDATURA (PAG. 4-5 PDF) -->
-        <div id="sec-pres-candidatura-direct" style="background:#090e17; border:1.5px solid rgba(2,132,199,0.4); border-radius:6px; padding:1.35rem; margin-bottom:1.5rem;">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.8rem; margin-bottom:1rem; border-bottom:1px solid rgba(148,163,184,0.15); padding-bottom:0.75rem;">
-            <div>
-              <span class="es-tag es-tag-blue" style="margin-bottom:0.3rem;">📢 Modulo Istituzionale Club</span>
-              <h3 style="margin:0; font-size:1.15rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:0.5rem;">
-                <span>📢</span> Come Pubblicare una Candidatura (Richiesta Personale / Staff / Calciatori)
-              </h3>
-              <p style="margin:0.2rem 0 0; font-size:0.8rem; color:#94a3b8;">
-                Compila i due blocchi ufficiali (<b>Cosa Offriamo</b> / <b>Cosa Richiediamo</b>) con opzione di <b>Scouting AI Automatico</b>.
-              </p>
-            </div>
-            <button type="button" class="es-pres-btn-primary" id="btn-open-candidatura-modal-now" style="font-size:0.84rem; padding:7px 16px; background:linear-gradient(135deg,#0284c7,#059669);">+ Nuova Pubblicazione Candidatura</button>
-          </div>
-
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.25rem; margin-bottom:1rem;">
-            <!-- Blocco Cosa Offriamo -->
-            <div style="background:#040810; border:1px solid rgba(56,189,248,0.25); border-radius:4px; padding:1rem;">
-              <h4 style="margin:0 0 0.5rem; color:#38bdf8; font-size:0.92rem; font-weight:800;">🟡 Cosa Offriamo</h4>
-              <ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.6; display:flex; flex-direction:column; gap:0.25rem;">
-                <li>• <b>Tipologia di incarico:</b> Contratto Federale, Accordo Sportivo, Stage Tecnico.</li>
-                <li>• <b>Eventuale compenso o rimborso spese:</b> Indennità fissa mensile / premi.</li>
-                <li>• <b>Durata della collaborazione:</b> Stagione 2026/2027 o pluriennale.</li>
-                <li>• <b>Orari e giorni di lavoro:</b> Sedute pomeridiane + gara ufficiale.</li>
-                <li>• <b>Benefit e vantaggi offerti:</b> Alloggio, vitto, abbigliamento, convenzioni.</li>
-                <li>• <b>Possibilità di crescita professionale:</b> Percorso tecnico nel club.</li>
-              </ul>
-            </div>
-
-            <!-- Blocco Cosa Richiediamo -->
-            <div style="background:#040810; border:1px solid rgba(34,197,94,0.25); border-radius:4px; padding:1rem;">
-              <h4 style="margin:0 0 0.5rem; color:#34d399; font-size:0.92rem; font-weight:800;">🔵 Cosa Richiediamo / Il Profilo che Cerchiamo</h4>
-              <ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.6; display:flex; flex-direction:column; gap:0.25rem;">
-                <li>• <b>Ruolo ricercato:</b> Calciatore, Allenatore, Match Analyst, Preparatore, Medico.</li>
-                <li>• <b>Competenze tecniche richieste:</b> Requisiti di campo e tattici.</li>
-                <li>• <b>Esperienza minima preferibile:</b> Anni di militanza in categoria.</li>
-                <li>• <b>Qualifiche o certificazioni necessarie:</b> Patentini UEFA / FIGC / Albi.</li>
-                <li>• <b>Caratteristiche personali e attitudinali:</b> Leadership, serietà, motivazione.</li>
-                <li>• <b>Requisiti aggiuntivi:</b> Disponibilità trasferte, domicilio in zona.</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Opzione AI Scouting -->
-          <div style="background:rgba(99,102,241,0.08); border:1px solid rgba(99,102,241,0.3); border-radius:4px; padding:0.85rem 1rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.8rem;">
-            <div style="display:flex; align-items:center; gap:0.6rem;">
-              <span style="font-size:1.4rem;">🤖</span>
-              <div>
-                <b style="color:#a5b4fc; font-size:0.86rem;">Opzione AI (Candidatura Automatica Intelligente):</b>
-                <p style="margin:0; font-size:0.76rem; color:#cbd5e1;">Il sistema analizza tutti i profili del sito, individua i più compatibili e li candida in automatico archiviando le schede tecniche nell'annuncio.</p>
-              </div>
-            </div>
-            <button type="button" class="es-pres-btn-primary" id="btn-open-candidatura-modal-now-2" style="font-size:0.78rem; padding:5px 12px; background:#4f46e5;">Compila &amp; Pubblica con AI &rsaquo;</button>
-          </div>
-        </div>
-
-        <!-- 4. ATTIVITÀ, PERMESSI & LIMITI DI RUOLO (PAG. 3-4 PDF) -->
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.25rem; margin-bottom:1.5rem;">
-          <div style="background:#090e17; border:1px solid rgba(56,189,248,0.2); border-radius:6px; padding:1.1rem;">
-            <h4 style="margin:0 0 0.5rem; color:#38bdf8; font-size:0.92rem; font-weight:800; display:flex; align-items:center; gap:0.4rem;">
-              <span>⚖️</span> Attività e Permessi Ufficiali del Presidente
-            </h4>
-            <ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.55; display:flex; flex-direction:column; gap:0.35rem;">
-              <li>• <b>Gestione Organigramma:</b> Delega dei permessi e invito nel team per Segretario, Direttore Sportivo, Allenatore e Match Analyst.</li>
-              <li>• <b>Ufficializzazione Mercato:</b> Approvazione finale dei trasferimenti e pubblicazione automatica della notizia sul <b>Wall delle Trattative Chiuse</b> (con la Card del giocatore aggiornata e grafica UFFICIALE).</li>
-            </ul>
-          </div>
-
-          <div style="background:#090e17; border:1px solid rgba(239,68,68,0.25); border-radius:6px; padding:1.1rem;">
-            <h4 style="margin:0 0 0.5rem; color:#f87171; font-size:0.92rem; font-weight:800; display:flex; align-items:center; gap:0.4rem;">
-              <span>🚫</span> Limiti Istituzionali di Ruolo del Presidente
-            </h4>
-            <ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.55; display:flex; flex-direction:column; gap:0.35rem;">
-              <li>• <b>Nessuna Candidatura Calciatore:</b> Non può candidarsi come calciatore alle offerte di ingaggio.</li>
-              <li>• <b>Nessun Profilo Squadra Duplicato:</b> Non può creare un Profilo Squadra duplicato o scollegato dalla figura presidenziale e legale.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="es-pres-nav-strip" id="es-pres-navbar">' +
+        '<div class="es-pres-nav-strip" id="es-pres-navbar">' +
           '<button type="button" class="es-pres-nav-btn is-active" data-tab="panoramica">' + ICONS.shield + ' Panoramica</button>' +
           '<button type="button" class="es-pres-nav-btn" data-tab="gestione">' + ICONS.users + ' Gestione Club</button>' +
           '<button type="button" class="es-pres-nav-btn" data-tab="ufficio">' + ICONS.briefcase + ' Ufficio &amp; Finanze</button>' +
@@ -2383,7 +2383,7 @@
                     '<span class="es-pres-status es-pres-status-ok" style="font-size:0.72rem;">Profilo Attivo</span>' +
                     '<button type="button" class="es-pres-btn-primary es-btn-open-player-card" data-idx="' + idx + '" style="padding:4px 10px; font-size:0.75rem;">Visualizza Card &rsaquo;</button>'
                   ) : (
-                    '<span class="es-pres-status es-pres-status-warning" style="font-size:0.72rem;" title="Anteprima limitata non cliccabile finché l'atleta non crea l'account">Non Registrato (Anteprima Limitata)</span>'
+                    '<span class="es-pres-status es-pres-status-warning" style="font-size:0.72rem;" title="Anteprima limitata non cliccabile finché l\'atleta non crea l\'account">Non Registrato (Anteprima Limitata)</span>'
                   )) +
                   '<button type="button" class="es-dl-btn-remove es-btn-remove-player" data-idx="' + idx + '" style="background:transparent; border:none; color:#94a3b8; font-size:0.72rem; cursor:pointer; text-decoration:underline;" title="Rimuovi dalla rosa">Rimuovi</button>' +
                 '</div>' +

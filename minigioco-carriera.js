@@ -1989,7 +1989,7 @@
   /* ---- Mappa regioni italiane (per Eccellenza e categorie regionali) ---- */
   var IT_REGIONS = [
     { n: 'Piemonte',           e: '🏔️', col: '#22c55e', k: ['PIEMONTE'] },
-    { n: 'Valle d'Aosta',      e: '⛰️', col: '#16a34a', k: ['VALLE'] },
+    { n: 'Valle d\'Aosta',      e: '⛰️', col: '#16a34a', k: ['VALLE'] },
     { n: 'Lombardia',          e: '🏙️', col: '#2563eb', k: ['LOMBARDIA'] },
     { n: 'Trentino-A.A.',      e: '🏔️', col: '#0891b2', k: ['TRENTINO','ALTO ADIGE','TRENTINO-ALTO ADIGE','VDA'] },
     { n: 'Veneto',             e: '🚣', col: '#0284c7', k: ['VENETO'] },
