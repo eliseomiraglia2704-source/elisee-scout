@@ -10297,30 +10297,30 @@
       "country": "ITALIA",
       "league": "SERIE D · GIRONE H",
       "city": "BISCEGLIE",
-      "year": "1900",
+      "year": "1913",
       "abbr": "BIS",
       "gender": "m",
       "pos": 2,
       "pts": 0,
       "played": 0,
-      "logo": "immagini/squadre-loghi/unione-calcio-bisceglie.png",
-      "primary": "#c0378a",
-      "secondary": "#3fc875",
+      "logo": "immagini/squadre-loghi/bisceglie.png",
+      "primary": "#003399",
+      "secondary": "#111111",
       "accent": "#ffffff",
       "home": {
-        "body": "#c0378a",
-        "sleeve": "#c0378a"
+        "body": "#003399",
+        "sleeve": "#111111"
       },
       "away": {
-        "body": "#3fc875",
-        "sleeve": "#c0378a"
+        "body": "#ffffff",
+        "sleeve": "#003399"
       },
       "source": "tuttocampo-2026-27",
       "stadium": "",
       "capacity": null,
       "stadiumImage": "immagini/stadi/_default.jpg",
       "stadiumImageSource": "default",
-      "logoUrl": "immagini/squadre-loghi/unione-calcio-bisceglie.png"
+      "logoUrl": "immagini/squadre-loghi/bisceglie.png"
     },
     {
       "id": "brindisi",
@@ -84449,23 +84449,23 @@
       "country": "ITALIA",
       "league": "ECCELLENZA · PUGLIA",
       "city": "BISCEGLIE",
-      "year": "1920",
+      "year": "2012",
       "abbr": "UB",
       "gender": "m",
       "pos": 18,
       "pts": 0,
       "played": 0,
       "logo": "immagini/squadre-loghi/unione-calcio-bisceglie.png",
-      "primary": "#916b36",
-      "secondary": "#6e94c9",
+      "primary": "#800020",
+      "secondary": "#007acc",
       "accent": "#ffffff",
       "home": {
-        "body": "#916b36",
-        "sleeve": "#916b36"
+        "body": "#800020",
+        "sleeve": "#007acc"
       },
       "away": {
-        "body": "#6e94c9",
-        "sleeve": "#916b36"
+        "body": "#007acc",
+        "sleeve": "#800020"
       },
       "stadium": "",
       "capacity": null,

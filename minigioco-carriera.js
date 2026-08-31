@@ -4092,6 +4092,31 @@
       awardYouthCaps(p, club, stats, seasonAge, newOvr, newTier);
       evolveItalianLeagues();
       repairClubTiers();
+      // Fix universale: se il giocatore o il club vince il campionato di qualunque categoria (Serie D, C, B, Eccellenza, Promozione, 1ª/2ª/3ª Categoria, campionati femminili ed esteri),
+      // il club sale di conseguenza al livello superiore (tier - 1). Vincere il campionato = promozione diretta garantita.
+      if (club && !club.justPromoted && !club.justRelegated && !club.justFailed && !club.failed) {
+        var wonLeagueTier = 0;
+        if (seasonTrophyKeys.indexOf('terza_categoria') >= 0) wonLeagueTier = 9;
+        else if (seasonTrophyKeys.indexOf('seconda_categoria') >= 0) wonLeagueTier = 8;
+        else if (seasonTrophyKeys.indexOf('prima_categoria') >= 0) wonLeagueTier = 7;
+        else if (seasonTrophyKeys.indexOf('promozione') >= 0 || seasonTrophyKeys.indexOf('promozione_femminile') >= 0) wonLeagueTier = 6;
+        else if (seasonTrophyKeys.indexOf('eccellenza') >= 0 || seasonTrophyKeys.indexOf('eccellenza_femminile') >= 0) wonLeagueTier = 5;
+        else if (seasonTrophyKeys.indexOf('serie_d') >= 0) wonLeagueTier = 4;
+        else if (seasonTrophyKeys.indexOf('serie_c_a') >= 0 || seasonTrophyKeys.indexOf('serie_c_b') >= 0 || seasonTrophyKeys.indexOf('serie_c_c') >= 0 || seasonTrophyKeys.indexOf('serie_c_femminile') >= 0) wonLeagueTier = 3;
+        else if (seasonTrophyKeys.indexOf('serie_b') >= 0 || seasonTrophyKeys.indexOf('serie_b_femminile') >= 0) wonLeagueTier = 2;
+        
+        var currentT = Number(club.t) || clubLeagueTier(club);
+        if (wonLeagueTier > 0 && currentT === wonLeagueTier && currentT > 1) {
+          var toTier = currentT - 1;
+          club.t = toTier;
+          if (isItalianPyramid(club)) {
+            club.l = labelForItalianTier(club, toTier);
+          }
+          club.justPromoted = true;
+          club.justRelegated = false;
+          club.promotedFromTier = currentT;
+        }
+      }
       club = liveClub(club) || club;
       row.recap = seasonRecapText(club, stats, {
         callUp: !!(selectedOffer && selectedOffer.isCallUp && y === 0)

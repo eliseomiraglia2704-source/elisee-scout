@@ -479,8 +479,10 @@
   put(['NOCERINA', 'ASD NOCERINA 1910', 'NOCERINA 1910'], { a: 0, b: 3, c: 22, d: 15 });
   // Brindisi: storia professionistica (Serie B/C)
   put(['BRINDISI', 'BRINDISI FC', 'FOOTBALL BRINDISI 1912'], { a: 0, b: 6, c: 14, d: 20 });
-  // Bisceglie: reduce da Serie C recente
-  put(['BISCEGLIE', 'AS BISCEGLIE', 'AS BISCEGLIE 1913'], { a: 0, b: 0, c: 8, d: 32 });
+  // Bisceglie: AS Bisceglie 1913, Serie D Girone H, storia professionistica (ex Serie C)
+  put(['BISCEGLIE', 'AS BISCEGLIE', 'AS BISCEGLIE 1913', 'A.S. BISCEGLIE 1913', 'ASD BISCEGLIE'], { a: 0, b: 0, c: 8, d: 32 });
+  // Unione Calcio Bisceglie: società distinta fondata nel 2012, milita in Eccellenza Puglia
+  put(['UNIONE CALCIO BISCEGLIE', 'UC BISCEGLIE', 'U.C. BISCEGLIE', 'UNIONE BISCEGLIE'], { a: 0, b: 0, c: 0, d: 2, e: 38 });
   // Martina: piazza storica (ex Serie C)
   put(['MARTINA', 'MARTINA CALCIO', 'MARTINA FRANCA'], { a: 0, b: 0, c: 12, d: 28 });
   // Francavilla (Virtus Francavilla / Francavilla)
@@ -581,6 +583,9 @@
     'PATERNÒ', 'RAGUSA', 'SAMBIASE', 'SANCATALDESE', 'LANCIANO FC',
     'REAL FORIO', 'BISCEGLIE'
   ], VILLAGE);
+
+  /* Fix: Bisceglie viene gestito dal lock Girone H (ceil C, floor D).
+     L'alias 'REAL FORIO' appare anche sopra come standalone — normale, è in più gironi. */
 
   /* Lucchetti espliciti: non dipendono dai pesi e non si possono bypassare. */
   var HARD = {};
