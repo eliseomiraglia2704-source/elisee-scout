@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Aggiornamento Logo Narnese Calcio (Eccellenza Umbria)** — Scaricato e applicato il logo ufficiale in alta risoluzione in `immagini/squadre-loghi/ecc-narnese-calcio.png`.
-Feature precedente: Aggiornamento Batch 15 Loghi Eccellenza (Trentino-Alto Adige & Umbria).
+Ultimo fatto: **Aggiornamento Logo Nuova Alba (Eccellenza Umbria)** — Scaricato e applicato il logo ufficiale in alta risoluzione in `immagini/squadre-loghi/ecc-nuova-alba.png`.
+Feature precedente: Aggiornamento Logo Narnese Calcio (Eccellenza Umbria).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
