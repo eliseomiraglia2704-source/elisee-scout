@@ -1987,32 +1987,38 @@
     );
   }
 
-  /* ---- SVG icons per le regioni italiane ---- */
+  /* ---- Mappa immagini delle regioni italiane (da immagini/regioni-svg/) ---- */
+  var REGION_IMG_MAP = {
+    'Piemonte': 'immagini/regioni-svg/piemonte.png',
+    'Valle d\'Aosta': 'immagini/regioni-svg/valle-daosta.jpg',
+    'Lombardia': 'immagini/regioni-svg/lombardia.png',
+    'Trentino-A.A.': 'immagini/regioni-svg/trentino-alto-adige.png',
+    'Veneto': 'immagini/regioni-svg/veneto.png',
+    'Friuli-V.G.': 'immagini/regioni-svg/friuli-venezia-giulia.png',
+    'Liguria': 'immagini/regioni-svg/liguria.png',
+    'Emilia-Romagna': 'immagini/regioni-svg/emilia-romagna.png',
+    'Toscana': 'immagini/regioni-svg/toscana.png',
+    'Umbria': 'immagini/regioni-svg/umbria.png',
+    'Marche': 'immagini/regioni-svg/marche.png',
+    'Lazio': 'immagini/regioni-svg/lazio.png',
+    'Abruzzo': 'immagini/regioni-svg/abruzzo.png',
+    'Molise': 'immagini/regioni-svg/molise.png',
+    'Campania': 'immagini/regioni-svg/campania.png',
+    'Puglia': 'immagini/regioni-svg/puglia.png',
+    'Basilicata': 'immagini/regioni-svg/basilicata.png',
+    'Calabria': 'immagini/regioni-svg/calabria.png',
+    'Sicilia': 'immagini/regioni-svg/sicilia.png',
+    'Sardegna': 'immagini/regioni-svg/sardegna.png'
+  };
+
+  /* ---- SVG/IMG icons per le regioni italiane ---- */
   function regionSvgIcon(regionName, color) {
+    var imgSrc = REGION_IMG_MAP[regionName];
+    if (imgSrc) {
+      return '<img src="' + imgSrc + '" alt="' + esc(regionName) + '" class="es-mg-region-img" onerror="this.style.display=\'none\'" />';
+    }
     var c = color || '#38bdf8';
-    var icons = {
-      'Piemonte':       '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="6,26 16,6 26,26" fill="' + c + '" opacity="0.25"/><polygon points="10,26 16,11 22,26" fill="' + c + '" opacity="0.6"/><polygon points="13,26 16,16 19,26" fill="' + c + '"/><rect x="14" y="26" width="4" height="3" rx="1" fill="' + c + '" opacity="0.4"/></svg>',
-      'Valle d\'Aosta': '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="6,28 16,4 26,28" fill="' + c + '" opacity="0.2"/><polygon points="9,28 16,9 23,28" fill="' + c + '" opacity="0.5"/><polygon points="13,28 16,14 19,28" fill="' + c + '"/><circle cx="16" cy="7" r="2" fill="white" opacity="0.7"/></svg>',
-      'Lombardia':      '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="10" width="24" height="14" rx="2" fill="' + c + '" opacity="0.25"/><rect x="8" y="13" width="4" height="8" rx="1" fill="' + c + '" opacity="0.8"/><rect x="14" y="11" width="4" height="10" rx="1" fill="' + c + '"/><rect x="20" y="14" width="4" height="7" rx="1" fill="' + c + '" opacity="0.7"/></svg>',
-      'Trentino-A.A.':  '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="4,28 16,3 28,28" fill="' + c + '" opacity="0.2"/><polygon points="8,28 16,8 24,28" fill="' + c + '" opacity="0.5"/><polygon points="12,28 16,13 20,28" fill="' + c + '"/><line x1="16" y1="3" x2="16" y2="28" stroke="white" stroke-width="1" opacity="0.4"/></svg>',
-      'Veneto':         '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 18 Q8 10 16 10 Q24 10 28 18 Q24 26 16 26 Q8 26 4 18Z" fill="' + c + '" opacity="0.3"/><path d="M8 18 Q12 14 16 14 Q20 14 24 18 Q20 22 16 22 Q12 22 8 18Z" fill="' + c + '"/><circle cx="16" cy="18" r="2" fill="white" opacity="0.7"/></svg>',
-      'Friuli-V.G.':    '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="4,8 28,8 22,28 10,28" fill="' + c + '" opacity="0.2"/><polygon points="8,8 24,8 20,22 12,22" fill="' + c + '" opacity="0.5"/><rect x="14" y="8" width="4" height="20" fill="' + c + '" opacity="0.7"/><polygon points="4,8 14,8 12,14 4,14" fill="' + c + '"/></svg>',
-      'Liguria':        '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 20 Q10 14 16 16 Q22 18 28 20" stroke="' + c + '" stroke-width="2.5" fill="none" opacity="0.6"/><path d="M4 22 Q10 16 16 18 Q22 20 28 22 L28 28 L4 28Z" fill="' + c + '" opacity="0.3"/><path d="M5 22 Q11 17 16 19 Q21 21 27 22" stroke="' + c + '" stroke-width="1.5" fill="none"/></svg>',
-      'Emilia-Romagna': '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="10" width="26" height="12" rx="2" fill="' + c + '" opacity="0.25"/><rect x="3" y="12" width="26" height="8" rx="1" fill="' + c + '" opacity="0.5"/><path d="M3 16 Q8 13 13 16 Q18 19 23 16 Q26 14 29 16" stroke="white" stroke-width="1.5" fill="none" opacity="0.6"/></svg>',
-      'Toscana':        '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="16" cy="16" rx="12" ry="8" fill="' + c + '" opacity="0.2"/><path d="M6 18 Q10 10 16 10 Q22 10 26 16 Q22 24 16 24 Q10 24 6 18Z" fill="' + c + '" opacity="0.5"/><circle cx="14" cy="16" r="3" fill="' + c + '"/><circle cx="20" cy="15" r="2" fill="' + c + '" opacity="0.7"/></svg>',
-      'Umbria':         '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="16" cy="18" rx="10" ry="9" fill="' + c + '" opacity="0.25"/><ellipse cx="14" cy="17" rx="6" ry="7" fill="' + c + '" opacity="0.6"/><circle cx="14" cy="17" r="3" fill="' + c + '"/><circle cx="20" cy="18" r="4" fill="' + c + '" opacity="0.4"/></svg>',
-      'Marche':         '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="8,6 24,6 28,26 4,26" fill="' + c + '" opacity="0.2"/><polygon points="10,8 22,8 25,24 7,24" fill="' + c + '" opacity="0.5"/><path d="M28 10 Q24 16 22 24" stroke="' + c + '" stroke-width="2" fill="none"/></svg>',
-      'Lazio':          '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="6,6 26,6 28,22 16,28 4,22" fill="' + c + '" opacity="0.2"/><polygon points="9,9 23,9 25,21 16,26 7,21" fill="' + c + '" opacity="0.5"/><circle cx="16" cy="16" r="4" fill="' + c + '"/></svg>',
-      'Abruzzo':        '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="4,28 16,8 28,28" fill="' + c + '" opacity="0.2"/><polygon points="8,28 16,12 24,28" fill="' + c + '" opacity="0.5"/><polygon points="12,28 16,17 20,28" fill="' + c + '"/><path d="M28 20 Q24 22 20 24" stroke="' + c + '" stroke-width="2" fill="none" opacity="0.7"/></svg>',
-      'Molise':         '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="10" width="16" height="14" rx="3" fill="' + c + '" opacity="0.25"/><rect x="10" y="12" width="12" height="10" rx="2" fill="' + c + '" opacity="0.6"/><circle cx="16" cy="17" r="3" fill="' + c + '"/></svg>',
-      'Campania':       '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="16,4 20,14 30,14 22,20 25,30 16,24 7,30 10,20 2,14 12,14" fill="' + c + '" opacity="0.2"/><polygon points="16,8 19,16 27,16 21,20 23,28 16,23 9,28 11,20 5,16 13,16" fill="' + c + '" opacity="0.6"/><circle cx="16" cy="18" r="3" fill="' + c + '"/></svg>',
-      'Puglia':         '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 4 L8 18 Q8 24 14 26 Q18 28 20 24 L24 20 L20 18 L22 12 L14 10 L12 4Z" fill="' + c + '" opacity="0.3"/><path d="M10 6 L10 17 Q10 22 14 24 Q17 26 19 23 L22 20 L19 18 L20 14 L14 12 L13 6Z" fill="' + c + '" opacity="0.7"/><circle cx="21" cy="20" r="2" fill="' + c + '"/></svg>',
-      'Basilicata':     '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="4,14 28,10 24,28 4,28" fill="' + c + '" opacity="0.25"/><polygon points="6,15 26,12 22,26 6,26" fill="' + c + '" opacity="0.6"/><polygon points="8,16 22,14 20,24 8,24" fill="' + c + '" opacity="0.8"/></svg>',
-      'Calabria':       '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 4 Q18 4 20 8 Q22 12 20 18 Q22 22 20 28 Q14 30 12 26 Q10 22 12 18 Q10 12 12 8Z" fill="' + c + '" opacity="0.25"/><path d="M14 6 Q17 6 19 10 Q21 14 19 19 Q20 22 19 27 Q14 28 13 25 Q11 21 13 18 Q11 14 13 10Z" fill="' + c + '" opacity="0.7"/><path d="M19 26 Q22 24 24 26" stroke="' + c + '" stroke-width="2" fill="none" opacity="0.6"/></svg>',
-      'Sicilia':        '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="4,20 16,10 28,14 26,24 10,26" fill="' + c + '" opacity="0.25"/><polygon points="6,20 16,12 26,16 24,23 10,24" fill="' + c + '" opacity="0.6"/><circle cx="16" cy="18" r="4" fill="' + c + '"/><circle cx="24" cy="14" r="2" fill="' + c + '" opacity="0.5"/></svg>',
-      'Sardegna':       '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 4 Q18 5 20 10 Q22 15 20 20 Q18 26 14 28 Q10 26 10 20 Q8 14 10 9Z" fill="' + c + '" opacity="0.25"/><path d="M14 6 Q17 7 18 11 Q20 16 18 21 Q17 25 14 27 Q11 25 11 21 Q10 16 11 10Z" fill="' + c + '" opacity="0.7"/><circle cx="16" cy="16" r="2.5" fill="' + c + '"/></svg>'
-    };
-    return icons[regionName] || ('<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="10" fill="' + c + '" opacity="0.3"/><circle cx="16" cy="16" r="5" fill="' + c + '"/></svg>');
+    return '<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="10" fill="' + c + '" opacity="0.3"/><circle cx="16" cy="16" r="5" fill="' + c + '"/></svg>';
   }
 
   /* SVG per le lettere dei gironi (A-I) */

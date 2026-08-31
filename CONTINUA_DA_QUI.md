@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Aggiornamento Logo Torrese (Eccellenza Abruzzo)** — Scaricato e applicato il logo ufficiale in alta risoluzione (ID 82105) in `immagini/squadre-loghi/ecc-torrese.png`.
-Feature precedente: Batch 9 Loghi Abruzzo + Cartella SVG Regioni.
+Ultimo fatto: **Integrazione Immagini Ufficiali Regioni Minigioco** — Integrate tutte le 20 immagini PNG/JPG delle regioni italiane in `immagini/regioni-svg/` direttamente nella selezione regionale del minigioco carriera (`minigioco-carriera.js` & `minigioco-carriera.css`). Cache `REGIONIMG1`.
+Feature precedente: Aggiornamento Logo Torrese (Eccellenza Abruzzo).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
