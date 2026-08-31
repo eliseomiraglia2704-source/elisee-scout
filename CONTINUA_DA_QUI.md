@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-08-31**
-Ultimo fatto: **Aggiornato Logo Ufficiale Accademia Borgomanero** — scaricato e integrato in alta risoluzione RGBA (1291x1500px) da Tuttocampo in `immagini/squadre-loghi/ecc-accademia-borgomanero.png`, `accademia-borgomanero.png`, `borgomanero.png` e `ecc-borgomanero.png`. Colori sociali allineati nel catalogo (`catalog.json`).
-Feature precedente: Ordinamento Alfabetico Regionale Campionati Dilettantistici.
+Ultimo fatto: **Aggiornato Logo Ufficiale Autovip San Mauro** — scaricato e integrato in alta risoluzione RGBA (979x1000px) da Tuttocampo in `immagini/squadre-loghi/ecc-autovip-san-mauro.png`, `autovip-san-mauro.png`, `san-mauro.png`, `autovip.png` e `ecc-san-mauro.png`. Colori sociali allineati nel catalogo (`catalog.json`).
+Feature precedente: Aggiornato Logo Ufficiale Accademia Borgomanero.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -81,6 +81,7 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
+| (questo) | Aggiornato logo ufficiale Autovip San Mauro (979x1000px RGBA) da Tuttocampo e colori sociali |
 | `7099a44` | Aggiornato logo ufficiale Accademia Borgomanero (1291x1500px RGBA) da Tuttocampo e colori sociali |
 | `0b46799` | Eccellenza Veneto Girone B 2026/27: organico ufficiale 16 squadre, città e loghi Tuttocampo |
 | `5ac1f94` | Eccellenza Veneto Girone A 2026/27: organico ufficiale 16 squadre, città e loghi Tuttocampo |
@@ -322,6 +323,9 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-08-31** — Aggiornato Logo Ufficiale Autovip San Mauro:
+  - Scaricato e integrato in RGBA (979x1000px) il logo dell'Autovip San Mauro da Tuttocampo in `immagini/squadre-loghi/ecc-autovip-san-mauro.png`, `autovip-san-mauro.png`, `san-mauro.png`, `autovip.png` e `ecc-san-mauro.png`. Allineati colori sociali ufficiali (gialloblù) nel catalogo. Cache `SANMAURO1`.
 
 - **2026-08-31** — Aggiornato Logo Ufficiale Accademia Borgomanero:
   - Scaricato e integrato in RGBA (1291x1500px) il logo dell'Accademia Borgomanero da Tuttocampo in `immagini/squadre-loghi/ecc-accademia-borgomanero.png`, `accademia-borgomanero.png`, `borgomanero.png` e `ecc-borgomanero.png`. Allineati colori sociali ufficiali nel catalogo. Cache `BORGO1`.

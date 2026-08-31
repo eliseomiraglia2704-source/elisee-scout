@@ -82983,16 +82983,16 @@
       "pts": 0,
       "played": 0,
       "logo": "immagini/squadre-loghi/ecc-autovip-san-mauro.png",
-      "primary": "#c0a985",
-      "secondary": "#3f567a",
+      "primary": "#000098",
+      "secondary": "#fff32f",
       "accent": "#ffffff",
       "home": {
-        "body": "#c0a985",
-        "sleeve": "#c0a985"
+        "body": "#000098",
+        "sleeve": "#fff32f"
       },
       "away": {
-        "body": "#3f567a",
-        "sleeve": "#c0a985"
+        "body": "#fff32f",
+        "sleeve": "#000098"
       },
       "stadium": "",
       "capacity": null,
