@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-02**
-Ultimo fatto: **Rimozione Watermark e Passaggio a OpenStreetMap Ufficiale** — Sostituito il tile layer CartoDB (che generava i watermark «API KEY REQUIRED carto.com/basemaps/apikey») con il layer nativo OpenStreetMap (`tile.openstreetmap.org`), completamente pulito, privo di watermark e senza necessità di API key. Cache `CLEANOSM1`.
-Feature precedente: **Sincronizzazione Completa Squadre Serie A, B, C, D ed Eccellenza sulla Mappa** — Geocodificate e allineate con precisione tutte le 814+ squadre (33 Serie A, 43 Serie B, 110 Serie C, 162 Serie D e 466 di tutti i gironi regionali di Eccellenza d'Italia) in `data/squadre/scopri-clubs.json` con coordinate esatte nei rispettivi comuni, città e stadi ufficiali, loghi reali e dedup completo. Cache `ALLECC_GEO1`.
+Ultimo fatto: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Eliminato il punto di fallback centrale (42.5, 12.5) che creava un assembramento artificiale di centinaia di squadre al centro Italia. Geocodificate con Photon tutte le 660+ città/comuni d'Italia e posizionati con precisione millimetrica tutti i 2810 club regione per regione (232 Lombardia, 164 Sicilia, 164 Lazio, 164 Campania, 164 Emilia-Romagna, 162 Puglia, 160 Toscana, 160 Veneto, 144 Piemonte, 128 Marche, 114 Abruzzo, 108 Calabria, 74 Basilicata, 74 Friuli, 73 Sardegna, 72 Umbria, 72 Trentino, 62 Liguria, 47 Molise) con micro-offset circolare anti-sovrapposizione per squadre dello stesso comune. Cache `REGIONAL_FIX1`.
+Feature precedente: **Rimozione Watermark e Passaggio a OpenStreetMap Ufficiale** — Sostituito il tile layer CartoDB con OpenStreetMap nativo (`tile.openstreetmap.org`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

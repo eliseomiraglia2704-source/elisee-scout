@@ -3,7 +3,7 @@
    - MAI servire HTML al posto di JS/CSS (causa "Unexpected token <")
    - Fallback HTML solo per navigazioni pagina
 */
-const CACHE = 'elisee-scout-v20260902-clean-osm-map';
+const CACHE = 'elisee-scout-v20260902-regional-map-fix';
 const PRECACHE = [
   '/',
   '/index.html',
