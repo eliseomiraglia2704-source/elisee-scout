@@ -7,9 +7,9 @@
   <title>Elisee Scout</title>
   <meta name="description" content="ELISEE SCOUT: 3130 agenti IA (715 piattaforma + 3 supervisori piattaforma + 2010 campionati + 402 supervisori H24). GDPR Art. 22 e chat referente privacy.">
   <!-- Favicon / app icons (da logo sito/) -->
-  <link rel="icon" type="image/png" href="immagini/logo/favicon.png?v=20260831_121117">
-  <link rel="shortcut icon" type="image/png" href="immagini/logo/favicon.png?v=20260831_121117">
-  <link rel="apple-touch-icon" href="immagini/logo/logo-site.png?v=20260831_121117">
+  <link rel="icon" type="image/png" href="immagini/logo/favicon.png?v=20260902_curriculum">
+  <link rel="shortcut icon" type="image/png" href="immagini/logo/favicon.png?v=20260902_curriculum">
+  <link rel="apple-touch-icon" href="immagini/logo/logo-site.png?v=20260902_curriculum">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1582,11 +1582,10 @@
         <span class="logo-text-large">ELISEE <span>SCOUT</span></span>
       </a>
 
-      <!-- Nav: Home | Chi siamo | Curriculum | Bacheca -->
+      <!-- Nav: Home | Chi siamo | Bacheca (Curriculum spostato nel menu utente) -->
       <nav class="nav-menu portfolio-nav" id="nav-menu">
         <a href="#hero" class="nav-link active" data-view="home" data-i18n="nav.home" onclick="if(window.switchView){ window.switchView('home'); } return false;">Home</a>
         <a href="#about" class="nav-link" data-view="about" data-i18n="nav.about" onclick="if(window.switchView){ window.switchView('about'); } return false;">Chi siamo</a>
-        <a href="#dashboard-skills" class="nav-link" data-view="pillars" data-i18n="nav.resume" onclick="if(window.switchView){ window.switchView('pillars'); } return false;">Curriculum</a>
         <a href="#bacheca-annunci" class="nav-link" data-view="bacheca" data-i18n="nav.portfolio" onclick="if(window.switchView){ window.switchView('bacheca'); } return false;">Bacheca</a>
         <a href="#stampa-portal" class="nav-link" data-view="stampa" onclick="if(window.openStampaFeed){window.openStampaFeed();}else if(window.switchView){window.switchView('stampa','#stampa-portal');} return false;">Stampa</a>
         <a href="#mappa-portal" class="nav-link" data-view="mappa" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){window.switchView('mappa','#mappa-portal');} return false;">Mappa</a>
@@ -1672,6 +1671,9 @@
             </div>
             <a href="#" id="btn-area-riservata" onclick="event.preventDefault(); event.stopPropagation(); if(window.openAreaRiservataModal){ window.openAreaRiservataModal(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="user-cog" style="width:16px; height:16px; color:#38bdf8;"></i> La Mia Area Riservata
+            </a>
+            <a href="#dashboard-skills" id="btn-dropdown-curriculum" onclick="event.preventDefault(); event.stopPropagation(); if(window.switchView){ window.switchView('pillars','#dashboard-skills'); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
+              <i data-lucide="file-text" style="width:16px; height:16px; color:#38bdf8;"></i> Curriculum
             </a>
             <a href="#tc-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.EliseeTC){ window.EliseeTC.open(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
               <i data-lucide="clipboard-list" style="width:16px; height:16px; color:#38bdf8;"></i> Pannello Elisee Manager
