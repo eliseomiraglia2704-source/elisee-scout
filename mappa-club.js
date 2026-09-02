@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  var CLUBS_URL = 'data/squadre/scopri-clubs.json?v=20260826_GEO1';
+  var CLUBS_URL = 'data/squadre/scopri-clubs.json?v=20260902_ALLECC_GEO';
   var MAX_PINS = 3500;
   var clubs = null;
   var activeFilter = 'all';

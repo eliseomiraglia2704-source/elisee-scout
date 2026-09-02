@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-01**
-Ultimo fatto: **Primavera 1 e 2 nel Minigioco Carriera** — Implementati Tier 11 (Primavera 1) e Tier 12 (Primavera 2). Aggiunta tabella `YOUTH_ACADEMY_POWER` (forza vivai indipendente dalla prima squadra), funzione `youthClubPower()`, logica `generateYouthSeasonOutcome()` (promozione P2→P1, retrocessione, trofei Scudetto Primavera / Coppa Primavera). Aggiornati `CATEGORY_OVR_RANGES`, `CATEGORY_PRICE_RANGES`, `MALE_CATEGORIES`. Popolato `minigioco_clubs.json` con 48 club: 16 P1 (tier 11, elite), 16 P2-Girone A (Sampdoria, Cremonese, Südtirol…), 16 P2-Girone B (Napoli, Bari, Salernitana…). Cache `PRIMAVERA-TIERS`.
-Feature precedente: **Realismo Trofei Minigioco** — Coppa Italia più difficile per neopromosse, CL impossibile al 1° anno, dedup squadre.
+Ultimo aggiornamento: **2026-09-02**
+Ultimo fatto: **Sincronizzazione Completa Squadre Serie A, B, C, D ed Eccellenza sulla Mappa** — Geocodificate e allineate con precisione tutte le 814+ squadre (33 Serie A, 43 Serie B, 110 Serie C, 162 Serie D e 466 di tutti i gironi regionali di Eccellenza d'Italia) in `data/squadre/scopri-clubs.json` con coordinate esatte nei rispettivi comuni, città e stadi ufficiali, loghi reali e dedup completo. Cache `ALLECC_GEO1`.
+Feature precedente: **Curriculum nel menu a tendina utente** — Il link «Curriculum» è stato rimosso dalla navbar pubblica (Home | Chi siamo | Bacheca | …) e spostato nel menu a tendina del profilo loggato, subito sotto «La Mia Area Riservata», con icona `file-text`. Cache `CURRICULUM-DROPDOWN1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -81,6 +81,7 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
+| `847dfe9` | Curriculum spostato dalla navbar al menu a tendina utente; cache `CURRICULUM-DROPDOWN1` |
 | `a1c94c5` | Serie D Girone I 2026/27 (Serie D 100% completa): quote promozione/salvezza/retrocessione, penalizzazioni, bonus risalita, vincoli e lock `club-storia.js` |
 | `e454e27` | Serie D Girone H 2026/27: quote promozione/salvezza/retrocessione, bonus risalita, vincoli e lock `club-storia.js` |
 | `3520323` | Serie D Girone G 2026/27: quote promozione/salvezza/retrocessione, bonus risalita, vincoli e lock `club-storia.js` |

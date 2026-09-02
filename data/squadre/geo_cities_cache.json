@@ -1,0 +1,2650 @@
+{
+  "roma": [
+    41.9028,
+    12.4964
+  ],
+  "milano": [
+    45.4642,
+    9.19
+  ],
+  "napoli": [
+    40.8518,
+    14.2681
+  ],
+  "torino": [
+    45.0703,
+    7.6869
+  ],
+  "palermo": [
+    38.1157,
+    13.3615
+  ],
+  "genova": [
+    44.4056,
+    8.9463
+  ],
+  "bologna": [
+    44.4949,
+    11.3426
+  ],
+  "firenze": [
+    43.7696,
+    11.2558
+  ],
+  "bari": [
+    41.1171,
+    16.8719
+  ],
+  "catania": [
+    37.5079,
+    15.083
+  ],
+  "verona": [
+    45.4384,
+    10.9916
+  ],
+  "venezia": [
+    45.4408,
+    12.3155
+  ],
+  "messina": [
+    38.1938,
+    15.554
+  ],
+  "padova": [
+    45.4064,
+    11.8768
+  ],
+  "trieste": [
+    45.6495,
+    13.7768
+  ],
+  "brescia": [
+    45.5416,
+    10.2118
+  ],
+  "parma": [
+    44.8015,
+    10.3279
+  ],
+  "taranto": [
+    40.4764,
+    17.2441
+  ],
+  "prato": [
+    43.8777,
+    11.1026
+  ],
+  "modena": [
+    44.6471,
+    10.9252
+  ],
+  "reggio calabria": [
+    38.1104,
+    15.6479
+  ],
+  "reggio emilia": [
+    44.6983,
+    10.6312
+  ],
+  "perugia": [
+    43.1107,
+    12.3908
+  ],
+  "livorno": [
+    43.5485,
+    10.3106
+  ],
+  "ravenna": [
+    44.4184,
+    12.2035
+  ],
+  "cagliari": [
+    39.2238,
+    9.1217
+  ],
+  "foggia": [
+    41.4622,
+    15.5446
+  ],
+  "rimini": [
+    44.0678,
+    12.5695
+  ],
+  "salerno": [
+    40.6824,
+    14.7681
+  ],
+  "ferrara": [
+    44.8381,
+    11.6198
+  ],
+  "sassari": [
+    40.7259,
+    8.5556
+  ],
+  "latina": [
+    41.4676,
+    12.9037
+  ],
+  "monza": [
+    45.5845,
+    9.2744
+  ],
+  "siracusa": [
+    37.0755,
+    15.2866
+  ],
+  "pescara": [
+    42.4618,
+    14.2161
+  ],
+  "bergamo": [
+    45.6983,
+    9.6773
+  ],
+  "forli": [
+    44.2227,
+    12.0407
+  ],
+  "trento": [
+    46.0748,
+    11.1217
+  ],
+  "vicenza": [
+    45.5455,
+    11.5355
+  ],
+  "terni": [
+    42.5641,
+    12.6405
+  ],
+  "bolzano": [
+    46.4983,
+    11.3548
+  ],
+  "novara": [
+    45.4469,
+    8.6212
+  ],
+  "piacenza": [
+    45.0526,
+    9.6934
+  ],
+  "ancona": [
+    43.6158,
+    13.5189
+  ],
+  "andria": [
+    41.2263,
+    16.2974
+  ],
+  "arezzo": [
+    43.4633,
+    11.8796
+  ],
+  "udine": [
+    46.0711,
+    13.2346
+  ],
+  "cesena": [
+    44.1391,
+    12.2431
+  ],
+  "lecce": [
+    40.3515,
+    18.175
+  ],
+  "pesaro": [
+    43.9125,
+    12.9155
+  ],
+  "barletta": [
+    41.3197,
+    16.2805
+  ],
+  "alessandria": [
+    44.913,
+    8.615
+  ],
+  "la spezia": [
+    44.1025,
+    9.8241
+  ],
+  "pisa": [
+    43.7228,
+    10.4017
+  ],
+  "pistoia": [
+    43.9333,
+    10.9167
+  ],
+  "catanzaro": [
+    38.9098,
+    16.5877
+  ],
+  "lucca": [
+    43.8429,
+    10.5027
+  ],
+  "brindisi": [
+    40.6327,
+    17.9418
+  ],
+  "treviso": [
+    45.6669,
+    12.243
+  ],
+  "como": [
+    45.8081,
+    9.0852
+  ],
+  "busto arsizio": [
+    45.6119,
+    8.8519
+  ],
+  "grosseto": [
+    42.7636,
+    11.1134
+  ],
+  "pozzuoli": [
+    40.8239,
+    14.1206
+  ],
+  "varese": [
+    45.8206,
+    8.8251
+  ],
+  "asti": [
+    44.9008,
+    8.2069
+  ],
+  "caserta": [
+    41.0726,
+    14.3323
+  ],
+  "gela": [
+    37.0667,
+    14.25
+  ],
+  "aprilia": [
+    41.5956,
+    12.6517
+  ],
+  "ragusa": [
+    36.9269,
+    14.7306
+  ],
+  "pavia": [
+    45.1847,
+    9.1582
+  ],
+  "cremona": [
+    45.1333,
+    10.0333
+  ],
+  "carpi": [
+    44.7836,
+    10.8856
+  ],
+  "altamura": [
+    40.8267,
+    16.5519
+  ],
+  "imola": [
+    44.3533,
+    11.7144
+  ],
+  "l aquila": [
+    42.3498,
+    13.3995
+  ],
+  "massa": [
+    44.035,
+    10.1417
+  ],
+  "trapani": [
+    38.0176,
+    12.5365
+  ],
+  "cosenza": [
+    39.3,
+    16.25
+  ],
+  "potenza": [
+    40.6406,
+    15.8056
+  ],
+  "castellammare di stabia": [
+    40.7,
+    14.4833
+  ],
+  "crotone": [
+    39.0833,
+    17.1167
+  ],
+  "viterbo": [
+    42.4167,
+    12.1
+  ],
+  "aversa": [
+    40.9722,
+    14.2056
+  ],
+  "pomezia": [
+    41.6706,
+    12.5022
+  ],
+  "carrara": [
+    44.08,
+    10.1
+  ],
+  "siena": [
+    43.3188,
+    11.3308
+  ],
+  "benevento": [
+    41.1306,
+    14.7806
+  ],
+  "mantova": [
+    45.1564,
+    10.7914
+  ],
+  "caltanissetta": [
+    37.4922,
+    14.0625
+  ],
+  "matera": [
+    40.6667,
+    16.6
+  ],
+  "agrigento": [
+    37.3111,
+    13.5767
+  ],
+  "cerignola": [
+    41.2656,
+    15.8986
+  ],
+  "avellino": [
+    40.9144,
+    14.7906
+  ],
+  "lecco": [
+    45.8566,
+    9.3977
+  ],
+  "biella": [
+    45.5636,
+    8.0547
+  ],
+  "vercelli": [
+    45.3256,
+    8.4233
+  ],
+  "cuneo": [
+    44.39,
+    7.55
+  ],
+  "campobasso": [
+    41.5603,
+    14.6625
+  ],
+  "isernia": [
+    41.5958,
+    14.2344
+  ],
+  "rieti": [
+    42.4042,
+    12.8631
+  ],
+  "frosinone": [
+    41.64,
+    13.35
+  ],
+  "ascoli piceno": [
+    42.8542,
+    13.575
+  ],
+  "macerata": [
+    43.3,
+    13.45
+  ],
+  "fermo": [
+    43.1606,
+    13.7183
+  ],
+  "chieti": [
+    42.3511,
+    14.1678
+  ],
+  "teramo": [
+    42.6589,
+    13.7039
+  ],
+  "enna": [
+    37.5678,
+    14.2792
+  ],
+  "oristano": [
+    39.9039,
+    8.5911
+  ],
+  "nuoro": [
+    40.3208,
+    9.3281
+  ],
+  "aosta": [
+    45.7372,
+    7.3206
+  ],
+  "belluno": [
+    46.1389,
+    12.2167
+  ],
+  "rovigo": [
+    45.0711,
+    11.7906
+  ],
+  "pordenone": [
+    45.9569,
+    12.6606
+  ],
+  "gorizia": [
+    45.9408,
+    13.6219
+  ],
+  "lodi": [
+    45.3142,
+    9.5033
+  ],
+  "sondrio": [
+    46.1711,
+    9.8728
+  ],
+  "verbania": [
+    45.9228,
+    8.5517
+  ],
+  "san marino": [
+    43.9424,
+    12.4578
+  ],
+  "chiavari": [
+    44.31757,
+    9.32446
+  ],
+  "zanica": [
+    45.63946,
+    9.68413
+  ],
+  "empoli": [
+    43.71949,
+    10.94586
+  ],
+  "arzignano": [
+    45.52835,
+    11.34311
+  ],
+  "cittadella": [
+    45.64499,
+    11.78189
+  ],
+  "desenzano del garda": [
+    45.46949,
+    10.53895
+  ],
+  "carate brianza": [
+    45.67655,
+    9.23716
+  ],
+  "gorgonzola": [
+    45.53157,
+    9.40465
+  ],
+  "lumezzane": [
+    45.64991,
+    10.2615
+  ],
+  "ospitaletto": [
+    45.55522,
+    10.07395
+  ],
+  "crema": [
+    45.3661,
+    9.68471
+  ],
+  "meda": [
+    45.6625,
+    9.15675
+  ],
+  "gubbio": [
+    43.35176,
+    12.5773
+  ],
+  "guidonia montecelio": [
+    41.98427,
+    12.69532
+  ],
+  "ostia": [
+    41.75364,
+    12.28574
+  ],
+  "piancastagnaio": [
+    42.84938,
+    11.69191
+  ],
+  "pineto": [
+    42.60777,
+    14.0671
+  ],
+  "san benedetto del tronto": [
+    42.95253,
+    13.88071
+  ],
+  "vado ligure": [
+    44.27144,
+    8.43822
+  ],
+  "casarano": [
+    40.01082,
+    18.16177
+  ],
+  "cava de tirreni": [
+    40.70046,
+    14.70626
+  ],
+  "giugliano in campania": [
+    42.5,
+    12.5
+  ],
+  "sesto san giovanni": [
+    42.5,
+    12.5
+  ],
+  "monopoli": [
+    42.5,
+    12.5
+  ],
+  "torre annunziata": [
+    42.5,
+    12.5
+  ],
+  "picerno": [
+    42.5,
+    12.5
+  ],
+  "scafati": [
+    42.5,
+    12.5
+  ],
+  "sorrento": [
+    42.5,
+    12.5
+  ],
+  "bra": [
+    42.5,
+    12.5
+  ],
+  "borgosesia": [
+    42.5,
+    12.5
+  ],
+  "celle ligure": [
+    42.5,
+    12.5
+  ],
+  "vinovo": [
+    42.5,
+    12.5
+  ],
+  "tortona": [
+    42.5,
+    12.5
+  ],
+  "portovenere": [
+    42.5,
+    12.5
+  ],
+  "imperia": [
+    42.5,
+    12.5
+  ],
+  "gozzano": [
+    42.5,
+    12.5
+  ],
+  "pianezza": [
+    42.5,
+    12.5
+  ],
+  "saluzzo": [
+    42.5,
+    12.5
+  ],
+  "millesimo": [
+    42.5,
+    12.5
+  ],
+  "sanremo": [
+    42.5,
+    12.5
+  ],
+  "sestri levante": [
+    42.5,
+    12.5
+  ],
+  "valenza": [
+    42.5,
+    12.5
+  ],
+  "brusaporto": [
+    42.5,
+    12.5
+  ],
+  "ciserano": [
+    42.5,
+    12.5
+  ],
+  "caldiero": [
+    42.5,
+    12.5
+  ],
+  "fiorenzuola d arda": [
+    42.5,
+    12.5
+  ],
+  "nibbiano": [
+    42.5,
+    12.5
+  ],
+  "montichiari": [
+    42.5,
+    12.5
+  ],
+  "carugate": [
+    42.5,
+    12.5
+  ],
+  "palazzolo sull oglio": [
+    42.5,
+    12.5
+  ],
+  "calcio": [
+    42.5,
+    12.5
+  ],
+  "rovato": [
+    42.5,
+    12.5
+  ],
+  "scanzorosciate": [
+    42.5,
+    12.5
+  ],
+  "trezzo sull adda": [
+    42.5,
+    12.5
+  ],
+  "villa d alme": [
+    42.5,
+    12.5
+  ],
+  "altavilla vicentina": [
+    42.5,
+    12.5
+  ],
+  "bassano del grappa": [
+    42.5,
+    12.5
+  ],
+  "lignano sabbiadoro": [
+    42.5,
+    12.5
+  ],
+  "schio": [
+    42.5,
+    12.5
+  ],
+  "noale": [
+    42.5,
+    12.5
+  ],
+  "campodarsego": [
+    42.5,
+    12.5
+  ],
+  "conegliano": [
+    42.5,
+    12.5
+  ],
+  "carlino": [
+    42.5,
+    12.5
+  ],
+  "este": [
+    42.5,
+    12.5
+  ],
+  "merano": [
+    42.5,
+    12.5
+  ],
+  "legnago": [
+    42.5,
+    12.5
+  ],
+  "lavariano": [
+    42.5,
+    12.5
+  ],
+  "san martino di lupari": [
+    42.5,
+    12.5
+  ],
+  "san dona di piave": [
+    42.5,
+    12.5
+  ],
+  "arconate": [
+    42.5,
+    12.5
+  ],
+  "chioggia": [
+    42.5,
+    12.5
+  ],
+  "castellanza": [
+    42.5,
+    12.5
+  ],
+  "brescello": [
+    42.5,
+    12.5
+  ],
+  "correggio": [
+    42.5,
+    12.5
+  ],
+  "stradella": [
+    42.5,
+    12.5
+  ],
+  "sant angelo lodigiano": [
+    42.5,
+    12.5
+  ],
+  "pontedera": [
+    42.5,
+    12.5
+  ],
+  "solbiate arno": [
+    42.5,
+    12.5
+  ],
+  "casatenovo": [
+    42.5,
+    12.5
+  ],
+  "coriano": [
+    42.5,
+    12.5
+  ],
+  "venegono superiore": [
+    42.5,
+    12.5
+  ],
+  "civita castellana": [
+    42.5,
+    12.5
+  ],
+  "gavorrano": [
+    42.5,
+    12.5
+  ],
+  "bagno a ripoli": [
+    42.5,
+    12.5
+  ],
+  "campiglia marittima": [
+    42.5,
+    12.5
+  ],
+  "budrio": [
+    42.5,
+    12.5
+  ],
+  "montevarchi": [
+    42.5,
+    12.5
+  ],
+  "tavarnelle val di pesa": [
+    42.5,
+    12.5
+  ],
+  "sasso marconi": [
+    42.5,
+    12.5
+  ],
+  "scandicci": [
+    42.5,
+    12.5
+  ],
+  "seravezza": [
+    42.5,
+    12.5
+  ],
+  "castel maggiore": [
+    42.5,
+    12.5
+  ],
+  "altopascio": [
+    42.5,
+    12.5
+  ],
+  "santa maria degli angeli": [
+    42.5,
+    12.5
+  ],
+  "terranuova bracciolini": [
+    42.5,
+    12.5
+  ],
+  "fossombrone": [
+    42.5,
+    12.5
+  ],
+  "foligno": [
+    42.5,
+    12.5
+  ],
+  "giulianova": [
+    42.5,
+    12.5
+  ],
+  "lanciano": [
+    42.5,
+    12.5
+  ],
+  "montecassiano": [
+    42.5,
+    12.5
+  ],
+  "notaresco": [
+    42.5,
+    12.5
+  ],
+  "pietralunga": [
+    42.5,
+    12.5
+  ],
+  "recanati": [
+    42.5,
+    12.5
+  ],
+  "sant egidio alla vibrata": [
+    42.5,
+    12.5
+  ],
+  "termoli": [
+    42.5,
+    12.5
+  ],
+  "citta di castello": [
+    42.5,
+    12.5
+  ],
+  "afragola": [
+    42.5,
+    12.5
+  ],
+  "senigallia": [
+    42.5,
+    12.5
+  ],
+  "albano laziale": [
+    42.5,
+    12.5
+  ],
+  "fiumicino": [
+    42.5,
+    12.5
+  ],
+  "anzio": [
+    42.5,
+    12.5
+  ],
+  "budoni": [
+    42.5,
+    12.5
+  ],
+  "anagni": [
+    42.5,
+    12.5
+  ],
+  "monastir": [
+    42.5,
+    12.5
+  ],
+  "vallo della lucania": [
+    42.5,
+    12.5
+  ],
+  "ozieri": [
+    42.5,
+    12.5
+  ],
+  "pagani": [
+    42.5,
+    12.5
+  ],
+  "sarno": [
+    42.5,
+    12.5
+  ],
+  "muravera": [
+    42.5,
+    12.5
+  ],
+  "venafro": [
+    42.5,
+    12.5
+  ],
+  "campagnano di roma": [
+    42.5,
+    12.5
+  ],
+  "bisceglie": [
+    42.5,
+    12.5
+  ],
+  "nardo": [
+    42.5,
+    12.5
+  ],
+  "eboli": [
+    42.5,
+    12.5
+  ],
+  "francavilla in sinni": [
+    42.5,
+    12.5
+  ],
+  "santa maria a vico": [
+    42.5,
+    12.5
+  ],
+  "gravina in puglia": [
+    42.5,
+    12.5
+  ],
+  "ischia": [
+    42.5,
+    12.5
+  ],
+  "manfredonia": [
+    42.5,
+    12.5
+  ],
+  "martina franca": [
+    42.5,
+    12.5
+  ],
+  "melfi": [
+    42.5,
+    12.5
+  ],
+  "nocera inferiore": [
+    42.5,
+    12.5
+  ],
+  "palma campania": [
+    42.5,
+    12.5
+  ],
+  "forio": [
+    42.5,
+    12.5
+  ],
+  "torre del greco": [
+    42.5,
+    12.5
+  ],
+  "francavilla fontana": [
+    42.5,
+    12.5
+  ],
+  "avola": [
+    42.5,
+    12.5
+  ],
+  "favara": [
+    42.5,
+    12.5
+  ],
+  "praia a mare": [
+    42.5,
+    12.5
+  ],
+  "barcellona pozzo di gotto": [
+    42.5,
+    12.5
+  ],
+  "licata": [
+    42.5,
+    12.5
+  ],
+  "milazzo": [
+    42.5,
+    12.5
+  ],
+  "modica": [
+    42.5,
+    12.5
+  ],
+  "lamezia terme": [
+    42.5,
+    12.5
+  ],
+  "vibo valentia": [
+    42.5,
+    12.5
+  ],
+  "savona": [
+    42.5,
+    12.5
+  ],
+  "rapallo": [
+    42.5,
+    12.5
+  ],
+  "sestri": [
+    42.5,
+    12.5
+  ],
+  "albenga": [
+    42.5,
+    12.5
+  ],
+  "ventimiglia": [
+    42.5,
+    12.5
+  ],
+  "sarzana": [
+    42.5,
+    12.5
+  ],
+  "lavagna": [
+    42.5,
+    12.5
+  ],
+  "pisticci": [
+    42.5,
+    12.5
+  ],
+  "policoro": [
+    42.5,
+    12.5
+  ],
+  "lavello": [
+    42.5,
+    12.5
+  ],
+  "rionero": [
+    42.5,
+    12.5
+  ],
+  "irsina": [
+    42.5,
+    12.5
+  ],
+  "lamezia": [
+    42.5,
+    12.5
+  ],
+  "vibo": [
+    42.5,
+    12.5
+  ],
+  "bernalda": [
+    42.5,
+    12.5
+  ],
+  "castrovillari": [
+    42.5,
+    12.5
+  ],
+  "rossano": [
+    42.5,
+    12.5
+  ],
+  "paola": [
+    42.5,
+    12.5
+  ],
+  "siderno": [
+    42.5,
+    12.5
+  ],
+  "palmi": [
+    42.5,
+    12.5
+  ],
+  "locri": [
+    42.5,
+    12.5
+  ],
+  "marsala": [
+    42.5,
+    12.5
+  ],
+  "acireale": [
+    42.5,
+    12.5
+  ],
+  "paterno": [
+    42.5,
+    12.5
+  ],
+  "olbia": [
+    42.5,
+    12.5
+  ],
+  "carbonia": [
+    42.5,
+    12.5
+  ],
+  "alghero": [
+    42.5,
+    12.5
+  ],
+  "iglesias": [
+    42.5,
+    12.5
+  ],
+  "selargius": [
+    42.5,
+    12.5
+  ],
+  "quartu": [
+    42.5,
+    12.5
+  ],
+  "porto torres": [
+    42.5,
+    12.5
+  ],
+  "trani": [
+    42.5,
+    12.5
+  ],
+  "molfetta": [
+    42.5,
+    12.5
+  ],
+  "bitonto": [
+    42.5,
+    12.5
+  ],
+  "gallipoli": [
+    42.5,
+    12.5
+  ],
+  "fasano": [
+    42.5,
+    12.5
+  ],
+  "sesto": [
+    42.5,
+    12.5
+  ],
+  "legnano": [
+    42.5,
+    12.5
+  ],
+  "rho": [
+    42.5,
+    12.5
+  ],
+  "desio": [
+    42.5,
+    12.5
+  ],
+  "cinisello": [
+    42.5,
+    12.5
+  ],
+  "guidonia": [
+    42.5,
+    12.5
+  ],
+  "tivoli": [
+    42.5,
+    12.5
+  ],
+  "nettuno": [
+    42.5,
+    12.5
+  ],
+  "civitavecchia": [
+    42.5,
+    12.5
+  ],
+  "formia": [
+    42.5,
+    12.5
+  ],
+  "cassino": [
+    42.5,
+    12.5
+  ],
+  "terracina": [
+    42.5,
+    12.5
+  ],
+  "nocera": [
+    42.5,
+    12.5
+  ],
+  "castellammare": [
+    42.5,
+    12.5
+  ],
+  "portici": [
+    42.5,
+    12.5
+  ],
+  "nola": [
+    42.5,
+    12.5
+  ],
+  "viareggio": [
+    42.5,
+    12.5
+  ],
+  "pescia": [
+    42.5,
+    12.5
+  ],
+  "montecatini": [
+    42.5,
+    12.5
+  ],
+  "bassano": [
+    42.5,
+    12.5
+  ],
+  "mestre": [
+    42.5,
+    12.5
+  ],
+  "thiene": [
+    42.5,
+    12.5
+  ],
+  "portogruaro": [
+    42.5,
+    12.5
+  ],
+  "castelfranco": [
+    42.5,
+    12.5
+  ],
+  "montebelluna": [
+    42.5,
+    12.5
+  ],
+  "faenza": [
+    42.5,
+    12.5
+  ],
+  "sassuolo": [
+    42.5,
+    12.5
+  ],
+  "riccione": [
+    42.5,
+    12.5
+  ],
+  "cattolica": [
+    42.5,
+    12.5
+  ],
+  "ivrea": [
+    42.5,
+    12.5
+  ],
+  "chieri": [
+    42.5,
+    12.5
+  ],
+  "moncalieri": [
+    42.5,
+    12.5
+  ],
+  "rivoli": [
+    42.5,
+    12.5
+  ],
+  "settimo": [
+    42.5,
+    12.5
+  ],
+  "pinerolo": [
+    42.5,
+    12.5
+  ],
+  "casale": [
+    42.5,
+    12.5
+  ],
+  "urbino": [
+    42.5,
+    12.5
+  ],
+  "ascoli": [
+    42.5,
+    12.5
+  ],
+  "civitanova": [
+    42.5,
+    12.5
+  ],
+  "jesi": [
+    42.5,
+    12.5
+  ],
+  "fano": [
+    42.5,
+    12.5
+  ],
+  "tolentino": [
+    42.5,
+    12.5
+  ],
+  "san benedetto": [
+    42.5,
+    12.5
+  ],
+  "avezzano": [
+    42.5,
+    12.5
+  ],
+  "vasto": [
+    42.5,
+    12.5
+  ],
+  "sulmona": [
+    42.5,
+    12.5
+  ],
+  "ortona": [
+    42.5,
+    12.5
+  ],
+  "francavilla": [
+    42.5,
+    12.5
+  ],
+  "roseto": [
+    42.5,
+    12.5
+  ],
+  "spoleto": [
+    42.5,
+    12.5
+  ],
+  "assisi": [
+    42.5,
+    12.5
+  ],
+  "orvieto": [
+    42.5,
+    12.5
+  ],
+  "narni": [
+    42.5,
+    12.5
+  ],
+  "bojano": [
+    42.5,
+    12.5
+  ],
+  "todi": [
+    42.5,
+    12.5
+  ],
+  "larino": [
+    42.5,
+    12.5
+  ],
+  "agnone": [
+    42.5,
+    12.5
+  ],
+  "guglionesi": [
+    42.5,
+    12.5
+  ],
+  "monfalcone": [
+    42.5,
+    12.5
+  ],
+  "codroipo": [
+    42.5,
+    12.5
+  ],
+  "cividale": [
+    42.5,
+    12.5
+  ],
+  "gemona": [
+    42.5,
+    12.5
+  ],
+  "latisana": [
+    42.5,
+    12.5
+  ],
+  "tolmezzo": [
+    42.5,
+    12.5
+  ],
+  "sacile": [
+    42.5,
+    12.5
+  ],
+  "rovereto": [
+    42.5,
+    12.5
+  ],
+  "spilimbergo": [
+    42.5,
+    12.5
+  ],
+  "maniago": [
+    42.5,
+    12.5
+  ],
+  "bressanone": [
+    42.5,
+    12.5
+  ],
+  "pergine": [
+    42.5,
+    12.5
+  ],
+  "riva": [
+    42.5,
+    12.5
+  ],
+  "mezzocorona": [
+    42.5,
+    12.5
+  ],
+  "lavis": [
+    42.5,
+    12.5
+  ],
+  "arco": [
+    42.5,
+    12.5
+  ],
+  "brunico": [
+    42.5,
+    12.5
+  ],
+  "pomigliano": [
+    42.5,
+    12.5
+  ],
+  "chievo": [
+    42.5,
+    12.5
+  ],
+  "pink": [
+    42.5,
+    12.5
+  ],
+  "san": [
+    42.5,
+    12.5
+  ],
+  "tavagnacco": [
+    42.5,
+    12.5
+  ],
+  "cairo montenotte": [
+    42.5,
+    12.5
+  ],
+  "res": [
+    42.5,
+    12.5
+  ],
+  "ferrandina": [
+    42.5,
+    12.5
+  ],
+  "san cataldo": [
+    42.5,
+    12.5
+  ],
+  "serravalle": [
+    42.5,
+    12.5
+  ],
+  "uri": [
+    42.5,
+    12.5
+  ],
+  "caronno pertusella": [
+    42.5,
+    12.5
+  ],
+  "sedriano": [
+    42.5,
+    12.5
+  ],
+  "lesmo": [
+    42.5,
+    12.5
+  ],
+  "cologno monzese": [
+    42.5,
+    12.5
+  ],
+  "villorba": [
+    42.5,
+    12.5
+  ],
+  "erbusco": [
+    42.5,
+    12.5
+  ],
+  "sesto fiorentino": [
+    42.5,
+    12.5
+  ],
+  "alba": [
+    42.5,
+    12.5
+  ],
+  "grottaferrata": [
+    42.5,
+    12.5
+  ],
+  "colleferro": [
+    42.5,
+    12.5
+  ],
+  "villaricca": [
+    42.5,
+    12.5
+  ],
+  "sant antonio abate": [
+    42.5,
+    12.5
+  ],
+  "rende": [
+    42.5,
+    12.5
+  ],
+  "agazzano": [
+    42.5,
+    12.5
+  ],
+  "scandiano": [
+    42.5,
+    12.5
+  ],
+  "castelfranco emilia": [
+    42.5,
+    12.5
+  ],
+  "bobbio": [
+    42.5,
+    12.5
+  ],
+  "campagnola emilia": [
+    42.5,
+    12.5
+  ],
+  "castel san giovanni": [
+    42.5,
+    12.5
+  ],
+  "castellarano": [
+    42.5,
+    12.5
+  ],
+  "fornovo di taro": [
+    42.5,
+    12.5
+  ],
+  "fidenza": [
+    42.5,
+    12.5
+  ],
+  "pontenure": [
+    42.5,
+    12.5
+  ],
+  "medolla": [
+    42.5,
+    12.5
+  ],
+  "rolo": [
+    42.5,
+    12.5
+  ],
+  "sant agostino": [
+    42.5,
+    12.5
+  ],
+  "viano": [
+    42.5,
+    12.5
+  ],
+  "zola predosa": [
+    42.5,
+    12.5
+  ],
+  "castenaso": [
+    42.5,
+    12.5
+  ],
+  "comacchio": [
+    42.5,
+    12.5
+  ],
+  "massa lombarda": [
+    42.5,
+    12.5
+  ],
+  "bertinoro": [
+    42.5,
+    12.5
+  ],
+  "medicina": [
+    42.5,
+    12.5
+  ],
+  "castel san pietro terme": [
+    42.5,
+    12.5
+  ],
+  "san leo": [
+    42.5,
+    12.5
+  ],
+  "russi": [
+    42.5,
+    12.5
+  ],
+  "san mauro pascoli": [
+    42.5,
+    12.5
+  ],
+  "acquaviva": [
+    42.5,
+    12.5
+  ],
+  "conselice": [
+    42.5,
+    12.5
+  ],
+  "savignano sul rubicone": [
+    42.5,
+    12.5
+  ],
+  "borgo tossignano": [
+    42.5,
+    12.5
+  ],
+  "santarcangelo di romagna": [
+    42.5,
+    12.5
+  ],
+  "novafeltria": [
+    42.5,
+    12.5
+  ],
+  "teor": [
+    42.5,
+    12.5
+  ],
+  "premariacco": [
+    42.5,
+    12.5
+  ],
+  "casarsa della delizia": [
+    42.5,
+    12.5
+  ],
+  "chions": [
+    42.5,
+    12.5
+  ],
+  "fontanafredda": [
+    42.5,
+    12.5
+  ],
+  "cividale del friuli": [
+    42.5,
+    12.5
+  ],
+  "muggia": [
+    42.5,
+    12.5
+  ],
+  "monrupino": [
+    42.5,
+    12.5
+  ],
+  "brugnera": [
+    42.5,
+    12.5
+  ],
+  "fagagna": [
+    42.5,
+    12.5
+  ],
+  "san vito al tagliamento": [
+    42.5,
+    12.5
+  ],
+  "lazzate": [
+    42.5,
+    12.5
+  ],
+  "assago": [
+    42.5,
+    12.5
+  ],
+  "cerro maggiore": [
+    42.5,
+    12.5
+  ],
+  "baranzate": [
+    42.5,
+    12.5
+  ],
+  "besnate": [
+    42.5,
+    12.5
+  ],
+  "lentate sul seveso": [
+    42.5,
+    12.5
+  ],
+  "magenta": [
+    42.5,
+    12.5
+  ],
+  "saronno": [
+    42.5,
+    12.5
+  ],
+  "tribiano": [
+    42.5,
+    12.5
+  ],
+  "vergiate": [
+    42.5,
+    12.5
+  ],
+  "erba": [
+    42.5,
+    12.5
+  ],
+  "caravaggio": [
+    42.5,
+    12.5
+  ],
+  "cisano bergamasco": [
+    42.5,
+    12.5
+  ],
+  "albino": [
+    42.5,
+    12.5
+  ],
+  "casnigo": [
+    42.5,
+    12.5
+  ],
+  "almenno san salvatore": [
+    42.5,
+    12.5
+  ],
+  "barzano": [
+    42.5,
+    12.5
+  ],
+  "olginate": [
+    42.5,
+    12.5
+  ],
+  "muggio": [
+    42.5,
+    12.5
+  ],
+  "ponte san pietro": [
+    42.5,
+    12.5
+  ],
+  "seregno": [
+    42.5,
+    12.5
+  ],
+  "treviglio": [
+    42.5,
+    12.5
+  ],
+  "giussano": [
+    42.5,
+    12.5
+  ],
+  "verdellino": [
+    42.5,
+    12.5
+  ],
+  "breno": [
+    42.5,
+    12.5
+  ],
+  "carpenedolo": [
+    42.5,
+    12.5
+  ],
+  "castel goffredo": [
+    42.5,
+    12.5
+  ],
+  "castiglione delle stiviere": [
+    42.5,
+    12.5
+  ],
+  "cellatica": [
+    42.5,
+    12.5
+  ],
+  "mazzano": [
+    42.5,
+    12.5
+  ],
+  "codogno": [
+    42.5,
+    12.5
+  ],
+  "offanengo": [
+    42.5,
+    12.5
+  ],
+  "orzinuovi": [
+    42.5,
+    12.5
+  ],
+  "pianico": [
+    42.5,
+    12.5
+  ],
+  "poggio rusco": [
+    42.5,
+    12.5
+  ],
+  "soncino": [
+    42.5,
+    12.5
+  ],
+  "torre de roveri": [
+    42.5,
+    12.5
+  ],
+  "verolanuova": [
+    42.5,
+    12.5
+  ],
+  "treia": [
+    42.5,
+    12.5
+  ],
+  "castelfidardo": [
+    42.5,
+    12.5
+  ],
+  "fermignano": [
+    42.5,
+    12.5
+  ],
+  "lunano": [
+    42.5,
+    12.5
+  ],
+  "matelica": [
+    42.5,
+    12.5
+  ],
+  "montefano": [
+    42.5,
+    12.5
+  ],
+  "montegranaro": [
+    42.5,
+    12.5
+  ],
+  "osimo": [
+    42.5,
+    12.5
+  ],
+  "monte san giusto": [
+    42.5,
+    12.5
+  ],
+  "borgomanero": [
+    42.5,
+    12.5
+  ],
+  "san mauro torinese": [
+    42.5,
+    12.5
+  ],
+  "morrovalle": [
+    42.5,
+    12.5
+  ],
+  "baveno": [
+    42.5,
+    12.5
+  ],
+  "aymavilles": [
+    42.5,
+    12.5
+  ],
+  "casale monferrato": [
+    42.5,
+    12.5
+  ],
+  "borgaro torinese": [
+    42.5,
+    12.5
+  ],
+  "briga novarese": [
+    42.5,
+    12.5
+  ],
+  "varallo": [
+    42.5,
+    12.5
+  ],
+  "settimo torinese": [
+    42.5,
+    12.5
+  ],
+  "druento": [
+    42.5,
+    12.5
+  ],
+  "volpiano": [
+    42.5,
+    12.5
+  ],
+  "rivarolo canavese": [
+    42.5,
+    12.5
+  ],
+  "quincinetto": [
+    42.5,
+    12.5
+  ],
+  "carmagnola": [
+    42.5,
+    12.5
+  ],
+  "cherasco": [
+    42.5,
+    12.5
+  ],
+  "fossano": [
+    42.5,
+    12.5
+  ],
+  "centallo": [
+    42.5,
+    12.5
+  ],
+  "gavi": [
+    42.5,
+    12.5
+  ],
+  "mondovi": [
+    42.5,
+    12.5
+  ],
+  "moretta": [
+    42.5,
+    12.5
+  ],
+  "dronero": [
+    42.5,
+    12.5
+  ],
+  "ovada": [
+    42.5,
+    12.5
+  ],
+  "villafranca d asti": [
+    42.5,
+    12.5
+  ],
+  "san damiano d asti": [
+    42.5,
+    12.5
+  ],
+  "acquaviva delle fonti": [
+    42.5,
+    12.5
+  ],
+  "racale": [
+    42.5,
+    12.5
+  ],
+  "canosa di puglia": [
+    42.5,
+    12.5
+  ],
+  "campi salentina": [
+    42.5,
+    12.5
+  ],
+  "spinazzola": [
+    42.5,
+    12.5
+  ],
+  "galatina": [
+    42.5,
+    12.5
+  ],
+  "novoli": [
+    42.5,
+    12.5
+  ],
+  "polignano a mare": [
+    42.5,
+    12.5
+  ],
+  "ostuni": [
+    42.5,
+    12.5
+  ],
+  "squinzano": [
+    42.5,
+    12.5
+  ],
+  "taurisano": [
+    42.5,
+    12.5
+  ],
+  "ugento": [
+    42.5,
+    12.5
+  ],
+  "maglie": [
+    42.5,
+    12.5
+  ],
+  "riva del garda": [
+    42.5,
+    12.5
+  ],
+  "cles": [
+    42.5,
+    12.5
+  ],
+  "valle aurina": [
+    42.5,
+    12.5
+  ],
+  "levico terme": [
+    42.5,
+    12.5
+  ],
+  "mori": [
+    42.5,
+    12.5
+  ],
+  "comano terme": [
+    42.5,
+    12.5
+  ],
+  "naturno": [
+    42.5,
+    12.5
+  ],
+  "san giorgio": [
+    42.5,
+    12.5
+  ],
+  "termeno": [
+    42.5,
+    12.5
+  ],
+  "appiano": [
+    42.5,
+    12.5
+  ],
+  "umbertide": [
+    42.5,
+    12.5
+  ],
+  "parcines": [
+    42.5,
+    12.5
+  ],
+  "cannara": [
+    42.5,
+    12.5
+  ],
+  "corciano": [
+    42.5,
+    12.5
+  ],
+  "bastia umbra": [
+    42.5,
+    12.5
+  ],
+  "montone": [
+    42.5,
+    12.5
+  ],
+  "san martino in campo": [
+    42.5,
+    12.5
+  ],
+  "panicale": [
+    42.5,
+    12.5
+  ],
+  "torgiano": [
+    42.5,
+    12.5
+  ],
+  "bevagna": [
+    42.5,
+    12.5
+  ],
+  "sansepolcro": [
+    42.5,
+    12.5
+  ],
+  "agerola": [
+    42.5,
+    12.5
+  ],
+  "policastro bussentino": [
+    42.5,
+    12.5
+  ],
+  "lioni": [
+    42.5,
+    12.5
+  ],
+  "montemiletto": [
+    42.5,
+    12.5
+  ],
+  "apice": [
+    42.5,
+    12.5
+  ],
+  "poggiomarino": [
+    42.5,
+    12.5
+  ],
+  "castel san giorgio": [
+    42.5,
+    12.5
+  ],
+  "battipaglia": [
+    42.5,
+    12.5
+  ],
+  "baronissi": [
+    42.5,
+    12.5
+  ],
+  "campagna": [
+    42.5,
+    12.5
+  ],
+  "pontecagnano faiano": [
+    42.5,
+    12.5
+  ],
+  "positano": [
+    42.5,
+    12.5
+  ],
+  "solofra": [
+    42.5,
+    12.5
+  ],
+  "mercato san severino": [
+    42.5,
+    12.5
+  ],
+  "maiori": [
+    42.5,
+    12.5
+  ],
+  "ponte": [
+    42.5,
+    12.5
+  ],
+  "telese terme": [
+    42.5,
+    12.5
+  ],
+  "angri": [
+    42.5,
+    12.5
+  ],
+  "alatri": [
+    42.5,
+    12.5
+  ],
+  "arce": [
+    42.5,
+    12.5
+  ],
+  "roccasecca": [
+    42.5,
+    12.5
+  ],
+  "monte san giovanni campano": [
+    42.5,
+    12.5
+  ],
+  "ferentino": [
+    42.5,
+    12.5
+  ],
+  "paliano": [
+    42.5,
+    12.5
+  ],
+  "frascati": [
+    42.5,
+    12.5
+  ],
+  "gaeta": [
+    42.5,
+    12.5
+  ],
+  "sezze": [
+    42.5,
+    12.5
+  ],
+  "mosciano sant angelo": [
+    42.5,
+    12.5
+  ],
+  "celano": [
+    42.5,
+    12.5
+  ],
+  "pontevomano": [
+    42.5,
+    12.5
+  ],
+  "francavilla al mare": [
+    42.5,
+    12.5
+  ],
+  "roseto degli abruzzi": [
+    42.5,
+    12.5
+  ],
+  "san giovanni teatino": [
+    42.5,
+    12.5
+  ],
+  "san salvo": [
+    42.5,
+    12.5
+  ],
+  "trasacco": [
+    42.5,
+    12.5
+  ],
+  "montesilvano": [
+    42.5,
+    12.5
+  ],
+  "torre de passeri": [
+    42.5,
+    12.5
+  ],
+  "montorio al vomano": [
+    42.5,
+    12.5
+  ],
+  "cupello": [
+    42.5,
+    12.5
+  ],
+  "casal di principe": [
+    42.5,
+    12.5
+  ],
+  "caivano": [
+    42.5,
+    12.5
+  ],
+  "castel volturno": [
+    42.5,
+    12.5
+  ],
+  "quarto": [
+    42.5,
+    12.5
+  ],
+  "ercolano": [
+    42.5,
+    12.5
+  ],
+  "qualiano": [
+    42.5,
+    12.5
+  ],
+  "pompei": [
+    42.5,
+    12.5
+  ],
+  "bacoli": [
+    42.5,
+    12.5
+  ],
+  "casoria": [
+    42.5,
+    12.5
+  ],
+  "grazzanise": [
+    42.5,
+    12.5
+  ],
+  "gricignano di aversa": [
+    42.5,
+    12.5
+  ],
+  "santa maria la carita": [
+    42.5,
+    12.5
+  ],
+  "pomigliano d arco": [
+    42.5,
+    12.5
+  ],
+  "ardea": [
+    42.5,
+    12.5
+  ],
+  "monterotondo": [
+    42.5,
+    12.5
+  ],
+  "sora": [
+    42.5,
+    12.5
+  ],
+  "piedimonte matese": [
+    42.5,
+    12.5
+  ],
+  "alife": [
+    42.5,
+    12.5
+  ],
+  "torremaggiore": [
+    42.5,
+    12.5
+  ],
+  "pietramontecorvino": [
+    42.5,
+    12.5
+  ],
+  "campomarino": [
+    42.5,
+    12.5
+  ],
+  "capriati a volturno": [
+    42.5,
+    12.5
+  ],
+  "sesto campano": [
+    42.5,
+    12.5
+  ],
+  "castel di sangro": [
+    42.5,
+    12.5
+  ],
+  "montenero di bisaccia": [
+    42.5,
+    12.5
+  ],
+  "pietrasanta": [
+    42.5,
+    12.5
+  ],
+  "camaiore": [
+    42.5,
+    12.5
+  ],
+  "cerreto guidi": [
+    42.5,
+    12.5
+  ],
+  "forte dei marmi": [
+    42.5,
+    12.5
+  ],
+  "castelnuovo di garfagnana": [
+    42.5,
+    12.5
+  ],
+  "perignano": [
+    42.5,
+    12.5
+  ],
+  "san giuliano terme": [
+    42.5,
+    12.5
+  ],
+  "fucecchio": [
+    42.5,
+    12.5
+  ],
+  "cecina": [
+    42.5,
+    12.5
+  ],
+  "san miniato": [
+    42.5,
+    12.5
+  ],
+  "lamporecchio": [
+    42.5,
+    12.5
+  ],
+  "larciano": [
+    42.5,
+    12.5
+  ],
+  "antella": [
+    42.5,
+    12.5
+  ],
+  "ponsacco": [
+    42.5,
+    12.5
+  ],
+  "montespertoli": [
+    42.5,
+    12.5
+  ],
+  "rufina": [
+    42.5,
+    12.5
+  ],
+  "poggibonsi": [
+    42.5,
+    12.5
+  ],
+  "anghiari": [
+    42.5,
+    12.5
+  ],
+  "barberino tavarnelle": [
+    42.5,
+    12.5
+  ],
+  "san giovanni valdarno": [
+    42.5,
+    12.5
+  ],
+  "monte san savino": [
+    42.5,
+    12.5
+  ],
+  "castiglion fiorentino": [
+    42.5,
+    12.5
+  ],
+  "colle di val d elsa": [
+    42.5,
+    12.5
+  ],
+  "figline valdarno": [
+    42.5,
+    12.5
+  ],
+  "lastra a signa": [
+    42.5,
+    12.5
+  ],
+  "signa": [
+    42.5,
+    12.5
+  ],
+  "sant ambrogio di valpolicella": [
+    42.5,
+    12.5
+  ],
+  "montecchio maggiore": [
+    42.5,
+    12.5
+  ],
+  "adria": [
+    42.5,
+    12.5
+  ],
+  "montorio": [
+    42.5,
+    12.5
+  ],
+  "borgo veneto": [
+    42.5,
+    12.5
+  ],
+  "oppeano": [
+    42.5,
+    12.5
+  ],
+  "bolzano vicentino": [
+    42.5,
+    12.5
+  ],
+  "piove di sacco": [
+    42.5,
+    12.5
+  ],
+  "castelnuovo del garda": [
+    42.5,
+    12.5
+  ],
+  "chiampo": [
+    42.5,
+    12.5
+  ],
+  "pozzonovo": [
+    42.5,
+    12.5
+  ],
+  "vigasio": [
+    42.5,
+    12.5
+  ],
+  "limena": [
+    42.5,
+    12.5
+  ],
+  "villafranca di verona": [
+    42.5,
+    12.5
+  ],
+  "mestrino": [
+    42.5,
+    12.5
+  ],
+  "villafranca padovana": [
+    42.5,
+    12.5
+  ],
+  "san polo di piave": [
+    42.5,
+    12.5
+  ],
+  "borgo valbelluna": [
+    42.5,
+    12.5
+  ],
+  "marostica": [
+    42.5,
+    12.5
+  ],
+  "dolo": [
+    42.5,
+    12.5
+  ],
+  "mansue": [
+    42.5,
+    12.5
+  ],
+  "pieve di soligo": [
+    42.5,
+    12.5
+  ],
+  "castello di godego": [
+    42.5,
+    12.5
+  ],
+  "galliera veneta": [
+    42.5,
+    12.5
+  ],
+  "borgoricco": [
+    42.5,
+    12.5
+  ],
+  "mogliano veneto": [
+    42.5,
+    12.5
+  ],
+  "oderzo": [
+    42.5,
+    12.5
+  ]
+}
