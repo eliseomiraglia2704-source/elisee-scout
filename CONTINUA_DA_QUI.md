@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-02**
-Ultimo fatto: **Sincronizzazione Completa Squadre Serie A, B, C, D ed Eccellenza sulla Mappa** — Geocodificate e allineate con precisione tutte le 814+ squadre (33 Serie A, 43 Serie B, 110 Serie C, 162 Serie D e 466 di tutti i gironi regionali di Eccellenza d'Italia) in `data/squadre/scopri-clubs.json` con coordinate esatte nei rispettivi comuni, città e stadi ufficiali, loghi reali e dedup completo. Cache `ALLECC_GEO1`.
-Feature precedente: **Curriculum nel menu a tendina utente** — Il link «Curriculum» è stato rimosso dalla navbar pubblica (Home | Chi siamo | Bacheca | …) e spostato nel menu a tendina del profilo loggato, subito sotto «La Mia Area Riservata», con icona `file-text`. Cache `CURRICULUM-DROPDOWN1`.
+Ultimo fatto: **Rimozione Watermark e Passaggio a OpenStreetMap Ufficiale** — Sostituito il tile layer CartoDB (che generava i watermark «API KEY REQUIRED carto.com/basemaps/apikey») con il layer nativo OpenStreetMap (`tile.openstreetmap.org`), completamente pulito, privo di watermark e senza necessità di API key. Cache `CLEANOSM1`.
+Feature precedente: **Sincronizzazione Completa Squadre Serie A, B, C, D ed Eccellenza sulla Mappa** — Geocodificate e allineate con precisione tutte le 814+ squadre (33 Serie A, 43 Serie B, 110 Serie C, 162 Serie D e 466 di tutti i gironi regionali di Eccellenza d'Italia) in `data/squadre/scopri-clubs.json` con coordinate esatte nei rispettivi comuni, città e stadi ufficiali, loghi reali e dedup completo. Cache `ALLECC_GEO1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
