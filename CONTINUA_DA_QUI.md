@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-03**
-Ultimo fatto: **Bugfix Match Analyst** — clip non più etichettate Post-gara, GPS non “inviato” se Free Agent, inbox staff senza club fantasma Atalanta, Wall mercato senza testo Scout, Osservatore non ruba il ruolo Match Analyst. Cache `MA3`.
+Ultimo fatto: **Card calciatore stile FIFA 22 gold** — scudetto, OVR, ruolo, bandiera, stemma club, foto, cognome e stats PAC/SHO/PAS/DRI/DEF/PHY. Cache `FIFA1`.
 Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -58,6 +58,7 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 Flusso recente, dal più nuovo:
 
+- **Card calciatore FIFA 22 gold** (cache `FIFA1`): layout scudetto come la rare gold (OVR + ruolo, bandiera, stemma, ritratto, cognome, 6 stats). Branding Elisee Scout in calce.
 - **Bugfix Match Analyst** (cache `MA3`): etichette clip, GPS solo in-house se In Staff, inbox club reale, testi Wall, isObs vs isMa.
 - **Area Match Analyst da PDF** (`Profilo_Match_Analyst_260903_154242.pdf`): identità e qualifiche, In Staff Club vs Consulente Esterno, laboratorio heatmap (validazione + overlay squadra), GPS verso Allenatore e Preparatore, Clip Hub e dossier avversario, report privati (in-house) vs pubblici (portfolio + Menzione Speciale sulla Card), tagging posizioni adattate, export dossier, limiti di ruolo (niente rosa/struttura, niente annunci/trattative). Cache `MA2`.
 - **Eccellenza Veneto Girone B 2026/27** (16 squadre): Arcella Padova (Padova), Liapiave (San Polo di Piave), Borgo Valbelluna, Marosticense (Marostica), Cavarzano Belluno (Belluno), Portogruaro, Dolo 1909, Portomansuè (Mansuè), Eclisse Carenipievigina (Pieve di Soligo), Thiene 1908, Galliera (Galliera Veneta), Union Monte (Montebelluna), Godigese (Castello di Godego), Union Pro (Mogliano Veneto), LeO Oderzo, United Borgoricco Campetra (Borgoricco). Cache `ECCVENB1`.
@@ -356,6 +357,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-03** — Card calciatore ridisegnata sul modello FIFA 22 gold (Mbappé): scudetto, OVR, posizione, bandiera, stemma, foto, cognome, PAC/SHO/PAS/DRI/DEF/PHY. Cache `FIFA1`.
 
 - **2026-09-03** — Bugfix Match Analyst: clip con tag reali, GPS non dichiarato inviato se Free Agent, inbox Allenatore sul club vero (non Atalanta di default), testi Wall per MA, Osservatore non intercetta Match Analyst. Cache `MA3`.
 

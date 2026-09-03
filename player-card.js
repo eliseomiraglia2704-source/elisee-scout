@@ -178,41 +178,176 @@
     return { g: g, a: a, pres: pres, min: min, yc: yc };
   }
 
+  function slugClub(s) {
+    return String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  }
+  function lastNameOf(name) {
+    var p = String(name || '').trim().split(/\s+/);
+    return (p.length > 1 ? p[p.length - 1] : (p[0] || 'PLAYER')).toUpperCase();
+  }
+  function posCode(role) {
+    var r = String(role || '').toLowerCase();
+    if (/portier/.test(r)) return 'GK';
+    if (/terzino dest|terzino d/.test(r)) return 'RB';
+    if (/terzino sin|terzino s/.test(r)) return 'LB';
+    if (/esterno dest|ala dest/.test(r)) return 'RW';
+    if (/esterno sin|ala sin/.test(r)) return 'LW';
+    if (/difensore centrale|centrale/.test(r) && /dif/.test(r)) return 'CB';
+    if (/difens/.test(r)) return 'CB';
+    if (/median|regista/.test(r)) return 'CDM';
+    if (/mezzala/.test(r)) return 'CM';
+    if (/trequart/.test(r)) return 'CAM';
+    if (/seconda punta/.test(r)) return 'CF';
+    if (/centravanti|punta|attacc/.test(r)) return 'ST';
+    if (/centro/.test(r)) return 'CM';
+    return 'ST';
+  }
+  function nationCode(n) {
+    var k = String(n || 'Italia').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    var map = {
+      italia: 'it', albania: 'al', algeria: 'dz', argentina: 'ar', australia: 'au', austria: 'at',
+      belgio: 'be', 'bosnia ed erzegovina': 'ba', brasile: 'br', bulgaria: 'bg', camerun: 'cm',
+      canada: 'ca', cile: 'cl', cina: 'cn', colombia: 'co', "costa d'avorio": 'ci', croazia: 'hr',
+      danimarca: 'dk', egitto: 'eg', finlandia: 'fi', francia: 'fr', germania: 'de', ghana: 'gh',
+      giappone: 'jp', grecia: 'gr', inghilterra: 'en', irlanda: 'ie', kosovo: 'xk', marocco: 'ma',
+      messico: 'mx', nigeria: 'ng', norvegia: 'no', 'paesi bassi': 'nl', paraguay: 'py', peru: 'pe',
+      polonia: 'pl', portogallo: 'pt', 'repubblica ceca': 'cz', romania: 'ro', senegal: 'sn',
+      serbia: 'rs', slovacchia: 'sk', slovenia: 'si', spagna: 'es', 'stati uniti': 'us',
+      svezia: 'se', svizzera: 'ch', tunisia: 'tn', turchia: 'tr', ucraina: 'ua', ungheria: 'hu',
+      uruguay: 'uy', venezuela: 've'
+    };
+    return map[k] || 'it';
+  }
+  function nationOf(u) {
+    var p = u.playerProfile || {};
+    return String(p.nationality || u.nazionalita || u.nazione || 'Italia').trim() || 'Italia';
+  }
+  function clubLogo(club) {
+    var s = slugClub(club);
+    if (!s) return '';
+    if (/atalanta/.test(s)) s = 'atalanta';
+    else if (/juventus/.test(s)) s = 'juventus';
+    else if (/inter/.test(s) && !/internazionale-citt/.test(s)) s = s.indexOf('inter') === 0 ? 'inter' : s;
+    else if (/milan/.test(s) && !/empoli/.test(s)) s = /ac-milan|milan$/.test(s) ? 'milan' : s;
+    else if (/napoli/.test(s)) s = 'napoli';
+    else if (/roma/.test(s) && !/ascoli/.test(s)) s = 'roma';
+    else if (/lazio/.test(s)) s = 'lazio';
+    else if (/foggia/.test(s)) s = 'foggia';
+    else if (/bari/.test(s)) s = 'bari';
+    else if (/lecce/.test(s)) s = 'lecce';
+    return 'immagini/squadre-loghi/' + s + '.png';
+  }
+  function hashN(s) {
+    var n = 0;
+    String(s || '').split('').forEach(function (c) { n += c.charCodeAt(0); });
+    return Math.abs(n);
+  }
+  function clamp(n, a, b) {
+    n = Math.round(Number(n) || 0);
+    return Math.max(a, Math.min(b, n));
+  }
+  function ovrOf(u) {
+    var p = u.playerProfile || {};
+    var raw = p.ovr || p.overall || u.ovr;
+    if (raw) return clamp(raw, 45, 99);
+    var st = statsOf(u);
+    var base = 64 + (hashN(nameOf(u)) % 11);
+    if (st.pres >= 8) base += 2;
+    if (st.g >= 5) base += 3;
+    if (st.a >= 4) base += 2;
+    return clamp(base, 58, 86);
+  }
+  function fifaAttrs(u) {
+    var p = u.playerProfile || {};
+    var o = ovrOf(u);
+    var r = roleOf(u).toLowerCase();
+    var h = hashN(nameOf(u) + roleOf(u));
+    function v(base, spread, off) {
+      return clamp(base + ((h + off) % (spread + 1)) - Math.floor(spread / 2), 32, 96);
+    }
+    if (p.pac || p.sho || p.pas) {
+      return {
+        gk: /portier/.test(r),
+        rows: /portier/.test(r)
+          ? [['DIV', clamp(p.div || p.pac, 1, 99)], ['HAN', clamp(p.han || p.dri, 1, 99)], ['KIC', clamp(p.kic || p.pas, 1, 99)], ['REF', clamp(p.ref || p.sho, 1, 99)], ['SPD', clamp(p.spd || p.pac, 1, 99)], ['POS', clamp(p.pos || p.def, 1, 99)]]
+          : [['PAC', clamp(p.pac, 1, 99)], ['SHO', clamp(p.sho, 1, 99)], ['PAS', clamp(p.pas, 1, 99)], ['DRI', clamp(p.dri, 1, 99)], ['DEF', clamp(p.def, 1, 99)], ['PHY', clamp(p.phy, 1, 99)]]
+      };
+    }
+    if (/portier/.test(r)) {
+      return {
+        gk: true,
+        rows: [
+          ['DIV', v(o - 2, 8, 1)], ['HAN', v(o - 4, 8, 3)], ['KIC', v(o - 8, 10, 5)],
+          ['REF', v(o - 1, 7, 7)], ['SPD', v(o - 18, 12, 9)], ['POS', v(o - 3, 8, 11)]
+        ]
+      };
+    }
+    var att = /ala|esterno|centravanti|punta|attacc|trequart|seconda/.test(r);
+    var dif = /difens|terzin|centrale|stopper/.test(r);
+    var mid = /centro|median|mezzala|regista/.test(r);
+    return {
+      gk: false,
+      rows: [
+        ['PAC', v(att ? o + 2 : (dif ? o - 10 : o - 2), 8, 2)],
+        ['SHO', v(att ? o : (dif ? o - 18 : o - 6), 10, 4)],
+        ['PAS', v(mid ? o + 1 : o - 6, 8, 6)],
+        ['DRI', v(att || mid ? o : o - 8, 8, 8)],
+        ['DEF', v(dif ? o + 2 : (att ? o - 22 : o - 4), 10, 10)],
+        ['PHY', v(dif ? o : o - 4, 8, 12)]
+      ]
+    };
+  }
+
   function cardHtml(u, opts) {
     opts = opts || {};
     var name = nameOf(u);
     var ph = photoOf(u);
     var free = isFree(u);
     var club = clubOf(u);
+    var ovr = ovrOf(u);
+    var pos = posCode(roleOf(u));
+    var nat = nationCode(nationOf(u));
+    var attrs = fifaAttrs(u);
     var photo = ph
       ? '<img src="' + esc(ph) + '" alt="">'
       : '<div class="es-pc-ph">' + esc(initials(name)) + '</div>';
-    var meta = '';
-    if (ageOf(u)) meta += '<span>' + esc(ageOf(u)) + ' anni</span>';
-    if (roleOf(u)) meta += '<span>' + esc(roleOf(u)) + '</span>';
-    if (footOf(u)) meta += '<span>Piede ' + esc(footOf(u)) + '</span>';
-    var badges = badgesOf(u).map(function (b) {
-      var cls = b === 'Menzione Speciale' ? ' es-pc-badge is-ma-mention' : ' es-pc-badge';
-      return '<span class="' + cls.trim() + '">' + esc(b) + '</span>';
+    var flag = '<img class="es-pc-flag" src="immagini/nazioni-loghi/' + esc(nat) + '.png" alt="" onerror="this.style.visibility=\'hidden\'">';
+    var logo = club
+      ? '<img class="es-pc-clublogo" src="' + esc(clubLogo(club)) + '" alt="" onerror="this.style.visibility=\'hidden\'">'
+      : '<span class="es-pc-clublogo is-empty"></span>';
+    var left = attrs.rows.slice(0, 3).map(function (row) {
+      return '<div><b>' + esc(row[1]) + '</b><span>' + esc(row[0]) + '</span></div>';
+    }).join('');
+    var right = attrs.rows.slice(3, 6).map(function (row) {
+      return '<div><b>' + esc(row[1]) + '</b><span>' + esc(row[0]) + '</span></div>';
     }).join('');
     var ma = maTagsOf(u);
-    var mention = (ma && ma.mention)
-      ? '<span class="es-pc-mention">Menzione Speciale · Match Analyst</span>'
-      : '';
-    return '<article class="es-pc-card" id="es-pc-card" tabindex="0" role="button" aria-label="Apri Card di ' + esc(name) + '">' +
-      '<div class="es-pc-card-top">' +
-        '<span class="es-pc-status' + (free ? ' is-free' : '') + '">' +
-          (free ? 'Svincolato / Cerca squadra' : 'Tesserato') +
-        '</span>' + photo +
-      '</div>' +
-      '<div class="es-pc-body">' +
-        '<h2 class="es-pc-name">' + esc(name) + '</h2>' +
-        '<p class="es-pc-club">' + esc(club || 'Nessuna società associata') + '</p>' +
-        '<div class="es-pc-meta">' + meta + '</div>' +
-        '<div class="es-pc-badges">' + badges + '</div>' +
-        mention +
-        (opts.hideHint ? '' : '<div class="es-pc-hint">Tocca la Card per l’analisi tattica</div>') +
-      '</div></article>';
+    var special = (ma && ma.mention) ? '<span class="es-pc-fifa-special">Menzione</span>' : '';
+    return '<div class="es-pc-card-shell">' +
+      '<article class="es-pc-card"' + (opts.hideHint ? '' : ' id="es-pc-card"') +
+        ' tabindex="0" role="button" aria-label="Apri Card di ' + esc(name) + '">' +
+        '<div class="es-pc-fifa-top">' +
+          '<div class="es-pc-fifa-meta">' +
+            '<div class="es-pc-ovr">' + ovr + '</div>' +
+            '<div class="es-pc-pos">' + esc(pos) + '</div>' +
+            flag + logo +
+          '</div>' +
+          '<div class="es-pc-fifa-photo">' + photo + special + '</div>' +
+        '</div>' +
+        '<div class="es-pc-fifa-name">' + esc(lastNameOf(name)) + '</div>' +
+        '<div class="es-pc-fifa-stats">' +
+          '<div class="es-pc-fifa-col">' + left + '</div>' +
+          '<div class="es-pc-fifa-rule"></div>' +
+          '<div class="es-pc-fifa-col">' + right + '</div>' +
+        '</div>' +
+        '<div class="es-pc-fifa-foot">' +
+          '<span>ELISEE SCOUT</span>' +
+          '<span class="es-pc-fifa-status' + (free ? ' is-free' : '') + '">' +
+            (free ? 'Svincolato' : 'Tesserato') +
+          '</span>' +
+        '</div>' +
+      '</article></div>';
   }
 
   var ROWS = 8, COLS = 6;
