@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-03**
-Ultimo fatto: **Hub minigioco: allineamento card Pokemon Calcistico** — Stesso ritmo verticale della card Carriera (icona, titolo, tag, testo). Badge Prossimamente in alto, fuori dal flusso. Cache `PKMN2`.
+Ultimo fatto: **Hub minigioco: contenuto card al centro** — Icona, titolo e testi centrati verticalmente in entrambe le card. Cache `PKMN3`.
 Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
