@@ -14,24 +14,19 @@
   position: relative;
   width: 268px;
   padding-left: 18px;
-  padding-top: 10px;
-  padding-right: 22px;
+  padding-top: 0;
+  padding-right: 0;
   overflow: visible;
   filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.55));
 }
-.es-pc-ovr.is-out {
-  position: absolute;
-  top: -4px;
-  right: 0;
-  z-index: 10;
+.es-pc-fifa-ovrcol .es-pc-ovr {
   font-family: Outfit, Inter, sans-serif;
-  font-size: 2.55rem;
+  font-size: 2.15rem;
   font-weight: 800;
-  line-height: 0.85;
+  line-height: 0.88;
   letter-spacing: -0.04em;
   color: #ffe7b8;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
-  pointer-events: none;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.65);
 }
 .es-pc-playstyles {
   position: absolute;
@@ -111,16 +106,18 @@
 
 .es-pc-fifa-ovrcol {
   position: absolute;
-  top: 4%;
-  left: 5%;
+  top: 3%;
+  left: 4%;
   z-index: 5;
-  text-align: left;
+  text-align: center;
+  min-width: 2.4rem;
 }
 .es-pc-pos {
   font-family: Outfit, Inter, sans-serif;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 800;
   letter-spacing: 0.08em;
+  margin-top: 0.08rem;
   color: #ffd08a;
 }
 

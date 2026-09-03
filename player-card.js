@@ -320,12 +320,12 @@
     }).join('');
     return '<div class="es-pc-card-shell">' +
       playstylesHtml(u) +
-      '<div class="es-pc-ovr is-out" title="Overall">' + (ovr == null ? '–' : ovr) + '</div>' +
       '<article class="es-pc-card es-pc-elisee"' + (opts.hideHint ? '' : ' id="es-pc-card"') +
         ' tabindex="0" role="button" aria-label="Apri Card di ' + esc(name) + '">' +
         '<img class="es-pc-frame" src="immagini/card-elisee/sfondo.png" alt="">' +
         '<div class="es-pc-inner">' +
           '<div class="es-pc-fifa-ovrcol">' +
+            '<div class="es-pc-ovr" title="Overall">' + (ovr == null ? '–' : ovr) + '</div>' +
             '<div class="es-pc-pos">' + esc(pos) + '</div>' +
           '</div>' +
           '<div class="es-pc-kit"><img src="immagini/card-elisee/maglia.png" alt=""></div>' +

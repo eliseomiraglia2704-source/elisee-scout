@@ -17,5 +17,14 @@ maglia.png
 viso-placeholder.png
   Viso di attesa, finché lo staff non pubblica il PNG dell'utente.
 
+esempio-maglia.png
+  Esempio di maglia scontornata. Misura di lavoro: 800 x 800 px, PNG
+  trasparente. Usa queste proporzioni quando disegni la maglia ufficiale.
+
+esempio-viso.png
+  Esempio di viso scontornato. Misura di lavoro: 500 x 650 px, PNG
+  trasparente, viso in verticale allineato in basso. Usa queste
+  proporzioni per i volti da pubblicare.
+
 Dopo la modifica dei file: aggiorna il sito (deploy) oppure in locale
 ricarica con Ctrl+F5.
