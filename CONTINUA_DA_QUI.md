@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-03**
-Ultimo fatto: **Card** — giocatore leggermente più piccolo, testa intera dentro lo scudetto (come Yamal). Cache `ELISEE8`.
+Ultimo fatto: **Card** — stemma Italia/FIGC intero, senza riquadro di crop. Cache `ELISEE9`.
 Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -363,6 +363,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-03** — Stemma nazione in card senza riquadro: object-fit contain, niente crop 22×15. Cache `ELISEE9`.
 
 - **2026-09-03** — Giocatore ridotto: testa e capelli interi nello scudetto, come Yamal FC26. Cache `ELISEE8`.
 

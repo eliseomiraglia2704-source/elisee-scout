@@ -278,7 +278,7 @@
     if (window.EliseeCardAtelier && typeof window.EliseeCardAtelier.faceSrc === 'function') {
       return window.EliseeCardAtelier.faceSrc(u);
     }
-    return 'immagini/card-elisee/esempio-viso.png?v=20260903_ELISEE8';
+    return 'immagini/card-elisee/esempio-viso.png?v=20260903_ELISEE9';
   }
 
   function displaySurname(u) {
@@ -331,7 +331,7 @@
           playstylesHtml(u) +
         '</div>' +
         '<div class="es-pc-inner">' +
-          '<div class="es-pc-kit"><img src="immagini/card-elisee/maglia.png?v=20260903_ELISEE8" alt=""></div>' +
+          '<div class="es-pc-kit"><img src="immagini/card-elisee/maglia.png?v=20260903_ELISEE9" alt=""></div>' +
           '<div class="es-pc-fifa-photo"><img class="es-pc-player" src="' + esc(face) + '" alt=""></div>' +
           '<div class="es-pc-fifa-bottom">' +
             '<div class="es-pc-fifa-name">' + esc(displaySurname(u)) + '</div>' +

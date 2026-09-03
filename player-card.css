@@ -231,15 +231,19 @@
   justify-content: center;
   align-items: center;
   gap: 0.45rem;
-  min-height: 22px;
+  min-height: 24px;
+  overflow: visible;
 }
 .es-pc-flag {
-  width: 22px;
-  height: 15px;
-  object-fit: cover;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  object-position: center;
   display: block;
-  border-radius: 1px;
-  box-shadow: 0 0 0 1px rgba(255, 180, 80, 0.35);
+  border-radius: 0;
+  box-shadow: none;
+  background: none;
+  overflow: visible;
 }
 .es-pc-clublogo {
   width: 22px;
