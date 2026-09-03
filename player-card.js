@@ -278,7 +278,7 @@
     if (window.EliseeCardAtelier && typeof window.EliseeCardAtelier.faceSrc === 'function') {
       return window.EliseeCardAtelier.faceSrc(u);
     }
-    return 'immagini/card-elisee/esempio-viso.png';
+    return 'immagini/card-elisee/esempio-viso.png?v=20260903_ELISEE5';
   }
 
   function displaySurname(u) {
@@ -328,7 +328,7 @@
           '<div class="es-pc-pos">' + esc(pos) + '</div>' +
         '</div>' +
         '<div class="es-pc-inner">' +
-          '<div class="es-pc-kit"><img src="immagini/card-elisee/esempio-maglia.png" alt=""></div>' +
+          '<div class="es-pc-kit"><img src="immagini/card-elisee/maglia.png?v=20260903_ELISEE5" alt=""></div>' +
           '<div class="es-pc-fifa-photo"><img class="es-pc-player" src="' + esc(face) + '" alt=""></div>' +
           '<div class="es-pc-fifa-bottom">' +
             '<div class="es-pc-fifa-name">' + esc(displaySurname(u)) + '</div>' +
@@ -359,6 +359,21 @@
       try { id = ctx.getImageData(0, 0, w, h); } catch (e) { return; }
       var d = id.data;
       function idx(x, y) { return (y * w + x) * 4; }
+      var transEdge = 0, edgeN = 0, ex, ey, stepX = Math.max(1, (w / 50) | 0), stepY = Math.max(1, (h / 50) | 0);
+      for (ex = 0; ex < w; ex += stepX) {
+        edgeN += 2;
+        if (d[idx(ex, 0) + 3] < 12) transEdge++;
+        if (d[idx(ex, h - 1) + 3] < 12) transEdge++;
+      }
+      for (ey = 0; ey < h; ey += stepY) {
+        edgeN += 2;
+        if (d[idx(0, ey) + 3] < 12) transEdge++;
+        if (d[idx(w - 1, ey) + 3] < 12) transEdge++;
+      }
+      if (edgeN && transEdge / edgeN > 0.3) {
+        img.dataset.cut = '1';
+        return;
+      }
       function dist(i, r, g, b) {
         return Math.abs(d[i] - r) + Math.abs(d[i + 1] - g) + Math.abs(d[i + 2] - b);
       }

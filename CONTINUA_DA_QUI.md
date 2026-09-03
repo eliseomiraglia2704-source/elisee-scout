@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-03**
-Ultimo fatto: **Card** — overall intero in alto a sinistra (non tagliato); esempi maglia e viso visibili sulla card. Cache `ELISEE4`.
+Ultimo fatto: **Card** — overall 79 intero nello slot in alto a sinistra (fuori dal clip, più in basso nel campo oro); maglia e viso di esempio visibili in card come TOTY (maglia dietro, viso bust). Cache `ELISEE5`.
 Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -58,6 +58,7 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 Flusso recente, dal più nuovo:
 
+- **Card overall + esempi** (cache `ELISEE5`): overall fuori dal clip-path dello scudetto, nello slot FIFA in alto a sinistra (ruolo sotto); maglia `maglia.png` = esempio scontornato dietro il viso; viso inedito = `esempio-viso.png` a bust TOTY. Non usare più silhouette/cartoon.
 - **Card Elisee** (cache `ELISEE1`): viso solo PNG; overall = media delle 6 stats italiane; maglia ufficiale `immagini/card-elisee/maglia.png`; cornice `sfondo.png` sostituibile dal grafico; staff in Control center → Card Elisee (cerca, scarica/copia, Carica l'immagine, Salva obbligatorio).
 - **Card Primetime identica al template** (cache `FC26B`): cornice = PNG UEL originale (niente zoom/clip), figura scontornata e tagliata dentro i bordi.
 - **Card FC26 TOTY + UEL Primetime** (cache `FC26`): struttura TOTY (OVR/ruolo, playstyle a rombo, foto, nome, PAC–PHY in riga, bandiera/club in basso) con sfondo `immagini/card-bg/uel-primetime.png`.
@@ -360,6 +361,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-03** — Overall intero nello slot FIFA (non tagliato dal clip). Maglia e viso di esempio mostrati in card (jersey dietro, bust davanti). Cache `ELISEE5`.
 
 - **2026-09-03** — Overall non più tagliato (fuori dal clip dello scudetto). Esempi maglia/viso mostrati sulla card. Cache `ELISEE4`.
 

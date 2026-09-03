@@ -116,7 +116,7 @@
   function faceSrc(u) {
     var pub = publishedOf(u);
     if (pub && pub.facePng && isPngData(pub.facePng)) return pub.facePng;
-    return 'immagini/card-elisee/esempio-viso.png';
+    return 'immagini/card-elisee/esempio-viso.png?v=20260903_ELISEE5';
   }
   function isPublished(u) { return !!(publishedOf(u) && publishedOf(u).facePng); }
 
