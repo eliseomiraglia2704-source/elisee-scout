@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-03**
-Ultimo fatto: **Email OTP UI premium** — Layout scuro brand: logo ES, cifre in box singoli, pill 10 minuti, riquadro Data/Browser/Sistema/Posizione. Cache `OTPMAIL5`.
+Ultimo fatto: **Kit senza categorie** — Tolti i tab Partita/Portiere/Pre-match/Allenamento. Le divise scorrono tutte, nell’ordine della cartella squadra. Cache `KITFLAT1`.
 Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -354,6 +354,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-03** — Selettore squadre: le divise non sono più suddivise in Partita / Portiere / Pre-match / Allenamento. Elenco unico, ordine `team.kits` come in cartella. Cache `KITFLAT1`.
 
 - **2026-09-03** — Email OTP: interfaccia grafica rifatta. Header logo + wordmark e barra ciano, titolo, 6 box cifra, badge “Valido 10 minuti”, card dettagli accesso, footer sito. Italiano, mobile Gmail. Cache `OTPMAIL5`.
 

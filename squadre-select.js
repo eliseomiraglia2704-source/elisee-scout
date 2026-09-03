@@ -43,8 +43,7 @@
     gender: 'm',
     leagueIndex: 0,
     index: 0,
-    kit: 'home', // home | away | third | fourth
-    kitGroup: 'match', // match | gk | pre | train | extra
+    kit: 'home', // home | away | third | fourth | ...ordine cartella
     ready: false,
     focusZone: 'team' // team | kit
   };
@@ -108,61 +107,6 @@
     'goalkeper-away': 'PORTIERE (OSPITI)',
     'trining': 'ALLENAMENTO'
   };
-
-  var KIT_ORDER = [
-    'home', 'away', 'third', 'fourth', 'fifth',
-    'goalkeeper', 'goalkeeper-home', 'goalkeeper-away', 'goalkeeper-third',
-    'pre-match', 'pre-match-home', 'pre-match-away', 'pre-match-third',
-    'polo', 'polo-1', 'polo-2', 'polo-white', 'polo-black', 'polo-staff', 'polo-players',
-    'training', 'training-1', 'training-2', 'training-3',
-    'training-home', 'training-away', 'training-third',
-    'training-goalkeeper', 'training-staff',
-    'pre-season', 'pre-season-home', 'pre-season-away', 'pre-season-goalkeeper',
-    'travel-shirt', 'extra-1', 'extra-2', 'extra-3', 'extra-4', 'extra-5'
-  ];
-
-  var KIT_GROUP_DEFS = [
-    { id: 'match', label: 'Partita' },
-    { id: 'gk', label: 'Portiere' },
-    { id: 'pre', label: 'Pre-match' },
-    { id: 'train', label: 'Allenamento' },
-    { id: 'extra', label: 'Altro' }
-  ];
-
-  function kitGroupId(key) {
-    var k = String(key || '').toLowerCase();
-    if (/^extra-/.test(k)) return 'extra';
-    if (/goalkeeper|^gk(-|$)/.test(k)) return 'gk';
-    if (/pre-match|pre-partita|pre-season|pre-stagione/.test(k)) return 'pre';
-    if (/training|trining|polo|travel|t-shirt|retro/.test(k)) return 'train';
-    if (/^(home|away|third|fourth|fifth)$/.test(k)) return 'match';
-    return 'extra';
-  }
-
-  function slotsForGroup(slots, groupId) {
-    var list = slots || [];
-    var gid = groupId || state.kitGroup || 'match';
-    var filtered = list.filter(function (s) { return kitGroupId(s.key) === gid; });
-    if (filtered.length) return filtered;
-    for (var i = 0; i < KIT_GROUP_DEFS.length; i++) {
-      var alt = list.filter(function (s) { return kitGroupId(s.key) === KIT_GROUP_DEFS[i].id; });
-      if (alt.length) return alt;
-    }
-    return list;
-  }
-
-  function groupsForSlots(slots) {
-    var seen = {};
-    var out = [];
-    (slots || []).forEach(function (s) {
-      var g = kitGroupId(s.key);
-      if (!seen[g]) {
-        seen[g] = true;
-        out.push(g);
-      }
-    });
-    return KIT_GROUP_DEFS.filter(function (d) { return seen[d.id]; });
-  }
 
   function getKitLabel(key, fallbackLabel) {
     if (fallbackLabel) return fallbackLabel;
@@ -282,68 +226,28 @@
       addSlot('home', 'IN CASA', '', team.home || null);
       addSlot('away', 'OSPITI', '', team.away || null);
     }
-
-    slots.sort(function (a, b) {
-      var ia = KIT_ORDER.indexOf(a.key);
-      var ib = KIT_ORDER.indexOf(b.key);
-      if (ia < 0) ia = 80;
-      if (ib < 0) ib = 80;
-      if (ia !== ib) return ia - ib;
-      return String(a.label).localeCompare(String(b.label));
-    });
     return slots;
   }
 
   function ensureKitKey(team) {
     var slots = kitSlotsFor(team);
-    var groups = groupsForSlots(slots);
-    var groupIds = groups.map(function (g) { return g.id; });
-    if (groupIds.indexOf(state.kitGroup) < 0) {
-      state.kitGroup = groupIds[0] || 'match';
-    }
-    var visible = slotsForGroup(slots, state.kitGroup);
-    var keys = visible.map(function (s) { return s.key; });
+    var keys = slots.map(function (s) { return s.key; });
     if (keys.indexOf(state.kit) < 0) {
-      state.kit = keys[0] || (slots[0] && slots[0].key) || 'home';
-      if (state.kit) state.kitGroup = kitGroupId(state.kit);
+      state.kit = keys[0] || 'home';
     }
     return slots;
   }
 
-  function renderKitGroups(slots) {
+  function renderKitGroups() {
     var host = $('es-sq-kit-groups');
     if (!host) return;
-    var groups = groupsForSlots(slots);
     host.innerHTML = '';
-    if (groups.length < 2) {
-      host.hidden = true;
-      return;
-    }
-    host.hidden = false;
-    groups.forEach(function (g) {
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'es-sq-kit-group' + (g.id === state.kitGroup ? ' is-on' : '');
-      btn.textContent = g.label;
-      btn.setAttribute('data-kit-group', g.id);
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        if (state.kitGroup === g.id) return;
-        state.kitGroup = g.id;
-        var vis = slotsForGroup(slots, g.id);
-        state.kit = (vis[0] && vis[0].key) || state.kit;
-        var team = current();
-        if (team) applyKit(team);
-      });
-      host.appendChild(btn);
-    });
+    host.hidden = true;
   }
 
   function renderKitDots(slots) {
     var host = document.querySelector('.es-sq-kit-dots');
     if (!host) return;
-    slots = slotsForGroup(slots, state.kitGroup);
     var next = $('es-sq-kit-next');
     var dots = host.querySelectorAll('.es-sq-dot');
     for (var i = 0; i < dots.length; i++) {
@@ -726,10 +630,9 @@
 
   function applyKit(team) {
     var slots = ensureKitKey(team);
-    renderKitGroups(slots);
-    var visible = slotsForGroup(slots, state.kitGroup);
+    renderKitGroups();
     renderKitDots(slots);
-    updateKitGhosts(team, visible);
+    updateKitGhosts(team, slots);
 
     var slot = null;
     for (var i = 0; i < slots.length; i++) {
@@ -1054,7 +957,6 @@
     animThen(function () {
       state.index = (state.index + dir + list.length) % list.length;
       state.kit = 'home';
-      state.kitGroup = 'match';
       render();
       playGoldSweep();
     });
@@ -1066,7 +968,6 @@
     state.leagueIndex = 0;
     state.index = 0;
     state.kit = 'home';
-    state.kitGroup = 'match';
     render();
     playGoldSweep();
   }
@@ -1077,7 +978,6 @@
     state.leagueIndex = (state.leagueIndex + dir + leagues.length) % leagues.length;
     state.index = 0;
     state.kit = 'home';
-    state.kitGroup = 'match';
     render();
     playGoldSweep();
   }
@@ -1089,7 +989,6 @@
     state.leagueIndex = idx;
     state.index = 0;
     state.kit = 'home';
-    state.kitGroup = 'match';
     closeLeaguePicker();
     render();
     playGoldSweep();
@@ -1618,7 +1517,7 @@
 
     function cycleKit(dir) {
       var team = current();
-      var slots = slotsForGroup(kitSlotsFor(team), state.kitGroup);
+      var slots = kitSlotsFor(team);
       if (!slots.length) return;
       var keys = slots.map(function (s) {
         return s.key;

@@ -906,12 +906,7 @@
 }
 
 .es-sq-kit-groups {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.35rem;
-  margin: 0.15rem 0 0.45rem;
-  max-width: 100%;
+  display: none !important;
 }
 .es-sq-kit-groups[hidden] { display: none !important; }
 .es-sq-kit-group {
