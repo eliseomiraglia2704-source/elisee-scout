@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-03**
-Ultimo fatto: **Card** — layout FC26 come Yamal gold: close-up viso, overall a sinistra, stats in riga sotto il nome. Cornice Primetime invariata. Cache `ELISEE7`.
+Ultimo fatto: **Card** — giocatore leggermente più piccolo, testa intera dentro lo scudetto (come Yamal). Cache `ELISEE8`.
 Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -363,6 +363,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-03** — Giocatore ridotto: testa e capelli interi nello scudetto, come Yamal FC26. Cache `ELISEE8`.
 
 - **2026-09-03** — Card allineata all’esempio FC26 Yamal gold: viso close-up, overall a sinistra, stats in riga. Cache `ELISEE7`.
 
