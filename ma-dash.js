@@ -16,6 +16,7 @@
   function isMa(u) {
     u = u || userObj();
     var blob = String(u.staffRole || u.ruoloDettagliato || (u.staffProfile && u.staffProfile.fieldRole) || u.ruolo || u.role || '').trim().toLowerCase();
+    if (/\bosservatore\b/.test(blob) && !/match analyst|video analyst/.test(blob)) return false;
     return /match analyst|video analyst/.test(blob);
   }
   function maName(u) {
@@ -172,6 +173,7 @@
     if (typeof window.showToast === 'function') window.showToast(msg, kind || 'success');
   }
   function inboxForClub(club) {
+    if (!String(club || '').trim()) return [];
     var map = loadMap(INBOX_KEY);
     var k = slug(club);
     return (map[k] && Array.isArray(map[k].items)) ? map[k].items : [];
@@ -251,18 +253,23 @@
     return html;
   }
   function kindLabel(kind) {
-    var k = String(kind || '').toLowerCase();
+    var raw = String(kind || '').trim();
+    var k = raw.toLowerCase();
     if (k === 'focus') return 'Focus tattico';
     if (k === 'pillola') return 'Pillola tattica';
     if (k === 'avversario') return 'Studio avversario';
     if (k === 'gps') return 'GPS / carico';
-    return 'Post-gara';
+    if (k === 'post-gara' || k === 'postgara' || k === 'post gara') return 'Post-gara';
+    return raw;
   }
 
   function html(user) {
     var rec = (myLab().reports || []).slice(0, 8).map(function (r) {
-      return { a: r.title, b: r.kind, c: r.channel === 'public' ? 'Pubblico' : 'Privato' };
+      return { a: r.title, b: kindLabel(r.kind) || r.kind, c: r.channel === 'public' ? 'Pubblico' : 'Privato' };
     });
+    if (!window.EliseeDashReal || typeof window.EliseeDashReal.shell !== 'function') {
+      return '<div class="es-pd-empty">Dashboard Match Analyst non disponibile.</div>';
+    }
     return window.EliseeDashReal.shell({
       user: user,
       title: 'Elisee Scout — Dashboard Match Analyst',
@@ -289,15 +296,18 @@
     var lab = myLab();
     var reps = (lab.reports || []).slice(0, 6);
     var clips = (lab.clips || []).slice(0, 4);
-    var heat = (lab.heatmaps || []).slice(0, 4);
+    var heat = (lab.heatmaps || []).filter(function (h) { return !h.overlay; }).slice(0, 4);
     var gps = (lab.gps || []).slice(0, 4);
     var tags = (lab.tags || []).slice(0, 4);
     function lis(arr, emptyMsg) {
-      if (!arr.length) return '<p class="es-ma-lead">' + emptyMsg + '</p>';
+      if (!arr.length) return emptyMsg ? '<p class="es-ma-lead">' + emptyMsg + '</p>' : '';
       return '<ul class="es-ma-list">' + arr.map(function (x) {
-        var ch = x.channel ? '<span class="es-ma-ch is-' + esc(x.channel) + '">' + (x.channel === 'public' ? 'Pubblico' : 'Privato') + '</span> ' : '';
-        var sub = x.note || kindLabel(x.kind) || x.kind || '';
-        return '<li>' + ch + '<b>' + esc(x.title || x.player || x.tag) + '</b>' + (sub ? ' — ' + esc(sub) : '') + '</li>';
+        var chSafe = String(x.channel || '').toLowerCase() === 'public' ? 'public' : (x.channel ? 'private' : '');
+        var ch = chSafe ? '<span class="es-ma-ch is-' + chSafe + '">' + (chSafe === 'public' ? 'Pubblico' : 'Privato') + '</span> ' : '';
+        var label = (x.player && x.title) ? (x.player + ' · ' + x.title) : (x.title || x.player || x.tag || '');
+        var sub = x.note || kindLabel(x.kind) || '';
+        if (sub && label && sub === x.title) sub = '';
+        return '<li>' + ch + '<b>' + esc(label) + '</b>' + (sub && sub !== label ? ' — ' + esc(sub) : '') + '</li>';
       }).join('') + '</ul>';
     }
     return '<div class="es-ma-extra">' +
@@ -372,7 +382,8 @@
     if (old) old.remove();
     var wrap = document.createElement('div');
     wrap.innerHTML = extraHtml(user);
-    body.appendChild(wrap.firstChild);
+    if (!wrap.firstElementChild) return;
+    body.appendChild(wrap.firstElementChild);
     var slot = host.querySelector('#es-pd-actions-slot');
     if (slot) {
       slot.innerHTML = '<button type="button" class="es-pd-edit" data-ma="rep-priv">Nuovo report</button>';
@@ -386,16 +397,20 @@
   function addReport(channel) {
     var title = promptField('Titolo del report');
     if (!title) return;
-    var kindRaw = promptField('Tipo: focus / post-gara / pillola', channel === 'public' ? 'focus' : 'post-gara') || 'post-gara';
-    var kind = String(kindRaw).toLowerCase();
+    var kindRaw = promptField('Tipo: focus / post-gara / pillola', channel === 'public' ? 'focus' : 'post-gara');
+    if (kindRaw == null) return;
+    var kind = String(kindRaw || 'post-gara').toLowerCase();
     if (/focus/.test(kind)) kind = 'focus';
     else if (/pillola/.test(kind)) kind = 'pillola';
     else if (/avvers/.test(kind)) kind = 'avversario';
     else kind = 'post-gara';
-    var note = promptField('Sintesi tattica') || '';
+    var note = promptField('Sintesi tattica');
+    if (note == null) return;
     var player = '';
     if (kind === 'focus') {
-      player = promptField('Calciatore in focus (tag sulla Card)') || '';
+      var plFocus = promptField('Calciatore in focus (tag sulla Card)');
+      if (plFocus == null) return;
+      player = plFocus;
     }
     var rec = {
       id: 'r-' + Date.now(),
@@ -541,7 +556,8 @@
       }
       if (k === 'overlay') {
         var labh = myLab();
-        if (!labh.heatmaps.length) {
+        var nHeat = labh.heatmaps.filter(function (h) { return !h.overlay; }).length;
+        if (!nHeat) {
           toast('Valida prima almeno una heatmap individuale.', 'error');
           return;
         }
@@ -559,12 +575,14 @@
       if (k === 'gps') {
         var t = promptField('Titolo report GPS (picchi fisici / HSR)');
         if (!t) return;
-        var noteG = promptField('Velocità max / sprint / accelerazioni / HSR') || 'Picchi fisici incrociati con la tattica';
+        var noteG = promptField('Velocità max / sprint / accelerazioni / HSR');
+        if (noteG == null) return;
+        if (!noteG) noteG = 'Picchi fisici incrociati con la tattica';
         var labg = myLab();
         labg.gps.unshift({ title: t, note: noteG, at: new Date().toISOString() });
         persistLab(labg);
         if (inStaff()) {
-          pushInbox({
+          var gpsOk = pushInbox({
             id: 'gps-' + Date.now(),
             title: t,
             kind: 'gps',
@@ -575,16 +593,23 @@
             to: ['allenatore', 'preparatore'],
             at: new Date().toISOString()
           });
+          toast(gpsOk
+            ? 'Report GPS inviato all’Allenatore e al Preparatore atletico.'
+            : 'Indica il club in anagrafica per inviare il GPS allo staff.', gpsOk ? 'success' : 'error');
+        } else {
+          toast('Report GPS salvato nel laboratorio. Passa a In Staff Club per inviarlo ad Allenatore e Preparatore.');
         }
-        toast('Report GPS inviato all’Allenatore e al Preparatore atletico.');
         render(userObj());
         return;
       }
       if (k === 'clip') {
         var ct = promptField('Titolo clip (es. Transizioni positive)');
         if (!ct) return;
-        var tag = promptField('Tag: palle inattive / transizioni / costruzione', 'transizioni') || 'transizioni';
-        var whoC = promptField('Calciatore collegato alla Card (opzionale)') || '';
+        var tag = promptField('Tag: palle inattive / transizioni / costruzione', 'transizioni');
+        if (tag == null) return;
+        if (!tag) tag = 'transizioni';
+        var whoC = promptField('Calciatore collegato alla Card (opzionale)');
+        if (whoC == null) return;
         var labc = myLab();
         labc.clips.unshift({ title: ct, kind: tag, player: whoC, at: new Date().toISOString() });
         persistLab(labc);
@@ -600,7 +625,8 @@
       if (k === 'opponent') {
         var opp = promptField('Squadra avversaria (dossier pre-gara)');
         if (!opp) return;
-        var note = promptField('Punti deboli / calci d’angolo / occupazione') || '';
+        var note = promptField('Punti deboli / calci d’angolo / occupazione');
+        if (note == null) return;
         var labo = myLab();
         labo.reports.unshift({
           id: 'r-' + Date.now(),
@@ -653,15 +679,21 @@
         var a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
         a.download = 'dossier-match-analyst.txt';
+        document.body.appendChild(a);
         a.click();
+        a.remove();
+        setTimeout(function () { try { URL.revokeObjectURL(a.href); } catch (_) {} }, 1500);
         toast('Dossier esportato per briefing / curriculum.');
         return;
       }
       if (k === 'tag') {
         var who = promptField('Calciatore da taggare sulla Card');
         if (!who) return;
-        var badge = promptField('Badge tattico (es. Mezzala adattata)', 'Mezzala adattata') || 'Badge tattico';
-        var adapted = promptField('Posizione secondaria/adattata (vuoto = solo badge)', badge) || '';
+        var badge = promptField('Badge tattico (es. Mezzala adattata)', 'Mezzala adattata');
+        if (badge == null) return;
+        if (!badge) badge = 'Badge tattico';
+        var adapted = promptField('Posizione secondaria/adattata (vuoto = solo badge)', badge);
+        if (adapted == null) return;
         var labt = myLab();
         labt.tags.unshift({ player: who, title: badge, note: adapted || 'Posizione secondaria/adattata', at: new Date().toISOString() });
         persistLab(labt);

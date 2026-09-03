@@ -544,8 +544,9 @@
       (function () {
         var maItems = [];
         try {
-          if (window.EliseeMaDash && typeof window.EliseeMaDash.inboxForClub === 'function') {
-            maItems = window.EliseeMaDash.inboxForClub(data.clubName || '').slice(0, 6);
+          var clubForMa = String((userObj() && (userObj().squadra || userObj().club)) || '').trim();
+          if (clubForMa && window.EliseeMaDash && typeof window.EliseeMaDash.inboxForClub === 'function') {
+            maItems = window.EliseeMaDash.inboxForClub(clubForMa).slice(0, 6);
           }
         } catch (_) {}
         return '<div class="es-coach-card" style="margin-top:0.85rem;">' +

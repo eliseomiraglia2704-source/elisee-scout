@@ -69,7 +69,9 @@
   }
   function isMa(u) {
     u = u || userObj();
-    return /match analyst|video analyst/.test(roleBlob(u));
+    var blob = roleBlob(u);
+    if (/\bosservatore\b/.test(blob) && !/match analyst|video analyst/.test(blob)) return false;
+    return /match analyst|video analyst/.test(blob);
   }
   function canOfficialize(u) {
     u = u || userObj();
@@ -372,7 +374,7 @@
     html += '<div class="es-mk-toolbar">' +
       (canOfficialize()
         ? '<button type="button" class="es-mk-btn" id="es-mk-official-open">Ufficializza accordo</button>'
-        : '<p class="es-mk-empty-col" style="margin:0">Consultazione: lo Scout non può ufficializzare acquisti sul Wall.</p>') +
+        : '<p class="es-mk-empty-col" style="margin:0">Consultazione: solo DS e Presidente possono ufficializzare gli acquisti sul Wall.</p>') +
       '</div>';
     html += '<form class="es-mk-form" id="es-mk-official-form" hidden>' +
       '<label>Calciatore<input name="player" required placeholder="Nome e cognome"></label>' +
@@ -399,7 +401,7 @@
       return;
     }
     if (!canOfficialize()) {
-      toast('Lo Scout non può ufficializzare acquisti sul Wall. Operazione riservata a DS / Presidente.', 'error');
+      toast('Non puoi ufficializzare acquisti sul Wall. Operazione riservata a DS / Presidente.', 'error');
       return;
     }
     var row = {
@@ -602,7 +604,7 @@
       var off = e.target.closest('[data-official]');
       if (off) {
         if (!canOfficialize()) {
-          toast('Lo Scout non può ufficializzare acquisti sul Wall.', 'error');
+          toast('Non puoi ufficializzare acquisti sul Wall. Operazione riservata a DS / Presidente.', 'error');
           return;
         }
         var it = myList().filter(function (x) { return x.id === off.getAttribute('data-official'); })[0];
@@ -621,7 +623,7 @@
       }
       if (e.target.closest('#es-mk-official-open')) {
         if (!canOfficialize()) {
-          toast('Lo Scout non può ufficializzare acquisti sul Wall. Operazione riservata a DS / Presidente.', 'error');
+          toast('Non puoi ufficializzare acquisti sul Wall. Operazione riservata a DS / Presidente.', 'error');
           return;
         }
         var form = document.getElementById('es-mk-official-form');

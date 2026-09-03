@@ -16,6 +16,7 @@
   function isObs(u) {
     u = u || userObj();
     var blob = String(u.staffRole || u.ruoloDettagliato || (u.staffProfile && u.staffProfile.fieldRole) || u.ruolo || u.role || '').trim().toLowerCase();
+    if (/match analyst|video analyst/.test(blob) && !/\bosservatore\b/.test(blob) && !/scout\s*\/\s*osservatore/.test(blob)) return false;
     return /scout\s*\/\s*osservatore|\bosservatore\b|\bscout\b/.test(blob);
   }
   function obsName(u) {

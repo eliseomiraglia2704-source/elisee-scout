@@ -90,6 +90,7 @@
 
   function maTagsOf(u) {
     var name = nameOf(u);
+    if (!name) return {};
     if (window.EliseeMaDash && typeof window.EliseeMaDash.tagsForPlayer === 'function') {
       try { return window.EliseeMaDash.tagsForPlayer(name) || {}; } catch (_) {}
     }
