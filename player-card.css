@@ -58,7 +58,7 @@
   cursor: pointer;
   color: #ffe7b0;
   display: block;
-  overflow: hidden;
+  overflow: visible;
   clip-path: none;
   background: transparent;
   border: 0;
@@ -106,11 +106,12 @@
 
 .es-pc-fifa-ovrcol {
   position: absolute;
-  top: 3%;
-  left: 4%;
-  z-index: 5;
+  top: 15.5%;
+  left: 17.5%;
+  z-index: 8;
   text-align: center;
-  min-width: 2.4rem;
+  min-width: 2.6rem;
+  pointer-events: none;
 }
 .es-pc-pos {
   font-family: Outfit, Inter, sans-serif;
@@ -123,32 +124,32 @@
 
 .es-pc-kit {
   position: absolute;
-  left: 28%;
+  left: 16%;
   right: 8%;
-  top: 28%;
-  height: 34%;
+  top: 34%;
+  bottom: 30%;
   z-index: 2;
   display: grid;
-  place-items: end center;
+  place-items: center;
   pointer-events: none;
-  opacity: 0.92;
 }
 .es-pc-kit img {
-  max-width: 78%;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
+  object-position: center bottom;
   filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
 }
 .es-pc-fifa-photo {
   position: absolute;
-  left: 18%;
-  right: 4%;
-  top: 2%;
-  bottom: 30%;
-  z-index: 3;
+  left: 14%;
+  right: 6%;
+  top: 6%;
+  bottom: 32%;
+  z-index: 4;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 76%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 76%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
 }
 .es-pc-fifa-photo img.es-pc-player,
 .es-pc-fifa-photo img,

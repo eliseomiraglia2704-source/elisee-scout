@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-03**
-Ultimo fatto: **Card** — overall + ruolo in alto a sinistra (ruolo sotto il numero); esempi maglia 800×800 e viso 500×650 in `immagini/card-elisee/`. Cache `ELISEE3`.
+Ultimo fatto: **Card** — overall intero in alto a sinistra (non tagliato); esempi maglia e viso visibili sulla card. Cache `ELISEE4`.
 Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -360,6 +360,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-03** — Overall non più tagliato (fuori dal clip dello scudetto). Esempi maglia/viso mostrati sulla card. Cache `ELISEE4`.
 
 - **2026-09-03** — Overall e ruolo in alto a sinistra (ruolo sotto il numero). Esempi PNG maglia 800×800 e viso 500×650 in `immagini/card-elisee/`. Cache `ELISEE3`.
 
