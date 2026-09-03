@@ -358,6 +358,7 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
   - Minigioco: `clubLeagueTier` per Primavera restituiva 10 (range D 30-42) invece di 11/12; U23 usa range 48-68; fallimento non clampa più a 40 (progetto forte vs debole); lucchetti catalogo per club scesi in Eccellenza/D.
   - Test verdi: `_test_piramide.js`, `_test_fail_market.js`, `_test_market_plane.js`, `_test_u23.js`, `_test_deal.js`, `_test_identity.js`.
   - Cache `BUGFIXALL1`.
+  - Secondo giro: `isCoach` non intercetta più Mental coach / Collaboratore tecnico / Staff generico; categorie femminili allineate ai tier reali (Eccellenza 5, Promozione 6, Primavera 11); `clampTier` fino a Terza/Primavera; form staff DG distinto da Presidente; simulatore ruoli monta la dash Giornalista; `timingSafeEqual` admin non crasha su token corti; JSON.parse localStorage in app.js protetto. Cache `BUGFIXALL2`.
 
 - **2026-08-31** — Motore Simulazione Serie D 2026/27 (Girone I — Serie D Completa al 100%):
   - Calcolo e assegnazione bande probabilità Promozione / Salvezza / Retrocessione per tutte le 17 squadre di Serie D Girone I (Calabria/Sicilia/Campania).

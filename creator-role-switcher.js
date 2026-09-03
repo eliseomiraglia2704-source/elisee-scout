@@ -680,6 +680,7 @@
       else if (key === 'comunicazione' && window.EliseePrDash && window.EliseePrDash.render) window.EliseePrDash.render(u);
       else if (key === 'marketing' && window.EliseeMkDash && window.EliseeMkDash.render) window.EliseeMkDash.render(u);
       else if (key === 'tifoso' && window.EliseeTifosoDash && window.EliseeTifosoDash.render) window.EliseeTifosoDash.render(u);
+      else if (key === 'giornalista' && window.EliseeGiornDash && window.EliseeGiornDash.render) window.EliseeGiornDash.render(u);
     }
 
     // 6. Navigazione mirata alla vista corretta

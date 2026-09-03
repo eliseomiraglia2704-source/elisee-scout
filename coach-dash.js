@@ -34,8 +34,9 @@
   function isCoach(u) {
     u = u || userObj();
     var primary = String(u.staffRole || u.ruoloDettagliato || (u.staffProfile && u.staffProfile.fieldRole) || u.ruolo || u.role || '').trim().toLowerCase();
-    if (/in seconda|vice allenatore/.test(primary)) return false;
-    return /allenatore|coach|mister|tecnico/.test(primary) || primary === 'staff';
+    if (!primary || primary === 'staff') return false;
+    if (/in seconda|vice allenatore|mental coach|collaboratore tecnico|preparatore|match analyst|video analyst/.test(primary)) return false;
+    return primary === 'allenatore' || primary === 'mister' || primary === 'coach' || /\ballenatore capo\b/.test(primary);
   }
 
   function getCoachData() {

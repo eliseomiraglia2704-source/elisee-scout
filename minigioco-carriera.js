@@ -1934,9 +1934,9 @@
     { id: 1, name: 'Serie A Femminile', sub: '1ª Divisione Femminile Professionistica', badge: '1ª DIV', ovr: '76 – 93', logo: 'immagini/squadre-loghi/serie-a-femminile.png', color: '#ec4899' },
     { id: 2, name: 'Serie B Femminile', sub: '2ª Divisione Femminile Nazionale', badge: '2ª DIV', ovr: '59 – 75', logo: 'immagini/squadre-loghi/serie-b-femminile.png', color: '#f43f5e' },
     { id: 3, name: 'Serie C Femminile', sub: '3ª Divisione Femminile (Gironi Nazionali)', badge: '3ª DIV', ovr: '43 – 58', logo: 'immagini/squadre-loghi/serie-c-femminile.png', color: '#fb7185' },
-    { id: 4, name: 'Eccellenza Femminile', sub: 'Campionati Regionali Femminili', badge: '4ª DIV', ovr: '24 – 29', logo: 'immagini/squadre-loghi/eccellenza.png', color: '#e879f9' },
-    { id: 5, name: 'Promozione Femminile', sub: 'Campionati Territoriali Femminili', badge: '5ª DIV', ovr: '19 – 23', logo: 'immagini/squadre-loghi/promozione.png', color: '#d946ef' },
-    { id: 10, name: 'Primavera Femminile', sub: 'Settore Giovanile Femminile U19', badge: 'U19', ovr: '50 – 68', logo: 'immagini/squadre-loghi/serie-a-femminile.png', color: '#c084fc' }
+    { id: 5, name: 'Eccellenza Femminile', sub: 'Campionati Regionali Femminili', badge: '4ª DIV', ovr: '24 – 29', logo: 'immagini/squadre-loghi/eccellenza.png', color: '#e879f9' },
+    { id: 6, name: 'Promozione Femminile', sub: 'Campionati Territoriali Femminili', badge: '5ª DIV', ovr: '19 – 23', logo: 'immagini/squadre-loghi/promozione.png', color: '#d946ef' },
+    { id: 11, name: 'Primavera Femminile', sub: 'Settore Giovanile Femminile U19', badge: 'U19', ovr: '50 – 68', logo: 'immagini/squadre-loghi/serie-a-femminile.png', color: '#c084fc' }
   ];
 
   function trialChance(club) {
@@ -3230,6 +3230,7 @@
     8:  { name: 'Seconda Categoria',  min:  5, max: 11, label: 'min. 5 / max. 11'  },
     9:  { name: 'Terza Categoria',    min:  0, max:  4, label: 'min. 0 / max. 4'   },
     /* Campionati giovanili — l'OVR riflette il livello del singolo prospetto */
+    10: { name: 'Primavera',          min: 50, max: 68, label: 'min. 50 / max. 68' },
     11: { name: 'Primavera 1',        min: 50, max: 68, label: 'min. 50 / max. 68' },
     12: { name: 'Primavera 2',        min: 40, max: 55, label: 'min. 40 / max. 55' }
   };
@@ -3882,8 +3883,10 @@
   }
 
   function clampTier(t) {
+    t = Number(t) || 4;
+    if (t === 11 || t === 12) return t;
     if (t < 1) return 1;
-    if (t > 5) return 5;
+    if (t > 9) return 9;
     return t;
   }
 

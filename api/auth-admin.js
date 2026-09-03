@@ -100,7 +100,13 @@ function verifySignedToken(tokenString) {
   const [payloadB64, signature] = parts;
   const expectedSig = crypto.createHmac('sha256', getSigningKey()).update(payloadB64).digest('base64url');
   
-  if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expectedSig))) {
+  try {
+    const sigBuf = Buffer.from(String(signature));
+    const expBuf = Buffer.from(String(expectedSig));
+    if (sigBuf.length !== expBuf.length || !crypto.timingSafeEqual(sigBuf, expBuf)) {
+      return null;
+    }
+  } catch (_) {
     return null;
   }
 

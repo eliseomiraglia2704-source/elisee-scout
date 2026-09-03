@@ -924,7 +924,7 @@
     var p = staffProfileOf(user);
 
     var blobRole = [user.staffRole, user.ruoloDettagliato, user.ruolo, user.role, user.siteRoleFamily, (p && p.fieldRole)].filter(Boolean).join(' ').toLowerCase();
-    var isPres = /presidente|vice presidente|amministratore|direttore generale/.test(blobRole);
+    var isPres = /presidente|vice presidente|amministratore/.test(blobRole) && !/direttore generale|direttore sportivo/.test(blobRole);
     root.classList.toggle('is-pres-profile-mode', isPres);
 
     var secCard = document.getElementById('es-sp-secret-card');

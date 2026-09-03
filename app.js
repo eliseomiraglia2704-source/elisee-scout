@@ -3332,8 +3332,10 @@
     downloadGDPRPdf('BILANCIO ANNUALE CONFORMITÀ GDPR', 'RELAZIONE FINALE RESPONSABILE PRIVACY', customHTML);
   };
 
-  let accountEditRequests = JSON.parse(localStorage.getItem('elisee_account_edit_requests') || '[]');
-  let platformComplaints = JSON.parse(localStorage.getItem('elisee_platform_complaints') || '[]');
+  let accountEditRequests = [];
+  let platformComplaints = [];
+  try { accountEditRequests = JSON.parse(localStorage.getItem('elisee_account_edit_requests') || '[]') || []; } catch (_) { accountEditRequests = []; }
+  try { platformComplaints = JSON.parse(localStorage.getItem('elisee_platform_complaints') || '[]') || []; } catch (_) { platformComplaints = []; }
 
   if (accountEditRequests.length === 0) {
     accountEditRequests = [
