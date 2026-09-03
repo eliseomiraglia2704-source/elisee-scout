@@ -540,7 +540,25 @@
           '</div>' +
           '<p style="font-size:0.82rem; color:#94a3b8; margin:0.8rem 0 0;">Le Heatmap confermano la perfetta occupazione dei corridoi esterni sulle catene Zappacosta-Lookman e Ruggeri-De Ketelaere.</p>' +
         '</div>' +
-      '</div>'
+      '</div>' +
+      (function () {
+        var maItems = [];
+        try {
+          if (window.EliseeMaDash && typeof window.EliseeMaDash.inboxForClub === 'function') {
+            maItems = window.EliseeMaDash.inboxForClub(data.clubName || '').slice(0, 6);
+          }
+        } catch (_) {}
+        return '<div class="es-coach-card" style="margin-top:0.85rem;">' +
+          '<div class="es-coach-card-head"><div class="es-coach-card-title-wrap"><span class="es-coach-card-icon">📊</span><div><h3>Report Match Analyst</h3><p>Analisi tattiche e GPS inoltrate in-house per le sedute</p></div></div></div>' +
+          (maItems.length
+            ? '<ul style="margin:0;padding-left:1.1rem;color:#cbd5e1;font-size:0.82rem;line-height:1.5;">' +
+              maItems.map(function (x) {
+                return '<li><b>' + esc(x.title) + '</b> — ' + esc(x.kind || 'report') +
+                  (x.fromName ? ' · ' + esc(x.fromName) : '') + '</li>';
+              }).join('') + '</ul>'
+            : '<p style="color:#94a3b8;font-size:0.82rem;margin:0;">Nessun report inoltrato dal Match Analyst.</p>') +
+          '</div>';
+      }())
     );
   }
 

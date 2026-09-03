@@ -88,19 +88,42 @@
     if (typeof window.showToast === 'function') window.showToast(msg, kind || 'success');
   }
 
+  function maTagsOf(u) {
+    var name = nameOf(u);
+    if (window.EliseeMaDash && typeof window.EliseeMaDash.tagsForPlayer === 'function') {
+      try { return window.EliseeMaDash.tagsForPlayer(name) || {}; } catch (_) {}
+    }
+    try {
+      var map = JSON.parse(localStorage.getItem('elisee_ma_card_tags_v1') || '{}') || {};
+      var k = String(name || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'x';
+      return map[k] || {};
+    } catch (_) { return {}; }
+  }
   function badgesOf(u) {
     var p = u.playerProfile || {};
-    if (Array.isArray(p.attitudeBadges) && p.attitudeBadges.length) return p.attitudeBadges.slice(0, 4);
-    var r = roleOf(u).toLowerCase();
     var out = [];
-    if (/ala|esterno|terzino/.test(r)) out.push('Velocità');
-    if (/centravanti|punta|attacc/.test(r)) out.push('Finalizzazione');
-    if (/difens|centrale|mediano/.test(r)) out.push('Lettura');
-    if (/portier/.test(r)) out.push('Reattività');
-    if (/trequartista|mezzala|centrocamp/.test(r)) out.push('Visione');
-    if (!out.length) out.push('Atleta');
-    if (isFree(u)) out.push('Cerca squadra');
-    return out.slice(0, 3);
+    if (Array.isArray(p.attitudeBadges) && p.attitudeBadges.length) {
+      out = p.attitudeBadges.slice();
+    } else {
+      var r = roleOf(u).toLowerCase();
+      if (/ala|esterno|terzino/.test(r)) out.push('Velocità');
+      if (/centravanti|punta|attacc/.test(r)) out.push('Finalizzazione');
+      if (/difens|centrale|mediano/.test(r)) out.push('Lettura');
+      if (/portier/.test(r)) out.push('Reattività');
+      if (/trequartista|mezzala|centrocamp/.test(r)) out.push('Visione');
+      if (!out.length) out.push('Atleta');
+      if (isFree(u)) out.push('Cerca squadra');
+    }
+    var ma = maTagsOf(u);
+    if (ma && Array.isArray(ma.badges)) {
+      ma.badges.forEach(function (b) {
+        var t = String((b && b.title) || b || '').trim();
+        if (t && out.indexOf(t) < 0) out.unshift(t);
+      });
+    }
+    if (ma && ma.mention && out.indexOf('Menzione Speciale') < 0) out.unshift('Menzione Speciale');
+    return out.slice(0, 4);
   }
 
   function cityOf(u) {
@@ -168,8 +191,13 @@
     if (roleOf(u)) meta += '<span>' + esc(roleOf(u)) + '</span>';
     if (footOf(u)) meta += '<span>Piede ' + esc(footOf(u)) + '</span>';
     var badges = badgesOf(u).map(function (b) {
-      return '<span class="es-pc-badge">' + esc(b) + '</span>';
+      var cls = b === 'Menzione Speciale' ? ' es-pc-badge is-ma-mention' : ' es-pc-badge';
+      return '<span class="' + cls.trim() + '">' + esc(b) + '</span>';
     }).join('');
+    var ma = maTagsOf(u);
+    var mention = (ma && ma.mention)
+      ? '<span class="es-pc-mention">Menzione Speciale · Match Analyst</span>'
+      : '';
     return '<article class="es-pc-card" id="es-pc-card" tabindex="0" role="button" aria-label="Apri Card di ' + esc(name) + '">' +
       '<div class="es-pc-card-top">' +
         '<span class="es-pc-status' + (free ? ' is-free' : '') + '">' +
@@ -181,6 +209,7 @@
         '<p class="es-pc-club">' + esc(club || 'Nessuna società associata') + '</p>' +
         '<div class="es-pc-meta">' + meta + '</div>' +
         '<div class="es-pc-badges">' + badges + '</div>' +
+        mention +
         (opts.hideHint ? '' : '<div class="es-pc-hint">Tocca la Card per l’analisi tattica</div>') +
       '</div></article>';
   }
@@ -269,6 +298,10 @@
     var p = u.playerProfile || {};
     var sec = String(p.secondaryRoles || '').trim();
     var adapted = String(p.adaptedRole || '').trim();
+    if (!adapted) {
+      var maPos = maTagsOf(u);
+      if (maPos && maPos.adaptedRole) adapted = String(maPos.adaptedRole).trim();
+    }
     function pin(label, cls, x, y) {
       return '<div style="position:absolute;left:' + x + '%;top:' + y + '%;transform:translate(-50%,-50%);font-size:0.68rem;font-weight:800;padding:0.22rem 0.45rem;border-radius:999px;background:' + cls + ';color:#041018;white-space:nowrap;">' + esc(label) + '</div>';
     }
@@ -337,6 +370,22 @@
         '<div><h3 style="margin:0 0 0.45rem;font-size:0.9rem;color:#fff;">Heatmap</h3>' + pitchSvg(heat.cells, false) + '</div>' +
         '<div><h3 style="margin:0 0 0.45rem;font-size:0.9rem;color:#fff;">Ruoli (primario / secondario / adattato)</h3>' + fmPitch(u) + '</div>' +
       '</div>' +
+      (function () {
+        var ma = maTagsOf(u);
+        if (!ma || !(ma.mention || (ma.badges && ma.badges.length) || (ma.clips && ma.clips.length) || ma.adaptedRole)) return '';
+        var h = '<h3 style="margin:1rem 0 0.4rem;font-size:0.9rem;color:#fff;">Match Analyst</h3>';
+        if (ma.mention) {
+          h += '<p class="lead"><b>Menzione Speciale</b> — ' + esc(ma.mention.title) +
+            (ma.mention.analyst ? ' · ' + esc(ma.mention.analyst) : '') + '</p>';
+        }
+        if (ma.adaptedRole) {
+          h += '<p class="lead">Posizione adattata: <b>' + esc(ma.adaptedRole) + '</b></p>';
+        }
+        if (ma.clips && ma.clips.length) {
+          h += '<p class="lead">Clip: ' + esc(ma.clips.map(function (c) { return c.title || c.kind; }).join(' · ')) + '</p>';
+        }
+        return h;
+      }()) +
       '<h3 style="margin:1rem 0 0.4rem;font-size:0.9rem;color:#fff;">Highlight Video Hub</h3>' +
       '<div class="es-pc-video-row">' +
         '<input id="es-pc-vid-url" placeholder="https://… clip highlight" />' +

@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-03**
-Ultimo fatto: **Area Osservatore da PDF** — Identità, qualifica, Under Contract / Free Agent, Secret List stealth, inoltro al DS o proposta a club, limiti di ruolo, Wall in sola lettura. Cache `OBS1`.
+Ultimo fatto: **Area Match Analyst da PDF** — Identità (Video/Dati APF, Corso FIGC, SVideo-Analysis), In Staff Club vs Consulente Esterno, laboratorio heatmap/GPS/clip con sovrapposizione, report privati vs pubblici, Menzione Speciale sulla Card, inoltro reale ad Allenatore/DS/Preparatore, export dossier, niente ufficializzazione mercato. Cache `MA2`.
 Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -58,6 +58,7 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 Flusso recente, dal più nuovo:
 
+- **Area Match Analyst da PDF** (`Profilo_Match_Analyst_260903_154242.pdf`): identità e qualifiche, In Staff Club vs Consulente Esterno, laboratorio heatmap (validazione + overlay squadra), GPS verso Allenatore e Preparatore, Clip Hub e dossier avversario, report privati (in-house) vs pubblici (portfolio + Menzione Speciale sulla Card), tagging posizioni adattate, export dossier, limiti di ruolo (niente rosa/struttura, niente annunci/trattative). Cache `MA2`.
 - **Eccellenza Veneto Girone B 2026/27** (16 squadre): Arcella Padova (Padova), Liapiave (San Polo di Piave), Borgo Valbelluna, Marosticense (Marostica), Cavarzano Belluno (Belluno), Portogruaro, Dolo 1909, Portomansuè (Mansuè), Eclisse Carenipievigina (Pieve di Soligo), Thiene 1908, Galliera (Galliera Veneta), Union Monte (Montebelluna), Godigese (Castello di Godego), Union Pro (Mogliano Veneto), LeO Oderzo, United Borgoricco Campetra (Borgoricco). Cache `ECCVENB1`.
 - **Eccellenza Veneto Girone A 2026/27** (16 squadre): Adriese (Adria), Montecchio Maggiore, Ambrosiana (Sant'Ambrogio di Valpolicella), Montorio FC (Montorio), AQS Borgo Veneto (Borgo Veneto), Oppeano, Berton Bolzano Vicentino (Bolzano Vicentino), Piovese (Piove di Sacco), Castelnuovo del Garda, Pozzonovo, Chiampo, Vigasio, Limena, Villafranca Veronese (Villafranca di Verona), Mestrino United (Mestrino), Villafranchese (Villafranca Padovana). Cache `ECCVENA1`.
 - **Eccellenza Toscana Girone B 2026/27** (16 squadre): Antella 99 (Antella), Montespertoli, Audax Rufina (Rufina), Poggibonsi, Baldaccio Bruni (Anghiari), Sangiovannese (San Giovanni Valdarno), Barberino Tavarnelle, Sansovino (Monte San Savino), Castiglionese (Castiglion Fiorentino), Sestese (Sesto Fiorentino), Colligiana (Colle di Val d'Elsa), Signa 1914 (Signa), Figline 1965 (Figline Valdarno), Asta Taverne (Siena; in Tuttocampo «Sport Club»), Lastrigiana (Lastra a Signa), Valentino Mazzola (Siena; in Tuttocampo «Valentino»). Cache `ECCTOSB1`.
@@ -315,7 +316,7 @@ Copia utente Grok: `C:\Users\Eliseo Miraglia\.grok\skills\elisee-scout-deploy\SK
 
 Eliseo manda uno screenshot Tuttocampo Classifica alla volta. Non inventare il prossimo girone. Completati: Campania A/B, Lazio A/B, Abruzzo, Molise, Toscana A/B, Veneto A.
 
-Match Analyst: se ruolo staff è Match analyst o Video analyst, al posto del form anagrafica compare la dashboard analitica (radar attività, compliance Wyscout/InStat, registro partite). Cache `MA1`.
+Match Analyst: se ruolo staff è Match analyst o Video analyst, dashboard da PDF (identità, laboratorio heatmap/GPS/clip, report privati vs pubblici, inoltro staff, tagging Card). Cache `MA2`.
 
 Staff Medico: se ruolo staff è Medico sociale, dashboard visite mediche, idoneità, compliance FIGC/CONI. Distinta dal Fisioterapista. Cache `MD1`.
 
@@ -354,6 +355,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-03** — Area Match Analyst aggiornata sul PDF: identità e abilitazioni, In Staff Club vs Consulente Esterno, laboratorio heatmap/GPS/video con overlay, report in-house vs portfolio pubblico, Menzione Speciale e badge tattici sulla Card, inoltro reale ad Allenatore, DS e Preparatore, export dossier, blocco ufficializzazione mercato. Cache `MA2`.
 
 - **2026-09-03** — Area Osservatore / Scout aggiornata sul PDF Profilo Scout: credenziali, status Under Contract vs Free Agent, Secret List stealth con inoltro al DS (contratto) o proposta a club terzi (free, solo con autorizzazione DS), ricerca geo, Wall in consultazione, blocco ufficializzazione. Cache `OBS1`.
 

@@ -118,6 +118,24 @@
   padding: 0.18rem 0.48rem;
 }
 .es-pc-badges { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.es-pc-badge.is-ma-mention {
+  color: #fde68a;
+  background: rgba(250, 204, 21, 0.12);
+  border-color: rgba(250, 204, 21, 0.4);
+}
+.es-pc-mention {
+  display: inline-flex;
+  margin-top: 0.4rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #fde68a;
+  background: rgba(250, 204, 21, 0.12);
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  border-radius: 999px;
+  padding: 0.18rem 0.55rem;
+}
 .es-pc-hint {
   margin-top: auto;
   font-size: 0.68rem;

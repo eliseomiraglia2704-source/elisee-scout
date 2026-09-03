@@ -198,6 +198,35 @@
     });
   }
 
+  function fillMaInbox(host, user) {
+    if (!host) return;
+    var body = host.querySelector('.es-pd-body');
+    if (!body) return;
+    var old = body.querySelector('.es-ma-staff-inbox');
+    if (old) old.remove();
+    var club = String((user && (user.squadra || user.club)) || '').trim();
+    var items = [];
+    if (window.EliseeMaDash && typeof window.EliseeMaDash.inboxForClub === 'function') {
+      items = window.EliseeMaDash.inboxForClub(club).filter(function (x) {
+        return !x.to || x.to.indexOf('ds') >= 0;
+      }).slice(0, 6);
+    }
+    var wrap = document.createElement('div');
+    wrap.className = 'es-ma-staff-inbox';
+    wrap.innerHTML = '<section class="es-pd-card">' +
+      '<div class="es-pd-card-header"><h2>Report Match Analyst</h2>' +
+      '<span class="es-pd-source-badge">In-house</span></div>' +
+      (items.length
+        ? '<ul style="margin:0;padding-left:1.1rem;color:#cbd5e1;font-size:0.82rem;line-height:1.5;">' +
+          items.map(function (x) {
+            return '<li><b>' + esc(x.title) + '</b> — ' + esc(x.kind || 'report') +
+              (x.fromName ? ' · ' + esc(x.fromName) : '') + '</li>';
+          }).join('') + '</ul>'
+        : '<p style="color:#94a3b8;font-size:0.82rem;margin:0;">Nessun report tattico inoltrato dal Match Analyst per valutare la crescita in ottica calciomercato.</p>') +
+      '</section>';
+    body.appendChild(wrap);
+  }
+
   function bind(host) {
     if (!host || host.dataset.dsBound === '1') return;
     host.dataset.dsBound = '1';
@@ -234,6 +263,7 @@
       host.insertBefore(box, host.firstChild);
     }
     box.innerHTML = html(user);
+    fillMaInbox(box, user);
     box.hidden = false;
     box.removeAttribute('hidden');
     box.style.display = 'block';
