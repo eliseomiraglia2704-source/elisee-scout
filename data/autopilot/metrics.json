@@ -1,9 +1,9 @@
 {
-  "cycles": 2274,
-  "heals": 3,
-  "jobs_ok": 18192,
+  "cycles": 10002,
+  "heals": 14,
+  "jobs_ok": 80016,
   "jobs_fail": 0,
-  "campionati_ticks": 4544,
+  "campionati_ticks": 19978,
   "running": true,
-  "at": "2026-08-30T16:43:07.220941+00:00"
+  "at": "2026-09-03T21:32:41.669845+00:00"
 }
