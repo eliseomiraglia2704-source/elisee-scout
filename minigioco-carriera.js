@@ -1518,8 +1518,21 @@
         '<span class="es-mg-hub-desc">In <strong>Serie D</strong> e <strong>Serie C</strong> sale chi vince il girone. Poi Serie B, Serie A e i top mondiali.</span>' +
         publishBlockHtml() +
         '</div>' +
-        '<div class="es-mg-hub-card is-empty" id="es-mg-hub-slot" aria-disabled="true" aria-label="Slot giochi in arrivo">' +
-        '<span class="es-mg-hub-empty" aria-hidden="true"></span>' +
+        '<div class="es-mg-hub-card is-soon" id="es-mg-hub-pokemon" role="button" tabindex="0" aria-label="Pokemon Calcistico, prossimamente">' +
+        '<span class="es-mg-hub-soon">Prossimamente</span>' +
+        '<span class="es-mg-hub-icon es-mg-hub-icon-pkmn" aria-hidden="true">' +
+        '<svg viewBox="0 0 64 64" width="72" height="72" fill="none">' +
+        '<circle cx="32" cy="32" r="22" stroke="#e2e8f0" stroke-width="3"/>' +
+        '<path d="M10 32h44" stroke="#e2e8f0" stroke-width="3"/>' +
+        '<path d="M10 32a22 22 0 0 1 44 0" fill="rgba(56,189,248,0.35)"/>' +
+        '<circle cx="32" cy="32" r="7.5" fill="#0b1220" stroke="#e2e8f0" stroke-width="3"/>' +
+        '<circle cx="32" cy="32" r="3.2" fill="#38bdf8"/>' +
+        '<path d="M22 18l3 4M42 18l-3 4M18 44l4-2M46 44l-4-2" stroke="#7dd3fc" stroke-width="2" stroke-linecap="round"/>' +
+        '</svg>' +
+        '</span>' +
+        '<span class="es-mg-hub-title">Pokemon Calcistico</span>' +
+        '<span class="es-mg-hub-tags">Collezione · Sfide · Evoluzioni in campo</span>' +
+        '<span class="es-mg-hub-desc">Nuovo minigioco in lavorazione: creature calcistiche, allenatori e partite. <strong>Uscirà in futuro</strong> su Elisee Scout.</span>' +
         '</div>' +
         '</div>' +
         '<div class="es-mg-hub-playwrap' + (savedNow ? ' is-split' : '') + '">' +
@@ -1601,6 +1614,19 @@
       if (mask) mask.hidden = false;
     }
     var career = document.getElementById('es-mg-hub-career');
+    var pkmn = document.getElementById('es-mg-hub-pokemon');
+    if (pkmn) {
+      var soonMsg = function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        if (typeof window.showToast === 'function') {
+          window.showToast('Pokemon Calcistico: prossimamente. Ci stiamo lavorando.', 'info');
+        }
+      };
+      pkmn.onclick = soonMsg;
+      pkmn.onkeydown = function (e) {
+        if (e.key === 'Enter' || e.key === ' ') soonMsg(e);
+      };
+    }
     var play = document.getElementById('es-mg-hub-play');
     var cont = document.getElementById('es-mg-hub-continue');
     var neu = document.getElementById('es-mg-hub-new');

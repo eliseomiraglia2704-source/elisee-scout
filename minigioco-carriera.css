@@ -483,6 +483,36 @@ button.es-mg-hub-menubar:focus {
     linear-gradient(180deg, rgba(18, 90, 120, 0.18) 0%, rgba(8, 16, 28, 0.62) 46%, rgba(6, 10, 18, 0.78) 100%);
   box-shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
 }
+.es-mg-hub-card.is-soon {
+  cursor: default;
+  border-color: rgba(56, 189, 248, 0.28);
+  background:
+    linear-gradient(180deg, rgba(14, 42, 68, 0.72) 0%, rgba(8, 16, 28, 0.78) 55%, rgba(6, 10, 18, 0.86) 100%);
+}
+.es-mg-hub-card.is-soon:hover {
+  transform: none;
+  border-color: rgba(56, 189, 248, 0.48);
+}
+.es-mg-hub-soon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0 0.85rem;
+  padding: 0.28rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  background: rgba(56, 189, 248, 0.14);
+  color: #7dd3fc;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.es-mg-hub-icon-pkmn {
+  width: 72px;
+  height: 72px;
+}
 .es-mg-hub-icon {
   position: relative;
   z-index: 1;
