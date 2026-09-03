@@ -115,11 +115,11 @@ def _otp_parse_ua(ua: str) -> tuple[str, str]:
 def _otp_location(tz: str) -> str:
     name = str(tz or "").strip()
     known = {
-        "Europe/Rome": "Rome (IT)",
-        "Europe/Paris": "Paris (FR)",
-        "Europe/Berlin": "Berlin (DE)",
+        "Europe/Rome": "Roma (IT)",
+        "Europe/Paris": "Parigi (FR)",
+        "Europe/Berlin": "Berlino (DE)",
         "Europe/Madrid": "Madrid (ES)",
-        "Europe/London": "London (GB)",
+        "Europe/London": "Londra (GB)",
         "Europe/Amsterdam": "Amsterdam (NL)",
         "America/New_York": "New York (US)",
         "America/Los_Angeles": "Los Angeles (US)",
@@ -141,9 +141,7 @@ def _otp_when(tz: str) -> str:
     except Exception:
         from datetime import datetime
         now = datetime.now()
-    hour12 = now.hour % 12 or 12
-    ampm = "AM" if now.hour < 12 else "PM"
-    return f"{now.month:02d}/{now.day:02d}/{now.year} {hour12:02d}:{now.minute:02d}:{now.second:02d} {ampm}"
+    return f"{now.day:02d}/{now.month:02d}/{now.year} · {now.hour:02d}:{now.minute:02d}"
 
 
 def _otp_lookup_nome(email: str) -> str:
@@ -160,14 +158,28 @@ def _otp_lookup_nome(email: str) -> str:
 
 
 def _otp_detail_row(label: str, value: str, first: bool = False, last: bool = False) -> str:
-    pt = "16px" if first else "7px"
-    pb = "16px" if last else "7px"
+    pt = "14px" if first else "10px"
+    pb = "14px" if last else "10px"
+    line = "" if last else "border-bottom:1px solid #1E3A5F;"
     return (
         "<tr>"
-        f'<td width="170" valign="top" style="padding:{pt} 20px {pb} 20px;font-family:Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:#8B8B98;">{_otp_esc(label)}</td>'
-        f'<td valign="top" style="padding:{pt} 20px {pb} 20px;font-family:Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:#232333;">{_otp_esc(value)}</td>'
+        f'<td width="46%" valign="middle" style="padding:{pt} 16px {pb} 16px;{line}font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#7DD3FC;">{_otp_esc(label)}</td>'
+        f'<td valign="middle" style="padding:{pt} 16px {pb} 16px;{line}font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:700;color:#F1F5F9;">{_otp_esc(value)}</td>'
         "</tr>"
     )
+
+
+def _otp_digit_cells(digits: str) -> str:
+    parts = ['<table role="presentation" cellpadding="0" cellspacing="0" align="center" style="margin:0 auto;"><tr>']
+    for i, ch in enumerate(digits):
+        if i:
+            parts.append('<td width="6" style="width:6px;font-size:1px;line-height:1px;">&nbsp;</td>')
+        parts.append(
+            '<td align="center" valign="middle" width="44" style="width:44px;background:#071422;border:1px solid #38BDF8;border-radius:10px;padding:12px 0;font-family:Arial,Helvetica,sans-serif;font-size:24px;line-height:24px;font-weight:800;color:#38BDF8;">'
+            f"{_otp_esc(ch)}</td>"
+        )
+    parts.append("</tr></table>")
+    return "".join(parts)
 
 
 def _otp_mail_bodies(code: str, meta: dict | None = None) -> tuple[str, str, str]:
@@ -180,63 +192,65 @@ def _otp_mail_bodies(code: str, meta: dict | None = None) -> tuple[str, str, str
     browser, os_name = _otp_parse_ua(ua)
     when = _otp_when(tz)
     place = _otp_location(tz)
-    hello = f"Hi {nome}," if nome else "Hi,"
-    subject = "Your Elisee Scout verification code"
+    hello = f"Ciao {nome}," if nome else "Ciao,"
+    subject = "Codice di verifica Elisee Scout"
     text = (
         f"{hello}\n\n"
-        "We detected an unusual login from a device or location you don't usually use. "
-        "If this was you please input the code below to log into Elisee Scout\n\n"
+        "Per confermare il tuo account, inserisci questo codice nella barra in basso su Elisee Scout.\n\n"
         f"{spaced}\n\n"
-        "The code will be expired in 10 minutes.\n\n"
-        "Please review the sign in activity details below:\n"
-        f"Date                 {when}\n"
+        "Valido 10 minuti. Non condividerlo con nessuno.\n\n"
+        "Dettagli di questo accesso:\n"
+        f"Data                 {when}\n"
         f"Browser              {browser}\n"
-        f"Operating System     {os_name}\n"
-        f"Location             {place}\n\n"
-        "If this wasn't you, please let us know here. We recommend you update your password "
-        "and enable Two-factor authentication to secure your account.\n\n"
-        "Thank you,\n"
-        "The Elisee Scout Team"
+        f"Sistema operativo    {os_name}\n"
+        f"Posizione            {place}\n\n"
+        "Se non hai richiesto questo codice, ignora l'email oppure segnalacelo.\n\n"
+        "Il team Elisee Scout"
     )
     support = "mailto:eliseomiraglia2704@gmail.com?subject=Accesso%20non%20autorizzato%20Elisee%20Scout"
+    logo = "https://elisee-scout.vercel.app/immagini/logo/es-logo-icon.png"
     html = (
-        '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">'
+        '<!DOCTYPE html><html lang="it"><head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width,initial-scale=1">'
         f'<title>{_otp_esc(subject)}</title></head>'
-        '<body style="margin:0;padding:0;background:#ffffff;">'
-        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#ffffff;">'
-        "<tr><td>"
-        '<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;background:#ffffff;">'
-        '<tr><td style="padding:28px 32px 8px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">'
+        '<body style="margin:0;padding:0;background:#05070C;">'
+        '<div style="display:none;max-height:0;overflow:hidden;opacity:0;">Il tuo codice di verifica Elisee Scout</div>'
+        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#05070C;">'
+        '<tr><td align="center">'
+        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;max-width:560px;background:#0B1220;">'
+        '<tr><td style="padding:18px 24px;background:#07101C;border-bottom:3px solid #38BDF8;">'
+        '<table role="presentation" cellpadding="0" cellspacing="0"><tr>'
+        f'<td valign="middle" style="padding-right:12px;"><img src="{logo}" width="36" height="36" alt="Elisee Scout" style="display:block;border:0;width:36px;height:36px;"></td>'
+        '<td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:800;letter-spacing:0.18em;color:#FFFFFF;">ELISEE SCOUT</td>'
+        "</tr></table></td></tr>"
+        '<tr><td style="padding:28px 24px 8px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:22px;color:#94A3B8;">'
         f"{_otp_esc(hello)}"
         "</td></tr>"
-        '<tr><td style="padding:12px 32px 8px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">'
-        "We detected an unusual login from a device or location you don't usually use. "
-        "If this was you please input the code below to log into Elisee Scout"
+        '<tr><td style="padding:4px 24px 10px;font-family:Arial,Helvetica,sans-serif;font-size:26px;line-height:32px;font-weight:800;color:#F8FAFC;">Codice di verifica</td></tr>'
+        '<tr><td style="padding:0 24px 22px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:23px;color:#94A3B8;">'
+        "Per confermare il tuo account, inserisci questo codice nella barra in basso sul sito."
         "</td></tr>"
-        '<tr><td style="padding:20px 32px 8px;font-family:Helvetica,Arial,sans-serif;font-size:32px;line-height:40px;font-weight:700;letter-spacing:6px;color:#000000;">'
-        f"{_otp_esc(spaced)}"
-        "</td></tr>"
-        '<tr><td style="padding:12px 32px 8px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">'
-        "The code will be expired in 10 minutes."
-        "</td></tr>"
-        '<tr><td style="padding:16px 32px 10px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">'
-        "Please review the sign in activity details below:"
-        "</td></tr>"
-        '<tr><td style="padding:4px 32px 18px;">'
-        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;background:#F4F4F8;border-radius:8px;">'
-        + _otp_detail_row("Date", when, first=True)
+        f'<tr><td align="center" style="padding:4px 16px 8px;">{_otp_digit_cells(digits)}</td></tr>'
+        '<tr><td align="center" style="padding:14px 24px 26px;">'
+        '<table role="presentation" cellpadding="0" cellspacing="0" style="background:#082F49;border-radius:999px;"><tr>'
+        '<td style="padding:8px 16px;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.04em;color:#7DD3FC;">Valido 10 minuti</td>'
+        "</tr></table></td></tr>"
+        '<tr><td style="padding:0 24px 10px;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:#38BDF8;">Dettagli accesso</td></tr>'
+        '<tr><td style="padding:0 24px 22px;">'
+        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;background:#07101C;border:1px solid #1E3A5F;border-radius:12px;">'
+        + _otp_detail_row("Data", when, first=True)
         + _otp_detail_row("Browser", browser)
-        + _otp_detail_row("Operating System", os_name)
-        + _otp_detail_row("Location", place, last=True)
+        + _otp_detail_row("Sistema", os_name)
+        + _otp_detail_row("Posizione", place, last=True)
         + "</table></td></tr>"
-        '<tr><td style="padding:8px 32px 8px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">'
-        "If this wasn't you, please let us know "
-        f'<a href="{support}" style="color:#0E71EB;text-decoration:underline;">here</a>. '
-        "We recommend you update your password and enable Two-factor authentication to secure your account."
+        '<tr><td style="padding:0 24px 28px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:21px;color:#64748B;">'
+        "Se non hai richiesto questo codice, ignora l'email oppure "
+        f'<a href="{support}" style="color:#38BDF8;text-decoration:underline;">segnalacelo</a>. '
+        "Non condividere il codice con nessuno."
         "</td></tr>"
-        '<tr><td style="padding:20px 32px 4px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">Thank you,</td></tr>'
-        '<tr><td style="padding:0 32px 36px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">The Elisee Scout Team</td></tr>'
+        '<tr><td style="padding:16px 24px 24px;border-top:1px solid #1E3A5F;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;color:#475569;">'
+        'Elisee Scout · <a href="https://elisee-scout.vercel.app" style="color:#7DD3FC;text-decoration:none;">elisee-scout.vercel.app</a>'
+        "</td></tr>"
         "</table></td></tr></table></body></html>"
     )
     return subject, text, html

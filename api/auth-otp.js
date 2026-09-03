@@ -68,11 +68,11 @@ function parseUa(ua) {
 function locationFromTz(tz) {
   const name = String(tz || '').trim();
   const known = {
-    'Europe/Rome': 'Rome (IT)',
-    'Europe/Paris': 'Paris (FR)',
-    'Europe/Berlin': 'Berlin (DE)',
+    'Europe/Rome': 'Roma (IT)',
+    'Europe/Paris': 'Parigi (FR)',
+    'Europe/Berlin': 'Berlino (DE)',
     'Europe/Madrid': 'Madrid (ES)',
-    'Europe/London': 'London (GB)',
+    'Europe/London': 'Londra (GB)',
     'Europe/Amsterdam': 'Amsterdam (NL)',
     'America/New_York': 'New York (US)',
     'America/Los_Angeles': 'Los Angeles (US)',
@@ -85,34 +85,43 @@ function locationFromTz(tz) {
 
 function formatWhen(tz) {
   try {
-    const now = new Date();
-    const fmt = new Intl.DateTimeFormat('en-US', {
+    const fmt = new Intl.DateTimeFormat('it-IT', {
       timeZone: tz || 'Europe/Rome',
-      month: '2-digit',
       day: '2-digit',
+      month: '2-digit',
       year: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
-      second: '2-digit',
-      hour12: true
+      hour12: false
     });
-    const parts = fmt.formatToParts(now);
-    const get = (t) => (parts.find((p) => p.type === t) || {}).value || '';
-    return get('month') + '/' + get('day') + '/' + get('year') + ' ' + get('hour') + ':' + get('minute') + ':' + get('second') + ' ' + get('dayPeriod');
+    return fmt.format(new Date()).replace(',', ' ·');
   } catch (_) {
-    return new Date().toLocaleString('en-US');
+    return new Date().toLocaleString('it-IT');
   }
 }
 
 function detailRow(label, value, first, last) {
-  const pt = first ? '16px' : '7px';
-  const pb = last ? '16px' : '7px';
+  const pt = first ? '14px' : '10px';
+  const pb = last ? '14px' : '10px';
+  const line = last ? '' : 'border-bottom:1px solid #1E3A5F;';
   return (
     '<tr>' +
-    '<td width="170" valign="top" style="padding:' + pt + ' 20px ' + pb + ' 20px;font-family:Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:#8B8B98;">' + esc(label) + '</td>' +
-    '<td valign="top" style="padding:' + pt + ' 20px ' + pb + ' 20px;font-family:Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:#232333;">' + esc(value) + '</td>' +
+    '<td width="46%" valign="middle" style="padding:' + pt + ' 16px ' + pb + ' 16px;' + line + 'font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#7DD3FC;">' + esc(label) + '</td>' +
+    '<td valign="middle" style="padding:' + pt + ' 16px ' + pb + ' 16px;' + line + 'font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:700;color:#F1F5F9;">' + esc(value) + '</td>' +
     '</tr>'
   );
+}
+
+function digitCells(digits) {
+  let html = '<table role="presentation" cellpadding="0" cellspacing="0" align="center" style="margin:0 auto;"><tr>';
+  String(digits || '').split('').forEach((ch, i) => {
+    if (i) html += '<td width="6" style="width:6px;font-size:1px;line-height:1px;">&nbsp;</td>';
+    html +=
+      '<td align="center" valign="middle" width="44" style="width:44px;background:#071422;border:1px solid #38BDF8;border-radius:10px;padding:12px 0;font-family:Arial,Helvetica,sans-serif;font-size:24px;line-height:24px;font-weight:800;color:#38BDF8;">' +
+      esc(ch) + '</td>';
+  });
+  html += '</tr></table>';
+  return html;
 }
 
 function mailBodies(code, meta) {
@@ -124,62 +133,64 @@ function mailBodies(code, meta) {
   const tz = String(info.tz || '');
   const when = formatWhen(tz);
   const place = locationFromTz(tz);
-  const hello = nome ? ('Hi ' + nome + ',') : 'Hi,';
-  const subject = 'Your Elisee Scout verification code';
+  const hello = nome ? ('Ciao ' + nome + ',') : 'Ciao,';
+  const subject = 'Codice di verifica Elisee Scout';
   const text =
     hello + '\n\n' +
-    "We detected an unusual login from a device or location you don't usually use. " +
-    'If this was you please input the code below to log into Elisee Scout\n\n' +
+    'Per confermare il tuo account, inserisci questo codice nella barra in basso su Elisee Scout.\n\n' +
     spaced + '\n\n' +
-    'The code will be expired in 10 minutes.\n\n' +
-    'Please review the sign in activity details below:\n' +
-    'Date                 ' + when + '\n' +
+    'Valido 10 minuti. Non condividerlo con nessuno.\n\n' +
+    'Dettagli di questo accesso:\n' +
+    'Data                 ' + when + '\n' +
     'Browser              ' + parsed.browser + '\n' +
-    'Operating System     ' + parsed.osName + '\n' +
-    'Location             ' + place + '\n\n' +
-    "If this wasn't you, please let us know here. We recommend you update your password " +
-    'and enable Two-factor authentication to secure your account.\n\n' +
-    'Thank you,\n' +
-    'The Elisee Scout Team';
+    'Sistema operativo    ' + parsed.osName + '\n' +
+    'Posizione            ' + place + '\n\n' +
+    "Se non hai richiesto questo codice, ignora l'email oppure segnalacelo.\n\n" +
+    'Il team Elisee Scout';
   const support = 'mailto:eliseomiraglia2704@gmail.com?subject=Accesso%20non%20autorizzato%20Elisee%20Scout';
+  const logo = 'https://elisee-scout.vercel.app/immagini/logo/es-logo-icon.png';
   const html =
-    '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">' +
+    '<!DOCTYPE html><html lang="it"><head><meta charset="utf-8">' +
     '<meta name="viewport" content="width=device-width,initial-scale=1">' +
     '<title>' + esc(subject) + '</title></head>' +
-    '<body style="margin:0;padding:0;background:#ffffff;">' +
-    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#ffffff;">' +
-    '<tr><td>' +
-    '<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;background:#ffffff;">' +
-    '<tr><td style="padding:28px 32px 8px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">' +
+    '<body style="margin:0;padding:0;background:#05070C;">' +
+    '<div style="display:none;max-height:0;overflow:hidden;opacity:0;">Il tuo codice di verifica Elisee Scout</div>' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#05070C;">' +
+    '<tr><td align="center">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;max-width:560px;background:#0B1220;">' +
+    '<tr><td style="padding:18px 24px;background:#07101C;border-bottom:3px solid #38BDF8;">' +
+    '<table role="presentation" cellpadding="0" cellspacing="0"><tr>' +
+    '<td valign="middle" style="padding-right:12px;"><img src="' + logo + '" width="36" height="36" alt="Elisee Scout" style="display:block;border:0;width:36px;height:36px;"></td>' +
+    '<td valign="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:800;letter-spacing:0.18em;color:#FFFFFF;">ELISEE SCOUT</td>' +
+    '</tr></table></td></tr>' +
+    '<tr><td style="padding:28px 24px 8px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:22px;color:#94A3B8;">' +
     esc(hello) +
     '</td></tr>' +
-    '<tr><td style="padding:12px 32px 8px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">' +
-    "We detected an unusual login from a device or location you don't usually use. " +
-    'If this was you please input the code below to log into Elisee Scout' +
+    '<tr><td style="padding:4px 24px 10px;font-family:Arial,Helvetica,sans-serif;font-size:26px;line-height:32px;font-weight:800;color:#F8FAFC;">Codice di verifica</td></tr>' +
+    '<tr><td style="padding:0 24px 22px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:23px;color:#94A3B8;">' +
+    'Per confermare il tuo account, inserisci questo codice nella barra in basso sul sito.' +
     '</td></tr>' +
-    '<tr><td style="padding:20px 32px 8px;font-family:Helvetica,Arial,sans-serif;font-size:32px;line-height:40px;font-weight:700;letter-spacing:6px;color:#000000;">' +
-    esc(spaced) +
-    '</td></tr>' +
-    '<tr><td style="padding:12px 32px 8px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">' +
-    'The code will be expired in 10 minutes.' +
-    '</td></tr>' +
-    '<tr><td style="padding:16px 32px 10px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">' +
-    'Please review the sign in activity details below:' +
-    '</td></tr>' +
-    '<tr><td style="padding:4px 32px 18px;">' +
-    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;background:#F4F4F8;border-radius:8px;">' +
-    detailRow('Date', when, true, false) +
+    '<tr><td align="center" style="padding:4px 16px 8px;">' + digitCells(digits) + '</td></tr>' +
+    '<tr><td align="center" style="padding:14px 24px 26px;">' +
+    '<table role="presentation" cellpadding="0" cellspacing="0" style="background:#082F49;border-radius:999px;"><tr>' +
+    '<td style="padding:8px 16px;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;letter-spacing:0.04em;color:#7DD3FC;">Valido 10 minuti</td>' +
+    '</tr></table></td></tr>' +
+    '<tr><td style="padding:0 24px 10px;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;color:#38BDF8;">Dettagli accesso</td></tr>' +
+    '<tr><td style="padding:0 24px 22px;">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;background:#07101C;border:1px solid #1E3A5F;border-radius:12px;">' +
+    detailRow('Data', when, true, false) +
     detailRow('Browser', parsed.browser, false, false) +
-    detailRow('Operating System', parsed.osName, false, false) +
-    detailRow('Location', place, false, true) +
+    detailRow('Sistema', parsed.osName, false, false) +
+    detailRow('Posizione', place, false, true) +
     '</table></td></tr>' +
-    '<tr><td style="padding:8px 32px 8px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">' +
-    "If this wasn't you, please let us know " +
-    '<a href="' + support + '" style="color:#0E71EB;text-decoration:underline;">here</a>. ' +
-    'We recommend you update your password and enable Two-factor authentication to secure your account.' +
+    '<tr><td style="padding:0 24px 28px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:21px;color:#64748B;">' +
+    "Se non hai richiesto questo codice, ignora l'email oppure " +
+    '<a href="' + support + '" style="color:#38BDF8;text-decoration:underline;">segnalacelo</a>. ' +
+    'Non condividere il codice con nessuno.' +
     '</td></tr>' +
-    '<tr><td style="padding:20px 32px 4px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">Thank you,</td></tr>' +
-    '<tr><td style="padding:0 32px 36px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">The Elisee Scout Team</td></tr>' +
+    '<tr><td style="padding:16px 24px 24px;border-top:1px solid #1E3A5F;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;color:#475569;">' +
+    'Elisee Scout · <a href="https://elisee-scout.vercel.app" style="color:#7DD3FC;text-decoration:none;">elisee-scout.vercel.app</a>' +
+    '</td></tr>' +
     '</table></td></tr></table></body></html>';
   return { subject, text, html };
 }
