@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-03**
-Ultimo fatto: **Audit e fix bug su tutte le interfacce** — Dashboard staff (Fisio, Medico, Scout, TM, Portieri, Atletico, Giovanile, DG, Agente, Marketing, Stampa, Nutrizionista, Magazzino, Segretario, Biglietteria, DS, Tifoso, Giornalista) restavano `display:none` dopo il primo cambio ruolo. Calendario KPI admin/privacy con ID duplicato. Link Termini/Condizioni in registrazione puntavano a `#`. Minigioco: tetto OVR Primavera forato su Serie D (tier 10 inesistente), U23 rifiutava prospetti 66 OVR, fallimento club ignorava progetto forte (floor fisso 40), Lucchese/Imolese/Pordenone/Cassino/Portogruaro fuori dai lucchetti catalogo. Cache `BUGFIXALL1`.
+Ultimo fatto: **Minigioco: vincere il campionato promuove** — Se il giocatore vince Serie B, C, D, Eccellenza, Promozione o 1ª/2ª/3ª Categoria (e gli equivalenti femminili), il club sale di una categoria. Serie A resta il vertice. La promozione viene scritta sul club nello store e non è più sovrascritta da `liveClub`/`clamp`. Cache `CHAMPPROMO1`.
 Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -81,7 +81,9 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| `1533f08` | Audit bug tutte le interfacce: dashboard staff visibili, KPI calendar, TOS, minigioco OVR/U23/fallimento/lucchetti; cache `BUGFIXALL1` |
+| (questo) | Minigioco: vincere B/C/D/dilettanti promuove nella categoria superiore; cache `CHAMPPROMO1` |
+| `94163fd` | Fix ruoli coach/DG, piramide femminile, clamp dilettanti e crash admin token; cache `BUGFIXALL2` |
+| `cc8a896` | Audit bug tutte le interfacce: dashboard staff visibili, KPI calendar, TOS, minigioco OVR/U23/fallimento/lucchetti; cache `BUGFIXALL1` |
 | `847dfe9` | Curriculum spostato dalla navbar al menu a tendina utente; cache `CURRICULUM-DROPDOWN1` |
 | `a1c94c5` | Serie D Girone I 2026/27 (Serie D 100% completa): quote promozione/salvezza/retrocessione, penalizzazioni, bonus risalita, vincoli e lock `club-storia.js` |
 | `e454e27` | Serie D Girone H 2026/27: quote promozione/salvezza/retrocessione, bonus risalita, vincoli e lock `club-storia.js` |
@@ -350,6 +352,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-03** — Minigioco: vincere il campionato (B, C, D, Eccellenza, Promozione, 1ª/2ª/3ª Categoria, femminili) fa salire il club. Serie A no. Persistenza su `state.clubs`, `earnedCeil` anti-clamp, trofeo anche se la promozione arriva dal motore gironi. Test `_test_champion_promo.js`. Cache `CHAMPPROMO1`.
 
 - **2026-09-03** — Audit e risoluzione bug su tutte le interfacce:
   - Dashboard ruolo: `unmountAllRoleDashboards` lasciava `style.display=none` e le dash generate non lo toglievano; dopo un cambio ruolo la scheda restava nera/vuota. Keep-id + reveal esplicito su 16 dash + mappa host class completa.
