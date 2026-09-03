@@ -51,20 +51,20 @@
   function readPng(file) {
     return new Promise(function (res, rej) {
       if (!isPngFile(file)) {
-        rej(new Error('Solo file PNG.'));
+        rej(new Error('Solo file in formato PNG con sfondo trasparente.'));
         return;
       }
-      if (file.size > 4 * 1024 * 1024) {
-        rej(new Error('PNG massimo 4 MB.'));
+      if (file.size > 2 * 1024 * 1024) {
+        rej(new Error('File troppo pesante: massimo 2 MB consentiti (consigliato tra 150 KB e 1 MB).'));
         return;
       }
       var r = new FileReader();
       r.onload = function () {
         var s = String(r.result || '');
-        if (!isPngData(s)) { rej(new Error('Il file non è un PNG valido.')); return; }
+        if (!isPngData(s)) { rej(new Error('Il file caricato non è un PNG valido.')); return; }
         res(s);
       };
-      r.onerror = function () { rej(new Error('Lettura fallita.')); };
+      r.onerror = function () { rej(new Error('Lettura del file fallita.')); };
       r.readAsDataURL(file);
     });
   }
@@ -309,7 +309,7 @@
         '</label>' +
         '<button type="button" class="es-card-btn is-save" data-card-act="save">Salva</button>' +
       '</div>' +
-      '<p class="es-card-hint">Solo PNG. Dopo «Carica l\'immagine» premi <b>Salva</b>: senza salvataggio la Card pubblica non cambia.</p>';
+      '<p class="es-card-hint">Solo formato <b>PNG con sfondo trasparente</b>. Peso: <b>massimo 2 MB</b> (consigliato tra <b>150 KB e 1 MB</b>). Risoluzione ideale: <b>600×800 px</b> o <b>800×1000 px</b>. Dopo «Carica l\'immagine» premi <b>Salva</b>: senza salvataggio la Card pubblica non cambia.</p>';
   }
 
   function ensureAdminUi() {
@@ -432,7 +432,7 @@
       '<label class="es-card-btn is-file">Carica viso PNG' +
         '<input type="file" accept="image/png,.png" hidden id="es-card-player-file">' +
       '</label>' +
-      '<p class="es-card-hint">Solo PNG. Lo staff riceve il file, lo rielabora e lo pubblica con Salva.</p>' +
+      '<p class="es-card-hint">Solo formato <b>PNG con sfondo trasparente</b> (viso/busto). Peso: <b>massimo 2 MB</b> (consigliato tra <b>150 KB e 1 MB</b> per caricamento istantaneo). Risoluzione consigliata: <b>600×800 px</b> o <b>800×1000 px</b>. Lo staff Elisee riceve il file, lo rifinisce e pubblica la tua Card ufficiale.</p>' +
     '</div>';
   }
 
