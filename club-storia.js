@@ -796,7 +796,13 @@
     if (home <= 1) return derive({ a: 28, b: 10, c: 2, d: 0 });
     if (home === 2) return derive({ a: 4, b: 18, c: 16, d: 2 });
     if (home === 3) return derive({ a: 0, b: 4, c: 24, d: 12 });
-    if (home >= 5) return eccellenzaHome();
+    if (home >= 5) {
+      var spec = eccellenzaHome();
+      spec.home = home;
+      spec.floor = Math.max(9, home);
+      spec.ceil = 1;
+      return spec;
+    }
     return derive(VILLAGE);
   }
 
@@ -817,9 +823,9 @@
       : Object.assign({ known: false }, fallbackFromHome(home, n));
     if (!hit && isEccellenzaClub(club)) {
       spec.known = true;
-      spec.ceil = 4;
-      spec.floor = 5;
-      spec.home = 5;
+      spec.ceil = (club && club.earnedCeil != null) ? Math.min(1, Number(club.earnedCeil)) : 1;
+      spec.floor = Math.max(9, home);
+      spec.home = home;
     }
     var hard = HARD[keyOf(n)];
     if (hard) {
@@ -827,6 +833,9 @@
       spec.floor = hard.floor;
       if (spec.home < spec.ceil) spec.home = spec.ceil;
       if (spec.home > spec.floor) spec.home = spec.floor;
+    }
+    if (club && club.earnedCeil != null) {
+      spec.ceil = Math.min(spec.ceil, Number(club.earnedCeil));
     }
     var catNow = Number(club && (club.catalogT != null ? club.catalogT : club.t));
     if (catNow >= 1 && catNow <= 12 && catNow > spec.floor) {
@@ -872,6 +881,10 @@
     if (destT === 1) return 'SERIE A';
     if (destT === 2) return 'SERIE B';
     if (destT === 5) return 'ECCELLENZA';
+    if (destT === 6) return 'PROMOZIONE';
+    if (destT === 7) return 'PRIMA CATEGORIA';
+    if (destT === 8) return 'SECONDA CATEGORIA';
+    if (destT === 9) return 'TERZA CATEGORIA';
     if (destT === 3) {
       if (atStart && catT === 3 && catL) {
         var g0 = parseGirone(catL);
@@ -901,8 +914,10 @@
     var dest;
     if (atStart && catT != null) dest = catT;
     else dest = clampTierOf(club, proposedT);
-    if (dest < s.ceil) dest = s.ceil;
-    if (dest > s.floor) dest = s.floor;
+    var effCeil = (club && club.earnedCeil != null) ? Math.min(s.ceil, Number(club.earnedCeil)) : s.ceil;
+    var effFloor = (club && club.earnedCeil != null) ? Math.max(s.floor, Number(club.earnedCeil)) : s.floor;
+    if (dest < effCeil) dest = effCeil;
+    if (dest > effFloor) dest = effFloor;
     if (atStart && catT != null && catT >= s.ceil && catT <= s.floor) dest = catT;
     return { t: dest, l: labelFor(club, dest, !!atStart) };
   }
@@ -912,6 +927,10 @@
     var t = Number(tier);
     if (isYouthName(n)) return t === youthTierOf(club);
     if (isU23Name(n)) return t >= 2 && t <= 4;
+    if (club && (club.championPromoted || club.earnedCeil != null)) {
+      var effC = club.earnedCeil != null ? Math.min(1, Number(club.earnedCeil)) : 1;
+      return t >= effC && t <= 9;
+    }
     var s = profile(club);
     return t >= s.ceil && t <= s.floor;
   }
@@ -919,9 +938,14 @@
   function clampTierOf(club, current) {
     var s = profile(club);
     var now = Number(current);
-    if (!(now >= 1 && now <= 5)) now = s.home;
+    if (club && (club.championPromoted || club.earnedCeil != null)) {
+      if (now >= 1 && now <= 9) return now;
+    }
+    if (!(now >= 1 && now <= 9)) now = s.home;
     if (club && club.failed && now >= s.ceil && now <= s.floor) return now;
-    if (now < s.ceil || now > s.floor) return s.home;
+    var effCeil = (club && club.earnedCeil != null) ? Math.min(s.ceil, Number(club.earnedCeil)) : s.ceil;
+    var effFloor = (club && club.earnedCeil != null) ? Math.max(s.floor, Number(club.earnedCeil)) : s.floor;
+    if (now < effCeil || now > effFloor) return s.home;
     return now;
   }
 

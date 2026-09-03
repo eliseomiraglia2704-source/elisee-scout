@@ -1,0 +1,5 @@
+CALCIO LEGNANO
+PRIMA CATEGORIA · LOMBARDIA · GIRONE B
+
+Inserisci qui i PNG delle divise (home.png, away.png, third.png, ...).
+Poi rilancia _sync_catalog_kits.py per aggiornare il catalogo.

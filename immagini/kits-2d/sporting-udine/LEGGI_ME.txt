@@ -1,0 +1,5 @@
+SPORTING UDINE
+PROMOZIONE · FRIULI-VENEZIA GIULIA
+
+Inserisci qui i PNG delle divise (home.png, away.png, third.png, ...).
+Poi rilancia _sync_catalog_kits.py per aggiornare il catalogo.

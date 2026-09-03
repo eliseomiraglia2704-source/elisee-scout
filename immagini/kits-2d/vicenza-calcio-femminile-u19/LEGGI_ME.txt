@@ -1,0 +1,5 @@
+VICENZA CALCIO FEMMINILE U19
+PRIMAVERA 2 FEMMINILE · GIRONE A
+
+Inserisci qui i PNG delle divise (home.png, away.png, third.png, ...).
+Poi rilancia _sync_catalog_kits.py per aggiornare il catalogo.

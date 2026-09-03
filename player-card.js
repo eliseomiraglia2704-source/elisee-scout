@@ -238,6 +238,76 @@
     else if (/lecce/.test(s)) s = 'lecce';
     return 'immagini/squadre-loghi/' + s + '.png';
   }
+  var CLUB_IX = {};
+  function indexClubs(list) {
+    (list || []).forEach(function (c) {
+      var name = c.n || c.name || '';
+      if (!name) return;
+      CLUB_IX[slugClub(name)] = {
+        league: c.l || c.league || '',
+        logo: c.o || c.logo || ''
+      };
+    });
+  }
+  function leagueLogoPath(leagueName) {
+    var lg = String(leagueName || '').toUpperCase();
+    if (!lg) return '';
+    if (lg.indexOf('FEMMINILE') >= 0) {
+      if (lg.indexOf('PRIMAVERA 1') >= 0) return 'immagini/squadre-loghi/primavera-1-femminile.png';
+      if (lg.indexOf('PRIMAVERA 2') >= 0) return 'immagini/squadre-loghi/primavera-2-femminile.png';
+      if (lg.indexOf('SERIE A') >= 0) return 'immagini/squadre-loghi/serie-a-femminile.png';
+      if (lg.indexOf('SERIE B') >= 0) return 'immagini/squadre-loghi/serie-b-femminile.png';
+      if (lg.indexOf('SERIE C') >= 0) return 'immagini/squadre-loghi/serie-c-femminile.png';
+    }
+    if (lg.indexOf('SERIE A') >= 0) return 'immagini/squadre-loghi/serie-a.png';
+    if (lg.indexOf('SERIE B') >= 0) return 'immagini/squadre-loghi/serie-b.png';
+    if (lg.indexOf('SERIE C') >= 0) return 'immagini/squadre-loghi/serie-c.png';
+    if (lg.indexOf('SERIE D') >= 0) return 'immagini/squadre-loghi/serie-d.png';
+    if (lg.indexOf('ECCELLENZA') >= 0) return 'immagini/squadre-loghi/eccellenza.png';
+    if (lg.indexOf('PROMOZIONE') >= 0) return 'immagini/squadre-loghi/promozione.png';
+    if (lg.indexOf('PRIMA CATEGORIA') >= 0) return 'immagini/squadre-loghi/prima-categoria.png';
+    if (lg.indexOf('SECONDA CATEGORIA') >= 0) return 'immagini/squadre-loghi/seconda-categoria.png';
+    if (lg.indexOf('TERZA CATEGORIA') >= 0) return 'immagini/squadre-loghi/terza-categoria.png';
+    if (lg.indexOf('PRIMAVERA 1') >= 0) return 'immagini/squadre-loghi/primavera-1.png';
+    if (lg.indexOf('PRIMAVERA 2') >= 0) return 'immagini/squadre-loghi/primavera-2.png';
+    if (lg.indexOf('PRIMAVERA 3') >= 0) return 'immagini/squadre-loghi/primavera-3.png';
+    if (lg.indexOf('PRIMAVERA 4') >= 0) return 'immagini/squadre-loghi/primavera-4.png';
+    if (lg.indexOf('PREMIER') >= 0) return 'immagini/squadre-loghi/english-premier-league.png';
+    if (lg.indexOf('LA LIGA') >= 0) return 'immagini/squadre-loghi/la-liga.png';
+    if (lg.indexOf('BUNDESLIGA') >= 0) return 'immagini/squadre-loghi/bundesliga.png';
+    if (lg.indexOf('LIGUE 1') >= 0) return 'immagini/squadre-loghi/ligue-1.png';
+    if (lg.indexOf('PRIMEIRA') >= 0) return 'immagini/squadre-loghi/primeira-liga.png';
+    if (lg.indexOf('EREDIVISIE') >= 0) return 'immagini/squadre-loghi/eredivisie.png';
+    return '';
+  }
+  function leagueOf(u) {
+    var p = (u && u.playerProfile) || {};
+    var direct = p.campionato || p.league || p.lega || (u && (u.campionato || u.lega)) || '';
+    if (direct) return String(direct).trim();
+    var k = slugClub(clubOf(u));
+    if (k && CLUB_IX[k] && CLUB_IX[k].league) return CLUB_IX[k].league;
+    if (/atalanta|juventus|inter$|ac-milan|^milan$|napoli|roma$|lazio|fiorentina|bologna|torino|genoa|sassuolo|udinese|cagliari|parma|como|lecce|verona|cremonese|frosinone|monza/.test(k)) {
+      return 'SERIE A';
+    }
+    return '';
+  }
+  function idsHtml(u) {
+    var nat = nationCode(nationOf(u));
+    var flag = '<img class="es-pc-flag" src="immagini/nazioni-bandiere/' + esc(nat) + '.png" alt="" onerror="this.style.visibility=\'hidden\'">';
+    var lgSrc = leagueLogoPath(leagueOf(u));
+    var club = clubOf(u);
+    var cSrc = clubLogo(club);
+    if (club && CLUB_IX[slugClub(club)] && CLUB_IX[slugClub(club)].logo) {
+      cSrc = CLUB_IX[slugClub(club)].logo;
+    }
+    var lg = lgSrc
+      ? '<img class="es-pc-leaguelogo" src="' + esc(lgSrc) + '" alt="" onerror="this.style.visibility=\'hidden\'">'
+      : '';
+    var cl = cSrc
+      ? '<img class="es-pc-clublogo" src="' + esc(cSrc) + '" alt="" onerror="this.style.visibility=\'hidden\'">'
+      : '';
+    return flag + lg + cl;
+  }
   function hashN(s) {
     var n = 0;
     String(s || '').split('').forEach(function (c) { n += c.charCodeAt(0); });
@@ -278,7 +348,7 @@
     if (window.EliseeCardAtelier && typeof window.EliseeCardAtelier.faceSrc === 'function') {
       return window.EliseeCardAtelier.faceSrc(u);
     }
-    return 'immagini/card-elisee/esempio-viso.png?v=20260903_ELISEE9';
+    return 'immagini/card-elisee/esempio-viso.png?v=20260903_ELISEE10';
   }
 
   function displaySurname(u) {
@@ -311,10 +381,8 @@
     var free = isFree(u);
     var ovr = ovrOf(u);
     var pos = posCode(roleOf(u));
-    var nat = nationCode(nationOf(u));
     var rows = itAttrs(u);
     var face = faceSrc(u);
-    var flag = '<img class="es-pc-flag" src="immagini/nazioni-loghi/' + esc(nat) + '.png" alt="" onerror="this.style.visibility=\'hidden\'">';
     var labs = rows.map(function (row) {
       return '<span title="' + esc(row[2]) + '">' + esc(row[0]) + '</span>';
     }).join('');
@@ -331,15 +399,13 @@
           playstylesHtml(u) +
         '</div>' +
         '<div class="es-pc-inner">' +
-          '<div class="es-pc-kit"><img src="immagini/card-elisee/maglia.png?v=20260903_ELISEE9" alt=""></div>' +
+          '<div class="es-pc-kit"><img src="immagini/card-elisee/maglia.png?v=20260903_ELISEE10" alt=""></div>' +
           '<div class="es-pc-fifa-photo"><img class="es-pc-player" src="' + esc(face) + '" alt=""></div>' +
           '<div class="es-pc-fifa-bottom">' +
             '<div class="es-pc-fifa-name">' + esc(displaySurname(u)) + '</div>' +
             '<div class="es-pc-stat-labs">' + labs + '</div>' +
             '<div class="es-pc-stat-nums">' + nums + '</div>' +
-            '<div class="es-pc-fifa-ids">' + flag +
-              '<span class="es-pc-league">ELISEE</span>' +
-            '</div>' +
+            '<div class="es-pc-fifa-ids">' + idsHtml(u) + '</div>' +
             '<div class="es-pc-fifa-status' + (free ? ' is-free' : '') + '">' +
               (free ? 'Svincolato' : 'Tesserato') +
             '</div>' +
@@ -1180,6 +1246,13 @@
     if (box) {
       try { mountDash(box, userObj()); } catch (_) {}
     }
+    fetch('data/squadre/minigioco_clubs.json').then(function (r) { return r.json(); }).then(function (arr) {
+      indexClubs(arr);
+      var dash = document.getElementById('es-pd');
+      if (dash && document.getElementById('es-pc-slot')) {
+        try { mountDash(dash, userObj()); } catch (_) {}
+      }
+    }).catch(function () {});
     document.addEventListener('elisee:view-changed', function (ev) {
       var d = ev && ev.detail;
       if (d && (d.view === 'bacheca' || (d.hash && String(d.hash).indexOf('bacheca') >= 0))) {

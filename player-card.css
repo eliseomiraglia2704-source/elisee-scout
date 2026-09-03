@@ -230,26 +230,29 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.45rem;
-  min-height: 24px;
+  gap: 0.55rem;
+  min-height: 26px;
   overflow: visible;
+  padding-top: 0.12rem;
 }
 .es-pc-flag {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
+  width: 26px;
+  height: 18px;
+  object-fit: cover;
   object-position: center;
   display: block;
-  border-radius: 0;
-  box-shadow: none;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgba(255, 200, 120, 0.35);
   background: none;
-  overflow: visible;
+  overflow: hidden;
 }
+.es-pc-leaguelogo,
 .es-pc-clublogo {
   width: 22px;
   height: 22px;
   object-fit: contain;
   display: block;
+  background: none;
 }
 .es-pc-league {
   font-size: 0.48rem;

@@ -1160,14 +1160,14 @@
   function guardClub(c, atStart) {
     /* Tier 11 (Primavera 1) e 12 (Primavera 2): gestiti da youthClubPower, non dalla storia seniores */
     if (!c || c.world || c.isFree || isYouthClub(c) || Number(c.t) === 11 || Number(c.t) === 12) return c;
-    if (c.championPromoted && c.justPromoted) return c;
-    var now = clubLeagueTier(c);
-    if (c.earnedCeil != null) {
-      var stKeep = clubStoria(c);
-      var ceilKeep = Math.min(Number(stKeep.ceil) || now, Number(c.earnedCeil));
-      var floorKeep = Number(stKeep.floor) || 9;
-      if (now >= ceilKeep && now <= floorKeep) return c;
+    if (c.championPromoted || c.earnedCeil != null) {
+      if (c.earnedCeil != null && Number(c.t) > Number(c.earnedCeil)) {
+        c.t = Number(c.earnedCeil);
+        c.l = labelForItalianTier(c, c.t);
+      }
+      return c;
     }
+    var now = clubLeagueTier(c);
     var dest = now;
     var S = typeof window !== 'undefined' ? window.EliseeClubStoria : null;
     if (S && S.enforce) {
@@ -2918,10 +2918,13 @@
     if (has('terza_categoria')) return 9;
     if (has('seconda_categoria')) return 8;
     if (has('prima_categoria')) return 7;
-    if (has('promozione') || has('promozione_femminile')) return 6;
-    if (has('eccellenza') || has('eccellenza_femminile')) return 5;
+    if (has('promozione')) return 6;
+    if (has('promozione_femminile')) return 5;
+    if (has('eccellenza')) return 5;
+    if (has('eccellenza_femminile')) return 4;
     if (has('serie_d')) return 4;
-    if (has('serie_c') || has('serie_c_a') || has('serie_c_b') || has('serie_c_c') || has('serie_c_femminile')) return 3;
+    if (has('serie_c') || has('serie_c_a') || has('serie_c_b') || has('serie_c_c')) return 3;
+    if (has('serie_c_femminile')) return 3;
     if (has('serie_b') || has('serie_b_femminile')) return 2;
     if (has('primavera2_promozione')) return 12;
     return 0;
@@ -2931,29 +2934,35 @@
     if (!club || club.isFree || club.n === 'Svincolato' || club.world) return false;
     var wonT = leagueTrophyWonTier(trophyKeys);
     if (!(wonT > 1)) return false;
-    var toTier = wonT === 12 ? 11 : wonT - 1;
+    var isF = (club && club.g === 'f') || (state.player && state.player.gender === 'f');
+    var toTier = wonT - 1;
+    if (wonT === 12) toTier = 11;
     if (toTier < 1) return false;
     if (isU23Club(club) && toTier < 2) return false;
     var live = findLiveClub(club.n);
     var target = live || club;
     var fromT = Number(target.t) || clubLeagueTier(target) || wonT;
-    if (target.justPromoted && Number(target.t) === toTier) {
-      target.championPromoted = true;
-      if (target.earnedCeil == null || toTier < Number(target.earnedCeil)) target.earnedCeil = toTier;
+
+    target.t = toTier;
+    if (wonT === 12) {
+      target.l = isF ? 'PRIMAVERA FEMMINILE' : 'PRIMAVERA 1';
+    } else if (isF) {
+      if (toTier === 1) target.l = 'SERIE A FEMMINILE';
+      else if (toTier === 2) target.l = 'SERIE B FEMMINILE';
+      else if (toTier === 3) target.l = 'SERIE C FEMMINILE · GIRONE A';
+      else if (toTier === 4) target.l = 'ECCELLENZA FEMMINILE';
+      else target.l = 'PROMOZIONE FEMMINILE';
     } else {
-      target.t = toTier;
-      if (wonT === 12) target.l = 'PRIMAVERA 1';
-      else if (isItalianPyramid(target) || /SERIE|ECCELLENZA|PROMOZIONE|CATEGORIA/i.test(String(target.l || ''))) {
-        target.l = labelForItalianTier(target, toTier);
-      }
-      target.justPromoted = true;
-      target.justRelegated = false;
-      target.justFailed = false;
-      target.failed = false;
-      target.championPromoted = true;
-      target.promotedFromTier = fromT;
-      if (target.earnedCeil == null || toTier < Number(target.earnedCeil)) target.earnedCeil = toTier;
+      target.l = labelForItalianTier(target, toTier);
     }
+    target.justPromoted = true;
+    target.justRelegated = false;
+    target.justFailed = false;
+    target.failed = false;
+    target.championPromoted = true;
+    target.promotedFromTier = fromT;
+    target.earnedCeil = toTier;
+
     club.t = target.t;
     club.l = target.l;
     club.justPromoted = true;
@@ -2961,8 +2970,8 @@
     club.justFailed = false;
     club.failed = false;
     club.championPromoted = true;
-    club.promotedFromTier = target.promotedFromTier || fromT;
-    club.earnedCeil = target.earnedCeil;
+    club.promotedFromTier = fromT;
+    club.earnedCeil = toTier;
     return true;
   }
 
@@ -2973,15 +2982,21 @@
       return String(c.n || '').toUpperCase() === name;
     })[0];
     if (!found) {
-      if (!club.championPromoted) clampClubToHistory(club);
+      if (!club.championPromoted && club.earnedCeil == null) clampClubToHistory(club);
       return club;
     }
-    if (!found.championPromoted) clampClubToHistory(found);
+    if (club.championPromoted || club.earnedCeil != null) {
+      found.championPromoted = true;
+      found.earnedCeil = club.earnedCeil != null ? Math.min(Number(club.earnedCeil), Number(found.earnedCeil || club.earnedCeil)) : found.earnedCeil;
+      if (club.t != null) found.t = club.t;
+      if (club.l) found.l = club.l;
+    }
+    if (!found.championPromoted && found.earnedCeil == null) clampClubToHistory(found);
     var out = Object.assign({}, found);
     if (club.isLoan) out.isLoan = true;
     if (club.isStay) out.isStay = true;
     /* Promossa/Retro: solo il movimento di QUESTA stagione, non il ricordo del contratto. */
-    out.isPromoted = !!found.justPromoted;
+    out.isPromoted = !!found.justPromoted || !!club.championPromoted || !!found.championPromoted;
     out.isRelegated = !!found.justRelegated;
     out.failed = !!found.justFailed || !!found.failed;
     out.justFailed = !!found.justFailed;

@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-03**
-Ultimo fatto: **Card** — stemma Italia/FIGC intero, senza riquadro di crop. Cache `ELISEE9`.
-Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
+Ultimo fatto: **Minigioco Carriera** — Bonifica definitiva club clone Serie A/B/C/D dai campionati dilettantistici, promozione integrale automatica alla vittoria del campionato (Terza Categoria $\rightarrow$ Serie A) e mantenimento della categoria superiore in caso di rinnovo/permanenza nella stessa squadra. Cache `TIERPROMO1`.
+Feature precedente: **Card** — in basso bandiera nazione, logo campionato e logo squadra (come Yamal FC26). Cache `ELISEE10`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -90,7 +90,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Hub minigioco: allineamento card Pokemon Calcistico con Carriera; cache `PKMN2` |
+| (questo) | Minigioco: bonifica club clone dilettanti e promozioni integrali 9->1 con mantenimento categoria; cache `TIERPROMO1` |
+| `0e6b52c` | Hub minigioco: allineamento card Pokemon Calcistico con Carriera; cache `PKMN2` |
 | `f2161c7` | OTP classico: codice a 6 cifre inviato solo via email all’indirizzo dell’account; cache `OTPMAIL1` |
 | `f812722` | Minigioco: vincere B/C/D/dilettanti promuove nella categoria superiore; cache `CHAMPPROMO1` |
 | `94163fd` | Fix ruoli coach/DG, piramide femminile, clamp dilettanti e crash admin token; cache `BUGFIXALL2` |
@@ -363,6 +364,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-03** — Card: bandiera + logo campionato + logo club in calce, come Yamal. Cache `ELISEE10`.
 
 - **2026-09-03** — Stemma nazione in card senza riquadro: object-fit contain, niente crop 22×15. Cache `ELISEE9`.
 
