@@ -121,9 +121,25 @@ body:has(#es-otp-bottom-banner) #elisee-cookie-settings-btn {
   gap: 0.4rem !important;
 }
 .es-otp-inputs-inline .es-otp-digit {
-  width: 42px !important;
-  height: 46px !important;
-  font-size: 1.25rem !important;
+  width: 36px !important;
+  height: 44px !important;
+  font-size: 1.15rem !important;
+  text-align: center;
+  border-radius: 8px;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  background: #0b1222;
+  color: #fff;
+  font-weight: 800;
+}
+.es-otp-mail {
+  color: #38bdf8;
+  font-weight: 800;
+}
+a.es-otp-inbox-link {
+  color: #7dd3fc;
+  font-weight: 700;
+  margin-left: 0.35rem;
+  text-decoration: underline;
 }
 .es-otp-banner-actions {
   display: flex;

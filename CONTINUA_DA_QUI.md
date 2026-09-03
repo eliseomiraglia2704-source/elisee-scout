@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-03**
-Ultimo fatto: **Minigioco: vincere il campionato promuove** — Se il giocatore vince Serie B, C, D, Eccellenza, Promozione o 1ª/2ª/3ª Categoria (e gli equivalenti femminili), il club sale di una categoria. Serie A resta il vertice. La promozione viene scritta sul club nello store e non è più sovrascritta da `liveClub`/`clamp`. Cache `CHAMPPROMO1`.
+Ultimo fatto: **OTP classico via email** — Il codice a 6 cifre parte dal server e arriva solo nella casella dell’utente (Resend / SMTP / Outlook / Supabase Auth). Niente challenge in pagina, niente auto-fill. La barra mostra l’email dell’account. Cache `OTPMAIL1`.
 Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -81,7 +81,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Minigioco: vincere B/C/D/dilettanti promuove nella categoria superiore; cache `CHAMPPROMO1` |
+| (questo) | OTP classico: codice a 6 cifre inviato solo via email all’indirizzo dell’account; cache `OTPMAIL1` |
+| `f812722` | Minigioco: vincere B/C/D/dilettanti promuove nella categoria superiore; cache `CHAMPPROMO1` |
 | `94163fd` | Fix ruoli coach/DG, piramide femminile, clamp dilettanti e crash admin token; cache `BUGFIXALL2` |
 | `cc8a896` | Audit bug tutte le interfacce: dashboard staff visibili, KPI calendar, TOS, minigioco OVR/U23/fallimento/lucchetti; cache `BUGFIXALL1` |
 | `847dfe9` | Curriculum spostato dalla navbar al menu a tendina utente; cache `CURRICULUM-DROPDOWN1` |
@@ -352,6 +353,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-03** — OTP classico via email: 6 cifre generate lato server, invio a `user.email` (Resend, SMTP/Gmail, Outlook COM, fallback Supabase Auth). Niente codice in HTTP, niente challenge client. UI con indirizzo visibile + link Apri Gmail. Cache `OTPMAIL1`.
 
 - **2026-09-03** — Minigioco: vincere il campionato (B, C, D, Eccellenza, Promozione, 1ª/2ª/3ª Categoria, femminili) fa salire il club. Serie A no. Persistenza su `state.clubs`, `earnedCeil` anti-clamp, trofeo anche se la promozione arriva dal motore gironi. Test `_test_champion_promo.js`. Cache `CHAMPPROMO1`.
 

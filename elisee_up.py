@@ -14,6 +14,7 @@ from __future__ import annotations
 import json
 import os
 import socket
+import subprocess
 import sys
 import threading
 import time
@@ -34,136 +35,224 @@ os.chdir(ROOT)
 sys.path.insert(0, str(ROOT / "workers"))
 
 
+def _load_dotenv() -> None:
+    for fname in (".env", ".env.local"):
+        path = ROOT / fname
+        if not path.exists():
+            continue
+        try:
+            for raw in path.read_text(encoding="utf-8").splitlines():
+                line = raw.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, _, val = line.partition("=")
+                key = key.strip()
+                val = val.strip().strip('"').strip("'")
+                if key and key not in os.environ:
+                    os.environ[key] = val
+        except Exception:
+            pass
+
+
+_load_dotenv()
+
+
 def _otp_secret() -> str:
     return os.environ.get("OTP_SECRET", "elisee-scout-otp-secret-salt-2026")
 
 
-def _otp_make_challenge(email: str, code: str, exp: int) -> str:
-    h = hmac.new(_otp_secret().encode(), f"{email}:{code}:{exp}".encode(), hashlib.sha256).hexdigest()
-    raw = json.dumps({"e": email, "x": exp, "h": h}, separators=(",", ":"))
-    return base64.urlsafe_b64encode(raw.encode()).decode().rstrip("=")
+def _otp_supabase_cfg() -> tuple[str, str]:
+    url = (os.environ.get("SUPABASE_URL") or "").strip()
+    key = (os.environ.get("SUPABASE_ANON_KEY") or os.environ.get("SUPABASE_KEY") or "").strip()
+    cfg_path = ROOT / "data" / "auth" / "config.json"
+    try:
+        cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
+        if not url:
+            url = str(cfg.get("supabaseUrl") or "").strip()
+        if not key:
+            key = str(cfg.get("supabaseAnonKey") or "").strip()
+    except Exception:
+        pass
+    return url.rstrip("/"), key
 
 
-def _otp_send_email(to_email: str, code: str) -> bool:
-    """Invia l'OTP via email. Mai esporre il codice nella risposta HTTP."""
+def _otp_mail_bodies(code: str) -> tuple[str, str, str]:
     subject = "Il tuo codice di verifica Elisee Scout"
     text = (
         f"Il tuo codice OTP di verifica è: {code}\n\n"
-        "Valido 10 minuti. Inseriscilo nella barra di verifica su Elisee Scout.\n\n"
+        "Valido 10 minuti. Aprilo in questa email e inseriscilo nella barra di verifica su Elisee Scout.\n"
+        "Non condividere il codice con nessuno.\n\n"
         "Se non hai richiesto questo codice, ignora il messaggio."
     )
     html = (
-        "<p>Il tuo codice OTP di verifica è:</p>"
-        f"<p style='font-size:28px;letter-spacing:8px;font-weight:700'>{code}</p>"
-        "<p>Valido 10 minuti. Inseriscilo nella barra di verifica su Elisee Scout.</p>"
-        "<p>Se non hai richiesto questo codice, ignora il messaggio.</p>"
+        "<div style='font-family:Arial,sans-serif;max-width:480px;margin:0 auto;color:#0f172a'>"
+        "<p>Ciao,</p>"
+        "<p>Il tuo codice OTP di verifica per <strong>Elisee Scout</strong> è:</p>"
+        f"<p style='font-size:32px;letter-spacing:10px;font-weight:800;color:#0284c7'>{code}</p>"
+        "<p>Valido 10 minuti. Inseriscilo nella barra in basso sul sito. Non è un SMS: arriva solo via email.</p>"
+        "<p style='color:#64748b;font-size:13px'>Se non hai richiesto questo codice, ignora il messaggio.</p>"
+        "</div>"
     )
+    return subject, text, html
 
+
+def _otp_send_resend(to_email: str, subject: str, text: str, html: str) -> bool:
     key = (os.environ.get("RESEND_API_KEY") or "").strip()
-    if key:
-        try:
-            payload = json.dumps({
-                "from": "Elisee Scout <verifica@elisee-scout.vercel.app>",
-                "to": [to_email],
-                "subject": subject,
-                "text": text,
-                "html": html,
-            }).encode("utf-8")
-            req = urllib.request.Request(
-                "https://api.resend.com/emails",
-                data=payload,
-                headers={
-                    "Authorization": f"Bearer {key}",
-                    "Content-Type": "application/json",
-                },
-                method="POST",
-            )
-            with urllib.request.urlopen(req, timeout=12) as r:
-                if 200 <= int(getattr(r, "status", 200) or 200) < 300:
-                    return True
-        except Exception:
-            pass
+    if not key:
+        return False
+    try:
+        payload = json.dumps({
+            "from": os.environ.get("RESEND_FROM") or "Elisee Scout <verifica@elisee-scout.vercel.app>",
+            "to": [to_email],
+            "subject": subject,
+            "text": text,
+            "html": html,
+        }).encode("utf-8")
+        req = urllib.request.Request(
+            "https://api.resend.com/emails",
+            data=payload,
+            headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+            method="POST",
+        )
+        with urllib.request.urlopen(req, timeout=12) as r:
+            return 200 <= int(getattr(r, "status", 200) or 200) < 300
+    except Exception:
+        return False
 
-    host = (os.environ.get("SMTP_HOST") or os.environ.get("OTP_SMTP_HOST") or "").strip()
-    user = (os.environ.get("SMTP_USER") or os.environ.get("OTP_SMTP_USER") or "").strip()
+
+def _otp_send_smtp(to_email: str, subject: str, text: str, html: str) -> bool:
+    smtp_file = ROOT / "data" / "auth" / "smtp.json"
+    file_cfg = {}
+    try:
+        if smtp_file.exists():
+            file_cfg = json.loads(smtp_file.read_text(encoding="utf-8")) or {}
+    except Exception:
+        file_cfg = {}
+    user = (
+        os.environ.get("SMTP_USER")
+        or os.environ.get("OTP_SMTP_USER")
+        or os.environ.get("GMAIL_USER")
+        or str(file_cfg.get("user") or "")
+    ).strip()
     password = (
         os.environ.get("SMTP_PASS")
         or os.environ.get("OTP_SMTP_PASS")
         or os.environ.get("GMAIL_APP_PASSWORD")
-        or ""
+        or str(file_cfg.get("password") or file_cfg.get("pass") or "")
     ).strip()
+    host = (
+        os.environ.get("SMTP_HOST")
+        or os.environ.get("OTP_SMTP_HOST")
+        or str(file_cfg.get("host") or "")
+    ).strip()
+    if not host and user and password and "@gmail.com" in user.lower():
+        host = "smtp.gmail.com"
     try:
-        port = int(os.environ.get("SMTP_PORT") or os.environ.get("OTP_SMTP_PORT") or "587")
+        port = int(os.environ.get("SMTP_PORT") or os.environ.get("OTP_SMTP_PORT") or file_cfg.get("port") or "587")
     except Exception:
         port = 587
-    if host and user and password:
-        try:
-            import smtplib
-            from email.mime.multipart import MIMEMultipart
-            from email.mime.text import MIMEText
-            msg = MIMEMultipart("alternative")
-            msg["Subject"] = subject
-            msg["From"] = user
-            msg["To"] = to_email
-            msg.attach(MIMEText(text, "plain", "utf-8"))
-            msg.attach(MIMEText(html, "html", "utf-8"))
-            with smtplib.SMTP(host, port, timeout=12) as smtp:
-                smtp.starttls()
-                smtp.login(user, password)
-                smtp.sendmail(user, [to_email], msg.as_string())
-            return True
-        except Exception:
-            pass
-
+    if not (host and user and password):
+        return False
     try:
-        payload = json.dumps({
-            "_subject": subject,
-            "message": text,
-            "_template": "box",
-            "_captcha": "false",
-        }).encode("utf-8")
+        import smtplib
+        from email.mime.multipart import MIMEMultipart
+        from email.mime.text import MIMEText
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = subject
+        msg["From"] = f"Elisee Scout <{user}>"
+        msg["To"] = to_email
+        msg.attach(MIMEText(text, "plain", "utf-8"))
+        msg.attach(MIMEText(html, "html", "utf-8"))
+        with smtplib.SMTP(host, port, timeout=12) as smtp:
+            smtp.starttls()
+            smtp.login(user, password)
+            smtp.sendmail(user, [to_email], msg.as_string())
+        return True
+    except Exception:
+        return False
+
+
+def _otp_send_outlook(to_email: str, subject: str, html: str) -> bool:
+    ps = (
+        "param($To,$Subject,$Html)\n"
+        "try {\n"
+        "  $o = New-Object -ComObject Outlook.Application\n"
+        "  $m = $o.CreateItem(0)\n"
+        "  $m.To = $To\n"
+        "  $m.Subject = $Subject\n"
+        "  $m.HTMLBody = $Html\n"
+        "  $m.Send()\n"
+        "  Write-Output 'OK'\n"
+        "} catch { Write-Output $_.Exception.Message; exit 1 }\n"
+    )
+    try:
+        r = subprocess.run(
+            ["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", ps, "-To", to_email, "-Subject", subject, "-Html", html],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        return r.returncode == 0 and "OK" in (r.stdout or "")
+    except Exception:
+        return False
+
+
+def _otp_send_supabase(to_email: str) -> bool:
+    base, key = _otp_supabase_cfg()
+    if not base or not key:
+        return False
+    try:
+        payload = json.dumps({"email": to_email, "create_user": True}).encode("utf-8")
         req = urllib.request.Request(
-            "https://formsubmit.co/ajax/" + quote(to_email),
+            base + "/auth/v1/otp",
             data=payload,
             headers={
+                "apikey": key,
+                "Authorization": "Bearer " + key,
                 "Content-Type": "application/json",
-                "Accept": "application/json",
-                "User-Agent": "EliseeScoutOTP/1.0",
             },
             method="POST",
         )
         with urllib.request.urlopen(req, timeout=15) as r:
-            body = r.read().decode("utf-8", "replace")
-            if 200 <= int(getattr(r, "status", 200) or 200) < 300:
-                if "error" not in body.lower() or "success" in body.lower():
-                    return True
+            return 200 <= int(getattr(r, "status", 200) or 200) < 300
     except Exception:
-        pass
-    return False
+        return False
 
 
-def _otp_check_challenge(email: str, code: str, challenge: str):
-    if not challenge:
-        return False, "Challenge OTP assente. Richiedi un nuovo codice."
-    pad = "=" * ((4 - len(challenge) % 4) % 4)
+def _otp_verify_supabase(email: str, code: str) -> bool:
+    base, key = _otp_supabase_cfg()
+    if not base or not key:
+        return False
     try:
-        data = json.loads(base64.urlsafe_b64decode((challenge + pad).encode()).decode())
+        payload = json.dumps({"type": "email", "email": email, "token": code}).encode("utf-8")
+        req = urllib.request.Request(
+            base + "/auth/v1/verify",
+            data=payload,
+            headers={
+                "apikey": key,
+                "Authorization": "Bearer " + key,
+                "Content-Type": "application/json",
+            },
+            method="POST",
+        )
+        with urllib.request.urlopen(req, timeout=15) as r:
+            return 200 <= int(getattr(r, "status", 200) or 200) < 300
     except Exception:
-        return False, "Challenge OTP non valido. Richiedi un nuovo codice."
-    if str(data.get("e") or "").lower() != email:
-        return False, "Challenge OTP non valido. Richiedi un nuovo codice."
-    now_ts = int(time.time() * 1000)
-    try:
-        exp = int(data.get("x") or 0)
-    except Exception:
-        exp = 0
-    if not exp or now_ts > exp:
-        return False, "Codice OTP scaduto"
-    expected = hmac.new(_otp_secret().encode(), f"{email}:{code}:{exp}".encode(), hashlib.sha256).hexdigest()
-    given = str(data.get("h") or "")
-    if len(expected) != len(given) or not hmac.compare_digest(expected, given):
-        return False, "Codice OTP errato"
-    return True, None
+        return False
+
+
+def _otp_send_email(to_email: str, code: str) -> str:
+    """Invia l'OTP via email. Ritorna 'local' | 'supabase' | ''."""
+    subject, text, html = _otp_mail_bodies(code)
+    if _otp_send_resend(to_email, subject, text, html):
+        return "local"
+    if _otp_send_smtp(to_email, subject, text, html):
+        return "local"
+    if _otp_send_outlook(to_email, subject, html):
+        return "local"
+    if _otp_send_supabase(to_email):
+        return "supabase"
+    return ""
 
 PORT = int(os.environ.get("ELISEE_PORT", "8080"))
 OAUTH_BRIDGE_PORT = int(os.environ.get("ELISEE_OAUTH_BRIDGE_PORT", "3000"))
@@ -552,79 +641,90 @@ class Handler(SimpleHTTPRequestHandler):
                 now_ts = int(time.time() * 1000)
 
                 if action == "send":
-                    raw_code = str(random.randint(1000, 9999))
-                    secret = os.environ.get("OTP_SECRET", "elisee-scout-otp-secret-salt-2026")
-                    h = hmac.new(secret.encode(), f"{email}:{raw_code}".encode(), hashlib.sha256).hexdigest()
-                    exp = now_ts + 600000
-                    otp_store[email] = {
-                        "codeHash": h,
-                        "expiresAt": exp,
-                        "attempts": 0
-                    }
-                    otp_store_file.parent.mkdir(parents=True, exist_ok=True)
-                    otp_store_file.write_text(json.dumps(otp_store, indent=2), encoding="utf-8")
-                    challenge = _otp_make_challenge(email, raw_code, exp)
-                    emailed = _otp_send_email(email, raw_code)
-                    if not emailed:
-                        self._json(503, {
+                    existing = otp_store.get(email) or {}
+                    history = [t for t in (existing.get("sendHistory") or []) if now_ts - int(t) < 600000]
+                    if len(history) >= 3:
+                        self._json(429, {
                             "success": False,
-                            "error": "Invio email non riuscito. Riprova tra poco: il codice arriva solo via posta elettronica.",
+                            "error": "Troppe richieste. Attendi qualche minuto e riprova.",
                             "email": email,
                         })
                         return True
+                    raw_code = f"{random.randint(100000, 999999):06d}"
+                    secret = _otp_secret()
+                    h = hmac.new(secret.encode(), f"{email}:{raw_code}".encode(), hashlib.sha256).hexdigest()
+                    exp = now_ts + 600000
+                    via = _otp_send_email(email, raw_code)
+                    if not via:
+                        self._json(503, {
+                            "success": False,
+                            "error": "Invio email non riuscito. Controlla la casella e riprova: il codice arriva solo via posta elettronica.",
+                            "email": email,
+                        })
+                        return True
+                    history.append(now_ts)
+                    rec = {
+                        "expiresAt": exp,
+                        "attempts": 0,
+                        "sendHistory": history,
+                        "via": via,
+                    }
+                    if via == "local":
+                        rec["codeHash"] = h
+                    otp_store[email] = rec
+                    otp_store_file.parent.mkdir(parents=True, exist_ok=True)
+                    otp_store_file.write_text(json.dumps(otp_store, indent=2), encoding="utf-8")
                     self._json(200, {
                         "success": True,
-                        "message": "Codice inviato via email. Aprilo nella casella e inserisci le 4 cifre.",
+                        "message": "Codice inviato via email. Aprilo nella casella e inserisci le 6 cifre.",
                         "email": email,
-                        "challenge": challenge,
+                        "digits": 6,
                         "expiresIn": 600,
                     })
                     return True
 
                 if action == "verify":
                     code = str(body.get("code") or (otp_qs.get("code") or [""])[0] or "").strip()
-                    challenge = str(body.get("challenge") or (otp_qs.get("challenge") or [""])[0] or "").strip()
-                    ok, err = _otp_check_challenge(email, code, challenge)
-                    if ok:
-                        otp_store.pop(email, None)
-                        try:
-                            otp_store_file.write_text(json.dumps(otp_store, indent=2), encoding="utf-8")
-                        except Exception:
-                            pass
-                        self._json(200, {
-                            "success": True,
-                            "verified": True,
-                            "email": email,
-                            "verifiedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-                        })
-                        return True
-                    if err and ("errato" in err or "scaduto" in err):
-                        self._json(400, {"success": False, "error": err})
+                    if not code or not code.isdigit() or len(code) not in (4, 6, 8):
+                        self._json(400, {"success": False, "error": "Inserisci il codice numerico ricevuto via email."})
                         return True
                     rec = otp_store.get(email)
-                    if not rec or not rec.get("codeHash"):
-                        self._json(400, {"success": False, "error": err or "Nessun codice attivo per questa email"})
+                    if not rec:
+                        self._json(400, {"success": False, "error": "Nessun codice attivo per questa email. Premi Invia codice."})
                         return True
                     if now_ts > rec.get("expiresAt", 0):
                         otp_store.pop(email, None)
                         otp_store_file.write_text(json.dumps(otp_store, indent=2), encoding="utf-8")
-                        self._json(400, {"success": False, "error": "Codice OTP scaduto"})
+                        self._json(400, {"success": False, "error": "Codice OTP scaduto. Richiedi un nuovo codice."})
                         return True
-                    
-                    secret = os.environ.get("OTP_SECRET", "elisee-scout-otp-secret-salt-2026")
-                    provided_h = hmac.new(secret.encode(), f"{email}:{code}".encode(), hashlib.sha256).hexdigest()
-                    if provided_h != rec.get("codeHash"):
-                        rec["attempts"] = rec.get("attempts", 0) + 1
-                        if rec["attempts"] > 5:
-                            otp_store.pop(email, None)
+                    rec["attempts"] = rec.get("attempts", 0) + 1
+                    if rec["attempts"] > 5:
+                        otp_store.pop(email, None)
+                        otp_store_file.write_text(json.dumps(otp_store, indent=2), encoding="utf-8")
+                        self._json(429, {"success": False, "error": "Troppi tentativi. Richiedi un nuovo codice."})
+                        return True
+                    ok = False
+                    if rec.get("via") == "supabase" or not rec.get("codeHash"):
+                        ok = _otp_verify_supabase(email, code)
+                    if not ok and rec.get("codeHash"):
+                        provided_h = hmac.new(_otp_secret().encode(), f"{email}:{code}".encode(), hashlib.sha256).hexdigest()
+                        stored = str(rec.get("codeHash") or "")
+                        ok = len(provided_h) == len(stored) and hmac.compare_digest(provided_h, stored)
+                    if not ok:
                         otp_store_file.write_text(json.dumps(otp_store, indent=2), encoding="utf-8")
                         self._json(400, {"success": False, "error": f"Codice OTP errato. Tentativi rimasti: {max(0, 5 - rec['attempts'])}"})
                         return True
-                    
                     otp_store.pop(email, None)
                     otp_store_file.write_text(json.dumps(otp_store, indent=2), encoding="utf-8")
-                    self._json(200, {"success": True, "verified": True, "email": email, "verifiedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())})
+                    self._json(200, {
+                        "success": True,
+                        "verified": True,
+                        "email": email,
+                        "verifiedAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                    })
                     return True
+                self._json(400, {"success": False, "error": "Azione non supportata (action=send o action=verify)"})
+                return True
 
             if path in ("/api/auth-admin", "/api/auth/admin") or path.startswith("/api/auth-admin"):
                 admin_secret = os.environ.get("ADMIN_SECRET", "Iemmello9")

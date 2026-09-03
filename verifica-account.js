@@ -467,7 +467,6 @@
     document.querySelectorAll('.es-otp-modal-backdrop').forEach(function (el) { el.remove(); });
   }
 
-  var otpChallenge = '';
   var otpBound = false;
 
   function otpEmailOf(u) {
@@ -502,29 +501,37 @@
   function sendOtpRequest() {
     var userEmail = otpEmailOf();
     if (!userEmail) {
-      otpFeedback('Nessun indirizzo email associato all\'account', true);
+      otpFeedback('Nessun indirizzo email associato all\'account. Esci e accedi di nuovo.', true);
       return;
     }
     var btnSend = document.getElementById('btn-trigger-otp');
     if (btnSend) btnSend.disabled = true;
     otpDigits().forEach(function (inp) { inp.value = ''; });
-    otpFeedback('Invio codice in corso all\'indirizzo ' + userEmail + '...', false);
+    otpFeedback('Invio del codice a ' + userEmail + ' in corso…', false);
 
     fetch('/api/auth-otp?action=send', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: userEmail })
+      body: JSON.stringify({ email: userEmail, action: 'send' })
     })
     .then(function (res) { return res.json().then(function (data) { data._http = res.status; return data; }); })
     .then(function (data) {
-      if (btnSend) btnSend.disabled = false;
       otpDigits().forEach(function (inp) { inp.value = ''; });
       if (data.success) {
-        otpChallenge = data.challenge || '';
-        otpFeedback('Ti abbiamo inviato un codice a 4 cifre su ' + userEmail + '. Aprilo nella casella e inseriscilo qui.', false);
+        otpFeedback('Ti abbiamo inviato un codice a 6 cifre su ' + userEmail + '. Aprilo nella casella (anche Spam) e inseriscilo qui. Non è un SMS.', false);
         var first = document.getElementById('otp-d-0');
         if (first) first.focus();
+        var left = 45;
+        var tick = setInterval(function () {
+          left -= 1;
+          if (btnSend) btnSend.textContent = left > 0 ? ('Reinvia tra ' + left + 's') : 'Invia codice';
+          if (left <= 0) {
+            clearInterval(tick);
+            if (btnSend) btnSend.disabled = false;
+          }
+        }, 1000);
       } else {
+        if (btnSend) btnSend.disabled = false;
         otpFeedback(data.error || 'Errore durante l\'invio del codice OTP', true);
       }
     })
@@ -538,8 +545,8 @@
     var userEmail = otpEmailOf();
     var inputs = otpDigits();
     var entered = Array.prototype.map.call(inputs, function (i) { return i.value; }).join('');
-    if (entered.length !== 4) {
-      otpFeedback('Inserisci tutte le 4 cifre del codice OTP', true);
+    if (entered.length < 6) {
+      otpFeedback('Inserisci tutte le 6 cifre del codice ricevuto via email', true);
       return;
     }
     var btnSubmit = document.getElementById('btn-submit-otp');
@@ -550,7 +557,7 @@
     fetch('/api/auth-otp?action=verify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: userEmail, code: entered, challenge: otpChallenge })
+      body: JSON.stringify({ email: userEmail, code: entered, action: 'verify' })
     })
     .then(function (res) { return res.json(); })
     .then(function (data) {
@@ -627,17 +634,23 @@
       existing = document.createElement('div');
       existing.id = 'es-otp-bottom-banner';
       existing.className = 'es-otp-bottom-banner';
+      var mail = otpEmailOf(u);
+      var gmailLink = /@gmail\.com$/.test(mail)
+        ? ' <a href="https://mail.google.com/mail/u/0/#search/Elisee+Scout" target="_blank" rel="noopener" class="es-otp-inbox-link">Apri Gmail</a>'
+        : '';
       existing.innerHTML =
         '<div class="es-otp-banner-inner es-otp-banner-flow">' +
           '<div class="es-otp-banner-text">' +
-            '<strong>Email non verificata</strong>' +
-            '<span>Il codice OTP viene inviato al tuo indirizzo email. Non è un SMS.</span>' +
+            '<strong>Verifica email</strong>' +
+            '<span>Invieremo un codice OTP a <b class="es-otp-mail">' + otpEsc(mail || '—') + '</b>. Aprilo nella casella e inseriscilo qui. Non è un SMS.' + gmailLink + '</span>' +
           '</div>' +
-          '<div class="es-otp-inputs-wrap es-otp-inputs-inline">' +
-            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-0" autocomplete="off">' +
-            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-1" autocomplete="off">' +
-            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-2" autocomplete="off">' +
-            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-3" autocomplete="off">' +
+          '<div class="es-otp-inputs-wrap es-otp-inputs-inline" role="group" aria-label="Codice OTP a 6 cifre">' +
+            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-0" autocomplete="one-time-code" aria-label="Cifra 1">' +
+            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-1" autocomplete="off" aria-label="Cifra 2">' +
+            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-2" autocomplete="off" aria-label="Cifra 3">' +
+            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-3" autocomplete="off" aria-label="Cifra 4">' +
+            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-4" autocomplete="off" aria-label="Cifra 5">' +
+            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-5" autocomplete="off" aria-label="Cifra 6">' +
           '</div>' +
           '<div class="es-otp-banner-actions">' +
             '<button type="button" class="es-otp-btn-send" id="btn-trigger-otp">Invia codice</button>' +

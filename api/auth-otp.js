@@ -1,25 +1,21 @@
 /**
- * ELISEE SCOUT — Vercel Serverless Function: Email OTP Verification
- * Endpoint: /api/auth-otp?action=send | /api/auth-otp?action=verify
- * 
- * Gestione sicura del codice OTP per la verifica email:
- * - Generazione crittografica lato server (4 cifre)
- * - Rate limiting su invii (max 3 invii per email ogni 10 min)
- * - Rate limiting su verifiche (max 5 tentativi falliti poi invalidazione)
- * - Scadenza codice 10 minuti
- * - Nessun fallback hardcoded (0000/1234 categoricamente vietati)
+ * ELISEE SCOUT — Email OTP
+ * /api/auth-otp?action=send | /api/auth-otp?action=verify
+ *
+ * Flusso classico: il codice nasce sul server, arriva SOLO via email,
+ * l'utente lo digita a mano. Mai in risposta HTTP, mai in auto-fill.
  */
-
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-const OTP_STORE_FILE = process.env.VERCEL 
-  ? '/tmp/elisee-otp-store.json' 
+const OTP_STORE_FILE = process.env.VERCEL
+  ? '/tmp/elisee-otp-store.json'
   : path.join(process.cwd(), 'data', 'auth', 'otp-store.json');
 
-// In-memory fallback se il filesystem è temporaneamente indisponibile
 const memoryStore = {};
+const SUPABASE_URL = (process.env.SUPABASE_URL || 'https://uautnlmnpxgbajtucuko.supabase.co').replace(/\/$/, '');
+const SUPABASE_KEY = process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_KEY || 'sb_publishable_1e-KMVmQHAf9GduUTMKn8Q_9ibW1BK_';
 
 function getStore() {
   try {
@@ -27,7 +23,7 @@ function getStore() {
       return JSON.parse(fs.readFileSync(OTP_STORE_FILE, 'utf8')) || {};
     }
   } catch (_) {}
-  return memoryStore;
+  return Object.assign({}, memoryStore);
 }
 
 function saveStore(store) {
@@ -41,49 +37,80 @@ function saveStore(store) {
 
 function hashOtp(email, code) {
   const secret = process.env.OTP_SECRET || 'elisee-scout-otp-secret-salt-2026';
-  return crypto.createHmac('sha256', secret).update(email.toLowerCase() + ':' + code).digest('hex');
+  return crypto.createHmac('sha256', secret).update(String(email).toLowerCase() + ':' + code).digest('hex');
 }
 
-function otpSecret() {
-  return process.env.OTP_SECRET || 'elisee-scout-otp-secret-salt-2026';
+function mailBodies(code) {
+  const subject = 'Il tuo codice di verifica Elisee Scout';
+  const text =
+    'Il tuo codice OTP di verifica è: ' + code + '\n\n' +
+    'Valido 10 minuti. Aprilo in questa email e inseriscilo nella barra di verifica su Elisee Scout.\n' +
+    'Non condividere il codice con nessuno.\n\n' +
+    'Se non hai richiesto questo codice, ignora il messaggio.';
+  const html =
+    '<div style="font-family:Arial,sans-serif;max-width:480px;margin:0 auto;color:#0f172a">' +
+    '<p>Ciao,</p><p>Il tuo codice OTP di verifica per <strong>Elisee Scout</strong> è:</p>' +
+    '<p style="font-size:32px;letter-spacing:10px;font-weight:800;color:#0284c7">' + code + '</p>' +
+    '<p>Valido 10 minuti. Inseriscilo nella barra in basso sul sito. Non è un SMS: arriva solo via email.</p>' +
+    '<p style="color:#64748b;font-size:13px">Se non hai richiesto questo codice, ignora il messaggio.</p></div>';
+  return { subject, text, html };
 }
 
-function toB64Url(str) {
-  return Buffer.from(str, 'utf8').toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-}
-
-function fromB64Url(s) {
-  const t = String(s || '').replace(/-/g, '+').replace(/_/g, '/');
-  const pad = t.length % 4 === 0 ? '' : '='.repeat(4 - (t.length % 4));
-  return Buffer.from(t + pad, 'base64').toString('utf8');
-}
-
-function makeChallenge(email, code, exp) {
-  const h = crypto.createHmac('sha256', otpSecret()).update(email + ':' + code + ':' + exp).digest('hex');
-  return toB64Url(JSON.stringify({ e: email, x: exp, h: h }));
-}
-
-function checkChallenge(email, code, challenge) {
-  if (!challenge) return { ok: false, error: 'Challenge OTP assente. Richiedi un nuovo codice.' };
-  let data;
+async function sendResend(email, bodies) {
+  const key = (process.env.RESEND_API_KEY || '').trim();
+  if (!key) return false;
   try {
-    data = JSON.parse(fromB64Url(challenge));
+    const r = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: 'Bearer ' + key, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: process.env.RESEND_FROM || 'Elisee Scout <verifica@elisee-scout.vercel.app>',
+        to: email,
+        subject: bodies.subject,
+        text: bodies.text,
+        html: bodies.html
+      })
+    });
+    return !!(r && r.ok);
   } catch (_) {
-    return { ok: false, error: 'Challenge OTP non valido. Richiedi un nuovo codice.' };
+    return false;
   }
-  if (String(data.e || '').toLowerCase() !== email) {
-    return { ok: false, error: 'Challenge OTP non valido. Richiedi un nuovo codice.' };
+}
+
+async function sendSupabaseOtp(email) {
+  if (!SUPABASE_URL || !SUPABASE_KEY) return false;
+  try {
+    const r = await fetch(SUPABASE_URL + '/auth/v1/otp', {
+      method: 'POST',
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email: email, create_user: true })
+    });
+    return !!(r && r.ok);
+  } catch (_) {
+    return false;
   }
-  const exp = Number(data.x || 0);
-  if (!exp || Date.now() > exp) {
-    return { ok: false, error: 'Il codice OTP è scaduto. Richiedi un nuovo codice di verifica.' };
+}
+
+async function verifySupabaseOtp(email, code) {
+  if (!SUPABASE_URL || !SUPABASE_KEY) return false;
+  try {
+    const r = await fetch(SUPABASE_URL + '/auth/v1/verify', {
+      method: 'POST',
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ type: 'email', email: email, token: code })
+    });
+    return !!(r && r.ok);
+  } catch (_) {
+    return false;
   }
-  const expected = crypto.createHmac('sha256', otpSecret()).update(email + ':' + code + ':' + exp).digest('hex');
-  const given = String(data.h || '');
-  if (expected.length !== given.length || !crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(given))) {
-    return { ok: false, error: 'Codice OTP errato.' };
-  }
-  return { ok: true };
 }
 
 function sendJson(res, statusCode, data) {
@@ -98,9 +125,9 @@ function sendJson(res, statusCode, data) {
 function readBody(req) {
   return new Promise((resolve) => {
     let raw = '';
-    req.on('data', (c) => { 
-      raw += c; 
-      if (raw.length > 1e5) req.destroy(); 
+    req.on('data', (c) => {
+      raw += c;
+      if (raw.length > 1e5) req.destroy();
     });
     req.on('end', () => {
       try { resolve(JSON.parse(raw || '{}')); } catch (e) { resolve({}); }
@@ -125,187 +152,98 @@ module.exports = async function handler(req, res) {
 
   const now = Date.now();
   const store = getStore();
-
-  // Pulizia vecchi record (> 30 minuti)
   Object.keys(store).forEach((k) => {
-    if (store[k].expiresAt && store[k].expiresAt < now - 1800000) {
-      delete store[k];
-    }
+    if (store[k].expiresAt && store[k].expiresAt < now - 1800000) delete store[k];
   });
 
-  // --- AZIONE: INVIO OTP ---
   if (action === 'send') {
     const existing = store[email] || {};
-
-    // Rate limiting: max 3 richieste ogni 10 minuti
-    if (existing.sendHistory) {
-      const recentSends = existing.sendHistory.filter((t) => now - t < 600000);
-      if (recentSends.length >= 3) {
-        return sendJson(res, 429, { 
-          success: false, 
-          error: 'Troppe richieste di invio OTP. Attendi qualche minuto prima di riprovare.' 
-        });
-      }
-      existing.sendHistory = recentSends;
-    } else {
-      existing.sendHistory = [];
+    const recentSends = (existing.sendHistory || []).filter((t) => now - t < 600000);
+    if (recentSends.length >= 3) {
+      return sendJson(res, 429, {
+        success: false,
+        error: 'Troppe richieste. Attendi qualche minuto e riprova.',
+        email: email
+      });
     }
-
-    // Generazione codice sicuro a 4 cifre (1000 - 9999)
-    const rawCode = crypto.randomInt(1000, 10000).toString();
-    const codeHash = hashOtp(email, rawCode);
-
-    existing.codeHash = codeHash;
-    existing.expiresAt = now + 600000; // 10 minuti di validità
-    existing.attempts = 0;
-    existing.sendHistory.push(now);
-    store[email] = existing;
-    saveStore(store);
-
-    const exp = now + 600000;
-    const challenge = makeChallenge(email, rawCode, exp);
-
-    let emailed = false;
-    const mailSubject = 'Il tuo codice di verifica Elisee Scout';
-    const mailText = `Il tuo codice OTP di verifica è: ${rawCode}.\n\nValido 10 minuti. Inseriscilo nella barra di verifica su Elisee Scout.\n\nSe non hai richiesto questo codice, ignora il messaggio.`;
-    if (process.env.RESEND_API_KEY) {
-      try {
-        const mailRes = await fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            from: process.env.RESEND_FROM || 'Elisee Scout <verifica@elisee-scout.vercel.app>',
-            to: email,
-            subject: mailSubject,
-            text: mailText
-          })
-        });
-        emailed = !!(mailRes && mailRes.ok);
-      } catch (err) {}
-    }
-    if (!emailed) {
-      try {
-        const mailRes = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(email), {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-            _subject: mailSubject,
-            message: mailText,
-            _template: 'box',
-            _captcha: 'false'
-          })
-        });
-        emailed = !!(mailRes && mailRes.ok);
-      } catch (err) {}
-    }
-
-    if (!emailed) {
+    const rawCode = String(crypto.randomInt(100000, 1000000)).padStart(6, '0');
+    const bodies = mailBodies(rawCode);
+    let via = '';
+    if (await sendResend(email, bodies)) via = 'local';
+    else if (await sendSupabaseOtp(email)) via = 'supabase';
+    if (!via) {
       return sendJson(res, 503, {
         success: false,
         error: 'Invio email non riuscito. Riprova tra poco: il codice arriva solo via posta elettronica.',
         email: email
       });
     }
+    const rec = {
+      expiresAt: now + 600000,
+      attempts: 0,
+      sendHistory: recentSends.concat([now]),
+      via: via
+    };
+    if (via === 'local') rec.codeHash = hashOtp(email, rawCode);
+    store[email] = rec;
+    saveStore(store);
     return sendJson(res, 200, {
       success: true,
-      message: 'Codice inviato via email. Aprilo nella casella e inserisci le 4 cifre.',
+      message: 'Codice inviato via email. Aprilo nella casella e inserisci le 6 cifre.',
       email: email,
-      expiresIn: 600,
-      challenge: challenge
+      digits: 6,
+      expiresIn: 600
     });
   }
 
-  // --- AZIONE: VERIFICA OTP ---
   if (action === 'verify') {
     const code = String(body.code || query.code || '').trim();
-    if (!code || code.length !== 4 || !/^\d{4}$/.test(code)) {
-      return sendJson(res, 400, { success: false, error: 'Il codice OTP deve essere composto da 4 cifre numeriche' });
+    if (!code || !/^\d{4,8}$/.test(code)) {
+      return sendJson(res, 400, { success: false, error: 'Inserisci il codice numerico ricevuto via email.' });
     }
-
-    const challenge = String(body.challenge || query.challenge || '').trim();
-    if (challenge) {
-      const challenged = checkChallenge(email, code, challenge);
-      if (challenged.ok) {
-        const proofSecret = process.env.OTP_SECRET || 'elisee-scout-otp-secret-salt-2026';
-        const proof = crypto.createHmac('sha256', proofSecret).update(email + ':verified:' + now).digest('hex');
-        try { delete store[email]; saveStore(store); } catch (_) {}
-        return sendJson(res, 200, {
-          success: true,
-          verified: true,
-          email: email,
-          verifiedAt: new Date(now).toISOString(),
-          proof: proof
-        });
-      }
-      if (challenged.error && /errato|scaduto/i.test(challenged.error)) {
-        return sendJson(res, 400, { success: false, error: challenged.error });
-      }
-    }
-
     const record = store[email];
-    if (!record || !record.codeHash || !record.expiresAt) {
-      return sendJson(res, 400, { 
-        success: false, 
-        error: 'Nessun codice OTP attivo per questa email. Richiedi un nuovo codice.' 
-      });
+    if (!record) {
+      return sendJson(res, 400, { success: false, error: 'Nessun codice attivo per questa email. Premi Invia codice.' });
     }
-
-    // Verifica scadenza
     if (now > record.expiresAt) {
       delete store[email];
       saveStore(store);
-      return sendJson(res, 400, { 
-        success: false, 
-        error: 'Il codice OTP è scaduto. Richiedi un nuovo codice di verifica.' 
-      });
+      return sendJson(res, 400, { success: false, error: 'Il codice OTP è scaduto. Richiedi un nuovo codice.' });
     }
-
-    // Rate limiting tentativi errati (max 5 tentativi)
     record.attempts = (record.attempts || 0) + 1;
     if (record.attempts > 5) {
       delete store[email];
       saveStore(store);
-      return sendJson(res, 429, { 
-        success: false, 
-        error: 'Numero massimo di tentativi superato. Il codice è stato annullato per motivi di sicurezza.' 
-      });
+      return sendJson(res, 429, { success: false, error: 'Troppi tentativi. Richiedi un nuovo codice.' });
     }
-
-    // Confronto crittografico dell'hash
-    const providedHash = hashOtp(email, code);
-    const isValid = crypto.timingSafeEqual(Buffer.from(providedHash), Buffer.from(record.codeHash));
-
-    if (!isValid) {
+    let ok = false;
+    if (record.via === 'supabase' || !record.codeHash) {
+      ok = await verifySupabaseOtp(email, code);
+    }
+    if (!ok && record.codeHash) {
+      const provided = hashOtp(email, code);
+      try {
+        ok = crypto.timingSafeEqual(Buffer.from(provided), Buffer.from(record.codeHash));
+      } catch (_) {
+        ok = false;
+      }
+    }
+    if (!ok) {
       saveStore(store);
-      const remaining = 5 - record.attempts;
-      return sendJson(res, 400, { 
-        success: false, 
-        error: `Codice OTP errato. Tentativi rimasti: ${remaining}` 
+      return sendJson(res, 400, {
+        success: false,
+        error: 'Codice OTP errato. Tentativi rimasti: ' + Math.max(0, 5 - record.attempts)
       });
     }
-
-    // Codice corretto: rimuovi il record per evitare riutilizzo
     delete store[email];
     saveStore(store);
-
-    // Genera token di avvenuta verifica firmato
-    const proofSecret = process.env.OTP_SECRET || 'elisee-scout-otp-secret-salt-2026';
-    const proof = crypto.createHmac('sha256', proofSecret).update(email + ':verified:' + now).digest('hex');
-
     return sendJson(res, 200, {
       success: true,
       verified: true,
       email: email,
-      verifiedAt: new Date(now).toISOString(),
-      proof: proof
+      verifiedAt: new Date(now).toISOString()
     });
   }
 
-  return sendJson(res, 400, { success: false, error: 'Azione non supportata (utilizzare action=send o action=verify)' });
+  return sendJson(res, 400, { success: false, error: 'Azione non supportata (action=send o action=verify)' });
 };
