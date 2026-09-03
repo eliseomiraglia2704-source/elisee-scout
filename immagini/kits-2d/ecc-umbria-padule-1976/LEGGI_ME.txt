@@ -1,0 +1,5 @@
+PADULE 1976
+ECCELLENZA · UMBRIA
+
+Inserisci qui i PNG delle divise (home.png, away.png, third.png, ...).
+Poi rilancia _sync_catalog_kits.py per aggiornare il catalogo.

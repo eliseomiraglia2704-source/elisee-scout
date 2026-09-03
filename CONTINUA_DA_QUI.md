@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-03**
-Ultimo fatto: **Kit senza categorie** — Tolti i tab Partita/Portiere/Pre-match/Allenamento. Le divise scorrono tutte, nell’ordine della cartella squadra. Cache `KITFLAT1`.
+Ultimo fatto: **Cartelle kit Serie D ed Eccellenza** — Create le cartelle mancanti in `immagini/kits-2d/` (634 squadre). Dentro c’è `LEGGI_ME.txt` con nome e campionato, pronto per i PNG.
 Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -354,6 +354,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-03** — Serie D + Eccellenza: create 634 cartelle kit 2D mancanti (`immagini/kits-2d/<id-squadra>/` + `LEGGI_ME.txt`). Script `_ensure_d_ecc_kit_folders.py`. Dopo i PNG: `_sync_catalog_kits.py`.
 
 - **2026-09-03** — Selettore squadre: le divise non sono più suddivise in Partita / Portiere / Pre-match / Allenamento. Elenco unico, ordine `team.kits` come in cartella. Cache `KITFLAT1`.
 
