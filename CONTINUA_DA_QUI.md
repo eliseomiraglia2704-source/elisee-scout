@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-03**
-Ultimo fatto: **Email OTP Elisee Scout** — Niente più magic link inglese di Supabase Auth. Arriva un’email italiana con codice a 6 cifre, mittente Elisee Scout. Cache `OTPMAIL3`.
+Ultimo fatto: **Email OTP stile Zoom** — Stesso layout dell’esempio: bianco, saluto, codice grande con spazi, riquadro Date/Browser/OS/Location, chiusura The Elisee Scout Team. Cache `OTPMAIL4`.
 Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -354,6 +354,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-03** — Email OTP replicata sull’esempio Zoom: sfondo bianco, “Hi Nome,”, paragrafo unusual login, codice 6 cifre con spazi, “The code will be expired in 10 minutes.”, box Date/Browser/Operating System/Location, link here, “The Elisee Scout Team”. Cache `OTPMAIL4`.
 
 - **2026-09-03** — Email OTP: tolto il fallback Supabase Auth (inglese, “Your sign-in link”, pulsante Sign in, powered by Supabase). Invio solo Resend/SMTP con template italiano Elisee Scout, codice a 6 cifre, niente link di accesso. Cache `OTPMAIL3`.
 

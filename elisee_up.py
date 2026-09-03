@@ -75,31 +75,168 @@ def _otp_supabase_cfg() -> tuple[str, str]:
     return url.rstrip("/"), key
 
 
-def _otp_mail_bodies(code: str) -> tuple[str, str, str]:
-    digits = "".join(ch for ch in str(code or "") if ch.isdigit())[:8]
-    subject = "Codice di verifica Elisee Scout"
-    text = (
-        f"ELISEE SCOUT\n\n"
-        f"Il tuo codice di verifica è: {digits}\n\n"
-        "Valido 10 minuti. Aprilo in questa email e inseriscilo nella barra in basso sul sito.\n"
-        "Non è un link di accesso e non è un SMS.\n"
-        "Non condividere il codice con nessuno.\n\n"
-        "Se non hai richiesto questo codice, ignora il messaggio."
+def _otp_esc(value: str) -> str:
+    return (
+        str(value or "")
+        .replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
     )
+
+
+def _otp_parse_ua(ua: str) -> tuple[str, str]:
+    low = str(ua or "").lower()
+    browser = "Sconosciuto"
+    if "edg/" in low or "edg " in low:
+        browser = "Edge"
+    elif "opr/" in low or "opera" in low:
+        browser = "Opera"
+    elif "chrome/" in low and "chromium" not in low:
+        browser = "Chrome"
+    elif "firefox/" in low or "fxios" in low:
+        browser = "Firefox"
+    elif "safari/" in low:
+        browser = "Safari"
+    os_name = "Sconosciuto"
+    if "windows" in low:
+        os_name = "Windows"
+    elif "android" in low:
+        os_name = "Android"
+    elif "iphone" in low or "ipad" in low or "ios" in low:
+        os_name = "iOS"
+    elif "mac os" in low or "macintosh" in low:
+        os_name = "macOS"
+    elif "linux" in low:
+        os_name = "Linux"
+    return browser, os_name
+
+
+def _otp_location(tz: str) -> str:
+    name = str(tz or "").strip()
+    known = {
+        "Europe/Rome": "Rome (IT)",
+        "Europe/Paris": "Paris (FR)",
+        "Europe/Berlin": "Berlin (DE)",
+        "Europe/Madrid": "Madrid (ES)",
+        "Europe/London": "London (GB)",
+        "Europe/Amsterdam": "Amsterdam (NL)",
+        "America/New_York": "New York (US)",
+        "America/Los_Angeles": "Los Angeles (US)",
+        "America/Chicago": "Chicago (US)",
+    }
+    if name in known:
+        return known[name]
+    if "/" in name:
+        return name.split("/")[-1].replace("_", " ")
+    return "Non disponibile"
+
+
+def _otp_when(tz: str) -> str:
+    try:
+        from datetime import datetime
+        from zoneinfo import ZoneInfo
+        zone = ZoneInfo(tz) if tz else ZoneInfo("Europe/Rome")
+        now = datetime.now(zone)
+    except Exception:
+        from datetime import datetime
+        now = datetime.now()
+    hour12 = now.hour % 12 or 12
+    ampm = "AM" if now.hour < 12 else "PM"
+    return f"{now.month:02d}/{now.day:02d}/{now.year} {hour12:02d}:{now.minute:02d}:{now.second:02d} {ampm}"
+
+
+def _otp_lookup_nome(email: str) -> str:
+    try:
+        data = json.loads((ROOT / "data" / "auth" / "users.json").read_text(encoding="utf-8"))
+        users = data.get("users", data) if isinstance(data, dict) else data
+        em = str(email or "").strip().lower()
+        for u in users or []:
+            if str(u.get("email") or "").strip().lower() == em:
+                return str(u.get("nome") or "").strip()
+    except Exception:
+        pass
+    return ""
+
+
+def _otp_detail_row(label: str, value: str, first: bool = False, last: bool = False) -> str:
+    pt = "16px" if first else "7px"
+    pb = "16px" if last else "7px"
+    return (
+        "<tr>"
+        f'<td width="170" valign="top" style="padding:{pt} 20px {pb} 20px;font-family:Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:#8B8B98;">{_otp_esc(label)}</td>'
+        f'<td valign="top" style="padding:{pt} 20px {pb} 20px;font-family:Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:#232333;">{_otp_esc(value)}</td>'
+        "</tr>"
+    )
+
+
+def _otp_mail_bodies(code: str, meta: dict | None = None) -> tuple[str, str, str]:
+    digits = "".join(ch for ch in str(code or "") if ch.isdigit())[:8]
+    spaced = " ".join(list(digits)) or digits
+    info = meta if isinstance(meta, dict) else {}
+    nome = str(info.get("nome") or "").strip()
+    ua = str(info.get("ua") or "")
+    tz = str(info.get("tz") or "")
+    browser, os_name = _otp_parse_ua(ua)
+    when = _otp_when(tz)
+    place = _otp_location(tz)
+    hello = f"Hi {nome}," if nome else "Hi,"
+    subject = "Your Elisee Scout verification code"
+    text = (
+        f"{hello}\n\n"
+        "We detected an unusual login from a device or location you don't usually use. "
+        "If this was you please input the code below to log into Elisee Scout\n\n"
+        f"{spaced}\n\n"
+        "The code will be expired in 10 minutes.\n\n"
+        "Please review the sign in activity details below:\n"
+        f"Date                 {when}\n"
+        f"Browser              {browser}\n"
+        f"Operating System     {os_name}\n"
+        f"Location             {place}\n\n"
+        "If this wasn't you, please let us know here. We recommend you update your password "
+        "and enable Two-factor authentication to secure your account.\n\n"
+        "Thank you,\n"
+        "The Elisee Scout Team"
+    )
+    support = "mailto:eliseomiraglia2704@gmail.com?subject=Accesso%20non%20autorizzato%20Elisee%20Scout"
     html = (
-        '<!DOCTYPE html><html lang="it"><body style="margin:0;padding:0;background:#0b1220;">'
-        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0b1220;padding:24px 0;">'
-        '<tr><td align="center">'
-        '<table role="presentation" width="560" cellpadding="0" cellspacing="0" style="width:560px;max-width:560px;background:#111827;border:1px solid #1e3a5f;border-radius:16px;">'
-        '<tr><td style="background:#0284c7;padding:20px 28px;font-family:Arial,Helvetica,sans-serif;color:#ffffff;font-size:13px;font-weight:800;letter-spacing:0.16em;">ELISEE SCOUT</td></tr>'
-        '<tr><td style="padding:28px 28px 8px;font-family:Arial,Helvetica,sans-serif;color:#e2e8f0;font-size:22px;font-weight:800;">Codice di verifica</td></tr>'
-        '<tr><td style="padding:0 28px 20px;font-family:Arial,Helvetica,sans-serif;color:#94a3b8;font-size:15px;line-height:1.55;">Usa questo codice a 6 cifre nella barra in basso sul sito. Non è un link di accesso e non è un SMS.</td></tr>'
-        '<tr><td align="center" style="padding:8px 28px 24px;">'
-        '<table role="presentation" cellpadding="0" cellspacing="0" style="background:#0b1220;border:1px solid #38bdf8;border-radius:14px;">'
-        f'<tr><td style="padding:18px 32px;font-family:Consolas,\'Courier New\',monospace;font-size:34px;letter-spacing:10px;font-weight:800;color:#38bdf8;">{digits}</td></tr>'
-        "</table></td></tr>"
-        '<tr><td style="padding:0 28px 28px;font-family:Arial,Helvetica,sans-serif;color:#64748b;font-size:13px;line-height:1.5;">Valido 10 minuti. Non condividere il codice con nessuno. Se non hai richiesto questa verifica, ignora l\'email.</td></tr>'
-        '<tr><td style="padding:14px 28px;border-top:1px solid #1e3a5f;font-family:Arial,Helvetica,sans-serif;color:#475569;font-size:11px;">Elisee Scout · verifica account</td></tr>'
+        '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">'
+        '<meta name="viewport" content="width=device-width,initial-scale=1">'
+        f'<title>{_otp_esc(subject)}</title></head>'
+        '<body style="margin:0;padding:0;background:#ffffff;">'
+        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#ffffff;">'
+        "<tr><td>"
+        '<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;background:#ffffff;">'
+        '<tr><td style="padding:28px 32px 8px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">'
+        f"{_otp_esc(hello)}"
+        "</td></tr>"
+        '<tr><td style="padding:12px 32px 8px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">'
+        "We detected an unusual login from a device or location you don't usually use. "
+        "If this was you please input the code below to log into Elisee Scout"
+        "</td></tr>"
+        '<tr><td style="padding:20px 32px 8px;font-family:Helvetica,Arial,sans-serif;font-size:32px;line-height:40px;font-weight:700;letter-spacing:6px;color:#000000;">'
+        f"{_otp_esc(spaced)}"
+        "</td></tr>"
+        '<tr><td style="padding:12px 32px 8px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">'
+        "The code will be expired in 10 minutes."
+        "</td></tr>"
+        '<tr><td style="padding:16px 32px 10px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">'
+        "Please review the sign in activity details below:"
+        "</td></tr>"
+        '<tr><td style="padding:4px 32px 18px;">'
+        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;background:#F4F4F8;border-radius:8px;">'
+        + _otp_detail_row("Date", when, first=True)
+        + _otp_detail_row("Browser", browser)
+        + _otp_detail_row("Operating System", os_name)
+        + _otp_detail_row("Location", place, last=True)
+        + "</table></td></tr>"
+        '<tr><td style="padding:8px 32px 8px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">'
+        "If this wasn't you, please let us know "
+        f'<a href="{support}" style="color:#0E71EB;text-decoration:underline;">here</a>. '
+        "We recommend you update your password and enable Two-factor authentication to secure your account."
+        "</td></tr>"
+        '<tr><td style="padding:20px 32px 4px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">Thank you,</td></tr>'
+        '<tr><td style="padding:0 32px 36px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">The Elisee Scout Team</td></tr>'
         "</table></td></tr></table></body></html>"
     )
     return subject, text, html
@@ -275,9 +412,12 @@ def _otp_verify_supabase(email: str, code: str) -> bool:
         return False
 
 
-def _otp_send_email(to_email: str, code: str) -> tuple[str, str]:
+def _otp_send_email(to_email: str, code: str, meta: dict | None = None) -> tuple[str, str]:
     """Invia l'OTP via email. Ritorna (via, errore). via: 'local' | ''."""
-    subject, text, html = _otp_mail_bodies(code)
+    info = dict(meta or {})
+    if not str(info.get("nome") or "").strip():
+        info["nome"] = _otp_lookup_nome(to_email)
+    subject, text, html = _otp_mail_bodies(code, info)
     if _otp_send_resend(to_email, subject, text, html):
         return "local", ""
     if _otp_send_smtp(to_email, subject, text, html):
@@ -675,7 +815,11 @@ class Handler(SimpleHTTPRequestHandler):
                     secret = _otp_secret()
                     h = hmac.new(secret.encode(), f"{email}:{raw_code}".encode(), hashlib.sha256).hexdigest()
                     exp = now_ts + 600000
-                    via, send_err = _otp_send_email(email, raw_code)
+                    via, send_err = _otp_send_email(email, raw_code, {
+                        "nome": str(body.get("nome") or ""),
+                        "ua": str(body.get("ua") or self.headers.get("User-Agent") or ""),
+                        "tz": str(body.get("tz") or ""),
+                    })
                     if not via:
                         self._json(503, {
                             "success": False,

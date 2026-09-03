@@ -509,10 +509,19 @@
     otpDigits().forEach(function (inp) { inp.value = ''; });
     otpFeedback('Invio del codice a ' + userEmail + ' in corso…', false);
 
+    var u = user() || {};
+    var tz = '';
+    try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (_) {}
     fetch('/api/auth-otp?action=send', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: userEmail, action: 'send' })
+      body: JSON.stringify({
+        email: userEmail,
+        action: 'send',
+        nome: u.nome || u.firstName || '',
+        ua: navigator.userAgent || '',
+        tz: tz
+      })
     })
     .then(function (res) { return res.json().then(function (data) { data._http = res.status; return data; }); })
     .then(function (data) {
@@ -627,7 +636,7 @@
       existing.className = 'es-otp-bottom-banner';
       var mail = otpEmailOf(u);
       var gmailLink = /@gmail\.com$/.test(mail)
-        ? ' <a href="https://mail.google.com/mail/u/0/#search/subject%3A%22Codice+di+verifica+Elisee+Scout%22" target="_blank" rel="noopener" class="es-otp-inbox-link">Apri Gmail</a>'
+        ? ' <a href="https://mail.google.com/mail/u/0/#search/subject%3A%22Your+Elisee+Scout+verification+code%22" target="_blank" rel="noopener" class="es-otp-inbox-link">Apri Gmail</a>'
         : '';
       existing.innerHTML =
         '<div class="es-otp-banner-inner es-otp-banner-flow">' +

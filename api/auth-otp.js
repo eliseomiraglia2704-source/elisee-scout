@@ -40,30 +40,146 @@ function hashOtp(email, code) {
   return crypto.createHmac('sha256', secret).update(String(email).toLowerCase() + ':' + code).digest('hex');
 }
 
-function mailBodies(code) {
+function esc(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function parseUa(ua) {
+  const low = String(ua || '').toLowerCase();
+  let browser = 'Sconosciuto';
+  if (low.includes('edg/') || low.includes('edg ')) browser = 'Edge';
+  else if (low.includes('opr/') || low.includes('opera')) browser = 'Opera';
+  else if (low.includes('chrome/') && !low.includes('chromium')) browser = 'Chrome';
+  else if (low.includes('firefox/') || low.includes('fxios')) browser = 'Firefox';
+  else if (low.includes('safari/')) browser = 'Safari';
+  let osName = 'Sconosciuto';
+  if (low.includes('windows')) osName = 'Windows';
+  else if (low.includes('android')) osName = 'Android';
+  else if (low.includes('iphone') || low.includes('ipad') || low.includes('ios')) osName = 'iOS';
+  else if (low.includes('mac os') || low.includes('macintosh')) osName = 'macOS';
+  else if (low.includes('linux')) osName = 'Linux';
+  return { browser, osName };
+}
+
+function locationFromTz(tz) {
+  const name = String(tz || '').trim();
+  const known = {
+    'Europe/Rome': 'Rome (IT)',
+    'Europe/Paris': 'Paris (FR)',
+    'Europe/Berlin': 'Berlin (DE)',
+    'Europe/Madrid': 'Madrid (ES)',
+    'Europe/London': 'London (GB)',
+    'Europe/Amsterdam': 'Amsterdam (NL)',
+    'America/New_York': 'New York (US)',
+    'America/Los_Angeles': 'Los Angeles (US)',
+    'America/Chicago': 'Chicago (US)'
+  };
+  if (known[name]) return known[name];
+  if (name.includes('/')) return name.split('/').pop().replace(/_/g, ' ');
+  return 'Non disponibile';
+}
+
+function formatWhen(tz) {
+  try {
+    const now = new Date();
+    const fmt = new Intl.DateTimeFormat('en-US', {
+      timeZone: tz || 'Europe/Rome',
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true
+    });
+    const parts = fmt.formatToParts(now);
+    const get = (t) => (parts.find((p) => p.type === t) || {}).value || '';
+    return get('month') + '/' + get('day') + '/' + get('year') + ' ' + get('hour') + ':' + get('minute') + ':' + get('second') + ' ' + get('dayPeriod');
+  } catch (_) {
+    return new Date().toLocaleString('en-US');
+  }
+}
+
+function detailRow(label, value, first, last) {
+  const pt = first ? '16px' : '7px';
+  const pb = last ? '16px' : '7px';
+  return (
+    '<tr>' +
+    '<td width="170" valign="top" style="padding:' + pt + ' 20px ' + pb + ' 20px;font-family:Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:#8B8B98;">' + esc(label) + '</td>' +
+    '<td valign="top" style="padding:' + pt + ' 20px ' + pb + ' 20px;font-family:Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;color:#232333;">' + esc(value) + '</td>' +
+    '</tr>'
+  );
+}
+
+function mailBodies(code, meta) {
   const digits = String(code || '').replace(/\D/g, '').slice(0, 8);
-  const subject = 'Codice di verifica Elisee Scout';
+  const spaced = digits.split('').join(' ') || digits;
+  const info = meta && typeof meta === 'object' ? meta : {};
+  const nome = String(info.nome || '').trim();
+  const parsed = parseUa(info.ua || '');
+  const tz = String(info.tz || '');
+  const when = formatWhen(tz);
+  const place = locationFromTz(tz);
+  const hello = nome ? ('Hi ' + nome + ',') : 'Hi,';
+  const subject = 'Your Elisee Scout verification code';
   const text =
-    'ELISEE SCOUT\n\n' +
-    'Il tuo codice di verifica è: ' + digits + '\n\n' +
-    'Valido 10 minuti. Aprilo in questa email e inseriscilo nella barra in basso sul sito.\n' +
-    'Non è un link di accesso e non è un SMS.\n' +
-    'Non condividere il codice con nessuno.\n\n' +
-    'Se non hai richiesto questo codice, ignora il messaggio.';
+    hello + '\n\n' +
+    "We detected an unusual login from a device or location you don't usually use. " +
+    'If this was you please input the code below to log into Elisee Scout\n\n' +
+    spaced + '\n\n' +
+    'The code will be expired in 10 minutes.\n\n' +
+    'Please review the sign in activity details below:\n' +
+    'Date                 ' + when + '\n' +
+    'Browser              ' + parsed.browser + '\n' +
+    'Operating System     ' + parsed.osName + '\n' +
+    'Location             ' + place + '\n\n' +
+    "If this wasn't you, please let us know here. We recommend you update your password " +
+    'and enable Two-factor authentication to secure your account.\n\n' +
+    'Thank you,\n' +
+    'The Elisee Scout Team';
+  const support = 'mailto:eliseomiraglia2704@gmail.com?subject=Accesso%20non%20autorizzato%20Elisee%20Scout';
   const html =
-    '<!DOCTYPE html><html lang="it"><body style="margin:0;padding:0;background:#0b1220;">' +
-    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0b1220;padding:24px 0;">' +
-    '<tr><td align="center">' +
-    '<table role="presentation" width="560" cellpadding="0" cellspacing="0" style="width:560px;max-width:560px;background:#111827;border:1px solid #1e3a5f;border-radius:16px;">' +
-    '<tr><td style="background:#0284c7;padding:20px 28px;font-family:Arial,Helvetica,sans-serif;color:#ffffff;font-size:13px;font-weight:800;letter-spacing:0.16em;">ELISEE SCOUT</td></tr>' +
-    '<tr><td style="padding:28px 28px 8px;font-family:Arial,Helvetica,sans-serif;color:#e2e8f0;font-size:22px;font-weight:800;">Codice di verifica</td></tr>' +
-    '<tr><td style="padding:0 28px 20px;font-family:Arial,Helvetica,sans-serif;color:#94a3b8;font-size:15px;line-height:1.55;">Usa questo codice a 6 cifre nella barra in basso sul sito. Non è un link di accesso e non è un SMS.</td></tr>' +
-    '<tr><td align="center" style="padding:8px 28px 24px;">' +
-    '<table role="presentation" cellpadding="0" cellspacing="0" style="background:#0b1220;border:1px solid #38bdf8;border-radius:14px;">' +
-    '<tr><td style="padding:18px 32px;font-family:Consolas,\'Courier New\',monospace;font-size:34px;letter-spacing:10px;font-weight:800;color:#38bdf8;">' + digits + '</td></tr>' +
+    '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">' +
+    '<meta name="viewport" content="width=device-width,initial-scale=1">' +
+    '<title>' + esc(subject) + '</title></head>' +
+    '<body style="margin:0;padding:0;background:#ffffff;">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#ffffff;">' +
+    '<tr><td>' +
+    '<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;background:#ffffff;">' +
+    '<tr><td style="padding:28px 32px 8px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">' +
+    esc(hello) +
+    '</td></tr>' +
+    '<tr><td style="padding:12px 32px 8px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">' +
+    "We detected an unusual login from a device or location you don't usually use. " +
+    'If this was you please input the code below to log into Elisee Scout' +
+    '</td></tr>' +
+    '<tr><td style="padding:20px 32px 8px;font-family:Helvetica,Arial,sans-serif;font-size:32px;line-height:40px;font-weight:700;letter-spacing:6px;color:#000000;">' +
+    esc(spaced) +
+    '</td></tr>' +
+    '<tr><td style="padding:12px 32px 8px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">' +
+    'The code will be expired in 10 minutes.' +
+    '</td></tr>' +
+    '<tr><td style="padding:16px 32px 10px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">' +
+    'Please review the sign in activity details below:' +
+    '</td></tr>' +
+    '<tr><td style="padding:4px 32px 18px;">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="width:100%;background:#F4F4F8;border-radius:8px;">' +
+    detailRow('Date', when, true, false) +
+    detailRow('Browser', parsed.browser, false, false) +
+    detailRow('Operating System', parsed.osName, false, false) +
+    detailRow('Location', place, false, true) +
     '</table></td></tr>' +
-    '<tr><td style="padding:0 28px 28px;font-family:Arial,Helvetica,sans-serif;color:#64748b;font-size:13px;line-height:1.5;">Valido 10 minuti. Non condividere il codice con nessuno. Se non hai richiesto questa verifica, ignora l\'email.</td></tr>' +
-    '<tr><td style="padding:14px 28px;border-top:1px solid #1e3a5f;font-family:Arial,Helvetica,sans-serif;color:#475569;font-size:11px;">Elisee Scout · verifica account</td></tr>' +
+    '<tr><td style="padding:8px 32px 8px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">' +
+    "If this wasn't you, please let us know " +
+    '<a href="' + support + '" style="color:#0E71EB;text-decoration:underline;">here</a>. ' +
+    'We recommend you update your password and enable Two-factor authentication to secure your account.' +
+    '</td></tr>' +
+    '<tr><td style="padding:20px 32px 4px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">Thank you,</td></tr>' +
+    '<tr><td style="padding:0 32px 36px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:24px;color:#232333;">The Elisee Scout Team</td></tr>' +
     '</table></td></tr></table></body></html>';
   return { subject, text, html };
 }
@@ -184,7 +300,11 @@ module.exports = async function handler(req, res) {
 
   if (action === 'send') {
     const rawCode = String(crypto.randomInt(100000, 1000000)).padStart(6, '0');
-    const bodies = mailBodies(rawCode);
+    const bodies = mailBodies(rawCode, {
+      nome: body.nome || query.nome || '',
+      ua: body.ua || req.headers['user-agent'] || '',
+      tz: body.tz || ''
+    });
     let via = '';
     if (await sendResend(email, bodies)) via = 'local';
     if (!via) {
