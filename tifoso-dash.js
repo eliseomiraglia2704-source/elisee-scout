@@ -201,7 +201,7 @@
     user = user || userObj();
     if (!isTifoso(user)) return;
     if (typeof window.unmountAllRoleDashboards === 'function') {
-      try { window.unmountAllRoleDashboards(); } catch (_) {}
+      try { window.unmountAllRoleDashboards('es-td'); } catch (_) {}
     }
     var host = document.getElementById('es-tifoso-profile');
     var group = document.getElementById('user-dossier-view-group');
@@ -215,6 +215,8 @@
     }
     box.innerHTML = html(user);
     box.hidden = false;
+    box.removeAttribute('hidden');
+    box.style.display = 'block';
     host.classList.add('es-tf-on');
     if (group) group.classList.add('is-tf-dash');
     bind(host);

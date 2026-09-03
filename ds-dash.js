@@ -127,7 +127,7 @@
 
   function hideCoach() {
     if (typeof window.unmountAllRoleDashboards === "function") {
-      window.unmountAllRoleDashboards();
+      window.unmountAllRoleDashboards('es-dsd');
     }
   }
 
@@ -235,6 +235,8 @@
     }
     box.innerHTML = html(user);
     box.hidden = false;
+    box.removeAttribute('hidden');
+    box.style.display = 'block';
     if (window.EliseeDsHub && typeof window.EliseeDsHub.mount === 'function') {
       try { window.EliseeDsHub.mount(box, user); } catch (_) {}
     }

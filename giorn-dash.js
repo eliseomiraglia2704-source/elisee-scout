@@ -441,6 +441,8 @@
         if (!box) return;
         if (!hits.length) { box.hidden = true; box.innerHTML = ''; return; }
         box.hidden = false;
+    box.removeAttribute('hidden');
+    box.style.display = 'block';
         box.innerHTML = hits.map(function (t) {
           return '<button type="button" data-gd-pick="' + encodeURIComponent(JSON.stringify({ kind: t.kind, id: t.id, name: t.name })) + '">' +
             esc(t.name) + ' <span style="color:#94a3b8">' + esc(t.extra || t.kind) + '</span></button>';
@@ -735,6 +737,8 @@
     composerTags = [];
     box.innerHTML = html(user);
     box.hidden = false;
+    box.removeAttribute('hidden');
+    box.style.display = 'block';
     host.hidden = false;
     host.removeAttribute('hidden');
     host.classList.add('es-gd-on');

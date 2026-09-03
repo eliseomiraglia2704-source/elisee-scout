@@ -616,6 +616,11 @@
   );
   lock(['JUVENTUS U23', 'INTER U23', 'ATALANTA U23', 'JUVENTUS NEXT GEN'], 2, 4);
   lock(['MILAN U23', 'MILAN FUTURO'], 2, 4);
+  lock(['LUCCHESE', 'LUCCHESE 1905', 'AS LUCCHESE LIBERTAS'], 1, 4);
+  lock(['IMOLESE'], 3, 5);
+  lock(['PORDENONE'], 2, 5);
+  lock(['CASSINO'], 3, 5);
+  lock(['PORTOGRUARO'], 2, 5);
   /* Girone A Serie D 2026/27 — club senza storia in B/A: ceiling C */
   lock(
     ['BORGOSESIA', 'AS BORGOSESIA', 'FEZZANESE', 'FC FEZZANESE',
@@ -738,15 +743,29 @@
     return /\b(U19|U20|UNDER 19|UNDER 20|PRIMAVERA|JUNIORES|BERRETTI|ALLIEVI)\b/.test(keyOf(name));
   }
 
+  function youthTierOf(club) {
+    var t = Number(club && (club.catalogT != null ? club.catalogT : club.t));
+    if (t === 11 || t === 12) return t;
+    var lg = String((club && (club.l || club.league || club.catalogL)) || '').toUpperCase();
+    if (lg.indexOf('PRIMAVERA 2') >= 0) return 12;
+    if (lg.indexOf('PRIMAVERA') >= 0 || lg.indexOf('UNDER 19') >= 0 || lg.indexOf('U19') >= 0) return 11;
+    return 11;
+  }
+
+  function youthSpec(tier) {
+    var yt = (tier === 12) ? 12 : 11;
+    return {
+      home: yt, floor: yt, ceil: yt, rel: 0, promo: 0, stay: 1,
+      seasons: { a: 0, b: 0, c: 0, d: 0, e: 0 }, known: true
+    };
+  }
+
   function lookup(name) {
     var k = keyOf(name);
     if (!k) return null;
     if (P[k]) return P[k];
     if (isYouthName(k)) {
-      return {
-        home: 10, floor: 10, ceil: 10, rel: 0, promo: 0, stay: 1,
-        seasons: { a: 0, b: 0, c: 0, d: 0, e: 0 }, known: true
-      };
+      return youthSpec(11);
     }
     if (isU23Name(k)) return derive(U23_C);
     var stripped = k.replace(/^(AS |AC |US |SSD |FBC |FC |ASD |SS |ACR |LR )/, '');
@@ -789,6 +808,7 @@
         seasons: { a: 40, b: 0, c: 0, d: 0 }, known: true
       };
     }
+    if (isYouthName(n)) return youthSpec(youthTierOf(club));
     var hit = lookup(n);
     var home = Number((club && club.homeTier) != null ? club.homeTier : (club && club.t) || 4);
     if (!hit && isEccellenzaClub(club)) home = 5;
@@ -796,6 +816,7 @@
       ? Object.assign({ known: true }, hit)
       : Object.assign({ known: false }, fallbackFromHome(home, n));
     if (!hit && isEccellenzaClub(club)) {
+      spec.known = true;
       spec.ceil = 4;
       spec.floor = 5;
       spec.home = 5;
@@ -806,6 +827,10 @@
       spec.floor = hard.floor;
       if (spec.home < spec.ceil) spec.home = spec.ceil;
       if (spec.home > spec.floor) spec.home = spec.floor;
+    }
+    var catNow = Number(club && (club.catalogT != null ? club.catalogT : club.t));
+    if (catNow >= 1 && catNow <= 12 && catNow > spec.floor) {
+      spec.floor = catNow;
     }
     var stored = lookup(n);
     if (stored) {
@@ -868,7 +893,8 @@
   function enforce(club, proposedT, atStart) {
     var n = club && (club.n || club.name);
     if (isYouthName(n)) {
-      return { t: 10, l: (club && (club.catalogL || club.l)) || 'PRIMAVERA 1' };
+      var yt = youthTierOf(club);
+      return { t: yt, l: (club && (club.catalogL || club.l)) || (yt === 12 ? 'PRIMAVERA 2' : 'PRIMAVERA 1') };
     }
     var s = profile(club);
     var catT = club && club.catalogT != null ? Number(club.catalogT) : null;
@@ -884,7 +910,7 @@
   function legalTier(club, tier) {
     var n = club && (club.n || club.name);
     var t = Number(tier);
-    if (isYouthName(n)) return t === 10;
+    if (isYouthName(n)) return t === youthTierOf(club);
     if (isU23Name(n)) return t >= 2 && t <= 4;
     var s = profile(club);
     return t >= s.ceil && t <= s.floor;
@@ -1063,7 +1089,7 @@
       if (!c || c.world) return;
       var s = profile(c);
       var catT = c.catalogT != null ? Number(c.catalogT) : Number(c.t);
-      if (!s.known) errors.push(c.n + ': senza storia');
+      if (!s.known && catT <= 4) errors.push(c.n + ': senza storia');
       if (catT < s.ceil || catT > s.floor) {
         errors.push(c.n + ': catalogo t' + catT + ' fuori da ceil' + s.ceil + '/floor' + s.floor);
       }

@@ -4027,9 +4027,16 @@
     if (typeof renderPrivacyPanel === 'function') renderPrivacyPanel();
   };
 
+  function kpiCalendarFromEvent(evt) {
+    var t = evt && (evt.currentTarget || evt.target);
+    var wrap = t && t.closest ? t.closest('.calendar-dropdown-wrapper') : null;
+    if (wrap) return wrap.querySelector('.kpi-calendar-dropdown');
+    return document.querySelector('.kpi-calendar-dropdown');
+  }
+
   window.toggleCalendarDatePicker = function(evt) {
     if (evt) evt.stopPropagation();
-    const dropdown = document.getElementById('kpi-calendar-dropdown');
+    const dropdown = kpiCalendarFromEvent(evt);
     if (dropdown) {
       dropdown.style.display = (dropdown.style.display === 'none' || !dropdown.style.display) ? 'block' : 'none';
     }
@@ -4038,8 +4045,7 @@
   window.selectKpiDate = function(labelStr, periodKey) {
     window.selectedKpiDateLabel = labelStr;
     window.currentGarofaloPeriod = periodKey;
-    const dropdown = document.getElementById('kpi-calendar-dropdown');
-    if (dropdown) dropdown.style.display = 'none';
+    document.querySelectorAll('.kpi-calendar-dropdown').forEach(function (el) { el.style.display = 'none'; });
     renderAdminPanel();
   };
 
@@ -4048,16 +4054,13 @@
     const formatted = new Date(dateVal).toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric' });
     window.selectedKpiDateLabel = formatted;
     window.currentGarofaloPeriod = 'PERSONALIZZATO';
-    const dropdown = document.getElementById('kpi-calendar-dropdown');
-    if (dropdown) dropdown.style.display = 'none';
+    document.querySelectorAll('.kpi-calendar-dropdown').forEach(function (el) { el.style.display = 'none'; });
     renderAdminPanel();
   };
 
   document.addEventListener('click', function(e) {
-    const dropdown = document.getElementById('kpi-calendar-dropdown');
-    if (dropdown && !e.target.closest('.calendar-dropdown-wrapper')) {
-      dropdown.style.display = 'none';
-    }
+    if (e.target.closest('.calendar-dropdown-wrapper')) return;
+    document.querySelectorAll('.kpi-calendar-dropdown').forEach(function (el) { el.style.display = 'none'; });
   });
 
   window.currentAdminTab = localStorage.getItem('elisee_active_admin_tab') || 'dashboard';
@@ -4877,7 +4880,7 @@
                         <i data-lucide="chevron-down" style="width:12px; height:12px;"></i>
                       </button>
 
-                      <div id="kpi-calendar-dropdown" style="display:none; position:absolute; right:0; top:110%; z-index:99999 !important; background:#0f172a; border:1px solid #f59e0b; border-radius:10px; padding:0.6rem; min-width:220px; box-shadow:0 15px 35px rgba(0,0,0,0.95); text-align:left;">
+                      <div class="kpi-calendar-dropdown" style="display:none; position:absolute; right:0; top:110%; z-index:99999 !important; background:#0f172a; border:1px solid #f59e0b; border-radius:10px; padding:0.6rem; min-width:220px; box-shadow:0 15px 35px rgba(0,0,0,0.95); text-align:left;">
                         <div style="font-size:0.7rem; color:#f59e0b; font-weight:bold; padding:0.25rem 0.4rem; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:0.4rem;">
                           📅 Seleziona Giorno Analytics
                         </div>
@@ -5877,7 +5880,7 @@
                   <i data-lucide="chevron-down" style="width:12px; height:12px;"></i>
                 </button>
 
-                <div id="kpi-calendar-dropdown" style="display:none; position:absolute; right:0; top:110%; z-index:99999 !important; background:#0f172a; border:1px solid #f59e0b; border-radius:10px; padding:0.6rem; min-width:220px; box-shadow:0 15px 35px rgba(0,0,0,0.95); text-align:left;">
+                <div class="kpi-calendar-dropdown" style="display:none; position:absolute; right:0; top:110%; z-index:99999 !important; background:#0f172a; border:1px solid #f59e0b; border-radius:10px; padding:0.6rem; min-width:220px; box-shadow:0 15px 35px rgba(0,0,0,0.95); text-align:left;">
                   <div style="font-size:0.7rem; color:#f59e0b; font-weight:bold; padding:0.25rem 0.4rem; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:0.4rem;">
                     📅 Seleziona Giorno Analytics
                   </div>

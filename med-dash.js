@@ -110,7 +110,7 @@
   }
   function hideOthers() {
     if (typeof window.unmountAllRoleDashboards === "function") {
-      window.unmountAllRoleDashboards();
+      window.unmountAllRoleDashboards('es-md');
     }
   }
 
@@ -216,6 +216,8 @@
     }
     box.innerHTML = html(user);
     box.hidden = false;
+    box.removeAttribute('hidden');
+    box.style.display = 'block';
     host.classList.add('es-med-on');
     host.classList.remove('es-pd-on', 'es-ds-on', 'es-pres-on', 'es-vice-on', 'es-fisio-on', 'es-ma-on', 'es-obs-on', 'es-tm-on', 'es-gk-on', 'es-at-on', 'es-yg-on');
     if (group) {

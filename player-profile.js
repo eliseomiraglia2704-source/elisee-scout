@@ -1195,6 +1195,22 @@
       'es-dsd': 'es-ds-on',
       'es-prd': 'es-pres-on',
       'es-vd': 'es-vice-on',
+      'es-fd': 'es-fisio-on',
+      'es-mad': 'es-ma-on',
+      'es-md': 'es-med-on',
+      'es-od': 'es-obs-on',
+      'es-tmd': 'es-tm-on',
+      'es-gk': 'es-gk-on',
+      'es-atd': 'es-at-on',
+      'es-yg': 'es-yg-on',
+      'es-dg': 'es-dg-on',
+      'es-ag': 'es-ag-on',
+      'es-mk': 'es-mk-on',
+      'es-pr': 'es-pr-on',
+      'es-nu': 'es-nu-on',
+      'es-eq': 'es-eq-on',
+      'es-sg': 'es-sg-on',
+      'es-bt': 'es-bt-on',
       'es-td': 'es-tf-on',
       'es-gd': 'es-gd-on'
     };
@@ -1205,11 +1221,12 @@
       if (keepId && id === keepId) {
         el.hidden = false;
         el.removeAttribute('hidden');
+        el.style.removeProperty('display');
         el.style.display = 'block';
       } else {
         el.hidden = true;
         el.setAttribute('hidden', '');
-        el.style.display = 'none';
+        el.style.removeProperty('display');
       }
     });
     ['es-player-profile', 'es-staff-profile', 'es-tifoso-profile', 'es-giorn-profile'].forEach(function (hid) {

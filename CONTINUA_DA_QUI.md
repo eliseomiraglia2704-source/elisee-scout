@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-02**
-Ultimo fatto: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Eliminato il punto di fallback centrale (42.5, 12.5) che creava un assembramento artificiale di centinaia di squadre al centro Italia. Geocodificate con Photon tutte le 660+ città/comuni d'Italia e posizionati con precisione millimetrica tutti i 2810 club regione per regione (232 Lombardia, 164 Sicilia, 164 Lazio, 164 Campania, 164 Emilia-Romagna, 162 Puglia, 160 Toscana, 160 Veneto, 144 Piemonte, 128 Marche, 114 Abruzzo, 108 Calabria, 74 Basilicata, 74 Friuli, 73 Sardegna, 72 Umbria, 72 Trentino, 62 Liguria, 47 Molise) con micro-offset circolare anti-sovrapposizione per squadre dello stesso comune. Cache `REGIONAL_FIX1`.
-Feature precedente: **Rimozione Watermark e Passaggio a OpenStreetMap Ufficiale** — Sostituito il tile layer CartoDB con OpenStreetMap nativo (`tile.openstreetmap.org`).
+Ultimo aggiornamento: **2026-09-03**
+Ultimo fatto: **Audit e fix bug su tutte le interfacce** — Dashboard staff (Fisio, Medico, Scout, TM, Portieri, Atletico, Giovanile, DG, Agente, Marketing, Stampa, Nutrizionista, Magazzino, Segretario, Biglietteria, DS, Tifoso, Giornalista) restavano `display:none` dopo il primo cambio ruolo. Calendario KPI admin/privacy con ID duplicato. Link Termini/Condizioni in registrazione puntavano a `#`. Minigioco: tetto OVR Primavera forato su Serie D (tier 10 inesistente), U23 rifiutava prospetti 66 OVR, fallimento club ignorava progetto forte (floor fisso 40), Lucchese/Imolese/Pordenone/Cassino/Portogruaro fuori dai lucchetti catalogo. Cache `BUGFIXALL1`.
+Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -81,6 +81,7 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
+| `1533f08` | Audit bug tutte le interfacce: dashboard staff visibili, KPI calendar, TOS, minigioco OVR/U23/fallimento/lucchetti; cache `BUGFIXALL1` |
 | `847dfe9` | Curriculum spostato dalla navbar al menu a tendina utente; cache `CURRICULUM-DROPDOWN1` |
 | `a1c94c5` | Serie D Girone I 2026/27 (Serie D 100% completa): quote promozione/salvezza/retrocessione, penalizzazioni, bonus risalita, vincoli e lock `club-storia.js` |
 | `e454e27` | Serie D Girone H 2026/27: quote promozione/salvezza/retrocessione, bonus risalita, vincoli e lock `club-storia.js` |
@@ -349,6 +350,14 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-03** — Audit e risoluzione bug su tutte le interfacce:
+  - Dashboard ruolo: `unmountAllRoleDashboards` lasciava `style.display=none` e le dash generate non lo toglievano; dopo un cambio ruolo la scheda restava nera/vuota. Keep-id + reveal esplicito su 16 dash + mappa host class completa.
+  - Admin/Privacy: ID duplicato `kpi-calendar-dropdown` (il secondo calendario non si apriva). Ora classe + lookup dal wrapper.
+  - Registrazione: Termini di Servizio → `privacy-policy.html`, Condizioni d'uso → `cookie-policy.html`.
+  - Minigioco: `clubLeagueTier` per Primavera restituiva 10 (range D 30-42) invece di 11/12; U23 usa range 48-68; fallimento non clampa più a 40 (progetto forte vs debole); lucchetti catalogo per club scesi in Eccellenza/D.
+  - Test verdi: `_test_piramide.js`, `_test_fail_market.js`, `_test_market_plane.js`, `_test_u23.js`, `_test_deal.js`, `_test_identity.js`.
+  - Cache `BUGFIXALL1`.
 
 - **2026-08-31** — Motore Simulazione Serie D 2026/27 (Girone I — Serie D Completa al 100%):
   - Calcolo e assegnazione bande probabilità Promozione / Salvezza / Retrocessione per tutte le 17 squadre di Serie D Girone I (Calabria/Sicilia/Campania).

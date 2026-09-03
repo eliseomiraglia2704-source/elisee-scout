@@ -2832,7 +2832,13 @@
   }
 
   function clubLeagueTier(club) {
-    if (isYouthClub(club)) return 10;
+    if (isYouthClub(club)) {
+      var yt = Number(club && (club.catalogT != null ? club.catalogT : club.t));
+      if (yt === 11 || yt === 12) return yt;
+      var ylg = String((club && (club.l || club.league)) || '').toUpperCase();
+      if (ylg.indexOf('PRIMAVERA 2') >= 0) return 12;
+      return 11;
+    }
     var league = String((club && (club.l || club.league)) || '').toUpperCase();
     if (league.indexOf('TERZA CATEGORIA') >= 0) return 9;
     if (league.indexOf('SECONDA CATEGORIA') >= 0) return 8;
@@ -4440,6 +4446,7 @@
 
   function minOvrForClub(c) {
     if (!c) return 30;
+    if (isU23Club(c)) return 48;
     var n = String(c.n || '').toUpperCase();
     if (c.world) {
       if (/REAL MADRID|BARCELONA|BAYERN|MANCHESTER CITY|LIVERPOOL|PSG/.test(n)) return 86;
@@ -4456,6 +4463,7 @@
   function maxOvrForClub(c) {
     if (!c) return 93;
     if (c.world) return 94;
+    if (isU23Club(c)) return 68;
     var t = clubLeagueTier(c);
     var r = CATEGORY_OVR_RANGES[t] || CATEGORY_OVR_RANGES[4];
     return r.max;
@@ -4543,7 +4551,7 @@
     }
     if (target < destMin) target = destMin;
     if (target > destMax) target = destMax;
-    if (target < 40) target = 40;
+    if (target < 0) target = 0;
     if (target > 94) target = 94;
     return Math.round(target);
   }
