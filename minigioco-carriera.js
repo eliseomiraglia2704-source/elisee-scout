@@ -1521,7 +1521,7 @@
         '<div class="es-mg-hub-card is-soon" id="es-mg-hub-pokemon" role="button" tabindex="0" aria-label="Pokemon Calcistico, prossimamente">' +
         '<span class="es-mg-hub-soon">Prossimamente</span>' +
         '<span class="es-mg-hub-icon es-mg-hub-icon-pkmn" aria-hidden="true">' +
-        '<svg viewBox="0 0 64 64" width="72" height="72" fill="none">' +
+        '<svg viewBox="0 0 64 64" fill="none">' +
         '<circle cx="32" cy="32" r="22" stroke="#e2e8f0" stroke-width="3"/>' +
         '<path d="M10 32h44" stroke="#e2e8f0" stroke-width="3"/>' +
         '<path d="M10 32a22 22 0 0 1 44 0" fill="rgba(56,189,248,0.35)"/>' +
@@ -1532,7 +1532,10 @@
         '</span>' +
         '<span class="es-mg-hub-title">Pokemon Calcistico</span>' +
         '<span class="es-mg-hub-tags">Collezione · Sfide · Evoluzioni in campo</span>' +
-        '<span class="es-mg-hub-desc">Nuovo minigioco in lavorazione: creature calcistiche, allenatori e partite. <strong>Uscirà in futuro</strong> su Elisee Scout.</span>' +
+        '<span class="es-mg-hub-desc">Nuovo minigioco in lavorazione: creature calcistiche, allenatori e partite.</span>' +
+        '<div class="es-mg-hub-concept">' +
+        '<p>Lo stiamo creando: <strong>uscirà in futuro</strong> su Elisee Scout.</p>' +
+        '</div>' +
         '</div>' +
         '</div>' +
         '<div class="es-mg-hub-playwrap' + (savedNow ? ' is-split' : '') + '">' +

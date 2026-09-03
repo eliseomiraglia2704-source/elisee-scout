@@ -443,11 +443,11 @@ button.es-mg-hub-menubar:focus {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
   min-height: min(52vh, 390px);
   aspect-ratio: 1 / 1.02;
-  padding: 2.05rem 1.45rem 1.85rem;
+  padding: 2.55rem 1.45rem 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   background: rgba(12, 18, 32, 0.72);
@@ -494,11 +494,14 @@ button.es-mg-hub-menubar:focus {
   border-color: rgba(56, 189, 248, 0.48);
 }
 .es-mg-hub-soon {
-  position: relative;
-  z-index: 1;
+  position: absolute;
+  top: 0.85rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
   display: inline-flex;
   align-items: center;
-  margin: 0 0 0.85rem;
+  margin: 0;
   padding: 0.28rem 0.75rem;
   border-radius: 999px;
   border: 1px solid rgba(56, 189, 248, 0.45);
@@ -508,10 +511,15 @@ button.es-mg-hub-menubar:focus {
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 .es-mg-hub-icon-pkmn {
-  width: 72px;
-  height: 72px;
+  width: 86px;
+  height: 46px;
+}
+.es-mg-hub-icon-pkmn svg {
+  width: 46px;
+  height: 46px;
 }
 .es-mg-hub-icon {
   position: relative;
@@ -558,6 +566,7 @@ button.es-mg-hub-menubar:focus {
   line-height: 1.45;
   color: rgba(226, 232, 240, 0.86);
   max-width: 22.5rem;
+  min-height: 3.4em;
 }
 .es-mg-hub-desc strong {
   color: #fff;

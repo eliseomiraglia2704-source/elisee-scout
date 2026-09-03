@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-03**
-Ultimo fatto: **Hub minigioco: card Pokemon Calcistico Prossimamente** — Lo slot vuoto a destra di Carriera Giocatore mostra ora Pokemon Calcistico con badge Prossimamente. Cache `PKMN1`.
+Ultimo fatto: **Hub minigioco: allineamento card Pokemon Calcistico** — Stesso ritmo verticale della card Carriera (icona, titolo, tag, testo). Badge Prossimamente in alto, fuori dal flusso. Cache `PKMN2`.
 Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -81,7 +81,7 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Hub minigioco: card Pokemon Calcistico in Prossimamente; cache `PKMN1` |
+| (questo) | Hub minigioco: allineamento card Pokemon Calcistico con Carriera; cache `PKMN2` |
 | `f2161c7` | OTP classico: codice a 6 cifre inviato solo via email all’indirizzo dell’account; cache `OTPMAIL1` |
 | `f812722` | Minigioco: vincere B/C/D/dilettanti promuove nella categoria superiore; cache `CHAMPPROMO1` |
 | `94163fd` | Fix ruoli coach/DG, piramide femminile, clamp dilettanti e crash admin token; cache `BUGFIXALL2` |
