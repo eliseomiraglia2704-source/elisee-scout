@@ -28,6 +28,12 @@ folder_overrides = {
     "folgore caratese": "folgore-caratese",
     "milan-futuro": "milan",
 }
+_map_path = ROOT / "data" / "squadre" / "kit-folder-map.json"
+if _map_path.exists():
+    try:
+        folder_overrides.update(json.loads(_map_path.read_text(encoding="utf-8")) or {})
+    except Exception:
+        pass
 team_by_id = {t["id"]: t for t in teams}
 
 def slugify(s):
