@@ -517,21 +517,12 @@
     .then(function (res) { return res.json().then(function (data) { data._http = res.status; return data; }); })
     .then(function (data) {
       otpDigits().forEach(function (inp) { inp.value = ''; });
+      if (btnSend) btnSend.disabled = false;
       if (data.success) {
         otpFeedback('Ti abbiamo inviato un codice a 6 cifre su ' + userEmail + '. Aprilo nella casella (anche Spam) e inseriscilo qui. Non è un SMS.', false);
         var first = document.getElementById('otp-d-0');
         if (first) first.focus();
-        var left = 45;
-        var tick = setInterval(function () {
-          left -= 1;
-          if (btnSend) btnSend.textContent = left > 0 ? ('Reinvia tra ' + left + 's') : 'Invia codice';
-          if (left <= 0) {
-            clearInterval(tick);
-            if (btnSend) btnSend.disabled = false;
-          }
-        }, 1000);
       } else {
-        if (btnSend) btnSend.disabled = false;
         otpFeedback(data.error || 'Errore durante l\'invio del codice OTP', true);
       }
     })

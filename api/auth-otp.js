@@ -157,15 +157,6 @@ module.exports = async function handler(req, res) {
   });
 
   if (action === 'send') {
-    const existing = store[email] || {};
-    const recentSends = (existing.sendHistory || []).filter((t) => now - t < 600000);
-    if (recentSends.length >= 3) {
-      return sendJson(res, 429, {
-        success: false,
-        error: 'Troppe richieste. Attendi qualche minuto e riprova.',
-        email: email
-      });
-    }
     const rawCode = String(crypto.randomInt(100000, 1000000)).padStart(6, '0');
     const bodies = mailBodies(rawCode);
     let via = '';
@@ -174,14 +165,13 @@ module.exports = async function handler(req, res) {
     if (!via) {
       return sendJson(res, 503, {
         success: false,
-        error: 'Invio email non riuscito. Riprova tra poco: il codice arriva solo via posta elettronica.',
+        error: 'Invio email non riuscito. Riprova: il codice arriva solo via posta elettronica.',
         email: email
       });
     }
     const rec = {
       expiresAt: now + 600000,
       attempts: 0,
-      sendHistory: recentSends.concat([now]),
       via: via
     };
     if (via === 'local') rec.codeHash = hashOtp(email, rawCode);

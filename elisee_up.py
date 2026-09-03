@@ -175,43 +175,48 @@ def _otp_send_supabase(to_email: str) -> tuple[bool, str]:
     base, key = _otp_supabase_cfg()
     if not base or not key:
         return False, "servizio email non configurato"
-    try:
-        payload = json.dumps({"email": to_email, "create_user": True}).encode("utf-8")
-        req = urllib.request.Request(
-            base + "/auth/v1/otp",
-            data=payload,
-            headers={
-                "apikey": key,
-                "Authorization": "Bearer " + key,
-                "Content-Type": "application/json",
-            },
-            method="POST",
-        )
-        with urllib.request.urlopen(req, timeout=15) as r:
-            if 200 <= int(getattr(r, "status", 200) or 200) < 300:
-                return True, ""
-            return False, "invio rifiutato dal servizio email"
-    except urllib.error.HTTPError as e:
+    last_err = "invio email non riuscito"
+    for attempt in range(4):
         try:
-            body = e.read().decode("utf-8", "replace")
-        except Exception:
-            body = ""
-        msg = ""
-        try:
-            data = json.loads(body) if body else {}
-            msg = str(data.get("msg") or data.get("error_description") or data.get("error") or "")
-        except Exception:
-            msg = body[:180]
-        low = msg.lower()
-        if e.code == 429 or "rate" in low:
-            return False, "Troppe email in pochi minuti. Attendi e riprova."
-        if "invalid" in low and "email" in low:
-            return False, "Indirizzo email non valido."
-        log("otp supabase send fail " + str(e.code) + " " + (msg or ""))
-        return False, (msg or "invio email non riuscito")
-    except Exception as e:
-        log("otp supabase send err " + str(e))
-        return False, "invio email non riuscito"
+            payload = json.dumps({"email": to_email, "create_user": True}).encode("utf-8")
+            req = urllib.request.Request(
+                base + "/auth/v1/otp",
+                data=payload,
+                headers={
+                    "apikey": key,
+                    "Authorization": "Bearer " + key,
+                    "Content-Type": "application/json",
+                },
+                method="POST",
+            )
+            with urllib.request.urlopen(req, timeout=15) as r:
+                if 200 <= int(getattr(r, "status", 200) or 200) < 300:
+                    return True, ""
+                last_err = "invio rifiutato dal servizio email"
+        except urllib.error.HTTPError as e:
+            try:
+                body = e.read().decode("utf-8", "replace")
+            except Exception:
+                body = ""
+            msg = ""
+            try:
+                data = json.loads(body) if body else {}
+                msg = str(data.get("msg") or data.get("error_description") or data.get("error") or "")
+            except Exception:
+                msg = body[:180]
+            low = msg.lower()
+            if "invalid" in low and "email" in low:
+                return False, "Indirizzo email non valido."
+            last_err = "Invio email non riuscito. Riprova."
+            log("otp supabase send fail " + str(e.code) + " " + (msg or ""))
+            if e.code == 429 or "rate" in low:
+                time.sleep(1.2 * (attempt + 1))
+                continue
+        except Exception as e:
+            log("otp supabase send err " + str(e))
+            last_err = "invio email non riuscito"
+        break
+    return False, last_err
 
 
 def _otp_verify_supabase(email: str, code: str) -> bool:
@@ -635,15 +640,6 @@ class Handler(SimpleHTTPRequestHandler):
                 now_ts = int(time.time() * 1000)
 
                 if action == "send":
-                    existing = otp_store.get(email) or {}
-                    history = [t for t in (existing.get("sendHistory") or []) if now_ts - int(t) < 600000]
-                    if len(history) >= 3:
-                        self._json(429, {
-                            "success": False,
-                            "error": "Troppe richieste. Attendi qualche minuto e riprova.",
-                            "email": email,
-                        })
-                        return True
                     raw_code = f"{random.randint(100000, 999999):06d}"
                     secret = _otp_secret()
                     h = hmac.new(secret.encode(), f"{email}:{raw_code}".encode(), hashlib.sha256).hexdigest()
@@ -652,15 +648,13 @@ class Handler(SimpleHTTPRequestHandler):
                     if not via:
                         self._json(503, {
                             "success": False,
-                            "error": send_err or "Invio email non riuscito. Riprova tra poco: il codice arriva solo via posta elettronica.",
+                            "error": send_err or "Invio email non riuscito. Riprova: il codice arriva solo via posta elettronica.",
                             "email": email,
                         })
                         return True
-                    history.append(now_ts)
                     rec = {
                         "expiresAt": exp,
                         "attempts": 0,
-                        "sendHistory": history,
                         "via": via,
                     }
                     if via == "local":
