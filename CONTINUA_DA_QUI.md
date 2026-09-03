@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-03**
-Ultimo fatto: **Card calciatore stile FIFA 22 gold** — scudetto, OVR, ruolo, bandiera, stemma club, foto, cognome e stats PAC/SHO/PAS/DRI/DEF/PHY. Cache `FIFA1`.
+Ultimo fatto: **Card FC26 TOTY + sfondo UEL Primetime** — layout Mbappé TOTY (OVR, playstyle, stats in riga, loghi in basso) su background arancione/nero Primetime. Cache `FC26`.
 Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -58,6 +58,7 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 Flusso recente, dal più nuovo:
 
+- **Card FC26 TOTY + UEL Primetime** (cache `FC26`): struttura TOTY (OVR/ruolo, playstyle a rombo, foto, nome, PAC–PHY in riga, bandiera/club in basso) con sfondo `immagini/card-bg/uel-primetime.png`.
 - **Card calciatore FIFA 22 gold** (cache `FIFA1`): layout scudetto come la rare gold (OVR + ruolo, bandiera, stemma, ritratto, cognome, 6 stats). Branding Elisee Scout in calce.
 - **Bugfix Match Analyst** (cache `MA3`): etichette clip, GPS solo in-house se In Staff, inbox club reale, testi Wall, isObs vs isMa.
 - **Area Match Analyst da PDF** (`Profilo_Match_Analyst_260903_154242.pdf`): identità e qualifiche, In Staff Club vs Consulente Esterno, laboratorio heatmap (validazione + overlay squadra), GPS verso Allenatore e Preparatore, Clip Hub e dossier avversario, report privati (in-house) vs pubblici (portfolio + Menzione Speciale sulla Card), tagging posizioni adattate, export dossier, limiti di ruolo (niente rosa/struttura, niente annunci/trattative). Cache `MA2`.
@@ -357,6 +358,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-03** — Card FC26: layout TOTY Mbappé (stats in riga, playstyle, loghi in basso) e sfondo UEL Primetime arancione/nero. Cache `FC26`.
 
 - **2026-09-03** — Card calciatore ridisegnata sul modello FIFA 22 gold (Mbappé): scudetto, OVR, posizione, bandiera, stemma, foto, cognome, PAC/SHO/PAS/DRI/DEF/PHY. Cache `FIFA1`.
 

@@ -299,6 +299,30 @@
     };
   }
 
+  function displaySurname(u) {
+    var last = String(u.cognome || lastNameOf(nameOf(u)) || 'Player').trim();
+    if (!last) return 'Player';
+    return last.charAt(0).toUpperCase() + last.slice(1).toLowerCase();
+  }
+  function playstyleIcon(label) {
+    var k = String(label || '').toLowerCase();
+    var d = 'M12 3l2.2 6.6H21l-5.4 4 2.1 6.4L12 16.8 6.3 20l2.1-6.4L3 9.6h6.8z';
+    if (/veloc|sprint|pace|rocket/.test(k)) d = 'M13 2L4 14h7l-1 8 10-14h-7l0-6z';
+    else if (/final|shot|tiro|gol/.test(k)) d = 'M12 2a10 10 0 1 0 .01 20.01A10 10 0 0 0 12 2zm0 3a7 7 0 1 1 0 14 7 7 0 0 1 0-14zm0 3a4 4 0 1 0 .01 8.01A4 4 0 0 0 12 8z';
+    else if (/lettur|dif|tackle|difesa/.test(k)) d = 'M12 3l8 3v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-3z';
+    else if (/vision|pass|visione/.test(k)) d = 'M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12zm10 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6z';
+    else if (/reattiv|gk|portier/.test(k)) d = 'M13 2L3 14h8l-1 8 11-12h-8l0-8z';
+    else if (/menzion|special/.test(k)) d = 'M12 2l2.4 7.2H22l-6 4.4 2.3 7.4L12 16.8 5.7 21l2.3-7.4-6-4.4h7.6z';
+    return '<svg viewBox="0 0 24 24" fill="currentColor"><path d="' + d + '"/></svg>';
+  }
+  function playstylesHtml(u) {
+    var list = badgesOf(u).filter(function (b) { return b && b !== 'Cerca squadra'; }).slice(0, 3);
+    if (!list.length) list = ['Atleta'];
+    return '<div class="es-pc-playstyles" aria-hidden="true">' + list.map(function (b) {
+      return '<span class="es-pc-ps" title="' + esc(b) + '">' + playstyleIcon(b) + '</span>';
+    }).join('') + '</div>';
+  }
+
   function cardHtml(u, opts) {
     opts = opts || {};
     var name = nameOf(u);
@@ -315,37 +339,32 @@
     var flag = '<img class="es-pc-flag" src="immagini/nazioni-loghi/' + esc(nat) + '.png" alt="" onerror="this.style.visibility=\'hidden\'">';
     var logo = club
       ? '<img class="es-pc-clublogo" src="' + esc(clubLogo(club)) + '" alt="" onerror="this.style.visibility=\'hidden\'">'
-      : '<span class="es-pc-clublogo is-empty"></span>';
-    var left = attrs.rows.slice(0, 3).map(function (row) {
-      return '<div><b>' + esc(row[1]) + '</b><span>' + esc(row[0]) + '</span></div>';
-    }).join('');
-    var right = attrs.rows.slice(3, 6).map(function (row) {
-      return '<div><b>' + esc(row[1]) + '</b><span>' + esc(row[0]) + '</span></div>';
+      : '';
+    var stats = attrs.rows.map(function (row) {
+      return '<div class="es-pc-statcell"><span>' + esc(row[0]) + '</span><b>' + esc(row[1]) + '</b></div>';
     }).join('');
     var ma = maTagsOf(u);
     var special = (ma && ma.mention) ? '<span class="es-pc-fifa-special">Menzione</span>' : '';
     return '<div class="es-pc-card-shell">' +
-      '<article class="es-pc-card"' + (opts.hideHint ? '' : ' id="es-pc-card"') +
+      playstylesHtml(u) +
+      '<article class="es-pc-card es-pc-fc26"' + (opts.hideHint ? '' : ' id="es-pc-card"') +
         ' tabindex="0" role="button" aria-label="Apri Card di ' + esc(name) + '">' +
-        '<div class="es-pc-fifa-top">' +
-          '<div class="es-pc-fifa-meta">' +
-            '<div class="es-pc-ovr">' + ovr + '</div>' +
-            '<div class="es-pc-pos">' + esc(pos) + '</div>' +
-            flag + logo +
+        '<div class="es-pc-crest" title="Elisee Scout">ES</div>' +
+        '<div class="es-pc-fifa-ovrcol">' +
+          '<div class="es-pc-ovr">' + ovr + '</div>' +
+          '<div class="es-pc-pos">' + esc(pos) + '</div>' +
+        '</div>' +
+        '<div class="es-pc-fifa-photo">' + photo + special + '</div>' +
+        '<div class="es-pc-fifa-bottom">' +
+          '<div class="es-pc-fifa-name">' + esc(displaySurname(u)) + '</div>' +
+          '<div class="es-pc-fifa-stats-row">' + stats + '</div>' +
+          '<div class="es-pc-fifa-ids">' + flag +
+            '<span class="es-pc-league">ELISEE</span>' +
+            logo +
           '</div>' +
-          '<div class="es-pc-fifa-photo">' + photo + special + '</div>' +
-        '</div>' +
-        '<div class="es-pc-fifa-name">' + esc(lastNameOf(name)) + '</div>' +
-        '<div class="es-pc-fifa-stats">' +
-          '<div class="es-pc-fifa-col">' + left + '</div>' +
-          '<div class="es-pc-fifa-rule"></div>' +
-          '<div class="es-pc-fifa-col">' + right + '</div>' +
-        '</div>' +
-        '<div class="es-pc-fifa-foot">' +
-          '<span>ELISEE SCOUT</span>' +
-          '<span class="es-pc-fifa-status' + (free ? ' is-free' : '') + '">' +
+          '<div class="es-pc-fifa-status' + (free ? ' is-free' : '') + '">' +
             (free ? 'Svincolato' : 'Tesserato') +
-          '</span>' +
+          '</div>' +
         '</div>' +
       '</article></div>';
   }
