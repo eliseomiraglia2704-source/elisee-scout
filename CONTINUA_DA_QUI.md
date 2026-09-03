@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-03**
-Ultimo fatto: **Cartella kit automatica** — Ogni squadra inserita o sincronizzata ottiene `immagini/kits-2d/<nome-squadra>/`. Hook in `_sync_catalog_kits.py`, `_build_squadre_catalog.py`, script Eccellenza/donne. Modulo `_kit_folders.py`.
+Ultimo fatto: **Area Osservatore da PDF** — Identità, qualifica, Under Contract / Free Agent, Secret List stealth, inoltro al DS o proposta a club, limiti di ruolo, Wall in sola lettura. Cache `OBS1`.
 Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -354,6 +354,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-03** — Area Osservatore / Scout aggiornata sul PDF Profilo Scout: credenziali, status Under Contract vs Free Agent, Secret List stealth con inoltro al DS (contratto) o proposta a club terzi (free, solo con autorizzazione DS), ricerca geo, Wall in consultazione, blocco ufficializzazione. Cache `OBS1`.
 
 - **2026-09-03** — Da ora, ogni squadra nuova in catalogo ha la cartella kit 2D (solo nome). `_kit_folders.ensure_kit_folders` è chiamato da `_sync_catalog_kits.py`, `_build_squadre_catalog.py` e dagli script di inserimento Eccellenza/calcio femminile.
 

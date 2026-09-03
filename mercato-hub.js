@@ -47,6 +47,32 @@
     if (/\bsquadra\b|\bclub\b|societ/.test(blob)) return true;
     return false;
   }
+  function isScout(u) {
+    u = u || userObj();
+    var blob = roleBlob(u);
+    if (/direttore sportivo|\bds\b/.test(blob) && !/scout|osservatore/.test(blob)) return false;
+    return /scout|osservatore/.test(blob);
+  }
+  function isDsRole(u) {
+    u = u || userObj();
+    return /direttore sportivo|\bds\b/.test(roleBlob(u));
+  }
+  function scoutUnderContract(u) {
+    u = u || userObj();
+    if (window.EliseeObsDash && typeof window.EliseeObsDash.underContract === 'function') {
+      return window.EliseeObsDash.underContract(u);
+    }
+    var st = String(u.obsContract || u.contractStatus || '').toLowerCase();
+    if (st === 'free' || st === 'free-agent') return false;
+    if (st === 'contract' || st === 'under-contract') return true;
+    return !!(u.squadra || u.club);
+  }
+  function canOfficialize(u) {
+    u = u || userObj();
+    if (localStorage.getItem('elisee_admin_auth') === 'true') return true;
+    if (isScout(u) && !isDsRole(u)) return false;
+    return /direttore sportivo|presidente/.test(roleBlob(u));
+  }
   function needLogin(hash) {
     if (isLogged()) return false;
     if (window.requireEliseeLogin) {
@@ -99,7 +125,17 @@
     var map = loadMap(LIST_KEY);
     var k = meKey() || '_guest';
     if (!map[k] || !Array.isArray(map[k].items)) map[k] = { items: [] };
-    return map[k].items;
+    var items = map[k].items.slice();
+    if (isDsRole()) {
+      var club = slug(userObj().squadra || userObj().club || '');
+      var extra = ((map['ds:' + club] || {}).items) || [];
+      extra.forEach(function (it) {
+        if (!items.some(function (x) { return x.id === it.id || x.playerId === it.playerId; })) {
+          items.push(it);
+        }
+      });
+    }
+    return items;
   }
   function saveList(items) {
     var map = loadMap(LIST_KEY);
@@ -221,10 +257,12 @@
     if (banner) banner.hidden = !allowed;
     if (!allowed) return;
     var q = ((document.getElementById('es-mk-q') || {}).value || '').toLowerCase();
+    var geo = ((document.getElementById('es-mk-geo') || {}).value || '').toLowerCase();
     var prio = ((document.getElementById('es-mk-prio') || {}).value || '');
     var items = myList().filter(function (it) {
       if (prio && it.priority !== prio) return false;
       if (q && [it.name, it.role, it.city, it.notes].join(' ').toLowerCase().indexOf(q) < 0) return false;
+      if (geo && [it.city, it.region, it.provincia].join(' ').toLowerCase().indexOf(geo) < 0) return false;
       return true;
     });
     var html = '';
@@ -243,7 +281,19 @@
           '<div class="es-mk-card-actions">' +
           '<button type="button" data-prio="' + esc(it.id) + '">Priorità</button>' +
           '<button type="button" data-status="' + esc(it.id) + '">Status</button>' +
-          '<button type="button" data-official="' + esc(it.id) + '">Ufficializza</button>' +
+          (isScout() && scoutUnderContract()
+            ? '<button type="button" data-fwd-ds="' + esc(it.id) + '">Inoltra al DS</button>'
+            : '') +
+          (isScout() && !scoutUnderContract()
+            ? '<button type="button" data-propose="' + esc(it.id) + '">Proponi a club</button>'
+            : '') +
+          (isScout()
+            ? '<button type="button" data-obs-chat="' + esc(it.id) + '">Chat</button>' +
+              '<button type="button" data-obs-sheet="' + esc(it.id) + '">Scheda</button>'
+            : '') +
+          (canOfficialize()
+            ? '<button type="button" data-official="' + esc(it.id) + '">Ufficializza</button>'
+            : '') +
           '<button type="button" class="danger" data-del="' + esc(it.id) + '">Togli</button>' +
           '</div></article>';
       });
@@ -315,7 +365,9 @@
     var html = '<p class="es-mk-live"><i></i> Feed in tempo reale · tab notizie di mercato</p>';
     if (ticker) html += '<div class="es-mk-ticker" aria-hidden="true"><span>' + esc(ticker + '     ★     ' + ticker) + '</span></div>';
     html += '<div class="es-mk-toolbar">' +
-      '<button type="button" class="es-mk-btn" id="es-mk-official-open">Ufficializza accordo</button>' +
+      (canOfficialize()
+        ? '<button type="button" class="es-mk-btn" id="es-mk-official-open">Ufficializza accordo</button>'
+        : '<p class="es-mk-empty-col" style="margin:0">Consultazione: lo Scout non può ufficializzare acquisti sul Wall.</p>') +
       '</div>';
     html += '<form class="es-mk-form" id="es-mk-official-form" hidden>' +
       '<label>Calciatore<input name="player" required placeholder="Nome e cognome"></label>' +
@@ -339,6 +391,10 @@
   function officialize(payload) {
     if (!isLogged()) {
       needLogin('#wall-trasferimenti');
+      return;
+    }
+    if (!canOfficialize()) {
+      toast('Lo Scout non può ufficializzare acquisti sul Wall. Operazione riservata a DS / Presidente.', 'error');
       return;
     }
     var row = {
@@ -399,6 +455,70 @@
     saveList(items);
     renderSecret();
   }
+  function forwardToDs(id) {
+    var u = userObj();
+    if (!scoutUnderContract(u)) {
+      toast('Serve lo status Under Contract e il club per inoltrare al DS.', 'error');
+      return;
+    }
+    var club = String(u.squadra || u.club || '').trim();
+    if (!club) {
+      toast('Indica il club in anagrafica per la filiera con il DS.', 'error');
+      return;
+    }
+    var it = myList().filter(function (x) { return x.id === id; })[0];
+    if (!it) return;
+    var map = loadMap(LIST_KEY);
+    var dsKey = 'ds:' + slug(club);
+    if (!map[dsKey] || !Array.isArray(map[dsKey].items)) map[dsKey] = { items: [] };
+    map[dsKey].items.unshift({
+      id: 'sl-ds-' + Date.now(),
+      playerId: it.playerId,
+      name: it.name,
+      role: it.role,
+      city: it.city,
+      region: it.region,
+      photo: it.photo,
+      priority: it.priority,
+      status: it.status,
+      notes: it.notes || '',
+      fromScout: meKey(),
+      scoutName: [u.nome, u.cognome].filter(Boolean).join(' ') || 'Scout',
+      dossierAt: new Date().toISOString(),
+      addedAt: new Date().toISOString()
+    });
+    map[dsKey].updatedAt = new Date().toISOString();
+    saveMap(LIST_KEY, map);
+    toast('Dossier inoltrato alla Secret List del DS di ' + club + '. Nessuna notifica all\'atleta.', 'success');
+  }
+  function proposeToClub(id) {
+    var u = userObj();
+    var it = myList().filter(function (x) { return x.id === id; })[0];
+    if (!it) return;
+    var club = window.prompt('Club a cui proporre il dossier di ' + it.name + ':');
+    if (!club) return;
+    club = String(club).trim();
+    if (!club) return;
+    var linked = !!u.obsDsLink;
+    var map = loadMap('elisee_scout_proposals_v1');
+    var k = meKey() || '_guest';
+    if (!Array.isArray(map[k])) map[k] = [];
+    map[k].unshift({
+      id: 'pr-' + Date.now(),
+      player: it.name,
+      role: it.role,
+      club: club,
+      notes: it.notes || '',
+      authorized: linked,
+      at: new Date().toISOString()
+    });
+    saveMap('elisee_scout_proposals_v1', map);
+    if (!linked) {
+      toast('Senza autorizzazione del DS la scheda non entra nell\'area riservata del club. Salvata come proposta in bozza per ' + club + '.', 'warning');
+      return;
+    }
+    toast('Dossier di presentazione proposto a ' + club + '.', 'success');
+  }
   function cycleStatus(id) {
     var items = myList();
     items.forEach(function (it) {
@@ -452,8 +572,34 @@
       if (pr) { cyclePrio(pr.getAttribute('data-prio')); return; }
       var st = e.target.closest('[data-status]');
       if (st) { cycleStatus(st.getAttribute('data-status')); return; }
+      var fwd = e.target.closest('[data-fwd-ds]');
+      if (fwd) { forwardToDs(fwd.getAttribute('data-fwd-ds')); return; }
+      var prop = e.target.closest('[data-propose]');
+      if (prop) { proposeToClub(prop.getAttribute('data-propose')); return; }
+      var cht = e.target.closest('[data-obs-chat]');
+      if (cht) {
+        if (window.openUserMessages) window.openUserMessages();
+        else toast('Apri i messaggi per contattare il calciatore.', 'info');
+        return;
+      }
+      var sh = e.target.closest('[data-obs-sheet]');
+      if (sh) {
+        var itS = myList().filter(function (x) { return x.id === sh.getAttribute('data-obs-sheet'); })[0];
+        if (window.openSchedeTecniche) {
+          window.openSchedeTecniche({
+            title: itS ? ('Dossier ' + itS.name) : 'Scheda tecnica',
+            club: (userObj().squadra || userObj().club || ''),
+            role: itS ? itS.role : ''
+          });
+        } else if (window.switchView) window.switchView('schede', '#schede-tecniche');
+        return;
+      }
       var off = e.target.closest('[data-official]');
       if (off) {
+        if (!canOfficialize()) {
+          toast('Lo Scout non può ufficializzare acquisti sul Wall.', 'error');
+          return;
+        }
         var it = myList().filter(function (x) { return x.id === off.getAttribute('data-official'); })[0];
         if (!it) return;
         tab = 'wall';
@@ -469,12 +615,17 @@
         return;
       }
       if (e.target.closest('#es-mk-official-open')) {
+        if (!canOfficialize()) {
+          toast('Lo Scout non può ufficializzare acquisti sul Wall. Operazione riservata a DS / Presidente.', 'error');
+          return;
+        }
         var form = document.getElementById('es-mk-official-form');
         if (form) form.hidden = !form.hidden;
       }
     });
     hub.addEventListener('input', function (e) {
       if (e.target && e.target.id === 'es-mk-q') renderSecret();
+      if (e.target && e.target.id === 'es-mk-geo') renderSecret();
       if (e.target && e.target.id === 'es-mk-prio') renderSecret();
       if (e.target && e.target.id === 'es-mk-pick-q') paintPicker(e.target.value);
       if (e.target && e.target.getAttribute('data-note')) {
