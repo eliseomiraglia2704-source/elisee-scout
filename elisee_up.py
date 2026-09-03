@@ -14,7 +14,6 @@ from __future__ import annotations
 import json
 import os
 import socket
-import subprocess
 import sys
 import threading
 import time
@@ -172,35 +171,10 @@ def _otp_send_smtp(to_email: str, subject: str, text: str, html: str) -> bool:
         return False
 
 
-def _otp_send_outlook(to_email: str, subject: str, html: str) -> bool:
-    ps = (
-        "param($To,$Subject,$Html)\n"
-        "try {\n"
-        "  $o = New-Object -ComObject Outlook.Application\n"
-        "  $m = $o.CreateItem(0)\n"
-        "  $m.To = $To\n"
-        "  $m.Subject = $Subject\n"
-        "  $m.HTMLBody = $Html\n"
-        "  $m.Send()\n"
-        "  Write-Output 'OK'\n"
-        "} catch { Write-Output $_.Exception.Message; exit 1 }\n"
-    )
-    try:
-        r = subprocess.run(
-            ["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", ps, "-To", to_email, "-Subject", subject, "-Html", html],
-            capture_output=True,
-            text=True,
-            timeout=10,
-        )
-        return r.returncode == 0 and "OK" in (r.stdout or "")
-    except Exception:
-        return False
-
-
-def _otp_send_supabase(to_email: str) -> bool:
+def _otp_send_supabase(to_email: str) -> tuple[bool, str]:
     base, key = _otp_supabase_cfg()
     if not base or not key:
-        return False
+        return False, "servizio email non configurato"
     try:
         payload = json.dumps({"email": to_email, "create_user": True}).encode("utf-8")
         req = urllib.request.Request(
@@ -214,9 +188,30 @@ def _otp_send_supabase(to_email: str) -> bool:
             method="POST",
         )
         with urllib.request.urlopen(req, timeout=15) as r:
-            return 200 <= int(getattr(r, "status", 200) or 200) < 300
-    except Exception:
-        return False
+            if 200 <= int(getattr(r, "status", 200) or 200) < 300:
+                return True, ""
+            return False, "invio rifiutato dal servizio email"
+    except urllib.error.HTTPError as e:
+        try:
+            body = e.read().decode("utf-8", "replace")
+        except Exception:
+            body = ""
+        msg = ""
+        try:
+            data = json.loads(body) if body else {}
+            msg = str(data.get("msg") or data.get("error_description") or data.get("error") or "")
+        except Exception:
+            msg = body[:180]
+        low = msg.lower()
+        if e.code == 429 or "rate" in low:
+            return False, "Troppe email in pochi minuti. Attendi e riprova."
+        if "invalid" in low and "email" in low:
+            return False, "Indirizzo email non valido."
+        log("otp supabase send fail " + str(e.code) + " " + (msg or ""))
+        return False, (msg or "invio email non riuscito")
+    except Exception as e:
+        log("otp supabase send err " + str(e))
+        return False, "invio email non riuscito"
 
 
 def _otp_verify_supabase(email: str, code: str) -> bool:
@@ -241,18 +236,17 @@ def _otp_verify_supabase(email: str, code: str) -> bool:
         return False
 
 
-def _otp_send_email(to_email: str, code: str) -> str:
-    """Invia l'OTP via email. Ritorna 'local' | 'supabase' | ''."""
+def _otp_send_email(to_email: str, code: str) -> tuple[str, str]:
+    """Invia l'OTP via email. Ritorna (via, errore). via: 'local' | 'supabase' | ''."""
     subject, text, html = _otp_mail_bodies(code)
     if _otp_send_resend(to_email, subject, text, html):
-        return "local"
+        return "local", ""
     if _otp_send_smtp(to_email, subject, text, html):
-        return "local"
-    if _otp_send_outlook(to_email, subject, html):
-        return "local"
-    if _otp_send_supabase(to_email):
-        return "supabase"
-    return ""
+        return "local", ""
+    ok, err = _otp_send_supabase(to_email)
+    if ok:
+        return "supabase", ""
+    return "", err or "Invio email non riuscito. Riprova tra poco."
 
 PORT = int(os.environ.get("ELISEE_PORT", "8080"))
 OAUTH_BRIDGE_PORT = int(os.environ.get("ELISEE_OAUTH_BRIDGE_PORT", "3000"))
@@ -654,11 +648,11 @@ class Handler(SimpleHTTPRequestHandler):
                     secret = _otp_secret()
                     h = hmac.new(secret.encode(), f"{email}:{raw_code}".encode(), hashlib.sha256).hexdigest()
                     exp = now_ts + 600000
-                    via = _otp_send_email(email, raw_code)
+                    via, send_err = _otp_send_email(email, raw_code)
                     if not via:
                         self._json(503, {
                             "success": False,
-                            "error": "Invio email non riuscito. Controlla la casella e riprova: il codice arriva solo via posta elettronica.",
+                            "error": send_err or "Invio email non riuscito. Riprova tra poco: il codice arriva solo via posta elettronica.",
                             "email": email,
                         })
                         return True
