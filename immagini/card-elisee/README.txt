@@ -6,8 +6,9 @@ basta sovrascrivere i file con lo stesso nome e ricaricare il sito
 (Ctrl+F5). Formato obbligatorio: PNG.
 
 sfondo.png
-  Cornice / sfondo della Card. Consigliato 644 x 894 px, PNG con
-  trasparenza fuori dal bordo. NON è una card EA FC: è lo stile Elisee.
+  Cornice della Card (stessa struttura TOTY: scudetto).
+  Default = template Primetime. Sostituisci questo PNG per
+  cambiare look a 360° senza toccare il codice. 644 x 894 px.
 
 maglia.png
   Maglia ufficiale Elisee Scout, uguale per tutti. PNG scontornata

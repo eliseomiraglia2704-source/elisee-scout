@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-03**
-Ultimo fatto: **Card Elisee** — PNG only, stats IT (Velocità/Tiro/Passaggio/Dribbling/Difesa/Fisico) → overall, maglia sito, cartella `immagini/card-elisee/` per il grafico, flusso utente→staff (cerca, scarica, carica PNG, Salva). Cache `ELISEE1`.
+Ultimo fatto: **Card: struttura TOTY ripristinata**, grafica sostituibile in `immagini/card-elisee/` (sfondo/maglia/viso). Cache `ELISEE2`.
 Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -360,6 +360,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-03** — Ripristinata la struttura TOTY della Card; personalizzazione 360° solo dai PNG in `immagini/card-elisee/`. Cache `ELISEE2`.
 
 - **2026-09-03** — Card Elisee: PNG only, stats in italiano, overall calcolato, maglia sito, cartella grafica `immagini/card-elisee/`, atelier staff (cerca/scarica/carica/salva). Cache `ELISEE1`.
 

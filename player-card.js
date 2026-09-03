@@ -316,18 +316,20 @@
     var face = faceSrc(u);
     var flag = '<img class="es-pc-flag" src="immagini/nazioni-loghi/' + esc(nat) + '.png" alt="" onerror="this.style.visibility=\'hidden\'">';
     var stats = rows.map(function (row) {
-      return '<div class="es-pc-statcell" title="' + esc(row[2]) + '"><span>' + esc(row[2]) + '</span><b>' + esc(row[1]) + '</b></div>';
+      return '<div class="es-pc-statcell" title="' + esc(row[2]) + '"><span>' + esc(row[0]) + '</span><b>' + esc(row[1]) + '</b></div>';
     }).join('');
-    var ovrHtml = '<div class="es-pc-ovr" title="Overall">' + (ovr == null ? '–' : ovr) + '</div>';
     return '<div class="es-pc-card-shell">' +
-      ovrHtml +
+      playstylesHtml(u) +
+      '<div class="es-pc-ovr is-out" title="Overall">' + (ovr == null ? '–' : ovr) + '</div>' +
       '<article class="es-pc-card es-pc-elisee"' + (opts.hideHint ? '' : ' id="es-pc-card"') +
         ' tabindex="0" role="button" aria-label="Apri Card di ' + esc(name) + '">' +
         '<img class="es-pc-frame" src="immagini/card-elisee/sfondo.png" alt="">' +
         '<div class="es-pc-inner">' +
-          '<div class="es-pc-kit"><img src="immagini/card-elisee/maglia.png" alt="Maglia Elisee Scout"></div>' +
+          '<div class="es-pc-fifa-ovrcol">' +
+            '<div class="es-pc-pos">' + esc(pos) + '</div>' +
+          '</div>' +
+          '<div class="es-pc-kit"><img src="immagini/card-elisee/maglia.png" alt=""></div>' +
           '<div class="es-pc-fifa-photo"><img class="es-pc-player" src="' + esc(face) + '" alt=""></div>' +
-          '<div class="es-pc-fifa-ovrcol"><div class="es-pc-pos">' + esc(pos) + '</div></div>' +
           '<div class="es-pc-fifa-bottom">' +
             '<div class="es-pc-fifa-name">' + esc(displaySurname(u)) + '</div>' +
             '<div class="es-pc-fifa-stats-row">' + stats + '</div>' +
