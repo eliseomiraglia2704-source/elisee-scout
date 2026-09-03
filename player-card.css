@@ -1,7 +1,7 @@
 /* Card calciatore collezionabile + heatmap + GPS + Album — palette ufficiale */
 .es-pc-wrap {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 246px 1fr;
   gap: 1.25rem;
   margin: 0 0 1.15rem;
   align-items: center;
@@ -12,35 +12,35 @@
 
 .es-pc-card-shell {
   position: relative;
-  width: 268px;
-  padding-left: 18px;
-  padding-top: 0;
-  padding-right: 0;
+  width: 246px;
+  padding: 0;
   overflow: visible;
   filter: drop-shadow(0 12px 22px rgba(0, 0, 0, 0.55));
 }
 .es-pc-fifa-ovrcol .es-pc-ovr {
   font-family: Outfit, Inter, sans-serif;
-  font-size: 2.05rem;
+  font-size: 2.55rem;
   font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.04em;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
   color: #ffe7b8;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.65);
-  padding: 0.04em 0.05em 0;
+  padding: 0.02em 0.04em 0;
 }
 .es-pc-playstyles {
-  position: absolute;
-  left: 0;
-  top: 38%;
-  z-index: 6;
+  position: relative;
+  left: auto;
+  top: auto;
+  z-index: 8;
   display: flex;
   flex-direction: column;
-  gap: 0.32rem;
+  align-items: center;
+  gap: 0.18rem;
+  margin-top: 0.28rem;
 }
 .es-pc-ps {
-  width: 30px;
-  height: 30px;
+  width: 22px;
+  height: 22px;
   display: grid;
   place-items: center;
   color: #ffd27a;
@@ -48,7 +48,7 @@
   clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
   box-shadow: 0 0 0 1px rgba(255, 140, 40, 0.55);
 }
-.es-pc-ps svg { width: 13px; height: 13px; }
+.es-pc-ps svg { width: 11px; height: 11px; }
 
 .es-pc-card,
 .es-pc-card.es-pc-fc26,
@@ -107,80 +107,60 @@
 
 .es-pc-fifa-ovrcol {
   position: absolute;
-  top: 17.2%;
-  left: 19.2%;
+  top: 18.4%;
+  left: 18.6%;
   z-index: 8;
   text-align: center;
-  min-width: 2.6rem;
+  min-width: 2.7rem;
   pointer-events: none;
   overflow: visible;
 }
 .es-pc-pos {
   font-family: Outfit, Inter, sans-serif;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-weight: 800;
-  letter-spacing: 0.08em;
-  margin-top: 0.08rem;
+  letter-spacing: 0.1em;
+  margin-top: 0.06rem;
   color: #ffd08a;
 }
 
 .es-pc-kit {
-  position: absolute;
-  left: 12%;
-  right: 10%;
-  top: 40%;
-  bottom: 28%;
-  z-index: 2;
-  display: grid;
-  place-items: start center;
-  pointer-events: none;
-  overflow: hidden;
-}
-.es-pc-kit img {
-  width: 90%;
-  height: 90%;
-  object-fit: contain;
-  object-position: center top;
-  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+  display: none;
 }
 .es-pc-fifa-photo {
   position: absolute;
-  left: 4%;
-  right: -2%;
-  top: 1%;
-  bottom: 24%;
+  left: 6%;
+  right: -4%;
+  top: 0;
+  bottom: 36%;
   z-index: 4;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 88%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 88%, transparent 100%);
 }
 .es-pc-fifa-photo img.es-pc-player,
 .es-pc-fifa-photo img,
 .es-pc-ph {
   position: absolute;
-  left: 52%;
-  bottom: 0;
-  transform: translateX(-50%);
-  height: 108%;
-  width: auto;
+  inset: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: none;
   max-width: none;
   max-height: none;
-  object-fit: contain;
-  object-position: bottom center;
+  object-fit: cover;
+  object-position: 54% 6%;
   filter: drop-shadow(0 8px 14px rgba(0, 0, 0, 0.45));
 }
 .es-pc-ph {
   display: grid;
-  place-items: end center;
+  place-items: center;
   font-family: Outfit, Inter, sans-serif;
   font-size: 3.6rem;
   font-weight: 800;
   color: rgba(255, 210, 140, 0.22);
   letter-spacing: -0.04em;
-  height: 100%;
-  width: 100%;
-  left: 0;
-  transform: none;
   object-fit: none;
 }
 .es-pc-fifa-special {
@@ -203,49 +183,47 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 3;
-  padding: 0 0.7rem 1.05rem;
-  background: linear-gradient(180deg, transparent 0%, rgba(10, 3, 0, 0.55) 28%, rgba(8, 2, 0, 0.82) 100%);
+  z-index: 5;
+  padding: 0 0.55rem 0.72rem;
+  background: linear-gradient(180deg, transparent 0%, rgba(10, 3, 0, 0.4) 16%, rgba(8, 2, 0, 0.9) 100%);
   text-align: center;
 }
 .es-pc-fifa-name {
   font-family: Outfit, Inter, sans-serif;
-  font-size: 1.22rem;
+  font-size: 1.28rem;
   font-weight: 800;
   letter-spacing: 0.01em;
   text-align: center;
   color: #ffe7b8;
-  padding: 0 0.4rem 0.28rem;
+  padding: 0 0.3rem 0.18rem;
   text-transform: none;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
   background: none;
   border: 0;
 }
-.es-pc-fifa-stats-row {
+.es-pc-stat-labs,
+.es-pc-stat-nums {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 0.12rem;
-  padding: 0 0.1rem 0.35rem;
+  gap: 0.08rem;
   font-family: Outfit, Inter, sans-serif;
+  padding: 0 0.08rem;
 }
-.es-pc-statcell {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.02rem;
-}
-.es-pc-statcell span {
-  font-size: 0.48rem;
+.es-pc-stat-labs span {
+  font-size: 0.5rem;
   font-weight: 800;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
   color: #7dd3fc;
   text-transform: uppercase;
 }
-.es-pc-statcell b {
-  font-size: 0.92rem;
+.es-pc-stat-nums {
+  padding-bottom: 0.28rem;
+}
+.es-pc-stat-nums b {
+  font-size: 1.05rem;
   font-weight: 800;
   color: #fff4d6;
-  line-height: 1;
+  line-height: 1.05;
 }
 .es-pc-fifa-ids {
   display: flex;

@@ -278,7 +278,7 @@
     if (window.EliseeCardAtelier && typeof window.EliseeCardAtelier.faceSrc === 'function') {
       return window.EliseeCardAtelier.faceSrc(u);
     }
-    return 'immagini/card-elisee/esempio-viso.png?v=20260903_ELISEE6';
+    return 'immagini/card-elisee/esempio-viso.png?v=20260903_ELISEE7';
   }
 
   function displaySurname(u) {
@@ -315,24 +315,28 @@
     var rows = itAttrs(u);
     var face = faceSrc(u);
     var flag = '<img class="es-pc-flag" src="immagini/nazioni-loghi/' + esc(nat) + '.png" alt="" onerror="this.style.visibility=\'hidden\'">';
-    var stats = rows.map(function (row) {
-      return '<div class="es-pc-statcell" title="' + esc(row[2]) + '"><span>' + esc(row[0]) + '</span><b>' + esc(row[1]) + '</b></div>';
+    var labs = rows.map(function (row) {
+      return '<span title="' + esc(row[2]) + '">' + esc(row[0]) + '</span>';
+    }).join('');
+    var nums = rows.map(function (row) {
+      return '<b title="' + esc(row[2]) + '">' + esc(row[1]) + '</b>';
     }).join('');
     return '<div class="es-pc-card-shell">' +
-      playstylesHtml(u) +
       '<article class="es-pc-card es-pc-elisee"' + (opts.hideHint ? '' : ' id="es-pc-card"') +
         ' tabindex="0" role="button" aria-label="Apri Card di ' + esc(name) + '">' +
         '<img class="es-pc-frame" src="immagini/card-elisee/sfondo.png" alt="">' +
         '<div class="es-pc-fifa-ovrcol">' +
           '<div class="es-pc-ovr" title="Overall">' + (ovr == null ? '–' : ovr) + '</div>' +
           '<div class="es-pc-pos">' + esc(pos) + '</div>' +
+          playstylesHtml(u) +
         '</div>' +
         '<div class="es-pc-inner">' +
-          '<div class="es-pc-kit"><img src="immagini/card-elisee/maglia.png?v=20260903_ELISEE6" alt=""></div>' +
+          '<div class="es-pc-kit"><img src="immagini/card-elisee/maglia.png?v=20260903_ELISEE7" alt=""></div>' +
           '<div class="es-pc-fifa-photo"><img class="es-pc-player" src="' + esc(face) + '" alt=""></div>' +
           '<div class="es-pc-fifa-bottom">' +
             '<div class="es-pc-fifa-name">' + esc(displaySurname(u)) + '</div>' +
-            '<div class="es-pc-fifa-stats-row">' + stats + '</div>' +
+            '<div class="es-pc-stat-labs">' + labs + '</div>' +
+            '<div class="es-pc-stat-nums">' + nums + '</div>' +
             '<div class="es-pc-fifa-ids">' + flag +
               '<span class="es-pc-league">ELISEE</span>' +
             '</div>' +
