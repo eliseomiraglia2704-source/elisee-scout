@@ -627,7 +627,7 @@
       existing.className = 'es-otp-bottom-banner';
       var mail = otpEmailOf(u);
       var gmailLink = /@gmail\.com$/.test(mail)
-        ? ' <a href="https://mail.google.com/mail/u/0/#search/Elisee+Scout" target="_blank" rel="noopener" class="es-otp-inbox-link">Apri Gmail</a>'
+        ? ' <a href="https://mail.google.com/mail/u/0/#search/subject%3A%22Codice+di+verifica+Elisee+Scout%22" target="_blank" rel="noopener" class="es-otp-inbox-link">Apri Gmail</a>'
         : '';
       existing.innerHTML =
         '<div class="es-otp-banner-inner es-otp-banner-flow">' +

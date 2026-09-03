@@ -76,23 +76,40 @@ def _otp_supabase_cfg() -> tuple[str, str]:
 
 
 def _otp_mail_bodies(code: str) -> tuple[str, str, str]:
-    subject = "Il tuo codice di verifica Elisee Scout"
+    digits = "".join(ch for ch in str(code or "") if ch.isdigit())[:8]
+    subject = "Codice di verifica Elisee Scout"
     text = (
-        f"Il tuo codice OTP di verifica è: {code}\n\n"
-        "Valido 10 minuti. Aprilo in questa email e inseriscilo nella barra di verifica su Elisee Scout.\n"
+        f"ELISEE SCOUT\n\n"
+        f"Il tuo codice di verifica è: {digits}\n\n"
+        "Valido 10 minuti. Aprilo in questa email e inseriscilo nella barra in basso sul sito.\n"
+        "Non è un link di accesso e non è un SMS.\n"
         "Non condividere il codice con nessuno.\n\n"
         "Se non hai richiesto questo codice, ignora il messaggio."
     )
     html = (
-        "<div style='font-family:Arial,sans-serif;max-width:480px;margin:0 auto;color:#0f172a'>"
-        "<p>Ciao,</p>"
-        "<p>Il tuo codice OTP di verifica per <strong>Elisee Scout</strong> è:</p>"
-        f"<p style='font-size:32px;letter-spacing:10px;font-weight:800;color:#0284c7'>{code}</p>"
-        "<p>Valido 10 minuti. Inseriscilo nella barra in basso sul sito. Non è un SMS: arriva solo via email.</p>"
-        "<p style='color:#64748b;font-size:13px'>Se non hai richiesto questo codice, ignora il messaggio.</p>"
-        "</div>"
+        '<!DOCTYPE html><html lang="it"><body style="margin:0;padding:0;background:#0b1220;">'
+        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0b1220;padding:24px 0;">'
+        '<tr><td align="center">'
+        '<table role="presentation" width="560" cellpadding="0" cellspacing="0" style="width:560px;max-width:560px;background:#111827;border:1px solid #1e3a5f;border-radius:16px;">'
+        '<tr><td style="background:#0284c7;padding:20px 28px;font-family:Arial,Helvetica,sans-serif;color:#ffffff;font-size:13px;font-weight:800;letter-spacing:0.16em;">ELISEE SCOUT</td></tr>'
+        '<tr><td style="padding:28px 28px 8px;font-family:Arial,Helvetica,sans-serif;color:#e2e8f0;font-size:22px;font-weight:800;">Codice di verifica</td></tr>'
+        '<tr><td style="padding:0 28px 20px;font-family:Arial,Helvetica,sans-serif;color:#94a3b8;font-size:15px;line-height:1.55;">Usa questo codice a 6 cifre nella barra in basso sul sito. Non è un link di accesso e non è un SMS.</td></tr>'
+        '<tr><td align="center" style="padding:8px 28px 24px;">'
+        '<table role="presentation" cellpadding="0" cellspacing="0" style="background:#0b1220;border:1px solid #38bdf8;border-radius:14px;">'
+        f'<tr><td style="padding:18px 32px;font-family:Consolas,\'Courier New\',monospace;font-size:34px;letter-spacing:10px;font-weight:800;color:#38bdf8;">{digits}</td></tr>'
+        "</table></td></tr>"
+        '<tr><td style="padding:0 28px 28px;font-family:Arial,Helvetica,sans-serif;color:#64748b;font-size:13px;line-height:1.5;">Valido 10 minuti. Non condividere il codice con nessuno. Se non hai richiesto questa verifica, ignora l\'email.</td></tr>'
+        '<tr><td style="padding:14px 28px;border-top:1px solid #1e3a5f;font-family:Arial,Helvetica,sans-serif;color:#475569;font-size:11px;">Elisee Scout · verifica account</td></tr>'
+        "</table></td></tr></table></body></html>"
     )
     return subject, text, html
+
+
+def _otp_resend_from() -> str:
+    return (
+        os.environ.get("RESEND_FROM")
+        or "Elisee Scout <verifica@barberiagarofalo.it>"
+    ).strip()
 
 
 def _otp_send_resend(to_email: str, subject: str, text: str, html: str) -> bool:
@@ -100,22 +117,39 @@ def _otp_send_resend(to_email: str, subject: str, text: str, html: str) -> bool:
     if not key:
         return False
     try:
-        payload = json.dumps({
-            "from": os.environ.get("RESEND_FROM") or "Elisee Scout <verifica@elisee-scout.vercel.app>",
+        body = {
+            "from": _otp_resend_from(),
             "to": [to_email],
             "subject": subject,
             "text": text,
             "html": html,
-        }).encode("utf-8")
+        }
+        reply_to = (os.environ.get("RESEND_REPLY_TO") or "").strip()
+        if reply_to:
+            body["reply_to"] = reply_to
+        payload = json.dumps(body).encode("utf-8")
         req = urllib.request.Request(
             "https://api.resend.com/emails",
             data=payload,
-            headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
+            headers={
+                "Authorization": f"Bearer {key}",
+                "Content-Type": "application/json",
+                "User-Agent": "EliseeScout/1.0",
+                "Accept": "application/json",
+            },
             method="POST",
         )
-        with urllib.request.urlopen(req, timeout=12) as r:
+        with urllib.request.urlopen(req, timeout=15) as r:
             return 200 <= int(getattr(r, "status", 200) or 200) < 300
-    except Exception:
+    except urllib.error.HTTPError as e:
+        try:
+            msg = e.read().decode("utf-8", "replace")[:240]
+        except Exception:
+            msg = ""
+        log("otp resend fail " + str(e.code) + " " + msg)
+        return False
+    except Exception as e:
+        log("otp resend err " + str(e))
         return False
 
 
@@ -242,16 +276,13 @@ def _otp_verify_supabase(email: str, code: str) -> bool:
 
 
 def _otp_send_email(to_email: str, code: str) -> tuple[str, str]:
-    """Invia l'OTP via email. Ritorna (via, errore). via: 'local' | 'supabase' | ''."""
+    """Invia l'OTP via email. Ritorna (via, errore). via: 'local' | ''."""
     subject, text, html = _otp_mail_bodies(code)
     if _otp_send_resend(to_email, subject, text, html):
         return "local", ""
     if _otp_send_smtp(to_email, subject, text, html):
         return "local", ""
-    ok, err = _otp_send_supabase(to_email)
-    if ok:
-        return "supabase", ""
-    return "", err or "Invio email non riuscito. Riprova tra poco."
+    return "", "Invio email non riuscito. Riprova."
 
 PORT = int(os.environ.get("ELISEE_PORT", "8080"))
 OAUTH_BRIDGE_PORT = int(os.environ.get("ELISEE_OAUTH_BRIDGE_PORT", "3000"))

@@ -12,12 +12,16 @@ Thumbs.db
 *.log
 .vercel
 node_modules/
+.env
+.env.local
 
 # Auth secrets / sessions — never commit
 data/auth/config.json
 data/auth/users.json
 data/auth/sessions.json
 data/auth/oauth_states.json
+data/auth/smtp.json
+data/auth/otp-store.json
 
 # Manager inbox (candidature e proposte)
 data/manager/state.json

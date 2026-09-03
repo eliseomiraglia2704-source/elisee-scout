@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-03**
-Ultimo fatto: **OTP senza limite “troppe email”** — Tolto il blocco su invii ravvicinati. Cache `OTPMAIL2`.
+Ultimo fatto: **Email OTP Elisee Scout** — Niente più magic link inglese di Supabase Auth. Arriva un’email italiana con codice a 6 cifre, mittente Elisee Scout. Cache `OTPMAIL3`.
 Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -354,6 +354,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-03** — Email OTP: tolto il fallback Supabase Auth (inglese, “Your sign-in link”, pulsante Sign in, powered by Supabase). Invio solo Resend/SMTP con template italiano Elisee Scout, codice a 6 cifre, niente link di accesso. Cache `OTPMAIL3`.
 
 - **2026-09-03** — Hub minigioco: card vuota sostituita con Pokemon Calcistico (badge Prossimamente, non giocabile). Cache `PKMN1`.
 
