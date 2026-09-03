@@ -334,7 +334,7 @@
     var nat = nationCode(nationOf(u));
     var attrs = fifaAttrs(u);
     var photo = ph
-      ? '<img src="' + esc(ph) + '" alt="">'
+      ? '<img class="es-pc-player" src="' + esc(ph) + '" alt="" crossorigin="anonymous">'
       : '<div class="es-pc-ph">' + esc(initials(name)) + '</div>';
     var flag = '<img class="es-pc-flag" src="immagini/nazioni-loghi/' + esc(nat) + '.png" alt="" onerror="this.style.visibility=\'hidden\'">';
     var logo = club
@@ -346,27 +346,110 @@
     var ma = maTagsOf(u);
     var special = (ma && ma.mention) ? '<span class="es-pc-fifa-special">Menzione</span>' : '';
     return '<div class="es-pc-card-shell">' +
-      playstylesHtml(u) +
       '<article class="es-pc-card es-pc-fc26"' + (opts.hideHint ? '' : ' id="es-pc-card"') +
         ' tabindex="0" role="button" aria-label="Apri Card di ' + esc(name) + '">' +
-        '<div class="es-pc-crest" title="Elisee Scout">ES</div>' +
-        '<div class="es-pc-fifa-ovrcol">' +
-          '<div class="es-pc-ovr">' + ovr + '</div>' +
-          '<div class="es-pc-pos">' + esc(pos) + '</div>' +
-        '</div>' +
-        '<div class="es-pc-fifa-photo">' + photo + special + '</div>' +
-        '<div class="es-pc-fifa-bottom">' +
-          '<div class="es-pc-fifa-name">' + esc(displaySurname(u)) + '</div>' +
-          '<div class="es-pc-fifa-stats-row">' + stats + '</div>' +
-          '<div class="es-pc-fifa-ids">' + flag +
-            '<span class="es-pc-league">ELISEE</span>' +
-            logo +
+        '<img class="es-pc-frame" src="immagini/card-bg/uel-primetime.png" alt="">' +
+        '<div class="es-pc-inner">' +
+          playstylesHtml(u) +
+          '<div class="es-pc-fifa-ovrcol">' +
+            '<div class="es-pc-ovr">' + ovr + '</div>' +
+            '<div class="es-pc-pos">' + esc(pos) + '</div>' +
           '</div>' +
-          '<div class="es-pc-fifa-status' + (free ? ' is-free' : '') + '">' +
-            (free ? 'Svincolato' : 'Tesserato') +
+          '<div class="es-pc-fifa-photo">' + photo + special + '</div>' +
+          '<div class="es-pc-fifa-bottom">' +
+            '<div class="es-pc-fifa-name">' + esc(displaySurname(u)) + '</div>' +
+            '<div class="es-pc-fifa-stats-row">' + stats + '</div>' +
+            '<div class="es-pc-fifa-ids">' + flag +
+              '<span class="es-pc-league">ELISEE</span>' +
+              logo +
+            '</div>' +
+            '<div class="es-pc-fifa-status' + (free ? ' is-free' : '') + '">' +
+              (free ? 'Svincolato' : 'Tesserato') +
+            '</div>' +
           '</div>' +
         '</div>' +
       '</article></div>';
+  }
+
+  function scontornaImg(img) {
+    if (!img || img.dataset.cut === '1') return;
+    function run() {
+      if (img.dataset.cut === '1') return;
+      var w = img.naturalWidth, h = img.naturalHeight;
+      if (!w || !h || w < 12 || h < 12) return;
+      var c = document.createElement('canvas');
+      c.width = w;
+      c.height = h;
+      var ctx = c.getContext('2d');
+      try { ctx.drawImage(img, 0, 0); } catch (e) { return; }
+      var id;
+      try { id = ctx.getImageData(0, 0, w, h); } catch (e) { return; }
+      var d = id.data;
+      function idx(x, y) { return (y * w + x) * 4; }
+      function dist(i, r, g, b) {
+        return Math.abs(d[i] - r) + Math.abs(d[i + 1] - g) + Math.abs(d[i + 2] - b);
+      }
+      var sr = 0, sg = 0, sb = 0, n = 0;
+      function acc(x, y) {
+        var i = idx(x, y);
+        sr += d[i]; sg += d[i + 1]; sb += d[i + 2]; n++;
+      }
+      var sx = Math.max(1, (w / 50) | 0), sy = Math.max(1, (h / 50) | 0);
+      var x, y;
+      for (x = 0; x < w; x += sx) { acc(x, 0); acc(x, h - 1); }
+      for (y = 0; y < h; y += sy) { acc(0, y); acc(w - 1, y); }
+      sr = (sr / n) | 0; sg = (sg / n) | 0; sb = (sb / n) | 0;
+      var thr = 62;
+      var seen = new Uint8Array(w * h);
+      var q = [];
+      function push(px, py) {
+        if (px < 0 || py < 0 || px >= w || py >= h) return;
+        var p = py * w + px;
+        if (seen[p]) return;
+        var i = idx(px, py);
+        if (d[i + 3] < 8) { seen[p] = 1; return; }
+        if (dist(i, sr, sg, sb) > thr) return;
+        seen[p] = 1;
+        q.push(p);
+      }
+      for (x = 0; x < w; x++) { push(x, 0); push(x, h - 1); }
+      for (y = 0; y < h; y++) { push(0, y); push(w - 1, y); }
+      var qi = 0;
+      while (qi < q.length) {
+        var p = q[qi++];
+        var px = p % w, py = (p / w) | 0;
+        d[idx(px, py) + 3] = 0;
+        push(px - 1, py); push(px + 1, py); push(px, py - 1); push(px, py + 1);
+      }
+      var gone = 0;
+      for (var i = 3; i < d.length; i += 4) if (d[i] === 0) gone++;
+      if (gone / (w * h) > 0.78 || gone / (w * h) < 0.02) return;
+      var k, nx, ny, ii, jj, t;
+      for (y = 1; y < h - 1; y++) {
+        for (x = 1; x < w - 1; x++) {
+          ii = idx(x, y);
+          if (d[ii + 3] === 0) continue;
+          t = 0;
+          for (ny = -1; ny <= 1; ny++) {
+            for (nx = -1; nx <= 1; nx++) {
+              jj = idx(x + nx, y + ny);
+              if (d[jj + 3] === 0) t++;
+            }
+          }
+          if (t) d[ii + 3] = Math.max(0, d[ii + 3] - t * 28);
+        }
+      }
+      ctx.putImageData(id, 0, 0);
+      img.dataset.cut = '1';
+      img.src = c.toDataURL('image/png');
+    }
+    if (img.complete && img.naturalWidth) run();
+    else img.addEventListener('load', run, { once: true });
+  }
+  function bindCardPhotos(root) {
+    root = root || document;
+    var imgs = root.querySelectorAll('.es-pc-player');
+    for (var i = 0; i < imgs.length; i++) scontornaImg(imgs[i]);
   }
 
   var ROWS = 8, COLS = 6;
@@ -566,7 +649,10 @@
   function openSheet(html) {
     var el = overlay();
     var sheet = document.getElementById('es-pc-sheet');
-    if (sheet) sheet.innerHTML = html;
+    if (sheet) {
+      sheet.innerHTML = html;
+      bindCardPhotos(sheet);
+    }
     el.classList.add('is-on');
     document.body.style.overflow = 'hidden';
   }
@@ -876,6 +962,7 @@
       else body.insertBefore(slot, body.firstChild);
     }
     slot.innerHTML = slotHtml(user || userObj());
+    bindCardPhotos(slot);
     refreshGpsTool();
   }
 
