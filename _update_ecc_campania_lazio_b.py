@@ -257,6 +257,8 @@ def main():
     if isinstance(cat.get("stats"), dict):
         cat["stats"]["total"] = len(cat["teams"])
     CATALOG.write_text(json.dumps(cat, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    from _kit_folders import ensure_kit_folders
+    ensure_kit_folders(cat.get("teams") or [])
     print("catalog teams", len(cat["teams"]), "added", len(new_teams))
 
     if MINIG.exists():

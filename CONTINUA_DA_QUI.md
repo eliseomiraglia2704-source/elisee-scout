@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-03**
-Ultimo fatto: **Cartelle kit solo nome squadra** — Tolto campionato dai nomi (`ecc-emilia-a-agazzanese` → `agazzanese`). 466 cartelle rinominate.
+Ultimo fatto: **Cartella kit automatica** — Ogni squadra inserita o sincronizzata ottiene `immagini/kits-2d/<nome-squadra>/`. Hook in `_sync_catalog_kits.py`, `_build_squadre_catalog.py`, script Eccellenza/donne. Modulo `_kit_folders.py`.
 Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -354,6 +354,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-03** — Da ora, ogni squadra nuova in catalogo ha la cartella kit 2D (solo nome). `_kit_folders.ensure_kit_folders` è chiamato da `_sync_catalog_kits.py`, `_build_squadre_catalog.py` e dagli script di inserimento Eccellenza/calcio femminile.
 
 - **2026-09-03** — Cartelle kit 2D: nome = solo squadra, niente campionato. `ecc-emilia-a-agazzanese` → `agazzanese`. Omonimi: `asd-agrigento-2`. Mappa `data/squadre/kit-folder-map.json`.
 

@@ -34,6 +34,15 @@ if _map_path.exists():
         folder_overrides.update(json.loads(_map_path.read_text(encoding="utf-8")) or {})
     except Exception:
         pass
+from _kit_folders import ensure_kit_folders
+_folder_stats = ensure_kit_folders(teams)
+folder_overrides.update(_folder_stats.get("mapping") or {})
+print(
+    "kit folders: create",
+    _folder_stats.get("created", 0),
+    "gia presenti",
+    _folder_stats.get("skipped", 0),
+)
 team_by_id = {t["id"]: t for t in teams}
 
 def slugify(s):

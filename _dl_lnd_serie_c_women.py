@@ -357,6 +357,8 @@ def main():
     cat["stats"]["serieCFemGironi"] = {g: len(clubs) for g, clubs in GIRONI.items()}
 
     CAT.write_text(json.dumps(cat, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    from _kit_folders import ensure_kit_folders
+    ensure_kit_folders(cat.get("teams") or [])
 
     print("---")
     print(f"DONE Serie C Femminile: {len(keep_names)} teams (created={created}, updated={updated})")

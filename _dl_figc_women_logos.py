@@ -239,6 +239,8 @@ def main():
     cat.setdefault("stats", {})["serieAFem"] = 12
     cat["stats"]["serieAFemSource"] = "figc.it"
     CAT.write_text(json.dumps(cat, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    from _kit_folders import ensure_kit_folders
+    ensure_kit_folders(cat.get("teams") or [])
     print("DONE catalog v", cat["version"])
 
 

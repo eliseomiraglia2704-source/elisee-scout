@@ -374,6 +374,9 @@ catalog = {
 }
 
 OUT.write_text(json.dumps(catalog, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+from _kit_folders import ensure_kit_folders
+_kf = ensure_kit_folders(uniq)
+print("kit folders create", _kf.get("created", 0), "gia presenti", _kf.get("skipped", 0))
 print("teams", len(uniq), "leagues", len(order_leagues), "bytes", OUT.stat().st_size)
 print("sample leagues:", order_leagues[:12])
 print("last leagues:", order_leagues[-5:])

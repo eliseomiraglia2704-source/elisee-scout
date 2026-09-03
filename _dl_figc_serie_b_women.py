@@ -215,6 +215,8 @@ def main():
     cat["stats"]["serieBFem"] = len(keep)
     cat["stats"]["serieBFemSource"] = "figc.it"
     CAT.write_text(json.dumps(cat, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    from _kit_folders import ensure_kit_folders
+    ensure_kit_folders(cat.get("teams") or [])
 
     b = [t for t in cat["teams"] if t.get("league") == "SERIE B FEMMINILE"]
     print("DONE Serie B Femminile", len(b), "teams")

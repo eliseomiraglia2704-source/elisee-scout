@@ -142,6 +142,8 @@ def main():
     cat["updatedAt"] = "2026-08-27"
     cat["stats"]["total"] = len(cat["teams"])
     CATALOG.write_text(json.dumps(cat, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    from _kit_folders import ensure_kit_folders
+    ensure_kit_folders(cat.get("teams") or [])
     print("catalog teams", len(cat["teams"]))
     patch_focus(resolved)
     patch_agents()

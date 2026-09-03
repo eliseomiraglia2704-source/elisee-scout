@@ -28,6 +28,7 @@ Se il push dà 403 (account Git `sfondiitaliani23-svg`), pubblica comunque su Ve
 
 - Parla italiano con Eliseo.
 - Non rifare le feature elencate in `CONTINUA_DA_QUI.md`.
+- Kit 2D: ogni squadra inserita o sincronizzata deve avere `immagini/kits-2d/<nome-squadra>/` (solo nome, niente campionato). Usare `_kit_folders.ensure_kit_folders(teams)` dopo il salvataggio del catalogo, oppure `_sync_catalog_kits.py` (lo fa da solo).
 - Non inventare il prossimo task: chiedi o aspetta.
 - Commenti nel codice: solo vincoli non ovvi, niente diario di implementazione.
 - Admin Manager: header `X-Elisee-Admin: admin123`.
