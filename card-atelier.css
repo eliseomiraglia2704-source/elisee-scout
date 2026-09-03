@@ -1,0 +1,131 @@
+/* Atelier Card Elisee — player + staff */
+.es-card-player-box {
+  margin: 0 0 0.85rem;
+  padding: 0.85rem 0.9rem;
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  border-radius: 14px;
+  background: rgba(8, 16, 32, 0.55);
+}
+.es-card-kicker {
+  margin: 0 0 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #38bdf8;
+}
+.es-card-status-line {
+  margin: 0 0 0.7rem;
+  font-size: 0.8rem;
+  color: #cbd5e1;
+}
+.es-card-stats-edit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem;
+  margin-bottom: 0.65rem;
+}
+.es-card-statf {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-weight: 700;
+}
+.es-card-statf input {
+  background: #0b1222;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.35rem 0.5rem;
+  font-family: inherit;
+  font-weight: 700;
+}
+.es-card-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.2rem 0.25rem 0.2rem 0;
+  padding: 0.42rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  background: rgba(2, 132, 199, 0.2);
+  color: #e0f2fe;
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+}
+.es-card-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.es-card-btn.is-file { position: relative; overflow: hidden; }
+.es-card-btn.is-file input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.es-card-btn.is-save { background: #0284c7; border-color: #38bdf8; color: #fff; }
+.es-card-hint { margin: 0.55rem 0 0; font-size: 0.72rem; color: #94a3b8; line-height: 1.4; }
+.es-card-search {
+  width: 100%;
+  max-width: 420px;
+  background: #0b1222;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #fff;
+  border-radius: 10px;
+  padding: 0.55rem 0.75rem;
+  font-family: inherit;
+  margin-bottom: 0.85rem;
+}
+.es-card-staff-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) 1fr;
+  gap: 0.9rem;
+}
+@media (max-width: 860px) { .es-card-staff-grid { grid-template-columns: 1fr; } }
+.es-card-staff-list {
+  display: grid;
+  gap: 0.4rem;
+  max-height: 420px;
+  overflow: auto;
+}
+.es-card-user {
+  text-align: left;
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  background: rgba(15, 23, 42, 0.6);
+  color: #e2e8f0;
+  border-radius: 10px;
+  padding: 0.55rem 0.7rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+.es-card-user b { display: block; color: #fff; }
+.es-card-user span, .es-card-user i { display: block; font-size: 0.72rem; color: #94a3b8; font-style: normal; }
+.es-card-user.is-on { border-color: #38bdf8; background: rgba(14, 165, 233, 0.12); }
+.es-card-thumbs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin: 0.7rem 0;
+}
+@media (max-width: 700px) { .es-card-thumbs { grid-template-columns: 1fr; } }
+.es-card-thumbs div {
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 10px;
+  padding: 0.45rem;
+  background: #0b1222;
+}
+.es-card-thumbs span { display: block; font-size: 0.68rem; color: #7dd3fc; font-weight: 800; margin-bottom: 0.35rem; }
+.es-card-thumbs img { width: 100%; max-height: 140px; object-fit: contain; background: #020617; border-radius: 8px; }
+.es-card-thumbs p, .es-card-empty { margin: 0; color: #94a3b8; font-size: 0.8rem; }
+.es-card-chip-n {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.15rem;
+  height: 1.15rem;
+  margin-left: 0.3rem;
+  border-radius: 999px;
+  background: #0284c7;
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+.es-card-detail-head h3 { margin: 0; color: #fff; }
+.es-card-detail-head p { margin: 0.15rem 0 0; color: #94a3b8; font-size: 0.8rem; }
+.es-card-admin { color: #e2e8f0; }

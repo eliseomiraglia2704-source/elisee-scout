@@ -247,56 +247,38 @@
     n = Math.round(Number(n) || 0);
     return Math.max(a, Math.min(b, n));
   }
-  function ovrOf(u) {
-    var p = u.playerProfile || {};
-    var raw = p.ovr || p.overall || u.ovr;
-    if (raw) return clamp(raw, 45, 99);
-    var st = statsOf(u);
-    var base = 64 + (hashN(nameOf(u)) % 11);
-    if (st.pres >= 8) base += 2;
-    if (st.g >= 5) base += 3;
-    if (st.a >= 4) base += 2;
-    return clamp(base, 58, 86);
+  function cardStats(u) {
+    if (window.EliseeCardAtelier && typeof window.EliseeCardAtelier.statsOf === 'function') {
+      return window.EliseeCardAtelier.statsOf(u);
+    }
+    return { velocita: 0, tiro: 0, passaggio: 0, dribbling: 0, difesa: 0, fisico: 0 };
   }
-  function fifaAttrs(u) {
-    var p = u.playerProfile || {};
-    var o = ovrOf(u);
-    var r = roleOf(u).toLowerCase();
-    var h = hashN(nameOf(u) + roleOf(u));
-    function v(base, spread, off) {
-      return clamp(base + ((h + off) % (spread + 1)) - Math.floor(spread / 2), 32, 96);
+  function ovrOf(u) {
+    if (window.EliseeCardAtelier && typeof window.EliseeCardAtelier.ovrOf === 'function') {
+      var o = window.EliseeCardAtelier.ovrOf(u);
+      return o == null ? null : o;
     }
-    if (p.pac || p.sho || p.pas) {
-      return {
-        gk: /portier/.test(r),
-        rows: /portier/.test(r)
-          ? [['DIV', clamp(p.div || p.pac, 1, 99)], ['HAN', clamp(p.han || p.dri, 1, 99)], ['KIC', clamp(p.kic || p.pas, 1, 99)], ['REF', clamp(p.ref || p.sho, 1, 99)], ['SPD', clamp(p.spd || p.pac, 1, 99)], ['POS', clamp(p.pos || p.def, 1, 99)]]
-          : [['PAC', clamp(p.pac, 1, 99)], ['SHO', clamp(p.sho, 1, 99)], ['PAS', clamp(p.pas, 1, 99)], ['DRI', clamp(p.dri, 1, 99)], ['DEF', clamp(p.def, 1, 99)], ['PHY', clamp(p.phy, 1, 99)]]
-      };
+    return null;
+  }
+  function itAttrs(u) {
+    var st = cardStats(u);
+    var rows = (window.EliseeCardAtelier && window.EliseeCardAtelier.STATS) || [
+      { id: 'velocita', short: 'VEL', label: 'Velocità' },
+      { id: 'tiro', short: 'TIR', label: 'Tiro' },
+      { id: 'passaggio', short: 'PAS', label: 'Passaggio' },
+      { id: 'dribbling', short: 'DRI', label: 'Dribbling' },
+      { id: 'difesa', short: 'DIF', label: 'Difesa' },
+      { id: 'fisico', short: 'FIS', label: 'Fisico' }
+    ];
+    return rows.map(function (s) {
+      return [s.short, st[s.id] ? st[s.id] : '–', s.label];
+    });
+  }
+  function faceSrc(u) {
+    if (window.EliseeCardAtelier && typeof window.EliseeCardAtelier.faceSrc === 'function') {
+      return window.EliseeCardAtelier.faceSrc(u);
     }
-    if (/portier/.test(r)) {
-      return {
-        gk: true,
-        rows: [
-          ['DIV', v(o - 2, 8, 1)], ['HAN', v(o - 4, 8, 3)], ['KIC', v(o - 8, 10, 5)],
-          ['REF', v(o - 1, 7, 7)], ['SPD', v(o - 18, 12, 9)], ['POS', v(o - 3, 8, 11)]
-        ]
-      };
-    }
-    var att = /ala|esterno|centravanti|punta|attacc|trequart|seconda/.test(r);
-    var dif = /difens|terzin|centrale|stopper/.test(r);
-    var mid = /centro|median|mezzala|regista/.test(r);
-    return {
-      gk: false,
-      rows: [
-        ['PAC', v(att ? o + 2 : (dif ? o - 10 : o - 2), 8, 2)],
-        ['SHO', v(att ? o : (dif ? o - 18 : o - 6), 10, 4)],
-        ['PAS', v(mid ? o + 1 : o - 6, 8, 6)],
-        ['DRI', v(att || mid ? o : o - 8, 8, 8)],
-        ['DEF', v(dif ? o + 2 : (att ? o - 22 : o - 4), 10, 10)],
-        ['PHY', v(dif ? o : o - 4, 8, 12)]
-      ]
-    };
+    return 'immagini/card-elisee/viso-placeholder.png';
   }
 
   function displaySurname(u) {
@@ -326,42 +308,31 @@
   function cardHtml(u, opts) {
     opts = opts || {};
     var name = nameOf(u);
-    var ph = photoOf(u);
     var free = isFree(u);
-    var club = clubOf(u);
     var ovr = ovrOf(u);
     var pos = posCode(roleOf(u));
     var nat = nationCode(nationOf(u));
-    var attrs = fifaAttrs(u);
-    var photo = ph
-      ? '<img class="es-pc-player" src="' + esc(ph) + '" alt="" crossorigin="anonymous">'
-      : '<div class="es-pc-ph">' + esc(initials(name)) + '</div>';
+    var rows = itAttrs(u);
+    var face = faceSrc(u);
     var flag = '<img class="es-pc-flag" src="immagini/nazioni-loghi/' + esc(nat) + '.png" alt="" onerror="this.style.visibility=\'hidden\'">';
-    var logo = club
-      ? '<img class="es-pc-clublogo" src="' + esc(clubLogo(club)) + '" alt="" onerror="this.style.visibility=\'hidden\'">'
-      : '';
-    var stats = attrs.rows.map(function (row) {
-      return '<div class="es-pc-statcell"><span>' + esc(row[0]) + '</span><b>' + esc(row[1]) + '</b></div>';
+    var stats = rows.map(function (row) {
+      return '<div class="es-pc-statcell" title="' + esc(row[2]) + '"><span>' + esc(row[2]) + '</span><b>' + esc(row[1]) + '</b></div>';
     }).join('');
-    var ma = maTagsOf(u);
-    var special = (ma && ma.mention) ? '<span class="es-pc-fifa-special">Menzione</span>' : '';
+    var ovrHtml = '<div class="es-pc-ovr" title="Overall">' + (ovr == null ? '–' : ovr) + '</div>';
     return '<div class="es-pc-card-shell">' +
-      '<article class="es-pc-card es-pc-fc26"' + (opts.hideHint ? '' : ' id="es-pc-card"') +
+      ovrHtml +
+      '<article class="es-pc-card es-pc-elisee"' + (opts.hideHint ? '' : ' id="es-pc-card"') +
         ' tabindex="0" role="button" aria-label="Apri Card di ' + esc(name) + '">' +
-        '<img class="es-pc-frame" src="immagini/card-bg/uel-primetime.png" alt="">' +
+        '<img class="es-pc-frame" src="immagini/card-elisee/sfondo.png" alt="">' +
         '<div class="es-pc-inner">' +
-          playstylesHtml(u) +
-          '<div class="es-pc-fifa-ovrcol">' +
-            '<div class="es-pc-ovr">' + ovr + '</div>' +
-            '<div class="es-pc-pos">' + esc(pos) + '</div>' +
-          '</div>' +
-          '<div class="es-pc-fifa-photo">' + photo + special + '</div>' +
+          '<div class="es-pc-kit"><img src="immagini/card-elisee/maglia.png" alt="Maglia Elisee Scout"></div>' +
+          '<div class="es-pc-fifa-photo"><img class="es-pc-player" src="' + esc(face) + '" alt=""></div>' +
+          '<div class="es-pc-fifa-ovrcol"><div class="es-pc-pos">' + esc(pos) + '</div></div>' +
           '<div class="es-pc-fifa-bottom">' +
             '<div class="es-pc-fifa-name">' + esc(displaySurname(u)) + '</div>' +
             '<div class="es-pc-fifa-stats-row">' + stats + '</div>' +
             '<div class="es-pc-fifa-ids">' + flag +
               '<span class="es-pc-league">ELISEE</span>' +
-              logo +
             '</div>' +
             '<div class="es-pc-fifa-status' + (free ? ' is-free' : '') + '">' +
               (free ? 'Svincolato' : 'Tesserato') +
@@ -649,10 +620,7 @@
   function openSheet(html) {
     var el = overlay();
     var sheet = document.getElementById('es-pc-sheet');
-    if (sheet) {
-      sheet.innerHTML = html;
-      bindCardPhotos(sheet);
-    }
+    if (sheet) sheet.innerHTML = html;
     el.classList.add('is-on');
     document.body.style.overflow = 'hidden';
   }
@@ -944,7 +912,8 @@
       '<div class="es-pc-side">' +
         '<p style="margin:0;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:#38bdf8;font-weight:800;">Asset digitale</p>' +
         '<h2 style="margin:0.15rem 0 0.35rem;font-family:Outfit,Inter,sans-serif;font-size:1.15rem;color:#fff;">La tua Card collezionabile</h2>' +
-        '<p style="margin:0 0 0.55rem;color:#94a3b8;font-size:0.84rem;line-height:1.45;">Identità, status contrattuale e numeri in un solo oggetto. Chi ti aggiunge all’Album colleziona questa Card.</p>' +
+        '<p style="margin:0 0 0.55rem;color:#94a3b8;font-size:0.84rem;line-height:1.45;">Card Elisee: maglia ufficiale del sito, viso PNG pubblicato dallo staff, overall dalle sei statistiche in italiano.</p>' +
+        (window.EliseeCardAtelier && window.EliseeCardAtelier.playerUploadUi ? window.EliseeCardAtelier.playerUploadUi() : '') +
         toolsHtml() +
       '</div></div>';
   }
@@ -962,7 +931,6 @@
       else body.insertBefore(slot, body.firstChild);
     }
     slot.innerHTML = slotHtml(user || userObj());
-    bindCardPhotos(slot);
     refreshGpsTool();
   }
 

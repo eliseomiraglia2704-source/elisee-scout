@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-03**
-Ultimo fatto: **Card Primetime identica al template** — PNG UEL intero come cornice, calciatore scontornato e contenuto dentro lo scudetto. Cache `FC26B`.
+Ultimo fatto: **Card Elisee** — PNG only, stats IT (Velocità/Tiro/Passaggio/Dribbling/Difesa/Fisico) → overall, maglia sito, cartella `immagini/card-elisee/` per il grafico, flusso utente→staff (cerca, scarica, carica PNG, Salva). Cache `ELISEE1`.
 Feature precedente: **Risoluzione Assembramento Mappa e Distribuzione Regionale Perfetta** — Geocodifica Photon 660+ città, 2810 club regione per regione. Cache `REGIONAL_FIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -58,6 +58,7 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 Flusso recente, dal più nuovo:
 
+- **Card Elisee** (cache `ELISEE1`): viso solo PNG; overall = media delle 6 stats italiane; maglia ufficiale `immagini/card-elisee/maglia.png`; cornice `sfondo.png` sostituibile dal grafico; staff in Control center → Card Elisee (cerca, scarica/copia, Carica l'immagine, Salva obbligatorio).
 - **Card Primetime identica al template** (cache `FC26B`): cornice = PNG UEL originale (niente zoom/clip), figura scontornata e tagliata dentro i bordi.
 - **Card FC26 TOTY + UEL Primetime** (cache `FC26`): struttura TOTY (OVR/ruolo, playstyle a rombo, foto, nome, PAC–PHY in riga, bandiera/club in basso) con sfondo `immagini/card-bg/uel-primetime.png`.
 - **Card calciatore FIFA 22 gold** (cache `FIFA1`): layout scudetto come la rare gold (OVR + ruolo, bandiera, stemma, ritratto, cognome, 6 stats). Branding Elisee Scout in calce.
@@ -359,6 +360,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-03** — Card Elisee: PNG only, stats in italiano, overall calcolato, maglia sito, cartella grafica `immagini/card-elisee/`, atelier staff (cerca/scarica/carica/salva). Cache `ELISEE1`.
 
 - **2026-09-03** — Card: template UEL Primetime usato intero come cornice; foto calciatore scontornata e non esce dai bordi. Cache `FC26B`.
 
