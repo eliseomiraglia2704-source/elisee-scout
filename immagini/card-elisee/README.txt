@@ -25,7 +25,8 @@ esempio-maglia.png
   per pubblicarlo in card.
 
 esempio-viso.png
-  Esempio di viso scontornato (500 x 650). È quello mostrato in card
+  Esempio di viso scontornato (500 x 650). Bust del calciatore con la
+  maglia Elisee già indossata (testa nel colletto). È quello in card
   finché lo staff non pubblica il PNG dell'utente.
 
 Dopo la modifica dei file: aggiorna il sito (deploy) oppure in locale

@@ -126,42 +126,42 @@
 
 .es-pc-kit {
   position: absolute;
-  left: 4%;
-  right: 0;
-  top: 28%;
-  bottom: 24%;
+  left: 12%;
+  right: 10%;
+  top: 40%;
+  bottom: 28%;
   z-index: 2;
   display: grid;
-  place-items: end center;
+  place-items: start center;
   pointer-events: none;
-  overflow: visible;
+  overflow: hidden;
 }
 .es-pc-kit img {
-  width: 108%;
-  height: 108%;
+  width: 90%;
+  height: 90%;
   object-fit: contain;
-  object-position: center bottom;
+  object-position: center top;
   filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
 }
 .es-pc-fifa-photo {
   position: absolute;
-  left: 16%;
-  right: -4%;
-  top: 2%;
-  bottom: 30%;
+  left: 4%;
+  right: -2%;
+  top: 1%;
+  bottom: 24%;
   z-index: 4;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 78%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%);
 }
 .es-pc-fifa-photo img.es-pc-player,
 .es-pc-fifa-photo img,
 .es-pc-ph {
   position: absolute;
-  left: 50%;
+  left: 52%;
   bottom: 0;
   transform: translateX(-50%);
-  height: 112%;
+  height: 108%;
   width: auto;
   max-width: none;
   max-height: none;
