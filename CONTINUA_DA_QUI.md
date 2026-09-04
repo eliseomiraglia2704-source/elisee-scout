@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-04**
-Ultimo fatto: **Rimozione Effetti Riflesso / Gloss-Shine Hover** — Eliminata completamente l'animazione del fascio di luce/riflesso a scorrimento (`btn-gloss-shine`, `legal-shine`, kit shine) al passaggio del cursore su pulsanti, icone laterali della rail, tab ed elementi interattivi. Cache `NOSHINE1`.
-Feature precedente: **Preparatore Atletico & Preparatore dei Portieri (Documento Ufficiale)** — Aggiornamento e potenziamento completo delle dashboard e dei ruoli dello staff per Preparatore Atletico (`at-dash.js`) e Preparatore dei Portieri / Preparatore Atletico dei Portieri (`gk-dash.js`). Cache `GKAT1`.
+Ultimo fatto: **Nuovo Selettore Stagione Custom Luxury Dropdown** — Sostituito il select nativo grezzo del browser con una tendina custom interattiva dark luxury (`public-rating-system.js`, `dash-luxury.css`, `player-dash.js`, `player-dash.css`). Palette scura coerente (#080e1e, ciano #38bdf8), dot pulsante, badge "Attuale"/"Archivio", checkmark di selezione attiva, animazione fluida slide/fade, supporto navigazione con frecce rapide e chiusura automatica click-outside/ESC. Cache `SEASONDROP1`.
+Feature precedente: **Rimozione Effetti Riflesso / Gloss-Shine Hover** — Eliminata completamente l'animazione del fascio di luce/riflesso a scorrimento (`btn-gloss-shine`, `legal-shine`, kit shine) al passaggio del cursore su pulsanti, icone laterali della rail, tab ed elementi interattivi. Cache `NOSHINE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

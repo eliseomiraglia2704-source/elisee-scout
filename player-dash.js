@@ -681,6 +681,57 @@
         return;
       }
 
+      // Toggle dropdown custom stagione
+      var toggleBtn = e.target.closest('.es-season-dropdown-toggle');
+      if (toggleBtn) {
+        var widget = toggleBtn.closest('.es-season-custom-dropdown');
+        if (widget) {
+          var popup = widget.querySelector('.es-season-menu-popup');
+          var isOpen = widget.classList.contains('is-open');
+          // Chiudi eventuali altri dropdown aperti
+          document.querySelectorAll('.es-season-custom-dropdown.is-open').forEach(function (w) {
+            if (w !== widget) {
+              w.classList.remove('is-open');
+              var p = w.querySelector('.es-season-menu-popup');
+              if (p) p.hidden = true;
+              var t = w.querySelector('.es-season-dropdown-toggle');
+              if (t) t.setAttribute('aria-expanded', 'false');
+            }
+          });
+          if (isOpen) {
+            widget.classList.remove('is-open');
+            if (popup) popup.hidden = true;
+            toggleBtn.setAttribute('aria-expanded', 'false');
+          } else {
+            widget.classList.add('is-open');
+            if (popup) popup.hidden = false;
+            toggleBtn.setAttribute('aria-expanded', 'true');
+          }
+        }
+        return;
+      }
+
+      // Selezione item dal menu custom stagione
+      var menuItem = e.target.closest('.es-season-menu-item');
+      if (menuItem) {
+        var targetSeason = menuItem.getAttribute('data-season-val');
+        if (targetSeason && targetSeason !== currentSeason) {
+          currentSeason = targetSeason;
+          render(userObj());
+        } else {
+          // Chiudi semplicemente
+          var parentWidget = menuItem.closest('.es-season-custom-dropdown');
+          if (parentWidget) {
+            parentWidget.classList.remove('is-open');
+            var p = parentWidget.querySelector('.es-season-menu-popup');
+            if (p) p.hidden = true;
+            var t = parentWidget.querySelector('.es-season-dropdown-toggle');
+            if (t) t.setAttribute('aria-expanded', 'false');
+          }
+        }
+        return;
+      }
+
       // Navigazione frecce selettore stagione
       var navBtn = e.target.closest('.es-season-nav-btn');
       if (navBtn && !navBtn.disabled) {
@@ -690,6 +741,17 @@
           render(userObj());
         }
         return;
+      }
+
+      // Click fuori dal menu a tendina
+      if (!e.target.closest('.es-season-custom-dropdown')) {
+        document.querySelectorAll('.es-season-custom-dropdown.is-open').forEach(function (w) {
+          w.classList.remove('is-open');
+          var p = w.querySelector('.es-season-menu-popup');
+          if (p) p.hidden = true;
+          var t = w.querySelector('.es-season-dropdown-toggle');
+          if (t) t.setAttribute('aria-expanded', 'false');
+        });
       }
 
       // Trigger modale valutazione

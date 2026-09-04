@@ -409,7 +409,7 @@
     }
   }
 
-  // Render del Cruscotto Selettore Stagione in alto a destra
+  // Render del Cruscotto Selettore Stagione in alto a destra (Custom Luxury Dropdown)
   function renderSeasonPicker(activeSeason, onChange) {
     activeSeason = activeSeason || DEFAULT_SEASON;
     var curIdx = SEASONS.indexOf(activeSeason);
@@ -418,20 +418,54 @@
     var prevSeason = curIdx < SEASONS.length - 1 ? SEASONS[curIdx + 1] : null;
     var nextSeason = curIdx > 0 ? SEASONS[curIdx - 1] : null;
 
-    var optionsHtml = SEASONS.map(function (s) {
-      return '<option value="' + s + '"' + (s === activeSeason ? ' selected' : '') + '>Stagione ' + s + (s === DEFAULT_SEASON ? ' (Attuale)' : '') + '</option>';
+    var isCurrent = (activeSeason === DEFAULT_SEASON);
+
+    var itemsHtml = SEASONS.map(function (s) {
+      var active = (s === activeSeason);
+      var current = (s === DEFAULT_SEASON);
+      var subText = current ? 'Campionato in corso · Dati live' : 'Archivio storico ufficiale';
+      return '<button type="button" class="es-season-menu-item' + (active ? ' is-active' : '') + '" data-season-val="' + s + '" role="menuitem">' +
+        '<div class="es-season-item-left">' +
+          '<span class="es-season-item-radio">' +
+            (active ? '<svg class="es-season-item-check" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' : '') +
+          '</span>' +
+          '<div class="es-season-item-info">' +
+            '<span class="es-season-item-name">Stagione ' + s + '</span>' +
+            '<span class="es-season-item-sub">' + subText + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<span class="es-season-item-pill' + (current ? ' is-current' : '') + '">' +
+          (current ? 'Attuale' : 'Archivio') +
+        '</span>' +
+      '</button>';
     }).join('');
 
-    return '<div class="es-season-picker-widget" style="display:inline-flex; align-items:center; gap:0.35rem; background:#080e1e; border:1px solid rgba(56,189,248,0.3); border-radius:4px; padding:0.25rem 0.45rem;">' +
-      '<button type="button" class="es-season-nav-btn" data-nav-season="' + (prevSeason || '') + '" ' + (!prevSeason ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : '') + ' title="Stagione precedente" style="background:transparent; border:0; color:#38bdf8; cursor:pointer; padding:0.2rem 0.35rem; display:grid; place-items:center; font-size:0.75rem;">' +
-        '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>' +
+    return '<div class="es-season-picker-widget es-season-custom-dropdown" data-season="' + activeSeason + '">' +
+      '<button type="button" class="es-season-nav-btn es-season-nav-prev" data-nav-season="' + (prevSeason || '') + '" ' + (!prevSeason ? 'disabled' : '') + ' title="Stagione precedente (' + (prevSeason || 'N/D') + ')">' +
+        '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>' +
       '</button>' +
-      '<select class="es-season-select-dropdown" style="background:transparent; border:0; color:#f1f5f9; font-size:0.75rem; font-weight:700; outline:none; cursor:pointer; font-family:Outfit,sans-serif;">' +
-        optionsHtml +
-      '</select>' +
-      '<button type="button" class="es-season-nav-btn" data-nav-season="' + (nextSeason || '') + '" ' + (!nextSeason ? 'disabled style="opacity:0.3; cursor:not-allowed;"' : '') + ' title="Stagione successiva" style="background:transparent; border:0; color:#38bdf8; cursor:pointer; padding:0.2rem 0.35rem; display:grid; place-items:center; font-size:0.75rem;">' +
-        '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>' +
+      '<button type="button" class="es-season-dropdown-toggle" aria-expanded="false" aria-haspopup="true" title="Seleziona stagione">' +
+        '<span class="es-season-dot' + (isCurrent ? ' is-pulsing' : '') + '"></span>' +
+        '<span class="es-season-current-label">Stagione ' + activeSeason + '</span>' +
+        '<span class="es-season-tag-badge' + (isCurrent ? ' is-current' : '') + '">' + (isCurrent ? 'Attuale' : 'Archivio') + '</span>' +
+        '<svg class="es-season-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>' +
       '</button>' +
+      '<button type="button" class="es-season-nav-btn es-season-nav-next" data-nav-season="' + (nextSeason || '') + '" ' + (!nextSeason ? 'disabled' : '') + ' title="Stagione successiva (' + (nextSeason || 'N/D') + ')">' +
+        '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>' +
+      '</button>' +
+      '<div class="es-season-menu-popup" role="menu" hidden>' +
+        '<div class="es-season-menu-header">' +
+          '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
+          '<span>ARCHIVIO STAGIONALE ELISEE</span>' +
+        '</div>' +
+        '<div class="es-season-menu-list">' +
+          itemsHtml +
+        '</div>' +
+        '<div class="es-season-menu-footer">' +
+          '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' +
+          '<span>Dati radar, presenze &amp; metriche sincronizzati</span>' +
+        '</div>' +
+      '</div>' +
     '</div>';
   }
 
@@ -495,6 +529,31 @@
     '</section>';
   }
 
+  // Listener globale per chiusura click outside e Escape
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.es-season-custom-dropdown')) {
+      document.querySelectorAll('.es-season-custom-dropdown.is-open').forEach(function (w) {
+        w.classList.remove('is-open');
+        var p = w.querySelector('.es-season-menu-popup');
+        if (p) p.hidden = true;
+        var t = w.querySelector('.es-season-dropdown-toggle');
+        if (t) t.setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.es-season-custom-dropdown.is-open').forEach(function (w) {
+        w.classList.remove('is-open');
+        var p = w.querySelector('.es-season-menu-popup');
+        if (p) p.hidden = true;
+        var t = w.querySelector('.es-season-dropdown-toggle');
+        if (t) t.setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
+
   // Esponi API globale
   window.EliseeRatingSystem = {
     SEASONS: SEASONS,
@@ -508,3 +567,4 @@
     renderRatingCard: renderPublicRatingCard
   };
 })();
+
