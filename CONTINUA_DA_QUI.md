@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-04**
-Ultimo fatto: **Hot Live Auto-Reload Attivo (Zero Refresh Manuale F5)** — Implementato watcher automatico in tempo reale (`live-reload.js`, endpoint `/_live_version` in `elisee_up.py`, `version.json`, `sw.js`): ogni volta che viene modificato o salvato un file di codice, la pagina nel browser rileva istantaneamente il cambiamento e si ricarica da sola preservando lo stato e l'hash di visualizzazione. Non serve più premere F5. Cache `AUTORELOAD1`.
-Feature precedente: **Fix Taglio Icona Anagrafica / Rail Laterale Dashboard** — Risolto il layout di `.es-pd-rail` e `.es-pd-rail-end` in `player-dash.css`. Cache `RAILFIX1`.
+Ultimo fatto: **Fix Rail Laterale a Tutta Altezza Sticky (Scroll Fluido Continuo)** — Aggiornata la barra laterale `.es-pd-rail` in `player-dash.css` con `height: calc(100vh - 86px)` e `position: sticky; top: 86px` senza interruzioni a metà altezza; la colonna di navigazione scende continua fino in fondo alla vista accompagnando lo scroll della dashboard con tutte le icone in alto perfettamente allineate. Cache `STICKYRAIL1`.
+Feature precedente: **Hot Live Auto-Reload Attivo (Zero Refresh Manuale F5)** — Implementato watcher automatico in tempo reale (`live-reload.js`, endpoint `/_live_version` in `elisee_up.py`, `version.json`, `sw.js`). Cache `AUTORELOAD1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
