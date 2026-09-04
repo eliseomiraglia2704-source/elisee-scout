@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-04**
-Ultimo fatto: **Specifiche PNG Card Elisee** — Indicazione esatta del peso (massimo 2 MB, consigliato 150 KB – 1 MB), trasparenza canale Alpha e risoluzione ideale (600×800 px o 800×1000 px) sia nell'area utente che nel pannello staff/admin. Cache `PNGSPECS1`.
-Feature precedente: **Minigioco Carriera** — Bonifica definitiva club clone Serie A/B/C/D dai campionati dilettantistici, promozione integrale automatica alla vittoria del campionato (Terza Categoria $\rightarrow$ Serie A) e mantenimento della categoria superiore in caso di rinnovo/permanenza nella stessa squadra. Cache `TIERPROMO1`.
+Ultimo fatto: **Admin Card Elisee** — Risolto taglio verticale dei nomi utenti nella lista staff (`.es-card-staff-list` / `.es-card-user`) con layout flex, min-height 68px e padding ottimale. Cache `FIXUSERNAMES1`.
+Feature precedente: **Specifiche PNG Card Elisee** — Indicazione esatta del peso (massimo 2 MB, consigliato 150 KB – 1 MB), trasparenza canale Alpha e risoluzione ideale (600×800 px o 800×1000 px) sia nell'area utente che nel pannello staff/admin. Cache `PNGSPECS1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -90,7 +90,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| `c296aef` | Specifiche PNG Card Elisee: peso max 2MB (consigliato 150KB-1MB), risoluzione e Alpha in area utente e staff; cache `PNGSPECS1` |
+| (questo) | Admin Card Elisee: fix taglio verticale nomi utenti nella lista con flexbox e min-height; cache `FIXUSERNAMES1` |
+| `10d0fcd` | Specifiche PNG Card Elisee: peso max 2MB (consigliato 150KB-1MB), risoluzione e Alpha in area utente e staff; cache `PNGSPECS1` |
 | `8290a12` | Minigioco: bonifica club clone dilettanti e promozioni integrali 9->1 con mantenimento categoria; cache `TIERPROMO1` |
 | `0e6b52c` | Hub minigioco: allineamento card Pokemon Calcistico con Carriera; cache `PKMN2` |
 | `f2161c7` | OTP classico: codice a 6 cifre inviato solo via email all’indirizzo dell’account; cache `OTPMAIL1` |
