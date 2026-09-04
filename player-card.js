@@ -856,7 +856,15 @@
       el.innerHTML = '<div class="es-pc-sheet" id="es-pc-sheet"></div>';
       document.body.appendChild(el);
       el.addEventListener('click', function (e) {
-        if (e.target === el) closeOverlay();
+        // Se il click avviene su un punto vuoto dello schermo (fuori dalla scheda), chiudi
+        if (!e.target.closest('#es-pc-sheet')) {
+          closeOverlay();
+        }
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' || e.key === 'Esc') {
+          closeOverlay();
+        }
       });
     }
     return el;
@@ -866,11 +874,14 @@
     var sheet = document.getElementById('es-pc-sheet');
     if (sheet) sheet.innerHTML = html;
     el.classList.add('is-on');
+    document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
+    try { el.scrollTop = 0; } catch (_) {}
   }
   function closeOverlay() {
     var el = document.getElementById('es-pc-overlay');
     if (el) el.classList.remove('is-on');
+    document.documentElement.style.overflow = '';
     document.body.style.overflow = '';
   }
 

@@ -315,19 +315,23 @@
   z-index: 400000;
   background: rgba(5, 6, 8, 0.92);
   display: none;
-  overflow: auto;
-  padding: 1.2rem 1rem 2rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1.5rem 1rem 3rem;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
 }
 .es-pc-overlay.is-on { display: block; }
 .es-pc-sheet {
   max-width: 960px;
-  margin: 1rem auto;
+  margin: 0 auto;
   background: #040812;
   border: 1px solid rgba(56, 189, 248, 0.35);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.75), 0 0 32px rgba(56, 189, 248, 0.12);
   border-radius: 18px;
   padding: 1.4rem 1.6rem 1.8rem;
   color: #e2e8f0;
+  box-sizing: border-box;
 }
 .es-pc-sheet h2 {
   margin: 0 0 0.35rem;
