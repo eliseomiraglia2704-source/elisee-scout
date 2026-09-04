@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-04**
-Ultimo fatto: **Monitor Canali, Client & Modelli IA (Outage / Health Check List)** — Integrata la lista componenti e client per Elisee Scout (`app.js`, `index.html`, `sw.js`): Elisee (iOS), Elisee (Android), Elisee (Web), Elisee AI Build & Atelier, TC Manager, API Milano Cloud, API Roma Data Hub e Wall Stampa. Ogni canale ha stato operativo circolare, badge uptime, latenza round-trip, crittografia TLS 1.3/AES-256 e pannello diagnostico espandibile con ping test. Cache `TELEMETRY2`.
-Feature precedente: **Pannello Telemetria Live & Stato Servizi nelle Impostazioni Admin** — Integrata la matrice di monitoraggio in tempo reale (Source × Endpoint) personalizzata per Elisee Scout. Cache `TELEMETRY1`.
+Ultimo fatto: **Rimozione Badge Playstyle sulla Card Elisee** — Rimosso il badge circolare/poligonale ramato posizionato sotto il ruolo nella colonna sinistra della Card (`player-card.js`, `player-card.css`, `index.html`, `sw.js`). Aspetto della card pulito e lineare con solo Overall e Ruolo sopra la foto. Cache `NOBADGE1`.
+Feature precedente: **Monitor Canali, Client & Modelli IA (Outage / Health Check List)** — Integrata la lista componenti e client per Elisee Scout nelle impostazioni Admin. Cache `TELEMETRY2`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

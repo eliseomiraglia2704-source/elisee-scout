@@ -447,7 +447,6 @@
         '<div class="es-pc-fifa-ovrcol">' +
           '<div class="es-pc-ovr" title="Overall">' + (ovr == null ? '–' : ovr) + '</div>' +
           '<div class="es-pc-pos">' + esc(pos) + '</div>' +
-          playstylesHtml(u) +
         '</div>' +
         '<div class="es-pc-inner">' +
           '<div class="es-pc-kit"><img src="immagini/card-elisee/maglia.png?v=20260903_ELISEE10" alt=""></div>' +
