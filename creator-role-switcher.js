@@ -87,11 +87,11 @@
         },
         {
           key: 'prep_portieri',
-          label: 'Preparatore Portieri',
+          label: 'Preparatore dei Portieri (Atletico & Tecnico)',
           family: 'Staff',
           staffRole: 'Preparatore dei portieri',
           iconSvg: SVG_ICONS.shield,
-          desc: 'Analisi reattività estremi difensori, uscite e schemi'
+          desc: 'Performance analisi GK, Stanza dei Portieri, reattività GPS e drill'
         },
         {
           key: 'prep_atletico',

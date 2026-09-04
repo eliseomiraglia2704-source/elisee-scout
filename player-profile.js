@@ -83,7 +83,7 @@
 
   var STAFF_ROLES_CALCIO = [
     'Allenatore', 'Allenatore in seconda', 'Collaboratore tecnico',
-    'Preparatore atletico', 'Preparatore dei portieri',
+    'Preparatore atletico', 'Preparatore dei portieri', 'Preparatore atletico dei portieri',
     'Match analyst', 'Video analyst', 'Scout / Osservatore',
     'Fisioterapista', 'Medico sociale', 'Nutrizionista', 'Mental coach',
     'Presidente', 'Direttore generale', 'Direttore sportivo', 'Procuratore / Agente FIFA', 'Responsabile marketing / commerciale', 'Responsabile comunicazione / ufficio stampa', 'Team manager', 'Responsabile settore giovanile', 'Dirigente accompagnatore',
@@ -91,7 +91,7 @@
   ];
   var STAFF_ROLES_DEFAULT = [
     'Allenatore', 'Allenatore in seconda', 'Collaboratore tecnico',
-    'Preparatore atletico', 'Match analyst', 'Scout / Osservatore',
+    'Preparatore atletico', 'Preparatore dei portieri', 'Preparatore atletico dei portieri', 'Match analyst', 'Scout / Osservatore',
     'Fisioterapista', 'Medico sociale', 'Team manager', 'Responsabile settore giovanile', 'Dirigente', 'Presidente', 'Direttore generale', 'Procuratore / Agente FIFA', 'Responsabile marketing / commerciale', 'Responsabile comunicazione / ufficio stampa'
   ];
   var ALL_STAFF_ROLES = STAFF_ROLES_CALCIO.concat(['Statistico', 'Dirigente']);
