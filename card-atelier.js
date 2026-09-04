@@ -362,6 +362,52 @@
       '<p class="es-card-hint">Solo formato <b>PNG con sfondo trasparente</b>. Peso: <b>massimo 2 MB</b> (consigliato tra <b>150 KB e 1 MB</b>). Risoluzione ideale: <b>600×800 px</b> o <b>800×1000 px</b>. Dopo «Carica l\'immagine» premi <b>Salva</b>: senza salvataggio la Card pubblica non cambia.</p>';
   }
 
+  function showCardAtelierTab() {
+    var dash = document.getElementById('admin-authenticated-dashboard');
+    if (!dash) return;
+    var chips = document.querySelector('.pf-gov-bar .pf-chips');
+    if (chips) {
+      chips.querySelectorAll('.gov-btn').forEach(function (x) { x.classList.remove('active'); });
+    }
+    var b = document.getElementById('btn-show-card-atelier');
+    if (b) b.classList.add('active');
+
+    // Nascondi tutte le altre sezioni della dashboard lasciando solo header, toolbar e Atelier Card
+    var children = dash.children;
+    for (var i = 0; i < children.length; i++) {
+      var el = children[i];
+      if (el.tagName === 'HEADER' || (el.classList && el.classList.contains('pf-gov-bar')) || el.id === 'es-card-admin-wrap') {
+        el.style.display = '';
+      } else {
+        el.style.display = 'none';
+      }
+    }
+    var wrap = document.getElementById('es-card-admin-wrap');
+    if (wrap) wrap.style.display = 'block';
+
+    var pool = searchPeople((document.getElementById('es-card-staff-q') || {}).value || '');
+    if (!selected && pool.length > 0) {
+      selected = pool[0].email;
+    }
+    renderStaffList((document.getElementById('es-card-staff-q') || {}).value || '');
+    renderStaffDetail();
+    paintBadge();
+  }
+
+  function hideCardAtelierTab() {
+    var dash = document.getElementById('admin-authenticated-dashboard');
+    if (!dash) return;
+    var wrap = document.getElementById('es-card-admin-wrap');
+    if (wrap) wrap.style.display = 'none';
+    var children = dash.children;
+    for (var i = 0; i < children.length; i++) {
+      var el = children[i];
+      if (el.id !== 'es-card-admin-wrap' && el.id !== 'es-mgr-admin-wrap') {
+        el.style.display = '';
+      }
+    }
+  }
+
   function ensureAdminUi() {
     if (!isAdmin()) return;
     var chips = document.querySelector('.pf-gov-bar .pf-chips');
@@ -373,15 +419,7 @@
       b.innerHTML = 'Card Elisee <span id="es-card-chip-n" class="es-card-chip-n" hidden></span>';
       chips.appendChild(b);
       b.addEventListener('click', function () {
-        chips.querySelectorAll('.gov-btn').forEach(function (x) { x.classList.remove('active'); });
-        b.classList.add('active');
-        var wrap = document.getElementById('es-card-admin-wrap');
-        if (wrap) wrap.style.display = 'block';
-        var mgr = document.getElementById('es-mgr-admin-wrap');
-        if (mgr) mgr.style.display = 'none';
-        renderStaffList((document.getElementById('es-card-staff-q') || {}).value || '');
-        renderStaffDetail();
-        paintBadge();
+        showCardAtelierTab();
       });
     }
     var dash = document.getElementById('admin-authenticated-dashboard');
@@ -411,8 +449,7 @@
       var t = e.target.closest('button');
       var id = t && t.id;
       if (id === 'btn-show-manager' || id === 'btn-show-admin' || id === 'btn-show-privacy' || id === 'btn-show-autopilot') {
-        var wrap = document.getElementById('es-card-admin-wrap');
-        if (wrap) wrap.style.display = 'none';
+        hideCardAtelierTab();
       }
     });
     document.addEventListener('input', function (e) {
@@ -495,7 +532,9 @@
     isPublished: isPublished,
     submitOriginal: submitOriginal,
     playerUploadUi: playerUploadUi,
-    pendingCount: pendingCount
+    pendingCount: pendingCount,
+    showAdminTab: showCardAtelierTab,
+    hideAdminTab: hideCardAtelierTab
   };
 
   document.addEventListener('change', function (e) {
