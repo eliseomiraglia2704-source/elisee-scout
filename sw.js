@@ -3,10 +3,11 @@
    - MAI servire HTML al posto di JS/CSS (causa "Unexpected token <")
    - Fallback HTML solo per navigazioni pagina
 */
-const CACHE = 'elisee-scout-v20260904-railfix1';
+const CACHE = 'elisee-scout-v20260904-autoreload1';
 const PRECACHE = [
   '/',
   '/index.html',
+  '/live-reload.js',
   '/style.css',
   '/app.js',
   '/public-rating-system.js',

@@ -460,8 +460,22 @@ def log(msg: str) -> None:
         pass
     try:
         print(line, flush=True)
+def _latest_project_mtime() -> float:
+    latest = 0.0
+    try:
+        for p in ROOT.glob("*.*"):
+            if p.suffix in (".js", ".css", ".html", ".json", ".md") and not p.name.startswith("."):
+                if "log" in p.name.lower() or "state.json" in p.name or "otp-store" in p.name:
+                    continue
+                try:
+                    mt = p.stat().st_mtime
+                    if mt > latest:
+                        latest = mt
+                except Exception:
+                    pass
     except Exception:
         pass
+    return latest
 
 
 class Handler(SimpleHTTPRequestHandler):
@@ -595,6 +609,11 @@ class Handler(SimpleHTTPRequestHandler):
         if self.command.upper() in ("GET", "HEAD") and (qs.get("code") or [""])[0]:
             if path in ("/", "/index.html", "/auth/callback"):
                 return self._oauth_callback()
+        # Live Auto-Reload / Watcher endpoint
+        if path in ("/_live_version", "/api/live-version") and self.command.upper() in ("GET", "HEAD"):
+            mt = _latest_project_mtime()
+            self._json(200, {"ok": True, "v": mt, "time": time.time()})
+            return True
         # Proxy generico anti-CORS (Tuttocampo / loghi)
         if path == "/api/proxy" and self.command in ("GET", "HEAD"):
             qs = parse_qs(parsed.query or "")
