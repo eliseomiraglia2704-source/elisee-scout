@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-04**
-Ultimo fatto: **Admin Card Elisee** — Al click sulla tab `CARD ELISEE` nel Control Center si apre direttamente la schermata intera del portale Atelier Card, nascondendo le altre sezioni e pre-selezionando il primo utente reale. Cache `ADMINTAB1`.
-Feature precedente: **Admin Card Elisee** — Rimossi tutti i profili di esempio/fittizi (`staff-*`, `me-player-*`, mock discovery); la lista include e mantiene solo gli account registrati realmente sul sito (`userObj`, `elisee_registered_users`, `elisee_users_db`, inbox reale). Cache `REALUSERS1`.
+Ultimo fatto: **Card Elisee nel Minigioco Carriera & Visibilità Valutazioni** — Integrata la Card Elisee ufficiale (luxury frame, maglia sito, viso, OVR, ruolo, cognome, bandiera, logo lega, logo club) nella schermata del Minigioco Simulazione Carriera con crescita contemporanea e dinamica delle 6 valutazioni (VEL, TIR, PAS, DRI, DIF, FIS). Le 6 valutazioni numeriche sotto il cognome sono visibili **solo ed esclusivamente** all'interno del minigioco carriera; nella propria area utente giocatore la Card resta visualizzata nella versione classica pulita senza le valutazioni sotto. Cache `CARDELISEE1`.
+Feature precedente: **Admin Card Elisee** — Al click sulla tab `CARD ELISEE` nel Control Center si apre direttamente la schermata intera del portale Atelier Card, nascondendo le altre sezioni e pre-selezionando il primo utente reale. Cache `ADMINTAB1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

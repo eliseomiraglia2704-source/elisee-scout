@@ -67,18 +67,26 @@
     return '';
   }
   function roleOf(u) {
+    if (!u) return '';
     var p = u.playerProfile || {};
-    return String(p.fieldRole || u.ruoloDettagliato || u.ruolo || '').trim();
+    return String(u.posLabel || u.position || p.fieldRole || u.ruoloDettagliato || u.ruolo || '').trim();
   }
   function clubOf(u) {
+    if (!u) return '';
+    if (typeof u.club === 'object' && u.club) return String(u.club.n || u.club.name || '').trim();
+    if (typeof u.club === 'string') return u.club.trim();
     return String(u.squadra || u.club || u.squadraCuore || '').trim();
   }
   function isFree(u) {
+    if (!u) return true;
+    if (u.isFree !== undefined) return Boolean(u.isFree);
     var p = u.playerProfile || {};
     var st = String(p.contractStatus || '').toLowerCase();
     if (/svincol|libero|senza vincolo/.test(st)) return true;
     if (p.availTransfer === true && !clubOf(u)) return true;
-    return !clubOf(u);
+    var c = clubOf(u);
+    if (!c || c === 'Svincolato' || c === 'Libero') return true;
+    return false;
   }
   function footOf(u) {
     var p = u.playerProfile || {};
@@ -187,6 +195,19 @@
     return (p.length > 1 ? p[p.length - 1] : (p[0] || 'PLAYER')).toUpperCase();
   }
   function posCode(role) {
+    var raw = String(role || '').trim().toUpperCase();
+    if (['GK', 'POR', 'PT'].indexOf(raw) >= 0) return 'GK';
+    if (['RB', 'TD'].indexOf(raw) >= 0) return 'RB';
+    if (['LB', 'TS'].indexOf(raw) >= 0) return 'LB';
+    if (['CB', 'DC', 'DIF'].indexOf(raw) >= 0) return 'CB';
+    if (['RW', 'AD', 'ED'].indexOf(raw) >= 0) return 'RW';
+    if (['LW', 'AS', 'ES'].indexOf(raw) >= 0) return 'LW';
+    if (['CDM', 'MED'].indexOf(raw) >= 0) return 'CDM';
+    if (['CM', 'CC', 'MZ', 'CEN'].indexOf(raw) >= 0) return 'CM';
+    if (['CAM', 'COC', 'TRQ'].indexOf(raw) >= 0) return 'CAM';
+    if (['CF', 'SP', 'AT'].indexOf(raw) >= 0) return 'CF';
+    if (['ST', 'ATT', 'PUNTA'].indexOf(raw) >= 0) return 'ST';
+
     var r = String(role || '').toLowerCase();
     if (/portier/.test(r)) return 'GK';
     if (/terzino dest|terzino d/.test(r)) return 'RB';
@@ -201,10 +222,12 @@
     if (/seconda punta/.test(r)) return 'CF';
     if (/centravanti|punta|attacc/.test(r)) return 'ST';
     if (/centro/.test(r)) return 'CM';
-    return 'ST';
+    return (raw.length <= 4 && raw.length >= 2) ? raw : 'ST';
   }
   function nationCode(n) {
-    var k = String(n || 'Italia').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    var raw = String(n || 'it').trim().toLowerCase();
+    if (raw.length === 2 || raw === 'sco' || raw === 'wal' || raw === 'nir') return raw;
+    var k = raw.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     var map = {
       italia: 'it', albania: 'al', algeria: 'dz', argentina: 'ar', australia: 'au', austria: 'at',
       belgio: 'be', 'bosnia ed erzegovina': 'ba', brasile: 'br', bulgaria: 'bg', camerun: 'cm',
@@ -220,6 +243,9 @@
     return map[k] || 'it';
   }
   function nationOf(u) {
+    if (!u) return 'Italia';
+    if (u.nation) return u.nation;
+    if (u.nationCode) return u.nationCode;
     var p = u.playerProfile || {};
     return String(p.nationality || u.nazionalita || u.nazione || 'Italia').trim() || 'Italia';
   }
@@ -281,6 +307,8 @@
     return '';
   }
   function leagueOf(u) {
+    if (!u) return '';
+    if (typeof u.club === 'object' && u.club && (u.club.l || u.club.league)) return String(u.club.l || u.club.league).trim();
     var p = (u && u.playerProfile) || {};
     var direct = p.campionato || p.league || p.lega || (u && (u.campionato || u.lega)) || '';
     if (direct) return String(direct).trim();
@@ -296,14 +324,14 @@
     var flag = '<img class="es-pc-flag" src="immagini/nazioni-bandiere/' + esc(nat) + '.png" alt="" onerror="this.style.visibility=\'hidden\'">';
     var lgSrc = leagueLogoPath(leagueOf(u));
     var club = clubOf(u);
-    var cSrc = clubLogo(club);
+    var cSrc = (typeof u.club === 'object' && u.club && (u.club.o || u.club.logo)) ? (u.club.o || u.club.logo) : clubLogo(club);
     if (club && CLUB_IX[slugClub(club)] && CLUB_IX[slugClub(club)].logo) {
       cSrc = CLUB_IX[slugClub(club)].logo;
     }
     var lg = lgSrc
       ? '<img class="es-pc-leaguelogo" src="' + esc(lgSrc) + '" alt="" onerror="this.style.visibility=\'hidden\'">'
       : '';
-    var cl = cSrc
+    var cl = (cSrc && !isFree(u))
       ? '<img class="es-pc-clublogo" src="' + esc(cSrc) + '" alt="" onerror="this.style.visibility=\'hidden\'">'
       : '';
     return flag + lg + cl;
@@ -318,12 +346,25 @@
     return Math.max(a, Math.min(b, n));
   }
   function cardStats(u) {
+    if (!u) return { velocita: 0, tiro: 0, passaggio: 0, dribbling: 0, difesa: 0, fisico: 0 };
+    if (u.stats && typeof u.stats === 'object') {
+      return {
+        velocita: u.stats.velocita || u.stats.vel || 0,
+        tiro: u.stats.tiro || u.stats.tir || 0,
+        passaggio: u.stats.passaggio || u.stats.pas || 0,
+        dribbling: u.stats.dribbling || u.stats.dri || 0,
+        difesa: u.stats.difesa || u.stats.dif || 0,
+        fisico: u.stats.fisico || u.stats.fis || 0
+      };
+    }
     if (window.EliseeCardAtelier && typeof window.EliseeCardAtelier.statsOf === 'function') {
       return window.EliseeCardAtelier.statsOf(u);
     }
     return { velocita: 0, tiro: 0, passaggio: 0, dribbling: 0, difesa: 0, fisico: 0 };
   }
   function ovrOf(u) {
+    if (!u) return null;
+    if (u.ovr != null) return Number(u.ovr);
     if (window.EliseeCardAtelier && typeof window.EliseeCardAtelier.ovrOf === 'function') {
       var o = window.EliseeCardAtelier.ovrOf(u);
       return o == null ? null : o;
@@ -345,6 +386,7 @@
     });
   }
   function faceSrc(u) {
+    if (u && u.faceUrl) return u.faceUrl;
     if (window.EliseeCardAtelier && typeof window.EliseeCardAtelier.faceSrc === 'function') {
       return window.EliseeCardAtelier.faceSrc(u);
     }
@@ -352,7 +394,7 @@
   }
 
   function displaySurname(u) {
-    var last = String(u.cognome || lastNameOf(nameOf(u)) || 'Player').trim();
+    var last = String((u && (u.cognome || u.surname)) || lastNameOf(nameOf(u)) || 'Player').trim();
     if (!last) return 'Player';
     return last.charAt(0).toUpperCase() + last.slice(1).toLowerCase();
   }
@@ -381,16 +423,25 @@
     var free = isFree(u);
     var ovr = ovrOf(u);
     var pos = posCode(roleOf(u));
-    var rows = itAttrs(u);
     var face = faceSrc(u);
-    var labs = rows.map(function (row) {
-      return '<span title="' + esc(row[2]) + '">' + esc(row[0]) + '</span>';
-    }).join('');
-    var nums = rows.map(function (row) {
-      return '<b title="' + esc(row[2]) + '">' + esc(row[1]) + '</b>';
-    }).join('');
+
+    var statsHtml = '';
+    if (opts.showStats === true) {
+      var rows = itAttrs(u);
+      var labs = rows.map(function (row) {
+        return '<span title="' + esc(row[2]) + '">' + esc(row[0]) + '</span>';
+      }).join('');
+      var nums = rows.map(function (row) {
+        return '<b title="' + esc(row[2]) + '">' + esc(row[1]) + '</b>';
+      }).join('');
+      statsHtml =
+        '<div class="es-pc-stat-labs">' + labs + '</div>' +
+        '<div class="es-pc-stat-nums">' + nums + '</div>';
+    }
+
     return '<div class="es-pc-card-shell">' +
-      '<article class="es-pc-card es-pc-elisee"' + (opts.hideHint ? '' : ' id="es-pc-card"') +
+      '<article class="es-pc-card es-pc-elisee' + (opts.showStats ? ' has-stats' : ' has-no-stats') + '"' +
+        (opts.hideHint ? '' : ' id="es-pc-card"') +
         ' tabindex="0" role="button" aria-label="Apri Card di ' + esc(name) + '">' +
         '<img class="es-pc-frame" src="immagini/card-elisee/sfondo.png" alt="">' +
         '<div class="es-pc-fifa-ovrcol">' +
@@ -403,8 +454,7 @@
           '<div class="es-pc-fifa-photo"><img class="es-pc-player" src="' + esc(face) + '" alt=""></div>' +
           '<div class="es-pc-fifa-bottom">' +
             '<div class="es-pc-fifa-name">' + esc(displaySurname(u)) + '</div>' +
-            '<div class="es-pc-stat-labs">' + labs + '</div>' +
-            '<div class="es-pc-stat-nums">' + nums + '</div>' +
+            statsHtml +
             '<div class="es-pc-fifa-ids">' + idsHtml(u) + '</div>' +
             '<div class="es-pc-fifa-status' + (free ? ' is-free' : '') + '">' +
               (free ? 'Svincolato' : 'Tesserato') +

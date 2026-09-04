@@ -5911,35 +5911,46 @@
         (transferBoxDesc ? '<p>' + transferBoxDesc + '</p>' : '') +
         '<div class="es-mg-offers es-mg-offers-grid">' + offerHtml + '</div></div>';
     }
+    var currentClubObj = liveClub(p.club) || p.club || (last && last.club ? { n: last.club, l: last.league, o: last.logo, isFree: last.isFree } : null);
+    var isCurrentFree = !currentClubObj || currentClubObj.isFree || currentClubObj.n === 'Svincolato' || last.isFree || last.club === 'Svincolato';
+
+    var careerCardPlayer = {
+      surname: p.surname || 'Giocatore',
+      cognome: p.surname || 'Giocatore',
+      ovr: p.ovr,
+      position: p.posLabel || posLabel(p.position) || p.position || 'ST',
+      posLabel: p.posLabel || posLabel(p.position) || p.position || 'ST',
+      nation: p.nation || 'Italia',
+      nationCode: p.nationCode || 'IT',
+      club: isCurrentFree ? null : currentClubObj,
+      isFree: isCurrentFree,
+      stats: calcCareerStats(p)
+    };
+
+    var cardEliseeHtml = '';
+    if (window.EliseePlayerCard && typeof window.EliseePlayerCard.cardHtml === 'function') {
+      cardEliseeHtml = window.EliseePlayerCard.cardHtml(careerCardPlayer, { showStats: true, hideHint: true });
+    }
+
     openShell(
       '<button type="button" class="es-mg-float-close" id="es-mg-x">Indietro</button>' +
         (animateNew ? '<div class="es-mg-season-flash" aria-hidden="true"></div>' : '') +
         '<div class="es-mg-career">' +
         '<div class="es-mg-career-board">' +
         '<div class="es-mg-career-left">' +
-        '<div class="es-mg-player-card' + (animateNew ? ' pop' : '') + '">' +
-        '<div class="es-mg-player-card-top">' +
-        '<div class="es-mg-ovr-big c' + ovrColor(p.ovr) + (animateNew ? ' is-pop' : '') + '" id="es-mg-ovr-big"><span>OVR</span><strong id="es-mg-ovr-num">' + p.ovr + '</strong></div>' +
-        '<div class="es-mg-player-meta">' +
-        '<div class="es-mg-player-tags">' +
-        '<span class="es-mg-tag">' + flagOf(p.nationCode) + ' ' + esc(p.nationCode || 'IT') + '</span>' +
-        '<span class="es-mg-tag green">#' + p.number + '</span>' +
-        '<span class="es-mg-tag green" title="' + esc(p.posLabel || posLabel(p.position) || p.position) + '">' + esc(p.posLabel || posLabel(p.position) || p.position) + '</span>' +
-        (p.isCaptain ? '<span class="es-mg-tag green" title="Capitano">C</span>' : '') +
-        (p.foot ? '<span class="es-mg-tag">' + (p.foot === 'left' ? 'Piede sinistro' : 'Piede destro') + '</span>' : '') +
-        (p.gender === 'f' ? '<span class="es-mg-tag is-fem" style="background:#ec4899;color:#fff;border-color:#db2777;">' + femaleSymbolSvg(15, 15, '#fff') + ' Femminile</span>' : '<span class="es-mg-tag" style="background:#0284c7;color:#fff;border-color:#0369a1;">' + maleSymbolSvg(15, 15, '#fff') + ' Maschile</span>') +
+        '<div class="es-mg-career-card-wrap' + (animateNew ? ' pop' : '') + '">' +
+        cardEliseeHtml +
+        '<div class="es-mg-career-card-meta">' +
+        '<div class="es-mg-meta-row">' +
+        '<span>ETÀ <b>' + p.age + '</b></span>' +
+        '<span>VALORE <b>€' + formatValue(p.valueM) + '</b></span>' +
         '</div>' +
-        '<div class="es-mg-player-name">' + esc(p.surname || 'Giocatore') + '</div>' +
-        clubDisplayCard +
-        '</div>' +
-        '<div class="es-mg-player-side">' +
-        '<div>ETÀ <b>' + p.age + '</b></div>' +
-        '<div>VALORE <b>€' + formatValue(p.valueM) + '</b></div>' +
+        '<div class="es-mg-meta-row">' +
         (p.wageWeek
-          ? '<div>INGAGGIO <b>€' + formatWage(p.wageWeek) + '</b></div>'
+          ? '<span>INGAGGIO <b>€' + formatWage(p.wageWeek) + '</b></span>'
           : '') +
         (p.contractYears
-          ? '<div>CONTRATTO <b>' + p.contractYears + (p.contractYears === 1 ? ' anno' : ' anni') + '</b></div>'
+          ? '<span>CONTRATTO <b>' + p.contractYears + (p.contractYears === 1 ? ' anno' : ' anni') + '</b></span>'
           : '') +
         '</div>' +
         '</div>' +
@@ -6198,6 +6209,67 @@
       var tl = document.getElementById('es-mg-timeline');
       if (tl) tl.scrollTop = tl.scrollHeight;
     }, 50);
+  }
+
+  function calcCareerStats(p) {
+    if (!p) return { velocita: 75, tiro: 75, passaggio: 75, dribbling: 75, difesa: 75, fisico: 75 };
+    var ovr = Math.max(35, Math.min(99, Number(p.ovr) || 75));
+    var pos = String(p.posLabel || (typeof posLabel === 'function' ? posLabel(p.position) : '') || p.position || 'ST').toUpperCase();
+
+    var baseOffsets = {
+      // Attaccanti
+      ST:   { vel: +6, tir: +5, pas: -4, dri: +2, dif: -26, fis: +2 },
+      ATT:  { vel: +6, tir: +5, pas: -4, dri: +2, dif: -26, fis: +2 },
+      CF:   { vel: +5, tir: +4, pas: +1, dri: +3, dif: -22, fis: -1 },
+      SP:   { vel: +5, tir: +4, pas: +1, dri: +3, dif: -22, fis: -1 },
+      RW:   { vel: +10, tir: +1, pas: +2, dri: +6, dif: -24, fis: -6 },
+      LW:   { vel: +10, tir: +1, pas: +2, dri: +6, dif: -24, fis: -6 },
+      AD:   { vel: +10, tir: +1, pas: +2, dri: +6, dif: -24, fis: -6 },
+      AS:   { vel: +10, tir: +1, pas: +2, dri: +6, dif: -24, fis: -6 },
+      // Centrocampisti
+      CAM:  { vel: +3, tir: +2, pas: +6, dri: +5, dif: -18, fis: -4 },
+      TRQ:  { vel: +3, tir: +2, pas: +6, dri: +5, dif: -18, fis: -4 },
+      CM:   { vel: -1, tir: -2, pas: +7, dri: +3, dif: +1, fis: +2 },
+      CC:   { vel: -1, tir: -2, pas: +7, dri: +3, dif: +1, fis: +2 },
+      MZ:   { vel: +1, tir: -1, pas: +6, dri: +3, dif: +0, fis: +1 },
+      CDM:  { vel: -3, tir: -8, pas: +4, dri: -1, dif: +7, fis: +8 },
+      MED:  { vel: -3, tir: -8, pas: +4, dri: -1, dif: +7, fis: +8 },
+      // Difensori
+      CB:   { vel: -2, tir: -28, pas: -6, dri: -10, dif: +9, fis: +8 },
+      DC:   { vel: -2, tir: -28, pas: -6, dri: -10, dif: +9, fis: +8 },
+      RB:   { vel: +8, tir: -18, pas: +2, dri: +1, dif: +5, fis: +4 },
+      LB:   { vel: +8, tir: -18, pas: +2, dri: +1, dif: +5, fis: +4 },
+      TD:   { vel: +8, tir: -18, pas: +2, dri: +1, dif: +5, fis: +4 },
+      TS:   { vel: +8, tir: -18, pas: +2, dri: +1, dif: +5, fis: +4 },
+      // Portieri
+      GK:   { vel: +3, tir: -1, pas: -3, dri: +5, dif: +2, fis: -2 },
+      POR:  { vel: +3, tir: -1, pas: -3, dri: +5, dif: +2, fis: -2 }
+    };
+
+    var off = baseOffsets[pos];
+    if (!off) {
+      if (/DIF|CENTRAL/.test(pos)) off = baseOffsets.CB;
+      else if (/TERZIN/.test(pos)) off = baseOffsets.RB;
+      else if (/ALA|ESTER/.test(pos)) off = baseOffsets.RW;
+      else if (/MED|REG/.test(pos)) off = baseOffsets.CDM;
+      else if (/TREQ/.test(pos)) off = baseOffsets.CAM;
+      else if (/CENTRO/.test(pos)) off = baseOffsets.CM;
+      else if (/PORT/.test(pos)) off = baseOffsets.GK;
+      else off = baseOffsets.ST;
+    }
+
+    function cl(val) {
+      return Math.max(30, Math.min(99, Math.round(val)));
+    }
+
+    return {
+      velocita: cl(ovr + (off.vel || 0)),
+      tiro: cl(ovr + (off.tir || 0)),
+      passaggio: cl(ovr + (off.pas || 0)),
+      dribbling: cl(ovr + (off.dri || 0)),
+      difesa: cl(ovr + (off.dif || 0)),
+      fisico: cl(ovr + (off.fis || 0))
+    };
   }
 
   function ovrColor(o) {

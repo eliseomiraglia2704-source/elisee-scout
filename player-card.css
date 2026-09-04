@@ -226,6 +226,16 @@
   color: #fff4d6;
   line-height: 1.05;
 }
+.es-pc-card.has-no-stats .es-pc-fifa-bottom {
+  padding-bottom: 0.85rem;
+}
+.es-pc-card.has-no-stats .es-pc-fifa-name {
+  padding-bottom: 0.38rem;
+}
+.es-pc-card.has-no-stats .es-pc-fifa-ids {
+  padding-top: 0.2rem;
+  padding-bottom: 0.15rem;
+}
 .es-pc-fifa-ids {
   display: flex;
   justify-content: center;

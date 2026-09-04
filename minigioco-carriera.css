@@ -1617,6 +1617,59 @@ button.es-mg-hub-menubar:focus {
   }
 }
 
+.es-mg-career-card-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, #16161f 0%, #0d0d12 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 0.95rem 0.85rem 0.85rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  margin-bottom: 0.85rem;
+}
+.es-mg-career-card-wrap .es-pc-card-shell {
+  width: 100%;
+  max-width: 275px;
+  margin: 0 auto 0.65rem;
+}
+.es-mg-career-card-meta {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 0.55rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.35rem;
+}
+.es-mg-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.es-mg-meta-row span b {
+  color: #f1f5f9;
+  font-weight: 800;
+  font-size: 0.86rem;
+  margin-left: 0.35rem;
+}
+.es-mg-career-card-wrap .es-mg-tot-stats {
+  width: 100%;
+  margin-top: 0.4rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.es-mg-career-card-wrap .es-mg-vitrina-container {
+  width: 100%;
+  margin-top: 0.4rem;
+}
+
 .es-mg-player-card {
   display: flex;
   flex-direction: column;
