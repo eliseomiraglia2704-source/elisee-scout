@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-04**
-Ultimo fatto: **Ruoli in Italiano (es. ATT) e dicitura VERIFICATO sulla Card Elisee** — Sostituita la dicitura "TESSERATO" con "VERIFICATO" e uniformati tutti i codici ruolo con le sigle italiane ufficiali del calcio (`ATT` al posto di `ST`, `POR` per `GK`, `DC` per `CB`, `TD` per `RB`, `TS` per `LB`, `AD` per `RW`, `AS` per `LW`, `MED` per `CDM`, `CC` per `CM`, `TRQ` per `CAM`, `SP` per `CF`) in `player-card.js` e `mercato-hub.js`. Cache `VERIFICATO1`.
-Feature precedente: **Rimozione Badge Playstyle sulla Card Elisee** — Rimosso il badge circolare/poligonale ramato posizionato sotto il ruolo nella colonna sinistra della Card (`player-card.js`, `player-card.css`, `index.html`, `sw.js`). Cache `NOBADGE1`.
+Ultimo fatto: **Fix Taglio Icona Anagrafica / Rail Laterale Dashboard** — Risolto il layout di `.es-pd-rail` e `.es-pd-rail-end` in `player-dash.css`: rimosso `margin-top: auto` e `height: calc(100vh - 86px)` che spingevano il pulsante di modifica/anagrafica oltre il bordo inferiore visibile dello schermo; ora tutte le icone del menu laterale rimangono raggruppate e perfettamente visibili e centrate con divisore pulito. Cache `RAILFIX1`.
+Feature precedente: **Ruoli in Italiano (es. ATT) e dicitura VERIFICATO sulla Card Elisee** — Sostituita la dicitura "TESSERATO" con "VERIFICATO" e uniformati tutti i codici ruolo con le sigle italiane ufficiali del calcio. Cache `VERIFICATO1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
