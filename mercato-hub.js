@@ -105,17 +105,36 @@
     return 'ATT';
   }
   function posCode(role) {
+    var raw = String(role || '').trim().toUpperCase();
+    if (['GK', 'POR', 'PT'].indexOf(raw) >= 0) return 'POR';
+    if (['RB', 'TD'].indexOf(raw) >= 0) return 'TD';
+    if (['LB', 'TS'].indexOf(raw) >= 0) return 'TS';
+    if (['CB', 'DC', 'DIF'].indexOf(raw) >= 0) return 'DC';
+    if (['RW', 'AD', 'ED'].indexOf(raw) >= 0) return 'AD';
+    if (['LW', 'AS', 'ES'].indexOf(raw) >= 0) return 'AS';
+    if (['CDM', 'MED', 'MDC'].indexOf(raw) >= 0) return 'MED';
+    if (['CM', 'CC', 'MZ', 'CEN'].indexOf(raw) >= 0) return 'CC';
+    if (['CAM', 'COC', 'TRQ'].indexOf(raw) >= 0) return 'TRQ';
+    if (['CF', 'SP', 'AT'].indexOf(raw) >= 0) return 'SP';
+    if (['ST', 'ATT', 'PUNTA', 'PC'].indexOf(raw) >= 0) return 'ATT';
+
     var r = String(role || '').toLowerCase();
     if (/portier/.test(r)) return 'POR';
-    if (/terzin/.test(r)) return 'TE';
-    if (/difens|centrale/.test(r)) return 'DC';
-    if (/median/.test(r)) return 'MDC';
+    if (/terzino dest|terzino d/.test(r)) return 'TD';
+    if (/terzino sin|terzino s/.test(r)) return 'TS';
+    if (/terzin/.test(r)) return 'TD';
+    if (/esterno dest|ala dest/.test(r)) return 'AD';
+    if (/esterno sin|ala sin/.test(r)) return 'AS';
+    if (/ala/.test(r)) return 'AD';
+    if (/difensore centrale|centrale/.test(r) && /dif/.test(r)) return 'DC';
+    if (/difens/.test(r)) return 'DC';
+    if (/median|regista/.test(r)) return 'MED';
     if (/mezzala|interno/.test(r)) return 'CC';
-    if (/trequart/.test(r)) return 'COC';
-    if (/\bala\b/.test(r)) return 'AL';
+    if (/trequart/.test(r)) return 'TRQ';
     if (/seconda punta/.test(r)) return 'SP';
-    if (/centravanti|punta/.test(r)) return 'ATT';
-    return 'CAL';
+    if (/centravanti|punta|attacc/.test(r)) return 'ATT';
+    if (/centro/.test(r)) return 'CC';
+    return (raw.length <= 4 && raw.length >= 2) ? raw : 'ATT';
   }
   function ovrOf(name) {
     var n = 0;

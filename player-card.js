@@ -196,33 +196,33 @@
   }
   function posCode(role) {
     var raw = String(role || '').trim().toUpperCase();
-    if (['GK', 'POR', 'PT'].indexOf(raw) >= 0) return 'GK';
-    if (['RB', 'TD'].indexOf(raw) >= 0) return 'RB';
-    if (['LB', 'TS'].indexOf(raw) >= 0) return 'LB';
-    if (['CB', 'DC', 'DIF'].indexOf(raw) >= 0) return 'CB';
-    if (['RW', 'AD', 'ED'].indexOf(raw) >= 0) return 'RW';
-    if (['LW', 'AS', 'ES'].indexOf(raw) >= 0) return 'LW';
-    if (['CDM', 'MED'].indexOf(raw) >= 0) return 'CDM';
-    if (['CM', 'CC', 'MZ', 'CEN'].indexOf(raw) >= 0) return 'CM';
-    if (['CAM', 'COC', 'TRQ'].indexOf(raw) >= 0) return 'CAM';
-    if (['CF', 'SP', 'AT'].indexOf(raw) >= 0) return 'CF';
-    if (['ST', 'ATT', 'PUNTA'].indexOf(raw) >= 0) return 'ST';
+    if (['GK', 'POR', 'PT'].indexOf(raw) >= 0) return 'POR';
+    if (['RB', 'TD'].indexOf(raw) >= 0) return 'TD';
+    if (['LB', 'TS'].indexOf(raw) >= 0) return 'TS';
+    if (['CB', 'DC', 'DIF'].indexOf(raw) >= 0) return 'DC';
+    if (['RW', 'AD', 'ED'].indexOf(raw) >= 0) return 'AD';
+    if (['LW', 'AS', 'ES'].indexOf(raw) >= 0) return 'AS';
+    if (['CDM', 'MED', 'MDC'].indexOf(raw) >= 0) return 'MED';
+    if (['CM', 'CC', 'MZ', 'CEN'].indexOf(raw) >= 0) return 'CC';
+    if (['CAM', 'COC', 'TRQ'].indexOf(raw) >= 0) return 'TRQ';
+    if (['CF', 'SP', 'AT'].indexOf(raw) >= 0) return 'SP';
+    if (['ST', 'ATT', 'PUNTA', 'PC'].indexOf(raw) >= 0) return 'ATT';
 
     var r = String(role || '').toLowerCase();
-    if (/portier/.test(r)) return 'GK';
-    if (/terzino dest|terzino d/.test(r)) return 'RB';
-    if (/terzino sin|terzino s/.test(r)) return 'LB';
-    if (/esterno dest|ala dest/.test(r)) return 'RW';
-    if (/esterno sin|ala sin/.test(r)) return 'LW';
-    if (/difensore centrale|centrale/.test(r) && /dif/.test(r)) return 'CB';
-    if (/difens/.test(r)) return 'CB';
-    if (/median|regista/.test(r)) return 'CDM';
-    if (/mezzala/.test(r)) return 'CM';
-    if (/trequart/.test(r)) return 'CAM';
-    if (/seconda punta/.test(r)) return 'CF';
-    if (/centravanti|punta|attacc/.test(r)) return 'ST';
-    if (/centro/.test(r)) return 'CM';
-    return (raw.length <= 4 && raw.length >= 2) ? raw : 'ST';
+    if (/portier/.test(r)) return 'POR';
+    if (/terzino dest|terzino d/.test(r)) return 'TD';
+    if (/terzino sin|terzino s/.test(r)) return 'TS';
+    if (/esterno dest|ala dest/.test(r)) return 'AD';
+    if (/esterno sin|ala sin/.test(r)) return 'AS';
+    if (/difensore centrale|centrale/.test(r) && /dif/.test(r)) return 'DC';
+    if (/difens/.test(r)) return 'DC';
+    if (/median|regista/.test(r)) return 'MED';
+    if (/mezzala/.test(r)) return 'CC';
+    if (/trequart/.test(r)) return 'TRQ';
+    if (/seconda punta/.test(r)) return 'SP';
+    if (/centravanti|punta|attacc/.test(r)) return 'ATT';
+    if (/centro/.test(r)) return 'CC';
+    return (raw.length <= 4 && raw.length >= 2) ? raw : 'ATT';
   }
   function nationCode(n) {
     var raw = String(n || 'it').trim().toLowerCase();
@@ -456,7 +456,7 @@
             statsHtml +
             '<div class="es-pc-fifa-ids">' + idsHtml(u) + '</div>' +
             '<div class="es-pc-fifa-status' + (free ? ' is-free' : '') + '">' +
-              (free ? 'Svincolato' : 'Tesserato') +
+              (free ? 'Svincolato' : 'VERIFICATO') +
             '</div>' +
           '</div>' +
         '</div>' +
