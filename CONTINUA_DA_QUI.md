@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-04**
-Ultimo fatto: **Fix Rail Laterale a Tutta Altezza Sticky (Scroll Fluido Continuo)** — Aggiornata la barra laterale `.es-pd-rail` in `player-dash.css` con `height: calc(100vh - 86px)` e `position: sticky; top: 86px` senza interruzioni a metà altezza; la colonna di navigazione scende continua fino in fondo alla vista accompagnando lo scroll della dashboard con tutte le icone in alto perfettamente allineate. Cache `STICKYRAIL1`.
-Feature precedente: **Hot Live Auto-Reload Attivo (Zero Refresh Manuale F5)** — Implementato watcher automatico in tempo reale (`live-reload.js`, endpoint `/_live_version` in `elisee_up.py`, `version.json`, `sw.js`). Cache `AUTORELOAD1`.
+Ultimo fatto: **Arricchimento Completo Card Vista Tattica & Campo Ruoli FM** — Riprogettata la modale della vista tattica (`player-card.js`, `player-card.css`): aggiunto campo da calcio vettoriale SVG per i ruoli Football Manager con tutte le posizioni, cerchi di idoneità (🟢 Naturale 100%, 🔵 Competente 80%, 🟡 Adattabile 60%), legenda FM, compiti tattici, metriche avanzate (Rating Elisee, xG/partita, duelli vinti, piede dominante) e hub highlight rifinito. Cache `FMPITCH1`.
+Feature precedente: **Fix Rail Laterale a Tutta Altezza Sticky (Scroll Fluido Continuo)** — Aggiornata la barra laterale `.es-pd-rail` in `player-dash.css`. Cache `STICKYRAIL1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

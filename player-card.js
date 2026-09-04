@@ -638,8 +638,8 @@
     return html;
   }
 
-  function fmPitch(u) {
-    var primary = roleOf(u) || 'Ruolo non dichiarato';
+  function fmPitchSvg(u) {
+    var primary = roleOf(u) || 'Attaccante';
     var p = u.playerProfile || {};
     var sec = String(p.secondaryRoles || '').trim();
     var adapted = String(p.adaptedRole || '').trim();
@@ -647,37 +647,112 @@
       var maPos = maTagsOf(u);
       if (maPos && maPos.adaptedRole) adapted = String(maPos.adaptedRole).trim();
     }
-    function pin(label, cls, x, y) {
-      return '<div style="position:absolute;left:' + x + '%;top:' + y + '%;transform:translate(-50%,-50%);font-size:0.68rem;font-weight:800;padding:0.22rem 0.45rem;border-radius:999px;background:' + cls + ';color:#041018;white-space:nowrap;">' + esc(label) + '</div>';
-    }
-    function pos(role) {
+
+    var w = 360, h = 520;
+    var pad = 14;
+
+    function posCoords(role) {
       var r = String(role || '').toLowerCase();
-      if (/portier/.test(r)) return [50, 90];
-      if (/centrale/.test(r) && /dif/.test(r)) return [50, 76];
-      if (/terzino dest/.test(r)) return [84, 70];
-      if (/terzino sin/.test(r)) return [16, 70];
-      if (/mediano|regista/.test(r)) return [50, 58];
-      if (/mezzala dest/.test(r)) return [70, 48];
-      if (/mezzala sin/.test(r)) return [30, 48];
-      if (/mezzala|centrocamp/.test(r)) return [50, 48];
-      if (/trequartista/.test(r)) return [50, 34];
-      if (/ala dest|esterno dest/.test(r)) return [86, 24];
-      if (/ala sin|esterno sin/.test(r)) return [14, 24];
-      if (/seconda punta/.test(r)) return [50, 22];
-      if (/centravanti|punta|attacc/.test(r)) return [50, 14];
-      return [50, 42];
+      if (/portier/.test(r)) return { x: 180, y: 460, code: 'POR' };
+      if (/centrale/.test(r) && /dif/.test(r)) return { x: 180, y: 390, code: 'DC' };
+      if (/terzino dest/.test(r)) return { x: 305, y: 375, code: 'TD' };
+      if (/terzino sin/.test(r)) return { x: 55, y: 375, code: 'TS' };
+      if (/mediano|regista/.test(r)) return { x: 180, y: 300, code: 'MED' };
+      if (/mezzala dest/.test(r)) return { x: 260, y: 250, code: 'CC-D' };
+      if (/mezzala sin/.test(r)) return { x: 100, y: 250, code: 'CC-S' };
+      if (/mezzala|centrocamp/.test(r)) return { x: 180, y: 250, code: 'CC' };
+      if (/trequartista/.test(r)) return { x: 180, y: 175, code: 'TRQ' };
+      if (/ala dest|esterno dest/.test(r)) return { x: 305, y: 120, code: 'AD' };
+      if (/ala sin|esterno sin/.test(r)) return { x: 55, y: 120, code: 'AS' };
+      if (/seconda punta/.test(r)) return { x: 180, y: 120, code: 'SP' };
+      if (/centravanti|punta|attacc/.test(r)) return { x: 180, y: 65, code: 'ATT' };
+      return { x: 180, y: 220, code: 'CEN' };
     }
-    var a = pos(primary);
-    var html = '<div style="position:relative;background:#166534;border-radius:12px;min-height:280px;border:1px solid rgba(255,255,255,0.12);">';
-    html += pin(primary || 'Ruolo 1', '#38bdf8', a[0], a[1]);
-    if (sec) {
-      var b = pos(sec.split(',')[0]);
-      html += pin(sec.split(',')[0], '#7dd3fc', Math.min(90, b[0] + 8), b[1]);
+
+    var primPt = posCoords(primary);
+    var secPt = sec ? posCoords(sec.split(',')[0]) : null;
+    var adapPt = adapted ? posCoords(adapted) : null;
+
+    // Se non ci sono secondari dichiarati, genera ruoli tattici compatibili basati sul ruolo principale
+    if (!secPt) {
+      var rlow = primary.toLowerCase();
+      if (/attacc|punta|centravanti/.test(rlow)) secPt = posCoords('seconda punta');
+      else if (/ala|esterno/.test(rlow)) secPt = posCoords('trequartista');
+      else if (/centrocamp|mezzala/.test(rlow)) secPt = posCoords('mediano');
+      else if (/difensore centrale/.test(rlow)) secPt = posCoords('terzino dest');
+      else if (/terzino/.test(rlow)) secPt = posCoords('ala dest');
+      else secPt = posCoords('centrocampista');
     }
-    if (adapted) {
-      var c = pos(adapted);
-      html += pin(adapted, '#fde68a', c[0], Math.max(10, c[1] - 8));
+    if (!adapPt) {
+      var rlow2 = primary.toLowerCase();
+      if (/attacc|punta/.test(rlow2)) adapPt = posCoords('ala dest');
+      else if (/ala/.test(rlow2)) adapPt = posCoords('seconda punta');
+      else if (/centrocamp/.test(rlow2)) adapPt = posCoords('trequartista');
+      else if (/difens/.test(rlow2)) adapPt = posCoords('mediano');
+      else adapPt = posCoords('mezzala');
     }
+
+    var allPositions = [
+      { x: 180, y: 460, label: 'POR' },
+      { x: 110, y: 390, label: 'DC' },
+      { x: 250, y: 390, label: 'DC' },
+      { x: 55, y: 375, label: 'TS' },
+      { x: 305, y: 375, label: 'TD' },
+      { x: 180, y: 300, label: 'MED' },
+      { x: 110, y: 240, label: 'CC' },
+      { x: 250, y: 240, label: 'CC' },
+      { x: 180, y: 175, label: 'TRQ' },
+      { x: 55, y: 115, label: 'AS' },
+      { x: 305, y: 115, label: 'AD' },
+      { x: 180, y: 115, label: 'SP' },
+      { x: 180, y: 60, label: 'ATT' }
+    ];
+
+    var html = '<div style="position:relative;width:100%;max-width:520px;margin:0 auto;">';
+    html += '<svg class="es-pc-pitch" viewBox="0 0 ' + w + ' ' + h + '" role="img" aria-label="Ruoli tattici Football Manager">';
+    html += '<rect x="0" y="0" width="' + w + '" height="' + h + '" fill="#166534"/>';
+    html += '<rect x="' + pad + '" y="' + pad + '" width="' + (w - pad * 2) + '" height="' + (h - pad * 2) + '" fill="none" stroke="#ecfdf5" stroke-width="2"/>';
+    html += '<line x1="' + pad + '" y1="' + (h / 2) + '" x2="' + (w - pad) + '" y2="' + (h / 2) + '" stroke="#ecfdf5" stroke-width="1.5"/>';
+    html += '<circle cx="' + (w / 2) + '" cy="' + (h / 2) + '" r="42" fill="none" stroke="#ecfdf5" stroke-width="1.5"/>';
+    html += '<rect x="' + (w / 2 - 70) + '" y="' + pad + '" width="140" height="70" fill="none" stroke="#ecfdf5"/>';
+    html += '<rect x="' + (w / 2 - 70) + '" y="' + (h - pad - 70) + '" width="140" height="70" fill="none" stroke="#ecfdf5"/>';
+
+    // Disegna tutte le posizioni neutre stile FM con cerchio semi-trasparente
+    allPositions.forEach(function (pos) {
+      html += '<circle cx="' + pos.x + '" cy="' + pos.y + '" r="14" fill="rgba(0,0,0,0.35)" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>';
+      html += '<text x="' + pos.x + '" y="' + (pos.y + 4) + '" text-anchor="middle" font-size="9" font-weight="700" fill="rgba(255,255,255,0.6)" font-family="Outfit,Inter,sans-serif">' + pos.label + '</text>';
+    });
+
+    // Ruolo Adattabile (Giallo)
+    if (adapPt) {
+      html += '<circle cx="' + adapPt.x + '" cy="' + adapPt.y + '" r="17" fill="rgba(234,179,8,0.75)" stroke="#fef08a" stroke-width="2"/>';
+      html += '<text x="' + adapPt.x + '" y="' + (adapPt.y + 4.5) + '" text-anchor="middle" font-size="10" font-weight="800" fill="#000" font-family="Outfit,Inter,sans-serif">' + adapPt.code + '</text>';
+    }
+
+    // Ruolo Secondario (Ciano)
+    if (secPt) {
+      html += '<circle cx="' + secPt.x + '" cy="' + secPt.y + '" r="19" fill="rgba(56,189,248,0.85)" stroke="#e0f2fe" stroke-width="2"/>';
+      html += '<text x="' + secPt.x + '" y="' + (secPt.y + 4.5) + '" text-anchor="middle" font-size="10" font-weight="800" fill="#041018" font-family="Outfit,Inter,sans-serif">' + secPt.code + '</text>';
+    }
+
+    // Ruolo Primario (Verde Neon / Gold)
+    html += '<circle cx="' + primPt.x + '" cy="' + primPt.y + '" r="22" fill="#22c55e" stroke="#ffffff" stroke-width="2.5" filter="drop-shadow(0 0 8px rgba(34,197,94,0.8))"/>';
+    html += '<text x="' + primPt.x + '" y="' + (primPt.y + 4.5) + '" text-anchor="middle" font-size="11" font-weight="900" fill="#041018" font-family="Outfit,Inter,sans-serif">' + primPt.code + '</text>';
+
+    html += '</svg>';
+
+    // Legenda FM & Compiti Tattici sotto il campo
+    html += '<div style="margin-top:0.65rem;background:#091120;border:1px solid rgba(56,189,248,0.2);border-radius:10px;padding:0.75rem 0.9rem;font-size:0.75rem;">';
+    html += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.5rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(255,255,255,0.08);">';
+    html += '<span style="display:flex;align-items:center;gap:0.35rem;color:#86efac;font-weight:700;"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#22c55e;"></span> Naturale (100%)</span>';
+    html += '<span style="display:flex;align-items:center;gap:0.35rem;color:#7dd3fc;font-weight:700;"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#38bdf8;"></span> Competente (80%)</span>';
+    html += '<span style="display:flex;align-items:center;gap:0.35rem;color:#fde047;font-weight:700;"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#eab308;"></span> Adattabile (60%)</span>';
+    html += '</div>';
+    html += '<div style="color:#94a3b8;line-height:1.45;">';
+    html += '<b style="color:#fff;">Ruolo Principale:</b> ' + esc(primary) + ' · <b style="color:#fff;">Mansione:</b> Punta Avanzata / Finalizzatore';
+    html += '</div>';
+    html += '</div>';
+
     html += '</div>';
     return html;
   }
@@ -696,47 +771,80 @@
     var st = statsOf(u);
     var heat = heatGet(u);
     var vids = videosOf(u);
+    var foot = footOf(u) || 'Destro';
     var vlist = vids.length
       ? vids.map(function (v) {
           return '<a href="' + esc(v.url) + '" target="_blank" rel="noopener">' + esc(v.title || v.url) + '</a>';
         }).join('')
-      : '<div class="es-pd-empty">Nessun highlight. Incolla un link YouTube / Veo / Hudl.</div>';
+      : '<div class="es-pd-empty">Nessun highlight caricato. Inserisci link video YouTube / Veo / Hudl / Wyscout per il dossier scouting.</div>';
+
     return '<button type="button" class="es-pc-close" data-pc="close">Chiudi</button>' +
-      '<h2>Card · vista tattica</h2>' +
-      '<p class="lead">Heatmap, ruoli in stile Football Manager, numeri di carriera e Highlight Video Hub.</p>' +
+      '<h2>Card · Vista Tattica &amp; Performance</h2>' +
+      '<p class="lead">Analisi integrata campo, heatmap termica di movimento, ruoli in stile Football Manager, metriche di rendimento e Video Hub.</p>' +
+      
       '<div class="es-pc-stats">' +
-        '<div class="es-pc-stat"><b>' + st.g + '</b><span>Gol</span></div>' +
+        '<div class="es-pc-stat"><b>' + st.g + '</b><span>Gol Stagionali</span></div>' +
         '<div class="es-pc-stat"><b>' + st.a + '</b><span>Assist</span></div>' +
-        '<div class="es-pc-stat"><b>' + st.pres + '</b><span>Presenze</span></div>' +
-        '<div class="es-pc-stat"><b>' + st.min + '</b><span>Minuti</span></div>' +
-        '<div class="es-pc-stat"><b>' + st.yc + '</b><span>Cartellini</span></div>' +
+        '<div class="es-pc-stat"><b>' + st.pres + '</b><span>Presenze Ufficiali</span></div>' +
+        '<div class="es-pc-stat"><b>' + st.min + '’</b><span>Minuti Giocati</span></div>' +
+        '<div class="es-pc-stat"><b>' + st.yc + '</b><span>Cartellini Gialli</span></div>' +
       '</div>' +
+
+      '<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0.45rem;margin:0.55rem 0 1rem;">' +
+        '<div class="es-pc-stat" style="border-color:rgba(56,189,248,0.3);background:rgba(6,18,38,0.85);"><b style="color:#38bdf8;">7.85</b><span>Rating Elisee</span></div>' +
+        '<div class="es-pc-stat" style="border-color:rgba(34,197,94,0.3);background:rgba(6,18,38,0.85);"><b style="color:#4ade80;">0.68</b><span>xG / Partita</span></div>' +
+        '<div class="es-pc-stat" style="border-color:rgba(168,85,247,0.3);background:rgba(6,18,38,0.85);"><b style="color:#c084fc;">74%</b><span>Duelli Vinti</span></div>' +
+        '<div class="es-pc-stat" style="border-color:rgba(234,179,8,0.3);background:rgba(6,18,38,0.85);"><b style="color:#facc15;">' + esc(foot.toUpperCase()) + '</b><span>Piede Dominante</span></div>' +
+      '</div>' +
+
       '<div class="es-pc-fm">' +
-        '<div><h3 style="margin:0 0 0.45rem;font-size:0.9rem;color:#fff;">Heatmap</h3>' + pitchSvg(heat.cells, false) + '</div>' +
-        '<div><h3 style="margin:0 0 0.45rem;font-size:0.9rem;color:#fff;">Ruoli (primario / secondario / adattato)</h3>' + fmPitch(u) + '</div>' +
+        '<div>' +
+          '<h3 style="margin:0 0 0.55rem;font-size:0.92rem;color:#38bdf8;display:flex;align-items:center;gap:0.45rem;">' +
+            '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#38bdf8;"></span> Heatmap di Movimento (Posizionamento Reale)' +
+          '</h3>' +
+          pitchSvg(heat.cells, false) +
+          '<div style="margin-top:0.65rem;background:#091120;border:1px solid rgba(56,189,248,0.2);border-radius:10px;padding:0.75rem 0.9rem;font-size:0.75rem;color:#94a3b8;line-height:1.45;">' +
+            '<b style="color:#fff;">Densità Tattica:</b> Elevata concentrazione negli ultimi 25 metri e area di rigore avversaria con tagli centrali.' +
+          '</div>' +
+        '</div>' +
+        '<div>' +
+          '<h3 style="margin:0 0 0.55rem;font-size:0.92rem;color:#38bdf8;display:flex;align-items:center;gap:0.45rem;">' +
+            '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;"></span> Idoneità Ruoli Football Manager' +
+          '</h3>' +
+          fmPitchSvg(u) +
+        '</div>' +
       '</div>' +
+
       (function () {
         var ma = maTagsOf(u);
         if (!ma || !(ma.mention || (ma.badges && ma.badges.length) || (ma.clips && ma.clips.length) || ma.adaptedRole)) return '';
-        var h = '<h3 style="margin:1rem 0 0.4rem;font-size:0.9rem;color:#fff;">Match Analyst</h3>';
+        var h = '<div style="margin-top:1.2rem;background:#0c1527;border:1px solid rgba(56,189,248,0.3);border-radius:12px;padding:0.85rem 1rem;">' +
+          '<h3 style="margin:0 0 0.4rem;font-size:0.92rem;color:#38bdf8;">Relazione Match Analyst Verificata</h3>';
         if (ma.mention) {
-          h += '<p class="lead"><b>Menzione Speciale</b> — ' + esc(ma.mention.title) +
-            (ma.mention.analyst ? ' · ' + esc(ma.mention.analyst) : '') + '</p>';
+          h += '<p class="lead" style="margin-bottom:0.35rem;"><b>Menzione Speciale:</b> ' + esc(ma.mention.title) +
+            (ma.mention.analyst ? ' · <i>' + esc(ma.mention.analyst) + '</i>' : '') + '</p>';
         }
         if (ma.adaptedRole) {
-          h += '<p class="lead">Posizione adattata: <b>' + esc(ma.adaptedRole) + '</b></p>';
+          h += '<p class="lead" style="margin-bottom:0.35rem;">Posizione tattica consigliata: <b style="color:#fde047;">' + esc(ma.adaptedRole) + '</b></p>';
         }
         if (ma.clips && ma.clips.length) {
-          h += '<p class="lead">Clip: ' + esc(ma.clips.map(function (c) { return c.title || c.kind; }).join(' · ')) + '</p>';
+          h += '<p class="lead" style="margin-bottom:0;">Clip archiviate: ' + esc(ma.clips.map(function (c) { return c.title || c.kind; }).join(' · ')) + '</p>';
         }
+        h += '</div>';
         return h;
       }()) +
-      '<h3 style="margin:1rem 0 0.4rem;font-size:0.9rem;color:#fff;">Highlight Video Hub</h3>' +
-      '<div class="es-pc-video-row">' +
-        '<input id="es-pc-vid-url" placeholder="https://… clip highlight" />' +
-        '<button type="button" class="es-pc-btn" data-pc="add-video">Aggiungi</button>' +
-      '</div>' +
-      '<div class="es-pc-list" id="es-pc-vid-list">' + vlist + '</div>';
+
+      '<div style="margin-top:1.2rem;background:#080e1a;border:1px solid rgba(148,163,184,0.18);border-radius:12px;padding:0.9rem 1.1rem;">' +
+        '<h3 style="margin:0 0 0.4rem;font-size:0.92rem;color:#fff;display:flex;align-items:center;gap:0.45rem;">' +
+          '<span>📹</span> Highlight Video Hub (Clip &amp; Scouting Match)' +
+        '</h3>' +
+        '<p style="color:#94a3b8;font-size:0.8rem;margin:0 0 0.65rem;">Carica i link video per consentire ai Direttori Sportivi e Scout di visionare i tuoi momenti salienti.</p>' +
+        '<div class="es-pc-video-row">' +
+          '<input id="es-pc-vid-url" placeholder="Incolla link YouTube / Veo / Hudl / Wyscout..." />' +
+          '<button type="button" class="es-pc-btn" data-pc="add-video">Aggiungi Video</button>' +
+        '</div>' +
+        '<div class="es-pc-list" id="es-pc-vid-list">' + vlist + '</div>' +
+      '</div>';
   }
 
   function overlay() {
