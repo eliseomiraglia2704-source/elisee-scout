@@ -29,7 +29,11 @@
   }
   function meKey(u) {
     u = u || userObj();
-    return String(u.email || u.id || u.username || '').trim().toLowerCase() || '';
+    var email = String(u.email || '').trim().toLowerCase();
+    if (email && email.indexOf('@') >= 0) return email;
+    var raw = String(u.id || u.username || '').trim().toLowerCase();
+    if (raw.indexOf('me-player-') === 0) raw = raw.replace('me-player-', '');
+    return raw || email || '';
   }
   function loadMap(key) {
     try { return JSON.parse(localStorage.getItem(key) || '{}') || {}; } catch (_) { return {}; }
@@ -141,40 +145,86 @@
     });
   }
 
+  function isRealUser(p) {
+    if (!p) return false;
+    var email = String(p.email || p.id || '').trim().toLowerCase();
+    if (!email) return false;
+    if (/^(staff-|demo-|me-player-|fake-|mock-|test-)/i.test(email)) return false;
+    if (email.indexOf('@') < 0 || email.indexOf('.') < 0) return false;
+    return true;
+  }
+
+  function cleanDummyData() {
+    try {
+      var inbox = inboxAll();
+      var changedI = false;
+      Object.keys(inbox).forEach(function (k) {
+        if (!isRealUser({ email: k })) {
+          delete inbox[k];
+          changedI = true;
+        }
+      });
+      if (changedI) saveMap(INBOX_KEY, inbox);
+
+      var pub = publishedAll();
+      var changedP = false;
+      Object.keys(pub).forEach(function (k) {
+        if (!isRealUser({ email: k })) {
+          delete pub[k];
+          changedP = true;
+        }
+      });
+      if (changedP) saveMap(PUB_KEY, pub);
+    } catch (_) {}
+  }
+
   function peoplePool() {
+    cleanDummyData();
     var out = [];
     var seen = {};
     function add(p) {
-      if (!p) return;
+      if (!p || !isRealUser(p)) return;
       var k = String(p.email || p.id || '').trim().toLowerCase();
       if (!k || seen[k]) return;
       seen[k] = 1;
       out.push({
         email: k,
-        name: p.name || [p.nome, p.cognome].filter(Boolean).join(' ').trim() || k,
-        role: p.role || p.ruolo || ''
+        name: p.name || [p.nome, p.cognome].filter(Boolean).join(' ').trim() || (p.playerProfile && [p.playerProfile.nome, p.playerProfile.cognome].filter(Boolean).join(' ').trim()) || p.username || k,
+        role: p.role || p.ruolo || (p.playerProfile && p.playerProfile.ruolo) || ''
       });
     }
+
+    // 1. Utente attivo reale
+    add(userObj());
+
+    // 2. Database e lista utenti registrati reali
+    try {
+      var regList = JSON.parse(localStorage.getItem('elisee_registered_users') || '[]');
+      if (Array.isArray(regList)) regList.forEach(add);
+    } catch (_) {}
+    try {
+      var dbList = JSON.parse(localStorage.getItem('elisee_users_db') || '[]');
+      if (Array.isArray(dbList)) dbList.forEach(add);
+    } catch (_) {}
+
+    // 3. Inbox richieste viso PNG reali
     var inbox = inboxAll();
     Object.keys(inbox).forEach(function (k) { add(inbox[k]); });
+
+    // 4. Utenti con Card pubblicata reale
     var pub = publishedAll();
     Object.keys(pub).forEach(function (k) { add({ email: k, name: (pub[k] && pub[k].name) || k }); });
-    add(userObj());
-    try {
-      if (window.EliseeScopri && typeof window.EliseeScopri.allProfiles === 'function') {
-        window.EliseeScopri.allProfiles().forEach(add);
-      }
-    } catch (_) {}
+
     return out;
   }
 
   function searchPeople(q) {
     q = String(q || '').trim().toLowerCase();
     var rows = peoplePool();
-    if (!q) return rows.slice(0, 24);
+    if (!q) return rows;
     return rows.filter(function (p) {
       return (p.name + ' ' + p.email + ' ' + p.role).toLowerCase().indexOf(q) >= 0;
-    }).slice(0, 24);
+    });
   }
 
   function setDraft(email, dataUrl) {

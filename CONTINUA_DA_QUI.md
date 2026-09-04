@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-04**
-Ultimo fatto: **Admin Card Elisee** — Risolto taglio verticale dei nomi utenti nella lista staff (`.es-card-staff-list` / `.es-card-user`) con layout flex, min-height 68px e padding ottimale. Cache `FIXUSERNAMES1`.
-Feature precedente: **Specifiche PNG Card Elisee** — Indicazione esatta del peso (massimo 2 MB, consigliato 150 KB – 1 MB), trasparenza canale Alpha e risoluzione ideale (600×800 px o 800×1000 px) sia nell'area utente che nel pannello staff/admin. Cache `PNGSPECS1`.
+Ultimo fatto: **Admin Card Elisee** — Rimossi tutti i profili di esempio/fittizi (`staff-*`, `me-player-*`, mock discovery); la lista include e mantiene solo gli account registrati realmente sul sito (`userObj`, `elisee_registered_users`, `elisee_users_db`, inbox reale). Cache `REALUSERS1`.
+Feature precedente: **Admin Card Elisee** — Risolto taglio verticale dei nomi utenti nella lista staff (`.es-card-staff-list` / `.es-card-user`) con layout flex, min-height 68px e padding ottimale. Cache `FIXUSERNAMES1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -90,7 +90,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| `f500090` | Admin Card Elisee: fix taglio verticale nomi utenti nella lista con flexbox e min-height; cache `FIXUSERNAMES1` |
+| (questo) | Admin Card Elisee: rimossi profili esempio, mostrati solo utenti registrati reali; cache `REALUSERS1` |
+| `c265188` | Admin Card Elisee: fix taglio verticale nomi utenti nella lista con flexbox e min-height; cache `FIXUSERNAMES1` |
 | `10d0fcd` | Specifiche PNG Card Elisee: peso max 2MB (consigliato 150KB-1MB), risoluzione e Alpha in area utente e staff; cache `PNGSPECS1` |
 | `8290a12` | Minigioco: bonifica club clone dilettanti e promozioni integrali 9->1 con mantenimento categoria; cache `TIERPROMO1` |
 | `0e6b52c` | Hub minigioco: allineamento card Pokemon Calcistico con Carriera; cache `PKMN2` |
