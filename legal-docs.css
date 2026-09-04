@@ -176,54 +176,7 @@ body.legal-doc-page::before {
   color: #fff;
 }
 
-/* Gloss on action buttons */
-.cp-actions a::after,
-.cp-actions button::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -120%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(
-    105deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.12) 40%,
-    rgba(255, 255, 255, 0.4) 50%,
-    rgba(255, 255, 255, 0.12) 60%,
-    transparent 100%
-  );
-  transform: skewX(-18deg);
-  pointer-events: none;
-}
-
-.cp-actions a:hover::after,
-.cp-actions button:hover::after {
-  /* Ciclo lento: 1.5s, ripete finché il cursore resta sul bottone */
-  animation: legal-shine 1.5s ease-in-out infinite;
-}
-
-@keyframes legal-shine {
-  0% {
-    left: -120%;
-    opacity: 0;
-  }
-  8% {
-    opacity: 0.75;
-  }
-  45% {
-    opacity: 1;
-  }
-  70% {
-    left: 140%;
-    opacity: 0.55;
-  }
-  71%,
-  100% {
-    left: 140%;
-    opacity: 0;
-  }
-}
+/* Gloss on action buttons rimosso */
 
 /* ---------- Hero document header ---------- */
 .cp-hero {

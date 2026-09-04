@@ -837,16 +837,10 @@
   opacity: 1 !important;
   animation: none !important;
 }
-.es-sq-kit-ghost:hover .es-sq-kit-ghost-shine {
-  opacity: 1;
-}
+.es-sq-kit-ghost:hover .es-sq-kit-ghost-shine,
 .es-sq-kit-ghost:hover .es-sq-kit-ghost-shine::after {
-  display: block !important;
-  animation: esSqKitShine 0.58s ease-out forwards !important;
-}
-@keyframes esSqKitShine {
-  from { transform: translateX(-160%) skewX(-20deg); }
-  to { transform: translateX(280%) skewX(-20deg); }
+  display: none !important;
+  animation: none !important;
 }
 .es-sq-kit-stage.is-solo .es-sq-kit-ghost {
   display: none !important;

@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-04**
-Ultimo fatto: **Preparatore Atletico & Preparatore dei Portieri (Documento Ufficiale)** — Aggiornamento e potenziamento completo delle dashboard e dei ruoli dello staff per Preparatore Atletico (`at-dash.js`) e Preparatore dei Portieri / Preparatore Atletico dei Portieri (`gk-dash.js`): aggiunte le metriche specifiche GK (parate, uscite, costruzione coi piedi, reattività GPS), la Stanza dei Portieri (video hub briefing), schede sviluppo settimanali, Workload Management GPS con semaforo prevenzione infortuni, schede forza/riatletizzazione, test periodici (Mader, Cooper, Yo-Yo, Salto), report in-house/pubblici, assegnazione badge ("Saracinesca", "Piede Educato GK", "Atleta Top", "Resistenza Élite"), menzioni speciali e inoltro report al Mister. Cache `GKAT1`.
-Feature precedente: **Card Elisee nel Minigioco Carriera & Visibilità Valutazioni** — Integrata la Card Elisee ufficiale (luxury frame, maglia sito, viso, OVR, ruolo, cognome, bandiera, logo lega, logo club) nella schermata del Minigioco Simulazione Carriera con crescita contemporanea e dinamica delle 6 valutazioni (VEL, TIR, PAS, DRI, DIF, FIS). Le 6 valutazioni numeriche sotto il cognome sono visibili solo nel minigioco; nella propria area utente la Card è pulita senza valutazioni. Cache `CARDELISEE1`.
+Ultimo fatto: **Rimozione Effetti Riflesso / Gloss-Shine Hover** — Eliminata completamente l'animazione del fascio di luce/riflesso a scorrimento (`btn-gloss-shine`, `legal-shine`, kit shine) al passaggio del cursore su pulsanti, icone laterali della rail, tab ed elementi interattivi. Cache `NOSHINE1`.
+Feature precedente: **Preparatore Atletico & Preparatore dei Portieri (Documento Ufficiale)** — Aggiornamento e potenziamento completo delle dashboard e dei ruoli dello staff per Preparatore Atletico (`at-dash.js`) e Preparatore dei Portieri / Preparatore Atletico dei Portieri (`gk-dash.js`). Cache `GKAT1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
