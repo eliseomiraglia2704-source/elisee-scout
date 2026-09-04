@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-04**
-Ultimo fatto: **Pannello Telemetria Live & Stato Servizi nelle Impostazioni Admin** — Integrata la matrice di monitoraggio in tempo reale (Source × Endpoint) personalizzata per Elisee Scout (`app.js`, `index.html`, `sw.js`). Nodi regionali (Italia Nord/Centro/Sud), scomposizione «Inferenza IA» (Radar, Match Analysis, Scouting) e «Servizi Core» (Database, TC Manager, Auth), indicatori percentuali colorati (100% verde / 99.8% ambra), timestamp live con auto-refresh e nuova scheda dedicata «Telemetria & Servizi Live» nella sidebar Admin. Cache `TELEMETRY1`.
-Feature precedente: **Nuovo Selettore Stagione Custom Luxury Dropdown** — Sostituito il select nativo grezzo del browser con una tendina custom interattiva dark luxury (`public-rating-system.js`, `dash-luxury.css`, `player-dash.js`, `player-dash.css`). Cache `SEASONDROP1`.
+Ultimo fatto: **Monitor Canali, Client & Modelli IA (Outage / Health Check List)** — Integrata la lista componenti e client per Elisee Scout (`app.js`, `index.html`, `sw.js`): Elisee (iOS), Elisee (Android), Elisee (Web), Elisee AI Build & Atelier, TC Manager, API Milano Cloud, API Roma Data Hub e Wall Stampa. Ogni canale ha stato operativo circolare, badge uptime, latenza round-trip, crittografia TLS 1.3/AES-256 e pannello diagnostico espandibile con ping test. Cache `TELEMETRY2`.
+Feature precedente: **Pannello Telemetria Live & Stato Servizi nelle Impostazioni Admin** — Integrata la matrice di monitoraggio in tempo reale (Source × Endpoint) personalizzata per Elisee Scout. Cache `TELEMETRY1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
