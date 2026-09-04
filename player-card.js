@@ -876,20 +876,103 @@
 
   function heatmapEditor(u) {
     heatRange = heatGet(u);
+    var r = roleOf(u) || 'Attaccante';
+
     openSheet(
       '<button type="button" class="es-pc-close" data-pc="close">Chiudi</button>' +
-      '<h2>Heatmap intelligente a fine gara</h2>' +
-      '<p class="lead">Generazione automatica da ruolo e modulo, oppure tocca le zone in cui hai spinto, crossato o recuperato palla.</p>' +
-      '<div class="es-pc-form">' +
-        '<select id="es-pc-form">' +
-          ['4-3-3', '4-2-3-1', '4-4-2', '3-5-2', '3-4-3'].map(function (f) {
+      '<h2>Heatmap Intelligente a Fine Gara</h2>' +
+      '<p class="lead">Traccia e rifinisci la mappa termica del tuo movimento in campo: tocca le zolle o scegli i preset tattici per generare il tuo report.</p>' +
+
+      '<div class="es-pc-form" style="margin-bottom:1.1rem;display:flex;align-items:center;flex-wrap:wrap;gap:0.6rem;">' +
+        '<span style="font-size:0.82rem;font-weight:700;color:#94a3b8;">Modulo di Gara:</span>' +
+        '<select id="es-pc-form" style="background:#091224;color:#fff;border-color:rgba(56,189,248,0.35);padding:0.4rem 0.8rem;border-radius:8px;">' +
+          ['4-3-3', '4-2-3-1', '4-4-2', '3-5-2', '3-4-3', '4-3-1-2'].map(function (f) {
             return '<option' + (heatRange.form === f ? ' selected' : '') + '>' + f + '</option>';
           }).join('') +
         '</select>' +
-        '<button type="button" class="es-pc-btn" data-pc="heat-auto">Genera dal modulo</button>' +
-        '<button type="button" class="es-pc-btn" data-pc="heat-save">Salva heatmap</button>' +
+        '<button type="button" class="es-pc-btn" data-pc="heat-auto" style="padding:0.4rem 0.9rem;">⚡ Genera dal Modulo</button>' +
+        '<button type="button" class="es-pc-btn" data-pc="heat-save" style="background:#0284c7;color:#fff;padding:0.4rem 1.1rem;border-color:#38bdf8;">💾 Salva Heatmap sulla Card</button>' +
+        '<button type="button" class="es-pc-btn" data-pc="heat-clear" style="background:rgba(239,68,68,0.12);color:#f87171;border-color:rgba(239,68,68,0.3);margin-left:auto;">🧹 Azzera</button>' +
       '</div>' +
-      '<div id="es-pc-heat-pitch">' + pitchSvg(heatRange.cells, true) + '</div>'
+
+      '<div class="es-pc-fm" style="gap:1.3rem;align-items:start;">' +
+        '<div>' +
+          '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem;">' +
+            '<h3 style="margin:0;font-size:0.92rem;color:#38bdf8;display:flex;align-items:center;gap:0.45rem;">' +
+              '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#38bdf8;"></span> Campo Interattivo (Tocca per aggiungere calore)' +
+            '</h3>' +
+            '<span style="font-size:0.75rem;color:#94a3b8;">Fronte d’Attacco ↑</span>' +
+          '</div>' +
+          '<div id="es-pc-heat-pitch">' + pitchSvg(heatRange.cells, true) + '</div>' +
+        '</div>' +
+
+        '<div style="display:flex;flex-direction:column;gap:0.9rem;">' +
+          // Box Guida Tattica
+          '<div style="background:#081020;border:1px solid rgba(56,189,248,0.25);border-radius:12px;padding:0.95rem 1.1rem;">' +
+            '<h4 style="margin:0 0 0.6rem;color:#38bdf8;font-size:0.88rem;display:flex;align-items:center;gap:0.4rem;">' +
+              '<span>🧭</span> Guida: Come Muoverti &amp; Posizionarti' +
+            '</h4>' +
+            '<div style="font-size:0.78rem;color:#cbd5e1;line-height:1.55;display:flex;flex-direction:column;gap:0.55rem;">' +
+              '<div style="display:flex;gap:0.5rem;">' +
+                '<span style="color:#38bdf8;font-weight:800;">1.</span>' +
+                '<span><b>Tocca le zolle:</b> ogni click incrementa l’intensità termica di quella porzione di campo fino al livello massimo.</span>' +
+              '</div>' +
+              '<div style="display:flex;gap:0.5rem;">' +
+                '<span style="color:#38bdf8;font-weight:800;">2.</span>' +
+                '<span><b>Attacco &amp; Profondità:</b> focalizza la pressione negli ultimi 20 metri per indicare presenza costante nei 16 metri e tagli centrali.</span>' +
+              '</div>' +
+              '<div style="display:flex;gap:0.5rem;">' +
+                '<span style="color:#38bdf8;font-weight:800;">3.</span>' +
+                '<span><b>Corsie Esterne:</b> colora le fasce laterali se effettui allarghi, sovrapposizioni o cross a rientrare.</span>' +
+              '</div>' +
+              '<div style="display:flex;gap:0.5rem;">' +
+                '<span style="color:#38bdf8;font-weight:800;">4.</span>' +
+                '<span><b>Non Possesso &amp; Pressing:</b> colora la trequarti avversaria per segnalare pressing feroce sul primo possesso avversario.</span>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+
+          // Box Legenda Termica
+          '<div style="background:#081020;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:0.95rem 1.1rem;">' +
+            '<h4 style="margin:0 0 0.6rem;color:#fff;font-size:0.86rem;display:flex;align-items:center;gap:0.4rem;">' +
+              '<span>🎨</span> Legenda Intensità Termica' +
+            '</h4>' +
+            '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.55rem;font-size:0.76rem;">' +
+              '<div style="display:flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.03);padding:0.45rem 0.6rem;border-radius:6px;border:1px solid rgba(56,189,248,0.4);">' +
+                '<span style="width:12px;height:12px;border-radius:3px;background:rgba(56,189,248,0.9);box-shadow:0 0 6px #38bdf8;"></span>' +
+                '<span style="color:#fff;font-weight:700;">Alta Frequenza (>75%)</span>' +
+              '</div>' +
+              '<div style="display:flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.03);padding:0.45rem 0.6rem;border-radius:6px;border:1px solid rgba(56,189,248,0.25);">' +
+                '<span style="width:12px;height:12px;border-radius:3px;background:rgba(56,189,248,0.5);"></span>' +
+                '<span style="color:#cbd5e1;font-weight:600;">Media Frequenza (50%)</span>' +
+              '</div>' +
+              '<div style="display:flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.03);padding:0.45rem 0.6rem;border-radius:6px;border:1px solid rgba(56,189,248,0.15);">' +
+                '<span style="width:12px;height:12px;border-radius:3px;background:rgba(56,189,248,0.2);"></span>' +
+                '<span style="color:#94a3b8;">Transizione (25%)</span>' +
+              '</div>' +
+              '<div style="display:flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.03);padding:0.45rem 0.6rem;border-radius:6px;border:1px solid rgba(255,255,255,0.05);">' +
+                '<span style="width:12px;height:12px;border-radius:3px;background:#166534;"></span>' +
+                '<span style="color:#64748b;">Nessun Tocco (0%)</span>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+
+          // Box Preset Tattici Rapidi
+          '<div style="background:#081020;border:1px solid rgba(56,189,248,0.2);border-radius:12px;padding:0.95rem 1.1rem;">' +
+            '<h4 style="margin:0 0 0.6rem;color:#38bdf8;font-size:0.86rem;display:flex;align-items:center;gap:0.4rem;">' +
+              '<span>⚡</span> Preset Tattici Rapidi' +
+            '</h4>' +
+            '<div style="display:flex;flex-wrap:wrap;gap:0.45rem;">' +
+              '<button type="button" class="es-pc-btn" data-pc="heat-preset" data-preset="att" style="font-size:0.75rem;padding:0.35rem 0.65rem;">🎯 Punta / Finalizzazione</button>' +
+              '<button type="button" class="es-pc-btn" data-pc="heat-preset" data-preset="ala" style="font-size:0.75rem;padding:0.35rem 0.65rem;">🚀 Ala / Corsie Esterne</button>' +
+              '<button type="button" class="es-pc-btn" data-pc="heat-preset" data-preset="trq" style="font-size:0.75rem;padding:0.35rem 0.65rem;">🧠 Trequarti &amp; Raccordo</button>' +
+              '<button type="button" class="es-pc-btn" data-pc="heat-preset" data-preset="b2b" style="font-size:0.75rem;padding:0.35rem 0.65rem;">🔋 Box-to-Box / Mezzala</button>' +
+              '<button type="button" class="es-pc-btn" data-pc="heat-preset" data-preset="press" style="font-size:0.75rem;padding:0.35rem 0.65rem;">⚔️ Pressing Alto</button>' +
+            '</div>' +
+          '</div>' +
+
+        '</div>' +
+      '</div>'
     );
   }
 
@@ -1333,6 +1416,34 @@
       heatRange.cells = roleSeeds(roleOf(u), form);
       var hold = document.getElementById('es-pc-heat-pitch');
       if (hold) hold.innerHTML = pitchSvg(heatRange.cells, true);
+      return;
+    }
+    if (k === 'heat-clear') {
+      heatRange.cells = {};
+      var hold = document.getElementById('es-pc-heat-pitch');
+      if (hold) hold.innerHTML = pitchSvg(heatRange.cells, true);
+      toast('Heatmap azzerata. Tocca le zolle per disegnare.');
+      return;
+    }
+    if (k === 'heat-preset') {
+      var preset = t.getAttribute('data-preset') || 'att';
+      var newCells = {};
+      function fill(row, col, w) { newCells[row + '-' + col] = w; }
+      if (preset === 'att') {
+        fill(0, 2, 8); fill(0, 3, 8); fill(1, 2, 7); fill(1, 3, 7); fill(0, 1, 4); fill(0, 4, 4); fill(2, 2, 5); fill(2, 3, 5);
+      } else if (preset === 'ala') {
+        fill(1, 5, 8); fill(2, 5, 8); fill(3, 5, 7); fill(0, 4, 6); fill(1, 4, 5); fill(4, 5, 4);
+      } else if (preset === 'trq') {
+        fill(2, 2, 8); fill(2, 3, 8); fill(1, 2, 6); fill(1, 3, 6); fill(2, 1, 5); fill(2, 4, 5); fill(3, 2, 5); fill(3, 3, 5);
+      } else if (preset === 'b2b') {
+        fill(3, 2, 7); fill(3, 3, 7); fill(4, 2, 8); fill(4, 3, 8); fill(2, 2, 5); fill(5, 2, 6); fill(3, 1, 4); fill(4, 1, 4);
+      } else if (preset === 'press') {
+        fill(0, 1, 7); fill(0, 2, 8); fill(0, 3, 8); fill(0, 4, 7); fill(1, 1, 6); fill(1, 4, 6); fill(1, 2, 7); fill(1, 3, 7);
+      }
+      heatRange.cells = newCells;
+      var hold2 = document.getElementById('es-pc-heat-pitch');
+      if (hold2) hold2.innerHTML = pitchSvg(heatRange.cells, true);
+      toast('Preset tattico applicato.');
       return;
     }
     if (k === 'heat-save') {

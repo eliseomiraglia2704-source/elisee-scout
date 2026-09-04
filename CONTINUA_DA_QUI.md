@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-04**
-Ultimo fatto: **Arricchimento Completo Card Vista Tattica & Campo Ruoli FM** — Riprogettata la modale della vista tattica (`player-card.js`, `player-card.css`): aggiunto campo da calcio vettoriale SVG per i ruoli Football Manager con tutte le posizioni, cerchi di idoneità (🟢 Naturale 100%, 🔵 Competente 80%, 🟡 Adattabile 60%), legenda FM, compiti tattici, metriche avanzate (Rating Elisee, xG/partita, duelli vinti, piede dominante) e hub highlight rifinito. Cache `FMPITCH1`.
-Feature precedente: **Fix Rail Laterale a Tutta Altezza Sticky (Scroll Fluido Continuo)** — Aggiornata la barra laterale `.es-pd-rail` in `player-dash.css`. Cache `STICKYRAIL1`.
+Ultimo fatto: **Guida Operativa, Legenda & Preset Tattici Heatmap Gara** — Riorganizzata la modale "Heatmap Intelligente a Fine Gara" (`player-card.js`, `player-card.css`) su 2 colonne: inserito pannello laterale con Guida Step-by-Step su come muoversi e posizionarsi per ruolo (Punta, Ali, Mezzala, Difesa), Legenda completa delle frequenze termiche (Alta, Media, Transizione, 0%), preset rapidi (Punta, Corsie, Trequarti, B2B, Pressing) e azzeramento rapido. Cache `HEATLEGENDA1`.
+Feature precedente: **Arricchimento Completo Card Vista Tattica & Campo Ruoli FM** — Riprogettata la modale della vista tattica con campo FM, legenda FM e metriche avanzate. Cache `FMPITCH1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
