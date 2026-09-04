@@ -33,6 +33,20 @@
   color: var(--lx-text) !important;
   font-family: var(--lx-sans) !important;
   font-weight: 400;
+  position: relative;
+}
+
+.es-pd::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 56px;
+  background: var(--lx-bg-2, #050a14) !important;
+  border-right: 1px solid var(--lx-line, rgba(56, 189, 248, 0.12)) !important;
+  pointer-events: none;
+  z-index: 1;
 }
 
 .es-pd-rail {
@@ -811,4 +825,10 @@ body.es-tifoso-on #user-dossier-view-group {
   border-top: 1px solid rgba(56, 189, 248, 0.1) !important;
   background: rgba(3, 7, 15, 0.6) !important;
   border-radius: 0 0 9px 9px !important;
+}
+
+@media (max-width: 860px) {
+  .es-pd::before {
+    display: none !important;
+  }
 }

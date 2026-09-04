@@ -34,6 +34,20 @@
   background: #080e1a;
   color: #e2e8f0;
   font-family: 'Outfit', Inter, system-ui, sans-serif;
+  position: relative;
+}
+
+.es-pd::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 56px;
+  background: #050a14;
+  border-right: 1px solid rgba(56, 189, 248, 0.12);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .es-pd-rail {
@@ -138,6 +152,9 @@
 @media (max-width: 860px) {
   .es-pd {
     grid-template-columns: 1fr;
+  }
+  .es-pd::before {
+    display: none !important;
   }
   .es-pd-rail {
     display: none;

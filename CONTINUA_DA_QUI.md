@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-04**
-Ultimo fatto: **Scroll Unico Schermata Modale & Chiusura al Click su Punto Vuoto** — Risolto il problema della doppia scrollbar bloccando lo scorrimento di fondo della pagina principale (`document.documentElement.style.overflow = 'hidden'`) quando la modale è aperta (`player-card.js`, `player-card.css`). Ora è presente un solo scroll fluido. Aggiunta chiusura immediata al click su qualsiasi punto vuoto dello schermo (backdrop) o pressione del tasto Esc. Cache `SINGLESCROLL1`.
-Feature precedente: **Consenso GDPR Art. 9, Sincronizzazione Smartwatch & Contapassi Dispositivo** — Integrato consenso privacy informato per tracciamento biometrico e GPS in `player-card.js`. Cache `WATCHSYNC1`.
+Ultimo fatto: **Risolto Taglio Colonna Sinistra / Rail a Tutta Altezza** — Risolto il problema del buco nero/taglio visivo a sinistra della Card Elisee nella dashboard atleta (`#user-dossier-portal`). Aggiunto `position: relative` e pseudo-elemento `::before` a tutta altezza con background scuro continuo e bordo ciano per l'intera colonna laterale di 56px (`player-dash.css`, `dash-luxury.css`). Ora la rail non si interrompe più e rimane uniforme e continua per l'intera altezza della pagina. Cache `RAILFULL1`.
+Feature precedente: **Scroll Unico Schermata Modale & Chiusura al Click su Punto Vuoto** — Risolto il problema della doppia scrollbar bloccando lo scorrimento di fondo della pagina principale (`document.documentElement.style.overflow = 'hidden'`) quando la modale è aperta (`player-card.js`, `player-card.css`). Ora è presente un solo scroll fluido. Aggiunta chiusura immediata al click su qualsiasi punto vuoto dello schermo (backdrop) o pressione del tasto Esc. Cache `SINGLESCROLL1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
