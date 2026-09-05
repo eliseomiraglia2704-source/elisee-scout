@@ -1,0 +1,233 @@
+/* =========================================================
+   ELISEE WORLD — FOOTBALL EDITION (Retro 16-bit RPG UI)
+   ========================================================= */
+
+#elisee-world-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background: rgba(3, 7, 18, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.ew-container {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  background: #050a14;
+  border: 2px solid #38bdf8;
+  border-radius: 16px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(2, 132, 199, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+.ew-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 1rem;
+  background: linear-gradient(135deg, #0284c7, #0f172a);
+  border-bottom: 1.5px solid rgba(56, 189, 248, 0.4);
+  box-sizing: border-box;
+}
+
+.ew-title {
+  color: #facc15;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.ew-title span {
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.ew-close-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.ew-close-btn:hover {
+  background: rgba(239, 68, 68, 0.8);
+  border-color: #ef4444;
+}
+
+.ew-canvas-wrapper {
+  position: relative;
+  width: 100%;
+  background: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#elisee-world-canvas {
+  width: 100%;
+  max-width: 576px;
+  height: auto;
+  aspect-ratio: 576 / 440;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  display: block;
+}
+
+/* TOUCH CONTROLS (VIRTUAL D-PAD & BUTTONS) */
+.ew-controls {
+  width: 100%;
+  padding: 0.75rem 1rem 1rem;
+  background: #070d1a;
+  border-top: 1px solid rgba(56, 189, 248, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.ew-dpad {
+  position: relative;
+  width: 110px;
+  height: 110px;
+}
+
+.ew-dpad-btn {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  background: #1e293b;
+  border: 1.5px solid #38bdf8;
+  border-radius: 8px;
+  color: #38bdf8;
+  font-size: 1.1rem;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: all 0.1s;
+}
+
+.ew-dpad-btn:active {
+  background: #0284c7;
+  color: #ffffff;
+  transform: scale(0.95);
+}
+
+.ew-dpad-up { top: 0; left: 37px; }
+.ew-dpad-down { bottom: 0; left: 37px; }
+.ew-dpad-left { top: 37px; left: 0; }
+.ew-dpad-right { top: 37px; right: 0; }
+
+.ew-center-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.ew-start-btn {
+  background: #0f172a;
+  border: 1.5px solid #64748b;
+  color: #cbd5e1;
+  font-family: 'Outfit', monospace, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.ew-start-btn:active {
+  background: #38bdf8;
+  color: #000000;
+}
+
+.ew-action-btns {
+  display: flex;
+  gap: 0.85rem;
+  align-items: center;
+}
+
+.ew-action-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  transition: transform 0.1s;
+}
+
+.ew-action-btn:active {
+  transform: scale(0.92);
+}
+
+.ew-btn-b {
+  background: #ef4444;
+  border: 2px solid #f87171;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4);
+}
+
+.ew-btn-a {
+  background: #22c55e;
+  border: 2px solid #4ade80;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(34, 197, 94, 0.4);
+}
+
+@media (max-width: 500px) {
+  .ew-controls {
+    padding: 0.5rem;
+  }
+  .ew-dpad {
+    width: 95px;
+    height: 95px;
+  }
+  .ew-dpad-btn {
+    width: 30px;
+    height: 30px;
+  }
+  .ew-dpad-up { top: 0; left: 32px; }
+  .ew-dpad-down { bottom: 0; left: 32px; }
+  .ew-dpad-left { top: 32px; left: 0; }
+  .ew-dpad-right { top: 32px; right: 0; }
+  .ew-action-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 0.95rem;
+  }
+}

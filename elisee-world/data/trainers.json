@@ -1,0 +1,140 @@
+[
+  {
+    "id": "mister_allegro",
+    "nome": "Mister Allegro",
+    "titolo": "Tattico del 'Corto Muso'",
+    "sprite_id": "coach_allegro",
+    "frase_intro": "L'importante non è il bel gioco, ma vincere di misura al 90°!",
+    "frase_sconfitta": "Mi prendo la responsabilità. C'è da fare i complimenti ai ragazzi per l'impegno.",
+    "ricompensa_forma": 120,
+    "squadra": [
+      {
+        "id": "opp_bus",
+        "nome": "Bus Tattico",
+        "ruolo": "DIFESA",
+        "tipi": ["DIFESA"],
+        "livello": 13,
+        "hp_max": 75,
+        "hp": 75,
+        "attacco": 30,
+        "difesa": 70,
+        "att_sp": 30,
+        "dif_sp": 65,
+        "velocita": 25,
+        "mosse": ["marcatura_ferrea", "tacchetti", "trappola_fuorigioco"]
+      },
+      {
+        "id": "opp_rabiotto",
+        "nome": "Rabiotto",
+        "ruolo": "MEDIANO",
+        "tipi": ["MEDIANO"],
+        "livello": 14,
+        "hp_max": 65,
+        "hp": 65,
+        "attacco": 55,
+        "difesa": 52,
+        "att_sp": 50,
+        "dif_sp": 54,
+        "velocita": 62,
+        "mosse": ["elastico", "raddoppio", "fucilata"]
+      }
+    ]
+  },
+  {
+    "id": "mister_spalletti",
+    "nome": "Mister Filosofo",
+    "titolo": "Maestro delle Parole e del Palleggio",
+    "sprite_id": "coach_filosofo",
+    "frase_intro": "Uomini forti, destini forti! Vediamo se reggete la nostra pressione asfissiante.",
+    "frase_sconfitta": "Abbiamo fatto cose eccellenti ma loro sono stati più cinici nel finale. Sarà una brutta nottata.",
+    "ricompensa_forma": 180,
+    "squadra": [
+      {
+        "id": "opp_politro",
+        "nome": "Politro",
+        "ruolo": "ALA",
+        "tipi": ["ALA"],
+        "livello": 15,
+        "hp_max": 60,
+        "hp": 60,
+        "attacco": 65,
+        "difesa": 42,
+        "att_sp": 60,
+        "dif_sp": 40,
+        "velocita": 72,
+        "mosse": ["tunnel", "doppia_finta", "tiro_a_giro"]
+      },
+      {
+        "id": "opp_osimen",
+        "nome": "Osimaster",
+        "ruolo": "PUNTA",
+        "tipi": ["PUNTA"],
+        "livello": 16,
+        "hp_max": 72,
+        "hp": 72,
+        "attacco": 78,
+        "difesa": 48,
+        "att_sp": 55,
+        "dif_sp": 46,
+        "velocita": 78,
+        "mosse": ["bordata", "rovesciata", "tiro_della_tigre"]
+      }
+    ]
+  },
+  {
+    "id": "mister_mou",
+    "nome": "Lo Speciale",
+    "titolo": "Stratega delle Finali",
+    "sprite_id": "coach_speciale",
+    "frase_intro": "Io non parlo prima delle partite... parlo solo sul campo!",
+    "frase_sconfitta": "Zero tituli per oggi, ma la colpa è solo dell'arbitro e del VAR.",
+    "ricompensa_forma": 250,
+    "squadra": [
+      {
+        "id": "opp_mancini",
+        "nome": "Mancinus",
+        "ruolo": "DIFESA",
+        "tipi": ["DIFESA"],
+        "livello": 16,
+        "hp_max": 74,
+        "hp": 74,
+        "attacco": 55,
+        "difesa": 68,
+        "att_sp": 40,
+        "dif_sp": 62,
+        "velocita": 52,
+        "mosse": ["tacchetti", "marcatura_ferrea", "trappola_fuorigioco"]
+      },
+      {
+        "id": "opp_dybala",
+        "nome": "La Joyita",
+        "ruolo": "TREQ",
+        "tipi": ["TREQ", "PUNTA"],
+        "livello": 17,
+        "hp_max": 65,
+        "hp": 65,
+        "attacco": 75,
+        "difesa": 38,
+        "att_sp": 74,
+        "dif_sp": 44,
+        "velocita": 74,
+        "mosse": ["tunnel", "tiro_a_giro", "sforbiciata"]
+      },
+      {
+        "id": "opp_lukakone",
+        "nome": "Lukakone",
+        "ruolo": "PUNTA",
+        "tipi": ["PUNTA"],
+        "livello": 17,
+        "hp_max": 80,
+        "hp": 80,
+        "attacco": 82,
+        "difesa": 55,
+        "att_sp": 50,
+        "dif_sp": 50,
+        "velocita": 66,
+        "mosse": ["bordata", "tiro_della_tigre", "esultanza"]
+      }
+    ]
+  }
+]

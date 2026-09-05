@@ -62,6 +62,8 @@ Se il push dà 403 (account Git `sfondiitaliani23-svg`), pubblica comunque su Ve
 - Area Biglietteria: dashboard vendite e tifoseria (`bt-dash.js`) se il ruolo è Responsabile biglietteria / tifoseria. Distinta dal Tifoso (ruolo sito).
 - Area Presidente: dashboard Presidenza (`pres-dash.js`) se il ruolo staff è Presidente.
 - Simulatore Ruoli Creatore (`creator-role-switcher.js`, ADMIN ONLY): strumento interno riservato esclusivamente al creatore/admin per QA, test e demo rapida delle dashboard di ruolo. Non esporre mai a utenti standard.
+- Elisee World — Football Edition (`elisee-world/`, `elisee-world.js`, `elisee-world.css`): gioco RPG a turni calcistico retro pixel art 16-bit con IP 100% originale. Motore proprietario Canvas 2D + Vanilla JS (`/src/core`, `/src/render`, `/src/world`, `/src/battle`, `/src/data`). Nessun riferimento a franchise terzi. Naming: Eliball, Contratti, Punti Forma, Energia mossa, TATTICA/BORSONE/PANCHINA/RUN, type chart ruoli PUNTA/ALA/TREQ/MEDIANO/TERZINO/DIFESA/POR, hook Momentum/Formazione/Meteo. Salvataggio `localStorage['elisee_world_save']`. Modulo modale `#elisee-world-modal`.
+
 
 ## Skill
 

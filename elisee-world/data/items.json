@@ -1,0 +1,58 @@
+[
+  {
+    "id": "pozione_segreta",
+    "nome": "Pozione Segreta",
+    "categoria": "Cura",
+    "quantita": 3,
+    "descrizione": "Bevanda energetica arricchita con sali minerali. Ripristina 40 HP a un calciatore.",
+    "effetto": { "tipo": "cura_hp", "valore": 40 }
+  },
+  {
+    "id": "fiala_elettroliti",
+    "nome": "Fiala Elettrolitica",
+    "categoria": "Cura",
+    "quantita": 2,
+    "descrizione": "Integratore ad azione immediata che ripristina 50 punti di Energia mossa.",
+    "effetto": { "tipo": "cura_energia", "valore": 50 }
+  },
+  {
+    "id": "contratto_base",
+    "nome": "Contratto Base",
+    "categoria": "Contratti",
+    "quantita": 5,
+    "descrizione": "Proposta di tesseramento base per convincere giovani talenti a firmare con la tua rosa.",
+    "effetto": { "tipo": "cattura", "tasso": 1.0 }
+  },
+  {
+    "id": "contratto_argento",
+    "nome": "Contratto d'Argento",
+    "categoria": "Contratti",
+    "quantita": 2,
+    "descrizione": "Offerta contrattuale con bonus rendimento e gettone presenze. Più efficace di quello base.",
+    "effetto": { "tipo": "cattura", "tasso": 1.5 }
+  },
+  {
+    "id": "contratto_oro",
+    "nome": "Contratto d'Oro",
+    "categoria": "Contratti",
+    "quantita": 1,
+    "descrizione": "Contratto pluriennale top con sponsor tecnico dedicato. Altissima percentuale di firma.",
+    "effetto": { "tipo": "cattura", "tasso": 2.0 }
+  },
+  {
+    "id": "caramella_rara",
+    "nome": "Caramella Rara",
+    "categoria": "Potenziamento",
+    "quantita": 1,
+    "descrizione": "Pillola motivazionale esclusiva che fa salire istantaneamente di 1 Livello il calciatore prescelto.",
+    "effetto": { "tipo": "level_up", "valore": 1 }
+  },
+  {
+    "id": "fascia_capitano",
+    "nome": "Fascia da Capitano",
+    "categoria": "Equipaggiabile",
+    "quantita": 1,
+    "descrizione": "Simbolo di leadership. Quando il calciatore è in campo la squadra parte con +10 Momentum.",
+    "effetto": { "tipo": "held_momentum", "valore": 10 }
+  }
+]
