@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-06**
-Ultimo fatto: **War Room & Console Log: Inizializzazione idempotente e azzeramento duplicati** — Aggiunta guardia `_warRoomInitialized` per evitare doppie chiamate di `init()`, ottimizzando le risorse del browser e garantendo una console pulita e priva di warning. Cache `WARROOM1`.
+Ultimo fatto: **DOM & Performance: Risolti warning form password, autocomplete username e reflow timer Manager** — Incapsulati tutti i campi password dentro tag `<form>`, aggiunti attributi `autocomplete="username"` ed `email`, e ottimizzato il `setInterval` di `manager-runtime.js` con throttling e controllo di visibilità per azzerare reflow pesanti. Cache `DEVTOOLSFINAL1`.
 Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)

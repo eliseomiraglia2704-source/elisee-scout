@@ -1180,14 +1180,16 @@
         </div>
         <div id="reg-social-status" style="display:none; margin:-0.5rem 0 1rem; padding:0.75rem 0.9rem; border-radius:10px; border:1px solid rgba(56,189,248,0.35); background:rgba(14,165,233,0.1); color:#7dd3fc; font-size:0.85rem; font-weight:700; text-align:center;"></div>
         <div id="reg-google-simple" style="display:none; margin:-0.25rem 0 1.1rem; padding:0.95rem; border-radius:12px; border:1px solid rgba(56,189,248,0.3); background:rgba(8,18,32,0.62);">
-          <p style="margin:0 0 0.75rem; color:#e2e8f0; font-size:0.86rem; line-height:1.4;">Scrivi la tua <strong>email Gmail</strong> e scegli una <strong>password di almeno 8 caratteri</strong>.</p>
-          <label style="display:block; color:#94a3b8; font-size:0.75rem; font-weight:700; margin-bottom:0.3rem;">EMAIL GMAIL *</label>
-          <input type="email" id="reg-google-email" placeholder="esempio@gmail.com" style="width:100%; box-sizing:border-box; padding:0.65rem 0.8rem; border-radius:8px; border:1.5px solid rgba(56,189,248,0.3); background:#0b1222; color:#fff; margin-bottom:0.55rem;">
-          <label style="display:block; color:#94a3b8; font-size:0.75rem; font-weight:700; margin-bottom:0.3rem;">PASSWORD (minimo 8 caratteri) *</label>
-          <input type="password" id="reg-google-password" minlength="8" autocomplete="new-password" placeholder="Minimo 8 caratteri" style="width:100%; box-sizing:border-box; padding:0.65rem 0.8rem; border-radius:8px; border:1.5px solid rgba(56,189,248,0.3); background:#0b1222; color:#fff; margin-bottom:0.55rem;">
-          <label style="display:block; color:#94a3b8; font-size:0.75rem; font-weight:700; margin-bottom:0.3rem;">RIPETI PASSWORD *</label>
-          <input type="password" id="reg-google-password2" minlength="8" autocomplete="new-password" placeholder="Ripeti la password" style="width:100%; box-sizing:border-box; padding:0.65rem 0.8rem; border-radius:8px; border:1.5px solid rgba(56,189,248,0.3); background:#0b1222; color:#fff; margin-bottom:0.7rem;">
-          <button type="button" onclick="window.completeGoogleSimpleRegister && window.completeGoogleSimpleRegister();" style="width:100%; padding:0.7rem; border:0; border-radius:9px; background:linear-gradient(180deg,#f4fcff,#7dd3fc); color:#082033; font-weight:800; cursor:pointer;">Crea account e entra</button>
+          <form action="#" onsubmit="return false;" autocomplete="on">
+            <p style="margin:0 0 0.75rem; color:#e2e8f0; font-size:0.86rem; line-height:1.4;">Scrivi la tua <strong>email Gmail</strong> e scegli una <strong>password di almeno 8 caratteri</strong>.</p>
+            <label style="display:block; color:#94a3b8; font-size:0.75rem; font-weight:700; margin-bottom:0.3rem;">EMAIL GMAIL *</label>
+            <input type="email" id="reg-google-email" autocomplete="username" placeholder="esempio@gmail.com" style="width:100%; box-sizing:border-box; padding:0.65rem 0.8rem; border-radius:8px; border:1.5px solid rgba(56,189,248,0.3); background:#0b1222; color:#fff; margin-bottom:0.55rem;">
+            <label style="display:block; color:#94a3b8; font-size:0.75rem; font-weight:700; margin-bottom:0.3rem;">PASSWORD (minimo 8 caratteri) *</label>
+            <input type="password" id="reg-google-password" minlength="8" autocomplete="new-password" placeholder="Minimo 8 caratteri" style="width:100%; box-sizing:border-box; padding:0.65rem 0.8rem; border-radius:8px; border:1.5px solid rgba(56,189,248,0.3); background:#0b1222; color:#fff; margin-bottom:0.55rem;">
+            <label style="display:block; color:#94a3b8; font-size:0.75rem; font-weight:700; margin-bottom:0.3rem;">RIPETI PASSWORD *</label>
+            <input type="password" id="reg-google-password2" minlength="8" autocomplete="new-password" placeholder="Ripeti la password" style="width:100%; box-sizing:border-box; padding:0.65rem 0.8rem; border-radius:8px; border:1.5px solid rgba(56,189,248,0.3); background:#0b1222; color:#fff; margin-bottom:0.7rem;">
+            <button type="button" onclick="window.completeGoogleSimpleRegister && window.completeGoogleSimpleRegister();" style="width:100%; padding:0.7rem; border:0; border-radius:9px; background:linear-gradient(180deg,#f4fcff,#7dd3fc); color:#082033; font-weight:800; cursor:pointer;">Crea account e entra</button>
+          </form>
         </div>
 
         <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1.25rem;">
@@ -1197,25 +1199,25 @@
         </div>
 
         <!-- Form campi -->
-        <form id="form-registrazione" onsubmit="return window.submitRegistrazione(event);" autocomplete="off" novalidate>
+        <form id="form-registrazione" onsubmit="return window.submitRegistrazione(event);" autocomplete="on" novalidate>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:0.75rem;">
             <div>
               <label style="display:block; color:#94a3b8; font-size:0.78rem; font-weight:600; margin-bottom:0.35rem; text-transform:uppercase; letter-spacing:0.04em;">Nome *</label>
-              <input type="text" id="reg-nome" required placeholder="Es: Marco" style="width:100%; padding:0.7rem 0.9rem; border-radius:9px; background:#0b1222; border:1.5px solid rgba(56,189,248,0.3); color:#ffffff; font-size:0.9rem; box-sizing:border-box; outline:none;" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
+              <input type="text" id="reg-nome" required autocomplete="given-name" placeholder="Es: Marco" style="width:100%; padding:0.7rem 0.9rem; border-radius:9px; background:#0b1222; border:1.5px solid rgba(56,189,248,0.3); color:#ffffff; font-size:0.9rem; box-sizing:border-box; outline:none;" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
             </div>
             <div>
               <label style="display:block; color:#94a3b8; font-size:0.78rem; font-weight:600; margin-bottom:0.35rem; text-transform:uppercase; letter-spacing:0.04em;">Cognome *</label>
-              <input type="text" id="reg-cognome" required placeholder="Es: Rossi" style="width:100%; padding:0.7rem 0.9rem; border-radius:9px; background:#0b1222; border:1.5px solid rgba(56,189,248,0.3); color:#ffffff; font-size:0.9rem; box-sizing:border-box; outline:none;" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
+              <input type="text" id="reg-cognome" required autocomplete="family-name" placeholder="Es: Rossi" style="width:100%; padding:0.7rem 0.9rem; border-radius:9px; background:#0b1222; border:1.5px solid rgba(56,189,248,0.3); color:#ffffff; font-size:0.9rem; box-sizing:border-box; outline:none;" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
             </div>
           </div>
           <div style="margin-bottom:0.75rem;">
             <label style="display:block; color:#94a3b8; font-size:0.78rem; font-weight:600; margin-bottom:0.35rem; text-transform:uppercase; letter-spacing:0.04em;">Indirizzo Email *</label>
-            <input type="email" id="reg-email" required placeholder="la-tua@email.it" style="width:100%; padding:0.7rem 0.9rem; border-radius:9px; background:#0b1222; border:1.5px solid rgba(56,189,248,0.3); color:#ffffff; font-size:0.9rem; box-sizing:border-box; outline:none;" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
+            <input type="email" id="reg-email" required autocomplete="username" placeholder="la-tua@email.it" style="width:100%; padding:0.7rem 0.9rem; border-radius:9px; background:#0b1222; border:1.5px solid rgba(56,189,248,0.3); color:#ffffff; font-size:0.9rem; box-sizing:border-box; outline:none;" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
           </div>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:0.75rem;">
             <div>
               <label style="display:block; color:#94a3b8; font-size:0.78rem; font-weight:600; margin-bottom:0.35rem; text-transform:uppercase; letter-spacing:0.04em;">Data di nascita *</label>
-              <input type="date" id="reg-dob" required style="width:100%; padding:0.7rem 0.9rem; border-radius:9px; background:#0b1222; border:1.5px solid rgba(56,189,248,0.3); color:#ffffff; font-size:0.9rem; box-sizing:border-box; outline:none; color-scheme:dark;" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
+              <input type="date" id="reg-dob" required autocomplete="bday" style="width:100%; padding:0.7rem 0.9rem; border-radius:9px; background:#0b1222; border:1.5px solid rgba(56,189,248,0.3); color:#ffffff; font-size:0.9rem; box-sizing:border-box; outline:none; color-scheme:dark;" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
             </div>
             <div>
               <input type="hidden" id="reg-ruolo" value="">
@@ -1588,17 +1590,19 @@
           </div>
 
           <div id="accesso-method-setpw" style="display:none;">
-            <p id="accesso-setpw-hello" style="color:#e2e8f0; font-size:0.88rem; line-height:1.45; margin:0 0 0.9rem;">
-              Account Google collegato. Imposta una password di almeno 8 caratteri per accedere anche con email.
-            </p>
-            <input type="password" id="accesso-setpw-a" minlength="8" autocomplete="new-password" placeholder="Minimo 8 caratteri"
-                   style="width:100%; box-sizing:border-box; padding:0.75rem 0.85rem; border-radius:10px; background:#121212; border:1px solid rgba(255,255,255,0.12); color:#fff; margin-bottom:0.55rem;">
-            <input type="password" id="accesso-setpw-b" minlength="8" autocomplete="new-password" placeholder="Ripeti la password"
-                   style="width:100%; box-sizing:border-box; padding:0.75rem 0.85rem; border-radius:10px; background:#121212; border:1px solid rgba(255,255,255,0.12); color:#fff; margin-bottom:0.85rem;">
-            <button type="button" onclick="window.completeAccessoGooglePassword && window.completeAccessoGooglePassword();"
-                    style="width:100%; padding:0.9rem; border:0; border-radius:999px; background:linear-gradient(180deg,#f6e7b2,#e0c36a); color:#111; font-weight:800; cursor:pointer;">
-              Salva password ed entra
-            </button>
+            <form action="#" onsubmit="return false;" autocomplete="on">
+              <p id="accesso-setpw-hello" style="color:#e2e8f0; font-size:0.88rem; line-height:1.45; margin:0 0 0.9rem;">
+                Account Google collegato. Imposta una password di almeno 8 caratteri per accedere anche con email.
+              </p>
+              <input type="password" id="accesso-setpw-a" minlength="8" autocomplete="new-password" placeholder="Minimo 8 caratteri"
+                     style="width:100%; box-sizing:border-box; padding:0.75rem 0.85rem; border-radius:10px; background:#121212; border:1px solid rgba(255,255,255,0.12); color:#fff; margin-bottom:0.55rem;">
+              <input type="password" id="accesso-setpw-b" minlength="8" autocomplete="new-password" placeholder="Ripeti la password"
+                     style="width:100%; box-sizing:border-box; padding:0.75rem 0.85rem; border-radius:10px; background:#121212; border:1px solid rgba(255,255,255,0.12); color:#fff; margin-bottom:0.85rem;">
+              <button type="button" onclick="window.completeAccessoGooglePassword && window.completeAccessoGooglePassword();"
+                      style="width:100%; padding:0.9rem; border:0; border-radius:999px; background:linear-gradient(180deg,#f6e7b2,#e0c36a); color:#111; font-weight:800; cursor:pointer;">
+                Salva password ed entra
+              </button>
+            </form>
           </div>
 
           <p style="text-align:center; color:#64748b; font-size:0.78rem; margin-top:1.15rem; margin-bottom:0; border-top:1px solid rgba(255,255,255,0.06); padding-top:0.95rem;">

@@ -638,10 +638,11 @@
     syncBadge();
   });
   setInterval(function () {
+    if (document.hidden) return;
     ensureSquadreButton();
     ensureAdminUi();
     syncBadge();
-  }, 2500);
+  }, 10000);
 
   window.EliseeManager = { open: openOverlay, close: closeOverlay, refreshAdmin: renderAdmin };
 })();
