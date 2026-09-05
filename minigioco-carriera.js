@@ -5602,7 +5602,7 @@
         '</div></div>' +
         '<div class="es-mg-sum-clubs">' + clubsHtml + '</div>' +
         '<div class="es-mg-sum-foot">' +
-        '<button type="button" class="es-mg-btn-full ghost" id="es-mg-restart">Gioca di nuovo</button>' +
+        '<button type="button" class="es-mg-btn-full" id="es-mg-restart"><span style="margin-right:0.35rem;font-size:1.05rem;">⟲</span> Gioca di nuovo</button>' +
         '</div></div></div>'
     );
     bindClose();

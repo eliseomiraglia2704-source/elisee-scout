@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **Carriera Giocatore: Card giocatore compatta in alto a sinistra con metadati/totali/vetrina a destra nello stesso riquadro** — Riorganizzato il riquadro superiore della colonna sinistra con un layout a 2 colonne affiancate: FUT card ridimensionata in alto a sinistra e metadati (età, valore, ingaggio, contratto), totali (PR, GOL, ASS) e vetrina trofei posizionati a destra all'interno dello stesso box. L'altezza del blocco superiore si dimezza (da ~500px a ~200px), consentendo al box offerte/trattative di essere immediatamente visibile e cliccabile senza richiedere alcuno scroll. Cache `CARDCOMPACT1`.
+Ultimo fatto: **Carriera Giocatore: Schermata di riepilogo a fine carriera nello stile Copero** — Uniformata la struttura e la grafica di fine carriera: 3 box superiori (Giocatore con OVR dorato e valore, Nazionale, Premi individuali) e griglia inferiore con le card delle squadre in cui ha militato l'atleta. Ogni card mostra il watermark/filigrana del logo sul background con i colori del club, stemma ufficiale, nome della squadra, griglia statistiche (PR/GOL/ASS) e l'esposizione dei trofei vinti con quella squadra. Cache `SUMMARYCOPERO1`.
 Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
