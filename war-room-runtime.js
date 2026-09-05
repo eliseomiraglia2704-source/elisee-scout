@@ -814,11 +814,14 @@
       .replace(/'/g, '&#039;');
   }
 
+  var _warRoomInitialized = false;
   /**
    * API Pubblica EliseeWarRoom
    */
   var EliseeWarRoom = {
     init: function () {
+      if (_warRoomInitialized) return;
+      _warRoomInitialized = true;
       loadState();
       console.log('[WarRoom] Inizializzato su EVENTI REALI DOM (50 Agenti & 100 Supervisori).');
     },
