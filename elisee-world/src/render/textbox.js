@@ -74,25 +74,27 @@
 
     render(ctx, width, height) {
       if (!this.isOpen) return;
-      const boxH = 140;
+      const boxH = 124;
       const boxY = height - boxH - 16;
       const boxX = 16;
       const boxW = width - 32;
 
       ctx.save();
-      // Box retro
-      ctx.fillStyle = '#ffffff';
+      // Box retro con stile identico ai box di battaglia
+      ctx.fillStyle = '#0a0f1d';
       ctx.fillRect(boxX, boxY, boxW, boxH);
-      ctx.fillStyle = '#0a0e1a';
-      ctx.fillRect(boxX + 4, boxY + 4, boxW - 8, boxH - 8);
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(boxX, boxY, boxW, boxH);
 
       // Testo visibile
       const textToDraw = this.currentText.substring(0, this.displayedChars);
-      ctx.font = 'bold 16px monospace';
-      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 14px monospace';
+      ctx.fillStyle = '#f8fafc';
       ctx.textBaseline = 'top';
+      ctx.textAlign = 'left';
 
-      // Wrapping semplice
+      // Wrapping
       const maxWidth = boxW - 32;
       const words = textToDraw.split(' ');
       let line = '';
@@ -104,17 +106,18 @@
         if (metrics.width > maxWidth && n > 0) {
           ctx.fillText(line, boxX + 16, lineY);
           line = words[n] + ' ';
-          lineY += 24;
+          lineY += 22;
         } else {
           line = testLine;
         }
       }
       ctx.fillText(line, boxX + 16, lineY);
 
-      // Indicatore freccia lampeggiante
+      // Indicatore freccia lampeggiante coordinato oro
       if (this.displayedChars >= this.currentText.length && Math.floor(Date.now() / 400) % 2 === 0) {
-        ctx.fillStyle = '#38bdf8';
-        ctx.fillText('▼', boxX + boxW - 28, boxY + boxH - 28);
+        ctx.fillStyle = '#facc15';
+        ctx.font = 'bold 14px monospace';
+        ctx.fillText('▼', boxX + boxW - 24, boxY + boxH - 24);
       }
       ctx.restore();
     }
