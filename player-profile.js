@@ -1222,7 +1222,6 @@
         el.hidden = false;
         el.removeAttribute('hidden');
         el.style.removeProperty('display');
-        el.style.display = 'block';
       } else {
         el.hidden = true;
         el.setAttribute('hidden', '');

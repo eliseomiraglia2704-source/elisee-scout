@@ -1,11 +1,30 @@
 /* Dashboard Osservatore / Scout */
 #user-dossier-view-group.is-staff-area.is-obs-dash .es-user-tabs { display: none !important; }
+#user-dossier-view-group.is-staff-area.is-obs-dash,
+#user-dossier-portal.is-staff-area.is-obs-dash,
 #user-dossier-view-group.is-staff-area.is-obs-dash .pf-page-inner {
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+#es-staff-profile.es-obs-on {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
   max-width: none !important;
   margin: 0 !important;
   padding: 0 !important;
 }
 #es-staff-profile.es-obs-on > :not(#es-od) { display: none !important; }
+#es-staff-profile.es-obs-on #es-od {
+  display: grid !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+}
 .es-obs-grade {
   font-size: 1.45rem;
   font-weight: 800;
