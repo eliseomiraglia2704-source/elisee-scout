@@ -5731,7 +5731,7 @@
               ? 'Decisione di carriera\u2026'
               : 'Scegliendo squadra\u2026';
       rows +=
-        '<div class="es-mg-row is-pending">' +
+        '<div class="es-mg-row is-pending" id="es-mg-row-pending" role="button" tabindex="0" title="Clicca per scegliere la squadra della prossima stagione">' +
         '<div class="es-mg-row-age">' + nextAge + '</div>' +
         '<div class="es-mg-row-club"><span class="es-mg-muted"><span class="es-mg-qmark">?</span> ' + pendingTxt + '</span></div>' +
         '<div class="es-mg-row-ovr"><span class="es-mg-ovr-pill">—</span></div>' +
@@ -6209,6 +6209,25 @@
         renderCareer(false);
       };
     });
+    var pendingRow = document.getElementById('es-mg-row-pending');
+    function scrollToDecisions() {
+      var leftCol = root.querySelector('.es-mg-career-left');
+      var targetBox = root.querySelector('.es-mg-transfer') || root.querySelector('.es-mg-deal-box') || root.querySelector('.es-mg-dilemma') || root.querySelector('.es-mg-career-end');
+      if (leftCol && targetBox) {
+        leftCol.scrollTo({ top: targetBox.offsetTop - 20, behavior: 'smooth' });
+        targetBox.classList.add('is-highlight');
+        setTimeout(function () { targetBox.classList.remove('is-highlight'); }, 1200);
+      }
+    }
+    if (pendingRow) {
+      pendingRow.onclick = scrollToDecisions;
+      pendingRow.onkeydown = function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          scrollToDecisions();
+        }
+      };
+    }
     setTimeout(function () {
       var tl = document.getElementById('es-mg-timeline');
       if (tl) tl.scrollTop = tl.scrollHeight;

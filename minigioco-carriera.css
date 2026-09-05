@@ -41,15 +41,32 @@ body.es-mg-open::-webkit-scrollbar {
   -ms-overflow-style: none !important;
 }
 /* Eccezione: la lista nazioni in desktop deve essere scrollabile */
-.es-mg-nation-grid-wide {
+.es-mg-nation-grid-wide,
+.es-mg-career-left,
+.es-mg-timeline,
+.es-mg-career {
   scrollbar-width: thin !important;
   -ms-overflow-style: auto !important;
 }
-.es-mg-nation-grid-wide::-webkit-scrollbar {
+.es-mg-nation-grid-wide::-webkit-scrollbar,
+.es-mg-career-left::-webkit-scrollbar,
+.es-mg-timeline::-webkit-scrollbar,
+.es-mg-career::-webkit-scrollbar {
   display: block !important;
-  width: 5px !important;
-  height: auto !important;
-  background: transparent !important;
+  width: 6px !important;
+  height: 6px !important;
+  background: rgba(0, 0, 0, 0.4) !important;
+  border-radius: 4px !important;
+}
+.es-mg-career-left::-webkit-scrollbar-thumb,
+.es-mg-timeline::-webkit-scrollbar-thumb,
+.es-mg-career::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.45) !important;
+  border-radius: 4px !important;
+}
+.es-mg-career-left::-webkit-scrollbar-thumb:hover,
+.es-mg-timeline::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.8) !important;
 }
 /* Eccezione: griglia categorie deve essere scrollabile */
 .es-mg-cat-grid {
@@ -1686,26 +1703,27 @@ button.es-mg-hub-menubar:focus {
   align-items: center;
   background: linear-gradient(135deg, #16161f 0%, #0d0d12 100%);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 0.95rem 0.85rem 0.85rem;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  margin-bottom: 0.85rem;
+  border-radius: 18px;
+  padding: 0.65rem 0.75rem;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  margin-bottom: 0.65rem;
+  flex-shrink: 0;
 }
 .es-mg-career-card-wrap .es-pc-card-shell {
   width: 100%;
-  max-width: 275px;
-  margin: 0 auto 0.65rem;
+  max-width: 235px;
+  margin: 0 auto 0.45rem;
 }
 .es-mg-career-card-meta {
   width: 100%;
   background: rgba(0, 0, 0, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  padding: 0.55rem 0.85rem;
+  border-radius: 10px;
+  padding: 0.4rem 0.7rem;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  margin-bottom: 0.35rem;
+  gap: 0.25rem;
+  margin-bottom: 0.25rem;
 }
 .es-mg-meta-row {
   display: flex;
@@ -2039,13 +2057,34 @@ button.es-mg-hub-menubar:focus {
   flex-shrink: 0;
 }
 
-.es-mg-transfer {
-  background: #121216;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.es-mg-transfer,
+.es-mg-deal-box,
+.es-mg-dilemma {
+  background: linear-gradient(180deg, #141824 0%, #0d1017 100%);
+  border: 1.5px solid rgba(56, 189, 248, 0.45);
   border-radius: 16px;
-  padding: 0.9rem;
+  padding: 0.85rem;
   flex-shrink: 0;
-  margin-top: auto;
+  margin-top: 0.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.18);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.es-mg-transfer:hover,
+.es-mg-deal-box:hover,
+.es-mg-dilemma:hover {
+  border-color: rgba(56, 189, 248, 0.85);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 28px rgba(56, 189, 248, 0.35);
+}
+.es-mg-row.is-pending {
+  cursor: pointer;
+  border-color: rgba(56, 189, 248, 0.35);
+  background: rgba(56, 189, 248, 0.08);
+  opacity: 0.95;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.es-mg-row.is-pending:hover {
+  background: rgba(56, 189, 248, 0.18);
+  border-color: #38bdf8;
 }
 .es-mg-transfer.slide-up {
   animation: esMgSlideUp 0.22s cubic-bezier(0.22, 1, 0.36, 1);

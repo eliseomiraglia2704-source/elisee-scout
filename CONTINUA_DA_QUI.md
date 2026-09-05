@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **Navbar: voce "Minigiochi" e apertura Hub Bivio (Carriera / Elisee World)** — Ripristinata la dicitura **"Minigiochi"** nella navbar principale (e traduzioni IT/EN/ES/FR in `i18n.js`). Il click sulla navbar apre correttamente l'Hub dei Minigiochi con il bivio tra la Simulazione Carriera Giocatore e Elisee World, da cui l'utente può scegliere quale minigioco avviare. Cache `MINIGIOCHI1`.
-Feature precedente: **Hub Minigiochi: Card Elisee World attiva e giocabile al click** — Sostituita la vecchia card statica con la nuova card interattiva **"Elisee World — Football Edition"** con apertura istantanea. Cache `ELISEEWORLD2`.
+Ultimo fatto: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra: abilitate scrollbar stilizzate visibili (`.es-mg-career-left`, `.es-mg-timeline`), compattata l'altezza della Card Elisee in carriera per far entrare le offerte nel viewport, aggiunta animazione/bordo neon per `.es-mg-transfer` / `.es-mg-deal-box` / `.es-mg-dilemma`, e collegata la riga `is-pending` (`? Scegliendo squadra...`) al click con auto-scroll morbido sulle offerte. Cache `CAREERADVANCE1`.
+Feature precedente: **Navbar: voce "Minigiochi" e apertura Hub Bivio (Carriera / Elisee World)** — Ripristinata la dicitura **"Minigiochi"** nella navbar con apertura dell'Hub Bivio. Cache `MINIGIOCHI1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
