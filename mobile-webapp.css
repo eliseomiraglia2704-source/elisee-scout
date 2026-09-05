@@ -367,4 +367,30 @@
     flex-direction: column;
     gap: 0.5rem;
   }
+
+  /* 6. Gestione corretta Floating Cookie Badge su Mobile */
+  #elisee-cookie-settings-btn,
+  .elisee-cookie-badge-btn {
+    bottom: calc(68px + env(safe-area-inset-bottom, 0px)) !important;
+    left: 0.75rem !important;
+    width: 36px !important;
+    height: 36px !important;
+    z-index: 10040 !important;
+    opacity: 0.85;
+  }
+
+  #elisee-cookie-settings-btn svg,
+  .elisee-cookie-badge-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  /* Nascondi il floating cookie quando il Drawer o un modale è aperto */
+  .es-m-drawer-backdrop.is-open ~ #elisee-cookie-settings-btn,
+  .es-m-drawer-backdrop.is-open ~ .elisee-cookie-badge-btn,
+  body:has(.es-m-drawer-backdrop.is-open) #elisee-cookie-settings-btn,
+  body:has(.es-m-drawer-backdrop.is-open) .elisee-cookie-badge-btn,
+  body.modal-open #elisee-cookie-settings-btn {
+    display: none !important;
+  }
 }

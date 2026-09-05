@@ -974,15 +974,17 @@
     if (!document.getElementById('elisee-cookie-settings-btn')) {
       var btn = document.createElement('button');
       btn.id = 'elisee-cookie-settings-btn';
+      btn.className = 'elisee-cookie-badge-btn';
       btn.type = 'button';
-      btn.title = 'Preferenze cookie';
+      btn.title = 'Preferenze cookie & Privacy GDPR';
       btn.setAttribute(
         'style',
-        'position:fixed;bottom:1rem;left:1rem;z-index:99980;width:44px;height:44px;border-radius:50%;' +
-          'border:1px solid rgba(56,189,248,0.5);background:rgba(7,13,28,0.92);color:#38bdf8;' +
-          'font-size:1.15rem;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.35);'
+        'position:fixed;bottom:1.25rem;left:1.25rem;z-index:99980;width:40px;height:40px;border-radius:50%;' +
+          'border:1px solid rgba(56,189,248,0.4);background:rgba(6,11,22,0.92);color:#38bdf8;' +
+          'display:inline-flex;align-items:center;justify-content:center;cursor:pointer;' +
+          'box-shadow:0 4px 16px rgba(0,0,0,0.4);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform 0.2s ease,border-color 0.2s ease;'
       );
-      btn.textContent = '🍪';
+      btn.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>';
       btn.onclick = function () {
         openPreferences();
       };

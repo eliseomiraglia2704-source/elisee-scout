@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **UI & Drawer: Rimozione completa emoji ridondanti dai link e dai banner** — Rimosse le emoji (gamepad, fotocamera, stella e pallone) dai link del Drawer laterale della Mobile Web App e dai titoli/banner di Elisee World, lasciando esclusivamente le icone SVG vettoriali native e la tipografia pulita. Cache `NOEMOJI1`.
+Ultimo fatto: **UI & Compliance GDPR: Refactor Floating Cookie Badge e integrazione nel Drawer** — Sostituita l'emoji cookie con un'icona SVG vettoriale di scudo/privacy ciano, posizionato il floating button sopra la Bottom Bar su mobile (<768px), nascosto automaticamente quando il Drawer o un modale è aperto per evitare sovrapposizioni e aggiunto il link esplicito "Privacy & Preferenze Cookie" nella navigazione del Drawer. Cache `COOKIEFIX1`.
 Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)

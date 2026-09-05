@@ -324,7 +324,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
   <link rel="stylesheet" href="mappa-club.css?v=20260902_CLEANOSM1">
   <link rel="stylesheet" href="dash-luxury.css?v=20260905_RESPON2">
-  <link rel="stylesheet" href="mobile-webapp.css?v=20260905_MOBILEAPP1">
+  <link rel="stylesheet" href="mobile-webapp.css?v=20260905_COOKIEFIX1">
   <script>
     /* Boot OAuth: token in search O in hash (#hero?elisee_token=...). La sessione vince sempre. */
     (function () {
@@ -1727,6 +1727,11 @@
           <a href="#mercato-hub" class="es-m-drawer-link" data-view="mercato" data-target="#mercato-hub">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             <span>Hub Mercato B2B</span>
+          </a>
+
+          <a href="javascript:void(0);" class="es-m-drawer-link" onclick="if(window.EliseeCookies&&EliseeCookies.openPreferences){EliseeCookies.openPreferences();}else if(window.openPrivacyPolicy){window.openPrivacyPolicy();}else{location.href='privacy-policy.html';}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            <span>Privacy &amp; Preferenze Cookie</span>
           </a>
         </div>
 
@@ -5260,7 +5265,7 @@
       }
     });
   </script>
-  <script src="cookie-profiling.js?v=20260806_NOCORS"></script>
+  <script src="cookie-profiling.js?v=20260905_COOKIEFIX1"></script>
   <script src="ai-gdpr-monitor.js?v=20260806_NOCORS"></script>
   <script src="i18n.js?v=20260905_MINIGIOCHI1"></script>
   <script src="agents-runtime.js?v=20260806_NOCORS"></script>
