@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **Hub Minigiochi: Card Elisee World attiva e giocabile al click** — Sostituita la vecchia card statica "Pokemon Calcistico - Prossimamente" con la nuova card interattiva **"Elisee World — Football Edition"** con badge `Novità · Gioca`, design retro-calcio al neon, pulsante "Entra in campo ➔", trigger d'apertura al click/tastiera (`EliseeWorld.open()`), ascolto automatico `hashchange` e `z-index: 2000000` per apertura istantanea e fluida sopra qualsiasi schermata. Cache `ELISEEWORLD2`.
-Feature precedente: **Elisee World — Football Edition (Motore RPG a turni 2D & Rebranding Completo)** — Motore proprietario Canvas 2D + Vanilla JS (`elisee-world/`) a 60 FPS deterministico con state machine (`BOOT` → `TITLE` → `OVERWORLD` ⇄ `BATTLE` / `PARTY_MENU`), Overworld, Battle Engine completo, Eliball e comandi tattici. Cache `ELISEEWORLD1`.
+Ultimo fatto: **Navbar: voce "Minigiochi" e apertura Hub Bivio (Carriera / Elisee World)** — Ripristinata la dicitura **"Minigiochi"** nella navbar principale (e traduzioni IT/EN/ES/FR in `i18n.js`). Il click sulla navbar apre correttamente l'Hub dei Minigiochi con il bivio tra la Simulazione Carriera Giocatore e Elisee World, da cui l'utente può scegliere quale minigioco avviare. Cache `MINIGIOCHI1`.
+Feature precedente: **Hub Minigiochi: Card Elisee World attiva e giocabile al click** — Sostituita la vecchia card statica con la nuova card interattiva **"Elisee World — Football Edition"** con apertura istantanea. Cache `ELISEEWORLD2`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

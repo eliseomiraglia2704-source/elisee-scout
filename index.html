@@ -280,8 +280,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <link rel="stylesheet" href="style.css?v=20260904_NOSHINE1">
-  <link rel="stylesheet" href="elisee-world/elisee-world.css?v=20260905_ELISEEWORLD2">
-  <link rel="stylesheet" href="minigioco-carriera.css?v=20260905_ELISEEWORLD2">
+  <link rel="stylesheet" href="elisee-world/elisee-world.css?v=20260905_MINIGIOCHI1">
+  <link rel="stylesheet" href="minigioco-carriera.css?v=20260905_MINIGIOCHI1">
   <link rel="stylesheet" href="autopilot.css?v=20260827_FIX3">
   <link rel="stylesheet" href="squadre-select.css?v=20260904_NOSHINE1">
   <link rel="stylesheet" href="formazione-squadra.css?v=20260830_ECCB1">
@@ -1592,7 +1592,7 @@
         <a href="#mappa-portal" class="nav-link" data-view="mappa" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){window.switchView('mappa','#mappa-portal');} return false;">Mappa</a>
         <a href="#seguo-portal" class="nav-link" data-view="seguo" onclick="if(window.openChiSegui){window.openChiSegui();}else if(window.switchView){window.switchView('seguo','#seguo-portal');} return false;">Album</a>
         <a href="#ambassador-portal" class="nav-link nav-link-soft" data-view="ambassador" data-i18n="nav.ambassador" onclick="if(window.switchView){ window.switchView('ambassador'); } return false;">Ambassador</a>
-        <a href="#elisee-world" class="nav-link nav-link-soft nav-link-elisee-world" id="nav-elisee-world" data-view="elisee-world" data-i18n="nav.elisee_world" title="Elisee World — Football Edition" onclick="if(window.EliseeWorld&amp;&amp;window.EliseeWorld.open){window.EliseeWorld.open();return false;} if(window.openEliseeWorld){window.openEliseeWorld();return false;} return false;">Elisee World</a>
+        <a href="#minigioco-carriera" class="nav-link nav-link-soft nav-link-minigioco" id="nav-minigioco" data-view="minigioco" data-i18n="nav.minigame" title="Minigiochi" onclick="if(window.switchView){ window.switchView('minigioco'); } else if(window.openMinigiocoCarriera){ window.openMinigiocoCarriera(); } return false;">Minigiochi</a>
       </nav>
 
       <div id="nav-user-container" class="portfolio-nav-right">
@@ -5096,28 +5096,28 @@
   </script>
   <script src="cookie-profiling.js?v=20260806_NOCORS"></script>
   <script src="ai-gdpr-monitor.js?v=20260806_NOCORS"></script>
-  <script src="i18n.js?v=20260831_121117"></script>
+  <script src="i18n.js?v=20260905_MINIGIOCHI1"></script>
   <script src="agents-runtime.js?v=20260806_NOCORS"></script>
   <script src="piramide-italia.js?v=20260831_GENDERSVG1"></script>
   <script src="club-storia.js?v=20260903_TIERPROMO1"></script>
   <script src="campionati-agents.js?v=20260806_STABLE"></script>
   <script src="war-room-runtime.js?v=20260827_BUGFIX1"></script>
   <script src="player-card.js?v=20260904_SINGLESCROLL1"></script>
-  <script src="minigioco-carriera.js?v=20260905_ELISEEWORLD2"></script>
+  <script src="minigioco-carriera.js?v=20260905_MINIGIOCHI1"></script>
   <!-- ELISEE WORLD — Motore RPG Calcistico 2D -->
-  <script src="elisee-world/src/battle/damage-calc.js?v=20260905_ELISEEWORLD2"></script>
-  <script src="elisee-world/src/core/state-machine.js?v=20260905_ELISEEWORLD2"></script>
-  <script src="elisee-world/src/core/save-manager.js?v=20260905_ELISEEWORLD2"></script>
-  <script src="elisee-world/src/core/input.js?v=20260905_ELISEEWORLD2"></script>
-  <script src="elisee-world/src/core/audio-engine.js?v=20260905_ELISEEWORLD2"></script>
-  <script src="elisee-world/src/render/camera.js?v=20260905_ELISEEWORLD2"></script>
-  <script src="elisee-world/src/render/textbox.js?v=20260905_ELISEEWORLD2"></script>
-  <script src="elisee-world/src/world/tilemap.js?v=20260905_ELISEEWORLD2"></script>
-  <script src="elisee-world/src/world/entity.js?v=20260905_ELISEEWORLD2"></script>
-  <script src="elisee-world/src/battle/ai-controller.js?v=20260905_ELISEEWORLD2"></script>
-  <script src="elisee-world/src/battle/battle-engine.js?v=20260905_ELISEEWORLD2"></script>
-  <script src="elisee-world/src/core/engine.js?v=20260905_ELISEEWORLD2"></script>
-  <script src="elisee-world/elisee-world.js?v=20260905_ELISEEWORLD2"></script>
+  <script src="elisee-world/src/battle/damage-calc.js?v=20260905_MINIGIOCHI1"></script>
+  <script src="elisee-world/src/core/state-machine.js?v=20260905_MINIGIOCHI1"></script>
+  <script src="elisee-world/src/core/save-manager.js?v=20260905_MINIGIOCHI1"></script>
+  <script src="elisee-world/src/core/input.js?v=20260905_MINIGIOCHI1"></script>
+  <script src="elisee-world/src/core/audio-engine.js?v=20260905_MINIGIOCHI1"></script>
+  <script src="elisee-world/src/render/camera.js?v=20260905_MINIGIOCHI1"></script>
+  <script src="elisee-world/src/render/textbox.js?v=20260905_MINIGIOCHI1"></script>
+  <script src="elisee-world/src/world/tilemap.js?v=20260905_MINIGIOCHI1"></script>
+  <script src="elisee-world/src/world/entity.js?v=20260905_MINIGIOCHI1"></script>
+  <script src="elisee-world/src/battle/ai-controller.js?v=20260905_MINIGIOCHI1"></script>
+  <script src="elisee-world/src/battle/battle-engine.js?v=20260905_MINIGIOCHI1"></script>
+  <script src="elisee-world/src/core/engine.js?v=20260905_MINIGIOCHI1"></script>
+  <script src="elisee-world/elisee-world.js?v=20260905_MINIGIOCHI1"></script>
   <script src="autopilot-runtime.js?v=20260827_FIX3"></script>
   <script src="live-reload.js?v=20260904_AUTORELOAD1"></script>
   <script>

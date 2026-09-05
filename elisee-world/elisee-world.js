@@ -106,6 +106,13 @@
       if (engineInstance) {
         engineInstance.stop();
       }
+      if (window.location.hash === '#elisee-world') {
+        try {
+          if (window.history && window.history.replaceState) {
+            window.history.replaceState(null, '', '#minigioco-carriera');
+          }
+        } catch (e) {}
+      }
     },
 
     reset: function () {
