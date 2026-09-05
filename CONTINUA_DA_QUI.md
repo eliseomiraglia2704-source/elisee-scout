@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **Mobile Web App (<768px): Bottom Navigation Bar, Top Bar nativa e App Drawer laterale** — Trasformata esclusivamente la versione per smartphone (<768px) in una vera e propria Mobile Web App nativa: Bottom Bar a 5 tab (Home, Bacheca, Stampa, Mappa, Profilo), Top Bar compatta con notifiche/messaggi/profilo, Slide-over App Drawer per sezioni secondarie (Chi siamo, Minigiochi, Album, Ambassador) e layout fluido anti-overflow calibrato per il pollice. Cache `MOBILEAPP1`.
+Ultimo fatto: **Elisee World: Party Screen (griglia 2x3 con HP dinamici e highlight oro) & Overworld Campestre (tileset naturale, alberi, staccionate, sprite umanoide 32x48 e banner zona)** — Implementato il Party Screen (sez. 2) con 3 atleti mock (Kvaradona, Barella, Donnarumma) + 3 slot vuoti, barre HP colorate, bordo selezionato oro e testo contestuale in basso. Ridisegnato l'Overworld (sez. 1) con texture erba campestre procedurale (nessuna scacchiera), alberi 16-bit a strati, staccionate perimetrali, siepi, sprite player con proporzioni umane (32x48px) animato su 2 frame per direzione e banner di zona "Campetto San Siro" in alto a sinistra. Cache `EWPARTY1`.
 Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
