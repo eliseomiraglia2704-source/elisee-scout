@@ -97,6 +97,7 @@ body.dyslexia-font {
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -114,6 +115,11 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--text-main);
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 a {
