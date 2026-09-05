@@ -3,8 +3,8 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **UI Mobile: Disinfezione runtime e forzata a 3 livelli di qualsiasi linea o bordo azzurro** — Applicata pulizia runtime JS a caricamento DOM e resize (`forceCleanDividers`), inline style HTML diretto e blocco CSS prioritario per estirpare al 100% qualsiasi linea o decorazione orizzontale. Cache `ZEROAZZURRA1`.
+Ultimo aggiornamento: **2026-09-06**
+Ultimo fatto: **UI Mobile: Blocco di override definitivo pre-chiusura body per azzeramento assoluto linee azzurre** — Inserito `<style id="es-absolute-noline-override">` immediatamente prima di `</body>` per garantire priorità a cascata assoluta e sovrascrivere qualsiasi bordo o ombra residua nel DOM. Cache `DEFINITIVE_NOLINE1`.
 Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
