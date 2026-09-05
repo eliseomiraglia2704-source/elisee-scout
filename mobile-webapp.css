@@ -129,6 +129,16 @@
   }
 
   /* 3. Top App Bar Mobile (Fissa in alto, 52px + Safe Area Top) */
+  .es-m-topbar,
+  .es-m-topbar::before,
+  .es-m-topbar::after {
+    border: none !important;
+    border-bottom: none !important;
+    border-top: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
   .es-m-topbar {
     position: fixed !important;
     top: 0 !important;
@@ -141,13 +151,29 @@
     background: rgba(4, 7, 14, 0.94) !important;
     backdrop-filter: blur(16px) !important;
     -webkit-backdrop-filter: blur(16px) !important;
-    border-bottom: none !important;
-    box-shadow: none !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
     z-index: 10050 !important;
     box-sizing: border-box !important;
+  }
+
+  /* Azzeramento linee divisorie su tutte le sezioni portfolio */
+  .portfolio-section,
+  .portfolio-about,
+  .portfolio-resume,
+  .portfolio-works,
+  .portfolio-access,
+  #home-about,
+  #home-resume,
+  #home-portfolio,
+  #hero,
+  .hero-section,
+  .hero-portfolio {
+    border: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
   }
 
   .es-m-brand {

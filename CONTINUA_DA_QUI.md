@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **UI Mobile: Ripristino pieno scorrimento verticale naturale su smartphone** — Rimossi i vincoli restrittivi di overflow/overscroll, configurato `html` con `overflow-y: auto !important` e `body` con `overflow-y: visible !important` con `-webkit-overflow-scrolling: touch` per garantire lo scorrimento continuo, fluido e senza intoppi di tutta la pagina. Cache `SCROLLRESTORE1`.
+Ultimo fatto: **UI Mobile: Rimozione totale e definitiva linee divisorie topbar e sezioni** — Azzerati tutti i bordi superiori/inferiori (`border-top: none !important`, `border-bottom: none !important`, `box-shadow: none !important`) su topbar, pseudo-elementi e sezioni home (`#home-resume`, `.portfolio-section`), eliminando ogni linea azzurra/blu residua. Cache `NOLINES1`.
 Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
