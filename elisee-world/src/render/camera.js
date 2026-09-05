@@ -1,37 +1,45 @@
 /**
- * ELISEE WORLD — CAMERA
- * Gestione viewport, player-follow e clamping ai bordi mappa.
+ * ELISEE WORLD — Camera (sez. 4 architettura)
+ * Viewport, follow-player, clamping ai bordi mappa.
  */
 (function (global) {
   'use strict';
 
-  function Camera(viewWidth, viewHeight) {
-    this.x = 0;
-    this.y = 0;
-    this.width = viewWidth || 576;
-    this.height = viewHeight || 480;
+  class Camera {
+    constructor(viewportWidth, viewportHeight) {
+      this.vw = viewportWidth || 576;
+      this.vh = viewportHeight || 1024;
+      this.x = 0;
+      this.y = 0;
+      this.target = null;
+    }
+
+    follow(targetEntity) {
+      this.target = targetEntity;
+    }
+
+    update(mapWidthPx, mapHeightPx) {
+      if (this.target) {
+        const tx = (this.target.x || 0) + (this.target.width || 32) / 2;
+        const ty = (this.target.y || 0) + (this.target.height || 32) / 2;
+        this.x = tx - this.vw / 2;
+        this.y = ty - this.vh / 2;
+      }
+
+      // Clamping ai limiti del mondo/mappa
+      if (mapWidthPx > this.vw) {
+        this.x = Math.max(0, Math.min(this.x, mapWidthPx - this.vw));
+      } else {
+        this.x = (mapWidthPx - this.vw) / 2;
+      }
+
+      if (mapHeightPx > this.vh) {
+        this.y = Math.max(0, Math.min(this.y, mapHeightPx - this.vh));
+      } else {
+        this.y = (mapHeightPx - this.vh) / 2;
+      }
+    }
   }
 
-  Camera.prototype.follow = function (targetX, targetY, mapWidthPx, mapHeightPx) {
-    var rawX = targetX - this.width / 2;
-    var rawY = targetY - this.height / 2;
-
-    var maxX = Math.max(0, mapWidthPx - this.width);
-    var maxY = Math.max(0, mapHeightPx - this.height);
-
-    this.x = Math.max(0, Math.min(rawX, maxX));
-    this.y = Math.max(0, Math.min(rawY, maxY));
-  };
-
-  Camera.prototype.apply = function (ctx) {
-    ctx.save();
-    ctx.translate(-Math.round(this.x), -Math.round(this.y));
-  };
-
-  Camera.prototype.restore = function (ctx) {
-    ctx.restore();
-  };
-
   global.EliseeCamera = Camera;
-
 })(typeof window !== 'undefined' ? window : this);

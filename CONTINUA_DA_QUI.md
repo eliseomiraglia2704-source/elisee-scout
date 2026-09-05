@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **Carriera Giocatore: Schermata di riepilogo a fine carriera nello stile Copero** — Uniformata la struttura e la grafica di fine carriera: 3 box superiori (Giocatore con OVR dorato e valore, Nazionale, Premi individuali) e griglia inferiore con le card delle squadre in cui ha militato l'atleta. Ogni card mostra il watermark/filigrana del logo sul background con i colori del club, stemma ufficiale, nome della squadra, griglia statistiche (PR/GOL/ASS) e l'esposizione dei trofei vinti con quella squadra. Cache `SUMMARYCOPERO1`.
+Ultimo fatto: **Elisee World: Struttura file completa e scheletro tecnico del motore grafico (Fixed Timestep Loop 60 FPS + State Machine BOOT → TITLE → OVERWORLD ⇄ BATTLE)** — Implementata la struttura file rigorosa conforme a sez. 1 dell'architettura (/src/core, /src/render, /src/world, /src/battle, /src/data, /src/ui, main.js) con zero dipendenze esterne. Il motore gira perfettamente senza errori a 60 FPS deterministico con accumulator. Cache `EWSKELETON1`.
 Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)

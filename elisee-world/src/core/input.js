@@ -1,114 +1,134 @@
 /**
- * ELISEE WORLD — INPUT MANAGER
- * Astrazione intent unificata: input.isDown('UP'|'DOWN'|'LEFT'|'RIGHT'|'A'|'B'|'START')
- * Tastiera desktop + touch virtuale mobile generano gli stessi intent.
+ * ELISEE WORLD — Input System (sez. 7 architettura)
+ * Astrazione a intent unificati: UP, DOWN, LEFT, RIGHT, A, B, START
  */
 (function (global) {
   'use strict';
 
-  var keysDown = {};
-  var keysPressed = {}; // Single-frame trigger
-  var touchIntents = {};
+  class Input {
+    constructor() {
+      this.keys = {
+        UP: false,
+        DOWN: false,
+        LEFT: false,
+        RIGHT: false,
+        A: false,
+        B: false,
+        START: false
+      };
+      this.justPressed = {
+        UP: false,
+        DOWN: false,
+        LEFT: false,
+        RIGHT: false,
+        A: false,
+        B: false,
+        START: false
+      };
+      this.boundKeyDown = this.onKeyDown.bind(this);
+      this.boundKeyUp = this.onKeyUp.bind(this);
+      this.attached = false;
+    }
 
-  var KEY_MAP = {
-    'ArrowUp': 'UP',
-    'KeyW': 'UP',
-    'w': 'UP',
-    'W': 'UP',
+    attach() {
+      if (this.attached) return;
+      window.addEventListener('keydown', this.boundKeyDown);
+      window.addEventListener('keyup', this.boundKeyUp);
+      this.attached = true;
+    }
 
-    'ArrowDown': 'DOWN',
-    'KeyS': 'DOWN',
-    's': 'DOWN',
-    'S': 'DOWN',
+    detach() {
+      if (!this.attached) return;
+      window.removeEventListener('keydown', this.boundKeyDown);
+      window.removeEventListener('keyup', this.boundKeyUp);
+      this.attached = false;
+      this.reset();
+    }
 
-    'ArrowLeft': 'LEFT',
-    'KeyA': 'LEFT',
-    'a': 'LEFT',
-    'A': 'LEFT',
+    reset() {
+      for (const k in this.keys) {
+        this.keys[k] = false;
+        this.justPressed[k] = false;
+      }
+    }
 
-    'ArrowRight': 'RIGHT',
-    'KeyD': 'RIGHT',
-    'd': 'RIGHT',
-    'D': 'RIGHT',
+    mapKey(e) {
+      switch (e.code) {
+        case 'ArrowUp':
+        case 'KeyW':
+          return 'UP';
+        case 'ArrowDown':
+        case 'KeyS':
+          return 'DOWN';
+        case 'ArrowLeft':
+        case 'KeyA':
+          return 'LEFT';
+        case 'ArrowRight':
+        case 'KeyD':
+          return 'RIGHT';
+        case 'Enter':
+        case 'Space':
+        case 'KeyZ':
+        case 'KeyJ':
+          return 'A';
+        case 'Escape':
+        case 'KeyX':
+        case 'KeyK':
+        case 'Backspace':
+          return 'B';
+        case 'KeyP':
+        case 'KeyM':
+          return 'START';
+        default:
+          return null;
+      }
+    }
 
-    'Enter': 'A',
-    'Space': 'A',
-    ' ': 'A',
-    'KeyZ': 'A',
-    'z': 'A',
-    'Z': 'A',
-
-    'Escape': 'B',
-    'KeyX': 'B',
-    'x': 'B',
-    'X': 'B',
-    'Backspace': 'B',
-
-    'KeyM': 'START',
-    'Tab': 'START'
-  };
-
-  function initKeyboard() {
-    window.addEventListener('keydown', function (e) {
-      var intent = KEY_MAP[e.code] || KEY_MAP[e.key];
+    onKeyDown(e) {
+      const intent = this.mapKey(e);
       if (intent) {
-        if (!keysDown[intent]) {
-          keysPressed[intent] = true;
+        if (!this.keys[intent]) {
+          this.justPressed[intent] = true;
         }
-        keysDown[intent] = true;
-        // Non bloccare F5, F12, o combinazioni di sistema
-        if (!e.ctrlKey && !e.altKey && !e.metaKey && e.key !== 'F12' && e.key !== 'F5') {
-          // Prevenire scrolling della pagina con frecce / spazio
-          if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].indexOf(e.key) >= 0) {
-            e.preventDefault();
-          }
+        this.keys[intent] = true;
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) {
+          e.preventDefault();
         }
       }
-    });
+    }
 
-    window.addEventListener('keyup', function (e) {
-      var intent = KEY_MAP[e.code] || KEY_MAP[e.key];
+    onKeyUp(e) {
+      const intent = this.mapKey(e);
       if (intent) {
-        keysDown[intent] = false;
+        this.keys[intent] = false;
       }
-    });
+    }
+
+    isDown(intent) {
+      return !!this.keys[intent];
+    }
+
+    wasJustPressed(intent) {
+      return !!this.justPressed[intent];
+    }
+
+    // Richiamato alla fine di ogni frame logico per azzerare i tasti one-shot
+    clearJustPressed() {
+      for (const k in this.justPressed) {
+        this.justPressed[k] = false;
+      }
+    }
+
+    // Metodi di simulazione per touch / virtual D-Pad
+    setTouchIntent(intent, isDown) {
+      if (intent in this.keys) {
+        if (isDown && !this.keys[intent]) {
+          this.justPressed[intent] = true;
+        }
+        this.keys[intent] = isDown;
+      }
+    }
   }
 
-  var Input = {
-    init: function () {
-      initKeyboard();
-    },
-
-    isDown: function (intent) {
-      return !!(keysDown[intent] || touchIntents[intent]);
-    },
-
-    isJustPressed: function (intent) {
-      return !!keysPressed[intent];
-    },
-
-    setTouchIntent: function (intent, isDown) {
-      if (isDown) {
-        if (!touchIntents[intent]) {
-          keysPressed[intent] = true;
-        }
-        touchIntents[intent] = true;
-      } else {
-        touchIntents[intent] = false;
-      }
-    },
-
-    flushFrame: function () {
-      keysPressed = {};
-    },
-
-    reset: function () {
-      keysDown = {};
-      keysPressed = {};
-      touchIntents = {};
-    }
-  };
-
   global.EliseeInput = Input;
-
 })(typeof window !== 'undefined' ? window : this);

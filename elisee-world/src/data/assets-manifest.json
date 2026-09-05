@@ -1,0 +1,10 @@
+{
+  "json": [
+    { "id": "roster", "url": "elisee-world/data/roster.json" },
+    { "id": "moves", "url": "elisee-world/data/moves.json" },
+    { "id": "trainers", "url": "elisee-world/data/trainers.json" },
+    { "id": "items", "url": "elisee-world/data/items.json" }
+  ],
+  "images": [],
+  "audio": []
+}

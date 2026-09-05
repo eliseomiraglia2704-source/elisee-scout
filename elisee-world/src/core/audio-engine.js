@@ -1,124 +1,129 @@
 /**
- * ELISEE WORLD — AUDIO ENGINE
- * Wrapper Web Audio API nativo per SFX retro 16-bit generati in real-time.
- * Zero asset esterni, nessun ritardo di rete.
+ * ELISEE WORLD — Audio Engine (sez. 9 architettura + sez. 19 design doc)
+ * Wrapper Web Audio API per BGM e SFX nativi procedurali retro 16-bit.
  */
 (function (global) {
   'use strict';
 
-  var audioCtx = null;
-  var isMuted = false;
+  class AudioEngine {
+    constructor() {
+      this.ctx = null;
+      this.sfxGain = null;
+      this.bgmGain = null;
+      this.sfxVolume = 0.8;
+      this.bgmVolume = 0.5;
+      this.muted = false;
+      this.initialized = false;
+    }
 
-  function getContext() {
-    if (!audioCtx) {
-      var AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (AudioContext) {
-        audioCtx = new AudioContext();
+    init() {
+      if (this.initialized) return;
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        this.ctx = new AudioCtx();
+        this.sfxGain = this.ctx.createGain();
+        this.bgmGain = this.ctx.createGain();
+
+        this.sfxGain.gain.setValueAtTime(this.sfxVolume, this.ctx.currentTime);
+        this.bgmGain.gain.setValueAtTime(this.bgmVolume, this.ctx.currentTime);
+
+        this.sfxGain.connect(this.ctx.destination);
+        this.bgmGain.connect(this.ctx.destination);
+        this.initialized = true;
+      } catch (e) {
+        console.warn('[AudioEngine] Web Audio API non disponibile:', e);
       }
     }
-    if (audioCtx && audioCtx.state === 'suspended') {
-      audioCtx.resume();
+
+    unlock() {
+      this.init();
+      if (this.ctx && this.ctx.state === 'suspended') {
+        this.ctx.resume();
+      }
     }
-    return audioCtx;
+
+    setVolume(channel, vol) {
+      const val = Math.max(0, Math.min(1, vol));
+      if (channel === 'sfx') {
+        this.sfxVolume = val;
+        if (this.sfxGain && this.ctx) this.sfxGain.gain.setValueAtTime(val, this.ctx.currentTime);
+      } else if (channel === 'bgm') {
+        this.bgmVolume = val;
+        if (this.bgmGain && this.ctx) this.bgmGain.gain.setValueAtTime(val, this.ctx.currentTime);
+      }
+    }
+
+    playSFX(type) {
+      if (this.muted || !this.ctx || this.ctx.state !== 'running') return;
+      try {
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.connect(gain);
+        gain.connect(this.sfxGain);
+
+        switch (type) {
+          case 'select':
+          case 'click':
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(600, now);
+            osc.frequency.exponentialRampToValueAtTime(900, now + 0.05);
+            gain.gain.setValueAtTime(0.3, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+            osc.start(now);
+            osc.stop(now + 0.05);
+            break;
+          case 'hit':
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(220, now);
+            osc.frequency.exponentialRampToValueAtTime(80, now + 0.12);
+            gain.gain.setValueAtTime(0.5, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+            osc.start(now);
+            osc.stop(now + 0.12);
+            break;
+          case 'miss':
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(350, now);
+            osc.frequency.exponentialRampToValueAtTime(150, now + 0.18);
+            gain.gain.setValueAtTime(0.35, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
+            osc.start(now);
+            osc.stop(now + 0.18);
+            break;
+          case 'faint':
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(320, now);
+            osc.frequency.linearRampToValueAtTime(80, now + 0.4);
+            gain.gain.setValueAtTime(0.4, now);
+            gain.gain.linearRampToValueAtTime(0.01, now + 0.4);
+            osc.start(now);
+            osc.stop(now + 0.4);
+            break;
+          case 'levelup':
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(440, now);
+            osc.frequency.setValueAtTime(554.37, now + 0.08);
+            osc.frequency.setValueAtTime(659.25, now + 0.16);
+            osc.frequency.setValueAtTime(880, now + 0.24);
+            gain.gain.setValueAtTime(0.3, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+            osc.start(now);
+            osc.stop(now + 0.4);
+            break;
+          default:
+            break;
+        }
+      } catch (e) {}
+    }
+
+    playBGM(trackName) {
+      // Hook predisposto per BGM future
+    }
+
+    stopBGM() {}
   }
 
-  function playTone(freq, type, duration, gainVal, slideToFreq) {
-    if (isMuted) return;
-    try {
-      var ctx = getContext();
-      if (!ctx) return;
-      var osc = ctx.createOscillator();
-      var gain = ctx.createGain();
-
-      osc.type = type || 'square';
-      osc.frequency.setValueAtTime(freq, ctx.currentTime);
-      if (slideToFreq) {
-        osc.frequency.exponentialRampToValueAtTime(Math.max(10, slideToFreq), ctx.currentTime + duration);
-      }
-
-      gain.gain.setValueAtTime(gainVal || 0.15, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc.start();
-      osc.stop(ctx.currentTime + duration);
-    } catch (_) {}
-  }
-
-  var AudioEngine = {
-    init: function () {
-      // Inizializza al primo tocco/click
-      var unlock = function () {
-        getContext();
-        window.removeEventListener('click', unlock);
-        window.removeEventListener('keydown', unlock);
-        window.removeEventListener('touchstart', unlock);
-      };
-      window.addEventListener('click', unlock, { once: true });
-      window.addEventListener('keydown', unlock, { once: true });
-      window.addEventListener('touchstart', unlock, { once: true });
-    },
-
-    playSFX: function (name) {
-      if (isMuted) return;
-      switch (name) {
-        case 'select':
-          playTone(440, 'square', 0.06, 0.1, 880);
-          break;
-        case 'confirm':
-          playTone(520, 'triangle', 0.08, 0.15, 1040);
-          break;
-        case 'cancel':
-          playTone(330, 'square', 0.08, 0.12, 165);
-          break;
-        case 'hit':
-          playTone(180, 'sawtooth', 0.18, 0.25, 40);
-          break;
-        case 'crit':
-          playTone(320, 'sawtooth', 0.1, 0.25, 640);
-          setTimeout(function () { playTone(640, 'square', 0.2, 0.25, 80); }, 80);
-          break;
-        case 'miss':
-          playTone(280, 'sine', 0.2, 0.15, 120);
-          break;
-        case 'faint':
-          playTone(300, 'triangle', 0.35, 0.2, 60);
-          break;
-        case 'level_up':
-          playTone(392, 'square', 0.1, 0.18); // G4
-          setTimeout(function () { playTone(523, 'square', 0.1, 0.18); }, 100); // C5
-          setTimeout(function () { playTone(659, 'square', 0.1, 0.18); }, 200); // E5
-          setTimeout(function () { playTone(784, 'square', 0.25, 0.22); }, 300); // G5
-          break;
-        case 'victory':
-          playTone(523, 'square', 0.12, 0.2); // C5
-          setTimeout(function () { playTone(523, 'square', 0.12, 0.2); }, 130);
-          setTimeout(function () { playTone(523, 'square', 0.12, 0.2); }, 260);
-          setTimeout(function () { playTone(659, 'square', 0.35, 0.25); }, 390); // E5
-          setTimeout(function () { playTone(784, 'square', 0.5, 0.25); }, 550); // G5
-          break;
-        case 'battle_start':
-          playTone(150, 'sawtooth', 0.1, 0.25, 300);
-          setTimeout(function () { playTone(300, 'sawtooth', 0.15, 0.25, 600); }, 100);
-          break;
-        default:
-          playTone(400, 'square', 0.05, 0.1);
-          break;
-      }
-    },
-
-    toggleMute: function () {
-      isMuted = !isMuted;
-      return isMuted;
-    },
-
-    isMuted: function () {
-      return isMuted;
-    }
-  };
-
-  global.EliseeAudio = AudioEngine;
-
+  global.EliseeAudioEngine = AudioEngine;
 })(typeof window !== 'undefined' ? window : this);

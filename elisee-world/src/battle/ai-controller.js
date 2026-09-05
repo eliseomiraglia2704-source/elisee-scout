@@ -1,57 +1,34 @@
 /**
- * ELISEE WORLD — AI CONTROLLER (MVP)
- * Logica di decisione avversaria ponderata:
- * 1) Mossa super efficace con energia sufficiente
- * 2) Mossa a danno più alto
- * 3) Mossa random tra quelle rimaste
+ * ELISEE WORLD — AI Controller (sez. 18 design doc)
+ * Logica di decisione mossa avversaria basata su priorità ed efficacia.
  */
 (function (global) {
   'use strict';
 
-  var AIController = {
-    chooseMove: function (aiPlayer, targetPlayer, movesDb, battleContext) {
-      if (!aiPlayer || !aiPlayer.mosse || !aiPlayer.mosse.length) return null;
+  class AIController {
+    static pickMove(aiPlayer, userPlayer, context = {}) {
+      if (!aiPlayer || !aiPlayer.moves || !aiPlayer.moves.length) return null;
 
-      var availableMoves = [];
-      for (var i = 0; i < aiPlayer.mosse.length; i++) {
-        var moveKey = aiPlayer.mosse[i];
-        var moveData = movesDb[moveKey] || { id: moveKey, nome: moveKey, potenza: 40, tipo: aiPlayer.ruolo, energia: 10 };
-        availableMoves.push(moveData);
-      }
-
-      if (!availableMoves.length) return null;
-
-      // 1. Cerca una mossa superefficace
-      var bestMove = null;
-      var bestMult = 1.0;
-      var targetTypes = targetPlayer.tipi || [targetPlayer.ruolo];
-
-      for (var j = 0; j < availableMoves.length; j++) {
-        var m = availableMoves[j];
-        if (m.potenza > 0) {
-          var mult = global.EliseeDamageCalc ? global.EliseeDamageCalc.getTypeMultiplier(m.tipo, targetTypes) : 1.0;
-          if (mult > bestMult) {
-            bestMult = mult;
-            bestMove = m;
+      // 1. Cerca mosse super efficaci
+      for (const m of aiPlayer.moves) {
+        if (m.currentPp > 0) {
+          const mult = global.EliseeDamageCalc.typeChartMultiplier(m.type, userPlayer.types || userPlayer.type);
+          if (mult > 1) {
+            return m;
           }
         }
       }
 
-      if (bestMove && bestMult > 1.2) {
-        return bestMove;
+      // 2. Mossa a danno più alto con PP > 0
+      const available = aiPlayer.moves.filter((m) => (m.currentPp || m.pp || 1) > 0);
+      if (available.length) {
+        available.sort((a, b) => (b.power || 0) - (a.power || 0));
+        return available[0];
       }
 
-      // 2. Altrimenti mossa con danno più alto
-      availableMoves.sort(function (a, b) {
-        return (b.potenza || 0) - (a.potenza || 0);
-      });
-
-      // Seleziona con priorità tra le top 2 mosse
-      var pickIndex = Math.random() < 0.75 ? 0 : Math.min(1, availableMoves.length - 1);
-      return availableMoves[pickIndex];
+      return aiPlayer.moves[0];
     }
-  };
+  }
 
   global.EliseeAIController = AIController;
-
 })(typeof window !== 'undefined' ? window : this);

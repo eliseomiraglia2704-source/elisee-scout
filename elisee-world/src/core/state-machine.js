@@ -1,45 +1,45 @@
 /**
- * ELISEE WORLD — GENERIC STATE MACHINE
- * Gestore stati riusabile per loop globale, schermate e battaglia.
+ * ELISEE WORLD — State Machine generica riusabile
+ * Conforme a sez. 3 dell'architettura del motore grafico.
  */
 (function (global) {
   'use strict';
 
-  function StateMachine(states, initial) {
-    this.states = states || {};
-    this.current = initial || null;
-    if (initial && this.states[initial] && typeof this.states[initial].enter === 'function') {
-      this.states[initial].enter();
+  class StateMachine {
+    constructor(states, initial) {
+      this.states = states || {}; // { NOME: { enter(payload), update(dt), render(ctx, renderer), exit() } }
+      this.current = initial || null;
+      if (this.current && this.states[this.current] && typeof this.states[this.current].enter === 'function') {
+        this.states[this.current].enter();
+      }
+    }
+
+    transition(name, payload) {
+      if (this.current && this.states[this.current] && typeof this.states[this.current].exit === 'function') {
+        this.states[this.current].exit();
+      }
+      this.current = name;
+      if (this.states[name] && typeof this.states[name].enter === 'function') {
+        this.states[name].enter(payload);
+      }
+    }
+
+    update(dt) {
+      if (this.current && this.states[this.current] && typeof this.states[this.current].update === 'function') {
+        this.states[this.current].update(dt);
+      }
+    }
+
+    render(ctx, renderer) {
+      if (this.current && this.states[this.current] && typeof this.states[this.current].render === 'function') {
+        this.states[this.current].render(ctx, renderer);
+      }
+    }
+
+    getCurrent() {
+      return this.current;
     }
   }
 
-  StateMachine.prototype.transition = function (name, payload) {
-    if (!this.states[name]) {
-      console.warn('[EliseeStateMachine] Stato non trovato:', name);
-      return;
-    }
-    if (this.current && this.states[this.current] && typeof this.states[this.current].exit === 'function') {
-      this.states[this.current].exit();
-    }
-    var previous = this.current;
-    this.current = name;
-    if (typeof this.states[name].enter === 'function') {
-      this.states[name].enter(payload, previous);
-    }
-  };
-
-  StateMachine.prototype.update = function (dt) {
-    if (this.current && this.states[this.current] && typeof this.states[this.current].update === 'function') {
-      this.states[this.current].update(dt);
-    }
-  };
-
-  StateMachine.prototype.render = function (ctx) {
-    if (this.current && this.states[this.current] && typeof this.states[this.current].render === 'function') {
-      this.states[this.current].render(ctx);
-    }
-  };
-
   global.EliseeStateMachine = StateMachine;
-
 })(typeof window !== 'undefined' ? window : this);
