@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **UI Mobile: Rimozione totale e definitiva linee divisorie topbar e sezioni** — Azzerati tutti i bordi superiori/inferiori (`border-top: none !important`, `border-bottom: none !important`, `box-shadow: none !important`) su topbar, pseudo-elementi e sezioni home (`#home-resume`, `.portfolio-section`), eliminando ogni linea azzurra/blu residua. Cache `NOLINES1`.
+Ultimo fatto: **UI Mobile: Rimozione forzata e prioritaria linea azzurra TopBar via inline style & style head** — Applicato stile diretto `style="border:none !important; border-bottom:none !important; box-shadow:none !important;"` sull'elemento DOM `.es-m-topbar` e blocco prioritario `<style id="es-force-no-lines">` per bypassare qualsiasi cache o interferenza di stile. Cache `FORCENOLINE1`.
 Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)

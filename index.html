@@ -323,8 +323,30 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
   <link rel="stylesheet" href="mappa-club.css?v=20260902_CLEANOSM1">
-  <link rel="stylesheet" href="dash-luxury.css?v=20260905_RESPON2">
-  <link rel="stylesheet" href="mobile-webapp.css?v=20260905_NOLINES1">
+  <link rel="stylesheet" href="mobile-webapp.css?v=20260905_FORCENOLINE1">
+  <style id="es-force-no-lines">
+    @media screen and (max-width: 768px) {
+      .es-m-topbar,
+      .es-m-topbar::before,
+      .es-m-topbar::after,
+      header.main-header,
+      .portfolio-header,
+      .navbar,
+      #hero,
+      .hero-section,
+      .hero-portfolio,
+      .portfolio-section,
+      #home-resume,
+      #home-about,
+      #home-portfolio {
+        border: none !important;
+        border-top: none !important;
+        border-bottom: none !important;
+        box-shadow: none !important;
+        outline: none !important;
+      }
+    }
+  </style>
   <script>
     /* Boot OAuth: token in search O in hash (#hero?elisee_token=...). La sessione vince sempre. */
     (function () {
@@ -1578,7 +1600,7 @@
        ============================================================ -->
   <div id="es-mobile-app-shell">
     <!-- 1. Top App Bar -->
-    <div class="es-m-topbar">
+    <div class="es-m-topbar" style="border:none !important;border-bottom:none !important;box-shadow:none !important;outline:none !important;">
       <a href="#hero" class="es-m-brand" onclick="if(window.switchView){window.switchView('home','#hero');} return false;">
         <img src="immagini/logo/logo-site.png?v=20260831_121117" alt="ELISEE SCOUT" class="es-m-brand-logo">
         <span class="es-m-brand-txt">ELISEE <span>SCOUT</span></span>
