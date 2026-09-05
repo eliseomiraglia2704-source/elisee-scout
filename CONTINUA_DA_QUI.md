@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **UI Mobile: Rinomina voce Drawer in "Minigiochi"** — Aggiornato il link nel menu laterale a scomparsa per smartphone da "Minigiochi & Elisee World" a solo "Minigiochi". Cache `MINIGIOCHI1`.
+Ultimo fatto: **UI Mobile: Rimozione linea azzurra inferiore sotto la TopBar (.es-m-topbar)** — Eliminato il `border-bottom` azzurro/ciano dalla barra superiore dell'App Mobile per una transizione fluida e pulita senza interruzioni visive. Cache `NOTOPBORDER1`.
 Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
