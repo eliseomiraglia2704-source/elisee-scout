@@ -60,11 +60,15 @@
 
       var startHandler = function (e) {
         e.preventDefault();
-        if (global.EliseeInput) global.EliseeInput.setTouchIntent(intent, true);
+        if (engineInstance && engineInstance.input) {
+          engineInstance.input.setTouchIntent(intent, true);
+        }
       };
       var endHandler = function (e) {
         e.preventDefault();
-        if (global.EliseeInput) global.EliseeInput.setTouchIntent(intent, false);
+        if (engineInstance && engineInstance.input) {
+          engineInstance.input.setTouchIntent(intent, false);
+        }
       };
 
       btn.addEventListener('pointerdown', startHandler);
@@ -72,6 +76,22 @@
       btn.addEventListener('pointercancel', endHandler);
       btn.addEventListener('pointerleave', endHandler);
     });
+
+    // Tap diretto sul canvas = intent A / START
+    var canvasEl = modalEl.querySelector('#elisee-world-canvas');
+    if (canvasEl) {
+      canvasEl.addEventListener('pointerdown', function (e) {
+        e.preventDefault();
+        if (engineInstance && engineInstance.input) {
+          engineInstance.input.setTouchIntent('A', true);
+          setTimeout(function () {
+            if (engineInstance && engineInstance.input) {
+              engineInstance.input.setTouchIntent('A', false);
+            }
+          }, 100);
+        }
+      });
+    }
 
     // Close on ESC
     window.addEventListener('keydown', function (e) {

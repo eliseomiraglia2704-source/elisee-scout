@@ -9,10 +9,17 @@
   const STEP = 1000 / 60; // 60 update/sec logici (16.666ms)
 
   class Engine {
-    constructor(canvasId) {
-      this.canvas = document.getElementById(canvasId);
+    constructor(canvasTarget) {
+      if (typeof canvasTarget === 'string') {
+        this.canvas = document.getElementById(canvasTarget);
+      } else if (canvasTarget && canvasTarget.getContext) {
+        this.canvas = canvasTarget;
+      } else {
+        this.canvas = document.getElementById('elisee-world-canvas');
+      }
+
       if (!this.canvas) {
-        throw new Error('Canvas non trovato: ' + canvasId);
+        throw new Error('[Engine] Canvas non trovato: ' + canvasTarget);
       }
       this.ctx = this.canvas.getContext('2d');
       this.ctx.imageSmoothingEnabled = false;
@@ -220,6 +227,7 @@
       this.input.attach();
       this.lastTime = performance.now();
       this.accumulator = 0;
+      this.render(); // Primo render immediato
 
       const loop = (now) => {
         if (!this.running) return;

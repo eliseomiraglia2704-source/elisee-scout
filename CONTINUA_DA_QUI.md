@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **Elisee World: Struttura file completa e scheletro tecnico del motore grafico (Fixed Timestep Loop 60 FPS + State Machine BOOT → TITLE → OVERWORLD ⇄ BATTLE)** — Implementata la struttura file rigorosa conforme a sez. 1 dell'architettura (/src/core, /src/render, /src/world, /src/battle, /src/data, /src/ui, main.js) con zero dipendenze esterne. Il motore gira perfettamente senza errori a 60 FPS deterministico con accumulator. Cache `EWSKELETON1`.
+Ultimo fatto: **Elisee World: Fix binding canvas e rendering immediato BOOT OK** — Risolta l'inizializzazione del costruttore di `Engine` che accetta sia l'ID stringa che l'elemento DOM canvas, collegati i listener touch/pointer a `engineInstance.input.setTouchIntent` e forzato il primo render immediato in `start()`. Il canvas visualizza chiaramente `ELISEE WORLD - ENGINE BOOT OK — 60 FPS`. Cache `EWRUN1`.
 Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
