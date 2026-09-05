@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-06**
-Ultimo fatto: **UI Mobile: Blocco di override definitivo pre-chiusura body per azzeramento assoluto linee azzurre** — Inserito `<style id="es-absolute-noline-override">` immediatamente prima di `</body>` per garantire priorità a cascata assoluta e sovrascrivere qualsiasi bordo o ombra residua nel DOM. Cache `DEFINITIVE_NOLINE1`.
+Ultimo fatto: **Sicurezza & Form DOM: Risolti warning password console (autocomplete new-password)** — Aggiunto attributo `autocomplete="new-password"` su tutti i campi password di registrazione e reimpostazione credenziali (`reg-password`, `reg-password2`, `reg-google-password`, `accesso-setpw`). Cache `DEVTOOLSPW1`.
 Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
