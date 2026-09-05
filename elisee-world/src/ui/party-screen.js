@@ -129,7 +129,7 @@
       ctx.fillStyle = '#facc15';
       ctx.font = 'bold 13px monospace';
       ctx.textAlign = 'left';
-      ctx.fillText('⚽ GESTIONE SQUADRA / ROSA ATLETI (PARTY)', 28, 34);
+      ctx.fillText('GESTIONE SQUADRA / ROSA ATLETI (PARTY)', 28, 34);
 
       ctx.fillStyle = '#94a3b8';
       ctx.font = 'bold 11px monospace';

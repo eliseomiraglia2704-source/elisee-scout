@@ -192,7 +192,7 @@
             ctx.fillStyle = '#ffffff';
             ctx.font = 'bold 11px monospace';
             ctx.textAlign = 'left';
-            ctx.fillText('⚽ Campetto San Siro', banX + 10, banY + 16);
+            ctx.fillText('Campetto San Siro', banX + 10, banY + 16);
 
             ctx.fillStyle = '#38bdf8';
             ctx.font = '9px monospace';
