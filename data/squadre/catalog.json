@@ -1815,8 +1815,6 @@
       "stadiumImageSource": "stadium",
       "fmId": "1179",
       "kitHome": "immagini/kits-2d/venezia/home.png",
-      "kitAway": "immagini/kits-2d/venezia/away.png",
-      "kitThird": "immagini/kits-2d/venezia/third.png",
       "kitSource": "sortitoutsi-ss-kits-2026.14",
       "kits": [
         {

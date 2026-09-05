@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **Console & Live-Reload: Pulizia log ed eliminazione 404 su polling versione** — Allineato `live-reload.js` per puntare a `/version.json` (risorsa statica universale sempre presente) eliminando la cascata di richieste 404 a `_live_version` in console durante il testing locale e remoto. Cache `CLEANLOGS1`.
+Ultimo fatto: **Kit 2D & Preload: Fix 404 maglie non presenti e allineamento slot reali** — Ottimizzato `squadre-select.js` per utilizzare i fallback generici (`kitAway`, `kitThird`) esclusivamente se l'array `team.kits` è assente o vuoto, evitando che il sistema di preloading provi a richiedere asset inesistenti (es. `away.png`/`third.png` per Venezia) generando errori 404 in console. Cache `KITCLEAN1`.
 Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)

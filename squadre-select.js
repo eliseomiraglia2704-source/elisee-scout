@@ -193,33 +193,33 @@
           addSlot(item.key || 'kit-' + i, item.label, item.url);
         }
       }
-    }
-
-    var extras = [
-      ['home', team.kitHome],
-      ['away', team.kitAway],
-      ['third', team.kitThird],
-      ['fourth', team.kitFourth],
-      ['fifth', team.kitFifth],
-      ['goalkeeper', team.kitGoalkeeper || team.kitGk],
-      ['goalkeeper-away', team.kitGoalkeeperAway],
-      ['goalkeeper-third', team.kitGoalkeeperThird],
-      ['pre-match', team.kitPreMatch],
-      ['pre-match-home', team.kitPreMatchHome],
-      ['pre-match-away', team.kitPreMatchAway],
-      ['pre-match-third', team.kitPreMatchThird],
-      ['polo', team.kitPolo],
-      ['polo-2', team.kitPolo2],
-      ['training', team.kitTraining],
-      ['training-1', team.kitTraining1],
-      ['training-2', team.kitTraining2],
-      ['training-3', team.kitTraining3],
-      ['training-staff', team.kitTrainingStaff],
-      ['training-goalkeeper', team.kitTrainingGoalkeeper],
-      ['pre-season-home', team.kitPreSeasonHome]
-    ];
-    for (var e = 0; e < extras.length; e++) {
-      if (extras[e][1]) addSlot(extras[e][0], '', extras[e][1]);
+    } else {
+      var extras = [
+        ['home', team.kitHome],
+        ['away', team.kitAway],
+        ['third', team.kitThird],
+        ['fourth', team.kitFourth],
+        ['fifth', team.kitFifth],
+        ['goalkeeper', team.kitGoalkeeper || team.kitGk],
+        ['goalkeeper-away', team.kitGoalkeeperAway],
+        ['goalkeeper-third', team.kitGoalkeeperThird],
+        ['pre-match', team.kitPreMatch],
+        ['pre-match-home', team.kitPreMatchHome],
+        ['pre-match-away', team.kitPreMatchAway],
+        ['pre-match-third', team.kitPreMatchThird],
+        ['polo', team.kitPolo],
+        ['polo-2', team.kitPolo2],
+        ['training', team.kitTraining],
+        ['training-1', team.kitTraining1],
+        ['training-2', team.kitTraining2],
+        ['training-3', team.kitTraining3],
+        ['training-staff', team.kitTrainingStaff],
+        ['training-goalkeeper', team.kitTrainingGoalkeeper],
+        ['pre-season-home', team.kitPreSeasonHome]
+      ];
+      for (var e = 0; e < extras.length; e++) {
+        if (extras[e][1]) addSlot(extras[e][0], '', extras[e][1]);
+      }
     }
 
     if (!slots.length) {
