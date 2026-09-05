@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **Kit 2D & Preload: Fix 404 maglie non presenti e allineamento slot reali** — Ottimizzato `squadre-select.js` per utilizzare i fallback generici (`kitAway`, `kitThird`) esclusivamente se l'array `team.kits` è assente o vuoto, evitando che il sistema di preloading provi a richiedere asset inesistenti (es. `away.png`/`third.png` per Venezia) generando errori 404 in console. Cache `KITCLEAN1`.
+Ultimo fatto: **Dashboard Match Analyst & Ruoli Staff: Fix universale layout a griglia e allineamento rail/body** — Blindata la regola `display: grid !important; grid-template-columns: 56px 1fr !important;` in `dash-luxury.css` per tutti gli ID di dashboard (`#es-mad`, `#es-od`, `#es-dsd`, `#es-cd`, ecc.) e aggiornato `ma-dash.js` e `ma-dash.css`, eliminando lo shift e il floating della sidebar al centro dello schermo nell'area Match Analyst. Cache `MAFIX1`.
 Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)

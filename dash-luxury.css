@@ -832,3 +832,76 @@ body.es-tifoso-on #user-dossier-view-group {
     display: none !important;
   }
 }
+
+/* ============================================================
+   REGOLE UNIVERSALI BLINDATE PER TUTTE LE DASHBOARD DI RUOLO
+   Garantisce display: grid (56px 1fr) ovunque, prevenendo
+   qualsiasi disallineamento o shift della sidebar al centro.
+   ============================================================ */
+.es-pd,
+#es-pd,
+#es-cd,
+#es-dsd,
+#es-prd,
+#es-vd,
+#es-fd,
+#es-mad,
+#es-md,
+#es-od,
+#es-tmd,
+#es-gk,
+#es-atd,
+#es-yg,
+#es-dg,
+#es-ag,
+#es-mk,
+#es-pr,
+#es-nu,
+#es-eq,
+#es-sg,
+#es-bt,
+#es-td,
+#es-gd {
+  display: grid !important;
+  grid-template-columns: 56px 1fr !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+#es-staff-profile,
+#es-player-profile,
+#es-tifoso-profile,
+#es-giorn-profile {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+#user-dossier-view-group.is-staff-area,
+#user-dossier-portal.is-staff-area,
+#user-dossier-view-group.is-player-area,
+#user-dossier-portal.is-player-area,
+#user-dossier-view-group.is-tifoso-area,
+#user-dossier-portal.is-tifoso-area,
+#user-dossier-view-group.is-giorn-area,
+#user-dossier-portal.is-giorn-area {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+  box-sizing: border-box !important;
+}
+
+#user-dossier-view-group.is-staff-area .pf-page-inner,
+#user-dossier-view-group.is-player-area .pf-page-inner,
+#user-dossier-view-group.is-tifoso-area .pf-page-inner,
+#user-dossier-view-group.is-giorn-area .pf-page-inner {
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}

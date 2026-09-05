@@ -1,11 +1,30 @@
 /* Dashboard Match Analyst */
 #user-dossier-view-group.is-staff-area.is-ma-dash .es-user-tabs { display: none !important; }
+#user-dossier-view-group.is-staff-area.is-ma-dash,
+#user-dossier-portal.is-staff-area.is-ma-dash,
 #user-dossier-view-group.is-staff-area.is-ma-dash .pf-page-inner {
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+#es-staff-profile.es-ma-on {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
   max-width: none !important;
   margin: 0 !important;
   padding: 0 !important;
 }
 #es-staff-profile.es-ma-on > :not(#es-mad) { display: none !important; }
+#es-staff-profile.es-ma-on #es-mad {
+  display: grid !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+}
 .es-ma-grade {
   font-size: 1.45rem;
   font-weight: 800;
