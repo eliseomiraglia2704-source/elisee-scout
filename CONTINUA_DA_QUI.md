@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **Modern Web & DevTools 152: Preload asset critici, text-wrap balance/pretty e scrollbar-gutter** — Integrato `<link rel="preload">` ad alta priorità per il logo brand e asset chiave in `index.html`, introdotta la tipografia moderna CSS (`text-wrap: balance` su tutti gli headings `h1..h6`, `text-wrap: pretty` sui paragrafi `p`) e `scrollbar-gutter: stable` in `style.css` per azzerare il layout shift (CLS) ed esaltare il rendering FCP/LCP. Cache `PERF1`.
+Ultimo fatto: **Console & Head: Rimozione warning link preload non consumato** — Rimosso il tag `<link rel="preload">` su `logo-site.png` in `index.html` eliminando il warning Chrome "resource was preloaded using link preload but not used within a few seconds". Cache `NOPRELOAD1`.
 Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
