@@ -1510,6 +1510,7 @@
         '<div class="es-mg-hub-shade" aria-hidden="true"></div>' +
         '<div class="es-mg-hub-stage">' +
         '<div class="es-mg-hub-card is-on es-mg-hub-card--career" id="es-mg-hub-career" role="region" aria-label="Carriera Giocatore">' +
+        '<div class="es-mg-hub-card-body">' +
         '<span class="es-mg-hub-icon" aria-hidden="true">' +
         '<img class="es-mg-hub-boot" src="immagini/minigioco/scarpa-calcio-white.png?v=20260813_BOOT" alt="" />' +
         '</span>' +
@@ -1517,7 +1518,8 @@
         '<span class="es-mg-hub-tags">Serie D (A–I) → Serie C (A/B/C) → Serie B · Top 10 mondiali</span>' +
         '<span class="es-mg-hub-desc">In <strong>Serie D</strong> e <strong>Serie C</strong> sale chi vince il girone. Poi Serie B, Serie A e i top mondiali.</span>' +
         publishBlockHtml() +
-        '<div class="es-mg-hub-actions-career">' +
+        '</div>' +
+        '<div class="es-mg-hub-card-footer es-mg-hub-actions-career">' +
         (savedNow
           ? '<button type="button" class="es-mg-hub-play" id="es-mg-hub-continue">Continua</button>' +
             '<span class="es-mg-hub-continue-meta">' + esc(savedCareerLabel(savedNow)) + '</span>' +
@@ -1527,6 +1529,7 @@
         '</div>' +
         '<div class="es-mg-hub-card es-mg-hub-card--elisee-world" id="es-mg-hub-elisee-world" role="button" tabindex="0" aria-label="Elisee World — Football Edition, Gioca ora">' +
         '<span class="es-mg-hub-badge-live">Novità · Gioca</span>' +
+        '<div class="es-mg-hub-card-body">' +
         '<span class="es-mg-hub-icon es-mg-hub-icon-ew" aria-hidden="true">' +
         '<svg viewBox="0 0 64 64" fill="none">' +
         '<circle cx="32" cy="32" r="22" stroke="#38bdf8" stroke-width="2.5" fill="rgba(2,132,199,0.18)"/>' +
@@ -1540,7 +1543,8 @@
         '<span class="es-mg-hub-title">Elisee World</span>' +
         '<span class="es-mg-hub-tags">RPG Calcistico 16-bit · 60 FPS · Mosse & Turni</span>' +
         '<span class="es-mg-hub-desc">Cattura fuoriclasse con le <strong>Eliball</strong>, gestisci la rosa e sfida i Mister d\'élite nell\'Overworld retro.</span>' +
-        '<div class="es-mg-hub-concept es-mg-hub-concept-ew">' +
+        '</div>' +
+        '<div class="es-mg-hub-card-footer es-mg-hub-concept-ew">' +
         '<span class="es-mg-hub-btn-launch">Entra in campo ➔</span>' +
         '</div>' +
         '</div>' +

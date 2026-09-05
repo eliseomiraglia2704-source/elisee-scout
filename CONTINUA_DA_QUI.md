@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **Hub Minigiochi: Bottoni azione posizionati dentro la card Carriera Giocatore** — Spostati i pulsanti "Continua" (con metadati salvataggio) e "Nuova carriera" (o "Gioca") direttamente all'interno della parte bassa della card "Carriera Giocatore", eliminando il wrapper esterno fluttuante per un layout perfettamente simmetrico, pulito e integrato con la card di Elisee World. Cache `HUBBUTTONS1`.
+Ultimo fatto: **Hub Minigiochi: Centratura perfetta dei contenuti all'interno delle card** — Centrati sia verticalmente che orizzontalmente i contenuti di entrambe le card dell'Hub Minigiochi (Carriera Giocatore ed Elisee World), ricalibrando spaziature, padding e dimensioni dei bottoni per evitare qualsiasi fuoriuscita o schiacciamento sul fondo. Cache `HUBCENTER1`.
 Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
