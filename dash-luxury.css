@@ -905,3 +905,87 @@ body.es-tifoso-on #user-dossier-view-group {
   width: 100% !important;
   box-sizing: border-box !important;
 }
+
+/* ============================================================
+   RESPONSIVE DASHBOARD: MOBILE & TABLET (<768px)
+   Converte la rail laterale in barra orizzontale touch-friendly
+   lasciando il 100% dello schermo per schede, grafici e radar.
+   ============================================================ */
+@media screen and (max-width: 768px) {
+  .es-pd,
+  #es-pd,
+  #es-cd,
+  #es-dsd,
+  #es-prd,
+  #es-vd,
+  #es-fd,
+  #es-mad,
+  #es-md,
+  #es-od,
+  #es-tmd,
+  #es-gk,
+  #es-atd,
+  #es-yg,
+  #es-dg,
+  #es-ag,
+  #es-mk,
+  #es-pr,
+  #es-nu,
+  #es-eq,
+  #es-sg,
+  #es-bt,
+  #es-td,
+  #es-gd {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+
+  .es-pd::before {
+    display: none !important;
+  }
+
+  .es-pd-rail {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 48px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 0.4rem !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 0.45rem 0.75rem !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--lx-line, rgba(56, 189, 248, 0.15)) !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 25 !important;
+    box-sizing: border-box !important;
+    scrollbar-width: none !important;
+  }
+
+  .es-pd-rail::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .es-pd-rail button {
+    flex: 0 0 42px !important;
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    border-radius: 8px !important;
+  }
+
+  .es-pd-main {
+    width: 100% !important;
+    padding: 0.85rem !important;
+    box-sizing: border-box !important;
+  }
+
+  .es-ma-lab-grid,
+  .es-ma-extra {
+    grid-template-columns: 1fr !important;
+  }
+}

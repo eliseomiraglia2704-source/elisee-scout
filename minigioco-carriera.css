@@ -453,6 +453,14 @@ button.es-mg-hub-menubar:focus {
   gap: clamp(0.95rem, 2.6vw, 1.55rem);
   align-items: stretch;
 }
+@media screen and (max-width: 768px) {
+  .es-mg-hub-stage {
+    grid-template-columns: 1fr !important;
+    max-width: 440px !important;
+    gap: 1.25rem !important;
+    padding: 1rem 0.5rem !important;
+  }
+}
 .es-mg-hub-card {
   appearance: none;
   -webkit-appearance: none;

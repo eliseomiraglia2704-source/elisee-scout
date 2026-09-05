@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **Console & Head: Rimozione warning link preload non consumato** — Rimosso il tag `<link rel="preload">` su `logo-site.png` in `index.html` eliminando il warning Chrome "resource was preloaded using link preload but not used within a few seconds". Cache `NOPRELOAD1`.
+Ultimo fatto: **Multi-Dispositivo & Responsive Uniforme: Safe area iOS/Android, rail touch orizzontale e mobile hub** — Introdotto il supporto globale safe-area-inset per notch/Dynamic Island, prevenzione auto-zoom Safari iOS (input 16px), touch targets minimi 44px e conversione responsive fluida delle dashboard staff/giocatore (rail orizzontale sticky touch sotto 768px) e dell'Hub Minigiochi (colonna singola 440px su smartphone). Cache `RESPON1`.
 Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
