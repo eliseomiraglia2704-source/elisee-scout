@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra: abilitate scrollbar stilizzate visibili (`.es-mg-career-left`, `.es-mg-timeline`), compattata l'altezza della Card Elisee in carriera per far entrare le offerte nel viewport, aggiunta animazione/bordo neon per `.es-mg-transfer` / `.es-mg-deal-box` / `.es-mg-dilemma`, e collegata la riga `is-pending` (`? Scegliendo squadra...`) al click con auto-scroll morbido sulle offerte. Cache `CAREERADVANCE1`.
-Feature precedente: **Navbar: voce "Minigiochi" e apertura Hub Bivio (Carriera / Elisee World)** — Ripristinata la dicitura **"Minigiochi"** nella navbar con apertura dell'Hub Bivio. Cache `MINIGIOCHI1`.
+Ultimo fatto: **Hub Minigiochi: Bottoni azione posizionati dentro la card Carriera Giocatore** — Spostati i pulsanti "Continua" (con metadati salvataggio) e "Nuova carriera" (o "Gioca") direttamente all'interno della parte bassa della card "Carriera Giocatore", eliminando il wrapper esterno fluttuante per un layout perfettamente simmetrico, pulito e integrato con la card di Elisee World. Cache `HUBBUTTONS1`.
+Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

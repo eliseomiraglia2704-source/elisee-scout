@@ -1509,7 +1509,7 @@
         '<div class="es-mg-hub-bg" aria-hidden="true"></div>' +
         '<div class="es-mg-hub-shade" aria-hidden="true"></div>' +
         '<div class="es-mg-hub-stage">' +
-        '<div class="es-mg-hub-card is-on" id="es-mg-hub-career" role="button" tabindex="0" aria-pressed="true">' +
+        '<div class="es-mg-hub-card is-on es-mg-hub-card--career" id="es-mg-hub-career" role="region" aria-label="Carriera Giocatore">' +
         '<span class="es-mg-hub-icon" aria-hidden="true">' +
         '<img class="es-mg-hub-boot" src="immagini/minigioco/scarpa-calcio-white.png?v=20260813_BOOT" alt="" />' +
         '</span>' +
@@ -1517,6 +1517,13 @@
         '<span class="es-mg-hub-tags">Serie D (A–I) → Serie C (A/B/C) → Serie B · Top 10 mondiali</span>' +
         '<span class="es-mg-hub-desc">In <strong>Serie D</strong> e <strong>Serie C</strong> sale chi vince il girone. Poi Serie B, Serie A e i top mondiali.</span>' +
         publishBlockHtml() +
+        '<div class="es-mg-hub-actions-career">' +
+        (savedNow
+          ? '<button type="button" class="es-mg-hub-play" id="es-mg-hub-continue">Continua</button>' +
+            '<span class="es-mg-hub-continue-meta">' + esc(savedCareerLabel(savedNow)) + '</span>' +
+            '<button type="button" class="es-mg-hub-play es-mg-hub-play-ghost" id="es-mg-hub-new">Nuova carriera</button>'
+          : '<button type="button" class="es-mg-hub-play" id="es-mg-hub-play">Gioca</button>') +
+        '</div>' +
         '</div>' +
         '<div class="es-mg-hub-card es-mg-hub-card--elisee-world" id="es-mg-hub-elisee-world" role="button" tabindex="0" aria-label="Elisee World — Football Edition, Gioca ora">' +
         '<span class="es-mg-hub-badge-live">Novità · Gioca</span>' +
@@ -1537,19 +1544,6 @@
         '<span class="es-mg-hub-btn-launch">Entra in campo ➔</span>' +
         '</div>' +
         '</div>' +
-        '</div>' +
-        '<div class="es-mg-hub-playwrap' + (savedNow ? ' is-split' : '') + '">' +
-        (savedNow
-          ? '<div class="es-mg-hub-playcol">' +
-            '<button type="button" class="es-mg-hub-play" id="es-mg-hub-continue">Continua</button>' +
-            '<span class="es-mg-hub-continue-meta">' + esc(savedCareerLabel(savedNow)) + '</span>' +
-            '</div>' +
-            '<div class="es-mg-hub-playcol">' +
-            '<button type="button" class="es-mg-hub-play es-mg-hub-play-ghost" id="es-mg-hub-new">Nuova carriera</button>' +
-            '</div>'
-          : '<div class="es-mg-hub-playcol">' +
-            '<button type="button" class="es-mg-hub-play" id="es-mg-hub-play">Gioca</button>' +
-            '</div>') +
         '</div>' +
         '<div class="es-mg-confirm-mask" id="es-mg-new-mask" hidden>' +
         '<div class="es-mg-confirm-box" role="dialog" aria-modal="true">' +
@@ -1649,9 +1643,24 @@
         }
       };
     }
-    if (play) play.onclick = enterNewCareer;
-    if (cont) cont.onclick = continueCareer;
-    if (neu) neu.onclick = askNewCareer;
+    if (play) {
+      play.onclick = function (e) {
+        if (e) e.stopPropagation();
+        enterNewCareer();
+      };
+    }
+    if (cont) {
+      cont.onclick = function (e) {
+        if (e) e.stopPropagation();
+        continueCareer();
+      };
+    }
+    if (neu) {
+      neu.onclick = function (e) {
+        if (e) e.stopPropagation();
+        askNewCareer();
+      };
+    }
     if (noBtn) {
       noBtn.onclick = function () {
         var mask = document.getElementById('es-mg-new-mask');
