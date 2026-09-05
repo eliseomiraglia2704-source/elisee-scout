@@ -5956,20 +5956,21 @@
         '<div class="es-mg-career-board">' +
         '<div class="es-mg-career-left">' +
         '<div class="es-mg-career-card-wrap' + (animateNew ? ' pop' : '') + '">' +
+        '<div class="es-mg-career-card-visual">' +
         cardEliseeHtml +
+        '</div>' +
+        '<div class="es-mg-career-side-info">' +
         '<div class="es-mg-career-card-meta">' +
         '<div class="es-mg-meta-row">' +
         '<span>ETÀ <b>' + p.age + '</b></span>' +
         '<span>VALORE <b>€' + formatValue(p.valueM) + '</b></span>' +
         '</div>' +
-        '<div class="es-mg-meta-row">' +
-        (p.wageWeek
-          ? '<span>INGAGGIO <b>€' + formatWage(p.wageWeek) + '</b></span>'
+        ((p.wageWeek || p.contractYears)
+          ? '<div class="es-mg-meta-row">' +
+            (p.wageWeek ? '<span>INGAGGIO <b>€' + formatWage(p.wageWeek) + '</b></span>' : '') +
+            (p.contractYears ? '<span>CONTRATTO <b>' + p.contractYears + (p.contractYears === 1 ? ' anno' : ' anni') + '</b></span>' : '') +
+            '</div>'
           : '') +
-        (p.contractYears
-          ? '<span>CONTRATTO <b>' + p.contractYears + (p.contractYears === 1 ? ' anno' : ' anni') + '</b></span>'
-          : '') +
-        '</div>' +
         '</div>' +
         /* Totali carriera con icona campetto da calcio per PJ */
         '<div class="es-mg-tot-stats">' +
@@ -5979,6 +5980,7 @@
         '</div>' +
         /* Vitrina dei trofei in stile Copero */
         '<div class="es-mg-vitrina-container">' + vitrinaHtml + '</div>' +
+        '</div>' +
         '</div>' +
         leftBottom +
         '</div>' +

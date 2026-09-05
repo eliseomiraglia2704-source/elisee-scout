@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **Hub Minigiochi: Centratura perfetta dei contenuti all'interno delle card** — Centrati sia verticalmente che orizzontalmente i contenuti di entrambe le card dell'Hub Minigiochi (Carriera Giocatore ed Elisee World), ricalibrando spaziature, padding e dimensioni dei bottoni per evitare qualsiasi fuoriuscita o schiacciamento sul fondo. Cache `HUBCENTER1`.
+Ultimo fatto: **Carriera Giocatore: Card giocatore compatta in alto a sinistra con metadati/totali/vetrina a destra nello stesso riquadro** — Riorganizzato il riquadro superiore della colonna sinistra con un layout a 2 colonne affiancate: FUT card ridimensionata in alto a sinistra e metadati (età, valore, ingaggio, contratto), totali (PR, GOL, ASS) e vetrina trofei posizionati a destra all'interno dello stesso box. L'altezza del blocco superiore si dimezza (da ~500px a ~200px), consentendo al box offerte/trattative di essere immediatamente visibile e cliccabile senza richiedere alcuno scroll. Cache `CARDCOMPACT1`.
 Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
