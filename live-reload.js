@@ -58,11 +58,11 @@
     }, 250);
   }
 
+  var pollEndpoint = '/version.json';
+
   function checkLiveVersion() {
     if (isReloading) return;
-    var endpoint = isLocal
-      ? '/_live_version?_t=' + Date.now()
-      : '/version.json?_t=' + Date.now();
+    var endpoint = pollEndpoint + '?_t=' + Date.now();
 
     var xhr = new XMLHttpRequest();
     xhr.open('GET', endpoint, true);
@@ -71,7 +71,7 @@
       if (xhr.status >= 200 && xhr.status < 300) {
         try {
           var data = JSON.parse(xhr.responseText);
-          var v = String(data.v || data.version || data.time || '');
+          var v = String(data.v || data.version || data.time || data.updatedAt || '');
           if (!v) return;
 
           if (currentVersion === null) {
