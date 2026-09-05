@@ -28,18 +28,77 @@
     display: none !important;
   }
 
-  /* 2. Struttura globale mobile: no shift orizzontale */
+  /* 2. Struttura globale mobile: no shift orizzontale & scrollbar pulite */
+  html {
+    scrollbar-gutter: auto !important;
+  }
+
+  * {
+    scrollbar-width: none !important;
+  }
+
+  *::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
   html, body {
-    width: 100vw !important;
-    max-width: 100vw !important;
+    width: 100% !important;
+    max-width: 100% !important;
     overflow-x: hidden !important;
     position: relative !important;
     -webkit-tap-highlight-color: transparent;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior-y: contain;
   }
 
   body.layout-portfolio {
     padding-top: calc(52px + env(safe-area-inset-top, 0px)) !important;
-    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
+    padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* Schermata Hero calzata alla perfezione su mobile senza micro-scroll forzato */
+  #hero,
+  .hero-section,
+  .hero-portfolio {
+    min-height: calc(100dvh - 52px - 58px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)) !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 1.5rem 1rem !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-portfolio-stage {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .hero-typography-left {
+    width: 100% !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .hero-buttons-row {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    gap: 0.65rem !important;
+  }
+
+  .hero-buttons-row .btn {
+    width: 100% !important;
+    max-width: 260px !important;
   }
 
   /* Padding dinamico per tutte le viste e modali */
