@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **Elisee World: Restyling grafico completo del Battle Screen (Sez. 3 Master Prompt)** — Implementato sfondo a gradiente "Prato verde diurno" con righe campo retro, piattaforme 3D con ombra e profondità, sprite calciatori proporzionati in silhouette (2:3, giocatore di spalle con numero 10 e avversario in alto a destra), box nome/HP con stile scheda retro e barra colorata dinamica verde/gialla/rossa, e textbox coordinata con indicatore freccia oro. Cache `EWBATTLEV1`.
+Ultimo fatto: **Simulatore Ruoli Creatore: Fix visibilità completa titoli, descrizioni e posizionamento badge Attivo** — Rimosso il troncamento forzato (`white-space: nowrap` con `ellipsis`) su titoli lunghi e descrizioni di ruolo, introdotto wrapping multiriga fluido e posizionato il badge "Attivo" in alto a destra in posizione assoluta (`top: 0.65rem; right: 0.75rem`), ampliando la larghezza del modal a 980px con minmax(280px, 1fr) per una leggibilità perfetta su tutte le 23 card di ruolo. Cache `ROLEVISIB1`.
 Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
