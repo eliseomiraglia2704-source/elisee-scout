@@ -28,29 +28,37 @@
     display: none !important;
   }
 
-  /* 2. Struttura globale mobile: no shift orizzontale & scrollbar pulite */
+  /* 2. Struttura globale mobile: scorrimento naturale fluido & scrollbar pulite */
   html {
     scrollbar-gutter: auto !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 
-  * {
+  html,
+  body {
     scrollbar-width: none !important;
   }
 
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
   *::-webkit-scrollbar {
     display: none !important;
     width: 0 !important;
     height: 0 !important;
   }
 
-  html, body {
+  body {
     width: 100% !important;
     max-width: 100% !important;
+    min-height: 100% !important;
+    height: auto !important;
     overflow-x: hidden !important;
+    overflow-y: visible !important;
     position: relative !important;
     -webkit-tap-highlight-color: transparent;
     -webkit-overflow-scrolling: touch !important;
-    overscroll-behavior-y: contain;
   }
 
   body.layout-portfolio {
