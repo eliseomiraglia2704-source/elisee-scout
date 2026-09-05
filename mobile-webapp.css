@@ -1,0 +1,370 @@
+/* ============================================================
+   ELISEE SCOUT — MOBILE WEB APP EXPERIENCE (< 768px)
+   Solo ed esclusivamente per smartphone: trasforma l'interfaccia
+   in una vera e propria Web App nativa con Top Bar, Bottom Bar,
+   Slide-over Drawer e layout fluido per il pollice.
+   ============================================================ */
+
+/* Su Desktop e schermi larghi (>= 769px), la shell mobile è completamente nascosta */
+@media screen and (min-width: 769px) {
+  #es-mobile-app-shell,
+  .es-m-topbar,
+  .es-m-bottombar,
+  .es-m-drawer-backdrop {
+    display: none !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+  }
+}
+
+/* ============================================================
+   ATTIVAZIONE MOBILE WEB APP (< 768px)
+   ============================================================ */
+@media screen and (max-width: 768px) {
+  /* 1. Nascondiamo l'header desktop tradizionale */
+  header.main-header.portfolio-header,
+  header.main-header,
+  .portfolio-header {
+    display: none !important;
+  }
+
+  /* 2. Struttura globale mobile: no shift orizzontale */
+  html, body {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    position: relative !important;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body.layout-portfolio {
+    padding-top: calc(52px + env(safe-area-inset-top, 0px)) !important;
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* Padding dinamico per tutte le viste e modali */
+  .container.pf-page-inner,
+  .pf-page-inner,
+  #user-dossier-portal .pf-page-inner,
+  #account-portal .pf-page-inner,
+  #admin-portal .pf-page-inner,
+  #ambassador-portal .pf-page-inner,
+  #persone-portal .pf-page-inner,
+  #bacheca-annunci .pf-page-inner,
+  #stampa-portal .pf-page-inner,
+  #mappa-portal .pf-page-inner,
+  #view-about .about-split-page,
+  .es-pd-body {
+    padding-top: 0.75rem !important;
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 3. Top App Bar Mobile (Fissa in alto, 52px + Safe Area Top) */
+  .es-m-topbar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: calc(52px + env(safe-area-inset-top, 0px)) !important;
+    padding-top: env(safe-area-inset-top, 0px) !important;
+    padding-left: max(0.75rem, env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(0.75rem, env(safe-area-inset-right, 0px)) !important;
+    background: rgba(4, 7, 14, 0.94) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.16) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    z-index: 10050 !important;
+    box-sizing: border-box !important;
+  }
+
+  .es-m-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: #fff;
+  }
+
+  .es-m-brand-logo {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+  }
+
+  .es-m-brand-txt {
+    font-family: Outfit, Inter, system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    color: #f8fafc;
+  }
+
+  .es-m-brand-txt span {
+    color: #38bdf8;
+  }
+
+  .es-m-top-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .es-m-btn-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #e2e8f0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    padding: 0;
+    touch-action: manipulation;
+  }
+
+  .es-m-btn-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .es-m-btn-icon .es-m-dot {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #38bdf8;
+    box-shadow: 0 0 6px #38bdf8;
+  }
+
+  .es-m-btn-user-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 999px;
+    padding: 0.22rem 0.55rem;
+    color: #7dd3fc;
+    font-size: 0.76rem;
+    font-weight: 700;
+    cursor: pointer;
+    max-width: 105px;
+    touch-action: manipulation;
+  }
+
+  .es-m-btn-user-pill span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .es-m-btn-hamburger {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+    touch-action: manipulation;
+  }
+
+  .es-m-btn-hamburger svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* 4. Bottom Navigation Bar Mobile (Fissa in basso, 58px + Safe Area Bottom) */
+  .es-m-bottombar {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: calc(58px + env(safe-area-inset-bottom, 0px)) !important;
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+    padding-left: max(0.5rem, env(safe-area-inset-left, 0px)) !important;
+    padding-right: max(0.5rem, env(safe-area-inset-right, 0px)) !important;
+    background: rgba(4, 7, 14, 0.96) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-top: 1px solid rgba(56, 189, 248, 0.2) !important;
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr) !important;
+    align-items: center !important;
+    z-index: 10050 !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  .es-m-tab-item {
+    appearance: none;
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    height: 100%;
+    color: #94a3b8;
+    text-decoration: none;
+    padding: 0.25rem 0;
+    cursor: pointer;
+    transition: color 0.15s ease, transform 0.12s ease;
+    touch-action: manipulation;
+  }
+
+  .es-m-tab-item svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2;
+    transition: transform 0.15s ease;
+  }
+
+  .es-m-tab-item span {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .es-m-tab-item.is-active {
+    color: #38bdf8 !important;
+  }
+
+  .es-m-tab-item.is-active svg {
+    transform: translateY(-2px);
+    filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6));
+  }
+
+  .es-m-tab-item:active {
+    transform: scale(0.94);
+  }
+
+  /* 5. Slide-over App Drawer Laterale */
+  .es-m-drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 10100;
+    display: flex;
+    justify-content: flex-end;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+  }
+
+  .es-m-drawer-backdrop.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .es-m-drawer {
+    width: min(84vw, 320px);
+    height: 100%;
+    background: #070c18;
+    border-left: 1px solid rgba(56, 189, 248, 0.25);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -12px 0 36px rgba(0, 0, 0, 0.7);
+    transform: translateX(100%);
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: calc(1rem + env(safe-area-inset-top, 0px)) 1.25rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
+    box-sizing: border-box;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .es-m-drawer-backdrop.is-open .es-m-drawer {
+    transform: translateX(0);
+  }
+
+  .es-m-drawer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 1rem;
+  }
+
+  .es-m-drawer-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .es-m-drawer-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex: 1;
+  }
+
+  .es-m-drawer-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0.9rem;
+    border-radius: 12px;
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid transparent;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    touch-action: manipulation;
+  }
+
+  .es-m-drawer-link svg {
+    width: 18px;
+    height: 18px;
+    color: #38bdf8;
+  }
+
+  .es-m-drawer-link:active,
+  .es-m-drawer-link.is-active {
+    background: rgba(56, 189, 248, 0.14);
+    border-color: rgba(56, 189, 248, 0.35);
+    color: #38bdf8;
+  }
+
+  .es-m-drawer-sep {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    margin: 0.75rem 0;
+  }
+
+  .es-m-drawer-footer {
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

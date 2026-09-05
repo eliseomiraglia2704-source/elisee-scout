@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **UI Mobile Universale (320px–480px): Fix layout Chi siamo (#about) e navbar ultracompatta** — Risolta la vista #about su smartphone compatti eliminando il blocco a 2 colonne fisse e il portrait clippato, convertito in layout fluido a 1 colonna con Roadmap proporzionata, eliminata la barra di scroll orizzontale anomala e resa la navbar a 2 righe pulite (riga 1: Logo icona + Lingua + Notifiche + Profilo; riga 2: link orizzontali touch-friendly). Cache `RESPON3`.
+Ultimo fatto: **Mobile Web App (<768px): Bottom Navigation Bar, Top Bar nativa e App Drawer laterale** — Trasformata esclusivamente la versione per smartphone (<768px) in una vera e propria Mobile Web App nativa: Bottom Bar a 5 tab (Home, Bacheca, Stampa, Mappa, Profilo), Top Bar compatta con notifiche/messaggi/profilo, Slide-over App Drawer per sezioni secondarie (Chi siamo, Minigiochi, Album, Ambassador) e layout fluido anti-overflow calibrato per il pollice. Cache `MOBILEAPP1`.
 Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
