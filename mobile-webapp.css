@@ -96,7 +96,11 @@
     object-fit: contain;
   }
 
-  .es-m-brand-txt {
+  .es-m-topbar .es-m-brand-txt {
+    display: none !important;
+  }
+
+  .es-m-drawer-head .es-m-brand-txt {
     font-family: Outfit, Inter, system-ui, sans-serif;
     font-weight: 800;
     font-size: 0.95rem;
@@ -104,7 +108,7 @@
     color: #f8fafc;
   }
 
-  .es-m-brand-txt span {
+  .es-m-drawer-head .es-m-brand-txt span {
     color: #38bdf8;
   }
 
