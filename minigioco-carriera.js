@@ -1518,23 +1518,23 @@
         '<span class="es-mg-hub-desc">In <strong>Serie D</strong> e <strong>Serie C</strong> sale chi vince il girone. Poi Serie B, Serie A e i top mondiali.</span>' +
         publishBlockHtml() +
         '</div>' +
-        '<div class="es-mg-hub-card is-soon" id="es-mg-hub-pokemon" role="button" tabindex="0" aria-label="Pokemon Calcistico, prossimamente">' +
-        '<span class="es-mg-hub-soon">Prossimamente</span>' +
-        '<span class="es-mg-hub-icon es-mg-hub-icon-pkmn" aria-hidden="true">' +
+        '<div class="es-mg-hub-card es-mg-hub-card--elisee-world" id="es-mg-hub-elisee-world" role="button" tabindex="0" aria-label="Elisee World — Football Edition, Gioca ora">' +
+        '<span class="es-mg-hub-badge-live">Novità · Gioca</span>' +
+        '<span class="es-mg-hub-icon es-mg-hub-icon-ew" aria-hidden="true">' +
         '<svg viewBox="0 0 64 64" fill="none">' +
-        '<circle cx="32" cy="32" r="22" stroke="#e2e8f0" stroke-width="3"/>' +
-        '<path d="M10 32h44" stroke="#e2e8f0" stroke-width="3"/>' +
-        '<path d="M10 32a22 22 0 0 1 44 0" fill="rgba(56,189,248,0.35)"/>' +
-        '<circle cx="32" cy="32" r="7.5" fill="#0b1220" stroke="#e2e8f0" stroke-width="3"/>' +
-        '<circle cx="32" cy="32" r="3.2" fill="#38bdf8"/>' +
-        '<path d="M22 18l3 4M42 18l-3 4M18 44l4-2M46 44l-4-2" stroke="#7dd3fc" stroke-width="2" stroke-linecap="round"/>' +
+        '<circle cx="32" cy="32" r="22" stroke="#38bdf8" stroke-width="2.5" fill="rgba(2,132,199,0.18)"/>' +
+        '<path d="M10 32h44" stroke="#38bdf8" stroke-width="2.5"/>' +
+        '<circle cx="32" cy="32" r="8" fill="#0369a1" stroke="#facc15" stroke-width="2.5"/>' +
+        '<circle cx="32" cy="32" r="3" fill="#ffffff"/>' +
+        '<path d="M22 18l3 4M42 18l-3 4M18 44l4-2M46 44l-4-2" stroke="#facc15" stroke-width="2" stroke-linecap="round"/>' +
+        '<polygon points="32,15 36,23 44,24 38,30 40,38 32,34 24,38 26,30 20,24 28,23" fill="none" stroke="#38bdf8" stroke-width="1.2" opacity="0.6"/>' +
         '</svg>' +
         '</span>' +
-        '<span class="es-mg-hub-title">Pokemon Calcistico</span>' +
-        '<span class="es-mg-hub-tags">Collezione · Sfide · Evoluzioni in campo</span>' +
-        '<span class="es-mg-hub-desc">Nuovo minigioco in lavorazione: creature calcistiche, allenatori e partite.</span>' +
-        '<div class="es-mg-hub-concept">' +
-        '<p>Lo stiamo creando: <strong>uscirà in futuro</strong> su Elisee Scout.</p>' +
+        '<span class="es-mg-hub-title">Elisee World</span>' +
+        '<span class="es-mg-hub-tags">RPG Calcistico 16-bit · 60 FPS · Mosse & Turni</span>' +
+        '<span class="es-mg-hub-desc">Cattura fuoriclasse con le <strong>Eliball</strong>, gestisci la rosa e sfida i Mister d\'élite nell\'Overworld retro.</span>' +
+        '<div class="es-mg-hub-concept es-mg-hub-concept-ew">' +
+        '<span class="es-mg-hub-btn-launch">Entra in campo ➔</span>' +
         '</div>' +
         '</div>' +
         '</div>' +
@@ -1617,17 +1617,21 @@
       if (mask) mask.hidden = false;
     }
     var career = document.getElementById('es-mg-hub-career');
-    var pkmn = document.getElementById('es-mg-hub-pokemon');
-    if (pkmn) {
-      var soonMsg = function (e) {
+    var ewCard = document.getElementById('es-mg-hub-elisee-world') || document.getElementById('es-mg-hub-pokemon');
+    if (ewCard) {
+      var launchEw = function (e) {
         if (e) { e.preventDefault(); e.stopPropagation(); }
-        if (typeof window.showToast === 'function') {
-          window.showToast('Pokemon Calcistico: prossimamente. Ci stiamo lavorando.', 'info');
+        if (window.EliseeWorld && typeof window.EliseeWorld.open === 'function') {
+          window.EliseeWorld.open();
+        } else if (typeof window.openEliseeWorld === 'function') {
+          window.openEliseeWorld();
+        } else {
+          window.location.hash = '#elisee-world';
         }
       };
-      pkmn.onclick = soonMsg;
-      pkmn.onkeydown = function (e) {
-        if (e.key === 'Enter' || e.key === ' ') soonMsg(e);
+      ewCard.onclick = launchEw;
+      ewCard.onkeydown = function (e) {
+        if (e.key === 'Enter' || e.key === ' ') launchEw(e);
       };
     }
     var play = document.getElementById('es-mg-hub-play');

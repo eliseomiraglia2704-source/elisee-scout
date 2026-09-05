@@ -73,6 +73,13 @@
       btn.addEventListener('pointerleave', endHandler);
     });
 
+    // Close on ESC
+    window.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modalEl && modalEl.style.display === 'flex') {
+        EliseeWorld.close();
+      }
+    });
+
     return modalEl;
   }
 
@@ -115,11 +122,13 @@
   global.EliseeWorld = EliseeWorld;
   global.openEliseeWorld = EliseeWorld.open;
 
-  // Auto-bind se hash è #elisee-world
-  window.addEventListener('load', function () {
+  // Auto-bind se hash è #elisee-world su load o hashchange
+  function checkHash() {
     if (window.location.hash === '#elisee-world') {
       EliseeWorld.open();
     }
-  });
+  }
+  window.addEventListener('load', checkHash);
+  window.addEventListener('hashchange', checkHash);
 
 })(typeof window !== 'undefined' ? window : this);
