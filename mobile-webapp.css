@@ -397,4 +397,74 @@
   body.modal-open #elisee-cookie-settings-btn {
     display: none !important;
   }
+
+  /* 7. Tab Bar Orizzontali Touch & Anti-spezzamento parole */
+  .es-user-tabs,
+  .es-pd-nav,
+  .es-dash-tabs,
+  .es-obs-nav,
+  .es-ds-tabs,
+  .es-mk-tabs,
+  .es-tc-tabs,
+  .es-sp-tabs,
+  .es-role-tabs {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    gap: 0.65rem !important;
+    padding: 0.35rem 0.25rem 0.6rem !important;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.2) !important;
+  }
+
+  .es-user-tabs::-webkit-scrollbar,
+  .es-pd-nav::-webkit-scrollbar,
+  .es-dash-tabs::-webkit-scrollbar,
+  .es-obs-nav::-webkit-scrollbar,
+  .es-ds-tabs::-webkit-scrollbar,
+  .es-mk-tabs::-webkit-scrollbar,
+  .es-tc-tabs::-webkit-scrollbar,
+  .es-sp-tabs::-webkit-scrollbar,
+  .es-role-tabs::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .es-user-tab,
+  .es-pd-tab,
+  .es-dash-tab,
+  .es-obs-tab,
+  .es-ds-tab,
+  .es-mk-tab,
+  .es-tc-tab,
+  .es-sp-tab,
+  .es-role-tab {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    word-break: keep-all !important;
+    font-size: 0.86rem !important;
+    padding: 0.35rem 0.75rem !important;
+    border-radius: 999px !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #94a3b8 !important;
+  }
+
+  .es-user-tab.is-on,
+  .es-pd-tab.is-on,
+  .es-dash-tab.is-on,
+  .es-obs-tab.is-on,
+  .es-ds-tab.is-on,
+  .es-mk-tab.is-on,
+  .es-tc-tab.is-on,
+  .es-sp-tab.is-on,
+  .es-role-tab.is-on {
+    color: #38bdf8 !important;
+    background: rgba(56, 189, 248, 0.14) !important;
+    border-color: rgba(56, 189, 248, 0.4) !important;
+    box-shadow: none !important;
+  }
 }

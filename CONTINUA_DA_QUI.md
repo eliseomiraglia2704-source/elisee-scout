@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-05**
-Ultimo fatto: **UI Mobile App: Rimozione testo esteso logo da TopBar (solo icona Es)** — Nascosto il testo esteso "ELISEE SCOUT" dalla barra superiore fissa della versione smartphone (<768px), mantenendo esclusivamente l'icona del logo "Es" a sinistra per un'interfaccia ultra-pulita e spaziosa. Cache `NOTOPTEXT1`.
+Ultimo fatto: **UI Mobile: Fix composizione tab bar utente (#user-dossier-portal) con scroll orizzontale touch e nowrap** — Risolto l'antiestetico spezzamento verticale delle parole nei tab ("Pr", "No", "Me", "Al", "S", "Sec", "W", "Eli") applicando `white-space: nowrap !important;`, `flex-shrink: 0 !important;` e `overflow-x: auto !important;` con scorrimento touch fluido a pillole per tutti i tab bar (`.es-user-tabs`, `.es-pd-nav`, `.es-dash-tabs`, ecc.). Cache `TABFIX1`.
 Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)

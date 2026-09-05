@@ -560,28 +560,42 @@ body.layout-portfolio .es-sp select:disabled {
 }
 
 .es-user-tabs {
-  display: flex;
-  align-items: center;
-  gap: 1.15rem;
-  margin: 0 0 1.2rem;
-  padding-bottom: 0.55rem;
-  border-bottom: 1px solid rgba(56, 189, 248, 0.22);
-  overflow-x: auto;
-  flex-wrap: nowrap;
+  display: flex !important;
+  align-items: center !important;
+  gap: 1rem !important;
+  margin: 0 0 1.2rem !important;
+  padding: 0.2rem 0.25rem 0.65rem !important;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.22) !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  flex-wrap: nowrap !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-width: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+.es-user-tabs::-webkit-scrollbar {
+  display: none !important;
 }
 .es-user-tab {
   position: relative;
   border: 0;
   background: transparent;
   color: #94a3b8;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 700;
   cursor: pointer;
-  padding: 0.2rem 0 0.45rem;
+  padding: 0.35rem 0.6rem 0.5rem;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   text-transform: none !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  word-break: keep-all !important;
+  border-radius: 6px;
+  transition: color 0.15s ease, background 0.15s ease;
 }
 .es-user-tab.is-on {
   color: #7dd3fc;
