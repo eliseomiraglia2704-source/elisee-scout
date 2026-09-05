@@ -348,6 +348,30 @@
     }
   </style>
   <script>
+    (function () {
+      function forceCleanDividers() {
+        var targets = document.querySelectorAll('.es-m-topbar, .portfolio-header, header.main-header, .navbar, #hero, .hero-section, .portfolio-section, .hero-typography-left, .hero-name, .hero-name-bold');
+        targets.forEach(function (el) {
+          if (el) {
+            el.style.setProperty('border', 'none', 'important');
+            el.style.setProperty('border-bottom', 'none', 'important');
+            el.style.setProperty('border-top', 'none', 'important');
+            el.style.setProperty('box-shadow', 'none', 'important');
+            el.style.setProperty('outline', 'none', 'important');
+            el.style.setProperty('text-decoration', 'none', 'important');
+          }
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', forceCleanDividers);
+      } else {
+        forceCleanDividers();
+      }
+      window.addEventListener('load', forceCleanDividers);
+      window.addEventListener('resize', forceCleanDividers);
+    })();
+  </script>
+  <script>
     /* Boot OAuth: token in search O in hash (#hero?elisee_token=...). La sessione vince sempre. */
     (function () {
       function readAuthParams() {
