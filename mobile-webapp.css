@@ -129,14 +129,24 @@
   }
 
   /* 3. Top App Bar Mobile (Fissa in alto, 52px + Safe Area Top) */
+  #es-mobile-app-shell,
+  #es-mobile-app-shell::before,
+  #es-mobile-app-shell::after,
   .es-m-topbar,
   .es-m-topbar::before,
   .es-m-topbar::after {
-    border: none !important;
-    border-bottom: none !important;
-    border-top: none !important;
+    border: 0 none !important;
+    border-bottom: 0 none !important;
+    border-top: 0 none !important;
     box-shadow: none !important;
     outline: none !important;
+    background-image: none !important;
+  }
+
+  .es-m-topbar::before,
+  .es-m-topbar::after {
+    content: none !important;
+    display: none !important;
   }
 
   .es-m-topbar {
@@ -148,9 +158,9 @@
     padding-top: env(safe-area-inset-top, 0px) !important;
     padding-left: max(0.75rem, env(safe-area-inset-left, 0px)) !important;
     padding-right: max(0.75rem, env(safe-area-inset-right, 0px)) !important;
-    background: rgba(4, 7, 14, 0.94) !important;
-    backdrop-filter: blur(16px) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
+    background: #050810 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
@@ -158,7 +168,7 @@
     box-sizing: border-box !important;
   }
 
-  /* Azzeramento linee divisorie su tutte le sezioni portfolio */
+  /* Azzeramento linee divisorie su tutte le sezioni portfolio + contenitori hero */
   .portfolio-section,
   .portfolio-about,
   .portfolio-resume,
@@ -167,13 +177,47 @@
   #home-about,
   #home-resume,
   #home-portfolio,
+  #home-views-group,
+  #view-home,
+  main,
+  .site-main,
   #hero,
   .hero-section,
-  .hero-portfolio {
-    border: none !important;
-    border-top: none !important;
-    border-bottom: none !important;
+  .hero-portfolio,
+  .hero-portfolio-stage,
+  .hero-portfolio-inner,
+  .hero-typography-left,
+  .hero-name,
+  .hero-name-bold,
+  .hero-role {
+    border: 0 none !important;
+    border-top: 0 none !important;
+    border-bottom: 0 none !important;
     box-shadow: none !important;
+    outline: none !important;
+    text-decoration: none !important;
+    background-image: none !important;
+  }
+
+  .hero-name::before,
+  .hero-name::after,
+  .hero-name-bold::before,
+  .hero-name-bold::after,
+  .hero-typography-left::after,
+  .hero-portfolio-stage::before,
+  .hero-portfolio-stage::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  .es-verify-banner[hidden] {
+    display: none !important;
+    border: 0 !important;
+    height: 0 !important;
+  }
+
+  .es-verify-banner:not([hidden]) {
+    top: calc(52px + env(safe-area-inset-top, 0px)) !important;
   }
 
   .es-m-brand {

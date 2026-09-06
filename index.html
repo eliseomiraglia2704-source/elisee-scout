@@ -284,7 +284,7 @@
   <link rel="stylesheet" href="autopilot.css?v=20260827_FIX3">
   <link rel="stylesheet" href="squadre-select.css?v=20260904_NOSHINE1">
   <link rel="stylesheet" href="formazione-squadra.css?v=20260830_ECCB1">
-  <link rel="stylesheet" href="verifica-account.css?v=20260903_OTPMAIL5">
+  <link rel="stylesheet" href="verifica-account.css?v=20260906_NOLINE2">
   <link rel="stylesheet" href="manager.css?v=20260820_XI1">
   <link rel="stylesheet" href="tc-panel.css?v=20260827_LUX1">
   <link rel="stylesheet" href="player-profile.css?v=20260905_TABFIX1">
@@ -323,9 +323,10 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
   <link rel="stylesheet" href="mappa-club.css?v=20260902_CLEANOSM1">
-  <link rel="stylesheet" href="mobile-webapp.css?v=20260905_FORCENOLINE1">
+  <link rel="stylesheet" href="mobile-webapp.css?v=20260906_NOLINE2">
   <style id="es-force-no-lines">
     @media screen and (max-width: 768px) {
+      #es-mobile-app-shell,
       .es-m-topbar,
       .es-m-topbar::before,
       .es-m-topbar::after,
@@ -335,22 +336,44 @@
       #hero,
       .hero-section,
       .hero-portfolio,
+      .hero-portfolio-stage,
+      .hero-typography-left,
+      .hero-name,
+      .hero-name-bold,
       .portfolio-section,
       #home-resume,
       #home-about,
-      #home-portfolio {
-        border: none !important;
-        border-top: none !important;
-        border-bottom: none !important;
+      #home-portfolio,
+      #home-views-group,
+      #view-home,
+      #es-verify-banner[hidden] {
+        border: 0 none !important;
+        border-top: 0 none !important;
+        border-bottom: 0 none !important;
         box-shadow: none !important;
         outline: none !important;
+        text-decoration: none !important;
+      }
+      .es-m-topbar::before,
+      .es-m-topbar::after,
+      .hero-name::before,
+      .hero-name::after,
+      .hero-name-bold::before,
+      .hero-name-bold::after {
+        content: none !important;
+        display: none !important;
+      }
+      .es-verify-banner[hidden] {
+        display: none !important;
+        height: 0 !important;
       }
     }
   </style>
   <script>
     (function () {
       function forceCleanDividers() {
-        var targets = document.querySelectorAll('.es-m-topbar, .portfolio-header, header.main-header, .navbar, #hero, .hero-section, .portfolio-section, .hero-typography-left, .hero-name, .hero-name-bold');
+        if (window.innerWidth > 768) return;
+        var targets = document.querySelectorAll('#es-mobile-app-shell, .es-m-topbar, .portfolio-header, header.main-header, .navbar, #hero, .hero-section, .hero-portfolio-stage, .hero-typography-left, .hero-name, .hero-name-bold, .portfolio-section, #view-home, #home-views-group, #es-verify-banner');
         targets.forEach(function (el) {
           if (el) {
             el.style.setProperty('border', 'none', 'important');
@@ -361,6 +384,11 @@
             el.style.setProperty('text-decoration', 'none', 'important');
           }
         });
+        var banner = document.getElementById('es-verify-banner');
+        if (banner && banner.hidden) {
+          banner.style.setProperty('display', 'none', 'important');
+          banner.style.setProperty('height', '0', 'important');
+        }
       }
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', forceCleanDividers);
@@ -5315,7 +5343,7 @@
       }
     });
   </script>
-  <script src="cookie-profiling.js?v=20260905_COOKIEFIX1"></script>
+  <script src="cookie-profiling.js?v=20260906_NOLINE2"></script>
   <script src="ai-gdpr-monitor.js?v=20260806_NOCORS"></script>
   <script src="i18n.js?v=20260905_MINIGIOCHI1"></script>
   <script src="agents-runtime.js?v=20260806_NOCORS"></script>
@@ -5323,8 +5351,8 @@
   <script src="club-storia.js?v=20260903_TIERPROMO1"></script>
   <script src="campionati-agents.js?v=20260806_STABLE"></script>
   <script src="war-room-runtime.js?v=20260906_WARROOM1"></script>
-  <script src="player-card.js?v=20260904_SINGLESCROLL1"></script>
-  <script src="minigioco-carriera.js?v=20260905_SUMMARYCOPERO1"></script>
+  <script src="player-card.js?v=20260906_NOLINE2"></script>
+  <script src="minigioco-carriera.js?v=20260906_NOLINE2"></script>
   <!-- ELISEE WORLD — Motore RPG Calcistico 2D (Architettura Completa) -->
   <script src="elisee-world/src/core/state-machine.js?v=20260905_EWBATTLEV1"></script>
   <script src="elisee-world/src/core/input.js?v=20260905_EWPARTY1"></script>
@@ -5384,7 +5412,7 @@
   <script src="tc-panel.js?v=20260826_TC3"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260904_TELEMETRY2"></script>
+  <script src="app.js?v=20260906_NOLINE2"></script>
   <script src="player-profile.js?v=20260905_OBSFIX1"></script>
   <script src="public-rating-system.js?v=20260904_SEASONDROP1"></script>
   <script src="dash-real.js?v=20260904_SEASONDROP1"></script>
@@ -5705,23 +5733,50 @@
     })();
   </script>
   <style id="es-absolute-noline-override">
-    .es-m-topbar,
-    .es-m-topbar::before,
-    .es-m-topbar::after,
-    #hero,
-    .hero-section,
-    .hero-portfolio,
-    .portfolio-header,
-    header.main-header,
-    .navbar {
-      border: 0 none transparent !important;
-      border-bottom: 0 none transparent !important;
-      border-top: 0 none transparent !important;
-      box-shadow: none !important;
-      outline: none !important;
-      text-decoration: none !important;
+    @media screen and (max-width: 768px) {
+      #es-mobile-app-shell,
+      .es-m-topbar,
+      .es-m-topbar::before,
+      .es-m-topbar::after,
+      #hero,
+      .hero-section,
+      .hero-portfolio,
+      .hero-portfolio-stage,
+      .hero-typography-left,
+      .hero-name,
+      .hero-name-bold,
+      .portfolio-header,
+      header.main-header,
+      .navbar,
+      #view-home,
+      #home-views-group,
+      #es-verify-banner[hidden] {
+        border: 0 none transparent !important;
+        border-bottom: 0 none transparent !important;
+        border-top: 0 none transparent !important;
+        box-shadow: none !important;
+        outline: none !important;
+        text-decoration: none !important;
+      }
+      .es-m-topbar {
+        background: #050810 !important;
+        background-image: none !important;
+      }
+      .es-m-topbar::before,
+      .es-m-topbar::after,
+      .hero-name::before,
+      .hero-name::after,
+      .hero-name-bold::before,
+      .hero-name-bold::after {
+        content: none !important;
+        display: none !important;
+      }
+      .es-verify-banner[hidden] {
+        display: none !important;
+        height: 0 !important;
+      }
     }
   </style>
-  <script src="mobile-webapp.js?v=20260905_MOBILEAPP1"></script>
+  <script src="mobile-webapp.js?v=20260906_NOLINE2"></script>
 </body>
 </html>

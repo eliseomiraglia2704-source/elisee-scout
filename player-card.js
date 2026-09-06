@@ -345,16 +345,27 @@
     n = Math.round(Number(n) || 0);
     return Math.max(a, Math.min(b, n));
   }
+  function numStat(v, alt) {
+    if (v != null && v !== '') {
+      var n = Number(v);
+      if (isFinite(n)) return n;
+    }
+    if (alt != null && alt !== '') {
+      var n2 = Number(alt);
+      if (isFinite(n2)) return n2;
+    }
+    return 0;
+  }
   function cardStats(u) {
     if (!u) return { velocita: 0, tiro: 0, passaggio: 0, dribbling: 0, difesa: 0, fisico: 0 };
     if (u.stats && typeof u.stats === 'object') {
       return {
-        velocita: u.stats.velocita || u.stats.vel || 0,
-        tiro: u.stats.tiro || u.stats.tir || 0,
-        passaggio: u.stats.passaggio || u.stats.pas || 0,
-        dribbling: u.stats.dribbling || u.stats.dri || 0,
-        difesa: u.stats.difesa || u.stats.dif || 0,
-        fisico: u.stats.fisico || u.stats.fis || 0
+        velocita: numStat(u.stats.velocita, u.stats.vel),
+        tiro: numStat(u.stats.tiro, u.stats.tir),
+        passaggio: numStat(u.stats.passaggio, u.stats.pas),
+        dribbling: numStat(u.stats.dribbling, u.stats.dri),
+        difesa: numStat(u.stats.difesa, u.stats.dif),
+        fisico: numStat(u.stats.fisico, u.stats.fis)
       };
     }
     if (window.EliseeCardAtelier && typeof window.EliseeCardAtelier.statsOf === 'function') {
@@ -382,7 +393,8 @@
       { id: 'fisico', short: 'FIS', label: 'Fisico' }
     ];
     return rows.map(function (s) {
-      return [s.short, st[s.id] ? st[s.id] : '–', s.label];
+      var v = st[s.id];
+      return [s.short, (v == null || v === '') ? '–' : v, s.label];
     });
   }
   function faceSrc(u) {

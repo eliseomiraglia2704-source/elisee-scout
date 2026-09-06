@@ -6229,7 +6229,12 @@
       var leftCol = root.querySelector('.es-mg-career-left');
       var targetBox = root.querySelector('.es-mg-transfer') || root.querySelector('.es-mg-deal-box') || root.querySelector('.es-mg-dilemma') || root.querySelector('.es-mg-career-end');
       if (leftCol && targetBox) {
-        leftCol.scrollTo({ top: targetBox.offsetTop - 20, behavior: 'smooth' });
+        var top = targetBox.getBoundingClientRect().top - leftCol.getBoundingClientRect().top + leftCol.scrollTop - 16;
+        if (typeof leftCol.scrollTo === 'function') {
+          leftCol.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        } else {
+          leftCol.scrollTop = Math.max(0, top);
+        }
         targetBox.classList.add('is-highlight');
         setTimeout(function () { targetBox.classList.remove('is-highlight'); }, 1200);
       }
@@ -6246,12 +6251,14 @@
     setTimeout(function () {
       var tl = document.getElementById('es-mg-timeline');
       if (tl) tl.scrollTop = tl.scrollHeight;
-    }, 50);
+      if (animateNew && p.age < 38) scrollToDecisions();
+    }, 80);
   }
 
   function calcCareerStats(p) {
     if (!p) return { velocita: 75, tiro: 75, passaggio: 75, dribbling: 75, difesa: 75, fisico: 75 };
-    var ovr = Math.max(35, Math.min(99, Number(p.ovr) || 75));
+    var rawOvr = Number(p.ovr);
+    var ovr = isFinite(rawOvr) ? Math.max(0, Math.min(99, rawOvr)) : 0;
     var pos = String(p.posLabel || (typeof posLabel === 'function' ? posLabel(p.position) : '') || p.position || 'ST').toUpperCase();
 
     var baseOffsets = {
@@ -6297,7 +6304,7 @@
     }
 
     function cl(val) {
-      return Math.max(30, Math.min(99, Math.round(val)));
+      return Math.max(0, Math.min(99, Math.round(val)));
     }
 
     return {
@@ -6437,6 +6444,7 @@
       preview: offerPreview,
       formatWage: formatWage
     },
+    calcCareerStats: calcCareerStats,
     u23: {
       isU23: isU23Club,
       parent: u23ParentName,

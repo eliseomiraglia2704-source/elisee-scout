@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-06**
-Ultimo fatto: **IDE & Sintassi JS: Risolti tutti i warning/errori di parsing HTML inline (`&amp;&amp;` -> `&&`)** — Corretti gli operatori logici inline in `index.html` (righe 1015, 3536, 4030) che causavano gli errori di token attesi nell'IDE. Cache `IDEPARSE1`.
-Feature precedente: **Carriera Giocatore: Fix blocco avanzamento stagione e scroll finestra mercato** — Risolto il problema per cui a fine stagione non risultava visibile la finestra di mercato/trattative nella colonna sinistra. Cache `CAREERADVANCE1`.
+Ultimo fatto: **Bugfix mobile + card/carriera** — Rimossa la linea azzurra sotto la top bar smartphone (banner verifica `[hidden]` che restava visibile + bordi/pseudo residui su hero/topbar; topbar a fondo pieno `#050810`). Card minigioco: stats dilettanti non più clippate a 30/35; 0 visibile in card; auto-scroll mercato a fine stagione. Cookie `&&` in innerHTML. JSON.parse protetto su badge/analytics. Cache `NOLINE2`.
+Feature precedente: **IDE & Sintassi JS: Risolti tutti i warning/errori di parsing HTML inline (`&amp;&amp;` -> `&&`)** — Cache `IDEPARSE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -368,6 +368,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-06** — Bugfix: linea azzurra sotto topbar mobile (banner verifica `[hidden]` visibile + residui hero/topbar); stats card dilettanti 0–29; scroll mercato a fine stagione; JSON.parse badge. Cache `NOLINE2`.
 
 - **2026-09-03** — Card: bandiera + logo campionato + logo club in calce, come Yamal. Cache `ELISEE10`.
 

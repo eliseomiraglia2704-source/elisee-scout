@@ -696,7 +696,7 @@
       '<a href="privacy-policy.html" style="color:#38bdf8;text-decoration:underline;">informativa sul trattamento dei dati personali</a> (artt. 12 e 13 GDPR).</p></div>' +
       '<div style="display:flex;gap:0.65rem;flex-wrap:wrap;align-items:center;">' +
       '<button type="button" onclick="acceptCookiesOnly()" style="padding:0.6rem 1.2rem;border-radius:20px;background:transparent;color:#94a3b8;border:1px solid rgba(148,163,184,0.4);font-size:0.82rem;cursor:pointer;font-weight:600;white-space:nowrap;">Solo tecnici</button>' +
-      '<button type="button" onclick="if(window.EliseeCookies&amp;&amp;EliseeCookies.showPreferencesPanel){EliseeCookies.showPreferencesPanel();}else{acceptCookiesPartial();}" style="padding:0.6rem 1.2rem;border-radius:20px;background:rgba(2,132,199,0.2);color:#38bdf8;border:1px solid rgba(56,189,248,0.45);font-size:0.82rem;cursor:pointer;font-weight:700;white-space:nowrap;">Gestisci preferenze</button>' +
+      '<button type="button" onclick="if(window.EliseeCookies&&EliseeCookies.showPreferencesPanel){EliseeCookies.showPreferencesPanel();}else{acceptCookiesPartial();}" style="padding:0.6rem 1.2rem;border-radius:20px;background:rgba(2,132,199,0.2);color:#38bdf8;border:1px solid rgba(56,189,248,0.45);font-size:0.82rem;cursor:pointer;font-weight:700;white-space:nowrap;">Gestisci preferenze</button>' +
       primaryBtn +
       (decided
         ? '<button type="button" onclick="EliseeCookies.hideBanner()" style="padding:0.55rem 0.9rem;border-radius:20px;background:transparent;color:#64748b;border:1px solid rgba(100,116,139,0.35);font-size:0.78rem;cursor:pointer;">Chiudi</button>'

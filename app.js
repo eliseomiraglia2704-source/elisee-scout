@@ -7166,7 +7166,8 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   window.toggleFollowUser = function(userId) {
-    let followed = JSON.parse(localStorage.getItem('elisee_followed_users') || '[]');
+    let followed = [];
+    try { followed = JSON.parse(localStorage.getItem('elisee_followed_users') || '[]') || []; } catch (_) { followed = []; }
     if (followed.includes(userId)) {
       followed = followed.filter(id => id !== userId);
     } else {
@@ -12792,7 +12793,8 @@ document.addEventListener('click', function (ev) {
 // STEP 2 — BADGE DI VERIFICA: modale richiesta
 // ============================================================
 window.openRequestBadgeModal = function() {
-  const user = JSON.parse(localStorage.getItem('elisee_active_user') || 'null');
+  var user = null;
+  try { user = JSON.parse(localStorage.getItem('elisee_active_user') || 'null'); } catch (_) { user = null; }
   if (!user) {
     showToast('Devi prima registrare un utente.', 'warning');
     return;
@@ -12846,7 +12848,8 @@ window.openRequestBadgeModal = function() {
 };
 
 window.submitBadgeRequest = function() {
-  const user = JSON.parse(localStorage.getItem('elisee_active_user') || 'null');
+  var user = null;
+  try { user = JSON.parse(localStorage.getItem('elisee_active_user') || 'null'); } catch (_) { user = null; }
   if (!user) return;
   user.badgeVerificaStato = 'pending';
   user.badgeRequestedAt = new Date().toISOString();
@@ -12862,8 +12865,10 @@ window.submitBadgeRequest = function() {
 // STEP 3 — ADMIN ANALYTICS: aggiorna contatori badge e reclami
 // ============================================================
 window.refreshAdminAnalytics = function() {
-  const users = JSON.parse(localStorage.getItem('elisee_users_db') || '[]');
-  const complaints = JSON.parse(localStorage.getItem('elisee_complaints') || '[]');
+  var users = [];
+  var complaints = [];
+  try { users = JSON.parse(localStorage.getItem('elisee_users_db') || '[]') || []; } catch (_) { users = []; }
+  try { complaints = JSON.parse(localStorage.getItem('elisee_complaints') || '[]') || []; } catch (_) { complaints = []; }
   const badgeCounts = { pending: 0, approved: 0, in_review: 0, rejected: 0 };
   users.forEach(u => {
     const s = u.badgeVerificaStato || 'none';
@@ -12885,7 +12890,8 @@ window.refreshAdminAnalytics = function() {
 // STEP 6 — AMBASSADOR PDF DOWNLOAD (testo semplice)
 // ============================================================
 window.downloadAmbassadorPdf = function() {
-  const user = JSON.parse(localStorage.getItem('elisee_active_user') || 'null');
+  var user = null;
+  try { user = JSON.parse(localStorage.getItem('elisee_active_user') || 'null'); } catch (_) { user = null; }
   const name = user ? ((user.nome || '') + ' ' + (user.cognome || '')).trim() : 'Utente';
   const today = new Date().toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' });
   const end = new Date(); end.setMonth(end.getMonth() + 6);
@@ -13305,7 +13311,7 @@ window.performAdminLogout = function() {
       var u = JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {};
       var blob = [u.siteRoleFamily, u.ruolo, u.role, u.staffRole, u.ruoloDettagliato, u.category].filter(Boolean).join(' ').toLowerCase();
       return /squadra|club|societ|ente|direttore|presidente|giovanile|segretario|dirigente|tc|staff/.test(blob);
-    } catch (_) { return true; }
+    } catch (_) { return false; }
   };
 
   window.openPubblicaAnnuncioModal = function () {
