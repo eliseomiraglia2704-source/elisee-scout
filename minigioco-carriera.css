@@ -315,19 +315,41 @@ body.es-mg-open::-webkit-scrollbar {
   text-overflow: ellipsis;
 }
 .es-mg-top--hub {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  position: relative;
   z-index: 5;
-  background: linear-gradient(
-    180deg,
-    rgba(6, 12, 22, 0.28) 0%,
-    rgba(6, 12, 22, 0.1) 46%,
-    transparent 100%
-  );
-  border-bottom: 0;
-  padding: 0.75rem 1.15rem 1.85rem;
+  flex-shrink: 0;
+  background: rgba(6, 12, 22, 0.92);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.7rem 1rem;
+  gap: 0.65rem;
+}
+.es-mg-hub-heading {
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: Outfit, Inter, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #fff;
+  text-align: center;
+  line-height: 1.2;
+}
+.es-mg-close--back {
+  flex-shrink: 0;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+}
+.es-mg-hub-num {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.85rem;
+  z-index: 3;
+  font-family: Outfit, Inter, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: rgba(125, 211, 252, 0.7);
 }
 .es-mg-hub-menubar,
 button.es-mg-hub-menubar {
@@ -421,11 +443,10 @@ button.es-mg-hub-menubar:focus {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: clamp(0.6rem, 3vh, 1.8rem) clamp(1rem, 4vw, 2.5rem) 1.8rem;
-  overflow: hidden;
+  justify-content: flex-start;
+  padding: clamp(0.85rem, 2.4vh, 1.6rem) clamp(1rem, 4vw, 2.5rem) 1.6rem;
+  overflow: auto;
   margin-top: 0;
-  padding-top: 4.4rem;
 }
 .es-mg-hub-bg {
   position: absolute;
@@ -447,18 +468,15 @@ button.es-mg-hub-menubar:focus {
 .es-mg-hub-stage {
   position: relative;
   z-index: 1;
-  width: min(860px, 100%);
+  width: min(1080px, 100%);
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(0.95rem, 2.6vw, 1.55rem);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.85rem, 2.2vw, 1.4rem);
   align-items: stretch;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 980px) {
   .es-mg-hub-stage {
-    grid-template-columns: 1fr !important;
-    max-width: 440px !important;
-    gap: 1.25rem !important;
-    padding: 1rem 0.5rem !important;
+    grid-template-columns: 1fr 1fr;
   }
 }
 .es-mg-hub-card {
@@ -470,9 +488,9 @@ button.es-mg-hub-menubar:focus {
   align-items: center;
   justify-content: center;
   text-align: center;
-  min-height: min(74vh, 520px);
+  min-height: min(58vh, 420px);
   aspect-ratio: auto;
-  padding: 2.2rem 1.4rem 1.8rem;
+  padding: 2.1rem 1.3rem 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
   background: rgba(12, 18, 32, 0.78);
@@ -557,6 +575,7 @@ button.es-mg-hub-menubar:focus {
 }
 .es-mg-hub-card.is-soon {
   cursor: default;
+  pointer-events: none;
   border-color: rgba(56, 189, 248, 0.28);
   background:
     linear-gradient(180deg, rgba(14, 42, 68, 0.72) 0%, rgba(8, 16, 28, 0.78) 55%, rgba(6, 10, 18, 0.86) 100%);
@@ -580,9 +599,10 @@ button.es-mg-hub-menubar:focus {
 }
 .es-mg-hub-badge-live {
   position: absolute;
-  top: 0.85rem;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 0.75rem;
+  right: 0.75rem;
+  left: auto;
+  transform: none;
   z-index: 2;
   display: inline-flex;
   align-items: center;
@@ -631,9 +651,10 @@ button.es-mg-hub-menubar:focus {
 }
 .es-mg-hub-soon {
   position: absolute;
-  top: 0.85rem;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 0.75rem;
+  right: 0.75rem;
+  left: auto;
+  transform: none;
   z-index: 2;
   display: inline-flex;
   align-items: center;
@@ -945,12 +966,12 @@ button.es-mg-hub-menubar:focus {
 
 @media (max-width: 720px) {
   .es-mg-hub-top-actions {
-    flex-wrap: wrap;
     justify-content: flex-end;
   }
   .es-mg-hub {
     padding: 0.85rem 0.85rem 1.2rem;
     justify-content: flex-start;
+    margin-top: 0;
   }
   .es-mg-hub-stage,
   .es-mg-hub-playwrap {
@@ -958,12 +979,8 @@ button.es-mg-hub-menubar:focus {
     flex-direction: column;
     width: 100%;
   }
-  .es-mg-hub {
-    margin-top: 0;
-    padding-top: 4.2rem;
-  }
   .es-mg-hub-card {
-    min-height: 240px;
+    min-height: 0;
     aspect-ratio: auto;
     padding: 1.4rem 1.1rem 1.15rem;
   }
@@ -4672,7 +4689,7 @@ button.es-mg-hub-menubar:focus {
   .es-mg-hub {
     overflow: auto;
     justify-content: flex-start;
-    padding: max(4rem, calc(env(safe-area-inset-top) + 3.2rem)) 0.75rem max(1rem, env(safe-area-inset-bottom));
+    padding: 0.85rem 0.75rem max(1rem, env(safe-area-inset-bottom));
   }
   .es-mg-hub-stage {
     grid-template-columns: 1fr;
@@ -4791,6 +4808,180 @@ button.es-mg-hub-menubar:focus {
   .es-mg-row {
     grid-template-columns: 24px minmax(0, 1fr) 28px 22px 22px 22px;
     gap: 0.1rem;
+  }
+}
+
+/* Hub minigiochi — catalogo ordinato su smartphone */
+@media screen and (max-width: 768px) {
+  html.es-mg-open .es-m-topbar,
+  html.es-mg-open .es-m-bottombar,
+  body.es-mg-open .es-m-topbar,
+  body.es-mg-open .es-m-bottombar {
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .es-mg-root.is-open {
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .es-mg-top--hub {
+    position: relative !important;
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center !important;
+    gap: 0.45rem !important;
+    padding: 0.55rem 0.75rem !important;
+    background: #071018 !important;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.18) !important;
+  }
+
+  .es-mg-hub-heading {
+    font-size: 0.98rem !important;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .es-mg-close--back {
+    padding: 0.38rem 0.7rem !important;
+    font-size: 0.74rem !important;
+    white-space: nowrap;
+  }
+
+  .es-mg-hub-top-actions {
+    flex-wrap: nowrap !important;
+    justify-content: flex-end !important;
+    min-width: 0;
+  }
+
+  .es-mg-hub-auth {
+    gap: 0.3rem !important;
+  }
+
+  .es-mg-top--hub .es-mg-hub-auth-in,
+  .es-mg-top--hub .es-mg-hub-auth-up {
+    min-width: 0 !important;
+    padding: 0.34rem 0.65rem !important;
+    font-size: 0.7rem !important;
+  }
+
+  .es-mg-top--hub .es-mg-hub-auth-up {
+    display: none !important;
+  }
+
+  .es-mg-user-chip {
+    max-width: 96px !important;
+    padding: 0.3rem 0.55rem !important;
+    font-size: 0.68rem !important;
+  }
+
+  .es-mg-hub {
+    justify-content: flex-start !important;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.85rem 0.85rem 1.4rem !important;
+  }
+
+  .es-mg-hub-stage {
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 0.7rem !important;
+    padding: 0 !important;
+  }
+
+  .es-mg-hub-card,
+  .es-mg-hub-card.is-on,
+  .es-mg-hub-card.is-soon,
+  .es-mg-hub-card--elisee-world,
+  .es-mg-hub-card--career {
+    min-height: 0 !important;
+    height: auto !important;
+    aspect-ratio: auto !important;
+    display: grid !important;
+    grid-template-columns: 52px minmax(0, 1fr);
+    grid-template-areas:
+      "icon body"
+      "cta cta";
+    align-items: center !important;
+    justify-items: stretch !important;
+    text-align: left !important;
+    padding: 0.9rem 0.9rem 0.85rem !important;
+    border-radius: 16px !important;
+  }
+
+  .es-mg-hub-num {
+    top: 0.55rem !important;
+    left: 0.6rem !important;
+    font-size: 0.62rem !important;
+  }
+
+  .es-mg-hub-badge-live,
+  .es-mg-hub-soon {
+    top: 0.5rem !important;
+    right: 0.55rem !important;
+    left: auto !important;
+    transform: none !important;
+    font-size: 0.58rem !important;
+    padding: 0.18rem 0.5rem !important;
+    letter-spacing: 0.06em !important;
+  }
+
+  .es-mg-hub-icon,
+  .es-mg-hub-icon-ew,
+  .es-mg-hub-icon-pkmn {
+    grid-area: icon;
+    width: 44px !important;
+    height: 44px !important;
+    margin: 0.35rem 0 0 !important;
+  }
+
+  .es-mg-hub-card-body {
+    grid-area: body;
+    align-items: flex-start !important;
+    text-align: left !important;
+    padding-right: 0.2rem;
+  }
+
+  .es-mg-hub-title {
+    font-size: 1.02rem !important;
+    margin: 0 0 0.18rem !important;
+  }
+
+  .es-mg-hub-tags {
+    font-size: 0.66rem !important;
+    margin: 0 0 0.2rem !important;
+  }
+
+  .es-mg-hub-desc,
+  .es-mg-hub-concept,
+  .es-mg-hub-publish,
+  .es-mg-hub-publish-hint {
+    display: none !important;
+  }
+
+  .es-mg-hub-card-footer,
+  .es-mg-hub-actions-career,
+  .es-mg-hub-concept-ew {
+    grid-area: cta;
+    margin-top: 0.55rem !important;
+    align-items: stretch !important;
+    width: 100% !important;
+  }
+
+  .es-mg-hub-play,
+  .es-mg-hub-play-ghost,
+  .es-mg-hub-btn-launch {
+    max-width: none !important;
+    width: 100% !important;
+    padding: 0.62rem 1rem !important;
+    font-size: 0.88rem !important;
+  }
+
+  .es-mg-hub-continue-meta {
+    max-width: 100% !important;
+    font-size: 0.68rem !important;
   }
 }
 

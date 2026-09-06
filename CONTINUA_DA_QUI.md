@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-06**
-Ultimo fatto: **Bugfix modali + linea mobile** — Badge/Segnalazione/Logout: apertura con classe `active` (il CSS `display:none !important` bloccava `style.display=flex`), pulsanti Chiudi/Invia collegati, X globale non mangia più War Room e altre modali. PDF admin non più sovrascritto da uno stub `.txt`. Cache `MODALFIX1`.
+Ultimo fatto: **Hub Minigiochi mobile** — catalogo in ordine 01 Carriera, 02 Elisee World, 03 Pokemon Calcistico (Prossimamente). Header in flusso (Indietro + titolo + Accedi), card compatte a lista, niente più header assoluto né card da 74vh. Cache `MGHUB1`.
 Feature precedente: **IDE & Sintassi JS: Risolti tutti i warning/errori di parsing HTML inline (`&amp;&amp;` -> `&&`)** — Cache `IDEPARSE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -368,6 +368,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-06** — Hub Minigiochi mobile: catalogo 01/02/03, header in flusso, card a lista. Cache `MGHUB1`.
 
 - **2026-09-06** — Bugfix: linea azzurra sotto topbar mobile (banner verifica `[hidden]` visibile + residui hero/topbar); stats card dilettanti 0–29; scroll mercato a fine stagione; JSON.parse badge. Cache `NOLINE2`.
 

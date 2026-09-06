@@ -911,13 +911,10 @@
   function topBarHub(extraRight) {
     return (
       '<div class="es-mg-top es-mg-top--hub">' +
-      '<button type="button" class="es-mg-hub-menubar" id="es-mg-home" title="Torna alla Homepage">' +
-      '<img class="es-mg-brand-logo" src="immagini/logo/logo-site.png?v=20260731_LOGO_CLEAN" alt="" width="26" height="26" />' +
-      '<strong>Minigioco</strong>' +
-      '</button>' +
+      '<button type="button" class="es-mg-close es-mg-close--back" id="es-mg-x" aria-label="Chiudi minigiochi">Indietro</button>' +
+      '<h1 class="es-mg-hub-heading">Minigiochi</h1>' +
       '<div class="es-mg-hub-top-actions">' +
       (extraRight || '') +
-      '<button type="button" class="es-mg-close" id="es-mg-x">Indietro</button>' +
       '</div></div>'
     );
   }
@@ -1509,14 +1506,15 @@
         '<div class="es-mg-hub-bg" aria-hidden="true"></div>' +
         '<div class="es-mg-hub-shade" aria-hidden="true"></div>' +
         '<div class="es-mg-hub-stage">' +
-        '<div class="es-mg-hub-card is-on es-mg-hub-card--career" id="es-mg-hub-career" role="region" aria-label="Carriera Giocatore">' +
+        '<article class="es-mg-hub-card is-on es-mg-hub-card--career" id="es-mg-hub-career" role="region" aria-label="1. Carriera Giocatore">' +
+        '<span class="es-mg-hub-num" aria-hidden="true">01</span>' +
         '<div class="es-mg-hub-card-body">' +
         '<span class="es-mg-hub-icon" aria-hidden="true">' +
         '<img class="es-mg-hub-boot" src="immagini/minigioco/scarpa-calcio-white.png?v=20260813_BOOT" alt="" />' +
         '</span>' +
         '<span class="es-mg-hub-title">Carriera Giocatore</span>' +
-        '<span class="es-mg-hub-tags">Serie D (A–I) → Serie C (A/B/C) → Serie B · Top 10 mondiali</span>' +
-        '<span class="es-mg-hub-desc">In <strong>Serie D</strong> e <strong>Serie C</strong> sale chi vince il girone. Poi Serie B, Serie A e i top mondiali.</span>' +
+        '<span class="es-mg-hub-tags">Serie D → C → B → A · Top mondiali</span>' +
+        '<span class="es-mg-hub-desc">Simula la carriera: vinci il girone, sali di categoria, tratta sul mercato.</span>' +
         publishBlockHtml() +
         '</div>' +
         '<div class="es-mg-hub-card-footer es-mg-hub-actions-career">' +
@@ -1526,8 +1524,9 @@
             '<button type="button" class="es-mg-hub-play es-mg-hub-play-ghost" id="es-mg-hub-new">Nuova carriera</button>'
           : '<button type="button" class="es-mg-hub-play" id="es-mg-hub-play">Gioca</button>') +
         '</div>' +
-        '</div>' +
-        '<div class="es-mg-hub-card es-mg-hub-card--elisee-world" id="es-mg-hub-elisee-world" role="button" tabindex="0" aria-label="Elisee World — Football Edition, Gioca ora">' +
+        '</article>' +
+        '<article class="es-mg-hub-card es-mg-hub-card--elisee-world" id="es-mg-hub-elisee-world" role="button" tabindex="0" aria-label="2. Elisee World, Gioca ora">' +
+        '<span class="es-mg-hub-num" aria-hidden="true">02</span>' +
         '<span class="es-mg-hub-badge-live">Novità · Gioca</span>' +
         '<div class="es-mg-hub-card-body">' +
         '<span class="es-mg-hub-icon es-mg-hub-icon-ew" aria-hidden="true">' +
@@ -1536,18 +1535,32 @@
         '<path d="M10 32h44" stroke="#38bdf8" stroke-width="2.5"/>' +
         '<circle cx="32" cy="32" r="8" fill="#0369a1" stroke="#facc15" stroke-width="2.5"/>' +
         '<circle cx="32" cy="32" r="3" fill="#ffffff"/>' +
-        '<path d="M22 18l3 4M42 18l-3 4M18 44l4-2M46 44l-4-2" stroke="#facc15" stroke-width="2" stroke-linecap="round"/>' +
-        '<polygon points="32,15 36,23 44,24 38,30 40,38 32,34 24,38 26,30 20,24 28,23" fill="none" stroke="#38bdf8" stroke-width="1.2" opacity="0.6"/>' +
         '</svg>' +
         '</span>' +
         '<span class="es-mg-hub-title">Elisee World</span>' +
-        '<span class="es-mg-hub-tags">RPG Calcistico 16-bit · 60 FPS · Mosse & Turni</span>' +
-        '<span class="es-mg-hub-desc">Cattura fuoriclasse con le <strong>Eliball</strong>, gestisci la rosa e sfida i Mister d\'élite nell\'Overworld retro.</span>' +
+        '<span class="es-mg-hub-tags">RPG calcistico 16-bit · Mosse a turni</span>' +
+        '<span class="es-mg-hub-desc">Cattura fuoriclasse con le <strong>Eliball</strong> e sfida i Mister nell\'overworld retro.</span>' +
         '</div>' +
         '<div class="es-mg-hub-card-footer es-mg-hub-concept-ew">' +
-        '<span class="es-mg-hub-btn-launch">Entra in campo ➔</span>' +
+        '<span class="es-mg-hub-btn-launch">Entra in campo</span>' +
         '</div>' +
+        '</article>' +
+        '<article class="es-mg-hub-card is-soon es-mg-hub-card--pkmn" id="es-mg-hub-pokemon" aria-label="3. Pokemon Calcistico, Prossimamente">' +
+        '<span class="es-mg-hub-num" aria-hidden="true">03</span>' +
+        '<span class="es-mg-hub-soon">Prossimamente</span>' +
+        '<div class="es-mg-hub-card-body">' +
+        '<span class="es-mg-hub-icon es-mg-hub-icon-pkmn" aria-hidden="true">' +
+        '<svg viewBox="0 0 64 64" fill="none">' +
+        '<circle cx="32" cy="32" r="20" stroke="#38bdf8" stroke-width="2.5" fill="rgba(2,132,199,0.12)"/>' +
+        '<path d="M12 32h40" stroke="#38bdf8" stroke-width="2.5"/>' +
+        '<circle cx="32" cy="32" r="6" fill="#0b1220" stroke="#facc15" stroke-width="2"/>' +
+        '</svg>' +
+        '</span>' +
+        '<span class="es-mg-hub-title">Pokemon Calcistico</span>' +
+        '<span class="es-mg-hub-tags">Collezione · Battaglie · In arrivo</span>' +
+        '<span class="es-mg-hub-desc">Un gioco in preparazione. Lo sbloccheremo quando sarà pronto.</span>' +
         '</div>' +
+        '</article>' +
         '</div>' +
         '<div class="es-mg-confirm-mask" id="es-mg-new-mask" hidden>' +
         '<div class="es-mg-confirm-box" role="dialog" aria-modal="true">' +
