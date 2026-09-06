@@ -14,7 +14,8 @@
         RIGHT: false,
         A: false,
         B: false,
-        START: false
+        START: false,
+        SELECT: false
       };
       this.justPressed = {
         UP: false,
@@ -23,7 +24,8 @@
         RIGHT: false,
         A: false,
         B: false,
-        START: false
+        START: false,
+        SELECT: false
       };
       this.boundKeyDown = this.onKeyDown.bind(this);
       this.boundKeyUp = this.onKeyUp.bind(this);
@@ -71,7 +73,6 @@
         case 'KeyZ':
         case 'KeyJ':
           return 'A';
-        case 'Escape':
         case 'KeyX':
         case 'KeyK':
         case 'Backspace':
@@ -79,6 +80,10 @@
         case 'KeyP':
         case 'KeyM':
           return 'START';
+        case 'KeyC':
+        case 'KeyL':
+        case 'Tab':
+          return 'SELECT';
         default:
           return null;
       }
@@ -91,7 +96,7 @@
           this.justPressed[intent] = true;
         }
         this.keys[intent] = true;
-        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) {
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space', 'Tab'].includes(e.code)) {
           e.preventDefault();
         }
       }

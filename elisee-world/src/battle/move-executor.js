@@ -11,6 +11,11 @@
       const log = [];
       log.push(`${attacker.name} usa ${move.name}!`);
 
+      if (!move.power) {
+        log.push(move.flavor || 'La marcatura si fa più stretta!');
+        return { success: true, log, fainted: false };
+      }
+
       // Calcola danno
       const calcResult = global.EliseeDamageCalc.calculateDamage({
         attacker,

@@ -33,7 +33,8 @@
             '<button type="button" class="ew-dpad-btn ew-dpad-right" data-intent="RIGHT">▶</button>' +
           '</div>' +
           '<div class="ew-center-info">' +
-            '<button type="button" class="ew-start-btn" data-intent="START">MENU / START</button>' +
+            '<button type="button" class="ew-start-btn" data-intent="SELECT">ROSA</button>' +
+            '<button type="button" class="ew-start-btn" data-intent="START">MATCH</button>' +
           '</div>' +
           '<div class="ew-action-btns">' +
             '<button type="button" class="ew-action-btn ew-btn-b" data-intent="B">B</button>' +
@@ -77,26 +78,43 @@
       btn.addEventListener('pointerleave', endHandler);
     });
 
-    // Tap diretto sul canvas = intent A / START
+    // Tap sul canvas: hit-test menu GBA, altrimenti A
     var canvasEl = modalEl.querySelector('#elisee-world-canvas');
     if (canvasEl) {
       canvasEl.addEventListener('pointerdown', function (e) {
         e.preventDefault();
-        if (engineInstance && engineInstance.input) {
+        if (!engineInstance) return;
+        var rect = canvasEl.getBoundingClientRect();
+        var cx = ((e.clientX - rect.left) / rect.width) * canvasEl.width;
+        var cy = ((e.clientY - rect.top) / rect.height) * canvasEl.height;
+        var consumed = false;
+        if (typeof engineInstance.handlePointer === 'function') {
+          consumed = !!engineInstance.handlePointer(cx, cy);
+        }
+        if (!consumed && engineInstance.input) {
           engineInstance.input.setTouchIntent('A', true);
           setTimeout(function () {
             if (engineInstance && engineInstance.input) {
               engineInstance.input.setTouchIntent('A', false);
             }
-          }, 100);
+          }, 80);
         }
       });
     }
 
-    // Close on ESC
+    // ESC chiude il minigioco solo da titolo (in partita B = KeyX)
     window.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && modalEl && modalEl.style.display === 'flex') {
+      if (e.key !== 'Escape' || !modalEl || modalEl.style.display !== 'flex') return;
+      var st = engineInstance && engineInstance.stateMachine && engineInstance.stateMachine.getCurrent();
+      if (!st || st === 'TITLE' || st === 'BOOT') {
         EliseeWorld.close();
+      } else if (engineInstance.input) {
+        engineInstance.input.setTouchIntent('B', true);
+        setTimeout(function () {
+          if (engineInstance && engineInstance.input) {
+            engineInstance.input.setTouchIntent('B', false);
+          }
+        }, 80);
       }
     });
 

@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-06**
-Ultimo fatto: **Hub Minigiochi mobile** — catalogo in ordine 01 Carriera, 02 Elisee World, 03 Pokemon Calcistico (Prossimamente). Header in flusso (Indietro + titolo + Accedi), card compatte a lista, niente più header assoluto né card da 74vh. Cache `MGHUB1`.
-Feature precedente: **IDE & Sintassi JS: Risolti tutti i warning/errori di parsing HTML inline (`&amp;&amp;` -> `&&`)** — Cache `IDEPARSE1`.
+Ultimo fatto: **Elisee World GBA** — layout identico ai video di riferimento (HUD argento, menu 2×2 TATTICA/BORSONE/PANCHINA/RUN, mosse + PP, party verde 2×3 + CANCEL, textbox bianca, overworld, shop, NPC «Ancora tu!»). Cache `EWGBA1`. Test `_test_elisee_world_gba.js` all green.
+Feature precedente: **Hub Minigiochi mobile** — catalogo 01 Carriera / 02 Elisee World / 03 Pokemon Calcistico. Cache `MGHUB1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -58,6 +58,8 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 Flusso recente, dal più nuovo:
 
+- **Elisee World GBA** (cache `EWGBA1`): replica struttura dei video in `MINIGIOCO ELISEE WORLD` (non copiare marchi). HUD argento nome/sesso/Lv/HP, sprite fronte/retro su piattaforma, menu comando 2×2 colorato, mosse 2×2 + pannello tipo/PP, party box verdi selezione rossa «Che fare con X?» + CANCEL, borsone lista oggetti, textbox bianca bordo nero, title ELISEE WORLD, overworld Campetto + NPC rival + Centro Elisee. Rosa originale: Donnaroccia, Bastonix, Barella-Sprint, Triraghi, Kvaradona. Controlli: A/B, C rosa, P match, tap sui pulsanti. Test `_test_elisee_world_gba.js`.
+- **Hub Minigiochi mobile** (cache `MGHUB1`): catalogo 01 Carriera, 02 Elisee World, 03 Pokemon Calcistico (Prossimamente). Header in flusso, card a lista su mobile.
 - **Card FC26 Yamal** (cache `ELISEE7`): close-up testa/spalle come rare gold FC26; overall+ruolo+playstyle a sinistra; nome e stats (etichette sopra, numeri sotto) in calce. Maglia nel viso, non come layer staccato.
 - **Card viso-maglia** (cache `ELISEE6`): esempio viso = calciatore che indossa la maglia Elisee (testa nel colletto, niente doppia maglia). Maglia dietro, più piccola, coperta dal bust.
 - **Card overall + esempi** (cache `ELISEE5`): overall fuori dal clip-path dello scudetto, nello slot FIFA in alto a sinistra (ruolo sotto); maglia `maglia.png` = esempio scontornato dietro il viso; viso inedito = `esempio-viso.png` a bust TOTY. Non usare più silhouette/cartoon.
@@ -327,6 +329,8 @@ Copia utente Grok: `C:\Users\Eliseo Miraglia\.grok\skills\elisee-scout-deploy\SK
 
 ## Prossimo passo
 
+Elisee World: struttura GBA dei video è in gioco (cache `EWGBA1`). Eventuali sprite bitmap veri al posto dei placeholder canvas, più mappe/interior, se Eliseo chiede.
+
 Eliseo manda uno screenshot Tuttocampo Classifica alla volta. Non inventare il prossimo girone. Completati: Campania A/B, Lazio A/B, Abruzzo, Molise, Toscana A/B, Veneto A.
 
 Match Analyst: se ruolo staff è Match analyst o Video analyst, dashboard da PDF (identità, laboratorio heatmap/GPS/clip, report privati vs pubblici, inoltro staff, tagging Card). Cache `MA3`.
@@ -368,6 +372,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-06** — Elisee World: UI GBA allineata ai video (HUD, 2×2, party 2×3, textbox, shop, NPC). Cache `EWGBA1`. Self-test `_test_elisee_world_gba.js` green.
 
 - **2026-09-06** — Hub Minigiochi mobile: catalogo 01/02/03, header in flusso, card a lista. Cache `MGHUB1`.
 

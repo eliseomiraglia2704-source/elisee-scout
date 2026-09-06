@@ -35,7 +35,10 @@
         { type: 'hedge', x: 8, y: 3 },
         { type: 'hedge', x: 9, y: 3 },
         { type: 'hedge', x: 14, y: 3 },
-        { type: 'hedge', x: 15, y: 3 }
+        { type: 'hedge', x: 15, y: 3 },
+
+        // Centro Elisee (ingresso shop)
+        { type: 'building', x: 18, y: 7 }
       ];
 
       this.initCollision();
@@ -62,6 +65,8 @@
           }
         } else if (item.type === 'hedge') {
           this.setSolid(item.x, item.y, 1, 1);
+        } else if (item.type === 'building') {
+          this.setSolid(item.x, item.y, 3, 3);
         }
       }
     }
@@ -226,8 +231,43 @@
           ctx.fillStyle = '#4ade80';
           ctx.fillRect(px + 6, py + 6, 4, 4);
           ctx.fillRect(px + 16, py + 8, 4, 4);
+        } else if (item.type === 'building') {
+          const bw = ts * 3;
+          const bh = ts * 3;
+          ctx.fillStyle = 'rgba(0,0,0,0.25)';
+          ctx.fillRect(px + 6, py + bh - 8, bw - 8, 10);
+          ctx.fillStyle = '#b91c1c';
+          ctx.fillRect(px, py + 12, bw, bh - 12);
+          ctx.fillStyle = '#7f1d1d';
+          ctx.beginPath();
+          ctx.moveTo(px - 6, py + 16);
+          ctx.lineTo(px + bw / 2, py - 10);
+          ctx.lineTo(px + bw + 6, py + 16);
+          ctx.closePath();
+          ctx.fill();
+          ctx.fillStyle = '#0f172a';
+          ctx.fillRect(px + ts + 8, py + bh - 36, 20, 28);
+          ctx.fillStyle = '#facc15';
+          ctx.fillRect(px + ts + 22, py + bh - 24, 3, 3);
+          ctx.fillStyle = '#7dd3fc';
+          ctx.fillRect(px + 10, py + 28, 18, 14);
+          ctx.fillRect(px + bw - 28, py + 28, 18, 14);
         }
       }
+    }
+
+    isNearBuilding(px, py) {
+      const ts = this.tileSize;
+      for (let i = 0; i < this.scenery.length; i++) {
+        const item = this.scenery[i];
+        if (item.type !== 'building') continue;
+        const doorX = (item.x + 1.5) * ts;
+        const doorY = (item.y + 3) * ts;
+        const dx = px + 16 - doorX;
+        const dy = py + 40 - doorY;
+        if (dx * dx + dy * dy < 46 * 46) return true;
+      }
+      return false;
     }
 
     render(ctx) {
