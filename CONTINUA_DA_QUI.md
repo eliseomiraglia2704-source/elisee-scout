@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-06**
-Ultimo fatto: **Bugfix mobile + card/carriera** — Rimossa la linea azzurra sotto la top bar smartphone (banner verifica `[hidden]` che restava visibile + bordi/pseudo residui su hero/topbar; topbar a fondo pieno `#050810`). Card minigioco: stats dilettanti non più clippate a 30/35; 0 visibile in card; auto-scroll mercato a fine stagione. Cookie `&&` in innerHTML. JSON.parse protetto su badge/analytics. Cache `NOLINE2`.
+Ultimo fatto: **Bugfix modali + linea mobile** — Badge/Segnalazione/Logout: apertura con classe `active` (il CSS `display:none !important` bloccava `style.display=flex`), pulsanti Chiudi/Invia collegati, X globale non mangia più War Room e altre modali. PDF admin non più sovrascritto da uno stub `.txt`. Cache `MODALFIX1`.
 Feature precedente: **IDE & Sintassi JS: Risolti tutti i warning/errori di parsing HTML inline (`&amp;&amp;` -> `&&`)** — Cache `IDEPARSE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)

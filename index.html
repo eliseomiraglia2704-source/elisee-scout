@@ -5412,7 +5412,7 @@
   <script src="tc-panel.js?v=20260826_TC3"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260906_NOLINE2"></script>
+  <script src="app.js?v=20260906_MODALFIX1"></script>
   <script src="player-profile.js?v=20260905_OBSFIX1"></script>
   <script src="public-rating-system.js?v=20260904_SEASONDROP1"></script>
   <script src="dash-real.js?v=20260904_SEASONDROP1"></script>
@@ -5592,30 +5592,14 @@
       // FORCED RUNTIME OVERRIDE FOR WAR ROOM AGENT SCORES TO 100% & CLEAR STALE LOCALSTORAGE
       try { localStorage.removeItem('ELISEE_WAR_ROOM_DEV_TEAM_V1'); } catch(_) {}
 
-      window.printReportOptional = function(optionName) {
-        if (!optionName) optionName = 'REPORT GOVERNANCE ADMIN';
-        if (typeof window.downloadGDPRPdf === 'function') {
-          window.downloadGDPRPdf(optionName);
-        }
-      };
-
-      window.closeModal = function() {
-        var modal = document.getElementById('candidate-modal');
-        if (modal) {
-          modal.classList.remove('active', 'open', 'pf-modal', 'pf-badge-open');
-          modal.style.cssText = 'display:none !important; visibility:hidden !important; opacity:0 !important;';
-        }
-      };
-
-      // Global capture-phase event listener for modal close buttons
       document.addEventListener('click', function(e) {
-        var closeTarget = e.target.closest('#modal-close-btn, .modal-close, .wr-close-btn, [data-modal-close]');
-        if (closeTarget) {
-          e.preventDefault();
-          e.stopPropagation();
+        var closeTarget = e.target.closest('#modal-close-btn');
+        if (!closeTarget) return;
+        var candidate = document.getElementById('candidate-modal');
+        if (candidate && candidate.contains(closeTarget) && typeof window.closeModal === 'function') {
           window.closeModal();
         }
-      }, true);
+      });
     })();
   </script>
   <!-- =====================================================

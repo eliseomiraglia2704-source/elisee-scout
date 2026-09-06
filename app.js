@@ -12792,6 +12792,24 @@ document.addEventListener('click', function (ev) {
 // ============================================================
 // STEP 2 — BADGE DI VERIFICA: modale richiesta
 // ============================================================
+function showOverlayModal(id) {
+  var el = document.getElementById(id);
+  if (!el) return null;
+  el.classList.add('active', 'open');
+  el.removeAttribute('hidden');
+  el.style.setProperty('display', 'flex', 'important');
+  el.style.setProperty('visibility', 'visible', 'important');
+  el.style.setProperty('opacity', '1', 'important');
+  el.style.setProperty('pointer-events', 'auto', 'important');
+  return el;
+}
+function hideOverlayModal(id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.classList.remove('active', 'open');
+  el.style.setProperty('display', 'none', 'important');
+}
+
 window.openRequestBadgeModal = function() {
   var user = null;
   try { user = JSON.parse(localStorage.getItem('elisee_active_user') || 'null'); } catch (_) { user = null; }
@@ -12800,8 +12818,7 @@ window.openRequestBadgeModal = function() {
     return;
   }
   if (window.blockSpectatorApplication && window.blockSpectatorApplication('badge')) return;
-  const existing = document.getElementById('elisee-badge-request-modal');
-  if (existing) { existing.style.display = 'flex'; return; }
+  if (showOverlayModal('elisee-badge-request-modal')) return;
 
   const modal = document.createElement('div');
   modal.id = 'elisee-badge-request-modal';
@@ -12855,8 +12872,7 @@ window.submitBadgeRequest = function() {
   user.badgeRequestedAt = new Date().toISOString();
   user.badgeNotes = document.getElementById('badge-notes')?.value || '';
   localStorage.setItem('elisee_active_user', JSON.stringify(user));
-  const m = document.getElementById('elisee-badge-request-modal');
-  if (m) m.style.display = 'none';
+  hideOverlayModal('elisee-badge-request-modal');
   if (typeof showToast === 'function') showToast('Richiesta badge inviata! Revisione entro 72 ore.', 'success');
   if (typeof updateDossierView === 'function') updateDossierView();
 };
@@ -12935,10 +12951,11 @@ window.downloadAmbassadorPdf = function() {
 };
 
 // ============================================================
-// STEP 6 — DOSSIER GDPR PDF DOWNLOAD
+// STEP 6 — DOSSIER GDPR PDF DOWNLOAD (utente, testo; non sovrascrive il PDF admin)
 // ============================================================
-window.downloadGDPRPdf = function() {
-  const user = JSON.parse(localStorage.getItem('elisee_active_user') || 'null');
+window.downloadUserDossierTxt = function() {
+  var user = null;
+  try { user = JSON.parse(localStorage.getItem('elisee_active_user') || 'null'); } catch (_) { user = null; }
   const name = user ? ((user.nome || '') + ' ' + (user.cognome || '')).trim() : 'Utente';
   const today = new Date().toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' });
   const trustScore = (user && window.calculateTrustScore) ? window.calculateTrustScore(user) : '—';
@@ -12983,8 +13000,7 @@ window.downloadGDPRPdf = function() {
 // STEP 7 — RECLAMI & SEGNALAZIONI (GDPR Art. 77)
 // ============================================================
 window.openSubmitComplaintModal = function() {
-  const existing = document.getElementById('elisee-complaint-modal');
-  if (existing) { existing.style.display = 'flex'; return; }
+  if (showOverlayModal('elisee-complaint-modal')) return;
 
   const modal = document.createElement('div');
   modal.id = 'elisee-complaint-modal';
@@ -13037,8 +13053,10 @@ window.submitComplaint = function() {
     if (typeof showToast === 'function') showToast('Inserisci una descrizione per il reclamo.', 'warning');
     return;
   }
-  const user = JSON.parse(localStorage.getItem('elisee_active_user') || 'null');
-  const complaints = JSON.parse(localStorage.getItem('elisee_complaints') || '[]');
+  var user = null;
+  var complaints = [];
+  try { user = JSON.parse(localStorage.getItem('elisee_active_user') || 'null'); } catch (_) { user = null; }
+  try { complaints = JSON.parse(localStorage.getItem('elisee_complaints') || '[]') || []; } catch (_) { complaints = []; }
   complaints.push({
     id: Date.now(),
     type,
@@ -13049,8 +13067,7 @@ window.submitComplaint = function() {
     status: 'open'
   });
   localStorage.setItem('elisee_complaints', JSON.stringify(complaints));
-  const m = document.getElementById('elisee-complaint-modal');
-  if (m) m.style.display = 'none';
+  hideOverlayModal('elisee-complaint-modal');
   if (typeof showToast === 'function') showToast('Segnalazione registrata. Il DPO sarà informato entro 24 ore.', 'success');
   if (window.refreshAdminAnalytics) window.refreshAdminAnalytics();
 };
@@ -13111,7 +13128,7 @@ window.downloadGaranteReportGDPR = function() {
         document.body.appendChild(modal);
         if (window.lucide) lucide.createIcons();
       } else {
-        modal.style.display = 'flex';
+        showOverlayModal('elisee-logout-confirm-modal');
       }
     });
   }
@@ -13125,10 +13142,68 @@ window.downloadGaranteReportGDPR = function() {
 
 window.performAdminLogout = function() {
   localStorage.removeItem('elisee_admin_auth');
-  document.getElementById('elisee-logout-confirm-modal')?.remove();
+  hideOverlayModal('elisee-logout-confirm-modal');
   if (typeof showToast === 'function') showToast('Uscita effettuata. Sessione admin terminata.', 'info');
   if (window.switchView) window.switchView('home', '#hero');
 };
+
+(function bindStaticOverlayModals() {
+  function bind() {
+    var badgeClose = document.getElementById('badge-modal-close');
+    var badgeCancel = document.getElementById('badge-modal-cancel');
+    var badgeConfirm = document.getElementById('badge-modal-confirm');
+    if (badgeClose && !badgeClose._bound) {
+      badgeClose._bound = true;
+      badgeClose.addEventListener('click', function () { hideOverlayModal('elisee-badge-request-modal'); });
+    }
+    if (badgeCancel && !badgeCancel._bound) {
+      badgeCancel._bound = true;
+      badgeCancel.addEventListener('click', function () { hideOverlayModal('elisee-badge-request-modal'); });
+    }
+    if (badgeConfirm && !badgeConfirm._bound) {
+      badgeConfirm._bound = true;
+      badgeConfirm.addEventListener('click', function () {
+        if (typeof window.submitBadgeRequest === 'function') window.submitBadgeRequest();
+      });
+    }
+    var cClose = document.getElementById('complaint-modal-close');
+    var cCancel = document.getElementById('complaint-modal-cancel');
+    var cSubmit = document.getElementById('complaint-modal-submit');
+    if (cClose && !cClose._bound) {
+      cClose._bound = true;
+      cClose.addEventListener('click', function () { hideOverlayModal('elisee-complaint-modal'); });
+    }
+    if (cCancel && !cCancel._bound) {
+      cCancel._bound = true;
+      cCancel.addEventListener('click', function () { hideOverlayModal('elisee-complaint-modal'); });
+    }
+    if (cSubmit && !cSubmit._bound) {
+      cSubmit._bound = true;
+      cSubmit.addEventListener('click', function () {
+        if (typeof window.submitComplaint === 'function') window.submitComplaint();
+      });
+    }
+    var lClose = document.getElementById('logout-confirm-close');
+    var lCancel = document.getElementById('logout-confirm-cancel');
+    var lProceed = document.getElementById('logout-confirm-proceed');
+    if (lClose && !lClose._bound) {
+      lClose._bound = true;
+      lClose.addEventListener('click', function () { hideOverlayModal('elisee-logout-confirm-modal'); });
+    }
+    if (lCancel && !lCancel._bound) {
+      lCancel._bound = true;
+      lCancel.addEventListener('click', function () { hideOverlayModal('elisee-logout-confirm-modal'); });
+    }
+    if (lProceed && !lProceed._bound) {
+      lProceed._bound = true;
+      lProceed.addEventListener('click', function () {
+        if (typeof window.performAdminLogout === 'function') window.performAdminLogout();
+      });
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bind);
+  else bind();
+})();
 
 // ============================================================
 // STEP 8 — AUTO-FIX PIPELINE DEMO
