@@ -1538,27 +1538,11 @@
         '</svg>' +
         '</span>' +
         '<span class="es-mg-hub-title">Elisee World</span>' +
-        '<span class="es-mg-hub-tags">RPG calcistico 16-bit · Mosse a turni</span>' +
-        '<span class="es-mg-hub-desc">Cattura fuoriclasse con le <strong>Eliball</strong> e sfida i Mister nell\'overworld retro.</span>' +
+        '<span class="es-mg-hub-tags">RPG 16-bit · Collezione · Battaglie</span>' +
+        '<span class="es-mg-hub-desc">Cattura fuoriclasse con le <strong>Eliball</strong>, costruisci la collezione e sfida i Mister in battaglie a turni nell\'overworld retro.</span>' +
         '</div>' +
         '<div class="es-mg-hub-card-footer es-mg-hub-concept-ew">' +
         '<span class="es-mg-hub-btn-launch">Entra in campo</span>' +
-        '</div>' +
-        '</article>' +
-        '<article class="es-mg-hub-card is-soon es-mg-hub-card--pkmn" id="es-mg-hub-pokemon" aria-label="3. Pokemon Calcistico, Prossimamente">' +
-        '<span class="es-mg-hub-num" aria-hidden="true">03</span>' +
-        '<span class="es-mg-hub-soon">Prossimamente</span>' +
-        '<div class="es-mg-hub-card-body">' +
-        '<span class="es-mg-hub-icon es-mg-hub-icon-pkmn" aria-hidden="true">' +
-        '<svg viewBox="0 0 64 64" fill="none">' +
-        '<circle cx="32" cy="32" r="20" stroke="#38bdf8" stroke-width="2.5" fill="rgba(2,132,199,0.12)"/>' +
-        '<path d="M12 32h40" stroke="#38bdf8" stroke-width="2.5"/>' +
-        '<circle cx="32" cy="32" r="6" fill="#0b1220" stroke="#facc15" stroke-width="2"/>' +
-        '</svg>' +
-        '</span>' +
-        '<span class="es-mg-hub-title">Pokemon Calcistico</span>' +
-        '<span class="es-mg-hub-tags">Collezione · Battaglie · In arrivo</span>' +
-        '<span class="es-mg-hub-desc">Un gioco in preparazione. Lo sbloccheremo quando sarà pronto.</span>' +
         '</div>' +
         '</article>' +
         '</div>' +
@@ -1628,7 +1612,7 @@
       if (mask) mask.hidden = false;
     }
     var career = document.getElementById('es-mg-hub-career');
-    var ewCard = document.getElementById('es-mg-hub-elisee-world') || document.getElementById('es-mg-hub-pokemon');
+    var ewCard = document.getElementById('es-mg-hub-elisee-world');
     if (ewCard) {
       var launchEw = function (e) {
         if (e) { e.preventDefault(); e.stopPropagation(); }

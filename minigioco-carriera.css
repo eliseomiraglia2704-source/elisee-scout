@@ -468,16 +468,11 @@ button.es-mg-hub-menubar:focus {
 .es-mg-hub-stage {
   position: relative;
   z-index: 1;
-  width: min(1080px, 100%);
+  width: min(760px, 100%);
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(0.85rem, 2.2vw, 1.4rem);
   align-items: stretch;
-}
-@media screen and (max-width: 980px) {
-  .es-mg-hub-stage {
-    grid-template-columns: 1fr 1fr;
-  }
 }
 .es-mg-hub-card {
   appearance: none;
@@ -573,17 +568,6 @@ button.es-mg-hub-menubar:focus {
     linear-gradient(180deg, rgba(18, 90, 120, 0.18) 0%, rgba(8, 16, 28, 0.62) 46%, rgba(6, 10, 18, 0.78) 100%);
   box-shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
 }
-.es-mg-hub-card.is-soon {
-  cursor: default;
-  pointer-events: none;
-  border-color: rgba(56, 189, 248, 0.28);
-  background:
-    linear-gradient(180deg, rgba(14, 42, 68, 0.72) 0%, rgba(8, 16, 28, 0.78) 55%, rgba(6, 10, 18, 0.86) 100%);
-}
-.es-mg-hub-card.is-soon:hover {
-  transform: none;
-  border-color: rgba(56, 189, 248, 0.48);
-}
 .es-mg-hub-card--elisee-world {
   cursor: pointer;
   border-color: rgba(56, 189, 248, 0.4);
@@ -649,33 +633,10 @@ button.es-mg-hub-menubar:focus {
   box-shadow: 0 6px 20px rgba(56, 189, 248, 0.6);
   transform: translateY(-2px);
 }
-.es-mg-hub-soon {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  left: auto;
-  transform: none;
-  z-index: 2;
-  display: inline-flex;
-  align-items: center;
-  margin: 0;
-  padding: 0.28rem 0.75rem;
-  border-radius: 999px;
-  border: 1px solid rgba(56, 189, 248, 0.45);
-  background: rgba(56, 189, 248, 0.14);
-  color: #7dd3fc;
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-.es-mg-hub-icon-pkmn,
 .es-mg-hub-icon-ew {
   width: 86px;
   height: 44px;
 }
-.es-mg-hub-icon-pkmn svg,
 .es-mg-hub-icon-ew svg {
   width: 44px;
   height: 44px;
@@ -4893,7 +4854,6 @@ button.es-mg-hub-menubar:focus {
 
   .es-mg-hub-card,
   .es-mg-hub-card.is-on,
-  .es-mg-hub-card.is-soon,
   .es-mg-hub-card--elisee-world,
   .es-mg-hub-card--career {
     min-height: 0 !important;
@@ -4917,8 +4877,7 @@ button.es-mg-hub-menubar:focus {
     font-size: 0.62rem !important;
   }
 
-  .es-mg-hub-badge-live,
-  .es-mg-hub-soon {
+  .es-mg-hub-badge-live {
     top: 0.5rem !important;
     right: 0.55rem !important;
     left: auto !important;
@@ -4929,8 +4888,7 @@ button.es-mg-hub-menubar:focus {
   }
 
   .es-mg-hub-icon,
-  .es-mg-hub-icon-ew,
-  .es-mg-hub-icon-pkmn {
+  .es-mg-hub-icon-ew {
     grid-area: icon;
     width: 44px !important;
     height: 44px !important;

@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-06**
-Ultimo fatto: **Elisee World GBA** — layout identico ai video di riferimento (HUD argento, menu 2×2 TATTICA/BORSONE/PANCHINA/RUN, mosse + PP, party verde 2×3 + CANCEL, textbox bianca, overworld, shop, NPC «Ancora tu!»). Cache `EWGBA1`. Test `_test_elisee_world_gba.js` all green.
-Feature precedente: **Hub Minigiochi mobile** — catalogo 01 Carriera / 02 Elisee World / 03 Pokemon Calcistico. Cache `MGHUB1`.
+Ultimo fatto: **Hub Minigiochi** — Pokemon Calcistico assorbito in Elisee World (collezione + battaglie). Hub a 2 card: 01 Carriera, 02 Elisee World. Niente più card 03 Prossimamente. Cache `MGHUB2`.
+Feature precedente: **Elisee World GBA** — HUD/menu/party/textbox allineati ai video. Cache `EWGBA1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -58,8 +58,9 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 Flusso recente, dal più nuovo:
 
+- **Hub 2 card** (cache `MGHUB2`): Pokemon Calcistico non è più una voce a parte. Collezione e battaglie stanno in Elisee World. Catalogo hub: 01 Carriera, 02 Elisee World. Griglia desktop a 2 colonne.
 - **Elisee World GBA** (cache `EWGBA1`): replica struttura dei video in `MINIGIOCO ELISEE WORLD` (non copiare marchi). HUD argento nome/sesso/Lv/HP, sprite fronte/retro su piattaforma, menu comando 2×2 colorato, mosse 2×2 + pannello tipo/PP, party box verdi selezione rossa «Che fare con X?» + CANCEL, borsone lista oggetti, textbox bianca bordo nero, title ELISEE WORLD, overworld Campetto + NPC rival + Centro Elisee. Rosa originale: Donnaroccia, Bastonix, Barella-Sprint, Triraghi, Kvaradona. Controlli: A/B, C rosa, P match, tap sui pulsanti. Test `_test_elisee_world_gba.js`.
-- **Hub Minigiochi mobile** (cache `MGHUB1`): catalogo 01 Carriera, 02 Elisee World, 03 Pokemon Calcistico (Prossimamente). Header in flusso, card a lista su mobile.
+- **Hub Minigiochi mobile** (cache `MGHUB1`): header in flusso, card a lista su mobile.
 - **Card FC26 Yamal** (cache `ELISEE7`): close-up testa/spalle come rare gold FC26; overall+ruolo+playstyle a sinistra; nome e stats (etichette sopra, numeri sotto) in calce. Maglia nel viso, non come layer staccato.
 - **Card viso-maglia** (cache `ELISEE6`): esempio viso = calciatore che indossa la maglia Elisee (testa nel colletto, niente doppia maglia). Maglia dietro, più piccola, coperta dal bust.
 - **Card overall + esempi** (cache `ELISEE5`): overall fuori dal clip-path dello scudetto, nello slot FIFA in alto a sinistra (ruolo sotto); maglia `maglia.png` = esempio scontornato dietro il viso; viso inedito = `esempio-viso.png` a bust TOTY. Non usare più silhouette/cartoon.
@@ -372,6 +373,8 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-06** — Pokemon Calcistico spostato dentro Elisee World; hub a due card (Carriera + Elisee World). Cache `MGHUB2`.
 
 - **2026-09-06** — Elisee World: UI GBA allineata ai video (HUD, 2×2, party 2×3, textbox, shop, NPC). Cache `EWGBA1`. Self-test `_test_elisee_world_gba.js` green.
 
