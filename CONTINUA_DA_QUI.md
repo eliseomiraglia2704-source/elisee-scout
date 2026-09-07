@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Redesign Chi Siamo — Pitch Stadium & Touchline** — Rivoluzionato il layout di `#about`: palette notte partita (`#0A0F0D`, `#3ECF6E`, `#D9A94D`, `#F2F5F1`, `#8FA095`), font Oswald per titoli e numeri di maglia, timeline a linea laterale con marcatori jersey `[26]` live, governance a barre verticali d'accento oro/verde e nuova intestazione hero di raccordo. Cache `PITCHABOUT1`.
-Feature precedente: **Aggiornamento Email Ufficiale** — Sostituito ogni riferimento a `info@eliseescout.it` con `areaeliseescout@gmail.com` (Chi Siamo in `index.html`, `privacy-policy.html`, `cookie-policy.html`). Cache `MAILUPDATE1`.
+Ultimo fatto: **Affinamento Chi Siamo — Azzurro Italia & Coerenza Gerarchica** — Aggiornata la palette con l'Azzurro Nazionale `#35AEE8` e neutri freddi (`#080C10`, `#0D131A`, `#F2F5F8`, `#8B9DAE`). Titolo H1 in sentence case, rimosso badge LIVE ridondante sul nodo '26, unificato il sistema a barre laterali d'accento per tutte e 3 le colonne, rimosse frecce superflue e riga divisoria hero tratteggiata stile linea di campo. Cache `AZZURROABOUT1`.
+Feature precedente: **Redesign Chi Siamo — Pitch Stadium & Touchline** — Rivoluzionato il layout di `#about` con font Oswald, touchline timeline e hero di raccordo. Cache `PITCHABOUT1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -93,7 +93,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| `8e295c9` | Redesign Chi Siamo: layout Pitch Stadium, touchline timeline, marcatori maglia, barre d'accento oro/verde, tipografia Oswald, hero intestazione; cache `PITCHABOUT1` |
+| `ea0c946` | Chi Siamo: palette Azzurro Italia (#35AEE8), H1 in sentence case, rimozione badge ridondante nodo '26, unificazione barre d'accento su 3 colonne, divisore hero tratteggiato; cache `AZZURROABOUT1` |
+| `3fec3e9` | Redesign Chi Siamo: layout Pitch Stadium, touchline timeline, marcatori maglia, barre d'accento oro/verde, tipografia Oswald, hero intestazione; cache `PITCHABOUT1` |
 | `7eeea68` | Admin Card Elisee: apertura diretta ed esclusiva del portale al click sulla tab; cache `ADMINTAB1` |
 | `8a18b0e` | Admin Card Elisee: rimossi profili esempio, mostrati solo utenti registrati reali; cache `REALUSERS1` |
 | `c265188` | Admin Card Elisee: fix taglio verticale nomi utenti nella lista con flexbox e min-height; cache `FIXUSERNAMES1` |

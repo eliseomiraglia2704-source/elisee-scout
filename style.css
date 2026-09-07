@@ -2650,8 +2650,9 @@ select.pf-input {
 }
 
 /* ============================================================ */
-/* CALCIO PITCH & NOTTE STADIO — CHI SIAMO REDESIGN             */
-/* Palette: #0A0F0D (fondo), #3ECF6E (pitch), #D9A94D (oro)     */
+/* CALCIO PITCH & NOTTE STADIO — AZZURRO ITALIA REDESIGN        */
+/* Palette: #080C10 (fondo), #35AEE8 (azzurro), #D9A94D (oro)   */
+/* Testo: #F2F5F8 (principale), #8B9DAE (muted)                 */
 /* ============================================================ */
 
 .about-extra-sections.pitch-field-theme {
@@ -2659,24 +2660,24 @@ select.pf-input {
   max-width: 1360px;
   margin: 2.5rem auto 0;
   padding: 2.5rem 5vw 3rem;
-  border-top: 1px solid rgba(62, 207, 110, 0.18);
+  border-top: 1px dashed rgba(53, 174, 232, 0.25);
   box-sizing: border-box;
-  background: radial-gradient(circle at 50% 0%, rgba(62, 207, 110, 0.05) 0%, transparent 70%);
+  background: radial-gradient(circle at 50% 0%, rgba(53, 174, 232, 0.06) 0%, transparent 70%);
 }
 
 /* Hero Intestazione Calcio */
 .pitch-extra-hero {
   margin-bottom: 2.2rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 1.6rem;
+  border-bottom: 1px dashed rgba(53, 174, 232, 0.25);
 }
 
 .pitch-hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(62, 207, 110, 0.1);
-  border: 1px solid rgba(62, 207, 110, 0.3);
+  background: rgba(53, 174, 232, 0.08);
+  border: 1px solid rgba(53, 174, 232, 0.3);
   padding: 0.3rem 0.75rem;
   border-radius: 999px;
   margin-bottom: 0.85rem;
@@ -2686,8 +2687,8 @@ select.pf-input {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #3ECF6E;
-  box-shadow: 0 0 8px #3ECF6E;
+  background: #35AEE8;
+  box-shadow: 0 0 8px #35AEE8;
   animation: pitchPulse 2s infinite ease-in-out;
 }
 
@@ -2698,19 +2699,18 @@ select.pf-input {
 
 .pitch-badge-text {
   font-family: 'Oswald', 'Outfit', sans-serif;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  color: #3ECF6E;
-  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #35AEE8;
 }
 
 .pitch-hero-title {
   font-family: 'Oswald', 'Outfit', sans-serif;
   font-size: clamp(1.4rem, 2.8vw, 2.1rem);
   font-weight: 600;
-  color: #F2F5F1;
-  letter-spacing: 0.02em;
+  color: #F2F5F8;
+  letter-spacing: 0.01em;
   margin: 0 0 0.5rem;
   line-height: 1.25;
 }
@@ -2718,7 +2718,7 @@ select.pf-input {
 .pitch-hero-sub {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 0.95rem;
-  color: #8FA095;
+  color: #8B9DAE;
   line-height: 1.55;
   margin: 0;
   max-width: 820px;
@@ -2733,7 +2733,7 @@ select.pf-input {
 }
 
 .pitch-col {
-  background: #0A0F0D;
+  background: #0D131A;
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 12px;
   padding: 1.4rem;
@@ -2770,9 +2770,9 @@ select.pf-input {
   border-radius: 2px;
 }
 
-.pitch-indicator-green {
-  background: #3ECF6E;
-  box-shadow: 0 0 10px rgba(62, 207, 110, 0.6);
+.pitch-indicator-azzurro {
+  background: #35AEE8;
+  box-shadow: 0 0 10px rgba(53, 174, 232, 0.6);
 }
 
 .pitch-indicator-gold {
@@ -2784,8 +2784,8 @@ select.pf-input {
   font-family: 'Oswald', 'Outfit', sans-serif;
   font-size: 1.15rem;
   font-weight: 600;
-  color: #F2F5F1;
-  letter-spacing: 0.03em;
+  color: #F2F5F8;
+  letter-spacing: 0.02em;
   margin: 0;
 }
 
@@ -2806,7 +2806,7 @@ select.pf-input {
   bottom: 22px;
   left: 21px;
   width: 2px;
-  border-left: 2px dashed rgba(62, 207, 110, 0.35);
+  border-left: 2px dashed rgba(53, 174, 232, 0.35);
   z-index: 1;
 }
 
@@ -2829,8 +2829,8 @@ select.pf-input {
 .jersey-box {
   width: 44px;
   height: 44px;
-  background: #111815;
-  border: 1.5px solid rgba(143, 160, 149, 0.35);
+  background: #0F1722;
+  border: 1.5px solid rgba(139, 157, 174, 0.35);
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -2844,35 +2844,19 @@ select.pf-input {
   font-family: 'Oswald', 'Outfit', sans-serif;
   font-size: 1.15rem;
   font-weight: 600;
-  color: #8FA095;
+  color: #8B9DAE;
   letter-spacing: 0.02em;
 }
 
 .jersey-box-active {
-  background: linear-gradient(135deg, rgba(62, 207, 110, 0.22), #0D1912);
-  border-color: #3ECF6E;
-  box-shadow: 0 0 16px rgba(62, 207, 110, 0.35);
+  background: linear-gradient(135deg, rgba(53, 174, 232, 0.22), #0D1622);
+  border-color: #35AEE8;
+  box-shadow: 0 0 16px rgba(53, 174, 232, 0.4);
 }
 
 .jersey-box-active .jersey-num {
-  color: #3ECF6E;
+  color: #35AEE8;
   font-weight: 700;
-}
-
-.jersey-status-tag {
-  position: absolute;
-  top: -6px;
-  right: -5px;
-  background: #3ECF6E;
-  color: #0A0F0D;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 0.52rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  padding: 1px 4px;
-  border-radius: 3px;
-  line-height: 1;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
 }
 
 .touchline-content {
@@ -2892,19 +2876,19 @@ select.pf-input {
   font-family: 'Oswald', 'Outfit', sans-serif;
   font-size: 1rem;
   font-weight: 500;
-  color: #F2F5F1;
+  color: #F2F5F8;
   letter-spacing: 0.01em;
   margin: 0;
 }
 
 .touchline-item-active .touchline-title {
-  color: #3ECF6E;
+  color: #35AEE8;
 }
 
 .touchline-year-full {
   font-family: 'Oswald', 'Outfit', sans-serif;
   font-size: 0.78rem;
-  color: #8FA095;
+  color: #8B9DAE;
   opacity: 0.7;
 }
 
@@ -2912,14 +2896,14 @@ select.pf-input {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 0.76rem;
   font-weight: 600;
-  color: #8FA095;
+  color: #8B9DAE;
   margin: 0 0 0.35rem;
 }
 
 .touchline-desc {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 0.8rem;
-  color: #8FA095;
+  color: #8B9DAE;
   line-height: 1.45;
   margin: 0;
 }
@@ -2957,9 +2941,9 @@ select.pf-input {
   box-shadow: 0 0 10px rgba(217, 169, 77, 0.4);
 }
 
-.pitch-gov-green .pitch-gov-bar {
-  background: #3ECF6E;
-  box-shadow: 0 0 10px rgba(62, 207, 110, 0.4);
+.pitch-gov-azzurro .pitch-gov-bar {
+  background: #35AEE8;
+  box-shadow: 0 0 10px rgba(53, 174, 232, 0.4);
 }
 
 .pitch-gov-content {
@@ -2967,28 +2951,11 @@ select.pf-input {
   flex: 1;
 }
 
-.pitch-gov-kicker {
-  font-family: 'Oswald', 'Outfit', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  margin-bottom: 0.25rem;
-  text-transform: uppercase;
-}
-
-.pitch-gov-gold .pitch-gov-kicker {
-  color: #D9A94D;
-}
-
-.pitch-gov-green .pitch-gov-kicker {
-  color: #3ECF6E;
-}
-
 .pitch-gov-title {
   font-family: 'Oswald', 'Outfit', sans-serif;
-  font-size: 0.95rem;
+  font-size: 0.98rem;
   font-weight: 500;
-  color: #F2F5F1;
+  color: #F2F5F8;
   letter-spacing: 0.01em;
   margin: 0 0 0.4rem;
 }
@@ -2996,7 +2963,7 @@ select.pf-input {
 .pitch-gov-desc {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 0.8rem;
-  color: #8FA095;
+  color: #8B9DAE;
   line-height: 1.45;
   margin: 0;
 }
@@ -3012,9 +2979,9 @@ select.pf-input {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 0.72rem;
   font-weight: 500;
-  background: rgba(62, 207, 110, 0.08);
-  border: 1px solid rgba(62, 207, 110, 0.2);
-  color: #F2F5F1;
+  background: rgba(53, 174, 232, 0.08);
+  border: 1px solid rgba(53, 174, 232, 0.25);
+  color: #F2F5F8;
   padding: 0.25rem 0.55rem;
   border-radius: 4px;
 }
@@ -3031,78 +2998,71 @@ select.pf-input {
 .pitch-module-btn {
   width: 100%;
   background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 8px;
-  padding: 0.85rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  padding: 0;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  color: #F2F5F1;
+  color: #F2F5F8;
   cursor: pointer;
   text-align: left;
   transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   box-sizing: border-box;
+  overflow: hidden;
+}
+
+.pitch-module-bar {
+  width: 4px;
+  background: #35AEE8;
+  box-shadow: 0 0 10px rgba(53, 174, 232, 0.4);
+  flex-shrink: 0;
+  transition: width 0.2s ease;
+}
+
+.pitch-module-content {
+  padding: 0.85rem 1rem;
+  flex: 1;
 }
 
 .pitch-module-btn:hover {
-  background: rgba(62, 207, 110, 0.06);
-  border-color: rgba(62, 207, 110, 0.35);
+  background: rgba(53, 174, 232, 0.06);
+  border-color: rgba(53, 174, 232, 0.3);
+  border-left: none;
   transform: translateX(4px);
 }
 
-.pitch-module-left {
+.pitch-module-btn:hover .pitch-module-bar {
+  width: 6px;
+}
+
+.pitch-mod-header {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-  min-width: 0;
+  gap: 0.55rem;
+  margin-bottom: 0.25rem;
 }
 
 .pitch-mod-num {
   font-family: 'Oswald', 'Outfit', sans-serif;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  color: #3ECF6E;
-  opacity: 0.8;
-  width: 22px;
-  flex-shrink: 0;
-}
-
-.pitch-mod-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  min-width: 0;
+  color: #35AEE8;
 }
 
 .pitch-mod-name {
   font-family: 'Oswald', 'Outfit', sans-serif;
-  font-size: 0.96rem;
+  font-size: 0.98rem;
   font-weight: 500;
-  color: #F2F5F1;
+  color: #F2F5F8;
   letter-spacing: 0.01em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-.pitch-mod-sub {
+.pitch-mod-desc {
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 0.75rem;
-  color: #8FA095;
-}
-
-.pitch-mod-arrow {
-  color: #8FA095;
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-  transition: all 0.2s ease;
-}
-
-.pitch-module-btn:hover .pitch-mod-arrow {
-  color: #3ECF6E;
-  transform: translate(2px, -2px);
+  font-size: 0.78rem;
+  color: #8B9DAE;
+  margin: 0;
+  line-height: 1.4;
 }
 
 @media (max-width: 1024px) {
