@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Integrazione Logo Ufficiale Quarto 2012 (Eccellenza Campania Girone A)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-quarto-2012.png` collegato al catalogo squadre e a focus.html. Cache `QUARTO1`.
-Feature precedente: **Integrazione Logo Ufficiale Portici 1906** — Cache `PORTICI1`.
+Ultimo fatto: **Integrazione Logo Ufficiale Rangers Qualiano (Eccellenza Campania Girone A)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-rangers-qualiano.png` collegato al catalogo squadre e a focus.html. Cache `QUALIANO1`.
+Feature precedente: **Integrazione Logo Ufficiale Quarto 2012** — Cache `QUARTO1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
