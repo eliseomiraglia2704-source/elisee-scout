@@ -630,23 +630,31 @@
 
   function lockBodyScroll() {
     lockedY = window.scrollY || window.pageYOffset || 0;
+    document.documentElement.classList.add('has-about-detail-open', 'has-active-overlay');
+    document.body.classList.add('has-about-detail-open', 'has-active-overlay');
+    document.documentElement.style.overflow = 'hidden';
+    document.documentElement.style.scrollbarGutter = 'auto';
     document.body.style.position = 'fixed';
     document.body.style.top = `-${lockedY}px`;
     document.body.style.left = '0';
     document.body.style.right = '0';
     document.body.style.width = '100%';
     document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
+    document.body.style.scrollbarGutter = 'auto';
   }
 
   function unlockBodyScroll() {
+    document.documentElement.classList.remove('has-about-detail-open', 'has-active-overlay');
+    document.body.classList.remove('has-about-detail-open', 'has-active-overlay');
+    document.documentElement.style.overflow = '';
+    document.documentElement.style.scrollbarGutter = '';
     document.body.style.position = '';
     document.body.style.top = '';
     document.body.style.left = '';
     document.body.style.right = '';
     document.body.style.width = '';
     document.body.style.overflow = '';
-    document.documentElement.style.overflow = '';
+    document.body.style.scrollbarGutter = '';
     window.scrollTo(0, lockedY);
   }
 

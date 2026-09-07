@@ -68,15 +68,35 @@
 /* ============================================================
    OVERLAY A SCHERMO INTERO (FULL-SCREEN DETAIL VIEW)
    ============================================================ */
+html.has-about-detail-open,
+html:has(#about-detail-overlay.is-active) {
+  overflow: hidden !important;
+  scrollbar-gutter: auto !important;
+  height: 100% !important;
+}
+
+html.has-about-detail-open body,
+html:has(#about-detail-overlay.is-active) body {
+  overflow: hidden !important;
+  scrollbar-gutter: auto !important;
+  height: 100% !important;
+  touch-action: none !important;
+}
+
 #about-detail-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 100000;
-  background: rgba(5, 8, 16, 0.96);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  overflow-y: auto;
-  overflow-x: hidden;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  z-index: 100000 !important;
+  background: rgba(5, 8, 16, 0.96) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior: contain !important;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);

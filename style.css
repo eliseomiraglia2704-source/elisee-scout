@@ -100,6 +100,28 @@ html {
   scrollbar-gutter: stable;
 }
 
+/* Prevent double scrollbar & gutter clash across all overlays and modals */
+html.has-active-overlay,
+html.has-about-detail-open,
+html.modal-open,
+html:has(#about-detail-overlay.is-active),
+html:has(.modal-overlay.is-open),
+html:has(.es-creator-modal-overlay.is-open) {
+  overflow: hidden !important;
+  scrollbar-gutter: auto !important;
+  height: 100% !important;
+}
+
+html.has-active-overlay body,
+html.has-about-detail-open body,
+html.modal-open body,
+html:has(#about-detail-overlay.is-active) body {
+  overflow: hidden !important;
+  scrollbar-gutter: auto !important;
+  height: 100% !important;
+  touch-action: none !important;
+}
+
 body {
   font-family: var(--font-family);
   background-color: var(--bg-primary);

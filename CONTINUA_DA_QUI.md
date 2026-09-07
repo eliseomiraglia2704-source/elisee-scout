@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Risoluzione Definitiva Bug Doppio Scrollbar Overlay (Scroll Lock)** — Implementato il pattern `lockBodyScroll()` / `unlockBodyScroll()` con `position: fixed`, `top: -${lockedY}px` e ripristino istantaneo dello scroll alla chiusura, eliminando totalmente la doppia traccia della scrollbar sotto l'overlay a schermo intero. Cache `DETAIL5`.
-Feature precedente: **Perfezionamento Scheda Dettaglio (Chi Siamo): Sentence Case, Hairline Dividers, Breadcrumb & Navigazione Sequenziale** — Cache `DETAIL4`.
+Ultimo fatto: **Eliminazione Radicale Doppio Scrollbar su Tutto il Sito (Gutter & Overlay Hygiene)** — Rimosso il conflitto di `scrollbar-gutter: stable` di `html` con gli overlay e le modali a schermo intero tramite regole globali `html.has-active-overlay` e reset completo `scrollbarGutter = 'auto'`. Una sola scrollbar pulita e fluida. Cache `DETAIL6`.
+Feature precedente: **Risoluzione Definitiva Bug Doppio Scrollbar Overlay (Scroll Lock)** — Cache `DETAIL5`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
