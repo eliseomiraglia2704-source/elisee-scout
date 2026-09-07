@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Nuova Architettura Area Stampa a Due Macro-Blocchi (Rassegna Stampa & Ufficio Stampa)** — 1) Rassegna Stampa con filtri categoria (Mercato, Club, Settore giovanile, Riforma dello Sport, Competizioni), ricerca, estratti brevi e link alle fonti nel pieno rispetto del copyright editoriale; 2) Ufficio Stampa con 3 blocchi verticali (Comunicati ufficiali in stile Chi siamo, Media kit con card asset scaricabili e Contatti stampa unificati con email, sede e tempi di risposta garantiti). Cache `STAMPA2`.
-Feature precedente: **Fix Routing e Render Portale Pubblico Stampa** — Cache `STAMPA1`.
+Ultimo fatto: **Integrazione Logo Ufficiale Albanova 64 (Eccellenza Campania Girone A)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-albanova-64.png` collegato al catalogo squadre e a focus.html. Cache `ALBANOVA1`.
+Feature precedente: **Nuova Architettura Area Stampa a Due Macro-Blocchi (Rassegna Stampa & Ufficio Stampa)** — Cache `STAMPA2`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
