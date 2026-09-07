@@ -8426,40 +8426,108 @@ document.addEventListener('DOMContentLoaded', () => {
     const optionsList = document.getElementById('location-options-list');
     if (!optionsList) return;
 
-    const allComuni = (window.ELISEE_COMUNI_ITALIANI && window.ELISEE_COMUNI_ITALIANI.length)
-      ? window.ELISEE_COMUNI_ITALIANI
-      : ['Foggia (FG)', 'Lucera (FG)', 'Bari (BA)', 'Roma (RM)', 'Milano (MI)', 'Napoli (NA)', 'Torino (TO)', 'Palermo (PA)', 'Bologna (BO)', 'Firenze (FI)'];
-
     let selectedValue = 'all';
 
+    function esc(s) {
+      return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function getComuniList() {
+      if (window.ELISEE_COMUNI_ITALIANI && Array.isArray(window.ELISEE_COMUNI_ITALIANI) && window.ELISEE_COMUNI_ITALIANI.length > 0) {
+        return window.ELISEE_COMUNI_ITALIANI;
+      }
+      return [
+        'Foggia (FG)', 'Lucera (FG)', 'Bari (BA)', 'Roma (RM)', 'Milano (MI)',
+        'Napoli (NA)', 'Torino (TO)', 'Palermo (PA)', 'Bologna (BO)', 'Firenze (FI)',
+        'Genova (GE)', 'Verona (VR)', 'Catania (CT)', 'Lecce (LE)', 'Taranto (TA)',
+        'Salerno (SA)', 'Reggio Calabria (RC)', 'Messina (ME)', 'Brescia (BS)', 'Padova (PD)'
+      ];
+    }
+
+    function norm(str) {
+      return String(str || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+    }
+
     function renderOptions(filterText) {
-      const q = (filterText || '').trim().toLowerCase();
+      const allComuni = getComuniList();
+      const rawQ = (filterText || '').trim();
+      const q = norm(rawQ);
       let matches = [];
+
       if (!q) {
+        // Nessun filtro: suggerimenti città principali in alto, poi l'intero database in ordine alfabetico
         const topCities = [
           'Foggia (FG)', 'Lucera (FG)', 'Bari (BA)', 'Roma (RM)', 'Milano (MI)',
           'Napoli (NA)', 'Torino (TO)', 'Palermo (PA)', 'Bologna (BO)', 'Firenze (FI)',
           'Genova (GE)', 'Verona (VR)', 'Catania (CT)', 'Lecce (LE)', 'Taranto (TA)',
-          'Salerno (SA)', 'Reggio Calabria (RC)', 'Messina (ME)', 'Brescia (BS)', 'Padova (PD)'
+          'Salerno (SA)', 'Reggio Calabria (RC)', 'Messina (ME)', 'Brescia (BS)', 'Padova (PD)',
+          'Trieste (TS)', 'Parma (PR)', 'Modena (MO)', 'Reggio Emilia (RE)', 'Perugia (PG)', 'Livorno (LI)', 'Cagliari (CA)'
         ];
         const others = allComuni.filter(c => !topCities.includes(c));
         matches = topCities.concat(others);
       } else {
-        matches = allComuni.filter(c => c.toLowerCase().includes(q));
+        // Suggerimenti istantanei (da 1, 2, 3+ lettere)
+        const startsWith = [];
+        const contains = [];
+
+        for (let i = 0; i < allComuni.length; i++) {
+          const item = allComuni[i];
+          const nItem = norm(item);
+          if (nItem.startsWith(q)) {
+            startsWith.push(item);
+          } else if (nItem.includes(q)) {
+            contains.push(item);
+          }
+        }
+        matches = startsWith.concat(contains);
       }
 
-      const displayList = matches.slice(0, 150);
+      const displayList = matches.slice(0, 100);
 
-      let html = `<div class="dropdown-option ${selectedValue === 'all' ? 'selected' : ''}" data-value="all">Tutte le zone</div>`;
+      let html = `<div class="dropdown-option ${selectedValue === 'all' ? 'selected' : ''}" data-value="all">
+        <span class="comune-name" style="font-weight:600;">Tutte le zone</span>
+      </div>`;
+
       if (q && matches.length === 0) {
-        html += `<div style="padding:0.75rem 1rem; color:#64748b; font-size:0.8rem; text-align:center;">Nessun comune trovato per "${filterText}"</div>`;
+        html += `<div style="padding:1.25rem 1rem; color:#94a3b8; font-size:0.84rem; text-align:center;">
+          <div style="font-size:1.4rem; margin-bottom:0.35rem;">🔍</div>
+          Nessun comune trovato per "<strong>${esc(rawQ)}</strong>"<br>
+          <small style="color:#64748b; font-size:0.75rem;">Verifica il nome tra tutti i 7.904 comuni italiani</small>
+        </div>`;
       } else {
         displayList.forEach(c => {
           const isSel = (selectedValue === c);
-          html += `<div class="dropdown-option ${isSel ? 'selected' : ''}" data-value="${c}">${c}</div>`;
+          const provMatch = c.match(/\(([A-Z0-9]{2})\)$/i);
+          const provCode = provMatch ? provMatch[1] : '';
+          const cityName = provMatch ? c.replace(/\s*\([A-Z0-9]{2}\)$/i, '') : c;
+
+          let displayCity = cityName;
+          if (q) {
+            const idx = norm(cityName).indexOf(q);
+            if (idx !== -1) {
+              const before = cityName.slice(0, idx);
+              const match = cityName.slice(idx, idx + rawQ.length);
+              const after = cityName.slice(idx + rawQ.length);
+              displayCity = `${esc(before)}<span class="comune-match-highlight">${esc(match)}</span>${esc(after)}`;
+            } else {
+              displayCity = esc(cityName);
+            }
+          } else {
+            displayCity = esc(cityName);
+          }
+
+          html += `
+            <div class="dropdown-option ${isSel ? 'selected' : ''}" data-value="${esc(c)}">
+              <span class="comune-name">${displayCity}</span>
+              ${provCode ? `<span class="comune-prov-tag">${esc(provCode)}</span>` : ''}
+            </div>
+          `;
         });
-        if (matches.length > 150) {
-          html += `<div style="padding:0.45rem 1rem; color:#38bdf8; font-size:0.75rem; text-align:center; border-top:1px solid rgba(255,255,255,0.05);">...e altri ${matches.length - 150} comuni (digita per filtrare)</div>`;
+
+        if (matches.length > 100) {
+          html += `<div style="padding:0.5rem 1rem; color:#38bdf8; font-size:0.75rem; text-align:center; background:rgba(56,189,248,0.06); border-top:1px solid rgba(56,189,248,0.15);">
+            Mostrati 100 di ${matches.length} comuni suggeriti · Digita per filtrare
+          </div>`;
         }
       }
       optionsList.innerHTML = html;
@@ -8504,6 +8572,11 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
           if (dropdown.classList.contains('open') && searchInput) {
             searchInput.focus();
+            if (searchInput.value) {
+              renderOptions(searchInput.value);
+            } else {
+              renderOptions('');
+            }
           }
         }, 50);
       });

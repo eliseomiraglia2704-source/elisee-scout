@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Fix Click Pulsante «Torna alla Bacheca» da Hub Mercato / Wall Trattative** — Risolto l'evento di bubbling che intercettava il click sul pulsante di ritorno reindirizzando a Secret List e scatenando il modal di login. Separata la classe tab e gestito il click con stopPropagation diretto verso `switchView('bacheca', '#bacheca-annunci')`. Cache `COMUNI2`.
-Feature precedente: **Integrazione Database Completo 7.904 Comuni, Città e Paesi Italiani in Bacheca** — Cache `COMUNI1`.
+Ultimo fatto: **Autocompletamento & Suggerimenti Istantanei su tutti i 7.904 Comuni e Città Italiane (Foggia, Roma, Milano, ecc.)** — Caricato `comuni-italiani.js` prioritariamente nell'<head>, ottimizzato il rendering flessibile del menu a tendina senza ritaglio dell'overflow e implementato il matching istantaneo (già dalle prime lettere digitate) con evidenziazione del match e tag provincia. Cache `COMUNI3`.
+Feature precedente: **Fix Click Pulsante «Torna alla Bacheca» da Hub Mercato / Wall Trattative** — Cache `COMUNI2`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
