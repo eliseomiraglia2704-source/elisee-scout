@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260907_BACHECA_FORCED1';
+      var BUILD_VERSION = '20260907_BACHECA_FORCED2';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -945,6 +945,95 @@
       window.EliseeApplyHashView = function (hash) {
         var h = hash || location.hash || '#hero';
         coreSwitchView(viewFromHash(h), h, { noHistory: true });
+      };
+
+      window.switchBachecaTab = function (tabName) {
+        if (tabName === 'wall') {
+          if (typeof window.openTransferWall === 'function') {
+            window.openTransferWall();
+          } else if (typeof window.switchView === 'function') {
+            window.switchView('mercato', '#wall-trasferimenti');
+          }
+          return;
+        }
+        if (tabName === 'squadre') {
+          if (typeof window.switchView === 'function') {
+            window.switchView('squadre', '#squadre-portal');
+          }
+          return;
+        }
+
+        var tabAnnunci = document.getElementById('bacheca-tab-annunci');
+        var tabPersone = document.getElementById('bacheca-tab-persone');
+        var btnAnnunci = document.getElementById('tab-btn-annunci');
+        var btnPersone = document.getElementById('tab-btn-persone');
+        var btnWall = document.getElementById('tab-btn-wall');
+        var btnSquadre = document.getElementById('tab-btn-squadre');
+
+        [btnAnnunci, btnPersone, btnWall, btnSquadre].forEach(function (btn) {
+          if (btn) {
+            btn.classList.remove('is-active');
+            btn.setAttribute('aria-selected', 'false');
+          }
+        });
+
+        if (tabName === 'persone') {
+          if (tabAnnunci) tabAnnunci.style.display = 'none';
+          if (tabPersone) {
+            tabPersone.style.display = 'block';
+            tabPersone.classList.add('is-active');
+          }
+          if (btnPersone) {
+            btnPersone.classList.add('is-active');
+            btnPersone.setAttribute('aria-selected', 'true');
+          }
+          if (typeof window.renderPeopleCards === 'function') window.renderPeopleCards();
+        } else {
+          if (tabPersone) tabPersone.style.display = 'none';
+          if (tabAnnunci) {
+            tabAnnunci.style.display = 'block';
+            tabAnnunci.classList.add('is-active');
+          }
+          if (btnAnnunci) {
+            btnAnnunci.classList.add('is-active');
+            btnAnnunci.setAttribute('aria-selected', 'true');
+          }
+          if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs();
+        }
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+          try { window.lucide.createIcons(); } catch (_) {}
+        }
+      };
+
+      window.filterPeopleByType = function (type) {
+        window.activePeopleType = type || 'all';
+        document.querySelectorAll('.bacheca-type-btn').forEach(function (btn) {
+          btn.classList.toggle('is-active', btn.getAttribute('data-type') === window.activePeopleType);
+        });
+        if (typeof window.renderPeopleCards === 'function') window.renderPeopleCards();
+      };
+
+      window.resetPeopleFilters = function () {
+        var q = document.getElementById('search-people-query');
+        if (q) q.value = '';
+        var name = document.getElementById('search-people-name');
+        var surname = document.getElementById('search-people-surname');
+        if (name) name.value = '';
+        if (surname) surname.value = '';
+        window.activePeopleType = 'all';
+        document.querySelectorAll('.bacheca-type-btn').forEach(function (btn) {
+          btn.classList.toggle('is-active', btn.getAttribute('data-type') === 'all');
+        });
+        ['search-people-role', 'search-people-category'].forEach(function (id) {
+          var dd = document.getElementById(id);
+          if (!dd) return;
+          dd.querySelectorAll('.dropdown-option').forEach(function (o) { o.classList.remove('selected'); });
+          var all = dd.querySelector('.dropdown-option[data-value="all"]');
+          if (all) all.classList.add('selected');
+          var span = dd.querySelector('.dropdown-trigger span');
+          if (span && all) span.textContent = all.textContent.trim();
+        });
+        if (typeof window.renderPeopleCards === 'function') window.renderPeopleCards();
       };
 
       // Tasto Indietro / Avanti: usa window.switchView (core ora, app.js dopo il load)

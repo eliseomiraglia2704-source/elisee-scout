@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Forzatura Atomica Cache & Auto-Purge Service Worker** — Rimosso ogni blocco di cache con Cache-Control no-store / no-cache su Vercel e su `index.html`, eliminati link CSS duplicati obsoleti in `<head>`, integrato script di svuotamento forzato `caches.delete()` e unregister dei Service Worker all'avvio. Versione cache `BACHECA_FORCED1`.
-Feature precedente: **Fix Routing Head, Cache-Bust & Stili CSS Bacheca Reclutamento** — Cache `BACHECA2`.
+Ultimo fatto: **Fix Globale switchBachecaTab & Deploy Atomico** — Dichiarate le funzioni `switchBachecaTab`, `filterPeopleByType`, `resetPeopleFilters` e `renderPeopleCards` globalmente all'inizio di `<head>` in `index.html` per garantire l'immediata reattività al click dei tab senza attendere il caricamento asincrono di `app.js`. Versione cache `BACHECA_FORCED2`.
+Feature precedente: **Forzatura Atomica Cache & Auto-Purge Service Worker** — Cache `BACHECA_FORCED1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
