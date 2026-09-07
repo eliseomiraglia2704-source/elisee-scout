@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Integrazione Logo Ufficiale Castel Volturno (Eccellenza Campania Girone A)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-castel-volturno.png` collegato al catalogo squadre e a focus.html. Cache `VOLTURNO1`.
-Feature precedente: **Integrazione Logo Ufficiale Boys Caivanese** — Cache `CAIVANESE1`.
+Ultimo fatto: **Integrazione Logo Ufficiale Ercolanese 1924 (Eccellenza Campania Girone A)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-ercolanese-1924.png` collegato al catalogo squadre e a focus.html. Cache `ERCOLANESE1`.
+Feature precedente: **Integrazione Logo Ufficiale Castel Volturno** — Cache `VOLTURNO1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
