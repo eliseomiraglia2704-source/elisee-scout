@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Rimozione Box Maglia & Date Laterali Roadmap (Chi Siamo)** — Rimossi i marcatori quadrati con numero di maglia ('26', '25', '24', '23') e le date fluttuanti sulla destra. La Colonna 1 (Roadmap) è ora allineata al 100% con la stessa struttura pulita ed editoriale a barre laterali azzurre (`#35AEE8`) e hairlines delle altre due colonne, con anno integrato direttamente nei titoli. Cache `CLEANROADMAP1`.
-Feature precedente: **Eliminazione Card & Layout Flat Chi Siamo** — Rimossi completamente sfondi, bordi perimetrali e angoli arrotondati su blocchi governance e moduli: struttura editoriale pura con barra laterale d'accento (oro/azzurro) e sottile hairline divisorio. Cache `CARDLESS1`.
+Ultimo fatto: **Rimozione Prefissi Anno dai Titoli Roadmap (Chi Siamo)** — Rimossi i prefissi degli anni (`2026 —`, `2025 —`, `2024 —`, `2023 —`) dai titoli della Colonna 1 Roadmap in `#about`, lasciando i titoli essenziali e puliti (`Elisee Scout: Piattaforma live`, `Business plan & 715 agenti IA`, `Nucleo pillar 01–50`, `Concept marketplace calcio`). Cache `CLEANROADMAP2`.
+Feature precedente: **Rimozione Box Maglia & Date Laterali Roadmap (Chi Siamo)** — Rimossi i marcatori quadrati con numero di maglia ('26', '25', '24', '23') e le date fluttuanti sulla destra. Cache `CLEANROADMAP1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
