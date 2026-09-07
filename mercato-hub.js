@@ -561,9 +561,19 @@
     if (!hub || hub.dataset.bound === '1') return;
     hub.dataset.bound = '1';
     hub.addEventListener('click', function (e) {
+      var backBtn = e.target.closest('.es-mk-back-bacheca, [data-action="back-bacheca"]');
+      if (backBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof window.switchView === 'function') {
+          window.switchView('bacheca', '#bacheca-annunci');
+        }
+        return;
+      }
       var ttab = e.target.closest('.es-mk-tab');
       if (ttab) {
         var next = ttab.getAttribute('data-mk');
+        if (!next) return;
         if (typeof window.switchView === 'function') {
           window.switchView('mercato', next === 'wall' ? '#wall-trasferimenti' : '#mercato-hub');
         } else setTab(next);

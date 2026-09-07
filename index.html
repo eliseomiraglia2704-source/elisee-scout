@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260907_COMUNI1';
+      var BUILD_VERSION = '20260907_COMUNI2';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -4153,7 +4153,7 @@
         <div class="es-mk-tabs" role="tablist" aria-label="Hub Mercato">
           <button type="button" class="es-mk-tab is-on" data-mk="secret">Secret List</button>
           <button type="button" class="es-mk-tab" data-mk="wall">Wall trattative</button>
-          <button type="button" class="es-mk-tab es-mk-back-bacheca" style="margin-left:auto; background:transparent; border-color:rgba(56,189,248,0.3); color:#38bdf8;" onclick="if(window.switchView) window.switchView('bacheca','#bacheca-annunci');">← Torna alla Bacheca</button>
+          <button type="button" class="btn btn-outline-pill es-mk-back-bacheca" data-action="back-bacheca" style="margin-left:auto; background:transparent; border-color:rgba(56,189,248,0.3); color:#38bdf8;" onclick="event.stopPropagation(); if(window.switchView) window.switchView('bacheca','#bacheca-annunci');">← Torna alla Bacheca</button>
         </div>
         <div id="es-mk-secret">
           <p class="es-mk-stealth" id="es-mk-stealth-banner">Modalità stealth · visibile solo a te · zero notifiche esterne</p>
