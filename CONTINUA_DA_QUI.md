@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Integrazione Logo Ufficiale Polisportiva Gricignano (Eccellenza Campania Girone A)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-polisportiva-gricignano.png` collegato al catalogo squadre e a focus.html. Cache `GRICIGNANO1`.
-Feature precedente: **Integrazione Logo Ufficiale Marianella** — Cache `MARIANELLA1`.
+Ultimo fatto: **Integrazione Logo Ufficiale Pomigliano 1920 (Eccellenza Campania Girone A)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-pomigliano-1920.png` collegato al catalogo squadre e a focus.html. Cache `POMIGLIANO1`.
+Feature precedente: **Integrazione Logo Ufficiale Polisportiva Gricignano** — Cache `GRICIGNANO1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
