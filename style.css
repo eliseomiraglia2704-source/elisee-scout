@@ -646,8 +646,9 @@ body.layout-portfolio #view-pillars {
   min-height: auto;
   background: #050608;
   display: flex;
+  flex-direction: column;
   align-items: stretch;
-  padding: 0 0 2rem;
+  padding: 0 0 3rem;
   position: relative;
   overflow: hidden;
 }
@@ -2647,15 +2648,18 @@ select.pf-input {
 
 /* Sezioni Roadmap e Pillar in Chi Siamo */
 .about-extra-sections {
-  margin-top: 3rem;
-  padding-top: 2.5rem;
+  width: 100%;
+  max-width: 1360px;
+  margin: 2.5rem auto 0;
+  padding: 2.5rem 5vw 0;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-sizing: border-box;
 }
 .about-grid-3 {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  margin-top: 1.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.75rem;
+  margin-top: 1.5rem;
 }
 .about-card-box {
   background: rgba(15, 23, 42, 0.75);
@@ -8562,6 +8566,8 @@ main {
 }
 /* About split e altre full-bleed: padding top se non hero */
 #view-about .about-split-page {
+  display: flex !important;
+  flex-direction: column !important;
   padding-top: 5.5rem !important;
   overflow: visible !important;
   min-height: auto !important;

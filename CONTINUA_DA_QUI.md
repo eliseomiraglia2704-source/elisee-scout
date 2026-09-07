@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-06**
-Ultimo fatto: **Hub Minigiochi** — Pokemon Calcistico assorbito in Elisee World (collezione + battaglie). Hub a 2 card: 01 Carriera, 02 Elisee World. Niente più card 03 Prossimamente. Cache `MGHUB2`.
-Feature precedente: **Elisee World GBA** — HUD/menu/party/textbox allineati ai video. Cache `EWGBA1`.
+Ultimo aggiornamento: **2026-09-07**
+Ultimo fatto: **Chi Siamo Layout** — Card Roadmap, Governance e Piattaforma posizionate sotto la sezione introduttiva CHI SIAMO a tutta larghezza (`flex-direction: column` su `.about-split-page` e contenitore `.about-extra-sections` centrato). Cache `ABOUTGRID1`.
+Feature precedente: **Hub Minigiochi** — Pokemon Calcistico assorbito in Elisee World (collezione + battaglie). Hub a 2 card: 01 Carriera, 02 Elisee World. Cache `MGHUB2`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
