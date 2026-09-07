@@ -1,0 +1,442 @@
+/* ============================================================
+   ELISEE SCOUT — ABOUT DETAIL OVERLAY & INTERACTION
+   Pattern: Panoramica -> Dettaglio a Schermo Intero
+   ============================================================ */
+
+/* Hover state per i blocchi interattivi della panoramica */
+.pitch-roadmap-block[data-about-item],
+.pitch-gov-block[data-about-item],
+.pitch-module-btn[data-about-item] {
+  cursor: pointer;
+  position: relative;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pitch-roadmap-block[data-about-item]:hover,
+.pitch-gov-block[data-about-item]:hover {
+  background: rgba(53, 174, 232, 0.04) !important;
+  padding-left: 0.5rem !important;
+}
+
+.pitch-gov-block.pitch-gov-gold[data-about-item]:hover {
+  background: rgba(217, 169, 77, 0.04) !important;
+}
+
+.pitch-roadmap-block[data-about-item]:hover .pitch-roadmap-bar {
+  box-shadow: 0 0 14px rgba(53, 174, 232, 0.7);
+  width: 4.5px;
+}
+
+.pitch-gov-block.pitch-gov-gold[data-about-item]:hover .pitch-gov-bar {
+  box-shadow: 0 0 14px rgba(217, 169, 77, 0.7);
+  width: 4.5px;
+}
+
+.pitch-roadmap-block[data-about-item]:hover .pitch-roadmap-title,
+.pitch-gov-block[data-about-item]:hover .pitch-gov-title,
+.pitch-module-btn[data-about-item]:hover .pitch-mod-name {
+  color: #FFFFFF !important;
+}
+
+/* Freccia indicatore hover per far capire che è apribile */
+.pitch-roadmap-block[data-about-item]::after,
+.pitch-gov-block[data-about-item]::after {
+  content: '→';
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%) translateX(-4px);
+  font-size: 0.95rem;
+  color: rgba(139, 157, 174, 0.4);
+  opacity: 0;
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+
+.pitch-roadmap-block[data-about-item]:hover::after,
+.pitch-gov-block[data-about-item]:hover::after {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+  color: #35AEE8;
+}
+
+.pitch-gov-block.pitch-gov-gold[data-about-item]:hover::after {
+  color: #D9A94D;
+}
+
+/* ============================================================
+   OVERLAY A SCHERMO INTERO (FULL-SCREEN DETAIL VIEW)
+   ============================================================ */
+#about-detail-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background: rgba(5, 8, 16, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: scale(0.985);
+  display: flex;
+  flex-direction: column;
+}
+
+#about-detail-overlay.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.about-detail-container {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 5rem;
+  box-sizing: border-box;
+}
+
+/* Top bar con pulsante indietro e chiusura */
+.about-detail-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 2.5rem;
+}
+
+.about-detail-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #F2F5F8;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 0.55rem 1.1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.about-detail-back-btn:hover {
+  background: rgba(53, 174, 232, 0.12);
+  border-color: #35AEE8;
+  color: #35AEE8;
+}
+
+.about-detail-esc-hint {
+  font-size: 0.72rem;
+  color: #8B9DAE;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  margin-left: 0.4rem;
+}
+
+.about-detail-close-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #8B9DAE;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.about-detail-close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Category Pill */
+.about-detail-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.about-detail-category.cat-azzurro {
+  color: #35AEE8;
+}
+
+.about-detail-category.cat-gold {
+  color: #D9A94D;
+}
+
+.about-detail-cat-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.cat-azzurro .about-detail-cat-dot {
+  background: #35AEE8;
+  box-shadow: 0 0 8px #35AEE8;
+}
+
+.cat-gold .about-detail-cat-dot {
+  background: #D9A94D;
+  box-shadow: 0 0 8px #D9A94D;
+}
+
+/* Header & Title */
+.about-detail-header {
+  margin-bottom: 2.5rem;
+}
+
+.about-detail-title {
+  font-family: 'Oswald', 'Outfit', sans-serif;
+  font-size: clamp(1.85rem, 4vw, 2.75rem);
+  font-weight: 600;
+  color: #F2F5F8;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  margin: 0 0 1rem;
+}
+
+.about-detail-lead {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 1.05rem;
+  color: #BAC7D5;
+  line-height: 1.65;
+  max-width: 840px;
+  margin: 0;
+}
+
+/* Statistiche Chiave Grid */
+.about-detail-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.about-detail-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  border-left: 3px solid rgba(53, 174, 232, 0.5);
+  padding-left: 1rem;
+}
+
+.about-detail-stat-item.stat-gold {
+  border-left-color: rgba(217, 169, 77, 0.6);
+}
+
+.about-detail-stat-val {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+
+.about-detail-stat-label {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.78rem;
+  color: #8B9DAE;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+/* Stato di Avanzamento a Puntini / Fasi */
+.about-detail-progress-section {
+  margin-bottom: 3rem;
+}
+
+.about-detail-section-label {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.92rem;
+  letter-spacing: 0.06em;
+  color: #8B9DAE;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.about-detail-dots-track {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.about-detail-dot-step {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 0.45rem 0.85rem;
+  border-radius: 20px;
+}
+
+.about-detail-dot-step.is-done {
+  border-color: rgba(53, 174, 232, 0.35);
+  background: rgba(53, 174, 232, 0.08);
+}
+
+.about-detail-dot-step.is-done.step-gold {
+  border-color: rgba(217, 169, 77, 0.35);
+  background: rgba(217, 169, 77, 0.08);
+}
+
+.about-detail-dot-indicator {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(139, 157, 174, 0.3);
+}
+
+.about-detail-dot-step.is-done .about-detail-dot-indicator {
+  background: #35AEE8;
+  box-shadow: 0 0 8px #35AEE8;
+}
+
+.about-detail-dot-step.is-done.step-gold .about-detail-dot-indicator {
+  background: #D9A94D;
+  box-shadow: 0 0 8px #D9A94D;
+}
+
+.about-detail-dot-label {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #BAC7D5;
+}
+
+/* Come Funziona - Step Numerati */
+.about-detail-steps-section {
+  margin-bottom: 3.5rem;
+}
+
+.about-detail-steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.about-detail-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 1.2rem 1.25rem;
+  background: rgba(11, 16, 23, 0.7);
+  border-left: 3.5px solid #35AEE8;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
+}
+
+.about-detail-step-item.step-gold {
+  border-left-color: #D9A94D;
+}
+
+.about-detail-step-num {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #35AEE8;
+  line-height: 1;
+  min-width: 28px;
+}
+
+.step-gold .about-detail-step-num {
+  color: #D9A94D;
+}
+
+.about-detail-step-content {
+  flex: 1;
+}
+
+.about-detail-step-title {
+  font-family: 'Oswald', 'Outfit', sans-serif;
+  font-size: 1.08rem;
+  font-weight: 500;
+  color: #F2F5F8;
+  margin: 0 0 0.35rem;
+}
+
+.about-detail-step-desc {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.86rem;
+  color: #8B9DAE;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Footer Azione Rapida */
+.about-detail-action-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.about-detail-action-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #35AEE8;
+  color: #050810;
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 0.75rem 1.6rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 16px rgba(53, 174, 232, 0.3);
+}
+
+.about-detail-action-cta:hover {
+  background: #5dc2f3;
+  transform: translateY(-1px);
+  box-shadow: 0 0 24px rgba(53, 174, 232, 0.5);
+}
+
+@media (max-width: 768px) {
+  .about-detail-container {
+    padding: 1.5rem 1rem 4rem;
+  }
+  .about-detail-topbar {
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.75rem;
+  }
+  .about-detail-title {
+    font-size: 1.75rem;
+  }
+  .about-detail-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

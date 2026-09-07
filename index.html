@@ -13,6 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="about-detail.css?v=20260907_DETAIL1">
   
   <style id="forced-brand-font-override">
     /* FORCED LOGO FONT OVERRIDE FOR USER NAME DISPLAY IN NAVBAR */
@@ -2185,7 +2186,7 @@
                 <div class="pitch-roadmap-stack">
                   
                   <!-- Item 2026 -->
-                  <article class="pitch-roadmap-block">
+                  <article class="pitch-roadmap-block" data-about-item="roadmap-live">
                     <div class="pitch-roadmap-bar"></div>
                     <div class="pitch-roadmap-content">
                       <h4 class="pitch-roadmap-title">Elisee Scout: Piattaforma live</h4>
@@ -2194,7 +2195,7 @@
                   </article>
 
                   <!-- Item 2025 -->
-                  <article class="pitch-roadmap-block">
+                  <article class="pitch-roadmap-block" data-about-item="roadmap-plan">
                     <div class="pitch-roadmap-bar"></div>
                     <div class="pitch-roadmap-content">
                       <h4 class="pitch-roadmap-title">Business plan &amp; 715 agenti IA</h4>
@@ -2203,7 +2204,7 @@
                   </article>
 
                   <!-- Item 2024 -->
-                  <article class="pitch-roadmap-block">
+                  <article class="pitch-roadmap-block" data-about-item="roadmap-mvp">
                     <div class="pitch-roadmap-bar"></div>
                     <div class="pitch-roadmap-content">
                       <h4 class="pitch-roadmap-title">Nucleo pillar 01–50</h4>
@@ -2212,7 +2213,7 @@
                   </article>
 
                   <!-- Item 2023 -->
-                  <article class="pitch-roadmap-block">
+                  <article class="pitch-roadmap-block" data-about-item="roadmap-concept">
                     <div class="pitch-roadmap-bar"></div>
                     <div class="pitch-roadmap-content">
                       <h4 class="pitch-roadmap-title">Concept marketplace calcio</h4>
@@ -2232,7 +2233,7 @@
 
                 <div class="pitch-gov-stack">
                   <!-- Blocco Oro 1: GDPR -->
-                  <div class="pitch-gov-block pitch-gov-gold">
+                  <div class="pitch-gov-block pitch-gov-gold" data-about-item="gov-gdpr">
                     <div class="pitch-gov-bar"></div>
                     <div class="pitch-gov-content">
                       <h4 class="pitch-gov-title">GDPR Art. 13/30 &amp; Tutela Minori</h4>
@@ -2241,7 +2242,7 @@
                   </div>
 
                   <!-- Blocco Oro 2: Riforma Sport & NOIF -->
-                  <div class="pitch-gov-block pitch-gov-gold">
+                  <div class="pitch-gov-block pitch-gov-gold" data-about-item="gov-riforma">
                     <div class="pitch-gov-bar"></div>
                     <div class="pitch-gov-content">
                       <h4 class="pitch-gov-title">Riforma dello Sport &amp; Svincoli</h4>
@@ -2249,7 +2250,7 @@
                     </div>
                   </div>
 
-                  <!-- Blocco Oro 3: Pillar Trasversali -->
+                  <!-- Blocco Oro 3: Pillar Trasversali (Statico) -->
                   <div class="pitch-gov-block pitch-gov-gold">
                     <div class="pitch-gov-bar"></div>
                     <div class="pitch-gov-content">
@@ -2268,7 +2269,7 @@
                 </div>
 
                 <div class="pitch-modules-stack">
-                  <button type="button" class="pitch-module-btn" onclick="if(window.switchView){ window.switchView('bacheca'); }">
+                  <button type="button" class="pitch-module-btn" data-about-item="mod-01" onclick="if(window.switchView){ window.switchView('bacheca'); }">
                     <div class="pitch-module-bar"></div>
                     <div class="pitch-module-content">
                       <div class="pitch-mod-header">
@@ -2279,7 +2280,7 @@
                     </div>
                   </button>
 
-                  <button type="button" class="pitch-module-btn" onclick="if(window.switchView){ window.switchView('mappa'); }">
+                  <button type="button" class="pitch-module-btn" data-about-item="mod-02" onclick="if(window.switchView){ window.switchView('mappa'); }">
                     <div class="pitch-module-bar"></div>
                     <div class="pitch-module-content">
                       <div class="pitch-mod-header">
@@ -2290,7 +2291,7 @@
                     </div>
                   </button>
 
-                  <button type="button" class="pitch-module-btn" onclick="if(window.switchView){ window.switchView('squadre'); }">
+                  <button type="button" class="pitch-module-btn" data-about-item="mod-03" onclick="if(window.switchView){ window.switchView('squadre'); }">
                     <div class="pitch-module-bar"></div>
                     <div class="pitch-module-content">
                       <div class="pitch-mod-header">
@@ -2301,7 +2302,7 @@
                     </div>
                   </button>
 
-                  <button type="button" class="pitch-module-btn" onclick="if(window.switchView){ window.switchView('scopri','#scopri-portal'); }">
+                  <button type="button" class="pitch-module-btn" data-about-item="mod-04" onclick="if(window.switchView){ window.switchView('scopri','#scopri-portal'); }">
                     <div class="pitch-module-bar"></div>
                     <div class="pitch-module-content">
                       <div class="pitch-mod-header">
@@ -5437,6 +5438,7 @@
   <script src="elisee-world/main.js?v=20260906_EWGBA1"></script>
   <script src="elisee-world/elisee-world.js?v=20260906_EWGBA1"></script>
   <script src="autopilot-runtime.js?v=20260827_FIX3"></script>
+  <script src="about-detail.js?v=20260907_DETAIL1"></script>
   <script src="live-reload.js?v=20260905_CLEANLOGS1"></script>
   <script>
     /* Emergency unlock: body scroll + overlay fantasma */

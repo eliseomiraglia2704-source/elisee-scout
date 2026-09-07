@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Rimozione Sottotitoli Ruolo Roadmap (Chi Siamo)** — Rimossi i sottotitoli (`Prodotto · Governance · Rete Ufficiale`, `Strategia · Orchestrazione IA`, `MVP Scouting`, `Ricerca & Analisi Settore`) dai blocchi della Colonna 1 Roadmap in `#about`. La struttura dei blocchi è ora perfettamente simmetrica a 2 righe (Titolo + Descrizione) su tutte e tre le colonne. Cache `CLEANROADMAP3`.
-Feature precedente: **Unificazione Barre Oro Colonna Governance (Chi Siamo)** — Impostata la barra laterale oro (`#D9A94D`) anche sul blocco 'Pillar trasversali di rete'. Cache `GOVGOLD1`.
+Ultimo fatto: **Pattern Navigazione Elenco → Dettaglio a Schermo Intero (Chi Siamo)** — Implementato il sistema interattivo di dettaglio a schermo intero DATA-driven per la sezione `#about` (`about-detail.js`, `about-detail.css`). Cliccando qualsiasi voce (Roadmap, GDPR, Riforma, Moduli 01-04) si apre un overlay fluido a tutto schermo con tag categoria, titolo, descrizione estesa, metriche/statistiche chiave, avanzamento a puntini, guida a step 'Come funziona' e pulsante 'Torna alla panoramica' (o tasto Esc). 'Pillar trasversali di rete' resta blocco statico. Cache `DETAIL1`.
+Feature precedente: **Rimozione Sottotitoli Ruolo Roadmap (Chi Siamo)** — Rimossi i sottotitoli dai blocchi della Colonna 1 Roadmap. Cache `CLEANROADMAP3`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
