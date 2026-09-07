@@ -1,6 +1,7 @@
 /* ============================================================
    ELISEE SCOUT — ABOUT DETAIL OVERLAY & INTERACTION
    Pattern: Panoramica -> Dettaglio a Schermo Intero
+   Design: Sentence case, Hairline Dividers, Breadcrumb & Seq Nav
    ============================================================ */
 
 /* Hover state per i blocchi interattivi della panoramica */
@@ -71,14 +72,14 @@
   position: fixed;
   inset: 0;
   z-index: 100000;
-  background: rgba(5, 8, 16, 0.94);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(5, 8, 16, 0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   overflow-y: auto;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-  transform: scale(0.985);
+  transform: scale(0.99);
   display: flex;
   flex-direction: column;
 }
@@ -90,7 +91,7 @@
 }
 
 .about-detail-container {
-  max-width: 1000px;
+  max-width: 960px;
   width: 100%;
   margin: 0 auto;
   padding: 2.5rem 1.5rem 5rem;
@@ -103,9 +104,9 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding-bottom: 2rem;
+  padding-bottom: 1.75rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  margin-bottom: 2.5rem;
+  margin-bottom: 2.25rem;
 }
 
 .about-detail-back-btn {
@@ -160,56 +161,52 @@
   border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Category Pill */
-.about-detail-category {
+/* Breadcrumb in alto */
+.about-detail-breadcrumb {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  font-family: 'Oswald', sans-serif;
+  gap: 0.5rem;
+  font-family: 'Oswald', 'Outfit', sans-serif;
   font-size: 0.82rem;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  font-weight: 600;
+  color: #8B9DAE;
   margin-bottom: 0.75rem;
 }
 
-.about-detail-category.cat-azzurro {
+.about-detail-breadcrumb-group.cat-azzurro {
   color: #35AEE8;
 }
 
-.about-detail-category.cat-gold {
+.about-detail-breadcrumb-group.cat-gold {
   color: #D9A94D;
 }
 
-.about-detail-cat-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
+.about-detail-breadcrumb-sep {
+  color: rgba(255, 255, 255, 0.25);
+  font-weight: 400;
 }
 
-.cat-azzurro .about-detail-cat-dot {
-  background: #35AEE8;
-  box-shadow: 0 0 8px #35AEE8;
+.about-detail-breadcrumb-pos {
+  color: #BAC7D5;
+  font-weight: 500;
 }
 
-.cat-gold .about-detail-cat-dot {
-  background: #D9A94D;
-  box-shadow: 0 0 8px #D9A94D;
-}
-
-/* Header & Title */
+/* Header & Titolo (Sentence Case 34px) */
 .about-detail-header {
-  margin-bottom: 2.5rem;
+  margin-bottom: 2.25rem;
 }
 
 .about-detail-title {
-  font-family: 'Oswald', 'Outfit', sans-serif;
-  font-size: clamp(1.85rem, 4vw, 2.75rem);
-  font-weight: 600;
-  color: #F2F5F8;
-  line-height: 1.15;
-  letter-spacing: 0.01em;
-  margin: 0 0 1rem;
+  font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif !important;
+  font-size: 34px !important;
+  font-weight: 700 !important;
+  color: #F2F5F8 !important;
+  line-height: 1.22 !important;
+  letter-spacing: -0.01em !important;
+  text-transform: none !important;
+  margin: 0 0 1rem !important;
 }
 
 .about-detail-lead {
@@ -217,16 +214,16 @@
   font-size: 1.05rem;
   color: #BAC7D5;
   line-height: 1.65;
-  max-width: 840px;
+  max-width: 820px;
   margin: 0;
 }
 
 /* Statistiche Chiave Grid */
 .about-detail-stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1.25rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2.75rem;
   padding: 1.5rem 0;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -262,106 +259,52 @@
   font-weight: 600;
 }
 
-/* Stato di Avanzamento a Puntini / Fasi */
-.about-detail-progress-section {
-  margin-bottom: 3rem;
+/* Come Funziona - Step Numerati (Hairline Divisore, No Box/Pattern-Card) */
+.about-detail-steps-section {
+  margin-bottom: 2.5rem;
 }
 
 .about-detail-section-label {
   font-family: 'Oswald', sans-serif;
-  font-size: 0.92rem;
-  letter-spacing: 0.06em;
+  font-size: 0.88rem;
+  letter-spacing: 0.08em;
   color: #8B9DAE;
   text-transform: uppercase;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   display: flex;
   align-items: center;
   gap: 0.6rem;
-}
-
-.about-detail-dots-track {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.about-detail-dot-step {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  padding: 0.45rem 0.85rem;
-  border-radius: 20px;
-}
-
-.about-detail-dot-step.is-done {
-  border-color: rgba(53, 174, 232, 0.35);
-  background: rgba(53, 174, 232, 0.08);
-}
-
-.about-detail-dot-step.is-done.step-gold {
-  border-color: rgba(217, 169, 77, 0.35);
-  background: rgba(217, 169, 77, 0.08);
-}
-
-.about-detail-dot-indicator {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: rgba(139, 157, 174, 0.3);
-}
-
-.about-detail-dot-step.is-done .about-detail-dot-indicator {
-  background: #35AEE8;
-  box-shadow: 0 0 8px #35AEE8;
-}
-
-.about-detail-dot-step.is-done.step-gold .about-detail-dot-indicator {
-  background: #D9A94D;
-  box-shadow: 0 0 8px #D9A94D;
-}
-
-.about-detail-dot-label {
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #BAC7D5;
-}
-
-/* Come Funziona - Step Numerati */
-.about-detail-steps-section {
-  margin-bottom: 3.5rem;
 }
 
 .about-detail-steps-list {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 0;
 }
 
 .about-detail-step-item {
   display: flex;
   align-items: flex-start;
   gap: 1.25rem;
-  padding: 1.2rem 1.25rem;
-  background: rgba(11, 16, 23, 0.7);
-  border-left: 3.5px solid #35AEE8;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1.35rem 0;
+  background: transparent !important;
+  border-left: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   transition: all 0.2s ease;
 }
 
-.about-detail-step-item.step-gold {
-  border-left-color: #D9A94D;
+.about-detail-step-item:last-child {
+  border-bottom: none;
 }
 
 .about-detail-step-num {
   font-family: 'Oswald', sans-serif;
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: #35AEE8;
-  line-height: 1;
+  line-height: 1.2;
   min-width: 28px;
 }
 
@@ -374,19 +317,103 @@
 }
 
 .about-detail-step-title {
-  font-family: 'Oswald', 'Outfit', sans-serif;
-  font-size: 1.08rem;
-  font-weight: 500;
-  color: #F2F5F8;
-  margin: 0 0 0.35rem;
+  font-family: 'Outfit', 'Inter', system-ui, sans-serif !important;
+  font-size: 1.05rem !important;
+  font-weight: 600 !important;
+  color: #F2F5F8 !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  margin: 0 0 0.35rem !important;
 }
 
 .about-detail-step-desc {
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 0.86rem;
+  font-size: 0.9rem;
   color: #8B9DAE;
-  line-height: 1.55;
+  line-height: 1.6;
   margin: 0;
+}
+
+/* Navigazione Sequenziale Precedente / Successivo */
+.about-detail-seq-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 2.25rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.about-detail-nav-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.9rem 1.15rem;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #F2F5F8;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.about-detail-nav-card.is-next {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.about-detail-nav-card:hover {
+  background: rgba(53, 174, 232, 0.08);
+  border-color: rgba(53, 174, 232, 0.35);
+  transform: translateY(-2px);
+}
+
+.about-detail-nav-arrow {
+  font-size: 1.2rem;
+  color: #35AEE8;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.about-detail-nav-card.is-prev:hover .about-detail-nav-arrow {
+  transform: translateX(-3px);
+}
+
+.about-detail-nav-card.is-next:hover .about-detail-nav-arrow {
+  transform: translateX(3px);
+}
+
+.about-detail-nav-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  overflow: hidden;
+}
+
+.about-detail-nav-micro {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #8B9DAE;
+}
+
+.about-detail-nav-name {
+  font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #F2F5F8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.about-detail-nav-spacer {
+  display: block;
 }
 
 /* Footer Azione Rapida */
@@ -396,7 +423,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 1rem;
-  padding-top: 2rem;
+  padding-top: 1.75rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -433,10 +460,13 @@
     margin-bottom: 1.75rem;
   }
   .about-detail-title {
-    font-size: 1.75rem;
+    font-size: 26px !important;
   }
   .about-detail-stats-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
+  }
+  .about-detail-seq-nav {
+    grid-template-columns: 1fr;
   }
 }

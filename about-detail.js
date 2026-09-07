@@ -8,11 +8,27 @@
   'use strict';
 
   // ============================================================
-  // STRUTTURA DATI CENTRALE (Aggiungi o modifica voci qui)
+  // STRUTTURA DATI CENTRALE (Sentence Case & Hierarchy)
   // ============================================================
+  const GROUPS = {
+    'roadmap': {
+      name: 'Roadmap',
+      keys: ['roadmap-live', 'roadmap-plan', 'roadmap-mvp', 'roadmap-concept']
+    },
+    'gov': {
+      name: 'Governance & Compliance',
+      keys: ['gov-gdpr', 'gov-riforma']
+    },
+    'mod': {
+      name: 'Moduli Operativi',
+      keys: ['mod-01', 'mod-02', 'mod-03', 'mod-04']
+    }
+  };
+
   const DATA = {
     // --- ROADMAP ---
     'roadmap-live': {
+      group: 'roadmap',
       category: 'Roadmap · 2026',
       accent: 'azzurro',
       title: 'Elisee Scout: Piattaforma live',
@@ -32,17 +48,17 @@
       steps: [
         {
           num: '01',
-          title: 'Registrazione e Validazione Anti-Fake',
+          title: 'Registrazione e validazione anti-fake',
           desc: 'Ogni atleta e professionista allega documento di riconoscimento e selfie per la verifica di identità obbligatoria entro 30 giorni.'
         },
         {
           num: '02',
-          title: 'Creazione Dossier & Telemetria GPS',
+          title: 'Creazione dossier & telemetria GPS',
           desc: 'Integrazione dei dati fisici e biometrici: velocità di picco (Vmax), minutaggio effettivo, video highlights ufficiali e storico tesseramenti.'
         },
         {
           num: '03',
-          title: 'Matchmaking B2B e Bacheca Annunci',
+          title: 'Matchmaking B2B e bacheca annunci',
           desc: 'Connessione diretta e trasparente tra società, direttori sportivi, scout e calciatori su scala nazionale, dalla Serie D alla Terza Categoria.'
         }
       ],
@@ -50,6 +66,7 @@
     },
 
     'roadmap-plan': {
+      group: 'roadmap',
       category: 'Roadmap · 2025',
       accent: 'azzurro',
       title: 'Business plan & 715 agenti IA',
@@ -69,17 +86,17 @@
       steps: [
         {
           num: '01',
-          title: 'Sviluppo Algoritmi di Matchmaking',
+          title: 'Sviluppo algoritmi di matchmaking',
           desc: 'Creazione degli agenti intelligenti per analizzare fabbisogni tecnici dei club e profili atleti compatibili per ruolo e categoria.'
         },
         {
           num: '02',
-          title: 'Mappatura Territoriale Completa',
+          title: 'Mappatura territoriale completa',
           desc: 'Censimento dei gironi regionali dall’Eccellenza alla Terza Categoria, con estrazione kit gara e colori sociali ufficiali.'
         },
         {
           num: '03',
-          title: 'Standardizzazione Contrattuale NOIF',
+          title: 'Standardizzazione contrattuale NOIF',
           desc: 'Allineamento dei moduli di ingaggio e svincolo alle normative federali e alla riforma del lavoro sportivo.'
         }
       ],
@@ -87,6 +104,7 @@
     },
 
     'roadmap-mvp': {
+      group: 'roadmap',
       category: 'Roadmap · 2024',
       accent: 'azzurro',
       title: 'Nucleo pillar 01–50',
@@ -106,17 +124,17 @@
       steps: [
         {
           num: '01',
-          title: 'Passaporto Atletico Digitale',
+          title: 'Passaporto atletico digitale',
           desc: 'Architettura del curriculum sportivo verificato per sostituire i tradizionali PDF non certificati.'
         },
         {
           num: '02',
-          title: 'Algoritmo Fuoriquota Under',
+          title: 'Algoritmo fuoriquota Under',
           desc: 'Calcolo automatico dell’eleggibilità per le annate obbligatorie nei campionati dilettantistici e giovanili.'
         },
         {
           num: '03',
-          title: 'Modulo Video 30s Highlights',
+          title: 'Modulo video 30s highlights',
           desc: 'Standardizzazione delle clip di gioco con tabellino di gara e metadati verificabili.'
         }
       ],
@@ -124,6 +142,7 @@
     },
 
     'roadmap-concept': {
+      group: 'roadmap',
       category: 'Roadmap · 2023',
       accent: 'azzurro',
       title: 'Concept marketplace calcio',
@@ -143,17 +162,17 @@
       steps: [
         {
           num: '01',
-          title: 'Analisi dei Fabbisogni dei Club',
+          title: 'Analisi dei fabbisogni dei club',
           desc: 'Rilevazione delle criticità nei provini, nelle chiamate a vuoto e nella mancanza di visibilità per i talenti di provincia.'
         },
         {
           num: '02',
-          title: 'Definizione dell’Architettura Etica',
+          title: 'Definizione dell’architettura etica',
           desc: 'Principio zero intermediari occulti: trasparenza contrattuale, safeguarding minori e tracciabilità di ogni contatto.'
         },
         {
           num: '03',
-          title: 'Stesura del Blueprint Tecnico',
+          title: 'Stesura del blueprint tecnico',
           desc: 'Pianificazione dei 1.386 pillar operativi a copertura di tutte le aree (societaria, tecnica, medica, scouting e legale).'
         }
       ],
@@ -162,9 +181,10 @@
 
     // --- GOVERNANCE & COMPLIANCE ---
     'gov-gdpr': {
+      group: 'gov',
       category: 'Governance & Compliance',
       accent: 'gold',
-      title: 'GDPR Art. 13/30 & Tutela Minori',
+      title: 'GDPR Art. 13/30 & tutela minori',
       lead: 'Quadro normativo europeo per il trattamento rigoroso dei dati sportivi, biometrici e sanitari, con consenso genitoriale obbligatorio per gli atleti minorenni e crittografia end-to-end.',
       stats: [
         { label: 'Conformità GDPR', val: 'Art. 13/30' },
@@ -181,17 +201,17 @@
       steps: [
         {
           num: '01',
-          title: 'Doppio Consenso per Minorenni',
+          title: 'Doppio consenso per minorenni',
           desc: 'Gli atleti under 18 possono pubblicare profili e video solo dopo la convalida documentale del genitore o tutore legale.'
         },
         {
           num: '02',
-          title: 'Isolamento Dati Sanitari e Medici',
+          title: 'Isolamento dati sanitari e medici',
           desc: 'I certificati di idoneità agonistica e le schede fisioterapiche sono protetti da permessi di visualizzazione strettamente riservati.'
         },
         {
           num: '03',
-          title: 'Tracciamento e Diritto alla Cancellazione',
+          title: 'Tracciamento e diritto alla cancellazione',
           desc: 'Pieno controllo da parte dell’utente sui propri dati, con possibilità di esportazione e cancellazione immediata conforme al GDPR.'
         }
       ],
@@ -199,9 +219,10 @@
     },
 
     'gov-riforma': {
+      group: 'gov',
       category: 'Governance & Compliance',
       accent: 'gold',
-      title: 'Riforma dello Sport & Svincoli',
+      title: 'Riforma dello sport & svincoli',
       lead: 'Gestione trasparente dell’inquadramento contrattuale da lavoro sportivo, fascicolo telematico per svincoli ex Art. 107/108 NOIF e pieno rispetto dei regolamenti FIGC.',
       stats: [
         { label: 'Normativa NOIF', val: 'Art. 107/108' },
@@ -218,17 +239,17 @@
       steps: [
         {
           num: '01',
-          title: 'Monitoraggio Date di Svincolo',
+          title: 'Monitoraggio date di svincolo',
           desc: 'Notifiche automatiche e gestione chiara delle finestre temporali per gli svincoli per accordo (Art. 108) e inattività (Art. 107).'
         },
         {
           num: '02',
-          title: 'Inquadramento del Lavoratore Sportivo',
+          title: 'Inquadramento del lavoratore sportivo',
           desc: 'Template e modelli conformi per collaborazioni coordinate e continuative sportive, rimborsi forfettari e contratti di prestazione.'
         },
         {
           num: '03',
-          title: 'Tutela dei Procuratori Iscritti',
+          title: 'Tutela dei procuratori iscritti',
           desc: 'Accesso all’Hub di Mercato consentito solo ad agenti sportivi iscritti al registro federale FIGC / CONI.'
         }
       ],
@@ -237,6 +258,7 @@
 
     // --- LA PIATTAFORMA PER IL CALCIO (MODULI 01-04) ---
     'mod-01': {
+      group: 'mod',
       category: 'Modulo Operativo 01',
       accent: 'azzurro',
       title: 'Bacheca annunci & provini',
@@ -256,17 +278,17 @@
       steps: [
         {
           num: '01',
-          title: 'Pubblicazione Selezionata',
+          title: 'Pubblicazione selezionata',
           desc: 'I club pubblicano le esigenze di rosa specificando categoria, benefit (es. vitto e alloggio, rimborso spese) e requisiti tattici.'
         },
         {
           num: '02',
-          title: 'Candidatura con 1 Click',
+          title: 'Candidatura con 1 click',
           desc: 'I calciatori verificati inviano il passaporto atletico con statistiche, video highlights e referenze tecniche.'
         },
         {
           num: '03',
-          title: 'Gestione Provini e Convocazioni',
+          title: 'Gestione provini e convocazioni',
           desc: 'I direttori sportivi valutano le candidature in un pannello dedicato e fissano i provini ufficiali sul campo.'
         }
       ],
@@ -277,6 +299,7 @@
     },
 
     'mod-02': {
+      group: 'mod',
       category: 'Modulo Operativo 02',
       accent: 'azzurro',
       title: 'Mappa interattiva 2.900+ club',
@@ -296,17 +319,17 @@
       steps: [
         {
           num: '01',
-          title: 'Ricerca Geografica per Raggio',
+          title: 'Ricerca geografica per raggio',
           desc: 'Imposta la tua posizione o seleziona una regione per scoprire tutti i club presenti nel raggio chilometrico desiderato.'
         },
         {
           num: '02',
-          title: 'Scheda Tecnica del Club',
+          title: 'Scheda tecnica del club',
           desc: 'Visualizza colori sociali, kit gara 2D, stadio, categoria di militanza e staff dirigenziale.'
         },
         {
           num: '03',
-          title: 'Pianificazione Trasferte & Provini',
+          title: 'Pianificazione trasferte & provini',
           desc: 'Calcola distanze e percorsi logistici per atleti e addetti ai lavori in cerca di opportunità territoriali.'
         }
       ],
@@ -317,6 +340,7 @@
     },
 
     'mod-03': {
+      group: 'mod',
       category: 'Modulo Operativo 03',
       accent: 'azzurro',
       title: 'Selettore squadre & kit ufficiali',
@@ -336,17 +360,17 @@
       steps: [
         {
           num: '01',
-          title: 'Selettore Rapido per Regione e Girone',
+          title: 'Selettore rapido per regione e girone',
           desc: 'Naviga visivamente tra le squadre con un’interfaccia fluida ispirata ai selettori dei migliori videogame calcistici.'
         },
         {
           num: '02',
-          title: 'Anteprima Divise Ufficiali',
+          title: 'Anteprima divise ufficiali',
           desc: 'Visualizza fedelmente maglia, pantaloncini e calzettoni di ogni società per la stagione in corso.'
         },
         {
           num: '03',
-          title: 'Personalizzazione Card Atleta',
+          title: 'Personalizzazione card atleta',
           desc: 'La maglia della squadra di appartenenza viene integrata automaticamente nella card ufficiale del calciatore.'
         }
       ],
@@ -357,6 +381,7 @@
     },
 
     'mod-04': {
+      group: 'mod',
       category: 'Modulo Operativo 04',
       accent: 'azzurro',
       title: 'Network scout, agenti & società',
@@ -376,17 +401,17 @@
       steps: [
         {
           num: '01',
-          title: 'Scouting Silenzioso (Secret List)',
+          title: 'Scouting silenzioso (Secret List)',
           desc: 'I DS e gli osservatori possono monitorare calciatori in lista riservata senza generare notifiche o speculazioni.'
         },
         {
           num: '02',
-          title: 'Confronto Schede Tecniche IA',
+          title: 'Confronto schede tecniche IA',
           desc: 'Algoritmi di comparazione tra atleti per parametrizzare velocità, gol attesi, minutaggio e affidabilità fisica.'
         },
         {
           num: '03',
-          title: 'Chiusura Accordi e Wall Ufficiale',
+          title: 'Chiusura accordi e Wall ufficiale',
           desc: 'Registrazione dei trasferimenti andati a buon fine con pubblicazione celebrativa sul Wall stile FIFA.'
         }
       ],
@@ -423,7 +448,7 @@
 
     document.body.appendChild(overlayEl);
 
-    // Event listeners su overlay
+    // Event listeners su overlay (chiusura su click sfondo)
     overlayEl.addEventListener('click', function (e) {
       if (e.target === overlayEl) {
         closeAboutDetail();
@@ -441,9 +466,21 @@
     if (!item) return;
 
     const isGold = item.accent === 'gold';
-    const catClass = isGold ? 'cat-gold' : 'cat-azzurro';
     const statClass = isGold ? 'stat-gold' : '';
     const stepClass = isGold ? 'step-gold' : '';
+    const breadcrumbCatClass = isGold ? 'cat-gold' : 'cat-azzurro';
+
+    // Calcolo Breadcrumb e Sequenza Precedente / Successivo
+    const groupDef = GROUPS[item.group] || { name: 'Dettaglio', keys: [itemKey] };
+    const groupKeys = groupDef.keys;
+    const currentIndex = groupKeys.indexOf(itemKey);
+    const totalInGroup = groupKeys.length;
+
+    const prevKey = currentIndex > 0 ? groupKeys[currentIndex - 1] : null;
+    const nextKey = currentIndex < totalInGroup - 1 ? groupKeys[currentIndex + 1] : null;
+
+    const prevItem = prevKey ? DATA[prevKey] : null;
+    const nextItem = nextKey ? DATA[nextKey] : null;
 
     // Statistiche HTML
     const statsHtml = item.stats.map(s => `
@@ -453,15 +490,7 @@
       </div>
     `).join('');
 
-    // Avanzamento a puntini HTML
-    const progressHtml = item.progress.map(p => `
-      <div class="about-detail-dot-step ${p.done ? 'is-done' : ''} ${stepClass}">
-        <span class="about-detail-dot-indicator"></span>
-        <span class="about-detail-dot-label">${p.label}</span>
-      </div>
-    `).join('');
-
-    // Come funziona - Step HTML
+    // Come funziona - Step HTML (Clean Hairline, No Box)
     const stepsHtml = item.steps.map(step => `
       <div class="about-detail-step-item ${stepClass}">
         <span class="about-detail-step-num">${step.num}</span>
@@ -482,6 +511,35 @@
       `;
     }
 
+    // Navigazione Sequenziale Precedente / Successivo HTML
+    const navButtonsHtml = `
+      <div class="about-detail-seq-nav">
+        ${prevItem ? `
+          <button type="button" class="about-detail-nav-card is-prev" data-nav-key="${prevKey}" title="Vai a: ${prevItem.title}">
+            <span class="about-detail-nav-arrow">←</span>
+            <div class="about-detail-nav-text">
+              <span class="about-detail-nav-micro">Precedente</span>
+              <span class="about-detail-nav-name">${prevItem.title}</span>
+            </div>
+          </button>
+        ` : `
+          <div class="about-detail-nav-spacer"></div>
+        `}
+
+        ${nextItem ? `
+          <button type="button" class="about-detail-nav-card is-next" data-nav-key="${nextKey}" title="Vai a: ${nextItem.title}">
+            <div class="about-detail-nav-text text-right">
+              <span class="about-detail-nav-micro">Successivo</span>
+              <span class="about-detail-nav-name">${nextItem.title}</span>
+            </div>
+            <span class="about-detail-nav-arrow">→</span>
+          </button>
+        ` : `
+          <div class="about-detail-nav-spacer"></div>
+        `}
+      </div>
+    `;
+
     const html = `
       <div class="about-detail-topbar">
         <button type="button" class="about-detail-back-btn" id="about-detail-back-btn">
@@ -493,6 +551,11 @@
       </div>
 
       <div class="about-detail-header">
+        <div class="about-detail-breadcrumb">
+          <span class="about-detail-breadcrumb-group ${breadcrumbCatClass}">${groupDef.name}</span>
+          <span class="about-detail-breadcrumb-sep">·</span>
+          <span class="about-detail-breadcrumb-pos">${currentIndex + 1} di ${totalInGroup}</span>
+        </div>
         <h2 class="about-detail-title">${item.title}</h2>
         <p class="about-detail-lead">${item.lead}</p>
       </div>
@@ -509,6 +572,8 @@
           ${stepsHtml}
         </div>
       </div>
+
+      ${navButtonsHtml}
 
       <div class="about-detail-action-footer">
         <button type="button" class="about-detail-back-btn" id="about-detail-bottom-back-btn">
@@ -532,6 +597,21 @@
       if (bottomBackBtn) bottomBackBtn.addEventListener('click', closeAboutDetail);
       if (closeBtn) closeBtn.addEventListener('click', closeAboutDetail);
 
+      // Listener navigazione Precedente / Successivo
+      const navCards = box.querySelectorAll('.about-detail-nav-card[data-nav-key]');
+      navCards.forEach(btn => {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          const targetKey = this.getAttribute('data-nav-key');
+          if (targetKey && DATA[targetKey]) {
+            renderDetailContent(targetKey);
+            // Scroll fluido all'inizio dell'overlay
+            const overlay = document.getElementById('about-detail-overlay');
+            if (overlay) overlay.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        });
+      });
+
       if (actionBtn && item.action) {
         actionBtn.addEventListener('click', function () {
           closeAboutDetail();
@@ -553,6 +633,7 @@
     renderDetailContent(itemKey);
 
     overlay.classList.add('is-active');
+    overlay.scrollTo({ top: 0 });
     document.body.style.overflow = 'hidden';
 
     // Focus sul pulsante indietro per accessibilità
