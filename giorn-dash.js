@@ -560,110 +560,365 @@
     if (typeof window.showToast === 'function') window.showToast('Scheda calciatore: ' + tag.name, 'success');
   }
 
-  function feedCard(it) {
-    var tags = (it.tags || []).map(function (t) {
-      return '<button type="button" class="es-gd-chip" data-st-tag="' + encodeURIComponent(JSON.stringify({ kind: t.kind, id: t.id, name: t.name })) + '">' +
-        esc(t.kind === 'club' ? 'Club' : 'Scheda') + ' · ' + esc(t.name) + '</button>';
-    }).join(' ');
-    var poll = '';
-    if (it.type === 'poll' && it.pollOptions) {
-      var total = it.pollOptions.reduce(function (a, o) { return a + (o.votes || 0); }, 0);
-      poll = '<div class="es-st-poll">' + it.pollOptions.map(function (o, i) {
-        var pct = total ? Math.round((o.votes || 0) * 100 / total) : 0;
-        return '<button type="button" data-st-vote="' + esc(it.id) + '" data-st-opt="' + i + '">' + esc(o.text) +
-          ' <span style="color:#38bdf8;float:right">' + pct + '% · ' + (o.votes || 0) + '</span></button>';
-      }).join('') + '</div>';
+  var activeMacroTab = 'rassegna'; // 'rassegna' | 'ufficiostampa'
+  var activeCategory = 'all'; // 'all' | 'mercato' | 'club' | 'giovanile' | 'riforma' | 'competizioni'
+  var rassegnaSearchQ = '';
+
+  var RASSEGNA_ITEMS = [
+    {
+      id: 'rs-1',
+      category: 'mercato',
+      categoryLabel: 'Mercato',
+      title: 'Serie D & Eccellenza: i fuoriquota più richiesti e le strategie di mercato',
+      excerpt: 'Riflettori puntati sui migliori prospetti under classe 2005, 2006 e 2007. I Direttori Sportivi monitorano costantemente il rendimento atletico e i report di scouting per i trasferimenti stagionali.',
+      source: 'Sky Sport Calcio',
+      sourceUrl: 'https://sport.sky.it/calcio',
+      date: '07 Set 2026',
+      tag: { kind: 'club', id: 'cl-foggia', name: 'Calcio Foggia 1920' }
+    },
+    {
+      id: 'rs-2',
+      category: 'riforma',
+      categoryLabel: 'Riforma dello Sport',
+      title: 'Lavoro Sportivo nei Dilettanti: vademecum operativo su contratti, tutele e compensi',
+      excerpt: 'Pubblicate le circolari applicative per atleti, istruttori e collaboratori gestionali: tutte le disposizioni su premi di preparazione, svincoli e semplificazioni telematiche.',
+      source: 'FIGC / LND Ufficiale',
+      sourceUrl: 'https://www.lnd.it',
+      date: '06 Set 2026',
+      tag: { kind: 'player', id: 'pl-Marco Rossi', name: 'Marco Rossi' }
+    },
+    {
+      id: 'rs-3',
+      category: 'giovanile',
+      categoryLabel: 'Settore Giovanile',
+      title: 'Juniores e Under 17: la crescita dei vivai italiani e l\'impatto dei dati GPS',
+      excerpt: 'L\'analisi dei campionati giovanili evidenzia un incremento dell\'intensità di gioco e un utilizzo capillare della match analysis per la prevenzione e la crescita tecnica dei talenti.',
+      source: 'Notiziario del Calcio',
+      sourceUrl: 'https://www.notiziariocalcio.com',
+      date: '05 Set 2026',
+      tag: { kind: 'player', id: 'pl-Roberto Barbieri', name: 'Roberto Barbieri' }
+    },
+    {
+      id: 'rs-4',
+      category: 'club',
+      categoryLabel: 'Club',
+      title: 'Modelli di Gestione Sostenibile: digitalizzazione e strutture nei campionati regionali',
+      excerpt: 'Focus sulle società virtuose che investono nell\'innovazione e nella valorizzazione del territorio per garantire continuità sportiva ed equilibrio economico.',
+      source: 'Calcio e Finanza',
+      sourceUrl: 'https://www.calcioefinanza.it',
+      date: '04 Set 2026',
+      tag: { kind: 'club', id: 'cl-serie-d', name: 'Lega Nazionale Dilettanti' }
+    },
+    {
+      id: 'rs-5',
+      category: 'competizioni',
+      categoryLabel: 'Competizioni',
+      title: 'Coppa Italia e Campionati Nazionali: regolamenti, date chiave e format promozioni',
+      excerpt: 'Definito il quadro della fase a eliminazione diretta e i criteri di accesso agli spareggi promozione tra le prime classificate dei massimi tornei dilettantistici.',
+      source: 'La Gazzetta dello Sport',
+      sourceUrl: 'https://www.gazzetta.it/Calcio',
+      date: '03 Set 2026',
+      tag: null
+    },
+    {
+      id: 'rs-6',
+      category: 'mercato',
+      categoryLabel: 'Mercato',
+      title: 'Trattative e Secret List: come gli scout professionisti scovano talenti nei dilettanti',
+      excerpt: 'Il passaggio dal calcio regionale ai campionati professionistici: interviste ai responsabili scouting sull\'impiego di dossier digitali e video analitici.',
+      source: 'TuttoCampo.it',
+      sourceUrl: 'https://www.tuttocampo.it',
+      date: '02 Set 2026',
+      tag: { kind: 'player', id: 'pl-Lorenzo Bianchi', name: 'Lorenzo Bianchi' }
     }
-    var video = it.type === 'video' ? videoHtml(it.videoUrl) : '';
-    var kind = it.type === 'poll' ? 'Sondaggio' : (it.type === 'video' ? 'Video' : 'Articolo');
-    return '<article class="es-st-card">' +
-      '<div class="es-st-meta">' + esc(kind) + ' · ' + esc(geoText(it.geo)) + ' · ' + esc(it.authorName || 'Redazione') +
-      ' · ' + esc(fmtDate(it.createdAt)) + '</div>' +
-      '<h3>' + esc(it.title) + '</h3>' +
-      (it.body ? '<div class="es-st-body">' + esc(it.body) + '</div>' : '') +
-      (tags ? '<div class="es-gd-tags" style="margin-top:0.7rem">' + tags + '</div>' : '') +
-      poll + video +
-      '</article>';
+  ];
+
+  var COMUNICATI_UFFICIALI = [
+    {
+      id: 'com-04',
+      date: '05 SET 2026',
+      title: 'Comunicato Ufficiale N. 04/2026 — Rilascio Elisee Scout v3.0 e Rete Anti-Fake',
+      text: 'Presentazione ufficiale della release di produzione della piattaforma: integrati 3.130 agenti IA, dossier verificati con verifica dell\'identità a doppio fattore e conformità GDPR Art. 22.',
+      docTitle: 'Scarica PDF (240 KB)'
+    },
+    {
+      id: 'com-03',
+      date: '28 AGO 2026',
+      title: 'Comunicato Ufficiale N. 03/2026 — Protocollo di Digitalizzazione Calcio Territoriale',
+      text: 'Accordo per la standardizzazione dei report prestazionali GPS e delle schede tecniche condivise per club di Serie D, Eccellenza e Promozione.',
+      docTitle: 'Scarica PDF (180 KB)'
+    },
+    {
+      id: 'com-02',
+      date: '15 AGO 2026',
+      title: 'Comunicato Ufficiale N. 02/2026 — Linee Guida per il Trattamento Dati Biometrici',
+      text: 'Approvato il documento programmatico sulla tutela dei dati sanitari, atletici e delle metriche video con crittografia end-to-end e chat referente privacy.',
+      docTitle: 'Scarica PDF (310 KB)'
+    },
+    {
+      id: 'com-01',
+      date: '01 AGO 2026',
+      title: 'Comunicato Ufficiale N. 01/2026 — Apertura Accreditamenti Stampa e Media Kit 2026/27',
+      text: 'Attivazione del desk giornalisti con rilascio del pacchetto di asset grafici ufficiali, linee guida brand e canali dedicati per interviste.',
+      docTitle: 'Scarica PDF (150 KB)'
+    }
+  ];
+
+  var MEDIA_KIT_ITEMS = [
+    {
+      id: 'mk-1',
+      icon: '🎨',
+      title: 'Loghi Ufficiali & Brand Asset',
+      desc: 'Pacchetto loghi vettoriali SVG, versioni Dark e Light in PNG ad altissima risoluzione con trasparenza e favicon ufficiali.',
+      meta: 'ZIP · 2.4 MB',
+      file: 'immagini/logo/logo-site.png'
+    },
+    {
+      id: 'mk-2',
+      icon: '📱',
+      title: 'Screenshot UI & Mockup HD',
+      desc: 'Catture in risoluzione 4K dell\'interfaccia: dashboard scouting, bacheca annunci di reclutamento e dossier analitico calciatore.',
+      meta: 'ZIP · 8.1 MB',
+      file: 'immagini/01-home-hero/hero-workspace.jpg'
+    },
+    {
+      id: 'mk-3',
+      icon: '📄',
+      title: 'Executive One-Pager & Factsheet',
+      desc: 'Presentazione corporate in formato PDF: metriche di piattaforma, 3.130 agenti IA, copertura dei campionati e standard di sicurezza.',
+      meta: 'PDF · 1.2 MB',
+      file: '#'
+    },
+    {
+      id: 'mk-4',
+      icon: '📘',
+      title: 'Brand & Editorial Guidelines',
+      desc: 'Linee guida d\'uso del marchio, palette colori ufficiali (HEX/Pantone), tipografia Outfit/Inter e regole di attribuzione stampa.',
+      meta: 'PDF · 950 KB',
+      file: '#'
+    }
+  ];
+
+  function renderRassegnaCards(items) {
+    if (!items || items.length === 0) {
+      return '<div class="es-st-empty">Nessuna notizia trovata per la categoria o la ricerca selezionata.</div>';
+    }
+    return items.map(function (it) {
+      var catClass = 'cat-' + (it.category || 'mercato');
+      var tagHtml = '';
+      if (it.tag) {
+        tagHtml = '<button type="button" class="es-gd-chip" data-st-tag="' + encodeURIComponent(JSON.stringify(it.tag)) + '" style="margin-left:auto;">' +
+          esc(it.tag.kind === 'club' ? 'Club' : 'Scheda') + ' · ' + esc(it.tag.name) + '</button>';
+      }
+      return '<article class="es-st-card">' +
+        '<div class="es-st-card-top">' +
+        '<span class="es-st-badge-cat ' + esc(catClass) + '">' + esc(it.categoryLabel || it.category) + '</span>' +
+        '<span class="es-st-card-date">' + esc(it.date) + '</span>' +
+        '</div>' +
+        '<h3>' + esc(it.title) + '</h3>' +
+        '<p class="es-st-excerpt">' + esc(it.excerpt) + '</p>' +
+        '<div class="es-st-card-footer">' +
+        '<span class="es-st-source-badge">' +
+        '<span class="es-st-source-icon">📰</span> ' + esc(it.source) +
+        '</span>' +
+        tagHtml +
+        '<a href="' + esc(it.sourceUrl) + '" target="_blank" rel="noopener noreferrer" class="es-st-read-more" title="Apri l\'articolo originale su ' + esc(it.source) + '">' +
+        'Leggi tutto ↗' +
+        '</a>' +
+        '</div>' +
+        '</article>';
+    }).join('');
+  }
+
+  function renderUfficioStampaHTML() {
+    // Blocco 1: Comunicati Ufficiali (stile Chi siamo con divisori)
+    var comHtml = COMUNICATI_UFFICIALI.map(function (c) {
+      return '<div class="es-us-release-row">' +
+        '<div><span class="es-us-date-pill">' + esc(c.date) + '</span></div>' +
+        '<div class="es-us-release-content">' +
+        '<h3>' + esc(c.title) + '</h3>' +
+        '<p>' + esc(c.text) + '</p>' +
+        '</div>' +
+        '<div class="es-us-release-action">' +
+        '<button type="button" class="es-us-btn-doc" onclick="if(window.showToast)window.showToast(\'Download comunicato: ' + esc(c.title).replace(/'/g, "\\'") + '\', \'info\');">' +
+        '📄 ' + esc(c.docTitle) + '</button>' +
+        '</div>' +
+        '</div>';
+    }).join('');
+
+    // Blocco 2: Media Kit (griglia card)
+    var kitHtml = MEDIA_KIT_ITEMS.map(function (m) {
+      return '<div class="es-us-kit-card">' +
+        '<div class="es-us-kit-icon-wrap">' + m.icon + '</div>' +
+        '<h4>' + esc(m.title) + '</h4>' +
+        '<p>' + esc(m.desc) + '</p>' +
+        '<div class="es-us-kit-meta">' +
+        '<span>' + esc(m.meta) + '</span>' +
+        '<span style="color:#38bdf8;">Pronto al download</span>' +
+        '</div>' +
+        '<a href="' + esc(m.file) + '" download class="es-us-btn-download" onclick="if(window.showToast)window.showToast(\'Download avviato: ' + esc(m.title).replace(/'/g, "\\'") + '\', \'success\');">' +
+        '⬇ Scarica Asset' +
+        '</a>' +
+        '</div>';
+    }).join('');
+
+    // Blocco 3: Contatti Stampa (blocco unico)
+    var contactHtml = '<div class="es-us-contact-box">' +
+      '<div style="border-bottom:1px solid rgba(56,189,248,0.2); padding-bottom:0.85rem;">' +
+      '<span class="es-st-kicker">Relazioni Esterne & Accrediti</span>' +
+      '<h3 style="margin:0.25rem 0 0; color:#fff; font-size:1.35rem; font-weight:800;">Desk Stampa & Media Relations</h3>' +
+      '<p style="margin:0.35rem 0 0; color:#94a3b8; font-size:0.88rem;">Canale riservato a giornalisti, testate sportive, redazioni TV e content creator accreditati.</p>' +
+      '</div>' +
+      '<div class="es-us-contact-grid">' +
+      '<div class="es-us-contact-item">' +
+      '<span class="es-us-contact-label">Email Ufficio Stampa</span>' +
+      '<div class="es-us-email-row">' +
+      '<a href="mailto:stampa@elisee-scout.it" style="color:#38bdf8; text-decoration:none; font-weight:700; font-size:0.95rem;">stampa@elisee-scout.it</a>' +
+      '<button type="button" class="es-us-copy-btn" onclick="navigator.clipboard.writeText(\'stampa@elisee-scout.it\'); if(window.showToast)window.showToast(\'Email stampa copiata negli appunti!\', \'success\');">Copia</button>' +
+      '</div>' +
+      '<span class="es-us-contact-sub">Canale prioritario per comunicazioni e rettifiche</span>' +
+      '</div>' +
+      '<div class="es-us-contact-item">' +
+      '<span class="es-us-contact-label">Tempi di Risposta</span>' +
+      '<span class="es-us-contact-val">Entro 4-6 ore</span>' +
+      '<span class="es-us-contact-sub">Garantiti per redazioni e testate registrate</span>' +
+      '</div>' +
+      '<div class="es-us-contact-item">' +
+      '<span class="es-us-contact-label">Sede & Desk Operativo</span>' +
+      '<span class="es-us-contact-val">Italia (Roma / Foggia / Milano)</span>' +
+      '<span class="es-us-contact-sub">Desk digitale H24 per comunicati e materiali</span>' +
+      '</div>' +
+      '<div class="es-us-contact-item">' +
+      '<span class="es-us-contact-label">Richiesta Interviste & Dati</span>' +
+      '<a href="mailto:stampa@elisee-scout.it?subject=Richiesta%20Intervista%20/%20Dati%20Scouting" class="es-us-btn-download" style="margin-top:0.2rem; text-align:center;">' +
+      '✉ Richiedi Intervista o Dati' +
+      '</a>' +
+      '</div>' +
+      '</div>' +
+      '</div>';
+
+    return '<div class="es-us-block">' +
+      '<div class="es-us-block-head">' +
+      '<h2><span>📜</span> Comunicati Ufficiali</h2>' +
+      '<p>Documenti e note istituzionali rilasciate da Elisee Scout</p>' +
+      '</div>' +
+      '<div class="es-us-releases-list">' + comHtml + '</div>' +
+      '</div>' +
+      '<div class="es-us-block">' +
+      '<div class="es-us-block-head">' +
+      '<h2><span>📦</span> Media Kit Ufficiale</h2>' +
+      '<p>Asset grafici, presentazioni aziendali e linee guida brand per la stampa</p>' +
+      '</div>' +
+      '<div class="es-us-kit-grid">' + kitHtml + '</div>' +
+      '</div>' +
+      '<div class="es-us-block" style="margin-bottom:0;">' +
+      '<div class="es-us-block-head">' +
+      '<h2><span>📞</span> Contatti Stampa</h2>' +
+      '<p>Canali diretti per giornalisti, redazioni e media partner</p>' +
+      '</div>' +
+      contactHtml +
+      '</div>';
   }
 
   function renderFeed(host) {
     host = host || document.getElementById('stampa-portal');
     if (!host) return;
-    var u = userObj();
-    var q = ((document.getElementById('es-st-q') || {}).value || '').toLowerCase();
-    var geo = ((document.getElementById('es-st-geo') || {}).value || '');
-    var kind = ((document.getElementById('es-st-kind') || {}).value || '');
-    var rows = loadItems().filter(function (it) { return it.status === 'approved'; });
-    if (kind) rows = rows.filter(function (it) { return it.type === kind; });
-    if (geo) rows = rows.filter(function (it) { return geoText(it.geo).toLowerCase().indexOf(geo.toLowerCase()) >= 0 || (it.geo && it.geo.level === geo); });
-    if (q) rows = rows.filter(function (it) {
-      return (it.title + ' ' + (it.body || '') + ' ' + (it.authorName || '')).toLowerCase().indexOf(q) >= 0;
-    });
-    var staffBtn = isStaffMod(u)
-      ? '<button type="button" class="es-gd-ghost" style="width:auto;padding:0.45rem 0.9rem" id="es-st-open-mod">Pannello moderazione</button>'
-      : '';
-    var list = rows.length ? rows.map(feedCard).join('') : '<div class="es-st-empty">Nessun contenuto approvato. La redazione locale apparirà qui dopo il via libera dello staff.</div>';
+
+    var filteredRassegna = RASSEGNA_ITEMS.slice();
+    if (activeCategory && activeCategory !== 'all') {
+      filteredRassegna = filteredRassegna.filter(function (it) {
+        return it.category === activeCategory;
+      });
+    }
+    if (rassegnaSearchQ) {
+      var sq = rassegnaSearchQ.toLowerCase();
+      filteredRassegna = filteredRassegna.filter(function (it) {
+        return (it.title + ' ' + it.excerpt + ' ' + it.source + ' ' + (it.categoryLabel || '')).toLowerCase().indexOf(sq) >= 0;
+      });
+    }
+
+    var macroTabsHtml = '<div class="es-stampa-nav-wrap">' +
+      '<div class="es-stampa-nav" role="tablist">' +
+      '<button type="button" class="es-stampa-tab ' + (activeMacroTab === 'rassegna' ? 'is-active' : '') + '" data-st-macro="rassegna">' +
+      '<span>📰</span> Rassegna Stampa' +
+      '</button>' +
+      '<button type="button" class="es-stampa-tab ' + (activeMacroTab === 'ufficiostampa' ? 'is-active' : '') + '" data-st-macro="ufficiostampa">' +
+      '<span>🏛️</span> Ufficio Stampa & Media Kit' +
+      '</button>' +
+      '</div>' +
+      '</div>';
+
+    var bodyContent = '';
+    if (activeMacroTab === 'rassegna') {
+      bodyContent = '<div class="es-st-toolbar-row">' +
+        '<div class="es-st-search-bar">' +
+        '<span style="color:#38bdf8; margin-right:0.45rem; font-size:1rem;">🔍</span>' +
+        '<input type="text" id="es-st-search-input" placeholder="Cerca nella rassegna stampa per titolo, parola chiave o fonte..." value="' + esc(rassegnaSearchQ) + '" autocomplete="off">' +
+        '</div>' +
+        '<div class="es-st-category-pills">' +
+        '<button type="button" class="es-st-cat-btn ' + (activeCategory === 'all' ? 'is-active' : '') + '" data-st-cat="all">Tutte le notizie</button>' +
+        '<button type="button" class="es-st-cat-btn ' + (activeCategory === 'mercato' ? 'is-active' : '') + '" data-st-cat="mercato">Mercato</button>' +
+        '<button type="button" class="es-st-cat-btn ' + (activeCategory === 'club' ? 'is-active' : '') + '" data-st-cat="club">Club</button>' +
+        '<button type="button" class="es-st-cat-btn ' + (activeCategory === 'giovanile' ? 'is-active' : '') + '" data-st-cat="giovanile">Settore giovanile</button>' +
+        '<button type="button" class="es-st-cat-btn ' + (activeCategory === 'riforma' ? 'is-active' : '') + '" data-st-cat="riforma">Riforma dello Sport</button>' +
+        '<button type="button" class="es-st-cat-btn ' + (activeCategory === 'competizioni' ? 'is-active' : '') + '" data-st-cat="competizioni">Competizioni</button>' +
+        '</div>' +
+        '</div>' +
+        '<div class="es-st-grid">' + renderRassegnaCards(filteredRassegna) + '</div>' +
+        '<div class="es-st-copyright-notice">' +
+        'ℹ️ <strong>Nota sul Copyright Editoriale</strong>: La rassegna stampa aggrega estratti brevi a scopo informativo nel rispetto dei diritti editoriali, rimandando con link diretto alla fonte originale.' +
+        '</div>';
+    } else {
+      bodyContent = renderUfficioStampaHTML();
+    }
+
     host.innerHTML = '<div class="es-st-wrap">' +
-      '<p class="es-st-kicker">Elisee Scout</p>' +
-      '<h1>Stampa locale</h1>' +
-      '<p class="es-st-sub">Articoli, sondaggi e video del territorio. Clicca una scheda per aprire il calciatore o il club.</p>' +
-      '<div class="es-st-toolbar">' +
-      '<input id="es-st-q" placeholder="Cerca titolo, testo, autore" value="' + esc((document.getElementById('es-st-q') || {}).value || '') + '">' +
-      '<select id="es-st-kind"><option value="">Tutti i formati</option><option value="article">Articoli</option><option value="poll">Sondaggi</option><option value="video">Video</option></select>' +
-      '<select id="es-st-geo"><option value="">Copertura</option><option value="citta">Città</option><option value="provincia">Provincia</option><option value="regione">Regione</option><option value="nazionale">Nazionale</option></select>' +
-      staffBtn +
-      '</div>' + list + '</div>';
-    var kEl = document.getElementById('es-st-kind');
-    if (kEl) kEl.value = kind;
-    var gEl = document.getElementById('es-st-geo');
-    if (gEl) gEl.value = geo;
+      '<div class="es-st-header">' +
+      '<span class="es-st-kicker">Elisee Scout · Media Room</span>' +
+      '<h1>Area Stampa & Comunicazione</h1>' +
+      '<p class="es-st-sub">Rassegna di attualità calcistica per utenti e desk ufficiale con comunicati, media kit e contatti per le redazioni.</p>' +
+      macroTabsHtml +
+      '</div>' +
+      bodyContent +
+      '</div>';
+
     if (!host.dataset.stBound) {
       host.dataset.stBound = '1';
       host.addEventListener('click', onFeedClick);
-      host.addEventListener('change', function (e) {
-        if (e.target && (e.target.id === 'es-st-kind' || e.target.id === 'es-st-geo')) renderFeed(host);
-      });
       host.addEventListener('input', function (e) {
-        if (e.target && e.target.id === 'es-st-q') renderFeed(host);
+        if (e.target && e.target.id === 'es-st-search-input') {
+          rassegnaSearchQ = e.target.value;
+          renderFeed(host);
+          var newInput = document.getElementById('es-st-search-input');
+          if (newInput) {
+            newInput.focus();
+            newInput.setSelectionRange(newInput.value.length, newInput.value.length);
+          }
+        }
       });
     }
   }
+
   function onFeedClick(e) {
-    if (e.target && e.target.id === 'es-st-open-mod') {
-      openModeration();
+    var macroBtn = e.target.closest('[data-st-macro]');
+    if (macroBtn) {
+      activeMacroTab = macroBtn.getAttribute('data-st-macro') || 'rassegna';
+      renderFeed();
       return;
     }
+
+    var catBtn = e.target.closest('[data-st-cat]');
+    if (catBtn) {
+      activeCategory = catBtn.getAttribute('data-st-cat') || 'all';
+      renderFeed();
+      return;
+    }
+
     var tag = e.target.closest('[data-st-tag]');
     if (tag) {
       try { openTag(JSON.parse(decodeURIComponent(tag.getAttribute('data-st-tag') || ''))); } catch (_) {}
       return;
     }
-    var vote = e.target.closest('[data-st-vote]');
-    if (vote) {
-      votePoll(vote.getAttribute('data-st-vote'), parseInt(vote.getAttribute('data-st-opt'), 10) || 0);
-    }
-  }
-  function votePoll(id, opt) {
-    var u = userObj();
-    var em = emailOf(u);
-    if (!em) {
-      if (typeof window.showToast === 'function') window.showToast('Accedi per votare il sondaggio.', 'error');
-      return;
-    }
-    var rows = loadItems();
-    var it = null;
-    for (var i = 0; i < rows.length; i++) if (rows[i].id === id) it = rows[i];
-    if (!it || !it.pollOptions || !it.pollOptions[opt]) return;
-    it.voters = it.voters || {};
-    if (it.voters[em] != null) {
-      if (typeof window.showToast === 'function') window.showToast('Hai già votato questo sondaggio.', 'error');
-      return;
-    }
-    it.voters[em] = opt;
-    it.pollOptions[opt].votes = (it.pollOptions[opt].votes || 0) + 1;
-    it.updatedAt = nowIso();
-    saveItems(rows);
-    renderFeed();
   }
 
   function openModeration() {

@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Fix Routing e Render Portale Pubblico Stampa (`#stampa-portal` / `view-stampa`)** — Risolta l'assenza di `view-stampa` in `VIEW_IDS` e aggiunto il branch per la vista `stampa` in `coreSwitchView` (router veloce inline). Aggiunti articoli, sondaggi e contenuti di redazione predefiniti in `giorn-dash.js`. Cache `STAMPA1`.
-Feature precedente: **Motore Autonomo & Event Delegation per Autocompletamento Comuni Italiani** — Cache `COMUNI4`.
+Ultimo fatto: **Nuova Architettura Area Stampa a Due Macro-Blocchi (Rassegna Stampa & Ufficio Stampa)** — 1) Rassegna Stampa con filtri categoria (Mercato, Club, Settore giovanile, Riforma dello Sport, Competizioni), ricerca, estratti brevi e link alle fonti nel pieno rispetto del copyright editoriale; 2) Ufficio Stampa con 3 blocchi verticali (Comunicati ufficiali in stile Chi siamo, Media kit con card asset scaricabili e Contatti stampa unificati con email, sede e tempi di risposta garantiti). Cache `STAMPA2`.
+Feature precedente: **Fix Routing e Render Portale Pubblico Stampa** — Cache `STAMPA1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
