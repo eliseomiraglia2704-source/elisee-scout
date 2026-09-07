@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Unificazione Barre Oro Colonna Governance (Chi Siamo)** — Impostata la barra laterale oro (`#D9A94D`) anche sul blocco 'Pillar trasversali di rete', rendendo omogenea al 100% la colonna Governance & Conformità in linea con i due blocchi sovrastanti (GDPR e Riforma dello Sport). Cache `GOVGOLD1`.
-Feature precedente: **Rimozione Prefissi Anno dai Titoli Roadmap (Chi Siamo)** — Rimossi i prefissi degli anni dai titoli della Colonna 1 Roadmap in `#about`. Cache `CLEANROADMAP2`.
+Ultimo fatto: **Rimozione Sottotitoli Ruolo Roadmap (Chi Siamo)** — Rimossi i sottotitoli (`Prodotto · Governance · Rete Ufficiale`, `Strategia · Orchestrazione IA`, `MVP Scouting`, `Ricerca & Analisi Settore`) dai blocchi della Colonna 1 Roadmap in `#about`. La struttura dei blocchi è ora perfettamente simmetrica a 2 righe (Titolo + Descrizione) su tutte e tre le colonne. Cache `CLEANROADMAP3`.
+Feature precedente: **Unificazione Barre Oro Colonna Governance (Chi Siamo)** — Impostata la barra laterale oro (`#D9A94D`) anche sul blocco 'Pillar trasversali di rete'. Cache `GOVGOLD1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
