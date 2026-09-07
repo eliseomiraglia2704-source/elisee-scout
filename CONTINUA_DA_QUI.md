@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Rimozione Tag Categoria Overlay Dettaglio (Chi Siamo)** — Rimosso il tag/pillola della categoria sopra al titolo nell'overlay di dettaglio a schermo intero (`about-detail.js`), lasciando il titolo in evidenza diretta e pulita. Cache `DETAIL2`.
-Feature precedente: **Pattern Navigazione Elenco → Dettaglio a Schermo Intero (Chi Siamo)** — Implementato il sistema interattivo di dettaglio a schermo intero DATA-driven per la sezione `#about`. Cache `DETAIL1`.
+Ultimo fatto: **Rimozione Sezione Fasi & Avanzamento Overlay Dettaglio (Chi Siamo)** — Rimossa la sezione con i pill/puntini di avanzamento (`FASI & AVANZAMENTO`) dall'overlay di dettaglio a schermo intero (`about-detail.js`), lasciando la schermata pulita e focalizzata su Titolo, Descrizione, Statistiche chiave e Guida operativa step-by-step. Cache `DETAIL3`.
+Feature precedente: **Rimozione Tag Categoria Overlay Dettaglio (Chi Siamo)** — Rimosso il tag/pillola della categoria sopra al titolo nell'overlay di dettaglio. Cache `DETAIL2`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

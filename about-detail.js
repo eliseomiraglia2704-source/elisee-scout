@@ -501,15 +501,6 @@
         ${statsHtml}
       </div>
 
-      <div class="about-detail-progress-section">
-        <div class="about-detail-section-label">
-          <span>Fasi &amp; Avanzamento</span>
-        </div>
-        <div class="about-detail-dots-track">
-          ${progressHtml}
-        </div>
-      </div>
-
       <div class="about-detail-steps-section">
         <div class="about-detail-section-label">
           <span>Come funziona &amp; Dettagli operativi</span>
