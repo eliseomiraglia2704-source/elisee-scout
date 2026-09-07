@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Affinamento Chi Siamo — Azzurro Italia & Coerenza Gerarchica** — Aggiornata la palette con l'Azzurro Nazionale `#35AEE8` e neutri freddi (`#080C10`, `#0D131A`, `#F2F5F8`, `#8B9DAE`). Titolo H1 in sentence case, rimosso badge LIVE ridondante sul nodo '26, unificato il sistema a barre laterali d'accento per tutte e 3 le colonne, rimosse frecce superflue e riga divisoria hero tratteggiata stile linea di campo. Cache `AZZURROABOUT1`.
-Feature precedente: **Redesign Chi Siamo — Pitch Stadium & Touchline** — Rivoluzionato il layout di `#about` con font Oswald, touchline timeline e hero di raccordo. Cache `PITCHABOUT1`.
+Ultimo fatto: **Eliminazione Card & Layout Flat Chi Siamo** — Rimossi completamente sfondi, bordi perimetrali e angoli arrotondati su blocchi governance e moduli: struttura editoriale pura con barra laterale d'accento (oro/azzurro) e sottile hairline divisorio. Titoli e 'Chi siamo' in sentence case (rimosso text-transform uppercase), rimossi i chip/tag su Pillar di rete (sostituiti da testo piatto con separatori a punto) e aumentato il padding inferiore a 7.5rem. Cache `CARDLESS1`.
+Feature precedente: **Affinamento Chi Siamo — Azzurro Italia & Coerenza Gerarchica** — Aggiornata la palette con l'Azzurro Nazionale `#35AEE8` e neutri freddi. Cache `AZZURROABOUT1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -93,7 +93,8 @@ Flusso recente, dal più nuovo:
 
 | Commit | Cosa |
 |---|---|
-| `ea0c946` | Chi Siamo: palette Azzurro Italia (#35AEE8), H1 in sentence case, rimozione badge ridondante nodo '26, unificazione barre d'accento su 3 colonne, divisore hero tratteggiato; cache `AZZURROABOUT1` |
+| `e66b81a` | Chi Siamo: eliminazione totale box/card, layout editoriale flat con sola barra laterale e hairline, H1 e titoli in sentence case, testo piatto per pillar senza pillole/chip, padding inferiore esteso; cache `CARDLESS1` |
+| `c1d5ecd` | Chi Siamo: palette Azzurro Italia (#35AEE8), H1 in sentence case, rimozione badge ridondante nodo '26, unificazione barre d'accento su 3 colonne, divisore hero tratteggiato; cache `AZZURROABOUT1` |
 | `3fec3e9` | Redesign Chi Siamo: layout Pitch Stadium, touchline timeline, marcatori maglia, barre d'accento oro/verde, tipografia Oswald, hero intestazione; cache `PITCHABOUT1` |
 | `7eeea68` | Admin Card Elisee: apertura diretta ed esclusiva del portale al click sulla tab; cache `ADMINTAB1` |
 | `8a18b0e` | Admin Card Elisee: rimossi profili esempio, mostrati solo utenti registrati reali; cache `REALUSERS1` |
