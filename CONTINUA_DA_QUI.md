@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Integrazione Logo Ufficiale Il Punto di Svolta (Eccellenza Campania Girone A)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-il-punto-di-svolta.png` collegato al catalogo squadre e a focus.html. Cache `SVOLTA1`.
-Feature precedente: **Integrazione Logo Ufficiale FC Pompei** — Cache `POMPEI1`.
+Ultimo fatto: **Integrazione Logo Ufficiale Marianella (Eccellenza Campania Girone A)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-marianella.png` collegato al catalogo squadre e a focus.html. Cache `MARIANELLA1`.
+Feature precedente: **Integrazione Logo Ufficiale Il Punto di Svolta** — Cache `SVOLTA1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
