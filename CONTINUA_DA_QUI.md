@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Fix CSS Lint & Chi Siamo Layout** — Aggiunta proprietà standard `line-clamp: 2` su `.pf-person-team` in `style.css` per piena compatibilità linter/browser. Card Chi Siamo posizionate sotto al blocco introduttivo. Cache `ABOUTGRID2`.
-Feature precedente: **Hub Minigiochi** — Pokemon Calcistico assorbito in Elisee World (collezione + battaglie). Hub a 2 card: 01 Carriera, 02 Elisee World. Cache `MGHUB2`.
+Ultimo fatto: **Aggiornamento Email Ufficiale** — Sostituito ogni riferimento a `info@eliseescout.it` con `areaeliseescout@gmail.com` (Chi Siamo in `index.html`, `privacy-policy.html`, `cookie-policy.html`). Cache `MAILUPDATE1`.
+Feature precedente: **Fix CSS Lint & Chi Siamo Layout** — Aggiunta proprietà standard `line-clamp: 2` su `.pf-person-team` in `style.css`. Card Chi Siamo posizionate sotto al blocco introduttivo. Cache `ABOUTGRID2`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
