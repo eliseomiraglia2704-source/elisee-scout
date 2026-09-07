@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Eliminazione Card & Layout Flat Chi Siamo** — Rimossi completamente sfondi, bordi perimetrali e angoli arrotondati su blocchi governance e moduli: struttura editoriale pura con barra laterale d'accento (oro/azzurro) e sottile hairline divisorio. Titoli e 'Chi siamo' in sentence case (rimosso text-transform uppercase), rimossi i chip/tag su Pillar di rete (sostituiti da testo piatto con separatori a punto) e aumentato il padding inferiore a 7.5rem. Cache `CARDLESS1`.
-Feature precedente: **Affinamento Chi Siamo — Azzurro Italia & Coerenza Gerarchica** — Aggiornata la palette con l'Azzurro Nazionale `#35AEE8` e neutri freddi. Cache `AZZURROABOUT1`.
+Ultimo fatto: **Rimozione Box Maglia & Date Laterali Roadmap (Chi Siamo)** — Rimossi i marcatori quadrati con numero di maglia ('26', '25', '24', '23') e le date fluttuanti sulla destra. La Colonna 1 (Roadmap) è ora allineata al 100% con la stessa struttura pulita ed editoriale a barre laterali azzurre (`#35AEE8`) e hairlines delle altre due colonne, con anno integrato direttamente nei titoli. Cache `CLEANROADMAP1`.
+Feature precedente: **Eliminazione Card & Layout Flat Chi Siamo** — Rimossi completamente sfondi, bordi perimetrali e angoli arrotondati su blocchi governance e moduli: struttura editoriale pura con barra laterale d'accento (oro/azzurro) e sottile hairline divisorio. Cache `CARDLESS1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

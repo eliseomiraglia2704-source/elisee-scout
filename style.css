@@ -2782,110 +2782,53 @@ select.pf-input {
 }
 
 /* ============================================================ */
-/* COLONNA 1: TOUCHLINE TIMELINE (Linea laterale di campo)      */
+/* COLONNA 1: ROADMAP (Barre laterali + Hairlines)             */
 /* ============================================================ */
-.touchline-track {
-  position: relative;
+.pitch-roadmap-stack {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 0;
 }
 
-.touchline-track::before {
-  content: '';
-  position: absolute;
-  top: 22px;
-  bottom: 22px;
-  left: 21px;
-  width: 2px;
-  border-left: 2px dashed rgba(53, 174, 232, 0.35);
-  z-index: 1;
-}
-
-.touchline-item {
-  position: relative;
+.pitch-roadmap-block {
   display: flex;
-  gap: 1.1rem;
-  z-index: 2;
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0.9rem 0 0.9rem 0.2rem;
+  transition: background 0.2s ease;
 }
 
-.touchline-marker {
+.pitch-roadmap-block:last-child {
+  border-bottom: none !important;
+}
+
+.pitch-roadmap-bar {
+  width: 3.5px;
+  background: #35AEE8;
+  box-shadow: 0 0 8px rgba(53, 174, 232, 0.35);
   flex-shrink: 0;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 2px;
 }
 
-/* Scatola Numero di Maglia */
-.jersey-box {
-  width: 44px;
-  height: 44px;
-  background: #0B1017;
-  border: 1.5px solid rgba(139, 157, 174, 0.35);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  transition: all 0.25s ease;
-  box-sizing: border-box;
-}
-
-.jersey-num {
-  font-family: 'Oswald', 'Outfit', sans-serif;
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: #8B9DAE;
-  letter-spacing: 0.02em;
-}
-
-.jersey-box-active {
-  background: linear-gradient(135deg, rgba(53, 174, 232, 0.22), #0D1622);
-  border-color: #35AEE8;
-  box-shadow: 0 0 16px rgba(53, 174, 232, 0.4);
-}
-
-.jersey-box-active .jersey-num {
-  color: #35AEE8;
-  font-weight: 700;
-}
-
-.touchline-content {
+.pitch-roadmap-content {
+  padding: 0 0 0 0.9rem;
   flex: 1;
-  min-width: 0;
 }
 
-.touchline-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.5rem;
-  margin-bottom: 0.2rem;
-}
-
-.touchline-title {
+.pitch-roadmap-title {
   font-family: 'Oswald', 'Outfit', sans-serif;
   font-size: 1rem;
   font-weight: 500;
   color: #F2F5F8;
   letter-spacing: 0.01em;
-  margin: 0;
+  margin: 0 0 0.2rem;
   text-transform: none !important;
 }
 
-.touchline-item-active .touchline-title {
-  color: #35AEE8;
-}
-
-.touchline-year-full {
-  font-family: 'Oswald', 'Outfit', sans-serif;
-  font-size: 0.78rem;
-  color: #8B9DAE;
-  opacity: 0.7;
-}
-
-.touchline-role {
+.pitch-roadmap-role {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 0.76rem;
   font-weight: 600;
@@ -2893,11 +2836,11 @@ select.pf-input {
   margin: 0 0 0.35rem;
 }
 
-.touchline-desc {
+.pitch-roadmap-desc {
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: #8B9DAE;
-  line-height: 1.45;
+  line-height: 1.5;
   margin: 0;
 }
 
