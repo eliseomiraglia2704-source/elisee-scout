@@ -6953,17 +6953,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (targetHash) setHashSafe(targetHash, opts);
         else setHashSafe('#iscrizione-portal', opts);
         setTimeout(function () { try { if (window.EliseeTC && window.EliseeTC.paintPublic) window.EliseeTC.paintPublic(); } catch (e) {} }, 40);
-      } else if (viewType === 'persone' || targetHash === '#persone-portal' || targetHash === '#bacheca-network') {
-        // Network unito in Bacheca
-        showEl('home-views-group');
-        showEl('view-bacheca');
-        const link = document.querySelector('.nav-link[data-view="bacheca"]');
-        if (link) link.classList.add('active');
-        try { renderPeopleCards(); } catch (e) { console.error(e); }
-        setTimeout(() => {
-          const t = document.getElementById('bacheca-network');
-          if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 80);
       } else if (viewType === 'about' || targetHash === '#about') {
         showEl('home-views-group');
         showEl('view-about');

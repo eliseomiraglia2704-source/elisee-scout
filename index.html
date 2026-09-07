@@ -13,7 +13,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="about-detail.css?v=20260907_DETAIL4">
+  <link rel="stylesheet" href="style.css?v=20260907_BACHECA2">
+  <link rel="stylesheet" href="player-card.css?v=20260907_BACHECA2">
+  <link rel="stylesheet" href="about-detail.css?v=20260907_BACHECA2">
   
   <style id="forced-brand-font-override">
     /* FORCED LOGO FONT OVERRIDE FOR USER NAME DISPLAY IN NAVBAR */
@@ -787,25 +789,19 @@
             hash = '#squadre-portal';
             setTimeout(function(){ try{ if(window.EliseeSquadreSelect){ if(window.EliseeSquadreSelect.forceShow) window.EliseeSquadreSelect.forceShow(); else if(window.EliseeSquadreSelect.init) window.EliseeSquadreSelect.init(); } }catch(e){} }, 40);
           } else if (view === 'bacheca' || view === 'persone') {
-            // Network/persone uniti in Bacheca
             show('home-views-group'); show('view-bacheca'); setActiveNav('bacheca');
-            if (view === 'persone' || (hash && String(hash).indexOf('bacheca-network') >= 0) || (hash && String(hash).indexOf('persone') >= 0)) {
-              hash = '#bacheca-network';
-              setTimeout(function () {
-                try {
-                  var t = document.getElementById('bacheca-network');
-                  if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                  if (typeof window.renderPeopleCards === 'function') window.renderPeopleCards();
-                  else if (typeof renderPeopleCards === 'function') renderPeopleCards();
-                } catch (e) {}
-              }, 80);
-            } else {
-              setTimeout(function () {
-                try {
-                  if (typeof window.renderPeopleCards === 'function') window.renderPeopleCards();
-                } catch (e) {}
-              }, 80);
-            }
+            var isPersoneTab = (view === 'persone' || (hash && (String(hash).indexOf('persone') >= 0 || String(hash).indexOf('bacheca-network') >= 0)));
+            if (isPersoneTab) hash = '#persone-portal';
+            else hash = '#bacheca-annunci';
+            setTimeout(function () {
+              try {
+                if (typeof window.switchBachecaTab === 'function') {
+                  window.switchBachecaTab(isPersoneTab ? 'persone' : 'annunci');
+                }
+                if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs();
+                if (typeof window.renderPeopleCards === 'function') window.renderPeopleCards();
+              } catch (e) {}
+            }, 30);
             view = 'bacheca';
           } else if (view === 'ambassador') {
             show('view-ambassador'); show('ambassador-view-group'); setActiveNav('ambassador');
@@ -5450,7 +5446,7 @@
   <script src="club-storia.js?v=20260903_TIERPROMO1"></script>
   <script src="campionati-agents.js?v=20260806_STABLE"></script>
   <script src="war-room-runtime.js?v=20260906_WARROOM1"></script>
-  <script src="player-card.js?v=20260906_NOLINE2"></script>
+  <script src="player-card.js?v=20260907_BACHECA2"></script>
   <script src="minigioco-carriera.js?v=20260906_MGHUB2"></script>
   <!-- ELISEE WORLD — Motore RPG Calcistico 2D (Architettura Completa) -->
   <script src="elisee-world/src/core/state-machine.js?v=20260906_EWGBA1"></script>
@@ -5516,7 +5512,7 @@
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260906_MODALFIX1"></script>
+  <script src="app.js?v=20260907_BACHECA2"></script>
   <script src="player-profile.js?v=20260905_OBSFIX1"></script>
   <script src="public-rating-system.js?v=20260904_SEASONDROP1"></script>
   <script src="dash-real.js?v=20260904_SEASONDROP1"></script>
