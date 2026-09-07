@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Chi Siamo Layout** — Card Roadmap, Governance e Piattaforma posizionate sotto la sezione introduttiva CHI SIAMO a tutta larghezza (`flex-direction: column` su `.about-split-page` e contenitore `.about-extra-sections` centrato). Cache `ABOUTGRID1`.
+Ultimo fatto: **Fix CSS Lint & Chi Siamo Layout** — Aggiunta proprietà standard `line-clamp: 2` su `.pf-person-team` in `style.css` per piena compatibilità linter/browser. Card Chi Siamo posizionate sotto al blocco introduttivo. Cache `ABOUTGRID2`.
 Feature precedente: **Hub Minigiochi** — Pokemon Calcistico assorbito in Elisee World (collezione + battaglie). Hub a 2 card: 01 Carriera, 02 Elisee World. Cache `MGHUB2`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
