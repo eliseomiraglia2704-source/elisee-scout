@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Fix Globale switchBachecaTab & Deploy Atomico** — Dichiarate le funzioni `switchBachecaTab`, `filterPeopleByType`, `resetPeopleFilters` e `renderPeopleCards` globalmente all'inizio di `<head>` in `index.html` per garantire l'immediata reattività al click dei tab senza attendere il caricamento asincrono di `app.js`. Versione cache `BACHECA_FORCED2`.
-Feature precedente: **Forzatura Atomica Cache & Auto-Purge Service Worker** — Cache `BACHECA_FORCED1`.
+Ultimo fatto: **Integrazione Database Completo 7.904 Comuni, Città e Paesi Italiani in Bacheca** — Generato `comuni-italiani.js` con l'elenco completo di tutti i 7.904 comuni italiani (con sigla provincia), integrata la barra di ricerca istantanea sticky nel menu a tendina `#dropdown-location`, rendering virtualizzato ad alte prestazioni e logica di filtro annunci intelligente per comune/provincia. Versione cache `COMUNI1`.
+Feature precedente: **Fix Globale switchBachecaTab & Deploy Atomico** — Cache `BACHECA_FORCED2`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

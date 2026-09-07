@@ -8419,6 +8419,99 @@ document.addEventListener('DOMContentLoaded', () => {
     return selected ? selected.getAttribute('data-value') : 'all';
   }
 
+  function initComuniLocationDropdown() {
+    const dropdown = document.getElementById('dropdown-location');
+    if (!dropdown) return;
+    const searchInput = document.getElementById('input-search-location');
+    const optionsList = document.getElementById('location-options-list');
+    if (!optionsList) return;
+
+    const allComuni = (window.ELISEE_COMUNI_ITALIANI && window.ELISEE_COMUNI_ITALIANI.length)
+      ? window.ELISEE_COMUNI_ITALIANI
+      : ['Foggia (FG)', 'Lucera (FG)', 'Bari (BA)', 'Roma (RM)', 'Milano (MI)', 'Napoli (NA)', 'Torino (TO)', 'Palermo (PA)', 'Bologna (BO)', 'Firenze (FI)'];
+
+    let selectedValue = 'all';
+
+    function renderOptions(filterText) {
+      const q = (filterText || '').trim().toLowerCase();
+      let matches = [];
+      if (!q) {
+        const topCities = [
+          'Foggia (FG)', 'Lucera (FG)', 'Bari (BA)', 'Roma (RM)', 'Milano (MI)',
+          'Napoli (NA)', 'Torino (TO)', 'Palermo (PA)', 'Bologna (BO)', 'Firenze (FI)',
+          'Genova (GE)', 'Verona (VR)', 'Catania (CT)', 'Lecce (LE)', 'Taranto (TA)',
+          'Salerno (SA)', 'Reggio Calabria (RC)', 'Messina (ME)', 'Brescia (BS)', 'Padova (PD)'
+        ];
+        const others = allComuni.filter(c => !topCities.includes(c));
+        matches = topCities.concat(others);
+      } else {
+        matches = allComuni.filter(c => c.toLowerCase().includes(q));
+      }
+
+      const displayList = matches.slice(0, 150);
+
+      let html = `<div class="dropdown-option ${selectedValue === 'all' ? 'selected' : ''}" data-value="all">Tutte le zone</div>`;
+      if (q && matches.length === 0) {
+        html += `<div style="padding:0.75rem 1rem; color:#64748b; font-size:0.8rem; text-align:center;">Nessun comune trovato per "${filterText}"</div>`;
+      } else {
+        displayList.forEach(c => {
+          const isSel = (selectedValue === c);
+          html += `<div class="dropdown-option ${isSel ? 'selected' : ''}" data-value="${c}">${c}</div>`;
+        });
+        if (matches.length > 150) {
+          html += `<div style="padding:0.45rem 1rem; color:#38bdf8; font-size:0.75rem; text-align:center; border-top:1px solid rgba(255,255,255,0.05);">...e altri ${matches.length - 150} comuni (digita per filtrare)</div>`;
+        }
+      }
+      optionsList.innerHTML = html;
+    }
+
+    renderOptions('');
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        renderOptions(e.target.value);
+      });
+      searchInput.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+      searchInput.addEventListener('keydown', (e) => {
+        e.stopPropagation();
+      });
+    }
+
+    optionsList.addEventListener('click', (e) => {
+      const opt = e.target.closest('.dropdown-option');
+      if (!opt) return;
+      e.stopPropagation();
+      const val = opt.getAttribute('data-value') || 'all';
+      selectedValue = val;
+      optionsList.querySelectorAll('.dropdown-option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+
+      const triggerSpan = dropdown.querySelector('.dropdown-trigger > span');
+      if (triggerSpan) {
+        triggerSpan.textContent = (val === 'all') ? 'Tutte le zone' : val;
+      }
+      dropdown.classList.remove('open');
+      if (typeof window.filterAndRenderJobs === 'function') {
+        window.filterAndRenderJobs();
+      }
+    });
+
+    const trigger = dropdown.querySelector('.dropdown-trigger');
+    if (trigger) {
+      trigger.addEventListener('click', () => {
+        setTimeout(() => {
+          if (dropdown.classList.contains('open') && searchInput) {
+            searchInput.focus();
+          }
+        }, 50);
+      });
+    }
+  }
+
+  window.initComuniLocationDropdown = initComuniLocationDropdown;
+
   window.filterAndRenderJobs = function filterAndRenderJobs() {
     if (!jobsContainer) return;
 
@@ -8465,7 +8558,13 @@ document.addEventListener('DOMContentLoaded', () => {
     var filtered = allJobs.filter(job => {
       if (roleVal !== 'all' && job.role !== roleVal) return false;
       if (catVal !== 'all' && job.category !== catVal) return false;
-      if (locVal !== 'all' && job.location !== locVal) return false;
+      if (locVal !== 'all') {
+        const locPure = String(locVal).replace(/\s*\([A-Z0-9]{2}\)\s*$/i, '').trim().toLowerCase();
+        const jobLoc = String(job.location || '').trim().toLowerCase();
+        const locFull = String(locVal).trim().toLowerCase();
+        const matchesLoc = jobLoc === locPure || jobLoc.includes(locPure) || locPure.includes(jobLoc) || jobLoc === locFull;
+        if (!matchesLoc) return false;
+      }
       if (isUnder && !job.under) return false;
       if (isHousing && !job.housing) return false;
       if (isSvincolato && !job.svincolato) return false;
@@ -8521,6 +8620,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (el) el.addEventListener('change', filterAndRenderJobs);
   });
 
+  if (typeof initComuniLocationDropdown === 'function') initComuniLocationDropdown();
   filterAndRenderJobs();
 
   // Deep-link da focus.html?focusCat=Serie+D (apre Portfolio/Network filtrati)

@@ -482,6 +482,56 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   padding-left: 1rem;
 }
 
+.dropdown-search-wrap {
+  position: sticky;
+  top: -6px;
+  background: #0a0e16;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.dropdown-search-icon {
+  width: 14px;
+  height: 14px;
+  color: #38bdf8;
+  flex-shrink: 0;
+}
+
+.dropdown-search-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.8rem;
+  color: #ffffff;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.dropdown-search-input:focus {
+  border-color: #38bdf8;
+  background: rgba(56, 189, 248, 0.08);
+}
+
+.dropdown-search-input::placeholder {
+  color: #64748b;
+  font-size: 0.76rem;
+}
+
+.dropdown-options-list {
+  max-height: 220px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56, 189, 248, 0.35) transparent;
+}
+
 .dropdown-option.selected {
   background: rgba(56, 189, 248, 0.12);
   color: #38bdf8;

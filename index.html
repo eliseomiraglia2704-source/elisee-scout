@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260907_BACHECA_FORCED2';
+      var BUILD_VERSION = '20260907_COMUNI1';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -816,6 +816,7 @@
             else hash = '#bacheca-annunci';
             setTimeout(function () {
               try {
+                if (typeof window.initComuniLocationDropdown === 'function') window.initComuniLocationDropdown();
                 if (typeof window.switchBachecaTab === 'function') {
                   window.switchBachecaTab(isPersoneTab ? 'persone' : 'annunci');
                 }
@@ -2815,20 +2816,19 @@
 
                   <div class="filter-group pf-filter-group">
                     <label>Zona specifica</label>
-                    <div class="custom-dropdown" id="dropdown-location">
+                    <div class="custom-dropdown custom-dropdown-searchable" id="dropdown-location">
                       <div class="dropdown-trigger" role="button" tabindex="0">
                         <span id="location-selected-text">Tutte le zone</span>
                         <i data-lucide="chevron-down" class="arrow-icon"></i>
                       </div>
                       <div class="dropdown-options-menu" role="listbox">
-                        <div class="dropdown-option selected" data-value="all">Tutte le zone</div>
-                        <div class="dropdown-option" data-value="Foggia">Foggia</div>
-                        <div class="dropdown-option" data-value="Lucera">Lucera</div>
-                        <div class="dropdown-option" data-value="Bari">Bari</div>
-                        <div class="dropdown-option" data-value="Roma">Roma</div>
-                        <div class="dropdown-option" data-value="Milano">Milano</div>
-                        <div class="dropdown-option" data-value="Napoli">Napoli</div>
-                        <div class="dropdown-option" data-value="Torino">Torino</div>
+                        <div class="dropdown-search-wrap" onclick="event.stopPropagation()">
+                          <i data-lucide="search" class="dropdown-search-icon"></i>
+                          <input type="text" id="input-search-location" class="dropdown-search-input" placeholder="Cerca tra tutti i 7.904 comuni e città..." autocomplete="off" spellcheck="false">
+                        </div>
+                        <div class="dropdown-options-list" id="location-options-list">
+                          <div class="dropdown-option selected" data-value="all">Tutte le zone</div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -5556,6 +5556,7 @@
   <script src="club-storia.js?v=20260903_TIERPROMO1"></script>
   <script src="campionati-agents.js?v=20260806_STABLE"></script>
   <script src="war-room-runtime.js?v=20260906_WARROOM1"></script>
+  <script src="comuni-italiani.js?v=20260907_COMUNI1"></script>
   <script src="player-card.js?v=20260907_BACHECA_FORCED1"></script>
   <script src="minigioco-carriera.js?v=20260906_MGHUB2"></script>
   <!-- ELISEE WORLD — Motore RPG Calcistico 2D (Architettura Completa) -->
