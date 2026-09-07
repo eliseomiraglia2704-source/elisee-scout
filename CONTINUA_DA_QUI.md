@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Autocompletamento & Suggerimenti Istantanei su tutti i 7.904 Comuni e Città Italiane (Foggia, Roma, Milano, ecc.)** — Caricato `comuni-italiani.js` prioritariamente nell'<head>, ottimizzato il rendering flessibile del menu a tendina senza ritaglio dell'overflow e implementato il matching istantaneo (già dalle prime lettere digitate) con evidenziazione del match e tag provincia. Cache `COMUNI3`.
-Feature precedente: **Fix Click Pulsante «Torna alla Bacheca» da Hub Mercato / Wall Trattative** — Cache `COMUNI2`.
+Ultimo fatto: **Motore Autonomo & Event Delegation per Autocompletamento Comuni Italiani (Foggia, Roma, Milano, ecc.)** — Incorporato il motore di autocompletamento direttamente dentro `comuni-italiani.js` con event delegation globale su `document` (cattura input, focus, keydown, click e apertura menu in tempo reale senza dipendenze). Cache `COMUNI4`.
+Feature precedente: **Autocompletamento & Suggerimenti Istantanei su tutti i 7.904 Comuni e Città Italiane** — Cache `COMUNI3`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
