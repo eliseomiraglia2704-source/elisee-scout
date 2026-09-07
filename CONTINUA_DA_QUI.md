@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Risoluzione Endpoint API AutoPilot su Vercel (404 Not Found)** — Creato l'handler serverless `api/autopilot.js` con route rewrite in `vercel.json` per gestire status, start, stop, config, health, log e bridge senza errori 404 su Vercel e garantire continuità completa al runtime client `autopilot-runtime.js`. Cache `AUTOPILOT_API1`.
-Feature precedente: **Rimozione Sezione Fasi & Avanzamento Overlay Dettaglio (Chi Siamo)** — Rimossa la sezione con i pill/puntini di avanzamento (`FASI & AVANZAMENTO`) dall'overlay di dettaglio a schermo intero (`about-detail.js`). Cache `DETAIL3`.
+Ultimo fatto: **Integrazione Runtime Globale React & ReactDOM** — Inseriti i runtime globali ufficiali React 18 e ReactDOM UMD in `index.html` (rendendo `window.React` e `window.ReactDOM` accessibili per qualsiasi componente/widget reattivo) e confermato il setup React 19 nativo (`react: 19.2.3` / `react-native: 0.86.3`) nell'app Expo `eliseo2704`. Cache `REACT1`.
+Feature precedente: **Risoluzione Endpoint API AutoPilot su Vercel (404 Not Found)** — Creato l'handler serverless `api/autopilot.js` con route rewrite in `vercel.json`. Cache `AUTOPILOT_API1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
