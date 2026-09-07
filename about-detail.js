@@ -493,10 +493,6 @@
       </div>
 
       <div class="about-detail-header">
-        <div class="about-detail-category ${catClass}">
-          <span class="about-detail-cat-dot"></span>
-          <span>${item.category}</span>
-        </div>
         <h2 class="about-detail-title">${item.title}</h2>
         <p class="about-detail-lead">${item.lead}</p>
       </div>

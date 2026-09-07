@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Pattern Navigazione Elenco → Dettaglio a Schermo Intero (Chi Siamo)** — Implementato il sistema interattivo di dettaglio a schermo intero DATA-driven per la sezione `#about` (`about-detail.js`, `about-detail.css`). Cliccando qualsiasi voce (Roadmap, GDPR, Riforma, Moduli 01-04) si apre un overlay fluido a tutto schermo con tag categoria, titolo, descrizione estesa, metriche/statistiche chiave, avanzamento a puntini, guida a step 'Come funziona' e pulsante 'Torna alla panoramica' (o tasto Esc). 'Pillar trasversali di rete' resta blocco statico. Cache `DETAIL1`.
-Feature precedente: **Rimozione Sottotitoli Ruolo Roadmap (Chi Siamo)** — Rimossi i sottotitoli dai blocchi della Colonna 1 Roadmap. Cache `CLEANROADMAP3`.
+Ultimo fatto: **Rimozione Tag Categoria Overlay Dettaglio (Chi Siamo)** — Rimosso il tag/pillola della categoria sopra al titolo nell'overlay di dettaglio a schermo intero (`about-detail.js`), lasciando il titolo in evidenza diretta e pulita. Cache `DETAIL2`.
+Feature precedente: **Pattern Navigazione Elenco → Dettaglio a Schermo Intero (Chi Siamo)** — Implementato il sistema interattivo di dettaglio a schermo intero DATA-driven per la sezione `#about`. Cache `DETAIL1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
