@@ -1,21 +1,44 @@
 <!DOCTYPE html>
 <html lang="it" data-theme="vault-neon" data-lang="it">
 <head>
+  <script>
+    (function () {
+      var BUILD_VERSION = '20260907_BACHECA_FORCED1';
+      try {
+        if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
+          localStorage.setItem('__elisee_last_build', BUILD_VERSION);
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function (regs) {
+              regs.forEach(function (r) { try { r.unregister(); } catch (e) {} });
+            });
+          }
+          if (window.caches && caches.keys) {
+            caches.keys().then(function (keys) {
+              keys.forEach(function (k) { try { caches.delete(k); } catch (e) {} });
+            });
+          }
+        }
+      } catch (e) {}
+    })();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <!-- BUILD_STAMP_SQUADRE_FC26 -->
   <title>Elisee Scout</title>
   <meta name="description" content="ELISEE SCOUT: 3130 agenti IA (715 piattaforma + 3 supervisori piattaforma + 2010 campionati + 402 supervisori H24). GDPR Art. 22 e chat referente privacy.">
-  <link rel="icon" type="image/png" href="immagini/logo/favicon.png?v=20260902_curriculum">
-  <link rel="shortcut icon" type="image/png" href="immagini/logo/favicon.png?v=20260902_curriculum">
-  <link rel="apple-touch-icon" href="immagini/logo/logo-site.png?v=20260902_curriculum">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="icon" type="image/png" href="immagini/logo/favicon.png?v=20260907_BACHECA_FORCED1">
+  <link rel="shortcut icon" type="image/png" href="immagini/logo/favicon.png?v=20260907_BACHECA_FORCED1">
+  <link rel="apple-touch-icon" href="immagini/logo/logo-site.png?v=20260907_BACHECA_FORCED1">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260907_BACHECA2">
-  <link rel="stylesheet" href="player-card.css?v=20260907_BACHECA2">
-  <link rel="stylesheet" href="about-detail.css?v=20260907_BACHECA2">
+  <link rel="stylesheet" href="style.css?v=20260907_BACHECA_FORCED1">
+  <link rel="stylesheet" href="player-card.css?v=20260907_BACHECA_FORCED1">
+  <link rel="stylesheet" href="about-detail.css?v=20260907_BACHECA_FORCED1">
   
   <style id="forced-brand-font-override">
     /* FORCED LOGO FONT OVERRIDE FOR USER NAME DISPLAY IN NAVBAR */
@@ -281,7 +304,6 @@
   <script src="https://unpkg.com/lucide@0.460.0"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <link rel="stylesheet" href="style.css?v=20260907_ABOUTGRID2">
   <link rel="stylesheet" href="elisee-world/elisee-world.css?v=20260906_EWGBA1">
   <link rel="stylesheet" href="minigioco-carriera.css?v=20260906_MGHUB2">
   <link rel="stylesheet" href="autopilot.css?v=20260827_FIX3">
@@ -292,7 +314,6 @@
   <link rel="stylesheet" href="tc-panel.css?v=20260827_LUX1">
   <link rel="stylesheet" href="player-profile.css?v=20260905_TABFIX1">
   <link rel="stylesheet" href="player-dash.css?v=20260904_RAILFULL1">
-  <link rel="stylesheet" href="player-card.css?v=20260904_SINGLESCROLL1">
   <link rel="stylesheet" href="card-atelier.css?v=20260904_FIXUSERNAMES1">
   <link rel="stylesheet" href="coach-dash.css?v=20260830_ECCB1">
   <link rel="stylesheet" href="ds-dash.css?v=20260827_LUX1">
@@ -5446,7 +5467,7 @@
   <script src="club-storia.js?v=20260903_TIERPROMO1"></script>
   <script src="campionati-agents.js?v=20260806_STABLE"></script>
   <script src="war-room-runtime.js?v=20260906_WARROOM1"></script>
-  <script src="player-card.js?v=20260907_BACHECA2"></script>
+  <script src="player-card.js?v=20260907_BACHECA_FORCED1"></script>
   <script src="minigioco-carriera.js?v=20260906_MGHUB2"></script>
   <!-- ELISEE WORLD — Motore RPG Calcistico 2D (Architettura Completa) -->
   <script src="elisee-world/src/core/state-machine.js?v=20260906_EWGBA1"></script>
@@ -5478,7 +5499,7 @@
   <script src="elisee-world/elisee-world.js?v=20260906_EWGBA1"></script>
   <script src="autopilot-runtime.js?v=20260827_FIX3"></script>
   <script src="about-detail.js?v=20260907_DETAIL1"></script>
-  <script src="live-reload.js?v=20260905_CLEANLOGS1"></script>
+  <script src="live-reload.js?v=20260907_BACHECA_FORCED1"></script>
   <script>
     /* Emergency unlock: body scroll + overlay fantasma */
     (function(){
@@ -5512,7 +5533,7 @@
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260907_BACHECA2"></script>
+  <script src="app.js?v=20260907_BACHECA_FORCED1"></script>
   <script src="player-profile.js?v=20260905_OBSFIX1"></script>
   <script src="public-rating-system.js?v=20260904_SEASONDROP1"></script>
   <script src="dash-real.js?v=20260904_SEASONDROP1"></script>

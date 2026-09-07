@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Fix Routing Head, Cache-Bust & Stili CSS Bacheca Reclutamento** — Inseriti `<link rel="stylesheet" href="style.css?v=20260907_BACHECA2">` e `player-card.css` nell'head di `index.html`, ripulito il routing inline in `<head>` e il ramo duplicato in `app.js` per garantire l'immediata attivazione e visibilità della nuova Bacheca a tab, filtri unificati, segmented control e vista persone dedicata. Cache `BACHECA2`.
-Feature precedente: **Redesign Integrale Bacheca Reclutamento: Tab di Primo Livello & Filtri Unificati** — Cache `BACHECA1`.
+Ultimo fatto: **Forzatura Atomica Cache & Auto-Purge Service Worker** — Rimosso ogni blocco di cache con Cache-Control no-store / no-cache su Vercel e su `index.html`, eliminati link CSS duplicati obsoleti in `<head>`, integrato script di svuotamento forzato `caches.delete()` e unregister dei Service Worker all'avvio. Versione cache `BACHECA_FORCED1`.
+Feature precedente: **Fix Routing Head, Cache-Bust & Stili CSS Bacheca Reclutamento** — Cache `BACHECA2`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

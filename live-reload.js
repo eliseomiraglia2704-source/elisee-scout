@@ -53,8 +53,20 @@
       '<span>Aggiornamento codice applicato · Ricaricamento in corso...</span>';
     document.body.appendChild(banner);
 
+    if (window.caches && caches.keys) {
+      try {
+        caches.keys().then(function (keys) {
+          keys.forEach(function (k) { caches.delete(k); });
+        });
+      } catch (_) {}
+    }
+
     setTimeout(function () {
-      window.location.reload();
+      try {
+        window.location.reload(true);
+      } catch (_) {
+        window.location.reload();
+      }
     }, 250);
   }
 
