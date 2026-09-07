@@ -38,5 +38,11 @@
         }
       ]
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/autopilot/(.*)",
+      "destination": "/api/autopilot?path=$1"
+    }
   ]
 }
