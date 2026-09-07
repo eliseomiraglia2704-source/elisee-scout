@@ -17,7 +17,7 @@ Sito statico HTML/CSS/JS. Non introdurre un bundler o un framework.
 Eliseo ha chiesto esplicitamente: **salva, pubblica, pusha**, e lascia traccia in cartella così un altro account Grok può riprendere.
 
 1. Aggiorna `CONTINUA_DA_QUI.md` (data, hash, ultimo fatto, diario).
-2. Cache-bust: `?v=` in `index.html` + `CACHE` in `sw.js` se HTML/CSS/JS.
+2. Cache-bust & Auto-reload: `?v=` in `index.html` + `CACHE` in `sw.js` + aggiorna `version.json` (triggera `live-reload.js` per il refresh automatico del browser senza F5 manuale).
 3. Commit (niente `data/autopilot/*`, `data/auth/*`, `data/manager/state.json`).
 4. `git push origin main`
 5. `vercel --prod` dalla cartella del sito. **Non** usare `--yes`. Timeout ≥ 5 minuti. Attendi alias su https://elisee-scout.vercel.app

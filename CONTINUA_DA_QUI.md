@@ -31,7 +31,7 @@ Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 Non chiudere un task senza questa sequenza:
 
 1. Aggiorna **questa pagina** (data, hash commit, “ultimo fatto”, “prossimo passo”).
-2. Se hai toccato HTML/CSS/JS: alza `?v=YYYYMMDD_…` in `index.html` e `CACHE` in `sw.js`.
+2. Se hai toccato HTML/CSS/JS: alza `?v=YYYYMMDD_…` in `index.html`, `CACHE` in `sw.js` e aggiorna `version.json` (triggera `live-reload.js` per il refresh automatico su tutti i client).
 3. `git add` solo i file della feature (mai `data/autopilot/*`, `data/auth/*`, `data/manager/state.json`).
 4. `git commit` con messaggio in italiano, una riga.
 5. `git push origin main`
