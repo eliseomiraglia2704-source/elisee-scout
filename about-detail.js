@@ -624,6 +624,33 @@
   }
 
   // ============================================================
+  // ROBUST BODY SCROLL LOCK (Elimina definitivamente la doppia scrollbar)
+  // ============================================================
+  let lockedY = 0;
+
+  function lockBodyScroll() {
+    lockedY = window.scrollY || window.pageYOffset || 0;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${lockedY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+  }
+
+  function unlockBodyScroll() {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+    window.scrollTo(0, lockedY);
+  }
+
+  // ============================================================
   // OPEN & CLOSE FUNCTIONS
   // ============================================================
   function openAboutDetail(itemKey) {
@@ -634,7 +661,7 @@
 
     overlay.classList.add('is-active');
     overlay.scrollTo({ top: 0 });
-    document.body.style.overflow = 'hidden';
+    lockBodyScroll();
 
     // Focus sul pulsante indietro per accessibilità
     setTimeout(() => {
@@ -647,7 +674,7 @@
     const overlay = document.getElementById('about-detail-overlay');
     if (overlay) {
       overlay.classList.remove('is-active');
-      document.body.style.overflow = '';
+      unlockBodyScroll();
     }
   }
 

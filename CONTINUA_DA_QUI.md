@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Perfezionamento Scheda Dettaglio (Chi Siamo): Sentence Case, Hairline Dividers, Breadcrumb & Navigazione Sequenziale** — 1) Titolo H2 in sentence case (34px, no all-caps). 2) Titoli degli step in sentence case e rimozione del pattern box/card (sostituito con divisore hairline sotto). 3) Breadcrumb in alto (es. `Roadmap · 2 di 4`). 4) Navigazione sequenziale `Precedente / Successivo` in fondo alla scheda per scorrere senza uscire dal full-screen. Cache `DETAIL4`.
-Feature precedente: **Integrazione Runtime Globale React & ReactDOM** — Inseriti i runtime globali ufficiali React 18 e ReactDOM UMD in `index.html` e confermato il setup React 19 nativo in `eliseo2704`. Cache `REACT1`.
+Ultimo fatto: **Risoluzione Definitiva Bug Doppio Scrollbar Overlay (Scroll Lock)** — Implementato il pattern `lockBodyScroll()` / `unlockBodyScroll()` con `position: fixed`, `top: -${lockedY}px` e ripristino istantaneo dello scroll alla chiusura, eliminando totalmente la doppia traccia della scrollbar sotto l'overlay a schermo intero. Cache `DETAIL5`.
+Feature precedente: **Perfezionamento Scheda Dettaglio (Chi Siamo): Sentence Case, Hairline Dividers, Breadcrumb & Navigazione Sequenziale** — Cache `DETAIL4`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
