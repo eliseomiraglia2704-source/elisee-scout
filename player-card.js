@@ -1456,6 +1456,22 @@
   }
 
   function injectFunnel() {
+    var seg = document.getElementById('bacheca-geo-segmented');
+    if (seg) {
+      if (!seg.dataset.wired) {
+        seg.dataset.wired = '1';
+        seg.addEventListener('click', function (e) {
+          var b = e.target.closest('[data-geo]');
+          if (!b) return;
+          var v = Number(b.getAttribute('data-geo') || 0);
+          seg.querySelectorAll('[data-geo]').forEach(function (x) { x.classList.remove('is-active'); });
+          b.classList.add('is-active');
+          window.EliseePlayerCard.geoFilter = v;
+          if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs();
+        });
+      }
+      return;
+    }
     var bar = document.querySelector('#bacheca-annunci .pf-toolbar');
     if (!bar || document.getElementById('es-pc-geo-funnel')) return;
     var box = document.createElement('div');

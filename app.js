@@ -6999,18 +6999,17 @@ document.addEventListener('DOMContentLoaded', () => {
             window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
           } catch (e) { /* non bloccare navigazione */ }
         }, 40);
-      } else if (viewType === 'bacheca' || targetHash === '#bacheca-annunci' || targetHash === '#bacheca-network') {
+      } else if (viewType === 'bacheca' || viewType === 'persone' || targetHash === '#bacheca-annunci' || targetHash === '#bacheca-network' || targetHash === '#persone-portal') {
         showEl('home-views-group');
         showEl('view-bacheca');
         const link = document.querySelector('.nav-link[data-view="bacheca"]');
         if (link) link.classList.add('active');
-        try { renderPeopleCards(); } catch (e) { console.error(e); }
-        if (targetHash === '#bacheca-network') {
-          setTimeout(() => {
-            const t = document.getElementById('bacheca-network');
-            if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 80);
+        const isPersoneTab = (viewType === 'persone' || targetHash === '#bacheca-network' || targetHash === '#persone-portal');
+        if (typeof window.switchBachecaTab === 'function') {
+          window.switchBachecaTab(isPersoneTab ? 'persone' : 'annunci');
         }
+        try { renderPeopleCards(); } catch (e) { console.error(e); }
+        try { if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs(); } catch (e) {}
       } else if (viewType === 'ambassador' || targetHash === '#ambassador-portal') {
         showEl('view-ambassador');
         showEl('ambassador-view-group');
@@ -7154,16 +7153,87 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  window.activePeopleType = 'all';
+
   const mockPeopleData = [
-    { id: 'usr_1', name: 'Marco Rossi', role: 'Attaccante', category: 'Serie D', team: 'ASD Foggia Calcio', status: 'Svincolato Art. 107', score: '98.4', image: 'immagini/03-calciatore-ritratto/footballer-portrait.svg?v=20260831_121117', followers: 1420 },
-    { id: 'usr_2', name: 'Lorenzo Bianchi', role: 'Centrocampista', category: 'Eccellenza', team: 'US San Severo', status: 'Tesserato FIGC', score: '95.1', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 890 },
-    { id: 'usr_3', name: 'Andrea Moretti', role: 'Scout', category: 'Serie D', team: 'Certificato FIGC', status: 'Scout Ufficiale', score: '99.0', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 2310 },
-    { id: 'usr_4', name: 'Giulia Conti', role: 'Match Analyst', category: 'Under 19', team: 'Accademia Calcio', status: 'Certificata WyScout', score: '96.8', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 1150 },
-    { id: 'usr_5', name: 'Matteo Ferrari', role: 'Difensore', category: 'Promozione', team: 'Manfredonia Calcio', status: 'Fuoriquota Under 2005', score: '92.4', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 670 },
-    { id: 'usr_6', name: 'Stefano Ricci', role: 'Direttore', category: 'Serie D', team: 'Audace Cerignola', status: 'Direttore Sportivo', score: '97.6', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 3450 },
-    { id: 'usr_7', name: 'Roberto Barbieri', role: 'Portiere', category: 'Eccellenza', team: 'Lucera Calcio', status: 'Svincolato Art. 108', score: '94.2', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 530 },
-    { id: 'usr_8', name: 'Elena Santoro', role: 'Preparatore', category: 'Serie D', team: 'Foggia In Motion', status: 'Preparatore Atletico FIGC', score: '98.0', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 1820 }
+    { id: 'usr_1', name: 'Marco Rossi', type: 'calciatore', role: 'Attaccante', category: 'Serie D', team: 'ASD Foggia Calcio', status: 'Svincolato Art. 107', score: '98.4', image: 'immagini/03-calciatore-ritratto/footballer-portrait.svg?v=20260831_121117', followers: 1420 },
+    { id: 'usr_2', name: 'Lorenzo Bianchi', type: 'calciatore', role: 'Centrocampista', category: 'Eccellenza', team: 'US San Severo', status: 'Tesserato FIGC', score: '95.1', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 890 },
+    { id: 'usr_3', name: 'Andrea Moretti', type: 'scout', role: 'Scout FIGC', category: 'Serie D', team: 'Elisee Scout Network', status: 'Scout Ufficiale', score: '99.0', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 2310 },
+    { id: 'usr_4', name: 'Giulia Conti', type: 'staff', role: 'Match Analyst', category: 'Under 19', team: 'Accademia Calcio', status: 'Certificata WyScout', score: '96.8', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 1150 },
+    { id: 'usr_5', name: 'Matteo Ferrari', type: 'calciatore', role: 'Difensore', category: 'Promozione', team: 'Manfredonia Calcio', status: 'Fuoriquota Under 2005', score: '92.4', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 670 },
+    { id: 'usr_6', name: 'Stefano Ricci', type: 'scout', role: 'Direttore Sportivo', category: 'Serie D', team: 'Audace Cerignola', status: 'Direttore Sportivo', score: '97.6', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 3450 },
+    { id: 'usr_7', name: 'Roberto Barbieri', type: 'calciatore', role: 'Portiere', category: 'Eccellenza', team: 'Lucera Calcio', status: 'Svincolato Art. 108', score: '94.2', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 530 },
+    { id: 'usr_8', name: 'Elena Santoro', type: 'staff', role: 'Preparatore Atletico', category: 'Serie D', team: 'Foggia In Motion', status: 'Preparatore FIGC', score: '98.0', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 1820 },
+    { id: 'usr_9', name: 'US Foggia 1920', type: 'squadra', role: 'Società Calcistica', category: 'Serie D', team: 'Foggia (FG)', status: 'Club Verificato', score: '99.5', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 12800 },
+    { id: 'usr_10', name: 'Lucera Calcio', type: 'squadra', role: 'Società Calcistica', category: 'Eccellenza', team: 'Lucera (FG)', status: 'Club Verificato', score: '93.2', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 2940 }
   ];
+
+  window.switchBachecaTab = function(tabName) {
+    if (tabName === 'wall') {
+      if (typeof window.openTransferWall === 'function') {
+        window.openTransferWall();
+      } else if (typeof window.switchView === 'function') {
+        window.switchView('mercato', '#wall-trasferimenti');
+      }
+      return;
+    }
+    if (tabName === 'squadre') {
+      if (typeof window.switchView === 'function') {
+        window.switchView('squadre', '#squadre-portal');
+      }
+      return;
+    }
+
+    const tabAnnunci = document.getElementById('bacheca-tab-annunci');
+    const tabPersone = document.getElementById('bacheca-tab-persone');
+    const btnAnnunci = document.getElementById('tab-btn-annunci');
+    const btnPersone = document.getElementById('tab-btn-persone');
+    const btnWall = document.getElementById('tab-btn-wall');
+    const btnSquadre = document.getElementById('tab-btn-squadre');
+
+    [btnAnnunci, btnPersone, btnWall, btnSquadre].forEach(btn => {
+      if (btn) {
+        btn.classList.remove('is-active');
+        btn.setAttribute('aria-selected', 'false');
+      }
+    });
+
+    if (tabName === 'persone') {
+      if (tabAnnunci) tabAnnunci.style.display = 'none';
+      if (tabPersone) {
+        tabPersone.style.display = 'block';
+        tabPersone.classList.add('is-active');
+      }
+      if (btnPersone) {
+        btnPersone.classList.add('is-active');
+        btnPersone.setAttribute('aria-selected', 'true');
+      }
+      renderPeopleCards();
+    } else {
+      // Default: annunci
+      if (tabPersone) tabPersone.style.display = 'none';
+      if (tabAnnunci) {
+        tabAnnunci.style.display = 'block';
+        tabAnnunci.classList.add('is-active');
+      }
+      if (btnAnnunci) {
+        btnAnnunci.classList.add('is-active');
+        btnAnnunci.setAttribute('aria-selected', 'true');
+      }
+      if (typeof window.filterAndRenderJobs === 'function') {
+        window.filterAndRenderJobs();
+      }
+    }
+    if (window.lucide) lucide.createIcons();
+  };
+
+  window.filterPeopleByType = function(type) {
+    window.activePeopleType = type || 'all';
+    document.querySelectorAll('.bacheca-type-btn').forEach(btn => {
+      btn.classList.toggle('is-active', btn.getAttribute('data-type') === window.activePeopleType);
+    });
+    renderPeopleCards();
+  };
 
   window.toggleFollowUser = function(userId) {
     let followed = [];
@@ -7178,23 +7248,20 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   window.filterPeopleCards = function() {
-    if (window.EliseeAICluster && window.EliseeAICluster.logEvent) {
-      const name = (document.getElementById('search-people-name') || {}).value || '';
-      const surname = (document.getElementById('search-people-surname') || {}).value || '';
-      window.EliseeAICluster.logEvent(
-        'matchmaking',
-        `Filtro Network reale${name || surname ? ': ' + (name + ' ' + surname).trim() : ' (ruolo/categoria)'}`,
-        { source: 'network-filter' }
-      );
-    }
     renderPeopleCards();
   };
 
   window.resetPeopleFilters = function() {
+    const q = document.getElementById('search-people-query');
+    if (q) q.value = '';
     const name = document.getElementById('search-people-name');
     const surname = document.getElementById('search-people-surname');
     if (name) name.value = '';
     if (surname) surname.value = '';
+    window.activePeopleType = 'all';
+    document.querySelectorAll('.bacheca-type-btn').forEach(btn => {
+      btn.classList.toggle('is-active', btn.getAttribute('data-type') === 'all');
+    });
     ['search-people-role', 'search-people-category'].forEach(id => {
       const dd = document.getElementById(id);
       if (!dd) return;
@@ -7264,31 +7331,56 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('people-cards-container');
     if (!container) return;
 
-    const filterName = (document.getElementById('search-people-name')?.value || '').toLowerCase().trim();
-    const filterSurname = (document.getElementById('search-people-surname')?.value || '').toLowerCase().trim();
+    const query = ((document.getElementById('search-people-query')?.value || '') + ' ' + (document.getElementById('search-people-name')?.value || '') + ' ' + (document.getElementById('search-people-surname')?.value || '')).toLowerCase().trim();
     const roleSel = document.querySelector('#search-people-role .dropdown-option.selected');
     const catSel = document.querySelector('#search-people-category .dropdown-option.selected');
     const filterRole = roleSel ? (roleSel.getAttribute('data-value') || 'all') : 'all';
     const filterCat = catSel ? (catSel.getAttribute('data-value') || 'all') : 'all';
+    const activeType = window.activePeopleType || 'all';
 
     const followed = JSON.parse(localStorage.getItem('elisee_followed_users') || '[]');
 
     const filtered = mockPeopleData.filter(p => {
-      const fullName = p.name.toLowerCase();
-      if (filterName && !fullName.includes(filterName)) return false;
-      if (filterSurname && !fullName.includes(filterSurname)) return false;
+      // Check type
+      if (activeType !== 'all') {
+        if (p.type && p.type !== activeType) return false;
+        if (!p.type) {
+          if (activeType === 'calciatore' && !/attaccante|centrocampista|difensore|portiere|ala|terzino|punta/i.test(p.role)) return false;
+          if (activeType === 'squadra' && !/squadra|societ|club/i.test(p.role + ' ' + p.team)) return false;
+          if (activeType === 'scout' && !/scout|direttore|procuratore|agente/i.test(p.role)) return false;
+          if (activeType === 'staff' && !/analyst|preparatore|fisioterapista|medico|allenatore/i.test(p.role)) return false;
+        }
+      }
+
+      // Check query
+      if (query) {
+        const fullHaystack = (p.name + ' ' + p.role + ' ' + p.team + ' ' + p.category + ' ' + p.status).toLowerCase();
+        const terms = query.split(/\s+/).filter(Boolean);
+        const matchesAll = terms.every(t => fullHaystack.includes(t));
+        if (!matchesAll) return false;
+      }
+
+      // Check role
       if (filterRole !== 'all' && !p.role.toLowerCase().includes(filterRole.toLowerCase())) return false;
+
+      // Check category
       if (filterCat !== 'all' && !p.category.toLowerCase().includes(filterCat.toLowerCase()) && !p.status.toLowerCase().includes(filterCat.toLowerCase())) return false;
+
       return true;
     });
+
+    const countLabel = document.getElementById('people-count-label');
+    if (countLabel) {
+      countLabel.textContent = `Profili e società della community (${filtered.length})`;
+    }
 
     if (filtered.length === 0) {
       container.innerHTML = `
         <div class="pf-job-card" style="grid-column:1/-1; grid-template-columns:1fr; text-align:center; padding:2.5rem 1.5rem;">
           <div>
             <h4 style="margin-bottom:0.5rem;">Nessun profilo con questi filtri</h4>
-            <p class="pf-job-desc" style="max-width:none;margin-bottom:1rem;">Modifica nome, ruolo o categoria.</p>
-            <button type="button" class="btn btn-outline-pill pf-mini" onclick="if(window.resetPeopleFilters){window.resetPeopleFilters();}else{renderPeopleCards();}">Azzera filtri</button>
+            <p class="pf-job-desc" style="max-width:none;margin-bottom:1rem;">Modifica o azzera i parametri di ricerca per visualizzare altri profili.</p>
+            <button type="button" class="btn btn-outline-pill pf-mini" onclick="resetPeopleFilters()">Azzera filtri</button>
           </div>
         </div>
       `;
@@ -7314,7 +7406,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <p class="pf-person-team" title="${p.team}">${p.team}</p>
           <div class="pf-person-meta">
             <span class="pf-person-status" title="${p.status}">${p.status}</span>
-            <span class="pf-person-followers">${followerCount} follower</span>
+            <span class="pf-person-followers">${followerCount.toLocaleString('it-IT')} follower</span>
           </div>
           <div class="pf-person-actions">
             <button type="button" class="btn btn-outline-pill pf-mini ${isFollowing ? 'pf-btn-solid' : ''}" onclick="toggleFollowUser('${p.id}')">
@@ -7328,6 +7420,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (window.lucide) lucide.createIcons();
   }
+
+  window.renderPeopleCards = renderPeopleCards;
 
   // switchView già su window sopra la definizione; riallinea riferimento
   window.switchView = switchView;

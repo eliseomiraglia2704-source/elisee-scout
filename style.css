@@ -9201,3 +9201,248 @@ input[type="submit"],
   color: #041018;
 }
 .es-role-continue.is-ready:hover { filter: brightness(1.06); }
+
+/* ============================================================
+   BACHECA RECLUTAMENTO: TAB SYSTEM, UNIFIED FILTERS & SEGMENTED CONTROL
+   ============================================================ */
+/* Sentence case globale per l'area bacheca */
+#view-bacheca h1, #view-bacheca h2, #view-bacheca h3, #view-bacheca h4,
+#bacheca-annunci h1, #bacheca-annunci h2, #bacheca-annunci h3, #bacheca-annunci h4,
+.pf-header-bacheca .pf-title,
+.pf-aside-title,
+.pf-section-label span {
+  text-transform: none !important;
+  letter-spacing: -0.01em !important;
+}
+
+.pf-section-label span:first-child {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #94a3b8;
+}
+
+/* Navigazione Tab Bacheca con linea attiva azzurra */
+.bacheca-nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 1.75rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.bacheca-nav-tabs::-webkit-scrollbar { display: none; }
+
+.bacheca-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: none;
+  border-bottom: 2.5px solid transparent;
+  color: #94a3b8;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.75rem 1.15rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  margin-bottom: -1px;
+  white-space: nowrap;
+}
+.bacheca-tab-btn:hover {
+  color: #f1f5f9;
+}
+.bacheca-tab-btn.is-active {
+  color: #38bdf8;
+  border-bottom-color: #38bdf8;
+  font-weight: 700;
+}
+.bacheca-tab-btn .tab-icon {
+  width: 17px;
+  height: 17px;
+  stroke-width: 2.2;
+}
+
+.bacheca-tab-pane {
+  display: block;
+  animation: bachecaFadeIn 0.22s ease-out;
+}
+@keyframes bachecaFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Pannello Filtri Unificato per Bacheca */
+.bacheca-filter-panel {
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.25rem 1.4rem;
+  margin-bottom: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+}
+.bacheca-filter-row-primary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  align-items: flex-end;
+}
+.bacheca-filter-row-secondary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Segmented Control Raggio Geografico */
+.bacheca-segmented-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+.bacheca-seg-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.02em;
+}
+.bacheca-segmented-control {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(2, 6, 23, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 2px;
+}
+.bacheca-seg-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+.bacheca-seg-btn:hover {
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.05);
+}
+.bacheca-seg-btn.is-active {
+  background: rgba(56, 189, 248, 0.16);
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: 0 2px 8px rgba(56, 189, 248, 0.12);
+  font-weight: 700;
+}
+
+/* Griglia Bacheca e Sidebar agganciata (nessuna card fluttuante) */
+.bacheca-grid-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 1.75rem;
+  align-items: start;
+}
+@media (max-width: 992px) {
+  .bacheca-grid-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tab Persone & Squadre */
+.bacheca-people-header {
+  margin-bottom: 1.25rem;
+}
+.bacheca-people-types {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.bacheca-type-btn {
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: #94a3b8;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.bacheca-type-btn:hover {
+  color: #fff;
+  border-color: rgba(56, 189, 248, 0.35);
+  background: rgba(56, 189, 248, 0.06);
+}
+.bacheca-type-btn.is-active {
+  background: #38bdf8;
+  color: #030a16;
+  border-color: #38bdf8;
+  font-weight: 700;
+  box-shadow: 0 2px 10px rgba(56, 189, 248, 0.25);
+}
+
+.bacheca-people-search-panel {
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.25rem 1.4rem;
+  margin-bottom: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+}
+.bacheca-search-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(2, 6, 23, 0.75);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.bacheca-search-input-wrap:focus-within {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+.bacheca-search-ico {
+  width: 18px;
+  height: 18px;
+  color: #64748b;
+  flex-shrink: 0;
+}
+.bacheca-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #f8fafc;
+  font-size: 0.95rem;
+}
+.bacheca-search-input::placeholder {
+  color: #64748b;
+}
+.bacheca-people-extra-filters {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+}

@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Eliminazione Radicale Doppio Scrollbar su Tutto il Sito (Gutter & Overlay Hygiene)** — Rimosso il conflitto di `scrollbar-gutter: stable` di `html` con gli overlay e le modali a schermo intero tramite regole globali `html.has-active-overlay` e reset completo `scrollbarGutter = 'auto'`. Una sola scrollbar pulita e fluida. Cache `DETAIL6`.
-Feature precedente: **Risoluzione Definitiva Bug Doppio Scrollbar Overlay (Scroll Lock)** — Cache `DETAIL5`.
+Ultimo fatto: **Redesign Integrale Bacheca Reclutamento: Tab di Primo Livello, Filtri Unificati, Segmented Control Raggio Geografico, Sidebar Agganciata & Tab Persone/Squadre Dedicata** — Sostituito lo scroll infinito e i blocchi frammentati con un sistema a tab pulito (Bacheca annunci / Persone & squadre / Wall trattative / Squadre) con indicatore attivo azzurro, raggio geografico a segmented control (`Tutti` | `1 · Città` | `2 · Provincia` | `3 · Regione` | `4 · Italia`), sidebar laterale saldamente ancorata alla griglia annunci senza card fluttuanti, ricerca unificata e griglia immediata per profili/società e rimozione di tutti i maiuscoli forzati in favore del sentence case editoriale. Cache `BACHECA1`.
+Feature precedente: **Eliminazione Radicale Doppio Scrollbar su Tutto il Sito (Gutter & Overlay Hygiene)** — Cache `DETAIL6`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

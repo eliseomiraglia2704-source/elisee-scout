@@ -2616,7 +2616,7 @@
       </div>
 
       <!-- ============================================================ -->
-      <!-- PORTFOLIO / BACHECA — luxury editorial (no hub infantile)     -->
+      <!-- PORTFOLIO / BACHECA — Luxury editorial con tab & filtri unificati -->
       <!-- ============================================================ -->
       <div id="view-bacheca" style="display: none;">
         <section id="bacheca-annunci" class="pf-page">
@@ -2625,157 +2625,198 @@
 
           <div class="container pf-page-inner">
 
-            <!-- Header editoriale -->
+            <!-- Header editoriale (Sentence Case) -->
             <header class="pf-header pf-header-bacheca">
               <div class="pf-header-text">
                 <h1 class="pf-title" data-i18n="bacheca.title">Bacheca reclutamento</h1>
                 <p class="pf-lead">Provini, ingaggi e ruoli tecnici per il calcio dilettantistico e giovanile italiano.</p>
               </div>
               <div class="pf-header-actions">
-                <button type="button" class="btn btn-outline-pill" id="btn-bacheca-wall" onclick="if(window.openTransferWall){window.openTransferWall();}else if(window.switchView){window.switchView('mercato','#wall-trasferimenti');}" title="Wall trattative ufficiali mercato">Wall trattative</button>
-                <button type="button" class="btn btn-outline-pill" id="btn-bacheca-squadre" data-bacheca-action="squadre" title="Sezione Squadre e profili">Squadre</button>
-                <button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-bacheca-pubblica" data-bacheca-action="pubblica" title="Pubblica una candidatura">Pubblica candidatura</button>
-                <button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-bacheca-crea-profilo" data-bacheca-action="crea-profilo" title="Crea il tuo profilo">Crea profilo</button>
+                <button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-bacheca-pubblica" data-bacheca-action="pubblica" title="Pubblica una candidatura">+ Pubblica candidatura</button>
+                <button type="button" class="btn btn-outline-pill" id="btn-bacheca-crea-profilo" data-bacheca-action="crea-profilo" title="Crea il tuo profilo">Crea profilo</button>
               </div>
             </header>
 
-            <!-- Filtri annunci -->
-            <div class="pf-toolbar">
-              <div class="pf-filters">
-                <div class="filter-group pf-filter-group">
-                  <label>Ruolo</label>
-                  <div class="custom-dropdown" id="dropdown-role">
-                    <div class="dropdown-trigger">
-                      <span id="role-selected-text">Tutti i ruoli</span>
-                      <i data-lucide="chevron-down" class="arrow-icon"></i>
+            <!-- Navigazione Tab Bacheca con indicatore di stato attivo azzurro -->
+            <nav class="bacheca-nav-tabs" role="tablist" aria-label="Sezioni Bacheca">
+              <button type="button" class="bacheca-tab-btn is-active" id="tab-btn-annunci" role="tab" aria-selected="true" aria-controls="bacheca-tab-annunci" onclick="switchBachecaTab('annunci')">
+                <i data-lucide="briefcase" class="tab-icon"></i>
+                <span>Bacheca annunci</span>
+              </button>
+              <button type="button" class="bacheca-tab-btn" id="tab-btn-persone" role="tab" aria-selected="false" aria-controls="bacheca-tab-persone" onclick="switchBachecaTab('persone')">
+                <i data-lucide="users" class="tab-icon"></i>
+                <span>Persone &amp; squadre</span>
+              </button>
+              <button type="button" class="bacheca-tab-btn" id="tab-btn-wall" role="tab" aria-selected="false" onclick="switchBachecaTab('wall')">
+                <i data-lucide="trending-up" class="tab-icon"></i>
+                <span>Wall trattative</span>
+              </button>
+              <button type="button" class="bacheca-tab-btn" id="tab-btn-squadre" role="tab" aria-selected="false" onclick="switchBachecaTab('squadre')">
+                <i data-lucide="shield" class="tab-icon"></i>
+                <span>Squadre</span>
+              </button>
+            </nav>
+
+            <!-- ============================================================ -->
+            <!-- VISTA 1: BACHECA ANNUNCI (Filtri unificati + Griglia + Sidebar) -->
+            <!-- ============================================================ -->
+            <div id="bacheca-tab-annunci" class="bacheca-tab-pane is-active" role="tabpanel">
+
+              <!-- Pannello Filtri Unificato -->
+              <div class="bacheca-filter-panel">
+                <div class="bacheca-filter-row-primary">
+                  <div class="filter-group pf-filter-group">
+                    <label>Ruolo</label>
+                    <div class="custom-dropdown" id="dropdown-role">
+                      <div class="dropdown-trigger" role="button" tabindex="0">
+                        <span id="role-selected-text">Tutti i ruoli</span>
+                        <i data-lucide="chevron-down" class="arrow-icon"></i>
+                      </div>
+                      <div class="dropdown-options-menu" role="listbox">
+                        <div class="dropdown-option selected" data-value="all">Tutti i ruoli</div>
+                        <div class="dropdown-option" data-value="Attaccante">Attaccante</div>
+                        <div class="dropdown-option" data-value="Centrocampista">Centrocampista</div>
+                        <div class="dropdown-option" data-value="Difensore">Difensore</div>
+                        <div class="dropdown-option" data-value="Portiere">Portiere</div>
+                        <div class="dropdown-option" data-value="Match Analyst">Match Analyst</div>
+                        <div class="dropdown-option" data-value="Preparatore Atletico">Preparatore atletico</div>
+                        <div class="dropdown-option" data-value="Fisioterapista">Fisioterapista</div>
+                        <div class="dropdown-option" data-value="Direttore Generale">Direttore sportivo</div>
+                      </div>
                     </div>
-                    <div class="dropdown-options-menu">
-                      <div class="dropdown-option selected" data-value="all">Tutti i ruoli</div>
-                      <div class="dropdown-option" data-value="Attaccante">Attaccante</div>
-                      <div class="dropdown-option" data-value="Centrocampista">Centrocampista</div>
-                      <div class="dropdown-option" data-value="Difensore">Difensore</div>
-                      <div class="dropdown-option" data-value="Portiere">Portiere</div>
-                      <div class="dropdown-option" data-value="Match Analyst">Match Analyst</div>
-                      <div class="dropdown-option" data-value="Preparatore Atletico">Preparatore atletico</div>
-                      <div class="dropdown-option" data-value="Fisioterapista">Fisioterapista</div>
-                      <div class="dropdown-option" data-value="Direttore Generale">Direttore sportivo</div>
+                  </div>
+
+                  <div class="filter-group pf-filter-group">
+                    <label>Categoria</label>
+                    <div class="custom-dropdown" id="dropdown-category">
+                      <div class="dropdown-trigger" role="button" tabindex="0">
+                        <span id="category-selected-text">Tutte le categorie</span>
+                        <i data-lucide="chevron-down" class="arrow-icon"></i>
+                      </div>
+                      <div class="dropdown-options-menu" role="listbox">
+                        <div class="dropdown-option selected" data-value="all">Tutte le categorie</div>
+                        <div class="dropdown-option" data-value="Serie D">Serie D</div>
+                        <div class="dropdown-option" data-value="Eccellenza">Eccellenza</div>
+                        <div class="dropdown-option" data-value="Promozione">Promozione</div>
+                        <div class="dropdown-option" data-value="Prima Categoria">Prima Categoria</div>
+                        <div class="dropdown-option" data-value="Seconda Categoria">Seconda Categoria</div>
+                        <div class="dropdown-option" data-value="Terza Categoria">Terza Categoria</div>
+                        <div class="dropdown-option" data-value="Under 19">Under 19</div>
+                        <div class="dropdown-option" data-value="Under 17">Under 17</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="filter-group pf-filter-group">
+                    <label>Zona specifica</label>
+                    <div class="custom-dropdown" id="dropdown-location">
+                      <div class="dropdown-trigger" role="button" tabindex="0">
+                        <span id="location-selected-text">Tutte le zone</span>
+                        <i data-lucide="chevron-down" class="arrow-icon"></i>
+                      </div>
+                      <div class="dropdown-options-menu" role="listbox">
+                        <div class="dropdown-option selected" data-value="all">Tutte le zone</div>
+                        <div class="dropdown-option" data-value="Foggia">Foggia</div>
+                        <div class="dropdown-option" data-value="Lucera">Lucera</div>
+                        <div class="dropdown-option" data-value="Bari">Bari</div>
+                        <div class="dropdown-option" data-value="Roma">Roma</div>
+                        <div class="dropdown-option" data-value="Milano">Milano</div>
+                        <div class="dropdown-option" data-value="Napoli">Napoli</div>
+                        <div class="dropdown-option" data-value="Torino">Torino</div>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <div class="filter-group pf-filter-group">
-                  <label>Categoria</label>
-                  <div class="custom-dropdown" id="dropdown-category">
-                    <div class="dropdown-trigger">
-                      <span id="category-selected-text">Tutte le categorie</span>
-                      <i data-lucide="chevron-down" class="arrow-icon"></i>
-                    </div>
-                    <div class="dropdown-options-menu">
-                      <div class="dropdown-option selected" data-value="all">Tutte le categorie</div>
-                      <div class="dropdown-option" data-value="Serie D">Serie D</div>
-                      <div class="dropdown-option" data-value="Eccellenza">Eccellenza</div>
-                      <div class="dropdown-option" data-value="Promozione">Promozione</div>
-                      <div class="dropdown-option" data-value="Prima Categoria">Prima Categoria</div>
-                      <div class="dropdown-option" data-value="Seconda Categoria">Seconda Categoria</div>
-                      <div class="dropdown-option" data-value="Terza Categoria">Terza Categoria</div>
-                      <div class="dropdown-option" data-value="Under 19">Under 19</div>
-                      <div class="dropdown-option" data-value="Under 17">Under 17</div>
+                <div class="bacheca-filter-row-secondary">
+                  <!-- Segmented Control Raggio Geografico -->
+                  <div class="bacheca-segmented-wrap">
+                    <span class="bacheca-seg-label">Raggio:</span>
+                    <div class="bacheca-segmented-control" id="bacheca-geo-segmented" role="radiogroup" aria-label="Raggio geografico">
+                      <button type="button" class="bacheca-seg-btn is-active" data-geo="0" title="Tutte le zone d'Italia">Tutti</button>
+                      <button type="button" class="bacheca-seg-btn" data-geo="1" title="Club della tua città">1 · Città</button>
+                      <button type="button" class="bacheca-seg-btn" data-geo="2" title="Spostamenti quotidiani">2 · Provincia</button>
+                      <button type="button" class="bacheca-seg-btn" data-geo="3" title="Categorie superiori">3 · Regione</button>
+                      <button type="button" class="bacheca-seg-btn" data-geo="4" title="Esperienze fuori sede">4 · Italia</button>
                     </div>
                   </div>
-                </div>
 
-                <div class="filter-group pf-filter-group">
-                  <label>Zona</label>
-                  <div class="custom-dropdown" id="dropdown-location">
-                    <div class="dropdown-trigger">
-                      <span id="location-selected-text">Tutte le zone</span>
-                      <i data-lucide="chevron-down" class="arrow-icon"></i>
-                    </div>
-                    <div class="dropdown-options-menu">
-                      <div class="dropdown-option selected" data-value="all">Tutte le zone</div>
-                      <div class="dropdown-option" data-value="Foggia">Foggia</div>
-                      <div class="dropdown-option" data-value="Lucera">Lucera</div>
-                      <div class="dropdown-option" data-value="Bari">Bari</div>
-                      <div class="dropdown-option" data-value="Roma">Roma</div>
-                      <div class="dropdown-option" data-value="Milano">Milano</div>
-                      <div class="dropdown-option" data-value="Napoli">Napoli</div>
-                      <div class="dropdown-option" data-value="Torino">Torino</div>
-                    </div>
+                  <!-- Chips Opzioni -->
+                  <div class="pf-chips">
+                    <label class="pf-chip">
+                      <input type="checkbox" id="filter-under">
+                      <span>Fuoriquota Under</span>
+                    </label>
+                    <label class="pf-chip">
+                      <input type="checkbox" id="filter-housing">
+                      <span>Vitto e alloggio</span>
+                    </label>
+                    <label class="pf-chip">
+                      <input type="checkbox" id="filter-svincolato">
+                      <span>Svincolato</span>
+                    </label>
                   </div>
                 </div>
               </div>
 
-              <div class="pf-chips">
-                <label class="pf-chip">
-                  <input type="checkbox" id="filter-under">
-                  <span>Fuoriquota Under</span>
-                </label>
-                <label class="pf-chip">
-                  <input type="checkbox" id="filter-housing">
-                  <span>Vitto e alloggio</span>
-                </label>
-                <label class="pf-chip">
-                  <input type="checkbox" id="filter-svincolato">
-                  <span>Svincolato</span>
-                </label>
+              <!-- Layout: Lista annunci + Colonna laterale affiancata -->
+              <div class="pf-layout bacheca-grid-layout">
+                <div class="pf-main">
+                  <div class="pf-section-label">
+                    <span>Opportunità selezionate</span>
+                    <span class="pf-section-line" aria-hidden="true"></span>
+                  </div>
+                  <div class="jobs-grid pf-jobs" id="jobs-container"></div>
+                </div>
+
+                <aside class="pf-aside">
+                  <div class="pf-aside-card">
+                    <h3 class="pf-aside-title">In evidenza</h3>
+                    <p class="pf-aside-text">Profili e società con maggiore attività sul network nelle ultime 24 ore.</p>
+                    <div id="trending-search-list-bacheca" class="pf-aside-list"></div>
+                  </div>
+                  <div class="pf-aside-card">
+                    <h3 class="pf-aside-title">Community score</h3>
+                    <p class="pf-aside-text">Classifica formazione e cultura calcistica (quiz piattaforma).</p>
+                    <div id="leaderboard-rows-bacheca" class="pf-aside-list pf-aside-list-compact"></div>
+                  </div>
+                  <div class="pf-aside-card pf-aside-cta">
+                    <h3 class="pf-aside-title">Cerca persone e squadre</h3>
+                    <p class="pf-aside-text">Calciatori, staff, scout e società nella tua zona.</p>
+                    <button type="button" class="btn btn-outline-pill pf-mini pf-btn-solid" style="width: 100%;" onclick="switchBachecaTab('persone')">
+                      <i data-lucide="users" style="width:14px;height:14px;"></i> Apri Persone &amp; squadre
+                    </button>
+                  </div>
+                </aside>
               </div>
+
             </div>
 
-            <!-- Layout: lista annunci + colonna laterale sobria -->
-            <div class="pf-layout">
-              <div class="pf-main">
-                <div class="pf-section-label">
-                  <span>Opportunità selezionate</span>
-                  <span class="pf-section-line" aria-hidden="true"></span>
+            <!-- ============================================================ -->
+            <!-- VISTA 2: PERSONE & SQUADRE (Tab dedicata senza gap o vuoti)   -->
+            <!-- ============================================================ -->
+            <div id="bacheca-tab-persone" class="bacheca-tab-pane" role="tabpanel" style="display: none;">
+
+              <div class="bacheca-people-header">
+                <div class="bacheca-people-types" role="radiogroup" aria-label="Filtra tipo profilo">
+                  <button type="button" class="bacheca-type-btn is-active" data-type="all" onclick="filterPeopleByType('all')">Tutti i profili</button>
+                  <button type="button" class="bacheca-type-btn" data-type="calciatore" onclick="filterPeopleByType('calciatore')">Calciatori</button>
+                  <button type="button" class="bacheca-type-btn" data-type="squadra" onclick="filterPeopleByType('squadra')">Società</button>
+                  <button type="button" class="bacheca-type-btn" data-type="scout" onclick="filterPeopleByType('scout')">Scout &amp; DS</button>
+                  <button type="button" class="bacheca-type-btn" data-type="staff" onclick="filterPeopleByType('staff')">Staff tecnico</button>
                 </div>
-                <div class="jobs-grid pf-jobs" id="jobs-container"></div>
               </div>
 
-              <aside class="pf-aside">
-                <div class="pf-aside-card">
-                  <h3 class="pf-aside-title">In evidenza</h3>
-                  <p class="pf-aside-text">Profili e società con maggiore attività sul network nelle ultime 24 ore.</p>
-                  <div id="trending-search-list-bacheca" class="pf-aside-list"></div>
+              <div class="bacheca-people-search-panel" id="persone-portal">
+                <div class="bacheca-search-input-wrap">
+                  <i data-lucide="search" class="bacheca-search-ico"></i>
+                  <input type="text" id="search-people-query" class="bacheca-search-input" placeholder="Cerca per nome, cognome, club, ruolo o categoria (es. Rossi, Serie D, Lucera)..." oninput="if(window.filterPeopleCards)filterPeopleCards();" onkeyup="if(event.key==='Enter')filterPeopleCards()">
+                  <input type="hidden" id="search-people-name" value="">
+                  <input type="hidden" id="search-people-surname" value="">
                 </div>
-                <div class="pf-aside-card">
-                  <h3 class="pf-aside-title">Community score</h3>
-                  <p class="pf-aside-text">Classifica formazione e cultura calcistica (quiz piattaforma).</p>
-                  <div id="leaderboard-rows-bacheca" class="pf-aside-list pf-aside-list-compact"></div>
-                </div>
-                <div class="pf-aside-card pf-aside-cta">
-                  <h3 class="pf-aside-title">Cerca profili e squadre</h3>
-                  <p class="pf-aside-text">Calciatori, staff, scout e società nella tua zona.</p>
-                  <input type="hidden" id="scout-search-type-bacheca" value="calciatore">
-                  <div class="pf-search-types">
-                    <button type="button" class="btn btn-outline-pill pf-mini" onclick="var e=document.getElementById('scout-search-type')||document.getElementById('scout-search-type-bacheca'); if(e)e.value='calciatore'; if(window.focusBachecaNetwork){window.focusBachecaNetwork('calciatore');}else if(typeof filterPeopleCards==='function'){filterPeopleCards();}">Calciatore</button>
-                    <button type="button" class="btn btn-outline-pill pf-mini" onclick="var e=document.getElementById('scout-search-type')||document.getElementById('scout-search-type-bacheca'); if(e)e.value='squadra'; if(window.focusBachecaNetwork){window.focusBachecaNetwork('squadra');}else if(typeof filterPeopleCards==='function'){filterPeopleCards();}">Società</button>
-                    <button type="button" class="btn btn-outline-pill pf-mini" onclick="var e=document.getElementById('scout-search-type')||document.getElementById('scout-search-type-bacheca'); if(e)e.value='scout'; if(window.focusBachecaNetwork){window.focusBachecaNetwork('scout');}else if(typeof filterPeopleCards==='function'){filterPeopleCards();}">Scout</button>
-                  </div>
-                </div>
-              </aside>
-            </div>
 
-            <!-- NETWORK unito in Bacheca: persone, professioni e squadre -->
-            <section id="bacheca-network" class="pf-bacheca-network" style="margin-top:3rem; padding-top:2rem; border-top:1px solid rgba(255,255,255,0.08);">
-              <header class="pf-header" style="margin-bottom:1.25rem;">
-                <div class="pf-header-text">
-                  <p class="portfolio-kicker">Persone &amp; Squadre</p>
-                  <h2 class="pf-title" style="font-size:clamp(1.5rem,3vw,2.1rem);">Profili, professioni e società</h2>
-                  <p class="pf-lead">Calciatori, staff, scout, dirigenti e squadre. Cerca, segui e apri il dossier — tutto in Bacheca.</p>
-                </div>
-              </header>
-
-              <div class="pf-toolbar" id="persone-portal">
-                <div class="pf-filters pf-filters-4">
-                  <div class="filter-group pf-filter-group">
-                    <label>Nome</label>
-                    <input type="text" id="search-people-name" class="pf-input" placeholder="Es. Marco" onkeyup="if(event.key==='Enter')filterPeopleCards()">
-                  </div>
-                  <div class="filter-group pf-filter-group">
-                    <label>Cognome</label>
-                    <input type="text" id="search-people-surname" class="pf-input" placeholder="Es. Rossi" onkeyup="if(event.key==='Enter')filterPeopleCards()">
-                  </div>
-                  <div class="filter-group pf-filter-group">
+                <div class="bacheca-people-extra-filters">
+                  <div class="filter-group pf-filter-group" style="min-width: 170px;">
                     <label>Ruolo</label>
                     <div class="custom-dropdown pf-select" id="search-people-role">
                       <div class="dropdown-trigger" role="button" tabindex="0" aria-haspopup="listbox">
@@ -2796,7 +2837,8 @@
                       </div>
                     </div>
                   </div>
-                  <div class="filter-group pf-filter-group">
+
+                  <div class="filter-group pf-filter-group" style="min-width: 170px;">
                     <label>Categoria</label>
                     <div class="custom-dropdown pf-select" id="search-people-category">
                       <div class="dropdown-trigger" role="button" tabindex="0" aria-haspopup="listbox">
@@ -2808,23 +2850,24 @@
                         <div class="dropdown-option" data-value="Serie D">Serie D</div>
                         <div class="dropdown-option" data-value="Eccellenza">Eccellenza</div>
                         <div class="dropdown-option" data-value="Promozione">Promozione</div>
+                        <div class="dropdown-option" data-value="Prima Categoria">Prima Categoria</div>
                         <div class="dropdown-option" data-value="Under 19">Under 19</div>
                         <div class="dropdown-option" data-value="Svincolato">Svincolato Art. 107</div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="pf-chips">
-                  <button type="button" class="btn btn-outline-pill pf-mini" onclick="filterPeopleCards()"><i data-lucide="search" style="width:14px;height:14px;"></i> Cerca</button>
+
+                  <button type="button" class="btn btn-outline-pill pf-mini" onclick="resetPeopleFilters()" style="margin-bottom: 2px;">Azzera filtri</button>
                 </div>
               </div>
 
               <div class="pf-section-label">
-                <span>Profili e squadre</span>
+                <span id="people-count-label">Profili e società della community</span>
                 <span class="pf-section-line" aria-hidden="true"></span>
               </div>
               <div id="people-cards-container" class="pf-people-grid"></div>
-            </section>
+
+            </div>
 
           </div>
         </section>
