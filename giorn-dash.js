@@ -81,11 +81,68 @@
   function giornName(u) {
     return [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Giornalista';
   }
+  function defaultSeedItems() {
+    return [
+      {
+        id: 'st-seed-1',
+        type: 'article',
+        status: 'approved',
+        authorName: 'Redazione Elisee Scout',
+        authorEmail: 'stampa@elisee-scout.it',
+        title: 'Focus Calciomercato Dilettanti & Serie D: i giovani emergenti del Sud e Nord Italia',
+        body: 'Inizio di stagione entusiasmante sui campi della Serie D e dei massimi campionati regionali di Eccellenza. Cresce l’attenzione dei Direttori Sportivi e degli Osservatori sui fuoriquota classe 2005, 2006 e 2007 che stanno trascinando le rispettive squadre. Ecco l’analisi tattica e i dati prestazionali elaborati dalla piattaforma.',
+        geo: { level: 'nazionale', value: 'Italia' },
+        tags: [
+          { kind: 'player', id: 'pl-Marco Rossi', name: 'Marco Rossi' },
+          { kind: 'club', id: 'cl-foggia', name: 'Calcio Foggia 1920' }
+        ],
+        createdAt: new Date(Date.now() - 3600000 * 4).toISOString()
+      },
+      {
+        id: 'st-seed-2',
+        type: 'poll',
+        status: 'approved',
+        authorName: 'Eliseo Miraglia (Editoriale Sportivo)',
+        authorEmail: 'eliseomiraglia2704@gmail.com',
+        title: 'Sondaggio: Quale girone di Serie D esprimerà il maggior numero di talenti per il professionismo?',
+        body: 'Vota il girone più competitivo e tecnico della stagione secondo la tua visione di scouting.',
+        geo: { level: 'nazionale', value: 'Italia' },
+        pollOptions: [
+          { text: 'Girone H (Puglia, Campania, Basilicata)', votes: 98 },
+          { text: 'Girone D (Emilia-Romagna, Toscana, Lombardia)', votes: 74 },
+          { text: 'Girone I (Sicilia, Calabria, Campania)', votes: 63 },
+          { text: 'Girone A/B (Piemonte, Liguria, Lombardia)', votes: 55 }
+        ],
+        tags: [
+          { kind: 'club', id: 'cl-serie-d', name: 'Serie D Italia' }
+        ],
+        createdAt: new Date(Date.now() - 3600000 * 10).toISOString()
+      },
+      {
+        id: 'st-seed-3',
+        type: 'article',
+        status: 'approved',
+        authorName: 'Ufficio Stampa & Scouting Territoriale',
+        authorEmail: 'scout.territorio@elisee-scout.it',
+        title: 'Guida al Tesseramento Fuoriquota, Premi di Preparazione e Svincoli',
+        body: 'Tutto quello che c’è da sapere sulle finestre di trasferimento, le tutele legali per calciatori dilettanti e l’utilizzo dell’IA per il matching tra società e atleti svincolati.',
+        geo: { level: 'regione', value: 'Puglia' },
+        tags: [
+          { kind: 'player', id: 'pl-Roberto Barbieri', name: 'Roberto Barbieri' }
+        ],
+        createdAt: new Date(Date.now() - 3600000 * 20).toISOString()
+      }
+    ];
+  }
+
   function loadItems() {
     try {
       var rows = JSON.parse(localStorage.getItem(STORE) || '[]');
-      return Array.isArray(rows) ? rows : [];
-    } catch (_) { return []; }
+      if (Array.isArray(rows) && rows.length > 0) return rows;
+      var seeds = defaultSeedItems();
+      saveItems(seeds);
+      return seeds;
+    } catch (_) { return defaultSeedItems(); }
   }
   function saveItems(rows) {
     try { localStorage.setItem(STORE, JSON.stringify(rows || [])); } catch (_) {}

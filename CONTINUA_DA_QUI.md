@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-07**
-Ultimo fatto: **Motore Autonomo & Event Delegation per Autocompletamento Comuni Italiani (Foggia, Roma, Milano, ecc.)** — Incorporato il motore di autocompletamento direttamente dentro `comuni-italiani.js` con event delegation globale su `document` (cattura input, focus, keydown, click e apertura menu in tempo reale senza dipendenze). Cache `COMUNI4`.
-Feature precedente: **Autocompletamento & Suggerimenti Istantanei su tutti i 7.904 Comuni e Città Italiane** — Cache `COMUNI3`.
+Ultimo fatto: **Fix Routing e Render Portale Pubblico Stampa (`#stampa-portal` / `view-stampa`)** — Risolta l'assenza di `view-stampa` in `VIEW_IDS` e aggiunto il branch per la vista `stampa` in `coreSwitchView` (router veloce inline). Aggiunti articoli, sondaggi e contenuti di redazione predefiniti in `giorn-dash.js`. Cache `STAMPA1`.
+Feature precedente: **Motore Autonomo & Event Delegation per Autocompletamento Comuni Italiani** — Cache `COMUNI4`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
