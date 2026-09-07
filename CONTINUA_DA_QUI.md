@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-08**
-Ultimo fatto: **Integrazione Logo Ufficiale Real Casoria (Eccellenza Campania Girone A)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-real-casoria.png` collegato al catalogo squadre e a focus.html. Cache `CASORIA1`.
-Feature precedente: **Integrazione Logo Ufficiale Real Bacoli Sibilla** — Cache `BACOLI1`.
+Ultimo fatto: **Integrazione Logo Ufficiale Real Grazzanise (Eccellenza Campania Girone A)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-real-grazzanise.png` collegato al catalogo squadre e a focus.html. Cache `GRAZZANISE1`.
+Feature precedente: **Integrazione Logo Ufficiale Real Casoria** — Cache `CASORIA1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
