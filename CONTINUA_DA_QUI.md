@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-08**
-Ultimo fatto: **Integrazione Logo Ufficiale San Vito Positano (Eccellenza Campania Girone B)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-san-vito-positano.png` collegato a focus.html. Cache `POSITANO1`.
-Feature precedente: **Integrazione Logo Ufficiale Salernum Baronissi** — Cache `BARONISSI1`.
+Ultimo fatto: **Integrazione Completa 15 Loghi Ufficiali Eccellenza Lazio Girone A** — Scaricati in alta risoluzione HD con trasparenza alfa e sincronizzati a catalogo, divise e focus.html per Campus Eur, Borgo Palidoro, Colleferro, Cavese 1919, Montespaccato, Luiss, Grifone Gialloverde, Fregene, Civitavecchia, FC Rieti, Real Monterotondo, Ottavia, Sorianese, Tivoli Calcio e W3 Maccarese. Cache `ECCLAZIO1`.
+Feature precedente: **Integrazione Logo Ufficiale San Vito Positano** — Cache `POSITANO1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

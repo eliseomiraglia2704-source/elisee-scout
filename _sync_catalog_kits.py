@@ -7,10 +7,12 @@ Scansiona e indicizza OGNI file di immagine presente nelle cartelle dei club:
 - Polo, Pre-Match (Home / Away), Training, etc.
 Genera la lista 'kits' completa per ogni squadra.
 """
-import json, re, time
+import json, re, time, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 CAT_PATH = ROOT / "data" / "squadre" / "catalog.json"
 KITS_DIR = ROOT / "immagini" / "kits-2d"
 
