@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-08** (commit `d69aaf7`)
-Ultimo fatto: **Cache-Bust Globale, Invalidazione SessionStorage & Hot Reload Loghi Eccellenza Lazio (Gironi A e B)** — Risolto il problema di mancata visualizzazione delle modifiche lato client: allineati a `20260908_ECCLAZIO4` tutti i punti di cache (`squadre-select.js` CATALOG_URL e LOGO_V, `mappa-club.js`, `focus.html`, `index.html` con pulizia proattiva di `sessionStorage` e service worker, `live-reload.js` con cancellazione chiavi `elisee_cat_` e forzatura hard reload, `sw.js` e `version.json`). Ora i nuovi stemmi ufficiali HD di Astrea, Boreale, Atletico Ardea, Pomezia e di tutte le 36 squadre di Eccellenza Laziale appaiono istantaneamente e nitidamente.
-Feature precedente: **Aggiornamento Completo Loghi Ufficiali HD Eccellenza Lazio (Gironi A e B — 36 Squadre)**.
+Ultimo aggiornamento: **2026-09-08**
+Ultimo fatto: **Risoluzione Syntax Error & Import in elisee_up.py** — Corretto blocco `try` senza `except` nella funzione `log()` (linea 463), creato `workers/__init__.py` e strutturato l'import con fallback sui package `workers.auth_store`, `workers.manager_store` e `workers.autopilot_engine`, garantendo piena compatibilità sia per l'analisi statica IDE che per l'esecuzione runtime del server indistruttibile locale.
+Feature precedente: **Cache-Bust Globale, Invalidazione SessionStorage & Hot Reload Loghi Eccellenza Lazio (Gironi A e B)**.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -836,3 +836,4 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 - **2026-08-20** — Loading stadio 2s rinforzato: overlay su `document.body`, z-index 3e6, poi formazione. Cache `STAD2`.
 - **2026-08-20** — Scopri solo da account loggato (tab utente / menu account). Navbar pubblica senza Scopri. `requireEliseeLogin`. Cache `SCO1`.
 - **2026-08-20** — Pannello TC Manager: `tc-panel.js` / `.css`, `#tc-portal`, modulo pubblico `#iscrizione-portal?team=`. Cache `TC1`.
+- **2026-09-08** — Risolto Syntax Error in `elisee_up.py` (blocco try privo di except nella funzione `log`) e problemi di import `auth_store`/`manager_store` tramite package `workers/__init__.py` e import resiliente.

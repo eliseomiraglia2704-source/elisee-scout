@@ -31,6 +31,8 @@ import random
 
 ROOT = Path(__file__).resolve().parent
 os.chdir(ROOT)
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "workers"))
 
 
@@ -445,9 +447,12 @@ LOG = ROOT / "data" / "autopilot" / "elisee_up.log"
 OAUTH_BRIDGE_UP = False
 
 try:
-    from autopilot_engine import get_engine  # type: ignore
+    from workers.autopilot_engine import get_engine  # type: ignore
 except Exception:
-    get_engine = None  # type: ignore
+    try:
+        from autopilot_engine import get_engine  # type: ignore
+    except Exception:
+        get_engine = None  # type: ignore
 
 
 def log(msg: str) -> None:
@@ -460,6 +465,10 @@ def log(msg: str) -> None:
         pass
     try:
         print(line, flush=True)
+    except Exception:
+        pass
+
+
 def _latest_project_mtime() -> float:
     latest = 0.0
     try:
@@ -739,20 +748,36 @@ class Handler(SimpleHTTPRequestHandler):
 
     def _auth_api(self, path: str, method: str) -> bool:
         try:
-            from auth_store import (
-                build_google_oauth_url,
-                finish_supabase_session,
-                get_user_by_token,
-                login_email,
-                login_or_register_google,
-                login_or_register_supabase_token,
-                public_auth_config,
-                register_email,
-                revoke_token,
-                save_google_client_id,
-                set_password,
-                sync_verify_docs,
-            )
+            try:
+                from workers.auth_store import (
+                    build_google_oauth_url,
+                    finish_supabase_session,
+                    get_user_by_token,
+                    login_email,
+                    login_or_register_google,
+                    login_or_register_supabase_token,
+                    public_auth_config,
+                    register_email,
+                    revoke_token,
+                    save_google_client_id,
+                    set_password,
+                    sync_verify_docs,
+                )
+            except ImportError:
+                from auth_store import (  # type: ignore
+                    build_google_oauth_url,
+                    finish_supabase_session,
+                    get_user_by_token,
+                    login_email,
+                    login_or_register_google,
+                    login_or_register_supabase_token,
+                    public_auth_config,
+                    register_email,
+                    revoke_token,
+                    save_google_client_id,
+                    set_password,
+                    sync_verify_docs,
+                )
         except Exception as e:
             self._json(503, {"ok": False, "error": "auth_store_unavailable", "detail": str(e)})
             return True
@@ -981,7 +1006,10 @@ class Handler(SimpleHTTPRequestHandler):
 
     def _manager_user(self):
         try:
-            from auth_store import get_user_by_token
+            try:
+                from workers.auth_store import get_user_by_token
+            except ImportError:
+                from auth_store import get_user_by_token  # type: ignore
             return get_user_by_token(self._bearer())
         except Exception:
             return None
@@ -995,7 +1023,10 @@ class Handler(SimpleHTTPRequestHandler):
 
     def _manager_api(self, path: str, method: str) -> bool:
         try:
-            from manager_store import admin_inbox, apply_as_manager, decide, my_view, official_lineup, propose_change, propose_lineup
+            try:
+                from workers.manager_store import admin_inbox, apply_as_manager, decide, my_view, official_lineup, propose_change, propose_lineup
+            except ImportError:
+                from manager_store import admin_inbox, apply_as_manager, decide, my_view, official_lineup, propose_change, propose_lineup  # type: ignore
         except Exception as e:
             self._json(503, {"ok": False, "error": "manager_store_unavailable", "detail": str(e)})
             return True
@@ -1135,7 +1166,10 @@ class Handler(SimpleHTTPRequestHandler):
         return True
 
     def _start_google_oauth(self) -> bool:
-        from auth_store import build_google_oauth_url
+        try:
+            from workers.auth_store import build_google_oauth_url
+        except ImportError:
+            from auth_store import build_google_oauth_url  # type: ignore
 
         parsed = urlparse(self.path)
         qs = parse_qs(parsed.query or "")
@@ -1150,7 +1184,10 @@ class Handler(SimpleHTTPRequestHandler):
         return self._redirect(str(payload["url"]))
 
     def _oauth_callback(self) -> bool:
-        from auth_store import finish_supabase_session
+        try:
+            from workers.auth_store import finish_supabase_session
+        except ImportError:
+            from auth_store import finish_supabase_session  # type: ignore
 
         parsed = urlparse(self.path)
         qs = parse_qs(parsed.query or "")
