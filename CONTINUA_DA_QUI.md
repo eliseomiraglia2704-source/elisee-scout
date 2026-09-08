@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-08**
-Ultimo fatto: **Integrazione Logo Ufficiale Salernum Baronissi (Eccellenza Campania Girone B)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-salernum-baronissi.png` collegato a focus.html. Cache `BARONISSI1`.
-Feature precedente: **Integrazione Logo Ufficiale Rossoblù Castel San Giorgio** — Cache `CASTELSANGIORGIO1`.
+Ultimo fatto: **Integrazione Logo Ufficiale San Vito Positano (Eccellenza Campania Girone B)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-san-vito-positano.png` collegato a focus.html. Cache `POSITANO1`.
+Feature precedente: **Integrazione Logo Ufficiale Salernum Baronissi** — Cache `BARONISSI1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
