@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-08**
-Ultimo fatto: **Super-Ottimizzazione Prestazioni Selettore Squadre & Intero Sito** — 1) Indicizzazione O(1) in `squadre-select.js`: pre-calcolo e sorting istantaneo per genere/lega azzerando 1.7M iterazioni per click; memoizzazione slot kit e prelievo logo; eliminato layout thrashing (`void offsetWidth` sostituito con `requestAnimationFrame`); caching sessionStorage `catalog.json`; 2) Pulizia `index.html`: rimosso script duplicato di `comuni-italiani.js`, aggiunti attributi `defer` a `jspdf` e script pesanti; 3) Cache `PERF1`.
-Feature precedente: **Risoluzione Aggiornamento Loghi Eccellenza Lazio A & Cache-Bust Totale** — Cache `ECCLAZIO2`.
+Ultimo aggiornamento: **2026-09-08** (commit `d900459`)
+Ultimo fatto: **Aggiornamento Completo Loghi Ufficiali HD Eccellenza Lazio (Gironi A e B — 36 Squadre)** — Scaricati ed elaborati in alta risoluzione HD con trasparenza alfa tutti i loghi ufficiali per l'Eccellenza Laziale: Girone A completo (Astrea, Boreale, Atletico Ardea, Campus Eur, Borgo Palidoro, Colleferro, Cavese 1919, Montespaccato, Luiss, Grifone Gialloverde, Fregene, Civitavecchia, FC Rieti, Real Monterotondo, Ottavia, Sorianese, Tivoli Calcio, W3 Maccarese) e tutte le 18 squadre del Girone B (Alatri, Pomezia, Arce 1932, Real San Basilio, Cassino, Roccasecca, Città di Formia, Roma City, Città Monte San Giovanni Campano, Salaria FC, Ferentino, SS Romulea, Lodigiani, Sterparo, Lupa Frascati, Terracina, Polisportiva Gaeta, Vis Sezze). Sincronizzati su disco sia come `ecc-<slug>.png` che come `<slug>.png` (più alias), allineati in `focus.html` con cache-bust `?v=20260908_ECCLAZIO3`, catalogo e kit 2D. Cache `ECCLAZIO3`.
+Feature precedente: **Super-Ottimizzazione Prestazioni Selettore Squadre & Intero Sito** — Cache `PERF1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
