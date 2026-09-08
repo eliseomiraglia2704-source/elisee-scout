@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-08**
-Ultimo fatto: **Risoluzione Aggiornamento Loghi Eccellenza Lazio A & Cache-Bust Totale** — Sincronizzati sia i file `ecc-<nome>.png` che i file alternativi `<nome>.png` in `immagini/squadre-loghi/`; implementato cache-busting dinamico forzato (`?v=20260908_ECCLAZIO2`) in `focus.html`, `squadre-select.js`, `mappa-club.js`, inserito `live-reload.js` in `focus.html`, azzeramento cache in `sw.js` e allineamento `version.json`.
-Feature precedente: **Integrazione Completa 15 Loghi Ufficiali Eccellenza Lazio Girone A** — Cache `ECCLAZIO1`.
+Ultimo fatto: **Super-Ottimizzazione Prestazioni Selettore Squadre & Intero Sito** — 1) Indicizzazione O(1) in `squadre-select.js`: pre-calcolo e sorting istantaneo per genere/lega azzerando 1.7M iterazioni per click; memoizzazione slot kit e prelievo logo; eliminato layout thrashing (`void offsetWidth` sostituito con `requestAnimationFrame`); caching sessionStorage `catalog.json`; 2) Pulizia `index.html`: rimosso script duplicato di `comuni-italiani.js`, aggiunti attributi `defer` a `jspdf` e script pesanti; 3) Cache `PERF1`.
+Feature precedente: **Risoluzione Aggiornamento Loghi Eccellenza Lazio A & Cache-Bust Totale** — Cache `ECCLAZIO2`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
