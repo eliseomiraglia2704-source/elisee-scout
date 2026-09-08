@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  var CLUBS_URL = 'data/squadre/scopri-clubs.json?v=20260908_ECCLAZIO2';
+  var CLUBS_URL = 'data/squadre/scopri-clubs.json?v=20260908_ECCLAZIO4';
   var MAX_PINS = 3500;
   var clubs = null;
   var activeFilter = 'all';
@@ -86,7 +86,7 @@
   function logoBust(u) {
     if (!u) return '';
     if (u.indexOf('?v=') !== -1 || u.indexOf('&v=') !== -1) return u;
-    return u + (u.indexOf('?') >= 0 ? '&' : '?') + 'v=20260908_ECCLAZIO2';
+    return u + (u.indexOf('?') >= 0 ? '&' : '?') + 'v=20260908_ECCLAZIO4';
   }
 
   function pinIcon(c) {

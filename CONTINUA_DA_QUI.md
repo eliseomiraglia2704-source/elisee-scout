@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-08** (commit `d900459`)
-Ultimo fatto: **Aggiornamento Completo Loghi Ufficiali HD Eccellenza Lazio (Gironi A e B — 36 Squadre)** — Scaricati ed elaborati in alta risoluzione HD con trasparenza alfa tutti i loghi ufficiali per l'Eccellenza Laziale: Girone A completo (Astrea, Boreale, Atletico Ardea, Campus Eur, Borgo Palidoro, Colleferro, Cavese 1919, Montespaccato, Luiss, Grifone Gialloverde, Fregene, Civitavecchia, FC Rieti, Real Monterotondo, Ottavia, Sorianese, Tivoli Calcio, W3 Maccarese) e tutte le 18 squadre del Girone B (Alatri, Pomezia, Arce 1932, Real San Basilio, Cassino, Roccasecca, Città di Formia, Roma City, Città Monte San Giovanni Campano, Salaria FC, Ferentino, SS Romulea, Lodigiani, Sterparo, Lupa Frascati, Terracina, Polisportiva Gaeta, Vis Sezze). Sincronizzati su disco sia come `ecc-<slug>.png` che come `<slug>.png` (più alias), allineati in `focus.html` con cache-bust `?v=20260908_ECCLAZIO3`, catalogo e kit 2D. Cache `ECCLAZIO3`.
-Feature precedente: **Super-Ottimizzazione Prestazioni Selettore Squadre & Intero Sito** — Cache `PERF1`.
+Ultimo aggiornamento: **2026-09-08** (commit `d69aaf7`)
+Ultimo fatto: **Cache-Bust Globale, Invalidazione SessionStorage & Hot Reload Loghi Eccellenza Lazio (Gironi A e B)** — Risolto il problema di mancata visualizzazione delle modifiche lato client: allineati a `20260908_ECCLAZIO4` tutti i punti di cache (`squadre-select.js` CATALOG_URL e LOGO_V, `mappa-club.js`, `focus.html`, `index.html` con pulizia proattiva di `sessionStorage` e service worker, `live-reload.js` con cancellazione chiavi `elisee_cat_` e forzatura hard reload, `sw.js` e `version.json`). Ora i nuovi stemmi ufficiali HD di Astrea, Boreale, Atletico Ardea, Pomezia e di tutte le 36 squadre di Eccellenza Laziale appaiono istantaneamente e nitidamente.
+Feature precedente: **Aggiornamento Completo Loghi Ufficiali HD Eccellenza Lazio (Gironi A e B — 36 Squadre)**.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

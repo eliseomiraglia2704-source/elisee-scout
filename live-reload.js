@@ -28,7 +28,16 @@
     if (isReloading) return;
     isReloading = true;
     try {
-      sessionStorage.setItem('__elisee_scroll_y', String(window.scrollY || window.pageYOffset || 0));
+      var scrollY = String(window.scrollY || window.pageYOffset || 0);
+      try {
+        for (var si = sessionStorage.length - 1; si >= 0; si--) {
+          var sk = sessionStorage.key(si);
+          if (sk && (sk.indexOf('elisee_cat_') !== -1 || sk.indexOf('elisee_') !== -1) && sk !== '__elisee_scroll_y') {
+            sessionStorage.removeItem(sk);
+          }
+        }
+      } catch (_) {}
+      sessionStorage.setItem('__elisee_scroll_y', scrollY);
     } catch (_) {}
 
     // Feedback visivo elegante e discreto
