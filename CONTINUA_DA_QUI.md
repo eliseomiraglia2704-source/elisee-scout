@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-08**
-Ultimo fatto: **Integrazione Logo Ufficiale Virtus Puteolana (Eccellenza Campania Girone A)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-virtus-puteolana.png` collegato al catalogo squadre e a focus.html. Cache `PUTEOLANA1`.
-Feature precedente: **Integrazione Logo Ufficiale Santa Maria la Carità** — Cache `SANTAMARIA1`.
+Ultimo fatto: **Integrazione Loghi Ufficiali Agerola (Eccellenza Campania B) e Virtus Stabia (Eccellenza Campania A)** — Scaricati e integrati i loghi ad alta risoluzione in `immagini/squadre-loghi/ecc-agerola.png` e `immagini/squadre-loghi/ecc-virtus-stabia.png`. Cache `AGEROLA1`.
+Feature precedente: **Integrazione Logo Ufficiale Virtus Puteolana** — Cache `PUTEOLANA1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
