@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-08**
-Ultimo fatto: **Integrazione Logo Ufficiale Costa d'Amalfi (Eccellenza Campania Girone B)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-costa-d-amalfi.png` collegato a focus.html. Cache `AMALFI1`.
-Feature precedente: **Integrazione Logo Ufficiale Città di Solofra** — Cache `SOLOFRA1`.
+Ultimo fatto: **Integrazione Logo Ufficiale GS Telese Terme (Eccellenza Campania Girone B)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-gs-telese-terme.png` collegato a focus.html. Cache `TELESE1`.
+Feature precedente: **Integrazione Logo Ufficiale Costa d'Amalfi** — Cache `AMALFI1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
