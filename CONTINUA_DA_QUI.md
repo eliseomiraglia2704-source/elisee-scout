@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-08**
-Ultimo fatto: **Integrazione Logo Ufficiale Battipagliese (Eccellenza Campania Girone B)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-battipagliese.png` collegato a focus.html. Cache `BATTIPAGLIESE1`.
-Feature precedente: **Integrazione Logo Ufficiale Apice Calcio** — Cache `APICE1`.
+Ultimo fatto: **Integrazione Logo Ufficiale Città di Campagna (Eccellenza Campania Girone B)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-citta-di-campagna.png` collegato a focus.html. Cache `CAMPAGNA1`.
+Feature precedente: **Integrazione Logo Ufficiale Battipagliese** — Cache `BATTIPAGLIESE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
