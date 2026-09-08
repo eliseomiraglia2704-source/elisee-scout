@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  var CLUBS_URL = 'data/squadre/scopri-clubs.json?v=20260902_REGIONAL_FIX1';
+  var CLUBS_URL = 'data/squadre/scopri-clubs.json?v=20260908_ECCLAZIO2';
   var MAX_PINS = 3500;
   var clubs = null;
   var activeFilter = 'all';
@@ -83,8 +83,15 @@
       });
   }
 
+  function logoBust(u) {
+    if (!u) return '';
+    if (u.indexOf('?v=') !== -1 || u.indexOf('&v=') !== -1) return u;
+    return u + (u.indexOf('?') >= 0 ? '&' : '?') + 'v=20260908_ECCLAZIO2';
+  }
+
   function pinIcon(c) {
     var logoUrl = c.logo || (c.id ? 'immagini/squadre-loghi/' + c.id + '.png' : '');
+    logoUrl = logoBust(logoUrl);
     var inner = logoUrl
       ? '<img src="' + esc(logoUrl) + '" alt="" onerror="this.style.display=\'none\'; this.parentElement.innerHTML=\'' + esc(initials(c.name)) + '\';">'
       : esc(initials(c.name));
@@ -105,6 +112,7 @@
   function popupHtml(c) {
     var sid = socialId(c);
     var logoUrl = c.logo || (c.id ? 'immagini/squadre-loghi/' + c.id + '.png' : '');
+    logoUrl = logoBust(logoUrl);
     var logoImg = logoUrl
       ? '<img src="' + esc(logoUrl) + '" alt="" style="width:36px; height:36px; object-fit:contain; border-radius:8px; background:rgba(15,23,42,0.8); padding:3px; border:1px solid rgba(56,189,248,0.3);">'
       : '';

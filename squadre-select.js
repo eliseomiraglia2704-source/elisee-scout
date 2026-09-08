@@ -9,9 +9,9 @@
   var LEAGUE_ORDER = [];
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260830_ALPHALEAGUES';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260908_ECCLAZIO2';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260827_TCATLND1';
+  var LOGO_V = '20260908_ECCLAZIO2';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};

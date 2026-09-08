@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-08**
-Ultimo fatto: **Integrazione Completa 15 Loghi Ufficiali Eccellenza Lazio Girone A** — Scaricati in alta risoluzione HD con trasparenza alfa e sincronizzati a catalogo, divise e focus.html per Campus Eur, Borgo Palidoro, Colleferro, Cavese 1919, Montespaccato, Luiss, Grifone Gialloverde, Fregene, Civitavecchia, FC Rieti, Real Monterotondo, Ottavia, Sorianese, Tivoli Calcio e W3 Maccarese. Cache `ECCLAZIO1`.
-Feature precedente: **Integrazione Logo Ufficiale San Vito Positano** — Cache `POSITANO1`.
+Ultimo fatto: **Risoluzione Aggiornamento Loghi Eccellenza Lazio A & Cache-Bust Totale** — Sincronizzati sia i file `ecc-<nome>.png` che i file alternativi `<nome>.png` in `immagini/squadre-loghi/`; implementato cache-busting dinamico forzato (`?v=20260908_ECCLAZIO2`) in `focus.html`, `squadre-select.js`, `mappa-club.js`, inserito `live-reload.js` in `focus.html`, azzeramento cache in `sw.js` e allineamento `version.json`.
+Feature precedente: **Integrazione Completa 15 Loghi Ufficiali Eccellenza Lazio Girone A** — Cache `ECCLAZIO1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
