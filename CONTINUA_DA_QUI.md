@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-08**
-Ultimo fatto: **Integrazione Logo Ufficiale Città di Pontecagnano (Eccellenza Campania Girone B)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-citta-di-pontecagnano.png` collegato a focus.html. Cache `PONTECAGNANO1`.
-Feature precedente: **Integrazione Logo Ufficiale Città di Campagna** — Cache `CAMPAGNA1`.
+Ultimo fatto: **Integrazione Logo Ufficiale Città di Solofra (Eccellenza Campania Girone B)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-citta-di-solofra.png` collegato al catalogo squadre e a focus.html. Cache `SOLOFRA1`.
+Feature precedente: **Integrazione Logo Ufficiale Città di Pontecagnano** — Cache `PONTECAGNANO1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
