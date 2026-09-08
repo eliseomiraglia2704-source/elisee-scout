@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-08**
-Ultimo fatto: **Integrazione Logo Ufficiale Alta Hirpinia (Eccellenza Campania Girone B)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-alta-hirpinia.png` collegato a focus.html. Cache `HIRPINIA1`.
-Feature precedente: **Integrazione Loghi Ufficiali Agerola e Virtus Stabia** — Cache `AGEROLA1`.
+Ultimo fatto: **Integrazione Logo Ufficiale Apice Calcio (Eccellenza Campania Girone B)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-apice-calcio.png` collegato a focus.html. Cache `APICE1`.
+Feature precedente: **Integrazione Logo Ufficiale Alta Hirpinia** — Cache `HIRPINIA1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
