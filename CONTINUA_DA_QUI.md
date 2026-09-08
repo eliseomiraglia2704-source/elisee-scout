@@ -3,7 +3,7 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-08**
+Ultimo aggiornamento: **2026-09-08** (commit `c4f6c2d`)
 Ultimo fatto: **Risoluzione Syntax Error & Import in elisee_up.py** — Corretto blocco `try` senza `except` nella funzione `log()` (linea 463), creato `workers/__init__.py` e strutturato l'import con fallback sui package `workers.auth_store`, `workers.manager_store` e `workers.autopilot_engine`, garantendo piena compatibilità sia per l'analisi statica IDE che per l'esecuzione runtime del server indistruttibile locale.
 Feature precedente: **Cache-Bust Globale, Invalidazione SessionStorage & Hot Reload Loghi Eccellenza Lazio (Gironi A e B)**.
 Sito pubblico: **https://elisee-scout.vercel.app**
