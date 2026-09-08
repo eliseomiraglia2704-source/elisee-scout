@@ -4,8 +4,8 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-08**
-Ultimo fatto: **Integrazione Logo Ufficiale Rossoblù Castel San Giorgio (Eccellenza Campania Girone B)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-rossoblu-castel-san-giorgio.png` collegato a focus.html. Cache `CASTELSANGIORGIO1`.
-Feature precedente: **Integrazione Loghi Ufficiali Heraclea, LMM Montemiletto e Poggio de Marinis** — Cache `MONTEMILETTO1`.
+Ultimo fatto: **Integrazione Logo Ufficiale Salernum Baronissi (Eccellenza Campania Girone B)** — Scaricato e integrato il logo ad alta risoluzione in `immagini/squadre-loghi/ecc-salernum-baronissi.png` collegato a focus.html. Cache `BARONISSI1`.
+Feature precedente: **Integrazione Logo Ufficiale Rossoblù Castel San Giorgio** — Cache `CASTELSANGIORGIO1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
