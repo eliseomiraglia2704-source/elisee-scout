@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-10** (Chi siamo — palette allineata al sito)
-Ultimo fatto: **Chi siamo: palette dossier allineata al sito** (nero `#050608`, testo bianco/slate, accento ciano `#38bdf8` da `--accent-primary`). Niente più inchiostro/bronzo. Cache `PALETTE1`.
-Feature precedente: **Chi siamo ristrutturata da layout pitch/card a dossier istituzionale**: Newsreader+Inter, hero letterhead, governance lista editoriale, roadmap timeline, moduli a due colonne, pull quote. Cache `DOSSIER1`.
+Ultimo aggiornamento: **2026-09-10** (Chi siamo — fix Indietro freeze)
+Ultimo fatto: **Fix schermata nera/bloccata dopo tasto Indietro**: sblocco `position:fixed` e overlay dettaglio su popstate/hashchange/switchView; Indietro chiude prima l’overlay Chi siamo. Cache `BACKFIX1`.
+Feature precedente: **Chi siamo: palette dossier allineata al sito** (nero `#050608`, accento ciano `#38bdf8`). Cache `PALETTE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -56,6 +56,7 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 ## Stato attuale (fatto, non rifare)
 
+- **Fix Indietro freeze su Chi siamo** (cache `BACKFIX1`): `EliseeUnlockPage` resetta body lock (`position:fixed`, overflow, overlay dettaglio) su Back/Forward e su ogni `switchView`. Overlay Chi siamo inserisce uno state in cronologia così il primo Indietro chiude il dettaglio senza lasciare la pagina nera. Animazione hero senza `fill-mode: both`.
 - **Chi siamo — palette sito** (cache `PALETTE1`): token del dossier agganciati a `--bg-primary` / `--text-main` / `--text-muted` / `--accent-primary`. Fondo `#050608`, accento ciano `#38bdf8` come header/footer. Niente inchiostro né bronzo.
 - **Chi siamo — dossier istituzionale** (cache `DOSSIER1`):
   - Abbandonato il linguaggio da videogioco (pill, numeri cerchiati, card con barre colorate, ritratto B/N, badge “Struttura & Governance”).
@@ -114,7 +115,8 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Chi siamo: palette allineata al sito (nero + ciano `--accent-primary`); cache `PALETTE1` |
+| (questo) | Fix schermata nera/freeze dopo tasto Indietro (unlock overlay + body lock); cache `BACKFIX1` |
+| `43b4ed4` | Chi siamo: palette allineata al sito (nero + ciano `--accent-primary`); cache `PALETTE1` |
 | `8a3ec85` | Chi siamo: dossier istituzionale Newsreader/bronzo, letterhead, timeline, pull quote; cache `DOSSIER1` |
 | `e66b81a` | Chi Siamo: eliminazione totale box/card, layout editoriale flat con sola barra laterale e hairline, H1 e titoli in sentence case, testo piatto per pillar senza pillole/chip, padding inferiore esteso; cache `CARDLESS1` |
 | `c1d5ecd` | Chi Siamo: palette Azzurro Italia (#35AEE8), H1 in sentence case, rimozione badge ridondante nodo '26, unificazione barre d'accento su 3 colonne, divisore hero tratteggiato; cache `AZZURROABOUT1` |

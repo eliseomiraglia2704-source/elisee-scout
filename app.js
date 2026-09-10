@@ -6733,10 +6733,26 @@ document.addEventListener('DOMContentLoaded', () => {
    */
   function forceCloseBlockingOverlays(closeIntentional) {
     try {
+      if (window.EliseeUnlockPage) window.EliseeUnlockPage();
+      document.documentElement.classList.remove('has-about-detail-open', 'has-active-overlay', 'modal-open');
+      document.body.classList.remove('has-about-detail-open', 'has-active-overlay', 'modal-open');
       document.documentElement.style.overflow = '';
+      document.documentElement.style.height = '';
       document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+      document.body.style.maxHeight = '';
       document.body.style.pointerEvents = 'auto';
       document.documentElement.style.pointerEvents = 'auto';
+    } catch (_) {}
+    try {
+      if (window.EliseeAboutDetail && typeof window.EliseeAboutDetail.close === 'function') {
+        window.EliseeAboutDetail.close(true);
+      }
     } catch (_) {}
     const blockers = [
       'ai-cluster-boot',

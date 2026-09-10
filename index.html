@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260910_PALETTE1';
+      var BUILD_VERSION = '20260910_BACKFIX1';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -47,7 +47,7 @@
   <link rel="stylesheet" href="style.css?v=20260910_PALETTE1">
   <link rel="stylesheet" href="player-card.css?v=20260907_COMUNI4">
   <link rel="stylesheet" href="about-detail.css?v=20260910_DOSSIER1">
-  <link rel="stylesheet" href="chi-siamo.css?v=20260910_PALETTE1">
+  <link rel="stylesheet" href="chi-siamo.css?v=20260910_BACKFIX1">
   <script src="comuni-italiani.js?v=20260907_COMUNI4" defer></script>
   
   <style id="forced-brand-font-override">
@@ -568,13 +568,48 @@
           el.style.setProperty('z-index', '-1', 'important');
         } catch (e) {}
       }
+      function fullyUnlockPage() {
+        try {
+          var html = document.documentElement;
+          var body = document.body;
+          html.classList.remove('has-about-detail-open', 'has-active-overlay', 'modal-open');
+          html.style.overflow = '';
+          html.style.overflowY = '';
+          html.style.height = '';
+          html.style.pointerEvents = 'auto';
+          html.style.scrollbarGutter = '';
+          if (body) {
+            body.classList.remove('has-about-detail-open', 'has-active-overlay', 'modal-open');
+            body.style.overflow = '';
+            body.style.overflowY = '';
+            body.style.position = '';
+            body.style.top = '';
+            body.style.left = '';
+            body.style.right = '';
+            body.style.width = '';
+            body.style.height = '';
+            body.style.maxHeight = '';
+            body.style.pointerEvents = 'auto';
+            body.style.touchAction = '';
+            body.style.scrollbarGutter = '';
+          }
+          var overlay = document.getElementById('about-detail-overlay');
+          if (overlay) {
+            overlay.classList.remove('is-active');
+            overlay.style.pointerEvents = 'none';
+            overlay.style.opacity = '0';
+          }
+        } catch (e) {}
+      }
+      window.EliseeUnlockPage = fullyUnlockPage;
+
       function killBlockers() {
         try {
+          fullyUnlockPage();
           document.documentElement.style.pointerEvents = 'auto';
           document.documentElement.style.overflow = '';
           if (document.body) {
             document.body.style.pointerEvents = 'auto';
-            // non azzerare overflow se una modal open lo richiede
           }
           // Ghost overlays tipici (boot / hub / autopilot chiusi)
           ['ai-cluster-boot', 'es-int-root', 'es-ap-root', 'modal-war-room-backdrop'].forEach(function (id) {
@@ -765,13 +800,17 @@
       }
       function unlockScroll() {
         try {
+          if (window.EliseeUnlockPage) window.EliseeUnlockPage();
           document.documentElement.style.overflow = '';
           document.documentElement.style.overflowY = 'auto';
           if (document.body) {
             document.body.style.overflow = '';
             document.body.style.overflowY = 'auto';
+            document.body.style.position = '';
+            document.body.style.top = '';
             document.body.style.height = 'auto';
             document.body.style.maxHeight = 'none';
+            document.body.style.pointerEvents = 'auto';
           }
           window.scrollTo(0, 0);
         } catch (e) {}
@@ -1073,13 +1112,15 @@
         if (typeof window.renderPeopleCards === 'function') window.renderPeopleCards();
       };
 
-      // Tasto Indietro / Avanti: usa window.switchView (core ora, app.js dopo il load)
+      // Tasto Indietro / Avanti: sblocca overlay/body lock, poi applica la vista
       window.addEventListener('popstate', function () {
+        if (window.EliseeUnlockPage) window.EliseeUnlockPage();
         if (_histLock) return;
         var h = location.hash || '#hero';
         if (typeof window.switchView === 'function') window.switchView(viewFromHash(h), h, { noHistory: true });
       });
       window.addEventListener('hashchange', function () {
+        if (window.EliseeUnlockPage) window.EliseeUnlockPage();
         if (_histLock) return;
         var h = location.hash || '#hero';
         if (h === _lastHash) return;
@@ -5579,16 +5620,20 @@
   <script src="elisee-world/main.js?v=20260906_EWGBA1"></script>
   <script src="elisee-world/elisee-world.js?v=20260906_EWGBA1"></script>
   <script src="autopilot-runtime.js?v=20260827_FIX3"></script>
-  <script src="about-detail.js?v=20260910_DOSSIER1"></script>
+  <script src="about-detail.js?v=20260910_BACKFIX1"></script>
   <script src="live-reload.js?v=20260907_BACHECA_FORCED1"></script>
   <script>
     /* Emergency unlock: body scroll + overlay fantasma */
     (function(){
       function unlock(){
         try{
+          if (window.EliseeUnlockPage) window.EliseeUnlockPage();
           document.body.style.overflow='';
           document.documentElement.style.overflow='';
-          document.body.style.pointerEvents='';
+          document.body.style.pointerEvents='auto';
+          document.body.style.position='';
+          document.body.style.top='';
+          document.body.style.height='';
           ['es-int-root','es-ap-root'].forEach(function(id){
             var el=document.getElementById(id);
             if(el && !el.classList.contains('is-open')){
@@ -5614,7 +5659,7 @@
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260907_BACHECA_FORCED1"></script>
+  <script src="app.js?v=20260910_BACKFIX1"></script>
   <script src="player-profile.js?v=20260905_OBSFIX1"></script>
   <script src="public-rating-system.js?v=20260904_SEASONDROP1"></script>
   <script src="dash-real.js?v=20260904_SEASONDROP1"></script>

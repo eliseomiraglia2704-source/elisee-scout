@@ -643,24 +643,37 @@
     document.body.style.scrollbarGutter = 'auto';
   }
 
-  function unlockBodyScroll() {
+  function unlockBodyScroll(opts) {
     document.documentElement.classList.remove('has-about-detail-open', 'has-active-overlay');
     document.body.classList.remove('has-about-detail-open', 'has-active-overlay');
     document.documentElement.style.overflow = '';
+    document.documentElement.style.height = '';
     document.documentElement.style.scrollbarGutter = '';
     document.body.style.position = '';
     document.body.style.top = '';
     document.body.style.left = '';
     document.body.style.right = '';
     document.body.style.width = '';
+    document.body.style.height = '';
+    document.body.style.maxHeight = '';
     document.body.style.overflow = '';
+    document.body.style.touchAction = '';
+    document.body.style.pointerEvents = 'auto';
     document.body.style.scrollbarGutter = '';
-    window.scrollTo(0, lockedY);
+    if (window.EliseeUnlockPage) {
+      try { window.EliseeUnlockPage(); } catch (e) {}
+    }
+    if (!opts || !opts.skipRestore) {
+      window.scrollTo(0, lockedY);
+    }
   }
 
   // ============================================================
   // OPEN & CLOSE FUNCTIONS
   // ============================================================
+  let overlayHistPushed = false;
+  let closingOverlay = false;
+
   function openAboutDetail(itemKey) {
     if (!DATA[itemKey]) return;
 
@@ -671,22 +684,50 @@
     overlay.scrollTo({ top: 0 });
     lockBodyScroll();
 
-    // Focus sul pulsante indietro per accessibilità
+    if (!overlayHistPushed) {
+      try {
+        history.pushState(
+          { elisee: true, aboutDetail: true, hash: location.hash || '#about' },
+          '',
+          location.href
+        );
+        overlayHistPushed = true;
+      } catch (e) {}
+    }
+
     setTimeout(() => {
       const back = document.getElementById('about-detail-back-btn');
       if (back) back.focus();
     }, 50);
   }
 
-  function closeAboutDetail() {
+  function closeAboutDetail(fromPop) {
     const overlay = document.getElementById('about-detail-overlay');
-    if (overlay) {
-      overlay.classList.remove('is-active');
-      unlockBodyScroll();
+    if (overlay) overlay.classList.remove('is-active');
+    unlockBodyScroll({ skipRestore: !!fromPop });
+    if (!fromPop && overlayHistPushed && !closingOverlay) {
+      overlayHistPushed = false;
+      closingOverlay = true;
+      try { history.back(); } catch (e) { closingOverlay = false; }
+      setTimeout(function () { closingOverlay = false; }, 80);
+    } else {
+      overlayHistPushed = false;
     }
   }
 
-  // Listener ESC Key
+  window.addEventListener('popstate', function () {
+    if (closingOverlay) {
+      closingOverlay = false;
+      overlayHistPushed = false;
+      return;
+    }
+    const overlay = document.getElementById('about-detail-overlay');
+    if (overlay && overlay.classList.contains('is-active')) {
+      overlayHistPushed = false;
+      closeAboutDetail(true);
+    }
+  }, true);
+
   window.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' || e.key === 'Esc') {
       const overlay = document.getElementById('about-detail-overlay');

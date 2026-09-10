@@ -20,7 +20,7 @@
   min-height: auto;
   padding: 0 0 2rem;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -55,7 +55,7 @@
 /* ----- Hero + letterhead ----- */
 .about-dossier .cs-hero {
   padding: 7.25rem 0 4.5rem;
-  animation: csFadeUp 0.7s ease both;
+  animation: csFadeUp 0.7s ease;
 }
 
 @keyframes csFadeUp {
