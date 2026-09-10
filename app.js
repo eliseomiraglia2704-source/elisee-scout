@@ -10691,32 +10691,74 @@ function handleGoogleCredential(resp) {
   });
 }
 
+function isUsableGoogleClientId(id) {
+  id = String(id || '').trim();
+  if (id.indexOf('.apps.googleusercontent.com') < 0) return false;
+  if (id.indexOf('3785607635-c80g7kd5ini2n8a4rvnh3fg26krq5g') === 0) return false;
+  var mid = (id.split('-')[1] || '').split('.')[0];
+  return mid.length >= 20;
+}
+
+function resolveGoogleClientId(cfg) {
+  var local = '';
+  try { local = String(localStorage.getItem('elisee_google_client_id') || '').trim(); } catch (_) {}
+  var fromCfg = cfg && cfg.googleClientId ? String(cfg.googleClientId).trim() : '';
+  if (isUsableGoogleClientId(local)) return local;
+  if (isUsableGoogleClientId(fromCfg)) return fromCfg;
+  return '';
+}
+
+function showGoogleClientSetup(msg) {
+  var setup = document.getElementById('accesso-google-setup') || document.getElementById('reg-google-setup');
+  if (setup) setup.style.display = 'block';
+  setRegSocialButtonsBusy(false);
+  if (msg) setRegSocialStatus(msg, true);
+  var box = document.getElementById('accesso-error-general');
+  var em = document.getElementById('accesso-error-msg');
+  if (box && em && msg) {
+    em.textContent = msg;
+    box.style.display = 'block';
+  }
+}
+
+window.saveAccessoGoogleClientIdAndStart = function () {
+  var inp = document.getElementById('accesso-google-client-id') || document.getElementById('reg-google-client-id');
+  var val = ((inp && inp.value) || '').trim();
+  if (!isUsableGoogleClientId(val)) {
+    showGoogleClientSetup('Incolla un Client ID Web valido (…apps.googleusercontent.com).');
+    return;
+  }
+  try { localStorage.setItem('elisee_google_client_id', val); } catch (_) {}
+  var setup = document.getElementById('accesso-google-setup');
+  if (setup) setup.style.display = 'none';
+  if (typeof window.runRealGoogleAuth === 'function') window.runRealGoogleAuth();
+};
+
 window.runRealGoogleAuth = function runRealGoogleAuth() {
   if (typeof clearRegError === 'function') clearRegError();
   setRegSocialStatus('Connessione a Google in corso…');
   setRegSocialButtonsBusy(true);
-  const setup = document.getElementById('reg-google-setup');
   fetch('/api/auth/config', { credentials: 'same-origin' })
     .then(function (r) { return r.json(); })
     .then(function (cfg) {
-      if (!cfg || !cfg.googleClientId) {
-        setRegSocialButtonsBusy(false);
-        setRegSocialStatus('Per registrarti con Google serve un Client ID OAuth (una volta sola).');
-        if (setup) setup.style.display = 'block';
+      var clientId = resolveGoogleClientId(cfg);
+      if (!clientId) {
+        showGoogleClientSetup('Google non è ancora configurato per Elisee Scout. Crea un ID client OAuth Web e incollalo qui sotto.');
         return;
       }
+      var setup = document.getElementById('accesso-google-setup');
       if (setup) setup.style.display = 'none';
       return loadGoogleGis().then(function () {
         google.accounts.id.initialize({
-          client_id: cfg.googleClientId,
+          client_id: clientId,
           callback: handleGoogleCredential,
           auto_select: false,
           ux_mode: 'popup'
         });
         google.accounts.id.prompt(function (n) {
-          if (n && ((n.isNotDisplayed && n.isNotDisplayed()) || (n.isSkippedMoment && n.isSkippedMoment()))) {
-            const host = document.getElementById('btn-reg-google');
-            if (host) {
+          if (n && ((n.isNotDisplayed && n.isNotDisplayed()) || (n.isSkippedMoment && n.isSkippedMoment()) || (n.isDismissedMoment && n.isDismissedMoment()))) {
+            const host = document.getElementById('btn-reg-google') || document.getElementById('accesso-btn-google');
+            if (host && host.id === 'btn-reg-google') {
               host.innerHTML = '';
               google.accounts.id.renderButton(host, {
                 theme: 'outline',
@@ -10727,13 +10769,13 @@ window.runRealGoogleAuth = function runRealGoogleAuth() {
             }
           }
         });
-        setRegSocialStatus('Scegli l’account Google. Poi imposterai una password di 8 caratteri.');
+        setRegSocialStatus('Scegli l’account Google.');
         setRegSocialButtonsBusy(false);
       });
     })
     .catch(function (err) {
       setRegSocialButtonsBusy(false);
-      setRegSocialStatus('Impossibile avviare Google: ' + ((err && err.message) || 'errore'), true);
+      showGoogleClientSetup('Impossibile avviare Google: ' + ((err && err.message) || 'errore'));
     });
 }
 
