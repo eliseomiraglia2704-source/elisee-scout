@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-10** (Chi siamo — scroll pagina tagliata)
-Ultimo fatto: **Fix Chi siamo tagliata / scroll bloccato**: overlay dettaglio da chiuso è `display:none` (prima restava flex a schermo intero e rubava la rotella). html/body tornano `overflow-y: auto`. Cache `SCROLL1`.
-Feature precedente: **Fix schermata nera/bloccata dopo tasto Indietro**. Cache `BACKFIX1`.
+Ultimo aggiornamento: **2026-09-10** (Chi siamo — Cosa facciamo / Perché puoi fidarti)
+Ultimo fatto: **Chi siamo: rimossi roadmap, pillar, business plan e moduli numerati.** Al loro posto: «Cosa facciamo, concretamente» (bacheca, mappa 2.900 club, dossier verificato) e «Perché puoi fidarti» (GDPR, minori, zero fake, opportunità reali). Palette sito. Cache `TRUST1`.
+Feature precedente: **Fix Chi siamo tagliata / scroll bloccato**. Cache `SCROLL1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -56,6 +56,7 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 ## Stato attuale (fatto, non rifare)
 
+- **Chi siamo — Cosa facciamo / Perché puoi fidarti** (cache `TRUST1`): niente roadmap interna né numeri di business plan. Griglia 3 funzioni reali + 4 garanzie. File: `index.html` (`#view-about`), `chi-siamo.css`.
 - **Fix Chi siamo scroll tagliato** (cache `SCROLL1`): `#about-detail-overlay` chiuso è `display:none` (non più layer flex invisibile a tutto schermo). Unlock forza `overflow-y: auto` su html/body.
 - **Fix Indietro freeze su Chi siamo** (cache `BACKFIX1`): `EliseeUnlockPage` resetta body lock (`position:fixed`, overflow, overlay dettaglio) su Back/Forward e su ogni `switchView`. Overlay Chi siamo inserisce uno state in cronologia così il primo Indietro chiude il dettaglio senza lasciare la pagina nera. Animazione hero senza `fill-mode: both`.
 - **Chi siamo — palette sito** (cache `PALETTE1`): token del dossier agganciati a `--bg-primary` / `--text-main` / `--text-muted` / `--accent-primary`. Fondo `#050608`, accento ciano `#38bdf8` come header/footer. Niente inchiostro né bronzo.
@@ -116,7 +117,8 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Chi siamo: overlay chiuso non ruba più lo scroll (display:none); cache `SCROLL1` |
+| (questo) | Chi siamo: Cosa facciamo + Perché puoi fidarti al posto di roadmap/governance; cache `TRUST1` |
+| `9f92a16` | Chi siamo: overlay chiuso non ruba più lo scroll (display:none); cache `SCROLL1` |
 | `35fcb59` | Fix schermata nera/freeze dopo tasto Indietro (unlock overlay + body lock); cache `BACKFIX1` |
 | `43b4ed4` | Chi siamo: palette allineata al sito (nero + ciano `--accent-primary`); cache `PALETTE1` |
 | `8a3ec85` | Chi siamo: dossier istituzionale Newsreader/bronzo, letterhead, timeline, pull quote; cache `DOSSIER1` |

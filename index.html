@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260910_SCROLL1';
+      var BUILD_VERSION = '20260910_TRUST1';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -47,7 +47,7 @@
   <link rel="stylesheet" href="style.css?v=20260910_PALETTE1">
   <link rel="stylesheet" href="player-card.css?v=20260907_COMUNI4">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
-  <link rel="stylesheet" href="chi-siamo.css?v=20260910_SCROLL1">
+  <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
   <script src="comuni-italiani.js?v=20260907_COMUNI4" defer></script>
   
   <style id="forced-brand-font-override">
@@ -2359,82 +2359,50 @@
               </div>
             </section>
 
-            <section class="cs-section" aria-labelledby="cs-gov-title">
-              <div class="cs-section-head">
-                <h2 id="cs-gov-title">Governance &amp; conformità</h2>
-                <span class="cs-count">3 aree normative</span>
+            <section class="es-about" aria-labelledby="es-about-title">
+              <div class="es-about__head">
+                <h2 id="es-about-title">Cosa facciamo, concretamente</h2>
+                <p>Elisee Scout mette in contatto calciatori, società, scout e staff tecnico su tutto il territorio italiano, dal dilettantismo agli svincolati, con strumenti pensati per essere usati oggi — non annunciati per domani.</p>
               </div>
-              <div class="cs-gov-list">
-                <article class="cs-gov-item" data-about-item="gov-gdpr" tabindex="0" role="button" aria-label="Apri dettaglio: GDPR Art. 13/30 e tutela dei minori">
-                  <div>
-                    <div class="cs-gov-tag">GDPR</div>
-                    <h3>Art. 13/30 &amp; tutela dei minori</h3>
-                  </div>
-                  <p>Trattamento dei dati sportivi e sanitari a norma europea, con consenso genitoriale obbligatorio per gli atleti minorenni e crittografia end-to-end su tutti i documenti caricati.</p>
-                </article>
-                <article class="cs-gov-item" data-about-item="gov-riforma" tabindex="0" role="button" aria-label="Apri dettaglio: Riforma dello Sport e svincoli">
-                  <div>
-                    <div class="cs-gov-tag">Riforma dello Sport</div>
-                    <h3>Svincoli &amp; inquadramento contrattuale</h3>
-                  </div>
-                  <p>Gestione trasparente degli articoli 107 e 108 NOIF e piena conformità al regolamento FIGC per agenti sportivi e operazioni di svincolo.</p>
-                </article>
-                <article class="cs-gov-item">
-                  <div>
-                    <div class="cs-gov-tag">Rete</div>
-                    <h3>Pillar trasversali di fiducia</h3>
-                  </div>
-                  <p>Verifica anti-fake al 100% su ogni profilo pubblicato e trasparenza contrattuale su ogni trattativa avviata in piattaforma.</p>
-                </article>
-              </div>
-            </section>
 
-            <section class="cs-section" aria-labelledby="cs-roadmap-title">
-              <div class="cs-section-head">
-                <h2 id="cs-roadmap-title">Roadmap &amp; sviluppo piattaforma</h2>
-                <span class="cs-count">3 fasi</span>
-              </div>
-              <div class="cs-timeline">
-                <article class="cs-t-item" data-about-item="roadmap-live" tabindex="0" role="button" aria-label="Apri dettaglio: Piattaforma Elisee Scout, fase 1 live">
-                  <div class="cs-t-phase">Fase 1 — Live</div>
-                  <h3>Piattaforma Elisee Scout</h3>
-                  <p>1.386 pillar strategici e architettura anti-fake con verifica documentale, dossier atleta con dati GPS e bacheca annunci attiva.</p>
-                </article>
-                <article class="cs-t-item" data-about-item="roadmap-plan" tabindex="0" role="button" aria-label="Apri dettaglio: Business plan e agenti IA, fase 2 in sviluppo">
-                  <div class="cs-t-phase">Fase 2 — In sviluppo</div>
-                  <h3>Business plan &amp; agenti IA</h3>
-                  <p>Estensione del catalogo con 715 agenti IA per il matchmaking, catalogazione dei campionati e verifiche di conformità pre-lancio.</p>
-                </article>
-                <article class="cs-t-item" data-about-item="roadmap-mvp" tabindex="0" role="button" aria-label="Apri dettaglio: Nucleo pillar 01–50, fase 3 pianificata">
-                  <div class="cs-t-phase">Fase 3 — Pianificata</div>
-                  <h3>Nucleo pillar 01–50</h3>
-                  <p>Passaporto digitale del calciatore, gestione degli svincoli Art. 107/108, video da 30 secondi e algoritmo Under fuoriquota.</p>
-                </article>
-              </div>
-            </section>
-
-            <section class="cs-section is-last" aria-labelledby="cs-platform-title">
-              <div class="cs-section-head">
-                <h2 id="cs-platform-title">La piattaforma per il calcio</h2>
-                <span class="cs-count">4 moduli</span>
-              </div>
-              <div class="cs-feat-list">
-                <a class="cs-feat-item" href="#bacheca-annunci" onclick="if(window.switchView){ window.switchView('bacheca','#bacheca-annunci'); } return false;">
+              <div class="es-features">
+                <a class="es-features__item" href="#bacheca-annunci" onclick="if(window.switchView){ window.switchView('bacheca','#bacheca-annunci'); } return false;">
                   <h3>Bacheca annunci &amp; provini</h3>
-                  <p>Reclutamento di calciatori, staff tecnico e club in un unico spazio verificato.</p>
+                  <p>Reclutamento diretto di giocatori e staff tecnico da parte dei club, senza intermediari.</p>
                 </a>
-                <a class="cs-feat-item" href="#mappa-portal" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){ window.switchView('mappa','#mappa-portal'); } return false;">
-                  <h3>Mappa interattiva</h3>
-                  <p>Oltre 2.900 club censiti dalla Serie D alla Terza Categoria, in tutta Italia.</p>
+                <a class="es-features__item" href="#mappa-portal" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){ window.switchView('mappa','#mappa-portal'); } return false;">
+                  <h3>Mappa di oltre 2.900 club</h3>
+                  <p>Dalla Serie D alla Terza Categoria, geolocalizzati e consultabili in tutta Italia.</p>
                 </a>
-                <a class="cs-feat-item" href="#squadre-portal" onclick="if(window.switchView){ window.switchView('squadre','#squadre-portal'); } return false;">
-                  <h3>Selettore squadre &amp; kit ufficiali</h3>
-                  <p>Catalogazione grafica delle divise da gara e dei colori sociali di ogni club.</p>
-                </a>
-                <a class="cs-feat-item" href="#scopri-portal" onclick="if(window.openScopriProfili){window.openScopriProfili('staff');}else if(window.switchView){ window.switchView('scopri','#scopri-portal'); } return false;">
-                  <h3>Network scout, agenti &amp; società</h3>
-                  <p>Matchmaking certificato e anti-fake, con dossier verificati su ogni profilo.</p>
-                </a>
+                <div class="es-features__item">
+                  <h3>Dossier atleta verificato</h3>
+                  <p>Dati GPS, video highlights e documenti controllati, così ogni profilo è quello che dichiara di essere.</p>
+                </div>
+              </div>
+
+              <div class="es-trust">
+                <div class="es-trust__head">
+                  <h2>Perché puoi fidarti</h2>
+                  <span>Le regole che seguiamo, non solo quelle che dichiariamo</span>
+                </div>
+                <div class="es-trust__grid">
+                  <div class="es-trust__item">
+                    <strong>Conformità GDPR</strong>
+                    <p>Trattamento dei dati sportivi e sanitari a norma (Art. 13/30), con crittografia end-to-end.</p>
+                  </div>
+                  <div class="es-trust__item">
+                    <strong>Tutela dei minori</strong>
+                    <p>Consenso genitoriale obbligatorio per ogni atleta sotto i 18 anni, senza eccezioni.</p>
+                  </div>
+                  <div class="es-trust__item">
+                    <strong>Zero fake account</strong>
+                    <p>Ogni profilo passa una verifica documentale prima di comparire in bacheca o in mappa.</p>
+                  </div>
+                  <div class="es-trust__item">
+                    <strong>Opportunità reali</strong>
+                    <p>Nessun annuncio a pagamento per apparire: la visibilità si guadagna con un profilo verificato.</p>
+                  </div>
+                </div>
               </div>
             </section>
 
