@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-10** (API activity + quiz-score su Vercel KV)
-Ultimo fatto: **Classifiche server-side**: `POST/GET /api/activity` e `/api/quiz-score` con sorted set Redis (Vercel KV). Client: `renderBachecaSidebar` fetch `/top`. Pubblica candidatura → `POST /api/activity`. Senza KV resta stato vuoto onesto. Cache `KV1`.
-Feature precedente: **Sidebar onesta**. Cache `SIDE1`.
+Ultimo aggiornamento: **2026-09-10** (Bacheca — click Pubblica una richiesta)
+Ultimo fatto: **CTA Bacheca**: id `btn-pubblica-richiesta` + event delegation in capture su `document`. Se non loggato: toast/alert + modale Accedi (niente più return silenzioso). Cache `CTA1`.
+Feature precedente: **API KV activity/quiz**. Cache `KV1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -134,7 +134,8 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 | Commit | Cosa |
 |---|---|
-| (questo) | API /api/activity e /api/quiz-score su Vercel KV; Bacheca fetch /top; cache `KV1` |
+| (questo) | Bacheca: delega click Pubblica una richiesta + feedback se non loggato; cache `CTA1` |
+| `1b1521b` | API /api/activity e /api/quiz-score su Vercel KV; Bacheca fetch /top; cache `KV1` |
 | `dd52ac4` | Bacheca sidebar: stati vuoti onesti, niente ranking finti; cache `SIDE1` |
 | `367e900` | Bacheca: dropdown Zona in portale body, overflow visible sui filtri; cache `DROP1` |
 | `02ac1ed` | Bacheca: filtri+reset+dati sampleJobs/localStorage, bottoni su modali reali; cache `BOARD4` |

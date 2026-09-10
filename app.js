@@ -13954,12 +13954,14 @@ window.performAdminLogout = function() {
     var logged = false;
     try { logged = localStorage.getItem('elisee_user_auth') === 'true' || localStorage.getItem('elisee_creator_mode') === 'true'; } catch (_) {}
     if (!logged) {
+      if (typeof window.showToast === 'function') window.showToast('Accedi con un profilo Club per pubblicare.', 'error');
       if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
-      else if (typeof window.showToast === 'function') window.showToast('Accedi con un profilo Club per pubblicare.', 'error');
+      else alert('Accedi con un profilo Club per pubblicare una candidatura.');
       return;
     }
     if (!window.canPublishCandidatura()) {
       if (typeof window.showToast === 'function') window.showToast('Pubblica candidatura è riservata ai profili Club.', 'error');
+      else alert('Pubblica candidatura è riservata ai profili Club.');
       return;
     }
     var modal = document.getElementById('modal-pubblica-annuncio');
@@ -14141,4 +14143,29 @@ window.performAdminLogout = function() {
   }
   setTimeout(wireBachecaActions, 500);
   setTimeout(wireBachecaActions, 1500);
+})();
+
+/* Delega click Bacheca: sopravvive a re-render e gira in capture. */
+(function () {
+  if (document.documentElement.dataset.bachecaCtaDel) return;
+  document.documentElement.dataset.bachecaCtaDel = '1';
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    if (!t || !t.closest) return;
+    if (t.closest('#btn-pubblica-richiesta, #es-cta-pubblica, #btn-bacheca-pubblica, [data-bacheca-action="pubblica"]')) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (typeof window.onPubblicaCandidatura === 'function') window.onPubblicaCandidatura();
+      else if (typeof window.openPubblicaAnnuncioModal === 'function') window.openPubblicaAnnuncioModal();
+      else if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
+      else alert('Accedi per pubblicare una candidatura.');
+      return;
+    }
+    if (t.closest('#btn-crea-profilo, #btn-bacheca-crea-profilo, [data-bacheca-action="crea-profilo"]')) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (typeof window.onCreaProfilo === 'function') window.onCreaProfilo();
+      else if (typeof window.openRegistrazioneModal === 'function') window.openRegistrazioneModal();
+    }
+  }, true);
 })();
