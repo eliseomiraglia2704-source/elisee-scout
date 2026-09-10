@@ -3,7 +3,7 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-10** (Season Wrapped v1.2)
+Ultimo aggiornamento: **2026-09-10** (commit `3c8d06f` — Season Wrapped v1.2)
 Ultimo fatto: **Season Wrapped — Recap virale di fine campionato stile «Spotify Wrapped» per l'intero ecosistema del club** (21 profili, dal calciatore al tifoso, con sistema Card OVR stile FIFA, Curva di Crescita Stagionale, Story Viewer 9:16, export Canvas 1080x1920 PNG e Countdown Wrapped Day).
 Feature precedente: **Risoluzione Syntax Error & Import in elisee_up.py** — Corretto blocco try senza except nella funzione log() (linea 463).
 Sito pubblico: **https://elisee-scout.vercel.app**
