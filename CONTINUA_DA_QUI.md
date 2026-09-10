@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-10** (Elisee Scout Mobile Auto-Reload Engine)
-Ultimo fatto: **Elisee Scout Mobile — Sistema di Refresh Automatico in background per Expo Go** (polling continuo a zero latenza su `version.json`, ricarica istantanea senza toccare lo smartphone o premere ricarica manuale, banner visivo animato "⚡ Sincronizzazione modifiche in corso...", AppState listener al risveglio dell'app e pull-to-refresh nativo).
-Feature precedente: **Elisee Scout Mobile (React Native Expo SDK 57)** — Integrazione layout mobile completo via WebView, risoluzione conflitti Tailscale ed eliminazione moduli nativi vietati.
+Ultimo aggiornamento: **2026-09-10** (Elisee Scout Mobile UI Polish & Overlay Fix)
+Ultimo fatto: **Elisee Scout Mobile — Risoluzione sovrapposizioni interfaccia mobile** (rimosso banner cookie invasivo e badge floating su app mobile, soppressi toast gialli/avvisi React Native con `LogBox.ignoreAllLogs`, gestione safe-area insets per barra di navigazione Android e status bar, padding-bottom dinamico per visualizzazione impeccabile dei tab).
+Feature precedente: **Elisee Scout Mobile — Sistema di Refresh Automatico in background per Expo Go** (polling continuo a zero latenza su `version.json`, banner visivo animato, AppState listener e pull-to-refresh nativo).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

@@ -952,6 +952,14 @@
     // Rimuovi riquadri indesiderati su logo/nav da personalizzazioni precedenti
     clearNavProfileBoxes();
 
+    // In ambiente app nativa / WebView mobile non mostrare banner o badge invasivi
+    var isMobileApp = /EliseeScoutApp/i.test(navigator.userAgent) || window.__ELISEE_MOBILE_APP__;
+    if (isMobileApp) {
+      applyCookiesFromConsent(DEFAULT_CONSENT);
+      hideBanner();
+      return;
+    }
+
     // migrate + apply technical cookies always
     var c = getConsent();
     if (hasDecision()) {

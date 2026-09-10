@@ -8,18 +8,67 @@ import {
   Platform,
   Pressable,
   Linking,
-  SafeAreaView,
   AppState,
   AppStateStatus,
   Animated,
+  LogBox,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { WebView, WebViewNavigation } from 'react-native-webview';
+
+// Disabilita tutti i banner/toast di avviso interni di React Native/Expo
+LogBox.ignoreAllLogs(true);
 
 const ELISEE_URL = 'https://elisee-scout.vercel.app';
 const VERSION_URL = 'https://elisee-scout.vercel.app/version.json';
-const POLL_INTERVAL_MS = 3000; // Controlla aggiornamenti ogni 3 secondi
+const POLL_INTERVAL_MS = 3000;
+
+// Script da iniettare immediatamente per eliminare banner cookie, badge e sovrapposizioni
+const CLEANUP_JS = `
+  (function() {
+    window.__ELISEE_MOBILE_APP__ = true;
+    try {
+      var c = JSON.stringify({
+        version: 2,
+        technical: true,
+        analytics: true,
+        profiling: true,
+        marketing: true,
+        updatedAt: new Date().toISOString(),
+        source: 'mobile_app'
+      });
+      localStorage.setItem('elisee_cookie_consent_v2', c);
+      localStorage.setItem('elisee_cookie_consent', 'all');
+      localStorage.setItem('elisee_cookies_accepted', 'true');
+    } catch (e) {}
+
+    var hideStyle = document.createElement('style');
+    hideStyle.id = 'elisee-mobile-overrides';
+    hideStyle.innerHTML = [
+      '#cookie-banner, #elisee-cookie-banner, #elisee-cookie-settings-btn, .cookie-banner, .elisee-cookie-badge-btn {',
+      '  display: none !important;',
+      '  visibility: hidden !important;',
+      '  opacity: 0 !important;',
+      '  pointer-events: none !important;',
+      '  height: 0 !important;',
+      '}',
+      'body {',
+      '  -webkit-tap-highlight-color: transparent;',
+      '  padding-bottom: env(safe-area-inset-bottom, 16px) !important;',
+      '}'
+    ].join('\\n');
+    (document.head || document.documentElement).appendChild(hideStyle);
+
+    var cb = document.getElementById('cookie-banner');
+    if (cb) cb.remove();
+    var cbtn = document.getElementById('elisee-cookie-settings-btn');
+    if (cbtn) cbtn.remove();
+  })();
+  true;
+`;
 
 export default function MobileHomeScreen() {
+  const insets = useSafeAreaInsets();
   const webViewRef = useRef<WebView>(null);
   const [canGoBack, setCanGoBack] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -28,7 +77,7 @@ export default function MobileHomeScreen() {
   const [showUpdateBanner, setShowUpdateBanner] = useState(false);
   const bannerAnim = useRef(new Animated.Value(-60)).current;
 
-  // Mostra banner animato durante l'auto-reload
+  // Banner animato di sincronizzazione automatica
   const triggerAutoReload = useCallback(() => {
     setShowUpdateBanner(true);
     Animated.spring(bannerAnim, {
@@ -45,10 +94,10 @@ export default function MobileHomeScreen() {
           useNativeDriver: true,
         }).start(() => setShowUpdateBanner(false));
       }, 1500);
-    }, 400);
+    }, 300);
   }, [bannerAnim]);
 
-  // Polling continuo di version.json per Live Auto-Reload istantaneo senza F5
+  // Polling continuo per ricarica automatica
   useEffect(() => {
     let isMounted = true;
 
@@ -65,20 +114,14 @@ export default function MobileHomeScreen() {
         if (!isMounted) return;
 
         if (currentVersion === null) {
-          // Primo caricamento
           setCurrentVersion(verId);
         } else if (verId && verId !== currentVersion) {
-          // Nuova versione rilevata: ricarica automatica istantanea!
-          console.log('[AutoReload] Nuova versione rilevata:', verId, 'Precedente:', currentVersion);
           setCurrentVersion(verId);
           triggerAutoReload();
         }
-      } catch (_) {
-        // Silenzioso in caso di rete temporaneamente assente
-      }
+      } catch (_) {}
     };
 
-    // Controllo immediato poi a intervalli regolari
     checkVersion();
     const interval = setInterval(checkVersion, POLL_INTERVAL_MS);
 
@@ -88,11 +131,10 @@ export default function MobileHomeScreen() {
     };
   }, [currentVersion, triggerAutoReload]);
 
-  // Auto-refresh quando l'utente sblocca il telefono o torna nell'app Expo Go
+  // Auto-refresh al risveglio dell'applicazione
   useEffect(() => {
     const handleAppStateChange = (nextAppState: AppStateStatus) => {
       if (nextAppState === 'active') {
-        // Ricontrolla versione immediatamente
         fetch(`${VERSION_URL}?_t=${Date.now()}`, { cache: 'no-store' })
           .then((res) => res.json())
           .then((data) => {
@@ -110,7 +152,7 @@ export default function MobileHomeScreen() {
     return () => sub.remove();
   }, [currentVersion, triggerAutoReload]);
 
-  // Gestione tasto "Indietro" su dispositivi Android
+  // Gestione tasto fisico "Indietro" su Android
   useEffect(() => {
     if (Platform.OS !== 'android') return;
 
@@ -140,9 +182,18 @@ export default function MobileHomeScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <View
+      style={[
+        styles.root,
+        {
+          paddingTop: Math.max(insets.top, 8),
+          paddingBottom: Math.max(insets.bottom, 12),
+          paddingLeft: insets.left,
+          paddingRight: insets.right,
+        },
+      ]}>
       <View style={styles.container}>
-        {/* Banner animato di Auto-Reload */}
+        {/* Banner animato in alto per auto-reload */}
         {showUpdateBanner && (
           <Animated.View style={[styles.updateBanner, { transform: [{ translateY: bannerAnim }] }]}>
             <Text style={styles.updateBannerDot}>⚡</Text>
@@ -167,7 +218,6 @@ export default function MobileHomeScreen() {
               setHasError(true);
             }
           }}
-          // Pull-to-refresh nativo abilitato: basta trascinare verso il basso dall'alto
           pullToRefreshEnabled={true}
           javaScriptEnabled={true}
           domStorageEnabled={true}
@@ -176,6 +226,9 @@ export default function MobileHomeScreen() {
           mediaPlaybackRequiresUserAction={false}
           allowsBackForwardNavigationGestures={true}
           mixedContentMode="compatibility"
+          // Iniezione immediata prima e dopo il caricamento per ripulire banner
+          injectedJavaScriptBeforeContentLoaded={CLEANUP_JS}
+          injectedJavaScript={CLEANUP_JS}
           userAgent="Mozilla/5.0 (Linux; Android 14; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Mobile Safari/537.36 EliseeScoutApp/1.0"
           onShouldStartLoadWithRequest={(request) => {
             const { url } = request;
@@ -192,18 +245,18 @@ export default function MobileHomeScreen() {
           }}
         />
 
-        {/* Loader iniziale durante il primissimo caricamento */}
+        {/* Loader iniziale pulito */}
         {isLoading && !showUpdateBanner && (
           <View style={styles.loadingOverlay}>
             <View style={styles.loaderBox}>
               <Text style={styles.loaderLogo}>⚡ ELISEE SCOUT</Text>
               <ActivityIndicator size="large" color="#38bdf8" style={styles.spinner} />
-              <Text style={styles.loaderText}>Caricamento piattaforma...</Text>
+              <Text style={styles.loaderText}>Caricamento interfaccia...</Text>
             </View>
           </View>
         )}
 
-        {/* Schermata di errore se offline con tasto Riprova */}
+        {/* Schermata di errore con riprova */}
         {hasError && (
           <View style={styles.errorOverlay}>
             <View style={styles.errorCard}>
@@ -220,12 +273,12 @@ export default function MobileHomeScreen() {
           </View>
         )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
+  root: {
     flex: 1,
     backgroundColor: '#050810',
   },
@@ -240,9 +293,9 @@ const styles = StyleSheet.create({
   },
   updateBanner: {
     position: 'absolute',
-    top: 8,
-    left: 20,
-    right: 20,
+    top: 4,
+    left: 16,
+    right: 16,
     zIndex: 9999,
     backgroundColor: 'rgba(6, 18, 38, 0.96)',
     borderWidth: 1,
