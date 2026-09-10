@@ -8218,9 +8218,86 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.addEventListener('click', (e) => {
-    if (e.target && e.target.closest && e.target.closest('.custom-dropdown')) return;
+    if (e.target && e.target.closest && (e.target.closest('.custom-dropdown') || e.target.closest('.dropdown-options-menu.is-ported'))) return;
     document.querySelectorAll('.custom-dropdown.open').forEach(d => d.classList.remove('open'));
   });
+
+  (function portalBachecaDropdowns() {
+    function placeMenu(menu, trigger) {
+      var r = trigger.getBoundingClientRect();
+      var width = Math.max(r.width, 280);
+      var left = Math.min(Math.max(8, r.left), window.innerWidth - width - 8);
+      var top = r.bottom + 6;
+      var maxH = Math.min(380, Math.max(160, window.innerHeight - top - 12));
+      menu.style.position = 'fixed';
+      menu.style.left = left + 'px';
+      menu.style.top = top + 'px';
+      menu.style.width = width + 'px';
+      menu.style.zIndex = '20000';
+      menu.style.maxHeight = maxH + 'px';
+    }
+    function restoreMenu(menu) {
+      if (!menu || !menu._homeParent) return;
+      if (menu._homeNext && menu._homeNext.parentNode === menu._homeParent) {
+        menu._homeParent.insertBefore(menu, menu._homeNext);
+      } else {
+        menu._homeParent.appendChild(menu);
+      }
+      menu.classList.remove('is-ported');
+      menu.removeAttribute('data-ported-for');
+      menu.style.position = '';
+      menu.style.left = '';
+      menu.style.top = '';
+      menu.style.width = '';
+      menu.style.zIndex = '';
+      menu.style.maxHeight = '';
+      menu._homeParent = null;
+      menu._homeNext = null;
+    }
+    function portalOpen(dd) {
+      var menu = dd.querySelector('.dropdown-options-menu') || document.querySelector('.dropdown-options-menu[data-ported-for="' + dd.id + '"]');
+      var trigger = dd.querySelector('.dropdown-trigger');
+      if (!menu || !trigger) return;
+      if (!menu._homeParent) {
+        menu._homeParent = menu.parentNode;
+        menu._homeNext = menu.nextSibling;
+      }
+      menu.setAttribute('data-ported-for', dd.id || '');
+      document.body.appendChild(menu);
+      menu.classList.add('is-ported');
+      placeMenu(menu, trigger);
+      dd._portedMenu = menu;
+    }
+    function portalClose(dd) {
+      var menu = dd._portedMenu || (dd.id && document.querySelector('.dropdown-options-menu[data-ported-for="' + dd.id + '"]'));
+      if (menu) restoreMenu(menu);
+      dd._portedMenu = null;
+    }
+    function watch(dd) {
+      if (dd.dataset.portalWatch) return;
+      dd.dataset.portalWatch = '1';
+      new MutationObserver(function () {
+        if (dd.classList.contains('open')) portalOpen(dd);
+        else portalClose(dd);
+      }).observe(dd, { attributes: true, attributeFilter: ['class'] });
+    }
+    document.querySelectorAll('#bacheca-annunci .custom-dropdown, #bacheca-tab-persone .custom-dropdown').forEach(watch);
+    window.addEventListener('scroll', function () {
+      document.querySelectorAll('.custom-dropdown.open').forEach(function (dd) {
+        var menu = dd._portedMenu;
+        var trigger = dd.querySelector('.dropdown-trigger');
+        if (menu && trigger) placeMenu(menu, trigger);
+      });
+    }, true);
+    window.addEventListener('resize', function () {
+      document.querySelectorAll('.custom-dropdown.open').forEach(function (dd) {
+        var menu = dd._portedMenu;
+        var trigger = dd.querySelector('.dropdown-trigger');
+        if (menu && trigger) placeMenu(menu, trigger);
+      });
+    });
+    window.EliseePortalDropdown = { open: portalOpen, close: portalClose };
+  })();
 
   const btnContrast = document.getElementById('btn-accessibility-contrast');
   if (btnContrast) {
@@ -13708,12 +13785,17 @@ window.performAdminLogout = function() {
       var t = e.target;
       if (!t || !t.closest) return;
 
-      // click su opzione
-      var opt = t.closest('.custom-dropdown .dropdown-option');
-      if (opt) {
+      // click su opzione (anche se il menu è portale su body)
+      var opt = t.closest('.dropdown-option');
+      if (opt && (opt.closest('.custom-dropdown') || opt.closest('.dropdown-options-menu.is-ported'))) {
         e.preventDefault();
         e.stopPropagation();
         var dd = opt.closest('.custom-dropdown');
+        if (!dd) {
+          var portedMenu = opt.closest('.dropdown-options-menu.is-ported');
+          var ownerId = portedMenu && portedMenu.getAttribute('data-ported-for');
+          dd = ownerId ? document.getElementById(ownerId) : null;
+        }
         if (!dd || dd.id === 'lang-switcher' || dd.classList.contains('nav-lang')) return;
         dd.querySelectorAll('.dropdown-option').forEach(function (o) { o.classList.remove('selected'); });
         opt.classList.add('selected');
@@ -13747,8 +13829,8 @@ window.performAdminLogout = function() {
         return;
       }
 
-      // click fuori: chiudi
-      if (!t.closest('.custom-dropdown')) {
+      // click fuori: chiudi (il menu portale non è più dentro .custom-dropdown)
+      if (!t.closest('.custom-dropdown') && !t.closest('.dropdown-options-menu.is-ported')) {
         document.querySelectorAll('.custom-dropdown.open').forEach(function (d) { d.classList.remove('open'); });
       }
     }, false);

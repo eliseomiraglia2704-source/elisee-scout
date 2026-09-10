@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-10** (Bacheca funzionante — filtri, reset, dati reali)
-Ultimo fatto: **Bacheca**: filtri ruolo/categoria/zona + raggio (proprietà annuncio) + tag multipli; stato vuoto «Reimposta filtri»; `onCreaProfilo` → registrazione, `onPubblicaCandidatura` → modale pubblica. Dati = `sampleJobs` + `localStorage.elisee_user_jobs` (nessuna API `/api/annunci` ancora). Cache `BOARD4`.
-Feature precedente: **CTA strip + pill senza numeri**. Cache `BOARD3`.
+Ultimo aggiornamento: **2026-09-10** (Bacheca — dropdown Zona su portale body)
+Ultimo fatto: **Dropdown Zona**: overflow visible sul pannello filtri, niente backdrop-filter, sidebar senza sticky/z-index. Menu comuni portato su `document.body` con `position:fixed`. Cache `DROP1`.
+Feature precedente: **Bacheca filtri/reset/dati**. Cache `BOARD4`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -56,6 +56,7 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 ## Stato attuale (fatto, non rifare)
 
+- **Dropdown Zona portale** (cache `DROP1`): menu `.dropdown-options-menu` su `body` (`position:fixed`) così non viene tagliato dal filtro né coperto dalla sidebar.
 - **Bacheca funzionante** (cache `BOARD4`): reset filtri; raggio filtra `job.raggio` (non geo utente); bottoni agganciati alle modali reali. Fonti dati: catalogo `sampleJobs` in `app.js` + candidature utente in `localStorage['elisee_user_jobs']`.
 - **Bacheca — CTA strip + pill + maglia** (cache `BOARD3`): raggio senza `1 ·`; `.es-cta-strip` sotto le card; tab Squadre con SVG maglia.
 - **Bacheca — struttura es-main** (cache `BOARD2`): HTML reale con `.es-main`, `.es-sidebar` unita, card fallback + `.es-empty`. Render JS con try/catch. Icone tab SVG.
@@ -125,7 +126,8 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Bacheca: filtri+reset+dati sampleJobs/localStorage, bottoni su modali reali; cache `BOARD4` |
+| (questo) | Bacheca: dropdown Zona in portale body, overflow visible sui filtri; cache `DROP1` |
+| `02ac1ed` | Bacheca: filtri+reset+dati sampleJobs/localStorage, bottoni su modali reali; cache `BOARD4` |
 | `99d1ed4` | Bacheca: pill raggio senza numeri, CTA strip, icona maglia Squadre; cache `BOARD3` |
 | `80bb68b` | Bacheca strutturale: es-main, sidebar unita, empty state, icone SVG; cache `BOARD2` |
 | `80e8b40` | Bacheca: layout board, sidebar compatta, stato vuoto, gerarchia bottoni; cache `BOARD1` |
