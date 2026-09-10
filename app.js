@@ -8755,10 +8755,18 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.addEventListener('click', function (e) {
-    var btn = e.target && e.target.closest && e.target.closest('#es-empty-widen');
-    if (!btn) return;
-    e.preventDefault();
-    if (typeof window.widenBachecaSearch === 'function') window.widenBachecaSearch();
+    var t = e.target && e.target.closest ? e.target : null;
+    if (!t || !t.closest) return;
+    if (t.closest('#es-empty-widen')) {
+      e.preventDefault();
+      if (typeof window.widenBachecaSearch === 'function') window.widenBachecaSearch();
+      return;
+    }
+    if (t.closest('#es-cta-pubblica')) {
+      e.preventDefault();
+      if (typeof window.openPubblicaAnnuncioModal === 'function') window.openPubblicaAnnuncioModal();
+      else if (typeof window.openRegistrazioneModal === 'function') window.openRegistrazioneModal();
+    }
   });
 
   if (typeof initComuniLocationDropdown === 'function') initComuniLocationDropdown();

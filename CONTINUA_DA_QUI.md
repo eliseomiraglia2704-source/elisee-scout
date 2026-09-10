@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-10** (Bacheca — struttura es-main / sidebar / empty)
-Ultimo fatto: **Bacheca strutturale**: markup `.es-main` + `.es-listings` (card di fallback in HTML) + `.es-empty` + sidebar unica `.es-sidebar` con `border-top` tra gli item. Icone tab in SVG inline (fix cerchio su Squadre). Cache `BOARD2`.
-Feature precedente: **Bacheca bottoni/filtri/tab**. Cache `BOARD1`.
+Ultimo aggiornamento: **2026-09-10** (Bacheca — pill raggio, CTA strip, icona maglia)
+Ultimo fatto: **Bacheca**: pill raggio senza numeri (Città/Provincia/Regione/Italia); striscia CTA «Non hai trovato il ruolo giusto?» sotto gli annunci; icona tab Squadre = maglia SVG (non più scudo/cerchio). Cache `BOARD3`.
+Feature precedente: **Bacheca strutturale es-main/sidebar**. Cache `BOARD2`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -56,6 +56,7 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 ## Stato attuale (fatto, non rifare)
 
+- **Bacheca — CTA strip + pill + maglia** (cache `BOARD3`): raggio senza `1 ·`; `.es-cta-strip` sotto le card; tab Squadre con SVG maglia.
 - **Bacheca — struttura es-main** (cache `BOARD2`): HTML reale con `.es-main`, `.es-sidebar` unita, card fallback + `.es-empty`. Render JS con try/catch. Icone tab SVG.
 - **Bacheca reclutamento — board** (cache `BOARD1`):
   - Sidebar unica (In evidenza + Community score), niente card CTA duplicata «Cerca persone e squadre».
@@ -123,7 +124,8 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Bacheca strutturale: es-main, sidebar unita, empty state, icone SVG; cache `BOARD2` |
+| (questo) | Bacheca: pill raggio senza numeri, CTA strip, icona maglia Squadre; cache `BOARD3` |
+| `80bb68b` | Bacheca strutturale: es-main, sidebar unita, empty state, icone SVG; cache `BOARD2` |
 | `80e8b40` | Bacheca: layout board, sidebar compatta, stato vuoto, gerarchia bottoni; cache `BOARD1` |
 | `14b2491` | Chi siamo: Cosa facciamo + Perché puoi fidarti al posto di roadmap/governance; cache `TRUST1` |
 | `9f92a16` | Chi siamo: overlay chiuso non ruba più lo scroll (display:none); cache `SCROLL1` |

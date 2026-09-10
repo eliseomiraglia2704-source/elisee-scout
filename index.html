@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260910_BOARD2';
+      var BUILD_VERSION = '20260910_BOARD3';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -48,7 +48,7 @@
   <link rel="stylesheet" href="player-card.css?v=20260907_COMUNI4">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
-  <link rel="stylesheet" href="bacheca-board.css?v=20260910_BOARD2">
+  <link rel="stylesheet" href="bacheca-board.css?v=20260910_BOARD3">
   <script src="comuni-italiani.js?v=20260907_COMUNI4" defer></script>
   
   <style id="forced-brand-font-override">
@@ -2749,7 +2749,7 @@
                 <span>Wall trattative</span>
               </button>
               <button type="button" class="bacheca-tab-btn" id="tab-btn-squadre" role="tab" aria-selected="false" onclick="switchBachecaTab('squadre')">
-                <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>
                 <span>Squadre</span>
               </button>
             </nav>
@@ -2830,10 +2830,10 @@
                     <span class="bacheca-seg-label">Raggio:</span>
                     <div class="bacheca-segmented-control" id="bacheca-geo-segmented" role="radiogroup" aria-label="Raggio geografico">
                       <button type="button" class="bacheca-seg-btn is-active" data-geo="0" title="Tutte le zone d'Italia">Tutti</button>
-                      <button type="button" class="bacheca-seg-btn" data-geo="1" title="Club della tua città">1 · Città</button>
-                      <button type="button" class="bacheca-seg-btn" data-geo="2" title="Spostamenti quotidiani">2 · Provincia</button>
-                      <button type="button" class="bacheca-seg-btn" data-geo="3" title="Categorie superiori">3 · Regione</button>
-                      <button type="button" class="bacheca-seg-btn" data-geo="4" title="Esperienze fuori sede">4 · Italia</button>
+                      <button type="button" class="bacheca-seg-btn" data-geo="1" title="Club della tua città">Città</button>
+                      <button type="button" class="bacheca-seg-btn" data-geo="2" title="Spostamenti quotidiani">Provincia</button>
+                      <button type="button" class="bacheca-seg-btn" data-geo="3" title="Categorie superiori">Regione</button>
+                      <button type="button" class="bacheca-seg-btn" data-geo="4" title="Esperienze fuori sede">Italia</button>
                     </div>
                   </div>
 
@@ -2891,6 +2891,10 @@
                       <p>Amplia il raggio di ricerca a Regione o Italia per vedere più opportunità.</p>
                       <button type="button" id="es-empty-widen">Amplia il raggio</button>
                     </div>
+                  </div>
+                  <div class="es-cta-strip">
+                    <p>Non hai trovato il ruolo giusto?</p>
+                    <button type="button" class="es-btn es-btn--secondary" id="es-cta-pubblica">Pubblica una richiesta</button>
                   </div>
                 </div>
 
@@ -5586,7 +5590,7 @@
   <script src="club-storia.js?v=20260903_TIERPROMO1"></script>
   <script src="campionati-agents.js?v=20260806_STABLE"></script>
   <script src="war-room-runtime.js?v=20260906_WARROOM1"></script>
-  <script src="player-card.js?v=20260907_BACHECA_FORCED1"></script>
+  <script src="player-card.js?v=20260910_BOARD3"></script>
   <script src="minigioco-carriera.js?v=20260906_MGHUB2"></script>
   <!-- ELISEE WORLD — Motore RPG Calcistico 2D (Architettura Completa) -->
   <script src="elisee-world/src/core/state-machine.js?v=20260906_EWGBA1"></script>
@@ -5656,7 +5660,7 @@
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260910_BOARD2"></script>
+  <script src="app.js?v=20260910_BOARD3"></script>
   <script src="player-profile.js?v=20260905_OBSFIX1"></script>
   <script src="public-rating-system.js?v=20260904_SEASONDROP1"></script>
   <script src="dash-real.js?v=20260904_SEASONDROP1"></script>

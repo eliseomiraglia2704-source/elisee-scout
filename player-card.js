@@ -1478,10 +1478,10 @@
     box.id = 'es-pc-geo-funnel';
     box.className = 'es-pc-funnel';
     box.innerHTML =
-      '<button type="button" data-geo="1"><b>1 · Città</b><span>Club della tua città</span></button>' +
-      '<button type="button" data-geo="2"><b>2 · Provincia</b><span>Spostamenti quotidiani</span></button>' +
-      '<button type="button" data-geo="3"><b>3 · Regione</b><span>Categorie superiori</span></button>' +
-      '<button type="button" data-geo="4"><b>4 · Italia</b><span>Esperienze fuori sede</span></button>';
+      '<button type="button" data-geo="1"><b>Città</b><span>Club della tua città</span></button>' +
+      '<button type="button" data-geo="2"><b>Provincia</b><span>Spostamenti quotidiani</span></button>' +
+      '<button type="button" data-geo="3"><b>Regione</b><span>Categorie superiori</span></button>' +
+      '<button type="button" data-geo="4"><b>Italia</b><span>Esperienze fuori sede</span></button>';
     bar.appendChild(box);
     box.addEventListener('click', function (e) {
       var b = e.target.closest('[data-geo]');
