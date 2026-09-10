@@ -8863,40 +8863,69 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof window.openPubblicaAnnuncioModal === 'function') window.openPubblicaAnnuncioModal();
   };
 
-  function getInEvidenzaData() {
-    var out = [];
+  function eliseeIdentity() {
+    var id = '';
+    var nome = '';
     try {
-      var jobs = JSON.parse(localStorage.getItem('elisee_user_jobs') || '[]') || [];
-      jobs.slice(0, 6).forEach(function (j) {
-        var nome = (j.societa || j.title || '').trim();
-        if (!nome) return;
-        out.push({ nome: nome, meta: 'Candidatura pubblicata' });
-      });
+      if (window.EliseeAuth && window.EliseeAuth.user) {
+        id = window.EliseeAuth.user.id || window.EliseeAuth.user.email || '';
+        nome = window.EliseeAuth.user.name || window.EliseeAuth.user.username || '';
+      }
     } catch (_) {}
-    return out;
-  }
-
-  function getCommunityScoreData() {
-    var keys = ['elisee_quiz_leaderboard', 'elisee_community_score', 'elisee_quiz_scores'];
-    for (var i = 0; i < keys.length; i++) {
-      try {
-        var raw = localStorage.getItem(keys[i]);
-        if (!raw) continue;
-        var arr = JSON.parse(raw);
-        if (!Array.isArray(arr) || !arr.length) continue;
-        return arr.map(function (x) {
-          return {
-            nome: x.nome || x.username || x.name || 'Utente',
-            punti: Number(x.punti || x.points || x.score || 0)
-          };
-        }).filter(function (x) { return x.punti > 0; }).sort(function (a, b) { return b.punti - a.punti; }).slice(0, 8);
-      } catch (_) {}
+    try {
+      var u = JSON.parse(localStorage.getItem('elisee_user') || localStorage.getItem('elisee_auth_me') || '{}');
+      id = id || u.id || u.email || '';
+      nome = nome || u.name || u.username || u.displayName || '';
+    } catch (_) {}
+    if (!id) {
+      id = localStorage.getItem('elisee_anon_id');
+      if (!id) {
+        id = 'anon-' + Math.random().toString(36).slice(2, 10);
+        try { localStorage.setItem('elisee_anon_id', id); } catch (_) {}
+      }
     }
-    return [];
+    return { userId: String(id).slice(0, 80), nome: String(nome || id).slice(0, 80) };
   }
 
-  window.renderBachecaSidebar = function renderBachecaSidebar() {
-    var evidenza = getInEvidenzaData();
+  window.trackEliseeActivity = function trackEliseeActivity(tipo, extra) {
+    var idn = eliseeIdentity();
+    var payload = {
+      userId: (extra && extra.userId) || idn.userId,
+      tipo: tipo || 'visita',
+      ts: Date.now(),
+      nome: (extra && extra.nome) || idn.nome
+    };
+    fetch('/api/activity', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(function () {});
+  };
+
+  window.submitEliseeQuizScore = function submitEliseeQuizScore(nome, punti) {
+    var idn = eliseeIdentity();
+    fetch('/api/quiz-score', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nome: nome || idn.nome, punti: Number(punti) || 0, userId: idn.userId })
+    }).then(function () {
+      if (typeof window.renderBachecaSidebar === 'function') window.renderBachecaSidebar();
+    }).catch(function () {});
+  };
+
+  async function fetchJsonList(url) {
+    try {
+      var res = await fetch(url, { credentials: 'same-origin' });
+      if (!res.ok) return [];
+      var data = await res.json();
+      return Array.isArray(data) ? data : [];
+    } catch (_) {
+      return [];
+    }
+  }
+
+  window.renderBachecaSidebar = async function renderBachecaSidebar() {
+    var evidenza = await fetchJsonList('/api/activity/top');
     var listE = document.getElementById('in-evidenza-list');
     var emptyE = document.getElementById('in-evidenza-empty');
     if (listE && emptyE) {
@@ -8906,11 +8935,11 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         emptyE.classList.remove('is-active');
         listE.innerHTML = evidenza.map(function (item) {
-          return '<li><span class="es-rank-list__name">' + item.nome + '</span><span class="es-rank-list__meta">' + item.meta + '</span></li>';
+          return '<li><span class="es-rank-list__name">' + (item.nome || '') + '</span><span class="es-rank-list__meta">' + (item.meta || '') + '</span></li>';
         }).join('');
       }
     }
-    var scores = getCommunityScoreData();
+    var scores = await fetchJsonList('/api/quiz-score/top');
     var listC = document.getElementById('community-score-list');
     var emptyC = document.getElementById('community-score-empty');
     var cta = document.getElementById('btn-fai-quiz');
@@ -8923,7 +8952,7 @@ document.addEventListener('DOMContentLoaded', () => {
         emptyC.classList.remove('is-active');
         if (cta) cta.classList.remove('is-active');
         listC.innerHTML = scores.map(function (item, i) {
-          return '<li data-position="' + (i + 1) + '"><span class="es-rank-list__name">' + item.nome + '</span><span class="es-rank-list__meta">' + item.punti + ' pt</span></li>';
+          return '<li data-position="' + (i + 1) + '"><span class="es-rank-list__name">' + (item.nome || '') + '</span><span class="es-rank-list__meta">' + (item.punti || 0) + ' pt</span></li>';
         }).join('');
       }
     }
@@ -14024,6 +14053,9 @@ window.performAdminLogout = function() {
     if (typeof window.switchView === 'function') window.switchView('bacheca', '#bacheca-annunci');
     setTimeout(function () {
       if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs();
+      if (typeof window.trackEliseeActivity === 'function') {
+        window.trackEliseeActivity('candidatura', { nome: societa || title || '' });
+      }
       if (typeof window.renderBachecaSidebar === 'function') window.renderBachecaSidebar();
       var jobs = document.getElementById('jobs-container');
       if (jobs) jobs.scrollIntoView({ behavior: 'smooth', block: 'start' });

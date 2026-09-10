@@ -38,6 +38,14 @@
     {
       "source": "/api/autopilot/(.*)",
       "destination": "/api/autopilot?path=$1"
+    },
+    {
+      "source": "/api/activity/top",
+      "destination": "/api/activity?path=top"
+    },
+    {
+      "source": "/api/quiz-score/top",
+      "destination": "/api/quiz-score?path=top"
     }
   ]
 }

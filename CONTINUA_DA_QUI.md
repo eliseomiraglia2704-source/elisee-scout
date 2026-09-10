@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-10** (Bacheca sidebar — stati vuoti onesti)
-Ultimo fatto: **In evidenza / Community score**: niente più copie fake da trending/leaderboard. Lista reale da `elisee_user_jobs` (candidature) e `elisee_quiz_leaderboard` se presente; altrimenti «Ancora nessuna attività» + «Fai il quiz» → minigiochi. Cache `SIDE1`.
-Feature precedente: **Dropdown Zona portale**. Cache `DROP1`.
+Ultimo aggiornamento: **2026-09-10** (API activity + quiz-score su Vercel KV)
+Ultimo fatto: **Classifiche server-side**: `POST/GET /api/activity` e `/api/quiz-score` con sorted set Redis (Vercel KV). Client: `renderBachecaSidebar` fetch `/top`. Pubblica candidatura → `POST /api/activity`. Senza KV resta stato vuoto onesto. Cache `KV1`.
+Feature precedente: **Sidebar onesta**. Cache `SIDE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -56,6 +56,13 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 ## Stato attuale (fatto, non rifare)
 
+- **API KV classifiche** (cache `KV1`):
+  - `POST /api/activity` `{ userId, tipo, ts, nome }` — ZADD `activity:events`
+  - `GET /api/activity/top` — aggregato 24h → `{ nome, meta }`
+  - `POST /api/quiz-score` `{ nome, punti }` — ZADD `quiz:scores`
+  - `GET /api/quiz-score/top` — top 10 `{ nome, punti }`
+  - Attivare **Vercel KV** sul progetto (Storage → KV) per `KV_REST_API_URL` / `KV_REST_API_TOKEN`, poi redeploy.
+  - Client: `trackEliseeActivity()`, `submitEliseeQuizScore()`.
 - **Sidebar onesta** (cache `SIDE1`): In evidenza da candidature `localStorage.elisee_user_jobs`; Community score da `elisee_quiz_leaderboard` (se vuoto: empty + Fai il quiz). Non si copiano più i ranking finti di Home.
 - **Dropdown Zona portale** (cache `DROP1`): menu `.dropdown-options-menu` su `body` (`position:fixed`) così non viene tagliato dal filtro né coperto dalla sidebar.
 - **Bacheca funzionante** (cache `BOARD4`): reset filtri; raggio filtra `job.raggio` (non geo utente); bottoni agganciati alle modali reali. Fonti dati: catalogo `sampleJobs` in `app.js` + candidature utente in `localStorage['elisee_user_jobs']`.
@@ -127,7 +134,8 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Bacheca sidebar: stati vuoti onesti, niente ranking finti; cache `SIDE1` |
+| (questo) | API /api/activity e /api/quiz-score su Vercel KV; Bacheca fetch /top; cache `KV1` |
+| `dd52ac4` | Bacheca sidebar: stati vuoti onesti, niente ranking finti; cache `SIDE1` |
 | `367e900` | Bacheca: dropdown Zona in portale body, overflow visible sui filtri; cache `DROP1` |
 | `02ac1ed` | Bacheca: filtri+reset+dati sampleJobs/localStorage, bottoni su modali reali; cache `BOARD4` |
 | `99d1ed4` | Bacheca: pill raggio senza numeri, CTA strip, icona maglia Squadre; cache `BOARD3` |
