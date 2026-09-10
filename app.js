@@ -10691,7 +10691,7 @@ function handleGoogleCredential(resp) {
   });
 }
 
-function runRealGoogleAuth() {
+window.runRealGoogleAuth = function runRealGoogleAuth() {
   if (typeof clearRegError === 'function') clearRegError();
   setRegSocialStatus('Connessione a Google in corso…');
   setRegSocialButtonsBusy(true);
@@ -10977,12 +10977,29 @@ window.eliseeReadAuthParams = window.eliseeReadAuthParams || function () {
 
 window.startEliseeGoogleOAuth = function () {
   if (window.rememberAuthReturn) window.rememberAuthReturn();
-  const next = String(location.pathname || '/index.html').split('?')[0].split('#')[0] || '/index.html';
-  try {
-    sessionStorage.setItem('elisee_oauth_return', next);
-  } catch (_) {}
-  location.href = '/api/auth/oauth/google?next=' + encodeURIComponent(next);
+  if (typeof window.openAccessoModal === 'function') {
+    try { window.openAccessoModal('email'); } catch (_) {}
+  }
+  if (typeof window.runRealGoogleAuth === 'function') {
+    window.runRealGoogleAuth();
+    return;
+  }
+  if (typeof runRealGoogleAuth === 'function') {
+    runRealGoogleAuth();
+  }
 };
+
+(function bootGoogleGisFromQuery() {
+  try {
+    if (!/(?:^|[?&])google_gis=1(?:&|$)/.test(String(location.search || ''))) return;
+    var u = new URL(location.href);
+    u.searchParams.delete('google_gis');
+    history.replaceState({}, '', u.pathname + (u.search || '') + (u.hash || ''));
+    setTimeout(function () {
+      if (window.startEliseeGoogleOAuth) window.startEliseeGoogleOAuth();
+    }, 250);
+  } catch (_) {}
+})();
 
 window.consumeEliseeOAuthReturn = function () {
   if (window.__ELISEE_OAUTH_CONSUMED) return;

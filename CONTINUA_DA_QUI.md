@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-10** (OAuth Google su Vercel)
-Ultimo fatto: **Fix 404 `/api/auth/oauth/google`**: function Vercel `api/auth/oauth/google.js` + `finish.js` + `config.js` + `me.js`. Redirect Supabase Google con PKCE in cookie. Aggiungere `https://elisee-scout.vercel.app/` alle Redirect URL di Supabase e alle origini Google OAuth.
-Feature precedente: **CTA Bacheca click**. Cache `CTA1`.
+Ultimo aggiornamento: **2026-09-10** (Google login resta su Elisee Scout)
+Ultimo fatto: **Login Google non passa più da Supabase** (Site URL della Barberia Garofalo). GIS popup su `elisee-scout.vercel.app`. `/api/auth/oauth/google` redirige al sito Scout, non a Garofalo.
+Feature precedente: **OAuth Google Vercel 404**. Cache `CTA1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -135,7 +135,8 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Fix 404 Google OAuth: /api/auth/oauth/google + finish su Vercel |
+| (questo) | Login Google: niente redirect Supabase/Garofalo, GIS su Elisee Scout; cache `GGL1` |
+| `ff85550` | Fix 404 Google OAuth: /api/auth/oauth/google + finish su Vercel |
 | `adb9a74` | Bacheca: delega click Pubblica una richiesta + feedback se non loggato; cache `CTA1` |
 | `1b1521b` | API /api/activity e /api/quiz-score su Vercel KV; Bacheca fetch /top; cache `KV1` |
 | `dd52ac4` | Bacheca sidebar: stati vuoti onesti, niente ranking finti; cache `SIDE1` |
