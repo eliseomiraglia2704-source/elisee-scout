@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-10** (Bacheca — click Pubblica una richiesta)
-Ultimo fatto: **CTA Bacheca**: id `btn-pubblica-richiesta` + event delegation in capture su `document`. Se non loggato: toast/alert + modale Accedi (niente più return silenzioso). Cache `CTA1`.
-Feature precedente: **API KV activity/quiz**. Cache `KV1`.
+Ultimo aggiornamento: **2026-09-10** (OAuth Google su Vercel)
+Ultimo fatto: **Fix 404 `/api/auth/oauth/google`**: function Vercel `api/auth/oauth/google.js` + `finish.js` + `config.js` + `me.js`. Redirect Supabase Google con PKCE in cookie. Aggiungere `https://elisee-scout.vercel.app/` alle Redirect URL di Supabase e alle origini Google OAuth.
+Feature precedente: **CTA Bacheca click**. Cache `CTA1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -56,6 +56,7 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 ## Stato attuale (fatto, non rifare)
 
+- **OAuth Google Vercel**: `GET /api/auth/oauth/google` (302 a Supabase), `POST /api/auth/oauth/finish`, `GET /api/auth/config`, `GET /api/auth/me`, `POST /api/auth/google`. PKCE in cookie `es_pkce`. Redirect produzione: `https://elisee-scout.vercel.app/`.
 - **API KV classifiche** (cache `KV1`):
   - `POST /api/activity` `{ userId, tipo, ts, nome }` — ZADD `activity:events`
   - `GET /api/activity/top` — aggregato 24h → `{ nome, meta }`
@@ -134,7 +135,8 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Bacheca: delega click Pubblica una richiesta + feedback se non loggato; cache `CTA1` |
+| (questo) | Fix 404 Google OAuth: /api/auth/oauth/google + finish su Vercel |
+| `adb9a74` | Bacheca: delega click Pubblica una richiesta + feedback se non loggato; cache `CTA1` |
 | `1b1521b` | API /api/activity e /api/quiz-score su Vercel KV; Bacheca fetch /top; cache `KV1` |
 | `dd52ac4` | Bacheca sidebar: stati vuoti onesti, niente ranking finti; cache `SIDE1` |
 | `367e900` | Bacheca: dropdown Zona in portale body, overflow visible sui filtri; cache `DROP1` |
