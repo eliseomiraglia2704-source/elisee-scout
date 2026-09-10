@@ -1,19 +1,18 @@
 /* ============================================================
    CHI SIAMO — dossier istituzionale
    Tipografia: Newsreader (titoli/citazioni) + Inter (UI/dati)
-   Palette: inchiostro + bronzo. Niente card, pill, numeri finti.
+   Palette: stessa del sito (nero #050608 + accento #38bdf8).
    ============================================================ */
 
 .about-dossier {
-  --cs-bg: #10141a;
-  --cs-line: rgba(233, 230, 222, 0.13);
-  --cs-line-strong: rgba(233, 230, 222, 0.24);
-  --cs-text: #e9e6de;
-  --cs-muted: #9aa3ae;
-  --cs-faint: #6b7580;
-  --cs-gold: #b9945f;
-  --cs-gold-dim: rgba(185, 148, 95, 0.35);
-  --cs-blue: #5b8aa8;
+  --cs-bg: var(--bg-primary);
+  --cs-line: rgba(255, 255, 255, 0.08);
+  --cs-line-strong: rgba(255, 255, 255, 0.14);
+  --cs-text: var(--text-main);
+  --cs-muted: var(--text-muted);
+  --cs-faint: var(--text-dim);
+  --cs-accent: var(--accent-primary);
+  --cs-accent-dim: var(--accent-glow);
   background: var(--cs-bg);
   color: var(--cs-text);
   font-family: 'Inter', system-ui, sans-serif;
@@ -78,7 +77,7 @@
 .about-dossier .cs-eyebrow {
   font-size: 13px;
   color: var(--cs-muted);
-  border-left: 2px solid var(--cs-gold);
+  border-left: 2px solid var(--cs-accent);
   padding-left: 12px;
   margin-bottom: 22px;
   font-weight: 500;
@@ -122,17 +121,17 @@
 }
 
 .about-dossier .cs-hero-meta a {
-  color: var(--cs-blue);
+  color: var(--cs-accent);
   text-decoration: none;
-  border-bottom: 1px solid rgba(91, 138, 168, 0.35);
+  border-bottom: 1px solid var(--cs-accent-dim);
 }
 
 .about-dossier .cs-hero-meta a:hover {
-  border-bottom-color: var(--cs-blue);
+  border-bottom-color: var(--cs-accent);
 }
 
 .about-dossier .cs-hero-meta a:focus-visible {
-  outline: 2px solid var(--cs-gold);
+  outline: 2px solid var(--cs-accent);
   outline-offset: 3px;
 }
 
@@ -168,7 +167,7 @@
 }
 
 .about-dossier .cs-mission em {
-  color: var(--cs-gold);
+  color: var(--cs-accent);
   font-style: normal;
 }
 
@@ -237,7 +236,7 @@
 
 .about-dossier .cs-gov-tag {
   font-size: 12.5px;
-  color: var(--cs-gold);
+  color: var(--cs-accent);
   letter-spacing: 0.01em;
   margin-bottom: 6px;
 }
@@ -247,11 +246,11 @@
 }
 
 .about-dossier .cs-gov-item[data-about-item]:hover h3 {
-  color: #fff;
+  color: var(--cs-accent);
 }
 
 .about-dossier .cs-gov-item:focus-visible {
-  outline: 2px solid var(--cs-gold);
+  outline: 2px solid var(--cs-accent);
   outline-offset: 4px;
 }
 
@@ -296,7 +295,7 @@
   top: 5px;
   width: 11px;
   height: 11px;
-  border: 1px solid var(--cs-gold);
+  border: 1px solid var(--cs-accent);
   background: var(--cs-bg);
   border-radius: 50%;
   box-sizing: border-box;
@@ -325,11 +324,11 @@
 }
 
 .about-dossier .cs-t-item[data-about-item]:hover h3 {
-  color: #fff;
+  color: var(--cs-accent);
 }
 
 .about-dossier .cs-t-item:focus-visible {
-  outline: 2px solid var(--cs-gold);
+  outline: 2px solid var(--cs-accent);
   outline-offset: 6px;
 }
 
@@ -375,11 +374,11 @@
 }
 
 .about-dossier .cs-feat-item:hover h3 {
-  color: var(--cs-gold);
+  color: var(--cs-accent);
 }
 
 .about-dossier .cs-feat-item:focus-visible {
-  outline: 2px solid var(--cs-gold);
+  outline: 2px solid var(--cs-accent);
   outline-offset: 4px;
 }
 
@@ -397,7 +396,7 @@
   line-height: 1.5;
   color: var(--cs-text);
   max-width: 44ch;
-  border-left: 2px solid var(--cs-gold);
+  border-left: 2px solid var(--cs-accent);
   padding-left: 28px;
 }
 

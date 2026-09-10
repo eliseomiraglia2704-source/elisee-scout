@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-10** (Chi siamo — dossier istituzionale)
-Ultimo fatto: **Chi siamo ristrutturata da layout pitch/card a dossier istituzionale**: Newsreader+Inter, palette inchiostro/bronzo, hero con letterhead, governance a lista editoriale, roadmap a timeline verticale, moduli a due colonne senza numerazione, pull quote di fiducia. Cache `DOSSIER1`.
-Feature precedente: **Elisee Scout Mobile — Risolto warning schema app.json (jsEngine rimosso, default Hermes in SDK 57)** + Ottimizzazione prestazioni app Expo Go, fix crash Android WebView bridge, spring animation e cleanup automatico.
+Ultimo aggiornamento: **2026-09-10** (Chi siamo — palette allineata al sito)
+Ultimo fatto: **Chi siamo: palette dossier allineata al sito** (nero `#050608`, testo bianco/slate, accento ciano `#38bdf8` da `--accent-primary`). Niente più inchiostro/bronzo. Cache `PALETTE1`.
+Feature precedente: **Chi siamo ristrutturata da layout pitch/card a dossier istituzionale**: Newsreader+Inter, hero letterhead, governance lista editoriale, roadmap timeline, moduli a due colonne, pull quote. Cache `DOSSIER1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -56,10 +56,10 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 ## Stato attuale (fatto, non rifare)
 
+- **Chi siamo — palette sito** (cache `PALETTE1`): token del dossier agganciati a `--bg-primary` / `--text-main` / `--text-muted` / `--accent-primary`. Fondo `#050608`, accento ciano `#38bdf8` come header/footer. Niente inchiostro né bronzo.
 - **Chi siamo — dossier istituzionale** (cache `DOSSIER1`):
   - Abbandonato il linguaggio da videogioco (pill, numeri cerchiati, card con barre colorate, ritratto B/N, badge “Struttura & Governance”).
   - Tipografia: serif Newsreader per titoli e citazioni, Inter per UI/dati.
-  - Palette: blu-inchiostro `#10141a` + accento bronzo `#b9945f`.
   - Hero: headline + lede + blocco letterhead (sede, contatti, ambito).
   - Governance: lista editoriale con tag normativo (GDPR, Riforma dello Sport, Rete).
   - Roadmap: timeline verticale a 3 fasi (unico contenuto sequenziale).
@@ -114,7 +114,8 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Chi siamo: dossier istituzionale Newsreader/bronzo, letterhead, timeline, pull quote; cache `DOSSIER1` |
+| (questo) | Chi siamo: palette allineata al sito (nero + ciano `--accent-primary`); cache `PALETTE1` |
+| `8a3ec85` | Chi siamo: dossier istituzionale Newsreader/bronzo, letterhead, timeline, pull quote; cache `DOSSIER1` |
 | `e66b81a` | Chi Siamo: eliminazione totale box/card, layout editoriale flat con sola barra laterale e hairline, H1 e titoli in sentence case, testo piatto per pillar senza pillole/chip, padding inferiore esteso; cache `CARDLESS1` |
 | `c1d5ecd` | Chi Siamo: palette Azzurro Italia (#35AEE8), H1 in sentence case, rimozione badge ridondante nodo '26, unificazione barre d'accento su 3 colonne, divisore hero tratteggiato; cache `AZZURROABOUT1` |
 | `3fec3e9` | Redesign Chi Siamo: layout Pitch Stadium, touchline timeline, marcatori maglia, barre d'accento oro/verde, tipografia Oswald, hero intestazione; cache `PITCHABOUT1` |

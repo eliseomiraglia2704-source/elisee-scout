@@ -5895,8 +5895,8 @@ body.layout-portfolio {
 
 #view-about,
 #view-about .about-dossier {
-  background: #10141a !important;
-  background-color: #10141a !important;
+  background: var(--bg-primary) !important;
+  background-color: var(--bg-primary) !important;
 }
 
 main {
