@@ -722,7 +722,10 @@
               '<h2 id="es-creator-modal-title">Simulatore ruoli creatore</h2>' +
               '<p>Strumento interno riservato all\'amministratore — accesso rapido alle dashboard attive per test e verifica</p>' +
             '</div>' +
-            '<button type="button" class="es-creator-modal-close" id="es-creator-modal-close" aria-label="Chiudi">&times;</button>' +
+            '<div style="display:flex; align-items:center; gap:0.6rem;">' +
+              '<button type="button" id="es-creator-btn-wrapped" style="background:linear-gradient(135deg,#0284c7,#8b5cf6);color:#fff;border:none;border-radius:999px;font-weight:700;font-size:0.75rem;padding:0.4rem 0.85rem;cursor:pointer;display:inline-flex;align-items:center;gap:0.35rem;">🎬 Test Season Wrapped</button>' +
+              '<button type="button" class="es-creator-modal-close" id="es-creator-modal-close" aria-label="Chiudi">&times;</button>' +
+            '</div>' +
           '</div>' +
           '<div class="es-creator-modal-body" id="es-creator-modal-body"></div>' +
         '</div>';
@@ -730,6 +733,15 @@
 
       var closeBtn = document.getElementById('es-creator-modal-close');
       if (closeBtn) closeBtn.addEventListener('click', closeModal);
+      var wrappedBtn = document.getElementById('es-creator-btn-wrapped');
+      if (wrappedBtn) {
+        wrappedBtn.addEventListener('click', function () {
+          var cur = getActiveRoleInfo();
+          var rk = cur.key || localStorage.getItem('elisee_creator_sim_role') || 'giocatore';
+          closeModal();
+          if (window.SeasonWrapped) window.SeasonWrapped.open(rk);
+        });
+      }
       overlay.addEventListener('click', function (e) {
         if (e.target === overlay) closeModal();
       });

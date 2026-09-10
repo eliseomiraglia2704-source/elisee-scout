@@ -6828,14 +6828,25 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // Espone subito switchView (prima di altro codice che può fallire)
-  window.switchView = function(viewType, targetHash) {
-    return switchView(viewType, targetHash);
+  window.switchView = function(viewType, targetHash, opts) {
+    return switchView(viewType, targetHash, opts);
   };
 
   function switchView(viewType, targetHash, opts) {
     try {
       if (opts === true) opts = { noHistory: true };
       opts = opts || {};
+      if (viewType === 'wrapped' || (targetHash && String(targetHash).indexOf('wrapped') >= 0)) {
+        try {
+          if (window.SeasonWrapped && typeof window.SeasonWrapped.open === 'function') {
+            window.SeasonWrapped.open();
+          }
+        } catch (wErr) {
+          console.error('wrapped open', wErr);
+        }
+        setHashSafe(targetHash || '#season-wrapped', opts);
+        return true;
+      }
       if (viewType === 'minigioco' || (targetHash && String(targetHash).indexOf('minigioco') >= 0)) {
         try {
           document.querySelectorAll('.nav-link').forEach(function (l) { l.classList.remove('active'); });
@@ -7806,6 +7817,10 @@ document.addEventListener('DOMContentLoaded', () => {
       switchView('admin', '#admin-portal', noHist);
     } else if (hash.indexOf('user-dossier') >= 0) {
       switchView('user-dossier', '#user-dossier-portal', noHist);
+    } else if (hash.indexOf('wrapped') >= 0) {
+      if (window.SeasonWrapped && typeof window.SeasonWrapped.open === 'function') {
+        window.SeasonWrapped.open();
+      }
     } else if (hash.indexOf('minigioco') >= 0) {
       if (window.EliseeMinigioco && typeof window.EliseeMinigioco.open === 'function') {
         window.EliseeMinigioco.open();

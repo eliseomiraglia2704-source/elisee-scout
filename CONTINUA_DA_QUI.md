@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-08** (commit `c4f6c2d`)
-Ultimo fatto: **Risoluzione Syntax Error & Import in elisee_up.py** — Corretto blocco `try` senza `except` nella funzione `log()` (linea 463), creato `workers/__init__.py` e strutturato l'import con fallback sui package `workers.auth_store`, `workers.manager_store` e `workers.autopilot_engine`, garantendo piena compatibilità sia per l'analisi statica IDE che per l'esecuzione runtime del server indistruttibile locale.
-Feature precedente: **Cache-Bust Globale, Invalidazione SessionStorage & Hot Reload Loghi Eccellenza Lazio (Gironi A e B)**.
+Ultimo aggiornamento: **2026-09-10** (Season Wrapped v1.2)
+Ultimo fatto: **Season Wrapped — Recap virale di fine campionato stile «Spotify Wrapped» per l'intero ecosistema del club** (21 profili, dal calciatore al tifoso, con sistema Card OVR stile FIFA, Curva di Crescita Stagionale, Story Viewer 9:16, export Canvas 1080x1920 PNG e Countdown Wrapped Day).
+Feature precedente: **Risoluzione Syntax Error & Import in elisee_up.py** — Corretto blocco try senza except nella funzione log() (linea 463).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -56,8 +56,18 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 ## Stato attuale (fatto, non rifare)
 
-Flusso recente, dal più nuovo:
-
+- **Season Wrapped — Recap Virale Fine Campionato & Card OVR FIFA** (cache `WRAPPED1`):
+  - Story Viewer 9:16 full-screen interattivo con auto-avanzamento (6s), gesture tap/swipe, progress bar segmentata Instagram-style, safe area 60-90px.
+  - Copertura integrale di 21 profili distinti (Calciatore, 6 Staff Tecnico, 3 Staff Medico, 10 Dirigenza/Società, 3 Intermediazione/Media/Tifoso).
+  - Sistema Card OVR (FIFA-style): 6 attributi (VEL, TIR, PAS, DRIB, DIF, FIS), pesi ponderati per ruolo in campo (ATT, Ala, CENT, Terzino, DIF, POR), Canale A (GPS 1.0x, badge "GPS Validated") vs Canale B (Manuale 0.92x + Cap Categoria Fair Play).
+  - Indice di Reparto (50-99 OVR) e Badge testuale finale per ciascun ruolo ("Freccia della Fascia", "Mister dell'Anno", "Re del Calciomercato", "Card Motore Fisico", "Card Super Tifoso", ecc.).
+  - Curva di Crescita Stagionale multi-anno (grafico a barre OVR 2023/24 → 2024/25 → 2025/26).
+  - Generatore Canvas 2D nativo per esportazione immediata di qualsiasi slide in PNG alta risoluzione 1080×1920 px pronta per Instagram Stories, TikTok e WhatsApp.
+  - Growth loop & tracking attribution: link condivisibili con parametri UTM (`utm_source`, `utm_medium=wrapped_share`, `utm_campaign=2025-26`, `ref_user_id`).
+  - Schermata Teaser & Countdown Wrapped Day con promemoria e contatore iscritti.
+  - Entry point banner in Area Riservata / Account, Dossier utente e pulsante rapido nel Simulatore Ruoli Creatore (`creator-role-switcher.js`).
+  - Endpoint API serverless `/api/wrapped` (actions: me, share, countdown, optin).
+  - File: `season-wrapped.js`, `season-wrapped.css`, `api/wrapped.js`, `index.html`, `app.js`, `creator-role-switcher.js`.
 - **Hub 2 card** (cache `MGHUB2`): Pokemon Calcistico non è più una voce a parte. Collezione e battaglie stanno in Elisee World. Catalogo hub: 01 Carriera, 02 Elisee World. Griglia desktop a 2 colonne.
 - **Elisee World GBA** (cache `EWGBA1`): replica struttura dei video in `MINIGIOCO ELISEE WORLD` (non copiare marchi). HUD argento nome/sesso/Lv/HP, sprite fronte/retro su piattaforma, menu comando 2×2 colorato, mosse 2×2 + pannello tipo/PP, party box verdi selezione rossa «Che fare con X?» + CANCEL, borsone lista oggetti, textbox bianca bordo nero, title ELISEE WORLD, overworld Campetto + NPC rival + Centro Elisee. Rosa originale: Donnaroccia, Bastonix, Barella-Sprint, Triraghi, Kvaradona. Controlli: A/B, C rosa, P match, tap sui pulsanti. Test `_test_elisee_world_gba.js`.
 - **Hub Minigiochi mobile** (cache `MGHUB1`): header in flusso, card a lista su mobile.

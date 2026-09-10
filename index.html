@@ -351,6 +351,7 @@
   <link rel="stylesheet" href="messaggi.css?v=20260820_DARK1">
   <link rel="stylesheet" href="mercato-hub.css?v=20260830_ECCB1">
   <link rel="stylesheet" href="schede-tecniche.css?v=20260820_ST3">
+  <link rel="stylesheet" href="season-wrapped.css?v=20260910_WRAPPED1">
   <link rel="stylesheet" href="creator-role-switcher.css?v=20260905_ROLEVISIB1">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
@@ -713,11 +714,13 @@
         if (view === 'schede') return '#schede-tecniche';
         if (view === 'iscrizione') return '#iscrizione-portal';
         if (view === 'area-riservata') return '#area-riservata';
+        if (view === 'wrapped') return '#season-wrapped';
         return '#hero';
       }
       function viewFromHash(hash) {
         var h = (hash || '').toLowerCase();
         if (!h || h === '#' || h === '#hero') return 'home';
+        if (h.indexOf('wrapped') >= 0) return 'wrapped';
         if (h.indexOf('about') >= 0) return 'about';
         if (h.indexOf('dashboard-skills') >= 0) return 'pillars';
         if (h.indexOf('squadre') >= 0) return 'squadre';
@@ -792,6 +795,16 @@
             } catch (arErr) {}
             if (!opts.noHistory) writeHistory('#area-riservata', !!opts.replace);
             else _lastHash = '#area-riservata';
+            return true;
+          }
+          if (view === 'wrapped') {
+            try {
+              if (window.SeasonWrapped && typeof window.SeasonWrapped.open === 'function') {
+                window.SeasonWrapped.open();
+              }
+            } catch (wErr) { console.error('wrapped open', wErr); }
+            if (!opts.noHistory) writeHistory('#season-wrapped', !!opts.replace);
+            else _lastHash = '#season-wrapped';
             return true;
           }
           if (view === 'minigioco') {
@@ -3360,6 +3373,24 @@
               <p class="pf-lead">Scegli il portale: utente (dossier e candidature) oppure amministrazione e privacy.</p>
             </div>
           </header>
+          <!-- Season Wrapped Banner in Area Riservata / Account -->
+          <div class="sw-launch-banner">
+            <div class="sw-banner-content">
+              <div class="sw-banner-icon">🏆</div>
+              <div class="sw-banner-texts">
+                <h4>La tua Season Wrapped 2025/26 è pronta! <span class="sw-banner-tag">Nuovo</span></h4>
+                <p>Scopri il tuo recap stagionale con numeri, superlativi, Card OVR stile FIFA e Curva di Crescita.</p>
+              </div>
+            </div>
+            <div class="sw-banner-actions">
+              <button type="button" class="sw-btn-countdown" onclick="window.SeasonWrapped.openCountdown()">
+                Countdown
+              </button>
+              <button type="button" class="sw-btn-launch" onclick="window.SeasonWrapped.open()">
+                Guarda la Story
+              </button>
+            </div>
+          </div>
 
           <div class="pf-account-grid">
             <article class="pf-account-card">
@@ -5680,6 +5711,7 @@
   <script src="card-atelier.js?v=20260904_ADMINTAB1"></script>
   <script src="ds-hub.js?v=20260827_DS1"></script>
   <script src="verifica-account.js?v=20260903_OTPMAIL5"></script>
+  <script src="season-wrapped.js?v=20260910_WRAPPED1"></script>
   <script src="creator-role-switcher.js?v=20260905_ROLEVISIB1"></script>
   <script src="role-actions-runtime.js?v=20260827_GIORN1"></script>
   <script>
@@ -5897,6 +5929,114 @@
         <button type="button" class="btn btn-outline-pill" id="complaint-modal-cancel">Annulla</button>
         <button type="button" class="btn btn-outline-pill pf-btn-solid" id="complaint-modal-submit">
           <i data-lucide="send" style="width:14px;height:14px;"></i> Invia Segnalazione
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Fullscreen Season Wrapped Story Viewer (9:16) -->
+  <div id="elisee-wrapped-modal" class="sw-modal-overlay" role="dialog" aria-modal="true" aria-label="Season Wrapped Story Viewer">
+    <!-- Controlli top bar desktop/mobile -->
+    <div class="sw-modal-top-controls">
+      <div class="sw-role-selector-pill" title="Seleziona ruolo per visualizzare la relativa Season Wrapped">
+        <span>Ruolo:</span>
+        <select id="sw-role-select">
+          <option value="giocatore">Calciatore (FIFA OVR)</option>
+          <option value="allenatore">Allenatore (Mister dell'Anno)</option>
+          <option value="vice_allenatore">Vice Allenatore (Master Collaboratore)</option>
+          <option value="scout">Scout / Osservatore (Segugio dell'Anno)</option>
+          <option value="match_analyst">Match Analyst (Analista Top)</option>
+          <option value="prep_portieri">Preparatore Portieri (GK Mastermind)</option>
+          <option value="prep_atletico">Preparatore Atletico (Motore Fisico)</option>
+          <option value="medico">Medico Sociale (Protezione Clinica)</option>
+          <option value="fisioterapista">Fisioterapista (Mani d'Oro)</option>
+          <option value="nutrizionista">Nutrizionista (Fuel Specialist)</option>
+          <option value="presidente">Presidente (Presidente Top Club)</option>
+          <option value="dg">Direttore Generale (Financial Master)</option>
+          <option value="ds">Direttore Sportivo (Re del Calciomercato)</option>
+          <option value="segretario">Segretario Generale (Burocrazia Zero)</option>
+          <option value="magazziniere">Magazziniere / Equipment (Kit Master)</option>
+          <option value="biglietteria">Resp. Biglietteria (Sold Out Specialist)</option>
+          <option value="tm">Team Manager (Logistica Perfetta)</option>
+          <option value="settore_giovanile">Resp. Settore Giovanile (Fabbrica Talenti)</option>
+          <option value="comunicazione">Ufficio Stampa (Media Magnet)</option>
+          <option value="marketing">Marketing & Commerciale (Commercial Top)</option>
+          <option value="agente">Procuratore / Agente FIFA (Top Agent)</option>
+          <option value="tifoso">Tifoso / Spettatore (Super Tifoso)</option>
+          <option value="giornalista">Giornalista / Creator (Press MVP)</option>
+        </select>
+      </div>
+      <div class="sw-top-actions">
+        <button type="button" class="sw-icon-btn" title="Scarica Immagine Story (1080x1920 PNG)" onclick="window.SeasonWrapped.exportPng()">
+          <i data-lucide="download" style="width:18px;height:18px;"></i>
+        </button>
+        <button type="button" class="sw-icon-btn" title="Chiudi Story" onclick="window.SeasonWrapped.close()">
+          <i data-lucide="x" style="width:20px;height:20px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Story Viewport 9:16 -->
+    <div id="sw-story-viewport" class="sw-story-viewport">
+      <!-- Progress Bar Segmentata stile Instagram -->
+      <div id="sw-progress-bar-container" class="sw-progress-bar-container"></div>
+
+      <!-- Header Ufficiale -->
+      <div class="sw-story-header">
+        <div class="sw-brand-pill">
+          <img src="immagini/logo/logo-site.png" class="sw-brand-logo-img" alt="Elisee">
+          <span class="sw-brand-wordmark">ELISEE SCOUT</span>
+        </div>
+        <div class="sw-season-badge">2025/26</div>
+      </div>
+
+      <!-- Touch Click Navigation Areas -->
+      <div id="sw-touch-prev" class="sw-touch-prev" title="Slide precedente"></div>
+      <div id="sw-touch-next" class="sw-touch-next" title="Slide successiva"></div>
+
+      <!-- Livello Dinamico Slide -->
+      <div id="sw-slide-layer" class="sw-slide-layer sw-theme-player"></div>
+    </div>
+  </div>
+
+  <!-- Modal: Countdown Wrapped Day -->
+  <div id="elisee-wrapped-countdown-modal" class="sw-modal-overlay" role="dialog" aria-modal="true" aria-label="Countdown Wrapped Day">
+    <div class="sw-countdown-card">
+      <div style="font-size:0.8rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:#38bdf8; margin-bottom:0.5rem;">
+        MANCA SEMPRE MENO
+      </div>
+      <h3 style="font-size:1.45rem; font-weight:900; color:#fff; margin-bottom:0.5rem; font-family:'Outfit', sans-serif;">
+        La tua stagione sta per essere impacchettata
+      </h3>
+      <p style="font-size:0.88rem; color:#94a3b8; margin-bottom:1rem;">
+        Il <strong>15 Giugno alle ore 20:00</strong> sbloccherai il tuo Season Wrapped con numeri, superlativi e la tua Card OVR.
+      </p>
+
+      <div class="sw-timer-blocks">
+        <div class="sw-timer-box">
+          <div id="sw-cd-days" class="sw-timer-box-num">00</div>
+          <div class="sw-timer-box-label">GIORNI</div>
+        </div>
+        <div class="sw-timer-box">
+          <div id="sw-cd-hours" class="sw-timer-box-num">00</div>
+          <div class="sw-timer-box-label">ORE</div>
+        </div>
+        <div class="sw-timer-box">
+          <div id="sw-cd-mins" class="sw-timer-box-num">00</div>
+          <div class="sw-timer-box-label">MINUTI</div>
+        </div>
+      </div>
+
+      <div class="sw-social-counter-box">
+        <div style="font-size:0.75rem; color:#cbd5e1; margin-bottom:0.25rem;">GIA ISCRITTI AL COUNTDOWN</div>
+        <strong id="sw-cd-sub-count" data-count="8230">8.230 utenti</strong>
+        <div style="font-size:0.7rem; color:#22c55e; margin-top:0.2rem;">+1.200 nelle ultime 24 ore</div>
+      </div>
+
+      <div style="display:flex; gap:0.75rem; justify-content:center;">
+        <button type="button" class="btn btn-outline-pill" onclick="window.SeasonWrapped.closeCountdown()">Chiudi</button>
+        <button type="button" id="sw-cd-btn-optin" class="btn btn-outline-pill pf-btn-solid" onclick="window.SeasonWrapped.subscribeReminder()">
+          <i data-lucide="bell" style="width:14px;height:14px;"></i> Attiva Promemoria
         </button>
       </div>
     </div>
