@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-10** (Elisee Scout Mobile — Fix Schema app.json & Ottimizzazione)
-Ultimo fatto: **Elisee Scout Mobile — Risolto warning schema app.json (jsEngine rimosso, default Hermes in SDK 57)** + Ottimizzazione prestazioni app Expo Go, fix crash Android WebView bridge, spring animation e cleanup automatico.
-Feature precedente: **Elisee Scout Mobile — UI Polish & Overlay Fix** (rimosso banner cookie invasivo, LogBox.ignoreAllLogs, safe-area insets, padding-bottom dinamico).
+Ultimo aggiornamento: **2026-09-10** (Chi siamo — dossier istituzionale)
+Ultimo fatto: **Chi siamo ristrutturata da layout pitch/card a dossier istituzionale**: Newsreader+Inter, palette inchiostro/bronzo, hero con letterhead, governance a lista editoriale, roadmap a timeline verticale, moduli a due colonne senza numerazione, pull quote di fiducia. Cache `DOSSIER1`.
+Feature precedente: **Elisee Scout Mobile — Risolto warning schema app.json (jsEngine rimosso, default Hermes in SDK 57)** + Ottimizzazione prestazioni app Expo Go, fix crash Android WebView bridge, spring animation e cleanup automatico.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -56,6 +56,17 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 ## Stato attuale (fatto, non rifare)
 
+- **Chi siamo — dossier istituzionale** (cache `DOSSIER1`):
+  - Abbandonato il linguaggio da videogioco (pill, numeri cerchiati, card con barre colorate, ritratto B/N, badge “Struttura & Governance”).
+  - Tipografia: serif Newsreader per titoli e citazioni, Inter per UI/dati.
+  - Palette: blu-inchiostro `#10141a` + accento bronzo `#b9945f`.
+  - Hero: headline + lede + blocco letterhead (sede, contatti, ambito).
+  - Governance: lista editoriale con tag normativo (GDPR, Riforma dello Sport, Rete).
+  - Roadmap: timeline verticale a 3 fasi (unico contenuto sequenziale).
+  - Piattaforma: lista a due colonne, link reali a Bacheca / Mappa / Squadre / Scopri, senza numerazione finta.
+  - Pull quote isolato: «zero fake account, opportunità reali, mai un rischio».
+  - Header/footer globali del sito invariati (SPA). Overlay dettaglio `about-detail.js` resta sui nodi governance/roadmap.
+  - File: `chi-siamo.css`, `index.html` (`#view-about`), `i18n.js`, `about-detail.js`, `style.css`, `mobile-webapp.css`.
 - **Season Wrapped — Recap Virale Fine Campionato & Card OVR FIFA** (cache `WRAPPED1`):
   - Story Viewer 9:16 full-screen interattivo con auto-avanzamento (6s), gesture tap/swipe, progress bar segmentata Instagram-style, safe area 60-90px.
   - Copertura integrale di 21 profili distinti (Calciatore, 6 Staff Tecnico, 3 Staff Medico, 10 Dirigenza/Società, 3 Intermediazione/Media/Tifoso).
@@ -103,6 +114,7 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 | Commit | Cosa |
 |---|---|
+| (questo) | Chi siamo: dossier istituzionale Newsreader/bronzo, letterhead, timeline, pull quote; cache `DOSSIER1` |
 | `e66b81a` | Chi Siamo: eliminazione totale box/card, layout editoriale flat con sola barra laterale e hairline, H1 e titoli in sentence case, testo piatto per pillar senza pillole/chip, padding inferiore esteso; cache `CARDLESS1` |
 | `c1d5ecd` | Chi Siamo: palette Azzurro Italia (#35AEE8), H1 in sentence case, rimozione badge ridondante nodo '26, unificazione barre d'accento su 3 colonne, divisore hero tratteggiato; cache `AZZURROABOUT1` |
 | `3fec3e9` | Redesign Chi Siamo: layout Pitch Stadium, touchline timeline, marcatori maglia, barre d'accento oro/verde, tipografia Oswald, hero intestazione; cache `PITCHABOUT1` |

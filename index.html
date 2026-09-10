@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260908_ECCLAZIO4';
+      var BUILD_VERSION = '20260910_DOSSIER1';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -43,10 +43,11 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260907_COMUNI4">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20260910_DOSSIER1">
   <link rel="stylesheet" href="player-card.css?v=20260907_COMUNI4">
-  <link rel="stylesheet" href="about-detail.css?v=20260907_COMUNI4">
+  <link rel="stylesheet" href="about-detail.css?v=20260910_DOSSIER1">
+  <link rel="stylesheet" href="chi-siamo.css?v=20260910_DOSSIER1">
   <script src="comuni-italiani.js?v=20260907_COMUNI4" defer></script>
   
   <style id="forced-brand-font-override">
@@ -357,7 +358,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
   <link rel="stylesheet" href="mappa-club.css?v=20260902_CLEANOSM1">
-  <link rel="stylesheet" href="mobile-webapp.css?v=20260906_NOLINE2">
+  <link rel="stylesheet" href="mobile-webapp.css?v=20260910_DOSSIER1">
   <style id="es-force-no-lines">
     @media screen and (max-width: 768px) {
       #es-mobile-app-shell,
@@ -2270,194 +2271,132 @@
       <div id="view-persone" style="display:none;" aria-hidden="true" hidden></div>
 
       <!-- ============================================================ -->
-      <!-- MACRO VIEW: CHI SIAMO — layout about portfolio (testo | foto) -->
+      <!-- MACRO VIEW: CHI SIAMO — dossier istituzionale                 -->
       <!-- ============================================================ -->
       <div id="view-about" style="display: none;">
 
-        <section id="about" class="about-split-page">
-          <div class="about-split-inner">
+        <section id="about" class="about-dossier">
+          <div class="about-dossier-wrap">
 
-            <!-- Colonna sinistra: titolo, email, bio -->
-            <div class="about-split-copy">
-              <div class="about-split-top">
-                <h1 class="about-split-title" data-i18n="about.pageTitle">Chi siamo</h1>
-                <a href="mailto:areaeliseescout@gmail.com" class="about-split-email">areaeliseescout@gmail.com</a>
-              </div>
-
-              <div class="about-split-body">
-                <p data-i18n="about.bio1">
-                  ELISEE SCOUT è la piattaforma di recruitment calcistico nata per digitalizzare il mercato dilettantistico, giovanile e svincolati in Italia.
-                </p>
-                <p data-i18n="about.bio2">
-                  Connettiamo calciatori, società, scout e staff tecnico con dossier verificati, dati GPS, video highlights e compliance GDPR. La nostra forza è la fiducia: zero fake account, opportunità reali, mai un rischio.
-                </p>
-              </div>
-            </div>
-
-            <!-- Colonna destra: ritratto cinematico B/N -->
-            <div class="about-split-visual">
-              <img src="immagini/02-chi-siamo-ritratto/about-portrait.jpg?v=20260831_121117" alt="ELISEE SCOUT" class="about-split-portrait">
-            </div>
-
-          </div>
-
-          <!-- Sezione estesa Chi siamo: Calcio Pitch / Notte Stadio Design System (Azzurro Italia) -->
-          <div class="container about-extra-sections pitch-field-theme">
-            
-            <!-- Hero Intestazione Calcio Italiano -->
-            <div class="pitch-extra-hero">
-              <div class="pitch-hero-badge">
-                <span class="pitch-badge-dot"></span>
-                <span class="pitch-badge-text">Struttura &amp; Governance Ufficiale</span>
-              </div>
-              <h2 class="pitch-hero-title">Architettura del calcio italiano: dal territorio alla rete nazionale</h2>
-              <p class="pitch-hero-sub">
-                1.386 pillar strategici, compliance giuridica NOIF/GDPR e moduli operativi per calciatori, club e professionisti.
-              </p>
-            </div>
-
-            <div class="pitch-about-grid">
-              
-              <!-- COLONNA 1: Roadmap & Sviluppo Piattaforma (Barre laterali + Hairlines) -->
-              <div class="pitch-col pitch-col-timeline">
-                <div class="pitch-col-header">
-                  <div class="pitch-col-indicator pitch-indicator-azzurro"></div>
-                  <h3 class="pitch-col-title">Roadmap &amp; Sviluppo Piattaforma</h3>
+            <header class="cs-hero">
+              <div class="cs-hero-grid">
+                <div>
+                  <div class="cs-eyebrow" data-i18n="about.pageTitle">Chi siamo</div>
+                  <h1 class="cs-headline" data-i18n="about.headline">Il mercato del calcio italiano, verificato.</h1>
+                  <p class="cs-lede" data-i18n="about.lede">Elisee Scout digitalizza il reclutamento nel calcio dilettantistico, giovanile e degli svincolati in Italia, collegando calciatori, società, scout e staff tecnico con dossier verificati, dati GPS e video highlights, in piena conformità GDPR.</p>
                 </div>
-                
-                <div class="pitch-roadmap-stack">
-                  
-                  <!-- Item 2026 -->
-                  <article class="pitch-roadmap-block" data-about-item="roadmap-live">
-                    <div class="pitch-roadmap-bar"></div>
-                    <div class="pitch-roadmap-content">
-                      <h4 class="pitch-roadmap-title">Elisee Scout: Piattaforma live</h4>
-                      <p class="pitch-roadmap-desc">1.386 pillar, architettura anti-fake con verifica documenti, dossier atleta con GPS e bacheca annunci.</p>
-                    </div>
-                  </article>
-
-                  <!-- Item 2025 -->
-                  <article class="pitch-roadmap-block" data-about-item="roadmap-plan">
-                    <div class="pitch-roadmap-bar"></div>
-                    <div class="pitch-roadmap-content">
-                      <h4 class="pitch-roadmap-title">Business plan &amp; 715 agenti IA</h4>
-                      <p class="pitch-roadmap-desc">Estensione del catalogo, agenti di matchmaking, catalogazione campionati e conformità pre-lancio.</p>
-                    </div>
-                  </article>
-
-                  <!-- Item 2024 -->
-                  <article class="pitch-roadmap-block" data-about-item="roadmap-mvp">
-                    <div class="pitch-roadmap-bar"></div>
-                    <div class="pitch-roadmap-content">
-                      <h4 class="pitch-roadmap-title">Nucleo pillar 01–50</h4>
-                      <p class="pitch-roadmap-desc">Passaporto digitale, gestione svincoli Art. 107/108, video 30s e algoritmo Under fuoriquota.</p>
-                    </div>
-                  </article>
-
-                  <!-- Item 2023 -->
-                  <article class="pitch-roadmap-block" data-about-item="roadmap-concept">
-                    <div class="pitch-roadmap-bar"></div>
-                    <div class="pitch-roadmap-content">
-                      <h4 class="pitch-roadmap-title">Concept marketplace calcio</h4>
-                      <p class="pitch-roadmap-desc">Digitalizzazione del mercato dilettantistico e giovanile per colmare il gap con il professionismo.</p>
-                    </div>
-                  </article>
-
+                <div class="cs-hero-meta">
+                  <dl>
+                    <dt data-i18n="about.metaSeat">Sede</dt>
+                    <dd data-i18n="about.metaSeatVal">Foggia, Italia</dd>
+                    <dt data-i18n="about.metaContact">Contatti</dt>
+                    <dd><a href="mailto:areaeliseescout@gmail.com">areaeliseescout@gmail.com</a></dd>
+                    <dt data-i18n="about.metaScope">Ambito</dt>
+                    <dd data-i18n="about.metaScopeVal">Reclutamento calcistico</dd>
+                  </dl>
                 </div>
               </div>
+            </header>
 
-              <!-- COLONNA 2: Governance & Conformità (Barre d'accento) -->
-              <div class="pitch-col pitch-col-governance">
-                <div class="pitch-col-header">
-                  <div class="pitch-col-indicator pitch-indicator-gold"></div>
-                  <h3 class="pitch-col-title">Governance &amp; Conformità</h3>
+            <section class="cs-mission" aria-labelledby="cs-mission-label">
+              <div class="cs-mission-grid">
+                <div class="cs-mission-label" id="cs-mission-label" data-i18n="about.missionLabel">La nostra missione</div>
+                <div>
+                  <p>
+                    <span data-i18n="about.mission1a">Connettiamo il sistema calcistico italiano — dalla Serie D alla Terza Categoria — con un unico principio guida:</span>
+                    <em data-i18n="about.mission1em">zero fake account, opportunità reali, nessun rischio</em>
+                    <span data-i18n="about.mission1b"> per chi si affida alla piattaforma.</span>
+                  </p>
+                  <p data-i18n="about.mission2">Ogni profilo è verificato tramite documento d'identità, ogni dato sportivo è tracciato con GPS, e ogni trattamento — a partire dagli atleti minorenni — segue gli articoli 13 e 30 del GDPR con consenso genitoriale obbligatorio.</p>
                 </div>
+              </div>
+            </section>
 
-                <div class="pitch-gov-stack">
-                  <!-- Blocco Oro 1: GDPR -->
-                  <div class="pitch-gov-block pitch-gov-gold" data-about-item="gov-gdpr">
-                    <div class="pitch-gov-bar"></div>
-                    <div class="pitch-gov-content">
-                      <h4 class="pitch-gov-title">GDPR Art. 13/30 &amp; Tutela Minori</h4>
-                      <p class="pitch-gov-desc">Trattamento dati sportivi e sanitari a norma europea, consenso genitoriale obbligatorio per gli atleti minorenni e crittografia end-to-end.</p>
-                    </div>
+            <section class="cs-section" aria-labelledby="cs-gov-title">
+              <div class="cs-section-head">
+                <h2 id="cs-gov-title">Governance &amp; conformità</h2>
+                <span class="cs-count">3 aree normative</span>
+              </div>
+              <div class="cs-gov-list">
+                <article class="cs-gov-item" data-about-item="gov-gdpr" tabindex="0" role="button" aria-label="Apri dettaglio: GDPR Art. 13/30 e tutela dei minori">
+                  <div>
+                    <div class="cs-gov-tag">GDPR</div>
+                    <h3>Art. 13/30 &amp; tutela dei minori</h3>
                   </div>
-
-                  <!-- Blocco Oro 2: Riforma Sport & NOIF -->
-                  <div class="pitch-gov-block pitch-gov-gold" data-about-item="gov-riforma">
-                    <div class="pitch-gov-bar"></div>
-                    <div class="pitch-gov-content">
-                      <h4 class="pitch-gov-title">Riforma dello Sport &amp; Svincoli</h4>
-                      <p class="pitch-gov-desc">Inquadramento contrattuale, gestione trasparente Art. 107/108 NOIF e conformità al regolamento FIGC e agenti sportivi.</p>
-                    </div>
+                  <p>Trattamento dei dati sportivi e sanitari a norma europea, con consenso genitoriale obbligatorio per gli atleti minorenni e crittografia end-to-end su tutti i documenti caricati.</p>
+                </article>
+                <article class="cs-gov-item" data-about-item="gov-riforma" tabindex="0" role="button" aria-label="Apri dettaglio: Riforma dello Sport e svincoli">
+                  <div>
+                    <div class="cs-gov-tag">Riforma dello Sport</div>
+                    <h3>Svincoli &amp; inquadramento contrattuale</h3>
                   </div>
-
-                  <!-- Blocco Oro 3: Pillar Trasversali (Statico) -->
-                  <div class="pitch-gov-block pitch-gov-gold">
-                    <div class="pitch-gov-bar"></div>
-                    <div class="pitch-gov-content">
-                      <h4 class="pitch-gov-title">Pillar trasversali di rete</h4>
-                      <p class="pitch-gov-desc">Fiducia · Anti-fake 100% · Trasparenza contrattuale · Safeguarding minori · Rete ufficiale B2B</p>
-                    </div>
+                  <p>Gestione trasparente degli articoli 107 e 108 NOIF e piena conformità al regolamento FIGC per agenti sportivi e operazioni di svincolo.</p>
+                </article>
+                <article class="cs-gov-item">
+                  <div>
+                    <div class="cs-gov-tag">Rete</div>
+                    <h3>Pillar trasversali di fiducia</h3>
                   </div>
-                </div>
+                  <p>Verifica anti-fake al 100% su ogni profilo pubblicato e trasparenza contrattuale su ogni trattativa avviata in piattaforma.</p>
+                </article>
               </div>
+            </section>
 
-              <!-- COLONNA 3: La Piattaforma per il Calcio / Moduli Operativi (Barre d'accento) -->
-              <div class="pitch-col pitch-col-platform">
-                <div class="pitch-col-header">
-                  <div class="pitch-col-indicator pitch-indicator-azzurro"></div>
-                  <h3 class="pitch-col-title">La Piattaforma per il Calcio</h3>
-                </div>
-
-                <div class="pitch-modules-stack">
-                  <button type="button" class="pitch-module-btn" data-about-item="mod-01" onclick="if(window.switchView){ window.switchView('bacheca'); }">
-                    <div class="pitch-module-bar"></div>
-                    <div class="pitch-module-content">
-                      <div class="pitch-mod-header">
-                        <span class="pitch-mod-num">01</span>
-                        <span class="pitch-mod-name">Bacheca annunci &amp; provini</span>
-                      </div>
-                      <p class="pitch-mod-desc">Reclutamento giocatori, staff tecnico e club</p>
-                    </div>
-                  </button>
-
-                  <button type="button" class="pitch-module-btn" data-about-item="mod-02" onclick="if(window.switchView){ window.switchView('mappa'); }">
-                    <div class="pitch-module-bar"></div>
-                    <div class="pitch-module-content">
-                      <div class="pitch-mod-header">
-                        <span class="pitch-mod-num">02</span>
-                        <span class="pitch-mod-name">Mappa interattiva 2.900+ club</span>
-                      </div>
-                      <p class="pitch-mod-desc">Dalla Serie D alla Terza Categoria in tutta Italia</p>
-                    </div>
-                  </button>
-
-                  <button type="button" class="pitch-module-btn" data-about-item="mod-03" onclick="if(window.switchView){ window.switchView('squadre'); }">
-                    <div class="pitch-module-bar"></div>
-                    <div class="pitch-module-content">
-                      <div class="pitch-mod-header">
-                        <span class="pitch-mod-num">03</span>
-                        <span class="pitch-mod-name">Selettore squadre &amp; kit ufficiali</span>
-                      </div>
-                      <p class="pitch-mod-desc">Catalogazione 2D grafiche gara e colori sociali</p>
-                    </div>
-                  </button>
-
-                  <button type="button" class="pitch-module-btn" data-about-item="mod-04" onclick="if(window.switchView){ window.switchView('scopri','#scopri-portal'); }">
-                    <div class="pitch-module-bar"></div>
-                    <div class="pitch-module-content">
-                      <div class="pitch-mod-header">
-                        <span class="pitch-mod-num">04</span>
-                        <span class="pitch-mod-name">Network scout, agenti &amp; società</span>
-                      </div>
-                      <p class="pitch-mod-desc">Matchmaking certificato anti-fake con dossier verificati</p>
-                    </div>
-                  </button>
-                </div>
+            <section class="cs-section" aria-labelledby="cs-roadmap-title">
+              <div class="cs-section-head">
+                <h2 id="cs-roadmap-title">Roadmap &amp; sviluppo piattaforma</h2>
+                <span class="cs-count">3 fasi</span>
               </div>
+              <div class="cs-timeline">
+                <article class="cs-t-item" data-about-item="roadmap-live" tabindex="0" role="button" aria-label="Apri dettaglio: Piattaforma Elisee Scout, fase 1 live">
+                  <div class="cs-t-phase">Fase 1 — Live</div>
+                  <h3>Piattaforma Elisee Scout</h3>
+                  <p>1.386 pillar strategici e architettura anti-fake con verifica documentale, dossier atleta con dati GPS e bacheca annunci attiva.</p>
+                </article>
+                <article class="cs-t-item" data-about-item="roadmap-plan" tabindex="0" role="button" aria-label="Apri dettaglio: Business plan e agenti IA, fase 2 in sviluppo">
+                  <div class="cs-t-phase">Fase 2 — In sviluppo</div>
+                  <h3>Business plan &amp; agenti IA</h3>
+                  <p>Estensione del catalogo con 715 agenti IA per il matchmaking, catalogazione dei campionati e verifiche di conformità pre-lancio.</p>
+                </article>
+                <article class="cs-t-item" data-about-item="roadmap-mvp" tabindex="0" role="button" aria-label="Apri dettaglio: Nucleo pillar 01–50, fase 3 pianificata">
+                  <div class="cs-t-phase">Fase 3 — Pianificata</div>
+                  <h3>Nucleo pillar 01–50</h3>
+                  <p>Passaporto digitale del calciatore, gestione degli svincoli Art. 107/108, video da 30 secondi e algoritmo Under fuoriquota.</p>
+                </article>
+              </div>
+            </section>
 
-            </div>
+            <section class="cs-section is-last" aria-labelledby="cs-platform-title">
+              <div class="cs-section-head">
+                <h2 id="cs-platform-title">La piattaforma per il calcio</h2>
+                <span class="cs-count">4 moduli</span>
+              </div>
+              <div class="cs-feat-list">
+                <a class="cs-feat-item" href="#bacheca-annunci" onclick="if(window.switchView){ window.switchView('bacheca','#bacheca-annunci'); } return false;">
+                  <h3>Bacheca annunci &amp; provini</h3>
+                  <p>Reclutamento di calciatori, staff tecnico e club in un unico spazio verificato.</p>
+                </a>
+                <a class="cs-feat-item" href="#mappa-portal" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){ window.switchView('mappa','#mappa-portal'); } return false;">
+                  <h3>Mappa interattiva</h3>
+                  <p>Oltre 2.900 club censiti dalla Serie D alla Terza Categoria, in tutta Italia.</p>
+                </a>
+                <a class="cs-feat-item" href="#squadre-portal" onclick="if(window.switchView){ window.switchView('squadre','#squadre-portal'); } return false;">
+                  <h3>Selettore squadre &amp; kit ufficiali</h3>
+                  <p>Catalogazione grafica delle divise da gara e dei colori sociali di ogni club.</p>
+                </a>
+                <a class="cs-feat-item" href="#scopri-portal" onclick="if(window.openScopriProfili){window.openScopriProfili('staff');}else if(window.switchView){ window.switchView('scopri','#scopri-portal'); } return false;">
+                  <h3>Network scout, agenti &amp; società</h3>
+                  <p>Matchmaking certificato e anti-fake, con dossier verificati su ogni profilo.</p>
+                </a>
+              </div>
+            </section>
+
+            <section class="cs-pullquote">
+              <blockquote>
+                <span data-i18n="about.quote">«La nostra forza è la fiducia: zero fake account, opportunità reali, mai un rischio.»</span>
+                <cite data-i18n="about.quoteCite">— Elisee Scout</cite>
+              </blockquote>
+            </section>
 
           </div>
 
@@ -5603,7 +5542,7 @@
   </script>
   <script src="cookie-profiling.js?v=20260910_CLEANUP1"></script>
   <script src="ai-gdpr-monitor.js?v=20260806_NOCORS"></script>
-  <script src="i18n.js?v=20260905_MINIGIOCHI1"></script>
+  <script src="i18n.js?v=20260910_DOSSIER1"></script>
   <script src="agents-runtime.js?v=20260806_NOCORS"></script>
   <script src="piramide-italia.js?v=20260831_GENDERSVG1"></script>
   <script src="club-storia.js?v=20260903_TIERPROMO1"></script>
@@ -5640,7 +5579,7 @@
   <script src="elisee-world/main.js?v=20260906_EWGBA1"></script>
   <script src="elisee-world/elisee-world.js?v=20260906_EWGBA1"></script>
   <script src="autopilot-runtime.js?v=20260827_FIX3"></script>
-  <script src="about-detail.js?v=20260907_DETAIL1"></script>
+  <script src="about-detail.js?v=20260910_DOSSIER1"></script>
   <script src="live-reload.js?v=20260907_BACHECA_FORCED1"></script>
   <script>
     /* Emergency unlock: body scroll + overlay fantasma */

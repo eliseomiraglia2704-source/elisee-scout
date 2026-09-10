@@ -7,7 +7,9 @@
 /* Hover state per i blocchi interattivi della panoramica */
 .pitch-roadmap-block[data-about-item],
 .pitch-gov-block[data-about-item],
-.pitch-module-btn[data-about-item] {
+.pitch-module-btn[data-about-item],
+.about-dossier .cs-gov-item[data-about-item],
+.about-dossier .cs-t-item[data-about-item] {
   cursor: pointer;
   position: relative;
   transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);

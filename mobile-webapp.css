@@ -120,7 +120,7 @@
   #bacheca-annunci .pf-page-inner,
   #stampa-portal .pf-page-inner,
   #mappa-portal .pf-page-inner,
-  #view-about .about-split-page,
+  #view-about .about-dossier,
   .es-pd-body {
     padding-top: 0.75rem !important;
     padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;

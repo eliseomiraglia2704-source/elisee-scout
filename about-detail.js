@@ -13,7 +13,7 @@
   const GROUPS = {
     'roadmap': {
       name: 'Roadmap',
-      keys: ['roadmap-live', 'roadmap-plan', 'roadmap-mvp', 'roadmap-concept']
+      keys: ['roadmap-live', 'roadmap-plan', 'roadmap-mvp']
     },
     'gov': {
       name: 'Governance & Compliance',
@@ -704,15 +704,17 @@
 
     const items = document.querySelectorAll('[data-about-item]');
     items.forEach(el => {
-      el.addEventListener('click', function (e) {
-        // Se è un bottone con switchView originario, intercettiamo per aprire l'overlay di dettaglio
+      if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+      const activate = function (e) {
+        const key = this.getAttribute('data-about-item');
+        if (!key || !DATA[key]) return;
         e.preventDefault();
         e.stopPropagation();
-
-        const key = this.getAttribute('data-about-item');
-        if (key && DATA[key]) {
-          openAboutDetail(key);
-        }
+        openAboutDetail(key);
+      };
+      el.addEventListener('click', activate);
+      el.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') activate.call(this, e);
       });
     });
   }

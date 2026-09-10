@@ -1,0 +1,484 @@
+/* ============================================================
+   CHI SIAMO — dossier istituzionale
+   Tipografia: Newsreader (titoli/citazioni) + Inter (UI/dati)
+   Palette: inchiostro + bronzo. Niente card, pill, numeri finti.
+   ============================================================ */
+
+.about-dossier {
+  --cs-bg: #10141a;
+  --cs-line: rgba(233, 230, 222, 0.13);
+  --cs-line-strong: rgba(233, 230, 222, 0.24);
+  --cs-text: #e9e6de;
+  --cs-muted: #9aa3ae;
+  --cs-faint: #6b7580;
+  --cs-gold: #b9945f;
+  --cs-gold-dim: rgba(185, 148, 95, 0.35);
+  --cs-blue: #5b8aa8;
+  background: var(--cs-bg);
+  color: var(--cs-text);
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+  min-height: auto;
+  padding: 0 0 2rem;
+  position: relative;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.about-dossier h1,
+.about-dossier h2,
+.about-dossier h3 {
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: -0.01em;
+  color: var(--cs-text);
+}
+
+.about-dossier a {
+  color: inherit;
+}
+
+.about-dossier-wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 32px;
+  box-sizing: border-box;
+}
+
+.about-dossier .cs-hero,
+.about-dossier .cs-mission,
+.about-dossier .cs-section,
+.about-dossier .cs-pullquote {
+  border-bottom: 1px solid var(--cs-line);
+}
+
+/* ----- Hero + letterhead ----- */
+.about-dossier .cs-hero {
+  padding: 7.25rem 0 4.5rem;
+  animation: csFadeUp 0.7s ease both;
+}
+
+@keyframes csFadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-dossier .cs-hero { animation: none; }
+}
+
+.about-dossier .cs-hero-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 64px;
+  align-items: end;
+}
+
+.about-dossier .cs-eyebrow {
+  font-size: 13px;
+  color: var(--cs-muted);
+  border-left: 2px solid var(--cs-gold);
+  padding-left: 12px;
+  margin-bottom: 22px;
+  font-weight: 500;
+}
+
+.about-dossier .cs-headline {
+  font-size: clamp(2rem, 4.2vw, 2.75rem);
+  line-height: 1.18;
+  max-width: 16ch;
+}
+
+.about-dossier .cs-lede {
+  margin: 22px 0 0;
+  font-size: 17px;
+  color: var(--cs-muted);
+  max-width: 52ch;
+}
+
+.about-dossier .cs-hero-meta {
+  border-left: 1px solid var(--cs-line);
+  padding-left: 28px;
+  font-size: 13.5px;
+  color: var(--cs-muted);
+}
+
+.about-dossier .cs-hero-meta dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 16px;
+}
+
+.about-dossier .cs-hero-meta dt {
+  color: var(--cs-faint);
+  font-weight: 400;
+}
+
+.about-dossier .cs-hero-meta dd {
+  margin: 0;
+  color: var(--cs-text);
+}
+
+.about-dossier .cs-hero-meta a {
+  color: var(--cs-blue);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(91, 138, 168, 0.35);
+}
+
+.about-dossier .cs-hero-meta a:hover {
+  border-bottom-color: var(--cs-blue);
+}
+
+.about-dossier .cs-hero-meta a:focus-visible {
+  outline: 2px solid var(--cs-gold);
+  outline-offset: 3px;
+}
+
+/* ----- Missione ----- */
+.about-dossier .cs-mission {
+  padding: 64px 0;
+}
+
+.about-dossier .cs-mission-grid {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 64px;
+}
+
+.about-dossier .cs-mission-label {
+  font-size: 13px;
+  color: var(--cs-faint);
+  padding-top: 6px;
+}
+
+.about-dossier .cs-mission p {
+  font-size: 18px;
+  font-family: 'Newsreader', Georgia, serif;
+  font-weight: 400;
+  color: var(--cs-text);
+  max-width: 62ch;
+  margin: 0 0 20px;
+  line-height: 1.55;
+}
+
+.about-dossier .cs-mission p:last-child {
+  margin-bottom: 0;
+}
+
+.about-dossier .cs-mission em {
+  color: var(--cs-gold);
+  font-style: normal;
+}
+
+/* ----- Sezioni corpo ----- */
+.about-dossier .cs-section {
+  padding: 72px 0;
+}
+
+.about-dossier .cs-section.is-last {
+  border-bottom: none;
+}
+
+.about-dossier .cs-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 40px;
+  gap: 24px;
+}
+
+.about-dossier .cs-section-head h2 {
+  font-size: 26px;
+}
+
+.about-dossier .cs-count {
+  font-size: 13px;
+  color: var(--cs-faint);
+  white-space: nowrap;
+}
+
+/* ----- Governance: lista editoriale ----- */
+.about-dossier .cs-gov-list {
+  display: grid;
+  gap: 0;
+}
+
+.about-dossier .cs-gov-item {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 36px;
+  padding: 28px 0;
+  border-top: 1px solid var(--cs-line);
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.about-dossier .cs-gov-item:last-child {
+  border-bottom: 1px solid var(--cs-line);
+}
+
+.about-dossier .cs-gov-item h3 {
+  font-size: 17px;
+}
+
+.about-dossier .cs-gov-item p {
+  margin: 10px 0 0;
+  font-size: 14.5px;
+  color: var(--cs-muted);
+  max-width: 60ch;
+}
+
+.about-dossier .cs-gov-tag {
+  font-size: 12.5px;
+  color: var(--cs-gold);
+  letter-spacing: 0.01em;
+  margin-bottom: 6px;
+}
+
+.about-dossier .cs-gov-item[data-about-item] {
+  cursor: pointer;
+}
+
+.about-dossier .cs-gov-item[data-about-item]:hover h3 {
+  color: #fff;
+}
+
+.about-dossier .cs-gov-item:focus-visible {
+  outline: 2px solid var(--cs-gold);
+  outline-offset: 4px;
+}
+
+/* ----- Roadmap: timeline verticale ----- */
+.about-dossier .cs-timeline {
+  position: relative;
+  padding-left: 32px;
+}
+
+.about-dossier .cs-timeline::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--cs-line-strong);
+}
+
+.about-dossier .cs-t-item {
+  position: relative;
+  padding-bottom: 40px;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  border: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  display: block;
+}
+
+.about-dossier .cs-t-item:last-child {
+  padding-bottom: 0;
+}
+
+.about-dossier .cs-t-item::before {
+  content: "";
+  position: absolute;
+  left: -32px;
+  top: 5px;
+  width: 11px;
+  height: 11px;
+  border: 1px solid var(--cs-gold);
+  background: var(--cs-bg);
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.about-dossier .cs-t-phase {
+  font-size: 12.5px;
+  color: var(--cs-faint);
+  margin-bottom: 6px;
+}
+
+.about-dossier .cs-t-item h3 {
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+
+.about-dossier .cs-t-item p {
+  margin: 0;
+  font-size: 14.5px;
+  color: var(--cs-muted);
+  max-width: 56ch;
+}
+
+.about-dossier .cs-t-item[data-about-item] {
+  cursor: pointer;
+}
+
+.about-dossier .cs-t-item[data-about-item]:hover h3 {
+  color: #fff;
+}
+
+.about-dossier .cs-t-item:focus-visible {
+  outline: 2px solid var(--cs-gold);
+  outline-offset: 6px;
+}
+
+/* ----- Piattaforma: due colonne, niente numerazione ----- */
+.about-dossier .cs-feat-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.about-dossier .cs-feat-item {
+  padding: 26px 28px 26px 0;
+  border-top: 1px solid var(--cs-line);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.about-dossier .cs-feat-item:nth-child(odd) {
+  border-right: 1px solid var(--cs-line);
+  padding-right: 36px;
+}
+
+.about-dossier .cs-feat-item:nth-child(even) {
+  padding-left: 36px;
+}
+
+.about-dossier .cs-feat-item:nth-last-child(-n+2) {
+  border-bottom: 1px solid var(--cs-line);
+}
+
+.about-dossier .cs-feat-item h3 {
+  font-size: 16.5px;
+  margin-bottom: 8px;
+}
+
+.about-dossier .cs-feat-item p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--cs-muted);
+}
+
+.about-dossier .cs-feat-item:hover h3 {
+  color: var(--cs-gold);
+}
+
+.about-dossier .cs-feat-item:focus-visible {
+  outline: 2px solid var(--cs-gold);
+  outline-offset: 4px;
+}
+
+/* ----- Pull quote ----- */
+.about-dossier .cs-pullquote {
+  padding: 64px 0;
+}
+
+.about-dossier .cs-pullquote blockquote {
+  margin: 0;
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+  line-height: 1.5;
+  color: var(--cs-text);
+  max-width: 44ch;
+  border-left: 2px solid var(--cs-gold);
+  padding-left: 28px;
+}
+
+.about-dossier .cs-pullquote cite {
+  display: block;
+  margin-top: 16px;
+  font-style: normal;
+  font-size: 13px;
+  color: var(--cs-faint);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* ----- Responsive ----- */
+@media (max-width: 860px) {
+  .about-dossier-wrap {
+    padding: 0 20px;
+  }
+
+  .about-dossier .cs-hero {
+    padding: 5.5rem 0 3rem;
+  }
+
+  .about-dossier .cs-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .about-dossier .cs-headline {
+    max-width: none;
+  }
+
+  .about-dossier .cs-hero-meta {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--cs-line);
+    padding-top: 20px;
+  }
+
+  .about-dossier .cs-mission,
+  .about-dossier .cs-section,
+  .about-dossier .cs-pullquote {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  .about-dossier .cs-mission-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .about-dossier .cs-gov-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .about-dossier .cs-feat-list {
+    grid-template-columns: 1fr;
+  }
+
+  .about-dossier .cs-feat-item:nth-child(odd) {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .about-dossier .cs-feat-item:nth-child(even) {
+    padding-left: 0;
+  }
+
+  .about-dossier .cs-feat-item:nth-last-child(-n+2) {
+    border-bottom: none;
+  }
+
+  .about-dossier .cs-feat-item {
+    border-bottom: 1px solid var(--cs-line) !important;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-dossier .cs-hero {
+    padding: 1.25rem 0 2.5rem;
+  }
+}
