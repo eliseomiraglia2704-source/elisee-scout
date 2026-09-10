@@ -61,7 +61,7 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
   - `GET /api/activity/top` — aggregato 24h → `{ nome, meta }`
   - `POST /api/quiz-score` `{ nome, punti }` — ZADD `quiz:scores`
   - `GET /api/quiz-score/top` — top 10 `{ nome, punti }`
-  - Attivare **Vercel KV** sul progetto (Storage → KV) per `KV_REST_API_URL` / `KV_REST_API_TOKEN`, poi redeploy.
+  - Storage Vercel: **Redis (Upstash)** dal Marketplace (KV è deprecato). Env: `KV_REST_API_*` o `UPSTASH_REDIS_REST_*`. Poi redeploy.
   - Client: `trackEliseeActivity()`, `submitEliseeQuizScore()`.
 - **Sidebar onesta** (cache `SIDE1`): In evidenza da candidature `localStorage.elisee_user_jobs`; Community score da `elisee_quiz_leaderboard` (se vuoto: empty + Fai il quiz). Non si copiano più i ranking finti di Home.
 - **Dropdown Zona portale** (cache `DROP1`): menu `.dropdown-options-menu` su `body` (`position:fixed`) così non viene tagliato dal filtro né coperto dalla sidebar.
