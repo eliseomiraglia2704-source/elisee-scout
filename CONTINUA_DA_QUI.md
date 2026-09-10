@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-10** (Bacheca — dropdown Zona su portale body)
-Ultimo fatto: **Dropdown Zona**: overflow visible sul pannello filtri, niente backdrop-filter, sidebar senza sticky/z-index. Menu comuni portato su `document.body` con `position:fixed`. Cache `DROP1`.
-Feature precedente: **Bacheca filtri/reset/dati**. Cache `BOARD4`.
+Ultimo aggiornamento: **2026-09-10** (Bacheca sidebar — stati vuoti onesti)
+Ultimo fatto: **In evidenza / Community score**: niente più copie fake da trending/leaderboard. Lista reale da `elisee_user_jobs` (candidature) e `elisee_quiz_leaderboard` se presente; altrimenti «Ancora nessuna attività» + «Fai il quiz» → minigiochi. Cache `SIDE1`.
+Feature precedente: **Dropdown Zona portale**. Cache `DROP1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -56,6 +56,7 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 ## Stato attuale (fatto, non rifare)
 
+- **Sidebar onesta** (cache `SIDE1`): In evidenza da candidature `localStorage.elisee_user_jobs`; Community score da `elisee_quiz_leaderboard` (se vuoto: empty + Fai il quiz). Non si copiano più i ranking finti di Home.
 - **Dropdown Zona portale** (cache `DROP1`): menu `.dropdown-options-menu` su `body` (`position:fixed`) così non viene tagliato dal filtro né coperto dalla sidebar.
 - **Bacheca funzionante** (cache `BOARD4`): reset filtri; raggio filtra `job.raggio` (non geo utente); bottoni agganciati alle modali reali. Fonti dati: catalogo `sampleJobs` in `app.js` + candidature utente in `localStorage['elisee_user_jobs']`.
 - **Bacheca — CTA strip + pill + maglia** (cache `BOARD3`): raggio senza `1 ·`; `.es-cta-strip` sotto le card; tab Squadre con SVG maglia.
@@ -126,7 +127,8 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Bacheca: dropdown Zona in portale body, overflow visible sui filtri; cache `DROP1` |
+| (questo) | Bacheca sidebar: stati vuoti onesti, niente ranking finti; cache `SIDE1` |
+| `367e900` | Bacheca: dropdown Zona in portale body, overflow visible sui filtri; cache `DROP1` |
 | `02ac1ed` | Bacheca: filtri+reset+dati sampleJobs/localStorage, bottoni su modali reali; cache `BOARD4` |
 | `99d1ed4` | Bacheca: pill raggio senza numeri, CTA strip, icona maglia Squadre; cache `BOARD3` |
 | `80bb68b` | Bacheca strutturale: es-main, sidebar unita, empty state, icone SVG; cache `BOARD2` |

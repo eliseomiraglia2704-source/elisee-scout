@@ -7136,12 +7136,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       try {
-        const trendSrc = document.getElementById('trending-search-list');
-        const trendDst = document.getElementById('trending-search-list-bacheca');
-        if (trendSrc && trendDst) trendDst.innerHTML = trendSrc.innerHTML;
-        const leadSrc = document.getElementById('leaderboard-rows');
-        const leadDst = document.getElementById('leaderboard-rows-bacheca');
-        if (leadSrc && leadDst) leadDst.innerHTML = leadSrc.innerHTML;
+        if (typeof window.renderBachecaSidebar === 'function') window.renderBachecaSidebar();
       } catch (e) {}
 
       window.scrollTo(0, 0);
@@ -8868,6 +8863,84 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof window.openPubblicaAnnuncioModal === 'function') window.openPubblicaAnnuncioModal();
   };
 
+  function getInEvidenzaData() {
+    var out = [];
+    try {
+      var jobs = JSON.parse(localStorage.getItem('elisee_user_jobs') || '[]') || [];
+      jobs.slice(0, 6).forEach(function (j) {
+        var nome = (j.societa || j.title || '').trim();
+        if (!nome) return;
+        out.push({ nome: nome, meta: 'Candidatura pubblicata' });
+      });
+    } catch (_) {}
+    return out;
+  }
+
+  function getCommunityScoreData() {
+    var keys = ['elisee_quiz_leaderboard', 'elisee_community_score', 'elisee_quiz_scores'];
+    for (var i = 0; i < keys.length; i++) {
+      try {
+        var raw = localStorage.getItem(keys[i]);
+        if (!raw) continue;
+        var arr = JSON.parse(raw);
+        if (!Array.isArray(arr) || !arr.length) continue;
+        return arr.map(function (x) {
+          return {
+            nome: x.nome || x.username || x.name || 'Utente',
+            punti: Number(x.punti || x.points || x.score || 0)
+          };
+        }).filter(function (x) { return x.punti > 0; }).sort(function (a, b) { return b.punti - a.punti; }).slice(0, 8);
+      } catch (_) {}
+    }
+    return [];
+  }
+
+  window.renderBachecaSidebar = function renderBachecaSidebar() {
+    var evidenza = getInEvidenzaData();
+    var listE = document.getElementById('in-evidenza-list');
+    var emptyE = document.getElementById('in-evidenza-empty');
+    if (listE && emptyE) {
+      if (!evidenza.length) {
+        listE.innerHTML = '';
+        emptyE.classList.add('is-active');
+      } else {
+        emptyE.classList.remove('is-active');
+        listE.innerHTML = evidenza.map(function (item) {
+          return '<li><span class="es-rank-list__name">' + item.nome + '</span><span class="es-rank-list__meta">' + item.meta + '</span></li>';
+        }).join('');
+      }
+    }
+    var scores = getCommunityScoreData();
+    var listC = document.getElementById('community-score-list');
+    var emptyC = document.getElementById('community-score-empty');
+    var cta = document.getElementById('btn-fai-quiz');
+    if (listC && emptyC) {
+      if (!scores.length) {
+        listC.innerHTML = '';
+        emptyC.classList.add('is-active');
+        if (cta) cta.classList.add('is-active');
+      } else {
+        emptyC.classList.remove('is-active');
+        if (cta) cta.classList.remove('is-active');
+        listC.innerHTML = scores.map(function (item, i) {
+          return '<li data-position="' + (i + 1) + '"><span class="es-rank-list__name">' + item.nome + '</span><span class="es-rank-list__meta">' + item.punti + ' pt</span></li>';
+        }).join('');
+      }
+    }
+  };
+
+  var quizBtn = document.getElementById('btn-fai-quiz');
+  if (quizBtn && !quizBtn.dataset.wired) {
+    quizBtn.dataset.wired = '1';
+    quizBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (window.EliseeMinigioco && typeof window.EliseeMinigioco.open === 'function') window.EliseeMinigioco.open();
+      else if (typeof window.openMinigiocoCarriera === 'function') window.openMinigiocoCarriera();
+      else if (typeof window.switchView === 'function') window.switchView('minigioco', '#minigioco-carriera');
+    });
+  }
+  try { window.renderBachecaSidebar(); } catch (_) {}
+
   [filterUnder, filterHousing, filterSvincolato].forEach(el => {
     if (el) el.addEventListener('change', filterAndRenderJobs);
   });
@@ -8888,8 +8961,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (typeof initComuniLocationDropdown === 'function') initComuniLocationDropdown();
   try { filterAndRenderJobs(); } catch (e) { console.error(e); }
+  try { if (typeof window.renderBachecaSidebar === 'function') window.renderBachecaSidebar(); } catch (_) {}
   setTimeout(function () {
     try { if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs(); } catch (_) {}
+    try { if (typeof window.renderBachecaSidebar === 'function') window.renderBachecaSidebar(); } catch (_) {}
   }, 50);
 
   // Deep-link da focus.html?focusCat=Serie+D (apre Portfolio/Network filtrati)
@@ -13949,6 +14024,7 @@ window.performAdminLogout = function() {
     if (typeof window.switchView === 'function') window.switchView('bacheca', '#bacheca-annunci');
     setTimeout(function () {
       if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs();
+      if (typeof window.renderBachecaSidebar === 'function') window.renderBachecaSidebar();
       var jobs = document.getElementById('jobs-container');
       if (jobs) jobs.scrollIntoView({ behavior: 'smooth', block: 'start' });
       var msg = payload.ai

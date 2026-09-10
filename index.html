@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260910_DROP1';
+      var BUILD_VERSION = '20260910_SIDE1';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -48,7 +48,7 @@
   <link rel="stylesheet" href="player-card.css?v=20260907_COMUNI4">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
-  <link rel="stylesheet" href="bacheca-board.css?v=20260910_DROP1">
+  <link rel="stylesheet" href="bacheca-board.css?v=20260910_SIDE1">
   <script src="comuni-italiani.js?v=20260907_COMUNI4" defer></script>
   
   <style id="forced-brand-font-override">
@@ -2901,13 +2901,18 @@
                 <aside class="es-sidebar">
                   <div class="es-sidebar__item">
                     <h3>In evidenza</h3>
-                    <p>Profili e società con maggiore attività sul network nelle ultime 24 ore.</p>
-                    <div id="trending-search-list-bacheca" class="pf-aside-list"></div>
+                    <p class="es-sidebar__caption">Profili e società con maggiore attività sul network nelle ultime 24 ore.</p>
+                    <ul class="es-rank-list" id="in-evidenza-list"></ul>
+                    <p class="es-sidebar__empty" id="in-evidenza-empty">Ancora nessuna attività registrata nelle ultime 24 ore.</p>
+                    <div id="trending-search-list-bacheca" hidden></div>
                   </div>
                   <div class="es-sidebar__item">
                     <h3>Community score</h3>
-                    <p>Classifica formazione e cultura calcistica (quiz piattaforma).</p>
-                    <div id="leaderboard-rows-bacheca" class="pf-aside-list pf-aside-list-compact"></div>
+                    <p class="es-sidebar__caption">Classifica formazione e cultura calcistica (quiz piattaforma).</p>
+                    <ol class="es-rank-list" id="community-score-list"></ol>
+                    <p class="es-sidebar__empty" id="community-score-empty">Nessun punteggio ancora registrato: fai il quiz per essere il primo in classifica.</p>
+                    <button type="button" class="es-btn es-btn--secondary es-sidebar__cta" id="btn-fai-quiz">Fai il quiz</button>
+                    <div id="leaderboard-rows-bacheca" hidden></div>
                   </div>
                 </aside>
               </div>
@@ -5660,7 +5665,7 @@
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260910_DROP1"></script>
+  <script src="app.js?v=20260910_SIDE1"></script>
   <script src="player-profile.js?v=20260905_OBSFIX1"></script>
   <script src="public-rating-system.js?v=20260904_SEASONDROP1"></script>
   <script src="dash-real.js?v=20260904_SEASONDROP1"></script>
