@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-10** (commit `3c8d06f` — Season Wrapped v1.2)
-Ultimo fatto: **Season Wrapped — Recap virale di fine campionato stile «Spotify Wrapped» per l'intero ecosistema del club** (21 profili, dal calciatore al tifoso, con sistema Card OVR stile FIFA, Curva di Crescita Stagionale, Story Viewer 9:16, export Canvas 1080x1920 PNG e Countdown Wrapped Day).
-Feature precedente: **Risoluzione Syntax Error & Import in elisee_up.py** — Corretto blocco try senza except nella funzione log() (linea 463).
+Ultimo aggiornamento: **2026-09-10** (Elisee Scout Mobile Expo Go Fix)
+Ultimo fatto: **Elisee Scout Mobile (React Native Expo SDK 57)** — Risolto errore Expo Go (`java.io.IOException: Failed to download remote update` e `Something went wrong`): rimossa configurazione EAS remota da `app.json`, risolto conflitto IP virtuale Tailscale con binding automatico all'IP Wi-Fi reale in `AVVIA_EXPO.bat`, pre-riscaldamento cache Metro per bundle istantaneo (<1s), terminazione processi zombie su porta 8081 e testato con successo download bundle pubblico via Tunnel HTTP 200 (8.69 MB).
+Feature precedente: **Season Wrapped — Recap virale di fine campionato stile «Spotify Wrapped» per l'intero ecosistema del club** (commit `3c8d06f` / `d2537eb`).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
