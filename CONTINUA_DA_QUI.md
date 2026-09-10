@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-10** (Elisee Scout Mobile Expo Go Fix)
-Ultimo fatto: **Elisee Scout Mobile (React Native Expo SDK 57)** — Risolto errore Expo Go (`java.io.IOException: Failed to download remote update` e `Something went wrong`): rimossa configurazione EAS remota da `app.json`, risolto conflitto IP virtuale Tailscale con binding automatico all'IP Wi-Fi reale in `AVVIA_EXPO.bat`, pre-riscaldamento cache Metro per bundle istantaneo (<1s), terminazione processi zombie su porta 8081 e testato con successo download bundle pubblico via Tunnel HTTP 200 (8.69 MB).
-Feature precedente: **Season Wrapped — Recap virale di fine campionato stile «Spotify Wrapped» per l'intero ecosistema del club** (commit `3c8d06f` / `d2537eb`).
+Ultimo aggiornamento: **2026-09-10** (Elisee Scout Mobile Auto-Reload Engine)
+Ultimo fatto: **Elisee Scout Mobile — Sistema di Refresh Automatico in background per Expo Go** (polling continuo a zero latenza su `version.json`, ricarica istantanea senza toccare lo smartphone o premere ricarica manuale, banner visivo animato "⚡ Sincronizzazione modifiche in corso...", AppState listener al risveglio dell'app e pull-to-refresh nativo).
+Feature precedente: **Elisee Scout Mobile (React Native Expo SDK 57)** — Integrazione layout mobile completo via WebView, risoluzione conflitti Tailscale ed eliminazione moduli nativi vietati.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
