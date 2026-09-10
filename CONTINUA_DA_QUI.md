@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-10** (Elisee Scout Mobile UI Polish & Overlay Fix)
-Ultimo fatto: **Elisee Scout Mobile — Risoluzione sovrapposizioni interfaccia mobile** (rimosso banner cookie invasivo e badge floating su app mobile, soppressi toast gialli/avvisi React Native con `LogBox.ignoreAllLogs`, gestione safe-area insets per barra di navigazione Android e status bar, padding-bottom dinamico per visualizzazione impeccabile dei tab).
-Feature precedente: **Elisee Scout Mobile — Sistema di Refresh Automatico in background per Expo Go** (polling continuo a zero latenza su `version.json`, banner visivo animato, AppState listener e pull-to-refresh nativo).
+Ultimo aggiornamento: **2026-09-10** (Elisee Scout Mobile — Fix Schema app.json & Ottimizzazione)
+Ultimo fatto: **Elisee Scout Mobile — Risolto warning schema app.json (jsEngine rimosso, default Hermes in SDK 57)** + Ottimizzazione prestazioni app Expo Go, fix crash Android WebView bridge, spring animation e cleanup automatico.
+Feature precedente: **Elisee Scout Mobile — UI Polish & Overlay Fix** (rimosso banner cookie invasivo, LogBox.ignoreAllLogs, safe-area insets, padding-bottom dinamico).
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
