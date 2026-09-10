@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260910_BACKFIX1';
+      var BUILD_VERSION = '20260910_SCROLL1';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -46,8 +46,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=20260910_PALETTE1">
   <link rel="stylesheet" href="player-card.css?v=20260907_COMUNI4">
-  <link rel="stylesheet" href="about-detail.css?v=20260910_DOSSIER1">
-  <link rel="stylesheet" href="chi-siamo.css?v=20260910_BACKFIX1">
+  <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
+  <link rel="stylesheet" href="chi-siamo.css?v=20260910_SCROLL1">
   <script src="comuni-italiani.js?v=20260907_COMUNI4" defer></script>
   
   <style id="forced-brand-font-override">
@@ -574,21 +574,24 @@
           var body = document.body;
           html.classList.remove('has-about-detail-open', 'has-active-overlay', 'modal-open');
           html.style.overflow = '';
-          html.style.overflowY = '';
-          html.style.height = '';
+          html.style.overflowX = 'hidden';
+          html.style.overflowY = 'auto';
+          html.style.height = 'auto';
+          html.style.maxHeight = 'none';
           html.style.pointerEvents = 'auto';
           html.style.scrollbarGutter = '';
           if (body) {
             body.classList.remove('has-about-detail-open', 'has-active-overlay', 'modal-open');
             body.style.overflow = '';
-            body.style.overflowY = '';
+            body.style.overflowX = 'hidden';
+            body.style.overflowY = 'auto';
             body.style.position = '';
             body.style.top = '';
             body.style.left = '';
             body.style.right = '';
             body.style.width = '';
-            body.style.height = '';
-            body.style.maxHeight = '';
+            body.style.height = 'auto';
+            body.style.maxHeight = 'none';
             body.style.pointerEvents = 'auto';
             body.style.touchAction = '';
             body.style.scrollbarGutter = '';
@@ -596,8 +599,11 @@
           var overlay = document.getElementById('about-detail-overlay');
           if (overlay) {
             overlay.classList.remove('is-active');
+            overlay.style.display = 'none';
             overlay.style.pointerEvents = 'none';
             overlay.style.opacity = '0';
+            overlay.style.visibility = 'hidden';
+            overlay.setAttribute('aria-hidden', 'true');
           }
         } catch (e) {}
       }
@@ -5620,7 +5626,7 @@
   <script src="elisee-world/main.js?v=20260906_EWGBA1"></script>
   <script src="elisee-world/elisee-world.js?v=20260906_EWGBA1"></script>
   <script src="autopilot-runtime.js?v=20260827_FIX3"></script>
-  <script src="about-detail.js?v=20260910_BACKFIX1"></script>
+  <script src="about-detail.js?v=20260910_SCROLL1"></script>
   <script src="live-reload.js?v=20260907_BACHECA_FORCED1"></script>
   <script>
     /* Emergency unlock: body scroll + overlay fantasma */

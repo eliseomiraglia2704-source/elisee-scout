@@ -4,6 +4,14 @@
    Palette: stessa del sito (nero #050608 + accento #38bdf8).
    ============================================================ */
 
+#view-about,
+#view-about .about-dossier,
+#view-about .about-dossier-wrap {
+  overflow: visible !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
 .about-dossier {
   --cs-bg: var(--bg-primary);
   --cs-line: rgba(255, 255, 255, 0.08);

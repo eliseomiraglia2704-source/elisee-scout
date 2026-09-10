@@ -439,6 +439,8 @@
     overlayEl.setAttribute('role', 'dialog');
     overlayEl.setAttribute('aria-modal', 'true');
     overlayEl.setAttribute('aria-label', 'Dettaglio Pillar Elisee Scout');
+    overlayEl.setAttribute('aria-hidden', 'true');
+    overlayEl.style.display = 'none';
 
     overlayEl.innerHTML = `
       <div class="about-detail-container" id="about-detail-content-box">
@@ -633,6 +635,7 @@
     document.documentElement.classList.add('has-about-detail-open', 'has-active-overlay');
     document.body.classList.add('has-about-detail-open', 'has-active-overlay');
     document.documentElement.style.overflow = 'hidden';
+    document.documentElement.style.overflowY = 'hidden';
     document.documentElement.style.scrollbarGutter = 'auto';
     document.body.style.position = 'fixed';
     document.body.style.top = `-${lockedY}px`;
@@ -680,6 +683,11 @@
     const overlay = ensureOverlayExists();
     renderDetailContent(itemKey);
 
+    overlay.style.removeProperty('display');
+    overlay.style.removeProperty('opacity');
+    overlay.style.removeProperty('pointer-events');
+    overlay.style.removeProperty('visibility');
+    overlay.removeAttribute('aria-hidden');
     overlay.classList.add('is-active');
     overlay.scrollTo({ top: 0 });
     lockBodyScroll();
