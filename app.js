@@ -8330,7 +8330,9 @@ document.addEventListener('DOMContentLoaded', () => {
       matchScore: 'Match 96%',
       under: false,
       housing: true,
-      svincolato: true
+      svincolato: true,
+      raggio: 2,
+      quando: '3 giorni fa'
     },
     {
       id: 'portiere-reattivo-under-19',
@@ -8343,7 +8345,9 @@ document.addEventListener('DOMContentLoaded', () => {
       matchScore: 'Match 94%',
       under: true,
       housing: true,
-      svincolato: false
+      svincolato: false,
+      raggio: 1,
+      quando: '2 giorni fa'
     },
     {
       id: 'centrocampista-mezzala-eccellenza',
@@ -8356,7 +8360,9 @@ document.addEventListener('DOMContentLoaded', () => {
       matchScore: 'Match 91%',
       under: false,
       housing: false,
-      svincolato: true
+      svincolato: true,
+      raggio: 3,
+      quando: '5 giorni fa'
     },
     {
       id: 'match-analyst-staff-tecnico',
@@ -8369,7 +8375,9 @@ document.addEventListener('DOMContentLoaded', () => {
       matchScore: 'Match 93%',
       under: false,
       housing: false,
-      svincolato: false
+      svincolato: false,
+      raggio: 4,
+      quando: '1 settimana fa'
     },
     {
       id: 'difensore-centrale-fuoriquota',
@@ -8382,7 +8390,9 @@ document.addEventListener('DOMContentLoaded', () => {
       matchScore: 'Match 97%',
       under: true,
       housing: true,
-      svincolato: false
+      svincolato: false,
+      raggio: 2,
+      quando: '4 giorni fa'
     },
     {
       id: 'preparatore-atletico',
@@ -8395,7 +8405,9 @@ document.addEventListener('DOMContentLoaded', () => {
       matchScore: 'Match 89%',
       under: false,
       housing: false,
-      svincolato: false
+      svincolato: false,
+      raggio: 1,
+      quando: '1 settimana fa'
     },
     {
       id: 'centrocampista-prima-categoria-foggia',
@@ -8408,7 +8420,9 @@ document.addEventListener('DOMContentLoaded', () => {
       matchScore: 'Match 95%',
       under: false,
       housing: false,
-      svincolato: true
+      svincolato: true,
+      raggio: 2,
+      quando: '6 giorni fa'
     },
     {
       id: 'attaccante-prima-categoria-bari',
@@ -8421,7 +8435,9 @@ document.addEventListener('DOMContentLoaded', () => {
       matchScore: 'Match 88%',
       under: false,
       housing: false,
-      svincolato: true
+      svincolato: true,
+      raggio: 3,
+      quando: '2 settimane fa'
     },
     {
       id: 'difensore-seconda-categoria-roma',
@@ -8434,7 +8450,9 @@ document.addEventListener('DOMContentLoaded', () => {
       matchScore: 'Match 84%',
       under: false,
       housing: true,
-      svincolato: true
+      svincolato: true,
+      raggio: 4,
+      quando: '8 giorni fa'
     }
   ];
 
@@ -8655,11 +8673,15 @@ document.addEventListener('DOMContentLoaded', () => {
           matchScore: j.ai === false ? 'Manuale' : 'IA',
           under: false,
           housing: !!(j.benefit && /alloggio|vitto/i.test(j.benefit)),
-          svincolato: false
+          svincolato: false,
+          raggio: 4,
+          quando: 'Oggi'
         };
       });
     } catch (_) { userJobs = []; }
     const allJobs = userJobs.concat(sampleJobs);
+    var geoBtn = document.querySelector('#bacheca-geo-segmented .bacheca-seg-btn.is-active');
+    var geo = geoBtn ? Number(geoBtn.getAttribute('data-geo') || 0) : 0;
     var filtered = allJobs.filter(job => {
       if (roleVal !== 'all' && job.role !== roleVal) return false;
       if (catVal !== 'all' && job.category !== catVal) return false;
@@ -8670,20 +8692,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const matchesLoc = jobLoc === locPure || jobLoc.includes(locPure) || locPure.includes(jobLoc) || jobLoc === locFull;
         if (!matchesLoc) return false;
       }
+      if (geo && Number(job.raggio || 4) !== geo) return false;
       if (isUnder && !job.under) return false;
       if (isHousing && !job.housing) return false;
       if (isSvincolato && !job.svincolato) return false;
       return true;
     });
-    if (window.EliseePlayerCard && typeof window.EliseePlayerCard.sortJobs === 'function') {
-      filtered = window.EliseePlayerCard.sortJobs(filtered);
-    }
 
     var emptyHtml = ''
-      + '<div class="es-empty" id="es-empty">'
-      + '<h3>Nessun altro annuncio in questa zona</h3>'
-      + '<p>Amplia il raggio di ricerca a Regione o Italia per vedere più opportunità.</p>'
-      + '<button type="button" id="es-empty-widen">Amplia il raggio</button>'
+      + '<div class="es-empty is-active" id="es-empty">'
+      + '<h3>Nessun annuncio corrisponde ai filtri</h3>'
+      + '<p>Amplia il raggio di ricerca o rimuovi qualche filtro per vedere più opportunità.</p>'
+      + '<button type="button" id="btn-reset-filtri">Reimposta filtri</button>'
       + '</div>';
 
     try {
@@ -8713,7 +8733,7 @@ document.addEventListener('DOMContentLoaded', () => {
             + '</div>'
             + '<div class="es-card__club">'
             + '<strong>' + (job.club || '') + '</strong>'
-            + '<span>' + (job.matchScore || '') + '</span>'
+            + '<span>' + (job.quando || job.matchScore || '') + '</span>'
             + '<div class="es-card__actions">'
             + '<button type="button" class="btn btn-outline-pill pf-job-cta" onclick="openCandidateModal(\'' + safeTitle + '\')">' + cta + '</button>'
             + '<button type="button" class="btn btn-outline-pill pf-job-cta" onclick="if(window.openSchedeTecniche)window.openSchedeTecniche({id:\'' + esc(jid) + '\',title:\'' + safeTitle + '\',club:\'' + esc(job.club) + '\',role:\'' + esc(job.role) + '\',location:\'' + esc(job.location) + '\'})">Schede tecniche</button>'
@@ -8729,7 +8749,25 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.lucide) try { lucide.createIcons(); } catch (_) {}
   }
 
-  window.widenBachecaSearch = function widenBachecaSearch() {
+  function setDropdownAll(dropdownId, textId, fallback) {
+    var dd = document.getElementById(dropdownId);
+    if (!dd) return;
+    dd.querySelectorAll('.dropdown-option').forEach(function (o) { o.classList.remove('selected'); });
+    var all = dd.querySelector('.dropdown-option[data-value="all"]');
+    if (all) {
+      all.classList.add('selected');
+      var span = document.getElementById(textId) || dd.querySelector('.dropdown-trigger span');
+      if (span) span.textContent = all.textContent.trim();
+    } else if (textId) {
+      var s = document.getElementById(textId);
+      if (s) s.textContent = fallback || 'Tutti';
+    }
+  }
+
+  window.resetBachecaFilters = function resetBachecaFilters() {
+    setDropdownAll('dropdown-role', 'role-selected-text', 'Tutti i ruoli');
+    setDropdownAll('dropdown-category', 'category-selected-text', 'Tutte le categorie');
+    setDropdownAll('dropdown-location', 'location-selected-text', 'Tutte le zone');
     var seg = document.getElementById('bacheca-geo-segmented');
     if (seg) {
       seg.querySelectorAll('[data-geo]').forEach(function (x) { x.classList.remove('is-active'); });
@@ -8737,17 +8775,20 @@ document.addEventListener('DOMContentLoaded', () => {
       if (tutti) tutti.classList.add('is-active');
     }
     if (window.EliseePlayerCard) window.EliseePlayerCard.geoFilter = 0;
-    var dd = document.getElementById('dropdown-location');
-    if (dd) {
-      dd.querySelectorAll('.dropdown-option').forEach(function (o) { o.classList.remove('selected'); });
-      var all = dd.querySelector('.dropdown-option[data-value="all"]');
-      if (all) {
-        all.classList.add('selected');
-        var span = document.getElementById('location-selected-text');
-        if (span) span.textContent = all.textContent.trim();
-      }
-    }
+    ['filter-under', 'filter-housing', 'filter-svincolato'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.checked = false;
+    });
     if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs();
+  };
+  window.widenBachecaSearch = window.resetBachecaFilters;
+
+  window.onCreaProfilo = function onCreaProfilo() {
+    if (typeof window.openRegistrazioneModal === 'function') window.openRegistrazioneModal();
+    else if (typeof window.switchView === 'function') window.switchView('account', '#account-portal');
+  };
+  window.onPubblicaCandidatura = function onPubblicaCandidatura() {
+    if (typeof window.openPubblicaAnnuncioModal === 'function') window.openPubblicaAnnuncioModal();
   };
 
   [filterUnder, filterHousing, filterSvincolato].forEach(el => {
@@ -8757,15 +8798,14 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('click', function (e) {
     var t = e.target && e.target.closest ? e.target : null;
     if (!t || !t.closest) return;
-    if (t.closest('#es-empty-widen')) {
+    if (t.closest('#es-empty-widen') || t.closest('#btn-reset-filtri')) {
       e.preventDefault();
-      if (typeof window.widenBachecaSearch === 'function') window.widenBachecaSearch();
+      if (typeof window.resetBachecaFilters === 'function') window.resetBachecaFilters();
       return;
     }
-    if (t.closest('#es-cta-pubblica')) {
+    if (t.closest('#es-cta-pubblica') || t.closest('#btn-pubblica-richiesta')) {
       e.preventDefault();
-      if (typeof window.openPubblicaAnnuncioModal === 'function') window.openPubblicaAnnuncioModal();
-      else if (typeof window.openRegistrazioneModal === 'function') window.openRegistrazioneModal();
+      if (typeof window.onPubblicaCandidatura === 'function') window.onPubblicaCandidatura();
     }
   });
 
@@ -13867,7 +13907,8 @@ window.performAdminLogout = function() {
       pub.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
-        openPubblicaAnnuncioModal();
+        if (typeof window.onPubblicaCandidatura === 'function') window.onPubblicaCandidatura();
+        else openPubblicaAnnuncioModal();
       });
     }
     if (crea && !crea.dataset.wired) {
@@ -13875,7 +13916,8 @@ window.performAdminLogout = function() {
       crea.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
-        if (typeof window.openRegistrazioneModal === 'function') window.openRegistrazioneModal();
+        if (typeof window.onCreaProfilo === 'function') window.onCreaProfilo();
+        else if (typeof window.openRegistrazioneModal === 'function') window.openRegistrazioneModal();
       });
     }
     var closeBtn = document.getElementById('pubblica-annuncio-close');

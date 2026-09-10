@@ -15,6 +15,13 @@
   flex-shrink: 0;
 }
 
+#bacheca-annunci .es-empty {
+  display: none;
+}
+#bacheca-annunci .es-empty.is-active,
+#bacheca-annunci .es-empty:not([hidden]) {
+  display: block;
+}
 #bacheca-annunci .es-empty[hidden] {
   display: none !important;
 }

@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-10** (Bacheca — pill raggio, CTA strip, icona maglia)
-Ultimo fatto: **Bacheca**: pill raggio senza numeri (Città/Provincia/Regione/Italia); striscia CTA «Non hai trovato il ruolo giusto?» sotto gli annunci; icona tab Squadre = maglia SVG (non più scudo/cerchio). Cache `BOARD3`.
-Feature precedente: **Bacheca strutturale es-main/sidebar**. Cache `BOARD2`.
+Ultimo aggiornamento: **2026-09-10** (Bacheca funzionante — filtri, reset, dati reali)
+Ultimo fatto: **Bacheca**: filtri ruolo/categoria/zona + raggio (proprietà annuncio) + tag multipli; stato vuoto «Reimposta filtri»; `onCreaProfilo` → registrazione, `onPubblicaCandidatura` → modale pubblica. Dati = `sampleJobs` + `localStorage.elisee_user_jobs` (nessuna API `/api/annunci` ancora). Cache `BOARD4`.
+Feature precedente: **CTA strip + pill senza numeri**. Cache `BOARD3`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -56,6 +56,7 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 ## Stato attuale (fatto, non rifare)
 
+- **Bacheca funzionante** (cache `BOARD4`): reset filtri; raggio filtra `job.raggio` (non geo utente); bottoni agganciati alle modali reali. Fonti dati: catalogo `sampleJobs` in `app.js` + candidature utente in `localStorage['elisee_user_jobs']`.
 - **Bacheca — CTA strip + pill + maglia** (cache `BOARD3`): raggio senza `1 ·`; `.es-cta-strip` sotto le card; tab Squadre con SVG maglia.
 - **Bacheca — struttura es-main** (cache `BOARD2`): HTML reale con `.es-main`, `.es-sidebar` unita, card fallback + `.es-empty`. Render JS con try/catch. Icone tab SVG.
 - **Bacheca reclutamento — board** (cache `BOARD1`):
@@ -124,7 +125,8 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Bacheca: pill raggio senza numeri, CTA strip, icona maglia Squadre; cache `BOARD3` |
+| (questo) | Bacheca: filtri+reset+dati sampleJobs/localStorage, bottoni su modali reali; cache `BOARD4` |
+| `99d1ed4` | Bacheca: pill raggio senza numeri, CTA strip, icona maglia Squadre; cache `BOARD3` |
 | `80bb68b` | Bacheca strutturale: es-main, sidebar unita, empty state, icone SVG; cache `BOARD2` |
 | `80e8b40` | Bacheca: layout board, sidebar compatta, stato vuoto, gerarchia bottoni; cache `BOARD1` |
 | `14b2491` | Chi siamo: Cosa facciamo + Perché puoi fidarti al posto di roadmap/governance; cache `TRUST1` |
