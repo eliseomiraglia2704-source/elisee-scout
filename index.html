@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260910_BOARD1';
+      var BUILD_VERSION = '20260910_BOARD2';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -48,7 +48,7 @@
   <link rel="stylesheet" href="player-card.css?v=20260907_COMUNI4">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
-  <link rel="stylesheet" href="bacheca-board.css?v=20260910_BOARD1">
+  <link rel="stylesheet" href="bacheca-board.css?v=20260910_BOARD2">
   <script src="comuni-italiani.js?v=20260907_COMUNI4" defer></script>
   
   <style id="forced-brand-font-override">
@@ -2737,19 +2737,19 @@
             <!-- Navigazione Tab Bacheca con indicatore di stato attivo azzurro -->
             <nav class="bacheca-nav-tabs" role="tablist" aria-label="Sezioni Bacheca">
               <button type="button" class="bacheca-tab-btn is-active" id="tab-btn-annunci" role="tab" aria-selected="true" aria-controls="bacheca-tab-annunci" onclick="switchBachecaTab('annunci')">
-                <i data-lucide="briefcase" class="tab-icon"></i>
+                <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
                 <span>Bacheca annunci</span>
               </button>
               <button type="button" class="bacheca-tab-btn" id="tab-btn-persone" role="tab" aria-selected="false" aria-controls="bacheca-tab-persone" onclick="switchBachecaTab('persone')">
-                <i data-lucide="users" class="tab-icon"></i>
+                <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 <span>Persone &amp; squadre</span>
               </button>
               <button type="button" class="bacheca-tab-btn" id="tab-btn-wall" role="tab" aria-selected="false" onclick="switchBachecaTab('wall')">
-                <i data-lucide="trending-up" class="tab-icon"></i>
+                <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
                 <span>Wall trattative</span>
               </button>
               <button type="button" class="bacheca-tab-btn" id="tab-btn-squadre" role="tab" aria-selected="false" onclick="switchBachecaTab('squadre')">
-                <i data-lucide="shield" class="tab-icon"></i>
+                <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 <span>Squadre</span>
               </button>
             </nav>
@@ -2855,25 +2855,54 @@
                 </div>
               </div>
 
-              <!-- Layout: Lista annunci + Colonna laterale affiancata -->
-              <div class="pf-layout bacheca-grid-layout">
-                <div class="pf-main">
-                  <div class="pf-section-label">
-                    <span>Opportunità selezionate</span>
-                    <span class="pf-section-line" aria-hidden="true"></span>
+              <div class="es-main">
+                <div class="es-listings">
+                  <h2>Opportunità selezionate</h2>
+                  <div class="es-listings__grid" id="jobs-container">
+                    <article class="es-card">
+                      <div>
+                        <p class="es-card__role">Centrocampista centrale, Under 19</p>
+                        <p class="es-card__meta">Serie D · Provincia di Foggia</p>
+                        <div class="es-card__tags">
+                          <span>Fuoriquota Under</span>
+                          <span>Vitto e alloggio</span>
+                        </div>
+                      </div>
+                      <div class="es-card__club">
+                        <strong>ASD Calcio Foggia</strong>
+                        <span>3 giorni fa</span>
+                      </div>
+                    </article>
+                    <article class="es-card">
+                      <div>
+                        <p class="es-card__role">Preparatore atletico</p>
+                        <p class="es-card__meta">Eccellenza · Regione Puglia</p>
+                        <div class="es-card__tags">
+                          <span>Svincolato benvenuto</span>
+                        </div>
+                      </div>
+                      <div class="es-card__club">
+                        <strong>Unione Sportiva Manfredonia</strong>
+                        <span>1 settimana fa</span>
+                      </div>
+                    </article>
+                    <div class="es-empty" id="es-empty" hidden>
+                      <h3>Nessun altro annuncio in questa zona</h3>
+                      <p>Amplia il raggio di ricerca a Regione o Italia per vedere più opportunità.</p>
+                      <button type="button" id="es-empty-widen">Amplia il raggio</button>
+                    </div>
                   </div>
-                  <div class="jobs-grid pf-jobs" id="jobs-container"></div>
                 </div>
 
-                <aside class="pf-aside">
-                  <div class="pf-aside-card">
-                    <h3 class="pf-aside-title">In evidenza</h3>
-                    <p class="pf-aside-text">Profili e società con maggiore attività sul network nelle ultime 24 ore.</p>
+                <aside class="es-sidebar">
+                  <div class="es-sidebar__item">
+                    <h3>In evidenza</h3>
+                    <p>Profili e società con maggiore attività sul network nelle ultime 24 ore.</p>
                     <div id="trending-search-list-bacheca" class="pf-aside-list"></div>
                   </div>
-                  <div class="pf-aside-card">
-                    <h3 class="pf-aside-title">Community score</h3>
-                    <p class="pf-aside-text">Classifica formazione e cultura calcistica (quiz piattaforma).</p>
+                  <div class="es-sidebar__item">
+                    <h3>Community score</h3>
+                    <p>Classifica formazione e cultura calcistica (quiz piattaforma).</p>
                     <div id="leaderboard-rows-bacheca" class="pf-aside-list pf-aside-list-compact"></div>
                   </div>
                 </aside>
@@ -5627,7 +5656,7 @@
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260910_BOARD1"></script>
+  <script src="app.js?v=20260910_BOARD2"></script>
   <script src="player-profile.js?v=20260905_OBSFIX1"></script>
   <script src="public-rating-system.js?v=20260904_SEASONDROP1"></script>
   <script src="dash-real.js?v=20260904_SEASONDROP1"></script>

@@ -8617,6 +8617,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.initComuniLocationDropdown = initComuniLocationDropdown;
 
   window.filterAndRenderJobs = function filterAndRenderJobs() {
+    const jobsContainer = document.getElementById('jobs-container');
     if (!jobsContainer) return;
 
     const roleVal = getCustomDropdownValue('dropdown-role');
@@ -8678,55 +8679,54 @@ document.addEventListener('DOMContentLoaded', () => {
       filtered = window.EliseePlayerCard.sortJobs(filtered);
     }
 
-    if (filtered.length === 0) {
-      jobsContainer.innerHTML = `
-        <div class="es-empty">
-          <h3>Nessun altro annuncio in questa zona</h3>
-          <p>Amplia il raggio di ricerca a Regione o Italia per vedere più opportunità.</p>
-          <button type="button" id="es-empty-widen">Amplia il raggio</button>
-        </div>
-      `;
-      var widen = document.getElementById('es-empty-widen');
-      if (widen) widen.addEventListener('click', function () {
-        if (typeof window.widenBachecaSearch === 'function') window.widenBachecaSearch();
-      });
-    } else {
-      jobsContainer.innerHTML = filtered.map(job => {
-        const jid = job.id || String(job.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
-        const safeTitle = String(job.title || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-        const safeClub = String(job.club || '').replace(/'/g, "\\'");
-        const safeRole = String(job.role || '').replace(/'/g, "\\'");
-        const safeLoc = String(job.location || '').replace(/'/g, "\\'");
-        const tags = [];
-        if (job.under) tags.push('Fuoriquota Under');
-        if (job.housing) tags.push('Vitto e alloggio');
-        if (job.svincolato) tags.push('Svincolato');
-        if (job.ai) tags.push('Selezione IA');
-        const tagHtml = tags.map(function (t) { return '<span>' + t + '</span>'; }).join('');
-        const cta = window.isSpectatorRole && window.isSpectatorRole(window.getActiveSiteRole())
-          ? 'Solo lettura'
-          : ((window.EliseeDsHub && window.EliseeDsHub.isDs && window.EliseeDsHub.isDs()) ? 'Riservato ai calciatori' : 'Candidati');
-        return `
-        <article class="es-card">
-          <div>
-            <p class="es-card__role">${job.title || job.role}</p>
-            <p class="es-card__meta">${job.category || ''} · ${job.location || ''}${job._geoLabel ? ' · ' + job._geoLabel : ''}</p>
-            ${tagHtml ? '<div class="es-card__tags">' + tagHtml + '</div>' : ''}
-          </div>
-          <div class="es-card__club">
-            <strong>${job.club || ''}</strong>
-            <span>${job.matchScore || ''}</span>
-            <div class="es-card__actions">
-              <button type="button" class="btn btn-outline-pill pf-job-cta" onclick="openCandidateModal('${safeTitle}')">${cta}</button>
-              <button type="button" class="btn btn-outline-pill pf-job-cta" onclick="if(window.openSchedeTecniche)window.openSchedeTecniche({id:'${jid}',title:'${safeTitle}',club:'${safeClub}',role:'${safeRole}',location:'${safeLoc}'})">Schede tecniche</button>
-            </div>
-          </div>
-        </article>
-      `;
-      }).join('');
+    var emptyHtml = ''
+      + '<div class="es-empty" id="es-empty">'
+      + '<h3>Nessun altro annuncio in questa zona</h3>'
+      + '<p>Amplia il raggio di ricerca a Regione o Italia per vedere più opportunità.</p>'
+      + '<button type="button" id="es-empty-widen">Amplia il raggio</button>'
+      + '</div>';
+
+    try {
+      if (filtered.length === 0) {
+        jobsContainer.innerHTML = emptyHtml;
+      } else {
+        var html = filtered.map(function (job) {
+          var jid = job.id || String(job.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+          var esc = function (s) { return String(s || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'"); };
+          var safeTitle = esc(job.title);
+          var tags = [];
+          if (job.under) tags.push('Fuoriquota Under');
+          if (job.housing) tags.push('Vitto e alloggio');
+          if (job.svincolato) tags.push('Svincolato');
+          var tagHtml = tags.map(function (t) { return '<span>' + t + '</span>'; }).join('');
+          var cta = 'Candidati';
+          try {
+            if (window.isSpectatorRole && window.getActiveSiteRole && window.isSpectatorRole(window.getActiveSiteRole())) cta = 'Solo lettura';
+            else if (window.EliseeDsHub && window.EliseeDsHub.isDs && window.EliseeDsHub.isDs()) cta = 'Riservato ai calciatori';
+          } catch (_) {}
+          return ''
+            + '<article class="es-card">'
+            + '<div>'
+            + '<p class="es-card__role">' + (job.title || job.role || '') + '</p>'
+            + '<p class="es-card__meta">' + (job.category || '') + ' · ' + (job.location || '') + (job._geoLabel ? ' · ' + job._geoLabel : '') + '</p>'
+            + (tagHtml ? '<div class="es-card__tags">' + tagHtml + '</div>' : '')
+            + '</div>'
+            + '<div class="es-card__club">'
+            + '<strong>' + (job.club || '') + '</strong>'
+            + '<span>' + (job.matchScore || '') + '</span>'
+            + '<div class="es-card__actions">'
+            + '<button type="button" class="btn btn-outline-pill pf-job-cta" onclick="openCandidateModal(\'' + safeTitle + '\')">' + cta + '</button>'
+            + '<button type="button" class="btn btn-outline-pill pf-job-cta" onclick="if(window.openSchedeTecniche)window.openSchedeTecniche({id:\'' + esc(jid) + '\',title:\'' + safeTitle + '\',club:\'' + esc(job.club) + '\',role:\'' + esc(job.role) + '\',location:\'' + esc(job.location) + '\'})">Schede tecniche</button>'
+            + '</div></div></article>';
+        }).join('');
+        jobsContainer.innerHTML = html;
+      }
+    } catch (err) {
+      console.error('filterAndRenderJobs', err);
+      if (!jobsContainer.querySelector('.es-card')) jobsContainer.innerHTML = emptyHtml;
     }
 
-    if (window.lucide) lucide.createIcons();
+    if (window.lucide) try { lucide.createIcons(); } catch (_) {}
   }
 
   window.widenBachecaSearch = function widenBachecaSearch() {
@@ -8754,8 +8754,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (el) el.addEventListener('change', filterAndRenderJobs);
   });
 
+  document.addEventListener('click', function (e) {
+    var btn = e.target && e.target.closest && e.target.closest('#es-empty-widen');
+    if (!btn) return;
+    e.preventDefault();
+    if (typeof window.widenBachecaSearch === 'function') window.widenBachecaSearch();
+  });
+
   if (typeof initComuniLocationDropdown === 'function') initComuniLocationDropdown();
-  filterAndRenderJobs();
+  try { filterAndRenderJobs(); } catch (e) { console.error(e); }
+  setTimeout(function () {
+    try { if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs(); } catch (_) {}
+  }, 50);
 
   // Deep-link da focus.html?focusCat=Serie+D (apre Portfolio/Network filtrati)
   (function applyFocusCategoryFromQuery() {
