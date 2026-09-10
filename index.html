@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260910_TRUST1';
+      var BUILD_VERSION = '20260910_BOARD1';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -44,10 +44,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260910_PALETTE1">
+  <link rel="stylesheet" href="style.css?v=20260910_BOARD1">
   <link rel="stylesheet" href="player-card.css?v=20260907_COMUNI4">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
+  <link rel="stylesheet" href="bacheca-board.css?v=20260910_BOARD1">
   <script src="comuni-italiani.js?v=20260907_COMUNI4" defer></script>
   
   <style id="forced-brand-font-override">
@@ -2727,9 +2728,9 @@
                 <h1 class="pf-title" data-i18n="bacheca.title">Bacheca reclutamento</h1>
                 <p class="pf-lead">Provini, ingaggi e ruoli tecnici per il calcio dilettantistico e giovanile italiano.</p>
               </div>
-              <div class="pf-header-actions">
-                <button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-bacheca-pubblica" data-bacheca-action="pubblica" title="Pubblica una candidatura">+ Pubblica candidatura</button>
-                <button type="button" class="btn btn-outline-pill" id="btn-bacheca-crea-profilo" data-bacheca-action="crea-profilo" title="Crea il tuo profilo">Crea profilo</button>
+              <div class="pf-header-actions es-board__actions">
+                <button type="button" class="es-btn es-btn--secondary" id="btn-bacheca-pubblica" data-bacheca-action="pubblica" title="Pubblica una candidatura">Pubblica candidatura</button>
+                <button type="button" class="es-btn es-btn--primary" id="btn-bacheca-crea-profilo" data-bacheca-action="crea-profilo" title="Crea il tuo profilo">Crea profilo</button>
               </div>
             </header>
 
@@ -2874,13 +2875,6 @@
                     <h3 class="pf-aside-title">Community score</h3>
                     <p class="pf-aside-text">Classifica formazione e cultura calcistica (quiz piattaforma).</p>
                     <div id="leaderboard-rows-bacheca" class="pf-aside-list pf-aside-list-compact"></div>
-                  </div>
-                  <div class="pf-aside-card pf-aside-cta">
-                    <h3 class="pf-aside-title">Cerca persone e squadre</h3>
-                    <p class="pf-aside-text">Calciatori, staff, scout e società nella tua zona.</p>
-                    <button type="button" class="btn btn-outline-pill pf-mini pf-btn-solid" style="width: 100%;" onclick="switchBachecaTab('persone')">
-                      <i data-lucide="users" style="width:14px;height:14px;"></i> Apri Persone &amp; squadre
-                    </button>
                   </div>
                 </aside>
               </div>
@@ -5633,7 +5627,7 @@
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260910_BACKFIX1"></script>
+  <script src="app.js?v=20260910_BOARD1"></script>
   <script src="player-profile.js?v=20260905_OBSFIX1"></script>
   <script src="public-rating-system.js?v=20260904_SEASONDROP1"></script>
   <script src="dash-real.js?v=20260904_SEASONDROP1"></script>

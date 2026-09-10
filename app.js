@@ -8680,37 +8680,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (filtered.length === 0) {
       jobsContainer.innerHTML = `
-        <div class="pf-job-card" style="grid-template-columns:1fr; text-align:center; padding:2.5rem 1.5rem;">
-          <div>
-            <h4 style="margin-bottom:0.5rem;">Nessun annuncio con questi filtri</h4>
-            <p class="pf-job-desc" style="max-width:none;">Modifica ruolo, categoria o zona per ampliare i risultati.</p>
-          </div>
+        <div class="es-empty">
+          <h3>Nessun altro annuncio in questa zona</h3>
+          <p>Amplia il raggio di ricerca a Regione o Italia per vedere più opportunità.</p>
+          <button type="button" id="es-empty-widen">Amplia il raggio</button>
         </div>
       `;
+      var widen = document.getElementById('es-empty-widen');
+      if (widen) widen.addEventListener('click', function () {
+        if (typeof window.widenBachecaSearch === 'function') window.widenBachecaSearch();
+      });
     } else {
       jobsContainer.innerHTML = filtered.map(job => {
         const jid = job.id || String(job.title || '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
         const safeTitle = String(job.title || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        const safeClub = String(job.club || '').replace(/'/g, "\\'");
+        const safeRole = String(job.role || '').replace(/'/g, "\\'");
+        const safeLoc = String(job.location || '').replace(/'/g, "\\'");
+        const tags = [];
+        if (job.under) tags.push('Fuoriquota Under');
+        if (job.housing) tags.push('Vitto e alloggio');
+        if (job.svincolato) tags.push('Svincolato');
+        if (job.ai) tags.push('Selezione IA');
+        const tagHtml = tags.map(function (t) { return '<span>' + t + '</span>'; }).join('');
+        const cta = window.isSpectatorRole && window.isSpectatorRole(window.getActiveSiteRole())
+          ? 'Solo lettura'
+          : ((window.EliseeDsHub && window.EliseeDsHub.isDs && window.EliseeDsHub.isDs()) ? 'Riservato ai calciatori' : 'Candidati');
         return `
-        <article class="pf-job-card">
+        <article class="es-card">
           <div>
-            <div class="pf-job-meta">
-              <span class="pf-job-role">${job.role}</span>
-              ${job.ai ? '<span class="pf-job-ai">Selezione IA</span>' : ''}
-              <span class="pf-job-score">${job.matchScore}</span>
-            </div>
-            ${job._geoLabel ? '<span class="es-pc-job-tier">' + job._geoLabel + '</span>' : ''}
-            <h4>${job.title}</h4>
-            <p class="pf-job-sub">${job.club} · ${job.location} · ${job.category}</p>
-            <p class="pf-job-desc">${job.description}</p>
-            ${job.offer ? '<p class="pf-job-offer"><strong>Cosa offriamo:</strong> ' + job.offer + '</p>' : ''}
-            ${job.req ? '<p class="pf-job-req"><strong>Cosa richiediamo:</strong> ' + job.req + '</p>' : ''}
+            <p class="es-card__role">${job.title || job.role}</p>
+            <p class="es-card__meta">${job.category || ''} · ${job.location || ''}${job._geoLabel ? ' · ' + job._geoLabel : ''}</p>
+            ${tagHtml ? '<div class="es-card__tags">' + tagHtml + '</div>' : ''}
           </div>
-          <div class="pf-job-actions">
-            <button type="button" class="btn btn-outline-pill pf-job-cta" onclick="openCandidateModal('${safeTitle}')">
-              ${window.isSpectatorRole && window.isSpectatorRole(window.getActiveSiteRole()) ? 'Solo lettura' : ((window.EliseeDsHub && window.EliseeDsHub.isDs && window.EliseeDsHub.isDs()) ? 'Riservato ai calciatori' : 'Candidati Ora')}
-            </button>
-            <button type="button" class="btn btn-outline-pill pf-job-cta" onclick="if(window.openSchedeTecniche)window.openSchedeTecniche({id:'${jid}',title:'${safeTitle}',club:'${String(job.club||'').replace(/'/g, "\\'")}',role:'${String(job.role||'').replace(/'/g, "\\'")}',location:'${String(job.location||'').replace(/'/g, "\\'")}'})">Schede tecniche</button>
+          <div class="es-card__club">
+            <strong>${job.club || ''}</strong>
+            <span>${job.matchScore || ''}</span>
+            <div class="es-card__actions">
+              <button type="button" class="btn btn-outline-pill pf-job-cta" onclick="openCandidateModal('${safeTitle}')">${cta}</button>
+              <button type="button" class="btn btn-outline-pill pf-job-cta" onclick="if(window.openSchedeTecniche)window.openSchedeTecniche({id:'${jid}',title:'${safeTitle}',club:'${safeClub}',role:'${safeRole}',location:'${safeLoc}'})">Schede tecniche</button>
+            </div>
           </div>
         </article>
       `;
@@ -8719,6 +8728,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (window.lucide) lucide.createIcons();
   }
+
+  window.widenBachecaSearch = function widenBachecaSearch() {
+    var seg = document.getElementById('bacheca-geo-segmented');
+    if (seg) {
+      seg.querySelectorAll('[data-geo]').forEach(function (x) { x.classList.remove('is-active'); });
+      var tutti = seg.querySelector('[data-geo="0"]');
+      if (tutti) tutti.classList.add('is-active');
+    }
+    if (window.EliseePlayerCard) window.EliseePlayerCard.geoFilter = 0;
+    var dd = document.getElementById('dropdown-location');
+    if (dd) {
+      dd.querySelectorAll('.dropdown-option').forEach(function (o) { o.classList.remove('selected'); });
+      var all = dd.querySelector('.dropdown-option[data-value="all"]');
+      if (all) {
+        all.classList.add('selected');
+        var span = document.getElementById('location-selected-text');
+        if (span) span.textContent = all.textContent.trim();
+      }
+    }
+    if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs();
+  };
 
   [filterUnder, filterHousing, filterSvincolato].forEach(el => {
     if (el) el.addEventListener('change', filterAndRenderJobs);

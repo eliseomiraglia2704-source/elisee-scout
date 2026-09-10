@@ -6731,8 +6731,9 @@ body.layout-portfolio .resume-section-title {
   max-height: 400px !important;
 }
 
-/* Pipeline Auto-Fix aside card */
-.pf-aside-card {
+/* Pipeline Auto-Fix aside card (solo admin, non Bacheca) */
+#admin-portal .pf-aside-card,
+#governance-panel-target .pf-aside-card {
   margin-top: 2.5rem !important;
   margin-bottom: 5rem !important;
 }
