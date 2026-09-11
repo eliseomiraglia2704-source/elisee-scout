@@ -1,0 +1,375 @@
+<!--
+  ELISEE SCOUT — macroarea "Stampa", versione LUXURY / EDITORIALE
+  Stesso contenuto e stessa logica funzionale (filtri, ricerca, media kit)
+  della versione precedente (area-stampa-comunicazione.html), ma con un
+  linguaggio visivo diverso:
+
+  - Tipografia: serif (Playfair Display, con fallback Georgia) per titolo
+    pagina e titoli articolo — l'UI di servizio (label, meta, bottoni)
+    resta in sans, per il classico accostamento editoriale serif/sans.
+  - Palette: un solo accento (oro/champagne), non cinque colori saturi —
+    le categorie si distinguono col testo, non con blocchi colorati pieni.
+  - Layout: lista editoriale a colonna singola con divisori sottili,
+    non una griglia di card — legge come una testata, non come una
+    dashboard.
+  - Zero emoji, zero pillole piene arrotondate: solo linee sottili,
+    maiuscoletto spaziato dove serve (uso editoriale legittimo, non un
+    "tell" da template qui).
+
+  Font: carica Playfair Display da Google Fonts nel tuo progetto reale, o
+  sostituisci con un serif editoriale che hai già in licenza — il fallback
+  Georgia è comunque dignitoso se preferisci non aggiungere un web font.
+-->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<title>Anteprima — Area Stampa &amp; Comunicazione (luxury)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --es-bg: #0a0c12;
+    --es-text: #f1eee6;
+    --es-text-muted: #99917f;
+    --es-text-faint: #6d6858;
+    --es-gold: #c9a961;
+    --es-gold-soft: rgba(201, 169, 97, 0.12);
+    --es-hairline: rgba(255, 255, 255, 0.09);
+    --es-hairline-gold: rgba(201, 169, 97, 0.28);
+    --es-font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+    --es-font-sans: -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--es-bg); color: var(--es-text); font-family: var(--es-font-sans); }
+
+  .es-press { padding: 88px 24px 120px; }
+  .es-press__container { max-width: 780px; margin: 0 auto; }
+
+  /* ---- Header ---- */
+  .es-press__header { text-align: center; margin: 0 auto 40px; }
+  .es-press__eyebrow {
+    color: var(--es-gold); font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
+    text-transform: uppercase; margin: 0 0 18px;
+  }
+  .es-press__header h1 {
+    font-family: var(--es-font-serif); font-size: 38px; font-weight: 600;
+    margin: 0 0 18px; letter-spacing: 0.01em; line-height: 1.2;
+  }
+  .es-press__header p {
+    font-size: 15px; color: var(--es-text-muted); line-height: 1.7; margin: 0 auto;
+    max-width: 480px; font-weight: 300;
+  }
+
+  /* ---- Toggle vista (testo + linea, non pillole) ---- */
+  .es-view-toggle {
+    display: flex; justify-content: center; gap: 36px; margin: 0 0 56px;
+    border-top: 1px solid var(--es-hairline); border-bottom: 1px solid var(--es-hairline);
+    padding: 18px 0;
+  }
+  .es-view-toggle button {
+    font-family: var(--es-font-sans); font-size: 13px; font-weight: 600; letter-spacing: 0.04em;
+    background: none; border: none; color: var(--es-text-faint); cursor: pointer; padding: 0 0 6px;
+    border-bottom: 1px solid transparent;
+  }
+  .es-view-toggle button.is-active { color: var(--es-gold); border-bottom-color: var(--es-gold); }
+
+  .es-view { display: none; }
+  .es-view.is-active { display: block; }
+
+  /* ---- Ricerca (riga sottile, non box) ---- */
+  .es-search {
+    display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--es-hairline);
+    padding: 0 0 14px; margin-bottom: 28px;
+  }
+  .es-search svg { flex-shrink: 0; opacity: 0.55; }
+  .es-search input {
+    flex: 1; background: transparent; border: none; color: var(--es-text);
+    font-size: 14px; font-family: var(--es-font-sans); font-weight: 300;
+  }
+  .es-search input:focus { outline: none; }
+  .es-search input::placeholder { color: var(--es-text-faint); }
+
+  /* ---- Filtri categoria: testo + puntino, non pillole ---- */
+  .es-cat-filters { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 0; margin-bottom: 56px; }
+  .es-cat-filters button {
+    font-family: var(--es-font-sans); font-size: 12px; font-weight: 500; letter-spacing: 0.03em;
+    padding: 4px 14px; border: none; background: transparent; color: var(--es-text-faint); cursor: pointer;
+    border-right: 1px solid var(--es-hairline);
+  }
+  .es-cat-filters button:last-child { border-right: none; }
+  .es-cat-filters button.is-active { color: var(--es-gold); }
+
+  /* ---- Lista editoriale (niente card colorate) ---- */
+  .es-articles { display: flex; flex-direction: column; }
+
+  .es-article { padding: 34px 0; border-bottom: 1px solid var(--es-hairline); }
+  .es-article:first-child { padding-top: 0; }
+
+  .es-article__meta {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .es-article__meta .es-cat-label { color: var(--es-gold); }
+  .es-article__meta .es-dot { color: var(--es-text-faint); }
+  .es-article__meta .es-date { color: var(--es-text-faint); letter-spacing: 0.02em; text-transform: none; font-weight: 400; }
+
+  .es-article h3 {
+    font-family: var(--es-font-serif); font-size: 23px; font-weight: 600; line-height: 1.32;
+    margin: 0 0 12px; letter-spacing: 0.002em;
+  }
+
+  .es-article p { font-size: 14px; color: var(--es-text-muted); line-height: 1.7; margin: 0 0 18px; font-weight: 300; }
+
+  .es-article__footer { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+  .es-article__source {
+    font-size: 12px; color: var(--es-text-faint); letter-spacing: 0.03em;
+  }
+  .es-article__internal-link {
+    font-size: 11px; color: var(--es-text-faint); border-left: 1px solid var(--es-hairline); padding-left: 10px; margin-left: 4px;
+  }
+  .es-article__link {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: var(--es-gold);
+    text-decoration: none; border-bottom: 1px solid transparent;
+  }
+  .es-article__link:hover { border-bottom-color: var(--es-gold); }
+
+  .es-empty { text-align: center; padding: 60px 0; }
+  .es-empty h3 { font-family: var(--es-font-serif); font-size: 19px; font-weight: 600; margin: 0 0 8px; }
+  .es-empty p { font-size: 13px; color: var(--es-text-muted); margin: 0; }
+  .es-empty { display: none; }
+  .es-empty.is-active { display: block; }
+
+  .es-copyright-note {
+    margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--es-hairline);
+    font-size: 12px; color: var(--es-text-faint); line-height: 1.7; font-style: italic;
+  }
+  .es-copyright-note strong { color: var(--es-text-muted); font-style: normal; }
+
+  /* ---- Media Kit ---- */
+  .es-mediakit { display: flex; flex-direction: column; gap: 44px; }
+  .es-mediakit__block h3 {
+    font-family: var(--es-font-serif); font-size: 19px; font-weight: 600; margin: 0 0 10px;
+  }
+  .es-mediakit__block > p { font-size: 14px; color: var(--es-text-muted); line-height: 1.7; margin: 0 0 20px; font-weight: 300; }
+
+  .es-mediakit__list { list-style: none; margin: 0; padding: 0; }
+  .es-mediakit__list li {
+    display: flex; justify-content: space-between; align-items: center; font-size: 14px;
+    padding: 16px 0; border-bottom: 1px solid var(--es-hairline); color: var(--es-text);
+  }
+  .es-mediakit__list a {
+    color: var(--es-gold); font-size: 12px; font-weight: 600; letter-spacing: 0.03em; text-decoration: none;
+  }
+
+  .es-mediakit__contact { font-size: 14px; line-height: 2; color: var(--es-text-muted); font-weight: 300; }
+  .es-mediakit__contact strong { color: var(--es-text); font-weight: 600; }
+  .es-mediakit__contact a { color: var(--es-gold); text-decoration: none; }
+
+  @media (max-width: 560px) {
+    .es-press__header h1 { font-size: 30px; }
+    .es-cat-filters { justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<section class="es-press">
+  <div class="es-press__container">
+
+    <div class="es-press__header">
+      <p class="es-press__eyebrow">Elisee Scout · Media Room</p>
+      <h1>Area Stampa &amp; Comunicazione</h1>
+      <p>Rassegna di attualità calcistica per utenti e desk ufficiale, con comunicati, media kit e contatti per le redazioni.</p>
+    </div>
+
+    <div class="es-view-toggle">
+      <button class="is-active" data-view="rassegna">Rassegna Stampa</button>
+      <button data-view="mediakit">Ufficio Stampa &amp; Media Kit</button>
+    </div>
+
+    <!-- ===== Vista: Rassegna Stampa ===== -->
+    <div class="es-view is-active" data-panel="rassegna">
+
+      <div class="es-search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="press-search" placeholder="Cerca per titolo, parola chiave o fonte" />
+      </div>
+
+      <div class="es-cat-filters" id="cat-filters">
+        <button class="is-active" data-cat="tutte">Tutte le notizie</button>
+        <button data-cat="mercato">Mercato</button>
+        <button data-cat="club">Club</button>
+        <button data-cat="giovanile">Settore giovanile</button>
+        <button data-cat="riforma">Riforma dello Sport</button>
+        <button data-cat="competizioni">Competizioni</button>
+      </div>
+
+      <div class="es-articles" id="articles-grid"><!-- generata da JS --></div>
+
+      <div class="es-empty" id="articles-empty">
+        <h3>Nessun articolo corrisponde alla ricerca</h3>
+        <p>Prova a rimuovere il filtro categoria o a usare una parola chiave diversa.</p>
+      </div>
+
+      <p class="es-copyright-note">
+        <strong>Nota sul copyright editoriale.</strong> La rassegna stampa aggrega estratti brevi a scopo informativo nel rispetto dei diritti editoriali, rimandando con link diretto alla fonte originale.
+      </p>
+
+    </div>
+
+    <!-- ===== Vista: Ufficio Stampa & Media Kit ===== -->
+    <div class="es-view" data-panel="mediakit">
+      <div class="es-mediakit">
+
+        <div class="es-mediakit__block">
+          <h3>Asset scaricabili</h3>
+          <p>Logo, palette colori e linee guida del brand per articoli, servizi e collaborazioni editoriali.</p>
+          <ul class="es-mediakit__list">
+            <li>Logo pack (SVG / PNG) <a href="#" data-asset="logo">Scarica →</a></li>
+            <li>Brand guidelines (PDF) <a href="#" data-asset="guidelines">Scarica →</a></li>
+            <li>Scheda piattaforma / fact sheet <a href="#" data-asset="factsheet">Scarica →</a></li>
+          </ul>
+        </div>
+
+        <div class="es-mediakit__block">
+          <h3>Contatti redazione</h3>
+          <p>Per richieste stampa, interviste o collaborazioni editoriali.</p>
+          <div class="es-mediakit__contact">
+            <strong>Ufficio Stampa Elisee Scout</strong><br />
+            <a href="mailto:elisee.scout@platform-calcio.it">elisee.scout@platform-calcio.it</a><br />
+            Foggia, Italia
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function () {
+  // Stessa fonte dati e stessa logica di filtro della versione precedente —
+  // sostituisci ARTICOLI_DATA con la tua fonte reale.
+  var ARTICOLI_DATA = [
+    {
+      categoria: "mercato", categoriaLabel: "Mercato",
+      titolo: "Serie D & Eccellenza: i fuoriquota più richiesti e le strategie di mercato",
+      estratto: "Riflettori puntati sui migliori prospetti under classe 2005, 2006 e 2007. I Direttori Sportivi monitorano costantemente il rendimento atletico e i report di scouting per i trasferimenti stagionali.",
+      fonte: "Sky Sport Calcio", data: "07 Set 2026",
+      schedaInterna: null,
+      url: "#"
+    },
+    {
+      categoria: "riforma", categoriaLabel: "Riforma dello Sport",
+      titolo: "Lavoro sportivo nei dilettanti: vademecum operativo su contratti, tutele e compensi",
+      estratto: "Pubblicate le circolari applicative per atleti, istruttori e collaboratori gestionali: tutte le disposizioni su premi di preparazione, svincoli e semplificazioni telematiche.",
+      fonte: "FIGC / LND Ufficiale", data: "06 Set 2026",
+      schedaInterna: null,
+      url: "#"
+    },
+    {
+      categoria: "giovanile", categoriaLabel: "Settore giovanile",
+      titolo: "Juniores e Under 17: la crescita dei vivai italiani e l'impatto dei dati GPS",
+      estratto: "L'analisi dei campionati giovanili evidenzia un incremento dell'intensità di gioco e un utilizzo capillare della match analysis per la prevenzione e la crescita tecnica dei talenti.",
+      fonte: "Notiziario del Calcio", data: "05 Set 2026",
+      schedaInterna: null,
+      url: "#"
+    },
+    {
+      categoria: "club", categoriaLabel: "Club",
+      titolo: "Modelli di gestione sostenibile: digitalizzazione e strutture nei campionati regionali",
+      estratto: "Focus sulle società virtuose che investono nell'innovazione e nella valorizzazione del territorio per garantire continuità sportiva ed equilibrio economico.",
+      fonte: "Calcio e Finanza", data: "04 Set 2026",
+      schedaInterna: null,
+      url: "#"
+    },
+    {
+      categoria: "competizioni", categoriaLabel: "Competizioni",
+      titolo: "Coppa Italia e campionati nazionali: regolamenti, date chiave e format promozioni",
+      estratto: "Definito il quadro della fase a eliminazione diretta e i criteri di accesso agli spareggi promozione tra le prime classificate dei massimi tornei dilettantistici.",
+      fonte: "La Gazzetta dello Sport", data: "03 Set 2026",
+      schedaInterna: null,
+      url: "#"
+    },
+    {
+      categoria: "mercato", categoriaLabel: "Mercato",
+      titolo: "Trattative e secret list: come gli scout professionisti scovano talenti nei dilettanti",
+      estratto: "Il passaggio dal calcio regionale ai campionati professionistici: interviste ai responsabili scouting sull'impiego di dossier digitali e video analitici.",
+      fonte: "TuttoCampo.it", data: "02 Set 2026",
+      schedaInterna: null,
+      url: "#"
+    }
+  ];
+
+  var state = { cat: "tutte", query: "" };
+  var grid = document.getElementById("articles-grid");
+  var empty = document.getElementById("articles-empty");
+
+  function articleHTML(a) {
+    var internalLink = a.schedaInterna
+      ? '<span class="es-article__internal-link">' + a.schedaInterna.tipo + " · " + a.schedaInterna.nome + "</span>"
+      : "";
+    return (
+      '<article class="es-article">' +
+        '<div class="es-article__meta">' +
+          '<span class="es-cat-label">' + a.categoriaLabel + "</span>" +
+          '<span class="es-dot">·</span>' +
+          '<span class="es-date">' + a.data + "</span>" +
+        "</div>" +
+        "<h3>" + a.titolo + "</h3>" +
+        "<p>" + a.estratto + "</p>" +
+        '<div class="es-article__footer">' +
+          '<span class="es-article__source">' + a.fonte + internalLink + "</span>" +
+          '<a class="es-article__link" href="' + a.url + '">Leggi tutto →</a>' +
+        "</div>" +
+      "</article>"
+    );
+  }
+
+  function render() {
+    var risultati = ARTICOLI_DATA.filter(function (a) {
+      var matchCat = state.cat === "tutte" || a.categoria === state.cat;
+      var matchQuery = !state.query || a.titolo.toLowerCase().indexOf(state.query) !== -1 || a.fonte.toLowerCase().indexOf(state.query) !== -1;
+      return matchCat && matchQuery;
+    });
+    grid.innerHTML = risultati.map(articleHTML).join("");
+    empty.classList.toggle("is-active", risultati.length === 0);
+  }
+
+  document.querySelectorAll("#cat-filters button").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll("#cat-filters button").forEach(function (b) { b.classList.remove("is-active"); });
+      btn.classList.add("is-active");
+      state.cat = btn.getAttribute("data-cat");
+      render();
+    });
+  });
+
+  document.getElementById("press-search").addEventListener("input", function (e) {
+    state.query = e.target.value.trim().toLowerCase();
+    render();
+  });
+
+  document.querySelectorAll(".es-view-toggle button").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll(".es-view-toggle button").forEach(function (b) { b.classList.remove("is-active"); });
+      btn.classList.add("is-active");
+      var target = btn.getAttribute("data-view");
+      document.querySelectorAll(".es-view").forEach(function (v) {
+        v.classList.toggle("is-active", v.getAttribute("data-panel") === target);
+      });
+    });
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>

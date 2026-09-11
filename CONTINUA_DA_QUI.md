@@ -4,7 +4,7 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
 Ultimo aggiornamento: **2026-09-11** (Stampa: versione Luxury / Editoriale)
-Ultimo fatto: **Stampa Luxury / Editoriale**: tipografia serif (Playfair Display con fallback Georgia), accento champagne/oro (`#c9a961`), niente pillole arrotondate né colori saturi a blocchi, lista editoriale a colonna singola con divisori sottili, ricerca e filtri minimali a linea sottile. Cache `STAMPALUX1`.
+Ultimo fatto: **Stampa Luxury / Editoriale**: tipografia serif (Playfair Display con fallback Georgia), accento champagne/oro (`#c9a961`), niente pillole arrotondate né colori saturi a blocchi, lista editoriale a colonna singola con divisori sottili, ricerca e filtri minimali a linea sottile. Creata anche anteprima standalone `area-stampa-comunicazione.html`. Cache `STAMPALUX1`.
 Feature precedente: **Fix login email password + Unexpected token JSON**. Cache `LOGINFIX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -138,6 +138,7 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 | Commit | Cosa |
 |---|---|
+| `926a888` | Stampa: file anteprima standalone area-stampa-comunicazione.html; cache `STAMPALUX1` |
 | `f409b8a` | Stampa: linguaggio visivo Luxury / Editoriale (Playfair Display, oro/champagne, lista singola, zero pillole/emoji); cache `STAMPALUX1` |
 | `3db0e26` | Fix login: esporta signToken in lib/auth-oauth.js, try/catch me.js, parser non-JSON app.js, fix refuso requisiti password; cache `LOGINFIX1` |
 | `0e462e0` | Stampa: rimosse emoji tab, fonti e nota copyright; cache `STAMPA2` |
