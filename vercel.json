@@ -46,6 +46,14 @@
     {
       "source": "/api/quiz-score/top",
       "destination": "/api/quiz-score?path=top"
+    },
+    {
+      "source": "/api/auth/login",
+      "destination": "/api/auth/me?path=login"
+    },
+    {
+      "source": "/api/auth/set-password",
+      "destination": "/api/auth/me?path=set-password"
     }
   ]
 }
