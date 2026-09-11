@@ -743,9 +743,11 @@
       }
       function setActiveNav(view) {
         try {
-          document.querySelectorAll('.nav-link').forEach(function (a) { a.classList.remove('active'); });
+          document.querySelectorAll('.nav-link, .es-m-tab-item').forEach(function (a) { a.classList.remove('active'); });
           var link = document.querySelector('.nav-link[data-view="' + view + '"]');
           if (link) link.classList.add('active');
+          var mTab = document.querySelector('.es-m-tab-item[data-view="' + view + '"]');
+          if (mTab) mTab.classList.add('active');
           if (view === 'account') {
             var acc = document.getElementById('btn-nav-accedi');
             if (acc) acc.classList.add('active');
@@ -967,26 +969,32 @@
               return true;
             }
             show('view-scopri');
+            setActiveNav('scopri');
             hash = '#scopri-portal';
             setTimeout(function () { try { if (window.EliseeScopri) window.EliseeScopri.render(); } catch (e) {} }, 40);
           } else if (view === 'messaggi') {
             show('view-messaggi');
+            setActiveNav('messaggi');
             hash = '#messaggi-portal';
             setTimeout(function () { try { if (window.EliseeB2B) window.EliseeB2B.renderInbox(); } catch (e) {} }, 40);
           } else if (view === 'mappa') {
             show('view-mappa');
+            setActiveNav('mappa');
             hash = '#mappa-portal';
             setTimeout(function () { try { if (window.EliseeClubMap) window.EliseeClubMap.refresh(); } catch (e) {} }, 80);
           } else if (view === 'seguo') {
             show('view-seguo');
+            setActiveNav('seguo');
             hash = '#seguo-portal';
             setTimeout(function () { try { if (window.EliseeChiSegui) window.EliseeChiSegui.render(); } catch (e) {} }, 40);
           } else if (view === 'formazione') {
             show('view-formazione');
+            setActiveNav('formazione');
             hash = '#formazione-portal';
             setTimeout(function () { try { if (window.EliseeFormazione) window.EliseeFormazione.render(); } catch (e) {} }, 40);
           } else if (view === 'tc') {
             show('view-tc-panel');
+            setActiveNav('tc');
             hash = '#tc-portal';
             setTimeout(function () { try { if (window.EliseeTC && window.EliseeTC.render) window.EliseeTC.render(); } catch (e) {} }, 40);
           } else if (view === 'mercato') {
@@ -5680,7 +5688,7 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="elisee-staff.js?v=20260911_STAFF1"></script>
-  <script src="app.js?v=20260911_STAMPABLU1"></script>
+  <script src="app.js?v=20260911_MAPACT1"></script>
   <script src="player-profile.js?v=20260905_OBSFIX1"></script>
   <script src="public-rating-system.js?v=20260904_SEASONDROP1"></script>
   <script src="dash-real.js?v=20260904_SEASONDROP1"></script>
@@ -5711,7 +5719,7 @@
   <script src="messaggi.js?v=20260820_MSG1"></script>
   <script src="mercato-hub.js?v=20260903_MA3"></script>
   <script src="schede-tecniche.js?v=20260820_ST3"></script>
-  <script src="mappa-club.js?v=20260908_ECCLAZIO4"></script>
+  <script src="mappa-club.js?v=20260911_MAPACT1"></script>
   <script src="chi-segui.js?v=20260827_CARD1"></script>
   <script src="card-atelier.js?v=20260904_ADMINTAB1"></script>
   <script src="ds-hub.js?v=20260827_DS1"></script>

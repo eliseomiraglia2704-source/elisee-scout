@@ -447,6 +447,13 @@
     },
     open: function () {
       if (typeof window.switchView === 'function') window.switchView('mappa', '#mappa-portal');
+      try {
+        document.querySelectorAll('.nav-link, .es-m-tab-item').forEach(function (l) { l.classList.remove('active'); });
+        var ml = document.querySelector('.nav-link[data-view="mappa"]');
+        if (ml) ml.classList.add('active');
+        var mt = document.querySelector('.es-m-tab-item[data-view="mappa"]');
+        if (mt) mt.classList.add('active');
+      } catch (_) {}
       var self = this;
       setTimeout(function () { self.refresh(); }, 80);
     },

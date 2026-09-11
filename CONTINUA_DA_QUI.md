@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-11** (commit `13cd399`) — Cambio email di contatto in areaeliseescout@gmail.com
-Ultimo fatto: **Email istituzionale & contatti**: sostituita l'email di contatto `elisee.scout@platform-calcio.it` con `areaeliseescout@gmail.com` in tutto il sito (Ufficio Stampa & Media Kit, footer di index.html, privacy policy, cookie policy, ai-gdpr-monitor, area-stampa-comunicazione) e abilitati i permessi di amministrazione per `areaeliseescout@gmail.com` in `elisee-staff.js`, `lib/auth-oauth.js` e `index.html`. Cache `EMAIL1`.
-Feature precedente: **Stampa: rimozione intestazione Contatti Redazione**: rimosso `<h3>Contatti redazione</h3>` e `<p>Per richieste stampa, interviste o collaborazioni editoriali.</p>`. Cache `STAMPACT1`.
+Ultimo aggiornamento: **2026-09-11** (commit `6f5bb65`) — Fix navbar attiva Mappa & deselezione tab precedente
+Ultimo fatto: **Navbar attiva Mappa**: risolto il problema per cui cliccando su "Mappa" rimaneva evidenziata in azzurro la voce precedente (Bacheca/Stampa): aggiunto `setActiveNav('mappa')` (e per le altre viste come Album/seguo) in `coreSwitchView` e `openClubMap()`, esteso `setActiveNav` alla pulizia e assegnazione sia dei `.nav-link` desktop che degli `.es-m-tab-item` mobile, e corretta la rimozione della classe active in `app.js`. Cache `MAPACT1`.
+Feature precedente: **Email istituzionale & contatti**: sostituita l'email di contatto `elisee.scout@platform-calcio.it` con `areaeliseescout@gmail.com` in tutto il sito e admin list. Cache `EMAIL1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

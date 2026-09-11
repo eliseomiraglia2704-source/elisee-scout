@@ -6905,7 +6905,7 @@ document.addEventListener('DOMContentLoaded', () => {
       hideAllPortals();
 
       try {
-        navLinks.forEach((link) => link.classList.remove('active'));
+        document.querySelectorAll('.nav-link, .es-m-tab-item').forEach((link) => link.classList.remove('active'));
       } catch (_) {}
 
       if (viewType) localStorage.setItem('elisee_view', viewType);
