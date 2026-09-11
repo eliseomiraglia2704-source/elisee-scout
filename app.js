@@ -9984,9 +9984,19 @@ window.EliseeAuth = {
       body: body ? JSON.stringify(body) : undefined,
       credentials: 'same-origin'
     }).then(function (r) {
-      return r.json().then(function (data) {
+      return r.text().then(function (text) {
+        let data = null;
+        try {
+          data = text ? JSON.parse(text) : {};
+        } catch (_) {
+          data = {
+            ok: false,
+            error: r.status === 401 ? 'credenziali_non_valide' : ('server_error_' + r.status),
+            message: 'Risposta del server non valida (' + r.status + ')'
+          };
+        }
         if (!r.ok || data.ok === false) {
-          const err = new Error(data.error || ('http_' + r.status));
+          const err = new Error(data.error || data.message || ('http_' + r.status));
           err.payload = data;
           throw err;
         }
@@ -10941,8 +10951,10 @@ window.validateAccessoPassword = function() {
   const updateReq = (id, ok) => {
     const el = document.getElementById(id);
     if (!el) return;
+    const base = el.getAttribute('data-label') || el.textContent.replace(/^[✓✗\s]+/, '');
+    if (!el.getAttribute('data-label')) el.setAttribute('data-label', base);
     el.style.color = ok ? '#22c55e' : '#ef4444';
-    el.textContent = (ok ? '✓' : '✗') + el.textContent.slice(1);
+    el.textContent = (ok ? '✓ ' : '✗ ') + base;
   };
   updateReq('req-len', hasLen);
   updateReq('req-upper', hasUpper);
@@ -10963,16 +10975,15 @@ window.validateAccessoPassword = function() {
 
   const allOk = hasLen && hasUpper && hasNum && hasSpecial;
   if (err) {
-    if (!allOk && val.length > 0) {
-      err.textContent = '⚠ La password non soddisfa tutti i requisiti';
-      err.style.display = 'block';
-      input.style.borderColor = '#f87171';
-    } else if (allOk) {
-      err.style.display = 'none';
-      input.style.borderColor = '#22c55e';
+    // In fase di accesso (login) la password è già registrata: non mostrare allarme rosso
+    err.style.display = 'none';
+    if (val.length > 0) {
+      input.style.borderColor = 'rgba(56,189,248,0.5)';
+    } else {
+      input.style.borderColor = 'rgba(56,189,248,0.3)';
     }
   }
-  return allOk;
+  return val.length > 0;
 };
 
 // =====================================================================

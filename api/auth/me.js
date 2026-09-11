@@ -65,49 +65,53 @@ function json(res, status, body) {
 }
 
 module.exports = async function handler(req, res) {
-  if (req.method === 'OPTIONS') {
-    json(res, 204, {});
-    return;
-  }
-  const path = pathOf(req);
-
-  if (req.method === 'POST' && path === 'login') {
-    const b = bodyOf(req);
-    const email = String(b.email || '').trim().toLowerCase();
-    const password = String(b.password || '');
-    const rec = STAFF[email];
-    if (!rec || !password) return json(res, 401, { ok: false, error: 'credenziali_non_valide' });
-    if (!hashesEqual(hashPassword(password), rec.passwordHash)) {
-      return json(res, 401, { ok: false, error: 'credenziali_non_valide' });
+  try {
+    if (req.method === 'OPTIONS') {
+      json(res, 204, {});
+      return;
     }
-    const user = publicUser(rec);
-    user.verifiedByAdmin = true;
-    user.skipDocVerify = true;
-    user.badgeVerificaStato = 'approved';
-    user.mustResetPassword = true;
-    user.staffRole = rec.staffRole;
-    return json(res, 200, { ok: true, token: signToken(rec), user: user, mustResetPassword: true });
-  }
+    const path = pathOf(req);
 
-  if (req.method === 'POST' && path === 'set-password') {
+    if (req.method === 'POST' && path === 'login') {
+      const b = bodyOf(req);
+      const email = String(b.email || '').trim().toLowerCase();
+      const password = String(b.password || '');
+      const rec = STAFF[email];
+      if (!rec || !password) return json(res, 401, { ok: false, error: 'credenziali_non_valide' });
+      if (!hashesEqual(hashPassword(password), rec.passwordHash)) {
+        return json(res, 401, { ok: false, error: 'credenziali_non_valide' });
+      }
+      const user = publicUser(rec);
+      user.verifiedByAdmin = true;
+      user.skipDocVerify = true;
+      user.badgeVerificaStato = 'approved';
+      user.mustResetPassword = true;
+      user.staffRole = rec.staffRole;
+      return json(res, 200, { ok: true, token: signToken(rec), user: user, mustResetPassword: true });
+    }
+
+    if (req.method === 'POST' && path === 'set-password') {
+      const h = String(req.headers.authorization || '');
+      const tok = h.toLowerCase().startsWith('bearer ') ? h.slice(7).trim() : '';
+      const session = verifyToken(tok);
+      if (!session) return json(res, 401, { ok: false, error: 'non_autenticato' });
+      const password = String(bodyOf(req).password || '');
+      if (password.length < 8) return json(res, 400, { ok: false, error: 'password_troppo_corta' });
+      session.mustResetPassword = false;
+      const user = publicUser(session);
+      user.mustResetPassword = false;
+      user.verifiedByAdmin = true;
+      user.skipDocVerify = true;
+      user.badgeVerificaStato = 'approved';
+      return json(res, 200, { ok: true, user: user, token: signToken(session) });
+    }
+
     const h = String(req.headers.authorization || '');
-    const tok = h.toLowerCase().startsWith('bearer ') ? h.slice(7).trim() : '';
-    const session = verifyToken(tok);
-    if (!session) return json(res, 401, { ok: false, error: 'non_autenticato' });
-    const password = String(bodyOf(req).password || '');
-    if (password.length < 8) return json(res, 400, { ok: false, error: 'password_troppo_corta' });
-    session.mustResetPassword = false;
-    const user = publicUser(session);
-    user.mustResetPassword = false;
-    user.verifiedByAdmin = true;
-    user.skipDocVerify = true;
-    user.badgeVerificaStato = 'approved';
-    return json(res, 200, { ok: true, user: user, token: signToken(session) });
+    const token = h.toLowerCase().startsWith('bearer ') ? h.slice(7).trim() : '';
+    const user = verifyToken(token);
+    if (!user) return json(res, 401, { ok: false, error: 'non_autenticato' });
+    return json(res, 200, { ok: true, user: publicUser(user) });
+  } catch (err) {
+    return json(res, 500, { ok: false, error: 'errore_server', message: (err && err.message) || 'Errore interno del server' });
   }
-
-  const h = String(req.headers.authorization || '');
-  const token = h.toLowerCase().startsWith('bearer ') ? h.slice(7).trim() : '';
-  const user = verifyToken(token);
-  if (!user) return json(res, 401, { ok: false, error: 'non_autenticato' });
-  return json(res, 200, { ok: true, user: publicUser(user) });
 };

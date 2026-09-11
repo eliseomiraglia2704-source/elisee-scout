@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-11** (Stampa: via emoji tab/fonti/copyright)
-Ultimo fatto: **Stampa**: rimosse emoji da tab Rassegna/Media Kit, icone fonte articoli e nota copyright. Cache `STAMPA2`.
-Feature precedente: **Stampa no schede fittizie**. Cache `STAMPA1`.
+Ultimo aggiornamento: **2026-09-11** (Fix login email password + Unexpected token JSON)
+Ultimo fatto: **Fix login**: esportato `signToken` in `lib/auth-oauth.js` (risolto crash 500 Vercel), aggiunto try/catch in `api/auth/me.js`, parser sicuro non-JSON in `EliseeAuth.api`, corretto refuso caratteri requisiti password e rimosso allarme bloccante durante login. Cache `LOGINFIX1`.
+Feature precedente: **Stampa**: rimosse emoji da tab Rassegna/Media Kit, icone fonte articoli e nota copyright. Cache `STAMPA2`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -138,7 +138,8 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Stampa: rimosse emoji tab, fonti e nota copyright; cache `STAMPA2` |
+| `426d441` | Fix login: esporta signToken in lib/auth-oauth.js, try/catch me.js, parser non-JSON app.js, fix refuso requisiti password; cache `LOGINFIX1` |
+| `0e462e0` | Stampa: rimosse emoji tab, fonti e nota copyright; cache `STAMPA2` |
 | `f5d994f` | Stampa: no schede fittizie, empty state, scudo cookie vs footer; cache `STAMPA1` |
 | `0b97188` | Login Privacy Officer + skip KYC + banner reimposta password; cache `STAFF2` |
 | `56ffbea` | Staff: manueltucci2002@gmail.com Responsabile Privacy; cache `STAFF1` |
