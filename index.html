@@ -356,7 +356,7 @@
   <link rel="stylesheet" href="eq-dash.css?v=20260827_LUX1">
   <link rel="stylesheet" href="sg-dash.css?v=20260827_LUX1">
   <link rel="stylesheet" href="bt-dash.css?v=20260827_LUX1">
-  <link rel="stylesheet" href="scopri-profili.css?v=20260827_CARDORDER1">
+  <link rel="stylesheet" href="scopri-profili.css?v=20260911_ALBUM1">
   <link rel="stylesheet" href="messaggi.css?v=20260820_DARK1">
   <link rel="stylesheet" href="mercato-hub.css?v=20260830_ECCB1">
   <link rel="stylesheet" href="schede-tecniche.css?v=20260820_ST3">
@@ -4184,19 +4184,33 @@
     </div>
 
     <div id="view-seguo" style="display:none;">
-      <section id="seguo-portal" class="es-sc es-cs">
-        <h1 class="es-sc-title" id="es-cs-title">Album</h1>
-        <div class="es-sc-chips" id="es-cs-chips" role="tablist" aria-label="Tipo seguito">
-          <button type="button" class="es-sc-chip is-on" data-kind="ente">ENTE</button>
-          <button type="button" class="es-sc-chip" data-kind="club">Club</button>
-          <button type="button" class="es-sc-chip" data-kind="player">Player</button>
-          <button type="button" class="es-sc-chip" data-kind="staff">Staff</button>
+      <section id="seguo-portal" class="es-album">
+        <div class="es-album__container">
+
+          <div class="es-album__header">
+            <h1 id="es-cs-title">Album</h1>
+            <p id="es-cs-subtitle">Chi hai in rete — enti, club, giocatori e staff che segui o hai salvato su Elisee Scout.</p>
+          </div>
+
+          <nav class="es-tabs" id="es-cs-chips" role="tablist" aria-label="Tipo seguito">
+            <button type="button" class="is-active" data-cat="ente" data-kind="ente">Ente</button>
+            <button type="button" data-cat="club" data-kind="club">Club</button>
+            <button type="button" data-cat="player" data-kind="player">Player</button>
+            <button type="button" data-cat="staff" data-kind="staff">Staff</button>
+          </nav>
+
+          <div class="es-profiles" id="profiles-grid"></div>
+
+          <div class="es-empty is-active" id="profiles-empty">
+            <h3 id="es-cs-empty-title">Nessun profilo in questa categoria dell'Album</h3>
+            <p id="es-cs-empty-sub">Non hai ancora salvato nessun profilo qui. Esplora la Bacheca o la Mappa per trovare club, giocatori e staff da seguire.</p>
+            <div class="es-empty__actions">
+              <a class="es-btn--primary" href="#bacheca-annunci" id="es-empty-bacheca-btn">Vai alla Bacheca</a>
+              <a class="es-btn--secondary" href="#mappa-portal" id="es-empty-mappa-btn">Apri la Mappa</a>
+            </div>
+          </div>
+
         </div>
-        <div class="es-cs-empty" id="es-cs-empty">
-          <h2 id="es-cs-empty-title">Nessun profilo</h2>
-          <p id="es-cs-empty-sub">Nessuna Card nel tuo Album.</p>
-        </div>
-        <div id="es-cs-list" class="es-sc-list" hidden></div>
       </section>
     </div>
 
@@ -5766,7 +5780,7 @@
   <script src="mercato-hub.js?v=20260903_MA3"></script>
   <script src="schede-tecniche.js?v=20260820_ST3"></script>
   <script src="mappa-club.js?v=20260911_MAPREG1"></script>
-  <script src="chi-segui.js?v=20260827_CARD1"></script>
+  <script src="chi-segui.js?v=20260911_ALBUM1"></script>
   <script src="card-atelier.js?v=20260904_ADMINTAB1"></script>
   <script src="ds-hub.js?v=20260827_DS1"></script>
   <script src="verifica-account.js?v=20260911_STAFF2"></script>

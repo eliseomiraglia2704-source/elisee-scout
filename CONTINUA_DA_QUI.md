@@ -3,15 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-11** (commit `fcb9cb7`) — Mappa: 6 fix completi (email, footer Macroaree 1:1, CTA geolocalizzazione, classifica regioni, zoom scuro, legenda & HQ Foggia)
-Ultimo fatto: **Mappa & Footer Upgrade Totale (6 punti)**: 
-1. Unificata email `areaeliseescout@gmail.com` ovunque (Chi siamo, footer, contatti).
-2. Footer "Macroaree" allineato 1:1 con la navbar superiore (Home, Chi siamo, Bacheca, Stampa, Mappa, Album, Ambassador, Minigiochi) e introdotta colonna ordinata "Funzionalità".
-3. CTA "Sei un Club? Imposta la geolocalizzazione" trasformata in vero pulsante moderno con icona pin, gradiente e hover morbido.
-4. Rimosso il vuoto nero sotto la mappa e introdotta la sezione «Regioni con più Club & Cluster Attivi» con schede/chip interattive (click = flyto della mappa sulla regione).
-5. Controlli di zoom (+/-) Leaflet completamente ridisegnati in tema dark/ciano (#0b1220).
-6. Legenda visiva interattiva (Cluster, Club singolo, Sede HQ) + Sede Centrale Elisee Scout (Foggia) con marker distintivo dorato HQ e tooltip con nome club su ogni marker singolo. Cache `MAPREG1`.
-Feature precedente: **Navbar attiva Mappa**: risolto il problema per cui cliccando su "Mappa" rimaneva evidenziata in azzurro la voce precedente. Cache `MAPACT1`.
+Ultimo aggiornamento: **2026-09-11** (commit `bb07b8d`) — Album / Chi hai in rete: tab a sottolineatura blu (#3b7dff), titolo separato, empty state con CTA ("Vai alla Bacheca", "Apri la Mappa") e struttura card profilo pronta
+Ultimo fatto: **Album / Chi hai in rete Upgrade Totale (4 punti)**:
+1. **Tab a sottolineatura**: Sostituito il selettore "pillola piena" (switch stile app) con tab testuali minimal ed eleganti con sottolineatura azzurra `#3b7dff`, identiche alla logica visiva di Bacheca e Stampa.
+2. **Titolo separato da sottotitolo**: `<h1>Album</h1>` ed esplicativo sotto `<p>Chi hai in rete — enti, club, giocatori e staff che segui o hai salvato su Elisee Scout.</p>`, come le altre macroaree.
+3. **Stato vuoto utile (non un vicolo cieco)**: Trasformato il vuoto nero in un pannello curato con spiegazione chiara e due bottoni CTA verso i posti migliori per trovare profili ("Vai alla Bacheca" `#bacheca-annunci` e "Apri la Mappa" `#mappa-portal`).
+4. **Struttura card profilo pronta**: Creata la griglia responsive a 3 colonne (`.es-profiles`) con card complete di avatar con iniziali, nome, metadati/ruolo e pulsante "Visualizza profilo". `PROFILI_DATA` mantenuto vuoto di default per visualizzare lo stato vuoto onesto finché non ci sono connessioni reali. Cache `ALBUM1`.
+Feature precedente: **Mappa & Footer Upgrade Totale (6 punti)**: unificata email, footer Macroaree 1:1, CTA geolocalizzazione, classifica regioni, zoom scuro, legenda & HQ Foggia. Commit `fcb9cb7`. Cache `MAPREG1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -62,6 +60,11 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 ## Stato attuale (fatto, non rifare)
 
+- **Album · Chi hai in rete (cache `ALBUM1`)**:
+  - Tab a sottolineatura azzurra `#3b7dff` al posto del selettore a pillola stile switch app, allineate a Bacheca e Stampa.
+  - Titolo `h1` ("Album") separato dal sottotitolo esplicativo ("Chi hai in rete — enti, club, giocatori e staff che segui o hai salvato su Elisee Scout.").
+  - Stato vuoto non cieco con pannello dashed, testo orientativo e 2 CTA ("Vai alla Bacheca", "Apri la Mappa").
+  - Struttura card profilo responsive a 3 colonne (`.es-profiles`, `.es-profile-card`) con avatar circolare, nome, metadati e pulsante "Visualizza profilo". `PROFILI_DATA` mantenuto vuoto come richiesto finché non ci sono connessioni reali. File: `index.html`, `scopri-profili.css`, `chi-segui.js`, `area-album-seguiti.html`.
 - **Privacy Officer STAFF2**: login email `manueltucci2002@gmail.com` via `POST /api/auth/login` (hash PBKDF2, no plaintext). Skip documenti KYC (`verifiedByAdmin`). Banner reimposta password dopo accesso. `/api/auth/set-password`.
 - **Staff STAFF1**: `eliseomiraglia2704@gmail.com` = Admin Executive; `manueltucci2002@gmail.com` = Responsabile Privacy (`elisee_privacy_auth`). File `elisee-staff.js`.
 - **Accedi GGL4**: lock scroll `es-modal-open`; GIS `renderButton` da env `GOOGLE_CLIENT_ID`; `/api/auth/google` verifica con `google-auth-library`.

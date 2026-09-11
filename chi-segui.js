@@ -71,47 +71,81 @@
     isMe: true,
     render: function () {
       var title = document.getElementById('es-cs-title');
-      var empty = document.getElementById('es-cs-empty');
+      var subtitle = document.getElementById('es-cs-subtitle');
+      var empty = document.getElementById('profiles-empty') || document.getElementById('es-cs-empty');
       var emptyT = document.getElementById('es-cs-empty-title');
       var emptyS = document.getElementById('es-cs-empty-sub');
-      var list = document.getElementById('es-cs-list');
+      var list = document.getElementById('profiles-grid') || document.getElementById('es-cs-list');
       var owner = this.ownerId || meKey();
       var mine = !this.ownerId || this.ownerId === meKey();
       this.isMe = mine;
+      
       if (title) title.textContent = mine ? 'Album' : ('Album di ' + (this.ownerName || 'questo profilo'));
-      document.querySelectorAll('#es-cs-chips .es-sc-chip').forEach(function (b) {
-        b.classList.toggle('is-on', b.getAttribute('data-kind') === window.EliseeChiSegui.kind);
+      if (subtitle) {
+        subtitle.textContent = mine
+          ? 'Chi hai in rete — enti, club, giocatori e staff che segui o hai salvato su Elisee Scout.'
+          : ('I collegamenti e i profili seguiti da ' + (this.ownerName || 'questo utente') + ' su Elisee Scout.');
+      }
+
+      var currentKind = this.kind || 'ente';
+      document.querySelectorAll('#es-cs-chips button, .es-tabs button').forEach(function (b) {
+        var k = b.getAttribute('data-cat') || b.getAttribute('data-kind');
+        var active = (k === currentKind);
+        b.classList.toggle('is-active', active);
+        b.classList.toggle('is-on', active);
       });
+
       var ids = mine ? ((followMap()[meKey()] || {}).ids || []) : publicFollowingIds(owner);
-      var rows = peopleFor(ids, this.kind);
+      var rows = peopleFor(ids, currentKind);
+
+      function initials(nome) {
+        return String(nome || '').trim().split(/\s+/).map(function (p) { return p.charAt(0); }).slice(0, 2).join('').toUpperCase() || 'ES';
+      }
+
+      function cardHTML(p) {
+        var ini = initials(p.name || p.nome);
+        var nome = esc(p.name || p.nome || 'Profilo');
+        var meta = esc(p.role || p.ruolo || p.cat || p.categoria || p.meta || (currentKind.toUpperCase()));
+        var pid = esc(p.id || '');
+        return (
+          '<div class="es-profile-card">' +
+            '<div class="es-profile-card__avatar">' + ini + '</div>' +
+            '<p class="es-profile-card__name">' + nome + '</p>' +
+            '<p class="es-profile-card__meta">' + meta + '</p>' +
+            '<button type="button" class="es-profile-card__btn" data-see-dossier="' + pid + '" data-see-name="' + nome + '">Visualizza profilo</button>' +
+          '</div>'
+        );
+      }
+
       if (!rows.length) {
-        if (empty) empty.hidden = false;
-        if (emptyT) emptyT.textContent = 'Nessun profilo';
+        if (empty) {
+          empty.hidden = false;
+          empty.classList.add('is-active');
+          empty.style.display = 'block';
+        }
+        if (emptyT) emptyT.textContent = "Nessun profilo in questa categoria dell'Album";
         if (emptyS) {
           emptyS.textContent = mine
-            ? 'Nessuna Card nel tuo Album.'
-            : 'Nessuna Card in questa categoria dell’Album.';
+            ? "Non hai ancora salvato nessun profilo qui. Esplora la Bacheca o la Mappa per trovare club, giocatori e staff da seguire."
+            : "Questo profilo non ha ancora collegamenti in questa categoria dell'Album.";
         }
-        if (list) { list.hidden = true; list.innerHTML = ''; }
+        if (list) {
+          list.hidden = true;
+          list.style.display = 'none';
+          list.innerHTML = '';
+        }
         return;
       }
-      if (empty) empty.hidden = true;
+
+      if (empty) {
+        empty.hidden = true;
+        empty.classList.remove('is-active');
+        empty.style.display = 'none';
+      }
       if (list) {
         list.hidden = false;
-        var card = window.EliseeScopri && window.EliseeScopri.cardHtml
-          ? function (p) { return window.EliseeScopri.cardHtml(p, rows.filter(function (x) { return x._iFollow; }).map(function (x) { return x.id; }).concat(p._iFollow ? [p.id] : [])); }
-          : null;
-        var followedMine = (followMap()[meKey()] || {}).ids || [];
-        if (window.EliseeScopri && typeof window.EliseeScopri.cardHtml === 'function') {
-          list.innerHTML = rows.map(function (p) {
-            return window.EliseeScopri.cardHtml(p, followedMine) +
-              '<button type="button" class="es-cs-their" data-see-follow="' + esc(p.id) + '" data-see-name="' + esc(p.name) + '">Vedi Album</button>';
-          }).join('');
-        } else {
-          list.innerHTML = rows.map(function (p) {
-            return '<article class="es-sc-card"><div class="es-sc-ava"></div><div><h3 class="es-sc-name">' + esc(p.name) + '</h3></div></article>';
-          }).join('');
-        }
+        list.style.display = 'grid';
+        list.innerHTML = rows.map(cardHTML).join('');
       }
     },
     setKind: function (k) {
@@ -148,8 +182,43 @@
       root.dataset.bound = '1';
       var self = this;
       root.addEventListener('click', function (e) {
-        var chip = e.target.closest('.es-sc-chip');
-        if (chip) { self.setKind(chip.getAttribute('data-kind')); return; }
+        var tabBtn = e.target.closest('#es-cs-chips button, .es-tabs button');
+        if (tabBtn) {
+          e.preventDefault();
+          var k = tabBtn.getAttribute('data-cat') || tabBtn.getAttribute('data-kind');
+          self.setKind(k);
+          return;
+        }
+
+        var bachecaCta = e.target.closest('#es-empty-bacheca-btn, .es-empty__actions .es-btn--primary');
+        if (bachecaCta) {
+          e.preventDefault();
+          if (typeof window.switchView === 'function') window.switchView('bacheca', '#bacheca-annunci');
+          else window.location.hash = '#bacheca-annunci';
+          return;
+        }
+
+        var mappaCta = e.target.closest('#es-empty-mappa-btn, .es-empty__actions .es-btn--secondary');
+        if (mappaCta) {
+          e.preventDefault();
+          if (typeof window.openClubMap === 'function') window.openClubMap();
+          else if (typeof window.switchView === 'function') window.switchView('mappa', '#mappa-portal');
+          else window.location.hash = '#mappa-portal';
+          return;
+        }
+
+        var seeDossier = e.target.closest('[data-see-dossier]');
+        if (seeDossier) {
+          var did = seeDossier.getAttribute('data-see-dossier');
+          var dname = seeDossier.getAttribute('data-see-name');
+          if (typeof window.openUserDossierModal === 'function') {
+            window.openUserDossierModal(did, dname);
+          } else if (typeof window.switchView === 'function') {
+            window.switchView('user-dossier', '#user-dossier-portal?id=' + encodeURIComponent(did));
+          }
+          return;
+        }
+
         var see = e.target.closest('[data-see-follow]');
         if (see) { self.openOf(see.getAttribute('data-see-follow'), see.getAttribute('data-see-name')); return; }
         var fol = e.target.closest('[data-follow]');

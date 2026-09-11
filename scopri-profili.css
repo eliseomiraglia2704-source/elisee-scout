@@ -1,12 +1,15 @@
 /* Scopri / Chi segui — tema homepage (dark + cyan) */
-#view-scopri,
-#view-seguo {
+#view-scopri {
   background: #050608;
   min-height: 100vh;
   color-scheme: dark;
 }
-#scopri-portal.es-sc,
-#seguo-portal.es-sc {
+#view-seguo {
+  background: #0b0e14;
+  min-height: 100vh;
+  color-scheme: dark;
+}
+#scopri-portal.es-sc {
   max-width: 960px;
   margin: 0 auto;
   padding: 7.25rem 1.5rem 3.5rem;
@@ -385,3 +388,196 @@ body.layout-portfolio .es-cs-empty h2 {
   .es-sc-card { flex-direction: column; align-items: flex-start; gap: 0.85rem; }
   .es-sc-actions { width: 100%; justify-content: flex-start; }
 }
+
+/* ==========================================================================
+   Album · Chi hai in rete (Stile identico a Bacheca / Stampa / Chi siamo)
+   ========================================================================== */
+.es-album {
+  padding: 56px 24px 96px;
+}
+.es-album__container {
+  max-width: 980px;
+  margin: 0 auto;
+}
+.es-album__header {
+  margin-bottom: 32px;
+}
+.es-album__header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+  color: var(--es-text, #eef1f6) !important;
+}
+.es-album__header p {
+  font-size: 15px;
+  color: var(--es-text-muted, #8a93a3);
+  margin: 0;
+  max-width: 560px;
+  line-height: 1.55;
+}
+
+/* ---- Tab: stesso linguaggio delle tab di Bacheca ---- */
+.es-tabs {
+  display: flex;
+  gap: 28px;
+  border-bottom: 1px solid var(--es-border, #1e2430);
+  margin-bottom: 32px;
+}
+.es-tabs button {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--es-text-muted, #8a93a3);
+  padding: 0 0 14px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.es-tabs button:hover {
+  color: #eef1f6;
+}
+.es-tabs button.is-active,
+.es-tabs button.is-on {
+  color: #3b7dff !important;
+  border-bottom-color: #3b7dff !important;
+}
+
+/* ---- Griglia profili ---- */
+.es-profiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.es-profile-card {
+  background: var(--es-panel, #10141d);
+  border: 1px solid var(--es-border, #1e2430);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.es-profile-card:hover {
+  border-color: rgba(59, 125, 255, 0.4);
+  transform: translateY(-2px);
+}
+.es-profile-card__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(59, 125, 255, 0.12);
+  color: #3b7dff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+}
+.es-profile-card__name {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  color: #eef1f6;
+}
+.es-profile-card__meta {
+  font-size: 12px;
+  color: #8a93a3;
+  margin: 0;
+}
+.es-profile-card__btn {
+  margin-top: 6px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 16px;
+  border-radius: 20px;
+  border: 1px solid #1e2430;
+  background: transparent;
+  color: #eef1f6;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.es-profile-card__btn:hover {
+  border-color: #3b7dff;
+  color: #3b7dff;
+  background: rgba(59, 125, 255, 0.08);
+}
+
+/* ---- Stato vuoto ---- */
+.es-empty {
+  display: none;
+  text-align: center;
+  background: #10141d;
+  border: 1px dashed #1e2430;
+  border-radius: 12px;
+  padding: 56px 24px;
+}
+.es-empty.is-active {
+  display: block;
+}
+.es-empty h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: #eef1f6;
+}
+.es-empty p {
+  font-size: 14px;
+  color: #8a93a3;
+  margin: 0 0 22px;
+  max-width: 380px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.55;
+}
+.es-empty__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.es-empty__actions a {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.es-empty__actions .es-btn--primary {
+  background: #3b7dff;
+  color: #ffffff !important;
+}
+.es-empty__actions .es-btn--primary:hover {
+  background: #2f69db;
+}
+.es-empty__actions .es-btn--secondary {
+  background: transparent;
+  color: #eef1f6 !important;
+  border: 1px solid #1e2430;
+}
+.es-empty__actions .es-btn--secondary:hover {
+  border-color: #3b7dff;
+  color: #3b7dff !important;
+}
+
+@media (max-width: 760px) {
+  .es-profiles { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .es-profiles { grid-template-columns: 1fr; }
+  .es-tabs { gap: 18px; overflow-x: auto; }
+  .es-album { padding: 40px 16px 64px; }
+}
+

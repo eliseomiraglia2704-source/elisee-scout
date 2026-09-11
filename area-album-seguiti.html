@@ -1,0 +1,192 @@
+<!--
+  ELISEE SCOUT — macroarea "Album · Chi hai in rete"
+  Stessi token (blu #3b7dff, non oro) e stesse convenzioni di Chi siamo /
+  Bacheca / Stampa.
+
+  Cosa cambia rispetto allo screenshot:
+  - Il selettore ENTE/Club/Player/Staff era una pillola piena stile
+    "switch da app" (identica al problema già corretto in Stampa) → ora
+    sono tab a sottolineatura, come in Bacheca.
+  - Il titolo "Album · Chi hai in rete" (un unico h1 con un punto in
+    mezzo) → separato in titolo + sottotitolo, come le altre macroaree.
+  - Lo stato vuoto era solo due righe di testo su sfondo nero enorme →
+    ora è un pannello con spiegazione + CTA verso Bacheca/Mappa, per non
+    lasciare l'utente davanti a un vicolo cieco.
+  - Aggiunta la struttura della card profilo, pronta per quando ci sono
+    dati reali (PROFILI_DATA sotto è vuoto di proposito, comportamento
+    identico a quello attuale finché non colleghi la fonte reale).
+-->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<title>Anteprima — Album · Chi hai in rete</title>
+<style>
+  :root {
+    --es-bg: #0b0e14;
+    --es-panel: #10141d;
+    --es-panel-2: #141925;
+    --es-border: #1e2430;
+    --es-text: #eef1f6;
+    --es-text-muted: #8a93a3;
+    --es-accent: #3b7dff;
+    --es-accent-soft: rgba(59, 125, 255, 0.12);
+    --es-font: -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--es-bg); }
+  body { color: var(--es-text); font-family: var(--es-font); }
+
+  .es-album { padding: 56px 24px 96px; }
+  .es-album__container { max-width: 980px; margin: 0 auto; }
+
+  .es-album__header { margin-bottom: 32px; }
+  .es-album__header h1 { font-size: 28px; font-weight: 700; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .es-album__header p { font-size: 15px; color: var(--es-text-muted); margin: 0; max-width: 560px; line-height: 1.55; }
+
+  /* ---- Tab: stesso linguaggio delle tab di Bacheca ---- */
+  .es-tabs { display: flex; gap: 28px; border-bottom: 1px solid var(--es-border); margin-bottom: 32px; }
+  .es-tabs button {
+    background: none; border: none; font-family: var(--es-font); font-size: 14px; font-weight: 600;
+    color: var(--es-text-muted); padding: 0 0 14px; cursor: pointer; border-bottom: 2px solid transparent;
+  }
+  .es-tabs button.is-active { color: var(--es-accent); border-bottom-color: var(--es-accent); }
+
+  /* ---- Griglia profili ---- */
+  .es-profiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  .es-profile-card {
+    background: var(--es-panel); border: 1px solid var(--es-border); border-radius: 12px;
+    padding: 20px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px;
+  }
+  .es-profile-card__avatar {
+    width: 56px; height: 56px; border-radius: 50%; background: var(--es-accent-soft);
+    color: var(--es-accent); display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 700;
+  }
+  .es-profile-card__name { font-size: 14px; font-weight: 600; margin: 0; }
+  .es-profile-card__meta { font-size: 12px; color: var(--es-text-muted); margin: 0; }
+  .es-profile-card__btn {
+    margin-top: 6px; font-family: var(--es-font); font-size: 12px; font-weight: 600;
+    padding: 7px 16px; border-radius: 20px; border: 1px solid var(--es-border); background: transparent;
+    color: var(--es-text); cursor: pointer;
+  }
+
+  /* ---- Stato vuoto: utile, non solo due righe su sfondo nero ---- */
+  .es-empty {
+    display: none; text-align: center; background: var(--es-panel); border: 1px dashed var(--es-border);
+    border-radius: 12px; padding: 56px 24px;
+  }
+  .es-empty.is-active { display: block; }
+  .es-empty h3 { font-size: 17px; font-weight: 700; margin: 0 0 8px; }
+  .es-empty p { font-size: 14px; color: var(--es-text-muted); margin: 0 0 22px; max-width: 380px; margin-left: auto; margin-right: auto; line-height: 1.55; }
+  .es-empty__actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .es-empty__actions a {
+    font-family: var(--es-font); font-size: 13px; font-weight: 600; text-decoration: none;
+    padding: 10px 18px; border-radius: 20px; cursor: pointer;
+  }
+  .es-empty__actions .es-btn--primary { background: var(--es-accent); color: #fff; }
+  .es-empty__actions .es-btn--secondary { background: transparent; color: var(--es-text); border: 1px solid var(--es-border); }
+
+  @media (max-width: 760px) {
+    .es-profiles { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .es-profiles { grid-template-columns: 1fr; }
+    .es-tabs { gap: 18px; overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+
+<section class="es-album">
+  <div class="es-album__container">
+
+    <div class="es-album__header">
+      <h1>Album</h1>
+      <p>Chi hai in rete — enti, club, giocatori e staff che segui o hai salvato su Elisee Scout.</p>
+    </div>
+
+    <nav class="es-tabs">
+      <button class="is-active" data-cat="ente">Ente</button>
+      <button data-cat="club">Club</button>
+      <button data-cat="player">Player</button>
+      <button data-cat="staff">Staff</button>
+    </nav>
+
+    <div class="es-profiles" id="profiles-grid"><!-- generata da JS --></div>
+
+    <div class="es-empty" id="profiles-empty">
+      <h3>Nessun profilo in questa categoria dell'Album</h3>
+      <p>Non hai ancora salvato nessun profilo qui. Esplora la Bacheca o la Mappa per trovare club, giocatori e staff da seguire.</p>
+      <div class="es-empty__actions">
+        <a class="es-btn--primary" href="#bacheca-annunci">Vai alla Bacheca</a>
+        <a class="es-btn--secondary" href="#mappa-portal">Apri la Mappa</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function () {
+  // Sostituisci con la fonte reale (profili salvati/seguiti dall'utente).
+  // Vuoto di proposito: replica il comportamento attuale finché non colleghi
+  // i dati reali dell'utente loggato.
+  var PROFILI_DATA = {
+    ente: [
+      // { nome: "FIGC Puglia", meta: "Ente regionale" }
+    ],
+    club: [
+      // { nome: "ASD Calcio Foggia", meta: "Serie D · Provincia di Foggia" }
+    ],
+    player: [
+      // { nome: "Marco B.", meta: "Centrocampista · Under 19" }
+    ],
+    staff: [
+      // { nome: "Giulia R.", meta: "Preparatore atletico" }
+    ]
+  };
+
+  var state = { cat: "ente" };
+  var grid = document.getElementById("profiles-grid");
+  var empty = document.getElementById("profiles-empty");
+
+  function initials(nome) {
+    return nome.split(" ").map(function (p) { return p[0]; }).slice(0, 2).join("").toUpperCase();
+  }
+
+  function cardHTML(p) {
+    return (
+      '<div class="es-profile-card">' +
+        '<div class="es-profile-card__avatar">' + initials(p.nome) + "</div>" +
+        '<p class="es-profile-card__name">' + p.nome + "</p>" +
+        '<p class="es-profile-card__meta">' + p.meta + "</p>" +
+        '<button class="es-profile-card__btn">Visualizza profilo</button>' +
+      "</div>"
+    );
+  }
+
+  function render() {
+    var lista = PROFILI_DATA[state.cat] || [];
+    grid.innerHTML = lista.map(cardHTML).join("");
+    empty.classList.toggle("is-active", lista.length === 0);
+  }
+
+  document.querySelectorAll(".es-tabs button").forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      document.querySelectorAll(".es-tabs button").forEach(function (b) { b.classList.remove("is-active"); });
+      btn.classList.add("is-active");
+      state.cat = btn.getAttribute("data-cat");
+      render();
+    });
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>
