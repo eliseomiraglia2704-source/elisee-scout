@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-11** (commit `a4f72bf`) — Stampa: palette blu coerente (#3b7dff), box ricerca allineato e fix tab Media Kit
-Ultimo fatto: **Stampa: palette blu coerente & fix router tab**: tolto l'oro, allineato all'accento blu (`#3b7dff`) e ai token del brand (`--es-bg: #0b0e14`, `--es-panel: #10141d`, `--es-border: #1e2430`, `--es-text-muted: #8a93a3`); barra di ricerca trasformata in box scuro con bordo sottile e glow blu al focus; risolto alla radice il bug del tab "Ufficio Stampa & Media Kit" che rimandava alla home (bloccata l'intercettazione in capture phase del router globale in `index.html` e `app.js`, aggiunti `preventDefault()` e `stopPropagation()`, bottoni espliciti `data-press-tab`). Aggiornata anche anteprima standalone `area-stampa-comunicazione.html`. Cache `STAMPABLU1`.
-Feature precedente: **Stampa Luxury / Editoriale**: tipografia serif (Playfair Display con fallback Georgia), lista editoriale a colonna singola con divisori sottili. Cache `STAMPALUX1`.
+Ultimo aggiornamento: **2026-09-11** — Stampa: rimozione Media Room dall'eyebrow e tab Ufficio Stampa (layout diretto Rassegna Stampa)
+Ultimo fatto: **Stampa: pulizia eyebrow & layout diretto**: rimosso `· MEDIA ROOM` dall'eyebrow superiore (ora solo `Elisee Scout`) e rimosso il tab toggle `Ufficio Stampa & Media Kit` (la sezione va ora direttamente alla Rassegna Stampa pulita con ricerca e filtri). Cache `STAMPACLEAN1`.
+Feature precedente: **Stampa: palette blu coerente & fix router tab**: tolto l'oro, allineato all'accento blu (`#3b7dff`), box ricerca e fix router. Cache `STAMPABLU1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
