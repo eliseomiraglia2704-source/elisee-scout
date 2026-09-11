@@ -369,7 +369,7 @@
           id: uid('MSG'),
           from: 'system',
           text:
-            'Chat con il referente privacy del Titolare (ELISEE SCOUT). Scriva pure la Sua richiesta. Le risposte dell’operatore compariranno qui. Per urgenze: elisee.scout@platform-calcio.it',
+            'Chat con il referente privacy del Titolare (ELISEE SCOUT). Scriva pure la Sua richiesta. Le risposte dell’operatore compariranno qui. Per urgenze: areaeliseescout@gmail.com',
           ts: nowISO()
         }
       ]

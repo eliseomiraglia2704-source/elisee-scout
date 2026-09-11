@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-11** (commit `c908c03`) — Stampa: rimozione titolo "Contatti redazione" e descrizione
-Ultimo fatto: **Stampa: rimozione intestazione Contatti Redazione**: rimosso `<h3>Contatti redazione</h3>` e `<p>Per richieste stampa, interviste o collaborazioni editoriali.</p>` evidenziati in giallo nella scheda Ufficio Stampa & Media Kit (ora il blocco contatti presenta direttamente la dicitura pulita "Ufficio Stampa Elisee Scout" con email e sede). Cache `STAMPACT1`.
-Feature precedente: **Stampa: sfondo #0b0e14 a tutta viewport & no eyebrow**: rimosso completamente l'eyebrow "Media Room" sopra il titolo e forzato sfondo senza cuciture. Cache `STAMPABG1`.
+Ultimo aggiornamento: **2026-09-11** (commit `13cd399`) — Cambio email di contatto in areaeliseescout@gmail.com
+Ultimo fatto: **Email istituzionale & contatti**: sostituita l'email di contatto `elisee.scout@platform-calcio.it` con `areaeliseescout@gmail.com` in tutto il sito (Ufficio Stampa & Media Kit, footer di index.html, privacy policy, cookie policy, ai-gdpr-monitor, area-stampa-comunicazione) e abilitati i permessi di amministrazione per `areaeliseescout@gmail.com` in `elisee-staff.js`, `lib/auth-oauth.js` e `index.html`. Cache `EMAIL1`.
+Feature precedente: **Stampa: rimozione intestazione Contatti Redazione**: rimosso `<h3>Contatti redazione</h3>` e `<p>Per richieste stampa, interviste o collaborazioni editoriali.</p>`. Cache `STAMPACT1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

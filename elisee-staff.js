@@ -5,6 +5,7 @@
 (function (root) {
   var ADMIN = [
     'eliseomiraglia2704@gmail.com',
+    'areaeliseescout@gmail.com',
     'elisee.scout@platform-calcio.it'
   ];
   var PRIVACY = [
