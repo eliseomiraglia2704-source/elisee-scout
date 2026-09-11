@@ -3,14 +3,16 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-11** (commit `b4b47b2`) — Nuovo Account Admin Executive a pieni poteri: abilitato `alessandromancini469@gmail.com` con password `Iemmello9`, bypass verifiche, accesso completo all'area Admin, Simulatore Ruoli Creatore e privilegi executive identici all'Admin principale. Cache `ADMIN2`.
-Ultimo fatto: **Nuovo Account Admin Executive (`alessandromancini469@gmail.com`)**:
-1. **Configurazione Ruolo & Privilegi (`elisee-staff.js`)**: Aggiunta l'email alla lista `ADMIN`. Riconosciuto con ruolo `'admin'` e displayRole `'Admin Executive'`. Abilitato automaticamente all'Admin Role Switcher (Simulatore Ruoli Creatore).
-2. **Autenticazione Cloud & Serverless (`api/auth/me.js`)**: Registrato l'account nello store `STAFF` con hash PBKDF2 sicuro per la password `Iemmello9`, `skipDocVerify: true`, `verifiedByAdmin: true`, `badgeVerificaStato: 'approved'`, `mustResetPassword: false`.
-3. **Guard Login Admin & Sessione (`index.html`)**: Abilitata l'email per l'impostazione di `elisee_admin_auth = 'true'` con accesso diretto al pannello e bypass login secondario.
-4. **Integrazione OAuth (`lib/auth-oauth.js`)**: Inserito il riconoscimento admin istantaneo per l'email anche via login Google/OAuth con nome Alessandro Mancini.
-5. **Autenticazione Locale (`data/auth/users.json`)**: Configurato l'utente con PBKDF2 anche per il server locale Python `elisee_up.py`.
-Feature precedente: **Ambassador / Adesione & Contratto (corpo pagina)**: anteprima contratto strutturata, sentence case, border-radius 9px, CTA primario blu, nota revisione umana, checkbox GDPR. Cache `AMBASSADOR1`.
+Ultimo aggiornamento: **2026-09-11** (commit `38676cd`) — Mappa: ristrutturazione visiva totale (via emoji, icone SVG lineari in blu, CTA 'Sei un club?' solido blu pulito, legenda a puntini geometrici sentence case, panoramica territoriale con titolo sentence case, 20 regioni coperte senza box, griglia a 5 colonne con hover blu e Leaflet dark override). Cache `MAPPA2`.
+Ultimo fatto: **Mappa Club / Ristrutturazione Completa (Design System Blu & Sans-serif)**:
+1. **Zero emoji & Icone SVG lineari**: Rimosse tutte le emoji da barra info (`🗺️`), CTA (`📍`), legenda (`🛡️`, numeri), popup club e sede centrale; sostituite con icone SVG lineari minimali blu `#3b7dff`.
+2. **CTA "Sei un club?" solido pulito**: Rimosso il fill con gradiente sgargiante/infantile; ora pulsante blu pieno `#3b7dff` con testo in sentence case e icona SVG pin mappa.
+3. **Legenda con puntini semplici**: Sostituite le vecchie pillole e icone con tre puntini geometrici puliti (pieno = cluster, contorno = club singolo, oro = sede centrale), con etichette in sentence case.
+4. **Panoramica Territoriale in sentence case**: Eyebrow `Panoramica territoriale` e H2 `Regioni con più club & cluster attivi` senza maiuscolo forzato né pillole sature.
+5. **Stat "20 Regioni coperte"**: Trasformata da box colorato pieno a numero grande 30px blu + etichetta sotto, senza contenitore.
+6. **Card Regioni & Griglia a 5 colonne**: Card con bordo sottile che si illumina in blu `#3b7dff` all'hover, nome regione bianco e conteggio pulito in blu con etichetta club in grigio, disposte su 5 colonne desktop responsive.
+7. **Override Leaflet & Tipografia sans-serif**: Applicato tema dark ai controlli di zoom (+/-) e marker cluster con palette blu, e tipografia sans-serif uniforme con Chi siamo/Bacheca/Album.
+Feature precedente: **Nuovo Account Admin Executive (`alessandromancini469@gmail.com`)**: credenziali abilitate a pieni poteri, bypass KYC, simulatore ruoli creatore, auth cloud & locale. Cache `ADMIN2`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

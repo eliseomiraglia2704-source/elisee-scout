@@ -365,7 +365,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
-  <link rel="stylesheet" href="mappa-club.css?v=20260911_MAPREG1">
+  <link rel="stylesheet" href="mappa-club.css?v=20260911_MAPPA2">
   <link rel="stylesheet" href="mobile-webapp.css?v=20260910_DOSSIER1">
   <style id="es-force-no-lines">
     @media screen and (max-width: 768px) {
@@ -4111,50 +4111,60 @@
     </div>
 
     <div id="view-mappa" style="display:none;">
-      <section id="mappa-portal" class="es-map">
-        <div class="es-map-banner">
-          <p><span class="es-map-banner__dot">🗺️</span> <span id="es-map-count">0</span> Club sono già visibili sulla mappa.</p>
-          <button type="button" id="es-map-geobtn" class="es-map-geobtn" onclick="if(window.openClubGeoModal){ window.openClubGeoModal(); } else if(window.EliseeClubMap && window.EliseeClubMap.openGeoModal){ window.EliseeClubMap.openGeoModal(); } else if(window.EliseeClubMap){ window.EliseeClubMap.setGeo(); } return false;">
-            <span class="es-map-geobtn__icon">📍</span>
-            <span>Sei un Club? Imposta la geolocalizzazione</span>
-          </button>
-          <a href="#mappa-portal" id="es-map-geolink" style="display:none;">Sei un Club? Imposta la geolocalizzazione</a>
-        </div>
-
-        <div class="es-map-legend">
-          <div class="es-map-legend__item">
-            <span class="es-map-legend__dot es-map-legend__dot--cluster">150</span>
-            <span><strong>Cluster Club</strong> (zoom per esplodere)</span>
-          </div>
-          <div class="es-map-legend__item">
-            <span class="es-map-legend__dot es-map-legend__dot--club">🛡️</span>
-            <span><strong>Club Singolo</strong> (stemma e scheda)</span>
-          </div>
-          <div class="es-map-legend__item">
-            <span class="es-map-legend__dot es-map-legend__dot--hq">HQ</span>
-            <span><strong>Sede Centrale (Foggia)</strong></span>
-          </div>
-        </div>
-
-        <div class="es-map-wrap">
-          <div id="es-map-canvas" role="application" aria-label="Mappa dei club"></div>
-          <button type="button" class="es-map-fs" title="Schermo intero" onclick="if(window.EliseeClubMap) window.EliseeClubMap.toggleFull();">⤢</button>
-        </div>
-
-        <div class="es-map-regions" id="es-map-regions">
-          <div class="es-map-regions__header">
-            <div>
-              <span class="es-map-regions__tag">PANORAMICA TERRITORIALE</span>
-              <h3 class="es-map-regions__title">Regioni con più Club &amp; Cluster Attivi</h3>
-              <p class="es-map-regions__subtitle">Clicca su una regione per inquadrare istantaneamente la mappa sulle sue società.</p>
+      <section id="mappa-portal" class="es-map-page es-map">
+        <div class="es-map-page__container">
+          <div class="es-map-topbar">
+            <div class="es-map-info">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                <path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+              </svg>
+              <span><strong id="es-map-count">0</strong> club sono già visibili sulla mappa.</span>
             </div>
-            <div class="es-map-regions__badge">
-              <span class="es-map-regions__badge-val" id="es-map-regions-count">20</span>
-              <span class="es-map-regions__badge-lbl">Regioni coperte</span>
+            <button type="button" id="es-map-geobtn" class="es-map-cta" onclick="if(window.openClubGeoModal){ window.openClubGeoModal(); } else if(window.EliseeClubMap && window.EliseeClubMap.openGeoModal){ window.EliseeClubMap.openGeoModal(); } else if(window.EliseeClubMap){ window.EliseeClubMap.setGeo(); } return false;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+              </svg>
+              Sei un club? Imposta la geolocalizzazione
+            </button>
+            <a href="#mappa-portal" id="es-map-geolink" style="display:none;">Sei un club? Imposta la geolocalizzazione</a>
+          </div>
+
+          <div class="es-map-legend">
+            <div class="es-map-legend__item">
+              <span class="es-legend-dot es-legend-dot--cluster"></span>
+              <span><strong>Cluster club</strong> — zoom per esplorare</span>
+            </div>
+            <div class="es-map-legend__item">
+              <span class="es-legend-dot es-legend-dot--club"></span>
+              <span><strong>Club singolo</strong> — stemma e scheda</span>
+            </div>
+            <div class="es-map-legend__item">
+              <span class="es-legend-dot es-legend-dot--hq"></span>
+              <span><strong>Sede centrale</strong> — Foggia</span>
             </div>
           </div>
-          <div class="es-map-regions__grid" id="es-map-regions-grid">
-            <!-- Popolato dinamicamente dai dati reali in mappa-club.js -->
+
+          <div class="es-map-frame es-map-wrap">
+            <div id="es-map-canvas" role="application" aria-label="Mappa dei club"></div>
+            <button type="button" class="es-map-fs" title="Schermo intero" onclick="if(window.EliseeClubMap) window.EliseeClubMap.toggleFull();">⤢</button>
+          </div>
+
+          <div class="es-territory es-map-regions" id="es-map-regions">
+            <div class="es-territory__head">
+              <div>
+                <p class="es-territory__eyebrow">Panoramica territoriale</p>
+                <h2>Regioni con più club &amp; cluster attivi</h2>
+                <p>Clicca su una regione per inquadrare istantaneamente la mappa sulle sue società.</p>
+              </div>
+              <div class="es-territory__stat">
+                <strong id="es-map-regions-count">20</strong>
+                <span>Regioni coperte</span>
+              </div>
+            </div>
+
+            <div class="es-region-grid es-map-regions__grid" id="es-map-regions-grid">
+              <!-- Popolato dinamicamente dai dati reali in mappa-club.js -->
+            </div>
           </div>
         </div>
       </section>
@@ -5798,7 +5808,7 @@
   <script src="messaggi.js?v=20260820_MSG1"></script>
   <script src="mercato-hub.js?v=20260903_MA3"></script>
   <script src="schede-tecniche.js?v=20260820_ST3"></script>
-  <script src="mappa-club.js?v=20260911_MAPREG1"></script>
+  <script src="mappa-club.js?v=20260911_MAPPA2"></script>
   <script src="chi-segui.js?v=20260911_ALBUM2"></script>
   <script src="card-atelier.js?v=20260904_ADMINTAB1"></script>
   <script src="ds-hub.js?v=20260827_DS1"></script>

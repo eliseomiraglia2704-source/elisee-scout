@@ -114,21 +114,21 @@
     var logoUrl = c.logo || (c.id ? 'immagini/squadre-loghi/' + c.id + '.png' : '');
     logoUrl = logoBust(logoUrl);
     var logoImg = logoUrl
-      ? '<img src="' + esc(logoUrl) + '" alt="" style="width:36px; height:36px; object-fit:contain; border-radius:8px; background:rgba(15,23,42,0.8); padding:3px; border:1px solid rgba(56,189,248,0.3);">'
+      ? '<img src="' + esc(logoUrl) + '" alt="" style="width:36px; height:36px; object-fit:contain; border-radius:8px; background:rgba(15,23,42,0.8); padding:3px; border:1px solid rgba(59,125,255,0.3);">'
       : '';
-    var stadia = c.stadium ? ('<div style="font-size:0.75rem; color:#94a3b8; margin-top:2px;">🏟️ ' + esc(c.stadium) + '</div>') : '';
+    var stadia = c.stadium ? ('<div style="font-size:0.75rem; color:#94a3b8; margin-top:2px;">Stadio: ' + esc(c.stadium) + '</div>') : '';
     return '<div class="es-map-pop">' +
       '<div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.4rem; justify-content:center;">' +
         logoImg +
         '<div style="text-align:left;">' +
           '<strong style="display:block; font-size:0.92rem; color:#0f172a; line-height:1.2;">' + esc(c.name) + '</strong>' +
-          '<span style="font-size:0.75rem; color:#0284c7; font-weight:700;">' + esc(c.league || c.group || 'Club Ufficiale') + '</span>' +
+          '<span style="font-size:0.75rem; color:#3b7dff; font-weight:700;">' + esc(c.league || c.group || 'Club Ufficiale') + '</span>' +
         '</div>' +
       '</div>' +
-      '<span>📍 ' + esc(c.city || 'Italia') + (c.region ? ' (' + esc(c.region) + ')' : '') + '</span>' +
+      '<span>' + esc(c.city || 'Italia') + (c.region ? ' (' + esc(c.region) + ')' : '') + '</span>' +
       stadia +
       '<div class="es-sc-actions" style="margin-top:0.6rem; display:flex; flex-wrap:wrap; gap:0.35rem; justify-content:center;">' +
-        '<button type="button" class="btn-map-select" data-map-team="' + esc(c.id) + '" style="background:#0284c7; color:#fff; border:none; border-radius:8px; padding:0.35rem 0.65rem; font-size:0.75rem; font-weight:700; cursor:pointer;">Vedi nel Selettore</button>' +
+        '<button type="button" class="btn-map-select" data-map-team="' + esc(c.id) + '" style="background:#3b7dff; color:#fff; border:none; border-radius:8px; padding:0.35rem 0.65rem; font-size:0.75rem; font-weight:700; cursor:pointer;">Vedi nel Selettore</button>' +
         '<button type="button" class="es-sc-follow" data-map-follow="' + esc(sid) + '" style="border-radius:8px; padding:0.35rem 0.6rem; font-size:0.75rem;">Segui</button>' +
         '<button type="button" class="es-sc-msg" data-map-msg="' + esc(sid) + '" data-map-name="' + esc(c.name) + '" style="border-radius:8px; padding:0.35rem 0.6rem; font-size:0.75rem;">Messaggia</button>' +
       '</div></div>';
@@ -372,10 +372,10 @@
     var html = '';
     keys.forEach(function (reg) {
       var num = counts[reg] || 0;
-      html += '<button type="button" class="es-map-reg-card" data-region="' + esc(reg) + '" onclick="if(window.EliseeClubMap) window.EliseeClubMap.flyToRegion(\'' + esc(reg) + '\');">' +
-        '<span class="es-map-reg-card__name">' + esc(reg) + '</span>' +
-        '<span class="es-map-reg-card__count">' + num + ' club</span>' +
-      '</button>';
+      html += '<div class="es-region-card es-map-reg-card" data-regione="' + esc(reg) + '" data-region="' + esc(reg) + '" role="button" tabindex="0" onclick="if(window.EliseeClubMap) window.EliseeClubMap.flyToRegion(\'' + esc(reg) + '\');">' +
+        '<p class="es-region-card__name es-map-reg-card__name">' + esc(reg) + '</p>' +
+        '<p class="es-region-card__count es-map-reg-card__count">' + num + '<span>club</span></p>' +
+      '</div>';
     });
     host.innerHTML = html;
   }
@@ -498,14 +498,14 @@
               '<img src="immagini/logo/logo-site.png" alt="Elisee Scout" style="width:36px; height:36px; object-fit:contain; border-radius:8px; background:#0b1220; padding:2px; border:1.5px solid #f59e0b;">' +
               '<div style="text-align:left;">' +
                 '<strong style="display:block; font-size:0.92rem; color:#0f172a;">ELISEE SCOUT — Sede Centrale</strong>' +
-                '<span style="font-size:0.75rem; color:#d97706; font-weight:800;">Direzione &amp; Sviluppo Piattaforma</span>' +
+                '<span style="font-size:0.75rem; color:#c9a13b; font-weight:800;">Direzione &amp; Sviluppo Piattaforma</span>' +
               '</div>' +
             '</div>' +
-            '<span style="font-size:0.8rem; color:#475569;">📍 Foggia, Puglia (Italia)</span><br>' +
-            '<span style="font-size:0.75rem; color:#0284c7; font-weight:700;">✉️ areaeliseescout@gmail.com</span>' +
+            '<span style="font-size:0.8rem; color:#475569;">Foggia, Puglia (Italia)</span><br>' +
+            '<span style="font-size:0.75rem; color:#3b7dff; font-weight:700;">areaeliseescout@gmail.com</span>' +
           '</div>'
         );
-        self.hqLayer.bindTooltip('📍 Sede Centrale Elisee Scout (Foggia)', {
+        self.hqLayer.bindTooltip('Sede Centrale Elisee Scout (Foggia)', {
           direction: 'top',
           offset: [0, -22],
           className: 'es-map-tooltip'
@@ -515,13 +515,19 @@
         var geo = myClubGeo();
         if (geo && geo.lat) {
           var you = L.circleMarker([geo.lat, geo.lng], {
-            radius: 12, color: '#0d4f73', fillColor: '#38bdf8', fillOpacity: 0.95, weight: 3
-          }).bindPopup('<div style="text-align:center;"><strong>📍 ' + esc(geo.name || 'Il tuo Club') + '</strong><br><span style="font-size:0.8rem; color:#0284c7;">Sede geolocalizzata ufficialmente</span></div>');
+            radius: 12, color: '#1e2430', fillColor: '#3b7dff', fillOpacity: 0.95, weight: 3
+          }).bindPopup('<div style="text-align:center;"><strong>' + esc(geo.name || 'Il tuo club') + '</strong><br><span style="font-size:0.8rem; color:#3b7dff;">Sede geolocalizzata ufficialmente</span></div>');
           self.cluster.addLayer(you);
         }
 
         var nEl = document.getElementById('es-map-count');
-        if (nEl) nEl.textContent = String(rows.length);
+        if (nEl) {
+          try {
+            nEl.textContent = rows.length.toLocaleString('it-IT');
+          } catch (_) {
+            nEl.textContent = String(rows.length);
+          }
+        }
 
         // Calcola e renderizza classifica regionale
         var regionCounts = {};
@@ -543,7 +549,7 @@
           root.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
         if (window.showToast) {
-          window.showToast('📍 Mappa inquadrata su ' + regionName, 'info');
+          window.showToast('Mappa inquadrata su ' + regionName, 'info');
         }
       }
     },

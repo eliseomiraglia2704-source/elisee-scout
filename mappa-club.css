@@ -1,222 +1,581 @@
-/* Mappa club — tema homepage */
+/* ==========================================================================
+   ELISEE SCOUT — Macroarea Mappa
+   Stessa direzione delle altre macroaree ristrutturate: blu #3b7dff,
+   niente emoji, niente pillole piene sature, tipografia sans coerente
+   con Chi siamo / Bacheca / Album.
+   ========================================================================== */
+
+:root {
+  --es-bg: #0b0e14;
+  --es-panel: #10141d;
+  --es-panel-2: #141925;
+  --es-border: #1e2430;
+  --es-text: #eef1f6;
+  --es-text-muted: #8a93a3;
+  --es-accent: #3b7dff;
+  --es-accent-soft: rgba(59, 125, 255, 0.12);
+  --es-hq: #c9a13b;
+  --es-font: -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
 #view-mappa {
-  background: #050608;
+  background: var(--es-bg);
   min-height: auto;
   color-scheme: dark;
+  font-family: var(--es-font);
 }
+
+.es-map-page,
 .es-map {
-  max-width: 1160px;
-  margin: 0 auto;
-  padding: 5.5rem 1.25rem 3.5rem;
+  padding: 96px 24px 96px;
+  font-family: var(--es-font);
+  color: var(--es-text);
+  max-width: 100%;
+  margin: 0;
 }
+
+.es-map-page__container {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* ---- Barra info sopra la mappa ---- */
+.es-map-topbar,
 .es-map-banner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  margin-bottom: 16px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.es-map-info,
+.es-map-banner p {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-  background: rgba(12, 18, 32, 0.85);
-  border: 1px solid rgba(56, 189, 248, 0.22);
-  border-radius: 16px;
-  padding: 1rem 1.35rem;
-  margin-bottom: 0.85rem;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-}
-.es-map-banner p {
-  margin: 0;
-  background: rgba(56, 189, 248, 0.08);
-  border: 1px solid rgba(56, 189, 248, 0.18);
+  gap: 10px;
+  background: var(--es-panel);
+  border: 1px solid var(--es-border);
   border-radius: 10px;
-  padding: 0.65rem 1rem;
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: #7dd3fc;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+  padding: 16px 18px;
+  font-size: 14px;
+  margin: 0;
+  color: var(--es-text);
+  font-weight: 400;
+  line-height: 1.4;
 }
-.es-map-banner__dot {
-  font-size: 1.1rem;
+
+.es-map-info svg,
+.es-map-banner p svg {
+  color: var(--es-accent);
+  flex-shrink: 0;
 }
+
+.es-map-info strong,
+.es-map-banner p strong {
+  color: var(--es-accent);
+  font-weight: 700;
+}
+
+/* ---- CTA "Sei un club?" ---- */
+.es-map-cta,
 .es-map-geobtn {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  gap: 8px;
+  background: var(--es-accent) !important;
   color: #ffffff !important;
-  font-weight: 700;
-  font-size: 0.88rem;
-  padding: 0.7rem 1.3rem;
+  border: none !important;
   border-radius: 10px;
-  border: 1px solid rgba(56, 189, 248, 0.45);
-  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+  padding: 16px 20px;
+  font-family: var(--es-font);
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none !important;
-  font-family: inherit;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(59, 125, 255, 0.22);
+  transition: background 0.15s ease, transform 0.15s ease;
+  line-height: 1.2;
 }
+
+.es-map-cta:hover,
 .es-map-geobtn:hover {
-  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-  box-shadow: 0 6px 22px rgba(56, 189, 248, 0.45);
+  background: #2b6ce8 !important;
   transform: translateY(-1px);
   color: #ffffff !important;
 }
+
+.es-map-cta:active,
 .es-map-geobtn:active {
   transform: translateY(0);
 }
-.es-map-geobtn__icon {
-  font-size: 1.05rem;
-  line-height: 1;
+
+.es-map-cta svg,
+.es-map-geobtn svg {
+  flex-shrink: 0;
 }
 
-/* Legenda mappa visiva */
+/* ---- Legenda ---- */
 .es-map-legend {
   display: flex;
   align-items: center;
+  gap: 28px;
   flex-wrap: wrap;
-  gap: 1.25rem;
-  background: rgba(10, 15, 26, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  padding: 0.65rem 1.1rem;
-  margin-bottom: 0.85rem;
-  font-size: 0.82rem;
-  color: #94a3b8;
-}
-.es-map-legend__item {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.es-map-legend__item strong {
-  color: #e2e8f0;
-}
-.es-map-legend__dot {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  font-size: 0.72rem;
-  font-weight: 800;
-}
-.es-map-legend__dot--cluster {
-  background: #0284c7;
-  color: #ffffff;
-  border: 2px solid #38bdf8;
-}
-.es-map-legend__dot--club {
-  background: #0c1220;
-  border: 2px solid #38bdf8;
-  font-size: 0.82rem;
-}
-.es-map-legend__dot--hq {
-  background: #0b1220;
-  border: 2px solid #f59e0b;
-  font-size: 0.85rem;
+  background: var(--es-panel);
+  border: 1px solid var(--es-border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: var(--es-text-muted);
 }
 
+.es-map-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.es-map-legend__item strong {
+  color: var(--es-text);
+  font-weight: 600;
+}
+
+.es-legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.es-legend-dot--cluster {
+  background: var(--es-accent);
+}
+
+.es-legend-dot--club {
+  background: transparent;
+  border: 2px solid var(--es-accent);
+}
+
+.es-legend-dot--hq {
+  background: var(--es-hq);
+}
+
+/* ---- Contenitore Mappa ---- */
+.es-map-frame,
 .es-map-wrap {
   position: relative;
-  height: min(65vh, 600px);
-  min-height: 380px;
-  border-radius: 20px;
+  border: 1px solid var(--es-border);
+  border-radius: 12px;
   overflow: hidden;
-  border: 1px solid rgba(56, 189, 248, 0.22);
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+  height: 520px;
+  background: var(--es-panel-2);
+  margin-bottom: 48px;
+  box-shadow: none;
 }
+
 #es-map-canvas {
   width: 100%;
   height: 100%;
-  background: #0b1220;
+  background: var(--es-panel-2);
 }
-.es-map.is-full .es-map-wrap {
+
+.es-map.is-full .es-map-wrap,
+.es-map.is-full .es-map-frame {
   position: fixed;
   inset: 0;
   z-index: 80;
   height: 100%;
   min-height: 100%;
   border-radius: 0;
+  margin-bottom: 0;
 }
+
 .es-map-fs {
   position: absolute;
   right: 12px;
   bottom: 12px;
   z-index: 500;
-  width: 42px;
-  height: 42px;
-  border: 0;
-  border-radius: 50%;
-  background: rgba(12, 18, 32, 0.92);
-  color: #7dd3fc;
-  border: 1px solid rgba(56, 189, 248, 0.35);
-  box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--es-border);
+  border-radius: 8px;
+  background: var(--es-panel);
+  color: var(--es-text);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
 }
+
+.es-map-fs:hover {
+  background: var(--es-panel-2);
+  color: var(--es-accent);
+  border-color: var(--es-accent);
+}
+
+/* ==========================================================================
+   LEAFLET OVERRIDE (Zoom & Marker Cluster)
+   ========================================================================== */
+.leaflet-control-zoom {
+  border: 1px solid var(--es-border) !important;
+  border-radius: 10px !important;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+  background: var(--es-panel) !important;
+  margin-top: 14px !important;
+  margin-left: 14px !important;
+}
+
+.leaflet-control-zoom a {
+  background-color: var(--es-panel) !important;
+  color: var(--es-text) !important;
+  border: none !important;
+  border-bottom: 1px solid var(--es-border) !important;
+  font-size: 1.15rem !important;
+  line-height: 32px !important;
+  width: 34px !important;
+  height: 34px !important;
+  transition: background 0.15s ease, color 0.15s ease !important;
+  text-decoration: none !important;
+}
+
+.leaflet-control-zoom a:last-child {
+  border-bottom: none !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background-color: var(--es-panel-2) !important;
+  color: #ffffff !important;
+}
+
+.leaflet-control-zoom a.leaflet-disabled {
+  background-color: #070b14 !important;
+  color: #475569 !important;
+}
+
+.marker-cluster-small,
+.marker-cluster-medium,
+.marker-cluster-large {
+  background-color: rgba(59, 125, 255, 0.25) !important;
+  border-radius: 50%;
+}
+
+.marker-cluster-small div,
+.marker-cluster-medium div,
+.marker-cluster-large div {
+  background-color: var(--es-accent) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-family: var(--es-font) !important;
+  border-radius: 50%;
+}
+
+/* Custom Marker Pin & Cluster */
 .es-map-pin {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: #0c1220;
-  border: 2px solid #38bdf8;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  background: var(--es-panel);
+  border: 2px solid var(--es-accent);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
-  color: #7dd3fc;
+  color: var(--es-accent);
   font-size: 0.78rem;
 }
+
 .es-map-pin img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  background: #0c1220;
+  background: var(--es-panel);
 }
+
 .es-map-cluster {
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  background: #0284c7;
-  color: #fff;
+  background: var(--es-accent);
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
-  border: 3px solid #38bdf8;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  border: 3px solid rgba(59, 125, 255, 0.4);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  font-family: var(--es-font);
 }
+
+/* Marker Sede Centrale Foggia */
+.es-map-pin--hq {
+  border: 2.5px solid var(--es-hq) !important;
+  background: #0f172a !important;
+  box-shadow: 0 0 16px rgba(201, 161, 59, 0.45) !important;
+  animation: es-hq-pulse 2.5s infinite;
+}
+
+.es-map-hq-badge {
+  color: var(--es-hq);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+@keyframes es-hq-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(201, 161, 59, 0.6); }
+  70% { box-shadow: 0 0 0 10px rgba(201, 161, 59, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(201, 161, 59, 0); }
+}
+
+/* Tooltip Marker Personalizzati */
+.es-map-tooltip {
+  background: var(--es-panel) !important;
+  border: 1px solid var(--es-border) !important;
+  border-radius: 8px !important;
+  color: var(--es-text) !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  padding: 5px 9px !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
+  white-space: nowrap !important;
+  font-family: var(--es-font) !important;
+}
+
+.es-map-tooltip::before {
+  border-top-color: var(--es-border) !important;
+}
+
+/* Popups Leaflet */
+.leaflet-popup-content-wrapper {
+  background: #ffffff !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+}
+
 .es-map-pop {
   min-width: 180px;
   text-align: center;
+  font-family: var(--es-font);
 }
+
 .es-map-pop strong {
   display: block;
   color: #0b4f7a;
   margin-bottom: 0.2rem;
 }
-.es-map-pop span { color: #5a7390; font-size: 0.82rem; }
-.es-map-pop .es-sc-actions {
-  margin-top: 0.55rem;
-  flex-direction: row;
-  justify-content: center;
-}
-.leaflet-popup-content-wrapper { border-radius: 14px; }
-.marker-cluster-small, .marker-cluster-medium, .marker-cluster-large {
-  background: transparent !important;
-}
-.marker-cluster-small div, .marker-cluster-medium div, .marker-cluster-large div {
-  background: #0284c7 !important;
-  color: #fff !important;
-  font-weight: 800;
+
+.es-map-pop span {
+  color: #5a7390;
+  font-size: 0.82rem;
 }
 
-/* Modale Geolocalizzazione Club */
+.es-map-pop .es-sc-actions {
+  margin-top: 0.55rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  justify-content: center;
+}
+
+/* ---- Panoramica Territoriale ---- */
+.es-territory,
+.es-map-regions {
+  margin-top: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.es-territory__head,
+.es-map-regions__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--es-border);
+}
+
+.es-territory__eyebrow,
+.es-map-regions__tag {
+  color: var(--es-accent);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  margin: 0 0 8px;
+  display: block;
+  text-transform: none;
+}
+
+.es-territory__head h2,
+.es-map-regions__title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  letter-spacing: -0.005em;
+  color: var(--es-text);
+  line-height: 1.25;
+  text-transform: none !important;
+}
+
+.es-territory__head p,
+.es-map-regions__subtitle {
+  font-size: 13px;
+  color: var(--es-text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Stat "20 regioni coperte" — numero grande + etichetta sotto, senza contenitore colorato */
+.es-territory__stat,
+.es-map-regions__badge {
+  text-align: right;
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  min-width: auto;
+}
+
+.es-territory__stat strong,
+.es-map-regions__badge-val {
+  display: block;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--es-accent);
+  line-height: 1;
+}
+
+.es-territory__stat span,
+.es-map-regions__badge-lbl {
+  display: block;
+  font-size: 11px;
+  color: var(--es-text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* Griglia Regioni */
+.es-region-grid,
+.es-map-regions__grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+.es-region-card,
+.es-map-reg-card {
+  background: var(--es-panel);
+  border: 1px solid var(--es-border);
+  border-radius: 10px;
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+  display: block;
+  text-align: left;
+  box-shadow: none;
+  text-decoration: none;
+  color: inherit;
+  font-family: var(--es-font);
+}
+
+.es-region-card:hover,
+.es-map-reg-card:hover {
+  border-color: var(--es-accent);
+  background: var(--es-panel);
+  transform: none;
+  box-shadow: none;
+}
+
+.es-region-card__name,
+.es-map-reg-card__name {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  color: var(--es-text);
+  display: block;
+}
+
+.es-region-card:hover .es-region-card__name,
+.es-map-reg-card:hover .es-map-reg-card__name {
+  color: var(--es-text);
+}
+
+.es-region-card__count,
+.es-map-reg-card__count {
+  font-size: 13px;
+  color: var(--es-accent);
+  font-weight: 700;
+  margin: 0;
+  background: transparent;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+  display: block;
+}
+
+.es-region-card__count span,
+.es-map-reg-card__count span {
+  color: var(--es-text-muted);
+  font-weight: 400;
+  margin-left: 3px;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 980px) {
+  .es-map-topbar,
+  .es-map-banner {
+    grid-template-columns: 1fr;
+  }
+  .es-region-grid,
+  .es-map-regions__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  .es-map-page,
+  .es-map {
+    padding: 30px 16px 64px;
+  }
+  .es-region-grid,
+  .es-map-regions__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .es-territory__head,
+  .es-map-regions__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .es-territory__stat,
+  .es-map-regions__badge {
+    text-align: left;
+    margin-top: 10px;
+  }
+}
+
+/* ---- Modale Geolocalizzazione Club (Preservata e rifinita) ---- */
 .es-geo-modal-backdrop {
   position: fixed;
   inset: 0;
@@ -231,224 +590,52 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s ease;
+  font-family: var(--es-font);
 }
+
 .es-geo-modal-backdrop.is-open {
   opacity: 1;
   pointer-events: auto;
 }
+
 .es-geo-modal-sheet {
-  background: #0c1527;
-  border: 1.5px solid rgba(56, 189, 248, 0.4);
-  border-radius: 20px;
+  background: var(--es-panel);
+  border: 1px solid var(--es-border);
+  border-radius: 16px;
   width: 100%;
   max-width: 520px;
   max-height: 90vh;
   overflow-y: auto;
-  padding: 1.4rem 1.5rem 1.6rem;
+  padding: 1.5rem 1.6rem;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
   transform: translateY(16px);
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  color: var(--es-text);
 }
+
 .es-geo-modal-backdrop.is-open .es-geo-modal-sheet {
   transform: translateY(0);
 }
+
 .es-geo-modal-header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--es-border);
   padding-bottom: 0.85rem;
 }
+
 .es-geo-close-btn {
   background: transparent;
   border: none;
-  color: #94a3b8;
+  color: var(--es-text-muted);
   font-size: 1.6rem;
   line-height: 1;
   cursor: pointer;
   padding: 0 0.3rem;
   transition: color 0.15s;
 }
+
 .es-geo-close-btn:hover {
-  color: #fff;
-}
-
-/* Controlli Zoom Leaflet Dark Theme */
-.leaflet-control-zoom {
-  border: 1px solid rgba(56, 189, 248, 0.35) !important;
-  border-radius: 10px !important;
-  overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
-  background: #0b1220 !important;
-  margin-top: 14px !important;
-  margin-left: 14px !important;
-}
-.leaflet-control-zoom a {
-  background-color: #0c1424 !important;
-  color: #7dd3fc !important;
-  border-bottom: 1px solid rgba(56, 189, 248, 0.2) !important;
-  font-size: 1.15rem !important;
-  line-height: 32px !important;
-  width: 34px !important;
-  height: 34px !important;
-  transition: all 0.15s ease !important;
-  text-decoration: none !important;
-}
-.leaflet-control-zoom a:last-child {
-  border-bottom: none !important;
-}
-.leaflet-control-zoom a:hover {
-  background-color: #1e293b !important;
-  color: #ffffff !important;
-}
-.leaflet-control-zoom a.leaflet-disabled {
-  background-color: #070b14 !important;
-  color: #475569 !important;
-}
-
-/* Tooltip Marker Personalizzati */
-.es-map-tooltip {
-  background: rgba(12, 18, 32, 0.95) !important;
-  border: 1px solid rgba(56, 189, 248, 0.4) !important;
-  border-radius: 8px !important;
-  color: #f8fafc !important;
-  font-size: 0.78rem !important;
-  font-weight: 700 !important;
-  padding: 4px 8px !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
-  white-space: nowrap !important;
-}
-.es-map-tooltip::before {
-  border-top-color: rgba(56, 189, 248, 0.4) !important;
-}
-
-/* Marker Sede Centrale Foggia HQ */
-.es-map-pin--hq {
-  border: 2.5px solid #f59e0b !important;
-  background: #0f172a !important;
-  box-shadow: 0 0 16px rgba(245, 158, 11, 0.5) !important;
-  animation: es-hq-pulse 2.5s infinite;
-}
-.es-map-hq-badge {
-  color: #fbbf24;
-  font-size: 0.75rem;
-  font-weight: 900;
-  letter-spacing: 0.05em;
-}
-@keyframes es-hq-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6); }
-  70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
-}
-
-/* Sezione Regioni & Cluster sotto la Mappa */
-.es-map-regions {
-  margin-top: 1.85rem;
-  background: rgba(12, 18, 32, 0.75);
-  border: 1px solid rgba(56, 189, 248, 0.2);
-  border-radius: 18px;
-  padding: 1.5rem 1.6rem 1.7rem;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
-}
-.es-map-regions__header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 1.35rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-  padding-bottom: 1rem;
-}
-.es-map-regions__tag {
-  display: inline-block;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  color: #38bdf8;
-  text-transform: uppercase;
-  margin-bottom: 0.35rem;
-}
-.es-map-regions__title {
-  margin: 0;
-  font-size: 1.25rem;
-  font-weight: 800;
   color: #ffffff;
-  letter-spacing: -0.01em;
 }
-.es-map-regions__subtitle {
-  margin: 0.3rem 0 0;
-  font-size: 0.86rem;
-  color: #94a3b8;
-}
-.es-map-regions__badge {
-  background: rgba(56, 189, 248, 0.08);
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  border-radius: 12px;
-  padding: 0.6rem 1.1rem;
-  text-align: center;
-  min-width: 110px;
-}
-.es-map-regions__badge-val {
-  display: block;
-  font-size: 1.4rem;
-  font-weight: 900;
-  color: #38bdf8;
-  line-height: 1.1;
-}
-.es-map-regions__badge-lbl {
-  display: block;
-  font-size: 0.72rem;
-  color: #94a3b8;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-top: 2px;
-}
-.es-map-regions__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-  gap: 0.75rem;
-}
-.es-map-reg-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
-  padding: 0.65rem 0.9rem;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  text-align: left;
-}
-.es-map-reg-card:hover {
-  background: rgba(56, 189, 248, 0.12);
-  border-color: rgba(56, 189, 248, 0.4);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-}
-.es-map-reg-card__name {
-  font-size: 0.86rem;
-  font-weight: 700;
-  color: #f1f5f9;
-}
-.es-map-reg-card:hover .es-map-reg-card__name {
-  color: #38bdf8;
-}
-.es-map-reg-card__count {
-  font-size: 0.78rem;
-  font-weight: 800;
-  color: #7dd3fc;
-  background: rgba(2, 132, 199, 0.25);
-  border-radius: 6px;
-  padding: 2px 7px;
-  border: 1px solid rgba(56, 189, 248, 0.25);
-}
-@media (max-width: 640px) {
-  .es-map-regions__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-
