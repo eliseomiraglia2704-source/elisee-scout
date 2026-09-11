@@ -2,17 +2,23 @@
   ELISEE SCOUT — macroarea "Stampa", versione LUXURY / EDITORIALE
   Stesso contenuto e stessa logica funzionale (filtri, ricerca, media kit)
   della versione precedente (area-stampa-comunicazione.html), ma con un
-  linguaggio visivo coerente con il resto del sito:
+  linguaggio visivo diverso:
 
   - Tipografia: serif (Playfair Display, con fallback Georgia) per titolo
     pagina e titoli articolo — l'UI di servizio (label, meta, bottoni)
     resta in sans, per il classico accostamento editoriale serif/sans.
-  - Palette: accento blu coerente (#3b7dff), sfondo scuro e token del brand (--es-bg, --es-panel, --es-border, --es-text-muted).
+  - Palette: un solo accento (oro/champagne), non cinque colori saturi —
+    le categorie si distinguono col testo, non con blocchi colorati pieni.
   - Layout: lista editoriale a colonna singola con divisori sottili,
     non una griglia di card — legge come una testata, non come una
     dashboard.
-  - Barra di ricerca boxata con sfondo scuro e bordo sottile (#1e2430) che si accende al focus.
-  - Toggle Ufficio Stampa & Media Kit protetto da interferenze del router hash-based (preventDefault + stopPropagation).
+  - Zero emoji, zero pillole piene arrotondate: solo linee sottili,
+    maiuscoletto spaziato dove serve (uso editoriale legittimo, non un
+    "tell" da template qui).
+
+  Font: carica Playfair Display da Google Fonts nel tuo progetto reale, o
+  sostituisci con un serif editoriale che hai già in licenza — il fallback
+  Georgia è comunque dignitoso se preferisci non aggiungere un web font.
 -->
 <!DOCTYPE html>
 <html lang="it">
@@ -78,9 +84,9 @@
   .es-search {
     display: flex; align-items: center; gap: 10px;
     background: var(--es-panel); border: 1px solid var(--es-border); border-radius: 8px;
-    padding: 12px 16px; margin-bottom: 28px; transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    padding: 12px 16px; margin-bottom: 28px; transition: border-color 0.15s ease;
   }
-  .es-search:focus-within { border-color: var(--es-accent); box-shadow: 0 0 0 1px var(--es-accent-soft); }
+  .es-search:focus-within { border-color: var(--es-accent); }
   .es-search svg { flex-shrink: 0; color: var(--es-text-muted); }
   .es-search input {
     flex: 1; background: transparent; border: none; color: var(--es-text);
