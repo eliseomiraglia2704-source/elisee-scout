@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260910_GGL2';
+      var BUILD_VERSION = '20260911_GGL3';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -1563,7 +1563,7 @@
   <div id="modal-accesso-unificato"
        style="display:none; position:fixed; inset:0; z-index:99997;
               background:rgba(0,0,0,0.82); backdrop-filter:blur(12px);
-              align-items:center; justify-content:center; padding:1rem; overflow-y:auto;"
+              align-items:center; justify-content:center; padding:1rem; overflow-y:auto; overflow-x:hidden;"
        onclick="if(event.target===this) closeAccessoModal()">
     <div style="width:100%; max-width:460px; margin:auto;
                 background:linear-gradient(160deg,#060e1c 0%,#0a1628 100%);
@@ -1721,7 +1721,7 @@
             </div>
 
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.7rem;">
-              <button type="button" id="accesso-btn-google" onclick="window.startEliseeGoogleOAuth && window.startEliseeGoogleOAuth();">
+              <button type="button" id="accesso-btn-google" onclick="window.startEliseeGoogleOAuth && window.startEliseeGoogleOAuth();"
                       style="display:flex; align-items:center; justify-content:center; gap:0.5rem;
                              padding:0.85rem 0.6rem; border-radius:999px; cursor:pointer;
                              background:#161616; color:#fff; font-weight:700; font-size:0.88rem;
@@ -1737,18 +1737,6 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e8c872" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 11.25v2.25M10.5 14.25h3"/></svg>
                 Passkey
               </button>
-            </div>
-
-            <div id="accesso-google-setup" style="display:none; margin:0.85rem 0 0; padding:0.9rem; border-radius:12px; border:1px solid rgba(56,189,248,0.35); background:rgba(8,18,32,0.75); text-align:left;">
-              <p style="margin:0 0 0.55rem; color:#e2e8f0; font-size:0.82rem; line-height:1.45; font-weight:600;">Il Client ID Google attuale non esiste (errore 401 invalid_client). Creane uno nuovo:</p>
-              <ol style="margin:0 0 0.7rem; padding-left:1.15rem; color:#94a3b8; font-size:0.78rem; line-height:1.5;">
-                <li>Apri <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener" style="color:#38bdf8;">Google Cloud → Credenziali</a></li>
-                <li>Crea ID client OAuth 2.0 → tipo <strong>Applicazione Web</strong></li>
-                <li>Origini JavaScript: <code style="color:#7dd3fc;">https://elisee-scout.vercel.app</code></li>
-                <li>URI reindirizzamento: <code style="color:#7dd3fc;">https://elisee-scout.vercel.app</code></li>
-              </ol>
-              <input type="text" id="accesso-google-client-id" placeholder="….apps.googleusercontent.com" style="width:100%; box-sizing:border-box; padding:0.6rem 0.75rem; border-radius:8px; border:1.5px solid rgba(56,189,248,0.3); background:#0b1222; color:#fff; margin-bottom:0.55rem; font-size:0.8rem;">
-              <button type="button" onclick="window.saveAccessoGoogleClientIdAndStart && window.saveAccessoGoogleClientIdAndStart();" class="es-btn es-btn--primary" style="width:100%;">Salva e continua con Google</button>
             </div>
 
             <button type="button" id="accesso-btn-whatsapp" onclick="window.showAccessoMethod && window.showAccessoMethod('whatsapp');"
@@ -5677,7 +5665,7 @@
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="app.js?v=20260910_GGL2"></script>
+  <script src="app.js?v=20260911_GGL3"></script>
   <script src="player-profile.js?v=20260905_OBSFIX1"></script>
   <script src="public-rating-system.js?v=20260904_SEASONDROP1"></script>
   <script src="dash-real.js?v=20260904_SEASONDROP1"></script>

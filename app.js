@@ -10640,28 +10640,7 @@ window.completeGooglePassword = function () {
 };
 
 window.saveGoogleClientIdAndStart = function () {
-  const inp = document.getElementById('reg-google-client-id');
-  const val = ((inp && inp.value) || '').trim();
-  if (!val || val.indexOf('apps.googleusercontent.com') < 0) {
-    setRegSocialStatus('Incolla un Client ID Google valido (…apps.googleusercontent.com).', true);
-    return;
-  }
-  fetch('/api/auth/config', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ googleClientId: val }),
-    credentials: 'same-origin'
-  })
-    .then(function (r) { return r.json(); })
-    .then(function (data) {
-      if (!data || !data.ok) throw new Error((data && data.error) || 'config');
-      const setup = document.getElementById('reg-google-setup');
-      if (setup) setup.style.display = 'none';
-      runRealGoogleAuth();
-    })
-    .catch(function (err) {
-      setRegSocialStatus('Client ID non salvato: ' + ((err && err.message) || 'errore'), true);
-    });
+  if (typeof window.runRealGoogleAuth === 'function') window.runRealGoogleAuth();
 };
 
 function handleGoogleCredential(resp) {
@@ -10700,54 +10679,45 @@ function isUsableGoogleClientId(id) {
 }
 
 function resolveGoogleClientId(cfg) {
-  var local = '';
-  try { local = String(localStorage.getItem('elisee_google_client_id') || '').trim(); } catch (_) {}
   var fromCfg = cfg && cfg.googleClientId ? String(cfg.googleClientId).trim() : '';
-  if (isUsableGoogleClientId(local)) return local;
-  if (isUsableGoogleClientId(fromCfg)) return fromCfg;
-  return '';
+  return isUsableGoogleClientId(fromCfg) ? fromCfg : '';
 }
 
-function showGoogleClientSetup(msg) {
-  var setup = document.getElementById('accesso-google-setup') || document.getElementById('reg-google-setup');
-  if (setup) setup.style.display = 'block';
+function setGoogleLoginAvailable(on) {
+  ['accesso-btn-google', 'btn-reg-google'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.style.display = on ? '' : 'none';
+    el.disabled = !on;
+    if (!on) el.setAttribute('title', 'Accesso Google al momento non disponibile');
+    else el.removeAttribute('title');
+  });
+}
+
+function googleLoginUnavailable() {
+  setGoogleLoginAvailable(false);
   setRegSocialButtonsBusy(false);
-  if (msg) setRegSocialStatus(msg, true);
+  setRegSocialStatus('');
   var box = document.getElementById('accesso-error-general');
   var em = document.getElementById('accesso-error-msg');
-  if (box && em && msg) {
-    em.textContent = msg;
+  if (box && em) {
+    em.textContent = 'Accesso Google al momento non disponibile.';
     box.style.display = 'block';
   }
 }
 
-window.saveAccessoGoogleClientIdAndStart = function () {
-  var inp = document.getElementById('accesso-google-client-id') || document.getElementById('reg-google-client-id');
-  var val = ((inp && inp.value) || '').trim();
-  if (!isUsableGoogleClientId(val)) {
-    showGoogleClientSetup('Incolla un Client ID Web valido (…apps.googleusercontent.com).');
-    return;
-  }
-  try { localStorage.setItem('elisee_google_client_id', val); } catch (_) {}
-  var setup = document.getElementById('accesso-google-setup');
-  if (setup) setup.style.display = 'none';
-  if (typeof window.runRealGoogleAuth === 'function') window.runRealGoogleAuth();
-};
-
 window.runRealGoogleAuth = function runRealGoogleAuth() {
   if (typeof clearRegError === 'function') clearRegError();
-  setRegSocialStatus('Connessione a Google in corso…');
   setRegSocialButtonsBusy(true);
   fetch('/api/auth/config', { credentials: 'same-origin' })
     .then(function (r) { return r.json(); })
     .then(function (cfg) {
       var clientId = resolveGoogleClientId(cfg);
       if (!clientId) {
-        showGoogleClientSetup('Google non è ancora configurato per Elisee Scout. Crea un ID client OAuth Web e incollalo qui sotto.');
+        googleLoginUnavailable();
         return;
       }
-      var setup = document.getElementById('accesso-google-setup');
-      if (setup) setup.style.display = 'none';
+      setGoogleLoginAvailable(true);
       return loadGoogleGis().then(function () {
         google.accounts.id.initialize({
           client_id: clientId,
@@ -10755,27 +10725,12 @@ window.runRealGoogleAuth = function runRealGoogleAuth() {
           auto_select: false,
           ux_mode: 'popup'
         });
-        google.accounts.id.prompt(function (n) {
-          if (n && ((n.isNotDisplayed && n.isNotDisplayed()) || (n.isSkippedMoment && n.isSkippedMoment()) || (n.isDismissedMoment && n.isDismissedMoment()))) {
-            const host = document.getElementById('btn-reg-google') || document.getElementById('accesso-btn-google');
-            if (host && host.id === 'btn-reg-google') {
-              host.innerHTML = '';
-              google.accounts.id.renderButton(host, {
-                theme: 'outline',
-                size: 'large',
-                text: 'continue_with',
-                width: 280
-              });
-            }
-          }
-        });
-        setRegSocialStatus('Scegli l’account Google.');
+        google.accounts.id.prompt();
         setRegSocialButtonsBusy(false);
       });
     })
-    .catch(function (err) {
-      setRegSocialButtonsBusy(false);
-      showGoogleClientSetup('Impossibile avviare Google: ' + ((err && err.message) || 'errore'));
+    .catch(function () {
+      googleLoginUnavailable();
     });
 }
 

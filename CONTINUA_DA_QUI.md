@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-10** (Google invalid_client)
-Ultimo fatto: **401 invalid_client**: il Client ID `3785607635-…` non esiste su Google (stesso ID rotto della Barberia). Rimosso. Login Google chiede un ID client Web nuovo; origini `https://elisee-scout.vercel.app`. Cache `GGL2`.
-Feature precedente: **GIS senza redirect Garofalo**. Cache `GGL1`.
+Ultimo aggiornamento: **2026-09-11** (Accedi: via setup OAuth dal pubblico)
+Ultimo fatto: **Rimosso il pannello sviluppatore Google** dal modale Accedi. Client ID solo da env `GOOGLE_CLIENT_ID`. Bottone Google riparato (`<button` era spezzato). Se manca l’ID: bottone nascosto / «al momento non disponibile». Cache `GGL3`.
+Feature precedente: **invalid_client**. Cache `GGL2`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -135,7 +135,8 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Google login: niente Client ID inesistente, setup ID Web; cache `GGL2` |
+| (questo) | Accedi: rimosso setup OAuth pubblico, fix bottone Google rotto; cache `GGL3` |
+| `5ba294b` | Google login: niente Client ID inesistente, setup ID Web; cache `GGL2` |
 | `d21806d` | Login Google: niente redirect Supabase/Garofalo, GIS su Elisee Scout; cache `GGL1` |
 | `ff85550` | Fix 404 Google OAuth: /api/auth/oauth/google + finish su Vercel |
 | `adb9a74` | Bacheca: delega click Pubblica una richiesta + feedback se non loggato; cache `CTA1` |
