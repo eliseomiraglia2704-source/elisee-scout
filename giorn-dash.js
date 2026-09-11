@@ -698,126 +698,70 @@
 
   function renderRassegnaCards(items) {
     if (!items || items.length === 0) {
-      return '<div class="es-empty is-active es-st-empty" id="articles-empty">' +
+      return '<div class="es-empty is-active" id="articles-empty">' +
         '<h3>Nessun articolo corrisponde alla ricerca</h3>' +
         '<p>Prova a rimuovere il filtro categoria o a usare una parola chiave diversa.</p>' +
         '</div>';
     }
     return items.map(function (it) {
-      var catClass = 'cat-' + (it.category || 'mercato');
       var tagHtml = '';
       if (it.tag && it.tag.name && it.tag.kind === 'club') {
-        tagHtml = '<span class="es-article__internal-link">' +
+        tagHtml = '<span class="es-article__internal-link" data-st-tag="' + encodeURIComponent(JSON.stringify(it.tag)) + '" style="cursor:pointer;" title="Vedi scheda club">' +
           'Club · ' + esc(it.tag.name) + '</span>';
       }
-      return '<article class="es-st-card">' +
-        '<div class="es-st-card-top">' +
-        '<span class="es-st-badge-cat ' + esc(catClass) + '">' + esc(it.categoryLabel || it.category) + '</span>' +
-        '<span class="es-st-card-date">' + esc(it.date) + '</span>' +
+      return '<article class="es-article">' +
+        '<div class="es-article__meta">' +
+          '<span class="es-cat-label">' + esc(it.categoryLabel || it.category) + '</span>' +
+          '<span class="es-dot">·</span>' +
+          '<span class="es-date">' + esc(it.date) + '</span>' +
         '</div>' +
         '<h3>' + esc(it.title) + '</h3>' +
-        '<p class="es-st-excerpt">' + esc(it.excerpt) + '</p>' +
-        '<div class="es-st-card-footer">' +
-        '<span class="es-st-source-badge">' +
-        esc(it.source) +
-        '</span>' +
-        tagHtml +
-        '<a href="' + esc(it.sourceUrl) + '" target="_blank" rel="noopener noreferrer" class="es-st-read-more" title="Apri l\'articolo originale su ' + esc(it.source) + '">' +
-        'Leggi tutto ↗' +
-        '</a>' +
+        '<p>' + esc(it.excerpt) + '</p>' +
+        '<div class="es-article__footer">' +
+          '<span class="es-article__source">' + esc(it.source) + tagHtml + '</span>' +
+          '<a class="es-article__link" href="' + esc(it.sourceUrl || '#') + '" target="_blank" rel="noopener noreferrer">Leggi tutto →</a>' +
         '</div>' +
-        '</article>';
+      '</article>';
     }).join('');
   }
 
   function renderUfficioStampaHTML() {
-    // Blocco 1: Comunicati Ufficiali (stile Chi siamo con divisori)
     var comHtml = COMUNICATI_UFFICIALI.map(function (c) {
-      return '<div class="es-us-release-row">' +
-        '<div><span class="es-us-date-pill">' + esc(c.date) + '</span></div>' +
-        '<div class="es-us-release-content">' +
-        '<h3>' + esc(c.title) + '</h3>' +
-        '<p>' + esc(c.text) + '</p>' +
+      return '<li>' +
+        '<div>' +
+          '<div style="font-size:11px; color:var(--es-gold); font-weight:600; letter-spacing:0.08em; margin-bottom:4px;">' + esc(c.date) + '</div>' +
+          '<div style="font-weight:600; color:var(--es-text); font-size:14px; margin-bottom:4px;">' + esc(c.title) + '</div>' +
+          '<div style="font-size:13px; color:var(--es-text-muted); line-height:1.5;">' + esc(c.text) + '</div>' +
         '</div>' +
-        '<div class="es-us-release-action">' +
-        '<button type="button" class="es-us-btn-doc" onclick="if(window.showToast)window.showToast(\'Download comunicato: ' + esc(c.title).replace(/'/g, "\\'") + '\', \'info\');">' +
-        '📄 ' + esc(c.docTitle) + '</button>' +
-        '</div>' +
-        '</div>';
+        '<a href="#" onclick="if(window.showToast)window.showToast(\'Download comunicato: ' + esc(c.title).replace(/'/g, "\\'") + '\', \'info\'); return false;" style="white-space:nowrap; margin-left:16px;">' + esc(c.docTitle) + ' →</a>' +
+      '</li>';
     }).join('');
 
-    // Blocco 2: Media Kit (griglia card)
-    var kitHtml = MEDIA_KIT_ITEMS.map(function (m) {
-      return '<div class="es-us-kit-card">' +
-        '<div class="es-us-kit-icon-wrap">' + m.icon + '</div>' +
-        '<h4>' + esc(m.title) + '</h4>' +
-        '<p>' + esc(m.desc) + '</p>' +
-        '<div class="es-us-kit-meta">' +
-        '<span>' + esc(m.meta) + '</span>' +
-        '<span style="color:#38bdf8;">Pronto al download</span>' +
+    return '<div class="es-mediakit">' +
+      '<div class="es-mediakit__block">' +
+        '<h3>Comunicati ufficiali</h3>' +
+        '<p>Documenti e note istituzionali rilasciate da Elisee Scout.</p>' +
+        '<ul class="es-mediakit__list">' + comHtml + '</ul>' +
+      '</div>' +
+      '<div class="es-mediakit__block">' +
+        '<h3>Asset scaricabili</h3>' +
+        '<p>Logo, palette colori e linee guida del brand per articoli, servizi e collaborazioni editoriali.</p>' +
+        '<ul class="es-mediakit__list">' +
+          '<li>Logo pack (SVG / PNG) <a href="#" data-asset="logo" onclick="if(window.showToast)window.showToast(\'Download Logo pack avviato\', \'success\'); return false;">Scarica →</a></li>' +
+          '<li>Brand guidelines (PDF) <a href="#" data-asset="guidelines" onclick="if(window.showToast)window.showToast(\'Download Brand guidelines avviato\', \'success\'); return false;">Scarica →</a></li>' +
+          '<li>Scheda piattaforma / fact sheet <a href="#" data-asset="factsheet" onclick="if(window.showToast)window.showToast(\'Download Fact sheet avviato\', \'success\'); return false;">Scarica →</a></li>' +
+        '</ul>' +
+      '</div>' +
+      '<div class="es-mediakit__block">' +
+        '<h3>Contatti redazione</h3>' +
+        '<p>Per richieste stampa, interviste o collaborazioni editoriali.</p>' +
+        '<div class="es-mediakit__contact">' +
+          '<strong>Ufficio Stampa Elisee Scout</strong><br />' +
+          '<a href="mailto:elisee.scout@platform-calcio.it">elisee.scout@platform-calcio.it</a><br />' +
+          'Foggia, Italia' +
         '</div>' +
-        '<a href="' + esc(m.file) + '" download class="es-us-btn-download" onclick="if(window.showToast)window.showToast(\'Download avviato: ' + esc(m.title).replace(/'/g, "\\'") + '\', \'success\');">' +
-        '⬇ Scarica Asset' +
-        '</a>' +
-        '</div>';
-    }).join('');
-
-    // Blocco 3: Contatti Stampa (blocco unico)
-    var contactHtml = '<div class="es-us-contact-box">' +
-      '<div style="border-bottom:1px solid rgba(56,189,248,0.2); padding-bottom:0.85rem;">' +
-      '<span class="es-st-kicker">Relazioni Esterne & Accrediti</span>' +
-      '<h3 style="margin:0.25rem 0 0; color:#fff; font-size:1.35rem; font-weight:800;">Desk Stampa & Media Relations</h3>' +
-      '<p style="margin:0.35rem 0 0; color:#94a3b8; font-size:0.88rem;">Canale riservato a giornalisti, testate sportive, redazioni TV e content creator accreditati.</p>' +
       '</div>' +
-      '<div class="es-us-contact-grid">' +
-      '<div class="es-us-contact-item">' +
-      '<span class="es-us-contact-label">Email Ufficio Stampa</span>' +
-      '<div class="es-us-email-row">' +
-      '<a href="mailto:elisee.scout@platform-calcio.it" style="color:#38bdf8; text-decoration:none; font-weight:700; font-size:0.95rem;">elisee.scout@platform-calcio.it</a>' +
-      '<button type="button" class="es-us-copy-btn" onclick="navigator.clipboard.writeText(\'elisee.scout@platform-calcio.it\'); if(window.showToast)window.showToast(\'Email stampa copiata negli appunti!\', \'success\');">Copia</button>' +
-      '</div>' +
-      '<span class="es-us-contact-sub">Canale prioritario per comunicazioni e rettifiche</span>' +
-      '</div>' +
-      '<div class="es-us-contact-item">' +
-      '<span class="es-us-contact-label">Tempi di Risposta</span>' +
-      '<span class="es-us-contact-val">Entro 4-6 ore</span>' +
-      '<span class="es-us-contact-sub">Garantiti per redazioni e testate registrate</span>' +
-      '</div>' +
-      '<div class="es-us-contact-item">' +
-      '<span class="es-us-contact-label">Sede & Desk Operativo</span>' +
-      '<span class="es-us-contact-val">Italia (Roma / Foggia / Milano)</span>' +
-      '<span class="es-us-contact-sub">Desk digitale H24 per comunicati e materiali</span>' +
-      '</div>' +
-      '<div class="es-us-contact-item">' +
-      '<span class="es-us-contact-label">Richiesta Interviste & Dati</span>' +
-      '<a href="mailto:elisee.scout@platform-calcio.it?subject=Richiesta%20Intervista%20/%20Dati%20Scouting" class="es-us-btn-download" style="margin-top:0.2rem; text-align:center;">' +
-      '✉ Richiedi Intervista o Dati' +
-      '</a>' +
-      '</div>' +
-      '</div>' +
-      '</div>';
-
-    return '<div class="es-us-block">' +
-      '<div class="es-us-block-head">' +
-      '<h2><span>📜</span> Comunicati Ufficiali</h2>' +
-      '<p>Documenti e note istituzionali rilasciate da Elisee Scout</p>' +
-      '</div>' +
-      '<div class="es-us-releases-list">' + comHtml + '</div>' +
-      '</div>' +
-      '<div class="es-us-block">' +
-      '<div class="es-us-block-head">' +
-      '<h2><span>📦</span> Media Kit Ufficiale</h2>' +
-      '<p>Asset grafici, presentazioni aziendali e linee guida brand per la stampa</p>' +
-      '</div>' +
-      '<div class="es-us-kit-grid">' + kitHtml + '</div>' +
-      '</div>' +
-      '<div class="es-us-block" style="margin-bottom:0;">' +
-      '<div class="es-us-block-head">' +
-      '<h2><span>📞</span> Contatti Stampa</h2>' +
-      '<p>Canali diretti per giornalisti, redazioni e media partner</p>' +
-      '</div>' +
-      contactHtml +
-      '</div>';
+    '</div>';
   }
 
   function renderFeed(host) {
@@ -825,7 +769,7 @@
     if (!host) return;
 
     var filteredRassegna = RASSEGNA_ITEMS.slice();
-    if (activeCategory && activeCategory !== 'all') {
+    if (activeCategory && activeCategory !== 'all' && activeCategory !== 'tutte') {
       filteredRassegna = filteredRassegna.filter(function (it) {
         return it.category === activeCategory;
       });
@@ -837,59 +781,62 @@
       });
     }
 
-    var macroTabsHtml = '<div class="es-stampa-nav-wrap">' +
-      '<div class="es-stampa-nav" role="tablist">' +
-      '<button type="button" class="es-stampa-tab ' + (activeMacroTab === 'rassegna' ? 'is-active' : '') + '" data-st-macro="rassegna">' +
-      'Rassegna Stampa' +
-      '</button>' +
-      '<button type="button" class="es-stampa-tab ' + (activeMacroTab === 'ufficiostampa' ? 'is-active' : '') + '" data-st-macro="ufficiostampa">' +
-      'Ufficio Stampa & Media Kit' +
-      '</button>' +
-      '</div>' +
+    var toggleHtml = '<div class="es-view-toggle">' +
+      '<button type="button" class="' + (activeMacroTab === 'rassegna' ? 'is-active' : '') + '" data-view="rassegna" data-st-macro="rassegna">Rassegna Stampa</button>' +
+      '<button type="button" class="' + (activeMacroTab === 'ufficiostampa' ? 'is-active' : '') + '" data-view="mediakit" data-st-macro="ufficiostampa">Ufficio Stampa &amp; Media Kit</button>' +
       '</div>';
 
     var bodyContent = '';
     if (activeMacroTab === 'rassegna') {
-      bodyContent = '<div class="es-st-toolbar-row">' +
-        '<div class="es-st-search-bar">' +
-        '<span style="color:#38bdf8; margin-right:0.45rem; font-size:1rem;">🔍</span>' +
-        '<input type="text" id="es-st-search-input" placeholder="Cerca nella rassegna stampa per titolo, parola chiave o fonte..." value="' + esc(rassegnaSearchQ) + '" autocomplete="off">' +
+      bodyContent = '<div class="es-view is-active" data-panel="rassegna">' +
+        '<div class="es-search">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">' +
+            '<circle cx="11" cy="11" r="7"></circle>' +
+            '<line x1="21" y1="21" x2="16.65" y2="16.65"></line>' +
+          '</svg>' +
+          '<input type="text" id="press-search" placeholder="Cerca per titolo, parola chiave o fonte" value="' + esc(rassegnaSearchQ) + '" autocomplete="off" />' +
         '</div>' +
-        '<div class="es-st-category-pills">' +
-        '<button type="button" class="es-st-cat-btn ' + (activeCategory === 'all' ? 'is-active' : '') + '" data-st-cat="all">Tutte le notizie</button>' +
-        '<button type="button" class="es-st-cat-btn ' + (activeCategory === 'mercato' ? 'is-active' : '') + '" data-st-cat="mercato">Mercato</button>' +
-        '<button type="button" class="es-st-cat-btn ' + (activeCategory === 'club' ? 'is-active' : '') + '" data-st-cat="club">Club</button>' +
-        '<button type="button" class="es-st-cat-btn ' + (activeCategory === 'giovanile' ? 'is-active' : '') + '" data-st-cat="giovanile">Settore giovanile</button>' +
-        '<button type="button" class="es-st-cat-btn ' + (activeCategory === 'riforma' ? 'is-active' : '') + '" data-st-cat="riforma">Riforma dello Sport</button>' +
-        '<button type="button" class="es-st-cat-btn ' + (activeCategory === 'competizioni' ? 'is-active' : '') + '" data-st-cat="competizioni">Competizioni</button>' +
+        '<div class="es-cat-filters" id="cat-filters">' +
+          '<button type="button" class="' + (activeCategory === 'all' || activeCategory === 'tutte' ? 'is-active' : '') + '" data-cat="tutte" data-st-cat="all">Tutte le notizie</button>' +
+          '<button type="button" class="' + (activeCategory === 'mercato' ? 'is-active' : '') + '" data-cat="mercato" data-st-cat="mercato">Mercato</button>' +
+          '<button type="button" class="' + (activeCategory === 'club' ? 'is-active' : '') + '" data-cat="club" data-st-cat="club">Club</button>' +
+          '<button type="button" class="' + (activeCategory === 'giovanile' ? 'is-active' : '') + '" data-cat="giovanile" data-st-cat="giovanile">Settore giovanile</button>' +
+          '<button type="button" class="' + (activeCategory === 'riforma' ? 'is-active' : '') + '" data-cat="riforma" data-st-cat="riforma">Riforma dello Sport</button>' +
+          '<button type="button" class="' + (activeCategory === 'competizioni' ? 'is-active' : '') + '" data-cat="competizioni" data-st-cat="competizioni">Competizioni</button>' +
         '</div>' +
+        '<div class="es-articles" id="articles-grid">' +
+          renderRassegnaCards(filteredRassegna) +
         '</div>' +
-        '<div class="es-st-grid">' + renderRassegnaCards(filteredRassegna) + '</div>' +
-        '<div class="es-st-copyright-notice">' +
-        '<strong>Nota sul Copyright Editoriale</strong>: La rassegna stampa aggrega estratti brevi a scopo informativo nel rispetto dei diritti editoriali, rimandando con link diretto alla fonte originale.' +
-        '</div>';
+        '<p class="es-copyright-note">' +
+          '<strong>Nota sul copyright editoriale.</strong> La rassegna stampa aggrega estratti brevi a scopo informativo nel rispetto dei diritti editoriali, rimandando con link diretto alla fonte originale.' +
+        '</p>' +
+      '</div>';
     } else {
-      bodyContent = renderUfficioStampaHTML();
+      bodyContent = '<div class="es-view is-active" data-panel="mediakit">' +
+        renderUfficioStampaHTML() +
+      '</div>';
     }
 
-    host.innerHTML = '<div class="es-st-wrap">' +
-      '<div class="es-st-header">' +
-      '<span class="es-st-kicker">Elisee Scout · Media Room</span>' +
-      '<h1>Area Stampa & Comunicazione</h1>' +
-      '<p class="es-st-sub">Rassegna di attualità calcistica per utenti e desk ufficiale con comunicati, media kit e contatti per le redazioni.</p>' +
-      macroTabsHtml +
+    host.innerHTML = '<section class="es-press">' +
+      '<div class="es-press__container">' +
+        '<div class="es-press__header">' +
+          '<p class="es-press__eyebrow">Elisee Scout · Media Room</p>' +
+          '<h1>Area Stampa &amp; Comunicazione</h1>' +
+          '<p>Rassegna di attualità calcistica per utenti e desk ufficiale, con comunicati, media kit e contatti per le redazioni.</p>' +
+        '</div>' +
+        toggleHtml +
+        bodyContent +
       '</div>' +
-      bodyContent +
-      '</div>';
+    '</section>';
 
     if (!host.dataset.stBound) {
       host.dataset.stBound = '1';
       host.addEventListener('click', onFeedClick);
       host.addEventListener('input', function (e) {
-        if (e.target && e.target.id === 'es-st-search-input') {
+        if (e.target && (e.target.id === 'press-search' || e.target.id === 'es-st-search-input')) {
           rassegnaSearchQ = e.target.value;
           renderFeed(host);
-          var newInput = document.getElementById('es-st-search-input');
+          var newInput = document.getElementById('press-search') || document.getElementById('es-st-search-input');
           if (newInput) {
             newInput.focus();
             newInput.setSelectionRange(newInput.value.length, newInput.value.length);
@@ -900,16 +847,18 @@
   }
 
   function onFeedClick(e) {
-    var macroBtn = e.target.closest('[data-st-macro]');
+    var macroBtn = e.target.closest('[data-st-macro], [data-view]');
     if (macroBtn) {
-      activeMacroTab = macroBtn.getAttribute('data-st-macro') || 'rassegna';
+      var v = macroBtn.getAttribute('data-st-macro') || macroBtn.getAttribute('data-view');
+      activeMacroTab = (v === 'mediakit' || v === 'ufficiostampa') ? 'ufficiostampa' : 'rassegna';
       renderFeed();
       return;
     }
 
-    var catBtn = e.target.closest('[data-st-cat]');
+    var catBtn = e.target.closest('[data-st-cat], [data-cat]');
     if (catBtn) {
-      activeCategory = catBtn.getAttribute('data-st-cat') || 'all';
+      var c = catBtn.getAttribute('data-st-cat') || catBtn.getAttribute('data-cat');
+      activeCategory = (c === 'tutte' || c === 'all') ? 'all' : c;
       renderFeed();
       return;
     }
