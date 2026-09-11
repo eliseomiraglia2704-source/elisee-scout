@@ -174,6 +174,7 @@ module.exports = async function handler(req, res) {
 
     const body = await readBody(req);
     const providedPin = String(body.pin || body.password || '').trim();
+    const username = String(body.username || body.email || '').trim().toLowerCase();
 
     if (!providedPin) {
       return sendJson(res, 400, { success: false, error: 'PIN o Password di amministrazione non fornita' });
@@ -210,13 +211,16 @@ module.exports = async function handler(req, res) {
     delete rateData[ip];
     saveRateLimits(rateData);
 
-    const tokenData = generateSignedToken('admin', 7200000); // 2 ore
+    const isPrivacy = username.indexOf('privacy') >= 0 || username.indexOf('garante') >= 0 || username.indexOf('manueltucci') >= 0 || username === 'manueltucci2002@gmail.com';
+    const role = isPrivacy ? 'privacy' : 'admin';
+    const tokenData = generateSignedToken(role, 7200000); // 2 ore
     return sendJson(res, 200, {
       success: true,
       authenticated: true,
+      role: role,
       token: tokenData.token,
       expiresAt: tokenData.expiresAt,
-      message: 'Autenticazione Creatore / Admin completata con successo'
+      message: isPrivacy ? 'Autenticazione Responsabile Privacy completata' : 'Autenticazione Creatore / Admin completata con successo'
     });
   }
 

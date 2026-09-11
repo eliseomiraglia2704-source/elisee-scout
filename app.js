@@ -7092,10 +7092,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (_) {}
           }
           if (!uEmail) uEmail = localStorage.getItem('elisee_user_email') || '';
-          const cleanEmail = String(uEmail).trim().toLowerCase();
-          if (cleanEmail === 'eliseomiraglia2704@gmail.com' || cleanEmail.includes('eliseomiraglia2704') || cleanEmail === 'elisee.scout@platform-calcio.it') {
-            localStorage.setItem('elisee_admin_auth', 'true');
-          }
+          if (window.EliseeStaff) window.EliseeStaff.applyFlagsFromEmail(uEmail);
         } catch (_) {}
 
         const isStaff =
@@ -7985,10 +7982,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } catch (_) {}
     }
     if (!uEmail) uEmail = localStorage.getItem('elisee_user_email') || '';
-    const cleanEmail = String(uEmail).trim().toLowerCase();
-    if (cleanEmail === 'eliseomiraglia2704@gmail.com' || cleanEmail.includes('eliseomiraglia2704') || cleanEmail === 'elisee.scout@platform-calcio.it') {
-      localStorage.setItem('elisee_admin_auth', 'true');
-    }
+    if (window.EliseeStaff) window.EliseeStaff.applyFlagsFromEmail(uEmail);
   } catch (_) {}
 
   const isAlreadyAuth = localStorage.getItem('elisee_admin_auth') === 'true' || localStorage.getItem('elisee_privacy_auth') === 'true';
@@ -8108,7 +8102,7 @@ document.addEventListener('DOMContentLoaded', () => {
           sessionStorage.setItem('elisee_admin_session_token', data.token);
           localStorage.setItem('elisee_admin_session_token', data.token);
         } catch (_) {}
-        if (userVal.includes('privacy') || userVal.includes('garante')) {
+        if (userVal.includes('privacy') || userVal.includes('garante') || userVal.includes('manueltucci') || userVal.includes('tucci2002')) {
           localStorage.setItem('elisee_privacy_auth', 'true');
           localStorage.removeItem('elisee_admin_auth');
         } else {
@@ -9921,7 +9915,22 @@ window.EliseeAuth = {
     localStorage.setItem('elisee_user_auth', 'true');
     localStorage.setItem('elisee_active_user', JSON.stringify(user));
     localStorage.setItem('elisee_user_data', JSON.stringify(user));
+    if (user.email) localStorage.setItem('elisee_user_email', String(user.email).toLowerCase());
     if (token) localStorage.setItem('elisee_auth_token', token);
+    if (window.EliseeStaff) {
+      var role = window.EliseeStaff.applyFlagsFromEmail(user.email);
+      if (role === 'privacy') {
+        user.ruolo = user.ruolo || 'Responsabile Privacy';
+        user.staffRole = 'Responsabile Privacy';
+        user.ruoloDettagliato = 'Responsabile Privacy GDPR';
+      } else if (role === 'admin') {
+        user.ruolo = user.ruolo || 'Admin Executive';
+        user.staffRole = 'Admin Executive';
+        user.isCreator = true;
+      }
+      localStorage.setItem('elisee_active_user', JSON.stringify(user));
+      localStorage.setItem('elisee_user_data', JSON.stringify(user));
+    }
   },
   clearSession: function () {
     localStorage.removeItem('elisee_user_auth');
@@ -11287,9 +11296,7 @@ window.updateNavbarUserUI = function() {
 
     try {
       const uMail = String(userData.email || localStorage.getItem('elisee_user_email') || '').trim().toLowerCase();
-      if (uMail === 'eliseomiraglia2704@gmail.com' || uMail.includes('eliseomiraglia2704') || uMail === 'elisee.scout@platform-calcio.it') {
-        localStorage.setItem('elisee_admin_auth', 'true');
-      }
+      if (window.EliseeStaff) window.EliseeStaff.applyFlagsFromEmail(uMail);
     } catch (_) {}
 
     // Profilo Area Riservata: solo se appartiene allo stesso account loggato
@@ -11401,7 +11408,7 @@ window.updateNavbarUserUI = function() {
     // Visibilità strumenti riservati admin
     const adminSection = document.getElementById('user-dropdown-admin-section');
     if (adminSection) {
-      const isUserAdmin = isAdminAuth || !!userData.isCreator || userData.role === 'admin' || userData.siteRole === 'admin' || /eliseomiraglia2704|admin@eliseescout\.it|elisee\.scout@platform-calcio\.it/.test(String(userData.email || '').toLowerCase());
+      const isUserAdmin = isAdminAuth || isPrivacyAuth || !!userData.isCreator || userData.role === 'admin' || userData.siteRole === 'admin' || (window.EliseeStaff && window.EliseeStaff.isStaffEmail(userData.email));
       adminSection.style.display = isUserAdmin ? 'block' : 'none';
     }
 

@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-11** (GOOGLE_CLIENT_ID su Vercel)
-Ultimo fatto: **Client ID Elisee Scout** salvato come env Production `GOOGLE_CLIENT_ID` (progetto GCP `elisee-scout`, non Garofalo). Redeploy perché GIS e `/api/auth/google` lo vedano. Cache `GGL5`.
-Feature precedente: **lock scroll + GIS**. Cache `GGL4`.
+Ultimo aggiornamento: **2026-09-11** (Staff: Responsabile Privacy Manuel Tucci)
+Ultimo fatto: **Nuovo profilo Admin staff** `manueltucci2002@gmail.com` = **Responsabile Privacy** (non Executive). Eliseo resta Admin Executive. File `elisee-staff.js`. Login Google/sessione imposta `elisee_privacy_auth`. Cache `STAFF1`.
+Feature precedente: **GOOGLE_CLIENT_ID Vercel**. Cache `GGL5`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -56,6 +56,7 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 ## Stato attuale (fatto, non rifare)
 
+- **Staff STAFF1**: `eliseomiraglia2704@gmail.com` = Admin Executive; `manueltucci2002@gmail.com` = Responsabile Privacy (`elisee_privacy_auth`). File `elisee-staff.js`.
 - **Accedi GGL4**: lock scroll `es-modal-open`; GIS `renderButton` da env `GOOGLE_CLIENT_ID`; `/api/auth/google` verifica con `google-auth-library`.
 - **OAuth Google Vercel**: `GET /api/auth/oauth/google`, `POST /api/auth/oauth/finish`, `GET /api/auth/config`, `GET /api/auth/me`, `POST /api/auth/google`.
 - **API KV classifiche** (cache `KV1`):
@@ -136,7 +137,8 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 | Commit | Cosa |
 |---|---|
-| (questo) | GOOGLE_CLIENT_ID su Vercel Production + redeploy GIS; cache `GGL5` |
+| (questo) | Staff: manueltucci2002@gmail.com Responsabile Privacy; cache `STAFF1` |
+| `a7350d9` | GOOGLE_CLIENT_ID su Vercel Production + redeploy GIS; cache `GGL5` |
 | `3613d27` | Accedi: lock scroll body, GIS renderButton, verifyIdToken server; cache `GGL4` |
 | `3f74992` | Accedi: rimosso setup OAuth pubblico, fix bottone Google rotto; cache `GGL3` |
 | `5ba294b` | Google login: niente Client ID inesistente, setup ID Web; cache `GGL2` |
