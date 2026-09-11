@@ -9398,7 +9398,7 @@ window.openRegistrazioneModal = function() {
     modal.style.setProperty('visibility', 'visible', 'important');
     modal.style.setProperty('opacity', '1', 'important');
     modal.style.setProperty('z-index', '99998', 'important');
-    document.body.style.overflow = 'hidden';
+    lockPageForModal();
   }
 };
 
@@ -9408,8 +9408,8 @@ window.closeRegistrazioneModal = function() {
     modal.classList.remove('is-open', 'open', 'active');
     modal.style.setProperty('display', 'none', 'important');
     modal.style.setProperty('pointer-events', 'none', 'important');
-    document.body.style.overflow = '';
   }
+  unlockPageForModal();
 };
 
 function showRegError(msg) {
@@ -10378,6 +10378,28 @@ window.filterNews = function(cat) {
 // =====================================================================
 let _accessoProvider = 'email'; // 'google' | 'apple' | 'spid' | 'email'
 
+function lockPageForModal() {
+  document.documentElement.classList.add('es-modal-open');
+  document.body.classList.add('es-modal-open');
+  document.documentElement.style.overflow = 'hidden';
+  document.documentElement.style.overflowY = 'hidden';
+  document.body.style.overflow = 'hidden';
+  document.body.style.overflowY = 'hidden';
+}
+function unlockPageForModal() {
+  var acc = document.getElementById('modal-accesso-unificato');
+  var reg = document.getElementById('modal-registrazione');
+  var accOpen = acc && acc.classList.contains('is-open');
+  var regOpen = reg && reg.classList.contains('is-open');
+  if (accOpen || regOpen) return;
+  document.documentElement.classList.remove('es-modal-open');
+  document.body.classList.remove('es-modal-open');
+  document.documentElement.style.overflow = '';
+  document.documentElement.style.overflowY = '';
+  document.body.style.overflow = '';
+  document.body.style.overflowY = '';
+}
+
 window.openAccessoModal = function openAccessoModal(provider, iconHtml, label) {
   window.rememberAuthReturn();
   _accessoProvider = provider;
@@ -10389,7 +10411,8 @@ window.openAccessoModal = function openAccessoModal(provider, iconHtml, label) {
   modal.style.setProperty('visibility', 'visible', 'important');
   modal.style.setProperty('opacity', '1', 'important');
   modal.style.setProperty('z-index', '2000001', 'important');
-  document.body.style.overflow = 'hidden';
+  lockPageForModal();
+  if (typeof window.mountGoogleSignInButton === 'function') window.mountGoogleSignInButton();
 
   // Aggiorna header badge
   const badge = document.getElementById('accesso-provider-badge');
@@ -10434,8 +10457,8 @@ window.closeAccessoModal = function() {
     modal.classList.remove('is-open', 'open', 'active');
     modal.style.setProperty('display', 'none', 'important');
     modal.style.setProperty('pointer-events', 'none', 'important');
-    document.body.style.overflow = '';
   }
+  unlockPageForModal();
   resetAccessoForm();
 };
 
@@ -10706,18 +10729,19 @@ function googleLoginUnavailable() {
   }
 }
 
-window.runRealGoogleAuth = function runRealGoogleAuth() {
-  if (typeof clearRegError === 'function') clearRegError();
-  setRegSocialButtonsBusy(true);
+window.mountGoogleSignInButton = function mountGoogleSignInButton() {
+  var host = document.getElementById('accesso-google-gis');
   fetch('/api/auth/config', { credentials: 'same-origin' })
     .then(function (r) { return r.json(); })
     .then(function (cfg) {
       var clientId = resolveGoogleClientId(cfg);
       if (!clientId) {
-        googleLoginUnavailable();
+        if (host) host.style.display = 'none';
+        setGoogleLoginAvailable(false);
         return;
       }
       setGoogleLoginAvailable(true);
+      if (host) host.style.display = 'flex';
       return loadGoogleGis().then(function () {
         google.accounts.id.initialize({
           client_id: clientId,
@@ -10725,14 +10749,24 @@ window.runRealGoogleAuth = function runRealGoogleAuth() {
           auto_select: false,
           ux_mode: 'popup'
         });
-        google.accounts.id.prompt();
-        setRegSocialButtonsBusy(false);
+        if (host) {
+          host.innerHTML = '';
+          google.accounts.id.renderButton(host, {
+            theme: 'filled_black',
+            size: 'large',
+            text: 'continue_with',
+            shape: 'pill',
+            width: 180
+          });
+        }
       });
     })
     .catch(function () {
-      googleLoginUnavailable();
+      if (host) host.style.display = 'none';
+      setGoogleLoginAvailable(false);
     });
-}
+};
+window.runRealGoogleAuth = window.mountGoogleSignInButton;
 
 window.registerWithGoogle = function () {
   if (window.startEliseeGoogleOAuth) window.startEliseeGoogleOAuth();

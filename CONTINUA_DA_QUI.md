@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-11** (Accedi: via setup OAuth dal pubblico)
-Ultimo fatto: **Rimosso il pannello sviluppatore Google** dal modale Accedi. Client ID solo da env `GOOGLE_CLIENT_ID`. Bottone Google riparato (`<button` era spezzato). Se manca l’ID: bottone nascosto / «al momento non disponibile». Cache `GGL3`.
-Feature precedente: **invalid_client**. Cache `GGL2`.
+Ultimo aggiornamento: **2026-09-11** (Accedi: lock scroll + GIS)
+Ultimo fatto: **Modale Accedi**: `html.es-modal-open` blocca lo scroll della pagina (una sola scrollbar). Google: `renderButton` GIS, Client ID da env `GOOGLE_CLIENT_ID` / `NEXT_PUBLIC_GOOGLE_CLIENT_ID`, verifica `id_token` con `google-auth-library` su `/api/auth/google`. Cache `GGL4`.
+Feature precedente: **via setup OAuth dal pubblico**. Cache `GGL3`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -56,7 +56,8 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 ## Stato attuale (fatto, non rifare)
 
-- **OAuth Google Vercel**: `GET /api/auth/oauth/google` (302 a Supabase), `POST /api/auth/oauth/finish`, `GET /api/auth/config`, `GET /api/auth/me`, `POST /api/auth/google`. PKCE in cookie `es_pkce`. Redirect produzione: `https://elisee-scout.vercel.app/`.
+- **Accedi GGL4**: lock scroll `es-modal-open`; GIS `renderButton` da env `GOOGLE_CLIENT_ID`; `/api/auth/google` verifica con `google-auth-library`.
+- **OAuth Google Vercel**: `GET /api/auth/oauth/google`, `POST /api/auth/oauth/finish`, `GET /api/auth/config`, `GET /api/auth/me`, `POST /api/auth/google`.
 - **API KV classifiche** (cache `KV1`):
   - `POST /api/activity` `{ userId, tipo, ts, nome }` — ZADD `activity:events`
   - `GET /api/activity/top` — aggregato 24h → `{ nome, meta }`
@@ -135,7 +136,8 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Accedi: rimosso setup OAuth pubblico, fix bottone Google rotto; cache `GGL3` |
+| (questo) | Accedi: lock scroll body, GIS renderButton, verifyIdToken server; cache `GGL4` |
+| `3f74992` | Accedi: rimosso setup OAuth pubblico, fix bottone Google rotto; cache `GGL3` |
 | `5ba294b` | Google login: niente Client ID inesistente, setup ID Web; cache `GGL2` |
 | `d21806d` | Login Google: niente redirect Supabase/Garofalo, GIS su Elisee Scout; cache `GGL1` |
 | `ff85550` | Fix 404 Google OAuth: /api/auth/oauth/google + finish su Vercel |
