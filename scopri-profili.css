@@ -392,6 +392,11 @@ body.layout-portfolio .es-cs-empty h2 {
 /* ==========================================================================
    Album · Chi hai in rete (Stile identico a Bacheca / Stampa / Chi siamo)
    ========================================================================== */
+.es-album,
+.es-album * {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  box-sizing: border-box;
+}
 .es-album {
   padding: 56px 24px 96px;
 }
@@ -402,16 +407,18 @@ body.layout-portfolio .es-cs-empty h2 {
 .es-album__header {
   margin-bottom: 32px;
 }
-.es-album__header h1 {
-  font-size: 28px;
-  font-weight: 700;
-  margin: 0 0 8px;
-  letter-spacing: -0.01em;
-  color: var(--es-text, #eef1f6) !important;
+.es-album__header h1,
+body.layout-portfolio .es-album__header h1 {
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  margin: 0 0 8px !important;
+  letter-spacing: -0.01em !important;
+  text-transform: none !important;
+  color: #eef1f6 !important;
 }
 .es-album__header p {
   font-size: 15px;
-  color: var(--es-text-muted, #8a93a3);
+  color: #8a93a3;
   margin: 0;
   max-width: 560px;
   line-height: 1.55;
@@ -521,11 +528,14 @@ body.layout-portfolio .es-cs-empty h2 {
 .es-empty.is-active {
   display: block;
 }
-.es-empty h3 {
-  font-size: 17px;
-  font-weight: 700;
-  margin: 0 0 8px;
-  color: #eef1f6;
+.es-empty h3,
+body.layout-portfolio .es-empty h3 {
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  margin: 0 0 8px !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  color: #eef1f6 !important;
 }
 .es-empty p {
   font-size: 14px;

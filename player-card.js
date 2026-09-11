@@ -1436,7 +1436,7 @@
       var mine = window.EliseeChiSegui.isMe;
       var kind = window.EliseeChiSegui.kind;
       if (title) {
-        if (mine) title.textContent = kind === 'player' ? 'Il tuo Album' : 'Album · Chi hai in rete';
+        if (mine) title.textContent = kind === 'player' ? 'Il tuo Album' : 'Album';
         else title.textContent = 'Album di ' + (window.EliseeChiSegui.ownerName || 'questo profilo');
       }
       if (emptyS && mine) {

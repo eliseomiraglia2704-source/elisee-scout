@@ -3,12 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-11** (commit `bb07b8d`) — Album / Chi hai in rete: tab a sottolineatura blu (#3b7dff), titolo separato, empty state con CTA ("Vai alla Bacheca", "Apri la Mappa") e struttura card profilo pronta
+Ultimo aggiornamento: **2026-09-11** — Album / Chi hai in rete: tab a sottolineatura blu (#3b7dff), titolo H1 "Album" isolato (disinnescato override player-card.js), font sans-serif pulito (no uppercase), empty state con CTA ("Vai alla Bacheca", "Apri la Mappa") e struttura card profilo pronta. Cache `ALBUM2`.
 Ultimo fatto: **Album / Chi hai in rete Upgrade Totale (4 punti)**:
 1. **Tab a sottolineatura**: Sostituito il selettore "pillola piena" (switch stile app) con tab testuali minimal ed eleganti con sottolineatura azzurra `#3b7dff`, identiche alla logica visiva di Bacheca e Stampa.
-2. **Titolo separato da sottotitolo**: `<h1>Album</h1>` ed esplicativo sotto `<p>Chi hai in rete — enti, club, giocatori e staff che segui o hai salvato su Elisee Scout.</p>`, come le altre macroaree.
+2. **Titolo separato da sottotitolo**: `<h1>Album</h1>` singolo e isolato (corretto override in `player-card.js` che forzava la stringa intera con il punto) ed esplicativo sotto `<p>Chi hai in rete — enti, club, giocatori e staff che segui o hai salvato su Elisee Scout.</p>`. Font pulito moderno senza uppercase ereditato.
 3. **Stato vuoto utile (non un vicolo cieco)**: Trasformato il vuoto nero in un pannello curato con spiegazione chiara e due bottoni CTA verso i posti migliori per trovare profili ("Vai alla Bacheca" `#bacheca-annunci` e "Apri la Mappa" `#mappa-portal`).
-4. **Struttura card profilo pronta**: Creata la griglia responsive a 3 colonne (`.es-profiles`) con card complete di avatar con iniziali, nome, metadati/ruolo e pulsante "Visualizza profilo". `PROFILI_DATA` mantenuto vuoto di default per visualizzare lo stato vuoto onesto finché non ci sono connessioni reali. Cache `ALBUM1`.
+4. **Struttura card profilo pronta**: Creata la griglia responsive a 3 colonne (`.es-profiles`) con card complete di avatar con iniziali, nome, metadati/ruolo e pulsante "Visualizza profilo". `PROFILI_DATA` mantenuto vuoto di default per visualizzare lo stato vuoto onesto finché non ci sono connessioni reali. Cache `ALBUM2`.
 Feature precedente: **Mappa & Footer Upgrade Totale (6 punti)**: unificata email, footer Macroaree 1:1, CTA geolocalizzazione, classifica regioni, zoom scuro, legenda & HQ Foggia. Commit `fcb9cb7`. Cache `MAPREG1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
