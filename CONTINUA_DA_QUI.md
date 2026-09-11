@@ -3,15 +3,14 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-11** (commit `5adf908`) — Ambassador: corpo pagina ridisegnato (sentence case, border-radius 9px, CTA primario pieno in blu, checkbox GDPR obbligatoria, nota revisione umana ed empty state anteprima contratto strutturato con icona SVG). Cache `AMBASSADOR1`.
-Ultimo fatto: **Ambassador / Adesione & Contratto (corpo pagina)**:
-1. **Anteprima contratto strutturata**: Da riquadro nero isolato a empty state coerente (icona documento SVG + messaggio orientativo), allineato al design system di Bacheca ed Album.
-2. **Etichette campi in sentence case**: Trasformate tutte le etichette del form in sentence case con asterisco azzurro (`#3b7dff`), rimosso uppercase e tracking esagerato.
-3. **Input coerenti (border-radius 9px)**: Sostituito lo stile stondato estremo con border-radius 9px, padding 12px 14px e focus blu `#3b7dff`.
-4. **CTA primario pieno in blu**: Il bottone "Genera e firma contratto" è ora un pulsante pieno `#3b7dff` con testo bianco, hover scuro e peso visivo primario.
-5. **Nota revisione umana Agente IA**: Integrata la frase sulla valutazione manuale del team in caso di esito negativo dell'Agente IA prima di qualsiasi decisione definitiva.
-6. **Checkbox consenso GDPR obbligatoria**: Preservata e resa chiaramente visibile ed obbligatoria prima del bottone di firma, con link all'informativa privacy.
-Feature precedente: **Album / Chi hai in rete Upgrade Totale (4 punti)**: tab con sottolineatura azzurra, H1 isolato, empty state con CTA e card responsive. Commit `c5255c5`. Cache `ALBUM2`.
+Ultimo aggiornamento: **2026-09-11** (commit `b4b47b2`) — Nuovo Account Admin Executive a pieni poteri: abilitato `alessandromancini469@gmail.com` con password `Iemmello9`, bypass verifiche, accesso completo all'area Admin, Simulatore Ruoli Creatore e privilegi executive identici all'Admin principale. Cache `ADMIN2`.
+Ultimo fatto: **Nuovo Account Admin Executive (`alessandromancini469@gmail.com`)**:
+1. **Configurazione Ruolo & Privilegi (`elisee-staff.js`)**: Aggiunta l'email alla lista `ADMIN`. Riconosciuto con ruolo `'admin'` e displayRole `'Admin Executive'`. Abilitato automaticamente all'Admin Role Switcher (Simulatore Ruoli Creatore).
+2. **Autenticazione Cloud & Serverless (`api/auth/me.js`)**: Registrato l'account nello store `STAFF` con hash PBKDF2 sicuro per la password `Iemmello9`, `skipDocVerify: true`, `verifiedByAdmin: true`, `badgeVerificaStato: 'approved'`, `mustResetPassword: false`.
+3. **Guard Login Admin & Sessione (`index.html`)**: Abilitata l'email per l'impostazione di `elisee_admin_auth = 'true'` con accesso diretto al pannello e bypass login secondario.
+4. **Integrazione OAuth (`lib/auth-oauth.js`)**: Inserito il riconoscimento admin istantaneo per l'email anche via login Google/OAuth con nome Alessandro Mancini.
+5. **Autenticazione Locale (`data/auth/users.json`)**: Configurato l'utente con PBKDF2 anche per il server locale Python `elisee_up.py`.
+Feature precedente: **Ambassador / Adesione & Contratto (corpo pagina)**: anteprima contratto strutturata, sentence case, border-radius 9px, CTA primario blu, nota revisione umana, checkbox GDPR. Cache `AMBASSADOR1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

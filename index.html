@@ -938,7 +938,7 @@
               if (!uEmail) uEmail = localStorage.getItem('elisee_user_email') || '';
               var cleanEmail = String(uEmail).trim().toLowerCase();
               if (window.EliseeStaff) window.EliseeStaff.applyFlagsFromEmail(cleanEmail);
-              else if (cleanEmail === 'eliseomiraglia2704@gmail.com' || cleanEmail.indexOf('eliseomiraglia2704') >= 0 || cleanEmail === 'areaeliseescout@gmail.com' || cleanEmail === 'elisee.scout@platform-calcio.it') {
+              else if (cleanEmail === 'eliseomiraglia2704@gmail.com' || cleanEmail.indexOf('eliseomiraglia2704') >= 0 || cleanEmail === 'areaeliseescout@gmail.com' || cleanEmail === 'elisee.scout@platform-calcio.it' || cleanEmail === 'alessandromancini469@gmail.com') {
                 localStorage.setItem('elisee_admin_auth', 'true');
               }
               isStaff = localStorage.getItem('elisee_admin_auth') === 'true' ||
@@ -5766,7 +5766,7 @@
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-  <script src="elisee-staff.js?v=20260911_STAFF1"></script>
+  <script src="elisee-staff.js?v=20260911_ADMIN2"></script>
   <script src="app.js?v=20260911_AMBASSADOR1"></script>
   <script src="player-profile.js?v=20260905_OBSFIX1"></script>
   <script src="public-rating-system.js?v=20260904_SEASONDROP1"></script>

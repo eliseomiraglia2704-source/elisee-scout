@@ -6,7 +6,8 @@
   var ADMIN = [
     'eliseomiraglia2704@gmail.com',
     'areaeliseescout@gmail.com',
-    'elisee.scout@platform-calcio.it'
+    'elisee.scout@platform-calcio.it',
+    'alessandromancini469@gmail.com'
   ];
   var PRIVACY = [
     'manueltucci2002@gmail.com'

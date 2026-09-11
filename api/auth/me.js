@@ -9,6 +9,7 @@ const { verifyToken, publicUser, signToken } = require('../../lib/auth-oauth');
 const SALT = 'elisee-staff-v1';
 const ITER = 120000;
 const MANUEL_HASH = 'de134c138f54a18fb10cd0f5fda4699a81326bb1b6a5d47aeadb26bce167270b';
+const ALESSANDRO_HASH = 'de134c138f54a18fb10cd0f5fda4699a81326bb1b6a5d47aeadb26bce167270b';
 
 const STAFF = {
   'manueltucci2002@gmail.com': {
@@ -24,6 +25,20 @@ const STAFF = {
     badgeVerificaStato: 'approved',
     mustResetPassword: true,
     passwordHash: MANUEL_HASH
+  },
+  'alessandromancini469@gmail.com': {
+    id: 'staff_admin_alessandro',
+    email: 'alessandromancini469@gmail.com',
+    nome: 'Alessandro',
+    cognome: 'Mancini',
+    ruolo: 'Admin Executive',
+    staffRole: 'Admin Executive',
+    provider: 'email',
+    verifiedByAdmin: true,
+    skipDocVerify: true,
+    badgeVerificaStato: 'approved',
+    mustResetPassword: false,
+    passwordHash: ALESSANDRO_HASH
   }
 };
 
@@ -85,9 +100,9 @@ module.exports = async function handler(req, res) {
       user.verifiedByAdmin = true;
       user.skipDocVerify = true;
       user.badgeVerificaStato = 'approved';
-      user.mustResetPassword = true;
+      user.mustResetPassword = !!rec.mustResetPassword;
       user.staffRole = rec.staffRole;
-      return json(res, 200, { ok: true, token: signToken(rec), user: user, mustResetPassword: true });
+      return json(res, 200, { ok: true, token: signToken(rec), user: user, mustResetPassword: !!rec.mustResetPassword });
     }
 
     if (req.method === 'POST' && path === 'set-password') {
