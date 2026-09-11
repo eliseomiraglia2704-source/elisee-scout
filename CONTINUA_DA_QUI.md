@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-11** (commit `66430f5`) — Stampa: rimosso Media Room, sfondo uniforme #0b0e14 senza cuciture (body, header, viewport)
-Ultimo fatto: **Stampa: sfondo #0b0e14 a tutta viewport & no eyebrow**: rimosso completamente l'eyebrow "Media Room" sopra il titolo; esteso e forzato lo sfondo esatto `--es-bg: #0b0e14` su html, body, `#view-stampa`, `#stampa-portal`, `.es-press` e header (classe `.is-view-stampa` attiva), eliminando qualsiasi stacco cromatico o cucitura con la navbar; confermato funzionamento a 8px del box di ricerca e navigazione tra "Rassegna Stampa" e "Ufficio Stampa & Media Kit". Cache `STAMPABG1`.
-Feature precedente: **Stampa: box ricerca squadrato 8px & toggle protetto**: eliminato alla radice il doppio bordo/pillola interna da `#press-search`. Cache `STAMPABOX1`.
+Ultimo aggiornamento: **2026-09-11** (commit `c908c03`) — Stampa: rimozione titolo "Contatti redazione" e descrizione
+Ultimo fatto: **Stampa: rimozione intestazione Contatti Redazione**: rimosso `<h3>Contatti redazione</h3>` e `<p>Per richieste stampa, interviste o collaborazioni editoriali.</p>` evidenziati in giallo nella scheda Ufficio Stampa & Media Kit (ora il blocco contatti presenta direttamente la dicitura pulita "Ufficio Stampa Elisee Scout" con email e sede). Cache `STAMPACT1`.
+Feature precedente: **Stampa: sfondo #0b0e14 a tutta viewport & no eyebrow**: rimosso completamente l'eyebrow "Media Room" sopra il titolo e forzato sfondo senza cuciture. Cache `STAMPABG1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
