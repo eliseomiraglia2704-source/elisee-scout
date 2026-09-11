@@ -27,8 +27,16 @@
   function hasRole(u) {
     return !!(u && (u.siteRoleConfirmed || u.siteRoleFamily || u.ruolo || u.role));
   }
+  function isPreVerified(u) {
+    if (!u) return false;
+    if (u.verifiedByAdmin || u.skipDocVerify) return true;
+    if (window.EliseeStaff && window.EliseeStaff.isStaffEmail(emailOf(u))) return true;
+    return false;
+  }
+
   function docsOk(u) {
     if (!u) return false;
+    if (isPreVerified(u)) return true;
     var st = String(u.badgeVerificaStato || '');
     if (st === 'pending' || st === 'in_review' || st === 'approved' || st === 'temp_approved') return true;
     if (u.docsAttachedAt) return true;
@@ -59,6 +67,13 @@
   function startClock(u, opts) {
     opts = opts || {};
     if (!u || isSpectator(u)) return u;
+    if (isPreVerified(u)) {
+      u.skipDocVerify = true;
+      u.verifiedByAdmin = true;
+      u.badgeVerificaStato = u.badgeVerificaStato && u.badgeVerificaStato !== 'none' ? u.badgeVerificaStato : 'approved';
+      u.needsIdentityDocument = false;
+      return saveUser(u);
+    }
     if (docsOk(u) || u.accountClosed) return u;
     if (!u.roleConfirmedAt) u.roleConfirmedAt = iso(now());
     if (!u.verifyDocsDeadline) {
@@ -253,6 +268,15 @@
       return u;
     }
     if (isSpectator(u) || !hasRole(u)) {
+      paintBanner(null);
+      return u;
+    }
+    if (isPreVerified(u)) {
+      u.skipDocVerify = true;
+      u.verifiedByAdmin = true;
+      u.badgeVerificaStato = 'approved';
+      u.needsIdentityDocument = false;
+      saveUser(u);
       paintBanner(null);
       return u;
     }

@@ -9800,6 +9800,7 @@ window.needsSiteRole = function (user) {
   try {
     if (localStorage.getItem('elisee_site_role_confirmed') === '1') return false;
   } catch (_) {}
+  if (window.EliseeStaff && window.EliseeStaff.isStaffEmail(user.email)) return false;
   if (user.siteRoleFamily && String(user.siteRoleFamily).trim()) return false;
   if (window.isStaffPreciseRole && window.isStaffPreciseRole(user.ruolo || user.staffRole)) return false;
   if (user.siteRoleConfirmed && String(user.ruolo || user.role || '').trim()) return false;
@@ -9883,6 +9884,40 @@ window.ensureSiteRole = function (user) {
   if (window.needsSiteRole(user)) window.openSiteRoleModal();
 };
 
+window.showPasswordResetBanner = function (user) {
+  var email = String((user && user.email) || '').trim().toLowerCase();
+  if (!email) return;
+  var must = !!(user && user.mustResetPassword);
+  if (!must && window.EliseeStaff && window.EliseeStaff.isPrivacyEmail(email)) must = true;
+  try {
+    if (localStorage.getItem('elisee_pw_reset_done:' + email) === '1') must = false;
+  } catch (_) {}
+  var old = document.getElementById('es-pw-reset-banner');
+  if (old) old.remove();
+  if (!must) return;
+  var b = document.createElement('div');
+  b.id = 'es-pw-reset-banner';
+  b.setAttribute('role', 'status');
+  b.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:2000100;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:10px 16px;background:#0b1a2e;border-bottom:1px solid rgba(56,189,248,0.35);color:#e2e8f0;font-size:14px;';
+  b.innerHTML = '<span>Per ricordarti l’accesso, <strong>reimposta la password</strong> del profilo Responsabile Privacy.</span>' +
+    '<button type="button" id="es-pw-reset-go" class="es-btn es-btn--primary" style="padding:8px 14px;font-size:13px;">Reimposta password</button>' +
+    '<button type="button" id="es-pw-reset-x" style="background:none;border:none;color:#94a3b8;cursor:pointer;font-size:18px;line-height:1;" aria-label="Chiudi">×</button>';
+  document.body.appendChild(b);
+  document.body.style.paddingTop = '48px';
+  var go = document.getElementById('es-pw-reset-go');
+  var x = document.getElementById('es-pw-reset-x');
+  if (go) go.addEventListener('click', function () {
+    if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
+    if (typeof window.showAccessoMethod === 'function') window.showAccessoMethod('setpw');
+    var hello = document.getElementById('accesso-setpw-hello');
+    if (hello) hello.textContent = 'Scegli una password nuova (minimo 8 caratteri) e tienila da parte.';
+  });
+  if (x) x.addEventListener('click', function () {
+    b.remove();
+    document.body.style.paddingTop = '';
+  });
+};
+
 window.revealRegisteredUser = function (user, after) {
   const name = displayNameFromUser(user) || 'Account';
   if (typeof window.closeRegistrazioneModal === 'function') window.closeRegistrazioneModal();
@@ -9891,6 +9926,7 @@ window.revealRegisteredUser = function (user, after) {
   setTimeout(function () {
     window.paintLoggedInUser(user);
     window.hideAuthLoadingScreen();
+    if (typeof window.showPasswordResetBanner === 'function') window.showPasswordResetBanner(user);
     if (window.needsSiteRole(user)) {
       window.openSiteRoleModal();
     } else if (typeof window.restoreAuthReturn === 'function') {
@@ -11152,6 +11188,13 @@ window.completeAccessoGooglePassword = function () {
     return;
   }
   window.EliseeAuth.setPassword(a).then(function (res) {
+    try {
+      var em = String((res.user && res.user.email) || '').toLowerCase();
+      if (em) localStorage.setItem('elisee_pw_reset_done:' + em, '1');
+    } catch (_) {}
+    var ban = document.getElementById('es-pw-reset-banner');
+    if (ban) ban.remove();
+    document.body.style.paddingTop = '';
     window.revealRegisteredUser(res.user || {});
   }).catch(function (err) {
     if (box && msg) {
