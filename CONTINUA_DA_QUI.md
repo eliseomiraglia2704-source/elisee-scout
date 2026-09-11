@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-11** (Accedi: lock scroll + GIS)
-Ultimo fatto: **Modale Accedi**: `html.es-modal-open` blocca lo scroll della pagina (una sola scrollbar). Google: `renderButton` GIS, Client ID da env `GOOGLE_CLIENT_ID` / `NEXT_PUBLIC_GOOGLE_CLIENT_ID`, verifica `id_token` con `google-auth-library` su `/api/auth/google`. Cache `GGL4`.
-Feature precedente: **via setup OAuth dal pubblico**. Cache `GGL3`.
+Ultimo aggiornamento: **2026-09-11** (GOOGLE_CLIENT_ID su Vercel)
+Ultimo fatto: **Client ID Elisee Scout** salvato come env Production `GOOGLE_CLIENT_ID` (progetto GCP `elisee-scout`, non Garofalo). Redeploy perché GIS e `/api/auth/google` lo vedano. Cache `GGL5`.
+Feature precedente: **lock scroll + GIS**. Cache `GGL4`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -136,7 +136,8 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Accedi: lock scroll body, GIS renderButton, verifyIdToken server; cache `GGL4` |
+| (questo) | GOOGLE_CLIENT_ID su Vercel Production + redeploy GIS; cache `GGL5` |
+| `3613d27` | Accedi: lock scroll body, GIS renderButton, verifyIdToken server; cache `GGL4` |
 | `3f74992` | Accedi: rimosso setup OAuth pubblico, fix bottone Google rotto; cache `GGL3` |
 | `5ba294b` | Google login: niente Client ID inesistente, setup ID Web; cache `GGL2` |
 | `d21806d` | Login Google: niente redirect Supabase/Garofalo, GIS su Elisee Scout; cache `GGL1` |
