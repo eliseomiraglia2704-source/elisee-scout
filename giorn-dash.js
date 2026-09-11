@@ -719,7 +719,7 @@
         '<p class="es-st-excerpt">' + esc(it.excerpt) + '</p>' +
         '<div class="es-st-card-footer">' +
         '<span class="es-st-source-badge">' +
-        '<span class="es-st-source-icon">📰</span> ' + esc(it.source) +
+        esc(it.source) +
         '</span>' +
         tagHtml +
         '<a href="' + esc(it.sourceUrl) + '" target="_blank" rel="noopener noreferrer" class="es-st-read-more" title="Apri l\'articolo originale su ' + esc(it.source) + '">' +
@@ -840,10 +840,10 @@
     var macroTabsHtml = '<div class="es-stampa-nav-wrap">' +
       '<div class="es-stampa-nav" role="tablist">' +
       '<button type="button" class="es-stampa-tab ' + (activeMacroTab === 'rassegna' ? 'is-active' : '') + '" data-st-macro="rassegna">' +
-      '<span>📰</span> Rassegna Stampa' +
+      'Rassegna Stampa' +
       '</button>' +
       '<button type="button" class="es-stampa-tab ' + (activeMacroTab === 'ufficiostampa' ? 'is-active' : '') + '" data-st-macro="ufficiostampa">' +
-      '<span>🏛️</span> Ufficio Stampa & Media Kit' +
+      'Ufficio Stampa & Media Kit' +
       '</button>' +
       '</div>' +
       '</div>';
@@ -866,7 +866,7 @@
         '</div>' +
         '<div class="es-st-grid">' + renderRassegnaCards(filteredRassegna) + '</div>' +
         '<div class="es-st-copyright-notice">' +
-        'ℹ️ <strong>Nota sul Copyright Editoriale</strong>: La rassegna stampa aggrega estratti brevi a scopo informativo nel rispetto dei diritti editoriali, rimandando con link diretto alla fonte originale.' +
+        '<strong>Nota sul Copyright Editoriale</strong>: La rassegna stampa aggrega estratti brevi a scopo informativo nel rispetto dei diritti editoriali, rimandando con link diretto alla fonte originale.' +
         '</div>';
     } else {
       bodyContent = renderUfficioStampaHTML();

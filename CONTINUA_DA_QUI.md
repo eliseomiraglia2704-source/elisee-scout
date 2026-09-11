@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-11** (Area Stampa: niente schede fittizie, scudo vs footer)
-Ultimo fatto: **Stampa**: rimossi tag «Scheda · Nome» placeholder (Rossi/Barbieri/Bianchi). Restano solo tag Club reali. Empty state ricerca. Scudo cookie si nasconde quando il footer è in vista. Cache `STAMPA1`.
-Feature precedente: **Login Privacy Officer**. Cache `STAFF2`.
+Ultimo aggiornamento: **2026-09-11** (Stampa: via emoji tab/fonti/copyright)
+Ultimo fatto: **Stampa**: rimosse emoji da tab Rassegna/Media Kit, icone fonte articoli e nota copyright. Cache `STAMPA2`.
+Feature precedente: **Stampa no schede fittizie**. Cache `STAMPA1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -138,7 +138,8 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Stampa: no schede fittizie, empty state, scudo cookie vs footer; cache `STAMPA1` |
+| (questo) | Stampa: rimosse emoji tab, fonti e nota copyright; cache `STAMPA2` |
+| `f5d994f` | Stampa: no schede fittizie, empty state, scudo cookie vs footer; cache `STAMPA1` |
 | `0b97188` | Login Privacy Officer + skip KYC + banner reimposta password; cache `STAFF2` |
 | `56ffbea` | Staff: manueltucci2002@gmail.com Responsabile Privacy; cache `STAFF1` |
 | `a7350d9` | GOOGLE_CLIENT_ID su Vercel Production + redeploy GIS; cache `GGL5` |
