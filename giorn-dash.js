@@ -781,37 +781,50 @@
       });
     }
 
-    var bodyContent = '<div class="es-view is-active" data-panel="rassegna">' +
-      '<div class="es-search">' +
-        '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">' +
-          '<circle cx="11" cy="11" r="7"></circle>' +
-          '<line x1="21" y1="21" x2="16.65" y2="16.65"></line>' +
-        '</svg>' +
-        '<input type="text" id="press-search" placeholder="Cerca per titolo, parola chiave o fonte" value="' + esc(rassegnaSearchQ) + '" autocomplete="off" />' +
-      '</div>' +
-      '<div class="es-cat-filters" id="cat-filters">' +
-        '<button type="button" class="' + (activeCategory === 'all' || activeCategory === 'tutte' ? 'is-active' : '') + '" data-cat="tutte" data-st-cat="all">Tutte le notizie</button>' +
-        '<button type="button" class="' + (activeCategory === 'mercato' ? 'is-active' : '') + '" data-cat="mercato" data-st-cat="mercato">Mercato</button>' +
-        '<button type="button" class="' + (activeCategory === 'club' ? 'is-active' : '') + '" data-cat="club" data-st-cat="club">Club</button>' +
-        '<button type="button" class="' + (activeCategory === 'giovanile' ? 'is-active' : '') + '" data-cat="giovanile" data-st-cat="giovanile">Settore giovanile</button>' +
-        '<button type="button" class="' + (activeCategory === 'riforma' ? 'is-active' : '') + '" data-cat="riforma" data-st-cat="riforma">Riforma dello Sport</button>' +
-        '<button type="button" class="' + (activeCategory === 'competizioni' ? 'is-active' : '') + '" data-cat="competizioni" data-st-cat="competizioni">Competizioni</button>' +
-      '</div>' +
-      '<div class="es-articles" id="articles-grid">' +
-        renderRassegnaCards(filteredRassegna) +
-      '</div>' +
-      '<p class="es-copyright-note">' +
-        '<strong>Nota sul copyright editoriale.</strong> La rassegna stampa aggrega estratti brevi a scopo informativo nel rispetto dei diritti editoriali, rimandando con link diretto alla fonte originale.' +
-      '</p>' +
-    '</div>';
+    var toggleHtml = '<div class="es-view-toggle">' +
+      '<button type="button" class="' + (activeMacroTab === 'rassegna' ? 'is-active' : '') + '" data-press-tab="rassegna" data-st-macro="rassegna">Rassegna Stampa</button>' +
+      '<button type="button" class="' + (activeMacroTab === 'ufficiostampa' ? 'is-active' : '') + '" data-press-tab="mediakit" data-st-macro="ufficiostampa">Ufficio Stampa &amp; Media Kit</button>' +
+      '</div>';
+
+    var bodyContent = '';
+    if (activeMacroTab === 'rassegna') {
+      bodyContent = '<div class="es-view is-active" data-panel="rassegna">' +
+        '<div class="es-search">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">' +
+            '<circle cx="11" cy="11" r="7"></circle>' +
+            '<line x1="21" y1="21" x2="16.65" y2="16.65"></line>' +
+          '</svg>' +
+          '<input type="text" id="press-search" placeholder="Cerca per titolo, parola chiave o fonte" value="' + esc(rassegnaSearchQ) + '" autocomplete="off" />' +
+        '</div>' +
+        '<div class="es-cat-filters" id="cat-filters">' +
+          '<button type="button" class="' + (activeCategory === 'all' || activeCategory === 'tutte' ? 'is-active' : '') + '" data-cat="tutte" data-st-cat="all">Tutte le notizie</button>' +
+          '<button type="button" class="' + (activeCategory === 'mercato' ? 'is-active' : '') + '" data-cat="mercato" data-st-cat="mercato">Mercato</button>' +
+          '<button type="button" class="' + (activeCategory === 'club' ? 'is-active' : '') + '" data-cat="club" data-st-cat="club">Club</button>' +
+          '<button type="button" class="' + (activeCategory === 'giovanile' ? 'is-active' : '') + '" data-cat="giovanile" data-st-cat="giovanile">Settore giovanile</button>' +
+          '<button type="button" class="' + (activeCategory === 'riforma' ? 'is-active' : '') + '" data-cat="riforma" data-st-cat="riforma">Riforma dello Sport</button>' +
+          '<button type="button" class="' + (activeCategory === 'competizioni' ? 'is-active' : '') + '" data-cat="competizioni" data-st-cat="competizioni">Competizioni</button>' +
+        '</div>' +
+        '<div class="es-articles" id="articles-grid">' +
+          renderRassegnaCards(filteredRassegna) +
+        '</div>' +
+        '<p class="es-copyright-note">' +
+          '<strong>Nota sul copyright editoriale.</strong> La rassegna stampa aggrega estratti brevi a scopo informativo nel rispetto dei diritti editoriali, rimandando con link diretto alla fonte originale.' +
+        '</p>' +
+      '</div>';
+    } else {
+      bodyContent = '<div class="es-view is-active" data-panel="mediakit">' +
+        renderUfficioStampaHTML() +
+      '</div>';
+    }
 
     host.innerHTML = '<section class="es-press">' +
       '<div class="es-press__container">' +
         '<div class="es-press__header">' +
-          '<p class="es-press__eyebrow">Elisee Scout</p>' +
+          '<p class="es-press__eyebrow">Elisee Scout · Media Room</p>' +
           '<h1>Area Stampa &amp; Comunicazione</h1>' +
-          '<p>Rassegna di attualità calcistica per utenti e desk ufficiale, con comunicati e aggiornamenti per le redazioni.</p>' +
+          '<p>Rassegna di attualità calcistica per utenti e desk ufficiale, con comunicati, media kit e contatti per le redazioni.</p>' +
         '</div>' +
+        toggleHtml +
         bodyContent +
       '</div>' +
     '</section>';

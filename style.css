@@ -9534,3 +9534,19 @@ input[type="submit"],
   flex-wrap: wrap;
   padding-top: 0.5rem;
 }
+
+/* Stampa — Ricerca box 8px e reset input interno */
+#stampa-portal .es-search,
+.es-press .es-search {
+  border-radius: 8px !important;
+}
+#stampa-portal #press-search,
+.es-press #press-search,
+#stampa-portal .es-search input,
+.es-press .es-search input {
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
