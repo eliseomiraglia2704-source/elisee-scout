@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-11** (Login Privacy Officer + banner reimposta password)
-Ultimo fatto: **`manueltucci2002@gmail.com`** accede da Accedi (email+password). Profilo già verificato dal titolare: niente documenti KYC. Dopo il login banner **Reimposta password**. `POST /api/auth/login` e `/api/auth/set-password`. Cache `STAFF2`.
-Feature precedente: **Staff Privacy roster**. Cache `STAFF1`.
+Ultimo aggiornamento: **2026-09-11** (Area Stampa: niente schede fittizie, scudo vs footer)
+Ultimo fatto: **Stampa**: rimossi tag «Scheda · Nome» placeholder (Rossi/Barbieri/Bianchi). Restano solo tag Club reali. Empty state ricerca. Scudo cookie si nasconde quando il footer è in vista. Cache `STAMPA1`.
+Feature precedente: **Login Privacy Officer**. Cache `STAFF2`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -138,7 +138,8 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 | Commit | Cosa |
 |---|---|
-| (questo) | Login Privacy Officer + skip KYC + banner reimposta password; cache `STAFF2` |
+| (questo) | Stampa: no schede fittizie, empty state, scudo cookie vs footer; cache `STAMPA1` |
+| `0b97188` | Login Privacy Officer + skip KYC + banner reimposta password; cache `STAFF2` |
 | `56ffbea` | Staff: manueltucci2002@gmail.com Responsabile Privacy; cache `STAFF1` |
 | `a7350d9` | GOOGLE_CLIENT_ID su Vercel Production + redeploy GIS; cache `GGL5` |
 | `3613d27` | Accedi: lock scroll body, GIS renderButton, verifyIdToken server; cache `GGL4` |

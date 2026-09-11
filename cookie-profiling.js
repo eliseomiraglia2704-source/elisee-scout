@@ -997,7 +997,24 @@
         openPreferences();
       };
       document.body.appendChild(btn);
+      hideCookieBtnOverFooter(btn);
     }
+  }
+
+  function hideCookieBtnOverFooter(btn) {
+    var footer = document.querySelector('footer.site-footer, footer.pf-footer, .site-footer');
+    if (!btn || !footer) return;
+    if (!('IntersectionObserver' in window)) {
+      footer.style.paddingLeft = '4.5rem';
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      var hit = entries.some(function (en) { return en.isIntersecting && en.intersectionRatio > 0.08; });
+      btn.style.opacity = hit ? '0' : '1';
+      btn.style.pointerEvents = hit ? 'none' : 'auto';
+      btn.setAttribute('aria-hidden', hit ? 'true' : 'false');
+    }, { threshold: [0, 0.08, 0.2] });
+    io.observe(footer);
   }
 
   var API = {

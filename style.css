@@ -5911,6 +5911,14 @@ main {
   margin-bottom: 2.5rem;
 }
 
+#elisee-cookie-settings-btn {
+  transition: opacity 0.2s ease;
+}
+#elisee-cookie-settings-btn[aria-hidden="true"] {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 .pf-footer-brand {
   display: flex;
   align-items: center;

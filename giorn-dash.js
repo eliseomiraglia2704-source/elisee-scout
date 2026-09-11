@@ -93,7 +93,6 @@
         body: 'Inizio di stagione entusiasmante sui campi della Serie D e dei massimi campionati regionali di Eccellenza. Cresce l’attenzione dei Direttori Sportivi e degli Osservatori sui fuoriquota classe 2005, 2006 e 2007 che stanno trascinando le rispettive squadre. Ecco l’analisi tattica e i dati prestazionali elaborati dalla piattaforma.',
         geo: { level: 'nazionale', value: 'Italia' },
         tags: [
-          { kind: 'player', id: 'pl-Marco Rossi', name: 'Marco Rossi' },
           { kind: 'club', id: 'cl-foggia', name: 'Calcio Foggia 1920' }
         ],
         createdAt: new Date(Date.now() - 3600000 * 4).toISOString()
@@ -127,9 +126,7 @@
         title: 'Guida al Tesseramento Fuoriquota, Premi di Preparazione e Svincoli',
         body: 'Tutto quello che c’è da sapere sulle finestre di trasferimento, le tutele legali per calciatori dilettanti e l’utilizzo dell’IA per il matching tra società e atleti svincolati.',
         geo: { level: 'regione', value: 'Puglia' },
-        tags: [
-          { kind: 'player', id: 'pl-Roberto Barbieri', name: 'Roberto Barbieri' }
-        ],
+        tags: [],
         createdAt: new Date(Date.now() - 3600000 * 20).toISOString()
       }
     ];
@@ -585,7 +582,7 @@
       source: 'FIGC / LND Ufficiale',
       sourceUrl: 'https://www.lnd.it',
       date: '06 Set 2026',
-      tag: { kind: 'player', id: 'pl-Marco Rossi', name: 'Marco Rossi' }
+      tag: null
     },
     {
       id: 'rs-3',
@@ -596,7 +593,7 @@
       source: 'Notiziario del Calcio',
       sourceUrl: 'https://www.notiziariocalcio.com',
       date: '05 Set 2026',
-      tag: { kind: 'player', id: 'pl-Roberto Barbieri', name: 'Roberto Barbieri' }
+      tag: null
     },
     {
       id: 'rs-4',
@@ -629,7 +626,7 @@
       source: 'TuttoCampo.it',
       sourceUrl: 'https://www.tuttocampo.it',
       date: '02 Set 2026',
-      tag: { kind: 'player', id: 'pl-Lorenzo Bianchi', name: 'Lorenzo Bianchi' }
+      tag: null
     }
   ];
 
@@ -701,14 +698,17 @@
 
   function renderRassegnaCards(items) {
     if (!items || items.length === 0) {
-      return '<div class="es-st-empty">Nessuna notizia trovata per la categoria o la ricerca selezionata.</div>';
+      return '<div class="es-empty is-active es-st-empty" id="articles-empty">' +
+        '<h3>Nessun articolo corrisponde alla ricerca</h3>' +
+        '<p>Prova a rimuovere il filtro categoria o a usare una parola chiave diversa.</p>' +
+        '</div>';
     }
     return items.map(function (it) {
       var catClass = 'cat-' + (it.category || 'mercato');
       var tagHtml = '';
-      if (it.tag) {
-        tagHtml = '<button type="button" class="es-gd-chip" data-st-tag="' + encodeURIComponent(JSON.stringify(it.tag)) + '" style="margin-left:auto;">' +
-          esc(it.tag.kind === 'club' ? 'Club' : 'Scheda') + ' · ' + esc(it.tag.name) + '</button>';
+      if (it.tag && it.tag.name && it.tag.kind === 'club') {
+        tagHtml = '<span class="es-article__internal-link">' +
+          'Club · ' + esc(it.tag.name) + '</span>';
       }
       return '<article class="es-st-card">' +
         '<div class="es-st-card-top">' +
@@ -773,8 +773,8 @@
       '<div class="es-us-contact-item">' +
       '<span class="es-us-contact-label">Email Ufficio Stampa</span>' +
       '<div class="es-us-email-row">' +
-      '<a href="mailto:stampa@elisee-scout.it" style="color:#38bdf8; text-decoration:none; font-weight:700; font-size:0.95rem;">stampa@elisee-scout.it</a>' +
-      '<button type="button" class="es-us-copy-btn" onclick="navigator.clipboard.writeText(\'stampa@elisee-scout.it\'); if(window.showToast)window.showToast(\'Email stampa copiata negli appunti!\', \'success\');">Copia</button>' +
+      '<a href="mailto:elisee.scout@platform-calcio.it" style="color:#38bdf8; text-decoration:none; font-weight:700; font-size:0.95rem;">elisee.scout@platform-calcio.it</a>' +
+      '<button type="button" class="es-us-copy-btn" onclick="navigator.clipboard.writeText(\'elisee.scout@platform-calcio.it\'); if(window.showToast)window.showToast(\'Email stampa copiata negli appunti!\', \'success\');">Copia</button>' +
       '</div>' +
       '<span class="es-us-contact-sub">Canale prioritario per comunicazioni e rettifiche</span>' +
       '</div>' +
@@ -790,7 +790,7 @@
       '</div>' +
       '<div class="es-us-contact-item">' +
       '<span class="es-us-contact-label">Richiesta Interviste & Dati</span>' +
-      '<a href="mailto:stampa@elisee-scout.it?subject=Richiesta%20Intervista%20/%20Dati%20Scouting" class="es-us-btn-download" style="margin-top:0.2rem; text-align:center;">' +
+      '<a href="mailto:elisee.scout@platform-calcio.it?subject=Richiesta%20Intervista%20/%20Dati%20Scouting" class="es-us-btn-download" style="margin-top:0.2rem; text-align:center;">' +
       '✉ Richiedi Intervista o Dati' +
       '</a>' +
       '</div>' +
