@@ -365,7 +365,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
-  <link rel="stylesheet" href="mappa-club.css?v=20260902_CLEANOSM1">
+  <link rel="stylesheet" href="mappa-club.css?v=20260911_MAPREG1">
   <link rel="stylesheet" href="mobile-webapp.css?v=20260910_DOSSIER1">
   <style id="es-force-no-lines">
     @media screen and (max-width: 768px) {
@@ -4094,12 +4094,49 @@
     <div id="view-mappa" style="display:none;">
       <section id="mappa-portal" class="es-map">
         <div class="es-map-banner">
-          <p><span id="es-map-count">0</span> Club sono già visibili sulla mappa.</p>
-          <a href="#mappa-portal" id="es-map-geolink" onclick="event.preventDefault(); if(window.openClubGeoModal){ window.openClubGeoModal(); } else if(window.EliseeClubMap && window.EliseeClubMap.openGeoModal){ window.EliseeClubMap.openGeoModal(); } else if(window.EliseeClubMap){ window.EliseeClubMap.setGeo(); } return false;">Sei un Club? Imposta la geolocalizzazione</a>
+          <p><span class="es-map-banner__dot">🗺️</span> <span id="es-map-count">0</span> Club sono già visibili sulla mappa.</p>
+          <button type="button" id="es-map-geobtn" class="es-map-geobtn" onclick="if(window.openClubGeoModal){ window.openClubGeoModal(); } else if(window.EliseeClubMap && window.EliseeClubMap.openGeoModal){ window.EliseeClubMap.openGeoModal(); } else if(window.EliseeClubMap){ window.EliseeClubMap.setGeo(); } return false;">
+            <span class="es-map-geobtn__icon">📍</span>
+            <span>Sei un Club? Imposta la geolocalizzazione</span>
+          </button>
+          <a href="#mappa-portal" id="es-map-geolink" style="display:none;">Sei un Club? Imposta la geolocalizzazione</a>
         </div>
+
+        <div class="es-map-legend">
+          <div class="es-map-legend__item">
+            <span class="es-map-legend__dot es-map-legend__dot--cluster">150</span>
+            <span><strong>Cluster Club</strong> (zoom per esplodere)</span>
+          </div>
+          <div class="es-map-legend__item">
+            <span class="es-map-legend__dot es-map-legend__dot--club">🛡️</span>
+            <span><strong>Club Singolo</strong> (stemma e scheda)</span>
+          </div>
+          <div class="es-map-legend__item">
+            <span class="es-map-legend__dot es-map-legend__dot--hq">HQ</span>
+            <span><strong>Sede Centrale (Foggia)</strong></span>
+          </div>
+        </div>
+
         <div class="es-map-wrap">
           <div id="es-map-canvas" role="application" aria-label="Mappa dei club"></div>
           <button type="button" class="es-map-fs" title="Schermo intero" onclick="if(window.EliseeClubMap) window.EliseeClubMap.toggleFull();">⤢</button>
+        </div>
+
+        <div class="es-map-regions" id="es-map-regions">
+          <div class="es-map-regions__header">
+            <div>
+              <span class="es-map-regions__tag">PANORAMICA TERRITORIALE</span>
+              <h3 class="es-map-regions__title">Regioni con più Club &amp; Cluster Attivi</h3>
+              <p class="es-map-regions__subtitle">Clicca su una regione per inquadrare istantaneamente la mappa sulle sue società.</p>
+            </div>
+            <div class="es-map-regions__badge">
+              <span class="es-map-regions__badge-val" id="es-map-regions-count">20</span>
+              <span class="es-map-regions__badge-lbl">Regioni coperte</span>
+            </div>
+          </div>
+          <div class="es-map-regions__grid" id="es-map-regions-grid">
+            <!-- Popolato dinamicamente dai dati reali in mappa-club.js -->
+          </div>
         </div>
       </section>
     </div>
@@ -4291,13 +4328,22 @@
           <ul class="pf-footer-links">
             <li><a href="#hero" onclick="switchView('home'); return false;">Home</a></li>
             <li><a href="#about" onclick="switchView('about'); return false;">Chi siamo</a></li>
-            <li><a href="#dashboard-skills" onclick="switchView('pillars'); return false;">Curriculum</a></li>
             <li><a href="#bacheca-annunci" onclick="switchView('bacheca'); return false;">Bacheca</a></li>
-            <li><a href="#schede-tecniche" onclick="if(window.openSchedeTecniche){window.openSchedeTecniche({id:'attaccante-centrale-stagione-2026-27',title:'Attaccante centrale — stagione 2026/27',club:'ASD Virtus Foggia',role:'Attaccante',location:'Foggia'});} return false;">Schede tecniche</a></li>
+            <li><a href="#stampa-portal" onclick="if(window.openStampaFeed){window.openStampaFeed();}else if(window.switchView){window.switchView('stampa','#stampa-portal');} return false;">Stampa</a></li>
+            <li><a href="#mappa-portal" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){window.switchView('mappa','#mappa-portal');} return false;">Mappa</a></li>
+            <li><a href="#seguo-portal" onclick="if(window.openChiSegui){window.openChiSegui();}else if(window.switchView){window.switchView('seguo','#seguo-portal');} return false;">Album</a></li>
+            <li><a href="#ambassador-portal" onclick="switchView('ambassador'); return false;">Ambassador</a></li>
+            <li><a href="#minigioco-carriera" onclick="switchView('minigioco'); return false;">Minigiochi</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="pf-footer-heading">Funzionalità</h4>
+          <ul class="pf-footer-links">
+            <li><a href="#dashboard-skills" onclick="switchView('pillars'); return false;">Curriculum sportivo</a></li>
+            <li><a href="#schede-tecniche" onclick="if(window.openSchedeTecniche){window.openSchedeTecniche({id:'attaccante-centrale-stagione-2026-27',title:'Attaccante centrale — stagione 2026/27',club:'ASD Virtus Foggia',role:'Attaccante',location:'Foggia'});} return false;">Schede tecniche IA</a></li>
             <li><a href="#scopri-portal" onclick="if(window.openScopriProfili){window.openScopriProfili('staff');}else{switchView('scopri','#scopri-portal');} return false;">Scopri profili</a></li>
             <li><a href="#wall-trasferimenti" onclick="if(window.openTransferWall){window.openTransferWall();}else{switchView('mercato','#wall-trasferimenti');} return false;">Wall mercato</a></li>
             <li><a href="#bacheca-annunci" onclick="switchView('bacheca','#bacheca-network'); return false;">Persone &amp; Squadre</a></li>
-            <li><a href="#ambassador-portal" onclick="switchView('ambassador'); return false;">Ambassador</a></li>
           </ul>
         </div>
         <div>
@@ -5719,7 +5765,7 @@
   <script src="messaggi.js?v=20260820_MSG1"></script>
   <script src="mercato-hub.js?v=20260903_MA3"></script>
   <script src="schede-tecniche.js?v=20260820_ST3"></script>
-  <script src="mappa-club.js?v=20260911_MAPACT1"></script>
+  <script src="mappa-club.js?v=20260911_MAPREG1"></script>
   <script src="chi-segui.js?v=20260827_CARD1"></script>
   <script src="card-atelier.js?v=20260904_ADMINTAB1"></script>
   <script src="ds-hub.js?v=20260827_DS1"></script>

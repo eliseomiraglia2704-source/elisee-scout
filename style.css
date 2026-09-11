@@ -5906,8 +5906,8 @@ main {
 
 .pf-footer-grid {
   display: grid;
-  grid-template-columns: 1.3fr 1fr 1fr;
-  gap: 2.5rem;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr;
+  gap: 2.2rem;
   margin-bottom: 2.5rem;
 }
 
@@ -8209,13 +8209,16 @@ body.layout-portfolio main {
    ============================================================ */
 .pf-footer-grid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr;
   gap: 2rem;
   padding: 2.5rem 0 1.5rem;
   border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
-@media (max-width: 720px) {
+@media (max-width: 960px) {
+  .pf-footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
+@media (max-width: 560px) {
   .pf-footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
 }
 

@@ -3,9 +3,15 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-11** (commit `6f5bb65`) — Fix navbar attiva Mappa & deselezione tab precedente
-Ultimo fatto: **Navbar attiva Mappa**: risolto il problema per cui cliccando su "Mappa" rimaneva evidenziata in azzurro la voce precedente (Bacheca/Stampa): aggiunto `setActiveNav('mappa')` (e per le altre viste come Album/seguo) in `coreSwitchView` e `openClubMap()`, esteso `setActiveNav` alla pulizia e assegnazione sia dei `.nav-link` desktop che degli `.es-m-tab-item` mobile, e corretta la rimozione della classe active in `app.js`. Cache `MAPACT1`.
-Feature precedente: **Email istituzionale & contatti**: sostituita l'email di contatto `elisee.scout@platform-calcio.it` con `areaeliseescout@gmail.com` in tutto il sito e admin list. Cache `EMAIL1`.
+Ultimo aggiornamento: **2026-09-11** (commit `fcb9cb7`) — Mappa: 6 fix completi (email, footer Macroaree 1:1, CTA geolocalizzazione, classifica regioni, zoom scuro, legenda & HQ Foggia)
+Ultimo fatto: **Mappa & Footer Upgrade Totale (6 punti)**: 
+1. Unificata email `areaeliseescout@gmail.com` ovunque (Chi siamo, footer, contatti).
+2. Footer "Macroaree" allineato 1:1 con la navbar superiore (Home, Chi siamo, Bacheca, Stampa, Mappa, Album, Ambassador, Minigiochi) e introdotta colonna ordinata "Funzionalità".
+3. CTA "Sei un Club? Imposta la geolocalizzazione" trasformata in vero pulsante moderno con icona pin, gradiente e hover morbido.
+4. Rimosso il vuoto nero sotto la mappa e introdotta la sezione «Regioni con più Club & Cluster Attivi» con schede/chip interattive (click = flyto della mappa sulla regione).
+5. Controlli di zoom (+/-) Leaflet completamente ridisegnati in tema dark/ciano (#0b1220).
+6. Legenda visiva interattiva (Cluster, Club singolo, Sede HQ) + Sede Centrale Elisee Scout (Foggia) con marker distintivo dorato HQ e tooltip con nome club su ogni marker singolo. Cache `MAPREG1`.
+Feature precedente: **Navbar attiva Mappa**: risolto il problema per cui cliccando su "Mappa" rimaneva evidenziata in azzurro la voce precedente. Cache `MAPACT1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

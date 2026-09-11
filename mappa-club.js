@@ -340,9 +340,50 @@
   // =====================================================================
   // MAP ENGINE
   // =====================================================================
+  var REGION_CENTERS = {
+    'Lombardia': { coords: [45.65, 9.75], zoom: 8 },
+    'Sicilia': { coords: [37.60, 14.15], zoom: 8 },
+    'Lazio': { coords: [41.90, 12.60], zoom: 8 },
+    'Campania': { coords: [40.85, 14.80], zoom: 8 },
+    'Emilia-Romagna': { coords: [44.50, 11.30], zoom: 8 },
+    'Puglia': { coords: [41.10, 16.60], zoom: 8 },
+    'Toscana': { coords: [43.40, 11.20], zoom: 8 },
+    'Veneto': { coords: [45.45, 11.90], zoom: 8 },
+    'Piemonte': { coords: [45.10, 7.80], zoom: 8 },
+    'Marche': { coords: [43.35, 13.20], zoom: 8 },
+    'Abruzzo': { coords: [42.30, 13.80], zoom: 8 },
+    'Calabria': { coords: [39.00, 16.40], zoom: 8 },
+    'Sardegna': { coords: [40.10, 9.10], zoom: 8 },
+    'Liguria': { coords: [44.30, 8.85], zoom: 8 },
+    'Umbria': { coords: [42.95, 12.50], zoom: 9 },
+    'Friuli-Venezia Giulia': { coords: [46.10, 13.15], zoom: 8 },
+    'Basilicata': { coords: [40.55, 16.05], zoom: 8 },
+    'Trentino-Alto Adige': { coords: [46.40, 11.35], zoom: 8 },
+    'Molise': { coords: [41.65, 14.65], zoom: 9 },
+    'Valle d\'Aosta': { coords: [45.75, 7.35], zoom: 9 }
+  };
+
+  function renderRegionsGrid(counts) {
+    var host = document.getElementById('es-map-regions-grid');
+    if (!host) return;
+    var keys = Object.keys(REGION_CENTERS).sort(function (a, b) {
+      return (counts[b] || 0) - (counts[a] || 0);
+    });
+    var html = '';
+    keys.forEach(function (reg) {
+      var num = counts[reg] || 0;
+      html += '<button type="button" class="es-map-reg-card" data-region="' + esc(reg) + '" onclick="if(window.EliseeClubMap) window.EliseeClubMap.flyToRegion(\'' + esc(reg) + '\');">' +
+        '<span class="es-map-reg-card__name">' + esc(reg) + '</span>' +
+        '<span class="es-map-reg-card__count">' + num + ' club</span>' +
+      '</button>';
+    });
+    host.innerHTML = html;
+  }
+
   window.EliseeClubMap = {
     map: null,
     cluster: null,
+    hqLayer: null,
     ready: false,
     ensure: function () {
       var el = document.getElementById('es-map-canvas');
@@ -427,9 +468,49 @@
         filtered.slice(0, MAX_PINS).forEach(function (c) {
           var mk = L.marker([c.lat, c.lng], { icon: pinIcon(c), title: c.name });
           mk.bindPopup(popupHtml(c), { maxWidth: 260 });
+          mk.bindTooltip(esc(c.name) + (c.city ? ' (' + esc(c.city) + ')' : ''), {
+            direction: 'top',
+            offset: [0, -22],
+            className: 'es-map-tooltip'
+          });
           self.cluster.addLayer(mk);
           count++;
         });
+
+        // Sede Centrale Elisee Scout (Foggia) — Marker dedicato e trasparente
+        if (self.hqLayer) {
+          try { self.map.removeLayer(self.hqLayer); } catch (_) {}
+          self.hqLayer = null;
+        }
+        var hqIcon = L.divIcon({
+          className: 'es-map-ico es-map-ico--hq',
+          html: '<div class="es-map-pin es-map-pin--hq" title="Sede Centrale Elisee Scout (Foggia)">' +
+                '<span class="es-map-hq-badge">HQ</span>' +
+                '</div>',
+          iconSize: [46, 46],
+          iconAnchor: [23, 23],
+          popupAnchor: [0, -23]
+        });
+        self.hqLayer = L.marker([41.4622, 15.5447], { icon: hqIcon, zIndexOffset: 2000 });
+        self.hqLayer.bindPopup(
+          '<div class="es-map-pop">' +
+            '<div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.4rem; justify-content:center;">' +
+              '<img src="immagini/logo/logo-site.png" alt="Elisee Scout" style="width:36px; height:36px; object-fit:contain; border-radius:8px; background:#0b1220; padding:2px; border:1.5px solid #f59e0b;">' +
+              '<div style="text-align:left;">' +
+                '<strong style="display:block; font-size:0.92rem; color:#0f172a;">ELISEE SCOUT — Sede Centrale</strong>' +
+                '<span style="font-size:0.75rem; color:#d97706; font-weight:800;">Direzione &amp; Sviluppo Piattaforma</span>' +
+              '</div>' +
+            '</div>' +
+            '<span style="font-size:0.8rem; color:#475569;">📍 Foggia, Puglia (Italia)</span><br>' +
+            '<span style="font-size:0.75rem; color:#0284c7; font-weight:700;">✉️ areaeliseescout@gmail.com</span>' +
+          '</div>'
+        );
+        self.hqLayer.bindTooltip('📍 Sede Centrale Elisee Scout (Foggia)', {
+          direction: 'top',
+          offset: [0, -22],
+          className: 'es-map-tooltip'
+        });
+        self.hqLayer.addTo(self.map);
 
         var geo = myClubGeo();
         if (geo && geo.lat) {
@@ -442,8 +523,29 @@
         var nEl = document.getElementById('es-map-count');
         if (nEl) nEl.textContent = String(rows.length);
 
+        // Calcola e renderizza classifica regionale
+        var regionCounts = {};
+        rows.forEach(function (c) {
+          var reg = c.region || 'Altra Regione';
+          regionCounts[reg] = (regionCounts[reg] || 0) + 1;
+        });
+        renderRegionsGrid(regionCounts);
+
         setTimeout(function () { if (self.map) self.map.invalidateSize(); }, 120);
       });
+    },
+    flyToRegion: function (regionName) {
+      var cfg = REGION_CENTERS[regionName];
+      if (cfg && this.map) {
+        this.map.flyTo(cfg.coords, cfg.zoom, { duration: 1.2 });
+        var root = document.getElementById('mappa-portal');
+        if (root) {
+          root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        if (window.showToast) {
+          window.showToast('📍 Mappa inquadrata su ' + regionName, 'info');
+        }
+      }
     },
     open: function () {
       if (typeof window.switchView === 'function') window.switchView('mappa', '#mappa-portal');
