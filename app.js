@@ -12222,6 +12222,13 @@ function initAmbassadorSignaturePad() {
       return;
     }
 
+    const gdprConsent = document.getElementById('amb-gdpr-consent');
+    if (gdprConsent && !gdprConsent.checked) {
+      setStatus('Devi accettare l’informativa privacy per procedere.', false);
+      gdprConsent.focus();
+      return;
+    }
+
     const payload = {
       name: val('amb-name'),
       birthplace: val('amb-birthplace'),
@@ -12240,6 +12247,7 @@ function initAmbassadorSignaturePad() {
 
     // Blocca anteprima finché non c'è esito positivo
     if (target) {
+      target.style.display = 'block';
       target.innerHTML = '<p class="pf-aside-text" style="text-align:center;margin-top:2rem;">Verifica IA in corso… il contratto resta bloccato finché il profilo non risulta idoneo.</p>';
     }
 
@@ -12261,12 +12269,13 @@ function initAmbassadorSignaturePad() {
     }
 
     if (!verdict.idoneo) {
-      setStatus('✗ Profilo NON idoneo. Correggi i dati e riprova.', false);
+      setStatus('✗ Profilo NON idoneo. Il team esaminerà manualmente la richiesta prima di una decisione definitiva.', false);
       if (target) {
+        target.style.display = 'block';
         target.innerHTML = `
           <div class="amb-ai-blocked">
             <p class="amb-ai-blocked-title">Contratto bloccato</p>
-            <p class="pf-aside-text">L’Agente IA Idoneità Ambassador ha valutato il profilo come <strong>non idoneo</strong>. Correggi le criticità indicate e invia di nuovo la richiesta.</p>
+            <p class="pf-aside-text">L’Agente IA Idoneità Ambassador ha valutato il profilo come <strong>non idoneo</strong>. In caso di esito negativo, il team esamina manualmente la richiesta prima di una decisione definitiva.</p>
           </div>`;
       }
       // Modal già mostrato da runAmbassadorAiEligibility

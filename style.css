@@ -9553,3 +9553,102 @@ input[type="submit"],
   box-shadow: none !important;
   padding: 0 !important;
 }
+
+/* ==========================================================================
+   Ambassador — Restyling Form & Anteprima Contratto
+   ========================================================================== */
+#ambassador-portal .pf-layout-equal {
+  border-top: 1px solid #1e2430;
+  padding-top: 32px;
+  gap: 24px;
+}
+#ambassador-portal .pf-aside-card {
+  background: #10141d !important;
+  border: 1px solid #1e2430 !important;
+  border-radius: 12px !important;
+}
+#form-ambassador label,
+#ambassador-portal .pf-form label {
+  display: block !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #8a93a3 !important;
+  margin-bottom: 7px !important;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
+}
+#form-ambassador .pf-input {
+  width: 100% !important;
+  background: #10141d !important;
+  color: #eef1f6 !important;
+  border: 1px solid #1e2430 !important;
+  border-radius: 9px !important;
+  padding: 12px 14px !important;
+  font-size: 14px !important;
+  transition: border-color 0.15s ease;
+}
+#form-ambassador .pf-input:focus {
+  outline: none !important;
+  border-color: #3b7dff !important;
+}
+#form-ambassador .pf-canvas-wrap {
+  background: #f2f0eb !important;
+  border-radius: 10px !important;
+  height: 150px !important;
+  margin-bottom: 14px !important;
+}
+#btn-amb-submit,
+.es-amb-submit {
+  width: 100% !important;
+  background: #3b7dff !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 15px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  cursor: pointer !important;
+  margin-bottom: 14px !important;
+  transition: background 0.15s ease !important;
+}
+#btn-amb-submit:hover,
+.es-amb-submit:hover {
+  background: #2f69db !important;
+}
+.es-eligibility-note {
+  font-size: 12px !important;
+  color: #8a93a3 !important;
+  line-height: 1.6 !important;
+  padding-top: 14px !important;
+  border-top: 1px solid #1e2430 !important;
+  margin-top: 14px !important;
+}
+.es-eligibility-note strong {
+  color: #eef1f6 !important;
+}
+.es-preview {
+  background: #10141d !important;
+  border: 1px solid #1e2430 !important;
+  border-radius: 12px !important;
+  min-height: 460px !important;
+  padding: 32px !important;
+}
+.es-preview__empty {
+  text-align: center !important;
+  max-width: 280px !important;
+  margin: 0 auto !important;
+}
+.es-preview__icon {
+  width: 44px !important;
+  height: 44px !important;
+  margin: 0 auto 16px !important;
+  color: #8a93a3 !important;
+  display: block !important;
+}
+.es-preview__empty p {
+  font-size: 13px !important;
+  color: #8a93a3 !important;
+  line-height: 1.6 !important;
+  margin: 0 !important;
+}

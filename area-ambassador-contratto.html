@@ -1,0 +1,197 @@
+<!--
+  ELISEE SCOUT — macroarea "Ambassador", corpo pagina (Adesione + Anteprima contratto)
+  L'HEADER (eyebrow "AMBASSADOR", titolo "Programma e contratto", sottotitolo,
+  bottone "Chi siamo") NON è incluso qui apposta — va lasciato esattamente
+  com'è. Questo file copre solo la sezione sotto, con lo stesso design
+  system (blu #3b7dff) delle altre macroaree.
+
+  Cosa cambia rispetto allo screenshot:
+  - L'anteprima contratto vuota era un riquadro nero pieno con solo una
+    frase al centro → ora è uno stato vuoto strutturato (icona documento +
+    messaggio), stesso linguaggio usato in Bacheca/Album per gli stati vuoti.
+  - Etichette dei campi da maiuscolo tracciato a sentence case, coerente
+    col resto del sito (Bacheca usa "Ruolo", non "RUOLO").
+  - Input con border-radius coerente (8-10px) invece della pillola molto
+    stondata dello screenshot.
+  - Il bottone "Genera e firma contratto" diventa il CTA primario pieno
+    (blu), non più solo un contorno — è l'azione più importante della pagina.
+  - Aggiunta una riga esplicita sulla revisione umana in caso di esito
+    negativo dell'Agente IA, dato che mi hai confermato che esiste.
+
+  NOTA IMPORTANTE: non ho ricostruito la checkbox di consenso GDPR perché
+  mi hai confermato che esiste già nel tuo modulo reale — assicurati resti
+  visibile e obbligatoria prima del bottone "Genera e firma contratto",
+  qualunque sia la sua posizione nel form completo.
+-->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<title>Anteprima — Ambassador: Adesione e contratto</title>
+<style>
+  :root {
+    --es-bg: #0b0e14;
+    --es-panel: #10141d;
+    --es-panel-2: #141925;
+    --es-border: #1e2430;
+    --es-text: #eef1f6;
+    --es-text-muted: #8a93a3;
+    --es-accent: #3b7dff;
+    --es-accent-soft: rgba(59, 125, 255, 0.12);
+    --es-font: -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--es-bg); }
+  body { color: var(--es-text); font-family: var(--es-font); }
+
+  .es-ambassador { padding: 0 24px 96px; }
+  .es-ambassador__container { max-width: 1100px; margin: 0 auto; }
+
+  .es-ambassador__grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    border-top: 1px solid var(--es-border); padding-top: 32px;
+  }
+
+  .es-panel-block h2 { font-size: 16px; font-weight: 700; margin: 0 0 6px; }
+  .es-panel-block > p { font-size: 13px; color: var(--es-text-muted); margin: 0 0 22px; line-height: 1.55; }
+
+  /* ---- Form ---- */
+  .es-field { margin-bottom: 18px; }
+  .es-field label {
+    display: block; font-size: 12px; font-weight: 600; color: var(--es-text-muted);
+    margin-bottom: 7px; letter-spacing: 0.01em;
+  }
+  .es-field label .req { color: var(--es-accent); }
+  .es-field input {
+    width: 100%; background: var(--es-panel); color: var(--es-text); border: 1px solid var(--es-border);
+    border-radius: 9px; padding: 12px 14px; font-family: var(--es-font); font-size: 14px;
+  }
+  .es-field input::placeholder { color: var(--es-text-muted); }
+  .es-field input:focus { outline: none; border-color: var(--es-accent); }
+  .es-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .es-field__hint { font-size: 12px; color: var(--es-text-muted); margin-top: 6px; }
+  .es-field--address { position: relative; }
+  .es-field--address svg { position: absolute; right: 14px; top: 41px; color: var(--es-text-muted); }
+
+  /* ---- Firma ---- */
+  .es-signature-pad {
+    background: #f2f0eb; border-radius: 10px; height: 150px; position: relative;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
+  }
+  .es-signature-pad__placeholder { color: #8a8478; font-size: 14px; font-weight: 500; }
+  .es-signature-pad__clear {
+    position: absolute; top: 12px; right: 12px; background: #1c2027; color: #fff;
+    font-size: 12px; font-weight: 600; border: none; border-radius: 16px; padding: 6px 12px; cursor: pointer;
+  }
+
+  .es-submit-btn {
+    width: 100%; background: var(--es-accent); color: #fff; border: none; border-radius: 10px;
+    padding: 15px; font-family: var(--es-font); font-size: 14px; font-weight: 700; letter-spacing: 0.02em;
+    cursor: pointer; margin-bottom: 14px;
+  }
+
+  .es-eligibility-note {
+    font-size: 12px; color: var(--es-text-muted); line-height: 1.6; padding-top: 14px; border-top: 1px solid var(--es-border);
+  }
+  .es-eligibility-note strong { color: var(--es-text); }
+
+  /* ---- Anteprima contratto ---- */
+  .es-preview {
+    background: var(--es-panel); border: 1px solid var(--es-border); border-radius: 12px;
+    min-height: 460px; display: flex; align-items: center; justify-content: center; padding: 32px;
+  }
+  .es-preview__empty { text-align: center; max-width: 280px; }
+  .es-preview__icon {
+    width: 44px; height: 44px; margin: 0 auto 16px; color: var(--es-text-muted);
+  }
+  .es-preview__empty p { font-size: 13px; color: var(--es-text-muted); line-height: 1.6; margin: 0; }
+
+  @media (max-width: 860px) {
+    .es-ambassador__grid { grid-template-columns: 1fr; }
+    .es-field-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ⚠️ HEADER ESISTENTE — non incluso, va lasciato invariato sopra questo blocco -->
+
+<section class="es-ambassador">
+  <div class="es-ambassador__container">
+    <div class="es-ambassador__grid">
+
+      <!-- ===== Colonna sinistra: Adesione ===== -->
+      <div class="es-panel-block">
+        <h2>Adesione</h2>
+        <p>Compila i dati e firma digitalmente. Il contratto viene generato in anteprima a destra.</p>
+
+        <div class="es-field">
+          <label>Nome e cognome <span class="req">*</span></label>
+          <input type="text" placeholder="Es. Mario Rossi" />
+        </div>
+
+        <div class="es-field-row">
+          <div class="es-field">
+            <label>Luogo di nascita <span class="req">*</span></label>
+            <input type="text" placeholder="Es. Milano" />
+          </div>
+          <div class="es-field">
+            <label>Data di nascita <span class="req">*</span></label>
+            <input type="date" />
+          </div>
+        </div>
+
+        <div class="es-field">
+          <label>Codice fiscale <span class="req">*</span></label>
+          <input type="text" placeholder="Es. RSSMRA00A01H501U" />
+        </div>
+
+        <div class="es-field es-field--address">
+          <label>Indirizzo di residenza <span class="req">*</span></label>
+          <input type="text" placeholder="Inizia a digitare via, CAP o città..." />
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <p class="es-field__hint">Suggerimenti geografici in tempo reale (vie, CAP e comuni italiani).</p>
+        </div>
+
+        <div class="es-field">
+          <label>Firma elettronica <span class="req">*</span></label>
+          <p class="es-field__hint" style="margin-top:0; margin-bottom:10px;">Disegna la firma nell'area sotto con il mouse o il dito (touch). Poi premi "Genera e firma contratto".</p>
+          <div class="es-signature-pad">
+            <button class="es-signature-pad__clear">↺ Pulisci</button>
+            <span class="es-signature-pad__placeholder">✒ Firma qui</span>
+          </div>
+        </div>
+
+        <button class="es-submit-btn">Genera e firma contratto</button>
+
+        <p class="es-eligibility-note">
+          Prima della firma, l'<strong>Agente IA Idoneità Ambassador</strong> verifica se il profilo è idoneo.
+          In caso di esito negativo, il team esamina manualmente la richiesta prima di una decisione definitiva.
+        </p>
+      </div>
+
+      <!-- ===== Colonna destra: Anteprima contratto ===== -->
+      <div class="es-panel-block">
+        <h2>Anteprima contratto</h2>
+        <p>Documento legale 6 mesi — sbloccato solo se l'agente IA conferma l'idoneità.</p>
+
+        <div class="es-preview">
+          <div class="es-preview__empty">
+            <svg class="es-preview__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <path d="M14 2v6h6"/>
+              <line x1="8" y1="13" x2="16" y2="13"/>
+              <line x1="8" y1="17" x2="13" y2="17"/>
+            </svg>
+            <p>Completa il modulo: l'agente IA valuterà l'idoneità prima di generare il contratto.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

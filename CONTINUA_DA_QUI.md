@@ -3,13 +3,15 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-11** — Album / Chi hai in rete: tab a sottolineatura blu (#3b7dff), titolo H1 "Album" isolato (disinnescato override player-card.js), font sans-serif pulito (no uppercase), empty state con CTA ("Vai alla Bacheca", "Apri la Mappa") e struttura card profilo pronta. Cache `ALBUM2`.
-Ultimo fatto: **Album / Chi hai in rete Upgrade Totale (4 punti)**:
-1. **Tab a sottolineatura**: Sostituito il selettore "pillola piena" (switch stile app) con tab testuali minimal ed eleganti con sottolineatura azzurra `#3b7dff`, identiche alla logica visiva di Bacheca e Stampa.
-2. **Titolo separato da sottotitolo**: `<h1>Album</h1>` singolo e isolato (corretto override in `player-card.js` che forzava la stringa intera con il punto) ed esplicativo sotto `<p>Chi hai in rete — enti, club, giocatori e staff che segui o hai salvato su Elisee Scout.</p>`. Font pulito moderno senza uppercase ereditato.
-3. **Stato vuoto utile (non un vicolo cieco)**: Trasformato il vuoto nero in un pannello curato con spiegazione chiara e due bottoni CTA verso i posti migliori per trovare profili ("Vai alla Bacheca" `#bacheca-annunci` e "Apri la Mappa" `#mappa-portal`).
-4. **Struttura card profilo pronta**: Creata la griglia responsive a 3 colonne (`.es-profiles`) con card complete di avatar con iniziali, nome, metadati/ruolo e pulsante "Visualizza profilo". `PROFILI_DATA` mantenuto vuoto di default per visualizzare lo stato vuoto onesto finché non ci sono connessioni reali. Cache `ALBUM2`.
-Feature precedente: **Mappa & Footer Upgrade Totale (6 punti)**: unificata email, footer Macroaree 1:1, CTA geolocalizzazione, classifica regioni, zoom scuro, legenda & HQ Foggia. Commit `fcb9cb7`. Cache `MAPREG1`.
+Ultimo aggiornamento: **2026-09-11** (commit `5adf908`) — Ambassador: corpo pagina ridisegnato (sentence case, border-radius 9px, CTA primario pieno in blu, checkbox GDPR obbligatoria, nota revisione umana ed empty state anteprima contratto strutturato con icona SVG). Cache `AMBASSADOR1`.
+Ultimo fatto: **Ambassador / Adesione & Contratto (corpo pagina)**:
+1. **Anteprima contratto strutturata**: Da riquadro nero isolato a empty state coerente (icona documento SVG + messaggio orientativo), allineato al design system di Bacheca ed Album.
+2. **Etichette campi in sentence case**: Trasformate tutte le etichette del form in sentence case con asterisco azzurro (`#3b7dff`), rimosso uppercase e tracking esagerato.
+3. **Input coerenti (border-radius 9px)**: Sostituito lo stile stondato estremo con border-radius 9px, padding 12px 14px e focus blu `#3b7dff`.
+4. **CTA primario pieno in blu**: Il bottone "Genera e firma contratto" è ora un pulsante pieno `#3b7dff` con testo bianco, hover scuro e peso visivo primario.
+5. **Nota revisione umana Agente IA**: Integrata la frase sulla valutazione manuale del team in caso di esito negativo dell'Agente IA prima di qualsiasi decisione definitiva.
+6. **Checkbox consenso GDPR obbligatoria**: Preservata e resa chiaramente visibile ed obbligatoria prima del bottone di firma, con link all'informativa privacy.
+Feature precedente: **Album / Chi hai in rete Upgrade Totale (4 punti)**: tab con sottolineatura azzurra, H1 isolato, empty state con CTA e card responsive. Commit `c5255c5`. Cache `ALBUM2`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -60,7 +62,15 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
 
 ## Stato attuale (fatto, non rifare)
 
-- **Album · Chi hai in rete (cache `ALBUM1`)**:
+- **Ambassador — Adesione & Contratto (cache `AMBASSADOR1`)**:
+  - Corpo pagina rinnovato mantenendo l'header esistente intatto.
+  - Etichette form in sentence case con asterisco azzurro `#3b7dff` (eliminato uppercase e tracking eccessivo).
+  - Input con border-radius 9px, padding 12px 14px e focus color coordinato.
+  - Bottone "Genera e firma contratto" reso CTA primario pieno in blu `#3b7dff` con testo bianco.
+  - Anteprima contratto vuota ristrutturata con icona SVG documento e messaggio orientativo (allineata a Bacheca ed Album).
+  - Nota revisione umana integrata: valutazione manuale del team in caso di esito negativo dell'Agente IA.
+  - Checkbox consenso GDPR preservata, visibile e obbligatoria prima del submit. File: `index.html`, `style.css`, `app.js`, `area-ambassador-contratto.html`.
+- **Album · Chi hai in rete (cache `ALBUM2`)**:
   - Tab a sottolineatura azzurra `#3b7dff` al posto del selettore a pillola stile switch app, allineate a Bacheca e Stampa.
   - Titolo `h1` ("Album") separato dal sottotitolo esplicativo ("Chi hai in rete — enti, club, giocatori e staff che segui o hai salvato su Elisee Scout.").
   - Stato vuoto non cieco con pannello dashed, testo orientativo e 2 CTA ("Vai alla Bacheca", "Apri la Mappa").
