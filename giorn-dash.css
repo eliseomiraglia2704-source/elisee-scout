@@ -216,8 +216,30 @@ body.es-giorn-on #user-dossier-portal,
   --es-font-sans: -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
+#view-stampa,
+#stampa-portal,
+.es-press {
+  min-height: 100vh;
+  background: var(--es-bg, #0b0e14) !important;
+}
+
+body:has(#view-stampa:not([style*="none"])),
+body.is-view-stampa,
+body.view-stampa {
+  background: var(--es-bg, #0b0e14) !important;
+  background-color: var(--es-bg, #0b0e14) !important;
+}
+
+body:has(#view-stampa:not([style*="none"])) header.main-header,
+body:has(#view-stampa:not([style*="none"])) .portfolio-header,
+body.is-view-stampa header.main-header,
+body.is-view-stampa .portfolio-header {
+  background: rgba(11, 14, 20, 0.96) !important;
+}
+
 .es-press {
   padding: 88px 24px 120px;
+  background: var(--es-bg, #0b0e14);
 }
 
 .es-press__container {
@@ -229,15 +251,6 @@ body.es-giorn-on #user-dossier-portal,
 .es-press__header {
   text-align: center;
   margin: 0 auto 40px;
-}
-
-.es-press__eyebrow {
-  color: var(--es-accent);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  margin: 0 0 18px;
 }
 
 .es-press__header h1 {

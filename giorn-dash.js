@@ -820,7 +820,6 @@
     host.innerHTML = '<section class="es-press">' +
       '<div class="es-press__container">' +
         '<div class="es-press__header">' +
-          '<p class="es-press__eyebrow">Elisee Scout · Media Room</p>' +
           '<h1>Area Stampa &amp; Comunicazione</h1>' +
           '<p>Rassegna di attualità calcistica per utenti e desk ufficiale, con comunicati, media kit e contatti per le redazioni.</p>' +
         '</div>' +

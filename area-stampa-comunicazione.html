@@ -44,17 +44,14 @@
   }
 
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--es-bg); color: var(--es-text); font-family: var(--es-font-sans); }
+  html, body { margin: 0; background: var(--es-bg); }
+  body { color: var(--es-text); font-family: var(--es-font-sans); }
 
-  .es-press { padding: 88px 24px 120px; }
+  .es-press { padding: 88px 24px 120px; background: var(--es-bg); }
   .es-press__container { max-width: 780px; margin: 0 auto; }
 
   /* ---- Header ---- */
   .es-press__header { text-align: center; margin: 0 auto 40px; }
-  .es-press__eyebrow {
-    color: var(--es-accent); font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
-    text-transform: uppercase; margin: 0 0 18px;
-  }
   .es-press__header h1 {
     font-family: var(--es-font-serif); font-size: 38px; font-weight: 600;
     margin: 0 0 18px; letter-spacing: 0.01em; line-height: 1.2;
@@ -183,7 +180,6 @@
   <div class="es-press__container">
 
     <div class="es-press__header">
-      <p class="es-press__eyebrow">Elisee Scout · Media Room</p>
       <h1>Area Stampa &amp; Comunicazione</h1>
       <p>Rassegna di attualità calcistica per utenti e desk ufficiale, con comunicati, media kit e contatti per le redazioni.</p>
     </div>

@@ -342,7 +342,7 @@
   <link rel="stylesheet" href="ma-dash.css?v=20260905_MAFIX1">
   <link rel="stylesheet" href="med-dash.css?v=20260827_LUX1">
   <link rel="stylesheet" href="tifoso-dash.css?v=20260827_LUX1">
-  <link rel="stylesheet" href="giorn-dash.css?v=20260911_STAMPABOX1">
+  <link rel="stylesheet" href="giorn-dash.css?v=20260911_STAMPABG1">
   <link rel="stylesheet" href="obs-dash.css?v=20260905_OBSFIX1">
   <link rel="stylesheet" href="tm-dash.css?v=20260827_LUX1">
   <link rel="stylesheet" href="gk-dash.css?v=20260904_GKAT1">
@@ -884,6 +884,7 @@
             return true;
           }
           hideAll();
+          document.body.classList.remove('is-view-stampa');
           try { localStorage.setItem('elisee_view', view); } catch (e) {}
           if (view === 'about') {
             show('home-views-group'); show('view-about'); setActiveNav('about');
@@ -1001,6 +1002,7 @@
             hash = hash || '#schede-tecniche';
             setTimeout(function () { try { if (window.EliseeSchede) window.EliseeSchede.render(); } catch (e) {} }, 40);
           } else if (view === 'stampa') {
+            document.body.classList.add('is-view-stampa');
             show('view-stampa');
             setActiveNav('stampa');
             hash = '#stampa-portal';
@@ -5704,7 +5706,7 @@
   <script src="sg-dash.js?v=20260903_BUGFIXALL2"></script>
   <script src="bt-dash.js?v=20260903_BUGFIXALL2"></script>
   <script src="tifoso-dash.js?v=20260903_BUGFIXALL2"></script>
-  <script src="giorn-dash.js?v=20260911_STAMPABOX1"></script>
+  <script src="giorn-dash.js?v=20260911_STAMPABG1"></script>
   <script src="scopri-profili.js?v=20260827_CARDORDER1"></script>
   <script src="messaggi.js?v=20260820_MSG1"></script>
   <script src="mercato-hub.js?v=20260903_MA3"></script>
