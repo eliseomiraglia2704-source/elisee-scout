@@ -2,23 +2,17 @@
   ELISEE SCOUT — macroarea "Stampa", versione LUXURY / EDITORIALE
   Stesso contenuto e stessa logica funzionale (filtri, ricerca, media kit)
   della versione precedente (area-stampa-comunicazione.html), ma con un
-  linguaggio visivo diverso:
+  linguaggio visivo coerente con il resto del sito:
 
   - Tipografia: serif (Playfair Display, con fallback Georgia) per titolo
     pagina e titoli articolo — l'UI di servizio (label, meta, bottoni)
     resta in sans, per il classico accostamento editoriale serif/sans.
-  - Palette: un solo accento (oro/champagne), non cinque colori saturi —
-    le categorie si distinguono col testo, non con blocchi colorati pieni.
+  - Palette: accento blu coerente (#3b7dff), sfondo scuro e token del brand (--es-bg, --es-panel, --es-border, --es-text-muted).
   - Layout: lista editoriale a colonna singola con divisori sottili,
     non una griglia di card — legge come una testata, non come una
     dashboard.
-  - Zero emoji, zero pillole piene arrotondate: solo linee sottili,
-    maiuscoletto spaziato dove serve (uso editoriale legittimo, non un
-    "tell" da template qui).
-
-  Font: carica Playfair Display da Google Fonts nel tuo progetto reale, o
-  sostituisci con un serif editoriale che hai già in licenza — il fallback
-  Georgia è comunque dignitoso se preferisci non aggiungere un web font.
+  - Barra di ricerca boxata con sfondo scuro e bordo sottile (#1e2430) che si accende al focus.
+  - Toggle Ufficio Stampa & Media Kit protetto da interferenze del router hash-based (preventDefault + stopPropagation).
 -->
 <!DOCTYPE html>
 <html lang="it">
@@ -29,14 +23,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --es-bg: #0a0c12;
-    --es-text: #f1eee6;
-    --es-text-muted: #99917f;
-    --es-text-faint: #6d6858;
-    --es-gold: #c9a961;
-    --es-gold-soft: rgba(201, 169, 97, 0.12);
+    --es-bg: #0b0e14;
+    --es-panel: #10141d;
+    --es-border: #1e2430;
+    --es-text: #eef1f6;
+    --es-text-muted: #8a93a3;
+    --es-text-faint: #626b79;
+    --es-accent: #3b7dff;
+    --es-accent-soft: rgba(59, 125, 255, 0.12);
     --es-hairline: rgba(255, 255, 255, 0.09);
-    --es-hairline-gold: rgba(201, 169, 97, 0.28);
+    --es-hairline-accent: rgba(59, 125, 255, 0.28);
     --es-font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
     --es-font-sans: -apple-system, "Segoe UI", Roboto, sans-serif;
   }
@@ -50,7 +46,7 @@
   /* ---- Header ---- */
   .es-press__header { text-align: center; margin: 0 auto 40px; }
   .es-press__eyebrow {
-    color: var(--es-gold); font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
+    color: var(--es-accent); font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
     text-transform: uppercase; margin: 0 0 18px;
   }
   .es-press__header h1 {
@@ -73,23 +69,25 @@
     background: none; border: none; color: var(--es-text-faint); cursor: pointer; padding: 0 0 6px;
     border-bottom: 1px solid transparent;
   }
-  .es-view-toggle button.is-active { color: var(--es-gold); border-bottom-color: var(--es-gold); }
+  .es-view-toggle button.is-active { color: var(--es-accent); border-bottom-color: var(--es-accent); }
 
   .es-view { display: none; }
   .es-view.is-active { display: block; }
 
-  /* ---- Ricerca (riga sottile, non box) ---- */
+  /* ---- Ricerca: stesso linguaggio degli altri campi filtro del sito ---- */
   .es-search {
-    display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--es-hairline);
-    padding: 0 0 14px; margin-bottom: 28px;
+    display: flex; align-items: center; gap: 10px;
+    background: var(--es-panel); border: 1px solid var(--es-border); border-radius: 8px;
+    padding: 12px 16px; margin-bottom: 28px; transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
-  .es-search svg { flex-shrink: 0; opacity: 0.55; }
+  .es-search:focus-within { border-color: var(--es-accent); box-shadow: 0 0 0 1px var(--es-accent-soft); }
+  .es-search svg { flex-shrink: 0; color: var(--es-text-muted); }
   .es-search input {
     flex: 1; background: transparent; border: none; color: var(--es-text);
-    font-size: 14px; font-family: var(--es-font-sans); font-weight: 300;
+    font-size: 14px; font-family: var(--es-font-sans); font-weight: 400;
   }
   .es-search input:focus { outline: none; }
-  .es-search input::placeholder { color: var(--es-text-faint); }
+  .es-search input::placeholder { color: var(--es-text-muted); }
 
   /* ---- Filtri categoria: testo + puntino, non pillole ---- */
   .es-cat-filters { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 0; margin-bottom: 56px; }
@@ -99,7 +97,7 @@
     border-right: 1px solid var(--es-hairline);
   }
   .es-cat-filters button:last-child { border-right: none; }
-  .es-cat-filters button.is-active { color: var(--es-gold); }
+  .es-cat-filters button.is-active { color: var(--es-accent); }
 
   /* ---- Lista editoriale (niente card colorate) ---- */
   .es-articles { display: flex; flex-direction: column; }
@@ -111,7 +109,7 @@
     display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
     font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
   }
-  .es-article__meta .es-cat-label { color: var(--es-gold); }
+  .es-article__meta .es-cat-label { color: var(--es-accent); }
   .es-article__meta .es-dot { color: var(--es-text-faint); }
   .es-article__meta .es-date { color: var(--es-text-faint); letter-spacing: 0.02em; text-transform: none; font-weight: 400; }
 
@@ -130,10 +128,10 @@
     font-size: 11px; color: var(--es-text-faint); border-left: 1px solid var(--es-hairline); padding-left: 10px; margin-left: 4px;
   }
   .es-article__link {
-    font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: var(--es-gold);
+    font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: var(--es-accent);
     text-decoration: none; border-bottom: 1px solid transparent;
   }
-  .es-article__link:hover { border-bottom-color: var(--es-gold); }
+  .es-article__link:hover { border-bottom-color: var(--es-accent); }
 
   .es-empty { text-align: center; padding: 60px 0; }
   .es-empty h3 { font-family: var(--es-font-serif); font-size: 19px; font-weight: 600; margin: 0 0 8px; }
@@ -160,12 +158,12 @@
     padding: 16px 0; border-bottom: 1px solid var(--es-hairline); color: var(--es-text);
   }
   .es-mediakit__list a {
-    color: var(--es-gold); font-size: 12px; font-weight: 600; letter-spacing: 0.03em; text-decoration: none;
+    color: var(--es-accent); font-size: 12px; font-weight: 600; letter-spacing: 0.03em; text-decoration: none;
   }
 
   .es-mediakit__contact { font-size: 14px; line-height: 2; color: var(--es-text-muted); font-weight: 300; }
   .es-mediakit__contact strong { color: var(--es-text); font-weight: 600; }
-  .es-mediakit__contact a { color: var(--es-gold); text-decoration: none; }
+  .es-mediakit__contact a { color: var(--es-accent); text-decoration: none; }
 
   @media (max-width: 560px) {
     .es-press__header h1 { font-size: 30px; }
@@ -185,8 +183,8 @@
     </div>
 
     <div class="es-view-toggle">
-      <button class="is-active" data-view="rassegna">Rassegna Stampa</button>
-      <button data-view="mediakit">Ufficio Stampa &amp; Media Kit</button>
+      <button type="button" class="is-active" data-view="rassegna">Rassegna Stampa</button>
+      <button type="button" data-view="mediakit">Ufficio Stampa &amp; Media Kit</button>
     </div>
 
     <!-- ===== Vista: Rassegna Stampa ===== -->
@@ -343,7 +341,9 @@
   }
 
   document.querySelectorAll("#cat-filters button").forEach(function (btn) {
-    btn.addEventListener("click", function () {
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
       document.querySelectorAll("#cat-filters button").forEach(function (b) { b.classList.remove("is-active"); });
       btn.classList.add("is-active");
       state.cat = btn.getAttribute("data-cat");
@@ -357,7 +357,13 @@
   });
 
   document.querySelectorAll(".es-view-toggle button").forEach(function (btn) {
-    btn.addEventListener("click", function () {
+    btn.addEventListener("click", function (e) {
+      // Il sito usa un router basato su hash (#stampa-portal). Se questo
+      // bottone viene mai marcato come <a href="#"> o dentro un <form>,
+      // preventDefault + stopPropagation evitano che il router globale
+      // interpreti il click come "vai a home".
+      e.preventDefault();
+      e.stopPropagation();
       document.querySelectorAll(".es-view-toggle button").forEach(function (b) { b.classList.remove("is-active"); });
       btn.classList.add("is-active");
       var target = btn.getAttribute("data-view");

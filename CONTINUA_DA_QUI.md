@@ -3,9 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-11** (Stampa: versione Luxury / Editoriale)
-Ultimo fatto: **Stampa Luxury / Editoriale**: tipografia serif (Playfair Display con fallback Georgia), accento champagne/oro (`#c9a961`), niente pillole arrotondate né colori saturi a blocchi, lista editoriale a colonna singola con divisori sottili, ricerca e filtri minimali a linea sottile. Creata anche anteprima standalone `area-stampa-comunicazione.html`. Cache `STAMPALUX1`.
-Feature precedente: **Fix login email password + Unexpected token JSON**. Cache `LOGINFIX1`.
+Ultimo aggiornamento: **2026-09-11** (Stampa: palette blu coerente (#3b7dff), box ricerca allineato e fix tab Media Kit)
+Ultimo fatto: **Stampa: palette blu coerente & fix router tab**: tolto l'oro, allineato all'accento blu (`#3b7dff`) e ai token del brand (`--es-bg: #0b0e14`, `--es-panel: #10141d`, `--es-border: #1e2430`, `--es-text-muted: #8a93a3`); barra di ricerca trasformata in box scuro con bordo sottile e glow blu al focus; risolto alla radice il bug del tab "Ufficio Stampa & Media Kit" che rimandava alla home (bloccata l'intercettazione in capture phase del router globale in `index.html` e `app.js`, aggiunti `preventDefault()` e `stopPropagation()`, bottoni espliciti `data-press-tab`). Aggiornata anche anteprima standalone `area-stampa-comunicazione.html`. Cache `STAMPABLU1`.
+Feature precedente: **Stampa Luxury / Editoriale**: tipografia serif (Playfair Display con fallback Georgia), lista editoriale a colonna singola con divisori sottili. Cache `STAMPALUX1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 

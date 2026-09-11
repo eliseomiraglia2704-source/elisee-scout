@@ -194,22 +194,24 @@ body.es-giorn-on #user-dossier-portal,
 
 #view-stampa {
   min-height: 100vh;
-  background: var(--es-bg, #0a0c12);
-  color: var(--es-text, #f1eee6);
+  background: var(--es-bg, #0b0e14);
+  color: var(--es-text, #eef1f6);
   font-family: var(--es-font-sans, -apple-system, "Segoe UI", Roboto, sans-serif);
   position: relative;
   overflow-x: hidden;
 }
 
 :root {
-  --es-bg: #0a0c12;
-  --es-text: #f1eee6;
-  --es-text-muted: #99917f;
-  --es-text-faint: #6d6858;
-  --es-gold: #c9a961;
-  --es-gold-soft: rgba(201, 169, 97, 0.12);
+  --es-bg: #0b0e14;
+  --es-panel: #10141d;
+  --es-border: #1e2430;
+  --es-text: #eef1f6;
+  --es-text-muted: #8a93a3;
+  --es-text-faint: #626b79;
+  --es-accent: #3b7dff;
+  --es-accent-soft: rgba(59, 125, 255, 0.12);
   --es-hairline: rgba(255, 255, 255, 0.09);
-  --es-hairline-gold: rgba(201, 169, 97, 0.28);
+  --es-hairline-accent: rgba(59, 125, 255, 0.28);
   --es-font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
   --es-font-sans: -apple-system, "Segoe UI", Roboto, sans-serif;
 }
@@ -230,7 +232,7 @@ body.es-giorn-on #user-dossier-portal,
 }
 
 .es-press__eyebrow {
-  color: var(--es-gold);
+  color: var(--es-accent);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.18em;
@@ -287,8 +289,8 @@ body.es-giorn-on #user-dossier-portal,
 }
 
 .es-view-toggle button.is-active {
-  color: var(--es-gold);
-  border-bottom-color: var(--es-gold);
+  color: var(--es-accent);
+  border-bottom-color: var(--es-accent);
 }
 
 .es-view {
@@ -299,19 +301,26 @@ body.es-giorn-on #user-dossier-portal,
   display: block;
 }
 
-/* ---- Ricerca (riga sottile, non box) ---- */
+/* ---- Ricerca: box scuro con bordo sottile identico agli altri filtri del sito ---- */
 .es-search {
   display: flex;
   align-items: center;
-  gap: 12px;
-  border-bottom: 1px solid var(--es-hairline);
-  padding: 0 0 14px;
+  gap: 10px;
+  background: var(--es-panel);
+  border: 1px solid var(--es-border);
+  border-radius: 8px;
+  padding: 12px 16px;
   margin-bottom: 28px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.es-search:focus-within {
+  border-color: var(--es-accent);
+  box-shadow: 0 0 0 1px var(--es-accent-soft);
 }
 
 .es-search svg {
   flex-shrink: 0;
-  opacity: 0.55;
   color: var(--es-text-muted);
 }
 
@@ -322,7 +331,7 @@ body.es-giorn-on #user-dossier-portal,
   color: var(--es-text);
   font-size: 14px;
   font-family: var(--es-font-sans);
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .es-search input:focus {
@@ -330,7 +339,7 @@ body.es-giorn-on #user-dossier-portal,
 }
 
 .es-search input::placeholder {
-  color: var(--es-text-faint);
+  color: var(--es-text-muted);
 }
 
 /* ---- Filtri categoria: testo + divisore sottile, non pillole ---- */
@@ -365,7 +374,7 @@ body.es-giorn-on #user-dossier-portal,
 }
 
 .es-cat-filters button.is-active {
-  color: var(--es-gold);
+  color: var(--es-accent);
 }
 
 /* ---- Lista editoriale (niente card colorate) ---- */
@@ -395,7 +404,7 @@ body.es-giorn-on #user-dossier-portal,
 }
 
 .es-article__meta .es-cat-label {
-  color: var(--es-gold);
+  color: var(--es-accent);
 }
 
 .es-article__meta .es-dot {
@@ -451,21 +460,21 @@ body.es-giorn-on #user-dossier-portal,
 }
 
 .es-article__internal-link:hover {
-  color: var(--es-gold);
+  color: var(--es-accent);
 }
 
 .es-article__link {
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: var(--es-gold);
+  color: var(--es-accent);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: border-color 0.18s ease;
 }
 
 .es-article__link:hover {
-  border-bottom-color: var(--es-gold);
+  border-bottom-color: var(--es-accent);
 }
 
 .es-empty {
@@ -548,7 +557,7 @@ body.es-giorn-on #user-dossier-portal,
 }
 
 .es-mediakit__list a {
-  color: var(--es-gold);
+  color: var(--es-accent);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.03em;
@@ -559,7 +568,7 @@ body.es-giorn-on #user-dossier-portal,
 }
 
 .es-mediakit__list a:hover {
-  border-bottom-color: var(--es-gold);
+  border-bottom-color: var(--es-accent);
 }
 
 .es-mediakit__contact {
@@ -575,14 +584,14 @@ body.es-giorn-on #user-dossier-portal,
 }
 
 .es-mediakit__contact a {
-  color: var(--es-gold);
+  color: var(--es-accent);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: border-color 0.18s ease;
 }
 
 .es-mediakit__contact a:hover {
-  border-bottom-color: var(--es-gold);
+  border-bottom-color: var(--es-accent);
 }
 
 @media (max-width: 560px) {
@@ -599,3 +608,4 @@ body.es-giorn-on #user-dossier-portal,
     gap: 20px;
   }
 }
+

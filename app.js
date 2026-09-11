@@ -7872,8 +7872,8 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   document.addEventListener('click', (e) => {
-    // Non intercettare i bottoni del bivio Account (hanno handler dedicati)
-    if (e.target.closest('#btn-enter-user-portal, #btn-enter-admin-portal')) {
+    // Non intercettare i bottoni del bivio Account o click interni all'area Stampa
+    if (e.target.closest('#btn-enter-user-portal, #btn-enter-admin-portal, #stampa-portal, #view-stampa, .es-press')) {
       return;
     }
     const link = e.target.closest('a[href^="#"], [data-view]');

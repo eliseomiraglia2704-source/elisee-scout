@@ -342,7 +342,7 @@
   <link rel="stylesheet" href="ma-dash.css?v=20260905_MAFIX1">
   <link rel="stylesheet" href="med-dash.css?v=20260827_LUX1">
   <link rel="stylesheet" href="tifoso-dash.css?v=20260827_LUX1">
-  <link rel="stylesheet" href="giorn-dash.css?v=20260911_STAMPALUX1">
+  <link rel="stylesheet" href="giorn-dash.css?v=20260911_STAMPABLU1">
   <link rel="stylesheet" href="obs-dash.css?v=20260905_OBSFIX1">
   <link rel="stylesheet" href="tm-dash.css?v=20260827_LUX1">
   <link rel="stylesheet" href="gk-dash.css?v=20260904_GKAT1">
@@ -1153,7 +1153,9 @@
 
       function resolveViewFromEl(el) {
         if (!el) return null;
+        if (el.closest && el.closest('#stampa-portal, #view-stampa, .es-press')) return null;
         var view = el.getAttribute('data-view');
+        if (view === 'mediakit' || view === 'rassegna') return null;
         if (view) return { view: view, hash: el.getAttribute('href') || '' };
         if (el.id === 'btn-nav-accedi') {
           return { view: '__login__', hash: '' };
@@ -1188,14 +1190,14 @@
         return null;
       }
 
-      // Capture phase: SOLO navigazione macro (mai dropdown / azioni bacheca)
+      // Capture phase: SOLO navigazione macro (mai dropdown / azioni bacheca / tab stampa)
       document.addEventListener('click', function (ev) {
         try {
           var t = ev.target;
           if (!t || !t.closest) return;
           // Non interferire con form, dropdown, filtri, azioni locali
           if (t.closest(
-            'input, textarea, select, option, label, .modal-card, .custom-dropdown, .dropdown-trigger, .dropdown-options-menu, .dropdown-option, .pf-toolbar, .pf-filters, .pf-chips, .pf-header-actions, #bacheca-network, .es-ap-root.is-open, .es-int-root.is-open, #es-mg-root.is-open, .wr-backdrop.is-open, #amb-ai-modal.is-open, #modal-registrazione, #modal-accesso-unificato, #modal-pubblica-annuncio'
+            'input, textarea, select, option, label, .modal-card, .custom-dropdown, .dropdown-trigger, .dropdown-options-menu, .dropdown-option, .pf-toolbar, .pf-filters, .pf-chips, .pf-header-actions, #bacheca-network, #stampa-portal, #view-stampa, .es-press, .es-ap-root.is-open, .es-int-root.is-open, #es-mg-root.is-open, .wr-backdrop.is-open, #amb-ai-modal.is-open, #modal-registrazione, #modal-accesso-unificato, #modal-pubblica-annuncio'
           )) return;
           var el = t.closest(
             'a.nav-link, a[data-view], button[data-view], .btn-nav-accedi, .btn-nav-iscriviti, #btn-nav-accedi, #btn-enter-user-portal, #btn-enter-admin-portal, .hero-buttons-row a, .hero-buttons-row button, .brand-logo, footer a[href^="#"], a[href^="#"]'
@@ -5676,7 +5678,7 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="elisee-staff.js?v=20260911_STAFF1"></script>
-  <script src="app.js?v=20260911_LOGINFIX1"></script>
+  <script src="app.js?v=20260911_STAMPABLU1"></script>
   <script src="player-profile.js?v=20260905_OBSFIX1"></script>
   <script src="public-rating-system.js?v=20260904_SEASONDROP1"></script>
   <script src="dash-real.js?v=20260904_SEASONDROP1"></script>
@@ -5702,7 +5704,7 @@
   <script src="sg-dash.js?v=20260903_BUGFIXALL2"></script>
   <script src="bt-dash.js?v=20260903_BUGFIXALL2"></script>
   <script src="tifoso-dash.js?v=20260903_BUGFIXALL2"></script>
-  <script src="giorn-dash.js?v=20260911_STAMPALUX1"></script>
+  <script src="giorn-dash.js?v=20260911_STAMPABLU1"></script>
   <script src="scopri-profili.js?v=20260827_CARDORDER1"></script>
   <script src="messaggi.js?v=20260820_MSG1"></script>
   <script src="mercato-hub.js?v=20260903_MA3"></script>

@@ -729,11 +729,11 @@
     var comHtml = COMUNICATI_UFFICIALI.map(function (c) {
       return '<li>' +
         '<div>' +
-          '<div style="font-size:11px; color:var(--es-gold); font-weight:600; letter-spacing:0.08em; margin-bottom:4px;">' + esc(c.date) + '</div>' +
+          '<div style="font-size:11px; color:var(--es-accent); font-weight:600; letter-spacing:0.08em; margin-bottom:4px;">' + esc(c.date) + '</div>' +
           '<div style="font-weight:600; color:var(--es-text); font-size:14px; margin-bottom:4px;">' + esc(c.title) + '</div>' +
           '<div style="font-size:13px; color:var(--es-text-muted); line-height:1.5;">' + esc(c.text) + '</div>' +
         '</div>' +
-        '<a href="#" onclick="if(window.showToast)window.showToast(\'Download comunicato: ' + esc(c.title).replace(/'/g, "\\'") + '\', \'info\'); return false;" style="white-space:nowrap; margin-left:16px;">' + esc(c.docTitle) + ' →</a>' +
+        '<a href="#" onclick="event.preventDefault();event.stopPropagation();if(window.showToast)window.showToast(\'Download comunicato: ' + esc(c.title).replace(/'/g, "\\'") + '\', \'info\'); return false;" style="white-space:nowrap; margin-left:16px;">' + esc(c.docTitle) + ' →</a>' +
       '</li>';
     }).join('');
 
@@ -747,9 +747,9 @@
         '<h3>Asset scaricabili</h3>' +
         '<p>Logo, palette colori e linee guida del brand per articoli, servizi e collaborazioni editoriali.</p>' +
         '<ul class="es-mediakit__list">' +
-          '<li>Logo pack (SVG / PNG) <a href="#" data-asset="logo" onclick="if(window.showToast)window.showToast(\'Download Logo pack avviato\', \'success\'); return false;">Scarica →</a></li>' +
-          '<li>Brand guidelines (PDF) <a href="#" data-asset="guidelines" onclick="if(window.showToast)window.showToast(\'Download Brand guidelines avviato\', \'success\'); return false;">Scarica →</a></li>' +
-          '<li>Scheda piattaforma / fact sheet <a href="#" data-asset="factsheet" onclick="if(window.showToast)window.showToast(\'Download Fact sheet avviato\', \'success\'); return false;">Scarica →</a></li>' +
+          '<li>Logo pack (SVG / PNG) <a href="#" data-asset="logo" onclick="event.preventDefault();event.stopPropagation();if(window.showToast)window.showToast(\'Download Logo pack avviato\', \'success\'); return false;">Scarica →</a></li>' +
+          '<li>Brand guidelines (PDF) <a href="#" data-asset="guidelines" onclick="event.preventDefault();event.stopPropagation();if(window.showToast)window.showToast(\'Download Brand guidelines avviato\', \'success\'); return false;">Scarica →</a></li>' +
+          '<li>Scheda piattaforma / fact sheet <a href="#" data-asset="factsheet" onclick="event.preventDefault();event.stopPropagation();if(window.showToast)window.showToast(\'Download Fact sheet avviato\', \'success\'); return false;">Scarica →</a></li>' +
         '</ul>' +
       '</div>' +
       '<div class="es-mediakit__block">' +
@@ -782,8 +782,8 @@
     }
 
     var toggleHtml = '<div class="es-view-toggle">' +
-      '<button type="button" class="' + (activeMacroTab === 'rassegna' ? 'is-active' : '') + '" data-view="rassegna" data-st-macro="rassegna">Rassegna Stampa</button>' +
-      '<button type="button" class="' + (activeMacroTab === 'ufficiostampa' ? 'is-active' : '') + '" data-view="mediakit" data-st-macro="ufficiostampa">Ufficio Stampa &amp; Media Kit</button>' +
+      '<button type="button" class="' + (activeMacroTab === 'rassegna' ? 'is-active' : '') + '" data-press-tab="rassegna" data-st-macro="rassegna">Rassegna Stampa</button>' +
+      '<button type="button" class="' + (activeMacroTab === 'ufficiostampa' ? 'is-active' : '') + '" data-press-tab="mediakit" data-st-macro="ufficiostampa">Ufficio Stampa &amp; Media Kit</button>' +
       '</div>';
 
     var bodyContent = '';
@@ -847,9 +847,11 @@
   }
 
   function onFeedClick(e) {
-    var macroBtn = e.target.closest('[data-st-macro], [data-view]');
+    var macroBtn = e.target.closest('[data-st-macro], [data-press-tab]');
     if (macroBtn) {
-      var v = macroBtn.getAttribute('data-st-macro') || macroBtn.getAttribute('data-view');
+      e.preventDefault();
+      e.stopPropagation();
+      var v = macroBtn.getAttribute('data-st-macro') || macroBtn.getAttribute('data-press-tab');
       activeMacroTab = (v === 'mediakit' || v === 'ufficiostampa') ? 'ufficiostampa' : 'rassegna';
       renderFeed();
       return;
@@ -857,6 +859,8 @@
 
     var catBtn = e.target.closest('[data-st-cat], [data-cat]');
     if (catBtn) {
+      e.preventDefault();
+      e.stopPropagation();
       var c = catBtn.getAttribute('data-st-cat') || catBtn.getAttribute('data-cat');
       activeCategory = (c === 'tutte' || c === 'all') ? 'all' : c;
       renderFeed();
@@ -865,6 +869,8 @@
 
     var tag = e.target.closest('[data-st-tag]');
     if (tag) {
+      e.preventDefault();
+      e.stopPropagation();
       try { openTag(JSON.parse(decodeURIComponent(tag.getAttribute('data-st-tag') || ''))); } catch (_) {}
       return;
     }
