@@ -3,11 +3,11 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-12** (commit `c38dd0e`) — Mappa Club: barra di ricerca in pillola bianca piena, icona e placeholder in nero grassetto, ombra stacco tile e menu risultati chiaro coerente (`mappa-club.css`). Cache `SEARCHPILL1`.
-Ultimo fatto: **Mappa Club / Barra Ricerca Pillola Bianca & Dropdown Chiaro**:
-1. **Pillola Bianca Piena (`.es-map-search__bar`)**: Sfondo `#ffffff`, completamente arrotondata (`border-radius: 999px`), icona e input in nero `#1a1a1a` con font grassetto `font-weight: 700`, ombra `box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4)` per un perfetto stacco dai tile della mappa.
-2. **Menu Risultati Chiaro Coerente (`.es-map-search__results`)**: Sfondo bianco `#ffffff`, angoli `border-radius: 14px`, righe con hover chiaro `#f2f2f2`, testo nero e meta grigio scuro `#666`, perfettamente coordinato con la barra.
-Feature precedente: **Mappa Club / Pannello Squadre Regionale & Centratura**: Cache `REGTEAMS1`.
+Ultimo aggiornamento: **2026-09-12** (commit `481778a`) — Mappa Club: allineati i colori della barra di ricerca a pillola e del dropdown a quelli dei controlli zoom e fullscreen (`var(--es-panel)` #10141d, `var(--es-border)` #1e2430, `var(--es-text)` #eef1f6). Cache `DARKPILL1`.
+Ultimo fatto: **Mappa Club / Allineamento Colori Barra di Ricerca ai Controlli Mappa**:
+1. **Barra Pillola Coordinata (`.es-map-search__bar`)**: Stesso colore dei bottoni zoom e fullscreen (`background: var(--es-panel)` #10141d, `border: 1px solid var(--es-border)` #1e2430), testo ed icona in bianco (`var(--es-text)`), placeholder soft, hover/focus con bordo d'accento.
+2. **Dropdown Risultati Coordinato (`.es-map-search__results`)**: Uniformato allo stesso tema dark luxury con sfondo `#10141d`, bordo `#1e2430` e testo coordinato.
+Feature precedente: **Mappa Club / Barra Ricerca Pillola Bianca & Dropdown Chiaro**: Cache `SEARCHPILL1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -942,3 +942,4 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 - **2026-09-12** — Mappa Club: rimosso definitivamente il marker con badge "ES" della Sede Centrale a Foggia. La mappa mostra esclusivamente i cluster e i club effettivi. Cache `NOHQ1`.
 - **2026-09-12** — Mappa Club: pannello squadre per regione espandibile a tutta riga (`.es-region-teams`) al click sulla card, centratura mappa Leaflet sincronizzata, chiusura con ✕ o click ripetuto. Cache `REGTEAMS1`.
 - **2026-09-12** — Mappa Club: barra di ricerca trasformata in pillola bianca piena (`border-radius: 999px`), icona e placeholder in nero grassetto (`#1a1a1a`), dropdown risultati chiaro su sfondo bianco coordinato. Cache `SEARCHPILL1`.
+- **2026-09-12** — Mappa Club: colori della barra di ricerca e del dropdown allineati esattamente a quelli dei controlli zoom e fullscreen (`#10141d` / `#1e2430` / `#eef1f6`). Cache `DARKPILL1`.
