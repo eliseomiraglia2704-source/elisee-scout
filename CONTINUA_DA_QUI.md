@@ -3,12 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-12** (commit `c862068`) — Mappa Club: loghi PNG trasparenti senza sfondo nero, dimensioni loghi e nomi squadra ingrandite, ordinamento alfabetico A-Z nel pannello regionale. Cache `LOGOSIZE1`.
-Ultimo fatto: **Mappa Club / Loghi Trasparenti, Dimensioni Incrementate & Ordine Alfabetico**:
-1. **Loghi Senza Sfondo Nero (`mappa-club.css`)**: Eliminato sfondo scuro, bordo e padding da `.es-region-team-logo`; i loghi PNG vengono ora visualizzati in trasparenza pura con un morbido `drop-shadow`.
-2. **Dimensioni Maggiori (`mappa-club.css`)**: Ingranditi i loghi (da 22px a 26px) e il testo dei nomi delle società (da 12px a 13.5px con `font-weight: 600`), con spaziatura (`gap: 10px`) e padding proporzionati.
-3. **Ordinamento Alfabetico (`mappa-club.js`)**: Le squadre di ogni regione vengono ora ordinate rigorosamente in ordine alfabetico (A-Z) con supporto per localizzazione italiana.
-Feature precedente: **Mappa Club / Spostamento Attribuzione Cartografica Sotto la Mappa**: Cache `ATTRIB1`.
+Ultimo aggiornamento: **2026-09-12** (commit `c55350f`) — Mappa Club & Tabelle Regionali: presenti sulla mappa e nelle schede tutte e sole le squadre dalla Serie A all'Eccellenza (729 società ufficiali reali, rimossi duplicati, giovanili e serie minori). Cache `ATOECC2`.
+Ultimo fatto: **Mappa Club / Tutte e Sole le Squadre dalla Serie A all'Eccellenza**:
+1. **Catalogo Reale Serie A - Eccellenza (`data/squadre/scopri-clubs.json`)**: Rigenerato il catalogo escludendo Promozione, 1ª/2ª/3ª Categoria, U19 e duplicati, mantenendo le 729 società uniche ufficiali dalla Serie A all'Eccellenza con geolocalizzazione esatta e loghi.
+2. **Filtro Mappa & Tabelle (`mappa-club.js`)**: Aggiunto `isSerieAToEccellenza(c)` su caricamento pin, cluster, ricerca e pannelli regionali; i conteggi riflettono esattamente le squadre di vertice (es. Puglia: 34 società autentiche senza duplicati, Lombardia: 92, Campania: 59).
+3. **Dicitura & Trasparenza (`index.html`, `mappa-club.js`)**: Contatore e intestazioni aggiornate con la dicitura chiara "(dalla Serie A all'Eccellenza)".
+Feature precedente: **Mappa Club / Loghi Trasparenti, Dimensioni Incrementate & Ordine Alfabetico**: Cache `LOGOSIZE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -463,6 +463,12 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-12** — Mappa Club & Tabelle: tutte e sole le squadre dalla Serie A all'Eccellenza:
+  - Filtrato `data/squadre/scopri-clubs.json`: mantenute esclusivamente le 729 società ufficiali reali appartenenti a Serie A, Serie B, Serie C, Serie D ed Eccellenza (maschile), eliminando duplicati, formazioni U19 e categorie minori (Promozione, Prima, Seconda e Terza Categoria).
+  - Aggiornato `mappa-club.js`: introdotta la funzione di validazione `isSerieAToEccellenza(c)` che garantisce che sia i marker della mappa, sia i conteggi regionali, sia i pannelli espandibili mostrino soltanto i club dalla Serie A all'Eccellenza (es. Puglia: 34 società reali senza duplicati; Lombardia: 92, Campania: 59).
+  - Aggiornato `index.html` con etichetta contatore trasparente "(dalla Serie A all'Eccellenza)".
+  - Cache `ATOECC2`.
 
 - **2026-09-12** — Mappa Club: loghi trasparenti senza sfondo nero, dimensioni ingrandite e ordine alfabetico:
   - Aggiornato `mappa-club.css`: rimosso lo sfondo nero, il bordo e il padding da `.es-region-team-logo` consentendo la visualizzazione in piena trasparenza dei loghi PNG con leggero `drop-shadow`.

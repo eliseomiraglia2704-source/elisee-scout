@@ -2,10 +2,25 @@
 (function () {
   'use strict';
 
-  var CLUBS_URL = 'data/squadre/scopri-clubs.json?v=20260908_ECCLAZIO4';
+  var CLUBS_URL = 'data/squadre/scopri-clubs.json?v=20260912_SERIEA_TO_ECC_CLEAN';
   var MAX_PINS = 3500;
   var clubs = null;
   var activeFilter = 'all';
+
+  function isSerieAToEccellenza(c) {
+    if (!c) return false;
+    var l = (c.league || c.group || '').trim().toUpperCase();
+    if (!l) return false;
+    if (l.indexOf('PRIMAVERA') !== -1 || l.indexOf('ARCHIVIO') !== -1 || l.indexOf('U19') !== -1 || l.indexOf('UNDER') !== -1) {
+      return false;
+    }
+    if (l.indexOf('FEMMINILE') !== -1 || (c.gender && String(c.gender).toLowerCase() === 'f')) {
+      return false;
+    }
+    if (l.indexOf('ECCELLENZA') !== -1) return true;
+    if (/^SERIE\s+[ABCD](\s|$|—|-)/i.test(l)) return true;
+    return false;
+  }
 
   function esc(s) {
     return String(s == null ? '' : s)
@@ -53,16 +68,11 @@
 
   function loadClubs(done) {
     if (clubs) { done(clubs); return; }
-    if (window.__eliseeScopriClubs && window.__eliseeScopriClubs.length) {
-      clubs = window.__eliseeScopriClubs;
-      done(clubs);
-      return;
-    }
     fetch(CLUBS_URL)
       .then(function (r) { return r.json(); })
       .then(function (j) {
         var base = (j.clubs || []).filter(function (c) {
-          return typeof c.lat === 'number' && typeof c.lng === 'number';
+          return typeof c.lat === 'number' && typeof c.lng === 'number' && isSerieAToEccellenza(c);
         });
         var overrides = getGeoOverrides();
         base.forEach(function (c) {
@@ -373,7 +383,7 @@
     if (!source || !source.length) return [];
     var target = (regione || '').trim().toLowerCase();
     var list = source.filter(function (c) {
-      return (c.region || '').trim().toLowerCase() === target;
+      return (c.region || '').trim().toLowerCase() === target && isSerieAToEccellenza(c);
     });
 
     list.sort(function (a, b) {
@@ -413,7 +423,7 @@
             '<button type="button" class="es-region-show-more-btn" data-show-all="' + esc(regione) + '">' +
               'Mostra tutte le ' + squadre.length + ' squadre' +
             '</button>' +
-            '<p class="es-region-teams__note" style="margin-top:0;">Visualizzate le prime ' + maxInitial + ' squadre ufficiali in ordine alfabetico.</p>' +
+            '<p class="es-region-teams__note" style="margin-top:0;">Visualizzate le prime ' + maxInitial + ' squadre ufficiali (dalla Serie A all\'Eccellenza) in ordine alfabetico.</p>' +
           '</div>';
         } else {
           listHtml += '<div style="margin-top:14px;">' +
@@ -430,7 +440,7 @@
     return (
       '<div class="es-region-teams" role="region" aria-label="Squadre in ' + esc(regione) + '">' +
         '<div class="es-region-teams__head">' +
-          '<h3>Squadre in ' + esc(regione) + ' <span>(' + count + ' club ufficiali)</span></h3>' +
+          '<h3>Squadre in ' + esc(regione) + ' <span>(' + count + ' club — Serie A / Eccellenza)</span></h3>' +
           '<button type="button" class="es-region-teams__close" data-close="' + esc(regione) + '" aria-label="Chiudi pannello squadre">✕</button>' +
         '</div>' +
         listHtml +

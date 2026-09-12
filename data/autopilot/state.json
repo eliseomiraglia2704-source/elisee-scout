@@ -1,12 +1,12 @@
 {
-  "saved_at": "2026-09-12T11:52:17.690733+00:00",
+  "saved_at": "2026-09-12T13:00:15.409272+00:00",
   "running": true,
   "started_at": "2026-09-09T09:09:30.047490+00:00",
-  "cycles": 21757,
+  "cycles": 21936,
   "heals": 26,
-  "jobs_ok": 174056,
+  "jobs_ok": 175488,
   "jobs_fail": 0,
-  "campionati_ticks": 43569,
+  "campionati_ticks": 43940,
   "cfg": {
     "enabled": true,
     "auto_start": true,
@@ -36,7 +36,7 @@
     }
   },
   "last_health": {
-    "at": "2026-09-12T11:52:17.690733+00:00",
+    "at": "2026-09-12T13:00:14.660117+00:00",
     "ok": true,
     "bad": [],
     "fleets": [
@@ -46,10 +46,10 @@
         "target": 715,
         "online": 715,
         "status": "online",
-        "last_ok": "2026-09-12T11:52:17.295633+00:00",
-        "ops": 5954,
+        "last_ok": "2026-09-12T13:00:05.352384+00:00",
+        "ops": 6133,
         "errors": 0,
-        "detail": "hb cycle 21757",
+        "detail": "hb cycle 21936",
         "enabled": true,
         "ok": true,
         "unit": "units"
@@ -60,10 +60,10 @@
         "target": 2010,
         "online": 2010,
         "status": "online",
-        "last_ok": "2026-09-12T11:52:16.039006+00:00",
-        "ops": 11979,
+        "last_ok": "2026-09-12T13:00:04.913756+00:00",
+        "ops": 12349,
         "errors": 0,
-        "detail": "tick #43569 · latest.json age=5s · keys=8",
+        "detail": "tick #43939 · latest.json age=5s · keys=8",
         "enabled": true,
         "ok": true,
         "unit": "units"
@@ -74,8 +74,8 @@
         "target": 402,
         "online": 402,
         "status": "online",
-        "last_ok": "2026-09-12T11:52:16.039006+00:00",
-        "ops": 11979,
+        "last_ok": "2026-09-12T13:00:04.913756+00:00",
+        "ops": 12349,
         "errors": 0,
         "detail": "H24 ok · data age 5s",
         "enabled": true,
@@ -88,8 +88,8 @@
         "target": 3,
         "online": 3,
         "status": "online",
-        "last_ok": "2026-09-12T11:52:17.295633+00:00",
-        "ops": 5954,
+        "last_ok": "2026-09-12T13:00:05.352384+00:00",
+        "ops": 6133,
         "errors": 0,
         "detail": "pulse PSUP-01/02/03",
         "enabled": true,
@@ -102,8 +102,8 @@
         "target": 150,
         "online": 150,
         "status": "online",
-        "last_ok": "2026-09-12T11:52:16.476522+00:00",
-        "ops": 5954,
+        "last_ok": "2026-09-12T13:00:05.192380+00:00",
+        "ops": 6133,
         "errors": 0,
         "detail": "integrity issues=0",
         "enabled": true,
@@ -116,10 +116,10 @@
         "target": 8,
         "online": 8,
         "status": "online",
-        "last_ok": "2026-09-12T11:52:17.295633+00:00",
-        "ops": 5954,
+        "last_ok": "2026-09-12T13:00:05.352384+00:00",
+        "ops": 6133,
         "errors": 0,
-        "detail": "cycle #21757",
+        "detail": "cycle #21936",
         "enabled": true,
         "ok": true,
         "unit": "units"
@@ -130,7 +130,7 @@
         "target": 1,
         "online": 1,
         "status": "online",
-        "last_ok": "2026-09-12T11:52:02.099165+00:00",
+        "last_ok": "2026-09-12T12:59:59.409800+00:00",
         "ops": 1,
         "errors": 0,
         "detail": "pid 22968",
@@ -140,8 +140,8 @@
       }
     ]
   },
-  "last_ops": "2026-09-12T11:52:15.089320+00:00",
-  "last_campionati": "2026-09-12T11:52:16.003586+00:00",
+  "last_ops": "2026-09-12T13:00:04.446335+00:00",
+  "last_campionati": "2026-09-12T13:00:15.196474+00:00",
   "last_tuttocampo": {
     "started_at": "2026-09-12T03:13:10.402433+00:00",
     "pid": 22968,
@@ -154,10 +154,10 @@
       "target": 715,
       "online": 715,
       "status": "online",
-      "last_ok": "2026-09-12T11:52:17.295633+00:00",
-      "ops": 5954,
+      "last_ok": "2026-09-12T13:00:05.352384+00:00",
+      "ops": 6133,
       "errors": 0,
-      "detail": "hb cycle 21757"
+      "detail": "hb cycle 21936"
     },
     "campionatiAgents": {
       "id": "campionatiAgents",
@@ -165,10 +165,10 @@
       "target": 2010,
       "online": 2010,
       "status": "online",
-      "last_ok": "2026-09-12T11:52:16.039006+00:00",
-      "ops": 11979,
+      "last_ok": "2026-09-12T13:00:15.409272+00:00",
+      "ops": 12350,
       "errors": 0,
-      "detail": "tick #43569 · latest.json age=5s · keys=8"
+      "detail": "tick #43940 · latest.json age=5s · keys=8"
     },
     "campionatiSupervisors": {
       "id": "campionatiSupervisors",
@@ -176,8 +176,8 @@
       "target": 402,
       "online": 402,
       "status": "online",
-      "last_ok": "2026-09-12T11:52:16.039006+00:00",
-      "ops": 11979,
+      "last_ok": "2026-09-12T13:00:15.409272+00:00",
+      "ops": 12350,
       "errors": 0,
       "detail": "H24 ok · data age 5s"
     },
@@ -187,8 +187,8 @@
       "target": 3,
       "online": 3,
       "status": "online",
-      "last_ok": "2026-09-12T11:52:17.295633+00:00",
-      "ops": 5954,
+      "last_ok": "2026-09-12T13:00:05.352384+00:00",
+      "ops": 6133,
       "errors": 0,
       "detail": "pulse PSUP-01/02/03"
     },
@@ -198,8 +198,8 @@
       "target": 150,
       "online": 150,
       "status": "online",
-      "last_ok": "2026-09-12T11:52:16.476522+00:00",
-      "ops": 5954,
+      "last_ok": "2026-09-12T13:00:05.192380+00:00",
+      "ops": 6133,
       "errors": 0,
       "detail": "integrity issues=0"
     },
@@ -209,10 +209,10 @@
       "target": 8,
       "online": 8,
       "status": "online",
-      "last_ok": "2026-09-12T11:52:17.295633+00:00",
-      "ops": 5954,
+      "last_ok": "2026-09-12T13:00:05.352384+00:00",
+      "ops": 6133,
       "errors": 0,
-      "detail": "cycle #21757"
+      "detail": "cycle #21936"
     },
     "tuttocampoSync": {
       "id": "tuttocampoSync",
@@ -220,7 +220,7 @@
       "target": 1,
       "online": 1,
       "status": "online",
-      "last_ok": "2026-09-12T11:52:02.099165+00:00",
+      "last_ok": "2026-09-12T12:59:59.409800+00:00",
       "ops": 1,
       "errors": 0,
       "detail": "pid 22968"
