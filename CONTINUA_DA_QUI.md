@@ -3,11 +3,11 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-12** (commit `dd033ae`) — Rimozione HQ / Sede Centrale dalla Mappa Club e legenda per privacy (`mappa-club.js`, `index.html`). Cache `MAPPRIVACY1`.
-Ultimo fatto: **Mappa Club / Privacy HQ (Rimozione Sede Centrale)**:
-1. **Rimozione Pin HQ**: Rimosso il marker dorato dedicato "HQ / Sede Centrale Elisee Scout (Foggia)" da Leaflet in `mappa-club.js`.
-2. **Rimozione Legenda**: Eliminata la voce "Sede centrale — Foggia" con relativo dot giallo dalla legenda in `index.html`. Rimangono solo Cluster club e Club singolo.
-Feature precedente: **Mappa Club → Selettore Squadre / Risolto Errore Reindirizzamento**: Navigazione mirata per Club e Categoria (`selectTeamById`, supporto query hash, `mappa-club.js`). Cache `MAPSELECT1`.
+Ultimo aggiornamento: **2026-09-12** (commit `49cfc73`) — Rimozione completa barra legenda sopra la Mappa Club (`index.html`, `mappa-club.css`). Cache `NOLEGEND1`.
+Ultimo fatto: **Mappa Club / Rimozione Barra Legenda Superiore**:
+1. **Rimozione Barra Legenda**: Eliminato l'intero contenitore `.es-map-legend` (con cluster club, club singolo e sede centrale) posizionato sopra la mappa in `index.html`.
+2. **Layout Mappa Pulito**: La mappa e il suo frame scendono immediatamente sotto la barra informativa e la CTA di geolocalizzazione club per un design pulito, minimale e senza ingombri.
+Feature precedente: **Mappa Club / Privacy HQ (Rimozione Sede Centrale)**: Rimosso marker dorato HQ e relativo tooltip da `mappa-club.js`. Cache `MAPPRIVACY1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -462,6 +462,10 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-12** — Rimossa completamente la barra legenda superiore sopra la Mappa Club:
+  - Eliminato il contenitore `.es-map-legend` da `index.html`.
+  - Aggiornato cache-bust a `NOLEGEND1`.
 
 - **2026-09-12** — Privacy Mappa: rimossa Sede Centrale / HQ Foggia:
   - Rimosso il marker dorato dedicato HQ e relativo popup/tooltip da `mappa-club.js`.
