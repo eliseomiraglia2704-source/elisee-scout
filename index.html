@@ -365,7 +365,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
-  <link rel="stylesheet" href="mappa-club.css?v=20260912_MAPCOMPLETE1">
+  <link rel="stylesheet" href="mappa-club.css?v=20260912_MAPCOMPLETE2">
   <link rel="stylesheet" href="mobile-webapp.css?v=20260910_DOSSIER1">
   <style id="es-force-no-lines">
     @media screen and (max-width: 768px) {
@@ -4130,31 +4130,16 @@
             <a href="#mappa-portal" id="es-map-geolink" style="display:none;">Sei un club? Imposta la geolocalizzazione</a>
           </div>
 
-          <!-- Barra Ricerca Club con Autocomplete -->
-          <div class="es-map-search-bar" id="es-map-search-container">
-            <div class="es-map-search-wrap">
-              <svg class="es-map-search-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+          <!-- Barra Ricerca Club: autocomplete reale -->
+          <div class="es-map-search">
+            <div class="es-map-search__input">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                <circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
               </svg>
-              <input type="text" id="es-map-search-input" class="es-map-search-input" placeholder="Cerca tra 2.810 club per nome società o comune (es. Nuova Spinazzola, Foggia, Palermo)..." autocomplete="off" spellcheck="false" />
-              <button type="button" id="es-map-search-clear" class="es-map-search-clear" title="Cancella ricerca" hidden>&times;</button>
+              <input type="text" id="club-search" placeholder="Cerca un club per nome o comune" autocomplete="off" />
+              <button class="es-map-search__clear" id="club-search-clear" type="button">✕</button>
             </div>
-            <div id="es-map-search-dropdown" class="es-map-search-dropdown" hidden></div>
-          </div>
-
-          <div class="es-map-legend">
-            <div class="es-map-legend__item">
-              <span class="es-legend-dot es-legend-dot--cluster"></span>
-              <span><strong>Cluster club</strong> — zoom per esplorare</span>
-            </div>
-            <div class="es-map-legend__item">
-              <span class="es-legend-dot es-legend-dot--club"></span>
-              <span><strong>Club singolo</strong> — stemma e scheda</span>
-            </div>
-            <div class="es-map-legend__item">
-              <span class="es-legend-dot es-legend-dot--hq"></span>
-              <span><strong>Sede centrale</strong> — Foggia</span>
-            </div>
+            <div class="es-map-search__results" id="club-search-results"></div>
           </div>
 
           <div class="es-map-frame es-map-wrap">
@@ -5827,7 +5812,7 @@
   <script src="messaggi.js?v=20260820_MSG1"></script>
   <script src="mercato-hub.js?v=20260903_MA3"></script>
   <script src="schede-tecniche.js?v=20260820_ST3"></script>
-  <script src="mappa-club.js?v=20260912_MAPCOMPLETE1"></script>
+  <script src="mappa-club.js?v=20260912_MAPCOMPLETE2"></script>
   <script src="chi-segui.js?v=20260911_ALBUM2"></script>
   <script src="card-atelier.js?v=20260904_ADMINTAB1"></script>
   <script src="ds-hub.js?v=20260827_DS1"></script>

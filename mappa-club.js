@@ -404,100 +404,82 @@
     };
   }
 
-  /* Ricerca club autocomplete */
+  /* Ricerca club autocomplete — ricostruita con vera sorgente dati e centratura mappa */
   var searchBound = false;
   function initClubSearch() {
     if (searchBound) return;
-    var input = document.getElementById('es-map-search-input');
-    var dropdown = document.getElementById('es-map-search-dropdown');
-    var clearBtn = document.getElementById('es-map-search-clear');
-    if (!input || !dropdown) return;
+    var input = document.getElementById('club-search') || document.getElementById('es-map-search-input');
+    var clearBtn = document.getElementById('club-search-clear') || document.getElementById('es-map-search-clear');
+    var resultsBox = document.getElementById('club-search-results') || document.getElementById('es-map-search-dropdown');
+    if (!input || !resultsBox) return;
     searchBound = true;
 
-    var timer = null;
-
-    function doSearch(q) {
-      q = (q || '').trim().toLowerCase();
-      if (!q || q.length < 2) {
-        dropdown.innerHTML = '';
-        dropdown.hidden = true;
+    function renderResults(query) {
+      if (!query) {
+        resultsBox.classList.remove('is-open');
+        resultsBox.innerHTML = '';
         return;
       }
+      var q = query.toLowerCase();
       loadClubs(function (all) {
-        var matches = [];
+        var match = [];
         for (var i = 0; i < all.length; i++) {
           var c = all[i];
-          var name = (c.name || '').toLowerCase();
-          var city = (c.city || '').toLowerCase();
-          var region = (c.region || '').toLowerCase();
-          if (name.indexOf(q) >= 0 || city.indexOf(q) >= 0 || region.indexOf(q) >= 0) {
-            matches.push(c);
-            if (matches.length >= 10) break;
+          var nome = (c.name || '').toLowerCase();
+          var comune = (c.city || '').toLowerCase();
+          var regione = (c.region || '').toLowerCase();
+          if (nome.indexOf(q) !== -1 || comune.indexOf(q) !== -1 || regione.indexOf(q) !== -1) {
+            match.push(c);
+            if (match.length >= 10) break;
           }
         }
-        if (!matches.length) {
-          dropdown.innerHTML = '<div class="es-map-search-empty">Nessun club trovato per &ldquo;' + esc(q) + '&rdquo;</div>';
-          dropdown.hidden = false;
-          return;
+
+        if (!match.length) {
+          resultsBox.innerHTML = '<div class="es-map-search__empty">Nessun club trovato per &ldquo;' + esc(query) + '&rdquo;</div>';
+        } else {
+          resultsBox.innerHTML = match.map(function (c) {
+            var meta = esc(c.city ? (c.city + (c.region ? ' (' + c.region + ')' : '')) : (c.region || ''));
+            return (
+              '<div class="es-map-search__result" data-club-id="' + esc(c.id) + '" data-nome="' + esc(c.name) + '">' +
+                '<span class="es-map-search__result-name">' + esc(c.name) + '</span>' +
+                '<span class="es-map-search__result-meta">' + meta + '</span>' +
+              '</div>'
+            );
+          }).join('');
         }
-
-        var html = '';
-        matches.forEach(function (c) {
-          var logoUrl = c.logo || (c.id ? 'immagini/squadre-loghi/' + c.id + '.png' : '');
-          logoUrl = logoBust(logoUrl);
-          var logoHtml = logoUrl
-            ? '<img src="' + esc(logoUrl) + '" alt="" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">' +
-              '<span class="es-map-search-initials" style="display:none;">' + esc(initials(c.name)) + '</span>'
-            : '<span class="es-map-search-initials">' + esc(initials(c.name)) + '</span>';
-
-          var meta = [];
-          if (c.city) meta.push(esc(c.city));
-          if (c.region && c.region !== c.city) meta.push(esc(c.region));
-          if (c.group || c.league) meta.push(esc(c.group || c.league));
-
-          html += '<button type="button" class="es-map-search-item" data-search-id="' + esc(c.id) + '">' +
-            '<div class="es-map-search-thumb">' + logoHtml + '</div>' +
-            '<div class="es-map-search-info">' +
-              '<div class="es-map-search-name">' + esc(c.name) + '</div>' +
-              '<div class="es-map-search-meta">' + meta.join(' · ') + '</div>' +
-            '</div>' +
-          '</button>';
-        });
-
-        dropdown.innerHTML = html;
-        dropdown.hidden = false;
+        resultsBox.classList.add('is-open');
       });
     }
 
-    input.addEventListener('input', function () {
-      var val = input.value;
-      if (clearBtn) clearBtn.hidden = !val;
-      clearTimeout(timer);
-      timer = setTimeout(function () {
-        doSearch(val);
-      }, 160);
+    input.addEventListener('input', function (e) {
+      var val = e.target.value.trim();
+      if (clearBtn) clearBtn.classList.toggle('is-visible', !!val);
+      renderResults(val);
     });
 
-    if (clearBtn) {
-      clearBtn.addEventListener('click', function () {
-        input.value = '';
-        clearBtn.hidden = true;
-        dropdown.innerHTML = '';
-        dropdown.hidden = true;
-        input.focus();
-      });
-    }
+    input.addEventListener('focus', function () {
+      if (input.value.trim()) renderResults(input.value.trim());
+    });
 
-    dropdown.addEventListener('click', function (e) {
-      var item = e.target.closest('[data-search-id]');
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.es-map-search') && !e.target.closest('#es-map-search-container')) {
+        resultsBox.classList.remove('is-open');
+      }
+    });
+
+    resultsBox.addEventListener('click', function (e) {
+      var item = e.target.closest('.es-map-search__result');
       if (!item) return;
-      var id = item.getAttribute('data-search-id');
-      loadClubs(function (all) {
-        var found = all.find(function (c) { return String(c.id) === String(id); });
-        if (!found || typeof found.lat !== 'number' || typeof found.lng !== 'number') return;
+      var clubId = item.getAttribute('data-club-id');
+      var clubNome = item.getAttribute('data-nome');
+      input.value = clubNome;
+      resultsBox.classList.remove('is-open');
 
-        input.value = found.name;
-        dropdown.hidden = true;
+      loadClubs(function (all) {
+        var found = all.find(function (c) {
+          return (clubId && String(c.id) === String(clubId)) || (c.name && c.name.toLowerCase() === clubNome.toLowerCase());
+        });
+        if (!found || typeof found.lat !== 'number' || typeof found.lng !== 'number') return;
 
         if (window.EliseeClubMap && window.EliseeClubMap.map) {
           var map = window.EliseeClubMap.map;
@@ -518,15 +500,18 @@
       });
     });
 
-    document.addEventListener('click', function (e) {
-      if (!e.target.closest('#es-map-search-container')) {
-        dropdown.hidden = true;
-      }
-    });
+    if (clearBtn) {
+      clearBtn.addEventListener('click', function () {
+        input.value = '';
+        clearBtn.classList.remove('is-visible');
+        resultsBox.classList.remove('is-open');
+        input.focus();
+      });
+    }
 
     input.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') {
-        dropdown.hidden = true;
+        resultsBox.classList.remove('is-open');
       }
     });
   }
@@ -725,12 +710,18 @@
         c.classList.remove('is-selected');
         c.removeAttribute('aria-selected');
       });
-      var input = document.getElementById('es-map-search-input');
+      var input = document.getElementById('club-search') || document.getElementById('es-map-search-input');
       if (input) input.value = '';
-      var clearBtn = document.getElementById('es-map-search-clear');
-      if (clearBtn) clearBtn.hidden = true;
-      var dd = document.getElementById('es-map-search-dropdown');
-      if (dd) dd.hidden = true;
+      var clearBtn = document.getElementById('club-search-clear') || document.getElementById('es-map-search-clear');
+      if (clearBtn) {
+        clearBtn.classList.remove('is-visible');
+        clearBtn.hidden = true;
+      }
+      var dd = document.getElementById('club-search-results') || document.getElementById('es-map-search-dropdown');
+      if (dd) {
+        dd.classList.remove('is-open');
+        dd.hidden = true;
+      }
 
       var root = document.getElementById('mappa-portal');
       if (root) {
@@ -742,6 +733,7 @@
     },
     open: function () {
       if (typeof window.switchView === 'function') window.switchView('mappa', '#mappa-portal');
+      document.body.classList.add('is-view-mappa');
       try {
         document.querySelectorAll('.nav-link, .es-m-tab-item').forEach(function (l) { l.classList.remove('active'); });
         var ml = document.querySelector('.nav-link[data-view="mappa"]');
@@ -774,7 +766,10 @@
     document.addEventListener('elisee:view-changed', function (e) {
       var d = e && e.detail;
       if (d && (d.view === 'mappa' || (d.hash && String(d.hash).indexOf('mappa') >= 0))) {
+        document.body.classList.add('is-view-mappa');
         setTimeout(function () { window.EliseeClubMap.refresh(); }, 60);
+      } else {
+        document.body.classList.remove('is-view-mappa');
       }
     });
   }

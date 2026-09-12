@@ -3,15 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-12** (commit `0b55c85`) — Suite completa Mappa Club: ricerca autocomplete, legenda e HQ oro coordinati, controlli zoom unificati, card regionali accessibili con barra proporzionale Bloomberg style e reset vista (`index.html`, `mappa-club.js`, `mappa-club.css`). Cache `MAPCOMPLETE1`.
-Ultimo fatto: **Mappa Club / Suite Completa & Rifiniture UX**:
-1. **Ricerca Club Autocomplete**: Barra di ricerca istantanea (`#es-map-search-input`) con dropdown stile Stampa per cercare per nome club o città tra tutti i 2.810 club, con `flyTo` automatico e apertura popup.
-2. **Coerenza Cromatica Oro HQ**: Reintegrato il marker Sede Centrale Elisee Scout a Foggia `[41.4622, 15.5447]` con dot legenda e pin entrambi in finitura Oro/Gold (`#f59e0b`) e pulse ring.
-3. **Legenda 3 Livelli Reintegrata**: Cluster club (blu accent), Club singolo (stemma/bordo blu), Sede centrale (oro Foggia).
-4. **Controlli Zoom Unificati**: Pulsanti `+` e `−` raggruppati in un unico blocco verticale compatto con linea sottile divisoria, ottimizzati sia per desktop che per touch.
-5. **Card Regionali Accessibili con Barra Proporzionale**: Trasformate in `<button>` accessibili da tastiera (ARIA), con barre orizzontali comparative proporzionali stile Financial Times / Bloomberg, stato `.is-selected` con glow accent al click e pulsante dedicato «Torna a tutta Italia» (`resetView()`).
-6. **Altezza Mappa Responsiva**: Frame adattato con `clamp(380px, 58vh, 600px)` per eccellente visibilità su tutte le risoluzioni.
-Feature precedente: **Mappa Club / Rimozione Barra Legenda Superiore**: Cache `NOLEGEND1`.
+Ultimo aggiornamento: **2026-09-12** (commit `72c5564`) — Mappa Club: legenda rimossa del tutto, sfondo forzato identico a `--es-bg` (#0b0e14) con header coordinato, e barra di ricerca ricostruita da zero con menu risultati dinamico, stato vuoto, reset X e centratura mappa su club reale (`index.html`, `mappa-club.js`, `mappa-club.css`). Cache `MAPCOMPLETE2`.
+Ultimo fatto: **Mappa Club / Tre Correzioni Definitive**:
+1. **Legenda Rimossa**: Eliminata completamente la riga «Cluster club / Club singolo / Sede centrale» da `index.html` e puliti tutti i relativi stili in `mappa-club.css`.
+2. **Sfondo Forzato su `--es-bg` (#0b0e14)**: Applicato su `html`, `body`, `#view-mappa`, `#mappa-portal`, `.es-map-page`, header `.main-header` (`rgba(11, 14, 20, 0.96)`) e classe dinamica `.is-view-mappa`, identico al fix già adottato su Stampa.
+3. **Barra Ricerca Ricostruita da Zero**: Markup e classi `.es-map-search`, `.es-map-search__input`, `.es-map-search__clear`, `.es-map-search__results` conformi al template fornito, con menu a discesa contestuale dei risultati (nome club + comune) generato in tempo reale dall'archivio dei 2.810 club, stato vuoto se nessun riscontro, tasto `✕` di pulizia rapida e centratura dinamica della mappa (`map.flyTo` e apertura popup o zoom del cluster) al click sul club.
+Feature precedente: **Mappa Club / Suite Completa UX**: Cache `MAPCOMPLETE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
