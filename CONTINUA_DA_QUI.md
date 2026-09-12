@@ -3,11 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-12** (commit `481778a`) — Mappa Club: allineati i colori della barra di ricerca a pillola e del dropdown a quelli dei controlli zoom e fullscreen (`var(--es-panel)` #10141d, `var(--es-border)` #1e2430, `var(--es-text)` #eef1f6). Cache `DARKPILL1`.
-Ultimo fatto: **Mappa Club / Allineamento Colori Barra di Ricerca ai Controlli Mappa**:
-1. **Barra Pillola Coordinata (`.es-map-search__bar`)**: Stesso colore dei bottoni zoom e fullscreen (`background: var(--es-panel)` #10141d, `border: 1px solid var(--es-border)` #1e2430), testo ed icona in bianco (`var(--es-text)`), placeholder soft, hover/focus con bordo d'accento.
-2. **Dropdown Risultati Coordinato (`.es-map-search__results`)**: Uniformato allo stesso tema dark luxury con sfondo `#10141d`, bordo `#1e2430` e testo coordinato.
-Feature precedente: **Mappa Club / Barra Ricerca Pillola Bianca & Dropdown Chiaro**: Cache `SEARCHPILL1`.
+Ultimo aggiornamento: **2026-09-12** (commit `34cf410`) — Mappa Club: squadre reali dal Selettore Squadra e catalogo ufficiale con logo della società accanto al nome nel pannello regionale espandibile. Cache `TEAMSREAL1`.
+Ultimo fatto: **Mappa Club / Squadre Reali del Selettore & Loghi Ufficiali per Regione**:
+1. **Dati Reali dal Catalogo (`data/squadre/scopri-clubs.json`)**: Popolata la regione corretta per tutte le società di Serie A, B e C tramite mappatura con `comuni_italiani.json`. Le 2810 squadre sono ora tutte georeferenziate per regione reale.
+2. **Loghi Squadra e Chip Interattivi (`mappa-club.js`, `mappa-club.css`)**: Ciascuna squadra nel pannello regionale espandibile mostra ora il logo ufficiale (`immagini/squadre-loghi/<id>.png`), ordinata per categoria (Serie A, B, C, D, Eccellenza...). Cliccando sulla chip, la mappa vola istantaneamente alla posizione del club aprendone il popup.
+3. **Paginazione Intelligente**: Mostrate le prime 40 squadre per regione con pulsante "Mostra tutte le X squadre" / "Mostra meno squadre".
+Feature precedente: **Mappa Club / Allineamento Colori Barra di Ricerca ai Controlli Mappa**: Cache `DARKPILL1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -462,6 +463,14 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-12** — Mappa Club: squadre reali dal Selettore Squadra con logo ufficiale affiancato al nome:
+  - Aggiornato `data/squadre/scopri-clubs.json` popolando il campo `region` per le 472 squadre di Serie A, B e C tramite mappatura con `comuni_italiani.json` e normalizzazione nomi regionali (es. `Trentino-Alto Adige`).
+  - Aggiornato `mappa-club.js`: rimossi i placeholder statici; implementata `getTeamsForRegion(regione)` che estrae tutte le società reali censite nel catalogo e le ordina per categoria d'importanza (Serie A, B, C, D, Eccellenza, Promozione...).
+  - Generati chip interattivi con logo societario ufficiale (`immagini/squadre-loghi/<id>.png`), fallback trasparente `onerror` e click che muove la visuale della mappa direttamente sulla sede del club con apertura del popup informativo.
+  - Aggiunta paginazione intelligente con visualizzazione iniziale delle prime 40 squadre e pulsante per espandere tutte le squadre della regione.
+  - Aggiornato `mappa-club.css` con stili `.es-region-team-chip`, `.es-region-team-logo` (22x22px con border dark) e pulsante `.es-region-show-more-btn`.
+  - Cache `TEAMSREAL1`.
 
 - **2026-09-12** — Rimossa completamente la barra legenda superiore sopra la Mappa Club:
   - Eliminato il contenitore `.es-map-legend` da `index.html`.

@@ -365,31 +365,91 @@
 
   var clubMarkersMap = {};
 
-  var SQUADRE_PER_REGIONE = {
-    "Puglia": ["ASD Calcio Foggia", "Unione Sportiva Manfredonia", "Città di Bari", "Taranto Calcio 1927", "Nuova Spinazzola"]
-  };
-
-  var regionState = { expandedRegion: null };
+  var regionState = { expandedRegion: null, showAllTeams: {} };
   var lastRegionCounts = {};
 
-  function teamsPanelHTML(regione, count) {
-    var squadre = SQUADRE_PER_REGIONE[regione];
-    var body = squadre && squadre.length
-      ? '<div class="es-region-teams__list">' +
-          squadre.map(function (s) {
-            return '<span class="es-region-team-chip" data-team="' + esc(s) + '" title="Centra sulla mappa">' + esc(s) + '</span>';
-          }).join('') +
-        '</div>' +
-        (count > squadre.length ? '<p class="es-region-teams__note">Elenco parziale — altre ' + (count - squadre.length) + ' società non mostrate in questa anteprima.</p>' : '')
-      : '<p class="es-region-teams__note">Elenco squadre non ancora collegato alla fonte dati reale per questa regione.</p>';
+  function getTeamsForRegion(regione) {
+    var source = clubs || window.__eliseeScopriClubs || [];
+    if (!source || !source.length) return [];
+    var target = (regione || '').trim().toLowerCase();
+    var list = source.filter(function (c) {
+      return (c.region || '').trim().toLowerCase() === target;
+    });
+
+    function leagueRank(c) {
+      var l = (c.league || c.group || '').toLowerCase();
+      if (l.indexOf('serie a') >= 0) return 1;
+      if (l.indexOf('serie b') >= 0) return 2;
+      if (l.indexOf('serie c') >= 0) return 3;
+      if (l.indexOf('serie d') >= 0) return 4;
+      if (l.indexOf('eccellenza') >= 0) return 5;
+      if (l.indexOf('promozione') >= 0) return 6;
+      if (l.indexOf('prima') >= 0) return 7;
+      if (l.indexOf('seconda') >= 0) return 8;
+      if (l.indexOf('terza') >= 0) return 9;
+      return 10;
+    }
+
+    list.sort(function (a, b) {
+      var ra = leagueRank(a), rb = leagueRank(b);
+      if (ra !== rb) return ra - rb;
+      return (a.name || '').localeCompare(b.name || '');
+    });
+
+    return list;
+  }
+
+  function teamsPanelHTML(regione, totalCount) {
+    var squadre = getTeamsForRegion(regione);
+    var count = squadre.length || totalCount;
+    var maxInitial = 40;
+    var showAll = !!regionState.showAllTeams[regione];
+    var displayed = showAll ? squadre : squadre.slice(0, maxInitial);
+
+    var listHtml = '';
+    if (displayed && displayed.length) {
+      listHtml = '<div class="es-region-teams__list">' +
+        displayed.map(function (c) {
+          var logoUrl = c.logo || (c.id ? 'immagini/squadre-loghi/' + c.id + '.png' : '');
+          logoUrl = logoBust(logoUrl);
+          var logoImg = logoUrl
+            ? '<img src="' + esc(logoUrl) + '" alt="" class="es-region-team-logo" onerror="this.style.display=\'none\';">'
+            : '';
+          var infoTitle = esc(c.name + (c.city ? ' (' + c.city + ')' : '') + (c.league ? ' — ' + c.league : ''));
+          return '<button type="button" class="es-region-team-chip" data-team-id="' + esc(c.id) + '" data-team-name="' + esc(c.name) + '" title="' + infoTitle + '">' +
+            logoImg +
+            '<span class="es-region-team-name">' + esc(c.name) + '</span>' +
+          '</button>';
+        }).join('') +
+      '</div>';
+
+      if (squadre.length > maxInitial) {
+        if (!showAll) {
+          listHtml += '<div style="margin-top:14px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;">' +
+            '<button type="button" class="es-region-show-more-btn" data-show-all="' + esc(regione) + '">' +
+              'Mostra tutte le ' + squadre.length + ' squadre' +
+            '</button>' +
+            '<p class="es-region-teams__note" style="margin-top:0;">Visualizzate le prime ' + maxInitial + ' squadre ufficiali ordinate per categoria (Serie A, B, C, D, Eccellenza, Promozione).</p>' +
+          '</div>';
+        } else {
+          listHtml += '<div style="margin-top:14px;">' +
+            '<button type="button" class="es-region-show-more-btn" data-show-less="' + esc(regione) + '">' +
+              'Mostra meno squadre' +
+            '</button>' +
+          '</div>';
+        }
+      }
+    } else {
+      listHtml = '<p class="es-region-teams__note">Nessuna società censita per questa regione nel catalogo attuale.</p>';
+    }
 
     return (
       '<div class="es-region-teams" role="region" aria-label="Squadre in ' + esc(regione) + '">' +
         '<div class="es-region-teams__head">' +
-          '<h3>Squadre in ' + esc(regione) + ' <span>(' + count + ' club)</span></h3>' +
+          '<h3>Squadre in ' + esc(regione) + ' <span>(' + count + ' club ufficiali)</span></h3>' +
           '<button type="button" class="es-region-teams__close" data-close="' + esc(regione) + '" aria-label="Chiudi pannello squadre">✕</button>' +
         '</div>' +
-        body +
+        listHtml +
       '</div>'
     );
   }
@@ -436,25 +496,47 @@
         return;
       }
 
-      var teamChip = e.target.closest('[data-team]');
+      var showAllBtn = e.target.closest('[data-show-all]');
+      if (showAllBtn) {
+        var regAll = showAllBtn.getAttribute('data-show-all');
+        regionState.showAllTeams[regAll] = true;
+        renderRegionsGrid();
+        return;
+      }
+
+      var showLessBtn = e.target.closest('[data-show-less]');
+      if (showLessBtn) {
+        var regLess = showLessBtn.getAttribute('data-show-less');
+        regionState.showAllTeams[regLess] = false;
+        renderRegionsGrid();
+        return;
+      }
+
+      var teamChip = e.target.closest('.es-region-team-chip') || e.target.closest('[data-team]');
       if (teamChip) {
-        var tName = teamChip.getAttribute('data-team') || '';
-        if (tName && window.EliseeClubMap) {
-          loadClubs(function (all) {
-            var q = tName.toLowerCase();
-            var found = all.find(function (c) {
+        var teamId = teamChip.getAttribute('data-team-id') || '';
+        var tName = teamChip.getAttribute('data-team-name') || teamChip.getAttribute('data-team') || '';
+        loadClubs(function (all) {
+          var found = all.find(function (c) {
+            if (teamId && c.id === teamId) return true;
+            if (tName) {
+              var q = tName.toLowerCase();
               var cn = (c.name || '').toLowerCase();
               return cn === q || cn.indexOf(q) !== -1 || q.indexOf(cn) !== -1;
-            });
-            if (found && window.EliseeClubMap.map) {
-              window.EliseeClubMap.map.flyTo([found.lat, found.lng], 14, { duration: 1.2 });
-              var mk = clubMarkersMap[found.id];
-              if (mk) {
-                setTimeout(function () { mk.openPopup(); }, 1200);
-              }
             }
+            return false;
           });
-        }
+          if (found && window.EliseeClubMap && window.EliseeClubMap.map) {
+            window.EliseeClubMap.map.flyTo([found.lat, found.lng], 14, { duration: 1.2 });
+            var mk = clubMarkersMap[found.id];
+            if (mk) {
+              setTimeout(function () { mk.openPopup(); }, 1200);
+            }
+            if (window.showToast) {
+              window.showToast('Mappa inquadrata su ' + found.name, 'info');
+            }
+          }
+        });
         return;
       }
 
