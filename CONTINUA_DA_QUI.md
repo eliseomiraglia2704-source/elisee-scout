@@ -3,16 +3,14 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-11** (commit `38676cd`) — Mappa: ristrutturazione visiva totale (via emoji, icone SVG lineari in blu, CTA 'Sei un club?' solido blu pulito, legenda a puntini geometrici sentence case, panoramica territoriale con titolo sentence case, 20 regioni coperte senza box, griglia a 5 colonne con hover blu e Leaflet dark override). Cache `MAPPA2`.
-Ultimo fatto: **Mappa Club / Ristrutturazione Completa (Design System Blu & Sans-serif)**:
-1. **Zero emoji & Icone SVG lineari**: Rimosse tutte le emoji da barra info (`🗺️`), CTA (`📍`), legenda (`🛡️`, numeri), popup club e sede centrale; sostituite con icone SVG lineari minimali blu `#3b7dff`.
-2. **CTA "Sei un club?" solido pulito**: Rimosso il fill con gradiente sgargiante/infantile; ora pulsante blu pieno `#3b7dff` con testo in sentence case e icona SVG pin mappa.
-3. **Legenda con puntini semplici**: Sostituite le vecchie pillole e icone con tre puntini geometrici puliti (pieno = cluster, contorno = club singolo, oro = sede centrale), con etichette in sentence case.
-4. **Panoramica Territoriale in sentence case**: Eyebrow `Panoramica territoriale` e H2 `Regioni con più club & cluster attivi` senza maiuscolo forzato né pillole sature.
-5. **Stat "20 Regioni coperte"**: Trasformata da box colorato pieno a numero grande 30px blu + etichetta sotto, senza contenitore.
-6. **Card Regioni & Griglia a 5 colonne**: Card con bordo sottile che si illumina in blu `#3b7dff` all'hover, nome regione bianco e conteggio pulito in blu con etichetta club in grigio, disposte su 5 colonne desktop responsive.
-7. **Override Leaflet & Tipografia sans-serif**: Applicato tema dark ai controlli di zoom (+/-) e marker cluster con palette blu, e tipografia sans-serif uniforme con Chi siamo/Bacheca/Album.
-Feature precedente: **Nuovo Account Admin Executive (`alessandromancini469@gmail.com`)**: credenziali abilitate a pieni poteri, bypass KYC, simulatore ruoli creatore, auth cloud & locale. Cache `ADMIN2`.
+Ultimo aggiornamento: **2026-09-12** (commit `314fecb`) — Fix "Vedi nel Selettore" dalla Mappa Club al Selettore Squadre (`squadre-select.js`, `mappa-club.js`, `app.js`, `index.html`). Cache `MAPSELECT1`.
+Ultimo fatto: **Mappa Club → Selettore Squadre / Risolto Errore Reindirizzamento**:
+1. **Navigazione mirata per Club e Categoria**: Risolto il bug documentato con screenshot (cliccando "Vedi nel Selettore" su un club come Nuova Spinazzola, veniva mostrata un'altra categoria e un'altra squadra predefinita anziché la scheda del club corretto).
+2. **Motore `selectTeamById` in `squadre-select.js`**: Implementata la selezione asincrona per ID, nome o slug; posizionamento automatico sul genere corretto (M/F con sincronizzazione dei radio button), ricerca e attivazione della categoria di appartenenza e dell'indice esatto del club, con chiusura del picker, render immediato e animazione gold sweep.
+3. **Supporto Parametri Query in Hash**: `#squadre-portal?team=ID` ora viene riconosciuto e parsato sia all'avvio, sia all'evento `elisee:view-changed`, sia al popstate/hashchange, con memorizzazione `pendingTeamId` per garantire la selezione anche prima del completamento del download del catalogo.
+4. **Esposizione API Robusta**: In `window.EliseeSquadreSelect` esposti `selectTeam(idOrName)`, `selectTeamById(idOrName)` e `goToTeam(idOrName)`, mantenendo la retrocompatibilità totale per la conferma squadra.
+5. **Cablaggio `mappa-club.js`**: Inserito `data-map-team-name` nel popup per fallback robusto e doppia chiamata (immediata prima del cambio vista + retry dopo animazione).
+Feature precedente: **Mappa Club / Ristrutturazione Completa (Design System Blu & Sans-serif)**: Rimosse emoji, icone SVG lineari blu, CTA 'Sei un club?' solido blu, legenda a puntini geometrici sentence case, panoramica territoriale 5 colonne responsive. Cache `MAPPA2`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -467,6 +465,13 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-12** — Risolto problema navigazione "Vedi nel Selettore" dalla Mappa Club:
+  - Implementata la funzione `selectTeamById` in `squadre-select.js` che individua il club nel catalogo tramite ID esatto, nome o slug, imposta il genere (M/F) con sincronizzazione radio, trova e attiva l'esatta categoria e indice della squadra, chiude il picker e forza il render con animazione.
+  - Esposte le API `selectTeam(idOrName)`, `selectTeamById(idOrName)` e `goToTeam(idOrName)` in `window.EliseeSquadreSelect`.
+  - Supporto per parametri query nell'hash (es. `#squadre-portal?team=...`) con elaborazione immediata e tramite `pendingTeamId` in caso di catalogo ancora in download.
+  - Aggiornato `mappa-club.js` con passaggio del nome squadra di backup nel popup e invocazione coordinata di selezione e `switchView`.
+  - Cache `MAPSELECT1`.
 
 - **2026-09-06** — Pokemon Calcistico spostato dentro Elisee World; hub a due card (Carriera + Elisee World). Cache `MGHUB2`.
 

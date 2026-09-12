@@ -6997,7 +6997,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showEl('view-formazione');
         if (!targetHash) setHashSafe('#formazione-portal', opts);
         setTimeout(function () { try { if (window.EliseeFormazione) window.EliseeFormazione.render(); } catch (e) {} }, 40);
-      } else if (viewType === 'squadre' || targetHash === '#squadre-portal') {
+      } else if (viewType === 'squadre' || (targetHash && targetHash.indexOf('squadre-portal') >= 0)) {
         showEl('view-squadre');
         const link = document.querySelector('.nav-link[data-view="bacheca"]');
         if (link) link.classList.add('active');
@@ -7815,8 +7815,8 @@ document.addEventListener('DOMContentLoaded', () => {
       switchView('mercato', hash, noHist);
     } else if (hash.indexOf('iscrizione-portal') >= 0) {
       switchView('iscrizione', hash, noHist);
-    } else if (hash === '#squadre-portal') {
-      switchView('squadre', '#squadre-portal', noHist);
+    } else if (hash.indexOf('squadre-portal') >= 0) {
+      switchView('squadre', hash, noHist);
     } else if (hash === '#ambassador-portal') {
       switchView('ambassador', '#ambassador-portal', noHist);
     } else if (hash === '#account-portal') {

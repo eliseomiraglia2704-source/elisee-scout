@@ -895,7 +895,7 @@
           } else if (view === 'squadre') {
             show('view-squadre');
             setActiveNav('bacheca');
-            hash = '#squadre-portal';
+            if (!hash || hash.indexOf('squadre') < 0) hash = '#squadre-portal';
             setTimeout(function(){ try{ if(window.EliseeSquadreSelect){ if(window.EliseeSquadreSelect.forceShow) window.EliseeSquadreSelect.forceShow(); else if(window.EliseeSquadreSelect.init) window.EliseeSquadreSelect.init(); } }catch(e){} }, 40);
           } else if (view === 'bacheca' || view === 'persone') {
             show('home-views-group'); show('view-bacheca'); setActiveNav('bacheca');
@@ -5767,7 +5767,7 @@
       setTimeout(unlock, 2000);
     })();
   </script>
-  <script src="squadre-select.js?v=20260908_ECCLAZIO4"></script>
+  <script src="squadre-select.js?v=20260912_MAPSELECT1"></script>
   <script src="formazione-squadra.js?v=20260830_ECCB1"></script>
   <script src="manager-runtime.js?v=20260826_MGR1"></script>
   <script src="tc-panel.js?v=20260826_TC3"></script>
@@ -5777,7 +5777,7 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="elisee-staff.js?v=20260911_ADMIN2"></script>
-  <script src="app.js?v=20260911_AMBASSADOR1"></script>
+  <script src="app.js?v=20260912_MAPSELECT1"></script>
   <script src="player-profile.js?v=20260905_OBSFIX1"></script>
   <script src="public-rating-system.js?v=20260904_SEASONDROP1"></script>
   <script src="dash-real.js?v=20260904_SEASONDROP1"></script>
@@ -5808,7 +5808,7 @@
   <script src="messaggi.js?v=20260820_MSG1"></script>
   <script src="mercato-hub.js?v=20260903_MA3"></script>
   <script src="schede-tecniche.js?v=20260820_ST3"></script>
-  <script src="mappa-club.js?v=20260911_MAPPA2"></script>
+  <script src="mappa-club.js?v=20260912_MAPSELECT1"></script>
   <script src="chi-segui.js?v=20260911_ALBUM2"></script>
   <script src="card-atelier.js?v=20260904_ADMINTAB1"></script>
   <script src="ds-hub.js?v=20260827_DS1"></script>

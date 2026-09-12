@@ -128,7 +128,7 @@
       '<span>' + esc(c.city || 'Italia') + (c.region ? ' (' + esc(c.region) + ')' : '') + '</span>' +
       stadia +
       '<div class="es-sc-actions" style="margin-top:0.6rem; display:flex; flex-wrap:wrap; gap:0.35rem; justify-content:center;">' +
-        '<button type="button" class="btn-map-select" data-map-team="' + esc(c.id) + '" style="background:#3b7dff; color:#fff; border:none; border-radius:8px; padding:0.35rem 0.65rem; font-size:0.75rem; font-weight:700; cursor:pointer;">Vedi nel Selettore</button>' +
+        '<button type="button" class="btn-map-select" data-map-team="' + esc(c.id) + '" data-map-team-name="' + esc(c.name) + '" style="background:#3b7dff; color:#fff; border:none; border-radius:8px; padding:0.35rem 0.65rem; font-size:0.75rem; font-weight:700; cursor:pointer;">Vedi nel Selettore</button>' +
         '<button type="button" class="es-sc-follow" data-map-follow="' + esc(sid) + '" style="border-radius:8px; padding:0.35rem 0.6rem; font-size:0.75rem;">Segui</button>' +
         '<button type="button" class="es-sc-msg" data-map-msg="' + esc(sid) + '" data-map-name="' + esc(c.name) + '" style="border-radius:8px; padding:0.35rem 0.6rem; font-size:0.75rem;">Messaggia</button>' +
       '</div></div>';
@@ -421,14 +421,27 @@
         portal.addEventListener('click', function (e) {
           var sel = e.target.closest('[data-map-team]');
           if (sel) {
-            var teamId = sel.getAttribute('data-map-team');
+            var teamId = sel.getAttribute('data-map-team') || '';
+            var teamName = sel.getAttribute('data-map-team-name') || '';
+            var targetId = teamId || teamName;
+            if (window.EliseeSquadreSelect) {
+              if (typeof window.EliseeSquadreSelect.selectTeamById === 'function') {
+                window.EliseeSquadreSelect.selectTeamById(targetId);
+              } else if (typeof window.EliseeSquadreSelect.selectTeam === 'function') {
+                window.EliseeSquadreSelect.selectTeam(targetId);
+              }
+            }
             if (window.switchView) {
-              window.switchView('squadre', '#squadre-portal');
+              window.switchView('squadre', '#squadre-portal?team=' + encodeURIComponent(targetId));
               setTimeout(function () {
-                if (window.EliseeSquadreSelect && window.EliseeSquadreSelect.selectTeam) {
-                  window.EliseeSquadreSelect.selectTeam(teamId);
+                if (window.EliseeSquadreSelect) {
+                  if (typeof window.EliseeSquadreSelect.selectTeamById === 'function') {
+                    window.EliseeSquadreSelect.selectTeamById(targetId);
+                  } else if (typeof window.EliseeSquadreSelect.selectTeam === 'function') {
+                    window.EliseeSquadreSelect.selectTeam(targetId);
+                  }
                 }
-              }, 300);
+              }, 100);
             }
             return;
           }

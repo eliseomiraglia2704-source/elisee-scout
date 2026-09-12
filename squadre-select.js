@@ -909,6 +909,7 @@
   }
 
   function render() {
+    syncGenderInputs();
     var team = current();
     var nameEl = $('es-sq-team-name');
     if (!team) {
@@ -1739,8 +1740,137 @@
     return true;
   }
 
+  function syncGenderInputs() {
+    try {
+      var radios = document.querySelectorAll('input[name="es-sq-gender"]');
+      radios.forEach(function (r) {
+        r.checked = (r.value === state.gender);
+      });
+    } catch (_) {}
+  }
+
+  function parseTeamFromHash() {
+    try {
+      var h = window.location.hash || '';
+      var qIdx = h.indexOf('?');
+      if (qIdx >= 0) {
+        var q = h.slice(qIdx + 1);
+        var p = new URLSearchParams(q);
+        return p.get('team') || p.get('id') || p.get('club') || '';
+      }
+    } catch (_) {}
+    return '';
+  }
+
+  function applySelectTeam(teamIdOrName) {
+    if (!teamIdOrName || !TEAMS || !TEAMS.length) return false;
+    var raw = String(teamIdOrName || '').trim();
+    if (!raw) return false;
+    var rawLower = raw.toLowerCase();
+    var cleanId = rawLower.replace(/^club-/, '');
+    var targetTeam = null;
+
+    // 1. Corrispondenza esatta per ID
+    for (var i = 0; i < TEAMS.length; i++) {
+      var tid = String(TEAMS[i].id || '').toLowerCase();
+      if (tid === cleanId || tid === rawLower || ('club-' + tid) === rawLower) {
+        targetTeam = TEAMS[i];
+        break;
+      }
+    }
+
+    // 2. Corrispondenza esatta per nome (case-insensitive)
+    if (!targetTeam) {
+      for (var j = 0; j < TEAMS.length; j++) {
+        var tnm = String(TEAMS[j].name || '').toLowerCase().trim();
+        if (tnm === rawLower || tnm === cleanId) {
+          targetTeam = TEAMS[j];
+          break;
+        }
+      }
+    }
+
+    // 3. Corrispondenza normalizzata slug / parziale
+    if (!targetTeam) {
+      var slug = rawLower.replace(/[^a-z0-9]+/g, '');
+      if (slug.length >= 3) {
+        for (var k = 0; k < TEAMS.length; k++) {
+          var nSlug = String(TEAMS[k].name || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+          var iSlug = String(TEAMS[k].id || '').toLowerCase().replace(/[^a-z0-9]+/g, '');
+          if (nSlug === slug || iSlug === slug || (slug.length >= 5 && (nSlug.indexOf(slug) >= 0 || iSlug.indexOf(slug) >= 0))) {
+            targetTeam = TEAMS[k];
+            break;
+          }
+        }
+      }
+    }
+
+    if (!targetTeam) return false;
+
+    var g = (targetTeam.gender === 'f') ? 'f' : 'm';
+    state.gender = g;
+    syncGenderInputs();
+
+    var leagues = leaguesForGender();
+    var leagueIdx = -1;
+    var targetLeague = targetTeam.league || '';
+
+    // Ricerca categoria esatta o normalizzata
+    leagueIdx = leagues.indexOf(targetLeague);
+    if (leagueIdx < 0) {
+      var normTarget = targetLeague.toLowerCase().replace(/[^a-z0-9]+/g, '');
+      for (var l = 0; l < leagues.length; l++) {
+        if (leagues[l].toLowerCase().replace(/[^a-z0-9]+/g, '') === normTarget) {
+          leagueIdx = l;
+          break;
+        }
+      }
+    }
+
+    if (leagueIdx < 0) return false;
+    state.leagueIndex = leagueIdx;
+
+    var list = filtered();
+    var teamIdx = -1;
+    for (var m = 0; m < list.length; m++) {
+      if (list[m].id === targetTeam.id || String(list[m].name || '').toUpperCase().trim() === String(targetTeam.name || '').toUpperCase().trim()) {
+        teamIdx = m;
+        break;
+      }
+    }
+
+    if (teamIdx >= 0) {
+      state.index = teamIdx;
+      state.kit = 'home';
+      return true;
+    }
+
+    return false;
+  }
+
+  function selectTeamById(teamIdOrName) {
+    if (!teamIdOrName) return Promise.resolve(false);
+    state.pendingTeamId = teamIdOrName;
+    return loadCatalog().then(function () {
+      var found = applySelectTeam(teamIdOrName);
+      if (found) {
+        state.pendingTeamId = null;
+        bindUI();
+        closeLeaguePicker();
+        render();
+        playGoldSweep();
+        syncGoldRing();
+      }
+      return !!found;
+    });
+  }
+
   function refresh() {
     return loadCatalog().then(function () {
+      if (state.pendingTeamId) {
+        applySelectTeam(state.pendingTeamId);
+        state.pendingTeamId = null;
+      }
       // clamp indexes
       var leagues = leaguesForGender();
       if (state.leagueIndex >= leagues.length) state.leagueIndex = 0;
@@ -1754,6 +1884,10 @@
 
   function forceShow() {
     try {
+      var fromHash = parseTeamFromHash();
+      if (fromHash) {
+        state.pendingTeamId = fromHash;
+      }
       var v = $('view-squadre');
       if (v) {
         v.style.setProperty('display', 'block', 'important');
@@ -1768,8 +1902,16 @@
 
   document.addEventListener('elisee:view-changed', function (ev) {
     var v = ev && ev.detail && ev.detail.view;
-    var h = (ev && ev.detail && ev.detail.hash) || '';
+    var h = (ev && ev.detail && ev.detail.hash) || (window.location.hash || '');
     if (v === 'squadre' || (h && String(h).indexOf('squadre') >= 0)) {
+      var qIdx = String(h).indexOf('?');
+      if (qIdx >= 0) {
+        try {
+          var p = new URLSearchParams(h.slice(qIdx + 1));
+          var t = p.get('team') || p.get('id') || p.get('club') || '';
+          if (t) state.pendingTeamId = t;
+        } catch (_) {}
+      }
       setTimeout(function () {
         forceShow();
       }, 20);
@@ -1787,6 +1929,14 @@
     openLeaguePicker: openLeaguePicker,
     closeLeaguePicker: closeLeaguePicker,
     select: selectTeam,
+    selectTeam: function (idOrName) {
+      if (idOrName) {
+        return selectTeamById(idOrName);
+      }
+      return selectTeam();
+    },
+    selectTeamById: selectTeamById,
+    goToTeam: selectTeamById,
     getSelected: current,
     isTeamVerified: isTeamVerified,
     loadCatalog: loadCatalog,
@@ -1802,6 +1952,10 @@
   };
 
   function boot() {
+    var fromHash = parseTeamFromHash();
+    if (fromHash) {
+      state.pendingTeamId = fromHash;
+    }
     refresh();
     setTimeout(function () {
       if ((location.hash || '').indexOf('squadre') >= 0) forceShow();
