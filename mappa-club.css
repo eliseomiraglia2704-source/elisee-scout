@@ -165,23 +165,23 @@ body.is-view-mappa .portfolio-header {
 .es-map-search__bar {
   display: flex;
   align-items: stretch;
-  background: var(--es-panel);
-  border: 1px solid var(--es-border);
-  border-radius: 10px;
+  background: #ffffff;
+  border: none;
+  border-radius: 999px;
   overflow: hidden;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-  transition: border-color 0.15s ease;
+  transition: box-shadow 0.15s ease;
 }
 
 .es-map-search__bar:focus-within {
-  border-color: var(--es-accent);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.5);
 }
 
 .es-map-search__icon {
   display: flex;
   align-items: center;
-  padding: 0 12px;
-  color: var(--es-text-muted);
+  padding: 0 6px 0 16px;
+  color: #1a1a1a;
   flex-shrink: 0;
 }
 
@@ -192,14 +192,17 @@ body.is-view-mappa .portfolio-header {
   border: none !important;
   border-radius: 0 !important;
   box-shadow: none !important;
-  padding: 11px 6px 11px 0 !important;
-  color: var(--es-text) !important;
+  padding: 13px 8px 13px 4px !important;
+  color: #1a1a1a !important;
   font-family: var(--es-font) !important;
-  font-size: 13px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
 }
 
 .es-map-search__bar input[type="text"]::placeholder {
-  color: var(--es-text-muted);
+  color: #1a1a1a;
+  opacity: 0.7;
+  font-weight: 700;
 }
 
 .es-map-search__bar input[type="text"]:focus {
@@ -209,11 +212,11 @@ body.is-view-mappa .portfolio-header {
 .es-map-search__clear {
   background: none;
   border: none;
-  color: var(--es-text-muted);
+  color: #666666;
   cursor: pointer;
   font-size: 14px;
   line-height: 1;
-  padding: 0 10px;
+  padding: 0 14px;
   display: none;
   flex-shrink: 0;
 }
@@ -228,9 +231,9 @@ body.is-view-mappa .portfolio-header {
   left: 0;
   right: 0;
   z-index: 20;
-  background: var(--es-panel);
-  border: 1px solid var(--es-border);
-  border-radius: 10px;
+  background: #ffffff;
+  border: none;
+  border-radius: 14px;
   overflow: hidden;
   display: none;
   max-height: 280px;
@@ -247,9 +250,9 @@ body.is-view-mappa .portfolio-header {
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  padding: 10px 13px;
+  padding: 11px 16px;
   cursor: pointer;
-  border-bottom: 1px solid var(--es-border);
+  border-bottom: 1px solid #ececec;
   transition: background 0.15s ease;
 }
 
@@ -259,24 +262,24 @@ body.is-view-mappa .portfolio-header {
 
 .es-map-search__result:hover,
 .es-map-search__result.is-focused {
-  background: var(--es-accent-soft);
+  background: #f2f2f2;
 }
 
 .es-map-search__result-name {
   font-size: 13px;
-  font-weight: 600;
-  color: var(--es-text);
+  font-weight: 700;
+  color: #1a1a1a;
 }
 
 .es-map-search__result-meta {
   font-size: 11px;
-  color: var(--es-text-muted);
+  color: #666666;
 }
 
 .es-map-search__empty {
   padding: 14px;
   font-size: 12px;
-  color: var(--es-text-muted);
+  color: #666666;
   text-align: center;
 }
 

@@ -3,12 +3,11 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-12** (commit `1833779`) — Mappa Club: click sulla regione apre/chiude il pannello squadre (.es-region-teams) a tutta riga sotto la card con elenco club, centratura mappa Leaflet sincronizzata e chiusura con ✕ o click ripetuto (`mappa-club.js`, `mappa-club.css`). Cache `REGTEAMS1`.
-Ultimo fatto: **Mappa Club / Pannello Squadre Regionale & Centratura**:
-1. **Pannello a Tutta Riga (`.es-region-teams`)**: Click su una card regione apre/chiude il pannello a tutta larghezza griglia (`grid-column: 1 / -1`) immediatamente sotto la card selezionata, con chip squadre, conteggio club e pulsante di chiusura `✕`.
-2. **Centratura Mappa Integrata**: Il click inquadra la mappa Leaflet sulle coordinate e zoom della regione prescelta (`flyToRegion(r, false)`) mantenendo il pannello squadre nel campo visivo.
-3. **Dati Reali e Integrazione**: Popolata la lista reale per la Puglia (Foggia, Manfredonia, Bari, Taranto, Spinazzola) con nota parziale e avviso coerente per le regioni non ancora collegate, pronto per l'endpoint dedicato. Click sui chip squadra inquadra il marker del club.
-Feature precedente: **Mappa Club / Rimozione Marker Sede Centrale (ES)**: Cache `NOHQ1`.
+Ultimo aggiornamento: **2026-09-12** (commit `c38dd0e`) — Mappa Club: barra di ricerca in pillola bianca piena, icona e placeholder in nero grassetto, ombra stacco tile e menu risultati chiaro coerente (`mappa-club.css`). Cache `SEARCHPILL1`.
+Ultimo fatto: **Mappa Club / Barra Ricerca Pillola Bianca & Dropdown Chiaro**:
+1. **Pillola Bianca Piena (`.es-map-search__bar`)**: Sfondo `#ffffff`, completamente arrotondata (`border-radius: 999px`), icona e input in nero `#1a1a1a` con font grassetto `font-weight: 700`, ombra `box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4)` per un perfetto stacco dai tile della mappa.
+2. **Menu Risultati Chiaro Coerente (`.es-map-search__results`)**: Sfondo bianco `#ffffff`, angoli `border-radius: 14px`, righe con hover chiaro `#f2f2f2`, testo nero e meta grigio scuro `#666`, perfettamente coordinato con la barra.
+Feature precedente: **Mappa Club / Pannello Squadre Regionale & Centratura**: Cache `REGTEAMS1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -942,3 +941,4 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 - **2026-09-08** — Risolto Syntax Error in `elisee_up.py` (blocco try privo di except nella funzione `log`) e problemi di import `auth_store`/`manager_store` tramite package `workers/__init__.py` e import resiliente.
 - **2026-09-12** — Mappa Club: rimosso definitivamente il marker con badge "ES" della Sede Centrale a Foggia. La mappa mostra esclusivamente i cluster e i club effettivi. Cache `NOHQ1`.
 - **2026-09-12** — Mappa Club: pannello squadre per regione espandibile a tutta riga (`.es-region-teams`) al click sulla card, centratura mappa Leaflet sincronizzata, chiusura con ✕ o click ripetuto. Cache `REGTEAMS1`.
+- **2026-09-12** — Mappa Club: barra di ricerca trasformata in pillola bianca piena (`border-radius: 999px`), icona e placeholder in nero grassetto (`#1a1a1a`), dropdown risultati chiaro su sfondo bianco coordinato. Cache `SEARCHPILL1`.
