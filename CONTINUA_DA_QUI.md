@@ -3,14 +3,11 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-12** (commit `314fecb`) — Fix "Vedi nel Selettore" dalla Mappa Club al Selettore Squadre (`squadre-select.js`, `mappa-club.js`, `app.js`, `index.html`). Cache `MAPSELECT1`.
-Ultimo fatto: **Mappa Club → Selettore Squadre / Risolto Errore Reindirizzamento**:
-1. **Navigazione mirata per Club e Categoria**: Risolto il bug documentato con screenshot (cliccando "Vedi nel Selettore" su un club come Nuova Spinazzola, veniva mostrata un'altra categoria e un'altra squadra predefinita anziché la scheda del club corretto).
-2. **Motore `selectTeamById` in `squadre-select.js`**: Implementata la selezione asincrona per ID, nome o slug; posizionamento automatico sul genere corretto (M/F con sincronizzazione dei radio button), ricerca e attivazione della categoria di appartenenza e dell'indice esatto del club, con chiusura del picker, render immediato e animazione gold sweep.
-3. **Supporto Parametri Query in Hash**: `#squadre-portal?team=ID` ora viene riconosciuto e parsato sia all'avvio, sia all'evento `elisee:view-changed`, sia al popstate/hashchange, con memorizzazione `pendingTeamId` per garantire la selezione anche prima del completamento del download del catalogo.
-4. **Esposizione API Robusta**: In `window.EliseeSquadreSelect` esposti `selectTeam(idOrName)`, `selectTeamById(idOrName)` e `goToTeam(idOrName)`, mantenendo la retrocompatibilità totale per la conferma squadra.
-5. **Cablaggio `mappa-club.js`**: Inserito `data-map-team-name` nel popup per fallback robusto e doppia chiamata (immediata prima del cambio vista + retry dopo animazione).
-Feature precedente: **Mappa Club / Ristrutturazione Completa (Design System Blu & Sans-serif)**: Rimosse emoji, icone SVG lineari blu, CTA 'Sei un club?' solido blu, legenda a puntini geometrici sentence case, panoramica territoriale 5 colonne responsive. Cache `MAPPA2`.
+Ultimo aggiornamento: **2026-09-12** (commit `dd033ae`) — Rimozione HQ / Sede Centrale dalla Mappa Club e legenda per privacy (`mappa-club.js`, `index.html`). Cache `MAPPRIVACY1`.
+Ultimo fatto: **Mappa Club / Privacy HQ (Rimozione Sede Centrale)**:
+1. **Rimozione Pin HQ**: Rimosso il marker dorato dedicato "HQ / Sede Centrale Elisee Scout (Foggia)" da Leaflet in `mappa-club.js`.
+2. **Rimozione Legenda**: Eliminata la voce "Sede centrale — Foggia" con relativo dot giallo dalla legenda in `index.html`. Rimangono solo Cluster club e Club singolo.
+Feature precedente: **Mappa Club → Selettore Squadre / Risolto Errore Reindirizzamento**: Navigazione mirata per Club e Categoria (`selectTeamById`, supporto query hash, `mappa-club.js`). Cache `MAPSELECT1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -465,6 +462,11 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-12** — Privacy Mappa: rimossa Sede Centrale / HQ Foggia:
+  - Rimosso il marker dorato dedicato HQ e relativo popup/tooltip da `mappa-club.js`.
+  - Rimossa la voce "Sede centrale — Foggia" con dot giallo dalla legenda in `index.html`.
+  - Cache `MAPPRIVACY1`.
 
 - **2026-09-12** — Risolto problema navigazione "Vedi nel Selettore" dalla Mappa Club:
   - Implementata la funzione `selectTeamById` in `squadre-select.js` che individua il club nel catalogo tramite ID esatto, nome o slug, imposta il genere (M/F) con sincronizzazione radio, trova e attiva l'esatta categoria e indice della squadra, chiude il picker e forza il render con animazione.

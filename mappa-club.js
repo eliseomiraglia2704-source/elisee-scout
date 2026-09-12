@@ -490,40 +490,11 @@
           count++;
         });
 
-        // Sede Centrale Elisee Scout (Foggia) — Marker dedicato e trasparente
+        // HQ rimosso per privacy
         if (self.hqLayer) {
           try { self.map.removeLayer(self.hqLayer); } catch (_) {}
           self.hqLayer = null;
         }
-        var hqIcon = L.divIcon({
-          className: 'es-map-ico es-map-ico--hq',
-          html: '<div class="es-map-pin es-map-pin--hq" title="Sede Centrale Elisee Scout (Foggia)">' +
-                '<span class="es-map-hq-badge">HQ</span>' +
-                '</div>',
-          iconSize: [46, 46],
-          iconAnchor: [23, 23],
-          popupAnchor: [0, -23]
-        });
-        self.hqLayer = L.marker([41.4622, 15.5447], { icon: hqIcon, zIndexOffset: 2000 });
-        self.hqLayer.bindPopup(
-          '<div class="es-map-pop">' +
-            '<div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.4rem; justify-content:center;">' +
-              '<img src="immagini/logo/logo-site.png" alt="Elisee Scout" style="width:36px; height:36px; object-fit:contain; border-radius:8px; background:#0b1220; padding:2px; border:1.5px solid #f59e0b;">' +
-              '<div style="text-align:left;">' +
-                '<strong style="display:block; font-size:0.92rem; color:#0f172a;">ELISEE SCOUT — Sede Centrale</strong>' +
-                '<span style="font-size:0.75rem; color:#c9a13b; font-weight:800;">Direzione &amp; Sviluppo Piattaforma</span>' +
-              '</div>' +
-            '</div>' +
-            '<span style="font-size:0.8rem; color:#475569;">Foggia, Puglia (Italia)</span><br>' +
-            '<span style="font-size:0.75rem; color:#3b7dff; font-weight:700;">areaeliseescout@gmail.com</span>' +
-          '</div>'
-        );
-        self.hqLayer.bindTooltip('Sede Centrale Elisee Scout (Foggia)', {
-          direction: 'top',
-          offset: [0, -22],
-          className: 'es-map-tooltip'
-        });
-        self.hqLayer.addTo(self.map);
 
         var geo = myClubGeo();
         if (geo && geo.lat) {
