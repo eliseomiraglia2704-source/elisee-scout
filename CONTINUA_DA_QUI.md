@@ -3,11 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-12** (commit `ff764d6`) — Mappa Club: spostata attribuzione cartografica (Leaflet / OpenStreetMap) sotto al riquadro della mappa per liberare completamente il pulsante schermo intero. Cache `ATTRIB1`.
-Ultimo fatto: **Mappa Club / Spostamento Attribuzione Cartografica Sotto la Mappa**:
-1. **Pulsante Schermo Intero Libero (`mappa-club.js`, `mappa-club.css`)**: Disabilitato `attributionControl: false` in `L.map` e forzato `display: none !important` su `.leaflet-control-attribution` per eliminare l'overlay nell'angolo in basso a destra che copriva il bottone `⤢`.
-2. **Footer Attribuzione Sotto la Mappa (`index.html`, `mappa-club.css`)**: Inserito un elegante footer `.es-map-attribution-footer` posizionato direttamente sotto al container della mappa, mantenendo i riferimenti ufficiali ("🇺🇦 Leaflet • © OpenStreetMap") senza interferire con l'interfaccia.
-Feature precedente: **Mappa Club / Squadre Reali del Selettore & Loghi Ufficiali per Regione**: Cache `TEAMSREAL1`.
+Ultimo aggiornamento: **2026-09-12** (commit `c862068`) — Mappa Club: loghi PNG trasparenti senza sfondo nero, dimensioni loghi e nomi squadra ingrandite, ordinamento alfabetico A-Z nel pannello regionale. Cache `LOGOSIZE1`.
+Ultimo fatto: **Mappa Club / Loghi Trasparenti, Dimensioni Incrementate & Ordine Alfabetico**:
+1. **Loghi Senza Sfondo Nero (`mappa-club.css`)**: Eliminato sfondo scuro, bordo e padding da `.es-region-team-logo`; i loghi PNG vengono ora visualizzati in trasparenza pura con un morbido `drop-shadow`.
+2. **Dimensioni Maggiori (`mappa-club.css`)**: Ingranditi i loghi (da 22px a 26px) e il testo dei nomi delle società (da 12px a 13.5px con `font-weight: 600`), con spaziatura (`gap: 10px`) e padding proporzionati.
+3. **Ordinamento Alfabetico (`mappa-club.js`)**: Le squadre di ogni regione vengono ora ordinate rigorosamente in ordine alfabetico (A-Z) con supporto per localizzazione italiana.
+Feature precedente: **Mappa Club / Spostamento Attribuzione Cartografica Sotto la Mappa**: Cache `ATTRIB1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -462,6 +463,12 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-12** — Mappa Club: loghi trasparenti senza sfondo nero, dimensioni ingrandite e ordine alfabetico:
+  - Aggiornato `mappa-club.css`: rimosso lo sfondo nero, il bordo e il padding da `.es-region-team-logo` consentendo la visualizzazione in piena trasparenza dei loghi PNG con leggero `drop-shadow`.
+  - Ingrandite le dimensioni dei loghi delle squadre a 26×26px e la tipografia del nome del club a 13.5px (`font-weight: 600`), con spaziatura armoniosa (`gap: 10px`).
+  - Aggiornato `mappa-club.js`: le società nel pannello regionale espandibile vengono ordinate rigorosamente in ordine alfabetico (A-Z) tramite `localeCompare`.
+  - Cache `LOGOSIZE1`.
 
 - **2026-09-12** — Mappa Club: spostata attribuzione cartografica (Leaflet / OpenStreetMap) sotto al riquadro della mappa:
   - Disabilitato `attributionControl: false` in `L.map` (`mappa-club.js`) e forzato `display: none !important` su `.leaflet-control-attribution` (`mappa-club.css`) per evitare la sovrapposizione dell'overlay con bandiera ucraina e crediti cartografici sul pulsante per ingrandire la mappa `⤢`.

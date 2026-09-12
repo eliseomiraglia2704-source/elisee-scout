@@ -857,15 +857,15 @@ body.is-view-mappa .portfolio-header {
 .es-region-team-chip {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 5px 12px 5px 8px;
+  gap: 10px;
+  padding: 6px 14px 6px 8px;
   border-radius: 999px;
   background: var(--es-panel-2);
   color: var(--es-text);
   border: 1px solid var(--es-border);
   cursor: pointer;
   font-family: var(--es-font);
-  font-size: 12px;
+  font-size: 13.5px;
   font-weight: 600;
   line-height: 1.2;
   transition: all 0.15s ease;
@@ -877,22 +877,26 @@ body.is-view-mappa .portfolio-header {
   background: var(--es-accent-soft);
   color: #ffffff;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 
 .es-region-team-logo {
-  width: 22px;
-  height: 22px;
+  width: 26px;
+  height: 26px;
   object-fit: contain;
   flex-shrink: 0;
-  border-radius: 4px;
-  background: rgba(11, 14, 20, 0.6);
-  padding: 2px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.45));
 }
 
 .es-region-team-name {
   white-space: nowrap;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
 .es-region-show-more-btn {

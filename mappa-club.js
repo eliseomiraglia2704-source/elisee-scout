@@ -376,24 +376,8 @@
       return (c.region || '').trim().toLowerCase() === target;
     });
 
-    function leagueRank(c) {
-      var l = (c.league || c.group || '').toLowerCase();
-      if (l.indexOf('serie a') >= 0) return 1;
-      if (l.indexOf('serie b') >= 0) return 2;
-      if (l.indexOf('serie c') >= 0) return 3;
-      if (l.indexOf('serie d') >= 0) return 4;
-      if (l.indexOf('eccellenza') >= 0) return 5;
-      if (l.indexOf('promozione') >= 0) return 6;
-      if (l.indexOf('prima') >= 0) return 7;
-      if (l.indexOf('seconda') >= 0) return 8;
-      if (l.indexOf('terza') >= 0) return 9;
-      return 10;
-    }
-
     list.sort(function (a, b) {
-      var ra = leagueRank(a), rb = leagueRank(b);
-      if (ra !== rb) return ra - rb;
-      return (a.name || '').localeCompare(b.name || '');
+      return (a.name || '').localeCompare(b.name || '', 'it', { sensitivity: 'base' });
     });
 
     return list;
@@ -429,7 +413,7 @@
             '<button type="button" class="es-region-show-more-btn" data-show-all="' + esc(regione) + '">' +
               'Mostra tutte le ' + squadre.length + ' squadre' +
             '</button>' +
-            '<p class="es-region-teams__note" style="margin-top:0;">Visualizzate le prime ' + maxInitial + ' squadre ufficiali ordinate per categoria (Serie A, B, C, D, Eccellenza, Promozione).</p>' +
+            '<p class="es-region-teams__note" style="margin-top:0;">Visualizzate le prime ' + maxInitial + ' squadre ufficiali in ordine alfabetico.</p>' +
           '</div>';
         } else {
           listHtml += '<div style="margin-top:14px;">' +
