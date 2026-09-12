@@ -14,7 +14,7 @@
   --es-text-muted: #8a93a3;
   --es-accent: #3b7dff;
   --es-accent-soft: rgba(59, 125, 255, 0.12);
-  --es-hq: #c9a13b;
+  --es-hq: #f59e0b;
   --es-font: -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
@@ -68,6 +68,14 @@
   color: var(--es-text);
   font-weight: 400;
   line-height: 1.4;
+  flex-wrap: wrap;
+}
+
+.es-map-badge-update {
+  color: var(--es-text-muted);
+  font-size: 12.5px;
+  font-weight: 400;
+  margin-left: 2px;
 }
 
 .es-map-info svg,
@@ -121,6 +129,158 @@
   flex-shrink: 0;
 }
 
+/* ---- Barra Ricerca Club con Autocomplete ---- */
+.es-map-search-bar {
+  position: relative;
+  margin-bottom: 16px;
+  z-index: 20;
+}
+
+.es-map-search-wrap {
+  display: flex;
+  align-items: center;
+  background: var(--es-panel);
+  border: 1px solid var(--es-border);
+  border-radius: 10px;
+  padding: 0 16px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.es-map-search-wrap:focus-within {
+  border-color: var(--es-accent);
+  box-shadow: 0 0 0 3px rgba(59, 125, 255, 0.15);
+}
+
+.es-map-search-ico {
+  color: var(--es-text-muted);
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.es-map-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--es-text);
+  font-family: var(--es-font);
+  font-size: 13.5px;
+  padding: 14px 0;
+}
+
+.es-map-search-input::placeholder {
+  color: var(--es-text-muted);
+}
+
+.es-map-search-clear {
+  background: transparent;
+  border: none;
+  color: var(--es-text-muted);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: color 0.15s;
+}
+
+.es-map-search-clear:hover {
+  color: #ffffff;
+}
+
+.es-map-search-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: var(--es-panel);
+  border: 1px solid var(--es-border);
+  border-radius: 10px;
+  max-height: 320px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.65);
+}
+
+.es-map-search-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+  font-family: var(--es-font);
+}
+
+.es-map-search-item:last-child {
+  border-bottom: none;
+}
+
+.es-map-search-item:hover,
+.es-map-search-item:focus {
+  background: var(--es-panel-2);
+  outline: none;
+}
+
+.es-map-search-thumb {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid var(--es-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.es-map-search-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.es-map-search-initials {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--es-accent);
+}
+
+.es-map-search-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.es-map-search-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--es-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.es-map-search-meta {
+  font-size: 11.5px;
+  color: var(--es-text-muted);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.es-map-search-empty {
+  padding: 16px;
+  font-size: 13px;
+  color: var(--es-text-muted);
+  text-align: center;
+}
+
 /* ---- Legenda ---- */
 .es-map-legend {
   display: flex;
@@ -165,6 +325,7 @@
 
 .es-legend-dot--hq {
   background: var(--es-hq);
+  box-shadow: 0 0 6px rgba(245, 158, 11, 0.5);
 }
 
 /* ---- Contenitore Mappa ---- */
@@ -174,7 +335,7 @@
   border: 1px solid var(--es-border);
   border-radius: 12px;
   overflow: hidden;
-  height: 520px;
+  height: clamp(380px, 58vh, 600px);
   background: var(--es-panel-2);
   margin-bottom: 48px;
   box-shadow: none;
@@ -226,39 +387,60 @@
 /* ==========================================================================
    LEAFLET OVERRIDE (Zoom & Marker Cluster)
    ========================================================================== */
-.leaflet-control-zoom {
+.leaflet-control-zoom,
+.leaflet-touch .leaflet-control-zoom,
+.leaflet-bar,
+.leaflet-touch .leaflet-bar {
   border: 1px solid var(--es-border) !important;
   border-radius: 10px !important;
-  overflow: hidden;
+  overflow: hidden !important;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
   background: var(--es-panel) !important;
   margin-top: 14px !important;
   margin-left: 14px !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
-.leaflet-control-zoom a {
+.leaflet-control-zoom a,
+.leaflet-touch .leaflet-control-zoom a,
+.leaflet-bar a,
+.leaflet-touch .leaflet-bar a {
   background-color: var(--es-panel) !important;
   color: var(--es-text) !important;
   border: none !important;
+  border-radius: 0 !important;
   border-bottom: 1px solid var(--es-border) !important;
   font-size: 1.15rem !important;
-  line-height: 32px !important;
+  line-height: 34px !important;
   width: 34px !important;
   height: 34px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   transition: background 0.15s ease, color 0.15s ease !important;
   text-decoration: none !important;
 }
 
-.leaflet-control-zoom a:last-child {
+.leaflet-control-zoom a:last-child,
+.leaflet-touch .leaflet-control-zoom a:last-child,
+.leaflet-bar a:last-child,
+.leaflet-touch .leaflet-bar a:last-child {
   border-bottom: none !important;
 }
 
-.leaflet-control-zoom a:hover {
+.leaflet-control-zoom a:hover,
+.leaflet-touch .leaflet-control-zoom a:hover,
+.leaflet-bar a:hover,
+.leaflet-touch .leaflet-bar a:hover {
   background-color: var(--es-panel-2) !important;
   color: #ffffff !important;
 }
 
-.leaflet-control-zoom a.leaflet-disabled {
+.leaflet-control-zoom a.leaflet-disabled,
+.leaflet-touch .leaflet-control-zoom a.leaflet-disabled,
+.leaflet-bar a.leaflet-disabled,
+.leaflet-touch .leaflet-bar a.leaflet-disabled {
   background-color: #070b14 !important;
   color: #475569 !important;
 }
@@ -323,7 +505,7 @@
 .es-map-pin--hq {
   border: 2.5px solid var(--es-hq) !important;
   background: #0f172a !important;
-  box-shadow: 0 0 16px rgba(201, 161, 59, 0.45) !important;
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.5) !important;
   animation: es-hq-pulse 2.5s infinite;
 }
 
@@ -335,9 +517,9 @@
 }
 
 @keyframes es-hq-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(201, 161, 59, 0.6); }
-  70% { box-shadow: 0 0 0 10px rgba(201, 161, 59, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(201, 161, 59, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6); }
+  70% { box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
 }
 
 /* Tooltip Marker Personalizzati */
@@ -445,6 +627,35 @@
   line-height: 1.4;
 }
 
+/* Bottone Ripristina "Torna a tutta Italia" */
+.es-map-reset-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--es-panel);
+  border: 1px solid var(--es-border);
+  border-radius: 8px;
+  color: var(--es-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: var(--es-font);
+  line-height: 1;
+}
+
+.es-map-reset-btn:hover {
+  color: var(--es-text);
+  border-color: var(--es-accent);
+  background: var(--es-panel-2);
+}
+
+.es-map-reset-btn svg {
+  color: var(--es-accent);
+  flex-shrink: 0;
+}
+
 /* Stat "20 regioni coperte" — numero grande + etichetta sotto, senza contenitore colorato */
 .es-territory__stat,
 .es-map-regions__badge {
@@ -486,40 +697,59 @@
 
 .es-region-card,
 .es-map-reg-card {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
   background: var(--es-panel);
   border: 1px solid var(--es-border);
   border-radius: 10px;
-  padding: 16px 18px;
+  padding: 14px 16px;
   cursor: pointer;
-  transition: border-color 0.15s ease;
-  display: block;
+  transition: all 0.18s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   text-align: left;
   box-shadow: none;
   text-decoration: none;
   color: inherit;
   font-family: var(--es-font);
+  outline: none;
 }
 
 .es-region-card:hover,
-.es-map-reg-card:hover {
+.es-map-reg-card:hover,
+.es-region-card:focus-visible {
   border-color: var(--es-accent);
-  background: var(--es-panel);
-  transform: none;
-  box-shadow: none;
+  background: var(--es-panel-2);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.es-region-card.is-selected {
+  border-color: var(--es-accent) !important;
+  background: rgba(59, 125, 255, 0.09) !important;
+  box-shadow: 0 0 0 1px var(--es-accent), 0 4px 16px rgba(59, 125, 255, 0.25) !important;
+}
+
+.es-region-card__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 8px;
 }
 
 .es-region-card__name,
 .es-map-reg-card__name {
   font-size: 13px;
   font-weight: 600;
-  margin: 0 0 4px;
+  margin: 0;
   color: var(--es-text);
-  display: block;
-}
-
-.es-region-card:hover .es-region-card__name,
-.es-map-reg-card:hover .es-map-reg-card__name {
-  color: var(--es-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .es-region-card__count,
@@ -532,7 +762,8 @@
   border: none;
   padding: 0;
   border-radius: 0;
-  display: block;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .es-region-card__count span,
@@ -540,6 +771,29 @@
   color: var(--es-text-muted);
   font-weight: 400;
   margin-left: 3px;
+  font-size: 11px;
+}
+
+/* Barra orizzontale proporzionale (Bloomberg / Financial Times style) */
+.es-region-card__bar-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 2px;
+}
+
+.es-region-card__bar {
+  height: 100%;
+  background: linear-gradient(90deg, #3b7dff 0%, #60a5fa 100%);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.es-region-card.is-selected .es-region-card__bar {
+  background: linear-gradient(90deg, #60a5fa 0%, #93c5fd 100%);
+  box-shadow: 0 0 6px rgba(59, 125, 255, 0.6);
 }
 
 /* Responsive Media Queries */

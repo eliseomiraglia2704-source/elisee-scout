@@ -363,21 +363,172 @@
     'Valle d\'Aosta': { coords: [45.75, 7.35], zoom: 9 }
   };
 
+  var clubMarkersMap = {};
+
   function renderRegionsGrid(counts) {
     var host = document.getElementById('es-map-regions-grid');
     if (!host) return;
     var keys = Object.keys(REGION_CENTERS).sort(function (a, b) {
       return (counts[b] || 0) - (counts[a] || 0);
     });
+
+    var maxVal = 1;
+    keys.forEach(function (k) {
+      var n = counts[k] || 0;
+      if (n > maxVal) maxVal = n;
+    });
+
     var html = '';
     keys.forEach(function (reg) {
       var num = counts[reg] || 0;
-      html += '<div class="es-region-card es-map-reg-card" data-regione="' + esc(reg) + '" data-region="' + esc(reg) + '" role="button" tabindex="0" onclick="if(window.EliseeClubMap) window.EliseeClubMap.flyToRegion(\'' + esc(reg) + '\');">' +
-        '<p class="es-region-card__name es-map-reg-card__name">' + esc(reg) + '</p>' +
-        '<p class="es-region-card__count es-map-reg-card__count">' + num + '<span>club</span></p>' +
-      '</div>';
+      var pct = Math.max(3, Math.round((num / maxVal) * 100));
+      html += '<button type="button" class="es-region-card es-map-reg-card" data-regione="' + esc(reg) + '" aria-label="' + esc(reg) + ', ' + num + ' club">' +
+        '<div class="es-region-card__header">' +
+          '<p class="es-region-card__name es-map-reg-card__name">' + esc(reg) + '</p>' +
+          '<p class="es-region-card__count es-map-reg-card__count">' + num.toLocaleString('it-IT') + '<span>club</span></p>' +
+        '</div>' +
+        '<div class="es-region-card__bar-track" aria-hidden="true">' +
+          '<div class="es-region-card__bar" style="width:' + pct + '%;"></div>' +
+        '</div>' +
+      '</button>';
     });
     host.innerHTML = html;
+
+    host.onclick = function (e) {
+      var btn = e.target.closest('.es-region-card');
+      if (!btn) return;
+      var r = btn.getAttribute('data-regione');
+      if (r && window.EliseeClubMap) {
+        window.EliseeClubMap.flyToRegion(r);
+      }
+    };
+  }
+
+  /* Ricerca club autocomplete */
+  var searchBound = false;
+  function initClubSearch() {
+    if (searchBound) return;
+    var input = document.getElementById('es-map-search-input');
+    var dropdown = document.getElementById('es-map-search-dropdown');
+    var clearBtn = document.getElementById('es-map-search-clear');
+    if (!input || !dropdown) return;
+    searchBound = true;
+
+    var timer = null;
+
+    function doSearch(q) {
+      q = (q || '').trim().toLowerCase();
+      if (!q || q.length < 2) {
+        dropdown.innerHTML = '';
+        dropdown.hidden = true;
+        return;
+      }
+      loadClubs(function (all) {
+        var matches = [];
+        for (var i = 0; i < all.length; i++) {
+          var c = all[i];
+          var name = (c.name || '').toLowerCase();
+          var city = (c.city || '').toLowerCase();
+          var region = (c.region || '').toLowerCase();
+          if (name.indexOf(q) >= 0 || city.indexOf(q) >= 0 || region.indexOf(q) >= 0) {
+            matches.push(c);
+            if (matches.length >= 10) break;
+          }
+        }
+        if (!matches.length) {
+          dropdown.innerHTML = '<div class="es-map-search-empty">Nessun club trovato per &ldquo;' + esc(q) + '&rdquo;</div>';
+          dropdown.hidden = false;
+          return;
+        }
+
+        var html = '';
+        matches.forEach(function (c) {
+          var logoUrl = c.logo || (c.id ? 'immagini/squadre-loghi/' + c.id + '.png' : '');
+          logoUrl = logoBust(logoUrl);
+          var logoHtml = logoUrl
+            ? '<img src="' + esc(logoUrl) + '" alt="" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">' +
+              '<span class="es-map-search-initials" style="display:none;">' + esc(initials(c.name)) + '</span>'
+            : '<span class="es-map-search-initials">' + esc(initials(c.name)) + '</span>';
+
+          var meta = [];
+          if (c.city) meta.push(esc(c.city));
+          if (c.region && c.region !== c.city) meta.push(esc(c.region));
+          if (c.group || c.league) meta.push(esc(c.group || c.league));
+
+          html += '<button type="button" class="es-map-search-item" data-search-id="' + esc(c.id) + '">' +
+            '<div class="es-map-search-thumb">' + logoHtml + '</div>' +
+            '<div class="es-map-search-info">' +
+              '<div class="es-map-search-name">' + esc(c.name) + '</div>' +
+              '<div class="es-map-search-meta">' + meta.join(' · ') + '</div>' +
+            '</div>' +
+          '</button>';
+        });
+
+        dropdown.innerHTML = html;
+        dropdown.hidden = false;
+      });
+    }
+
+    input.addEventListener('input', function () {
+      var val = input.value;
+      if (clearBtn) clearBtn.hidden = !val;
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        doSearch(val);
+      }, 160);
+    });
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', function () {
+        input.value = '';
+        clearBtn.hidden = true;
+        dropdown.innerHTML = '';
+        dropdown.hidden = true;
+        input.focus();
+      });
+    }
+
+    dropdown.addEventListener('click', function (e) {
+      var item = e.target.closest('[data-search-id]');
+      if (!item) return;
+      var id = item.getAttribute('data-search-id');
+      loadClubs(function (all) {
+        var found = all.find(function (c) { return String(c.id) === String(id); });
+        if (!found || typeof found.lat !== 'number' || typeof found.lng !== 'number') return;
+
+        input.value = found.name;
+        dropdown.hidden = true;
+
+        if (window.EliseeClubMap && window.EliseeClubMap.map) {
+          var map = window.EliseeClubMap.map;
+          var cluster = window.EliseeClubMap.cluster;
+          var mk = clubMarkersMap[found.id];
+
+          if (cluster && mk) {
+            cluster.zoomToShowLayer(mk, function () {
+              mk.openPopup();
+            });
+          } else {
+            map.flyTo([found.lat, found.lng], 14, { duration: 1.2 });
+            if (mk) {
+              setTimeout(function () { mk.openPopup(); }, 1200);
+            }
+          }
+        }
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('#es-map-search-container')) {
+        dropdown.hidden = true;
+      }
+    });
+
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        dropdown.hidden = true;
+      }
+    });
   }
 
   window.EliseeClubMap = {
@@ -400,19 +551,21 @@
       }).addTo(this.map);
 
       this.cluster = L.markerClusterGroup({
-        maxClusterRadius: 48,
+        maxClusterRadius: 88,
         showCoverageOnHover: false,
         spiderfyOnMaxZoom: true,
         iconCreateFunction: function (cluster) {
           var n = cluster.getChildCount();
           return L.divIcon({
-            html: '<div class="es-map-cluster">' + n + '</div>',
+            html: '<div class="es-map-cluster" role="button" tabindex="0" aria-label="Cluster con ' + n + ' club">' + n + '</div>',
             className: 'es-map-cluster-wrap',
             iconSize: [46, 46]
           });
         }
       });
       this.map.addLayer(this.cluster);
+
+      initClubSearch();
 
       var self = this;
       var portal = document.getElementById('mappa-portal');
@@ -468,6 +621,7 @@
 
       loadClubs(function (rows) {
         self.cluster.clearLayers();
+        clubMarkersMap = {};
         var overrides = getGeoOverrides();
 
         var filtered = rows.filter(function (c) {
@@ -487,14 +641,29 @@
             className: 'es-map-tooltip'
           });
           self.cluster.addLayer(mk);
+          if (c.id) clubMarkersMap[c.id] = mk;
           count++;
         });
 
-        // HQ rimosso per privacy
+        // Sede Centrale Elisee Scout (Foggia) - Marker oro coerente con la legenda
         if (self.hqLayer) {
           try { self.map.removeLayer(self.hqLayer); } catch (_) {}
           self.hqLayer = null;
         }
+
+        var hqIcon = L.divIcon({
+          className: 'es-map-ico',
+          html: '<div class="es-map-pin es-map-pin--hq" title="Elisee Scout — Sede Centrale Foggia"><img src="immagini/icona-app/icona-elisee-scout.png" alt="" onerror="this.parentElement.innerHTML=\'ES\';"></div>',
+          iconSize: [46, 46],
+          iconAnchor: [23, 23],
+          popupAnchor: [0, -23]
+        });
+
+        var hqMarker = L.marker([41.4622, 15.5447], { icon: hqIcon, zIndexOffset: 1000 });
+        hqMarker.bindPopup('<div class="es-map-pop"><div class="es-map-hq-badge">SEDE CENTRALE</div><strong style="color:#f59e0b; font-size:0.95rem; margin:4px 0 2px;">Elisee Scout HQ</strong><span style="color:#cbd5e1;">Foggia, Puglia</span><div style="font-size:0.75rem; color:#94a3b8; margin-top:4px;">Piattaforma Scouting &amp; Rete Nazionale Calcio</div></div>', { maxWidth: 260 });
+        hqMarker.bindTooltip('Elisee Scout — Sede Centrale (Foggia)', { direction: 'top', offset: [0, -23], className: 'es-map-tooltip' });
+        hqMarker.addTo(self.map);
+        self.hqLayer = hqMarker;
 
         var geo = myClubGeo();
         if (geo && geo.lat) {
@@ -528,6 +697,17 @@
       var cfg = REGION_CENTERS[regionName];
       if (cfg && this.map) {
         this.map.flyTo(cfg.coords, cfg.zoom, { duration: 1.2 });
+
+        document.querySelectorAll('.es-region-card').forEach(function (c) {
+          if (c.getAttribute('data-regione') === regionName) {
+            c.classList.add('is-selected');
+            c.setAttribute('aria-selected', 'true');
+          } else {
+            c.classList.remove('is-selected');
+            c.removeAttribute('aria-selected');
+          }
+        });
+
         var root = document.getElementById('mappa-portal');
         if (root) {
           root.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -535,6 +715,29 @@
         if (window.showToast) {
           window.showToast('Mappa inquadrata su ' + regionName, 'info');
         }
+      }
+    },
+    resetView: function () {
+      if (this.map) {
+        this.map.flyTo([42.2, 12.8], 6, { duration: 1.2 });
+      }
+      document.querySelectorAll('.es-region-card').forEach(function (c) {
+        c.classList.remove('is-selected');
+        c.removeAttribute('aria-selected');
+      });
+      var input = document.getElementById('es-map-search-input');
+      if (input) input.value = '';
+      var clearBtn = document.getElementById('es-map-search-clear');
+      if (clearBtn) clearBtn.hidden = true;
+      var dd = document.getElementById('es-map-search-dropdown');
+      if (dd) dd.hidden = true;
+
+      var root = document.getElementById('mappa-portal');
+      if (root) {
+        root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      if (window.showToast) {
+        window.showToast('Visuale ripristinata su tutta Italia', 'info');
       }
     },
     open: function () {
