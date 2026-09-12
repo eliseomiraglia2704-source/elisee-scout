@@ -3,12 +3,11 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-12** (commit `34cf410`) — Mappa Club: squadre reali dal Selettore Squadra e catalogo ufficiale con logo della società accanto al nome nel pannello regionale espandibile. Cache `TEAMSREAL1`.
-Ultimo fatto: **Mappa Club / Squadre Reali del Selettore & Loghi Ufficiali per Regione**:
-1. **Dati Reali dal Catalogo (`data/squadre/scopri-clubs.json`)**: Popolata la regione corretta per tutte le società di Serie A, B e C tramite mappatura con `comuni_italiani.json`. Le 2810 squadre sono ora tutte georeferenziate per regione reale.
-2. **Loghi Squadra e Chip Interattivi (`mappa-club.js`, `mappa-club.css`)**: Ciascuna squadra nel pannello regionale espandibile mostra ora il logo ufficiale (`immagini/squadre-loghi/<id>.png`), ordinata per categoria (Serie A, B, C, D, Eccellenza...). Cliccando sulla chip, la mappa vola istantaneamente alla posizione del club aprendone il popup.
-3. **Paginazione Intelligente**: Mostrate le prime 40 squadre per regione con pulsante "Mostra tutte le X squadre" / "Mostra meno squadre".
-Feature precedente: **Mappa Club / Allineamento Colori Barra di Ricerca ai Controlli Mappa**: Cache `DARKPILL1`.
+Ultimo aggiornamento: **2026-09-12** (commit `ff764d6`) — Mappa Club: spostata attribuzione cartografica (Leaflet / OpenStreetMap) sotto al riquadro della mappa per liberare completamente il pulsante schermo intero. Cache `ATTRIB1`.
+Ultimo fatto: **Mappa Club / Spostamento Attribuzione Cartografica Sotto la Mappa**:
+1. **Pulsante Schermo Intero Libero (`mappa-club.js`, `mappa-club.css`)**: Disabilitato `attributionControl: false` in `L.map` e forzato `display: none !important` su `.leaflet-control-attribution` per eliminare l'overlay nell'angolo in basso a destra che copriva il bottone `⤢`.
+2. **Footer Attribuzione Sotto la Mappa (`index.html`, `mappa-club.css`)**: Inserito un elegante footer `.es-map-attribution-footer` posizionato direttamente sotto al container della mappa, mantenendo i riferimenti ufficiali ("🇺🇦 Leaflet • © OpenStreetMap") senza interferire con l'interfaccia.
+Feature precedente: **Mappa Club / Squadre Reali del Selettore & Loghi Ufficiali per Regione**: Cache `TEAMSREAL1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -463,6 +462,11 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 ---
 
 ## Diario sessioni
+
+- **2026-09-12** — Mappa Club: spostata attribuzione cartografica (Leaflet / OpenStreetMap) sotto al riquadro della mappa:
+  - Disabilitato `attributionControl: false` in `L.map` (`mappa-club.js`) e forzato `display: none !important` su `.leaflet-control-attribution` (`mappa-club.css`) per evitare la sovrapposizione dell'overlay con bandiera ucraina e crediti cartografici sul pulsante per ingrandire la mappa `⤢`.
+  - Inserito il blocco `.es-map-attribution-footer` in `index.html` e `mappa-club.css` posizionato pulito sotto al riquadro della mappa, mantenendo la dicitura ("🇺🇦 Leaflet • © OpenStreetMap").
+  - Cache `ATTRIB1`.
 
 - **2026-09-12** — Mappa Club: squadre reali dal Selettore Squadra con logo ufficiale affiancato al nome:
   - Aggiornato `data/squadre/scopri-clubs.json` popolando il campo `region` per le 472 squadre di Serie A, B e C tramite mappatura con `comuni_italiani.json` e normalizzazione nomi regionali (es. `Trentino-Alto Adige`).

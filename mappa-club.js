@@ -686,7 +686,7 @@
         setTimeout(function () { window.EliseeClubMap.map.invalidateSize(); }, 60);
         return;
       }
-      this.map = L.map(el, { zoomControl: true, scrollWheelZoom: true }).setView([42.2, 12.8], 6);
+      this.map = L.map(el, { zoomControl: true, scrollWheelZoom: true, attributionControl: false }).setView([42.2, 12.8], 6);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>',
         maxZoom: 19,

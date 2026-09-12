@@ -304,7 +304,7 @@ body.is-view-mappa .portfolio-header {
   overflow: hidden;
   height: clamp(380px, 58vh, 600px);
   background: var(--es-panel-2);
-  margin-bottom: 48px;
+  margin-bottom: 8px;
   box-shadow: none;
 }
 
@@ -349,6 +349,32 @@ body.is-view-mappa .portfolio-header {
   background: var(--es-panel-2);
   color: var(--es-accent);
   border-color: var(--es-accent);
+}
+
+.es-map-attribution-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 11px;
+  color: var(--es-text-muted);
+  margin-bottom: 38px;
+  padding: 0 4px;
+}
+
+.es-map-attribution-footer a {
+  color: var(--es-text-muted);
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.25);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.es-map-attribution-footer a:hover {
+  color: var(--es-accent);
+  border-bottom-color: var(--es-accent);
+}
+
+.leaflet-control-attribution {
+  display: none !important;
 }
 
 /* ==========================================================================
