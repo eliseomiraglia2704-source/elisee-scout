@@ -152,47 +152,58 @@ body.is-view-mappa .portfolio-header {
   flex-shrink: 0;
 }
 
-/* ---- Ricerca club: vero autocomplete, non solo un placeholder statico ---- */
+/* ---- Ricerca club: overlay flottante DENTRO la mappa (pattern Google Maps/Airbnb) ---- */
 .es-map-search {
-  position: relative;
-  margin-bottom: 16px;
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 500;
+  width: 300px;
+  max-width: calc(100% - 32px);
 }
 
-.es-map-search__input {
+.es-map-search__bar {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  align-items: stretch;
   background: var(--es-panel);
   border: 1px solid var(--es-border);
   border-radius: 10px;
-  padding: 14px 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
   transition: border-color 0.15s ease;
 }
 
-.es-map-search__input:focus-within {
+.es-map-search__bar:focus-within {
   border-color: var(--es-accent);
 }
 
-.es-map-search__input svg {
+.es-map-search__icon {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
   color: var(--es-text-muted);
   flex-shrink: 0;
 }
 
-.es-map-search__input input {
+.es-map-search__bar input[type="text"] {
   flex: 1;
-  background: transparent;
-  border: none;
-  color: var(--es-text);
-  font-family: var(--es-font);
-  font-size: 14px;
+  min-width: 0;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 11px 6px 11px 0 !important;
+  color: var(--es-text) !important;
+  font-family: var(--es-font) !important;
+  font-size: 13px !important;
 }
 
-.es-map-search__input input::placeholder {
+.es-map-search__bar input[type="text"]::placeholder {
   color: var(--es-text-muted);
 }
 
-.es-map-search__input input:focus {
-  outline: none;
+.es-map-search__bar input[type="text"]:focus {
+  outline: none !important;
 }
 
 .es-map-search__clear {
@@ -200,10 +211,11 @@ body.is-view-mappa .portfolio-header {
   border: none;
   color: var(--es-text-muted);
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1;
-  padding: 2px 4px;
+  padding: 0 10px;
   display: none;
+  flex-shrink: 0;
 }
 
 .es-map-search__clear.is-visible {
@@ -221,9 +233,9 @@ body.is-view-mappa .portfolio-header {
   border-radius: 10px;
   overflow: hidden;
   display: none;
-  max-height: 320px;
+  max-height: 280px;
   overflow-y: auto;
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.65);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
 }
 
 .es-map-search__results.is-open {
@@ -235,7 +247,7 @@ body.is-view-mappa .portfolio-header {
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  padding: 12px 16px;
+  padding: 10px 13px;
   cursor: pointer;
   border-bottom: 1px solid var(--es-border);
   transition: background 0.15s ease;
@@ -251,19 +263,19 @@ body.is-view-mappa .portfolio-header {
 }
 
 .es-map-search__result-name {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--es-text);
 }
 
 .es-map-search__result-meta {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--es-text-muted);
 }
 
 .es-map-search__empty {
-  padding: 16px;
-  font-size: 13px;
+  padding: 14px;
+  font-size: 12px;
   color: var(--es-text-muted);
   text-align: center;
 }
@@ -336,8 +348,8 @@ body.is-view-mappa .portfolio-header {
   overflow: hidden !important;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4) !important;
   background: var(--es-panel) !important;
-  margin-top: 14px !important;
-  margin-left: 14px !important;
+  margin-top: 70px !important;
+  margin-left: 16px !important;
   display: flex !important;
   flex-direction: column !important;
 }

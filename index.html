@@ -365,7 +365,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
-  <link rel="stylesheet" href="mappa-club.css?v=20260912_MAPCOMPLETE2">
+  <link rel="stylesheet" href="mappa-club.css?v=20260912_MAPOVERLAY1">
   <link rel="stylesheet" href="mobile-webapp.css?v=20260910_DOSSIER1">
   <style id="es-force-no-lines">
     @media screen and (max-width: 768px) {
@@ -4130,19 +4130,21 @@
             <a href="#mappa-portal" id="es-map-geolink" style="display:none;">Sei un club? Imposta la geolocalizzazione</a>
           </div>
 
-          <!-- Barra Ricerca Club: autocomplete reale -->
-          <div class="es-map-search">
-            <div class="es-map-search__input">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
-                <circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-              <input type="text" id="club-search" placeholder="Cerca un club per nome o comune" autocomplete="off" />
-              <button class="es-map-search__clear" id="club-search-clear" type="button">✕</button>
-            </div>
-            <div class="es-map-search__results" id="club-search-results"></div>
-          </div>
-
           <div class="es-map-frame es-map-wrap">
+            <!-- Barra Ricerca Club: overlay compatto flottante DENTRO la mappa (pattern Google Maps / Airbnb) -->
+            <div class="es-map-search">
+              <div class="es-map-search__bar">
+                <span class="es-map-search__icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                    <circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                </span>
+                <input type="text" id="club-search" placeholder="Cerca un club per nome o comune" autocomplete="off" />
+                <button class="es-map-search__clear" id="club-search-clear" type="button">✕</button>
+              </div>
+              <div class="es-map-search__results" id="club-search-results"></div>
+            </div>
+
             <div id="es-map-canvas" role="application" aria-label="Mappa dei club"></div>
             <button type="button" class="es-map-fs" title="Schermo intero" onclick="if(window.EliseeClubMap) window.EliseeClubMap.toggleFull();">⤢</button>
           </div>
@@ -5812,7 +5814,7 @@
   <script src="messaggi.js?v=20260820_MSG1"></script>
   <script src="mercato-hub.js?v=20260903_MA3"></script>
   <script src="schede-tecniche.js?v=20260820_ST3"></script>
-  <script src="mappa-club.js?v=20260912_MAPCOMPLETE2"></script>
+  <script src="mappa-club.js?v=20260912_MAPOVERLAY1"></script>
   <script src="chi-segui.js?v=20260911_ALBUM2"></script>
   <script src="card-atelier.js?v=20260904_ADMINTAB1"></script>
   <script src="ds-hub.js?v=20260827_DS1"></script>

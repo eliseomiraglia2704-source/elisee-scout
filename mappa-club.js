@@ -414,6 +414,12 @@
     if (!input || !resultsBox) return;
     searchBound = true;
 
+    var searchContainer = input.closest('.es-map-search');
+    if (searchContainer && typeof L !== 'undefined' && L.DomEvent) {
+      L.DomEvent.disableClickPropagation(searchContainer);
+      L.DomEvent.disableScrollPropagation(searchContainer);
+    }
+
     function renderResults(query) {
       if (!query) {
         resultsBox.classList.remove('is-open');

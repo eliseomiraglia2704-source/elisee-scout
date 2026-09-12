@@ -3,12 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-12** (commit `72c5564`) — Mappa Club: legenda rimossa del tutto, sfondo forzato identico a `--es-bg` (#0b0e14) con header coordinato, e barra di ricerca ricostruita da zero con menu risultati dinamico, stato vuoto, reset X e centratura mappa su club reale (`index.html`, `mappa-club.js`, `mappa-club.css`). Cache `MAPCOMPLETE2`.
-Ultimo fatto: **Mappa Club / Tre Correzioni Definitive**:
-1. **Legenda Rimossa**: Eliminata completamente la riga «Cluster club / Club singolo / Sede centrale» da `index.html` e puliti tutti i relativi stili in `mappa-club.css`.
-2. **Sfondo Forzato su `--es-bg` (#0b0e14)**: Applicato su `html`, `body`, `#view-mappa`, `#mappa-portal`, `.es-map-page`, header `.main-header` (`rgba(11, 14, 20, 0.96)`) e classe dinamica `.is-view-mappa`, identico al fix già adottato su Stampa.
-3. **Barra Ricerca Ricostruita da Zero**: Markup e classi `.es-map-search`, `.es-map-search__input`, `.es-map-search__clear`, `.es-map-search__results` conformi al template fornito, con menu a discesa contestuale dei risultati (nome club + comune) generato in tempo reale dall'archivio dei 2.810 club, stato vuoto se nessun riscontro, tasto `✕` di pulizia rapida e centratura dinamica della mappa (`map.flyTo` e apertura popup o zoom del cluster) al click sul club.
-Feature precedente: **Mappa Club / Suite Completa UX**: Cache `MAPCOMPLETE1`.
+Ultimo aggiornamento: **2026-09-12** (commit `c0f700a`) — Mappa Club: barra di ricerca trasformata in overlay compatto flottante (300px) ancorato in alto a sinistra DENTRO il riquadro della mappa sopra i tile (pattern Google Maps / Airbnb), con ombra dedicata, risultati a larghezza campo, controlli zoom riallineati a 70px per zero collisioni (`index.html`, `mappa-club.js`, `mappa-club.css`). Cache `MAPOVERLAY1`.
+Ultimo fatto: **Mappa Club / Overlay Flottante Interno Stile Google Maps / Airbnb**:
+1. **Ricerca Ancorata Dentro la Mappa**: Spostata `.es-map-search` da riga a tutta larghezza esterna a box compatto flottante (`300px`, `top: 16px; left: 16px; z-index: 500`) direttamente sopra il canvas Leaflet dentro `.es-map-frame`.
+2. **Nessun Pulsante Ridondante**: Input pulito con icona lente e tasto `✕` di reset contestuale, senza bottoni superflui.
+3. **Menu Autocomplete a Misura**: Dropdown dei risultati perfettamente agganciato alla larghezza del campo (300px) con scrolling compatto a 280px e ombreggiatura profonda sopra i tile.
+4. **Layout Zoom Coordinato**: `.leaflet-control-zoom` allineato verticalmente sotto l'overlay a `margin-top: 70px` per una navigazione pulita ed ergonomica.
+Feature precedente: **Mappa Club / Tre Correzioni Definitive**: Cache `MAPCOMPLETE2`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
