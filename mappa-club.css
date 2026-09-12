@@ -748,6 +748,92 @@ body.is-view-mappa .portfolio-header {
   box-shadow: 0 0 6px rgba(59, 125, 255, 0.6);
 }
 
+/* ---- Pannello squadre della regione cliccata: spans tutta la riga
+   della griglia (grid-column: 1/-1), quindi appare come una riga
+   intera subito sotto la card cliccata, non come un popup isolato. ---- */
+.es-region-teams {
+  grid-column: 1 / -1;
+  background: var(--es-panel);
+  border: 1px solid var(--es-accent);
+  border-radius: 10px;
+  padding: 18px 22px 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  animation: es-region-teams-fade 0.2s ease-out;
+}
+
+@keyframes es-region-teams-fade {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.es-region-teams__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.es-region-teams__head h3 {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--es-text);
+  letter-spacing: -0.01em;
+}
+
+.es-region-teams__head h3 span {
+  color: var(--es-text-muted);
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+.es-region-teams__close {
+  background: none;
+  border: none;
+  color: var(--es-text-muted);
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.es-region-teams__close:hover {
+  color: var(--es-text);
+  background: var(--es-panel-2);
+}
+
+.es-region-teams__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.es-region-teams__list span {
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 16px;
+  background: var(--es-panel-2);
+  color: var(--es-text);
+  border: 1px solid var(--es-border);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.es-region-teams__list span:hover {
+  border-color: var(--es-accent);
+  background: var(--es-accent-soft);
+  color: #ffffff;
+}
+
+.es-region-teams__note {
+  font-size: 11px;
+  color: var(--es-text-muted);
+  margin-top: 12px;
+  margin-bottom: 0;
+}
+
 /* Responsive Media Queries */
 @media (max-width: 980px) {
   .es-map-topbar,

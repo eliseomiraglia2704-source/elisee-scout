@@ -365,7 +365,39 @@
 
   var clubMarkersMap = {};
 
+  var SQUADRE_PER_REGIONE = {
+    "Puglia": ["ASD Calcio Foggia", "Unione Sportiva Manfredonia", "Città di Bari", "Taranto Calcio 1927", "Nuova Spinazzola"]
+  };
+
+  var regionState = { expandedRegion: null };
+  var lastRegionCounts = {};
+
+  function teamsPanelHTML(regione, count) {
+    var squadre = SQUADRE_PER_REGIONE[regione];
+    var body = squadre && squadre.length
+      ? '<div class="es-region-teams__list">' +
+          squadre.map(function (s) {
+            return '<span class="es-region-team-chip" data-team="' + esc(s) + '" title="Centra sulla mappa">' + esc(s) + '</span>';
+          }).join('') +
+        '</div>' +
+        (count > squadre.length ? '<p class="es-region-teams__note">Elenco parziale — altre ' + (count - squadre.length) + ' società non mostrate in questa anteprima.</p>' : '')
+      : '<p class="es-region-teams__note">Elenco squadre non ancora collegato alla fonte dati reale per questa regione.</p>';
+
+    return (
+      '<div class="es-region-teams" role="region" aria-label="Squadre in ' + esc(regione) + '">' +
+        '<div class="es-region-teams__head">' +
+          '<h3>Squadre in ' + esc(regione) + ' <span>(' + count + ' club)</span></h3>' +
+          '<button type="button" class="es-region-teams__close" data-close="' + esc(regione) + '" aria-label="Chiudi pannello squadre">✕</button>' +
+        '</div>' +
+        body +
+      '</div>'
+    );
+  }
+
   function renderRegionsGrid(counts) {
+    if (counts) lastRegionCounts = counts;
+    else counts = lastRegionCounts;
+
     var host = document.getElementById('es-map-regions-grid');
     if (!host) return;
     var keys = Object.keys(REGION_CENTERS).sort(function (a, b) {
@@ -382,7 +414,8 @@
     keys.forEach(function (reg) {
       var num = counts[reg] || 0;
       var pct = Math.max(3, Math.round((num / maxVal) * 100));
-      html += '<button type="button" class="es-region-card es-map-reg-card" data-regione="' + esc(reg) + '" aria-label="' + esc(reg) + ', ' + num + ' club">' +
+      var isOpen = regionState.expandedRegion === reg;
+      var card = '<button type="button" class="es-region-card es-map-reg-card' + (isOpen ? ' is-selected is-open' : '') + '" data-regione="' + esc(reg) + '" aria-label="' + esc(reg) + ', ' + num + ' club" ' + (isOpen ? 'aria-expanded="true"' : 'aria-expanded="false"') + '>' +
         '<div class="es-region-card__header">' +
           '<p class="es-region-card__name es-map-reg-card__name">' + esc(reg) + '</p>' +
           '<p class="es-region-card__count es-map-reg-card__count">' + num.toLocaleString('it-IT') + '<span>club</span></p>' +
@@ -391,16 +424,53 @@
           '<div class="es-region-card__bar" style="width:' + pct + '%;"></div>' +
         '</div>' +
       '</button>';
+      html += card + (isOpen ? teamsPanelHTML(reg, num) : '');
     });
     host.innerHTML = html;
 
     host.onclick = function (e) {
+      var closeBtn = e.target.closest('[data-close]');
+      if (closeBtn) {
+        regionState.expandedRegion = null;
+        renderRegionsGrid();
+        return;
+      }
+
+      var teamChip = e.target.closest('[data-team]');
+      if (teamChip) {
+        var tName = teamChip.getAttribute('data-team') || '';
+        if (tName && window.EliseeClubMap) {
+          loadClubs(function (all) {
+            var q = tName.toLowerCase();
+            var found = all.find(function (c) {
+              var cn = (c.name || '').toLowerCase();
+              return cn === q || cn.indexOf(q) !== -1 || q.indexOf(cn) !== -1;
+            });
+            if (found && window.EliseeClubMap.map) {
+              window.EliseeClubMap.map.flyTo([found.lat, found.lng], 14, { duration: 1.2 });
+              var mk = clubMarkersMap[found.id];
+              if (mk) {
+                setTimeout(function () { mk.openPopup(); }, 1200);
+              }
+            }
+          });
+        }
+        return;
+      }
+
       var btn = e.target.closest('.es-region-card');
       if (!btn) return;
       var r = btn.getAttribute('data-regione');
-      if (r && window.EliseeClubMap) {
-        window.EliseeClubMap.flyToRegion(r);
+      if (!r) return;
+
+      // 1. Centra la mappa sulla regione
+      if (window.EliseeClubMap) {
+        window.EliseeClubMap.flyToRegion(r, false);
       }
+
+      // 2. Apri/chiudi pannello squadre della regione
+      regionState.expandedRegion = (regionState.expandedRegion === r) ? null : r;
+      renderRegionsGrid();
     };
   }
 
@@ -670,7 +740,7 @@
         setTimeout(function () { if (self.map) self.map.invalidateSize(); }, 120);
       });
     },
-    flyToRegion: function (regionName) {
+    flyToRegion: function (regionName, shouldScroll) {
       var cfg = REGION_CENTERS[regionName];
       if (cfg && this.map) {
         this.map.flyTo(cfg.coords, cfg.zoom, { duration: 1.2 });
@@ -685,9 +755,11 @@
           }
         });
 
-        var root = document.getElementById('mappa-portal');
-        if (root) {
-          root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (shouldScroll) {
+          var root = document.getElementById('mappa-portal');
+          if (root) {
+            root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
         }
         if (window.showToast) {
           window.showToast('Mappa inquadrata su ' + regionName, 'info');
@@ -698,6 +770,9 @@
       if (this.map) {
         this.map.flyTo([42.2, 12.8], 6, { duration: 1.2 });
       }
+      regionState.expandedRegion = null;
+      renderRegionsGrid();
+
       document.querySelectorAll('.es-region-card').forEach(function (c) {
         c.classList.remove('is-selected');
         c.removeAttribute('aria-selected');
