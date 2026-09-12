@@ -636,25 +636,11 @@
           count++;
         });
 
-        // Sede Centrale Elisee Scout (Foggia) - Marker oro coerente con la legenda
+        // HQ rimosso
         if (self.hqLayer) {
           try { self.map.removeLayer(self.hqLayer); } catch (_) {}
           self.hqLayer = null;
         }
-
-        var hqIcon = L.divIcon({
-          className: 'es-map-ico',
-          html: '<div class="es-map-pin es-map-pin--hq" title="Elisee Scout — Sede Centrale Foggia"><img src="immagini/icona-app/icona-elisee-scout.png" alt="" onerror="this.parentElement.innerHTML=\'ES\';"></div>',
-          iconSize: [46, 46],
-          iconAnchor: [23, 23],
-          popupAnchor: [0, -23]
-        });
-
-        var hqMarker = L.marker([41.4622, 15.5447], { icon: hqIcon, zIndexOffset: 1000 });
-        hqMarker.bindPopup('<div class="es-map-pop"><div class="es-map-hq-badge">SEDE CENTRALE</div><strong style="color:#f59e0b; font-size:0.95rem; margin:4px 0 2px;">Elisee Scout HQ</strong><span style="color:#cbd5e1;">Foggia, Puglia</span><div style="font-size:0.75rem; color:#94a3b8; margin-top:4px;">Piattaforma Scouting &amp; Rete Nazionale Calcio</div></div>', { maxWidth: 260 });
-        hqMarker.bindTooltip('Elisee Scout — Sede Centrale (Foggia)', { direction: 'top', offset: [0, -23], className: 'es-map-tooltip' });
-        hqMarker.addTo(self.map);
-        self.hqLayer = hqMarker;
 
         var geo = myClubGeo();
         if (geo && geo.lat) {

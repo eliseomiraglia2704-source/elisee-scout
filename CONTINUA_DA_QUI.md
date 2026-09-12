@@ -3,13 +3,10 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-12** (commit `c0f700a`) — Mappa Club: barra di ricerca trasformata in overlay compatto flottante (300px) ancorato in alto a sinistra DENTRO il riquadro della mappa sopra i tile (pattern Google Maps / Airbnb), con ombra dedicata, risultati a larghezza campo, controlli zoom riallineati a 70px per zero collisioni (`index.html`, `mappa-club.js`, `mappa-club.css`). Cache `MAPOVERLAY1`.
-Ultimo fatto: **Mappa Club / Overlay Flottante Interno Stile Google Maps / Airbnb**:
-1. **Ricerca Ancorata Dentro la Mappa**: Spostata `.es-map-search` da riga a tutta larghezza esterna a box compatto flottante (`300px`, `top: 16px; left: 16px; z-index: 500`) direttamente sopra il canvas Leaflet dentro `.es-map-frame`.
-2. **Nessun Pulsante Ridondante**: Input pulito con icona lente e tasto `✕` di reset contestuale, senza bottoni superflui.
-3. **Menu Autocomplete a Misura**: Dropdown dei risultati perfettamente agganciato alla larghezza del campo (300px) con scrolling compatto a 280px e ombreggiatura profonda sopra i tile.
-4. **Layout Zoom Coordinato**: `.leaflet-control-zoom` allineato verticalmente sotto l'overlay a `margin-top: 70px` per una navigazione pulita ed ergonomica.
-Feature precedente: **Mappa Club / Tre Correzioni Definitive**: Cache `MAPCOMPLETE2`.
+Ultimo aggiornamento: **2026-09-12** (commit `d9d5b87`) — Mappa Club: rimosso definitivamente il marker "ES" della Sede Centrale a Foggia, la mappa mostra esclusivamente i cluster e i club effettivi (`mappa-club.js`). Cache `NOHQ1`.
+Ultimo fatto: **Mappa Club / Rimozione Marker Sede Centrale (ES)**:
+1. **Rimozione Pin ES**: Eliminato completamente il marker dorato con sigla `ES` su Foggia (`[41.4622, 15.5447]`) da `mappa-club.js`. La mappa visualizza ora unicamente i cluster territoriali e le società sportive verificate.
+Feature precedente: **Mappa Club / Overlay Flottante Interno Stile Google Maps / Airbnb**: Cache `MAPOVERLAY1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
 
@@ -941,3 +938,4 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
 - **2026-08-20** — Scopri solo da account loggato (tab utente / menu account). Navbar pubblica senza Scopri. `requireEliseeLogin`. Cache `SCO1`.
 - **2026-08-20** — Pannello TC Manager: `tc-panel.js` / `.css`, `#tc-portal`, modulo pubblico `#iscrizione-portal?team=`. Cache `TC1`.
 - **2026-09-08** — Risolto Syntax Error in `elisee_up.py` (blocco try privo di except nella funzione `log`) e problemi di import `auth_store`/`manager_store` tramite package `workers/__init__.py` e import resiliente.
+- **2026-09-12** — Mappa Club: rimosso definitivamente il marker con badge "ES" della Sede Centrale a Foggia. La mappa mostra esclusivamente i cluster e i club effettivi. Cache `NOHQ1`.
