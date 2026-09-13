@@ -500,7 +500,7 @@ button.es-mg-hub-menubar:focus {
   position: absolute;
   inset: 0;
   background:
-    url("immagini/minigioco/minigiochi-sfondo-stadio.png?v=20260913_STADIO1") center / cover no-repeat;
+    url("immagini/minigioco/minigiochi-sfondo-stadio.png?v=20260913_HUBPOLISH2") center 76% / cover no-repeat;
   pointer-events: none;
 }
 .es-mg-hub-shade {

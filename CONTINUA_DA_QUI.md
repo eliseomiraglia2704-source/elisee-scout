@@ -3,10 +3,10 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-13** — Hub Minigiochi (cache `HUBPOLISH1`): icone tutte a contorno; vignetta centrale più chiara per il trofeo.
-Ultimo fatto: **Minigiochi / icone e trofeo (HUBPOLISH1)**:
-1. Scarpino PNG pieno sostituito da SVG stroke (come mirino e lucchetto).
-2. Vignetta al centro schiarita (card hanno già fondo proprio). "Popolare" resta etichetta statica. "Presto disponibile" è `<button disabled>`. File: `minigioco-carriera.js`, `minigioco-carriera.css`.
+Ultimo aggiornamento: **2026-09-13** — Hub Minigiochi (cache `HUBPOLISH2`): sfondo `center 76%` per far entrare il trofeo in viewport.
+Ultimo fatto: **Minigiochi / crop trofeo (HUBPOLISH2)**:
+1. L'immagine è verticale; `cover` + `center` ritagliava il basso (campo + coppa). Lo scroll non la mostra: lo sfondo è `position:absolute` sull'hub.
+2. Posizione `center 76%`. Hover card (sollevamento + bagliore) è ancora su career/Elisee World, non sulla card locked. File: `minigioco-carriera.css`.
 Feature precedente: **Mappa Club / Tutte e Sole le Squadre dalla Serie A all'Eccellenza** (cache `ATOECC2`):
 1. **Catalogo Reale Serie A - Eccellenza (`data/squadre/scopri-clubs.json`)**: Rigenerato il catalogo escludendo Promozione, 1ª/2ª/3ª Categoria, U19 e duplicati, mantenendo le 729 società uniche ufficiali dalla Serie A all'Eccellenza con geolocalizzazione esatta e loghi.
 2. **Filtro Mappa & Tabelle (`mappa-club.js`)**: Aggiunto `isSerieAToEccellenza(c)` su caricamento pin, cluster, ricerca e pannelli regionali; i conteggi riflettono esattamente le squadre di vertice (es. Puglia: 34 società autentiche senza duplicati, Lombardia: 92, Campania: 59).
