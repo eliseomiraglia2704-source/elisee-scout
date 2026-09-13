@@ -11,10 +11,12 @@ function ok(cond, msg) {
 ok(!/Pokemon Calcistico/.test(j + c + h), 'niente card Pokemon Calcistico');
 ok(!/es-mg-hub-pokemon|es-mg-hub-card--pkmn|es-mg-hub-icon-pkmn/.test(j + c), 'niente classi pkmn');
 ok(/es-mg-hub-elisee-world/.test(j), 'card Elisee World presente');
-ok(/Collezione/.test(j) && /Battaglie/.test(j), 'copy collezione/battaglie in Elisee World');
-ok((j.match(/<article class="es-mg-hub-card/g) || []).length === 2, 'due card hub (career + elisee-world)');
-ok(/grid-template-columns: repeat\(2/.test(c), 'griglia hub 2 colonne');
-ok(/MGHUB2/.test(h), 'cache MGHUB2 in index.html');
+ok(/Collezione/.test(j) && /Battaglia/.test(j), 'copy collezione/battaglia in Elisee World');
+ok((j.match(/<article class="es-mg-hub-card/g) || []).length === 3, 'tre card hub (career + elisee-world + locked)');
+ok(/es-mg-hub-card--locked/.test(j + c), 'card In arrivo presente');
+ok(/es-mg-hub-badge/.test(j), 'badge su tutte le card');
+ok(/es-mg-hub-lead/.test(j + c), 'sottotitolo hub');
+ok(/MGHUB3/.test(h), 'cache MGHUB3 in index.html');
 if (fail.length) {
   console.log('FAIL');
   fail.forEach((f) => console.log('  - ' + f));

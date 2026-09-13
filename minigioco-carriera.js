@@ -1463,13 +1463,8 @@
 
   function publishBlockHtml() {
     var logged = isAccountLogged();
-    var concept =
-      '<div class="es-mg-hub-concept">' +
-      '<p>La carriera si <strong>salva</strong> e può essere vista da club e staff iscritti.</p>' +
-      '</div>';
     if (logged) {
       return (
-        concept +
         '<label class="es-mg-hub-publish" id="es-mg-hub-publish">' +
         '<input type="checkbox" id="es-mg-publish-check"' +
         (state.publishPublic ? ' checked' : '') +
@@ -1478,13 +1473,10 @@
         '</label>'
       );
     }
-    return (
-      concept +
-      '<p class="es-mg-hub-publish-hint">Accedi per salvare la carriera sul tuo account.</p>'
-    );
+    return '<p class="es-mg-hub-publish-hint">Accedi per salvare la carriera sul tuo account.</p>';
   }
 
-  // ---------- HUB minigiochi (macroarea, 2 card stile EA FC) ----------
+  // ---------- HUB minigiochi (3 card, stessa grammatica, accento per gioco) ----------
   function renderHub() {
     state.step = 'hub';
     state.publishPublic = loadPublishPref();
@@ -1505,16 +1497,18 @@
         '<div class="es-mg-hub">' +
         '<div class="es-mg-hub-bg" aria-hidden="true"></div>' +
         '<div class="es-mg-hub-shade" aria-hidden="true"></div>' +
+        '<p class="es-mg-hub-lead">Sfide, carriere e collezioni della community Elisee Scout: gioca, salva i progressi, confrontati con gli altri.</p>' +
         '<div class="es-mg-hub-stage">' +
-        '<article class="es-mg-hub-card is-on es-mg-hub-card--career" id="es-mg-hub-career" role="region" aria-label="1. Carriera Giocatore">' +
+        '<article class="es-mg-hub-card es-mg-hub-card--career" id="es-mg-hub-career" role="region" aria-label="1. Carriera Giocatore">' +
         '<span class="es-mg-hub-num" aria-hidden="true">01</span>' +
+        '<span class="es-mg-hub-badge">Popolare</span>' +
         '<div class="es-mg-hub-card-body">' +
         '<span class="es-mg-hub-icon" aria-hidden="true">' +
         '<img class="es-mg-hub-boot" src="immagini/minigioco/scarpa-calcio-white.png?v=20260813_BOOT" alt="" />' +
         '</span>' +
         '<span class="es-mg-hub-title">Carriera Giocatore</span>' +
         '<span class="es-mg-hub-tags">Serie D → C → B → A · Top mondiali</span>' +
-        '<span class="es-mg-hub-desc">Simula la carriera: vinci il girone, sali di categoria, tratta sul mercato.</span>' +
+        '<span class="es-mg-hub-desc">Simula la carriera: vinci il girone, sali di categoria, tratta sul mercato. La carriera si <strong>salva</strong> e può essere vista da club e staff iscritti.</span>' +
         publishBlockHtml() +
         '</div>' +
         '<div class="es-mg-hub-card-footer es-mg-hub-actions-career">' +
@@ -1527,22 +1521,36 @@
         '</article>' +
         '<article class="es-mg-hub-card es-mg-hub-card--elisee-world" id="es-mg-hub-elisee-world" role="button" tabindex="0" aria-label="2. Elisee World, Gioca ora">' +
         '<span class="es-mg-hub-num" aria-hidden="true">02</span>' +
-        '<span class="es-mg-hub-badge-live">Novità · Gioca</span>' +
+        '<span class="es-mg-hub-badge">Novità</span>' +
         '<div class="es-mg-hub-card-body">' +
         '<span class="es-mg-hub-icon es-mg-hub-icon-ew" aria-hidden="true">' +
-        '<svg viewBox="0 0 64 64" fill="none">' +
-        '<circle cx="32" cy="32" r="22" stroke="#38bdf8" stroke-width="2.5" fill="rgba(2,132,199,0.18)"/>' +
-        '<path d="M10 32h44" stroke="#38bdf8" stroke-width="2.5"/>' +
-        '<circle cx="32" cy="32" r="8" fill="#0369a1" stroke="#facc15" stroke-width="2.5"/>' +
-        '<circle cx="32" cy="32" r="3" fill="#ffffff"/>' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+        '<circle cx="12" cy="12" r="9"/>' +
+        '<circle cx="12" cy="12" r="3"/>' +
         '</svg>' +
         '</span>' +
         '<span class="es-mg-hub-title">Elisee World</span>' +
-        '<span class="es-mg-hub-tags">RPG 16-bit · Collezione · Battaglie</span>' +
+        '<span class="es-mg-hub-tags">RPG 16-bit · Collezione · Battaglia</span>' +
         '<span class="es-mg-hub-desc">Cattura fuoriclasse con le <strong>Eliball</strong>, costruisci la collezione e sfida i Mister in battaglie a turni nell\'overworld retro.</span>' +
+        '<p class="es-mg-hub-note">Progressi salvati automaticamente sul tuo account.</p>' +
         '</div>' +
         '<div class="es-mg-hub-card-footer es-mg-hub-concept-ew">' +
         '<span class="es-mg-hub-btn-launch">Entra in campo</span>' +
+        '</div>' +
+        '</article>' +
+        '<article class="es-mg-hub-card es-mg-hub-card--locked" id="es-mg-hub-coming" aria-disabled="true" aria-label="3. Prossimo minigioco, in arrivo">' +
+        '<span class="es-mg-hub-num" aria-hidden="true">03</span>' +
+        '<span class="es-mg-hub-badge">In arrivo</span>' +
+        '<div class="es-mg-hub-card-body">' +
+        '<span class="es-mg-hub-icon" aria-hidden="true">' +
+        '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>' +
+        '</span>' +
+        '<span class="es-mg-hub-title">Prossimo minigioco</span>' +
+        '<span class="es-mg-hub-tags">Annuncio a breve</span>' +
+        '<span class="es-mg-hub-desc">Stiamo lavorando alla prossima modalità. Torna a trovarci per essere tra i primi a provarla.</span>' +
+        '</div>' +
+        '<div class="es-mg-hub-card-footer">' +
+        '<button type="button" class="es-mg-hub-play" disabled>Presto disponibile</button>' +
         '</div>' +
         '</article>' +
         '</div>' +

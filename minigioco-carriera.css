@@ -281,7 +281,7 @@ body.es-mg-open::-webkit-scrollbar {
   box-shadow: none;
 }
 
-/* ===== HUB minigiochi — 2 card stile EA FC Kick Off ===== */
+/* ===== HUB minigiochi — 3 card, stessa grammatica, accento per gioco ===== */
 .es-mg-hub-top-actions {
   display: flex;
   align-items: center;
@@ -294,8 +294,12 @@ body.es-mg-open::-webkit-scrollbar {
 .es-mg-top--hub .es-mg-hub-auth-in,
 .es-mg-top--hub .es-mg-hub-auth-up {
   min-width: 104px;
-  padding: 0.42rem 1.05rem;
+  padding: 9px 18px;
   font-size: 0.8rem;
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #f2f5f8;
 }
 .es-mg-user-chip {
   display: inline-flex;
@@ -318,19 +322,25 @@ body.es-mg-open::-webkit-scrollbar {
   position: relative;
   z-index: 5;
   flex-shrink: 0;
-  background: rgba(6, 12, 22, 0.92);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 0.7rem 1rem;
+  background: transparent;
+  border-bottom: none;
+  padding: 18px 28px;
   gap: 0.65rem;
+}
+.es-mg-top--hub .es-mg-close {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 9px 18px;
 }
 .es-mg-hub-heading {
   margin: 0;
   flex: 1 1 auto;
   min-width: 0;
   font-family: Outfit, Inter, sans-serif;
-  font-size: 1.05rem;
+  font-size: 15px;
   font-weight: 800;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: #fff;
   text-align: center;
   line-height: 1.2;
@@ -342,14 +352,14 @@ body.es-mg-open::-webkit-scrollbar {
 }
 .es-mg-hub-num {
   position: absolute;
-  top: 0.75rem;
-  left: 0.85rem;
+  top: 16px;
+  left: 18px;
   z-index: 3;
   font-family: Outfit, Inter, sans-serif;
-  font-size: 0.72rem;
+  font-size: 12px;
   font-weight: 800;
-  letter-spacing: 0.12em;
-  color: rgba(125, 211, 252, 0.7);
+  letter-spacing: 0.05em;
+  color: var(--accent, #2fd6d1);
 }
 .es-mg-hub-menubar,
 button.es-mg-hub-menubar {
@@ -443,18 +453,27 @@ button.es-mg-hub-menubar:focus {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding: clamp(0.85rem, 2.4vh, 1.6rem) clamp(1rem, 4vw, 2.5rem) 1.6rem;
+  justify-content: center;
+  padding: 8px clamp(1rem, 4vw, 2.5rem) 48px;
   overflow: auto;
   margin-top: 0;
+}
+.es-mg-hub-lead {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(242, 245, 248, 0.72);
+  max-width: 420px;
+  margin: 0 auto 8px;
+  padding: 4px 8px 16px;
 }
 .es-mg-hub-bg {
   position: absolute;
   inset: 0;
   background:
-    url("immagini/minigioco/hub-sfondo.jpg?v=20260813_HUBBG2") center 40% / cover no-repeat;
-  filter: saturate(1.05) brightness(0.78);
-  transform: scale(1.04);
+    url("immagini/minigioco/hub-sfondo.jpg?v=20260913_MGHUB3") center / cover no-repeat;
   pointer-events: none;
 }
 .es-mg-hub-shade {
@@ -462,56 +481,75 @@ button.es-mg-hub-menubar:focus {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 80% 70% at 50% 55%, rgba(4, 12, 24, 0.04) 0%, rgba(3, 8, 16, 0.22) 100%),
-    linear-gradient(180deg, rgba(4, 8, 16, 0.04) 0%, transparent 26%, rgba(4, 8, 16, 0.28) 100%);
+    radial-gradient(ellipse at center, rgba(6, 10, 16, 0.35) 0%, rgba(6, 10, 16, 0.75) 70%),
+    linear-gradient(to bottom, rgba(6, 10, 16, 0.85) 0%, rgba(6, 10, 16, 0.35) 22%, rgba(6, 10, 16, 0.35) 78%, rgba(6, 10, 16, 0.9) 100%);
 }
 .es-mg-hub-stage {
   position: relative;
   z-index: 1;
-  width: min(760px, 100%);
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(0.85rem, 2.2vw, 1.4rem);
+  width: min(1080px, 100%);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: stretch;
+  gap: 26px;
 }
 .es-mg-hub-card {
+  --accent: #2fd6d1;
+  --accent-soft: rgba(47, 214, 209, 0.16);
+  --accent-hi: #8af0ec;
   appearance: none;
   -webkit-appearance: none;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   text-align: center;
-  min-height: min(58vh, 420px);
-  aspect-ratio: auto;
-  padding: 2.1rem 1.3rem 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  background: rgba(12, 18, 32, 0.78);
-  color: #fff;
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.38);
-  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  width: 320px;
+  flex: 0 0 320px;
+  min-height: 0;
+  padding: 26px 24px 24px;
+  border: 1.5px solid var(--accent);
+  border-radius: 16px;
+  background: rgba(10, 14, 20, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #f2f5f8;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.03), 0 20px 40px rgba(0, 0, 0, 0.35);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
   overflow: hidden;
   box-sizing: border-box;
 }
 .es-mg-hub-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(ellipse 90% 55% at 50% 0%, rgba(56, 220, 230, 0.22), transparent 62%);
+  display: none;
 }
-.es-mg-hub-card.is-on {
-  border-color: rgba(90, 230, 240, 0.78);
+.es-mg-hub-card--career {
+  --accent: #2fd6d1;
+  --accent-soft: rgba(47, 214, 209, 0.16);
+  --accent-hi: #8af0ec;
+}
+.es-mg-hub-card--elisee-world {
+  --accent: #3b7dff;
+  --accent-soft: rgba(59, 125, 255, 0.16);
+  --accent-hi: #7aa6ff;
+}
+.es-mg-hub-card--locked {
+  --accent: #6b7280;
+  --accent-soft: rgba(107, 114, 128, 0.16);
+  --accent-hi: #9ca3af;
+  opacity: 0.82;
+  cursor: default;
+}
+.es-mg-hub-card.is-on,
+.es-mg-hub-card--elisee-world {
+  border-color: var(--accent);
+}
+.es-mg-hub-card:not(.es-mg-hub-card--locked):hover {
+  transform: translateY(-6px);
   box-shadow:
-    0 0 0 1px rgba(90, 230, 240, 0.28),
-    0 0 28px rgba(40, 190, 210, 0.28),
-    0 18px 48px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-.es-mg-hub-card:not(.is-empty):hover {
-  transform: translateY(-2px);
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 0 32px var(--accent-soft),
+    0 24px 44px rgba(0, 0, 0, 0.4);
 }
 .es-mg-hub-card-body {
   width: 100%;
@@ -542,15 +580,11 @@ button.es-mg-hub-menubar:focus {
 }
 .es-mg-hub-actions-career .es-mg-hub-play {
   width: 100%;
-  max-width: 260px;
-  padding: 0.52rem 1.2rem;
-  font-size: 0.9rem;
+  max-width: none;
 }
 .es-mg-hub-actions-career .es-mg-hub-play-ghost {
   width: 100%;
-  max-width: 260px;
-  padding: 0.42rem 1.1rem;
-  font-size: 0.82rem;
+  max-width: none;
 }
 .es-mg-hub-actions-career .es-mg-hub-continue-meta {
   font-size: 0.68rem;
@@ -563,45 +597,32 @@ button.es-mg-hub-menubar:focus {
 .es-mg-hub-card.is-empty {
   cursor: default;
   pointer-events: none;
-  border-color: rgba(148, 210, 230, 0.1);
-  background:
-    linear-gradient(180deg, rgba(18, 90, 120, 0.18) 0%, rgba(8, 16, 28, 0.62) 46%, rgba(6, 10, 18, 0.78) 100%);
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
 }
 .es-mg-hub-card--elisee-world {
   cursor: pointer;
-  border-color: rgba(56, 189, 248, 0.4);
-  background:
-    linear-gradient(180deg, rgba(14, 42, 78, 0.85) 0%, rgba(8, 16, 32, 0.88) 55%, rgba(5, 10, 20, 0.95) 100%);
-  position: relative;
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
-.es-mg-hub-card--elisee-world:hover {
-  transform: translateY(-4px);
-  border-color: rgba(56, 189, 248, 0.9);
-  box-shadow: 0 0 24px rgba(56, 189, 248, 0.35), 0 20px 40px rgba(0, 0, 0, 0.6);
-}
+.es-mg-hub-badge,
 .es-mg-hub-badge-live {
   position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
+  top: 14px;
+  right: 14px;
   left: auto;
   transform: none;
   z-index: 2;
   display: inline-flex;
   align-items: center;
   margin: 0;
-  padding: 0.28rem 0.85rem;
-  border-radius: 999px;
-  border: 1px solid rgba(56, 189, 248, 0.7);
-  background: linear-gradient(135deg, rgba(2, 132, 199, 0.5), rgba(15, 23, 42, 0.8));
-  color: #38bdf8;
-  font-size: 0.7rem;
+  padding: 5px 11px;
+  border-radius: 12px;
+  border: 1px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 10px;
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   white-space: nowrap;
-  box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+  box-shadow: none;
 }
 .es-mg-hub-concept-ew {
   width: 100%;
@@ -615,78 +636,79 @@ button.es-mg-hub-menubar:focus {
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: 260px;
-  padding: 0.55rem 1.2rem;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #0284c7, #0369a1);
-  color: #ffffff;
-  font-size: 0.92rem;
+  padding: 13px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hi));
+  color: #06090d;
+  font-size: 14px;
   font-weight: 800;
-  letter-spacing: 0.03em;
-  border: 2px solid rgba(56, 189, 248, 0.6);
-  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
-  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  letter-spacing: 0.02em;
+  border: none;
+  box-shadow: none;
   pointer-events: none;
 }
 .es-mg-hub-card--elisee-world:hover .es-mg-hub-btn-launch {
-  background: linear-gradient(135deg, #0ea5e9, #0284c7);
-  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.6);
-  transform: translateY(-2px);
+  filter: brightness(1.06);
 }
-.es-mg-hub-icon-ew {
-  width: 86px;
-  height: 44px;
-}
-.es-mg-hub-icon-ew svg {
-  width: 44px;
-  height: 44px;
-}
+.es-mg-hub-icon-ew,
 .es-mg-hub-icon {
   position: relative;
   z-index: 1;
-  width: 86px;
-  height: 44px;
-  margin: 0 0 0.45rem;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  margin: 18px 0 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+  background: var(--accent-soft);
+  color: var(--accent);
+  filter: none;
 }
+.es-mg-hub-icon-ew svg,
 .es-mg-hub-icon svg,
 .es-mg-hub-boot {
-  width: 100%;
-  height: 100%;
+  width: 24px;
+  height: 24px;
   object-fit: contain;
   display: block;
-  filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.25));
+  filter: none;
 }
 .es-mg-hub-title {
   position: relative;
   z-index: 1;
   font-family: Outfit, Inter, system-ui, sans-serif;
-  font-size: clamp(1.3rem, 2.2vw, 1.65rem);
+  font-size: 20px;
   font-weight: 800;
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
   line-height: 1.15;
-  margin: 0 0 0.35rem;
+  margin: 0 0 6px;
+  text-transform: none !important;
 }
 .es-mg-hub-tags {
   position: relative;
   z-index: 1;
-  font-size: 0.72rem;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.02em;
-  color: #7dd3fc;
-  margin: 0 0 0.45rem;
+  color: var(--accent);
+  margin: 0 0 14px;
 }
 .es-mg-hub-desc {
   position: relative;
   z-index: 1;
-  font-size: 0.76rem;
-  line-height: 1.4;
-  color: rgba(226, 232, 240, 0.86);
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(242, 245, 248, 0.72);
   max-width: 22.5rem;
-  margin: 0 0 0.2rem;
+  margin: 0 0 14px;
+}
+.es-mg-hub-note {
+  position: relative;
+  z-index: 1;
+  font-size: 12px;
+  color: rgba(242, 245, 248, 0.72);
+  margin: 0 0 4px;
 }
 .es-mg-hub-desc strong {
   color: #fff;
@@ -809,46 +831,48 @@ button.es-mg-hub-menubar:focus {
   -webkit-appearance: none;
   display: block;
   width: 100%;
-  max-width: 320px;
-  padding: 0.75rem 1.8rem;
-  border: 2px solid rgba(56, 189, 248, 0.9);
-  border-radius: 999px;
-  background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 50%, #7dd3fc 100%);
-  color: #041019;
+  max-width: none;
+  margin-top: 16px;
+  padding: 13px;
+  border: none;
+  border-radius: 22px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hi));
+  color: #06090d;
   font-weight: 800;
-  font-size: 1rem;
-  letter-spacing: 0.03em;
+  font-size: 14px;
+  letter-spacing: 0.02em;
   cursor: pointer;
-  box-shadow:
-    0 0 0 3px rgba(56, 189, 248, 0.2),
-    0 6px 20px rgba(14, 165, 233, 0.45);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  box-shadow: none;
+  transition: filter 0.15s ease, transform 0.15s ease;
   text-align: center;
 }
 .es-mg-hub-play:hover {
-  background: linear-gradient(135deg, #38bdf8 0%, #7dd3fc 100%);
-  border-color: #7dd3fc;
-  transform: translateY(-2px);
-  box-shadow:
-    0 0 0 4px rgba(56, 189, 248, 0.3),
-    0 10px 28px rgba(14, 165, 233, 0.55);
+  filter: brightness(1.06);
+  transform: none;
+  box-shadow: none;
+  border: none;
 }
 .es-mg-hub-play:active {
   transform: translateY(0) scale(0.98);
-  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+}
+.es-mg-hub-play:disabled,
+.es-mg-hub-card--locked .es-mg-hub-play {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(242, 245, 248, 0.72);
+  cursor: not-allowed;
+  filter: none;
 }
 .es-mg-hub-play-ghost {
-  background: rgba(255, 255, 255, 0.07);
-  border: 2px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   color: #f1f5f9;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(4px);
+  box-shadow: none;
+  margin-top: 8px;
 }
 .es-mg-hub-play-ghost:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.8);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.35);
+  filter: none;
 }
 .es-mg-hub-continue-meta {
   font-size: 0.68rem;
@@ -941,9 +965,12 @@ button.es-mg-hub-menubar:focus {
     width: 100%;
   }
   .es-mg-hub-card {
+    width: 100%;
+    max-width: 340px;
+    flex: none;
     min-height: 0;
     aspect-ratio: auto;
-    padding: 1.4rem 1.1rem 1.15rem;
+    padding: 26px 22px 22px;
   }
   .es-mg-hub-card.is-empty {
     min-height: 160px;
@@ -4654,14 +4681,16 @@ button.es-mg-hub-menubar:focus {
   }
   .es-mg-hub-stage {
     grid-template-columns: 1fr;
+    flex-direction: column;
     width: 100%;
   }
   .es-mg-hub-card {
     width: 100%;
-    max-width: 100%;
+    max-width: 340px;
+    flex: none;
     min-height: 0;
     aspect-ratio: auto;
-    padding: 1.25rem 1rem 1.1rem;
+    padding: 24px 20px 20px;
   }
   .es-mg-hub-card.is-empty {
     display: none;
@@ -4846,60 +4875,60 @@ button.es-mg-hub-menubar:focus {
 
   .es-mg-hub-stage {
     grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
     width: 100% !important;
     max-width: 100% !important;
-    gap: 0.7rem !important;
+    gap: 16px !important;
     padding: 0 !important;
   }
 
   .es-mg-hub-card,
   .es-mg-hub-card.is-on,
   .es-mg-hub-card--elisee-world,
-  .es-mg-hub-card--career {
+  .es-mg-hub-card--career,
+  .es-mg-hub-card--locked {
+    width: 100% !important;
+    max-width: 340px !important;
     min-height: 0 !important;
     height: auto !important;
     aspect-ratio: auto !important;
-    display: grid !important;
-    grid-template-columns: 52px minmax(0, 1fr);
-    grid-template-areas:
-      "icon body"
-      "cta cta";
+    display: flex !important;
+    flex-direction: column !important;
     align-items: center !important;
-    justify-items: stretch !important;
-    text-align: left !important;
-    padding: 0.9rem 0.9rem 0.85rem !important;
+    text-align: center !important;
+    padding: 22px 18px 18px !important;
     border-radius: 16px !important;
   }
 
   .es-mg-hub-num {
-    top: 0.55rem !important;
-    left: 0.6rem !important;
-    font-size: 0.62rem !important;
+    top: 14px !important;
+    left: 16px !important;
+    font-size: 11px !important;
   }
 
+  .es-mg-hub-badge,
   .es-mg-hub-badge-live {
-    top: 0.5rem !important;
-    right: 0.55rem !important;
+    top: 12px !important;
+    right: 12px !important;
     left: auto !important;
     transform: none !important;
-    font-size: 0.58rem !important;
-    padding: 0.18rem 0.5rem !important;
-    letter-spacing: 0.06em !important;
+    font-size: 9px !important;
+    padding: 4px 9px !important;
+    letter-spacing: 0.04em !important;
   }
 
   .es-mg-hub-icon,
   .es-mg-hub-icon-ew {
-    grid-area: icon;
-    width: 44px !important;
-    height: 44px !important;
-    margin: 0.35rem 0 0 !important;
+    width: 48px !important;
+    height: 48px !important;
+    margin: 16px 0 12px !important;
   }
 
   .es-mg-hub-card-body {
-    grid-area: body;
-    align-items: flex-start !important;
-    text-align: left !important;
-    padding-right: 0.2rem;
+    align-items: center !important;
+    text-align: center !important;
   }
 
   .es-mg-hub-title {
@@ -4913,10 +4942,11 @@ button.es-mg-hub-menubar:focus {
   }
 
   .es-mg-hub-desc,
+  .es-mg-hub-note,
   .es-mg-hub-concept,
   .es-mg-hub-publish,
   .es-mg-hub-publish-hint {
-    display: none !important;
+    font-size: 12px !important;
   }
 
   .es-mg-hub-card-footer,

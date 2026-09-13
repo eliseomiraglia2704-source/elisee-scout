@@ -3,10 +3,10 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-13** — Album copy e header (cache `ALBUM5`): niente em dash nelle tre frasi visibili; padding-top 88px (header fisso 72px + 16).
-Ultimo fatto: **Album / trattini e titolo sotto navbar (ALBUM5)**:
-1. **Copy**: "Chi hai in rete:" / "comparirà qui, …" / "per categoria (Ente, Club, Player, Staff), …" — niente em dash.
-2. **Titolo non tagliato**: `.portfolio-navbar` è `position:fixed; height:72px`. Padding-top Album da 56px a 88px (72+16). Mobile 72px (navbar min-height 52px + respiro). File: `index.html`, `chi-segui.js`, `player-card.js`, `scopri-profili.css`, `area-album-seguiti.html`.
+Ultimo aggiornamento: **2026-09-13** — Hub Minigiochi (cache `MGHUB3`): stessa grammatica visiva su 3 card, vignetta, hover glow, card In arrivo.
+Ultimo fatto: **Minigiochi / hub curato stile console (MGHUB3)**:
+1. **Grammatica unica**: numero, badge (Popolare/Novità/In arrivo), icona in cerchio, bottone gradiente. Cambia solo l'accento (ciano / blu / grigio locked).
+2. **Vignetta** sullo sfondo reale `immagini/minigioco/hub-sfondo.jpg` per contrasto testo. Terza card "In arrivo" riempie la griglia. Hover con bagliore accento. Sottotitolo sotto MINIGIOCHI. File: `minigioco-carriera.js`, `minigioco-carriera.css`, `_test_mg_hub_merge.js`.
 Feature precedente: **Mappa Club / Tutte e Sole le Squadre dalla Serie A all'Eccellenza** (cache `ATOECC2`):
 1. **Catalogo Reale Serie A - Eccellenza (`data/squadre/scopri-clubs.json`)**: Rigenerato il catalogo escludendo Promozione, 1ª/2ª/3ª Categoria, U19 e duplicati, mantenendo le 729 società uniche ufficiali dalla Serie A all'Eccellenza con geolocalizzazione esatta e loghi.
 2. **Filtro Mappa & Tabelle (`mappa-club.js`)**: Aggiunto `isSerieAToEccellenza(c)` su caricamento pin, cluster, ricerca e pannelli regionali; i conteggi riflettono esattamente le squadre di vertice (es. Puglia: 34 società autentiche senza duplicati, Lombardia: 92, Campania: 59).
