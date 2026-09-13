@@ -320,13 +320,14 @@ body.es-mg-open::-webkit-scrollbar {
 }
 .es-mg-top--hub {
   position: relative;
-  z-index: 5;
+  z-index: 6;
   flex-shrink: 0;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  background: transparent;
-  border-bottom: none;
+  background: transparent !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
   padding: 18px 28px;
   gap: 0.65rem;
 }
@@ -469,17 +470,18 @@ button.es-mg-hub-menubar:focus {
   background: rgba(255, 255, 255, 0.28);
 }
 .es-mg-root:has(.es-mg-hub) {
-  background: #1a2a38;
+  background: #000;
 }
 .es-mg-hub {
-  position: relative;
-  flex: 1;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 8px clamp(1rem, 4vw, 2.5rem) 48px;
+  padding: 88px clamp(1rem, 4vw, 2.5rem) 48px;
   overflow: auto;
   margin-top: 0;
 }
@@ -992,7 +994,7 @@ button.es-mg-hub-menubar:focus {
     justify-content: flex-end;
   }
   .es-mg-hub {
-    padding: 0.85rem 0.85rem 1.2rem;
+    padding: 72px 0.85rem 1.2rem;
     justify-content: flex-start;
     margin-top: 0;
   }
@@ -4715,7 +4717,7 @@ button.es-mg-hub-menubar:focus {
   .es-mg-hub {
     overflow: auto;
     justify-content: flex-start;
-    padding: 0.85rem 0.75rem max(1rem, env(safe-area-inset-bottom));
+    padding: 72px 0.75rem max(1rem, env(safe-area-inset-bottom));
   }
   .es-mg-hub-stage {
     grid-template-columns: 1fr;
@@ -4862,8 +4864,9 @@ button.es-mg-hub-menubar:focus {
     align-items: center !important;
     gap: 0.45rem !important;
     padding: 0.55rem 0.75rem !important;
-    background: #071018 !important;
-    border-bottom: 1px solid rgba(56, 189, 248, 0.18) !important;
+    background: transparent !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
   }
 
   .es-mg-hub-heading {
@@ -4915,7 +4918,7 @@ button.es-mg-hub-menubar:focus {
     justify-content: flex-start !important;
     overflow: auto !important;
     -webkit-overflow-scrolling: touch;
-    padding: 0.85rem 0.85rem 1.4rem !important;
+    padding: 72px 0.85rem 1.4rem !important;
   }
 
   .es-mg-hub-stage {
