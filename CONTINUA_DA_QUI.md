@@ -3,10 +3,10 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-13** — Hub Minigiochi (cache `MGHUB3`): stessa grammatica visiva su 3 card, vignetta, hover glow, card In arrivo.
-Ultimo fatto: **Minigiochi / hub curato stile console (MGHUB3)**:
-1. **Grammatica unica**: numero, badge (Popolare/Novità/In arrivo), icona in cerchio, bottone gradiente. Cambia solo l'accento (ciano / blu / grigio locked).
-2. **Vignetta** sullo sfondo reale `immagini/minigioco/hub-sfondo.jpg` per contrasto testo. Terza card "In arrivo" riempie la griglia. Hover con bagliore accento. Sottotitolo sotto MINIGIOCHI. File: `minigioco-carriera.js`, `minigioco-carriera.css`, `_test_mg_hub_merge.js`.
+Ultimo aggiornamento: **2026-09-13** — Hub Minigiochi (cache `MGHUB4`): titolo centrato in assoluto sulla barra; gradienti bottoni con tinte fisse.
+Ultimo fatto: **Minigiochi / titolo e gradienti (MGHUB4)**:
+1. **MINIGIOCHI** ancorato con `position:absolute; left:50%` così non si sposta verso Indietro quando a destra ci sono Accedi+Registrati.
+2. **Gradienti CTA** su `--accent-light` fisso (`#8ff0ec` ciano, `#93b8ff` blu), niente `color-mix()`. File: `minigioco-carriera.css`.
 Feature precedente: **Mappa Club / Tutte e Sole le Squadre dalla Serie A all'Eccellenza** (cache `ATOECC2`):
 1. **Catalogo Reale Serie A - Eccellenza (`data/squadre/scopri-clubs.json`)**: Rigenerato il catalogo escludendo Promozione, 1ª/2ª/3ª Categoria, U19 e duplicati, mantenendo le 729 società uniche ufficiali dalla Serie A all'Eccellenza con geolocalizzazione esatta e loghi.
 2. **Filtro Mappa & Tabelle (`mappa-club.js`)**: Aggiunto `isSerieAToEccellenza(c)` su caricamento pin, cluster, ricerca e pannelli regionali; i conteggi riflettono esattamente le squadre di vertice (es. Puglia: 34 società autentiche senza duplicati, Lombardia: 92, Campania: 59).

@@ -328,14 +328,23 @@ body.es-mg-open::-webkit-scrollbar {
   gap: 0.65rem;
 }
 .es-mg-top--hub .es-mg-close {
+  position: relative;
+  z-index: 2;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.18);
   padding: 9px 18px;
 }
+.es-mg-top--hub .es-mg-hub-top-actions {
+  position: relative;
+  z-index: 2;
+}
 .es-mg-hub-heading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   margin: 0;
-  flex: 1 1 auto;
-  min-width: 0;
+  flex: none;
   font-family: Outfit, Inter, sans-serif;
   font-size: 15px;
   font-weight: 800;
@@ -344,6 +353,8 @@ body.es-mg-open::-webkit-scrollbar {
   color: #fff;
   text-align: center;
   line-height: 1.2;
+  white-space: nowrap;
+  pointer-events: none;
 }
 .es-mg-close--back {
   flex-shrink: 0;
@@ -497,7 +508,7 @@ button.es-mg-hub-menubar:focus {
 .es-mg-hub-card {
   --accent: #2fd6d1;
   --accent-soft: rgba(47, 214, 209, 0.16);
-  --accent-hi: #8af0ec;
+  --accent-light: #8ff0ec;
   appearance: none;
   -webkit-appearance: none;
   position: relative;
@@ -526,17 +537,17 @@ button.es-mg-hub-menubar:focus {
 .es-mg-hub-card--career {
   --accent: #2fd6d1;
   --accent-soft: rgba(47, 214, 209, 0.16);
-  --accent-hi: #8af0ec;
+  --accent-light: #8ff0ec;
 }
 .es-mg-hub-card--elisee-world {
   --accent: #3b7dff;
   --accent-soft: rgba(59, 125, 255, 0.16);
-  --accent-hi: #7aa6ff;
+  --accent-light: #93b8ff;
 }
 .es-mg-hub-card--locked {
   --accent: #6b7280;
   --accent-soft: rgba(107, 114, 128, 0.16);
-  --accent-hi: #9ca3af;
+  --accent-light: #9ca3af;
   opacity: 0.82;
   cursor: default;
 }
@@ -638,7 +649,7 @@ button.es-mg-hub-menubar:focus {
   width: 100%;
   padding: 13px;
   border-radius: 22px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-hi));
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
   color: #06090d;
   font-size: 14px;
   font-weight: 800;
@@ -836,7 +847,7 @@ button.es-mg-hub-menubar:focus {
   padding: 13px;
   border: none;
   border-radius: 22px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-hi));
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
   color: #06090d;
   font-weight: 800;
   font-size: 14px;
@@ -4818,8 +4829,8 @@ button.es-mg-hub-menubar:focus {
 
   .es-mg-top--hub {
     position: relative !important;
-    display: grid !important;
-    grid-template-columns: auto minmax(0, 1fr) auto;
+    display: flex !important;
+    justify-content: space-between !important;
     align-items: center !important;
     gap: 0.45rem !important;
     padding: 0.55rem 0.75rem !important;
@@ -4828,9 +4839,14 @@ button.es-mg-hub-menubar:focus {
   }
 
   .es-mg-hub-heading {
-    font-size: 0.98rem !important;
-    letter-spacing: 0.06em;
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    font-size: 0.82rem !important;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
+    pointer-events: none !important;
   }
 
   .es-mg-close--back {
