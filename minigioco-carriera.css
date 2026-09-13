@@ -322,6 +322,9 @@ body.es-mg-open::-webkit-scrollbar {
   position: relative;
   z-index: 5;
   flex-shrink: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
   background: transparent;
   border-bottom: none;
   padding: 18px 28px;
@@ -330,6 +333,8 @@ body.es-mg-open::-webkit-scrollbar {
 .es-mg-top--hub .es-mg-close {
   position: relative;
   z-index: 2;
+  grid-column: 1;
+  justify-self: start;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.18);
   padding: 9px 18px;
@@ -337,18 +342,27 @@ body.es-mg-open::-webkit-scrollbar {
 .es-mg-top--hub .es-mg-hub-top-actions {
   position: relative;
   z-index: 2;
+  grid-column: 3;
+  justify-self: end;
+  margin-left: 0;
 }
 .es-mg-hub-heading {
+  /* Centro reale della barra, non il centro dello spazio flex rimasto. */
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   margin: 0;
   flex: none;
+  width: auto;
+  max-width: calc(100% - 16rem);
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-family: Outfit, Inter, sans-serif;
   font-size: 15px;
   font-weight: 800;
   letter-spacing: 0.14em;
+  padding-left: 0.14em;
   text-transform: uppercase;
   color: #fff;
   text-align: center;
@@ -649,7 +663,7 @@ button.es-mg-hub-menubar:focus {
   width: 100%;
   padding: 13px;
   border-radius: 22px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  background: linear-gradient(135deg, #3b7dff, #93b8ff);
   color: #06090d;
   font-size: 14px;
   font-weight: 800;
@@ -657,6 +671,13 @@ button.es-mg-hub-menubar:focus {
   border: none;
   box-shadow: none;
   pointer-events: none;
+}
+.es-mg-hub-card--career .es-mg-hub-play:not(.es-mg-hub-play-ghost):not(:disabled) {
+  background: linear-gradient(135deg, #2fd6d1, #8ff0ec);
+}
+.es-mg-hub-card--elisee-world .es-mg-hub-play:not(.es-mg-hub-play-ghost):not(:disabled),
+.es-mg-hub-card--elisee-world .es-mg-hub-btn-launch {
+  background: linear-gradient(135deg, #3b7dff, #93b8ff);
 }
 .es-mg-hub-card--elisee-world:hover .es-mg-hub-btn-launch {
   filter: brightness(1.06);
@@ -4829,8 +4850,9 @@ button.es-mg-hub-menubar:focus {
 
   .es-mg-top--hub {
     position: relative !important;
-    display: flex !important;
-    justify-content: space-between !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important;
+    justify-content: unset !important;
     align-items: center !important;
     gap: 0.45rem !important;
     padding: 0.55rem 0.75rem !important;
@@ -4845,6 +4867,7 @@ button.es-mg-hub-menubar:focus {
     transform: translate(-50%, -50%) !important;
     font-size: 0.82rem !important;
     letter-spacing: 0.1em;
+    padding-left: 0.1em;
     text-transform: uppercase;
     pointer-events: none !important;
   }

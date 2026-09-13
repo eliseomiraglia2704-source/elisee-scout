@@ -912,7 +912,7 @@
     return (
       '<div class="es-mg-top es-mg-top--hub">' +
       '<button type="button" class="es-mg-close es-mg-close--back" id="es-mg-x" aria-label="Chiudi minigiochi">Indietro</button>' +
-      '<h1 class="es-mg-hub-heading">Minigiochi</h1>' +
+      '<span class="es-mg-hub-heading">Minigiochi</span>' +
       '<div class="es-mg-hub-top-actions">' +
       (extraRight || '') +
       '</div></div>'
