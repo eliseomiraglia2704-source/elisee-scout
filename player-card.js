@@ -1440,7 +1440,7 @@
         else title.textContent = 'Album di ' + (window.EliseeChiSegui.ownerName || 'questo profilo');
       }
       if (emptyS && mine && kind === 'player') {
-        emptyS.textContent = 'Quando aggiungi una Card da Scopri profili, comparirà qui — in un unico posto, organizzata per categoria.';
+        emptyS.textContent = 'Quando aggiungi una Card da Scopri profili, comparirà qui, in un unico posto e organizzata per categoria.';
       }
     };
     var origMine = window.EliseeChiSegui.openMine;

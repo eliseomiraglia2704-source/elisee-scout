@@ -83,7 +83,7 @@
       if (title) title.textContent = mine ? 'Album' : ('Album di ' + (this.ownerName || 'questo profilo'));
       if (subtitle) {
         subtitle.textContent = mine
-          ? 'Chi hai in rete — enti, club, giocatori e staff che segui o hai salvato su Elisee Scout.'
+          ? 'Chi hai in rete: enti, club, giocatori e staff che segui o hai salvato su Elisee Scout.'
           : ('I collegamenti e i profili seguiti da ' + (this.ownerName || 'questo utente') + ' su Elisee Scout.');
       }
 
@@ -129,7 +129,7 @@
         if (emptyT) emptyT.textContent = 'Nessun profilo salvato in questa categoria';
         if (emptyS) {
           emptyS.textContent = mine
-            ? 'Quando segui un ente, un club, un giocatore o uno staff, comparirà qui — in un unico posto, organizzato per categoria.'
+            ? 'Quando segui un ente, un club, un giocatore o uno staff, comparirà qui, in un unico posto e organizzato per categoria.'
             : 'Questo profilo non ha ancora collegamenti in questa categoria dell\'Album.';
         }
         if (list) {

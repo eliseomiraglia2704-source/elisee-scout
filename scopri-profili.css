@@ -398,7 +398,8 @@ body.layout-portfolio .es-cs-empty h2 {
   box-sizing: border-box;
 }
 .es-album {
-  padding: 56px 24px 48px;
+  /* .portfolio-navbar è position:fixed e alto 72px: 72 + 16 di respiro */
+  padding: 88px 24px 48px;
 }
 .es-album h1,
 .es-album h2,
@@ -653,6 +654,6 @@ body.layout-portfolio .es-how-it-works__item h4 {
 @media (max-width: 480px) {
   .es-profiles { grid-template-columns: 1fr; }
   .es-tabs { gap: 18px; overflow-x: auto; }
-  .es-album { padding: 40px 16px 32px; }
+  .es-album { padding: 72px 16px 32px; } /* navbar mobile min-height 52px + respiro */
 }
 
