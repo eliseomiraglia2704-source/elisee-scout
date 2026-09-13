@@ -46,7 +46,7 @@
   html, body { margin: 0; background: var(--es-bg); }
   body { color: var(--es-text); font-family: var(--es-font); }
 
-  .es-album { padding: 56px 24px 96px; }
+  .es-album { padding: 56px 24px 48px; }
   .es-album__container { max-width: 980px; margin: 0 auto; }
 
   .es-album__header { margin-bottom: 32px; }
@@ -104,12 +104,15 @@
     margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--es-border);
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
   }
-  .es-how-it-works__item h4 { font-size: 14px; font-weight: 700; margin: 0 0 8px; }
+  .es-how-it-works__item h4 {
+    font-size: 14px; font-weight: 700; margin: 0 0 8px;
+    text-transform: none !important; letter-spacing: normal !important;
+  }
   .es-how-it-works__item p { font-size: 13px; color: var(--es-text-muted); line-height: 1.6; margin: 0; }
   .es-how-it-works__item span {
-    display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px;
-    border-radius: 50%; background: var(--es-accent-soft); color: var(--es-accent); font-size: 13px;
-    font-weight: 700; margin-bottom: 14px;
+    display: block; font-size: 13px; font-weight: 700; color: var(--es-accent);
+    padding-bottom: 10px; margin-bottom: 14px; border-bottom: 2px solid var(--es-accent-soft);
+    width: 28px;
   }
 
   @media (max-width: 760px) {

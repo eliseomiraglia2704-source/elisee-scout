@@ -3,11 +3,11 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-13** (commit `10f4a1f`) — Album stato vuoto (cache `ALBUM3`): titolo/sottotitolo distinti, icona rete, CTA specifiche, sezione Come funziona, bordo pieno.
-Ultimo fatto: **Album / Stato vuoto definitivo (ALBUM3)**:
-1. **Testo non duplicato**: titolo "Nessun profilo salvato in questa categoria" + sottotitolo che spiega dove compariranno i profili. Rimosso l'overwrite in `player-card.js` che copiava il titolo nel sottotitolo.
-2. **Icona SVG rete/persone**, CTA "Scopri club e profili in Bacheca" / "Esplora club vicino a te", pannello con padding 72px e bordo pieno.
-3. **Sezione Come funziona** (Trova → Segui → Organizza) sotto il pannello. File: `index.html`, `scopri-profili.css`, `chi-segui.js`, `player-card.js`, `area-album-seguiti.html`.
+Ultimo aggiornamento: **2026-09-13** — Album Come funziona (cache `ALBUM4`): numeri editoriali al posto dei badge, Trova/Segui/Organizza in sentence case, padding inferiore ridotto.
+Ultimo fatto: **Album / Come funziona editoriale (ALBUM4)**:
+1. **Niente badge da videogioco**: i cerchi pieni 1/2/3 sono un numero + linea sottile (lista editoriale).
+2. **Maiuscolo bloccato**: `text-transform: none !important` su h4 Album. Causa: regola globale `h1–h6 { text-transform: uppercase }` in `style.css` (Bacheca aveva già l'eccezione; ora anche Album).
+3. **Padding sezione** 56/24/48 invece di 96 in basso, meno vuoto prima del footer. Empty state e CTA non toccati. File: `scopri-profili.css`, `index.html`, `area-album-seguiti.html`.
 Feature precedente: **Mappa Club / Tutte e Sole le Squadre dalla Serie A all'Eccellenza** (cache `ATOECC2`):
 1. **Catalogo Reale Serie A - Eccellenza (`data/squadre/scopri-clubs.json`)**: Rigenerato il catalogo escludendo Promozione, 1ª/2ª/3ª Categoria, U19 e duplicati, mantenendo le 729 società uniche ufficiali dalla Serie A all'Eccellenza con geolocalizzazione esatta e loghi.
 2. **Filtro Mappa & Tabelle (`mappa-club.js`)**: Aggiunto `isSerieAToEccellenza(c)` su caricamento pin, cluster, ricerca e pannelli regionali; i conteggi riflettono esattamente le squadre di vertice (es. Puglia: 34 società autentiche senza duplicati, Lombardia: 92, Campania: 59).
@@ -71,11 +71,11 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
   - Anteprima contratto vuota ristrutturata con icona SVG documento e messaggio orientativo (allineata a Bacheca ed Album).
   - Nota revisione umana integrata: valutazione manuale del team in caso di esito negativo dell'Agente IA.
   - Checkbox consenso GDPR preservata, visibile e obbligatoria prima del submit. File: `index.html`, `style.css`, `app.js`, `area-ambassador-contratto.html`.
-- **Album · Chi hai in rete (cache `ALBUM3`)**:
+- **Album · Chi hai in rete (cache `ALBUM4`)**:
   - Tab a sottolineatura azzurra `#3b7dff` al posto del selettore a pillola stile switch app, allineate a Bacheca e Stampa.
   - Titolo `h1` ("Album") separato dal sottotitolo esplicativo ("Chi hai in rete — enti, club, giocatori e staff che segui o hai salvato su Elisee Scout.").
   - Stato vuoto: titolo e sottotitolo distinti (niente eco), icona SVG rete/persone, CTA "Scopri club e profili in Bacheca" / "Esplora club vicino a te", bordo pieno e padding 72px.
-  - Sezione "Come funziona" (Trova → Segui → Organizza) sotto il pannello. Visibile solo sul proprio Album.
+  - Sezione "Come funziona" (Trova → Segui → Organizza) sotto il pannello. Numeri editoriali (cifra + linea), non badge circolari. Sentence case forzato (`text-transform: none`) perché `style.css` mette in uppercase tutti gli h1–h6. Padding sezione 48px in basso.
   - `player-card.js` non sovrascrive più il sottotitolo con lo stesso testo del titolo (era la causa del duplicato in produzione).
   - Struttura card profilo responsive a 3 colonne (`.es-profiles`, `.es-profile-card`) con avatar circolare, nome, metadati e pulsante "Visualizza profilo". `PROFILI_DATA` mantenuto vuoto come richiesto finché non ci sono connessioni reali. File: `index.html`, `scopri-profili.css`, `chi-segui.js`, `player-card.js`, `area-album-seguiti.html`.
 - **Privacy Officer STAFF2**: login email `manueltucci2002@gmail.com` via `POST /api/auth/login` (hash PBKDF2, no plaintext). Skip documenti KYC (`verifiedByAdmin`). Banner reimposta password dopo accesso. `/api/auth/set-password`.
