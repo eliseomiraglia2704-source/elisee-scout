@@ -1,18 +1,18 @@
 /**
- * ELISEE SCOUT — Hot Live Auto-Reload System
- * 
- * Monitora costantemente le modifiche al codice (in locale su elisee_up.py e in produzione via version.json)
- * e ricarica automaticamente la pagina senza bisogno che l'utente prema manualmente F5.
- * Preserva hash di navigazione (#user-dossier-portal, #account-portal, ecc.) e scroll.
+ * ELISEE SCOUT — Hot Live Auto-Reload
+ * Quando version.json cambia dopo un deploy, ricarica la pagina in modo
+ * forzato (niente cache SW/HTTP). Nessun badge, toast o avviso visivo.
  */
 (function () {
   'use strict';
 
   var isLocal = location.hostname === '127.0.0.1' || location.hostname === 'localhost' || location.port === '8080';
-  var pollInterval = isLocal ? 1000 : 4000;
+  var pollInterval = isLocal ? 1000 : 2000;
   var currentVersion = null;
   var isReloading = false;
   var checkTimer = null;
+  var APPLIED_KEY = '__elisee_live_ver';
+  var AT_KEY = '__elisee_live_at';
 
   function restoreScrollAndState() {
     try {
@@ -24,84 +24,111 @@
     } catch (_) {}
   }
 
-  function triggerHotReload(newVer) {
-    if (isReloading) return;
-    isReloading = true;
+  function wipeCaches() {
+    var jobs = [];
     try {
-      var scrollY = String(window.scrollY || window.pageYOffset || 0);
-      try {
-        for (var si = sessionStorage.length - 1; si >= 0; si--) {
-          var sk = sessionStorage.key(si);
-          if (sk && (sk.indexOf('elisee_cat_') !== -1 || sk.indexOf('elisee_') !== -1) && sk !== '__elisee_scroll_y') {
-            sessionStorage.removeItem(sk);
-          }
-        }
-      } catch (_) {}
-      sessionStorage.setItem('__elisee_scroll_y', scrollY);
-    } catch (_) {}
-
-    // Feedback visivo elegante e discreto
-    var banner = document.createElement('div');
-    banner.style.position = 'fixed';
-    banner.style.top = '12px';
-    banner.style.right = '12px';
-    banner.style.zIndex = '99999999';
-    banner.style.background = 'rgba(6, 18, 38, 0.95)';
-    banner.style.border = '1px solid #38bdf8';
-    banner.style.boxShadow = '0 8px 32px rgba(56, 189, 248, 0.35)';
-    banner.style.borderRadius = '8px';
-    banner.style.padding = '0.55rem 0.95rem';
-    banner.style.color = '#ffffff';
-    banner.style.fontSize = '0.82rem';
-    banner.style.fontWeight = '600';
-    banner.style.fontFamily = 'Outfit, Inter, system-ui, sans-serif';
-    banner.style.display = 'flex';
-    banner.style.alignItems = 'center';
-    banner.style.gap = '0.5rem';
-    banner.innerHTML = '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#38bdf8;box-shadow:0 0 8px #38bdf8;animation:pulse 1s infinite;"></span>' +
-      '<span>Aggiornamento codice applicato · Ricaricamento in corso...</span>';
-    document.body.appendChild(banner);
-
-    if (window.caches && caches.keys) {
-      try {
-        caches.keys().then(function (keys) {
-          keys.forEach(function (k) { caches.delete(k); });
-        });
-      } catch (_) {}
-    }
-
-    setTimeout(function () {
-      try {
-        window.location.reload(true);
-      } catch (_) {
-        window.location.reload();
+      if (navigator.serviceWorker && navigator.serviceWorker.getRegistrations) {
+        jobs.push(
+          navigator.serviceWorker.getRegistrations().then(function (regs) {
+            return Promise.all(
+              (regs || []).map(function (r) {
+                try { return r.unregister(); } catch (e) { return null; }
+              })
+            );
+          })
+        );
       }
-    }, 250);
+    } catch (_) {}
+    try {
+      if (window.caches && caches.keys) {
+        jobs.push(
+          caches.keys().then(function (keys) {
+            return Promise.all(
+              (keys || []).map(function (k) {
+                try { return caches.delete(k); } catch (e) { return null; }
+              })
+            );
+          })
+        );
+      }
+    } catch (_) {}
+    return Promise.all(jobs).catch(function () {});
   }
 
-  var pollEndpoint = '/version.json';
+  function goNow() {
+    var hash = location.hash || '';
+    var path = location.pathname || '/';
+    var params = new URLSearchParams(location.search || '');
+    params.set('_es', Date.now().toString(36));
+    var qs = params.toString();
+    location.replace(path + (qs ? '?' + qs : '') + hash);
+  }
+
+  function triggerHotReload() {
+    if (isReloading) return;
+    var last = 0;
+    try { last = parseInt(sessionStorage.getItem(AT_KEY) || '0', 10) || 0; } catch (_) {}
+    if (last && Date.now() - last < 5000) return;
+    isReloading = true;
+    try {
+      sessionStorage.setItem(AT_KEY, String(Date.now()));
+      sessionStorage.setItem('__elisee_scroll_y', String(window.scrollY || window.pageYOffset || 0));
+    } catch (_) {}
+
+    var done = false;
+    function once() {
+      if (done) return;
+      done = true;
+      goNow();
+    }
+
+    wipeCaches().then(once, once);
+    setTimeout(once, 350);
+  }
+
+  function onNewVersion(v) {
+    try { sessionStorage.setItem(APPLIED_KEY, v); } catch (_) {}
+    triggerHotReload();
+  }
 
   function checkLiveVersion() {
     if (isReloading) return;
-    var endpoint = pollEndpoint + '?_t=' + Date.now();
+    var endpoint = '/version.json?_t=' + Date.now();
+
+    function handleBody(text) {
+      try {
+        var data = JSON.parse(text);
+        var v = String(data.v || data.version || data.time || data.updatedAt || '');
+        if (!v) return;
+        if (currentVersion === null) {
+          currentVersion = v;
+          try { sessionStorage.setItem(APPLIED_KEY, v); } catch (_) {}
+          return;
+        }
+        if (currentVersion !== v) {
+          currentVersion = v;
+          onNewVersion(v);
+        }
+      } catch (_) {}
+    }
+
+    if (window.fetch) {
+      fetch(endpoint, { cache: 'no-store', headers: { Pragma: 'no-cache', 'Cache-Control': 'no-cache' } })
+        .then(function (r) { return r.ok ? r.text() : ''; })
+        .then(function (t) { if (t) handleBody(t); })
+        .catch(function () {});
+      return;
+    }
 
     var xhr = new XMLHttpRequest();
     xhr.open('GET', endpoint, true);
     xhr.timeout = 2500;
+    try {
+      xhr.setRequestHeader('Cache-Control', 'no-cache');
+      xhr.setRequestHeader('Pragma', 'no-cache');
+    } catch (_) {}
     xhr.onload = function () {
-      if (xhr.status >= 200 && xhr.status < 300) {
-        try {
-          var data = JSON.parse(xhr.responseText);
-          var v = String(data.v || data.version || data.time || data.updatedAt || '');
-          if (!v) return;
-
-          if (currentVersion === null) {
-            currentVersion = v;
-          } else if (currentVersion !== v) {
-            triggerHotReload(v);
-          }
-        } catch (_) {}
-      }
+      if (xhr.status >= 200 && xhr.status < 300) handleBody(xhr.responseText);
     };
     xhr.onerror = function () {};
     xhr.send();
@@ -116,6 +143,15 @@
     document.addEventListener('visibilitychange', function () {
       if (!document.hidden) checkLiveVersion();
     });
+
+    try {
+      if (navigator.serviceWorker) {
+        navigator.serviceWorker.addEventListener('message', function (e) {
+          var d = e && e.data;
+          if (d && d.type === 'FORCE_RELOAD') triggerHotReload();
+        });
+      }
+    } catch (_) {}
 
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', restoreScrollAndState);
