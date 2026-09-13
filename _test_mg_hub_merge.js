@@ -16,7 +16,7 @@ ok((j.match(/<article class="es-mg-hub-card/g) || []).length === 3, 'tre card hu
 ok(/es-mg-hub-card--locked/.test(j + c), 'card In arrivo presente');
 ok(/es-mg-hub-badge/.test(j), 'badge su tutte le card');
 ok(/es-mg-hub-lead/.test(j + c), 'sottotitolo hub');
-ok(/MGHUB6/.test(h), 'cache MGHUB6 in index.html');
+ok(/STADIO1/.test(h), 'cache STADIO1 in index.html');
 if (fail.length) {
   console.log('FAIL');
   fail.forEach((f) => console.log('  - ' + f));

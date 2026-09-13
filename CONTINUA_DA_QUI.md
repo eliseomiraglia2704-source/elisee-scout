@@ -3,10 +3,10 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-13** — Hub Minigiochi (cache `MGHUB6`): card stessa altezza, CTA allineati in fondo.
-Ultimo fatto: **Minigiochi / bottoni allineati (MGHUB6)**:
-1. Griglia `align-items: stretch` (già presente) + footer `margin-top: auto` e body `flex: 1`.
-2. I tre CTA (Gioca / Entra in campo / Presto disponibile) restano alla stessa altezza, anche se la prima card ha la nota extra. File: `minigioco-carriera.css`.
+Ultimo aggiornamento: **2026-09-13** — Hub Minigiochi (cache `STADIO1`): sfondo stadio + trofeo al posto del campetto.
+Ultimo fatto: **Minigiochi / sfondo stadio (STADIO1)**:
+1. Immagine `immagini/minigioco/minigiochi-sfondo-stadio.png` (stadio futurista + trofeo tigre ELISEE SCOUT).
+2. Vignetta scura invariata. File: `minigioco-carriera.css`, `immagini/minigioco/minigiochi-sfondo-stadio.png`.
 Feature precedente: **Mappa Club / Tutte e Sole le Squadre dalla Serie A all'Eccellenza** (cache `ATOECC2`):
 1. **Catalogo Reale Serie A - Eccellenza (`data/squadre/scopri-clubs.json`)**: Rigenerato il catalogo escludendo Promozione, 1ª/2ª/3ª Categoria, U19 e duplicati, mantenendo le 729 società uniche ufficiali dalla Serie A all'Eccellenza con geolocalizzazione esatta e loghi.
 2. **Filtro Mappa & Tabelle (`mappa-club.js`)**: Aggiunto `isSerieAToEccellenza(c)` su caricamento pin, cluster, ricerca e pannelli regionali; i conteggi riflettono esattamente le squadre di vertice (es. Puglia: 34 società autentiche senza duplicati, Lombardia: 92, Campania: 59).
