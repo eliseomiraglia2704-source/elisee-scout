@@ -1504,7 +1504,12 @@
         '<span class="es-mg-hub-badge">Popolare</span>' +
         '<div class="es-mg-hub-card-body">' +
         '<span class="es-mg-hub-icon" aria-hidden="true">' +
-        '<img class="es-mg-hub-boot" src="immagini/minigioco/scarpa-calcio-white.png?v=20260813_BOOT" alt="" />' +
+        '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+        '<path d="M4 17h12a3 3 0 0 0 0-6h-1.5"/>' +
+        '<path d="M4 17V9a2 2 0 0 1 2-2h5l1.5 4H16"/>' +
+        '<path d="M7 10h3.5"/>' +
+        '<path d="M6 17v2M10 17v2M14 17v2"/>' +
+        '</svg>' +
         '</span>' +
         '<span class="es-mg-hub-title">Carriera Giocatore</span>' +
         '<span class="es-mg-hub-tags">Serie D → C → B → A · Top mondiali</span>' +
@@ -1524,7 +1529,7 @@
         '<span class="es-mg-hub-badge">Novità</span>' +
         '<div class="es-mg-hub-card-body">' +
         '<span class="es-mg-hub-icon es-mg-hub-icon-ew" aria-hidden="true">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+        '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
         '<circle cx="12" cy="12" r="9"/>' +
         '<circle cx="12" cy="12" r="3"/>' +
         '</svg>' +
@@ -1543,14 +1548,14 @@
         '<span class="es-mg-hub-badge">In arrivo</span>' +
         '<div class="es-mg-hub-card-body">' +
         '<span class="es-mg-hub-icon" aria-hidden="true">' +
-        '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>' +
+        '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>' +
         '</span>' +
         '<span class="es-mg-hub-title">Prossimo minigioco</span>' +
         '<span class="es-mg-hub-tags">Annuncio a breve</span>' +
         '<span class="es-mg-hub-desc">Stiamo lavorando alla prossima modalità. Torna a trovarci per essere tra i primi a provarla.</span>' +
         '</div>' +
         '<div class="es-mg-hub-card-footer">' +
-        '<button type="button" class="es-mg-hub-play" disabled>Presto disponibile</button>' +
+        '<button type="button" class="es-mg-hub-play" disabled aria-disabled="true" tabindex="-1">Presto disponibile</button>' +
         '</div>' +
         '</article>' +
         '</div>' +
