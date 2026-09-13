@@ -581,7 +581,8 @@ button.es-mg-hub-menubar:focus {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  flex: 1 1 auto;
   position: relative;
   z-index: 1;
 }
@@ -592,7 +593,8 @@ button.es-mg-hub-menubar:focus {
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
-  margin-top: 0.85rem;
+  margin-top: auto;
+  padding-top: 16px;
   position: relative;
   z-index: 2;
 }
@@ -653,6 +655,8 @@ button.es-mg-hub-menubar:focus {
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-top: auto;
+  padding-top: 16px;
   position: relative;
   z-index: 2;
 }
@@ -661,6 +665,7 @@ button.es-mg-hub-menubar:focus {
   align-items: center;
   justify-content: center;
   width: 100%;
+  margin-top: 0;
   padding: 13px;
   border-radius: 22px;
   background: linear-gradient(135deg, #3b7dff, #93b8ff);
@@ -864,7 +869,7 @@ button.es-mg-hub-menubar:focus {
   display: block;
   width: 100%;
   max-width: none;
-  margin-top: 16px;
+  margin-top: 0;
   padding: 13px;
   border: none;
   border-radius: 22px;
@@ -4992,7 +4997,8 @@ button.es-mg-hub-menubar:focus {
   .es-mg-hub-actions-career,
   .es-mg-hub-concept-ew {
     grid-area: cta;
-    margin-top: 0.55rem !important;
+    margin-top: auto !important;
+    padding-top: 14px;
     align-items: stretch !important;
     width: 100% !important;
   }

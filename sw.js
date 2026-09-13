@@ -1,7 +1,7 @@
 /* ELISEE SCOUT — Cache Wipe & Self-Unregister Service Worker
    Assicura che nessun asset obsoleto rimanga memorizzato nella cache del browser.
 */
-const CACHE_VERSION = 'elisee-scout-v20260913-silent1';
+const CACHE_VERSION = 'elisee-scout-v20260913-mghub6';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
