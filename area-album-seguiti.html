@@ -12,6 +12,14 @@
   - Lo stato vuoto era solo due righe di testo su sfondo nero enorme →
     ora è un pannello con spiegazione + CTA verso Bacheca/Mappa, per non
     lasciare l'utente davanti a un vicolo cieco.
+  - Titolo e sottotitolo dello stato vuoto non sono più identici:
+    titolo = "Nessun profilo salvato in questa categoria",
+    sottotitolo = spiegazione reale ("comparirà qui — in un unico posto…").
+  - Icona rete/persone (SVG, non emoji) sullo stato vuoto.
+  - CTA specifiche: "Scopri club e profili in Bacheca" /
+    "Esplora club vicino a te".
+  - Sezione "Come funziona" (Trova → Segui → Organizza) sotto il pannello.
+  - Pannello con più respiro e bordo pieno (non tratteggiato).
   - Aggiunta la struttura della card profilo, pronta per quando ci sono
     dati reali (PROFILI_DATA sotto è vuoto di proposito, comportamento
     identico a quello attuale finché non colleghi la fonte reale).
@@ -75,22 +83,38 @@
 
   /* ---- Stato vuoto: utile, non solo due righe su sfondo nero ---- */
   .es-empty {
-    display: none; text-align: center; background: var(--es-panel); border: 1px dashed var(--es-border);
-    border-radius: 12px; padding: 56px 24px;
+    display: none; text-align: center; background: var(--es-panel); border: 1px solid var(--es-border);
+    border-radius: 12px; padding: 72px 24px;
   }
   .es-empty.is-active { display: block; }
-  .es-empty h3 { font-size: 17px; font-weight: 700; margin: 0 0 8px; }
-  .es-empty p { font-size: 14px; color: var(--es-text-muted); margin: 0 0 22px; max-width: 380px; margin-left: auto; margin-right: auto; line-height: 1.55; }
+  .es-empty__icon { color: var(--es-accent); margin: 0 auto 20px; opacity: 0.9; }
+  .es-empty h3 { font-size: 18px; font-weight: 700; margin: 0 0 10px; }
+  .es-empty p { font-size: 14px; color: var(--es-text-muted); margin: 0 0 26px; max-width: 420px; margin-left: auto; margin-right: auto; line-height: 1.6; }
   .es-empty__actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
   .es-empty__actions a {
     font-family: var(--es-font); font-size: 13px; font-weight: 600; text-decoration: none;
-    padding: 10px 18px; border-radius: 20px; cursor: pointer;
+    padding: 11px 20px; border-radius: 22px; cursor: pointer;
   }
   .es-empty__actions .es-btn--primary { background: var(--es-accent); color: #fff; }
   .es-empty__actions .es-btn--secondary { background: transparent; color: var(--es-text); border: 1px solid var(--es-border); }
 
+  /* ---- "Come funziona l'Album": riempie lo spazio con sostanza reale,
+     non con dati finti — spiega la funzione invece di lasciare vuoto ---- */
+  .es-how-it-works {
+    margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--es-border);
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+  }
+  .es-how-it-works__item h4 { font-size: 14px; font-weight: 700; margin: 0 0 8px; }
+  .es-how-it-works__item p { font-size: 13px; color: var(--es-text-muted); line-height: 1.6; margin: 0; }
+  .es-how-it-works__item span {
+    display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px;
+    border-radius: 50%; background: var(--es-accent-soft); color: var(--es-accent); font-size: 13px;
+    font-weight: 700; margin-bottom: 14px;
+  }
+
   @media (max-width: 760px) {
     .es-profiles { grid-template-columns: repeat(2, 1fr); }
+    .es-how-it-works { grid-template-columns: 1fr; }
   }
   @media (max-width: 480px) {
     .es-profiles { grid-template-columns: 1fr; }
@@ -118,11 +142,35 @@
     <div class="es-profiles" id="profiles-grid"><!-- generata da JS --></div>
 
     <div class="es-empty" id="profiles-empty">
-      <h3>Nessun profilo in questa categoria dell'Album</h3>
-      <p>Non hai ancora salvato nessun profilo qui. Esplora la Bacheca o la Mappa per trovare club, giocatori e staff da seguire.</p>
+      <svg class="es-empty__icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+      <h3>Nessun profilo salvato in questa categoria</h3>
+      <p>Quando segui un ente, un club, un giocatore o uno staff, comparirà qui — in un unico posto, organizzato per categoria.</p>
       <div class="es-empty__actions">
-        <a class="es-btn--primary" href="#bacheca-annunci">Vai alla Bacheca</a>
-        <a class="es-btn--secondary" href="#mappa-portal">Apri la Mappa</a>
+        <a class="es-btn--primary" href="#bacheca-annunci">Scopri club e profili in Bacheca</a>
+        <a class="es-btn--secondary" href="#mappa-portal">Esplora club vicino a te</a>
+      </div>
+    </div>
+
+    <div class="es-how-it-works">
+      <div class="es-how-it-works__item">
+        <span>1</span>
+        <h4>Trova</h4>
+        <p>Cerca enti, club, giocatori e staff da Bacheca o dalla Mappa club.</p>
+      </div>
+      <div class="es-how-it-works__item">
+        <span>2</span>
+        <h4>Segui</h4>
+        <p>Salva i profili che ti interessano per ritrovarli rapidamente in un unico posto.</p>
+      </div>
+      <div class="es-how-it-works__item">
+        <span>3</span>
+        <h4>Organizza</h4>
+        <p>Il tuo Album li raggruppa per categoria — Ente, Club, Player, Staff — pronti quando ti servono.</p>
       </div>
     </div>
 

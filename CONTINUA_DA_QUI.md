@@ -3,8 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-12** (commit `c55350f`) — Mappa Club & Tabelle Regionali: presenti sulla mappa e nelle schede tutte e sole le squadre dalla Serie A all'Eccellenza (729 società ufficiali reali, rimossi duplicati, giovanili e serie minori). Cache `ATOECC2`.
-Ultimo fatto: **Mappa Club / Tutte e Sole le Squadre dalla Serie A all'Eccellenza**:
+Ultimo aggiornamento: **2026-09-13** (commit `10f4a1f`) — Album stato vuoto (cache `ALBUM3`): titolo/sottotitolo distinti, icona rete, CTA specifiche, sezione Come funziona, bordo pieno.
+Ultimo fatto: **Album / Stato vuoto definitivo (ALBUM3)**:
+1. **Testo non duplicato**: titolo "Nessun profilo salvato in questa categoria" + sottotitolo che spiega dove compariranno i profili. Rimosso l'overwrite in `player-card.js` che copiava il titolo nel sottotitolo.
+2. **Icona SVG rete/persone**, CTA "Scopri club e profili in Bacheca" / "Esplora club vicino a te", pannello con padding 72px e bordo pieno.
+3. **Sezione Come funziona** (Trova → Segui → Organizza) sotto il pannello. File: `index.html`, `scopri-profili.css`, `chi-segui.js`, `player-card.js`, `area-album-seguiti.html`.
+Feature precedente: **Mappa Club / Tutte e Sole le Squadre dalla Serie A all'Eccellenza** (cache `ATOECC2`):
 1. **Catalogo Reale Serie A - Eccellenza (`data/squadre/scopri-clubs.json`)**: Rigenerato il catalogo escludendo Promozione, 1ª/2ª/3ª Categoria, U19 e duplicati, mantenendo le 729 società uniche ufficiali dalla Serie A all'Eccellenza con geolocalizzazione esatta e loghi.
 2. **Filtro Mappa & Tabelle (`mappa-club.js`)**: Aggiunto `isSerieAToEccellenza(c)` su caricamento pin, cluster, ricerca e pannelli regionali; i conteggi riflettono esattamente le squadre di vertice (es. Puglia: 34 società autentiche senza duplicati, Lombardia: 92, Campania: 59).
 3. **Dicitura & Trasparenza (`index.html`, `mappa-club.js`)**: Contatore e intestazioni aggiornate con la dicitura chiara "(dalla Serie A all'Eccellenza)".
@@ -67,11 +71,13 @@ Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client ad
   - Anteprima contratto vuota ristrutturata con icona SVG documento e messaggio orientativo (allineata a Bacheca ed Album).
   - Nota revisione umana integrata: valutazione manuale del team in caso di esito negativo dell'Agente IA.
   - Checkbox consenso GDPR preservata, visibile e obbligatoria prima del submit. File: `index.html`, `style.css`, `app.js`, `area-ambassador-contratto.html`.
-- **Album · Chi hai in rete (cache `ALBUM2`)**:
+- **Album · Chi hai in rete (cache `ALBUM3`)**:
   - Tab a sottolineatura azzurra `#3b7dff` al posto del selettore a pillola stile switch app, allineate a Bacheca e Stampa.
   - Titolo `h1` ("Album") separato dal sottotitolo esplicativo ("Chi hai in rete — enti, club, giocatori e staff che segui o hai salvato su Elisee Scout.").
-  - Stato vuoto non cieco con pannello dashed, testo orientativo e 2 CTA ("Vai alla Bacheca", "Apri la Mappa").
-  - Struttura card profilo responsive a 3 colonne (`.es-profiles`, `.es-profile-card`) con avatar circolare, nome, metadati e pulsante "Visualizza profilo". `PROFILI_DATA` mantenuto vuoto come richiesto finché non ci sono connessioni reali. File: `index.html`, `scopri-profili.css`, `chi-segui.js`, `area-album-seguiti.html`.
+  - Stato vuoto: titolo e sottotitolo distinti (niente eco), icona SVG rete/persone, CTA "Scopri club e profili in Bacheca" / "Esplora club vicino a te", bordo pieno e padding 72px.
+  - Sezione "Come funziona" (Trova → Segui → Organizza) sotto il pannello. Visibile solo sul proprio Album.
+  - `player-card.js` non sovrascrive più il sottotitolo con lo stesso testo del titolo (era la causa del duplicato in produzione).
+  - Struttura card profilo responsive a 3 colonne (`.es-profiles`, `.es-profile-card`) con avatar circolare, nome, metadati e pulsante "Visualizza profilo". `PROFILI_DATA` mantenuto vuoto come richiesto finché non ci sono connessioni reali. File: `index.html`, `scopri-profili.css`, `chi-segui.js`, `player-card.js`, `area-album-seguiti.html`.
 - **Privacy Officer STAFF2**: login email `manueltucci2002@gmail.com` via `POST /api/auth/login` (hash PBKDF2, no plaintext). Skip documenti KYC (`verifiedByAdmin`). Banner reimposta password dopo accesso. `/api/auth/set-password`.
 - **Staff STAFF1**: `eliseomiraglia2704@gmail.com` = Admin Executive; `manueltucci2002@gmail.com` = Responsabile Privacy (`elisee_privacy_auth`). File `elisee-staff.js`.
 - **Accedi GGL4**: lock scroll `es-modal-open`; GIS `renderButton` da env `GOOGLE_CLIENT_ID`; `/api/auth/google` verifica con `google-auth-library`.

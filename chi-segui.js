@@ -117,17 +117,20 @@
         );
       }
 
+      var how = document.getElementById('es-album-how');
+      if (how) how.hidden = !mine;
+
       if (!rows.length) {
         if (empty) {
           empty.hidden = false;
           empty.classList.add('is-active');
           empty.style.display = 'block';
         }
-        if (emptyT) emptyT.textContent = "Nessun profilo in questa categoria dell'Album";
+        if (emptyT) emptyT.textContent = 'Nessun profilo salvato in questa categoria';
         if (emptyS) {
           emptyS.textContent = mine
-            ? "Non hai ancora salvato nessun profilo qui. Esplora la Bacheca o la Mappa per trovare club, giocatori e staff da seguire."
-            : "Questo profilo non ha ancora collegamenti in questa categoria dell'Album.";
+            ? 'Quando segui un ente, un club, un giocatore o uno staff, comparirà qui — in un unico posto, organizzato per categoria.'
+            : 'Questo profilo non ha ancora collegamenti in questa categoria dell\'Album.';
         }
         if (list) {
           list.hidden = true;

@@ -1439,10 +1439,8 @@
         if (mine) title.textContent = kind === 'player' ? 'Il tuo Album' : 'Album';
         else title.textContent = 'Album di ' + (window.EliseeChiSegui.ownerName || 'questo profilo');
       }
-      if (emptyS && mine) {
-        emptyS.textContent = kind === 'player'
-          ? 'Nessuna Card nell’Album. Da Scopri profili usa Aggiungi all’Album.'
-          : 'Nessun profilo in questa categoria dell’Album.';
+      if (emptyS && mine && kind === 'player') {
+        emptyS.textContent = 'Quando aggiungi una Card da Scopri profili, comparirà qui — in un unico posto, organizzata per categoria.';
       }
     };
     var origMine = window.EliseeChiSegui.openMine;

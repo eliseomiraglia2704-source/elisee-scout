@@ -516,74 +516,122 @@ body.layout-portfolio .es-album__header h1 {
   background: rgba(59, 125, 255, 0.08);
 }
 
-/* ---- Stato vuoto ---- */
-.es-empty {
+/* ---- Stato vuoto: pannello definitivo, non modulo tratteggiato ---- */
+.es-album .es-empty {
   display: none;
   text-align: center;
   background: #10141d;
-  border: 1px dashed #1e2430;
+  border: 1px solid #1e2430;
   border-radius: 12px;
-  padding: 56px 24px;
+  padding: 72px 24px;
 }
-.es-empty.is-active {
+.es-album .es-empty.is-active {
   display: block;
 }
-.es-empty h3,
-body.layout-portfolio .es-empty h3 {
-  font-size: 17px !important;
+.es-album .es-empty[hidden] {
+  display: none !important;
+}
+.es-album .es-empty__icon {
+  color: #3b7dff;
+  margin: 0 auto 20px;
+  opacity: 0.9;
+  display: block;
+}
+.es-album .es-empty h3,
+body.layout-portfolio .es-album .es-empty h3 {
+  font-size: 18px !important;
   font-weight: 700 !important;
-  margin: 0 0 8px !important;
+  margin: 0 0 10px !important;
   text-transform: none !important;
   letter-spacing: normal !important;
   color: #eef1f6 !important;
 }
-.es-empty p {
+.es-album .es-empty p {
   font-size: 14px;
   color: #8a93a3;
-  margin: 0 0 22px;
-  max-width: 380px;
+  margin: 0 0 26px;
+  max-width: 420px;
   margin-left: auto;
   margin-right: auto;
-  line-height: 1.55;
+  line-height: 1.6;
 }
-.es-empty__actions {
+.es-album .es-empty__actions {
   display: flex;
   gap: 10px;
   justify-content: center;
   flex-wrap: wrap;
 }
-.es-empty__actions a {
+.es-album .es-empty__actions a {
   font-family: inherit;
   font-size: 13px;
   font-weight: 600;
   text-decoration: none;
-  padding: 10px 18px;
-  border-radius: 20px;
+  padding: 11px 20px;
+  border-radius: 22px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
-.es-empty__actions .es-btn--primary {
+.es-album .es-empty__actions .es-btn--primary {
   background: #3b7dff;
   color: #ffffff !important;
 }
-.es-empty__actions .es-btn--primary:hover {
+.es-album .es-empty__actions .es-btn--primary:hover {
   background: #2f69db;
 }
-.es-empty__actions .es-btn--secondary {
+.es-album .es-empty__actions .es-btn--secondary {
   background: transparent;
   color: #eef1f6 !important;
   border: 1px solid #1e2430;
 }
-.es-empty__actions .es-btn--secondary:hover {
+.es-album .es-empty__actions .es-btn--secondary:hover {
   border-color: #3b7dff;
   color: #3b7dff !important;
 }
 
+/* ---- Come funziona l'Album: sostanza reale, non dati finti ---- */
+.es-how-it-works {
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid #1e2430;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.es-how-it-works[hidden] {
+  display: none !important;
+}
+.es-how-it-works__item h4 {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: #eef1f6;
+}
+.es-how-it-works__item p {
+  font-size: 13px;
+  color: #8a93a3;
+  line-height: 1.6;
+  margin: 0;
+}
+.es-how-it-works__item span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(59, 125, 255, 0.12);
+  color: #3b7dff;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
 @media (max-width: 760px) {
   .es-profiles { grid-template-columns: repeat(2, 1fr); }
+  .es-how-it-works { grid-template-columns: 1fr; }
 }
 @media (max-width: 480px) {
   .es-profiles { grid-template-columns: 1fr; }
