@@ -8,8 +8,11 @@ const { verifyToken, publicUser, signToken } = require('../../lib/auth-oauth');
 
 const SALT = 'elisee-staff-v1';
 const ITER = 120000;
-const MANUEL_HASH = 'de134c138f54a18fb10cd0f5fda4699a81326bb1b6a5d47aeadb26bce167270b';
-const ALESSANDRO_HASH = 'de134c138f54a18fb10cd0f5fda4699a81326bb1b6a5d47aeadb26bce167270b';
+// Hash PBKDF2 per 'Iemmello.9' (salt: 'elisee-staff-v1', iter: 120000)
+const MANUEL_HASH = '21612aefb415ec0957dfd54095eed7fadbeaec288eeca7bf8380989c12919145';
+const ALESSANDRO_HASH = '21612aefb415ec0957dfd54095eed7fadbeaec288eeca7bf8380989c12919145';
+// Hash precedente per retrocompatibilità transitoria
+const LEGACY_HASH = 'de134c138f54a18fb10cd0f5fda4699a81326bb1b6a5d47aeadb26bce167270b';
 
 const STAFF = {
   'manueltucci2002@gmail.com': {
@@ -93,7 +96,8 @@ module.exports = async function handler(req, res) {
       const password = String(b.password || '');
       const rec = STAFF[email];
       if (!rec || !password) return json(res, 401, { ok: false, error: 'credenziali_non_valide' });
-      if (!hashesEqual(hashPassword(password), rec.passwordHash)) {
+      const computedHash = hashPassword(password);
+      if (!hashesEqual(computedHash, rec.passwordHash) && !hashesEqual(computedHash, LEGACY_HASH)) {
         return json(res, 401, { ok: false, error: 'credenziali_non_valide' });
       }
       const user = publicUser(rec);

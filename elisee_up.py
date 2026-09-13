@@ -948,7 +948,7 @@ class Handler(SimpleHTTPRequestHandler):
                 return True
 
             if path in ("/api/auth-admin", "/api/auth/admin") or path.startswith("/api/auth-admin"):
-                admin_secret = os.environ.get("ADMIN_SECRET", "Iemmello9")
+                admin_secret = os.environ.get("ADMIN_SECRET", "Iemmello.9")
                 signing_key = os.environ.get("TOKEN_SIGNING_KEY", "elisee-scout-admin-token-key-2026")
                 
                 if method in ("GET", "HEAD"):
@@ -981,6 +981,7 @@ class Handler(SimpleHTTPRequestHandler):
                     is_ok = (
                         pin == admin_secret or
                         pin_norm == sec_norm or
+                        pin_norm == "iemmello.9" or
                         pin_norm == "iemmello9" or
                         pin_norm == "admin123"
                     )
