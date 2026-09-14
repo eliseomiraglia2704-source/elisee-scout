@@ -455,6 +455,230 @@ body:has(#view-tc-panel:not([style*="display: none"])) .es-pd-rail {
   line-height: 1.5;
 }
 
+/* COMMUNICATION OPERATIONS WORKSPACE (LUXURY ENTERPRISE) */
+.es-tc-comms-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.07);
+}
+
+.es-tc-comms-header-left h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.65rem;
+  font-weight: 500;
+  color: #0F172A;
+  margin: 0 0 0.35rem 0;
+  line-height: 1.2;
+}
+
+.es-tc-comms-header-left p {
+  font-size: 0.88rem;
+  color: #64748B;
+  margin: 0;
+}
+
+.es-tc-composer-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.6rem;
+  background: #F8FAFC;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+}
+
+.es-tc-toolbar-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #475569;
+  padding: 0.25rem 0.55rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.es-tc-toolbar-btn:hover {
+  background: #E2E8F0;
+  color: #0F172A;
+}
+
+.es-tc-composer-textarea {
+  border-radius: 0 0 6px 6px !important;
+  min-height: 140px !important;
+}
+
+.es-tc-composer-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.es-tc-attach-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #F1F5F9;
+  border: 1px dashed rgba(15, 23, 42, 0.2);
+  border-radius: 6px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.es-tc-attach-pill:hover {
+  background: #E2E8F0;
+  color: #0F172A;
+  border-color: rgba(15, 23, 42, 0.35);
+}
+
+.es-tc-group-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.es-tc-group-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.85rem;
+  background: #F8FAFC;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  border-radius: 6px;
+  transition: border-color 0.15s ease;
+}
+
+.es-tc-group-item:hover {
+  border-color: rgba(15, 23, 42, 0.18);
+}
+
+.es-tc-group-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.es-tc-group-name {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #0F172A;
+}
+
+.es-tc-group-sub {
+  font-size: 0.72rem;
+  color: #64748B;
+}
+
+.es-tc-group-badge {
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #0F172A;
+  background: #FFFFFF;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+}
+
+.es-tc-history-item {
+  padding: 0.85rem;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  transition: background 0.15s ease;
+}
+
+.es-tc-history-item:last-child {
+  border-bottom: none;
+}
+
+.es-tc-history-item:hover {
+  background: #F8FAFC;
+}
+
+.es-tc-history-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.es-tc-history-subject {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #0F172A;
+}
+
+.es-tc-history-meta {
+  font-size: 0.74rem;
+  color: #64748B;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.es-tc-perm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.es-tc-perm-table th {
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748B;
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.1);
+  background: #F8FAFC;
+}
+
+.es-tc-perm-table td {
+  padding: 0.75rem 0.85rem;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+  color: #334155;
+  vertical-align: middle;
+}
+
+.es-tc-perm-table tr:hover td {
+  background: #F8FAFC;
+}
+
+.es-tc-perm-role {
+  font-weight: 600;
+  color: #0F172A;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.es-tc-perm-shield {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  background: rgba(15, 23, 42, 0.06);
+  font-size: 0.68rem;
+}
+
 @media (max-width: 900px) {
   .es-tc-grid-main {
     grid-template-columns: 1fr;

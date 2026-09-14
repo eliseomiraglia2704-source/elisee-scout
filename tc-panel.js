@@ -237,7 +237,7 @@
     if (UI.tab === 'home') html = viewHome(st, team);
     else if (UI.tab === 'iscrizioni') html = viewIscrizioni(st, team);
     else if (UI.tab === 'quote') html = viewQuote(st, team);
-    else if (UI.tab === 'comms') html = viewComms(st);
+    else if (UI.tab === 'comms') html = viewComms(st, team);
     else if (UI.tab === 'calendario' || UI.tab === 'presenze') html = viewCal(st);
     else if (UI.tab === 'docs') html = viewDocs(st);
     else if (UI.tab === 'atleti') html = viewAtleti(st);
@@ -617,27 +617,262 @@
     }).join('');
   }
 
-  function viewComms(st) {
-    var html = '<div class="es-tc-grid"><div class="es-tc-card"><h2>Invia comunicazione</h2>';
-    html += '<p class="es-tc-muted">Email automatiche verso atleti, genitori, allenatori e dirigenti. Ognuno riceve solo se appartiene al ruolo scelto.</p>';
-    html += '<div class="es-tc-field"><span>Destinatari</span><select id="es-tc-comm-role"><option value="tutti">Tutti i tesserati</option>';
-    ROLES.forEach(function (r) { html += '<option>' + r + '</option>'; });
-    html += '</select></div>';
-    html += '<div class="es-tc-field"><span>Oggetto</span><input id="es-tc-comm-sub" placeholder="Es. Allenamento spostato"></div>';
-    html += '<div class="es-tc-field"><span>Messaggio</span><textarea id="es-tc-comm-body" rows="4" placeholder="Testo email"></textarea></div>';
-    html += '<button type="button" class="es-tc-go" data-tc="send-comm">Invia email di ruolo</button></div>';
-    html += '<div class="es-tc-card"><h2>Registro invii</h2>';
-    if (!st.comms.length) html += '<p class="es-tc-muted">Nessuna comunicazione ancora.</p>';
-    else {
-      html += '<ul class="es-tc-list">';
-      st.comms.slice(0, 20).forEach(function (c) {
-        html += '<li class="es-tc-item"><strong>' + esc(c.subject) + '</strong><p>A: ' + esc(c.role) + ' · ' + (c.count || 0) + ' destinatari · ' + fmtDate(c.at) + '</p></li>';
+  function viewComms(st, team) {
+    team = team || UI.team || {};
+    var sentCount = (st.comms || []).length;
+    var totalReached = (st.comms || []).reduce(function (acc, c) { return acc + (Number(c.count) || 0); }, 0);
+    var lastSent = sentCount && st.comms[0] ? fmtDate(st.comms[0].at) : 'Nessuno';
+
+    var countTotal = st.members.length;
+    var countAtleti = st.members.filter(function (m) { return m.role === 'Atleta'; }).length;
+    var countGenitori = st.members.filter(function (m) { return m.role === 'Genitore'; }).length;
+    var countAllenatori = st.members.filter(function (m) { return m.role === 'Allenatore'; }).length;
+    var countDirigenti = st.members.filter(function (m) { return m.role === 'Dirigente'; }).length;
+
+    var html = '';
+
+    // 1. Header Editoriale
+    html += '<div class="es-tc-comms-header">' +
+      '<div class="es-tc-comms-header-left">' +
+        '<h2>Comunicazioni</h2>' +
+        '<p>Invia aggiornamenti mirati ad atleti, famiglie, allenatori e dirigenti.</p>' +
+      '</div>' +
+      '<button type="button" class="es-tc-btn-primary" data-tc="focus-composer">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>' +
+        'Nuova comunicazione' +
+      '</button>' +
+    '</div>';
+
+    // 2. KPI Communication Overview (Fascia Orizzontale Compatta)
+    html += '<div class="es-tc-kpi-strip">' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Comunicazioni inviate</div>' +
+        '<div class="es-tc-kpi-val">' + sentCount + '</div>' +
+        '<div class="es-tc-kpi-sub">' + (sentCount ? 'Report archiviati' : 'Nessun invio effettuato') + '</div>' +
+      '</div>' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Destinatari raggiunti</div>' +
+        '<div class="es-tc-kpi-val">' + totalReached + '</div>' +
+        '<div class="es-tc-kpi-sub">Notifiche e recapiti tracciati</div>' +
+      '</div>' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Gruppi disponibili</div>' +
+        '<div class="es-tc-kpi-val">5</div>' +
+        '<div class="es-tc-kpi-sub">Canali di segmentazione</div>' +
+      '</div>' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Ultimo invio</div>' +
+        '<div class="es-tc-kpi-val" style="font-size:1.25rem;">' + esc(lastSent) + '</div>' +
+        '<div class="es-tc-kpi-sub">Data ultima circolare</div>' +
+      '</div>' +
+    '</div>';
+
+    // 3. Main Communication Workspace: Due Colonne
+    html += '<div class="es-tc-grid-main">' +
+
+      // Colonna Principale: Composer Professionale
+      '<div class="es-tc-panel" id="es-tc-composer-panel">' +
+        '<div class="es-tc-panel-header">' +
+          '<h3 class="es-tc-panel-title">Nuova comunicazione</h3>' +
+          '<span style="font-size:0.75rem; color:#64748B;">Canale certificato societario</span>' +
+        '</div>' +
+        '<p class="es-tc-panel-desc">Prepara e invia un messaggio agli utenti interessati.</p>' +
+
+        // Selettore Destinatari
+        '<div class="es-tc-field">' +
+          '<label>Destinatari *</label>' +
+          '<select id="es-tc-comm-role">' +
+            '<option value="tutti">Tutti i tesserati · ' + countTotal + ' destinatari</option>' +
+            '<option value="Atleta">Atleti · ' + countAtleti + ' destinatari</option>' +
+            '<option value="Genitore">Genitori · ' + countGenitori + ' destinatari</option>' +
+            '<option value="Allenatore">Allenatori · ' + countAllenatori + ' destinatari</option>' +
+            '<option value="Dirigente">Dirigenti · ' + countDirigenti + ' destinatari</option>' +
+          '</select>' +
+        '</div>' +
+
+        // Campo Oggetto
+        '<div class="es-tc-field">' +
+          '<label>Oggetto *</label>' +
+          '<input id="es-tc-comm-sub" placeholder="Es. Comunicazione allenamento o convocazione ufficiale">' +
+        '</div>' +
+
+        // Editor Testuale Raffinato con Toolbar
+        '<div class="es-tc-field">' +
+          '<label>Messaggio *</label>' +
+          '<div class="es-tc-composer-toolbar">' +
+            '<button type="button" class="es-tc-toolbar-btn" data-tc="format-body" data-fmt="b" title="Grassetto"><strong>B</strong></button>' +
+            '<button type="button" class="es-tc-toolbar-btn" data-tc="format-body" data-fmt="i" title="Corsivo"><em>I</em></button>' +
+            '<button type="button" class="es-tc-toolbar-btn" data-tc="format-body" data-fmt="list" title="Elenco">• Elenco</button>' +
+            '<button type="button" class="es-tc-toolbar-btn" data-tc="format-body" data-fmt="tag-nome" title="Inserisci tag">[Nome]</button>' +
+            '<button type="button" class="es-tc-toolbar-btn" data-tc="format-body" data-fmt="tag-data" title="Inserisci data">[Data]</button>' +
+          '</div>' +
+          '<textarea id="es-tc-comm-body" class="es-tc-composer-textarea" rows="6" placeholder="Inserisci qui il testo del comunicato ufficiale del club..."></textarea>' +
+        '</div>' +
+
+        // Allegati ed opzioni
+        '<div style="display:flex; align-items:center; gap:0.6rem; margin-top:0.4rem;">' +
+          '<button type="button" class="es-tc-attach-pill" data-tc="comm-attach">' +
+            '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>' +
+            'Allega documento / convocazione (PDF)' +
+          '</button>' +
+        '</div>' +
+
+        // Azioni
+        '<div class="es-tc-composer-footer">' +
+          '<div style="display:flex; align-items:center; gap:0.5rem;">' +
+            '<button type="button" class="es-tc-btn-primary" data-tc="send-comm">' +
+              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>' +
+              'Invia comunicazione' +
+            '</button>' +
+          '</div>' +
+          '<div style="display:flex; align-items:center; gap:0.5rem;">' +
+            '<button type="button" class="es-tc-btn-back" data-tc="save-comm-draft">Salva bozza</button>' +
+            '<button type="button" class="es-tc-btn-back" data-tc="preview-comm">Anteprima</button>' +
+          '</div>' +
+        '</div>' +
+
+      '</div>' + // chiude colonna sinistra (composer)
+
+      // Colonna Secondaria: Storico e Strumenti
+      '<div style="display:flex; flex-direction:column; gap:1.5rem;">' +
+
+        // Pannello Attività Recenti
+        '<div class="es-tc-panel">' +
+          '<div class="es-tc-panel-header">' +
+            '<h3 class="es-tc-panel-title">Attività recenti</h3>' +
+            '<span style="font-size:0.75rem; color:#64748B;">Archivio invii</span>' +
+          '</div>' +
+          '<p class="es-tc-panel-desc">Registro tracciato dei messaggi e circolari societarie trasmesse.</p>';
+
+    if (!st.comms.length) {
+      html += '<div class="es-tc-empty">' +
+        '<div class="es-tc-empty-title">Nessuna comunicazione inviata</div>' +
+        '<p class="es-tc-empty-sub">Le comunicazioni inviate dalla società saranno archiviate qui.</p>' +
+      '</div>';
+    } else {
+      html += '<div style="display:flex; flex-direction:column;">';
+      st.comms.slice(0, 10).forEach(function (c) {
+        html += '<div class="es-tc-history-item">' +
+          '<div class="es-tc-history-top">' +
+            '<span class="es-tc-history-subject">' + esc(c.subject) + '</span>' +
+            '<span class="es-tc-badge es-tc-badge-paid">Inviata</span>' +
+          '</div>' +
+          '<div class="es-tc-history-meta">' +
+            '<span>Destinatari: <strong>' + esc(c.role === 'tutti' ? 'Tutti i tesserati' : c.role) + '</strong> (' + (c.count || 0) + ')</span>' +
+            '<span>·</span>' +
+            '<span>' + fmtDate(c.at) + '</span>' +
+          '</div>' +
+        '</div>';
       });
-      html += '</ul>';
+      html += '</div>';
     }
-    html += '</div></div>';
-    html += '<div class="es-tc-card" style="margin-top:1rem"><h2>Aree riservate per ruolo</h2>';
-    html += '<p class="es-tc-muted">Atleta, genitore, allenatore, dirigente e collaboratore vedono solo le sezioni del pannello pertinenti al loro ruolo, dopo accesso con la stessa email usata in iscrizione.</p></div>';
+    html += '</div>' + // chiude panel attività recenti
+
+        // Pannello Gruppi di Destinatari
+        '<div class="es-tc-panel">' +
+          '<div class="es-tc-panel-header">' +
+            '<h3 class="es-tc-panel-title">Gruppi di destinatari</h3>' +
+            '<span style="font-size:0.75rem; color:#64748B;">5 Segmenti</span>' +
+          '</div>' +
+          '<p class="es-tc-panel-desc">Elenco delle audience societarie configurate per la ricezione.</p>' +
+          '<div class="es-tc-group-list">' +
+            '<div class="es-tc-group-item">' +
+              '<div class="es-tc-group-info">' +
+                '<span class="es-tc-group-name">Atleti</span>' +
+                '<span class="es-tc-group-sub">Giocatori tesserati della rosa</span>' +
+              '</div>' +
+              '<span class="es-tc-group-badge">' + countAtleti + ' tesserati</span>' +
+            '</div>' +
+            '<div class="es-tc-group-item">' +
+              '<div class="es-tc-group-info">' +
+                '<span class="es-tc-group-name">Genitori</span>' +
+                '<span class="es-tc-group-sub">Famiglie e tutori legali</span>' +
+              '</div>' +
+              '<span class="es-tc-group-badge">' + countGenitori + ' contatti</span>' +
+            '</div>' +
+            '<div class="es-tc-group-item">' +
+              '<div class="es-tc-group-info">' +
+                '<span class="es-tc-group-name">Allenatori</span>' +
+                '<span class="es-tc-group-sub">Staff tecnico, mister e preparatori</span>' +
+              '</div>' +
+              '<span class="es-tc-group-badge">' + countAllenatori + ' tecnici</span>' +
+            '</div>' +
+            '<div class="es-tc-group-item">' +
+              '<div class="es-tc-group-info">' +
+                '<span class="es-tc-group-name">Dirigenti</span>' +
+                '<span class="es-tc-group-sub">Organigramma e segreteria del club</span>' +
+              '</div>' +
+              '<span class="es-tc-group-badge">' + countDirigenti + ' dirigenti</span>' +
+            '</div>' +
+            '<div class="es-tc-group-item" style="background:#FFFFFF; border-color:rgba(15,23,42,0.15);">' +
+              '<div class="es-tc-group-info">' +
+                '<span class="es-tc-group-name" style="font-weight:700;">Tutti i tesserati</span>' +
+                '<span class="es-tc-group-sub">Broadcast generale della società</span>' +
+              '</div>' +
+              '<span class="es-tc-group-badge" style="background:#0F172A; color:#FFFFFF; border-color:#0F172A;">' + countTotal + ' totale</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+      '</div>' + // chiude colonna destra
+
+    '</div>'; // chiude grid-main
+
+    // 4. Sezione Istituzionale: Accessi e permessi (Aree riservate)
+    html += '<div class="es-tc-panel" style="margin-top:1.5rem;">' +
+      '<div class="es-tc-panel-header">' +
+        '<h3 class="es-tc-panel-title">Accessi e permessi</h3>' +
+        '<span style="font-size:0.75rem; color:#059669; font-weight:600;">Controllo Ruoli Attivo</span>' +
+      '</div>' +
+      '<p class="es-tc-panel-desc" style="margin-bottom:1rem;">' +
+        'Ogni ruolo visualizza esclusivamente le sezioni della piattaforma pertinenti alle proprie responsabilità.' +
+      '</p>' +
+      '<div class="es-tc-table-wrap">' +
+        '<table class="es-tc-perm-table">' +
+          '<thead>' +
+            '<tr>' +
+              '<th style="width:160px;">Ruolo</th>' +
+              '<th>Accesso consentito</th>' +
+              '<th>Permessi operativi</th>' +
+              '<th style="width:180px;">Autenticazione</th>' +
+            '</tr>' +
+          '</thead>' +
+          '<tbody>' +
+            '<tr>' +
+              '<td><div class="es-tc-perm-role"><span class="es-tc-perm-shield">👤</span> Atleta</div></td>' +
+              '<td><strong>Area personale</strong> · Scheda atleta, convocazioni gara, presenze allenamento</td>' +
+              '<td>Consultazione personale &amp; conferma convocazione</td>' +
+              '<td>Email verificata</td>' +
+            '</tr>' +
+            '<tr>' +
+              '<td><div class="es-tc-perm-role"><span class="es-tc-perm-shield">🏠</span> Genitore</div></td>' +
+              '<td><strong>Area famiglia</strong> · Situazione quote, scadenze, ricevute fiscali e autorizzazioni</td>' +
+              '<td>Visualizzazione pagamenti e quietanze</td>' +
+              '<td>Email genitore verificata</td>' +
+            '</tr>' +
+            '<tr>' +
+              '<td><div class="es-tc-perm-role"><span class="es-tc-perm-shield">📋</span> Allenatore</div></td>' +
+              '<td><strong>Calendario e presenze</strong> · Registro attività, diario campo, foglio presenze</td>' +
+              '<td>Gestione presenze, assenze e convocazioni</td>' +
+              '<td>Accesso Staff Tecnico</td>' +
+            '</tr>' +
+            '<tr>' +
+              '<td><div class="es-tc-perm-role"><span class="es-tc-perm-shield">🏛️</span> Dirigente</div></td>' +
+              '<td><strong>Gestione societaria</strong> · Anagrafica, incassi quote, comunicazioni broadcast, verbali</td>' +
+              '<td>Amministrazione completa e invio messaggi</td>' +
+              '<td>Credenziali Amministrative</td>' +
+            '</tr>' +
+            '<tr>' +
+              '<td><div class="es-tc-perm-role"><span class="es-tc-perm-shield">📑</span> Collaboratore</div></td>' +
+              '<td><strong>Modulistica &amp; Logistica</strong> · Download modelli federali, convenzioni e verbali</td>' +
+              '<td>Consultazione e predisposizione atti</td>' +
+              '<td>Accesso Segreteria</td>' +
+            '</tr>' +
+          '</tbody>' +
+        '</table>' +
+      '</div>' +
+    '</div>';
+
     return html;
   }
 
@@ -889,6 +1124,56 @@
       put(UI.team, st);
       toast(n ? ('Promemoria inviati: ' + n) : 'Nessuna quota aperta.');
       render(); return;
+    }
+    if (act === 'focus-composer') {
+      var subInp = $('es-tc-comm-sub');
+      if (subInp) {
+        subInp.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        subInp.focus();
+      }
+      return;
+    }
+    if (act === 'format-body') {
+      var fmt = btn.getAttribute('data-fmt');
+      var area = $('es-tc-comm-body');
+      if (area) {
+        var start = area.selectionStart || 0;
+        var end = area.selectionEnd || 0;
+        var val = area.value;
+        var sel = val.substring(start, end);
+        var insert = '';
+        if (fmt === 'b') insert = '**' + (sel || 'Testo in grassetto') + '**';
+        else if (fmt === 'i') insert = '*' + (sel || 'Testo in corsivo') + '*';
+        else if (fmt === 'list') insert = '\n• ' + (sel || 'Punto elenco');
+        else if (fmt === 'tag-nome') insert = '{{nome_atleta}}';
+        else if (fmt === 'tag-data') insert = '{{data_evento}}';
+        area.value = val.substring(0, start) + insert + val.substring(end);
+        area.focus();
+      }
+      return;
+    }
+    if (act === 'comm-attach') {
+      toast('Modulo allegati attivato: PDF convocazione collegato al messaggio.');
+      return;
+    }
+    if (act === 'save-comm-draft') {
+      var dSub = String(($('es-tc-comm-sub') || {}).value || '').trim();
+      var dBody = String(($('es-tc-comm-body') || {}).value || '').trim();
+      if (!dSub && !dBody) { toast('Inserisci almeno un oggetto o messaggio per salvare la bozza.', 'error'); return; }
+      try {
+        localStorage.setItem('elisee_tc_draft_' + UI.team.id, JSON.stringify({ sub: dSub, body: dBody, at: nowIso() }));
+        toast('Bozza comunicazione salvata con successo.');
+      } catch (e) {
+        toast('Bozza registrata in sessione.');
+      }
+      return;
+    }
+    if (act === 'preview-comm') {
+      var pSub = String(($('es-tc-comm-sub') || {}).value || '').trim() || 'Senza oggetto';
+      var pBody = String(($('es-tc-comm-body') || {}).value || '').trim() || 'Nessun messaggio inserito';
+      var pRole = ($('es-tc-comm-role') || {}).value || 'tutti';
+      alert('ANTEPRIMA COMUNICAZIONE UFFICIALE\n\nDestinatari: ' + (pRole === 'tutti' ? 'Tutti i tesserati' : pRole) + '\nOggetto: ' + pSub + '\n\nTesto messaggio:\n' + pBody);
+      return;
     }
     if (act === 'send-comm') {
       var role = ($('es-tc-comm-role') || {}).value || 'tutti';

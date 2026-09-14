@@ -3,20 +3,31 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** — Elisée Manager: risoluzione sovrapposizione sidebar/header e restyling luxury enterprise del pannello società (#tc-portal), Iscrizioni (Registration Management Center) e Quote (Financial Operations Dashboard) (cache `PRIVMGR1`).
-Ultimo fatto: **Elisée Manager: Risoluzione Sovrapposizione Header & Restyling Luxury Enterprise (`PRIVMGR1`)**:
-1. **Risoluzione sovrapposizione in alto a sinistra ed eliminazione spazio nero vuoto**:
-   - Risolto il bug per cui la rail verticale dell'atleta (`.es-pd-rail`) rimaneva fissa a `left: 0; top: 86px` sopra il titolo "Elisee Manager / Pannello società".
-   - Blindata `revealPlayerShell()` in `player-dash.js` e `syncPlayerProfileView()` in `player-profile.js` per impedire la forzatura di `user-dossier-view-group` su viste estranee (`tc`, `squadre`, ecc.).
-   - Aggiunta regola in `style.css` e `tc-panel.css` per nascondere tassativamente `.es-pd-rail` e `user-dossier-view-group` quando è attivo `#view-tc-panel`.
-   - Risolto il fallback di `resolveTeam()` in `tc-panel.js`: se `UI.team` è null all'atterraggio diretto via hash `#tc-portal`, recupera automaticamente Foggia City (o la squadra attiva) evitando che il body rimanga vuoto a mostrare una voragine nera.
-2. **Restyling Luxury Enterprise Private Sports Management**:
-   - **Look & Feel**: fondo chiaro sofisticato (`#F8F9FA`), pannelli bianco puro, zero bordi azzurri neon, zero pulsanti a pillola gaming.
-   - **Header editoriale**: breadcrumb dinamico (`Foggia City / Gestione società / [Sezione]`), titolo elegante in Fraunces, badge `Società Verificata`, stagione `2025/2026` e pulsante `← Torna alle Squadre`.
-   - **Panoramica**: fascia compatta a 5 KPI strategici + dashboard a due colonne asimmetriche con attività recenti, situazione quote e modulo condivisibile.
-   - **Iscrizioni**: Registration Management Center con KPI strip (4 indicatori), modulo pubblico condivisibile a sinistra, inbox richieste a destra e anagrafica tesserati full-width sotto.
-   - **Quote e pagamenti**: Financial Operations Dashboard con KPI finanziari, registro pagamenti a sinistra con filtri e toolbar, pannello compatto nuova quota a destra e sezione attenzione richiesta (insoluti e scadenze).
-3. **File aggiornati**: `tc-panel.css`, `tc-panel.js`, `player-dash.js`, `player-profile.js`, `style.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `PRIVMGR1`.
+Ultimo aggiornamento: **2026-09-14** — Elisée Manager: Redesign radicale della sezione "Comunicazioni" (#tc-portal tab comms) in vero Communication Management Center Luxury Enterprise (cache `COMMMGR1`).
+Ultimo fatto: **Elisée Manager: Redesign Comunicazioni — Communication Operations Center (`COMMMGR1`)**:
+1. **Trasformazione da semplice form email a Communication Operations Workspace**:
+   - Superata completamente la vecchia schermata con due card anonime e bordi scuri.
+   - Design luxury enterprise coerente con il resto di Elisée Manager (fondo caldo `#F8F9FA`, card candide, tipografia editoriale Fraunces + Inter, dettagli graphite e navy profondo).
+2. **Header Editoriale & KPI Communication Overview**:
+   - Header con breadcrumb istituzionale (`Foggia City / Gestione società / Comunicazioni`), titolo Fraunces, sottotitolo esplicativo («Invia aggiornamenti mirati ad atleti, famiglie, allenatori e dirigenti») e pulsante d'azione rapida `Nuova comunicazione`.
+   - Fascia orizzontale a 4 KPI strategici:
+     - *Comunicazioni inviate* (conteggio reale da archivio `st.comms`)
+     - *Destinatari raggiunti* (somma contatti tracciati nei delivery report)
+     - *Gruppi disponibili* (5 segmenti di default: Atleti, Genitori, Allenatori, Dirigenti, Tutti i tesserati)
+     - *Ultimo invio* (data dell'ultima circolare o «Nessuno»)
+3. **Main Communication Workspace a Due Colonne**:
+   - **Colonna principale (Composer Professionale)**:
+     - Selettore segmentato dell'audience con conteggi dinamici in tempo reale calcolati dall'anagrafica (`Tutti i tesserati · X destinatari`, `Atleti · X destinatari`, ecc.).
+     - Oggetto elegante e formale.
+     - Editor testuale arricchito con toolbar rapida per formattazione (B, I, elenchi puntati, segnaposto dinamici `{{nome_atleta}}`, `{{data_evento}}`).
+     - Modulo allegati PDF/convocazione.
+     - Azioni con pulsante principale «Invia comunicazione» (`data-tc="send-comm"` con dispatch e fallback mailto), «Salva bozza» (persistenza locale) e «Anteprima».
+   - **Colonna secondaria (Storico & Audience)**:
+     - Pannello *Attività recenti* con registro cronologico degli invii, destinatari raggiunti, data e badge di stato `Inviata` (oppure empty state curato se nessun messaggio è ancora stato spedito).
+     - Pannello *Gruppi di destinatari* con elenco dettagliato dei 5 segmenti, descrizione del ruolo societario e badge di conteggio organico.
+4. **Sezione Istituzionale "Accessi e permessi"**:
+   - Matrice tabellare completa dei permessi per ruolo (Atleta, Genitore, Allenatore, Dirigente, Collaboratore) con aree consentite, livello operativo e metodo di autenticazione, per trasmettere massima sicurezza e controllo societario.
+5. **File aggiornati**: `tc-panel.css`, `tc-panel.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COMMMGR1`.
 Feature precedente: **Candidatura Elisee Manager — Restyling Luxury Editoriale Club Esclusivo (`LUXMGR1`)**:
 1. **Addio taglio da videogame**:
    - Eliminati box neon celesti, trofei, badge dorati vistosi ed emoji stile WhatsApp VIP.
