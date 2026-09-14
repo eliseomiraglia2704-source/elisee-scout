@@ -12,10 +12,10 @@
   var LEAGUE_TEAMS_COUNT = { 'm': {}, 'f': {} };
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260914_ONLYREG1';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260914_FGC1';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260914_ONLYREG1';
-  var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260914_ONLYREG1';
+  var LOGO_V = '20260914_FGC1';
+  var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260914_FGC1';
   var REGISTERED_TEAMS = [];
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -29,7 +29,7 @@
       country: 'ITALIA',
       league: 'AMATORIALE',
       city: 'FOGGIA',
-      year: '2024',
+      year: '2026',
       abbr: 'FGC',
       gender: 'm',
       pos: 1,
@@ -37,10 +37,11 @@
       played: 0,
       verified: true,
       eliseeVerified: true,
-      primary: '#dc2626',
-      secondary: '#0f172a',
-      home: { body: '#dc2626', sleeve: '#0f172a' },
-      away: { body: '#ffffff', sleeve: '#dc2626' }
+      logo: 'immagini/squadre-loghi/foggia-city.png',
+      primary: '#0055d4',
+      secondary: '#0b0f19',
+      home: { body: '#0055d4', sleeve: '#0b0f19' },
+      away: { body: '#ffffff', sleeve: '#0055d4' }
     }
   ];
 

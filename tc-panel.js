@@ -187,7 +187,10 @@
       } catch (_) {}
     }
     if (!t || !t.id) {
-      t = teamById('foggia-city') || { id: 'foggia-city', name: 'FOGGIA CITY', league: 'Amatoriale', city: 'Foggia' };
+      t = teamById('foggia-city') || { id: 'foggia-city', name: 'FOGGIA CITY', league: 'Amatoriale', city: 'Foggia', logo: 'immagini/squadre-loghi/foggia-city.png' };
+    }
+    if (t && t.id === 'foggia-city' && !t.logo) {
+      t.logo = 'immagini/squadre-loghi/foggia-city.png';
     }
     return t;
   }
@@ -225,8 +228,17 @@
     // Aggiorna breadcrumb & header
     var nameEl = $('es-tc-team');
     var leagueEl = $('es-tc-league');
+    var logoUrl = team.logo || (team.id === 'foggia-city' ? 'immagini/squadre-loghi/foggia-city.png' : '');
     if (nameEl) {
-      nameEl.innerHTML = esc(team.name || 'Foggia City');
+      if (logoUrl) {
+        nameEl.innerHTML = 
+          '<div style="display:flex; align-items:center; gap:0.85rem;">' +
+            '<img src="' + esc(logoUrl) + '" alt="' + esc(team.name || 'Foggia City') + '" style="width:52px; height:52px; object-fit:contain; border-radius:50%; background:#0B0F19; border:2px solid rgba(0,85,212,0.4); box-shadow:0 4px 14px rgba(0,0,0,0.35); flex-shrink:0;">' +
+            '<span>' + esc(team.name || 'Foggia City') + '</span>' +
+          '</div>';
+      } else {
+        nameEl.innerHTML = esc(team.name || 'Foggia City');
+      }
     }
     if (leagueEl) {
       leagueEl.innerHTML = 

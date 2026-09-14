@@ -3,8 +3,23 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** — Elisée Manager: Redesign radicale di "Soci / Verbali" (#tc-portal tab soci) in Club Governance & Corporate Administration Workspace con company profile, registro soci ufficiale e redazione verbali assembleari modale (cache `GOVMGR1`).
-Ultimo fatto: **Elisée Manager: Redesign Soci / Verbali — Club Governance & Corporate Administration Workspace (`GOVMGR1`)**:
+Ultimo aggiornamento: **2026-09-14** — Logo ufficiale Foggia City integrato: scudo circolare nerazzurro con skyline cattedrale, diavolo e pallone (2026 FC), asset `immagini/squadre-loghi/foggia-city.png`, header Elisée Manager, schede e selettore squadre (cache `FOGGIACITY1`).
+Ultimo fatto: **Integrazione Logo Ufficiale Foggia City (`FOGGIACITY1`)**:
+1. **Asset Grafico Ufficiale Foggia City**:
+   - Ricevuto e integrato il logo circolare ufficiale nerazzurro di **Foggia City**: scudo con righe verticali blu reale e nere, profilo della cattedrale di Foggia con corona, sagoma del diavolo con pallone, dicitura "FOGGIA CITY", "20 26" e sigla "FC".
+   - Salvato in `immagini/squadre-loghi/foggia-city.png` (e copia alias `1000345699.png`).
+   - Creata la cartella kit 2D richiesta dalle regole fisse: `immagini/kits-2d/foggia-city/` con file `LEGGI_ME.txt`.
+2. **Aggiornamento Dati Società & Colori Ufficiali**:
+   - In `data/squadre/verified-teams.json` aggiornato il club `foggia-city` con:
+     - `logo: "immagini/squadre-loghi/foggia-city.png"`
+     - `year: "2026"`
+     - `primary: "#0055d4"`, `secondary: "#0b0f19"`
+     - `home: { body: "#0055d4", sleeve: "#0b0f19" }`, `away: { body: "#ffffff", sleeve: "#0055d4" }`
+   - In `squadre-select.js` aggiornato `TEAMS_FALLBACK` con il percorso logo, i colori societari e le date corrispondenti, con invalidazione cache `LOGO_V = '20260914_FGC1'`.
+3. **Integrazione Header Elisée Manager**:
+   - In `tc-panel.js` (`#tc-portal`) l'header principale di Elisée Manager mostra ora lo stemma ufficiale tondo accanto al titolo del club (Foggia City), rifinito con bordo satinato e ombra profonda.
+4. **File aggiornati**: `data/squadre/verified-teams.json`, `squadre-select.js`, `tc-panel.js`, `immagini/kits-2d/foggia-city/LEGGI_ME.txt`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `FOGGIACITY1`.
+Feature precedente: **Elisée Manager: Redesign Soci / Verbali — Club Governance & Corporate Administration Workspace (`GOVMGR1`)**:
 1. **Trasformazione in Corporate Governance Workspace**:
    - Superato l'effetto amatoriale a «due grandi form affiancati della stessa altezza» con campi sempre aperti ed enormi aree vuote.
    - Creata una struttura a 3 macro-sezioni funzionali indipendenti ispirata ai gestionali societari enterprise di alto livello (*Company Profile / Organization Settings*, *Registro Soci Ufficiale*, *Verbali Assembleari*).
