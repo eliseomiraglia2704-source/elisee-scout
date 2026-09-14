@@ -3,31 +3,30 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** — Elisée Manager: Redesign radicale della sezione "Comunicazioni" (#tc-portal tab comms) in vero Communication Management Center Luxury Enterprise (cache `COMMMGR1`).
-Ultimo fatto: **Elisée Manager: Redesign Comunicazioni — Communication Operations Center (`COMMMGR1`)**:
-1. **Trasformazione da semplice form email a Communication Operations Workspace**:
-   - Superata completamente la vecchia schermata con due card anonime e bordi scuri.
-   - Design luxury enterprise coerente con il resto di Elisée Manager (fondo caldo `#F8F9FA`, card candide, tipografia editoriale Fraunces + Inter, dettagli graphite e navy profondo).
-2. **Header Editoriale & KPI Communication Overview**:
-   - Header con breadcrumb istituzionale (`Foggia City / Gestione società / Comunicazioni`), titolo Fraunces, sottotitolo esplicativo («Invia aggiornamenti mirati ad atleti, famiglie, allenatori e dirigenti») e pulsante d'azione rapida `Nuova comunicazione`.
-   - Fascia orizzontale a 4 KPI strategici:
-     - *Comunicazioni inviate* (conteggio reale da archivio `st.comms`)
-     - *Destinatari raggiunti* (somma contatti tracciati nei delivery report)
-     - *Gruppi disponibili* (5 segmenti di default: Atleti, Genitori, Allenatori, Dirigenti, Tutti i tesserati)
-     - *Ultimo invio* (data dell'ultima circolare o «Nessuno»)
-3. **Main Communication Workspace a Due Colonne**:
-   - **Colonna principale (Composer Professionale)**:
-     - Selettore segmentato dell'audience con conteggi dinamici in tempo reale calcolati dall'anagrafica (`Tutti i tesserati · X destinatari`, `Atleti · X destinatari`, ecc.).
-     - Oggetto elegante e formale.
-     - Editor testuale arricchito con toolbar rapida per formattazione (B, I, elenchi puntati, segnaposto dinamici `{{nome_atleta}}`, `{{data_evento}}`).
-     - Modulo allegati PDF/convocazione.
-     - Azioni con pulsante principale «Invia comunicazione» (`data-tc="send-comm"` con dispatch e fallback mailto), «Salva bozza» (persistenza locale) e «Anteprima».
-   - **Colonna secondaria (Storico & Audience)**:
-     - Pannello *Attività recenti* con registro cronologico degli invii, destinatari raggiunti, data e badge di stato `Inviata` (oppure empty state curato se nessun messaggio è ancora stato spedito).
-     - Pannello *Gruppi di destinatari* con elenco dettagliato dei 5 segmenti, descrizione del ruolo societario e badge di conteggio organico.
-4. **Sezione Istituzionale "Accessi e permessi"**:
-   - Matrice tabellare completa dei permessi per ruolo (Atleta, Genitore, Allenatore, Dirigente, Collaboratore) con aree consentite, livello operativo e metodo di autenticazione, per trasmettere massima sicurezza e controllo societario.
-5. **File aggiornati**: `tc-panel.css`, `tc-panel.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COMMMGR1`.
+Ultimo aggiornamento: **2026-09-14** — Elisée Manager: Redesign radicale di "Calendario e Presenze" (#tc-portal tab calendario) in Club Operations Calendar con viste Mese/Settimana/Agenda, workflow contestuale e gestione presenze (cache `CALMGR1`).
+Ultimo fatto: **Elisée Manager: Redesign Calendario e Presenze — Club Operations Calendar (`CALMGR1`)**:
+1. **Trasformazione in vero Club Operations Calendar**:
+   - Superato il vecchio layout con form gigante fisso a sinistra e card vuota a destra.
+   - Design luxury enterprise con il calendario come fulcro operativo e la creazione evento come workflow contestuale in modale.
+2. **Header Editoriale & KPI Operativi**:
+   - Header con breadcrumb istituzionale (`Foggia City / Gestione società / Calendario`), titolo Fraunces, sottotitolo operativo («Organizza allenamenti, partite, provini ed eventi. Monitora la partecipazione degli atleti») e pulsante d'azione rapida `+ Nuova attività`.
+   - Fascia compatta orizzontale a 4 KPI strategici:
+     - *Attività questa settimana* (conteggio attività nei prossimi 7 giorni)
+     - *Prossimo evento* (titolo, data e orario della prossima seduta o gara in agenda)
+     - *Presenze da registrare* (conteggio eventi da validare)
+     - *Atleti coinvolti* (organico tesserati convocabile)
+3. **Main Calendar Workspace**:
+   - **Colonna principale (Calendario Gestionale)**:
+     - Barra di navigazione temporale con frecce avanti/indietro, mese/anno corrente, pulsante *Oggi*, selettore viste (**Mese**, **Settimana**, **Agenda**) e filtro reattivo per tipologia evento (*Allenamento*, *Partita*, *Provino*, *Evento scouting*, *Riunione*, *Altro*).
+     - *Vista Mese*: griglia mensile completa a 7 colonne (Lun-Dom) con evidenziazione del giorno odierno, chip eventi distinti per tipologia con orario e titolo, e click rapido su qualsiasi cella per creare un'attività.
+     - *Vista Settimana*: 7 colonne con prospetto orario e schede attività.
+     - *Vista Agenda*: timeline cronologica verticale dettagliata con raggruppamento per data, orario, luogo, indicatore di percentuale presenza e pulsante diretto *Gestione presenze*.
+   - **Colonna laterale (Prossimi appuntamenti)**:
+     - Sezione compatta con la sequenza delle prossime attività, luogo, data, orario, stato presenze e pulsante *Gestione presenze* (con empty state elegante in assenza di gare/sedute).
+4. **Creazione Attività Contestuale & Gestione Presenze Integrata**:
+   - *Nuova attività*: drawer/modale elegante aperta su richiesta (o da click su un giorno del calendario) con Tipo, Categoria/Squadra, Titolo, Data, Ora, Luogo, Note e opzioni di salvataggio («Salva attività» / «Salva e comunica ai partecipanti»).
+   - *Gestione presenze*: pannello modale per ogni evento con statistiche di partecipazione in tempo reale (% Partecipazione, Presenti, Assenti, Giustificati), elenco atleti della rosa e commutatore a 4 stati di presenza (*Presente*, *Assente*, *Giustificato*, *Da confermare*) con aggiornamento istantaneo dell'anagrafica.
+5. **File aggiornati**: `tc-panel.css`, `tc-panel.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `CALMGR1`.
 Feature precedente: **Candidatura Elisee Manager — Restyling Luxury Editoriale Club Esclusivo (`LUXMGR1`)**:
 1. **Addio taglio da videogame**:
    - Eliminati box neon celesti, trofei, badge dorati vistosi ed emoji stile WhatsApp VIP.

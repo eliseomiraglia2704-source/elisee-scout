@@ -3,7 +3,7 @@
   var STORE = 'elisee_tc_panel_v1';
   var ROLES = ['Atleta', 'Genitore', 'Allenatore', 'Dirigente', 'Collaboratore'];
   var FEE_TYPES = ['Iscrizione', 'Quota mensile', 'Kit / materiale', 'Rinnovo tesseramento'];
-  var EV_TYPES = ['Allenamento', 'Provino', 'Evento scouting', 'Partita', 'Assemblea'];
+  var EV_TYPES = ['Allenamento', 'Partita', 'Provino', 'Evento scouting', 'Riunione', 'Altro'];
   var DOCS = [
     { id: 'mod-iscr', name: 'Modulo di iscrizione', body: 'Modulo iscrizione società / squadra.' },
     { id: 'cert-med', name: 'Certificato medico agonistico', body: 'Scadenza certificato medico.' },
@@ -140,7 +140,15 @@
   var UI = {
     team: null,
     tab: 'iscrizioni',
-    memberMode: false
+    memberMode: false,
+    calView: 'month',
+    calYear: 2026,
+    calMonth: 8,
+    calTypeFilter: 'all',
+    calCatFilter: 'all',
+    calModalOpen: false,
+    calModalDate: null,
+    attModalEvId: null
   };
 
   function tabsFor() {
@@ -238,7 +246,7 @@
     else if (UI.tab === 'iscrizioni') html = viewIscrizioni(st, team);
     else if (UI.tab === 'quote') html = viewQuote(st, team);
     else if (UI.tab === 'comms') html = viewComms(st, team);
-    else if (UI.tab === 'calendario' || UI.tab === 'presenze') html = viewCal(st);
+    else if (UI.tab === 'calendario' || UI.tab === 'presenze') html = viewCal(st, team);
     else if (UI.tab === 'docs') html = viewDocs(st);
     else if (UI.tab === 'atleti') html = viewAtleti(st);
     else html = viewSoci(st, team);
@@ -876,33 +884,505 @@
     return html;
   }
 
-  function viewCal(st) {
-    var html = '<div class="es-tc-grid"><div class="es-tc-card"><h2>Nuova attività</h2>';
-    html += '<div class="es-tc-field"><span>Tipo</span><select id="es-tc-ev-type">';
-    EV_TYPES.forEach(function (t) { html += '<option>' + t + '</option>'; });
-    html += '</select></div>';
-    html += '<div class="es-tc-field"><span>Titolo</span><input id="es-tc-ev-title" placeholder="Es. Allenamento U15"></div>';
-    html += '<div class="es-tc-row"><div class="es-tc-field"><span>Data</span><input id="es-tc-ev-date" type="date" value="' + addDays(0) + '"></div>';
-    html += '<div class="es-tc-field"><span>Ora</span><input id="es-tc-ev-time" type="time" value="17:30"></div></div>';
-    html += '<div class="es-tc-field"><span>Luogo</span><input id="es-tc-ev-place" placeholder="Campo / impianto"></div>';
-    html += '<button type="button" class="es-tc-go" data-tc="add-ev">Salva in calendario</button></div>';
-    html += '<div class="es-tc-card"><h2>Calendario e presenze</h2>';
-    if (!st.events.length) html += '<p class="es-tc-muted">Nessuna attività. Aggiungi allenamenti, provini o eventi scouting.</p>';
-    else {
-      st.events.slice().reverse().forEach(function (ev) {
-        html += '<div class="es-tc-item"><strong>' + esc(ev.type) + ' · ' + esc(ev.title) + '</strong>';
-        html += '<p>' + esc(ev.date) + ' ' + esc(ev.time || '') + ' · ' + esc(ev.place || '') + '</p>';
-        html += '<div class="es-tc-att">';
-        st.members.forEach(function (m) {
-          var v = (st.attendance[ev.id] || {})[m.id] || '';
-          html += '<button type="button" class="es-tc-ghost" data-tc="att" data-ev="' + esc(ev.id) + '" data-m="' + esc(m.id) + '">' +
-            esc(m.nome) + ' ' + (v ? '(' + v + ')' : '') + '</button>';
+  var MONTH_NAMES = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
+  var DAY_NAMES = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
+
+  function getEventClass(type) {
+    var t = String(type || '').toLowerCase();
+    if (t.indexOf('allenamento') >= 0) return 'type-allenamento';
+    if (t.indexOf('partita') >= 0) return 'type-partita';
+    if (t.indexOf('provino') >= 0) return 'type-provino';
+    if (t.indexOf('scouting') >= 0) return 'type-scouting';
+    if (t.indexOf('riunione') >= 0 || t.indexOf('assemblea') >= 0) return 'type-riunione';
+    return 'type-altro';
+  }
+
+  function viewCal(st, team) {
+    team = team || UI.team || {};
+    var today = addDays(0);
+    var in7Days = addDays(7);
+
+    // KPI Operativi
+    var eventsThisWeek = (st.events || []).filter(function (ev) {
+      return ev.date >= today && ev.date <= in7Days;
+    }).length;
+
+    var sortedEvents = (st.events || []).slice().sort(function (a, b) {
+      return (a.date + ' ' + (a.time || '')).localeCompare(b.date + ' ' + (b.time || ''));
+    });
+
+    var futureEv = sortedEvents.filter(function (ev) { return ev.date >= today; });
+    var nextEv = futureEv[0];
+    var nextEvText = nextEv ? (esc(nextEv.title) + ' (' + fmtDate(nextEv.date) + ' ' + esc(nextEv.time || '') + ')') : 'Nessuno programmato';
+
+    var pendingAttCount = (st.events || []).filter(function (ev) {
+      return ev.date <= today && (!st.attendance[ev.id] || Object.keys(st.attendance[ev.id]).length === 0);
+    }).length;
+
+    var athletesCount = st.members.filter(function (m) { return m.role === 'Atleta'; }).length;
+    var involvedCount = athletesCount || (st.members.length ? st.members.length : 24);
+
+    var y = UI.calYear || 2026;
+    var m = UI.calMonth != null ? UI.calMonth : 8;
+
+    var html = '';
+
+    // 1. Header Editoriale
+    html += '<div class="es-tc-comms-header">' +
+      '<div class="es-tc-comms-header-left">' +
+        '<h2>Calendario e presenze</h2>' +
+        '<p>Organizza allenamenti, partite, provini ed eventi. Monitora la partecipazione degli atleti.</p>' +
+      '</div>' +
+      '<button type="button" class="es-tc-btn-primary" data-tc="open-cal-modal">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>' +
+        '+ Nuova attività' +
+      '</button>' +
+    '</div>';
+
+    // 2. KPI Operativi (Fascia Compatta Orizzontale)
+    html += '<div class="es-tc-kpi-strip">' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Attività questa settimana</div>' +
+        '<div class="es-tc-kpi-val">' + eventsThisWeek + '</div>' +
+        '<div class="es-tc-kpi-sub">Allenamenti e gare nei 7 gg</div>' +
+      '</div>' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Prossimo evento</div>' +
+        '<div class="es-tc-kpi-val" style="font-size:1.1rem; line-height:1.2; word-break:break-word;">' + nextEvText + '</div>' +
+        '<div class="es-tc-kpi-sub">Impegno in agenda</div>' +
+      '</div>' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Presenze da registrare</div>' +
+        '<div class="es-tc-kpi-val" style="color:' + (pendingAttCount ? '#D97706' : '#059669') + ';">' + pendingAttCount + '</div>' +
+        '<div class="es-tc-kpi-sub">' + (pendingAttCount ? 'Sessioni da validare' : 'Tutte validate') + '</div>' +
+      '</div>' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Atleti coinvolti</div>' +
+        '<div class="es-tc-kpi-val">' + involvedCount + '</div>' +
+        '<div class="es-tc-kpi-sub">Organico convocabile</div>' +
+      '</div>' +
+    '</div>';
+
+    // 3. Main Calendar Workspace
+    html += '<div class="es-tc-grid-main">' +
+
+      // Colonna Principale: Calendario Gestionale
+      '<div class="es-tc-panel">' +
+        // Barra comandi calendario
+        '<div class="es-tc-cal-bar">' +
+          '<div class="es-tc-cal-nav">' +
+            '<button type="button" class="es-tc-cal-nav-btn" data-tc="cal-prev-month" title="Mese precedente">&larr;</button>' +
+            '<div class="es-tc-cal-month-title">' + MONTH_NAMES[m] + ' ' + y + '</div>' +
+            '<button type="button" class="es-tc-cal-nav-btn" data-tc="cal-next-month" title="Mese successivo">&rarr;</button>' +
+            '<button type="button" class="es-tc-btn-back" data-tc="cal-today" style="padding:0.35rem 0.65rem; font-size:0.75rem;">Oggi</button>' +
+          '</div>' +
+          '<div class="es-tc-cal-view-group">' +
+            '<button type="button" class="es-tc-cal-view-btn ' + (UI.calView === 'month' ? 'is-active' : '') + '" data-tc="set-cal-view" data-view="month">Mese</button>' +
+            '<button type="button" class="es-tc-cal-view-btn ' + (UI.calView === 'week' ? 'is-active' : '') + '" data-tc="set-cal-view" data-view="week">Settimana</button>' +
+            '<button type="button" class="es-tc-cal-view-btn ' + (UI.calView === 'agenda' ? 'is-active' : '') + '" data-tc="set-cal-view" data-view="agenda">Agenda</button>' +
+          '</div>' +
+          '<div class="es-tc-cal-filters">' +
+            '<select class="es-tc-cal-filter-select" id="es-tc-filter-type" data-tc="change-cal-filter">' +
+              '<option value="all">Tutti i tipi</option>' +
+              EV_TYPES.map(function (t) { return '<option value="' + esc(t) + '" ' + (UI.calTypeFilter === t ? 'selected' : '') + '>' + esc(t) + '</option>'; }).join('') +
+            '</select>' +
+          '</div>' +
+        '</div>';
+
+    // Rendering viste
+    if (UI.calView === 'month') {
+      html += renderCalMonth(st, y, m);
+    } else if (UI.calView === 'week') {
+      html += renderCalWeek(st, y, m);
+    } else {
+      html += renderCalAgenda(st);
+    }
+
+    html += '</div>' + // chiude colonna principale
+
+      // Colonna Laterale: Prossime Attività
+      '<div style="display:flex; flex-direction:column; gap:1.5rem;">' +
+        '<div class="es-tc-panel">' +
+          '<div class="es-tc-panel-header">' +
+            '<h3 class="es-tc-panel-title">Prossimi appuntamenti</h3>' +
+            '<span style="font-size:0.75rem; color:#64748B;">' + sortedEvents.length + ' eventi</span>' +
+          '</div>' +
+          '<p class="es-tc-panel-desc">Attività programmate e impegni del club.</p>';
+
+    if (!sortedEvents.length) {
+      html += '<div class="es-tc-empty">' +
+        '<div class="es-tc-empty-title">Nessuna attività programmata</div>' +
+        '<p class="es-tc-empty-sub">Le prossime attività della società appariranno qui.</p>' +
+      '</div>';
+    } else {
+      html += '<div style="display:flex; flex-direction:column; gap:0.6rem;">';
+      sortedEvents.slice(0, 6).forEach(function (ev) {
+        var att = st.attendance[ev.id] || {};
+        var attPresent = Object.keys(att).filter(function (k) { return att[k] === 'presente'; }).length;
+        var attTotal = Object.keys(att).length;
+        var attLabel = attTotal ? (attPresent + ' presenti') : 'Presenze aperte';
+
+        html += '<div class="es-tc-history-item" style="border:1px solid rgba(15,23,42,0.08); border-radius:6px; padding:0.75rem;">' +
+          '<div class="es-tc-history-top">' +
+            '<span class="es-tc-history-subject">' + esc(ev.title) + '</span>' +
+            '<span class="es-tc-badge es-tc-badge-pending">' + esc(ev.type) + '</span>' +
+          '</div>' +
+          '<div class="es-tc-history-meta" style="margin-bottom:0.5rem;">' +
+            '<span>🗓️ ' + fmtDate(ev.date) + ' ' + esc(ev.time || '17:30') + '</span>' +
+            '<span>·</span>' +
+            '<span>📍 ' + esc(ev.place || 'Campo sportivo') + '</span>' +
+          '</div>' +
+          '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:0.4rem; padding-top:0.4rem; border-top:1px solid rgba(15,23,42,0.05);">' +
+            '<span style="font-size:0.72rem; color:#64748B;">👥 ' + attLabel + '</span>' +
+            '<button type="button" class="es-tc-btn-back" data-tc="open-att-modal" data-id="' + esc(ev.id) + '" style="padding:0.25rem 0.55rem; font-size:0.72rem;">' +
+              'Gestione presenze' +
+            '</button>' +
+          '</div>' +
+        '</div>';
+      });
+      html += '</div>';
+    }
+
+    html += '</div>' + // chiude pannello laterale
+      '</div>' + // chiude colonna laterale
+    '</div>'; // chiude grid-main
+
+    // Modali contestuali (aperti in sovrimpressione se richiesto)
+    if (UI.calModalOpen) html += renderCalModal(st);
+    if (UI.attModalEvId) html += renderAttModal(st);
+
+    return html;
+  }
+
+  function renderCalMonth(st, y, m) {
+    var firstDayDate = new Date(y, m, 1);
+    var firstDayOfWeek = firstDayDate.getDay(); // 0 = Dom, 1 = Lun...
+    var offset = (firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1);
+    var daysInMonth = new Date(y, m + 1, 0).getDate();
+    var daysInPrevMonth = new Date(y, m, 0).getDate();
+
+    var todayStr = addDays(0);
+
+    var filteredEvents = (st.events || []).filter(function (ev) {
+      if (UI.calTypeFilter && UI.calTypeFilter !== 'all' && ev.type !== UI.calTypeFilter) return false;
+      return true;
+    });
+
+    var html = '<table class="es-tc-month-table">' +
+      '<thead><tr>' +
+        DAY_NAMES.map(function (d) { return '<th>' + d + '</th>'; }).join('') +
+      '</tr></thead><tbody><tr>';
+
+    var col = 0;
+
+    // Giorni mese precedente
+    for (var p = offset - 1; p >= 0; p--) {
+      var prevDayNum = daysInPrevMonth - p;
+      html += '<td class="es-tc-month-cell is-other">' +
+        '<div class="es-tc-cell-top"><span class="es-tc-cell-num">' + prevDayNum + '</span></div>' +
+      '</td>';
+      col++;
+    }
+
+    // Giorni mese corrente
+    for (var d = 1; d <= daysInMonth; d++) {
+      if (col === 7) {
+        html += '</tr><tr>';
+        col = 0;
+      }
+      var mmStr = (m + 1) < 10 ? ('0' + (m + 1)) : String(m + 1);
+      var ddStr = d < 10 ? ('0' + d) : String(d);
+      var currentIso = y + '-' + mmStr + '-' + ddStr;
+      var isToday = currentIso === todayStr;
+
+      var evs = filteredEvents.filter(function (ev) { return ev.date === currentIso; });
+
+      html += '<td class="es-tc-month-cell ' + (isToday ? 'is-today' : '') + '">' +
+        '<div class="es-tc-cell-top">' +
+          '<span class="es-tc-cell-num">' + d + '</span>' +
+          '<button type="button" class="es-tc-cell-add-btn" data-tc="open-cal-modal" data-date="' + currentIso + '" title="Aggiungi attività">+</button>' +
+        '</div>' +
+        '<div class="es-tc-cell-events">';
+
+      evs.slice(0, 3).forEach(function (ev) {
+        var cls = getEventClass(ev.type);
+        html += '<div class="es-tc-event-chip ' + cls + '" data-tc="open-att-modal" data-id="' + esc(ev.id) + '" title="' + esc(ev.title) + ' - Clicca per presenze">' +
+          '<span>' + esc(ev.time || '') + '</span> <strong>' + esc(ev.title) + '</strong>' +
+        '</div>';
+      });
+      if (evs.length > 3) {
+        html += '<span style="font-size:0.65rem; color:#64748B;">+' + (evs.length - 3) + ' altre</span>';
+      }
+
+      html += '</div></td>';
+      col++;
+    }
+
+    // Completa la riga finale se necessario
+    if (col > 0) {
+      var nextDay = 1;
+      while (col < 7) {
+        html += '<td class="es-tc-month-cell is-other">' +
+          '<div class="es-tc-cell-top"><span class="es-tc-cell-num">' + nextDay + '</span></div>' +
+        '</td>';
+        nextDay++;
+        col++;
+      }
+    }
+
+    html += '</tr></tbody></table>';
+    return html;
+  }
+
+  function renderCalWeek(st, y, m) {
+    var today = new Date();
+    var curr = new Date(y, m, today.getDate() || 14);
+    var first = curr.getDate() - (curr.getDay() === 0 ? 6 : curr.getDay() - 1);
+
+    var days = [];
+    for (var i = 0; i < 7; i++) {
+      var d = new Date(curr.setDate(first + i));
+      days.push(d.toISOString().slice(0, 10));
+    }
+
+    var html = '<div style="display:grid; grid-template-columns:repeat(7, 1fr); gap:0.5rem; background:#F8FAFC; padding:0.75rem; border-radius:8px; border:1px solid rgba(15,23,42,0.08);">';
+    days.forEach(function (dateStr, idx) {
+      var evs = (st.events || []).filter(function (ev) { return ev.date === dateStr; });
+      var isToday = dateStr === addDays(0);
+
+      html += '<div style="background:#FFFFFF; border:1px solid rgba(15,23,42,0.08); border-radius:6px; padding:0.5rem; min-height:220px; display:flex; flex-direction:column;">' +
+        '<div style="text-align:center; padding-bottom:0.4rem; border-bottom:1px solid rgba(15,23,42,0.06); margin-bottom:0.4rem;">' +
+          '<div style="font-size:0.7rem; font-weight:700; color:#64748B; text-transform:uppercase;">' + DAY_NAMES[idx] + '</div>' +
+          '<div style="font-size:0.95rem; font-weight:700; color:' + (isToday ? '#059669' : '#0F172A') + ';">' + dateStr.slice(8, 10) + '</div>' +
+        '</div>' +
+        '<div style="display:flex; flex-direction:column; gap:0.35rem; flex:1;">';
+
+      if (!evs.length) {
+        html += '<span style="font-size:0.68rem; color:#94A3B8; text-align:center; margin-top:1rem;">Nessuna attività</span>';
+      } else {
+        evs.forEach(function (ev) {
+          var cls = getEventClass(ev.type);
+          html += '<div class="es-tc-event-chip ' + cls + '" data-tc="open-att-modal" data-id="' + esc(ev.id) + '" style="white-space:normal; flex-direction:column; align-items:flex-start; padding:0.35rem 0.45rem;">' +
+            '<div style="font-size:0.68rem; color:#64748B;">' + esc(ev.time || '17:30') + ' · ' + esc(ev.type) + '</div>' +
+            '<div style="font-weight:600; color:#0F172A; font-size:0.75rem;">' + esc(ev.title) + '</div>' +
+          '</div>';
         });
-        if (!st.members.length) html += '<p class="es-tc-muted">Serve anagrafica per tracciare presenze.</p>';
-        html += '</div></div>';
+      }
+
+      html += '</div>' +
+        '<button type="button" class="es-tc-btn-back" data-tc="open-cal-modal" data-date="' + dateStr + '" style="width:100%; margin-top:0.5rem; padding:0.25rem; font-size:0.68rem; justify-content:center;">+ Aggiungi</button>' +
+      '</div>';
+    });
+    html += '</div>';
+    return html;
+  }
+
+  function renderCalAgenda(st) {
+    var sorted = (st.events || []).slice().sort(function (a, b) {
+      return (a.date + ' ' + (a.time || '')).localeCompare(b.date + ' ' + (b.time || ''));
+    });
+
+    if (!sorted.length) {
+      return '<div class="es-tc-empty">' +
+        '<div class="es-tc-empty-title">Nessuna attività registrata in agenda</div>' +
+        '<p class="es-tc-empty-sub">Crea un nuovo allenamento, provino o partita per compilare l\'agenda societaria.</p>' +
+      '</div>';
+    }
+
+    var html = '<div style="display:flex; flex-direction:column; gap:0.85rem;">';
+    var grouped = {};
+    sorted.forEach(function (ev) {
+      if (!grouped[ev.date]) grouped[ev.date] = [];
+      grouped[ev.date].push(ev);
+    });
+
+    Object.keys(grouped).forEach(function (dateStr) {
+      html += '<div class="es-tc-agenda-group">' +
+        '<div class="es-tc-agenda-date-header">' +
+          '<span>🗓️ ' + fmtDate(dateStr) + '</span>' +
+          '<span style="font-weight:500; font-size:0.7rem;">' + grouped[dateStr].length + ' attività</span>' +
+        '</div>';
+
+      grouped[dateStr].forEach(function (ev) {
+        var att = st.attendance[ev.id] || {};
+        var attPresent = Object.keys(att).filter(function (k) { return att[k] === 'presente'; }).length;
+        var attTotal = st.members.filter(function (m) { return m.role === 'Atleta'; }).length || Object.keys(att).length || 1;
+        var perc = Math.round((attPresent / attTotal) * 100);
+
+        html += '<div class="es-tc-agenda-card">' +
+          '<div class="es-tc-agenda-left">' +
+            '<div class="es-tc-agenda-time">' + esc(ev.time || '17:30') + '</div>' +
+            '<div class="es-tc-agenda-info">' +
+              '<div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.2rem;">' +
+                '<span class="es-tc-agenda-title">' + esc(ev.title) + '</span>' +
+                '<span class="es-tc-badge es-tc-badge-pending">' + esc(ev.type) + '</span>' +
+                (ev.cat ? '<span class="es-tc-badge" style="background:#F1F5F9; color:#475569;">' + esc(ev.cat) + '</span>' : '') +
+              '</div>' +
+              '<div class="es-tc-agenda-meta">' +
+                '<span>📍 ' + esc(ev.place || 'Campo sportivo') + '</span>' +
+                '<span>·</span>' +
+                '<span>👥 ' + attPresent + '/' + attTotal + ' presenti (' + perc + '%)</span>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div style="display:flex; align-items:center; gap:0.5rem;">' +
+            '<button type="button" class="es-tc-btn-primary" data-tc="open-att-modal" data-id="' + esc(ev.id) + '">' +
+              'Gestione presenze' +
+            '</button>' +
+          '</div>' +
+        '</div>';
+      });
+      html += '</div>';
+    });
+
+    html += '</div>';
+    return html;
+  }
+
+  function renderCalModal(st) {
+    var defDate = UI.calModalDate || addDays(0);
+    return '<div class="es-tc-modal-backdrop">' +
+      '<div class="es-tc-modal">' +
+        '<div class="es-tc-modal-header">' +
+          '<h3 class="es-tc-modal-title">Nuova attività sportiva</h3>' +
+          '<button type="button" class="es-tc-modal-close" data-tc="close-cal-modal">&times;</button>' +
+        '</div>' +
+        '<p class="es-tc-panel-desc" style="margin-bottom:1rem;">Inserisci i parametri dell\'evento nel calendario societario.</p>' +
+        '<div class="es-tc-form-row">' +
+          '<div class="es-tc-field">' +
+            '<label>Tipo attività *</label>' +
+            '<select id="es-tc-ev-type">' +
+              EV_TYPES.map(function (t) { return '<option>' + t + '</option>'; }).join('') +
+            '</select>' +
+          '</div>' +
+          '<div class="es-tc-field">' +
+            '<label>Squadra / Categoria</label>' +
+            '<select id="es-tc-ev-cat">' +
+              '<option>Tutte le rose</option>' +
+              '<option>Prima Squadra</option>' +
+              '<option>Under 19</option>' +
+              '<option>Under 17</option>' +
+              '<option>Under 15</option>' +
+              '<option>Scuola Calcio</option>' +
+            '</select>' +
+          '</div>' +
+        '</div>' +
+        '<div class="es-tc-field">' +
+          '<label>Titolo attività *</label>' +
+          '<input id="es-tc-ev-title" placeholder="Es. Rifinitura tattica, Partita Campionato, Provino">' +
+        '</div>' +
+        '<div class="es-tc-form-row">' +
+          '<div class="es-tc-field">' +
+            '<label>Data evento *</label>' +
+            '<input id="es-tc-ev-date" type="date" value="' + defDate + '">' +
+          '</div>' +
+          '<div class="es-tc-field">' +
+            '<label>Ora inizio *</label>' +
+            '<input id="es-tc-ev-time" type="time" value="17:30">' +
+          '</div>' +
+        '</div>' +
+        '<div class="es-tc-field">' +
+          '<label>Luogo / Impianto</label>' +
+          '<input id="es-tc-ev-place" placeholder="Es. Campo Sportivo Comunale, Foggia">' +
+        '</div>' +
+        '<div class="es-tc-field">' +
+          '<label>Note operative</label>' +
+          '<textarea id="es-tc-ev-notes" rows="2" placeholder="Indicazioni su divisa, ritrovo o programma seduta..."></textarea>' +
+        '</div>' +
+        '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(15,23,42,0.08);">' +
+          '<div style="display:flex; gap:0.5rem;">' +
+            '<button type="button" class="es-tc-btn-primary" data-tc="save-ev">Salva attività</button>' +
+            '<button type="button" class="es-tc-btn-back" data-tc="save-ev-notify">Salva e comunica</button>' +
+          '</div>' +
+          '<button type="button" class="es-tc-btn-back" data-tc="close-cal-modal">Annulla</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function renderAttModal(st) {
+    var ev = (st.events || []).filter(function (x) { return x.id === UI.attModalEvId; })[0];
+    if (!ev) return '';
+
+    var att = st.attendance[ev.id] || {};
+    var members = st.members.filter(function (m) { return m.role === 'Atleta'; });
+    if (!members.length) members = st.members; // fallback se non ci sono atleti categorizzati
+
+    var total = members.length;
+    var pres = 0, ass = 0, giust = 0, pending = 0;
+    members.forEach(function (m) {
+      var s = att[m.id];
+      if (s === 'presente') pres++;
+      else if (s === 'assente') ass++;
+      else if (s === 'giustificato') giust++;
+      else pending++;
+    });
+
+    var perc = total ? Math.round((pres / total) * 100) : 0;
+
+    var html = '<div class="es-tc-modal-backdrop">' +
+      '<div class="es-tc-modal" style="max-width:680px;">' +
+        '<div class="es-tc-modal-header">' +
+          '<div>' +
+            '<h3 class="es-tc-modal-title">Gestione presenze</h3>' +
+            '<span style="font-size:0.8rem; color:#64748B;">' + esc(ev.type) + ' · ' + esc(ev.title) + ' (' + fmtDate(ev.date) + ' ' + esc(ev.time || '') + ')</span>' +
+          '</div>' +
+          '<button type="button" class="es-tc-modal-close" data-tc="close-att-modal">&times;</button>' +
+        '</div>' +
+
+        // Box Statistiche istantanee
+        '<div class="es-tc-att-stats">' +
+          '<div class="es-tc-att-stat-box">' +
+            '<div class="es-tc-att-stat-label">Partecipazione</div>' +
+            '<div class="es-tc-att-stat-val" style="color:#059669;">' + perc + '%</div>' +
+          '</div>' +
+          '<div class="es-tc-att-stat-box">' +
+            '<div class="es-tc-att-stat-label">Presenti</div>' +
+            '<div class="es-tc-att-stat-val" style="color:#059669;">' + pres + '</div>' +
+          '</div>' +
+          '<div class="es-tc-att-stat-box">' +
+            '<div class="es-tc-att-stat-label">Assenti</div>' +
+            '<div class="es-tc-att-stat-val" style="color:#DC2626;">' + ass + '</div>' +
+          '</div>' +
+          '<div class="es-tc-att-stat-box">' +
+            '<div class="es-tc-att-stat-label">Giustificati</div>' +
+            '<div class="es-tc-att-stat-val" style="color:#D97706;">' + giust + '</div>' +
+          '</div>' +
+        '</div>' +
+
+        // Elenco Atleti con Toggle a 4 Stati
+        '<div style="border:1px solid rgba(15,23,42,0.08); border-radius:8px; overflow:hidden; max-height:350px; overflow-y:auto; margin-bottom:1.25rem;">';
+
+    if (!members.length) {
+      html += '<div class="es-tc-empty">' +
+        '<div class="es-tc-empty-title">Nessun tesserato presente in anagrafica</div>' +
+        '<p class="es-tc-empty-sub">Aggiungi atleti dalle iscrizioni o dalla scheda anagrafica per registrarne le presenze.</p>' +
+      '</div>';
+    } else {
+      members.forEach(function (m) {
+        var cur = att[m.id] || 'pending';
+        html += '<div class="es-tc-att-row">' +
+          '<div>' +
+            '<strong style="font-size:0.86rem; color:#0F172A;">' + esc(m.nome) + ' ' + esc(m.cognome) + '</strong>' +
+            '<span style="font-size:0.72rem; color:#64748B; margin-left:0.4rem;">(' + esc(m.role) + ')</span>' +
+          '</div>' +
+          '<div class="es-tc-att-toggle-group">' +
+            '<button type="button" class="es-tc-att-state-btn ' + (cur === 'presente' ? 'is-presente' : '') + '" data-tc="set-att-state" data-ev="' + esc(ev.id) + '" data-m="' + esc(m.id) + '" data-state="presente">Presente</button>' +
+            '<button type="button" class="es-tc-att-state-btn ' + (cur === 'assente' ? 'is-assente' : '') + '" data-tc="set-att-state" data-ev="' + esc(ev.id) + '" data-m="' + esc(m.id) + '" data-state="assente">Assente</button>' +
+            '<button type="button" class="es-tc-att-state-btn ' + (cur === 'giustificato' ? 'is-giustificato' : '') + '" data-tc="set-att-state" data-ev="' + esc(ev.id) + '" data-m="' + esc(m.id) + '" data-state="giustificato">Giustificato</button>' +
+            '<button type="button" class="es-tc-att-state-btn ' + (cur === 'pending' ? 'is-pending' : '') + '" data-tc="set-att-state" data-ev="' + esc(ev.id) + '" data-m="' + esc(m.id) + '" data-state="pending">Da conf.</button>' +
+          '</div>' +
+        '</div>';
       });
     }
-    html += '</div></div>';
+
+    html += '</div>' +
+        '<div style="display:flex; justify-content:flex-end;">' +
+          '<button type="button" class="es-tc-btn-primary" data-tc="close-att-modal">Salva e chiudi distinta</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
     return html;
   }
 
@@ -1191,6 +1671,98 @@
       toast('Comunicazione inviata a ' + dest.length + ' destinatari.');
       render(); return;
     }
+    if (act === 'open-cal-modal') {
+      UI.calModalOpen = true;
+      UI.calModalDate = btn.getAttribute('data-date') || addDays(0);
+      render();
+      return;
+    }
+    if (act === 'close-cal-modal') {
+      UI.calModalOpen = false;
+      render();
+      return;
+    }
+    if (act === 'open-att-modal') {
+      UI.attModalEvId = btn.getAttribute('data-id');
+      render();
+      return;
+    }
+    if (act === 'close-att-modal') {
+      UI.attModalEvId = null;
+      render();
+      return;
+    }
+    if (act === 'set-cal-view') {
+      UI.calView = btn.getAttribute('data-view') || 'month';
+      render();
+      return;
+    }
+    if (act === 'cal-prev-month') {
+      UI.calMonth--;
+      if (UI.calMonth < 0) { UI.calMonth = 11; UI.calYear--; }
+      render();
+      return;
+    }
+    if (act === 'cal-next-month') {
+      UI.calMonth++;
+      if (UI.calMonth > 11) { UI.calMonth = 0; UI.calYear++; }
+      render();
+      return;
+    }
+    if (act === 'cal-today') {
+      UI.calYear = 2026;
+      UI.calMonth = 8;
+      render();
+      return;
+    }
+    if (act === 'save-ev' || act === 'save-ev-notify') {
+      var evTitle = String(($('es-tc-ev-title') || {}).value || '').trim();
+      if (!evTitle) { toast('Inserisci il titolo dell\'attività.', 'error'); return; }
+      var evType = ($('es-tc-ev-type') || {}).value || 'Allenamento';
+      var evDate = ($('es-tc-ev-date') || {}).value || addDays(0);
+      var evTime = ($('es-tc-ev-time') || {}).value || '17:30';
+      var evPlace = String(($('es-tc-ev-place') || {}).value || '').trim() || 'Campo sportivo';
+      var evCat = ($('es-tc-ev-cat') || {}).value || 'Tutte le rose';
+      var evNotes = String(($('es-tc-ev-notes') || {}).value || '').trim();
+
+      var newEv = {
+        id: uid('e'),
+        type: evType,
+        title: evTitle,
+        date: evDate,
+        time: evTime,
+        place: evPlace,
+        cat: evCat,
+        notes: evNotes
+      };
+      st.events.unshift(newEv);
+      st.attendance[newEv.id] = {};
+
+      if (act === 'save-ev-notify') {
+        var recipients = st.members.filter(function (m) { return m.role === 'Atleta'; });
+        recipients.forEach(function (m) {
+          notify('Convocazione: ' + evTitle, 'Attività programmata per il ' + fmtDate(evDate) + ' ore ' + evTime + ' presso ' + evPlace, m.email);
+        });
+        toast('Attività registrata e convocazione inviata a ' + recipients.length + ' atleti.');
+      } else {
+        toast('Attività aggiunta al calendario societario.');
+      }
+
+      UI.calModalOpen = false;
+      put(UI.team, st);
+      render();
+      return;
+    }
+    if (act === 'set-att-state') {
+      var evId = btn.getAttribute('data-ev');
+      var mId = btn.getAttribute('data-m');
+      var newState = btn.getAttribute('data-state');
+      if (!st.attendance[evId]) st.attendance[evId] = {};
+      st.attendance[evId][mId] = newState;
+      put(UI.team, st);
+      render();
+      return;
+    }
     if (act === 'add-ev') {
       var title = String(($('es-tc-ev-title') || {}).value || '').trim();
       if (!title) { toast('Inserisci un titolo.', 'error'); return; }
@@ -1363,6 +1935,12 @@
         var tab = e.target.closest('[data-tc-tab]');
         if (tab) { UI.tab = tab.getAttribute('data-tc-tab'); render(); return; }
         onClick(e);
+      });
+      root.addEventListener('change', function (e) {
+        if (e.target && e.target.id === 'es-tc-filter-type') {
+          UI.calTypeFilter = e.target.value;
+          render();
+        }
       });
     }
     bindPublic();
