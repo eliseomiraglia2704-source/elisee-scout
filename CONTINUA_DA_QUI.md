@@ -3,22 +3,26 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** (commit `c51ff19`) — Selettore Stagione Unificato + Richieste di Contatto + Interesse dalla Rete (cache `PLAYERDOSSIER2`).
-Ultimo fatto: **Area Player Dossier / Selettore Stagione Unificato & Nuovi Blocchi B2B**:
-1. **Selettore Stagione Unificato (Eliminata Duplicazione)**:
-   - Risolto il problema del testo duplicato cerchiato in rosso ("Eliseo Miraglia · Stagione 2026/27" ripetuto accanto a "‹ Stagione 2026/27 Attuale ›").
-   - Fusi in un unico controllo elegante `.es-dossier__season`: `<strong>Nome Atleta</strong> | <button class="es-season-nav" data-season-step="-1">‹</button> <span>Stagione <strong>2026/27</strong> · Attuale</span> <button class="es-season-nav" data-season-step="1">›</button>`.
-   - Navigazione ciclica immediata tra le stagioni (`2026/27`, `2025/26`, `2024/25`, `2023/24`) con aggiornamento istantaneo del Radar a 12 assi, dei voti PGB e del registro match.
-2. **Pannello "Richieste di contatto"**:
-   - Posizionato come blocco full-width sotto la griglia a 3 colonne (senza sbilanciare le colonne sovrastanti).
-   - Badge "N in attesa" (`#requests-count-badge`), sincronizzato con la campanella notifiche (`#es-nav-bell-dot`).
-   - Gestione interattiva `Accetta` / `Rifiuta`: la card cambia stato in `.is-resolved` con etichetta verde ("Accettata") o grigia ("Rifiutata") e persiste in `localStorage['elisee_contact_requests']`.
-   - Lista vuota di default (zero dati fake) pronta per l'aggancio API reale.
-3. **Pannello "Interesse dalla rete"**:
-   - Posizionato sotto la griglia a 3 colonne, con badge "Solo tu puoi vederlo".
-   - Griglia a 5 categorie: *Allenatori interessati*, *Direttori Sportivi interessati*, *Club interessati*, *Procuratori sportivi interessati* e *Osservatori rappresentative giovanili*.
-   - Responsive a 2 colonne fino a 980px e 1 colonna sotto i 560px.
-4. **File coinvolti**: `player-dash.js`, `player-dash.css`, `index.html`, `version.json`, `sw.js`. Cache `PLAYERDOSSIER2`.
+Ultimo aggiornamento: **2026-09-14** (commit `76e31c7`) — Riorganizzazione Tematica a 3 Colonne Dossier Player (cache `PLAYERDOSSIER3`).
+Ultimo fatto: **Riorganizzazione Tematica dei Pannelli del Dossier Player**:
+1. **Colonna 1 — Identità & Azioni (Account & Chi sei)**:
+   - *Indice Atleta & Parametri*
+   - *Il Mio Profilo & Obiettivi* (spostato qui a fianco dell'anagrafica, risolvendo il vuoto in Colonna 1)
+   - *Azioni possibili* (strumenti operativi account, GDPR, intervento umano art. 22)
+2. **Colonna 2 — Prestazioni (Il calcio giocato sul campo)**:
+   - *Radar Prestazioni a 12 Assi (Stagione)*
+   - *Registro Match & Voti PGB (Stagione)*
+   - *Crescita Storica (2023–2027)*
+   - Raggruppamento logico completo di tutto ciò che riguarda le prestazioni e l'analisi tecnica di gara.
+3. **Colonna 3 — Fiducia & Mercato (Affidabilità & Interesse)**:
+   - *Certificazione & Compliance* (checklist zero fake account)
+   - *Interesse Scouting & Percorso* (club attuale, disponibilità, scadenza vincolo)
+   - Si raccorda in modo coerente e fluido con i due blocchi sottostanti a larghezza piena (*Richieste di contatto* e *Interesse dalla rete*).
+4. **File coinvolti**: `player-dash.js`, `index.html`, `version.json`, `sw.js`. Cache `PLAYERDOSSIER3`.
+Feature precedente: **Area Player Dossier / Selettore Stagione Unificato & Nuovi Blocchi B2B**:
+1. Selettore stagione unificato (‹ Stagione 2026/27 · Attuale ›) senza duplicazioni.
+2. Blocco "Richieste di contatto" con Accetta/Rifiuta e badge in attesa.
+3. Blocco "Interesse dalla rete" a 5 categorie (Allenatori, DS, Club, Procuratori, Osservatori giovanili).
 Feature precedente: **Allineamento Grafico & Strutturale Area Riservata Player ("Report Tecnico & Profilo Atleta")**:
 1. Design System & Palette Istituzionale B2B (`#3b7dff`, `#0b0e14`, `#10141d`).
 2. Badge di stato unificati a 3 livelli: `.es-badge--active`, `.es-badge--verified`, `.es-badge--pending`.

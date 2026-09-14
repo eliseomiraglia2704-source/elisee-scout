@@ -436,7 +436,7 @@
 
       '<div class="es-dossier-grid">' +
 
-      // === COLONNA 1 ===
+      // === COLONNA 1 — Identità & Azioni ===
       '<div class="es-dossier-col">' +
         // Card 1: Indice Atleta & Parametri
         '<div class="es-panel-card">' +
@@ -467,45 +467,7 @@
           )) +
         '</div>' +
 
-        // Card 2: Azioni possibili
-        '<div class="es-panel-card">' +
-          '<div class="es-panel-card__head">' +
-            '<h4>Azioni possibili</h4>' +
-            '<span class="es-badge es-badge--tag">Strumenti operativi</span>' +
-          '</div>' +
-          '<p class="es-empty-note" style="margin-bottom:10px;">— Calciatore / Utente</p>' +
-          '<div class="es-link-list">' +
-            '<a href="#" data-pd="edit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Aggiornare anagrafica e preferenze</a>' +
-            '<a href="#" data-player-action="behavioral_consent"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Attivare consenso profilo comportamentale</a>' +
-            '<a href="#" data-player-action="human_intervention"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Richiedere intervento umano (art. 22)</a>' +
-            '<a href="#" data-player-action="export_gdpr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Esportare i propri dati (GDPR)</a>' +
-            '<a href="#" data-player-action="career_projection"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Percorso di Crescita Proiettato (IA Career Projection)</a>' +
-          '</div>' +
-        '</div>' +
-      '</div>' +
-
-      // === COLONNA 2 ===
-      '<div class="es-dossier-col">' +
-        // Card 3: Radar Prestazioni a 12 Assi
-        '<div class="es-panel-card">' +
-          '<div class="es-panel-card__head">' +
-            '<h4>Radar Prestazioni a 12 Assi (' + esc(currentSeason) + ')</h4>' +
-            '<span class="es-badge ' + (sData.hasData ? 'es-badge--active' : 'es-badge--pending') + '">' + (sData.hasData ? 'Dati gara' : 'In attesa') + '</span>' +
-          '</div>' +
-          '<p class="es-empty-note" style="margin-bottom:14px;">Clicca su un parametro per aprire clip video e contesto gara.</p>' +
-          '<div style="display:flex; gap:14px; font-size:11px; color:var(--es-text-muted); margin-bottom:16px;">' +
-            '<span><b style="color:var(--es-accent);">■</b> ' + esc(currentSeason) + '</span><span><b style="color:var(--es-text-muted);">■</b> Benchmark</span><span><b style="color:var(--es-verified);">■</b> Media Girone</span>' +
-          '</div>' +
-          (sData.hasData
-            ? radarSvg(sData)
-            : '<div style="background:var(--es-panel-2); border:1px solid var(--es-border); border-radius:10px; padding:32px; text-align:center;">' +
-                '<p style="font-size:13px; font-weight:700; margin:0 0 6px; color:var(--es-text);">Nessun dato registrato per la ' + esc(currentSeason) + '</p>' +
-                '<p class="es-empty-note">La rilevazione delle prestazioni e il tracciamento video sono attivi a partire dalle stagioni successive.</p>' +
-              '</div>'
-          ) +
-        '</div>' +
-
-        // Card 4: Il Mio Profilo & Obiettivi
+        // Card 2: Il Mio Profilo & Obiettivi
         '<div class="es-panel-card">' +
           '<div class="es-panel-card__head">' +
             '<h4>Il Mio Profilo &amp; Obiettivi</h4>' +
@@ -533,28 +495,46 @@
           '</dl>' +
           '<button type="button" class="es-btn es-btn--primary" style="width:100%; margin-top:16px;" data-pd="edit">Modifica Profilo &amp; Autovalutazione</button>' +
         '</div>' +
-      '</div>' +
 
-      // === COLONNA 3 ===
-      '<div class="es-dossier-col">' +
-        // Card 5: Certificazione & Compliance
+        // Card 3: Azioni possibili
         '<div class="es-panel-card">' +
           '<div class="es-panel-card__head">' +
-            '<h4>Certificazione &amp; Compliance</h4>' +
-            '<span class="es-badge es-badge--verified">Validato</span>' +
+            '<h4>Azioni possibili</h4>' +
+            '<span class="es-badge es-badge--tag">Strumenti operativi</span>' +
           '</div>' +
-          '<ul class="es-checklist">' +
-            '<li><span>Email</span><span class="es-badge ' + (emailOk ? 'es-badge--verified' : 'es-badge--pending') + '">' + (emailOk ? 'Verificata' : 'Da verificare') + '</span></li>' +
-            '<li><span>Documenti identità</span><span class="es-badge ' + (docsOk ? 'es-badge--active' : 'es-badge--pending') + '">' + (docsOk ? 'Allegati' : 'Mancanti') + '</span></li>' +
-            '<li><span>Consenso GDPR</span><span class="es-badge ' + (gdprOk ? 'es-badge--active' : 'es-badge--pending') + '">' + (gdprOk ? 'Presente' : 'Non registrato') + '</span></li>' +
-            '<li><span>Liberatoria immagine</span><span class="es-badge ' + (imageOk ? 'es-badge--active' : 'es-badge--pending') + '">' + (imageOk ? 'Presente' : 'Non registrata') + '</span></li>' +
-            '<li><span>Idoneità agonistica</span><span class="es-badge ' + (medOk ? 'es-badge--active' : 'es-badge--pending') + '">' + (medOk ? esc(user.visitaMedica || 'Presente') : 'Non caricata') + '</span></li>' +
-            '<li><span>Validazione club / badge</span><span class="es-badge ' + (badgeOk ? 'es-badge--verified' : (docsOk ? 'es-badge--active' : 'es-badge--pending')) + '">' + (badgeOk ? 'Approvato' : (docsOk ? 'In revisione' : 'Non richiesto')) + '</span></li>' +
-            '<li><span>Anti-fake</span><span class="es-badge ' + (docsOk ? 'es-badge--active' : 'es-badge--pending') + '">' + (docsOk ? 'Documenti ricevuti' : 'In attesa') + '</span></li>' +
-          '</ul>' +
+          '<p class="es-empty-note" style="margin-bottom:10px;">— Calciatore / Utente</p>' +
+          '<div class="es-link-list">' +
+            '<a href="#" data-pd="edit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Aggiornare anagrafica e preferenze</a>' +
+            '<a href="#" data-player-action="behavioral_consent"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Attivare consenso profilo comportamentale</a>' +
+            '<a href="#" data-player-action="human_intervention"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Richiedere intervento umano (art. 22)</a>' +
+            '<a href="#" data-player-action="export_gdpr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Esportare i propri dati (GDPR)</a>' +
+            '<a href="#" data-player-action="career_projection"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Percorso di Crescita Proiettato (IA Career Projection)</a>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      // === COLONNA 2 — Prestazioni ===
+      '<div class="es-dossier-col">' +
+        // Card 4: Radar Prestazioni a 12 Assi
+        '<div class="es-panel-card">' +
+          '<div class="es-panel-card__head">' +
+            '<h4>Radar Prestazioni a 12 Assi (' + esc(currentSeason) + ')</h4>' +
+            '<span class="es-badge ' + (sData.hasData ? 'es-badge--active' : 'es-badge--pending') + '">' + (sData.hasData ? 'Dati gara' : 'In attesa') + '</span>' +
+          '</div>' +
+          '<p class="es-empty-note" style="margin-bottom:14px;">Clicca su un parametro per aprire clip video e contesto gara.</p>' +
+          '<div style="display:flex; gap:14px; font-size:11px; color:var(--es-text-muted); margin-bottom:16px;">' +
+            '<span><b style="color:var(--es-accent);">■</b> ' + esc(currentSeason) + '</span><span><b style="color:var(--es-text-muted);">■</b> Benchmark</span><span><b style="color:var(--es-verified);">■</b> Media Girone</span>' +
+          '</div>' +
+          (sData.hasData
+            ? radarSvg(sData)
+            : '<div style="background:var(--es-panel-2); border:1px solid var(--es-border); border-radius:10px; padding:32px; text-align:center;">' +
+                '<p style="font-size:13px; font-weight:700; margin:0 0 6px; color:var(--es-text);">Nessun dato registrato per la ' + esc(currentSeason) + '</p>' +
+                '<p class="es-empty-note">La rilevazione delle prestazioni e il tracciamento video sono attivi a partire dalle stagioni successive.</p>' +
+              '</div>'
+          ) +
         '</div>' +
 
-        // Card 6: Registro Match & Voti PGB
+        // Card 5: Registro Match & Voti PGB
         '<div class="es-panel-card">' +
           '<div class="es-panel-card__head">' +
             '<h4>Registro Match &amp; Voti PGB (' + esc(currentSeason) + ')</h4>' +
@@ -570,7 +550,7 @@
           )) +
         '</div>' +
 
-        // Card 7: Crescita Storica
+        // Card 6: Crescita Storica
         '<div class="es-panel-card">' +
           '<div class="es-panel-card__head">' +
             '<h4>Crescita Storica (2023–2027)</h4>' +
@@ -580,6 +560,26 @@
             ? (trendSvg() || '')
             : '<p class="es-empty-note">Nessuna serie storica certificata. Il grafico si popola con le stagioni realmente tracciate.</p>'
           ) +
+        '</div>' +
+      '</div>' +
+
+      // === COLONNA 3 — Fiducia & Mercato ===
+      '<div class="es-dossier-col">' +
+        // Card 7: Certificazione & Compliance
+        '<div class="es-panel-card">' +
+          '<div class="es-panel-card__head">' +
+            '<h4>Certificazione &amp; Compliance</h4>' +
+            '<span class="es-badge es-badge--verified">Validato</span>' +
+          '</div>' +
+          '<ul class="es-checklist">' +
+            '<li><span>Email</span><span class="es-badge ' + (emailOk ? 'es-badge--verified' : 'es-badge--pending') + '">' + (emailOk ? 'Verificata' : 'Da verificare') + '</span></li>' +
+            '<li><span>Documenti identità</span><span class="es-badge ' + (docsOk ? 'es-badge--active' : 'es-badge--pending') + '">' + (docsOk ? 'Allegati' : 'Mancanti') + '</span></li>' +
+            '<li><span>Consenso GDPR</span><span class="es-badge ' + (gdprOk ? 'es-badge--active' : 'es-badge--pending') + '">' + (gdprOk ? 'Presente' : 'Non registrato') + '</span></li>' +
+            '<li><span>Liberatoria immagine</span><span class="es-badge ' + (imageOk ? 'es-badge--active' : 'es-badge--pending') + '">' + (imageOk ? 'Presente' : 'Non registrata') + '</span></li>' +
+            '<li><span>Idoneità agonistica</span><span class="es-badge ' + (medOk ? 'es-badge--active' : 'es-badge--pending') + '">' + (medOk ? esc(user.visitaMedica || 'Presente') : 'Non caricata') + '</span></li>' +
+            '<li><span>Validazione club / badge</span><span class="es-badge ' + (badgeOk ? 'es-badge--verified' : (docsOk ? 'es-badge--active' : 'es-badge--pending')) + '">' + (badgeOk ? 'Approvato' : (docsOk ? 'In revisione' : 'Non richiesto')) + '</span></li>' +
+            '<li><span>Anti-fake</span><span class="es-badge ' + (docsOk ? 'es-badge--active' : 'es-badge--pending') + '">' + (docsOk ? 'Documenti ricevuti' : 'In attesa') + '</span></li>' +
+          '</ul>' +
         '</div>' +
 
         // Card 8: Interesse Scouting & Percorso
