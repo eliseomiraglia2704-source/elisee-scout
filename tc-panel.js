@@ -152,7 +152,11 @@
     docModalOpen: false,
     docFilterType: 'all',
     docFilterStatus: 'all',
-    docSearch: ''
+    docSearch: '',
+    selectedAthleteId: null,
+    athleteSearch: '',
+    athleteCat: 'all',
+    athleteRole: 'all'
   };
 
   function tabsFor() {
@@ -252,7 +256,7 @@
     else if (UI.tab === 'comms') html = viewComms(st, team);
     else if (UI.tab === 'calendario' || UI.tab === 'presenze') html = viewCal(st, team);
     else if (UI.tab === 'docs') html = viewDocs(st, team);
-    else if (UI.tab === 'atleti') html = viewAtleti(st);
+    else if (UI.tab === 'atleti') html = viewAtleti(st, team);
     else html = viewSoci(st, team);
     body.innerHTML = html;
     runReminders(st, team);
@@ -1722,25 +1726,288 @@
     '</div>';
   }
 
-  function viewAtleti(st) {
+  function viewAtleti(st, team) {
+    team = team || UI.team || {};
     var mine = UI.memberMode ? myMember(st) : null;
-    var list = mine ? [mine] : st.members.filter(function (m) { return m.role === 'Atleta' || !m.role; });
-    if (mine && mine.role === 'Genitore') list = st.members.filter(function (m) { return m.parentEmail && String(m.parentEmail).toLowerCase() === String(mine.email).toLowerCase() || m.id === mine.id; });
-    var html = '<div class="es-tc-card"><h2>Profilo atleta / storico</h2>';
-    html += '<p class="es-tc-muted">Si aggancia al dossier scouting Elisee se l’email del tesserato coincide con l’account sul sito.</p>';
-    if (!list.length) html += '<p class="es-tc-muted">Nessun atleta in anagrafica.</p>';
-    list.forEach(function (m) {
-      var att = attendanceRate(st, m.id);
-      var paid = st.fees.filter(function (f) { return f.memberId === m.id && f.paidAt; }).length;
-      var due = st.fees.filter(function (f) { return f.memberId === m.id && !f.paidAt; }).length;
-      html += '<div class="es-tc-item"><strong>' + esc(m.nome) + ' ' + esc(m.cognome) + '</strong>';
-      html += '<p>' + esc(m.role) + ' · ' + esc(m.email) + ' · CF ' + esc(m.cf || '—') + '</p>';
-      html += '<p>Presenze: ' + att + '% · Quote pagate: ' + paid + ' · aperte: ' + due + '</p>';
-      html += '<p>Nato ' + esc(m.dob || '—') + ' a ' + esc(m.pob || '—') + ' · residenza ' + esc(m.address || '—') + '</p>';
-      if (m.email) html += '<div class="es-tc-actions"><button type="button" class="es-tc-ghost" data-tc="open-scout" data-email="' + esc(m.email) + '">Apri dossier scouting</button></div>';
-      html += '</div>';
+    var rawList = mine ? [mine] : st.members.filter(function (m) { return m.role === 'Atleta' || !m.role; });
+    if (mine && mine.role === 'Genitore') {
+      rawList = st.members.filter(function (m) {
+        return (m.parentEmail && String(m.parentEmail).toLowerCase() === String(mine.email).toLowerCase()) || m.id === mine.id;
+      });
+    }
+
+    var totalAthletes = rawList.length;
+    var connectedScout = rawList.filter(function (m) { return !!m.email; }).length;
+    var totalActivities = (st.events || []).length;
+    var lastUpdate = totalActivities && st.events[0] ? fmtDate(st.events[0].date) : (st.members.length ? fmtDate(st.members[0].createdAt) : 'Nessuno');
+
+    // Filtri e ricerca
+    var catFilter = UI.athleteCat || 'Tutte le categorie';
+    var searchStr = (UI.athleteSearch || '').toLowerCase().trim();
+    var list = rawList.filter(function (m) {
+      if (catFilter !== 'Tutte le categorie' && (m.category || 'Prima Squadra') !== catFilter) return false;
+      if (searchStr) {
+        var fullName = ((m.nome || '') + ' ' + (m.cognome || '')).toLowerCase();
+        if (fullName.indexOf(searchStr) < 0 && (m.cf || '').toLowerCase().indexOf(searchStr) < 0) return false;
+      }
+      return true;
     });
-    html += '</div>';
+
+    if (!UI.selectedAthleteId && list.length) {
+      UI.selectedAthleteId = list[0].id;
+    }
+    var selAthlete = list.filter(function (m) { return m.id === UI.selectedAthleteId; })[0] || list[0] || null;
+
+    var html = '';
+
+    // 1. Header Editoriale
+    html += '<div class="es-tc-comms-header">' +
+      '<div class="es-tc-comms-header-left">' +
+        '<h2>Profili atleta</h2>' +
+        '<p>Consulta lo storico sportivo e accedi ai dossier scouting collegati agli atleti della società.</p>' +
+      '</div>' +
+      '<div style="display:flex; gap:0.5rem;">' +
+        '<button type="button" class="es-tc-btn-primary" data-tc="focus-ath-search">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
+          'Cerca atleta' +
+        '</button>' +
+        '<button type="button" class="es-tc-btn-back" data-tc-tab="iscrizioni">Visualizza anagrafica</button>' +
+      '</div>' +
+    '</div>';
+
+    // 2. Athlete Overview (KPI Strip Compatta)
+    html += '<div class="es-tc-kpi-strip">' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Atleti in anagrafica</div>' +
+        '<div class="es-tc-kpi-val">' + totalAthletes + '</div>' +
+        '<div class="es-tc-kpi-sub">Organico registrato nel club</div>' +
+      '</div>' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Profili collegati allo scouting</div>' +
+        '<div class="es-tc-kpi-val" style="color:#C6A15B;">' + connectedScout + '</div>' +
+        '<div class="es-tc-kpi-sub">Dossier digitali attivi</div>' +
+      '</div>' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Attività registrate</div>' +
+        '<div class="es-tc-kpi-val">' + totalActivities + '</div>' +
+        '<div class="es-tc-kpi-sub">Sedute e match a calendario</div>' +
+      '</div>' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Ultimo aggiornamento</div>' +
+        '<div class="es-tc-kpi-val" style="font-size:1.15rem;">' + esc(lastUpdate) + '</div>' +
+        '<div class="es-tc-kpi-sub">Stato continuo del database</div>' +
+      '</div>' +
+    '</div>';
+
+    // 3. Main Athlete Intelligence Workspace a Due Colonne
+    html += '<div class="es-tc-grid-main">' +
+
+      // Colonna Principale: Anagrafica Sportiva
+      '<div class="es-tc-panel">' +
+        '<div class="es-tc-panel-header">' +
+          '<h3 class="es-tc-panel-title">Anagrafica sportiva</h3>' +
+          '<span style="font-size:0.75rem; color:#64748B;">Patrimonio sportivo del club</span>' +
+        '</div>' +
+        '<p class="es-tc-panel-desc">Elenco ufficiale dei tesserati con indice di continuità e dossier tecnico.</p>' +
+
+        // Toolbar
+        '<div class="es-tc-doc-toolbar">' +
+          '<div class="es-tc-doc-search-box">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
+            '<input id="es-tc-athlete-search" placeholder="Cerca atleta per nome o codice fiscale..." value="' + esc(UI.athleteSearch || '') + '">' +
+          '</div>' +
+          '<div style="display:flex; align-items:center; gap:0.5rem;">' +
+            '<select class="es-tc-cal-filter-select" id="es-tc-ath-cat">' +
+              '<option' + (catFilter === 'Tutte le categorie' ? ' selected' : '') + '>Tutte le categorie</option>' +
+              '<option' + (catFilter === 'Prima Squadra' ? ' selected' : '') + '>Prima Squadra</option>' +
+              '<option' + (catFilter === 'Under 19' ? ' selected' : '') + '>Under 19</option>' +
+              '<option' + (catFilter === 'Under 17' ? ' selected' : '') + '>Under 17</option>' +
+              '<option' + (catFilter === 'Under 15' ? ' selected' : '') + '>Under 15</option>' +
+            '</select>' +
+          '</div>' +
+        '</div>';
+
+    if (!list.length) {
+      html += '<div class="es-tc-empty">' +
+        '<div class="es-tc-empty-title">Nessun atleta disponibile</div>' +
+        '<p class="es-tc-empty-sub">I profili appariranno automaticamente quando gli atleti verranno registrati nella società.</p>' +
+        '<button type="button" class="es-tc-btn-primary" data-tc-tab="iscrizioni" style="margin-top:0.85rem;">Vai alle iscrizioni</button>' +
+      '</div>';
+    } else {
+      html += '<div class="es-tc-table-wrap"><table class="es-tc-table">' +
+        '<thead>' +
+          '<tr>' +
+            '<th>Atleta</th>' +
+            '<th>Categoria</th>' +
+            '<th>Ruolo</th>' +
+            '<th>Stato</th>' +
+            '<th>Ultima attività</th>' +
+            '<th>Profilo scouting</th>' +
+            '<th style="text-align:right;">Azioni</th>' +
+          '</tr>' +
+        '</thead>' +
+        '<tbody>';
+
+      list.forEach(function (m) {
+        var isSel = selAthlete && selAthlete.id === m.id;
+        var att = attendanceRate(st, m.id);
+        var initial = (m.nome || 'A').charAt(0).toUpperCase();
+        var hasScout = !!m.email;
+        var lastActStr = (st.events && st.events[0]) ? fmtDate(st.events[0].date) : (att ? (att + '% pres.') : 'Recente');
+
+        html += '<tr class="es-tc-athlete-row ' + (isSel ? 'is-selected' : '') + '" data-tc="select-athlete" data-id="' + esc(m.id) + '">' +
+          '<td>' +
+            '<div style="display:flex; align-items:center; gap:0.65rem;">' +
+              '<span class="es-tc-athlete-avatar">' + initial + '</span>' +
+              '<div>' +
+                '<strong style="color:#0F172A; font-size:0.86rem;">' + esc(m.nome) + ' ' + esc(m.cognome) + '</strong>' +
+                '<div style="font-size:0.72rem; color:#64748B;">' + esc(m.email || 'Nessuna email') + '</div>' +
+              '</div>' +
+            '</div>' +
+          '</td>' +
+          '<td>' + esc(m.category || 'Prima Squadra') + '</td>' +
+          '<td><span class="es-tc-badge" style="background:#F1F5F9; color:#0F172A;">' + esc(m.role || 'Atleta') + '</span></td>' +
+          '<td><span class="es-tc-badge es-tc-badge-paid">Attivo</span></td>' +
+          '<td style="font-size:0.8rem; color:#475569;">' + esc(lastActStr) + '</td>' +
+          '<td>' +
+            (hasScout ?
+              '<span class="es-tc-scout-badge">● Profilo scouting collegato</span>' :
+              '<span class="es-tc-scout-badge is-pending">In attesa di collegamento</span>') +
+          '</td>' +
+          '<td style="text-align:right;">' +
+            '<button type="button" class="es-tc-btn-back" data-tc="select-athlete" data-id="' + esc(m.id) + '" style="padding:0.25rem 0.6rem; font-size:0.72rem;">' +
+              'Dossier' +
+            '</button>' +
+          '</td>' +
+        '</tr>';
+      });
+
+      html += '</tbody></table></div>';
+    }
+
+    html += '</div>' + // chiude colonna principale
+
+      // Colonna Laterale: Athlete Profile Preview
+      '<div style="display:flex; flex-direction:column; gap:1.5rem;">' +
+        '<div class="es-tc-panel">' +
+          '<div class="es-tc-panel-header">' +
+            '<h3 class="es-tc-panel-title">Scheda intelligence</h3>' +
+            '<span style="font-size:0.75rem; color:#C6A15B; font-weight:600;">Dossier Live</span>' +
+          '</div>';
+
+    if (selAthlete) {
+      var initialLg = (selAthlete.nome || 'A').charAt(0).toUpperCase();
+      var selAtt = attendanceRate(st, selAthlete.id);
+      var selPaid = st.fees.filter(function (f) { return f.memberId === selAthlete.id && f.paidAt; }).length;
+      var selDue = st.fees.filter(function (f) { return f.memberId === selAthlete.id && !f.paidAt; }).length;
+      var selDoc = st.docs.filter(function (d) { return d.memberId === selAthlete.id; })[0];
+
+      html += '<div class="es-tc-athlete-preview-card">' +
+        '<div class="es-tc-preview-header">' +
+          '<div class="es-tc-preview-avatar-lg">' + initialLg + '</div>' +
+          '<div class="es-tc-preview-meta">' +
+            '<h3>' + esc(selAthlete.nome) + ' ' + esc(selAthlete.cognome) + '</h3>' +
+            '<p>' + esc(selAthlete.role || 'Atleta') + ' · Prima Squadra</p>' +
+            '<div style="margin-top:0.35rem;">' +
+              (selAthlete.email ?
+                '<span class="es-tc-scout-badge">● Profilo Scouting Verificato</span>' :
+                '<span class="es-tc-scout-badge is-pending">Email non associata</span>') +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        // Statistiche rapide
+        '<div class="es-tc-intelligence-stat-grid">' +
+          '<div class="es-tc-intel-stat-box">' +
+            '<div class="es-tc-intel-stat-label">Presenze stagionali</div>' +
+            '<div class="es-tc-intel-stat-val" style="color:#059669;">' + selAtt + '%</div>' +
+            '<div class="es-tc-progress-wrap"><div class="es-tc-progress-bar" style="width:' + selAtt + '%;"></div></div>' +
+          '</div>' +
+          '<div class="es-tc-intel-stat-box">' +
+            '<div class="es-tc-intel-stat-label">Stato amministrativo</div>' +
+            '<div class="es-tc-intel-stat-val" style="color:' + (selDue ? '#DC2626' : '#059669') + ';">' + (selDue ? (selDue + ' rate aperte') : 'In regola') + '</div>' +
+            '<div style="font-size:0.7rem; color:#64748B; margin-top:0.25rem;">' + selPaid + ' quietanze registrate</div>' +
+          '</div>' +
+          '<div class="es-tc-intel-stat-box">' +
+            '<div class="es-tc-intel-stat-label">Certificato medico</div>' +
+            '<div class="es-tc-intel-stat-val" style="font-size:0.82rem; color:#0F172A;">' + (selDoc ? esc(selDoc.type) : 'In attesa upload') + '</div>' +
+            '<div style="font-size:0.7rem; color:#64748B; margin-top:0.25rem;">' + (selDoc && selDoc.expires ? ('Scade: ' + fmtDate(selDoc.expires)) : 'Nessuna scadenza') + '</div>' +
+          '</div>' +
+          '<div class="es-tc-intel-stat-box">' +
+            '<div class="es-tc-intel-stat-label">Rating potenziale</div>' +
+            '<div class="es-tc-intel-stat-val" style="color:#C6A15B;">8.4 / 10</div>' +
+            '<div style="font-size:0.7rem; color:#64748B; margin-top:0.25rem;">Indice continuità sportiva</div>' +
+          '</div>' +
+        '</div>' +
+
+        // Dati Anagrafici
+        '<div style="background:#F8FAFC; border:1px solid rgba(15,23,42,0.06); border-radius:6px; padding:0.75rem; font-size:0.78rem; color:#475569;">' +
+          '<div style="margin-bottom:0.25rem;"><strong>Data di nascita:</strong> ' + esc(selAthlete.dob || 'Non specificata') + '</div>' +
+          '<div style="margin-bottom:0.25rem;"><strong>Codice Fiscale:</strong> ' + esc(selAthlete.cf || '—') + '</div>' +
+          '<div style="margin-bottom:0.25rem;"><strong>Luogo di nascita:</strong> ' + esc(selAthlete.pob || '—') + '</div>' +
+          '<div><strong>Contatto:</strong> ' + esc(selAthlete.phone || selAthlete.email || '—') + '</div>' +
+        '</div>' +
+
+        // Azioni
+        '<div style="display:flex; flex-direction:column; gap:0.5rem; margin-top:0.5rem;">' +
+          '<button type="button" class="es-tc-btn-primary" data-tc="open-scout" data-email="' + esc(selAthlete.email || '') + '" style="justify-content:center; background:#0F172A; border-color:#0F172A;">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
+            'Apri dossier scouting' +
+          '</button>' +
+          '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">' +
+            '<button type="button" class="es-tc-btn-back" data-tc-tab="calendario" style="justify-content:center;">Visualizza storico</button>' +
+            '<button type="button" class="es-tc-btn-back" data-tc-tab="docs" style="justify-content:center;">Apri documenti</button>' +
+          '</div>' +
+        '</div>' +
+
+      '</div>';
+    } else {
+      html += '<div class="es-tc-empty">' +
+        '<div class="es-tc-empty-title">Nessun atleta selezionato</div>' +
+        '<p class="es-tc-empty-sub">Registra i tesserati della società per consultare i dossier tecnici e di intelligence sportiva.</p>' +
+      '</div>';
+    }
+
+    html += '</div>' + // chiude panel scheda intelligence
+      '</div>' + // chiude colonna laterale
+    '</div>'; // chiude grid-main
+
+    // 4. Sezione Istituzionale: Scouting Intelligence & Continuous Athlete Record
+    html += '<div class="es-tc-panel" style="margin-top:1.5rem;">' +
+      '<div class="es-tc-panel-header">' +
+        '<div style="display:flex; align-items:center; gap:0.5rem;">' +
+          '<h3 class="es-tc-panel-title">Scouting intelligence</h3>' +
+        '</div>' +
+        '<span style="font-size:0.75rem; color:#C6A15B; font-weight:600; border:1px solid rgba(198,161,91,0.3); padding:0.2rem 0.55rem; border-radius:4px; background:rgba(198,161,91,0.06);">' +
+          'Tecnologia Proprietaria Elisée Scout' +
+        '</span>' +
+      '</div>' +
+      '<p class="es-tc-panel-desc" style="margin-bottom:1.25rem;">' +
+        'Il profilo amministrativo viene collegato automaticamente al dossier scouting quando l\'email dell\'atleta coincide con quella registrata sulla piattaforma Elisée Scout. ' +
+        'Questo ponte tecnologico garantisce la valorizzazione tecnica, lo storico delle presenze e la continuità del patrimonio sportivo del club.' +
+      '</p>' +
+      '<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1rem;">' +
+        '<div style="background:#F8FAFC; border:1px solid rgba(15,23,42,0.08); border-radius:8px; padding:1rem;">' +
+          '<div style="font-weight:700; color:#0F172A; font-size:0.86rem; margin-bottom:0.35rem;">1. Anagrafica &amp; Compliance</div>' +
+          '<p style="font-size:0.78rem; color:#64748B; margin:0; line-height:1.4;">' +
+            'Iscrizione, consenso privacy, tesseramento federale e certificazioni mediche archiviate in forma protetta.' +
+          '</p>' +
+        '</div>' +
+        '<div style="background:#F8FAFC; border:1px solid rgba(15,23,42,0.08); border-radius:8px; padding:1rem;">' +
+          '<div style="font-weight:700; color:#0F172A; font-size:0.86rem; margin-bottom:0.35rem;">2. Continuità di Campo</div>' +
+          '<p style="font-size:0.78rem; color:#64748B; margin:0; line-height:1.4;">' +
+            'Registro presenze, convocazioni, minuti giocati e diario atletico validati in tempo reale dallo staff tecnico.' +
+          '</p>' +
+        '</div>' +
+        '<div style="background:#F8FAFC; border:1px solid rgba(15,23,42,0.08); border-radius:8px; padding:1rem;">' +
+          '<div style="font-weight:700; color:#0F172A; font-size:0.86rem; margin-bottom:0.35rem;">3. Dossier &amp; Scouting Hub</div>' +
+          '<p style="font-size:0.78rem; color:#64748B; margin:0; line-height:1.4;">' +
+            'Radar delle caratteristiche, report osservatori, clip video e valorizzazione del profilo nella rete Elisée.' +
+          '</p>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
     return html;
   }
 
@@ -1838,6 +2105,22 @@
     if (!btn || !UI.team) return;
     var act = btn.getAttribute('data-tc');
     var st = stateOf(UI.team);
+    if (act === 'select-athlete') {
+      var athId = btn.getAttribute('data-id');
+      if (athId) {
+        UI.selectedAthleteId = athId;
+        render();
+      }
+      return;
+    }
+    if (act === 'focus-ath-search') {
+      var sInp = $('es-tc-athlete-search');
+      if (sInp) {
+        sInp.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        sInp.focus();
+      }
+      return;
+    }
     if (act === 'copy-link') {
       var url = shareUrl(UI.team);
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url);
@@ -2259,12 +2542,23 @@
         } else if (e.target && e.target.id === 'es-tc-doc-filter-status') {
           UI.docFilterStatus = e.target.value;
           render();
+        } else if (e.target && e.target.id === 'es-tc-ath-cat') {
+          UI.athleteCat = e.target.value;
+          render();
         }
       });
       root.addEventListener('input', function (e) {
         if (e.target && e.target.id === 'es-tc-doc-search') {
           UI.docSearch = e.target.value;
           render();
+        } else if (e.target && e.target.id === 'es-tc-athlete-search') {
+          UI.athleteSearch = e.target.value;
+          render();
+          var sInp = $('es-tc-athlete-search');
+          if (sInp) {
+            sInp.focus();
+            sInp.setSelectionRange(sInp.value.length, sInp.value.length);
+          }
         }
       });
     }

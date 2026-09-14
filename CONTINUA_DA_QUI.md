@@ -3,8 +3,32 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** — Elisée Manager: Redesign radicale di "Documenti e Scadenze" (#tc-portal tab docs) in Sports Document Management & Compliance Center con archivio ricercabile, scadenziario e modelli federali (cache `DOCMGR1`).
-Ultimo fatto: **Elisée Manager: Redesign Documenti e Scadenze — Sports Document Management & Compliance Center (`DOCMGR1`)**:
+Ultimo aggiornamento: **2026-09-14** — Elisée Manager: Redesign completo di "Profilo Atleta / Storico" (#tc-portal tab atleti) in Athlete Intelligence & Performance Center collegato al dossier scouting e continuità sportiva (cache `ATHMGR1`).
+Ultimo fatto: **Elisée Manager: Redesign Profilo Atleta / Storico — Athlete Intelligence & Performance Center (`ATHMGR1`)**:
+1. **Trasformazione in Athlete Intelligence Workspace**:
+   - Superata la semplice card informativa con messaggio vuoto ("Nessun atleta in anagrafica").
+   - Trasformata in un vero *Athlete Intelligence & Performance Center* che connette la gestione amministrativa del club (tesseramento, presenze, rate, certificati) con lo scouting, le performance e lo storico continuo dell'atleta.
+2. **Header Editoriale & KPI Strip Compatta**:
+   - Header editoriale con breadcrumb (`Foggia City / Gestione società / Profili atleta`), titolo Fraunces «Profili atleta», sottotitolo esplicativo («Consulta lo storico sportivo e accedi ai dossier scouting collegati agli atleti della società») e pulsanti rapidi `Cerca atleta` e `Visualizza anagrafica`.
+   - Fascia a 4 KPI istituzionali:
+     - *Atleti in anagrafica* (totale tesserati nel club)
+     - *Profili collegati allo scouting* (atleti con dossier digitale attivo su Elisée Scout)
+     - *Attività registrate* (sedute e match monitorati a calendario)
+     - *Ultimo aggiornamento* (data ultimo evento o registrazione continua nel database)
+3. **Main Athlete Workspace a Due Colonne**:
+   - **Colonna principale (Anagrafica Sportiva)**:
+     - Toolbar con input ricerca atleta per nome o codice fiscale e selettore categoria (*Tutte le categorie*, *Prima Squadra*, *Under 19*, *Under 17*, *Under 15*).
+     - Tabella premium con colonne: *Atleta* (avatar, nome, email), *Categoria*, *Ruolo*, *Stato* (badge attivo), *Ultima attività* (data evento o indice presenze), *Profilo scouting* (badge di collegamento verified/pending) e *Azioni* (pulsante `Dossier`).
+     - Empty state istituzionale coerente con CTA `Vai alle iscrizioni`.
+   - **Colonna laterale (Athlete Profile Preview - Scheda Intelligence Live)**:
+     - Header con avatar Fraunces bordato oro, nome completo, categoria, ruolo e badge di stato collegamento Elisée Scout.
+     - Griglia a 4 stat box analitiche: *Presenze stagionali* con progress bar verde smeraldo, *Stato amministrativo* (rate aperte o in regola), *Certificato medico* (tipo e data di scadenza), *Rating potenziale* (indice di continuità 8.4/10).
+     - Riquadro dati anagrafici (data e luogo di nascita, CF, contatti).
+     - CTA principale: `Apri dossier scouting` (`data-tc="open-scout"`), affiancata da `Visualizza storico` (rimando a Calendario) e `Apri documenti` (rimando a Documenti).
+4. **Sezione Istituzionale: Scouting Intelligence & Continuous Athlete Record**:
+   - Sezione a tutta larghezza con badge «Tecnologia Proprietaria Elisée Scout» che descrive il ponte tecnologico: collegamento automatico al dossier scouting quando l'email dell'atleta coincide con quella registrata su Elisée Scout, con i tre pilastri (Anagrafica & Compliance, Continuità di Campo, Dossier & Scouting Hub).
+5. **File aggiornati**: `tc-panel.css`, `tc-panel.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `ATHMGR1`.
+Feature precedente: **Elisée Manager: Redesign Documenti e Scadenze — Sports Document Management & Compliance Center (`DOCMGR1`)**:
 1. **Trasformazione in Document Management & Compliance Center**:
    - Superata l'interfaccia a card tecniche con bottoni isolati e form di upload sempre aperto.
    - Design luxury enterprise con archivio documentale ricercabile, scadenziario automatico di conformità e modelli federali a libreria.

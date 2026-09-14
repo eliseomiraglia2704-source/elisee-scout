@@ -1227,3 +1227,141 @@ body:has(#view-tc-panel:not([style*="display: none"])) .es-pd-rail {
   background: #F1F5F9;
 }
 
+/* ATHLETE INTELLIGENCE & PERFORMANCE CENTER (LUXURY ENTERPRISE) */
+.es-tc-athlete-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #0F172A;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.es-tc-athlete-row {
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.es-tc-athlete-row:hover {
+  background: #F8FAFC !important;
+}
+
+.es-tc-athlete-row.is-selected {
+  background: rgba(198, 161, 91, 0.08) !important;
+  border-left: 3px solid #C6A15B;
+}
+
+.es-tc-scout-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.55rem;
+  background: rgba(198, 161, 91, 0.1);
+  color: #8A6D3B;
+  border: 1px solid rgba(198, 161, 91, 0.25);
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.es-tc-scout-badge.is-pending {
+  background: #F1F5F9;
+  color: #64748B;
+  border-color: rgba(15, 23, 42, 0.1);
+}
+
+.es-tc-athlete-preview-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.es-tc-preview-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.es-tc-preview-avatar-lg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #0F172A;
+  color: #FFFFFF;
+  font-family: 'Fraunces', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  border: 2px solid #C6A15B;
+  flex-shrink: 0;
+}
+
+.es-tc-preview-meta h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #0F172A;
+  margin: 0 0 0.25rem 0;
+}
+
+.es-tc-preview-meta p {
+  font-size: 0.78rem;
+  color: #64748B;
+  margin: 0;
+}
+
+.es-tc-intelligence-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.es-tc-intel-stat-box {
+  background: #F8FAFC;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 6px;
+  padding: 0.65rem 0.8rem;
+}
+
+.es-tc-intel-stat-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748B;
+  margin-bottom: 0.2rem;
+}
+
+.es-tc-intel-stat-val {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0F172A;
+}
+
+.es-tc-progress-wrap {
+  height: 6px;
+  background: #E2E8F0;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 0.4rem;
+}
+
+.es-tc-progress-bar {
+  height: 100%;
+  background: #059669;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+
