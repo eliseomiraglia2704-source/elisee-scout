@@ -3,7 +3,7 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** — Logo ufficiale Foggia City integrato nel selettore squadre `#squadre-portal`: scudo circolare nerazzurro visibile direttamente al posto del fallback generico FGC, rimozione `USE_NEUTRAL_BADGES`, cache-bust `FOGGIACITY2`.
+Ultimo aggiornamento: **2026-09-14** (Commit `8db0b8d`) — Logo ufficiale Foggia City integrato nel selettore squadre `#squadre-portal`: scudo circolare nerazzurro visibile direttamente al posto del fallback generico FGC, rimozione `USE_NEUTRAL_BADGES`, cache-bust `FOGGIACITY2`.
 Ultimo fatto: **Fix Stemma Ufficiale Foggia City in Seleziona Squadre (`FOGGIACITY2`)**:
 1. **Risoluzione visualizzazione stemma circolare in `#squadre-portal`**:
    - Disattivato il flag `USE_NEUTRAL_BADGES = false;` in `squadre-select.js` che forzava l'uso dello scudo geometrico neutro ("FGC" con stella) coprendo l'immagine originale.
