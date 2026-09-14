@@ -3,8 +3,21 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** (Commit `9a13782`) — Redesign Ultra-Professionale Candidatura Elisee Manager: 4 sezioni numerate con divisori, breadcrumb gerarchico di navigazione, timeline verticale in 3 fasi con linea continua, callout motivazionale con accento laterale, sidebar a 3 blocchi separati con crest ufficiale club (cache `CANDMGR1`).
-Ultimo fatto: **Redesign Ultra-Professionale Candidatura Elisee Manager (`CANDMGR1`)**:
+Ultimo aggiornamento: **2026-09-14** — Conversione Pannello Elisee Manager al tema Dark Standard del sito: fondo `--es-bg`, card `--es-panel`, badge "Società Verificata" con token `--es-verified` smeraldo, tab con bordo accento `--es-accent`, stat card coerenti con Bacheca/Player dossier (cache `TCDARK1`).
+Ultimo fatto: **Conversione Dark Theme Completa Pannello Elisee Manager (`TCDARK1`)**:
+1. **Conversione Globale al Dark Theme Coerente**:
+   - Superato l'intero schema chiaro isolato (sfondo bianco `#F8F9FA`, card chiare `#FFFFFF`, testo scuro `#0F172A`).
+   - Applicati sistematicamente i token del design system standard del sito: `--es-bg: #0b0e14`, `--es-panel: #10141d`, `--es-panel-2: #141925`, `--es-border: #1e2430`, `--es-text: #eef1f6`, `--es-text-muted: #8a93a3`, `--es-text-faint: #5c6472`.
+2. **Badge "Società Verificata" Istituzionale**:
+   - Utilizza ora il verde riservato agli stati di verifica ufficiale (`--es-verified: #34c77b`, `--es-verified-soft: rgba(52, 199, 123, 0.12)`), identico al dossier Player, con micro-indicatore verde e bordo satinato.
+3. **Header, Breadcrumb & Backlink**:
+   - Header club con stemma rotondo del club (con fallback sigla), nome squadra in bianco brillante, breadcrumb grigio faint e meta-row con badge e link «← Torna alle Squadre».
+4. **Tab, Stat Card, Tabelle & Modali Dark**:
+   - Tab di navigazione orizzontali (`Panoramica`, `Iscrizioni`, `Quote e pagamenti`, `Comunicazioni`, `Calendario`, `Documenti`, `Profilo atleta`, `Soci e verbali`) con linea d'accento blu (`#3b7dff`).
+   - Stat card a 5 colonne con etichetta superiore maiuscola tracciata e numero bianco grande.
+   - Pannelli inferiori, tabelle, box link pubblico condiviso (`.es-link-box`), sezioni comunicazioni, calendario mensile e modali completamente convertiti al tema scuro.
+5. **File aggiornati**: `tc-panel.css`, `tc-panel.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `TCDARK1`.
+Feature precedente: **Redesign Ultra-Professionale Candidatura Elisee Manager (`CANDMGR1`)**:
 1. **Struttura Enterprise & Form Diviso in 4 Sezioni**:
    - Superata la griglia piatta generica: form riorganizzato in 4 sezioni numerate con intestazione, progressivo `01-04` e linea divisoria:
      - `01 Dati di contatto`: Nome e cognome, Email account, Telefono con hint per Circolo Manager/WhatsApp VIP, Ruolo nel club.

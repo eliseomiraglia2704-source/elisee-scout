@@ -229,33 +229,32 @@
     var nameEl = $('es-tc-team');
     var leagueEl = $('es-tc-league');
     var logoUrl = team.logo || (team.id === 'foggia-city' ? 'immagini/squadre-loghi/foggia-city.png' : '');
+    var abbr = (team.abbr || (team.name || 'FGC').slice(0, 3)).toUpperCase();
     if (nameEl) {
-      if (logoUrl) {
-        nameEl.innerHTML = 
-          '<div style="display:flex; align-items:center; gap:0.85rem;">' +
-            '<img src="' + esc(logoUrl) + '" alt="' + esc(team.name || 'Foggia City') + '" style="width:52px; height:52px; object-fit:contain; border-radius:50%; background:#0B0F19; border:2px solid rgba(0,85,212,0.4); box-shadow:0 4px 14px rgba(0,0,0,0.35); flex-shrink:0;">' +
-            '<span>' + esc(team.name || 'Foggia City') + '</span>' +
-          '</div>';
-      } else {
-        nameEl.innerHTML = esc(team.name || 'Foggia City');
-      }
+      nameEl.innerHTML = 
+        '<div class="es-club__head">' +
+          '<div class="es-club__crest">' +
+            (logoUrl
+              ? '<img src="' + esc(logoUrl) + '" alt="' + esc(team.name || 'Foggia City') + '" onerror="this.parentElement.textContent=\'' + esc(abbr) + '\';">'
+              : esc(abbr)) +
+          '</div>' +
+          '<h1>' + esc(team.name || 'Foggia City') + '</h1>' +
+        '</div>';
     }
     if (leagueEl) {
       leagueEl.innerHTML = 
-        '<div class="es-tc-top-nav">' +
-          '<div class="es-tc-breadcrumb">' +
-            '<a href="#squadre-portal" onclick="if(window.switchView) window.switchView(\'squadre\',\'#squadre-portal\');">' + esc(team.name || 'Foggia City') + '</a>' +
-            '<span class="es-tc-breadcrumb-sep">/</span>' +
-            '<span>Gestione società</span>' +
-            '<span class="es-tc-breadcrumb-sep">/</span>' +
-            '<span class="es-tc-breadcrumb-current">' + esc(sectionTitle) + '</span>' +
+        '<p class="es-breadcrumb">' +
+          '<a href="#squadre-portal" onclick="if(window.switchView) window.switchView(\'squadre\',\'#squadre-portal\');">' + esc(team.name || 'Foggia City') + '</a>' +
+          ' / Gestione società / <strong>' + esc(sectionTitle) + '</strong>' +
+        '</p>' +
+        '<div class="es-club__meta-row">' +
+          '<div class="es-club__meta-left">' +
+            '<span class="es-badge-verified">Società Verificata</span>' +
+            '<span>Stagione 2025/2026</span>' +
+            '<span>·</span>' +
+            '<span>' + esc(team.league || 'Amatoriale') + (team.city ? ' · ' + esc(team.city) : '') + '</span>' +
           '</div>' +
-        '</div>' +
-        '<div class="es-tc-meta-row">' +
-          '<span class="es-tc-badge-status">● Società Verificata</span>' +
-          '<span>Stagione 2025/2026</span>' +
-          '<span>·</span>' +
-          '<span>' + esc(team.league || 'Amatoriale') + (team.city ? ' · ' + esc(team.city) : '') + '</span>' +
+          '<a class="es-btn-back" href="#squadre-portal" onclick="if(window.switchView) window.switchView(\'squadre\',\'#squadre-portal\');">← Torna alle Squadre</a>' +
         '</div>';
     }
 
