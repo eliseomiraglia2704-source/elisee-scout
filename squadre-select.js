@@ -12,9 +12,9 @@
   var LEAGUE_TEAMS_COUNT = { 'm': {}, 'f': {} };
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260914_BARLETTA1';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260914_BARLETTA2';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260914_BARLETTA1';
+  var LOGO_V = '20260914_BARLETTA2';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -888,50 +888,53 @@
     if (!url) {
       img.style.display = 'none';
       img.dataset.currentSrc = '';
+      try { img.removeAttribute('src'); } catch (e) {}
       showFallback(team && team.abbr, team);
       return;
     }
     var fullSrc = logoUrl(url);
+
+    // Se l'immagine mostrata è già esattamente questa ed è pronta, mantienila
     if (img.dataset.currentSrc === fullSrc && img.style.display === 'block' && img.complete && img.naturalWidth > 0) {
       if (fb) fb.hidden = true;
       return;
     }
+
     img.dataset.currentSrc = fullSrc;
     img.alt = (team && team.name ? team.name : '') + ' logo';
+    img.decoding = 'async';
+    try {
+      img.removeAttribute('crossorigin');
+      img.crossOrigin = null;
+    } catch (e) {}
+    img.referrerPolicy = 'no-referrer';
 
-    // Se l'immagine è già caricata in memoria cache, mostrala istantaneamente
-    var cached = PRELOAD_CACHE[fullSrc];
-    if (cached && cached.complete && cached.naturalWidth > 0) {
-      img.src = fullSrc;
-      img.style.display = 'block';
-      img.style.opacity = '1';
-      if (fb) fb.hidden = true;
-      return;
-    }
-
-    // Se non è ancora in memoria, NON mostrare il logo della squadra precedente:
-    // mostra subito il badge iniziale fallback della squadra attuale con i suoi colori
-    img.style.display = 'none';
-    showFallback(team && team.abbr, team);
-
-    var probe = cached || new Image();
-    probe.decoding = 'async';
-    probe.onload = function () {
-      PRELOAD_CACHE[fullSrc] = probe;
+    img.onload = function () {
       if (img.dataset.currentSrc === fullSrc) {
-        img.src = fullSrc;
         img.style.display = 'block';
         img.style.opacity = '1';
         if (fb) fb.hidden = true;
       }
     };
-    probe.onerror = function () {
+    img.onerror = function () {
       if (img.dataset.currentSrc === fullSrc) {
         img.style.display = 'none';
         showFallback(team && team.abbr, team);
       }
     };
-    if (!probe.src) probe.src = fullSrc;
+
+    img.src = fullSrc;
+
+    // Se l'immagine è già in cache del browser e pronta
+    if (img.complete && img.naturalWidth > 0) {
+      img.style.display = 'block';
+      img.style.opacity = '1';
+      if (fb) fb.hidden = true;
+    } else {
+      // Se non è ancora pronta, non mostrare il logo della squadra precedente
+      img.style.display = 'none';
+      showFallback(team && team.abbr, team);
+    }
   }
 
   function render() {
@@ -1021,10 +1024,10 @@
         if (t && t.logo) {
           var u = logoUrl(t.logo);
           if (!PRELOAD_CACHE[u]) {
+            PRELOAD_CACHE[u] = true;
             var im = new Image();
             im.decoding = 'async';
             im.src = u;
-            PRELOAD_CACHE[u] = im;
           }
         }
       }
@@ -1040,16 +1043,14 @@
         if (logo) {
           var fullLogo = logoUrl(logo);
           if (!PRELOAD_CACHE[fullLogo]) {
+            PRELOAD_CACHE[fullLogo] = true;
             (function (u, delay) {
               setTimeout(function () {
-                if (!PRELOAD_CACHE[u]) {
-                  var img = new Image();
-                  img.decoding = 'async';
-                  img.src = u;
-                  PRELOAD_CACHE[u] = img;
-                }
+                var img = new Image();
+                img.decoding = 'async';
+                img.src = u;
               }, delay);
-            })(fullLogo, i * 15);
+            })(fullLogo, i * 20);
           }
         }
       }
