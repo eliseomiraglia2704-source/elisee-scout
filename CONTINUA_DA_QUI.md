@@ -3,8 +3,17 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** — Rimozione categoria Eccellenza e Barletta da Seleziona Squadra: resta solo Foggia City (AMATORIALE) e le squadre registrate (cache `ONLYAMAT1`).
-Ultimo fatto: **Rimozione Categoria "ECCELLENZA" da Seleziona Squadra (`ONLYAMAT1`)**:
+Ultimo aggiornamento: **2026-09-14** — Candidatura Elisee Manager: layout editoriale da club esclusivo (Fraunces + Inter, palette nero-inchiostro/verde #0B0F0D, oro tenue #C6A15B, avorio #EDE8DA, campi a sottolineatura) (cache `LUXMGR1`).
+Ultimo fatto: **Candidatura Elisee Manager — Restyling Luxury Editoriale Club Esclusivo (`LUXMGR1`)**:
+1. **Addio taglio da videogame**:
+   - Eliminati box neon celesti, trofei, badge dorati vistosi ed emoji stile WhatsApp VIP.
+   - Nuovo registro luxury: palette nero-inchiostro con sottotono verde (`#0B0F0D`), accento oro tenue (`#C6A15B`), testi avorio (`#EDE8DA`), salvia (`#8FA096`) per label e bordi hairline traslucidi.
+2. **Tipografia editoriale & Struttura a due colonne**:
+   - Aggiunto il font Google **Fraunces** (serif editoriale per titoli, citazioni, stemma e numeri romani) abbinato a **Inter** per label e corpo testo.
+   - **Colonna sinistra (`identity`)**: stemma minimale/monogramma circolare con finitura dorata, citazione in corsivo («È solo un mese, ma un mese di costanza.» / Non chiediamo perfezione — chiediamo continuità.), nome squadra e categoria/territorio come stat pulite.
+   - **Colonna destra (`content`)**: percorso in tre passaggi numerati in numeri romani (I. Mese di prova, II. Verifica editoriale, III. Circolo Manager), form con campi a sottolineatura minimali, casella di dichiarazione elegante e pulsante d'azione oro satinato.
+3. **File aggiornati**: `manager.css`, `manager-runtime.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `LUXMGR1`.
+Feature precedente: **Rimozione Categoria "ECCELLENZA" da Seleziona Squadra (`ONLYAMAT1`)**:
 1. **Rimozione categoria Eccellenza e club Barletta**:
    - Rimossa la categoria "ECCELLENZA" e il club Barletta da `data/squadre/verified-teams.json` e dal fallback in `squadre-select.js`.
    - In Seleziona Squadra e nel picker "SCEGLI CATEGORIA" compare ora unicamente la categoria **AMATORIALE** con **Foggia City** (e qualunque altro club che si registri via modulo).

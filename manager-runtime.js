@@ -172,24 +172,69 @@
       var pend = teamId && pendingApp(teamId);
       var html = '';
       if (!teamId && !teamName) {
-        html = '<p class="es-mgr-lead">Apri prima una squadra dalla Bacheca, poi candidati come Manager.</p>';
+        html = '<div class="es-mgr-topbar">' +
+          '<span class="es-mgr-wordmark">ELISEE SCOUT</span>' +
+          '<button type="button" class="es-mgr-backlink" data-mgr-close>← Torna alla selezione squadre</button>' +
+          '</div>' +
+          '<div style="padding:48px 32px; text-align:center;">' +
+          '<p class="es-mgr-lede">Apri prima una squadra dalla Bacheca, poi candidati come Manager.</p>' +
+          '<button type="button" class="es-mgr-cancel" data-mgr-close style="margin-top:1rem;">Chiudi</button>' +
+          '</div>';
         root.innerHTML = html;
         return;
       }
-      html += '<p class="es-mgr-kicker">Squadra</p><h2>' + esc(teamName) + '</h2>';
-      html += '<p class="es-mgr-lead">' + esc(team.league || '') + (team.city ? ' · ' + esc(team.city) : '') + '</p>';
+
+      var abbr = (team.abbr || teamName.slice(0, 3) || 'ES').toUpperCase();
+      var leagueText = team.league || 'Amatoriale';
+      var cityText = team.city || 'Italia';
+
+      // Topbar con logo e backlink elegante
+      html += '<div class="es-mgr-topbar">' +
+        '<span class="es-mgr-wordmark">ELISEE SCOUT</span>' +
+        '<button type="button" class="es-mgr-backlink" data-mgr-close>← Torna alla selezione squadre</button>' +
+        '</div>';
+
+      // Due colonne: identity a sinistra, content a destra
+      html += '<div class="es-mgr-frame">';
+
+      // Colonna sinistra: Identità
+      html += '<aside class="es-mgr-identity">' +
+        '<div class="es-mgr-crest">' + esc(abbr.slice(0, 3)) + '</div>' +
+        '<p class="es-mgr-quote">È solo un mese, ma un mese di costanza.</p>' +
+        '<p class="es-mgr-quote-attr">Non chiediamo perfezione — chiediamo continuità.</p>' +
+        '<p class="es-mgr-club-label">Squadra</p>' +
+        '<p class="es-mgr-club-name">' + esc(teamName) + '</p>' +
+        '<div class="es-mgr-club-stats">' +
+          '<div>' +
+            '<p class="es-mgr-stat-label">Categoria</p>' +
+            '<p class="es-mgr-stat-value">' + esc(leagueText) + '</p>' +
+          '</div>' +
+          '<div>' +
+            '<p class="es-mgr-stat-label">Territorio</p>' +
+            '<p class="es-mgr-stat-value">' + esc(cityText) + '</p>' +
+          '</div>' +
+        '</div>' +
+      '</aside>';
+
+      // Colonna destra: Contenuto
+      html += '<main class="es-mgr-content">';
 
       if (mgr) {
-        html += '<p class="es-mgr-msg is-ok">Sei <strong>Elisee Manager</strong> ufficiale di questa squadra. Puoi gestire la società e proporre modifiche aggiornate.</p>';
-        html += '<div class="es-mgr-actions" style="margin-bottom:1rem;"><button type="button" class="btn btn-outline-pill pf-btn-solid" id="es-mgr-open-tc">Apri pannello Elisee Manager</button></div>';
+        html += '<h1>Elisee Manager Ufficiale</h1>';
+        html += '<p class="es-mgr-lede">Sei <strong>Elisee Manager</strong> accreditato per questa società. Puoi gestire la società e proporre modifiche aggiornate.</p>';
+        html += '<div class="es-mgr-actions" style="margin-bottom:1.5rem;"><button type="button" class="btn btn-outline-pill pf-btn-solid" id="es-mgr-open-tc">Apri pannello Elisee Manager</button></div>';
         html += proposeFormHtml(team);
       } else if (pend) {
-        html += '<p class="es-mgr-msg">Candidatura Elisee Manager già inviata il ' + esc((pend.createdAt || '').slice(0, 10)) + '. Attualmente nel mese di prova sotto valutazione Admin.</p>';
+        html += '<h1>Candidatura Elisee Manager</h1>';
+        html += '<p class="es-mgr-lede">Candidatura Elisee Manager già inviata il <strong>' + esc((pend.createdAt || '').slice(0, 10)) + '</strong>.<br>Attualmente nel mese di prova sotto valutazione del team di redazione ed Admin.</p>';
+        html += '<div class="es-mgr-actions" style="margin-top:2rem;"><button type="button" class="es-mgr-cancel" data-mgr-close>Chiudi</button></div>';
       } else {
         html += applyFormHtml(team, id);
       }
 
       html += myListHtml(me);
+      html += '</main></div>'; // chiude es-mgr-content ed es-mgr-frame
+
       root.innerHTML = html;
       bindOverlay(team);
     });
@@ -199,55 +244,88 @@
     var phone = (user() || {}).telefono || (user() || {}).phone || '';
     var city = team.city || '';
     return (
+      '<h1>Candidatura Elisee Manager</h1>' +
+      '<p class="es-mgr-lede">Un ruolo editoriale a tutti gli effetti: chi diventa Elisee Manager racconta la squadra ogni giorno, con la supervisione del nostro team prima di ogni pubblicazione.</p>' +
+
+      '<ol class="es-mgr-path">' +
+        '<li>' +
+          '<span class="es-mgr-num">I.</span>' +
+          '<div>' +
+            '<p class="es-mgr-step-title">Mese di prova</p>' +
+            '<p class="es-mgr-step-desc">30 giorni di pubblicazioni costanti dedicate alla squadra.</p>' +
+          '</div>' +
+        '</li>' +
+        '<li>' +
+          '<span class="es-mgr-num">II.</span>' +
+          '<div>' +
+            '<p class="es-mgr-step-title">Verifica editoriale</p>' +
+            '<p class="es-mgr-step-desc">Ogni contenuto viene rivisto dagli Admin prima di andare online.</p>' +
+          '</div>' +
+        '</li>' +
+        '<li>' +
+          '<span class="es-mgr-num">III.</span>' +
+          '<div>' +
+            '<p class="es-mgr-step-title">Circolo Manager</p>' +
+            '<p class="es-mgr-step-desc">Al termine del periodo, accesso al canale riservato con aggiornamenti diretti dagli Admin.</p>' +
+          '</div>' +
+        '</li>' +
+      '</ol>' +
+
       '<form id="es-mgr-apply">' +
-      '<div class="es-mgr-trial-banner" style="background:linear-gradient(135deg, rgba(2,132,199,0.18), rgba(15,23,42,0.6)); border:1.5px solid rgba(56,189,248,0.45); border-radius:14px; padding:1.1rem 1.25rem; margin-bottom:1.3rem; box-shadow:0 8px 24px rgba(0,0,0,0.3); text-align:left;">' +
-      '<div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.5rem;">' +
-      '<span style="font-size:1.4rem;">👑</span>' +
-      '<h3 style="color:#38bdf8; margin:0; font-size:1rem; font-weight:800; letter-spacing:0.02em;">Candidatura Elisee Manager — Requisiti &amp; Mese di Prova (VIP Club)</h3>' +
-      '</div>' +
-      '<p style="color:#e2e8f0; font-size:0.84rem; line-height:1.5; margin:0 0 0.65rem;">' +
-      'Prima di diventare <strong>Elisee Manager</strong> dovrai compilare tutti i campi richiesti ed effettuare <strong>un mese di prova</strong> (30 giorni di costanza) dove ogni giorno dovrai pubblicare costantemente contenuti per la squadra.' +
-      '</p>' +
-      '<div style="background:rgba(15,23,42,0.7); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:0.8rem 1rem; margin-bottom:0.65rem;">' +
-      '<p style="color:#cbd5e1; font-size:0.81rem; line-height:1.45; margin:0 0 0.35rem;">' +
-      '🔍 <strong style="color:#38bdf8;">Moderazione Preventiva Admin:</strong> Tutti i contenuti inviati durante il mese di prova verranno prima inoltrati agli Admin, che ne valuteranno l’accuratezza e veridicità prima di approvarli e pubblicarli.' +
-      '</p>' +
-      '<p style="color:#facc15; font-size:0.81rem; font-weight:700; margin:0;">' +
-      '⏳ <em>«È solo un mese, ma un mese di costanza. Dobbiamo accertarci che il duro lavoro paghi.»</em>' +
-      '</p>' +
-      '</div>' +
-      '<p style="color:#4ade80; font-size:0.82rem; line-height:1.45; margin:0; display:flex; align-items:flex-start; gap:0.45rem;">' +
-      '<span style="font-size:1.1rem; flex-shrink:0;">📲</span>' +
-      '<span><strong>Accesso al Gruppo WhatsApp VIP Club:</strong> Il rilascio del tuo recapito telefonico è obbligatorio. Superato con successo il mese di prova, verrai inserito nel <strong>gruppo WhatsApp esclusivo di Elisee Manager</strong> dove riceverai in tempo reale tutte le nuove informazioni, direttive e anteprime direttamente dagli Admin.</span>' +
-      '</p>' +
-      '</div>' +
-      '<div class="es-mgr-row">' +
-      '<div class="es-mgr-field"><label>Nome e cognome *</label><input name="name" required value="' + esc(id.name) + '" placeholder="Es. Mario Rossi"></div>' +
-      '<div class="es-mgr-field"><label>Email account *</label><input name="email" type="email" required value="' + esc(id.email) + '" placeholder="nome@esempio.it"></div>' +
-      '</div>' +
-      '<div class="es-mgr-row">' +
-      '<div class="es-mgr-field"><label style="color:#facc15; font-weight:700;">Numero di Telefono (Obbligatorio per Gruppo WhatsApp VIP) *</label><input name="phone" type="tel" required value="' + esc(phone) + '" placeholder="+39 333 1234567" style="border-color:rgba(250,204,21,0.5);">' +
-      '<small style="color:#94a3b8; font-size:0.72rem; display:block; margin-top:0.25rem;">Usato per l’inserimento nel Gruppo WhatsApp VIP Club al superamento del mese di prova</small></div>' +
-      '<div class="es-mgr-field"><label>Ruolo nel club / Società *</label>' +
-      '<select name="roleAtClub" required>' +
-      '<option value="">Seleziona ruolo</option>' +
-      '<option>Presidente / Proprietà</option><option>Direttore Sportivo / Generale</option>' +
-      '<option>Dirigente Accompagnatore</option><option>Segretario Generale</option>' +
-      '<option>Responsabile Settore Giovanile</option><option>Allenatore / Staff Tecnico</option>' +
-      '<option>Match Analyst / Addetto Stampa</option><option>Collaboratore Societario</option>' +
-      '</select></div></div>' +
-      '<div class="es-mgr-field"><label>Città e Territorio di riferimento *</label><input name="city" required value="' + esc(city) + '" placeholder="Es. Foggia (Puglia)"></div>' +
-      '<div class="es-mgr-field"><label>Perché vuoi diventare Elisee Manager e piano di pubblicazione per i 30 giorni *</label>' +
-      '<textarea name="motivation" required rows="3" placeholder="Descrivi la tua motivazione e disponibilità a pubblicare costantemente contenuti veritieri ogni giorno (risultati, formazioni, news, rose, eventi) durante il mese di prova."></textarea></div>' +
-      '<div class="es-mgr-field" style="margin:1rem 0 1.2rem;">' +
-      '<label style="display:flex; align-items:flex-start; gap:0.6rem; cursor:pointer; color:#e2e8f0; font-size:0.82rem; line-height:1.45;">' +
-      '<input type="checkbox" name="trialAccept" required style="margin-top:0.2rem; width:17px; height:17px; accent-color:#38bdf8; flex-shrink:0;">' +
-      '<span><strong>Dichiaro di accettare il mese di prova</strong> con impegno alla pubblicazione quotidiana dei contenuti sotto verifica preventiva degli Admin e autorizzo l’inserimento del mio recapito telefonico nel <strong>Gruppo WhatsApp Elisee Manager (VIP Club)</strong> a esito positivo.</span>' +
-      '</label></div>' +
-      '<div class="es-mgr-actions">' +
-      '<button type="submit" class="btn btn-outline-pill pf-btn-solid">Invia Candidatura Elisee Manager</button>' +
-      '<button type="button" class="btn btn-outline-pill" data-mgr-close>Chiudi</button>' +
-      '</div><p class="es-mgr-msg" id="es-mgr-apply-msg"></p></form>'
+        '<div class="es-mgr-field-row">' +
+          '<div class="es-mgr-field">' +
+            '<label>Nome e cognome <span class="es-mgr-req">*</span></label>' +
+            '<input name="name" required value="' + esc(id.name) + '" placeholder="Mario Rossi">' +
+          '</div>' +
+          '<div class="es-mgr-field">' +
+            '<label>Email account <span class="es-mgr-req">*</span></label>' +
+            '<input name="email" type="email" required value="' + esc(id.email) + '" placeholder="nome.cognome@email.com">' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="es-mgr-field-row">' +
+          '<div class="es-mgr-field">' +
+            '<label>Telefono <span class="es-mgr-req">*</span></label>' +
+            '<input name="phone" type="tel" required value="' + esc(phone) + '" placeholder="+39 333 1234567">' +
+            '<p class="es-mgr-hint">Necessario per l\'accesso al Circolo Manager al superamento del mese di prova.</p>' +
+          '</div>' +
+          '<div class="es-mgr-field">' +
+            '<label>Ruolo nel club / società <span class="es-mgr-req">*</span></label>' +
+            '<select name="roleAtClub" required>' +
+              '<option value="">Seleziona ruolo</option>' +
+              '<option>Dirigente</option>' +
+              '<option>Staff tecnico</option>' +
+              '<option>Giocatore</option>' +
+              '<option>Esterno / appassionato</option>' +
+            '</select>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="es-mgr-field-row">' +
+          '<div class="es-mgr-field es-mgr-full">' +
+            '<label>Città e territorio di riferimento <span class="es-mgr-req">*</span></label>' +
+            '<input name="city" required value="' + esc(city) + '" placeholder="Foggia">' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="es-mgr-field-row">' +
+          '<div class="es-mgr-field es-mgr-full">' +
+            '<label>Motivazione e piano di pubblicazione per i 30 giorni <span class="es-mgr-req">*</span></label>' +
+            '<textarea name="motivation" required placeholder="Racconta perché vuoi rappresentare la squadra e come pensi di organizzare i contenuti — risultati, formazioni, rose, eventi."></textarea>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="es-mgr-declaration">' +
+          '<input type="checkbox" id="decl" name="trialAccept" required>' +
+          '<label for="decl" style="cursor:pointer; margin:0;"><p>Confermo l\'impegno alla pubblicazione quotidiana durante il mese di prova, soggetta a verifica editoriale, e autorizzo l\'inserimento del mio recapito nel Circolo Manager al superamento del periodo di prova.</p></label>' +
+        '</div>' +
+
+        '<div class="es-mgr-actions">' +
+          '<button type="submit">Invia candidatura</button>' +
+          '<button type="button" class="es-mgr-cancel" data-mgr-close>Annulla</button>' +
+        '</div>' +
+        '<p class="es-mgr-msg" id="es-mgr-apply-msg"></p>' +
+      '</form>'
     );
   }
 
@@ -524,14 +602,10 @@
     wrap.className = 'es-mgr-overlay';
     wrap.innerHTML =
       '<div class="es-mgr-sheet" role="dialog" aria-modal="true">' +
-      '<button type="button" class="es-mgr-close" data-mgr-close aria-label="Chiudi">&times;</button>' +
-      '<p class="es-mgr-kicker">Elisee Scout</p>' +
-      '<h2>Elisee Manager</h2>' +
-      '<p class="es-mgr-lead">Candidati come Elisee Manager: 1 mese di prova con pubblicazione costante e verifica Admin. Al superamento, accesso al <strong>Gruppo WhatsApp VIP Club</strong>.</p>' +
       '<div id="es-mgr-body"></div></div>';
     document.body.appendChild(wrap);
     wrap.addEventListener('click', function (e) {
-      if (e.target === wrap || e.target.getAttribute('data-mgr-close') != null) closeOverlay();
+      if (e.target === wrap || e.target.closest('[data-mgr-close]') != null) closeOverlay();
     });
   }
 
