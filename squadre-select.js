@@ -27,7 +27,7 @@
       id: 'foggia-city',
       name: 'FOGGIA CITY',
       country: 'ITALIA',
-      league: 'DILETTANTI',
+      league: 'AMATORIALE',
       city: 'FOGGIA',
       year: '2024',
       abbr: 'FGC',
@@ -440,6 +440,8 @@
         try {
           var locReg = JSON.parse(localStorage.getItem('elisee_registered_teams_v1') || '[]');
           if (Array.isArray(locReg)) {
+            locReg = locReg.filter(function (t) { return t && t.id !== 'foggia-city'; });
+            try { localStorage.setItem('elisee_registered_teams_v1', JSON.stringify(locReg)); } catch (_) {}
             locReg.forEach(function (t) {
               if (t && t.id) {
                 VERIFIED_IDS[String(t.id).toLowerCase()] = true;
@@ -922,6 +924,9 @@
     }
     if (lg.indexOf('PRIMAVERA 4') === 0) {
       return 'immagini/squadre-loghi/primavera-4.png';
+    }
+    if (lg.indexOf('AMATORIAL') >= 0) {
+      return 'immagini/squadre-loghi/terza-categoria.png';
     }
     if (lg.indexOf('DILETTANTI') >= 0) {
       return 'immagini/squadre-loghi/promozione.png';
@@ -2026,7 +2031,8 @@
       '          <div class="es-sq-reg-field">',
       '            <label for="es-sq-reg-league">Campionato / Categoria</label>',
       '            <select id="es-sq-reg-league" name="team-league">',
-      '              <option value="DILETTANTI" selected>DILETTANTI</option>',
+      '              <option value="AMATORIALE" selected>AMATORIALE</option>',
+      '              <option value="DILETTANTI">DILETTANTI</option>',
       '              <option value="ECCELLENZA">ECCELLENZA</option>',
       '              <option value="PROMOZIONE">PROMOZIONE</option>',
       '              <option value="PRIMA CATEGORIA">PRIMA CATEGORIA</option>',
@@ -2081,7 +2087,7 @@
       '        <div class="es-sq-reg-preview-title">Anteprima Stemma Ufficiale</div>',
       '        <div class="es-sq-reg-preview-badge" id="es-sq-reg-badge-slot"></div>',
       '        <div class="es-sq-reg-preview-name" id="es-sq-reg-preview-name">FOGGIA CITY</div>',
-      '        <div class="es-sq-reg-preview-sub" id="es-sq-reg-preview-sub">DILETTANTI · FOGGIA</div>',
+      '        <div class="es-sq-reg-preview-sub" id="es-sq-reg-preview-sub">AMATORIALE · FOGGIA</div>',
       '        <div class="es-sq-reg-preview-tag">✓ 100% ORIGINALE & CERTIFICATO</div>',
       '      </div>',
       '    </div>',
@@ -2097,7 +2103,7 @@
 
     function updateLivePreview() {
       var nameVal = (modal.querySelector('#es-sq-reg-name').value || 'NUOVO CLUB').trim();
-      var leagueVal = (modal.querySelector('#es-sq-reg-league').value || 'DILETTANTI').trim();
+      var leagueVal = (modal.querySelector('#es-sq-reg-league').value || 'AMATORIALE').trim();
       var cityVal = (modal.querySelector('#es-sq-reg-city').value || 'ITALIA').trim();
       var abbrVal = (modal.querySelector('#es-sq-reg-abbr').value || '').trim();
       var colorP = modal.querySelector('#es-sq-reg-color-p').value;
@@ -2146,7 +2152,7 @@
       ev.preventDefault();
       var name = (modal.querySelector('#es-sq-reg-name').value || '').trim();
       if (!name) return;
-      var league = (modal.querySelector('#es-sq-reg-league').value || 'DILETTANTI').trim();
+      var league = (modal.querySelector('#es-sq-reg-league').value || 'AMATORIALE').trim();
       var city = (modal.querySelector('#es-sq-reg-city').value || '').trim();
       var abbr = (modal.querySelector('#es-sq-reg-abbr').value || '').trim();
       var year = parseInt(modal.querySelector('#es-sq-reg-year').value, 10) || new Date().getFullYear();

@@ -3,22 +3,24 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** — Seleziona Squadra: rimossa sfilza club non registrati, mostrate solo squadre registrate con Foggia City e modulo registrazione club (cache `ONLYREG1`).
-Ultimo fatto: **Seleziona Squadra: Solo Club Registrati Ufficiali con Foggia City & Modulo Registrazione Club (`ONLYREG1`)**:
+Ultimo aggiornamento: **2026-09-14** — Correzione categoria Foggia City: impostata su AMATORIALE (nè eccellenza, nè dilettanti), con opzione dedicata e pulizia cache (cache `FGCAMAT1`).
+Ultimo fatto: **Correzione Categoria Foggia City in "AMATORIALE" (`FGCAMAT1`)**:
+1. **Assegnazione corretta della categoria**:
+   - Foggia City è una squadra amatoriale: rimossa qualsiasi classificazione da "Dilettanti" o "Eccellenza".
+   - Impostata la categoria ufficiale **"AMATORIALE"** in `data/squadre/verified-teams.json` e nel fallback in `squadre-select.js`.
+2. **Supporto categoria "AMATORIALE" in Seleziona Squadra**:
+   - In `squadre-select.js` e `index.html`: la pillola categoria e l'elenco mostrano fedelmente "AMATORIALE" per Foggia City con icona appropriata.
+   - Nella modale interattiva "➕ Registra Club", "AMATORIALE" è ora la prima opzione predefinita nel menu a tendina delle categorie.
+   - Aggiunta pulizia automatica di vecchie voci di localStorage in `loadVerifiedList()` per evitare che una versione precedente in cache sovrascriva la categoria.
+3. **File aggiornati**: `data/squadre/verified-teams.json`, `squadre-select.js`, `index.html`, `version.json`, `sw.js`. Cache `FGCAMAT1`.
+Feature precedente: **Seleziona Squadra: Solo Club Registrati Ufficiali con Foggia City & Modulo Registrazione Club (`ONLYREG1`)**:
 1. **Rimozione sfilza 1500 squadre non registrate**:
    - In "Seleziona Squadra" (`squadre-select.js`), rimossa completamente la sfilza massiva dei 1500 club estratti/non registrati.
-   - Vengono mostrate **esclusivamente** le squadre registrate ufficialmente nel progetto ELISEE SCOUT (di partenza **Foggia City** in Dilettanti e **Barletta** in Eccellenza) e le squadre che si registrano tramite la piattaforma.
+   - Vengono mostrate **esclusivamente** le squadre registrate ufficialmente nel progetto ELISEE SCOUT (di partenza **Foggia City** e **Barletta**) e le squadre che si registrano tramite la piattaforma.
 2. **Badge Ufficiale, Originale al 100% e IP-Safe (`badge-engine.js`)**:
    - Ogni squadra registrata dispone del proprio scudetto vettoriale geometrico originale basato sui colori sociali del club (es. Foggia City: rosso `#dc2626` e scuro `#0f172a`, sigla "FGC"; Barletta: rosso e bianco, sigla "BAR") con stella, finiture luxury e riflessi 3D.
-   - Zero rischi di contraffazione, marchi terzi o contestazioni legali.
 3. **Pulsante & Modale Interattiva "➕ Registra Club"**:
-   - Aggiunto il pulsante `➕ Registra Club` nella topbar di Seleziona Squadra.
-   - Cliccando si apre una modale moderna glassmorphic con campi: Nome Squadra, Categoria/Lega, Città, Sigla Stemma, Anno Fondazione, Color Picker Primario/Secondario con codice esadecimale e Genere (M/F).
-   - **Anteprima Live in tempo reale**: mentre l'utente scrive o sceglie i colori, lo scudetto vettoriale `EliseeBadge` si aggiorna LIVE.
-   - Al salvataggio, il club viene archiviato in `localStorage['elisee_registered_teams_v1']`, registrato in memoria, il selettore si aggiorna istantaneamente e seleziona il nuovo club con toast di conferma.
-4. **Valori iniziali di default aggiornati**:
-   - Nome squadra iniziale `FOGGIA CITY`, stemma `FGC`, lega `DILETTANTI`, anno `2024`, badge verificato verde attivo.
-5. **File aggiornati**: `data/squadre/verified-teams.json`, `squadre-select.js`, `squadre-select.css`, `index.html`, `badge-engine.js`, `formazione-squadra.js`, `version.json`, `sw.js`. Cache `ONLYREG1`.
+   - Pulsante nella topbar di Seleziona Squadra con anteprima live dello stemma in tempo reale e salvataggio su `localStorage['elisee_registered_teams_v1']`.
 Feature precedente: **Modalità "Zero Rischi" IP-Safe con Motore di Badge Vettoriali Geometrici Neutri (`badge-engine.js`)**:
 1. **Piena conformità legale e tutela proprietà industriale**:
    - Zero rischi di contraffazione, imitazione servile o concorrenza parassitaria rispetto ai marchi ufficiali dei club.
