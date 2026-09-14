@@ -3,7 +3,7 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** — Redesign Ultra-Professionale Candidatura Elisee Manager: 4 sezioni numerate con divisori, breadcrumb gerarchico di navigazione, timeline verticale in 3 fasi con linea continua, callout motivazionale con accento laterale, sidebar a 3 blocchi separati con crest ufficiale club (cache `CANDMGR1`).
+Ultimo aggiornamento: **2026-09-14** (Commit `9a13782`) — Redesign Ultra-Professionale Candidatura Elisee Manager: 4 sezioni numerate con divisori, breadcrumb gerarchico di navigazione, timeline verticale in 3 fasi con linea continua, callout motivazionale con accento laterale, sidebar a 3 blocchi separati con crest ufficiale club (cache `CANDMGR1`).
 Ultimo fatto: **Redesign Ultra-Professionale Candidatura Elisee Manager (`CANDMGR1`)**:
 1. **Struttura Enterprise & Form Diviso in 4 Sezioni**:
    - Superata la griglia piatta generica: form riorganizzato in 4 sezioni numerate con intestazione, progressivo `01-04` e linea divisoria:
