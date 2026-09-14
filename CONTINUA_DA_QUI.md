@@ -3,7 +3,7 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** — Password Account & Responsabile Privacy: `Iemmello.9` (cache `AUTHPRIVACY1`).
+Ultimo aggiornamento: **2026-09-14** (commit `3387262`) — Password Account & Responsabile Privacy: `Iemmello.9` (cache `AUTHPRIVACY1`).
 Ultimo fatto: **Credenziali Password Account & Responsabile Privacy**:
 1. Memorizzata e impostata come standard per gli account e per l'account del Responsabile Privacy (`manueltucci2002@gmail.com`) e master secret admin la password: `Iemmello.9` (esattamente con il punto).
 2. Aggiornato hash PBKDF2 in `api/auth/me.js` (`21612aefb415ec0957dfd54095eed7fadbeaec288eeca7bf8380989c12919145`).
