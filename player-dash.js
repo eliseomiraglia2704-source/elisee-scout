@@ -495,22 +495,6 @@
           '</dl>' +
           '<button type="button" class="es-btn es-btn--primary" style="width:100%; margin-top:16px;" data-pd="edit">Modifica Profilo &amp; Autovalutazione</button>' +
         '</div>' +
-
-        // Card 3: Azioni possibili
-        '<div class="es-panel-card">' +
-          '<div class="es-panel-card__head">' +
-            '<h4>Azioni possibili</h4>' +
-            '<span class="es-badge es-badge--tag">Strumenti operativi</span>' +
-          '</div>' +
-          '<p class="es-empty-note" style="margin-bottom:10px;">— Calciatore / Utente</p>' +
-          '<div class="es-link-list">' +
-            '<a href="#" data-pd="edit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Aggiornare anagrafica e preferenze</a>' +
-            '<a href="#" data-player-action="behavioral_consent"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Attivare consenso profilo comportamentale</a>' +
-            '<a href="#" data-player-action="human_intervention"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Richiedere intervento umano (art. 22)</a>' +
-            '<a href="#" data-player-action="export_gdpr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Esportare i propri dati (GDPR)</a>' +
-            '<a href="#" data-player-action="career_projection"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Percorso di Crescita Proiettato (IA Career Projection)</a>' +
-          '</div>' +
-        '</div>' +
       '</div>' +
 
       // === COLONNA 2 — Prestazioni ===
@@ -608,6 +592,22 @@
       '</div>' +
 
       '</div>' + // fine es-dossier-grid
+
+      // ===== Card 3: Azioni possibili =====
+      '<div class="es-panel-card" style="margin-top: 24px;">' +
+        '<div class="es-panel-card__head">' +
+          '<h4>Azioni possibili</h4>' +
+          '<span class="es-badge es-badge--tag">Strumenti operativi</span>' +
+        '</div>' +
+        '<p class="es-empty-note" style="margin-bottom:10px;">— Calciatore / Utente</p>' +
+        '<div class="es-link-list">' +
+          '<a href="#" data-pd="edit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Aggiornare anagrafica e preferenze</a>' +
+          '<a href="#" data-player-action="behavioral_consent"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Attivare consenso profilo comportamentale</a>' +
+          '<a href="#" data-player-action="human_intervention"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Richiedere intervento umano (art. 22)</a>' +
+          '<a href="#" data-player-action="export_gdpr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Esportare i propri dati (GDPR)</a>' +
+          '<a href="#" data-player-action="career_projection"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Percorso di Crescita Proiettato (IA Career Projection)</a>' +
+        '</div>' +
+      '</div>' +
 
       // ===== Richieste di contatto =====
       '<div class="es-panel-card" style="margin-top: 24px;">' +

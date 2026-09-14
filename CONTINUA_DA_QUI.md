@@ -3,22 +3,22 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** (commit `76e31c7`) — Riorganizzazione Tematica a 3 Colonne Dossier Player (cache `PLAYERDOSSIER3`).
-Ultimo fatto: **Riorganizzazione Tematica dei Pannelli del Dossier Player**:
-1. **Colonna 1 — Identità & Azioni (Account & Chi sei)**:
-   - *Indice Atleta & Parametri*
-   - *Il Mio Profilo & Obiettivi* (spostato qui a fianco dell'anagrafica, risolvendo il vuoto in Colonna 1)
-   - *Azioni possibili* (strumenti operativi account, GDPR, intervento umano art. 22)
-2. **Colonna 2 — Prestazioni (Il calcio giocato sul campo)**:
-   - *Radar Prestazioni a 12 Assi (Stagione)*
-   - *Registro Match & Voti PGB (Stagione)*
-   - *Crescita Storica (2023–2027)*
-   - Raggruppamento logico completo di tutto ciò che riguarda le prestazioni e l'analisi tecnica di gara.
-3. **Colonna 3 — Fiducia & Mercato (Affidabilità & Interesse)**:
-   - *Certificazione & Compliance* (checklist zero fake account)
-   - *Interesse Scouting & Percorso* (club attuale, disponibilità, scadenza vincolo)
-   - Si raccorda in modo coerente e fluido con i due blocchi sottostanti a larghezza piena (*Richieste di contatto* e *Interesse dalla rete*).
-4. **File coinvolti**: `player-dash.js`, `index.html`, `version.json`, `sw.js`. Cache `PLAYERDOSSIER3`.
+Ultimo aggiornamento: **2026-09-14** (commit `d282b3e`) — Pannello "Azioni possibili" a griglia orizzontale 3 colonne a schede (cache `PLAYERDOSSIER4`).
+Ultimo fatto: **Pannello "Azioni possibili" a Griglia Orizzontale 3 Colonne a Schede**:
+1. **Risoluzione spazio vuoto a destra**:
+   - Trasformato `.es-link-list` da lista verticale stretta su colonna singola a griglia orizzontale a 3 colonne (`grid-template-columns: repeat(3, 1fr); gap: 10px 14px;`).
+   - Ogni azione diventa una card autonoma con bordo (`1px solid var(--es-border)`), sfondo scuro dedicato (`var(--es-panel-2)`), padding confortevole (`12px 14px`), icona SVG blu accento (`var(--es-accent)`) e micro-elevazione + highlight al passaggio del mouse.
+2. **Posizionamento a piena larghezza**:
+   - Spostato il pannello "Azioni possibili" a tutta larghezza subito sotto la griglia dossier a 3 colonne (prima di *Richieste di contatto* e *Interesse dalla rete*), occupando interamente la larghezza del contenitore senza lasciare spazio morto.
+3. **Adattamento responsive automatico**:
+   - Su schermi medi/tablet (≤ 980px): scende ordinatamente a 2 colonne.
+   - Su smartphone/schermi stretti (≤ 560px): scende a colonna singola.
+4. **File coinvolti**: `player-dash.css`, `player-dash.js`, `index.html`, `version.json`, `sw.js`. Cache `PLAYERDOSSIER4`.
+Feature precedente: **Riorganizzazione Tematica dei Pannelli del Dossier Player (PLAYERDOSSIER3)**:
+1. **Colonna 1 — Identità & Azioni (Account & Chi sei)**: *Indice Atleta & Parametri*, *Il Mio Profilo & Obiettivi*.
+2. **Colonna 2 — Prestazioni (Il calcio giocato sul campo)**: *Radar Prestazioni a 12 Assi*, *Registro Match & Voti PGB*, *Crescita Storica*.
+3. **Colonna 3 — Fiducia & Mercato (Affidabilità & Interesse)**: *Certificazione & Compliance*, *Interesse Scouting & Percorso*.
+4. **Blocchi orizzontali**: *Azioni possibili* (3 col), *Richieste di contatto* (con accettazione interattiva), *Interesse dalla rete* (5 card conteggio).
 Feature precedente: **Area Player Dossier / Selettore Stagione Unificato & Nuovi Blocchi B2B**:
 1. Selettore stagione unificato (‹ Stagione 2026/27 · Attuale ›) senza duplicazioni.
 2. Blocco "Richieste di contatto" con Accetta/Rifiuta e badge in attesa.
