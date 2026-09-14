@@ -1018,7 +1018,7 @@
     if (box) {
       box.hidden = false;
       box.removeAttribute('hidden');
-      box.style.setProperty('display', 'grid', 'important');
+      box.style.setProperty('display', 'block', 'important');
       box.style.setProperty('visibility', 'visible', 'important');
       box.style.setProperty('opacity', '1', 'important');
     }

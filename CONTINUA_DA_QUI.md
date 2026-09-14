@@ -3,15 +3,30 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** — Ripristino pulito e fedele loghi squadre e competizioni in Seleziona Squadre (cache `CLEAN1`).
-Ultimo fatto: **Allineamento Diretto e Pulito Loghi Squadre & Competizioni (`immagini/squadre-loghi/`)**:
+Ultimo aggiornamento: **2026-09-14** — Ancoraggio fisso viewport per la barra di navigazione laterale verticale (`es-pd-rail`) durante lo scroll (cache `FIXEDRAIL1`).
+Ultimo fatto: **Ancoraggio Fisso Viewport della Barra di Navigazione Laterale (`es-pd-rail`) durante lo Scroll**:
+1. **Identificazione del componente**:
+   - Elemento: `<aside class="es-pd-rail">` presente in `player-dash.js` (calciatore), `dash-real.js` (staff/dirigenti: DS, Scout, Medico, Preparatore, ecc.) e `giorn-dash.js` (giornalista/redazione).
+   - Raggruppa le icone: Home, Profilo/Dashboard, Album/immagini, Messaggi e Anagrafica/Modifica.
+2. **Posizionamento `position: fixed` ancorato alla viewport**:
+   - Modificato da `position: sticky` (che non restava visibile per via degli overflow dei contenitori padri) a `position: fixed !important; top: 86px !important; left: 0 !important; width: 56px !important; height: calc(100vh - 86px) !important; z-index: 50 !important;`.
+   - Rimane posizionato sotto l'header fisso superiore (`top: 86px`, z-index 1000) e copre l'intera altezza dello schermo verso il basso senza sovrapporsi all'header.
+   - L'icona scudo circolare privacy/cookie in basso a sinistra mantiene il proprio z-index elevato (99980) e la piena interattività.
+3. **Offset del contenuto principale**:
+   - Aggiunto `padding-left: 56px !important;` e `display: block !important;` sul contenitore `.es-pd` e `#es-pd` (e id affini), così il contenuto principale (`.es-pd-body`) parte esattamente a destra della rail senza venire coperto da essa.
+   - Nascosta la striscia decorativa obsoleta `.es-pd::before { display: none !important; }`.
+   - Modificato `player-dash.js` per usare `display: block` invece di forzare inline `display: grid`.
+4. **Uniformità e responsività**:
+   - Comportamento identico su tutte le dashboard di ruolo (Calciatore, DS, Osservatore, Medico, Preparatore, Giornalista, Tifoso, ecc.).
+   - Schermi mobile (≤768px): tramite media query la rail si adatta come barra orizzontale sticky touch-friendly con `padding-left: 0`, preservando il 100% dell'area per il contenuto.
+   - Nessuna alterazione visiva a colori, icone o spaziature dei pulsanti.
+5. **File aggiornati**: `player-dash.css`, `dash-luxury.css`, `style.css`, `player-dash.js`, `index.html`, `version.json`, `sw.js`. Cache `FIXEDRAIL1`.
+Feature precedente: **Ripristino pulito e fedele loghi squadre e competizioni in Seleziona Squadre (cache `CLEAN1`)**:
 1. **Ripristino Architettura Diretta & Fedeltà Asset Progetto**:
-   - **Causa del disallineamento**: L'introduzione di un filtro dinamico `seenInLeague` e di un motore di prefetch asincrono con `PRELOAD_CACHE` nel selettore squadre aveva alterato l'indicizzazione dei club (scartando involontariamente squadre distinte con nomi affini) e provocato race condition tra il rendering dei loghi squadra e dei loghi competizione.
-   - **Soluzione applicata**: Rimosso totalmente `seenInLeague` e ogni sovrastruttura di prefetch arbitrario da `squadre-select.js`. I loghi di squadre e competizioni sono ora collegati in modo lineare, diretto e autentico ai file della cartella di progetto `immagini/squadre-loghi/`.
-   - **Gestione visiva anti-glitch senza effetti collaterali**: Durante il download di un nuovo stemma, l'immagine precedente viene temporaneamente occultata con `visibility: 'hidden'` mostrando le iniziali e i colori sociali della squadra corrente, per poi tornare immediatamente visibile (`visibility: 'visible'`) a download ultimato o a 0ms se già presente in memoria.
+   - Rimosso `seenInLeague` e prefetch asincrono con race condition. Loghi collegati direttamente a `immagini/squadre-loghi/`.
+   - Gestione anti-glitch con fallback colori e iniziali durante il caricamento.
 2. **Deduplicazione Barletta preservata nel catalogo**:
-   - In `data/squadre/catalog.json` è stata rimossa la sola riga duplicata `barletta-cb0b`, lasciando l'unica squadra ufficiale `barletta`.
-3. **File coinvolti**: `squadre-select.js`, `squadre-select.css`, `index.html`, `version.json`, `sw.js`. Cache `CLEAN1`.
+   - In `data/squadre/catalog.json` rimossa la sola riga duplicata `barletta-cb0b`, lasciando l'unica squadra ufficiale `barletta`.
 Feature precedente: **Pannello "Azioni possibili" a Griglia Orizzontale 3 Colonne a Schede (PLAYERDOSSIER4)**:
 1. **Risoluzione spazio vuoto a destra**: Trasformato `.es-link-list` in griglia orizzontale a 3 colonne a schede.
 2. **Posizionamento a piena larghezza**: Subito sotto la griglia dossier a 3 colonne.
