@@ -3,7 +3,7 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** — Conversione Pannello Elisee Manager al tema Dark Standard del sito: fondo `--es-bg`, card `--es-panel`, badge "Società Verificata" con token `--es-verified` smeraldo, tab con bordo accento `--es-accent`, stat card coerenti con Bacheca/Player dossier (cache `TCDARK1`).
+Ultimo aggiornamento: **2026-09-14** (Commit `93fe746`) — Conversione Pannello Elisee Manager al tema Dark Standard del sito: fondo `--es-bg`, card `--es-panel`, badge "Società Verificata" con token `--es-verified` smeraldo, tab con bordo accento `--es-accent`, stat card coerenti con Bacheca/Player dossier (cache `TCDARK1`).
 Ultimo fatto: **Conversione Dark Theme Completa Pannello Elisee Manager (`TCDARK1`)**:
 1. **Conversione Globale al Dark Theme Coerente**:
    - Superato l'intero schema chiaro isolato (sfondo bianco `#F8F9FA`, card chiare `#FFFFFF`, testo scuro `#0F172A`).
