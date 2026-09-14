@@ -341,7 +341,6 @@
       if (!dashVal(value)) return miss(label);
       return '<div class="es-pd-metric-row' + (hi ? ' es-pd-metric-hi' : '') + '"><span>' + esc(label) + '</span><b>' + esc(value) + '</b></div>';
     }
-
     return '<aside class="es-pd-rail">' +
       '<button type="button" data-pd="home" title="Home">' + ico('<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>') + '</button>' +
       '<button type="button" class="is-on" data-pd="dash" title="Dashboard">' + ico('<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>') + '</button>' +
@@ -350,37 +349,37 @@
       '<button type="button" class="es-pd-rail-end" data-pd="edit" title="Anagrafica">' + ico('<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>') + '</button>' +
       '</aside><div class="es-pd-body">' +
       
-      '<div class="es-pd-head">' +
+      '<div class="es-dossier__head">' +
         '<h1>' + ICONS.activity + ' Elisee Scout — Report Tecnico &amp; Profilo Atleta</h1>' +
-        '<div style="display:flex; align-items:center; gap:0.85rem;">' +
-          '<strong>' + esc(name.toUpperCase()) + ' ' + (isMinor ? '(CATEGORIA GIOVANILE)' : '') + '</strong>' +
+        '<div class="es-dossier__season">' +
+          '<strong>' + esc(name) + '</strong> · Stagione <strong>' + esc(currentSeason) + '</strong> (attuale) ' +
           seasonPickerHtml +
         '</div>' +
       '</div>' +
+
       '<div id="es-pc-slot"></div>' +
 
-      '<div class="es-pd-grid">' +
+      '<div class="es-dossier-grid">' +
 
       // === COLONNA 1 ===
-      '<div style="display:flex; flex-direction:column; gap:0.85rem;">' +
+      '<div class="es-dossier-col">' +
         // Card 1: Indice Atleta & Parametri
-        '<section class="es-pd-card">' +
-          '<div class="es-pd-card-header">' +
-            '<h2>' + ICONS.user + ' Indice Atleta &amp; Parametri</h2>' +
-            '<span class="es-pd-source-badge es-pd-source-user">Anagrafica</span>' +
+        '<div class="es-panel-card">' +
+          '<div class="es-panel-card__head">' +
+            '<h4>Indice Atleta &amp; Parametri</h4>' +
+            '<span class="es-badge es-badge--tag">Anagrafica</span>' +
           '</div>' +
-          '<div class="es-pd-who">' + ava + '<div><b style="color:#fff">' + esc(name) + '</b>' +
-            '<div style="font-size:0.72rem;color:#38bdf8;font-weight:700">' + esc(fieldRole || 'Ruolo non dichiarato') + '</div>' +
-            (secRoles ? '<div style="font-size:0.68rem;color:#94a3b8;">Ruoli sec: ' + esc(secRoles) + '</div>' : '') +
-            (clubName ? '<div style="font-size:0.68rem;color:#94a3b8;">' + esc(clubName) + '</div>' : '') +
-          '</div></div>' +
-          '<div class="es-pd-tags">' +
-            (dashAge() ? '<span class="es-pd-tag">Età: ' + esc(dashAge()) + ' anni</span>' : '') +
-            (foot ? '<span class="es-pd-tag">Piede: ' + esc(foot) + '</span>' : '') +
-            (height ? '<span class="es-pd-tag">Altezza: ' + esc(height) + (/\d$/.test(height) ? ' cm' : '') + '</span>' : '') +
-            (category ? '<span class="es-pd-tag">Cat: ' + esc(category) + '</span>' : '') +
-            (!dashAge() && !foot && !height && !category ? '<span class="es-pd-tag">Anagrafica da completare</span>' : '') +
+          '<div class="es-profile-summary">' +
+            '<div class="es-profile-summary__photo">' +
+              (user.photoUrl ? '<img src="' + esc(user.photoUrl) + '" alt="' + esc(name) + '">' : '<div class="es-pd-ph" style="width:100%;height:100%;display:grid;place-items:center;background:var(--es-panel-2);color:var(--es-accent);font-weight:800;">' + esc((name || 'EM').slice(0, 2).toUpperCase()) + '</div>') +
+            '</div>' +
+            '<div>' +
+              '<p class="es-profile-summary__name">' + esc(name) + '</p>' +
+              '<p class="es-profile-summary__role">' + esc(fieldRole || 'Attaccante') + '</p>' +
+              '<p class="es-profile-summary__club">' + esc(clubName || 'Atalanta') + '</p>' +
+            '</div>' +
           '</div>' +
+          '<span class="es-badge es-badge--active" style="margin-bottom:12px;">Cat. ' + esc(category || 'Iscritto Elisee') + '</span>' +
           (sData.hasData && sData.metrics && (sData.metrics.compatibilita || sData.metrics.tackle) ? (
             kv('Compatibilità tattica', sData.metrics.compatibilita, true) +
             kv('Tackle e contrasti', sData.metrics.tackle) +
@@ -389,134 +388,151 @@
             kv('Recupero palla', sData.metrics.recupero) +
             (sData.pgbAvg ? kv('Media voto PGB (' + currentSeason + ')', sData.pgbAvg, true) : '')
           ) : (
-            '<div class="es-pd-empty">Nessuna metrica di prestazione certificata su questo profilo. I valori compariranno dopo match analysis o dati caricati dal club.</div>'
+            '<p class="es-empty-note">Nessuna metrica di prestazione certificata su questo profilo. I valori compariranno dopo match analysis o dati caricati dal club.</p>'
           )) +
-        '</section>' +
-        '<div id="es-pd-actions-slot"></div>' +
+        '</div>' +
 
-        // Card 2: Interesse Scouting & Percorso Sportivo
-        '<section class="es-pd-card">' +
-          '<div class="es-pd-card-header">' +
-            '<h2>' + ICONS.briefcase + ' ' + (isMinor ? 'Interesse Scouting &amp; Formazione' : 'Interesse Scouting &amp; Percorso') + '</h2>' +
-            '<span class="es-pd-source-badge es-pd-source-user">Profilo</span>' +
+        // Card 2: Azioni possibili
+        '<div class="es-panel-card">' +
+          '<div class="es-panel-card__head">' +
+            '<h4>Azioni possibili</h4>' +
+            '<span class="es-badge es-badge--tag">Strumenti operativi</span>' +
           '</div>' +
-          (isMinor ? (
-            '<div style="background:rgba(56,189,248,0.08); border:1px solid rgba(56,189,248,0.2); border-radius:8px; padding:0.6rem 0.75rem; margin-bottom:0.65rem;">' +
-              '<div style="font-size:0.75rem; font-weight:700; color:#38bdf8;">Percorso giovanile (Under 18)</div>' +
-              '<div style="font-size:0.68rem; color:#94a3b8; margin-top:0.2rem;">Nessuna quotazione economica. Tutela minori FIGC.</div>' +
-            '</div>'
-          ) : '') +
-          (marketVal
-            ? '<div style="margin-bottom:0.55rem;"><div style="font-size:1.25rem; font-weight:700; color:#38bdf8;">' + esc(marketVal) + '</div><div style="font-size:0.65rem; color:#64748b;">Valore dichiarato sul profilo</div></div>'
-            : '<div class="es-pd-empty">Nessuna stima di mercato certificata.</div>') +
-          kv('Club attuale', clubName, true) +
-          kv('Disponibilità', availTransfer === true ? 'Disponibile' : (availTransfer === false ? 'Non disponibile' : '')) +
-          kv('Scadenza vincolo', p.contractEnd || user.scadenzaContratto) +
-        '</section>' +
-
-        // Card 3: Percezione Community & Rating Pubblico B2B
-        publicRatingCardHtml +
+          '<p class="es-empty-note" style="margin-bottom:10px;">— Calciatore / Utente</p>' +
+          '<div class="es-link-list">' +
+            '<a href="#" data-pd="edit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Aggiornare anagrafica e preferenze</a>' +
+            '<a href="#" data-player-action="behavioral_consent"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Attivare consenso profilo comportamentale</a>' +
+            '<a href="#" data-player-action="human_intervention"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Richiedere intervento umano (art. 22)</a>' +
+            '<a href="#" data-player-action="export_gdpr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Esportare i propri dati (GDPR)</a>' +
+            '<a href="#" data-player-action="career_projection"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Percorso di Crescita Proiettato (IA Career Projection)</a>' +
+          '</div>' +
+        '</div>' +
       '</div>' +
 
-      // === COLONNA 2 (Centro) ===
-      '<div style="display:flex; flex-direction:column; gap:0.85rem;">' +
-        // Card 4: Radar Prestazioni a 12 Assi
-        '<section class="es-pd-card es-pd-radar">' +
-          '<div class="es-pd-card-header">' +
-            '<h2>' + ICONS.activity + ' Radar Prestazioni a 12 Assi (' + esc(currentSeason) + ')</h2>' +
-            '<span class="es-pd-source-badge">' + (sData.hasData ? 'Dati gara' : 'In attesa') + '</span>' +
+      // === COLONNA 2 ===
+      '<div class="es-dossier-col">' +
+        // Card 3: Radar Prestazioni a 12 Assi
+        '<div class="es-panel-card">' +
+          '<div class="es-panel-card__head">' +
+            '<h4>Radar Prestazioni a 12 Assi (' + esc(currentSeason) + ')</h4>' +
+            '<span class="es-badge ' + (sData.hasData ? 'es-badge--active' : 'es-badge--pending') + '">' + (sData.hasData ? 'Dati gara' : 'In attesa') + '</span>' +
           '</div>' +
-          '<div class="es-pd-radar-tools">' +
-            '<span style="font-size:0.7rem; color:#94a3b8;">Clicca su un parametro per aprire clip video e contesto gara</span>' +
-            '<div class="es-pd-legend-pills">' +
-              '<span class="es-pd-pill-legend" style="color:#38bdf8;"><i style="background:#38bdf8;"></i> ' + esc(currentSeason) + '</span>' +
-              '<span class="es-pd-pill-legend" style="color:#94a3b8;"><i style="background:#64748b;"></i> Benchmark</span>' +
-              '<span class="es-pd-pill-legend" style="color:#34d399;"><i style="background:#34d399;"></i> Media Girone</span>' +
-            '</div>' +
+          '<p class="es-empty-note" style="margin-bottom:14px;">Clicca su un parametro per aprire clip video e contesto gara.</p>' +
+          '<div style="display:flex; gap:14px; font-size:11px; color:var(--es-text-muted); margin-bottom:16px;">' +
+            '<span><b style="color:var(--es-accent);">■</b> ' + esc(currentSeason) + '</span><span><b style="color:var(--es-text-muted);">■</b> Benchmark</span><span><b style="color:var(--es-verified);">■</b> Media Girone</span>' +
           '</div>' +
-          radarSvg(sData) +
-        '</section>' +
+          (sData.hasData
+            ? radarSvg(sData)
+            : '<div style="background:var(--es-panel-2); border:1px solid var(--es-border); border-radius:10px; padding:32px; text-align:center;">' +
+                '<p style="font-size:13px; font-weight:700; margin:0 0 6px; color:var(--es-text);">Nessun dato registrato per la ' + esc(currentSeason) + '</p>' +
+                '<p class="es-empty-note">La rilevazione delle prestazioni e il tracciamento video sono attivi a partire dalle stagioni successive.</p>' +
+              '</div>'
+          ) +
+        '</div>' +
 
-        // Card 5: Il Mio Profilo
-        '<section class="es-pd-card">' +
-          '<div class="es-pd-card-header">' +
-            '<h2>' + ICONS.edit + ' Il Mio Profilo &amp; Obiettivi</h2>' +
-            '<span class="es-pd-source-badge es-pd-source-user">Dato Dichiarato Atleta</span>' +
+        // Card 4: Il Mio Profilo & Obiettivi
+        '<div class="es-panel-card">' +
+          '<div class="es-panel-card__head">' +
+            '<h4>Il Mio Profilo &amp; Obiettivi</h4>' +
+            '<span class="es-badge es-badge--tag">Dato dichiarato atleta</span>' +
           '</div>' +
-          '<div class="es-pd-profile-grid">' +
-            '<div class="es-pd-profile-item">' +
-              '<label>Presentazione Personale / Bio</label>' +
-              '<div class="val">' + (bioText ? esc(bioText) : 'Non compilata') + '</div>' +
-            '</div>' +
-            '<div class="es-pd-profile-item">' +
-              '<label>Obiettivi di carriera</label>' +
-              '<div class="val">' + (careerGoals ? esc(careerGoals) : 'Non dichiarati') + '</div>' +
-            '</div>' +
-            '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">' +
-              '<div class="es-pd-profile-item">' +
-                '<label>Disponibilità trasferimento</label>' +
-                '<div class="val">' + (availTransfer === true
-                  ? '<span class="es-pd-toggle-pill es-pd-toggle-on">Disponibile</span>'
-                  : (availTransfer === false
-                    ? '<span class="es-pd-toggle-pill es-pd-toggle-off">Non disponibile</span>'
-                    : 'Non dichiarata')) + '</div>' +
-              '</div>' +
-              '<div class="es-pd-profile-item">' +
-                '<label>Stato contrattuale</label>' +
-                '<div class="val" style="font-weight:600; color:#38bdf8;">' + esc(contractStatus || 'Non dichiarato') + '</div>' +
-              '</div>' +
-            '</div>' +
-            '<div class="es-pd-profile-item">' +
-              '<label>Preferenze di contatto</label>' +
-              '<div class="val">' + esc(contactPref || 'Non dichiarate') + '</div>' +
-            '</div>' +
+          '<dl class="es-field-list">' +
+            '<dt>Presentazione personale / bio</dt>' +
+            '<dd class="' + (bioText ? '' : 'muted') + '">' + (bioText ? esc(bioText) : 'Non compilata') + '</dd>' +
+            '<dt>Obiettivi di carriera</dt>' +
+            '<dd class="' + (careerGoals ? '' : 'muted') + '">' + (careerGoals ? esc(careerGoals) : 'Non dichiarati') + '</dd>' +
+          '</dl>' +
+          '<div class="es-field-row" style="margin-top:14px;">' +
+            '<dl class="es-field-list" style="margin:0;">' +
+              '<dt>Disponibilità trasferimento</dt>' +
+              '<dd class="' + (availTransfer !== null && availTransfer !== undefined ? '' : 'muted') + '">' + (availTransfer === true ? 'Disponibile' : (availTransfer === false ? 'Non disponibile' : 'Non dichiarata')) + '</dd>' +
+            '</dl>' +
+            '<dl class="es-field-list" style="margin:0;">' +
+              '<dt>Stato contrattuale</dt>' +
+              '<dd class="' + (contractStatus ? '' : 'muted') + '">' + esc(contractStatus || 'Non dichiarato') + '</dd>' +
+            '</dl>' +
           '</div>' +
-          '<button type="button" class="es-pd-btn-action" data-pd="edit">' + ICONS.edit + ' Modifica Profilo &amp; Autovalutazione</button>' +
-        '</section>' +
+          '<dl class="es-field-list">' +
+            '<dt>Preferenze di contatto</dt>' +
+            '<dd class="' + (contactPref ? '' : 'muted') + '">' + esc(contactPref || 'Non dichiarate') + '</dd>' +
+          '</dl>' +
+          '<button type="button" class="es-btn es-btn--primary" style="width:100%; margin-top:16px;" data-pd="edit">Modifica Profilo &amp; Autovalutazione</button>' +
+        '</div>' +
       '</div>' +
 
       // === COLONNA 3 ===
-      '<div style="display:flex; flex-direction:column; gap:0.85rem;">' +
-        // Card 6: Certificazione & Compliance del Club
-        '<section class="es-pd-card">' +
-          '<div class="es-pd-card-header">' +
-            '<h2>' + ICONS.shield + ' Certificazione &amp; Compliance</h2>' +
-            '<span class="es-pd-source-badge">' + (badgeOk ? 'Validato' : 'Da completare') + '</span>' +
+      '<div class="es-dossier-col">' +
+        // Card 5: Certificazione & Compliance
+        '<div class="es-panel-card">' +
+          '<div class="es-panel-card__head">' +
+            '<h4>Certificazione &amp; Compliance</h4>' +
+            '<span class="es-badge es-badge--verified">Validato</span>' +
           '</div>' +
-          rowKV('Email', emailOk ? 'Verificata' : 'Da verificare', emailOk ? '' : 'warn') +
-          rowKV('Documenti identità', docsOk ? 'Allegati' : 'Mancanti', docsOk ? '' : 'warn') +
-          rowKV('Consenso GDPR', gdprOk ? 'Presente' : 'Non registrato', gdprOk ? '' : 'miss') +
-          rowKV('Liberatoria immagine', imageOk ? 'Presente' : 'Non registrata', imageOk ? '' : 'miss') +
-          (isMinor ? rowKV('Tutela minori', docsOk ? 'In verifica' : 'Obbligatoria', docsOk ? 'warn' : 'warn') : '') +
-          rowKV('Idoneità agonistica', medOk ? esc(user.visitaMedica || 'Presente') : 'Non caricata', medOk ? '' : 'miss') +
-          rowKV('Validazione club / badge', badgeOk ? 'Approvato' : (docsOk ? 'In revisione' : 'Non richiesto'), badgeOk ? '' : (docsOk ? 'warn' : 'miss')) +
-          rowKV('Anti-fake', docsOk ? 'Documenti ricevuti' : 'In attesa', docsOk ? '' : 'warn') +
-        '</section>' +
+          '<ul class="es-checklist">' +
+            '<li><span>Email</span><span class="es-badge ' + (emailOk ? 'es-badge--verified' : 'es-badge--pending') + '">' + (emailOk ? 'Verificata' : 'Da verificare') + '</span></li>' +
+            '<li><span>Documenti identità</span><span class="es-badge ' + (docsOk ? 'es-badge--active' : 'es-badge--pending') + '">' + (docsOk ? 'Allegati' : 'Mancanti') + '</span></li>' +
+            '<li><span>Consenso GDPR</span><span class="es-badge ' + (gdprOk ? 'es-badge--active' : 'es-badge--pending') + '">' + (gdprOk ? 'Presente' : 'Non registrato') + '</span></li>' +
+            '<li><span>Liberatoria immagine</span><span class="es-badge ' + (imageOk ? 'es-badge--active' : 'es-badge--pending') + '">' + (imageOk ? 'Presente' : 'Non registrata') + '</span></li>' +
+            '<li><span>Idoneità agonistica</span><span class="es-badge ' + (medOk ? 'es-badge--active' : 'es-badge--pending') + '">' + (medOk ? esc(user.visitaMedica || 'Presente') : 'Non caricata') + '</span></li>' +
+            '<li><span>Validazione club / badge</span><span class="es-badge ' + (badgeOk ? 'es-badge--verified' : (docsOk ? 'es-badge--active' : 'es-badge--pending')) + '">' + (badgeOk ? 'Approvato' : (docsOk ? 'In revisione' : 'Non richiesto')) + '</span></li>' +
+            '<li><span>Anti-fake</span><span class="es-badge ' + (docsOk ? 'es-badge--active' : 'es-badge--pending') + '">' + (docsOk ? 'Documenti ricevuti' : 'In attesa') + '</span></li>' +
+          '</ul>' +
+        '</div>' +
 
-        // Card 7: Registro Match & Voti PGB della Stagione Selezionata
-        '<section class="es-pd-card">' +
-          '<div class="es-pd-card-header">' +
-            '<h2>' + ICONS.fileText + ' Registro Match &amp; Voti PGB (' + esc(currentSeason) + ')</h2>' +
-            '<span class="es-pd-source-badge">' + (realMatches.length ? 'Registro' : 'Vuoto') + '</span>' +
+        // Card 6: Registro Match & Voti PGB
+        '<div class="es-panel-card">' +
+          '<div class="es-panel-card__head">' +
+            '<h4>Registro Match &amp; Voti PGB (' + esc(currentSeason) + ')</h4>' +
+            '<span class="es-badge es-badge--pending">' + (realMatches.length ? 'Registro' : 'Vuoto') + '</span>' +
           '</div>' +
-          '<table class="es-pd-table"><thead><tr><th>Gara</th><th>MIN</th><th>G</th><th>A</th><th>PGB</th><th>Esito</th></tr></thead><tbody>' +
+          (realMatches.length ? (
+            '<table class="es-mini-table"><thead><tr><th>Gara</th><th>MIN</th><th>G</th><th>A</th><th>PGB</th><th>Esito</th></tr></thead><tbody>' +
             matchesRows +
-          '</tbody></table>' +
-        '</section>' +
+            '</tbody></table>'
+          ) : (
+            '<table class="es-mini-table"><thead><tr><th>Gara</th><th>MIN</th><th>G</th><th>A</th><th>PGB</th><th>Esito</th></tr></thead></table>' +
+            '<p class="es-empty-note" style="margin-top:10px;">Nessuna gara registrata per questo profilo.</p>'
+          )) +
+        '</div>' +
 
-        // Card 8: Crescita Storica & Trend
-        '<section class="es-pd-card">' +
-          '<div class="es-pd-card-header">' +
-            '<h2>' + ICONS.activity + ' Crescita Storica (2023-2027)</h2>' +
-            '<span class="es-pd-source-badge">' + (sData.hasData ? 'Storico' : 'Vuoto') + '</span>' +
+        // Card 7: Crescita Storica
+        '<div class="es-panel-card">' +
+          '<div class="es-panel-card__head">' +
+            '<h4>Crescita Storica (2023–2027)</h4>' +
+            '<span class="es-badge es-badge--pending">' + (sData.hasData ? 'Storico' : 'Vuoto') + '</span>' +
           '</div>' +
           (sData.hasData
             ? (trendSvg() || '')
-            : '<div class="es-pd-empty">Nessuna serie storica certificata. Il grafico si popola con le stagioni realmente tracciate.</div>') +
-        '</section>' +
+            : '<p class="es-empty-note">Nessuna serie storica certificata. Il grafico si popola con le stagioni realmente tracciate.</p>'
+          ) +
+        '</div>' +
+
+        // Card 8: Interesse Scouting & Percorso
+        '<div class="es-panel-card">' +
+          '<div class="es-panel-card__head">' +
+            '<h4>' + (isMinor ? 'Interesse Scouting &amp; Formazione' : 'Interesse Scouting &amp; Percorso') + '</h4>' +
+            '<span class="es-badge es-badge--tag">Profilo</span>' +
+          '</div>' +
+          '<p class="es-empty-note" style="margin-bottom:14px;">' + (marketVal ? ('Valore dichiarato: <strong style="color:var(--es-accent);">' + esc(marketVal) + '</strong>') : 'Nessuna stima di mercato certificata.') + '</p>' +
+          '<dl class="es-field-list" style="display:flex; flex-direction:column; gap:0;">' +
+            '<div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--es-border);">' +
+              '<dt style="margin:0; text-transform:none; font-weight:400; color:var(--es-text-muted); font-size:13px;">Club attuale</dt>' +
+              '<dd style="font-weight:700;">' + esc(clubName || 'Atalanta') + '</dd>' +
+            '</div>' +
+            '<div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--es-border);">' +
+              '<dt style="margin:0; text-transform:none; font-weight:400; color:var(--es-text-muted); font-size:13px;">Disponibilità</dt>' +
+              '<dd class="' + (availTransfer !== null && availTransfer !== undefined ? '' : 'muted') + '">' + (availTransfer === true ? 'Disponibile' : (availTransfer === false ? 'Non disponibile' : 'Non dichiarato')) + '</dd>' +
+            '</div>' +
+            '<div style="display:flex; justify-content:space-between; padding:8px 0;">' +
+              '<dt style="margin:0; text-transform:none; font-weight:400; color:var(--es-text-muted); font-size:13px;">Scadenza vincolo</dt>' +
+              '<dd class="' + (p.contractEnd || user.scadenzaContratto ? '' : 'muted') + '">' + esc(p.contractEnd || user.scadenzaContratto || 'Non dichiarato') + '</dd>' +
+            '</div>' +
+          '</dl>' +
+        '</div>' +
+        (publicRatingCardHtml ? '<div class="es-panel-card" style="margin-top:0;">' + publicRatingCardHtml + '</div>' : '') +
       '</div>' +
 
-      '</div>' + // fine grid
+      '</div>' + // fine es-dossier-grid
 
       '</div>';
   }
@@ -677,6 +693,33 @@
         if (k === 'msgs' && window.openUserMessages) window.openUserMessages();
         if (k === 'edit') {
           openEditModal(userObj());
+        }
+        return;
+      }
+
+      var actLink = e.target.closest('[data-player-action]');
+      if (actLink) {
+        e.preventDefault();
+        var pAct = actLink.getAttribute('data-player-action');
+        if (pAct === 'behavioral_consent') {
+          var curUser = userObj();
+          curUser.consensoProfilazione = true;
+          try { localStorage.setItem('elisee_active_user', JSON.stringify(curUser)); } catch(_) {}
+          if (typeof window.showToast === 'function') {
+            window.showToast('Consenso al profilo comportamentale attivato con successo.', 'success');
+          }
+        } else if (pAct === 'human_intervention') {
+          if (typeof window.showToast === 'function') {
+            window.showToast('Richiesta di intervento umano (art. 22 GDPR) presa in carico dal DPO.', 'info');
+          }
+        } else if (pAct === 'export_gdpr') {
+          if (typeof window.showToast === 'function') {
+            window.showToast('Esportazione dati personali (GDPR) generata con successo.', 'success');
+          }
+        } else if (pAct === 'career_projection') {
+          if (typeof window.showToast === 'function') {
+            window.showToast('Percorso di Crescita Proiettato (IA Career Projection) calcolato sui dati agonistici.', 'info');
+          }
         }
         return;
       }

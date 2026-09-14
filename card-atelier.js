@@ -508,18 +508,20 @@
     var row = k ? inboxAll()[k] : null;
     var status = pub ? 'Card pubblicata dallo staff.' : (row && row.status === 'pending' ? 'PNG in attesa dello staff Elisee.' : (row && row.status === 'ready' ? 'Staff ha caricato un PNG: in attesa di Salva.' : 'Nessun PNG inviato.'));
     var fields = STATS.map(function (s) {
-      return '<label class="es-card-statf"><span>' + esc(s.label) + '</span>' +
-        '<input type="number" min="1" max="99" data-card-stat="' + s.id + '" value="' + (st[s.id] || '') + '" placeholder="1–99"></label>';
+      return '<div class="es-stat-field es-card-statf"><label>' + esc(s.label) + '</label>' +
+        '<input type="number" min="1" max="99" data-card-stat="' + s.id + '" value="' + (st[s.id] || '') + '" placeholder="1–99" /></div>';
     }).join('');
-    return '<div class="es-card-player-box">' +
-      '<p class="es-card-kicker">Card Elisee</p>' +
-      '<p class="es-card-status-line">' + esc(status) + '</p>' +
-      '<div class="es-card-stats-edit">' + fields + '</div>' +
-      '<button type="button" class="es-card-btn" id="es-card-save-stats">Salva statistiche</button>' +
-      '<label class="es-card-btn is-file">Carica viso PNG' +
-        '<input type="file" accept="image/png,.png" hidden id="es-card-player-file">' +
-      '</label>' +
-      '<p class="es-card-hint">Solo formato <b>PNG con sfondo trasparente</b> (viso/busto). Peso: <b>massimo 2 MB</b> (consigliato tra <b>150 KB e 1 MB</b> per caricamento istantaneo). Risoluzione consigliata: <b>600×800 px</b> o <b>800×1000 px</b>. Lo staff Elisee riceve il file, lo rifinisce e pubblica la tua Card ufficiale.</p>' +
+    return '<div class="es-asset-box es-card-player-box">' +
+      '<p class="es-asset-box__label es-card-kicker">Card Elisee</p>' +
+      '<p class="es-asset-box__status es-card-status-line">' + esc(status) + '</p>' +
+      '<div class="es-stat-grid es-card-stats-edit">' + fields + '</div>' +
+      '<div class="es-btn-row">' +
+        '<button type="button" class="es-btn es-btn--primary es-card-btn" id="es-card-save-stats">Salva statistiche</button>' +
+        '<label class="es-btn es-btn--secondary es-card-btn is-file">Carica viso PNG' +
+          '<input type="file" accept="image/png,.png" hidden id="es-card-player-file">' +
+        '</label>' +
+      '</div>' +
+      '<p class="es-asset-box__hint es-card-hint">Solo formato <strong>PNG con sfondo trasparente</strong> (viso/busto). Peso: massimo <strong>2 MB</strong> (consigliato tra 150 KB e 1 MB per caricamento istantaneo). Risoluzione consigliata: <strong>600×800 px</strong> o <strong>800×1000 px</strong>. Lo staff Elisee riceve il file, lo rifinisce e pubblica la tua Card ufficiale.</p>' +
     '</div>';
   }
 

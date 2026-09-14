@@ -1342,33 +1342,34 @@
   }
 
   function toolsHtml() {
-    return '<div class="es-pc-tools">' +
-      '<button type="button" class="es-pc-tool" data-pc="open-card"><b>Apri la Card</b><span>Fronte figurina + vista tattica, stats e video hub.</span></button>' +
-      '<button type="button" class="es-pc-tool" data-pc="heatmap"><b>Heatmap fine gara</b><span>Auto da modulo, oppure tocca le zone sul campo.</span></button>' +
-      '<button type="button" class="es-pc-tool" id="es-pc-gps-tool" data-pc="gps"><b>' +
+    return '<div class="es-quick-actions es-pc-tools">' +
+      '<div class="es-quick-action es-pc-tool" data-pc="open-card"><strong>Apri la Card</strong><span>Fronte figurina + vista tattica, stats e video hub.</span></div>' +
+      '<div class="es-quick-action es-pc-tool" data-pc="heatmap"><strong>Heatmap fine gara</strong><span>Auto da modulo, oppure tocca le zone sul campo.</span></div>' +
+      '<div class="es-quick-action es-pc-tool" id="es-pc-gps-tool" data-pc="gps"><strong>' +
         (live ? 'GPS in corso' : 'Inizia allenamento') +
-      '</b><span>Tracciamento GPS dello smartphone · MVP Fase 1.</span></button>' +
-      '<button type="button" class="es-pc-tool" data-pc="jobs"><b>Cerca squadra</b><span>Annunci a imbuto: città, provincia, regione, Italia.</span></button>' +
+      '</strong><span>Tracciamento GPS dello smartphone · MVP Fase 1.</span></div>' +
+      '<div class="es-quick-action es-pc-tool" data-pc="jobs"><strong>Cerca squadra</strong><span>Annunci a imbuto: città, provincia, regione, Italia.</span></div>' +
       '</div>';
   }
   function refreshGpsTool() {
     var btn = document.getElementById('es-pc-gps-tool');
     if (!btn) return;
     btn.classList.toggle('is-live', !!live);
-    var b = btn.querySelector('b');
-    if (b) b.textContent = live ? 'GPS in corso' : 'Inizia allenamento';
+    var str = btn.querySelector('strong') || btn.querySelector('b');
+    if (str) str.textContent = live ? 'GPS in corso' : 'Inizia allenamento';
   }
 
   function slotHtml(u) {
-    return '<div class="es-pc-wrap">' +
-      cardHtml(u) +
-      '<div class="es-pc-side">' +
-        '<p style="margin:0;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:#38bdf8;font-weight:800;">Asset digitale</p>' +
-        '<h2 style="margin:0.15rem 0 0.35rem;font-family:Outfit,Inter,sans-serif;font-size:1.15rem;color:#fff;">La tua Card collezionabile</h2>' +
-        '<p style="margin:0 0 0.55rem;color:#94a3b8;font-size:0.84rem;line-height:1.45;">Card Elisee: maglia ufficiale del sito, viso PNG pubblicato dallo staff, overall dalle sei statistiche in italiano.</p>' +
+    return '<div class="es-card-section es-pc-wrap">' +
+      '<div class="es-card-holder">' + cardHtml(u) + '</div>' +
+      '<div class="es-asset-panel es-pc-side">' +
+        '<h2>Asset digitale</h2>' +
+        '<h3>La tua Card collezionabile</h3>' +
+        '<p>Card Elisee: maglia ufficiale del sito, viso PNG pubblicato dallo staff, overall dalle sei statistiche in italiano.</p>' +
         (window.EliseeCardAtelier && window.EliseeCardAtelier.playerUploadUi ? window.EliseeCardAtelier.playerUploadUi() : '') +
-        toolsHtml() +
-      '</div></div>';
+      '</div>' +
+    '</div>' +
+    toolsHtml();
   }
 
   function mountDash(box, user) {

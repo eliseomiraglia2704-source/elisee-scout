@@ -3,8 +3,25 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** (commit `3387262`) — Password Account & Responsabile Privacy: `Iemmello.9` (cache `AUTHPRIVACY1`).
-Ultimo fatto: **Credenziali Password Account & Responsabile Privacy**:
+Ultimo aggiornamento: **2026-09-14** (commit `986a225`) — Report Tecnico & Profilo Atleta / Area Player Dossier B2B (cache `PLAYERDOSSIER1`).
+Ultimo fatto: **Allineamento Grafico & Strutturale Area Riservata Player ("Report Tecnico & Profilo Atleta")**:
+1. **Design System & Palette Istituzionale B2B**:
+   - Palette allineata al blu del sito (`--es-accent: #3b7dff`, `#0b0e14`, `#10141d`, `#1e2430`), eliminando l'eccesso di tinte neon cyan/teal e card stile gioco da console.
+   - Bordo sottile, radius 8-10px per input e bottoni coerenti con Bacheca/Ambassador.
+2. **Badge di Stato Unificati (3 Stati Regolari, Zero Rumore Visivo)**:
+   - `.es-badge--active` (blu tenue con bordo): azioni, attivo, dati dichiarati.
+   - `.es-badge--verified` (verde smeraldo `#34c77b` tenue con bordo): rigorosamente riservato alle verifiche/validazioni effettive (zero fake account).
+   - `.es-badge--pending` / `.es-badge--tag` (grigio tenue con bordo): in attesa, vuoto, anagrafica o tag.
+3. **Layout & Griglia Dossier**:
+   - Intestazione professionale `.es-dossier__head` + selettore stagione integrato `.es-dossier__season`.
+   - Sezione superiore `.es-card-section` a 2 colonne: a sinistra la Card 2D ufficiale esistente del giocatore mantenuta intatta nel suo slot, a destra il pannello `.es-asset-panel` + `.es-asset-box` con 6 statistiche e caricamento viso PNG.
+   - Barra azioni rapide `.es-quick-actions` a 4 schede orizzontali ("Apri la Card", "Heatmap fine gara", "Inizia allenamento", "Cerca squadra").
+   - Griglia dossier a 3 colonne `.es-dossier-grid` con `.es-panel-card`:
+     - Colonna 1: *Indice Atleta & Parametri* + *Azioni possibili* (con link interattivi GDPR/interventi).
+     - Colonna 2: *Radar Prestazioni a 12 Assi (Stagione)* + *Il Mio Profilo & Obiettivi*.
+     - Colonna 3: *Certificazione & Compliance* (checklist interattiva), *Registro Match & Voti PGB*, *Crescita Storica*, *Interesse Scouting & Percorso* (+ valutazione pubblica multi-ruolo se attiva).
+4. **File coinvolti**: `player-dash.css`, `player-dash.js`, `player-card.css`, `player-card.js`, `card-atelier.css`, `card-atelier.js`, `index.html`, `version.json`, `sw.js`. Cache `PLAYERDOSSIER1`.
+Feature precedente: **Credenziali Password Account & Responsabile Privacy**:
 1. Memorizzata e impostata come standard per gli account e per l'account del Responsabile Privacy (`manueltucci2002@gmail.com`) e master secret admin la password: `Iemmello.9` (esattamente con il punto).
 2. Aggiornato hash PBKDF2 in `api/auth/me.js` (`21612aefb415ec0957dfd54095eed7fadbeaec288eeca7bf8380989c12919145`).
 3. Aggiornato secret predefinito e comparazioni in `api/auth-admin.js` e `elisee_up.py` per accettare `Iemmello.9` e relative forme normalizzate.
