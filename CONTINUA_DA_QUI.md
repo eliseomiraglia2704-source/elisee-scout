@@ -3,30 +3,30 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** — Elisée Manager: Redesign radicale di "Calendario e Presenze" (#tc-portal tab calendario) in Club Operations Calendar con viste Mese/Settimana/Agenda, workflow contestuale e gestione presenze (cache `CALMGR1`).
-Ultimo fatto: **Elisée Manager: Redesign Calendario e Presenze — Club Operations Calendar (`CALMGR1`)**:
-1. **Trasformazione in vero Club Operations Calendar**:
-   - Superato il vecchio layout con form gigante fisso a sinistra e card vuota a destra.
-   - Design luxury enterprise con il calendario come fulcro operativo e la creazione evento come workflow contestuale in modale.
-2. **Header Editoriale & KPI Operativi**:
-   - Header con breadcrumb istituzionale (`Foggia City / Gestione società / Calendario`), titolo Fraunces, sottotitolo operativo («Organizza allenamenti, partite, provini ed eventi. Monitora la partecipazione degli atleti») e pulsante d'azione rapida `+ Nuova attività`.
-   - Fascia compatta orizzontale a 4 KPI strategici:
-     - *Attività questa settimana* (conteggio attività nei prossimi 7 giorni)
-     - *Prossimo evento* (titolo, data e orario della prossima seduta o gara in agenda)
-     - *Presenze da registrare* (conteggio eventi da validare)
-     - *Atleti coinvolti* (organico tesserati convocabile)
-3. **Main Calendar Workspace**:
-   - **Colonna principale (Calendario Gestionale)**:
-     - Barra di navigazione temporale con frecce avanti/indietro, mese/anno corrente, pulsante *Oggi*, selettore viste (**Mese**, **Settimana**, **Agenda**) e filtro reattivo per tipologia evento (*Allenamento*, *Partita*, *Provino*, *Evento scouting*, *Riunione*, *Altro*).
-     - *Vista Mese*: griglia mensile completa a 7 colonne (Lun-Dom) con evidenziazione del giorno odierno, chip eventi distinti per tipologia con orario e titolo, e click rapido su qualsiasi cella per creare un'attività.
-     - *Vista Settimana*: 7 colonne con prospetto orario e schede attività.
-     - *Vista Agenda*: timeline cronologica verticale dettagliata con raggruppamento per data, orario, luogo, indicatore di percentuale presenza e pulsante diretto *Gestione presenze*.
-   - **Colonna laterale (Prossimi appuntamenti)**:
-     - Sezione compatta con la sequenza delle prossime attività, luogo, data, orario, stato presenze e pulsante *Gestione presenze* (con empty state elegante in assenza di gare/sedute).
-4. **Creazione Attività Contestuale & Gestione Presenze Integrata**:
-   - *Nuova attività*: drawer/modale elegante aperta su richiesta (o da click su un giorno del calendario) con Tipo, Categoria/Squadra, Titolo, Data, Ora, Luogo, Note e opzioni di salvataggio («Salva attività» / «Salva e comunica ai partecipanti»).
-   - *Gestione presenze*: pannello modale per ogni evento con statistiche di partecipazione in tempo reale (% Partecipazione, Presenti, Assenti, Giustificati), elenco atleti della rosa e commutatore a 4 stati di presenza (*Presente*, *Assente*, *Giustificato*, *Da confermare*) con aggiornamento istantaneo dell'anagrafica.
-5. **File aggiornati**: `tc-panel.css`, `tc-panel.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `CALMGR1`.
+Ultimo aggiornamento: **2026-09-14** — Elisée Manager: Redesign radicale di "Documenti e Scadenze" (#tc-portal tab docs) in Sports Document Management & Compliance Center con archivio ricercabile, scadenziario e modelli federali (cache `DOCMGR1`).
+Ultimo fatto: **Elisée Manager: Redesign Documenti e Scadenze — Sports Document Management & Compliance Center (`DOCMGR1`)**:
+1. **Trasformazione in Document Management & Compliance Center**:
+   - Superata l'interfaccia a card tecniche con bottoni isolati e form di upload sempre aperto.
+   - Design luxury enterprise con archivio documentale ricercabile, scadenziario automatico di conformità e modelli federali a libreria.
+2. **Header Editoriale & Document Control Overview**:
+   - Header con breadcrumb istituzionale (`Foggia City / Gestione società / Documenti`), titolo Fraunces, sottotitolo esplicativo («Un unico spazio per archiviare, verificare e monitorare tutta la documentazione della società») e pulsante d'azione rapida `Carica documento`.
+   - Fascia orizzontale compatta a 5 KPI strategici:
+     - *Documenti archiviati* (totale fascicoli salvati)
+     - *Documenti da completare* (tesserati con fascicolo o certificato medico mancante)
+     - *Scadenze imminenti* (atti in scadenza entro i prossimi 30 giorni)
+     - *Documenti scaduti* (atti con validità superata che richiedono rinnovo immediato)
+     - *Modelli disponibili* (4 format ufficiali scaricabili)
+3. **Main Document Workspace a Due Colonne**:
+   - **Colonna principale (Archivio Documentale)**:
+     - Toolbar con ricerca live per nome file, tesserato o tipologia, filtro reattivo per tipo documento e filtro per stato (*Valido*, *In scadenza*, *Scaduto*).
+     - Tabella istituzionale con *Nome documento*, *Tesserato*, *Tipologia*, *Data caricamento*, *Scadenza*, *Stato* e pulsante *Scarica* per ciascun file.
+     - Empty state curato ed esplicativo in assenza di documenti.
+   - **Colonna laterale (Modelli Precompilati)**:
+     - Lista a righe library con icona, nome e descrizione per ciascun modello ufficiale (*Modulo di iscrizione*, *Certificato medico agonistico*, *Delega genitore*, *Informativa privacy GDPR*) e pulsante rapido di download.
+4. **Upload Documento Contestuale & Scadenziario Automatico**:
+   - *Upload Documento*: drawer/modale elegante aperta da `Carica documento`, con tesserato associato, tipo documento, data scadenza e drag&drop zone per file PDF/immagini.
+   - *Scadenziario & Compliance*: sezione istituzionale a tutta larghezza con tabella di monitoraggio continuo per certificati medici, rinnovi e quote societarie, con giorni rimanenti calcolati in tempo reale, badge di conformità e pulsante *Notifica sollecito*.
+5. **File aggiornati**: `tc-panel.css`, `tc-panel.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `DOCMGR1`.
 Feature precedente: **Candidatura Elisee Manager — Restyling Luxury Editoriale Club Esclusivo (`LUXMGR1`)**:
 1. **Addio taglio da videogame**:
    - Eliminati box neon celesti, trofei, badge dorati vistosi ed emoji stile WhatsApp VIP.

@@ -148,7 +148,11 @@
     calCatFilter: 'all',
     calModalOpen: false,
     calModalDate: null,
-    attModalEvId: null
+    attModalEvId: null,
+    docModalOpen: false,
+    docFilterType: 'all',
+    docFilterStatus: 'all',
+    docSearch: ''
   };
 
   function tabsFor() {
@@ -247,7 +251,7 @@
     else if (UI.tab === 'quote') html = viewQuote(st, team);
     else if (UI.tab === 'comms') html = viewComms(st, team);
     else if (UI.tab === 'calendario' || UI.tab === 'presenze') html = viewCal(st, team);
-    else if (UI.tab === 'docs') html = viewDocs(st);
+    else if (UI.tab === 'docs') html = viewDocs(st, team);
     else if (UI.tab === 'atleti') html = viewAtleti(st);
     else html = viewSoci(st, team);
     body.innerHTML = html;
@@ -1386,53 +1390,336 @@
     return html;
   }
 
-  function viewDocs(st) {
-    var html = '<div class="es-tc-grid"><div class="es-tc-card"><h2>Moduli precompilati</h2><ul class="es-tc-list">';
-    DOCS.forEach(function (d) {
-      html += '<li class="es-tc-item"><strong>' + esc(d.name) + '</strong><p>' + esc(d.body) + '</p>';
-      html += '<div class="es-tc-actions"><button type="button" class="es-tc-ghost" data-tc="dl-tpl" data-id="' + d.id + '">Scarica</button></div></li>';
+  function docStatusBadge(d) {
+    if (!d.expires) return '<span class="es-tc-badge es-tc-badge-paid">Valido</span>';
+    var today = addDays(0);
+    var in30 = addDays(30);
+    if (d.expires < today) return '<span class="es-tc-badge es-tc-badge-declined">Scaduto</span>';
+    if (d.expires <= in30) return '<span class="es-tc-badge es-tc-badge-warn">In scadenza</span>';
+    return '<span class="es-tc-badge es-tc-badge-paid">Valido</span>';
+  }
+
+  function viewDocs(st, team) {
+    team = team || UI.team || {};
+    var today = addDays(0);
+    var in30 = addDays(30);
+
+    // KPI Document Control Overview
+    var totalDocs = (st.docs || []).length;
+    var expiredDocs = (st.docs || []).filter(function (d) { return d.expires && d.expires < today; }).length;
+    var expiringDocs = (st.docs || []).filter(function (d) { return d.expires && d.expires >= today && d.expires <= in30; }).length;
+    var athleteMembers = st.members.filter(function (m) { return m.role === 'Atleta'; });
+    var missingDocs = athleteMembers.filter(function (m) {
+      return !st.docs.some(function (d) { return d.memberId === m.id; });
+    }).length;
+
+    var html = '';
+
+    // 1. Header Editoriale
+    html += '<div class="es-tc-comms-header">' +
+      '<div class="es-tc-comms-header-left">' +
+        '<h2>Documenti e scadenze</h2>' +
+        '<p>Un unico spazio per archiviare, verificare e monitorare tutta la documentazione della società.</p>' +
+      '</div>' +
+      '<button type="button" class="es-tc-btn-primary" data-tc="open-doc-modal">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
+        'Carica documento' +
+      '</button>' +
+    '</div>';
+
+    // 2. Document Control Overview (Fascia Orizzontale Compatta a 5 KPI)
+    html += '<div class="es-tc-kpi-strip">' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Documenti archiviati</div>' +
+        '<div class="es-tc-kpi-val">' + totalDocs + '</div>' +
+        '<div class="es-tc-kpi-sub">Fascicoli e atti salvati</div>' +
+      '</div>' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Documenti da completare</div>' +
+        '<div class="es-tc-kpi-val" style="color:' + (missingDocs ? '#D97706' : '#059669') + ';">' + missingDocs + '</div>' +
+        '<div class="es-tc-kpi-sub">Tesserati con fascicolo aperto</div>' +
+      '</div>' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Scadenze imminenti</div>' +
+        '<div class="es-tc-kpi-val" style="color:' + (expiringDocs ? '#D97706' : '#0F172A') + ';">' + expiringDocs + '</div>' +
+        '<div class="es-tc-kpi-sub">Entro i prossimi 30 giorni</div>' +
+      '</div>' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Documenti scaduti</div>' +
+        '<div class="es-tc-kpi-val" style="color:' + (expiredDocs ? '#DC2626' : '#059669') + ';">' + expiredDocs + '</div>' +
+        '<div class="es-tc-kpi-sub">' + (expiredDocs ? 'Rinnovi urgenti necessari' : 'Tutti conformi') + '</div>' +
+      '</div>' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Modelli disponibili</div>' +
+        '<div class="es-tc-kpi-val">4</div>' +
+        '<div class="es-tc-kpi-sub">Format federali precompilati</div>' +
+      '</div>' +
+    '</div>';
+
+    // 3. Main Document Workspace a Due Colonne
+    html += '<div class="es-tc-grid-main">' +
+
+      // Colonna Principale: Archivio Documentale
+      '<div class="es-tc-panel">' +
+        '<div class="es-tc-panel-header">' +
+          '<h3 class="es-tc-panel-title">Archivio documenti</h3>' +
+          '<span style="font-size:0.75rem; color:#64748B;">Repository societario sicuro</span>' +
+        '</div>' +
+        '<p class="es-tc-panel-desc">Catalogo completo della documentazione caricata per atleti, tecnici e dirigenti.</p>' +
+
+        // Toolbar filtri e ricerca
+        '<div class="es-tc-doc-toolbar">' +
+          '<div class="es-tc-doc-search-box">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
+            '<input id="es-tc-doc-search" placeholder="Cerca documento o tesserato..." value="' + esc(UI.docSearch || '') + '">' +
+          '</div>' +
+          '<div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">' +
+            '<select class="es-tc-cal-filter-select" id="es-tc-doc-filter-type">' +
+              '<option value="all">Tutte le tipologie</option>' +
+              DOCS.map(function (d) { return '<option value="' + esc(d.name) + '" ' + (UI.docFilterType === d.name ? 'selected' : '') + '>' + esc(d.name) + '</option>'; }).join('') +
+              '<option value="Altro">Altro</option>' +
+            '</select>' +
+            '<select class="es-tc-cal-filter-select" id="es-tc-doc-filter-status">' +
+              '<option value="all">Tutti gli stati</option>' +
+              '<option value="valido" ' + (UI.docFilterStatus === 'valido' ? 'selected' : '') + '>Valido</option>' +
+              '<option value="in_scadenza" ' + (UI.docFilterStatus === 'in_scadenza' ? 'selected' : '') + '>In scadenza</option>' +
+              '<option value="scaduto" ' + (UI.docFilterStatus === 'scaduto' ? 'selected' : '') + '>Scaduto</option>' +
+            '</select>' +
+          '</div>' +
+        '</div>';
+
+    // Filtra documenti
+    var searchLower = (UI.docSearch || '').toLowerCase().trim();
+    var filteredDocs = (st.docs || []).filter(function (d) {
+      if (UI.docFilterType && UI.docFilterType !== 'all' && d.type !== UI.docFilterType) return false;
+      if (UI.docFilterStatus && UI.docFilterStatus !== 'all') {
+        if (UI.docFilterStatus === 'scaduto' && (!d.expires || d.expires >= today)) return false;
+        if (UI.docFilterStatus === 'in_scadenza' && (!d.expires || d.expires < today || d.expires > in30)) return false;
+        if (UI.docFilterStatus === 'valido' && d.expires && d.expires <= in30) return false;
+      }
+      if (searchLower) {
+        var match = (d.fileName || '').toLowerCase().indexOf(searchLower) >= 0 ||
+                    (d.memberName || '').toLowerCase().indexOf(searchLower) >= 0 ||
+                    (d.type || '').toLowerCase().indexOf(searchLower) >= 0;
+        if (!match) return false;
+      }
+      return true;
     });
-    html += '</ul></div><div class="es-tc-card"><h2>Carica documento tesserato</h2>';
-    html += '<div class="es-tc-field"><span>Tesserato</span><select id="es-tc-doc-m">' + memberOptions(st) + '</select></div>';
-    html += '<div class="es-tc-field"><span>Tipo</span><select id="es-tc-doc-t">';
-    DOCS.forEach(function (d) { html += '<option>' + d.name + '</option>'; });
-    html += '<option>Altro</option></select></div>';
-    html += '<div class="es-tc-field"><span>Scadenza (certificati / rinnovi)</span><input id="es-tc-doc-exp" type="date"></div>';
-    html += '<div class="es-tc-field"><span>File</span><input id="es-tc-doc-file" type="file"></div>';
-    html += '<button type="button" class="es-tc-go" data-tc="add-doc">Archivia</button></div></div>';
-    html += '<div class="es-tc-card" style="margin-top:1rem"><h2>Scadenzario automatico</h2>' + deadlineList(st) + '</div>';
-    html += '<div class="es-tc-card" style="margin-top:1rem"><h2>Archivio caricato</h2>';
-    if (!st.docs.length) html += '<p class="es-tc-muted">Nessun documento caricato.</p>';
-    else {
-      html += '<ul class="es-tc-list">';
-      st.docs.slice().reverse().forEach(function (d) {
-        html += '<li class="es-tc-item"><strong>' + esc(d.type) + '</strong><p>' + esc(d.memberName) + ' · file ' + esc(d.fileName) + (d.expires ? ' · scade ' + esc(d.expires) : '') + '</p></li>';
+
+    if (!filteredDocs.length) {
+      html += '<div class="es-tc-empty">' +
+        '<div class="es-tc-empty-title">Nessun documento archiviato</div>' +
+        '<p class="es-tc-empty-sub">I documenti caricati dalla società verranno organizzati e visualizzati in questo archivio.</p>' +
+      '</div>';
+    } else {
+      html += '<div class="es-tc-table-wrap"><table class="es-tc-table">' +
+        '<thead>' +
+          '<tr>' +
+            '<th>Nome documento</th>' +
+            '<th>Tesserato</th>' +
+            '<th>Tipologia</th>' +
+            '<th>Data carico</th>' +
+            '<th>Scadenza</th>' +
+            '<th>Stato</th>' +
+            '<th style="text-align:right;">Azioni</th>' +
+          '</tr>' +
+        '</thead>' +
+        '<tbody>';
+      filteredDocs.forEach(function (d) {
+        html += '<tr>' +
+          '<td><strong>📄 ' + esc(d.fileName || 'documento.pdf') + '</strong></td>' +
+          '<td>' + esc(d.memberName) + '</td>' +
+          '<td><span class="es-tc-badge" style="background:#F1F5F9; color:#0F172A;">' + esc(d.type) + '</span></td>' +
+          '<td>' + fmtDate(d.at) + '</td>' +
+          '<td>' + (d.expires ? fmtDate(d.expires) : '—') + '</td>' +
+          '<td>' + docStatusBadge(d) + '</td>' +
+          '<td style="text-align:right;">' +
+            '<button type="button" class="es-tc-btn-back" data-tc="dl-doc" data-id="' + esc(d.id) + '" style="padding:0.25rem 0.6rem; font-size:0.75rem;">' +
+              'Scarica' +
+            '</button>' +
+          '</td>' +
+        '</tr>';
       });
-      html += '</ul>';
+      html += '</tbody></table></div>';
     }
-    html += '</div>';
+
+    html += '</div>' + // chiude colonna principale
+
+      // Colonna Laterale: Modelli Precompilati
+      '<div style="display:flex; flex-direction:column; gap:1.5rem;">' +
+        '<div class="es-tc-panel">' +
+          '<div class="es-tc-panel-header">' +
+            '<h3 class="es-tc-panel-title">Modelli precompilati</h3>' +
+            '<span style="font-size:0.75rem; color:#64748B;">4 Format</span>' +
+          '</div>' +
+          '<p class="es-tc-panel-desc">Documentazione societaria ufficiale conforme alle normative federali.</p>' +
+          '<div class="es-tc-doc-model-list">';
+
+    DOCS.forEach(function (d) {
+      html += '<div class="es-tc-doc-model-item">' +
+        '<div class="es-tc-doc-model-info">' +
+          '<span class="es-tc-doc-icon">📑</span>' +
+          '<div class="es-tc-doc-meta">' +
+            '<h4>' + esc(d.name) + '</h4>' +
+            '<p>' + esc(d.body) + '</p>' +
+          '</div>' +
+        '</div>' +
+        '<button type="button" class="es-tc-btn-back" data-tc="dl-tpl" data-id="' + d.id + '" style="padding:0.35rem 0.75rem; font-size:0.75rem;">' +
+          'Scarica' +
+        '</button>' +
+      '</div>';
+    });
+
+    html += '</div>' + // chiude doc-model-list
+        '</div>' + // chiude panel modelli
+      '</div>' + // chiude colonna laterale
+    '</div>'; // chiude grid-main
+
+    // 4. Sezione Scadenziario & Compliance (A tutta larghezza)
+    html += '<div class="es-tc-panel" style="margin-top:1.5rem;">' +
+      '<div class="es-tc-panel-header">' +
+        '<h3 class="es-tc-panel-title">Scadenziario &amp; Compliance</h3>' +
+        '<span style="font-size:0.75rem; color:#059669; font-weight:600;">Monitoraggio Automatico Attivo</span>' +
+      '</div>' +
+      '<p class="es-tc-panel-desc" style="margin-bottom:1rem;">' +
+        'Monitoraggio attivo delle certificazioni mediche, rinnovi delle quote societarie e conformità legale dei tesserati.' +
+      '</p>' +
+      renderComplianceSection(st) +
+    '</div>';
+
+    // Modal di caricamento se aperto
+    if (UI.docModalOpen) html += renderDocModal(st);
+
     return html;
   }
 
-  function deadlineList(st) {
+  function renderComplianceSection(st) {
+    var today = addDays(0);
     var rows = [];
-    st.docs.forEach(function (d) {
-      if (d.expires) rows.push({ who: d.memberName, what: d.type, when: d.expires });
-    });
-    st.fees.forEach(function (f) {
-      if (!f.paidAt) {
-        var m = st.members.filter(function (x) { return x.id === f.memberId; })[0] || {};
-        rows.push({ who: (m.nome || '') + ' ' + (m.cognome || ''), what: 'Quota ' + f.type, when: f.due });
+
+    // Documenti con scadenza
+    (st.docs || []).forEach(function (d) {
+      if (d.expires) {
+        rows.push({
+          type: 'doc',
+          title: d.type,
+          who: d.memberName,
+          date: d.expires,
+          isMedical: d.type.toLowerCase().indexOf('medico') >= 0
+        });
       }
     });
-    rows.sort(function (a, b) { return String(a.when).localeCompare(String(b.when)); });
-    if (!rows.length) return '<p class="es-tc-muted">Nessuna scadenza. Le date di certificati medici e rinnovi quote compaiono qui.</p>';
-    var html = '<ul class="es-tc-list">';
-    rows.forEach(function (r) {
-      var past = Date.parse(r.when + 'T00:00:00') < Date.now();
-      html += '<li class="es-tc-item"><strong>' + esc(r.who) + '</strong><p class="' + (past ? 'es-tc-bad' : 'es-tc-warn') + '">' + esc(r.what) + ' · ' + esc(r.when) + (past ? ' (scaduto)' : '') + '</p></li>';
+
+    // Quote in scadenza o insolute
+    var map = {};
+    (st.members || []).forEach(function (m) { map[m.id] = m; });
+    (st.fees || []).forEach(function (f) {
+      if (!f.paidAt && f.due) {
+        var mem = map[f.memberId] || {};
+        rows.push({
+          type: 'fee',
+          title: 'Quota ' + f.type + ' (€' + f.amount + ')',
+          who: (mem.nome || '') + ' ' + (mem.cognome || ''),
+          date: f.due,
+          isMedical: false
+        });
+      }
     });
-    return html + '</ul>';
+
+    rows.sort(function (a, b) { return String(a.date).localeCompare(String(b.date)); });
+
+    if (!rows.length) {
+      return '<div class="es-tc-empty">' +
+        '<div class="es-tc-empty-title">Nessuna scadenza imminente</div>' +
+        '<p class="es-tc-empty-sub">Le prossime scadenze documentali e sanitarie compariranno automaticamente in questa sezione.</p>' +
+      '</div>';
+    }
+
+    var html = '<div class="es-tc-table-wrap"><table class="es-tc-table">' +
+      '<thead>' +
+        '<tr>' +
+          '<th>Documento / Titolo</th>' +
+          '<th>Tesserato</th>' +
+          '<th>Data scadenza</th>' +
+          '<th>Giorni rimanenti</th>' +
+          '<th>Stato conformità</th>' +
+          '<th style="text-align:right;">Azione</th>' +
+        '</tr>' +
+      '</thead>' +
+      '<tbody>';
+
+    rows.slice(0, 15).forEach(function (r) {
+      var diffDays = Math.round((Date.parse(r.date + 'T00:00:00') - Date.now()) / (1000 * 60 * 60 * 24));
+      var isPast = diffDays < 0;
+      var daysLabel = isPast ? ('Scaduto da ' + Math.abs(diffDays) + ' gg') : (diffDays === 0 ? 'Scade oggi' : ('Mancano ' + diffDays + ' gg'));
+      var statusBadge = isPast ?
+        '<span class="es-tc-badge es-tc-badge-declined">Non conforme / Scaduto</span>' :
+        (diffDays <= 30 ? '<span class="es-tc-badge es-tc-badge-warn">In scadenza</span>' : '<span class="es-tc-badge es-tc-badge-paid">Conforme</span>');
+
+      html += '<tr>' +
+        '<td><strong>' + (r.isMedical ? '🩺 ' : (r.type === 'fee' ? '💶 ' : '📋 ')) + esc(r.title) + '</strong></td>' +
+        '<td>' + esc(r.who) + '</td>' +
+        '<td>' + fmtDate(r.date) + '</td>' +
+        '<td style="color:' + (isPast ? '#DC2626' : (diffDays <= 15 ? '#D97706' : '#475569')) + '; font-weight:600;">' + daysLabel + '</td>' +
+        '<td>' + statusBadge + '</td>' +
+        '<td style="text-align:right;">' +
+          '<button type="button" class="es-tc-btn-back" data-tc="notify-compliance" data-who="' + esc(r.who) + '" style="padding:0.25rem 0.55rem; font-size:0.72rem;">' +
+            'Notifica sollecito' +
+          '</button>' +
+        '</td>' +
+      '</tr>';
+    });
+
+    html += '</tbody></table></div>';
+    return html;
+  }
+
+  function renderDocModal(st) {
+    return '<div class="es-tc-modal-backdrop">' +
+      '<div class="es-tc-modal">' +
+        '<div class="es-tc-modal-header">' +
+          '<h3 class="es-tc-modal-title">Archivia nuovo documento</h3>' +
+          '<button type="button" class="es-tc-modal-close" data-tc="close-doc-modal">&times;</button>' +
+        '</div>' +
+        '<p class="es-tc-panel-desc" style="margin-bottom:1.25rem;">' +
+          'Associa un certificato medico o un documento societario a un tesserato registrato.' +
+        '</p>' +
+        '<div class="es-tc-field">' +
+          '<label>Tesserato associato *</label>' +
+          '<select id="es-tc-doc-m">' + memberOptions(st) + '</select>' +
+        '</div>' +
+        '<div class="es-tc-form-row">' +
+          '<div class="es-tc-field">' +
+            '<label>Tipologia documento *</label>' +
+            '<select id="es-tc-doc-t">' +
+              DOCS.map(function (d) { return '<option>' + d.name + '</option>'; }).join('') +
+              '<option>Certificato medico non agonistico</option>' +
+              '<option>Documento identità atleta</option>' +
+              '<option>Contratto / Tesseramento FIGC</option>' +
+              '<option>Altro</option>' +
+            '</select>' +
+          '</div>' +
+          '<div class="es-tc-field">' +
+            '<label>Data di scadenza (opzionale)</label>' +
+            '<input id="es-tc-doc-exp" type="date">' +
+          '</div>' +
+        '</div>' +
+        '<div class="es-tc-field">' +
+          '<label>File documento (PDF, Immagine, Scansione)</label>' +
+          '<div class="es-tc-dragzone" onclick="var f = document.getElementById(\'es-tc-doc-file\'); if(f) f.click();">' +
+            '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:0.4rem;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
+            '<div style="font-size:0.84rem; font-weight:600; color:#0F172A;">Trascina qui il file oppure clicca per sfogliare</div>' +
+            '<div style="font-size:0.72rem; color:#64748B; margin-top:0.2rem;">Formati ammessi: PDF, PNG, JPG fino a 10MB</div>' +
+            '<input id="es-tc-doc-file" type="file" style="display:none;" onchange="var l = document.getElementById(\'es-tc-drag-label\'); if(l && this.files[0]) l.innerText = this.files[0].name;">' +
+            '<div id="es-tc-drag-label" style="font-size:0.75rem; color:#059669; font-weight:600; margin-top:0.4rem;"></div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(15,23,42,0.08);">' +
+          '<button type="button" class="es-tc-btn-primary" data-tc="add-doc">Archivia documento</button>' +
+          '<button type="button" class="es-tc-btn-back" data-tc="close-doc-modal">Annulla</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
   }
 
   function viewAtleti(st) {
@@ -1784,6 +2071,31 @@
       st.attendance[ev][mid] = cur === 'presente' ? 'assente' : (cur === 'assente' ? 'giustificato' : 'presente');
       put(UI.team, st); render(); return;
     }
+    if (act === 'open-doc-modal') {
+      UI.docModalOpen = true;
+      render();
+      return;
+    }
+    if (act === 'close-doc-modal') {
+      UI.docModalOpen = false;
+      render();
+      return;
+    }
+    if (act === 'dl-doc') {
+      var dId = btn.getAttribute('data-id');
+      var docItem = (st.docs || []).filter(function (x) { return x.id === dId; })[0];
+      if (docItem) {
+        downloadText(docItem.fileName || 'documento.txt', 'ELISEE SCOUT — DOCUMENTO SOCIETARIO\n\nTitolo: ' + docItem.type + '\nTesserato: ' + docItem.memberName + '\nScadenza: ' + (docItem.expires || 'Nessuna') + '\nData caricamento: ' + fmtDate(docItem.at) + '\n\nFile verificato nel repository di ' + (UI.team.name || 'Società'));
+      } else {
+        toast('Download documento avviato.');
+      }
+      return;
+    }
+    if (act === 'notify-compliance') {
+      var who = btn.getAttribute('data-who') || 'tesserato';
+      toast('Sollecito di conformità inviato a ' + who + '.');
+      return;
+    }
     if (act === 'dl-tpl') {
       var tpl = DOCS.filter(function (d) { return d.id === btn.getAttribute('data-id'); })[0];
       if (!tpl) return;
@@ -1804,7 +2116,8 @@
         fileName: (file && file.files && file.files[0] && file.files[0].name) || 'documento.pdf',
         at: nowIso()
       });
-      put(UI.team, st); toast('Documento in archivio.'); render(); return;
+      UI.docModalOpen = false;
+      put(UI.team, st); toast('Documento archiviato con successo.'); render(); return;
     }
     if (act === 'open-scout') {
       if (window.switchView) window.switchView('user-dossier', '#user-dossier-portal');
@@ -1939,6 +2252,18 @@
       root.addEventListener('change', function (e) {
         if (e.target && e.target.id === 'es-tc-filter-type') {
           UI.calTypeFilter = e.target.value;
+          render();
+        } else if (e.target && e.target.id === 'es-tc-doc-filter-type') {
+          UI.docFilterType = e.target.value;
+          render();
+        } else if (e.target && e.target.id === 'es-tc-doc-filter-status') {
+          UI.docFilterStatus = e.target.value;
+          render();
+        }
+      });
+      root.addEventListener('input', function (e) {
+        if (e.target && e.target.id === 'es-tc-doc-search') {
+          UI.docSearch = e.target.value;
           render();
         }
       });

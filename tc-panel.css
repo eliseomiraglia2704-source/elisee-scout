@@ -1125,3 +1125,105 @@ body:has(#view-tc-panel:not([style*="display: none"])) .es-pd-rail {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* DOCUMENT MANAGEMENT & COMPLIANCE (LUXURY ENTERPRISE) */
+.es-tc-doc-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.es-tc-doc-search-box {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #FFFFFF;
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  border-radius: 6px;
+  padding: 0.35rem 0.65rem;
+  flex: 1;
+  min-width: 200px;
+  max-width: 320px;
+}
+
+.es-tc-doc-search-box input {
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  font-size: 0.8rem !important;
+  width: 100%;
+}
+
+.es-tc-doc-model-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.es-tc-doc-model-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0.85rem;
+  background: #F8FAFC;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.es-tc-doc-model-item:hover {
+  background: #FFFFFF;
+  border-color: rgba(15, 23, 42, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.es-tc-doc-model-info {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.es-tc-doc-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: rgba(15, 23, 42, 0.06);
+  color: #0F172A;
+  font-size: 0.85rem;
+}
+
+.es-tc-doc-meta h4 {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #0F172A;
+  margin: 0 0 0.15rem 0;
+}
+
+.es-tc-doc-meta p {
+  font-size: 0.72rem;
+  color: #64748B;
+  margin: 0;
+}
+
+.es-tc-dragzone {
+  border: 2px dashed rgba(15, 23, 42, 0.15);
+  border-radius: 8px;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  background: #F8FAFC;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.es-tc-dragzone:hover {
+  border-color: #0F172A;
+  background: #F1F5F9;
+}
+
