@@ -3,24 +3,24 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** — Ancoraggio fisso viewport per la barra di navigazione laterale verticale (`es-pd-rail`) durante lo scroll (cache `FIXEDRAIL1`).
-Ultimo fatto: **Ancoraggio Fisso Viewport della Barra di Navigazione Laterale (`es-pd-rail`) durante lo Scroll**:
-1. **Identificazione del componente**:
-   - Elemento: `<aside class="es-pd-rail">` presente in `player-dash.js` (calciatore), `dash-real.js` (staff/dirigenti: DS, Scout, Medico, Preparatore, ecc.) e `giorn-dash.js` (giornalista/redazione).
-   - Raggruppa le icone: Home, Profilo/Dashboard, Album/immagini, Messaggi e Anagrafica/Modifica.
-2. **Posizionamento `position: fixed` ancorato alla viewport**:
-   - Modificato da `position: sticky` (che non restava visibile per via degli overflow dei contenitori padri) a `position: fixed !important; top: 86px !important; left: 0 !important; width: 56px !important; height: calc(100vh - 86px) !important; z-index: 50 !important;`.
-   - Rimane posizionato sotto l'header fisso superiore (`top: 86px`, z-index 1000) e copre l'intera altezza dello schermo verso il basso senza sovrapporsi all'header.
-   - L'icona scudo circolare privacy/cookie in basso a sinistra mantiene il proprio z-index elevato (99980) e la piena interattività.
-3. **Offset del contenuto principale**:
-   - Aggiunto `padding-left: 56px !important;` e `display: block !important;` sul contenitore `.es-pd` e `#es-pd` (e id affini), così il contenuto principale (`.es-pd-body`) parte esattamente a destra della rail senza venire coperto da essa.
-   - Nascosta la striscia decorativa obsoleta `.es-pd::before { display: none !important; }`.
-   - Modificato `player-dash.js` per usare `display: block` invece di forzare inline `display: grid`.
-4. **Uniformità e responsività**:
-   - Comportamento identico su tutte le dashboard di ruolo (Calciatore, DS, Osservatore, Medico, Preparatore, Giornalista, Tifoso, ecc.).
-   - Schermi mobile (≤768px): tramite media query la rail si adatta come barra orizzontale sticky touch-friendly con `padding-left: 0`, preservando il 100% dell'area per il contenuto.
-   - Nessuna alterazione visiva a colori, icone o spaziature dei pulsanti.
-5. **File aggiornati**: `player-dash.css`, `dash-luxury.css`, `style.css`, `player-dash.js`, `index.html`, `version.json`, `sw.js`. Cache `FIXEDRAIL1`.
+Ultimo aggiornamento: **2026-09-14** — Attivazione modalità "Zero Rischi" IP-Safe con motore di badge vettoriali geometrici neutri e iniziali (cache `NEUTRALBADGE1`).
+Ultimo fatto: **Modalità "Zero Rischi" IP-Safe con Motore di Badge Vettoriali Geometrici Neutri (`badge-engine.js`)**:
+1. **Piena conformità legale e tutela proprietà industriale**:
+   - Zero rischi di contraffazione, imitazione servile o concorrenza parassitaria rispetto ai marchi ufficiali dei club.
+   - I club vengono visualizzati di default con stemmi e scudetti vettoriali SVG 100% originali e geometrici (stile heraldic shield / luxury medal), basati sui colori sociali ufficiali (`primary` e `secondary`) e sulla sigla/abbreviazione a 3 lettere calcolata con algoritmo intelligente (es. "ATA", "BAR", "NAP", "MIL", "INT", "JUV").
+2. **Architettura `badge-engine.js`**:
+   - Motore SVG leggero e performante (zero richieste di rete, rendering a 0ms).
+   - Genera SVG scalabili a qualsiasi dimensione (da 24px a 200px) con supporto a `generateSvg(team, opts)`, `svgUri(team, opts)` per immagini Data URI e `mount(container, team, opts)` per iniezione diretta nel DOM.
+3. **Integrazione Selettore Squadre FC (`squadre-select.js` & `squadre-select.css`)**:
+   - Impostato `USE_NEUTRAL_BADGES = true` di default per mostrare sempre lo scudetto vettoriale rifinito con drop-shadow e rilievo tridimensionale all'interno dell'anello luxury dello stage.
+   - Sostituito il markup iniziale statico di Pisa in `index.html` con il fallback vettoriale dinamico.
+4. **Integrazione Formazione & Tattica (`formazione-squadra.js`)**:
+   - Testata della formazione `#es-xi-logo` aggiornata per caricare in automatico l'SVG Data-URI del badge neutro della squadra selezionata.
+5. **File creati e aggiornati**: `badge-engine.js` (nuovo), `squadre-select.js`, `squadre-select.css`, `formazione-squadra.js`, `index.html`, `version.json`, `sw.js`. Cache `NEUTRALBADGE1`.
+Feature precedente: **Ancoraggio fisso viewport per la barra di navigazione laterale verticale (`es-pd-rail`) durante lo scroll (cache `FIXEDRAIL1`)**:
+1. **Identificazione del componente**: `<aside class="es-pd-rail">` in `player-dash.js`, `dash-real.js` e `giorn-dash.js`.
+2. **Posizionamento `position: fixed`**: Ancorato a viewport con `top: 86px`, `height: calc(100vh - 86px)`, `z-index: 50`.
+3. **Offset del contenuto principale**: `padding-left: 56px !important` su `.es-pd` e `#es-pd`. Media query mobile touch preservata.
 Feature precedente: **Ripristino pulito e fedele loghi squadre e competizioni in Seleziona Squadre (cache `CLEAN1`)**:
 1. **Ripristino Architettura Diretta & Fedeltà Asset Progetto**:
    - Rimosso `seenInLeague` e prefetch asincrono con race condition. Loghi collegati direttamente a `immagini/squadre-loghi/`.

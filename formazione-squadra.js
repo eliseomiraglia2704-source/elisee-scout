@@ -309,8 +309,15 @@
       if (nameEl) nameEl.textContent = team.name || '';
       if (leagueEl) leagueEl.textContent = team.league || '';
       if (logoEl) {
-        if (team.logo) { logoEl.src = team.logo; logoEl.hidden = false; }
-        else logoEl.hidden = true;
+        if (window.EliseeBadge && typeof window.EliseeBadge.svgUri === 'function') {
+          logoEl.src = window.EliseeBadge.svgUri(team, { size: 64, shape: 'shield' });
+          logoEl.hidden = false;
+        } else if (team.logo) {
+          logoEl.src = team.logo;
+          logoEl.hidden = false;
+        } else {
+          logoEl.hidden = true;
+        }
       }
       document.querySelectorAll('.es-xi-mod').forEach(function (b) {
         b.classList.toggle('is-on', b.getAttribute('data-mod') === window.EliseeFormazione.module);

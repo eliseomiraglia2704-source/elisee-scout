@@ -758,22 +758,32 @@
     if (sr) sr.style.background = kit.sleeve || kit.body || (team && team.primary) || '#1e3a5f';
   }
 
+  var USE_NEUTRAL_BADGES = true; // Modalità "Zero Rischi" IP-Safe attiva di default
+
   function showFallback(abbr, team) {
     var img = $('es-sq-crest-img');
     var fb = $('es-sq-crest-fallback');
     if (img) {
       img.style.display = 'none';
+      img.style.visibility = 'hidden';
       try {
         img.removeAttribute('src');
       } catch (e) {}
     }
     if (fb) {
       fb.hidden = false;
-      fb.textContent = abbr || 'FC';
-      var p = (team && team.primary) || '#1e3a5f';
-      var s = (team && team.secondary) || '#0f172a';
-      fb.style.background =
-        'radial-gradient(circle at 30% 30%, ' + p + 'cc, ' + s + 'ee 70%, #0f172a)';
+      fb.style.display = 'flex';
+      if (window.EliseeBadge && typeof window.EliseeBadge.mount === 'function') {
+        fb.style.background = 'transparent';
+        fb.textContent = '';
+        window.EliseeBadge.mount(fb, team, { size: 140, shape: 'shield', abbr: abbr });
+      } else {
+        fb.textContent = abbr || (team && team.abbr) || 'ESC';
+        var p = (team && team.primary) || '#1e3a5f';
+        var s = (team && team.secondary) || '#0f172a';
+        fb.style.background =
+          'radial-gradient(circle at 30% 30%, ' + p + 'cc, ' + s + 'ee 70%, #0f172a)';
+      }
     }
   }
 
@@ -880,7 +890,9 @@
     var img = $('es-sq-crest-img');
     var fb = $('es-sq-crest-fallback');
     if (!img) return;
-    if (!url) {
+
+    if (USE_NEUTRAL_BADGES || !url) {
+      img.style.display = 'none';
       img.style.visibility = 'hidden';
       img.dataset.currentSrc = '';
       try { img.removeAttribute('src'); } catch (e) {}

@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260914_FIXEDRAIL1';
+      var BUILD_VERSION = '20260914_NEUTRALBADGE1';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -325,7 +325,7 @@
   <link rel="stylesheet" href="elisee-world/elisee-world.css?v=20260906_EWGBA1">
   <link rel="stylesheet" href="minigioco-carriera.css?v=20260913_HUBPOLISH2">
   <link rel="stylesheet" href="autopilot.css?v=20260827_FIX3">
-  <link rel="stylesheet" href="squadre-select.css?v=20260914_CLEAN1">
+  <link rel="stylesheet" href="squadre-select.css?v=20260914_NEUTRALBADGE1">
   <link rel="stylesheet" href="formazione-squadra.css?v=20260830_ECCB1">
   <link rel="stylesheet" href="verifica-account.css?v=20260906_NOLINE2">
   <link rel="stylesheet" href="manager.css?v=20260820_XI1">
@@ -3061,8 +3061,8 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
                   </button>
                   <div class="es-sq-crest" id="es-sq-crest">
-                    <img id="es-sq-crest-img" class="es-sq-crest-img" src="immagini/squadre-loghi/pisa.png" alt="Pisa logo" referrerpolicy="no-referrer" />
-                    <div class="es-sq-crest-fallback" id="es-sq-crest-fallback" hidden>PIS</div>
+                    <img id="es-sq-crest-img" class="es-sq-crest-img" alt="" style="display:none;" />
+                    <div class="es-sq-crest-fallback" id="es-sq-crest-fallback">PIS</div>
                     <span id="es-sq-crest-abbr" hidden>PIS</span>
                     <span id="es-sq-crest-year" hidden>1909</span>
                   </div>
@@ -5801,8 +5801,9 @@
       setTimeout(unlock, 2000);
     })();
   </script>
-  <script src="squadre-select.js?v=20260914_CLEAN1"></script>
-  <script src="formazione-squadra.js?v=20260830_ECCB1"></script>
+  <script src="badge-engine.js?v=20260914_NEUTRALBADGE1"></script>
+  <script src="squadre-select.js?v=20260914_NEUTRALBADGE1"></script>
+  <script src="formazione-squadra.js?v=20260914_NEUTRALBADGE1"></script>
   <script src="manager-runtime.js?v=20260826_MGR1"></script>
   <script src="tc-panel.js?v=20260826_TC3"></script>
   <!-- React & ReactDOM Global Runtime (UMD) -->

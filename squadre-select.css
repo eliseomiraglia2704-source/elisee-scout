@@ -330,7 +330,7 @@
 .es-sq-crest-fallback {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -339,9 +339,22 @@
   color: #fff;
   letter-spacing: 0.06em;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, rgba(56, 189, 248, 0.45), rgba(15, 23, 42, 0.95));
+  background: transparent;
   user-select: none;
   pointer-events: none;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.es-sq-crest-fallback svg {
+  max-width: 82%;
+  max-height: 82%;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.65));
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateZ(0);
+}
+.es-sq-card:hover .es-sq-crest-fallback svg,
+.es-sq-main:hover .es-sq-crest-fallback svg {
+  transform: scale(1.05) translateZ(0);
 }
 .es-sq-crest-fallback[hidden] {
   display: none !important;
