@@ -12,10 +12,10 @@
   var LEAGUE_TEAMS_COUNT = { 'm': {}, 'f': {} };
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260914_FGC1';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260914_FGC2';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260914_FGC1';
-  var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260914_FGC1';
+  var LOGO_V = '20260914_FGC2';
+  var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260914_FGC2';
   var REGISTERED_TEAMS = [];
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -447,6 +447,11 @@
               if (nm && nm !== 'BARLETTA') VERIFIED_NAMES[String(nm).toUpperCase().trim()] = true;
             });
           }
+          var selSquadra = JSON.parse(localStorage.getItem('elisee_selected_squadra') || 'null');
+          if (selSquadra && (selSquadra.id === 'foggia-city' || String(selSquadra.name).toUpperCase().indexOf('FOGGIA CITY') >= 0)) {
+            selSquadra.logo = 'immagini/squadre-loghi/foggia-city.png';
+            localStorage.setItem('elisee_selected_squadra', JSON.stringify(selSquadra));
+          }
         } catch (e) {}
         return true;
       })
@@ -819,7 +824,7 @@
     if (sr) sr.style.background = kit.sleeve || kit.body || (team && team.primary) || '#1e3a5f';
   }
 
-  var USE_NEUTRAL_BADGES = true; // Modalità "Zero Rischi" IP-Safe attiva di default
+  var USE_NEUTRAL_BADGES = false; // Mostra i loghi ufficiali delle squadre registrate e verificate
 
   function showFallback(abbr, team) {
     var img = $('es-sq-crest-img');
@@ -958,7 +963,11 @@
     var fb = $('es-sq-crest-fallback');
     if (!img) return;
 
-    if (USE_NEUTRAL_BADGES || !url) {
+    if (!url && team && (team.id === 'foggia-city' || String(team.name).toUpperCase().indexOf('FOGGIA CITY') >= 0)) {
+      url = 'immagini/squadre-loghi/foggia-city.png';
+    }
+
+    if (!url) {
       img.style.display = 'none';
       img.style.visibility = 'hidden';
       img.dataset.currentSrc = '';
@@ -967,8 +976,11 @@
       return;
     }
     var fullSrc = logoUrl(url);
-    if (img.dataset.currentSrc === fullSrc && img.style.visibility !== 'hidden' && img.complete && img.naturalWidth > 0) {
-      if (fb) fb.hidden = true;
+    if (img.dataset.currentSrc === fullSrc && img.style.display !== 'none' && img.complete && img.naturalWidth > 0) {
+      if (fb) {
+        fb.hidden = true;
+        fb.style.display = 'none';
+      }
       return;
     }
     img.dataset.currentSrc = fullSrc;
@@ -982,30 +994,37 @@
 
     img.onerror = function () {
       if (img.dataset.currentSrc === fullSrc) {
+        img.style.display = 'none';
         img.style.visibility = 'hidden';
         showFallback(team && team.abbr, team);
       }
     };
     img.onload = function () {
       if (img.dataset.currentSrc === fullSrc) {
+        img.style.display = 'block';
         img.style.visibility = 'visible';
-        if (fb) fb.hidden = true;
+        if (fb) {
+          fb.hidden = true;
+          fb.style.display = 'none';
+        }
       }
     };
 
     img.src = fullSrc;
-    if (img.complete && img.naturalWidth > 0) {
-      img.style.visibility = 'visible';
-      if (fb) fb.hidden = true;
-    } else {
-      img.style.visibility = 'hidden';
-      showFallback(team && team.abbr, team);
+    img.style.display = 'block';
+    img.style.visibility = 'visible';
+    if (fb) {
+      fb.hidden = true;
+      fb.style.display = 'none';
     }
   }
 
   function render() {
     syncGenderInputs();
     var team = current();
+    if (team && (team.id === 'foggia-city' || String(team.name).toUpperCase().indexOf('FOGGIA CITY') >= 0) && !team.logo) {
+      team.logo = 'immagini/squadre-loghi/foggia-city.png';
+    }
     var nameEl = $('es-sq-team-name');
     if (!team) {
       if (nameEl) {
