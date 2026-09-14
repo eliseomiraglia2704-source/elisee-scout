@@ -3,8 +3,23 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** (Commit `8db0b8d`) — Logo ufficiale Foggia City integrato nel selettore squadre `#squadre-portal`: scudo circolare nerazzurro visibile direttamente al posto del fallback generico FGC, rimozione `USE_NEUTRAL_BADGES`, cache-bust `FOGGIACITY2`.
-Ultimo fatto: **Fix Stemma Ufficiale Foggia City in Seleziona Squadre (`FOGGIACITY2`)**:
+Ultimo aggiornamento: **2026-09-14** — Redesign Ultra-Professionale Candidatura Elisee Manager: 4 sezioni numerate con divisori, breadcrumb gerarchico di navigazione, timeline verticale in 3 fasi con linea continua, callout motivazionale con accento laterale, sidebar a 3 blocchi separati con crest ufficiale club (cache `CANDMGR1`).
+Ultimo fatto: **Redesign Ultra-Professionale Candidatura Elisee Manager (`CANDMGR1`)**:
+1. **Struttura Enterprise & Form Diviso in 4 Sezioni**:
+   - Superata la griglia piatta generica: form riorganizzato in 4 sezioni numerate con intestazione, progressivo `01-04` e linea divisoria:
+     - `01 Dati di contatto`: Nome e cognome, Email account, Telefono con hint per Circolo Manager/WhatsApp VIP, Ruolo nel club.
+     - `02 Territorio`: Città e territorio di riferimento.
+     - `03 Motivazione`: Piano editoriale di pubblicazione per i 30 giorni (risultati, formazioni, rose, eventi).
+     - `04 Conferma`: Checkbox formale d'impegno con blocco consensi stile enterprise, pulsanti `Invia candidatura` e `Annulla`.
+2. **Breadcrumb Gerarchico & Titolo Contenuto**:
+   - Breadcrumb di navigazione integrato (`Squadre / [Nome Squadra] / Candidatura Manager`) con pulsante rapido di chiusura `✕`.
+   - Tipografia calibrata: titolo 24px sobrio, intro informativa (ruolo editoriale supervisionato dalla redazione).
+3. **Sidebar Modulare a 3 Blocchi Impilati**:
+   - **Scheda Identità Club**: card con stemma ufficiale del club (logo tondo con fallback abbr), nome club, categoria e territorio.
+   - **Timeline Verticale in 3 Fasi**: stile roadmap Bacheca con pallini e linea continua di collegamento (*Mese di prova*, *Verifica editoriale*, *Circolo Manager*).
+   - **Callout Nota Editoriale**: box con bordo d'accento sinistro per la citazione «È solo un mese, ma un mese di costanza.» / «Non chiediamo perfezione: chiediamo continuità.».
+4. **File aggiornati**: `manager.css`, `manager-runtime.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `CANDMGR1`.
+Feature precedente: **Fix Stemma Ufficiale Foggia City in Seleziona Squadre (`FOGGIACITY2`)**:
 1. **Risoluzione visualizzazione stemma circolare in `#squadre-portal`**:
    - Disattivato il flag `USE_NEUTRAL_BADGES = false;` in `squadre-select.js` che forzava l'uso dello scudo geometrico neutro ("FGC" con stella) coprendo l'immagine originale.
    - Perfezionata la funzione `showLogo(url, team)` per caricare direttamente `immagini/squadre-loghi/foggia-city.png` per Foggia City, rendendo visibile l'elemento `<img>` (`style.display = 'block'; style.visibility = 'visible'`) e nascondendo in modo perentorio il fallback `.es-sq-crest-fallback` (`fb.hidden = true; fb.style.display = 'none'`).
