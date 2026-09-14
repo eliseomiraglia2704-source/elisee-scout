@@ -21,27 +21,8 @@
       "secondary": "#0f172a",
       "home": { "body": "#dc2626", "sleeve": "#0f172a" },
       "away": { "body": "#ffffff", "sleeve": "#dc2626" }
-    },
-    {
-      "id": "barletta",
-      "name": "BARLETTA",
-      "country": "ITALIA",
-      "league": "ECCELLENZA",
-      "city": "BARLETTA",
-      "year": "1922",
-      "abbr": "BAR",
-      "gender": "m",
-      "pos": 1,
-      "pts": 0,
-      "played": 0,
-      "verified": true,
-      "eliseeVerified": true,
-      "primary": "#dc2626",
-      "secondary": "#ffffff",
-      "home": { "body": "#dc2626", "sleeve": "#dc2626" },
-      "away": { "body": "#ffffff", "sleeve": "#dc2626" }
     }
   ],
-  "verifiedIds": ["foggia-city", "barletta"],
-  "verifiedNames": ["FOGGIA CITY", "BARLETTA"]
+  "verifiedIds": ["foggia-city"],
+  "verifiedNames": ["FOGGIA CITY"]
 }

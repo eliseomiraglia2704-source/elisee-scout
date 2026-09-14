@@ -41,25 +41,6 @@
       secondary: '#0f172a',
       home: { body: '#dc2626', sleeve: '#0f172a' },
       away: { body: '#ffffff', sleeve: '#dc2626' }
-    },
-    {
-      id: 'barletta',
-      name: 'BARLETTA',
-      country: 'ITALIA',
-      league: 'ECCELLENZA',
-      city: 'BARLETTA',
-      year: '1922',
-      abbr: 'BAR',
-      gender: 'm',
-      pos: 1,
-      pts: 0,
-      played: 0,
-      verified: true,
-      eliseeVerified: true,
-      primary: '#dc2626',
-      secondary: '#ffffff',
-      home: { body: '#dc2626', sleeve: '#dc2626' },
-      away: { body: '#ffffff', sleeve: '#dc2626' }
     }
   ];
 
@@ -440,10 +421,10 @@
         try {
           var locReg = JSON.parse(localStorage.getItem('elisee_registered_teams_v1') || '[]');
           if (Array.isArray(locReg)) {
-            locReg = locReg.filter(function (t) { return t && t.id !== 'foggia-city'; });
+            locReg = locReg.filter(function (t) { return t && t.id !== 'foggia-city' && t.id !== 'barletta'; });
             try { localStorage.setItem('elisee_registered_teams_v1', JSON.stringify(locReg)); } catch (_) {}
             locReg.forEach(function (t) {
-              if (t && t.id) {
+              if (t && t.id && t.id !== 'barletta') {
                 VERIFIED_IDS[String(t.id).toLowerCase()] = true;
                 if (t.name) VERIFIED_NAMES[String(t.name).toUpperCase().trim()] = true;
                 var exists = false;
@@ -457,12 +438,12 @@
           var loc = JSON.parse(localStorage.getItem('elisee_verified_teams_v1') || 'null');
           if (loc && Array.isArray(loc.ids)) {
             loc.ids.forEach(function (id) {
-              if (id) VERIFIED_IDS[String(id).toLowerCase()] = true;
+              if (id && id !== 'barletta') VERIFIED_IDS[String(id).toLowerCase()] = true;
             });
           }
           if (loc && Array.isArray(loc.names)) {
             loc.names.forEach(function (nm) {
-              if (nm) VERIFIED_NAMES[String(nm).toUpperCase().trim()] = true;
+              if (nm && nm !== 'BARLETTA') VERIFIED_NAMES[String(nm).toUpperCase().trim()] = true;
             });
           }
         } catch (e) {}

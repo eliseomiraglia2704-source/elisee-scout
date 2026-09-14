@@ -3,8 +3,15 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** — Correzione categoria Foggia City: impostata su AMATORIALE (nè eccellenza, nè dilettanti), con opzione dedicata e pulizia cache (cache `FGCAMAT1`).
-Ultimo fatto: **Correzione Categoria Foggia City in "AMATORIALE" (`FGCAMAT1`)**:
+Ultimo aggiornamento: **2026-09-14** — Rimozione categoria Eccellenza e Barletta da Seleziona Squadra: resta solo Foggia City (AMATORIALE) e le squadre registrate (cache `ONLYAMAT1`).
+Ultimo fatto: **Rimozione Categoria "ECCELLENZA" da Seleziona Squadra (`ONLYAMAT1`)**:
+1. **Rimozione categoria Eccellenza e club Barletta**:
+   - Rimossa la categoria "ECCELLENZA" e il club Barletta da `data/squadre/verified-teams.json` e dal fallback in `squadre-select.js`.
+   - In Seleziona Squadra e nel picker "SCEGLI CATEGORIA" compare ora unicamente la categoria **AMATORIALE** con **Foggia City** (e qualunque altro club che si registri via modulo).
+2. **Purga residui di cache**:
+   - In `loadVerifiedList()` rimossa la persistenza di "barletta" da `localStorage['elisee_registered_teams_v1']` e `elisee_verified_teams_v1`, impedendo che vecchie sessioni browser ripropongano la categoria.
+3. **File aggiornati**: `data/squadre/verified-teams.json`, `squadre-select.js`, `index.html`, `version.json`, `sw.js`. Cache `ONLYAMAT1`.
+Feature precedente: **Correzione Categoria Foggia City in "AMATORIALE" (`FGCAMAT1`)**:
 1. **Assegnazione corretta della categoria**:
    - Foggia City è una squadra amatoriale: rimossa qualsiasi classificazione da "Dilettanti" o "Eccellenza".
    - Impostata la categoria ufficiale **"AMATORIALE"** in `data/squadre/verified-teams.json` e nel fallback in `squadre-select.js`.
