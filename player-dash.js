@@ -987,6 +987,14 @@
   }
 
   function revealPlayerShell(host, box) {
+    var hash = String(location.hash || '');
+    var curView = '';
+    try { curView = localStorage.getItem('elisee_view') || ''; } catch (_) {}
+    if (hash.indexOf('tc-portal') >= 0 || hash.indexOf('iscrizione') >= 0 || hash.indexOf('squadre') >= 0 || hash.indexOf('bacheca') >= 0 || curView === 'tc' || curView === 'squadre') {
+      var g = document.getElementById('user-dossier-view-group');
+      if (g) { g.hidden = true; g.style.setProperty('display', 'none', 'important'); }
+      return;
+    }
     var group = document.getElementById('user-dossier-view-group');
     if (group) {
       group.hidden = false;

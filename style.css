@@ -9701,6 +9701,16 @@ input[type="submit"],
   scrollbar-width: none !important;
 }
 
+body:not(.es-player-on) .es-pd-rail,
+#user-dossier-view-group[style*="display: none"] .es-pd-rail,
+#user-dossier-view-group[hidden] .es-pd-rail,
+#view-tc-panel:not([style*="display: none"]) ~ #user-dossier-view-group .es-pd-rail,
+body:has(#view-tc-panel:not([style*="display: none"])) .es-pd-rail {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 .es-pd-rail::-webkit-scrollbar {
   display: none !important;
 }

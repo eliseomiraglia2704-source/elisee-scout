@@ -3,8 +3,21 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** — Candidatura Elisee Manager: layout editoriale da club esclusivo (Fraunces + Inter, palette nero-inchiostro/verde #0B0F0D, oro tenue #C6A15B, avorio #EDE8DA, campi a sottolineatura) (cache `LUXMGR1`).
-Ultimo fatto: **Candidatura Elisee Manager — Restyling Luxury Editoriale Club Esclusivo (`LUXMGR1`)**:
+Ultimo aggiornamento: **2026-09-14** — Elisée Manager: risoluzione sovrapposizione sidebar/header e restyling luxury enterprise del pannello società (#tc-portal), Iscrizioni (Registration Management Center) e Quote (Financial Operations Dashboard) (cache `PRIVMGR1`).
+Ultimo fatto: **Elisée Manager: Risoluzione Sovrapposizione Header & Restyling Luxury Enterprise (`PRIVMGR1`)**:
+1. **Risoluzione sovrapposizione in alto a sinistra ed eliminazione spazio nero vuoto**:
+   - Risolto il bug per cui la rail verticale dell'atleta (`.es-pd-rail`) rimaneva fissa a `left: 0; top: 86px` sopra il titolo "Elisee Manager / Pannello società".
+   - Blindata `revealPlayerShell()` in `player-dash.js` e `syncPlayerProfileView()` in `player-profile.js` per impedire la forzatura di `user-dossier-view-group` su viste estranee (`tc`, `squadre`, ecc.).
+   - Aggiunta regola in `style.css` e `tc-panel.css` per nascondere tassativamente `.es-pd-rail` e `user-dossier-view-group` quando è attivo `#view-tc-panel`.
+   - Risolto il fallback di `resolveTeam()` in `tc-panel.js`: se `UI.team` è null all'atterraggio diretto via hash `#tc-portal`, recupera automaticamente Foggia City (o la squadra attiva) evitando che il body rimanga vuoto a mostrare una voragine nera.
+2. **Restyling Luxury Enterprise Private Sports Management**:
+   - **Look & Feel**: fondo chiaro sofisticato (`#F8F9FA`), pannelli bianco puro, zero bordi azzurri neon, zero pulsanti a pillola gaming.
+   - **Header editoriale**: breadcrumb dinamico (`Foggia City / Gestione società / [Sezione]`), titolo elegante in Fraunces, badge `Società Verificata`, stagione `2025/2026` e pulsante `← Torna alle Squadre`.
+   - **Panoramica**: fascia compatta a 5 KPI strategici + dashboard a due colonne asimmetriche con attività recenti, situazione quote e modulo condivisibile.
+   - **Iscrizioni**: Registration Management Center con KPI strip (4 indicatori), modulo pubblico condivisibile a sinistra, inbox richieste a destra e anagrafica tesserati full-width sotto.
+   - **Quote e pagamenti**: Financial Operations Dashboard con KPI finanziari, registro pagamenti a sinistra con filtri e toolbar, pannello compatto nuova quota a destra e sezione attenzione richiesta (insoluti e scadenze).
+3. **File aggiornati**: `tc-panel.css`, `tc-panel.js`, `player-dash.js`, `player-profile.js`, `style.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `PRIVMGR1`.
+Feature precedente: **Candidatura Elisee Manager — Restyling Luxury Editoriale Club Esclusivo (`LUXMGR1`)**:
 1. **Addio taglio da videogame**:
    - Eliminati box neon celesti, trofei, badge dorati vistosi ed emoji stile WhatsApp VIP.
    - Nuovo registro luxury: palette nero-inchiostro con sottotono verde (`#0B0F0D`), accento oro tenue (`#C6A15B`), testi avorio (`#EDE8DA`), salvia (`#8FA096`) per label e bordi hairline traslucidi.

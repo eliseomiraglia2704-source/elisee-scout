@@ -329,7 +329,7 @@
   <link rel="stylesheet" href="formazione-squadra.css?v=20260830_ECCB1">
   <link rel="stylesheet" href="verifica-account.css?v=20260906_NOLINE2">
   <link rel="stylesheet" href="manager.css?v=20260914_LUXMGR1">
-  <link rel="stylesheet" href="tc-panel.css?v=20260827_LUX1">
+  <link rel="stylesheet" href="tc-panel.css?v=20260914_PRIVMGR1">
   <link rel="stylesheet" href="player-profile.css?v=20260905_TABFIX1">
   <link rel="stylesheet" href="player-dash.css?v=20260914_FIXEDRAIL1">
   <link rel="stylesheet" href="card-atelier.css?v=20260914_PLAYERDOSSIER1">
@@ -3177,13 +3177,12 @@
         <div class="pf-page-shade" aria-hidden="true"></div>
         <div class="container pf-page-inner">
           <header class="es-tc-head">
-            <div>
-              <p class="es-tc-kicker">Elisee Manager</p>
-              <h1 id="es-tc-team">Pannello società</h1>
-              <p class="es-tc-muted" id="es-tc-league"></p>
+            <div class="es-tc-title-wrap">
+              <h1 id="es-tc-team">Foggia City</h1>
+              <div id="es-tc-league"></div>
             </div>
             <div class="es-tc-actions">
-              <button type="button" class="btn btn-outline-pill" onclick="if(window.switchView) window.switchView('squadre','#squadre-portal');">← Squadre</button>
+              <button type="button" class="es-tc-btn-back" onclick="if(window.switchView) window.switchView('squadre','#squadre-portal');">← Torna alle Squadre</button>
             </div>
           </header>
           <nav class="es-tc-tabs" id="es-tc-tabs" aria-label="Sezioni pannello"></nav>
@@ -5810,7 +5809,7 @@
   <script src="squadre-select.js?v=20260914_ONLYAMAT1"></script>
   <script src="formazione-squadra.js?v=20260914_ONLYAMAT1"></script>
   <script src="manager-runtime.js?v=20260914_LUXMGR1"></script>
-  <script src="tc-panel.js?v=20260826_TC3"></script>
+  <script src="tc-panel.js?v=20260914_PRIVMGR1"></script>
   <!-- React & ReactDOM Global Runtime (UMD) -->
   <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>

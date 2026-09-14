@@ -1311,7 +1311,11 @@
       try { bind(); } catch (_) {}
       try { if (!filling && !notifsOn) fillForm(user); } catch (_) {}
       try {
-        if (!notifsOn && window.EliseePlayerDash && window.EliseePlayerDash.render) {
+        var hash = String(location.hash || '');
+        var curView = '';
+        try { curView = localStorage.getItem('elisee_view') || ''; } catch (_) {}
+        var inOtherView = hash.indexOf('tc-portal') >= 0 || hash.indexOf('squadre') >= 0 || curView === 'tc' || curView === 'squadre';
+        if (!notifsOn && !inOtherView && window.EliseePlayerDash && window.EliseePlayerDash.render) {
           window.EliseePlayerDash.render(user);
         }
       } catch (err) {
