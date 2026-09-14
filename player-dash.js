@@ -125,6 +125,74 @@
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
+  var SEASONS = ['2026/27', '2025/26', '2024/25', '2023/24'];
+  var RICHIESTE_STORAGE_KEY = 'elisee_contact_requests';
+
+  function getRichiesteData() {
+    try {
+      var d = JSON.parse(localStorage.getItem(RICHIESTE_STORAGE_KEY) || '[]');
+      if (Array.isArray(d)) return d;
+    } catch (_) {}
+    return [];
+  }
+  function saveRichiesteData(arr) {
+    try {
+      localStorage.setItem(RICHIESTE_STORAGE_KEY, JSON.stringify(arr));
+    } catch (_) {}
+  }
+
+  function cardRequestHtml(r) {
+    var verifiedTag = r.verificato ? ' <span style="color:var(--es-verified); font-size:11px; font-weight:700;">✓ verificato</span>' : '';
+    if (r.stato) {
+      var statusLabel = r.stato === 'accepted' ? 'Accettata' : 'Rifiutata';
+      var statusClass = r.stato === 'accepted' ? 'accepted' : 'declined';
+      return (
+        '<div class="es-request-card is-resolved" data-id="' + esc(r.id) + '">' +
+          '<div>' +
+            '<p class="es-request-card__role">' + esc(r.ruolo) + '</p>' +
+            '<p class="es-request-card__name">' + esc(r.nome) + verifiedTag + '</p>' +
+          '</div>' +
+          '<span class="es-request-card__status ' + statusClass + '">' + statusLabel + '</span>' +
+        '</div>'
+      );
+    }
+    return (
+      '<div class="es-request-card" data-id="' + esc(r.id) + '">' +
+        '<div>' +
+          '<p class="es-request-card__role">' + esc(r.ruolo) + '</p>' +
+          '<p class="es-request-card__name">' + esc(r.nome) + verifiedTag + '</p>' +
+          (r.messaggio ? '<p class="es-request-card__message">' + esc(r.messaggio) + '</p>' : '') +
+          '<p class="es-request-card__time">' + esc(r.quando || 'Recente') + '</p>' +
+        '</div>' +
+        '<div class="es-request-card__actions">' +
+          '<button type="button" class="es-request-card__decline" data-action="decline" data-id="' + esc(r.id) + '">Rifiuta</button>' +
+          '<button type="button" class="es-request-card__accept" data-action="accept" data-id="' + esc(r.id) + '">Accetta</button>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
+  function renderRequestsList(data) {
+    if (!Array.isArray(data) || !data.length) return '';
+    return data.map(cardRequestHtml).join('');
+  }
+
+  function updateRequestsUI(box, reqList) {
+    reqList = reqList || getRichiesteData();
+    var list = box ? box.querySelector('#requests-list') : document.getElementById('requests-list');
+    var emptyNote = box ? box.querySelector('#requests-empty') : document.getElementById('requests-empty');
+    var countBadge = box ? box.querySelector('#requests-count-badge') : document.getElementById('requests-count-badge');
+    var pending = reqList.filter(function (r) { return !r.stato; }).length;
+    if (countBadge) countBadge.textContent = pending + ' in attesa';
+    if (emptyNote) emptyNote.style.display = reqList.length === 0 ? 'block' : 'none';
+    if (list) list.innerHTML = renderRequestsList(reqList);
+
+    var bellDot = document.getElementById('es-nav-bell-dot');
+    if (bellDot) {
+      bellDot.hidden = pending <= 0;
+    }
+  }
+
   function userObj() {
     try { return JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {}; } catch (_) { return {}; }
   }
@@ -352,8 +420,15 @@
       '<div class="es-dossier__head">' +
         '<h1>' + ICONS.activity + ' Elisee Scout — Report Tecnico &amp; Profilo Atleta</h1>' +
         '<div class="es-dossier__season">' +
-          '<strong>' + esc(name) + '</strong> · Stagione <strong>' + esc(currentSeason) + '</strong> (attuale) ' +
-          seasonPickerHtml +
+          '<strong>' + esc(name) + '</strong>' +
+          '<span style="color:var(--es-border); margin:0 4px;">|</span>' +
+          '<button type="button" class="es-season-nav" aria-label="Stagione precedente" data-season-step="-1" title="Stagione precedente">‹</button>' +
+          '<span>Stagione <strong>' + esc(currentSeason) + '</strong> ' +
+            (currentSeason === '2026/27'
+              ? '<span style="color:var(--es-accent);">· Attuale</span>'
+              : '<span style="color:var(--es-text-muted);">· Storico</span>') +
+          '</span>' +
+          '<button type="button" class="es-season-nav" aria-label="Stagione successiva" data-season-step="1" title="Stagione successiva">›</button>' +
         '</div>' +
       '</div>' +
 
@@ -533,6 +608,49 @@
       '</div>' +
 
       '</div>' + // fine es-dossier-grid
+
+      // ===== Richieste di contatto =====
+      '<div class="es-panel-card" style="margin-top: 24px;">' +
+        '<div class="es-panel-card__head">' +
+          '<h4>Richieste di contatto</h4>' +
+          '<span class="es-badge es-badge--active" id="requests-count-badge">0 in attesa</span>' +
+        '</div>' +
+        '<p class="es-empty-note" style="margin-bottom: 16px;">Richieste esplicite di contatto da profili verificati — diverse dal semplice interesse passivo qui sotto: qui c\'è un\'azione da parte tua.</p>' +
+        '<div id="requests-list">' + renderRequestsList(getRichiesteData()) + '</div>' +
+        '<div class="es-empty-note" id="requests-empty"' + (getRichiesteData().length ? ' style="display:none;"' : '') + '>Nessuna richiesta di contatto in attesa.</div>' +
+      '</div>' +
+
+      // ===== Interesse dalla rete =====
+      '<div class="es-panel-card" style="margin-top: 24px;">' +
+        '<div class="es-panel-card__head">' +
+          '<h4>Interesse dalla rete</h4>' +
+          '<span class="es-badge es-badge--tag">Solo tu puoi vederlo</span>' +
+        '</div>' +
+        '<p class="es-empty-note" style="margin-bottom: 18px;">Chi, nella rete Elisee Scout, ha mostrato interesse verso il tuo profilo. Visibile solo a te finché non scegli di condividerlo.</p>' +
+        '<div class="es-interest-grid">' +
+          '<div class="es-interest-item">' +
+            '<span class="es-interest-item__count">0</span>' +
+            '<p class="es-interest-item__label">Allenatori interessati</p>' +
+          '</div>' +
+          '<div class="es-interest-item">' +
+            '<span class="es-interest-item__count">0</span>' +
+            '<p class="es-interest-item__label">Direttori Sportivi interessati</p>' +
+          '</div>' +
+          '<div class="es-interest-item">' +
+            '<span class="es-interest-item__count">0</span>' +
+            '<p class="es-interest-item__label">Club interessati</p>' +
+          '</div>' +
+          '<div class="es-interest-item">' +
+            '<span class="es-interest-item__count">0</span>' +
+            '<p class="es-interest-item__label">Procuratori sportivi interessati</p>' +
+          '</div>' +
+          '<div class="es-interest-item">' +
+            '<span class="es-interest-item__count">0</span>' +
+            '<p class="es-interest-item__label">Osservatori rappresentative giovanili</p>' +
+          '</div>' +
+        '</div>' +
+        '<p class="es-empty-note" style="margin-top: 16px;">Nessun interesse registrato finora — comparirà qui non appena un profilo verificato visualizza o salva il tuo dossier.</p>' +
+      '</div>' +
 
       '</div>';
   }
@@ -775,7 +893,48 @@
         return;
       }
 
-      // Navigazione frecce selettore stagione
+      // Navigazione frecce selettore stagione unificato (‹ / ›)
+      var stepBtn = e.target.closest('[data-season-step]');
+      if (stepBtn) {
+        e.preventDefault();
+        var step = parseInt(stepBtn.getAttribute('data-season-step'), 10) || 0;
+        var sIdx = SEASONS.indexOf(currentSeason);
+        if (sIdx < 0) sIdx = 0;
+        var nextIdx = sIdx - step;
+        if (nextIdx < 0) nextIdx = 0;
+        if (nextIdx >= SEASONS.length) nextIdx = SEASONS.length - 1;
+        if (nextIdx !== sIdx) {
+          currentSeason = SEASONS[nextIdx];
+          try {
+            if (window.EliseeRatingSystem && window.EliseeRatingSystem.setSeason) {
+              window.EliseeRatingSystem.setSeason(currentSeason);
+            }
+          } catch (_) {}
+          render(userObj());
+        }
+        return;
+      }
+
+      // Azioni richieste di contatto (Accetta / Rifiuta)
+      var reqActionBtn = e.target.closest('[data-action="accept"], [data-action="decline"]');
+      if (reqActionBtn) {
+        e.preventDefault();
+        var reqAction = reqActionBtn.getAttribute('data-action');
+        var reqId = reqActionBtn.getAttribute('data-id');
+        var allReqs = getRichiesteData();
+        var targetR = allReqs.find(function (r) { return String(r.id) === String(reqId); });
+        if (targetR) {
+          targetR.stato = reqAction === 'accept' ? 'accepted' : 'declined';
+          saveRichiesteData(allReqs);
+          updateRequestsUI(root, allReqs);
+          if (typeof window.showToast === 'function') {
+            window.showToast(targetR.stato === 'accepted' ? 'Richiesta di contatto accettata.' : 'Richiesta di contatto rifiutata.', 'info');
+          }
+        }
+        return;
+      }
+
+      // Navigazione frecce selettore stagione legacy
       var navBtn = e.target.closest('.es-season-nav-btn');
       if (navBtn && !navBtn.disabled) {
         var targetSeason = navBtn.getAttribute('data-nav-season');
@@ -917,6 +1076,7 @@
     if (window.EliseePlayerCard && typeof window.EliseePlayerCard.mountDash === 'function') {
       try { window.EliseePlayerCard.mountDash(box, user); } catch (_) {}
     }
+    updateRequestsUI(box);
   }
 
   window.EliseePlayerDash = { 
