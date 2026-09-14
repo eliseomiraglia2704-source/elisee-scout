@@ -3,17 +3,21 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** (commit `d282b3e`) — Pannello "Azioni possibili" a griglia orizzontale 3 colonne a schede (cache `PLAYERDOSSIER4`).
-Ultimo fatto: **Pannello "Azioni possibili" a Griglia Orizzontale 3 Colonne a Schede**:
-1. **Risoluzione spazio vuoto a destra**:
-   - Trasformato `.es-link-list` da lista verticale stretta su colonna singola a griglia orizzontale a 3 colonne (`grid-template-columns: repeat(3, 1fr); gap: 10px 14px;`).
-   - Ogni azione diventa una card autonoma con bordo (`1px solid var(--es-border)`), sfondo scuro dedicato (`var(--es-panel-2)`), padding confortevole (`12px 14px`), icona SVG blu accento (`var(--es-accent)`) e micro-elevazione + highlight al passaggio del mouse.
-2. **Posizionamento a piena larghezza**:
-   - Spostato il pannello "Azioni possibili" a tutta larghezza subito sotto la griglia dossier a 3 colonne (prima di *Richieste di contatto* e *Interesse dalla rete*), occupando interamente la larghezza del contenitore senza lasciare spazio morto.
-3. **Adattamento responsive automatico**:
-   - Su schermi medi/tablet (≤ 980px): scende ordinatamente a 2 colonne.
-   - Su smartphone/schermi stretti (≤ 560px): scende a colonna singola.
-4. **File coinvolti**: `player-dash.css`, `player-dash.js`, `index.html`, `version.json`, `sw.js`. Cache `PLAYERDOSSIER4`.
+Ultimo aggiornamento: **2026-09-14** (commit `8de7abc`) — Deduplicazione Barletta e fix caricamento istantaneo loghi in Seleziona Squadre (cache `BARLETTA1`).
+Ultimo fatto: **Deduplicazione Barletta & Ottimizzazione Caricamento Loghi Seleziona Squadre**:
+1. **Deduplicazione Barletta**:
+   - Rimossa la voce duplicata di "BARLETTA" (`barletta-cb0b`) in `SERIE C · GIRONE C` da `data/squadre/catalog.json`, mantenendo esclusivamente la squadra ufficiale corretta (`barletta`).
+   - Aggiunto safeguard di deduplicazione automatica in `applyCatalog()` (`squadre-select.js`), impedendo in ogni caso doppioni di squadra con stesso nome all'interno della medesima lega.
+2. **Fix Caricamento & Latenza Loghi Squadre**:
+   - Risolto il glitch visivo in cui il logo della squadra precedente rimaneva dipinto a schermo durante il download del logo della nuova squadra: ora se il logo non è già in memoria, viene mostrato immediatamente il badge iniziale con i colori del club, senza mostrare mai il logo sbagliato.
+   - Implementato precaricamento prioritario intelligente (`preloadNeighborLogos`): non appena si visualizza una squadra, i loghi delle 4 squadre precedenti e successive vengono pre-renderizzati in memoria a latenza zero.
+   - Attivato `preloadLogosForCategory()` in background per l'intera categoria/girone al cambio di lega o genere.
+   - Aggiunta transizione di opacità fluida (`transition: opacity 0.12s ease-out`) su `.es-sq-crest-img` in `squadre-select.css`.
+3. **File coinvolti**: `data/squadre/catalog.json`, `squadre-select.js`, `squadre-select.css`, `index.html`, `version.json`, `sw.js`. Cache `BARLETTA1`.
+Feature precedente: **Pannello "Azioni possibili" a Griglia Orizzontale 3 Colonne a Schede (PLAYERDOSSIER4)**:
+1. **Risoluzione spazio vuoto a destra**: Trasformato `.es-link-list` in griglia orizzontale a 3 colonne a schede.
+2. **Posizionamento a piena larghezza**: Subito sotto la griglia dossier a 3 colonne.
+3. **Adattamento responsive automatico**: 3 col desktop, 2 col tablet, 1 col smartphone.
 Feature precedente: **Riorganizzazione Tematica dei Pannelli del Dossier Player (PLAYERDOSSIER3)**:
 1. **Colonna 1 — Identità & Azioni (Account & Chi sei)**: *Indice Atleta & Parametri*, *Il Mio Profilo & Obiettivi*.
 2. **Colonna 2 — Prestazioni (Il calcio giocato sul campo)**: *Radar Prestazioni a 12 Assi*, *Registro Match & Voti PGB*, *Crescita Storica*.

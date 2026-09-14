@@ -12,9 +12,9 @@
   var LEAGUE_TEAMS_COUNT = { 'm': {}, 'f': {} };
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260908_ECCLAZIO4';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260914_BARLETTA1';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260908_ECCLAZIO4';
+  var LOGO_V = '20260914_BARLETTA1';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -306,11 +306,15 @@
     var lgOrder = { 'm': [], 'f': [] };
     var counts = { 'm': {}, 'f': {} };
 
+    var seenInLeague = {};
     for (var i = 0; i < TEAMS.length; i++) {
       var t = TEAMS[i];
       var g = (t.gender === 'f') ? 'f' : 'm';
       var lg = t.league || '';
       if (!lg || String(lg).toUpperCase().indexOf('(ARCHIVIO)') >= 0) continue;
+      var dedupKey = g + '::' + lg + '::' + String(t.name || '').toUpperCase().trim();
+      if (seenInLeague[dedupKey]) continue;
+      seenInLeague[dedupKey] = true;
       if (!byGL[g][lg]) {
         byGL[g][lg] = [];
       }
@@ -358,6 +362,7 @@
         window.EliseeSquadreSelect.catalogStats = data.stats || null;
       }
     } catch (e) {}
+    try { setTimeout(preloadLogosForCategory, 120); } catch (_) {}
     return true;
   }
 
@@ -881,31 +886,52 @@
     var fb = $('es-sq-crest-fallback');
     if (!img) return;
     if (!url) {
+      img.style.display = 'none';
+      img.dataset.currentSrc = '';
       showFallback(team && team.abbr, team);
       return;
     }
     var fullSrc = logoUrl(url);
-    if (img.dataset.currentSrc === fullSrc && img.style.display !== 'none') {
+    if (img.dataset.currentSrc === fullSrc && img.style.display === 'block' && img.complete && img.naturalWidth > 0) {
       if (fb) fb.hidden = true;
       return;
     }
     img.dataset.currentSrc = fullSrc;
-    img.onerror = function () {
-      showFallback(team && team.abbr, team);
-    };
-    img.onload = function () {
-      this.style.display = 'block';
-      if (fb) fb.hidden = true;
-    };
     img.alt = (team && team.name ? team.name : '') + ' logo';
-    img.decoding = 'async';
-    try {
-      img.removeAttribute('crossorigin');
-      img.crossOrigin = null;
-    } catch (e) {}
-    img.referrerPolicy = 'no-referrer';
-    img.src = fullSrc;
-    img.style.display = 'block';
+
+    // Se l'immagine è già caricata in memoria cache, mostrala istantaneamente
+    var cached = PRELOAD_CACHE[fullSrc];
+    if (cached && cached.complete && cached.naturalWidth > 0) {
+      img.src = fullSrc;
+      img.style.display = 'block';
+      img.style.opacity = '1';
+      if (fb) fb.hidden = true;
+      return;
+    }
+
+    // Se non è ancora in memoria, NON mostrare il logo della squadra precedente:
+    // mostra subito il badge iniziale fallback della squadra attuale con i suoi colori
+    img.style.display = 'none';
+    showFallback(team && team.abbr, team);
+
+    var probe = cached || new Image();
+    probe.decoding = 'async';
+    probe.onload = function () {
+      PRELOAD_CACHE[fullSrc] = probe;
+      if (img.dataset.currentSrc === fullSrc) {
+        img.src = fullSrc;
+        img.style.display = 'block';
+        img.style.opacity = '1';
+        if (fb) fb.hidden = true;
+      }
+    };
+    probe.onerror = function () {
+      if (img.dataset.currentSrc === fullSrc) {
+        img.style.display = 'none';
+        showFallback(team && team.abbr, team);
+      }
+    };
+    if (!probe.src) probe.src = fullSrc;
   }
 
   function render() {
@@ -961,7 +987,6 @@
 
     var list = filtered();
     if (counterEl) {
-      // Solo progressione squadre nella categoria (niente "CAT. x/y")
       counterEl.textContent = list.length ? state.index + 1 + ' / ' + list.length : '';
     }
 
@@ -977,6 +1002,33 @@
     }
     applyKit(team);
     preloadNeighborKits();
+    preloadNeighborLogos();
+  }
+
+  function preloadNeighborLogos() {
+    try {
+      var list = filtered();
+      if (!list || !list.length) return;
+      var idx = state.index;
+      var len = list.length;
+      var toPreload = [idx];
+      for (var d = 1; d <= 4; d++) {
+        toPreload.push((idx + d) % len);
+        toPreload.push((idx - d + len) % len);
+      }
+      for (var i = 0; i < toPreload.length; i++) {
+        var t = list[toPreload[i]];
+        if (t && t.logo) {
+          var u = logoUrl(t.logo);
+          if (!PRELOAD_CACHE[u]) {
+            var im = new Image();
+            im.decoding = 'async';
+            im.src = u;
+            PRELOAD_CACHE[u] = im;
+          }
+        }
+      }
+    } catch (e) {}
   }
 
   function preloadLogosForCategory() {
@@ -988,10 +1040,16 @@
         if (logo) {
           var fullLogo = logoUrl(logo);
           if (!PRELOAD_CACHE[fullLogo]) {
-            var img = new Image();
-            img.decoding = 'async';
-            img.src = fullLogo;
-            PRELOAD_CACHE[fullLogo] = img;
+            (function (u, delay) {
+              setTimeout(function () {
+                if (!PRELOAD_CACHE[u]) {
+                  var img = new Image();
+                  img.decoding = 'async';
+                  img.src = u;
+                  PRELOAD_CACHE[u] = img;
+                }
+              }, delay);
+            })(fullLogo, i * 15);
           }
         }
       }
@@ -1029,6 +1087,7 @@
     state.kit = 'home';
     render();
     playGoldSweep();
+    preloadLogosForCategory();
   }
 
   function nextLeague(dir) {
@@ -1039,6 +1098,7 @@
     state.kit = 'home';
     render();
     playGoldSweep();
+    preloadLogosForCategory();
   }
 
   function selectLeagueByIndex(idx) {
@@ -1051,6 +1111,7 @@
     closeLeaguePicker();
     render();
     playGoldSweep();
+    preloadLogosForCategory();
   }
 
   function selectLeagueByName(name) {
