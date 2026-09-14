@@ -1364,4 +1364,66 @@ body:has(#view-tc-panel:not([style*="display: none"])) .es-pd-rail {
   transition: width 0.3s ease;
 }
 
+/* CORPORATE GOVERNANCE & CLUB ADMINISTRATION WORKSPACE */
+.es-tc-gov-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  background: #F8FAFC;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+}
+
+.es-tc-gov-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.es-tc-gov-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748B;
+  margin-bottom: 0.25rem;
+}
+
+.es-tc-gov-val {
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: #0F172A;
+  word-break: break-word;
+}
+
+.es-tc-socio-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #0F172A;
+  color: #C6A15B;
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border: 1px solid rgba(198, 161, 91, 0.4);
+  flex-shrink: 0;
+}
+
+.es-tc-min-view-box {
+  background: #FAFAFA;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 8px;
+  padding: 1.25rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: #0F172A;
+  white-space: pre-wrap;
+  max-height: 380px;
+  overflow-y: auto;
+}
+
 

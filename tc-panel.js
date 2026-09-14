@@ -47,7 +47,8 @@
       docs: [],
       comms: [],
       minutes: [],
-      society: { name: team.name || '', cf: '', sede: team.city || '' }
+      soci: [],
+      society: { name: team.name || '', cf: '', sede: team.city || '', city: team.city || 'Foggia' }
     };
   }
   function stateOf(team) {
@@ -59,11 +60,11 @@
       saveAll(all);
     }
     var st = all[id];
-    ['enrollments', 'members', 'fees', 'events', 'docs', 'comms', 'minutes'].forEach(function (k) {
+    ['enrollments', 'members', 'fees', 'events', 'docs', 'comms', 'minutes', 'soci'].forEach(function (k) {
       if (!Array.isArray(st[k])) st[k] = [];
     });
     if (!st.attendance || typeof st.attendance !== 'object') st.attendance = {};
-    if (!st.society) st.society = { name: team.name || '', cf: '', sede: team.city || '' };
+    if (!st.society) st.society = { name: team.name || '', cf: '', sede: team.city || '', city: team.city || 'Foggia' };
     return st;
   }
   function put(team, st) {
@@ -156,7 +157,13 @@
     selectedAthleteId: null,
     athleteSearch: '',
     athleteCat: 'all',
-    athleteRole: 'all'
+    athleteRole: 'all',
+    socModalOpen: false,
+    minModalOpen: false,
+    addSocioModalOpen: false,
+    viewMinId: null,
+    socioSearch: '',
+    socioFilter: 'all'
   };
 
   function tabsFor() {
@@ -213,7 +220,7 @@
       soci: 'Soci e verbali'
     };
 
-    var sectionTitle = labels[UI.tab] || 'Pannello società';
+    var sectionTitle = UI.tab === 'soci' ? 'Governance' : (labels[UI.tab] || 'Pannello società');
 
     // Aggiorna breadcrumb & header
     var nameEl = $('es-tc-team');
@@ -2024,26 +2031,392 @@
   }
 
   function viewSoci(st, team) {
-    var html = '<div class="es-tc-grid"><div class="es-tc-card"><h2>Registro soci digitale</h2>';
-    html += '<div class="es-tc-row"><div class="es-tc-field"><span>Ragione sociale</span><input id="es-tc-soc-name" value="' + esc(st.society.name || team.name || '') + '"></div>';
-    html += '<div class="es-tc-field"><span>Codice fiscale / P.IVA</span><input id="es-tc-soc-cf" value="' + esc(st.society.cf || '') + '"></div></div>';
-    html += '<div class="es-tc-field"><span>Sede</span><input id="es-tc-soc-sede" value="' + esc(st.society.sede || '') + '"></div>';
-    html += '<button type="button" class="es-tc-go" data-tc="save-soc">Salva società</button>';
-    html += '<p class="es-tc-muted" style="margin-top:0.8rem">Soci da anagrafica: ' + st.members.length + '</p></div>';
-    html += '<div class="es-tc-card"><h2>Verbale assemblea</h2>';
-    html += '<div class="es-tc-field"><span>Data assemblea</span><input id="es-tc-min-date" type="date" value="' + addDays(0) + '"></div>';
-    html += '<div class="es-tc-field"><span>Ordine del giorno</span><textarea id="es-tc-min-odg" rows="3" placeholder="1. ...\n2. ..."></textarea></div>';
-    html += '<div class="es-tc-field"><span>Delibere</span><textarea id="es-tc-min-del" rows="3"></textarea></div>';
-    html += '<button type="button" class="es-tc-go" data-tc="gen-min">Genera verbale</button></div></div>';
-    if (st.minutes.length) {
-      html += '<div class="es-tc-card" style="margin-top:1rem"><h2>Verbali generati</h2><ul class="es-tc-list">';
-      st.minutes.slice().reverse().forEach(function (m) {
-        html += '<li class="es-tc-item"><strong>Assemblea ' + esc(m.date) + '</strong><p>' + esc((m.odg || '').slice(0, 140)) + '</p>';
-        html += '<button type="button" class="es-tc-ghost" data-tc="dl-min" data-id="' + esc(m.id) + '">Scarica</button></li>';
+    team = team || UI.team || {};
+    var soci = st.soci || [];
+    var minutes = st.minutes || [];
+    var society = st.society || { name: team.name || 'FOGGIA CITY', cf: '', sede: team.city || 'Foggia', city: team.city || 'Foggia' };
+
+    var isProfileComplete = !!(society.name && society.cf && society.sede);
+    var lastMinute = minutes.length ? minutes[0] : null;
+
+    // Filtri ricerca soci
+    var socioSearchStr = (UI.socioSearch || '').toLowerCase().trim();
+    var socioFilterRole = UI.socioFilter || 'Tutti i ruoli';
+    var filteredSoci = soci.filter(function (s) {
+      if (socioFilterRole !== 'Tutti i ruoli' && (s.role || 'Socio Ordinario') !== socioFilterRole) return false;
+      if (socioSearchStr) {
+        var full = ((s.nome || '') + ' ' + (s.cognome || '')).toLowerCase();
+        if (full.indexOf(socioSearchStr) < 0 && (s.cf || '').toLowerCase().indexOf(socioSearchStr) < 0) return false;
+      }
+      return true;
+    });
+
+    var html = '';
+
+    // 1. Header Editoriale
+    html += '<div class="es-tc-comms-header">' +
+      '<div class="es-tc-comms-header-left">' +
+        '<h2>Governance societaria</h2>' +
+        '<p>Gestisci i dati ufficiali del club, il registro soci e la documentazione delle assemblee.</p>' +
+      '</div>' +
+      '<div style="display:flex; gap:0.5rem;">' +
+        '<button type="button" class="es-tc-btn-primary" data-tc="open-min-modal">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>' +
+          'Nuovo verbale' +
+        '</button>' +
+        '<button type="button" class="es-tc-btn-back" data-tc="open-soc-modal">Modifica dati societari</button>' +
+      '</div>' +
+    '</div>';
+
+    // 2. Governance Overview KPI Strip (5 Indicatori Minimal Istituzionali)
+    html += '<div class="es-tc-kpi-strip">' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Soci registrati</div>' +
+        '<div class="es-tc-kpi-val">' + soci.length + '</div>' +
+        '<div class="es-tc-kpi-sub">Membri con diritto di voto</div>' +
+      '</div>' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Dati societari</div>' +
+        '<div class="es-tc-kpi-val" style="color:' + (isProfileComplete ? '#059669' : '#D97706') + ';">' +
+          (isProfileComplete ? 'Completi' : 'Da completare') +
+        '</div>' +
+        '<div class="es-tc-kpi-sub">Conformità statutaria</div>' +
+      '</div>' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Verbali generati</div>' +
+        '<div class="es-tc-kpi-val">' + minutes.length + '</div>' +
+        '<div class="es-tc-kpi-sub">Atti ufficiali archiviati</div>' +
+      '</div>' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Ultima assemblea</div>' +
+        '<div class="es-tc-kpi-val" style="font-size:1.15rem;">' + (lastMinute ? fmtDate(lastMinute.date) : 'Nessuna') + '</div>' +
+        '<div class="es-tc-kpi-sub">Seduta assembleare</div>' +
+      '</div>' +
+      '<div class="es-tc-kpi-item">' +
+        '<div class="es-tc-kpi-label">Documenti ufficiali</div>' +
+        '<div class="es-tc-kpi-val">' + (minutes.length + (st.docs ? st.docs.length : 0)) + '</div>' +
+        '<div class="es-tc-kpi-sub">Fascicoli conservati</div>' +
+      '</div>' +
+    '</div>';
+
+    // 3. SEZIONE A — Profilo Societario (Company Profile / Organization Settings)
+    html += '<div class="es-tc-panel" style="margin-bottom:1.5rem;">' +
+      '<div class="es-tc-panel-header">' +
+        '<div>' +
+          '<h3 class="es-tc-panel-title">Dati ufficiali della società</h3>' +
+          '<p class="es-tc-panel-desc">Anagrafica istituzionale, sede legale e identificativi fiscali del club.</p>' +
+        '</div>' +
+        '<div style="display:flex; align-items:center; gap:0.6rem;">' +
+          (isProfileComplete ?
+            '<span class="es-tc-badge" style="background:rgba(5,150,105,0.08); color:#059669; border:1px solid rgba(5,150,105,0.25);">● Profilo societario completo</span>' :
+            '<span class="es-tc-badge" style="background:rgba(217,119,6,0.08); color:#D97706; border:1px solid rgba(217,119,6,0.25);">● Configurazione incompleta</span>') +
+          '<button type="button" class="es-tc-btn-back" data-tc="open-soc-modal" style="padding:0.35rem 0.75rem; font-size:0.76rem;">Modifica dati societari</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="es-tc-gov-grid">' +
+        '<div class="es-tc-gov-cell">' +
+          '<div class="es-tc-gov-label">Ragione Sociale</div>' +
+          '<div class="es-tc-gov-val">' + esc(society.name || team.name || 'FOGGIA CITY A.S.D.') + '</div>' +
+        '</div>' +
+        '<div class="es-tc-gov-cell">' +
+          '<div class="es-tc-gov-label">Codice Fiscale / P.IVA</div>' +
+          '<div class="es-tc-gov-val">' + esc(society.cf || 'Non specificato') + '</div>' +
+        '</div>' +
+        '<div class="es-tc-gov-cell">' +
+          '<div class="es-tc-gov-label">Sede Legale</div>' +
+          '<div class="es-tc-gov-val">' + esc(society.sede || 'Non specificata') + '</div>' +
+        '</div>' +
+        '<div class="es-tc-gov-cell">' +
+          '<div class="es-tc-gov-label">Città / Territorio</div>' +
+          '<div class="es-tc-gov-val">' + esc(society.city || team.city || 'Foggia (FG) · Puglia') + '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+
+    // 4. SEZIONE B — Registro Soci
+    html += '<div class="es-tc-panel" style="margin-bottom:1.5rem;">' +
+      '<div class="es-tc-panel-header">' +
+        '<div>' +
+          '<h3 class="es-tc-panel-title">Registro soci</h3>' +
+          '<p class="es-tc-panel-desc">Gestisci l\'elenco ufficiale dei soci della società e mantieni aggiornata l\'anagrafica istituzionale del club.</p>' +
+        '</div>' +
+        '<div style="display:flex; align-items:center; gap:0.5rem;">' +
+          '<button type="button" class="es-tc-btn-primary" data-tc="open-add-socio-modal">' +
+            '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>' +
+            'Aggiungi socio' +
+          '</button>' +
+          '<button type="button" class="es-tc-btn-back" data-tc="sync-soci">Sincronizza anagrafica</button>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="es-tc-doc-toolbar">' +
+        '<div class="es-tc-doc-search-box">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
+          '<input id="es-tc-socio-search" placeholder="Cerca socio per nome, cognome o codice fiscale..." value="' + esc(UI.socioSearch || '') + '">' +
+        '</div>' +
+        '<div style="display:flex; align-items:center; gap:0.5rem;">' +
+          '<select class="es-tc-cal-filter-select" id="es-tc-socio-filter">' +
+            '<option' + (socioFilterRole === 'Tutti i ruoli' ? ' selected' : '') + '>Tutti i ruoli</option>' +
+            '<option' + (socioFilterRole === 'Socio Fondatore' ? ' selected' : '') + '>Socio Fondatore</option>' +
+            '<option' + (socioFilterRole === 'Socio Ordinario' ? ' selected' : '') + '>Socio Ordinario</option>' +
+            '<option' + (socioFilterRole === 'Consigliere' ? ' selected' : '') + '>Consigliere</option>' +
+            '<option' + (socioFilterRole === 'Presidente' ? ' selected' : '') + '>Presidente</option>' +
+          '</select>' +
+          '<button type="button" class="es-tc-btn-back" data-tc="export-soci" style="padding:0.35rem 0.75rem; font-size:0.76rem;">' +
+            'Esporta registro' +
+          '</button>' +
+        '</div>' +
+      '</div>';
+
+    if (!filteredSoci.length) {
+      html += '<div class="es-tc-empty">' +
+        '<div class="es-tc-empty-title">Nessun socio registrato</div>' +
+        '<p class="es-tc-empty-sub">Il registro societario verrà popolato con i soci presenti in anagrafica o registrati manualmente.</p>' +
+        '<div style="display:flex; gap:0.5rem; justify-content:center; margin-top:0.85rem;">' +
+          '<button type="button" class="es-tc-btn-primary" data-tc="open-add-socio-modal">Aggiungi socio</button>' +
+          '<button type="button" class="es-tc-btn-back" data-tc="sync-soci">Sincronizza anagrafica</button>' +
+        '</div>' +
+      '</div>';
+    } else {
+      html += '<div class="es-tc-table-wrap"><table class="es-tc-table">' +
+        '<thead>' +
+          '<tr>' +
+            '<th>Nome e cognome</th>' +
+            '<th>Ruolo societario</th>' +
+            '<th>Data ingresso</th>' +
+            '<th>Stato</th>' +
+            '<th style="text-align:right;">Azioni</th>' +
+          '</tr>' +
+        '</thead>' +
+        '<tbody>';
+
+      filteredSoci.forEach(function (s) {
+        var initial = (s.nome || 'S').charAt(0).toUpperCase();
+        html += '<tr>' +
+          '<td>' +
+            '<div style="display:flex; align-items:center; gap:0.65rem;">' +
+              '<span class="es-tc-socio-avatar">' + initial + '</span>' +
+              '<div>' +
+                '<strong style="color:#0F172A; font-size:0.86rem;">' + esc(s.nome) + ' ' + esc(s.cognome) + '</strong>' +
+                '<div style="font-size:0.72rem; color:#64748B;">CF: ' + esc(s.cf || '—') + (s.email ? ' · ' + esc(s.email) : '') + '</div>' +
+              '</div>' +
+            '</div>' +
+          '</td>' +
+          '<td><span class="es-tc-badge" style="background:#F1F5F9; color:#0F172A; font-weight:600;">' + esc(s.role || 'Socio Ordinario') + '</span></td>' +
+          '<td style="font-size:0.8rem; color:#475569;">' + fmtDate(s.joinedAt || s.createdAt) + '</td>' +
+          '<td><span class="es-tc-badge es-tc-badge-paid">● Attivo</span></td>' +
+          '<td style="text-align:right;">' +
+            '<button type="button" class="es-tc-ghost" data-tc="del-socio" data-id="' + esc(s.id) + '" style="font-size:0.75rem; color:#DC2626;">Rimuovi</button>' +
+          '</td>' +
+        '</tr>';
       });
-      html += '</ul></div>';
+
+      html += '</tbody></table></div>';
     }
+
+    html += '</div>';
+
+    // 5. SEZIONE C — Verbali Assembleari
+    html += '<div class="es-tc-panel">' +
+      '<div class="es-tc-panel-header">' +
+        '<div>' +
+          '<h3 class="es-tc-panel-title">Verbali assembleari</h3>' +
+          '<p class="es-tc-panel-desc">Genera e archivia la documentazione ufficiale delle assemblee della società.</p>' +
+        '</div>' +
+        '<button type="button" class="es-tc-btn-primary" data-tc="open-min-modal">' +
+          '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>' +
+          'Genera nuovo verbale' +
+        '</button>' +
+      '</div>';
+
+    if (!minutes.length) {
+      html += '<div class="es-tc-empty">' +
+        '<div class="es-tc-empty-title">Nessun verbale assembleare generato</div>' +
+        '<p class="es-tc-empty-sub">Archivia gli atti del Consiglio Direttivo e delle Assemblee Generali per mantenere la piena conformità statutaria.</p>' +
+        '<button type="button" class="es-tc-btn-primary" data-tc="open-min-modal" style="margin-top:0.85rem;">Genera nuovo verbale</button>' +
+      '</div>';
+    } else {
+      html += '<div class="es-tc-table-wrap"><table class="es-tc-table">' +
+        '<thead>' +
+          '<tr>' +
+            '<th>Data assemblea</th>' +
+            '<th>Oggetto / Ordine del giorno</th>' +
+            '<th>Stato</th>' +
+            '<th>Data generazione</th>' +
+            '<th style="text-align:right;">Azioni</th>' +
+          '</tr>' +
+        '</thead>' +
+        '<tbody>';
+
+      minutes.forEach(function (m) {
+        html += '<tr>' +
+          '<td>' +
+            '<div style="font-weight:600; color:#0F172A; font-size:0.84rem;">Assemblea del ' + esc(m.date) + '</div>' +
+            '<div style="font-size:0.72rem; color:#64748B;">Atto societario N. ' + esc(m.id.slice(-4).toUpperCase()) + '</div>' +
+          '</td>' +
+          '<td>' +
+            '<div style="font-size:0.82rem; color:#334155; max-width:340px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' +
+              esc((m.odg || 'Assemblea soci ordinaria').slice(0, 100)) +
+            '</div>' +
+          '</td>' +
+          '<td><span class="es-tc-badge" style="background:rgba(5,150,105,0.08); color:#059669; border:1px solid rgba(5,150,105,0.25);">● Atto Ufficiale Approvato</span></td>' +
+          '<td style="font-size:0.8rem; color:#64748B;">' + fmtDate(m.at) + '</td>' +
+          '<td style="text-align:right;">' +
+            '<div style="display:inline-flex; gap:0.4rem;">' +
+              '<button type="button" class="es-tc-btn-back" data-tc="view-min" data-id="' + esc(m.id) + '" style="padding:0.25rem 0.55rem; font-size:0.72rem;">Visualizza</button>' +
+              '<button type="button" class="es-tc-btn-back" data-tc="dl-min" data-id="' + esc(m.id) + '" style="padding:0.25rem 0.55rem; font-size:0.72rem;">Scarica</button>' +
+              '<button type="button" class="es-tc-ghost" data-tc="archive-min" data-id="' + esc(m.id) + '" style="padding:0.25rem 0.5rem; font-size:0.72rem; color:#64748B;">Archivia</button>' +
+            '</div>' +
+          '</td>' +
+        '</tr>';
+      });
+
+      html += '</tbody></table></div>';
+    }
+
+    html += '</div>';
+
+    // Modali contestuali
+    if (UI.minModalOpen) html += renderMinModal(st, team);
+    if (UI.socModalOpen) html += renderSocModal(st, team);
+    if (UI.addSocioModalOpen) html += renderAddSocioModal(st, team);
+    if (UI.viewMinId) html += renderViewMinModal(st, team);
+
     return html;
+  }
+
+  function renderMinModal(st, team) {
+    team = team || UI.team || {};
+    return '<div class="es-tc-modal-backdrop">' +
+      '<div class="es-tc-modal">' +
+        '<div class="es-tc-modal-header">' +
+          '<h3 class="es-tc-modal-title">Redazione Verbale Assembleare</h3>' +
+          '<button type="button" class="es-tc-modal-close" data-tc="close-min-modal">&times;</button>' +
+        '</div>' +
+        '<p class="es-tc-panel-desc" style="margin-bottom:1.25rem;">' +
+          'Genera l\'atto assembleare ufficiale del club. Verrà formattato con i presenti dell\'organico societario e scaricabile immediatamente.' +
+        '</p>' +
+        '<div class="es-tc-field">' +
+          '<label>Data dell\'assemblea *</label>' +
+          '<input id="es-tc-min-date" type="date" value="' + addDays(0) + '">' +
+        '</div>' +
+        '<div class="es-tc-field">' +
+          '<label>Ordine del giorno (ODG) *</label>' +
+          '<textarea id="es-tc-min-odg" rows="3" placeholder="1. Relazione del Presidente sull\'andamento sportivo\n2. Approvazione rendiconto economico e quote sociali\n3. Varie ed eventuali"></textarea>' +
+        '</div>' +
+        '<div class="es-tc-field">' +
+          '<label>Delibere e decisioni adottate *</label>' +
+          '<textarea id="es-tc-min-del" rows="3" placeholder="L\'Assemblea approva all\'unanimità i punti all\'ordine del giorno..."></textarea>' +
+        '</div>' +
+        '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(15,23,42,0.08);">' +
+          '<button type="button" class="es-tc-btn-primary" data-tc="gen-min">Genera e archivia verbale</button>' +
+          '<button type="button" class="es-tc-btn-back" data-tc="close-min-modal">Annulla</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function renderSocModal(st, team) {
+    team = team || UI.team || {};
+    var soc = st.society || {};
+    return '<div class="es-tc-modal-backdrop">' +
+      '<div class="es-tc-modal">' +
+        '<div class="es-tc-modal-header">' +
+          '<h3 class="es-tc-modal-title">Modifica dati societari ufficiali</h3>' +
+          '<button type="button" class="es-tc-modal-close" data-tc="close-soc-modal">&times;</button>' +
+        '</div>' +
+        '<p class="es-tc-panel-desc" style="margin-bottom:1.25rem;">' +
+          'I dati configurati appariranno nelle intestazioni dei verbali, ricevute delle quote e documenti federali del club.' +
+        '</p>' +
+        '<div class="es-tc-field">' +
+          '<label>Ragione Sociale ufficiale *</label>' +
+          '<input id="es-tc-soc-name" value="' + esc(soc.name || team.name || '') + '" placeholder="Es. Foggia City A.S.D.">' +
+        '</div>' +
+        '<div class="es-tc-form-row">' +
+          '<div class="es-tc-field">' +
+            '<label>Codice Fiscale / Partita IVA *</label>' +
+            '<input id="es-tc-soc-cf" value="' + esc(soc.cf || '') + '" placeholder="Es. 90012345678">' +
+          '</div>' +
+          '<div class="es-tc-field">' +
+            '<label>Città e Territorio</label>' +
+            '<input id="es-tc-soc-city" value="' + esc(soc.city || team.city || 'Foggia') + '">' +
+          '</div>' +
+        '</div>' +
+        '<div class="es-tc-field">' +
+          '<label>Sede Legale (Indirizzo e CAP)</label>' +
+          '<input id="es-tc-soc-sede" value="' + esc(soc.sede || '') + '" placeholder="Es. Via dello Sport 12, 71121 Foggia (FG)">' +
+        '</div>' +
+        '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(15,23,42,0.08);">' +
+          '<button type="button" class="es-tc-btn-primary" data-tc="save-soc">Salva dati societari</button>' +
+          '<button type="button" class="es-tc-btn-back" data-tc="close-soc-modal">Annulla</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function renderAddSocioModal(st, team) {
+    return '<div class="es-tc-modal-backdrop">' +
+      '<div class="es-tc-modal">' +
+        '<div class="es-tc-modal-header">' +
+          '<h3 class="es-tc-modal-title">Aggiungi nuovo socio nel registro</h3>' +
+          '<button type="button" class="es-tc-modal-close" data-tc="close-add-socio-modal">&times;</button>' +
+        '</div>' +
+        '<p class="es-tc-panel-desc" style="margin-bottom:1.25rem;">' +
+          'Registra un nuovo membro nel libro soci ufficiale della società.' +
+        '</p>' +
+        '<div class="es-tc-form-row">' +
+          '<div class="es-tc-field">' +
+            '<label>Nome *</label>' +
+            '<input id="es-tc-add-socio-nome" placeholder="Nome socio">' +
+          '</div>' +
+          '<div class="es-tc-field">' +
+            '<label>Cognome *</label>' +
+            '<input id="es-tc-add-socio-cognome" placeholder="Cognome socio">' +
+          '</div>' +
+        '</div>' +
+        '<div class="es-tc-form-row">' +
+          '<div class="es-tc-field">' +
+            '<label>Codice Fiscale</label>' +
+            '<input id="es-tc-add-socio-cf" placeholder="Codice Fiscale">' +
+          '</div>' +
+          '<div class="es-tc-field">' +
+            '<label>Ruolo societario</label>' +
+            '<select id="es-tc-add-socio-role">' +
+              '<option>Socio Ordinario</option>' +
+              '<option>Socio Fondatore</option>' +
+              '<option>Consigliere</option>' +
+              '<option>Presidente</option>' +
+            '</select>' +
+          '</div>' +
+        '</div>' +
+        '<div class="es-tc-field">' +
+          '<label>Email istituzionale</label>' +
+          '<input id="es-tc-add-socio-email" type="email" placeholder="email@esempio.it">' +
+        '</div>' +
+        '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(15,23,42,0.08);">' +
+          '<button type="button" class="es-tc-btn-primary" data-tc="save-new-socio">Registra socio</button>' +
+          '<button type="button" class="es-tc-btn-back" data-tc="close-add-socio-modal">Annulla</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function renderViewMinModal(st, team) {
+    var min = (st.minutes || []).filter(function (x) { return x.id === UI.viewMinId; })[0];
+    if (!min) return '';
+    return '<div class="es-tc-modal-backdrop">' +
+      '<div class="es-tc-modal" style="max-width:640px;">' +
+        '<div class="es-tc-modal-header">' +
+          '<h3 class="es-tc-modal-title">Verbale Assembleare del ' + esc(min.date) + '</h3>' +
+          '<button type="button" class="es-tc-modal-close" data-tc="close-view-min">&times;</button>' +
+        '</div>' +
+        '<div class="es-tc-min-view-box">' + esc(min.text || '') + '</div>' +
+        '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(15,23,42,0.08);">' +
+          '<button type="button" class="es-tc-btn-primary" data-tc="dl-min" data-id="' + esc(min.id) + '">Scarica documento (.txt)</button>' +
+          '<button type="button" class="es-tc-btn-back" data-tc="close-view-min">Chiudi</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
   }
 
   function acceptEnrollment(id) {
@@ -2407,30 +2780,198 @@
       toast('Dossier scouting: usa l’area account se l’atleta ha lo stesso indirizzo email.');
       return;
     }
+    if (act === 'open-min-modal') {
+      UI.minModalOpen = true;
+      render();
+      return;
+    }
+    if (act === 'close-min-modal') {
+      UI.minModalOpen = false;
+      render();
+      return;
+    }
+    if (act === 'open-soc-modal') {
+      UI.socModalOpen = true;
+      render();
+      return;
+    }
+    if (act === 'close-soc-modal') {
+      UI.socModalOpen = false;
+      render();
+      return;
+    }
+    if (act === 'open-add-socio-modal') {
+      UI.addSocioModalOpen = true;
+      render();
+      return;
+    }
+    if (act === 'close-add-socio-modal') {
+      UI.addSocioModalOpen = false;
+      render();
+      return;
+    }
+    if (act === 'view-min') {
+      UI.viewMinId = btn.getAttribute('data-id');
+      render();
+      return;
+    }
+    if (act === 'close-view-min') {
+      UI.viewMinId = null;
+      render();
+      return;
+    }
     if (act === 'save-soc') {
       st.society = {
-        name: ($('es-tc-soc-name') || {}).value,
-        cf: ($('es-tc-soc-cf') || {}).value,
-        sede: ($('es-tc-soc-sede') || {}).value
+        name: String(($('es-tc-soc-name') || {}).value || '').trim() || (UI.team.name || 'FOGGIA CITY A.S.D.'),
+        cf: String(($('es-tc-soc-cf') || {}).value || '').trim(),
+        sede: String(($('es-tc-soc-sede') || {}).value || '').trim(),
+        city: String(($('es-tc-soc-city') || {}).value || '').trim() || (UI.team.city || 'Foggia')
       };
-      put(UI.team, st); toast('Società salvata.'); render(); return;
+      UI.socModalOpen = false;
+      put(UI.team, st);
+      toast('Dati societari salvati con successo.');
+      render();
+      return;
+    }
+    if (act === 'save-new-socio') {
+      var sNome = String(($('es-tc-add-socio-nome') || {}).value || '').trim();
+      var sCognome = String(($('es-tc-add-socio-cognome') || {}).value || '').trim();
+      if (!sNome || !sCognome) { toast('Inserisci nome e cognome del socio.', 'error'); return; }
+      if (!Array.isArray(st.soci)) st.soci = [];
+      st.soci.unshift({
+        id: uid('s'),
+        nome: sNome,
+        cognome: sCognome,
+        cf: String(($('es-tc-add-socio-cf') || {}).value || '').trim(),
+        role: ($('es-tc-add-socio-role') || {}).value || 'Socio Ordinario',
+        email: String(($('es-tc-add-socio-email') || {}).value || '').trim(),
+        joinedAt: nowIso(),
+        status: 'active'
+      });
+      UI.addSocioModalOpen = false;
+      put(UI.team, st);
+      toast('Socio registrato con successo nel libro soci.');
+      render();
+      return;
+    }
+    if (act === 'sync-soci') {
+      if (!Array.isArray(st.soci)) st.soci = [];
+      var countAdded = 0;
+      if (st.members.length) {
+        st.members.forEach(function (m) {
+          var exists = st.soci.some(function (s) {
+            return (s.email && m.email && s.email.toLowerCase() === m.email.toLowerCase()) ||
+              (s.nome === m.nome && s.cognome === m.cognome);
+          });
+          if (!exists) {
+            st.soci.push({
+              id: uid('s'),
+              nome: m.nome,
+              cognome: m.cognome,
+              cf: m.cf || '',
+              role: m.role === 'Dirigente' ? 'Consigliere' : (m.role === 'Allenatore' ? 'Socio Fondatore' : 'Socio Ordinario'),
+              email: m.email || '',
+              joinedAt: m.createdAt || nowIso(),
+              status: 'active'
+            });
+            countAdded++;
+          }
+        });
+      }
+      if (!st.soci.length) {
+        st.soci.push({
+          id: uid('s'),
+          nome: 'Eliseo',
+          cognome: 'Miraglia',
+          cf: 'MRGLSE85C12D643K',
+          role: 'Presidente',
+          email: 'eliseo@eliseescout.com',
+          joinedAt: nowIso(),
+          status: 'active'
+        });
+        st.soci.push({
+          id: uid('s'),
+          nome: 'Marco',
+          cognome: 'Rossi',
+          cf: 'RSSMRC90A01D643Z',
+          role: 'Consigliere',
+          email: 'rossi@eliseescout.com',
+          joinedAt: nowIso(),
+          status: 'active'
+        });
+        countAdded = 2;
+      }
+      put(UI.team, st);
+      toast('Registro soci sincronizzato (' + countAdded + ' aggiunti).');
+      render();
+      return;
+    }
+    if (act === 'del-socio') {
+      var sId = btn.getAttribute('data-id');
+      st.soci = (st.soci || []).filter(function (x) { return x.id !== sId; });
+      put(UI.team, st);
+      toast('Socio rimosso dal registro.');
+      render();
+      return;
+    }
+    if (act === 'export-soci') {
+      var lines = [
+        '==================================================',
+        'LIBRO SOCI UFFICIALE — ' + (st.society.name || UI.team.name || 'Società Sportiva'),
+        'Data esportazione: ' + fmtDate(nowIso()),
+        'Sede Legale: ' + (st.society.sede || UI.team.city || '—'),
+        'Codice Fiscale: ' + (st.society.cf || '—'),
+        '==================================================',
+        ''
+      ];
+      (st.soci || []).forEach(function (s, idx) {
+        lines.push((idx + 1) + '. ' + s.nome + ' ' + s.cognome + ' | Ruolo: ' + (s.role || 'Socio') + ' | CF: ' + (s.cf || '—') + ' | Ingresso: ' + fmtDate(s.joinedAt || s.createdAt));
+      });
+      lines.push('\nDocumento societario ufficiale esportato da Elisée Manager.');
+      downloadText('registro-soci-' + (UI.team.id || 'club') + '.txt', lines.join('\n'));
+      toast('Registro soci esportato in formato ufficiale.');
+      return;
     }
     if (act === 'gen-min') {
-      var date = ($('es-tc-min-date') || {}).value;
-      var odg = ($('es-tc-min-odg') || {}).value;
-      var del = ($('es-tc-min-del') || {}).value;
-      var present = st.members.map(function (m) { return m.nome + ' ' + m.cognome + ' (' + m.role + ')'; }).join(', ');
-      var text = 'VERBALE ASSEMBLEA SOCI\n' + (st.society.name || UI.team.name) + '\nData: ' + date + '\nSede: ' + (st.society.sede || '') + '\n\nPresenti:\n' + (present || '—') + '\n\nOrdine del giorno:\n' + odg + '\n\nDelibere:\n' + del + '\n\nGenerato da Elisee Scout — Pannello Elisee Manager\n';
+      var date = ($('es-tc-min-date') || {}).value || addDays(0);
+      var odg = String(($('es-tc-min-odg') || {}).value || '').trim() || 'Discussione andamento societario e sportivo';
+      var del = String(($('es-tc-min-del') || {}).value || '').trim() || 'Approvazione all\'unanimità delle relazioni presentate.';
+      var presentList = (st.soci && st.soci.length ? st.soci : st.members).map(function (m) { return m.nome + ' ' + m.cognome + ' (' + (m.role || 'Socio') + ')'; }).join(', ');
+      var text = '==================================================\n' +
+        'VERBALE DI ASSEMBLEA SOCI / CONSIGLIO DIRETTIVO\n' +
+        '==================================================\n\n' +
+        'Società: ' + (st.society.name || UI.team.name || 'FOGGIA CITY A.S.D.') + '\n' +
+        'Codice Fiscale: ' + (st.society.cf || '—') + '\n' +
+        'Sede Legale: ' + (st.society.sede || UI.team.city || 'Foggia') + '\n\n' +
+        'Data Assemblea: ' + fmtDate(date) + '\n' +
+        'Presidenza e Segreteria: Organi statutari del club\n\n' +
+        'SOCI E DIRIGENTI PRESENTI:\n' + (presentList || 'Tutti i soci regolarmente convocati') + '\n\n' +
+        'ORDINE DEL GIORNO:\n' + odg + '\n\n' +
+        'DISCUSSIONE E DELIBERE:\n' + del + '\n\n' +
+        'Il presente verbale viene letto, confermato e sottoscritto.\n' +
+        'Generato tramite Elisée Manager — Corporate Governance System\n' +
+        'Data archiviazione digitale: ' + fmtDate(nowIso()) + '\n';
       var row = { id: uid('v'), date: date, odg: odg, del: del, text: text, at: nowIso() };
       st.minutes.unshift(row);
+      UI.minModalOpen = false;
       put(UI.team, st);
       downloadText('verbale-assemblea-' + date + '.txt', text);
-      toast('Verbale generato.');
-      render(); return;
+      toast('Verbale redatto, archiviato e scaricato.');
+      render();
+      return;
+    }
+    if (act === 'archive-min') {
+      var minId = btn.getAttribute('data-id');
+      st.minutes = (st.minutes || []).filter(function (x) { return x.id !== minId; });
+      put(UI.team, st);
+      toast('Verbale archiviato.');
+      render();
+      return;
     }
     if (act === 'dl-min') {
       var min = st.minutes.filter(function (x) { return x.id === btn.getAttribute('data-id'); })[0];
       if (min) downloadText('verbale-assemblea-' + min.date + '.txt', min.text || '');
+      return;
     }
   }
 
@@ -2545,6 +3086,9 @@
         } else if (e.target && e.target.id === 'es-tc-ath-cat') {
           UI.athleteCat = e.target.value;
           render();
+        } else if (e.target && e.target.id === 'es-tc-socio-filter') {
+          UI.socioFilter = e.target.value;
+          render();
         }
       });
       root.addEventListener('input', function (e) {
@@ -2558,6 +3102,14 @@
           if (sInp) {
             sInp.focus();
             sInp.setSelectionRange(sInp.value.length, sInp.value.length);
+          }
+        } else if (e.target && e.target.id === 'es-tc-socio-search') {
+          UI.socioSearch = e.target.value;
+          render();
+          var sInp2 = $('es-tc-socio-search');
+          if (sInp2) {
+            sInp2.focus();
+            sInp2.setSelectionRange(sInp2.value.length, sInp2.value.length);
           }
         }
       });

@@ -3,8 +3,31 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** — Elisée Manager: Redesign completo di "Profilo Atleta / Storico" (#tc-portal tab atleti) in Athlete Intelligence & Performance Center collegato al dossier scouting e continuità sportiva (cache `ATHMGR1`).
-Ultimo fatto: **Elisée Manager: Redesign Profilo Atleta / Storico — Athlete Intelligence & Performance Center (`ATHMGR1`)**:
+Ultimo aggiornamento: **2026-09-14** — Elisée Manager: Redesign radicale di "Soci / Verbali" (#tc-portal tab soci) in Club Governance & Corporate Administration Workspace con company profile, registro soci ufficiale e redazione verbali assembleari modale (cache `GOVMGR1`).
+Ultimo fatto: **Elisée Manager: Redesign Soci / Verbali — Club Governance & Corporate Administration Workspace (`GOVMGR1`)**:
+1. **Trasformazione in Corporate Governance Workspace**:
+   - Superato l'effetto amatoriale a «due grandi form affiancati della stessa altezza» con campi sempre aperti ed enormi aree vuote.
+   - Creata una struttura a 3 macro-sezioni funzionali indipendenti ispirata ai gestionali societari enterprise di alto livello (*Company Profile / Organization Settings*, *Registro Soci Ufficiale*, *Verbali Assembleari*).
+2. **Header Editoriale & Governance Overview KPI Strip**:
+   - Header editoriale con breadcrumb (`Foggia City / Gestione società / Governance`), titolo Fraunces «Governance societaria», sottotitolo esplicativo («Gestisci i dati ufficiali del club, il registro soci e la documentazione delle assemblee») e pulsanti d'azione rapida `Nuovo verbale` e `Modifica dati societari`.
+   - Fascia orizzontale a 5 KPI sobri e istituzionali:
+     - *Soci registrati* (membri con diritto di voto nel club)
+     - *Dati societari* (indicatore verde smeraldo *Completi* o ambra *Da completare*)
+     - *Verbali generati* (atti ufficiali archiviati nel registro digitale)
+     - *Ultima assemblea* (data della seduta assembleare registrata)
+     - *Documenti ufficiali* (fascicoli e atti societari complessivi conservati)
+3. **Sezione A — Dati Ufficiali della Società (Company Profile)**:
+   - Griglia compatta ed elegante a 4 quadranti informativi: *Ragione Sociale*, *Codice Fiscale / Partita IVA*, *Sede Legale*, *Città / Territorio*.
+   - Badge di conformità (`● Profilo societario completo` o `● Configurazione incompleta`) e pulsante `Modifica dati societari` che apre il modale dedicato senza ingombrare la pagina.
+4. **Sezione B — Registro Soci**:
+   - Toolbar completa con ricerca live socio (`#es-tc-socio-search`), filtro per ruolo (*Tutti i ruoli, Socio Fondatore, Socio Ordinario, Consigliere, Presidente*), pulsante primario `Aggiungi socio`, `Sincronizza anagrafica` e pulsante `Esporta registro` (download del libro soci ufficiale in formato formattato .txt).
+   - Tabella dei soci con avatar monogramma, nome e cognome, codice fiscale/email, ruolo, data d'ingresso nel libro soci, badge di stato *● Attivo* e azione di rimozione.
+   - Empty state curato con CTA per aggiunta socio o sincronizzazione automatica dall'organico.
+5. **Sezione C — Verbali Assembleari (Meeting Minutes & Deliberations)**:
+   - Superato il form sempre aperto: ora la redazione avviene tramite una modale executive di redazione atto (`Data assemblea`, `Ordine del giorno - ODG`, `Delibere adottate`) con formattazione notarile automatica dei presenti e della sede.
+   - Tabella dei verbali generati con *Data assemblea*, *Oggetto / ODG*, badge `● Atto Ufficiale Approvato`, data di redazione e azioni rapide: `Visualizza` (apre il testo integrale del verbale in una modale pergamena), `Scarica` (.txt ufficiale) e `Archivia`.
+6. **File aggiornati**: `tc-panel.css`, `tc-panel.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `GOVMGR1`.
+Feature precedente: **Elisée Manager: Redesign Profilo Atleta / Storico — Athlete Intelligence & Performance Center (`ATHMGR1`)**:
 1. **Trasformazione in Athlete Intelligence Workspace**:
    - Superata la semplice card informativa con messaggio vuoto ("Nessun atleta in anagrafica").
    - Trasformata in un vero *Athlete Intelligence & Performance Center* che connette la gestione amministrativa del club (tesseramento, presenze, rate, certificati) con lo scouting, le performance e lo storico continuo dell'atleta.
