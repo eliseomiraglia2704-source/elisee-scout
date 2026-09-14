@@ -1,7 +1,47 @@
 {
-  "version": 1,
-  "updatedAt": "2026-08-06",
-  "description": "Squadre che fanno parte del progetto ELISEE SCOUT e possono mostrare il badge Verificato. ID = campo id del catalogo squadre.",
-  "verifiedIds": [],
-  "verifiedNames": []
+  "version": 2,
+  "updatedAt": "2026-09-14",
+  "description": "Squadre registrate ufficialmente nel progetto ELISEE SCOUT con badge originale a tutti gli effetti.",
+  "registeredTeams": [
+    {
+      "id": "foggia-city",
+      "name": "FOGGIA CITY",
+      "country": "ITALIA",
+      "league": "DILETTANTI",
+      "city": "FOGGIA",
+      "year": "2024",
+      "abbr": "FGC",
+      "gender": "m",
+      "pos": 1,
+      "pts": 0,
+      "played": 0,
+      "verified": true,
+      "eliseeVerified": true,
+      "primary": "#dc2626",
+      "secondary": "#0f172a",
+      "home": { "body": "#dc2626", "sleeve": "#0f172a" },
+      "away": { "body": "#ffffff", "sleeve": "#dc2626" }
+    },
+    {
+      "id": "barletta",
+      "name": "BARLETTA",
+      "country": "ITALIA",
+      "league": "ECCELLENZA",
+      "city": "BARLETTA",
+      "year": "1922",
+      "abbr": "BAR",
+      "gender": "m",
+      "pos": 1,
+      "pts": 0,
+      "played": 0,
+      "verified": true,
+      "eliseeVerified": true,
+      "primary": "#dc2626",
+      "secondary": "#ffffff",
+      "home": { "body": "#dc2626", "sleeve": "#dc2626" },
+      "away": { "body": "#ffffff", "sleeve": "#dc2626" }
+    }
+  ],
+  "verifiedIds": ["foggia-city", "barletta"],
+  "verifiedNames": ["FOGGIA CITY", "BARLETTA"]
 }

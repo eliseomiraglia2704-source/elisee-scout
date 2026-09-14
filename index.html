@@ -325,7 +325,7 @@
   <link rel="stylesheet" href="elisee-world/elisee-world.css?v=20260906_EWGBA1">
   <link rel="stylesheet" href="minigioco-carriera.css?v=20260913_HUBPOLISH2">
   <link rel="stylesheet" href="autopilot.css?v=20260827_FIX3">
-  <link rel="stylesheet" href="squadre-select.css?v=20260914_NEUTRALBADGE1">
+  <link rel="stylesheet" href="squadre-select.css?v=20260914_ONLYREG1">
   <link rel="stylesheet" href="formazione-squadra.css?v=20260830_ECCB1">
   <link rel="stylesheet" href="verifica-account.css?v=20260906_NOLINE2">
   <link rel="stylesheet" href="manager.css?v=20260820_XI1">
@@ -3031,7 +3031,12 @@
         <div class="container pf-page-inner">
           <div class="es-sq-topbar">
             <h1>Seleziona squadra</h1>
-            <button type="button" class="btn btn-outline-pill es-sq-back" onclick="if(window.switchView){window.switchView('bacheca','#bacheca-annunci');}">Torna alla Bacheca</button>
+            <div class="es-sq-topbar-actions" style="display:flex;gap:10px;align-items:center;">
+              <button type="button" class="btn btn-outline-pill es-sq-btn-register" id="es-sq-open-register" style="border-color:var(--es-accent,#00d285);color:var(--es-accent,#00d285);font-weight:700;display:inline-flex;align-items:center;gap:6px;">
+                <span>➕</span> Registra Club
+              </button>
+              <button type="button" class="btn btn-outline-pill es-sq-back" onclick="if(window.switchView){window.switchView('bacheca','#bacheca-annunci');}">Torna alla Bacheca</button>
+            </div>
           </div>
           <div id="squadre-content">
             <div class="es-sq-gender" role="radiogroup" aria-label="Tipo squadre">
@@ -3047,14 +3052,14 @@
                   </svg>
                 </div>
                 <div class="es-sq-team-title-row">
-                  <h2 class="es-sq-team-name" id="es-sq-team-name">PISA</h2>
+                  <h2 class="es-sq-team-name" id="es-sq-team-name">FOGGIA CITY</h2>
                   <img id="es-sq-verify-badge"
-                       class="es-sq-verify-badge is-unverified"
-                       src="immagini/verifica/badge-non-verificato.svg"
-                       alt="Non verificato"
+                       class="es-sq-verify-badge is-verified"
+                       src="immagini/verifica/badge-verificato.svg"
+                       alt="Club Registrato Ufficiale"
                        width="28"
                        height="28"
-                       title="Non verificato — la squadra non fa ancora parte del progetto ELISEE" />
+                       title="Verificato — la squadra fa parte del progetto ELISEE SCOUT" />
                 </div>
                 <div class="es-sq-crest-row">
                   <button type="button" class="es-sq-nav-btn" id="es-sq-prev" aria-label="Squadra precedente">
@@ -3062,9 +3067,9 @@
                   </button>
                   <div class="es-sq-crest" id="es-sq-crest">
                     <img id="es-sq-crest-img" class="es-sq-crest-img" alt="" style="display:none;" />
-                    <div class="es-sq-crest-fallback" id="es-sq-crest-fallback">PIS</div>
-                    <span id="es-sq-crest-abbr" hidden>PIS</span>
-                    <span id="es-sq-crest-year" hidden>1909</span>
+                    <div class="es-sq-crest-fallback" id="es-sq-crest-fallback">FGC</div>
+                    <span id="es-sq-crest-abbr" hidden>FGC</span>
+                    <span id="es-sq-crest-year" hidden>2024</span>
                   </div>
                   <button type="button" class="es-sq-nav-btn" id="es-sq-next" aria-label="Squadra successiva">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
@@ -3080,8 +3085,8 @@
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
                     </button>
                     <button type="button" class="es-sq-league-pill" id="es-sq-league-pill" aria-haspopup="dialog" aria-controls="es-sq-league-picker" title="Apri elenco categorie">
-                      <img id="es-sq-league-logo" class="es-sq-league-logo" src="immagini/squadre-loghi/serie-a.png" alt="" width="28" height="28" referrerpolicy="no-referrer" />
-                      <span class="es-sq-league" id="es-sq-league" title="SERIE A">SERIE A</span>
+                      <img id="es-sq-league-logo" class="es-sq-league-logo" src="immagini/squadre-loghi/promozione.png" alt="" width="28" height="28" referrerpolicy="no-referrer" />
+                      <span class="es-sq-league" id="es-sq-league" title="DILETTANTI">DILETTANTI</span>
                       <svg class="es-sq-league-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
                     </button>
                     <button type="button" class="es-sq-nav-btn es-sq-league-btn" id="es-sq-league-next" aria-label="Categoria successiva" title="Categoria successiva">
@@ -5801,9 +5806,9 @@
       setTimeout(unlock, 2000);
     })();
   </script>
-  <script src="badge-engine.js?v=20260914_NEUTRALBADGE1"></script>
-  <script src="squadre-select.js?v=20260914_NEUTRALBADGE1"></script>
-  <script src="formazione-squadra.js?v=20260914_NEUTRALBADGE1"></script>
+  <script src="badge-engine.js?v=20260914_ONLYREG1"></script>
+  <script src="squadre-select.js?v=20260914_ONLYREG1"></script>
+  <script src="formazione-squadra.js?v=20260914_ONLYREG1"></script>
   <script src="manager-runtime.js?v=20260826_MGR1"></script>
   <script src="tc-panel.js?v=20260826_TC3"></script>
   <!-- React & ReactDOM Global Runtime (UMD) -->

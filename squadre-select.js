@@ -12,10 +12,11 @@
   var LEAGUE_TEAMS_COUNT = { 'm': {}, 'f': {} };
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260914_CLEAN1';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260914_ONLYREG1';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260914_CLEAN1';
-  var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260806_VERIFY';
+  var LOGO_V = '20260914_ONLYREG1';
+  var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260914_ONLYREG1';
+  var REGISTERED_TEAMS = [];
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
   var BADGE_OK = 'immagini/verifica/badge-verificato.svg';
@@ -23,22 +24,42 @@
 
   var TEAMS_FALLBACK = [
     {
-      id: 'napoli',
-      name: 'NAPOLI',
+      id: 'foggia-city',
+      name: 'FOGGIA CITY',
       country: 'ITALIA',
-      league: 'SERIE A',
-      city: 'NAPOLI',
-      year: '1926',
-      abbr: 'NAP',
+      league: 'DILETTANTI',
+      city: 'FOGGIA',
+      year: '2024',
+      abbr: 'FGC',
       gender: 'm',
       pos: 1,
       pts: 0,
       played: 0,
-      logo: 'immagini/squadre-loghi/napoli.png',
-      primary: '#12a0d7',
+      verified: true,
+      eliseeVerified: true,
+      primary: '#dc2626',
+      secondary: '#0f172a',
+      home: { body: '#dc2626', sleeve: '#0f172a' },
+      away: { body: '#ffffff', sleeve: '#dc2626' }
+    },
+    {
+      id: 'barletta',
+      name: 'BARLETTA',
+      country: 'ITALIA',
+      league: 'ECCELLENZA',
+      city: 'BARLETTA',
+      year: '1922',
+      abbr: 'BAR',
+      gender: 'm',
+      pos: 1,
+      pts: 0,
+      played: 0,
+      verified: true,
+      eliseeVerified: true,
+      primary: '#dc2626',
       secondary: '#ffffff',
-      home: { body: '#12a0d7', sleeve: '#12a0d7' },
-      away: { body: '#ffffff', sleeve: '#12a0d7' }
+      home: { body: '#dc2626', sleeve: '#dc2626' },
+      away: { body: '#ffffff', sleeve: '#dc2626' }
     }
   ];
 
@@ -296,9 +317,40 @@
   }
 
   function applyCatalog(data) {
-    if (!data || !Array.isArray(data.teams) || !data.teams.length) return false;
-    TEAMS = data.teams;
-    LEAGUE_ORDER = Array.isArray(data.leagueOrder) ? data.leagueOrder : [];
+    var rawTeams = (data && Array.isArray(data.teams)) ? data.teams : [];
+    
+    // Regola Eliseo: mostrare SOLO le squadre registrate o verificate
+    var pool = [];
+    var seenIds = {};
+
+    for (var r = 0; r < REGISTERED_TEAMS.length; r++) {
+      var regTeam = REGISTERED_TEAMS[r];
+      if (regTeam && regTeam.id && !seenIds[regTeam.id]) {
+        seenIds[regTeam.id] = true;
+        regTeam.verified = true;
+        regTeam.eliseeVerified = true;
+        pool.push(regTeam);
+      }
+    }
+
+    for (var i = 0; i < rawTeams.length; i++) {
+      var t = rawTeams[i];
+      if (t && isTeamVerified(t)) {
+        if (!seenIds[t.id]) {
+          seenIds[t.id] = true;
+          t.verified = true;
+          t.eliseeVerified = true;
+          pool.push(t);
+        }
+      }
+    }
+
+    if (!pool.length) {
+      pool = REGISTERED_TEAMS.length ? REGISTERED_TEAMS : TEAMS_FALLBACK.slice();
+    }
+
+    TEAMS = pool;
+    LEAGUE_ORDER = Array.isArray(data && data.leagueOrder) ? data.leagueOrder : [];
 
     // Costruzione indici O(1) istantanei per azzerare loop e allocazioni
     var byGL = { 'm': {}, 'f': {} };
@@ -306,15 +358,15 @@
     var lgOrder = { 'm': [], 'f': [] };
     var counts = { 'm': {}, 'f': {} };
 
-    for (var i = 0; i < TEAMS.length; i++) {
-      var t = TEAMS[i];
-      var g = (t.gender === 'f') ? 'f' : 'm';
-      var lg = t.league || '';
+    for (var j = 0; j < TEAMS.length; j++) {
+      var curT = TEAMS[j];
+      var g = (curT.gender === 'f') ? 'f' : 'm';
+      var lg = curT.league || '';
       if (!lg || String(lg).toUpperCase().indexOf('(ARCHIVIO)') >= 0) continue;
       if (!byGL[g][lg]) {
         byGL[g][lg] = [];
       }
-      byGL[g][lg].push(t);
+      byGL[g][lg].push(curT);
     }
 
     var genders = ['m', 'f'];
@@ -332,8 +384,8 @@
       }
 
       if (LEAGUE_ORDER && LEAGUE_ORDER.length) {
-        for (var j = 0; j < LEAGUE_ORDER.length; j++) {
-          var reqLg = LEAGUE_ORDER[j];
+        for (var lo = 0; lo < LEAGUE_ORDER.length; lo++) {
+          var reqLg = LEAGUE_ORDER[lo];
           if (byGL[gKey][reqLg] && byGL[gKey][reqLg].length && !lgSeen[gKey][reqLg]) {
             lgSeen[gKey][reqLg] = true;
             lgOrder[gKey].push(reqLg);
@@ -355,7 +407,7 @@
     CATALOG_READY = true;
     try {
       if (window.EliseeSquadreSelect) {
-        window.EliseeSquadreSelect.catalogStats = data.stats || null;
+        window.EliseeSquadreSelect.catalogStats = (data && data.stats) || null;
       }
     } catch (e) {}
     return true;
@@ -370,6 +422,7 @@
       .then(function (data) {
         VERIFIED_IDS = {};
         VERIFIED_NAMES = {};
+        REGISTERED_TEAMS = (data && Array.isArray(data.registeredTeams)) ? data.registeredTeams.slice() : [];
         var ids = (data && data.verifiedIds) || [];
         var names = (data && data.verifiedNames) || [];
         for (var i = 0; i < ids.length; i++) {
@@ -378,8 +431,27 @@
         for (var j = 0; j < names.length; j++) {
           if (names[j]) VERIFIED_NAMES[String(names[j]).toUpperCase().trim()] = true;
         }
-        // merge optional local overrides (admin / futuro)
+        for (var k = 0; k < REGISTERED_TEAMS.length; k++) {
+          var rt = REGISTERED_TEAMS[k];
+          if (rt && rt.id) VERIFIED_IDS[String(rt.id).toLowerCase()] = true;
+          if (rt && rt.name) VERIFIED_NAMES[String(rt.name).toUpperCase().trim()] = true;
+        }
+        // merge optional local overrides (nuove squadre registrate sulla piattaforma)
         try {
+          var locReg = JSON.parse(localStorage.getItem('elisee_registered_teams_v1') || '[]');
+          if (Array.isArray(locReg)) {
+            locReg.forEach(function (t) {
+              if (t && t.id) {
+                VERIFIED_IDS[String(t.id).toLowerCase()] = true;
+                if (t.name) VERIFIED_NAMES[String(t.name).toUpperCase().trim()] = true;
+                var exists = false;
+                for (var e = 0; e < REGISTERED_TEAMS.length; e++) {
+                  if (REGISTERED_TEAMS[e].id === t.id) { exists = true; break; }
+                }
+                if (!exists) REGISTERED_TEAMS.push(t);
+              }
+            });
+          }
           var loc = JSON.parse(localStorage.getItem('elisee_verified_teams_v1') || 'null');
           if (loc && Array.isArray(loc.ids)) {
             loc.ids.forEach(function (id) {
@@ -395,6 +467,11 @@
         return true;
       })
       .catch(function () {
+        REGISTERED_TEAMS = TEAMS_FALLBACK.slice();
+        REGISTERED_TEAMS.forEach(function (t) {
+          VERIFIED_IDS[String(t.id).toLowerCase()] = true;
+          VERIFIED_NAMES[String(t.name).toUpperCase().trim()] = true;
+        });
         return false;
       });
   }
@@ -845,6 +922,9 @@
     }
     if (lg.indexOf('PRIMAVERA 4') === 0) {
       return 'immagini/squadre-loghi/primavera-4.png';
+    }
+    if (lg.indexOf('DILETTANTI') >= 0) {
+      return 'immagini/squadre-loghi/promozione.png';
     }
     return '';
   }
@@ -1688,6 +1768,16 @@
       'sq'
     );
 
+    bindOnce(
+      $('es-sq-open-register'),
+      'click',
+      function (e) {
+        e.preventDefault();
+        openRegisterClubModal();
+      },
+      'sqreg'
+    );
+
     if (!document.documentElement.dataset.esSqKeys) {
       document.documentElement.dataset.esSqKeys = '1';
       document.addEventListener('keydown', function (e) {
@@ -1893,6 +1983,239 @@
     });
   }
 
+  function closeRegisterClubModal() {
+    var modal = $('es-sq-register-modal');
+    if (modal) {
+      modal.hidden = true;
+      modal.style.display = 'none';
+    }
+  }
+
+  function openRegisterClubModal() {
+    var existing = $('es-sq-register-modal');
+    if (existing) {
+      existing.hidden = false;
+      existing.style.display = 'flex';
+      var firstInput = existing.querySelector('input[name="team-name"]');
+      if (firstInput) firstInput.focus();
+      return;
+    }
+
+    var modal = document.createElement('div');
+    modal.id = 'es-sq-register-modal';
+    modal.className = 'es-sq-modal-overlay';
+    modal.innerHTML = [
+      '<div class="es-sq-modal-card" role="dialog" aria-modal="true" aria-labelledby="es-sq-modal-title">',
+      '  <div class="es-sq-modal-head">',
+      '    <div>',
+      '      <h3 id="es-sq-modal-title" style="margin:0;font-size:1.25rem;font-weight:800;color:#f8fafc;display:flex;align-items:center;gap:8px;">',
+      '        <span style="color:var(--es-accent,#00d285);">🛡️</span> Registra Club Ufficiale',
+      '      </h3>',
+      '      <p style="margin:4px 0 0;font-size:0.82rem;color:#94a3b8;">Aggiungi la tua squadra con Badge Vettoriale esclusivo 100% originale</p>',
+      '    </div>',
+      '    <button type="button" class="es-sq-modal-close" id="es-sq-reg-close" aria-label="Chiudi">&times;</button>',
+      '  </div>',
+      '  <form id="es-sq-reg-form" class="es-sq-reg-form">',
+      '    <div class="es-sq-reg-grid">',
+      '      <div class="es-sq-reg-fields">',
+      '        <div class="es-sq-reg-field">',
+      '          <label for="es-sq-reg-name">Nome Squadra *</label>',
+      '          <input type="text" id="es-sq-reg-name" name="team-name" placeholder="Es. Foggia City" required maxlength="40" />',
+      '        </div>',
+      '        <div class="es-sq-reg-row-2">',
+      '          <div class="es-sq-reg-field">',
+      '            <label for="es-sq-reg-league">Campionato / Categoria</label>',
+      '            <select id="es-sq-reg-league" name="team-league">',
+      '              <option value="DILETTANTI" selected>DILETTANTI</option>',
+      '              <option value="ECCELLENZA">ECCELLENZA</option>',
+      '              <option value="PROMOZIONE">PROMOZIONE</option>',
+      '              <option value="PRIMA CATEGORIA">PRIMA CATEGORIA</option>',
+      '              <option value="SECONDA CATEGORIA">SECONDA CATEGORIA</option>',
+      '              <option value="TERZA CATEGORIA">TERZA CATEGORIA</option>',
+      '              <option value="SERIE D">SERIE D</option>',
+      '              <option value="SERIE C">SERIE C</option>',
+      '              <option value="SERIE B">SERIE B</option>',
+      '              <option value="SERIE A">SERIE A</option>',
+      '            </select>',
+      '          </div>',
+      '          <div class="es-sq-reg-field">',
+      '            <label for="es-sq-reg-city">Città</label>',
+      '            <input type="text" id="es-sq-reg-city" name="team-city" placeholder="Es. Foggia" maxlength="35" />',
+      '          </div>',
+      '        </div>',
+      '        <div class="es-sq-reg-row-2">',
+      '          <div class="es-sq-reg-field">',
+      '            <label for="es-sq-reg-abbr">Sigla Stemma (3 lettere)</label>',
+      '            <input type="text" id="es-sq-reg-abbr" name="team-abbr" placeholder="Es. FGC" maxlength="4" style="text-transform:uppercase;" />',
+      '          </div>',
+      '          <div class="es-sq-reg-field">',
+      '            <label for="es-sq-reg-year">Anno Fondazione</label>',
+      '            <input type="number" id="es-sq-reg-year" name="team-year" placeholder="2024" min="1880" max="2030" value="2024" />',
+      '          </div>',
+      '        </div>',
+      '        <div class="es-sq-reg-row-2">',
+      '          <div class="es-sq-reg-field">',
+      '            <label>Colore Primario</label>',
+      '            <div class="es-sq-color-wrap">',
+      '              <input type="color" id="es-sq-reg-color-p" value="#dc2626" />',
+      '              <input type="text" id="es-sq-reg-hex-p" value="#dc2626" maxlength="7" />',
+      '            </div>',
+      '          </div>',
+      '          <div class="es-sq-reg-field">',
+      '            <label>Colore Secondario</label>',
+      '            <div class="es-sq-color-wrap">',
+      '              <input type="color" id="es-sq-reg-color-s" value="#0f172a" />',
+      '              <input type="text" id="es-sq-reg-hex-s" value="#0f172a" maxlength="7" />',
+      '            </div>',
+      '          </div>',
+      '        </div>',
+      '        <div class="es-sq-reg-field">',
+      '          <label>Genere</label>',
+      '          <div class="es-sq-reg-gender-opts">',
+      '            <label><input type="radio" name="team-gender" value="m" checked /> Maschile</label>',
+      '            <label><input type="radio" name="team-gender" value="f" /> Femminile</label>',
+      '          </div>',
+      '        </div>',
+      '      </div>',
+      '      <div class="es-sq-reg-preview-box">',
+      '        <div class="es-sq-reg-preview-title">Anteprima Stemma Ufficiale</div>',
+      '        <div class="es-sq-reg-preview-badge" id="es-sq-reg-badge-slot"></div>',
+      '        <div class="es-sq-reg-preview-name" id="es-sq-reg-preview-name">FOGGIA CITY</div>',
+      '        <div class="es-sq-reg-preview-sub" id="es-sq-reg-preview-sub">DILETTANTI · FOGGIA</div>',
+      '        <div class="es-sq-reg-preview-tag">✓ 100% ORIGINALE & CERTIFICATO</div>',
+      '      </div>',
+      '    </div>',
+      '    <div class="es-sq-modal-foot">',
+      '      <button type="button" class="btn btn-outline-pill" id="es-sq-reg-cancel">Annulla</button>',
+      '      <button type="submit" class="btn btn-primary" id="es-sq-reg-submit" style="background:linear-gradient(135deg,var(--es-accent,#00d285),#00a86b);border:none;color:#050d1a;font-weight:700;padding:8px 20px;border-radius:20px;cursor:pointer;">✓ Conferma e Salva Club</button>',
+      '    </div>',
+      '  </form>',
+      '</div>'
+    ].join('\n');
+
+    document.body.appendChild(modal);
+
+    function updateLivePreview() {
+      var nameVal = (modal.querySelector('#es-sq-reg-name').value || 'NUOVO CLUB').trim();
+      var leagueVal = (modal.querySelector('#es-sq-reg-league').value || 'DILETTANTI').trim();
+      var cityVal = (modal.querySelector('#es-sq-reg-city').value || 'ITALIA').trim();
+      var abbrVal = (modal.querySelector('#es-sq-reg-abbr').value || '').trim();
+      var colorP = modal.querySelector('#es-sq-reg-color-p').value;
+      var colorS = modal.querySelector('#es-sq-reg-color-s').value;
+
+      var prevName = modal.querySelector('#es-sq-reg-preview-name');
+      var prevSub = modal.querySelector('#es-sq-reg-preview-sub');
+      var badgeSlot = modal.querySelector('#es-sq-reg-badge-slot');
+
+      if (prevName) prevName.textContent = nameVal.toUpperCase();
+      if (prevSub) prevSub.textContent = (leagueVal + ' · ' + cityVal).toUpperCase();
+
+      var mockTeam = {
+        name: nameVal,
+        abbr: abbrVal,
+        primary: colorP,
+        secondary: colorS
+      };
+
+      if (badgeSlot && window.EliseeBadge) {
+        badgeSlot.innerHTML = window.EliseeBadge.generateSvg(mockTeam, { size: 100, shape: 'shield', abbr: abbrVal });
+      }
+    }
+
+    var colP = modal.querySelector('#es-sq-reg-color-p');
+    var hexP = modal.querySelector('#es-sq-reg-hex-p');
+    var colS = modal.querySelector('#es-sq-reg-color-s');
+    var hexS = modal.querySelector('#es-sq-reg-hex-s');
+
+    colP.addEventListener('input', function () { hexP.value = colP.value; updateLivePreview(); });
+    hexP.addEventListener('input', function () { if (/^#[0-9a-f]{6}$/i.test(hexP.value)) { colP.value = hexP.value; updateLivePreview(); } });
+    colS.addEventListener('input', function () { hexS.value = colS.value; updateLivePreview(); });
+    hexS.addEventListener('input', function () { if (/^#[0-9a-f]{6}$/i.test(hexS.value)) { colS.value = hexS.value; updateLivePreview(); } });
+
+    modal.querySelectorAll('input, select').forEach(function (inp) {
+      inp.addEventListener('input', updateLivePreview);
+    });
+
+    modal.querySelector('#es-sq-reg-close').addEventListener('click', closeRegisterClubModal);
+    modal.querySelector('#es-sq-reg-cancel').addEventListener('click', closeRegisterClubModal);
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeRegisterClubModal();
+    });
+
+    modal.querySelector('#es-sq-reg-form').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var name = (modal.querySelector('#es-sq-reg-name').value || '').trim();
+      if (!name) return;
+      var league = (modal.querySelector('#es-sq-reg-league').value || 'DILETTANTI').trim();
+      var city = (modal.querySelector('#es-sq-reg-city').value || '').trim();
+      var abbr = (modal.querySelector('#es-sq-reg-abbr').value || '').trim();
+      var year = parseInt(modal.querySelector('#es-sq-reg-year').value, 10) || new Date().getFullYear();
+      var colorP = modal.querySelector('#es-sq-reg-color-p').value;
+      var colorS = modal.querySelector('#es-sq-reg-color-s').value;
+      var genderInp = modal.querySelector('input[name="team-gender"]:checked');
+      var gender = genderInp ? genderInp.value : 'm';
+
+      var slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || ('club-' + Date.now());
+      var newTeam = {
+        id: slug,
+        name: name.toUpperCase(),
+        country: 'ITALIA',
+        league: league.toUpperCase(),
+        city: (city || name).toUpperCase(),
+        year: String(year),
+        abbr: (abbr || name.slice(0, 3)).toUpperCase(),
+        gender: gender,
+        pos: 1,
+        pts: 0,
+        played: 0,
+        verified: true,
+        eliseeVerified: true,
+        primary: colorP,
+        secondary: colorS,
+        home: { body: colorP, sleeve: colorS },
+        away: { body: colorS, sleeve: colorP }
+      };
+
+      // Salva in localStorage
+      var saved = [];
+      try { saved = JSON.parse(localStorage.getItem('elisee_registered_teams_v1') || '[]'); } catch(_) {}
+      if (!Array.isArray(saved)) saved = [];
+      saved = saved.filter(function (t) { return t.id !== newTeam.id; });
+      saved.push(newTeam);
+      localStorage.setItem('elisee_registered_teams_v1', JSON.stringify(saved));
+
+      // Registra in memoria
+      VERIFIED_IDS[newTeam.id] = true;
+      VERIFIED_NAMES[newTeam.name] = true;
+      var existingIdx = -1;
+      for (var i = 0; i < REGISTERED_TEAMS.length; i++) {
+        if (REGISTERED_TEAMS[i].id === newTeam.id) { existingIdx = i; break; }
+      }
+      if (existingIdx >= 0) REGISTERED_TEAMS[existingIdx] = newTeam;
+      else REGISTERED_TEAMS.push(newTeam);
+
+      // Ri-applica catalogo e aggiorna selettore
+      applyCatalog({ teams: TEAMS, leagueOrder: LEAGUE_ORDER });
+      state.gender = gender;
+      var genderRadios = document.querySelectorAll('input[name="es-sq-gender"]');
+      genderRadios.forEach(function (r) { r.checked = (r.value === gender); });
+
+      // Chiudi modale
+      closeRegisterClubModal();
+
+      if (typeof window.showToast === 'function') {
+        window.showToast('Club ' + newTeam.name + ' registrato con successo!', 'success');
+      }
+
+      // Seleziona la nuova squadra
+      setTimeout(function () {
+        selectTeamById(newTeam.id);
+      }, 50);
+    });
+
+    updateLivePreview();
+  }
+
   function refresh() {
     return loadCatalog().then(function () {
       if (state.pendingTeamId) {
@@ -1968,6 +2291,8 @@
     getSelected: current,
     isTeamVerified: isTeamVerified,
     loadCatalog: loadCatalog,
+    openRegisterClubModal: openRegisterClubModal,
+    closeRegisterClubModal: closeRegisterClubModal,
     get teams() {
       return TEAMS;
     },
