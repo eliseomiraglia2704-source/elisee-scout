@@ -326,7 +326,6 @@
   pointer-events: none;
   position: relative;
   z-index: 2;
-  transition: opacity 0.12s ease-out;
 }
 .es-sq-crest-fallback {
   position: absolute;

@@ -3,16 +3,15 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** — Fix definitivo sparizione loghi Serie B / Seleziona Squadre & deduplicazione Barletta (cache `BARLETTA2`).
-Ultimo fatto: **Fix Sparizione Loghi Serie B & Perfezionamento Caricamento Seleziona Squadre**:
-1. **Risoluzione Sparizione Loghi Serie B (e altre categorie)**:
-   - **Causa del problema**: Nel commit precedente, il meccanismo di pre-caricamento inseriva un oggetto `Image` con `.src` già impostato in `PRELOAD_CACHE`. Quando l'utente apriva la Serie B, `showLogo` riutilizzava quell'oggetto e gli attaccava `probe.onload` *dopo* che l'immagine era già in caricamento o completata; nei browser moderni l'evento `onload` registrato tardivamente non scatta, lasciando l'immagine bloccata su `display: 'none'` e mostrando solo il fallback.
-   - **Soluzione applicata**: Rimossa la dipendenza da `probe.onload`. Ora `img.onload` e `img.onerror` sono associati direttamente all'elemento `<img>` nativo. Se l'immagine è già pronta nella cache del browser (`img.complete && img.naturalWidth > 0`), viene mostrata istantaneamente a 0ms (`display: 'block'`, `opacity: 1`). Se è in download, non mostra il vecchio logo della squadra precedente bensì il fallback pulito con le iniziali e i colori della squadra attuale, e al completamento del download svela il logo istantaneamente.
-   - Il `PRELOAD_CACHE` è stato convertito in mappa booleana semplice (`PRELOAD_CACHE[u] = true`), garantendo prefetch in cache HTTP del browser senza interferire con i listener DOM.
-2. **Deduplicazione Barletta in Seleziona Squadre**:
-   - Eliminato definitivamente l'ID duplicato `barletta-cb0b` da `data/squadre/catalog.json` (mantenuta solo la squadra ufficiale `barletta`).
-   - Safeguard automatico `seenInLeague` attivo in `squadre-select.js`.
-3. **File coinvolti**: `squadre-select.js`, `squadre-select.css`, `data/squadre/catalog.json`, `index.html`, `version.json`, `sw.js`. Cache `BARLETTA2`.
+Ultimo aggiornamento: **2026-09-14** — Ripristino pulito e fedele loghi squadre e competizioni in Seleziona Squadre (cache `CLEAN1`).
+Ultimo fatto: **Allineamento Diretto e Pulito Loghi Squadre & Competizioni (`immagini/squadre-loghi/`)**:
+1. **Ripristino Architettura Diretta & Fedeltà Asset Progetto**:
+   - **Causa del disallineamento**: L'introduzione di un filtro dinamico `seenInLeague` e di un motore di prefetch asincrono con `PRELOAD_CACHE` nel selettore squadre aveva alterato l'indicizzazione dei club (scartando involontariamente squadre distinte con nomi affini) e provocato race condition tra il rendering dei loghi squadra e dei loghi competizione.
+   - **Soluzione applicata**: Rimosso totalmente `seenInLeague` e ogni sovrastruttura di prefetch arbitrario da `squadre-select.js`. I loghi di squadre e competizioni sono ora collegati in modo lineare, diretto e autentico ai file della cartella di progetto `immagini/squadre-loghi/`.
+   - **Gestione visiva anti-glitch senza effetti collaterali**: Durante il download di un nuovo stemma, l'immagine precedente viene temporaneamente occultata con `visibility: 'hidden'` mostrando le iniziali e i colori sociali della squadra corrente, per poi tornare immediatamente visibile (`visibility: 'visible'`) a download ultimato o a 0ms se già presente in memoria.
+2. **Deduplicazione Barletta preservata nel catalogo**:
+   - In `data/squadre/catalog.json` è stata rimossa la sola riga duplicata `barletta-cb0b`, lasciando l'unica squadra ufficiale `barletta`.
+3. **File coinvolti**: `squadre-select.js`, `squadre-select.css`, `index.html`, `version.json`, `sw.js`. Cache `CLEAN1`.
 Feature precedente: **Pannello "Azioni possibili" a Griglia Orizzontale 3 Colonne a Schede (PLAYERDOSSIER4)**:
 1. **Risoluzione spazio vuoto a destra**: Trasformato `.es-link-list` in griglia orizzontale a 3 colonne a schede.
 2. **Posizionamento a piena larghezza**: Subito sotto la griglia dossier a 3 colonne.
