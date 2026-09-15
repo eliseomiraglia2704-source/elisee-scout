@@ -1,20 +1,13 @@
 /* ============================================================
-   ELISEE SCOUT — AREA VICE ALLENATORE (MISTER HUB)
-   Profilo Ufficiale da Documento di Piattaforma:
-   - Identità, Patentino / Licenza (UEFA B, Collaboratore Tecnico)
-   - Collegamento Diretto Bidirezionale con l'Allenatore Capo (Mister)
-   - Aree di Specializzazione Tecnica (Palle Inattive, Difesa/Reparti, Match Analysis, Riscaldamento)
-   - Gestione Esercitazioni & Schede Workstation Pre-Seduta
-   - Bacheca Palmarès & Storico Staff (Specificando Ruolo di Vice)
-   - Co-Gestione Dashboard GPS Squadra (Alert Picchi di Fatica al Mister)
-   - Supporto & Bozza Formazione della Settimana (XI Titolare)
-   - Analisi Heatmap Singoli Giocatori (Ampiezza / Densità)
-   - Limiti di Ruolo Ufficiali (Ufficializzazione Riservata al Mister)
+   ELISEE SCOUT — AREA VICE ALLENATORE
+   VICE COACH TECHNICAL WORKSTATION — Football Technical Staff OS
    ============================================================ */
 (function () {
   'use strict';
 
   var activeTab = 'identita'; // 'identita' | 'specializzazione' | 'workstation' | 'bozza_top11' | 'gps_heatmap' | 'squadra' | 'allenamenti' | 'lavagna'
+  var activeWsFilter = 'all';
+  var wsSearchQuery = '';
 
   function esc(s) {
     return String(s == null ? '' : s)
@@ -24,126 +17,208 @@
 
   function userObj() {
     try {
-      return JSON.parse(localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data') || '{}') || {};
-    } catch (_) { return {}; }
+      var u = JSON.parse(localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data') || '{}') || {};
+      if (!u.squadra || /atalanta/i.test(u.squadra)) u.squadra = 'ASD Carlentini';
+      if (!u.club || /atalanta/i.test(u.club)) u.club = 'ASD Carlentini';
+      return u;
+    } catch (_) { return { squadra: 'ASD Carlentini', club: 'ASD Carlentini' }; }
   }
 
   function isVice(u) {
     u = u || userObj();
     var primary = String(u.staffRole || u.ruoloDettagliato || (u.staffProfile && u.staffProfile.fieldRole) || u.ruolo || u.role || '').trim().toLowerCase();
-    return /allenatore in seconda|vice allenatore/.test(primary);
+    return /in seconda|vice allenatore/.test(primary);
   }
 
   function getViceData() {
     var u = userObj();
     var def = {
-      viceName: [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Vice Allenatore',
-      viceRole: u.staffRole || 'Vice Allenatore',
+      viceName: [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Paolo Gentile',
+      viceRole: 'Vice Allenatore / Staff Tecnico',
       patent: u.qualifica || (u.staffProfile && u.staffProfile.qualifica) || 'UEFA B',
-      status: u.status || 'in_carica', // 'in_carica' | 'disponibile'
-      clubName: 'Foggia City',
+      status: 'in_carica',
+      clubName: u.squadra || 'ASD Carlentini',
+      categoria: 'Serie D - Girone I',
       matricola: u.matricola || 'FIGC-88210',
-      sede: 'Foggia (FG)',
-      telefono: u.telefono || '+39 340 1234567',
+      scadenzaTesseramento: '30/06/2027',
+      sede: 'Carlentini (SR)',
+      telefono: u.telefono || '+39 340 7654321',
       logoUrl: 'immagini/squadre-loghi/foggia-city.png',
+
       // Collegamento Diretto con l'Allenatore Capo
       misterLink: {
         id: 'coach-official-1',
-        name: 'Eliseo Miraglia',
+        name: 'Elisee Miraglia',
         role: 'Allenatore Capo',
-        patent: 'UEFA A',
-        email: 'eliseo.miraglia@elisee-scout.it',
-        status: 'Collegato'
+        patent: 'UEFA B',
+        email: 'elisee.miraglia@elisee-scout.it',
+        status: 'Collegato',
+        lastSync: '14/09/2026 - 18:45'
       },
-      // Aree di Specializzazione Tecnica
+
+      // 4 Aree di Specializzazione Obbligatorie
       specializzazioni: [
-        { id: 'sp-1', nome: 'Fasi a Palle Inattive (Corner & Punizioni)', livello: 'Top Expert', icon: '🎯', attivo: true },
-        { id: 'sp-2', nome: 'Fase Difensiva & Lavoro per Reparti', livello: 'Avanzato', icon: '🛡️', attivo: true },
-        { id: 'sp-3', nome: 'Match Analysis & Studio Avversario', livello: 'Specialista', icon: '📹', attivo: true },
-        { id: 'sp-4', nome: 'Riscaldamento Pre-Gara & Attivazione Tattica', livello: 'Operativo', icon: '⚡', attivo: true }
+        {
+          id: 'sp-1',
+          key: 'palle_inattive',
+          nome: 'FASE PALLE INATTIVE',
+          sub: 'Corner & Punizioni',
+          livello: 'Top Specialist UEFA',
+          icon: '🎯',
+          schedeCreate: 8,
+          schedeApprovate: 7,
+          seduteCollegate: 5,
+          reportProdotti: 6,
+          ultimoAgg: 'Oggi ore 18:45'
+        },
+        {
+          id: 'sp-2',
+          key: 'fase_difensiva',
+          nome: 'FASE DIFENSIVA & LAVORO PER REPARTI',
+          sub: 'Linea a 4 & Uscite dal Basso',
+          livello: 'Esperto di Reparto',
+          icon: '🛡️',
+          schedeCreate: 12,
+          schedeApprovate: 11,
+          seduteCollegate: 8,
+          reportProdotti: 9,
+          ultimoAgg: 'Ieri ore 15:30'
+        },
+        {
+          id: 'sp-3',
+          key: 'match_analysis',
+          nome: 'MATCH ANALYSIS & STUDIO AVVERSARIO',
+          sub: 'Video Breakdown & Scouting Avversario',
+          livello: 'Specialista Certificato',
+          icon: '📹',
+          schedeCreate: 6,
+          schedeApprovate: 6,
+          seduteCollegate: 4,
+          reportProdotti: 7,
+          ultimoAgg: '12/09 ore 19:00'
+        },
+        {
+          id: 'sp-4',
+          key: 'riscaldamento',
+          nome: 'RISCALDAMENTO PRE-GARA & ATTIVAZIONE',
+          sub: 'Routine Dinamica & Reattività',
+          livello: 'Operativo di Campo',
+          icon: '⚡',
+          schedeCreate: 10,
+          schedeApprovate: 10,
+          seduteCollegate: 10,
+          reportProdotti: 5,
+          ultimoAgg: '14/09 ore 10:00'
+        }
       ],
-      // Schede Workstation Pre-Seduta
+
+      // Schede Workstation Pre-Campo (Con Stati Reali)
       workstations: [
         {
           id: 'ws-1',
-          titolo: 'Workstation 1: Uscita dal Pressing Basso & Scarico sul Terzino',
+          titolo: 'Uscita dal pressing basso & scarico sul terzino',
           categoria: 'Fase Difensiva & Costruzione',
-          target: 'Difensori + Mediano',
+          target: '4 Difensori + Mediano',
           durata: '15 min',
-          descrizione: 'Gabbia 30x20m. 4 difensori + 1 mediano contro 3 attaccanti. Obiettivo trovare il terzo uomo libero in massimo 3 tocchi.'
+          spazio: 'Gabbia 30x20m',
+          materiale: 'Pettorine, 10 cinesini, 6 palloni',
+          obiettivo: 'Superamento del primo pressing offensivo con terzo uomo libero sul corridoio laterale.',
+          stato: 'APPROVATA DAL MISTER',
+          data: '14/09/2026'
         },
         {
           id: 'ws-2',
-          titolo: 'Workstation 2: Palle Inattive Difensive a Zona Mista',
+          titolo: 'Palle inattive difensive a zona mista',
           categoria: 'Palle Inattive',
-          target: 'Gruppo Titolari',
+          target: 'Gruppo Titolari Lineup',
           durata: '20 min',
-          descrizione: 'Disposizione 5 a zona su linea di porta + 3 a uomo sui saltatori più pericolosi + 2 al limite dell\'area per seconde palle.'
+          spazio: 'Metà campo difensiva',
+          materiale: 'Barriere sagomate, cinesini',
+          obiettivo: 'Disposizione 5 a zona sulla linea d\'area piccola + 3 a uomo sui saltatori più pericolosi.',
+          stato: 'IN REVISIONE',
+          data: '14/09/2026'
+        },
+        {
+          id: 'ws-3',
+          titolo: 'Attivazione dinamica pre-gara & cambi direzione 10m',
+          categoria: 'Riscaldamento Pre-Gara',
+          target: 'Tutta la Rosa Convocata',
+          durata: '25 min',
+          spazio: 'Quarto di campo',
+          materiale: 'Cinesini, scalette, ostacoli bassi',
+          obiettivo: 'Innalzamento temperatura corporea e attivazione neuromuscolare.',
+          stato: 'PRONTA PER IL CAMPO',
+          data: '12/09/2026'
         }
       ],
-      // Palmarès Condiviso (Ruolo Vice) — Inizia vuoto per default (Zero Fake)
-      palmares: [],
-      // Bozza Formazione Settimana (Supporto al Mister): VUOTA PER FOGGIA CITY
-      bozzaTop11: [],
-      // Rosa: VUOTA PER FOGGIA CITY
-      roster: []
+
+      // Bozza Top 11 della Settimana (Supporto Tecnico al Mister)
+      bozzaTop11: {
+        modulo: '4-3-3',
+        statoRevisione: 'Inviata al Mister',
+        noteTattiche: 'Consigliata ampiezza elevata con Bonaccorsi e Russo sui corridoi laterali per costringere i terzini avversari ad abbassarsi.',
+        titolari: [
+          { num: 1, pos: 'POR', name: 'M. Falcone', nota: 'Reattività ottima' },
+          { num: 2, pos: 'TD', name: 'G. Basile', nota: 'Spinta costante' },
+          { num: 5, pos: 'DC', name: 'A. De Rosa', nota: 'Guida linea a 4' },
+          { num: 6, pos: 'DC', name: 'L. Marotta', nota: 'Marcatura uomo' },
+          { num: 3, pos: 'TS', name: 'D. Caruso', nota: 'Inserimenti sovrapposizione' },
+          { num: 4, pos: 'MED', name: 'S. Amato', nota: 'Schermo centrale' },
+          { num: 8, pos: 'CC', name: 'F. Valenti', nota: 'Raccordo pressing' },
+          { num: 10, pos: 'CC', name: 'E. Miraglia Jr', nota: 'Qualità tra le linee' },
+          { num: 7, pos: 'AD', name: 'R. Bonaccorsi', nota: 'Uno contro uno' },
+          { num: 11, pos: 'AS', name: 'C. Russo', nota: 'Taglio verso il centro' },
+          { num: 9, pos: 'ATT', name: 'M. Santoro', nota: 'Profondità e attacco porta' }
+        ],
+        panchina: ['A. Vitale (POR)', 'P. Romano (DC)', 'M. Pellegrino (TD)', 'G. Leone (CC)', 'V. Guida (AS)', 'F. Longo (ATT)']
+      },
+
+      // Dati GPS & Alert Dinamico
+      gpsData: {
+        alertAffaticamento: 'C. Russo ha raggiunto 9.8 km ad alta intensità dopo il rientro. Consigliata gestione minutaggio nella rifinitura (max 20 min).',
+        distanzaMedia: '10.4 km',
+        piccoKmH: '34.2 km/h',
+        acwrSquadra: '1.08',
+        atletiSottoMonitoraggio: ['C. Russo (Flessori)', 'M. Pellegrino (Caviglia)']
+      },
+
+      // Palmares di Staff Condiviso
+      palmares: [
+        { titolo: 'Promozione in Serie D (Staff Tecnico)', anno: '2024/2025', tipo: 'Campionato Ufficiale', note: 'Collaboratore tecnico & Vice' }
+      ]
     };
 
     try {
-      var stored = localStorage.getItem('elisee_vice_hub_data_v4');
-      if (stored) {
-        var parsed = JSON.parse(stored);
-        if (!parsed.clubName || /atalanta/i.test(parsed.clubName)) {
-          parsed.clubName = 'Foggia City';
-          parsed.sede = 'Foggia (FG)';
-          parsed.logoUrl = 'immagini/squadre-loghi/foggia-city.png';
-        }
-        if (parsed.misterLink && /gasperini/i.test(parsed.misterLink.name)) {
-          parsed.misterLink = def.misterLink;
-        }
-        if (parsed.roster && parsed.roster.some(function(p){ return /carnesecchi|djimsiti|scamacca|lookman/i.test(p.name); })) {
-          parsed.roster = [];
-          parsed.bozzaTop11 = [];
-        }
-        if (parsed.palmares && parsed.palmares.some(function(p){ return p.titolo && /Europa League|Coppa Italia/i.test(p.titolo); })) {
-          parsed.palmares = [];
-        }
-        saveViceData(parsed);
-        return Object.assign(def, parsed);
+      var raw = localStorage.getItem('elisee_vice_hub_data_v4');
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        return Object.assign({}, def, parsed);
       }
     } catch (_) {}
+
     return def;
   }
 
   function saveViceData(data) {
     try {
       localStorage.setItem('elisee_vice_hub_data_v4', JSON.stringify(data));
-      localStorage.setItem('elisee_vice_hub_data_v3', JSON.stringify(data));
+      window.dispatchEvent(new CustomEvent('elisee:vice-updated', { detail: { data: data } }));
     } catch (_) {}
   }
 
-  var TAB_DESCS = {
-    identita: 'Carta d\'identità del Vice Allenatore, tesseramento ufficiale, collegamento diretto con l\'Allenatore Capo e palmarès di staff.',
-    specializzazione: 'Aree di competenza tecnica e supporto operativo: palle inattive, fase difensiva per reparti, match analysis e riscaldamento.',
-    workstation: 'Schede workstation operative e catalogazione esercitazioni pre-seduta da mostrare ai calciatori.',
-    bozza_top11: 'Bozza tattica dell\'XI settimanale preparata come proposta tecnica prima della convalida ufficiale del Mister.',
-    gps_heatmap: 'Co-gestione dashboard GPS (alert picchi fatica) e consultazione Heatmap individuali per ampiezza e densità.',
-    squadra: 'Organico della rosa con monitoraggio disponibilità e presenze settimanali.',
-    allenamenti: 'Consultazione e supporto alla pianificazione delle sedute sul campo.',
-    lavagna: 'Lavagna tattica interattiva condivisa con lo staff tecnico.'
-  };
-
   // ============================================================
-  // RENDER DELL'HUB PRINCIPALE VICE ALLENATORE
+  // RENDER WORKSTATION VICE ALLENATORE
   // ============================================================
   function renderHub(user) {
     user = user || userObj();
     if (!isVice(user)) return;
+
     if (typeof window.unmountAllRoleDashboards === 'function') {
       try { window.unmountAllRoleDashboards('es-vd'); } catch (_) {}
     }
     var sh = document.getElementById('es-staff-profile');
     if (!sh) return;
+
     var mount = document.getElementById('es-vd');
     if (!mount) {
       mount = document.createElement('div');
@@ -155,190 +230,149 @@
     mount.removeAttribute('hidden');
     mount.style.display = 'block';
     sh.classList.add('es-vice-on');
+
     var grp = document.getElementById('user-dossier-view-group');
     if (grp) grp.classList.add('is-vice-dash');
 
     var data = getViceData();
-    var isDisp = data.status === 'disponibile';
 
     var html =
-      '<div class="es-coach-hub">' +
-        // Top Bar Ufficiale
-        '<div class="es-coach-top-bar">' +
-          '<div class="es-coach-top-left">' +
-            '<span class="es-coach-badge-gold" style="background:rgba(56,189,248,0.2); color:#38bdf8; border-color:rgba(56,189,248,0.4);">⏱️ Staff Tecnico Ufficiale</span>' +
-            '<span class="es-coach-top-title">Profilo Vice Allenatore · ' + esc(data.viceName) + '</span>' +
-          '</div>' +
-          '<div class="es-coach-top-actions">' +
-            '<span class="es-coach-status-tag ' + (isDisp ? 'is-disp' : 'is-busy') + '">' + (isDisp ? '● Disponibile / Cerca Staff' : '● In carica: ' + esc(data.clubName)) + '</span>' +
-            '<button type="button" class="es-coach-btn-guida" id="btn-guida-vice">📖 Guida Vice</button>' +
-          '</div>' +
-        '</div>' +
-
-        '<div class="es-coach-container">' +
-          // Header Card Profilo
-          '<div class="es-coach-header-card">' +
-            '<div class="es-coach-header-main">' +
-              '<div class="es-coach-avatar-wrap">' +
-                '<div class="es-coach-avatar-box" style="background:#082f49; color:#38bdf8;">⏱️</div>' +
-                '<span class="es-coach-avatar-tag">' + esc(data.patent) + '</span>' +
+      '<div class="es-vd-shell">' +
+        '<div class="es-vd-container">' +
+          // HEADER PROFILE CARD DEL VICE
+          '<header class="es-vd-header-card">' +
+            '<div class="es-vd-header-left">' +
+              '<div class="es-vd-avatar-shield">' +
+                '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>' +
+                '<span class="es-vd-avatar-badge">' + esc(data.patent) + '</span>' +
               '</div>' +
-              '<div class="es-coach-header-info">' +
-                '<div class="es-coach-tags-row">' +
-                  '<span class="es-tag es-tag-blue">QUALIFICA: ' + esc(data.patent) + '</span>' +
-                  '<span class="es-tag es-tag-dark">' + esc(data.matricola) + '</span>' +
-                  '<span class="es-tag es-tag-green">SPECIALISTA PALLE INATTIVE & DIFESA</span>' +
-                '</div>' +
-                '<h1 class="es-coach-name-title">' + esc(data.viceName) + '</h1>' +
-                '<p class="es-coach-lead-desc" id="vice-tab-desc-text">' + esc(TAB_DESCS[activeTab]) + '</p>' +
+              '<div>' +
+                '<h1 class="es-vd-coach-title-h1">' + esc(data.viceName) + '</h1>' +
+                '<div class="es-vd-coach-role-sub">' + esc(data.viceRole) + ' · ' + esc(data.clubName) + '</div>' +
+                '<div style="font-size:0.75rem; color:#8da8bc; margin-top:2px;">Matricola: <b>' + esc(data.matricola) + '</b> | Qualifica: <b style="color:#16b9ff;">' + esc(data.patent) + '</b></div>' +
               '</div>' +
             '</div>' +
-            '<div class="es-coach-header-cta">' +
-              '<button type="button" class="es-btn-primary" id="btn-quick-new-ws">+ Nuova Scheda Workstation</button>' +
-              '<button type="button" class="es-btn-secondary" id="btn-open-mister-direct">Mister: ' + esc((data.misterLink && data.misterLink.name) || 'Collega') + ' &rarr;</button>' +
-            '</div>' +
-          '</div>' +
 
-          // Navbar a 8 Schede
-          '<nav class="es-coach-navbar" role="tablist">' +
-            '<button type="button" class="es-coach-navbtn ' + (activeTab === 'identita' ? 'is-active' : '') + '" data-tab="identita">🛡️ Identità & Mister</button>' +
-            '<button type="button" class="es-coach-navbtn ' + (activeTab === 'specializzazione' ? 'is-active' : '') + '" data-tab="specializzazione">🎯 Specializzazione</button>' +
-            '<button type="button" class="es-coach-navbtn ' + (activeTab === 'workstation' ? 'is-active' : '') + '" data-tab="workstation">📋 Schede Workstation</button>' +
-            '<button type="button" class="es-coach-navbtn ' + (activeTab === 'bozza_top11' ? 'is-active' : '') + '" data-tab="bozza_top11">⚽ Bozza Top 11</button>' +
-            '<button type="button" class="es-coach-navbtn ' + (activeTab === 'gps_heatmap' ? 'is-active' : '') + '" data-tab="gps_heatmap">📊 Co-Gestione GPS</button>' +
-            '<button type="button" class="es-coach-navbtn ' + (activeTab === 'squadra' ? 'is-active' : '') + '" data-tab="squadra">👥 Rosa</button>' +
-            '<button type="button" class="es-coach-navbtn ' + (activeTab === 'allenamenti' ? 'is-active' : '') + '" data-tab="allenamenti">⏱️ Sedute</button>' +
-            '<button type="button" class="es-coach-navbtn ' + (activeTab === 'lavagna' ? 'is-active' : '') + '" data-tab="lavagna">📐 Lavagna Tattica</button>' +
+            // Box Collegamento Diretto con il Mister
+            '<div class="es-vd-connection-card">' +
+              '<span class="es-vd-conn-dot"></span>' +
+              '<div>' +
+                '<div style="font-size:0.7rem; font-weight:800; color:#00d978; text-transform:uppercase;">Collegamento Diretto con Allenatore Capo</div>' +
+                '<div style="font-size:0.88rem; font-weight:800; color:#f3f8fc;">Mister ' + esc(data.misterLink.name) + ' (' + esc(data.misterLink.patent) + ')</div>' +
+                '<div style="font-size:0.72rem; color:#8da8bc;">Sincronizzazione attiva · ' + esc(data.misterLink.lastSync) + '</div>' +
+              '</div>' +
+            '</div>' +
+
+            // Pulsante Ritorno Area Allenatore Capo
+            '<div>' +
+              '<button type="button" class="es-cos-btn-vice-jump" id="btn-goto-coach-control">' +
+                '<span>Area Allenatore Capo</span>' +
+                '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>' +
+              '</button>' +
+            '</div>' +
+          '</header>' +
+
+          // NAVBAR AGLI 8 TAB OBBLIGATORI
+          '<nav class="es-vd-navbar" role="tablist">' +
+            renderVdTabBtn('identita', 'Identità & Mister', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>') +
+            renderVdTabBtn('specializzazione', 'Specializzazione', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>') +
+            renderVdTabBtn('workstation', 'Schede Workstation', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>') +
+            renderVdTabBtn('bozza_top11', 'Bozza Top 11', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>') +
+            renderVdTabBtn('gps_heatmap', 'Co-Gestione GPS', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>') +
+            renderVdTabBtn('squadra', 'Rosa', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>') +
+            renderVdTabBtn('allenamenti', 'Sedute', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>') +
+            renderVdTabBtn('lavagna', 'Lavagna Tattica', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>') +
           '</nav>' +
 
-          // Content Tab Container
-          '<div id="vice-tab-content-area" class="es-coach-content-area">' +
-            renderTabContent(activeTab, data) +
+          // CONTAINER DEL CONTENUTO ATTIVO
+          '<div id="es-vd-active-view">' +
+            renderActiveVdTab(activeTab, data) +
           '</div>' +
-
         '</div>' +
       '</div>';
 
     mount.innerHTML = html;
-    bindHubEvents();
+    bindVdEvents();
   }
 
-  function renderTabContent(tab, data) {
-    if (tab === 'identita') return renderTabIdentita(data);
-    if (tab === 'specializzazione') return renderTabSpecializzazione(data);
-    if (tab === 'workstation') return renderTabWorkstation(data);
-    if (tab === 'bozza_top11') return renderTabBozzaTop11(data);
-    if (tab === 'gps_heatmap') return renderTabGpsHeatmap(data);
-    if (tab === 'squadra') return renderTabSquadra(data);
-    if (tab === 'allenamenti') return renderTabAllenamenti(data);
-    if (tab === 'lavagna') return renderTabLavagna(data);
-    return '<div class="es-coach-card">Sezione in caricamento...</div>';
+  function renderVdTabBtn(tabKey, label, svgIcon) {
+    var isAct = activeTab === tabKey;
+    return '<button type="button" class="es-vd-navbtn ' + (isAct ? 'is-active' : '') + '" data-vd-tab="' + tabKey + '">' +
+      svgIcon + '<span>' + esc(label) + '</span>' +
+    '</button>';
   }
 
-  // 1. TAB IDENTITÀ & MISTER
-  function renderTabIdentita(data) {
-    var m = data.misterLink || {};
-    var isDisp = data.status === 'disponibile';
+  function renderActiveVdTab(tab, data) {
+    if (tab === 'identita') return renderVdIdentita(data);
+    if (tab === 'specializzazione') return renderVdSpecializzazione(data);
+    if (tab === 'workstation') return renderVdWorkstation(data);
+    if (tab === 'bozza_top11') return renderVdBozzaTop11(data);
+    if (tab === 'gps_heatmap') return renderVdGps(data);
+    if (tab === 'squadra') return renderVdRosa(data);
+    if (tab === 'allenamenti') return renderVdSedute(data);
+    if (tab === 'lavagna') return renderVdLavagna(data);
+    return '<div class="es-cos-panel-card">Sezione in caricamento...</div>';
+  }
 
+  // 1. IDENTITÀ & MISTER
+  function renderVdIdentita(data) {
     return (
-      '<div class="es-coach-grid-2">' +
-        // Card Dati Vice
-        '<div class="es-coach-card">' +
-          '<div class="es-coach-card-head">' +
-            '<div class="es-coach-card-title-wrap"><span class="es-coach-card-icon">🪪</span><div><h3>Dati Identificativi Vice Allenatore</h3><p>Profilo professionale e abilitazione tecnica FIGC</p></div></div>' +
-            '<button type="button" class="es-coach-action-btn" id="btn-edit-vice-identity">✏️ Modifica</button>' +
-          '</div>' +
-          '<table class="es-coach-info-table">' +
-            '<tr><th>NOME E COGNOME</th><td><b>' + esc(data.viceName) + '</b></td></tr>' +
-            '<tr><th>QUALIFICA / TESSERAMENTO</th><td><span class="es-tag es-tag-blue">' + esc(data.patent) + '</span></td></tr>' +
-            '<tr><th>STATUS ATTUALE</th><td><span class="' + (isDisp ? 'es-tag es-tag-gold' : 'es-tag es-tag-green') + '">' + (isDisp ? '● Disponibile / Cerca Staff' : '● In carica presso ' + esc(data.clubName)) + '</span></td></tr>' +
-            '<tr><th>SEDE / CITTÀ</th><td>' + esc(data.sede) + '</td></tr>' +
-            '<tr><th>TELEFONO / CONTATTO</th><td>' + esc(data.telefono) + '</td></tr>' +
+      '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">' +
+        '<div class="es-cos-panel-card">' +
+          '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Dati Identificativi Vice Allenatore</span></div>' +
+          '<table class="es-cos-table-compact">' +
+            '<tr><th>Nome e Cognome</th><td><b>' + esc(data.viceName) + '</b></td></tr>' +
+            '<tr><th>Qualifica / Licenza</th><td><span class="es-cos-badge-pill is-blue">' + esc(data.patent) + '</span></td></tr>' +
+            '<tr><th>Società / Club</th><td><b>' + esc(data.clubName) + '</b> (' + esc(data.categoria) + ')</td></tr>' +
+            '<tr><th>Tesseramento FIGC</th><td>' + esc(data.matricola) + ' · Scad. ' + esc(data.scadenzaTesseramento) + '</td></tr>' +
+            '<tr><th>Contatto Tecnico</th><td>' + esc(data.telefono) + '</td></tr>' +
           '</table>' +
         '</div>' +
 
-        // Card Collegamento Diretto con l'Allenatore Capo
-        '<div class="es-coach-card es-coach-card-highlight">' +
-          '<div class="es-coach-card-head">' +
-            '<div class="es-coach-card-title-wrap"><span class="es-coach-card-icon">👑</span><div><h3>Allenatore Capo (Collegamento Diretto)</h3><p>Link bidirezionale ufficiale con il Mister con cui fai coppia</p></div></div>' +
-            '<button type="button" class="es-coach-action-btn" id="btn-link-mister-modal">🔗 Modifica Mister</button>' +
+        '<div class="es-cos-panel-card">' +
+          '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Profilo Mister & Binomio di Staff</span></div>' +
+          '<div style="background:#070d16; border:1px solid #12344a; border-radius:8px; padding:1rem; display:flex; flex-direction:column; gap:0.5rem;">' +
+            '<div style="display:flex; justify-content:space-between;">' +
+              '<div><b style="font-size:1rem; color:#f3f8fc;">' + esc(data.misterLink.name) + '</b><div style="font-size:0.75rem; color:#16b9ff;">' + esc(data.misterLink.role) + '</div></div>' +
+              '<span class="es-cos-badge-pill is-green">● Staff Connesso</span>' +
+            '</div>' +
+            '<p style="font-size:0.8rem; color:#8da8bc; margin:0; line-height:1.4;">Coordinamento quotidiano su moduli, gestione carichi atletici, schede workstation pre-campo e match analysis avversari.</p>' +
           '</div>' +
-          (m.name ? (
-            '<div class="es-coach-vice-box">' +
-              '<div class="es-coach-vice-avatar" style="background:#1e3a8a; color:#93c5fd;">⚽</div>' +
-              '<div class="es-coach-vice-info">' +
-                '<h4 class="es-coach-vice-name">' + esc(m.name) + '</h4>' +
-                '<p class="es-coach-vice-sub">' + esc(m.role) + ' · Qualifica: <b>' + esc(m.patent || 'UEFA Pro') + '</b></p>' +
-                '<div style="display:flex; gap:0.5rem; margin-top:0.4rem;">' +
-                  '<span class="es-tag es-tag-green">✓ Binomio di Staff Confermato</span>' +
-                '</div>' +
-              '</div>' +
-              '<button type="button" class="es-btn-primary" id="btn-view-mister-card" style="padding:6px 12px; font-size:0.8rem;">Apri Scheda Mister &rarr;</button>' +
-            '</div>'
-          ) : (
-            '<div class="es-coach-empty-box"><p>Nessun Allenatore Capo collegato.</p><button type="button" class="es-btn-primary" id="btn-link-mister-modal-2">+ Collega Allenatore Capo</button></div>'
-          )) +
-        '</div>' +
-
-        // Card Palmarès Vice
-        '<div class="es-coach-card" style="grid-column:1 / -1;">' +
-          '<div class="es-coach-card-head">' +
-            '<div class="es-coach-card-title-wrap"><span class="es-coach-card-icon">🏆</span><div><h3>Bacheca Palmarès & Storico Staff</h3><p>Trofei e promozioni conquistati specificando il ruolo di Vice</p></div></div>' +
-            '<button type="button" class="es-coach-action-btn" id="btn-add-palmares-vice">+ Aggiungi Titolo</button>' +
-          '</div>' +
-          '<div class="es-coach-trofei-grid">' +
-            (data.palmares && data.palmares.length ? data.palmares.map(function (pal) {
-              return (
-                '<div class="es-coach-trofeo-card">' +
-                  '<div class="es-coach-trofeo-icon">🥈</div>' +
-                  '<div class="es-coach-trofeo-content">' +
-                    '<h4 class="es-coach-trofeo-title">' + esc(pal.titolo) + '</h4>' +
-                    '<div class="es-coach-trofeo-meta"><span class="es-tag es-tag-gold">' + esc(pal.anno) + '</span> <span class="es-tag es-tag-dark">' + esc(pal.tipo) + '</span></div>' +
-                    '<p class="es-coach-trofeo-notes">' + esc(pal.note || '') + '</p>' +
-                  '</div>' +
-                '</div>'
-              );
-            }).join('') : (
-              '<div class="es-coach-empty-palmares">' +
-                '<div class="es-coach-empty-palmares-icon">🏆</div>' +
-                '<h4 class="es-coach-empty-palmares-title">Nessun titolo registrato</h4>' +
-                '<p class="es-coach-empty-palmares-desc">La bacheca trofei e palmarès da Vice Allenatore è attualmente vuota. Clicca su <b>+ Aggiungi Titolo</b> per registrare successi e promozioni ufficiali del tuo percorso.</p>' +
-              '</div>'
-            )) +
-          '</div>' +
-        '</div>' +
-
-        // Limiti di Ruolo Vice
-        '<div class="es-coach-card" style="grid-column:1 / -1; background:#070d14; border-color:rgba(148,163,184,0.2);">' +
-          '<div class="es-coach-card-head">' +
-            '<div class="es-coach-card-title-wrap"><span class="es-coach-card-icon">⚖️</span><div><h3>Limiti di Ruolo del Vice Allenatore</h3><p>Conformità gerarchica all\'interno dello staff tecnico</p></div></div>' +
-          '</div>' +
-          '<div class="es-coach-limits-grid">' +
-            '<div class="es-coach-limit-item"><span class="es-coach-limit-icon is-ok">✓</span><div><b>Autonomia Metodologica:</b> Creazione e gestione schede workstation, conduzione riscaldamento e palle inattive.</div></div>' +
-            '<div class="es-coach-limit-item"><span class="es-coach-limit-icon is-warn">⚠️</span><div><b>Ufficializzazione Formazione:</b> Può preparare la bozza dell\'XI ma non può ufficializzare la formazione senza la convalida dell\'Allenatore Capo.</div></div>' +
-            '<div class="es-coach-limit-item"><span class="es-coach-limit-icon is-warn">⚠️</span><div><b>Struttura Societaria:</b> Non può modificare dati o profili ufficiali del club.</div></div>' +
+          '<div style="background:rgba(255,210,26,0.06); border:1px solid rgba(255,210,26,0.3); border-radius:6px; padding:0.75rem; font-size:0.78rem; color:#8da8bc; margin-top:0.65rem;">' +
+            '<b style="color:#ffd21a;">Limiti di Ruolo:</b> Le formazioni ufficiali e le approvazioni delle sedute restano riservate alla convalida formale dell\'Allenatore Capo.' +
           '</div>' +
         '</div>' +
       '</div>'
     );
   }
 
-  // 2. TAB SPECIALIZZAZIONE
-  function renderTabSpecializzazione(data) {
+  // 2. SPECIALIZZAZIONE (4 Aree Cliccabili)
+  function renderVdSpecializzazione(data) {
     return (
-      '<div class="es-coach-card">' +
-        '<div class="es-coach-card-head">' +
-          '<div class="es-coach-card-title-wrap"><span class="es-coach-card-icon">🎯</span><div><h3>Aree di Specializzazione Tecnica</h3><p>Competenze operative chiave e valore aggiunto per lo staff del Mister</p></div></div>' +
+      '<div class="es-cos-panel-card">' +
+        '<div class="es-cos-panel-head">' +
+          '<span class="es-cos-panel-title">Aree di Specializzazione Tecnica & Contributo di Reparto</span>' +
         '</div>' +
-
-        '<div class="es-vice-specs-grid">' +
-          (data.specializzazioni || []).map(function (sp) {
+        '<div class="es-vd-spec-grid">' +
+          data.specializzazioni.map(function (sp) {
             return (
-              '<div class="es-vice-spec-card">' +
-                '<div class="es-vice-spec-icon">' + sp.icon + '</div>' +
-                '<div class="es-vice-spec-info">' +
-                  '<h4 class="es-vice-spec-title">' + esc(sp.nome) + '</h4>' +
-                  '<span class="es-tag es-tag-blue">' + esc(sp.livello) + '</span>' +
+              '<div class="es-vd-spec-card" data-spec-key="' + esc(sp.key) + '">' +
+                '<div style="display:flex; align-items:center; gap:0.75rem;">' +
+                  '<div class="es-vd-spec-icon-box">' + sp.icon + '</div>' +
+                  '<div>' +
+                    '<h4 class="es-vd-spec-title">' + esc(sp.nome) + '</h4>' +
+                    '<span style="font-size:0.74rem; color:#16b9ff; font-weight:700;">' + esc(sp.sub) + '</span>' +
+                  '</div>' +
+                '</div>' +
+                '<div class="es-vd-spec-stats">' +
+                  '<div>Schede create: <b>' + sp.schedeCreate + '</b></div>' +
+                  '<div>Approvate: <b style="color:#00d978;">' + sp.schedeApprovate + '</b></div>' +
+                  '<div>Sedute collegate: <b>' + sp.seduteCollegate + '</b></div>' +
+                  '<div>Report prodotti: <b>' + sp.reportProdotti + '</b></div>' +
+                '</div>' +
+                '<div style="font-size:0.7rem; color:#8da8bc; display:flex; justify-content:space-between; align-items:center; margin-top:4px;">' +
+                  '<span>Livello: <b>' + esc(sp.livello) + '</b></span>' +
+                  '<span>' + esc(sp.ultimoAgg) + '</span>' +
                 '</div>' +
               '</div>'
             );
@@ -348,57 +382,71 @@
     );
   }
 
-  // 3. TAB WORKSTATION
-  function renderTabWorkstation(data) {
+  // 3. SCHEDE WORKSTATION
+  function renderVdWorkstation(data) {
     return (
-      '<div class="es-coach-card">' +
-        '<div class="es-coach-card-head">' +
-          '<div class="es-coach-card-title-wrap"><span class="es-coach-card-icon">📋</span><div><h3>Schede Workstation & Sedute Pre-Campo</h3><p>Organizzazione esercitazioni mirate (Rondos, pressione, schemi da fermo) per i calciatori</p></div></div>' +
-          '<button type="button" class="es-btn-primary" id="btn-new-workstation-modal">+ Nuova Scheda Workstation</button>' +
+      '<div class="es-cos-panel-card">' +
+        '<div class="es-cos-panel-head">' +
+          '<span class="es-cos-panel-title">SCHEDE WORKSTATION & SEDUTE PRE-CAMPO</span>' +
+          '<button type="button" class="es-btn-cos-primary" id="btn-create-ws-modal">+ Nuova Scheda Workstation</button>' +
         '</div>' +
 
-        '<div class="es-exercises-grid">' +
-          (data.workstations && data.workstations.length ? data.workstations.map(function (ws) {
+        '<div class="es-vd-ws-grid">' +
+          data.workstations.map(function (w, wIdx) {
+            var stClass = w.stato === 'APPROVATA DAL MISTER' ? 'is-approved' : (w.stato === 'IN REVISIONE' ? 'is-review' : 'is-ready');
             return (
-              '<div class="es-exercise-card is-public">' +
-                '<div class="es-exercise-head">' +
-                  '<span class="es-tag es-tag-blue">' + esc(ws.categoria) + '</span>' +
-                  '<span class="es-tag es-tag-gold">Target: ' + esc(ws.target) + '</span>' +
+              '<div class="es-vd-ws-card">' +
+                '<div class="es-vd-ws-head">' +
+                  '<div>' +
+                    '<div style="font-size:0.7rem; font-weight:800; color:#16b9ff; text-transform:uppercase;">' + esc(w.categoria) + '</div>' +
+                    '<h4 style="margin:0.25rem 0 0; font-size:0.95rem; font-weight:800; color:#f3f8fc;">' + esc(w.titolo) + '</h4>' +
+                  '</div>' +
+                  '<span class="es-vd-ws-status-badge ' + stClass + '">' + esc(w.stato) + '</span>' +
                 '</div>' +
-                '<h4 class="es-exercise-title">' + esc(ws.titolo) + '</h4>' +
-                '<p class="es-exercise-desc">' + esc(ws.descrizione) + '</p>' +
-                '<div class="es-exercise-foot">' +
-                  '<span style="font-size:0.78rem; color:#94a3b8;">⏱️ ' + esc(ws.durata) + '</span>' +
-                  '<span class="es-tag es-tag-green">Pronta per il campo</span>' +
+                '<p style="font-size:0.8rem; color:#8da8bc; line-height:1.45; margin:0;">' + esc(w.obiettivo) + '</p>' +
+                '<div style="background:#070d16; border:1px solid #12344a; border-radius:5px; padding:0.5rem 0.65rem; font-size:0.74rem; color:#8da8bc;">' +
+                  '<div>Target: <b style="color:#f3f8fc;">' + esc(w.target) + '</b> · Durata: <b style="color:#00d978;">' + esc(w.durata) + '</b></div>' +
+                  '<div>Spazio: ' + esc(w.spazio) + '</div>' +
+                '</div>' +
+                '<div class="es-vd-ws-actions-row">' +
+                  '<button type="button" class="es-btn-cos-primary" style="padding:0.4rem 0.75rem; font-size:0.74rem;" data-submit-mister-idx="' + wIdx + '">Invia al Mister per Convalida</button>' +
+                  '<button type="button" class="es-btn-cos-sec" style="color:#ff4d5a; padding:0.4rem 0.6rem;" data-del-ws-idx="' + wIdx + '">&times;</button>' +
                 '</div>' +
               '</div>'
             );
-          }).join('') : '<p class="es-coach-empty-text">Nessuna workstation creata.</p>') +
+          }).join('') +
         '</div>' +
       '</div>'
     );
   }
 
-  // 4. TAB BOZZA TOP 11
-  function renderTabBozzaTop11(data) {
+  // 4. BOZZA TOP 11
+  function renderVdBozzaTop11(data) {
+    var b = data.bozzaTop11 || {};
     return (
-      '<div class="es-coach-card">' +
-        '<div class="es-coach-card-head">' +
-          '<div class="es-coach-card-title-wrap"><span class="es-coach-card-icon">⚽</span><div><h3>Bozza Formazione della Settimana (Supporto Tecnico)</h3><p>Proposta dell\'XI titolare preparata dal Vice per la revisione e convalida del Mister</p></div></div>' +
-          '<button type="button" class="es-btn-primary" id="btn-send-draft-to-mister">📤 Invia Bozza all\'Allenatore Capo</button>' +
+      '<div class="es-cos-panel-card">' +
+        '<div class="es-cos-panel-head">' +
+          '<div style="display:flex; align-items:center; gap:0.75rem;">' +
+            '<span class="es-cos-panel-title">BOZZA FORMAZIONE DELLA SETTIMANA (SUPPORTO TECNICO)</span>' +
+            '<span class="es-cos-badge-pill is-warn">Stato: ' + esc(b.statoRevisione) + '</span>' +
+          '</div>' +
+          '<button type="button" class="es-btn-cos-primary" id="btn-send-bozza-mister">Invia Proposta Formazione al Mister &rarr;</button>' +
         '</div>' +
 
-        '<table class="es-coach-info-table">' +
-          '<thead><tr><th>POS</th><th>NUM</th><th>CALCIATORE</th><th>RUOLO</th><th>NOTE TATTICHE DEL VICE</th></tr></thead>' +
+        '<div style="background:#070d16; border:1px solid #12344a; border-radius:8px; padding:0.85rem; font-size:0.82rem; color:#8da8bc; margin-bottom:1rem;">' +
+          '<b style="color:#16b9ff;">Nota Tattica di Supporto:</b> ' + esc(b.noteTattiche) +
+        '</div>' +
+
+        '<table class="es-cos-table-compact">' +
+          '<thead><tr><th>Maglia</th><th>Ruolo</th><th>Calciatore Proposto</th><th>Note Tecniche del Vice</th></tr></thead>' +
           '<tbody>' +
-            (data.bozzaTop11 || []).map(function (b) {
+            (b.titolari || []).map(function (t) {
               return (
                 '<tr>' +
-                  '<td><span class="es-tag es-tag-blue">' + esc(b.pos) + '</span></td>' +
-                  '<td>#' + esc(b.num) + '</td>' +
-                  '<td><b>' + esc(b.name) + '</b></td>' +
-                  '<td>' + (b.pos === 'POR' ? 'Portiere' : (b.pos === 'ATT' ? 'Attaccante' : 'Giocatore')) + '</td>' +
-                  '<td style="color:#cbd5e1; font-size:0.82rem;">' + esc(b.note) + '</td>' +
+                  '<td><b style="color:#16b9ff;">#' + esc(t.num) + '</b></td>' +
+                  '<td><span class="es-cos-badge-pill is-blue">' + esc(t.pos) + '</span></td>' +
+                  '<td style="font-weight:800;">' + esc(t.name) + '</td>' +
+                  '<td style="color:#8da8bc;">' + esc(t.nota) + '</td>' +
                 '</tr>'
               );
             }).join('') +
@@ -408,360 +456,283 @@
     );
   }
 
-  // 5. TAB CO-GESTIONE GPS & HEATMAP
-  function renderTabGpsHeatmap(data) {
+  // 5. CO-GESTIONE GPS
+  function renderVdGps(data) {
+    var g = data.gpsData || {};
     return (
-      '<div class="es-coach-grid-2">' +
-        '<div class="es-coach-card">' +
-          '<div class="es-coach-card-head">' +
-            '<div class="es-coach-card-title-wrap"><span class="es-coach-card-icon">⚡</span><div><h3>Co-Gestione Dashboard GPS</h3><p>Rilevazione affaticamento e picchi atletici da segnalare al Mister</p></div></div>' +
-          '</div>' +
-          '<div style="padding:0.75rem; background:#040810; border-left:3px solid #facc15; border-radius:4px; margin-bottom:1rem;">' +
-            '<b style="color:#facc15;">Alert Affaticamento Settimanale:</b><br>' +
-            '<span style="font-size:0.82rem; color:#cbd5e1;">Scamacca ha raggiunto 9.5 km dopo il rientro. Consigliata gestione minutaggio nella rifinitura.</span>' +
-          '</div>' +
-          '<table class="es-coach-info-table">' +
-            '<tr><th>ATLETA</th><th>KM</th><th>PICCO KM/H</th><th>ALERT VICE</th></tr>' +
-            '<tr><td><b>Éderson</b></td><td>11.8</td><td>31.4</td><td><span class="es-tag es-tag-green">🟢 OK</span></td></tr>' +
-            '<tr><td><b>Lookman</b></td><td>10.4</td><td>34.8</td><td><span class="es-tag es-tag-green">🟢 Top Sprint</span></td></tr>' +
-            '<tr><td><b>Scamacca</b></td><td>9.5</td><td>31.0</td><td><span class="es-tag es-tag-gold">🟡 Monitorare</span></td></tr>' +
-          '</table>' +
+      '<div class="es-cos-panel-card">' +
+        '<div class="es-cos-panel-head">' +
+          '<span class="es-cos-panel-title">CO-GESTIONE DASHBOARD GPS & MONITORAGGIO AFFATICAMENTO</span>' +
         '</div>' +
 
-        '<div class="es-coach-card">' +
-          '<div class="es-coach-card-head">' +
-            '<div class="es-coach-card-title-wrap"><span class="es-coach-card-icon">🔥</span><div><h3>Analisi Heatmap Individuali</h3><p>Verifica rispetto consegne individuali (ampiezza e densità)</p></div></div>' +
+        // Alert Dinamico di Affaticamento
+        '<div style="background:rgba(255,210,26,0.08); border:1px solid #ffd21a; border-radius:8px; padding:1rem; display:flex; align-items:flex-start; gap:0.75rem; margin-bottom:1.25rem;">' +
+          '<span style="font-size:1.4rem;">⚠️</span>' +
+          '<div>' +
+            '<b style="color:#ffd21a; font-size:0.88rem;">Alert Affaticamento Settimanale:</b>' +
+            '<p style="margin:0.25rem 0 0; font-size:0.84rem; color:#f3f8fc;">' + esc(g.alertAffaticamento) + '</p>' +
           '</div>' +
-          '<div class="es-heatmap-overlay-wrap">' +
-            '<div class="es-heatmap-pitch-bg">' +
-              '<div class="es-heatmap-glow-zone is-left"></div>' +
-              '<div class="es-heatmap-glow-zone is-right"></div>' +
-              '<div class="es-heatmap-badge-text">Consegne Esterne Rispettate (Ampiezza 92%)</div>' +
-            '</div>' +
-          '</div>' +
+        '</div>' +
+
+        '<div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem;">' +
+          '<div style="background:#070d16; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.2rem; font-weight:900; color:#16b9ff;">' + esc(g.distanzaMedia) + '</div><div style="font-size:0.72rem; color:#8da8bc;">DISTANZA MEDIA TITOLARI</div></div>' +
+          '<div style="background:#070d16; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.2rem; font-weight:900; color:#00d978;">' + esc(g.piccoKmH) + '</div><div style="font-size:0.72rem; color:#8da8bc;">PICCO VELOCITÀ SQUADRA</div></div>' +
+          '<div style="background:#070d16; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.2rem; font-weight:900; color:#ffd21a;">' + esc(g.acwrSquadra) + '</div><div style="font-size:0.72rem; color:#8da8bc;">ACWR GENERALE</div></div>' +
         '</div>' +
       '</div>'
     );
   }
 
-  // 6. TAB SQUADRA
-  function renderTabSquadra(data) {
+  // 6. ROSA ORGANICO
+  function renderVdRosa(data) {
     return (
-      '<div class="es-coach-card">' +
-        '<div class="es-coach-card-head">' +
-          '<div class="es-coach-card-title-wrap"><span class="es-coach-card-icon">👥</span><div><h3>Organico Rosa</h3><p>Consultazione calciatori e disponibilità atletica</p></div></div>' +
+      '<div class="es-cos-panel-card">' +
+        '<div class="es-cos-panel-head">' +
+          '<span class="es-cos-panel-title">ORGANICO ROSA (Consultazione Tecnica Vice)</span>' +
         '</div>' +
-        '<div class="es-roster-grid">' +
-          (data.roster || []).map(function (p) {
-            return (
-              '<div class="es-roster-player-card">' +
-                '<div class="es-roster-num-box">' + esc(p.num) + '</div>' +
-                '<div class="es-roster-player-info">' +
-                  '<h4 class="es-roster-player-name">' + esc(p.name) + '</h4>' +
-                  '<div class="es-roster-player-meta">' + esc(p.role) + '</div>' +
-                '</div>' +
-              '</div>'
-            );
-          }).join('') +
+        '<p style="font-size:0.8rem; color:#8da8bc; margin:0 0 1rem;">Visualizzazione stato fisico e carichi di lavoro. Eventuali modifiche anagrafiche sono coordinate con l\'Allenatore Capo.</p>' +
+        '<table class="es-cos-table-compact">' +
+          '<thead><tr><th>Maglia</th><th>Calciatore</th><th>Ruolo</th><th>Stato Fisico</th><th>Disponibilità</th></tr></thead>' +
+          '<tbody>' +
+            [
+              { num: 1, name: 'M. Falcone', role: 'Portiere', st: 'Ottimale', disp: '🟢 Disponibile' },
+              { num: 2, name: 'G. Basile', role: 'Terzino Destro', st: 'Ottimale', disp: '🟢 Disponibile' },
+              { num: 5, name: 'A. De Rosa', role: 'Difensore Centrale', st: 'Ottimale', disp: '🟢 Disponibile' },
+              { num: 11, name: 'C. Russo', role: 'Ala Sinistra', st: 'Affaticamento', disp: '🟡 Differenziato' },
+              { num: 9, name: 'M. Santoro', role: 'Punta Centrale', st: 'Ottimale', disp: '🟢 Disponibile' }
+            ].map(function(p){
+              return '<tr><td><b>#' + p.num + '</b></td><td style="font-weight:800;">' + p.name + '</td><td>' + p.role + '</td><td>' + p.st + '</td><td>' + p.disp + '</td></tr>';
+            }).join('') +
+          '</tbody>' +
+        '</table>' +
+      '</div>'
+    );
+  }
+
+  // 7. SEDUTE
+  function renderVdSedute(data) {
+    return (
+      '<div class="es-cos-panel-card">' +
+        '<div class="es-cos-panel-head">' +
+          '<span class="es-cos-panel-title">SEDUTE DI ALLENAMENTO & WORKSTATION COLLEGATE</span>' +
+          '<button type="button" class="es-btn-cos-primary" id="btn-propose-session-modal">+ Proponi Seduta al Mister</button>' +
+        '</div>' +
+        '<table class="es-cos-table-compact">' +
+          '<thead><tr><th>Data & Orario</th><th>Tipologia</th><th>Workstation Collegata</th><th>Stato</th></tr></thead>' +
+          '<tbody>' +
+            '<tr><td><b>15/09/2026 10:00</b></td><td>Rifinitura Pre-Gara</td><td>Attivazione rapida + Palle Inattive</td><td><span class="es-cos-badge-pill is-green">Approvata dal Mister</span></td></tr>' +
+            '<tr><td><b>13/09/2026 15:30</b></td><td>Fase Difensiva Reparti</td><td>Uscita pressing basso & linea a 4</td><td><span class="es-cos-badge-pill is-green">Completata</span></td></tr>' +
+          '</tbody>' +
+        '</table>' +
+      '</div>'
+    );
+  }
+
+  // 8. LAVAGNA TATTICA CONDIVISA
+  function renderVdLavagna(data) {
+    return (
+      '<div class="es-cos-panel-card">' +
+        '<div class="es-cos-panel-head">' +
+          '<span class="es-cos-panel-title">LAVAGNA TATTICA CONDIVISA CON L\'ALLENATORE CAPO</span>' +
+          '<button type="button" class="es-btn-cos-primary" onclick="if(window.showToast)window.showToast(\'Schema condiviso direttamente con il Mister!\',\'success\')">Condividi con il Mister</button>' +
+        '</div>' +
+        '<div class="es-cos-pitch-wrapper" style="min-height:420px;">' +
+          '<div class="es-cos-pitch-field"></div>' +
+          '<div class="es-cos-pitch-line-center"></div>' +
+          '<div class="es-cos-pitch-circle-center"></div>' +
+          '<div class="es-cos-pitch-box-top"></div>' +
+          '<div class="es-cos-pitch-box-bottom"></div>' +
+          '<div class="es-cos-player-pin" style="left:50%; top:88%;"><div class="es-cos-pin-circle">#1</div><div class="es-cos-pin-tag">Falcone</div></div>' +
+          '<div class="es-cos-player-pin" style="left:82%; top:25%;"><div class="es-cos-pin-circle">#7</div><div class="es-cos-pin-tag">Bonaccorsi</div></div>' +
+          '<div class="es-cos-player-pin" style="left:50%; top:15%;"><div class="es-cos-pin-circle">#9</div><div class="es-cos-pin-tag">Santoro</div></div>' +
+          '<div class="es-cos-player-pin" style="left:18%; top:25%;"><div class="es-cos-pin-circle">#11</div><div class="es-cos-pin-tag">Russo</div></div>' +
+          '<div class="es-cos-player-pin" style="left:50%; top:45%;"><div style="font-size:1.3rem;">⚽</div></div>' +
         '</div>' +
       '</div>'
     );
   }
 
-  // 7. TAB ALLENAMENTI
-  function renderTabAllenamenti(data) {
-    return (
-      '<div class="es-coach-card">' +
-        '<div class="es-coach-card-head">' +
-          '<div class="es-coach-card-title-wrap"><span class="es-coach-card-icon">⏱️</span><div><h3>Sedute di Allenamento</h3><p>Supporto alla pianificazione delle workstation sul campo</p></div></div>' +
-        '</div>' +
-        '<p style="color:#94a3b8; font-size:0.86rem;">Le sedute sono sincronizzate in tempo reale con l\'Hub dell\'Allenatore Capo.</p>' +
-      '</div>'
-    );
-  }
-
-  // 8. TAB LAVAGNA
-  function renderTabLavagna(data) {
-    return (
-      '<div class="es-coach-card">' +
-        '<div class="es-coach-card-head">' +
-          '<div class="es-coach-card-title-wrap"><span class="es-coach-card-icon">📐</span><div><h3>Lavagna Tattica Condivisa</h3><p>Studio schemi su palle inattive e movimenti difensivi</p></div></div>' +
-        '</div>' +
-        '<div class="es-tactical-board-frame">' +
-          '<div class="es-tactical-canvas-placeholder">' +
-            '<p style="color:#7dd3fc; font-weight:800; font-size:1.1rem; margin:0 0 0.4rem;">Lavagna Tattica Staff Attiva</p>' +
-            '<p style="color:#94a3b8; font-size:0.85rem; margin:0;">Area di studio condivisa con l\'Allenatore Capo.</p>' +
-          '</div>' +
-        '</div>' +
-      '</div>'
-    );
-  }
-
-  // MODALI B2B VICE
-  function openViceModal(title, iconText, contentHtml) {
-    var old = document.getElementById('es-vice-modal-overlay');
-    if (old) old.remove();
-
-    var modal = document.createElement('div');
-    modal.id = 'es-vice-modal-overlay';
-    modal.className = 'es-pres-modal-overlay';
-    modal.innerHTML =
-      '<div class="es-pres-modal-sheet" role="dialog" aria-modal="true" style="border-radius:4px !important; max-width:640px; background:#090e17; border:1px solid rgba(56,189,248,0.3);">' +
-        '<button type="button" class="es-pres-modal-close-btn" id="btn-close-vice-modal" aria-label="Chiudi">&times;</button>' +
-        '<div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:1.2rem; padding-bottom:0.65rem; border-bottom:1px solid rgba(148,163,184,0.15);">' +
-          '<span style="font-size:1.3rem;">' + iconText + '</span>' +
-          '<h2 style="font-size:1.2rem; font-weight:800; color:#ffffff; margin:0;">' + esc(title) + '</h2>' +
-        '</div>' +
-        '<div>' + contentHtml + '</div>' +
-      '</div>';
-
-    document.body.appendChild(modal);
-    function close() { modal.remove(); }
-    modal.querySelector('#btn-close-vice-modal').onclick = close;
-    modal.onclick = function (e) { if (e.target === modal) close(); };
-  }
-
-  function openEditViceIdentityModal(data) {
-    var isDisp = data.status === 'disponibile';
-    var formHtml =
-      '<form id="form-edit-vice-id" style="display:flex; flex-direction:column; gap:1rem;">' +
-        '<div class="es-pres-input-group"><label>Nome e Cognome *</label><input type="text" class="es-pres-input-text" id="inp-v-name" value="' + esc(data.viceName) + '" required></div>' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
-          '<div class="es-pres-input-group"><label>Qualifica / Licenza</label><input type="text" class="es-pres-input-text" id="inp-v-patent" value="' + esc(data.patent) + '"></div>' +
-          '<div class="es-pres-input-group"><label>Status</label><select class="es-pres-input-text" id="sel-v-status" style="background:#040810; color:#fff;"><option value="in_carica" ' + (!isDisp ? 'selected' : '') + '>In carica</option><option value="disponibile" ' + (isDisp ? 'selected' : '') + '>Disponibile</option></select></div>' +
-        '</div>' +
-        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
-          '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-modal">Annulla</button>' +
-          '<button type="submit" class="es-pres-btn-primary">Salva Dati</button>' +
-        '</div>' +
-      '</form>';
-
-    openViceModal('Modifica Identità Vice Allenatore', '🪪', formHtml);
-    var overlay = document.getElementById('es-vice-modal-overlay');
-    var form = document.getElementById('form-edit-vice-id');
-    var btnCancel = document.getElementById('btn-cancel-modal');
-    if (btnCancel && overlay) btnCancel.onclick = function () { overlay.remove(); };
-
-    if (form) {
-      form.onsubmit = function (e) {
-        e.preventDefault();
-        data.viceName = document.getElementById('inp-v-name').value.trim();
-        data.patent = document.getElementById('inp-v-patent').value.trim();
-        data.status = document.getElementById('sel-v-status').value;
-        saveViceData(data);
-        if (overlay) overlay.remove();
-        renderHub();
-        if (window.showToast) window.showToast('Dati salvati!', 'success');
-      };
-    }
-  }
-
-  function openLinkMisterModal(data) {
-    var m = data.misterLink || {};
-    var formHtml =
-      '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem;">Inserisci i dati dell\'Allenatore Capo con cui fai coppia per attivare il collegamento di staff:</p>' +
-      '<form id="form-link-mister" style="display:flex; flex-direction:column; gap:1rem;">' +
-        '<div class="es-pres-input-group"><label>Nome Allenatore Capo *</label><input type="text" class="es-pres-input-text" id="inp-m-name" value="' + esc(m.name || '') + '" required></div>' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
-          '<div class="es-pres-input-group"><label>Qualifica / Patentino</label><input type="text" class="es-pres-input-text" id="inp-m-patent" value="' + esc(m.patent || 'UEFA Pro') + '"></div>' +
-          '<div class="es-pres-input-group"><label>Email Account Mister</label><input type="email" class="es-pres-input-text" id="inp-m-email" value="' + esc(m.email || '') + '"></div>' +
-        '</div>' +
-        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
-          '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-modal">Annulla</button>' +
-          '<button type="submit" class="es-pres-btn-primary">Salva & Collega Mister</button>' +
-        '</div>' +
-      '</form>';
-
-    openViceModal('Collegamento Diretto con Allenatore Capo', '👑', formHtml);
-    var overlay = document.getElementById('es-vice-modal-overlay');
-    var form = document.getElementById('form-link-mister');
-    var btnCancel = document.getElementById('btn-cancel-modal');
-    if (btnCancel && overlay) btnCancel.onclick = function () { overlay.remove(); };
-
-    if (form) {
-      form.onsubmit = function (e) {
-        e.preventDefault();
-        data.misterLink = {
-          id: 'mister-' + Date.now(),
-          name: document.getElementById('inp-m-name').value.trim(),
-          role: 'Allenatore Capo',
-          patent: document.getElementById('inp-m-patent').value.trim(),
-          email: document.getElementById('inp-m-email').value.trim(),
-          status: 'Collegato'
-        };
-        saveViceData(data);
-        if (overlay) overlay.remove();
-        renderHub();
-        if (window.showToast) window.showToast('Allenatore Capo collegato ufficialmente!', 'success');
-      };
-    }
-  }
-
-  function openNewWorkstationModal(data) {
-    var formHtml =
-      '<form id="form-new-ws" style="display:flex; flex-direction:column; gap:1rem;">' +
-        '<div class="es-pres-input-group"><label>Titolo Workstation *</label><input type="text" class="es-pres-input-text" id="inp-ws-title" required placeholder="Es. Workstation 3: Palle inattive offensive"></div>' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
-          '<div class="es-pres-input-group"><label>Categoria</label><select class="es-pres-input-text" id="sel-ws-cat" style="background:#040810; color:#fff;"><option>Palle Inattive</option><option>Fase Difensiva & Reparti</option><option>Rondos & Pressione</option><option>Attivazione Tattica</option></select></div>' +
-          '<div class="es-pres-input-group"><label>Target Calciatori</label><input type="text" class="es-pres-input-text" id="inp-ws-target" value="Titolari & Difensori"></div>' +
-        '</div>' +
-        '<div class="es-pres-input-group"><label>Descrizione Operativa</label><textarea class="es-pres-input-text" id="inp-ws-desc" rows="3" placeholder="Istruzioni per i giocatori..."></textarea></div>' +
-        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(148,163,184,0.15);">' +
-          '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-modal">Annulla</button>' +
-          '<button type="submit" class="es-pres-btn-primary">Salva Workstation</button>' +
-        '</div>' +
-      '</form>';
-
-    openViceModal('Nuova Scheda Workstation', '📋', formHtml);
-    var overlay = document.getElementById('es-vice-modal-overlay');
-    var form = document.getElementById('form-new-ws');
-    var btnCancel = document.getElementById('btn-cancel-modal');
-    if (btnCancel && overlay) btnCancel.onclick = function () { overlay.remove(); };
-
-    if (form) {
-      form.onsubmit = function (e) {
-        e.preventDefault();
-        data.workstations = data.workstations || [];
-        data.workstations.unshift({
-          id: 'ws-' + Date.now(),
-          titolo: document.getElementById('inp-ws-title').value.trim(),
-          categoria: document.getElementById('sel-ws-cat').value,
-          target: document.getElementById('inp-ws-target').value.trim(),
-          durata: '20 min',
-          descrizione: document.getElementById('inp-ws-desc').value.trim()
-        });
-        saveViceData(data);
-        if (overlay) overlay.remove();
-        renderHub();
-        if (window.showToast) window.showToast('Scheda workstation salvata!', 'success');
-      };
-    }
-  }
-
-  function openGuidaViceModal() {
-    var contentHtml =
-      '<div style="color:#e2e8f0; font-size:0.86rem; line-height:1.6; display:flex; flex-direction:column; gap:0.8rem;">' +
-        '<div style="padding:0.75rem; background:#040810; border-left:3px solid #38bdf8; border-radius:4px;">' +
-          '<b style="color:#38bdf8;">Ruolo Vice Allenatore su Elisee Scout:</b><br>' +
-          'Specialista di campo per palle inattive, fase difensiva, studio avversari, preparazione schede workstation e co-gestione della dashboard GPS.' +
-        '</div>' +
-        '<p><b>1. Collegamento con il Mister:</b> Crea il binomio ufficiale di staff con link diretto al profilo dell\'Allenatore Capo.</p>' +
-        '<p><b>2. Schede Workstation:</b> Prepara gli esercizi della settimana prima della seduta sul campo.</p>' +
-        '<p><b>3. Bozza Formazione:</b> Suggerisci la formazione ideale al Mister prima dell\'ufficializzazione finale.</p>' +
-      '</div>';
-    openViceModal('Guida Operativa Vice Allenatore', '📖', contentHtml);
-  }
-
-  function openAddPalmaresViceModal(data) {
-    var formHtml =
-      '<form id="form-add-pal-vice" style="display:flex; flex-direction:column; gap:1rem;">' +
-        '<div class="es-pres-input-group"><label>Titolo / Successo *</label><input type="text" class="es-pres-input-text" id="inp-vpal-title" required placeholder="Es. Promozione in Eccellenza (Vice Allenatore)"></div>' +
-        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
-          '<div class="es-pres-input-group"><label>Stagione *</label><input type="text" class="es-pres-input-text" id="inp-vpal-anno" value="2025/2026" required></div>' +
-          '<div class="es-pres-input-group"><label>Tipologia Titolo</label><select class="es-pres-input-text" id="sel-vpal-tipo" style="background:#050910; color:#fff;"><option>Campionato</option><option>Promozione di Categoria</option><option>Coppa Provinciale / Regionale</option><option>Titolo Giovanile</option></select></div>' +
-        '</div>' +
-        '<div class="es-pres-input-group"><label>Ruolo & Incarico nello Staff</label><input type="text" class="es-pres-input-text" id="inp-vpal-note" placeholder="Es. Responsabile palle inattive e riscaldamento"></div>' +
-        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(22,52,74,0.6);">' +
-          '<button type="button" class="es-btn-secondary" id="btn-cancel-modal">Annulla</button>' +
-          '<button type="submit" class="es-btn-primary">Aggiungi a Palmarès</button>' +
-        '</div>' +
-      '</form>';
-
-    openViceModal('Certifica Titolo Palmarès Vice', '🏆', formHtml);
-    var overlay = document.getElementById('es-vice-modal-overlay');
-    var form = document.getElementById('form-add-pal-vice');
-    var btnCancel = document.getElementById('btn-cancel-modal');
-    if (btnCancel && overlay) btnCancel.onclick = function () { overlay.remove(); };
-
-    if (form) {
-      form.onsubmit = function (e) {
-        e.preventDefault();
-        data.palmares = data.palmares || [];
-        data.palmares.push({
-          id: 'vpal-' + Date.now(),
-          titolo: document.getElementById('inp-vpal-title').value.trim(),
-          anno: document.getElementById('inp-vpal-anno').value.trim(),
-          tipo: document.getElementById('sel-vpal-tipo').value,
-          note: document.getElementById('inp-vpal-note').value.trim()
-        });
-        saveViceData(data);
-        if (overlay) overlay.remove();
-        renderHub();
-        if (window.showToast) window.showToast('🏆 Titolo aggiunto al palmarès del Vice!', 'success');
-      };
-    }
-  }
-
-  function bindHubEvents() {
+  // ============================================================
+  // EVENT BINDINGS
+  // ============================================================
+  function bindVdEvents() {
     var mount = document.getElementById('es-vd');
     if (!mount) return;
-
     var data = getViceData();
 
-    mount.querySelectorAll('.es-coach-navbtn').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var t = btn.getAttribute('data-tab');
+    // Navigazione Tab del Vice
+    mount.querySelectorAll('[data-vd-tab]').forEach(function (btn) {
+      btn.onclick = function () {
+        var t = btn.getAttribute('data-vd-tab');
         if (t) {
           activeTab = t;
-          renderHub();
+          var container = document.getElementById('es-vd-active-view');
+          if (container) {
+            container.innerHTML = renderActiveVdTab(activeTab, data);
+            bindVdEvents();
+          } else {
+            renderHub();
+          }
         }
-      });
+      };
     });
 
-    var btnGuida = mount.querySelector('#btn-guida-vice');
-    if (btnGuida) btnGuida.onclick = openGuidaViceModal;
-
-    var btnQuickWs = mount.querySelector('#btn-quick-new-ws');
-    if (btnQuickWs) btnQuickWs.onclick = function () { openNewWorkstationModal(data); };
-
-    var btnNewWs2 = mount.querySelector('#btn-new-workstation-modal');
-    if (btnNewWs2) btnNewWs2.onclick = function () { openNewWorkstationModal(data); };
-
-    var btnEditViceId = mount.querySelector('#btn-edit-vice-identity');
-    if (btnEditViceId) btnEditViceId.onclick = function () { openEditViceIdentityModal(data); };
-
-    var btnLinkMister = mount.querySelector('#btn-link-mister-modal');
-    if (btnLinkMister) btnLinkMister.onclick = function () { openLinkMisterModal(data); };
-
-    var btnLinkMister2 = mount.querySelector('#btn-link-mister-modal-2');
-    if (btnLinkMister2) btnLinkMister2.onclick = function () { openLinkMisterModal(data); };
-
-    var btnViewMister = mount.querySelector('#btn-view-mister-card');
-    if (btnViewMister) {
-      btnViewMister.onclick = function () {
-        if (window.showToast) window.showToast('Apertura scheda Allenatore Capo: ' + (data.misterLink ? data.misterLink.name : ''), 'info');
+    // Pulsante Rapido Ritorno all'Area Allenatore Capo
+    var btnGotoCoach = mount.querySelector('#btn-goto-coach-control');
+    if (btnGotoCoach) {
+      btnGotoCoach.onclick = function () {
+        if (window.EliseeRoleSwitcher && window.EliseeRoleSwitcher.impersonate) {
+          window.EliseeRoleSwitcher.impersonate('allenatore');
+        } else if (window.EliseeCoachDash && window.EliseeCoachDash.render) {
+          var u = userObj();
+          u.staffRole = 'Allenatore Capo';
+          try { localStorage.setItem('elisee_active_user', JSON.stringify(u)); } catch (_) {}
+          window.EliseeCoachDash.render(u);
+        }
+        if (window.showToast) window.showToast('Accesso alla Control Room Allenatore Capo', 'info');
       };
     }
 
-    var btnDirectMister = mount.querySelector('#btn-open-mister-direct');
-    if (btnDirectMister) {
-      btnDirectMister.onclick = function () {
-        if (window.showToast) window.showToast('Apertura scheda Allenatore Capo: ' + (data.misterLink ? data.misterLink.name : ''), 'info');
+    // Invia Bozza Formazione al Mister
+    var btnSendBozza = mount.querySelector('#btn-send-bozza-mister');
+    if (btnSendBozza) {
+      btnSendBozza.onclick = function () {
+        data.bozzaTop11.statoRevisione = 'Inviata al Mister per approvazione';
+        saveViceData(data);
+        if (window.showToast) window.showToast('📨 Bozza Formazione inviata con successo all\'Allenatore Capo!', 'success');
+        renderHub();
       };
     }
 
-    var btnSendDraft = mount.querySelector('#btn-send-draft-to-mister');
-    if (btnSendDraft) {
-      btnSendDraft.onclick = function () {
-        if (window.showToast) window.showToast('📤 Bozza Top 11 inviata all\'Allenatore Capo per la convalida!', 'success');
+    // Invio Workstation al Mister
+    mount.querySelectorAll('[data-submit-mister-idx]').forEach(function (btn) {
+      btn.onclick = function () {
+        var idx = parseInt(btn.getAttribute('data-submit-mister-idx'));
+        if (data.workstations && data.workstations[idx]) {
+          data.workstations[idx].stato = 'IN REVISIONE';
+          saveViceData(data);
+          renderHub();
+          if (window.showToast) window.showToast('Scheda Workstation inviata al Mister per la convalida!', 'success');
+        }
       };
-    }
+    });
 
-    var btnAddPal = mount.querySelector('#btn-add-palmares-vice');
-    if (btnAddPal) {
-      btnAddPal.onclick = function () { openAddPalmaresViceModal(data); };
+    // Elimina Workstation
+    mount.querySelectorAll('[data-del-ws-idx]').forEach(function (btn) {
+      btn.onclick = function () {
+        var idx = parseInt(btn.getAttribute('data-del-ws-idx'));
+        if (confirm('Vuoi eliminare questa scheda workstation?')) {
+          data.workstations.splice(idx, 1);
+          saveViceData(data);
+          renderHub();
+        }
+      };
+    });
+
+    // Modale Nuova Scheda Workstation
+    var btnCreateWs = mount.querySelector('#btn-create-ws-modal');
+    if (btnCreateWs) {
+      btnCreateWs.onclick = function () {
+        openVdModal('Crea Nuova Scheda Workstation Pre-Campo',
+          '<form id="form-create-ws" style="display:flex; flex-direction:column; gap:1rem;">' +
+            '<div class="es-cos-form-group"><label class="es-cos-form-label">Titolo Scheda *</label><input type="text" class="es-cos-form-input" id="inp-ws-title" required placeholder="Es. Rondos 4v2 con transizione rapida"></div>' +
+            '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+              '<div class="es-cos-form-group"><label class="es-cos-form-label">Categoria</label><select class="es-cos-form-input" id="inp-ws-cat"><option>Palle Inattive</option><option>Fase Difensiva & Costruzione</option><option>Match Analysis</option><option>Riscaldamento Pre-Gara</option></select></div>' +
+              '<div class="es-cos-form-group"><label class="es-cos-form-label">Durata</label><input type="text" class="es-cos-form-input" id="inp-ws-dur" value="15 min"></div>' +
+            '</div>' +
+            '<div class="es-cos-form-group"><label class="es-cos-form-label">Target Giocatori</label><input type="text" class="es-cos-form-input" id="inp-ws-target" value="Titolari o Reparto Difesa"></div>' +
+            '<div class="es-cos-form-group"><label class="es-cos-form-label">Obiettivo Tecnico</label><textarea class="es-cos-form-input" id="inp-ws-obj" rows="3" placeholder="Descrizione delle consegne e correzioni..."></textarea></div>' +
+            '<div style="display:flex; justify-content:flex-end; gap:0.5rem;">' +
+              '<button type="button" class="es-btn-cos-sec" id="btn-vd-modal-cancel">Annulla</button>' +
+              '<button type="submit" class="es-btn-cos-primary">Crea Scheda</button>' +
+            '</div>' +
+          '</form>'
+        );
+        var f = document.getElementById('form-create-ws');
+        if (f) {
+          f.onsubmit = function (e) {
+            e.preventDefault();
+            data.workstations.unshift({
+              id: 'ws-' + Date.now(),
+              titolo: document.getElementById('inp-ws-title').value.trim(),
+              categoria: document.getElementById('inp-ws-cat').value,
+              durata: document.getElementById('inp-ws-dur').value.trim(),
+              target: document.getElementById('inp-ws-target').value.trim(),
+              spazio: 'Gabbia regolamentare',
+              materiale: 'Cinesini, palloni',
+              obiettivo: document.getElementById('inp-ws-obj').value.trim(),
+              stato: 'PRONTA PER IL CAMPO',
+              data: new Date().toLocaleDateString('it-IT')
+            });
+            saveViceData(data);
+            closeVdModal();
+            renderHub();
+            if (window.showToast) window.showToast('Nuova scheda workstation creata!', 'success');
+          };
+        }
+      };
     }
   }
 
+  function openVdModal(title, contentHtml) {
+    closeVdModal();
+    var modal = document.createElement('div');
+    modal.id = 'es-vd-modal-box';
+    modal.className = 'es-cos-modal-backdrop';
+    modal.innerHTML =
+      '<div class="es-cos-modal-box">' +
+        '<button type="button" class="es-cos-modal-close" id="btn-vd-modal-close-x">&times;</button>' +
+        '<h3 style="margin:0 0 1.25rem; font-size:1.15rem; font-weight:800; color:#f3f8fc;">' + esc(title) + '</h3>' +
+        '<div>' + contentHtml + '</div>' +
+      '</div>';
+    document.body.appendChild(modal);
+    modal.querySelector('#btn-vd-modal-close-x').onclick = closeVdModal;
+    var btnCancel = modal.querySelector('#btn-vd-modal-cancel');
+    if (btnCancel) btnCancel.onclick = closeVdModal;
+    modal.onclick = function (e) { if (e.target === modal) closeVdModal(); };
+  }
+
+  function closeVdModal() {
+    var m = document.getElementById('es-vd-modal-box');
+    if (m) m.remove();
+  }
+
+  // ============================================================
+  // EXPORT GLOBALE
+  // ============================================================
   window.EliseeViceDash = {
     render: renderHub,
     isVice: isVice,
-    getData: getViceData,
-    saveData: saveViceData
+    getData: getViceData
   };
 
+  window.addEventListener('hashchange', function () {
+    if (window.location.hash.indexOf('user-dossier') >= 0 && isVice()) {
+      setTimeout(renderHub, 50);
+    }
+  });
+
   document.addEventListener('DOMContentLoaded', function () {
-    var u = userObj();
-    if (isVice(u)) renderHub();
+    if (window.location.hash.indexOf('user-dossier') >= 0 && isVice()) {
+      setTimeout(renderHub, 100);
+    }
+  });
+
+  document.addEventListener('elisee:view-changed', function (e) {
+    var d = e && e.detail;
+    if (d && d.view === 'user-dossier') {
+      try {
+        var u = userObj();
+        if (isVice(u)) renderHub(u);
+      } catch (_) {}
+    }
+  });
+
+  document.addEventListener('elisee:role-changed', function (e) {
+    var d = e && e.detail;
+    try {
+      var u = (d && d.user) || userObj();
+      if (isVice(u)) renderHub(u);
+    } catch (_) {}
   });
 })();
