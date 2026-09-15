@@ -3,7 +3,7 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-15** — Allineamento Totale Riferimento Immagine 2 Dashboard Allenatore: 8 Stat Card, Icone Reali SVG, Colonna Stadio, Tag Blu, Asse Y Carico, Gauge Circolare & Sidebar Club Identity (`COACHIMG2`).
+Ultimo aggiornamento: **2026-09-15** (Commit `a93e44dd`) — Allineamento Totale Riferimento Immagine 2 Dashboard Allenatore: 8 Stat Card, Icone Reali SVG, Colonna Stadio, Tag Blu, Asse Y Carico, Gauge Circolare & Sidebar Club Identity (`COACHIMG2`).
 Ultimo fatto: **Allineamento Riferimento Visivo Immagine 2 Dashboard Allenatore (`COACHIMG2`)**:
 1. **8 Stat Card Analitiche con Icone Reali SVG**:
    - Inserite le 8 card orizzontali: Prossima Gara, Ultima Seduta, Carico Squadra (78%), Disponibilità Rosa (24/26 · 92%), Giocatori indisponibili (2, 7.7%, ⚠ Da monitorare), Preparazione Partita (80%), Report ricevuti (3, +1 recente) e Sedute programmate (5, Questa settimana).
