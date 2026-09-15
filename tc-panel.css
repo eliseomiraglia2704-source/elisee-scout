@@ -17,6 +17,7 @@
   --es-verified: #34c77b;
   --es-verified-soft: rgba(52, 199, 123, 0.12);
   --es-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+  --es-font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
 }
 
 #view-tc-panel,
@@ -114,12 +115,12 @@ body:has(#view-tc-panel:not([style*="display: none"])) .es-pd-rail {
 
 .es-club__head h1,
 .es-tc-title-wrap h1 {
-  font-size: 26px;
-  font-weight: 800;
+  font-family: var(--es-font-serif);
+  font-size: 27px;
+  font-weight: 700;
   margin: 0;
   letter-spacing: -0.005em;
   color: var(--es-text);
-  font-family: var(--es-font);
 }
 
 .es-breadcrumb {
@@ -328,12 +329,12 @@ body:has(#view-tc-panel:not([style*="display: none"])) .es-pd-rail {
 
 .es-stat-card__value,
 .es-tc-kpi-val {
-  font-size: 26px;
+  font-family: var(--es-font-serif);
+  font-size: 28px;
   font-weight: 700;
   color: var(--es-text);
   margin: 0 0 6px;
   line-height: 1.1;
-  font-family: var(--es-font);
 }
 
 .es-stat-card__caption,
@@ -373,12 +374,13 @@ body:has(#view-tc-panel:not([style*="display: none"])) .es-pd-rail {
 }
 
 .es-panel-box__head h3,
-.es-tc-panel-title {
-  font-size: 16px;
+.es-tc-panel-title,
+.es-tc-panel-header h3 {
+  font-family: var(--es-font-serif);
+  font-size: 17px;
   font-weight: 700;
   margin: 0;
   color: var(--es-text);
-  font-family: var(--es-font);
 }
 
 .es-panel-box > p.sub,

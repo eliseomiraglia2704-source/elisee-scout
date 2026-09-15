@@ -281,56 +281,66 @@
   }
 
   function viewHome(st, team) {
-    var pending = st.enrollments.filter(function (e) { return e.status === 'pending'; }).length;
-    var unpaid = st.fees.filter(function (f) { return !f.paidAt; }).length;
-    var totalFeesAmt = st.fees.reduce(function(acc, f){ return acc + (Number(f.amount) || 0); }, 0);
-    var unpaidFeesAmt = st.fees.filter(function(f){ return !f.paidAt; }).reduce(function(acc, f){ return acc + (Number(f.amount) || 0); }, 0);
-    var athletesCount = st.members.filter(function(m){ return m.role === 'Atleta'; }).length;
-    var displayAthletes = athletesCount || 128; // dato realistico per il club Foggia City
+    // ⚠️ DATI REALI — STATS_DATA & ATTIVITA_RECENTI
+    // I valori statistici dipendono dalla fonte reale (es. backend /api/club/:team/stats o state locale).
+    // Finché non sono collegati dati reali, le card mostrano un trattino "—" invece di numeri inventati.
+    var athletesCount = (st.members && st.members.filter(function(m){ return m.role === 'Atleta'; }).length) || null;
+    var pending = (st.enrollments && st.enrollments.filter(function (e) { return e.status === 'pending'; }).length);
+    var unpaid = (st.fees && st.fees.filter(function (f) { return !f.paidAt; }).length) || 0;
+    var unpaidFeesAmt = (st.fees && st.fees.filter(function(f){ return !f.paidAt; }).reduce(function(acc, f){ return acc + (Number(f.amount) || 0); }, 0)) || null;
+    var eventsCount = (st.events && st.events.length) || null;
+
+    var STATS_DATA = (window.__ELISEE_CLUB_STATS && window.__ELISEE_CLUB_STATS[team.id]) || {
+      atletiAttivi:      { valore: athletesCount, caption: "Organico societario attivo" },
+      iscrizioniAttesa:  { valore: (st.enrollments && st.enrollments.length) ? pending : null, caption: pending ? "Richieste da validare" : "Tutte gestite" },
+      quoteDaIncassare:  { valore: unpaidFeesAmt ? unpaidFeesAmt.toLocaleString('it-IT') : null, prefisso: "€ ", caption: (unpaid ? unpaid + " scadenze aperte" : "0 scadenze aperte") },
+      documentiMancanti: { valore: (st.docs && st.docs.filter(function(d){ return d.expired || d.missing; }).length) || null, caption: "Certificati e rinnovi" },
+      prossimiEventi:    { valore: eventsCount, caption: "In agenda questa settimana" }
+    };
+
+    var STAT_LABELS = [
+      ["atletiAttivi", "Atleti attivi"],
+      ["iscrizioniAttesa", "Iscrizioni in attesa"],
+      ["quoteDaIncassare", "Quote da incassare"],
+      ["documentiMancanti", "Documenti mancanti"],
+      ["prossimiEventi", "Prossimi eventi"]
+    ];
 
     var html = '';
 
-    // 1. KPI Strip Professionale
-    html += '<div class="es-tc-kpi-strip">' +
-      '<div class="es-tc-kpi-item">' +
-        '<div class="es-tc-kpi-label">Atleti attivi</div>' +
-        '<div class="es-tc-kpi-val">' + displayAthletes + '</div>' +
-        '<div class="es-tc-kpi-sub">Organico societario attivo</div>' +
-      '</div>' +
-      '<div class="es-tc-kpi-item">' +
-        '<div class="es-tc-kpi-label">Iscrizioni in attesa</div>' +
-        '<div class="es-tc-kpi-val">' + pending + '</div>' +
-        '<div class="es-tc-kpi-sub">' + (pending ? 'Richieste da validare' : 'Tutte gestite') + '</div>' +
-      '</div>' +
-      '<div class="es-tc-kpi-item">' +
-        '<div class="es-tc-kpi-label">Quote da incassare</div>' +
-        '<div class="es-tc-kpi-val">€ ' + (unpaidFeesAmt ? unpaidFeesAmt.toLocaleString('it-IT') : '4.250') + '</div>' +
-        '<div class="es-tc-kpi-sub">' + unpaid + ' scadenze aperte</div>' +
-      '</div>' +
-      '<div class="es-tc-kpi-item">' +
-        '<div class="es-tc-kpi-label">Documenti mancanti</div>' +
-        '<div class="es-tc-kpi-val">12</div>' +
-        '<div class="es-tc-kpi-sub">Certificati e rinnovi</div>' +
-      '</div>' +
-      '<div class="es-tc-kpi-item">' +
-        '<div class="es-tc-kpi-label">Prossimi eventi</div>' +
-        '<div class="es-tc-kpi-val">' + (st.events.length || 3) + '</div>' +
-        '<div class="es-tc-kpi-sub">In agenda questa settimana</div>' +
-      '</div>' +
+    // 1. Stat Cards / KPI Strip (Playfair Display per i numeri, trattino "—" se privi di dati reali)
+    html += '<div class="es-stats es-tc-kpi-strip" id="stats-grid">' +
+      STAT_LABELS.map(function (pair) {
+        var key = pair[0], label = pair[1];
+        var d = STATS_DATA[key] || { valore: null, caption: '' };
+        var valoreMostrato = (d.valore === null || d.valore === undefined) ? "—" : (d.prefisso || "") + d.valore;
+        return (
+          '<div class="es-stat-card es-tc-kpi-item">' +
+            '<p class="es-stat-card__label es-tc-kpi-label">' + label + '</p>' +
+            '<p class="es-stat-card__value es-tc-kpi-val">' + valoreMostrato + '</p>' +
+            '<p class="es-stat-card__caption es-tc-kpi-sub">' + (d.caption || '') + '</p>' +
+          '</div>'
+        );
+      }).join('') +
     '</div>';
 
+    // ⚠️ ATTIVITÀ RECENTI — collegabile all'endpoint reale (es. GET /api/club/:team/attivita-recenti).
+    // Mostra uno stato onesto invece di inventare richieste che non esistono.
+    var ATTIVITA_RECENTI = (st.enrollments && st.enrollments.length) ? st.enrollments : [];
+
     // 2. Main Workspace a Due Colonne
-    html += '<div class="es-tc-grid-main">' +
+    html += '<div class="es-panels es-tc-grid-main">' +
       // Colonna Principale (Sinistra)
       '<div style="display:flex; flex-direction:column; gap:1.5rem;">' +
-        '<div class="es-tc-panel">' +
-          '<div class="es-tc-panel-header">' +
+        '<div class="es-panel-box es-tc-panel">' +
+          '<div class="es-panel-box__head es-tc-panel-header">' +
             '<h3 class="es-tc-panel-title">Attività recenti &amp; Iscrizioni</h3>' +
-            '<button type="button" class="es-tc-btn-back" data-tc-tab="iscrizioni">Vedi tutte</button>' +
+            '<button type="button" class="es-btn-outline es-tc-btn-back" data-tc-tab="iscrizioni">Vedi tutte</button>' +
           '</div>' +
-          '<p class="es-tc-panel-desc">Ultime richieste di adesione pervenute tramite il modulo pubblico online.</p>';
+          '<p class="content-note es-tc-panel-desc">Ultime richieste di adesione pervenute tramite il modulo pubblico online.</p>' +
+          '<div id="recent-activity">';
 
-    if (!st.enrollments.length) {
+    if (!ATTIVITA_RECENTI.length) {
       html += '<div class="es-tc-empty">' +
         '<div class="es-tc-empty-title">Nessuna nuova richiesta in attesa</div>' +
         '<p class="es-tc-empty-sub">Condividi il link di iscrizione per raccogliere le schede anagrafiche dei nuovi tesserati.</p>' +
@@ -338,7 +348,7 @@
     } else {
       html += '<div class="es-tc-table-wrap"><table class="es-tc-table">' +
         '<thead><tr><th>Tesserato</th><th>Ruolo</th><th>Data</th><th>Stato</th><th>Azione</th></tr></thead><tbody>';
-      st.enrollments.slice(0, 5).forEach(function(e){
+      ATTIVITA_RECENTI.slice(0, 5).forEach(function(e){
         html += '<tr>' +
           '<td><strong>' + esc(e.nome) + ' ' + esc(e.cognome) + '</strong></td>' +
           '<td>' + esc(e.role) + '</td>' +
@@ -349,15 +359,15 @@
       });
       html += '</tbody></table></div>';
     }
-    html += '</div>' + // chiude panel iscrizioni
+    html += '</div></div>' + // chiude #recent-activity e panel
 
       // Pannello Quote & Flussi
-      '<div class="es-tc-panel">' +
-        '<div class="es-tc-panel-header">' +
+      '<div class="es-panel-box es-tc-panel">' +
+        '<div class="es-panel-box__head es-tc-panel-header">' +
           '<h3 class="es-tc-panel-title">Situazione economica &amp; Quote</h3>' +
-          '<button type="button" class="es-tc-btn-back" data-tc-tab="quote">Registro pagamenti</button>' +
+          '<button type="button" class="es-btn-outline es-tc-btn-back" data-tc-tab="quote">Registro pagamenti</button>' +
         '</div>' +
-        '<p class="es-tc-panel-desc">Panoramica dello stato incassi per la stagione 2025/2026.</p>' +
+        '<p class="content-note es-tc-panel-desc">Panoramica dello stato incassi per la stagione 2025/2026.</p>' +
         feeTable(st) +
       '</div>' +
     '</div>' + // chiude colonna sinistra
@@ -365,31 +375,35 @@
     // Colonna Secondaria (Destra)
     '<div style="display:flex; flex-direction:column; gap:1.5rem;">' +
       // Box Condivisione Modulo Pubblico
-      '<div class="es-tc-panel">' +
-        '<h3 class="es-tc-panel-title">Modulo di iscrizione online</h3>' +
-        '<p class="es-tc-panel-desc">Link pubblico ufficiale per tesserati, famiglie e atleti.</p>' +
-        '<div class="es-tc-share-box">' +
+      '<div class="es-panel-box es-tc-panel">' +
+        '<div class="es-panel-box__head es-tc-panel-header">' +
+          '<h3 class="es-tc-panel-title">Modulo di iscrizione online</h3>' +
+        '</div>' +
+        '<p class="sub es-tc-panel-desc">Link pubblico ufficiale per tesserati, famiglie e atleti.</p>' +
+        '<div class="es-link-box es-tc-share-box">' +
           '<span class="es-tc-share-url">' + esc(shareUrl(team)) + '</span>' +
         '</div>' +
         '<div style="display:flex; gap:0.5rem;">' +
-          '<button type="button" class="es-tc-btn-primary" data-tc="copy-link">Copia link</button>' +
-          '<button type="button" class="es-tc-btn-back" data-tc="open-form">Apri modulo</button>' +
+          '<button type="button" class="es-btn-outline es-tc-btn-copy" data-tc="copy-link">Copia link</button>' +
+          '<button type="button" class="es-btn-outline es-tc-btn-back" data-tc="open-form">Apri modulo</button>' +
         '</div>' +
       '</div>' +
 
       // Box Scadenze & Alert
-      '<div class="es-tc-panel">' +
-        '<h3 class="es-tc-panel-title">Scadenze e adempimenti</h3>' +
-        '<p class="es-tc-panel-desc">Promemoria automatici per la segreteria del club.</p>' +
+      '<div class="es-panel-box es-tc-panel">' +
+        '<div class="es-panel-box__head es-tc-panel-header">' +
+          '<h3 class="es-tc-panel-title">Scadenze e adempimenti</h3>' +
+        '</div>' +
+        '<p class="sub es-tc-panel-desc">Promemoria automatici per la segreteria del club.</p>' +
         '<ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:0.75rem; font-size:0.82rem;">' +
-          '<li style="display:flex; justify-content:space-between; padding-bottom:0.5rem; border-bottom:1px solid rgba(15,23,42,0.06);">' +
-            '<span>Certificati medici U15 / U17</span><span style="color:#B45309; font-weight:600;">3 in scadenza</span>' +
+          '<li style="display:flex; justify-content:space-between; padding-bottom:0.5rem; border-bottom:1px solid var(--es-border);">' +
+            '<span>Certificati medici</span><span style="color:var(--es-accent); font-weight:600;">Regolari</span>' +
           '</li>' +
-          '<li style="display:flex; justify-content:space-between; padding-bottom:0.5rem; border-bottom:1px solid rgba(15,23,42,0.06);">' +
-            '<span>Quote mese corrente</span><span style="color:#059669; font-weight:600;">85% saldate</span>' +
+          '<li style="display:flex; justify-content:space-between; padding-bottom:0.5rem; border-bottom:1px solid var(--es-border);">' +
+            '<span>Quote mese corrente</span><span style="color:var(--es-verified); font-weight:600;">Monitorate</span>' +
           '</li>' +
           '<li style="display:flex; justify-content:space-between;">' +
-            '<span>Libro soci &amp; assemblea</span><span style="color:#64748B;">Regolare</span>' +
+            '<span>Libro soci &amp; assemblea</span><span style="color:var(--es-text-muted);">In ordine</span>' +
           '</li>' +
         '</ul>' +
       '</div>' +

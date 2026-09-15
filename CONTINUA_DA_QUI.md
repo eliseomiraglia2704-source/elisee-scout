@@ -3,20 +3,22 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-14** (Commit `93fe746`) — Conversione Pannello Elisee Manager al tema Dark Standard del sito: fondo `--es-bg`, card `--es-panel`, badge "Società Verificata" con token `--es-verified` smeraldo, tab con bordo accento `--es-accent`, stat card coerenti con Bacheca/Player dossier (cache `TCDARK1`).
-Ultimo fatto: **Conversione Dark Theme Completa Pannello Elisee Manager (`TCDARK1`)**:
-1. **Conversione Globale al Dark Theme Coerente**:
-   - Superato l'intero schema chiaro isolato (sfondo bianco `#F8F9FA`, card chiare `#FFFFFF`, testo scuro `#0F172A`).
-   - Applicati sistematicamente i token del design system standard del sito: `--es-bg: #0b0e14`, `--es-panel: #10141d`, `--es-panel-2: #141925`, `--es-border: #1e2430`, `--es-text: #eef1f6`, `--es-text-muted: #8a93a3`, `--es-text-faint: #5c6472`.
-2. **Badge "Società Verificata" Istituzionale**:
-   - Utilizza ora il verde riservato agli stati di verifica ufficiale (`--es-verified: #34c77b`, `--es-verified-soft: rgba(52, 199, 123, 0.12)`), identico al dossier Player, con micro-indicatore verde e bordo satinato.
-3. **Header, Breadcrumb & Backlink**:
-   - Header club con stemma rotondo del club (con fallback sigla), nome squadra in bianco brillante, breadcrumb grigio faint e meta-row con badge e link «← Torna alle Squadre».
-4. **Tab, Stat Card, Tabelle & Modali Dark**:
-   - Tab di navigazione orizzontali (`Panoramica`, `Iscrizioni`, `Quote e pagamenti`, `Comunicazioni`, `Calendario`, `Documenti`, `Profilo atleta`, `Soci e verbali`) con linea d'accento blu (`#3b7dff`).
-   - Stat card a 5 colonne con etichetta superiore maiuscola tracciata e numero bianco grande.
-   - Pannelli inferiori, tabelle, box link pubblico condiviso (`.es-link-box`), sezioni comunicazioni, calendario mensile e modali completamente convertiti al tema scuro.
-5. **File aggiornati**: `tc-panel.css`, `tc-panel.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `TCDARK1`.
+Ultimo aggiornamento: **2026-09-15** (Commit `4258ec7`) — Tipografia Serif Playfair Display su titoli/numeri & Dati reali con fallback a trattino "—" nel Pannello Elisee Manager (cache `TCSERIF1`).
+Ultimo fatto: **Font Serif Playfair Display & Dati Reali Pannello Elisee Manager (`TCSERIF1`)**:
+1. **Tipografia Distintiva Playfair Display (Serif)**:
+   - Applicato `Playfair Display` (stessa direzione editoriale di Stampa e testate di settore) per:
+     - Nome club nell'header (`.es-club__head h1`, `.es-tc-title-wrap h1`).
+     - Numeri/valori delle stat card (`.es-stat-card__value`, `.es-tc-kpi-val`).
+     - Titoli dei pannelli operativi (`.es-panel-box__head h3`, `.es-tc-panel-title`, `.es-tc-panel-header h3`).
+   - L'UI di servizio (etichette, breadcrumb, tab, bottoni, tabelle) resta in sans-serif pulito per la massima leggibilità.
+2. **Dati Statistici Reali (Eliminati segnaposto inventati)**:
+   - Rimossi tutti i numeri fittizi scritti a mano (`128`, `€ 4.250`, `12`, `3`).
+   - Le metriche sono ora collegate direttamente alla struttura reale `STATS_DATA` e allo stato effettivo `st` (o query backend con commento esplicito).
+   - In assenza di dati registrati o connessione al database, le card mostrano onestamente un trattino `"—”` invece di cifre simulate.
+3. **Attività Recenti Reali**:
+   - Sezione collegata ad `ATTIVITA_RECENTI`. Se vuota, mostra messaggio discreto: *"Nessuna nuova richiesta in attesa. Condividi il link di iscrizione per raccogliere le schede anagrafiche dei nuovi tesserati."*
+4. **File aggiornati**: `tc-panel.css`, `tc-panel.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `TCSERIF1`.
+Feature precedente: **Conversione Dark Theme Completa Pannello Elisee Manager (`TCDARK1`)**:
 Feature precedente: **Redesign Ultra-Professionale Candidatura Elisee Manager (`CANDMGR1`)**:
 1. **Struttura Enterprise & Form Diviso in 4 Sezioni**:
    - Superata la griglia piatta generica: form riorganizzato in 4 sezioni numerate con intestazione, progressivo `01-04` e linea divisoria:
