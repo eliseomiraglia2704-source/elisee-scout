@@ -3,8 +3,19 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-15** (Commit `ca801be`) — Area Allenatore & Vice Allenatore: Technical Staff Operating System & Zero-Fake Palmarès (`COACHOS1`).
-Ultimo fatto: **Technical Staff Operating System per Allenatore & Vice (`COACHOS1`)**:
+Ultimo aggiornamento: **2026-09-15** (Commit `c163077`) — Squadra Ufficiale Foggia City per Mister & Vice con Rosa e Top 11 Vuota per Default (`FGCCOACH1`).
+Ultimo fatto: **Foggia City Squadra di Riferimento per Allenatore & Vice (`FGCCOACH1`)**:
+1. **Club Ufficiale Foggia City (Rimossa Atalanta)**:
+   - Impostato definitivamente `Foggia City` come club di appartenenza sia in `coach-dash.js` che in `vice-dash.js`.
+   - Sanitizzazione automatica di qualsiasi valore mock memorizzato in precedenza (`u.squadra === 'Atalanta'` o `parsed.clubName === 'Atalanta'`), forzando sempre Foggia City, sede a Foggia e stadio Campo Comunale.
+2. **Rosa e Top 11 Completamente Vuote per Default**:
+   - `roster: []`, `top11: []`, `panchina: []`, `trainingsList: []` e `wishlistDs: []` azzerati per Foggia City.
+   - Rimossi tutti i calciatori mock dell'Atalanta (Carnesecchi, Djimsiti, Scamacca, Lookman, ecc.) sia nei default che con pulizia automatica su `localStorage`.
+   - Il campo tattico e la Mappa FM mostrano ora gli 11 slot di posizione del modulo ("Da Assegnare") in attesa che vengano tesserati i calciatori reali.
+   - La scheda Rosa mostra l'empty state dedicato con invito ad inserire i primi atleti tramite il pulsante interattivo `+ Tessere Primo Calciatore` / `+ Aggiungi Giocatore`.
+   - Strip KPI aggiornata: `0 Atleti` / `Rosa da comporre`, nessun infortunato, ACWR in attesa dati.
+3. **File aggiornati**: `coach-dash.js`, `vice-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `FGCCOACH1`.
+Feature precedente: **Area Allenatore & Vice Allenatore: Technical Staff Operating System & Zero-Fake Palmarès (`COACHOS1`)**:
 1. **Politica Zero-Fake & Bacheca Trofei Onesta**:
    - Eliminati tutti i titoli fittizi europei ("Vincitore UEFA Europa League", "Qualificazione Champions League", ecc.) da `coach-dash.js` e `vice-dash.js`.
    - La bacheca parte vuota per default con empty-state professionale ed elegante.

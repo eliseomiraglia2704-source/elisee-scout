@@ -41,18 +41,18 @@
       viceRole: u.staffRole || 'Vice Allenatore',
       patent: u.qualifica || (u.staffProfile && u.staffProfile.qualifica) || 'UEFA B',
       status: u.status || 'in_carica', // 'in_carica' | 'disponibile'
-      clubName: u.squadra || u.club || 'Atalanta Bergamasca Calcio',
+      clubName: 'Foggia City',
       matricola: u.matricola || 'FIGC-88210',
-      sede: u.sede || 'Bergamo (BG)',
-      telefono: u.telefono || '+39 035 123456',
-      logoUrl: u.logoUrl || 'immagini/squadre-loghi/foggia.png',
+      sede: 'Foggia (FG)',
+      telefono: u.telefono || '+39 340 1234567',
+      logoUrl: 'immagini/squadre-loghi/foggia-city.png',
       // Collegamento Diretto con l'Allenatore Capo
       misterLink: {
         id: 'coach-official-1',
-        name: 'Gian Piero Gasperini',
+        name: 'Eliseo Miraglia',
         role: 'Allenatore Capo',
-        patent: 'UEFA Pro',
-        email: 'gasperini@atalanta.it',
+        patent: 'UEFA A',
+        email: 'eliseo.miraglia@elisee-scout.it',
         status: 'Collegato'
       },
       // Aree di Specializzazione Tecnica
@@ -83,44 +83,32 @@
       ],
       // Palmarès Condiviso (Ruolo Vice) — Inizia vuoto per default (Zero Fake)
       palmares: [],
-      // Bozza Formazione Settimana (Supporto al Mister)
-      bozzaTop11: [
-        { pos: 'POR', num: 1, name: 'Marco Carnesecchi', note: 'Confermato' },
-        { pos: 'TD', num: 77, name: 'Davide Zappacosta', note: 'In ballottaggio' },
-        { pos: 'DC', num: 19, name: 'Berat Djimsiti', note: 'Titolare' },
-        { pos: 'DC', num: 4, name: 'Isak Hien', note: 'Titolare' },
-        { pos: 'TS', num: 22, name: 'Matteo Ruggeri', note: 'Titolare' },
-        { pos: 'MED', num: 15, name: 'Marten de Roon', note: 'Capitano' },
-        { pos: 'CC', num: 13, name: 'Éderson', note: 'Titolare' },
-        { pos: 'CC', num: 8, name: 'Mario Pašalić', note: 'Consigliato per inserimenti' },
-        { pos: 'AD', num: 17, name: 'Charles De Ketelaere', note: 'Titolare' },
-        { pos: 'AS', num: 11, name: 'Ademola Lookman', note: 'Titolare' },
-        { pos: 'ATT', num: 9, name: 'Gianluca Scamacca', note: 'Punta di riferimento' }
-      ],
-      // Rosa
-      roster: [
-        { num: 1, name: 'Marco Carnesecchi', role: 'Portiere', status: 'disp' },
-        { num: 19, name: 'Berat Djimsiti', role: 'Difensore Centrale', status: 'disp' },
-        { num: 4, name: 'Isak Hien', role: 'Difensore Centrale', status: 'disp' },
-        { num: 77, name: 'Davide Zappacosta', role: 'Terzino Destro', status: 'disp' },
-        { num: 22, name: 'Matteo Ruggeri', role: 'Terzino Sinistro', status: 'disp' },
-        { num: 15, name: 'Marten de Roon', role: 'Mediano', status: 'disp' },
-        { num: 13, name: 'Éderson', role: 'Mezzala', status: 'disp' },
-        { num: 8, name: 'Mario Pašalić', role: 'Trequartista', status: 'disp' },
-        { num: 17, name: 'Charles De Ketelaere', role: 'Ala Destra', status: 'disp' },
-        { num: 11, name: 'Ademola Lookman', role: 'Ala Sinistra', status: 'disp' },
-        { num: 9, name: 'Gianluca Scamacca', role: 'Punta Centrale', status: 'disp' }
-      ]
+      // Bozza Formazione Settimana (Supporto al Mister): VUOTA PER FOGGIA CITY
+      bozzaTop11: [],
+      // Rosa: VUOTA PER FOGGIA CITY
+      roster: []
     };
 
     try {
       var stored = localStorage.getItem('elisee_vice_hub_data_v4');
       if (stored) {
         var parsed = JSON.parse(stored);
+        if (!parsed.clubName || /atalanta/i.test(parsed.clubName)) {
+          parsed.clubName = 'Foggia City';
+          parsed.sede = 'Foggia (FG)';
+          parsed.logoUrl = 'immagini/squadre-loghi/foggia-city.png';
+        }
+        if (parsed.misterLink && /gasperini/i.test(parsed.misterLink.name)) {
+          parsed.misterLink = def.misterLink;
+        }
+        if (parsed.roster && parsed.roster.some(function(p){ return /carnesecchi|djimsiti|scamacca|lookman/i.test(p.name); })) {
+          parsed.roster = [];
+          parsed.bozzaTop11 = [];
+        }
         if (parsed.palmares && parsed.palmares.some(function(p){ return p.titolo && /Europa League|Coppa Italia/i.test(p.titolo); })) {
           parsed.palmares = [];
-          localStorage.setItem('elisee_vice_hub_data_v4', JSON.stringify(parsed));
         }
+        saveViceData(parsed);
         return Object.assign(def, parsed);
       }
     } catch (_) {}
