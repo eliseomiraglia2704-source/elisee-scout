@@ -3,16 +3,18 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-15** (Commit `f1b6b83`) — Divisa Ufficiale Unica 3D Foggia City (sostituito segnaposto 2D e rimossi pallini carosello) nel Selettore Squadre (cache `FGCKIT1`).
-Ultimo fatto: **Divisa Ufficiale Unica 3D Foggia City (`FGCKIT1`)**:
-1. **Sostituzione Divisa con Jersey 3D Ufficiale Reale**:
-   - Integrata la divisa reale ufficiale 3D con bande verticali nerazzurre, sponsor EDIL MILANESE, logo Givova e stemma circolare Foggia City (`immagini/kits-2d/foggia-city/home.png`).
-   - Sostituito integralmente il segnaposto vettoriale piatto precedente.
-2. **Singola Divisa Esclusiva (Nessun pallino/carosello)**:
-   - Configurato lo slot unico `IN CASA` senza seconde/terze divise fittizie in `data/squadre/verified-teams.json`, `squadre-select.js` e `catalog.json`.
-   - In `squadre-select.js` e `index.html`: quando è presente una sola divisa (`slots.length <= 1`), l'intera barra di navigazione/paginazione a pallini (`.es-sq-kit-dots`) e le frecce vengono nascoste automaticamente, lasciando in risalto statico e pulito l'unica divisa societaria.
-   - In `squadre-select.css`: applicato `filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.55))` alla maglia per conferirle un effetto 3D volumetrico e realistico sul piano di appoggio.
-3. **File aggiornati**: `immagini/kits-2d/foggia-city/home.png` (nuovo asset), `data/squadre/verified-teams.json`, `squadre-select.js`, `squadre-select.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `FGCKIT1`.
+Ultimo aggiornamento: **2026-09-15** (Commit `49e355f`) — Rimozione Totale Divisa Ospiti Foggia City & Isolamento Assoluto Sola Divisa Prima 3D (cache `FGCKIT2`).
+Ultimo fatto: **Rimozione Totale Divisa Ospiti Foggia City (`FGCKIT2`)**:
+1. **Isolamento a Monte della Sola Divisa In Casa**:
+   - In `squadre-select.js`: forzato `kitSlotsFor(team)` a intercettare immediatamente Foggia City prima di qualsiasi cache (`_cachedSlots`), eliminando ogni residuo di `away`, `kitAway`, `third`, e restituendo esclusivamente l'array a 1 elemento `[{ key: 'home', label: 'IN CASA', url: 'immagini/kits-2d/foggia-city/home.png' }]`.
+   - `ensureKitKey(team)` e `applyKit(team)` forzano costantemente `state.kit = 'home'` per Foggia City.
+   - `cycleKit(dir)` bloccato a no-op per Foggia City: impossibile passare a divise inesistenti da swipe, click o tastiera.
+2. **Purga Automatica LocalStorage e Inserimento in Catalog**:
+   - Inserito il record pulito di `foggia-city` all'indice 0 di `data/squadre/catalog.json`.
+   - Aggiornato `CATALOG_URL` a `20260915_FGCKIT2` per bypassare istantaneamente il vecchio `sessionStorage` salvato nel browser.
+   - Aggiunta pulizia automatica di `localStorage.elisee_selected_squadra` e `elisee_registered_teams_v1` per cancellare le vecchie proprietà `away` memorizzate nei browser dei client.
+3. **File aggiornati**: `squadre-select.js`, `data/squadre/catalog.json`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `FGCKIT2`.
+Feature precedente: **Divisa Ufficiale Unica 3D Foggia City (`FGCKIT1`)**:
 Feature precedente: **Font Futuristico Nevera per Foggia City (`NEVERA1`)**:
 Feature precedente: **Font Serif Playfair Display & Dati Reali Pannello Elisee Manager (`TCSERIF1`)**:
 Feature precedente: **Conversione Dark Theme Completa Pannello Elisee Manager (`TCDARK1`)**:
