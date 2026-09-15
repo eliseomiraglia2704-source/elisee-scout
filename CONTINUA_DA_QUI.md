@@ -3,18 +3,18 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-15** (Commit `c163077`) — Squadra Ufficiale Foggia City per Mister & Vice con Rosa e Top 11 Vuota per Default (`FGCCOACH1`).
-Ultimo fatto: **Foggia City Squadra di Riferimento per Allenatore & Vice (`FGCCOACH1`)**:
-1. **Club Ufficiale Foggia City (Rimossa Atalanta)**:
-   - Impostato definitivamente `Foggia City` come club di appartenenza sia in `coach-dash.js` che in `vice-dash.js`.
-   - Sanitizzazione automatica di qualsiasi valore mock memorizzato in precedenza (`u.squadra === 'Atalanta'` o `parsed.clubName === 'Atalanta'`), forzando sempre Foggia City, sede a Foggia e stadio Campo Comunale.
-2. **Rosa e Top 11 Completamente Vuote per Default**:
-   - `roster: []`, `top11: []`, `panchina: []`, `trainingsList: []` e `wishlistDs: []` azzerati per Foggia City.
-   - Rimossi tutti i calciatori mock dell'Atalanta (Carnesecchi, Djimsiti, Scamacca, Lookman, ecc.) sia nei default che con pulizia automatica su `localStorage`.
-   - Il campo tattico e la Mappa FM mostrano ora gli 11 slot di posizione del modulo ("Da Assegnare") in attesa che vengano tesserati i calciatori reali.
-   - La scheda Rosa mostra l'empty state dedicato con invito ad inserire i primi atleti tramite il pulsante interattivo `+ Tessere Primo Calciatore` / `+ Aggiungi Giocatore`.
-   - Strip KPI aggiornata: `0 Atleti` / `Rosa da comporre`, nessun infortunato, ACWR in attesa dati.
-3. **File aggiornati**: `coach-dash.js`, `vice-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `FGCCOACH1`.
+Ultimo aggiornamento: **2026-09-15** (Commit `00e9a746`) — Fix Montaggio Automatico Control Room Allenatore Capo (#es-cd, es-cd-on e unmountAllRoleDashboards) (`COACHFIX1`).
+Ultimo fatto: **Fix Montaggio Automatico Dashboard Allenatore Capo (`COACHFIX1`)**:
+1. **Risoluzione Bug Montaggio `#es-cd`**:
+   - In `coach-dash.js`, `renderHub` richiedeva l'esistenza statica di `#es-cd` nel DOM (`var mount = document.getElementById('es-cd'); if (!mount) return;`), ma come per tutte le altre dashboard di ruolo l'elemento va iniettato dinamicamente dentro `#es-staff-profile`.
+   - Aggiornato `renderHub` implementando la creazione automatica di `<div id="es-cd" class="es-pd">` come primo figlio di `#es-staff-profile`, l'impostazione esplicita di `mount.hidden = false`, `mount.removeAttribute('hidden')`, `mount.style.display = 'block'` e l'aggiunta della classe host `es-cd-on` a `#es-staff-profile`.
+   - In questo modo la regola CSS `#es-staff-profile.es-cd-on > :not(#es-cd) { display: none !important; }` nasconde il form standard generico ("Dashboard < Il mio profilo Staff", avviso campi mancanti, Secret List generica) e mostra direttamente la Control Room Tecnica del Mister.
+2. **Robustezza Riconoscimento Ruolo `isCoach` & Eventi**:
+   - `isCoach(u)` aggiornato per analizzare sia stringhe che oggetti utente, ispezionando tutte le proprietà candidate (`u.staffRole`, `u.ruoloDettagliato`, `u.staffProfile.fieldRole`, `u.staffProfile.staffRole`, `u.ruolo`, `u.role`) e ignorando l'etichetta generica `"staff"` senza bloccare la catena di fallback.
+   - Aggiunti listener diretti per gli eventi custom `elisee:view-changed` ed `elisee:role-changed` per una reattività immediata anche senza ricaricamento pagina.
+   - Integrata chiamata preventiva a `window.unmountAllRoleDashboards('es-cd')` per evitare conflitti con altre schede di ruolo.
+3. **File aggiornati**: `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHFIX1`.
+Feature precedente: **Foggia City Squadra di Riferimento per Allenatore & Vice (`FGCCOACH1`)**:
 Feature precedente: **Area Allenatore & Vice Allenatore: Technical Staff Operating System & Zero-Fake Palmarès (`COACHOS1`)**:
 1. **Politica Zero-Fake & Bacheca Trofei Onesta**:
    - Eliminati tutti i titoli fittizi europei ("Vincitore UEFA Europa League", "Qualificazione Champions League", ecc.) da `coach-dash.js` e `vice-dash.js`.

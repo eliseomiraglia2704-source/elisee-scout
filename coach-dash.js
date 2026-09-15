@@ -31,11 +31,35 @@
   }
 
   function isCoach(u) {
+    if (typeof u === 'string') {
+      var s = u.trim().toLowerCase();
+      if (!s || s === 'staff') return false;
+      if (/in seconda|vice allenatore|mental coach|collaboratore tecnico|preparatore|match analyst|video analyst|fisioterapista|medico|osservatore|scout|direttore|presidente/.test(s)) {
+        return false;
+      }
+      return s === 'allenatore' || s === 'mister' || s === 'coach' || /\ballenatore capo\b/.test(s) || s === 'tecnico';
+    }
     u = u || userObj();
-    var primary = String(u.staffRole || u.ruoloDettagliato || (u.staffProfile && u.staffProfile.fieldRole) || u.ruolo || u.role || '').trim().toLowerCase();
-    if (!primary || primary === 'staff') return false;
-    if (/in seconda|vice allenatore|mental coach|collaboratore tecnico|preparatore|match analyst|video analyst/.test(primary)) return false;
-    return primary === 'allenatore' || primary === 'mister' || primary === 'coach' || /\ballenatore capo\b/.test(primary);
+    if (!u || typeof u !== 'object') return false;
+    var candidates = [
+      u.staffRole,
+      u.ruoloDettagliato,
+      u.staffProfile && u.staffProfile.fieldRole,
+      u.staffProfile && u.staffProfile.staffRole,
+      u.ruolo,
+      u.role
+    ];
+    for (var i = 0; i < candidates.length; i++) {
+      var val = String(candidates[i] || '').trim().toLowerCase();
+      if (!val || val === 'staff') continue;
+      if (/in seconda|vice allenatore|mental coach|collaboratore tecnico|preparatore|match analyst|video analyst|fisioterapista|medico|osservatore|scout|direttore|presidente/.test(val)) {
+        return false;
+      }
+      if (val === 'allenatore' || val === 'mister' || val === 'coach' || /\ballenatore capo\b/.test(val) || val === 'tecnico') {
+        return true;
+      }
+    }
+    return false;
   }
 
   function getCoachData() {
@@ -206,9 +230,25 @@
   // ============================================================
   // RENDER PRINCIPALE
   // ============================================================
-  function renderHub() {
+  function renderHub(user) {
+    user = user || userObj();
+    if (!isCoach(user)) return;
+    if (typeof window.unmountAllRoleDashboards === 'function') {
+      try { window.unmountAllRoleDashboards('es-cd'); } catch (_) {}
+    }
+    var sh = document.getElementById('es-staff-profile');
+    if (!sh) return;
     var mount = document.getElementById('es-cd');
-    if (!mount) return;
+    if (!mount) {
+      mount = document.createElement('div');
+      mount.id = 'es-cd';
+      mount.className = 'es-pd';
+      sh.insertBefore(mount, sh.firstChild);
+    }
+    mount.hidden = false;
+    mount.removeAttribute('hidden');
+    mount.style.display = 'block';
+    sh.classList.add('es-cd-on');
 
     var grp = document.getElementById('user-dossier-view-group');
     if (grp) grp.classList.add('is-coach-dash');
@@ -1637,5 +1677,23 @@
     if (window.location.hash.indexOf('user-dossier') >= 0 && isCoach()) {
       setTimeout(renderHub, 120);
     }
+  });
+
+  document.addEventListener('elisee:view-changed', function (e) {
+    var d = e && e.detail;
+    if (d && d.view === 'user-dossier') {
+      try {
+        var u = userObj();
+        if (isCoach(u)) renderHub(u);
+      } catch (_) {}
+    }
+  });
+
+  document.addEventListener('elisee:role-changed', function (e) {
+    var d = e && e.detail;
+    try {
+      var u = (d && d.user) || userObj();
+      if (isCoach(u)) renderHub(u);
+    } catch (_) {}
   });
 })();
