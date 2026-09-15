@@ -1,21 +1,21 @@
 /* ============================================================
    ELISEE SCOUT — FOOTBALL TECHNICAL STAFF OPERATING SYSTEM
-   Suite Professionale per Allenatore Capo & Vice Allenatore
+   Suite Gestionale Professionale per Allenatore Capo & Vice Allenatore
    Palette Ufficiale: Luxury Dark Navy / Bright Cyan / High Information Density
    ============================================================ */
 
 :root {
-  --cos-bg: #050910;
-  --cos-canvas: #070D16;
-  --cos-card: #0A121D;
-  --cos-card-elevated: #0D1825;
-  --cos-card-hover: #101E2E;
+  --cos-bg: #040811;
+  --cos-canvas: #060c16;
+  --cos-card: #071522;
+  --cos-card-elevated: #091B2A;
+  --cos-card-hover: #0c2338;
   --cos-border: #12344A;
   --cos-border-active: #078FD0;
-  --cos-border-soft: rgba(18, 52, 74, 0.6);
+  --cos-border-soft: rgba(18, 52, 74, 0.65);
   --cos-primary: #0798D1;
   --cos-cyan: #16B9FF;
-  --cos-cyan-glow: rgba(22, 185, 255, 0.15);
+  --cos-cyan-glow: rgba(22, 185, 255, 0.16);
   --cos-success: #00D978;
   --cos-success-soft: rgba(0, 217, 120, 0.12);
   --cos-warning: #FFD21A;
@@ -53,17 +53,17 @@
 }
 
 /* ============================================================
-   SIDEBAR TECNICA SINISTRA
+   SIDEBAR TECNICA SINISTRA (Navigazione Unica & Non Duplicata)
    ============================================================ */
 .es-cos-sidebar {
-  width: 230px;
-  min-width: 230px;
-  background: var(--cos-canvas);
+  width: 235px;
+  min-width: 235px;
+  background: #050b14;
   border-right: 1px solid var(--cos-border);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 1.25rem 0.85rem 1rem;
+  padding: 1.15rem 0.75rem 1rem;
   flex-shrink: 0;
   min-height: 100vh;
   position: sticky;
@@ -95,8 +95,8 @@
 }
 
 .es-cos-side-btn svg {
-  width: 17px;
-  height: 17px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
   stroke: currentColor;
   opacity: 0.85;
@@ -120,7 +120,7 @@
   stroke: #ffffff;
 }
 
-/* Badge Utente Sidebar Bottom */
+/* Badge Squadra Sidebar Bottom */
 .es-cos-sidebar-bottom {
   margin-top: 1.5rem;
   padding-top: 1rem;
@@ -134,51 +134,49 @@
   background: var(--cos-card);
   border: 1px solid var(--cos-border);
   border-radius: 8px;
-  padding: 0.75rem 0.85rem;
+  padding: 0.65rem 0.8rem;
   display: flex;
   align-items: center;
   gap: 0.65rem;
 }
 
 .es-cos-user-pill-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
   background: var(--cos-canvas);
-  border: 2px solid var(--cos-cyan);
+  border: 1.5px solid var(--cos-cyan);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   position: relative;
-}
-
-.es-cos-user-pill-avatar svg {
-  color: #FFD21A;
+  overflow: hidden;
 }
 
 .es-cos-user-pill-tag {
   position: absolute;
-  bottom: -4px;
+  bottom: 0;
+  left: 0;
+  right: 0;
   background: var(--cos-primary);
   color: #ffffff;
-  font-size: 0.58rem;
-  font-weight: 800;
-  padding: 0 4px;
-  border-radius: 3px;
+  font-size: 0.52rem;
+  font-weight: 900;
+  text-align: center;
   line-height: 1.3;
 }
 
 .es-cos-user-pill-meta {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
   overflow: hidden;
 }
 
 .es-cos-user-pill-name {
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 800;
   color: var(--cos-text);
   white-space: nowrap;
@@ -187,18 +185,22 @@
 }
 
 .es-cos-user-pill-role {
-  font-size: 0.72rem;
-  color: var(--cos-cyan);
-  font-weight: 600;
+  font-size: 0.7rem;
+  color: var(--cos-text-sec);
 }
 
 .es-cos-status-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  justify-content: center;
+  gap: 0.4rem;
   font-size: 0.72rem;
   color: var(--cos-success);
   font-weight: 700;
+  background: rgba(0, 217, 120, 0.08);
+  border: 1px solid rgba(0, 217, 120, 0.3);
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
 }
 
 .es-cos-status-link::before {
@@ -211,46 +213,46 @@
 }
 
 /* ============================================================
-   MAIN CONTENT AREA
+   MAIN CONTENT AREA (Senza Navbar Duplicata)
    ============================================================ */
 .es-cos-main {
   flex: 1 1 auto;
   min-width: 0;
   background: var(--cos-bg);
-  padding: 1.25rem 1.75rem 3rem;
+  padding: 1.25rem 1.5rem 3rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.15rem;
 }
 
 /* ============================================================
-   TOP PROFILE HEADER CARD (Fedele all'immagine)
+   HEADER PROFILO ALLENATORE (Card Orizzontale a 5 Blocchi)
    ============================================================ */
 .es-cos-header-card {
   background: var(--cos-card);
   border: 1px solid var(--cos-border);
-  border-radius: 10px;
-  padding: 1.15rem 1.4rem;
+  border-radius: 8px;
+  padding: 1rem 1.3rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.25rem;
+  gap: 1.15rem;
   flex-wrap: wrap;
   position: relative;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
 }
 
 .es-cos-header-left {
   display: flex;
   align-items: center;
-  gap: 1.1rem;
+  gap: 1rem;
 }
 
 .es-cos-avatar-shield {
-  width: 72px;
-  height: 72px;
-  border-radius: 12px;
-  background: var(--cos-canvas);
+  width: 68px;
+  height: 68px;
+  border-radius: 10px;
+  background: #050d18;
   border: 2px solid var(--cos-cyan);
   display: flex;
   flex-direction: column;
@@ -258,7 +260,7 @@
   justify-content: center;
   position: relative;
   flex-shrink: 0;
-  box-shadow: 0 0 15px rgba(22, 185, 255, 0.2);
+  box-shadow: 0 0 12px rgba(22, 185, 255, 0.25);
 }
 
 .es-cos-avatar-shield svg {
@@ -267,26 +269,26 @@
 
 .es-cos-avatar-badge {
   position: absolute;
-  bottom: -6px;
+  bottom: -5px;
   background: var(--cos-primary);
   color: #ffffff;
-  font-size: 0.65rem;
-  font-weight: 800;
-  padding: 1px 7px;
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.62rem;
+  font-weight: 900;
+  padding: 1px 6px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
   letter-spacing: 0.04em;
 }
 
 .es-cos-header-coach-info {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.15rem;
 }
 
 .es-cos-coach-title-h1 {
   margin: 0;
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   font-weight: 800;
   color: var(--cos-text);
   letter-spacing: -0.01em;
@@ -294,41 +296,41 @@
 
 .es-cos-coach-role-sub {
   margin: 0;
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   font-weight: 700;
   color: var(--cos-cyan);
 }
 
 .es-cos-coach-tessera {
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   color: var(--cos-text-sec);
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
 }
 
 /* Blocchi Centrali dell'Header */
 .es-cos-header-center {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1.15rem;
   flex-wrap: wrap;
 }
 
 .es-cos-header-club-box {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding-right: 1.25rem;
+  gap: 0.65rem;
+  padding-right: 1.15rem;
   border-right: 1px solid var(--cos-border);
 }
 
 .es-cos-club-crest {
-  width: 42px;
-  height: 42px;
-  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
   object-fit: contain;
-  background: var(--cos-canvas);
+  background: #040912;
   border: 1px solid var(--cos-border);
   padding: 2px;
 }
@@ -339,21 +341,21 @@
 }
 
 .es-cos-club-name {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 800;
   color: var(--cos-text);
 }
 
 .es-cos-club-meta {
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   color: var(--cos-text-sec);
 }
 
 .es-cos-header-match-box {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-  padding-right: 1.25rem;
+  gap: 0.75rem;
+  padding-right: 1.15rem;
   border-right: 1px solid var(--cos-border);
 }
 
@@ -366,7 +368,7 @@
 }
 
 .es-cos-match-date {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 700;
   color: var(--cos-cyan);
 }
@@ -374,24 +376,24 @@
 .es-cos-match-oppo-row {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.4rem;
   margin-top: 2px;
 }
 
 .es-cos-oppo-crest {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   object-fit: contain;
 }
 
 .es-cos-oppo-name {
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   font-weight: 800;
   color: var(--cos-text);
 }
 
 .es-cos-oppo-venue {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--cos-text-sec);
 }
 
@@ -400,7 +402,7 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  padding-right: 1.25rem;
+  padding-right: 1.15rem;
   border-right: 1px solid var(--cos-border);
 }
 
@@ -415,7 +417,7 @@
 .es-cos-countdown-digits {
   display: flex;
   align-items: baseline;
-  gap: 0.4rem;
+  gap: 0.35rem;
 }
 
 .es-cos-cd-block {
@@ -425,14 +427,14 @@
 }
 
 .es-cos-cd-num {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 900;
   color: var(--cos-text);
   line-height: 1;
 }
 
 .es-cos-cd-unit {
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   font-weight: 800;
   color: var(--cos-text-sec);
   text-transform: uppercase;
@@ -448,20 +450,20 @@
 .es-cos-seduta-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  font-size: 0.75rem;
+  gap: 0.35rem;
+  font-size: 0.74rem;
   font-weight: 800;
   color: var(--cos-success);
 }
 
 .es-cos-seduta-name {
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   font-weight: 800;
   color: var(--cos-text);
 }
 
 .es-cos-seduta-time {
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   color: var(--cos-text-sec);
 }
 
@@ -470,116 +472,97 @@
   background: var(--cos-primary);
   border: 1px solid var(--cos-cyan);
   color: #ffffff;
-  padding: 0.6rem 1.1rem;
+  padding: 0.55rem 1rem;
   border-radius: 6px;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 800;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.45rem;
   transition: all 0.15s ease;
   white-space: nowrap;
 }
 
 .es-cos-btn-vice-jump:hover {
   background: #0689bd;
-  box-shadow: 0 0 14px rgba(22, 185, 255, 0.4);
+  box-shadow: 0 0 12px rgba(22, 185, 255, 0.4);
   transform: translateY(-1px);
 }
 
 /* ============================================================
-   SUB-NAVBAR A 11 SCHEDE
+   DASHBOARD KPI STRIP (Esattamente 8 Card Fedeli all'Immagine)
    ============================================================ */
-.es-cos-subnavbar {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
+.es-cos-kpi-row-8 {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 0.75rem;
+}
+
+.es-cos-kpi-card-box {
   background: var(--cos-card);
   border: 1px solid var(--cos-border);
-  border-radius: 8px;
-  padding: 0.4rem;
-  overflow-x: auto;
-  scrollbar-width: thin;
+  border-radius: 7px;
+  padding: 0.75rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.3rem;
+  min-height: 86px;
+  transition: border-color 0.15s ease;
 }
 
-.es-cos-subnav-btn {
-  background: transparent;
-  border: 1px solid transparent;
-  color: var(--cos-text-sec);
-  padding: 0.55rem 0.85rem;
-  border-radius: 6px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  white-space: nowrap;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-}
-
-.es-cos-subnav-btn svg {
-  width: 15px;
-  height: 15px;
-  stroke: currentColor;
-  opacity: 0.85;
-}
-
-.es-cos-subnav-btn:hover {
-  color: var(--cos-text);
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.es-cos-subnav-btn.is-active {
-  background: var(--cos-primary);
-  color: #ffffff;
+.es-cos-kpi-card-box:hover {
   border-color: var(--cos-cyan);
 }
 
-/* ============================================================
-   DASHBOARD TAB: RIEPILOGO STAGIONALE (7 KPI)
-   ============================================================ */
-.es-cos-kpi-row-7 {
-  background: var(--cos-card);
-  border: 1px solid var(--cos-border);
-  border-radius: 8px;
-  padding: 0.85rem 1.15rem;
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 1rem;
-  position: relative;
-}
-
-.es-cos-kpi-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  border-right: 1px solid var(--cos-border-soft);
-  padding-right: 0.75rem;
-}
-
-.es-cos-kpi-item:last-child {
-  border-right: none;
-  padding-right: 0;
-}
-
-.es-cos-kpi-header {
+.es-cos-kpi-top {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.4rem;
+}
+
+.es-cos-kpi-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  background: rgba(22, 185, 255, 0.1);
+  color: var(--cos-cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.es-cos-kpi-icon svg {
+  width: 13px;
+  height: 13px;
+}
+
+.es-cos-kpi-title-lbl {
   font-size: 0.68rem;
   font-weight: 800;
   color: var(--cos-text-sec);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.es-cos-kpi-val {
+.es-cos-kpi-main-val {
   font-size: 1.15rem;
   font-weight: 900;
   color: var(--cos-text);
-  line-height: 1.2;
+  line-height: 1.1;
+}
+
+.es-cos-kpi-sub-text {
+  font-size: 0.72rem;
+  color: var(--cos-text-sec);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .es-cos-kpi-bar-track {
@@ -606,12 +589,11 @@
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 800;
-  padding: 2px 7px;
+  padding: 1px 6px;
   border-radius: 4px;
   width: fit-content;
-  margin-top: 2px;
 }
 
 .es-cos-badge-pill.is-green {
@@ -639,22 +621,22 @@
 }
 
 /* ============================================================
-   GRIGLIA CENTRALE OPERATIVA (3 Colonne)
+   GRIGLIA CENTRALE (Calendario Gare, Ultima Sessione, Notifiche)
    ============================================================ */
 .es-cos-mid-grid {
   display: grid;
-  grid-template-columns: 1.15fr 1fr 0.95fr;
-  gap: 1.25rem;
+  grid-template-columns: 1.2fr 1fr 0.9fr;
+  gap: 1.15rem;
 }
 
 .es-cos-panel-card {
   background: var(--cos-card);
   border: 1px solid var(--cos-border);
   border-radius: 8px;
-  padding: 1.15rem;
+  padding: 1.1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 0.8rem;
   position: relative;
 }
 
@@ -664,7 +646,7 @@
   justify-content: space-between;
   gap: 0.75rem;
   border-bottom: 1px solid var(--cos-border-soft);
-  padding-bottom: 0.65rem;
+  padding-bottom: 0.6rem;
 }
 
 .es-cos-panel-title {
@@ -673,7 +655,7 @@
   color: var(--cos-text);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.45rem;
 }
 
 .es-cos-panel-title svg {
@@ -697,11 +679,11 @@
   text-decoration: underline;
 }
 
-/* Tabella Calendario Prossime Gare */
+/* Tabella Calendario Gare */
 .es-cos-table-compact {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
 }
 
 .es-cos-table-compact th {
@@ -710,13 +692,13 @@
   font-weight: 800;
   color: var(--cos-text-sec);
   text-transform: uppercase;
-  padding: 0.4rem 0.5rem;
+  padding: 0.4rem 0.45rem;
   border-bottom: 1px solid var(--cos-border-soft);
 }
 
 .es-cos-table-compact td {
-  padding: 0.6rem 0.5rem;
-  border-bottom: 1px solid rgba(18, 52, 74, 0.4);
+  padding: 0.55rem 0.45rem;
+  border-bottom: 1px solid rgba(18, 52, 74, 0.35);
   color: var(--cos-text);
 }
 
@@ -728,21 +710,21 @@
   background: rgba(255, 255, 255, 0.02);
 }
 
-/* Box Ultima Sessione & Mini Pitch */
+/* Ultima Sessione */
 .es-cos-session-box {
-  background: var(--cos-canvas);
+  background: #050e18;
   border: 1px solid var(--cos-border-soft);
   border-radius: 6px;
   padding: 0.85rem;
   display: flex;
-  gap: 1rem;
+  gap: 0.95rem;
   align-items: center;
 }
 
 .es-cos-session-thumb {
   width: 120px;
   height: 80px;
-  border-radius: 4px;
+  border-radius: 5px;
   background: linear-gradient(135deg, #0e3d23 0%, #071f12 100%);
   border: 1px solid rgba(0, 217, 120, 0.3);
   position: relative;
@@ -755,9 +737,9 @@
 
 .es-cos-session-thumb::before {
   content: '';
-  width: 32px;
-  height: 32px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
   position: absolute;
 }
@@ -766,39 +748,39 @@
   content: '';
   width: 100%;
   height: 1px;
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.3);
   position: absolute;
 }
 
 .es-cos-session-info {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.2rem;
   flex: 1 1 auto;
 }
 
 .es-cos-session-title {
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   font-weight: 800;
   color: var(--cos-text);
 }
 
 .es-cos-session-meta {
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   color: var(--cos-text-sec);
 }
 
 .es-cos-session-stats-grid {
   display: flex;
-  gap: 0.85rem;
-  margin-top: 0.35rem;
+  gap: 0.75rem;
+  margin-top: 0.3rem;
 }
 
 .es-cos-sstat {
   display: flex;
   align-items: center;
-  gap: 0.3rem;
-  font-size: 0.74rem;
+  gap: 0.25rem;
+  font-size: 0.72rem;
   color: var(--cos-text-sec);
 }
 
@@ -806,17 +788,17 @@
   color: var(--cos-text);
 }
 
-/* Box Report Staff Integrato nel Middle */
+/* Report Staff Subbox */
 .es-cos-staff-report-subbox {
   background: rgba(7, 152, 209, 0.06);
   border: 1px solid rgba(7, 152, 209, 0.25);
   border-radius: 6px;
-  padding: 0.85rem;
+  padding: 0.8rem 0.9rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  margin-top: 0.5rem;
+  margin-top: 0.35rem;
 }
 
 .es-cos-srep-info {
@@ -826,20 +808,20 @@
 }
 
 .es-cos-srep-lbl {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 800;
   color: var(--cos-cyan);
   text-transform: uppercase;
 }
 
 .es-cos-srep-title {
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 700;
   color: var(--cos-text);
 }
 
 .es-cos-srep-time {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--cos-text-sec);
 }
 
@@ -847,15 +829,15 @@
 .es-cos-notifs-list {
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
+  gap: 0.4rem;
 }
 
 .es-cos-notif-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.65rem 0.75rem;
-  background: var(--cos-canvas);
+  padding: 0.6rem 0.75rem;
+  background: #050d18;
   border: 1px solid var(--cos-border-soft);
   border-radius: 6px;
   cursor: pointer;
@@ -894,7 +876,7 @@
 }
 
 .es-cos-notif-text {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: var(--cos-text);
   white-space: nowrap;
@@ -903,46 +885,46 @@
 }
 
 .es-cos-notif-time {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   color: var(--cos-text-sec);
 }
 
 .es-cos-notif-arrow {
   color: var(--cos-text-sec);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   flex-shrink: 0;
 }
 
 /* ============================================================
-   FASCIA INFERIORE (Log, Carico Settimanale, Impegni Staff)
+   FASCIA INFERIORE (3 Pannelli)
    ============================================================ */
 .es-cos-bot-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 1.25rem;
+  gap: 1.15rem;
 }
 
 /* Timeline Log Attività */
 .es-cos-log-feed {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.5rem;
 }
 
 .es-cos-log-item {
   display: flex;
   align-items: center;
   gap: 0.65rem;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: var(--cos-text);
-  padding: 0.45rem 0.5rem;
+  padding: 0.4rem 0.5rem;
   border-bottom: 1px solid rgba(18, 52, 74, 0.4);
 }
 
 .es-cos-log-item:last-child { border-bottom: none; }
 
 .es-cos-log-date {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   color: var(--cos-cyan);
   font-weight: 700;
   flex-shrink: 0;
@@ -951,7 +933,7 @@
   gap: 0.25rem;
 }
 
-/* Grafico Carico Settimanale & Gauge */
+/* Grafico Carico Settimanale */
 .es-cos-weekly-chart-wrap {
   display: flex;
   align-items: flex-end;
@@ -963,8 +945,8 @@
 .es-cos-bar-chart {
   display: flex;
   align-items: flex-end;
-  gap: 0.6rem;
-  height: 100px;
+  gap: 0.55rem;
+  height: 95px;
   flex: 1 1 auto;
   border-bottom: 1px solid var(--cos-border-soft);
   padding-bottom: 4px;
@@ -982,7 +964,7 @@
 
 .es-cos-bar-stick {
   width: 100%;
-  max-width: 18px;
+  max-width: 16px;
   background: var(--cos-primary);
   border-radius: 3px 3px 0 0;
   transition: height 0.3s ease;
@@ -997,18 +979,18 @@
 }
 
 .es-cos-radial-gauge {
-  width: 90px;
+  width: 85px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 0.25rem;
+  gap: 0.2rem;
   flex-shrink: 0;
 }
 
 .es-cos-gauge-circle {
-  width: 58px;
-  height: 58px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   border: 4px solid var(--cos-border);
   border-top-color: var(--cos-success);
@@ -1016,14 +998,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 900;
   color: var(--cos-text);
   box-shadow: 0 0 10px rgba(0, 217, 120, 0.2);
 }
 
 .es-cos-gauge-sub {
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 700;
   color: var(--cos-success);
 }
@@ -1032,30 +1014,30 @@
 .es-cos-impegni-list {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.45rem;
 }
 
 .es-cos-impegno-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.6rem 0.75rem;
-  background: var(--cos-canvas);
+  padding: 0.55rem 0.7rem;
+  background: #050d18;
   border: 1px solid var(--cos-border-soft);
   border-radius: 6px;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
 }
 
 .es-cos-impegno-left {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.55rem;
 }
 
 .es-cos-impegno-left svg {
   color: var(--cos-cyan);
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   flex-shrink: 0;
 }
 
@@ -1065,7 +1047,7 @@
 }
 
 .es-cos-impegno-time {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   color: var(--cos-text-sec);
 }
 
@@ -1074,428 +1056,34 @@
   color: var(--cos-cyan);
 }
 
-/* ============================================================
-   SEZIONE ROSA
-   ============================================================ */
-.es-cos-roster-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-bottom: 1rem;
-}
-
-.es-cos-search-input {
-  background: var(--cos-canvas);
-  border: 1px solid var(--cos-border);
-  color: var(--cos-text);
-  padding: 0.55rem 0.95rem;
-  border-radius: 6px;
-  font-size: 0.84rem;
-  width: 260px;
-}
-
-.es-cos-search-input:focus {
-  outline: none;
-  border-color: var(--cos-cyan);
-  box-shadow: 0 0 10px rgba(22, 185, 255, 0.2);
-}
-
-.es-cos-filter-pills {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  flex-wrap: wrap;
-}
-
-.es-cos-fpill {
-  background: var(--cos-canvas);
-  border: 1px solid var(--cos-border);
-  color: var(--cos-text-sec);
-  padding: 0.45rem 0.8rem;
-  border-radius: 6px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.es-cos-fpill:hover {
-  color: var(--cos-text);
-  border-color: var(--cos-border-active);
-}
-
-.es-cos-fpill.is-active {
-  background: var(--cos-primary);
-  border-color: var(--cos-cyan);
-  color: #ffffff;
-}
-
-.es-cos-roster-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
-}
-
-.es-cos-player-card {
-  background: var(--cos-card);
-  border: 1px solid var(--cos-border);
-  border-radius: 8px;
-  padding: 1rem;
-  display: flex;
-  gap: 0.85rem;
-  align-items: center;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  position: relative;
-}
-
-.es-cos-player-card:hover {
-  border-color: var(--cos-cyan);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-}
-
-.es-cos-player-num-badge {
-  width: 44px;
-  height: 44px;
-  border-radius: 8px;
-  background: var(--cos-canvas);
-  border: 1px solid var(--cos-cyan);
-  color: var(--cos-cyan);
-  font-size: 1.15rem;
-  font-weight: 900;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.es-cos-player-meta-box {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  flex: 1 1 auto;
-}
-
-.es-cos-player-name {
-  font-size: 0.92rem;
-  font-weight: 800;
-  color: var(--cos-text);
-}
-
-.es-cos-player-sub {
-  font-size: 0.74rem;
-  color: var(--cos-text-sec);
-}
-
-.es-cos-player-status-tag {
-  font-size: 0.68rem;
-  font-weight: 800;
-  padding: 1px 6px;
-  border-radius: 4px;
-  width: fit-content;
-  margin-top: 3px;
-}
-
-/* ============================================================
-   SEZIONE FORMAZIONE (Lineup Builder)
-   ============================================================ */
-.es-cos-lineup-layout {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 1.25rem;
-}
-
-.es-cos-pitch-wrapper {
-  background: #061e11;
-  border: 2px solid #16562f;
-  border-radius: 10px;
-  position: relative;
-  aspect-ratio: 16/10;
-  overflow: hidden;
-  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6);
-}
-
-.es-cos-pitch-field {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 50%, rgba(0, 217, 120, 0.08) 0%, transparent 80%),
-              repeating-linear-gradient(0deg, transparent, transparent 15px, rgba(255, 255, 255, 0.015) 15px, rgba(255, 255, 255, 0.015) 30px);
-}
-
-.es-cos-pitch-line-center {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.35);
-}
-
-.es-cos-pitch-circle-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100px;
-  height: 100px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: 50%;
-}
-
-.es-cos-pitch-box-top {
-  position: absolute;
-  top: 0;
-  left: 30%;
-  right: 30%;
-  height: 18%;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-top: none;
-}
-
-.es-cos-pitch-box-bottom {
-  position: absolute;
-  bottom: 0;
-  left: 30%;
-  right: 30%;
-  height: 18%;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-bottom: none;
-}
-
-.es-cos-player-pin {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  cursor: pointer;
-  z-index: 10;
-  transition: transform 0.15s ease;
-}
-
-.es-cos-player-pin:hover {
-  transform: translate(-50%, -50%) scale(1.1);
-}
-
-.es-cos-pin-circle {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: var(--cos-canvas);
-  border: 2px solid var(--cos-cyan);
-  color: var(--cos-text);
-  font-size: 0.85rem;
-  font-weight: 900;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
-}
-
-.es-cos-pin-tag {
-  background: rgba(5, 9, 16, 0.92);
-  border: 1px solid var(--cos-border);
-  color: var(--cos-text);
-  font-size: 0.68rem;
-  font-weight: 800;
-  padding: 1px 6px;
-  border-radius: 4px;
-  white-space: nowrap;
-}
-
-/* ============================================================
-   LAVAGNA TATTICA INTERATTIVA (Canvas & Tools)
-   ============================================================ */
-.es-cos-board-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-  background: var(--cos-canvas);
-  border: 1px solid var(--cos-border);
-  border-radius: 8px;
-  padding: 0.65rem 1rem;
-  margin-bottom: 0.85rem;
-}
-
-.es-cos-board-btn-group {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.es-cos-board-btn {
-  background: var(--cos-card);
-  border: 1px solid var(--cos-border);
-  color: var(--cos-text);
-  padding: 0.4rem 0.75rem;
-  border-radius: 5px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.es-cos-board-btn:hover {
-  border-color: var(--cos-cyan);
-}
-
-.es-cos-board-btn.is-active {
-  background: var(--cos-primary);
-  border-color: var(--cos-cyan);
-  color: #ffffff;
-}
-
-/* ============================================================
-   SEZIONE ALLENAMENTI & CALENDARIO
-   ============================================================ */
-.es-cos-trainings-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1rem;
-}
-
-.es-cos-tr-card {
-  background: var(--cos-card);
-  border: 1px solid var(--cos-border);
-  border-radius: 8px;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-}
-
-.es-cos-tr-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-}
-
-.es-cos-tr-type {
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: var(--cos-text);
-}
-
-.es-cos-tr-date-badge {
-  background: var(--cos-cyan-glow);
-  color: var(--cos-cyan);
-  border: 1px solid rgba(22, 185, 255, 0.3);
-  padding: 2px 7px;
-  border-radius: 4px;
-  font-size: 0.72rem;
-  font-weight: 700;
-}
-
-/* ============================================================
-   MODALI & OVERLAYS PROFESSIONALI
-   ============================================================ */
-.es-cos-modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(4, 7, 12, 0.85);
-  backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 99999;
-  padding: 1.5rem;
-}
-
-.es-cos-modal-box {
-  background: var(--cos-canvas);
-  border: 1px solid var(--cos-border);
-  border-radius: 10px;
-  max-width: 620px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.9);
-  padding: 1.5rem;
-  position: relative;
-}
-
-.es-cos-modal-close {
-  position: absolute;
-  top: 1rem;
-  right: 1.15rem;
-  background: transparent;
-  border: none;
-  color: var(--cos-text-sec);
-  font-size: 1.5rem;
-  cursor: pointer;
-  line-height: 1;
-}
-
-.es-cos-modal-close:hover {
-  color: var(--cos-danger);
-}
-
-/* Form Styles */
-.es-cos-form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  margin-bottom: 0.85rem;
-}
-
-.es-cos-form-label {
-  font-size: 0.78rem;
-  font-weight: 800;
-  color: var(--cos-text-sec);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.es-cos-form-input {
-  background: var(--cos-bg);
-  border: 1px solid var(--cos-border);
-  color: var(--cos-text);
-  padding: 0.65rem 0.85rem;
-  border-radius: 6px;
-  font-size: 0.88rem;
-}
-
-.es-cos-form-input:focus {
-  outline: none;
-  border-color: var(--cos-cyan);
-  box-shadow: 0 0 12px rgba(22, 185, 255, 0.25);
-}
-
-/* Pulsanti Primari e Secondari */
+/* Pulsanti e Form Generici */
 .es-btn-cos-primary {
   background: var(--cos-primary);
   border: 1px solid var(--cos-cyan);
   color: #ffffff;
-  padding: 0.6rem 1.15rem;
+  padding: 0.55rem 1rem;
   border-radius: 6px;
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 800;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.4rem;
   transition: all 0.15s ease;
 }
 
 .es-btn-cos-primary:hover {
   background: #0689bd;
-  box-shadow: 0 0 14px rgba(22, 185, 255, 0.4);
+  box-shadow: 0 0 12px rgba(22, 185, 255, 0.4);
 }
 
 .es-btn-cos-sec {
   background: transparent;
   border: 1px solid var(--cos-border);
   color: var(--cos-text);
-  padding: 0.6rem 1.15rem;
+  padding: 0.55rem 1rem;
   border-radius: 6px;
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -1507,8 +1095,8 @@
 }
 
 /* Responsive */
-@media (max-width: 1200px) {
-  .es-cos-kpi-row-7 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1300px) {
+  .es-cos-kpi-row-8 { grid-template-columns: repeat(4, 1fr); }
   .es-cos-mid-grid { grid-template-columns: 1fr 1fr; }
   .es-cos-bot-grid { grid-template-columns: 1fr; }
 }
@@ -1516,7 +1104,6 @@
 @media (max-width: 900px) {
   .es-cos-shell { flex-direction: column; }
   .es-cos-sidebar { width: 100%; min-width: 100%; min-height: auto; position: static; }
-  .es-cos-kpi-row-7 { grid-template-columns: repeat(2, 1fr); }
+  .es-cos-kpi-row-8 { grid-template-columns: repeat(2, 1fr); }
   .es-cos-mid-grid { grid-template-columns: 1fr; }
-  .es-cos-lineup-layout { grid-template-columns: 1fr; }
 }

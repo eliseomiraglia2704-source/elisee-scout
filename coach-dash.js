@@ -1,6 +1,7 @@
 /* ============================================================
    ELISEE SCOUT — AREA ALLENATORE CAPO (HEAD COACH CONTROL ROOM)
    Technical Staff Operating System — Football Technical Staff OS
+   Navigazione gestionale unificata esclusivamente nella sidebar sinistra
    ============================================================ */
 (function () {
   'use strict';
@@ -9,7 +10,7 @@
   var activeRosterFilter = 'all';
   var rosterSearchQuery = '';
   var activeTacticalPreset = 'costruzione';
-  var calendarViewMode = 'settimana'; // 'giorno' | 'settimana' | 'mese' | 'lista'
+  var calendarViewMode = 'settimana';
   var countdownInterval = null;
 
   function esc(s) {
@@ -97,18 +98,18 @@
 
       // Calendario Prossime Gare
       prossimeGare: [
-        { id: 'g-1', data: '15/09/2026 15:00', comp: 'Serie D - Girone I', avv: 'A.C. Ragusa', logo: '', status: 'Prossima', isNext: true },
-        { id: 'g-2', data: '22/09/2026 15:00', comp: 'Serie D - Girone I', avv: 'Licata', logo: '', status: 'Da preparare', isNext: false },
-        { id: 'g-3', data: '29/09/2026 15:00', comp: 'Serie D - Girone I', avv: 'FC Messina', logo: '', status: 'Da preparare', isNext: false },
-        { id: 'g-4', data: '06/10/2026 15:00', comp: 'Serie D - Girone I', avv: 'Acireale', logo: '', status: 'Da preparare', isNext: false },
-        { id: 'g-5', data: '13/10/2026 15:00', comp: 'Coppa Italia Serie D', avv: 'S. Agata', logo: '', status: 'Da preparare', isNext: false }
+        { id: 'g-1', data: '15/09/2026 15:00', comp: 'Serie D - Girone I', avv: 'A.C. RAGUSA', stadio: 'Comunale - Carlentini', status: 'Da preparare', isNext: true },
+        { id: 'g-2', data: '22/09/2026 15:00', comp: 'Serie D - Girone I', avv: 'Licata', stadio: 'Comunale - Carlentini', status: 'Da preparare', isNext: false },
+        { id: 'g-3', data: '29/09/2026 15:00', comp: 'Serie D - Girone I', avv: 'FC Messina', stadio: 'Fr. Scoglio - Messina', status: 'Da preparare', isNext: false },
+        { id: 'g-4', data: '06/10/2026 15:00', comp: 'Serie D - Girone I', avv: 'Acireale', stadio: 'Comunale - Acireale', status: 'Da preparare', isNext: false },
+        { id: 'g-5', data: '13/10/2026 15:00', comp: 'Coppa Italia Serie D', avv: 'S. Agata', stadio: 'Comunale - S. Agata', status: 'Da preparare', isNext: false }
       ],
 
       // Ultima Sessione
       ultimaSessione: {
         tipo: 'Rifinitura',
         data: '14/09/2026 - 10:00',
-        durata: '1h 30\'',
+        durata: '1h 30m',
         carico: 'Medio',
         giocatori: '24/26',
         esercizi: 6,
@@ -180,7 +181,7 @@
       // Notifiche Live Staff
       notifiche: [
         { id: 'n-1', dot: 'green', text: 'Nuovo report dal Vice Allenatore', sub: 'Palle inattive offensive', date: '14/09/2026 - 18:45', action: 'report' },
-        { id: 'n-2', dot: 'green', text: 'Approvazione formazione richiesta', sub: 'Bozza 4-3-3 presentata al Mister', date: '14/09/2026 - 16:20', action: 'formazione' },
+        { id: 'n-2', dot: 'cyan', text: 'Approvazione formazione richiesta', sub: 'Bozza 4-3-3 presentata al Mister', date: '14/09/2026 - 16:20', action: 'formazione' },
         { id: 'n-3', dot: 'danger', text: 'Giocatore infortunato', sub: 'C. Russo: risentimento flessori', date: '13/09/2026 - 21:10', action: 'rosa' },
         { id: 'n-4', dot: 'warn', text: 'Aggiornamento carichi GPS', sub: '2 atleti in zona di monitoraggio affaticamento', date: '13/09/2026 - 17:32', action: 'gps' },
         { id: 'n-5', dot: 'cyan', text: 'Nuova scheda workstation', sub: 'Uscita dal pressing basso & scarico terzino', date: '12/09/2026 - 15:44', action: 'workstation' }
@@ -191,21 +192,20 @@
         { date: '14/09 18:45', text: 'Report dal Vice Allenatore - Palle inattive offensive' },
         { date: '14/09 16:20', text: 'Approvazione formazione - Richiesta al Mister' },
         { date: '13/09 21:10', text: 'Aggiornamento infortunati - 2 giocatori' },
-        { date: '12/09 15:44', text: 'Nuova scheda creata - Uscita dal pressing basso' },
-        { date: '11/09 10:15', text: 'Pianificazione seduta tattica pre-gara completata' }
+        { date: '12/09 15:44', text: 'Nuova scheda creata - Uscita dal pressing basso' }
       ],
 
       // Impegni Staff
       prossimiImpegni: [
         { title: 'Seduta di allenamento', time: '15/09/2026 - 10:00', type: 'Rifinitura' },
-        { title: 'Riunione tecnica staff', time: '15/09/2026 - 14:30', type: 'Analisi avversario' },
-        { title: 'Video analisi pre-partita', time: '16/09/2026 - 15:00', type: 'A.C. Ragusa' }
+        { title: 'Riunione tecnica', time: '15/09/2026 - 14:30', type: 'Analisi avversario' },
+        { title: 'Video analisi', time: '16/09/2026 - 16:00', type: 'A.C. Ragusa' }
       ],
 
       // Sedute Pianificate
       trainingsList: [
-        { id: 'tr-1', tipo: 'Rifinitura Pre-Gara', data: '15/09/2026', orario: '10:00 - 11:30', luogo: 'Stadio Comunale (Campo A)', desc: 'Attivazione dinamica, rapidità 10m, schemi su palla inattiva e conclusioni.', carico: 'Medio', presenze: {} },
-        { id: 'tr-2', tipo: 'Seduta Tattica Reparti', data: '13/09/2026', orario: '15:30 - 17:15', luogo: 'Stadio Comunale (Campo A)', desc: 'Linea difensiva a 4, pressing orientato e uscite dal basso.', carico: 'Alto', presenze: {} },
+        { id: 'tr-1', tipo: 'Rifinitura', data: '15/09/2026', orario: '10:00 - 11:30', luogo: 'Stadio Comunale - Carlentini', desc: 'Attivazione dinamica, rapidità 10m, schemi su palla inattiva e conclusioni.', carico: 'Medio', presenze: {} },
+        { id: 'tr-2', tipo: 'Seduta Tattica Reparti', data: '13/09/2026', orario: '15:30 - 17:15', luogo: 'Stadio Comunale - Carlentini', desc: 'Linea difensiva a 4, pressing orientato e uscite dal basso.', carico: 'Alto', presenze: {} },
         { id: 'tr-3', tipo: 'Potenza Aerobica & Rondos', data: '11/09/2026', orario: '15:30 - 17:30', luogo: 'Centro Sportivo', desc: 'Rondos 5v2 ad alta intensità e blocchi di corsa intermittente.', carico: 'Alto', presenze: {} }
       ],
 
@@ -218,7 +218,7 @@
 
       // Analisi Avversario
       analisiAvversario: {
-        nome: 'A.C. Ragusa',
+        nome: 'A.C. RAGUSA',
         campionato: 'Serie D - Girone I',
         modulo: '4-3-1-2 (Rombo)',
         puntiForza: 'Densità centrale, trequartista abile tra le linee, contropiede rapido.',
@@ -261,13 +261,12 @@
   function saveCoachData(data) {
     try {
       localStorage.setItem('elisee_coach_data', JSON.stringify(data));
-      // Notifica aggiornamento dati cross-tab
       window.dispatchEvent(new CustomEvent('elisee:coach-updated', { detail: { data: data } }));
     } catch (_) {}
   }
 
   // ============================================================
-  // RENDER DELL'OPERATING SYSTEM COMPLETO
+  // RENDER PRINCIPALE
   // ============================================================
   function renderHub(user) {
     user = user || userObj();
@@ -298,7 +297,7 @@
 
     var html =
       '<div class="es-cos-shell">' +
-        // 1. SIDEBAR TECNICA SINISTRA
+        // 1. SIDEBAR TECNICA SINISTRA (Unica presenza di navigazione)
         '<aside class="es-cos-sidebar">' +
           '<div class="es-cos-sidebar-top">' +
             '<div class="es-cos-sidebar-nav">' +
@@ -316,25 +315,25 @@
             '</div>' +
           '</div>' +
 
-          // Bottom User Pill Card (Fedele all'immagine)
+          // Bottom Squadra & Staff Collegato (Fedele all'immagine)
           '<div class="es-cos-sidebar-bottom">' +
             '<div class="es-cos-user-pill-card">' +
               '<div class="es-cos-user-pill-avatar">' +
-                '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/></svg>' +
-                '<span class="es-cos-user-pill-tag">' + esc(data.patent) + '</span>' +
+                '<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="color:#ffd21a;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' +
+                '<span class="es-cos-user-pill-tag">UEFA B</span>' +
               '</div>' +
               '<div class="es-cos-user-pill-meta">' +
-                '<span class="es-cos-user-pill-name">' + esc(data.coachName) + '</span>' +
-                '<span class="es-cos-user-pill-role">' + esc(data.coachRole) + '</span>' +
+                '<span class="es-cos-user-pill-name">' + esc(data.clubName) + '</span>' +
+                '<span class="es-cos-user-pill-role">' + esc(data.reparto) + '</span>' +
               '</div>' +
             '</div>' +
-            '<div class="es-cos-status-link">Collegamento attivo</div>' +
+            '<div class="es-cos-status-link">Staff collegato</div>' +
           '</div>' +
         '</aside>' +
 
-        // 2. MAIN CONTENT AREA
+        // 2. MAIN CONTENT AREA (Senza navigazione orizzontale duplicata)
         '<main class="es-cos-main">' +
-          // HEADER PROFILO TECNICO (Fedele all'immagine)
+          // HEADER PROFILO TECNICO
           '<header class="es-cos-header-card">' +
             '<div class="es-cos-header-left">' +
               '<div class="es-cos-avatar-shield">' +
@@ -401,22 +400,7 @@
             '</div>' +
           '</header>' +
 
-          // SUB-NAVBAR A 11 SCHEDE
-          '<nav class="es-cos-subnavbar" role="tablist">' +
-            renderSubNavBtn('dashboard', 'Dashboard', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>') +
-            renderSubNavBtn('rosa', 'Rosa', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>') +
-            renderSubNavBtn('formazione', 'Formazione', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>') +
-            renderSubNavBtn('tattica', 'Tattica', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>') +
-            renderSubNavBtn('allenamenti', 'Allenamenti', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>') +
-            renderSubNavBtn('calendario', 'Calendario', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>') +
-            renderSubNavBtn('analisi_avversario', 'Analisi Avversario', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>') +
-            renderSubNavBtn('gps_carichi', 'GPS / Carichi', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>') +
-            renderSubNavBtn('report_staff', 'Report Staff', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>') +
-            renderSubNavBtn('comunicazioni', 'Comunicazioni', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>') +
-            renderSubNavBtn('impostazioni', 'Impostazioni', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>') +
-          '</nav>' +
-
-          // 3. TAB CONTENT DEDICATO
+          // CONTENITORE OPERATIVO DIRETTO (Senza navbar orizzontale)
           '<div id="es-cos-active-content">' +
             renderActiveTab(activeTab, data) +
           '</div>' +
@@ -426,13 +410,6 @@
     mount.innerHTML = html;
     bindAllEvents();
     startCountdown();
-  }
-
-  function renderSubNavBtn(tabKey, label, svgIcon) {
-    var isAct = activeTab === tabKey;
-    return '<button type="button" class="es-cos-subnav-btn ' + (isAct ? 'is-active' : '') + '" data-tab-nav="' + tabKey + '">' +
-      svgIcon + '<span>' + esc(label) + '</span>' +
-    '</button>';
   }
 
   function renderSideBtn(tabKey, label, svgIcon) {
@@ -461,88 +438,118 @@
   }
 
   // ============================================================
-  // 1. SEZIONE DASHBOARD (Fedele allo Screenshot di Riferimento)
+  // 1. SEZIONE DASHBOARD (Fedele all'Immagine Fornita)
   // ============================================================
   function renderDashboard(data) {
     return (
-      '<div style="display:flex; flex-direction:column; gap:1.25rem;">' +
-        // A. RIEPILOGO STAGIONALE (7 KPI Cards Orizzontali)
-        '<section class="es-cos-kpi-row-7">' +
-          // 1. Prossima Gara
-          '<div class="es-cos-kpi-item">' +
-            '<div class="es-cos-kpi-header">' +
-              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
-              '<span>Prossima Gara</span>' +
+      '<div style="display:flex; flex-direction:column; gap:1.15rem;">' +
+        // A. RIEPILOGO STAGIONALE (Esattamente 8 KPI Cards)
+        '<section class="es-cos-kpi-row-8">' +
+          // 1. Prossima Partita
+          '<div class="es-cos-kpi-card-box" data-tab-nav="analisi_avversario" style="cursor:pointer;" title="Clicca per aprire analisi avversario">' +
+            '<div class="es-cos-kpi-top">' +
+              '<div class="es-cos-kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>' +
+              '<span class="es-cos-kpi-title-lbl">Prossima Partita</span>' +
             '</div>' +
-            '<div class="es-cos-kpi-val" style="font-size:0.95rem; color:#16b9ff;">' + esc(data.nextMatch.data) + '</div>' +
-            '<div style="font-size:0.8rem; font-weight:800; color:#f3f8fc;">' + esc(data.nextMatch.avversario) + '</div>' +
-            '<div class="es-cos-badge-pill is-blue">⏱️ ' + data.nextMatch.giorniMancanti + ' giorni</div>' +
+            '<div>' +
+              '<div style="font-size:0.75rem; color:#16b9ff; font-weight:700;">' + esc(data.nextMatch.data) + ' - ' + esc(data.nextMatch.orario) + '</div>' +
+              '<div style="display:flex; align-items:center; justify-content:space-between; margin-top:2px;">' +
+                '<b style="font-size:0.82rem; color:#f3f8fc;">' + esc(data.nextMatch.avversario) + '</b>' +
+                '<span style="color:#16b9ff; font-size:0.85rem;">&rsaquo;</span>' +
+              '</div>' +
+            '</div>' +
           '</div>' +
 
           // 2. Ultima Seduta
-          '<div class="es-cos-kpi-item">' +
-            '<div class="es-cos-kpi-header">' +
-              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' +
-              '<span>Ultima Seduta</span>' +
+          '<div class="es-cos-kpi-card-box" data-tab-nav="allenamenti" style="cursor:pointer;" title="Dettagli ultima seduta">' +
+            '<div class="es-cos-kpi-top">' +
+              '<div class="es-cos-kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>' +
+              '<span class="es-cos-kpi-title-lbl">Ultima Seduta</span>' +
             '</div>' +
-            '<div class="es-cos-kpi-val" style="font-size:0.95rem;">14/09/2026</div>' +
-            '<div style="font-size:0.8rem; color:#8da8bc;">Rifinitura</div>' +
-            '<div class="es-cos-badge-pill is-green">✓ Completata</div>' +
+            '<div>' +
+              '<div style="font-size:0.75rem; color:#8da8bc;">14/09/2026</div>' +
+              '<div style="font-size:0.8rem; font-weight:800; color:#f3f8fc; margin-bottom:2px;">Rifinitura</div>' +
+              '<span class="es-cos-badge-pill is-green">✓ Completata</span>' +
+            '</div>' +
           '</div>' +
 
           // 3. Carico Squadra
-          '<div class="es-cos-kpi-item">' +
-            '<div class="es-cos-kpi-header">' +
-              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' +
-              '<span>Carico Squadra</span>' +
+          '<div class="es-cos-kpi-card-box" data-tab-nav="gps_carichi" style="cursor:pointer;" title="Apri telemetria GPS">' +
+            '<div class="es-cos-kpi-top">' +
+              '<div class="es-cos-kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>' +
+              '<span class="es-cos-kpi-title-lbl">Carico Squadra</span>' +
             '</div>' +
-            '<div class="es-cos-kpi-val">78%</div>' +
-            '<div class="es-cos-kpi-bar-track"><div class="es-cos-kpi-bar-fill is-green" style="width:78%;"></div></div>' +
-            '<div class="es-cos-badge-pill is-green">Ottimale</div>' +
+            '<div>' +
+              '<div class="es-cos-kpi-main-val">78%</div>' +
+              '<div class="es-cos-kpi-bar-track"><div class="es-cos-kpi-bar-fill is-green" style="width:78%;"></div></div>' +
+            '</div>' +
           '</div>' +
 
           // 4. Disponibilità Rosa
-          '<div class="es-cos-kpi-item">' +
-            '<div class="es-cos-kpi-header">' +
-              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>' +
-              '<span>Disponibilità Rosa</span>' +
+          '<div class="es-cos-kpi-card-box" data-tab-nav="rosa" style="cursor:pointer;" title="Visualizza organico rosa">' +
+            '<div class="es-cos-kpi-top">' +
+              '<div class="es-cos-kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>' +
+              '<span class="es-cos-kpi-title-lbl">Disponibilità Rosa</span>' +
             '</div>' +
-            '<div class="es-cos-kpi-val">24/26 <span style="font-size:0.75rem; color:#00d978;">92%</span></div>' +
-            '<div class="es-cos-kpi-bar-track"><div class="es-cos-kpi-bar-fill is-green" style="width:92%;"></div></div>' +
-            '<div class="es-cos-badge-pill is-green">Idonei</div>' +
+            '<div>' +
+              '<div style="display:flex; align-items:baseline; justify-content:space-between;">' +
+                '<span class="es-cos-kpi-main-val">24/26</span>' +
+                '<span style="font-size:0.72rem; color:#00d978; font-weight:800;">92%</span>' +
+              '</div>' +
+              '<div class="es-cos-kpi-bar-track"><div class="es-cos-kpi-bar-fill is-green" style="width:92%;"></div></div>' +
+            '</div>' +
           '</div>' +
 
-          // 5. Infortunati
-          '<div class="es-cos-kpi-item">' +
-            '<div class="es-cos-kpi-header">' +
-              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>' +
-              '<span>Infortunati</span>' +
+          // 5. Giocatori Indisponibili
+          '<div class="es-cos-kpi-card-box" data-tab-nav="rosa" style="cursor:pointer;" title="Visualizza infortunati">' +
+            '<div class="es-cos-kpi-top">' +
+              '<div class="es-cos-kpi-icon" style="color:#ff4d5a; background:rgba(255,77,90,0.1);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>' +
+              '<span class="es-cos-kpi-title-lbl">Giocatori Indisponibili</span>' +
             '</div>' +
-            '<div class="es-cos-kpi-val" style="color:#ff4d5a;">2 <span style="font-size:0.75rem; color:#8da8bc;">(7.7%)</span></div>' +
-            '<div class="es-cos-kpi-bar-track"><div class="es-cos-kpi-bar-fill is-danger" style="width:15%;"></div></div>' +
-            '<div class="es-cos-badge-pill is-danger">Da monitorare</div>' +
+            '<div>' +
+              '<div style="display:flex; align-items:baseline; gap:0.35rem;">' +
+                '<span class="es-cos-kpi-main-val" style="color:#ff4d5a;">2</span>' +
+                '<span style="font-size:0.7rem; color:#8da8bc;">(7.7%)</span>' +
+              '</div>' +
+              '<span class="es-cos-badge-pill is-danger" style="margin-top:2px;">● Da monitorare</span>' +
+            '</div>' +
           '</div>' +
 
-          // 6. Giocatori da Monitorare
-          '<div class="es-cos-kpi-item">' +
-            '<div class="es-cos-kpi-header">' +
-              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>' +
-              '<span>Da Monitorare</span>' +
+          // 6. Preparazione Partita
+          '<div class="es-cos-kpi-card-box" data-tab-nav="formazione" style="cursor:pointer;" title="Apri lineup">' +
+            '<div class="es-cos-kpi-top">' +
+              '<div class="es-cos-kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>' +
+              '<span class="es-cos-kpi-title-lbl">Preparazione Partita</span>' +
             '</div>' +
-            '<div class="es-cos-kpi-val" style="color:#ffd21a;">4</div>' +
-            '<div class="es-cos-kpi-bar-track"><div class="es-cos-kpi-bar-fill is-warn" style="width:30%;"></div></div>' +
-            '<div class="es-cos-badge-pill is-warn">Attenzione</div>' +
+            '<div>' +
+              '<div class="es-cos-kpi-main-val" style="color:#16b9ff;">80%</div>' +
+              '<div class="es-cos-kpi-bar-track"><div class="es-cos-kpi-bar-fill is-cyan" style="width:80%;"></div></div>' +
+              '<span class="es-cos-badge-pill is-blue" style="margin-top:2px;">In corso</span>' +
+            '</div>' +
           '</div>' +
 
-          // 7. Preparazione Partita
-          '<div class="es-cos-kpi-item">' +
-            '<div class="es-cos-kpi-header">' +
-              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>' +
-              '<span>Preparazione</span>' +
+          // 7. Report Ricevuti
+          '<div class="es-cos-kpi-card-box" data-tab-nav="report_staff" style="cursor:pointer;" title="Apri inbox report">' +
+            '<div class="es-cos-kpi-top">' +
+              '<div class="es-cos-kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></div>' +
+              '<span class="es-cos-kpi-title-lbl">Report Ricevuti</span>' +
             '</div>' +
-            '<div class="es-cos-kpi-val" style="color:#16b9ff;">80%</div>' +
-            '<div class="es-cos-kpi-bar-track"><div class="es-cos-kpi-bar-fill is-cyan" style="width:80%;"></div></div>' +
-            '<div class="es-cos-badge-pill is-blue">In corso</div>' +
+            '<div>' +
+              '<div class="es-cos-kpi-main-val">3</div>' +
+              '<div style="font-size:0.72rem; color:#00d978; font-weight:800;">+1 nuovo</div>' +
+            '</div>' +
+          '</div>' +
+
+          // 8. Sedute Programmate
+          '<div class="es-cos-kpi-card-box" data-tab-nav="allenamenti" style="cursor:pointer;" title="Apri calendario sedute">' +
+            '<div class="es-cos-kpi-top">' +
+              '<div class="es-cos-kpi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>' +
+              '<span class="es-cos-kpi-title-lbl">Sedute Programmate</span>' +
+            '</div>' +
+            '<div>' +
+              '<div class="es-cos-kpi-main-val">5</div>' +
+              '<div class="es-cos-kpi-sub-text">Questa settimana</div>' +
+            '</div>' +
           '</div>' +
         '</section>' +
 
@@ -558,17 +565,18 @@
               '<a class="es-cos-panel-link" data-tab-nav="calendario">Visualizza tutto &rarr;</a>' +
             '</div>' +
             '<table class="es-cos-table-compact">' +
-              '<thead><tr><th>Data</th><th>Competizione</th><th>Avversario</th><th>Stato</th></tr></thead>' +
+              '<thead><tr><th>Data</th><th>Competizione</th><th>Avversario</th><th>Stadio</th><th>Stato</th></tr></thead>' +
               '<tbody>' +
                 data.prossimeGare.map(function (g) {
                   return (
-                    '<tr>' +
+                    '<tr style="cursor:pointer;" data-tab-nav="analisi_avversario" title="Clicca per aprire scheda match">' +
                       '<td style="white-space:nowrap; font-weight:700;">' + esc(g.data) + '</td>' +
-                      '<td style="color:#8da8bc;">' + esc(g.comp) + '</td>' +
+                      '<td style="color:#8da8bc; font-size:0.72rem;">' + esc(g.comp) + '</td>' +
                       '<td style="font-weight:800; color:#f3f8fc;">' + esc(g.avv) + '</td>' +
+                      '<td style="color:#8da8bc; font-size:0.72rem;">' + esc(g.stadio) + '</td>' +
                       '<td>' +
-                        '<span class="es-cos-badge-pill ' + (g.isNext ? 'is-blue' : 'is-warn') + '" style="font-size:0.65rem; cursor:pointer;" data-tab-nav="analisi_avversario">' +
-                          (g.isNext ? '&larr; Prossima' : 'Da preparare') +
+                        '<span class="es-cos-badge-pill is-blue" style="font-size:0.64rem;">' +
+                          esc(g.status) + ' &rsaquo;' +
                         '</span>' +
                       '</td>' +
                     '</tr>'
@@ -608,9 +616,9 @@
               '<div class="es-cos-srep-info">' +
                 '<div class="es-cos-srep-lbl">Report Staff</div>' +
                 '<div class="es-cos-srep-title">Ultimo report dal Vice Allenatore</div>' +
-                '<div class="es-cos-srep-time">Schede create: Palle inattive offensive · 14/09/2026 - 18:45</div>' +
+                '<div class="es-cos-srep-time">Schede create: Palle inattive offensive · 14/09/2026 - 16:45</div>' +
               '</div>' +
-              '<button type="button" class="es-btn-cos-primary" style="padding:0.45rem 0.85rem; font-size:0.75rem;" data-tab-nav="report_staff">Apri Report &rarr;</button>' +
+              '<button type="button" class="es-btn-cos-primary" style="padding:0.4rem 0.8rem; font-size:0.75rem;" data-tab-nav="report_staff">Apri Report &rarr;</button>' +
             '</div>' +
           '</div>' +
 
@@ -621,7 +629,7 @@
                 '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>' +
                 'Notifiche' +
               '</span>' +
-              '<a class="es-cos-panel-link" id="btn-read-all-notifs">Visualizza tutte &rarr;</a>' +
+              '<a class="es-cos-panel-link" data-tab-nav="comunicazioni">Visualizza tutte &rarr;</a>' +
             '</div>' +
             '<div class="es-cos-notifs-list">' +
               data.notifiche.map(function (n) {
@@ -634,7 +642,7 @@
                         '<div class="es-cos-notif-time">' + esc(n.date) + '</div>' +
                       '</div>' +
                     '</div>' +
-                    '<span class="es-cos-notif-arrow">&rarr;</span>' +
+                    '<span class="es-cos-notif-arrow">&rsaquo;</span>' +
                   '</div>'
                 );
               }).join('') +
@@ -665,7 +673,7 @@
             '</div>' +
           '</div>' +
 
-          // 2. Carico Settimanale Squadra
+          // 2. Carico Settimanale Squadra (con Y-axis 0..100)
           '<div class="es-cos-panel-card">' +
             '<div class="es-cos-panel-head">' +
               '<span class="es-cos-panel-title">' +
@@ -674,6 +682,9 @@
               '</span>' +
             '</div>' +
             '<div class="es-cos-weekly-chart-wrap">' +
+              '<div style="display:flex; flex-direction:column; justify-content:space-between; height:95px; font-size:0.62rem; color:#8da8bc; padding-right:6px;">' +
+                '<span>100</span><span>75</span><span>50</span><span>25</span><span>0</span>' +
+              '</div>' +
               '<div class="es-cos-bar-chart">' +
                 '<div class="es-cos-bar-col"><div class="es-cos-bar-stick" style="height:55%;"></div><span class="es-cos-bar-lbl">Lun</span></div>' +
                 '<div class="es-cos-bar-col"><div class="es-cos-bar-stick" style="height:70%;"></div><span class="es-cos-bar-lbl">Mar</span></div>' +
@@ -723,7 +734,7 @@
   }
 
   // ============================================================
-  // 2. SEZIONE ROSA (Gestione Organico)
+  // 2. SEZIONE ROSA
   // ============================================================
   function renderRosa(data) {
     var list = data.roster || [];
@@ -755,46 +766,43 @@
           '<button type="button" class="es-btn-cos-primary" id="btn-add-player-modal">+ Aggiungi Calciatore</button>' +
         '</div>' +
 
-        // Toolbar Ricerca e Filtri
-        '<div class="es-cos-roster-toolbar">' +
-          '<input type="text" class="es-cos-search-input" id="inp-roster-search" placeholder="Cerca calciatore per nome o ruolo..." value="' + esc(rosterSearchQuery) + '">' +
-          '<div class="es-cos-filter-pills">' +
-            '<button type="button" class="es-cos-fpill ' + (activeRosterFilter === 'all' ? 'is-active' : '') + '" data-r-filter="all">Tutti</button>' +
-            '<button type="button" class="es-cos-fpill ' + (activeRosterFilter === 'por' ? 'is-active' : '') + '" data-r-filter="por">Portieri</button>' +
-            '<button type="button" class="es-cos-fpill ' + (activeRosterFilter === 'dif' ? 'is-active' : '') + '" data-r-filter="dif">Difensori</button>' +
-            '<button type="button" class="es-cos-fpill ' + (activeRosterFilter === 'cen' ? 'is-active' : '') + '" data-r-filter="cen">Centrocampisti</button>' +
-            '<button type="button" class="es-cos-fpill ' + (activeRosterFilter === 'att' ? 'is-active' : '') + '" data-r-filter="att">Attaccanti</button>' +
-            '<button type="button" class="es-cos-fpill ' + (activeRosterFilter === 'disp' ? 'is-active' : '') + '" data-r-filter="disp">Disponibili</button>' +
-            '<button type="button" class="es-cos-fpill ' + (activeRosterFilter === 'diff' ? 'is-active' : '') + '" data-r-filter="diff">Differenziati</button>' +
+        '<div class="es-cos-roster-toolbar" style="display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; margin-bottom:1rem;">' +
+          '<input type="text" class="es-cos-search-input" id="inp-roster-search" placeholder="Cerca calciatore per nome o ruolo..." value="' + esc(rosterSearchQuery) + '" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.5rem 0.85rem; border-radius:6px; font-size:0.82rem; width:260px;">' +
+          '<div style="display:flex; gap:0.35rem; flex-wrap:wrap;">' +
+            '<button type="button" class="es-btn-cos-sec ' + (activeRosterFilter === 'all' ? 'is-active' : '') + '" style="padding:0.4rem 0.75rem; font-size:0.75rem;" data-r-filter="all">Tutti</button>' +
+            '<button type="button" class="es-btn-cos-sec ' + (activeRosterFilter === 'por' ? 'is-active' : '') + '" style="padding:0.4rem 0.75rem; font-size:0.75rem;" data-r-filter="por">Portieri</button>' +
+            '<button type="button" class="es-btn-cos-sec ' + (activeRosterFilter === 'dif' ? 'is-active' : '') + '" style="padding:0.4rem 0.75rem; font-size:0.75rem;" data-r-filter="dif">Difensori</button>' +
+            '<button type="button" class="es-btn-cos-sec ' + (activeRosterFilter === 'cen' ? 'is-active' : '') + '" style="padding:0.4rem 0.75rem; font-size:0.75rem;" data-r-filter="cen">Centrocampisti</button>' +
+            '<button type="button" class="es-btn-cos-sec ' + (activeRosterFilter === 'att' ? 'is-active' : '') + '" style="padding:0.4rem 0.75rem; font-size:0.75rem;" data-r-filter="att">Attaccanti</button>' +
+            '<button type="button" class="es-btn-cos-sec ' + (activeRosterFilter === 'disp' ? 'is-active' : '') + '" style="padding:0.4rem 0.75rem; font-size:0.75rem;" data-r-filter="disp">Disponibili</button>' +
+            '<button type="button" class="es-btn-cos-sec ' + (activeRosterFilter === 'diff' ? 'is-active' : '') + '" style="padding:0.4rem 0.75rem; font-size:0.75rem;" data-r-filter="diff">Differenziati</button>' +
           '</div>' +
         '</div>' +
 
-        // Griglia Giocatori
-        '<div class="es-cos-roster-grid">' +
+        '<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:1rem;">' +
           (list.length ? list.map(function (p, pIdx) {
             var isDisp = p.status === 'disp';
             return (
-              '<div class="es-cos-player-card" data-player-card-idx="' + pIdx + '" title="Clicca per aprire scheda dettagliata">' +
-                '<div class="es-cos-player-num-badge">#' + esc(p.num) + '</div>' +
-                '<div class="es-cos-player-meta-box">' +
-                  '<div class="es-cos-player-name">' + esc(p.name) + '</div>' +
-                  '<div class="es-cos-player-sub">' + esc(p.role) + ' · Classe ' + esc(p.birth) + '</div>' +
-                  '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">' +
+              '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:0.9rem; display:flex; gap:0.75rem; align-items:center; cursor:pointer;" data-player-card-idx="' + pIdx + '">' +
+                '<div style="width:42px; height:42px; border-radius:8px; background:#040912; border:1px solid #16b9ff; color:#16b9ff; font-size:1.1rem; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0;">#' + esc(p.num) + '</div>' +
+                '<div style="display:flex; flex-direction:column; gap:2px; flex:1 1 auto;">' +
+                  '<div style="font-size:0.9rem; font-weight:800; color:#f3f8fc;">' + esc(p.name) + '</div>' +
+                  '<div style="font-size:0.72rem; color:#8da8bc;">' + esc(p.role) + ' · Classe ' + esc(p.birth) + '</div>' +
+                  '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:3px;">' +
                     '<span class="es-cos-badge-pill ' + (isDisp ? 'is-green' : 'is-warn') + '">' + (isDisp ? '🟢 Disponibile' : '🟡 Differenziato') + '</span>' +
                     '<span style="font-size:0.72rem; color:#8da8bc;">Presenze: <b>' + (p.app || 0) + '</b></span>' +
                   '</div>' +
-                  '<div style="font-size:0.7rem; color:#16b9ff; margin-top:2px;">Carico: ' + esc(p.load || '9.5 km') + ' · ACWR ' + esc(p.acwr || '1.05') + '</div>' +
                 '</div>' +
               '</div>'
             );
-          }).join('') : '<div style="grid-column:1/-1; text-align:center; padding:3rem; color:#8da8bc;">Nessun calciatore trovato con i criteri selezionati.</div>') +
+          }).join('') : '<div style="grid-column:1/-1; text-align:center; padding:3rem; color:#8da8bc;">Nessun calciatore trovato.</div>') +
         '</div>' +
       '</div>'
     );
   }
 
   // ============================================================
-  // 3. SEZIONE FORMAZIONE (Lineup Builder Professionale)
+  // 3. SEZIONE FORMAZIONE
   // ============================================================
   function renderFormazione(data) {
     return (
@@ -805,13 +813,12 @@
               '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>' +
               'Lineup Builder Ufficiale · XI Titolare' +
             '</span>' +
-            '<select class="es-cos-form-input" id="sel-tactical-modulo" style="padding:0.35rem 0.75rem; font-size:0.82rem; font-weight:800; color:#16b9ff;">' +
-              '<option value="4-3-3" ' + (data.moduloPrincipale === '4-3-3' ? 'selected' : '') + '>4-3-3 (Offensivo con Ali Larghe)</option>' +
+            '<select id="sel-tactical-modulo" style="background:#071522; border:1px solid #12344a; color:#16b9ff; padding:0.35rem 0.75rem; border-radius:6px; font-size:0.82rem; font-weight:800;">' +
+              '<option value="4-3-3" ' + (data.moduloPrincipale === '4-3-3' ? 'selected' : '') + '>4-3-3 (Offensivo con Ali)</option>' +
               '<option value="4-2-3-1" ' + (data.moduloPrincipale === '4-2-3-1' ? 'selected' : '') + '>4-2-3-1 (Doppio Mediano & Trequarti)</option>' +
-              '<option value="3-5-2" ' + (data.moduloPrincipale === '3-5-2' ? 'selected' : '') + '>3-5-2 (Ampiezza Quinti & Due Punte)</option>' +
-              '<option value="3-4-2-1" ' + (data.moduloPrincipale === '3-4-2-1' ? 'selected' : '') + '>3-4-2-1 (Doppio Trequartista)</option>' +
-              '<option value="4-4-2" ' + (data.moduloPrincipale === '4-4-2' ? 'selected' : '') + '>4-4-2 (Lineare Classico)</option>' +
-              '<option value="4-1-4-1" ' + (data.moduloPrincipale === '4-1-4-1' ? 'selected' : '') + '>4-1-4-1 (Pressing & Schermo)</option>' +
+              '<option value="3-5-2" ' + (data.moduloPrincipale === '3-5-2' ? 'selected' : '') + '>3-5-2 (Ampiezza Quinti)</option>' +
+              '<option value="3-4-2-1" ' + (data.moduloPrincipale === '3-4-2-1' ? 'selected' : '') + '>3-4-2-1 (Doppio Trequarti)</option>' +
+              '<option value="4-4-2" ' + (data.moduloPrincipale === '4-4-2' ? 'selected' : '') + '>4-4-2 (Classico Lineare)</option>' +
             '</select>' +
           '</div>' +
           '<div style="display:flex; gap:0.5rem;">' +
@@ -820,28 +827,22 @@
           '</div>' +
         '</div>' +
 
-        '<div class="es-cos-lineup-layout">' +
-          // Campo Tattico 2D
-          '<div class="es-cos-pitch-wrapper">' +
-            '<div class="es-cos-pitch-field"></div>' +
-            '<div class="es-cos-pitch-line-center"></div>' +
-            '<div class="es-cos-pitch-circle-center"></div>' +
-            '<div class="es-cos-pitch-box-top"></div>' +
-            '<div class="es-cos-pitch-box-bottom"></div>' +
+        '<div style="display:grid; grid-template-columns:1.4fr 1fr; gap:1.25rem;">' +
+          '<div style="background:#061e11; border:2px solid #16562f; border-radius:10px; position:relative; aspect-ratio:16/10; overflow:hidden;">' +
+            '<div style="position:absolute; inset:0; background:radial-gradient(circle at 50% 50%, rgba(0,217,120,0.08) 0%, transparent 80%);"></div>' +
             renderPitchPins(data.top11, data.moduloPrincipale) +
           '</div>' +
 
-          // Panchina & Convocazioni
           '<div style="display:flex; flex-direction:column; gap:1rem;">' +
-            '<div class="es-cos-panel-card" style="background:#070d16; border-color:#12344a;">' +
-              '<div style="font-size:0.85rem; font-weight:800; color:#f3f8fc; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:0.5rem; display:flex; justify-content:space-between;">' +
+            '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:0.85rem;">' +
+              '<div style="font-size:0.85rem; font-weight:800; color:#f3f8fc; text-transform:uppercase; margin-bottom:0.5rem; display:flex; justify-content:space-between;">' +
                 '<span>A Disposizione (Panchina)</span>' +
                 '<span style="color:#16b9ff;">' + (data.panchina ? data.panchina.length : 0) + ' Calciatori</span>' +
               '</div>' +
-              '<div style="display:flex; flex-direction:column; gap:0.4rem; max-height:280px; overflow-y:auto;">' +
+              '<div style="display:flex; flex-direction:column; gap:0.4rem; max-height:260px; overflow-y:auto;">' +
                 (data.panchina && data.panchina.length ? data.panchina.map(function (b) {
                   return (
-                    '<div style="display:flex; justify-content:space-between; align-items:center; background:#0a121d; border:1px solid #12344a; border-radius:5px; padding:0.45rem 0.65rem;">' +
+                    '<div style="display:flex; justify-content:space-between; align-items:center; background:#040912; border:1px solid #12344a; border-radius:5px; padding:0.45rem 0.65rem;">' +
                       '<div style="display:flex; align-items:center; gap:0.5rem;">' +
                         '<b style="color:#16b9ff;">#' + esc(b.num) + '</b>' +
                         '<span>' + esc(b.name) + '</span>' +
@@ -849,13 +850,11 @@
                       '<span class="es-cos-badge-pill is-blue" style="font-size:0.65rem;">' + esc(b.pos || b.role) + '</span>' +
                     '</div>'
                   );
-                }).join('') : '<div style="color:#8da8bc; font-size:0.78rem; text-align:center; padding:1rem;">Panchina vuota</div>') +
+                }).join('') : '') +
               '</div>' +
             '</div>' +
-
-            // Stato Approvazione Ufficiale
             '<div style="background:rgba(0,217,120,0.06); border:1px solid rgba(0,217,120,0.3); border-radius:8px; padding:0.85rem; font-size:0.8rem; line-height:1.45;">' +
-              '<b style="color:#00d978;">Stato Ufficiale:</b> Formazione convalidata dal Mister. Sincronizzata in tempo reale con la Bozza del Vice Allenatore.' +
+              '<b style="color:#00d978;">Stato Ufficiale:</b> Formazione convalidata dal Mister. Consegne tecniche sincronizzate con la Bozza del Vice Allenatore.' +
             '</div>' +
           '</div>' +
         '</div>' +
@@ -866,11 +865,11 @@
   function renderPitchPins(players, modulo) {
     var coords = getFormationCoords(modulo);
     return coords.map(function (c, idx) {
-      var p = (players || [])[idx] || { num: idx + 1, name: 'Titolare ' + (idx + 1), pos: getSlotRole(idx, modulo), rating: '8.0' };
+      var p = (players || [])[idx] || { num: idx + 1, name: 'Titolare ' + (idx + 1), pos: getSlotRole(idx, modulo) };
       return (
-        '<div class="es-cos-player-pin" style="left:' + c.x + '%; top:' + c.y + '%;" data-player-pin-idx="' + idx + '">' +
-          '<div class="es-cos-pin-circle">#' + esc(p.num) + '</div>' +
-          '<div class="es-cos-pin-tag">' + esc(p.name) + ' (' + esc(p.pos) + ')</div>' +
+        '<div style="position:absolute; left:' + c.x + '%; top:' + c.y + '%; transform:translate(-50%, -50%); display:flex; flex-direction:column; align-items:center; gap:2px; cursor:pointer;" data-player-pin-idx="' + idx + '">' +
+          '<div style="width:36px; height:36px; border-radius:50%; background:#071522; border:2px solid #16b9ff; color:#f3f8fc; font-size:0.82rem; font-weight:900; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 10px rgba(0,0,0,0.6);">#' + esc(p.num) + '</div>' +
+          '<div style="background:rgba(5,9,16,0.92); border:1px solid #12344a; color:#f3f8fc; font-size:0.65rem; font-weight:800; padding:1px 5px; border-radius:4px; white-space:nowrap;">' + esc(p.name) + ' (' + esc(p.pos) + ')</div>' +
         '</div>'
       );
     }).join('');
@@ -905,7 +904,6 @@
         { x: 62, y: 18 }, { x: 38, y: 18 }
       ];
     }
-    // Default 4-3-3
     return [
       { x: 50, y: 88 }, { x: 86, y: 68 }, { x: 62, y: 72 }, { x: 38, y: 72 }, { x: 14, y: 68 },
       { x: 50, y: 52 }, { x: 72, y: 44 }, { x: 28, y: 44 },
@@ -923,43 +921,19 @@
   }
 
   // ============================================================
-  // 4. SEZIONE TATTICA (Lavagna Tattica Interattiva)
+  // 4. SEZIONE TATTICA
   // ============================================================
   function renderTattica(data) {
     return (
       '<div class="es-cos-panel-card">' +
         '<div class="es-cos-panel-head">' +
-          '<span class="es-cos-panel-title">' +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>' +
-            'Lavagna Tattica Digitale Interattiva' +
-          '</span>' +
+          '<span class="es-cos-panel-title">Lavagna Tattica Digitale Interattiva</span>' +
           '<div style="display:flex; gap:0.5rem;">' +
-            '<button type="button" class="es-btn-cos-sec" id="btn-reset-board">Reset Pedine</button>' +
+            '<button type="button" class="es-btn-cos-sec" id="btn-reset-board">Reset</button>' +
             '<button type="button" class="es-btn-cos-primary" id="btn-save-board-scheme">Salva Schema</button>' +
           '</div>' +
         '</div>' +
-
-        // Toolbar Preset Tattici
-        '<div class="es-cos-board-toolbar">' +
-          '<div class="es-cos-board-btn-group">' +
-            '<span style="font-size:0.75rem; font-weight:800; color:#8da8bc; text-transform:uppercase;">Preset Schemi:</span>' +
-            '<button type="button" class="es-cos-board-btn ' + (activeTacticalPreset === 'costruzione' ? 'is-active' : '') + '" data-preset="costruzione">Costruzione Bassa</button>' +
-            '<button type="button" class="es-cos-board-btn ' + (activeTacticalPreset === 'inattive' ? 'is-active' : '') + '" data-preset="inattive">Palle Inattive (Corner)</button>' +
-            '<button type="button" class="es-cos-board-btn ' + (activeTacticalPreset === 'pressing' ? 'is-active' : '') + '" data-preset="pressing">Pressing Alto</button>' +
-            '<button type="button" class="es-cos-board-btn ' + (activeTacticalPreset === 'transizioni' ? 'is-active' : '') + '" data-preset="transizioni">Transizioni</button>' +
-          '</div>' +
-          '<div style="font-size:0.76rem; color:#8da8bc;">' +
-            '🔵 Squadra (Blu) · 🔴 Avversario (Rosso) · ⚽ Pallone' +
-          '</div>' +
-        '</div>' +
-
-        // Pitch Lavagna
-        '<div class="es-cos-pitch-wrapper" id="es-tactical-canvas-frame" style="min-height:480px;">' +
-          '<div class="es-cos-pitch-field"></div>' +
-          '<div class="es-cos-pitch-line-center"></div>' +
-          '<div class="es-cos-pitch-circle-center"></div>' +
-          '<div class="es-cos-pitch-box-top"></div>' +
-          '<div class="es-cos-pitch-box-bottom"></div>' +
+        '<div style="background:#061e11; border:2px solid #16562f; border-radius:10px; position:relative; min-height:440px; overflow:hidden;">' +
           renderBoardPins(data.boardPins) +
         '</div>' +
       '</div>'
@@ -969,17 +943,13 @@
   function renderBoardPins(pins) {
     return (pins || []).map(function (p, idx) {
       if (p.type === 'ball') {
-        return (
-          '<div class="es-cos-player-pin" style="left:' + p.x + '%; top:' + p.y + '%;" data-board-pin-idx="' + idx + '">' +
-            '<div style="font-size:1.4rem; filter:drop-shadow(0 2px 5px rgba(0,0,0,0.8));">⚽</div>' +
-          '</div>'
-        );
+        return '<div style="position:absolute; left:' + p.x + '%; top:' + p.y + '%; transform:translate(-50%, -50%); font-size:1.3rem;">⚽</div>';
       }
       var isBlue = p.type === 'blue';
       return (
-        '<div class="es-cos-player-pin" style="left:' + p.x + '%; top:' + p.y + '%;" data-board-pin-idx="' + idx + '">' +
-          '<div class="es-cos-pin-circle" style="border-color:' + (isBlue ? '#16b9ff' : '#ff4d5a') + '; background:' + (isBlue ? 'rgba(7,152,209,0.85)' : 'rgba(255,77,90,0.85)') + ';">' + esc(p.num) + '</div>' +
-          '<div class="es-cos-pin-tag">' + esc(p.name) + '</div>' +
+        '<div style="position:absolute; left:' + p.x + '%; top:' + p.y + '%; transform:translate(-50%, -50%); display:flex; flex-direction:column; align-items:center; gap:2px;" data-board-pin-idx="' + idx + '">' +
+          '<div style="width:34px; height:34px; border-radius:50%; background:' + (isBlue ? 'rgba(7,152,209,0.9)' : 'rgba(255,77,90,0.9)') + '; border:2px solid ' + (isBlue ? '#16b9ff' : '#ff4d5a') + '; color:#fff; font-weight:900; font-size:0.8rem; display:flex; align-items:center; justify-content:center;">' + esc(p.num) + '</div>' +
+          '<div style="background:#040912; border:1px solid #12344a; color:#fff; font-size:0.62rem; font-weight:800; padding:1px 5px; border-radius:3px;">' + esc(p.name) + '</div>' +
         '</div>'
       );
     }).join('');
@@ -992,33 +962,26 @@
     return (
       '<div class="es-cos-panel-card">' +
         '<div class="es-cos-panel-head">' +
-          '<span class="es-cos-panel-title">' +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' +
-            'Pianificazione Sedute & Rilevazione Presenze' +
-          '</span>' +
-          '<button type="button" class="es-btn-cos-primary" id="btn-add-training-modal">+ Pianifica Nuova Seduta</button>' +
+          '<span class="es-cos-panel-title">Pianificazione Sedute di Allenamento</span>' +
+          '<button type="button" class="es-btn-cos-primary" id="btn-add-training-modal">+ Pianifica Seduta</button>' +
         '</div>' +
-
-        '<div class="es-cos-trainings-grid">' +
+        '<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:1rem;">' +
           (data.trainingsList && data.trainingsList.length ? data.trainingsList.map(function (tr, tIdx) {
             return (
-              '<div class="es-cos-tr-card">' +
-                '<div class="es-cos-tr-head">' +
-                  '<div class="es-cos-tr-type">' + esc(tr.tipo) + '</div>' +
-                  '<div class="es-cos-tr-date-badge">' + esc(tr.data) + ' · ' + esc(tr.orario) + '</div>' +
+              '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:1rem; display:flex; flex-direction:column; gap:0.5rem;">' +
+                '<div style="display:flex; justify-content:space-between; align-items:center;">' +
+                  '<b style="font-size:0.95rem; color:#f3f8fc;">' + esc(tr.tipo) + '</b>' +
+                  '<span class="es-cos-badge-pill is-blue">' + esc(tr.data) + ' · ' + esc(tr.orario) + '</span>' +
                 '</div>' +
-                '<div style="font-size:0.78rem; color:#8da8bc;">Campo: <b style="color:#f3f8fc;">' + esc(tr.luogo) + '</b></div>' +
-                '<p style="font-size:0.8rem; color:#8da8bc; line-height:1.4; margin:0.3rem 0;">' + esc(tr.desc) + '</p>' +
-                '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.5rem; padding-top:0.6rem; border-top:1px solid rgba(18,52,74,0.6);">' +
+                '<div style="font-size:0.75rem; color:#8da8bc;">Campo: <b style="color:#f3f8fc;">' + esc(tr.luogo) + '</b></div>' +
+                '<p style="font-size:0.78rem; color:#8da8bc; margin:0.2rem 0;">' + esc(tr.desc) + '</p>' +
+                '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.4rem; padding-top:0.5rem; border-top:1px solid #12344a;">' +
                   '<span class="es-cos-badge-pill is-green">Carico: ' + esc(tr.carico || 'Medio') + '</span>' +
-                  '<div style="display:flex; gap:0.4rem;">' +
-                    '<button type="button" class="es-btn-cos-primary" style="padding:0.35rem 0.75rem; font-size:0.75rem;" data-take-att-idx="' + tIdx + '">Rileva Presenze</button>' +
-                    '<button type="button" class="es-btn-cos-sec" style="color:#ff4d5a; padding:0.35rem 0.6rem;" data-del-tr-idx="' + tIdx + '">&times;</button>' +
-                  '</div>' +
+                  '<button type="button" class="es-btn-cos-primary" style="padding:0.35rem 0.75rem; font-size:0.74rem;" data-take-att-idx="' + tIdx + '">Rileva Presenze</button>' +
                 '</div>' +
               '</div>'
             );
-          }).join('') : '<div style="color:#8da8bc; text-align:center; padding:2rem;">Nessuna seduta programmata.</div>') +
+          }).join('') : '') +
         '</div>' +
       '</div>'
     );
@@ -1031,23 +994,13 @@
     return (
       '<div class="es-cos-panel-card">' +
         '<div class="es-cos-panel-head">' +
-          '<span class="es-cos-panel-title">' +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
-            'Calendario Tecnico Staff & Partite' +
-          '</span>' +
-          '<div class="es-cos-filter-pills">' +
-            '<button type="button" class="es-cos-fpill ' + (calendarViewMode === 'giorno' ? 'is-active' : '') + '" data-cal-view="giorno">Giorno</button>' +
-            '<button type="button" class="es-cos-fpill ' + (calendarViewMode === 'settimana' ? 'is-active' : '') + '" data-cal-view="settimana">Settimana</button>' +
-            '<button type="button" class="es-cos-fpill ' + (calendarViewMode === 'mese' ? 'is-active' : '') + '" data-cal-view="mese">Mese</button>' +
-            '<button type="button" class="es-cos-fpill ' + (calendarViewMode === 'lista' ? 'is-active' : '') + '" data-cal-view="lista">Lista Eventi</button>' +
-          '</div>' +
+          '<span class="es-cos-panel-title">Calendario Tecnico Staff & Partite</span>' +
         '</div>' +
-
         '<table class="es-cos-table-compact">' +
-          '<thead><tr><th>Data & Orario</th><th>Evento</th><th>Categoria</th><th>Luogo</th><th>Stato</th></tr></thead>' +
+          '<thead><tr><th>Data & Orario</th><th>Evento</th><th>Competizione / Categoria</th><th>Stadio / Luogo</th><th>Stato</th></tr></thead>' +
           '<tbody>' +
             data.prossimeGare.map(function (g) {
-              return '<tr><td><b>' + esc(g.data) + '</b></td><td>Partita: ' + esc(data.clubName) + ' vs ' + esc(g.avv) + '</td><td><span class="es-cos-badge-pill is-blue">' + esc(g.comp) + '</span></td><td>Stadio Comunale</td><td><span class="es-cos-badge-pill is-green">Confermata</span></td></tr>';
+              return '<tr><td><b>' + esc(g.data) + '</b></td><td>Partita: ' + esc(data.clubName) + ' vs ' + esc(g.avv) + '</td><td><span class="es-cos-badge-pill is-blue">' + esc(g.comp) + '</span></td><td>' + esc(g.stadio) + '</td><td><span class="es-cos-badge-pill is-green">Confermata</span></td></tr>';
             }).join('') +
             data.trainingsList.map(function (t) {
               return '<tr><td><b>' + esc(t.data) + ' ' + esc(t.orario) + '</b></td><td>Allenamento: ' + esc(t.tipo) + '</td><td><span class="es-cos-badge-pill is-warn">Seduta Campo</span></td><td>' + esc(t.luogo) + '</td><td><span class="es-cos-badge-pill is-green">Programmata</span></td></tr>';
@@ -1066,38 +1019,20 @@
     return (
       '<div style="display:grid; grid-template-columns:1.2fr 1fr; gap:1.25rem;">' +
         '<div class="es-cos-panel-card">' +
-          '<div class="es-cos-panel-head">' +
-            '<span class="es-cos-panel-title">' +
-              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
-              'Dossier Tecnico: ' + esc(a.nome) + ' (' + esc(a.modulo) + ')' +
-            '</span>' +
-            '<button type="button" class="es-btn-cos-primary" id="btn-share-oppo-vice">Condividi con Vice</button>' +
-          '</div>' +
-          '<div style="display:flex; flex-direction:column; gap:0.85rem; font-size:0.84rem;">' +
-            '<div style="background:#070d16; border:1px solid #12344a; border-radius:6px; padding:0.85rem;">' +
-              '<b style="color:#00d978;">Punti di Forza:</b><p style="margin:0.25rem 0 0; color:#8da8bc;">' + esc(a.puntiForza) + '</p>' +
-            '</div>' +
-            '<div style="background:#070d16; border:1px solid #12344a; border-radius:6px; padding:0.85rem;">' +
-              '<b style="color:#ff4d5a;">Punti Deboli & Vulnerabilità:</b><p style="margin:0.25rem 0 0; color:#8da8bc;">' + esc(a.puntiDeboli) + '</p>' +
-            '</div>' +
-            '<div style="background:#070d16; border:1px solid #12344a; border-radius:6px; padding:0.85rem;">' +
-              '<b style="color:#ffd21a;">Giocatori Chiave da Raddoppiare:</b><p style="margin:0.25rem 0 0; color:#8da8bc;">' + esc(a.giocatoriChiave) + '</p>' +
-            '</div>' +
-            '<div style="background:#070d16; border:1px solid #12344a; border-radius:6px; padding:0.85rem;">' +
-              '<b style="color:#16b9ff;">Palle Inattive Avversarie:</b><p style="margin:0.25rem 0 0; color:#8da8bc;">' + esc(a.palleInattive) + '</p>' +
-            '</div>' +
+          '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Dossier: ' + esc(a.nome) + ' (' + esc(a.modulo) + ')</span></div>' +
+          '<div style="display:flex; flex-direction:column; gap:0.75rem; font-size:0.82rem;">' +
+            '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem;"><b style="color:#00d978;">Punti di Forza:</b><p style="margin:0.25rem 0 0; color:#8da8bc;">' + esc(a.puntiForza) + '</p></div>' +
+            '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem;"><b style="color:#ff4d5a;">Punti Deboli:</b><p style="margin:0.25rem 0 0; color:#8da8bc;">' + esc(a.puntiDeboli) + '</p></div>' +
+            '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem;"><b style="color:#ffd21a;">Giocatori Chiave:</b><p style="margin:0.25rem 0 0; color:#8da8bc;">' + esc(a.giocatoriChiave) + '</p></div>' +
+            '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem;"><b style="color:#16b9ff;">Palle Inattive:</b><p style="margin:0.25rem 0 0; color:#8da8bc;">' + esc(a.palleInattive) + '</p></div>' +
           '</div>' +
         '</div>' +
-
         '<div class="es-cos-panel-card">' +
-          '<div class="es-cos-panel-head">' +
-            '<span class="es-cos-panel-title">Video Report & Match Analysis</span>' +
-          '</div>' +
-          '<div style="background:#070d16; border:1px solid #12344a; border-radius:8px; padding:1.25rem; display:flex; flex-direction:column; gap:0.75rem; text-align:center;">' +
+          '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Video Report & Match Analysis</span></div>' +
+          '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:1.25rem; text-align:center;">' +
             '<div style="font-size:2.5rem; color:#16b9ff;">📹</div>' +
-            '<div style="font-weight:800; font-size:0.95rem;">' + esc(a.videoReport) + '</div>' +
-            '<p style="font-size:0.78rem; color:#8da8bc; margin:0;">Tag clips: Transizioni negative avversario, posizionamento sui corner, uscite del portiere.</p>' +
-            '<button type="button" class="es-btn-cos-sec" style="margin-top:0.5rem;" onclick="if(window.showToast)window.showToast(\'Riproduzione clip video analisi\',\'info\')">Avvia Clip Video Analisi</button>' +
+            '<div style="font-weight:800; font-size:0.95rem; margin-top:0.5rem;">' + esc(a.videoReport) + '</div>' +
+            '<button type="button" class="es-btn-cos-sec" style="margin-top:0.75rem;" onclick="if(window.showToast)window.showToast(\'Riproduzione sintesi video avversario\',\'info\')">Guarda Video Report</button>' +
           '</div>' +
         '</div>' +
       '</div>'
@@ -1110,40 +1045,19 @@
   function renderGpsCarichi(data) {
     return (
       '<div class="es-cos-panel-card">' +
-        '<div class="es-cos-panel-head">' +
-          '<span class="es-cos-panel-title">' +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>' +
-            'Dashboard Telemetria GPS & Workload Management' +
-          '</span>' +
-          '<div class="es-cos-badge-pill is-green">● Sistema GPS Sincronizzato</div>' +
+        '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Dashboard Telemetria GPS & Workload Management</span></div>' +
+        '<div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:1rem; margin-bottom:1rem;">' +
+          '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#16b9ff;">114.8 km</div><div style="font-size:0.72rem; color:#8da8bc;">DISTANZA TOTALE SQUADRA</div></div>' +
+          '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#00d978;">34.6 km/h</div><div style="font-size:0.72rem; color:#8da8bc;">VELOCITÀ DI PICCO</div></div>' +
+          '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#ffd21a;">1.08</div><div style="font-size:0.72rem; color:#8da8bc;">ACWR RATIO MEDIO</div></div>' +
+          '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#00d978;">96.8%</div><div style="font-size:0.72rem; color:#8da8bc;">EFFICIENZA ATLETICA</div></div>' +
         '</div>' +
-
-        '<div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:1rem; margin-bottom:1.25rem;">' +
-          '<div style="background:#070d16; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#16b9ff;">114.8 km</div><div style="font-size:0.72rem; color:#8da8bc;">DISTANZA TOTALE SQUADRA</div></div>' +
-          '<div style="background:#070d16; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#00d978;">34.6 km/h</div><div style="font-size:0.72rem; color:#8da8bc;">VELOCITÀ DI PICCO</div></div>' +
-          '<div style="background:#070d16; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#ffd21a;">1.08</div><div style="font-size:0.72rem; color:#8da8bc;">ACWR RATIO MEDIO</div></div>' +
-          '<div style="background:#070d16; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#00d978;">96.8%</div><div style="font-size:0.72rem; color:#8da8bc;">EFFICIENZA ATLETICA</div></div>' +
-        '</div>' +
-
         '<table class="es-cos-table-compact">' +
           '<thead><tr><th>Calciatore</th><th>Ruolo</th><th>Km Totali</th><th>Sprint >25km/h</th><th>ACWR</th><th>Semaforo Rischio</th></tr></thead>' +
           '<tbody>' +
             data.roster.map(function (p) {
               var isDiff = p.status === 'diff';
-              return (
-                '<tr>' +
-                  '<td><b>' + esc(p.name) + '</b></td>' +
-                  '<td>' + esc(p.role) + '</td>' +
-                  '<td>' + esc(p.load) + '</td>' +
-                  '<td>' + (isDiff ? '12' : '28') + '</td>' +
-                  '<td><b>' + esc(p.acwr) + '</b></td>' +
-                  '<td>' +
-                    '<span class="es-cos-badge-pill ' + (isDiff ? 'is-warn' : 'is-green') + '">' +
-                      (isDiff ? '⚠️ Monitorare' : '🟢 Ottimale') +
-                    '</span>' +
-                  '</td>' +
-                '</tr>'
-              );
+              return '<tr><td><b>' + esc(p.name) + '</b></td><td>' + esc(p.role) + '</td><td>' + esc(p.load) + '</td><td>' + (isDiff ? '12' : '28') + '</td><td><b>' + esc(p.acwr) + '</b></td><td><span class="es-cos-badge-pill ' + (isDiff ? 'is-warn' : 'is-green') + '">' + (isDiff ? '⚠️ Monitorare' : '🟢 Ottimale') + '</span></td></tr>';
             }).join('') +
           '</tbody>' +
         '</table>' +
@@ -1152,41 +1066,20 @@
   }
 
   // ============================================================
-  // 9. SEZIONE REPORT STAFF (Integrazione col Vice)
+  // 9. SEZIONE REPORT STAFF
   // ============================================================
   function renderReportStaff(data) {
     return (
       '<div class="es-cos-panel-card">' +
-        '<div class="es-cos-panel-head">' +
-          '<span class="es-cos-panel-title">' +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' +
-            'Report Staff & Proposte del Vice Allenatore' +
-          '</span>' +
-          '<button type="button" class="es-btn-cos-primary" id="btn-create-exec-report">+ Redigi Report Direttivo</button>' +
-        '</div>' +
-
-        '<div style="display:flex; flex-direction:column; gap:0.85rem;">' +
-          '<div style="background:#070d16; border:1px solid #12344a; border-radius:8px; padding:1rem; display:flex; justify-content:space-between; align-items:center;">' +
+        '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Report Staff & Proposte del Vice Allenatore</span></div>' +
+        '<div style="display:flex; flex-direction:column; gap:0.75rem;">' +
+          '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:1rem; display:flex; justify-content:space-between; align-items:center;">' +
             '<div>' +
               '<div class="es-cos-badge-pill is-blue" style="margin-bottom:4px;">Workstation Seduta Pre-Campo</div>' +
               '<div style="font-weight:800; font-size:0.95rem;">Uscita dal pressing basso & scarico sul terzino</div>' +
               '<div style="font-size:0.75rem; color:#8da8bc;">Inviato da: <b>' + esc(data.viceLink.name) + '</b> · 14/09/2026 ore 18:45</div>' +
             '</div>' +
-            '<div style="display:flex; gap:0.5rem;">' +
-              '<button type="button" class="es-btn-cos-sec" onclick="if(window.showToast)window.showToast(\'Report aperto in lettura\',\'info\')">Visualizza Scheda</button>' +
-              '<button type="button" class="es-btn-cos-primary" onclick="if(window.showToast)window.showToast(\'Scheda approvata dal Mister!\',\'success\')">✓ Approva Scheda</button>' +
-            '</div>' +
-          '</div>' +
-
-          '<div style="background:#070d16; border:1px solid #12344a; border-radius:8px; padding:1rem; display:flex; justify-content:space-between; align-items:center;">' +
-            '<div>' +
-              '<div class="es-cos-badge-pill is-green" style="margin-bottom:4px;">Bozza Formazione Settimanale</div>' +
-              '<div style="font-weight:800; font-size:0.95rem;">Proposta XI Titolare 4-3-3 per A.C. Ragusa</div>' +
-              '<div style="font-size:0.75rem; color:#8da8bc;">Inviato da: <b>' + esc(data.viceLink.name) + '</b> · 14/09/2026 ore 16:20</div>' +
-            '</div>' +
-            '<div style="display:flex; gap:0.5rem;">' +
-              '<span class="es-cos-badge-pill is-green" style="font-size:0.8rem;">✓ Convalidata dal Mister</span>' +
-            '</div>' +
+            '<button type="button" class="es-btn-cos-primary" onclick="if(window.showToast)window.showToast(\'Scheda approvata dal Mister!\',\'success\')">✓ Approva Scheda</button>' +
           '</div>' +
         '</div>' +
       '</div>'
@@ -1194,37 +1087,26 @@
   }
 
   // ============================================================
-  // 10. SEZIONE COMUNICAZIONI (Allenatore <-> Vice)
+  // 10. SEZIONE COMUNICAZIONI
   // ============================================================
   function renderComunicazioni(data) {
     return (
       '<div class="es-cos-panel-card">' +
-        '<div class="es-cos-panel-head">' +
-          '<span class="es-cos-panel-title">' +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' +
-            'Canale Tecnico Diretto: Allenatore Capo &harr; Vice Allenatore' +
-          '</span>' +
-          '<span class="es-cos-badge-pill is-green">● Connessione Crittografata Attiva</span>' +
-        '</div>' +
-
-        '<div style="display:flex; flex-direction:column; gap:0.65rem; max-height:360px; overflow-y:auto; background:#070d16; border:1px solid #12344a; border-radius:8px; padding:1rem; margin-bottom:1rem;">' +
+        '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Canale Tecnico Diretto: Allenatore Capo &harr; Vice Allenatore</span></div>' +
+        '<div style="display:flex; flex-direction:column; gap:0.65rem; max-height:360px; overflow-y:auto; background:#040912; border:1px solid #12344a; border-radius:8px; padding:1rem; margin-bottom:1rem;">' +
           data.messaggiStaff.map(function (m) {
             var isMister = m.from.indexOf('Mister') >= 0;
             return (
               '<div style="align-self:' + (isMister ? 'flex-end' : 'flex-start') + '; max-width:80%; background:' + (isMister ? 'rgba(7,152,209,0.18)' : 'rgba(255,255,255,0.04)') + '; border:1px solid ' + (isMister ? '#078fd0' : '#12344a') + '; border-radius:8px; padding:0.65rem 0.85rem;">' +
-                '<div style="display:flex; justify-content:space-between; gap:1rem; font-size:0.72rem; color:#8da8bc; margin-bottom:3px;">' +
-                  '<b style="color:' + (isMister ? '#16b9ff' : '#00d978') + ';">' + esc(m.from) + '</b>' +
-                  '<span>' + esc(m.time) + '</span>' +
-                '</div>' +
-                '<div style="font-size:0.84rem; color:#f3f8fc; line-height:1.4;">' + esc(m.text) + '</div>' +
+                '<div style="display:flex; justify-content:space-between; gap:1rem; font-size:0.72rem; color:#8da8bc; margin-bottom:3px;"><b style="color:' + (isMister ? '#16b9ff' : '#00d978') + ';">' + esc(m.from) + '</b><span>' + esc(m.time) + '</span></div>' +
+                '<div style="font-size:0.84rem; color:#f3f8fc;">' + esc(m.text) + '</div>' +
               '</div>'
             );
           }).join('') +
         '</div>' +
-
         '<form id="form-send-staff-msg" style="display:flex; gap:0.5rem;">' +
-          '<input type="text" class="es-cos-form-input" id="inp-staff-msg" placeholder="Scrivi una comunicazione tecnica per il Vice Allenatore..." style="flex:1;" required>' +
-          '<button type="submit" class="es-btn-cos-primary">Invia Messaggio</button>' +
+          '<input type="text" class="es-cos-form-input" id="inp-staff-msg" placeholder="Scrivi una comunicazione tecnica..." style="flex:1; background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem 0.85rem; border-radius:6px;" required>' +
+          '<button type="submit" class="es-btn-cos-primary">Invia</button>' +
         '</form>' +
       '</div>'
     );
@@ -1236,33 +1118,13 @@
   function renderImpostazioni(data) {
     return (
       '<div class="es-cos-panel-card">' +
-        '<div class="es-cos-panel-head">' +
-          '<span class="es-cos-panel-title">Impostazioni Tecniche & Configurazione Staff</span>' +
-        '</div>' +
+        '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Impostazioni Tecniche & Configurazione Staff</span></div>' +
         '<form id="form-save-settings" style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
-          '<div class="es-cos-form-group">' +
-            '<label class="es-cos-form-label">Nome Allenatore</label>' +
-            '<input type="text" class="es-cos-form-input" id="cfg-coach-name" value="' + esc(data.coachName) + '">' +
-          '</div>' +
-          '<div class="es-cos-form-group">' +
-            '<label class="es-cos-form-label">Qualifica / Licenza UEFA</label>' +
-            '<select class="es-cos-form-input" id="cfg-coach-patent">' +
-              '<option ' + (data.patent === 'UEFA Pro' ? 'selected' : '') + '>UEFA Pro</option>' +
-              '<option ' + (data.patent === 'UEFA A' ? 'selected' : '') + '>UEFA A</option>' +
-              '<option ' + (data.patent === 'UEFA B' ? 'selected' : '') + '>UEFA B</option>' +
-            '</select>' +
-          '</div>' +
-          '<div class="es-cos-form-group">' +
-            '<label class="es-cos-form-label">Club Ufficiale</label>' +
-            '<input type="text" class="es-cos-form-input" id="cfg-coach-club" value="' + esc(data.clubName) + '">' +
-          '</div>' +
-          '<div class="es-cos-form-group">' +
-            '<label class="es-cos-form-label">Matricola FIGC</label>' +
-            '<input type="text" class="es-cos-form-input" id="cfg-coach-matr" value="' + esc(data.matricola) + '">' +
-          '</div>' +
-          '<div style="grid-column:1/-1; display:flex; justify-content:flex-end;">' +
-            '<button type="submit" class="es-btn-cos-primary">Salva Impostazioni</button>' +
-          '</div>' +
+          '<div style="display:flex; flex-direction:column; gap:0.3rem;"><label style="font-size:0.78rem; font-weight:800; color:#8da8bc;">Nome Allenatore</label><input type="text" id="cfg-coach-name" value="' + esc(data.coachName) + '" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
+          '<div style="display:flex; flex-direction:column; gap:0.3rem;"><label style="font-size:0.78rem; font-weight:800; color:#8da8bc;">Qualifica UEFA</label><input type="text" id="cfg-coach-patent" value="' + esc(data.patent) + '" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
+          '<div style="display:flex; flex-direction:column; gap:0.3rem;"><label style="font-size:0.78rem; font-weight:800; color:#8da8bc;">Club</label><input type="text" id="cfg-coach-club" value="' + esc(data.clubName) + '" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
+          '<div style="display:flex; flex-direction:column; gap:0.3rem;"><label style="font-size:0.78rem; font-weight:800; color:#8da8bc;">Matricola FIGC</label><input type="text" id="cfg-coach-matr" value="' + esc(data.matricola) + '" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
+          '<div style="grid-column:1/-1; display:flex; justify-content:flex-end;"><button type="submit" class="es-btn-cos-primary">Salva Impostazioni</button></div>' +
         '</form>' +
       '</div>'
     );
@@ -1296,25 +1158,48 @@
   }
 
   // ============================================================
-  // GESTIONE EVENTI & INTERAZIONI
+  // EVENT BINDINGS
   // ============================================================
   function bindAllEvents() {
     var mount = document.getElementById('es-cd');
     if (!mount) return;
     var data = getCoachData();
 
-    // Navigazione Tab (Sidebar + Subnavbar)
-    mount.querySelectorAll('[data-tab-nav]').forEach(function (btn) {
+    // Navigazione tramite Sidebar (Unica navigazione)
+    mount.querySelectorAll('.es-cos-side-btn').forEach(function (btn) {
       btn.onclick = function () {
         var t = btn.getAttribute('data-tab-nav');
         if (t) {
           activeTab = t;
+          // Aggiorna classe active sulla sidebar
+          mount.querySelectorAll('.es-cos-side-btn').forEach(function (b) {
+            b.classList.toggle('is-active', b.getAttribute('data-tab-nav') === activeTab);
+          });
           var container = document.getElementById('es-cos-active-content');
           if (container) {
             container.innerHTML = renderActiveTab(activeTab, data);
             bindAllEvents();
           } else {
             renderHub();
+          }
+        }
+      };
+    });
+
+    // Link interni con data-tab-nav (card cliccabili)
+    mount.querySelectorAll('[data-tab-nav]:not(.es-cos-side-btn)').forEach(function (el) {
+      el.onclick = function (e) {
+        e.stopPropagation();
+        var t = el.getAttribute('data-tab-nav');
+        if (t) {
+          activeTab = t;
+          mount.querySelectorAll('.es-cos-side-btn').forEach(function (b) {
+            b.classList.toggle('is-active', b.getAttribute('data-tab-nav') === activeTab);
+          });
+          var container = document.getElementById('es-cos-active-content');
+          if (container) {
+            container.innerHTML = renderActiveTab(activeTab, data);
+            bindAllEvents();
           }
         }
       };
@@ -1333,6 +1218,42 @@
           window.EliseeViceDash.render(u);
         }
         if (window.showToast) window.showToast('Accesso all\'Area Vice Allenatore', 'info');
+      };
+    }
+
+    // Conferma Formazione Ufficiale
+    var btnConfirmXI = mount.querySelector('#btn-confirm-official-xi');
+    if (btnConfirmXI) {
+      btnConfirmXI.onclick = function () {
+        data.formazioneUfficialeConfermata = true;
+        saveCoachData(data);
+        if (window.showToast) window.showToast('🏆 Formazione Ufficiale Confermata dal Mister!', 'success');
+      };
+    }
+
+    // Invio Messaggio Staff
+    var formMsg = mount.querySelector('#form-send-staff-msg');
+    if (formMsg) {
+      formMsg.onsubmit = function (e) {
+        e.preventDefault();
+        var inp = document.getElementById('inp-staff-msg');
+        if (!inp || !inp.value.trim()) return;
+        data.messaggiStaff = data.messaggiStaff || [];
+        data.messaggiStaff.push({
+          id: 'm-' + Date.now(),
+          from: 'Elisee Miraglia (Mister)',
+          text: inp.value.trim(),
+          time: new Date().toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit' }) + ' ' + new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }),
+          prio: 'Ordinaria'
+        });
+        saveCoachData(data);
+        inp.value = '';
+        var container = document.getElementById('es-cos-active-content');
+        if (container && activeTab === 'comunicazioni') {
+          container.innerHTML = renderComunicazioni(data);
+          bindAllEvents();
+        }
+        if (window.showToast) window.showToast('Messaggio inviato al Vice!', 'success');
       };
     }
 
@@ -1378,52 +1299,16 @@
       };
     }
 
-    // Conferma Formazione Ufficiale
-    var btnConfirmXI = mount.querySelector('#btn-confirm-official-xi');
-    if (btnConfirmXI) {
-      btnConfirmXI.onclick = function () {
-        data.formazioneUfficialeConfermata = true;
-        saveCoachData(data);
-        if (window.showToast) window.showToast('🏆 Formazione Ufficiale Confermata dal Mister!', 'success');
-      };
-    }
-
-    // Invio Messaggio Staff
-    var formMsg = mount.querySelector('#form-send-staff-msg');
-    if (formMsg) {
-      formMsg.onsubmit = function (e) {
-        e.preventDefault();
-        var inp = document.getElementById('inp-staff-msg');
-        if (!inp || !inp.value.trim()) return;
-        data.messaggiStaff = data.messaggiStaff || [];
-        data.messaggiStaff.push({
-          id: 'm-' + Date.now(),
-          from: 'Elisee Miraglia (Mister)',
-          text: inp.value.trim(),
-          time: new Date().toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit' }) + ' ' + new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }),
-          prio: 'Ordinaria'
-        });
-        saveCoachData(data);
-        inp.value = '';
-        var container = document.getElementById('es-cos-active-content');
-        if (container && activeTab === 'comunicazioni') {
-          container.innerHTML = renderComunicazioni(data);
-          bindAllEvents();
-        }
-        if (window.showToast) window.showToast('Messaggio inviato al Vice!', 'success');
-      };
-    }
-
     // Aggiungi Calciatore Modal
     var btnAddP = mount.querySelector('#btn-add-player-modal');
     if (btnAddP) {
       btnAddP.onclick = function () {
         openModal('Tesseramento Nuovo Calciatore',
           '<form id="form-modal-add-p" style="display:flex; flex-direction:column; gap:1rem;">' +
-            '<div class="es-cos-form-group"><label class="es-cos-form-label">Nome e Cognome *</label><input type="text" class="es-cos-form-input" id="inp-p-name" required placeholder="Es. Marco Bellini"></div>' +
+            '<div style="display:flex; flex-direction:column; gap:0.35rem;"><label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Nome e Cognome *</label><input type="text" id="inp-p-name" required placeholder="Es. Marco Bellini" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
             '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
-              '<div class="es-cos-form-group"><label class="es-cos-form-label">Numero Maglia</label><input type="number" class="es-cos-form-input" id="inp-p-num" value="' + (data.roster.length + 1) + '" min="1" max="99"></div>' +
-              '<div class="es-cos-form-group"><label class="es-cos-form-label">Ruolo</label><select class="es-cos-form-input" id="inp-p-role"><option>Portiere</option><option>Difensore Centrale</option><option>Terzino Destro</option><option>Terzino Sinistro</option><option>Mediano</option><option>Mezzala</option><option>Trequartista</option><option>Ala Destra</option><option>Ala Sinistra</option><option>Punta Centrale</option></select></div>' +
+              '<div style="display:flex; flex-direction:column; gap:0.35rem;"><label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Numero Maglia</label><input type="number" id="inp-p-num" value="' + (data.roster.length + 1) + '" min="1" max="99" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
+              '<div style="display:flex; flex-direction:column; gap:0.35rem;"><label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Ruolo</label><select id="inp-p-role" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"><option>Portiere</option><option>Difensore Centrale</option><option>Terzino Destro</option><option>Terzino Sinistro</option><option>Mediano</option><option>Mezzala</option><option>Trequartista</option><option>Ala Destra</option><option>Ala Sinistra</option><option>Punta Centrale</option></select></div>' +
             '</div>' +
             '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.5rem;">' +
               '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Annulla</button>' +
@@ -1441,7 +1326,13 @@
             data.roster.push({ num: num, name: name, role: role, birth: 2003, status: 'disp', app: 0, load: '8.5 km', acwr: '1.02' });
             saveCoachData(data);
             closeModal();
-            renderHub();
+            var container = document.getElementById('es-cos-active-content');
+            if (container && activeTab === 'rosa') {
+              container.innerHTML = renderRosa(data);
+              bindAllEvents();
+            } else {
+              renderHub();
+            }
             if (window.showToast) window.showToast('Calciatore aggiunto alla Rosa!', 'success');
           };
         }
@@ -1454,12 +1345,12 @@
       btnAddTr.onclick = function () {
         openModal('Pianifica Seduta di Campo',
           '<form id="form-modal-add-tr" style="display:flex; flex-direction:column; gap:1rem;">' +
-            '<div class="es-cos-form-group"><label class="es-cos-form-label">Tipologia Seduta *</label><input type="text" class="es-cos-form-input" id="inp-tr-name" required placeholder="Es. Lavoro Tattico & Calci Piazzati"></div>' +
+            '<div style="display:flex; flex-direction:column; gap:0.35rem;"><label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Tipologia Seduta *</label><input type="text" id="inp-tr-name" required placeholder="Es. Lavoro Tattico & Calci Piazzati" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
             '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
-              '<div class="es-cos-form-group"><label class="es-cos-form-label">Data</label><input type="text" class="es-cos-form-input" id="inp-tr-date" value="16/09/2026"></div>' +
-              '<div class="es-cos-form-group"><label class="es-cos-form-label">Orario</label><input type="text" class="es-cos-form-input" id="inp-tr-time" value="15:00 - 17:00"></div>' +
+              '<div style="display:flex; flex-direction:column; gap:0.35rem;"><label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Data</label><input type="text" id="inp-tr-date" value="16/09/2026" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
+              '<div style="display:flex; flex-direction:column; gap:0.35rem;"><label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Orario</label><input type="text" id="inp-tr-time" value="15:00 - 17:00" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
             '</div>' +
-            '<div class="es-cos-form-group"><label class="es-cos-form-label">Obiettivi & Descrizione</label><textarea class="es-cos-form-input" id="inp-tr-desc" rows="3" placeholder="Fase di possesso, transizioni e lavoro per reparti..."></textarea></div>' +
+            '<div style="display:flex; flex-direction:column; gap:0.35rem;"><label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Obiettivi & Descrizione</label><textarea id="inp-tr-desc" rows="3" placeholder="Fase di possesso, transizioni e lavoro per reparti..." style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></textarea></div>' +
             '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.5rem;">' +
               '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Annulla</button>' +
               '<button type="submit" class="es-btn-cos-primary">Programma Seduta</button>' +
@@ -1482,7 +1373,13 @@
             });
             saveCoachData(data);
             closeModal();
-            renderHub();
+            var container = document.getElementById('es-cos-active-content');
+            if (container && activeTab === 'allenamenti') {
+              container.innerHTML = renderAllenamenti(data);
+              bindAllEvents();
+            } else {
+              renderHub();
+            }
             if (window.showToast) window.showToast('Seduta programmata con successo!', 'success');
           };
         }
@@ -1509,10 +1406,10 @@
     closeModal();
     var modal = document.createElement('div');
     modal.id = 'es-cos-modal-box';
-    modal.className = 'es-cos-modal-backdrop';
+    modal.style.cssText = 'position:fixed; inset:0; background:rgba(0,0,0,0.78); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; z-index:99999; padding:1rem;';
     modal.innerHTML =
-      '<div class="es-cos-modal-box">' +
-        '<button type="button" class="es-cos-modal-close" id="btn-modal-close-x">&times;</button>' +
+      '<div style="background:#071522; border:1px solid #16b9ff; border-radius:10px; max-width:520px; width:100%; padding:1.5rem; position:relative; box-shadow:0 12px 36px rgba(0,0,0,0.8);">' +
+        '<button type="button" id="btn-modal-close-x" style="position:absolute; top:12px; right:12px; background:none; border:none; color:#8da8bc; font-size:1.4rem; cursor:pointer;">&times;</button>' +
         '<h3 style="margin:0 0 1.25rem; font-size:1.15rem; font-weight:800; color:#f3f8fc;">' + esc(title) + '</h3>' +
         '<div>' + contentHtml + '</div>' +
       '</div>';

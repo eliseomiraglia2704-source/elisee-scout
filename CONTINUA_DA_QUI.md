@@ -3,28 +3,31 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-15** — Redesign Integrale Area Allenatore Capo & Vice Allenatore: Football Technical Staff Operating System (`COACHOS2`).
-Ultimo fatto: **Football Technical Staff Operating System — Allenatore Capo & Vice Allenatore (`COACHOS2`)**:
-1. **Ricostruzione Visiva & Design System Serie A / UEFA**:
-   - Palette fedele al riferimento visivo fornito dall'utente: dark navy (`#050910`, `#070D16`), card (`#0A121D`, `#0D1825`), bordi sottili (`#12344A`, attivi `#078FD0`), accenti ciano/blu (`#16B9FF`, `#0798D1`) e indicatori semaforici standard (`#00D978`, `#FFD21A`, `#FF4D5A`).
-   - Sidebar tecnica sinistra fissa con 11 voci di menu, icone monochrome SVG e widget utente inferiore con licenza UEFA B, nominativo e badge «Collegamento attivo».
-   - Header profilo ad alta densità con scudo avatar e corona, dati di tesseramento FIGC e scadenza, box club con stemma e categoria, box prossima partita con stemma avversario, countdown dinamico in tempo reale («Mancano 02 GIORNI 15 ORE 24 MIN»), pill seduta odierna e pulsante di commutazione rapida «Area Vice Allenatore →».
-2. **Dashboard Modulare Allenatore Capo (11 Sezioni Operative)**:
-   - *Dashboard*: Riepilogo Stagionale con 7 KPI orizzontali a pillola (Prossima Gara, Ultima Seduta completata, Carico Squadra 78% con progress bar, Disponibilità Rosa 92%, Infortunati 7.7%, Atleti da monitorare, Preparazione partita 80%), tabella Calendario Prossime Gare con status pill, box Ultima Sessione con miniatura campo tattico + box Report Staff del Vice, Notifiche live multi-livello a semaforo, Ultimi Log Attività, Grafico carichi settimanale a barre con radial gauge media settimanale, Prossimi Impegni Staff.
-   - *Rosa*: Ricerca live, filtri per reparto (Portieri, Difensori, Centrocampisti, Attaccanti, Disponibili, Differenziati), modale di tesseramento nuovo calciatore, schede atleta con presenze, carichi e ACWR.
-   - *Formazione*: Lineup builder interattivo con selettore modulo (4-3-3, 4-2-3-1, 3-5-2, 3-4-2-1, 4-4-2, 4-1-4-1), campo 2D con pedine posizionali dinamiche, panchina e convalida formale della Formazione Ufficiale da parte del Mister, export grafica Story 9:16.
-   - *Tattica*: Lavagna tattica digitale interattiva con pedine blu/rosse e pallone, preset tattici (Costruzione bassa, Palle inattive corner, Pressing alto, Transizioni) e salvataggio schemi.
-   - *Allenamenti*: Gestione sedute programmabili con obiettivi, tipologie e registro presenze interattivo (Presente, Differenziato, Assente) per ciascun atleta.
-   - *Calendario*: Vista tecnica giorno/settimana/mese/lista impegni.
-   - *Analisi Avversario*: Dossier tecnico (A.C. Ragusa), punti di forza, vulnerabilità, catene di gioco, palle inattive e video report.
-   - *GPS / Carichi*: Telemetria squadra, velocità di picco, ACWR, semafori prevenzione infortuni e tabella telemetrica atleti.
-   - *Report Staff*: Ricezione, lettura, commento e approvazione dei report tecnici inviati dal Vice.
-   - *Comunicazioni*: Canale chat diretto cifrato Allenatore ↔ Vice con timestamp e priorità.
-   - *Impostazioni Tecniche*: Configurazione parametri staff, tesseramento e licenze.
-3. **Vice Coach Technical Workstation (8 Tab Obbligatori)**:
-   - Mantenuti e potenziati tutti gli 8 tab richiesti: *Identità & Mister* (connessione online e profilo Mister), *Specializzazione* (4 macro-aree cliccabili: Palle Inattive, Fase Difensiva per Reparti, Match Analysis, Riscaldamento Pre-Gara), *Schede Workstation* (workflow reale con stati `BOZZA`, `PRONTA PER IL CAMPO`, `IN REVISIONE`, `APPROVATA DAL MISTER` e invio al Mister), *Bozza Top 11* (proposta formazione con note tattiche e invio formale), *Co-Gestione GPS* (alert dinamico affaticamento), *Rosa*, *Sedute* e *Lavagna Tattica*.
-   - Sincronizzazione in tempo reale e commutazione bidirezionale con un click tra Mister e Vice.
-4. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `vice-dash.css`, `vice-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHOS2`.
+Ultimo aggiornamento: **2026-09-15** — Redesign Integrale Area Allenatore Capo & Vice Allenatore: Navigazione Unica in Sidebar & 8 KPI Card Esatte (`COACHOS3`).
+Ultimo fatto: **Football Technical Staff Operating System — Allenatore Capo & Vice Allenatore (`COACHOS3`)**:
+1. **Navigazione Gestionale Esclusiva in Sidebar Sinistra (Zero Duplicazioni)**:
+   - Eliminata categoricamente la subnavbar orizzontale sotto il profilo: la navigazione per le 11 sezioni (Dashboard, Rosa, Formazione, Tattica, Allenamenti, Calendario, Analisi Avversario, GPS / Carichi, Report Staff, Comunicazioni, Impostazioni Tecniche) risiede esclusivamente nella sidebar sinistra fissa ad alto contrasto.
+   - L'area centrale è riservata unicamente al profilo dell'allenatore (5 blocchi: scudo credential UEFA B, stemma ASD Carlentini Serie D, box Prossima Partita AC Ragusa, countdown dinamico "Mancano 02 GIORNI 15 ORE 24 MIN", pill verde "Seduta odierna Rifinitura" e pulsante "Area Vice Allenatore →") e ai contenuti operativi.
+2. **Griglia KPI Fedele al Riferimento Visivo (8 Card Esatte)**:
+   - 1. Prossima Partita (15/09/2026 - 15:00, A.C. Ragusa con stemma e freccia).
+   - 2. Ultima Seduta (14/09/2026 Rifinitura, pill verde "✓ Completata").
+   - 3. Carico Squadra (78% con progress bar).
+   - 4. Disponibilità Rosa (24/26, 92% con barra verde).
+   - 5. Giocatori Indisponibili (2, 7.7%, pill rossa "● Da monitorare").
+   - 6. Preparazione Partita (80%, pill blu "In corso").
+   - 7. Report Ricevuti (3, "+1 nuovo").
+   - 8. Sedute Programmate (5, "Questa settimana").
+3. **Pannelli Informativi e Tabelle Operative**:
+   - Calendario Prossime Gare tabellare con colonna *Stadio* (Comunale - Carlentini, Fr. Scoglio - Messina, Comunale - Acireale, Comunale - S. Agata), righe cliccabili verso Analisi Avversario e status pill "Da preparare".
+   - Ultima Sessione con miniatura tattica, dati (24/26 atleti, 6 esercizi, 3 obiettivi) e box interno integrato "Report Staff" con pulsante "Apri Report →".
+   - Notifiche con semafori colorati (verde, cyan, rosso, giallo) e navigazione contestuale.
+   - Ultimi Log Attività, Carico Settimanale Squadra con scala 0..100 e radial gauge 78% ("● Ottimale"), Prossimi Impegni Staff.
+4. **Interattività e Persistenza Reale**:
+   - Ricerca live e filtri reparto organico rosa con modale tesseramento.
+   - Lineup builder dinamico con cambio modulo (4-3-3, 4-2-3-1, 3-5-2, 3-4-2-1, 4-4-2) e convalida XI ufficiale.
+   - Modale pianificazione sedute e registro presenze.
+   - Connessione e commutazione rapida bidirezionale tra Allenatore Capo e Vice Allenatore.
+5. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `vice-dash.css`, `vice-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHOS3`.
 Feature precedente: **Fix Montaggio Automatico Dashboard Allenatore Capo (`COACHFIX1`)**:
 1. **Risoluzione Bug Montaggio `#es-cd`**:
    - In `coach-dash.js`, `renderHub` richiedeva l'esistenza statica di `#es-cd` nel DOM (`var mount = document.getElementById('es-cd'); if (!mount) return;`), ma come per tutte le altre dashboard di ruolo l'elemento va iniettato dinamicamente dentro `#es-staff-profile`.
