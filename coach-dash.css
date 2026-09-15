@@ -1,31 +1,32 @@
 /* ============================================================
-   ELISEE SCOUT — FOOTBALL TECHNICAL STAFF OPERATING SYSTEM
-   Suite Gestionale Professionale per Allenatore Capo & Vice Allenatore
-   Palette Ufficiale: Luxury Dark Navy / Bright Cyan / High Information Density
+   ELISEE SCOUT — FOOTBALL MANAGEMENT SAAS PLATFORM
+   Technical Staff Management Suite (Head Coach & Assistant Coach)
+   Aesthetic: Professional B2B Sports Management SaaS (Notion / Linear / Stripe style)
+   Zero Gaming · Zero Neon/Glow · Balanced Spacing · High Usability
    ============================================================ */
 
 :root {
-  --cos-bg: #040811;
-  --cos-canvas: #060c16;
-  --cos-card: #071522;
-  --cos-card-elevated: #091B2A;
-  --cos-card-hover: #0c2338;
-  --cos-border: #12344A;
-  --cos-border-active: #078FD0;
-  --cos-border-soft: rgba(18, 52, 74, 0.65);
-  --cos-primary: #0798D1;
-  --cos-cyan: #16B9FF;
-  --cos-cyan-glow: rgba(22, 185, 255, 0.16);
-  --cos-success: #00D978;
-  --cos-success-soft: rgba(0, 217, 120, 0.12);
-  --cos-warning: #FFD21A;
-  --cos-warning-soft: rgba(255, 210, 26, 0.12);
-  --cos-danger: #FF4D5A;
-  --cos-danger-soft: rgba(255, 77, 90, 0.12);
-  --cos-purple: #8B7CFF;
-  --cos-text: #F3F8FC;
-  --cos-text-sec: #8DA8BC;
-  --cos-text-faint: #526B7F;
+  --cos-bg: #050B14;
+  --cos-sidebar: #07111D;
+  --cos-card: #0A1624;
+  --cos-card-alt: #0D1B2A;
+  --cos-card-hover: #102133;
+  --cos-border: #17344A;
+  --cos-border-subtle: #122536;
+  --cos-border-hover: #244b68;
+  --cos-blue: #079BD3;
+  --cos-cyan: #19B9F2;
+  --cos-blue-soft: rgba(7, 155, 211, 0.12);
+  --cos-text: #F2F6FA;
+  --cos-text-sec: #8EA7BC;
+  --cos-text-muted: #566F84;
+  --cos-success: #20C997;
+  --cos-success-soft: rgba(32, 201, 151, 0.12);
+  --cos-warning: #F0B429;
+  --cos-warning-soft: rgba(240, 180, 41, 0.12);
+  --cos-danger: #EF5350;
+  --cos-danger-soft: rgba(239, 83, 80, 0.12);
+  --cos-radius: 8px;
 }
 
 #user-dossier-view-group.is-staff-area.is-coach-dash .es-user-tabs,
@@ -41,166 +42,183 @@
 #es-staff-profile.es-cd-on > :not(#es-cd),
 #es-staff-profile.es-vice-on > :not(#es-vd) { display: none !important; }
 
-/* Contenitore Globale Staff Operating System */
+/* Contenitore Principale Shell */
 .es-cos-shell {
   background: var(--cos-bg);
   min-height: 100vh;
   color: var(--cos-text);
-  font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   display: flex;
   position: relative;
   width: 100%;
+  letter-spacing: -0.01em;
 }
 
 /* ============================================================
-   SIDEBAR TECNICA SINISTRA (Navigazione Unica & Non Duplicata)
+   SIDEBAR GESTIONALE UNICA & FISSA (Zero Duplicazioni)
    ============================================================ */
 .es-cos-sidebar {
-  width: 235px;
-  min-width: 235px;
-  background: #050b14;
+  width: 240px;
+  min-width: 240px;
+  background: var(--cos-sidebar);
   border-right: 1px solid var(--cos-border);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 1.15rem 0.75rem 1rem;
+  padding: 1.25rem 0.85rem 1.25rem;
   flex-shrink: 0;
   min-height: 100vh;
   position: sticky;
   top: 0;
   z-index: 90;
+  box-sizing: border-box;
+}
+
+.es-cos-brand-header {
+  padding: 0 0.5rem 1.25rem;
+  border-bottom: 1px solid var(--cos-border-subtle);
+  margin-bottom: 0.85rem;
+}
+
+.es-cos-brand-title {
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.es-cos-brand-title span {
+  color: var(--cos-blue);
+}
+
+.es-cos-brand-sub {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--cos-text-muted);
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .es-cos-sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.25rem;
+  flex: 1 1 auto;
 }
 
 .es-cos-side-btn {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.65rem 0.85rem;
+  padding: 0.6rem 0.75rem;
   background: transparent;
-  border: 1px solid transparent;
-  border-radius: 6px;
+  border: none;
+  border-left: 3px solid transparent;
+  border-radius: 4px;
   color: var(--cos-text-sec);
   font-size: 0.84rem;
-  font-weight: 700;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
   text-align: left;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .es-cos-side-btn svg {
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
+  stroke: var(--cos-text-muted);
   flex-shrink: 0;
-  stroke: currentColor;
-  opacity: 0.85;
+  transition: stroke 0.15s ease;
 }
 
 .es-cos-side-btn:hover {
+  background: rgba(255, 255, 255, 0.03);
   color: var(--cos-text);
-  background: rgba(22, 185, 255, 0.05);
-  border-color: rgba(18, 52, 74, 0.6);
+}
+
+.es-cos-side-btn:hover svg {
+  stroke: var(--cos-text);
 }
 
 .es-cos-side-btn.is-active {
-  background: var(--cos-primary);
+  background: var(--cos-blue-soft);
   color: #ffffff;
-  border-color: var(--cos-cyan);
-  box-shadow: 0 2px 10px rgba(7, 152, 209, 0.35);
+  font-weight: 600;
+  border-left-color: var(--cos-blue);
 }
 
 .es-cos-side-btn.is-active svg {
-  opacity: 1;
-  stroke: #ffffff;
+  stroke: var(--cos-cyan);
 }
 
-/* Badge Squadra Sidebar Bottom */
-.es-cos-sidebar-bottom {
-  margin-top: 1.5rem;
+/* Footer Sidebar */
+.es-cos-sidebar-footer {
   padding-top: 1rem;
-  border-top: 1px solid var(--cos-border);
+  border-top: 1px solid var(--cos-border-subtle);
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
 }
 
 .es-cos-user-pill-card {
-  background: var(--cos-card);
-  border: 1px solid var(--cos-border);
-  border-radius: 8px;
-  padding: 0.65rem 0.8rem;
   display: flex;
   align-items: center;
   gap: 0.65rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--cos-border-subtle);
+  border-radius: var(--cos-radius);
 }
 
 .es-cos-user-pill-avatar {
-  width: 38px;
-  height: 38px;
-  border-radius: 8px;
-  background: var(--cos-canvas);
-  border: 1.5px solid var(--cos-cyan);
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: #0d2235;
+  border: 1px solid var(--cos-blue);
+  color: var(--cos-cyan);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
   flex-shrink: 0;
-  position: relative;
-  overflow: hidden;
-}
-
-.es-cos-user-pill-tag {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--cos-primary);
-  color: #ffffff;
-  font-size: 0.52rem;
-  font-weight: 900;
-  text-align: center;
-  line-height: 1.3;
 }
 
 .es-cos-user-pill-meta {
   display: flex;
   flex-direction: column;
-  gap: 1px;
   overflow: hidden;
 }
 
 .es-cos-user-pill-name {
-  font-size: 0.82rem;
-  font-weight: 800;
+  font-size: 0.78rem;
+  font-weight: 600;
   color: var(--cos-text);
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .es-cos-user-pill-role {
-  font-size: 0.7rem;
-  color: var(--cos-text-sec);
+  font-size: 0.68rem;
+  color: var(--cos-text-muted);
 }
 
 .es-cos-status-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--cos-success);
-  font-weight: 700;
-  background: rgba(0, 217, 120, 0.08);
-  border: 1px solid rgba(0, 217, 120, 0.3);
-  padding: 0.4rem 0.6rem;
-  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-left: 0.25rem;
+  font-weight: 500;
 }
 
 .es-cos-status-link::before {
@@ -209,901 +227,798 @@
   height: 6px;
   border-radius: 50%;
   background: var(--cos-success);
-  box-shadow: 0 0 8px var(--cos-success);
+  display: inline-block;
 }
 
 /* ============================================================
-   MAIN CONTENT AREA (Senza Navbar Duplicata)
+   MAIN CONTENT AREA
    ============================================================ */
 .es-cos-main {
   flex: 1 1 auto;
   min-width: 0;
-  background: var(--cos-bg);
-  padding: 1.25rem 1.5rem 3rem;
+  padding: 2rem 2.25rem 3rem;
   display: flex;
   flex-direction: column;
-  gap: 1.15rem;
+  gap: 1.75rem;
+  background: var(--cos-bg);
+  box-sizing: border-box;
 }
 
 /* ============================================================
-   HEADER PROFILO ALLENATORE (Card Orizzontale a 5 Blocchi)
+   PAGE HEADER (Sobrio, Istituzionale, Non da Gioco)
    ============================================================ */
-.es-cos-header-card {
-  background: var(--cos-card);
-  border: 1px solid var(--cos-border);
-  border-radius: 8px;
-  padding: 1rem 1.3rem;
+.es-cos-page-header {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 1.15rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--cos-border-subtle);
+}
+
+.es-cos-header-top-row {
+  display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 1.15rem;
-  flex-wrap: wrap;
-  position: relative;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
-}
-
-.es-cos-header-left {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.es-cos-avatar-shield {
-  width: 68px;
-  height: 68px;
-  border-radius: 10px;
-  background: #050d18;
-  border: 2px solid var(--cos-cyan);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  flex-shrink: 0;
-  box-shadow: 0 0 12px rgba(22, 185, 255, 0.25);
-}
-
-.es-cos-avatar-shield svg {
-  color: #FFD21A;
-}
-
-.es-cos-avatar-badge {
-  position: absolute;
-  bottom: -5px;
-  background: var(--cos-primary);
-  color: #ffffff;
-  font-size: 0.62rem;
-  font-weight: 900;
-  padding: 1px 6px;
-  border-radius: 3px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  letter-spacing: 0.04em;
-}
-
-.es-cos-header-coach-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-}
-
-.es-cos-coach-title-h1 {
-  margin: 0;
-  font-size: 1.3rem;
-  font-weight: 800;
-  color: var(--cos-text);
-  letter-spacing: -0.01em;
-}
-
-.es-cos-coach-role-sub {
-  margin: 0;
-  font-size: 0.86rem;
-  font-weight: 700;
-  color: var(--cos-cyan);
-}
-
-.es-cos-coach-tessera {
-  font-size: 0.74rem;
-  color: var(--cos-text-sec);
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-/* Blocchi Centrali dell'Header */
-.es-cos-header-center {
-  display: flex;
-  align-items: center;
-  gap: 1.15rem;
+  gap: 1.5rem;
   flex-wrap: wrap;
 }
 
-.es-cos-header-club-box {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  padding-right: 1.15rem;
-  border-right: 1px solid var(--cos-border);
-}
-
-.es-cos-club-crest {
-  width: 40px;
-  height: 40px;
-  border-radius: 6px;
-  object-fit: contain;
-  background: #040912;
-  border: 1px solid var(--cos-border);
-  padding: 2px;
-}
-
-.es-cos-club-names {
+.es-cos-page-title-group {
   display: flex;
   flex-direction: column;
+  gap: 0.25rem;
 }
 
-.es-cos-club-name {
-  font-size: 0.92rem;
-  font-weight: 800;
-  color: var(--cos-text);
-}
-
-.es-cos-club-meta {
-  font-size: 0.72rem;
-  color: var(--cos-text-sec);
-}
-
-.es-cos-header-match-box {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding-right: 1.15rem;
-  border-right: 1px solid var(--cos-border);
-}
-
-.es-cos-match-lbl {
-  font-size: 0.68rem;
-  font-weight: 800;
-  color: var(--cos-text-sec);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.es-cos-match-date {
-  font-size: 0.76rem;
+.es-cos-page-title {
+  font-size: 1.6rem;
   font-weight: 700;
-  color: var(--cos-cyan);
+  color: #FFFFFF;
+  margin: 0;
+  letter-spacing: -0.02em;
 }
 
-.es-cos-match-oppo-row {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin-top: 2px;
-}
-
-.es-cos-oppo-crest {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
-}
-
-.es-cos-oppo-name {
-  font-size: 0.86rem;
-  font-weight: 800;
-  color: var(--cos-text);
-}
-
-.es-cos-oppo-venue {
-  font-size: 0.7rem;
+.es-cos-page-subtitle {
+  font-size: 0.88rem;
   color: var(--cos-text-sec);
+  margin: 0;
+  font-weight: 400;
 }
 
-/* Countdown Card */
-.es-cos-countdown-box {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding-right: 1.15rem;
-  border-right: 1px solid var(--cos-border);
-}
-
-.es-cos-countdown-lbl {
-  font-size: 0.68rem;
-  font-weight: 800;
-  color: var(--cos-text-sec);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.es-cos-countdown-digits {
-  display: flex;
-  align-items: baseline;
-  gap: 0.35rem;
-}
-
-.es-cos-cd-block {
-  display: flex;
-  align-items: baseline;
-  gap: 2px;
-}
-
-.es-cos-cd-num {
-  font-size: 1.2rem;
-  font-weight: 900;
-  color: var(--cos-text);
-  line-height: 1;
-}
-
-.es-cos-cd-unit {
-  font-size: 0.6rem;
-  font-weight: 800;
-  color: var(--cos-text-sec);
-  text-transform: uppercase;
-}
-
-/* Seduta Odierna Pill */
-.es-cos-seduta-today {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.es-cos-seduta-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-size: 0.74rem;
-  font-weight: 800;
-  color: var(--cos-success);
-}
-
-.es-cos-seduta-name {
-  font-size: 0.84rem;
-  font-weight: 800;
-  color: var(--cos-text);
-}
-
-.es-cos-seduta-time {
-  font-size: 0.72rem;
-  color: var(--cos-text-sec);
-}
-
-/* Pulsante Area Vice Allenatore */
 .es-cos-btn-vice-jump {
-  background: var(--cos-primary);
-  border: 1px solid var(--cos-cyan);
-  color: #ffffff;
-  padding: 0.55rem 1rem;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  font-weight: 800;
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.55rem;
+  background: transparent;
+  border: 1px solid var(--cos-border);
+  color: var(--cos-text);
+  padding: 0.55rem 1rem;
+  border-radius: var(--cos-radius);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
   transition: all 0.15s ease;
-  white-space: nowrap;
 }
 
 .es-cos-btn-vice-jump:hover {
-  background: #0689bd;
-  box-shadow: 0 0 12px rgba(22, 185, 255, 0.4);
-  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--cos-blue);
+  color: var(--cos-cyan);
+}
+
+/* Meta-bar info riga compatta */
+.es-cos-meta-bar {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  padding: 0.65rem 1rem;
+  background: var(--cos-card);
+  border: 1px solid var(--cos-border);
+  border-radius: var(--cos-radius);
+  font-size: 0.8rem;
+  color: var(--cos-text-sec);
+}
+
+.es-cos-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.es-cos-meta-item b {
+  color: var(--cos-text);
+  font-weight: 600;
+}
+
+.es-cos-meta-divider {
+  width: 1px;
+  height: 14px;
+  background: var(--cos-border);
 }
 
 /* ============================================================
-   DASHBOARD KPI STRIP (Esattamente 8 Card Fedeli all'Immagine)
+   SEZIONE: RIEPILOGO OPERATIVO (Esattamente 4 Indicatori Puliti)
    ============================================================ */
-.es-cos-kpi-row-8 {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 0.75rem;
+.es-cos-section-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
 }
 
-.es-cos-kpi-card-box {
+.es-cos-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.es-cos-section-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--cos-text);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.es-cos-kpi-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.es-cos-kpi-card {
   background: var(--cos-card);
   border: 1px solid var(--cos-border);
-  border-radius: 7px;
-  padding: 0.75rem 0.85rem;
+  border-radius: var(--cos-radius);
+  padding: 1.15rem 1.25rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 0.3rem;
-  min-height: 86px;
-  transition: border-color 0.15s ease;
+  gap: 0.85rem;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  min-height: 110px;
+  box-sizing: border-box;
 }
 
-.es-cos-kpi-card-box:hover {
-  border-color: var(--cos-cyan);
+.es-cos-kpi-card:hover {
+  border-color: var(--cos-border-hover);
+  background: var(--cos-card-hover);
 }
 
-.es-cos-kpi-top {
+.es-cos-kpi-header {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  justify-content: space-between;
+  gap: 0.5rem;
 }
 
-.es-cos-kpi-icon {
-  width: 22px;
-  height: 22px;
-  border-radius: 5px;
-  background: rgba(22, 185, 255, 0.1);
-  color: var(--cos-cyan);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.es-cos-kpi-icon svg {
-  width: 13px;
-  height: 13px;
-}
-
-.es-cos-kpi-title-lbl {
-  font-size: 0.68rem;
-  font-weight: 800;
+.es-cos-kpi-label {
+  font-size: 0.76rem;
+  font-weight: 600;
   color: var(--cos-text-sec);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-.es-cos-kpi-main-val {
-  font-size: 1.15rem;
-  font-weight: 900;
-  color: var(--cos-text);
-  line-height: 1.1;
+.es-cos-kpi-icon {
+  width: 16px;
+  height: 16px;
+  stroke: var(--cos-blue);
+  flex-shrink: 0;
 }
 
-.es-cos-kpi-sub-text {
-  font-size: 0.72rem;
+.es-cos-kpi-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.es-cos-kpi-primary-value {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.15;
+}
+
+.es-cos-kpi-secondary-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.78rem;
   color: var(--cos-text-sec);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-.es-cos-kpi-bar-track {
-  width: 100%;
-  height: 4px;
-  background: rgba(18, 52, 74, 0.8);
-  border-radius: 2px;
-  overflow: hidden;
-  margin-top: 2px;
-}
-
-.es-cos-kpi-bar-fill {
-  height: 100%;
-  border-radius: 2px;
-  transition: width 0.3s ease;
-}
-
-.es-cos-kpi-bar-fill.is-green { background: var(--cos-success); }
-.es-cos-kpi-bar-fill.is-cyan { background: var(--cos-cyan); }
-.es-cos-kpi-bar-fill.is-warn { background: var(--cos-warning); }
-.es-cos-kpi-bar-fill.is-danger { background: var(--cos-danger); }
-
-.es-cos-badge-pill {
+/* Badge di stato sobri B2B */
+.es-cos-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
-  font-size: 0.66rem;
-  font-weight: 800;
-  padding: 1px 6px;
+  gap: 0.35rem;
+  padding: 0.2rem 0.55rem;
   border-radius: 4px;
-  width: fit-content;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1;
 }
 
-.es-cos-badge-pill.is-green {
+.es-cos-badge.is-success {
   background: var(--cos-success-soft);
   color: var(--cos-success);
-  border: 1px solid rgba(0, 217, 120, 0.3);
 }
 
-.es-cos-badge-pill.is-warn {
+.es-cos-badge.is-warning {
   background: var(--cos-warning-soft);
   color: var(--cos-warning);
-  border: 1px solid rgba(255, 210, 26, 0.3);
 }
 
-.es-cos-badge-pill.is-danger {
+.es-cos-badge.is-danger {
   background: var(--cos-danger-soft);
   color: var(--cos-danger);
-  border: 1px solid rgba(255, 77, 90, 0.3);
 }
 
-.es-cos-badge-pill.is-blue {
-  background: var(--cos-cyan-glow);
+.es-cos-badge.is-neutral {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--cos-text-sec);
+}
+
+.es-cos-badge.is-info {
+  background: var(--cos-blue-soft);
   color: var(--cos-cyan);
-  border: 1px solid rgba(22, 185, 255, 0.3);
+}
+
+/* Mini progress bar sobria */
+.es-cos-mini-progress {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 0.4rem;
+}
+
+.es-cos-mini-progress-fill {
+  height: 100%;
+  background: var(--cos-blue);
+  border-radius: 3px;
+}
+
+.es-cos-mini-progress-fill.is-success {
+  background: var(--cos-success);
 }
 
 /* ============================================================
-   GRIGLIA CENTRALE (Calendario Gare, Ultima Sessione, Notifiche)
+   LAYOUT A 12 COLONNE / ASIMMETRICO (Operativo 65% / Feed 35%)
    ============================================================ */
-.es-cos-mid-grid {
+.es-cos-layout-grid {
   display: grid;
-  grid-template-columns: 1.2fr 1fr 0.9fr;
-  gap: 1.15rem;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
 }
 
-.es-cos-panel-card {
-  background: var(--cos-card);
-  border: 1px solid var(--cos-border);
-  border-radius: 8px;
-  padding: 1.1rem;
+.es-cos-col-left,
+.es-cos-col-right {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
-  position: relative;
+  gap: 1.5rem;
 }
 
-.es-cos-panel-head {
+/* Componente Card Pannello */
+.es-cos-panel {
+  background: var(--cos-card);
+  border: 1px solid var(--cos-border);
+  border-radius: var(--cos-radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.es-cos-panel-header {
+  padding: 0.95rem 1.25rem;
+  background: var(--cos-card-alt);
+  border-bottom: 1px solid var(--cos-border-subtle);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
-  border-bottom: 1px solid var(--cos-border-soft);
-  padding-bottom: 0.6rem;
+  gap: 1rem;
 }
 
 .es-cos-panel-title {
-  font-size: 0.92rem;
-  font-weight: 800;
-  color: var(--cos-text);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #FFFFFF;
   display: flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.5rem;
+  letter-spacing: -0.01em;
 }
 
 .es-cos-panel-title svg {
-  color: var(--cos-cyan);
-  width: 17px;
-  height: 17px;
+  width: 16px;
+  height: 16px;
+  stroke: var(--cos-blue);
 }
 
-.es-cos-panel-link {
-  font-size: 0.75rem;
+.es-cos-panel-action {
+  font-size: 0.78rem;
   color: var(--cos-cyan);
+  font-weight: 600;
   text-decoration: none;
-  font-weight: 700;
   cursor: pointer;
+  transition: color 0.15s ease;
   display: inline-flex;
   align-items: center;
-  gap: 0.2rem;
+  gap: 0.3rem;
 }
 
-.es-cos-panel-link:hover {
+.es-cos-panel-action:hover {
+  color: #FFFFFF;
   text-decoration: underline;
 }
 
-/* Tabella Calendario Gare */
-.es-cos-table-compact {
+.es-cos-panel-body {
+  padding: 1.15rem 1.25rem;
+}
+
+/* ============================================================
+   TABELLA CALENDARIO PROSSIME GARE (SaaS B2B Clean Table)
+   ============================================================ */
+.es-cos-table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.es-cos-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.78rem;
-}
-
-.es-cos-table-compact th {
   text-align: left;
-  font-size: 0.68rem;
-  font-weight: 800;
-  color: var(--cos-text-sec);
+  font-size: 0.82rem;
+}
+
+.es-cos-table th {
+  padding: 0.7rem 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--cos-text-muted);
+  font-weight: 600;
+  font-size: 0.72rem;
   text-transform: uppercase;
-  padding: 0.4rem 0.45rem;
-  border-bottom: 1px solid var(--cos-border-soft);
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--cos-border);
 }
 
-.es-cos-table-compact td {
-  padding: 0.55rem 0.45rem;
-  border-bottom: 1px solid rgba(18, 52, 74, 0.35);
+.es-cos-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--cos-border-subtle);
   color: var(--cos-text);
+  vertical-align: middle;
 }
 
-.es-cos-table-compact tr:last-child td {
+.es-cos-table tr:last-child td {
   border-bottom: none;
 }
 
-.es-cos-table-compact tr:hover td {
+.es-cos-table tbody tr {
+  transition: background 0.15s ease;
+  cursor: pointer;
+}
+
+.es-cos-table tbody tr:hover {
   background: rgba(255, 255, 255, 0.02);
 }
 
-/* Ultima Sessione */
-.es-cos-session-box {
-  background: #050e18;
-  border: 1px solid var(--cos-border-soft);
-  border-radius: 6px;
-  padding: 0.85rem;
-  display: flex;
-  gap: 0.95rem;
-  align-items: center;
+/* ============================================================
+   CARD ULTIMA SESSIONE
+   ============================================================ */
+.es-cos-session-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 }
 
-.es-cos-session-thumb {
-  width: 120px;
-  height: 80px;
-  border-radius: 5px;
-  background: linear-gradient(135deg, #0e3d23 0%, #071f12 100%);
-  border: 1px solid rgba(0, 217, 120, 0.3);
-  position: relative;
-  overflow: hidden;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.es-cos-session-thumb::before {
-  content: '';
-  width: 34px;
-  height: 34px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  position: absolute;
-}
-
-.es-cos-session-thumb::after {
-  content: '';
-  width: 100%;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.3);
-  position: absolute;
-}
-
-.es-cos-session-info {
+.es-cos-session-info-row {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
-  flex: 1 1 auto;
 }
 
-.es-cos-session-title {
-  font-size: 0.9rem;
-  font-weight: 800;
-  color: var(--cos-text);
-}
-
-.es-cos-session-meta {
+.es-cos-session-label {
   font-size: 0.72rem;
-  color: var(--cos-text-sec);
-}
-
-.es-cos-session-stats-grid {
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 0.3rem;
-}
-
-.es-cos-sstat {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-size: 0.72rem;
-  color: var(--cos-text-sec);
-}
-
-.es-cos-sstat b {
-  color: var(--cos-text);
-}
-
-/* Report Staff Subbox */
-.es-cos-staff-report-subbox {
-  background: rgba(7, 152, 209, 0.06);
-  border: 1px solid rgba(7, 152, 209, 0.25);
-  border-radius: 6px;
-  padding: 0.8rem 0.9rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-top: 0.35rem;
-}
-
-.es-cos-srep-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.es-cos-srep-lbl {
-  font-size: 0.68rem;
-  font-weight: 800;
-  color: var(--cos-cyan);
+  color: var(--cos-text-muted);
   text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
 
-.es-cos-srep-title {
-  font-size: 0.82rem;
-  font-weight: 700;
+.es-cos-session-val {
+  font-size: 0.88rem;
   color: var(--cos-text);
+  font-weight: 600;
 }
 
-.es-cos-srep-time {
-  font-size: 0.7rem;
-  color: var(--cos-text-sec);
+.es-cos-metric-pill-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
 }
 
-/* Notifiche Live */
-.es-cos-notifs-list {
+.es-cos-metric-box {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--cos-border-subtle);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  flex: 1 1 80px;
 }
 
-.es-cos-notif-row {
+.es-cos-metric-box-num {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--cos-cyan);
+}
+
+.es-cos-metric-box-lbl {
+  font-size: 0.68rem;
+  color: var(--cos-text-muted);
+}
+
+/* ============================================================
+   ULTIMI REPORT STAFF (Feed/Elenco Tabellare Pulito)
+   ============================================================ */
+.es-cos-report-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.6rem 0.75rem;
-  background: #050d18;
-  border: 1px solid var(--cos-border-soft);
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  gap: 0.65rem;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--cos-border-subtle);
+  transition: background 0.15s ease;
 }
 
-.es-cos-notif-row:hover {
-  background: var(--cos-card-elevated);
-  border-color: var(--cos-border-active);
+.es-cos-report-item:last-child {
+  border-bottom: none;
 }
 
-.es-cos-notif-left {
+.es-cos-report-item:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.es-cos-report-meta {
   display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  min-width: 0;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.es-cos-report-title {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--cos-text);
+}
+
+.es-cos-report-sub {
+  font-size: 0.74rem;
+  color: var(--cos-text-sec);
+}
+
+/* ============================================================
+   FEED NOTIFICHE (Colonna Destra, Max 5, Sobrie)
+   ============================================================ */
+.es-cos-notification-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.es-cos-notif-item {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.85rem 1.15rem;
+  border-bottom: 1px solid var(--cos-border-subtle);
+  transition: background 0.15s ease;
+  cursor: pointer;
+  align-items: flex-start;
+}
+
+.es-cos-notif-item:last-child {
+  border-bottom: none;
+}
+
+.es-cos-notif-item:hover {
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .es-cos-notif-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
+  margin-top: 5px;
   flex-shrink: 0;
 }
 
-.es-cos-notif-dot.is-green { background: var(--cos-success); box-shadow: 0 0 6px var(--cos-success); }
-.es-cos-notif-dot.is-warn { background: var(--cos-warning); box-shadow: 0 0 6px var(--cos-warning); }
-.es-cos-notif-dot.is-danger { background: var(--cos-danger); box-shadow: 0 0 6px var(--cos-danger); }
-.es-cos-notif-dot.is-cyan { background: var(--cos-cyan); box-shadow: 0 0 6px var(--cos-cyan); }
+.es-cos-notif-dot.is-info { background: var(--cos-cyan); }
+.es-cos-notif-dot.is-success { background: var(--cos-success); }
+.es-cos-notif-dot.is-warning { background: var(--cos-warning); }
+.es-cos-notif-dot.is-danger { background: var(--cos-danger); }
 
-.es-cos-notif-text-wrap {
+.es-cos-notif-content {
   display: flex;
   flex-direction: column;
-  min-width: 0;
+  gap: 0.2rem;
+  flex: 1 1 auto;
 }
 
-.es-cos-notif-text {
-  font-size: 0.78rem;
-  font-weight: 700;
+.es-cos-notif-title {
+  font-size: 0.82rem;
+  font-weight: 600;
   color: var(--cos-text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.3;
 }
 
 .es-cos-notif-time {
-  font-size: 0.68rem;
-  color: var(--cos-text-sec);
-}
-
-.es-cos-notif-arrow {
-  color: var(--cos-text-sec);
-  font-size: 0.82rem;
-  flex-shrink: 0;
+  font-size: 0.7rem;
+  color: var(--cos-text-muted);
 }
 
 /* ============================================================
-   FASCIA INFERIORE (3 Pannelli)
+   PROSSIMI IMPEGNI STAFF
    ============================================================ */
-.es-cos-bot-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1.15rem;
-}
-
-/* Timeline Log Attività */
-.es-cos-log-feed {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.es-cos-log-item {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  font-size: 0.76rem;
-  color: var(--cos-text);
-  padding: 0.4rem 0.5rem;
-  border-bottom: 1px solid rgba(18, 52, 74, 0.4);
-}
-
-.es-cos-log-item:last-child { border-bottom: none; }
-
-.es-cos-log-date {
-  font-size: 0.68rem;
-  color: var(--cos-cyan);
-  font-weight: 700;
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-}
-
-/* Grafico Carico Settimanale */
-.es-cos-weekly-chart-wrap {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.5rem 0;
-}
-
-.es-cos-bar-chart {
-  display: flex;
-  align-items: flex-end;
-  gap: 0.55rem;
-  height: 95px;
-  flex: 1 1 auto;
-  border-bottom: 1px solid var(--cos-border-soft);
-  padding-bottom: 4px;
-}
-
-.es-cos-bar-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  flex: 1 1 0;
-  height: 100%;
-  justify-content: flex-end;
-}
-
-.es-cos-bar-stick {
-  width: 100%;
-  max-width: 16px;
-  background: var(--cos-primary);
-  border-radius: 3px 3px 0 0;
-  transition: height 0.3s ease;
-}
-
-.es-cos-bar-stick.is-green { background: var(--cos-success); }
-
-.es-cos-bar-lbl {
-  font-size: 0.65rem;
-  color: var(--cos-text-sec);
-  font-weight: 700;
-}
-
-.es-cos-radial-gauge {
-  width: 85px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 0.2rem;
-  flex-shrink: 0;
-}
-
-.es-cos-gauge-circle {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: 4px solid var(--cos-border);
-  border-top-color: var(--cos-success);
-  border-right-color: var(--cos-success);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.92rem;
-  font-weight: 900;
-  color: var(--cos-text);
-  box-shadow: 0 0 10px rgba(0, 217, 120, 0.2);
-}
-
-.es-cos-gauge-sub {
-  font-size: 0.66rem;
-  font-weight: 700;
-  color: var(--cos-success);
-}
-
-/* Impegni Staff */
 .es-cos-impegni-list {
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
 }
 
-.es-cos-impegno-item {
+.es-cos-impegno-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.55rem 0.7rem;
-  background: #050d18;
-  border: 1px solid var(--cos-border-soft);
-  border-radius: 6px;
-  font-size: 0.76rem;
+  padding: 0.8rem 1.15rem;
+  border-bottom: 1px solid var(--cos-border-subtle);
+  gap: 0.75rem;
 }
 
-.es-cos-impegno-left {
+.es-cos-impegno-row:last-child {
+  border-bottom: none;
+}
+
+.es-cos-impegno-date-box {
   display: flex;
-  align-items: center;
-  gap: 0.55rem;
+  flex-direction: column;
+  gap: 0.1rem;
 }
 
-.es-cos-impegno-left svg {
-  color: var(--cos-cyan);
-  width: 15px;
-  height: 15px;
-  flex-shrink: 0;
-}
-
-.es-cos-impegno-title {
-  font-weight: 800;
+.es-cos-impegno-name {
+  font-size: 0.82rem;
+  font-weight: 600;
   color: var(--cos-text);
 }
 
 .es-cos-impegno-time {
-  font-size: 0.68rem;
+  font-size: 0.72rem;
+  color: var(--cos-text-muted);
+}
+
+/* ============================================================
+   CARICO SETTIMANALE SQUADRA (Grafico Lineare a Barre Sobrio)
+   ============================================================ */
+.es-cos-chart-box {
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.es-cos-weekly-bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 90px;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--cos-border);
+}
+
+.es-cos-bar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 1 1 auto;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.es-cos-bar-stem {
+  width: 100%;
+  max-width: 24px;
+  background: var(--cos-blue-soft);
+  border: 1px solid var(--cos-blue);
+  border-radius: 3px 3px 0 0;
+  transition: height 0.2s ease, background 0.15s ease;
+}
+
+.es-cos-bar-stem:hover {
+  background: var(--cos-cyan);
+}
+
+.es-cos-bar-stem.is-optimal {
+  background: var(--cos-success-soft);
+  border-color: var(--cos-success);
+}
+
+.es-cos-bar-label {
+  font-size: 0.7rem;
+  color: var(--cos-text-muted);
+  font-weight: 500;
+}
+
+.es-cos-chart-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
   color: var(--cos-text-sec);
 }
 
-.es-cos-impegno-type {
-  font-weight: 700;
-  color: var(--cos-cyan);
-}
-
-/* Pulsanti e Form Generici */
+/* ============================================================
+   PULSANTI & INPUT STANDARD B2B
+   ============================================================ */
 .es-btn-cos-primary {
-  background: var(--cos-primary);
-  border: 1px solid var(--cos-cyan);
-  color: #ffffff;
-  padding: 0.55rem 1rem;
-  border-radius: 6px;
-  font-size: 0.82rem;
-  font-weight: 800;
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.45rem;
+  background: var(--cos-blue);
+  border: 1px solid var(--cos-blue);
+  color: #FFFFFF;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.5rem 0.95rem;
+  border-radius: 6px;
+  cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .es-btn-cos-primary:hover {
-  background: #0689bd;
-  box-shadow: 0 0 12px rgba(22, 185, 255, 0.4);
+  background: #09aee8;
+  border-color: #09aee8;
 }
 
 .es-btn-cos-sec {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   background: transparent;
   border: 1px solid var(--cos-border);
   color: var(--cos-text);
-  padding: 0.55rem 1rem;
-  border-radius: 6px;
   font-size: 0.82rem;
-  font-weight: 700;
+  font-weight: 600;
+  padding: 0.5rem 0.85rem;
+  border-radius: 6px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .es-btn-cos-sec:hover {
+  border-color: var(--cos-border-hover);
   background: rgba(255, 255, 255, 0.04);
-  border-color: var(--cos-border-active);
 }
 
-/* Responsive */
-@media (max-width: 1300px) {
-  .es-cos-kpi-row-8 { grid-template-columns: repeat(4, 1fr); }
-  .es-cos-mid-grid { grid-template-columns: 1fr 1fr; }
-  .es-cos-bot-grid { grid-template-columns: 1fr; }
+.es-btn-cos-sec.is-active {
+  background: var(--cos-blue-soft);
+  border-color: var(--cos-blue);
+  color: var(--cos-cyan);
 }
 
-@media (max-width: 900px) {
-  .es-cos-shell { flex-direction: column; }
-  .es-cos-sidebar { width: 100%; min-width: 100%; min-height: auto; position: static; }
-  .es-cos-kpi-row-8 { grid-template-columns: repeat(2, 1fr); }
-  .es-cos-mid-grid { grid-template-columns: 1fr; }
+/* Classi di compatibilità e continuità per le sezioni interne */
+.es-cos-panel-card {
+  background: var(--cos-card);
+  border: 1px solid var(--cos-border);
+  border-radius: var(--cos-radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.es-cos-panel-head {
+  padding: 0.95rem 1.25rem;
+  background: var(--cos-card-alt);
+  border-bottom: 1px solid var(--cos-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.es-cos-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.es-cos-badge-pill.is-green,
+.es-cos-badge-pill.is-success {
+  background: var(--cos-success-soft);
+  color: var(--cos-success);
+}
+
+.es-cos-badge-pill.is-blue,
+.es-cos-badge-pill.is-info {
+  background: var(--cos-blue-soft);
+  color: var(--cos-cyan);
+}
+
+.es-cos-badge-pill.is-warn,
+.es-cos-badge-pill.is-warning {
+  background: var(--cos-warning-soft);
+  color: var(--cos-warning);
+}
+
+.es-cos-badge-pill.is-danger {
+  background: var(--cos-danger-soft);
+  color: var(--cos-danger);
+}
+
+.es-cos-form-input,
+.es-cos-search-input {
+  background: var(--cos-card-alt);
+  border: 1px solid var(--cos-border);
+  color: var(--cos-text);
+  padding: 0.55rem 0.85rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.es-cos-form-input:focus,
+.es-cos-search-input:focus {
+  border-color: var(--cos-blue);
+}
+
+.es-cos-form-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--cos-text-sec);
+}
+
+.es-cos-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+/* Responsive Rules */
+@media (max-width: 1200px) {
+  .es-cos-kpi-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .es-cos-layout-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .es-cos-shell {
+    flex-direction: column;
+  }
+  .es-cos-sidebar {
+    width: 100%;
+    min-height: auto;
+    position: relative;
+    border-right: none;
+    border-bottom: 1px solid var(--cos-border);
+  }
+  .es-cos-main {
+    padding: 1.25rem 1rem 2rem;
+  }
+  .es-cos-kpi-grid-4 {
+    grid-template-columns: 1fr;
+  }
 }

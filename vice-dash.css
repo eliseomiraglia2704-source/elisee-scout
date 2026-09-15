@@ -1,42 +1,43 @@
 /* ============================================================
    ELISEE SCOUT — VICE COACH TECHNICAL WORKSTATION
-   Suite Professionale per Vice Allenatore
-   Palette Ufficiale: Luxury Dark Navy / Bright Cyan / High Information Density
+   Professional Assistant Coach Management Suite
+   Aesthetic: Clean B2B Sports Management SaaS (Inter, Flat surfaces, Zero Gaming Glow)
    ============================================================ */
 
 .es-vd-shell {
-  background: var(--cos-bg, #050910);
+  background: var(--cos-bg, #050B14);
   min-height: 100vh;
-  color: var(--cos-text, #F3F8FC);
-  font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--cos-text, #F2F6FA);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   display: flex;
   flex-direction: column;
   width: 100%;
   padding-bottom: 3rem;
+  box-sizing: border-box;
 }
 
 .es-vd-container {
   max-width: 1360px;
   margin: 0 auto;
-  padding: 1.25rem 1.5rem;
+  padding: 1.5rem 1.75rem;
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem;
+  box-sizing: border-box;
 }
 
-/* Header Card Vice */
+/* Header Card Vice (Sobrio, B2B) */
 .es-vd-header-card {
-  background: var(--cos-card, #0A121D);
-  border: 1px solid var(--cos-border, #12344A);
-  border-radius: 10px;
-  padding: 1.2rem 1.5rem;
+  background: var(--cos-card, #0A1624);
+  border: 1px solid var(--cos-border, #17344A);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1.25rem;
   flex-wrap: wrap;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .es-vd-header-left {
@@ -46,65 +47,65 @@
 }
 
 .es-vd-avatar-shield {
-  width: 68px;
-  height: 68px;
-  border-radius: 12px;
-  background: var(--cos-canvas, #070D16);
-  border: 2px solid var(--cos-cyan, #16B9FF);
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+  background: #07111D;
+  border: 1px solid var(--cos-blue, #079BD3);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
   flex-shrink: 0;
-  box-shadow: 0 0 15px rgba(22, 185, 255, 0.2);
 }
 
 .es-vd-avatar-shield svg {
-  color: var(--cos-cyan, #16B9FF);
+  color: var(--cos-cyan, #19B9F2);
+  width: 24px;
+  height: 24px;
 }
 
 .es-vd-avatar-badge {
   position: absolute;
-  bottom: -6px;
-  background: var(--cos-primary, #0798D1);
+  bottom: -5px;
+  background: var(--cos-blue, #079BD3);
   color: #ffffff;
-  font-size: 0.65rem;
-  font-weight: 800;
-  padding: 1px 6px;
-  border-radius: 4px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
 }
 
 .es-vd-coach-title-h1 {
   margin: 0;
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: var(--cos-text, #F3F8FC);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #FFFFFF;
 }
 
 .es-vd-coach-role-sub {
   margin: 0;
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--cos-cyan, #16B9FF);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--cos-text-sec, #8EA7BC);
 }
 
 .es-vd-connection-card {
-  background: var(--cos-canvas, #070D16);
-  border: 1px solid rgba(0, 217, 120, 0.3);
-  border-radius: 8px;
-  padding: 0.65rem 1rem;
+  background: #07111D;
+  border: 1px solid var(--cos-border, #17344A);
+  border-radius: 6px;
+  padding: 0.55rem 0.9rem;
   display: flex;
   align-items: center;
-  gap: 0.85rem;
+  gap: 0.75rem;
 }
 
 .es-vd-conn-dot {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: var(--cos-success, #00D978);
-  box-shadow: 0 0 8px var(--cos-success, #00D978);
+  background: var(--cos-success, #20C997);
   flex-shrink: 0;
 }
 
@@ -113,22 +114,22 @@
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  background: var(--cos-card, #0A121D);
-  border: 1px solid var(--cos-border, #12344A);
+  background: var(--cos-card, #0A1624);
+  border: 1px solid var(--cos-border, #17344A);
   border-radius: 8px;
-  padding: 0.4rem;
+  padding: 0.35rem;
   overflow-x: auto;
   scrollbar-width: thin;
 }
 
 .es-vd-navbtn {
   background: transparent;
-  border: 1px solid transparent;
-  color: var(--cos-text-sec, #8DA8BC);
-  padding: 0.55rem 0.9rem;
-  border-radius: 6px;
+  border: none;
+  border-radius: 5px;
+  color: var(--cos-text-sec, #8EA7BC);
+  padding: 0.55rem 0.85rem;
   font-size: 0.82rem;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
   white-space: nowrap;
@@ -138,128 +139,177 @@
 }
 
 .es-vd-navbtn svg {
-  width: 16px;
-  height: 16px;
-  stroke: currentColor;
-  opacity: 0.85;
+  width: 15px;
+  height: 15px;
+  stroke: var(--cos-text-muted, #566F84);
 }
 
 .es-vd-navbtn:hover {
-  color: var(--cos-text, #F3F8FC);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.03);
+  color: #FFFFFF;
 }
 
 .es-vd-navbtn.is-active {
-  background: var(--cos-primary, #0798D1);
-  color: #ffffff;
-  border-color: var(--cos-cyan, #16B9FF);
-  box-shadow: 0 2px 10px rgba(7, 152, 209, 0.35);
+  background: var(--cos-blue-soft, rgba(7, 155, 211, 0.12));
+  color: #FFFFFF;
 }
 
-/* Griglie Schede Specializzazioni (4 Aree) */
-.es-vd-spec-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.15rem;
+.es-vd-navbtn.is-active svg {
+  stroke: var(--cos-cyan, #19B9F2);
 }
 
-.es-vd-spec-card {
-  background: var(--cos-card, #0A121D);
-  border: 1px solid var(--cos-border, #12344A);
+/* Griglia e Card Interne Vice */
+.es-vd-tab-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.es-vd-card {
+  background: var(--cos-card, #0A1624);
+  border: 1px solid var(--cos-border, #17344A);
   border-radius: 8px;
   padding: 1.25rem;
+}
+
+.es-vd-card-title {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #FFFFFF;
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.es-vd-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.es-vd-area-box {
+  background: #07111D;
+  border: 1px solid var(--cos-border, #17344A);
+  border-radius: 6px;
+  padding: 1rem;
   cursor: pointer;
   transition: all 0.15s ease;
-  position: relative;
 }
 
-.es-vd-spec-card:hover {
-  border-color: var(--cos-cyan, #16B9FF);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+.es-vd-area-box:hover {
+  border-color: var(--cos-blue, #079BD3);
+  background: #0D1B2A;
 }
 
-.es-vd-spec-icon-box {
-  width: 44px;
-  height: 44px;
-  border-radius: 8px;
-  background: var(--cos-canvas, #070D16);
-  border: 1px solid var(--cos-cyan, #16B9FF);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.4rem;
+.es-vd-area-box.is-selected {
+  border-color: var(--cos-blue, #079BD3);
+  background: rgba(7, 155, 211, 0.08);
 }
 
-.es-vd-spec-title {
-  font-size: 1rem;
-  font-weight: 800;
-  color: var(--cos-text, #F3F8FC);
-  margin: 0;
+.es-vd-area-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 0.35rem;
 }
 
-.es-vd-spec-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
-  background: var(--cos-canvas, #070D16);
-  border: 1px solid var(--cos-border-soft, rgba(18, 52, 74, 0.6));
-  border-radius: 6px;
-  padding: 0.65rem;
-  font-size: 0.74rem;
+.es-vd-area-desc {
+  font-size: 0.76rem;
+  color: var(--cos-text-sec, #8EA7BC);
+  line-height: 1.4;
 }
 
-/* Griglia Schede Workstation */
-.es-vd-ws-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 1.15rem;
-}
-
-.es-vd-ws-card {
-  background: var(--cos-card, #0A121D);
-  border: 1px solid var(--cos-border, #12344A);
-  border-radius: 8px;
-  padding: 1.15rem;
+/* Lista Schede Workstation */
+.es-vd-ws-list {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  position: relative;
+  gap: 0.65rem;
 }
 
-.es-vd-ws-card:hover {
-  border-color: var(--cos-border-active, #078FD0);
-}
-
-.es-vd-ws-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.75rem;
-}
-
-.es-vd-ws-status-badge {
-  font-size: 0.68rem;
-  font-weight: 800;
-  padding: 2px 7px;
-  border-radius: 4px;
-  text-transform: uppercase;
-}
-
-.es-vd-ws-status-badge.is-draft { background: var(--cos-canvas); color: var(--cos-text-sec); border: 1px solid var(--cos-border); }
-.es-vd-ws-status-badge.is-ready { background: var(--cos-cyan-glow); color: var(--cos-cyan); border: 1px solid rgba(22, 185, 255, 0.3); }
-.es-vd-ws-status-badge.is-review { background: var(--cos-warning-soft); color: var(--cos-warning); border: 1px solid rgba(255, 210, 26, 0.3); }
-.es-vd-ws-status-badge.is-approved { background: var(--cos-success-soft); color: var(--cos-success); border: 1px solid rgba(0, 217, 120, 0.3); }
-
-.es-vd-ws-actions-row {
+.es-vd-ws-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-  padding-top: 0.65rem;
-  border-top: 1px solid var(--cos-border-soft, rgba(18, 52, 74, 0.6));
+  padding: 0.85rem 1rem;
+  background: #07111D;
+  border: 1px solid var(--cos-border, #17344A);
+  border-radius: 6px;
+  gap: 1rem;
+}
+
+.es-vd-ws-title {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.es-vd-ws-meta {
+  font-size: 0.74rem;
+  color: var(--cos-text-sec, #8EA7BC);
+}
+
+.es-vd-status-pill {
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.es-vd-status-pill.is-bozza {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--cos-text-sec, #8EA7BC);
+}
+
+.es-vd-status-pill.is-ready {
+  background: rgba(7, 155, 211, 0.15);
+  color: var(--cos-cyan, #19B9F2);
+}
+
+.es-vd-status-pill.is-review {
+  background: rgba(240, 180, 41, 0.15);
+  color: var(--cos-warning, #F0B429);
+}
+
+.es-vd-status-pill.is-approved {
+  background: rgba(32, 201, 151, 0.15);
+  color: var(--cos-success, #20C997);
+}
+
+/* Pulsante Ritorno ad Allenatore Capo */
+.es-vd-btn-return {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: transparent;
+  border: 1px solid var(--cos-border, #17344A);
+  color: var(--cos-text, #F2F6FA);
+  padding: 0.55rem 0.95rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.es-vd-btn-return:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--cos-blue, #079BD3);
+  color: var(--cos-cyan, #19B9F2);
+}
+
+@media (max-width: 1024px) {
+  .es-vd-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .es-vd-grid-4 {
+    grid-template-columns: 1fr;
+  }
+  .es-vd-container {
+    padding: 1rem;
+  }
 }
