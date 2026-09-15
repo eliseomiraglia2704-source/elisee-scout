@@ -885,6 +885,7 @@
   pointer-events: none;
   will-change: opacity, transform;
   transform: translateZ(0);
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.55));
 }
 .es-sq-kit-img[hidden],
 .es-sq-kit-img.is-hidden {

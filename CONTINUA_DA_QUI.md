@@ -3,16 +3,17 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-15** (Commit `4d60dd1`) — Tipografia Futuristica Esclusiva "Nevera" applicata al nome club Foggia City nel Selettore Squadre (cache `NEVERA1`).
-Ultimo fatto: **Font Futuristico Nevera per Foggia City (`NEVERA1`)**:
-1. **Integrazione Tipografica Ufficiale Nevera**:
-   - Integrato il font display/futuristico `Nevera` (`fonts/Nevera-Regular.otf`), identico al wordmark geometrico richiesto (con l'iconico arco sulla barra della 'A', 'F' a ponte continuo e forme hypercar/gaming).
-   - Registrato `@font-face` per `Nevera` a livello globale in `index.html`, `style.css` e `squadre-select.css`.
-2. **Applicazione al Nome Club Foggia City**:
-   - In `squadre-select.css`: `.es-sq-team-name` e `.is-foggia-city` adottano `font-family: 'Nevera', sans-serif !important; letter-spacing: 0.14em;` con resa ultra-moderna EA Sports FC.
-   - In `squadre-select.js`: aggiunta dinamica della classe `is-foggia-city` quando la squadra visualizzata è Foggia City.
-   - In `index.html`: preimpostata la classe `is-foggia-city` sull'elemento `#es-sq-team-name`.
-3. **File aggiornati**: `fonts/Nevera-Regular.otf` (nuovo asset), `squadre-select.css`, `squadre-select.js`, `style.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `NEVERA1`.
+Ultimo aggiornamento: **2026-09-15** (Commit `f1b6b83`) — Divisa Ufficiale Unica 3D Foggia City (sostituito segnaposto 2D e rimossi pallini carosello) nel Selettore Squadre (cache `FGCKIT1`).
+Ultimo fatto: **Divisa Ufficiale Unica 3D Foggia City (`FGCKIT1`)**:
+1. **Sostituzione Divisa con Jersey 3D Ufficiale Reale**:
+   - Integrata la divisa reale ufficiale 3D con bande verticali nerazzurre, sponsor EDIL MILANESE, logo Givova e stemma circolare Foggia City (`immagini/kits-2d/foggia-city/home.png`).
+   - Sostituito integralmente il segnaposto vettoriale piatto precedente.
+2. **Singola Divisa Esclusiva (Nessun pallino/carosello)**:
+   - Configurato lo slot unico `IN CASA` senza seconde/terze divise fittizie in `data/squadre/verified-teams.json`, `squadre-select.js` e `catalog.json`.
+   - In `squadre-select.js` e `index.html`: quando è presente una sola divisa (`slots.length <= 1`), l'intera barra di navigazione/paginazione a pallini (`.es-sq-kit-dots`) e le frecce vengono nascoste automaticamente, lasciando in risalto statico e pulito l'unica divisa societaria.
+   - In `squadre-select.css`: applicato `filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.55))` alla maglia per conferirle un effetto 3D volumetrico e realistico sul piano di appoggio.
+3. **File aggiornati**: `immagini/kits-2d/foggia-city/home.png` (nuovo asset), `data/squadre/verified-teams.json`, `squadre-select.js`, `squadre-select.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `FGCKIT1`.
+Feature precedente: **Font Futuristico Nevera per Foggia City (`NEVERA1`)**:
 Feature precedente: **Font Serif Playfair Display & Dati Reali Pannello Elisee Manager (`TCSERIF1`)**:
 Feature precedente: **Conversione Dark Theme Completa Pannello Elisee Manager (`TCDARK1`)**:
 Feature precedente: **Redesign Ultra-Professionale Candidatura Elisee Manager (`CANDMGR1`)**:

@@ -20,8 +20,10 @@
       "logo": "immagini/squadre-loghi/foggia-city.png",
       "primary": "#0055d4",
       "secondary": "#0b0f19",
-      "home": { "body": "#0055d4", "sleeve": "#0b0f19" },
-      "away": { "body": "#ffffff", "sleeve": "#0055d4" }
+      "kitHome": "immagini/kits-2d/foggia-city/home.png",
+      "kits": [
+        { "key": "home", "label": "IN CASA", "url": "immagini/kits-2d/foggia-city/home.png" }
+      ]
     }
   ],
   "verifiedIds": ["foggia-city"],
