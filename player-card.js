@@ -294,6 +294,7 @@
     if (lg.indexOf('PRIMA CATEGORIA') >= 0) return 'immagini/squadre-loghi/prima-categoria.png';
     if (lg.indexOf('SECONDA CATEGORIA') >= 0) return 'immagini/squadre-loghi/seconda-categoria.png';
     if (lg.indexOf('TERZA CATEGORIA') >= 0) return 'immagini/squadre-loghi/terza-categoria.png';
+    if (lg.indexOf('AMATORIAL') >= 0) return 'immagini/squadre-loghi/amatoriale.png';
     if (lg.indexOf('PRIMAVERA 1') >= 0) return 'immagini/squadre-loghi/primavera-1.png';
     if (lg.indexOf('PRIMAVERA 2') >= 0) return 'immagini/squadre-loghi/primavera-2.png';
     if (lg.indexOf('PRIMAVERA 3') >= 0) return 'immagini/squadre-loghi/primavera-3.png';

@@ -3,15 +3,16 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-15** (Commit `28269cd`) — Immagine Panoramica Ufficiale Città di Foggia come Sfondo Card Città · Stadio (cache `FGCCITY1`).
-Ultimo fatto: **Immagine Sfondo Card Città per Foggia City (`FGCCITY1`)**:
-1. **Integrazione Asset Fotografico Ufficiale Foggia**:
-   - Scaricata ad alta definizione l'immagine richiesta (`https://gedi.b-cdn.net/turismo/images/articoli/foggia-1763984237136-792.JPG`) e salvata in `immagini/stadi/city-foggia.jpg` e `immagini/citta/foggia.jpg`.
-2. **Attivazione nello Sfondo della Card Città · Stadio**:
-   - In `data/squadre/verified-teams.json`, `data/squadre/catalog.json` e `TEAMS_FALLBACK`: assegnato `stadiumImage: "immagini/stadi/city-foggia.jpg"` a Foggia City.
-   - In `squadre-select.js`: `updateStadiumPhoto` e `stadiumSrc` forzano automaticamente la foto reale per Foggia City, attivando la classe `.has-stadium-photo` con overlay calibrato per mantenere il testo in font Nevera nitido e contrastato.
-   - In `index.html`: preimpostato `has-stadium-photo` e `background-image: url('immagini/stadi/city-foggia.jpg')` su `#es-sq-city-panel` e `#es-sq-city-bg`.
-3. **File aggiornati**: `immagini/stadi/city-foggia.jpg` (nuovo asset), `immagini/citta/foggia.jpg` (nuovo asset), `data/squadre/verified-teams.json`, `data/squadre/catalog.json`, `squadre-select.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `FGCCITY1`.
+Ultimo aggiornamento: **2026-09-15** (Commit `211a28b`) — Logo Ufficiale Competizione Amatoriale (Monogramma Stilizzato V/S) (`FGCAMATLOGO1`).
+Ultimo fatto: **Logo Ufficiale Competizione Amatoriale (`FGCAMATLOGO1`)**:
+1. **Integrazione Asset Logo Competizione V/S**:
+   - Ritagliato e ottimizzato ad altissima risoluzione (512x512 PNG con sfondo trasparente) il logo fornito dall'utente (`1000345873.png`), salvato in `immagini/squadre-loghi/amatoriale.png`.
+2. **Sostituzione del Vecchio Badge LND "3" con il Nuovo Logo V/S**:
+   - In `squadre-select.js`: aggiornata la funzione `leagueLogoPath` in modo che per la categoria `AMATORIALE` restituisca `immagini/squadre-loghi/amatoriale.png` al posto del generico `terza-categoria.png`.
+   - In `player-card.js`: aggiunto supporto per la categoria `AMATORIALE` che mappa direttamente a `immagini/squadre-loghi/amatoriale.png`.
+   - In `index.html`: aggiornato l'elemento `#es-sq-league-logo` impostando come `src` iniziale `immagini/squadre-loghi/amatoriale.png`.
+3. **File aggiornati**: `immagini/squadre-loghi/amatoriale.png` (nuovo asset), `squadre-select.js`, `player-card.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `FGCAMATLOGO1`.
+Feature precedente: **Immagine Sfondo Card Città per Foggia City (`FGCCITY1`)**:
 Feature precedente: **Font Futuristico Nevera per la Città di Foggia (`FGCFONT1`)**:
 Feature precedente: **Rimozione Totale Divisa Ospiti Foggia City (`FGCKIT2`)**:
 Feature precedente: **Divisa Ufficiale Unica 3D Foggia City (`FGCKIT1`)**:

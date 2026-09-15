@@ -14,7 +14,7 @@
   var CATALOG_LOADING = false;
   var CATALOG_URL = 'data/squadre/catalog.json?v=20260915_FGCCITY1';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260915_FGCCITY1';
+  var LOGO_V = '20260915_FGCAMATLOGO1';
   var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260915_FGCCITY1';
   var REGISTERED_TEAMS = [];
   var VERIFIED_IDS = {};
@@ -973,7 +973,7 @@
       return 'immagini/squadre-loghi/primavera-4.png';
     }
     if (lg.indexOf('AMATORIAL') >= 0) {
-      return 'immagini/squadre-loghi/terza-categoria.png';
+      return 'immagini/squadre-loghi/amatoriale.png';
     }
     if (lg.indexOf('DILETTANTI') >= 0) {
       return 'immagini/squadre-loghi/promozione.png';
