@@ -3,13 +3,16 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-15** (Commit `2748d8b`) — Tipografia Futuristica Nevera Estesa alla Scritta Città Foggia nel Selettore Squadre (cache `FGCFONT1`).
-Ultimo fatto: **Font Futuristico Nevera per la Città di Foggia (`FGCFONT1`)**:
-1. **Applicazione Stile Tipografico Nevera alla Città**:
-   - In `squadre-select.css`: estesa la regola `.is-foggia-city` con `font-family: 'Nevera', sans-serif !important; letter-spacing: 0.14em;` a `.es-sq-city-name.is-foggia-city`, `[data-team="foggia-city"] .es-sq-city-name` e `#es-sq-city.is-foggia-city`.
-   - In `squadre-select.js`: all'aggiornamento della squadra (`applyTeam`), se il club è `foggia-city` o la città è Foggia, all'elemento `cityEl` (`#es-sq-city`) viene assegnata la classe `is-foggia-city`.
-   - In `index.html`: preimpostata la classe `is-foggia-city` e testo `FOGGIA` su `#es-sq-city`.
-2. **File aggiornati**: `squadre-select.css`, `squadre-select.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `FGCFONT1`.
+Ultimo aggiornamento: **2026-09-15** (Commit `28269cd`) — Immagine Panoramica Ufficiale Città di Foggia come Sfondo Card Città · Stadio (cache `FGCCITY1`).
+Ultimo fatto: **Immagine Sfondo Card Città per Foggia City (`FGCCITY1`)**:
+1. **Integrazione Asset Fotografico Ufficiale Foggia**:
+   - Scaricata ad alta definizione l'immagine richiesta (`https://gedi.b-cdn.net/turismo/images/articoli/foggia-1763984237136-792.JPG`) e salvata in `immagini/stadi/city-foggia.jpg` e `immagini/citta/foggia.jpg`.
+2. **Attivazione nello Sfondo della Card Città · Stadio**:
+   - In `data/squadre/verified-teams.json`, `data/squadre/catalog.json` e `TEAMS_FALLBACK`: assegnato `stadiumImage: "immagini/stadi/city-foggia.jpg"` a Foggia City.
+   - In `squadre-select.js`: `updateStadiumPhoto` e `stadiumSrc` forzano automaticamente la foto reale per Foggia City, attivando la classe `.has-stadium-photo` con overlay calibrato per mantenere il testo in font Nevera nitido e contrastato.
+   - In `index.html`: preimpostato `has-stadium-photo` e `background-image: url('immagini/stadi/city-foggia.jpg')` su `#es-sq-city-panel` e `#es-sq-city-bg`.
+3. **File aggiornati**: `immagini/stadi/city-foggia.jpg` (nuovo asset), `immagini/citta/foggia.jpg` (nuovo asset), `data/squadre/verified-teams.json`, `data/squadre/catalog.json`, `squadre-select.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `FGCCITY1`.
+Feature precedente: **Font Futuristico Nevera per la Città di Foggia (`FGCFONT1`)**:
 Feature precedente: **Rimozione Totale Divisa Ospiti Foggia City (`FGCKIT2`)**:
 Feature precedente: **Divisa Ufficiale Unica 3D Foggia City (`FGCKIT1`)**:
 Feature precedente: **Font Futuristico Nevera per Foggia City (`NEVERA1`)**:

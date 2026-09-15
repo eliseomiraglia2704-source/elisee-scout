@@ -230,7 +230,8 @@
           "label": "IN CASA",
           "url": "immagini/kits-2d/foggia-city/home.png"
         }
-      ]
+      ],
+      "stadiumImage": "immagini/stadi/city-foggia.jpg"
     },
     {
       "id": "atalanta",

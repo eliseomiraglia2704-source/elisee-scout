@@ -12,10 +12,10 @@
   var LEAGUE_TEAMS_COUNT = { 'm': {}, 'f': {} };
   var CATALOG_READY = false;
   var CATALOG_LOADING = false;
-  var CATALOG_URL = 'data/squadre/catalog.json?v=20260915_FGCKIT2';
+  var CATALOG_URL = 'data/squadre/catalog.json?v=20260915_FGCCITY1';
   /** Cache-bust loghi/kit locali */
-  var LOGO_V = '20260915_FGCKIT2';
-  var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260915_FGCKIT2';
+  var LOGO_V = '20260915_FGCCITY1';
+  var VERIFIED_URL = 'data/squadre/verified-teams.json?v=20260915_FGCCITY1';
   var REGISTERED_TEAMS = [];
   var VERIFIED_IDS = {};
   var VERIFIED_NAMES = {};
@@ -40,6 +40,7 @@
       logo: 'immagini/squadre-loghi/foggia-city.png',
       primary: '#0055d4',
       secondary: '#0b0f19',
+      stadiumImage: 'immagini/stadi/city-foggia.jpg',
       kitHome: 'immagini/kits-2d/foggia-city/home.png',
       kits: [
         {
@@ -349,6 +350,7 @@
           delete regTeam._cachedSlots;
           regTeam.kitHome = 'immagini/kits-2d/foggia-city/home.png';
           regTeam.kits = [{ key: 'home', label: 'IN CASA', url: 'immagini/kits-2d/foggia-city/home.png' }];
+          regTeam.stadiumImage = 'immagini/stadi/city-foggia.jpg';
         }
         seenIds[regTeam.id] = true;
         regTeam.verified = true;
@@ -493,6 +495,7 @@
           if (selSquadra && (selSquadra.id === 'foggia-city' || String(selSquadra.name).toUpperCase().indexOf('FOGGIA CITY') >= 0)) {
             selSquadra.logo = 'immagini/squadre-loghi/foggia-city.png';
             selSquadra.kitHome = 'immagini/kits-2d/foggia-city/home.png';
+            selSquadra.stadiumImage = 'immagini/stadi/city-foggia.jpg';
             delete selSquadra.away;
             delete selSquadra.kitAway;
             delete selSquadra.third;
@@ -637,9 +640,13 @@
     var panel = $('es-sq-city-panel');
     var bg = $('es-sq-city-bg');
     if (!bg) return;
+    var isFgc = team && (team.id === 'foggia-city' || (team.name && String(team.name).toUpperCase().indexOf('FOGGIA') >= 0) || (team.city && String(team.city).toUpperCase().indexOf('FOGGIA') >= 0));
     var src = team && team.stadiumImage ? String(team.stadiumImage).trim() : '';
+    if (isFgc) {
+      src = 'immagini/stadi/city-foggia.jpg';
+    }
     if (!src) src = 'immagini/stadi/_default.jpg';
-    var url = src.indexOf('?') >= 0 ? src : src + '?v=14';
+    var url = src.indexOf('?') >= 0 ? src : src + '?v=15';
     if (bg.dataset.currentBg === url) return;
     bg.dataset.currentBg = url;
     bg.style.backgroundImage = 'url("' + url.replace(/"/g, '') + '")';
@@ -649,7 +656,7 @@
     var probe = new Image();
     probe.onerror = function () {
       if (bg.dataset.currentBg !== url) return;
-      bg.style.backgroundImage = 'url("immagini/stadi/_default.jpg?v=14")';
+      bg.style.backgroundImage = 'url("immagini/stadi/_default.jpg?v=15")';
     };
     probe.src = url;
   }
@@ -1420,6 +1427,8 @@
   var loadTimer = null;
 
   function stadiumSrc(team) {
+    var isFgc = team && (team.id === 'foggia-city' || (team.name && String(team.name).toUpperCase().indexOf('FOGGIA') >= 0) || (team.city && String(team.city).toUpperCase().indexOf('FOGGIA') >= 0));
+    if (isFgc) return 'immagini/stadi/city-foggia.jpg?v=15';
     var src = team && team.stadiumImage ? String(team.stadiumImage).trim() : '';
     if (!src) src = 'immagini/stadi/_default.jpg';
     return src.indexOf('?') >= 0 ? src : src + '?v=14';

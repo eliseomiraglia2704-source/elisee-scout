@@ -22,10 +22,19 @@
       "secondary": "#0b0f19",
       "kitHome": "immagini/kits-2d/foggia-city/home.png",
       "kits": [
-        { "key": "home", "label": "IN CASA", "url": "immagini/kits-2d/foggia-city/home.png" }
-      ]
+        {
+          "key": "home",
+          "label": "IN CASA",
+          "url": "immagini/kits-2d/foggia-city/home.png"
+        }
+      ],
+      "stadiumImage": "immagini/stadi/city-foggia.jpg"
     }
   ],
-  "verifiedIds": ["foggia-city"],
-  "verifiedNames": ["FOGGIA CITY"]
+  "verifiedIds": [
+    "foggia-city"
+  ],
+  "verifiedNames": [
+    "FOGGIA CITY"
+  ]
 }
