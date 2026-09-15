@@ -292,6 +292,7 @@
 
     var grp = document.getElementById('user-dossier-view-group');
     if (grp) grp.classList.add('is-coach-dash');
+    try { document.body.classList.add('is-coach-mode'); } catch (_) {}
 
     var data = getCoachData();
 
@@ -330,36 +331,26 @@
           '</div>' +
         '</aside>' +
 
-        // 2. MAIN CONTENT AREA (Senza navigazione orizzontale duplicata)
+        // 2. MAIN WORKSPACE
         '<main class="es-cos-main">' +
-          // PAGE HEADER (Pulito, istituzionale SaaS B2B)
-          '<header class="es-cos-page-header">' +
-            '<div class="es-cos-header-top-row">' +
-              '<div class="es-cos-page-title-group">' +
-                '<h1 class="es-cos-page-title">Dashboard Allenatore</h1>' +
-                '<p class="es-cos-page-subtitle">Panoramica operativa della prima squadra · ' + esc(data.coachName) + '</p>' +
+          // TOP BAR DASHBOARD (Compatta, con Dati Essenziali & Pulsante Vice)
+          '<header class="es-cos-top-bar">' +
+            '<div class="es-cos-top-bar-left">' +
+              '<h1 class="es-cos-dash-title">Dashboard Allenatore</h1>' +
+              '<div class="es-cos-team-pills-row">' +
+                '<span class="es-cos-team-pill">Club: <b>' + esc(data.clubName) + '</b></span>' +
+                '<span class="es-cos-team-pill">Categoria: <b>' + esc(data.categoria) + '</b></span>' +
+                '<span class="es-cos-team-pill">Qualifica: <b>' + esc(data.patent) + '</b></span>' +
+                '<span class="es-cos-team-pill">FIGC: <b>' + esc(data.matricola) + '</b></span>' +
               '</div>' +
-              '<button type="button" class="es-cos-btn-vice-jump" id="btn-goto-vice-area">' +
-                '<span>Area Vice Allenatore</span>' +
-                '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>' +
-              '</button>' +
             '</div>' +
-
-            // Meta-bar compatta
-            '<div class="es-cos-meta-bar">' +
-              '<div class="es-cos-meta-item">Squadra: <b>' + esc(data.clubName) + '</b></div>' +
-              '<div class="es-cos-meta-divider"></div>' +
-              '<div class="es-cos-meta-item">Competizione: <b>' + esc(data.categoria) + '</b></div>' +
-              '<div class="es-cos-meta-divider"></div>' +
-              '<div class="es-cos-meta-item">Prossima partita: <b>' + esc(data.nextMatch.avversario) + ' (' + esc(data.nextMatch.data) + ' - ' + esc(data.nextMatch.orario) + ')</b></div>' +
-              '<div class="es-cos-meta-divider"></div>' +
-              '<div class="es-cos-meta-item">Tesseramento FIGC: <b>' + esc(data.matricola) + '</b></div>' +
-              '<div class="es-cos-meta-divider"></div>' +
-              '<div class="es-cos-meta-item">Licenza: <b>' + esc(data.patent) + ' (' + esc(data.scadenzaTesseramento) + ')</b></div>' +
-            '</div>' +
+            '<button type="button" class="es-cos-btn-vice-jump" id="btn-goto-vice-area">' +
+              '<span>Area Vice Allenatore</span>' +
+              '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>' +
+            '</button>' +
           '</header>' +
 
-          // CONTENITORE OPERATIVO DIRETTO (Senza navbar orizzontale)
+          // CONTENITORE OPERATIVO DIRETTO
           '<div id="es-cos-active-content">' +
             renderActiveTab(activeTab, data) +
           '</div>' +
@@ -397,96 +388,121 @@
   }
 
   // ============================================================
-  // 1. SEZIONE DASHBOARD (Architettura SaaS B2B Gestionale)
+  // 1. SEZIONE DASHBOARD (Football Manager & Modern Sports HUD)
   // ============================================================
   function renderDashboard(data) {
     return (
-      '<div style="display:flex; flex-direction:column; gap:1.75rem;">' +
-        // A. SEZIONE RIEPILOGO OPERATIVO (Esattamente 4 Indicatori Essenziali)
-        '<section class="es-cos-section-block">' +
-          '<div class="es-cos-section-heading">' +
-            '<span class="es-cos-section-title">' +
-              '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--cos-blue);"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>' +
-              'Riepilogo operativo' +
-            '</span>' +
+      '<div style="display:flex; flex-direction:column; gap:1.25rem;">' +
+        // 1. MATCHDAY HEADER BANNER (Widget Orizzontale in Evidenza)
+        '<section class="es-cos-matchday-banner">' +
+          '<div class="es-cos-matchday-left">' +
+            '<div class="es-cos-match-versus-box">' +
+              '<div class="es-cos-team-crest-badge">CAR</div>' +
+              '<span style="font-weight:800; color:var(--cos-text-muted); font-size:0.85rem;">VS</span>' +
+              '<div class="es-cos-team-crest-badge" style="color:var(--cos-emerald);">RAG</div>' +
+            '</div>' +
+            '<div class="es-cos-match-names">' +
+              '<div class="es-cos-match-title">' +
+                esc(data.clubName) + ' <span class="vs">vs</span> ' + esc(data.nextMatch.avversario) +
+              '</div>' +
+              '<div class="es-cos-match-details">' +
+                '<span>📅 <b>' + esc(data.nextMatch.data) + ' · ' + esc(data.nextMatch.orario) + '</b></span>' +
+                '<span>•</span>' +
+                '<span>🏟️ ' + esc(data.nextMatch.luogo) + '</span>' +
+                '<span>•</span>' +
+                '<span style="color:var(--cos-sky); font-weight:600;">' + esc(data.categoria) + '</span>' +
+              '</div>' +
+            '</div>' +
           '</div>' +
 
-          '<div class="es-cos-kpi-grid-4">' +
-            // Indicator 1: Prossima Partita
-            '<div class="es-cos-kpi-card" data-tab-nav="analisi_avversario" style="cursor:pointer;" title="Apri analisi tecnica avversario">' +
-              '<div class="es-cos-kpi-header">' +
-                '<span class="es-cos-kpi-label">Prossima partita</span>' +
-                '<svg class="es-cos-kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
+          '<div class="es-cos-matchday-status-group">' +
+            '<div class="es-cos-match-prep-badge">' +
+              '<span class="es-cos-badge is-success">✓ Seduta Rifinitura Completata</span>' +
+              '<span class="es-cos-prep-val">Preparazione Tattica: 80%</span>' +
+            '</div>' +
+            '<button type="button" class="es-btn-match-prep-cta" data-tab-nav="formazione" title="Apri Lineup Builder e lavagna tattica">' +
+              '<span>Match Prep / Setup Tattico</span>' +
+              '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>' +
+            '</button>' +
+          '</div>' +
+        '</section>' +
+
+        // 2. OPERATIONAL KPIS GRID (4 Mini-Cards)
+        '<section class="es-cos-kpi-grid-4">' +
+          // KPI 1: Disponibilità Rosa
+          '<div class="es-cos-kpi-card" data-tab-nav="rosa" style="cursor:pointer;" title="Visualizza organico atleti">' +
+            '<div class="es-cos-kpi-header">' +
+              '<span class="es-cos-kpi-label">Disponibilità Rosa</span>' +
+              '<svg class="es-cos-kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>' +
+            '</div>' +
+            '<div class="es-cos-kpi-body">' +
+              '<div style="display:flex; align-items:baseline; justify-content:space-between;">' +
+                '<span class="es-cos-kpi-primary-value">24 / 26</span>' +
+                '<span class="es-cos-badge is-success">92% attiva</span>' +
               '</div>' +
-              '<div class="es-cos-kpi-body">' +
-                '<div class="es-cos-kpi-primary-value" style="font-size:1.25rem;">' + esc(data.nextMatch.avversario) + '</div>' +
-                '<div class="es-cos-kpi-secondary-info">' +
-                  '<span>' + esc(data.nextMatch.data) + ' · ' + esc(data.nextMatch.orario) + '</span>' +
-                  '<span class="es-cos-badge is-info">In corso (80%)</span>' +
-                '</div>' +
+              '<div class="es-cos-mini-progress"><div class="es-cos-mini-progress-fill is-success" style="width:92%;"></div></div>' +
+              '<div class="es-cos-kpi-secondary-info" style="margin-top:0.25rem;">' +
+                '<span>Rosa convocabile</span>' +
+                '<span class="es-cos-badge is-warning">2 differenziati</span>' +
               '</div>' +
             '</div>' +
+          '</div>' +
 
-            // Indicator 2: Ultima Seduta
-            '<div class="es-cos-kpi-card" data-tab-nav="allenamenti" style="cursor:pointer;" title="Apri registro sedute">' +
-              '<div class="es-cos-kpi-header">' +
-                '<span class="es-cos-kpi-label">Ultima seduta</span>' +
-                '<svg class="es-cos-kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' +
+          // KPI 2: Indice Carico ACWR
+          '<div class="es-cos-kpi-card" data-tab-nav="gps_carichi" style="cursor:pointer;" title="Apri telemetria carichi GPS">' +
+            '<div class="es-cos-kpi-header">' +
+              '<span class="es-cos-kpi-label">Carico Squadra & ACWR</span>' +
+              '<svg class="es-cos-kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>' +
+            '</div>' +
+            '<div class="es-cos-kpi-body">' +
+              '<div style="display:flex; align-items:baseline; justify-content:space-between;">' +
+                '<span class="es-cos-kpi-primary-value">1.05 <span style="font-size:0.85rem; color:var(--cos-text-sec); font-weight:600;">(78%)</span></span>' +
+                '<span class="es-cos-badge is-success">● Ottimale</span>' +
               '</div>' +
-              '<div class="es-cos-kpi-body">' +
-                '<div class="es-cos-kpi-primary-value">' + esc(data.ultimaSessione.tipo) + '</div>' +
-                '<div class="es-cos-kpi-secondary-info">' +
-                  '<span>14/09/2026</span>' +
-                  '<span class="es-cos-badge is-success">✓ Completata</span>' +
-                '</div>' +
+              '<div class="es-cos-mini-progress"><div class="es-cos-mini-progress-fill" style="width:78%;"></div></div>' +
+              '<div class="es-cos-kpi-secondary-info" style="margin-top:0.25rem;">' +
+                '<span>Ratio Acute:Chronic</span>' +
+                '<span>Rischio Infortuni Basso</span>' +
               '</div>' +
             '</div>' +
+          '</div>' +
 
-            // Indicator 3: Disponibilità Rosa
-            '<div class="es-cos-kpi-card" data-tab-nav="rosa" style="cursor:pointer;" title="Visualizza atleti disponibili">' +
-              '<div class="es-cos-kpi-header">' +
-                '<span class="es-cos-kpi-label">Disponibilità rosa</span>' +
-                '<svg class="es-cos-kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>' +
-              '</div>' +
-              '<div class="es-cos-kpi-body">' +
-                '<div style="display:flex; align-items:baseline; justify-content:space-between;">' +
-                  '<span class="es-cos-kpi-primary-value">24 / 26</span>' +
-                  '<span style="font-size:0.82rem; color:var(--cos-success); font-weight:700;">92%</span>' +
-                '</div>' +
-                '<div class="es-cos-mini-progress"><div class="es-cos-mini-progress-fill is-success" style="width:92%;"></div></div>' +
-                '<div class="es-cos-kpi-secondary-info" style="margin-top:0.3rem;">' +
-                  '<span>Rosa attiva</span>' +
-                  '<span class="es-cos-badge is-warning">2 differenziati</span>' +
-                '</div>' +
+          // KPI 3: Ultima Seduta Svolta
+          '<div class="es-cos-kpi-card" data-tab-nav="allenamenti" style="cursor:pointer;" title="Dettagli ultima seduta di campo">' +
+            '<div class="es-cos-kpi-header">' +
+              '<span class="es-cos-kpi-label">Ultima Seduta</span>' +
+              '<svg class="es-cos-kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' +
+            '</div>' +
+            '<div class="es-cos-kpi-body">' +
+              '<div class="es-cos-kpi-primary-value">' + esc(data.ultimaSessione.tipo) + '</div>' +
+              '<div class="es-cos-kpi-secondary-info">' +
+                '<span>14/09 · 1h 30m</span>' +
+                '<span class="es-cos-badge is-success">✓ Conclusa</span>' +
               '</div>' +
             '</div>' +
+          '</div>' +
 
-            // Indicator 4: Carico Squadra
-            '<div class="es-cos-kpi-card" data-tab-nav="gps_carichi" style="cursor:pointer;" title="Apri monitoraggio carichi GPS">' +
-              '<div class="es-cos-kpi-header">' +
-                '<span class="es-cos-kpi-label">Carico squadra</span>' +
-                '<svg class="es-cos-kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>' +
-              '</div>' +
-              '<div class="es-cos-kpi-body">' +
-                '<div style="display:flex; align-items:baseline; justify-content:space-between;">' +
-                  '<span class="es-cos-kpi-primary-value">78%</span>' +
-                  '<span class="es-cos-badge is-success">● Ottimale</span>' +
-                '</div>' +
-                '<div class="es-cos-mini-progress"><div class="es-cos-mini-progress-fill" style="width:78%;"></div></div>' +
-                '<div class="es-cos-kpi-secondary-info" style="margin-top:0.3rem;">' +
-                  '<span>Indice ACWR: 1.05</span>' +
-                  '<span>Sotto soglia rischio</span>' +
-                '</div>' +
+          // KPI 4: Prossima Seduta in Programma
+          '<div class="es-cos-kpi-card" data-tab-nav="allenamenti" style="cursor:pointer;" title="Pianificazione sedute">' +
+            '<div class="es-cos-kpi-header">' +
+              '<span class="es-cos-kpi-label">Prossima Seduta</span>' +
+              '<svg class="es-cos-kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
+            '</div>' +
+            '<div class="es-cos-kpi-body">' +
+              '<div class="es-cos-kpi-primary-value" style="font-size:1.15rem;">Domani 10:00</div>' +
+              '<div class="es-cos-kpi-secondary-info">' +
+                '<span>Attivazione pre-gara</span>' +
+                '<span class="es-cos-badge is-info">In programma</span>' +
               '</div>' +
             '</div>' +
           '</div>' +
         '</section>' +
 
-        // B. LAYOUT ASIMMETRICO A 12 COLONNE (Operativo 65% / Feed & Impegni 35%)
-        '<section class="es-cos-layout-grid">' +
-          // COLONNA PRINCIPALE SINISTRA (Attività operative e tabelle)
+        // 3. LAYOUT A 2 COLONNE (68% Operatività Campo / 32% Notifiche & Staff)
+        '<section class="es-cos-layout-grid-68-32">' +
+          // COLONNA SINISTRA (68%): Tabella Gare, Grafico Carichi, Scheda Ultima Seduta
           '<div class="es-cos-col-left">' +
-            // 1. Calendario Prossime Gare (Tabella B2B Professionale)
+            // A. Calendario Prossime Gare (Tabella Compatta & Snella)
             '<div class="es-cos-panel">' +
               '<div class="es-cos-panel-header">' +
                 '<span class="es-cos-panel-title">' +
@@ -496,18 +512,18 @@
                 '<a class="es-cos-panel-action" data-tab-nav="calendario">Visualizza calendario completo &rarr;</a>' +
               '</div>' +
               '<div class="es-cos-table-wrapper">' +
-                '<table class="es-cos-table">' +
-                  '<thead><tr><th>Data</th><th>Competizione</th><th>Avversario</th><th>Stadio</th><th>Stato</th><th style="text-align:right;">Azioni</th></tr></thead>' +
+                '<table class="es-cos-table-compact-clean">' +
+                  '<thead><tr><th>Data</th><th>Competizione</th><th>Avversario</th><th>Stadio</th><th>Stato</th><th style="text-align:right;">Azione</th></tr></thead>' +
                   '<tbody>' +
                     data.prossimeGare.map(function (g) {
                       return (
-                        '<tr data-tab-nav="analisi_avversario" title="Clicca per aprire scheda match e analisi tattica">' +
-                          '<td style="white-space:nowrap; font-weight:600;">' + esc(g.data) + '</td>' +
+                        '<tr data-tab-nav="analisi_avversario" title="Apri analisi tattica ' + esc(g.avv) + '">' +
+                          '<td style="white-space:nowrap; font-weight:700;">' + esc(g.data) + '</td>' +
                           '<td style="color:var(--cos-text-sec);">' + esc(g.comp) + '</td>' +
                           '<td style="font-weight:700; color:#FFFFFF;">' + esc(g.avv) + '</td>' +
                           '<td style="color:var(--cos-text-sec);">' + esc(g.stadio) + '</td>' +
                           '<td><span class="es-cos-badge is-info">' + esc(g.status) + '</span></td>' +
-                          '<td style="text-align:right;"><span style="color:var(--cos-cyan); font-weight:600; font-size:0.78rem;">Analizza &rsaquo;</span></td>' +
+                          '<td style="text-align:right;"><span style="color:var(--cos-sky); font-weight:600; font-size:0.75rem;">Analizza &rsaquo;</span></td>' +
                         '</tr>'
                       );
                     }).join('') +
@@ -516,20 +532,42 @@
               '</div>' +
             '</div>' +
 
-            // 2. Ultima Sessione di Campo
+            // B. Grafico Carico Settimanale Squadra (Minimalist Daily GPS Load)
+            '<div class="es-cos-panel">' +
+              '<div class="es-cos-panel-header">' +
+                '<span class="es-cos-panel-title">' +
+                  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>' +
+                  'Monitoraggio Carico Settimanale GPS' +
+                '</span>' +
+                '<span style="font-size:0.75rem; color:var(--cos-text-sec);">Media: <b style="color:#FFFFFF;">78%</b> <span class="es-cos-badge is-success">● Ottimale</span></span>' +
+              '</div>' +
+              '<div class="es-cos-panel-body" style="padding-top:0.6rem;">' +
+                '<div class="es-cos-weekly-bars-clean">' +
+                  '<div class="es-cos-bar-wrapper"><div class="es-cos-bar-stem-clean" style="height:55%;"></div><span class="es-cos-bar-label">Lun</span></div>' +
+                  '<div class="es-cos-bar-wrapper"><div class="es-cos-bar-stem-clean" style="height:70%;"></div><span class="es-cos-bar-label">Mar</span></div>' +
+                  '<div class="es-cos-bar-wrapper"><div class="es-cos-bar-stem-clean" style="height:85%;"></div><span class="es-cos-bar-label">Mer</span></div>' +
+                  '<div class="es-cos-bar-wrapper"><div class="es-cos-bar-stem-clean" style="height:65%;"></div><span class="es-cos-bar-label">Gio</span></div>' +
+                  '<div class="es-cos-bar-wrapper"><div class="es-cos-bar-stem-clean is-optimal" style="height:90%;"></div><span class="es-cos-bar-label">Ven</span></div>' +
+                  '<div class="es-cos-bar-wrapper"><div class="es-cos-bar-stem-clean is-optimal" style="height:80%;"></div><span class="es-cos-bar-label">Sab</span></div>' +
+                  '<div class="es-cos-bar-wrapper"><div class="es-cos-bar-stem-clean" style="height:45%;"></div><span class="es-cos-bar-label">Dom</span></div>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+
+            // C. Ultima Sessione di Campo Svolta
             '<div class="es-cos-panel">' +
               '<div class="es-cos-panel-header">' +
                 '<span class="es-cos-panel-title">' +
                   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' +
-                  'Ultima Sessione Svolta' +
+                  'Dettaglio Ultima Seduta di Campo' +
                 '</span>' +
-                '<a class="es-cos-panel-action" data-tab-nav="allenamenti">Visualizza dettagli seduta &rarr;</a>' +
+                '<a class="es-cos-panel-action" data-tab-nav="allenamenti">Visualizza report seduta &rarr;</a>' +
               '</div>' +
               '<div class="es-cos-panel-body">' +
                 '<div class="es-cos-session-detail-grid">' +
-                  '<div style="display:flex; flex-direction:column; gap:0.65rem;">' +
+                  '<div style="display:flex; flex-direction:column; gap:0.5rem;">' +
                     '<div class="es-cos-session-info-row">' +
-                      '<span class="es-cos-session-label">Tipologia & Denominazione</span>' +
+                      '<span class="es-cos-session-label">Tipologia Seduta</span>' +
                       '<span class="es-cos-session-val">' + esc(data.ultimaSessione.tipo) + ' pre-gara</span>' +
                     '</div>' +
                     '<div class="es-cos-session-info-row">' +
@@ -537,105 +575,42 @@
                       '<span class="es-cos-session-val">' + esc(data.ultimaSessione.data) + ' (' + esc(data.ultimaSessione.durata) + ')</span>' +
                     '</div>' +
                     '<div class="es-cos-session-info-row">' +
-                      '<span class="es-cos-session-label">Campo & Carico Percepito</span>' +
-                      '<span class="es-cos-session-val">Stadio Comunale · Carico: <b style="color:var(--cos-success);">' + esc(data.ultimaSessione.carico) + ' (RPE 6/10)</b></span>' +
+                      '<span class="es-cos-session-label">Campo & Carico</span>' +
+                      '<span class="es-cos-session-val">Stadio Comunale · Carico: <b style="color:var(--cos-emerald);">' + esc(data.ultimaSessione.carico) + ' (RPE 6/10)</b></span>' +
                     '</div>' +
                   '</div>' +
                   '<div style="display:flex; flex-direction:column; justify-content:space-between;">' +
-                    '<span class="es-cos-session-label">Metriche Chiave Seduta</span>' +
+                    '<span class="es-cos-session-label">Parametri Seduta</span>' +
                     '<div class="es-cos-metric-pill-row">' +
-                      '<div class="es-cos-metric-box"><span class="es-cos-metric-box-num">' + esc(data.ultimaSessione.giocatori) + '</span><span class="es-cos-metric-box-lbl">Giocatori Presenti</span></div>' +
-                      '<div class="es-cos-metric-box"><span class="es-cos-metric-box-num">' + esc(data.ultimaSessione.esercizi) + '</span><span class="es-cos-metric-box-lbl">Esercizi Svolti</span></div>' +
-                      '<div class="es-cos-metric-box"><span class="es-cos-metric-box-num">' + esc(data.ultimaSessione.obiettivi) + '</span><span class="es-cos-metric-box-lbl">Obiettivi Raggiunti</span></div>' +
+                      '<div class="es-cos-metric-box"><span class="es-cos-metric-box-num">' + esc(data.ultimaSessione.giocatori) + '</span><span class="es-cos-metric-box-lbl">Atleti Presenti</span></div>' +
+                      '<div class="es-cos-metric-box"><span class="es-cos-metric-box-num">' + esc(data.ultimaSessione.esercizi) + '</span><span class="es-cos-metric-box-lbl">Esercizi</span></div>' +
+                      '<div class="es-cos-metric-box"><span class="es-cos-metric-box-num">' + esc(data.ultimaSessione.obiettivi) + '</span><span class="es-cos-metric-box-lbl">Obiettivi</span></div>' +
                     '</div>' +
                   '</div>' +
                 '</div>' +
-              '</div>' +
-            '</div>' +
-
-            // 3. Ultimi Report Staff
-            '<div class="es-cos-panel">' +
-              '<div class="es-cos-panel-header">' +
-                '<span class="es-cos-panel-title">' +
-                  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' +
-                  'Ultimi Report Staff Collaboratori' +
-                '</span>' +
-                '<a class="es-cos-panel-action" data-tab-nav="report_staff">Tutti i report &rarr;</a>' +
-              '</div>' +
-              '<div style="display:flex; flex-direction:column;">' +
-                '<div class="es-cos-report-item" data-tab-nav="report_staff" style="cursor:pointer;">' +
-                  '<div class="es-cos-report-meta">' +
-                    '<div class="es-cos-report-title">Vice Allenatore · Palle Inattive Offensive</div>' +
-                    '<div class="es-cos-report-sub">Paolo Gentile · 14/09/2026 - 16:45 · Analisi schemi d\'angolo per la gara con A.C. Ragusa</div>' +
-                  '</div>' +
-                  '<div style="display:flex; align-items:center; gap:0.75rem;">' +
-                    '<span class="es-cos-badge is-warning">In revisione</span>' +
-                    '<span style="color:var(--cos-cyan); font-size:0.8rem; font-weight:600;">Visualizza &rsaquo;</span>' +
-                  '</div>' +
-                '</div>' +
-                '<div class="es-cos-report-item" data-tab-nav="gps_carichi" style="cursor:pointer;">' +
-                  '<div class="es-cos-report-meta">' +
-                    '<div class="es-cos-report-title">Preparatore Atletico · Report Carichi GPS Rifinitura</div>' +
-                    '<div class="es-cos-report-sub">Prof. De Santis · 14/09/2026 - 17:30 · Telemetria atleti e distanze ad alta intensità</div>' +
-                  '</div>' +
-                  '<div style="display:flex; align-items:center; gap:0.75rem;">' +
-                    '<span class="es-cos-badge is-success">Approvato</span>' +
-                    '<span style="color:var(--cos-cyan); font-size:0.8rem; font-weight:600;">Visualizza &rsaquo;</span>' +
-                  '</div>' +
-                '</div>' +
-                '<div class="es-cos-report-item" data-tab-nav="analisi_avversario" style="cursor:pointer;">' +
-                  '<div class="es-cos-report-meta">' +
-                    '<div class="es-cos-report-title">Match Analyst · Studio Catene Laterali A.C. Ragusa</div>' +
-                    '<div class="es-cos-report-sub">Dott. Russo · 13/09/2026 - 19:15 · Analisi video dei pattern d\'uscita avversari</div>' +
-                  '</div>' +
-                  '<div style="display:flex; align-items:center; gap:0.75rem;">' +
-                    '<span class="es-cos-badge is-success">Approvato</span>' +
-                    '<span style="color:var(--cos-cyan); font-size:0.8rem; font-weight:600;">Visualizza &rsaquo;</span>' +
-                  '</div>' +
-                '</div>' +
-              '</div>' +
-            '</div>' +
-
-            // 4. Registro Attività Recenti / Log
-            '<div class="es-cos-panel">' +
-              '<div class="es-cos-panel-header">' +
-                '<span class="es-cos-panel-title">' +
-                  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>' +
-                  'Registro Attività Tecniche' +
-                '</span>' +
-              '</div>' +
-              '<div style="display:flex; flex-direction:column;">' +
-                data.logAttivita.map(function (l) {
-                  return (
-                    '<div class="es-cos-report-item" style="padding:0.65rem 1rem;">' +
-                      '<span style="font-size:0.76rem; color:var(--cos-text-muted); font-weight:600; white-space:nowrap;">' + esc(l.date) + '</span>' +
-                      '<span style="font-size:0.8rem; color:var(--cos-text); flex:1; margin-left:0.75rem;">' + esc(l.text) + '</span>' +
-                    '</div>'
-                  );
-                }).join('') +
               '</div>' +
             '</div>' +
           '</div>' +
 
-          // COLONNA LATERALE DESTRA (Feed Notifiche, Impegni e Carico)
+          // COLONNA DESTRA (32%): Notifiche Urgenti, Report Collaboratori, Activity Log
           '<div class="es-cos-col-right">' +
-            // 1. Notifiche Staff
+            // 1. Notifiche Prioritarie & Approvazioni Pending
             '<div class="es-cos-panel">' +
               '<div class="es-cos-panel-header">' +
                 '<span class="es-cos-panel-title">' +
                   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>' +
-                  'Notifiche Prioritarie' +
+                  'Notifiche & Approvazioni' +
                 '</span>' +
                 '<a class="es-cos-panel-action" data-tab-nav="comunicazioni">Tutte &rarr;</a>' +
               '</div>' +
-              '<div class="es-cos-notification-list">' +
+              '<div class="es-cos-notif-stack">' +
                 data.notifiche.slice(0, 5).map(function (n) {
                   return (
-                    '<div class="es-cos-notif-item" data-notif-action="' + esc(n.action) + '">' +
-                      '<span class="es-cos-notif-dot is-' + esc(n.dot) + '"></span>' +
-                      '<div class="es-cos-notif-content">' +
-                        '<div class="es-cos-notif-title">' + esc(n.text) + '</div>' +
-                        '<div class="es-cos-notif-time">' + esc(n.date) + '</div>' +
+                    '<div class="es-cos-notif-row-clean" data-notif-action="' + esc(n.action) + '">' +
+                      '<span class="es-cos-notif-dot-clean is-' + esc(n.dot) + '"></span>' +
+                      '<div class="es-cos-notif-body-clean">' +
+                        '<div class="es-cos-notif-title-clean">' + esc(n.text) + '</div>' +
+                        '<div class="es-cos-notif-time-clean">' + esc(n.date) + '</div>' +
                       '</div>' +
                       '<span style="color:var(--cos-text-muted);">&rsaquo;</span>' +
                     '</div>'
@@ -644,17 +619,51 @@
               '</div>' +
             '</div>' +
 
-            // 2. Prossimi Impegni Staff
+            // 2. Ultimi Report Staff Collaboratori
+            '<div class="es-cos-panel">' +
+              '<div class="es-cos-panel-header">' +
+                '<span class="es-cos-panel-title">' +
+                  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' +
+                  'Report Staff Collaboratori' +
+                '</span>' +
+                '<a class="es-cos-panel-action" data-tab-nav="report_staff">Tutti &rarr;</a>' +
+              '</div>' +
+              '<div style="display:flex; flex-direction:column;">' +
+                '<div class="es-cos-report-item-clean" data-tab-nav="report_staff">' +
+                  '<div>' +
+                    '<div class="es-cos-report-title-clean">Vice Allenatore · Palle Inattive</div>' +
+                    '<div class="es-cos-report-sub-clean">Paolo Gentile · 14/09 16:45</div>' +
+                  '</div>' +
+                  '<span class="es-cos-badge is-warning">In revisione</span>' +
+                '</div>' +
+                '<div class="es-cos-report-item-clean" data-tab-nav="gps_carichi">' +
+                  '<div>' +
+                    '<div class="es-cos-report-title-clean">Prep. Atletico · Carichi GPS</div>' +
+                    '<div class="es-cos-report-sub-clean">Prof. De Santis · 14/09 17:30</div>' +
+                  '</div>' +
+                  '<span class="es-cos-badge is-success">Approvato</span>' +
+                '</div>' +
+                '<div class="es-cos-report-item-clean" data-tab-nav="analisi_avversario">' +
+                  '<div>' +
+                    '<div class="es-cos-report-title-clean">Match Analyst · Catene A.C. Ragusa</div>' +
+                    '<div class="es-cos-report-sub-clean">Dott. Russo · 13/09 19:15</div>' +
+                  '</div>' +
+                  '<span class="es-cos-badge is-success">Approvato</span>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+
+            // 3. Prossimi Impegni Cronologici
             '<div class="es-cos-panel">' +
               '<div class="es-cos-panel-header">' +
                 '<span class="es-cos-panel-title">' +
                   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' +
                   'Prossimi Impegni Staff' +
                 '</span>' +
-                '<a class="es-cos-panel-action" data-tab-nav="calendario">Calendario &rarr;</a>' +
+                '<a class="es-cos-panel-action" data-tab-nav="calendario">Vedi tutti &rarr;</a>' +
               '</div>' +
               '<div class="es-cos-impegni-list">' +
-                data.prossimiImpegni.map(function (imp) {
+                data.prossimiImpegni.slice(0, 3).map(function (imp) {
                   return (
                     '<div class="es-cos-impegno-row">' +
                       '<div class="es-cos-impegno-date-box">' +
@@ -668,28 +677,23 @@
               '</div>' +
             '</div>' +
 
-            // 3. Monitoraggio Carico Settimanale
+            // 4. Registro Attività Tecniche (Activity Log)
             '<div class="es-cos-panel">' +
               '<div class="es-cos-panel-header">' +
                 '<span class="es-cos-panel-title">' +
-                  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>' +
-                  'Carico Settimanale Squadra' +
+                  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>' +
+                  'Registro Attività' +
                 '</span>' +
               '</div>' +
-              '<div class="es-cos-chart-box">' +
-                '<div class="es-cos-weekly-bars">' +
-                  '<div class="es-cos-bar-wrapper"><div class="es-cos-bar-stem" style="height:55%;"></div><span class="es-cos-bar-label">Lun</span></div>' +
-                  '<div class="es-cos-bar-wrapper"><div class="es-cos-bar-stem" style="height:70%;"></div><span class="es-cos-bar-label">Mar</span></div>' +
-                  '<div class="es-cos-bar-wrapper"><div class="es-cos-bar-stem" style="height:85%;"></div><span class="es-cos-bar-label">Mer</span></div>' +
-                  '<div class="es-cos-bar-wrapper"><div class="es-cos-bar-stem" style="height:65%;"></div><span class="es-cos-bar-label">Gio</span></div>' +
-                  '<div class="es-cos-bar-wrapper"><div class="es-cos-bar-stem is-optimal" style="height:90%;"></div><span class="es-cos-bar-label">Ven</span></div>' +
-                  '<div class="es-cos-bar-wrapper"><div class="es-cos-bar-stem is-optimal" style="height:80%;"></div><span class="es-cos-bar-label">Sab</span></div>' +
-                  '<div class="es-cos-bar-wrapper"><div class="es-cos-bar-stem" style="height:45%;"></div><span class="es-cos-bar-label">Dom</span></div>' +
-                '</div>' +
-                '<div class="es-cos-chart-footer">' +
-                  '<span>Media settimanale: <b style="color:#FFFFFF;">78%</b></span>' +
-                  '<span class="es-cos-badge is-success">● Ottimale</span>' +
-                '</div>' +
+              '<div style="display:flex; flex-direction:column;">' +
+                data.logAttivita.slice(0, 3).map(function (l) {
+                  return (
+                    '<div class="es-cos-activity-log-row">' +
+                      '<span class="es-cos-activity-date">' + esc(l.date) + '</span>' +
+                      '<span class="es-cos-activity-text">' + esc(l.text) + '</span>' +
+                    '</div>'
+                  );
+                }).join('') +
               '</div>' +
             '</div>' +
           '</div>' +

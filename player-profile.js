@@ -1243,6 +1243,9 @@
     if (grp) {
       groupClasses.forEach(function (c) { grp.classList.remove(c); });
     }
+    if (keepId !== 'es-cd') {
+      try { document.body.classList.remove('is-coach-mode'); } catch (_) {}
+    }
   };
 
   function setHostVisible(el, on) {

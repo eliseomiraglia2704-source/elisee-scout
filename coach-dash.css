@@ -1,32 +1,47 @@
 /* ============================================================
-   ELISEE SCOUT — FOOTBALL MANAGEMENT SAAS PLATFORM
-   Technical Staff Management Suite (Head Coach & Assistant Coach)
-   Aesthetic: Professional B2B Sports Management SaaS (Notion / Linear / Stripe style)
-   Zero Gaming · Zero Neon/Glow · Balanced Spacing · High Usability
+   ELISEE SCOUT — COACH DASHBOARD REDESIGN (SLATE THEME)
+   Professional Sports Analytics & Team Management Platform
+   Aesthetic: Dark Slate Theme (Football Manager / Modern Sports HUD / Linear style)
+   High Contrast Readability · Zero Duplicate Navigation · 68% / 32% Layout
    ============================================================ */
 
 :root {
-  --cos-bg: #050B14;
-  --cos-sidebar: #07111D;
-  --cos-card: #0A1624;
-  --cos-card-alt: #0D1B2A;
-  --cos-card-hover: #102133;
-  --cos-border: #17344A;
-  --cos-border-subtle: #122536;
-  --cos-border-hover: #244b68;
-  --cos-blue: #079BD3;
-  --cos-cyan: #19B9F2;
-  --cos-blue-soft: rgba(7, 155, 211, 0.12);
-  --cos-text: #F2F6FA;
-  --cos-text-sec: #8EA7BC;
-  --cos-text-muted: #566F84;
-  --cos-success: #20C997;
-  --cos-success-soft: rgba(32, 201, 151, 0.12);
-  --cos-warning: #F0B429;
-  --cos-warning-soft: rgba(240, 180, 41, 0.12);
-  --cos-danger: #EF5350;
-  --cos-danger-soft: rgba(239, 83, 80, 0.12);
-  --cos-radius: 8px;
+  --cos-bg: #0B1120;             /* Slate 950 ultra dark */
+  --cos-canvas: #0F172A;         /* Slate 900 */
+  --cos-card: #1E293B;           /* Slate 800 */
+  --cos-card-alt: #253347;       /* Slate 750 for subtle depth */
+  --cos-card-hover: #26354A;     /* Hover state */
+  --cos-border: #334155;         /* Slate 700 high-contrast border */
+  --cos-border-subtle: #1E293B;  /* Slate 800 */
+  --cos-border-hover: #475569;   /* Slate 600 */
+  --cos-emerald: #10B981;        /* Crisp Emerald Green (Primary Action/Optimal) */
+  --cos-emerald-soft: rgba(16, 185, 129, 0.14);
+  --cos-sky: #0EA5E9;            /* Sky Blue (Secondary Highlight) */
+  --cos-sky-soft: rgba(14, 165, 233, 0.14);
+  --cos-text: #F8FAFC;           /* Slate 50 - Crisp White */
+  --cos-text-sec: #94A3B8;       /* Slate 400 - Clear Muted Gray */
+  --cos-text-muted: #64748B;     /* Slate 500 */
+  --cos-warning: #F59E0B;        /* Amber 500 */
+  --cos-warning-soft: rgba(245, 158, 11, 0.14);
+  --cos-danger: #EF4444;         /* Red 500 */
+  --cos-danger-soft: rgba(239, 68, 68, 0.14);
+  --cos-radius: 10px;
+  --cos-radius-lg: 12px;
+}
+
+/* Nasconde la navigazione pubblica del sito quando la dashboard allenatore è aperta */
+body.is-coach-mode .portfolio-nav,
+body.is-coach-mode #nav-menu,
+#user-dossier-view-group.is-staff-area.is-coach-dash ~ * .portfolio-nav {
+  display: none !important;
+}
+
+body.is-coach-mode .portfolio-header,
+body.is-coach-mode .main-header {
+  padding-top: 0.4rem !important;
+  padding-bottom: 0.4rem !important;
+  background: var(--cos-bg) !important;
+  border-bottom: 1px solid var(--cos-border) !important;
 }
 
 #user-dossier-view-group.is-staff-area.is-coach-dash .es-user-tabs,
@@ -42,30 +57,29 @@
 #es-staff-profile.es-cd-on > :not(#es-cd),
 #es-staff-profile.es-vice-on > :not(#es-vd) { display: none !important; }
 
-/* Contenitore Principale Shell */
+/* Shell Globale */
 .es-cos-shell {
   background: var(--cos-bg);
   min-height: 100vh;
   color: var(--cos-text);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   display: flex;
   position: relative;
   width: 100%;
-  letter-spacing: -0.01em;
 }
 
 /* ============================================================
-   SIDEBAR GESTIONALE UNICA & FISSA (Zero Duplicazioni)
+   SIDEBAR GESTIONALE UNICA & COMPATTA
    ============================================================ */
 .es-cos-sidebar {
-  width: 240px;
-  min-width: 240px;
-  background: var(--cos-sidebar);
+  width: 230px;
+  min-width: 230px;
+  background: var(--cos-canvas);
   border-right: 1px solid var(--cos-border);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 1.25rem 0.85rem 1.25rem;
+  padding: 1.25rem 0.75rem 1.25rem;
   flex-shrink: 0;
   min-height: 100vh;
   position: sticky;
@@ -75,28 +89,28 @@
 }
 
 .es-cos-brand-header {
-  padding: 0 0.5rem 1.25rem;
-  border-bottom: 1px solid var(--cos-border-subtle);
-  margin-bottom: 0.85rem;
+  padding: 0 0.5rem 1.15rem;
+  border-bottom: 1px solid var(--cos-border);
+  margin-bottom: 0.75rem;
 }
 
 .es-cos-brand-title {
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   font-weight: 800;
-  letter-spacing: 0.04em;
-  color: #fff;
+  letter-spacing: 0.03em;
+  color: #FFFFFF;
   display: flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.4rem;
 }
 
 .es-cos-brand-title span {
-  color: var(--cos-blue);
+  color: var(--cos-sky);
 }
 
 .es-cos-brand-sub {
-  font-size: 0.72rem;
-  font-weight: 500;
+  font-size: 0.7rem;
+  font-weight: 600;
   color: var(--cos-text-muted);
   margin-top: 2px;
   text-transform: uppercase;
@@ -113,80 +127,80 @@
 .es-cos-side-btn {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.6rem 0.75rem;
+  gap: 0.7rem;
+  padding: 0.55rem 0.75rem;
   background: transparent;
   border: none;
   border-left: 3px solid transparent;
-  border-radius: 4px;
+  border-radius: 5px;
   color: var(--cos-text-sec);
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  transition: all 0.15s ease;
   text-align: left;
   width: 100%;
   box-sizing: border-box;
 }
 
 .es-cos-side-btn svg {
-  width: 17px;
-  height: 17px;
+  width: 16px;
+  height: 16px;
   stroke: var(--cos-text-muted);
   flex-shrink: 0;
   transition: stroke 0.15s ease;
 }
 
 .es-cos-side-btn:hover {
-  background: rgba(255, 255, 255, 0.03);
-  color: var(--cos-text);
+  background: rgba(255, 255, 255, 0.04);
+  color: #FFFFFF;
 }
 
 .es-cos-side-btn:hover svg {
-  stroke: var(--cos-text);
+  stroke: #FFFFFF;
 }
 
 .es-cos-side-btn.is-active {
-  background: var(--cos-blue-soft);
-  color: #ffffff;
+  background: var(--cos-sky-soft);
+  color: #FFFFFF;
   font-weight: 600;
-  border-left-color: var(--cos-blue);
+  border-left-color: var(--cos-sky);
 }
 
 .es-cos-side-btn.is-active svg {
-  stroke: var(--cos-cyan);
+  stroke: var(--cos-sky);
 }
 
 /* Footer Sidebar */
 .es-cos-sidebar-footer {
-  padding-top: 1rem;
-  border-top: 1px solid var(--cos-border-subtle);
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--cos-border);
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: 0.6rem;
 }
 
 .es-cos-user-pill-card {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  padding: 0.5rem;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--cos-border-subtle);
-  border-radius: var(--cos-radius);
+  gap: 0.6rem;
+  padding: 0.45rem 0.55rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--cos-border);
+  border-radius: 6px;
 }
 
 .es-cos-user-pill-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
-  background: #0d2235;
-  border: 1px solid var(--cos-blue);
-  color: var(--cos-cyan);
+  width: 28px;
+  height: 28px;
+  border-radius: 5px;
+  background: #1E293B;
+  border: 1px solid var(--cos-sky);
+  color: var(--cos-sky);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   flex-shrink: 0;
 }
@@ -200,7 +214,7 @@
 .es-cos-user-pill-name {
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--cos-text);
+  color: #FFFFFF;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -208,16 +222,16 @@
 
 .es-cos-user-pill-role {
   font-size: 0.68rem;
-  color: var(--cos-text-muted);
+  color: var(--cos-text-sec);
 }
 
 .es-cos-status-link {
   font-size: 0.7rem;
-  color: var(--cos-success);
+  color: var(--cos-emerald);
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  padding-left: 0.25rem;
+  padding-left: 0.2rem;
   font-weight: 500;
 }
 
@@ -226,142 +240,212 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--cos-success);
+  background: var(--cos-emerald);
   display: inline-block;
 }
 
 /* ============================================================
-   MAIN CONTENT AREA
+   MAIN WORKSPACE
    ============================================================ */
 .es-cos-main {
   flex: 1 1 auto;
   min-width: 0;
-  padding: 2rem 2.25rem 3rem;
+  padding: 1.5rem 2rem 3rem;
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
+  gap: 1.5rem;
   background: var(--cos-bg);
   box-sizing: border-box;
 }
 
 /* ============================================================
-   PAGE HEADER (Sobrio, Istituzionale, Non da Gioco)
+   TOP BAR DASHBOARD (Compatta, con Badge & Dati Essenziali)
    ============================================================ */
-.es-cos-page-header {
+.es-cos-top-bar {
   display: flex;
-  flex-direction: column;
-  gap: 1.15rem;
-  padding-bottom: 1.25rem;
-  border-bottom: 1px solid var(--cos-border-subtle);
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  padding-bottom: 1.15rem;
+  border-bottom: 1px solid var(--cos-border);
 }
 
-.es-cos-header-top-row {
+.es-cos-top-bar-left {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1.5rem;
+  align-items: center;
+  gap: 1rem;
   flex-wrap: wrap;
 }
 
-.es-cos-page-title-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.es-cos-page-title {
-  font-size: 1.6rem;
-  font-weight: 700;
+.es-cos-dash-title {
+  font-size: 1.4rem;
+  font-weight: 800;
   color: #FFFFFF;
-  margin: 0;
   letter-spacing: -0.02em;
+  margin: 0;
 }
 
-.es-cos-page-subtitle {
-  font-size: 0.88rem;
+.es-cos-team-pills-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.es-cos-team-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: var(--cos-card);
+  border: 1px solid var(--cos-border);
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
   color: var(--cos-text-sec);
-  margin: 0;
-  font-weight: 400;
+}
+
+.es-cos-team-pill b {
+  color: var(--cos-text);
+  font-weight: 600;
 }
 
 .es-cos-btn-vice-jump {
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
-  background: transparent;
+  gap: 0.5rem;
+  background: var(--cos-card);
   border: 1px solid var(--cos-border);
   color: var(--cos-text);
-  padding: 0.55rem 1rem;
-  border-radius: var(--cos-radius);
-  font-size: 0.82rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .es-cos-btn-vice-jump:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: var(--cos-blue);
-  color: var(--cos-cyan);
-}
-
-/* Meta-bar info riga compatta */
-.es-cos-meta-bar {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  flex-wrap: wrap;
-  padding: 0.65rem 1rem;
-  background: var(--cos-card);
-  border: 1px solid var(--cos-border);
-  border-radius: var(--cos-radius);
-  font-size: 0.8rem;
-  color: var(--cos-text-sec);
-}
-
-.es-cos-meta-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.es-cos-meta-item b {
-  color: var(--cos-text);
-  font-weight: 600;
-}
-
-.es-cos-meta-divider {
-  width: 1px;
-  height: 14px;
-  background: var(--cos-border);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--cos-sky);
+  color: var(--cos-sky);
 }
 
 /* ============================================================
-   SEZIONE: RIEPILOGO OPERATIVO (Esattamente 4 Indicatori Puliti)
+   1. MATCHDAY HEADER BANNER (Card Orizzontale in Evidenza)
    ============================================================ */
-.es-cos-section-block {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-}
-
-.es-cos-section-heading {
+.es-cos-matchday-banner {
+  background: var(--cos-card);
+  border: 1px solid var(--cos-border);
+  border-left: 4px solid var(--cos-sky);
+  border-radius: var(--cos-radius-lg);
+  padding: 1.25rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
-.es-cos-section-title {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--cos-text);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+.es-cos-matchday-left {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.es-cos-match-versus-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.es-cos-team-crest-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: var(--cos-canvas);
+  border: 1px solid var(--cos-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--cos-sky);
+  flex-shrink: 0;
+}
+
+.es-cos-match-names {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.es-cos-match-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #FFFFFF;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
+.es-cos-match-title .vs {
+  font-size: 0.8rem;
+  color: var(--cos-text-muted);
+  font-weight: 600;
+}
+
+.es-cos-match-details {
+  font-size: 0.78rem;
+  color: var(--cos-text-sec);
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.es-cos-matchday-status-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.es-cos-match-prep-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+}
+
+.es-cos-prep-val {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--cos-sky);
+}
+
+.es-btn-match-prep-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--cos-emerald);
+  border: 1px solid var(--cos-emerald);
+  color: #FFFFFF;
+  padding: 0.6rem 1.15rem;
+  border-radius: 8px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.es-btn-match-prep-cta:hover {
+  background: #059669;
+  border-color: #059669;
+}
+
+/* ============================================================
+   2. OPERATIONAL KPIS GRID (4 Mini-Cards)
+   ============================================================ */
 .es-cos-kpi-grid-4 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -372,13 +456,13 @@
   background: var(--cos-card);
   border: 1px solid var(--cos-border);
   border-radius: var(--cos-radius);
-  padding: 1.15rem 1.25rem;
+  padding: 1rem 1.15rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 0.85rem;
+  gap: 0.65rem;
   transition: border-color 0.15s ease, background 0.15s ease;
-  min-height: 110px;
+  min-height: 98px;
   box-sizing: border-box;
 }
 
@@ -391,11 +475,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem;
 }
 
 .es-cos-kpi-label {
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   font-weight: 600;
   color: var(--cos-text-sec);
   text-transform: uppercase;
@@ -403,23 +486,22 @@
 }
 
 .es-cos-kpi-icon {
-  width: 16px;
-  height: 16px;
-  stroke: var(--cos-blue);
-  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  stroke: var(--cos-sky);
 }
 
 .es-cos-kpi-body {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.2rem;
 }
 
 .es-cos-kpi-primary-value {
-  font-size: 1.45rem;
-  font-weight: 700;
+  font-size: 1.35rem;
+  font-weight: 800;
   color: #FFFFFF;
-  line-height: 1.15;
+  line-height: 1.1;
 }
 
 .es-cos-kpi-secondary-info {
@@ -427,25 +509,25 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   color: var(--cos-text-sec);
 }
 
-/* Badge di stato sobri B2B */
+/* Badge di stato sobri & ad alto contrasto */
 .es-cos-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.2rem 0.55rem;
+  gap: 0.3rem;
+  padding: 0.18rem 0.5rem;
   border-radius: 4px;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 600;
   line-height: 1;
 }
 
 .es-cos-badge.is-success {
-  background: var(--cos-success-soft);
-  color: var(--cos-success);
+  background: var(--cos-emerald-soft);
+  color: var(--cos-emerald);
 }
 
 .es-cos-badge.is-warning {
@@ -458,42 +540,40 @@
   color: var(--cos-danger);
 }
 
+.es-cos-badge.is-info {
+  background: var(--cos-sky-soft);
+  color: var(--cos-sky);
+}
+
 .es-cos-badge.is-neutral {
   background: rgba(255, 255, 255, 0.06);
   color: var(--cos-text-sec);
 }
 
-.es-cos-badge.is-info {
-  background: var(--cos-blue-soft);
-  color: var(--cos-cyan);
-}
-
-/* Mini progress bar sobria */
 .es-cos-mini-progress {
   width: 100%;
-  height: 5px;
+  height: 4px;
   background: rgba(255, 255, 255, 0.06);
-  border-radius: 3px;
+  border-radius: 2px;
   overflow: hidden;
-  margin-top: 0.4rem;
+  margin-top: 0.25rem;
 }
 
 .es-cos-mini-progress-fill {
   height: 100%;
-  background: var(--cos-blue);
-  border-radius: 3px;
+  background: var(--cos-sky);
 }
 
 .es-cos-mini-progress-fill.is-success {
-  background: var(--cos-success);
+  background: var(--cos-emerald);
 }
 
 /* ============================================================
-   LAYOUT A 12 COLONNE / ASIMMETRICO (Operativo 65% / Feed 35%)
+   3. LAYOUT A 2 COLONNE (68% Operatività / 32% Feed)
    ============================================================ */
-.es-cos-layout-grid {
+.es-cos-layout-grid-68-32 {
   display: grid;
-  grid-template-columns: 1.7fr 1fr;
+  grid-template-columns: 2.1fr 1fr;
   gap: 1.5rem;
   align-items: start;
 }
@@ -505,7 +585,7 @@
   gap: 1.5rem;
 }
 
-/* Componente Card Pannello */
+/* Componente Pannello Dark Slate */
 .es-cos-panel {
   background: var(--cos-card);
   border: 1px solid var(--cos-border);
@@ -516,9 +596,9 @@
 }
 
 .es-cos-panel-header {
-  padding: 0.95rem 1.25rem;
+  padding: 0.85rem 1.15rem;
   background: var(--cos-card-alt);
-  border-bottom: 1px solid var(--cos-border-subtle);
+  border-bottom: 1px solid var(--cos-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -526,362 +606,250 @@
 }
 
 .es-cos-panel-title {
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   font-weight: 700;
   color: #FFFFFF;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  letter-spacing: -0.01em;
+  gap: 0.45rem;
 }
 
 .es-cos-panel-title svg {
-  width: 16px;
-  height: 16px;
-  stroke: var(--cos-blue);
+  width: 15px;
+  height: 15px;
+  stroke: var(--cos-sky);
 }
 
 .es-cos-panel-action {
-  font-size: 0.78rem;
-  color: var(--cos-cyan);
+  font-size: 0.76rem;
+  color: var(--cos-sky);
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
-  transition: color 0.15s ease;
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.25rem;
 }
 
 .es-cos-panel-action:hover {
-  color: #FFFFFF;
   text-decoration: underline;
+  color: #FFFFFF;
 }
 
 .es-cos-panel-body {
-  padding: 1.15rem 1.25rem;
+  padding: 1rem 1.15rem;
 }
 
 /* ============================================================
-   TABELLA CALENDARIO PROSSIME GARE (SaaS B2B Clean Table)
+   MATCH CALENDAR TABLE (Compatta, Righe Basse)
    ============================================================ */
 .es-cos-table-wrapper {
   overflow-x: auto;
   width: 100%;
 }
 
-.es-cos-table {
+.es-cos-table-compact-clean {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
 }
 
-.es-cos-table th {
-  padding: 0.7rem 1rem;
-  background: rgba(0, 0, 0, 0.2);
-  color: var(--cos-text-muted);
+.es-cos-table-compact-clean th {
+  padding: 0.55rem 0.85rem;
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--cos-text-sec);
   font-weight: 600;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   border-bottom: 1px solid var(--cos-border);
 }
 
-.es-cos-table td {
-  padding: 0.85rem 1rem;
-  border-bottom: 1px solid var(--cos-border-subtle);
+.es-cos-table-compact-clean td {
+  padding: 0.65rem 0.85rem;
+  border-bottom: 1px solid var(--cos-border);
   color: var(--cos-text);
   vertical-align: middle;
 }
 
-.es-cos-table tr:last-child td {
+.es-cos-table-compact-clean tr:last-child td {
   border-bottom: none;
 }
 
-.es-cos-table tbody tr {
+.es-cos-table-compact-clean tbody tr {
   transition: background 0.15s ease;
   cursor: pointer;
 }
 
-.es-cos-table tbody tr:hover {
-  background: rgba(255, 255, 255, 0.02);
+.es-cos-table-compact-clean tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
 }
 
 /* ============================================================
-   CARD ULTIMA SESSIONE
+   WEEKLY LOAD CHART
    ============================================================ */
-.es-cos-session-detail-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-.es-cos-session-info-row {
+.es-cos-weekly-bars-clean {
   display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.es-cos-session-label {
-  font-size: 0.72rem;
-  color: var(--cos-text-muted);
-  text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
-
-.es-cos-session-val {
-  font-size: 0.88rem;
-  color: var(--cos-text);
-  font-weight: 600;
-}
-
-.es-cos-metric-pill-row {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  margin-top: 0.5rem;
-}
-
-.es-cos-metric-box {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--cos-border-subtle);
-  border-radius: 6px;
-  padding: 0.5rem 0.75rem;
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 80px;
-}
-
-.es-cos-metric-box-num {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--cos-cyan);
-}
-
-.es-cos-metric-box-lbl {
-  font-size: 0.68rem;
-  color: var(--cos-text-muted);
-}
-
-/* ============================================================
-   ULTIMI REPORT STAFF (Feed/Elenco Tabellare Pulito)
-   ============================================================ */
-.es-cos-report-item {
-  display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid var(--cos-border-subtle);
-  transition: background 0.15s ease;
+  height: 85px;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--cos-border);
 }
 
-.es-cos-report-item:last-child {
-  border-bottom: none;
+.es-cos-bar-stem-clean {
+  width: 100%;
+  max-width: 22px;
+  background: var(--cos-sky-soft);
+  border: 1px solid var(--cos-sky);
+  border-radius: 3px 3px 0 0;
+  transition: height 0.2s ease, background 0.15s ease;
 }
 
-.es-cos-report-item:hover {
-  background: rgba(255, 255, 255, 0.02);
+.es-cos-bar-stem-clean.is-optimal {
+  background: var(--cos-emerald-soft);
+  border-color: var(--cos-emerald);
 }
 
-.es-cos-report-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.es-cos-report-title {
-  font-size: 0.84rem;
-  font-weight: 600;
-  color: var(--cos-text);
-}
-
-.es-cos-report-sub {
-  font-size: 0.74rem;
-  color: var(--cos-text-sec);
+.es-cos-bar-stem-clean:hover {
+  background: var(--cos-sky);
 }
 
 /* ============================================================
-   FEED NOTIFICHE (Colonna Destra, Max 5, Sobrie)
+   RIGHT COLUMN (Urgent Notifs, Staff Reports, Activity Log)
    ============================================================ */
-.es-cos-notification-list {
+.es-cos-notif-stack {
   display: flex;
   flex-direction: column;
 }
 
-.es-cos-notif-item {
+.es-cos-notif-row-clean {
   display: flex;
-  gap: 0.75rem;
-  padding: 0.85rem 1.15rem;
-  border-bottom: 1px solid var(--cos-border-subtle);
-  transition: background 0.15s ease;
-  cursor: pointer;
   align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--cos-border);
+  cursor: pointer;
+  transition: background 0.15s ease;
 }
 
-.es-cos-notif-item:last-child {
+.es-cos-notif-row-clean:last-child {
   border-bottom: none;
 }
 
-.es-cos-notif-item:hover {
-  background: rgba(255, 255, 255, 0.02);
+.es-cos-notif-row-clean:hover {
+  background: rgba(255, 255, 255, 0.03);
 }
 
-.es-cos-notif-dot {
-  width: 8px;
-  height: 8px;
+.es-cos-notif-dot-clean {
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   margin-top: 5px;
   flex-shrink: 0;
 }
 
-.es-cos-notif-dot.is-info { background: var(--cos-cyan); }
-.es-cos-notif-dot.is-success { background: var(--cos-success); }
-.es-cos-notif-dot.is-warning { background: var(--cos-warning); }
-.es-cos-notif-dot.is-danger { background: var(--cos-danger); }
+.es-cos-notif-dot-clean.is-info { background: var(--cos-sky); }
+.es-cos-notif-dot-clean.is-success { background: var(--cos-emerald); }
+.es-cos-notif-dot-clean.is-warning { background: var(--cos-warning); }
+.es-cos-notif-dot-clean.is-danger { background: var(--cos-danger); }
 
-.es-cos-notif-content {
+.es-cos-notif-body-clean {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.15rem;
   flex: 1 1 auto;
 }
 
-.es-cos-notif-title {
-  font-size: 0.82rem;
+.es-cos-notif-title-clean {
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--cos-text);
   line-height: 1.3;
 }
 
-.es-cos-notif-time {
-  font-size: 0.7rem;
-  color: var(--cos-text-muted);
+.es-cos-notif-time-clean {
+  font-size: 0.68rem;
+  color: var(--cos-text-sec);
 }
 
-/* ============================================================
-   PROSSIMI IMPEGNI STAFF
-   ============================================================ */
-.es-cos-impegni-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.es-cos-impegno-row {
+/* Staff Reports Feed */
+.es-cos-report-item-clean {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.8rem 1.15rem;
-  border-bottom: 1px solid var(--cos-border-subtle);
   gap: 0.75rem;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--cos-border);
+  transition: background 0.15s ease;
+  cursor: pointer;
 }
 
-.es-cos-impegno-row:last-child {
+.es-cos-report-item-clean:last-child {
   border-bottom: none;
 }
 
-.es-cos-impegno-date-box {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
+.es-cos-report-item-clean:hover {
+  background: rgba(255, 255, 255, 0.03);
 }
 
-.es-cos-impegno-name {
+.es-cos-report-title-clean {
   font-size: 0.82rem;
   font-weight: 600;
   color: var(--cos-text);
 }
 
-.es-cos-impegno-time {
+.es-cos-report-sub-clean {
   font-size: 0.72rem;
-  color: var(--cos-text-muted);
-}
-
-/* ============================================================
-   CARICO SETTIMANALE SQUADRA (Grafico Lineare a Barre Sobrio)
-   ============================================================ */
-.es-cos-chart-box {
-  padding: 1rem 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-}
-
-.es-cos-weekly-bars {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  height: 90px;
-  gap: 0.5rem;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid var(--cos-border);
-}
-
-.es-cos-bar-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.4rem;
-  flex: 1 1 auto;
-  height: 100%;
-  justify-content: flex-end;
-}
-
-.es-cos-bar-stem {
-  width: 100%;
-  max-width: 24px;
-  background: var(--cos-blue-soft);
-  border: 1px solid var(--cos-blue);
-  border-radius: 3px 3px 0 0;
-  transition: height 0.2s ease, background 0.15s ease;
-}
-
-.es-cos-bar-stem:hover {
-  background: var(--cos-cyan);
-}
-
-.es-cos-bar-stem.is-optimal {
-  background: var(--cos-success-soft);
-  border-color: var(--cos-success);
-}
-
-.es-cos-bar-label {
-  font-size: 0.7rem;
-  color: var(--cos-text-muted);
-  font-weight: 500;
-}
-
-.es-cos-chart-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 0.78rem;
   color: var(--cos-text-sec);
 }
 
-/* ============================================================
-   PULSANTI & INPUT STANDARD B2B
-   ============================================================ */
+/* Activity Log Collapsible */
+.es-cos-activity-log-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid var(--cos-border);
+  font-size: 0.76rem;
+}
+
+.es-cos-activity-log-row:last-child {
+  border-bottom: none;
+}
+
+.es-cos-activity-date {
+  color: var(--cos-text-sec);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.es-cos-activity-text {
+  color: var(--cos-text);
+  flex: 1;
+}
+
+/* Standard B2B Buttons */
 .es-btn-cos-primary {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  background: var(--cos-blue);
-  border: 1px solid var(--cos-blue);
+  background: var(--cos-emerald);
+  border: 1px solid var(--cos-emerald);
   color: #FFFFFF;
-  font-size: 0.82rem;
-  font-weight: 600;
-  padding: 0.5rem 0.95rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.45rem 0.85rem;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .es-btn-cos-primary:hover {
-  background: #09aee8;
-  border-color: #09aee8;
+  background: #059669;
+  border-color: #059669;
 }
 
 .es-btn-cos-sec {
@@ -891,9 +859,9 @@
   background: transparent;
   border: 1px solid var(--cos-border);
   color: var(--cos-text);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  padding: 0.5rem 0.85rem;
+  padding: 0.45rem 0.75rem;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -905,102 +873,18 @@
 }
 
 .es-btn-cos-sec.is-active {
-  background: var(--cos-blue-soft);
-  border-color: var(--cos-blue);
-  color: var(--cos-cyan);
+  background: var(--cos-sky-soft);
+  border-color: var(--cos-sky);
+  color: var(--cos-sky);
 }
 
-/* Classi di compatibilità e continuità per le sezioni interne */
-.es-cos-panel-card {
-  background: var(--cos-card);
-  border: 1px solid var(--cos-border);
-  border-radius: var(--cos-radius);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.es-cos-panel-head {
-  padding: 0.95rem 1.25rem;
-  background: var(--cos-card-alt);
-  border-bottom: 1px solid var(--cos-border-subtle);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.es-cos-badge-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.2rem 0.55rem;
-  border-radius: 4px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  line-height: 1;
-}
-
-.es-cos-badge-pill.is-green,
-.es-cos-badge-pill.is-success {
-  background: var(--cos-success-soft);
-  color: var(--cos-success);
-}
-
-.es-cos-badge-pill.is-blue,
-.es-cos-badge-pill.is-info {
-  background: var(--cos-blue-soft);
-  color: var(--cos-cyan);
-}
-
-.es-cos-badge-pill.is-warn,
-.es-cos-badge-pill.is-warning {
-  background: var(--cos-warning-soft);
-  color: var(--cos-warning);
-}
-
-.es-cos-badge-pill.is-danger {
-  background: var(--cos-danger-soft);
-  color: var(--cos-danger);
-}
-
-.es-cos-form-input,
-.es-cos-search-input {
-  background: var(--cos-card-alt);
-  border: 1px solid var(--cos-border);
-  color: var(--cos-text);
-  padding: 0.55rem 0.85rem;
-  border-radius: 6px;
-  font-size: 0.82rem;
-  font-family: inherit;
-  outline: none;
-  transition: border-color 0.15s ease;
-}
-
-.es-cos-form-input:focus,
-.es-cos-search-input:focus {
-  border-color: var(--cos-blue);
-}
-
-.es-cos-form-label {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--cos-text-sec);
-}
-
-.es-cos-form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-/* Responsive Rules */
+/* Responsive */
 @media (max-width: 1200px) {
+  .es-cos-layout-grid-68-32 {
+    grid-template-columns: 1fr;
+  }
   .es-cos-kpi-grid-4 {
     grid-template-columns: repeat(2, 1fr);
-  }
-  .es-cos-layout-grid {
-    grid-template-columns: 1fr;
   }
 }
 
@@ -1016,9 +900,13 @@
     border-bottom: 1px solid var(--cos-border);
   }
   .es-cos-main {
-    padding: 1.25rem 1rem 2rem;
+    padding: 1rem 0.85rem 2rem;
   }
   .es-cos-kpi-grid-4 {
     grid-template-columns: 1fr;
+  }
+  .es-cos-matchday-banner {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

@@ -3,8 +3,38 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-15** (Commit `4c2a79cc`) — Riprogettazione Totale Area Allenatore Capo & Vice Allenatore: Piattaforma Gestionale SaaS B2B Calcistica (`COACHSAAS1`).
-Ultimo fatto: **Piattaforma Gestionale SaaS B2B Staff Tecnico Calcistico (`COACHSAAS1`)**:
+Ultimo aggiornamento: **2026-09-15** — Restyling UX/UI Dark Slate Dashboard Allenatore & Vice: Eliminazione Doppia Navigazione, Matchday Banner, Grid 68%/32% & Palette Alta Leggibilità (`COACHSLATE1`).
+Ultimo fatto: **Restyling UX/UI & Layout Dark Slate Dashboard Allenatore (`COACHSLATE1`)**:
+1. **Eliminazione Radicale Doppia Navigazione & Topbar Compatta**:
+   - Quando la dashboard dell'allenatore è attiva, viene iniettata la classe `is-coach-mode` sul `<body>`, sopprimendo integralmente la navbar del sito pubblico (`#nav-menu.portfolio-nav`, "Chi siamo", "Minigiochi", etc.) e recuperando oltre 70px di prezioso spazio verticale.
+   - L'header visualizza esclusivamente il logo, il selettore lingua, le notifiche e il profilo utente.
+   - Nella dashboard è integrata una Topbar compatta con titolo `Dashboard Allenatore`, badge/pills essenziali (`ASD Carlentini | Serie D - Girone I | Licenza UEFA B | FIGC: 88210`) e pulsante di commutazione `Area Vice Allenatore →`.
+2. **Palette Colori Modern Dark Slate ad Alto Contrasto (HUD Calcistico Professionale)**:
+   - Sfondo Principale neutro ultra-dark: `#0B1120` (Slate 950) / `#0F172A` (Slate 900).
+   - Card e Contenitori: `#1E293B` (Slate 800) con bordi precisi `#334155` (Slate 700) e angoli arrotondati `10-12px`.
+   - Testo Primario: `#F8FAFC` (Slate 50 - Bianco freddo ad altissima leggibilità).
+   - Testo Secondario & Etichette: `#94A3B8` (Slate 400).
+   - Accenti: `#10B981` (Crisp Emerald Green per stati positivi, CTA principale e parametri ottimali) e `#0EA5E9` (Sky Blue per interattività secondaria).
+   - Alert/Badge: `#F59E0B` (Warning) e `#EF4444` (Danger).
+3. **Matchday Header Banner in Evidenza**:
+   - Card orizzontale prominente in cima all'area operativa: Match `ASD Carlentini vs A.C. RAGUSA`, stemmi club, data e stadio (`15/09/2026 15:00 · Comunale - Carlentini`), stato rifinitura (`✓ Rifinitura Completata`), indicatore di prontezza gara (80%) e CTA diretta `"Match Prep / Setup Tattico →"`.
+4. **4 KPI Mini-Card Operative**:
+   - *Disponibilità Rosa*: `24 / 26` (92% attiva, 2 differenziati con barra di avanzamento).
+   - *Carico Squadra & ACWR*: `1.05 (78%)` (● Ottimale, rischio infortuni basso).
+   - *Ultima Seduta*: `Rifinitura` (14/09 · 1h 30m, ✓ Conclusa).
+   - *Prossima Seduta*: `Domani 10:00` (Attivazione pre-gara, In programma).
+5. **Riorganizzazione Grid Asimmetrica a 2 Colonne (68% / 32%)**:
+   - **Colonna Sinistra (68% - Focus Operativo Campo)**:
+     - *Calendario Prossime Gare*: tabella snella e pulita con altezze e padding ridotti (`0.65rem 0.85rem`), colonne `[Data, Competizione, Avversario, Stadio, Stato, Azione]` con link `Analizza ›`.
+     - *Monitoraggio Carico Settimanale GPS*: grafico a barre sobrio da Lun a Dom con media settimanale 78% (*Ottimale*).
+     - *Dettaglio Ultima Seduta di Campo*: tipologia, durata, campo, carico RPE e metriche chiave (24/26 presenti, 6 esercizi svolti, 3 obiettivi raggiunti).
+   - **Colonna Destra (32% - Feed & Control Room)**:
+     - *Notifiche Prioritarie*: stack di card interattive con semaforo sobrio.
+     - *Report Staff Collaboratori*: feed compatto con autore, ruolo, orario e badge stato (`In revisione`, `Approvato`).
+     - *Prossimi Impegni Staff*: elenco cronologico compatto.
+     - *Registro Attività*: log collassabile ad alto contrasto.
+6. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `vice-dash.css`, `player-profile.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHSLATE1`.
+Feature precedente: **Piattaforma Gestionale SaaS B2B Staff Tecnico Calcistico (`COACHSAAS1`)**:
 1. **Abolizione Totale dello Stile Gaming & Videogioco**:
    - Eliminati avatar giganti da console, corone dorate fittizie, bagliori, glow e bordi fluorescenti.
    - Adottato il design system pulito e piatto ispirato ai software SaaS B2B di riferimento (*Notion, Linear, Stripe Dashboard, HubSpot* e suite di performance management calcistico): palette sobria (`#050B14`, `#07111D`, `#0A1624`, `#17344A`), tipografia standard sans-serif (`Inter`), bordi sottili e spaziatura ariosa (padding 20-24px, gap 20-24px).

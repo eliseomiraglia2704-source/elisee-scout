@@ -1,13 +1,13 @@
 /* ============================================================
    ELISEE SCOUT — VICE COACH TECHNICAL WORKSTATION
    Professional Assistant Coach Management Suite
-   Aesthetic: Clean B2B Sports Management SaaS (Inter, Flat surfaces, Zero Gaming Glow)
+   Aesthetic: Clean Dark Slate Theme (Inter, Slate 950/800, Emerald & Sky Blue)
    ============================================================ */
 
 .es-vd-shell {
-  background: var(--cos-bg, #050B14);
+  background: var(--cos-bg, #0B1120);
   min-height: 100vh;
-  color: var(--cos-text, #F2F6FA);
+  color: var(--cos-text, #F8FAFC);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   display: flex;
   flex-direction: column;
@@ -29,9 +29,9 @@
 
 /* Header Card Vice (Sobrio, B2B) */
 .es-vd-header-card {
-  background: var(--cos-card, #0A1624);
-  border: 1px solid var(--cos-border, #17344A);
-  border-radius: 8px;
+  background: var(--cos-card, #1E293B);
+  border: 1px solid var(--cos-border, #334155);
+  border-radius: var(--cos-radius-lg, 12px);
   padding: 1.25rem 1.5rem;
   display: flex;
   align-items: center;
