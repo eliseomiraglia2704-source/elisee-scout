@@ -3,7 +3,7 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-15** — Restyling UX/UI Dark Slate Dashboard Allenatore & Vice: Eliminazione Doppia Navigazione, Matchday Banner, Grid 68%/32% & Palette Alta Leggibilità (`COACHSLATE1`).
+Ultimo aggiornamento: **2026-09-15** (Commit `a2e90e6b`) — Restyling UX/UI Dark Slate Dashboard Allenatore & Vice: Eliminazione Doppia Navigazione, Matchday Banner, Grid 68%/32% & Palette Alta Leggibilità (`COACHSLATE1`).
 Ultimo fatto: **Restyling UX/UI & Layout Dark Slate Dashboard Allenatore (`COACHSLATE1`)**:
 1. **Eliminazione Radicale Doppia Navigazione & Topbar Compatta**:
    - Quando la dashboard dell'allenatore è attiva, viene iniettata la classe `is-coach-mode` sul `<body>`, sopprimendo integralmente la navbar del sito pubblico (`#nav-menu.portfolio-nav`, "Chi siamo", "Minigiochi", etc.) e recuperando oltre 70px di prezioso spazio verticale.
