@@ -3,17 +3,14 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-15** (Commit `49e355f`) — Rimozione Totale Divisa Ospiti Foggia City & Isolamento Assoluto Sola Divisa Prima 3D (cache `FGCKIT2`).
-Ultimo fatto: **Rimozione Totale Divisa Ospiti Foggia City (`FGCKIT2`)**:
-1. **Isolamento a Monte della Sola Divisa In Casa**:
-   - In `squadre-select.js`: forzato `kitSlotsFor(team)` a intercettare immediatamente Foggia City prima di qualsiasi cache (`_cachedSlots`), eliminando ogni residuo di `away`, `kitAway`, `third`, e restituendo esclusivamente l'array a 1 elemento `[{ key: 'home', label: 'IN CASA', url: 'immagini/kits-2d/foggia-city/home.png' }]`.
-   - `ensureKitKey(team)` e `applyKit(team)` forzano costantemente `state.kit = 'home'` per Foggia City.
-   - `cycleKit(dir)` bloccato a no-op per Foggia City: impossibile passare a divise inesistenti da swipe, click o tastiera.
-2. **Purga Automatica LocalStorage e Inserimento in Catalog**:
-   - Inserito il record pulito di `foggia-city` all'indice 0 di `data/squadre/catalog.json`.
-   - Aggiornato `CATALOG_URL` a `20260915_FGCKIT2` per bypassare istantaneamente il vecchio `sessionStorage` salvato nel browser.
-   - Aggiunta pulizia automatica di `localStorage.elisee_selected_squadra` e `elisee_registered_teams_v1` per cancellare le vecchie proprietà `away` memorizzate nei browser dei client.
-3. **File aggiornati**: `squadre-select.js`, `data/squadre/catalog.json`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `FGCKIT2`.
+Ultimo aggiornamento: **2026-09-15** (Commit `2748d8b`) — Tipografia Futuristica Nevera Estesa alla Scritta Città Foggia nel Selettore Squadre (cache `FGCFONT1`).
+Ultimo fatto: **Font Futuristico Nevera per la Città di Foggia (`FGCFONT1`)**:
+1. **Applicazione Stile Tipografico Nevera alla Città**:
+   - In `squadre-select.css`: estesa la regola `.is-foggia-city` con `font-family: 'Nevera', sans-serif !important; letter-spacing: 0.14em;` a `.es-sq-city-name.is-foggia-city`, `[data-team="foggia-city"] .es-sq-city-name` e `#es-sq-city.is-foggia-city`.
+   - In `squadre-select.js`: all'aggiornamento della squadra (`applyTeam`), se il club è `foggia-city` o la città è Foggia, all'elemento `cityEl` (`#es-sq-city`) viene assegnata la classe `is-foggia-city`.
+   - In `index.html`: preimpostata la classe `is-foggia-city` e testo `FOGGIA` su `#es-sq-city`.
+2. **File aggiornati**: `squadre-select.css`, `squadre-select.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `FGCFONT1`.
+Feature precedente: **Rimozione Totale Divisa Ospiti Foggia City (`FGCKIT2`)**:
 Feature precedente: **Divisa Ufficiale Unica 3D Foggia City (`FGCKIT1`)**:
 Feature precedente: **Font Futuristico Nevera per Foggia City (`NEVERA1`)**:
 Feature precedente: **Font Serif Playfair Display & Dati Reali Pannello Elisee Manager (`TCSERIF1`)**:

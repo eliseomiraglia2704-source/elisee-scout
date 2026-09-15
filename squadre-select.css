@@ -252,7 +252,10 @@
 
 .es-sq-team-name.is-foggia-city,
 [data-team="foggia-city"] .es-sq-team-name,
-#es-sq-team-name.is-foggia-city {
+#es-sq-team-name.is-foggia-city,
+.es-sq-city-name.is-foggia-city,
+[data-team="foggia-city"] .es-sq-city-name,
+#es-sq-city.is-foggia-city {
   font-family: 'Nevera', sans-serif !important;
   letter-spacing: 0.14em;
 }

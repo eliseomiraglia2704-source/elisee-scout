@@ -1116,7 +1116,14 @@
     }
     updateLeagueLogo(league);
     if (countryEl) countryEl.textContent = team.country || 'ITALIA';
-    if (cityEl) cityEl.textContent = team.city || '—';
+    if (cityEl) {
+      cityEl.textContent = team.city || '—';
+      if (team.id === 'foggia-city' || (team.city && String(team.city).toUpperCase().indexOf('FOGGIA') >= 0)) {
+        cityEl.classList.add('is-foggia-city');
+      } else {
+        cityEl.classList.remove('is-foggia-city');
+      }
+    }
     if (stadiumEl) {
       stadiumEl.textContent = team.stadium || 'Stadio non disponibile';
       stadiumEl.setAttribute('title', team.stadium || '');
