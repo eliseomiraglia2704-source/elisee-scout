@@ -3,15 +3,31 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-15** (Commit `211a28b`) — Logo Ufficiale Competizione Amatoriale (Monogramma Stilizzato V/S) (`FGCAMATLOGO1`).
-Ultimo fatto: **Logo Ufficiale Competizione Amatoriale (`FGCAMATLOGO1`)**:
-1. **Integrazione Asset Logo Competizione V/S**:
-   - Ritagliato e ottimizzato ad altissima risoluzione (512x512 PNG con sfondo trasparente) il logo fornito dall'utente (`1000345873.png`), salvato in `immagini/squadre-loghi/amatoriale.png`.
-2. **Sostituzione del Vecchio Badge LND "3" con il Nuovo Logo V/S**:
-   - In `squadre-select.js`: aggiornata la funzione `leagueLogoPath` in modo che per la categoria `AMATORIALE` restituisca `immagini/squadre-loghi/amatoriale.png` al posto del generico `terza-categoria.png`.
-   - In `player-card.js`: aggiunto supporto per la categoria `AMATORIALE` che mappa direttamente a `immagini/squadre-loghi/amatoriale.png`.
-   - In `index.html`: aggiornato l'elemento `#es-sq-league-logo` impostando come `src` iniziale `immagini/squadre-loghi/amatoriale.png`.
-3. **File aggiornati**: `immagini/squadre-loghi/amatoriale.png` (nuovo asset), `squadre-select.js`, `player-card.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `FGCAMATLOGO1`.
+Ultimo aggiornamento: **2026-09-15** (Commit `ca801be`) — Area Allenatore & Vice Allenatore: Technical Staff Operating System & Zero-Fake Palmarès (`COACHOS1`).
+Ultimo fatto: **Technical Staff Operating System per Allenatore & Vice (`COACHOS1`)**:
+1. **Politica Zero-Fake & Bacheca Trofei Onesta**:
+   - Eliminati tutti i titoli fittizi europei ("Vincitore UEFA Europa League", "Qualificazione Champions League", ecc.) da `coach-dash.js` e `vice-dash.js`.
+   - La bacheca parte vuota per default con empty-state professionale ed elegante.
+   - Implementata aggiunta e rimozione reale di titoli certificati con persistenza in `localStorage['elisee_coach_data']`.
+   - Sanitizzazione automatica di eventuali vecchie chiavi salvate in cache browser con i trofei mock.
+2. **Palette Unificata & Design System Luxury Dark**:
+   - Eliminata l'eyebrow dorata con corona e badge multicolore casuali.
+   - Palette coerente da control room tecnica: blu/ciano (`#0798d1` / `#16b9ff`) per elementi attivi, verde (`#00d978`) solo per stati verificati/connessioni, ambra (`#ffd21a`) riservato ai limiti di ruolo e monitoraggio atleti.
+   - Navbar a 9 schede ridisegnata con icone SVG monochrome compatte ed eleganti.
+3. **Control Room Bar con 6 KPI Dinamici**:
+   - Aggiunta strip orizzontale superiore con Prossima Gara, Ultima Seduta, Carico Squadra (ACWR 1.08), Disponibilità Rosa (91%), Atleti da Monitorare e Stato Staff Vice.
+4. **9 Sezioni Tecniche Operative**:
+   - Identità & Staff (Dati, Licenza, Vice con status connessione, Bacheca, Limiti di Ruolo).
+   - Tattica & Top 11 (Selettore modulo dinamico 4-3-3, 4-2-3-1, 3-5-2, 3-4-2-1, 4-4-2 con riposizionamento pedine in tempo reale, Story Social 9:16).
+   - Esercitazioni (Filtri categorie, toggle visibilità, modale per creare nuova scheda).
+   - GPS & Carichi (Telemetria, ACWR, semaforo readiness individuale, heatmap).
+   - Segnalazione DS (Wishlist mercato con priorità, motivazione e stato trattativa).
+   - Rosa (Organico con filtri per reparto POR/DIF/CEN/ATT/DISP).
+   - Sedute & Presenze (Calendario sedute con rilevazione presenze Presente/Differenziato/Assente).
+   - Partite (Calendario gare e convocazioni ufficiali).
+   - Lavagna Tattica (Lavagna interattiva per schemi con pedine e pallone).
+5. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `vice-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHOS1`.
+Feature precedente: **Logo Ufficiale Competizione Amatoriale (`FGCAMATLOGO1`)**:
 Feature precedente: **Immagine Sfondo Card Città per Foggia City (`FGCCITY1`)**:
 Feature precedente: **Font Futuristico Nevera per la Città di Foggia (`FGCFONT1`)**:
 Feature precedente: **Rimozione Totale Divisa Ospiti Foggia City (`FGCKIT2`)**:

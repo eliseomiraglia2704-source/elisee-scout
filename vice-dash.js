@@ -81,11 +81,8 @@
           descrizione: 'Disposizione 5 a zona su linea di porta + 3 a uomo sui saltatori più pericolosi + 2 al limite dell\'area per seconde palle.'
         }
       ],
-      // Palmarès Condiviso (Ruolo Vice)
-      palmares: [
-        { id: 'vpal-1', titolo: 'Vincitore UEFA Europa League (Vice Allenatore)', anno: '2023/2024', tipo: 'Staff Tecnico Ufficiale', note: 'Staff Tecnico Prima Squadra' },
-        { id: 'vpal-2', titolo: 'Vincitore Coppa Italia Serie C (Vice Allenatore)', anno: '2021/2022', tipo: 'Coppa Nazionale', note: 'Coordinatore Palle Inattive' }
-      ],
+      // Palmarès Condiviso (Ruolo Vice) — Inizia vuoto per default (Zero Fake)
+      palmares: [],
       // Bozza Formazione Settimana (Supporto al Mister)
       bozzaTop11: [
         { pos: 'POR', num: 1, name: 'Marco Carnesecchi', note: 'Confermato' },
@@ -118,7 +115,14 @@
 
     try {
       var stored = localStorage.getItem('elisee_vice_hub_data_v4');
-      if (stored) return Object.assign(def, JSON.parse(stored));
+      if (stored) {
+        var parsed = JSON.parse(stored);
+        if (parsed.palmares && parsed.palmares.some(function(p){ return p.titolo && /Europa League|Coppa Italia/i.test(p.titolo); })) {
+          parsed.palmares = [];
+          localStorage.setItem('elisee_vice_hub_data_v4', JSON.stringify(parsed));
+        }
+        return Object.assign(def, parsed);
+      }
     } catch (_) {}
     return def;
   }
@@ -306,7 +310,13 @@
                   '</div>' +
                 '</div>'
               );
-            }).join('') : '<p class="es-coach-empty-text">Nessun titolo inserito.</p>') +
+            }).join('') : (
+              '<div class="es-coach-empty-palmares">' +
+                '<div class="es-coach-empty-palmares-icon">🏆</div>' +
+                '<h4 class="es-coach-empty-palmares-title">Nessun titolo registrato</h4>' +
+                '<p class="es-coach-empty-palmares-desc">La bacheca trofei e palmarès da Vice Allenatore è attualmente vuota. Clicca su <b>+ Aggiungi Titolo</b> per registrare successi e promozioni ufficiali del tuo percorso.</p>' +
+              '</div>'
+            )) +
           '</div>' +
         '</div>' +
 
@@ -654,6 +664,46 @@
     openViceModal('Guida Operativa Vice Allenatore', '📖', contentHtml);
   }
 
+  function openAddPalmaresViceModal(data) {
+    var formHtml =
+      '<form id="form-add-pal-vice" style="display:flex; flex-direction:column; gap:1rem;">' +
+        '<div class="es-pres-input-group"><label>Titolo / Successo *</label><input type="text" class="es-pres-input-text" id="inp-vpal-title" required placeholder="Es. Promozione in Eccellenza (Vice Allenatore)"></div>' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<div class="es-pres-input-group"><label>Stagione *</label><input type="text" class="es-pres-input-text" id="inp-vpal-anno" value="2025/2026" required></div>' +
+          '<div class="es-pres-input-group"><label>Tipologia Titolo</label><select class="es-pres-input-text" id="sel-vpal-tipo" style="background:#050910; color:#fff;"><option>Campionato</option><option>Promozione di Categoria</option><option>Coppa Provinciale / Regionale</option><option>Titolo Giovanile</option></select></div>' +
+        '</div>' +
+        '<div class="es-pres-input-group"><label>Ruolo & Incarico nello Staff</label><input type="text" class="es-pres-input-text" id="inp-vpal-note" placeholder="Es. Responsabile palle inattive e riscaldamento"></div>' +
+        '<div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:0.5rem; padding-top:0.85rem; border-top:1px solid rgba(22,52,74,0.6);">' +
+          '<button type="button" class="es-btn-secondary" id="btn-cancel-modal">Annulla</button>' +
+          '<button type="submit" class="es-btn-primary">Aggiungi a Palmarès</button>' +
+        '</div>' +
+      '</form>';
+
+    openViceModal('Certifica Titolo Palmarès Vice', '🏆', formHtml);
+    var overlay = document.getElementById('es-vice-modal-overlay');
+    var form = document.getElementById('form-add-pal-vice');
+    var btnCancel = document.getElementById('btn-cancel-modal');
+    if (btnCancel && overlay) btnCancel.onclick = function () { overlay.remove(); };
+
+    if (form) {
+      form.onsubmit = function (e) {
+        e.preventDefault();
+        data.palmares = data.palmares || [];
+        data.palmares.push({
+          id: 'vpal-' + Date.now(),
+          titolo: document.getElementById('inp-vpal-title').value.trim(),
+          anno: document.getElementById('inp-vpal-anno').value.trim(),
+          tipo: document.getElementById('sel-vpal-tipo').value,
+          note: document.getElementById('inp-vpal-note').value.trim()
+        });
+        saveViceData(data);
+        if (overlay) overlay.remove();
+        renderHub();
+        if (window.showToast) window.showToast('🏆 Titolo aggiunto al palmarès del Vice!', 'success');
+      };
+    }
+  }
+
   function bindHubEvents() {
     var mount = document.getElementById('es-vd');
     if (!mount) return;
@@ -707,6 +757,11 @@
       btnSendDraft.onclick = function () {
         if (window.showToast) window.showToast('📤 Bozza Top 11 inviata all\'Allenatore Capo per la convalida!', 'success');
       };
+    }
+
+    var btnAddPal = mount.querySelector('#btn-add-palmares-vice');
+    if (btnAddPal) {
+      btnAddPal.onclick = function () { openAddPalmaresViceModal(data); };
     }
   }
 
