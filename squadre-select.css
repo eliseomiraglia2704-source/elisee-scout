@@ -2,6 +2,14 @@
    SQUADRE SELECTOR — stile EA Sports FC (selezione club)
    Layout centrato nel viewport
    ============================================================ */
+@font-face {
+  font-family: 'Nevera';
+  src: url('fonts/Nevera-Regular.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 #view-squadre {
   background: #050810 !important;
   width: 100% !important;
@@ -232,13 +240,21 @@
   position: relative;
   z-index: 1;
   margin: 0;
+  font-family: 'Nevera', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
   font-size: clamp(1.35rem, 3vw, 1.85rem);
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 0.12em;
   color: #fff;
   text-transform: uppercase;
   text-align: center;
   min-width: 0;
+}
+
+.es-sq-team-name.is-foggia-city,
+[data-team="foggia-city"] .es-sq-team-name,
+#es-sq-team-name.is-foggia-city {
+  font-family: 'Nevera', sans-serif !important;
+  letter-spacing: 0.14em;
 }
 /* Badge verificato / non verificato (progetto ELISEE) */
 .es-sq-verify-badge {

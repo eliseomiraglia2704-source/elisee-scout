@@ -1047,7 +1047,14 @@
     var counterEl = $('es-sq-counter');
     var league = currentLeague() || team.league || '';
 
-    if (nameEl) nameEl.textContent = team.name;
+    if (nameEl) {
+      nameEl.textContent = team.name;
+      if (team.id === 'foggia-city' || (team.name && String(team.name).toUpperCase().indexOf('FOGGIA') >= 0)) {
+        nameEl.classList.add('is-foggia-city');
+      } else {
+        nameEl.classList.remove('is-foggia-city');
+      }
+    }
     updateVerifyBadge(team);
     if (starsEl) starsEl.innerHTML = positionHtml(team);
     if (leagueEl) {
