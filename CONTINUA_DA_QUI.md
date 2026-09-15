@@ -3,7 +3,7 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-15** — Redesign Integrale Area Allenatore Capo & Vice Allenatore: Navigazione Unica in Sidebar & 8 KPI Card Esatte (`COACHOS3`).
+Ultimo aggiornamento: **2026-09-15** (Commit `a228b8e4`) — Redesign Integrale Area Allenatore Capo & Vice Allenatore: Navigazione Unica in Sidebar & 8 KPI Card Esatte (`COACHOS3`).
 Ultimo fatto: **Football Technical Staff Operating System — Allenatore Capo & Vice Allenatore (`COACHOS3`)**:
 1. **Navigazione Gestionale Esclusiva in Sidebar Sinistra (Zero Duplicazioni)**:
    - Eliminata categoricamente la subnavbar orizzontale sotto il profilo: la navigazione per le 11 sezioni (Dashboard, Rosa, Formazione, Tattica, Allenamenti, Calendario, Analisi Avversario, GPS / Carichi, Report Staff, Comunicazioni, Impostazioni Tecniche) risiede esclusivamente nella sidebar sinistra fissa ad alto contrasto.
