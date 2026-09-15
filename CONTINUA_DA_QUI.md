@@ -3,7 +3,7 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-15** — Riprogettazione Totale Area Allenatore Capo & Vice Allenatore: Piattaforma Gestionale SaaS B2B Calcistica (`COACHSAAS1`).
+Ultimo aggiornamento: **2026-09-15** (Commit `4c2a79cc`) — Riprogettazione Totale Area Allenatore Capo & Vice Allenatore: Piattaforma Gestionale SaaS B2B Calcistica (`COACHSAAS1`).
 Ultimo fatto: **Piattaforma Gestionale SaaS B2B Staff Tecnico Calcistico (`COACHSAAS1`)**:
 1. **Abolizione Totale dello Stile Gaming & Videogioco**:
    - Eliminati avatar giganti da console, corone dorate fittizie, bagliori, glow e bordi fluorescenti.
