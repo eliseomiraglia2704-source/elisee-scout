@@ -959,7 +959,7 @@
       '<div class="es-cos-panel-card">' +
         '<div class="es-cos-panel-head">' +
           '<span class="es-cos-panel-title">' +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>' +
+            '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>' +
             'Organico Rosa Prima Squadra · ' + esc(data.clubName) + ' (' + list.length + ' Atleti Registrati)' +
           '</span>' +
           '<button type="button" class="es-btn-cos-primary" id="btn-add-player-modal">+ Aggiungi Calciatore</button>' +
@@ -998,10 +998,10 @@
               '</div>'
             );
           }).join('') : (
-            '<div style="grid-column:1/-1; text-align:center; padding:3.5rem 1rem; color:#8da8bc;">' +
-              '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:0.4; margin-bottom:0.75rem;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>' +
-              '<div style="font-size:1rem; font-weight:800; color:#f3f8fc;">Nessun calciatore presente in rosa</div>' +
-              '<div style="font-size:0.78rem; margin-top:0.3rem;">I calciatori inseriti nella tabella rosa su Supabase appariranno qui automaticamente.</div>' +
+            '<div class="es-cos-empty-state">' +
+              '<svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>' +
+              '<div class="es-cos-empty-title">Nessun calciatore presente in rosa</div>' +
+              '<div class="es-cos-empty-sub">I calciatori inseriti nella tabella rosa su Supabase appariranno qui automaticamente.</div>' +
             '</div>'
           )) +
         '</div>' +
@@ -1016,9 +1016,9 @@
     return (
       '<div class="es-cos-panel-card">' +
         '<div class="es-cos-panel-head">' +
-          '<div style="display:flex; align-items:center; gap:0.75rem;">' +
+          '<div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">' +
             '<span class="es-cos-panel-title">' +
-              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>' +
+              '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>' +
               'Lineup Builder Ufficiale · XI Titolare' +
             '</span>' +
             '<select id="sel-tactical-modulo" style="background:#071522; border:1px solid #12344a; color:#16b9ff; padding:0.35rem 0.75rem; border-radius:6px; font-size:0.82rem; font-weight:800;">' +

@@ -3,7 +3,19 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Area Staff Tecnico (Allenatore / Vice Allenatore): Rimozione Radicale Footer Pubblico (`NOFOOTER1`):
+Ultimo aggiornamento: **2026-09-16** — Area Staff Tecnico (Allenatore / Vice Allenatore): Risoluzione Bug Icona Gigante & Stato Vuoto Rosa Unificato (`ROSAEMPTY1`):
+1. **Causa del Bug Identificata e Risolta alla Radice**:
+   - L'icona enorme visibile in cima alla sezione Rosa non era uno spinner di loading bloccato né un doppio blocco renderizzato per errore: era l'icona `<svg viewBox="0 0 24 24">` del titolo *"Organico Rosa Prima Squadra"* in `.es-cos-panel-head` priva degli attributi `width` e `height`.
+   - In assenza di vincoli dimensionali nel CSS, il browser scalava il viewBox a tutta la larghezza disponibile del contenitore (~800-1100px), trasformando il tratto `stroke-width="2"` in un arco bianco spesso ~66px e spingendo il bottone `+ Aggiungi Calciatore` in posizione galleggiante.
+   - Sotto tale icona gigante apparivano i filtri e il blocco vuoto effettivo con icona a 36px, creando l'illusione ottica di due stati vuoti sovrapposti.
+2. **Fix Implementato (Allenatore & Vice Allenatore)**:
+   - In `coach-dash.js` e `vice-dash.js`: assegnate dimensioni esplicite `width="18" height="18"` a tutte le icone SVG dei titoli di pannello (`.es-cos-panel-title`).
+   - In `coach-dash.css` e `vice-dash.css`: aggiunte regole di difesa in profondità (`.es-cos-panel-title svg { width: 18px !important; height: 18px !important; }`, `.es-cos-panel-card svg:not(.es-pitch-svg):not([width]):not([height]) { width: 18px !important; height: 18px !important; }`).
+   - Il bottone `+ Aggiungi Calciatore` è stabilmente ancorato in alto a destra (`margin-left: auto; flex-shrink: 0`) all'interno di `.es-cos-panel-head`.
+   - Stato vuoto unificato sia per l'Allenatore che per il Vice Allenatore (`.es-cos-empty-state`): icona pulita e centrata a 52px con stroke ciano, titolo in grassetto *"Nessun calciatore presente in rosa"* e sottotitolo informativo *"I calciatori inseriti nella tabella rosa su Supabase appariranno qui automaticamente."*.
+3. **File aggiornati**: `coach-dash.js`, `vice-dash.js`, `coach-dash.css`, `vice-dash.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_ROSAEMPTY1`.
+
+Feature precedente: **Rimozione Radicale Footer Pubblico (`NOFOOTER1`)**:
 1. **Esclusione Footer Pubblico nelle Route Riservate dello Staff Tecnico**:
    - Assegnato ID esplicito `#site-public-footer` a `<footer class="site-footer pf-footer">` in `index.html`.
    - Implementata in `app.js` la funzione globale `window.updatePublicFooterVisibility(viewType, targetHash)`: rileva se l'utente si trova nell'Area Riservata dello Staff Tecnico (stato `is-coach-mode`, `is-vice-mode`, o montaggio del dossier con dashboard attiva) e disattiva/smonta completamente il footer dal rendering visivo e dall'albero accessibile con `display: none !important`, attributo `hidden`, `pointer-events: none` e classe `is-hidden-staff`.

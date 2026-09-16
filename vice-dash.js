@@ -668,21 +668,32 @@
     return (
       '<div class="es-cos-panel-card">' +
         '<div class="es-cos-panel-head">' +
-          '<span class="es-cos-panel-title">ORGANICO ROSA (Consultazione Tecnica Vice · Tabella Supabase: rosa)</span>' +
+          '<span class="es-cos-panel-title">' +
+            '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>' +
+            'Organico Rosa Prima Squadra (Consultazione Tecnica Vice · Tabella: rosa)' +
+          '</span>' +
         '</div>' +
         '<p style="font-size:0.8rem; color:#8da8bc; margin:0 0 1rem;">Visualizzazione stato fisico e carichi di lavoro incrociati con infortuni e squalifiche.</p>' +
-        '<table class="es-cos-table-compact">' +
-          '<thead><tr><th>Maglia</th><th>Calciatore</th><th>Ruolo</th><th>Stato Fisico</th><th>Disponibilità</th></tr></thead>' +
-          '<tbody>' +
-            (roster.length ? roster.map(function(p){
-              var isDisp = p.status === 'disp';
-              var dispHtml = isDisp ? '<span class="es-cos-badge-pill is-green">🟢 Disponibile</span>' :
-                (p.statoDettagliato === 'infortunato' ? '<span class="es-cos-badge-pill is-danger">🔴 Infortunato' + (p.motivo ? (' - ' + esc(p.motivo)) : '') + '</span>' :
-                '<span class="es-cos-badge-pill is-warn">🟡 ' + esc(p.statoDettagliato || 'Differenziato') + '</span>');
-              return '<tr><td><b>#' + esc(p.num) + '</b></td><td style="font-weight:800; color:#f3f8fc;">' + esc(p.name) + '</td><td>' + esc(p.role) + '</td><td>' + esc(p.load) + '</td><td>' + dispHtml + '</td></tr>';
-            }).join('') : '<tr><td colspan="5" style="text-align:center; padding:2.5rem; color:#8da8bc;">Nessun calciatore presente in rosa a database.</td></tr>') +
-          '</tbody>' +
-        '</table>' +
+        (roster.length ? (
+          '<table class="es-cos-table-compact">' +
+            '<thead><tr><th>Maglia</th><th>Calciatore</th><th>Ruolo</th><th>Stato Fisico</th><th>Disponibilità</th></tr></thead>' +
+            '<tbody>' +
+              roster.map(function(p){
+                var isDisp = p.status === 'disp';
+                var dispHtml = isDisp ? '<span class="es-cos-badge-pill is-green">🟢 Disponibile</span>' :
+                  (p.statoDettagliato === 'infortunato' ? '<span class="es-cos-badge-pill is-danger">🔴 Infortunato' + (p.motivo ? (' - ' + esc(p.motivo)) : '') + '</span>' :
+                  '<span class="es-cos-badge-pill is-warn">🟡 ' + esc(p.statoDettagliato || 'Differenziato') + '</span>');
+                return '<tr><td><b>#' + esc(p.num) + '</b></td><td style="font-weight:800; color:#f3f8fc;">' + esc(p.name) + '</td><td>' + esc(p.role) + '</td><td>' + esc(p.load) + '</td><td>' + dispHtml + '</td></tr>';
+              }).join('') +
+            '</tbody>' +
+          '</table>'
+        ) : (
+          '<div class="es-cos-empty-state">' +
+            '<svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>' +
+            '<div class="es-cos-empty-title">Nessun calciatore presente in rosa</div>' +
+            '<div class="es-cos-empty-sub">I calciatori inseriti nella tabella rosa su Supabase appariranno qui automaticamente.</div>' +
+          '</div>'
+        )) +
       '</div>'
     );
   }

@@ -1234,7 +1234,87 @@ section + section {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  gap: 1rem;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.es-cos-panel-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #f3f8fc;
+  letter-spacing: 0.2px;
+}
+
+.es-cos-panel-title svg {
+  width: 18px !important;
+  height: 18px !important;
+  max-width: 18px !important;
+  max-height: 18px !important;
+  flex-shrink: 0;
+  stroke: var(--cos-cyan, #19B9F2);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Difesa in profondità: nessun SVG generico può esplodere a pieno schermo nei pannelli staff */
+.es-cos-panel-card svg:not(.es-pitch-svg):not([width]):not([height]) {
+  width: 18px !important;
+  height: 18px !important;
+  max-width: 18px !important;
+  max-height: 18px !important;
+  flex-shrink: 0;
+}
+
+/* Bottone azione principale pannello sempre allineato e ancorato a destra */
+.es-cos-panel-head .es-btn-cos-primary {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* Stato vuoto pulito e professionale per la Rosa e le tabelle staff */
+.es-cos-empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  color: #8da8bc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.es-cos-empty-state svg,
+.es-cos-empty-state img,
+.rosa-empty-icon svg,
+.rosa-empty-icon img {
+  width: 52px !important;
+  height: 52px !important;
+  max-width: 52px !important;
+  max-height: 52px !important;
+  opacity: 0.65;
+  margin-bottom: 0.9rem;
+  stroke: var(--cos-cyan, #19B9F2);
+  flex-shrink: 0;
+}
+
+.es-cos-empty-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #f3f8fc;
+  margin-bottom: 0.35rem;
+}
+
+.es-cos-empty-sub {
+  font-size: 0.8rem;
+  color: #8da8bc;
+  max-width: 480px;
+  line-height: 1.4;
+  margin: 0 auto;
 }
 
 /* Responsività */

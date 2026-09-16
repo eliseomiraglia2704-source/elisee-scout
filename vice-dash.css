@@ -313,3 +313,53 @@
     padding: 1rem;
   }
 }
+
+/* Pannelli e Empty State Sicurezza Vice */
+.es-cos-panel-title svg {
+  width: 18px !important;
+  height: 18px !important;
+  max-width: 18px !important;
+  max-height: 18px !important;
+  flex-shrink: 0;
+  stroke: var(--cos-cyan, #19B9F2);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.es-cos-empty-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: #8da8bc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.es-cos-empty-state svg,
+.es-cos-empty-state img {
+  width: 52px !important;
+  height: 52px !important;
+  max-width: 52px !important;
+  max-height: 52px !important;
+  opacity: 0.65;
+  margin-bottom: 0.9rem;
+  stroke: var(--cos-cyan, #19B9F2);
+  flex-shrink: 0;
+}
+
+.es-cos-empty-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #f3f8fc;
+  margin-bottom: 0.35rem;
+}
+
+.es-cos-empty-sub {
+  font-size: 0.8rem;
+  color: #8da8bc;
+  max-width: 480px;
+  line-height: 1.4;
+  margin: 0 auto;
+}
