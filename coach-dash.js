@@ -321,6 +321,7 @@
             renderSideBtn('impostazioni', 'Impostazioni Tecniche', '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06-.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>') +
           '</nav>' +
         '</aside>' +
+        '<div class="es-cos-sidebar-overlay" id="es-cos-sidebar-overlay"></div>' +
 
         // 2. MAIN WORKSPACE
         '<main class="es-cos-main">' +
@@ -328,6 +329,9 @@
           '<div class="card es-cos-card es-cos-dash-header">' +
             // Fascia Superiore: Profilo Mister + Club + Tasto Vice
             '<div class="es-cos-header-top-row">' +
+              '<button type="button" class="es-cos-mobile-menu-btn" id="btn-toggle-coach-sidebar" aria-label="Menu Staff">' +
+                '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>' +
+              '</button>' +
               '<div class="es-cos-header-identity">' +
                 '<div class="es-cos-header-block">' +
                   '<div class="licence-badge es-cos-licence-badge"><strong>UEFA B</strong><span>Patentino</span></div>' +
@@ -1118,9 +1122,29 @@
     if (!mount) return;
     var data = getCoachData();
 
+    // Gestione Drawer Mobile Toggle & Overlay
+    var btnToggleSidebar = mount.querySelector('#btn-toggle-coach-sidebar');
+    var sidebar = mount.querySelector('.es-cos-sidebar');
+    var overlay = mount.querySelector('#es-cos-sidebar-overlay');
+    function closeDrawer() {
+      if (sidebar) sidebar.classList.remove('is-open');
+      if (overlay) overlay.classList.remove('is-active');
+    }
+    if (btnToggleSidebar && sidebar) {
+      btnToggleSidebar.onclick = function (e) {
+        e.stopPropagation();
+        var isOpen = sidebar.classList.toggle('is-open');
+        if (overlay) overlay.classList.toggle('is-active', isOpen);
+      };
+    }
+    if (overlay && sidebar) {
+      overlay.onclick = closeDrawer;
+    }
+
     // Navigazione tramite Sidebar (Unica navigazione)
     mount.querySelectorAll('.es-cos-side-btn').forEach(function (btn) {
       btn.onclick = function () {
+        closeDrawer();
         var t = btn.getAttribute('data-tab-nav');
         if (t) {
           activeTab = t;
@@ -1143,6 +1167,7 @@
     mount.querySelectorAll('[data-tab-nav]:not(.es-cos-side-btn)').forEach(function (el) {
       el.onclick = function (e) {
         e.stopPropagation();
+        closeDrawer();
         var t = el.getAttribute('data-tab-nav');
         if (t) {
           activeTab = t;

@@ -3,20 +3,17 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Perfezionamento Dashboard Allenatore: Risoluzione 4 Correzioni Utente (`COACHPRO2`):
-1. **Rimozione Zone Rosse (Sidebar Scrollbar & Box Club in Fondo)**:
-   - Rimosso completamente il box club `.es-cos-sidebar-club` che era posizionato in fondo alla sidebar sinistra.
-   - Reso invisibile lo scrollbar verticale della sidebar (`scrollbar-width: none; -ms-overflow-style: none; ::-webkit-scrollbar { display: none; }`), eliminando la barra rossa evidenziata nello screenshot lungo il margine destro della sidebar.
-2. **Riordino Header Superiore in Due Fasce Bilanciate**:
-   - Organizzato l'header in due righe ordinate e pulite:
-     - Fascia superiore (`.es-cos-header-top-row`): Blocco identità mister (Patentino UEFA B + Eliseo Miraglia Allenatore Capo + Tesseramento FIGC) separato da un divisore verticale sottile dal blocco Club (Scudetto FGC + Foggia City Prima Squadra Amatoriale · Foggia), con pulsante `Area Vice Allenatore →` allineato all'estrema destra.
-     - Fascia inferiore (`.es-cos-header-match-row`): Griglia bilanciata a 3 colonne: Prossima Partita (Cerignola Nord) a sinistra, Countdown (02d 15h 24m) al centro, pillola Seduta odierna (Rifinitura) a destra.
-3. **Tab Bar su Riga Singola Orizzontale**:
-   - Modificata la barra dei tab con `flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding: 6px 11px; font-size: 11.5px; gap: 5px;`: tutte le 11 sezioni (Dashboard, Rosa, Formazione, Tattica, Allenamenti, Calendario, Analisi Avversario, GPS / Carichi, Report Staff, Comunicazioni, Impostazioni) sono ora visualizzate rigorosamente su un'unica riga orizzontale, senza andare a capo.
-4. **Allineamento a Slot delle 8 Stat Card**:
-   - Standardizzati gli slot verticali di ogni singola card: etichetta con altezza fissa `min-height: 28px`, valore con `min-height: 20px`, traccia della barra `height: 4px; margin-bottom: 8px` con classe `.is-placeholder` invisibile per le card senza barra percentuale, e footer con `margin-top: auto; min-height: 16px; line-height: 16px`. In questo modo titoli, valori, percentuali e descrizioni risultano millimetricamente allineati su una linea orizzontale identica su tutte le 8 card.
-   - Aggiornato il testo della prima card da "A.C. Ragusa" a "Cerignola Nord · 2 giorni".
-5. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHPRO2`.
+Ultimo aggiornamento: **2026-09-16** — Sidebar Sticky Impeccabile & Ritmo Verticale Compatto Token-based (`COACHPRO3`):
+1. **Sidebar Sticky Garantita allo Scroll**:
+   - Impostato layout principale `.es-cos-shell` come `display: grid; grid-template-columns: 240px minmax(0, 1fr); align-items: start; gap: var(--space-3); padding-top: var(--header-h);`.
+   - Sidebar `.es-cos-sidebar` configurata con `position: sticky; top: var(--header-h, 70px); height: calc(100vh - var(--header-h)); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;`.
+   - Rimossi tutti i blocchi di overflow dai contenitori antenati (`body.is-coach-mode`, `html`, `#user-dossier-view-group`, `#user-dossier-portal`, `#es-staff-profile`, `#es-cd`, `.pf-page-inner` con `overflow: visible !important; max-height: none !important;`), garantendo che lo sticky rimanga sempre agganciato alla finestra durante lo scroll.
+   - Su viewport < 1024px, la sidebar diventa un drawer `position: fixed; inset: var(--header-h) auto 0 0; width: 260px; transform: translateX(-100%);` con pulsante hamburger dedicato (`#btn-toggle-coach-sidebar`) e overlay scuro animato (`#es-cos-sidebar-overlay`).
+2. **Eliminazione Spazi Eccessivi & Ritmo Verticale Unificato**:
+   - Introdotti token di spaziatura rigorosi in `:root`: `--space-1: 6px; --space-2: 12px; --space-3: 18px; --space-4: 26px; --content-max: 1280px; --header-h: 70px;`.
+   - Applicati su header profilo (`padding: var(--space-3); gap: var(--space-2);`), barra tab (`margin-block: var(--space-1) var(--space-2); gap: var(--space-1);`), griglia KPI (`gap: var(--space-2); padding: var(--space-2);`) e card KPI (`padding: var(--space-2); gap: var(--space-1);`).
+   - Line-height compatti (`1.25` su label, `1.1` su valori), azzerati margini di primo/ultimo figlio dentro `.card` ed `.es-cos-card`, e sostituiti i margini sparsi con `gap` su tutti i container e grid.
+3. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHPRO3`.
 Feature precedente: **Restyling UX/UI & Layout Dark Slate Dashboard Allenatore (`COACHSLATE1`)**:
 1. **Eliminazione Radicale Doppia Navigazione & Topbar Compatta**:
    - Quando la dashboard dell'allenatore è attiva, viene iniettata la classe `is-coach-mode` sul `<body>`, sopprimendo integralmente la navbar del sito pubblico (`#nav-menu.portfolio-nav`, "Chi siamo", "Minigiochi", etc.) e recuperando oltre 70px di prezioso spazio verticale.
