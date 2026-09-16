@@ -89,7 +89,7 @@ body.is-coach-mode .es-user-tabs { display: none !important; }
 #es-staff-profile.es-vice-on > :not(#es-vd) { display: none !important; }
 
 /* ============================================================
-   LAYOUT PRINCIPALE (Grid sidebar + contenuto, align-items: start)
+   LAYOUT PRINCIPALE (Sidebar Fissa a Tutta Altezza + Contenuto Fluido)
    ============================================================ */
 .layout,
 .es-cos-shell {
@@ -98,21 +98,18 @@ body.is-coach-mode .es-user-tabs { display: none !important; }
   min-height: calc(100dvh - var(--header-h));
   color: var(--cos-text);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  display: grid;
-  grid-template-columns: 240px minmax(0, 1fr);
-  align-items: start;        /* fondamentale: senza questo lo sticky non funziona */
-  gap: var(--space-3);
   position: relative;
   width: 100%;
   box-sizing: border-box;
-  padding-top: var(--header-h);   /* a) UNICO compenso per la navbar fissa */
-  padding-inline: var(--space-3);
+  padding-top: var(--header-h);   /* UNICO compenso per la navbar fissa */
+  padding-left: calc(240px + var(--space-3)); /* spazio riservato alla sidebar fissa */
+  padding-right: var(--space-3);
   padding-bottom: var(--space-3);
-  max-width: none !important;     /* d) usa tutta la larghezza */
+  max-width: none !important;
 }
 
 /* ============================================================
-   SIDEBAR GESTIONALE (Sticky con altezza propria e scroll interno)
+   SIDEBAR GESTIONALE (Fissa, Estesa a Tutta Altezza fino in Fondo, Non si abbassa allo scroll)
    ============================================================ */
 .sidebar,
 .es-cos-sidebar {
@@ -123,14 +120,15 @@ body.is-coach-mode .es-user-tabs { display: none !important; }
   display: flex;
   flex-direction: column;
   padding: var(--space-2);
-  padding-bottom: 56px;          /* b) spazio di sicurezza per non tagliare Comunicazioni e Impostazioni */
-  flex-shrink: 0;
-  position: sticky;
-  top: var(--header-h);          /* altezza della navbar in alto */
-  max-height: calc(100vh - var(--header-h));   /* b) max-height, non height */
-  max-height: calc(100dvh - var(--header-h));
+  padding-bottom: 24px;
+  position: fixed;
+  top: var(--header-h);          /* parte subito sotto la navbar (72px) */
+  left: 0;
+  bottom: 0;                     /* si estende fino al fondo della finestra */
+  height: calc(100vh - var(--header-h));
+  height: calc(100dvh - var(--header-h));
   overflow-y: auto;
-  overscroll-behavior: contain;  /* lo scroll non "trascina" la pagina */
+  overscroll-behavior: contain;  /* lo scroll interno non "trascina" la pagina */
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
   z-index: 90;
@@ -155,10 +153,12 @@ body.is-coach-mode .es-user-tabs { display: none !important; }
 }
 
 @media (max-width: 1024px) {
+  .layout,
   .es-cos-shell {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
+    padding-left: var(--space-3) !important;
+    padding-right: var(--space-3) !important;
   }
+  .sidebar,
   .es-cos-sidebar {
     position: fixed;
     inset: var(--header-h) auto 0 0;
@@ -168,6 +168,7 @@ body.is-coach-mode .es-user-tabs { display: none !important; }
     z-index: 100;
     box-shadow: 10px 0 30px rgba(0, 0, 0, 0.6);
   }
+  .sidebar.is-open,
   .es-cos-sidebar.is-open {
     transform: translateX(0);
   }
@@ -1235,17 +1236,6 @@ section + section {
 }
 
 @media (max-width: 850px) {
-  .es-cos-shell {
-    flex-direction: column;
-  }
-  .es-cos-sidebar {
-    width: 100%;
-    min-width: 100%;
-    min-height: auto;
-    position: static;
-    border-right: none;
-    border-bottom: 1px solid var(--cos-line);
-  }
   .es-cos-stat-grid-8 {
     grid-template-columns: repeat(2, 1fr);
   }

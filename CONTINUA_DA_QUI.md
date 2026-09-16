@@ -3,7 +3,16 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Risoluzione Radicale Conflitti CSS Layout & Sidebar Spazio Vuoto (`COACHPRO5`):
+Ultimo aggiornamento: **2026-09-16** — Sidebar Fissa a Tutta Altezza Estesa fino al Fondo (`COACHPRO6`):
+1. **Sidebar Estesa Verticalmente fino in Fondo (Linea Gialla Coperta al 100%)**:
+   - Impostata la sidebar `.es-cos-sidebar` come `position: fixed; top: var(--header-h); left: 0; bottom: 0; width: 240px; height: calc(100vh - var(--header-h)); height: calc(100dvh - var(--header-h));`.
+   - Lo sfondo scuro `#0A0E18` e la linea divisoria verticale destra `1px solid var(--cos-line)` ora scendono fluidamente e ininterrottamente fino al fondo del viewport (taskbar).
+2. **Sidebar Immobile e Fissa allo Scroll (Nessun Abbassamento)**:
+   - Grazie a `position: fixed`, allo scorrimento dei contenuti destri la sidebar non si abbassa, non si sposta e non scompare: rimane stabilmente visibile consentendo accesso immediato a tutte le macroaree in qualunque momento dello scroll.
+   - Su `.es-cos-shell`: impostato `padding-left: calc(240px + var(--space-3))` per distanziare perfettamente il contenuto centrale dalla sidebar fissa.
+   - Rimosso l'override mobile static obsoleto a 850px, preservando il drawer off-canvas su mobile/tablet (<= 1024px).
+3. **File aggiornati**: `coach-dash.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHPRO6`.
+Feature precedente: **Risoluzione Radicale Conflitti CSS Layout & Sidebar Spazio Vuoto (`COACHPRO5`)**:
 1. **Causa Reale del Gap ~150px Risolta alla Radice (Zero Patch Sovrapposte)**:
    - Individuata la regola in conflitto primario in `style.css` (riga 9004): `#user-dossier-portal .pf-page-inner` imponeva `padding-top: 7.25rem !important` (116px). Poiché conteneva un ID, vinceva per specificità su qualsiasi classe e si sommava ai 72px di `.es-cos-shell`, producendo 188px totali di fascia vuota.
    - Modificato `style.css` escludendo direttamente la dashboard: `.container.pf-page-inner:not(.is-coach-inner), .pf-page-inner:not(.is-coach-inner), #user-dossier-portal:not(.is-coach-dash) .pf-page-inner`.
