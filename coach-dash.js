@@ -395,33 +395,33 @@
       nome: '4-3-3 (Offensivo con Ali)',
       desc: 'Tridente largo, vertice basso di regia e due mezzali di inserimento.',
       slots: [
-        { idx: 0, ruolo: 'POR', x: 50, y: 88, name: 'Portiere' },
-        { idx: 1, ruolo: 'TD',  x: 84, y: 70, name: 'Terzino Dx' },
-        { idx: 2, ruolo: 'DC',  x: 62, y: 73, name: 'Difensore Centrale 1' },
-        { idx: 3, ruolo: 'DC',  x: 38, y: 73, name: 'Difensore Centrale 2' },
-        { idx: 4, ruolo: 'TS',  x: 16, y: 70, name: 'Terzino Sx' },
-        { idx: 5, ruolo: 'MED', x: 50, y: 53, name: 'Mediano' },
-        { idx: 6, ruolo: 'CC',  x: 70, y: 46, name: 'Mezzala Dx' },
-        { idx: 7, ruolo: 'CC',  x: 30, y: 46, name: 'Mezzala Sx' },
-        { idx: 8, ruolo: 'AD',  x: 84, y: 22, name: 'Ala Dx' },
-        { idx: 9, ruolo: 'AS',  x: 16, y: 22, name: 'Ala Sx' },
-        { idx: 10, ruolo: 'ATT', x: 50, y: 15, name: 'Centravanti' }
+        { idx: 0, ruolo: 'POR', x: 50, y: 89, name: 'Portiere' },
+        { idx: 1, ruolo: 'TD',  x: 84, y: 72, name: 'Terzino Dx' },
+        { idx: 2, ruolo: 'DC',  x: 62, y: 74, name: 'Difensore Centrale 1' },
+        { idx: 3, ruolo: 'DC',  x: 38, y: 74, name: 'Difensore Centrale 2' },
+        { idx: 4, ruolo: 'TS',  x: 16, y: 72, name: 'Terzino Sx' },
+        { idx: 5, ruolo: 'MED', x: 50, y: 55, name: 'Mediano' },
+        { idx: 6, ruolo: 'CC',  x: 70, y: 44, name: 'Mezzala Dx' },
+        { idx: 7, ruolo: 'CC',  x: 30, y: 44, name: 'Mezzala Sx' },
+        { idx: 8, ruolo: 'AD',  x: 84, y: 26, name: 'Ala Dx' },
+        { idx: 9, ruolo: 'AS',  x: 16, y: 26, name: 'Ala Sx' },
+        { idx: 10, ruolo: 'ATT', x: 50, y: 14, name: 'Centravanti' }
       ]
     },
     '4-4-2': {
       nome: '4-4-2 (Classico Lineare)',
       desc: 'Doppia linea compatta, corsie esterne bilanciate e tandem d\'attacco complementare.',
       slots: [
-        { idx: 0, ruolo: 'POR', x: 50, y: 88, name: 'Portiere' },
-        { idx: 1, ruolo: 'TD',  x: 84, y: 70, name: 'Terzino Dx' },
-        { idx: 2, ruolo: 'DC',  x: 62, y: 73, name: 'Difensore Centrale 1' },
-        { idx: 3, ruolo: 'DC',  x: 38, y: 73, name: 'Difensore Centrale 2' },
-        { idx: 4, ruolo: 'TS',  x: 16, y: 70, name: 'Terzino Sx' },
-        { idx: 5, ruolo: 'EAD', x: 84, y: 46, name: 'Esterno Alto Dx' },
+        { idx: 0, ruolo: 'POR', x: 50, y: 89, name: 'Portiere' },
+        { idx: 1, ruolo: 'TD',  x: 84, y: 72, name: 'Terzino Dx' },
+        { idx: 2, ruolo: 'DC',  x: 62, y: 74, name: 'Difensore Centrale 1' },
+        { idx: 3, ruolo: 'DC',  x: 38, y: 74, name: 'Difensore Centrale 2' },
+        { idx: 4, ruolo: 'TS',  x: 16, y: 72, name: 'Terzino Sx' },
+        { idx: 5, ruolo: 'EAD', x: 84, y: 48, name: 'Esterno Alto Dx' },
         { idx: 6, ruolo: 'CC',  x: 62, y: 48, name: 'Mezzala / Mediano' },
         { idx: 7, ruolo: 'REG', x: 38, y: 48, name: 'Regista di Centrocampo' },
-        { idx: 8, ruolo: 'EAS', x: 16, y: 46, name: 'Esterno Alto Sx' },
-        { idx: 9, ruolo: 'SP',  x: 38, y: 18, name: 'Seconda Punta' },
+        { idx: 8, ruolo: 'EAS', x: 16, y: 48, name: 'Esterno Alto Sx' },
+        { idx: 9, ruolo: 'SP',  x: 38, y: 24, name: 'Seconda Punta' },
         { idx: 10, ruolo: 'ATT', x: 62, y: 18, name: 'Centravanti' }
       ]
     },
@@ -429,33 +429,33 @@
       nome: '4-2-3-1 (Doppio Mediano & Trequarti)',
       desc: 'Doppio perno difensivo, tridente di rifinitura e punta centrale terminale.',
       slots: [
-        { idx: 0, ruolo: 'POR', x: 50, y: 88, name: 'Portiere' },
+        { idx: 0, ruolo: 'POR', x: 50, y: 89, name: 'Portiere' },
         { idx: 1, ruolo: 'TD',  x: 84, y: 72, name: 'Terzino Dx' },
         { idx: 2, ruolo: 'DC',  x: 62, y: 74, name: 'Difensore Centrale 1' },
         { idx: 3, ruolo: 'DC',  x: 38, y: 74, name: 'Difensore Centrale 2' },
         { idx: 4, ruolo: 'TS',  x: 16, y: 72, name: 'Terzino Sx' },
         { idx: 5, ruolo: 'MED', x: 62, y: 56, name: 'Mediano Destro' },
         { idx: 6, ruolo: 'REG', x: 38, y: 56, name: 'Regista / Mediano Sx' },
-        { idx: 7, ruolo: 'AD',  x: 82, y: 36, name: 'Ala Trequartista Dx' },
-        { idx: 8, ruolo: 'TRQ', x: 50, y: 34, name: 'Trequartista Centrale' },
-        { idx: 9, ruolo: 'AS',  x: 18, y: 36, name: 'Ala Trequartista Sx' },
-        { idx: 10, ruolo: 'ATT', x: 50, y: 15, name: 'Centravanti' }
+        { idx: 7, ruolo: 'AD',  x: 82, y: 34, name: 'Ala Trequartista Dx' },
+        { idx: 8, ruolo: 'TRQ', x: 50, y: 32, name: 'Trequartista Centrale' },
+        { idx: 9, ruolo: 'AS',  x: 18, y: 34, name: 'Ala Trequartista Sx' },
+        { idx: 10, ruolo: 'ATT', x: 50, y: 14, name: 'Centravanti' }
       ]
     },
     '3-5-2': {
       nome: '3-5-2 (Ampiezza Quinti & Doppio Attacco)',
       desc: 'Difesa a 3 con braccetti, quinti a tutta fascia e due punte d\'attacco.',
       slots: [
-        { idx: 0, ruolo: 'POR', x: 50, y: 88, name: 'Portiere' },
+        { idx: 0, ruolo: 'POR', x: 50, y: 89, name: 'Portiere' },
         { idx: 1, ruolo: 'BCD', x: 72, y: 74, name: 'Braccetto Dx' },
         { idx: 2, ruolo: 'LIB', x: 50, y: 76, name: 'Libero / Centrale' },
         { idx: 3, ruolo: 'BCS', x: 28, y: 74, name: 'Braccetto Sx' },
         { idx: 4, ruolo: 'EBD', x: 88, y: 50, name: 'Esterno Basso Dx (Quinto)' },
-        { idx: 5, ruolo: 'CC',  x: 66, y: 52, name: 'Mezzala Dx' },
-        { idx: 6, ruolo: 'REG', x: 50, y: 53, name: 'Regista Basso' },
-        { idx: 7, ruolo: 'CC',  x: 34, y: 52, name: 'Mezzala Sx' },
+        { idx: 5, ruolo: 'CC',  x: 66, y: 50, name: 'Mezzala Dx' },
+        { idx: 6, ruolo: 'REG', x: 50, y: 54, name: 'Regista Basso' },
+        { idx: 7, ruolo: 'CC',  x: 34, y: 50, name: 'Mezzala Sx' },
         { idx: 8, ruolo: 'EBS', x: 12, y: 50, name: 'Esterno Basso Sx (Quinto)' },
-        { idx: 9, ruolo: 'SP',  x: 38, y: 18, name: 'Seconda Punta' },
+        { idx: 9, ruolo: 'SP',  x: 38, y: 24, name: 'Seconda Punta' },
         { idx: 10, ruolo: 'ATT', x: 62, y: 18, name: 'Centravanti' }
       ]
     },
@@ -463,7 +463,7 @@
       nome: '3-4-3 (Tridente & Linea Mediana a 4)',
       desc: 'Aggressione alta, tre centrali strutturati, centrocampo a 4 e tridente puro.',
       slots: [
-        { idx: 0, ruolo: 'POR', x: 50, y: 88, name: 'Portiere' },
+        { idx: 0, ruolo: 'POR', x: 50, y: 89, name: 'Portiere' },
         { idx: 1, ruolo: 'BCD', x: 72, y: 74, name: 'Braccetto Dx' },
         { idx: 2, ruolo: 'DC',  x: 50, y: 75, name: 'Centrale di Difesa' },
         { idx: 3, ruolo: 'BCS', x: 28, y: 74, name: 'Braccetto Sx' },
@@ -471,25 +471,25 @@
         { idx: 5, ruolo: 'MED', x: 62, y: 52, name: 'Mediano Centrale' },
         { idx: 6, ruolo: 'CC',  x: 38, y: 52, name: 'Centrocampista Centrale' },
         { idx: 7, ruolo: 'EAS', x: 14, y: 50, name: 'Esterno Sinistro' },
-        { idx: 8, ruolo: 'AD',  x: 82, y: 22, name: 'Ala Dx' },
-        { idx: 9, ruolo: 'AS',  x: 18, y: 22, name: 'Ala Sx' },
-        { idx: 10, ruolo: 'ATT', x: 50, y: 15, name: 'Centravanti' }
+        { idx: 8, ruolo: 'AD',  x: 82, y: 26, name: 'Ala Dx' },
+        { idx: 9, ruolo: 'AS',  x: 18, y: 26, name: 'Ala Sx' },
+        { idx: 10, ruolo: 'ATT', x: 50, y: 14, name: 'Centravanti' }
       ]
     },
     '5-3-2': {
       nome: '5-3-2 (Difesa a 5 & Contropiede Rapido)',
       desc: 'Linea difensiva a 5 solidissima, densità centrale e ripartenza veloce delle punte.',
       slots: [
-        { idx: 0, ruolo: 'POR', x: 50, y: 88, name: 'Portiere' },
-        { idx: 1, ruolo: 'TD',  x: 88, y: 70, name: 'Terzino Dx' },
+        { idx: 0, ruolo: 'POR', x: 50, y: 89, name: 'Portiere' },
+        { idx: 1, ruolo: 'TD',  x: 88, y: 72, name: 'Terzino Dx' },
         { idx: 2, ruolo: 'BCD', x: 69, y: 74, name: 'Braccetto Dx' },
         { idx: 3, ruolo: 'LIB', x: 50, y: 77, name: 'Libero / Centrale' },
         { idx: 4, ruolo: 'BCS', x: 31, y: 74, name: 'Braccetto Sx' },
-        { idx: 5, ruolo: 'TS',  x: 12, y: 70, name: 'Terzino Sx' },
+        { idx: 5, ruolo: 'TS',  x: 12, y: 72, name: 'Terzino Sx' },
         { idx: 6, ruolo: 'CC',  x: 68, y: 50, name: 'Mezzala Dx' },
-        { idx: 7, ruolo: 'MED', x: 50, y: 53, name: 'Mediano Centrale' },
+        { idx: 7, ruolo: 'MED', x: 50, y: 54, name: 'Mediano Centrale' },
         { idx: 8, ruolo: 'CC',  x: 32, y: 50, name: 'Mezzala Sx' },
-        { idx: 9, ruolo: 'SP',  x: 38, y: 18, name: 'Seconda Punta' },
+        { idx: 9, ruolo: 'SP',  x: 38, y: 24, name: 'Seconda Punta' },
         { idx: 10, ruolo: 'ATT', x: 62, y: 18, name: 'Centravanti' }
       ]
     },
@@ -497,17 +497,17 @@
       nome: '4-1-4-1 (Vertice Basso & Linea di Trequarti)',
       desc: 'Schermo difensivo di filtro e linea di trequarti a quattro dietro la punta.',
       slots: [
-        { idx: 0, ruolo: 'POR', x: 50, y: 88, name: 'Portiere' },
+        { idx: 0, ruolo: 'POR', x: 50, y: 89, name: 'Portiere' },
         { idx: 1, ruolo: 'TD',  x: 84, y: 72, name: 'Terzino Dx' },
         { idx: 2, ruolo: 'DC',  x: 62, y: 74, name: 'Difensore Centrale 1' },
         { idx: 3, ruolo: 'DC',  x: 38, y: 74, name: 'Difensore Centrale 2' },
         { idx: 4, ruolo: 'TS',  x: 16, y: 72, name: 'Terzino Sx' },
-        { idx: 5, ruolo: 'MED', x: 50, y: 58, name: 'Vertice Basso / Regista' },
+        { idx: 5, ruolo: 'MED', x: 50, y: 57, name: 'Vertice Basso / Regista' },
         { idx: 6, ruolo: 'EAD', x: 84, y: 38, name: 'Esterno Alto Dx' },
-        { idx: 7, ruolo: 'CC',  x: 62, y: 40, name: 'Mezzala Offensiva Dx' },
-        { idx: 8, ruolo: 'TRQ', x: 38, y: 40, name: 'Trequartista / Mezzala Sx' },
+        { idx: 7, ruolo: 'CC',  x: 62, y: 38, name: 'Mezzala Offensiva Dx' },
+        { idx: 8, ruolo: 'TRQ', x: 38, y: 38, name: 'Trequartista / Mezzala Sx' },
         { idx: 9, ruolo: 'EAS', x: 16, y: 38, name: 'Esterno Alto Sx' },
-        { idx: 10, ruolo: 'ATT', x: 50, y: 15, name: 'Punta Unica / Falso Nueve' }
+        { idx: 10, ruolo: 'ATT', x: 50, y: 14, name: 'Punta Unica / Falso Nueve' }
       ]
     }
   };
@@ -1284,7 +1284,10 @@
               '</div>' +
 
               '<div class="es-cos-session-pill">' +
-                '<strong>● Seduta odierna</strong>' +
+                '<div class="session-head">' +
+                  '<span class="session-dot"></span>' +
+                  '<strong>Seduta odierna</strong>' +
+                '</div>' +
                 '<span id="today-session">Rifinitura · 10:00 - 11:30</span>' +
               '</div>' +
             '</div>' +
@@ -1713,8 +1716,8 @@
               'Lineup Builder Ufficiale · XI Titolare' +
             '</span>' +
             // SELETTORE MODULO EVIDENTE CON ETICHETTA E FRECCIA SVG
-            '<div class="es-modulo-select-wrap" style="display:flex; align-items:center; gap:0.5rem; background:#071522; border:1.5px solid #3b82f6; border-radius:8px; padding:0.3rem 0.65rem; box-shadow:0 2px 8px rgba(59,130,246,0.15);">' +
-              '<label for="sel-tactical-modulo" style="font-size:0.75rem; font-weight:800; color:#93c5fd; text-transform:uppercase; letter-spacing:0.04em; cursor:pointer;">Modulo:</label>' +
+            '<div class="es-modulo-select-wrap" style="display:flex; align-items:center; gap:0.5rem; background:rgba(7, 21, 34, 0.85); border:1px solid rgba(56, 189, 248, 0.35); border-radius:8px; padding:0.32rem 0.75rem; box-shadow:0 2px 8px rgba(0,0,0,0.35);">' +
+              '<label for="sel-tactical-modulo" style="font-size:0.68rem; font-weight:600; color:#8da8bc; text-transform:uppercase; letter-spacing:0.04em; cursor:pointer;">Modulo:</label>' +
               '<div style="position:relative; display:inline-flex; align-items:center;">' +
                 '<select id="sel-tactical-modulo" style="appearance:none; -webkit-appearance:none; background:transparent; border:none; color:#ffffff; font-size:0.85rem; font-weight:800; cursor:pointer; padding-right:1.4rem; outline:none;">' +
                   '<option value="4-3-3" ' + (modKey === '4-3-3' ? 'selected' : '') + ' style="background:#071522; color:#ffffff;">4-3-3 (Offensivo con Ali)</option>' +
@@ -1725,7 +1728,7 @@
                   '<option value="5-3-2" ' + (modKey === '5-3-2' ? 'selected' : '') + ' style="background:#071522; color:#ffffff;">5-3-2 (Difesa a 5 &amp; Contropiede Rapido)</option>' +
                   '<option value="4-1-4-1" ' + (modKey === '4-1-4-1' ? 'selected' : '') + ' style="background:#071522; color:#ffffff;">4-1-4-1 (Vertice Basso &amp; Linea di Trequarti)</option>' +
                 '</select>' +
-                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="3" style="position:absolute; right:0; pointer-events:none;"><polyline points="6 9 12 15 18 9"/></svg>' +
+                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="3" style="position:absolute; right:0; pointer-events:none;"><polyline points="6 9 12 15 18 9"/></svg>' +
               '</div>' +
             '</div>' +
           '</div>' +
@@ -1741,8 +1744,8 @@
           '</div>' +
         '</div>' +
 
-        // LAYOUT A DUE COLONNE: CAMPO FLESSIBILE A SINISTRA E PANCHINA FISSA A DESTRA (320px)
-        '<div class="es-lineup-layout-grid formazione-layout" style="display:grid; grid-template-columns:minmax(0, 1fr) 320px; gap:20px; align-items:start; margin-top:0.5rem; width:100%;">' +
+        // LAYOUT A DUE COLONNE: CAMPO FLESSIBILE A SINISTRA E PANCHINA FISSA A DESTRA (345px)
+        '<div class="es-lineup-layout-grid formazione-layout" style="display:grid; grid-template-columns:minmax(0, 1fr) 345px; gap:20px; align-items:start; margin-top:0.5rem; width:100%;">' +
           // COLONNA SINISTRA: CAMPO DA CALCIO REGOLAMENTARE CON OVERLAY VETTORIALE SVG (ASPECT RATIO 3/4)
           '<div class="es-pitch-container campo-container" style="background:radial-gradient(circle at 50% 50%, #0d3b1f 0%, #061e11 88%); border:2.5px solid #16562f; border-radius:12px; position:relative; min-width:0; width:100%; max-width:540px; margin:0 auto; aspect-ratio:3/4; overflow:hidden; box-shadow:0 12px 30px rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center;">' +
             // LINEE REGOLAMENTARI DEL CAMPO IN OVERLAY VETTORIALE SVG
@@ -1781,8 +1784,8 @@
             renderPitchPins(data.top11, modKey) +
           '</div>' +
 
-          // COLONNA DESTRA: PANCHINA A LARGHEZZA FISSA 320PX + STATO CONVALIDA
-          '<div class="es-bench-panel-card panchina-panel" style="background:#071522; border:1px solid #12344a; border-radius:12px; padding:0.85rem 0.95rem; display:flex; flex-direction:column; min-width:320px; max-width:320px; width:320px; box-sizing:border-box;">' +
+          // COLONNA DESTRA: PANCHINA A LARGHEZZA FISSA 345PX + STATO CONVALIDA
+          '<div class="es-bench-panel-card panchina-panel" style="background:#071522; border:1px solid #12344a; border-radius:12px; padding:0.85rem 0.95rem; display:flex; flex-direction:column; min-width:345px; max-width:345px; width:345px; box-sizing:border-box;">' +
             '<div>' +
               // INTESTAZIONE PANCHINA CON CONTATORE REALE
               '<div style="font-size:0.85rem; font-weight:800; color:#f3f8fc; text-transform:uppercase; margin-bottom:0.55rem; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #12344a; padding-bottom:0.5rem;">' +
@@ -1800,7 +1803,7 @@
               '</div>' +
 
               // LISTA SCROLLABILE CARD PANCHINARI CON ATTRIBUTO DRAGGABLE E RUOLO
-              '<div class="es-bench-scroll-list" style="display:flex; flex-direction:column; gap:0.45rem; max-height:460px; overflow-y:auto; padding-right:4px;">' +
+              '<div class="es-bench-scroll-list" style="display:flex; flex-direction:column; gap:0.45rem; max-height:360px; overflow-y:auto; padding-right:4px;">' +
                 (panchinaCount ? data.panchina.map(function (b) {
                   return (
                     '<div class="es-bench-card" draggable="true" data-bench-id="' + esc(b.id) + '" data-bench-num="' + esc(b.num) + '" data-bench-name="' + esc(b.name) + '" data-bench-pos="' + esc(b.pos || b.role) + '" style="display:flex; justify-content:space-between; align-items:center; background:#040912; border:1px solid #12344a; border-radius:6px; padding:0.45rem 0.6rem; cursor:grab; transition:all 0.15s ease; gap:0.4rem;">' +
@@ -1811,9 +1814,9 @@
                           '<span style="font-size:0.67rem; color:#8da8bc;">Classe ' + esc(b.birth || '--') + '</span>' +
                         '</div>' +
                       '</div>' +
-                      '<div style="display:flex; align-items:center; gap:0.35rem; flex-shrink:0;">' +
-                        '<span style="font-size:0.68rem; font-weight:800; padding:2px 6px; border-radius:4px; ' + getRoleBadgeStyle(b.pos || b.role) + '">' + esc(b.pos || b.role) + '</span>' +
-                        '<button type="button" class="es-bench-assign-btn" data-assign-bench-id="' + esc(b.id) + '" style="background:transparent; border:1px solid rgba(255,255,255,0.16); color:rgba(255,255,255,0.85); padding:0.22rem 0.45rem; border-radius:5px; font-size:0.67rem; font-weight:700; cursor:pointer; white-space:nowrap; transition:all 0.15s ease;" title="Schiera titolare nello slot desiderato">' +
+                      '<div style="display:flex; align-items:center; gap:0.3rem; flex-shrink:0;">' +
+                        '<span style="font-size:0.65rem; font-weight:800; padding:1px 5px; border-radius:4px; ' + getRoleBadgeStyle(b.pos || b.role) + '">' + esc(b.pos || b.role) + '</span>' +
+                        '<button type="button" class="es-bench-assign-btn" data-assign-bench-id="' + esc(b.id) + '" style="background:transparent; border:1px solid rgba(255,255,255,0.16); color:rgba(255,255,255,0.85); padding:0.2rem 0.4rem; border-radius:5px; font-size:0.65rem; font-weight:700; cursor:pointer; white-space:nowrap; transition:all 0.15s ease;" title="Schiera titolare nello slot desiderato">' +
                           'In Campo &rarr;' +
                         '</button>' +
                       '</div>' +
@@ -2247,16 +2250,26 @@
     var activeTool = tb.activeTool || 'move';
     var schemi = tb.schemiSalvati || [];
 
-    var modOptions = [
-      { k: '4-3-3', n: '4-3-3 (Offensivo con Ali)' },
-      { k: '4-4-2', n: '4-4-2 (Classico Lineare)' },
-      { k: '4-2-3-1', n: '4-2-3-1 (Doppio Mediano & Trequarti)' },
-      { k: '3-5-2', n: '3-5-2 (Ampiezza Quinti & Doppio Attacco)' },
-      { k: '3-4-3', n: '3-4-3 (Tridente & Linea Mediana a 4)' },
-      { k: '5-3-2', n: '5-3-2 (Difesa a 5 & Contropiede Rapido)' },
-      { k: '4-1-4-1', n: '4-1-4-1 (Vertice Basso & Linea di Trequarti)' }
-    ].map(function (m) {
-      return '<option value="' + m.k + '" ' + (m.k === modKey ? 'selected' : '') + ' style="background:#071522; color:#fff;">' + m.n + '</option>';
+    var moduliElenco = [
+      { k: '4-3-3', code: '4-3-3', sub: 'Offensivo con Ali' },
+      { k: '4-4-2', code: '4-4-2', sub: 'Classico Lineare' },
+      { k: '4-2-3-1', code: '4-2-3-1', sub: 'Doppio Mediano & Trequarti' },
+      { k: '3-5-2', code: '3-5-2', sub: 'Ampiezza Quinti & Doppio Attacco' },
+      { k: '3-4-3', code: '3-4-3', sub: 'Tridente & Mediana a 4' },
+      { k: '5-3-2', code: '5-3-2', sub: 'Difesa a 5 & Contropiede' },
+      { k: '4-1-4-1', code: '4-1-4-1', sub: 'Vertice Basso & Trequarti' }
+    ];
+    var currentModuloObj = null;
+    for (var mi = 0; mi < moduliElenco.length; mi++) {
+      if (moduliElenco[mi].k === modKey) {
+        currentModuloObj = moduliElenco[mi];
+        break;
+      }
+    }
+    if (!currentModuloObj) currentModuloObj = moduliElenco[0];
+
+    var modOptions = moduliElenco.map(function (m) {
+      return '<option value="' + m.k + '" ' + (m.k === modKey ? 'selected' : '') + ' style="background:#071522; color:#fff;">' + m.code + ' — ' + m.sub + '</option>';
     }).join('');
 
     var schemiOptions = '<option value="">-- Schemi Salvati (' + schemi.length + ') --</option>' +
@@ -2273,10 +2286,13 @@
               '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16b9ff" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>' +
               'Lavagna Tattica Digitale Interattiva' +
             '</span>' +
-            // SELETTORE MODULO INDIPENDENTE
-            '<div style="display:flex; align-items:center; gap:0.4rem; background:#071522; border:1.5px solid #3b82f6; border-radius:8px; padding:0.3rem 0.65rem;">' +
-              '<label for="sel-board-modulo" style="font-size:0.75rem; font-weight:800; color:#93c5fd; text-transform:uppercase;">Modulo:</label>' +
-              '<select id="sel-board-modulo" style="background:transparent; border:none; color:#ffffff; font-size:0.85rem; font-weight:800; cursor:pointer; outline:none;">' +
+            // SELETTORE MODULO DROPDOWN LUXURY CON CHEVRON E BADGE SEPARATO
+            '<div class="es-board-modulo-dropdown" style="position:relative; display:inline-flex; align-items:center; gap:0.45rem; background:rgba(7, 21, 34, 0.85); border:1px solid rgba(56, 189, 248, 0.35); border-radius:8px; padding:0.32rem 0.75rem; box-shadow:0 2px 8px rgba(0,0,0,0.35); cursor:pointer;">' +
+              '<span style="font-size:0.68rem; font-weight:600; color:#8da8bc; text-transform:uppercase; letter-spacing:0.04em;">Modulo:</span>' +
+              '<strong style="font-size:0.88rem; font-weight:800; color:#ffffff; letter-spacing:0.02em;">' + currentModuloObj.code + '</strong>' +
+              '<span style="font-size:0.65rem; font-weight:600; color:#38bdf8; background:rgba(56, 189, 248, 0.12); border:1px solid rgba(56, 189, 248, 0.25); border-radius:4px; padding:2px 6px; white-space:nowrap;">' + currentModuloObj.sub + '</span>' +
+              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0; margin-left:2px;"><polyline points="6 9 12 15 18 9"/></svg>' +
+              '<select id="sel-board-modulo" style="position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:pointer; z-index:2;">' +
                 modOptions +
               '</select>' +
             '</div>' +

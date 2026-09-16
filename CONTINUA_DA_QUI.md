@@ -3,10 +3,23 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Lavagna Tattica: Pulsante "Importa Schema" (Schemi Preimpostati UEFA Pro & JSON) e "Salva Schema" Riposizionato (`IMPORTSCHEMA1`):
-1. **Riposizionamento Pulsanti Testata Lavagna Tattica**:
-   - Spostato `"Salva Schema"` (`es-btn-cos-primary`) nella posizione evidenziata a destra della barra delle azioni.
-   - Al suo posto precedente è stato inserito il nuovo pulsante `"Importa Schema"` (`#btn-import-board-preset`, con icona SVG Lucide Download e bordo ciano).
+Ultimo aggiornamento: **2026-09-16** — Refine Tattica & Formazione: Header 3 Colonne, Selettore Modulo Luxury, Toolbar Uniformata & Spaziatura Campo (`TACTICREFINE1`):
+1. **Zona 1 (Widget Header: Partita + Countdown + Seduta Odierna)**:
+   - Risolto il disallineamento e rimosso il bordo stray sopra "MANCANO" con container a 3 colonne coerente (`1.25fr 1fr 1.25fr`) e `overflow: hidden; position: relative;` sul genitore.
+   - Badge "Seduta odierna" desaturato in stile "stato" luxury (`rgba(16, 185, 129, 0.04)`, bordo sottile `1px solid rgba(16, 185, 129, 0.24)` e puntino verde pieno `7px #10b981` con glow discreto).
+2. **Zona 2 (Selettore Modulo)**:
+   - Trasformato da input generico in dropdown luxury con chevron SVG Lucide (`polyline`), separando il codice modulo (`4-3-3` in peso 800 bianco) e la variante tattica (`Offensivo con Ali` in badge secondario compatto ciano con bordo sottile), con etichetta `MODULO:` a font-weight 600.
+3. **Zona 3 (Toolbar Strumenti Tattici)**:
+   - Larghezza uniforme dei bottoni con `min-width: 120px` fisso e centratura perfetta.
+   - Stato attivo ridisegnato: sfondo scuro neutro luxury con riflesso ciano discreto (`rgba(22, 185, 255, 0.12)` + bordo `#16b9ff`), eliminato il blu pieno fluorescente arcade.
+   - Icone standardizzate a 16x16px perfettamente allineate al testo.
+4. **Imperfezioni Risolte (Tab Bar, Panchina e Spaziatura Campo)**:
+   - Tab bar superiore: compattati gap/padding (`gap: 4px`, `padding: 5px 8px`, `font-size: 11px`) con `overflow-x: auto` e scrollbar visibile, evitando che "Comunicazioni" venga tagliata.
+   - Panchina e Convocati: allargata la colonna da 320px a 345px, compattati badge ruolo e bottone "In Campo &rarr;", limitata l'altezza della scroll list a 360px per mantenere il banner "Stato Ufficiale: Convalidata dal Mister" visibile nel viewport ed evitare troncamenti di nomi atleti.
+   - Spaziatura Linee del Campo: armonizzate le posizioni percentuali Y nei moduli tattici (es. 4-3-3: POR 89%, Difesa 72-74%, Mediano 55%, Mezzali 44%, Ali 26%, Attaccante 14%) eliminando la voragine tra centrocampo e attacco.
+5. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_TACTICREFINE1`.
+
+Feature precedente: **Lavagna Tattica: Pulsante "Importa Schema" (Schemi Preimpostati UEFA Pro & JSON) e "Salva Schema" Riposizionato (`IMPORTSCHEMA1`):**
 2. **Libreria Schemi Tattici Preimpostati (Mister & Vice Allenatore)**:
    - Modale dedicato interattivo (`840px`) con 6 schemi professionali completi codificati secondo i principi moderni (UEFA Pro):
      - *Costruzione dal Basso 4-3-3* (Scuola Guardiola-De Zerbi): 3+1 profondo, centrali larghi, mediano abbassato e terzini alti.
