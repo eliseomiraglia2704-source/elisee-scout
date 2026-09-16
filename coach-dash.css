@@ -119,8 +119,7 @@ body.is-coach-mode .es-user-tabs { display: none !important; }
   border-right: 1px solid var(--cos-line);
   display: flex;
   flex-direction: column;
-  padding: var(--space-2);
-  padding-bottom: 24px;
+  padding: 22px var(--space-2) 28px;
   position: fixed;
   top: var(--header-h);          /* parte subito sotto la navbar (72px) */
   left: 0;
@@ -175,9 +174,9 @@ body.is-coach-mode .es-user-tabs { display: none !important; }
 }
 
 .es-cos-brand-header {
-  padding: 0 4px 14px;
+  padding: 4px 4px 14px;
   border-bottom: 1px solid var(--cos-line);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .es-cos-brand-title {

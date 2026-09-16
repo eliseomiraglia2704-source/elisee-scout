@@ -3,7 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Sidebar Fissa a Tutta Altezza Estesa fino al Fondo (`COACHPRO6`):
+Ultimo aggiornamento: **2026-09-16** — Respiro e Spazio Superiore tra Header e Sidebar (`COACHPRO7`):
+1. **Spazio Header-Sidebar Calibrato**:
+   - Aumentato il padding-top della sidebar `.sidebar, .es-cos-sidebar` da 12px a 22px (`padding: 22px var(--space-2) 28px;`) e inserito 4px di padding-top su `.es-cos-brand-header`.
+   - Il titolo `ELISEE SCOUT / AREA STAFF TECNICO` ora gode del giusto respiro visivo sotto la navbar fissa, allineandosi armoniosamente al ritmo dei contenuti centrali.
+2. **File aggiornati**: `coach-dash.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHPRO7`.
+Feature precedente: **Sidebar Fissa a Tutta Altezza Estesa fino al Fondo (`COACHPRO6`)**:
 1. **Sidebar Estesa Verticalmente fino in Fondo (Linea Gialla Coperta al 100%)**:
    - Impostata la sidebar `.es-cos-sidebar` come `position: fixed; top: var(--header-h); left: 0; bottom: 0; width: 240px; height: calc(100vh - var(--header-h)); height: calc(100dvh - var(--header-h));`.
    - Lo sfondo scuro `#0A0E18` e la linea divisoria verticale destra `1px solid var(--cos-line)` ora scendono fluidamente e ininterrottamente fino al fondo del viewport (taskbar).
