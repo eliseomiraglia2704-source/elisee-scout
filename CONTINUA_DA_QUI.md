@@ -3,7 +3,15 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Risoluzione Scroll Tab Secondari & Menu "Altro ▾" a Scomparsa (`TABFIX1`):
+Ultimo aggiornamento: **2026-09-16** — Integrazione Logo Ufficiale Circolare Patentino UEFA B (`UEFAB1`):
+1. **Logo Ufficiale Circolare UEFA B**:
+   - Scaricato e integrato il logo ufficiale UEFA (`immagini/logo/uefa-b.png`) ad alta risoluzione.
+   - Trasparenza alpha impeccabile sul cerchio esterno tramite maschera antialiasing (eliminato il falso pattern a quadretti).
+   - Sostituito il badge tipografico generico con l'icona circolare del patentino UEFA B nell'header dell'identità Mister (`.es-cos-licence-badge`).
+   - Stile luxury coerente con anello dorato (`rgba(251, 191, 36, 0.45)`), ombra interna ed effetto hover con glow dorato (`rgba(251, 191, 36, 0.35)`).
+2. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `immagini/logo/uefa-b.png`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_UEFAB1`.
+
+Feature precedente: **Risoluzione Scroll Tab Secondari & Menu "Altro ▾" a Scomparsa (`TABFIX1`):**
 1. **Dimensioni Compatte Calibrate**:
    - Padding orizzontale ridotto a 11px (`padding: 6px 11px`).
    - Font-size snella e nitida a 12.5px (`font-size: 12.5px`).

@@ -1234,7 +1234,9 @@
               '</button>' +
               '<div class="es-cos-header-identity">' +
                 '<div class="es-cos-header-block">' +
-                  '<div class="licence-badge es-cos-licence-badge"><strong>UEFA B</strong><span>Patentino</span></div>' +
+                  '<div class="licence-badge es-cos-licence-badge" title="Patentino UEFA B">' +
+                    '<img src="immagini/logo/uefa-b.png?v=20260916_UEFAB1" alt="UEFA B" width="48" height="48">' +
+                  '</div>' +
                   '<div class="es-cos-coach-info">' +
                     '<strong>' + esc(data.coachName) + '</strong>' +
                     '<span class="role">Allenatore Capo</span>' +
