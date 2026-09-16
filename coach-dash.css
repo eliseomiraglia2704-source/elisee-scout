@@ -35,19 +35,21 @@
   --cos-radius-lg: 14px;
 }
 
-/* Nasconde la navigazione pubblica del sito quando la dashboard allenatore è aperta */
-body.is-coach-mode .portfolio-nav,
-body.is-coach-mode #nav-menu,
-#user-dossier-view-group.is-staff-area.is-coach-dash ~ * .portfolio-nav {
-  display: none !important;
-}
-
+/* Navigazione principale del sito: sempre visibile e integrata con la palette scura */
 body.is-coach-mode .portfolio-header,
 body.is-coach-mode .main-header {
   padding-top: 0.35rem !important;
   padding-bottom: 0.35rem !important;
   background: var(--cos-bg) !important;
   border-bottom: 1px solid var(--cos-line) !important;
+}
+
+#user-dossier-view-group.is-staff-area.is-coach-dash,
+#user-dossier-view-group.is-staff-area.is-coach-dash #user-dossier-portal,
+#user-dossier-view-group.is-staff-area.is-vice-dash,
+#user-dossier-view-group.is-staff-area.is-vice-dash #user-dossier-portal {
+  min-height: auto !important;
+  padding-bottom: 0 !important;
 }
 
 #user-dossier-view-group.is-staff-area.is-coach-dash .es-user-tabs,
@@ -58,6 +60,7 @@ body.is-coach-mode .main-header {
   max-width: none !important;
   margin: 0 !important;
   padding: 0 !important;
+  min-height: auto !important;
 }
 
 #es-staff-profile.es-cd-on > :not(#es-cd),
@@ -66,7 +69,7 @@ body.is-coach-mode .main-header {
 /* Shell Globale */
 .es-cos-shell {
   background: var(--cos-bg);
-  min-height: 100vh;
+  min-height: auto;
   color: var(--cos-text);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   display: flex;
@@ -84,10 +87,10 @@ body.is-coach-mode .main-header {
   border-right: 1px solid var(--cos-line);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 18px 14px;
+  padding: 16px 14px;
   flex-shrink: 0;
-  min-height: 100vh;
+  min-height: auto;
+  align-self: stretch;
   position: sticky;
   top: 0;
   z-index: 90;
@@ -171,8 +174,8 @@ body.is-coach-mode .main-header {
 /* Profilo Club in Fondo alla Sidebar (Immagine 2) */
 .es-cos-sidebar-club {
   border-top: 1px solid var(--cos-line);
-  padding-top: 16px;
-  margin-top: 14px;
+  padding-top: 14px;
+  margin-top: auto;
 }
 
 .es-cos-side-crest {
@@ -226,10 +229,10 @@ body.is-coach-mode .main-header {
 .es-cos-main {
   flex: 1 1 auto;
   min-width: 0;
-  padding: 22px 26px 60px;
+  padding: 16px 20px 24px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
   background: var(--cos-bg);
   box-sizing: border-box;
 }
@@ -244,14 +247,31 @@ body.is-coach-mode .main-header {
 }
 
 /* ============================================================
-   HEADER IDENTITÀ + COUNTDOWN (Immagine 2)
+   HEADER IDENTITÀ + COUNTDOWN + TASTO VICE
    ============================================================ */
 .es-cos-dash-header {
   display: flex;
   align-items: center;
-  gap: 24px;
-  padding: 18px 22px;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 18px;
   flex-wrap: wrap;
+}
+
+.es-cos-header-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.es-cos-header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .es-cos-header-block {
@@ -308,21 +328,20 @@ body.is-coach-mode .main-header {
 }
 
 .es-cos-match-target {
-  margin-left: auto;
   text-align: left;
 }
 
 .es-cos-match-target .label {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--cos-text-muted);
-  margin-bottom: 3px;
+  margin-bottom: 2px;
 }
 
 .es-cos-match-target .when {
-  font-size: 12px;
+  font-size: 11.5px;
   color: var(--cos-blue);
   font-weight: 700;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 
 .es-cos-match-target .opp {
@@ -332,19 +351,19 @@ body.is-coach-mode .main-header {
 }
 
 .es-cos-match-target .opp strong {
-  font-size: 13px;
+  font-size: 12.5px;
   color: #FFFFFF;
 }
 
 .es-cos-match-target .opp span {
-  font-size: 11px;
+  font-size: 10.5px;
   color: var(--cos-text-muted);
   display: block;
 }
 
 .es-cos-countdown {
   display: flex;
-  gap: 14px;
+  gap: 12px;
   align-items: center;
 }
 
@@ -353,12 +372,12 @@ body.is-coach-mode .main-header {
   color: var(--cos-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 
 .es-cos-countdown-nums {
   display: flex;
-  gap: 10px;
+  gap: 8px;
 }
 
 .es-cos-countdown-nums div {
@@ -367,7 +386,7 @@ body.is-coach-mode .main-header {
 
 .es-cos-countdown-nums strong {
   display: block;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 800;
   color: var(--cos-cyan);
   line-height: 1;
@@ -382,15 +401,15 @@ body.is-coach-mode .main-header {
 .es-cos-session-pill {
   background: var(--cos-green-soft);
   border: 1px solid var(--cos-green);
-  border-radius: 10px;
-  padding: 8px 14px;
+  border-radius: 9px;
+  padding: 7px 12px;
   font-size: 11px;
 }
 
 .es-cos-session-pill strong {
   display: block;
   color: var(--cos-green);
-  font-size: 12px;
+  font-size: 11.5px;
   margin-bottom: 2px;
 }
 
@@ -402,13 +421,14 @@ body.is-coach-mode .main-header {
   background: var(--cos-blue);
   color: #FFFFFF;
   border: none;
-  border-radius: 10px;
-  padding: 11px 18px;
-  font-size: 13px;
+  border-radius: 9px;
+  padding: 8px 14px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
   transition: background 0.15s ease, box-shadow 0.15s ease;
+  flex-shrink: 0;
 }
 
 .es-cos-btn-vice-jump:hover {
@@ -653,13 +673,14 @@ body.is-coach-mode .main-header {
   border: 1px solid rgba(59, 130, 246, 0.25);
 }
 
-/* Card Ultima Sessione */
+/* Card Ultima Sessione — Miniatura Campo Tattico */
 .es-cos-session-thumb {
   width: 100%;
-  height: 90px;
+  height: 94px;
   border-radius: 10px;
-  background: linear-gradient(160deg, #16321f, #0d1a12);
-  border: 1px solid rgba(34, 197, 94, 0.2);
+  background: repeating-linear-gradient(90deg, #102917 0px, #102917 28px, #15341e 28px, #15341e 56px);
+  border: 1.5px solid rgba(34, 197, 94, 0.35);
+  box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -668,10 +689,39 @@ body.is-coach-mode .main-header {
   overflow: hidden;
 }
 
-.es-cos-session-thumb svg {
-  color: rgba(34, 197, 94, 0.4);
-  width: 38px;
-  height: 38px;
+.es-cos-session-thumb svg.es-pitch-svg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.es-cos-session-thumb-badge {
+  position: relative;
+  z-index: 2;
+  background: rgba(6, 12, 8, 0.78);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  padding: 4px 10px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #86EFAC;
+  letter-spacing: 0.02em;
+}
+
+.es-cos-session-thumb-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22C55E;
+  box-shadow: 0 0 6px #22C55E;
 }
 
 .es-cos-session-meta-row {
@@ -876,16 +926,13 @@ body.is-coach-mode .main-header {
   justify-content: flex-end;
 }
 
-.es-cos-weekchart-bar .fill {
+.es-cos-weekchart-bar .fill,
+.es-cos-weekchart-bar .fill.is-high {
   width: 100%;
   max-width: 22px;
   border-radius: 4px 4px 0 0;
   background: linear-gradient(180deg, var(--cos-cyan), var(--cos-blue));
   transition: height 0.3s ease;
-}
-
-.es-cos-weekchart-bar .fill.is-high {
-  background: linear-gradient(180deg, var(--cos-green), #059669);
 }
 
 .es-cos-weekchart-bar .day {

@@ -309,7 +309,7 @@
             renderSideBtn('rosa', 'Rosa', '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>') +
             renderSideBtn('formazione', 'Formazione', '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>') +
             renderSideBtn('tattica', 'Tattica', '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>') +
-            renderSideBtn('allenamenti', 'Allenamenti', '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.5 6.5 17.5 17.5M17.5 6.5 6.5 17.5"/></svg>') +
+            renderSideBtn('allenamenti', 'Allenamenti', '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5"/><path d="M12 5V2"/><path d="M10 2h4"/></svg>') +
             renderSideBtn('calendario', 'Calendario', '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>') +
             renderSideBtn('analisi_avversario', 'Analisi Avversario', '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>') +
             renderSideBtn('gps_carichi', 'GPS / Carichi', '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>') +
@@ -331,56 +331,60 @@
         '<main class="es-cos-main">' +
           // HEADER IDENTITÀ + COUNTDOWN + PARTITA + SEDUTA + PULSANTE VICE (Immagine 2)
           '<div class="es-cos-card es-cos-dash-header">' +
-            '<div class="es-cos-header-block">' +
-              '<div class="es-cos-crest">UEFA B</div>' +
-              '<div class="es-cos-coach-info">' +
-                '<strong>' + esc(data.coachName) + '</strong>' +
-                '<span class="role">Allenatore Capo</span>' +
-                '<p class="sub">Tesseramento FIGC: ' + esc(data.matricola) + ' · Scadenza: 30/06/2027</p>' +
+            '<div class="es-cos-header-left">' +
+              '<div class="es-cos-header-block">' +
+                '<div class="es-cos-crest">UEFA B</div>' +
+                '<div class="es-cos-coach-info">' +
+                  '<strong>' + esc(data.coachName) + '</strong>' +
+                  '<span class="role">Allenatore Capo</span>' +
+                  '<p class="sub">Tesseramento FIGC: ' + esc(data.matricola) + ' · Scadenza: 30/06/2027</p>' +
+                '</div>' +
               '</div>' +
-            '</div>' +
 
-            '<div class="es-cos-header-block es-cos-club-info">' +
-              '<div class="es-cos-crest">ASC</div>' +
-              '<div>' +
-                '<strong>' + esc(data.clubName) + '</strong>' +
-                '<span>Prima Squadra</span><br/>' +
-                '<span>' + esc(data.categoria) + '</span>' +
-              '</div>' +
-            '</div>' +
-
-            '<div class="es-cos-match-target">' +
-              '<p class="label">Prossima Partita</p>' +
-              '<p class="when" id="match-when">' + esc(data.nextMatch.data) + ' - ' + esc(data.nextMatch.orario) + '</p>' +
-              '<div class="opp">' +
-                '<div class="es-cos-crest" style="width:30px;height:30px;font-size:8px;">RAG</div>' +
+              '<div class="es-cos-header-block es-cos-club-info">' +
+                '<div class="es-cos-crest">ASC</div>' +
                 '<div>' +
-                  '<strong id="match-opp">' + esc(data.nextMatch.avversario) + '</strong>' +
-                  '<span id="match-comp">' + esc(data.categoria) + '</span>' +
-                  '<span id="match-venue">' + esc(data.nextMatch.luogo) + '</span>' +
+                  '<strong>' + esc(data.clubName) + '</strong>' +
+                  '<span>Prima Squadra</span><br/>' +
+                  '<span>' + esc(data.categoria) + '</span>' +
                 '</div>' +
               '</div>' +
             '</div>' +
 
-            '<div class="es-cos-countdown">' +
-              '<div>' +
-                '<p class="label">Mancano</p>' +
-                '<div class="es-cos-countdown-nums" id="countdown-nums">' +
-                  '<div><strong id="cd-days">02</strong><span>Giorni</span></div>' +
-                  '<div><strong id="cd-hours">15</strong><span>Ore</span></div>' +
-                  '<div><strong id="cd-mins">24</strong><span>Min</span></div>' +
+            '<div class="es-cos-header-right">' +
+              '<div class="es-cos-match-target">' +
+                '<p class="label">Prossima Partita</p>' +
+                '<p class="when" id="match-when">' + esc(data.nextMatch.data) + ' - ' + esc(data.nextMatch.orario) + '</p>' +
+                '<div class="opp">' +
+                  '<div class="es-cos-crest" style="width:28px;height:28px;font-size:8px;">RAG</div>' +
+                  '<div>' +
+                    '<strong id="match-opp">' + esc(data.nextMatch.avversario) + '</strong>' +
+                    '<span id="match-comp">' + esc(data.categoria) + '</span>' +
+                    '<span id="match-venue">' + esc(data.nextMatch.luogo) + '</span>' +
+                  '</div>' +
                 '</div>' +
               '</div>' +
-            '</div>' +
 
-            '<div class="es-cos-session-pill">' +
-              '<strong>● Seduta odierna</strong>' +
-              '<span id="today-session">Rifinitura · 10:00 - 11:30</span>' +
-            '</div>' +
+              '<div class="es-cos-countdown">' +
+                '<div>' +
+                  '<p class="label">Mancano</p>' +
+                  '<div class="es-cos-countdown-nums" id="countdown-nums">' +
+                    '<div><strong id="cd-days">02</strong><span>Giorni</span></div>' +
+                    '<div><strong id="cd-hours">15</strong><span>Ore</span></div>' +
+                    '<div><strong id="cd-mins">24</strong><span>Min</span></div>' +
+                  '</div>' +
+                '</div>' +
+              '</div>' +
 
-            '<button type="button" class="es-cos-btn-vice-jump" id="btn-goto-vice-area">' +
-              'Area Vice Allenatore &rarr;' +
-            '</button>' +
+              '<div class="es-cos-session-pill">' +
+                '<strong>● Seduta odierna</strong>' +
+                '<span id="today-session">Rifinitura · 10:00 - 11:30</span>' +
+              '</div>' +
+
+              '<button type="button" class="es-cos-btn-vice-jump" id="btn-goto-vice-area">' +
+                'Area Vice Allenatore &rarr;' +
+              '</button>' +
+            '</div>' +
           '</div>' +
 
           // TAB BAR SUPERIORE (Sincronizzata con la Sidebar)
@@ -389,7 +393,7 @@
             renderNavTab('rosa', 'Rosa', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>') +
             renderNavTab('formazione', 'Formazione', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>') +
             renderNavTab('tattica', 'Tattica', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>') +
-            renderNavTab('allenamenti', 'Allenamenti', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.5 6.5 17.5 17.5M17.5 6.5 6.5 17.5"/></svg>') +
+            renderNavTab('allenamenti', 'Allenamenti', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5"/><path d="M12 5V2"/><path d="M10 2h4"/></svg>') +
             renderNavTab('calendario', 'Calendario', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>') +
             renderNavTab('analisi_avversario', 'Analisi Avversario', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>') +
             renderNavTab('gps_carichi', 'GPS / Carichi', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>') +
@@ -529,7 +533,19 @@
               '<a class="es-cos-section-link" data-tab-nav="allenamenti">Dettagli &rarr;</a>' +
             '</div>' +
             '<div class="es-cos-session-thumb">' +
-              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="4"/><line x1="12" y1="3" x2="12" y2="21"/></svg>' +
+              '<svg class="es-pitch-svg" viewBox="0 0 300 94" preserveAspectRatio="none">' +
+                '<rect x="8" y="7" width="284" height="80" rx="3" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>' +
+                '<line x1="150" y1="7" x2="150" y2="87" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>' +
+                '<circle cx="150" cy="47" r="20" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>' +
+                '<circle cx="150" cy="47" r="2" fill="rgba(255,255,255,0.7)"/>' +
+                '<rect x="8" y="24" width="36" height="46" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>' +
+                '<rect x="8" y="34" width="14" height="26" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>' +
+                '<circle cx="34" cy="47" r="1.5" fill="rgba(255,255,255,0.7)"/>' +
+                '<rect x="256" y="24" width="36" height="46" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>' +
+                '<rect x="278" y="34" width="14" height="26" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>' +
+                '<circle cx="266" cy="47" r="1.5" fill="rgba(255,255,255,0.7)"/>' +
+              '</svg>' +
+              '<span class="es-cos-session-thumb-badge">Seduta Tattica · 11 vs 11</span>' +
             '</div>' +
             '<div class="es-cos-session-meta-row">' +
               '<div>' +
@@ -622,8 +638,8 @@
                 '<div class="es-cos-weekchart-bar"><div class="fill" style="height:74%;"></div><span class="day">Mar</span></div>' +
                 '<div class="es-cos-weekchart-bar"><div class="fill" style="height:55%;"></div><span class="day">Mer</span></div>' +
                 '<div class="es-cos-weekchart-bar"><div class="fill" style="height:68%;"></div><span class="day">Gio</span></div>' +
-                '<div class="es-cos-weekchart-bar"><div class="fill is-high" style="height:80%;"></div><span class="day">Ven</span></div>' +
-                '<div class="es-cos-weekchart-bar"><div class="fill is-high" style="height:78%;"></div><span class="day">Sab</span></div>' +
+                '<div class="es-cos-weekchart-bar"><div class="fill" style="height:80%;"></div><span class="day">Ven</span></div>' +
+                '<div class="es-cos-weekchart-bar"><div class="fill" style="height:78%;"></div><span class="day">Sab</span></div>' +
                 '<div class="es-cos-weekchart-bar"><div class="fill" style="height:40%;"></div><span class="day">Dom</span></div>' +
               '</div>' +
             '</div>' +

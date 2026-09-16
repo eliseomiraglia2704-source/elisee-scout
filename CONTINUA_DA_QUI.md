@@ -3,23 +3,21 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-15** (Commit `a93e44dd`) — Allineamento Totale Riferimento Immagine 2 Dashboard Allenatore: 8 Stat Card, Icone Reali SVG, Colonna Stadio, Tag Blu, Asse Y Carico, Gauge Circolare & Sidebar Club Identity (`COACHIMG2`).
-Ultimo fatto: **Allineamento Riferimento Visivo Immagine 2 Dashboard Allenatore (`COACHIMG2`)**:
-1. **8 Stat Card Analitiche con Icone Reali SVG**:
-   - Inserite le 8 card orizzontali: Prossima Gara, Ultima Seduta, Carico Squadra (78%), Disponibilità Rosa (24/26 · 92%), Giocatori indisponibili (2, 7.7%, ⚠ Da monitorare), Preparazione Partita (80%), Report ricevuti (3, +1 recente) e Sedute programmate (5, Questa settimana).
-   - Icone SVG semantiche ad hoc per ciascuna card con background soft colorati (`.es-cos-stat-card-icon`).
-2. **Tabella Calendario con Colonna Stadio & Tag Blu "Da preparare"**:
-   - Tabella Prossime Gare arricchita con la colonna `Stadio` (Comunale - Carlentini, Fr. Scoglio - Messina, ecc.) e mini crest avversario.
-   - Tag "Da preparare" stilizzato in blu coerente con il riferimento (`.is-prep`) e "Prossima" in ambra (`.is-next`).
-3. **Grafico Carico Settimanale con Asse Y & Gauge Circolare**:
-   - Asse Y visibile con scala graduata `100 / 75 / 50 / 25 / 0` accanto all'istogramma Lun-Dom.
-   - Gauge circolare marcato ad anello con percentuale `78%`, dicitura `Media Settimanale` e badge pillola verde `Ottimale`.
-4. **Header Superiore Completo & Card Profilo Club in Fondo alla Sidebar**:
-   - Header identità completo: Blocco Mister (scudetto dorato UEFA B, FIGC 88210, scadenza 30/06/2027), blocco Club (ASD Carlentini, Serie D), Prossima Partita con countdown (02 Giorni 15 Ore 24 Min) e seduta odierna (Rifinitura 10:00 - 11:30).
-   - In fondo alla sidebar: stemma UEFA, denominazione `ASD Carlentini · Prima Squadra` e badge di stato `● Staff collegato`.
-5. **Icona Orologio nei Log Attività**:
-   - Ogni riga del feed attività integra l'icona orologio SVG accanto al timestamp.
-6. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHIMG2`.
+Ultimo aggiornamento: **2026-09-16** (Commit `3c705bac`) — Risoluzione dei 6 problemi concreti Dashboard Allenatore: Nav principale del sito ripristinata, Icona timer per Allenamenti, Tasto Vice integrato a destra, Grafico carico uniforme, Miniatura campo tattico dettagliata & Eliminazione spazio vuoto in fondo (`COACHFIX6`).
+Ultimo fatto: **Risoluzione 6 Problemi Concreti Dashboard Allenatore (`COACHFIX6`)**:
+1. **Navigazione Principale del Sito Ripristinata**:
+   - Rimossa la regola CSS che sopprimeva `.portfolio-nav` e `#nav-menu`. L'intera barra di navigazione del sito (Home, Chi siamo, Bacheca, Stampa, Mappa, Album, Ambassador, Minigiochi) è ora pienamente visibile e cliccabile in cima alla pagina con la dark palette coordinata, permettendo all'utente di spostarsi liberamente tra le macroaree senza usare il tasto Indietro del browser.
+2. **Icona della tab "Allenamenti" Corretta**:
+   - Sostituita la "✕" (che sembrava un'icona di chiusura/annullamento) sia nella sidebar sinistra sia nella barra orizzontale dei tab con un'icona SVG autentica di cronometro sportivo / timer da rifinitura calcistica (`stroke-width="2"`, cerchio graduato e lancetta).
+3. **Pulsante "Area Vice Allenatore" Perfettamente Allineato a Destra**:
+   - Riorganizzato il contenitore dell'header in due macro-blocchi flex: `.es-cos-header-left` (Mister + Club) e `.es-cos-header-right` (Partita + Countdown + Seduta + Tasto Vice). Il pulsante "Area Vice Allenatore →" rimane ancorato all'estremità destra della card senza mai cadere a capo da solo a sinistra.
+4. **Grafico "Carico Settimanale" Uniformato Cromaticamente**:
+   - Rimosse le incoerenze cromatiche: eliminata la classe `.is-high` per Venerdì e Sabato e standardizzato l'intero istogramma settimanale (Lun-Dom) su un unico gradiente coordinato ciano-blu (`linear-gradient(180deg, var(--cos-cyan), var(--cos-blue))`).
+5. **Miniatura "Ultima Sessione" Arricchita (Campo Tattico Realistico)**:
+   - Sostituito il blocco verde spoglio con una grafica di campo da calcio professionale: pattern a strisce d'erba bicolore alternate, bordi campo, centrocampo con cerchio e punto, aree di rigore e porte disegnate in SVG, rifinite da un badge semitrasparente scuro *"Seduta Tattica · 11 vs 11"* con pulsazione verde.
+6. **Eliminazione Radicale dello Spazio Vuoto in Fondo alla Pagina**:
+   - Azzerati i `min-height: 100vh` forzati su `.es-cos-shell`, `#user-dossier-portal` e `.es-cos-sidebar`. Impostato `align-self: stretch` sulla sidebar con `margin-top: auto` per la card del club, e ridotto il padding inferiore del workspace principale a `24px`. La dashboard ora termina in modo compatto e ordinato subito dopo l'ultima riga di card.
+7. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHFIX6`.
 Feature precedente: **Restyling UX/UI & Layout Dark Slate Dashboard Allenatore (`COACHSLATE1`)**:
 1. **Eliminazione Radicale Doppia Navigazione & Topbar Compatta**:
    - Quando la dashboard dell'allenatore è attiva, viene iniettata la classe `is-coach-mode` sul `<body>`, sopprimendo integralmente la navbar del sito pubblico (`#nav-menu.portfolio-nav`, "Chi siamo", "Minigiochi", etc.) e recuperando oltre 70px di prezioso spazio verticale.
