@@ -596,66 +596,77 @@ section + section {
 /* c) Tab bar scrollabile orizzontalmente senza taglio */
 .tab-bar,
 .es-cos-nav-tabs {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: var(--space-1);
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  margin-block: var(--space-2);
-  padding-bottom: 4px;
-  padding-right: 48px; /* respiro generoso per l'ultimo tab, evita il taglio netto a destra */
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 5px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(59, 130, 246, 0.45) transparent !important;
+  margin-block: var(--space-2) !important;
+  padding-bottom: 5px !important;
+  padding-right: 28px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  -webkit-overflow-scrolling: touch !important;
+  scroll-behavior: smooth !important;
 }
 
 .tab-bar::-webkit-scrollbar,
 .es-cos-nav-tabs::-webkit-scrollbar {
-  display: none;
-  width: 0;
-  height: 0;
+  height: 4px !important;
+}
+
+.tab-bar::-webkit-scrollbar-track,
+.es-cos-nav-tabs::-webkit-scrollbar-track {
+  background: rgba(4, 9, 18, 0.5) !important;
+  border-radius: 4px !important;
+}
+
+.tab-bar::-webkit-scrollbar-thumb,
+.es-cos-nav-tabs::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.45) !important;
+  border-radius: 4px !important;
 }
 
 .tab-bar > *,
 .es-cos-nav-tabs > * {
-  flex: 0 0 auto;
+  flex: 0 0 auto !important;
 }
 
 .es-cos-nav-tabs button {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  background: var(--cos-card);
-  border: 1px solid var(--cos-card-border);
-  border-radius: 5px;
-  padding: var(--space-1) var(--space-2);
-  color: var(--cos-text-muted);
-  font-size: 11.5px;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-  flex: 0 0 auto;
-  transition: all 0.15s ease;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  background: var(--cos-card) !important;
+  border: 1px solid var(--cos-card-border) !important;
+  border-radius: 6px !important;
+  padding: 6px 10px !important;
+  color: var(--cos-text-muted) !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  flex: 0 0 auto !important;
+  transition: all 0.15s ease !important;
 }
 
 .es-cos-nav-tabs button svg {
-  flex-shrink: 0;
+  flex-shrink: 0 !important;
 }
 
 .es-cos-nav-tabs button:hover:not(.is-active) {
-  background: rgba(255, 255, 255, 0.04);
-  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
 }
 
 .es-cos-nav-tabs button.is-active {
-  background: var(--cos-blue);
-  color: #FFFFFF;
-  border-color: var(--cos-blue);
-  box-shadow: none;
+  background: var(--cos-blue) !important;
+  color: #FFFFFF !important;
+  border-color: var(--cos-blue) !important;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.35) !important;
 }
 
 /* ============================================================
@@ -1361,33 +1372,125 @@ section + section {
 
 /* Specifico per bottoni Annulla e chiusura nei modali Staff Tecnico */
 #es-cos-modal-box .es-btn-cos-sec,
+#es-vd-modal-box .es-btn-cos-sec,
 #btn-close-modal,
-#btn-vd-modal-cancel {
-  background: #2A3441 !important;
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
-  color: #E5E7EB !important;
+#btn-vd-modal-cancel,
+.es-btn-cos-sec-modal,
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.24) !important;
+  color: rgba(255, 255, 255, 0.92) !important;
   padding: 8px 18px !important;
-  font-size: 12px !important;
+  font-size: 12.5px !important;
   font-weight: 600 !important;
   border-radius: 6px !important;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
-  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35) !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
 }
 
 #es-cos-modal-box .es-btn-cos-sec:hover,
+#es-vd-modal-box .es-btn-cos-sec:hover,
 #btn-close-modal:hover,
-#btn-vd-modal-cancel:hover {
-  background: #333F4E !important;
-  border-color: rgba(255, 255, 255, 0.32) !important;
+#btn-vd-modal-cancel:hover,
+.es-btn-cos-sec-modal:hover,
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.42) !important;
   color: #FFFFFF !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45) !important;
 }
 
 #es-cos-modal-box .es-btn-cos-sec:active,
+#es-vd-modal-box .es-btn-cos-sec:active,
 #btn-close-modal:active,
-#btn-vd-modal-cancel:active {
-  background: #1F2732 !important;
-  border-color: rgba(255, 255, 255, 0.42) !important;
+#btn-vd-modal-cancel:active,
+.btn-secondary:active {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+}
+
+/* ============================================================
+   LAVAGNA TATTICA DIGITALE INTERATTIVA & DOSSIER TATTICO
+   ============================================================ */
+.es-board-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  background: #040912;
+  border: 1px solid #12344a;
+  border-radius: 8px;
+  padding: 6px 12px;
+  margin-bottom: 12px;
+}
+
+.es-board-tool-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--cos-text-muted, #8da8bc);
+  padding: 5px 11px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.es-board-tool-btn:hover {
+  background: rgba(255, 255, 255, 0.09);
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.es-board-tool-btn.is-active {
+  background: #3B82F6 !important;
+  border-color: #3B82F6 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4) !important;
+}
+
+.es-tactical-pin-drag {
+  cursor: grab !important;
+  touch-action: none;
+  user-select: none;
+}
+
+.es-tactical-pin-drag:active,
+.es-tactical-pin-drag.is-dragging {
+  cursor: grabbing !important;
+  z-index: 50 !important;
+}
+
+/* Card Dossier Tattico Editabili */
+.es-dossier-card {
+  transition: all 0.18s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.es-dossier-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  border-color: rgba(59, 130, 246, 0.5) !important;
+}
+
+.es-dossier-edit-hint {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  opacity: 0.65;
+  transition: opacity 0.15s ease;
+}
+
+.es-dossier-card:hover .es-dossier-edit-hint {
+  opacity: 1;
 }
 
 .es-cos-search-input {

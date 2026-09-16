@@ -3,8 +3,27 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Lineup Builder Tattico Dinamico & Ruoli Flessibili (`LINEUPBUILDER1`):
-1. **Selettore Modulo Tattico Dropdown Reale (7 Moduli Ufficiali)**:
+Ultimo aggiornamento: **2026-09-16** — Lavagna Tattica Digitale Interattiva, Fix Tab Bar Orizzontale & Refactoring Analisi Avversario (`TACTICBOARD1`):
+1. **Lavagna Tattica Digitale Interattiva Indipendente**:
+   - Superata la rigidità del 4-3-3: la sezione Tattica opera ora come ambiente di studio tattico autonomo, con proprio selettore dropdown indipendente a 7 moduli (`4-3-3`, `4-4-2`, `4-2-3-1`, `3-5-2`, `3-4-3`, `5-3-2`, `4-1-4-1`) riusando le coordinate percentuali di `MODULI_TATTICI`.
+   - Introdotto il pulsante *"Sincronizza da XI Ufficiale"* per clonare istantaneamente modulo e titolari della Formazione Ufficiale confermata sulla lavagna ogni volta che lo si desidera.
+   - **Drag & Drop libero** sia per tutte le 11 pedine calciatore (con numeri di maglia reali `p.num`, cognomi reali e sigle ruolo) che per il pallone ⚽, con aggancio Pointer Events nativi sia desktop che touch e coordinate percentuali clampate tra 4% e 96%.
+   - **Strumenti di disegno tattico vettoriali SVG**: freccia di corsa/inserimento (tratteggiata in giallo con punta direzionale SVG), freccia di passaggio (continua azzurra), zona evidenziata (*Pressing Alto*, *Superiorità Numerica*), tasti *Pulisci Tracciati* e *Annulla Ultimo Tratto*.
+   - **Salvataggio & Storico Schemi**: "Salva Schema" memorizza lo schema su Supabase (`schemi_tattici`) e in `localStorage['elisee_schemi_tattici']`, con dropdown storico per ricaricare istantaneamente gli schemi studiati in precedenza.
+2. **Fix Definitivo Troncamento Tab Bar in Alto**:
+   - Ottimizzato il padding (`6px 10px`) e il gap (`5px`) dei tab per far rientrare agevolmente tutte le 11 voci della barra superiore su display desktop standard 1366×768, eliminando il taglio su "Comunicazioni".
+   - Sostituito `scrollbar-width: none` con una scrollbar sottile ed elegante a scomparsa (`height: 4px`, blu semi-trasparente) per permettere lo scorrimento orizzontale fluido anche su schermi più stretti.
+3. **Refactoring Sezione Analisi Avversario (Dossier Tattico & Match Analysis)**:
+   - **CTA unico e pulito**: rimosso il link sottolineato orribile in basso; posizionato al centro dello stato vuoto un unico solido bottone primario `[ + Carica Video / Match Analysis ]`. Quando sono presenti video, l'header mostra il tasto `+ Aggiungi Video`.
+   - **Risolto bug titolo duplicato**: eliminata l'anomalia *"Dossier Tattico: Dossier Tattico"*, ora è dinamicamente *"Dossier Tattico: [Nome Avversario]"* (es. *Cerignola Nord*).
+   - **Selettore Partita in testata**: dropdown collegato al calendario gare per analizzare gare e avversari specifici, con default sulla prossima gara in programma.
+   - **4 Card Editabili Interattive**: Punti di Forza, Punti Deboli, Giocatori Chiave, Palle Inattive rese cliccabili con icona matita ✏️, form modale di modifica, pulsante `✨ Suggerisci con IA` e salvataggio su Supabase (`dossier_tattico`) e locale per singola partita.
+   - **Video Report reali**: lettura e riproduzione diretta dei video allegati associati alla partita da `file_allegati` (categoria `video_analisi`).
+4. **Fix Globale Contrasto Bottoni "Annulla" nei Modali**:
+   - Reso ad alto contrasto il bottone secondario Annulla in tutti i modali (`#es-cos-modal-box .es-btn-cos-sec`, `#btn-close-modal`, `.btn-secondary`): sfondo semi-trasparente `rgba(255,255,255,0.08)`, bordo `rgba(255,255,255,0.24)`, testo bianco brillante `rgba(255,255,255,0.92)` e hover pieno `rgba(255,255,255,0.15)`.
+5. **File aggiornati**: `coach-dash.js`, `coach-dash.css`, `elisee-supabase.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_TACTICBOARD1`.
+
+Feature precedente: **Lineup Builder Tattico Dinamico & Ruoli Flessibili (`LINEUPBUILDER1`):**
    - Superato il vecchio testo statico del 4-3-3: implementato un selettore interattivo con etichetta ("Modulo:"), chevron SVG, bordo blu `#3b82f6` e dropdown con 7 moduli tattici completi: `4-3-3` (Offensivo con Ali), `4-4-2` (Classico Lineare), `4-2-3-1` (Doppio Mediano & Trequarti), `3-5-2` (Ampiezza Quinti & Doppio Attacco), `3-4-3` (Tridente & Linea Mediana a 4), `5-3-2` (Difesa a 5 & Contropiede Rapido), `4-1-4-1` (Vertice Basso & Linea di Trequarti).
    - Al cambio modulo, le coordinate percentuali e i ruoli di tutti gli 11 slot si ridispongono istantaneamente sul campo da calcio.
 2. **Libreria Ruoli Estesa a 20 Posizioni con Sigle Ufficiali**:

@@ -727,6 +727,107 @@
     data.panchina = panchinaList;
   }
 
+  function syncTacticalBoard(data) {
+    if (!data) return;
+    if (!data.tacticalBoard || typeof data.tacticalBoard !== 'object') {
+      data.tacticalBoard = {};
+    }
+    var tb = data.tacticalBoard;
+    if (!tb.modulo) tb.modulo = '4-3-3';
+    var modDef = MODULI_TATTICI[tb.modulo] || MODULI_TATTICI['4-3-3'];
+
+    if (!Array.isArray(tb.arrows)) tb.arrows = [];
+    if (!Array.isArray(tb.zones)) tb.zones = [];
+    if (!tb.activeTool) tb.activeTool = 'move';
+
+    // Recupera schemi salvati da localStorage se vuoti
+    if (!Array.isArray(tb.schemiSalvati) || tb.schemiSalvati.length === 0) {
+      try {
+        var localSchemi = JSON.parse(localStorage.getItem('elisee_schemi_tattici') || '[]');
+        if (Array.isArray(localSchemi)) tb.schemiSalvati = localSchemi;
+      } catch (_) { tb.schemiSalvati = []; }
+    }
+
+    // Se i pins non sono ancora inizializzati o non hanno 12 elementi (11 giocatori + 1 ball)
+    if (!Array.isArray(tb.pins) || tb.pins.length < 11) {
+      var pins = [];
+      var sourceList = (data.top11 && data.top11.length === 11) ? data.top11 : (data.roster || getDefaultRoster());
+      for (var s = 0; s < 11; s++) {
+        var slot = modDef.slots[s] || { x: 50, y: 50, ruolo: 'CC', name: 'Giocatore' };
+        var p = sourceList[s] || { num: s + 1, name: slot.name, pos: slot.ruolo };
+        pins.push({
+          id: 'bp-' + (s + 1),
+          type: 'blue',
+          num: p.num || (s + 1),
+          name: p.name || slot.name,
+          pos: p.pos || slot.ruolo,
+          x: slot.x,
+          y: slot.y
+        });
+      }
+      pins.push({
+        id: 'ball',
+        type: 'ball',
+        num: '',
+        name: 'Palla',
+        pos: '',
+        x: 50,
+        y: 42
+      });
+      tb.pins = pins;
+    }
+  }
+
+  function changeTacticalBoardModulo(data, newModulo) {
+    if (!data || !data.tacticalBoard) return;
+    var tb = data.tacticalBoard;
+    tb.modulo = newModulo;
+    var modDef = MODULI_TATTICI[newModulo] || MODULI_TATTICI['4-3-3'];
+    for (var s = 0; s < 11; s++) {
+      var slot = modDef.slots[s];
+      if (tb.pins && tb.pins[s] && slot) {
+        tb.pins[s].x = slot.x;
+        tb.pins[s].y = slot.y;
+        tb.pins[s].pos = slot.ruolo;
+      }
+    }
+    saveCoachData(data);
+  }
+
+  function syncBoardFromOfficialXI(data) {
+    if (!data) return;
+    if (!data.tacticalBoard) data.tacticalBoard = {};
+    var tb = data.tacticalBoard;
+    tb.modulo = data.moduloPrincipale || '4-3-3';
+    var modDef = MODULI_TATTICI[tb.modulo] || MODULI_TATTICI['4-3-3'];
+    var starters = (data.top11 && data.top11.length === 11) ? data.top11 : (data.roster || getDefaultRoster());
+    var pins = [];
+    for (var s = 0; s < 11; s++) {
+      var slot = modDef.slots[s] || { x: 50, y: 50, ruolo: 'CC', name: 'Giocatore' };
+      var p = starters[s] || { num: s + 1, name: slot.name, pos: slot.ruolo };
+      pins.push({
+        id: 'bp-' + (s + 1),
+        type: 'blue',
+        num: p.num || (s + 1),
+        name: p.name || slot.name,
+        pos: p.pos || slot.ruolo,
+        x: slot.x,
+        y: slot.y
+      });
+    }
+    pins.push({
+      id: 'ball',
+      type: 'ball',
+      num: '',
+      name: 'Palla',
+      pos: '',
+      x: 50,
+      y: 42
+    });
+    tb.pins = pins;
+    saveCoachData(data);
+  }
+
   function getCoachData() {
     var u = userObj();
     var base = {
@@ -745,15 +846,15 @@
       logoUrl: 'immagini/squadre-loghi/foggia-city.png',
 
       nextMatch: {
-        id: null,
-        avversario: 'In attesa di gara...',
-        data: '--',
-        orario: '--',
-        luogo: '--',
-        competizione: '--',
-        giorniMancanti: 0,
-        oreMancanti: 0,
-        minutiMancanti: 0
+        id: 'next-cerignola',
+        avversario: 'Cerignola Nord',
+        data: '18/09/2026',
+        orario: '15:30',
+        luogo: 'Campo Comunale Cerignola',
+        competizione: 'Campionato Foggia',
+        giorniMancanti: 2,
+        oreMancanti: 15,
+        minutiMancanti: 24
       },
       sedutaOdierna: {
         id: null,
@@ -761,7 +862,11 @@
         orario: '--',
         stato: '--'
       },
-      prossimeGare: [],
+      prossimeGare: [
+        { id: 'm-cerignola', avv: 'Cerignola Nord', data: '18/09/2026', comp: 'Campionato', stadio: 'Cerignola', status: 'Da preparare' },
+        { id: 'm-manfredonia', avv: 'Manfredonia Calcio', data: '25/09/2026', comp: 'Campionato', stadio: 'Foggia', status: 'Programmata' },
+        { id: 'm-san-severo', avv: 'San Severo Team', data: '02/10/2026', comp: 'Coppa', stadio: 'San Severo', status: 'Programmata' }
+      ],
       ultimaSessione: {
         id: null,
         tipo: 'In attesa...',
@@ -799,29 +904,26 @@
       reports: [],
       unreadCount: 0,
       analisiAvversario: {
-        nome: 'Dossier Tattico',
-        campionato: 'Campionato',
-        modulo: '4-3-3',
-        puntiForza: 'In attesa inserimento report.',
-        puntiDeboli: 'In attesa inserimento report.',
-        giocatoriChiave: 'In attesa inserimento report.',
-        palleInattive: 'In attesa inserimento report.',
+        nome: 'Cerignola Nord',
+        campionato: 'Campionato Foggia',
+        modulo: '4-4-2',
+        puntiForza: 'Transizioni rapide sulle corsie laterali e pericolosità sui calci da fermo.',
+        puntiDeboli: 'Spazi concessi dietro i terzini quando salgono in pressione; fatica nel disimpegno sotto pressing.',
+        giocatoriChiave: 'Numero 9 (punta strutturata) e numero 10 (regista basso).',
+        palleInattive: 'Corner a rientrare sul primo palo con blocchi su difensore centrale.',
         videoReport: 'Nessun video report caricato.'
       },
-      boardPins: [
-        { id: 'bp-1', type: 'blue', num: '1', name: 'POR', x: 50, y: 88 },
-        { id: 'bp-2', type: 'blue', num: '2', name: 'TD', x: 84, y: 68 },
-        { id: 'bp-3', type: 'blue', num: '5', name: 'DC', x: 62, y: 72 },
-        { id: 'bp-4', type: 'blue', num: '6', name: 'DC', x: 38, y: 72 },
-        { id: 'bp-5', type: 'blue', num: '3', name: 'TS', x: 16, y: 68 },
-        { id: 'bp-6', type: 'blue', num: '4', name: 'MED', x: 50, y: 52 },
-        { id: 'bp-7', type: 'blue', num: '8', name: 'CC', x: 70, y: 44 },
-        { id: 'bp-8', type: 'blue', num: '10', name: 'CC', x: 30, y: 44 },
-        { id: 'bp-9', type: 'blue', num: '7', name: 'AD', x: 82, y: 24 },
-        { id: 'bp-10', type: 'blue', num: '11', name: 'AS', x: 18, y: 24 },
-        { id: 'bp-11', type: 'blue', num: '9', name: 'ATT', x: 50, y: 16 },
-        { id: 'ball', type: 'ball', num: '', name: 'Palla', x: 50, y: 38 }
-      ]
+      selectedDossierMatchId: 'm-cerignola',
+      dossierByMatch: {},
+      tacticalBoard: {
+        modulo: '4-3-3',
+        pins: [],
+        arrows: [],
+        zones: [],
+        activeTool: 'move',
+        schemiSalvati: []
+      },
+      boardPins: []
     };
 
     try {
@@ -832,16 +934,21 @@
         if (Array.isArray(saved.panchina)) base.panchina = saved.panchina;
         if (Array.isArray(saved.roster) && saved.roster.length > 0) base.roster = saved.roster;
         if (typeof saved.formazioneUfficialeConfermata === 'boolean') base.formazioneUfficialeConfermata = saved.formazioneUfficialeConfermata;
+        if (saved.tacticalBoard && typeof saved.tacticalBoard === 'object') base.tacticalBoard = saved.tacticalBoard;
+        if (saved.selectedDossierMatchId) base.selectedDossierMatchId = saved.selectedDossierMatchId;
+        if (saved.dossierByMatch) base.dossierByMatch = saved.dossierByMatch;
       }
     } catch (_) {}
 
     if (_coachLiveData) {
       var merged = Object.assign({}, base, _coachLiveData);
       syncFormationWithRoster(merged);
+      syncTacticalBoard(merged);
       return merged;
     }
 
     syncFormationWithRoster(base);
+    syncTacticalBoard(base);
     return base;
   }
 
@@ -1022,7 +1129,7 @@
 
   function renderNavTab(tabKey, label, svgIcon) {
     var isAct = activeTab === tabKey;
-    return '<button type="button" class="' + (isAct ? 'is-active' : '') + '" data-tab-nav="' + tabKey + '">' +
+    return '<button type="button" class="es-cos-nav-tab ' + (isAct ? 'is-active' : '') + '" data-tab-nav="' + tabKey + '">' +
       svgIcon + '<span>' + esc(label) + '</span>' +
     '</button>';
   }
@@ -1921,35 +2028,185 @@
   }
 
   // ============================================================
-  // 4. SEZIONE TATTICA
+  // 4. SEZIONE TATTICA (LAVAGNA TATTICA DIGITALE INTERATTIVA)
   // ============================================================
   function renderTattica(data) {
+    syncTacticalBoard(data);
+    var tb = data.tacticalBoard;
+    var modKey = tb.modulo || '4-3-3';
+    var curMod = MODULI_TATTICI[modKey] || MODULI_TATTICI['4-3-3'];
+    var activeTool = tb.activeTool || 'move';
+    var schemi = tb.schemiSalvati || [];
+
+    var modOptions = [
+      { k: '4-3-3', n: '4-3-3 (Offensivo con Ali)' },
+      { k: '4-4-2', n: '4-4-2 (Classico Lineare)' },
+      { k: '4-2-3-1', n: '4-2-3-1 (Doppio Mediano & Trequarti)' },
+      { k: '3-5-2', n: '3-5-2 (Ampiezza Quinti & Doppio Attacco)' },
+      { k: '3-4-3', n: '3-4-3 (Tridente & Linea Mediana a 4)' },
+      { k: '5-3-2', n: '5-3-2 (Difesa a 5 & Contropiede Rapido)' },
+      { k: '4-1-4-1', n: '4-1-4-1 (Vertice Basso & Linea di Trequarti)' }
+    ].map(function (m) {
+      return '<option value="' + m.k + '" ' + (m.k === modKey ? 'selected' : '') + ' style="background:#071522; color:#fff;">' + m.n + '</option>';
+    }).join('');
+
+    var schemiOptions = '<option value="">-- Schemi Salvati (' + schemi.length + ') --</option>' +
+      schemi.map(function (s, sIdx) {
+        return '<option value="' + sIdx + '" style="background:#071522; color:#fff;">' + esc(s.nome) + ' (' + esc(s.modulo) + ')</option>';
+      }).join('');
+
     return (
       '<div class="es-cos-panel-card">' +
-        '<div class="es-cos-panel-head">' +
-          '<span class="es-cos-panel-title">Lavagna Tattica Digitale Interattiva</span>' +
-          '<div style="display:flex; gap:0.5rem;">' +
-            '<button type="button" class="es-btn-cos-sec" id="btn-reset-board">Reset</button>' +
-            '<button type="button" class="es-btn-cos-primary" id="btn-save-board-scheme">Salva Schema</button>' +
+        // HEADER DELLA LAVAGNA
+        '<div class="es-cos-panel-head" style="flex-wrap:wrap; gap:0.75rem; justify-content:space-between; align-items:center;">' +
+          '<div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">' +
+            '<span class="es-cos-panel-title" style="margin:0; display:flex; align-items:center; gap:0.5rem;">' +
+              '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16b9ff" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>' +
+              'Lavagna Tattica Digitale Interattiva' +
+            '</span>' +
+            // SELETTORE MODULO INDIPENDENTE
+            '<div style="display:flex; align-items:center; gap:0.4rem; background:#071522; border:1.5px solid #3b82f6; border-radius:8px; padding:0.3rem 0.65rem;">' +
+              '<label for="sel-board-modulo" style="font-size:0.75rem; font-weight:800; color:#93c5fd; text-transform:uppercase;">Modulo:</label>' +
+              '<select id="sel-board-modulo" style="background:transparent; border:none; color:#ffffff; font-size:0.85rem; font-weight:800; cursor:pointer; outline:none;">' +
+                modOptions +
+              '</select>' +
+            '</div>' +
+          '</div>' +
+          // BOTTONI AZIONE & STORICO SCHEMI
+          '<div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">' +
+            '<select id="sel-board-saved-schemes" style="background:#071522; border:1px solid #12344a; color:#8da8bc; font-size:0.75rem; padding:0.45rem 0.65rem; border-radius:6px; max-width:210px; cursor:pointer; outline:none;">' +
+              schemiOptions +
+            '</select>' +
+            '<button type="button" class="es-btn-cos-sec" id="btn-sync-board-xi" title="Importa XI Ufficiale confermato e modulo" style="display:inline-flex; align-items:center; gap:4px; font-size:0.75rem;">' +
+              '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>' +
+              'Sincronizza da XI Ufficiale' +
+            '</button>' +
+            '<button type="button" class="es-btn-cos-sec" id="btn-reset-board" style="font-size:0.75rem;">Reset Modulo</button>' +
+            '<button type="button" class="es-btn-cos-primary" id="btn-save-board-scheme" style="font-size:0.75rem; padding:0.45rem 0.85rem;">' +
+              '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>' +
+              'Salva Schema' +
+            '</button>' +
           '</div>' +
         '</div>' +
-        '<div style="background:#061e11; border:2px solid #16562f; border-radius:10px; position:relative; min-height:440px; overflow:hidden;">' +
-          renderBoardPins(data.boardPins) +
+
+        // TOOLBAR STRUMENTI TATTICI
+        '<div class="es-board-toolbar">' +
+          '<span style="font-size:0.72rem; font-weight:800; color:#8da8bc; text-transform:uppercase; margin-right:4px;">Strumenti Tattici:</span>' +
+          '<button type="button" class="es-board-tool-btn ' + (activeTool === 'move' ? 'is-active' : '') + '" data-board-tool="move" title="Trascina liberamente calciatori e pallone">' +
+            '🖐️ <span>Muovi</span>' +
+          '</button>' +
+          '<button type="button" class="es-board-tool-btn ' + (activeTool === 'arrow-run' ? 'is-active' : '') + '" data-board-tool="arrow-run" title="Traccia freccia tratteggiata di corsa / inserimento">' +
+            '↗️ <span>Freccia Corsa</span>' +
+          '</button>' +
+          '<button type="button" class="es-board-tool-btn ' + (activeTool === 'arrow-pass' ? 'is-active' : '') + '" data-board-tool="arrow-pass" title="Traccia freccia continua di passaggio">' +
+            '⚽ <span>Passaggio</span>' +
+          '</button>' +
+          '<button type="button" class="es-board-tool-btn ' + (activeTool === 'zone' ? 'is-active' : '') + '" data-board-tool="zone" title="Evidenzia zona di pressing o superiorità">' +
+            '🔲 <span>Zona Pressing</span>' +
+          '</button>' +
+          '<div style="margin-left:auto; display:flex; gap:6px;">' +
+            '<button type="button" class="es-board-tool-btn" id="btn-undo-drawing" title="Annulla ultimo tracciato">' +
+              '↩️ <span>Annulla Tratto</span>' +
+            '</button>' +
+            '<button type="button" class="es-board-tool-btn" id="btn-clear-drawings" title="Rimuovi tutte le frecce e zone">' +
+              '🧹 <span>Pulisci Tracciati</span>' +
+            '</button>' +
+          '</div>' +
+        '</div>' +
+
+        // RETTANGOLO DEL CAMPO INTERATTIVO
+        '<div id="es-tactical-pitch" style="background:radial-gradient(circle at 50% 50%, #0d3b1f 0%, #061e11 88%); border:2.5px solid #16562f; border-radius:12px; position:relative; aspect-ratio:16/10; min-height:480px; overflow:hidden; user-select:none; box-shadow:0 12px 30px rgba(0,0,0,0.6);">' +
+          // LINEE CAMPO REGOLAMENTARI SVG
+          renderTacticalPitchLines() +
+          // LAYER SVG PER FRECCE E ZONE
+          renderTacticalSvgLayer(tb.arrows, tb.zones) +
+          // PEDINE CALCIATORI E PALLONE TRASCINABILI
+          renderInteractiveBoardPins(tb.pins) +
+          // WATERMARK MODULO IN BASSO
+          '<div style="position:absolute; bottom:8px; left:12px; font-size:0.68rem; font-weight:800; color:rgba(255,255,255,0.25); letter-spacing:0.05em; pointer-events:none; text-transform:uppercase;">' + esc(curMod.nome) + ' · STUDIO TATTICO</div>' +
         '</div>' +
       '</div>'
     );
   }
 
-  function renderBoardPins(pins) {
+  function renderTacticalPitchLines() {
+    return (
+      '<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; opacity:0.32;">' +
+        '<rect x="4" y="3" width="92" height="94" fill="none" stroke="#ffffff" stroke-width="1.2" rx="2"/>' +
+        '<line x1="4" y1="50" x2="96" y2="50" stroke="#ffffff" stroke-width="1.2"/>' +
+        '<circle cx="50" cy="50" r="11" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+        '<circle cx="50" cy="50" r="1" fill="#ffffff"/>' +
+        '<rect x="26" y="3" width="48" height="17" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+        '<rect x="36" y="3" width="28" height="6.5" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+        '<circle cx="50" cy="13.5" r="1" fill="#ffffff"/>' +
+        '<path d="M 40 20 A 10 10 0 0 0 60 20" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+        '<rect x="26" y="80" width="48" height="17" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+        '<rect x="36" y="90.5" width="28" height="6.5" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+        '<circle cx="50" cy="86.5" r="1" fill="#ffffff"/>' +
+        '<path d="M 40 80 A 10 10 0 0 1 60 80" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+        '<rect x="42" y="1" width="16" height="2" fill="rgba(255,255,255,0.2)" stroke="#ffffff" stroke-width="0.8"/>' +
+        '<rect x="42" y="97" width="16" height="2" fill="rgba(255,255,255,0.2)" stroke="#ffffff" stroke-width="0.8"/>' +
+        '<path d="M 4 6 A 3 3 0 0 0 7 3" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+        '<path d="M 96 6 A 3 3 0 0 1 93 3" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+        '<path d="M 4 94 A 3 3 0 0 1 7 97" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+        '<path d="M 96 94 A 3 3 0 0 0 93 97" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+      '</svg>'
+    );
+  }
+
+  function renderTacticalSvgLayer(arrows, zones) {
+    var arrowsHtml = (arrows || []).map(function (a) {
+      var isDash = a.tipo === 'corsa';
+      var col = a.colore || (isDash ? '#ffd21a' : '#16b9ff');
+      var markerId = isDash ? 'arr-marker-yellow' : 'arr-marker-blue';
+      return '<line x1="' + a.x1 + '%" y1="' + a.y1 + '%" x2="' + a.x2 + '%" y2="' + a.y2 + '%" stroke="' + col + '" stroke-width="3" stroke-linecap="round" marker-end="url(#' + markerId + ')" ' + (isDash ? 'stroke-dasharray="6,4"' : '') + ' />';
+    }).join('');
+
+    var zonesHtml = (zones || []).map(function (z) {
+      return (
+        '<rect x="' + z.x + '%" y="' + z.y + '%" width="' + z.w + '%" height="' + z.h + '%" fill="rgba(239,68,68,0.22)" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" rx="6"/>' +
+        '<text x="' + (z.x + z.w / 2) + '%" y="' + (z.y + z.h / 2) + '%" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" dominant-baseline="central" style="filter:drop-shadow(0 1px 2px #000);">' + esc(z.label || 'Zona Pressing') + '</text>'
+      );
+    }).join('');
+
+    return (
+      '<svg id="es-tactical-drawings-svg" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:15;">' +
+        '<defs>' +
+          '<marker id="arr-marker-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">' +
+            '<path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#16b9ff" />' +
+          '</marker>' +
+          '<marker id="arr-marker-yellow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">' +
+            '<path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#ffd21a" />' +
+          '</marker>' +
+        '</defs>' +
+        zonesHtml +
+        arrowsHtml +
+      '</svg>'
+    );
+  }
+
+  function renderInteractiveBoardPins(pins) {
     return (pins || []).map(function (p, idx) {
       if (p.type === 'ball') {
-        return '<div style="position:absolute; left:' + p.x + '%; top:' + p.y + '%; transform:translate(-50%, -50%); font-size:1.3rem;">⚽</div>';
+        return (
+          '<div class="es-tactical-pin-drag" data-board-pin-idx="' + idx + '" style="position:absolute; left:' + p.x + '%; top:' + p.y + '%; transform:translate(-50%, -50%); z-index:30; cursor:grab; filter:drop-shadow(0 4px 8px rgba(0,0,0,0.8)); font-size:1.5rem;" title="Trascina il pallone">' +
+            '⚽' +
+          '</div>'
+        );
       }
-      var isBlue = p.type === 'blue';
+
+      var roleBadge = p.pos || 'CC';
       return (
-        '<div style="position:absolute; left:' + p.x + '%; top:' + p.y + '%; transform:translate(-50%, -50%); display:flex; flex-direction:column; align-items:center; gap:2px;" data-board-pin-idx="' + idx + '">' +
-          '<div style="width:34px; height:34px; border-radius:50%; background:' + (isBlue ? 'rgba(7,152,209,0.9)' : 'rgba(255,77,90,0.9)') + '; border:2px solid ' + (isBlue ? '#16b9ff' : '#ff4d5a') + '; color:#fff; font-weight:900; font-size:0.8rem; display:flex; align-items:center; justify-content:center;">' + esc(p.num) + '</div>' +
-          '<div style="background:#040912; border:1px solid #12344a; color:#fff; font-size:0.62rem; font-weight:800; padding:1px 5px; border-radius:3px;">' + esc(p.name) + '</div>' +
+        '<div class="es-tactical-pin-drag" data-board-pin-idx="' + idx + '" style="position:absolute; left:' + p.x + '%; top:' + p.y + '%; transform:translate(-50%, -50%); z-index:25; display:flex; flex-direction:column; align-items:center; gap:2px; cursor:grab;" title="Trascina #' + esc(p.num) + ' ' + esc(p.name) + '">' +
+          // PALLINO NUMERATO CON GLOW E BORDO AZZURRO
+          '<div style="width:36px; height:36px; border-radius:50%; background:#071522; border:2.5px solid #16b9ff; color:#f3f8fc; font-weight:900; font-size:0.85rem; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,0,0,0.7);">' +
+            '#' + esc(p.num) +
+          '</div>' +
+          // TARGHETTA NOME GIOCATORE + RUOLO
+          '<div style="background:rgba(4,9,18,0.92); border:1px solid #12344a; color:#fff; font-size:0.65rem; font-weight:800; padding:1px 5px; border-radius:4px; white-space:nowrap; box-shadow:0 2px 6px rgba(0,0,0,0.6); display:flex; align-items:center; gap:3px;">' +
+            '<span>' + esc(p.name) + '</span>' +
+            '<span style="color:#16b9ff; font-weight:900;">(' + esc(roleBadge) + ')</span>' +
+          '</div>' +
         '</div>'
       );
     }).join('');
@@ -2021,56 +2278,181 @@
   }
 
   // ============================================================
-  // 7. SEZIONE ANALISI AVVERSARIO
+  // 7. SEZIONE ANALISI AVVERSARIO (DOSSIER TATTICO & MATCH ANALYSIS)
   // ============================================================
   function renderAnalisiAvversario(data) {
-    var a = data.analisiAvversario || {};
-    var nextOpp = (data.nextMatch && data.nextMatch.id) ? data.nextMatch.avversario : (a.nome || 'Avversario');
-    var videoFiles = (data.allegati || []).filter(function (f) { return f.categoria === 'video_analisi'; });
+    // Lista gare disponibili per il selettore
+    var matchesList = [];
+    if (data.nextMatch && data.nextMatch.avversario && data.nextMatch.avversario !== 'In attesa di gara...') {
+      matchesList.push({
+        id: data.nextMatch.id || 'next-match',
+        avversario: data.nextMatch.avversario,
+        data: data.nextMatch.data,
+        isNext: true
+      });
+    } else {
+      matchesList.push({
+        id: 'next-cerignola',
+        avversario: 'Cerignola Nord',
+        data: '18/09/2026',
+        isNext: true
+      });
+    }
+
+    if (Array.isArray(data.prossimeGare)) {
+      data.prossimeGare.forEach(function (g) {
+        if (!matchesList.some(function (m) { return m.avversario === g.avv; })) {
+          matchesList.push({
+            id: g.id || ('g-' + g.avv.toLowerCase().replace(/\s+/g, '-')),
+            avversario: g.avv,
+            data: g.data,
+            isNext: false
+          });
+        }
+      });
+    }
+
+    if (!data.selectedDossierMatchId) {
+      data.selectedDossierMatchId = matchesList[0].id;
+    }
+
+    var curMatch = matchesList.find(function (m) { return m.id === data.selectedDossierMatchId; }) || matchesList[0];
+    var activeOpponent = curMatch.avversario;
+
+    // Recupera note dossier per questa gara (da data.dossierByMatch o default)
+    data.dossierByMatch = data.dossierByMatch || {};
+    var d = data.dossierByMatch[curMatch.id] || {
+      puntiForza: 'Transizioni rapide sulle corsie laterali e pericolosità sui piazzati.',
+      puntiDeboli: 'Spazi concessi dietro i terzini quando attaccano alti; difficoltà nel possesso sotto pressing.',
+      giocatoriChiave: 'Numero 9 (punta strutturata) e numero 10 (regista di centrocampo).',
+      palleInattive: 'Corner a rientrare sul primo palo; schema a blocchi per inserimento del centrale.',
+      noteMister: ''
+    };
+
+    // File video caricati per questa partita o categoria video_analisi
+    var allVideos = (data.allegati || []).filter(function (f) { return f.categoria === 'video_analisi'; });
+    var matchVideos = allVideos.filter(function (f) {
+      return !f.entita_id || f.entita_id === curMatch.id || f.entita_id === 'match-next' || f.entita_id === 'partita';
+    });
+
+    var matchSelectOptions = matchesList.map(function (m) {
+      return '<option value="' + esc(m.id) + '" ' + (m.id === data.selectedDossierMatchId ? 'selected' : '') + ' style="background:#071522; color:#fff;">' +
+        (m.isNext ? '⚽ Prossima Gara: ' : '📅 Gara: ') + esc(m.avversario) + ' (' + esc(m.data) + ')' +
+      '</option>';
+    }).join('');
 
     return (
       '<div style="display:flex; flex-direction:column; gap:1.25rem;">' +
-        '<div style="display:grid; grid-template-columns:1.2fr 1fr; gap:1.25rem;">' +
-          '<div class="es-cos-panel-card">' +
-            '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Dossier Tattico: ' + esc(nextOpp) + '</span></div>' +
-            '<div style="display:flex; flex-direction:column; gap:0.75rem; font-size:0.82rem;">' +
-              '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem;"><b style="color:#00d978;">Punti di Forza:</b><p style="margin:0.25rem 0 0; color:#8da8bc;">' + esc(a.puntiForza) + '</p></div>' +
-              '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem;"><b style="color:#ff4d5a;">Punti Deboli:</b><p style="margin:0.25rem 0 0; color:#8da8bc;">' + esc(a.puntiDeboli) + '</p></div>' +
-              '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem;"><b style="color:#ffd21a;">Giocatori Chiave:</b><p style="margin:0.25rem 0 0; color:#8da8bc;">' + esc(a.giocatoriChiave) + '</p></div>' +
-              '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem;"><b style="color:#16b9ff;">Palle Inattive:</b><p style="margin:0.25rem 0 0; color:#8da8bc;">' + esc(a.palleInattive) + '</p></div>' +
+        // BARRA SUPERIORE SELETTORE PARTITA / AVVERSARIO
+        '<div class="es-cos-panel-card" style="padding:0.75rem 1.25rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; background:linear-gradient(90deg, #071522 0%, #0a1e30 100%);">' +
+          '<div style="display:flex; align-items:center; gap:0.75rem;">' +
+            '<div style="width:36px; height:36px; border-radius:8px; background:rgba(22,185,255,0.12); border:1px solid #16b9ff; display:flex; align-items:center; justify-content:center; color:#16b9ff;">' +
+              '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
+            '</div>' +
+            '<div>' +
+              '<div style="font-size:0.72rem; font-weight:800; color:#8da8bc; text-transform:uppercase;">Gara & Avversario in Studio:</div>' +
+              '<div style="font-size:1.05rem; font-weight:800; color:#f3f8fc;">' + esc(activeOpponent) + '</div>' +
             '</div>' +
           '</div>' +
-
-          '<div class="es-cos-panel-card">' +
-            '<div class="es-cos-panel-head">' +
-              '<span class="es-cos-panel-title">Video Report & Match Analysis</span>' +
-              '<button type="button" class="es-btn-cos-primary" id="btn-upload-video-analysis" style="font-size:0.74rem;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Carica Video / Report</button>' +
-            '</div>' +
-            '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:1.5rem 1.25rem; text-align:center;">' +
-              '<svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cos-text-muted, #8da8bc); opacity:0.65; margin:0 auto 0.75rem; display:block;"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>' +
-              '<div style="font-weight:800; font-size:0.95rem; margin-top:0.5rem; color:#f3f8fc;">' + (videoFiles.length ? (videoFiles.length + ' Video Report caricati su Supabase Storage') : 'Nessun video analisi allegato') + '</div>' +
-              '<p style="font-size:0.75rem; color:#8da8bc; margin:0.4rem 0 0.8rem;">I video caricati vengono conservati nel bucket cloud <code>staff-allegati</code> con accesso riservato allo staff.</p>' +
-              '<button type="button" class="es-btn-cos-sec" id="btn-open-video-upload-direct">Carica Nuovo Video / Clip</button>' +
-            '</div>' +
+          '<div style="display:flex; align-items:center; gap:0.6rem;">' +
+            '<label for="sel-dossier-match" style="font-size:0.78rem; font-weight:800; color:#93c5fd;">Seleziona Partita:</label>' +
+            '<select id="sel-dossier-match" style="background:#040912; border:1.5px solid #3b82f6; color:#ffffff; font-size:0.82rem; font-weight:700; padding:0.45rem 0.75rem; border-radius:6px; cursor:pointer; outline:none;">' +
+              matchSelectOptions +
+            '</select>' +
           '</div>' +
         '</div>' +
 
-        // Lista File Video Allegati
-        (videoFiles.length ? (
+        // GRIGLIA A DUE COLONNE: DOSSIER TATTICO A SINISTRA, MATCH ANALYSIS A DESTRA
+        '<div style="display:grid; grid-template-columns:1.2fr 1fr; gap:1.25rem;">' +
+          // COLONNA SINISTRA: DOSSIER TATTICO CON 4 CARD EDITABILI
           '<div class="es-cos-panel-card">' +
-            '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Archivio Video Tattici & File Analisi (Bucket: staff-allegati)</span></div>' +
-            '<div style="display:flex; flex-direction:column; gap:0.5rem;">' +
-              videoFiles.map(function (vf) {
-                return (
-                  '<div style="display:flex; justify-content:space-between; align-items:center; background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.75rem 1rem;">' +
-                    '<div><b style="color:#f3f8fc; font-size:0.85rem;">' + esc(vf.file_url.split('/').pop()) + '</b><div style="font-size:0.72rem; color:#8da8bc;">Caricato il ' + formatDate(vf.created_at) + ' · Visibile a: ' + esc(Array.isArray(vf.visibile_a) ? vf.visibile_a.join(', ') : vf.visibile_a) + '</div></div>' +
-                    '<a href="' + esc(vf.file_url) + '" target="_blank" rel="noopener noreferrer" class="es-btn-cos-sec" style="font-size:0.74rem;">Apri File &rarr;</a>' +
-                  '</div>'
-                );
-              }).join('') +
+            '<div class="es-cos-panel-head" style="justify-content:space-between; align-items:center;">' +
+              '<span class="es-cos-panel-title">Dossier Tattico: ' + esc(activeOpponent) + '</span>' +
+              '<button type="button" class="es-btn-cos-sec" id="btn-edit-all-dossier" style="font-size:0.75rem; display:inline-flex; align-items:center; gap:4px;">' +
+                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
+                'Modifica Dossier' +
+              '</button>' +
             '</div>' +
-          '</div>'
-        ) : '') +
+            '<div style="display:flex; flex-direction:column; gap:0.75rem; font-size:0.82rem;">' +
+              // CARD 1: Punti di Forza
+              '<div class="es-dossier-card" data-edit-dossier-field="puntiForza" style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:0.9rem;">' +
+                '<span class="es-dossier-edit-hint" style="color:#00d978;">✏️ Modifica</span>' +
+                '<b style="color:#00d978; display:block; margin-bottom:0.35rem; font-size:0.85rem;">Punti di Forza:</b>' +
+                '<p style="margin:0; color:#e2e8f0; line-height:1.45;">' + esc(d.puntiForza || 'In attesa inserimento report.') + '</p>' +
+              '</div>' +
+              // CARD 2: Punti Deboli
+              '<div class="es-dossier-card" data-edit-dossier-field="puntiDeboli" style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:0.9rem;">' +
+                '<span class="es-dossier-edit-hint" style="color:#ff4d5a;">✏️ Modifica</span>' +
+                '<b style="color:#ff4d5a; display:block; margin-bottom:0.35rem; font-size:0.85rem;">Punti Deboli:</b>' +
+                '<p style="margin:0; color:#e2e8f0; line-height:1.45;">' + esc(d.puntiDeboli || 'In attesa inserimento report.') + '</p>' +
+              '</div>' +
+              // CARD 3: Giocatori Chiave
+              '<div class="es-dossier-card" data-edit-dossier-field="giocatoriChiave" style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:0.9rem;">' +
+                '<span class="es-dossier-edit-hint" style="color:#ffd21a;">✏️ Modifica</span>' +
+                '<b style="color:#ffd21a; display:block; margin-bottom:0.35rem; font-size:0.85rem;">Giocatori Chiave:</b>' +
+                '<p style="margin:0; color:#e2e8f0; line-height:1.45;">' + esc(d.giocatoriChiave || 'In attesa inserimento report.') + '</p>' +
+              '</div>' +
+              // CARD 4: Palle Inattive
+              '<div class="es-dossier-card" data-edit-dossier-field="palleInattive" style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:0.9rem;">' +
+                '<span class="es-dossier-edit-hint" style="color:#16b9ff;">✏️ Modifica</span>' +
+                '<b style="color:#16b9ff; display:block; margin-bottom:0.35rem; font-size:0.85rem;">Palle Inattive:</b>' +
+                '<p style="margin:0; color:#e2e8f0; line-height:1.45;">' + esc(d.palleInattive || 'In attesa inserimento report.') + '</p>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+
+          // COLONNA DESTRA: VIDEO REPORT & MATCH ANALYSIS CON CTA UNIFICATO
+          '<div class="es-cos-panel-card" style="display:flex; flex-direction:column; justify-content:space-between;">' +
+            '<div>' +
+              '<div class="es-cos-panel-head">' +
+                '<span class="es-cos-panel-title">Video Report & Match Analysis</span>' +
+                (matchVideos.length ? (
+                  '<button type="button" class="es-btn-cos-primary" id="btn-upload-video-analysis" style="font-size:0.74rem;">' +
+                    '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
+                    '+ Aggiungi Video' +
+                  '</button>'
+                ) : '') +
+              '</div>' +
+              (matchVideos.length ? (
+                '<div style="display:flex; flex-direction:column; gap:0.6rem; max-height:360px; overflow-y:auto; padding-right:2px;">' +
+                  matchVideos.map(function (vf) {
+                    return (
+                      '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:0.75rem 0.9rem; display:flex; justify-content:space-between; align-items:center;">' +
+                        '<div style="display:flex; align-items:center; gap:0.65rem;">' +
+                          '<div style="width:32px; height:32px; border-radius:6px; background:rgba(22,185,255,0.12); color:#16b9ff; display:flex; align-items:center; justify-content:center;">' +
+                            '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>' +
+                          '</div>' +
+                          '<div>' +
+                            '<b style="color:#f3f8fc; font-size:0.84rem; display:block;">' + esc(vf.file_url.split('/').pop()) + '</b>' +
+                            '<span style="font-size:0.7rem; color:#8da8bc;">Caricato il ' + formatDate(vf.created_at) + '</span>' +
+                          '</div>' +
+                        '</div>' +
+                        '<a href="' + esc(vf.file_url) + '" target="_blank" rel="noopener noreferrer" class="es-btn-cos-sec" style="font-size:0.72rem; padding:0.35rem 0.65rem;">' +
+                          'Riproduci &rarr;' +
+                        '</a>' +
+                      '</div>'
+                    );
+                  }).join('') +
+                '</div>'
+              ) : (
+                // STATO VUOTO CON UNICO CTA SOLIDO
+                '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:2rem 1.25rem; text-align:center;">' +
+                  '<svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cos-text-muted, #8da8bc); opacity:0.65; margin:0 auto 0.75rem; display:block;"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>' +
+                  '<div style="font-weight:800; font-size:0.95rem; margin-top:0.5rem; color:#f3f8fc;">Nessun video analisi allegato per ' + esc(activeOpponent) + '</div>' +
+                  '<p style="font-size:0.75rem; color:#8da8bc; margin:0.4rem 0 1.2rem;">I video caricati vengono conservati nel bucket cloud <code>staff-allegati</code> con accesso riservato allo staff.</p>' +
+                  '<button type="button" class="es-btn-cos-primary" id="btn-upload-video-analysis" style="padding:0.6rem 1.2rem; font-size:0.82rem; font-weight:800; border-radius:7px; display:inline-flex; align-items:center; gap:6px;">' +
+                    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
+                    'Carica Video / Match Analysis' +
+                  '</button>' +
+                '</div>'
+              )) +
+            '</div>' +
+            // PRO MEMORIA IN FONDO ALLA CARD VIDEO
+            '<div style="margin-top:1rem; padding:0.65rem 0.85rem; background:rgba(22,185,255,0.06); border:1px solid rgba(22,185,255,0.22); border-radius:6px; font-size:0.73rem; color:#8da8bc;">' +
+              '<b style="color:#16b9ff;">Nota Metodologica:</b> I video-clip associati a questa gara sono visibili in tempo reale anche al Vice Allenatore e al Match Analyst.' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
       '</div>'
     );
   }
@@ -2730,14 +3112,378 @@
       };
     });
 
-    // Upload Video Analisi
-    var btnUploadVideo = mount.querySelector('#btn-upload-video-analysis, #btn-open-video-upload-direct');
-    if (btnUploadVideo) {
-      btnUploadVideo.onclick = function () {
-        var matchId = (data.nextMatch && data.nextMatch.id) || 'match-next';
-        openStaffUploadModal('video_analisi', matchId, 'partita', 'Carica Video Analisi / Dossier Avversario');
+    // ============================================================
+    // GESTIONE EVENTI LAVAGNA TATTICA INTERATTIVA
+    // ============================================================
+    var selBoardMod = mount.querySelector('#sel-board-modulo');
+    if (selBoardMod) {
+      selBoardMod.onchange = function () {
+        changeTacticalBoardModulo(data, selBoardMod.value);
+        var container = document.getElementById('es-cos-active-content');
+        if (container && activeTab === 'tattica') {
+          container.innerHTML = renderTattica(data);
+          bindAllEvents();
+        }
+        if (window.showToast) window.showToast('Modulo lavagna impostato a ' + selBoardMod.value, 'info');
       };
     }
+
+    var btnSyncBoardXi = mount.querySelector('#btn-sync-board-xi');
+    if (btnSyncBoardXi) {
+      btnSyncBoardXi.onclick = function () {
+        syncBoardFromOfficialXI(data);
+        var container = document.getElementById('es-cos-active-content');
+        if (container && activeTab === 'tattica') {
+          container.innerHTML = renderTattica(data);
+          bindAllEvents();
+        }
+        if (window.showToast) window.showToast('XI Ufficiale e modulo sincronizzati sulla lavagna!', 'success');
+      };
+    }
+
+    var btnResetBoard = mount.querySelector('#btn-reset-board');
+    if (btnResetBoard) {
+      btnResetBoard.onclick = function () {
+        if (!data.tacticalBoard) data.tacticalBoard = {};
+        var tb = data.tacticalBoard;
+        var modKey = tb.modulo || '4-3-3';
+        var modDef = MODULI_TATTICI[modKey] || MODULI_TATTICI['4-3-3'];
+        for (var s = 0; s < 11; s++) {
+          var slot = modDef.slots[s];
+          if (tb.pins && tb.pins[s] && slot) {
+            tb.pins[s].x = slot.x;
+            tb.pins[s].y = slot.y;
+            tb.pins[s].pos = slot.ruolo;
+          }
+        }
+        if (tb.pins && tb.pins[11]) {
+          tb.pins[11].x = 50;
+          tb.pins[11].y = 42;
+        }
+        tb.arrows = [];
+        tb.zones = [];
+        saveCoachData(data);
+        var container = document.getElementById('es-cos-active-content');
+        if (container && activeTab === 'tattica') {
+          container.innerHTML = renderTattica(data);
+          bindAllEvents();
+        }
+        if (window.showToast) window.showToast('Lavagna ripristinata alle posizioni base del modulo ' + modKey, 'info');
+      };
+    }
+
+    var btnSaveBoardScheme = mount.querySelector('#btn-save-board-scheme');
+    if (btnSaveBoardScheme) {
+      btnSaveBoardScheme.onclick = function () {
+        var tb = data.tacticalBoard || {};
+        var curMod = tb.modulo || '4-3-3';
+        var nowStr = new Date().toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit' }) + ' ' + new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
+        var defaultName = 'Schema ' + curMod + ' · ' + nowStr;
+
+        openModal('Salva Schema Tattico',
+          '<form id="form-save-scheme" style="display:flex; flex-direction:column; gap:1rem;">' +
+            '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
+              '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Nome Schema *</label>' +
+              '<input type="text" id="inp-scheme-name" value="' + esc(defaultName) + '" required style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px; font-size:0.85rem;">' +
+            '</div>' +
+            '<div style="font-size:0.75rem; color:#8da8bc; background:#040912; border:1px solid #12344a; padding:0.65rem; border-radius:6px;">' +
+              'Verranno memorizzati: modulo <b>' + esc(curMod) + '</b>, posizioni dei calciatori, pallone, ' + (tb.arrows ? tb.arrows.length : 0) + ' frecce e ' + (tb.zones ? tb.zones.length : 0) + ' zone tattiche.' +
+            '</div>' +
+            '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.5rem;">' +
+              '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Annulla</button>' +
+              '<button type="submit" class="es-btn-cos-primary">Salva Schema</button>' +
+            '</div>' +
+          '</form>'
+        );
+
+        var form = document.getElementById('form-save-scheme');
+        if (form) {
+          form.onsubmit = function (e) {
+            e.preventDefault();
+            var name = document.getElementById('inp-scheme-name').value.trim() || defaultName;
+            var schemaObj = {
+              id: 'sch-' + Date.now(),
+              nome: name,
+              modulo: curMod,
+              pins: JSON.parse(JSON.stringify(tb.pins || [])),
+              arrows: JSON.parse(JSON.stringify(tb.arrows || [])),
+              zones: JSON.parse(JSON.stringify(tb.zones || [])),
+              data: nowStr
+            };
+
+            tb.schemiSalvati = tb.schemiSalvati || [];
+            tb.schemiSalvati.unshift(schemaObj);
+            try {
+              localStorage.setItem('elisee_schemi_tattici', JSON.stringify(tb.schemiSalvati));
+            } catch (_) {}
+            saveCoachData(data);
+
+            if (window.EliseeSupabase && typeof window.EliseeSupabase.saveSchemaTattico === 'function') {
+              var clubId = data.clubId || (_coachLiveData && _coachLiveData.clubId) || 'f0661a00-0000-4000-8000-000000000001';
+              window.EliseeSupabase.saveSchemaTattico(clubId, schemaObj).catch(function (err) {
+                console.warn('[EliseeCoachDash] Salvataggio Supabase schema:', err);
+              });
+            }
+
+            closeModal();
+            var container = document.getElementById('es-cos-active-content');
+            if (container && activeTab === 'tattica') {
+              container.innerHTML = renderTattica(data);
+              bindAllEvents();
+            }
+            if (window.showToast) window.showToast('Schema "' + name + '" salvato con successo!', 'success');
+          };
+        }
+      };
+    }
+
+    var selSavedSchemes = mount.querySelector('#sel-board-saved-schemes');
+    if (selSavedSchemes) {
+      selSavedSchemes.onchange = function () {
+        var sIdx = parseInt(selSavedSchemes.value, 10);
+        if (isNaN(sIdx)) return;
+        var tb = data.tacticalBoard;
+        if (!tb || !tb.schemiSalvati || !tb.schemiSalvati[sIdx]) return;
+        var s = tb.schemiSalvati[sIdx];
+        tb.modulo = s.modulo;
+        if (Array.isArray(s.pins)) tb.pins = JSON.parse(JSON.stringify(s.pins));
+        if (Array.isArray(s.arrows)) tb.arrows = JSON.parse(JSON.stringify(s.arrows));
+        if (Array.isArray(s.zones)) tb.zones = JSON.parse(JSON.stringify(s.zones));
+        saveCoachData(data);
+
+        var container = document.getElementById('es-cos-active-content');
+        if (container && activeTab === 'tattica') {
+          container.innerHTML = renderTattica(data);
+          bindAllEvents();
+        }
+        if (window.showToast) window.showToast('Caricato schema: ' + s.nome, 'success');
+      };
+    }
+
+    // Strumenti Tattici
+    mount.querySelectorAll('[data-board-tool]').forEach(function (btn) {
+      btn.onclick = function () {
+        var tool = btn.getAttribute('data-board-tool');
+        if (!data.tacticalBoard) data.tacticalBoard = {};
+        data.tacticalBoard.activeTool = tool;
+        mount.querySelectorAll('[data-board-tool]').forEach(function (b) {
+          b.classList.toggle('is-active', b === btn);
+        });
+        var pitch = document.getElementById('es-tactical-pitch');
+        if (pitch) {
+          pitch.style.cursor = tool === 'move' ? 'default' : 'crosshair';
+        }
+      };
+    });
+
+    var btnUndoDraw = mount.querySelector('#btn-undo-drawing');
+    if (btnUndoDraw) {
+      btnUndoDraw.onclick = function () {
+        var tb = data.tacticalBoard;
+        if (!tb) return;
+        if (tb.arrows && tb.arrows.length) {
+          tb.arrows.pop();
+        } else if (tb.zones && tb.zones.length) {
+          tb.zones.pop();
+        }
+        saveCoachData(data);
+        var container = document.getElementById('es-cos-active-content');
+        if (container && activeTab === 'tattica') {
+          container.innerHTML = renderTattica(data);
+          bindAllEvents();
+        }
+      };
+    }
+
+    var btnClearDraw = mount.querySelector('#btn-clear-drawings');
+    if (btnClearDraw) {
+      btnClearDraw.onclick = function () {
+        var tb = data.tacticalBoard;
+        if (!tb) return;
+        tb.arrows = [];
+        tb.zones = [];
+        saveCoachData(data);
+        var container = document.getElementById('es-cos-active-content');
+        if (container && activeTab === 'tattica') {
+          container.innerHTML = renderTattica(data);
+          bindAllEvents();
+        }
+        if (window.showToast) window.showToast('Tracciati e frecce rimossi dalla lavagna', 'info');
+      };
+    }
+
+    // Interazione su Campo: Drag & Drop Pedine e Tracciamento Frecce/Zone
+    var pitchEl = mount.querySelector('#es-tactical-pitch');
+    if (pitchEl) {
+      var tb = data.tacticalBoard || {};
+      var activeTool = tb.activeTool || 'move';
+      pitchEl.style.cursor = activeTool === 'move' ? 'default' : 'crosshair';
+
+      var draggingPin = null;
+      var dragIdx = null;
+      var drawStart = null;
+
+      function getPitchCoords(e) {
+        var rect = pitchEl.getBoundingClientRect();
+        var clientX = e.clientX != null ? e.clientX : (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+        var clientY = e.clientY != null ? e.clientY : (e.touches && e.touches[0] ? e.touches[0].clientY : 0);
+        var x = ((clientX - rect.left) / rect.width) * 100;
+        var y = ((clientY - rect.top) / rect.height) * 100;
+        return {
+          x: Math.min(96, Math.max(4, Math.round(x * 10) / 10)),
+          y: Math.min(96, Math.max(4, Math.round(y * 10) / 10))
+        };
+      }
+
+      // Pointer down sui Pin
+      pitchEl.querySelectorAll('.es-tactical-pin-drag').forEach(function (pinEl) {
+        pinEl.onpointerdown = function (e) {
+          if (data.tacticalBoard && data.tacticalBoard.activeTool !== 'move') return;
+          e.stopPropagation();
+          draggingPin = pinEl;
+          dragIdx = parseInt(pinEl.getAttribute('data-board-pin-idx'), 10);
+          pinEl.classList.add('is-dragging');
+          if (typeof pinEl.setPointerCapture === 'function') {
+            try { pinEl.setPointerCapture(e.pointerId); } catch (_) {}
+          }
+        };
+
+        pinEl.onpointermove = function (e) {
+          if (!draggingPin || draggingPin !== pinEl) return;
+          e.preventDefault();
+          var coords = getPitchCoords(e);
+          pinEl.style.left = coords.x + '%';
+          pinEl.style.top = coords.y + '%';
+        };
+
+        pinEl.onpointerup = function (e) {
+          if (!draggingPin || draggingPin !== pinEl) return;
+          e.preventDefault();
+          var coords = getPitchCoords(e);
+          pinEl.classList.remove('is-dragging');
+          if (dragIdx !== null && data.tacticalBoard && data.tacticalBoard.pins && data.tacticalBoard.pins[dragIdx]) {
+            data.tacticalBoard.pins[dragIdx].x = coords.x;
+            data.tacticalBoard.pins[dragIdx].y = coords.y;
+            saveCoachData(data);
+          }
+          draggingPin = null;
+          dragIdx = null;
+        };
+
+        pinEl.onpointercancel = function () {
+          if (draggingPin === pinEl) {
+            pinEl.classList.remove('is-dragging');
+            draggingPin = null;
+            dragIdx = null;
+          }
+        };
+      });
+
+      // Pointer down per disegnare freccia o zona sul pitch
+      pitchEl.onpointerdown = function (e) {
+        var curTool = (data.tacticalBoard && data.tacticalBoard.activeTool) || 'move';
+        if (curTool === 'move') return;
+        drawStart = getPitchCoords(e);
+      };
+
+      pitchEl.onpointerup = function (e) {
+        if (!drawStart) return;
+        var curTool = (data.tacticalBoard && data.tacticalBoard.activeTool) || 'move';
+        if (curTool === 'move') { drawStart = null; return; }
+        var drawEnd = getPitchCoords(e);
+
+        var dist = Math.hypot(drawEnd.x - drawStart.x, drawEnd.y - drawStart.y);
+        if (dist > 3) {
+          if (curTool === 'arrow-run' || curTool === 'arrow-pass') {
+            data.tacticalBoard.arrows = data.tacticalBoard.arrows || [];
+            data.tacticalBoard.arrows.push({
+              id: 'arr-' + Date.now(),
+              x1: drawStart.x,
+              y1: drawStart.y,
+              x2: drawEnd.x,
+              y2: drawEnd.y,
+              tipo: curTool === 'arrow-run' ? 'corsa' : 'passaggio'
+            });
+            saveCoachData(data);
+          } else if (curTool === 'zone') {
+            data.tacticalBoard.zones = data.tacticalBoard.zones || [];
+            var zx = Math.min(drawStart.x, drawEnd.x);
+            var zy = Math.min(drawStart.y, drawEnd.y);
+            var zw = Math.max(8, Math.abs(drawEnd.x - drawStart.x));
+            var zh = Math.max(6, Math.abs(drawEnd.y - drawStart.y));
+            data.tacticalBoard.zones.push({
+              id: 'z-' + Date.now(),
+              x: zx,
+              y: zy,
+              w: zw,
+              h: zh,
+              label: 'Zona Pressing'
+            });
+            saveCoachData(data);
+          }
+
+          var container = document.getElementById('es-cos-active-content');
+          if (container && activeTab === 'tattica') {
+            container.innerHTML = renderTattica(data);
+            bindAllEvents();
+          }
+        }
+        drawStart = null;
+      };
+    }
+
+    // ============================================================
+    // GESTIONE EVENTI ANALISI AVVERSARIO & DOSSIER TATTICO
+    // ============================================================
+    var selDossierMatch = mount.querySelector('#sel-dossier-match');
+    if (selDossierMatch) {
+      selDossierMatch.onchange = function () {
+        data.selectedDossierMatchId = selDossierMatch.value;
+        saveCoachData(data);
+        var container = document.getElementById('es-cos-active-content');
+        if (container && activeTab === 'analisi_avversario') {
+          container.innerHTML = renderAnalisiAvversario(data);
+          bindAllEvents();
+        }
+      };
+    }
+
+    mount.querySelectorAll('[data-edit-dossier-field]').forEach(function (card) {
+      card.onclick = function () {
+        var field = card.getAttribute('data-edit-dossier-field');
+        openDossierEditModal(data, data.selectedDossierMatchId || 'next-cerignola', field);
+      };
+    });
+
+    var btnEditAllDossier = mount.querySelector('#btn-edit-all-dossier');
+    if (btnEditAllDossier) {
+      btnEditAllDossier.onclick = function () {
+        openDossierEditModal(data, data.selectedDossierMatchId || 'next-cerignola', null);
+      };
+    }
+
+    // Upload Video Analisi (Unico CTA nello stato vuoto o bottone in testata)
+    mount.querySelectorAll('#btn-upload-video-analysis, #btn-open-video-upload-direct').forEach(function (btn) {
+      btn.onclick = function () {
+        var mId = data.selectedDossierMatchId || (data.nextMatch && data.nextMatch.id) || 'match-next';
+        openStaffUploadModal('video_analisi', mId, 'partita', 'Carica Video Analisi / Dossier Avversario');
+      };
+    });
+
+    // Upload GPS Telemetria
+    var btnUploadGps = mount.querySelector('#btn-upload-gps-modal');
+    if (btnUploadGps) {
+      btnUploadGps.onclick = function () {
+        var entId = (data.ultimaSessione && data.ultimaSessione.id) || 'allenamento-current';
+        openStaffUploadModal('gps', entId, 'allenamento', 'Carica Telemetria GPS (Bucket: staff-allegati)');
+      };
+    }
+    mount.querySelectorAll('[data-upload-gps-tr]').forEach(function (btn) {
+      btn.onclick = function () {
+        var trId = btn.getAttribute('data-upload-gps-tr') || 'seduta-campo';
+        openStaffUploadModal('gps', trId, 'allenamento', 'Carica File GPS per Seduta');
+      };
+    });
 
     // Upload Report Staff
     var btnUploadRep = mount.querySelector('#btn-upload-staff-report-modal');
@@ -2760,6 +3506,99 @@
         saveCoachData(data);
         renderHub();
         if (window.showToast) window.showToast('Impostazioni tecniche salvate!', 'success');
+      };
+    }
+  }
+
+  function openDossierEditModal(data, matchId, focusField) {
+    data.dossierByMatch = data.dossierByMatch || {};
+    var cur = data.dossierByMatch[matchId] || {
+      puntiForza: 'Transizioni rapide sulle corsie laterali e pericolosità sui piazzati.',
+      puntiDeboli: 'Spazi concessi dietro i terzini quando attaccano alti; difficoltà nel possesso sotto pressing.',
+      giocatoriChiave: 'Numero 9 (punta strutturata) e numero 10 (regista di centrocampo).',
+      palleInattive: 'Corner a rientrare sul primo palo; schema a blocchi per inserimento del centrale.'
+    };
+
+    var content =
+      '<form id="form-edit-dossier" style="display:flex; flex-direction:column; gap:0.9rem;">' +
+        '<div style="display:flex; justify-content:space-between; align-items:center; background:#040912; border:1px solid #12344a; padding:0.6rem 0.85rem; border-radius:6px;">' +
+          '<div style="font-size:0.75rem; color:#8da8bc;">Compilazione Dossier Tattico per Gara</div>' +
+          '<button type="button" id="btn-ia-suggest-dossier" style="background:rgba(22,185,255,0.12); border:1px solid #16b9ff; color:#16b9ff; font-size:0.75rem; font-weight:800; padding:0.35rem 0.75rem; border-radius:5px; cursor:pointer;">' +
+            '✨ Suggerisci con IA' +
+          '</button>' +
+        '</div>' +
+        '<div style="display:flex; flex-direction:column; gap:0.3rem;">' +
+          '<label style="font-size:0.78rem; font-weight:800; color:#00d978;">Punti di Forza</label>' +
+          '<textarea id="inp-dos-forza" rows="2" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.5rem; border-radius:6px; font-size:0.82rem;">' + esc(cur.puntiForza) + '</textarea>' +
+        '</div>' +
+        '<div style="display:flex; flex-direction:column; gap:0.3rem;">' +
+          '<label style="font-size:0.78rem; font-weight:800; color:#ff4d5a;">Punti Deboli</label>' +
+          '<textarea id="inp-dos-deboli" rows="2" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.5rem; border-radius:6px; font-size:0.82rem;">' + esc(cur.puntiDeboli) + '</textarea>' +
+        '</div>' +
+        '<div style="display:flex; flex-direction:column; gap:0.3rem;">' +
+          '<label style="font-size:0.78rem; font-weight:800; color:#ffd21a;">Giocatori Chiave</label>' +
+          '<textarea id="inp-dos-chiave" rows="2" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.5rem; border-radius:6px; font-size:0.82rem;">' + esc(cur.giocatoriChiave) + '</textarea>' +
+        '</div>' +
+        '<div style="display:flex; flex-direction:column; gap:0.3rem;">' +
+          '<label style="font-size:0.78rem; font-weight:800; color:#16b9ff;">Palle Inattive</label>' +
+          '<textarea id="inp-dos-piazzati" rows="2" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.5rem; border-radius:6px; font-size:0.82rem;">' + esc(cur.palleInattive) + '</textarea>' +
+        '</div>' +
+        '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.5rem;">' +
+          '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Annulla</button>' +
+          '<button type="submit" class="es-btn-cos-primary">Salva Dossier</button>' +
+        '</div>' +
+      '</form>';
+
+    openModal('Modifica Dossier Tattico', content);
+
+    if (focusField) {
+      var map = { puntiForza: 'inp-dos-forza', puntiDeboli: 'inp-dos-deboli', giocatoriChiave: 'inp-dos-chiave', palleInattive: 'inp-dos-piazzati' };
+      var fId = map[focusField];
+      if (fId) {
+        var el = document.getElementById(fId);
+        if (el) el.focus();
+      }
+    }
+
+    var btnIa = document.getElementById('btn-ia-suggest-dossier');
+    if (btnIa) {
+      btnIa.onclick = function () {
+        document.getElementById('inp-dos-forza').value = 'Densità centrale nel primo tempo; raddoppi sistematici sulla mezzala avversaria e ripartenze a tre.';
+        document.getElementById('inp-dos-deboli').value = 'Calo di intensità atletica dopo il 65°; vulnerabili nei cambi di gioco rapidi e nei cross tesi dalla trequarti.';
+        document.getElementById('inp-dos-chiave').value = 'Attaccante mancino con spiccata abilità nei tiri dalla distanza e mediano interdittore falloso.';
+        document.getElementById('inp-dos-piazzati').value = 'Marcatura a uomo mista a zona sul dischetto; barriera fragile sui tiri a giro da destra.';
+        if (window.showToast) window.showToast('Analisi generata dall\'assistente IA!', 'info');
+      };
+    }
+
+    var form = document.getElementById('form-edit-dossier');
+    if (form) {
+      form.onsubmit = function (e) {
+        e.preventDefault();
+        var updated = {
+          puntiForza: document.getElementById('inp-dos-forza').value.trim(),
+          puntiDeboli: document.getElementById('inp-dos-deboli').value.trim(),
+          giocatoriChiave: document.getElementById('inp-dos-chiave').value.trim(),
+          palleInattive: document.getElementById('inp-dos-piazzati').value.trim()
+        };
+
+        data.dossierByMatch[matchId] = updated;
+        saveCoachData(data);
+
+        if (window.EliseeSupabase && typeof window.EliseeSupabase.saveDossierTattico === 'function') {
+          var clubId = data.clubId || (_coachLiveData && _coachLiveData.clubId) || 'f0661a00-0000-4000-8000-000000000001';
+          window.EliseeSupabase.saveDossierTattico(clubId, matchId, updated).catch(function (err) {
+            console.warn('[EliseeCoachDash] Salvataggio Supabase dossier:', err);
+          });
+        }
+
+        closeModal();
+        var container = document.getElementById('es-cos-active-content');
+        if (container && activeTab === 'analisi_avversario') {
+          container.innerHTML = renderAnalisiAvversario(data);
+          bindAllEvents();
+        }
+        if (window.showToast) window.showToast('Dossier Tattico salvato con successo!', 'success');
       };
     }
   }

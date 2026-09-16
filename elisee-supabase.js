@@ -406,6 +406,71 @@
   }
 
   // ============================================================
+  // SCHEMI TATTICI & DOSSIER TATTICO
+  // ============================================================
+  async function saveSchemaTattico(clubId, schemaData) {
+    if (!clubId || !schemaData) return { ok: false };
+    try {
+      var r = await apiFetch('/schemi_tattici', {
+        method: 'POST',
+        headers: { 'Prefer': 'resolution=merge-duplicates,return=representation' },
+        body: JSON.stringify({
+          id: schemaData.id || ('st-' + Date.now()),
+          club_id: clubId,
+          nome: schemaData.nome || 'Schema Tattico',
+          modulo: schemaData.modulo || '4-3-3',
+          pins: schemaData.pins || [],
+          frecce: schemaData.frecce || [],
+          zone: schemaData.zone || [],
+          autore: schemaData.autore || 'Mister',
+          created_at: schemaData.created_at || new Date().toISOString()
+        })
+      });
+      return r;
+    } catch (e) {
+      return { ok: false, error: e.message };
+    }
+  }
+
+  async function getSchemiTattici(clubId) {
+    if (!clubId) return [];
+    var r = await apiFetch('/schemi_tattici?club_id=eq.' + encodeURIComponent(clubId) + '&order=created_at.desc');
+    if (r.ok && Array.isArray(r.data)) return r.data;
+    return [];
+  }
+
+  async function saveDossierTattico(clubId, matchId, dossierData) {
+    if (!clubId || !matchId || !dossierData) return { ok: false };
+    try {
+      var r = await apiFetch('/dossier_tattico', {
+        method: 'POST',
+        headers: { 'Prefer': 'resolution=merge-duplicates,return=representation' },
+        body: JSON.stringify({
+          club_id: clubId,
+          partita_id: matchId,
+          avversario: dossierData.avversario || 'Avversario',
+          punti_forza: dossierData.puntiForza || '',
+          punti_deboli: dossierData.puntiDeboli || '',
+          giocatori_chiave: dossierData.giocatoriChiave || '',
+          palle_inattive: dossierData.palleInattive || '',
+          note_mister: dossierData.noteMister || '',
+          updated_at: new Date().toISOString()
+        })
+      });
+      return r;
+    } catch (e) {
+      return { ok: false, error: e.message };
+    }
+  }
+
+  async function getDossierTattico(clubId, matchId) {
+    if (!clubId || !matchId) return null;
+    var r = await apiFetch('/dossier_tattico?club_id=eq.' + encodeURIComponent(clubId) + '&partita_id=eq.' + encodeURIComponent(matchId) + '&limit=1');
+    if (r.ok && Array.isArray(r.data) && r.data[0]) return r.data[0];
+    return null;
+  }
+
+  // ============================================================
   // EXPORT GLOBALE
   // ============================================================
   window.EliseeSupabase = {
@@ -427,7 +492,12 @@
     uploadFileAllegato: uploadFileAllegato,
     getFileAllegati: getFileAllegati,
     getStaff: getStaff,
+    saveSchemaTattico: saveSchemaTattico,
+    getSchemiTattici: getSchemiTattici,
+    saveDossierTattico: saveDossierTattico,
+    getDossierTattico: getDossierTattico,
     apiFetch: apiFetch
   };
 
 })();
+
