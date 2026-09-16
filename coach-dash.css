@@ -1521,32 +1521,164 @@ section + section {
   z-index: 50 !important;
 }
 
-/* Card Dossier Tattico Editabili */
-.es-dossier-card {
-  transition: all 0.18s ease;
+/* ============================================================
+   DOSSIER TATTICO SCOUT & ANALISI AVVERSARIO (LUXURY)
+   ============================================================ */
+.es-dossier-layout-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+@media (max-width: 992px) {
+  .es-dossier-layout-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Card Unica per il Dossier Scout */
+.es-dossier-single-card {
+  background: #071522;
+  border: 1px solid #12344a;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.es-dossier-card-head {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(18, 52, 74, 0.8);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(4, 9, 18, 0.6);
+}
+
+.es-dossier-card-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #f3f8fc;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Righe Sezioni Dossier (Via lo stile semaforo) */
+.es-dossier-section-row {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(18, 52, 74, 0.55);
+  transition: background 0.15s ease;
+  background: transparent;
+}
+
+.es-dossier-section-row:last-child {
+  border-bottom: none;
+}
+
+.es-dossier-section-row:hover {
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.es-dossier-section-row.is-forza {
+  border-left: 2.5px solid #10b981;
+}
+
+.es-dossier-section-row.is-deboli {
+  border-left: 2.5px solid #f87171;
+}
+
+.es-dossier-section-row.is-chiave {
+  border-left: 2.5px solid #fbbf24;
+}
+
+.es-dossier-section-row.is-piazzati {
+  border-left: 2.5px solid #38bdf8;
+}
+
+.es-dossier-section-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.45rem;
+}
+
+.es-dossier-section-label {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #f3f8fc;
+  letter-spacing: 0.01em;
+}
+
+.es-dossier-section-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+}
+
+.es-dossier-text {
+  margin: 0;
+  font-size: 0.84rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+  max-width: 65ch;
+}
+
+/* Dropzone Upload Video / File */
+.es-upload-dropzone {
+  border: 1.5px dashed rgba(56, 189, 248, 0.35);
+  border-radius: 8px;
+  padding: 1.25rem;
+  text-align: center;
+  background: rgba(7, 21, 34, 0.6);
   cursor: pointer;
+  transition: all 0.2s ease;
   position: relative;
 }
 
-.es-dossier-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
-  border-color: rgba(59, 130, 246, 0.5) !important;
+.es-upload-dropzone:hover,
+.es-upload-dropzone.is-dragover {
+  border-color: #16b9ff;
+  background: rgba(22, 185, 255, 0.08);
 }
 
-.es-dossier-edit-hint {
+.es-upload-dropzone input[type="file"] {
   position: absolute;
-  top: 8px;
-  right: 10px;
-  font-size: 11px;
-  font-weight: 700;
-  opacity: 0.65;
-  transition: opacity 0.15s ease;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
 }
 
-.es-dossier-card:hover .es-dossier-edit-hint {
-  opacity: 1;
+/* Barra Progresso Upload */
+.es-upload-progress-wrap {
+  margin-top: 0.75rem;
+  background: rgba(4, 9, 18, 0.8);
+  border: 1px solid #12344a;
+  border-radius: 6px;
+  overflow: hidden;
+  height: 10px;
+  position: relative;
 }
+
+.es-upload-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #16b9ff, #00d978);
+  width: 0%;
+  transition: width 0.2s ease;
+}
+
+/* Contatore caratteri textarea modale */
+.es-textarea-char-count {
+  font-size: 0.68rem;
+  color: #8da8bc;
+  text-align: right;
+  margin-top: 2px;
+}
+
 
 .es-cos-search-input {
   background: var(--cos-card, rgba(18, 26, 42, 0.75)) !important;
@@ -2261,5 +2393,195 @@ section + section {
     opacity: 1;
   }
 }
+
+/* ============================================================
+   ANALISI AVVERSARIO & DOSSIER SCOUT PROFESSIONALE
+   ============================================================ */
+.es-dossier-layout-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr; /* 60% Dossier / 40% Video Report */
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+@media (max-width: 1024px) {
+  .es-dossier-layout-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Card Unica per il Dossier Scout */
+.es-dossier-single-card {
+  background: var(--cos-card, #071522);
+  border: 1px solid var(--cos-card-border, #12344a);
+  border-radius: var(--cos-radius-lg, 10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.es-dossier-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: rgba(4, 9, 18, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.es-dossier-card-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #f3f8fc;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Sezioni interne con separatore sottile e bordo semantico laterale 2.5px */
+.es-dossier-section-row {
+  padding: 1.1rem 1.35rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-left: 2.5px solid transparent;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.es-dossier-section-row:last-child {
+  border-bottom: none;
+}
+
+.es-dossier-section-row:hover {
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.es-dossier-section-row.is-forza {
+  border-left-color: #10b981;
+}
+
+.es-dossier-section-row.is-deboli {
+  border-left-color: #f87171;
+}
+
+.es-dossier-section-row.is-chiave {
+  border-left-color: #fbbf24;
+}
+
+.es-dossier-section-row.is-piazzati {
+  border-left-color: #38bdf8;
+}
+
+.es-dossier-section-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0.45rem;
+}
+
+.es-dossier-section-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.es-dossier-section-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  letter-spacing: 0.02em;
+}
+
+/* Tipografia del testo dossier: respiro e limite a 65 caratteri per leggibilità ottimale */
+.es-dossier-text {
+  margin: 0;
+  font-size: 0.84rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+  max-width: 65ch;
+  word-break: break-word;
+}
+
+/* Contatore caratteri modale dossier */
+.es-textarea-char-count {
+  font-size: 0.72rem;
+  color: #627d98;
+  text-align: right;
+  margin-top: 3px;
+  font-family: inherit;
+}
+
+/* Box anteprima suggerimento IA */
+.es-ia-preview-box {
+  background: rgba(22, 185, 255, 0.05);
+  border: 1px solid rgba(22, 185, 255, 0.25);
+  border-radius: 8px;
+  padding: 0.85rem;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  animation: esFadeIn 0.2s ease-out;
+}
+
+@keyframes esFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Area Drag & Drop Upload Video */
+.es-upload-dropzone {
+  border: 1.5px dashed #1e3a5f;
+  border-radius: 8px;
+  background: rgba(7, 21, 34, 0.7);
+  padding: 1.25rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.es-upload-dropzone:hover,
+.es-upload-dropzone.is-dragover {
+  border-color: #38bdf8;
+  background: rgba(56, 189, 248, 0.08);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.15);
+}
+
+.es-upload-dropzone-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(56, 189, 248, 0.1);
+  color: #38bdf8;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+/* Barra di progresso upload */
+.es-upload-progress-wrap {
+  width: 100%;
+  height: 6px;
+  background: #040912;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid #12344a;
+  margin-top: 0.5rem;
+}
+
+.es-upload-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #16b9ff 0%, #00d978 100%);
+  border-radius: 999px;
+  transition: width 0.25s ease-out;
+}
+
 
 

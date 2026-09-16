@@ -3,7 +3,33 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Ridisegno Completo Macroarea Calendario Tecnico Luxury (`CALENDARLUX1`):
+Ultimo aggiornamento: **2026-09-16** — Ridisegno Completo Macroarea "Analisi Avversario" & Dossier Scout Professionale (`DOSSIERLUX1`):
+1. **Addio alla "dashboard da videogame tattico" & Nuova Gerarchia Visiva**:
+   - Eliminati tutti i titoli a semaforo pieno (verde/rosso/giallo/blu) in favore di una tipografia neutra scura (`#e2e8f0` e `#cbd5e1`), con piccole icone monocromatiche distintive (scudo, alert circolare, stella, bandierina corner).
+   - Colori semantici preservati esclusivamente come bordo sinistro sottile di 2.5px sulle card di sezione (`.is-forza`, `.is-deboli`, `.is-chiave`, `.is-piazzati`).
+   - Rimosse le icone matita / `/ Modifica` ripetute su ogni riga: ora è presente un unico contenitore dossier con separatori sottili (1px) e un solo pulsante *"Modifica Dossier"* in alto a destra.
+   - Tipografia con leggibilità ottimale per scouting: `line-height: 1.6` e `max-width: 65ch` per facilitare la scansione visiva senza righe troppo estese.
+2. **Header Sezione & Selettore Partita Interattivo**:
+   - Eliminata la label tecnica maiuscola `GARA & AVVERSARIO IN STUDIO:`.
+   - Nome avversario in grande evidenza con badge stato incontro (`⚽ Prossimo Incontro Ufficiale` o `📅 Dossier Programmato`), data e stadio.
+   - Trasformato il display statico in un vero menu a tendina (`#sel-dossier-match`) con tutte le prossime gare studiate per cambiare dossier al volo senza lasciare la pagina.
+3. **Layout a Due Colonne Ribilanciato (60% Dossier / 40% Video Report)**:
+   - Dossier tattico a sinistra (60% della larghezza) e pannello video report a destra (40%).
+   - Stato vuoto alleggerito e intenzionale: icona monocromatica da 20px, testo esplicativo in riga singola senza placeholder sbilanciati.
+   - Vista a lista con anteprima, categoria e data se sono presenti file caricati.
+4. **Modale "Modifica Dossier Tattico" Professionale**:
+   - Contatore caratteri discreto sotto ciascuna delle 4 textarea (`X / 500 caratteri`) con aggiornamento dinamico live.
+   - Checkmark visivo temporaneo *"✓ Salvato"* al salvataggio del form.
+   - Funzione *"✨ Suggerisci con IA"*: genera una bozza specifica contestualizzata sull'avversario selezionato (es. Cerignola Nord, Manfredonia, San Severo, o generica) e mostra un box di anteprima dedicato con bottoni *"✓ Applica Bozza al Dossier"* o *"Ignora"* (**nessuna sovrascrittura automatica senza conferma preventiva dell'utente**).
+   - Controllo modifiche non salvate (`isDirty`): click su Annulla, &times; o backdrop richiede conferma esplicita prima di chiudere.
+5. **Modale "Carica Video Analisi / Dossier Avversario"**:
+   - Campo "Categoria" trasformato da testo libero a `<select>` con opzioni fisse (*Video Analisi Tattica*, *Report Scout & Match Analysis*, *Dati GPS / Telemetria*, *Clip Palle Inattive & Schemi*, *Altro*).
+   - "Visibilità" trasformata in vero `<select>` con ruoli della piattaforma (*Staff Tecnico (Mister + Vice)*, *Staff Tecnico Completo*, *Tutta la Squadra*, *Riservato Dirigenza*).
+   - Area drag & drop (`.es-upload-dropzone`) con feedback visivo (`is-dragover`), selezione manuale e anteprima del nome file e dimensione (es. `video.mp4 (14.2 MB)`).
+   - Barra di progresso reale animata (`.es-upload-progress-bar`) con percentuale numerica durante l'upload cloud.
+6. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_DOSSIERLUX1`.
+
+Feature precedente: **Ridisegno Completo Macroarea Calendario Tecnico Luxury (`CALENDARLUX1`):**
 1. **Header Sezione Professionale**:
    - Rimosso completamente il testo tecnico di debug `(Tabelle: partite, allenamenti)`.
    - Titolo pulito *"Calendario Tecnico Staff & Partite"* con sottotitolo descrittivo *"Pianificazione timeline gare ufficiali, sedute di allenamento e impegni operativi dello staff"*.

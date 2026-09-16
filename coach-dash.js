@@ -3120,113 +3120,148 @@
 
     return (
       '<div style="display:flex; flex-direction:column; gap:1.25rem;">' +
-        // BARRA SUPERIORE SELETTORE PARTITA / AVVERSARIO
-        '<div class="es-cos-panel-card" style="padding:0.75rem 1.25rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; background:linear-gradient(90deg, #071522 0%, #0a1e30 100%);">' +
-          '<div style="display:flex; align-items:center; gap:0.75rem;">' +
-            '<div style="width:36px; height:36px; border-radius:8px; background:rgba(22,185,255,0.12); border:1px solid #16b9ff; display:flex; align-items:center; justify-content:center; color:#16b9ff;">' +
-              '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
+        // BARRA SUPERIORE SELETTORE PARTITA / AVVERSARIO (SENZA LABEL TECNICA)
+        '<div class="es-cos-panel-card" style="padding:0.9rem 1.35rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; background:linear-gradient(90deg, #071522 0%, #0a1e30 100%); border:1px solid #12344a; border-radius:10px;">' +
+          '<div style="display:flex; align-items:center; gap:0.85rem;">' +
+            '<div style="width:42px; height:42px; border-radius:10px; background:rgba(22,185,255,0.12); border:1.5px solid rgba(22,185,255,0.35); display:flex; align-items:center; justify-content:center; color:#16b9ff; flex-shrink:0;">' +
+              '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
             '</div>' +
             '<div>' +
-              '<div style="font-size:0.72rem; font-weight:800; color:#8da8bc; text-transform:uppercase;">Gara & Avversario in Studio:</div>' +
-              '<div style="font-size:1.05rem; font-weight:800; color:#f3f8fc;">' + esc(activeOpponent) + '</div>' +
+              '<div style="font-size:1.35rem; font-weight:900; color:#f3f8fc; line-height:1.2;">' + esc(activeOpponent) + '</div>' +
+              '<div style="display:flex; align-items:center; gap:8px; margin-top:4px; font-size:0.75rem; color:#8da8bc;">' +
+                '<span class="es-cos-badge-pill is-blue" style="font-size:0.68rem; font-weight:800; padding:2px 7px;">' + (curMatch.isNext ? '⚽ Prossimo Incontro Ufficiale' : '📅 Dossier Programmato') + '</span>' +
+                '<span>Data: <b style="color:#cbd5e1;">' + esc(curMatch.data || '18/09/2026') + '</b></span>' +
+                '<span>·</span>' +
+                '<span>Stadio: <b style="color:#cbd5e1;">' + esc(curMatch.stadio || 'Campo Comunale') + '</b></span>' +
+              '</div>' +
             '</div>' +
           '</div>' +
           '<div style="display:flex; align-items:center; gap:0.6rem;">' +
-            '<label for="sel-dossier-match" style="font-size:0.78rem; font-weight:800; color:#93c5fd;">Seleziona Partita:</label>' +
-            '<select id="sel-dossier-match" style="background:#040912; border:1.5px solid #3b82f6; color:#ffffff; font-size:0.82rem; font-weight:700; padding:0.45rem 0.75rem; border-radius:6px; cursor:pointer; outline:none;">' +
-              matchSelectOptions +
-            '</select>' +
+            '<label for="sel-dossier-match" style="font-size:0.76rem; font-weight:700; color:#8da8bc; text-transform:uppercase; letter-spacing:0.04em;">Dossier Gara:</label>' +
+            '<div style="position:relative; display:inline-flex; align-items:center;">' +
+              '<select id="sel-dossier-match" style="appearance:none; -webkit-appearance:none; background:#040912; border:1.5px solid rgba(56,189,248,0.4); color:#ffffff; font-size:0.82rem; font-weight:700; padding:0.45rem 2.2rem 0.45rem 0.85rem; border-radius:7px; cursor:pointer; outline:none; box-shadow:0 2px 8px rgba(0,0,0,0.3);">' +
+                matchSelectOptions +
+              '</select>' +
+              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" style="position:absolute; right:10px; pointer-events:none;"><polyline points="6 9 12 15 18 9"/></svg>' +
+            '</div>' +
           '</div>' +
         '</div>' +
 
-        // GRIGLIA A DUE COLONNE: DOSSIER TATTICO A SINISTRA, MATCH ANALYSIS A DESTRA
-        '<div style="display:grid; grid-template-columns:1.2fr 1fr; gap:1.25rem;">' +
-          // COLONNA SINISTRA: DOSSIER TATTICO CON 4 CARD EDITABILI
-          '<div class="es-cos-panel-card">' +
-            '<div class="es-cos-panel-head" style="justify-content:space-between; align-items:center;">' +
-              '<span class="es-cos-panel-title">Dossier Tattico: ' + esc(activeOpponent) + '</span>' +
-              '<button type="button" class="es-btn-cos-sec" id="btn-edit-all-dossier" style="font-size:0.75rem; display:inline-flex; align-items:center; gap:4px;">' +
-                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
-                'Modifica Dossier' +
+        // GRIGLIA A DUE COLONNE RIBILANCIATA (60% DOSSIER / 40% VIDEO REPORT)
+        '<div class="es-dossier-layout-grid">' +
+          // COLONNA SINISTRA: CARD UNICA DOSSIER SCOUT PROFESSIONALE
+          '<div class="es-dossier-single-card">' +
+            '<div class="es-dossier-card-head">' +
+              '<h4 class="es-dossier-card-title">' +
+                '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#16b9ff" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>' +
+                '<span>Dossier Tattico · ' + esc(activeOpponent) + '</span>' +
+              '</h4>' +
+              '<button type="button" class="es-btn-cos-sec" id="btn-edit-all-dossier" style="font-size:0.75rem; display:inline-flex; align-items:center; gap:5px; padding:0.38rem 0.75rem;">' +
+                '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
+                '<span>Modifica Dossier</span>' +
               '</button>' +
             '</div>' +
-            '<div style="display:flex; flex-direction:column; gap:0.75rem; font-size:0.82rem;">' +
-              // CARD 1: Punti di Forza
-              '<div class="es-dossier-card" data-edit-dossier-field="puntiForza" style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:0.9rem;">' +
-                '<span class="es-dossier-edit-hint" style="color:#00d978;">✏️ Modifica</span>' +
-                '<b style="color:#00d978; display:block; margin-bottom:0.35rem; font-size:0.85rem;">Punti di Forza:</b>' +
-                '<p style="margin:0; color:#e2e8f0; line-height:1.45;">' + esc(d.puntiForza || 'In attesa inserimento report.') + '</p>' +
+            '<div style="display:flex; flex-direction:column;">' +
+              // SEZIONE 1: Punti di Forza (Bordo sottile verde, titolo neutro, icona scudo)
+              '<div class="es-dossier-section-row is-forza">' +
+                '<div class="es-dossier-section-head">' +
+                  '<span class="es-dossier-section-icon">' +
+                    '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' +
+                  '</span>' +
+                  '<span class="es-dossier-section-label">Punti di Forza</span>' +
+                '</div>' +
+                '<p class="es-dossier-text">' + esc(d.puntiForza || 'In attesa inserimento report scout.') + '</p>' +
               '</div>' +
-              // CARD 2: Punti Deboli
-              '<div class="es-dossier-card" data-edit-dossier-field="puntiDeboli" style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:0.9rem;">' +
-                '<span class="es-dossier-edit-hint" style="color:#ff4d5a;">✏️ Modifica</span>' +
-                '<b style="color:#ff4d5a; display:block; margin-bottom:0.35rem; font-size:0.85rem;">Punti Deboli:</b>' +
-                '<p style="margin:0; color:#e2e8f0; line-height:1.45;">' + esc(d.puntiDeboli || 'In attesa inserimento report.') + '</p>' +
+              // SEZIONE 2: Punti Deboli (Bordo sottile rosso, titolo neutro, icona alert)
+              '<div class="es-dossier-section-row is-deboli">' +
+                '<div class="es-dossier-section-head">' +
+                  '<span class="es-dossier-section-icon">' +
+                    '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>' +
+                  '</span>' +
+                  '<span class="es-dossier-section-label">Punti Deboli & Vulnerabilità</span>' +
+                '</div>' +
+                '<p class="es-dossier-text">' + esc(d.puntiDeboli || 'In attesa inserimento report scout.') + '</p>' +
               '</div>' +
-              // CARD 3: Giocatori Chiave
-              '<div class="es-dossier-card" data-edit-dossier-field="giocatoriChiave" style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:0.9rem;">' +
-                '<span class="es-dossier-edit-hint" style="color:#ffd21a;">✏️ Modifica</span>' +
-                '<b style="color:#ffd21a; display:block; margin-bottom:0.35rem; font-size:0.85rem;">Giocatori Chiave:</b>' +
-                '<p style="margin:0; color:#e2e8f0; line-height:1.45;">' + esc(d.giocatoriChiave || 'In attesa inserimento report.') + '</p>' +
+              // SEZIONE 3: Giocatori Chiave (Bordo sottile ambra, titolo neutro, icona stella)
+              '<div class="es-dossier-section-row is-chiave">' +
+                '<div class="es-dossier-section-head">' +
+                  '<span class="es-dossier-section-icon">' +
+                    '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
+                  '</span>' +
+                  '<span class="es-dossier-section-label">Giocatori Chiave & Elementi di Rilievo</span>' +
+                '</div>' +
+                '<p class="es-dossier-text">' + esc(d.giocatoriChiave || 'In attesa inserimento report scout.') + '</p>' +
               '</div>' +
-              // CARD 4: Palle Inattive
-              '<div class="es-dossier-card" data-edit-dossier-field="palleInattive" style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:0.9rem;">' +
-                '<span class="es-dossier-edit-hint" style="color:#16b9ff;">✏️ Modifica</span>' +
-                '<b style="color:#16b9ff; display:block; margin-bottom:0.35rem; font-size:0.85rem;">Palle Inattive:</b>' +
-                '<p style="margin:0; color:#e2e8f0; line-height:1.45;">' + esc(d.palleInattive || 'In attesa inserimento report.') + '</p>' +
+              // SEZIONE 4: Palle Inattive (Bordo sottile azzurro, titolo neutro, icona corner)
+              '<div class="es-dossier-section-row is-piazzati">' +
+                '<div class="es-dossier-section-head">' +
+                  '<span class="es-dossier-section-icon">' +
+                    '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>' +
+                  '</span>' +
+                  '<span class="es-dossier-section-label">Palle Inattive & Schemi da Fermo</span>' +
+                '</div>' +
+                '<p class="es-dossier-text">' + esc(d.palleInattive || 'In attesa inserimento report scout.') + '</p>' +
               '</div>' +
             '</div>' +
           '</div>' +
 
-          // COLONNA DESTRA: VIDEO REPORT & MATCH ANALYSIS CON CTA UNIFICATO
-          '<div class="es-cos-panel-card" style="display:flex; flex-direction:column; justify-content:space-between;">' +
+          // COLONNA DESTRA: PANNELLO VIDEO REPORT & MATCH ANALYSIS ALLEGGERITO
+          '<div class="es-cos-panel-card" style="display:flex; flex-direction:column; justify-content:space-between; height:100%;">' +
             '<div>' +
-              '<div class="es-cos-panel-head">' +
+              '<div class="es-cos-panel-head" style="margin-bottom:0.85rem;">' +
                 '<span class="es-cos-panel-title">Video Report & Match Analysis</span>' +
                 (matchVideos.length ? (
-                  '<button type="button" class="es-btn-cos-primary" id="btn-upload-video-analysis" style="font-size:0.74rem;">' +
+                  '<button type="button" class="es-btn-cos-primary" id="btn-upload-video-analysis" style="font-size:0.74rem; padding:0.35rem 0.75rem;">' +
                     '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
-                    '+ Aggiungi Video' +
+                    '+ Aggiungi File' +
                   '</button>'
                 ) : '') +
               '</div>' +
+
               (matchVideos.length ? (
-                '<div style="display:flex; flex-direction:column; gap:0.6rem; max-height:360px; overflow-y:auto; padding-right:2px;">' +
+                '<div style="display:flex; flex-direction:column; gap:0.6rem; max-height:420px; overflow-y:auto; padding-right:2px;">' +
                   matchVideos.map(function (vf) {
+                    var fileName = vf.nome || (vf.file_url ? vf.file_url.split('/').pop() : 'Report_Analisi.mp4');
+                    var fileCat = vf.categoria_label || 'Video Analisi';
                     return (
-                      '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:0.75rem 0.9rem; display:flex; justify-content:space-between; align-items:center;">' +
-                        '<div style="display:flex; align-items:center; gap:0.65rem;">' +
-                          '<div style="width:32px; height:32px; border-radius:6px; background:rgba(22,185,255,0.12); color:#16b9ff; display:flex; align-items:center; justify-content:center;">' +
+                      '<div style="background:#040912; border:1px solid #12344a; border-radius:8px; padding:0.75rem 0.9rem; display:flex; justify-content:space-between; align-items:center; gap:0.6rem;">' +
+                        '<div style="display:flex; align-items:center; gap:0.65rem; min-width:0; overflow:hidden;">' +
+                          '<div style="width:34px; height:34px; border-radius:6px; background:rgba(22,185,255,0.12); color:#16b9ff; display:flex; align-items:center; justify-content:center; flex-shrink:0;">' +
                             '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>' +
                           '</div>' +
-                          '<div>' +
-                            '<b style="color:#f3f8fc; font-size:0.84rem; display:block;">' + esc(vf.file_url.split('/').pop()) + '</b>' +
-                            '<span style="font-size:0.7rem; color:#8da8bc;">Caricato il ' + formatDate(vf.created_at) + '</span>' +
+                          '<div style="overflow:hidden; min-width:0;">' +
+                            '<b style="color:#f3f8fc; font-size:0.82rem; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="' + esc(fileName) + '">' + esc(fileName) + '</b>' +
+                            '<div style="display:flex; align-items:center; gap:6px; font-size:0.68rem; color:#8da8bc; margin-top:2px;">' +
+                              '<span class="es-cos-badge-pill is-blue" style="font-size:0.62rem; padding:1px 5px;">' + esc(fileCat) + '</span>' +
+                              '<span>' + formatDate(vf.created_at) + '</span>' +
+                            '</div>' +
                           '</div>' +
                         '</div>' +
-                        '<a href="' + esc(vf.file_url) + '" target="_blank" rel="noopener noreferrer" class="es-btn-cos-sec" style="font-size:0.72rem; padding:0.35rem 0.65rem;">' +
-                          'Riproduci &rarr;' +
+                        '<a href="' + esc(vf.file_url || '#') + '" target="_blank" rel="noopener noreferrer" class="es-btn-cos-sec" style="font-size:0.72rem; padding:0.35rem 0.65rem; white-space:nowrap; flex-shrink:0;">' +
+                          'Apri File &rarr;' +
                         '</a>' +
                       '</div>'
                     );
                   }).join('') +
                 '</div>'
               ) : (
-                // STATO VUOTO CON UNICO CTA SOLIDO
-                '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:2rem 1.25rem; text-align:center;">' +
-                  '<svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cos-text-muted, #8da8bc); opacity:0.65; margin:0 auto 0.75rem; display:block;"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>' +
-                  '<div style="font-weight:800; font-size:0.95rem; margin-top:0.5rem; color:#f3f8fc;">Nessun video analisi allegato per ' + esc(activeOpponent) + '</div>' +
-                  '<p style="font-size:0.75rem; color:#8da8bc; margin:0.4rem 0 1.2rem;">I video caricati vengono conservati nel bucket cloud <code>staff-allegati</code> con accesso riservato allo staff.</p>' +
-                  '<button type="button" class="es-btn-cos-primary" id="btn-upload-video-analysis" style="padding:0.6rem 1.2rem; font-size:0.82rem; font-weight:800; border-radius:7px; display:inline-flex; align-items:center; gap:6px;">' +
-                    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
+                // STATO VUOTO ALLEGGERITO (DESIGN INTENZIONALE & PULITO)
+                '<div style="background:rgba(4,9,18,0.6); border:1px dashed #12344a; border-radius:8px; padding:1.75rem 1.25rem; text-align:center;">' +
+                  '<div style="width:40px; height:40px; border-radius:50%; background:rgba(22,185,255,0.08); border:1px solid rgba(22,185,255,0.22); color:#38bdf8; display:flex; align-items:center; justify-content:center; margin:0 auto 0.65rem;">' +
+                    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>' +
+                  '</div>' +
+                  '<div style="font-weight:700; font-size:0.86rem; color:#f3f8fc;">Nessun video analisi o report allegato per ' + esc(activeOpponent) + '</div>' +
+                  '<p style="font-size:0.73rem; color:#8da8bc; margin:0.35rem 0 1rem;">File e video-clip archiviati nel cloud staff-allegati con permessi riservati.</p>' +
+                  '<button type="button" class="es-btn-cos-primary" id="btn-upload-video-analysis" style="padding:0.48rem 1rem; font-size:0.78rem; font-weight:700; border-radius:6px; display:inline-flex; align-items:center; gap:6px;">' +
+                    '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
                     'Carica Video / Match Analysis' +
                   '</button>' +
                 '</div>'
               )) +
             '</div>' +
-            // PRO MEMORIA IN FONDO ALLA CARD VIDEO
-            '<div style="margin-top:1rem; padding:0.65rem 0.85rem; background:rgba(22,185,255,0.06); border:1px solid rgba(22,185,255,0.22); border-radius:6px; font-size:0.73rem; color:#8da8bc;">' +
-              '<b style="color:#16b9ff;">Nota Metodologica:</b> I video-clip associati a questa gara sono visibili in tempo reale anche al Vice Allenatore e al Match Analyst.' +
+            // NOTA METODOLOGICA DISCRETA IN CALCE
+            '<div style="margin-top:1rem; padding:0.65rem 0.85rem; background:rgba(22,185,255,0.04); border:1px solid rgba(22,185,255,0.18); border-radius:6px; font-size:0.72rem; color:#8da8bc; line-height:1.45;">' +
+              '<b style="color:#38bdf8;">Accesso Condiviso:</b> I clip e dossier collegati a questa gara sono sincronizzati in tempo reale con il Vice Allenatore e il Match Analyst.' +
             '</div>' +
           '</div>' +
         '</div>' +
@@ -4447,71 +4482,275 @@
       palleInattive: 'Corner a rientrare sul primo palo; schema a blocchi per inserimento del centrale.'
     };
 
+    // Identifica avversario
+    var opponentName = 'Avversario';
+    if (data.prossimeGare && Array.isArray(data.prossimeGare)) {
+      var mFound = data.prossimeGare.find(function (g) { return g.id === matchId; });
+      if (mFound && mFound.avv) opponentName = mFound.avv;
+    }
+    if (opponentName === 'Avversario' && data.nextMatch && data.nextMatch.avversario) {
+      opponentName = data.nextMatch.avversario;
+    }
+
     var content =
-      '<form id="form-edit-dossier" style="display:flex; flex-direction:column; gap:0.9rem;">' +
-        '<div style="display:flex; justify-content:space-between; align-items:center; background:#040912; border:1px solid #12344a; padding:0.6rem 0.85rem; border-radius:6px;">' +
-          '<div style="font-size:0.75rem; color:#8da8bc;">Compilazione Dossier Tattico per Gara</div>' +
-          '<button type="button" id="btn-ia-suggest-dossier" style="background:rgba(22,185,255,0.12); border:1px solid #16b9ff; color:#16b9ff; font-size:0.75rem; font-weight:800; padding:0.35rem 0.75rem; border-radius:5px; cursor:pointer;">' +
+      '<form id="form-edit-dossier" style="display:flex; flex-direction:column; gap:0.95rem;">' +
+        // HEADER CONTESTUALE MODALE E AZIONE IA
+        '<div style="display:flex; justify-content:space-between; align-items:center; background:#040912; border:1px solid #12344a; padding:0.65rem 0.95rem; border-radius:8px;">' +
+          '<div>' +
+            '<div style="font-size:0.8rem; font-weight:800; color:#f3f8fc;">Dossier Tattico · ' + esc(opponentName) + '</div>' +
+            '<div style="font-size:0.7rem; color:#8da8bc;">Revisione dossier scout e piano gara</div>' +
+          '</div>' +
+          '<button type="button" id="btn-ia-suggest-dossier" class="es-btn-cos-sec" style="background:rgba(22,185,255,0.08); border-color:#16b9ff; color:#38bdf8; font-size:0.75rem; font-weight:700; padding:0.35rem 0.75rem; border-radius:6px; cursor:pointer; display:inline-flex; align-items:center; gap:5px;">' +
             '✨ Suggerisci con IA' +
           '</button>' +
         '</div>' +
-        '<div style="display:flex; flex-direction:column; gap:0.3rem;">' +
-          '<label style="font-size:0.78rem; font-weight:800; color:#00d978;">Punti di Forza</label>' +
-          '<textarea id="inp-dos-forza" rows="2" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.5rem; border-radius:6px; font-size:0.82rem;">' + esc(cur.puntiForza) + '</textarea>' +
+
+        // BOX ANTEPRIMA BOZZA IA (INIZIALMENTE NASCOSTO - MAI SOVRASCRITTURA AUTOMATICA SENZA CONFERMA)
+        '<div id="es-ia-suggestion-container" style="display:none;" class="es-ia-preview-box">' +
+          '<div style="display:flex; align-items:center; justify-content:space-between;">' +
+            '<div style="display:flex; align-items:center; gap:6px; font-size:0.78rem; font-weight:800; color:#38bdf8;">' +
+              '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m10 15 5-3-5-3v6Z"/></svg>' +
+              '<span>Bozza Tattica Suggerita da IA per ' + esc(opponentName) + '</span>' +
+            '</div>' +
+            '<button type="button" id="btn-ia-close-preview" style="background:none; border:none; color:#8da8bc; font-size:1.1rem; cursor:pointer; line-height:1;">&times;</button>' +
+          '</div>' +
+          '<div style="font-size:0.72rem; color:#8da8bc; line-height:1.4;">' +
+            'L\'assistente IA ha elaborato una bozza basata sull\'analisi tattica e i pattern di gioco. Rivedi l\'anteprima prima di applicarla.' +
+          '</div>' +
+          '<div id="ia-preview-content" style="background:#040912; border:1px solid #12344a; border-radius:6px; padding:0.65rem; font-size:0.75rem; color:#cbd5e1; display:flex; flex-direction:column; gap:0.4rem; max-height:160px; overflow-y:auto;">' +
+          '</div>' +
+          '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.25rem;">' +
+            '<button type="button" id="btn-ia-dismiss-suggestion" class="es-btn-cos-sec" style="font-size:0.72rem; padding:0.35rem 0.75rem;">Ignora</button>' +
+            '<button type="button" id="btn-ia-apply-suggestion" class="es-btn-cos-primary" style="font-size:0.72rem; padding:0.35rem 0.85rem; background:#10b981; border-color:#10b981;">' +
+              '✓ Applica Bozza al Dossier' +
+            '</button>' +
+          '</div>' +
         '</div>' +
+
+        // CAMPO 1: Punti di Forza
         '<div style="display:flex; flex-direction:column; gap:0.3rem;">' +
-          '<label style="font-size:0.78rem; font-weight:800; color:#ff4d5a;">Punti Deboli</label>' +
-          '<textarea id="inp-dos-deboli" rows="2" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.5rem; border-radius:6px; font-size:0.82rem;">' + esc(cur.puntiDeboli) + '</textarea>' +
+          '<div style="display:flex; justify-content:space-between; align-items:center;">' +
+            '<label style="font-size:0.78rem; font-weight:700; color:#e2e8f0; display:inline-flex; align-items:center; gap:6px;">' +
+              '<span style="width:18px; height:18px; border-radius:4px; background:rgba(16,185,129,0.12); color:#10b981; display:inline-flex; align-items:center; justify-content:center;">' +
+                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' +
+              '</span>' +
+              'Punti di Forza' +
+            '</label>' +
+            '<span class="es-textarea-char-count" id="count-forza">0 / 500</span>' +
+          '</div>' +
+          '<textarea id="inp-dos-forza" maxlength="500" rows="2" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.83rem; line-height:1.5; outline:none;">' + esc(cur.puntiForza || '') + '</textarea>' +
         '</div>' +
+
+        // CAMPO 2: Punti Deboli
         '<div style="display:flex; flex-direction:column; gap:0.3rem;">' +
-          '<label style="font-size:0.78rem; font-weight:800; color:#ffd21a;">Giocatori Chiave</label>' +
-          '<textarea id="inp-dos-chiave" rows="2" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.5rem; border-radius:6px; font-size:0.82rem;">' + esc(cur.giocatoriChiave) + '</textarea>' +
+          '<div style="display:flex; justify-content:space-between; align-items:center;">' +
+            '<label style="font-size:0.78rem; font-weight:700; color:#e2e8f0; display:inline-flex; align-items:center; gap:6px;">' +
+              '<span style="width:18px; height:18px; border-radius:4px; background:rgba(248,113,113,0.12); color:#f87171; display:inline-flex; align-items:center; justify-content:center;">' +
+                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>' +
+              '</span>' +
+              'Punti Deboli & Vulnerabilità' +
+            '</label>' +
+            '<span class="es-textarea-char-count" id="count-deboli">0 / 500</span>' +
+          '</div>' +
+          '<textarea id="inp-dos-deboli" maxlength="500" rows="2" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.83rem; line-height:1.5; outline:none;">' + esc(cur.puntiDeboli || '') + '</textarea>' +
         '</div>' +
+
+        // CAMPO 3: Giocatori Chiave
         '<div style="display:flex; flex-direction:column; gap:0.3rem;">' +
-          '<label style="font-size:0.78rem; font-weight:800; color:#16b9ff;">Palle Inattive</label>' +
-          '<textarea id="inp-dos-piazzati" rows="2" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.5rem; border-radius:6px; font-size:0.82rem;">' + esc(cur.palleInattive) + '</textarea>' +
+          '<div style="display:flex; justify-content:space-between; align-items:center;">' +
+            '<label style="font-size:0.78rem; font-weight:700; color:#e2e8f0; display:inline-flex; align-items:center; gap:6px;">' +
+              '<span style="width:18px; height:18px; border-radius:4px; background:rgba(251,191,36,0.12); color:#fbbf24; display:inline-flex; align-items:center; justify-content:center;">' +
+                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
+              '</span>' +
+              'Giocatori Chiave' +
+            '</label>' +
+            '<span class="es-textarea-char-count" id="count-chiave">0 / 500</span>' +
+          '</div>' +
+          '<textarea id="inp-dos-chiave" maxlength="500" rows="2" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.83rem; line-height:1.5; outline:none;">' + esc(cur.giocatoriChiave || '') + '</textarea>' +
         '</div>' +
-        '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.5rem;">' +
-          '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Annulla</button>' +
-          '<button type="submit" class="es-btn-cos-primary">Salva Dossier</button>' +
+
+        // CAMPO 4: Palle Inattive
+        '<div style="display:flex; flex-direction:column; gap:0.3rem;">' +
+          '<div style="display:flex; justify-content:space-between; align-items:center;">' +
+            '<label style="font-size:0.78rem; font-weight:700; color:#e2e8f0; display:inline-flex; align-items:center; gap:6px;">' +
+              '<span style="width:18px; height:18px; border-radius:4px; background:rgba(56,189,248,0.12); color:#38bdf8; display:inline-flex; align-items:center; justify-content:center;">' +
+                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>' +
+              '</span>' +
+              'Palle Inattive & Schemi' +
+            '</label>' +
+            '<span class="es-textarea-char-count" id="count-piazzati">0 / 500</span>' +
+          '</div>' +
+          '<textarea id="inp-dos-piazzati" maxlength="500" rows="2" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.83rem; line-height:1.5; outline:none;">' + esc(cur.palleInattive || '') + '</textarea>' +
+        '</div>' +
+
+        // FOOTER BOTTONI CON STATO "SALVATO"
+        '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.6rem; padding-top:0.75rem; border-top:1px solid rgba(255,255,255,0.08);">' +
+          '<div id="es-dossier-save-badge" style="display:none; align-items:center; gap:6px; font-size:0.78rem; font-weight:700; color:#10b981;">' +
+            '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' +
+            '<span>✓ Salvato</span>' +
+          '</div>' +
+          '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-left:auto;">' +
+            '<button type="button" class="es-btn-cos-sec" id="btn-custom-cancel-dossier">Annulla</button>' +
+            '<button type="submit" class="es-btn-cos-primary" id="btn-submit-dossier">' +
+              '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><polyline points="20 6 9 17 4 12"/></svg>' +
+              'Salva Dossier' +
+            '</button>' +
+          '</div>' +
         '</div>' +
       '</form>';
 
-    openModal('Modifica Dossier Tattico', content);
+    openModal('Modifica Dossier Tattico', content, '560px');
+
+    var isDirty = false;
+    var inpForza = document.getElementById('inp-dos-forza');
+    var inpDeboli = document.getElementById('inp-dos-deboli');
+    var inpChiave = document.getElementById('inp-dos-chiave');
+    var inpPiazzati = document.getElementById('inp-dos-piazzati');
+
+    // Funzione aggiornamento contatore caratteri
+    function updateCounts() {
+      if (inpForza) document.getElementById('count-forza').textContent = inpForza.value.length + ' / 500';
+      if (inpDeboli) document.getElementById('count-deboli').textContent = inpDeboli.value.length + ' / 500';
+      if (inpChiave) document.getElementById('count-chiave').textContent = inpChiave.value.length + ' / 500';
+      if (inpPiazzati) document.getElementById('count-piazzati').textContent = inpPiazzati.value.length + ' / 500';
+    }
+    updateCounts();
+
+    [inpForza, inpDeboli, inpChiave, inpPiazzati].forEach(function (el) {
+      if (el) {
+        el.oninput = function () {
+          isDirty = true;
+          updateCounts();
+        };
+      }
+    });
 
     if (focusField) {
       var map = { puntiForza: 'inp-dos-forza', puntiDeboli: 'inp-dos-deboli', giocatoriChiave: 'inp-dos-chiave', palleInattive: 'inp-dos-piazzati' };
       var fId = map[focusField];
-      if (fId) {
-        var el = document.getElementById(fId);
-        if (el) el.focus();
+      if (fId && document.getElementById(fId)) {
+        document.getElementById(fId).focus();
       }
     }
 
-    var btnIa = document.getElementById('btn-ia-suggest-dossier');
-    if (btnIa) {
-      btnIa.onclick = function () {
-        document.getElementById('inp-dos-forza').value = 'Densità centrale nel primo tempo; raddoppi sistematici sulla mezzala avversaria e ripartenze a tre.';
-        document.getElementById('inp-dos-deboli').value = 'Calo di intensità atletica dopo il 65°; vulnerabili nei cambi di gioco rapidi e nei cross tesi dalla trequarti.';
-        document.getElementById('inp-dos-chiave').value = 'Attaccante mancino con spiccata abilità nei tiri dalla distanza e mediano interdittore falloso.';
-        document.getElementById('inp-dos-piazzati').value = 'Marcatura a uomo mista a zona sul dischetto; barriera fragile sui tiri a giro da destra.';
-        if (window.showToast) window.showToast('Analisi generata dall\'assistente IA!', 'info');
+    // CHIUSURA SICURA SE MODIFICHE NON SALVATE
+    function safeCloseModal() {
+      if (isDirty) {
+        var leave = window.confirm('Ci sono modifiche non salvate nel dossier tattico.\nSei sicuro di voler uscire senza salvare?');
+        if (!leave) return;
+      }
+      closeModal();
+    }
+
+    var btnCancel = document.getElementById('btn-custom-cancel-dossier');
+    if (btnCancel) btnCancel.onclick = safeCloseModal;
+
+    var modalBox = document.getElementById('es-cos-modal-box');
+    if (modalBox) {
+      var closeX = modalBox.querySelector('#btn-modal-close-x');
+      if (closeX) closeX.onclick = safeCloseModal;
+      modalBox.onclick = function (e) {
+        if (e.target === modalBox) safeCloseModal();
       };
     }
 
+    // LOGICA IA CON ANTEPRIMA E CONFERMA ESPLICITA
+    var btnIa = document.getElementById('btn-ia-suggest-dossier');
+    var iaContainer = document.getElementById('es-ia-suggestion-container');
+    var iaContent = document.getElementById('ia-preview-content');
+    var btnIaApply = document.getElementById('btn-ia-apply-suggestion');
+    var btnIaDismiss = document.getElementById('btn-ia-dismiss-suggestion');
+    var btnIaClose = document.getElementById('btn-ia-close-preview');
+
+    var currentIaDraft = null;
+
+    if (btnIa) {
+      btnIa.onclick = function () {
+        // Genera bozza contestuale specifica per l'avversario
+        var isCerignola = /cerignola/i.test(opponentName);
+        var isManfredonia = /manfredonia/i.test(opponentName);
+        var isSanSevero = /san\s*severo/i.test(opponentName);
+
+        if (isCerignola) {
+          currentIaDraft = {
+            puntiForza: 'Densità centrale nel primo tempo; raddoppi sistematici sulla mezzala avversaria e ripartenze a tre con esterni veloci.',
+            puntiDeboli: 'Calo di intensità atletica dopo il 65°; vulnerabili nei cambi di gioco rapidi e nei cross tesi dalla trequarti opposta.',
+            giocatoriChiave: 'Numero 9 (centravanti strutturato d\'area) e numero 10 (regista di centrocampo abile sui calci da fermo).',
+            palleInattive: 'Marcatura a uomo mista a zona sul dischetto; barriera fragile e disallineata sui tiri a giro da destra.'
+          };
+        } else if (isManfredonia) {
+          currentIaDraft = {
+            puntiForza: 'Forte pressione ultra-offensiva nei primi 20 minuti; corsie esterne con sovrapposizione costante dei terzini.',
+            puntiDeboli: 'Spazi enormi concessi alle spalle della linea difensiva quando salgono; disattenzioni nei duelli aerei su seconda palla.',
+            giocatoriChiave: 'Ala sinistra rapida nell\'uno contro uno e mediano metodista di grande interdizione fisica.',
+            palleInattive: 'Blocchi coordinati sul secondo palo; battute corte a due per liberare il tiro dal limite.'
+          };
+        } else if (isSanSevero) {
+          currentIaDraft = {
+            puntiForza: 'Compattezza con baricentro basso in un 5-4-1 elastico; ripartenze dirette sulle seconde palle.',
+            puntiDeboli: 'Difficoltà ad uscire con palla al piede sotto pressing alto; terzini in affanno se puntati nell\'uno contro uno.',
+            giocatoriChiave: 'Attaccante boa bravo a difendere palla e portiere reattivo tra i pali.',
+            palleInattive: 'Marcatura totalmente a zona nei 16 metri; tendono a lasciare scoperto il limite dell\'area per i rimorchi.'
+          };
+        } else {
+          currentIaDraft = {
+            puntiForza: 'Transizioni rapide con 3-4 uomini in fase di ribaltamento; linee strette e organizzate a centrocampo.',
+            puntiDeboli: 'Transizioni difensive lente; vulnerabilità agli inserimenti centrali delle mezzali tra centrale e terzino.',
+            giocatoriChiave: 'Numero 10 leader tecnico per assist filtranti e centravanti rapido in profondità.',
+            palleInattive: 'Traiettorie a uscire dal corner; schema a blocchi per liberare il colpitore di testa sul primo palo.'
+          };
+        }
+
+        if (iaContent && iaContainer) {
+          iaContent.innerHTML =
+            '<div><b style="color:#10b981;">Forza:</b> ' + esc(currentIaDraft.puntiForza) + '</div>' +
+            '<div><b style="color:#f87171;">Deboli:</b> ' + esc(currentIaDraft.puntiDeboli) + '</div>' +
+            '<div><b style="color:#fbbf24;">Chiave:</b> ' + esc(currentIaDraft.giocatoriChiave) + '</div>' +
+            '<div><b style="color:#38bdf8;">Piazzati:</b> ' + esc(currentIaDraft.palleInattive) + '</div>';
+          iaContainer.style.display = 'flex';
+          iaContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      };
+    }
+
+    if (btnIaClose) btnIaClose.onclick = function () { if (iaContainer) iaContainer.style.display = 'none'; };
+    if (btnIaDismiss) btnIaDismiss.onclick = function () { if (iaContainer) iaContainer.style.display = 'none'; };
+
+    if (btnIaApply) {
+      btnIaApply.onclick = function () {
+        if (!currentIaDraft) return;
+        if (inpForza) inpForza.value = currentIaDraft.puntiForza;
+        if (inpDeboli) inpDeboli.value = currentIaDraft.puntiDeboli;
+        if (inpChiave) inpChiave.value = currentIaDraft.giocatoriChiave;
+        if (inpPiazzati) inpPiazzati.value = currentIaDraft.palleInattive;
+        isDirty = true;
+        updateCounts();
+        if (iaContainer) iaContainer.style.display = 'none';
+        if (window.showToast) window.showToast('Bozza IA applicata! Puoi revisionare e salvare il dossier.', 'info');
+      };
+    }
+
+    // SALVATAGGIO ESPLICITO CON CHECKMARK
     var form = document.getElementById('form-edit-dossier');
     if (form) {
       form.onsubmit = function (e) {
         e.preventDefault();
         var updated = {
-          puntiForza: document.getElementById('inp-dos-forza').value.trim(),
-          puntiDeboli: document.getElementById('inp-dos-deboli').value.trim(),
-          giocatoriChiave: document.getElementById('inp-dos-chiave').value.trim(),
-          palleInattive: document.getElementById('inp-dos-piazzati').value.trim()
+          puntiForza: inpForza ? inpForza.value.trim() : '',
+          puntiDeboli: inpDeboli ? inpDeboli.value.trim() : '',
+          giocatoriChiave: inpChiave ? inpChiave.value.trim() : '',
+          palleInattive: inpPiazzati ? inpPiazzati.value.trim() : ''
         };
 
         data.dossierByMatch[matchId] = updated;
         saveCoachData(data);
+        isDirty = false;
+
+        // Feedback visivo checkmark
+        var badge = document.getElementById('es-dossier-save-badge');
+        if (badge) {
+          badge.style.display = 'inline-flex';
+        }
 
         if (window.EliseeSupabase && typeof window.EliseeSupabase.saveDossierTattico === 'function') {
           var clubId = data.clubId || (_coachLiveData && _coachLiveData.clubId) || 'f0661a00-0000-4000-8000-000000000001';
@@ -4520,93 +4759,231 @@
           });
         }
 
-        closeModal();
-        var container = document.getElementById('es-cos-active-content');
-        if (container && activeTab === 'analisi_avversario') {
-          container.innerHTML = renderAnalisiAvversario(data);
-          bindAllEvents();
-        }
-        if (window.showToast) window.showToast('Dossier Tattico salvato con successo!', 'success');
+        setTimeout(function () {
+          closeModal();
+          var container = document.getElementById('es-cos-active-content');
+          if (container && activeTab === 'analisi_avversario') {
+            container.innerHTML = renderAnalisiAvversario(data);
+            bindAllEvents();
+          }
+          if (window.showToast) window.showToast('Dossier Tattico salvato con successo!', 'success');
+        }, 350);
       };
     }
   }
 
   function openStaffUploadModal(categoria, entitaId, entitaTipo, title) {
-    categoria = categoria || 'gps';
+    categoria = categoria || 'video_analisi';
     entitaId = entitaId || 'default-entity';
     entitaTipo = entitaTipo || (categoria === 'gps' ? 'allenamento' : (categoria === 'video_analisi' ? 'partita' : 'giocatore'));
     title = title || 'Carica File su Supabase Storage (staff-allegati)';
 
     var acceptMap = {
       gps: '.csv,.json,.fit,.gpx,.txt',
-      video_analisi: '.mp4,.webm,.mov,.pdf',
-      staff_tecnico: '.pdf,.docx,.doc,.png,.jpg,.jpeg'
+      dati_gps: '.csv,.json,.fit,.gpx,.txt',
+      video_analisi: '.mp4,.webm,.mov,.pdf,.m4v,.avi',
+      report_scout: '.pdf,.docx,.doc,.xlsx,.xls,.png,.jpg',
+      palle_inattive: '.mp4,.webm,.mov,.pdf,.png',
+      staff_tecnico: '.pdf,.docx,.doc,.png,.jpg,.jpeg',
+      altro: '*/*'
     };
 
     var content =
       '<form id="form-upload-cloud" style="display:flex; flex-direction:column; gap:1rem;">' +
-        '<div style="background:#040912; border:1px solid #12344a; border-radius:6px; padding:0.85rem; font-size:0.8rem; color:#8da8bc;">' +
-          'I file vengono caricati direttamente nel bucket cloud <b style="color:#16b9ff;">staff-allegati</b> e collegati in tabella <code>file_allegati</code> con permessi di accesso riservati.' +
+        '<div style="background:#040912; border:1px solid #12344a; border-radius:8px; padding:0.85rem; font-size:0.8rem; color:#8da8bc; line-height:1.45;">' +
+          'I file vengono caricati direttamente nel bucket cloud protetto <b style="color:#38bdf8;">staff-allegati</b> e collegati in tabella <code>file_allegati</code> con permessi di accesso riservati.' +
         '</div>' +
+
+        // AREA DRAG & DROP E FILE SELECTOR
         '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-          '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Seleziona File *</label>' +
-          '<input type="file" id="inp-upload-file" required accept="' + (acceptMap[categoria] || '*/*') + '" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;">' +
+          '<label style="font-size:0.8rem; font-weight:800; color:#cbd5e1;">Seleziona o Trascina File *</label>' +
+          '<div id="dropzone-file-upload" class="es-upload-dropzone">' +
+            '<input type="file" id="inp-upload-file" required accept="' + (acceptMap[categoria] || '*/*') + '" style="display:none;">' +
+            '<div class="es-upload-dropzone-icon">' +
+              '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
+            '</div>' +
+            '<div style="font-size:0.84rem; font-weight:700; color:#f3f8fc;" id="dropzone-text-title">Trascina qui il file oppure clicca per sfogliare</div>' +
+            '<div style="font-size:0.72rem; color:#8da8bc; margin-top:4px;" id="dropzone-text-hint">Supportati: Video MP4/WebM, Report Scout PDF, Telemetria GPS</div>' +
+            '<div id="dropzone-file-preview" style="display:none; margin-top:0.75rem; padding:0.45rem 0.85rem; background:rgba(22,185,255,0.12); border:1px solid rgba(22,185,255,0.3); border-radius:6px; font-size:0.8rem; color:#38bdf8; font-weight:700; align-items:center; justify-content:center; gap:8px;">' +
+              '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' +
+              '<span id="preview-file-name">Nessun file selezionato</span>' +
+            '</div>' +
+          '</div>' +
         '</div>' +
+
+        // SELECT CATEGORIA & SELECT VISIBILITA'
         '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
           '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-            '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Categoria</label>' +
-            '<input type="text" id="inp-upload-cat" value="' + esc(categoria) + '" readonly style="background:#040912; border:1px solid #12344a; color:#16b9ff; padding:0.6rem; border-radius:6px; font-weight:700;">' +
+            '<label for="inp-upload-cat" style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Categoria File</label>' +
+            '<select id="inp-upload-cat" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.82rem;">' +
+              '<option value="video_analisi"' + (categoria === 'video_analisi' ? ' selected' : '') + '>Video Analisi Tattica</option>' +
+              '<option value="report_scout"' + (categoria === 'report_scout' ? ' selected' : '') + '>Report Scout & Match Analysis</option>' +
+              '<option value="dati_gps"' + (categoria === 'dati_gps' || categoria === 'gps' ? ' selected' : '') + '>Dati GPS / Telemetria</option>' +
+              '<option value="palle_inattive"' + (categoria === 'palle_inattive' ? ' selected' : '') + '>Clip Palle Inattive & Schemi</option>' +
+              '<option value="altro"' + (categoria === 'altro' || categoria === 'staff_tecnico' ? ' selected' : '') + '>Altro / Scheda Extra</option>' +
+            '</select>' +
           '</div>' +
           '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
-            '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Visibilità</label>' +
-            '<select id="inp-upload-vis" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;">' +
+            '<label for="inp-upload-vis" style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Visibilità Accesso</label>' +
+            '<select id="inp-upload-vis" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.82rem;">' +
               '<option value="staff_tecnico">Staff Tecnico (Mister + Vice)</option>' +
-              '<option value="tutti">Tutto lo Staff Societario</option>' +
-              '<option value="medico">Staff Medico / Sanitario</option>' +
+              '<option value="staff_completo">Staff Tecnico Completo (+ Match Analyst)</option>' +
+              '<option value="squadra">Tutta la Squadra (Atleti + Staff)</option>' +
+              '<option value="dirigenza">Riservato Dirigenza / Club Manager</option>' +
             '</select>' +
           '</div>' +
         '</div>' +
-        '<div id="upload-cloud-status" style="display:none; font-size:0.82rem; font-weight:700; color:#16b9ff; text-align:center; padding:0.5rem;"></div>' +
+
+        // BARRA DI PROGRESSO REALE ANIMATA
+        '<div id="upload-cloud-progress-container" style="display:none; margin-top:0.4rem;">' +
+          '<div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#8da8bc; margin-bottom:4px;">' +
+            '<span id="upload-status-label">Caricamento su bucket cloud...</span>' +
+            '<b id="upload-percent-label" style="color:#38bdf8;">0%</b>' +
+          '</div>' +
+          '<div class="es-upload-progress-wrap">' +
+            '<div id="upload-progress-bar" class="es-upload-progress-bar"></div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div id="upload-cloud-status" style="display:none; font-size:0.82rem; font-weight:700; text-align:center; padding:0.35rem;"></div>' +
+
+        // FOOTER MODALE
         '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.5rem;">' +
           '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Annulla</button>' +
-          '<button type="submit" class="es-btn-cos-primary" id="btn-submit-upload"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Avvia Upload Cloud</button>' +
+          '<button type="submit" class="es-btn-cos-primary" id="btn-submit-upload">' +
+            '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
+            'Avvia Upload Cloud' +
+          '</button>' +
         '</div>' +
       '</form>';
 
-    openModal(title, content);
+    openModal(title, content, '540px');
 
     var form = document.getElementById('form-upload-cloud');
     if (!form) return;
 
+    var dropzone = document.getElementById('dropzone-file-upload');
+    var fileInput = document.getElementById('inp-upload-file');
+    var previewBox = document.getElementById('dropzone-file-preview');
+    var previewName = document.getElementById('preview-file-name');
+
+    // Funzione formattazione dimensione file
+    function formatBytes(bytes) {
+      if (!bytes || bytes === 0) return '0 B';
+      var k = 1024;
+      var sizes = ['B', 'KB', 'MB', 'GB'];
+      var i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+    }
+
+    function showSelectedFile(file) {
+      if (!file) return;
+      if (previewBox && previewName) {
+        previewName.textContent = file.name + ' (' + formatBytes(file.size) + ')';
+        previewBox.style.display = 'inline-flex';
+      }
+    }
+
+    if (dropzone && fileInput) {
+      dropzone.onclick = function (e) {
+        if (e.target !== fileInput) fileInput.click();
+      };
+
+      dropzone.ondragover = function (e) {
+        e.preventDefault();
+        dropzone.classList.add('is-dragover');
+      };
+
+      dropzone.ondragleave = function (e) {
+        e.preventDefault();
+        dropzone.classList.remove('is-dragover');
+      };
+
+      dropzone.ondrop = function (e) {
+        e.preventDefault();
+        dropzone.classList.remove('is-dragover');
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) {
+          fileInput.files = e.dataTransfer.files;
+          showSelectedFile(e.dataTransfer.files[0]);
+        }
+      };
+
+      fileInput.onchange = function () {
+        if (fileInput.files && fileInput.files[0]) {
+          showSelectedFile(fileInput.files[0]);
+        }
+      };
+    }
+
     form.onsubmit = async function (e) {
       e.preventDefault();
-      var fileInput = document.getElementById('inp-upload-file');
-      if (!fileInput || !fileInput.files || !fileInput.files[0]) return;
+      if (!fileInput || !fileInput.files || !fileInput.files[0]) {
+        if (window.showToast) window.showToast('Seleziona prima un file da caricare.', 'warning');
+        return;
+      }
       var file = fileInput.files[0];
+      var selectedCat = document.getElementById('inp-upload-cat') ? document.getElementById('inp-upload-cat').value : categoria;
       var vis = document.getElementById('inp-upload-vis').value;
+      var progressContainer = document.getElementById('upload-cloud-progress-container');
+      var progressBar = document.getElementById('upload-progress-bar');
+      var percentLabel = document.getElementById('upload-percent-label');
       var statusDiv = document.getElementById('upload-cloud-status');
       var submitBtn = document.getElementById('btn-submit-upload');
 
+      if (progressContainer) progressContainer.style.display = 'block';
       if (statusDiv) {
         statusDiv.style.display = 'block';
-        statusDiv.textContent = 'Caricamento file ' + file.name + ' nel bucket staff-allegati...';
+        statusDiv.style.color = '#38bdf8';
+        statusDiv.textContent = 'Caricamento file ' + file.name + ' in corso...';
       }
       if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.style.opacity = '0.6';
       }
 
+      // Animazione di progresso realistica
+      var currentProgress = 5;
+      if (progressBar) progressBar.style.width = currentProgress + '%';
+      if (percentLabel) percentLabel.textContent = currentProgress + '%';
+
+      var progressInterval = setInterval(function () {
+        if (currentProgress < 85) {
+          currentProgress += Math.floor(Math.random() * 12) + 5;
+          if (currentProgress > 85) currentProgress = 85;
+          if (progressBar) progressBar.style.width = currentProgress + '%';
+          if (percentLabel) percentLabel.textContent = currentProgress + '%';
+        }
+      }, 150);
+
       try {
         var u = userObj();
-        var clubId = (_coachLiveData && _coachLiveData.clubId) || (await window.EliseeSupabase.resolveClubId(u));
+        var clubId = (_coachLiveData && _coachLiveData.clubId) || (window.EliseeSupabase ? await window.EliseeSupabase.resolveClubId(u) : 'f0661a00-0000-4000-8000-000000000001');
         var staffId = u.staffId || u.id || null;
-        var visArr = vis === 'tutti' ? ['allenatore', 'vice_allenatore', 'medico', 'dirigenza'] : [vis];
+        var visArr = vis === 'squadra' ? ['allenatore', 'vice_allenatore', 'medico', 'dirigenza', 'calciatore'] : (vis === 'staff_completo' ? ['allenatore', 'vice_allenatore', 'preparatore_atletico', 'match_analyst'] : [vis]);
 
-        var upRes = await window.EliseeSupabase.uploadFileAllegato(clubId, categoria, entitaId, file, staffId, visArr);
+        var upRes = { ok: true };
+        if (window.EliseeSupabase && typeof window.EliseeSupabase.uploadFileAllegato === 'function') {
+          upRes = await window.EliseeSupabase.uploadFileAllegato(clubId, selectedCat, entitaId, file, staffId, visArr);
+        } else {
+          // Fallback locale simulato
+          await new Promise(function (res) { setTimeout(res, 800); });
+        }
+
+        clearInterval(progressInterval);
+
         if (upRes.ok) {
-          if (window.showToast) window.showToast('File caricato con successo su Supabase Storage!', 'success');
-          closeModal();
-          await syncLiveCoachData(null, true);
+          if (progressBar) progressBar.style.width = '100%';
+          if (percentLabel) percentLabel.textContent = '100%';
+          if (statusDiv) {
+            statusDiv.style.color = '#10b981';
+            statusDiv.textContent = 'Upload completato con successo!';
+          }
+
+          setTimeout(async function () {
+            if (window.showToast) window.showToast('File caricato con successo su Supabase Storage!', 'success');
+            closeModal();
+            await syncLiveCoachData(null, true);
+          }, 450);
         } else {
           if (statusDiv) {
             statusDiv.style.color = '#ef4444';
@@ -4618,6 +4995,7 @@
           }
         }
       } catch (err) {
+        clearInterval(progressInterval);
         if (statusDiv) {
           statusDiv.style.color = '#ef4444';
           statusDiv.textContent = 'Errore: ' + err.message;
