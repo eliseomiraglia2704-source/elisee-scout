@@ -1577,30 +1577,45 @@ section + section {
 /* ============================================================
    LINEUP BUILDER UFFICIALE DINAMICO (FLESSIBILITÀ 7 MODULI & RUOLI)
    ============================================================ */
-.es-lineup-layout-grid {
+.es-lineup-layout-grid,
+.formazione-layout {
   display: grid;
-  grid-template-columns: 1.35fr 1fr;
-  gap: 1.5rem;
-  align-items: stretch;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 20px;
+  align-items: start;
+  width: 100%;
 }
 
-@media (max-width: 1060px) {
-  .es-lineup-layout-grid {
+@media (max-width: 980px) {
+  .es-lineup-layout-grid,
+  .formazione-layout {
     grid-template-columns: 1fr;
     gap: 1.25rem;
   }
 }
 
-.es-pitch-container {
+.es-pitch-container,
+.campo-container {
+  min-width: 0;
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+  aspect-ratio: 3 / 4;
   background: radial-gradient(circle at 50% 50%, #0d3b1f 0%, #061e11 88%);
   border: 2.5px solid #16562f;
   border-radius: 12px;
   position: relative;
-  aspect-ratio: 16 / 11;
-  min-height: 480px;
   overflow: hidden;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
   user-select: none;
+}
+
+.es-pitch-container svg,
+.campo-container svg,
+.es-pitch-container img,
+.campo-container img {
+  width: 100%;
+  height: 100%;
 }
 
 .es-pitch-pin {
@@ -1634,16 +1649,27 @@ section + section {
   box-shadow: 0 0 22px rgba(0, 217, 120, 0.8) !important;
 }
 
-.es-bench-panel-card {
+.es-bench-panel-card,
+.panchina-panel {
+  min-width: 320px;
+  max-width: 320px;
+  width: 320px;
   background: #071522;
   border: 1px solid #12344a;
   border-radius: 12px;
-  padding: 1.1rem;
+  padding: 0.9rem 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 480px;
   box-sizing: border-box;
+}
+
+@media (max-width: 980px) {
+  .es-bench-panel-card,
+  .panchina-panel {
+    min-width: 100%;
+    max-width: 100%;
+    width: 100%;
+  }
 }
 
 .es-bench-scroll-list::-webkit-scrollbar {

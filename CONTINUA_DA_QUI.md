@@ -3,7 +3,22 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Lavagna Tattica Digitale Interattiva, Fix Tab Bar Orizzontale & Refactoring Analisi Avversario (`TACTICBOARD1`):
+Ultimo aggiornamento: **2026-09-16** — Fix Layout Formazione 2 Colonne, Campo Proporzionato 3/4 & Panchina Fissa 320px (`LINEUPLAYOUT2`):
+1. **Grid a Due Colonne Rigoroso**:
+   - Risolto il bug di overflow e sovrapposizione in cui il campo da gioco sovrastava e tagliava a destra il pannello della Panchina (`...HINA)`, "...cca In Campo →").
+   - Contenitore principale `.formazione-layout` impostato con `display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 20px; align-items: start; width: 100%;`.
+2. **Campo Flessibile con Proporzioni Corrette 3/4**:
+   - Contenitore del campo `.campo-container` configurato con `min-width: 0; width: 100%; max-width: 540px; margin: 0 auto; aspect-ratio: 3 / 4; overflow: hidden;` eliminando `min-height: 480px` fisso che forzava l'allargamento orizzontale orizzontale.
+   - Linee regolamentari SVG del campo e overlay conformati con `width: 100%; height: 100%;`.
+   - Tutte le coordinate dei giocatori mantengono le percentuali relative al contenitore (`slot.x%`, `slot.y%`), garantendo un ridimensionamento fluido e perfetto.
+3. **Pannello Panchina Interamente Leggibile**:
+   - Pannello `.panchina-panel` vincolato a `min-width: 320px; max-width: 320px; width: 320px; box-sizing: border-box;`.
+   - Lista atleti scrollabile verticalmente fino a `max-height: 460px; overflow-y: auto;` per ospitare agevolmente tutti i calciatori disponibili.
+   - Nomi dei panchinari protetti con `min-width: 0; text-overflow: ellipsis; white-space: nowrap;` e pulsanti `In Campo →` sempre visibili, allineati e cliccabili al 100%.
+   - Responsive breakpoint a 980px con passaggio a singola colonna e panchina al 100% di larghezza.
+4. **File aggiornati**: `coach-dash.js`, `coach-dash.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_LINEUPLAYOUT2`.
+
+Feature precedente: **Lavagna Tattica Digitale Interattiva, Fix Tab Bar Orizzontale & Refactoring Analisi Avversario (`TACTICBOARD1`):**
 1. **Lavagna Tattica Digitale Interattiva Indipendente**:
    - Superata la rigidità del 4-3-3: la sezione Tattica opera ora come ambiente di studio tattico autonomo, con proprio selettore dropdown indipendente a 7 moduli (`4-3-3`, `4-4-2`, `4-2-3-1`, `3-5-2`, `3-4-3`, `5-3-2`, `4-1-4-1`) riusando le coordinate percentuali di `MODULI_TATTICI`.
    - Introdotto il pulsante *"Sincronizza da XI Ufficiale"* per clonare istantaneamente modulo e titolari della Formazione Ufficiale confermata sulla lavagna ogni volta che lo si desidera.

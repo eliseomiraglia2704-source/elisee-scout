@@ -1544,10 +1544,10 @@
           '</div>' +
         '</div>' +
 
-        // LAYOUT A DUE COLONNE BILANCIATE: CAMPO CENTRATO A SINISTRA E PANCHINA ESPANSA A DESTRA
-        '<div class="es-lineup-layout-grid" style="display:grid; grid-template-columns:1.35fr 1fr; gap:1.5rem; align-items:stretch; margin-top:0.5rem;">' +
-          // COLONNA SINISTRA: CAMPO DA CALCIO REGOLAMENTARE CON OVERLAY VETTORIALE SVG
-          '<div class="es-pitch-container" style="background:radial-gradient(circle at 50% 50%, #0d3b1f 0%, #061e11 88%); border:2.5px solid #16562f; border-radius:12px; position:relative; aspect-ratio:16/11; min-height:480px; overflow:hidden; box-shadow:0 12px 30px rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center;">' +
+        // LAYOUT A DUE COLONNE: CAMPO FLESSIBILE A SINISTRA E PANCHINA FISSA A DESTRA (320px)
+        '<div class="es-lineup-layout-grid formazione-layout" style="display:grid; grid-template-columns:minmax(0, 1fr) 320px; gap:20px; align-items:start; margin-top:0.5rem; width:100%;">' +
+          // COLONNA SINISTRA: CAMPO DA CALCIO REGOLAMENTARE CON OVERLAY VETTORIALE SVG (ASPECT RATIO 3/4)
+          '<div class="es-pitch-container campo-container" style="background:radial-gradient(circle at 50% 50%, #0d3b1f 0%, #061e11 88%); border:2.5px solid #16562f; border-radius:12px; position:relative; min-width:0; width:100%; max-width:540px; margin:0 auto; aspect-ratio:3/4; overflow:hidden; box-shadow:0 12px 30px rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center;">' +
             // LINEE REGOLAMENTARI DEL CAMPO IN OVERLAY VETTORIALE SVG
             '<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; opacity:0.32;">' +
               // Bordo perimetrale
@@ -1584,11 +1584,11 @@
             renderPitchPins(data.top11, modKey) +
           '</div>' +
 
-          // COLONNA DESTRA: PANCHINA A TUTTA ALTEZZA + STATO CONVALIDA
-          '<div class="es-bench-panel-card" style="background:#071522; border:1px solid #12344a; border-radius:12px; padding:1.1rem; display:flex; flex-direction:column; justify-content:space-between; min-height:480px; box-sizing:border-box;">' +
+          // COLONNA DESTRA: PANCHINA A LARGHEZZA FISSA 320PX + STATO CONVALIDA
+          '<div class="es-bench-panel-card panchina-panel" style="background:#071522; border:1px solid #12344a; border-radius:12px; padding:0.85rem 0.95rem; display:flex; flex-direction:column; min-width:320px; max-width:320px; width:320px; box-sizing:border-box;">' +
             '<div>' +
               // INTESTAZIONE PANCHINA CON CONTATORE REALE
-              '<div style="font-size:0.86rem; font-weight:800; color:#f3f8fc; text-transform:uppercase; margin-bottom:0.6rem; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #12344a; padding-bottom:0.55rem;">' +
+              '<div style="font-size:0.85rem; font-weight:800; color:#f3f8fc; text-transform:uppercase; margin-bottom:0.55rem; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #12344a; padding-bottom:0.5rem;">' +
                 '<div style="display:flex; align-items:center; gap:0.45rem;">' +
                   '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#16b9ff" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>' +
                   '<span>A Disposizione (Panchina)</span>' +
@@ -1597,26 +1597,26 @@
               '</div>' +
 
               // SUGGERIMENTO DI INTERAZIONE (DRAG & DROP E CLICK)
-              '<div style="font-size:0.72rem; color:#8da8bc; margin-bottom:0.75rem; display:flex; align-items:center; gap:5px; background:rgba(22,185,255,0.06); border:1px dashed rgba(22,185,255,0.25); border-radius:6px; padding:0.4rem 0.6rem;">' +
-                '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16b9ff" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>' +
-                '<span>Trascina il giocatore sul campo o clicca <b>In Campo &rarr;</b> per schierarlo.</span>' +
+              '<div style="font-size:0.72rem; color:#8da8bc; margin-bottom:0.65rem; display:flex; align-items:center; gap:5px; background:rgba(22,185,255,0.06); border:1px dashed rgba(22,185,255,0.25); border-radius:6px; padding:0.4rem 0.55rem;">' +
+                '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16b9ff" stroke-width="2" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>' +
+                '<span>Trascina sul campo o clicca <b>In Campo &rarr;</b></span>' +
               '</div>' +
 
               // LISTA SCROLLABILE CARD PANCHINARI CON ATTRIBUTO DRAGGABLE E RUOLO
-              '<div class="es-bench-scroll-list" style="display:flex; flex-direction:column; gap:0.45rem; max-height:330px; overflow-y:auto; padding-right:4px;">' +
+              '<div class="es-bench-scroll-list" style="display:flex; flex-direction:column; gap:0.45rem; max-height:460px; overflow-y:auto; padding-right:4px;">' +
                 (panchinaCount ? data.panchina.map(function (b) {
                   return (
-                    '<div class="es-bench-card" draggable="true" data-bench-id="' + esc(b.id) + '" data-bench-num="' + esc(b.num) + '" data-bench-name="' + esc(b.name) + '" data-bench-pos="' + esc(b.pos || b.role) + '" style="display:flex; justify-content:space-between; align-items:center; background:#040912; border:1px solid #12344a; border-radius:6px; padding:0.45rem 0.65rem; cursor:grab; transition:all 0.15s ease;">' +
-                      '<div style="display:flex; align-items:center; gap:0.55rem;">' +
+                    '<div class="es-bench-card" draggable="true" data-bench-id="' + esc(b.id) + '" data-bench-num="' + esc(b.num) + '" data-bench-name="' + esc(b.name) + '" data-bench-pos="' + esc(b.pos || b.role) + '" style="display:flex; justify-content:space-between; align-items:center; background:#040912; border:1px solid #12344a; border-radius:6px; padding:0.45rem 0.6rem; cursor:grab; transition:all 0.15s ease; gap:0.4rem;">' +
+                      '<div style="display:flex; align-items:center; gap:0.5rem; min-width:0; flex:1 1 auto; overflow:hidden;">' +
                         '<div style="width:28px; height:28px; border-radius:50%; background:#071522; border:1.5px solid #16b9ff; color:#16b9ff; display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:900; flex-shrink:0;">#' + esc(b.num) + '</div>' +
-                        '<div style="display:flex; flex-direction:column; gap:1px; overflow:hidden;">' +
-                          '<span style="font-size:0.82rem; font-weight:700; color:#f3f8fc; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + esc(b.name) + '</span>' +
+                        '<div style="display:flex; flex-direction:column; gap:1px; overflow:hidden; min-width:0;">' +
+                          '<span style="font-size:0.8rem; font-weight:700; color:#f3f8fc; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="' + esc(b.name) + '">' + esc(b.name) + '</span>' +
                           '<span style="font-size:0.67rem; color:#8da8bc;">Classe ' + esc(b.birth || '--') + '</span>' +
                         '</div>' +
                       '</div>' +
-                      '<div style="display:flex; align-items:center; gap:0.45rem; flex-shrink:0;">' +
-                        '<span style="font-size:0.68rem; font-weight:800; padding:2px 7px; border-radius:4px; ' + getRoleBadgeStyle(b.pos || b.role) + '">' + esc(b.pos || b.role) + '</span>' +
-                        '<button type="button" class="es-bench-assign-btn" data-assign-bench-id="' + esc(b.id) + '" style="background:transparent; border:1px solid rgba(255,255,255,0.16); color:rgba(255,255,255,0.85); padding:0.22rem 0.5rem; border-radius:5px; font-size:0.68rem; font-weight:700; cursor:pointer; transition:all 0.15s ease;" title="Schiera titolare nello slot desiderato">' +
+                      '<div style="display:flex; align-items:center; gap:0.35rem; flex-shrink:0;">' +
+                        '<span style="font-size:0.68rem; font-weight:800; padding:2px 6px; border-radius:4px; ' + getRoleBadgeStyle(b.pos || b.role) + '">' + esc(b.pos || b.role) + '</span>' +
+                        '<button type="button" class="es-bench-assign-btn" data-assign-bench-id="' + esc(b.id) + '" style="background:transparent; border:1px solid rgba(255,255,255,0.16); color:rgba(255,255,255,0.85); padding:0.22rem 0.45rem; border-radius:5px; font-size:0.67rem; font-weight:700; cursor:pointer; white-space:nowrap; transition:all 0.15s ease;" title="Schiera titolare nello slot desiderato">' +
                           'In Campo &rarr;' +
                         '</button>' +
                       '</div>' +
