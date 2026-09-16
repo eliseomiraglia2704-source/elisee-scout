@@ -364,6 +364,369 @@
     }
   }
 
+  // ============================================================
+  // LIBRERIA RUOLI ESTESA & 7 MODULI TATTICI DINAMICI
+  // ============================================================
+  var LIBRERIA_RUOLI = {
+    POR: { sigla: 'POR', nome: 'Portiere', reparto: 'POR', desc: 'Presidio della porta e conduzione difensiva' },
+    LIB: { sigla: 'LIB', nome: 'Libero', reparto: 'DIF', desc: 'Copertura alle spalle dei centrali e prima impostazione' },
+    DC:  { sigla: 'DC',  nome: 'Difensore Centrale', reparto: 'DIF', desc: 'Marcatura, duelli aerei e anticipo difensivo' },
+    BCD: { sigla: 'BCD', nome: 'Braccetto Dx', reparto: 'DIF', desc: 'Centrale destro in difesa a 3 con licenza di sganciamento' },
+    BCS: { sigla: 'BCS', nome: 'Braccetto Sx', reparto: 'DIF', desc: 'Centrale sinistro in difesa a 3 con conduzione palla' },
+    TD:  { sigla: 'TD',  nome: 'Terzino Dx', reparto: 'DIF', desc: 'Copertura laterale destra e supporto alla catena' },
+    TS:  { sigla: 'TS',  nome: 'Terzino Sx', reparto: 'DIF', desc: 'Copertura laterale sinistra e sovrapposizione' },
+    EBD: { sigla: 'EBD', nome: 'Esterno Basso Dx', reparto: 'DIF', desc: 'Quinto di destra con compiti difensivi e progressione' },
+    EBS: { sigla: 'EBS', nome: 'Esterno Basso Sx', reparto: 'DIF', desc: 'Quinto di sinistra a tutta fascia' },
+    MED: { sigla: 'MED', nome: 'Mediano', reparto: 'CEN', desc: 'Interdizione, schermo davanti alla difesa e recupero palla' },
+    REG: { sigla: 'REG', nome: 'Regista', reparto: 'CEN', desc: 'Direzione della manovra, tempi di gioco e passaggi chiave' },
+    CC:  { sigla: 'CC',  nome: 'Mezzala / Centrocampista', reparto: 'CEN', desc: 'Inserimento, raccordo e dinamismo tra le linee' },
+    TRQ: { sigla: 'TRQ', nome: 'Trequartista', reparto: 'CEN', desc: 'Fantasia tra le linee, rifinitura e tiro dalla distanza' },
+    EAD: { sigla: 'EAD', nome: 'Esterno Alto Dx', reparto: 'CEN', desc: 'Spinta e cross dalla corsia laterale destra' },
+    EAS: { sigla: 'EAS', nome: 'Esterno Alto Sx', reparto: 'CEN', desc: 'Ampiezza e rifinitura dalla fascia sinistra' },
+    AD:  { sigla: 'AD',  nome: 'Ala Dx', reparto: 'ATT', desc: 'Dribbling, 1 contro 1 e convergenza sul piede preferito' },
+    AS:  { sigla: 'AS',  nome: 'Ala Sx', reparto: 'ATT', desc: 'Isolamento laterale, attacco del secondo palo e tiro a giro' },
+    SP:  { sigla: 'SP',  nome: 'Seconda Punta', reparto: 'ATT', desc: 'Attacco della profondità e dialogo tecnico con la prima punta' },
+    FN:  { sigla: 'FN',  nome: 'Falso Nueve', reparto: 'ATT', desc: 'Svuotamento dell\'area, discesa a supporto e inserimenti ciechi' },
+    ATT: { sigla: 'ATT', nome: 'Centravanti', reparto: 'ATT', desc: 'Finalizzazione d\'area, sponda aerea e profondità offensiva' }
+  };
+
+  var MODULI_TATTICI = {
+    '4-3-3': {
+      nome: '4-3-3 (Offensivo con Ali)',
+      desc: 'Tridente largo, vertice basso di regia e due mezzali di inserimento.',
+      slots: [
+        { idx: 0, ruolo: 'POR', x: 50, y: 88, name: 'Portiere' },
+        { idx: 1, ruolo: 'TD',  x: 84, y: 70, name: 'Terzino Dx' },
+        { idx: 2, ruolo: 'DC',  x: 62, y: 73, name: 'Difensore Centrale 1' },
+        { idx: 3, ruolo: 'DC',  x: 38, y: 73, name: 'Difensore Centrale 2' },
+        { idx: 4, ruolo: 'TS',  x: 16, y: 70, name: 'Terzino Sx' },
+        { idx: 5, ruolo: 'MED', x: 50, y: 53, name: 'Mediano' },
+        { idx: 6, ruolo: 'CC',  x: 70, y: 46, name: 'Mezzala Dx' },
+        { idx: 7, ruolo: 'CC',  x: 30, y: 46, name: 'Mezzala Sx' },
+        { idx: 8, ruolo: 'AD',  x: 84, y: 22, name: 'Ala Dx' },
+        { idx: 9, ruolo: 'AS',  x: 16, y: 22, name: 'Ala Sx' },
+        { idx: 10, ruolo: 'ATT', x: 50, y: 15, name: 'Centravanti' }
+      ]
+    },
+    '4-4-2': {
+      nome: '4-4-2 (Classico Lineare)',
+      desc: 'Doppia linea compatta, corsie esterne bilanciate e tandem d\'attacco complementare.',
+      slots: [
+        { idx: 0, ruolo: 'POR', x: 50, y: 88, name: 'Portiere' },
+        { idx: 1, ruolo: 'TD',  x: 84, y: 70, name: 'Terzino Dx' },
+        { idx: 2, ruolo: 'DC',  x: 62, y: 73, name: 'Difensore Centrale 1' },
+        { idx: 3, ruolo: 'DC',  x: 38, y: 73, name: 'Difensore Centrale 2' },
+        { idx: 4, ruolo: 'TS',  x: 16, y: 70, name: 'Terzino Sx' },
+        { idx: 5, ruolo: 'EAD', x: 84, y: 46, name: 'Esterno Alto Dx' },
+        { idx: 6, ruolo: 'CC',  x: 62, y: 48, name: 'Mezzala / Mediano' },
+        { idx: 7, ruolo: 'REG', x: 38, y: 48, name: 'Regista di Centrocampo' },
+        { idx: 8, ruolo: 'EAS', x: 16, y: 46, name: 'Esterno Alto Sx' },
+        { idx: 9, ruolo: 'SP',  x: 38, y: 18, name: 'Seconda Punta' },
+        { idx: 10, ruolo: 'ATT', x: 62, y: 18, name: 'Centravanti' }
+      ]
+    },
+    '4-2-3-1': {
+      nome: '4-2-3-1 (Doppio Mediano & Trequarti)',
+      desc: 'Doppio perno difensivo, tridente di rifinitura e punta centrale terminale.',
+      slots: [
+        { idx: 0, ruolo: 'POR', x: 50, y: 88, name: 'Portiere' },
+        { idx: 1, ruolo: 'TD',  x: 84, y: 72, name: 'Terzino Dx' },
+        { idx: 2, ruolo: 'DC',  x: 62, y: 74, name: 'Difensore Centrale 1' },
+        { idx: 3, ruolo: 'DC',  x: 38, y: 74, name: 'Difensore Centrale 2' },
+        { idx: 4, ruolo: 'TS',  x: 16, y: 72, name: 'Terzino Sx' },
+        { idx: 5, ruolo: 'MED', x: 62, y: 56, name: 'Mediano Destro' },
+        { idx: 6, ruolo: 'REG', x: 38, y: 56, name: 'Regista / Mediano Sx' },
+        { idx: 7, ruolo: 'AD',  x: 82, y: 36, name: 'Ala Trequartista Dx' },
+        { idx: 8, ruolo: 'TRQ', x: 50, y: 34, name: 'Trequartista Centrale' },
+        { idx: 9, ruolo: 'AS',  x: 18, y: 36, name: 'Ala Trequartista Sx' },
+        { idx: 10, ruolo: 'ATT', x: 50, y: 15, name: 'Centravanti' }
+      ]
+    },
+    '3-5-2': {
+      nome: '3-5-2 (Ampiezza Quinti & Doppio Attacco)',
+      desc: 'Difesa a 3 con braccetti, quinti a tutta fascia e due punte d\'attacco.',
+      slots: [
+        { idx: 0, ruolo: 'POR', x: 50, y: 88, name: 'Portiere' },
+        { idx: 1, ruolo: 'BCD', x: 72, y: 74, name: 'Braccetto Dx' },
+        { idx: 2, ruolo: 'LIB', x: 50, y: 76, name: 'Libero / Centrale' },
+        { idx: 3, ruolo: 'BCS', x: 28, y: 74, name: 'Braccetto Sx' },
+        { idx: 4, ruolo: 'EBD', x: 88, y: 50, name: 'Esterno Basso Dx (Quinto)' },
+        { idx: 5, ruolo: 'CC',  x: 66, y: 52, name: 'Mezzala Dx' },
+        { idx: 6, ruolo: 'REG', x: 50, y: 53, name: 'Regista Basso' },
+        { idx: 7, ruolo: 'CC',  x: 34, y: 52, name: 'Mezzala Sx' },
+        { idx: 8, ruolo: 'EBS', x: 12, y: 50, name: 'Esterno Basso Sx (Quinto)' },
+        { idx: 9, ruolo: 'SP',  x: 38, y: 18, name: 'Seconda Punta' },
+        { idx: 10, ruolo: 'ATT', x: 62, y: 18, name: 'Centravanti' }
+      ]
+    },
+    '3-4-3': {
+      nome: '3-4-3 (Tridente & Linea Mediana a 4)',
+      desc: 'Aggressione alta, tre centrali strutturati, centrocampo a 4 e tridente puro.',
+      slots: [
+        { idx: 0, ruolo: 'POR', x: 50, y: 88, name: 'Portiere' },
+        { idx: 1, ruolo: 'BCD', x: 72, y: 74, name: 'Braccetto Dx' },
+        { idx: 2, ruolo: 'DC',  x: 50, y: 75, name: 'Centrale di Difesa' },
+        { idx: 3, ruolo: 'BCS', x: 28, y: 74, name: 'Braccetto Sx' },
+        { idx: 4, ruolo: 'EAD', x: 86, y: 50, name: 'Esterno Destro' },
+        { idx: 5, ruolo: 'MED', x: 62, y: 52, name: 'Mediano Centrale' },
+        { idx: 6, ruolo: 'CC',  x: 38, y: 52, name: 'Centrocampista Centrale' },
+        { idx: 7, ruolo: 'EAS', x: 14, y: 50, name: 'Esterno Sinistro' },
+        { idx: 8, ruolo: 'AD',  x: 82, y: 22, name: 'Ala Dx' },
+        { idx: 9, ruolo: 'AS',  x: 18, y: 22, name: 'Ala Sx' },
+        { idx: 10, ruolo: 'ATT', x: 50, y: 15, name: 'Centravanti' }
+      ]
+    },
+    '5-3-2': {
+      nome: '5-3-2 (Difesa a 5 & Contropiede Rapido)',
+      desc: 'Linea difensiva a 5 solidissima, densità centrale e ripartenza veloce delle punte.',
+      slots: [
+        { idx: 0, ruolo: 'POR', x: 50, y: 88, name: 'Portiere' },
+        { idx: 1, ruolo: 'TD',  x: 88, y: 70, name: 'Terzino Dx' },
+        { idx: 2, ruolo: 'BCD', x: 69, y: 74, name: 'Braccetto Dx' },
+        { idx: 3, ruolo: 'LIB', x: 50, y: 77, name: 'Libero / Centrale' },
+        { idx: 4, ruolo: 'BCS', x: 31, y: 74, name: 'Braccetto Sx' },
+        { idx: 5, ruolo: 'TS',  x: 12, y: 70, name: 'Terzino Sx' },
+        { idx: 6, ruolo: 'CC',  x: 68, y: 50, name: 'Mezzala Dx' },
+        { idx: 7, ruolo: 'MED', x: 50, y: 53, name: 'Mediano Centrale' },
+        { idx: 8, ruolo: 'CC',  x: 32, y: 50, name: 'Mezzala Sx' },
+        { idx: 9, ruolo: 'SP',  x: 38, y: 18, name: 'Seconda Punta' },
+        { idx: 10, ruolo: 'ATT', x: 62, y: 18, name: 'Centravanti' }
+      ]
+    },
+    '4-1-4-1': {
+      nome: '4-1-4-1 (Vertice Basso & Linea di Trequarti)',
+      desc: 'Schermo difensivo di filtro e linea di trequarti a quattro dietro la punta.',
+      slots: [
+        { idx: 0, ruolo: 'POR', x: 50, y: 88, name: 'Portiere' },
+        { idx: 1, ruolo: 'TD',  x: 84, y: 72, name: 'Terzino Dx' },
+        { idx: 2, ruolo: 'DC',  x: 62, y: 74, name: 'Difensore Centrale 1' },
+        { idx: 3, ruolo: 'DC',  x: 38, y: 74, name: 'Difensore Centrale 2' },
+        { idx: 4, ruolo: 'TS',  x: 16, y: 72, name: 'Terzino Sx' },
+        { idx: 5, ruolo: 'MED', x: 50, y: 58, name: 'Vertice Basso / Regista' },
+        { idx: 6, ruolo: 'EAD', x: 84, y: 38, name: 'Esterno Alto Dx' },
+        { idx: 7, ruolo: 'CC',  x: 62, y: 40, name: 'Mezzala Offensiva Dx' },
+        { idx: 8, ruolo: 'TRQ', x: 38, y: 40, name: 'Trequartista / Mezzala Sx' },
+        { idx: 9, ruolo: 'EAS', x: 16, y: 38, name: 'Esterno Alto Sx' },
+        { idx: 10, ruolo: 'ATT', x: 50, y: 15, name: 'Punta Unica / Falso Nueve' }
+      ]
+    }
+  };
+
+  function getDefaultRoster() {
+    return [
+      { id: 'p-1', num: 1, name: 'Alessandro Fumagalli', role: 'Portiere', status: 'disp', statoDettagliato: 'disponibile', birth: '1998', data_nascita: '1998-04-12', luogo_nascita: 'Foggia', codice_fiscale: 'FMGLSN98D12D643A', email: 'a.fumagalli@foggia.it', app: 14, load: 'Basso', acwr: '0.95' },
+      { id: 'p-12', num: 12, name: 'Matteo Dalmasso', role: 'Portiere', status: 'disp', statoDettagliato: 'disponibile', birth: '2001', data_nascita: '2001-09-20', luogo_nascita: 'Torino', codice_fiscale: 'DLMMTT01P20L219F', email: 'm.dalmasso@foggia.it', app: 4, load: 'Basso', acwr: '0.90' },
+      { id: 'p-2', num: 2, name: 'Luca Di Pasquale', role: 'Terzino Dx', status: 'disp', statoDettagliato: 'disponibile', birth: '1999', data_nascita: '1999-02-15', luogo_nascita: 'Bari', codice_fiscale: 'DPSLCU99B15A662K', email: 'l.dipasquale@foggia.it', app: 16, load: 'Medio', acwr: '1.02' },
+      { id: 'p-3', num: 3, name: 'Simone Rizzo', role: 'Terzino Sx', status: 'disp', statoDettagliato: 'disponibile', birth: '2000', data_nascita: '2000-06-11', luogo_nascita: 'Lecce', codice_fiscale: 'RZZSMN00H11E506J', email: 's.rizzo@foggia.it', app: 15, load: 'Medio', acwr: '1.05' },
+      { id: 'p-5', num: 5, name: 'Davide Carillo', role: 'Difensore Centrale', status: 'disp', statoDettagliato: 'disponibile', birth: '1996', data_nascita: '1996-01-28', luogo_nascita: 'Napoli', codice_fiscale: 'CRLDVD96A28F839W', email: 'd.carillo@foggia.it', app: 17, load: 'Alto', acwr: '1.12' },
+      { id: 'p-6', num: 6, name: 'Emanuele Salines', role: 'Difensore Centrale', status: 'disp', statoDettagliato: 'disponibile', birth: '2000', data_nascita: '2000-11-04', luogo_nascita: 'Roma', codice_fiscale: 'SLNMNL00S04H501E', email: 'e.salines@foggia.it', app: 16, load: 'Medio', acwr: '1.04' },
+      { id: 'p-13', num: 13, name: 'Marco Marzupio', role: 'Braccetto Dx', status: 'disp', statoDettagliato: 'disponibile', birth: '2000', data_nascita: '2000-03-08', luogo_nascita: 'Bergamo', codice_fiscale: 'MRZMRC00C08A794X', email: 'm.marzupio@foggia.it', app: 11, load: 'Medio', acwr: '1.00' },
+      { id: 'p-14', num: 14, name: 'Giacomo Riccardi', role: 'Libero', status: 'disp', statoDettagliato: 'disponibile', birth: '1997', data_nascita: '1997-08-19', luogo_nascita: 'Salerno', codice_fiscale: 'RCCGCM97M19H703B', email: 'g.riccardi@foggia.it', app: 9, load: 'Basso', acwr: '0.98' },
+      { id: 'p-15', num: 15, name: 'Filippo Antonacci', role: 'Esterno Basso Sx', status: 'disp', statoDettagliato: 'disponibile', birth: '2001', data_nascita: '2001-05-30', luogo_nascita: 'Taranto', codice_fiscale: 'NTNFPP01E30L049G', email: 'f.antonacci@foggia.it', app: 8, load: 'Medio', acwr: '1.01' },
+      { id: 'p-4', num: 4, name: 'Moses Odjer', role: 'Mediano', status: 'disp', statoDettagliato: 'disponibile', birth: '1996', data_nascita: '1996-07-04', luogo_nascita: 'Accra', codice_fiscale: 'DJRMSS96L04Z324L', email: 'm.odjer@foggia.it', app: 18, load: 'Alto', acwr: '1.15' },
+      { id: 'p-8', num: 8, name: 'Andrea Tascone', role: 'Mezzala Dx', status: 'disp', statoDettagliato: 'disponibile', birth: '1997', data_nascita: '1997-09-29', luogo_nascita: 'Napoli', codice_fiscale: 'TSNNDR97P29F839Z', email: 'a.tascone@foggia.it', app: 17, load: 'Alto', acwr: '1.08' },
+      { id: 'p-10', num: 10, name: 'Carlos Embalo', role: 'Trequartista', status: 'disp', statoDettagliato: 'disponibile', birth: '1994', data_nascita: '1994-11-25', luogo_nascita: 'Bissau', codice_fiscale: 'MBLCRL94S25Z323P', email: 'c.embalo@foggia.it', app: 15, load: 'Medio', acwr: '1.03' },
+      { id: 'p-16', num: 16, name: 'Federico Frigerio', role: 'Mezzala Sx', status: 'disp', statoDettagliato: 'disponibile', birth: '2001', data_nascita: '2001-01-14', luogo_nascita: 'Milano', codice_fiscale: 'FRGFRC01A14F205R', email: 'f.frigerio@foggia.it', app: 12, load: 'Medio', acwr: '1.02' },
+      { id: 'p-18', num: 18, name: 'Mattia Fiorini', role: 'Regista', status: 'disp', statoDettagliato: 'disponibile', birth: '2001', data_nascita: '2001-03-31', luogo_nascita: 'Firenze', codice_fiscale: 'FRNMTT01C31D612E', email: 'm.fiorini@foggia.it', app: 10, load: 'Basso', acwr: '0.96' },
+      { id: 'p-7', num: 7, name: 'Diego Peralta', role: 'Ala Dx', status: 'disp', statoDettagliato: 'disponibile', birth: '1996', data_nascita: '1996-09-27', luogo_nascita: 'Livorno', codice_fiscale: 'PRLDGO96P27E625T', email: 'd.peralta@foggia.it', app: 16, load: 'Alto', acwr: '1.10' },
+      { id: 'p-11', num: 11, name: 'Andrea Schenetti', role: 'Ala Sx', status: 'disp', statoDettagliato: 'disponibile', birth: '1991', data_nascita: '1991-03-09', luogo_nascita: 'Milano', codice_fiscale: 'SCNNDR91C09F205D', email: 'a.schenetti@foggia.it', app: 18, load: 'Alto', acwr: '1.14' },
+      { id: 'p-9', num: 9, name: 'Jacopo Murano', role: 'Centravanti', status: 'disp', statoDettagliato: 'disponibile', birth: '1990', data_nascita: '1990-02-14', luogo_nascita: 'Potenza', codice_fiscale: 'MRNJCP90B14G942J', email: 'j.murano@foggia.it', app: 17, load: 'Alto', acwr: '1.18' },
+      { id: 'p-19', num: 19, name: 'Francesco Orlando', role: 'Seconda Punta', status: 'disp', statoDettagliato: 'disponibile', birth: '1996', data_nascita: '1996-10-01', luogo_nascita: 'Taranto', codice_fiscale: 'RLNFNC96R01L049M', email: 'f.orlando@foggia.it', app: 13, load: 'Medio', acwr: '1.06' },
+      { id: 'p-20', num: 20, name: 'Gabriel Santaniello', role: 'Falso Nueve', status: 'disp', statoDettagliato: 'disponibile', birth: '1990', data_nascita: '1990-12-19', luogo_nascita: 'Napoli', codice_fiscale: 'SNTGRL90T19F839K', email: 'g.santaniello@foggia.it', app: 11, load: 'Basso', acwr: '0.99' },
+      { id: 'p-21', num: 21, name: 'Lorenzo Garattoni', role: 'Esterno Alto Dx', status: 'disp', statoDettagliato: 'disponibile', birth: '1998', data_nascita: '1998-01-23', luogo_nascita: 'Cesena', codice_fiscale: 'GRTLNZ98A23C573V', email: 'l.garattoni@foggia.it', app: 14, load: 'Medio', acwr: '1.04' },
+      { id: 'p-22', num: 22, name: 'Alberto Rizzo', role: 'Esterno Alto Sx', status: 'disp', statoDettagliato: 'disponibile', birth: '1997', data_nascita: '1997-04-25', luogo_nascita: 'Trapani', codice_fiscale: 'RZZLRT97D25L331W', email: 'a.rizzo@foggia.it', app: 12, load: 'Medio', acwr: '1.02' }
+    ];
+  }
+
+  function getShortRole(roleStr) {
+    if (!roleStr) return 'CC';
+    var r = String(roleStr).trim().toLowerCase();
+    if (/portiere/i.test(r)) return 'POR';
+    if (/libero/i.test(r)) return 'LIB';
+    if (/braccetto d/i.test(r)) return 'BCD';
+    if (/braccetto s/i.test(r)) return 'BCS';
+    if (/difensore centrale/i.test(r)) return 'DC';
+    if (/terzino d/i.test(r)) return 'TD';
+    if (/terzino s/i.test(r)) return 'TS';
+    if (/esterno b.*d/i.test(r)) return 'EBD';
+    if (/esterno b.*s/i.test(r)) return 'EBS';
+    if (/regista/i.test(r)) return 'REG';
+    if (/mediano/i.test(r)) return 'MED';
+    if (/trequartista/i.test(r)) return 'TRQ';
+    if (/mezzala d/i.test(r)) return 'CC';
+    if (/mezzala s/i.test(r)) return 'CC';
+    if (/mezzala|centrocampista/i.test(r)) return 'CC';
+    if (/esterno a.*d/i.test(r)) return 'EAD';
+    if (/esterno a.*s/i.test(r)) return 'EAS';
+    if (/ala d/i.test(r)) return 'AD';
+    if (/ala s/i.test(r)) return 'AS';
+    if (/seconda punta/i.test(r)) return 'SP';
+    if (/falso nueve/i.test(r)) return 'FN';
+    if (/centravanti|punta|attaccante/i.test(r)) return 'ATT';
+    var clean = roleStr.replace(/[^A-Za-z]/g, '').toUpperCase();
+    return clean.length >= 2 ? clean.substring(0, 3) : 'CC';
+  }
+
+  function matchRole(playerRole, slotRole) {
+    if (!playerRole || !slotRole) return false;
+    var pr = String(playerRole).toLowerCase();
+    var sr = String(slotRole).toUpperCase();
+    if (sr === 'POR' && /portiere|por/i.test(pr)) return true;
+    if ((sr === 'DC' || sr === 'LIB' || sr === 'BCD' || sr === 'BCS') && /difensore|centrale|libero|braccetto/i.test(pr)) return true;
+    if ((sr === 'TD' || sr === 'EBD') && /terzino d|destro|esterno b.*d/i.test(pr)) return true;
+    if ((sr === 'TS' || sr === 'EBS') && /terzino s|sinistro|esterno b.*s/i.test(pr)) return true;
+    if ((sr === 'MED' || sr === 'REG') && /mediano|regista|centrocampista d/i.test(pr)) return true;
+    if (sr === 'CC' && /mezzala|centrocampista/i.test(pr)) return true;
+    if (sr === 'TRQ' && /trequartista|fantasista/i.test(pr)) return true;
+    if ((sr === 'AD' || sr === 'EAD') && /ala d|esterno a.*d/i.test(pr)) return true;
+    if ((sr === 'AS' || sr === 'EAS') && /ala s|esterno a.*s/i.test(pr)) return true;
+    if ((sr === 'ATT' || sr === 'SP' || sr === 'FN') && /punta|centravanti|attaccante|seconda punta|falso/i.test(pr)) return true;
+    return false;
+  }
+
+  function getRoleBadgeStyle(pos) {
+    var p = String(pos || '').toUpperCase();
+    if (p === 'POR') return 'background:rgba(234,179,8,0.15); border:1px solid rgba(234,179,8,0.4); color:#facc15;';
+    if (['LIB', 'DC', 'BCD', 'BCS', 'TD', 'TS', 'EBD', 'EBS'].indexOf(p) >= 0) {
+      return 'background:rgba(59,130,246,0.15); border:1px solid rgba(59,130,246,0.4); color:#93c5fd;';
+    }
+    if (['MED', 'REG', 'CC', 'TRQ', 'EAD', 'EAS'].indexOf(p) >= 0) {
+      return 'background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.4); color:#6ee7b7;';
+    }
+    return 'background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.4); color:#fca5a5;';
+  }
+
+  function syncFormationWithRoster(data) {
+    if (!data) return;
+    if (!data.roster || !Array.isArray(data.roster) || data.roster.length === 0) {
+      data.roster = getDefaultRoster();
+    }
+
+    var modKey = String(data.moduloPrincipale || '4-3-3').trim();
+    if (!MODULI_TATTICI[modKey]) modKey = '4-3-3';
+    data.moduloPrincipale = modKey;
+    var modDef = MODULI_TATTICI[modKey];
+
+    var availableRoster = data.roster.filter(function (p) {
+      var st = String(p.statoDettagliato || p.status || 'disponibile').toLowerCase();
+      return st === 'disponibile' || st === 'disp';
+    });
+    if (availableRoster.length < 11) {
+      var def = getDefaultRoster();
+      for (var d = 0; d < def.length; d++) {
+        var found = availableRoster.some(function (r) { return r.id === def[d].id || String(r.num) === String(def[d].num); });
+        if (!found) availableRoster.push(def[d]);
+      }
+    }
+
+    var needsInit = !Array.isArray(data.top11) || data.top11.length !== 11;
+    if (!needsInit) {
+      var genericCount = data.top11.filter(function (p) { return /Titolare \d+/i.test(p.name); }).length;
+      if (genericCount >= 6) needsInit = true;
+    }
+
+    if (needsInit) {
+      data.top11 = [];
+      var usedIds = {};
+      modDef.slots.forEach(function (slot) {
+        var matched = null;
+        for (var i = 0; i < availableRoster.length; i++) {
+          var cand = availableRoster[i];
+          var key = cand.id || ('num-' + cand.num);
+          if (usedIds[key]) continue;
+          if (matchRole(cand.role, slot.ruolo)) {
+            matched = cand;
+            break;
+          }
+        }
+        if (!matched) {
+          for (var j = 0; j < availableRoster.length; j++) {
+            var c2 = availableRoster[j];
+            var key2 = c2.id || ('num-' + c2.num);
+            if (!usedIds[key2]) {
+              matched = c2;
+              break;
+            }
+          }
+        }
+        if (matched) {
+          usedIds[matched.id || ('num-' + matched.num)] = true;
+          data.top11.push({
+            id: matched.id || ('p-' + matched.num),
+            num: matched.num,
+            name: matched.name,
+            pos: slot.ruolo,
+            roleName: slot.name,
+            originalRole: matched.role,
+            rating: matched.rating || '--'
+          });
+        } else {
+          data.top11.push({
+            id: 'slot-' + slot.idx,
+            num: slot.idx + 1,
+            name: slot.name,
+            pos: slot.ruolo,
+            roleName: slot.name,
+            originalRole: slot.ruolo,
+            rating: '--'
+          });
+        }
+      });
+    } else {
+      for (var s = 0; s < 11; s++) {
+        var slotDef = modDef.slots[s];
+        if (data.top11[s] && slotDef) {
+          if (!data.top11[s].pos || data.top11[s].pos === 'C') {
+            data.top11[s].pos = slotDef.ruolo;
+          }
+          data.top11[s].roleName = slotDef.name;
+        }
+      }
+    }
+
+    var top11Nums = {};
+    var top11Ids = {};
+    data.top11.forEach(function (t) {
+      if (t.num != null) top11Nums[String(t.num)] = true;
+      if (t.id) top11Ids[String(t.id)] = true;
+    });
+
+    var panchinaList = [];
+    availableRoster.forEach(function (r) {
+      var isStarter = (r.id && top11Ids[String(r.id)]) || top11Nums[String(r.num)];
+      if (!isStarter) {
+        panchinaList.push({
+          id: r.id || ('bench-' + r.num),
+          num: r.num,
+          name: r.name,
+          pos: getShortRole(r.role),
+          role: r.role,
+          status: r.status || 'disp',
+          birth: r.birth || '--'
+        });
+      }
+    });
+
+    if (panchinaList.length === 0) {
+      var defRoster = getDefaultRoster();
+      defRoster.forEach(function (r) {
+        if (!top11Nums[String(r.num)]) {
+          panchinaList.push({
+            id: r.id,
+            num: r.num,
+            name: r.name,
+            pos: getShortRole(r.role),
+            role: r.role,
+            status: 'disp',
+            birth: r.birth || '--'
+          });
+        }
+      });
+    }
+
+    data.panchina = panchinaList;
+  }
+
   function getCoachData() {
     var u = userObj();
     var base = {
@@ -421,19 +784,7 @@
       moduloPrincipale: '4-3-3',
       moduloSecondario: '4-2-3-1',
       formazioneUfficialeConfermata: true,
-      top11: [
-        { num: 1, pos: 'POR', name: 'Portiere 1', rating: '--' },
-        { num: 2, pos: 'TD', name: 'Terzino Dx', rating: '--' },
-        { num: 5, pos: 'DC', name: 'Difensore Centrale 1', rating: '--' },
-        { num: 6, pos: 'DC', name: 'Difensore Centrale 2', rating: '--' },
-        { num: 3, pos: 'TS', name: 'Terzino Sx', rating: '--' },
-        { num: 4, pos: 'MED', name: 'Mediano', rating: '--' },
-        { num: 8, pos: 'CC', name: 'Mezzala Dx', rating: '--' },
-        { num: 10, pos: 'CC', name: 'Mezzala Sx', rating: '--' },
-        { num: 7, pos: 'AD', name: 'Ala Dx', rating: '--' },
-        { num: 11, pos: 'AS', name: 'Ala Sx', rating: '--' },
-        { num: 9, pos: 'ATT', name: 'Centravanti', rating: '--' }
-      ],
+      top11: [],
       panchina: [],
       roster: [],
       notifiche: [],
@@ -473,9 +824,24 @@
       ]
     };
 
+    try {
+      var saved = JSON.parse(localStorage.getItem('elisee_coach_data') || '{}');
+      if (saved && typeof saved === 'object') {
+        if (saved.moduloPrincipale) base.moduloPrincipale = saved.moduloPrincipale;
+        if (Array.isArray(saved.top11) && saved.top11.length === 11) base.top11 = saved.top11;
+        if (Array.isArray(saved.panchina)) base.panchina = saved.panchina;
+        if (Array.isArray(saved.roster) && saved.roster.length > 0) base.roster = saved.roster;
+        if (typeof saved.formazioneUfficialeConfermata === 'boolean') base.formazioneUfficialeConfermata = saved.formazioneUfficialeConfermata;
+      }
+    } catch (_) {}
+
     if (_coachLiveData) {
-      return Object.assign({}, base, _coachLiveData);
+      var merged = Object.assign({}, base, _coachLiveData);
+      syncFormationWithRoster(merged);
+      return merged;
     }
+
+    syncFormationWithRoster(base);
     return base;
   }
 
@@ -1024,59 +1390,149 @@
   }
 
   // ============================================================
-  // 3. SEZIONE FORMAZIONE
+  // 3. SEZIONE FORMAZIONE (LINEUP BUILDER UFFICIALE DINAMICO)
   // ============================================================
   function renderFormazione(data) {
+    var modKey = String(data.moduloPrincipale || '4-3-3').trim();
+    if (!MODULI_TATTICI[modKey]) modKey = '4-3-3';
+    var curMod = MODULI_TATTICI[modKey];
+
+    var panchinaCount = (data.panchina && Array.isArray(data.panchina)) ? data.panchina.length : 0;
+
     return (
       '<div class="es-cos-panel-card">' +
-        '<div class="es-cos-panel-head">' +
-          '<div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">' +
-            '<span class="es-cos-panel-title">' +
+        // HEADER SEZIONE: TITOLO + SELETTORE MODULO + BOTTONI AZIONE
+        '<div class="es-cos-panel-head" style="gap:1rem; flex-wrap:wrap; justify-content:space-between; align-items:center;">' +
+          '<div style="display:flex; align-items:center; gap:1.25rem; flex-wrap:wrap;">' +
+            '<span class="es-cos-panel-title" style="display:flex; align-items:center; gap:0.5rem; margin:0;">' +
               '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>' +
               'Lineup Builder Ufficiale · XI Titolare' +
             '</span>' +
-            '<select id="sel-tactical-modulo" style="background:#071522; border:1px solid #12344a; color:#16b9ff; padding:0.35rem 0.75rem; border-radius:6px; font-size:0.82rem; font-weight:800;">' +
-              '<option value="4-3-3" ' + (data.moduloPrincipale === '4-3-3' ? 'selected' : '') + '>4-3-3 (Offensivo con Ali)</option>' +
-              '<option value="4-2-3-1" ' + (data.moduloPrincipale === '4-2-3-1' ? 'selected' : '') + '>4-2-3-1 (Doppio Mediano & Trequarti)</option>' +
-              '<option value="3-5-2" ' + (data.moduloPrincipale === '3-5-2' ? 'selected' : '') + '>3-5-2 (Ampiezza Quinti)</option>' +
-              '<option value="3-4-2-1" ' + (data.moduloPrincipale === '3-4-2-1' ? 'selected' : '') + '>3-4-2-1 (Doppio Trequarti)</option>' +
-              '<option value="4-4-2" ' + (data.moduloPrincipale === '4-4-2' ? 'selected' : '') + '>4-4-2 (Classico Lineare)</option>' +
-            '</select>' +
+            // SELETTORE MODULO EVIDENTE CON ETICHETTA E FRECCIA SVG
+            '<div class="es-modulo-select-wrap" style="display:flex; align-items:center; gap:0.5rem; background:#071522; border:1.5px solid #3b82f6; border-radius:8px; padding:0.3rem 0.65rem; box-shadow:0 2px 8px rgba(59,130,246,0.15);">' +
+              '<label for="sel-tactical-modulo" style="font-size:0.75rem; font-weight:800; color:#93c5fd; text-transform:uppercase; letter-spacing:0.04em; cursor:pointer;">Modulo:</label>' +
+              '<div style="position:relative; display:inline-flex; align-items:center;">' +
+                '<select id="sel-tactical-modulo" style="appearance:none; -webkit-appearance:none; background:transparent; border:none; color:#ffffff; font-size:0.85rem; font-weight:800; cursor:pointer; padding-right:1.4rem; outline:none;">' +
+                  '<option value="4-3-3" ' + (modKey === '4-3-3' ? 'selected' : '') + ' style="background:#071522; color:#ffffff;">4-3-3 (Offensivo con Ali)</option>' +
+                  '<option value="4-4-2" ' + (modKey === '4-4-2' ? 'selected' : '') + ' style="background:#071522; color:#ffffff;">4-4-2 (Classico Lineare)</option>' +
+                  '<option value="4-2-3-1" ' + (modKey === '4-2-3-1' ? 'selected' : '') + ' style="background:#071522; color:#ffffff;">4-2-3-1 (Doppio Mediano &amp; Trequarti)</option>' +
+                  '<option value="3-5-2" ' + (modKey === '3-5-2' ? 'selected' : '') + ' style="background:#071522; color:#ffffff;">3-5-2 (Ampiezza Quinti &amp; Doppio Attacco)</option>' +
+                  '<option value="3-4-3" ' + (modKey === '3-4-3' ? 'selected' : '') + ' style="background:#071522; color:#ffffff;">3-4-3 (Tridente &amp; Linea Mediana a 4)</option>' +
+                  '<option value="5-3-2" ' + (modKey === '5-3-2' ? 'selected' : '') + ' style="background:#071522; color:#ffffff;">5-3-2 (Difesa a 5 &amp; Contropiede Rapido)</option>' +
+                  '<option value="4-1-4-1" ' + (modKey === '4-1-4-1' ? 'selected' : '') + ' style="background:#071522; color:#ffffff;">4-1-4-1 (Vertice Basso &amp; Linea di Trequarti)</option>' +
+                '</select>' +
+                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="3" style="position:absolute; right:0; pointer-events:none;"><polyline points="6 9 12 15 18 9"/></svg>' +
+              '</div>' +
+            '</div>' +
           '</div>' +
-          '<div style="display:flex; gap:0.5rem; flex-wrap:wrap;">' +
-            '<button type="button" class="es-btn-cos-sec" id="btn-export-story-modal"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>Story 9:16</button>' +
-            '<button type="button" class="es-btn-cos-primary" id="btn-confirm-official-xi">Conferma Formazione Ufficiale</button>' +
+          // BOTTONI STORY 9:16 E CONFERMA FORMAZIONE AFFIANCATI
+          '<div style="display:flex; gap:0.6rem; align-items:center;">' +
+            '<button type="button" class="es-btn-cos-sec" id="btn-export-story-modal" title="Genera Anteprima Story Instagram 9:16" style="display:inline-flex; align-items:center; gap:0.4rem; padding:0.5rem 0.9rem; font-size:0.82rem; font-weight:700; border:1px solid rgba(255,255,255,0.18); color:#f3f8fc; background:rgba(255,255,255,0.04); border-radius:7px; cursor:pointer; transition:all 0.15s ease;">' +
+              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16b9ff" stroke-width="2"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>' +
+              'Story 9:16' +
+            '</button>' +
+            '<button type="button" class="es-btn-cos-primary" id="btn-confirm-official-xi" style="padding:0.5rem 1.15rem; font-size:0.82rem; font-weight:800; border-radius:7px; cursor:pointer;">' +
+              'Conferma Formazione Ufficiale' +
+            '</button>' +
           '</div>' +
         '</div>' +
 
-        '<div style="display:grid; grid-template-columns:1.4fr 1fr; gap:1.25rem;">' +
-          '<div style="background:#061e11; border:2px solid #16562f; border-radius:10px; position:relative; aspect-ratio:16/10; overflow:hidden;">' +
-            '<div style="position:absolute; inset:0; background:radial-gradient(circle at 50% 50%, rgba(0,217,120,0.08) 0%, transparent 80%);"></div>' +
-            renderPitchPins(data.top11, data.moduloPrincipale) +
+        // LAYOUT A DUE COLONNE BILANCIATE: CAMPO CENTRATO A SINISTRA E PANCHINA ESPANSA A DESTRA
+        '<div class="es-lineup-layout-grid" style="display:grid; grid-template-columns:1.35fr 1fr; gap:1.5rem; align-items:stretch; margin-top:0.5rem;">' +
+          // COLONNA SINISTRA: CAMPO DA CALCIO REGOLAMENTARE CON OVERLAY VETTORIALE SVG
+          '<div class="es-pitch-container" style="background:radial-gradient(circle at 50% 50%, #0d3b1f 0%, #061e11 88%); border:2.5px solid #16562f; border-radius:12px; position:relative; aspect-ratio:16/11; min-height:480px; overflow:hidden; box-shadow:0 12px 30px rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center;">' +
+            // LINEE REGOLAMENTARI DEL CAMPO IN OVERLAY VETTORIALE SVG
+            '<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; opacity:0.32;">' +
+              // Bordo perimetrale
+              '<rect x="4" y="3" width="92" height="94" fill="none" stroke="#ffffff" stroke-width="1.2" rx="2"/>' +
+              // Linea mediana di centrocampo
+              '<line x1="4" y1="50" x2="96" y2="50" stroke="#ffffff" stroke-width="1.2"/>' +
+              // Cerchio di centrocampo e punto centrale
+              '<circle cx="50" cy="50" r="11" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+              '<circle cx="50" cy="50" r="1" fill="#ffffff"/>' +
+              // Area di rigore alta (porta avversaria)
+              '<rect x="26" y="3" width="48" height="17" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+              '<rect x="36" y="3" width="28" height="6.5" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+              '<circle cx="50" cy="13.5" r="1" fill="#ffffff"/>' +
+              '<path d="M 40 20 A 10 10 0 0 0 60 20" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+              // Area di rigore bassa (nostra porta)
+              '<rect x="26" y="80" width="48" height="17" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+              '<rect x="36" y="90.5" width="28" height="6.5" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+              '<circle cx="50" cy="86.5" r="1" fill="#ffffff"/>' +
+              '<path d="M 40 80 A 10 10 0 0 1 60 80" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+              // Porte esterne
+              '<rect x="42" y="1" width="16" height="2" fill="rgba(255,255,255,0.2)" stroke="#ffffff" stroke-width="0.8"/>' +
+              '<rect x="42" y="97" width="16" height="2" fill="rgba(255,255,255,0.2)" stroke="#ffffff" stroke-width="0.8"/>' +
+              // Bandierine d\'angolo
+              '<path d="M 4 6 A 3 3 0 0 0 7 3" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+              '<path d="M 96 6 A 3 3 0 0 1 93 3" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+              '<path d="M 4 94 A 3 3 0 0 1 7 97" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+              '<path d="M 96 94 A 3 3 0 0 0 93 97" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+            '</svg>' +
+            // GLOW RADIALE DEL CAMPO
+            '<div style="position:absolute; inset:0; background:radial-gradient(circle at 50% 50%, rgba(0,217,120,0.1) 0%, transparent 82%); pointer-events:none;"></div>' +
+            // WATERMARK DISCRETO MODULO IN BASSO AL CAMPO
+            '<div style="position:absolute; bottom:8px; left:12px; font-size:0.68rem; font-weight:800; color:rgba(255,255,255,0.22); letter-spacing:0.05em; pointer-events:none; text-transform:uppercase;">' + esc(curMod.nome) + '</div>' +
+            // 11 PIN TITOLARI DINAMICI
+            renderPitchPins(data.top11, modKey) +
           '</div>' +
 
-          '<div style="display:flex; flex-direction:column; gap:1rem;">' +
-            '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:0.85rem;">' +
-              '<div style="font-size:0.85rem; font-weight:800; color:#f3f8fc; text-transform:uppercase; margin-bottom:0.5rem; display:flex; justify-content:space-between;">' +
-                '<span>A Disposizione (Panchina)</span>' +
-                '<span style="color:#16b9ff;">' + (data.panchina ? data.panchina.length : 0) + ' Calciatori</span>' +
+          // COLONNA DESTRA: PANCHINA A TUTTA ALTEZZA + STATO CONVALIDA
+          '<div class="es-bench-panel-card" style="background:#071522; border:1px solid #12344a; border-radius:12px; padding:1.1rem; display:flex; flex-direction:column; justify-content:space-between; min-height:480px; box-sizing:border-box;">' +
+            '<div>' +
+              // INTESTAZIONE PANCHINA CON CONTATORE REALE
+              '<div style="font-size:0.86rem; font-weight:800; color:#f3f8fc; text-transform:uppercase; margin-bottom:0.6rem; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #12344a; padding-bottom:0.55rem;">' +
+                '<div style="display:flex; align-items:center; gap:0.45rem;">' +
+                  '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#16b9ff" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>' +
+                  '<span>A Disposizione (Panchina)</span>' +
+                '</div>' +
+                '<span class="es-cos-badge-pill is-blue" style="font-size:0.75rem; font-weight:800;">' + panchinaCount + ' Calciatori</span>' +
               '</div>' +
-              '<div style="display:flex; flex-direction:column; gap:0.4rem; max-height:260px; overflow-y:auto;">' +
-                (data.panchina && data.panchina.length ? data.panchina.map(function (b) {
+
+              // SUGGERIMENTO DI INTERAZIONE (DRAG & DROP E CLICK)
+              '<div style="font-size:0.72rem; color:#8da8bc; margin-bottom:0.75rem; display:flex; align-items:center; gap:5px; background:rgba(22,185,255,0.06); border:1px dashed rgba(22,185,255,0.25); border-radius:6px; padding:0.4rem 0.6rem;">' +
+                '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#16b9ff" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>' +
+                '<span>Trascina il giocatore sul campo o clicca <b>In Campo &rarr;</b> per schierarlo.</span>' +
+              '</div>' +
+
+              // LISTA SCROLLABILE CARD PANCHINARI CON ATTRIBUTO DRAGGABLE E RUOLO
+              '<div class="es-bench-scroll-list" style="display:flex; flex-direction:column; gap:0.45rem; max-height:330px; overflow-y:auto; padding-right:4px;">' +
+                (panchinaCount ? data.panchina.map(function (b) {
                   return (
-                    '<div style="display:flex; justify-content:space-between; align-items:center; background:#040912; border:1px solid #12344a; border-radius:5px; padding:0.45rem 0.65rem;">' +
-                      '<div style="display:flex; align-items:center; gap:0.5rem;">' +
-                        '<b style="color:#16b9ff;">#' + esc(b.num) + '</b>' +
-                        '<span>' + esc(b.name) + '</span>' +
+                    '<div class="es-bench-card" draggable="true" data-bench-id="' + esc(b.id) + '" data-bench-num="' + esc(b.num) + '" data-bench-name="' + esc(b.name) + '" data-bench-pos="' + esc(b.pos || b.role) + '" style="display:flex; justify-content:space-between; align-items:center; background:#040912; border:1px solid #12344a; border-radius:6px; padding:0.45rem 0.65rem; cursor:grab; transition:all 0.15s ease;">' +
+                      '<div style="display:flex; align-items:center; gap:0.55rem;">' +
+                        '<div style="width:28px; height:28px; border-radius:50%; background:#071522; border:1.5px solid #16b9ff; color:#16b9ff; display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:900; flex-shrink:0;">#' + esc(b.num) + '</div>' +
+                        '<div style="display:flex; flex-direction:column; gap:1px; overflow:hidden;">' +
+                          '<span style="font-size:0.82rem; font-weight:700; color:#f3f8fc; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + esc(b.name) + '</span>' +
+                          '<span style="font-size:0.67rem; color:#8da8bc;">Classe ' + esc(b.birth || '--') + '</span>' +
+                        '</div>' +
                       '</div>' +
-                      '<span class="es-cos-badge-pill is-blue" style="font-size:0.65rem;">' + esc(b.pos || b.role) + '</span>' +
+                      '<div style="display:flex; align-items:center; gap:0.45rem; flex-shrink:0;">' +
+                        '<span style="font-size:0.68rem; font-weight:800; padding:2px 7px; border-radius:4px; ' + getRoleBadgeStyle(b.pos || b.role) + '">' + esc(b.pos || b.role) + '</span>' +
+                        '<button type="button" class="es-bench-assign-btn" data-assign-bench-id="' + esc(b.id) + '" style="background:transparent; border:1px solid rgba(255,255,255,0.16); color:rgba(255,255,255,0.85); padding:0.22rem 0.5rem; border-radius:5px; font-size:0.68rem; font-weight:700; cursor:pointer; transition:all 0.15s ease;" title="Schiera titolare nello slot desiderato">' +
+                          'In Campo &rarr;' +
+                        '</button>' +
+                      '</div>' +
                     '</div>'
                   );
-                }).join('') : '') +
+                }).join('') : (
+                  '<div style="text-align:center; padding:1.5rem; color:#8da8bc; font-size:0.8rem;">' +
+                    'Tutti i calciatori disponibili sono attualmente assegnati ai titolari.' +
+                  '</div>'
+                )) +
               '</div>' +
             '</div>' +
-            '<div style="background:rgba(0,217,120,0.06); border:1px solid rgba(0,217,120,0.3); border-radius:8px; padding:0.85rem; font-size:0.8rem; line-height:1.45;">' +
-              '<b style="color:#00d978;">Stato Ufficiale:</b> Formazione convalidata dal Mister. Consegne tecniche sincronizzate con la Bozza del Vice Allenatore.' +
+
+            // BOX STATO UFFICIALE E RIEPILOGO CONVOCATI
+            '<div style="margin-top:1rem; background:rgba(0,217,120,0.06); border:1px solid rgba(0,217,120,0.3); border-radius:8px; padding:0.85rem; font-size:0.8rem; line-height:1.45;">' +
+              '<div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">' +
+                '<span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#00d978; box-shadow:0 0 8px #00d978;"></span>' +
+                '<b style="color:#00d978;">Stato Ufficiale:</b>' +
+                '<span style="color:#f3f8fc; font-weight:700;">Convalidata dal Mister</span>' +
+              '</div>' +
+              '<div style="color:#8da8bc; font-size:0.75rem;">' +
+                'Titolari: <b style="color:#16b9ff;">11</b> · Panchina: <b style="color:#16b9ff;">' + panchinaCount + '</b> · Consegne tecniche sincronizzate con la Bozza del Vice Allenatore.' +
+              '</div>' +
             '</div>' +
           '</div>' +
         '</div>' +
@@ -1085,61 +1541,383 @@
   }
 
   function renderPitchPins(players, modulo) {
-    var coords = getFormationCoords(modulo);
-    return coords.map(function (c, idx) {
-      var p = (players || [])[idx] || { num: idx + 1, name: 'Titolare ' + (idx + 1), pos: getSlotRole(idx, modulo) };
+    var modKey = String(modulo || '4-3-3').trim();
+    if (!MODULI_TATTICI[modKey]) modKey = '4-3-3';
+    var slots = MODULI_TATTICI[modKey].slots;
+
+    return slots.map(function (slot, idx) {
+      var p = (players || [])[idx] || {
+        num: idx + 1,
+        name: slot.name,
+        pos: slot.ruolo
+      };
+      var roleSigla = p.pos || slot.ruolo;
+
       return (
-        '<div style="position:absolute; left:' + c.x + '%; top:' + c.y + '%; transform:translate(-50%, -50%); display:flex; flex-direction:column; align-items:center; gap:2px; cursor:pointer;" data-player-pin-idx="' + idx + '">' +
-          '<div style="width:36px; height:36px; border-radius:50%; background:#071522; border:2px solid #16b9ff; color:#f3f8fc; font-size:0.82rem; font-weight:900; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 10px rgba(0,0,0,0.6);">#' + esc(p.num) + '</div>' +
-          '<div style="background:rgba(5,9,16,0.92); border:1px solid #12344a; color:#f3f8fc; font-size:0.65rem; font-weight:800; padding:1px 5px; border-radius:4px; white-space:nowrap;">' + esc(p.name) + ' (' + esc(p.pos) + ')</div>' +
+        '<div class="es-pitch-pin" ' +
+             'style="position:absolute; left:' + slot.x + '%; top:' + slot.y + '%; transform:translate(-50%, -50%); display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; z-index:10; transition:transform 0.15s ease;" ' +
+             'data-player-pin-idx="' + idx + '" ' +
+             'data-slot-role="' + esc(roleSigla) + '" ' +
+             'title="Clicca per sostituire con la panchina o modificare il ruolo">' +
+          // BADGE CIRCOLARE NUMERO MAGLIA CON GLOW E TASTO SWAP
+          '<div class="es-pitch-pin-badge" style="width:38px; height:38px; border-radius:50%; background:#071522; border:2.5px solid #16b9ff; color:#f3f8fc; font-size:0.85rem; font-weight:900; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,0,0,0.7); position:relative; transition:all 0.15s ease;">' +
+            '#' + esc(p.num) +
+            '<span class="es-pitch-pin-swap-hint" style="position:absolute; top:-3px; right:-3px; width:14px; height:14px; border-radius:50%; background:#16b9ff; color:#040912; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:900; box-shadow:0 2px 4px rgba(0,0,0,0.6);">&#8644;</span>' +
+          '</div>' +
+          // TARGHETTA NOME GIOCATORE + RUOLO TRA PARENTESI
+          '<div class="es-pitch-pin-tag" style="background:rgba(5,9,16,0.94); border:1px solid #12344a; color:#f3f8fc; font-size:0.67rem; font-weight:800; padding:2px 6px; border-radius:5px; white-space:nowrap; box-shadow:0 2px 6px rgba(0,0,0,0.6); display:flex; align-items:center; gap:3px;">' +
+            '<span>' + esc(p.name) + '</span>' +
+            '<span style="color:#16b9ff; font-weight:900;">(' + esc(roleSigla) + ')</span>' +
+          '</div>' +
         '</div>'
       );
     }).join('');
   }
 
   function getFormationCoords(modulo) {
-    var m = String(modulo || '4-3-3').trim();
-    if (m === '4-2-3-1') {
-      return [
-        { x: 50, y: 90 }, { x: 86, y: 72 }, { x: 62, y: 74 }, { x: 38, y: 74 }, { x: 14, y: 72 },
-        { x: 62, y: 55 }, { x: 38, y: 55 }, { x: 82, y: 35 }, { x: 50, y: 34 }, { x: 18, y: 35 }, { x: 50, y: 15 }
-      ];
-    }
-    if (m === '3-5-2') {
-      return [
-        { x: 50, y: 90 }, { x: 74, y: 75 }, { x: 50, y: 76 }, { x: 26, y: 75 },
-        { x: 90, y: 50 }, { x: 68, y: 52 }, { x: 50, y: 50 }, { x: 32, y: 52 }, { x: 10, y: 50 },
-        { x: 62, y: 18 }, { x: 38, y: 18 }
-      ];
-    }
-    if (m === '3-4-2-1') {
-      return [
-        { x: 50, y: 90 }, { x: 74, y: 75 }, { x: 50, y: 76 }, { x: 26, y: 75 },
-        { x: 88, y: 52 }, { x: 62, y: 54 }, { x: 38, y: 54 }, { x: 12, y: 52 },
-        { x: 68, y: 32 }, { x: 32, y: 32 }, { x: 50, y: 14 }
-      ];
-    }
-    if (m === '4-4-2') {
-      return [
-        { x: 50, y: 90 }, { x: 86, y: 72 }, { x: 62, y: 74 }, { x: 38, y: 74 }, { x: 14, y: 72 },
-        { x: 86, y: 46 }, { x: 62, y: 48 }, { x: 38, y: 48 }, { x: 14, y: 46 },
-        { x: 62, y: 18 }, { x: 38, y: 18 }
-      ];
-    }
-    return [
-      { x: 50, y: 88 }, { x: 86, y: 68 }, { x: 62, y: 72 }, { x: 38, y: 72 }, { x: 14, y: 68 },
-      { x: 50, y: 52 }, { x: 72, y: 44 }, { x: 28, y: 44 },
-      { x: 84, y: 22 }, { x: 16, y: 22 }, { x: 50, y: 14 }
-    ];
+    var modKey = String(modulo || '4-3-3').trim();
+    if (!MODULI_TATTICI[modKey]) modKey = '4-3-3';
+    return MODULI_TATTICI[modKey].slots.map(function (s) { return { x: s.x, y: s.y }; });
   }
 
   function getSlotRole(idx, modulo) {
-    var m = String(modulo || '4-3-3').trim();
-    if (m === '4-2-3-1') return ['POR', 'TD', 'DC', 'DC', 'TS', 'MED', 'MED', 'TRD', 'TRC', 'TRS', 'ATT'][idx] || 'C';
-    if (m === '3-5-2') return ['POR', 'DC', 'DC', 'DC', 'ED', 'CC', 'MED', 'CC', 'ES', 'ATT', 'ATT'][idx] || 'C';
-    if (m === '3-4-2-1') return ['POR', 'DC', 'DC', 'DC', 'ED', 'MED', 'MED', 'ES', 'TRQ', 'TRQ', 'ATT'][idx] || 'C';
-    if (m === '4-4-2') return ['POR', 'TD', 'DC', 'DC', 'TS', 'ED', 'CC', 'CC', 'ES', 'ATT', 'ATT'][idx] || 'C';
-    return ['POR', 'TD', 'DC', 'DC', 'TS', 'MED', 'CC', 'CC', 'AD', 'AS', 'ATT'][idx] || 'C';
+    var modKey = String(modulo || '4-3-3').trim();
+    if (!MODULI_TATTICI[modKey]) modKey = '4-3-3';
+    var s = MODULI_TATTICI[modKey].slots[idx];
+    return s ? s.ruolo : 'CC';
+  }
+
+  // ============================================================
+  // MODALE SOSTITUZIONE SLOT / CAMBIO RUOLO TATTICO
+  // ============================================================
+  function openSlotSwapModal(slotIdx, data) {
+    var modKey = String(data.moduloPrincipale || '4-3-3').trim();
+    if (!MODULI_TATTICI[modKey]) modKey = '4-3-3';
+    var slotDef = MODULI_TATTICI[modKey].slots[slotIdx];
+    var currentStarter = data.top11[slotIdx] || { num: slotIdx + 1, name: 'Titolare', pos: slotDef.ruolo };
+    var panchina = data.panchina || [];
+
+    var rolesOptions = Object.keys(LIBRERIA_RUOLI).map(function (k) {
+      var r = LIBRERIA_RUOLI[k];
+      return '<option value="' + k + '" ' + (currentStarter.pos === k ? 'selected' : '') + '>' + r.sigla + ' · ' + r.nome + ' (' + r.reparto + ')</option>';
+    }).join('');
+
+    var benchItemsHtml = panchina.length ? panchina.map(function (b, bIdx) {
+      return (
+        '<div style="display:flex; justify-content:space-between; align-items:center; background:#040912; border:1px solid #12344a; border-radius:6px; padding:0.5rem 0.75rem; margin-bottom:0.45rem;">' +
+          '<div style="display:flex; align-items:center; gap:0.6rem;">' +
+            '<div style="width:28px; height:28px; border-radius:50%; background:#071522; border:1.5px solid #16b9ff; color:#16b9ff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:900;">#' + esc(b.num) + '</div>' +
+            '<div>' +
+              '<div style="font-size:0.85rem; font-weight:700; color:#f3f8fc;">' + esc(b.name) + '</div>' +
+              '<div style="font-size:0.68rem; color:#8da8bc;">' + esc(b.role) + ' · Classe ' + esc(b.birth || '--') + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div style="display:flex; align-items:center; gap:0.5rem;">' +
+            '<span style="font-size:0.7rem; font-weight:800; padding:2px 7px; border-radius:4px; ' + getRoleBadgeStyle(b.pos || b.role) + '">' + esc(b.pos || b.role) + '</span>' +
+            '<button type="button" class="es-btn-cos-primary btn-do-swap-player" data-bench-idx="' + bIdx + '" style="padding:0.3rem 0.65rem; font-size:0.75rem; border-radius:5px; cursor:pointer;">' +
+              'Schiera in Campo' +
+            '</button>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join('') : (
+      '<div style="text-align:center; color:#8da8bc; padding:1.25rem; font-size:0.82rem;">Nessun calciatore disponibile in panchina.</div>'
+    );
+
+    var content =
+      '<div style="display:flex; flex-direction:column; gap:1.15rem;">' +
+        // SCHEDA TITOLARE ATTUALE
+        '<div style="background:#040912; border:1.5px solid #16b9ff; border-radius:8px; padding:0.85rem; display:flex; justify-content:space-between; align-items:center;">' +
+          '<div style="display:flex; align-items:center; gap:0.75rem;">' +
+            '<div style="width:38px; height:38px; border-radius:50%; background:#071522; border:2px solid #16b9ff; color:#f3f8fc; font-size:0.95rem; font-weight:900; display:flex; align-items:center; justify-content:center;">#' + esc(currentStarter.num) + '</div>' +
+            '<div>' +
+              '<div style="font-size:0.95rem; font-weight:800; color:#f3f8fc;">' + esc(currentStarter.name) + '</div>' +
+              '<div style="font-size:0.72rem; color:#8da8bc;">Titolare Attuale nello Slot #' + (slotIdx + 1) + ' (' + esc(slotDef.name) + ')</div>' +
+            '</div>' +
+          '</div>' +
+          '<span style="font-size:0.75rem; font-weight:800; padding:3px 8px; border-radius:5px; ' + getRoleBadgeStyle(currentStarter.pos) + '">' + esc(currentStarter.pos) + '</span>' +
+        '</div>' +
+
+        // CAMBIO RUOLO TATTICO DELLO SLOT
+        '<div style="background:#040912; border:1px solid #12344a; border-radius:8px; padding:0.85rem;">' +
+          '<label style="font-size:0.78rem; font-weight:800; color:#93c5fd; text-transform:uppercase; margin-bottom:0.4rem; display:block;">Personalizza Ruolo Tattico Slot:</label>' +
+          '<div style="display:flex; gap:0.5rem; align-items:center;">' +
+            '<select id="sel-slot-custom-role" style="flex:1; background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.5rem 0.75rem; border-radius:6px; font-size:0.82rem; font-weight:700;">' +
+              rolesOptions +
+            '</select>' +
+            '<button type="button" id="btn-save-slot-role" class="es-btn-cos-sec" style="padding:0.5rem 0.85rem; font-size:0.78rem; border-color:#3b82f6; color:#93c5fd; cursor:pointer;">Applica Ruolo</button>' +
+          '</div>' +
+        '</div>' +
+
+        // LISTA PANCHINA PER SOSTITUZIONE
+        '<div>' +
+          '<div style="font-size:0.82rem; font-weight:800; color:#f3f8fc; text-transform:uppercase; margin-bottom:0.6rem; display:flex; justify-content:space-between;">' +
+            '<span>Sostituisci con un Calciatore in Panchina</span>' +
+            '<span style="color:#16b9ff;">' + panchina.length + ' Disponibili</span>' +
+          '</div>' +
+          '<div style="max-height:240px; overflow-y:auto; padding-right:2px;">' +
+            benchItemsHtml +
+          '</div>' +
+        '</div>' +
+
+        '<div style="display:flex; justify-content:flex-end; gap:0.5rem; border-top:1px solid #12344a; padding-top:0.75rem;">' +
+          '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Chiudi</button>' +
+        '</div>' +
+      '</div>';
+
+    openModal('Gestione Slot Titolare #' + (slotIdx + 1) + ' · ' + currentStarter.name, content);
+
+    // Gestione applicazione nuovo ruolo allo slot
+    var btnSaveRole = document.getElementById('btn-save-slot-role');
+    if (btnSaveRole) {
+      btnSaveRole.onclick = function () {
+        var selRole = document.getElementById('sel-slot-custom-role');
+        if (selRole && selRole.value) {
+          data.top11[slotIdx].pos = selRole.value;
+          var roleDef = LIBRERIA_RUOLI[selRole.value];
+          if (roleDef) data.top11[slotIdx].roleName = roleDef.nome;
+          saveCoachData(data);
+          closeModal();
+          var container = document.getElementById('es-cos-active-content');
+          if (container && activeTab === 'formazione') {
+            container.innerHTML = renderFormazione(data);
+            bindAllEvents();
+          }
+          if (window.showToast) window.showToast('Ruolo slot aggiornato a ' + selRole.value, 'success');
+        }
+      };
+    }
+
+    // Gestione sostituzione con giocatore della panchina
+    document.querySelectorAll('.btn-do-swap-player').forEach(function (btn) {
+      btn.onclick = function () {
+        var bIdx = parseInt(btn.getAttribute('data-bench-idx'), 10);
+        var subIn = data.panchina[bIdx];
+        if (!subIn) return;
+
+        var subOut = data.top11[slotIdx];
+
+        // Scambia: subIn diventa titolare allo slot, subOut va in panchina
+        data.top11[slotIdx] = {
+          id: subIn.id,
+          num: subIn.num,
+          name: subIn.name,
+          pos: subOut.pos || subIn.pos || slotDef.ruolo,
+          roleName: subOut.roleName || slotDef.name,
+          originalRole: subIn.role,
+          rating: subIn.rating || '--'
+        };
+
+        data.panchina.splice(bIdx, 1);
+        data.panchina.push({
+          id: subOut.id,
+          num: subOut.num,
+          name: subOut.name,
+          pos: getShortRole(subOut.originalRole || subOut.pos),
+          role: subOut.originalRole || subOut.pos,
+          status: 'disp',
+          birth: subOut.birth || '--'
+        });
+
+        saveCoachData(data);
+        closeModal();
+        var container = document.getElementById('es-cos-active-content');
+        if (container && activeTab === 'formazione') {
+          container.innerHTML = renderFormazione(data);
+          bindAllEvents();
+        }
+        if (window.showToast) window.showToast('Sostituzione effettuata: entra #' + subIn.num + ' ' + subIn.name, 'success');
+      };
+    });
+  }
+
+  // ============================================================
+  // MODALE ASSEGNAZIONE GIOCATORE DALLA PANCHINA IN CAMPO
+  // ============================================================
+  function openBenchAssignModal(benchPlayerId, data) {
+    var benchPlayer = null;
+    var benchIdx = -1;
+    for (var i = 0; i < (data.panchina || []).length; i++) {
+      if (String(data.panchina[i].id) === String(benchPlayerId)) {
+        benchPlayer = data.panchina[i];
+        benchIdx = i;
+        break;
+      }
+    }
+    if (!benchPlayer) return;
+
+    var startersHtml = data.top11.map(function (st, sIdx) {
+      return (
+        '<div style="display:flex; justify-content:space-between; align-items:center; background:#040912; border:1px solid #12344a; border-radius:6px; padding:0.5rem 0.75rem; margin-bottom:0.45rem;">' +
+          '<div style="display:flex; align-items:center; gap:0.6rem;">' +
+            '<div style="width:28px; height:28px; border-radius:50%; background:#071522; border:1.5px solid #16b9ff; color:#f3f8fc; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:900;">#' + esc(st.num) + '</div>' +
+            '<div>' +
+              '<div style="font-size:0.85rem; font-weight:700; color:#f3f8fc;">' + esc(st.name) + '</div>' +
+              '<div style="font-size:0.68rem; color:#8da8bc;">Slot #' + (sIdx + 1) + ' · ' + esc(st.roleName || st.pos) + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div style="display:flex; align-items:center; gap:0.5rem;">' +
+            '<span style="font-size:0.7rem; font-weight:800; padding:2px 7px; border-radius:4px; ' + getRoleBadgeStyle(st.pos) + '">' + esc(st.pos) + '</span>' +
+            '<button type="button" class="es-btn-cos-primary btn-replace-starter" data-slot-target="' + sIdx + '" style="padding:0.3rem 0.65rem; font-size:0.75rem; border-radius:5px; cursor:pointer;">' +
+              'Sostituisci Questo' +
+            '</button>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join('');
+
+    var content =
+      '<div style="display:flex; flex-direction:column; gap:1rem;">' +
+        '<div style="background:#040912; border:1px solid #12344a; border-radius:8px; padding:0.85rem; display:flex; align-items:center; gap:0.75rem;">' +
+          '<div style="width:36px; height:36px; border-radius:50%; background:#071522; border:2px solid #16b9ff; color:#16b9ff; font-size:0.9rem; font-weight:900; display:flex; align-items:center; justify-content:center;">#' + esc(benchPlayer.num) + '</div>' +
+          '<div>' +
+            '<div style="font-size:0.92rem; font-weight:800; color:#f3f8fc;">' + esc(benchPlayer.name) + ' (' + esc(benchPlayer.pos || benchPlayer.role) + ')</div>' +
+            '<div style="font-size:0.72rem; color:#8da8bc;">Seleziona quale titolare sostituire per schierarlo in campo.</div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="max-height:280px; overflow-y:auto; padding-right:2px;">' +
+          startersHtml +
+        '</div>' +
+        '<div style="display:flex; justify-content:flex-end; gap:0.5rem; border-top:1px solid #12344a; padding-top:0.75rem;">' +
+          '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Annulla</button>' +
+        '</div>' +
+      '</div>';
+
+    openModal('Schiera Calciatore in Campo: ' + benchPlayer.name, content);
+
+    document.querySelectorAll('.btn-replace-starter').forEach(function (btn) {
+      btn.onclick = function () {
+        var sIdx = parseInt(btn.getAttribute('data-slot-target'), 10);
+        var subOut = data.top11[sIdx];
+
+        data.top11[sIdx] = {
+          id: benchPlayer.id,
+          num: benchPlayer.num,
+          name: benchPlayer.name,
+          pos: subOut.pos || benchPlayer.pos,
+          roleName: subOut.roleName,
+          originalRole: benchPlayer.role,
+          rating: benchPlayer.rating || '--'
+        };
+
+        data.panchina.splice(benchIdx, 1);
+        data.panchina.push({
+          id: subOut.id,
+          num: subOut.num,
+          name: subOut.name,
+          pos: getShortRole(subOut.originalRole || subOut.pos),
+          role: subOut.originalRole || subOut.pos,
+          status: 'disp',
+          birth: subOut.birth || '--'
+        });
+
+        saveCoachData(data);
+        closeModal();
+        var container = document.getElementById('es-cos-active-content');
+        if (container && activeTab === 'formazione') {
+          container.innerHTML = renderFormazione(data);
+          bindAllEvents();
+        }
+        if (window.showToast) window.showToast('Schierato #' + benchPlayer.num + ' ' + benchPlayer.name + ' in campo!', 'success');
+      };
+    });
+  }
+
+  // ============================================================
+  // ANTEPRIMA STORY INSTAGRAM 9:16
+  // ============================================================
+  function openStoryPreviewModal(data) {
+    var modKey = String(data.moduloPrincipale || '4-3-3').trim();
+    if (!MODULI_TATTICI[modKey]) modKey = '4-3-3';
+    var modDef = MODULI_TATTICI[modKey];
+    var clubName = data.clubName || 'Foggia City';
+
+    var miniPins = modDef.slots.map(function (slot, idx) {
+      var p = (data.top11 || [])[idx] || { num: idx + 1, name: slot.name, pos: slot.ruolo };
+      return (
+        '<div style="position:absolute; left:' + slot.x + '%; top:' + slot.y + '%; transform:translate(-50%, -50%); display:flex; flex-direction:column; align-items:center; gap:2px;">' +
+          '<div style="width:24px; height:24px; border-radius:50%; background:#071522; border:1.8px solid #16b9ff; color:#f3f8fc; font-size:0.68rem; font-weight:900; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(0,0,0,0.8);">' +
+            '#' + esc(p.num) +
+          '</div>' +
+          '<div style="background:rgba(0,0,0,0.85); color:#ffffff; font-size:0.55rem; font-weight:800; padding:1px 4px; border-radius:3px; white-space:nowrap;">' +
+            esc(p.name.split(' ').pop()) +
+          '</div>' +
+        '</div>'
+      );
+    }).join('');
+
+    var benchTextList = (data.panchina || []).slice(0, 8).map(function (b) {
+      return '<span style="font-size:0.65rem; color:#8da8bc;"><b style="color:#16b9ff;">#' + esc(b.num) + '</b> ' + esc(b.name.split(' ').pop()) + '</span>';
+    }).join(' · ');
+
+    var content =
+      '<div style="display:flex; flex-direction:column; align-items:center; gap:1rem;">' +
+        // SCHERMO 9:16 SIMULATO
+        '<div style="width:310px; height:550px; background:linear-gradient(180deg, #071522 0%, #030811 100%); border:2px solid #16b9ff; border-radius:24px; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; padding:1.25rem 1rem; position:relative; box-shadow:0 15px 40px rgba(0,0,0,0.85); box-sizing:border-box;">' +
+          // HEADER STORY
+          '<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(22,185,255,0.25); padding-bottom:0.5rem;">' +
+            '<div>' +
+              '<div style="font-size:0.65rem; font-weight:800; color:#16b9ff; letter-spacing:0.1em; text-transform:uppercase;">Official Matchday Lineup</div>' +
+              '<div style="font-size:1.05rem; font-weight:900; color:#f3f8fc; letter-spacing:0.02em;">' + esc(clubName).toUpperCase() + '</div>' +
+            '</div>' +
+            '<span style="font-size:0.75rem; font-weight:900; background:#16b9ff; color:#040912; padding:3px 8px; border-radius:12px;">' + esc(modKey) + '</span>' +
+          '</div>' +
+
+          // MINI PITCH 2D AL CENTRO DELLA STORY
+          '<div style="position:relative; width:100%; aspect-ratio:16/12; background:radial-gradient(circle at 50% 50%, #0d3b1f 0%, #061e11 88%); border:1.5px solid #16562f; border-radius:10px; overflow:hidden; margin:0.5rem 0;">' +
+            '<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; opacity:0.35;">' +
+              '<rect x="4" y="3" width="92" height="94" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+              '<line x1="4" y1="50" x2="96" y2="50" stroke="#ffffff" stroke-width="1.2"/>' +
+              '<circle cx="50" cy="50" r="11" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+              '<rect x="28" y="3" width="44" height="15" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+              '<rect x="28" y="82" width="44" height="15" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+            '</svg>' +
+            miniPins +
+          '</div>' +
+
+          // FOOTER STORY CON PANCHINA E WATERMARK
+          '<div>' +
+            '<div style="font-size:0.62rem; font-weight:800; color:#93c5fd; text-transform:uppercase; margin-bottom:0.25rem;">A Disposizione (Panchina)</div>' +
+            '<div style="line-height:1.4; margin-bottom:0.75rem;">' + benchTextList + '</div>' +
+            '<div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.1); padding-top:0.4rem; font-size:0.6rem; color:#64748b;">' +
+              '<span>Formazione Convalidata</span>' +
+              '<span style="color:#16b9ff; font-weight:800;">ELISEE SCOUT</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        // BOTTONI AZIONE MODALE
+        '<div style="display:flex; gap:0.6rem;">' +
+          '<button type="button" class="es-btn-cos-primary" id="btn-copy-story-text" style="font-size:0.8rem; padding:0.5rem 1rem;">' +
+            '📋 Copia Formazione Testuale' +
+          '</button>' +
+          '<button type="button" class="es-btn-cos-sec" id="btn-close-modal" style="font-size:0.8rem; padding:0.5rem 1rem;">' +
+            'Chiudi' +
+          '</button>' +
+        '</div>' +
+      '</div>';
+
+    openModal('Anteprima Story 9:16 · ' + clubName, content);
+
+    var btnCopy = document.getElementById('btn-copy-story-text');
+    if (btnCopy) {
+      btnCopy.onclick = function () {
+        var text = '⚽ ' + clubName + ' — FORMAZIONE UFFICIALE (' + modKey + ')\n\n' +
+          'XI Titolare:\n' +
+          data.top11.map(function (p, i) { return (i + 1) + '. #' + p.num + ' ' + p.name + ' (' + p.pos + ')'; }).join('\n') +
+          '\n\nPanchina:\n' +
+          (data.panchina || []).map(function (b) { return '#' + b.num + ' ' + b.name + ' (' + (b.pos || b.role) + ')'; }).join(', ') +
+          '\n\n#EliseeScout #Matchday #' + clubName.replace(/\s+/g, '');
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () {
+            if (window.showToast) window.showToast('Testo formazione copiato negli appunti!', 'success');
+          }).catch(function () {
+            if (window.showToast) window.showToast('Testo pronto per la condivisione.', 'info');
+          });
+        }
+      };
+    }
   }
 
   // ============================================================
@@ -1594,6 +2372,129 @@
       };
     }
 
+    // Esporta Story 9:16 Anteprima Instagram
+    var btnStory = mount.querySelector('#btn-export-story-modal');
+    if (btnStory) {
+      btnStory.onclick = function () {
+        openStoryPreviewModal(data);
+      };
+    }
+
+    // Cambio Modulo Tattico Dinamico (7 Moduli)
+    var selMod = mount.querySelector('#sel-tactical-modulo');
+    if (selMod) {
+      selMod.onchange = function () {
+        data.moduloPrincipale = selMod.value;
+        syncFormationWithRoster(data);
+        saveCoachData(data);
+        var container = document.getElementById('es-cos-active-content');
+        if (container && activeTab === 'formazione') {
+          container.innerHTML = renderFormazione(data);
+          bindAllEvents();
+        }
+        if (window.showToast) window.showToast('Modulo tattico aggiornato a ' + selMod.value, 'success');
+      };
+    }
+
+    // Click sui Pin del Campo (Sostituzione o cambio ruolo dello slot)
+    mount.querySelectorAll('.es-pitch-pin').forEach(function (pin) {
+      pin.onclick = function () {
+        var sIdx = parseInt(pin.getAttribute('data-player-pin-idx'), 10);
+        if (!isNaN(sIdx)) {
+          openSlotSwapModal(sIdx, data);
+        }
+      };
+
+      // Drag and drop su pin
+      pin.ondragover = function (e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        pin.style.transform = 'translate(-50%, -50%) scale(1.15)';
+        var b = pin.querySelector('.es-pitch-pin-badge');
+        if (b) b.style.borderColor = '#00d978';
+      };
+
+      pin.ondragleave = function () {
+        pin.style.transform = 'translate(-50%, -50%)';
+        var b = pin.querySelector('.es-pitch-pin-badge');
+        if (b) b.style.borderColor = '#16b9ff';
+      };
+
+      pin.ondrop = function (e) {
+        e.preventDefault();
+        pin.style.transform = 'translate(-50%, -50%)';
+        var b = pin.querySelector('.es-pitch-pin-badge');
+        if (b) b.style.borderColor = '#16b9ff';
+
+        var benchId = e.dataTransfer.getData('text/plain');
+        if (!benchId) return;
+
+        var sIdx = parseInt(pin.getAttribute('data-player-pin-idx'), 10);
+        if (isNaN(sIdx) || !data.top11[sIdx]) return;
+
+        var bIdx = -1;
+        for (var i = 0; i < (data.panchina || []).length; i++) {
+          if (String(data.panchina[i].id) === String(benchId)) {
+            bIdx = i;
+            break;
+          }
+        }
+        if (bIdx === -1) return;
+
+        var subIn = data.panchina[bIdx];
+        var subOut = data.top11[sIdx];
+
+        data.top11[sIdx] = {
+          id: subIn.id,
+          num: subIn.num,
+          name: subIn.name,
+          pos: subOut.pos || subIn.pos,
+          roleName: subOut.roleName,
+          originalRole: subIn.role,
+          rating: subIn.rating || '--'
+        };
+
+        data.panchina.splice(bIdx, 1);
+        data.panchina.push({
+          id: subOut.id,
+          num: subOut.num,
+          name: subOut.name,
+          pos: getShortRole(subOut.originalRole || subOut.pos),
+          role: subOut.originalRole || subOut.pos,
+          status: 'disp',
+          birth: subOut.birth || '--'
+        });
+
+        saveCoachData(data);
+        var container = document.getElementById('es-cos-active-content');
+        if (container && activeTab === 'formazione') {
+          container.innerHTML = renderFormazione(data);
+          bindAllEvents();
+        }
+        if (window.showToast) window.showToast('Sostituzione rapida: entra #' + subIn.num + ' ' + subIn.name, 'success');
+      };
+    });
+
+    // Dragstart sulle card della panchina
+    mount.querySelectorAll('.es-bench-card').forEach(function (card) {
+      card.ondragstart = function (e) {
+        var bId = card.getAttribute('data-bench-id');
+        e.dataTransfer.setData('text/plain', bId);
+        e.dataTransfer.effectAllowed = 'move';
+      };
+    });
+
+    // Pulsante "In Campo ->" sulle card della panchina
+    mount.querySelectorAll('.es-bench-assign-btn').forEach(function (btn) {
+      btn.onclick = function (e) {
+        e.stopPropagation();
+        var bId = btn.getAttribute('data-assign-bench-id');
+        if (bId) {
+          openBenchAssignModal(bId, data);
+        }
+      };
+    });
+
     // Invio Messaggio Staff
     var formMsg = mount.querySelector('#form-send-staff-msg');
     if (formMsg) {
@@ -1646,21 +2547,6 @@
         }
       };
     });
-
-    // Cambio Modulo Tattico
-    var selMod = mount.querySelector('#sel-tactical-modulo');
-    if (selMod) {
-      selMod.onchange = function () {
-        data.moduloPrincipale = selMod.value;
-        saveCoachData(data);
-        var container = document.getElementById('es-cos-active-content');
-        if (container && activeTab === 'formazione') {
-          container.innerHTML = renderFormazione(data);
-          bindAllEvents();
-        }
-        if (window.showToast) window.showToast('Modulo aggiornato a ' + selMod.value, 'success');
-      };
-    }
 
     // Aggiungi Calciatore Modal
     var btnAddP = mount.querySelector('#btn-add-player-modal');

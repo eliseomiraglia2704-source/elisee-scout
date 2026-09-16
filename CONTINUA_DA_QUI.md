@@ -3,17 +3,28 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Bottoni Secondari & Modali Annulla ad Alto Contrasto B2B (`CANCELBTN1`):
-1. **Risoluzione Definitiva Contrasto e Gerarchia Visiva del Bottone "Annulla"**:
-   - In `coach-dash.css` e `vice-dash.css`: aggiornato lo stile di `.es-btn-cos-sec` e specificamente dei bottoni di annullamento e chiusura modale (`#btn-close-modal`, `#btn-vd-modal-cancel`, `#es-cos-modal-box .es-btn-cos-sec`):
-     - **Sfondo solido neutro**: `#2A3441` (lo stesso family delle card KPI nel tema scuro), eliminando l'effetto "fantasma/disabilitato".
-     - **Bordo visibile**: `1px solid rgba(255, 255, 255, 0.16)` (fino a `0.18` nei modali).
-     - **Colore testo quasi bianco**: `#E5E7EB` (non più grigio scuro spento), garantendo perfetta leggibilità accanto al CTA primario blu solido.
-     - **Dimensioni & Padding equilibrati**: `padding: 8px 18px;`, `font-size: 12px;`, `font-weight: 600;`, `border-radius: 6px;` e ombra sottile `0 1px 4px rgba(0, 0, 0, 0.35)`.
-     - **Stati interattivi percepibili**: Hover su `#333F4E` con bordo `rgba(255, 255, 255, 0.32)` e testo `#FFFFFF`; active su `#1F2732`.
-2. **Coerenza Globale Estesa a Tutto il Sito**:
-   - In `style.css`: unificati con lo stesso pattern cromatico (`#2A3441`, bordo `rgba(255, 255, 255, 0.16)`, testo `#E5E7EB`, hover `#333F4E`) le classi secondarie e i bottoni di annullamento modali in tutta la piattaforma (`.btn-secondary`, `.es-edit-btn-cancel`, `.es-btn-cancel`, `#btn-cancel-rating`, `#btn-cancel-art22`).
-3. **File aggiornati**: `coach-dash.css`, `vice-dash.css`, `style.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_CANCELBTN1`.
+Ultimo aggiornamento: **2026-09-16** — Lineup Builder Tattico Dinamico & Ruoli Flessibili (`LINEUPBUILDER1`):
+1. **Selettore Modulo Tattico Dropdown Reale (7 Moduli Ufficiali)**:
+   - Superato il vecchio testo statico del 4-3-3: implementato un selettore interattivo con etichetta ("Modulo:"), chevron SVG, bordo blu `#3b82f6` e dropdown con 7 moduli tattici completi: `4-3-3` (Offensivo con Ali), `4-4-2` (Classico Lineare), `4-2-3-1` (Doppio Mediano & Trequarti), `3-5-2` (Ampiezza Quinti & Doppio Attacco), `3-4-3` (Tridente & Linea Mediana a 4), `5-3-2` (Difesa a 5 & Contropiede Rapido), `4-1-4-1` (Vertice Basso & Linea di Trequarti).
+   - Al cambio modulo, le coordinate percentuali e i ruoli di tutti gli 11 slot si ridispongono istantaneamente sul campo da calcio.
+2. **Libreria Ruoli Estesa a 20 Posizioni con Sigle Ufficiali**:
+   - Censite tutte le 20 specializzazioni di ruolo con sigle coerenti e codifica a 4 reparti cromatici (POR, DIF, CEN, ATT): Libero (`LIB`), Braccetto Dx/Sx (`BCD`, `BCS`), Regista (`REG`), Trequartista (`TRQ`), Seconda Punta (`SP`), Esterno Basso Dx/Sx (`EBD`, `EBS`), Esterno Alto Dx/Sx (`EAD`, `EAS`), Falso Nueve (`FN`), oltre a Portiere (`POR`), Difensore Centrale (`DC`), Terzino Dx/Sx (`TD`, `TS`), Mediano (`MED`), Mezzala (`CC`), Ala Dx/Sx (`AD`, `AS`), Centravanti (`ATT`).
+3. **Campo da Calcio Centrato con Linee Regolamentari Vettoriali SVG**:
+   - Centrato nello spazio a sinistra (rapporto 1.35fr a 1fr), preservando il colore verde `#061e11` / `#0d3b1f` e il bordo verde scuro `#16562f`.
+   - Disegno vettoriale SVG sovrapposto con bordo campo, centrocampo, cerchio di centrocampo, aree di rigore, dischetti, lunette, porte e bandierine d'angolo in trasparenza bianca al 32%.
+   - Badge numeri maglia `#1`..`#99` con glow azzurro ed etichetta nome giocatore + sigla ruolo tra parentesi.
+4. **Panchina a Tutta Altezza con Dati Reali (Mai più "0 Calciatori")**:
+   - Integrata la funzione `syncFormationWithRoster(data)` con fallback a `getDefaultRoster()` (22 calciatori realistici con anagrafica completa per Foggia City).
+   - Tutti i calciatori disponibili non schierati negli 11 titolari confluiscono automaticamente nella panchina (10-11 atleti a disposizione).
+   - Card panchinaro interattive con classe di nascita, pillola ruolo colorata per reparto e tasto `In Campo &rarr;`.
+5. **Doppia Interattività: Drag & Drop Nativo HTML5 + Click-to-Swap**:
+   - È possibile sia trascinare (drag & drop) un calciatore della panchina direttamente sul cerchio/pin del titolare per eseguire la sostituzione immediata, sia cliccare sul pin del campo per aprire il modale di gestione (sostituzione o cambio specializzazione ruolo dello slot), sia cliccare su `In Campo &rarr;` dalla panchina.
+6. **Esportazione Anteprima "Story 9:16" per Instagram**:
+   - Riposizionato il pulsante `Story 9:16` affiancato al CTA blu primario `Conferma Formazione Ufficiale`.
+   - Al click apre un visualizzatore modale a 9:16 con matchday card per Instagram Stories, mini-pitch 2D con titolari, panchina in basso e pulsante per copiare il testo social formattato.
+7. **File aggiornati**: `coach-dash.js`, `coach-dash.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_LINEUPBUILDER1`.
+
+Feature precedente: **Bottoni Secondari & Modali Annulla ad Alto Contrasto B2B (`CANCELBTN1`):**
 
 Feature precedente: **Form Tesseramento Nuovo Calciatore con Anagrafica Completa (`ROSTERFIELDS1`)**:
 1. **Pulsante "+ Aggiungi Calciatore" nel Blu Primario di Brand**:
