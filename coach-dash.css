@@ -40,8 +40,7 @@
   --space-2: 12px;
   --space-3: 18px;
   --space-4: 26px;
-  --content-max: 1280px;
-  --header-h: 70px;
+  --header-h: 72px;      /* misura reale della navbar */
 }
 
 /* Navigazione principale del sito: sempre visibile e integrata con la palette scura */
@@ -53,36 +52,28 @@ body.is-coach-mode .main-header {
   border-bottom: 1px solid var(--cos-line) !important;
 }
 
-/* Nessun antenato deve avere overflow: hidden / auto, altrimenti sticky muore */
+/* a) UN SOLO compenso per la navbar fissa, sul wrapper esterno. Niente altro. */
+/* Azzera qualsiasi padding-top / margin-top su tutti gli antenati e contenitori generici */
 body.is-coach-mode,
 body.is-coach-mode html,
 body.is-coach-mode #user-dossier-view-group,
 body.is-coach-mode #user-dossier-portal,
+body.is-coach-mode .pf-page,
+body.is-coach-mode .pf-page-inner,
 body.is-coach-mode #es-staff-profile,
-body.is-coach-mode #es-cd,
-body.is-coach-mode .pf-page-inner {
+body.is-coach-mode #es-cd {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+  min-height: auto !important;
   overflow: visible !important;
   max-height: none !important;
 }
 
-#user-dossier-view-group.is-staff-area.is-coach-dash,
-#user-dossier-view-group.is-staff-area.is-coach-dash #user-dossier-portal,
-#user-dossier-view-group.is-staff-area.is-vice-dash,
-#user-dossier-view-group.is-staff-area.is-vice-dash #user-dossier-portal {
-  min-height: auto !important;
-  padding-bottom: 0 !important;
-}
-
-#user-dossier-view-group.is-staff-area.is-coach-dash .es-user-tabs,
-#user-dossier-view-group.is-staff-area.is-vice-dash .es-user-tabs { display: none !important; }
-
-#user-dossier-view-group.is-staff-area.is-coach-dash .pf-page-inner,
-#user-dossier-view-group.is-staff-area.is-vice-dash .pf-page-inner {
-  max-width: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  min-height: auto !important;
-}
+body.is-coach-mode .es-user-tabs { display: none !important; }
 
 #es-staff-profile.es-cd-on > :not(#es-cd),
 #es-staff-profile.es-vice-on > :not(#es-vd) { display: none !important; }
@@ -90,9 +81,10 @@ body.is-coach-mode .pf-page-inner {
 /* ============================================================
    LAYOUT PRINCIPALE (Grid sidebar + contenuto, align-items: start)
    ============================================================ */
+.layout,
 .es-cos-shell {
   background: var(--cos-bg);
-  min-height: 100vh;
+  min-height: calc(100vh - var(--header-h));
   color: var(--cos-text);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   display: grid;
@@ -102,12 +94,16 @@ body.is-coach-mode .pf-page-inner {
   position: relative;
   width: 100%;
   box-sizing: border-box;
-  padding-top: var(--header-h);
+  padding-top: var(--header-h);   /* a) UNICO compenso per la navbar fissa */
+  padding-inline: var(--space-3);
+  padding-bottom: var(--space-3);
+  max-width: none !important;     /* d) usa tutta la larghezza */
 }
 
 /* ============================================================
    SIDEBAR GESTIONALE (Sticky con altezza propria e scroll interno)
    ============================================================ */
+.sidebar,
 .es-cos-sidebar {
   width: 240px;
   min-width: 240px;
@@ -115,17 +111,27 @@ body.is-coach-mode .pf-page-inner {
   border-right: 1px solid var(--cos-line);
   display: flex;
   flex-direction: column;
-  padding: var(--space-3) var(--space-2);
+  padding-inline: var(--space-2);
+  padding-top: var(--space-2);
+  padding-bottom: 64px;          /* b) così le voci non finiscono sotto il badge in basso */
   flex-shrink: 0;
   position: sticky;
-  top: var(--header-h);            /* altezza della navbar in alto */
-  height: calc(100vh - var(--header-h));
+  top: var(--header-h);          /* altezza della navbar in alto */
+  max-height: calc(100vh - var(--header-h));   /* b) max-height, non height */
   overflow-y: auto;
-  overscroll-behavior: contain;          /* lo scroll non "trascina" la pagina */
+  overscroll-behavior: contain;  /* lo scroll non "trascina" la pagina */
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
   z-index: 90;
   box-sizing: border-box;
+}
+
+.es-cos-sidebar-badge {
+  position: sticky;
+  bottom: 0;
+  margin-top: auto;
+  padding-block: var(--space-1);
+  background: #0A0E18;           /* copre le voci che scorrono sotto */
 }
 
 .es-cos-sidebar::-webkit-scrollbar {
@@ -293,11 +299,16 @@ body.is-coach-mode .pf-page-inner {
 /* ============================================================
    MAIN WORKSPACE
    ============================================================ */
+.content,
 .es-cos-main {
   flex: 1 1 auto;
   min-width: 0;
-  max-width: var(--content-max);
-  padding: var(--space-2) var(--space-3) var(--space-4);
+  max-width: none !important;    /* d) usa tutta la larghezza disponibile */
+  width: 100%;
+  padding-top: 0 !important;     /* a) azzerato */
+  margin-top: 0 !important;      /* a) azzerato */
+  padding-inline: 0;
+  padding-bottom: var(--space-3);
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
@@ -546,22 +557,31 @@ section + section {
   display: block;
 }
 
-/* Tab Navigation Bar (Tutto su UN'UNICA RIGA con token compatti) */
+/* c) Tab bar scrollabile invece che tagliata */
+.tab-bar,
 .es-cos-nav-tabs {
   display: flex;
   flex-wrap: nowrap;
   gap: var(--space-1);
-  margin-block: var(--space-1) var(--space-2);
   overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  margin-block: var(--space-2);
+  padding-bottom: 2px;
   width: 100%;
+  box-sizing: border-box;
 }
 
+.tab-bar::-webkit-scrollbar,
 .es-cos-nav-tabs::-webkit-scrollbar {
   display: none;
   width: 0;
   height: 0;
+}
+
+.tab-bar > *,
+.es-cos-nav-tabs > * {
+  flex: 0 0 auto;
 }
 
 .es-cos-nav-tabs button {
@@ -577,7 +597,7 @@ section + section {
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
-  flex-shrink: 0;
+  flex: 0 0 auto;
   transition: all 0.15s ease;
 }
 

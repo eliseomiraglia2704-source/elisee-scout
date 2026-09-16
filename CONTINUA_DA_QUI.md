@@ -3,7 +3,21 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Sidebar Sticky Impeccabile & Ritmo Verticale Compatto Token-based (`COACHPRO3`):
+Ultimo aggiornamento: **2026-09-16** — Risoluzione 4 Difetti Layout Area Staff Tecnico (`COACHPRO4`):
+1. **Fascia Vuota ~90px Risolta (Unico Compenso Navbar)**:
+   - Eliminato il doppio compenso per la navbar fissa: impostato un unico `padding-top: var(--header-h, 72px)` sul wrapper principale (`.layout, .es-cos-shell`).
+   - Azzerati rigorosamente `padding-top: 0 !important; margin-top: 0 !important;` su tutti gli antenati e contenitori intermedi (`body.is-coach-mode`, `html`, `#user-dossier-view-group`, `#user-dossier-portal`, `.pf-page`, `.pf-page-inner`, `#es-staff-profile`, `#es-cd`, `.content, .es-cos-main`).
+2. **Sidebar con Max-Height, Scroll Interno & Padding-Bottom di Sicurezza**:
+   - Convertito da `height: calc(100vh - var(--header-h))` a `max-height: calc(100vh - var(--header-h))` con `overflow-y: auto; overscroll-behavior: contain;`.
+   - Aggiunto `padding-bottom: 64px` per evitare che l'ultima voce del menu ("Comunicazioni") venga coperta o tagliata dal badge in fondo.
+   - Badge utente inferiore in sidebar reso `position: sticky; bottom: 0; margin-top: auto; background: #0A0E18;` con sfondo opaco a copertura delle voci che scorrono sotto.
+3. **Tab Bar Orizzontale a Scorrimento Fluido Senza Tagli**:
+   - Aggiunto `overflow-x: auto; scrollbar-width: none; margin-block: var(--space-2); padding-bottom: 2px;` su `.tab-bar, .es-cos-nav-tabs`.
+   - Impostato `flex: 0 0 auto;` su tutti gli elementi figli (`.tab-bar > *, .es-cos-nav-tabs > *`), impedendo il restringimento e il taglio laterale.
+4. **Contenitore Centrale a Larghezza Piena**:
+   - Rimosso il tetto `max-width: var(--content-max)` su layout e area centrale; impostato `max-width: none !important; width: 100%;` con `padding-inline: var(--space-3);` per sfruttare al 100% lo spazio disponibile nel viewport.
+5. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHPRO4`.
+Feature precedente: **Sidebar Sticky Impeccabile & Ritmo Verticale Compatto Token-based (`COACHPRO3`)**:
 1. **Sidebar Sticky Garantita allo Scroll**:
    - Impostato layout principale `.es-cos-shell` come `display: grid; grid-template-columns: 240px minmax(0, 1fr); align-items: start; gap: var(--space-3); padding-top: var(--header-h);`.
    - Sidebar `.es-cos-sidebar` configurata con `position: sticky; top: var(--header-h, 70px); height: calc(100vh - var(--header-h)); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;`.
