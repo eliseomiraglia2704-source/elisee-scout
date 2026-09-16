@@ -3,7 +3,28 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Lavagna Tattica Digitale: Icone SVG Lucide 16px & Strumenti Tattici End-to-End (`TACTICLUCIDE1`):
+Ultimo aggiornamento: **2026-09-16** — Lavagna Tattica: Pulsante "Importa Schema" (Schemi Preimpostati UEFA Pro & JSON) e "Salva Schema" Riposizionato (`IMPORTSCHEMA1`):
+1. **Riposizionamento Pulsanti Testata Lavagna Tattica**:
+   - Spostato `"Salva Schema"` (`es-btn-cos-primary`) nella posizione evidenziata a destra della barra delle azioni.
+   - Al suo posto precedente è stato inserito il nuovo pulsante `"Importa Schema"` (`#btn-import-board-preset`, con icona SVG Lucide Download e bordo ciano).
+2. **Libreria Schemi Tattici Preimpostati (Mister & Vice Allenatore)**:
+   - Modale dedicato interattivo (`840px`) con 6 schemi professionali completi codificati secondo i principi moderni (UEFA Pro):
+     - *Costruzione dal Basso 4-3-3* (Scuola Guardiola-De Zerbi): 3+1 profondo, centrali larghi, mediano abbassato e terzini alti.
+     - *Gegenpressing Alto Ultra-Offensivo* (Klopp Style): pressione orientata sull'esterno entro 5 secondi, 3 attaccanti e mezzali avanzate.
+     - *Transizione & Ripartenza Fulminea 3-5-2* (Conte-Inzaghi): ribaltamento immediato, punta a venire incontro e taglio in profondità della seconda punta, quinti a tutta fascia.
+     - *Catena Laterale & Sovrapposizione Terzino* (4-3-3): convergenza dell'ala, corridoio esterno per il terzino e taglio centravanti.
+     - *Blocco Medio Compatto 4-4-2* (Simeone-Sacchi): linee da quattro strette, slittamento collettivo lato palla e schermatura play.
+     - *Corner a Favore: Blocco & Taglio 1° Palo* (Palle Inattive): schema su palla ferma con blocchi su dischetto e taglio incrociato.
+   - Filtro rapido per categoria (*Tutti, Costruzione & Palleggio, Fase di Non Possesso, Transizione Offensiva, Sviluppo Corsie Esterne, Palle Inattive*).
+   - Click su *"Importa sulla Lavagna"*: applica istantaneamente modulo, posizioni degli 11 calciatori reali della rosa, palla, frecce di corsa, frecce di passaggio e zone tattiche.
+3. **Importazione & Esportazione File JSON**:
+   - Possibilità di caricare direttamente file `.json` salvati o scambiati tra staff.
+   - Aggiunto il tasto *"Esporta File JSON"* nel form di Salvataggio Schema per scaricare qualsiasi schema tattico su file locale in formato `.json`.
+4. **Integrazione Collaborativa Vice Allenatore (`vice-dash.js`)**:
+   - Aggiunti i pulsanti *"Importa Schema Preimpostato"* e *"Lavagna Interattiva &rarr;"* anche nell'header della lavagna del Vice, collegati alla libreria condivisa con il Mister.
+5. **File aggiornati**: `coach-dash.js`, `vice-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_IMPORTSCHEMA1`.
+
+Feature precedente: **Lavagna Tattica Digitale: Icone SVG Lucide 16px & Strumenti Tattici End-to-End (`TACTICLUCIDE1`):**
 1. **Sostituzione Integrale Emoji con Icone SVG Lucide**:
    - Rimosse tutte le emoji unicode nei pulsanti della sezione Tattica e sostituite con icone SVG standard Lucide 16x16px (stroke-width 2, coerenti con la sidebar e l'UI del club):
      - `Muovi`: Lucide `Move`

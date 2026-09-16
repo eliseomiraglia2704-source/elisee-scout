@@ -726,9 +726,18 @@
   function renderVdLavagna(data) {
     return (
       '<div class="es-cos-panel-card">' +
-        '<div class="es-cos-panel-head">' +
+        '<div class="es-cos-panel-head" style="flex-wrap:wrap; gap:0.6rem; justify-content:space-between; align-items:center;">' +
           '<span class="es-cos-panel-title">LAVAGNA TATTICA CONDIVISA CON L\'ALLENATORE CAPO</span>' +
-          '<button type="button" class="es-btn-cos-primary" onclick="if(window.showToast)window.showToast(\'Schema condiviso direttamente con il Mister!\',\'success\')">Condividi con il Mister</button>' +
+          '<div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">' +
+            '<button type="button" class="es-btn-cos-sec" id="btn-vd-import-preset" style="display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; border-color:rgba(56, 189, 248, 0.4); color:#38bdf8;" title="Importa schemi tattici preimpostati">' +
+              '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
+              '<span>Importa Schema Preimpostato</span>' +
+            '</button>' +
+            '<button type="button" class="es-btn-cos-sec" id="btn-vd-jump-tattica" style="font-size:0.75rem;" title="Apri lavagna interattiva completa del Mister">' +
+              '<span>Lavagna Interattiva &rarr;</span>' +
+            '</button>' +
+            '<button type="button" class="es-btn-cos-primary" onclick="if(window.showToast)window.showToast(\'Schema condiviso direttamente con il Mister!\',\'success\')">Condividi con il Mister</button>' +
+          '</div>' +
         '</div>' +
         '<div class="es-cos-pitch-wrapper" style="min-height:420px;">' +
           '<div class="es-cos-pitch-field"></div>' +
@@ -859,6 +868,32 @@
           window.EliseeCoachDash.render(u);
         }
         if (window.showToast) window.showToast('Accesso alla Control Room Allenatore Capo', 'info');
+      };
+    }
+
+    var btnVdImport = mount.querySelector('#btn-vd-import-preset');
+    if (btnVdImport) {
+      btnVdImport.onclick = function () {
+        if (window.EliseeCoachDash && typeof window.EliseeCoachDash.openImportSchemeModal === 'function') {
+          var cData = window.EliseeCoachDash.getData ? window.EliseeCoachDash.getData() : data;
+          window.EliseeCoachDash.openImportSchemeModal(cData);
+        } else if (window.showToast) {
+          window.showToast('Apri l\'Area Allenatore per gestire la lavagna completa.', 'info');
+        }
+      };
+    }
+
+    var btnVdJumpTattica = mount.querySelector('#btn-vd-jump-tattica');
+    if (btnVdJumpTattica) {
+      btnVdJumpTattica.onclick = function () {
+        var btnCoachJump = document.getElementById('btn-goto-coach-control');
+        if (btnCoachJump) {
+          btnCoachJump.click();
+          setTimeout(function () {
+            var tabTattica = document.querySelector('[data-cos-tab="tattica"]');
+            if (tabTattica) tabTattica.click();
+          }, 120);
+        }
       };
     }
 

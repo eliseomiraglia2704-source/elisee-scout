@@ -512,6 +512,203 @@
     }
   };
 
+  var SCHEMI_PREIMPOSTATI = [
+    {
+      id: 'costruzione-basso-433',
+      nome: 'Costruzione dal Basso 4-3-3',
+      modulo: '4-3-3',
+      autore: 'Mister / Scuola Guardiola-De Zerbi',
+      categoria: 'Costruzione & Palleggio',
+      descrizione: 'I centrali difensivi si allargano ai vertici dell\'area di rigore, il mediano (vertice basso) si abbassa per creare superiorità 3v2. I terzini salgono alti sulle corsie esterne, mentre le mezzali offrono linee di passaggio diagonali tra le linee avversarie.',
+      badgeColore: '#38bdf8',
+      slotsOverride: [
+        { ruolo: 'POR', x: 50, y: 88, name: 'Portiere' },
+        { ruolo: 'TD',  x: 88, y: 58, name: 'Terzino Dx' },
+        { ruolo: 'DC',  x: 72, y: 80, name: 'Difensore Centrale 1' },
+        { ruolo: 'DC',  x: 28, y: 80, name: 'Difensore Centrale 2' },
+        { ruolo: 'TS',  x: 12, y: 58, name: 'Terzino Sx' },
+        { ruolo: 'MED', x: 50, y: 64, name: 'Mediano' },
+        { ruolo: 'CC',  x: 70, y: 44, name: 'Mezzala Dx' },
+        { ruolo: 'CC',  x: 30, y: 44, name: 'Mezzala Sx' },
+        { ruolo: 'AD',  x: 84, y: 22, name: 'Ala Dx' },
+        { ruolo: 'AS',  x: 16, y: 22, name: 'Ala Sx' },
+        { ruolo: 'ATT', x: 50, y: 15, name: 'Centravanti' }
+      ],
+      ball: { x: 50, y: 82 },
+      arrows: [
+        { id: 'arr-cb1', tipo: 'passaggio', colore: '#38bdf8', x1: 50, y1: 88, x2: 28, y2: 80, createdAt: 1 },
+        { id: 'arr-cb2', tipo: 'passaggio', colore: '#38bdf8', x1: 50, y1: 88, x2: 72, y2: 80, createdAt: 2 },
+        { id: 'arr-cb3', tipo: 'passaggio', colore: '#38bdf8', x1: 72, y1: 80, x2: 50, y2: 64, createdAt: 3 },
+        { id: 'arr-run-ts', tipo: 'corsa', colore: '#ffd21a', x1: 12, y1: 58, x2: 12, y2: 40, createdAt: 4 },
+        { id: 'arr-run-td', tipo: 'corsa', colore: '#ffd21a', x1: 88, y1: 58, x2: 88, y2: 40, createdAt: 5 },
+        { id: 'arr-run-cc', tipo: 'corsa', colore: '#ffd21a', x1: 70, y1: 44, x2: 58, y2: 32, createdAt: 6 }
+      ],
+      zones: [
+        { id: 'z-costr', x: 18, y: 60, w: 64, h: 28, label: 'Zona Costruzione 3+1', createdAt: 7 }
+      ]
+    },
+    {
+      id: 'gegenpress-alto-433',
+      nome: 'Gegenpressing Alto Ultra-Offensivo',
+      modulo: '4-3-3',
+      autore: 'Mister / Klopp Style',
+      categoria: 'Fase di Non Possesso',
+      descrizione: 'Pressione asfissiante sul primo controllo avversario. La linea dei tre attaccanti chiude le linee verso l\'esterno, mentre mezzali e mediano avanzano a togliere gli appoggi centrali per recuperare palla entro 5 secondi.',
+      badgeColore: '#ef4444',
+      slotsOverride: [
+        { ruolo: 'POR', x: 50, y: 75, name: 'Portiere' },
+        { ruolo: 'TD',  x: 82, y: 54, name: 'Terzino Dx' },
+        { ruolo: 'DC',  x: 60, y: 58, name: 'Difensore Centrale 1' },
+        { ruolo: 'DC',  x: 40, y: 58, name: 'Difensore Centrale 2' },
+        { ruolo: 'TS',  x: 18, y: 54, name: 'Terzino Sx' },
+        { ruolo: 'MED', x: 50, y: 42, name: 'Mediano' },
+        { ruolo: 'CC',  x: 68, y: 34, name: 'Mezzala Dx' },
+        { ruolo: 'CC',  x: 32, y: 34, name: 'Mezzala Sx' },
+        { ruolo: 'AD',  x: 76, y: 16, name: 'Ala Dx' },
+        { ruolo: 'AS',  x: 24, y: 16, name: 'Ala Sx' },
+        { ruolo: 'ATT', x: 50, y: 10, name: 'Centravanti' }
+      ],
+      ball: { x: 48, y: 12 },
+      arrows: [
+        { id: 'arr-gp-att', tipo: 'corsa', colore: '#ffd21a', x1: 50, y1: 10, x2: 48, y2: 12, createdAt: 1 },
+        { id: 'arr-gp-ad',  tipo: 'corsa', colore: '#ffd21a', x1: 76, y1: 16, x2: 60, y2: 14, createdAt: 2 },
+        { id: 'arr-gp-as',  tipo: 'corsa', colore: '#ffd21a', x1: 24, y1: 16, x2: 38, y2: 14, createdAt: 3 },
+        { id: 'arr-gp-cc1', tipo: 'corsa', colore: '#ffd21a', x1: 68, y1: 34, x2: 64, y2: 24, createdAt: 4 },
+        { id: 'arr-gp-cc2', tipo: 'corsa', colore: '#ffd21a', x1: 32, y1: 34, x2: 36, y2: 24, createdAt: 5 }
+      ],
+      zones: [
+        { id: 'z-press', x: 15, y: 6, w: 70, h: 32, label: 'Zona Gegenpressing Attivo', createdAt: 6 }
+      ]
+    },
+    {
+      id: 'transizione-contropiede-352',
+      nome: 'Transizione & Ripartenza Fulminea 3-5-2',
+      modulo: '3-5-2',
+      autore: 'Mister / Verticalità Conte-Inzaghi',
+      categoria: 'Transizione Offensiva',
+      descrizione: 'Recuperata palla nella metà campo difensiva, verticalizzazione immediata sulla prima punta che viene incontro a fare da sponda per la seconda punta che attacca la profondità. Quinti a tutta velocità verso il fondo.',
+      badgeColore: '#10b981',
+      slotsOverride: [
+        { ruolo: 'POR', x: 50, y: 88, name: 'Portiere' },
+        { ruolo: 'BCD', x: 74, y: 72, name: 'Braccetto Dx' },
+        { ruolo: 'DCL', x: 50, y: 74, name: 'Centrale di Difesa' },
+        { ruolo: 'BCS', x: 26, y: 72, name: 'Braccetto Sx' },
+        { ruolo: 'ED',  x: 88, y: 46, name: 'Esterno Dx' },
+        { ruolo: 'MED', x: 50, y: 56, name: 'Play / Mediano' },
+        { ruolo: 'CC',  x: 66, y: 50, name: 'Mezzala Dx' },
+        { ruolo: 'CC',  x: 34, y: 50, name: 'Mezzala Sx' },
+        { ruolo: 'ES',  x: 12, y: 46, name: 'Esterno Sx' },
+        { ruolo: 'SP',  x: 40, y: 26, name: 'Seconda Punta' },
+        { ruolo: 'ATT', x: 60, y: 16, name: 'Centravanti' }
+      ],
+      ball: { x: 50, y: 56 },
+      arrows: [
+        { id: 'arr-tr-pass1', tipo: 'passaggio', colore: '#38bdf8', x1: 50, y1: 56, x2: 40, y2: 26, createdAt: 1 },
+        { id: 'arr-tr-pass2', tipo: 'passaggio', colore: '#38bdf8', x1: 40, y1: 26, x2: 60, y2: 16, createdAt: 2 },
+        { id: 'arr-tr-ed',   tipo: 'corsa', colore: '#ffd21a', x1: 88, y1: 46, x2: 88, y2: 20, createdAt: 3 },
+        { id: 'arr-tr-es',   tipo: 'corsa', colore: '#ffd21a', x1: 12, y1: 46, x2: 12, y2: 20, createdAt: 4 },
+        { id: 'arr-tr-att',  tipo: 'corsa', colore: '#ffd21a', x1: 60, y1: 16, x2: 50, y2: 6, createdAt: 5 }
+      ],
+      zones: [
+        { id: 'z-trans', x: 18, y: 44, w: 64, h: 36, label: 'Zona Recupero & Ripartenza', createdAt: 6 }
+      ]
+    },
+    {
+      id: 'catena-laterale-sovrapposizione-433',
+      nome: 'Catena Laterale & Sovrapposizione Terzino',
+      modulo: '4-3-3',
+      autore: 'Staff Tecnico Foggia City',
+      categoria: 'Sviluppo Corsie Esterne',
+      descrizione: 'Combinazione codificata sulla corsia destra: l\'ala riceve aperta e converge verso il limite per tirare fuori il terzino avversario. Il nostro terzino sprinta all\'esterno sul corridoio scoperto per crossare dal fondo.',
+      badgeColore: '#f59e0b',
+      slotsOverride: [
+        { ruolo: 'POR', x: 50, y: 88, name: 'Portiere' },
+        { ruolo: 'TD',  x: 84, y: 54, name: 'Terzino Dx' },
+        { ruolo: 'DC',  x: 64, y: 70, name: 'Difensore Centrale 1' },
+        { ruolo: 'DC',  x: 36, y: 70, name: 'Difensore Centrale 2' },
+        { ruolo: 'TS',  x: 16, y: 64, name: 'Terzino Sx' },
+        { ruolo: 'MED', x: 46, y: 50, name: 'Mediano' },
+        { ruolo: 'CC',  x: 68, y: 40, name: 'Mezzala Dx' },
+        { ruolo: 'CC',  x: 30, y: 44, name: 'Mezzala Sx' },
+        { ruolo: 'AD',  x: 82, y: 28, name: 'Ala Dx' },
+        { ruolo: 'AS',  x: 18, y: 20, name: 'Ala Sx' },
+        { ruolo: 'ATT', x: 48, y: 16, name: 'Centravanti' }
+      ],
+      ball: { x: 82, y: 28 },
+      arrows: [
+        { id: 'arr-cat-ad',   tipo: 'corsa', colore: '#ffd21a', x1: 82, y1: 28, x2: 68, y2: 24, createdAt: 1 },
+        { id: 'arr-cat-td',   tipo: 'corsa', colore: '#ffd21a', x1: 84, y1: 54, x2: 90, y2: 18, createdAt: 2 },
+        { id: 'arr-cat-pass', tipo: 'passaggio', colore: '#38bdf8', x1: 68, y1: 24, x2: 90, y2: 18, createdAt: 3 },
+        { id: 'arr-cat-att',  tipo: 'corsa', colore: '#ffd21a', x1: 48, y1: 16, x2: 52, y2: 8, createdAt: 4 }
+      ],
+      zones: [
+        { id: 'z-corsia', x: 62, y: 12, w: 34, h: 46, label: 'Zona Sovrapposizione Corsia Dx', createdAt: 5 }
+      ]
+    },
+    {
+      id: 'blocco-medio-compatto-442',
+      nome: 'Blocco Medio Compatto 4-4-2',
+      modulo: '4-4-2',
+      autore: 'Mister / Scuola Simeone-Sacchi',
+      categoria: 'Fase Difensiva Organizzata',
+      descrizione: 'Due linee da quattro strette ed ermetiche a metà campo. Slittamento collettivo in sincronia verso il lato palla per negare spazio tra le linee. Punte che schermano la linea di passaggio al regista avversario.',
+      badgeColore: '#64748b',
+      slotsOverride: [
+        { ruolo: 'POR', x: 50, y: 88, name: 'Portiere' },
+        { ruolo: 'TD',  x: 78, y: 64, name: 'Terzino Dx' },
+        { ruolo: 'DC',  x: 60, y: 66, name: 'Difensore Centrale 1' },
+        { ruolo: 'DC',  x: 40, y: 66, name: 'Difensore Centrale 2' },
+        { ruolo: 'TS',  x: 22, y: 64, name: 'Terzino Sx' },
+        { ruolo: 'EAD', x: 78, y: 46, name: 'Esterno Alto Dx' },
+        { ruolo: 'CC',  x: 58, y: 48, name: 'Mezzala / Mediano' },
+        { ruolo: 'REG', x: 42, y: 48, name: 'Regista Centrocampo' },
+        { ruolo: 'EAS', x: 22, y: 46, name: 'Esterno Alto Sx' },
+        { ruolo: 'SP',  x: 42, y: 32, name: 'Seconda Punta' },
+        { ruolo: 'ATT', x: 58, y: 32, name: 'Centravanti' }
+      ],
+      ball: { x: 50, y: 22 },
+      arrows: [
+        { id: 'arr-bm-sp',  tipo: 'corsa', colore: '#ffd21a', x1: 42, y1: 32, x2: 46, y2: 24, createdAt: 1 },
+        { id: 'arr-bm-att', tipo: 'corsa', colore: '#ffd21a', x1: 58, y1: 32, x2: 54, y2: 24, createdAt: 2 }
+      ],
+      zones: [
+        { id: 'z-blocco', x: 16, y: 40, w: 68, h: 32, label: 'Blocco Compatto Difesa-Centrocampo', createdAt: 3 }
+      ]
+    },
+    {
+      id: 'corner-blocco-primopalo',
+      nome: 'Corner a Favore: Blocco & Taglio 1° Palo',
+      modulo: '4-3-3',
+      autore: 'Specialista Palle Inattive',
+      categoria: 'Palle Inattive',
+      descrizione: 'Traiettoria arcuata e tesa verso il primo palo. Due saltatori partono dal dischetto del rigore effettuando un blocco sul marcatore per liberare il centrale aereo che taglia a tutta velocità nell\'area piccola.',
+      badgeColore: '#a855f7',
+      slotsOverride: [
+        { ruolo: 'POR', x: 50, y: 88, name: 'Portiere' },
+        { ruolo: 'TS',  x: 30, y: 70, name: 'Terzino Sx' },
+        { ruolo: 'TD',  x: 70, y: 70, name: 'Terzino Dx' },
+        { ruolo: 'MED', x: 50, y: 42, name: 'Mediano Preventivo' },
+        { ruolo: 'CC',  x: 40, y: 28, name: 'Mezzala Sx' },
+        { ruolo: 'CC',  x: 60, y: 28, name: 'Mezzala Dx' },
+        { ruolo: 'DC',  x: 46, y: 16, name: 'Difensore Centrale 1' },
+        { ruolo: 'DC',  x: 54, y: 16, name: 'Difensore Centrale 2' },
+        { ruolo: 'AS',  x: 38, y: 12, name: 'Ala Sx' },
+        { ruolo: 'ATT', x: 52, y: 10, name: 'Centravanti' },
+        { ruolo: 'AD',  x: 96, y: 2,  name: 'Battitore Corner' }
+      ],
+      ball: { x: 96, y: 2 },
+      arrows: [
+        { id: 'arr-crn-ball', tipo: 'passaggio', colore: '#38bdf8', x1: 96, y1: 2, x2: 60, y2: 7, createdAt: 1 },
+        { id: 'arr-crn-run1', tipo: 'corsa', colore: '#ffd21a', x1: 52, y1: 10, x2: 60, y2: 7, createdAt: 2 },
+        { id: 'arr-crn-run2', tipo: 'corsa', colore: '#ffd21a', x1: 54, y1: 16, x2: 48, y2: 8, createdAt: 3 },
+        { id: 'arr-crn-run3', tipo: 'corsa', colore: '#ffd21a', x1: 46, y1: 16, x2: 54, y2: 12, createdAt: 4 }
+      ],
+      zones: [
+        { id: 'z-corner', x: 42, y: 3, w: 26, h: 14, label: 'Zona Impatto 1° Palo', createdAt: 5 }
+      ]
+    }
+  ];
+
   function getDefaultRoster() {
     return [
       { id: 'p-1', num: 1, name: 'Alessandro Fumagalli', role: 'Portiere', status: 'disp', statoDettagliato: 'disponibile', birth: '1998', data_nascita: '1998-04-12', luogo_nascita: 'Foggia', codice_fiscale: 'FMGLSN98D12D643A', email: 'a.fumagalli@foggia.it', app: 14, load: 'Basso', acwr: '0.95' },
@@ -2097,6 +2294,10 @@
               '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>' +
               '<span>Reset Modulo</span>' +
             '</button>' +
+            '<button type="button" class="es-btn-cos-sec" id="btn-import-board-preset" style="display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; border-color:rgba(56, 189, 248, 0.4); color:#38bdf8;" title="Importa schemi tattici preimpostati (Mister & Vice)">' +
+              '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
+              '<span>Importa Schema</span>' +
+            '</button>' +
             '<button type="button" class="es-btn-cos-primary" id="btn-save-board-scheme" style="display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; padding:0.45rem 0.85rem;" title="Salva schema tattico attuale">' +
               '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>' +
               '<span>Salva Schema</span>' +
@@ -3219,12 +3420,42 @@
             '<div style="font-size:0.75rem; color:#8da8bc; background:#040912; border:1px solid #12344a; padding:0.65rem; border-radius:6px;">' +
               'Verranno memorizzati: modulo <b>' + esc(curMod) + '</b>, posizioni dei calciatori, pallone, ' + (tb.arrows ? tb.arrows.length : 0) + ' frecce e ' + (tb.zones ? tb.zones.length : 0) + ' zone tattiche.' +
             '</div>' +
-            '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.5rem;">' +
-              '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Annulla</button>' +
-              '<button type="submit" class="es-btn-cos-primary">Salva Schema</button>' +
+            '<div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; margin-top:0.5rem; flex-wrap:wrap;">' +
+              '<button type="button" class="es-btn-cos-sec" id="btn-export-current-json" style="display:inline-flex; align-items:center; gap:5px; font-size:0.75rem;" title="Scarica questo schema come file .json">' +
+                '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
+                '<span>Esporta File JSON</span>' +
+              '</button>' +
+              '<div style="display:flex; gap:0.5rem;">' +
+                '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Annulla</button>' +
+                '<button type="submit" class="es-btn-cos-primary">Salva Schema</button>' +
+              '</div>' +
             '</div>' +
           '</form>'
         );
+
+        var btnExportJson = document.getElementById('btn-export-current-json');
+        if (btnExportJson) {
+          btnExportJson.onclick = function () {
+            var name = (document.getElementById('inp-scheme-name') && document.getElementById('inp-scheme-name').value.trim()) || defaultName;
+            var exportObj = {
+              id: 'sch-' + Date.now(),
+              nome: name,
+              modulo: curMod,
+              pins: JSON.parse(JSON.stringify(tb.pins || [])),
+              arrows: JSON.parse(JSON.stringify(tb.arrows || [])),
+              zones: JSON.parse(JSON.stringify(tb.zones || [])),
+              data: nowStr
+            };
+            var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj, null, 2));
+            var dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", (name.replace(/[^a-zA-Z0-9_-]/g, '_')) + ".json");
+            document.body.appendChild(dlAnchor);
+            dlAnchor.click();
+            dlAnchor.remove();
+            if (window.showToast) window.showToast('File JSON schema scaricato!', 'success');
+          };
+        }
 
         var form = document.getElementById('form-save-scheme');
         if (form) {
@@ -3264,6 +3495,13 @@
             if (window.showToast) window.showToast('Schema "' + name + '" salvato con successo!', 'success');
           };
         }
+      };
+    }
+
+    var btnImportPreset = mount.querySelector('#btn-import-board-preset');
+    if (btnImportPreset) {
+      btnImportPreset.onclick = function () {
+        openImportSchemeModal(data);
       };
     }
 
@@ -3788,13 +4026,14 @@
     };
   }
 
-  function openModal(title, contentHtml) {
+  function openModal(title, contentHtml, maxWidth) {
     closeModal();
+    var mw = maxWidth || '540px';
     var modal = document.createElement('div');
     modal.id = 'es-cos-modal-box';
     modal.style.cssText = 'position:fixed; inset:0; background:rgba(0,0,0,0.78); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; z-index:99999; padding:1rem;';
     modal.innerHTML =
-      '<div style="background:#071522; border:1px solid #16b9ff; border-radius:10px; max-width:540px; width:100%; max-height:92vh; overflow-y:auto; padding:1.5rem; position:relative; box-shadow:0 12px 36px rgba(0,0,0,0.8);">' +
+      '<div style="background:#071522; border:1px solid #16b9ff; border-radius:10px; max-width:' + mw + '; width:100%; max-height:92vh; overflow-y:auto; padding:1.5rem; position:relative; box-shadow:0 12px 36px rgba(0,0,0,0.8);">' +
         '<button type="button" id="btn-modal-close-x" style="position:absolute; top:12px; right:12px; background:none; border:none; color:#8da8bc; font-size:1.4rem; cursor:pointer;">&times;</button>' +
         '<h3 style="margin:0 0 1.25rem; font-size:1.15rem; font-weight:800; color:#f3f8fc;">' + esc(title) + '</h3>' +
         '<div>' + contentHtml + '</div>' +
@@ -3809,6 +4048,215 @@
   function closeModal() {
     var m = document.getElementById('es-cos-modal-box');
     if (m) m.remove();
+  }
+
+  function applyPresetToBoard(preset, data) {
+    if (!preset || !data) return;
+    var tb = data.tacticalBoard = data.tacticalBoard || {};
+    var modKey = preset.modulo || '4-3-3';
+    tb.modulo = modKey;
+    var modDef = MODULI_TATTICI[modKey] || MODULI_TATTICI['4-3-3'];
+
+    var sourceList = (data.top11 && data.top11.length === 11) ? data.top11 : (data.roster || getDefaultRoster());
+    var newPins = [];
+    var slots = preset.slotsOverride || modDef.slots;
+    for (var s = 0; s < 11; s++) {
+      var slot = slots[s] || (modDef.slots && modDef.slots[s]) || { x: 50, y: 50, ruolo: 'CC', name: 'Giocatore' };
+      var p = sourceList[s] || { num: s + 1, name: slot.name || ('Giocatore ' + (s + 1)), pos: slot.ruolo };
+      newPins.push({
+        id: 'bp-' + (s + 1),
+        type: 'blue',
+        num: p.num || (s + 1),
+        name: p.name || slot.name,
+        pos: slot.ruolo || p.pos || 'CC',
+        x: slot.x,
+        y: slot.y
+      });
+    }
+    var ballCoord = preset.ball || { x: 50, y: 45 };
+    newPins.push({
+      id: 'ball',
+      type: 'ball',
+      num: '',
+      name: 'Palla',
+      pos: '',
+      x: ballCoord.x,
+      y: ballCoord.y
+    });
+    tb.pins = newPins;
+
+    var now = Date.now();
+    tb.arrows = (preset.arrows || []).map(function (a, i) {
+      var clone = JSON.parse(JSON.stringify(a));
+      clone.createdAt = now + i;
+      return clone;
+    });
+    tb.zones = (preset.zones || []).map(function (z, i) {
+      var clone = JSON.parse(JSON.stringify(z));
+      clone.createdAt = now + i + 100;
+      return clone;
+    });
+
+    saveCoachData(data);
+    closeModal();
+    var container = document.getElementById('es-cos-active-content');
+    if (container && activeTab === 'tattica') {
+      container.innerHTML = renderTattica(data);
+      bindAllEvents();
+    }
+    if (window.showToast) window.showToast('Schema preimpostato "' + (preset.nome || preset.modulo) + '" importato con successo!', 'success');
+  }
+
+  function openImportSchemeModal(data) {
+    var categories = ['Tutti', 'Costruzione & Palleggio', 'Fase di Non Possesso', 'Transizione Offensiva', 'Sviluppo Corsie Esterne', 'Palle Inattive'];
+
+    var filterPills = categories.map(function (c, idx) {
+      return (
+        '<button type="button" class="es-preset-filter-btn" data-filter-cat="' + esc(c) + '" style="background:' + (idx === 0 ? '#16b9ff' : 'rgba(255,255,255,0.06)') + '; color:' + (idx === 0 ? '#040912' : '#8da8bc') + '; border:1px solid ' + (idx === 0 ? '#16b9ff' : 'rgba(255,255,255,0.12)') + '; font-size:0.75rem; font-weight:700; padding:0.35rem 0.75rem; border-radius:6px; cursor:pointer; transition:all 0.15s ease;">' +
+          esc(c) + (idx === 0 ? ' (' + SCHEMI_PREIMPOSTATI.length + ')' : '') +
+        '</button>'
+      );
+    }).join('');
+
+    function renderPresetCards(filterCat) {
+      filterCat = filterCat || 'Tutti';
+      var list = SCHEMI_PREIMPOSTATI.filter(function (p) {
+        if (filterCat === 'Tutti') return true;
+        return p.categoria === filterCat;
+      });
+
+      if (list.length === 0) {
+        return '<div style="grid-column:1/-1; text-align:center; padding:2rem; color:#8da8bc; font-size:0.85rem;">Nessuno schema preimpostato trovato per questa categoria.</div>';
+      }
+
+      return list.map(function (p) {
+        var numPass = (p.arrows || []).filter(function (a) { return a.tipo === 'passaggio'; }).length;
+        var numRun = (p.arrows || []).filter(function (a) { return a.tipo === 'corsa'; }).length;
+        var numZones = (p.zones || []).length;
+
+        return (
+          '<div class="es-preset-card" data-preset-cat="' + esc(p.categoria) + '" style="background:#040912; border:1px solid #16364d; border-radius:10px; padding:1.1rem; display:flex; flex-direction:column; justify-content:space-between; gap:0.85rem; box-shadow:0 6px 18px rgba(0,0,0,0.5); transition:border-color 0.15s ease;">' +
+            '<div>' +
+              '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem; gap:0.5rem; flex-wrap:wrap;">' +
+                '<div style="display:flex; align-items:center; gap:6px;">' +
+                  '<span style="background:rgba(56,189,248,0.14); border:1px solid #38bdf8; color:#38bdf8; font-size:0.72rem; font-weight:800; padding:2px 7px; border-radius:5px;">' + esc(p.modulo) + '</span>' +
+                  '<span style="background:rgba(255,255,255,0.06); border:1px solid ' + esc(p.badgeColore || '#8da8bc') + '; color:' + esc(p.badgeColore || '#8da8bc') + '; font-size:0.68rem; font-weight:700; padding:2px 7px; border-radius:5px;">' + esc(p.categoria) + '</span>' +
+                '</div>' +
+                '<span style="font-size:0.68rem; color:#64748b; font-style:italic;">' + esc(p.autore || 'Staff Tecnico') + '</span>' +
+              '</div>' +
+              '<h4 style="margin:0 0 0.45rem 0; font-size:0.96rem; font-weight:800; color:#f3f8fc; line-height:1.3;">' + esc(p.nome) + '</h4>' +
+              '<p style="margin:0 0 0.75rem 0; font-size:0.77rem; color:#8da8bc; line-height:1.42;">' + esc(p.descrizione) + '</p>' +
+              '<div style="display:flex; gap:8px; flex-wrap:wrap; font-size:0.7rem; color:#94a3b8; background:rgba(255,255,255,0.02); padding:0.4rem 0.6rem; border-radius:6px; border:1px solid rgba(255,255,255,0.05);">' +
+                (numPass > 0 ? '<span style="display:inline-flex; align-items:center; gap:4px; color:#38bdf8;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg> ' + numPass + ' Passaggi</span>' : '') +
+                (numRun > 0 ? '<span style="display:inline-flex; align-items:center; gap:4px; color:#ffd21a;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg> ' + numRun + ' Corse</span>' : '') +
+                (numZones > 0 ? '<span style="display:inline-flex; align-items:center; gap:4px; color:#f87171;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> ' + numZones + ' Zone</span>' : '') +
+              '</div>' +
+            '</div>' +
+            '<div style="margin-top:0.4rem;">' +
+              '<button type="button" class="es-btn-cos-primary btn-apply-preset" data-preset-id="' + esc(p.id) + '" style="width:100%; display:inline-flex; align-items:center; justify-content:center; gap:6px; font-size:0.78rem; padding:0.5rem 0.8rem;">' +
+                '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
+                '<span>Importa sulla Lavagna</span>' +
+              '</button>' +
+            '</div>' +
+          '</div>'
+        );
+      }).join('');
+    }
+
+    var content =
+      '<div style="display:flex; flex-direction:column; gap:1rem;">' +
+        '<div style="font-size:0.8rem; color:#8da8bc; line-height:1.45;">' +
+          'Seleziona uno schema codificato sviluppato secondo i principi tattici moderni (UEFA Pro). Il modulo, i movimenti delle frecce, le zone di pressione e le posizioni degli atleti verranno applicati istantaneamente agli 11 titolari del tuo club.' +
+        '</div>' +
+        '<div style="display:flex; gap:6px; flex-wrap:wrap;" id="es-preset-filter-bar">' +
+          filterPills +
+        '</div>' +
+        '<div id="es-preset-cards-container" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:12px; max-height:58vh; overflow-y:auto; padding-right:4px;">' +
+          renderPresetCards('Tutti') +
+        '</div>' +
+        '<div style="background:#03080e; border:1px dashed #1e4a6a; border-radius:8px; padding:0.75rem 1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">' +
+          '<div style="display:flex; align-items:center; gap:8px;">' +
+            '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' +
+            '<span style="font-size:0.77rem; color:#cbd5e1;">Hai un file schema salvato (.json)? Caricalo direttamente sulla lavagna.</span>' +
+          '</div>' +
+          '<div>' +
+            '<input type="file" id="inp-file-scheme-json" accept=".json" style="display:none;">' +
+            '<button type="button" class="es-btn-cos-sec" id="btn-trigger-json-upload" style="font-size:0.74rem; padding:0.35rem 0.75rem;">' +
+              'Carica File JSON...' +
+            '</button>' +
+          '</div>' +
+        '</div>' +
+        '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.25rem;">' +
+          '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Chiudi</button>' +
+        '</div>' +
+      '</div>';
+
+    openModal('Libreria Schemi Tattici Preimpostati', content, '840px');
+
+    var filterBar = document.getElementById('es-preset-filter-bar');
+    if (filterBar) {
+      filterBar.querySelectorAll('.es-preset-filter-btn').forEach(function (btn) {
+        btn.onclick = function () {
+          var cat = btn.getAttribute('data-filter-cat') || 'Tutti';
+          filterBar.querySelectorAll('.es-preset-filter-btn').forEach(function (b) {
+            var active = b === btn;
+            b.style.background = active ? '#16b9ff' : 'rgba(255,255,255,0.06)';
+            b.style.color = active ? '#040912' : '#8da8bc';
+            b.style.borderColor = active ? '#16b9ff' : 'rgba(255,255,255,0.12)';
+          });
+          var grid = document.getElementById('es-preset-cards-container');
+          if (grid) {
+            grid.innerHTML = renderPresetCards(cat);
+            bindPresetCardEvents();
+          }
+        };
+      });
+    }
+
+    function bindPresetCardEvents() {
+      var grid = document.getElementById('es-preset-cards-container');
+      if (!grid) return;
+      grid.querySelectorAll('.btn-apply-preset').forEach(function (btn) {
+        btn.onclick = function () {
+          var pId = btn.getAttribute('data-preset-id');
+          var preset = SCHEMI_PREIMPOSTATI.find(function (x) { return x.id === pId; });
+          if (!preset) return;
+          var tb = data.tacticalBoard || {};
+          var hasDrawings = (tb.arrows && tb.arrows.length > 0) || (tb.zones && tb.zones.length > 0);
+          if (hasDrawings) {
+            if (!confirm('Importare lo schema "' + preset.nome + '" sovrascriverà l\'attuale configurazione della lavagna. Continuare?')) return;
+          }
+          applyPresetToBoard(preset, data);
+        };
+      });
+    }
+
+    bindPresetCardEvents();
+
+    var btnTriggerJson = document.getElementById('btn-trigger-json-upload');
+    var inpJson = document.getElementById('inp-file-scheme-json');
+    if (btnTriggerJson && inpJson) {
+      btnTriggerJson.onclick = function () { inpJson.click(); };
+      inpJson.onchange = function (e) {
+        var file = e.target.files && e.target.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+          try {
+            var parsed = JSON.parse(evt.target.result);
+            if (!parsed || (!parsed.modulo && !parsed.pins)) {
+              alert('Il file non sembra contenere uno schema tattico valido di Elisee Scout.');
+              return;
+            }
+            parsed.nome = parsed.nome || file.name.replace(/\.json$/i, '');
+            applyPresetToBoard(parsed, data);
+          } catch (err) {
+            alert('Errore nella lettura del file JSON: ' + err.message);
+          }
+        };
+        reader.readAsText(file);
+      };
+    }
   }
 
   // ============================================================
