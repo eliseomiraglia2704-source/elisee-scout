@@ -67,23 +67,23 @@
       coachRole: u.staffRole || 'Allenatore Capo',
       patent: u.qualifica || (u.staffProfile && u.staffProfile.qualifica) || 'UEFA B',
       status: 'in_carica',
-      clubName: u.squadra || 'ASD Carlentini',
-      categoria: 'Serie D - Girone I',
+      clubName: u.squadra || 'Foggia City',
+      categoria: 'Amatoriale · Foggia',
       reparto: 'Prima Squadra',
       matricola: u.matricola || '88210',
       scadenzaTesseramento: '30/06/2027',
-      sede: 'Carlentini (SR)',
-      stadio: 'Stadio Comunale - Carlentini',
+      sede: 'Foggia (FG)',
+      stadio: 'Campo Comunale - Foggia',
       telefono: u.telefono || '+39 340 1234567',
       logoUrl: 'immagini/squadre-loghi/foggia-city.png',
 
       // Prossima Partita & Countdown
       nextMatch: {
-        avversario: 'A.C. RAGUSA',
+        avversario: 'Cerignola Nord',
         data: '15/09/2026',
         orario: '15:00',
-        luogo: 'Stadio Comunale - Carlentini',
-        competizione: 'Serie D - Girone I',
+        luogo: 'Campo Comunale - Foggia',
+        competizione: 'Amatoriale · Girone Foggia',
         giorniMancanti: 2,
         oreMancanti: 15,
         minutiMancanti: 24
@@ -98,11 +98,11 @@
 
       // Calendario Prossime Gare
       prossimeGare: [
-        { id: 'g-1', data: '15/09/2026 15:00', comp: 'Serie D - Girone I', avv: 'A.C. RAGUSA', stadio: 'Comunale - Carlentini', status: 'Da preparare', isNext: true },
-        { id: 'g-2', data: '22/09/2026 15:00', comp: 'Serie D - Girone I', avv: 'Licata', stadio: 'Comunale - Carlentini', status: 'Da preparare', isNext: false },
-        { id: 'g-3', data: '29/09/2026 15:00', comp: 'Serie D - Girone I', avv: 'FC Messina', stadio: 'Fr. Scoglio - Messina', status: 'Da preparare', isNext: false },
-        { id: 'g-4', data: '06/10/2026 15:00', comp: 'Serie D - Girone I', avv: 'Acireale', stadio: 'Comunale - Acireale', status: 'Da preparare', isNext: false },
-        { id: 'g-5', data: '13/10/2026 15:00', comp: 'Coppa Italia Serie D', avv: 'S. Agata', stadio: 'Comunale - S. Agata', status: 'Da preparare', isNext: false }
+        { id: 'g-1', data: '15/09/2026 15:00', comp: 'Amatoriale · Girone Foggia', avv: 'Cerignola Nord', stadio: 'Comunale - Foggia', status: 'Prossima', isNext: true },
+        { id: 'g-2', data: '22/09/2026 15:00', comp: 'Amatoriale · Girone Foggia', avv: 'Lucera Sport', stadio: 'Comunale - Lucera', status: 'Da preparare', isNext: false },
+        { id: 'g-3', data: '29/09/2026 15:00', comp: 'Amatoriale · Girone Foggia', avv: 'Manfredonia 04', stadio: 'Comunale - Manfredonia', status: 'Da preparare', isNext: false },
+        { id: 'g-4', data: '06/10/2026 15:00', comp: 'Amatoriale · Girone Foggia', avv: 'San Severo', stadio: 'Comunale - San Severo', status: 'Da preparare', isNext: false },
+        { id: 'g-5', data: '13/10/2026 15:00', comp: 'Coppa Amatori', avv: 'Troia Calcio', stadio: 'Comunale - Troia', status: 'Da preparare', isNext: false }
       ],
 
       // Ultima Sessione
@@ -318,9 +318,9 @@
             renderSideBtn('impostazioni', 'Impostazioni Tecniche', '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06-.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>') +
           '</nav>' +
 
-          // Identità Club in Fondo alla Sidebar (ASD Carlentini · Prima Squadra · Staff collegato)
+          // Identità Club in Fondo alla Sidebar (Scudetto FGC · Staff collegato)
           '<div class="es-cos-sidebar-club">' +
-            '<div class="es-cos-side-crest">UEFA</div>' +
+            '<div class="crest es-cos-crest" style="margin-bottom:8px;">FGC</div>' +
             '<strong>' + esc(data.clubName) + '</strong>' +
             '<p class="role">Prima Squadra</p>' +
             '<span class="status-dot">Staff collegato</span>' +
@@ -329,11 +329,11 @@
 
         // 2. MAIN WORKSPACE
         '<main class="es-cos-main">' +
-          // HEADER IDENTITÀ + COUNTDOWN + PARTITA + SEDUTA + PULSANTE VICE (Immagine 2)
-          '<div class="es-cos-card es-cos-dash-header">' +
+          // HEADER IDENTITÀ + COUNTDOWN + PARTITA + SEDUTA + PULSANTE VICE
+          '<div class="card es-cos-card es-cos-dash-header">' +
             '<div class="es-cos-header-left">' +
               '<div class="es-cos-header-block">' +
-                '<div class="es-cos-crest">UEFA B</div>' +
+                '<div class="licence-badge es-cos-licence-badge"><strong>UEFA B</strong><span>Patentino</span></div>' +
                 '<div class="es-cos-coach-info">' +
                   '<strong>' + esc(data.coachName) + '</strong>' +
                   '<span class="role">Allenatore Capo</span>' +
@@ -342,7 +342,8 @@
               '</div>' +
 
               '<div class="es-cos-header-block es-cos-club-info">' +
-                '<div class="es-cos-crest">ASC</div>' +
+                '<!-- Sostituisci il monogramma con <img src=\"...\" alt=\"Foggia City\"> -->' +
+                '<div class="crest es-cos-crest">FGC</div>' +
                 '<div>' +
                   '<strong>' + esc(data.clubName) + '</strong>' +
                   '<span>Prima Squadra</span><br/>' +
@@ -356,7 +357,8 @@
                 '<p class="label">Prossima Partita</p>' +
                 '<p class="when" id="match-when">' + esc(data.nextMatch.data) + ' - ' + esc(data.nextMatch.orario) + '</p>' +
                 '<div class="opp">' +
-                  '<div class="es-cos-crest" style="width:28px;height:28px;font-size:8px;">RAG</div>' +
+                  '<!-- Sostituisci con <img src=\"...\" alt=\"Cerignola Nord\"> -->' +
+                  '<div class="crest crest--sm es-cos-crest--sm">CRG</div>' +
                   '<div>' +
                     '<strong id="match-opp">' + esc(data.nextMatch.avversario) + '</strong>' +
                     '<span id="match-comp">' + esc(data.categoria) + '</span>' +
@@ -506,7 +508,7 @@
               '<thead><tr><th>Data</th><th>Competizione</th><th>Avversario</th><th>Stadio</th><th></th></tr></thead>' +
               '<tbody>' +
                 data.prossimeGare.map(function (m) {
-                  var isNext = m.status === 'Prossima' || m.avv.indexOf('RAGUSA') !== -1;
+                  var isNext = m.status === 'Prossima' || m.isNext || m.avv.indexOf('Cerignola') !== -1;
                   var dotColor = isNext ? 'var(--cos-amber)' : 'var(--cos-blue)';
                   var tagClass = isNext ? 'is-next' : 'is-prep';
                   var tagLabel = isNext ? 'Prossima' : 'Da preparare';
@@ -515,7 +517,7 @@
                     '<tr data-tab-nav="analisi_avversario" title="Apri analisi tattica ' + esc(m.avv) + '">' +
                       '<td style="white-space:nowrap;"><span class="es-cos-match-dot" style="background:' + dotColor + ';"></span>' + esc(m.data) + '</td>' +
                       '<td style="color:var(--cos-text-muted);">' + esc(m.comp) + '</td>' +
-                      '<td><div class="es-cos-opp-cell"><span class="es-cos-mini-crest">' + esc(miniCrest) + '</span>' + esc(m.avv) + '</div></td>' +
+                      '<td><div class="es-cos-opp-cell"><span class="crest crest--sm es-cos-crest--sm">' + esc(miniCrest) + '</span>' + esc(m.avv) + '</div></td>' +
                       '<td style="color:var(--cos-text-muted);">' + esc(m.stadio) + '</td>' +
                       '<td><span class="es-cos-status-tag ' + tagClass + '">' + tagLabel + ' &rsaquo;</span></td>' +
                     '</tr>'

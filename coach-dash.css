@@ -11,13 +11,13 @@
    ============================================================ */
 
 :root {
-  --cos-bg: #060911;
+  --cos-bg: #080b12;
   --cos-canvas: #090e1a;
-  --cos-card: rgba(14, 22, 38, 0.85);
+  --cos-card: rgba(18, 26, 42, 0.75);
   --cos-card-border: rgba(59, 130, 246, 0.22);
-  --cos-card-glow: rgba(59, 130, 246, 0.1);
+  --cos-card-glow: none;
   --cos-card-hover: rgba(20, 31, 53, 0.95);
-  --cos-line: rgba(148, 163, 184, 0.12);
+  --cos-line: rgba(148, 163, 184, 0.14);
   --cos-text: #EEF2F9;
   --cos-text-muted: #8B95A8;
   --cos-text-faint: #5C6577;
@@ -25,14 +25,15 @@
   --cos-blue-soft: rgba(59, 130, 246, 0.14);
   --cos-cyan: #22D3EE;
   --cos-cyan-soft: rgba(34, 211, 238, 0.14);
-  --cos-green: #10B981;
-  --cos-green-soft: rgba(16, 185, 129, 0.14);
+  --cos-green: #22C55E;
+  --cos-green-soft: rgba(34, 197, 94, 0.14);
   --cos-red: #EF4444;
   --cos-red-soft: rgba(239, 68, 68, 0.14);
   --cos-amber: #F59E0B;
   --cos-amber-soft: rgba(245, 158, 11, 0.14);
-  --cos-radius: 12px;
-  --cos-radius-lg: 14px;
+  --cos-radius: 6px;
+  --cos-radius-lg: 6px;
+  --cos-radius-sm: 5px;
 }
 
 /* Navigazione principale del sito: sempre visibile e integrata con la palette scura */
@@ -78,7 +79,7 @@ body.is-coach-mode .main-header {
 }
 
 /* ============================================================
-   SIDEBAR GESTIONALE
+   SIDEBAR GESTIONALE (Fissa sticky a tutta altezza con scroll interno)
    ============================================================ */
 .es-cos-sidebar {
   width: 220px;
@@ -87,12 +88,12 @@ body.is-coach-mode .main-header {
   border-right: 1px solid var(--cos-line);
   display: flex;
   flex-direction: column;
-  padding: 16px 14px;
+  padding: 18px 14px;
   flex-shrink: 0;
-  min-height: auto;
-  align-self: stretch;
   position: sticky;
   top: 0;
+  height: 100vh;
+  overflow-y: auto;
   z-index: 90;
   box-sizing: border-box;
 }
@@ -140,7 +141,7 @@ body.is-coach-mode .main-header {
   padding: 10px 12px;
   background: none;
   border: none;
-  border-radius: 9px;
+  border-radius: 5px;
   color: var(--cos-text-muted);
   font-size: 13px;
   font-weight: 600;
@@ -171,26 +172,11 @@ body.is-coach-mode .main-header {
   color: var(--cos-blue);
 }
 
-/* Profilo Club in Fondo alla Sidebar (Immagine 2) */
+/* Profilo Club in Fondo alla Sidebar */
 .es-cos-sidebar-club {
   border-top: 1px solid var(--cos-line);
   padding-top: 14px;
   margin-top: auto;
-}
-
-.es-cos-side-crest {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  border: 1.5px solid var(--cos-blue);
-  background: rgba(59, 130, 246, 0.08);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--cos-cyan);
-  margin-bottom: 8px;
 }
 
 .es-cos-sidebar-club strong {
@@ -224,12 +210,72 @@ body.is-coach-mode .main-header {
 }
 
 /* ============================================================
+   STEMMI SQUADRA (Scudetto Monogramma Ritagliato) & PATENTINO
+   ============================================================ */
+.crest, .es-cos-crest {
+  width: 46px;
+  height: 50px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  background: linear-gradient(160deg, rgba(59,130,246,0.22), rgba(59,130,246,0.06));
+  border: 1px solid var(--cos-blue);
+  color: var(--cos-cyan);
+  clip-path: polygon(50% 0%, 100% 14%, 100% 68%, 50% 100%, 0% 68%, 0% 14%);
+}
+
+.crest img, .es-cos-crest img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.crest--sm, .es-cos-crest--sm {
+  width: 30px;
+  height: 33px;
+  font-size: 7.5px;
+}
+
+/* Badge Patentino UEFA B (Tipografico, pulito e leggibile) */
+.licence-badge, .es-cos-licence-badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  background: linear-gradient(160deg, rgba(34,211,238,0.18), rgba(59,130,246,0.08));
+  border: 1.5px solid var(--cos-cyan);
+  border-radius: 6px;
+  color: var(--cos-cyan);
+}
+
+.licence-badge strong, .es-cos-licence-badge strong {
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.licence-badge span, .es-cos-licence-badge span {
+  font-size: 7px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 3px;
+  opacity: 0.8;
+}
+
+/* ============================================================
    MAIN WORKSPACE
    ============================================================ */
 .es-cos-main {
   flex: 1 1 auto;
   min-width: 0;
-  padding: 16px 20px 24px;
+  padding: 18px 22px 32px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -237,12 +283,12 @@ body.is-coach-mode .main-header {
   box-sizing: border-box;
 }
 
-/* Componente Card Glow Universale */
-.es-cos-card {
+/* Componente Card Pulito (Meno videogame, angoli 6px, no box-shadow neon) */
+.card, .es-cos-card {
   background: var(--cos-card);
   border: 1px solid var(--cos-card-border);
-  border-radius: var(--cos-radius-lg);
-  box-shadow: 0 0 24px var(--cos-card-glow);
+  border-radius: 6px;
+  box-shadow: none;
   box-sizing: border-box;
 }
 
@@ -421,38 +467,36 @@ body.is-coach-mode .main-header {
   background: var(--cos-blue);
   color: #FFFFFF;
   border: none;
-  border-radius: 9px;
-  padding: 8px 14px;
-  font-size: 12px;
+  border-radius: 5px;
+  padding: 10px 16px;
+  font-size: 12.5px;
   font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
-  transition: background 0.15s ease, box-shadow 0.15s ease;
+  transition: background 0.15s ease;
   flex-shrink: 0;
 }
 
 .es-cos-btn-vice-jump:hover {
   background: #2563EB;
-  box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
 }
 
-/* Tab Navigation Bar */
+/* Tab Navigation Bar (Wrap su più righe — tutto visibile, niente scroll orizzontale) */
 .es-cos-nav-tabs {
   display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 4px;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
 }
 
 .es-cos-nav-tabs button {
-  flex-shrink: 0;
   display: inline-flex;
   align-items: center;
   gap: 7px;
   background: var(--cos-card);
   border: 1px solid var(--cos-card-border);
-  border-radius: 10px;
-  padding: 9px 16px;
+  border-radius: 5px;
+  padding: 9px 14px;
   color: var(--cos-text-muted);
   font-size: 12.5px;
   font-weight: 600;
@@ -473,11 +517,11 @@ body.is-coach-mode .main-header {
   background: var(--cos-blue);
   color: #FFFFFF;
   border-color: var(--cos-blue);
-  box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+  box-shadow: none;
 }
 
 /* ============================================================
-   8 STAT CARDS (Riepilogo Analitico Immagine 2)
+   8 STAT CARDS (Riepilogo Analitico)
    ============================================================ */
 .es-cos-stat-grid-8 {
   display: grid;
@@ -493,19 +537,18 @@ body.is-coach-mode .main-header {
   justify-content: space-between;
   border: 1px solid var(--cos-line);
   background: rgba(10, 16, 28, 0.6);
-  border-radius: 10px;
-  transition: transform 0.15s ease, border-color 0.15s ease;
+  border-radius: 6px;
+  transition: border-color 0.15s ease;
 }
 
 .es-cos-stat-card:hover {
-  transform: translateY(-1px);
   border-color: var(--cos-card-border);
 }
 
 .es-cos-stat-card-icon {
   width: 32px;
   height: 32px;
-  border-radius: 9px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -654,8 +697,8 @@ body.is-coach-mode .main-header {
 .es-cos-status-tag {
   font-size: 10.5px;
   font-weight: 700;
-  padding: 4px 9px;
-  border-radius: 8px;
+  padding: 3px 9px;
+  border-radius: 4px;
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -676,11 +719,10 @@ body.is-coach-mode .main-header {
 /* Card Ultima Sessione — Miniatura Campo Tattico */
 .es-cos-session-thumb {
   width: 100%;
-  height: 94px;
-  border-radius: 10px;
+  height: 90px;
+  border-radius: 5px;
   background: repeating-linear-gradient(90deg, #102917 0px, #102917 28px, #15341e 28px, #15341e 56px);
-  border: 1.5px solid rgba(34, 197, 94, 0.35);
-  box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(34, 197, 94, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -705,7 +747,7 @@ body.is-coach-mode .main-header {
   backdrop-filter: blur(4px);
   border: 1px solid rgba(34, 197, 94, 0.4);
   padding: 4px 10px;
-  border-radius: 6px;
+  border-radius: 5px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -721,7 +763,6 @@ body.is-coach-mode .main-header {
   height: 6px;
   border-radius: 50%;
   background: #22C55E;
-  box-shadow: 0 0 6px #22C55E;
 }
 
 .es-cos-session-meta-row {
@@ -786,7 +827,7 @@ body.is-coach-mode .main-header {
   background: transparent;
   border: 1px solid var(--cos-card-border);
   color: var(--cos-blue);
-  border-radius: 8px;
+  border-radius: 5px;
   padding: 6px 12px;
   font-size: 11px;
   font-weight: 700;

@@ -3,21 +3,21 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** (Commit `3c705bac`) — Risoluzione dei 6 problemi concreti Dashboard Allenatore: Nav principale del sito ripristinata, Icona timer per Allenamenti, Tasto Vice integrato a destra, Grafico carico uniforme, Miniatura campo tattico dettagliata & Eliminazione spazio vuoto in fondo (`COACHFIX6`).
-Ultimo fatto: **Risoluzione 6 Problemi Concreti Dashboard Allenatore (`COACHFIX6`)**:
-1. **Navigazione Principale del Sito Ripristinata**:
-   - Rimossa la regola CSS che sopprimeva `.portfolio-nav` e `#nav-menu`. L'intera barra di navigazione del sito (Home, Chi siamo, Bacheca, Stampa, Mappa, Album, Ambassador, Minigiochi) è ora pienamente visibile e cliccabile in cima alla pagina con la dark palette coordinata, permettendo all'utente di spostarsi liberamente tra le macroaree senza usare il tasto Indietro del browser.
-2. **Icona della tab "Allenamenti" Corretta**:
-   - Sostituita la "✕" (che sembrava un'icona di chiusura/annullamento) sia nella sidebar sinistra sia nella barra orizzontale dei tab con un'icona SVG autentica di cronometro sportivo / timer da rifinitura calcistica (`stroke-width="2"`, cerchio graduato e lancetta).
-3. **Pulsante "Area Vice Allenatore" Perfettamente Allineato a Destra**:
-   - Riorganizzato il contenitore dell'header in due macro-blocchi flex: `.es-cos-header-left` (Mister + Club) e `.es-cos-header-right` (Partita + Countdown + Seduta + Tasto Vice). Il pulsante "Area Vice Allenatore →" rimane ancorato all'estremità destra della card senza mai cadere a capo da solo a sinistra.
-4. **Grafico "Carico Settimanale" Uniformato Cromaticamente**:
-   - Rimosse le incoerenze cromatiche: eliminata la classe `.is-high` per Venerdì e Sabato e standardizzato l'intero istogramma settimanale (Lun-Dom) su un unico gradiente coordinato ciano-blu (`linear-gradient(180deg, var(--cos-cyan), var(--cos-blue))`).
-5. **Miniatura "Ultima Sessione" Arricchita (Campo Tattico Realistico)**:
-   - Sostituito il blocco verde spoglio con una grafica di campo da calcio professionale: pattern a strisce d'erba bicolore alternate, bordi campo, centrocampo con cerchio e punto, aree di rigore e porte disegnate in SVG, rifinite da un badge semitrasparente scuro *"Seduta Tattica · 11 vs 11"* con pulsazione verde.
-6. **Eliminazione Radicale dello Spazio Vuoto in Fondo alla Pagina**:
-   - Azzerati i `min-height: 100vh` forzati su `.es-cos-shell`, `#user-dossier-portal` e `.es-cos-sidebar`. Impostato `align-self: stretch` sulla sidebar con `margin-top: auto` per la card del club, e ridotto il padding inferiore del workspace principale a `24px`. La dashboard ora termina in modo compatto e ordinato subito dopo l'ultima riga di card.
-7. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHFIX6`.
+Ultimo aggiornamento: **2026-09-16** (Commit `953ae0c1`) — Refactoring Professionale Dashboard Allenatore (Meno Videogame, Stemmi Monogramma Sagomati a Scudetto, Badge Patentino UEFA B Tipografico, Sidebar Sticky 100vh con Scroll, Tab Bar Wrap Multi-riga & Club Foggia City (`COACHPRO1`)).
+Ultimo fatto: **Refactoring Professionale Dashboard Allenatore (`COACHPRO1`)**:
+1. **Stemmi Squadre — Scudetti Monogramma Progettati (`.crest`, `.crest--sm`)**:
+   - I vecchi riquadri generici sono stati sostituiti da scudetti monogramma autentici ritagliati via `clip-path: polygon(50% 0%, 100% 14%, 100% 68%, 50% 100%, 0% 68%, 0% 14%)`, con gradiente coordinato blu e monogramma a 3 lettere (FGC, CRG, LUC, MAN, SAN, TRO).
+   - Struttura già dimensionata per ospitare direttamente il file `<img>` reale non appena disponibile.
+   - Club impostato su **Foggia City** (Prima Squadra · Amatoriale · Foggia) con calendario avversari coerente (Cerignola Nord, Lucera Sport, Manfredonia 04, San Severo, Troia Calcio).
+2. **Badge Patentino — UEFA B / Patentino Tipografico e Leggibile (`.licence-badge`)**:
+   - Introdotto badge tipografico dedicato (52x52px, angoli 6px, bordo e scritte ciano con dicitura "UEFA B / Patentino"), che garantisce eccellente leggibilità senza riprodurre marchi registrati terzi.
+3. **Sidebar Fissa Sticky 100vh (`.dash-side`, `.es-cos-sidebar`)**:
+   - Impostata `position: sticky; top: 0; height: 100vh; overflow-y: auto;`: la sidebar tecnica resta perfettamente ancorata mentre l'area operativa della pagina scorre.
+4. **Meno "Videogame" & UI B2B Pulita**:
+   - Angoli delle card ridotti a **6px** (e **5px** su bottoni, tag, badge e icone).
+   - Rimosso qualsiasi bagliore o glow neon blu attorno alle card (`box-shadow: none !important;`).
+   - Barra orizzontale dei tab trasformata con `flex-wrap: wrap; gap: 6px;`: tutte le voci sono visibili contemporaneamente in un colpo d'occhio senza scroll orizzontale o contenuto nascosto a destra.
+5. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHPRO1`.
 Feature precedente: **Restyling UX/UI & Layout Dark Slate Dashboard Allenatore (`COACHSLATE1`)**:
 1. **Eliminazione Radicale Doppia Navigazione & Topbar Compatta**:
    - Quando la dashboard dell'allenatore è attiva, viene iniettata la classe `is-coach-mode` sul `<body>`, sopprimendo integralmente la navbar del sito pubblico (`#nav-menu.portfolio-nav`, "Chi siamo", "Minigiochi", etc.) e recuperando oltre 70px di prezioso spazio verticale.
