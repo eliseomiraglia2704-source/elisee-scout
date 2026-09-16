@@ -1295,7 +1295,7 @@
             '</div>' +
           '</div>' +
 
-          // TAB BAR SUPERIORE (Sincronizzata con la Sidebar)
+          // TAB BAR SUPERIORE COMPATTA (7 Tab Primari + Menu "Altro ▾" a Scomparsa)
           '<nav class="es-cos-nav-tabs" id="es-cos-main-tabs">' +
             renderNavTab('dashboard', 'Dashboard', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>') +
             renderNavTab('rosa', 'Rosa', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>') +
@@ -1304,10 +1304,7 @@
             renderNavTab('allenamenti', 'Allenamenti', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5"/><path d="M12 5V2"/><path d="M10 2h4"/></svg>') +
             renderNavTab('calendario', 'Calendario', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>') +
             renderNavTab('analisi_avversario', 'Analisi Avversario', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>') +
-            renderNavTab('gps_carichi', 'GPS / Carichi', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>') +
-            renderNavTab('report_staff', 'Report Staff', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>') +
-            renderNavTab('comunicazioni', 'Comunicazioni', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>') +
-            renderNavTab('impostazioni', 'Impostazioni', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06-.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>') +
+            renderMoreNavTabsDropdown() +
           '</nav>' +
 
           // CONTENITORE OPERATIVO DIRETTO
@@ -1334,6 +1331,45 @@
     return '<button type="button" class="es-cos-nav-tab ' + (isAct ? 'is-active' : '') + '" data-tab-nav="' + tabKey + '">' +
       svgIcon + '<span>' + esc(label) + '</span>' +
     '</button>';
+  }
+
+  function renderMoreNavTabsDropdown() {
+    var isMoreActive = ['gps_carichi', 'report_staff', 'comunicazioni', 'impostazioni'].indexOf(activeTab) !== -1;
+    var labelMap = {
+      gps_carichi: 'GPS / Carichi',
+      report_staff: 'Report Staff',
+      comunicazioni: 'Comunicazioni',
+      impostazioni: 'Impostazioni'
+    };
+    var activeLabel = isMoreActive ? labelMap[activeTab] : 'Altro';
+
+    return (
+      '<div class="es-cos-tab-dropdown-wrap" id="wrap-tabs-more-dropdown">' +
+        '<button type="button" class="es-cos-nav-tab ' + (isMoreActive ? 'is-active' : '') + '" id="btn-toggle-tabs-more" aria-haspopup="true" aria-expanded="false" title="Altre sezioni staff">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/><circle cx="5" cy="12" r="1.5"/></svg>' +
+          '<span>' + esc(activeLabel) + '</span>' +
+          '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left:2px;"><polyline points="6 9 12 15 18 9"/></svg>' +
+        '</button>' +
+        '<div class="es-cos-tab-more-menu" id="es-cos-tabs-more-menu">' +
+          '<button type="button" class="' + (activeTab === 'gps_carichi' ? 'is-active' : '') + '" data-tab-nav="gps_carichi">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' +
+            '<span>GPS / Carichi</span>' +
+          '</button>' +
+          '<button type="button" class="' + (activeTab === 'report_staff' ? 'is-active' : '') + '" data-tab-nav="report_staff">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>' +
+            '<span>Report Staff</span>' +
+          '</button>' +
+          '<button type="button" class="' + (activeTab === 'comunicazioni' ? 'is-active' : '') + '" data-tab-nav="comunicazioni">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' +
+            '<span>Comunicazioni</span>' +
+          '</button>' +
+          '<button type="button" class="' + (activeTab === 'impostazioni' ? 'is-active' : '') + '" data-tab-nav="impostazioni">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06-.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>' +
+            '<span>Impostazioni Tecniche</span>' +
+          '</button>' +
+        '</div>' +
+      '</div>'
+    );
   }
 
   // ============================================================
@@ -3478,48 +3514,46 @@
       overlay.onclick = closeDrawer;
     }
 
-    // Navigazione tramite Sidebar (Unica navigazione)
+    // Gestione Dropdown "Altro ▾" nella Tab Bar Superiore
+    var btnMoreToggle = mount.querySelector('#btn-toggle-tabs-more');
+    var menuMore = mount.querySelector('#es-cos-tabs-more-menu');
+    if (btnMoreToggle && menuMore) {
+      btnMoreToggle.onclick = function (e) {
+        e.stopPropagation();
+        var isOpen = menuMore.classList.toggle('is-open');
+        btnMoreToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      };
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('#wrap-tabs-more-dropdown')) {
+          menuMore.classList.remove('is-open');
+          btnMoreToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    // Navigazione tramite Sidebar
     mount.querySelectorAll('.es-cos-side-btn').forEach(function (btn) {
       btn.onclick = function () {
         closeDrawer();
+        if (menuMore) menuMore.classList.remove('is-open');
         var t = btn.getAttribute('data-tab-nav');
         if (t) {
           activeTab = t;
-          // Aggiorna classe active sulla sidebar e tabs superiori
-          mount.querySelectorAll('.es-cos-side-btn, #es-cos-main-tabs button').forEach(function (b) {
-            b.classList.toggle('is-active', b.getAttribute('data-tab-nav') === activeTab);
-          });
-          var container = document.getElementById('es-cos-active-content');
-          if (container) {
-            container.innerHTML = renderActiveTab(activeTab, data);
-            bindAllEvents();
-          } else {
-            renderHub();
-          }
+          renderHub();
         }
       };
     });
 
-    // Link interni con data-tab-nav (card cliccabili e bottoni nav)
+    // Link interni con data-tab-nav (card cliccabili, bottoni nav e dropdown Altro)
     mount.querySelectorAll('[data-tab-nav]:not(.es-cos-side-btn)').forEach(function (el) {
       el.onclick = function (e) {
         e.stopPropagation();
         closeDrawer();
+        if (menuMore) menuMore.classList.remove('is-open');
         var t = el.getAttribute('data-tab-nav');
         if (t) {
           activeTab = t;
-          mount.querySelectorAll('.es-cos-side-btn, #es-cos-main-tabs button').forEach(function (b) {
-            b.classList.toggle('is-active', b.getAttribute('data-tab-nav') === activeTab);
-          });
-          var activeNavBtn = mount.querySelector('#es-cos-main-tabs button.is-active');
-          if (activeNavBtn && typeof activeNavBtn.scrollIntoView === 'function') {
-            activeNavBtn.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
-          }
-          var container = document.getElementById('es-cos-active-content');
-          if (container) {
-            container.innerHTML = renderActiveTab(activeTab, data);
-            bindAllEvents();
-          }
+          renderHub();
         }
       };
     });

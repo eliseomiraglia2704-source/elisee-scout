@@ -3,7 +3,24 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Ridisegno Completo Macroarea "Analisi Avversario" & Dossier Scout Professionale (`DOSSIERLUX1`):
+Ultimo aggiornamento: **2026-09-16** — Risoluzione Scroll Tab Secondari & Menu "Altro ▾" a Scomparsa (`TABFIX1`):
+1. **Dimensioni Compatte Calibrate**:
+   - Padding orizzontale ridotto a 11px (`padding: 6px 11px`).
+   - Font-size snella e nitida a 12.5px (`font-size: 12.5px`).
+   - Icone standardizzate a 14x14px con gap icona-testo ridotto a 4.5px.
+   - Gap tra i bottoni ridotto a 4px.
+2. **Eliminazione Doppia Navigazione & Menu "Altro ▾" a Scomparsa**:
+   - Voci primarie fisse (7 tab): Dashboard, Rosa, Formazione, Tattica, Allenamenti, Calendario, Analisi Avversario.
+   - Voci secondarie raggruppate nel dropdown a comparsa luxury *"Altro ▾"* (`.es-cos-tab-dropdown-wrap`): GPS / Carichi, Report Staff, Comunicazioni, Impostazioni Tecniche.
+   - Reattività visiva: se una voce secondaria è attiva, il pulsante *"Altro ▾"* si evidenzia con stato `.is-active` e riporta dinamicamente la sezione attiva (es. *"Altro: GPS / Carichi"*).
+   - Chiusura automatica su selezione e su click-outside.
+3. **Addio Definitivo allo Scroll Orizzontale a 1366px**:
+   - Larghezza occupata ridotta da oltre 1150px a ~780px, rientrando con oltre 300px di margine nel viewport 1366px.
+   - Rimossa la scrollbar visibile (`scrollbar-width: none` e `display: none` su webkit scrollbar).
+   - Piena sincronizzazione con la sidebar sinistra per qualsiasi navigazione.
+4. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_TABFIX1`.
+
+Feature precedente: **Ridisegno Completo Macroarea "Analisi Avversario" & Dossier Scout Professionale (`DOSSIERLUX1`):**
 1. **Addio alla "dashboard da videogame tattico" & Nuova Gerarchia Visiva**:
    - Eliminati tutti i titoli a semaforo pieno (verde/rosso/giallo/blu) in favore di una tipografia neutra scura (`#e2e8f0` e `#cbd5e1`), con piccole icone monocromatiche distintive (scudo, alert circolare, stella, bandierina corner).
    - Colori semantici preservati esclusivamente come bordo sinistro sottile di 2.5px sulle card di sezione (`.is-forza`, `.is-deboli`, `.is-chiave`, `.is-piazzati`).
