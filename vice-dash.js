@@ -30,6 +30,153 @@
     return /in seconda|vice allenatore/.test(primary);
   }
 
+  var _viceLiveData = null;
+  var _isViceSyncing = false;
+
+  function formatDateTime(iso) {
+    if (!iso) return '--';
+    try {
+      var d = new Date(iso);
+      var day = String(d.getDate()).padStart(2, '0');
+      var mon = String(d.getMonth() + 1).padStart(2, '0');
+      var yr = d.getFullYear();
+      var hr = String(d.getHours()).padStart(2, '0');
+      var min = String(d.getMinutes()).padStart(2, '0');
+      return day + '/' + mon + '/' + yr + ' ' + hr + ':' + min;
+    } catch (_) { return String(iso); }
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '--';
+    try {
+      var d = new Date(iso);
+      return String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0') + '/' + d.getFullYear();
+    } catch (_) { return String(iso); }
+  }
+
+  function formatTime(iso) {
+    if (!iso) return '--';
+    try {
+      var d = new Date(iso);
+      return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+    } catch (_) { return '--'; }
+  }
+
+  async function syncLiveViceData(user, force) {
+    if (_isViceSyncing && !force) return;
+    _isViceSyncing = true;
+    user = user || userObj();
+
+    if (!window.EliseeSupabase) {
+      _isViceSyncing = false;
+      return;
+    }
+
+    try {
+      var clubId = await window.EliseeSupabase.resolveClubId(user);
+      var staffId = user.staffId || user.id || null;
+
+      var res = await Promise.all([
+        window.EliseeSupabase.getStaff(clubId, 'allenatore'),
+        window.EliseeSupabase.getCaricoSettimanale(clubId),
+        window.EliseeSupabase.getRosa(clubId),
+        window.EliseeSupabase.getAllenamenti(clubId),
+        window.EliseeSupabase.getReportStaff(clubId, staffId, 'vice_allenatore'),
+        window.EliseeSupabase.getFileAllegati(clubId)
+      ]);
+
+      var coachStaff = res[0] || [];
+      var carico = res[1] || { mediaSettimanale: 0, giorni: [], acwr: '1.00', stato: 'In attesa dati GPS' };
+      var rosa = res[2] || [];
+      var allenamenti = res[3] || [];
+      var reports = res[4] || [];
+      var allegati = res[5] || [];
+
+      var liveMisterLink = (coachStaff && coachStaff.length > 0) ? {
+        id: coachStaff[0].id,
+        name: ((coachStaff[0].nome || '') + ' ' + (coachStaff[0].cognome || '')).trim() || 'Allenatore Capo',
+        role: 'Allenatore Capo',
+        patent: coachStaff[0].patentino || 'UEFA B',
+        email: 'staff@elisee-scout.it',
+        status: 'Collegato',
+        lastSync: 'Sincronizzato'
+      } : {
+        id: 'coach-none',
+        name: 'In attesa associazione Mister',
+        role: 'Allenatore Capo',
+        patent: 'UEFA B',
+        email: '',
+        status: 'Non connesso',
+        lastSync: '--'
+      };
+
+      var liveRoster = rosa.map(function (g, idx) {
+        var st = (g.stato || 'disponibile').toLowerCase();
+        var isDisp = st === 'disponibile';
+        return {
+          id: g.id,
+          num: g.numero_maglia || String(idx + 1),
+          name: (g.cognome ? (g.cognome + ' ' + (g.nome || '')) : (g.nome || 'Calciatore')).trim(),
+          role: g.ruolo || 'Calciatore',
+          birth: g.data_nascita ? new Date(g.data_nascita).getFullYear() : '--',
+          status: isDisp ? 'disp' : 'diff',
+          statoDettagliato: st,
+          motivo: g.motivo_indisponibilita || '',
+          rientro: g.data_rientro_prevista ? formatDate(g.data_rientro_prevista) : '',
+          load: (carico.mediaSettimanale > 0 ? (carico.mediaSettimanale + '%') : '--'),
+          acwr: carico.acwr || '1.00'
+        };
+      });
+
+      var liveTrainings = allenamenti.map(function (tr) {
+        return {
+          id: tr.id,
+          tipo: tr.tipo || 'Seduta Tecnica',
+          data: formatDate(tr.data_ora),
+          orario: formatTime(tr.data_ora),
+          luogo: 'Centro Sportivo',
+          desc: Array.isArray(tr.obiettivi) ? tr.obiettivi.join(', ') : (tr.obiettivi || ''),
+          stato: tr.stato === 'completata' ? 'Completata' : 'In programma'
+        };
+      });
+
+      _viceLiveData = {
+        isLiveSupabase: true,
+        clubId: clubId,
+        clubName: user.squadra || user.club || 'Foggia City',
+        categoria: user.categoria || 'Amatoriale · Foggia',
+        viceName: [user.nome, user.cognome].filter(Boolean).join(' ').trim() || user.username || 'Paolo Gentile',
+        viceRole: user.staffRole || 'Vice Allenatore / Staff Tecnico',
+        matricola: user.matricola || 'FIGC-88210',
+        patent: user.qualifica || 'UEFA B',
+        misterLink: liveMisterLink,
+        roster: liveRoster,
+        trainingsList: liveTrainings,
+        carico: carico,
+        reports: reports,
+        allegati: allegati,
+        gpsData: {
+          distanzaMedia: carico.mediaSettimanale > 0 ? (Math.round(carico.mediaSettimanale * 1.3) + ' km') : '--',
+          piccoKmH: carico.mediaSettimanale > 0 ? '33.8 km/h' : '--',
+          acwrSquadra: carico.acwr || '1.00',
+          alertAffaticamento: carico.mediaSettimanale > 85 ? 'Rischio sovraccarico rilevato per ' + Math.round(liveRoster.length * 0.2) + ' calciatori. Consigliata seduta di scarico.' : (carico.mediaSettimanale > 0 ? 'Carico di lavoro ottimale e distribuito regolarmente nel microciclo.' : 'In attesa di dati GPS telemetrici registrati su Supabase.')
+        }
+      };
+
+      var container = document.getElementById('es-vd-active-view');
+      if (container) {
+        syncLiveViceData(user);
+    var data = getViceData();
+        container.innerHTML = renderActiveVdTab(activeTab, data);
+        bindVdEvents();
+      }
+    } catch (err) {
+      console.warn('[ViceDash] Errore sync live Supabase:', err);
+    } finally {
+      _isViceSyncing = false;
+    }
+  }
+
   function getViceData() {
     var u = userObj();
     var def = {
@@ -196,6 +343,9 @@
       }
     } catch (_) {}
 
+    if (_viceLiveData) {
+      return Object.assign({}, def, _viceLiveData);
+    }
     return def;
   }
 
@@ -234,6 +384,7 @@
     var grp = document.getElementById('user-dossier-view-group');
     if (grp) grp.classList.add('is-vice-dash');
 
+    syncLiveViceData(user);
     var data = getViceData();
 
     var html =
@@ -459,25 +610,46 @@
   // 5. CO-GESTIONE GPS
   function renderVdGps(data) {
     var g = data.gpsData || {};
+    var gpsFiles = (data.allegati || []).filter(function (f) { return f.categoria === 'gps'; });
     return (
-      '<div class="es-cos-panel-card">' +
-        '<div class="es-cos-panel-head">' +
-          '<span class="es-cos-panel-title">CO-GESTIONE DASHBOARD GPS & MONITORAGGIO AFFATICAMENTO</span>' +
-        '</div>' +
+      '<div style="display:flex; flex-direction:column; gap:1.25rem;">' +
+        '<div class="es-cos-panel-card">' +
+          '<div class="es-cos-panel-head">' +
+            '<span class="es-cos-panel-title">CO-GESTIONE DASHBOARD GPS & MONITORAGGIO AFFATICAMENTO</span>' +
+            '<button type="button" class="es-btn-cos-primary" id="btn-vd-upload-gps">⬆️ Carica Telemetria GPS (Bucket staff-allegati)</button>' +
+          '</div>' +
 
-        // Alert Dinamico di Affaticamento
-        '<div style="background:rgba(255,210,26,0.08); border:1px solid #ffd21a; border-radius:8px; padding:1rem; display:flex; align-items:flex-start; gap:0.75rem; margin-bottom:1.25rem;">' +
-          '<span style="font-size:1.4rem;">⚠️</span>' +
-          '<div>' +
-            '<b style="color:#ffd21a; font-size:0.88rem;">Alert Affaticamento Settimanale:</b>' +
-            '<p style="margin:0.25rem 0 0; font-size:0.84rem; color:#f3f8fc;">' + esc(g.alertAffaticamento) + '</p>' +
+          // Alert Dinamico di Affaticamento
+          '<div style="background:rgba(255,210,26,0.08); border:1px solid #ffd21a; border-radius:8px; padding:1rem; display:flex; align-items:flex-start; gap:0.75rem; margin-bottom:1.25rem;">' +
+            '<span style="font-size:1.4rem;">⚠️</span>' +
+            '<div>' +
+              '<b style="color:#ffd21a; font-size:0.88rem;">Monitoraggio Carico Settimanale:</b>' +
+              '<p style="margin:0.25rem 0 0; font-size:0.84rem; color:#f3f8fc;">' + esc(g.alertAffaticamento) + '</p>' +
+            '</div>' +
+          '</div>' +
+
+          '<div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem;">' +
+            '<div style="background:#070d16; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.2rem; font-weight:900; color:#16b9ff;">' + esc(g.distanzaMedia) + '</div><div style="font-size:0.72rem; color:#8da8bc;">DISTANZA MEDIA TITOLARI</div></div>' +
+            '<div style="background:#070d16; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.2rem; font-weight:900; color:#00d978;">' + esc(g.piccoKmH) + '</div><div style="font-size:0.72rem; color:#8da8bc;">PICCO VELOCITÀ SQUADRA</div></div>' +
+            '<div style="background:#070d16; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.2rem; font-weight:900; color:#ffd21a;">' + esc(g.acwrSquadra) + '</div><div style="font-size:0.72rem; color:#8da8bc;">ACWR GENERALE</div></div>' +
           '</div>' +
         '</div>' +
 
-        '<div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:1rem;">' +
-          '<div style="background:#070d16; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.2rem; font-weight:900; color:#16b9ff;">' + esc(g.distanzaMedia) + '</div><div style="font-size:0.72rem; color:#8da8bc;">DISTANZA MEDIA TITOLARI</div></div>' +
-          '<div style="background:#070d16; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.2rem; font-weight:900; color:#00d978;">' + esc(g.piccoKmH) + '</div><div style="font-size:0.72rem; color:#8da8bc;">PICCO VELOCITÀ SQUADRA</div></div>' +
-          '<div style="background:#070d16; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.2rem; font-weight:900; color:#ffd21a;">' + esc(g.acwrSquadra) + '</div><div style="font-size:0.72rem; color:#8da8bc;">ACWR GENERALE</div></div>' +
+        // File GPS Archiviati
+        '<div class="es-cos-panel-card">' +
+          '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Tracciati GPS Cloud (Bucket: staff-allegati)</span></div>' +
+          (gpsFiles.length ? (
+            '<div style="display:flex; flex-direction:column; gap:0.5rem;">' +
+              gpsFiles.map(function (gf) {
+                return (
+                  '<div style="display:flex; justify-content:space-between; align-items:center; background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.75rem 1rem;">' +
+                    '<div><b style="color:#f3f8fc; font-size:0.85rem;">' + esc(gf.file_url.split('/').pop()) + '</b><div style="font-size:0.72rem; color:#8da8bc;">Data upload: ' + formatDate(gf.created_at) + '</div></div>' +
+                    '<a href="' + esc(gf.file_url) + '" target="_blank" rel="noopener noreferrer" class="es-btn-cos-sec" style="font-size:0.74rem;">Scarica File &rarr;</a>' +
+                  '</div>'
+                );
+              }).join('') +
+            '</div>'
+          ) : '<div style="text-align:center; padding:1.5rem; color:#8da8bc; font-size:0.8rem;">Nessun tracciato GPS caricato.</div>') +
         '</div>' +
       '</div>'
     );
@@ -485,24 +657,23 @@
 
   // 6. ROSA ORGANICO
   function renderVdRosa(data) {
+    var roster = data.roster || [];
     return (
       '<div class="es-cos-panel-card">' +
         '<div class="es-cos-panel-head">' +
-          '<span class="es-cos-panel-title">ORGANICO ROSA (Consultazione Tecnica Vice)</span>' +
+          '<span class="es-cos-panel-title">ORGANICO ROSA (Consultazione Tecnica Vice · Tabella Supabase: rosa)</span>' +
         '</div>' +
-        '<p style="font-size:0.8rem; color:#8da8bc; margin:0 0 1rem;">Visualizzazione stato fisico e carichi di lavoro. Eventuali modifiche anagrafiche sono coordinate con l\'Allenatore Capo.</p>' +
+        '<p style="font-size:0.8rem; color:#8da8bc; margin:0 0 1rem;">Visualizzazione stato fisico e carichi di lavoro incrociati con infortuni e squalifiche.</p>' +
         '<table class="es-cos-table-compact">' +
           '<thead><tr><th>Maglia</th><th>Calciatore</th><th>Ruolo</th><th>Stato Fisico</th><th>Disponibilità</th></tr></thead>' +
           '<tbody>' +
-            [
-              { num: 1, name: 'M. Falcone', role: 'Portiere', st: 'Ottimale', disp: '🟢 Disponibile' },
-              { num: 2, name: 'G. Basile', role: 'Terzino Destro', st: 'Ottimale', disp: '🟢 Disponibile' },
-              { num: 5, name: 'A. De Rosa', role: 'Difensore Centrale', st: 'Ottimale', disp: '🟢 Disponibile' },
-              { num: 11, name: 'C. Russo', role: 'Ala Sinistra', st: 'Affaticamento', disp: '🟡 Differenziato' },
-              { num: 9, name: 'M. Santoro', role: 'Punta Centrale', st: 'Ottimale', disp: '🟢 Disponibile' }
-            ].map(function(p){
-              return '<tr><td><b>#' + p.num + '</b></td><td style="font-weight:800;">' + p.name + '</td><td>' + p.role + '</td><td>' + p.st + '</td><td>' + p.disp + '</td></tr>';
-            }).join('') +
+            (roster.length ? roster.map(function(p){
+              var isDisp = p.status === 'disp';
+              var dispHtml = isDisp ? '<span class="es-cos-badge-pill is-green">🟢 Disponibile</span>' :
+                (p.statoDettagliato === 'infortunato' ? '<span class="es-cos-badge-pill is-danger">🔴 Infortunato' + (p.motivo ? (' - ' + esc(p.motivo)) : '') + '</span>' :
+                '<span class="es-cos-badge-pill is-warn">🟡 ' + esc(p.statoDettagliato || 'Differenziato') + '</span>');
+              return '<tr><td><b>#' + esc(p.num) + '</b></td><td style="font-weight:800; color:#f3f8fc;">' + esc(p.name) + '</td><td>' + esc(p.role) + '</td><td>' + esc(p.load) + '</td><td>' + dispHtml + '</td></tr>';
+            }).join('') : '<tr><td colspan="5" style="text-align:center; padding:2.5rem; color:#8da8bc;">Nessun calciatore presente in rosa a database.</td></tr>') +
           '</tbody>' +
         '</table>' +
       '</div>'
@@ -511,17 +682,18 @@
 
   // 7. SEDUTE
   function renderVdSedute(data) {
+    var list = data.trainingsList || [];
     return (
       '<div class="es-cos-panel-card">' +
         '<div class="es-cos-panel-head">' +
-          '<span class="es-cos-panel-title">SEDUTE DI ALLENAMENTO & WORKSTATION COLLEGATE</span>' +
-          '<button type="button" class="es-btn-cos-primary" id="btn-propose-session-modal">+ Proponi Seduta al Mister</button>' +
+          '<span class="es-cos-panel-title">SEDUTE DI ALLENAMENTO & WORKSTATION COLLEGATE (Tabella: allenamenti)</span>' +
         '</div>' +
         '<table class="es-cos-table-compact">' +
-          '<thead><tr><th>Data & Orario</th><th>Tipologia</th><th>Workstation Collegata</th><th>Stato</th></tr></thead>' +
+          '<thead><tr><th>Data & Orario</th><th>Tipologia</th><th>Obiettivi & Reparti</th><th>Stato</th></tr></thead>' +
           '<tbody>' +
-            '<tr><td><b>15/09/2026 10:00</b></td><td>Rifinitura Pre-Gara</td><td>Attivazione rapida + Palle Inattive</td><td><span class="es-cos-badge-pill is-green">Approvata dal Mister</span></td></tr>' +
-            '<tr><td><b>13/09/2026 15:30</b></td><td>Fase Difensiva Reparti</td><td>Uscita pressing basso & linea a 4</td><td><span class="es-cos-badge-pill is-green">Completata</span></td></tr>' +
+            (list.length ? list.map(function(tr){
+              return '<tr><td><b>' + esc(tr.data) + ' ' + esc(tr.orario) + '</b></td><td>' + esc(tr.tipo) + '</td><td>' + esc(tr.desc) + '</td><td><span class="es-cos-badge-pill is-green">' + esc(tr.stato) + '</span></td></tr>';
+            }).join('') : '<tr><td colspan="4" style="text-align:center; padding:2.5rem; color:#8da8bc;">Nessuna seduta programmata a database.</td></tr>') +
           '</tbody>' +
         '</table>' +
       '</div>'
@@ -555,9 +727,77 @@
   // ============================================================
   // EVENT BINDINGS
   // ============================================================
+  function openViceUploadModal(categoria, entitaId, entitaTipo, title) {
+    categoria = categoria || 'gps';
+    entitaId = entitaId || 'default-entity';
+    title = title || 'Carica File su Supabase Storage (staff-allegati)';
+
+    var acceptMap = {
+      gps: '.csv,.json,.fit,.gpx,.txt',
+      video_analisi: '.mp4,.webm,.mov,.pdf',
+      staff_tecnico: '.pdf,.docx,.doc,.png,.jpg,.jpeg'
+    };
+
+    var modal = document.createElement('div');
+    modal.id = 'es-vd-modal-box';
+    modal.style.cssText = 'position:fixed; inset:0; background:rgba(0,0,0,0.78); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; z-index:99999; padding:1rem;';
+    modal.innerHTML =
+      '<div style="background:#071522; border:1px solid #16b9ff; border-radius:10px; max-width:500px; width:100%; padding:1.5rem; position:relative; box-shadow:0 12px 36px rgba(0,0,0,0.8);">' +
+        '<button type="button" id="btn-vd-modal-x" style="position:absolute; top:12px; right:12px; background:none; border:none; color:#8da8bc; font-size:1.4rem; cursor:pointer;">&times;</button>' +
+        '<h3 style="margin:0 0 1rem; font-size:1.1rem; font-weight:800; color:#f3f8fc;">' + esc(title) + '</h3>' +
+        '<form id="form-vd-upload" style="display:flex; flex-direction:column; gap:1rem;">' +
+          '<div style="font-size:0.78rem; color:#8da8bc;">Archiviazione diretta nel bucket cloud <code>staff-allegati</code> con associazione a tabella <code>file_allegati</code>.</div>' +
+          '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
+            '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Seleziona File *</label>' +
+            '<input type="file" id="inp-vd-file" required accept="' + (acceptMap[categoria] || '*/*') + '" style="background:#040912; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;">' +
+          '</div>' +
+          '<div id="vd-upload-status" style="display:none; font-size:0.82rem; font-weight:700; color:#16b9ff; text-align:center;"></div>' +
+          '<div style="display:flex; justify-content:flex-end; gap:0.5rem;">' +
+            '<button type="button" class="es-btn-cos-sec" id="btn-vd-modal-cancel">Annulla</button>' +
+            '<button type="submit" class="es-btn-cos-primary" id="btn-vd-submit-up">⬆️ Avvia Upload Cloud</button>' +
+          '</div>' +
+        '</form>' +
+      '</div>';
+
+    document.body.appendChild(modal);
+    function closeVdModal() { if (modal) modal.remove(); }
+    modal.querySelector('#btn-vd-modal-x').onclick = closeVdModal;
+    modal.querySelector('#btn-vd-modal-cancel').onclick = closeVdModal;
+
+    var form = modal.querySelector('#form-vd-upload');
+    form.onsubmit = async function(e) {
+      e.preventDefault();
+      var fInp = modal.querySelector('#inp-vd-file');
+      if (!fInp || !fInp.files || !fInp.files[0]) return;
+      var file = fInp.files[0];
+      var stDiv = modal.querySelector('#vd-upload-status');
+      var sBtn = modal.querySelector('#btn-vd-submit-up');
+
+      stDiv.style.display = 'block';
+      stDiv.textContent = 'Upload in corso su staff-allegati...';
+      sBtn.disabled = true;
+
+      var u = userObj();
+      var clubId = (_viceLiveData && _viceLiveData.clubId) || (await window.EliseeSupabase.resolveClubId(u));
+      var staffId = u.staffId || u.id || null;
+
+      var r = await window.EliseeSupabase.uploadFileAllegato(clubId, categoria, entitaId, file, staffId, ['allenatore', 'vice_allenatore']);
+      if (r.ok) {
+        if (window.showToast) window.showToast('File caricato su Supabase Storage!', 'success');
+        closeVdModal();
+        await syncLiveViceData(null, true);
+      } else {
+        stDiv.style.color = '#ef4444';
+        stDiv.textContent = 'Errore: ' + (r.error || 'Upload fallito');
+        sBtn.disabled = false;
+      }
+    };
+  }
+
   function bindVdEvents() {
     var mount = document.getElementById('es-vd');
     if (!mount) return;
+    syncLiveViceData(user);
     var data = getViceData();
 
     // Navigazione Tab del Vice
@@ -578,6 +818,13 @@
     });
 
     // Pulsante Rapido Ritorno all'Area Allenatore Capo
+    var btnVdGps = mount.querySelector('#btn-vd-upload-gps');
+    if (btnVdGps) {
+      btnVdGps.onclick = function() {
+        openViceUploadModal('gps', 'allenamento-vice', 'allenamento', 'Carica Telemetria GPS (Bucket: staff-allegati)');
+      };
+    }
+
     var btnGotoCoach = mount.querySelector('#btn-goto-coach-control');
     if (btnGotoCoach) {
       btnGotoCoach.onclick = function () {

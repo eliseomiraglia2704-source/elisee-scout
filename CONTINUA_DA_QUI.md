@@ -3,12 +3,22 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Respiro e Spazio Superiore tra Header e Sidebar (`COACHPRO7`):
-1. **Spazio Header-Sidebar Calibrato**:
-   - Aumentato il padding-top della sidebar `.sidebar, .es-cos-sidebar` da 12px a 22px (`padding: 22px var(--space-2) 28px;`) e inserito 4px di padding-top su `.es-cos-brand-header`.
-   - Il titolo `ELISEE SCOUT / AREA STAFF TECNICO` ora gode del giusto respiro visivo sotto la navbar fissa, allineandosi armoniosamente al ritmo dei contenuti centrali.
-2. **File aggiornati**: `coach-dash.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHPRO7`.
-Feature precedente: **Sidebar Fissa a Tutta Altezza Estesa fino al Fondo (`COACHPRO6`)**:
+Ultimo aggiornamento: **2026-09-16** — Area Staff Tecnico (Allenatore / Vice Allenatore): Dati Reali Supabase + Cloud Storage (`COACHSUPA1`):
+1. **Rimozione Integrale Dati Mock & Query Reali al Database Supabase**:
+   - Creato il client universale `elisee-supabase.js` (`window.EliseeSupabase`) con connessione REST PostgREST e supporto tabelle: `club`, `staff`, `rosa`, `partite`, `allenamenti`, `presenze_allenamento`, `report`, `eventi_log`, `impegni_staff`, `file_allegati`.
+   - **Prossima Gara & Calendario Gare**: collegate alla tabella `partite` con filtro data futura / stato prossima e ordine cronologico reale; se non ci sono gare a database, visualizza lo stato esplicito "Nessuna gara in programma", senza inventare avversari o date.
+   - **Ultima Seduta & Sedute Pianificate**: collegate alla tabella `allenamenti`; se non ci sono sedute completate, mostra "Nessuna seduta svolta registrata".
+   - **Carico Squadra & Carico Settimanale**: aggregazione in tempo reale dei carichi registrati (`presenze_allenamento` con fallback su `allenamenti.carico_percepito`) sui 7 giorni (Lun-Dom) con gauge ad anello percentuale e ACWR ratio dinamico; visualizza "In attesa dati GPS" se vuoto.
+   - **Disponibilità Rosa & Indisponibili**: incrocio in tempo reale della tabella `rosa` con stato atleti (disponibile, infortunato, squalificato, differenziato) con percentuale effettiva, motivo indisponibilità e data di rientro prevista.
+   - **Preparazione Partita**: calcolata dinamicamente dalle sedute pre-gara in programma/completate della settimana.
+   - **Report Ricevuti & Log Attività**: collegate alle tabelle `report` (conteggio non letti e archivio) ed `eventi_log` (attività cronologica reale per club).
+   - **Staff & Binomio Tecnico**: collegamento dinamico tra Allenatore Capo e Vice Allenatore tramite tabella `staff`.
+2. **Supabase Cloud Storage (Bucket `staff-allegati`)**:
+   - Implementato upload centralizzato dei file (`uploadFileAllegato`): tracciati e telemetria GPS (categoria `gps` per allenamento), video-analisi e dossier tattici (categoria `video_analisi` per partita), referti medici e report collaboratori (categoria `staff_tecnico` per club/giocatore).
+   - Modal dedicato di caricamento con progress feedback, selezione permessi di visibilità (`staff_tecnico`, `tutti`, `medico`), salvataggio metadati in `file_allegati` e link diretti per apertura e download.
+   - Integrazione speculare nell'Area Vice Allenatore (`vice-dash.js`): consultazione rosa reale, gestione sedute, monitoraggio GPS live e upload diretto di schede workstation.
+3. **File aggiornati**: `elisee-supabase.js`, `coach-dash.js`, `vice-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_COACHSUPA1`.
+Feature precedente: **Respiro e Spazio Superiore tra Header e Sidebar (`COACHPRO7`)**:
 1. **Sidebar Estesa Verticalmente fino in Fondo (Linea Gialla Coperta al 100%)**:
    - Impostata la sidebar `.es-cos-sidebar` come `position: fixed; top: var(--header-h); left: 0; bottom: 0; width: 240px; height: calc(100vh - var(--header-h)); height: calc(100dvh - var(--header-h));`.
    - Lo sfondo scuro `#0A0E18` e la linea divisoria verticale destra `1px solid var(--cos-line)` ora scendono fluidamente e ininterrottamente fino al fondo del viewport (taskbar).

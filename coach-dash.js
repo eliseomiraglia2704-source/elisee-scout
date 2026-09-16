@@ -60,9 +60,309 @@
     return false;
   }
 
+  var _coachLiveData = null;
+  var _isSyncing = false;
+
+  function formatDateTime(iso) {
+    if (!iso) return '--';
+    try {
+      var d = new Date(iso);
+      var day = String(d.getDate()).padStart(2, '0');
+      var mon = String(d.getMonth() + 1).padStart(2, '0');
+      var yr = d.getFullYear();
+      var hr = String(d.getHours()).padStart(2, '0');
+      var min = String(d.getMinutes()).padStart(2, '0');
+      return day + '/' + mon + '/' + yr + ' ' + hr + ':' + min;
+    } catch (_) { return String(iso); }
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '--';
+    try {
+      var d = new Date(iso);
+      return String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0') + '/' + d.getFullYear();
+    } catch (_) { return String(iso); }
+  }
+
+  function formatTime(iso) {
+    if (!iso) return '--';
+    try {
+      var d = new Date(iso);
+      return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+    } catch (_) { return '--'; }
+  }
+
+  function getCountdownValues(targetIso) {
+    if (!targetIso) return { days: 0, hours: 0, mins: 0 };
+    var diff = new Date(targetIso).getTime() - Date.now();
+    if (diff <= 0) return { days: 0, hours: 0, mins: 0 };
+    var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    return { days: days, hours: hours, mins: mins };
+  }
+
+  async function syncLiveCoachData(user, force) {
+    if (_isSyncing && !force) return;
+    _isSyncing = true;
+    user = user || userObj();
+
+    if (!window.EliseeSupabase) {
+      _isSyncing = false;
+      return;
+    }
+
+    try {
+      var clubId = await window.EliseeSupabase.resolveClubId(user);
+      var staffId = user.staffId || user.id || null;
+
+      var res = await Promise.all([
+        window.EliseeSupabase.getProssimaPartita(clubId),
+        window.EliseeSupabase.getPartite(clubId),
+        window.EliseeSupabase.getUltimaSeduta(clubId),
+        window.EliseeSupabase.getSedutaOdierna(clubId),
+        window.EliseeSupabase.getAllenamenti(clubId),
+        window.EliseeSupabase.getDisponibilitaRosa(clubId),
+        window.EliseeSupabase.getRosa(clubId),
+        window.EliseeSupabase.getCaricoSettimanale(clubId),
+        window.EliseeSupabase.getReportStaff(clubId, staffId, 'allenatore'),
+        window.EliseeSupabase.getEventiLog(clubId),
+        window.EliseeSupabase.getImpegniStaff(clubId),
+        window.EliseeSupabase.getFileAllegati(clubId),
+        window.EliseeSupabase.getStaff(clubId, 'vice_allenatore')
+      ]);
+
+      var prossima = res[0];
+      var partite = res[1] || [];
+      var ultima = res[2];
+      var odierna = res[3];
+      var allenamenti = res[4] || [];
+      var dispRosa = res[5] || { totale: 0, disponibili: 0, infortunati: 0, squalificati: 0, differenziati: 0, indisponibiliTotale: 0, percentuale: 0, indisponibiliLista: [] };
+      var rosa = res[6] || [];
+      var carico = res[7] || { mediaSettimanale: 0, giorni: [], acwr: '1.00', stato: 'In attesa dati GPS' };
+      var reports = res[8] || [];
+      var logs = res[9] || [];
+      var impegni = res[10] || [];
+      var allegati = res[11] || [];
+      var viceStaff = res[12] || [];
+
+      var cd = getCountdownValues(prossima ? prossima.data_ora : null);
+
+      var liveNextMatch = prossima ? {
+        id: prossima.id,
+        avversario: prossima.avversario,
+        data: formatDate(prossima.data_ora),
+        orario: formatTime(prossima.data_ora),
+        luogo: prossima.stadio ? (prossima.stadio + (prossima.casa_trasferta === 'casa' ? ' (Casa)' : ' (Trasf.)')) : (prossima.casa_trasferta === 'casa' ? 'In Casa' : 'Fuori Casa'),
+        competizione: prossima.competizione || 'Campionato',
+        giorniMancanti: cd.days,
+        oreMancanti: cd.hours,
+        minutiMancanti: cd.mins,
+        targetIso: prossima.data_ora
+      } : {
+        id: null,
+        avversario: 'Nessuna gara in programma',
+        data: '--',
+        orario: '--',
+        luogo: 'In attesa di calendario gare',
+        competizione: '--',
+        giorniMancanti: 0,
+        oreMancanti: 0,
+        minutiMancanti: 0,
+        targetIso: null
+      };
+
+      var liveSedutaOdierna = odierna ? {
+        id: odierna.id,
+        tipo: odierna.tipo || 'Seduta di campo',
+        orario: formatTime(odierna.data_ora) + (odierna.durata_minuti ? (' · ' + odierna.durata_minuti + 'm') : ''),
+        stato: odierna.stato || 'In programma'
+      } : {
+        id: null,
+        tipo: 'Nessuna seduta oggi',
+        orario: '--:--',
+        stato: 'Riposo'
+      };
+
+      var liveProssimeGare = partite.map(function (p) {
+        var isNext = prossima && p.id === prossima.id;
+        return {
+          id: p.id,
+          data: formatDateTime(p.data_ora),
+          comp: p.competizione || 'Campionato',
+          avv: p.avversario,
+          stadio: p.stadio || (p.casa_trasferta === 'casa' ? 'Casa' : 'Trasferta'),
+          status: p.stato || (isNext ? 'Prossima' : 'Da preparare'),
+          isNext: isNext
+        };
+      });
+
+      var liveUltimaSessione = ultima ? {
+        id: ultima.id,
+        tipo: ultima.tipo || 'Seduta di campo',
+        data: formatDateTime(ultima.data_ora),
+        durata: (ultima.durata_minuti || 90) + ' min',
+        carico: ultima.carico_percepito || 'Medio',
+        giocatori: dispRosa.totale > 0 ? (dispRosa.disponibili + '/' + dispRosa.totale) : '--',
+        esercizi: ultima.n_esercizi || 0,
+        obiettivi: Array.isArray(ultima.obiettivi) ? ultima.obiettivi.length : (ultima.obiettivi ? 1 : 0)
+      } : {
+        id: null,
+        tipo: 'Nessuna seduta recente',
+        data: '--',
+        durata: '--',
+        carico: '--',
+        giocatori: '0/0',
+        esercizi: 0,
+        obiettivi: 0
+      };
+
+      var liveRoster = rosa.map(function (g, idx) {
+        var st = (g.stato || 'disponibile').toLowerCase();
+        var isDisp = st === 'disponibile';
+        return {
+          id: g.id,
+          num: g.numero_maglia || String(idx + 1),
+          name: (g.cognome ? (g.cognome + ' ' + (g.nome || '')) : (g.nome || 'Calciatore')).trim(),
+          role: g.ruolo || 'Calciatore',
+          birth: g.data_nascita ? new Date(g.data_nascita).getFullYear() : '--',
+          status: isDisp ? 'disp' : 'diff',
+          statoDettagliato: st,
+          motivo: g.motivo_indisponibilita || '',
+          rientro: g.data_rientro_prevista ? formatDate(g.data_rientro_prevista) : '',
+          app: 0,
+          load: '--',
+          acwr: '1.00'
+        };
+      });
+
+      var liveTrainingsList = allenamenti.map(function (tr) {
+        return {
+          id: tr.id,
+          tipo: tr.tipo || 'Seduta Tecnica',
+          data: formatDate(tr.data_ora),
+          orario: formatTime(tr.data_ora),
+          luogo: 'Centro Sportivo Club',
+          desc: Array.isArray(tr.obiettivi) ? tr.obiettivi.join(', ') : (tr.obiettivi || 'Obiettivi tecnici e tattici.'),
+          carico: tr.carico_percepito || 'Medio'
+        };
+      });
+
+      var liveLogs = logs.map(function (l) {
+        var d = l.created_at ? new Date(l.created_at) : new Date();
+        var dateStr = String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0') + ' ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+        return {
+          date: dateStr,
+          text: l.descrizione || l.tipo_evento || 'Attività registrata'
+        };
+      });
+
+      var liveImpegni = impegni.map(function (imp) {
+        return {
+          id: imp.id,
+          title: imp.titolo,
+          time: formatDateTime(imp.data_ora),
+          type: imp.sottotitolo || 'Staff'
+        };
+      });
+
+      var unreadReports = reports.filter(function (r) { return !r.letto; });
+
+      var prepPct = 0;
+      var prepFoot = 'In attesa gara';
+      if (prossima) {
+        var totalWeeklyTr = allenamenti.length;
+        if (totalWeeklyTr > 0) {
+          var completedTr = allenamenti.filter(function (a) { return a.stato === 'completata'; }).length;
+          prepPct = Math.min(100, Math.round((completedTr / totalWeeklyTr) * 100));
+          prepFoot = prepPct >= 80 ? 'Completa' : (prepPct > 0 ? 'In corso (' + prepPct + '%)' : 'Avviata');
+        } else {
+          prepPct = 0;
+          prepFoot = 'Da avviare';
+        }
+      }
+
+      _coachLiveData = {
+        isLiveSupabase: true,
+        clubId: clubId,
+        clubName: user.squadra || user.club || 'Foggia City',
+        categoria: user.categoria || 'Amatoriale · Foggia',
+        coachName: [user.nome, user.cognome].filter(Boolean).join(' ').trim() || user.username || 'Elisee Miraglia',
+        coachRole: user.staffRole || 'Allenatore Capo',
+        matricola: user.matricola || 'FIGC-88210',
+        patent: user.qualifica || 'UEFA B',
+        nextMatch: liveNextMatch,
+        sedutaOdierna: liveSedutaOdierna,
+        prossimeGare: liveProssimeGare,
+        ultimaSessione: liveUltimaSessione,
+        trainingsList: liveTrainingsList,
+        roster: liveRoster,
+        dispRosa: dispRosa,
+        carico: carico,
+        prepPartita: { pct: prepPct, foot: prepFoot },
+        reports: reports,
+        unreadCount: unreadReports.length,
+        logAttivita: liveLogs,
+        prossimiImpegni: liveImpegni,
+        allegati: allegati,
+        viceLink: (viceStaff && viceStaff.length > 0) ? {
+          id: viceStaff[0].id,
+          name: ((viceStaff[0].nome || '') + ' ' + (viceStaff[0].cognome || '')).trim() || 'Vice Allenatore',
+          role: 'Vice Allenatore / Staff Tecnico',
+          patent: viceStaff[0].patentino || 'UEFA B',
+          status: 'Collegato',
+          lastSync: 'Sincronizzato'
+        } : {
+          id: 'vice-none',
+          name: 'In attesa associazione Vice',
+          role: 'Staff Tecnico',
+          patent: 'UEFA B',
+          status: 'Non connesso',
+          lastSync: '--'
+        }
+      };
+
+      updateCoachDomWithLiveData(_coachLiveData);
+    } catch (err) {
+      console.warn('[CoachDash] Errore sync live Supabase:', err);
+    } finally {
+      _isSyncing = false;
+    }
+  }
+
+  function updateCoachDomWithLiveData(ld) {
+    if (!ld) return;
+    var elWhen = document.getElementById('match-when');
+    var elOpp = document.getElementById('match-opp');
+    var elComp = document.getElementById('match-comp');
+    var elVenue = document.getElementById('match-venue');
+    var elToday = document.getElementById('today-session');
+    var elDays = document.getElementById('cd-days');
+    var elHours = document.getElementById('cd-hours');
+    var elMins = document.getElementById('cd-mins');
+
+    if (elWhen) elWhen.textContent = ld.nextMatch.data === '--' ? '--' : (ld.nextMatch.data + ' - ' + ld.nextMatch.orario);
+    if (elOpp) elOpp.textContent = ld.nextMatch.avversario;
+    if (elComp) elComp.textContent = ld.nextMatch.competizione;
+    if (elVenue) elVenue.textContent = ld.nextMatch.luogo;
+    if (elToday) elToday.textContent = ld.sedutaOdierna.tipo + (ld.sedutaOdierna.orario !== '--:--' ? (' · ' + ld.sedutaOdierna.orario) : '');
+
+    if (elDays) elDays.textContent = String(ld.nextMatch.giorniMancanti).padStart(2, '0');
+    if (elHours) elHours.textContent = String(ld.nextMatch.oreMancanti).padStart(2, '0');
+    if (elMins) elMins.textContent = String(ld.nextMatch.minutiMancanti).padStart(2, '0');
+
+    var container = document.getElementById('es-cos-active-content');
+    if (container) {
+      syncLiveCoachData(user);
+    var data = getCoachData();
+      container.innerHTML = renderActiveTab(activeTab, data);
+      bindAllEvents();
+    }
+  }
+
   function getCoachData() {
     var u = userObj();
-    var def = {
+    var base = {
       coachName: [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Elisee Miraglia',
       coachRole: u.staffRole || 'Allenatore Capo',
       patent: u.qualifica || (u.staffProfile && u.staffProfile.qualifica) || 'UEFA B',
@@ -70,195 +370,109 @@
       clubName: u.squadra || 'Foggia City',
       categoria: 'Amatoriale · Foggia',
       reparto: 'Prima Squadra',
-      matricola: u.matricola || '88210',
+      matricola: u.matricola || 'FIGC-88210',
       scadenzaTesseramento: '30/06/2027',
       sede: 'Foggia (FG)',
       stadio: 'Campo Comunale - Foggia',
       telefono: u.telefono || '+39 340 1234567',
       logoUrl: 'immagini/squadre-loghi/foggia-city.png',
 
-      // Prossima Partita & Countdown
       nextMatch: {
-        avversario: 'Cerignola Nord',
-        data: '15/09/2026',
-        orario: '15:00',
-        luogo: 'Campo Comunale - Foggia',
-        competizione: 'Amatoriale · Girone Foggia',
-        giorniMancanti: 2,
-        oreMancanti: 15,
-        minutiMancanti: 24
+        id: null,
+        avversario: 'In attesa di gara...',
+        data: '--',
+        orario: '--',
+        luogo: '--',
+        competizione: '--',
+        giorniMancanti: 0,
+        oreMancanti: 0,
+        minutiMancanti: 0
       },
-
-      // Seduta Odierna
       sedutaOdierna: {
-        tipo: 'Rifinitura',
-        orario: '10:00 - 11:30',
-        stato: 'In programma'
+        id: null,
+        tipo: 'In attesa...',
+        orario: '--',
+        stato: '--'
       },
-
-      // Calendario Prossime Gare
-      prossimeGare: [
-        { id: 'g-1', data: '15/09/2026 15:00', comp: 'Amatoriale · Girone Foggia', avv: 'Cerignola Nord', stadio: 'Comunale - Foggia', status: 'Prossima', isNext: true },
-        { id: 'g-2', data: '22/09/2026 15:00', comp: 'Amatoriale · Girone Foggia', avv: 'Lucera Sport', stadio: 'Comunale - Lucera', status: 'Da preparare', isNext: false },
-        { id: 'g-3', data: '29/09/2026 15:00', comp: 'Amatoriale · Girone Foggia', avv: 'Manfredonia 04', stadio: 'Comunale - Manfredonia', status: 'Da preparare', isNext: false },
-        { id: 'g-4', data: '06/10/2026 15:00', comp: 'Amatoriale · Girone Foggia', avv: 'San Severo', stadio: 'Comunale - San Severo', status: 'Da preparare', isNext: false },
-        { id: 'g-5', data: '13/10/2026 15:00', comp: 'Coppa Amatori', avv: 'Troia Calcio', stadio: 'Comunale - Troia', status: 'Da preparare', isNext: false }
-      ],
-
-      // Ultima Sessione
+      prossimeGare: [],
       ultimaSessione: {
-        tipo: 'Rifinitura',
-        data: '14/09/2026 - 10:00',
-        durata: '1h 30m',
-        carico: 'Medio',
-        giocatori: '24/26',
-        esercizi: 6,
-        obiettivi: 3
+        id: null,
+        tipo: 'In attesa...',
+        data: '--',
+        durata: '--',
+        carico: '--',
+        giocatori: '0/0',
+        esercizi: 0,
+        obiettivi: 0
       },
-
-      // Collegamento Diretto Vice Allenatore
       viceLink: {
-        id: 'vice-official-1',
-        name: 'Paolo Gentile',
+        id: 'vice-none',
+        name: 'In attesa associazione Vice',
         role: 'Vice Allenatore / Staff Tecnico',
         patent: 'UEFA B',
-        email: 'paolo.gentile@elisee-scout.it',
-        status: 'Collegato',
-        lastSync: '14/09/2026 - 18:45'
+        email: '',
+        status: 'In attesa',
+        lastSync: '--'
       },
-
-      // Modulo & Tattica
       moduloPrincipale: '4-3-3',
       moduloSecondario: '4-2-3-1',
       formazioneUfficialeConfermata: true,
-
-      // Top 11 & Panchina
       top11: [
-        { num: 1, pos: 'POR', name: 'M. Falcone', rating: '7.8' },
-        { num: 2, pos: 'TD', name: 'G. Basile', rating: '7.5' },
-        { num: 5, pos: 'DC', name: 'A. De Rosa', rating: '8.2' },
-        { num: 6, pos: 'DC', name: 'L. Marotta', rating: '7.9' },
-        { num: 3, pos: 'TS', name: 'D. Caruso', rating: '7.4' },
-        { num: 4, pos: 'MED', name: 'S. Amato', rating: '8.0' },
-        { num: 8, pos: 'CC', name: 'F. Valenti', rating: '7.7' },
-        { num: 10, pos: 'CC', name: 'E. Miraglia Jr', rating: '8.5' },
-        { num: 7, pos: 'AD', name: 'R. Bonaccorsi', rating: '8.1' },
-        { num: 11, pos: 'AS', name: 'C. Russo', rating: '7.9' },
-        { num: 9, pos: 'ATT', name: 'M. Santoro', rating: '8.6' }
+        { num: 1, pos: 'POR', name: 'Portiere 1', rating: '--' },
+        { num: 2, pos: 'TD', name: 'Terzino Dx', rating: '--' },
+        { num: 5, pos: 'DC', name: 'Difensore Centrale 1', rating: '--' },
+        { num: 6, pos: 'DC', name: 'Difensore Centrale 2', rating: '--' },
+        { num: 3, pos: 'TS', name: 'Terzino Sx', rating: '--' },
+        { num: 4, pos: 'MED', name: 'Mediano', rating: '--' },
+        { num: 8, pos: 'CC', name: 'Mezzala Dx', rating: '--' },
+        { num: 10, pos: 'CC', name: 'Mezzala Sx', rating: '--' },
+        { num: 7, pos: 'AD', name: 'Ala Dx', rating: '--' },
+        { num: 11, pos: 'AS', name: 'Ala Sx', rating: '--' },
+        { num: 9, pos: 'ATT', name: 'Centravanti', rating: '--' }
       ],
-      panchina: [
-        { num: 12, pos: 'POR', name: 'A. Vitale', role: 'Portiere' },
-        { num: 13, pos: 'DIF', name: 'P. Romano', role: 'Difensore Centrale' },
-        { num: 14, pos: 'DIF', name: 'M. Pellegrino', role: 'Terzino Destro' },
-        { num: 15, pos: 'CEN', name: 'G. Leone', role: 'Mezzala' },
-        { num: 16, pos: 'CEN', name: 'N. Ferrara', role: 'Trequartista' },
-        { num: 17, pos: 'ATT', name: 'V. Guida', role: 'Ala Sinistra' },
-        { num: 18, pos: 'ATT', name: 'F. Longo', role: 'Punta Centrale' }
-      ],
-
-      // Rosa Completa
-      roster: [
-        { num: 1, name: 'M. Falcone', role: 'Portiere', birth: 2001, status: 'disp', app: 4, load: '9.2 km', acwr: '1.04' },
-        { num: 2, name: 'G. Basile', role: 'Terzino Destro', birth: 2003, status: 'disp', app: 4, load: '10.5 km', acwr: '1.08' },
-        { num: 5, name: 'A. De Rosa', role: 'Difensore Centrale', birth: 1999, status: 'disp', app: 4, load: '9.8 km', acwr: '1.02' },
-        { num: 6, name: 'L. Marotta', role: 'Difensore Centrale', birth: 2000, status: 'disp', app: 4, load: '10.1 km', acwr: '1.06' },
-        { num: 3, name: 'D. Caruso', role: 'Terzino Sinistro', birth: 2002, status: 'disp', app: 3, load: '11.2 km', acwr: '1.14' },
-        { num: 4, name: 'S. Amato', role: 'Mediano', birth: 1998, status: 'disp', app: 4, load: '11.8 km', acwr: '1.09' },
-        { num: 8, name: 'F. Valenti', role: 'Mezzala', birth: 2001, status: 'disp', app: 4, load: '11.5 km', acwr: '1.11' },
-        { num: 10, name: 'E. Miraglia Jr', role: 'Trequartista', birth: 2002, status: 'disp', app: 4, load: '10.8 km', acwr: '1.05' },
-        { num: 7, name: 'R. Bonaccorsi', role: 'Ala Destra', birth: 2003, status: 'disp', app: 4, load: '10.9 km', acwr: '1.12' },
-        { num: 11, name: 'C. Russo', role: 'Ala Sinistra', birth: 2000, status: 'diff', app: 2, load: '7.4 km', acwr: '0.88' },
-        { num: 9, name: 'M. Santoro', role: 'Punta Centrale', birth: 1999, status: 'disp', app: 4, load: '10.2 km', acwr: '1.07' },
-        { num: 12, name: 'A. Vitale', role: 'Portiere', birth: 2004, status: 'disp', app: 0, load: '6.5 km', acwr: '0.95' },
-        { num: 13, name: 'P. Romano', role: 'Difensore Centrale', birth: 2002, status: 'disp', app: 2, load: '8.9 km', acwr: '1.01' },
-        { num: 14, name: 'M. Pellegrino', role: 'Terzino Destro', birth: 2004, status: 'diff', app: 1, load: '6.8 km', acwr: '0.84' },
-        { num: 15, name: 'G. Leone', role: 'Mezzala', birth: 2003, status: 'disp', app: 3, load: '9.4 km', acwr: '1.03' },
-        { num: 16, name: 'N. Ferrara', role: 'Trequartista', birth: 2001, status: 'disp', app: 2, load: '8.7 km', acwr: '1.02' },
-        { num: 17, name: 'V. Guida', role: 'Ala Sinistra', birth: 2002, status: 'disp', app: 3, load: '9.1 km', acwr: '1.05' },
-        { num: 18, name: 'F. Longo', role: 'Punta Centrale', birth: 2003, status: 'disp', app: 2, load: '8.4 km', acwr: '0.99' }
-      ],
-
-      // Notifiche Live Staff
-      notifiche: [
-        { id: 'n-1', dot: 'green', text: 'Nuovo report dal Vice Allenatore', sub: 'Palle inattive offensive', date: '14/09/2026 - 18:45', action: 'report' },
-        { id: 'n-2', dot: 'cyan', text: 'Approvazione formazione richiesta', sub: 'Bozza 4-3-3 presentata al Mister', date: '14/09/2026 - 16:20', action: 'formazione' },
-        { id: 'n-3', dot: 'danger', text: 'Giocatore infortunato', sub: 'C. Russo: risentimento flessori', date: '13/09/2026 - 21:10', action: 'rosa' },
-        { id: 'n-4', dot: 'warn', text: 'Aggiornamento carichi GPS', sub: '2 atleti in zona di monitoraggio affaticamento', date: '13/09/2026 - 17:32', action: 'gps' },
-        { id: 'n-5', dot: 'cyan', text: 'Nuova scheda workstation', sub: 'Uscita dal pressing basso & scarico terzino', date: '12/09/2026 - 15:44', action: 'workstation' }
-      ],
-
-      // Ultimi Log Attività
-      logAttivita: [
-        { date: '14/09 18:45', text: 'Report dal Vice Allenatore - Palle inattive offensive' },
-        { date: '14/09 16:20', text: 'Approvazione formazione - Richiesta al Mister' },
-        { date: '13/09 21:10', text: 'Aggiornamento infortunati - 2 giocatori' },
-        { date: '12/09 15:44', text: 'Nuova scheda creata - Uscita dal pressing basso' }
-      ],
-
-      // Impegni Staff
-      prossimiImpegni: [
-        { title: 'Seduta di allenamento', time: '15/09/2026 - 10:00', type: 'Rifinitura' },
-        { title: 'Riunione tecnica', time: '15/09/2026 - 14:30', type: 'Analisi avversario' },
-        { title: 'Video analisi', time: '16/09/2026 - 16:00', type: 'A.C. Ragusa' }
-      ],
-
-      // Sedute Pianificate
-      trainingsList: [
-        { id: 'tr-1', tipo: 'Rifinitura', data: '15/09/2026', orario: '10:00 - 11:30', luogo: 'Stadio Comunale - Carlentini', desc: 'Attivazione dinamica, rapidità 10m, schemi su palla inattiva e conclusioni.', carico: 'Medio', presenze: {} },
-        { id: 'tr-2', tipo: 'Seduta Tattica Reparti', data: '13/09/2026', orario: '15:30 - 17:15', luogo: 'Stadio Comunale - Carlentini', desc: 'Linea difensiva a 4, pressing orientato e uscite dal basso.', carico: 'Alto', presenze: {} },
-        { id: 'tr-3', tipo: 'Potenza Aerobica & Rondos', data: '11/09/2026', orario: '15:30 - 17:30', luogo: 'Centro Sportivo', desc: 'Rondos 5v2 ad alta intensità e blocchi di corsa intermittente.', carico: 'Alto', presenze: {} }
-      ],
-
-      // Comunicazioni Allenatore <-> Vice
-      messaggiStaff: [
-        { id: 'm-1', from: 'Paolo Gentile (Vice)', text: 'Mister, ho completato la scheda sui calci d\'angolo dell\'A.C. Ragusa. Lavorano con 2 saltatori sul secondo palo.', time: '14/09 18:45', prio: 'Tattica' },
-        { id: 'm-2', from: 'Elisee Miraglia (Mister)', text: 'Ottimo Paolo. Domani mattina in rifinitura dedichiamo 20 minuti al blocco a zona mista.', time: '14/09 19:10', prio: 'Ordinaria' },
-        { id: 'm-3', from: 'Paolo Gentile (Vice)', text: 'Ricevuto Mister, preparo già i cinesini e le pettorine per i due gruppi.', time: '14/09 19:15', prio: 'Ordinaria' }
-      ],
-
-      // Analisi Avversario
+      panchina: [],
+      roster: [],
+      notifiche: [],
+      logAttivita: [],
+      prossimiImpegni: [],
+      trainingsList: [],
+      messaggiStaff: [],
+      allegati: [],
+      dispRosa: { totale: 0, disponibili: 0, infortunati: 0, squalificati: 0, differenziati: 0, indisponibiliTotale: 0, percentuale: 0, indisponibiliLista: [] },
+      carico: { mediaSettimanale: 0, giorni: [], acwr: '1.00', stato: 'In attesa dati GPS' },
+      prepPartita: { pct: 0, foot: 'In attesa' },
+      reports: [],
+      unreadCount: 0,
       analisiAvversario: {
-        nome: 'A.C. RAGUSA',
-        campionato: 'Serie D - Girone I',
-        modulo: '4-3-1-2 (Rombo)',
-        puntiForza: 'Densità centrale, trequartista abile tra le linee, contropiede rapido.',
-        puntiDeboli: 'Vulnerabili sui cambi di gioco, terzini spesso troppo alti in transizione negativa.',
-        giocatoriChiave: 'Capocannoniere n.9 (14 gol), Playmaker n.10.',
-        palleInattive: 'Corner a uscire battuti col piede invertito, 3 saltatori a rimorchio.',
-        videoReport: 'Sintesi video ultimi 3 match (vittoria 2-1, pareggio 0-0, vittoria 3-0).'
+        nome: 'Dossier Tattico',
+        campionato: 'Campionato',
+        modulo: '4-3-3',
+        puntiForza: 'In attesa inserimento report.',
+        puntiDeboli: 'In attesa inserimento report.',
+        giocatoriChiave: 'In attesa inserimento report.',
+        palleInattive: 'In attesa inserimento report.',
+        videoReport: 'Nessun video report caricato.'
       },
-
-      // Pedine Lavagna Tattica
       boardPins: [
-        { id: 'bp-1', type: 'blue', num: '1', name: 'Falcone', x: 50, y: 88 },
-        { id: 'bp-2', type: 'blue', num: '2', name: 'Basile', x: 84, y: 68 },
-        { id: 'bp-3', type: 'blue', num: '5', name: 'De Rosa', x: 62, y: 72 },
-        { id: 'bp-4', type: 'blue', num: '6', name: 'Marotta', x: 38, y: 72 },
-        { id: 'bp-5', type: 'blue', num: '3', name: 'Caruso', x: 16, y: 68 },
-        { id: 'bp-6', type: 'blue', num: '4', name: 'Amato', x: 50, y: 52 },
-        { id: 'bp-7', type: 'blue', num: '8', name: 'Valenti', x: 70, y: 44 },
-        { id: 'bp-8', type: 'blue', num: '10', name: 'Miraglia', x: 30, y: 44 },
-        { id: 'bp-9', type: 'blue', num: '7', name: 'Bonaccorsi', x: 82, y: 24 },
-        { id: 'bp-10', type: 'blue', num: '11', name: 'Russo', x: 18, y: 24 },
-        { id: 'bp-11', type: 'blue', num: '9', name: 'Santoro', x: 50, y: 16 },
-        { id: 'bp-red-1', type: 'red', num: '9', name: 'Punta Avv', x: 48, y: 65 },
-        { id: 'bp-red-2', type: 'red', num: '10', name: 'Treq Avv', x: 52, y: 56 },
+        { id: 'bp-1', type: 'blue', num: '1', name: 'POR', x: 50, y: 88 },
+        { id: 'bp-2', type: 'blue', num: '2', name: 'TD', x: 84, y: 68 },
+        { id: 'bp-3', type: 'blue', num: '5', name: 'DC', x: 62, y: 72 },
+        { id: 'bp-4', type: 'blue', num: '6', name: 'DC', x: 38, y: 72 },
+        { id: 'bp-5', type: 'blue', num: '3', name: 'TS', x: 16, y: 68 },
+        { id: 'bp-6', type: 'blue', num: '4', name: 'MED', x: 50, y: 52 },
+        { id: 'bp-7', type: 'blue', num: '8', name: 'CC', x: 70, y: 44 },
+        { id: 'bp-8', type: 'blue', num: '10', name: 'CC', x: 30, y: 44 },
+        { id: 'bp-9', type: 'blue', num: '7', name: 'AD', x: 82, y: 24 },
+        { id: 'bp-10', type: 'blue', num: '11', name: 'AS', x: 18, y: 24 },
+        { id: 'bp-11', type: 'blue', num: '9', name: 'ATT', x: 50, y: 16 },
         { id: 'ball', type: 'ball', num: '', name: 'Palla', x: 50, y: 38 }
       ]
     };
 
-    try {
-      var raw = localStorage.getItem('elisee_coach_data');
-      if (raw) {
-        var parsed = JSON.parse(raw);
-        if (parsed && (/carlentini/i.test(parsed.clubName) || !parsed.clubName)) {
-          parsed.clubName = 'Foggia City';
-        }
-        return Object.assign({}, def, parsed);
-      }
-    } catch (_) {}
-
-    return def;
+    if (_coachLiveData) {
+      return Object.assign({}, base, _coachLiveData);
+    }
+    return base;
   }
 
   function saveCoachData(data) {
@@ -459,15 +673,44 @@
   // 1. SEZIONE DASHBOARD (Allineata fedelmente a Immagine 2)
   // ============================================================
   function renderDashboard(data) {
+    var nextVal = (data.nextMatch && data.nextMatch.id) ? (data.nextMatch.data + ' ' + data.nextMatch.orario) : '--';
+    var nextFoot = (data.nextMatch && data.nextMatch.id) ? (data.nextMatch.avversario + ' · ' + data.nextMatch.giorniMancanti + ' giorni') : 'Nessuna gara in programma';
+
+    var ultVal = (data.ultimaSessione && data.ultimaSessione.id) ? data.ultimaSessione.data : '--';
+    var ultFoot = (data.ultimaSessione && data.ultimaSessione.id) ? ('✓ ' + data.ultimaSessione.tipo + ' · Completata') : 'Nessuna seduta recente';
+
+    var caricoVal = (data.carico && data.carico.mediaSettimanale > 0) ? (data.carico.mediaSettimanale + '%') : '--';
+    var caricoBar = (data.carico && data.carico.mediaSettimanale > 0) ? data.carico.mediaSettimanale : 0;
+    var caricoFoot = (data.carico && data.carico.stato) ? data.carico.stato : 'In attesa dati GPS';
+
+    var disp = data.dispRosa || {};
+    var dispVal = (disp.totale > 0) ? (disp.disponibili + '/' + disp.totale + ' · ' + disp.percentuale + '%') : '0/0 · --%';
+    var dispBar = disp.percentuale || 0;
+    var dispFoot = disp.totale > 0 ? (disp.percentuale >= 85 ? 'Ottimale' : (disp.percentuale >= 70 ? 'Attenzione' : 'Critica')) : 'Rosa non inserita';
+
+    var indispVal = (disp.totale > 0) ? (disp.indisponibiliTotale + ' (' + Math.round((disp.indisponibiliTotale / disp.totale) * 100) + '%)') : '0';
+    var indispFoot = disp.indisponibiliTotale > 0 ? '⚠ Da monitorare' : '✓ Tutti disponibili';
+
+    var prep = data.prepPartita || {};
+    var prepVal = (data.nextMatch && data.nextMatch.id) ? (prep.pct + '%') : '--';
+    var prepBar = (data.nextMatch && data.nextMatch.id) ? prep.pct : 0;
+    var prepFoot = (data.nextMatch && data.nextMatch.id) ? (prep.foot || 'In corso') : 'Nessuna gara';
+
+    var repVal = String(data.unreadCount != null ? data.unreadCount : (data.reports ? data.reports.length : 0));
+    var repFoot = data.unreadCount > 0 ? ('+' + data.unreadCount + ' non letti') : (data.reports && data.reports.length ? (data.reports.length + ' in archivio') : 'Nessun report');
+
+    var sedVal = String(data.trainingsList ? data.trainingsList.length : 0);
+    var sedFoot = (data.trainingsList && data.trainingsList.length > 0) ? 'Sedute pianificate' : 'Nessuna seduta programmata';
+
     var statItems = [
-      { key: "calendar", label: "Prossima Gara", value: "15/09/2026", foot: "Cerignola Nord · 2 giorni", color: "blue", tab: "calendario" },
-      { key: "check", label: "Ultima Seduta", value: "14/09/2026", foot: "✓ Rifinitura · Completata", color: "green", tab: "allenamenti" },
-      { key: "heart", label: "Carico Squadra", value: "78%", foot: "Ottimale", color: "green", bar: 78, tab: "gps_carichi" },
-      { key: "users", label: "Disponibilità Rosa", value: "24/26 · 92%", foot: "Ottimale", color: "blue", bar: 92, tab: "rosa" },
-      { key: "alert", label: "Giocatori indisponibili", value: "2 (7.7%)", foot: "⚠ Da monitorare", color: "red", tab: "rosa" },
-      { key: "trend", label: "Preparazione Partita", value: "80%", foot: "In corso", color: "blue", bar: 80, tab: "formazione" },
-      { key: "file", label: "Report ricevuti", value: "3", foot: "+1 recente", color: "blue", tab: "report_staff" },
-      { key: "calcheck", label: "Sedute programmate", value: "5", foot: "Questa settimana", color: "blue", tab: "allenamenti" }
+      { key: "calendar", label: "Prossima Gara", value: nextVal, foot: nextFoot, color: "blue", tab: "calendario" },
+      { key: "check", label: "Ultima Seduta", value: ultVal, foot: ultFoot, color: "green", tab: "allenamenti" },
+      { key: "heart", label: "Carico Squadra", value: caricoVal, foot: caricoFoot, color: "green", bar: caricoBar, tab: "gps_carichi" },
+      { key: "users", label: "Disponibilità Rosa", value: dispVal, foot: dispFoot, color: "blue", bar: dispBar, tab: "rosa" },
+      { key: "alert", label: "Giocatori indisponibili", value: indispVal, foot: indispFoot, color: disp.indisponibiliTotale > 0 ? "red" : "green", tab: "rosa" },
+      { key: "trend", label: "Preparazione Partita", value: prepVal, foot: prepFoot, color: "blue", bar: prepBar, tab: "formazione" },
+      { key: "file", label: "Report ricevuti", value: repVal, foot: repFoot, color: "blue", tab: "report_staff" },
+      { key: "calcheck", label: "Sedute programmate", value: sedVal, foot: sedFoot, color: "blue", tab: "allenamenti" }
     ];
 
     var ICONS = {
@@ -486,11 +729,11 @@
 
     return (
       '<div style="display:flex; flex-direction:column; gap:18px;">' +
-        // 1. RIEPILOGO STAGIONALE (8 Stat Cards - Immagine 2)
+        // 1. RIEPILOGO STAGIONALE (8 Stat Cards - Reali da Supabase)
         '<section class="es-cos-card es-cos-stat-grid-8">' +
           statItems.map(function (s) {
             var barHtml = '<div class="es-cos-bar-track' + (s.bar ? '' : ' is-placeholder') + '">' +
-              (s.bar ? '<div class="es-cos-bar-fill" style="width:' + s.bar + '%; background:' + COLOR_MAP[s.color] + ';"></div>' : '') +
+              (s.bar ? '<div class="es-cos-bar-fill" style="width:' + Math.min(100, s.bar) + '%; background:' + COLOR_MAP[s.color] + ';"></div>' : '') +
             '</div>';
             return (
               '<div class="es-cos-stat-card" data-tab-nav="' + esc(s.tab) + '" style="cursor:pointer;" title="Visualizza dettagli ' + esc(s.label) + '">' +
@@ -506,7 +749,7 @@
 
         // 2. GRIGLIA CENTRALE (Calendario 1.4fr / Ultima Sessione 1.1fr / Notifiche 1fr)
         '<section class="es-cos-grid-main-3">' +
-          // Blocco A: Calendario Prossime Gare (con colonna Stadio & Tag Blu "Da preparare")
+          // Blocco A: Calendario Prossime Gare
           '<div class="es-cos-card" style="padding:20px;">' +
             '<div class="es-cos-section-title">' +
               '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
@@ -516,14 +759,14 @@
             '<table class="es-cos-match-table">' +
               '<thead><tr><th>Data</th><th>Competizione</th><th>Avversario</th><th>Stadio</th><th></th></tr></thead>' +
               '<tbody>' +
-                data.prossimeGare.map(function (m) {
-                  var isNext = m.status === 'Prossima' || m.isNext || m.avv.indexOf('Cerignola') !== -1;
+                (data.prossimeGare && data.prossimeGare.length ? data.prossimeGare.map(function (m) {
+                  var isNext = m.isNext || m.status === 'Prossima';
                   var dotColor = isNext ? 'var(--cos-amber)' : 'var(--cos-blue)';
                   var tagClass = isNext ? 'is-next' : 'is-prep';
                   var tagLabel = isNext ? 'Prossima' : 'Da preparare';
-                  var miniCrest = m.avv.slice(0, 3).toUpperCase();
+                  var miniCrest = (m.avv || 'AVV').slice(0, 3).toUpperCase();
                   return (
-                    '<tr data-tab-nav="analisi_avversario" title="Apri analisi tattica ' + esc(m.avv) + '">' +
+                    '<tr data-tab-nav="calendario" title="Dettagli gara ' + esc(m.avv) + '">' +
                       '<td style="white-space:nowrap;"><span class="es-cos-match-dot" style="background:' + dotColor + ';"></span>' + esc(m.data) + '</td>' +
                       '<td style="color:var(--cos-text-muted);">' + esc(m.comp) + '</td>' +
                       '<td><div class="es-cos-opp-cell"><span class="crest crest--sm es-cos-crest--sm">' + esc(miniCrest) + '</span>' + esc(m.avv) + '</div></td>' +
@@ -531,7 +774,7 @@
                       '<td><span class="es-cos-status-tag ' + tagClass + '">' + tagLabel + ' &rsaquo;</span></td>' +
                     '</tr>'
                   );
-                }).join('') +
+                }).join('') : '<tr><td colspan="5" style="text-align:center; padding:2rem 1rem; color:var(--cos-text-muted);"><div style="font-weight:700; color:#f3f8fc; font-size:0.9rem;">Nessuna gara in programma</div><div style="font-size:0.75rem; margin-top:0.25rem;">Nessuna partita registrata su Supabase per questo club.</div></td></tr>') +
               '</tbody>' +
             '</table>' +
           '</div>' +
@@ -543,78 +786,72 @@
               '<span>Ultima Sessione</span>' +
               '<a class="es-cos-section-link" data-tab-nav="allenamenti">Dettagli &rarr;</a>' +
             '</div>' +
-            '<div class="es-cos-session-thumb">' +
-              '<svg class="es-pitch-svg" viewBox="0 0 300 94" preserveAspectRatio="none">' +
-                '<rect x="8" y="7" width="284" height="80" rx="3" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>' +
-                '<line x1="150" y1="7" x2="150" y2="87" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>' +
-                '<circle cx="150" cy="47" r="20" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>' +
-                '<circle cx="150" cy="47" r="2" fill="rgba(255,255,255,0.7)"/>' +
-                '<rect x="8" y="24" width="36" height="46" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>' +
-                '<rect x="8" y="34" width="14" height="26" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>' +
-                '<circle cx="34" cy="47" r="1.5" fill="rgba(255,255,255,0.7)"/>' +
-                '<rect x="256" y="24" width="36" height="46" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>' +
-                '<rect x="278" y="34" width="14" height="26" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>' +
-                '<circle cx="266" cy="47" r="1.5" fill="rgba(255,255,255,0.7)"/>' +
-              '</svg>' +
-              '<span class="es-cos-session-thumb-badge">Seduta Tattica · 11 vs 11</span>' +
-            '</div>' +
-            '<div class="es-cos-session-meta-row">' +
-              '<div>' +
-                '<strong>' + esc(data.ultimaSessione.tipo) + '</strong>' +
-                '<span>' + esc(data.ultimaSessione.data) + ' - 10:00 · ' + esc(data.ultimaSessione.durata) + '</span>' +
+            (data.ultimaSessione && data.ultimaSessione.id ? (
+              '<div class="es-cos-session-thumb">' +
+                '<svg class="es-pitch-svg" viewBox="0 0 300 94" preserveAspectRatio="none">' +
+                  '<rect x="8" y="7" width="284" height="80" rx="3" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>' +
+                  '<line x1="150" y1="7" x2="150" y2="87" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>' +
+                  '<circle cx="150" cy="47" r="20" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>' +
+                  '<rect x="8" y="24" width="36" height="46" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>' +
+                  '<rect x="256" y="24" width="36" height="46" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5"/>' +
+                '</svg>' +
+                '<span class="es-cos-session-thumb-badge">' + esc(data.ultimaSessione.tipo) + '</span>' +
               '</div>' +
-              '<span style="color:var(--cos-green); font-size:12px; font-weight:700;">Carico: ' + esc(data.ultimaSessione.carico) + '</span>' +
-            '</div>' +
-            '<div class="es-cos-session-substats">' +
-              '<div><strong>' + esc(data.ultimaSessione.giocatori) + '</strong>Giocatori</div>' +
-              '<div><strong>' + esc(data.ultimaSessione.esercizi) + '</strong>Esercizi</div>' +
-              '<div><strong>' + esc(data.ultimaSessione.obiettivi) + '</strong>Obiettivi</div>' +
-            '</div>' +
-            '<div class="es-cos-staff-report-box">' +
-              '<div>' +
-                '<strong>Report Staff</strong>' +
-                '<span>Ultimo report dal Vice Allenatore · Palle inattive</span>' +
+              '<div class="es-cos-session-meta-row">' +
+                '<div>' +
+                  '<strong>' + esc(data.ultimaSessione.tipo) + '</strong>' +
+                  '<span>' + esc(data.ultimaSessione.data) + ' · ' + esc(data.ultimaSessione.durata) + '</span>' +
+                '</div>' +
+                '<span style="color:var(--cos-green); font-size:12px; font-weight:700;">Carico: ' + esc(data.ultimaSessione.carico) + '</span>' +
               '</div>' +
-              '<button type="button" class="es-btn-outline-sm" data-tab-nav="report_staff">Apri Report &rarr;</button>' +
-            '</div>' +
+              '<div class="es-cos-session-substats">' +
+                '<div><strong>' + esc(data.ultimaSessione.giocatori) + '</strong>Giocatori</div>' +
+                '<div><strong>' + esc(data.ultimaSessione.esercizi) + '</strong>Esercizi</div>' +
+                '<div><strong>' + esc(data.ultimaSessione.obiettivi) + '</strong>Obiettivi</div>' +
+              '</div>' +
+              '<div class="es-cos-staff-report-box">' +
+                '<div>' +
+                  '<strong>Report Staff</strong>' +
+                  '<span>Verifica referti e schede tecniche dello staff</span>' +
+                '</div>' +
+                '<button type="button" class="es-btn-outline-sm" data-tab-nav="report_staff">Apri Report &rarr;</button>' +
+              '</div>'
+            ) : (
+              '<div style="text-align:center; padding:2.5rem 1rem; color:var(--cos-text-muted);">' +
+                '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="opacity:0.5; margin-bottom:0.5rem;"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>' +
+                '<div style="font-weight:700; color:#f3f8fc; font-size:0.9rem;">Nessuna seduta registrata</div>' +
+                '<div style="font-size:0.75rem; margin-top:0.25rem;">Le sedute svolte registrate su Supabase appariranno qui.</div>' +
+                '<button type="button" class="es-btn-outline-sm" data-tab-nav="allenamenti" style="margin-top:1rem;">Pianifica Seduta &rarr;</button>' +
+              '</div>'
+            )) +
           '</div>' +
 
           // Blocco C: Notifiche Live Staff
           '<div class="es-cos-card" style="padding:20px;">' +
             '<div class="es-cos-section-title">' +
               '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>' +
-              '<span>Notifiche</span>' +
-              '<a class="es-cos-section-link" data-tab-nav="comunicazioni">Visualizza tutte &rarr;</a>' +
+              '<span>Notifiche & Novità</span>' +
+              '<a class="es-cos-section-link" data-tab-nav="report_staff">Visualizza &rarr;</a>' +
             '</div>' +
             '<div class="es-cos-notif-list">' +
-              data.notifiche.slice(0, 5).map(function (n) {
-                var notifIcons = {
-                  green: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>',
-                  danger: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
-                  warn: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
-                  cyan: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>'
-                };
-                var iconKey = n.dot === 'green' ? 'green' : (n.dot === 'danger' ? 'danger' : (n.dot === 'warn' ? 'warn' : 'cyan'));
-                var iconColor = n.dot === 'green' ? 'var(--cos-green)' : (n.dot === 'danger' ? 'var(--cos-red)' : (n.dot === 'warn' ? 'var(--cos-amber)' : 'var(--cos-cyan)'));
-                var softColor = n.dot === 'green' ? 'var(--cos-green-soft)' : (n.dot === 'danger' ? 'var(--cos-red-soft)' : (n.dot === 'warn' ? 'var(--cos-amber-soft)' : 'var(--cos-cyan-soft)'));
+              (data.notifiche && data.notifiche.length ? data.notifiche.slice(0, 5).map(function (n) {
                 return (
-                  '<div class="es-cos-notif-item" data-notif-action="' + esc(n.action) + '">' +
-                    '<span class="es-cos-notif-icon" style="background:' + softColor + '; color:' + iconColor + ';">' + (notifIcons[iconKey] || notifIcons.green) + '</span>' +
+                  '<div class="es-cos-notif-item">' +
+                    '<span class="es-cos-notif-icon" style="background:var(--cos-blue-soft); color:var(--cos-blue);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span>' +
                     '<div style="flex:1;">' +
                       '<strong>' + esc(n.text) + '</strong>' +
                       '<span>' + esc(n.date) + '</span>' +
                     '</div>' +
-                    '<span style="color:var(--cos-text-faint); font-size:16px;">&rsaquo;</span>' +
                   '</div>'
                 );
-              }).join('') +
+              }).join('') : '<div style="text-align:center; padding:2rem 1rem; color:var(--cos-text-muted); font-size:0.8rem;">Nessuna notifica staff presente.</div>') +
             '</div>' +
           '</div>' +
         '</section>' +
 
         // 3. GRIGLIA INFERIORE (Ultimi Log 1fr / Carico Settimanale 1.2fr / Prossimi Impegni 1fr)
         '<section class="es-cos-grid-lower-3">' +
-          // Blocco 1: Ultimi Log Attività (con icona orologio SVG)
+          // Blocco 1: Ultimi Log Attività
           '<div class="es-cos-card" style="padding:20px;">' +
             '<div class="es-cos-section-title">' +
               '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg>' +
@@ -622,7 +859,7 @@
               '<a class="es-cos-section-link" data-tab-nav="report_staff">Visualizza tutto &rarr;</a>' +
             '</div>' +
             '<div class="es-cos-log-list">' +
-              data.logAttivita.map(function (l) {
+              (data.logAttivita && data.logAttivita.length ? data.logAttivita.map(function (l) {
                 return (
                   '<div class="es-cos-log-item">' +
                     '<span class="es-cos-log-time">' +
@@ -632,11 +869,11 @@
                     '<span class="es-cos-log-text">' + esc(l.text) + '</span>' +
                   '</div>'
                 );
-              }).join('') +
+              }).join('') : '<div style="text-align:center; padding:1.5rem; color:var(--cos-text-muted); font-size:0.8rem;">Nessuna attività registrata di recente.</div>') +
             '</div>' +
           '</div>' +
 
-          // Blocco 2: Carico Settimanale Squadra (Asse Y + Barre + Gauge ad Anello con Pillola Ottimale)
+          // Blocco 2: Carico Settimanale Squadra (Reale aggregato da Supabase)
           '<div class="es-cos-card" style="padding:20px;">' +
             '<div class="es-cos-section-title">' +
               '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-4 4"/></svg>' +
@@ -645,25 +882,21 @@
             '<div class="es-cos-weekchart-wrap">' +
               '<div class="es-cos-weekchart-axis"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div>' +
               '<div class="es-cos-weekchart">' +
-                '<div class="es-cos-weekchart-bar"><div class="fill" style="height:62%;"></div><span class="day">Lun</span></div>' +
-                '<div class="es-cos-weekchart-bar"><div class="fill" style="height:74%;"></div><span class="day">Mar</span></div>' +
-                '<div class="es-cos-weekchart-bar"><div class="fill" style="height:55%;"></div><span class="day">Mer</span></div>' +
-                '<div class="es-cos-weekchart-bar"><div class="fill" style="height:68%;"></div><span class="day">Gio</span></div>' +
-                '<div class="es-cos-weekchart-bar"><div class="fill" style="height:80%;"></div><span class="day">Ven</span></div>' +
-                '<div class="es-cos-weekchart-bar"><div class="fill" style="height:78%;"></div><span class="day">Sab</span></div>' +
-                '<div class="es-cos-weekchart-bar"><div class="fill" style="height:40%;"></div><span class="day">Dom</span></div>' +
+                ((data.carico && data.carico.giorni && data.carico.giorni.length) ? data.carico.giorni.map(function (g) {
+                  return '<div class="es-cos-weekchart-bar"><div class="fill" style="height:' + (g.val || 0) + '%;"></div><span class="day">' + esc(g.day) + '</span></div>';
+                }).join('') : ['Lun','Mar','Mer','Gio','Ven','Sab','Dom'].map(function(d){ return '<div class="es-cos-weekchart-bar"><div class="fill" style="height:0%;"></div><span class="day">'+d+'</span></div>'; }).join('')) +
               '</div>' +
             '</div>' +
             '<div class="es-cos-gauge-wrap">' +
-              '<div class="es-cos-gauge-circle" style="background: conic-gradient(var(--cos-green) 280deg, rgba(255,255,255,0.08) 280deg);">' +
+              '<div class="es-cos-gauge-circle" style="background: conic-gradient(var(--cos-green) ' + Math.round(((data.carico && data.carico.mediaSettimanale) || 0) * 3.6) + 'deg, rgba(255,255,255,0.08) ' + Math.round(((data.carico && data.carico.mediaSettimanale) || 0) * 3.6) + 'deg);">' +
                 '<div class="es-cos-gauge-circle-inner">' +
                   '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg>' +
                 '</div>' +
               '</div>' +
               '<div class="es-cos-gauge-meta">' +
-                '<strong>78%</strong>' +
+                '<strong>' + (((data.carico && data.carico.mediaSettimanale) > 0) ? (data.carico.mediaSettimanale + '%') : '--') + '</strong>' +
                 '<p class="label">Media Settimanale</p>' +
-                '<span class="es-cos-gauge-pill-status">Ottimale</span>' +
+                '<span class="es-cos-gauge-pill-status">' + esc((data.carico && data.carico.stato) || 'In attesa') + '</span>' +
               '</div>' +
             '</div>' +
           '</div>' +
@@ -676,7 +909,7 @@
               '<a class="es-cos-section-link" data-tab-nav="calendario">Visualizza tutto &rarr;</a>' +
             '</div>' +
             '<div class="es-cos-impegni-list">' +
-              data.prossimiImpegni.map(function (imp) {
+              (data.prossimiImpegni && data.prossimiImpegni.length ? data.prossimiImpegni.map(function (imp) {
                 return (
                   '<div class="es-cos-impegno-item">' +
                     '<div>' +
@@ -686,7 +919,7 @@
                     '<span class="what">' + esc(imp.type) + '</span>' +
                   '</div>'
                 );
-              }).join('') +
+              }).join('') : '<div style="text-align:center; padding:1.5rem; color:var(--cos-text-muted); font-size:0.8rem;">Nessun impegno staff registrato.</div>') +
             '</div>' +
           '</div>' +
         '</section>' +
@@ -694,7 +927,6 @@
     );
   }
 
-  // ============================================================
   // 2. SEZIONE ROSA
   // ============================================================
   function renderRosa(data) {
@@ -722,7 +954,7 @@
         '<div class="es-cos-panel-head">' +
           '<span class="es-cos-panel-title">' +
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>' +
-            'Organico Rosa Prima Squadra · ' + esc(data.clubName) + ' (' + list.length + ' Atleti)' +
+            'Organico Rosa Prima Squadra · ' + esc(data.clubName) + ' (' + list.length + ' Atleti Registrati)' +
           '</span>' +
           '<button type="button" class="es-btn-cos-primary" id="btn-add-player-modal">+ Aggiungi Calciatore</button>' +
         '</div>' +
@@ -730,33 +962,42 @@
         '<div class="es-cos-roster-toolbar" style="display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; margin-bottom:1rem;">' +
           '<input type="text" class="es-cos-search-input" id="inp-roster-search" placeholder="Cerca calciatore per nome o ruolo..." value="' + esc(rosterSearchQuery) + '" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.5rem 0.85rem; border-radius:6px; font-size:0.82rem; width:260px;">' +
           '<div style="display:flex; gap:0.35rem; flex-wrap:wrap;">' +
-            '<button type="button" class="es-btn-cos-sec ' + (activeRosterFilter === 'all' ? 'is-active' : '') + '" style="padding:0.4rem 0.75rem; font-size:0.75rem;" data-r-filter="all">Tutti</button>' +
+            '<button type="button" class="es-btn-cos-sec ' + (activeRosterFilter === 'all' ? 'is-active' : '') + '" style="padding:0.4rem 0.75rem; font-size:0.75rem;" data-r-filter="all">Tutti (' + (data.roster ? data.roster.length : 0) + ')</button>' +
             '<button type="button" class="es-btn-cos-sec ' + (activeRosterFilter === 'por' ? 'is-active' : '') + '" style="padding:0.4rem 0.75rem; font-size:0.75rem;" data-r-filter="por">Portieri</button>' +
             '<button type="button" class="es-btn-cos-sec ' + (activeRosterFilter === 'dif' ? 'is-active' : '') + '" style="padding:0.4rem 0.75rem; font-size:0.75rem;" data-r-filter="dif">Difensori</button>' +
             '<button type="button" class="es-btn-cos-sec ' + (activeRosterFilter === 'cen' ? 'is-active' : '') + '" style="padding:0.4rem 0.75rem; font-size:0.75rem;" data-r-filter="cen">Centrocampisti</button>' +
             '<button type="button" class="es-btn-cos-sec ' + (activeRosterFilter === 'att' ? 'is-active' : '') + '" style="padding:0.4rem 0.75rem; font-size:0.75rem;" data-r-filter="att">Attaccanti</button>' +
             '<button type="button" class="es-btn-cos-sec ' + (activeRosterFilter === 'disp' ? 'is-active' : '') + '" style="padding:0.4rem 0.75rem; font-size:0.75rem;" data-r-filter="disp">Disponibili</button>' +
-            '<button type="button" class="es-btn-cos-sec ' + (activeRosterFilter === 'diff' ? 'is-active' : '') + '" style="padding:0.4rem 0.75rem; font-size:0.75rem;" data-r-filter="diff">Differenziati</button>' +
+            '<button type="button" class="es-btn-cos-sec ' + (activeRosterFilter === 'diff' ? 'is-active' : '') + '" style="padding:0.4rem 0.75rem; font-size:0.75rem;" data-r-filter="diff">Differenziati / Indisponibili</button>' +
           '</div>' +
         '</div>' +
 
         '<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:1rem;">' +
           (list.length ? list.map(function (p, pIdx) {
             var isDisp = p.status === 'disp';
+            var pillHtml = isDisp ? '<span class="es-cos-badge-pill is-green">🟢 Disponibile</span>' :
+              (p.statoDettagliato === 'infortunato' ? '<span class="es-cos-badge-pill is-danger" title="' + esc(p.motivo || 'Infortunio') + '">🔴 Infortunato' + (p.rientro ? (' · Rientro: ' + esc(p.rientro)) : '') + '</span>' :
+              (p.statoDettagliato === 'squalificato' ? '<span class="es-cos-badge-pill is-warn">🟡 Squalificato</span>' : '<span class="es-cos-badge-pill is-warn">🟠 ' + esc(p.statoDettagliato || 'Differenziato') + '</span>'));
             return (
-              '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:0.9rem; display:flex; gap:0.75rem; align-items:center; cursor:pointer;" data-player-card-idx="' + pIdx + '">' +
+              '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:0.9rem; display:flex; gap:0.75rem; align-items:center;" data-player-card-idx="' + pIdx + '">' +
                 '<div style="width:42px; height:42px; border-radius:8px; background:#040912; border:1px solid #16b9ff; color:#16b9ff; font-size:1.1rem; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0;">#' + esc(p.num) + '</div>' +
-                '<div style="display:flex; flex-direction:column; gap:2px; flex:1 1 auto;">' +
-                  '<div style="font-size:0.9rem; font-weight:800; color:#f3f8fc;">' + esc(p.name) + '</div>' +
+                '<div style="display:flex; flex-direction:column; gap:2px; flex:1 1 auto; overflow:hidden;">' +
+                  '<div style="font-size:0.9rem; font-weight:800; color:#f3f8fc; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + esc(p.name) + '</div>' +
                   '<div style="font-size:0.72rem; color:#8da8bc;">' + esc(p.role) + ' · Classe ' + esc(p.birth) + '</div>' +
-                  '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:3px;">' +
-                    '<span class="es-cos-badge-pill ' + (isDisp ? 'is-green' : 'is-warn') + '">' + (isDisp ? '🟢 Disponibile' : '🟡 Differenziato') + '</span>' +
-                    '<span style="font-size:0.72rem; color:#8da8bc;">Presenze: <b>' + (p.app || 0) + '</b></span>' +
+                  '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:3px; gap:0.5rem; flex-wrap:wrap;">' +
+                    pillHtml +
+                    (p.motivo ? '<span style="font-size:0.68rem; color:#f87171; max-width:140px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">' + esc(p.motivo) + '</span>' : '') +
                   '</div>' +
                 '</div>' +
               '</div>'
             );
-          }).join('') : '<div style="grid-column:1/-1; text-align:center; padding:3rem; color:#8da8bc;">Nessun calciatore trovato.</div>') +
+          }).join('') : (
+            '<div style="grid-column:1/-1; text-align:center; padding:3.5rem 1rem; color:#8da8bc;">' +
+              '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:0.4; margin-bottom:0.75rem;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>' +
+              '<div style="font-size:1rem; font-weight:800; color:#f3f8fc;">Nessun calciatore presente in rosa</div>' +
+              '<div style="font-size:0.78rem; margin-top:0.3rem;">I calciatori inseriti nella tabella rosa su Supabase appariranno qui automaticamente.</div>' +
+            '</div>'
+          )) +
         '</div>' +
       '</div>'
     );
@@ -923,7 +1164,7 @@
     return (
       '<div class="es-cos-panel-card">' +
         '<div class="es-cos-panel-head">' +
-          '<span class="es-cos-panel-title">Pianificazione Sedute di Allenamento</span>' +
+          '<span class="es-cos-panel-title">Pianificazione Sedute di Allenamento (Tabella: allenamenti)</span>' +
           '<button type="button" class="es-btn-cos-primary" id="btn-add-training-modal">+ Pianifica Seduta</button>' +
         '</div>' +
         '<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:1rem;">' +
@@ -938,11 +1179,17 @@
                 '<p style="font-size:0.78rem; color:#8da8bc; margin:0.2rem 0;">' + esc(tr.desc) + '</p>' +
                 '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.4rem; padding-top:0.5rem; border-top:1px solid #12344a;">' +
                   '<span class="es-cos-badge-pill is-green">Carico: ' + esc(tr.carico || 'Medio') + '</span>' +
-                  '<button type="button" class="es-btn-cos-primary" style="padding:0.35rem 0.75rem; font-size:0.74rem;" data-take-att-idx="' + tIdx + '">Rileva Presenze</button>' +
+                  '<button type="button" class="es-btn-cos-sec" style="padding:0.35rem 0.75rem; font-size:0.74rem;" data-upload-gps-tr="' + tr.id + '">⬆️ GPS</button>' +
                 '</div>' +
               '</div>'
             );
-          }).join('') : '') +
+          }).join('') : (
+            '<div style="grid-column:1/-1; text-align:center; padding:3.5rem 1rem; color:#8da8bc;">' +
+              '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:0.4; margin-bottom:0.75rem;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' +
+              '<div style="font-size:1rem; font-weight:800; color:#f3f8fc;">Nessuna seduta programmata</div>' +
+              '<div style="font-size:0.78rem; margin-top:0.3rem;">Gli allenamenti inseriti a database appariranno qui.</div>' +
+            '</div>'
+          )) +
         '</div>' +
       '</div>'
     );
@@ -952,20 +1199,23 @@
   // 6. SEZIONE CALENDARIO
   // ============================================================
   function renderCalendario(data) {
+    var hasEvents = (data.prossimeGare && data.prossimeGare.length) || (data.trainingsList && data.trainingsList.length);
     return (
       '<div class="es-cos-panel-card">' +
         '<div class="es-cos-panel-head">' +
-          '<span class="es-cos-panel-title">Calendario Tecnico Staff & Partite</span>' +
+          '<span class="es-cos-panel-title">Calendario Tecnico Staff & Partite (Tabelle: partite, allenamenti)</span>' +
         '</div>' +
         '<table class="es-cos-table-compact">' +
           '<thead><tr><th>Data & Orario</th><th>Evento</th><th>Competizione / Categoria</th><th>Stadio / Luogo</th><th>Stato</th></tr></thead>' +
           '<tbody>' +
-            data.prossimeGare.map(function (g) {
-              return '<tr><td><b>' + esc(g.data) + '</b></td><td>Partita: ' + esc(data.clubName) + ' vs ' + esc(g.avv) + '</td><td><span class="es-cos-badge-pill is-blue">' + esc(g.comp) + '</span></td><td>' + esc(g.stadio) + '</td><td><span class="es-cos-badge-pill is-green">Confermata</span></td></tr>';
-            }).join('') +
-            data.trainingsList.map(function (t) {
-              return '<tr><td><b>' + esc(t.data) + ' ' + esc(t.orario) + '</b></td><td>Allenamento: ' + esc(t.tipo) + '</td><td><span class="es-cos-badge-pill is-warn">Seduta Campo</span></td><td>' + esc(t.luogo) + '</td><td><span class="es-cos-badge-pill is-green">Programmata</span></td></tr>';
-            }).join('') +
+            (hasEvents ? (
+              (data.prossimeGare || []).map(function (g) {
+                return '<tr><td><b>' + esc(g.data) + '</b></td><td>Partita: ' + esc(data.clubName) + ' vs ' + esc(g.avv) + '</td><td><span class="es-cos-badge-pill is-blue">' + esc(g.comp) + '</span></td><td>' + esc(g.stadio) + '</td><td><span class="es-cos-badge-pill is-green">' + esc(g.status) + '</span></td></tr>';
+              }).join('') +
+              (data.trainingsList || []).map(function (t) {
+                return '<tr><td><b>' + esc(t.data) + ' ' + esc(t.orario) + '</b></td><td>Allenamento: ' + esc(t.tipo) + '</td><td><span class="es-cos-badge-pill is-warn">Seduta Campo</span></td><td>' + esc(t.luogo) + '</td><td><span class="es-cos-badge-pill is-green">Programmata</span></td></tr>';
+              }).join('')
+            ) : '<tr><td colspan="5" style="text-align:center; padding:2.5rem; color:#8da8bc;">Nessun evento o partita in programma registrato a database.</td></tr>') +
           '</tbody>' +
         '</table>' +
       '</div>'
@@ -977,25 +1227,52 @@
   // ============================================================
   function renderAnalisiAvversario(data) {
     var a = data.analisiAvversario || {};
+    var nextOpp = (data.nextMatch && data.nextMatch.id) ? data.nextMatch.avversario : (a.nome || 'Avversario');
+    var videoFiles = (data.allegati || []).filter(function (f) { return f.categoria === 'video_analisi'; });
+
     return (
-      '<div style="display:grid; grid-template-columns:1.2fr 1fr; gap:1.25rem;">' +
-        '<div class="es-cos-panel-card">' +
-          '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Dossier: ' + esc(a.nome) + ' (' + esc(a.modulo) + ')</span></div>' +
-          '<div style="display:flex; flex-direction:column; gap:0.75rem; font-size:0.82rem;">' +
-            '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem;"><b style="color:#00d978;">Punti di Forza:</b><p style="margin:0.25rem 0 0; color:#8da8bc;">' + esc(a.puntiForza) + '</p></div>' +
-            '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem;"><b style="color:#ff4d5a;">Punti Deboli:</b><p style="margin:0.25rem 0 0; color:#8da8bc;">' + esc(a.puntiDeboli) + '</p></div>' +
-            '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem;"><b style="color:#ffd21a;">Giocatori Chiave:</b><p style="margin:0.25rem 0 0; color:#8da8bc;">' + esc(a.giocatoriChiave) + '</p></div>' +
-            '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem;"><b style="color:#16b9ff;">Palle Inattive:</b><p style="margin:0.25rem 0 0; color:#8da8bc;">' + esc(a.palleInattive) + '</p></div>' +
+      '<div style="display:flex; flex-direction:column; gap:1.25rem;">' +
+        '<div style="display:grid; grid-template-columns:1.2fr 1fr; gap:1.25rem;">' +
+          '<div class="es-cos-panel-card">' +
+            '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Dossier Tattico: ' + esc(nextOpp) + '</span></div>' +
+            '<div style="display:flex; flex-direction:column; gap:0.75rem; font-size:0.82rem;">' +
+              '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem;"><b style="color:#00d978;">Punti di Forza:</b><p style="margin:0.25rem 0 0; color:#8da8bc;">' + esc(a.puntiForza) + '</p></div>' +
+              '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem;"><b style="color:#ff4d5a;">Punti Deboli:</b><p style="margin:0.25rem 0 0; color:#8da8bc;">' + esc(a.puntiDeboli) + '</p></div>' +
+              '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem;"><b style="color:#ffd21a;">Giocatori Chiave:</b><p style="margin:0.25rem 0 0; color:#8da8bc;">' + esc(a.giocatoriChiave) + '</p></div>' +
+              '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem;"><b style="color:#16b9ff;">Palle Inattive:</b><p style="margin:0.25rem 0 0; color:#8da8bc;">' + esc(a.palleInattive) + '</p></div>' +
+            '</div>' +
+          '</div>' +
+
+          '<div class="es-cos-panel-card">' +
+            '<div class="es-cos-panel-head">' +
+              '<span class="es-cos-panel-title">Video Report & Match Analysis</span>' +
+              '<button type="button" class="es-btn-cos-primary" id="btn-upload-video-analysis" style="font-size:0.74rem;">⬆️ Carica Video / Report</button>' +
+            '</div>' +
+            '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:1.25rem; text-align:center;">' +
+              '<div style="font-size:2.5rem; color:#16b9ff;">📹</div>' +
+              '<div style="font-weight:800; font-size:0.95rem; margin-top:0.5rem;">' + (videoFiles.length ? (videoFiles.length + ' Video Report caricati su Supabase Storage') : 'Nessun video analisi allegato') + '</div>' +
+              '<p style="font-size:0.75rem; color:#8da8bc; margin:0.4rem 0 0.8rem;">I video caricati vengono conservati nel bucket cloud <code>staff-allegati</code> con accesso riservato allo staff.</p>' +
+              '<button type="button" class="es-btn-cos-sec" id="btn-open-video-upload-direct">Carica Nuovo Video / Clip</button>' +
+            '</div>' +
           '</div>' +
         '</div>' +
-        '<div class="es-cos-panel-card">' +
-          '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Video Report & Match Analysis</span></div>' +
-          '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:1.25rem; text-align:center;">' +
-            '<div style="font-size:2.5rem; color:#16b9ff;">📹</div>' +
-            '<div style="font-weight:800; font-size:0.95rem; margin-top:0.5rem;">' + esc(a.videoReport) + '</div>' +
-            '<button type="button" class="es-btn-cos-sec" style="margin-top:0.75rem;" onclick="if(window.showToast)window.showToast(\'Riproduzione sintesi video avversario\',\'info\')">Guarda Video Report</button>' +
-          '</div>' +
-        '</div>' +
+
+        // Lista File Video Allegati
+        (videoFiles.length ? (
+          '<div class="es-cos-panel-card">' +
+            '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Archivio Video Tattici & File Analisi (Bucket: staff-allegati)</span></div>' +
+            '<div style="display:flex; flex-direction:column; gap:0.5rem;">' +
+              videoFiles.map(function (vf) {
+                return (
+                  '<div style="display:flex; justify-content:space-between; align-items:center; background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.75rem 1rem;">' +
+                    '<div><b style="color:#f3f8fc; font-size:0.85rem;">' + esc(vf.file_url.split('/').pop()) + '</b><div style="font-size:0.72rem; color:#8da8bc;">Caricato il ' + formatDate(vf.created_at) + ' · Visibile a: ' + esc(Array.isArray(vf.visibile_a) ? vf.visibile_a.join(', ') : vf.visibile_a) + '</div></div>' +
+                    '<a href="' + esc(vf.file_url) + '" target="_blank" rel="noopener noreferrer" class="es-btn-cos-sec" style="font-size:0.74rem;">Apri File &rarr;</a>' +
+                  '</div>'
+                );
+              }).join('') +
+            '</div>' +
+          '</div>'
+        ) : '') +
       '</div>'
     );
   }
@@ -1004,24 +1281,51 @@
   // 8. SEZIONE GPS & CARICHI
   // ============================================================
   function renderGpsCarichi(data) {
+    var gpsFiles = (data.allegati || []).filter(function (f) { return f.categoria === 'gps'; });
+    var avg = (data.carico && data.carico.mediaSettimanale) || 0;
+    var acwr = (data.carico && data.carico.acwr) || '1.00';
+    var stato = (data.carico && data.carico.stato) || 'In attesa dati GPS';
+
     return (
-      '<div class="es-cos-panel-card">' +
-        '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Dashboard Telemetria GPS & Workload Management</span></div>' +
-        '<div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:1rem; margin-bottom:1rem;">' +
-          '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#16b9ff;">114.8 km</div><div style="font-size:0.72rem; color:#8da8bc;">DISTANZA TOTALE SQUADRA</div></div>' +
-          '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#00d978;">34.6 km/h</div><div style="font-size:0.72rem; color:#8da8bc;">VELOCITÀ DI PICCO</div></div>' +
-          '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#ffd21a;">1.08</div><div style="font-size:0.72rem; color:#8da8bc;">ACWR RATIO MEDIO</div></div>' +
-          '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#00d978;">96.8%</div><div style="font-size:0.72rem; color:#8da8bc;">EFFICIENZA ATLETICA</div></div>' +
+      '<div style="display:flex; flex-direction:column; gap:1.25rem;">' +
+        '<div class="es-cos-panel-card">' +
+          '<div class="es-cos-panel-head">' +
+            '<span class="es-cos-panel-title">Dashboard Telemetria GPS & Workload Management (Supabase)</span>' +
+            '<button type="button" class="es-btn-cos-primary" id="btn-upload-gps-modal">⬆️ Carica Telemetria GPS (.csv, .json, .fit)</button>' +
+          '</div>' +
+          '<div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:1rem; margin-bottom:1rem;">' +
+            '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#16b9ff;">' + (avg > 0 ? (avg + '%') : '--') + '</div><div style="font-size:0.72rem; color:#8da8bc;">CARICO MEDIO SETTIMANA</div></div>' +
+            '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#00d978;">' + (avg > 0 ? (Math.round(avg * 1.3) + ' km') : '--') + '</div><div style="font-size:0.72rem; color:#8da8bc;">DISTANZA TOTALE STIMATA</div></div>' +
+            '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#ffd21a;">' + acwr + '</div><div style="font-size:0.72rem; color:#8da8bc;">ACWR RATIO MEDIO</div></div>' +
+            '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#00d978;">' + esc(stato) + '</div><div style="font-size:0.72rem; color:#8da8bc;">STATO DI FORMA</div></div>' +
+          '</div>' +
+          '<table class="es-cos-table-compact">' +
+            '<thead><tr><th>Calciatore</th><th>Ruolo</th><th>Km Totali</th><th>Sprint >25km/h</th><th>ACWR</th><th>Semaforo Rischio</th></tr></thead>' +
+            '<tbody>' +
+              (data.roster && data.roster.length ? data.roster.map(function (p) {
+                var isDiff = p.status === 'diff';
+                return '<tr><td><b>' + esc(p.name) + '</b></td><td>' + esc(p.role) + '</td><td>' + esc(p.load) + '</td><td>' + (isDiff ? '--' : '--') + '</td><td><b>' + esc(p.acwr) + '</b></td><td><span class="es-cos-badge-pill ' + (isDiff ? 'is-warn' : 'is-green') + '">' + (isDiff ? '⚠️ Differenziato' : '🟢 Regolare') + '</span></td></tr>';
+              }).join('') : '<tr><td colspan="6" style="text-align:center; padding:2rem; color:#8da8bc;">Nessun dato di carico o atleta presente.</td></tr>') +
+            '</tbody>' +
+          '</table>' +
         '</div>' +
-        '<table class="es-cos-table-compact">' +
-          '<thead><tr><th>Calciatore</th><th>Ruolo</th><th>Km Totali</th><th>Sprint >25km/h</th><th>ACWR</th><th>Semaforo Rischio</th></tr></thead>' +
-          '<tbody>' +
-            data.roster.map(function (p) {
-              var isDiff = p.status === 'diff';
-              return '<tr><td><b>' + esc(p.name) + '</b></td><td>' + esc(p.role) + '</td><td>' + esc(p.load) + '</td><td>' + (isDiff ? '12' : '28') + '</td><td><b>' + esc(p.acwr) + '</b></td><td><span class="es-cos-badge-pill ' + (isDiff ? 'is-warn' : 'is-green') + '">' + (isDiff ? '⚠️ Monitorare' : '🟢 Ottimale') + '</span></td></tr>';
-            }).join('') +
-          '</tbody>' +
-        '</table>' +
+
+        // File GPS Archiviati
+        '<div class="es-cos-panel-card">' +
+          '<div class="es-cos-panel-head"><span class="es-cos-panel-title">File Telemetria GPS Archiviati (Bucket Cloud: staff-allegati)</span></div>' +
+          (gpsFiles.length ? (
+            '<div style="display:flex; flex-direction:column; gap:0.5rem;">' +
+              gpsFiles.map(function (gf) {
+                return (
+                  '<div style="display:flex; justify-content:space-between; align-items:center; background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.75rem 1rem;">' +
+                    '<div><b style="color:#f3f8fc; font-size:0.85rem;">' + esc(gf.file_url.split('/').pop()) + '</b><div style="font-size:0.72rem; color:#8da8bc;">Caricato il ' + formatDate(gf.created_at) + '</div></div>' +
+                    '<a href="' + esc(gf.file_url) + '" target="_blank" rel="noopener noreferrer" class="es-btn-cos-sec" style="font-size:0.74rem;">Scarica File &rarr;</a>' +
+                  '</div>'
+                );
+              }).join('') +
+            '</div>'
+          ) : '<div style="text-align:center; padding:2rem; color:#8da8bc; font-size:0.82rem;">Nessun tracciato GPS caricato. Clicca su "+ Carica Telemetria GPS" per importare dati.</div>') +
+        '</div>' +
       '</div>'
     );
   }
@@ -1030,18 +1334,55 @@
   // 9. SEZIONE REPORT STAFF
   // ============================================================
   function renderReportStaff(data) {
+    var reports = data.reports || [];
+    var allegati = data.allegati || [];
+
     return (
-      '<div class="es-cos-panel-card">' +
-        '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Report Staff & Proposte del Vice Allenatore</span></div>' +
-        '<div style="display:flex; flex-direction:column; gap:0.75rem;">' +
-          '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:1rem; display:flex; justify-content:space-between; align-items:center;">' +
-            '<div>' +
-              '<div class="es-cos-badge-pill is-blue" style="margin-bottom:4px;">Workstation Seduta Pre-Campo</div>' +
-              '<div style="font-weight:800; font-size:0.95rem;">Uscita dal pressing basso & scarico sul terzino</div>' +
-              '<div style="font-size:0.75rem; color:#8da8bc;">Inviato da: <b>' + esc(data.viceLink.name) + '</b> · 14/09/2026 ore 18:45</div>' +
-            '</div>' +
-            '<button type="button" class="es-btn-cos-primary" onclick="if(window.showToast)window.showToast(\'Scheda approvata dal Mister!\',\'success\')">✓ Approva Scheda</button>' +
+      '<div style="display:flex; flex-direction:column; gap:1.25rem;">' +
+        '<div class="es-cos-panel-card">' +
+          '<div class="es-cos-panel-head">' +
+            '<span class="es-cos-panel-title">Report Staff Tecnico & Medico (Tabella: report)</span>' +
+            '<button type="button" class="es-btn-cos-primary" id="btn-upload-staff-report-modal">⬆️ Carica Nuovo Report / Scheda</button>' +
           '</div>' +
+          '<div style="display:flex; flex-direction:column; gap:0.75rem;">' +
+            (reports.length ? reports.map(function (r) {
+              return (
+                '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:1rem; display:flex; justify-content:space-between; align-items:center;">' +
+                  '<div>' +
+                    '<div class="es-cos-badge-pill is-blue" style="margin-bottom:4px;">' + esc(r.tipo || 'Report Staff') + '</div>' +
+                    '<div style="font-weight:800; font-size:0.95rem; color:#f3f8fc;">' + esc(r.titolo) + '</div>' +
+                    '<div style="font-size:0.75rem; color:#8da8bc;">' + esc(r.contenuto || '') + ' · ' + formatDate(r.created_at) + '</div>' +
+                  '</div>' +
+                  '<div style="display:flex; gap:0.5rem;">' +
+                    (r.file_url ? '<a href="' + esc(r.file_url) + '" target="_blank" rel="noopener noreferrer" class="es-btn-cos-sec" style="font-size:0.74rem;">Allegato &rarr;</a>' : '') +
+                  '</div>' +
+                '</div>'
+              );
+            }).join('') : (
+              '<div style="text-align:center; padding:2.5rem; color:#8da8bc;">' +
+                '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="opacity:0.4; margin-bottom:0.5rem;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>' +
+                '<div style="font-size:0.95rem; font-weight:800; color:#f3f8fc;">Nessun report ricevuto dallo staff</div>' +
+                '<div style="font-size:0.75rem; margin-top:0.25rem;">Le schede e i report inviati dai collaboratori tecnici appariranno qui.</div>' +
+              '</div>'
+            )) +
+          '</div>' +
+        '</div>' +
+
+        // Box Allegati Cloud
+        '<div class="es-cos-panel-card">' +
+          '<div class="es-cos-panel-head"><span class="es-cos-panel-title">Archivio File & Allegati Cloud (Bucket: staff-allegati)</span></div>' +
+          (allegati.length ? (
+            '<div style="display:flex; flex-direction:column; gap:0.5rem;">' +
+              allegati.map(function (al) {
+                return (
+                  '<div style="display:flex; justify-content:space-between; align-items:center; background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.75rem 1rem;">' +
+                    '<div><b style="color:#f3f8fc; font-size:0.85rem;">' + esc(al.file_url.split('/').pop()) + '</b><div style="font-size:0.72rem; color:#8da8bc;">Categoria: <b>' + esc(al.categoria) + '</b> · ' + formatDate(al.created_at) + '</div></div>' +
+                    '<a href="' + esc(al.file_url) + '" target="_blank" rel="noopener noreferrer" class="es-btn-cos-sec" style="font-size:0.74rem;">Apri Documento &rarr;</a>' +
+                  '</div>'
+                );
+              }).join('') +
+            '</div>'
+          ) : '<div style="text-align:center; padding:1.5rem; color:#8da8bc; font-size:0.8rem;">Nessun documento o referto archiviato.</div>') +
         '</div>' +
       '</div>'
     );
@@ -1368,6 +1709,39 @@
       };
     }
 
+    // Upload GPS Telemetria
+    var btnUploadGps = mount.querySelector('#btn-upload-gps-modal');
+    if (btnUploadGps) {
+      btnUploadGps.onclick = function () {
+        var entId = (data.ultimaSessione && data.ultimaSessione.id) || 'allenamento-current';
+        openStaffUploadModal('gps', entId, 'allenamento', 'Carica Telemetria GPS (Bucket: staff-allegati)');
+      };
+    }
+    mount.querySelectorAll('[data-upload-gps-tr]').forEach(function (btn) {
+      btn.onclick = function () {
+        var trId = btn.getAttribute('data-upload-gps-tr') || 'seduta-campo';
+        openStaffUploadModal('gps', trId, 'allenamento', 'Carica File GPS per Seduta');
+      };
+    });
+
+    // Upload Video Analisi
+    var btnUploadVideo = mount.querySelector('#btn-upload-video-analysis, #btn-open-video-upload-direct');
+    if (btnUploadVideo) {
+      btnUploadVideo.onclick = function () {
+        var matchId = (data.nextMatch && data.nextMatch.id) || 'match-next';
+        openStaffUploadModal('video_analisi', matchId, 'partita', 'Carica Video Analisi / Dossier Avversario');
+      };
+    }
+
+    // Upload Report Staff
+    var btnUploadRep = mount.querySelector('#btn-upload-staff-report-modal');
+    if (btnUploadRep) {
+      btnUploadRep.onclick = function () {
+        var cId = (_coachLiveData && _coachLiveData.clubId) || 'club-staff';
+        openStaffUploadModal('staff_tecnico', cId, 'club', 'Carica Report Staff su Storage Cloud');
+      };
+    }
+
     // Salvataggio Impostazioni
     var formCfg = mount.querySelector('#form-save-settings');
     if (formCfg) {
@@ -1382,6 +1756,105 @@
         if (window.showToast) window.showToast('Impostazioni tecniche salvate!', 'success');
       };
     }
+  }
+
+  function openStaffUploadModal(categoria, entitaId, entitaTipo, title) {
+    categoria = categoria || 'gps';
+    entitaId = entitaId || 'default-entity';
+    entitaTipo = entitaTipo || (categoria === 'gps' ? 'allenamento' : (categoria === 'video_analisi' ? 'partita' : 'giocatore'));
+    title = title || 'Carica File su Supabase Storage (staff-allegati)';
+
+    var acceptMap = {
+      gps: '.csv,.json,.fit,.gpx,.txt',
+      video_analisi: '.mp4,.webm,.mov,.pdf',
+      staff_tecnico: '.pdf,.docx,.doc,.png,.jpg,.jpeg'
+    };
+
+    var content =
+      '<form id="form-upload-cloud" style="display:flex; flex-direction:column; gap:1rem;">' +
+        '<div style="background:#040912; border:1px solid #12344a; border-radius:6px; padding:0.85rem; font-size:0.8rem; color:#8da8bc;">' +
+          'I file vengono caricati direttamente nel bucket cloud <b style="color:#16b9ff;">staff-allegati</b> e collegati in tabella <code>file_allegati</code> con permessi di accesso riservati.' +
+        '</div>' +
+        '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
+          '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Seleziona File *</label>' +
+          '<input type="file" id="inp-upload-file" required accept="' + (acceptMap[categoria] || '*/*') + '" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;">' +
+        '</div>' +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
+          '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
+            '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Categoria</label>' +
+            '<input type="text" id="inp-upload-cat" value="' + esc(categoria) + '" readonly style="background:#040912; border:1px solid #12344a; color:#16b9ff; padding:0.6rem; border-radius:6px; font-weight:700;">' +
+          '</div>' +
+          '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
+            '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Visibilità</label>' +
+            '<select id="inp-upload-vis" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;">' +
+              '<option value="staff_tecnico">Staff Tecnico (Mister + Vice)</option>' +
+              '<option value="tutti">Tutto lo Staff Societario</option>' +
+              '<option value="medico">Staff Medico / Sanitario</option>' +
+            '</select>' +
+          '</div>' +
+        '</div>' +
+        '<div id="upload-cloud-status" style="display:none; font-size:0.82rem; font-weight:700; color:#16b9ff; text-align:center; padding:0.5rem;"></div>' +
+        '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.5rem;">' +
+          '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Annulla</button>' +
+          '<button type="submit" class="es-btn-cos-primary" id="btn-submit-upload">⬆️ Avvia Upload Cloud</button>' +
+        '</div>' +
+      '</form>';
+
+    openModal(title, content);
+
+    var form = document.getElementById('form-upload-cloud');
+    if (!form) return;
+
+    form.onsubmit = async function (e) {
+      e.preventDefault();
+      var fileInput = document.getElementById('inp-upload-file');
+      if (!fileInput || !fileInput.files || !fileInput.files[0]) return;
+      var file = fileInput.files[0];
+      var vis = document.getElementById('inp-upload-vis').value;
+      var statusDiv = document.getElementById('upload-cloud-status');
+      var submitBtn = document.getElementById('btn-submit-upload');
+
+      if (statusDiv) {
+        statusDiv.style.display = 'block';
+        statusDiv.textContent = 'Caricamento file ' + file.name + ' nel bucket staff-allegati...';
+      }
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.6';
+      }
+
+      try {
+        var u = userObj();
+        var clubId = (_coachLiveData && _coachLiveData.clubId) || (await window.EliseeSupabase.resolveClubId(u));
+        var staffId = u.staffId || u.id || null;
+        var visArr = vis === 'tutti' ? ['allenatore', 'vice_allenatore', 'medico', 'dirigenza'] : [vis];
+
+        var upRes = await window.EliseeSupabase.uploadFileAllegato(clubId, categoria, entitaId, file, staffId, visArr);
+        if (upRes.ok) {
+          if (window.showToast) window.showToast('File caricato con successo su Supabase Storage!', 'success');
+          closeModal();
+          await syncLiveCoachData(null, true);
+        } else {
+          if (statusDiv) {
+            statusDiv.style.color = '#ef4444';
+            statusDiv.textContent = 'Errore upload: ' + (upRes.error || 'Impossibile completare');
+          }
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+          }
+        }
+      } catch (err) {
+        if (statusDiv) {
+          statusDiv.style.color = '#ef4444';
+          statusDiv.textContent = 'Errore: ' + err.message;
+        }
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = '1';
+        }
+      }
+    };
   }
 
   function openModal(title, contentHtml) {
