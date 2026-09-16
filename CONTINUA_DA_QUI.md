@@ -3,13 +3,17 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Creazione e Memorizzazione Cartella Archivio Loghi (`ARCHIVIOLOGHI1`):
-1. **Creazione Cartella Principale & Struttura**:
-   - Creata la cartella `archivio-loghi/` contenente due sottocartelle dedicate:
-     - **`archivio-loghi/competizioni/`** (55 loghi ufficiali di campionati, coppe nazionali, tornei internazionali e trofei: Serie A, B, C, D, Eccellenza, Champions League, Europa League, Conference League, Coppa Italia, Premier League, La Liga, Bundesliga, ecc.).
-     - **`archivio-loghi/squadre/`** (1427 loghi e stemmi vettoriali e PNG ad alta risoluzione di tutte le squadre memorizzate).
-   - Generati **`archivio-loghi/catalogo-loghi.json`** (registro strutturato JSON completo per accesso automatico da script e codice) e **`archivio-loghi/README.md`**.
-2. **File aggiornati**: `archivio-loghi/` (`competizioni/`, `squadre/`, `catalogo-loghi.json`, `README.md`), `CONTINUA_DA_QUI.md`.
+Ultimo aggiornamento: **2026-09-16** — Integrazione Logo Ufficiale Foggia City 1000345699.png & Redesign Badge Wrapped (`FGCLOGO2`):
+1. **Logo Ufficiale Circolare Foggia City 2026 FC**:
+   - Sostituito l'esagono segnaposto con sigla testuale `FGC` nell'header dell'Area Staff Tecnico (`coach-dash.js`) con il vero logo ufficiale circolare del Foggia City (`1000345699.png`).
+   - Aggiunta in `coach-dash.css` la classe `.es-cos-crest--img` con forma perfettamente circolare (`border-radius: 50%`, `clip-path: none`), eliminando il taglio poligonale per i loghi tondi e aggiungendo glow azzurro e ombra tridimensionale.
+   - Sincronizzato `1000345699.png` in `immagini/squadre-loghi/` e `archivio-loghi/squadre/` (anche come alias `foggia-city.png`).
+2. **Redesign Pulsante "Test Season Wrapped" nel Simulatore Ruoli**:
+   - In `creator-role-switcher.js` e `creator-role-switcher.css`: rimossa l'emoji `🎬` e il gradiente viola-blu stile videogioco.
+   - Inserita icona SVG Lucide monocromatica `sparkles` a stroke sottile (1.8px) color ciano, con sfondo scuro neutro sobrio (`rgba(15, 23, 42, 0.78)`), bordo sottile 1px e padding orizzontale compatto e defilato rispetto alle card ruolo.
+3. **File aggiornati**: `coach-dash.js`, `coach-dash.css`, `creator-role-switcher.js`, `creator-role-switcher.css`, `immagini/squadre-loghi/1000345699.png`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_FGCLOGO2`.
+
+Feature precedente: **Creazione e Memorizzazione Cartella Archivio Loghi (`ARCHIVIOLOGHI1`):**
 
 Feature precedente: **Integrazione Logo Ufficiale Circolare Patentino UEFA B (`UEFAB1`):**
 1. **Logo Ufficiale Circolare UEFA B**:

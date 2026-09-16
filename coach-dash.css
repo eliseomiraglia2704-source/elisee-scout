@@ -289,6 +289,29 @@ body.is-coach-mode .es-user-tabs { display: none !important; }
   object-fit: contain;
 }
 
+.crest.es-cos-crest--img,
+.es-cos-crest.es-cos-crest--img {
+  width: 52px;
+  height: 52px;
+  clip-path: none !important;
+  -webkit-clip-path: none !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.28), 0 4px 12px rgba(0, 0, 0, 0.6) !important;
+  overflow: hidden;
+  padding: 0;
+}
+
+.crest.es-cos-crest--img img,
+.es-cos-crest.es-cos-crest--img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
 .crest--sm, .es-cos-crest--sm {
   width: 30px;
   height: 33px;
