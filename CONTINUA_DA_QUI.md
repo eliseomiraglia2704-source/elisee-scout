@@ -3,17 +3,21 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Area Staff Tecnico: Risoluzione Taglio Tab Bar & Rimozione Integrale Emoji / Icone SVG Lucide (`TABSCROLL1`):
-1. **Risoluzione Definitiva Troncamento Tab Bar Secondaria**:
-   - In `coach-dash.css`: aggiornato `.es-cos-main` con `min-width: 0; max-width: 100%; overflow-x: hidden;` e `.es-cos-nav-tabs` con `padding-right: 48px;`, `overflow-x: auto; overflow-y: hidden;`, `scroll-behavior: smooth;` e `-webkit-overflow-scrolling: touch;` per garantire ampio respiro ed evitare qualsiasi taglio a destra (inclusi gli ultimi tab *"Comunicazioni"* e *"Impostazioni"*).
-   - In `coach-dash.js`: implementato lo scorrimento orizzontale tramite rotellina del mouse (desktop `wheel` listener) e auto-scroll fluido dell'elemento attivo (`scrollIntoView({ behavior: 'smooth', inline: 'nearest' })`) al click e al render.
-2. **Sostituzione Emoji con Icone SVG a Tratto Stile Lucide**:
-   - Nella sezione *"Video Report & Match Analysis"*, eliminata l'emoji `📹` e sostituita con l'icona SVG vettoriale Lucide `Video` (44px, stroke 1.6, colore neutro `#8da8bc` con opacità 0.65).
-   - Rimossi tutti i glifi/emoji dai pulsanti operativi (`⬆️ Carica Video`, `⬆️ Carica Telemetria GPS`, `⬆️ Carica Report`, `⬆️ Avvia Upload Cloud`, `📲 Story 9:16`, `⚠️ Differenziato`) e sostituiti con icone SVG vettoriali coordinate a tratto sottile.
-   - In `vice-dash.js`: sostituite tutte le emoji delle Specializzazioni Tecniche (`🎯`, `🛡️`, `📹`, `⚡`) e dell'avviso di affaticamento GPS con icone SVG professionali (Palle inattive Target, Linea Difensiva Shield, Match Analysis Video, Riscaldamento Zap).
-3. **File aggiornati**: `coach-dash.css`, `vice-dash.css`, `coach-dash.js`, `vice-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_TABSCROLL1`.
+Ultimo aggiornamento: **2026-09-16** — Area Staff Tecnico: Form Tesseramento Nuovo Calciatore con Anagrafica Completa (`ROSTERFIELDS1`):
+1. **Integrazione Campi Anagrafici Richiesti nel Modale di Tesseramento**:
+   - In `coach-dash.js`: nel form modale *"Tesseramento Nuovo Calciatore"* aggiunti i 4 campi ufficiali:
+     - `Data di nascita *` (`<input type="date" id="inp-p-dob" required style="color-scheme:dark;">`).
+     - `Luogo di Nascita *` (`<input type="text" id="inp-p-pob" required placeholder="Es. Foggia (FG)">`).
+     - `Codice Fiscale *` (`<input type="text" id="inp-p-cf" required placeholder="Es. BLLMRC03D14D643X" maxlength="16" uppercase monospace>`).
+     - `Email ( Opzionale )` (`<input type="email" id="inp-p-email" placeholder="Es. marco.bellini@email.it">`).
+   - Gestione submit con estrazione automatica dell'anno di nascita da `dob` (per compatibilità con `p.birth` / classe) e memorizzazione di `data_nascita`, `luogo_nascita`, `codice_fiscale`, `email`.
+2. **Sincronizzazione Supabase e Visualizzazione nelle Card Organico**:
+   - In `elisee-supabase.js`: implementata la funzione `addCalciatore(clubId, player)` per persistenza diretta su tabella `rosa` e gestione di rete/RLS in background.
+   - Nelle card organico di `renderRosa(data)`: visualizzazione arricchita con luogo di nascita, classe, stringa codice fiscale monospace ed eventuale email; sostituiti i glifi emoji di disponibilità con indicatori a punto colorato professionali (`🟢`, `🔴`, `🟡`, `🟠` &rarr; dot SVG/CSS).
+   - In `vice-dash.js`: sincronizzato il mapping di `liveRoster` con i nuovi campi anagrafici.
+3. **File aggiornati**: `coach-dash.js`, `elisee-supabase.js`, `vice-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_ROSTERFIELDS1`.
 
-Feature precedente: **Armonizzazione Colori Rosa con i Token del Design System (`ROSATOKEN1`)**:
+Feature precedente: **Risoluzione Taglio Tab Bar & Rimozione Integrale Emoji / Icone SVG Lucide (`TABSCROLL1`)**:
 1. **Pulsante "+ Aggiungi Calciatore" nel Blu Primario di Brand**:
    - Definite le regole `.es-btn-cos-primary` agganciate rigorosamente alle variabili del design system `var(--cos-blue)` (`#3B82F6`), testo bianco `#FFFFFF`, raggio `var(--cos-radius-sm, 5px)` ed effetto hover coordinato `#2563EB` (identico al pulsante *"Area Vice Allenatore &rarr;"*).
 2. **Filtri Pillola Roster Coerenti con la Secondary Tab Bar**:

@@ -226,6 +226,10 @@
           name: (g.cognome ? (g.cognome + ' ' + (g.nome || '')) : (g.nome || 'Calciatore')).trim(),
           role: g.ruolo || 'Calciatore',
           birth: g.data_nascita ? new Date(g.data_nascita).getFullYear() : '--',
+          data_nascita: g.data_nascita || '',
+          luogo_nascita: g.luogo_nascita || '',
+          codice_fiscale: g.codice_fiscale || '',
+          email: g.email || '',
           status: isDisp ? 'disp' : 'diff',
           statoDettagliato: st,
           motivo: g.motivo_indisponibilita || '',
@@ -981,15 +985,25 @@
         '<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:1rem;">' +
           (list.length ? list.map(function (p, pIdx) {
             var isDisp = p.status === 'disp';
-            var pillHtml = isDisp ? '<span class="es-cos-badge-pill is-green">🟢 Disponibile</span>' :
-              (p.statoDettagliato === 'infortunato' ? '<span class="es-cos-badge-pill is-danger" title="' + esc(p.motivo || 'Infortunio') + '">🔴 Infortunato' + (p.rientro ? (' · Rientro: ' + esc(p.rientro)) : '') + '</span>' :
-              (p.statoDettagliato === 'squalificato' ? '<span class="es-cos-badge-pill is-warn">🟡 Squalificato</span>' : '<span class="es-cos-badge-pill is-warn">🟠 ' + esc(p.statoDettagliato || 'Differenziato') + '</span>'));
+            var pillHtml = isDisp ? '<span class="es-cos-badge-pill is-green"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#22c55e;margin-right:4px;"></span>Disponibile</span>' :
+              (p.statoDettagliato === 'infortunato' ? '<span class="es-cos-badge-pill is-danger" title="' + esc(p.motivo || 'Infortunio') + '"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#ef4444;margin-right:4px;"></span>Infortunato' + (p.rientro ? (' · Rientro: ' + esc(p.rientro)) : '') + '</span>' :
+              (p.statoDettagliato === 'squalificato' ? '<span class="es-cos-badge-pill is-warn"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#eab308;margin-right:4px;"></span>Squalificato</span>' : '<span class="es-cos-badge-pill is-warn"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#f97316;margin-right:4px;"></span>' + esc(p.statoDettagliato || 'Differenziato') + '</span>'));
+            
+            var birthInfo = esc(p.role) + ((p.birth && p.birth !== '--') ? (' · Classe ' + esc(p.birth)) : (p.data_nascita ? (' · Nato: ' + esc(p.data_nascita)) : '')) + ((p.luogo_nascita || p.pob) ? (' (' + esc(p.luogo_nascita || p.pob) + ')') : '');
+            var cfVal = p.codice_fiscale || p.cf || '';
+            var emailVal = p.email || '';
+            var metaParts = [];
+            if (cfVal) metaParts.push('CF: ' + esc(cfVal));
+            if (emailVal) metaParts.push(esc(emailVal));
+            var metaHtml = metaParts.length ? '<div style="font-size:0.67rem; color:#64748b; font-family:monospace; margin-top:1px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">' + metaParts.join(' · ') + '</div>' : '';
+
             return (
               '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:0.9rem; display:flex; gap:0.75rem; align-items:center;" data-player-card-idx="' + pIdx + '">' +
                 '<div style="width:42px; height:42px; border-radius:8px; background:#040912; border:1px solid #16b9ff; color:#16b9ff; font-size:1.1rem; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0;">#' + esc(p.num) + '</div>' +
                 '<div style="display:flex; flex-direction:column; gap:2px; flex:1 1 auto; overflow:hidden;">' +
                   '<div style="font-size:0.9rem; font-weight:800; color:#f3f8fc; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + esc(p.name) + '</div>' +
-                  '<div style="font-size:0.72rem; color:#8da8bc;">' + esc(p.role) + ' · Classe ' + esc(p.birth) + '</div>' +
+                  '<div style="font-size:0.72rem; color:#8da8bc; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">' + birthInfo + '</div>' +
+                  metaHtml +
                   '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:3px; gap:0.5rem; flex-wrap:wrap;">' +
                     pillHtml +
                     (p.motivo ? '<span style="font-size:0.68rem; color:#f87171; max-width:140px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">' + esc(p.motivo) + '</span>' : '') +
@@ -1653,11 +1667,51 @@
     if (btnAddP) {
       btnAddP.onclick = function () {
         openModal('Tesseramento Nuovo Calciatore',
-          '<form id="form-modal-add-p" style="display:flex; flex-direction:column; gap:1rem;">' +
-            '<div style="display:flex; flex-direction:column; gap:0.35rem;"><label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Nome e Cognome *</label><input type="text" id="inp-p-name" required placeholder="Es. Marco Bellini" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
-            '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
-              '<div style="display:flex; flex-direction:column; gap:0.35rem;"><label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Numero Maglia</label><input type="number" id="inp-p-num" value="' + (data.roster.length + 1) + '" min="1" max="99" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"></div>' +
-              '<div style="display:flex; flex-direction:column; gap:0.35rem;"><label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Ruolo</label><select id="inp-p-role" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px;"><option>Portiere</option><option>Difensore Centrale</option><option>Terzino Destro</option><option>Terzino Sinistro</option><option>Mediano</option><option>Mezzala</option><option>Trequartista</option><option>Ala Destra</option><option>Ala Sinistra</option><option>Punta Centrale</option></select></div>' +
+          '<form id="form-modal-add-p" style="display:flex; flex-direction:column; gap:0.9rem;">' +
+            '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
+              '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Nome e Cognome *</label>' +
+              '<input type="text" id="inp-p-name" required placeholder="Es. Marco Bellini" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px; font-size:0.85rem;">' +
+            '</div>' +
+            '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.9rem;">' +
+              '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
+                '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Numero Maglia *</label>' +
+                '<input type="number" id="inp-p-num" value="' + (data.roster.length + 1) + '" min="1" max="99" required style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px; font-size:0.85rem;">' +
+              '</div>' +
+              '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
+                '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Ruolo *</label>' +
+                '<select id="inp-p-role" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px; font-size:0.85rem;">' +
+                  '<option>Portiere</option>' +
+                  '<option>Difensore Centrale</option>' +
+                  '<option>Terzino Destro</option>' +
+                  '<option>Terzino Sinistro</option>' +
+                  '<option>Mediano</option>' +
+                  '<option>Mezzala</option>' +
+                  '<option>Trequartista</option>' +
+                  '<option>Ala Destra</option>' +
+                  '<option>Ala Sinistra</option>' +
+                  '<option>Punta Centrale</option>' +
+                '</select>' +
+              '</div>' +
+            '</div>' +
+            '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.9rem;">' +
+              '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
+                '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Data di nascita *</label>' +
+                '<input type="date" id="inp-p-dob" required style="color-scheme:dark; background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px; font-size:0.85rem;">' +
+              '</div>' +
+              '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
+                '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Luogo di Nascita *</label>' +
+                '<input type="text" id="inp-p-pob" required placeholder="Es. Foggia (FG)" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px; font-size:0.85rem;">' +
+              '</div>' +
+            '</div>' +
+            '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.9rem;">' +
+              '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
+                '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Codice Fiscale *</label>' +
+                '<input type="text" id="inp-p-cf" required placeholder="Es. BLLMRC03D14D643X" maxlength="16" oninput="this.value=this.value.toUpperCase()" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px; font-size:0.85rem; text-transform:uppercase; font-family:monospace;">' +
+              '</div>' +
+              '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
+                '<label style="font-size:0.8rem; font-weight:800; color:#8da8bc;">Email ( Opzionale )</label>' +
+                '<input type="email" id="inp-p-email" placeholder="Es. calciatore@email.it" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.6rem; border-radius:6px; font-size:0.85rem;">' +
+              '</div>' +
             '</div>' +
             '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.5rem;">' +
               '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Annulla</button>' +
@@ -1672,8 +1726,48 @@
             var name = document.getElementById('inp-p-name').value.trim();
             var num = parseInt(document.getElementById('inp-p-num').value) || (data.roster.length + 1);
             var role = document.getElementById('inp-p-role').value;
-            data.roster.push({ num: num, name: name, role: role, birth: 2003, status: 'disp', app: 0, load: '8.5 km', acwr: '1.02' });
+            var dob = document.getElementById('inp-p-dob') ? document.getElementById('inp-p-dob').value : '';
+            var pob = document.getElementById('inp-p-pob') ? document.getElementById('inp-p-pob').value.trim() : '';
+            var cf = document.getElementById('inp-p-cf') ? document.getElementById('inp-p-cf').value.trim().toUpperCase() : '';
+            var email = document.getElementById('inp-p-email') ? document.getElementById('inp-p-email').value.trim() : '';
+
+            var birthYear = 2003;
+            if (dob) {
+              var d = new Date(dob);
+              if (!isNaN(d.getFullYear())) birthYear = d.getFullYear();
+            }
+
+            var nameParts = name.split(/\s+/);
+            var nome = nameParts[0] || '';
+            var cognome = nameParts.slice(1).join(' ') || '';
+
+            var newPlayer = {
+              id: 'p-' + Date.now(),
+              num: num,
+              name: name,
+              nome: nome,
+              cognome: cognome,
+              role: role,
+              birth: birthYear,
+              data_nascita: dob,
+              luogo_nascita: pob,
+              codice_fiscale: cf,
+              email: email,
+              status: 'disp',
+              app: 0,
+              load: '8.5 km',
+              acwr: '1.02'
+            };
+
+            data.roster.push(newPlayer);
             saveCoachData(data);
+
+            if (window.EliseeSupabase && typeof window.EliseeSupabase.addCalciatore === 'function') {
+              window.EliseeSupabase.addCalciatore(data.clubId || null, newPlayer).catch(function (e) {
+                console.warn('[EliseeCoachDash] Salvataggio Supabase:', e);
+              });
+            }
+
             closeModal();
             var container = document.getElementById('es-cos-active-content');
             if (container && activeTab === 'rosa') {
@@ -1682,7 +1776,7 @@
             } else {
               renderHub();
             }
-            if (window.showToast) window.showToast('Calciatore aggiunto alla Rosa!', 'success');
+            if (window.showToast) window.showToast('Calciatore tesserato con successo!', 'success');
           };
         }
       };
@@ -1889,7 +1983,7 @@
     modal.id = 'es-cos-modal-box';
     modal.style.cssText = 'position:fixed; inset:0; background:rgba(0,0,0,0.78); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; z-index:99999; padding:1rem;';
     modal.innerHTML =
-      '<div style="background:#071522; border:1px solid #16b9ff; border-radius:10px; max-width:520px; width:100%; padding:1.5rem; position:relative; box-shadow:0 12px 36px rgba(0,0,0,0.8);">' +
+      '<div style="background:#071522; border:1px solid #16b9ff; border-radius:10px; max-width:540px; width:100%; max-height:92vh; overflow-y:auto; padding:1.5rem; position:relative; box-shadow:0 12px 36px rgba(0,0,0,0.8);">' +
         '<button type="button" id="btn-modal-close-x" style="position:absolute; top:12px; right:12px; background:none; border:none; color:#8da8bc; font-size:1.4rem; cursor:pointer;">&times;</button>' +
         '<h3 style="margin:0 0 1.25rem; font-size:1.15rem; font-weight:800; color:#f3f8fc;">' + esc(title) + '</h3>' +
         '<div>' + contentHtml + '</div>' +

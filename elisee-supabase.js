@@ -201,6 +201,26 @@
     };
   }
 
+  async function addCalciatore(clubId, player) {
+    if (!clubId) clubId = DEFAULT_CLUB_ID;
+    var payload = {
+      club_id: clubId,
+      nome: player.nome || player.name || '',
+      cognome: player.cognome || '',
+      numero_maglia: parseInt(player.numero_maglia || player.num) || 1,
+      ruolo: player.ruolo || player.role || 'Calciatore',
+      data_nascita: player.data_nascita || player.dob || null,
+      luogo_nascita: player.luogo_nascita || player.pob || null,
+      codice_fiscale: player.codice_fiscale || player.cf || null,
+      email: player.email || null,
+      stato: player.stato || 'disponibile'
+    };
+    return await apiFetch('/rosa', {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+  }
+
   // ============================================================
   // CARICHI SETTIMANALI & PREPARAZIONE GARA (Aggregati da presenze o allenamenti)
   // ============================================================
@@ -399,6 +419,7 @@
     getSedutaOdierna: getSedutaOdierna,
     getRosa: getRosa,
     getDisponibilitaRosa: getDisponibilitaRosa,
+    addCalciatore: addCalciatore,
     getCaricoSettimanale: getCaricoSettimanale,
     getReportStaff: getReportStaff,
     getEventiLog: getEventiLog,
