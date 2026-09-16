@@ -1029,9 +1029,9 @@
               '<option value="4-4-2" ' + (data.moduloPrincipale === '4-4-2' ? 'selected' : '') + '>4-4-2 (Classico Lineare)</option>' +
             '</select>' +
           '</div>' +
-          '<div style="display:flex; gap:0.5rem;">' +
-            '<button type="button" class="es-btn-cos-sec" id="btn-export-story-modal">📲 Story 9:16</button>' +
-            '<button type="button" class="es-btn-cos-primary" id="btn-confirm-official-xi">✓ Conferma Formazione Ufficiale</button>' +
+          '<div style="display:flex; gap:0.5rem; flex-wrap:wrap;">' +
+            '<button type="button" class="es-btn-cos-sec" id="btn-export-story-modal"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>Story 9:16</button>' +
+            '<button type="button" class="es-btn-cos-primary" id="btn-confirm-official-xi">Conferma Formazione Ufficiale</button>' +
           '</div>' +
         '</div>' +
 
@@ -1185,7 +1185,7 @@
                 '<p style="font-size:0.78rem; color:#8da8bc; margin:0.2rem 0;">' + esc(tr.desc) + '</p>' +
                 '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.4rem; padding-top:0.5rem; border-top:1px solid #12344a;">' +
                   '<span class="es-cos-badge-pill is-green">Carico: ' + esc(tr.carico || 'Medio') + '</span>' +
-                  '<button type="button" class="es-btn-cos-sec" style="padding:0.35rem 0.75rem; font-size:0.74rem;" data-upload-gps-tr="' + tr.id + '">⬆️ GPS</button>' +
+                  '<button type="button" class="es-btn-cos-sec" style="padding:0.35rem 0.75rem; font-size:0.74rem;" data-upload-gps-tr="' + tr.id + '"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:3px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>GPS</button>' +
                 '</div>' +
               '</div>'
             );
@@ -1252,11 +1252,11 @@
           '<div class="es-cos-panel-card">' +
             '<div class="es-cos-panel-head">' +
               '<span class="es-cos-panel-title">Video Report & Match Analysis</span>' +
-              '<button type="button" class="es-btn-cos-primary" id="btn-upload-video-analysis" style="font-size:0.74rem;">⬆️ Carica Video / Report</button>' +
+              '<button type="button" class="es-btn-cos-primary" id="btn-upload-video-analysis" style="font-size:0.74rem;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Carica Video / Report</button>' +
             '</div>' +
-            '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:1.25rem; text-align:center;">' +
-              '<div style="font-size:2.5rem; color:#16b9ff;">📹</div>' +
-              '<div style="font-weight:800; font-size:0.95rem; margin-top:0.5rem;">' + (videoFiles.length ? (videoFiles.length + ' Video Report caricati su Supabase Storage') : 'Nessun video analisi allegato') + '</div>' +
+            '<div style="background:#071522; border:1px solid #12344a; border-radius:8px; padding:1.5rem 1.25rem; text-align:center;">' +
+              '<svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cos-text-muted, #8da8bc); opacity:0.65; margin:0 auto 0.75rem; display:block;"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>' +
+              '<div style="font-weight:800; font-size:0.95rem; margin-top:0.5rem; color:#f3f8fc;">' + (videoFiles.length ? (videoFiles.length + ' Video Report caricati su Supabase Storage') : 'Nessun video analisi allegato') + '</div>' +
               '<p style="font-size:0.75rem; color:#8da8bc; margin:0.4rem 0 0.8rem;">I video caricati vengono conservati nel bucket cloud <code>staff-allegati</code> con accesso riservato allo staff.</p>' +
               '<button type="button" class="es-btn-cos-sec" id="btn-open-video-upload-direct">Carica Nuovo Video / Clip</button>' +
             '</div>' +
@@ -1297,7 +1297,7 @@
         '<div class="es-cos-panel-card">' +
           '<div class="es-cos-panel-head">' +
             '<span class="es-cos-panel-title">Dashboard Telemetria GPS & Workload Management (Supabase)</span>' +
-            '<button type="button" class="es-btn-cos-primary" id="btn-upload-gps-modal">⬆️ Carica Telemetria GPS (.csv, .json, .fit)</button>' +
+            '<button type="button" class="es-btn-cos-primary" id="btn-upload-gps-modal"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Carica Telemetria GPS (.csv, .json, .fit)</button>' +
           '</div>' +
           '<div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:1rem; margin-bottom:1rem;">' +
             '<div style="background:#071522; border:1px solid #12344a; border-radius:6px; padding:0.85rem; text-align:center;"><div style="font-size:1.3rem; font-weight:900; color:#16b9ff;">' + (avg > 0 ? (avg + '%') : '--') + '</div><div style="font-size:0.72rem; color:#8da8bc;">CARICO MEDIO SETTIMANA</div></div>' +
@@ -1310,7 +1310,7 @@
             '<tbody>' +
               (data.roster && data.roster.length ? data.roster.map(function (p) {
                 var isDiff = p.status === 'diff';
-                return '<tr><td><b>' + esc(p.name) + '</b></td><td>' + esc(p.role) + '</td><td>' + esc(p.load) + '</td><td>' + (isDiff ? '--' : '--') + '</td><td><b>' + esc(p.acwr) + '</b></td><td><span class="es-cos-badge-pill ' + (isDiff ? 'is-warn' : 'is-green') + '">' + (isDiff ? '⚠️ Differenziato' : '🟢 Regolare') + '</span></td></tr>';
+                return '<tr><td><b>' + esc(p.name) + '</b></td><td>' + esc(p.role) + '</td><td>' + esc(p.load) + '</td><td>' + (isDiff ? '--' : '--') + '</td><td><b>' + esc(p.acwr) + '</b></td><td><span class="es-cos-badge-pill ' + (isDiff ? 'is-warn' : 'is-green') + '">' + (isDiff ? 'Differenziato' : 'Regolare') + '</span></td></tr>';
               }).join('') : '<tr><td colspan="6" style="text-align:center; padding:2rem; color:#8da8bc;">Nessun dato di carico o atleta presente.</td></tr>') +
             '</tbody>' +
           '</table>' +
@@ -1348,7 +1348,7 @@
         '<div class="es-cos-panel-card">' +
           '<div class="es-cos-panel-head">' +
             '<span class="es-cos-panel-title">Report Staff Tecnico & Medico (Tabella: report)</span>' +
-            '<button type="button" class="es-btn-cos-primary" id="btn-upload-staff-report-modal">⬆️ Carica Nuovo Report / Scheda</button>' +
+            '<button type="button" class="es-btn-cos-primary" id="btn-upload-staff-report-modal"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Carica Nuovo Report / Scheda</button>' +
           '</div>' +
           '<div style="display:flex; flex-direction:column; gap:0.75rem;">' +
             (reports.length ? reports.map(function (r) {
@@ -1525,6 +1525,10 @@
           mount.querySelectorAll('.es-cos-side-btn, #es-cos-main-tabs button').forEach(function (b) {
             b.classList.toggle('is-active', b.getAttribute('data-tab-nav') === activeTab);
           });
+          var activeNavBtn = mount.querySelector('#es-cos-main-tabs button.is-active');
+          if (activeNavBtn && typeof activeNavBtn.scrollIntoView === 'function') {
+            activeNavBtn.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
+          }
           var container = document.getElementById('es-cos-active-content');
           if (container) {
             container.innerHTML = renderActiveTab(activeTab, data);
@@ -1533,6 +1537,22 @@
         }
       };
     });
+
+    // Abilita scroll orizzontale della tab bar con la rotellina del mouse (desktop)
+    var mainTabs = mount.querySelector('#es-cos-main-tabs');
+    if (mainTabs && !mainTabs._wheelBound) {
+      mainTabs._wheelBound = true;
+      mainTabs.addEventListener('wheel', function (e) {
+        if (e.deltaY !== 0) {
+          e.preventDefault();
+          mainTabs.scrollLeft += e.deltaY;
+        }
+      }, { passive: false });
+    }
+    var initActiveNavBtn = mount.querySelector('#es-cos-main-tabs button.is-active');
+    if (initActiveNavBtn && typeof initActiveNavBtn.scrollIntoView === 'function') {
+      initActiveNavBtn.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
+    }
 
     // Pulsante Rapido Salto ad Area Vice Allenatore
     var btnGotoVice = mount.querySelector('#btn-goto-vice-area');
@@ -1802,7 +1822,7 @@
         '<div id="upload-cloud-status" style="display:none; font-size:0.82rem; font-weight:700; color:#16b9ff; text-align:center; padding:0.5rem;"></div>' +
         '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.5rem;">' +
           '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Annulla</button>' +
-          '<button type="submit" class="es-btn-cos-primary" id="btn-submit-upload">⬆️ Avvia Upload Cloud</button>' +
+          '<button type="submit" class="es-btn-cos-primary" id="btn-submit-upload"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Avvia Upload Cloud</button>' +
         '</div>' +
       '</form>';
 

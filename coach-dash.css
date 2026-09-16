@@ -585,19 +585,32 @@ section + section {
   display: block;
 }
 
-/* c) Tab bar scrollabile invece che tagliata */
+.es-cos-main {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* c) Tab bar scrollabile orizzontalmente senza taglio */
 .tab-bar,
 .es-cos-nav-tabs {
   display: flex;
   flex-wrap: nowrap;
   gap: var(--space-1);
   overflow-x: auto;
+  overflow-y: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
   margin-block: var(--space-2);
-  padding-bottom: 2px;
+  padding-bottom: 4px;
+  padding-right: 48px; /* respiro generoso per l'ultimo tab, evita il taglio netto a destra */
   width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
 }
 
 .tab-bar::-webkit-scrollbar,

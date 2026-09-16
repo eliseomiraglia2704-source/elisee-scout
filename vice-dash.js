@@ -211,7 +211,7 @@
           nome: 'FASE PALLE INATTIVE',
           sub: 'Corner & Punizioni',
           livello: 'Top Specialist UEFA',
-          icon: '🎯',
+          icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
           schedeCreate: 8,
           schedeApprovate: 7,
           seduteCollegate: 5,
@@ -224,7 +224,7 @@
           nome: 'FASE DIFENSIVA & LAVORO PER REPARTI',
           sub: 'Linea a 4 & Uscite dal Basso',
           livello: 'Esperto di Reparto',
-          icon: '🛡️',
+          icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
           schedeCreate: 12,
           schedeApprovate: 11,
           seduteCollegate: 8,
@@ -237,7 +237,7 @@
           nome: 'MATCH ANALYSIS & STUDIO AVVERSARIO',
           sub: 'Video Breakdown & Scouting Avversario',
           livello: 'Specialista Certificato',
-          icon: '📹',
+          icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>',
           schedeCreate: 6,
           schedeApprovate: 6,
           seduteCollegate: 4,
@@ -250,7 +250,7 @@
           nome: 'RISCALDAMENTO PRE-GARA & ATTIVAZIONE',
           sub: 'Routine Dinamica & Reattività',
           livello: 'Operativo di Campo',
-          icon: '⚡',
+          icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
           schedeCreate: 10,
           schedeApprovate: 10,
           seduteCollegate: 10,
@@ -623,12 +623,12 @@
         '<div class="es-cos-panel-card">' +
           '<div class="es-cos-panel-head">' +
             '<span class="es-cos-panel-title">CO-GESTIONE DASHBOARD GPS & MONITORAGGIO AFFATICAMENTO</span>' +
-            '<button type="button" class="es-btn-cos-primary" id="btn-vd-upload-gps">⬆️ Carica Telemetria GPS (Bucket staff-allegati)</button>' +
+            '<button type="button" class="es-btn-cos-primary" id="btn-vd-upload-gps"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Carica Telemetria GPS (Bucket staff-allegati)</button>' +
           '</div>' +
 
           // Alert Dinamico di Affaticamento
           '<div style="background:rgba(255,210,26,0.08); border:1px solid #ffd21a; border-radius:8px; padding:1rem; display:flex; align-items:flex-start; gap:0.75rem; margin-bottom:1.25rem;">' +
-            '<span style="font-size:1.4rem;">⚠️</span>' +
+            '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#ffd21a; flex-shrink:0; margin-top:1px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>' +
             '<div>' +
               '<b style="color:#ffd21a; font-size:0.88rem;">Monitoraggio Carico Settimanale:</b>' +
               '<p style="margin:0.25rem 0 0; font-size:0.84rem; color:#f3f8fc;">' + esc(g.alertAffaticamento) + '</p>' +
@@ -772,7 +772,7 @@
           '<div id="vd-upload-status" style="display:none; font-size:0.82rem; font-weight:700; color:#16b9ff; text-align:center;"></div>' +
           '<div style="display:flex; justify-content:flex-end; gap:0.5rem;">' +
             '<button type="button" class="es-btn-cos-sec" id="btn-vd-modal-cancel">Annulla</button>' +
-            '<button type="submit" class="es-btn-cos-primary" id="btn-vd-submit-up">⬆️ Avvia Upload Cloud</button>' +
+            '<button type="submit" class="es-btn-cos-primary" id="btn-vd-submit-up"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Avvia Upload Cloud</button>' +
           '</div>' +
         '</form>' +
       '</div>';
