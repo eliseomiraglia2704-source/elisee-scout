@@ -295,6 +295,10 @@
 
     var grp = document.getElementById('user-dossier-view-group');
     if (grp) grp.classList.add('is-coach-dash');
+    var portal = document.getElementById('user-dossier-portal');
+    if (portal) portal.classList.add('is-coach-dash');
+    var inner = portal ? portal.querySelector('.pf-page-inner') : null;
+    if (inner) inner.classList.add('is-coach-inner');
     try { document.body.classList.add('is-coach-mode'); } catch (_) {}
 
     var data = getCoachData();

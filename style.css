@@ -8993,11 +8993,11 @@ main {
   padding-bottom: 1rem;
   align-items: flex-start;
 }
-.container.pf-page-inner,
-.pf-page-inner,
+.container.pf-page-inner:not(.is-coach-inner),
+.pf-page-inner:not(.is-coach-inner),
 #account-portal .pf-page-inner,
 #admin-portal .pf-page-inner,
-#user-dossier-portal .pf-page-inner,
+#user-dossier-portal:not(.is-coach-dash) .pf-page-inner,
 #ambassador-portal .pf-page-inner,
 #persone-portal .pf-page-inner,
 #bacheca-annunci .pf-page-inner {

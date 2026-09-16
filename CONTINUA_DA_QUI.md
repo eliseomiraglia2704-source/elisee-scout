@@ -3,7 +3,19 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Risoluzione 4 Difetti Layout Area Staff Tecnico (`COACHPRO4`):
+Ultimo aggiornamento: **2026-09-16** — Risoluzione Radicale Conflitti CSS Layout & Sidebar Spazio Vuoto (`COACHPRO5`):
+1. **Causa Reale del Gap ~150px Risolta alla Radice (Zero Patch Sovrapposte)**:
+   - Individuata la regola in conflitto primario in `style.css` (riga 9004): `#user-dossier-portal .pf-page-inner` imponeva `padding-top: 7.25rem !important` (116px). Poiché conteneva un ID, vinceva per specificità su qualsiasi classe e si sommava ai 72px di `.es-cos-shell`, producendo 188px totali di fascia vuota.
+   - Modificato `style.css` escludendo direttamente la dashboard: `.container.pf-page-inner:not(.is-coach-inner), .pf-page-inner:not(.is-coach-inner), #user-dossier-portal:not(.is-coach-dash) .pf-page-inner`.
+   - Modificato `player-profile.css` (riga 384) escludendo il limite di larghezza: `#user-dossier-view-group.is-staff-area:not(.is-coach-dash) .pf-page-inner`.
+   - In `coach-dash.js`: iniettate le classi `is-coach-dash` e `is-coach-inner` su `portal` e `pf-page-inner`, con pulizia completa in `player-profile.js` all'unmount.
+   - In `coach-dash.css`: unico compenso `padding-top: var(--header-h, 72px)` su `.es-cos-shell`, azzerando tutti i contenitori intermedi.
+2. **Sidebar: Eliminato Taglio "Comunicazioni" & Dimensionamento Ottimale**:
+   - Compattato il padding dei bottoni a `8px 12px` e il `gap: 2px;` in `.es-cos-sidebar-nav`, portando l'altezza naturale degli 11 pulsanti a soli ~416px (visibili per intero su qualsiasi monitor).
+   - Inserito `padding-bottom: 56px` di sicurezza per garantire che anche a risoluzioni bassissime l'ultima voce ("Impostazioni Tecniche") e la penultima ("Comunicazioni") non tocchino mai il fondo.
+   - `max-height: calc(100vh - var(--header-h))` e `max-height: calc(100dvh - var(--header-h))` con `overflow-y: auto` e `overscroll-behavior: contain`.
+3. **File aggiornati**: `style.css`, `player-profile.css`, `player-profile.js`, `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHPRO5`.
+Feature precedente: **Risoluzione 4 Difetti Layout Area Staff Tecnico (`COACHPRO4`)**:
 1. **Fascia Vuota ~90px Risolta (Unico Compenso Navbar)**:
    - Eliminato il doppio compenso per la navbar fissa: impostato un unico `padding-top: var(--header-h, 72px)` sul wrapper principale (`.layout, .es-cos-shell`).
    - Azzerati rigorosamente `padding-top: 0 !important; margin-top: 0 !important;` su tutti gli antenati e contenitori intermedi (`body.is-coach-mode`, `html`, `#user-dossier-view-group`, `#user-dossier-portal`, `.pf-page`, `.pf-page-inner`, `#es-staff-profile`, `#es-cd`, `.content, .es-cos-main`).

@@ -381,7 +381,7 @@ body.layout-portfolio .es-pp textarea:focus,
 #user-dossier-view-group.is-staff-area #dossier-legacy {
   display: none !important;
 }
-#user-dossier-view-group.is-staff-area .pf-page-inner {
+#user-dossier-view-group.is-staff-area:not(.is-coach-dash) .pf-page-inner {
   max-width: 560px;
   margin: 0 auto;
   color: #e2e8f0;

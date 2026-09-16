@@ -1244,7 +1244,15 @@
       groupClasses.forEach(function (c) { grp.classList.remove(c); });
     }
     if (keepId !== 'es-cd') {
-      try { document.body.classList.remove('is-coach-mode'); } catch (_) {}
+      try {
+        document.body.classList.remove('is-coach-mode');
+        var p = document.getElementById('user-dossier-portal');
+        if (p) {
+          p.classList.remove('is-coach-dash');
+          var inr = p.querySelector('.pf-page-inner');
+          if (inr) inr.classList.remove('is-coach-inner');
+        }
+      } catch (_) {}
     }
   };
 
