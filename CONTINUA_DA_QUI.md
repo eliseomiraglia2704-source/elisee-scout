@@ -3,7 +3,15 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Integrazione Logo Ufficiale Circolare Patentino UEFA B (`UEFAB1`):
+Ultimo aggiornamento: **2026-09-16** — Creazione e Memorizzazione Cartella Archivio Loghi (`ARCHIVIOLOGHI1`):
+1. **Creazione Cartella Principale & Struttura**:
+   - Creata la cartella `archivio-loghi/` contenente due sottocartelle dedicate:
+     - **`archivio-loghi/competizioni/`** (55 loghi ufficiali di campionati, coppe nazionali, tornei internazionali e trofei: Serie A, B, C, D, Eccellenza, Champions League, Europa League, Conference League, Coppa Italia, Premier League, La Liga, Bundesliga, ecc.).
+     - **`archivio-loghi/squadre/`** (1427 loghi e stemmi vettoriali e PNG ad alta risoluzione di tutte le squadre memorizzate).
+   - Generati **`archivio-loghi/catalogo-loghi.json`** (registro strutturato JSON completo per accesso automatico da script e codice) e **`archivio-loghi/README.md`**.
+2. **File aggiornati**: `archivio-loghi/` (`competizioni/`, `squadre/`, `catalogo-loghi.json`, `README.md`), `CONTINUA_DA_QUI.md`.
+
+Feature precedente: **Integrazione Logo Ufficiale Circolare Patentino UEFA B (`UEFAB1`):**
 1. **Logo Ufficiale Circolare UEFA B**:
    - Scaricato e integrato il logo ufficiale UEFA (`immagini/logo/uefa-b.png`) ad alta risoluzione.
    - Trasparenza alpha impeccabile sul cerchio esterno tramite maschera antialiasing (eliminato il falso pattern a quadretti).
