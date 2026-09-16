@@ -1321,27 +1321,34 @@ section + section {
   flex-shrink: 0;
 }
 
-/* Filtri pillola della sezione Rosa e bottoni secondari (stesso stile coerente dei tab secondari) */
+/* Bottoni secondari / Annulla e filtri operativi Staff Tecnico */
 .es-btn-cos-sec {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  background: var(--cos-card, rgba(18, 26, 42, 0.75));
-  border: 1px solid var(--cos-card-border, rgba(59, 130, 246, 0.22));
-  border-radius: var(--cos-radius-sm, 5px);
-  color: var(--cos-text-muted, #8B95A8);
-  font-size: 11.5px;
+  justify-content: center;
+  gap: 6px;
+  background: #2A3441;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--cos-radius-sm, 6px);
+  color: #E5E7EB;
+  font-size: 12px;
   font-weight: 600;
+  padding: 8px 16px;
   cursor: pointer;
   white-space: nowrap;
-  transition: all 0.15s ease;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
   outline: none;
 }
 
 .es-btn-cos-sec:hover:not(.is-active) {
-  background: rgba(255, 255, 255, 0.04);
+  background: #333F4E;
   color: #FFFFFF;
-  border-color: var(--cos-blue, #3B82F6);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.es-btn-cos-sec:active:not(.is-active) {
+  background: #1F2732;
+  border-color: rgba(255, 255, 255, 0.38);
 }
 
 .es-btn-cos-sec.is-active {
@@ -1350,6 +1357,37 @@ section + section {
   border-color: var(--cos-blue, #3B82F6) !important;
   font-weight: 700;
   box-shadow: none;
+}
+
+/* Specifico per bottoni Annulla e chiusura nei modali Staff Tecnico */
+#es-cos-modal-box .es-btn-cos-sec,
+#btn-close-modal,
+#btn-vd-modal-cancel {
+  background: #2A3441 !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: #E5E7EB !important;
+  padding: 8px 18px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+}
+
+#es-cos-modal-box .es-btn-cos-sec:hover,
+#btn-close-modal:hover,
+#btn-vd-modal-cancel:hover {
+  background: #333F4E !important;
+  border-color: rgba(255, 255, 255, 0.32) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+#es-cos-modal-box .es-btn-cos-sec:active,
+#btn-close-modal:active,
+#btn-vd-modal-cancel:active {
+  background: #1F2732 !important;
+  border-color: rgba(255, 255, 255, 0.42) !important;
 }
 
 .es-cos-search-input {

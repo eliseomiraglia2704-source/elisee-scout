@@ -686,13 +686,53 @@ button > *,
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--text-main);
+  background: #2A3441;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #E5E7EB;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
+  background: #333F4E;
+  border-color: rgba(255, 255, 255, 0.28);
+  color: #FFFFFF;
+}
+
+.btn-secondary:active {
+  background: #1F2732;
+  border-color: rgba(255, 255, 255, 0.38);
+}
+
+/* Bottoni Annulla e Azioni Secondarie Modali (unificati per coerenza in tutto il sito) */
+.es-edit-btn-cancel,
+.es-btn-cancel,
+#btn-cancel-rating,
+#btn-cancel-art22 {
+  background: #2A3441 !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: #E5E7EB !important;
+  font-weight: 600 !important;
+  padding: 8px 18px !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.es-edit-btn-cancel:hover,
+.es-btn-cancel:hover,
+#btn-cancel-rating:hover,
+#btn-cancel-art22:hover {
+  background: #333F4E !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+  color: #FFFFFF !important;
+}
+
+.es-edit-btn-cancel:active,
+.es-btn-cancel:active,
+#btn-cancel-rating:active,
+#btn-cancel-art22:active {
+  background: #1F2732 !important;
+  border-color: rgba(255, 255, 255, 0.38) !important;
 }
 
 .btn-sm {

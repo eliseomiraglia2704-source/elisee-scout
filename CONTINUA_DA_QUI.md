@@ -3,21 +3,19 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Area Staff Tecnico: Form Tesseramento Nuovo Calciatore con Anagrafica Completa (`ROSTERFIELDS1`):
-1. **Integrazione Campi Anagrafici Richiesti nel Modale di Tesseramento**:
-   - In `coach-dash.js`: nel form modale *"Tesseramento Nuovo Calciatore"* aggiunti i 4 campi ufficiali:
-     - `Data di nascita *` (`<input type="date" id="inp-p-dob" required style="color-scheme:dark;">`).
-     - `Luogo di Nascita *` (`<input type="text" id="inp-p-pob" required placeholder="Es. Foggia (FG)">`).
-     - `Codice Fiscale *` (`<input type="text" id="inp-p-cf" required placeholder="Es. BLLMRC03D14D643X" maxlength="16" uppercase monospace>`).
-     - `Email ( Opzionale )` (`<input type="email" id="inp-p-email" placeholder="Es. marco.bellini@email.it">`).
-   - Gestione submit con estrazione automatica dell'anno di nascita da `dob` (per compatibilità con `p.birth` / classe) e memorizzazione di `data_nascita`, `luogo_nascita`, `codice_fiscale`, `email`.
-2. **Sincronizzazione Supabase e Visualizzazione nelle Card Organico**:
-   - In `elisee-supabase.js`: implementata la funzione `addCalciatore(clubId, player)` per persistenza diretta su tabella `rosa` e gestione di rete/RLS in background.
-   - Nelle card organico di `renderRosa(data)`: visualizzazione arricchita con luogo di nascita, classe, stringa codice fiscale monospace ed eventuale email; sostituiti i glifi emoji di disponibilità con indicatori a punto colorato professionali (`🟢`, `🔴`, `🟡`, `🟠` &rarr; dot SVG/CSS).
-   - In `vice-dash.js`: sincronizzato il mapping di `liveRoster` con i nuovi campi anagrafici.
-3. **File aggiornati**: `coach-dash.js`, `elisee-supabase.js`, `vice-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_ROSTERFIELDS1`.
+Ultimo aggiornamento: **2026-09-16** — Bottoni Secondari & Modali Annulla ad Alto Contrasto B2B (`CANCELBTN1`):
+1. **Risoluzione Definitiva Contrasto e Gerarchia Visiva del Bottone "Annulla"**:
+   - In `coach-dash.css` e `vice-dash.css`: aggiornato lo stile di `.es-btn-cos-sec` e specificamente dei bottoni di annullamento e chiusura modale (`#btn-close-modal`, `#btn-vd-modal-cancel`, `#es-cos-modal-box .es-btn-cos-sec`):
+     - **Sfondo solido neutro**: `#2A3441` (lo stesso family delle card KPI nel tema scuro), eliminando l'effetto "fantasma/disabilitato".
+     - **Bordo visibile**: `1px solid rgba(255, 255, 255, 0.16)` (fino a `0.18` nei modali).
+     - **Colore testo quasi bianco**: `#E5E7EB` (non più grigio scuro spento), garantendo perfetta leggibilità accanto al CTA primario blu solido.
+     - **Dimensioni & Padding equilibrati**: `padding: 8px 18px;`, `font-size: 12px;`, `font-weight: 600;`, `border-radius: 6px;` e ombra sottile `0 1px 4px rgba(0, 0, 0, 0.35)`.
+     - **Stati interattivi percepibili**: Hover su `#333F4E` con bordo `rgba(255, 255, 255, 0.32)` e testo `#FFFFFF`; active su `#1F2732`.
+2. **Coerenza Globale Estesa a Tutto il Sito**:
+   - In `style.css`: unificati con lo stesso pattern cromatico (`#2A3441`, bordo `rgba(255, 255, 255, 0.16)`, testo `#E5E7EB`, hover `#333F4E`) le classi secondarie e i bottoni di annullamento modali in tutta la piattaforma (`.btn-secondary`, `.es-edit-btn-cancel`, `.es-btn-cancel`, `#btn-cancel-rating`, `#btn-cancel-art22`).
+3. **File aggiornati**: `coach-dash.css`, `vice-dash.css`, `style.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_CANCELBTN1`.
 
-Feature precedente: **Risoluzione Taglio Tab Bar & Rimozione Integrale Emoji / Icone SVG Lucide (`TABSCROLL1`)**:
+Feature precedente: **Form Tesseramento Nuovo Calciatore con Anagrafica Completa (`ROSTERFIELDS1`)**:
 1. **Pulsante "+ Aggiungi Calciatore" nel Blu Primario di Brand**:
    - Definite le regole `.es-btn-cos-primary` agganciate rigorosamente alle variabili del design system `var(--cos-blue)` (`#3B82F6`), testo bianco `#FFFFFF`, raggio `var(--cos-radius-sm, 5px)` ed effetto hover coordinato `#2563EB` (identico al pulsante *"Area Vice Allenatore &rarr;"*).
 2. **Filtri Pillola Roster Coerenti con la Secondary Tab Bar**:
