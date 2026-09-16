@@ -1824,3 +1824,442 @@ section + section {
   color: #60a5fa !important;
 }
 
+/* ============================================================
+   CALENDARIO TECNICO LUXURY (TIMELINE, RIGHE-CARD & FILTRI)
+   ============================================================ */
+.es-cal-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(18, 52, 74, 0.8);
+}
+
+.es-cal-header-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.es-cal-title-main {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #f3f8fc;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.es-cal-subtitle {
+  font-size: 0.78rem;
+  color: #8da8bc;
+  margin: 0;
+}
+
+/* Barra Filtri: Toggle Partite/Allenamenti/Tutto + Selettore Mese */
+.es-cal-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  background: rgba(4, 9, 18, 0.65);
+  border: 1px solid #12344a;
+  border-radius: 10px;
+  padding: 0.55rem 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.es-cal-filter-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(7, 21, 34, 0.9);
+  border: 1px solid #12344a;
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.es-cal-filter-btn {
+  background: transparent;
+  border: none;
+  color: #8da8bc;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0.38rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.es-cal-filter-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.es-cal-filter-btn.is-active {
+  background: rgba(22, 185, 255, 0.14) !important;
+  color: #38bdf8 !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.es-cal-filter-count {
+  font-size: 0.68rem;
+  padding: 1px 6px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: inherit;
+}
+
+.es-cal-month-select-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.es-cal-month-select {
+  background: #071522;
+  border: 1px solid #12344a;
+  color: #f3f8fc;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.42rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.es-cal-month-select:focus,
+.es-cal-month-select:hover {
+  border-color: #16b9ff;
+}
+
+/* Timeline & Separatori per Mese */
+.es-cal-month-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 1.5rem 0 0.85rem;
+}
+
+.es-cal-month-divider:first-of-type {
+  margin-top: 0.25rem;
+}
+
+.es-cal-month-badge {
+  background: rgba(7, 21, 34, 0.95);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  border-radius: 20px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #93c5fd;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.es-cal-month-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.25) 0%, rgba(18, 52, 74, 0.6) 40%, transparent 100%);
+}
+
+/* Lista Righe-Card Eventi */
+.es-cal-events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.es-cal-card {
+  display: grid;
+  grid-template-columns: 78px 40px minmax(220px, 2fr) minmax(130px, 1.1fr) minmax(140px, 1.2fr) 135px 68px;
+  gap: 14px;
+  align-items: center;
+  background: #071522;
+  border: 1px solid #12344a;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  transition: all 0.18s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.es-cal-card:hover {
+  background: #091c2e;
+  border-color: rgba(56, 189, 248, 0.45);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+.es-cal-card.is-type-partita {
+  border-left: 3.5px solid #16b9ff;
+}
+
+.es-cal-card.is-type-allenamento {
+  border-left: 3.5px solid #10b981;
+}
+
+.es-cal-card.is-type-amichevole {
+  border-left: 3.5px solid #a855f7;
+}
+
+/* Mini Box Data Stile Agenda */
+.es-cal-datebox {
+  background: rgba(4, 9, 18, 0.9);
+  border: 1px solid #12344a;
+  border-radius: 8px;
+  width: 70px;
+  padding: 5px 4px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.es-cal-datebox .month {
+  font-size: 0.64rem;
+  font-weight: 800;
+  color: #8da8bc;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+.es-cal-datebox .day {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #ffffff;
+  line-height: 1.1;
+  margin: 2px 0 1px;
+}
+
+.es-cal-datebox .time {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #38bdf8;
+  line-height: 1;
+}
+
+/* Icona Cerchio Tipo Evento */
+.es-cal-type-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.es-cal-card.is-type-partita .es-cal-type-icon {
+  background: rgba(22, 185, 255, 0.1);
+  border: 1.5px solid rgba(22, 185, 255, 0.35);
+  color: #38bdf8;
+}
+
+.es-cal-card.is-type-allenamento .es-cal-type-icon {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1.5px solid rgba(16, 185, 129, 0.35);
+  color: #10b981;
+}
+
+.es-cal-card.is-type-amichevole .es-cal-type-icon {
+  background: rgba(168, 85, 247, 0.1);
+  border: 1.5px solid rgba(168, 85, 247, 0.35);
+  color: #c084fc;
+}
+
+/* Info Principali Evento */
+.es-cal-main-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.es-cal-main-title {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #f3f8fc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.es-cal-main-desc {
+  font-size: 0.74rem;
+  color: #8da8bc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Badge Competizione / Categoria */
+.es-cal-comp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+/* Stadio / Luogo con Icona Pin */
+.es-cal-venue {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.es-cal-venue svg {
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+/* Badge Stato Luxury (Sfondo Desaturato, Bordo 1px, Dot Pieno) */
+.es-cal-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.3rem 0.65rem;
+  border-radius: 20px;
+  white-space: nowrap;
+  width: fit-content;
+  letter-spacing: 0.01em;
+}
+
+.es-cal-status-badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.es-cal-status-badge.is-da-preparare {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.32);
+  color: #fbbf24;
+}
+
+.es-cal-status-badge.is-da-preparare .dot {
+  background: #f59e0b;
+  box-shadow: 0 0 6px rgba(245, 158, 11, 0.6);
+}
+
+.es-cal-status-badge.is-programmata {
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.32);
+  color: #38bdf8;
+}
+
+.es-cal-status-badge.is-programmata .dot {
+  background: #38bdf8;
+  box-shadow: 0 0 6px rgba(56, 189, 248, 0.6);
+}
+
+.es-cal-status-badge.is-disputata {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.32);
+  color: #34d399;
+}
+
+.es-cal-status-badge.is-disputata .dot {
+  background: #10b981;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+}
+
+/* Azioni Riga (Matita / Cestino On-Hover) */
+.es-cal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  opacity: 0.35;
+  transition: opacity 0.15s ease;
+}
+
+.es-cal-card:hover .es-cal-actions,
+.es-cal-actions:focus-within {
+  opacity: 1;
+}
+
+.es-cal-action-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #8da8bc;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 0;
+}
+
+.es-cal-action-btn.is-edit:hover {
+  color: #38bdf8;
+  border-color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+}
+
+.es-cal-action-btn.is-delete:hover {
+  color: #f87171;
+  border-color: #f87171;
+  background: rgba(239, 68, 68, 0.12);
+}
+
+/* Responsive Calendario per schermi medio-piccoli */
+@media (max-width: 1100px) {
+  .es-cal-card {
+    grid-template-columns: 75px 36px 1.8fr 1fr 1fr auto;
+  }
+}
+
+@media (max-width: 860px) {
+  .es-cal-card {
+    grid-template-columns: 75px 1fr auto;
+    gap: 10px;
+    padding: 0.75rem;
+  }
+  .es-cal-type-icon,
+  .es-cal-comp-badge {
+    display: none;
+  }
+  .es-cal-actions {
+    opacity: 1;
+  }
+}
+
+

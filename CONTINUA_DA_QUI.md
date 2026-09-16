@@ -3,7 +3,34 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Refine Tattica & Formazione: Header 3 Colonne, Selettore Modulo Luxury, Toolbar Uniformata & Spaziatura Campo (`TACTICREFINE1`):
+Ultimo aggiornamento: **2026-09-16** — Ridisegno Completo Macroarea Calendario Tecnico Luxury (`CALENDARLUX1`):
+1. **Header Sezione Professionale**:
+   - Rimosso completamente il testo tecnico di debug `(Tabelle: partite, allenamenti)`.
+   - Titolo pulito *"Calendario Tecnico Staff & Partite"* con sottotitolo descrittivo *"Pianificazione timeline gare ufficiali, sedute di allenamento e impegni operativi dello staff"*.
+   - Inserito il pulsante d'azione primario `+ Aggiungi Evento` (`#btn-add-cal-event`) in alto a destra coerente con lo stile luxury e "Salva Schema".
+2. **Barra Filtri Dedicata (`.es-cal-toolbar`)**:
+   - Gruppo toggle a tre stati: *Tutto (N)*, *Partite (N)*, *Allenamenti (N)* con pillole contatore dinamiche e stato attivo ciano sottile.
+   - Dropdown selettore mese (*Tutti i mesi*, *Settembre 2026*, *Ottobre 2026*, ecc.) popolato automaticamente dai mesi degli eventi memorizzati.
+3. **Timeline con Raggruppamento per Mese**:
+   - Inseriti divider temporali mese per mese (`.es-cal-month-divider`) con icona SVG Lucide del calendario e badge circolare ciano, trasformando la vecchia tabella in una vera e propria agenda/timeline stagionale.
+4. **Layout a Righe-Card Luxury (CSS Grid a Colonne Calibrate)**:
+   - Sostituita la tabella HTML grezza con righe-card spaziate e confortevoli (`.es-cal-card` con `grid-template-columns: 78px 40px minmax(220px, 2fr) minmax(130px, 1.1fr) minmax(140px, 1.2fr) 135px 68px`):
+     - **Bordo sinistro colorato 3.5px** per tipo evento: Ciano `#16b9ff` per Partite, Smeraldo `#10b981` per Allenamenti, Viola `#a855f7` per Amichevoli.
+     - **Mini box data stile agenda** (`.es-cal-datebox`): mese abbreviato (es. `SET`), giorno grande a contrasto elevato (es. `18`), orario sotto in ciano (`15:30`).
+     - **Icona circolare SVG**: pallone da calcio per gare, timer cronometro per sedute di allenamento.
+     - **Titolo e Note**: visualizzazione ordinata senza disallineamenti o sovrapposizioni.
+     - **Badge Competizione**: tag outline per Campionato, Coppa Italia, Seduta Campo, ecc.
+     - **Stadio / Luogo**: icona Pin mappa con denominazione impianto.
+     - **Badge di Stato Luxury**: stile "stato" desaturato con bordo sottile 1px e pallino pieno luminoso (*Da preparare* in ambra desaturato, *Programmata* in azzurro tenue, *Disputata* in verde smeraldo).
+     - **Azioni On-Hover**: pulsanti compatti di Modifica (matita) ed Eliminazione (cestino), puliti e discreti.
+5. **Funzionalità di Creazione, Modifica & Eliminazione**:
+   - Modale interattivo per creare o modificare qualsiasi evento con autocompletamento campi sportivi (`<datalist>`).
+   - Validazione anti-sovrapposizione oraria: blocco e notifica se esiste già un impegno per lo stesso staff alla stessa data e ora.
+   - Dialog di conferma preventiva prima dell'eliminazione.
+   - Persistenza automatica in `localStorage['elisee_coach_data']` (`calendarioEvents`) e aggiornamento reattivo istantaneo della UI.
+6. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_CALENDARLUX1`.
+
+Feature precedente: **Refine Tattica & Formazione: Header 3 Colonne, Selettore Modulo Luxury, Toolbar Uniformata & Spaziatura Campo (`TACTICREFINE1`):**
 1. **Zona 1 (Widget Header: Partita + Countdown + Seduta Odierna)**:
    - Risolto il disallineamento e rimosso il bordo stray sopra "MANCANO" con container a 3 colonne coerente (`1.25fr 1fr 1.25fr`) e `overflow: hidden; position: relative;` sul genitore.
    - Badge "Seduta odierna" desaturato in stile "stato" luxury (`rgba(16, 185, 129, 0.04)`, bordo sottile `1px solid rgba(16, 185, 129, 0.24)` e puntino verde pieno `7px #10b981` con glow discreto).

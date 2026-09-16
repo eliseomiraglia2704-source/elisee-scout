@@ -1120,7 +1120,8 @@
         activeTool: 'move',
         schemiSalvati: []
       },
-      boardPins: []
+      boardPins: [],
+      calendarioEvents: []
     };
 
     try {
@@ -1134,6 +1135,7 @@
         if (saved.tacticalBoard && typeof saved.tacticalBoard === 'object') base.tacticalBoard = saved.tacticalBoard;
         if (saved.selectedDossierMatchId) base.selectedDossierMatchId = saved.selectedDossierMatchId;
         if (saved.dossierByMatch) base.dossierByMatch = saved.dossierByMatch;
+        if (Array.isArray(saved.calendarioEvents)) base.calendarioEvents = saved.calendarioEvents;
       }
     } catch (_) {}
 
@@ -2490,30 +2492,566 @@
   }
 
   // ============================================================
-  // 6. SEZIONE CALENDARIO
+  // 6. SEZIONE CALENDARIO (TIMELINE LUXURY, RIGHE-CARD & FILTRI)
   // ============================================================
+  var CAMPI_SPORTIVI_SUGGERITI = [
+    'Stadio Pino Zaccheria (Foggia)',
+    'Campo Comunale Cerignola',
+    'Stadio Miramare (Manfredonia)',
+    'Stadio Ricciardelli (San Severo)',
+    'Centro Sportivo Foggia City - Campo 1',
+    'Centro Sportivo Foggia City - Palestra & GPS',
+    'Campo Antistadio Comunale',
+    'Palasport Cittadino'
+  ];
+
+  function parseEventDateHelper(dateStr, timeStr) {
+    var d = String(dateStr || '').trim();
+    var t = String(timeStr || '').trim() || '15:00';
+    var yyyy = '2026', mm = '09', dd = '18';
+
+    if (/^\d{4}-\d{2}-\d{2}/.test(d)) {
+      var parts = d.split('-');
+      yyyy = parts[0];
+      mm = parts[1];
+      dd = parts[2].slice(0, 2);
+    } else if (/^\d{2}\/\d{2}\/\d{4}/.test(d)) {
+      var slashParts = d.split('/');
+      dd = slashParts[0];
+      mm = slashParts[1];
+      yyyy = slashParts[2].slice(0, 4);
+    }
+
+    var mesiShort = ['GEN', 'FEB', 'MAR', 'APR', 'MAG', 'GIU', 'LUG', 'AGO', 'SET', 'OTT', 'NOV', 'DIC'];
+    var mesiFull = [
+      'Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
+      'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'
+    ];
+    var mIdx = parseInt(mm, 10) - 1;
+    if (mIdx < 0 || mIdx > 11) mIdx = 8;
+
+    return {
+      isoDate: yyyy + '-' + mm + '-' + dd,
+      dayStr: dd,
+      monthShort: mesiShort[mIdx],
+      monthLong: mesiFull[mIdx] + ' ' + yyyy,
+      monthKey: yyyy + '-' + mm,
+      timeStr: t.length === 5 ? t : (t.slice(0, 5) || '15:00')
+    };
+  }
+
+  function getInitCalendarEvents(data) {
+    if (Array.isArray(data.calendarioEvents) && data.calendarioEvents.length > 0) {
+      return data.calendarioEvents;
+    }
+
+    var baseEvents = [];
+    var clubName = data.clubName || 'Foggia City';
+
+    // 1. Partite note
+    if (Array.isArray(data.prossimeGare) && data.prossimeGare.length > 0) {
+      data.prossimeGare.forEach(function (g, idx) {
+        var parsed = parseEventDateHelper(g.data, '15:30');
+        baseEvents.push({
+          id: g.id || ('ev-match-' + idx),
+          tipo: 'partita',
+          titolo: clubName + ' vs ' + (g.avv || 'Avversario'),
+          avversario: g.avv || '',
+          data: parsed.isoDate,
+          ora: parsed.timeStr,
+          competizione: g.comp || 'Campionato',
+          luogo: g.stadio || 'Campo Comunale',
+          descrizione: 'Gara Ufficiale di ' + (g.comp || 'Campionato') + ' · Consegne tattiche anticipate.',
+          stato: g.status || (idx === 0 ? 'Da preparare' : 'Programmata')
+        });
+      });
+    }
+
+    // 2. Allenamenti noti
+    if (Array.isArray(data.trainingsList) && data.trainingsList.length > 0) {
+      data.trainingsList.forEach(function (tr, idx) {
+        var parsed = parseEventDateHelper(tr.data, tr.orario);
+        baseEvents.push({
+          id: tr.id || ('ev-tr-' + idx),
+          tipo: 'allenamento',
+          titolo: tr.tipo || 'Seduta di Campo',
+          avversario: '',
+          data: parsed.isoDate,
+          ora: parsed.timeStr,
+          competizione: 'Seduta Campo',
+          luogo: tr.luogo || 'Centro Sportivo',
+          descrizione: tr.desc || 'Seduta di preparazione tattica e carichi atletici.',
+          stato: 'Programmata'
+        });
+      });
+    }
+
+    // Fallback completo se nessun evento era pre-esistente
+    if (baseEvents.length === 0) {
+      baseEvents = [
+        {
+          id: 'ev-1',
+          tipo: 'partita',
+          titolo: clubName + ' vs Cerignola Nord',
+          avversario: 'Cerignola Nord',
+          data: '2026-09-18',
+          ora: '15:30',
+          competizione: 'Campionato',
+          luogo: 'Cerignola (Campo Comunale)',
+          descrizione: '1ª Giornata di Campionato · Consegne tattiche anticipate dal Mister.',
+          stato: 'Da preparare'
+        },
+        {
+          id: 'ev-2',
+          tipo: 'allenamento',
+          titolo: 'Seduta Tattica: Sviluppo Catene & Palle Inattive',
+          avversario: '',
+          data: '2026-09-21',
+          ora: '10:00',
+          competizione: 'Seduta Campo',
+          luogo: 'Centro Sportivo Foggia City - Campo 1',
+          descrizione: 'Lavoro per reparti, rifinitura palle inattive e monitoraggio GPS.',
+          stato: 'Programmata'
+        },
+        {
+          id: 'ev-3',
+          tipo: 'allenamento',
+          titolo: 'Rifinitura Pre-Gara & Velocità di Reazione',
+          avversario: '',
+          data: '2026-09-24',
+          ora: '15:00',
+          competizione: 'Rifinitura Tattica',
+          luogo: 'Centro Sportivo Foggia City - Campo 1',
+          descrizione: 'Attivazione neuromuscolare, torello rapido e 11 contro 11 a tema.',
+          stato: 'Programmata'
+        },
+        {
+          id: 'ev-4',
+          tipo: 'partita',
+          titolo: clubName + ' vs Manfredonia Calcio',
+          avversario: 'Manfredonia Calcio',
+          data: '2026-09-25',
+          ora: '15:30',
+          competizione: 'Campionato',
+          luogo: 'Stadio Pino Zaccheria (Foggia)',
+          descrizione: '2ª Giornata di Campionato · Gara casalinga.',
+          stato: 'Programmata'
+        },
+        {
+          id: 'ev-5',
+          tipo: 'partita',
+          titolo: clubName + ' vs San Severo Team',
+          avversario: 'San Severo Team',
+          data: '2026-10-02',
+          ora: '20:30',
+          competizione: 'Coppa Italia',
+          luogo: 'Stadio Ricciardelli (San Severo)',
+          descrizione: 'Turno eliminatorio di Coppa Italia in notturna.',
+          stato: 'Programmata'
+        },
+        {
+          id: 'ev-6',
+          tipo: 'allenamento',
+          titolo: 'Scarico Muscolare, Terapia & Analisi Video',
+          avversario: '',
+          data: '2026-10-05',
+          ora: '10:30',
+          competizione: 'Palestra & Video',
+          luogo: 'Centro Sportivo Foggia City - Palestra & GPS',
+          descrizione: 'Riatletizzazione post-partita e debriefing con Match Analyst.',
+          stato: 'Programmata'
+        }
+      ];
+    }
+
+    data.calendarioEvents = baseEvents;
+    saveCoachData(data);
+    return baseEvents;
+  }
+
   function renderCalendario(data) {
-    var hasEvents = (data.prossimeGare && data.prossimeGare.length) || (data.trainingsList && data.trainingsList.length);
+    var allEvents = getInitCalendarEvents(data);
+
+    // Ordinamento cronologico
+    allEvents.sort(function (a, b) {
+      var dateComp = String(a.data || '').localeCompare(String(b.data || ''));
+      if (dateComp !== 0) return dateComp;
+      return String(a.ora || '').localeCompare(String(b.ora || ''));
+    });
+
+    var activeFilter = data._calFilterType || 'all';
+    var activeMonth = data._calFilterMonth || 'all';
+
+    // Calcolo contatori
+    var countTotal = allEvents.length;
+    var countMatches = allEvents.filter(function (e) { return e.tipo === 'partita' || e.tipo === 'amichevole'; }).length;
+    var countTrainings = allEvents.filter(function (e) { return e.tipo === 'allenamento'; }).length;
+
+    // Estrazione mesi unici per il dropdown
+    var monthsMap = {};
+    allEvents.forEach(function (e) {
+      var p = parseEventDateHelper(e.data, e.ora);
+      if (!monthsMap[p.monthKey]) {
+        monthsMap[p.monthKey] = p.monthLong;
+      }
+    });
+    var monthsKeys = Object.keys(monthsMap).sort();
+
+    // Filtro attivo
+    var filteredEvents = allEvents.filter(function (e) {
+      var passType = true;
+      if (activeFilter === 'partita') passType = (e.tipo === 'partita' || e.tipo === 'amichevole');
+      if (activeFilter === 'allenamento') passType = (e.tipo === 'allenamento');
+
+      var passMonth = true;
+      if (activeMonth !== 'all') {
+        var p = parseEventDateHelper(e.data, e.ora);
+        passMonth = (p.monthKey === activeMonth);
+      }
+
+      return passType && passMonth;
+    });
+
+    var monthOptionsHtml = '<option value="all" ' + (activeMonth === 'all' ? 'selected' : '') + '>Tutti i mesi (' + countTotal + ')</option>' +
+      monthsKeys.map(function (mKey) {
+        return '<option value="' + mKey + '" ' + (activeMonth === mKey ? 'selected' : '') + '>' + esc(monthsMap[mKey]) + '</option>';
+      }).join('');
+
+    // Costruzione lista raggruppata per mese con timeline
+    var lastMonthKey = null;
+    var eventsListHtml = '';
+
+    if (filteredEvents.length === 0) {
+      eventsListHtml =
+        '<div style="text-align:center; padding:3.5rem 1.5rem; background:rgba(7,21,34,0.5); border:1px dashed #12344a; border-radius:10px; color:#8da8bc;">' +
+          '<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#16b9ff" stroke-width="1.5" style="opacity:0.6; margin-bottom:0.75rem;"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
+          '<div style="font-size:0.95rem; font-weight:800; color:#f3f8fc;">Nessun evento corrispondente ai filtri</div>' +
+          '<div style="font-size:0.76rem; margin-top:0.25rem;">Modifica il filtro per tipo o seleziona un altro mese dal selettore in alto.</div>' +
+        '</div>';
+    } else {
+      filteredEvents.forEach(function (ev) {
+        var parsed = parseEventDateHelper(ev.data, ev.ora);
+
+        // Separatore timeline per ogni cambio di mese
+        if (parsed.monthKey !== lastMonthKey) {
+          lastMonthKey = parsed.monthKey;
+          eventsListHtml +=
+            '<div class="es-cal-month-divider">' +
+              '<div class="es-cal-month-badge">' +
+                '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
+                '<span>' + esc(parsed.monthLong) + '</span>' +
+              '</div>' +
+              '<div class="es-cal-month-line"></div>' +
+            '</div>';
+        }
+
+        var isMatch = ev.tipo === 'partita' || ev.tipo === 'amichevole';
+        var typeClass = 'is-type-' + (ev.tipo || 'partita');
+
+        // Icona tipo evento (SVG Lucide)
+        var typeIconSvg = isMatch
+          ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" title="Gara / Partita"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg>'
+          : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" title="Seduta di Allenamento"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5"/><path d="M12 5V2"/><path d="M10 2h4"/></svg>';
+
+        // Badge Stato Luxury
+        var st = String(ev.stato || 'Programmata').trim().toLowerCase();
+        var statusBadgeClass = 'is-programmata';
+        var statusLabel = 'Programmata';
+        if (st === 'da preparare') {
+          statusBadgeClass = 'is-da-preparare';
+          statusLabel = 'Da preparare';
+        } else if (st === 'disputata' || st === 'completata') {
+          statusBadgeClass = 'is-disputata';
+          statusLabel = 'Disputata';
+        }
+
+        eventsListHtml +=
+          '<div class="es-cal-card ' + typeClass + '" data-event-id="' + esc(ev.id) + '">' +
+            // 1. Box data stile agenda
+            '<div class="es-cal-datebox">' +
+              '<span class="month">' + esc(parsed.monthShort) + '</span>' +
+              '<span class="day">' + esc(parsed.dayStr) + '</span>' +
+              '<span class="time">' + esc(parsed.timeStr) + '</span>' +
+            '</div>' +
+
+            // 2. Icona circolare tipo evento
+            '<div class="es-cal-type-icon">' +
+              typeIconSvg +
+            '</div>' +
+
+            // 3. Info principali: titolo e dettagli
+            '<div class="es-cal-main-info">' +
+              '<div class="es-cal-main-title" title="' + esc(ev.titolo) + '">' + esc(ev.titolo) + '</div>' +
+              '<div class="es-cal-main-desc">' + esc(ev.descrizione || 'Nessuna nota aggiuntiva') + '</div>' +
+            '</div>' +
+
+            // 4. Competizione / Categoria
+            '<div class="es-cal-comp-badge">' +
+              '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#16b9ff" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>' +
+              '<span>' + esc(ev.competizione || 'Campionato') + '</span>' +
+            '</div>' +
+
+            // 5. Stadio / Luogo con Icona Pin
+            '<div class="es-cal-venue" title="' + esc(ev.luogo || 'Stadio Comunale') + '">' +
+              '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' +
+              '<span>' + esc(ev.luogo || 'Stadio Comunale') + '</span>' +
+            '</div>' +
+
+            // 6. Badge Stato Luxury
+            '<div class="es-cal-status-badge ' + statusBadgeClass + '">' +
+              '<span class="dot"></span>' +
+              '<span>' + esc(statusLabel) + '</span>' +
+            '</div>' +
+
+            // 7. Azioni On-Hover: Modifica & Elimina
+            '<div class="es-cal-actions">' +
+              '<button type="button" class="es-cal-action-btn is-edit" data-cal-edit="' + esc(ev.id) + '" title="Modifica evento">' +
+                '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>' +
+              '</button>' +
+              '<button type="button" class="es-cal-action-btn is-delete" data-cal-delete="' + esc(ev.id) + '" title="Elimina evento">' +
+                '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>' +
+              '</button>' +
+            '</div>' +
+          '</div>';
+      });
+    }
+
     return (
       '<div class="es-cos-panel-card">' +
-        '<div class="es-cos-panel-head">' +
-          '<span class="es-cos-panel-title">Calendario Tecnico Staff & Partite (Tabelle: partite, allenamenti)</span>' +
+        // HEADER DELLA SEZIONE
+        '<div class="es-cal-panel-header">' +
+          '<div class="es-cal-header-titles">' +
+            '<h3 class="es-cal-title-main">' +
+              '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16b9ff" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
+              'Calendario Tecnico Staff & Partite' +
+            '</h3>' +
+            '<p class="es-cal-subtitle">Pianificazione timeline gare ufficiali, sedute di allenamento e impegni operativi dello staff</p>' +
+          '</div>' +
+          '<button type="button" class="es-btn-cos-primary" id="btn-add-cal-event" style="display:inline-flex; align-items:center; gap:6px; font-size:0.8rem; padding:0.5rem 1rem;">' +
+            '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>' +
+            '<span>+ Aggiungi Evento</span>' +
+          '</button>' +
         '</div>' +
-        '<table class="es-cos-table-compact">' +
-          '<thead><tr><th>Data & Orario</th><th>Evento</th><th>Competizione / Categoria</th><th>Stadio / Luogo</th><th>Stato</th></tr></thead>' +
-          '<tbody>' +
-            (hasEvents ? (
-              (data.prossimeGare || []).map(function (g) {
-                return '<tr><td><b>' + esc(g.data) + '</b></td><td>Partita: ' + esc(data.clubName) + ' vs ' + esc(g.avv) + '</td><td><span class="es-cos-badge-pill is-blue">' + esc(g.comp) + '</span></td><td>' + esc(g.stadio) + '</td><td><span class="es-cos-badge-pill is-green">' + esc(g.status) + '</span></td></tr>';
-              }).join('') +
-              (data.trainingsList || []).map(function (t) {
-                return '<tr><td><b>' + esc(t.data) + ' ' + esc(t.orario) + '</b></td><td>Allenamento: ' + esc(t.tipo) + '</td><td><span class="es-cos-badge-pill is-warn">Seduta Campo</span></td><td>' + esc(t.luogo) + '</td><td><span class="es-cos-badge-pill is-green">Programmata</span></td></tr>';
-              }).join('')
-            ) : '<tr><td colspan="5" style="text-align:center; padding:2.5rem; color:#8da8bc;">Nessun evento o partita in programma registrato a database.</td></tr>') +
-          '</tbody>' +
-        '</table>' +
+
+        // BARRA DEI FILTRI & SELETTORE MESE
+        '<div class="es-cal-toolbar">' +
+          '<div class="es-cal-filter-group">' +
+            '<button type="button" class="es-cal-filter-btn ' + (activeFilter === 'all' ? 'is-active' : '') + '" data-cal-filter="all">' +
+              '<span>Tutto</span>' +
+              '<span class="es-cal-filter-count">' + countTotal + '</span>' +
+            '</button>' +
+            '<button type="button" class="es-cal-filter-btn ' + (activeFilter === 'partita' ? 'is-active' : '') + '" data-cal-filter="partita">' +
+              '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>' +
+              '<span>Partite</span>' +
+              '<span class="es-cal-filter-count">' + countMatches + '</span>' +
+            '</button>' +
+            '<button type="button" class="es-cal-filter-btn ' + (activeFilter === 'allenamento' ? 'is-active' : '') + '" data-cal-filter="allenamento">' +
+              '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5"/></svg>' +
+              '<span>Allenamenti</span>' +
+              '<span class="es-cal-filter-count">' + countTrainings + '</span>' +
+            '</button>' +
+          '</div>' +
+
+          '<div class="es-cal-month-select-wrap">' +
+            '<label for="sel-cal-month" style="font-size:0.75rem; font-weight:700; color:#8da8bc;">Filtra Mese:</label>' +
+            '<select id="sel-cal-month" class="es-cal-month-select">' +
+              monthOptionsHtml +
+            '</select>' +
+          '</div>' +
+        '</div>' +
+
+        // TIMELINE RIGHE-CARD DEGLI EVENTI
+        '<div class="es-cal-events-list">' +
+          eventsListHtml +
+        '</div>' +
       '</div>'
     );
+  }
+
+  function openCalendarEventModal(data, editId) {
+    var allEvents = getInitCalendarEvents(data);
+    var editingEvent = null;
+    if (editId) {
+      editingEvent = allEvents.find(function (e) { return e.id === editId; });
+    }
+
+    var isEdit = !!editingEvent;
+    var defaultDate = isEdit ? editingEvent.data : new Date().toISOString().slice(0, 10);
+    var defaultTime = isEdit ? editingEvent.ora : '15:30';
+    var defaultTipo = isEdit ? editingEvent.tipo : 'partita';
+    var defaultTitolo = isEdit ? editingEvent.titolo : '';
+    var defaultComp = isEdit ? editingEvent.competizione : 'Campionato';
+    var defaultLuogo = isEdit ? editingEvent.luogo : 'Campo Comunale';
+    var defaultStato = isEdit ? editingEvent.stato : 'Programmata';
+    var defaultDesc = isEdit ? editingEvent.descrizione : '';
+
+    var datalistHtml = '<datalist id="campi-suggeriti-list">' +
+      CAMPI_SPORTIVI_SUGGERITI.map(function (c) {
+        return '<option value="' + esc(c) + '">';
+      }).join('') +
+    '</datalist>';
+
+    var formHtml =
+      '<form id="form-calendar-event" style="display:flex; flex-direction:column; gap:1rem;">' +
+        datalistHtml +
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">' +
+          '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
+            '<label style="font-size:0.75rem; font-weight:800; color:#8da8bc;">Tipologia Evento *</label>' +
+            '<select id="cal-form-tipo" required style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.82rem;">' +
+              '<option value="partita" ' + (defaultTipo === 'partita' ? 'selected' : '') + '>Partita Ufficiale</option>' +
+              '<option value="allenamento" ' + (defaultTipo === 'allenamento' ? 'selected' : '') + '>Seduta di Allenamento</option>' +
+              '<option value="amichevole" ' + (defaultTipo === 'amichevole' ? 'selected' : '') + '>Amichevole / Test Match</option>' +
+            '</select>' +
+          '</div>' +
+          '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
+            '<label style="font-size:0.75rem; font-weight:800; color:#8da8bc;">Stato Evento *</label>' +
+            '<select id="cal-form-stato" required style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.82rem;">' +
+              '<option value="Da preparare" ' + (defaultStato === 'Da preparare' ? 'selected' : '') + '>Da preparare</option>' +
+              '<option value="Programmata" ' + (defaultStato === 'Programmata' ? 'selected' : '') + '>Programmata</option>' +
+              '<option value="Disputata" ' + (defaultStato === 'Disputata' ? 'selected' : '') + '>Disputata</option>' +
+            '</select>' +
+          '</div>' +
+        '</div>' +
+
+        '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
+          '<label style="font-size:0.75rem; font-weight:800; color:#8da8bc;">Titolo Evento / Avversario *</label>' +
+          '<input type="text" id="cal-form-titolo" value="' + esc(defaultTitolo) + '" required placeholder="Es. Foggia City vs Cerignola Nord oppure Rifinitura Tattica" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.85rem;">' +
+        '</div>' +
+
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">' +
+          '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
+            '<label style="font-size:0.75rem; font-weight:800; color:#8da8bc;">Data *</label>' +
+            '<input type="date" id="cal-form-data" value="' + esc(defaultDate) + '" required style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.82rem;">' +
+          '</div>' +
+          '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
+            '<label style="font-size:0.75rem; font-weight:800; color:#8da8bc;">Orario *</label>' +
+            '<input type="time" id="cal-form-ora" value="' + esc(defaultTime) + '" required style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.82rem;">' +
+          '</div>' +
+        '</div>' +
+
+        '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">' +
+          '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
+            '<label style="font-size:0.75rem; font-weight:800; color:#8da8bc;">Competizione / Categoria *</label>' +
+            '<select id="cal-form-comp" required style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.82rem;">' +
+              '<option value="Campionato" ' + (defaultComp === 'Campionato' ? 'selected' : '') + '>Campionato</option>' +
+              '<option value="Coppa Italia" ' + (defaultComp === 'Coppa Italia' || defaultComp === 'Coppa' ? 'selected' : '') + '>Coppa Italia</option>' +
+              '<option value="Amichevole" ' + (defaultComp === 'Amichevole' ? 'selected' : '') + '>Amichevole</option>' +
+              '<option value="Seduta Campo" ' + (defaultComp === 'Seduta Campo' ? 'selected' : '') + '>Seduta Campo</option>' +
+              '<option value="Rifinitura Tattica" ' + (defaultComp === 'Rifinitura Tattica' ? 'selected' : '') + '>Rifinitura Tattica</option>' +
+              '<option value="Palestra & Video" ' + (defaultComp === 'Palestra & Video' ? 'selected' : '') + '>Palestra & Video</option>' +
+            '</select>' +
+          '</div>' +
+          '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
+            '<label style="font-size:0.75rem; font-weight:800; color:#8da8bc;">Stadio / Luogo</label>' +
+            '<input type="text" id="cal-form-luogo" list="campi-suggeriti-list" value="' + esc(defaultLuogo) + '" placeholder="Es. Campo Comunale Cerignola" style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.82rem;">' +
+          '</div>' +
+        '</div>' +
+
+        '<div style="display:flex; flex-direction:column; gap:0.35rem;">' +
+          '<label style="font-size:0.75rem; font-weight:800; color:#8da8bc;">Descrizione / Note Tecniche</label>' +
+          '<textarea id="cal-form-desc" rows="2" placeholder="Indicazioni per la squadra, orario ritrovo o programma..." style="background:#071522; border:1px solid #12344a; color:#f3f8fc; padding:0.55rem; border-radius:6px; font-size:0.82rem;">' + esc(defaultDesc) + '</textarea>' +
+        '</div>' +
+
+        '<div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.5rem;">' +
+          '<button type="button" class="es-btn-cos-sec" id="btn-close-modal">Annulla</button>' +
+          '<button type="submit" class="es-btn-cos-primary">' + (isEdit ? 'Salva Modifiche' : 'Crea Evento') + '</button>' +
+        '</div>' +
+      '</form>';
+
+    openModal(isEdit ? 'Modifica Evento Calendario' : 'Aggiungi Nuovo Evento in Calendario', formHtml, '580px');
+
+    var formEl = document.getElementById('form-calendar-event');
+    if (formEl) {
+      formEl.onsubmit = function (e) {
+        e.preventDefault();
+
+        var inTipo = document.getElementById('cal-form-tipo').value;
+        var inStato = document.getElementById('cal-form-stato').value;
+        var inTitolo = document.getElementById('cal-form-titolo').value.trim();
+        var inData = document.getElementById('cal-form-data').value;
+        var inOra = document.getElementById('cal-form-ora').value;
+        var inComp = document.getElementById('cal-form-comp').value;
+        var inLuogo = document.getElementById('cal-form-luogo').value.trim() || 'Stadio Comunale';
+        var inDesc = document.getElementById('cal-form-desc').value.trim();
+
+        if (!inData || !inOra || !inTitolo) {
+          alert('Compila tutti i campi obbligatori (Data, Orario e Titolo).');
+          return;
+        }
+
+        // VALIDAZIONE ANTI-SOVRAPPOSIZIONE ORARIA
+        var overlap = allEvents.find(function (ev) {
+          return ev.id !== editId && ev.data === inData && ev.ora === inOra;
+        });
+        if (overlap) {
+          alert('Attenzione: è già programmato l\'evento "' + overlap.titolo + '" il ' + inData + ' alle ore ' + inOra + '. Non sono ammessi due impegni sovrapposti nello stesso orario per lo stesso staff tecnico.');
+          return;
+        }
+
+        if (isEdit) {
+          editingEvent.tipo = inTipo;
+          editingEvent.stato = inStato;
+          editingEvent.titolo = inTitolo;
+          editingEvent.data = inData;
+          editingEvent.ora = inOra;
+          editingEvent.competizione = inComp;
+          editingEvent.luogo = inLuogo;
+          editingEvent.descrizione = inDesc;
+        } else {
+          var newEvent = {
+            id: 'ev-' + Date.now(),
+            tipo: inTipo,
+            stato: inStato,
+            titolo: inTitolo,
+            data: inData,
+            ora: inOra,
+            competizione: inComp,
+            luogo: inLuogo,
+            descrizione: inDesc
+          };
+          allEvents.unshift(newEvent);
+        }
+
+        data.calendarioEvents = allEvents;
+        saveCoachData(data);
+        closeModal();
+
+        var container = document.getElementById('es-cos-active-content');
+        if (container && activeTab === 'calendario') {
+          container.innerHTML = renderCalendario(data);
+          bindAllEvents();
+        }
+
+        if (window.showToast) {
+          window.showToast(isEdit ? 'Evento aggiornato con successo!' : 'Nuovo evento aggiunto al calendario!', 'success');
+        }
+      };
+    }
+  }
+
+  function deleteCalendarEvent(data, evId) {
+    var allEvents = getInitCalendarEvents(data);
+    var targetIdx = allEvents.findIndex(function (e) { return e.id === evId; });
+    if (targetIdx === -1) return;
+
+    var targetName = allEvents[targetIdx].titolo || 'questo evento';
+    if (!confirm('Sei sicuro di voler eliminare dal calendario: "' + targetName + '"?')) {
+      return;
+    }
+
+    allEvents.splice(targetIdx, 1);
+    data.calendarioEvents = allEvents;
+    saveCoachData(data);
+
+    var container = document.getElementById('es-cos-active-content');
+    if (container && activeTab === 'calendario') {
+      container.innerHTML = renderCalendario(data);
+      bindAllEvents();
+    }
+
+    if (window.showToast) {
+      window.showToast('Evento eliminato dal calendario', 'info');
+    }
   }
 
   // ============================================================
@@ -3348,6 +3886,56 @@
       btn.onclick = function () {
         var trId = btn.getAttribute('data-upload-gps-tr') || 'seduta-campo';
         openStaffUploadModal('gps', trId, 'allenamento', 'Carica File GPS per Seduta');
+      };
+    });
+
+    // ============================================================
+    // GESTIONE EVENTI CALENDARIO TECNICO LUXURY
+    // ============================================================
+    var btnAddCalEvent = mount.querySelector('#btn-add-cal-event');
+    if (btnAddCalEvent) {
+      btnAddCalEvent.onclick = function () {
+        openCalendarEventModal(data);
+      };
+    }
+
+    mount.querySelectorAll('.es-cal-filter-btn').forEach(function (btn) {
+      btn.onclick = function () {
+        var fType = btn.getAttribute('data-cal-filter') || 'all';
+        data._calFilterType = fType;
+        var container = document.getElementById('es-cos-active-content');
+        if (container && activeTab === 'calendario') {
+          container.innerHTML = renderCalendario(data);
+          bindAllEvents();
+        }
+      };
+    });
+
+    var selCalMonth = mount.querySelector('#sel-cal-month');
+    if (selCalMonth) {
+      selCalMonth.onchange = function () {
+        data._calFilterMonth = selCalMonth.value;
+        var container = document.getElementById('es-cos-active-content');
+        if (container && activeTab === 'calendario') {
+          container.innerHTML = renderCalendario(data);
+          bindAllEvents();
+        }
+      };
+    }
+
+    mount.querySelectorAll('[data-cal-edit]').forEach(function (btn) {
+      btn.onclick = function (e) {
+        e.stopPropagation();
+        var evId = btn.getAttribute('data-cal-edit');
+        openCalendarEventModal(data, evId);
+      };
+    });
+
+    mount.querySelectorAll('[data-cal-delete]').forEach(function (btn) {
+      btn.onclick = function (e) {
+        e.stopPropagation();
+        var evId = btn.getAttribute('data-cal-delete');
+        deleteCalendarEvent(data, evId);
       };
     });
 
