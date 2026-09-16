@@ -2084,44 +2084,53 @@
               '</select>' +
             '</div>' +
           '</div>' +
-          // BOTTONI AZIONE & STORICO SCHEMI
+            // BOTTONI AZIONE & STORICO SCHEMI
           '<div style="display:flex; gap:0.5rem; align-items:center; flex-wrap:wrap;">' +
             '<select id="sel-board-saved-schemes" style="background:#071522; border:1px solid #12344a; color:#8da8bc; font-size:0.75rem; padding:0.45rem 0.65rem; border-radius:6px; max-width:210px; cursor:pointer; outline:none;">' +
               schemiOptions +
             '</select>' +
-            '<button type="button" class="es-btn-cos-sec" id="btn-sync-board-xi" title="Importa XI Ufficiale confermato e modulo" style="display:inline-flex; align-items:center; gap:4px; font-size:0.75rem;">' +
-              '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>' +
-              'Sincronizza da XI Ufficiale' +
+            '<button type="button" class="es-btn-cos-sec" id="btn-sync-board-xi" title="Importa XI Ufficiale confermato e modulo" style="display:inline-flex; align-items:center; gap:6px; font-size:0.75rem;">' +
+              '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>' +
+              '<span>Sincronizza da XI Ufficiale</span>' +
             '</button>' +
-            '<button type="button" class="es-btn-cos-sec" id="btn-reset-board" style="font-size:0.75rem;">Reset Modulo</button>' +
-            '<button type="button" class="es-btn-cos-primary" id="btn-save-board-scheme" style="font-size:0.75rem; padding:0.45rem 0.85rem;">' +
-              '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>' +
-              'Salva Schema' +
+            '<button type="button" class="es-btn-cos-sec" id="btn-reset-board" style="display:inline-flex; align-items:center; gap:6px; font-size:0.75rem;" title="Ripristina posizioni base del modulo">' +
+              '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>' +
+              '<span>Reset Modulo</span>' +
+            '</button>' +
+            '<button type="button" class="es-btn-cos-primary" id="btn-save-board-scheme" style="display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; padding:0.45rem 0.85rem;" title="Salva schema tattico attuale">' +
+              '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>' +
+              '<span>Salva Schema</span>' +
             '</button>' +
           '</div>' +
         '</div>' +
 
-        // TOOLBAR STRUMENTI TATTICI
+        // TOOLBAR STRUMENTI TATTICI (ICONE SVG LUCIDE)
         '<div class="es-board-toolbar">' +
           '<span style="font-size:0.72rem; font-weight:800; color:#8da8bc; text-transform:uppercase; margin-right:4px;">Strumenti Tattici:</span>' +
           '<button type="button" class="es-board-tool-btn ' + (activeTool === 'move' ? 'is-active' : '') + '" data-board-tool="move" title="Trascina liberamente calciatori e pallone">' +
-            '🖐️ <span>Muovi</span>' +
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 9 2 12 5 15"/><polyline points="9 5 12 2 15 5"/><polyline points="15 19 12 22 9 19"/><polyline points="19 9 22 12 19 15"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>' +
+            '<span>Muovi</span>' +
           '</button>' +
-          '<button type="button" class="es-board-tool-btn ' + (activeTool === 'arrow-run' ? 'is-active' : '') + '" data-board-tool="arrow-run" title="Traccia freccia tratteggiata di corsa / inserimento">' +
-            '↗️ <span>Freccia Corsa</span>' +
+          '<button type="button" class="es-board-tool-btn ' + (activeTool === 'arrow-run' ? 'is-active' : '') + '" data-board-tool="arrow-run" title="Traccia freccia continua di corsa / movimento atleta">' +
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>' +
+            '<span>Freccia Corsa</span>' +
           '</button>' +
-          '<button type="button" class="es-board-tool-btn ' + (activeTool === 'arrow-pass' ? 'is-active' : '') + '" data-board-tool="arrow-pass" title="Traccia freccia continua di passaggio">' +
-            '⚽ <span>Passaggio</span>' +
+          '<button type="button" class="es-board-tool-btn ' + (activeTool === 'arrow-pass' ? 'is-active' : '') + '" data-board-tool="arrow-pass" title="Traccia freccia tratteggiata di passaggio pallone">' +
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>' +
+            '<span>Passaggio</span>' +
           '</button>' +
-          '<button type="button" class="es-board-tool-btn ' + (activeTool === 'zone' ? 'is-active' : '') + '" data-board-tool="zone" title="Evidenzia zona di pressing o superiorità">' +
-            '🔲 <span>Zona Pressing</span>' +
+          '<button type="button" class="es-board-tool-btn ' + (activeTool === 'zone' ? 'is-active' : '') + '" data-board-tool="zone" title="Evidenzia zona di pressing o superiorità numerica">' +
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' +
+            '<span>Zona Pressing</span>' +
           '</button>' +
           '<div style="margin-left:auto; display:flex; gap:6px;">' +
-            '<button type="button" class="es-board-tool-btn" id="btn-undo-drawing" title="Annulla ultimo tracciato">' +
-              '↩️ <span>Annulla Tratto</span>' +
+            '<button type="button" class="es-board-tool-btn" id="btn-undo-drawing" title="Annulla ultimo tracciato (Ctrl+Z)">' +
+              '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11"/></svg>' +
+              '<span>Annulla Tratto</span>' +
             '</button>' +
             '<button type="button" class="es-board-tool-btn" id="btn-clear-drawings" title="Rimuovi tutte le frecce e zone">' +
-              '🧹 <span>Pulisci Tracciati</span>' +
+              '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></svg>' +
+              '<span>Pulisci Tracciati</span>' +
             '</button>' +
           '</div>' +
         '</div>' +
@@ -2168,16 +2177,16 @@
 
   function renderTacticalSvgLayer(arrows, zones) {
     var arrowsHtml = (arrows || []).map(function (a) {
-      var isDash = a.tipo === 'corsa';
-      var col = a.colore || (isDash ? '#ffd21a' : '#16b9ff');
-      var markerId = isDash ? 'arr-marker-yellow' : 'arr-marker-blue';
-      return '<line x1="' + a.x1 + '%" y1="' + a.y1 + '%" x2="' + a.x2 + '%" y2="' + a.y2 + '%" stroke="' + col + '" stroke-width="3" stroke-linecap="round" marker-end="url(#' + markerId + ')" ' + (isDash ? 'stroke-dasharray="6,4"' : '') + ' />';
+      var isRun = a.tipo === 'corsa';
+      var col = a.colore || (isRun ? '#ffd21a' : '#38bdf8');
+      var markerId = isRun ? 'arr-marker-yellow' : 'arr-marker-blue';
+      return '<line x1="' + a.x1 + '%" y1="' + a.y1 + '%" x2="' + a.x2 + '%" y2="' + a.y2 + '%" stroke="' + col + '" stroke-width="3" stroke-linecap="round" marker-end="url(#' + markerId + ')" ' + (isRun ? '' : 'stroke-dasharray="6,4"') + ' />';
     }).join('');
 
     var zonesHtml = (zones || []).map(function (z) {
       return (
         '<rect x="' + z.x + '%" y="' + z.y + '%" width="' + z.w + '%" height="' + z.h + '%" fill="rgba(239,68,68,0.22)" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" rx="6"/>' +
-        '<text x="' + (z.x + z.w / 2) + '%" y="' + (z.y + z.h / 2) + '%" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" dominant-baseline="central" style="filter:drop-shadow(0 1px 2px #000);">' + esc(z.label || 'Zona Pressing') + '</text>'
+        '<text x="' + (z.x + z.w / 2) + '%" y="' + (z.y + z.h / 2) + '%" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" dominant-baseline="central" style="filter:drop-shadow(0 1px 2px #000); pointer-events:none;">' + esc(z.label || 'Zona Pressing') + '</text>'
       );
     }).join('');
 
@@ -2185,7 +2194,7 @@
       '<svg id="es-tactical-drawings-svg" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:15;">' +
         '<defs>' +
           '<marker id="arr-marker-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">' +
-            '<path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#16b9ff" />' +
+            '<path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#38bdf8" />' +
           '</marker>' +
           '<marker id="arr-marker-yellow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">' +
             '<path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#ffd21a" />' +
@@ -2193,6 +2202,7 @@
         '</defs>' +
         zonesHtml +
         arrowsHtml +
+        '<g id="es-tactical-live-preview"></g>' +
       '</svg>'
     );
   }
@@ -3143,7 +3153,15 @@
     var btnSyncBoardXi = mount.querySelector('#btn-sync-board-xi');
     if (btnSyncBoardXi) {
       btnSyncBoardXi.onclick = function () {
+        var tb = data.tacticalBoard || {};
+        var hasDrawings = (tb.arrows && tb.arrows.length > 0) || (tb.zones && tb.zones.length > 0);
+        if (hasDrawings) {
+          if (!confirm('Sincronizzare dall\'XI Ufficiale sovrascriverà la lavagna e resetterà i tracciati non salvati. Continuare?')) return;
+        }
         syncBoardFromOfficialXI(data);
+        tb.arrows = [];
+        tb.zones = [];
+        saveCoachData(data);
         var container = document.getElementById('es-cos-active-content');
         if (container && activeTab === 'tattica') {
           container.innerHTML = renderTattica(data);
@@ -3288,23 +3306,47 @@
       };
     });
 
+    function doUndoTacticalDrawing() {
+      var tb = data.tacticalBoard;
+      if (!tb) return;
+      var hasArrows = tb.arrows && tb.arrows.length > 0;
+      var hasZones = tb.zones && tb.zones.length > 0;
+      if (!hasArrows && !hasZones) return;
+
+      var lastArrTime = hasArrows ? (tb.arrows[tb.arrows.length - 1].createdAt || 0) : -1;
+      var lastZoneTime = hasZones ? (tb.zones[tb.zones.length - 1].createdAt || 0) : -1;
+
+      if (lastArrTime >= lastZoneTime) {
+        tb.arrows.pop();
+      } else {
+        tb.zones.pop();
+      }
+      saveCoachData(data);
+      var container = document.getElementById('es-cos-active-content');
+      if (container && activeTab === 'tattica') {
+        container.innerHTML = renderTattica(data);
+        bindAllEvents();
+      }
+    }
+
     var btnUndoDraw = mount.querySelector('#btn-undo-drawing');
     if (btnUndoDraw) {
-      btnUndoDraw.onclick = function () {
-        var tb = data.tacticalBoard;
-        if (!tb) return;
-        if (tb.arrows && tb.arrows.length) {
-          tb.arrows.pop();
-        } else if (tb.zones && tb.zones.length) {
-          tb.zones.pop();
+      btnUndoDraw.onclick = doUndoTacticalDrawing;
+    }
+
+    // Scorciatoia da tastiera globale Ctrl+Z per Undo Tratto
+    if (!window._esTacticalKeyBound) {
+      window._esTacticalKeyBound = true;
+      window.addEventListener('keydown', function (e) {
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'z' || e.key === 'Z') && !e.shiftKey) {
+          if (activeTab === 'tattica') {
+            var tag = (document.activeElement && document.activeElement.tagName) || '';
+            if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+            e.preventDefault();
+            doUndoTacticalDrawing();
+          }
         }
-        saveCoachData(data);
-        var container = document.getElementById('es-cos-active-content');
-        if (container && activeTab === 'tattica') {
-          container.innerHTML = renderTattica(data);
-          bindAllEvents();
-        }
-      };
+      });
     }
 
     var btnClearDraw = mount.querySelector('#btn-clear-drawings');
@@ -3347,7 +3389,7 @@
         };
       }
 
-      // Pointer down sui Pin
+      // Pointer down sui Pin (Calciatori e Palla)
       pitchEl.querySelectorAll('.es-tactical-pin-drag').forEach(function (pinEl) {
         pinEl.onpointerdown = function (e) {
           if (data.tacticalBoard && data.tacticalBoard.activeTool !== 'move') return;
@@ -3391,14 +3433,37 @@
         };
       });
 
-      // Pointer down per disegnare freccia o zona sul pitch
+      // Pointer down per disegnare freccia o zona sul pitch con anteprima live
       pitchEl.onpointerdown = function (e) {
         var curTool = (data.tacticalBoard && data.tacticalBoard.activeTool) || 'move';
         if (curTool === 'move') return;
         drawStart = getPitchCoords(e);
       };
 
+      pitchEl.onpointermove = function (e) {
+        if (!drawStart) return;
+        var curTool = (data.tacticalBoard && data.tacticalBoard.activeTool) || 'move';
+        if (curTool === 'move') return;
+        var drawEnd = getPitchCoords(e);
+        var previewG = document.getElementById('es-tactical-live-preview');
+        if (!previewG) return;
+        if (curTool === 'arrow-run' || curTool === 'arrow-pass') {
+          var isRun = curTool === 'arrow-run';
+          var col = isRun ? '#ffd21a' : '#38bdf8';
+          var mId = isRun ? 'arr-marker-yellow' : 'arr-marker-blue';
+          previewG.innerHTML = '<line x1="' + drawStart.x + '%" y1="' + drawStart.y + '%" x2="' + drawEnd.x + '%" y2="' + drawEnd.y + '%" stroke="' + col + '" stroke-width="3" stroke-linecap="round" marker-end="url(#' + mId + ')" ' + (isRun ? '' : 'stroke-dasharray="6,4"') + ' />';
+        } else if (curTool === 'zone') {
+          var zx = Math.min(drawStart.x, drawEnd.x);
+          var zy = Math.min(drawStart.y, drawEnd.y);
+          var zw = Math.max(2, Math.abs(drawEnd.x - drawStart.x));
+          var zh = Math.max(2, Math.abs(drawEnd.y - drawStart.y));
+          previewG.innerHTML = '<rect x="' + zx + '%" y="' + zy + '%" width="' + zw + '%" height="' + zh + '%" fill="rgba(239,68,68,0.22)" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,3" rx="6" />';
+        }
+      };
+
       pitchEl.onpointerup = function (e) {
+        var previewG = document.getElementById('es-tactical-live-preview');
+        if (previewG) previewG.innerHTML = '';
         if (!drawStart) return;
         var curTool = (data.tacticalBoard && data.tacticalBoard.activeTool) || 'move';
         if (curTool === 'move') { drawStart = null; return; }
@@ -3406,10 +3471,12 @@
 
         var dist = Math.hypot(drawEnd.x - drawStart.x, drawEnd.y - drawStart.y);
         if (dist > 3) {
+          var now = Date.now();
           if (curTool === 'arrow-run' || curTool === 'arrow-pass') {
             data.tacticalBoard.arrows = data.tacticalBoard.arrows || [];
             data.tacticalBoard.arrows.push({
-              id: 'arr-' + Date.now(),
+              id: 'arr-' + now,
+              createdAt: now,
               x1: drawStart.x,
               y1: drawStart.y,
               x2: drawEnd.x,
@@ -3424,7 +3491,8 @@
             var zw = Math.max(8, Math.abs(drawEnd.x - drawStart.x));
             var zh = Math.max(6, Math.abs(drawEnd.y - drawStart.y));
             data.tacticalBoard.zones.push({
-              id: 'z-' + Date.now(),
+              id: 'z-' + now,
+              createdAt: now,
               x: zx,
               y: zy,
               w: zw,
@@ -3440,6 +3508,12 @@
             bindAllEvents();
           }
         }
+        drawStart = null;
+      };
+
+      pitchEl.onpointercancel = function () {
+        var previewG = document.getElementById('es-tactical-live-preview');
+        if (previewG) previewG.innerHTML = '';
         drawStart = null;
       };
     }

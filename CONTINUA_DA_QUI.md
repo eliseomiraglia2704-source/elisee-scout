@@ -3,7 +3,32 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Redesign Editoriale/Luxury Story 9:16 Instagram (`STORYLUX1`):
+Ultimo aggiornamento: **2026-09-16** — Lavagna Tattica Digitale: Icone SVG Lucide 16px & Strumenti Tattici End-to-End (`TACTICLUCIDE1`):
+1. **Sostituzione Integrale Emoji con Icone SVG Lucide**:
+   - Rimosse tutte le emoji unicode nei pulsanti della sezione Tattica e sostituite con icone SVG standard Lucide 16x16px (stroke-width 2, coerenti con la sidebar e l'UI del club):
+     - `Muovi`: Lucide `Move`
+     - `Freccia Corsa`: Lucide `ArrowUpRight`
+     - `Passaggio`: Lucide `Route`
+     - `Zona Pressing`: Lucide `Shield`
+     - `Annulla Tratto`: Lucide `Undo2`
+     - `Pulisci Tracciati`: Lucide `Eraser`
+     - `Sincronizza da XI Ufficiale`: Lucide `RefreshCw`
+     - `Reset Modulo`: Lucide `RotateCcw`
+     - `Salva Schema`: Lucide `Save`
+2. **Funzionalità End-to-End degli Strumenti Tattici**:
+   - **Muovi**: Drag & Drop fluido e continuo sia per gli 11 calciatori reali che per il pallone ⚽, con coordinate percentuali clampate e supporto nativo a mouse e touch.
+   - **Freccia Corsa**: click-e-trascina con linea continua gialla (`#ffd21a`) e punta direzionale SVG.
+   - **Passaggio**: click-e-trascina con linea tratteggiata azzurra (`#38bdf8`, `stroke-dasharray="6,4"`) per distinguere visivamente i movimenti palla dalle corse giocatore.
+   - **Zona Pressing**: click-e-trascina per tracciare un'area rettangolare semitrasparente rossa con bordo tratteggiato e badge "Zona Pressing".
+   - **Rubber-Banding Live**: inserito layer `<g id="es-tactical-live-preview">` con rendering vettoriale in tempo reale durante il trascinamento sul campo.
+   - **Annulla Tratto (Undo)**: cronologia LIFO unificata basata su timestamp `createdAt` che rimuove l'ultimo elemento (freccia o zona) + listener per scorciatoia `Ctrl+Z` / `Cmd+Z`.
+   - **Pulisci Tracciati**: cancellazione immediata di tutte le frecce e zone senza alterare le posizioni dei calciatori.
+   - **Sincronizza da XI Ufficiale**: dialog di conferma preventiva se presenti tracciati sulla lavagna, clonazione modulo e titolari ufficiali, reset tracciati e salvataggio.
+   - **Reset Modulo**: ripristino immediato delle posizioni canoniche degli 11 slot del modulo e centratura palla.
+   - **Salva & Carica Schemi**: salvataggio sia in `localStorage['elisee_schemi_tattici']` che su Supabase (`schemi_tattici`), conteggio dinamico in `Schemi Salvati (N)` e dropdown per ripristinare qualsiasi schema salvato all'istante.
+3. **File aggiornati**: `coach-dash.js`, `coach-dash.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_TACTICLUCIDE1`.
+
+Feature precedente: **Redesign Editoriale/Luxury Story 9:16 Instagram (`STORYLUX1`):**
 1. **Design Piatto & Tipografia Protagonista (Addio Stile Videogioco)**:
    - Sostituiti i cerchi giocatore con bordo ciano fluorescente e glow con un design pulito ed elegante: cerchio con bordo sottile 1px (`rgba(255,255,255,0.45)`), sfondo verde scuro opaco profondo (`#071a0e`), numero maglia in font `Inter` a peso bilanciato (600) e cognome maiuscolo con letter-spacing senza etichette o box pesanti.
    - Linee del campo regolamentari desaturate e discrete (`opacity: 0.2`, stroke sottile 1px) per conferire profondità naturale e tridimensionalità sobria.
