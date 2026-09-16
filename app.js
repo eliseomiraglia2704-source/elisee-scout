@@ -6843,6 +6843,60 @@ document.addEventListener('DOMContentLoaded', () => {
     return false;
   };
 
+  // Controllo visibilità Footer Pubblico: rimosso totalmente nelle route dell'Area Staff Tecnico
+  function updatePublicFooterVisibility(viewType, targetHash) {
+    var footer = document.getElementById('site-public-footer') || document.querySelector('footer.site-footer');
+    if (!footer) return;
+
+    var u = {};
+    try {
+      u = JSON.parse(localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data') || '{}');
+    } catch (_) {}
+
+    var isStaffTecnico = false;
+    try {
+      if (window.EliseeCoachDash && window.EliseeCoachDash.isCoach && window.EliseeCoachDash.isCoach(u)) {
+        isStaffTecnico = true;
+      } else if (window.EliseeViceDash && window.EliseeViceDash.isVice && window.EliseeViceDash.isVice(u)) {
+        isStaffTecnico = true;
+      } else {
+        var r = String(u.staffRole || u.ruoloDettagliato || u.ruolo || u.role || '').toLowerCase();
+        if (/allenatore|mister|coach|vice allenatore|in seconda/.test(r)) {
+          isStaffTecnico = true;
+        }
+      }
+    } catch (_) {}
+
+    var currentView = viewType || localStorage.getItem('elisee_view') || 'home';
+    var hash = targetHash || window.location.hash || '';
+
+    var isAreaRiservataStaff = false;
+    if (currentView === 'user-dossier' || hash.indexOf('user-dossier') >= 0) {
+      if (isStaffTecnico || document.body.classList.contains('is-coach-mode') || document.body.classList.contains('is-vice-mode')) {
+        isAreaRiservataStaff = true;
+      }
+      var cd = document.getElementById('es-cd');
+      if (cd && !cd.hidden && cd.style.display !== 'none') isAreaRiservataStaff = true;
+      var vd = document.getElementById('es-vd');
+      if (vd && !vd.hidden && vd.style.display !== 'none') isAreaRiservataStaff = true;
+    }
+
+    if (document.body.classList.contains('is-coach-mode') || document.body.classList.contains('is-vice-mode')) {
+      isAreaRiservataStaff = true;
+    }
+
+    if (isAreaRiservataStaff) {
+      footer.style.setProperty('display', 'none', 'important');
+      footer.setAttribute('hidden', '');
+      footer.classList.add('is-hidden-staff');
+    } else {
+      footer.style.removeProperty('display');
+      footer.removeAttribute('hidden');
+      footer.classList.remove('is-hidden-staff');
+    }
+  }
+  window.updatePublicFooterVisibility = updatePublicFooterVisibility;
+
   // Espone subito switchView (prima di altro codice che può fallire)
   window.switchView = function(viewType, targetHash, opts) {
     return switchView(viewType, targetHash, opts);
@@ -7140,6 +7194,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (window.lucide) {
         try { lucide.createIcons(); } catch (_) {}
       }
+      try { updatePublicFooterVisibility(viewType, targetHash); } catch (_) {}
     } catch (err) {
       console.error('switchView fatal', err);
       // fallback di emergenza: mostra almeno home o account

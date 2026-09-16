@@ -383,6 +383,13 @@
 
     var grp = document.getElementById('user-dossier-view-group');
     if (grp) grp.classList.add('is-vice-dash');
+    try { document.body.classList.add('is-vice-mode'); } catch (_) {}
+    if (typeof window.updatePublicFooterVisibility === 'function') {
+      window.updatePublicFooterVisibility('user-dossier', '#user-dossier-portal');
+    } else {
+      var f = document.getElementById('site-public-footer') || document.querySelector('footer.site-footer');
+      if (f) { f.style.setProperty('display', 'none', 'important'); f.setAttribute('hidden', ''); }
+    }
 
     syncLiveViceData(user);
     var data = getViceData();

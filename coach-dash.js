@@ -514,6 +514,12 @@
     var inner = portal ? portal.querySelector('.pf-page-inner') : null;
     if (inner) inner.classList.add('is-coach-inner');
     try { document.body.classList.add('is-coach-mode'); } catch (_) {}
+    if (typeof window.updatePublicFooterVisibility === 'function') {
+      window.updatePublicFooterVisibility('user-dossier', '#user-dossier-portal');
+    } else {
+      var f = document.getElementById('site-public-footer') || document.querySelector('footer.site-footer');
+      if (f) { f.style.setProperty('display', 'none', 'important'); f.setAttribute('hidden', ''); }
+    }
 
     var data = getCoachData();
 

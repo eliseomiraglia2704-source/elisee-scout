@@ -1254,6 +1254,18 @@
         }
       } catch (_) {}
     }
+    if (keepId !== 'es-vd') {
+      try {
+        document.body.classList.remove('is-vice-mode');
+        var p2 = document.getElementById('user-dossier-portal');
+        if (p2) p2.classList.remove('is-vice-dash');
+      } catch (_) {}
+    }
+    try {
+      if (typeof window.updatePublicFooterVisibility === 'function') {
+        window.updatePublicFooterVisibility();
+      }
+    } catch (_) {}
   };
 
   function setHostVisible(el, on) {

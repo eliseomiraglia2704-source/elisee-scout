@@ -52,6 +52,22 @@ body.is-coach-mode .main-header {
   border-bottom: 1px solid var(--cos-line) !important;
 }
 
+/* Rimozione totale footer pubblico in Area Staff Tecnico (Allenatore & Vice) */
+body.is-coach-mode footer.site-footer,
+body.is-coach-mode #site-public-footer,
+body.is-vice-mode footer.site-footer,
+body.is-vice-mode #site-public-footer,
+#user-dossier-view-group.is-coach-dash ~ footer.site-footer,
+#user-dossier-view-group.is-coach-dash ~ #site-public-footer,
+#user-dossier-view-group.is-vice-dash ~ footer.site-footer,
+#user-dossier-view-group.is-vice-dash ~ #site-public-footer {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+
 /* a) UN SOLO compenso per la navbar fissa, sul wrapper esterno .es-cos-shell. Niente altro. */
 /* Azzera qualsiasi padding-top / margin-top su tutti gli antenati e contenitori generici */
 #user-dossier-view-group.is-coach-dash,

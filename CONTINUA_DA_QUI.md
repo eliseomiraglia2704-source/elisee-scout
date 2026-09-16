@@ -3,7 +3,16 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Area Staff Tecnico (Allenatore / Vice Allenatore): Dati Reali Supabase + Cloud Storage (`COACHSUPA1`):
+Ultimo aggiornamento: **2026-09-16** — Area Staff Tecnico (Allenatore / Vice Allenatore): Rimozione Radicale Footer Pubblico (`NOFOOTER1`):
+1. **Esclusione Footer Pubblico nelle Route Riservate dello Staff Tecnico**:
+   - Assegnato ID esplicito `#site-public-footer` a `<footer class="site-footer pf-footer">` in `index.html`.
+   - Implementata in `app.js` la funzione globale `window.updatePublicFooterVisibility(viewType, targetHash)`: rileva se l'utente si trova nell'Area Riservata dello Staff Tecnico (stato `is-coach-mode`, `is-vice-mode`, o montaggio del dossier con dashboard attiva) e disattiva/smonta completamente il footer dal rendering visivo e dall'albero accessibile con `display: none !important`, attributo `hidden`, `pointer-events: none` e classe `is-hidden-staff`.
+   - All'uscita dall'area riservata e durante la navigazione su qualsiasi pagina pubblica del sito (Home, Chi siamo, Bacheca, Modulo Iscrizione, ecc.), il footer viene automaticamente e pulitamente ripristinato.
+   - Aggiunta in `coach-dash.css` la regola ad altissima specificità su `body.is-coach-mode`, `body.is-vice-mode` e sibling selector su `#user-dossier-view-group` per prevenire qualsiasi flash orizzontale o reflow del footer durante il caricamento.
+   - Sincronizzati i trigger di mount/unmount in `coach-dash.js`, `vice-dash.js` e `player-profile.js` (`unmountAllRoleDashboards`).
+2. **File aggiornati**: `index.html`, `app.js`, `coach-dash.js`, `vice-dash.js`, `player-profile.js`, `coach-dash.css`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_NOFOOTER1`.
+
+Feature precedente: **Dati Reali Supabase + Cloud Storage (`COACHSUPA1`)**:
 1. **Rimozione Integrale Dati Mock & Query Reali al Database Supabase**:
    - Creato il client universale `elisee-supabase.js` (`window.EliseeSupabase`) con connessione REST PostgREST e supporto tabelle: `club`, `staff`, `rosa`, `partite`, `allenamenti`, `presenze_allenamento`, `report`, `eventi_log`, `impegni_staff`, `file_allegati`.
    - **Prossima Gara & Calendario Gare**: collegate alla tabella `partite` con filtro data futura / stato prossima e ordine cronologico reale; se non ci sono gare a database, visualizza lo stato esplicito "Nessuna gara in programma", senza inventare avversari o date.
