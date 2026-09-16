@@ -3,7 +3,23 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Fix Layout Formazione 2 Colonne, Campo Proporzionato 3/4 & Panchina Fissa 320px (`LINEUPLAYOUT2`):
+Ultimo aggiornamento: **2026-09-16** — Redesign Editoriale/Luxury Story 9:16 Instagram (`STORYLUX1`):
+1. **Design Piatto & Tipografia Protagonista (Addio Stile Videogioco)**:
+   - Sostituiti i cerchi giocatore con bordo ciano fluorescente e glow con un design pulito ed elegante: cerchio con bordo sottile 1px (`rgba(255,255,255,0.45)`), sfondo verde scuro opaco profondo (`#071a0e`), numero maglia in font `Inter` a peso bilanciato (600) e cognome maiuscolo con letter-spacing senza etichette o box pesanti.
+   - Linee del campo regolamentari desaturate e discrete (`opacity: 0.2`, stroke sottile 1px) per conferire profondità naturale e tridimensionalità sobria.
+2. **Gerarchia Tipografica Editoriale nell'Header**:
+   - `"OFFICIAL MATCHDAY LINEUP"` trasformato in overline tipografica spaziata (`letter-spacing: 0.16em`, font `Inter`, colore grigio chiaro `#94a3b8`).
+   - `"FOGGIA CITY"` elevato a titolo principale in font editoriale `Outfit` (800, maiuscolo spaziato).
+   - Badge modulo (`4-3-3`): rimosso il badge pillola blu pieno; sostituito con badge outline raffinato (bordo 1px sottile `rgba(255,255,255,0.24)`, sfondo trasparente, testo `#e2e8f0`).
+3. **Panchina a Griglia a Due Colonne Ordinata**:
+   - Sostituito l'elenco con pallini (`•`) con una griglia a 2 colonne perfettamente allineata: numero maglia tabellare (`#12`) e cognome dell'atleta allineato.
+   - Intestazione *"A DISPOSIZIONE (PANCHINA)"* coerente con l'overline tipografica dell'header.
+4. **Palette & Cornice 9:16 Luxury**:
+   - Rimosso qualunque bordo o glow ciano: cornice scura uniforme `#060b11` con sottile profilo hairline (`rgba(255,255,255,0.12)`) e angoli stondati da 18px.
+   - Proporzioni verticali 9:16 perfette per la condivisione diretta su Instagram Stories.
+5. **File aggiornati**: `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_STORYLUX1`.
+
+Feature precedente: **Fix Layout Formazione 2 Colonne, Campo Proporzionato 3/4 & Panchina Fissa 320px (`LINEUPLAYOUT2`):**
 1. **Grid a Due Colonne Rigoroso**:
    - Risolto il bug di overflow e sovrapposizione in cui il campo da gioco sovrastava e tagliava a destra il pannello della Panchina (`...HINA)`, "...cca In Campo →").
    - Contenitore principale `.formazione-layout` impostato con `display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 20px; align-items: start; width: 100%;`.

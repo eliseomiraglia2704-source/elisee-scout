@@ -1939,56 +1939,68 @@
     var modDef = MODULI_TATTICI[modKey];
     var clubName = data.clubName || 'Foggia City';
 
+    // PIN GIOCATORI: DESIGN PIATTO EDITORIALE SENZA GLOW
     var miniPins = modDef.slots.map(function (slot, idx) {
       var p = (data.top11 || [])[idx] || { num: idx + 1, name: slot.name, pos: slot.ruolo };
+      var surname = p.name ? (p.name.split(' ').pop().toUpperCase()) : '';
       return (
-        '<div style="position:absolute; left:' + slot.x + '%; top:' + slot.y + '%; transform:translate(-50%, -50%); display:flex; flex-direction:column; align-items:center; gap:2px;">' +
-          '<div style="width:24px; height:24px; border-radius:50%; background:#071522; border:1.8px solid #16b9ff; color:#f3f8fc; font-size:0.68rem; font-weight:900; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 6px rgba(0,0,0,0.8);">' +
-            '#' + esc(p.num) +
+        '<div style="position:absolute; left:' + slot.x + '%; top:' + slot.y + '%; transform:translate(-50%, -50%); display:flex; flex-direction:column; align-items:center; gap:2px; pointer-events:none;">' +
+          '<div style="width:22px; height:22px; border-radius:50%; background:#071a0e; border:1px solid rgba(255,255,255,0.45); color:#ffffff; font-size:0.65rem; font-weight:600; font-family:\'Inter\',sans-serif; display:flex; align-items:center; justify-content:center;">' +
+            esc(p.num) +
           '</div>' +
-          '<div style="background:rgba(0,0,0,0.85); color:#ffffff; font-size:0.55rem; font-weight:800; padding:1px 4px; border-radius:3px; white-space:nowrap;">' +
-            esc(p.name.split(' ').pop()) +
+          '<div style="color:#f1f5f9; font-size:0.52rem; font-weight:600; font-family:\'Inter\',sans-serif; text-transform:uppercase; letter-spacing:0.08em; white-space:nowrap; text-shadow:0 1px 3px rgba(0,0,0,0.95);">' +
+            esc(surname) +
           '</div>' +
         '</div>'
       );
     }).join('');
 
-    var benchTextList = (data.panchina || []).slice(0, 8).map(function (b) {
-      return '<span style="font-size:0.65rem; color:#8da8bc;"><b style="color:#16b9ff;">#' + esc(b.num) + '</b> ' + esc(b.name.split(' ').pop()) + '</span>';
-    }).join(' · ');
+    // PANCHINA: GRIGLIA ORDINATA A 2 COLONNE
+    var benchList = (data.panchina || []).slice(0, 10);
+    var benchGridHtml = '<div style="display:grid; grid-template-columns:1fr 1fr; gap:3px 12px; margin-bottom:0.75rem;">' +
+      benchList.map(function (b) {
+        var sname = b.name ? (b.name.split(' ').pop().toUpperCase()) : '';
+        return (
+          '<div style="display:flex; align-items:baseline; gap:5px; font-size:0.6rem; font-family:\'Inter\',sans-serif; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">' +
+            '<span style="color:#94a3b8; font-weight:500; font-variant-numeric:tabular-nums; min-width:18px;">#' + esc(b.num) + '</span>' +
+            '<span style="color:#e2e8f0; font-weight:600; letter-spacing:0.03em; overflow:hidden; text-overflow:ellipsis;">' + esc(sname) + '</span>' +
+          '</div>'
+        );
+      }).join('') +
+    '</div>';
 
     var content =
       '<div style="display:flex; flex-direction:column; align-items:center; gap:1rem;">' +
-        // SCHERMO 9:16 SIMULATO
-        '<div style="width:310px; height:550px; background:linear-gradient(180deg, #071522 0%, #030811 100%); border:2px solid #16b9ff; border-radius:24px; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; padding:1.25rem 1rem; position:relative; box-shadow:0 15px 40px rgba(0,0,0,0.85); box-sizing:border-box;">' +
-          // HEADER STORY
-          '<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(22,185,255,0.25); padding-bottom:0.5rem;">' +
+        // SCHERMO 9:16 SIMULATO (EDITORIAL LUXURY SPORT CARD)
+        '<div style="width:315px; min-height:560px; background:#060b11; border:1px solid rgba(255,255,255,0.12); border-radius:18px; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; padding:1.25rem 1.15rem; position:relative; box-shadow:0 20px 50px rgba(0,0,0,0.85); box-sizing:border-box;">' +
+          // HEADER STORY EDITORIALE
+          '<div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:0.55rem;">' +
             '<div>' +
-              '<div style="font-size:0.65rem; font-weight:800; color:#16b9ff; letter-spacing:0.1em; text-transform:uppercase;">Official Matchday Lineup</div>' +
-              '<div style="font-size:1.05rem; font-weight:900; color:#f3f8fc; letter-spacing:0.02em;">' + esc(clubName).toUpperCase() + '</div>' +
+              '<div style="font-size:0.58rem; font-weight:600; color:#94a3b8; letter-spacing:0.16em; text-transform:uppercase; font-family:\'Inter\',sans-serif;">Official Matchday Lineup</div>' +
+              '<div style="font-size:1.2rem; font-weight:800; color:#ffffff; letter-spacing:0.04em; font-family:\'Outfit\',\'Inter\',sans-serif; text-transform:uppercase; margin-top:2px;">' + esc(clubName) + '</div>' +
             '</div>' +
-            '<span style="font-size:0.75rem; font-weight:900; background:#16b9ff; color:#040912; padding:3px 8px; border-radius:12px;">' + esc(modKey) + '</span>' +
+            '<span style="font-size:0.68rem; font-weight:600; background:transparent; border:1px solid rgba(255,255,255,0.24); color:#e2e8f0; padding:2px 8px; border-radius:4px; letter-spacing:0.06em; font-family:\'Inter\',sans-serif; margin-top:2px;">' + esc(modKey) + '</span>' +
           '</div>' +
 
-          // MINI PITCH 2D AL CENTRO DELLA STORY
-          '<div style="position:relative; width:100%; aspect-ratio:16/12; background:radial-gradient(circle at 50% 50%, #0d3b1f 0%, #061e11 88%); border:1.5px solid #16562f; border-radius:10px; overflow:hidden; margin:0.5rem 0;">' +
-            '<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; opacity:0.35;">' +
-              '<rect x="4" y="3" width="92" height="94" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
-              '<line x1="4" y1="50" x2="96" y2="50" stroke="#ffffff" stroke-width="1.2"/>' +
-              '<circle cx="50" cy="50" r="11" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
-              '<rect x="28" y="3" width="44" height="15" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
-              '<rect x="28" y="82" width="44" height="15" fill="none" stroke="#ffffff" stroke-width="1.2"/>' +
+          // MINI PITCH 2D: LINEE DESATURATE E PROFONDITÀ NATURALE
+          '<div style="position:relative; width:100%; aspect-ratio:16/12; background:radial-gradient(circle at 50% 50%, #0a1f13 0%, #030c07 100%); border:1px solid rgba(255,255,255,0.08); border-radius:8px; overflow:hidden; margin:0.6rem 0;">' +
+            '<svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; opacity:0.2;">' +
+              '<rect x="4" y="3" width="92" height="94" fill="none" stroke="#ffffff" stroke-width="1"/>' +
+              '<line x1="4" y1="50" x2="96" y2="50" stroke="#ffffff" stroke-width="1"/>' +
+              '<circle cx="50" cy="50" r="11" fill="none" stroke="#ffffff" stroke-width="1"/>' +
+              '<rect x="28" y="3" width="44" height="16" fill="none" stroke="#ffffff" stroke-width="1"/>' +
+              '<rect x="28" y="81" width="44" height="16" fill="none" stroke="#ffffff" stroke-width="1"/>' +
             '</svg>' +
             miniPins +
           '</div>' +
 
-          // FOOTER STORY CON PANCHINA E WATERMARK
+          // FOOTER STORY CON PANCHINA E WATERMARK EDITORIALE
           '<div>' +
-            '<div style="font-size:0.62rem; font-weight:800; color:#93c5fd; text-transform:uppercase; margin-bottom:0.25rem;">A Disposizione (Panchina)</div>' +
-            '<div style="line-height:1.4; margin-bottom:0.75rem;">' + benchTextList + '</div>' +
-            '<div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.1); padding-top:0.4rem; font-size:0.6rem; color:#64748b;">' +
-              '<span>Formazione Convalidata</span>' +
-              '<span style="color:#16b9ff; font-weight:800;">ELISEE SCOUT</span>' +
+            '<div style="font-size:0.58rem; font-weight:600; color:#94a3b8; letter-spacing:0.16em; text-transform:uppercase; font-family:\'Inter\',sans-serif; margin-bottom:0.45rem; border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:0.25rem;">A Disposizione (Panchina)</div>' +
+            benchGridHtml +
+            '<div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.08); padding-top:0.45rem; font-size:0.58rem; color:#64748b; font-family:\'Inter\',sans-serif;">' +
+              '<span style="letter-spacing:0.05em;">Formazione Convalidata</span>' +
+              '<span style="color:#ffffff; font-weight:800; letter-spacing:0.1em;">ELISEE SCOUT</span>' +
             '</div>' +
           '</div>' +
         '</div>' +
