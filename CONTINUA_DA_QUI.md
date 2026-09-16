@@ -3,21 +3,20 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** (Commit `953ae0c1`) — Refactoring Professionale Dashboard Allenatore (Meno Videogame, Stemmi Monogramma Sagomati a Scudetto, Badge Patentino UEFA B Tipografico, Sidebar Sticky 100vh con Scroll, Tab Bar Wrap Multi-riga & Club Foggia City (`COACHPRO1`)).
-Ultimo fatto: **Refactoring Professionale Dashboard Allenatore (`COACHPRO1`)**:
-1. **Stemmi Squadre — Scudetti Monogramma Progettati (`.crest`, `.crest--sm`)**:
-   - I vecchi riquadri generici sono stati sostituiti da scudetti monogramma autentici ritagliati via `clip-path: polygon(50% 0%, 100% 14%, 100% 68%, 50% 100%, 0% 68%, 0% 14%)`, con gradiente coordinato blu e monogramma a 3 lettere (FGC, CRG, LUC, MAN, SAN, TRO).
-   - Struttura già dimensionata per ospitare direttamente il file `<img>` reale non appena disponibile.
-   - Club impostato su **Foggia City** (Prima Squadra · Amatoriale · Foggia) con calendario avversari coerente (Cerignola Nord, Lucera Sport, Manfredonia 04, San Severo, Troia Calcio).
-2. **Badge Patentino — UEFA B / Patentino Tipografico e Leggibile (`.licence-badge`)**:
-   - Introdotto badge tipografico dedicato (52x52px, angoli 6px, bordo e scritte ciano con dicitura "UEFA B / Patentino"), che garantisce eccellente leggibilità senza riprodurre marchi registrati terzi.
-3. **Sidebar Fissa Sticky 100vh (`.dash-side`, `.es-cos-sidebar`)**:
-   - Impostata `position: sticky; top: 0; height: 100vh; overflow-y: auto;`: la sidebar tecnica resta perfettamente ancorata mentre l'area operativa della pagina scorre.
-4. **Meno "Videogame" & UI B2B Pulita**:
-   - Angoli delle card ridotti a **6px** (e **5px** su bottoni, tag, badge e icone).
-   - Rimosso qualsiasi bagliore o glow neon blu attorno alle card (`box-shadow: none !important;`).
-   - Barra orizzontale dei tab trasformata con `flex-wrap: wrap; gap: 6px;`: tutte le voci sono visibili contemporaneamente in un colpo d'occhio senza scroll orizzontale o contenuto nascosto a destra.
-5. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHPRO1`.
+Ultimo aggiornamento: **2026-09-16** — Perfezionamento Dashboard Allenatore: Risoluzione 4 Correzioni Utente (`COACHPRO2`):
+1. **Rimozione Zone Rosse (Sidebar Scrollbar & Box Club in Fondo)**:
+   - Rimosso completamente il box club `.es-cos-sidebar-club` che era posizionato in fondo alla sidebar sinistra.
+   - Reso invisibile lo scrollbar verticale della sidebar (`scrollbar-width: none; -ms-overflow-style: none; ::-webkit-scrollbar { display: none; }`), eliminando la barra rossa evidenziata nello screenshot lungo il margine destro della sidebar.
+2. **Riordino Header Superiore in Due Fasce Bilanciate**:
+   - Organizzato l'header in due righe ordinate e pulite:
+     - Fascia superiore (`.es-cos-header-top-row`): Blocco identità mister (Patentino UEFA B + Eliseo Miraglia Allenatore Capo + Tesseramento FIGC) separato da un divisore verticale sottile dal blocco Club (Scudetto FGC + Foggia City Prima Squadra Amatoriale · Foggia), con pulsante `Area Vice Allenatore →` allineato all'estrema destra.
+     - Fascia inferiore (`.es-cos-header-match-row`): Griglia bilanciata a 3 colonne: Prossima Partita (Cerignola Nord) a sinistra, Countdown (02d 15h 24m) al centro, pillola Seduta odierna (Rifinitura) a destra.
+3. **Tab Bar su Riga Singola Orizzontale**:
+   - Modificata la barra dei tab con `flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding: 6px 11px; font-size: 11.5px; gap: 5px;`: tutte le 11 sezioni (Dashboard, Rosa, Formazione, Tattica, Allenamenti, Calendario, Analisi Avversario, GPS / Carichi, Report Staff, Comunicazioni, Impostazioni) sono ora visualizzate rigorosamente su un'unica riga orizzontale, senza andare a capo.
+4. **Allineamento a Slot delle 8 Stat Card**:
+   - Standardizzati gli slot verticali di ogni singola card: etichetta con altezza fissa `min-height: 28px`, valore con `min-height: 20px`, traccia della barra `height: 4px; margin-bottom: 8px` con classe `.is-placeholder` invisibile per le card senza barra percentuale, e footer con `margin-top: auto; min-height: 16px; line-height: 16px`. In questo modo titoli, valori, percentuali e descrizioni risultano millimetricamente allineati su una linea orizzontale identica su tutte le 8 card.
+   - Aggiornato il testo della prima card da "A.C. Ragusa" a "Cerignola Nord · 2 giorni".
+5. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHPRO2`.
 Feature precedente: **Restyling UX/UI & Layout Dark Slate Dashboard Allenatore (`COACHSLATE1`)**:
 1. **Eliminazione Radicale Doppia Navigazione & Topbar Compatta**:
    - Quando la dashboard dell'allenatore è attiva, viene iniettata la classe `is-coach-mode` sul `<body>`, sopprimendo integralmente la navbar del sito pubblico (`#nav-menu.portfolio-nav`, "Chi siamo", "Minigiochi", etc.) e recuperando oltre 70px di prezioso spazio verticale.

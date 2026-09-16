@@ -94,8 +94,16 @@ body.is-coach-mode .main-header {
   top: 0;
   height: 100vh;
   overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   z-index: 90;
   box-sizing: border-box;
+}
+
+.es-cos-sidebar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .es-cos-brand-header {
@@ -170,43 +178,6 @@ body.is-coach-mode .main-header {
 
 .es-cos-side-btn.is-active svg {
   color: var(--cos-blue);
-}
-
-/* Profilo Club in Fondo alla Sidebar */
-.es-cos-sidebar-club {
-  border-top: 1px solid var(--cos-line);
-  padding-top: 14px;
-  margin-top: auto;
-}
-
-.es-cos-sidebar-club strong {
-  display: block;
-  font-size: 13px;
-  font-weight: 700;
-  color: #FFFFFF;
-}
-
-.es-cos-sidebar-club .role {
-  font-size: 11px;
-  color: var(--cos-text-muted);
-  margin-bottom: 8px;
-}
-
-.es-cos-sidebar-club .status-dot {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--cos-green);
-}
-
-.es-cos-sidebar-club .status-dot::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--cos-green);
 }
 
 /* ============================================================
@@ -293,31 +264,29 @@ body.is-coach-mode .main-header {
 }
 
 /* ============================================================
-   HEADER IDENTITÀ + COUNTDOWN + TASTO VICE
+   HEADER IDENTITÀ + COUNTDOWN + TASTO VICE (Due Fasce Ordinate)
    ============================================================ */
 .es-cos-dash-header {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Fascia Superiore: Mister, Club e Bottone Vice */
+.es-cos-header-top-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 14px 18px;
-  flex-wrap: wrap;
-}
-
-.es-cos-header-left {
-  display: flex;
-  align-items: center;
   gap: 18px;
   flex-wrap: wrap;
 }
 
-.es-cos-header-right {
+.es-cos-header-identity {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-left: auto;
+  gap: 20px;
   flex-wrap: wrap;
-  justify-content: flex-end;
 }
 
 .es-cos-header-block {
@@ -326,24 +295,15 @@ body.is-coach-mode .main-header {
   gap: 12px;
 }
 
-.es-cos-crest {
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
-  border: 1.5px solid var(--cos-blue);
-  background: rgba(59, 130, 246, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--cos-cyan);
-  flex-shrink: 0;
+.es-cos-header-sep {
+  width: 1px;
+  height: 38px;
+  background: var(--cos-line);
 }
 
 .es-cos-coach-info strong {
   display: block;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 800;
   color: var(--cos-cyan);
   letter-spacing: -0.01em;
@@ -363,14 +323,25 @@ body.is-coach-mode .main-header {
 
 .es-cos-club-info strong {
   display: block;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   color: #FFFFFF;
 }
 
+.es-cos-club-info .sub-team,
 .es-cos-club-info span {
   font-size: 11px;
   color: var(--cos-text-muted);
+}
+
+/* Fascia Inferiore: Prossima Partita (sx), Countdown (centro), Seduta (dx) */
+.es-cos-header-match-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1.1fr;
+  gap: 16px;
+  align-items: center;
+  border-top: 1px solid var(--cos-line);
+  padding-top: 14px;
 }
 
 .es-cos-match-target {
@@ -411,6 +382,7 @@ body.is-coach-mode .main-header {
   display: flex;
   gap: 12px;
   align-items: center;
+  justify-content: center;
 }
 
 .es-cos-countdown .label {
@@ -447,8 +419,8 @@ body.is-coach-mode .main-header {
 .es-cos-session-pill {
   background: var(--cos-green-soft);
   border: 1px solid var(--cos-green);
-  border-radius: 9px;
-  padding: 7px 12px;
+  border-radius: 5px;
+  padding: 8px 14px;
   font-size: 11px;
 }
 
@@ -481,26 +453,38 @@ body.is-coach-mode .main-header {
   background: #2563EB;
 }
 
-/* Tab Navigation Bar (Wrap su più righe — tutto visibile, niente scroll orizzontale) */
+/* Tab Navigation Bar (Tutto su UN'UNICA RIGA, scroll orizzontale invisibile se necessario) */
 .es-cos-nav-tabs {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 20px;
+  flex-wrap: nowrap;
+  gap: 5px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  width: 100%;
+}
+
+.es-cos-nav-tabs::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .es-cos-nav-tabs button {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 5px;
   background: var(--cos-card);
   border: 1px solid var(--cos-card-border);
   border-radius: 5px;
-  padding: 9px 14px;
+  padding: 6px 11px;
   color: var(--cos-text-muted);
-  font-size: 12.5px;
+  font-size: 11.5px;
   font-weight: 600;
   cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
   transition: all 0.15s ease;
 }
 
@@ -521,7 +505,7 @@ body.is-coach-mode .main-header {
 }
 
 /* ============================================================
-   8 STAT CARDS (Riepilogo Analitico)
+   8 STAT CARDS (Riepilogo Analitico — Allineamento Perfetto)
    ============================================================ */
 .es-cos-stat-grid-8 {
   display: grid;
@@ -531,13 +515,14 @@ body.is-coach-mode .main-header {
 }
 
 .es-cos-stat-card {
-  padding: 12px 14px;
+  padding: 12px 12px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   border: 1px solid var(--cos-line);
   background: rgba(10, 16, 28, 0.6);
   border-radius: 6px;
+  min-height: 146px;
+  box-sizing: border-box;
   transition: border-color 0.15s ease;
 }
 
@@ -559,37 +544,56 @@ body.is-coach-mode .main-header {
 .es-cos-stat-card-label {
   font-size: 11px;
   color: var(--cos-text-muted);
-  margin: 0 0 4px;
+  min-height: 28px;
+  line-height: 1.25;
+  margin: 0 0 6px 0;
   font-weight: 500;
+  display: flex;
+  align-items: flex-start;
 }
 
 .es-cos-stat-card-value {
-  font-size: 17px;
+  font-size: 16.5px;
   font-weight: 800;
   color: #FFFFFF;
-  margin: 0 0 6px;
+  min-height: 20px;
   line-height: 1.1;
+  margin: 0 0 6px 0;
+  display: flex;
+  align-items: center;
 }
 
 .es-cos-bar-track {
-  height: 5px;
+  height: 4px;
   background: rgba(255, 255, 255, 0.08);
-  border-radius: 3px;
+  border-radius: 2px;
   overflow: hidden;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+
+.es-cos-bar-track.is-placeholder {
+  visibility: hidden;
+  background: transparent;
 }
 
 .es-cos-bar-fill {
   height: 100%;
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 .es-cos-stat-card-foot {
   font-size: 10px;
   font-weight: 700;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 4px;
+  margin-top: auto;
+  min-height: 16px;
+  line-height: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ============================================================

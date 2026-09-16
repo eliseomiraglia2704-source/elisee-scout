@@ -22,10 +22,10 @@
   function userObj() {
     try {
       var u = JSON.parse(localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data') || '{}') || {};
-      if (!u.squadra || /atalanta/i.test(u.squadra)) u.squadra = 'ASD Carlentini';
-      if (!u.club || /atalanta/i.test(u.club)) u.club = 'ASD Carlentini';
+      if (!u.squadra || /atalanta|carlentini/i.test(u.squadra)) u.squadra = 'Foggia City';
+      if (!u.club || /atalanta|carlentini/i.test(u.club)) u.club = 'Foggia City';
       return u;
-    } catch (_) { return { squadra: 'ASD Carlentini', club: 'ASD Carlentini' }; }
+    } catch (_) { return { squadra: 'Foggia City', club: 'Foggia City' }; }
   }
 
   function isCoach(u) {
@@ -251,6 +251,9 @@
       var raw = localStorage.getItem('elisee_coach_data');
       if (raw) {
         var parsed = JSON.parse(raw);
+        if (parsed && (/carlentini/i.test(parsed.clubName) || !parsed.clubName)) {
+          parsed.clubName = 'Foggia City';
+        }
         return Object.assign({}, def, parsed);
       }
     } catch (_) {}
@@ -317,47 +320,47 @@
             renderSideBtn('comunicazioni', 'Comunicazioni', '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>') +
             renderSideBtn('impostazioni', 'Impostazioni Tecniche', '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06-.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>') +
           '</nav>' +
-
-          // Identità Club in Fondo alla Sidebar (Scudetto FGC · Staff collegato)
-          '<div class="es-cos-sidebar-club">' +
-            '<div class="crest es-cos-crest" style="margin-bottom:8px;">FGC</div>' +
-            '<strong>' + esc(data.clubName) + '</strong>' +
-            '<p class="role">Prima Squadra</p>' +
-            '<span class="status-dot">Staff collegato</span>' +
-          '</div>' +
         '</aside>' +
 
         // 2. MAIN WORKSPACE
         '<main class="es-cos-main">' +
-          // HEADER IDENTITÀ + COUNTDOWN + PARTITA + SEDUTA + PULSANTE VICE
+          // HEADER IDENTITÀ + COUNTDOWN + PARTITA + SEDUTA + PULSANTE VICE (Due Fasce Ordinate)
           '<div class="card es-cos-card es-cos-dash-header">' +
-            '<div class="es-cos-header-left">' +
-              '<div class="es-cos-header-block">' +
-                '<div class="licence-badge es-cos-licence-badge"><strong>UEFA B</strong><span>Patentino</span></div>' +
-                '<div class="es-cos-coach-info">' +
-                  '<strong>' + esc(data.coachName) + '</strong>' +
-                  '<span class="role">Allenatore Capo</span>' +
-                  '<p class="sub">Tesseramento FIGC: ' + esc(data.matricola) + ' · Scadenza: 30/06/2027</p>' +
+            // Fascia Superiore: Profilo Mister + Club + Tasto Vice
+            '<div class="es-cos-header-top-row">' +
+              '<div class="es-cos-header-identity">' +
+                '<div class="es-cos-header-block">' +
+                  '<div class="licence-badge es-cos-licence-badge"><strong>UEFA B</strong><span>Patentino</span></div>' +
+                  '<div class="es-cos-coach-info">' +
+                    '<strong>' + esc(data.coachName) + '</strong>' +
+                    '<span class="role">Allenatore Capo</span>' +
+                    '<p class="sub">Tesseramento FIGC: ' + esc(data.matricola) + ' · Scadenza: 30/06/2027</p>' +
+                  '</div>' +
+                '</div>' +
+
+                '<div class="es-cos-header-sep"></div>' +
+
+                '<div class="es-cos-header-block es-cos-club-info">' +
+                  '<div class="crest es-cos-crest">FGC</div>' +
+                  '<div>' +
+                    '<strong>' + esc(data.clubName) + '</strong>' +
+                    '<span class="sub-team">Prima Squadra</span><br/>' +
+                    '<span>' + esc(data.categoria) + '</span>' +
+                  '</div>' +
                 '</div>' +
               '</div>' +
 
-              '<div class="es-cos-header-block es-cos-club-info">' +
-                '<!-- Sostituisci il monogramma con <img src=\"...\" alt=\"Foggia City\"> -->' +
-                '<div class="crest es-cos-crest">FGC</div>' +
-                '<div>' +
-                  '<strong>' + esc(data.clubName) + '</strong>' +
-                  '<span>Prima Squadra</span><br/>' +
-                  '<span>' + esc(data.categoria) + '</span>' +
-                '</div>' +
-              '</div>' +
+              '<button type="button" class="es-cos-btn-vice-jump" id="btn-goto-vice-area">' +
+                'Area Vice Allenatore &rarr;' +
+              '</button>' +
             '</div>' +
 
-            '<div class="es-cos-header-right">' +
+            // Fascia Inferiore: Prossima Partita + Countdown + Seduta
+            '<div class="es-cos-header-match-row">' +
               '<div class="es-cos-match-target">' +
                 '<p class="label">Prossima Partita</p>' +
                 '<p class="when" id="match-when">' + esc(data.nextMatch.data) + ' - ' + esc(data.nextMatch.orario) + '</p>' +
                 '<div class="opp">' +
-                  '<!-- Sostituisci con <img src=\"...\" alt=\"Cerignola Nord\"> -->' +
                   '<div class="crest crest--sm es-cos-crest--sm">CRG</div>' +
                   '<div>' +
                     '<strong id="match-opp">' + esc(data.nextMatch.avversario) + '</strong>' +
@@ -382,10 +385,6 @@
                 '<strong>● Seduta odierna</strong>' +
                 '<span id="today-session">Rifinitura · 10:00 - 11:30</span>' +
               '</div>' +
-
-              '<button type="button" class="es-cos-btn-vice-jump" id="btn-goto-vice-area">' +
-                'Area Vice Allenatore &rarr;' +
-              '</button>' +
             '</div>' +
           '</div>' +
 
@@ -453,7 +452,7 @@
   // ============================================================
   function renderDashboard(data) {
     var statItems = [
-      { key: "calendar", label: "Prossima Gara", value: "15/09/2026", foot: "A.C. Ragusa · 2 giorni", color: "blue", tab: "calendario" },
+      { key: "calendar", label: "Prossima Gara", value: "15/09/2026", foot: "Cerignola Nord · 2 giorni", color: "blue", tab: "calendario" },
       { key: "check", label: "Ultima Seduta", value: "14/09/2026", foot: "✓ Rifinitura · Completata", color: "green", tab: "allenamenti" },
       { key: "heart", label: "Carico Squadra", value: "78%", foot: "Ottimale", color: "green", bar: 78, tab: "gps_carichi" },
       { key: "users", label: "Disponibilità Rosa", value: "24/26 · 92%", foot: "Ottimale", color: "blue", bar: 92, tab: "rosa" },
@@ -482,7 +481,9 @@
         // 1. RIEPILOGO STAGIONALE (8 Stat Cards - Immagine 2)
         '<section class="es-cos-card es-cos-stat-grid-8">' +
           statItems.map(function (s) {
-            var barHtml = s.bar ? '<div class="es-cos-bar-track"><div class="es-cos-bar-fill" style="width:' + s.bar + '%; background:' + COLOR_MAP[s.color] + ';"></div></div>' : '';
+            var barHtml = '<div class="es-cos-bar-track' + (s.bar ? '' : ' is-placeholder') + '">' +
+              (s.bar ? '<div class="es-cos-bar-fill" style="width:' + s.bar + '%; background:' + COLOR_MAP[s.color] + ';"></div>' : '') +
+            '</div>';
             return (
               '<div class="es-cos-stat-card" data-tab-nav="' + esc(s.tab) + '" style="cursor:pointer;" title="Visualizza dettagli ' + esc(s.label) + '">' +
                 '<div class="es-cos-stat-card-icon" style="background:' + SOFT_MAP[s.color] + '; color:' + COLOR_MAP[s.color] + ';">' + ICONS[s.key] + '</div>' +
