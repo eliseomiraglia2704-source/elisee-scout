@@ -3,7 +3,17 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Area Staff Tecnico (Allenatore / Vice Allenatore): Risoluzione Bug Icona Gigante & Stato Vuoto Rosa Unificato (`ROSAEMPTY1`):
+Ultimo aggiornamento: **2026-09-16** — Area Staff Tecnico (Allenatore / Vice Allenatore): Armonizzazione Colori Rosa con i Token del Design System (`ROSATOKEN1`):
+1. **Pulsante "+ Aggiungi Calciatore" nel Blu Primario di Brand**:
+   - Definite le regole `.es-btn-cos-primary` agganciate rigorosamente alle variabili del design system `var(--cos-blue)` (`#3B82F6`), testo bianco `#FFFFFF`, raggio `var(--cos-radius-sm, 5px)` ed effetto hover coordinato `#2563EB` (identico al pulsante *"Area Vice Allenatore &rarr;"*).
+2. **Filtri Pillola Roster Coerenti con la Secondary Tab Bar**:
+   - Definite le regole `.es-btn-cos-sec`: stato inattivo con sfondo semi-trasparente `var(--cos-card)` (`rgba(18, 26, 42, 0.75)`), bordo sottile primario `var(--cos-card-border)` (`rgba(59, 130, 246, 0.22)`), testo chiaro `var(--cos-text-muted)` (`#8B95A8`) e hover su `var(--cos-blue)`.
+   - Stato attivo (`.es-btn-cos-sec.is-active`, di default "Tutti"): sfondo pieno nel blu primario `var(--cos-blue)`, testo `#FFFFFF`, bordo `var(--cos-blue)` e peso grassetto 700.
+   - Search input (`.es-cos-search-input`) stilizzato con `var(--cos-card)` e focus ring `var(--cos-blue)`.
+   - Allineamento speculare in `coach-dash.css` e `vice-dash.css`.
+3. **File aggiornati**: `coach-dash.css`, `vice-dash.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_ROSATOKEN1`.
+
+Feature precedente: **Risoluzione Bug Icona Gigante & Stato Vuoto Rosa Unificato (`ROSAEMPTY1`)**:
 1. **Causa del Bug Identificata e Risolta alla Radice**:
    - L'icona enorme visibile in cima alla sezione Rosa non era uno spinner di loading bloccato né un doppio blocco renderizzato per errore: era l'icona `<svg viewBox="0 0 24 24">` del titolo *"Organico Rosa Prima Squadra"* in `.es-cos-panel-head` priva degli attributi `width` e `height`.
    - In assenza di vincoli dimensionali nel CSS, il browser scalava il viewBox a tutta la larghezza disponibile del contenitore (~800-1100px), trasformando il tratto `stroke-width="2"` in un arco bianco spesso ~66px e spingendo il bottone `+ Aggiungi Calciatore` in posizione galleggiante.
