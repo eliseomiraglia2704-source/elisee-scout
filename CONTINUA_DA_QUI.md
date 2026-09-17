@@ -5,7 +5,7 @@ File di passaggio tra sessioni / account Grok.
 
 Ultimo aggiornamento: **2026-09-17** — Bacheca 7 categorie (`BACHECA7`):
 1. **Categorie**: `cerco_squadra`, `cerco_giocatore`, `cerco_allenatore`, `cerco_arbitro`, `cerco_amichevole`, `cerco_sponsor`, `calciomercato`. Dropdown Categoria con icone SVG, filtro in AND con Ruolo / Zona / Raggio. Query param `?cat=`.
-2. **Nuovo annuncio**: CTA unica al posto di «Pubblica candidatura». Step 1 card categoria, step 2 campi comuni + specifici. Validazione client + `POST /api/bacheca`. Persistenza `elisee_user_jobs` + file `data/bacheca/annunci.json` (`/tmp` su Vercel).
+2. **Nuovo annuncio**: CTA unica al posto di «Pubblica candidatura». Step 1 card categoria, step 2 campi comuni + specifici. Validazione client + `POST /api/bacheca` (rewrite su `/api/manager?path=bacheca`, niente 13ª serverless Hobby). Persistenza `elisee_user_jobs` + file `data/bacheca/annunci.json` (`/tmp` su Vercel).
 3. **Card**: badge icona+label da `categoria` del record (bordo sottile, non pillola satura).
 4. **Migrazione**: annunci senza categoria inferiti dal testo; fallback `calciomercato`.
 5. **File**: `bacheca-annunci.js`, `api/bacheca.js`, `app.js`, `index.html`, `bacheca-board.css`, `sw.js`, `version.json`. Cache `v20260917_BACHECA7`.

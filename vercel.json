@@ -54,6 +54,10 @@
     {
       "source": "/api/auth/set-password",
       "destination": "/api/auth/me?path=set-password"
+    },
+    {
+      "source": "/api/bacheca",
+      "destination": "/api/manager?path=bacheca"
     }
   ]
 }
