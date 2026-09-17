@@ -3,7 +3,26 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Riprogettazione Area Osservatore & Scout con Architettura Ordinata Speculare a Coach & Vice (`SCOUTPRO1`):
+Ultimo aggiornamento: **2026-09-17** — Riprogettazione Area Match Analyst & Video Analyst con Architettura Ordinata Speculare a Coach & Vice (`MAPRO1`):
+1. **Allineamento & Ordinamento Completo Dashboard Match Analyst & Video Analyst (`ma-dash.css`, `ma-dash.js`, `index.html`)**:
+   - **Richiesta Utente**: l'Area Match Analyst non era ordinata come l'Area Allenatore e Vice Allenatore. Tutte le opzioni e le funzioni andavano riordinate nel miglior modo possibile.
+   - **Interventi Applicati**:
+     - *Sidebar Gestionale a Sinistra (240px)*: introdotta la barra laterale professionale fissa con brand header "ELISEE SCOUT — Area Match & Video Analysis", 8 voci di navigazione con icone SVG (*Dashboard, Report Tattici, Heatmap & Spazi, Video Tagging & Clip, Comparatore IA, Radar Competenze, Canale Staff & Mister, Profilo & Abilitazione*) e badge societario Foggia City sticky in fondo (`1000345699.png`).
+     - *Header d'Eccellenza a Due Livelli*:
+       - Livello 1: Patentino FIGC Coverciano, Nome Analyst, Ruolo Ufficiale, Tesseramento federale, Logo Foggia City e pulsante d'azione rapida `Nuovo Report Tattico +`.
+       - Livello 2: Prossimo Avversario da Analizzare con avversario, data, ora, stadio, countdown dinamico giorni/ore/minuti, e Focus Tattico di Giornata ("Studio Palle Inattive & Transizioni Negative").
+     - *Tab Bar Superiore Compatta*: navigazione rapida orizzontale a schede per una visuale costantemente ordinata.
+     - *7 Viste Operative Dedicate*:
+       - `Dashboard`: Profilo Analyst con completamento scheda (85%), Centro Operativo Tactical OS con 3 KPI (*Report Archiviati, 92% Lettura Tattica, Canale Mister Attivo*), Tactical Suite v3.0 a 6 card responsive e registro ultime attività.
+       - `Report Tattici`: archivio report a 8 blocchi (pre-gara, post-gara, studio avversario) con modulo interattivo di compilazione e inoltro con un click al Mister e al DS.
+       - `Heatmap & Spazi`: pitch tattico vettoriale SVG interattivo con le zone di calore aggregate della squadra (baricentro medio 54.8m, indice di ampiezza 68%, densità recupero palla).
+       - `Video Tagging & Clip Hub`: catalogo clip video indicizzate con player e tag (palle inattive, costruzione bassa, uscite difensive).
+       - `Comparatore Giocatori IA`: strumento di confronto testa a testa con radar metrico comparativo istantaneo tra profili dello stesso ruolo.
+       - `Radar Competenze`: grafico polare vettoriale a 8 assi (Lettura Tattica 93%, Analisi Video 91%, Comunicazione Staff 94%) con indici Coverciano.
+       - `Canale Staff & Mister`: inoltro automatico dei dossier riservati all'Allenatore Capo per il briefing tecnico pre-gara e chat interna staff.
+2. **File aggiornati**: `ma-dash.css`, `ma-dash.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_MAPRO1`.
+
+Feature precedente: **Riprogettazione Area Osservatore & Scout con Architettura Ordinata Speculare a Coach & Vice (`SCOUTPRO1`):**
 1. **Allineamento & Ordinamento Completo Dashboard Osservatore & Talent Scout (`obs-dash.css`, `obs-dash.js`, `index.html`)**:
    - **Richiesta Utente**: l'Area Osservatore & Scout non era ordinata come l'Area Allenatore e Vice Allenatore. Tutte le opzioni e le funzioni andavano riordinate nel miglior modo possibile.
    - **Interventi Applicati**:
