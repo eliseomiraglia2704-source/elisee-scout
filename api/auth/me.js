@@ -2,6 +2,7 @@
  * GET  /api/auth/me
  * POST /api/auth/login         (rewrite → me?path=login)
  * POST /api/auth/set-password  (rewrite → me?path=set-password)
+ * GET/POST /api/auth/verify-docs (rewrite → me?path=verify-docs)
  */
 const crypto = require('crypto');
 const fs = require('fs');
@@ -17,7 +18,11 @@ const LEGACY_HASH = 'de134c138f54a18fb10cd0f5fda4699a81326bb1b6a5d47aeadb26bce16
 const OVERRIDE_FILE = process.env.VERCEL
   ? '/tmp/elisee-password-overrides.json'
   : path.join(process.cwd(), 'data', 'auth', 'password-overrides.json');
+const DOCS_FILE = process.env.VERCEL
+  ? '/tmp/elisee-verify-docs.json'
+  : path.join(process.cwd(), 'data', 'auth', 'verify-docs.json');
 const memoryOverrides = {};
+const memoryDocs = {};
 
 const STAFF = {
   'manueltucci2002@gmail.com': {
@@ -154,7 +159,62 @@ function pathOf(req) {
   if (q) return String(q);
   if (/\/login(?:\?|$)/.test(url)) return 'login';
   if (/set-password/.test(url)) return 'set-password';
+  if (/verify-docs/.test(url)) return 'verify-docs';
   return 'me';
+}
+
+function docsKey(email) {
+  return 'elisee:docs:' + String(email || '').trim().toLowerCase();
+}
+
+function loadDocsFile() {
+  try {
+    return JSON.parse(fs.readFileSync(DOCS_FILE, 'utf8')) || {};
+  } catch (_) {
+    return {};
+  }
+}
+
+function saveDocsFile(map) {
+  try {
+    fs.mkdirSync(path.dirname(DOCS_FILE), { recursive: true });
+    fs.writeFileSync(DOCS_FILE, JSON.stringify(map, null, 2));
+  } catch (_) {}
+}
+
+async function getDocsRecord(email) {
+  const em = String(email || '').trim().toLowerCase();
+  if (!em) return null;
+  if (memoryDocs[em]) return memoryDocs[em];
+  const fileMap = loadDocsFile();
+  if (fileMap[em]) {
+    memoryDocs[em] = fileMap[em];
+    return fileMap[em];
+  }
+  const remote = await redisCall('/get/' + encodeURIComponent(docsKey(em)));
+  if (remote) {
+    try {
+      const parsed = typeof remote === 'string' ? JSON.parse(remote) : remote;
+      if (parsed && typeof parsed === 'object') {
+        memoryDocs[em] = parsed;
+        return parsed;
+      }
+    } catch (_) {}
+  }
+  return null;
+}
+
+async function setDocsRecord(email, rec) {
+  const em = String(email || '').trim().toLowerCase();
+  if (!em) return rec;
+  rec.email = em;
+  rec.updatedAt = new Date().toISOString();
+  memoryDocs[em] = rec;
+  const fileMap = loadDocsFile();
+  fileMap[em] = rec;
+  saveDocsFile(fileMap);
+  await redisCall('/set/' + encodeURIComponent(docsKey(em)) + '/' + encodeURIComponent(JSON.stringify(rec)));
+  return rec;
 }
 
 function json(res, status, body) {
@@ -201,6 +261,46 @@ module.exports = async function handler(req, res) {
       const mustReset = okSaved ? false : !!rec.mustResetPassword;
       const user = decorateUser(rec, { mustResetPassword: mustReset });
       return json(res, 200, { ok: true, token: signToken(rec), user: user, mustResetPassword: mustReset });
+    }
+
+    if (pathName === 'verify-docs') {
+      if (req.method !== 'GET' && req.method !== 'POST') return json(res, 405, { ok: false, error: 'method' });
+      const h = String(req.headers.authorization || '');
+      const tok = h.toLowerCase().startsWith('bearer ') ? h.slice(7).trim() : '';
+      const session = verifyToken(tok);
+      const b = req.method === 'POST' ? bodyOf(req) : {};
+      const qEmail = (req.query && req.query.email) || '';
+      const email = String((session && session.email) || b.email || qEmail || '').trim().toLowerCase();
+      if (!email) return json(res, 401, { ok: false, error: 'non_autenticato' });
+      if (req.method === 'GET') {
+        const rec = await getDocsRecord(email);
+        return json(res, 200, { ok: true, record: rec });
+      }
+      const action = String(b.action || '').trim().toLowerCase();
+      if (['start', 'docs', 'close'].indexOf(action) < 0) {
+        return json(res, 400, { ok: false, error: 'azione' });
+      }
+      const prev = (await getDocsRecord(email)) || { email: email };
+      const nowIso = new Date().toISOString();
+      if (action === 'start') {
+        prev.action = 'start';
+        prev.ruolo = String(b.ruolo || prev.ruolo || '').slice(0, 80);
+        prev.startedAt = prev.startedAt || nowIso;
+        prev.badgeVerificaStato = prev.badgeVerificaStato || 'none';
+      }
+      if (action === 'docs') {
+        prev.action = 'docs';
+        prev.docsAt = nowIso;
+        prev.badgeVerificaStato = String(b.badgeVerificaStato || 'pending').slice(0, 40);
+      }
+      if (action === 'close') {
+        prev.action = 'close';
+        prev.closedAt = nowIso;
+        prev.reason = String(b.reason || 'docs_timeout').slice(0, 80);
+        prev.badgeVerificaStato = 'closed';
+      }
+      const saved = await setDocsRecord(email, prev);
+      return json(res, 200, { ok: true, record: saved });
     }
 
     if (req.method === 'POST' && pathName === 'set-password') {

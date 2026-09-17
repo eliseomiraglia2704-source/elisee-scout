@@ -195,10 +195,13 @@
     saveUser(u);
     markClosedStore(u, 'docs_timeout');
     try {
+      var closePayload = { action: 'close', reason: 'docs_timeout' };
+      var closeEm = emailOf(u);
+      if (closeEm) closePayload.email = closeEm;
       fetch('/api/auth/verify-docs', {
         method: 'POST',
         headers: authHeaders(),
-        body: JSON.stringify({ action: 'close', reason: 'docs_timeout' })
+        body: JSON.stringify(closePayload)
       }).catch(function () {});
     } catch (_) {}
     enforceClosed(u);
@@ -303,10 +306,13 @@
     if (!u.badgeVerificaStato || u.badgeVerificaStato === 'none') u.badgeVerificaStato = 'pending';
     saveUser(u);
     try {
+      var docsPayload = { action: 'docs', badgeVerificaStato: u.badgeVerificaStato };
+      var docsEm = emailOf(u);
+      if (docsEm) docsPayload.email = docsEm;
       fetch('/api/auth/verify-docs', {
         method: 'POST',
         headers: authHeaders(),
-        body: JSON.stringify({ action: 'docs', badgeVerificaStato: u.badgeVerificaStato })
+        body: JSON.stringify(docsPayload)
       }).catch(function () {});
     } catch (_) {}
     paintBanner(u);
@@ -319,6 +325,46 @@
     return u;
   }
 
+  function syncWithServer(u) {
+    u = u || user();
+    var em = emailOf(u);
+    if (!em || isSpectator(u)) return;
+    try {
+      fetch('/api/auth/verify-docs?email=' + encodeURIComponent(em), {
+        headers: authHeaders()
+      }).then(function (r) { return r.json(); }).then(function (res) {
+        if (!res || !res.ok || !res.record) return;
+        var rec = res.record;
+        var changed = false;
+        if (rec.action === 'close' || rec.closedAt) {
+          u.accountClosed = true;
+          u.accountClosedAt = rec.closedAt || u.accountClosedAt || iso(now());
+          u.accountClosedReason = rec.reason || 'docs_timeout';
+          markClosedStore(u, u.accountClosedReason);
+          saveUser(u);
+          enforceClosed(u);
+          return;
+        }
+        if (rec.badgeVerificaStato && rec.badgeVerificaStato !== u.badgeVerificaStato) {
+          u.badgeVerificaStato = rec.badgeVerificaStato;
+          changed = true;
+        }
+        if (rec.docsAt && !u.docsAttachedAt) {
+          u.docsAttachedAt = rec.docsAt;
+          changed = true;
+        }
+        if (rec.startedAt && !u.roleConfirmedAt) {
+          u.roleConfirmedAt = rec.startedAt;
+          changed = true;
+        }
+        if (changed) {
+          saveUser(u);
+          paintBanner(u);
+        }
+      }).catch(function () {});
+    } catch (_) {}
+  }
+
   function openDocs() {
     if (typeof window.openRequestBadgeModal === 'function') window.openRequestBadgeModal();
     else if (typeof window.switchView === 'function') window.switchView('user-dossier', '#user-dossier-portal');
@@ -329,7 +375,9 @@
       if (e.target && (e.target.id === 'es-verify-go' || e.target.id === 'es-verify-card-go')) openDocs();
     });
     document.addEventListener('elisee:user-revealed', function (e) {
-      tick((e && e.detail && e.detail.user) || user(), { forceWarn: true });
+      var u = (e && e.detail && e.detail.user) || user();
+      tick(u, { forceWarn: true });
+      syncWithServer(u);
     });
     document.addEventListener('visibilitychange', function () {
       if (document.visibilityState === 'visible') tick(user());
@@ -374,7 +422,10 @@
           }
         }
         var out = prevApply.call(this, u, token);
-        setTimeout(function () { tick(u, { forceWarn: false }); }, 0);
+        setTimeout(function () {
+          tick(u, { forceWarn: false });
+          syncWithServer(u);
+        }, 0);
         return out;
       };
       window.EliseeAuth.applySession.__esVerify = true;
@@ -392,7 +443,10 @@
       var prevRestore = window.EliseeAuth.restore;
       window.EliseeAuth.restore = function () {
         return prevRestore.apply(this, arguments).then(function (u) {
-          if (u) tick(u, { forceWarn: true });
+          if (u) {
+            tick(u, { forceWarn: true });
+            syncWithServer(u);
+          }
           return u;
         });
       };
@@ -409,10 +463,13 @@
         if (u && hasRole(u) && !isSpectator(u)) {
           u = startClock(u, { fromNow: true });
           try {
+            var startPayload = { action: 'start', ruolo: u.ruolo || u.siteRoleFamily };
+            var startEm = emailOf(u);
+            if (startEm) startPayload.email = startEm;
             fetch('/api/auth/verify-docs', {
               method: 'POST',
               headers: authHeaders(),
-              body: JSON.stringify({ action: 'start', ruolo: u.ruolo || u.siteRoleFamily })
+              body: JSON.stringify(startPayload)
             }).catch(function () {});
           } catch (_) {}
           if (typeof window.showToast === 'function') {

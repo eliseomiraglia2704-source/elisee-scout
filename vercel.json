@@ -56,6 +56,10 @@
       "destination": "/api/auth/me?path=set-password"
     },
     {
+      "source": "/api/auth/verify-docs",
+      "destination": "/api/auth/me?path=verify-docs"
+    },
+    {
       "source": "/api/bacheca",
       "destination": "/api/manager?path=bacheca"
     },

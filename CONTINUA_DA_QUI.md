@@ -3,7 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Provenienza dati scheda tecnica (`SCOUTSRC1`):
+Ultimo aggiornamento: **2026-09-18** — Connessione server `verify-docs` & anti-fake sync (`VERIFYDOCS1`):
+1. **Rewrite Vercel**: `/api/auth/verify-docs` reindirizzato via rewrite su `/api/auth/me?path=verify-docs` in `vercel.json` (evita il 404 e rispetta il limite rigido di 12 serverless functions del piano Hobby).
+2. **Backend `api/auth/me.js`**: gestione completa di `start`, `docs` e `close` su Vercel KV / `/tmp` e locale. Aggiunto supporto a `req.query.email` per le richieste GET/POST senza Bearer token.
+3. **Frontend `verifica-account.js`**: invio dell'email utente in tutti i payload POST (`start`, `docs`, `close`); aggiunta sincronizzazione automatica bidirezionale `syncWithServer(u)` al ripristino della sessione / login.
+4. **File**: `vercel.json`, `api/auth/me.js`, `verifica-account.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_VERIFYDOCS1`.
+
+Feature precedente: **Provenienza dati scheda tecnica (`SCOUTSRC1`):
 1. Se il nominativo è in rosa allenatore/club: anagrafica, presenze, carico, ACWR da lì. Non si spaccia per GPS hardware.
 2. Altrimenti GPS/carriera restano stima IA, con banner «Sintesi IA» su scheda, PDF e Word. Niente più dicitura «tracciamento hardware».
 3. File: `schede-tecniche.js/css`. Cache `v20260918_SCOUTSRC1`.
