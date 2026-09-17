@@ -1,12 +1,33 @@
 /* ============================================================
    ELISEE SCOUT — DASHBOARD PREPARATORE DEI PORTIERI (CSS)
    Layout Luxury Ordinato B2B — Goalkeeper Technical OS
+   Navigazione gestionale unificata nella sidebar sinistra e tab bar superiore
    ============================================================ */
 
-#user-dossier-view-group.is-staff-area.is-gk-dash .es-user-tabs { display: none !important; }
+/* Rimozione totale footer pubblico in Area Preparatore Portieri */
+body.is-gk-mode footer.site-footer,
+body.is-gk-mode #site-public-footer,
+#user-dossier-view-group.is-gk-dash ~ footer.site-footer,
+#user-dossier-view-group.is-gk-dash ~ #site-public-footer {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+
+#user-dossier-view-group.is-staff-area.is-gk-dash .es-user-tabs,
+body.is-gk-mode .es-user-tabs {
+  display: none !important;
+}
+
 #user-dossier-view-group.is-staff-area.is-gk-dash,
 #user-dossier-portal.is-staff-area.is-gk-dash,
-#user-dossier-view-group.is-staff-area.is-gk-dash .pf-page-inner {
+#user-dossier-view-group.is-staff-area.is-gk-dash .pf-page-inner,
+body.is-gk-mode #user-dossier-portal,
+body.is-gk-mode #user-dossier-portal .pf-page-inner,
+body.is-gk-mode #user-dossier-view-group,
+body.is-gk-mode #user-dossier-view-group .pf-page-inner {
   max-width: none !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -24,175 +45,462 @@
   padding: 0 !important;
 }
 
-#es-staff-profile.es-gk-on > :not(#es-gk) { display: none !important; }
+#es-staff-profile.es-gk-on > :not(#es-gk) {
+  display: none !important;
+}
 
 #es-staff-profile.es-gk-on #es-gk {
-  display: grid !important;
-  grid-template-columns: 56px 1fr !important;
+  display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
   width: 100% !important;
-  min-height: calc(100vh - 72px);
-  background: #050608;
+  background: #080b12;
   color: #ffffff;
   box-sizing: border-box !important;
 }
 
-/* ---------- Rail Laterale Sinistro ---------- */
-#es-gk .es-pd-rail {
-  background: #090c12;
-  border-right: 1px solid rgba(56, 189, 248, 0.12);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1.25rem 0;
-  gap: 1rem;
-  z-index: 20;
+/* ============================================================
+   LAYOUT PRINCIPALE (Sidebar Fissa 240px + Main Workspace)
+   ============================================================ */
+.es-gk-shell {
+  background: #080b12;
+  min-height: calc(100vh - 72px);
+  min-height: calc(100dvh - 72px);
+  color: #eef2f9;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  padding-top: 14px;
+  padding-left: calc(240px + 18px);
+  padding-right: 18px;
+  padding-bottom: 28px;
+  max-width: none !important;
 }
 
-#es-gk .es-pd-rail button {
-  width: 38px;
-  height: 38px;
-  border-radius: 8px;
+/* ============================================================
+   SIDEBAR GESTIONALE PORTIERI (Fissa a Sinistra)
+   ============================================================ */
+.es-gk-sidebar {
+  width: 240px;
+  min-width: 240px;
+  background: #0a0e18;
+  border-right: 1px solid rgba(148, 163, 184, 0.14);
+  display: flex;
+  flex-direction: column;
+  padding: 22px 12px 28px;
+  position: fixed;
+  top: 72px;
+  left: 0;
+  bottom: 0;
+  height: calc(100vh - 72px);
+  height: calc(100dvh - 72px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+  z-index: 90;
+  box-sizing: border-box;
+}
+
+.es-gk-brand-header {
+  padding: 4px 4px 14px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+  margin-bottom: 14px;
+}
+
+.es-gk-brand-title {
+  font-size: 0.94rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.es-gk-brand-title span {
+  color: #22d3ee;
+}
+
+.es-gk-brand-sub {
+  font-size: 0.7rem;
+  color: #8b95a8;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 3px;
+}
+
+.es-gk-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.es-gk-side-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 6px;
   background: transparent;
   border: 1px solid transparent;
-  color: #64748b;
+  color: #94a3b8;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.es-gk-side-btn svg {
+  flex-shrink: 0;
+  stroke: currentColor;
+  width: 16px;
+  height: 16px;
+}
+
+.es-gk-side-btn:hover {
+  background: rgba(56, 189, 248, 0.08);
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.18);
+}
+
+.es-gk-side-btn.is-active {
+  background: rgba(56, 189, 248, 0.14);
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.35);
+  font-weight: 700;
+  box-shadow: 0 2px 10px rgba(56, 189, 248, 0.15);
+}
+
+.es-gk-sidebar-badge {
+  position: sticky;
+  bottom: 0;
+  margin-top: auto;
+  padding-top: 12px;
+  background: #0a0e18;
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.es-gk-sidebar-club-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: rgba(18, 26, 42, 0.6);
+  border: 1px solid rgba(56, 189, 248, 0.18);
+}
+
+.es-gk-sidebar-club-card img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.es-gk-sidebar-club-card strong {
+  display: block;
+  font-size: 0.78rem;
+  color: #f8fafc;
+}
+
+.es-gk-sidebar-club-card span {
+  font-size: 0.7rem;
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+  .es-gk-shell {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+  .es-gk-sidebar {
+    position: fixed;
+    inset: 72px auto 0 0;
+    width: 260px;
+    transform: translateX(-100%);
+    transition: transform .25s ease;
+    z-index: 100;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.6);
+  }
+  .es-gk-sidebar.is-open {
+    transform: translateX(0);
+  }
+}
+
+/* ============================================================
+   HEADER IDENTITÀ & STATUS GK OS (2 FASCE)
+   ============================================================ */
+.es-gk-dash-header {
+  background: rgba(18, 26, 42, 0.75);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.es-gk-header-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.es-gk-mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .es-gk-mobile-menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.es-gk-header-identity {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.es-gk-header-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.es-gk-licence-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-#es-gk .es-pd-rail button:hover {
   color: #38bdf8;
-  background: rgba(56, 189, 248, 0.08);
-  border-color: rgba(56, 189, 248, 0.2);
+  flex-shrink: 0;
 }
 
-#es-gk .es-pd-rail button.is-on {
-  color: #38bdf8;
-  background: rgba(56, 189, 248, 0.14);
-  border-color: rgba(56, 189, 248, 0.35);
-  box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
-}
-
-#es-gk .es-pd-rail-end {
-  margin-top: auto;
-}
-
-/* ---------- Shell & Contenuto Principale ---------- */
-.es-gk-shell {
-  padding: 1.5rem 2rem 3rem;
-  max-width: 1400px;
-  margin: 0 auto;
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-/* Top Header Bar */
-.es-gk-header-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
-}
-
-.es-gk-breadcrumb {
-  font-size: 0.75rem;
-  color: #64748b;
-  margin-bottom: 0.25rem;
-  letter-spacing: 0.02em;
-}
-
-.es-gk-title-wrap h1 {
-  font-size: 1.45rem;
+.es-gk-coach-info strong {
+  display: block;
+  font-size: 1.05rem;
   font-weight: 800;
   color: #f8fafc;
-  margin: 0;
-  letter-spacing: -0.01em;
 }
 
-.es-gk-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
+.es-gk-coach-info .role {
+  display: inline-block;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #38bdf8;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 1px;
 }
 
-.es-gk-btn-primary {
+.es-gk-coach-info .sub {
+  margin: 2px 0 0;
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+.es-gk-header-sep {
+  width: 1px;
+  height: 38px;
+  background: rgba(148, 163, 184, 0.16);
+}
+
+.es-gk-club-info .crest {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.es-gk-club-info strong {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.es-gk-club-info span {
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+.es-gk-btn-quick-jump {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-  color: #ffffff;
-  font-size: 0.8rem;
-  font-weight: 700;
-  border: 1px solid rgba(56, 189, 248, 0.4);
-  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
-  cursor: pointer;
+  gap: 8px;
   transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
 }
 
-.es-gk-btn-primary:hover {
+.es-gk-btn-quick-jump:hover {
   background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
   border-color: #38bdf8;
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(2, 132, 199, 0.5);
 }
 
-.es-gk-btn-secondary {
+/* Fascia Inferiore: Prossima Gara + Countdown + Focus Portieri */
+.es-gk-header-match-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1.1fr 1.5fr;
+  gap: 14px;
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
+  padding-top: 12px;
+}
+
+@media (max-width: 900px) {
+  .es-gk-header-match-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.es-gk-target-box {
+  background: rgba(10, 15, 26, 0.6);
+  border: 1px solid rgba(56, 189, 248, 0.14);
+  border-radius: 6px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.es-gk-target-box .label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #64748b;
+  letter-spacing: 0.04em;
+  margin: 0 0 3px;
+}
+
+.es-gk-target-box strong {
+  font-size: 0.86rem;
+  color: #f8fafc;
+  font-weight: 700;
+}
+
+.es-gk-target-box span {
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+.es-gk-countdown-nums {
+  display: flex;
+  gap: 12px;
+  margin-top: 3px;
+}
+
+.es-gk-countdown-nums div {
+  text-align: center;
+}
+
+.es-gk-countdown-nums strong {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #38bdf8;
+  line-height: 1;
+}
+
+.es-gk-countdown-nums span {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* ============================================================
+   NAV TABS BAR SUPERIORE COMPATTA
+   ============================================================ */
+.es-gk-nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: rgba(18, 26, 42, 0.45);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 6px;
+  padding: 6px 8px;
+  margin-bottom: 16px;
+}
+
+.es-gk-nav-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.es-gk-tab-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.95rem;
-  border-radius: 8px;
-  background: rgba(15, 23, 42, 0.85);
-  color: #38bdf8;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 5px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #94a3b8;
   font-size: 0.8rem;
-  font-weight: 700;
-  border: 1px solid rgba(56, 189, 248, 0.3);
+  font-weight: 600;
   cursor: pointer;
+  white-space: nowrap;
   transition: all 0.2s ease;
 }
 
-.es-gk-btn-secondary:hover {
-  background: rgba(56, 189, 248, 0.12);
-  border-color: #38bdf8;
-  color: #ffffff;
+.es-gk-tab-btn:hover {
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.05);
 }
 
-/* Griglie di Layout */
-.es-gk-grid-2col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
+.es-gk-tab-btn.is-active {
+  background: rgba(56, 189, 248, 0.14);
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.35);
+  font-weight: 700;
 }
 
-.es-gk-grid-3col {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
-}
-
-/* Card Luxury Base */
+/* ============================================================
+   CARD E SEZIONI OPERATIVE
+   ============================================================ */
 .es-gk-card {
-  background: #0a0e18;
-  border: 1px solid rgba(56, 189, 248, 0.14);
-  border-radius: 12px;
-  padding: 1.35rem;
+  background: rgba(18, 26, 42, 0.75);
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  border-radius: 8px;
+  padding: 1.15rem 1.35rem;
+  margin-bottom: 14px;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-  position: relative;
 }
 
 .es-gk-card-head {
@@ -200,138 +508,99 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
 }
 
 .es-gk-card-title {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   font-weight: 800;
-  color: #f1f5f9;
+  color: #f8fafc;
   margin: 0;
-  letter-spacing: 0.02em;
 }
 
 .es-gk-badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 4px;
   font-size: 0.68rem;
   font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 6px;
-  letter-spacing: 0.03em;
   text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .es-gk-badge-tag.cyan {
-  background: rgba(56, 189, 248, 0.1);
+  background: rgba(56, 189, 248, 0.12);
   color: #38bdf8;
-  border: 1px solid rgba(56, 189, 248, 0.28);
+  border: 1px solid rgba(56, 189, 248, 0.3);
 }
 
 .es-gk-badge-tag.emerald {
-  background: rgba(52, 211, 153, 0.1);
-  color: #34d399;
-  border: 1px solid rgba(52, 211, 153, 0.28);
+  background: rgba(74, 222, 128, 0.12);
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.3);
 }
 
 .es-gk-badge-tag.amber {
-  background: rgba(251, 191, 36, 0.1);
+  background: rgba(245, 158, 11, 0.12);
   color: #fbbf24;
-  border: 1px solid rgba(251, 191, 36, 0.28);
+  border: 1px solid rgba(245, 158, 11, 0.3);
 }
 
-.es-gk-badge-tag.rose {
-  background: rgba(244, 63, 94, 0.08);
-  color: #fda4af;
-  border: 1px solid rgba(244, 63, 94, 0.22);
+.es-gk-grid-2col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
-/* Profilo */
+/* Profilo Preparatore Portieri */
 .es-gk-profile-row {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1.15rem;
-}
-
-.es-gk-avatar {
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  border: 2px solid rgba(56, 189, 248, 0.4);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
-  object-fit: cover;
-  flex-shrink: 0;
-}
-
-.es-gk-avatar-fallback {
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #091a2e 0%, #0369a1 100%);
-  border: 2px solid rgba(56, 189, 248, 0.45);
-  color: #ffffff;
-  font-weight: 800;
-  font-size: 1.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
-  flex-shrink: 0;
-}
-
-.es-gk-user-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.es-gk-user-name {
-  font-size: 1.15rem;
-  font-weight: 900;
-  color: #ffffff;
-  line-height: 1.2;
-}
-
-.es-gk-user-badges {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-top: 2px;
-}
-
-.es-gk-onboarding-bar-box {
-  background: #060911;
-  border: 1px solid rgba(56, 189, 248, 0.16);
-  border-radius: 8px;
-  padding: 0.8rem 1rem;
   margin-bottom: 1rem;
 }
 
-.es-gk-onboarding-label-row {
+.es-gk-avatar-fallback {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #075985 0%, #0369a1 100%);
+  border: 2px solid #38bdf8;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: #94a3b8;
-  margin-bottom: 6px;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 1.25rem;
+  color: #ffffff;
+}
+
+.es-gk-user-name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #f8fafc;
+  display: block;
+  margin-bottom: 4px;
 }
 
 .es-gk-progress-track {
-  height: 6px;
-  background: rgba(15, 23, 42, 0.9);
+  width: 100%;
+  height: 7px;
+  background: rgba(148, 163, 184, 0.14);
   border-radius: 4px;
   overflow: hidden;
-  border: 1px solid rgba(148, 163, 184, 0.12);
+  margin: 6px 0;
 }
 
 .es-gk-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #0284c7 0%, #38bdf8 100%);
+  background: linear-gradient(90deg, #38bdf8 0%, #0284c7 100%);
   border-radius: 4px;
 }
 
@@ -339,73 +608,68 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.65rem;
+  margin-top: 0.85rem;
 }
 
 .es-gk-cred-item {
-  background: rgba(15, 23, 42, 0.55);
-  border: 1px solid rgba(148, 163, 184, 0.1);
+  background: #060911;
+  border: 1px solid rgba(56, 189, 248, 0.12);
   border-radius: 6px;
   padding: 0.55rem 0.75rem;
 }
 
 .es-gk-cred-item span {
   display: block;
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   color: #94a3b8;
   text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 0.03em;
   margin-bottom: 2px;
 }
 
 .es-gk-cred-item b {
+  display: block;
   font-size: 0.82rem;
-  color: #e2e8f0;
-  font-weight: 700;
+  color: #f8fafc;
 }
 
-/* Metriche GK */
+/* Metriche Specifiche Portieri */
 .es-gk-metrics-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.65rem;
-  margin-bottom: 1rem;
+  margin: 0.85rem 0;
 }
 
 .es-gk-metric-box {
   background: #060911;
-  border: 1px solid rgba(56, 189, 248, 0.14);
+  border: 1px solid rgba(56, 189, 248, 0.12);
   border-radius: 8px;
-  padding: 0.65rem 0.5rem;
+  padding: 0.75rem 0.5rem;
   text-align: center;
 }
 
 .es-gk-metric-box strong {
   display: block;
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 900;
   color: #38bdf8;
-  line-height: 1.1;
-  margin-bottom: 2px;
+  line-height: 1;
+  margin-bottom: 4px;
 }
 
 .es-gk-metric-box span {
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   color: #94a3b8;
-  font-weight: 600;
-  line-height: 1.25;
-  display: block;
+  text-transform: uppercase;
 }
 
 .es-gk-quick-actions {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 0.5rem;
-  margin-top: auto;
 }
 
 .es-gk-quick-btn {
-  flex: 1 1 calc(50% - 0.5rem);
   padding: 0.55rem 0.75rem;
   border-radius: 6px;
   background: rgba(56, 189, 248, 0.07);
@@ -422,10 +686,9 @@
   background: rgba(56, 189, 248, 0.16);
   border-color: #38bdf8;
   color: #ffffff;
-  transform: translateY(-1px);
 }
 
-/* ActionsGrid a Card (Fluida & Reattiva - No Tagli) */
+/* Actions Grid Reattiva */
 .es-gk-actions-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -490,127 +753,24 @@
   line-height: 1.35;
 }
 
-/* Checklist e Limiti */
-.es-gk-checklist {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-}
-
-.es-gk-checklist li {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.6rem;
-  font-size: 0.78rem;
-  line-height: 1.45;
-  color: #cbd5e1;
-}
-
-.es-gk-checklist li svg {
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.es-gk-limits-card {
-  background: rgba(244, 63, 94, 0.03) !important;
-  border-color: rgba(244, 63, 94, 0.2) !important;
-}
-
-.es-gk-limits-card .es-gk-card-head {
-  border-bottom-color: rgba(244, 63, 94, 0.12);
-}
-
-.es-gk-limits-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-}
-
-.es-gk-limits-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.6rem;
-  font-size: 0.78rem;
-  line-height: 1.45;
-  color: #fda4af;
-}
-
-.es-gk-limits-list li svg {
-  flex-shrink: 0;
-  margin-top: 2px;
-  color: #f43f5e;
-}
-
-/* Empty State Registro */
-.es-gk-empty-wrap {
-  padding: 2.25rem 1rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
+.es-gk-btn-primary {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.65rem;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.es-gk-empty-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(56, 189, 248, 0.08);
-  border: 1px solid rgba(56, 189, 248, 0.22);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #38bdf8;
-}
-
-.es-gk-empty-title {
-  font-size: 0.88rem;
-  font-weight: 800;
-  color: #f1f5f9;
-}
-
-.es-gk-empty-sub {
-  font-size: 0.75rem;
-  color: #64748b;
-  max-width: 320px;
-  line-height: 1.45;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-  .es-gk-grid-3col {
-    grid-template-columns: 1fr;
-  }
-  .es-gk-actions-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (max-width: 768px) {
-  #es-staff-profile.es-gk-on #es-gk {
-    grid-template-columns: 1fr !important;
-  }
-  #es-gk .es-pd-rail {
-    flex-direction: row;
-    width: 100%;
-    padding: 0.5rem 1rem;
-    border-right: none;
-    border-bottom: 1px solid rgba(56, 189, 248, 0.12);
-  }
-  .es-gk-shell {
-    padding: 1rem;
-  }
-  .es-gk-grid-2col {
-    grid-template-columns: 1fr;
-  }
-  .es-gk-actions-grid {
-    grid-template-columns: 1fr;
-  }
+.es-gk-btn-primary:hover {
+  background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+  border-color: #38bdf8;
+  transform: translateY(-1px);
 }

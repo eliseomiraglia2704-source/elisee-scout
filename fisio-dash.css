@@ -24,11 +24,11 @@
   padding: 0 !important;
 }
 
-#es-staff-profile.es-fisio-on > :not(#es-fd) { display: none !important; }
+#es-staff-profile.es-fisio-on > :not(#es-fisio) { display: none !important; }
 
-#es-staff-profile.es-fisio-on #es-fd {
-  display: grid !important;
-  grid-template-columns: 56px 1fr !important;
+#es-staff-profile.es-fisio-on #es-fisio {
+  display: block !important;
+  grid-template-columns: none !important;
   visibility: visible !important;
   opacity: 1 !important;
   width: 100% !important;

@@ -3,15 +3,14 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Conversione PRO Atleta, Giornalista, Presidente (`PRO3DASH1`):
-1. **Tre dashboard allineate al layout PRO di `gk-dash.js` / `gk-dash.css`**:
-   - Sidebar fissa 240px con brand ELISEE SCOUT, voci etichettate e card club Foggia City sticky (`1000345699.png`, onerror `foggia-city.png`).
-   - Header a due livelli + tab bar compatta. Mobile `<1024` sidebar off-canvas.
-   - **player-dash.js**: rail 56px sostituita. Tab: Dashboard, Prestazione, Obiettivi, Card, Messaggi, Anagrafica. CTA «Modifica Profilo». L2: stagione, PGB media, Focus «Crescita & Visibilità». `#es-pd` `display:block`. `body.is-player-mode`. `#es-pc-slot` e `EliseePlayerCard.mountDash` conservati.
-   - **giorn-dash.js**: rail 56px sostituita. Tab: Dashboard, Redazione, Rassegna, Feed, Coda, Profilo. Titolo area «Area Giornalista / Content Creator». Licenza «Stampa / Giornalista» + badge verificato. CTA «Nuovo Articolo». Handler `data-gd` invariati.
-   - **pres-dash.js**: chrome PRO intorno a overview e tutte le subview. Sidebar → `openSubView` (overview, stadium, club-stats, sponsors, standings, schedule, training-center, Profilo). `#es-prd` / `.es-pres-suite` forzati `display:block` senza griglia 56px.
-2. **File aggiornati**: `player-dash.js`, `player-dash.css`, `giorn-dash.js`, `giorn-dash.css`, `pres-dash.js`, `pres-dash.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260917_PRO3DASH1`.
-3. Le rail 56px `.es-pd-rail` non sono più emesse da queste tre dashboard.
+Ultimo aggiornamento: **2026-09-17** — Allineamento PRO di tutte le dashboard restanti (`ALLPRO1`):
+1. **Sblocco griglia 56px** in `dash-luxury.css`: le shell PRO (`es-pro-shell`, `es-gk-shell`, `es-med-shell`, `es-obs-shell`, `es-ma-shell`, `es-at-shell`, `es-cos-shell`) e gli id `#es-gk` `#es-md` `#es-fisio` `#es-nu` `#es-mad` `#es-od` `#es-atd` `#es-dsd` `#es-tmd` `#es-yg` `#es-dg` `#es-ag` `#es-mk` `#es-pr` `#es-eq` `#es-sg` `#es-bt` `#es-td` `#es-pd` `#es-gd` `#es-prd` sono `display:block` (niente colonna nera da 56px). CSS condiviso `.es-pro-*` (sidebar 240px, header 2 livelli, tab bar).
+2. **Preparatore Portieri** (`gk-dash.js` / `gk-dash.css`): shell PRO già pronta, ora sbloccata dalla griglia 56px. Tab: Dashboard, Stanza dei Portieri, Schede, Reattività, Badge, Radar, Canale Mister.
+3. **Preparatore Atletico** (`at-dash.js` / `at-dash.css`): rail 56px rimossa. Sidebar 240px, header 2 livelli, tab Dashboard / GPS / Schede / Test / Badge / Radar / Canale Mister.
+4. **Shell condivisa** `dash-real.js`: DS, Team Manager, Settore Giovanile, DG, Procuratore, Marketing, Ufficio Stampa, Magazziniere, Segretario, Biglietteria, Tifoso passano alla shell PRO (sidebar + header 2 livelli + tab operative per ruolo).
+5. **Medico / Fisio / Nutrizionista**: CSS sidebar 240px (`es-med-*`) aggiunto; `#es-fisio` allineato all'id JS (prima `#es-fd`); box `display:block`.
+6. **Atleta, Giornalista, Presidente**: chrome PRO (commit `2f71a995` / `PRO3DASH1`) incluso in questo giro di cache.
+7. **File**: `dash-luxury.css`, `dash-real.js`, `gk-dash.js`, `gk-dash.css`, `at-dash.js`, `at-dash.css`, `med-dash.css`, `fisio-dash.css`, `nu-dash.css`, `player-profile.css`, `player-dash.js/css`, `giorn-dash.js/css`, `pres-dash.js/css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260917_ALLPRO1`.
 
 Feature precedente: **Conversione PRO Area Preparatore Atletico (`ATPRO1`):
 1. **Allineamento dashboard Preparatore Atletico a Preparatore Portieri**:

@@ -27,8 +27,8 @@
 #es-staff-profile.es-nu-on > :not(#es-nu) { display: none !important; }
 
 #es-staff-profile.es-nu-on #es-nu {
-  display: grid !important;
-  grid-template-columns: 56px 1fr !important;
+  display: block !important;
+  grid-template-columns: none !important;
   visibility: visible !important;
   opacity: 1 !important;
   width: 100% !important;

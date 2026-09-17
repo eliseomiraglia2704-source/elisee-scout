@@ -381,7 +381,7 @@ body.layout-portfolio .es-pp textarea:focus,
 #user-dossier-view-group.is-staff-area #dossier-legacy {
   display: none !important;
 }
-#user-dossier-view-group.is-staff-area:not(.is-coach-dash):not(.is-obs-dash):not(.is-vice-dash):not(.is-med-dash):not(.is-fisio-dash):not(.is-nu-dash):not(.is-ma-dash):not(.is-gk-dash):not(.is-at-dash):not(.is-ds-dash):not(.is-pres-dash):not(.is-tm-dash):not(.is-yg-dash):not(.is-dg-dash):not(.is-ag-dash):not(.is-mk-dash):not(.is-pr-dash):not(.is-eq-dash):not(.is-sg-dash):not(.is-bt-dash) .pf-page-inner {
+#user-dossier-view-group.is-staff-area:not(.is-coach-dash):not(.is-obs-dash):not(.is-vice-dash):not(.is-med-dash):not(.is-fisio-dash):not(.is-nu-dash):not(.is-ma-dash):not(.is-gk-dash):not(.is-at-dash):not(.is-ds-dash):not(.is-pres-dash):not(.is-tm-dash):not(.is-yg-dash):not(.is-dg-dash):not(.is-ag-dash):not(.is-mk-dash):not(.is-pr-dash):not(.is-eq-dash):not(.is-sg-dash):not(.is-bt-dash):not(.is-tf-dash) .pf-page-inner {
   max-width: 560px;
   margin: 0 auto;
   color: #e2e8f0;
