@@ -3,7 +3,16 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Allineamento criteri password login / reimposta (`PWPOLICY1`):
+Ultimo aggiornamento: **2026-09-17** — Scheda tecnica IA da DS e Scout (`SCHEDAIA1`):
+1. **Richiesta**: la scheda tecnica (manuale `manuale_profili_club_260916_153944.pdf`) deve essere generata dall’IA con i dati, non solo sui pochi profili demo in Bacheca, e richiedibile da Direttore Sportivo e Area Scout.
+2. **Intervento**:
+   - Generatore `EliseeSchede.generateFor` su qualsiasi tesserato (pool, Secret List, Scopri profili, dossier scout, o nome digitato).
+   - Scheda anagrafica tesserato del PDF: nome, ruolo, n° tessera, società, nascita, email, telefono, inizio incarico, foto + missione/competenze/funzioni se è uno staff di club.
+   - DS: tab **Schede tecniche IA** nella sidebar.
+   - Scout: pulsanti **Genera scheda tecnica IA** su Dossier e Database.
+3. **File**: `schede-tecniche.js`, `schede-tecniche.css`, `dash-real.js`, `ds-dash.js`, `obs-dash.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260917_SCHEDAIA1`.
+
+Feature precedente: **Allineamento criteri password login / reimposta (`PWPOLICY1`):
 1. **Bug**: Accedi mostrava i 4 requisiti (8 caratteri, maiuscola, numero, speciale) mentre Reimposta password accettava solo 8 caratteri e **non salvava** l'hash sul server. Chi cambiava password senza maiuscola poi non riusciva ad entrare (hash originale invariato + UI di login fuorviante).
 2. **Fix**:
    - Login: niente checklist di forza. Basta email + password; il server confronta l'hash.

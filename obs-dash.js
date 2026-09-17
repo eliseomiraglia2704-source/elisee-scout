@@ -438,7 +438,10 @@
             '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' +
             '<span>Dossier &amp; Relazioni di Scouting (' + dossiers.length + ')</span>' +
           '</h2>' +
-          '<button type="button" class="es-obs-btn-primary" data-ob-act="add-dossier">+ Nuova Relazione</button>' +
+          '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
+            '<button type="button" class="es-obs-btn-primary" data-ob-act="generate-sheet">Genera scheda tecnica IA</button>' +
+            '<button type="button" class="es-obs-quick-btn" data-ob-act="add-dossier">+ Nuova Relazione</button>' +
+          '</div>' +
         '</div>' +
 
         '<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:12px;">' +
@@ -515,7 +518,10 @@
             '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
             '<span>Database &amp; Motore di Ricerca Talenti</span>' +
           '</h2>' +
-          '<button type="button" class="es-obs-btn-primary" data-ob-act="open-search-global">🌐 Apri Discovery Globale</button>' +
+          '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
+            '<button type="button" class="es-obs-btn-primary" data-ob-act="generate-sheet">Genera scheda tecnica IA</button>' +
+            '<button type="button" class="es-obs-quick-btn" data-ob-act="open-search-global">Apri Discovery Globale</button>' +
+          '</div>' +
         '</div>' +
 
         '<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:10px; margin-bottom:16px;">' +
@@ -920,6 +926,18 @@
           saveSecretList(list2);
           toast(nome + ' aggiunto alla Secret List in modalità stealth!', 'success');
           renderHub(userObj());
+          return;
+        }
+
+        if (act === 'generate-sheet') {
+          var qSheet = prompt('Nome, ruolo o società del tesserato per la scheda tecnica IA:');
+          if (qSheet && window.EliseeSchede && window.EliseeSchede.generateFor) {
+            var shIa = window.EliseeSchede.generateFor(qSheet, 'scout');
+            if (shIa) {
+              toast('Scheda tecnica IA generata per ' + shIa.name + '.', 'success');
+              if (window.EliseeSchede.openViewer) window.EliseeSchede.openViewer(shIa, 'scout');
+            }
+          }
           return;
         }
 

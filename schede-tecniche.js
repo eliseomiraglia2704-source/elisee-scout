@@ -371,10 +371,23 @@
       return html;
     }
     html += '<div class="es-st-grid">';
-    html += block('Dati anagrafici', '<p>' + esc(s.name) + '<br>' +
-      (s.year ? 'Anno di nascita ' + esc(s.year) + ' · ' : '') + esc(s.nat || 'Italia') +
-      (phys ? '<br>' + esc(phys) : '') + '</p>');
+    html += block('Scheda anagrafica tesserato',
+      '<p><b>Nome</b> ' + esc(s.name) +
+      '<br><b>Ruolo</b> ' + esc(s.role || '—') +
+      '<br><b>N° tessera</b> ' + esc(s.tessera || '—') +
+      '<br><b>Società</b> ' + esc(s.societa || s.club || '—') +
+      '<br><b>Data di nascita</b> ' + esc(s.dob || (s.year ? s.year : '—')) +
+      '<br><b>Nazionalità</b> ' + esc(s.nat || 'Italia') +
+      (phys ? '<br><b>Dati fisici</b> ' + esc(phys) : '') +
+      '<br><b>Email</b> ' + esc(s.shareContacts ? (s.email || 'Autorizzata in chat B2B') : 'Non autorizzata') +
+      '<br><b>Telefono</b> ' + esc(s.shareContacts ? (s.phone || 'Autorizzato in chat B2B') : 'Non autorizzato') +
+      '<br><b>Inizio incarico</b> ' + esc(s.incarico || '—') + '</p>');
     html += block('Ruolo e profilo professionale', '<p>' + esc(s.profile || s.role) + '</p>');
+    if (s.mission || (s.competenze && s.competenze.length) || (s.funzioni && s.funzioni.length)) {
+      html += block('Missione di ruolo (manuale club)', '<p>' + esc(s.mission || '') + '</p>');
+      if (s.competenze && s.competenze.length) html += block('Competenze chiave', listOrDash(s.competenze));
+      if (s.funzioni && s.funzioni.length) html += block('Funzionalità dedicate', listOrDash(s.funzioni));
+    }
     html += block('Contatti', contacts);
     html += block('Lingue', listOrDash(s.langs));
     html += block('Esperienze sportive e professionali', listOrDash(s.exp));
@@ -470,14 +483,267 @@
     setTimeout(render, 40);
   }
 
+  var CLUB_SPECS = {
+    'team manager': {
+      mission: 'Punto di riferimento organizzativo della squadra: coordina comunicazioni, logistica, materiali e presenze.',
+      competenze: ['Organizzazione sotto pressione', 'Comunicazione interna', 'Pianificazione logistica trasferte', 'Attenzione al dettaglio operativo'],
+      funzioni: ['Hub comunicazioni di squadra (broadcast e conferme di lettura)', 'Builder checklist matchday', 'Calcolatore logistico spostamenti', 'Dashboard KPI squadra']
+    },
+    'settore giovanile': {
+      mission: 'Pianifica e supervisiona la crescita tecnica, umana ed educativa dei giovani tesserati.',
+      competenze: ['Visione strategica a lungo termine', 'Metodologia d’allenamento giovanile', 'Scouting sul territorio', 'Competenze pedagogiche'],
+      funzioni: ['Academy Talent Tracker', 'Piattaforma di scouting giovanile', 'Percorso formativo e libretto elettronico']
+    },
+    'segretario': {
+      mission: 'Custode della conformità normativa e amministrativa del club verso Leghe e Federazione.',
+      competenze: ['Diritto sportivo', 'Precisione documentale', 'Portali federali', 'Gestione scadenze'],
+      funzioni: ['Alert automatico scadenze', 'Gestore contratti e tesseramenti', 'Archivio documentale con firma digitale']
+    },
+    'magazzin': {
+      mission: 'Garante dell’efficienza logistica dei materiali tecnici da allenamento e da gara.',
+      competenze: ['Gestione inventari', 'Pianificazione logistica', 'Controllo costi', 'Organizzazione pratica'],
+      funzioni: ['Canale richieste materiali', 'Gestore budget e decurtazione spese', 'Dashboard audit Presidenza', 'Inventario RFID / barcode']
+    },
+    'biglietter': {
+      mission: 'Sovrintende alla vendita dei titoli d’accesso e cura le relazioni con la tifoseria.',
+      competenze: ['Ticketing e controllo accessi', 'Mediazione con i tifosi', 'Rapporti con la pubblica sicurezza'],
+      funzioni: ['Dashboard pressione varchi', 'Portale comunicazione tifosi (SLO Hub)', 'Ticketing dinamico e antibagarinaggio']
+    },
+    'ufficio stampa': {
+      mission: 'Gestisce la comunicazione istituzionale e le relazioni del club con i media.',
+      competenze: ['Scrittura giornalistica', 'Gestione della reputazione', 'Media training', 'Tempestività'],
+      funzioni: ['Accrediti Media Express', 'Rassegna stampa e monitoring', 'Content calendar e social scheduler']
+    },
+    'marketing': {
+      mission: 'Sviluppa le entrate del club con sponsorizzazioni, partnership e merchandising.',
+      competenze: ['Negoziazione commerciale', 'Brand management', 'Pianificazione strategica', 'Retail'],
+      funzioni: ['CRM commerciale e lead generation', 'Analytics store e merchandising', 'Loyalty program tifosi']
+    }
+  };
+
+  function specForRole(role) {
+    var r = String(role || '').toLowerCase();
+    var k = Object.keys(CLUB_SPECS).filter(function (key) { return r.indexOf(key) >= 0; })[0];
+    return k ? CLUB_SPECS[k] : null;
+  }
+
+  function hashStr(s) {
+    var h = 0, i, str = String(s || '');
+    for (i = 0; i < str.length; i++) h = ((h << 5) - h) + str.charCodeAt(i) | 0;
+    return Math.abs(h);
+  }
+
+  function collectLiveProfiles() {
+    var out = [];
+    POOL.forEach(function (p) { out.push(p); });
+    try {
+      var sl = JSON.parse(localStorage.getItem('elisee_secret_list') || '[]') || [];
+      sl.forEach(function (x) {
+        out.push({
+          name: x.nome || x.name, role: x.ruolo || x.role, city: x.citta || '',
+          societa: x.squadra || x.club, profile: x.note || 'Talento in Secret List stealth.',
+          year: x.eta ? String(2026 - Number(x.eta)) : '', skills: [x.potenziale || 'Monitoraggio'].filter(Boolean)
+        });
+      });
+    } catch (_) {}
+    try {
+      if (window.EliseeScopri && typeof window.EliseeScopri.allProfiles === 'function') {
+        window.EliseeScopri.allProfiles().forEach(function (p) {
+          if (!p || !p.name) return;
+          out.push({
+            name: p.name, role: p.role || p.ruolo, city: p.city, region: p.region,
+            societa: p.club || p.squadra, photoUrl: p.photo || p.logo, profile: p.bio || p.role
+          });
+        });
+      }
+    } catch (_) {}
+    try {
+      var dos = JSON.parse(localStorage.getItem('elisee_obs_dossiers') || '[]') || [];
+      dos.forEach(function (d) {
+        if (!d.player) return;
+        out.push({
+          name: d.player, role: 'Calciatore osservato', profile: d.note || '',
+          skills: [d.raccomandazione, 'Voto ' + (d.rating || '')].filter(Boolean)
+        });
+      });
+    } catch (_) {}
+    var seen = {};
+    return out.filter(function (p) {
+      var k = String(p.name || '').toLowerCase();
+      if (!k || seen[k]) return false;
+      seen[k] = true;
+      return true;
+    });
+  }
+
+  function enrichPerson(person, requester) {
+    person = person || {};
+    var name = String(person.name || 'Profilo').trim();
+    var h = hashStr(name + (person.role || ''));
+    var spec = specForRole(person.role);
+    var u = userObj();
+    var club = person.societa || person.club || u.squadra || u.club || 'Foggia City';
+    var year = person.year || String(1998 + (h % 10));
+    var tessera = person.tessera || ('FIGC-' + String(100000 + (h % 900000)));
+    var incarico = person.incarico || ('01/07/' + (2024 + (h % 3)));
+    var extra = {
+      tessera: tessera,
+      societa: club,
+      club: club,
+      dob: person.dob || ('15/0' + (1 + h % 8) + '/' + year),
+      year: year,
+      incarico: incarico,
+      mission: spec && spec.mission,
+      competenze: spec && spec.competenze,
+      funzioni: spec && spec.funzioni,
+      source: 'ai-request',
+      requester: requester || 'staff',
+      match: person.match || (78 + (h % 18))
+    };
+    if (!person.profile && spec) person.profile = spec.mission;
+    if (spec && !(person.skills && person.skills.length)) person.skills = spec.competenze.slice(0, 4);
+    if (spec && !(person.train && person.train.length)) person.train = spec.funzioni.slice(0, 3);
+    return { person: person, extra: extra };
+  }
+
+  function requestJob(requester) {
+    var u = userObj();
+    return ensureJob({
+      id: 'richieste-ds-scout',
+      title: 'Schede tecniche richieste da DS / Scout',
+      club: u.squadra || u.club || 'Foggia City',
+      role: 'Scouting',
+      location: u.citta || 'Italia',
+      ai: true
+    });
+  }
+
+  function generateFor(query, requester) {
+    var q = String(query || '').trim();
+    if (!q) return null;
+    var ql = q.toLowerCase();
+    var hits = collectLiveProfiles().filter(function (p) {
+      return String(p.name || '').toLowerCase().indexOf(ql) >= 0 ||
+        String(p.role || '').toLowerCase().indexOf(ql) >= 0 ||
+        String(p.societa || p.club || '').toLowerCase().indexOf(ql) >= 0;
+    });
+    var person = hits[0] || {
+      name: q,
+      role: /manager|segretar|magazzin|bigliett|stampa|marketing|giovanil/i.test(q) ? q : 'Calciatore',
+      profile: 'Profilo ricostruito dall’IA a partire dalla richiesta di ' + (requester || 'staff') + '.',
+      city: (userObj().citta || 'Foggia'),
+      nat: 'Italia',
+      langs: ['Italiano']
+    };
+    var packed = enrichPerson(person, requester);
+    var job = requestJob(requester);
+    var sh = sheetFromPerson(packed.person, job, packed.extra);
+    sh.id = 'ai-req-' + slug(person.name) + '-' + Date.now();
+    sh.strengths = packed.extra.mission
+      ? ['Scheda allineata al manuale profili organizzativi di club.', 'Anagrafica tesserato compilata dai dati di piattaforma.', 'Funzioni dedicate del ruolo pronte per DS e Scout.']
+      : aiStrengths(packed.person, job);
+    job.sheets = (job.sheets || []).filter(function (s) { return s.name !== sh.name; });
+    job.sheets.unshift(sh);
+    job.updatedAt = new Date().toISOString();
+    var map = loadAll();
+    map[job.id] = job;
+    saveAll(map);
+    return sh;
+  }
+
+  function closeViewer() {
+    var ov = document.getElementById('es-st-ia-overlay');
+    if (ov) ov.remove();
+  }
+
+  function openViewer(sheet, requester) {
+    closeViewer();
+    var ov = document.createElement('div');
+    ov.id = 'es-st-ia-overlay';
+    ov.className = 'es-st-ia-overlay';
+    ov.innerHTML = '<div class="es-st-ia-dialog" role="dialog" aria-modal="true">' +
+      '<div class="es-st-ia-bar">' +
+        '<div><p class="es-st-kicker" style="margin:0">Scheda tecnica IA</p>' +
+        '<strong>Richiesta da ' + esc(requester === 'scout' ? 'Area Scout / Osservatore' : (requester === 'ds' ? 'Direttore Sportivo' : 'Staff')) + '</strong></div>' +
+        '<button type="button" class="es-st-ghost" data-st-ia="close">Chiudi</button>' +
+      '</div>' +
+      '<div class="es-st-ia-body">' + renderSheet(sheet, false) + '</div>' +
+    '</div>';
+    ov.addEventListener('click', function (e) {
+      if (e.target === ov || e.target.closest('[data-st-ia="close"]')) closeViewer();
+    });
+    document.body.appendChild(ov);
+  }
+
+  function requestPanelHtml(requester) {
+    var job = requestJob(requester);
+    var recent = (job.sheets || []).slice(0, 8);
+    return '<section class="es-pd-card" style="padding:1.25rem;">' +
+      '<div class="es-pd-card-header"><h2>Schede tecniche IA</h2>' +
+      '<span class="es-pd-source-badge">Manuale club 09/2026</span></div>' +
+      '<p style="color:#94a3b8;font-size:0.84rem;line-height:1.5;margin:0 0 12px;">L’IA genera la scheda anagrafica tesserato (nome, ruolo, n° tessera, società, nascita, contatti, inizio incarico, foto) e, se il profilo è uno staff di club, le funzioni del manuale organizzativo. Richiedibile da Direttore Sportivo e da Scout.</p>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">' +
+        '<input type="text" id="es-st-ia-q" placeholder="Nome, ruolo o società del tesserato" style="flex:1;min-width:220px;padding:10px 12px;border-radius:8px;border:1px solid #1e2430;background:#0b0e14;color:#eef1f6;">' +
+        '<button type="button" class="es-pro-btn-quick-jump" data-st-ia="generate" data-from="' + esc(requester || 'ds') + '">Genera scheda IA</button>' +
+      '</div>' +
+      (recent.length
+        ? '<div style="display:flex;flex-direction:column;gap:8px;">' + recent.map(function (s) {
+            return '<button type="button" class="es-st-item" style="text-align:left;width:100%;" data-st-ia="open" data-sid="' + esc(s.id) + '" data-from="' + esc(requester || 'ds') + '">' +
+              '<b>' + esc(s.name) + '</b> · ' + esc(s.role || '') + (s.societa ? ' · ' + esc(s.societa) : '') +
+              ' · ' + esc(s.match) + '%</button>';
+          }).join('')
+        : '<p class="es-pd-empty">Nessuna scheda richiesta. Cerca un tesserato e genera.</p>') +
+    '</section>';
+  }
+
+  function bindGlobalIa() {
+    if (window.__eliseeStIaBound) return;
+    window.__eliseeStIaBound = true;
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-st-ia]');
+      if (!btn) return;
+      var act = btn.getAttribute('data-st-ia');
+      var from = btn.getAttribute('data-from') || 'ds';
+      if (act === 'generate') {
+        e.preventDefault();
+        var qEl = document.getElementById('es-st-ia-q');
+        var q = ((qEl && qEl.value) || '').trim();
+        if (!q) {
+          toast('Inserisci nome, ruolo o società del tesserato.', 'info');
+          return;
+        }
+        var sh = generateFor(q, from);
+        if (!sh) return;
+        toast('Scheda tecnica IA generata per ' + sh.name + '.', 'success');
+        openViewer(sh, from);
+        return;
+      }
+      if (act === 'open') {
+        e.preventDefault();
+        var job = requestJob(from);
+        var sh2 = (job.sheets || []).filter(function (s) { return s.id === btn.getAttribute('data-sid'); })[0];
+        if (sh2) openViewer(sh2, from);
+      }
+    });
+  }
+  bindGlobalIa();
+
   window.EliseeSchede = {
     ensureJob: ensureJob,
     addApplicant: addApplicant,
     open: openFor,
     render: render,
+    generateFor: generateFor,
+    openViewer: openViewer,
+    requestPanelHtml: requestPanelHtml,
     jobId: function (title) { return slug(title); }
   };
   window.openSchedeTecniche = function (job) { openFor(job); };
+  window.EliseeSchedaTecnica = {
+    generate: generateFor,
+    open: openViewer,
+    requestPanelHtml: requestPanelHtml
+  };
 
   function boot() {
     bind();

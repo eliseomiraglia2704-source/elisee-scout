@@ -367,3 +367,42 @@ body.layout-portfolio .es-st-toolbar select {
 @media (max-width: 620px) {
   .es-pub-grid2 { grid-template-columns: 1fr; }
 }
+
+.es-st-ia-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 120000;
+  background: rgba(5, 6, 8, 0.72);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 72px 16px 24px;
+  overflow: auto;
+}
+.es-st-ia-dialog {
+  width: min(880px, 100%);
+  background: #0b0e14;
+  border: 1px solid #1e2430;
+  border-radius: 8px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+.es-st-ia-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+.es-st-ia-bar strong {
+  display: block;
+  color: #eef1f6;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.es-st-ia-body {
+  padding: 8px 16px 20px;
+}
+.es-st-ia-body .es-st-sheet {
+  max-width: none;
+}

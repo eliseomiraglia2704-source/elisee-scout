@@ -235,6 +235,13 @@
       if (!b) return;
       var k = b.getAttribute('data-ds');
       if (k === 'home' && window.switchView) window.switchView('home', '#hero');
+      if (k === 'schede' && window.EliseeSchede && window.EliseeSchede.requestPanelHtml) {
+        var q = window.prompt('Nome, ruolo o società del tesserato per la scheda tecnica IA:');
+        if (q && window.EliseeSchede.generateFor) {
+          var sh = window.EliseeSchede.generateFor(q, 'ds');
+          if (sh && window.EliseeSchede.openViewer) window.EliseeSchede.openViewer(sh, 'ds');
+        }
+      }
       if (k === 'secret' && window.openSecretList) window.openSecretList();
       if (k === 'wall' && window.openTransferWall) window.openTransferWall();
       if (k === 'album' && window.openChiSegui) {

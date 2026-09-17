@@ -34,6 +34,7 @@
         { id: 'secret', label: 'Secret List Stealth', ico: 'lock', act: 'secret' },
         { id: 'trattative', label: 'Trattative & Contratti', ico: 'brief' },
         { id: 'scouting', label: 'Scouting & Target', ico: 'radar' },
+        { id: 'schede', label: 'Schede tecniche IA', ico: 'file' },
         { id: 'wall', label: 'Wall Trasferimenti', ico: 'file', act: 'wall' },
         { id: 'radar', label: 'Radar & Competenze', ico: 'radar' },
         { id: 'canale', label: 'Canale Staff', ico: 'users' },
@@ -421,6 +422,9 @@
     var extraPanels = cfg.nav.filter(function (n) {
       return n.id !== 'dashboard' && n.act !== 'edit' && n.act !== 'msgs' && n.act !== 'home';
     }).map(function (n) {
+      if (n.id === 'schede' && window.EliseeSchede && typeof window.EliseeSchede.requestPanelHtml === 'function') {
+        return tabPanel(n.id, window.EliseeSchede.requestPanelHtml(attr === 'ds' ? 'ds' : attr));
+      }
       var cta = n.act
         ? '<button type="button" class="es-pro-btn-quick-jump" data-' + attr + '="' + n.act + '">Apri ' + esc(n.label) + '</button>'
         : '';
