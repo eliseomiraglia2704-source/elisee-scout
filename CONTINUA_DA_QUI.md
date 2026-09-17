@@ -3,7 +3,25 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Risoluzione Schermata Nera Area Vice Allenatore (`VICEFIX1`):
+Ultimo aggiornamento: **2026-09-17** — Riprogettazione Completa & Armonica Area Osservatore / Scout (`OBSLUX1`):
+1. **Ridisegno Integrale Dashboard Osservatore & Talent Scout (`obs-dash.js`, `obs-dash.css`, `index.html`)**:
+   - **Diagnosi**: La pagina dell'Osservatore soffriva di una stratificazione frammentata (shell a 3 colonne generica sovrapposta a un blocco `.es-obs-extra` appeso in fondo che duplicava credenziali, bottoni e sezioni, creando disordine visivo).
+   - **Nuova Architettura Ordinata & Armonica**:
+     - **Dock Laterale Sinistro**: Rail compatto (56px) con icone pulite e tooltip (Home, Dashboard, Secret List, Wall Trasferimenti, Ricerca Profili, Messaggi, Anagrafica).
+     - **Top Header Bar**: Breadcrumb di navigazione, titolo ufficiale in grassetto, badge "Stealth Scouting" e due CTA ben visibili in alto a destra: *"Inoltra Target al DS"* e *"Apri Secret List"*.
+     - **Riga 1 — Profilo & Centro Stealth (2 Colonne 50/50)**:
+       - *Sinistra*: Profilo Ufficiale Scout con avatar circolare compatto (58px) con fallback monogramma su gradiente scuro indaco, ruolo `Osservatore / Scout`, club (senza alcuna duplicazione) o badge `Scout Indipendente`, status contrattuale (`Under Contract` ciano o `Free Agent` smeraldo), barra di onboarding (85%) con CTA *"✏️ Modifica Anagrafica"*, e credenziali FIGC.
+       - *Destra*: Centro Operativo Stealth Scouting con garanzie di riservatezza, contatore reale dei calciatori in Secret List, precisione valutazioni e pulsanti rapidi (Secret List, Wall, Ricerca, Messaggi).
+     - **Riga 2 — Strumenti Operativi Scout (ActionsGrid a 3 Colonne)**:
+       - Griglia di 6 card con icone 38px, titoli bianchi e descrizioni operative dettagliate (*Secret List Stealth*, *Inoltra Target al DS*, *Ricerca & Filtri Tattici*, *Wall Trasferimenti Ufficiali*, *Schede Tecniche IA*, *Note Vocali in Testo*).
+     - **Riga 3 — Analisi, Permessi & Limiti (3 Colonne Paritetiche)**:
+       - *Quadro Scouting*: Grafico radar polare a 8 assi perfettamente dimensionato con indice personale e media.
+       - *Attività & Permessi*: Lista con check verdi delle facoltà autorizzate dello scout.
+       - *Limiti di Ruolo & Governance*: Card con bordo e testo rosso/rosa tenue desaturato (`#fda4af`) coerente con la palette luxury (nessun annuncio a nome del club e nessuna ratifica trattative).
+     - **Riga 4 — Registro Osservazioni**: Visual empty-state moderno con icona archivio, spiegazione chiara e pulsanti rapidi di inizio scouting.
+2. **File aggiornati**: `obs-dash.js`, `obs-dash.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_OBSLUX1`.
+
+Feature precedente: **Risoluzione Schermata Nera Area Vice Allenatore (`VICEFIX1`):**
 1. **Fix Definitivo Schermata Nera Area Vice Allenatore & Allenatore Capo (`dash-luxury.css`, `vice-dash.js`, `coach-dash.js`, `vice-dash.css`, `coach-dash.css`)**:
    - **Diagnosi**: Nel foglio di stile `dash-luxury.css` le regole universali del layout a due colonne (56px 1fr per le dashboard a dock/rail) includevano erroneamente `#es-cd` e `#es-vd`, confinando la shell completa `.es-cos-shell` in soli 56px di larghezza e lasciando il restante 1fr come cella vuota a sfondo `#050608` (il rettangolo nero che copriva l'intera schermata).
    - **Risoluzione CSS**:
