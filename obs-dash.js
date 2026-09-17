@@ -716,7 +716,7 @@
           '</nav>' +
           '<div class="es-obs-sidebar-badge">' +
             '<div class="es-obs-sidebar-club-card">' +
-              '<img src="immagini/squadre-loghi/1000345699.png?v=20260916_FGCLOGO2" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'immagini/squadre-loghi/foggia-city.png\';">' +
+              '<img src="immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'immagini/squadre-loghi/foggia-city.png\';">' +
               '<div>' +
                 '<strong>' + esc(club) + '</strong>' +
                 '<span>Staff Scouting Ufficiale</span>' +
@@ -747,7 +747,7 @@
                 '</div>' +
                 '<div class="es-obs-header-sep"></div>' +
                 '<div class="es-obs-header-block es-obs-club-info">' +
-                  '<img class="crest" src="immagini/squadre-loghi/1000345699.png?v=20260916_FGCLOGO2" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'immagini/squadre-loghi/foggia-city.png\';">' +
+                  '<img class="crest" src="immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'immagini/squadre-loghi/foggia-city.png\';">' +
                   '<div>' +
                     '<strong>' + esc(club) + '</strong>' +
                     '<span>Prima Squadra &amp; Settore Giovanile</span>' +

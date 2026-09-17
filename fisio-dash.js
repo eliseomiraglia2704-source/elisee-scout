@@ -375,7 +375,7 @@
           renderSideBtn('impostazioni','Profilo &amp; Specializzazione', '<circle cx="12" cy="12" r="3"/>') +
         '</nav>' +
         '<div class="es-med-sidebar-badge"><div class="es-med-sidebar-club-card">' +
-          '<img src="immagini/squadre-loghi/1000345699.png?v=20260916_FGCLOGO2" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'immagini/squadre-loghi/foggia-city.png\';">' +
+          '<img src="immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'immagini/squadre-loghi/foggia-city.png\';">' +
           '<div><strong>' + esc(club) + '</strong><span>Staff Sanitario Ufficiale</span></div>' +
         '</div></div>' +
       '</aside>' +
@@ -389,7 +389,7 @@
                 '<div class="es-med-doc-info"><strong>' + esc(name) + '</strong><span class="role">Fisioterapista Sportivo AIFI</span><p class="sub">Iscr. AIFI: AIFI-FT-7731 &middot; Albo TSRM PSTRP FG #4421 &middot; Scad. 31/12/2026</p></div>' +
               '</div>' +
               '<div class="es-med-header-sep"></div>' +
-              '<div class="es-med-header-block es-med-club-info"><img class="crest" src="immagini/squadre-loghi/1000345699.png?v=20260916_FGCLOGO2" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'immagini/squadre-loghi/foggia-city.png\';"><div><strong>' + esc(club) + '</strong><span>Staff Fisioterapico Ufficiale</span></div></div>' +
+              '<div class="es-med-header-block es-med-club-info"><img class="crest" src="immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'immagini/squadre-loghi/foggia-city.png\';"><div><strong>' + esc(club) + '</strong><span>Staff Fisioterapico Ufficiale</span></div></div>' +
             '</div>' +
             '<button type="button" class="es-med-btn-quick-jump" data-fisio-nav="trattamenti">Nuovo Trattamento &#8594;</button>' +
           '</div>' +

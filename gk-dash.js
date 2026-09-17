@@ -639,7 +639,7 @@
           '</nav>' +
           '<div class="es-gk-sidebar-badge">' +
             '<div class="es-gk-sidebar-club-card">' +
-              '<img src="immagini/squadre-loghi/1000345699.png?v=20260916_FGCLOGO2" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'immagini/squadre-loghi/foggia-city.png\';">' +
+              '<img src="immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'immagini/squadre-loghi/foggia-city.png\';">' +
               '<div>' +
                 '<strong>' + esc(club) + '</strong>' +
                 '<span>Staff Tecnico Ufficiale</span>' +
@@ -670,7 +670,7 @@
                 '</div>' +
                 '<div class="es-gk-header-sep"></div>' +
                 '<div class="es-gk-header-block es-gk-club-info">' +
-                  '<img class="crest" src="immagini/squadre-loghi/1000345699.png?v=20260916_FGCLOGO2" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'immagini/squadre-loghi/foggia-city.png\';">' +
+                  '<img class="crest" src="immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'immagini/squadre-loghi/foggia-city.png\';">' +
                   '<div>' +
                     '<strong>' + esc(club) + '</strong>' +
                     '<span>Prima Squadra · Reparto Portieri</span>' +

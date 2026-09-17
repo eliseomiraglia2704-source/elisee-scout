@@ -3,7 +3,16 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Scheda tecnica scouting allineata al PDF ufficiale (`SCOUTPDF1`):
+Ultimo aggiornamento: **2026-09-17** — Logo Foggia City con licenza, mai Calcio Foggia 1920 (`FGCLIC1`):
+1. **Problema**: Foggia City usava lo stemma satanello di Calcio Foggia 1920 (`foggia.png` / id `1000345699`). Licenza d’uso solo per Foggia City.
+2. **Fix**:
+   - Crest di tutte le dashboard staff/atleta/presidente: `immagini/squadre-loghi/foggia-city.png`.
+   - Demo Presidenza: club **Foggia City** (non Foggia Calcio 1920).
+   - Sanifica localStorage se logo/nome 1920.
+   - Selettore squadre: kit/logo City solo se `id=foggia-city` o nome «FOGGIA CITY», non per qualsiasi «Foggia».
+3. **File**: dashboards, `dash-real.js`, `pres-dash.js`, `squadre-select.js`, `app.js`, `index.html`, `sw.js`. Cache `v20260917_FGCLIC1`.
+
+Feature precedente: **Scheda tecnica scouting allineata al PDF ufficiale (`SCOUTPDF1`):
 1. **Correzione**: il PDF precedente era il manuale profili club. Il documento corretto è `Scheda_Tecnica_Scouting.pdf` (Dossier analitico & scheda tecnica scouting, export DS).
 2. **Layout a 5 sezioni**:
    - 1 Header & anagrafica (nome, nascita/età, nazionalità/domicilio, status contrattuale, club/categoria, antropometria, Match Index IA)

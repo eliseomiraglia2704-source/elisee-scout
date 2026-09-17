@@ -7344,7 +7344,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       var name = (u.nome ? (u.nome + (u.cognome ? ' ' + u.cognome : '')) : (u.name || prof.nome || 'Eliseo Miraglia')).trim();
       var roleCampo = prof.ruoloCampo || prof.ruolo || u.ruolo || 'Attaccante / Ala Sinistra';
-      var club = prof.squadra || u.squadra || u.club || 'US Foggia 1920';
+      var club = prof.squadra || u.squadra || u.club || 'Foggia City';
       var cat = prof.categoria || u.categoria || 'Serie D (Girone H)';
       var birth = prof.annoNascita || prof.anno || '2004';
       var age = prof.eta || '22';

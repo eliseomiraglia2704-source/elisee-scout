@@ -1349,7 +1349,7 @@
 
                 '<div class="es-cos-header-block es-cos-club-info">' +
                   '<div class="crest es-cos-crest es-cos-crest--img" title="' + esc(data.clubName) + '">' +
-                    '<img src="immagini/squadre-loghi/1000345699.png?v=20260916_FGCLOGO2" alt="' + esc(data.clubName) + '" onerror="this.onerror=null;this.src=\'immagini/squadre-loghi/foggia-city.png\';">' +
+                    '<img src="immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1" alt="' + esc(data.clubName) + '" onerror="this.onerror=null;this.src=\'immagini/squadre-loghi/foggia-city.png\';">' +
                   '</div>' +
                   '<div>' +
                     '<strong>' + esc(data.clubName) + '</strong>' +

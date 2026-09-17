@@ -4,7 +4,7 @@
 
   var currentSeason = '2026/27';
   var activeTab = 'dashboard';
-  var CLUB_CREST = 'immagini/squadre-loghi/1000345699.png?v=20260916_FGCLOGO2';
+  var CLUB_CREST = 'immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1';
   var CLUB_CREST_FALLBACK = 'immagini/squadre-loghi/foggia-city.png';
 
   var AXES = [

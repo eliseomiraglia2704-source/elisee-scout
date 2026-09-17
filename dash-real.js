@@ -444,7 +444,7 @@
       return '<div><strong>' + it[0] + '</strong><span>' + it[1] + '</span></div>';
     }).join('');
 
-    var logo = 'immagini/squadre-loghi/1000345699.png?v=20260916_FGCLOGO2';
+    var logo = 'immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1';
 
     return '<div class="es-pro-shell">' +
       '<aside class="es-pro-sidebar">' +

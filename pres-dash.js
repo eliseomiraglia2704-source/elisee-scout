@@ -1,7 +1,7 @@
 /* ============================================================
    ELISEE SCOUT — AREA PRESIDENTE (PRESIDENTIAL DASHBOARD B2B)
    Architettura Dati Reali, Stati Vuoti Onesti & Provenienza Dati
-   - Gestione separata Modalità Dati Reali vs Modalità Demo (Foggia Calcio 1920)
+   - Gestione separata Modalità Dati Reali vs Modalità Demo (Foggia City)
    - Calcoli matematici real-time (Rating rosa, medie età, scadenze dinamiche)
    - Menu a tendina rigido per qualifiche federali ufficiali FIGC
    - Tracciabilità delle modifiche (Audit Trail con timestamp e utente)
@@ -703,7 +703,7 @@
       isDemoMode: true,
       lastUpdatedBy: 'Eliseo Miraglia (Admin Demo)',
       lastUpdatedAt: '26/08/2026 ore 13:30',
-      clubName: 'Foggia Calcio 1920',
+      clubName: 'Foggia City',
       footballScope: 'dilettanti',
       category: 'Serie D (Dipartimento Interregionale LND)',
       region: 'Puglia',
@@ -713,7 +713,7 @@
       points: 62,
       standingGap: '-2 pt dalla vetta (1° Brindisi 64 pt)',
       affiliationStatus: 'Tesseramento Attivo FIGC LND',
-      logoUrl: 'immagini/squadre-loghi/foggia.png',
+      logoUrl: 'immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1',
       presName: getUserName(u),
       presRole: 'Ruolo: Presidente',
 
@@ -906,7 +906,7 @@
 
       standingsTable: [
         { pos: 1, team: 'Brindisi', played: 28, won: 20, drawn: 4, lost: 4, gf: 58, ga: 20, gd: '+38', pts: 64, isUser: false },
-        { pos: 2, team: 'Foggia Calcio 1920', played: 28, won: 19, drawn: 5, lost: 4, gf: 54, ga: 22, gd: '+32', pts: 62, isUser: true },
+        { pos: 2, team: 'Foggia City', played: 28, won: 19, drawn: 5, lost: 4, gf: 54, ga: 22, gd: '+32', pts: 62, isUser: true },
         { pos: 3, team: 'Barletta 1922', played: 28, won: 17, drawn: 7, lost: 4, gf: 49, ga: 21, gd: '+28', pts: 58, isUser: false },
         { pos: 4, team: 'Casarano Calcio', played: 28, won: 15, drawn: 9, lost: 4, gf: 44, ga: 24, gd: '+20', pts: 54, isUser: false },
         { pos: 5, team: 'Audace Cerignola', played: 28, won: 14, drawn: 8, lost: 6, gf: 42, ga: 26, gd: '+16', pts: 50, isUser: false },
@@ -936,7 +936,7 @@
       points: 0,
       standingGap: 'Campionato in fase di caricamento',
       affiliationStatus: 'Affiliazione FIGC Registrata',
-      logoUrl: u.logoUrl || 'immagini/squadre-loghi/foggia.png',
+      logoUrl: u.logoUrl || 'immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1',
       presName: getUserName(u),
       presRole: 'Ruolo: ' + (u.staffRole || 'Presidente'),
 
@@ -1028,6 +1028,19 @@
     };
   }
 
+  function sanitizeLicensedCrest(data) {
+    if (!data || typeof data !== 'object') return data;
+    var name = String(data.clubName || '').toLowerCase();
+    var logo = String(data.logoUrl || '');
+    var is1920Name = /foggia calcio 1920|us foggia/.test(name);
+    var is1920Logo = /squadre-loghi\/foggia\.png|1000345699/.test(logo);
+    if (is1920Name) data.clubName = 'Foggia City';
+    if (is1920Name || is1920Logo || /foggia city/.test(name) || !logo) {
+      data.logoUrl = 'immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1';
+    }
+    return data;
+  }
+
   function getPresClubData() {
     var u = userObj();
     try {
@@ -1035,6 +1048,7 @@
       if (stored) {
         var parsed = JSON.parse(stored);
         if (parsed && typeof parsed === 'object') {
+          parsed = sanitizeLicensedCrest(parsed);
           // Se la modalità non è demo, rimuove qualsiasi residuo dei vecchi placeholder
           if (!parsed.isDemoMode) {
             if (Array.isArray(parsed.trainingWeek) && parsed.trainingWeek.some(function (tw) { return tw.attendance === 'Da rilevare'; })) {
@@ -1546,7 +1560,7 @@
           '<div class="es-pres-demo-banner">' +
             '<div style="display:flex; align-items:center; gap:0.65rem;">' +
               '<span class="es-pres-demo-tag">Modalità Dimostrativa</span>' +
-              '<span>Stai visualizzando il dataset di prova (Foggia Calcio 1920). Nessun dato reale del tuo club è stato ancora inserito.</span>' +
+              '<span>Stai visualizzando il dataset di prova (Foggia City). Nessun dato reale del tuo club è stato ancora inserito.</span>' +
             '</div>' +
             '<div style="display:flex; gap:0.5rem;">' +
               '<button type="button" class="es-pres-btn-primary" id="btn-switch-to-real" style="padding:4px 10px; font-size:0.75rem;">Passa a Dati Reali del Tuo Club</button>' +
@@ -1560,7 +1574,7 @@
           '<div class="es-pres-header-inner">' +
             '<div class="es-pres-club-meta-box">' +
               '<div class="es-pres-crest-frame">' +
-                '<img src="' + esc(data.logoUrl || 'immagini/squadre-loghi/foggia.png') + '" alt="' + esc(data.clubName) + '" class="es-pres-crest-img">' +
+                '<img src="' + esc(data.logoUrl || 'immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1') + '" alt="' + esc(data.clubName) + '" class="es-pres-crest-img">' +
               '</div>' +
               '<div class="es-pres-club-meta-text">' +
                 '<div style="display:flex; align-items:center; gap:0.6rem;">' +
@@ -2180,7 +2194,7 @@
             '<span>' + ICONS.building + '</span> 1. Creazione e Gestione Profilo Squadra' +
           '</h4>' +
           '<ul style="margin:0; padding-left:1.1rem; font-size:0.78rem; color:#cbd5e1; line-height:1.55; display:flex; flex-direction:column; gap:0.35rem;">' +
-            '<li><b>Nome Ufficiale Squadra:</b> es. A.S.D. Foggia Calcio 1920.</li>' +
+            '<li><b>Nome Ufficiale Squadra:</b> es. A.S.D. Foggia City.</li>' +
             '<li><b>Logo / Stemma Societario:</b> Crest aziendale ad alta risoluzione.</li>' +
             '<li><b>Città & Sede:</b> Geolocalizzazione (Città, Provincia, Regione) per indicizzazione ricerche a imbuto.</li>' +
             '<li><b>Foto Maglie Ufficiali:</b> Kit da gara (Prima Maglia, Seconda Maglia, Portiere) utilizzati per personalizzare la grafica delle Card dei tesserati.</li>' +
@@ -2253,7 +2267,7 @@
           '</div>' +
           '<div class="es-pres-input-group">' +
             '<label>URL Logo / Stemma Societario (Crest) *</label>' +
-            '<input type="text" class="es-pres-input-text" id="inp-club-logo" required value="' + esc(data.logoUrl || 'immagini/squadre-loghi/foggia.png') + '" placeholder="Percorso o URL logo">' +
+            '<input type="text" class="es-pres-input-text" id="inp-club-logo" required value="' + esc(data.logoUrl || 'immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1') + '" placeholder="Percorso o URL logo">' +
           '</div>' +
         '</div>' +
 
@@ -2436,7 +2450,7 @@
     clubData = clubData || getPresClubData();
     var kits = clubData.kits || {};
     var kitHome = kits.home || 'immagini/squadre-kits/foggia-home.png';
-    var logoUrl = clubData.logoUrl || 'immagini/squadre-loghi/foggia.png';
+    var logoUrl = clubData.logoUrl || 'immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1';
     var rating = player.rating || (78 + (player.id ? (player.id % 12) : 5));
 
     var cardHtml =
@@ -3672,7 +3686,7 @@
   // ============================================================
   // GESTIONE SUB-VIEWS & ROUTING (PUSHSTATE / POPSTATE)
 
-  var CLUB_CREST = 'immagini/squadre-loghi/1000345699.png?v=20260916_FGCLOGO2';
+  var CLUB_CREST = 'immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1';
   var CLUB_CREST_FALLBACK = 'immagini/squadre-loghi/foggia-city.png';
 
   function crestImg(club, cls) {
@@ -3884,7 +3898,7 @@
         var demo = getDemoDataset(userObj());
         savePresClubData(demo);
         renderPresidentialSuite();
-        if (window.showToast) window.showToast('Caricati dati dimostrativi Foggia Calcio 1920!', 'success');
+        if (window.showToast) window.showToast('Caricati dati dimostrativi Foggia City!', 'success');
       };
     }
 
