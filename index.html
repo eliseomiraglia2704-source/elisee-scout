@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260917_BUGFIX1';
+      var BUILD_VERSION = '20260917_BACHECA7';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -48,7 +48,7 @@
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
-  <link rel="stylesheet" href="bacheca-board.css?v=20260910_SIDE1">
+  <link rel="stylesheet" href="bacheca-board.css?v=20260917_BACHECA7">
   <style id="es-font-nevera">
     @font-face {
       font-family: 'Nevera';
@@ -2170,7 +2170,7 @@
                 Pannello Elisee Manager
               </a>
               <a href="#bacheca-annunci" class="es-account-item" onclick="event.preventDefault(); event.stopPropagation(); if(window.switchView){ window.switchView('bacheca','#bacheca-annunci'); } if(window.openPubblicaAnnuncioModal){ window.openPubblicaAnnuncioModal(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;">
-                Pubblica candidatura
+                Nuovo annuncio
               </a>
               <a href="#seguo-portal" class="es-account-item" onclick="event.preventDefault(); event.stopPropagation(); if(window.openChiSegui){ window.openChiSegui(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;">
                 Album
@@ -2772,10 +2772,10 @@
             <header class="pf-header pf-header-bacheca">
               <div class="pf-header-text">
                 <h1 class="pf-title" data-i18n="bacheca.title">Bacheca reclutamento</h1>
-                <p class="pf-lead">Provini, ingaggi e ruoli tecnici per il calcio dilettantistico e giovanile italiano.</p>
+                <p class="pf-lead">Sette categorie di annuncio, filtrabili per ruolo, zona e raggio. Pubblica in due passi.</p>
               </div>
               <div class="pf-header-actions es-board__actions">
-                <button type="button" class="es-btn es-btn--secondary" id="btn-bacheca-pubblica" data-bacheca-action="pubblica" title="Pubblica una candidatura">Pubblica candidatura</button>
+                <button type="button" class="es-btn es-btn--secondary" id="btn-bacheca-pubblica" data-bacheca-action="pubblica" title="Pubblica un nuovo annuncio">Nuovo annuncio</button>
                 <button type="button" class="es-btn es-btn--primary" id="btn-bacheca-crea-profilo" data-bacheca-action="crea-profilo" title="Crea il tuo profilo">Crea profilo</button>
               </div>
             </header>
@@ -2838,14 +2838,13 @@
                       </div>
                       <div class="dropdown-options-menu" role="listbox">
                         <div class="dropdown-option selected" data-value="all">Tutte le categorie</div>
-                        <div class="dropdown-option" data-value="Serie D">Serie D</div>
-                        <div class="dropdown-option" data-value="Eccellenza">Eccellenza</div>
-                        <div class="dropdown-option" data-value="Promozione">Promozione</div>
-                        <div class="dropdown-option" data-value="Prima Categoria">Prima Categoria</div>
-                        <div class="dropdown-option" data-value="Seconda Categoria">Seconda Categoria</div>
-                        <div class="dropdown-option" data-value="Terza Categoria">Terza Categoria</div>
-                        <div class="dropdown-option" data-value="Under 19">Under 19</div>
-                        <div class="dropdown-option" data-value="Under 17">Under 17</div>
+                        <div class="dropdown-option" data-value="cerco_squadra">Cerco Squadra</div>
+                        <div class="dropdown-option" data-value="cerco_giocatore">Cerco Giocatore</div>
+                        <div class="dropdown-option" data-value="cerco_allenatore">Cerco Allenatore</div>
+                        <div class="dropdown-option" data-value="cerco_arbitro">Cerco Arbitro</div>
+                        <div class="dropdown-option" data-value="cerco_amichevole">Cerco Amichevole</div>
+                        <div class="dropdown-option" data-value="cerco_sponsor">Cerco Sponsor</div>
+                        <div class="dropdown-option" data-value="calciomercato">Calciomercato</div>
                       </div>
                     </div>
                   </div>
@@ -2940,7 +2939,7 @@
                   </div>
                   <div class="es-cta-strip">
                     <p>Non hai trovato il ruolo giusto?</p>
-                    <button type="button" class="es-btn es-btn--secondary" id="btn-pubblica-richiesta" data-bacheca-action="pubblica">Pubblica una richiesta</button>
+                    <button type="button" class="es-btn es-btn--secondary" id="btn-pubblica-richiesta" data-bacheca-action="pubblica">Nuovo annuncio</button>
                   </div>
                 </div>
 
@@ -4485,8 +4484,8 @@
   <div id="modal-pubblica-annuncio" class="modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="pubblica-annuncio-title">
     <div class="modal-card es-pub-card">
       <button type="button" class="modal-close" id="pubblica-annuncio-close" aria-label="Chiudi">&times;</button>
-      <p class="portfolio-kicker" style="margin:0 0 0.35rem;">Profilo Club</p>
-      <h3 id="pubblica-annuncio-title">Pubblica candidatura</h3>
+      <p class="portfolio-kicker" style="margin:0 0 0.35rem;">Bacheca annunci</p>
+      <h3 id="pubblica-annuncio-title">Nuovo annuncio</h3>
       <p class="es-pub-intro">Compila l’offerta e il profilo ricercato. La richiesta diventa visibile in Bacheca. Con l’IA attiva, i profili più compatibili vengono candidati in automatico e le schede restano qui, senza e-mail.</p>
       <form id="form-pubblica-annuncio" class="pf-form es-pub-form" onsubmit="return false;">
         <div class="es-pub-grid2">
@@ -4565,7 +4564,7 @@
 
         <div class="es-pub-actions">
           <button type="button" class="btn btn-outline-pill" id="pubblica-annuncio-cancel">Annulla</button>
-          <button type="button" class="btn btn-outline-pill pf-btn-solid" id="pubblica-annuncio-submit">Pubblica candidatura</button>
+          <button type="button" class="btn btn-outline-pill pf-btn-solid" id="pubblica-annuncio-submit">Pubblica annuncio</button>
         </div>
       </form>
     </div>
@@ -5840,7 +5839,8 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="elisee-staff.js?v=20260911_ADMIN2"></script>
-  <script src="app.js?v=20260917_FGCLIC1"></script>
+  <script src="app.js?v=20260917_BACHECA7"></script>
+  <script src="bacheca-annunci.js?v=20260917_BACHECA7"></script>
   <script src="player-profile.js?v=20260917_BUGFIX1"></script>
   <script src="public-rating-system.js?v=20260904_SEASONDROP1"></script>
   <script src="schede-tecniche.js?v=20260917_BUGFIX1"></script>

@@ -7558,7 +7558,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setBachecaFilters({ svincolato: true });
         break;
       case 'scouting':
-        setBachecaFilters({ category: 'Serie D' });
+        setBachecaFilters({ category: 'cerco_giocatore' });
         break;
       case 'staff':
         setBachecaFilters({ role: 'Match Analyst' });
@@ -7628,11 +7628,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const cat = document.getElementById('dropdown-category');
         if (cat) {
           cat.querySelectorAll('.dropdown-option').forEach(o => o.classList.remove('selected'));
-          const serieD = cat.querySelector('.dropdown-option[data-value="Serie D"]');
+          const serieD = cat.querySelector('.dropdown-option[data-value="cerco_giocatore"]');
           if (serieD) {
             serieD.classList.add('selected');
             const txt = document.getElementById('category-selected-text');
-            if (txt) txt.textContent = 'Serie D';
+            if (txt) txt.textContent = 'Cerco Giocatore';
           }
         }
         document.querySelectorAll('#dropdown-category .dropdown-option').forEach(opt => {
@@ -8777,6 +8777,9 @@ document.addEventListener('DOMContentLoaded', () => {
     var userJobs = [];
     try {
       userJobs = (JSON.parse(localStorage.getItem('elisee_user_jobs') || '[]') || []).map(function (j) {
+        if (window.EliseeBacheca && typeof window.EliseeBacheca.normalize === 'function') {
+          return window.EliseeBacheca.normalize(j);
+        }
         var hx = function (s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
         var offer = [j.incarico, j.compenso, j.durata].filter(Boolean).join(' · ');
         var req = [j.ruolo, j.esperienza, j.competenze].filter(Boolean).join(' · ');
@@ -8787,6 +8790,7 @@ document.addEventListener('DOMContentLoaded', () => {
           club: hx(j.societa || ''),
           location: hx(j.zona || ''),
           category: j.category || 'Bacheca',
+          categoria: j.categoria || '',
           description: hx(j.desc || offer || ''),
           offer: hx(offer),
           req: hx(req),
@@ -8800,17 +8804,27 @@ document.addEventListener('DOMContentLoaded', () => {
         };
       });
     } catch (_) { userJobs = []; }
-    const allJobs = userJobs.concat(sampleJobs);
+    var extraJobs = (window.EliseeBacheca && typeof window.EliseeBacheca.extraJobs === 'function') ? window.EliseeBacheca.extraJobs() : [];
+    const allJobs = userJobs.concat(sampleJobs).concat(extraJobs).map(function (j) {
+      return (window.EliseeBacheca && typeof window.EliseeBacheca.normalize === 'function') ? window.EliseeBacheca.normalize(j) : j;
+    });
+    if (window.EliseeBacheca && typeof window.EliseeBacheca.syncCatParam === 'function') {
+      window.EliseeBacheca.syncCatParam(catVal);
+    }
     var geoBtn = document.querySelector('#bacheca-geo-segmented .bacheca-seg-btn.is-active');
     var geo = geoBtn ? Number(geoBtn.getAttribute('data-geo') || 0) : 0;
     var filtered = allJobs.filter(job => {
-      if (roleVal !== 'all' && job.role !== roleVal) return false;
-      if (catVal !== 'all' && job.category !== catVal) return false;
+      if (job.stato && job.stato !== 'attivo') return false;
+      if (roleVal !== 'all') {
+        var roleBlob = [job.role, job.ruolo, job.ruolo_campo, job.ruolo_cercato].join(' ').toLowerCase();
+        if (job.role !== roleVal && roleBlob.indexOf(String(roleVal).toLowerCase()) < 0) return false;
+      }
+      if (catVal !== 'all' && String(job.categoria || '') !== catVal) return false;
       if (locVal !== 'all') {
         const locPure = String(locVal).replace(/\s*\([A-Z0-9]{2}\)\s*$/i, '').trim().toLowerCase();
-        const jobLoc = String(job.location || '').trim().toLowerCase();
+        const jobLoc = [job.location, job.zona, job.zona_citta, job.zona_provincia, job.zona_regione].filter(Boolean).join(' ').toLowerCase();
         const locFull = String(locVal).trim().toLowerCase();
-        const matchesLoc = jobLoc === locPure || jobLoc.includes(locPure) || locPure.includes(jobLoc) || jobLoc === locFull;
+        const matchesLoc = jobLoc.indexOf(locPure) >= 0 || locPure.indexOf(jobLoc) >= 0 || jobLoc.indexOf(locFull) >= 0;
         if (!matchesLoc) return false;
       }
       if (geo && Number(job.raggio || 4) !== geo) return false;
@@ -8845,15 +8859,21 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.isSpectatorRole && window.getActiveSiteRole && window.isSpectatorRole(window.getActiveSiteRole())) cta = 'Solo lettura';
             else if (window.EliseeDsHub && window.EliseeDsHub.isDs && window.EliseeDsHub.isDs()) cta = 'Riservato ai calciatori';
           } catch (_) {}
+          var hx = function (s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+          var badge = (window.EliseeBacheca && typeof window.EliseeBacheca.badgeHtml === 'function')
+            ? window.EliseeBacheca.badgeHtml(job.categoria)
+            : '';
+          var metaBits = [job.category, job.location || job.zona_citta, job._geoLabel].filter(Boolean);
           return ''
-            + '<article class="es-card">'
+            + '<article class="es-card" data-categoria="' + hx(job.categoria || '') + '">'
             + '<div>'
-            + '<p class="es-card__role">' + (job.title || job.role || '') + '</p>'
-            + '<p class="es-card__meta">' + (job.category || '') + ' · ' + (job.location || '') + (job._geoLabel ? ' · ' + job._geoLabel : '') + '</p>'
+            + badge
+            + '<p class="es-card__role">' + hx(job.title || job.role || '') + '</p>'
+            + '<p class="es-card__meta">' + hx(metaBits.join(' · ')) + '</p>'
             + (tagHtml ? '<div class="es-card__tags">' + tagHtml + '</div>' : '')
             + '</div>'
             + '<div class="es-card__club">'
-            + '<strong>' + (job.club || '') + '</strong>'
+            + '<strong>' + hx(job.club || '') + '</strong>'
             + '<span>' + (job.quando || job.matchScore || '') + '</span>'
             + '<div class="es-card__actions">'
             + '<button type="button" class="btn btn-outline-pill pf-job-cta" onclick="openCandidateModal(\'' + safeTitle + '\')">' + cta + '</button>'

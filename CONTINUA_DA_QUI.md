@@ -3,7 +3,14 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Bugfix ruoli, DS e crest (`BUGFIX1`):
+Ultimo aggiornamento: **2026-09-17** — Bacheca 7 categorie (`BACHECA7`):
+1. **Categorie**: `cerco_squadra`, `cerco_giocatore`, `cerco_allenatore`, `cerco_arbitro`, `cerco_amichevole`, `cerco_sponsor`, `calciomercato`. Dropdown Categoria con icone SVG, filtro in AND con Ruolo / Zona / Raggio. Query param `?cat=`.
+2. **Nuovo annuncio**: CTA unica al posto di «Pubblica candidatura». Step 1 card categoria, step 2 campi comuni + specifici. Validazione client + `POST /api/bacheca`. Persistenza `elisee_user_jobs` + file `data/bacheca/annunci.json` (`/tmp` su Vercel).
+3. **Card**: badge icona+label da `categoria` del record (bordo sottile, non pillola satura).
+4. **Migrazione**: annunci senza categoria inferiti dal testo; fallback `calciomercato`.
+5. **File**: `bacheca-annunci.js`, `api/bacheca.js`, `app.js`, `index.html`, `bacheca-board.css`, `sw.js`, `version.json`. Cache `v20260917_BACHECA7`.
+
+Feature precedente: **Bugfix ruoli, DS e crest (`BUGFIX1`):
 1. **Cambio ruolo**: `#es-fisio { display:block !important }` batteva l’attributo `hidden` (specificità ID). Le dashboard si sovrapponevano. Unmount ora forza `display:none !important` e CSS `[hidden]` sulle shell.
 2. **Fisio**: host JS è `#es-fisio`, CSS/unmount cercavano ancora `#es-fd`. Inclusi entrambi.
 3. **Classi body residue** (`is-gk-mode`, `is-at-mode`, `is-player-mode`, `is-pres-mode`, …): al cambio ruolo restavano attive e nascondevano footer/tab. Pulizia su tutti i mode.
