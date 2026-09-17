@@ -3,7 +3,23 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Allineamento Speculare Area Vice Allenatore & Zero Dati Fittizi (`VICEMIRROR1`):
+Ultimo aggiornamento: **2026-09-17** — Refactoring Universale Dashboard di Ruolo, ActionsGrid a Card & Avatar Safe (`ROLEDASHUP1`):
+1. **Refactoring Universale Tutte le Dashboard di Ruolo (`dash-real.js`, `role-actions-runtime.js`, `dash-luxury.css`, `index.html`)**:
+   - **Header Profilo & Avatar Safe**:
+     - Risolto definitivamente il bug del riquadro nero vuoto alto 350px: avatar circolare compatto (56px) con bordo ciano soft, ombra e fallback infallibile alle iniziali su gradiente indaco profondo (`.es-pd-ph`).
+     - Eliminata la duplicazione del club ("Foggia City" mostrato una sola volta sotto il nome con icona scudetto SVG).
+     - Componente di Onboarding & Completamento Profilo: barra di avanzamento reale (85%) con gradiente ciano e CTA "Modifica Dati", al posto del vecchio testo grigio isolato.
+     - CTA primaria di ruolo ben visibile in alto a destra nella testata (es. "Inoltra Target al DS" per lo Scout, "Nuovo Report Tattico" per il Match Analyst, "Nuova Scheda Portieri", "Registra Carico GPS", "Nuova Visita Medica", "Registra Terapia", "Secret List Stealth", ecc.) con icona SVG dedicata.
+   - **ActionsGrid — "Strumenti Operativi" a Card (2-3 Colonne)**:
+     - Ristrutturata la sezione "Azioni possibili" in una vera griglia di card responsive (2-3 colonne) con micro-interazione hover (elevazione e glow).
+     - Ogni card ha un'icona 34px in box semitrasparente, titolo in grassetto bianco e riga descrittiva `desc` specifica per ruolo (grazie alla mappa `ROLE_ACTION_DESCS`).
+     - Rimosse le sovrascritture distruttive `slot.innerHTML = ...` in `obs-dash.js` e `ma-dash.js` che piallavano la griglia.
+   - **Integrazione Fogli di Stile & Empty-State**:
+     - Collegato ufficialmente `dash-luxury.css` in `index.html` per garantire lo styling scuro luxury B2B a tutte le dashboard.
+     - Sostituite le tabelle orfane con solo header nei registri con un vero visual empty-state (icona archivio, messaggio rassicurante e indicazione operativa).
+2. **File aggiornati**: `dash-real.js`, `role-actions-runtime.js`, `dash-luxury.css`, `obs-dash.js`, `ma-dash.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_ROLEDASHUP1`.
+
+Feature precedente: **Allineamento Speculare Area Vice Allenatore & Zero Dati Fittizi (`VICEMIRROR1`):**
 1. **Area Vice Allenatore Gemella all'Area Allenatore (`vice-dash.js`, `vice-dash.css`)**:
    - Resa l'interfaccia, la shell con sidebar a sinistra e tutte le funzioni del Vice Allenatore identiche all'Area Allenatore:
      - Sidebar con le 11 macroaree (Dashboard, Rosa, Formazione, Tattica, Allenamenti, Calendario, Analisi Avversario, GPS / Carichi, Report Staff, Comunicazioni, Impostazioni Tecniche).

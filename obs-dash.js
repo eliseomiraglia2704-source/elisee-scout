@@ -215,12 +215,6 @@
     var wrap = document.createElement('div');
     wrap.innerHTML = extraHtml(user);
     body.appendChild(wrap.firstChild);
-    var slot = host.querySelector('#es-pd-actions-slot');
-    if (slot) {
-      var on = underContract(user);
-      slot.innerHTML = '<button type="button" class="es-pd-edit" data-ob="secret">' +
-        (on ? 'Inoltra target al DS' : 'Apri Secret List personale') + '</button>';
-    }
   }
 
   function openObsEditModal(user) {
@@ -315,9 +309,9 @@
     if (!host || host.dataset.obBound === '1') return;
     host.dataset.obBound = '1';
     host.addEventListener('click', function (e) {
-      var b = e.target.closest('[data-ob]');
+      var b = e.target.closest('[data-ob], [data-obs]');
       if (!b) return;
-      var k = b.getAttribute('data-ob');
+      var k = b.getAttribute('data-ob') || b.getAttribute('data-obs');
       if (k === 'home' && window.switchView) window.switchView('home', '#hero');
       if (k === 'secret' && window.openSecretList) window.openSecretList();
       if (k === 'wall' && window.openTransferWall) window.openTransferWall();

@@ -180,10 +180,17 @@
 
 .es-pd-who img,
 .es-pd-who .es-pd-ph {
-  border-radius: 8px !important;
-  border: 1px solid rgba(56, 189, 248, 0.22) !important;
-  background: var(--lx-surface) !important;
-  color: var(--lx-accent) !important;
+  border-radius: 50% !important;
+  border: 2px solid rgba(56, 189, 248, 0.35) !important;
+  background: #071522 !important;
+  color: #38bdf8 !important;
+}
+
+.es-pd-act-btn:hover {
+  background: #0d2238 !important;
+  border-color: rgba(56, 189, 248, 0.45) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35) !important;
 }
 
 .es-pd-tag {

@@ -384,10 +384,6 @@
     wrap.innerHTML = extraHtml(user);
     if (!wrap.firstElementChild) return;
     body.appendChild(wrap.firstElementChild);
-    var slot = host.querySelector('#es-pd-actions-slot');
-    if (slot) {
-      slot.innerHTML = '<button type="button" class="es-pd-edit" data-ma="rep-priv">Nuovo report</button>';
-    }
   }
 
   function promptField(label, def) {
@@ -542,7 +538,7 @@
       if (k === 'album' && window.openChiSegui) window.openChiSegui();
       if (k === 'msgs' && window.openUserMessages) window.openUserMessages();
       if (k === 'edit') { openMaEditModal(userObj()); return; }
-      if (k === 'rep-priv') { addReport('private'); return; }
+      if (k === 'rep-priv' || k === 'new-report') { addReport('private'); return; }
       if (k === 'rep-pub') { addReport('public'); return; }
       if (k === 'heatmap') {
         var pl = promptField('Calciatore della heatmap da validare');

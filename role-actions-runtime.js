@@ -1697,19 +1697,51 @@
     var curRoleKey = resolveRoleKey();
     var roleData = ROLE_ACTIONS_MAP[curRoleKey] || ROLE_ACTIONS_MAP['scout'];
 
+    function getActionDescHelper(id, label) {
+      id = String(id || '').toLowerCase();
+      var l = String(label || '').toLowerCase();
+      if (/secret/.test(id) || /secret/.test(l)) return 'Gestione target riservati e monitoraggio in modalità stealth';
+      if (/schede/.test(id) || /schede/.test(l)) return 'Consultazione e confronto candidature tecniche via intelligenza artificiale';
+      if (/recruit|pubblica/.test(id) || /pubblica/.test(l)) return 'Apertura posizioni ufficiali di staff con matching automatico profili';
+      if (/voice|nota vocale/.test(id) || /voce/.test(l)) return 'Trascrizione ed elaborazione automatica appunti vocali di campo';
+      if (/report8|report/.test(id) || /report/.test(l)) return 'Redazione dettagliata degli indicatori prestazionali e tattici';
+      if (/heatmap|calore/.test(id) || /calore/.test(l)) return 'Mappatura delle zone di occupazione spaziale e transizioni';
+      if (/visit|medica|idoneit/.test(id) || /visite/.test(l)) return 'Verifica certificati agonistici, scadenze e registri di reparto';
+      if (/treat|terapia|rehab/.test(id) || /terapie/.test(l)) return 'Diario clinico trattamenti, tecar e protocolli di riatletizzazione';
+      if (/gps|caric/.test(id) || /gps/.test(l)) return 'Telemetria metabolica, carichi ACWR e prevenzione sovraccarichi';
+      if (/react|uscite|portier/.test(id) || /portier/.test(l)) return 'Analisi tempi di reazione, uscite alte e respinte difensive';
+      if (/event|qr/.test(id) || /evento/.test(l)) return 'Creazione sessione di selezione provini con QR code di accesso rapido';
+      if (/budget|operaz/.test(id) || /budget/.test(l)) return 'Monitoraggio costi, margini operativi e allocazione risorse societarie';
+      if (/wall|trattativ/.test(id) || /wall/.test(l)) return 'Bacheca trasferimenti ufficializzati stile FIFA Transfer Market';
+      return 'Strumento operativo avanzato abilitato per il ruolo di staff';
+    }
+
     grids.forEach(function (grid) {
       var existing = grid.querySelector('.es-pd-actions-card');
       if (existing) existing.remove();
 
       var card = document.createElement('section');
       card.className = 'es-pd-card es-pd-actions-card';
-      var html = '<div class="es-pd-card-header"><h2><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> <span>' + roleData.title + '</span></h2><span class="es-pd-source-badge es-pd-source-ia">Strumenti Operativi</span></div>';
-      html += '<div class="es-pd-actions-list" style="display:flex; flex-direction:column; gap:0.45rem; margin-top:0.35rem;">';
+      card.style.padding = '1.25rem';
+      var html = '<div class="es-pd-card-header" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.75rem; padding-bottom:0.65rem; border-bottom:1px solid rgba(148,163,184,0.12);">' +
+        '<div style="display:flex; align-items:center; gap:8px;">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>' +
+          '<h2 style="font-size:0.95rem; font-weight:800; color:#f3f8fc; margin:0;">' + esc(roleData.title) + '</h2>' +
+        '</div>' +
+        '<span class="es-pd-source-badge es-pd-source-ia" style="font-size:0.68rem; font-weight:700; padding:2px 8px; border-radius:6px; background:rgba(56,189,248,0.1); color:#38bdf8; border:1px solid rgba(56,189,248,0.25);">Strumenti Operativi</span>' +
+      '</div>';
+
+      html += '<div class="es-pd-actions-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:0.75rem; margin-top:0.4rem;">';
       for (var i = 0; i < roleData.actions.length; i++) {
         var act = roleData.actions[i];
         var iconHtml = getLinearSvgIcon(act.icon || act.id);
-        html += '<button type="button" class="es-pd-act-btn" data-act-id="' + act.id + '" data-act-label="' + act.label + '" style="display:flex; align-items:center; gap:0.5rem; background:rgba(15,23,42,0.6); border:1px solid rgba(148,163,184,0.14); border-radius:4px; padding:0.45rem 0.65rem; color:#cbd5e1; font-size:0.75rem; text-align:left; cursor:pointer; transition:all 0.15s ease;">';
-        html += '<span style="color:#38bdf8; display:flex; align-items:center; flex-shrink:0;">' + iconHtml + '</span> <span style="font-weight:600;">' + esc(act.label) + '</span>';
+        var actionDesc = act.desc || getActionDescHelper(act.id, act.label);
+        html += '<button type="button" class="es-pd-act-btn" data-act-id="' + act.id + '" data-act-label="' + act.label + '" style="display:flex; align-items:flex-start; gap:0.75rem; background:#071522; border:1px solid #12344a; border-radius:8px; padding:0.75rem 0.85rem; color:#cbd5e1; font-size:0.75rem; text-align:left; cursor:pointer; transition:all 0.18s ease; box-shadow:0 2px 6px rgba(0,0,0,0.25);">';
+        html += '<span style="color:#38bdf8; width:34px; height:34px; border-radius:8px; background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.2); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">' + iconHtml + '</span>';
+        html += '<div style="display:flex; flex-direction:column; gap:2px; overflow:hidden;">';
+        html += '<span style="font-weight:700; color:#f8fafc; font-size:0.78rem; line-height:1.25;">' + esc(act.label) + '</span>';
+        html += '<span style="font-size:0.68rem; color:#8da8bc; line-height:1.35;">' + esc(actionDesc) + '</span>';
+        html += '</div>';
         html += '</button>';
       }
       html += '</div>';
