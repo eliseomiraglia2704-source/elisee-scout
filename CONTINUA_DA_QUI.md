@@ -3,7 +3,25 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Riprogettazione Completa, Ordinata & Armonica Match Analyst, Preparatore Portieri & Preparatore Atletico (`STAFFLUX1`):
+Ultimo aggiornamento: **2026-09-17** — Riprogettazione Completa & Ordinata Medico Sociale & Staff Sanitario (`MEDLUX1`):
+1. **Ridisegno Integrale Dashboard Medico Sociale (`med-dash.js`, `med-dash.css`, `index.html`)**:
+   - **Diagnosi**: `med-dash.css` conteneva soltanto 16 righe grezze e la logica usava un template a 3 colonne generico senza strumenti clinici operativi, senza controllo scadenze idoneità agonistica, senza prescrizioni per fisioterapia e senza return-to-play.
+   - **Nuova Architettura Ordinata & Luxury**:
+     - **Dock Laterale Sinistro**: Rail (56px) con icone pulite (*Home, Dashboard, Nuova Visita, Idoneità, Messaggi Staff, Anagrafica*).
+     - **Top Header Bar**: Breadcrumb, badge ufficiale *FMSI / Ordine Medici* e due CTA primarie in alto a destra: **"Nuova Visita Medica"** e **"Certifica Idoneità Agonistica"**.
+     - **Riga 1 (2 Colonne 50/50)**:
+       - *Profilo Ufficiale Medico Sociale*: avatar circolare 58px con fallback monogramma, affiliazione al club con scudetto, barra completamento anagrafica all'**85%** con CTA *"✏️ Modifica Anagrafica"* e specializzazione medica.
+       - *Monitoraggio Sanitario & Idoneità Rosa*: griglia KPI sanitari (*24 Idoneità Valide 🟢, 0 In Scadenza 🟡, 0 Non Idonei 🔴, 1 In Terapia Conservativa, 22 Piena Disponibilità, 0 Interventi*) con quick-buttons (*Nuova Visita, Certifica Idoneità, Terapie & Fisio, Return to Play*).
+     - **Riga 2 — Strumenti Operativi Medico Sociale (ActionsGrid a 3 Colonne)**:
+       - 6 card operative (*Registra Visita / Controllo, Certifica Idoneità Agonistica, Registro Infortuni & Diagnosi, Prescrizioni & Fisioterapia, Attestazione Return to Play, Dossier Sanitario Riservato*).
+     - **Riga 3 — Analisi & Deontologia (3 Colonne Paritetiche)**:
+       - *Quadro Sanitario Rosa*: Radar polare ad 8 assi con benchmark FMSI.
+       - *Attività & Poteri Sanitari*: Checklist con check verdi delle facoltà medico-legali.
+       - *Limiti di Ruolo & Deontologia*: Card in rosa/rosso tenue desaturato (`#fda4af`) per segreto professionale e autonomia clinica.
+     - **Riga 4 — Registro Visite & Cartelle Cliniche**: visual empty-state moderno con icona stetoscopio e link operativi.
+2. **File aggiornati**: `med-dash.js`, `med-dash.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_MEDLUX1`.
+
+Feature precedente: **Riprogettazione Completa Match Analyst, Preparatore Portieri & Preparatore Atletico (`STAFFLUX1`):**
 1. **Ridisegno Integrale Dashboard Match Analyst (`ma-dash.js`, `ma-dash.css`, `index.html`)**:
    - **Diagnosi**: Layout spezzato da `fillExtra` che appendeva blocchi disordinati sotto la shell generica a 3 colonne, duplicando il profilo e disperdendo 15 bottoni in sotto-griglie frammentate.
    - **Nuova Architettura Ordinata & Luxury**:
