@@ -41,6 +41,9 @@
     Object.keys(map).forEach(function (k) {
       var el = $(map[k]);
       if (!el) return;
+      if ((k === 'manager' || k === 'card') && el.parentElement && el.parentElement.id === 'es-cc-overview') {
+        dash.appendChild(el);
+      }
       if (k === pane) {
         el.hidden = false;
         el.style.display = '';

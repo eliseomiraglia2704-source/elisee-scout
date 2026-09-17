@@ -3,7 +3,14 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Spezzato `app.js` (`APPSPLIT1`):
+Ultimo aggiornamento: **2026-09-18** — Control Center spazi e ordine (`CCSPACE1`):
+1. Padding laterale 24px (prima era 0 sul `pf-page-inner` admin).
+2. Tab senza doppio riquadro ciano; header con bordo sottile e Esci allineato.
+3. Griglie stats/azioni/moduli `auto-fit` (niente 5 colonne schiacciate).
+4. Inbox Manager fuori dall’overview (prima spariva aprendo la tab Manager).
+5. Cache `v20260918_CCSPACE1`.
+
+Feature precedente: **Spezzato `app.js` (`APPSPLIT1`):
 1. **`app-admin-panels.js`**: `renderAdminPanel` / `renderPrivacyPanel` / griglia opzioni (~2000 righe).
 2. **`app-boot-extras.js`**: unlock UI, wire Bacheca, pipeline extra (dopo la chiusura del `DOMContentLoaded` principale).
 3. **`app.js`**: resta il core (nav, login, filtri, sessioni). Helper admin esposti su `window.getActiveUser` ecc.

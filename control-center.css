@@ -1,15 +1,29 @@
 /* Control Center — dashboard operativa, palette scura desaturata */
-#admin-authenticated-dashboard.es-cc {
+#admin-portal .container.pf-page-inner,
+#admin-portal .pf-page-inner {
+  max-width: 1280px !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+  box-sizing: border-box !important;
+}
+#admin-authenticated-dashboard.es-cc,
+#admin-authenticated-dashboard {
   max-width: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 #admin-portal .es-cc-header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin: 1.25rem 0 0.5rem;
-  padding-top: 0.5rem;
-  border-bottom: none;
+  margin: 0 0 1.15rem;
+  padding: 0 0 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 #admin-portal .es-cc-title {
   margin: 0 0 0.35rem;
@@ -19,13 +33,30 @@
   color: #f3f8fc;
   text-transform: none;
 }
+#admin-portal .es-cc-tabs.pf-gov-bar,
 #admin-portal .es-cc-tabs {
-  margin-bottom: 1.25rem;
+  margin: 0 0 1.35rem !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  gap: 8px;
+}
+#admin-portal .es-cc-tabs .pf-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: none;
 }
 #admin-portal .es-cc-tabs .gov-btn {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.12);
   color: #94a3b8;
+  margin: 0;
 }
 #admin-portal .es-cc-tabs .gov-btn.active {
   border-color: rgba(56, 189, 248, 0.4);
@@ -35,9 +66,9 @@
 
 .es-cc-stats {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-  margin: 0 0 1.1rem;
+  grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+  gap: 12px;
+  margin: 0 0 1.15rem;
 }
 .es-cc-stat {
   background: #0a0c10;
@@ -75,9 +106,9 @@
 
 .es-cc-actions {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-  margin: 0 0 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+  gap: 12px;
+  margin: 0 0 1.35rem;
 }
 .es-cc-qa {
   display: flex;
@@ -93,6 +124,9 @@
   cursor: pointer;
   font-family: inherit;
   text-align: left;
+  min-height: 52px;
+  white-space: normal;
+  line-height: 1.25;
 }
 .es-cc-qa svg { color: #94a3b8; flex-shrink: 0; }
 .es-cc-qa:hover {
@@ -111,9 +145,9 @@
 
 .es-cc-modules {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-  margin: 0 0 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin: 0 0 1.35rem;
 }
 .es-cc-mod {
   background: #0a0c10;
@@ -157,7 +191,13 @@
   display: grid;
   grid-template-columns: minmax(0, 1.6fr) minmax(240px, 0.85fr);
   gap: 12px;
-  margin: 0 0 1.25rem;
+  margin: 0 0 1.35rem;
+  align-items: start;
+}
+.es-cc-side {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 .es-cc-charts {
   display: grid;
@@ -297,8 +337,12 @@
 .es-cc-who-row strong { display: block; color: #f8fafc; font-size: 0.92rem; }
 .es-cc-who-row span { display: block; font-size: 0.75rem; color: #94a3b8; }
 
-.es-cc-pratiche {
-  margin: 0 0 1.25rem !important;
+.es-cc-pratiche,
+#es-cc-legacy-stats {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+  gap: 12px !important;
+  margin: 0 0 1.35rem !important;
 }
 .es-cc-pratica {
   background: #0a0c10;
@@ -360,15 +404,28 @@
   color: #d1fae5 !important;
 }
 
+#es-mgr-admin-wrap,
+#es-card-admin-wrap {
+  margin-top: 0;
+}
+#admin-portal .wr-admin-trigger-card + .wr-admin-trigger-card {
+  margin-top: 12px;
+}
+#admin-portal .pf-admin-login {
+  margin-top: 0.5rem;
+}
+
 @media (max-width: 1100px) {
-  .es-cc-stats,
-  .es-cc-actions,
-  .es-cc-modules { grid-template-columns: repeat(2, 1fr); }
   .es-cc-split { grid-template-columns: 1fr; }
-  #es-cc-legacy-stats { grid-template-columns: repeat(2, 1fr) !important; }
 }
 @media (max-width: 640px) {
-  .es-cc-stats,
-  .es-cc-actions,
-  .es-cc-modules { grid-template-columns: 1fr; }
+  #admin-portal .container.pf-page-inner,
+  #admin-portal .pf-page-inner {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  #admin-portal .es-cc-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
