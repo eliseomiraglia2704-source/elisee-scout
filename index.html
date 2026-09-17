@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260917_BACHECA7';
+      var BUILD_VERSION = '20260917_CCDASH1';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -49,6 +49,7 @@
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
   <link rel="stylesheet" href="bacheca-board.css?v=20260917_BACHECA7">
+  <link rel="stylesheet" href="control-center.css?v=20260917_CCDASH1">
   <style id="es-font-nevera">
     @font-face {
       font-family: 'Nevera';
@@ -3510,136 +3511,224 @@
           </div>
 
           <div id="admin-authenticated-dashboard" style="display: none;">
-            <header class="pf-header" style="margin-top: 1.5rem; padding-top: 1.5rem;">
+            <header class="pf-header es-cc-header">
               <div class="pf-header-text">
-                <h1 class="pf-title" style="margin:0 0 0.5rem 0; font-size:2.4rem; font-weight:900; color:#ffffff; letter-spacing:-0.02em;">Control center</h1>
+                <h1 class="pf-title es-cc-title">Control Center</h1>
                 <p class="pf-lead">Trust, privacy e pipeline operativa della piattaforma.</p>
               </div>
+              <button type="button" class="btn btn-outline-pill" id="btn-admin-logout">Esci</button>
             </header>
 
-            <div class="pf-toolbar pf-gov-bar">
+            <div class="pf-toolbar pf-gov-bar es-cc-tabs">
               <div class="pf-chips">
-                <button type="button" class="gov-btn active pf-chip-btn" id="btn-show-admin">Dashboard Admin</button>
-                <button type="button" class="gov-btn pf-chip-btn" id="btn-show-privacy">Responsabile Privacy GDPR</button>
-                <button type="button" class="gov-btn pf-chip-btn" id="btn-show-autopilot" style="border-color:rgba(34,197,94,0.45);color:#bbf7d0;" title="Mission Control AutoPilot (solo Admin)">
-                  AutoPilot
-                </button>
-                <button type="button" class="gov-btn pf-chip-btn" id="btn-show-manager" title="Candidature e proposte Manager Elisee Scout">
-                  Manager Elisee
-                </button>
+                <button type="button" class="gov-btn active pf-chip-btn" id="btn-show-admin" data-cc-tab="admin">Dashboard Admin</button>
+                <button type="button" class="gov-btn pf-chip-btn" id="btn-show-privacy" data-cc-tab="privacy">Responsabile Privacy GDPR</button>
+                <button type="button" class="gov-btn pf-chip-btn" id="btn-show-autopilot" data-cc-tab="autopilot" title="Mission Control AutoPilot (solo Admin)">AutoPilot</button>
+                <button type="button" class="gov-btn pf-chip-btn" id="btn-show-manager" data-cc-tab="manager" title="Candidature e proposte Manager Elisee Scout">Manager Elisee</button>
+                <button type="button" class="gov-btn pf-chip-btn" id="btn-show-card-atelier" data-cc-tab="card">Card Elisee <span id="es-card-chip-n" class="es-card-chip-n" hidden></span></button>
               </div>
-              <div class="pf-gov-status" style="display:flex; flex-direction:column; align-items:flex-end; gap:0.35rem;">
-                <div style="display:flex; align-items:center; gap:0.85rem; font-size:0.82rem; font-weight:bold;">
-                  <span>Admin <strong style="color:#22c55e; background:rgba(34,197,94,0.12); padding:0.15rem 0.5rem; border-radius:10px; border:1px solid rgba(34,197,94,0.3);">ONLINE</strong></span>
-                  <span>Responsabile Privacy <strong id="garante-status-badge" style="color:#ef4444; background:rgba(239,68,68,0.12); padding:0.15rem 0.5rem; border-radius:10px; border:1px solid rgba(239,68,68,0.3);">OFFLINE</strong></span>
-                  <button type="button" class="btn btn-outline-pill" id="btn-admin-logout" style="margin-left:0.5rem;">
-                    <i data-lucide="log-out" style="width:13px;height:13px;"></i> Esci
-                  </button>
-                </div>
-                <small id="presence-last-seen" style="color:#94a3b8; font-size:0.73rem;">Ultimo accesso Responsabile Privacy: 28/07/2026 22:45 UTC</small>
+              <div class="pf-gov-status" hidden>
+                <span>Admin <strong id="es-cc-admin-inline">ONLINE</strong></span>
+                <span>Responsabile Privacy <strong id="garante-status-badge">OFFLINE</strong></span>
+                <small id="presence-last-seen">Ultimo accesso Responsabile Privacy: —</small>
               </div>
             </div><!-- /.pf-toolbar.pf-gov-bar -->
 
-            <div class="wr-admin-trigger-card" id="es-ap-admin-card-static" style="margin-top:1.25rem; border-color:rgba(34,197,94,0.35);">
-              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
-                <div>
-                  <div class="pf-section-label" style="margin-bottom:0.4rem;">
-                    <span>ORCHESTRAZIONE TOTALE</span>
-                    <span class="pf-section-line"></span>
-                    <span style="font-size:0.72rem; color:#4ade80; letter-spacing:0.08em; font-weight:bold;">AUTOPILOT  /  SOLO ADMIN</span>
-                  </div>
-                  <h3 style="margin:0 0 0.4rem; color:#ffffff; font-size:1.35rem; font-weight:900; letter-spacing:-0.01em; display:flex; align-items:center; gap:0.6rem;">
-                    <i data-lucide="cpu" style="color:#4ade80; width:24px; height:24px;"></i> Mission Control — AutoPilot IA
-                  </h3>
-                  <p style="margin:0; color:#cbd5e1; font-size:0.88rem; max-width:650px; line-height:1.5;">
-                    Cabina di regia riservata all’Admin: cluster, campionati, supervisori H24, GDPR, War Room, job operativi e backend 24/7. Sync automatico ogni 10s e auto-heal.
-                  </p>
-                </div>
-                <div>
-                  <button type="button" class="btn-war-room-trigger" id="es-ap-admin-open-static" style="background:linear-gradient(135deg,#16a34a,#0f766e);" onclick="if(window.EliseeAutoPilot){window.EliseeAutoPilot.open();}else{alert('AutoPilot in caricamento...');}">
-                    <i data-lucide="activity" style="width:20px; height:20px;"></i> Apri AutoPilot
-                  </button>
-                </div>
+            <div id="es-cc-overview" data-cc-pane="admin">
+              <div class="es-cc-stats" role="list">
+                <article class="es-cc-stat" role="listitem">
+                  <span class="es-cc-stat-ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h4"/></svg></span>
+                  <strong class="es-cc-stat-val" id="es-cc-stat-jobs" data-ai-cluster-active>0 / 0</strong>
+                  <span class="es-cc-stat-lbl">Job IA attivi</span>
+                  <em class="es-cc-stat-sub" id="es-cc-stat-jobs-delta">cluster piattaforma</em>
+                </article>
+                <article class="es-cc-stat" role="listitem">
+                  <span class="es-cc-stat-ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+                  <strong class="es-cc-stat-val" id="es-cc-stat-admin">Offline</strong>
+                  <span class="es-cc-stat-lbl">Stato Admin</span>
+                  <em class="es-cc-stat-sub es-cc-badge" id="es-cc-stat-admin-badge">—</em>
+                </article>
+                <article class="es-cc-stat" role="listitem">
+                  <span class="es-cc-stat-ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+                  <strong class="es-cc-stat-val" id="es-cc-stat-privacy">Offline</strong>
+                  <span class="es-cc-stat-lbl">Responsabile Privacy</span>
+                  <em class="es-cc-stat-sub" id="es-cc-stat-privacy-seen">ultimo accesso —</em>
+                </article>
+                <article class="es-cc-stat" role="listitem">
+                  <span class="es-cc-stat-ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></span>
+                  <strong class="es-cc-stat-val" id="es-cc-stat-sync">—</strong>
+                  <span class="es-cc-stat-lbl">Sync pipeline</span>
+                  <em class="es-cc-stat-sub" id="es-telemetry-sec-count">in attesa</em>
+                </article>
+                <article class="es-cc-stat" role="listitem">
+                  <span class="es-cc-stat-ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+                  <strong class="es-cc-stat-val" id="es-cc-stat-alerts">0</strong>
+                  <span class="es-cc-stat-lbl">Alert aperti</span>
+                  <em class="es-cc-stat-sub" id="es-cc-stat-alerts-sub">reclami e anomalie</em>
+                </article>
               </div>
-            </div>
 
-            <div class="wr-admin-trigger-card" style="margin-top:1rem;">
-              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
-                <div>
-                  <div class="pf-section-label" style="margin-bottom:0.4rem;">
-                    <span>SISTEMA GERARCHICO DI GOVERNANCE IA</span>
-                    <span class="pf-section-line"></span>
-                    <span style="font-size:0.72rem; color:#38bdf8; letter-spacing:0.08em; font-weight:bold;">50 AGENTI  /  100 SUPERVISORI</span>
-                  </div>
-                  <h3 style="margin:0 0 0.4rem; color:#ffffff; font-size:1.35rem; font-weight:900; letter-spacing:-0.01em; display:flex; align-items:center; gap:0.6rem;">
-                    <i data-lucide="shield-alert" style="color:#38bdf8; width:24px; height:24px;"></i> AI Dev Team — War Room
-                  </h3>
-                  <p style="margin:0; color:#cbd5e1; font-size:0.88rem; max-width:650px; line-height:1.5;">
-                    Quartiere generale operativo per monitoraggio, diagnosi e riparazione autonoma del sito.
-                  </p>
-                </div>
-                <div>
-                  <button type="button" class="btn-war-room-trigger" id="btn-open-war-room-admin" onclick="if(window.EliseeWarRoom){window.EliseeWarRoom.open();}else{alert('War Room in caricamento...');}">
-                    <i data-lucide="terminal" style="width:20px; height:20px;"></i> Attiva War Room
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- ANALYTICS LIVE COUNTERS (Step 3) -->
-            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0.75rem;margin:1.5rem 0 1.25rem;">
-              <div style="background:rgba(56,189,248,0.07);border:1px solid rgba(56,189,248,0.22);border-radius:12px;padding:1rem;text-align:center;">
-                <div id="stat-badge-pending" style="font-size:1.9rem;font-weight:900;color:#38bdf8;">0</div>
-                <div style="font-size:0.72rem;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;margin-top:0.25rem;">Badge In Attesa</div>
-              </div>
-              <div style="background:rgba(34,197,94,0.07);border:1px solid rgba(34,197,94,0.22);border-radius:12px;padding:1rem;text-align:center;">
-                <div id="stat-badge-approved" style="font-size:1.9rem;font-weight:900;color:#22c55e;">0</div>
-                <div style="font-size:0.72rem;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;margin-top:0.25rem;">Badge Approvati</div>
-              </div>
-              <div style="background:rgba(239,68,68,0.07);border:1px solid rgba(239,68,68,0.22);border-radius:12px;padding:1rem;text-align:center;">
-                <div id="stat-badge-rejected" style="font-size:1.9rem;font-weight:900;color:#ef4444;">0</div>
-                <div style="font-size:0.72rem;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;margin-top:0.25rem;">Badge Rifiutati</div>
-              </div>
-              <div style="background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.22);border-radius:12px;padding:1rem;text-align:center;">
-                <div id="stat-complaints" style="font-size:1.9rem;font-weight:900;color:#f59e0b;">0</div>
-                <div style="font-size:0.72rem;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;margin-top:0.25rem;">Reclami Art.30</div>
-              </div>
-              <div style="background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.22);border-radius:12px;padding:1rem;text-align:center;">
-                <div id="stat-users-total" style="font-size:1.9rem;font-weight:900;color:#a855f7;">0</div>
-                <div style="font-size:0.72rem;color:#64748b;text-transform:uppercase;letter-spacing:0.06em;margin-top:0.25rem;">Utenti Totali</div>
-              </div>
-            </div>
-            <!-- AZIONI RECLAMI / REPORT GDPR -->
-            <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:1.5rem;">
-              <button type="button" class="btn btn-outline-pill" onclick="window.openSubmitComplaintModal && window.openSubmitComplaintModal()">
-                <i data-lucide="alert-circle" style="width:14px;height:14px;"></i> Nuova Segnalazione
-              </button>
-              <button type="button" class="btn btn-outline-pill" onclick="window.downloadGaranteReportGDPR && window.downloadGaranteReportGDPR()">
-                <i data-lucide="file-down" style="width:14px;height:14px;"></i> Esporta Report Art.30
-              </button>
-            </div>
-
-
-            <!-- PIPELINE AUTO-FIX -->
-            <div class="pf-aside-card" style="margin-top:1.5rem;">
-              <div class="pf-section-label" style="margin-bottom:1rem;">
-                <span>Pipeline Auto-Fix Reale</span>
-                <span class="pf-section-line"></span>
-                <span style="font-size:0.72rem; color:#38bdf8; letter-spacing:0.08em; font-weight:bold;">727 AGENTI PIATTAFORMA</span>
-              </div>
-              <p class="pf-aside-text">Monitoraggio, diagnosi e ripristino autonomo in tempo reale sul cluster della piattaforma.</p>
-              <div class="pf-pipeline-grid">
-                <div class="pf-pipeline-step"><strong>1. Router</strong><span>Intercettazione anomalia</span></div>
-                <div class="pf-pipeline-step"><strong>2. Diagnoser</strong><span>Causa radice</span></div>
-                <div class="pf-pipeline-step"><strong>3. Fixer</strong><span>Riparazione autonoma</span></div>
-                <div class="pf-pipeline-step"><strong>4. Verification</strong><span>Controllo integrità</span></div>
-              </div>
-              <div style="display:flex; gap:0.75rem; flex-wrap:wrap; align-items:center; margin-top:1.15rem;">
-                <button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-run-autofix-demo">
-                  <i data-lucide="zap" style="width:14px;height:14px;color:#38bdf8;"></i> Esegui Auto-Fix Live
+              <div class="es-cc-actions">
+                <button type="button" class="es-cc-qa es-cc-qa--primary" id="es-cc-qa-autopilot">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                  <span>Apri Autopilot</span>
                 </button>
-                <div id="pipeline-log-box" class="pipeline-log-terminal pf-pipeline-log">
-                  <span class="log-line text-muted">[SYSTEM HEALTHY] 727 agenti e supervisori pronti.</span>
+                <button type="button" class="es-cc-qa" id="es-cc-qa-gdpr">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  <span>Audit GDPR / Privacy</span>
+                </button>
+                <button type="button" class="es-cc-qa" id="es-cc-qa-sync">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                  <span>Forza Sync Ora</span>
+                </button>
+                <button type="button" class="es-cc-qa" id="es-cc-qa-war">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                  <span>Apri War Room</span>
+                </button>
+                <button type="button" class="es-cc-qa" id="es-cc-qa-fix">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                  <span>Esegui Auto-Fix</span>
+                </button>
+              </div>
+
+              <div class="es-cc-modules" id="es-cc-modules">
+                <button type="button" class="es-cc-mod" data-cc-open="admin">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                  <strong>Dashboard Admin</strong>
+                  <span>Vista operativa generale della piattaforma.</span>
+                </button>
+                <button type="button" class="es-cc-mod" data-cc-open="privacy">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  <strong>Responsabile Privacy GDPR</strong>
+                  <span>Compliance, consensi, audit privacy.</span>
+                  <em>Registro consensi · DPIA · Audit log</em>
+                </button>
+                <button type="button" class="es-cc-mod" data-cc-open="autopilot">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                  <strong>Autopilot</strong>
+                  <span>Orchestrazione IA, job automatici, self-heal.</span>
+                  <em>Job attivi · Storico esecuzioni</em>
+                </button>
+                <button type="button" class="es-cc-mod" data-cc-open="manager">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                  <strong>Manager Elisee</strong>
+                  <span>Gestione staff e permessi piattaforma.</span>
+                  <em>Utenti · Ruoli · Permessi</em>
+                </button>
+                <button type="button" class="es-cc-mod" data-cc-open="card">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                  <strong>Card Elisee <span class="es-card-chip-n" id="es-cc-card-dot" hidden></span></strong>
+                  <span>Configurazione card e badge utente.</span>
+                </button>
+              </div>
+
+              <div class="es-cc-split">
+                <div class="es-cc-charts">
+                  <section class="es-cc-panel">
+                    <header><h2>Andamento job IA</h2><span>ultime 24 ore</span></header>
+                    <div id="es-cc-line" class="es-cc-chart"></div>
+                  </section>
+                  <section class="es-cc-panel">
+                    <header><h2>Categorie job</h2><span id="es-cc-pct-label">operativo</span></header>
+                    <div class="es-cc-donut-row">
+                      <div id="es-cc-donut" class="es-cc-chart es-cc-chart--donut"></div>
+                      <ul class="es-cc-legend" id="es-cc-legend"></ul>
+                    </div>
+                    <div class="es-cc-pct">
+                      <span>Percentuale attiva</span>
+                      <b id="es-cc-pct-val">0%</b>
+                      <div class="es-cc-pct-track"><i id="es-cc-pct-bar"></i></div>
+                    </div>
+                  </section>
+                </div>
+                <aside class="es-cc-side">
+                  <section class="es-cc-panel es-cc-trust">
+                    <header><h2>Governance &amp; Trust</h2></header>
+                    <ul>
+                      <li><span class="es-cc-trust-badge">GDPR</span> Registro Art. 30 e DPIA Art. 35</li>
+                      <li><span class="es-cc-trust-badge">Sicurezza</span> Accesso staff autenticato</li>
+                      <li><span class="es-cc-trust-badge" id="es-cc-trust-audit">Audit</span> <span id="es-cc-trust-audit-txt">In attesa di verifica</span></li>
+                    </ul>
+                  </section>
+                  <section class="es-cc-panel es-cc-who">
+                    <header><h2>Sessione staff</h2></header>
+                    <div class="es-cc-who-row">
+                      <div class="es-cc-ava" id="es-cc-ava">AD</div>
+                      <div>
+                        <strong id="es-cc-who-name">Admin</strong>
+                        <span id="es-cc-who-role">Amministratore piattaforma</span>
+                        <span id="es-cc-who-club"></span>
+                      </div>
+                    </div>
+                  </section>
+                </aside>
+              </div>
+
+              <div id="es-cc-legacy-stats" class="es-cc-pratiche" style="display:grid;grid-template-columns:repeat(5,1fr);gap:0.75rem;margin:1.5rem 0 1.25rem;">
+                <div class="es-cc-pratica"><div id="stat-badge-pending">0</div><span>Badge in attesa</span></div>
+                <div class="es-cc-pratica"><div id="stat-badge-approved">0</div><span>Badge approvati</span></div>
+                <div class="es-cc-pratica"><div id="stat-badge-rejected">0</div><span>Badge rifiutati</span></div>
+                <div class="es-cc-pratica"><div id="stat-complaints">0</div><span>Reclami Art.30</span></div>
+                <div class="es-cc-pratica"><div id="stat-users-total">0</div><span>Utenti totali</span></div>
+              </div>
+
+              <div class="pf-aside-card es-cc-pipeline">
+                <div class="pf-section-label">
+                  <span>Pipeline Auto-Fix</span>
+                  <span class="pf-section-line"></span>
+                  <span>727 agenti piattaforma</span>
+                </div>
+                <p class="pf-aside-text">Monitoraggio, diagnosi e ripristino autonomo in tempo reale sul cluster.</p>
+                <div class="pf-pipeline-grid">
+                  <div class="pf-pipeline-step"><strong>1. Router</strong><span>Intercettazione anomalia</span></div>
+                  <div class="pf-pipeline-step"><strong>2. Diagnoser</strong><span>Causa radice</span></div>
+                  <div class="pf-pipeline-step"><strong>3. Fixer</strong><span>Riparazione autonoma</span></div>
+                  <div class="pf-pipeline-step"><strong>4. Verification</strong><span>Controllo integrità</span></div>
+                </div>
+                <div class="es-cc-pipe-row">
+                  <button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-run-autofix-demo">Esegui Auto-Fix Live</button>
+                  <div id="pipeline-log-box" class="pipeline-log-terminal pf-pipeline-log">
+                    <span class="log-line text-muted">[SYSTEM HEALTHY] 727 agenti e supervisori pronti.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="es-cc-privacy-section" data-cc-pane="privacy" hidden>
+              <div class="es-cc-privacy-actions">
+                <button type="button" class="btn btn-outline-pill" onclick="window.openSubmitComplaintModal && window.openSubmitComplaintModal()">Nuova segnalazione</button>
+                <button type="button" class="btn btn-outline-pill" onclick="window.downloadGaranteReportGDPR && window.downloadGaranteReportGDPR()">Esporta report Art.30</button>
+              </div>
+              <div id="governance-panel-target"></div>
+            </div>
+
+            <div id="es-cc-autopilot-section" data-cc-pane="autopilot" hidden>
+              <div class="wr-admin-trigger-card" id="es-ap-admin-card-static">
+                <div class="es-cc-mission">
+                  <div>
+                    <div class="pf-section-label">
+                      <span>Orchestrazione totale</span>
+                      <span class="pf-section-line"></span>
+                      <span>Autopilot · solo Admin</span>
+                    </div>
+                    <h3>Mission Control — AutoPilot IA</h3>
+                    <p>Cabina di regia: cluster, campionati, supervisori H24, GDPR, War Room, job operativi e backend 24/7. Sync automatico e auto-heal.</p>
+                  </div>
+                  <button type="button" class="btn-war-room-trigger es-cc-ap-open" id="es-ap-admin-open-static">Apri AutoPilot</button>
+                </div>
+              </div>
+              <div class="wr-admin-trigger-card">
+                <div class="es-cc-mission">
+                  <div>
+                    <div class="pf-section-label">
+                      <span>Governance IA</span>
+                      <span class="pf-section-line"></span>
+                      <span>War Room</span>
+                    </div>
+                    <h3>AI Dev Team — War Room</h3>
+                    <p>Quartiere generale per monitoraggio, diagnosi e riparazione autonoma del sito.</p>
+                  </div>
+                  <button type="button" class="btn-war-room-trigger" id="btn-open-war-room-admin">Attiva War Room</button>
                 </div>
               </div>
             </div>
@@ -5831,7 +5920,7 @@
   <script src="badge-engine.js?v=20260914_ONLYAMAT1"></script>
   <script src="squadre-select.js?v=20260917_FGCLIC1"></script>
   <script src="formazione-squadra.js?v=20260914_ONLYAMAT1"></script>
-  <script src="manager-runtime.js?v=20260914_CANDMGR1"></script>
+  <script src="manager-runtime.js?v=20260917_CCDASH1"></script>
   <script src="tc-panel.js?v=20260915_TCSERIF1"></script>
   <!-- React & ReactDOM Global Runtime (UMD) -->
   <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
@@ -5876,7 +5965,8 @@
 
   <script src="mappa-club.js?v=20260912_ATOECC2"></script>
   <script src="chi-segui.js?v=20260913_ALBUM5"></script>
-  <script src="card-atelier.js?v=20260914_PLAYERDOSSIER1"></script>
+  <script src="card-atelier.js?v=20260917_CCDASH1"></script>
+  <script src="control-center.js?v=20260917_CCDASH1"></script>
   <script src="ds-hub.js?v=20260917_BUGFIX1"></script>
   <script src="verifica-account.js?v=20260911_STAFF2"></script>
   <script src="season-wrapped.js?v=20260910_WRAPPED1"></script>

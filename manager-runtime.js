@@ -707,11 +707,11 @@
         '<h3 style="margin:0 0 0.4rem;color:#fff;">Inbox Manager Elisee Scout</h3>' +
         '<p style="margin:0 0 0.6rem;color:#cbd5e1;font-size:0.88rem;">Candidature manager, correzioni squadra e suggerimenti di modulo/XI: Accetta per pubblicare, Declina per chiudere.</p>' +
         '<div id="es-mgr-admin-panel"></div></div>';
-      var stats = dash.querySelector('[style*="grid-template-columns:repeat(5,1fr)"]');
+      var stats = dash.querySelector('#es-cc-legacy-stats') || dash.querySelector('[style*="grid-template-columns:repeat(5,1fr)"]');
       if (stats && stats.parentNode) stats.parentNode.insertBefore(box, stats);
       else dash.appendChild(box);
     }
-    var statsRow = document.querySelector('#admin-authenticated-dashboard [style*="grid-template-columns:repeat(5,1fr)"]');
+    var statsRow = document.querySelector('#es-cc-legacy-stats') || document.querySelector('#admin-authenticated-dashboard [style*="grid-template-columns:repeat(5,1fr)"]');
     if (statsRow && !$('stat-mgr-pending')) {
       var cell = document.createElement('div');
       cell.style.cssText = 'background:rgba(56,189,248,0.07);border:1px solid rgba(56,189,248,0.22);border-radius:12px;padding:1rem;text-align:center;';

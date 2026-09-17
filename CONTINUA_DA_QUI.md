@@ -3,7 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Bacheca 7 categorie (`BACHECA7`):
+Ultimo aggiornamento: **2026-09-17** — Control Center dashboard operativa (`CCDASH1`):
+1. **Home Admin**: stat card (job IA, Admin, Privacy, sync, alert), azioni rapide (Autopilot primario, GDPR, Sync, War Room, Auto-Fix), grid 5 moduli, grafici job 24h + donut categorie + % operativa, Governance & Trust, identità sessione.
+2. **Tab**: restano le 5 sezioni. Mission Control Autopilot non è più l’unico contenuto della home: sta nel modulo Autopilot. Privacy ha `#governance-panel-target` (prima mancava, il pannello GDPR non montava).
+3. **Dati**: cluster `EliseeAICluster`, reclami localStorage, step audit, presenza admin/privacy, pending Card Elisee. Nessun dato mock permanente.
+4. **File**: `control-center.js/css`, `index.html`, `card-atelier.js`, `manager-runtime.js`, `sw.js`. Cache `v20260917_CCDASH1`.
+
+Feature precedente: **Bacheca 7 categorie (`BACHECA7`):
 1. **Categorie**: `cerco_squadra`, `cerco_giocatore`, `cerco_allenatore`, `cerco_arbitro`, `cerco_amichevole`, `cerco_sponsor`, `calciomercato`. Dropdown Categoria con icone SVG, filtro in AND con Ruolo / Zona / Raggio. Query param `?cat=`.
 2. **Nuovo annuncio**: CTA unica al posto di «Pubblica candidatura». Step 1 card categoria, step 2 campi comuni + specifici. Validazione client + `POST /api/bacheca` (rewrite su `/api/manager?path=bacheca`, niente 13ª serverless Hobby). Persistenza `elisee_user_jobs` + file `data/bacheca/annunci.json` (`/tmp` su Vercel).
 3. **Card**: badge icona+label da `categoria` del record (bordo sottile, non pillola satura).

@@ -297,12 +297,11 @@
   function paintBadge() {
     var el = document.getElementById('es-card-pending-n');
     if (el) el.textContent = String(pendingCount());
-    var chipN = document.getElementById('es-card-chip-n');
-    if (chipN) {
-      var n = pendingCount();
+    var n = pendingCount();
+    document.querySelectorAll('.es-card-chip-n').forEach(function (chipN) {
       chipN.textContent = n ? String(n) : '';
       chipN.hidden = !n;
-    }
+    });
   }
 
   function renderStaffList(q) {
@@ -365,25 +364,30 @@
   function showCardAtelierTab() {
     var dash = document.getElementById('admin-authenticated-dashboard');
     if (!dash) return;
-    var chips = document.querySelector('.pf-gov-bar .pf-chips');
-    if (chips) {
-      chips.querySelectorAll('.gov-btn').forEach(function (x) { x.classList.remove('active'); });
-    }
-    var b = document.getElementById('btn-show-card-atelier');
-    if (b) b.classList.add('active');
-
-    // Nascondi tutte le altre sezioni della dashboard lasciando solo header, toolbar e Atelier Card
-    var children = dash.children;
-    for (var i = 0; i < children.length; i++) {
-      var el = children[i];
-      if (el.tagName === 'HEADER' || (el.classList && el.classList.contains('pf-gov-bar')) || el.id === 'es-card-admin-wrap') {
-        el.style.display = '';
-      } else {
-        el.style.display = 'none';
+    if (window.EliseeCC && typeof window.EliseeCC.showPane === 'function') {
+      window.EliseeCC.showPane('card');
+    } else {
+      var chips = document.querySelector('.pf-gov-bar .pf-chips');
+      if (chips) {
+        chips.querySelectorAll('.gov-btn').forEach(function (x) { x.classList.remove('active'); });
+      }
+      var b = document.getElementById('btn-show-card-atelier');
+      if (b) b.classList.add('active');
+      var children = dash.children;
+      for (var i = 0; i < children.length; i++) {
+        var el = children[i];
+        if (el.tagName === 'HEADER' || (el.classList && el.classList.contains('pf-gov-bar')) || el.id === 'es-card-admin-wrap') {
+          el.style.display = '';
+        } else {
+          el.style.display = 'none';
+        }
       }
     }
     var wrap = document.getElementById('es-card-admin-wrap');
-    if (wrap) wrap.style.display = 'block';
+    if (wrap) {
+      wrap.hidden = false;
+      wrap.style.display = 'block';
+    }
 
     var pool = searchPeople((document.getElementById('es-card-staff-q') || {}).value || '');
     if (!selected && pool.length > 0) {
@@ -395,30 +399,29 @@
   }
 
   function hideCardAtelierTab() {
-    var dash = document.getElementById('admin-authenticated-dashboard');
-    if (!dash) return;
     var wrap = document.getElementById('es-card-admin-wrap');
-    if (wrap) wrap.style.display = 'none';
-    var children = dash.children;
-    for (var i = 0; i < children.length; i++) {
-      var el = children[i];
-      if (el.id !== 'es-card-admin-wrap' && el.id !== 'es-mgr-admin-wrap') {
-        el.style.display = '';
-      }
+    if (wrap) {
+      wrap.style.display = 'none';
+      wrap.hidden = true;
     }
   }
 
   function ensureAdminUi() {
     if (!isAdmin()) return;
     var chips = document.querySelector('.pf-gov-bar .pf-chips');
-    if (chips && !document.getElementById('btn-show-card-atelier')) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'gov-btn pf-chip-btn';
-      b.id = 'btn-show-card-atelier';
-      b.innerHTML = 'Card Elisee <span id="es-card-chip-n" class="es-card-chip-n" hidden></span>';
-      chips.appendChild(b);
-      b.addEventListener('click', function () {
+    var cardBtn = document.getElementById('btn-show-card-atelier');
+    if (chips && !cardBtn) {
+      cardBtn = document.createElement('button');
+      cardBtn.type = 'button';
+      cardBtn.className = 'gov-btn pf-chip-btn';
+      cardBtn.id = 'btn-show-card-atelier';
+      cardBtn.setAttribute('data-cc-tab', 'card');
+      cardBtn.innerHTML = 'Card Elisee <span id="es-card-chip-n" class="es-card-chip-n" hidden></span>';
+      chips.appendChild(cardBtn);
+    }
+    if (cardBtn && !cardBtn.dataset.cardBound) {
+      cardBtn.dataset.cardBound = '1';
+      cardBtn.addEventListener('click', function () {
         showCardAtelierTab();
       });
     }
