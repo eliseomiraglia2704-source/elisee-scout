@@ -3,7 +3,17 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Risoluzione Widescreen & Eliminazione Tagli Dashboard Osservatore & Scout (`OBSFIX1`):
+Ultimo aggiornamento: **2026-09-17** — Risoluzione Widescreen, Anti-Taglio Card & De-duplicazione Match Analyst (`MAFIX1`):
+1. **Perfezionamento Dashboard Match Analyst & Video Analyst (`ma-dash.css`, `ma-dash.js`, `index.html`)**:
+   - **Diagnosi del bug visivo riscontrato negli screenshot**:
+     - Analogamente all'osservatore, la griglia a 3 colonne di "Tactical Suite v3.0" si comprimeva tagliando verticalmente le card e le icone.
+     - Duplicazione dell'azione "Nuovo Report" presente sia nell'Header principale che come CTA nel footer del Registro.
+   - **Interventi Applicati**:
+     - *Grid Reattiva Anti-Taglio*: in `ma-dash.css`, `.es-ma-actions-grid` utilizza ora `grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))`, `width: 100%` e `min-height: 76px`. Tutte le 6 card operative (*Report 8 Blocchi, Heatmap & Mappa di Calore, Comparatore Giocatori IA, Tag & Menzioni Certificate, Clip Hub & Video Tagging, Inoltro Dossier a DS & Mister*) sono ora perfettamente ariose e non tagliate.
+     - *Eliminazione Duplicazione*: rimosso il pulsante ridondante "Nuovo Report Privato" nel footer del registro, sostituendolo con l'azione diretta **"⚖️ Apri Comparatore IA"** (`data-ma="compare-ia"`), mantenendo la CTA di creazione primaria nell'Header in alto e la pubblicazione del portfolio con **"🌐 Focus Pubblico Portfolio"**.
+2. **File aggiornati**: `ma-dash.css`, `ma-dash.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_MAFIX1`.
+
+Feature precedente: **Risoluzione Widescreen & Eliminazione Tagli Dashboard Osservatore & Scout (`OBSFIX1`):**
 1. **Risoluzione Compressione Widescreen & Tagli Card (`player-profile.css`, `obs-dash.css`, `obs-dash.js`)**:
    - **Diagnosi del bug visivo riscontrato negli screenshot**:
      - `player-profile.css` applicava a riga 384 un selettore restrittivo `#user-dossier-view-group.is-staff-area:not(.is-coach-dash) .pf-page-inner { max-width: 560px; }`. Questo causava lo schiacciamento dell'intera dashboard in una colonnina stretta di 560px con il restante 60% dello schermo nero e vuoto.

@@ -563,8 +563,8 @@
                 '<div class="es-ma-empty-title">Nessuna analisi archiviata di recente</div>' +
                 '<div class="es-ma-empty-sub">Crea un nuovo report tattico in-house o un focus pubblico per arricchire il tuo portfolio professionale e aggiornare la lavagna dello staff.</div>' +
                 '<div style="display:flex; gap:8px; margin-top:0.4rem;">' +
-                  '<button type="button" class="es-ma-btn-primary" data-ma="rep-priv" style="font-size:0.75rem; padding:0.45rem 0.85rem;">+ Nuovo Report Privato</button>' +
-                  '<button type="button" class="es-ma-btn-secondary" data-ma="rep-pub" style="font-size:0.75rem; padding:0.45rem 0.85rem;">🌟 Focus Pubblico</button>' +
+                  '<button type="button" class="es-ma-btn-primary" data-ma="compare-ia" style="font-size:0.75rem; padding:0.45rem 0.85rem;">⚖️ Apri Comparatore IA</button>' +
+                  '<button type="button" class="es-ma-btn-secondary" data-ma="rep-pub" style="font-size:0.75rem; padding:0.45rem 0.85rem;">🌐 Focus Pubblico Portfolio</button>' +
                 '</div>' +
               '</div>')
           ) +
@@ -726,6 +726,11 @@
       if (k === 'edit') { openMaEditModal(userObj()); return; }
       if (k === 'rep-priv' || k === 'new-report') { addReport('private'); return; }
       if (k === 'rep-pub') { addReport('public'); return; }
+      if (k === 'compare-ia') {
+        if (window.switchView) window.switchView('schede', '#schede-tecniche');
+        else toast('Modulo Comparatore Giocatori IA aperto (#schede-tecniche).', 'info');
+        return;
+      }
       if (k === 'heatmap') {
         var pl = promptField('Calciatore della heatmap da validare');
         if (!pl) return;

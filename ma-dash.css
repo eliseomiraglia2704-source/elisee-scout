@@ -412,10 +412,12 @@
 }
 
 /* ActionsGrid a Card (3 Colonne) */
+/* ActionsGrid a Card (Fluida & Reattiva - No Tagli) */
 .es-ma-actions-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1rem;
+  width: 100%;
 }
 
 .es-ma-action-card {
@@ -431,6 +433,7 @@
   text-align: left;
   width: 100%;
   box-sizing: border-box;
+  min-height: 76px;
 }
 
 .es-ma-action-card:hover {
