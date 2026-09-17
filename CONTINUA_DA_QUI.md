@@ -3,7 +3,17 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Risoluzione Widescreen, Anti-Taglio Card & De-duplicazione Match Analyst (`MAFIX1`):
+Ultimo aggiornamento: **2026-09-17** — Risoluzione Widescreen & Anti-Taglio ActionsGrid per Tutte le Dashboard Staff (`GKALLFIX1`):
+1. **Perfezionamento Preparatore Portieri & Standardizzazione Universale ActionsGrid (`gk-dash.css`, `at-dash.css`, `fisio-dash.css`, `med-dash.css`, `nu-dash.css`, `index.html`)**:
+   - **Diagnosi del bug visivo riscontrato negli screenshot del Preparatore Portieri**:
+     - Nello Screenshot 3, la sezione "GK Suite v3.0" presentava 6 card operative tagliate verticalmente con icone troncate e testo illeggibile a causa del selettore rigido a 3 colonne.
+     - L'ispezione preventiva su tutti i fogli di stile ha rivelato che la stessa struttura a 3 colonne fisse era presente anche in `at-dash.css` (Preparatore Atletico), `fisio-dash.css` (Fisioterapista), `med-dash.css` (Medico Sociale) e `nu-dash.css` (Nutrizionista).
+   - **Interventi Applicati**:
+     - *Standardizzazione Anti-Taglio Universale*: aggiornate tutte le classi `.es-gk-actions-grid`, `.es-at-actions-grid`, `.es-fisio-actions-grid`, `.es-med-actions-grid`, `.es-nu-actions-grid` adottando `grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))`, `width: 100%` e card con `min-height: 76px`.
+     - *Esperienza Utente Portieri*: tutte le 6 card operative (*Scheda Sviluppo Tecnico, Video Tagging & Uscite Alte, Convalida Reattività GPS, Assegna Badge Saracinesca, Menzione Speciale Card, Inoltra Report al Mister*) risultano ora perfettamente leggibili, ariose ed eleganti su qualsiasi risoluzione.
+2. **File aggiornati**: `gk-dash.css`, `at-dash.css`, `fisio-dash.css`, `med-dash.css`, `nu-dash.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_GKALLFIX1`.
+
+Feature precedente: **Risoluzione Widescreen, Anti-Taglio Card & De-duplicazione Match Analyst (`MAFIX1`):**
 1. **Perfezionamento Dashboard Match Analyst & Video Analyst (`ma-dash.css`, `ma-dash.js`, `index.html`)**:
    - **Diagnosi del bug visivo riscontrato negli screenshot**:
      - Analogamente all'osservatore, la griglia a 3 colonne di "Tactical Suite v3.0" si comprimeva tagliando verticalmente le card e le icone.
