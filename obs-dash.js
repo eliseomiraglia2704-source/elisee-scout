@@ -458,7 +458,7 @@
             '<div class="es-obs-empty-sub">I calciatori monitorati e le relazioni tecniche vengono archiviati nella Secret List stealth. Da lì potrai inoltrarli direttamente al Direttore Sportivo.</div>' +
             '<div style="display:flex; gap:8px; margin-top:0.4rem;">' +
               '<button type="button" class="es-obs-btn-primary" data-ob="search" style="font-size:0.75rem; padding:0.45rem 0.85rem;">🔍 Cerca Nuovi Talenti</button>' +
-              '<button type="button" class="es-obs-btn-secondary" data-ob="secret" style="font-size:0.75rem; padding:0.45rem 0.85rem;">📂 Apri Secret List</button>' +
+              '<button type="button" class="es-obs-btn-secondary" data-ob="report-ia" style="font-size:0.75rem; padding:0.45rem 0.85rem;">📋 Nuova Scheda Tecnica IA</button>' +
             '</div>' +
           '</div>' +
         '</section>' +
@@ -566,6 +566,10 @@
       if (k === 'secret' && window.openSecretList) window.openSecretList();
       if (k === 'wall' && window.openTransferWall) window.openTransferWall();
       if (k === 'search' && window.switchView) window.switchView('scopri', '#scopri-profili');
+      if (k === 'report-ia') {
+        if (window.switchView) window.switchView('schede', '#schede-tecniche');
+        else if (typeof window.showToast === 'function') window.showToast('Modulo Schede Tecniche IA aperto', 'info');
+      }
       if (k === 'msgs' && window.openUserMessages) window.openUserMessages();
       if (k === 'edit') {
         openObsEditModal(userObj());

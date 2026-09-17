@@ -3,7 +3,20 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Riprogettazione Completa & Ordinata Nutrizionista & Composizione Corporea (`NUTRILUX1`):
+Ultimo aggiornamento: **2026-09-17** — Risoluzione Widescreen & Eliminazione Tagli Dashboard Osservatore & Scout (`OBSFIX1`):
+1. **Risoluzione Compressione Widescreen & Tagli Card (`player-profile.css`, `obs-dash.css`, `obs-dash.js`)**:
+   - **Diagnosi del bug visivo riscontrato negli screenshot**:
+     - `player-profile.css` applicava a riga 384 un selettore restrittivo `#user-dossier-view-group.is-staff-area:not(.is-coach-dash) .pf-page-inner { max-width: 560px; }`. Questo causava lo schiacciamento dell'intera dashboard in una colonnina stretta di 560px con il restante 60% dello schermo nero e vuoto.
+     - A causa della larghezza forzata a 560px, le 3 colonne degli "Strumenti Operativi — Azioni Possibili" venivano compresse a 160px l'una, tagliando verticalmente le card e le icone.
+     - Nel registro a piè di pagina il testo andava a capo parola per parola per via della larghezza compressa.
+     - Presenza di un bottone duplicato ridondante "Apri Secret List" nel footer del registro oltre a quello già presente in header e nel centro operativo.
+   - **Interventi Applicati**:
+     - *Sblocco Larghezza*: aggiornato `player-profile.css` escludendo dal vincolo di 560px tutte le dashboard di ruolo moderne.
+     - *Grid Reattiva Anti-Taglio*: in `obs-dash.css` la griglia strumenti è ora fluida con `grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))`, `width: 100%` e `min-height: 76px`, garantendo card ariose e perfettamente visibili su qualunque monitor.
+     - *Eliminazione Ridondanze*: rimosso il terzo pulsante duplicato "Apri Secret List" nel footer del registro, sostituendolo con l'azione a valore aggiunto **"📋 Nuova Scheda Tecnica IA"** (agganciata direttamente al modulo schede/candidature).
+2. **File aggiornati**: `player-profile.css`, `obs-dash.css`, `obs-dash.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_OBSFIX1`.
+
+Feature precedente: **Riprogettazione Completa & Ordinata Nutrizionista & Composizione Corporea (`NUTRILUX1`):**
 1. **Ridisegno Integrale Dashboard Nutrizionista (`nu-dash.js`, `nu-dash.css`, `index.html`)**:
    - **Diagnosi**: Layout collassato da regole CSS asimmetriche a 3 colonne frastagliate con `grid-template-columns: 280px minmax(0, 1fr) 240px` che comprimevano il profilo e sparpagliavano blocchi scollegati senza un vero motore di pianificazione nutrizionale sportiva, esami BIA o timing carboidrati.
    - **Nuova Architettura Ordinata & Luxury**:
