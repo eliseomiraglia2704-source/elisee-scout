@@ -3,7 +3,20 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Scheda tecnica IA da DS e Scout (`SCHEDAIA1`):
+Ultimo aggiornamento: **2026-09-17** — Funzioni dedicate Manuale Profili Club (`CLUBOPS1`):
+1. **Richiesta**: aggiornare le 7 aree del PDF `manuale_profili_club_260916_153944.pdf` (Team Manager, Settore Giovanile, Segretario Generale, Magazziniere, Biglietteria/SLO, Ufficio Stampa, Marketing).
+2. **Intervento** (`club-role-ops.js` + nav in `dash-real.js`):
+   - **Team Manager**: Hub comunicazioni broadcast/push con conferme; checklist matchday; calcolatore itinerari/km/tempi; prenotazioni strutture **Coming soon / Beta** + lista d’attesa; KPI squadra; scheda anagrafica tesserato.
+   - **Settore Giovanile**: Academy Talent Tracker (fisica/tattica/scolastica); scouting territoriale; libretto elettronico formativo.
+   - **Segretario**: alert scadenze (visite, svincoli, rinnovi, squalifiche); gestore contratti/tesseramenti; archivio cloud con firma digitale.
+   - **Magazziniere**: canale richieste (approva/rifiuta/lavorazione); budget con decurtazione; inventario RFID/barcode; audit sola lettura Presidenza; manutenzioni programmate.
+   - **Biglietteria/SLO**: pressione varchi; SLO Hub tifosi; ticketing nominativo QR antibagarinaggio.
+   - **Ufficio Stampa**: Accrediti Media Express; rassegna/monitoring; content calendar.
+   - **Marketing**: CRM lead/rinnovi; analytics store; loyalty punti tifosi.
+   - Ogni area ha la **scheda anagrafica tesserato** del PDF (nome, cognome, ruolo, n° tessera, società, nascita, email, telefono, inizio incarico, foto).
+3. **File**: `club-role-ops.js`, `dash-real.js`, `dash-luxury.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260917_CLUBOPS1`.
+
+Feature precedente: **Scheda tecnica IA da DS e Scout (`SCHEDAIA1`):
 1. **Richiesta**: la scheda tecnica (manuale `manuale_profili_club_260916_153944.pdf`) deve essere generata dall’IA con i dati, non solo sui pochi profili demo in Bacheca, e richiedibile da Direttore Sportivo e Area Scout.
 2. **Intervento**:
    - Generatore `EliseeSchede.generateFor` su qualsiasi tesserato (pool, Secret List, Scopri profili, dossier scout, o nome digitato).
