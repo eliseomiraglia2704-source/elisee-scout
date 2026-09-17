@@ -1,12 +1,11 @@
 /* ============================================================
-   ELISEE SCOUT — DASHBOARD NUTRIZIONISTA & COMPOSIZIONE CORPOREA (JS)
-   Layout Professionale B2B — Sports Nutrition & Body Comp OS
+   ELISEE SCOUT — AREA NUTRIZIONISTA & PERFORMANCE ALIMENTARE
+   Sports Nutrition OS — Sidebar 240px + Tab bar + Header 2 livelli
    ============================================================ */
 (function () {
   'use strict';
 
-  var NU_DIETS_KEY = 'elisee_nu_diets_history';
-
+  var activeTab = 'dashboard';
   var AXES = [
     'Composizione Corporea / BIA', 'Timing Glucidico & Carb Loading', 'Idratazione Match-Day', 'Integrazione WADA Compliant',
     'Nutrizione Pre & Post Gara', 'Gestione Ritiro / Trasferte', 'Plicometria & Piani Personalizzati', 'Coordinamento Staff Atletico'
@@ -15,15 +14,18 @@
   var V2023 = [82, 80, 78, 85, 81, 75, 80, 81];
 
   function esc(s) {
-    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
   }
 
   function userObj() {
     try {
-      return JSON.parse(localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data') || '{}') || {};
-    } catch (_) {
-      return {};
-    }
+      var u = JSON.parse(localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data') || '{}') || {};
+      if (!u.squadra || /atalanta|carlentini/i.test(u.squadra)) u.squadra = 'Foggia City';
+      if (!u.club || /atalanta|carlentini/i.test(u.club)) u.club = 'Foggia City';
+      return u;
+    } catch (_) { return { squadra: 'Foggia City', club: 'Foggia City' }; }
   }
 
   function isNutrizionista(u) {
@@ -41,11 +43,25 @@
     return ((p[0] || 'N').charAt(0) + (p[1] || p[0] || 'U').charAt(0)).toUpperCase();
   }
 
-  function photoOf(u) {
+  function qualificaOf(u) {
+    return String((u && (u.nuQualifica || u.qualificaNutri || u.certificazione)) || '').trim() || 'Biologo Nutrizionista FNOB / CSNM';
+  }
+
+  function getDiets() {
     try {
-      if (window.getStoredProfilePhoto) return window.getStoredProfilePhoto(null, u) || u.fotoUrl || '';
+      var raw = JSON.parse(localStorage.getItem('elisee_nu_diets') || '[]');
+      if (Array.isArray(raw) && raw.length > 0) return raw;
     } catch (_) {}
-    return u.fotoUrl || '';
+    return [
+      { id: 'd-1', player: 'Jacopo Murano', date: '15/09/2026', tipo: 'Piano Composizione Corporea', kcal: '3200 kcal', obiettivo: 'Massa Magra', status: 'Attivo' },
+      { id: 'd-2', player: 'Diego Peralta', date: '12/09/2026', tipo: 'Piano Riatletizzazione', kcal: '2800 kcal', obiettivo: 'Recupero Proteico', status: 'Attivo' },
+      { id: 'd-3', player: 'Carlos Embalo', date: '10/09/2026', tipo: 'Match-Day Protocol', kcal: '3500 kcal', obiettivo: 'Carb Loading', status: 'Programmato' }
+    ];
+  }
+
+  function toast(msg, type) {
+    if (typeof window.showToast === 'function') window.showToast(msg, type || 'info');
+    else alert(msg);
   }
 
   function polar(cx, cy, r, i, n, val) {
@@ -61,503 +77,277 @@
     }).join(' ');
   }
 
-  function wedge(cx, cy, r, start, end, color) {
-    var n = 24;
-    var pts = [[cx, cy]];
-    for (var i = 0; i <= n; i++) {
-      var t = start + (end - start) * (i / n);
-      pts.push([cx + Math.cos(t) * r, cy + Math.sin(t) * r]);
-    }
-    return '<path d="M' + pts.map(function (p) { return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' L') + ' Z" fill="' + color + '" />';
-  }
-
   function radarSvg() {
-    var cx = 220, cy = 210, r = 145, n = AXES.length;
-    var html = '<svg viewBox="0 0 440 430" style="width:100%; height:auto; max-height:320px;" role="img" aria-label="Analisi nutrizionale e composizione corporea">';
-    html += wedge(cx, cy, r, -Math.PI / 2, 0, 'rgba(74,222,128,0.12)');
-    html += wedge(cx, cy, r, 0, Math.PI / 2, 'rgba(248,113,113,0.12)');
-    html += wedge(cx, cy, r, Math.PI / 2, Math.PI, 'rgba(250,204,21,0.12)');
-    html += wedge(cx, cy, r, Math.PI, Math.PI * 1.5, 'rgba(56,189,248,0.12)');
+    var cx = 220, cy = 200, r = 135, n = AXES.length;
+    var html = '<svg viewBox="0 0 440 400" style="width:100%;height:auto;max-height:300px;" role="img" aria-label="Competenze nutrizionista">';
     for (var ring = 1; ring <= 5; ring++) {
-      html += '<polygon points="' + poly(cx, cy, r, AXES.map(function () { return ring * 20; })) +
-        '" fill="none" stroke="rgba(148,163,184,0.18)" stroke-width="1"/>';
+      html += '<polygon points="' + poly(cx, cy, r, AXES.map(function () { return ring * 20; })) + '" fill="none" stroke="rgba(148,163,184,0.16)" stroke-width="1"/>';
     }
     for (var i = 0; i < n; i++) {
       var e = polar(cx, cy, r, i, n, 100);
-      html += '<line x1="' + cx + '" y1="' + cy + '" x2="' + e[0].toFixed(1) + '" y2="' + e[1].toFixed(1) +
-        '" stroke="rgba(148,163,184,0.18)"/>';
+      html += '<line x1="' + cx + '" y1="' + cy + '" x2="' + e[0].toFixed(1) + '" y2="' + e[1].toFixed(1) + '" stroke="rgba(148,163,184,0.16)"/>';
       var lab = polar(cx, cy, r + 24, i, n, 100);
-      html += '<text x="' + lab[0].toFixed(1) + '" y="' + lab[1].toFixed(1) +
-        '" text-anchor="middle" dominant-baseline="middle" fill="#94a3b8" font-size="8.5" font-weight="600">' +
-        esc(AXES[i]) + ' ' + V2025[i] + '%</text>';
+      html += '<text x="' + lab[0].toFixed(1) + '" y="' + lab[1].toFixed(1) + '" text-anchor="middle" dominant-baseline="middle" fill="#94a3b8" font-size="8.5" font-weight="600">' + esc(AXES[i]) + ' ' + V2025[i] + '%</text>';
     }
     html += '<polygon points="' + poly(cx, cy, r, V2023) + '" fill="rgba(148,163,184,0.10)" stroke="#64748b" stroke-width="1.5"/>';
-    html += '<polygon points="' + poly(cx, cy, r, V2025) + '" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="2"/>';
+    html += '<polygon points="' + poly(cx, cy, r, V2025) + '" fill="rgba(56,189,248,0.14)" stroke="#38bdf8" stroke-width="2"/>';
     html += '</svg>';
     return html;
   }
 
-  function ico(d) {
-    return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">' + d + '</svg>';
-  }
-
   function hideOthers() {
-    if (typeof window.unmountAllRoleDashboards === 'function') {
-      window.unmountAllRoleDashboards('es-nu');
-    }
+    if (typeof window.unmountAllRoleDashboards === 'function') window.unmountAllRoleDashboards('es-nu');
   }
 
-  function toast(msg, kind) {
-    if (typeof window.showToast === 'function') window.showToast(msg, kind || 'success');
+  function renderSideBtn(tab, label, svgInner) {
+    var cls = activeTab === tab ? ' is-active' : '';
+    return '<button type="button" class="es-med-side-btn' + cls + '" data-nu-nav="' + tab + '">' +
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' + svgInner + '</svg>' +
+      '<span>' + label + '</span></button>';
   }
 
-  function inStaff(u) {
-    u = u || userObj();
-    var st = String(u.contractStatus || '').toLowerCase();
-    if (st === 'free agent' || st === 'free' || st === 'consulente') return false;
-    return !!(u.squadra || u.club);
+  function renderNavTab(tab, label, svgInner) {
+    var cls = activeTab === tab ? ' is-active' : '';
+    return '<button type="button" class="es-med-tab-btn' + cls + '" data-nu-nav="' + tab + '">' +
+      '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' + svgInner + '</svg>' +
+      label + '</button>';
   }
 
-  function qualificaOf(u) {
-    return String((u && (u.abilitazione || u.specializzazione || u.certificazione)) || '').trim() || 'Biologo Nutrizionista dello Sport / ONB';
-  }
-
-  function html(user) {
-    user = user || userObj();
+  /* ---- TAB DASHBOARD ---- */
+  function renderTabDashboard(user, diets) {
     var name = nuName(user);
-    var ph = photoOf(user);
-    var initText = esc(initials(name));
-    var on = inStaff(user);
-    var club = String(user.squadra || user.club || '').trim();
+    var on = !!(user.squadra || user.club);
+    var club = String(user.squadra || user.club || 'Foggia City').trim();
     var qual = qualificaOf(user);
-
-    var avaHtml;
-    if (ph && ph.length > 5 && !/simulated|null|undefined/i.test(ph)) {
-      avaHtml = '<img src="' + esc(ph) + '" alt="" class="es-nu-avatar" onerror="this.style.display=\'none\'; this.nextElementSibling.style.display=\'flex\';">' +
-        '<div class="es-nu-avatar-fallback" style="display:none;">' + initText + '</div>';
-    } else {
-      avaHtml = '<div class="es-nu-avatar-fallback">' + initText + '</div>';
-    }
-
-    var statusBadge = on
-      ? '<span class="es-nu-badge-tag cyan">In Staff Club</span>'
-      : '<span class="es-nu-badge-tag emerald">Nutrizionista Indipendente</span>';
-
-    var clubDisplay = club
-      ? '<span style="font-size:0.75rem; color:#cbd5e1; font-weight:600; display:flex; align-items:center; gap:4px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' + esc(club) + '</span>'
-      : '<span style="font-size:0.75rem; color:#94a3b8; font-weight:500;">Consulente Nutrizionale Sportivo</span>';
-
-    return '' +
-      // DOCK LATERALE SINISTRO
-      '<aside class="es-pd-rail">' +
-        '<button type="button" data-nu="home" title="Home">' + ico('<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>') + '</button>' +
-        '<button type="button" class="is-on" data-nu="dash" title="Dashboard">' + ico('<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>') + '</button>' +
-        '<button type="button" data-nu-act="new-diet" title="Nuovo Piano">' + ico('<path d="M12 2a10 10 0 1 0 10 10H12V2z"/>') + '</button>' +
-        '<button type="button" data-nu-act="bia-test" title="BIA &amp; Plicometria">' + ico('<path d="M3 6h18M6 6V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>') + '</button>' +
-        '<button type="button" data-nu="msgs" title="Messaggi Staff">' + ico('<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>') + '</button>' +
-        '<button type="button" class="es-pd-rail-end" data-nu="edit" title="Modifica Anagrafica">' + ico('<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>') + '</button>' +
-      '</aside>' +
-
-      // SHELL PRINCIPALE
-      '<div class="es-nu-shell">' +
-
-        // 1. TOP HEADER BAR
-        '<div class="es-nu-header-bar">' +
-          '<div class="es-nu-title-wrap">' +
-            '<div class="es-nu-breadcrumb">Elisee Scout &rsaquo; Area Riservata Professionale &rsaquo; Performance Nutrizionale &amp; Staff</div>' +
-            '<h1>Dashboard Nutrizionista &amp; Performance Alimentare</h1>' +
-          '</div>' +
-          '<div class="es-nu-header-actions">' +
-            '<button type="button" class="es-nu-btn-secondary" data-nu-act="bia-test">' +
-              '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M6 6V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>' +
-              '<span>Registra BIA / Plicometria</span>' +
-            '</button>' +
-            '<button type="button" class="es-nu-btn-primary" data-nu-act="new-diet">' +
-              '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>' +
-              '<span>Nuovo Piano Alimentare</span>' +
-            '</button>' +
+    return '<div class="es-med-grid-2col">' +
+      '<section class="es-med-card">' +
+        '<div class="es-med-card-head">' +
+          '<h2 class="es-med-card-title"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profilo Ufficiale Nutrizionista</span></h2>' +
+          '<div style="display:flex;gap:6px;"><span class="es-med-badge-tag cyan">FNOB</span><span class="es-med-badge-tag emerald">' + (on ? 'In Staff' : 'Free Agent') + '</span></div>' +
+        '</div>' +
+        '<div class="es-med-profile-row">' +
+          '<div class="es-med-avatar-fallback">' + esc(initials(name)) + '</div>' +
+          '<div class="es-med-user-meta">' +
+            '<b class="es-med-user-name">' + esc(name) + '</b>' +
+            '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
+              '<span style="font-size:0.72rem;color:#38bdf8;background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.28);border-radius:4px;padding:2px 6px;font-weight:800;text-transform:uppercase;">Nutrizionista</span>' +
+              '<span style="font-size:0.75rem;color:#cbd5e1;font-weight:600;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" style="vertical-align:middle;margin-right:3px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' + esc(club) + '</span>' +
+            '</div>' +
           '</div>' +
         '</div>' +
-
-        // 2. RIGA SUPERIORE (2 COLONNE: PROFILO & MONITORAGGIO NUTRIZIONALE)
-        '<div class="es-nu-grid-2col">' +
-
-          // CARD 1: PROFILO NUTRIZIONISTA
-          '<section class="es-nu-card">' +
-            '<div class="es-nu-card-head">' +
-              '<h2 class="es-nu-card-title">' +
-                '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' +
-                '<span>Profilo Nutrizionale Ufficiale</span>' +
-              '</h2>' +
-              '<div style="display:flex; gap:6px; align-items:center;">' +
-                '<span class="es-nu-badge-tag cyan">Albo ONB</span>' +
-                statusBadge +
-              '</div>' +
-            '</div>' +
-
-            '<div class="es-nu-profile-row">' +
-              avaHtml +
-              '<div class="es-nu-user-meta">' +
-                '<b class="es-nu-user-name">' + esc(name) + '</b>' +
-                '<div class="es-nu-user-badges">' +
-                  '<span style="font-size:0.72rem; color:#38bdf8; background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.28); border-radius:4px; padding:2px 6px; font-weight:800; text-transform:uppercase;">Biologo Nutrizionista</span>' +
-                  clubDisplay +
-                '</div>' +
-              '</div>' +
-            '</div>' +
-
-            // Barra di completamento anagrafica
-            '<div class="es-nu-onboarding-bar-box">' +
-              '<div class="es-nu-onboarding-label-row">' +
-                '<span>Completamento Anagrafica &amp; Iscrizione Albo</span>' +
-                '<span style="color:#38bdf8; font-weight:900;">85%</span>' +
-              '</div>' +
-              '<div class="es-nu-progress-track">' +
-                '<div class="es-nu-progress-fill" style="width:85%;"></div>' +
-              '</div>' +
-              '<div style="display:flex; justify-content:flex-end; margin-top:6px;">' +
-                '<button type="button" class="es-pd-edit" data-nu="edit" style="font-size:0.72rem; color:#38bdf8; background:none; border:none; cursor:pointer; font-weight:700; padding:0;">✏️ Modifica Anagrafica</button>' +
-              '</div>' +
-            '</div>' +
-
-            // Credenziali in grid compatta
-            '<div class="es-nu-cred-grid">' +
-              '<div class="es-nu-cred-item">' +
-                '<span>Specializzazione</span>' +
-                '<b>' + esc(qual) + '</b>' +
-              '</div>' +
-              '<div class="es-nu-cred-item">' +
-                '<span>Coordinamento Tecnico</span>' +
-                '<b>' + (on ? 'In Staff con Medico e Preparatore' : 'Consulente Esterno') + '</b>' +
-              '</div>' +
-            '</div>' +
-          '</section>' +
-
-          // CARD 2: MONITORAGGIO NUTRIZIONALE & COMPOSIZIONE CORPOREA ROSA
-          '<section class="es-nu-card">' +
-            '<div class="es-nu-card-head">' +
-              '<h2 class="es-nu-card-title">' +
-                '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/></svg>' +
-                '<span>Composizione Corporea &amp; Rosa BIA</span>' +
-              '</h2>' +
-              '<span class="es-nu-badge-tag emerald">Target Peso 100%</span>' +
-            '</div>' +
-
-            '<div class="es-nu-stats-grid">' +
-              '<div class="es-nu-stat-box"><strong style="color:#4ade80;">9.4%</strong><span>Massa Grassa Rosa 🟢</span></div>' +
-              '<div class="es-nu-stat-box"><strong style="color:#38bdf8;">78.2%</strong><span>Massa Magra (FFM) 🟢</span></div>' +
-              '<div class="es-nu-stat-box"><strong>64.5%</strong><span>Idratazione Media (TBW)</span></div>' +
-              '<div class="es-nu-stat-box"><strong style="color:#4ade80;">24 / 24</strong><span>Piani Attivi Rosa</span></div>' +
-              '<div class="es-nu-stat-box"><strong style="color:#4ade80;">0</strong><span>Carenze Elettrolitiche</span></div>' +
-              '<div class="es-nu-stat-box"><strong>100%</strong><span>WADA Compliant</span></div>' +
-            '</div>' +
-
-            '<div class="es-nu-quick-actions">' +
-              '<button type="button" class="es-nu-quick-btn" data-nu-act="new-diet">🥗 Nuovo Piano</button>' +
-              '<button type="button" class="es-nu-quick-btn" data-nu-act="bia-test">⚖️ Test BIA / Plico</button>' +
-              '<button type="button" class="es-nu-quick-btn" data-nu-act="hydration">💧 Idratazione Match</button>' +
-              '<button type="button" class="es-nu-quick-btn" data-nu-act="menu-hotel">🏨 Menu Trasferta</button>' +
-            '</div>' +
-          '</section>' +
-
-        '</div>' + // Fine riga 1
-
-        // 3. STRUMENTI OPERATIVI — AZIONI NUTRIZIONISTA (GRID A 3 COLONNE)
-        '<section class="es-nu-card" style="padding:1.25rem 1.35rem;">' +
-          '<div class="es-nu-card-head">' +
-            '<h2 class="es-nu-card-title">' +
-              '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>' +
-              '<span>Strumenti Operativi — Azioni Nutrizionista</span>' +
-            '</h2>' +
-            '<span class="es-nu-badge-tag cyan">Nutrition Suite v3.0</span>' +
-          '</div>' +
-
-          '<div class="es-nu-actions-grid">' +
-            '<button type="button" class="es-nu-action-card" data-nu-act="new-diet">' +
-              '<div class="es-nu-action-icon">' +
-                '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/></svg>' +
-              '</div>' +
-              '<div class="es-nu-action-text">' +
-                '<b>Crea Piano Alimentare</b>' +
-                '<span>Fabbisogno energetico, macronutrienti e carichi di lavoro.</span>' +
-              '</div>' +
-            '</button>' +
-
-            '<button type="button" class="es-nu-action-card" data-nu-act="bia-test">' +
-              '<div class="es-nu-action-icon">' +
-                '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M6 6V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>' +
-              '</div>' +
-              '<div class="es-nu-action-text">' +
-                '<b>Esame BIA &amp; Plicometria</b>' +
-                '<span>Monitoraggio massa magra, massa grassa e idratazione.</span>' +
-              '</div>' +
-            '</button>' +
-
-            '<button type="button" class="es-nu-action-card" data-nu-act="hydration">' +
-              '<div class="es-nu-action-icon">' +
-                '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>' +
-              '</div>' +
-              '<div class="es-nu-action-text">' +
-                '<b>Protocollo Idratazione Match</b>' +
-                '<span>Strategia pre-gara, carboidrati intervallo e recovery drink.</span>' +
-              '</div>' +
-            '</button>' +
-
-            '<button type="button" class="es-nu-action-card" data-nu-act="supplements">' +
-              '<div class="es-nu-action-icon">' +
-                '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.5 20.5 3 13a9 9 0 0 1 12.73-12.73l7.5 7.5a9 9 0 0 1-12.73 12.73Z"/></svg>' +
-              '</div>' +
-              '<div class="es-nu-action-text">' +
-                '<b>Integrazione Certificata WADA</b>' +
-                '<span>Piani integrativi controllati conformi alle norme antidoping.</span>' +
-              '</div>' +
-            '</button>' +
-
-            '<button type="button" class="es-nu-action-card" data-nu-act="menu-hotel">' +
-              '<div class="es-nu-action-icon">' +
-                '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>' +
-              '</div>' +
-              '<div class="es-nu-action-text">' +
-                '<b>Pianificazione Menu Trasferta</b>' +
-                '<span>Linee guida per hotel, catering e nutrizione da viaggio.</span>' +
-              '</div>' +
-            '</button>' +
-
-            '<button type="button" class="es-nu-action-card" data-nu-act="send-diet-report">' +
-              '<div class="es-nu-action-icon">' +
-                '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>' +
-              '</div>' +
-              '<div class="es-nu-action-text">' +
-                '<b>Report Nutrizionale allo Staff</b>' +
-                '<span>Condivisione dati con Preparatore Atletico e Medico Sociale.</span>' +
-              '</div>' +
-            '</button>' +
-          '</div>' +
-        '</section>' +
-
-        // 4. RIGA ANALITICA (3 COLONNE: RADAR, PROTOCOLLI, LIMITI DI RUOLO)
-        '<div class="es-nu-grid-3col">' +
-
-          // COLONNA 1: QUADRO NUTRIZIONALE ROSA (RADAR)
-          '<section class="es-nu-card">' +
-            '<div class="es-nu-card-head">' +
-              '<h2 class="es-nu-card-title">' +
-                '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/></svg>' +
-                '<span>Quadro Nutrizionale</span>' +
-              '</h2>' +
-              '<span class="es-nu-badge-tag cyan">Radar Dieta</span>' +
-            '</div>' +
-            '<div style="display:flex; justify-content:center; align-items:center; padding:0.5rem 0;">' +
-              radarSvg() +
-            '</div>' +
-            '<div style="display:flex; justify-content:space-between; font-size:0.7rem; color:#94a3b8; border-top:1px solid rgba(148,163,184,0.08); padding-top:0.6rem; margin-top:auto;">' +
-              '<span>Media Benchmark Professionisti: <b>80%</b></span>' +
-              '<span style="color:#38bdf8;">Indice Nutrizionale Rosa: <b>95%</b></span>' +
-            '</div>' +
-          '</section>' +
-
-          // COLONNA 2: PROTOCOLLI & METODOLOGIA SCIENTIFICA
-          '<section class="es-nu-card">' +
-            '<div class="es-nu-card-head">' +
-              '<h2 class="es-nu-card-title">' +
-                '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>' +
-                '<span>Protocolli Scientifici</span>' +
-              '</h2>' +
-              '<span class="es-nu-badge-tag emerald">Attivo</span>' +
-            '</div>' +
-
-            '<ul class="es-nu-checklist">' +
-              '<li>' +
-                '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' +
-                '<span><b>Bioimpedenziometria (BIA) vettoriale</b> — analisi idratazione intra ed extracellulare.</span>' +
-              '</li>' +
-              '<li>' +
-                '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' +
-                '<span><b>Carb loading pre-gara</b> — saturazione delle riserve di glicogeno muscolare 24-36h prima.</span>' +
-              '</li>' +
-              '<li>' +
-                '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' +
-                '<span><b>Integrazione certificata Informed-Sport</b> — creatina, beta-alanina e sali a zero contaminanti.</span>' +
-              '</li>' +
-              '<li>' +
-                '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' +
-                '<span><b>Finestra anabolica recovery</b> — apporto 3:1 carbo/proteine entro 30 min dal triplice fischio.</span>' +
-              '</li>' +
-            '</ul>' +
-          '</section>' +
-
-          // COLONNA 3: LIMITI DI RUOLO & DEONTOLOGIA (Rosso Tenue Luxury Desaturato)
-          '<section class="es-nu-card es-nu-limits-card">' +
-            '<div class="es-nu-card-head">' +
-              '<h2 class="es-nu-card-title">' +
-                '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fda4af" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' +
-                '<span style="color:#fda4af;">Limiti di Ruolo &amp; Deontologia</span>' +
-              '</h2>' +
-              '<span class="es-nu-badge-tag rose">Compliance</span>' +
-            '</div>' +
-
-            '<ul class="es-nu-limits-list">' +
-              '<li>' +
-                '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>' +
-                '<span><b>Nessuna prescrizione farmacologica</b> — Riservato esclusivamente al Medico Sociale.</span>' +
-              '</li>' +
-              '<li>' +
-                '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>' +
-                '<span><b>Nessuna sostanza non certificata WADA</b> — Tolleranza zero per il rischio contaminazione.</span>' +
-              '</li>' +
-              '<li>' +
-                '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>' +
-                '<span><b>Nessuna modifica della rosa</b> — Riservato alla Direzione Sportiva e alla Presidenza.</span>' +
-              '</li>' +
-            '</ul>' +
-          '</section>' +
-
-        '</div>' + // Fine riga 3
-
-        // 5. REGISTRO PIANI ALIMENTARI & CHECK CORPOREI (EMPTY STATE VISUALE)
-        '<section class="es-nu-card">' +
-          '<div class="es-nu-card-head">' +
-            '<h2 class="es-nu-card-title">' +
-              '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
-              '<span>Registro Piani Alimentari &amp; Misurazioni Recenti</span>' +
-            '</h2>' +
-            '<span class="es-nu-badge-tag cyan">Archivio Nutrizione</span>' +
-          '</div>' +
-
-          '<div class="es-nu-empty-wrap">' +
-            '<div class="es-nu-empty-icon">' +
-              '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/></svg>' +
-            '</div>' +
-            '<div class="es-nu-empty-title">Nessun piano o misurazione registrata di recente</div>' +
-            '<div class="es-nu-empty-sub">Crea un nuovo piano alimentare personalizzato o registra un esame BIA per monitorare lo stato di forma della rosa.</div>' +
-            '<div style="display:flex; gap:8px; margin-top:0.4rem;">' +
-              '<button type="button" class="es-nu-btn-primary" data-nu-act="new-diet" style="font-size:0.75rem; padding:0.45rem 0.85rem;">+ Nuovo Piano Alimentare</button>' +
-              '<button type="button" class="es-nu-btn-secondary" data-nu-act="bia-test" style="font-size:0.75rem; padding:0.45rem 0.85rem;">⚖️ Registra BIA</button>' +
-            '</div>' +
-          '</div>' +
-        '</section>' +
-
-      '</div>'; // Fine shell
+        '<div style="background:#060911;border:1px solid rgba(56,189,248,0.12);border-radius:6px;padding:8px 12px;margin-bottom:10px;">' +
+          '<div style="display:flex;justify-content:space-between;font-size:0.72rem;color:#94a3b8;font-weight:700;"><span>Completamento Anagrafica &amp; Abilitazione</span><span style="color:#38bdf8;font-weight:900;">88%</span></div>' +
+          '<div class="es-med-progress-track"><div class="es-med-progress-fill" style="width:88%;"></div></div>' +
+          '<div style="display:flex;justify-content:flex-end;"><button type="button" data-nu-nav="impostazioni" style="font-size:0.72rem;color:#38bdf8;padding:0;background:none;border:none;cursor:pointer;">&#9999;&#65039; Modifica Anagrafica</button></div>' +
+        '</div>' +
+        '<div class="es-med-cred-grid">' +
+          '<div class="es-med-cred-item"><span>Qualifica Ufficiale</span><b>' + esc(qual) + '</b></div>' +
+          '<div class="es-med-cred-item"><span>Iscrizione Ordine</span><b>Ordine Biologi Nazionali #11284</b></div>' +
+        '</div>' +
+      '</section>' +
+      '<section class="es-med-card">' +
+        '<div class="es-med-card-head">' +
+          '<h2 class="es-med-card-title"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>Monitoraggio Nutrizione &amp; Composizione Corporea</span></h2>' +
+          '<span class="es-med-badge-tag amber">2 Attivi</span>' +
+        '</div>' +
+        '<div class="es-med-kpi-grid">' +
+          '<div class="es-med-kpi-box"><strong>24</strong><span>Atleti con Piano Nutrizionale</span></div>' +
+          '<div class="es-med-kpi-box"><strong>3</strong><span>Piani Attivi</span></div>' +
+          '<div class="es-med-kpi-box"><strong>2</strong><span>BIA Programmati</span></div>' +
+          '<div class="es-med-kpi-box"><strong>0</strong><span>Non Conformi WADA</span></div>' +
+          '<div class="es-med-kpi-box"><strong>1</strong><span>Match-Day Protocol</span></div>' +
+          '<div class="es-med-kpi-box"><strong>95%</strong><span>Aderenza ai Piani</span></div>' +
+        '</div>' +
+        '<div class="es-med-quick-actions">' +
+          '<button type="button" class="es-med-quick-btn" data-nu-nav="piani">&#x1F4CB; Nuovo Piano</button>' +
+          '<button type="button" class="es-med-quick-btn" data-nu-nav="composizione">&#x1F9EA; BIA & Plicometria</button>' +
+          '<button type="button" class="es-med-quick-btn" data-nu-nav="integrazione">&#x1F48A; Integratori WADA</button>' +
+          '<button type="button" class="es-med-quick-btn" data-nu-nav="trasferte">&#x1F697; Gestione Trasferte</button>' +
+        '</div>' +
+      '</section>' +
+    '</div>' +
+    '<section class="es-med-card">' +
+      '<div class="es-med-card-head">' +
+        '<h2 class="es-med-card-title"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg><span>Strumenti Operativi &#8212; Sports Nutrition OS v3.0</span></h2>' +
+        '<span class="es-med-badge-tag cyan">Nutrition Engine</span>' +
+      '</div>' +
+      '<div class="es-med-actions-grid">' +
+        '<button type="button" class="es-med-action-card" data-nu-nav="piani"><div class="es-med-action-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="es-med-action-text"><b>Piani Nutrizionali Personalizzati</b><span>Crea piani giornalieri e settimanali con macros, timing e note cliniche.</span></div></button>' +
+        '<button type="button" class="es-med-action-card" data-nu-nav="composizione"><div class="es-med-action-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg></div><div class="es-med-action-text"><b>Composizione Corporea &amp; BIA</b><span>Bioimpedenziometria, plicometria, monitoraggio % massa grassa e magra.</span></div></button>' +
+        '<button type="button" class="es-med-action-card" data-nu-nav="integrazione"><div class="es-med-action-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div class="es-med-action-text"><b>Integrazione WADA Compliant</b><span>Protocollo integratori verificato con database WADA. Solo supplementi certificati.</span></div></button>' +
+        '<button type="button" class="es-med-action-card" data-nu-nav="trasferte"><div class="es-med-action-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div class="es-med-action-text"><b>Gestione Ritiro &amp; Trasferte</b><span>Menu personalizzati per trasferta, ritiro preseason e post-gara. Coordinamento con chef.</span></div></button>' +
+        '<button type="button" class="es-med-action-card" data-nu-nav="radar"><div class="es-med-action-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/></svg></div><div class="es-med-action-text"><b>Radar Competenze</b><span>Mappa le tue aree di eccellenza rispetto al benchmark FNOB e CSNM.</span></div></button>' +
+        '<button type="button" class="es-med-action-card" data-nu-nav="canale"><div class="es-med-action-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div><div class="es-med-action-text"><b>Canale Staff Sanitario</b><span>Coordinamento con Medico Sociale, Fisioterapista e Preparatore Atletico.</span></div></button>' +
+      '</div>' +
+    '</section>' +
+    '<section class="es-med-card">' +
+      '<div class="es-med-card-head">' +
+        '<h2 class="es-med-card-title"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>Ultimi Piani Nutrizionali Aggiornati</span></h2>' +
+        '<button type="button" data-nu-nav="piani" style="font-size:0.75rem;color:#38bdf8;background:none;border:none;cursor:pointer;">Vedi Tutti &#8594;</button>' +
+      '</div>' +
+      '<div style="display:flex;flex-direction:column;gap:8px;">' +
+        diets.map(function (d) {
+          var color = d.status === 'Attivo' ? '#4ade80' : '#fbbf24';
+          return '<div style="background:#060911;border:1px solid rgba(56,189,248,0.12);border-radius:8px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">' +
+            '<div><b style="color:#f8fafc;font-size:0.86rem;display:block;">' + esc(d.player) + ' <span style="font-size:0.72rem;color:#38bdf8;">(' + esc(d.tipo) + ')</span></b>' +
+            '<span style="color:#94a3b8;font-size:0.74rem;">' + esc(d.date) + ' &middot; ' + esc(d.kcal) + ' &middot; <strong style="color:' + color + ';">' + esc(d.status) + '</strong></span></div>' +
+            '<button type="button" class="es-med-quick-btn">Dettagli</button>' +
+          '</div>';
+        }).join('') +
+      '</div>' +
+    '</section>';
   }
 
-  function openNuEditModal(user) {
-    user = user || userObj();
-    var backdrop = document.createElement('div');
-    backdrop.className = 'es-edit-modal-backdrop';
-
-    backdrop.innerHTML = '<div class="es-edit-modal">' +
-      '<div class="es-edit-modal-head">' +
-      '<h2><span>✏️</span> Modifica Anagrafica Nutrizionista</h2>' +
-      '<button type="button" class="es-edit-modal-close" title="Chiudi">&times;</button>' +
-      '</div>' +
-      '<div class="es-edit-grid">' +
-      '<div class="es-edit-field"><label>Nome</label><input id="es-nu-nome" value="' + esc(user.nome || '') + '"></div>' +
-      '<div class="es-edit-field"><label>Cognome</label><input id="es-nu-cognome" value="' + esc(user.cognome || '') + '"></div>' +
-      '<div class="es-edit-field"><label>Specializzazione / Albo</label><input id="es-nu-qual" value="' + esc(user.abilitazione || 'Biologo Nutrizionista dello Sport / ONB') + '"></div>' +
-      '<div class="es-edit-field"><label>Ruolo Ufficiale</label><input id="es-nu-role" value="Biologo Nutrizionista dello Sport" readonly></div>' +
-      '<div class="es-edit-field"><label>Club / Organizzazione</label><input id="es-nu-club" value="' + esc(user.squadra || user.club || '') + '" placeholder="Vuoto = Consulente Indipendente"></div>' +
-      '<div class="es-edit-field"><label>Status Contrattuale</label><select id="es-nu-status">' +
-      '<option value="In Staff Club"' + (inStaff(user) ? ' selected' : '') + '>In Staff Club (Collegato allo Staff Medico)</option>' +
-      '<option value="Free Agent"' + (!inStaff(user) ? ' selected' : '') + '>Consulente Nutrizionale Esterno</option>' +
-      '</select></div>' +
-      '<div class="es-edit-field full"><label>Linee Guida &amp; Note Operative</label><textarea id="es-nu-bio" rows="3">' + esc(user.bio || '') + '</textarea></div>' +
-      '</div>' +
-      '<div class="es-edit-actions">' +
-      '<button type="button" class="es-edit-btn-cancel">Annulla</button>' +
-      '<button type="button" class="es-edit-btn-save">💾 Salva Anagrafica</button>' +
-      '</div>' +
-      '</div>';
-
-    document.body.appendChild(backdrop);
-
-    var close = function () { backdrop.remove(); };
-    backdrop.querySelector('.es-edit-modal-close').addEventListener('click', close);
-    backdrop.querySelector('.es-edit-btn-cancel').addEventListener('click', close);
-    backdrop.addEventListener('click', function (e) { if (e.target === backdrop) close(); });
-
-    backdrop.querySelector('.es-edit-btn-save').addEventListener('click', function () {
-      var n = document.getElementById('es-nu-nome').value.trim();
-      var c = document.getElementById('es-nu-cognome').value.trim();
-      var q = document.getElementById('es-nu-qual').value.trim();
-      var clb = document.getElementById('es-nu-club').value.trim();
-      var st = document.getElementById('es-nu-status').value;
-      var bio = document.getElementById('es-nu-bio').value.trim();
-
-      user.nome = n || user.nome;
-      user.cognome = c || user.cognome;
-      user.fullName = (user.nome + ' ' + user.cognome).trim();
-      user.abilitazione = q;
-      user.squadra = clb;
-      user.club = clb;
-      user.contractStatus = st;
-      user.bio = bio;
-
-      try {
-        localStorage.setItem('elisee_active_user', JSON.stringify(user));
-        localStorage.setItem('elisee_user_data', JSON.stringify(user));
-      } catch (_) {}
-
-      close();
-      toast('Anagrafica Nutrizionista salvata con successo!', 'success');
-      render(user);
-    });
+  /* ---- TAB PIANI ---- */
+  function renderTabPiani(diets) {
+    return '<section class="es-med-card">' +
+      '<div class="es-med-card-head"><h2 class="es-med-card-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>Piani Nutrizionali Personalizzati (' + diets.length + ')</span></h2><button type="button" class="es-med-btn-primary" data-nu-act="new-plan">+ Nuovo Piano</button></div>' +
+      '<div style="overflow-x:auto;"><table class="es-med-table"><thead><tr><th>Atleta</th><th>Data</th><th>Tipo Piano</th><th>Kcal</th><th>Obiettivo</th><th>Stato</th><th style="text-align:right;">Azioni</th></tr></thead><tbody>' +
+        diets.map(function (d) {
+          var ok = d.status === 'Attivo';
+          return '<tr><td><strong style="color:#f8fafc;">' + esc(d.player) + '</strong></td><td>' + esc(d.date) + '</td><td>' + esc(d.tipo) + '</td><td><strong style="color:#38bdf8;">' + esc(d.kcal) + '</strong></td><td>' + esc(d.obiettivo) + '</td><td><span class="es-med-badge-tag ' + (ok ? 'emerald' : 'amber') + '">' + esc(d.status) + '</span></td><td style="text-align:right;"><button type="button" class="es-med-quick-btn">Apri</button></td></tr>';
+        }).join('') +
+      '</tbody></table></div>' +
+    '</section>';
   }
 
-  function bind(host) {
-    if (!host || host.dataset.nuBound === '1') return;
-    host.dataset.nuBound = '1';
-    host.addEventListener('click', function (e) {
-      var b = e.target.closest('[data-nu], [data-nu-act]');
-      if (!b) return;
-      var k = b.getAttribute('data-nu');
-      var act = b.getAttribute('data-nu-act');
-
-      if (k === 'home' && window.switchView) window.switchView('home', '#hero');
-      if (k === 'dash' && window.switchView) window.switchView('user-dossier', '#user-dossier-portal');
-      if (k === 'msgs' && window.openUserMessages) window.openUserMessages();
-      if (k === 'edit') openNuEditModal(userObj());
-
-      if (act === 'new-diet') {
-        var ath = window.prompt('Nome e cognome dell\'atleta per il nuovo piano alimentare:');
-        if (ath) {
-          var cal = window.prompt('Target calorico giornaliero stimato (es. 2850 kcal / match-day 3400 kcal):', '3000 kcal');
-          if (cal) {
-            toast('Piano alimentare personalizzato da ' + cal + ' assegnato a ' + ath + '!', 'success');
-          }
-        }
-      }
-      if (act === 'bia-test') {
-        var athB = window.prompt('Nome e cognome dell\'atleta per il test BIA / plicometria:');
-        if (athB) {
-          var fm = window.prompt('Percentuale di massa grassa misurata (% FM):', '9.2%');
-          if (fm) {
-            toast('Misurazione BIA registrata per ' + athB + ' (' + fm + ' FM). Dati archiviati.', 'success');
-          }
-        }
-      }
-      if (act === 'hydration') {
-        toast('💧 Protocollo idratazione match-day e reintegro salino distribuito alla rosa.', 'success');
-      }
-      if (act === 'supplements') {
-        toast('💊 Piano integrazione certificato WADA / Informed-Sport aggiornato.', 'success');
-      }
-      if (act === 'menu-hotel') {
-        toast('🏨 Linee guida nutrizionali e menu trasferta inviati all\'hotel del ritiro.', 'success');
-      }
-      if (act === 'send-diet-report') {
-        toast('📋 Report nutrizionale e stato BIA inoltrato al Preparatore Atletico e al Medico!', 'success');
-      }
-    });
+  /* ---- TAB COMPOSIZIONE ---- */
+  function renderTabComposizione() {
+    var atleti = [
+      { nome: 'Jacopo Murano', peso: '82.4 kg', masGrassa: '11.2%', masMagra: '73.2 kg', h2o: '62.1%', imc: '22.8', data: '10/09/2026' },
+      { nome: 'Carlos Embalo', peso: '78.1 kg', masGrassa: '13.8%', masMagra: '67.3 kg', h2o: '59.8%', imc: '21.9', data: '08/09/2026' },
+      { nome: 'Diego Peralta', peso: '85.0 kg', masGrassa: '15.1%', masMagra: '72.2 kg', h2o: '58.3%', imc: '23.5', data: '05/09/2026' }
+    ];
+    return '<section class="es-med-card">' +
+      '<div class="es-med-card-head"><h2 class="es-med-card-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg><span>Composizione Corporea, BIA &amp; Plicometria</span></h2><button type="button" class="es-med-btn-primary" data-nu-act="new-bia">+ Nuova BIA</button></div>' +
+      '<p style="font-size:0.78rem;color:#94a3b8;margin-bottom:14px;">&#x1F9EA; I dati di bioimpedenziometria (BIA) e plicometria vengono registrati ogni 2-4 settimane per monitorare le variazioni della composizione corporea e adeguare il piano nutrizionale.</p>' +
+      '<div style="overflow-x:auto;"><table class="es-med-table"><thead><tr><th>Atleta</th><th>Data</th><th>Peso</th><th>% Massa Grassa</th><th>Massa Magra</th><th>Idratazione</th><th>IMC</th><th style="text-align:right;">Azioni</th></tr></thead><tbody>' +
+        atleti.map(function (a) {
+          return '<tr><td><strong style="color:#f8fafc;">' + esc(a.nome) + '</strong></td><td>' + esc(a.data) + '</td><td><strong style="color:#38bdf8;">' + esc(a.peso) + '</strong></td><td>' + esc(a.masGrassa) + '</td><td>' + esc(a.masMagra) + '</td><td>' + esc(a.h2o) + '</td><td>' + esc(a.imc) + '</td><td style="text-align:right;"><button type="button" class="es-med-quick-btn">Dettaglio</button></td></tr>';
+        }).join('') +
+      '</tbody></table></div>' +
+    '</section>';
   }
 
-  function render(user) {
+  /* ---- TAB INTEGRAZIONE ---- */
+  function renderTabIntegrazione() {
+    var supps = [
+      { nome: 'Creatina Monoidrato', dose: '3g/die pre-allenamento', wada: 'Permesso', note: 'Solo marca certificata Informed Sport' },
+      { nome: 'Beta-Alanina', dose: '3.2g/die a colazione', wada: 'Permesso', note: 'Attenzione formicolio (parestesia)' },
+      { nome: 'Vitamina D3', dose: '2000 UI/die a pranzo', wada: 'Permesso', note: 'Livelli ematici monitorati ogni 3 mesi' },
+      { nome: 'Omega-3 EPA+DHA', dose: '2g/die con pasto principale', wada: 'Permesso', note: 'Effetto antinfiammatorio e cardiovascolare' },
+      { nome: 'Whey Protein Isolate', dose: '30g post-allenamento', wada: 'Permesso', note: 'Marca: Informed Sport certificata' },
+      { nome: 'Caffeina Anidra', dose: '3-6 mg/kg 60 min. pre-gara', wada: 'Permesso (monitorato)', note: 'NON usare >10 mg/kg. Check TUE per dosi alte' }
+    ];
+    return '<section class="es-med-card">' +
+      '<div class="es-med-card-head"><h2 class="es-med-card-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Protocollo Integrazione WADA Compliant</span></h2><span class="es-med-badge-tag emerald">0 Voci a Rischio</span></div>' +
+      '<p style="font-size:0.78rem;color:#94a3b8;margin-bottom:14px;">&#x2705; <b>Conformita WADA:</b> Tutti gli integratori in uso sono stati verificati sul database Prohibited List WADA 2026. La responsabilita della verifica e\' del Nutrizionista in coordinamento col Medico Sociale.</p>' +
+      '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;">' +
+        supps.map(function (s) {
+          var mon = s.wada.indexOf('monitorato') !== -1;
+          return '<div style="background:#060911;border:1px solid rgba(' + (mon ? '251,191,36' : '52,211,153') + ',0.2);border-radius:8px;padding:14px;">' +
+            '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><strong style="color:#f8fafc;font-size:0.88rem;">' + esc(s.nome) + '</strong><span class="es-med-badge-tag ' + (mon ? 'amber' : 'emerald') + '">' + esc(s.wada) + '</span></div>' +
+            '<div style="font-size:0.78rem;color:#94a3b8;line-height:1.6;"><div>&#x1F48A; <strong style="color:#e2e8f0;">Dosaggio:</strong> ' + esc(s.dose) + '</div><div>&#x1F4DD; <strong style="color:#e2e8f0;">Note:</strong> ' + esc(s.note) + '</div></div>' +
+          '</div>';
+        }).join('') +
+      '</div>' +
+    '</section>';
+  }
+
+  /* ---- TAB TRASFERTE ---- */
+  function renderTabTrasferte() {
+    return '<section class="es-med-card">' +
+      '<div class="es-med-card-head"><h2 class="es-med-card-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span>Gestione Ritiro &amp; Alimentazione in Trasferta</span></h2><span class="es-med-badge-tag cyan">Pianificazione</span></div>' +
+      '<p style="font-size:0.78rem;color:#94a3b8;margin-bottom:16px;">&#x1F697; La nutrizione in trasferta richiede pianificazione preventiva dei pasti, coordinamento con strutture alberghiere e protocollo pre-gara standardizzato.</p>' +
+      '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;">' +
+        '<div style="background:#060911;border:1px solid rgba(56,189,248,0.18);border-radius:8px;padding:14px;">' +
+          '<strong style="color:#38bdf8;font-size:0.88rem;display:block;margin-bottom:10px;">&#x1F4C5; Prossima Trasferta: 21 Set (Bari)</strong>' +
+          '<div style="font-size:0.78rem;color:#94a3b8;line-height:1.8;">' +
+            '<div>&#x1F374; <strong style="color:#e2e8f0;">Pranzo pre-partenza:</strong> Pasta/riso in bianco, pollo, verdure cotte</div>' +
+            '<div>&#x26BD;&#xFE0F; <strong style="color:#e2e8f0;">Pre-gara (H-3):</strong> Pasta al pomodoro + banana + acqua</div>' +
+            '<div>&#x26FD; <strong style="color:#e2e8f0;">Intra-gara:</strong> Gel glucidico 30g/h + elettroliti</div>' +
+            '<div>&#x1F35C; <strong style="color:#e2e8f0;">Post-gara:</strong> Proteine whey + carboidrati semplici entro 30 min</div>' +
+          '</div>' +
+          '<button type="button" class="es-med-btn-primary" data-nu-act="edit-travel" style="width:100%;margin-top:12px;">Modifica Piano Trasferta</button>' +
+        '</div>' +
+        '<div style="background:#060911;border:1px solid rgba(56,189,248,0.12);border-radius:8px;padding:14px;">' +
+          '<strong style="color:#38bdf8;font-size:0.88rem;display:block;margin-bottom:10px;">&#x1F3E8; Linee Guida Strutture Ricettive</strong>' +
+          '<div style="font-size:0.78rem;color:#94a3b8;line-height:1.8;">' +
+            '<div>&#x2705; Richiesta menu personalizzato 48h prima</div>' +
+            '<div>&#x2705; Verifica allergeni e intolleranze per ogni atleta</div>' +
+            '<div>&#x2705; Frutta fresca e acqua H24 in camera</div>' +
+            '<div>&#x26A0;&#xFE0F; NO buffet libero: porzioni controllate dal Nutrizionista</div>' +
+          '</div>' +
+          '<button type="button" class="es-med-btn-primary" data-nu-act="new-travel" style="width:100%;margin-top:12px;">+ Piano Nuova Trasferta</button>' +
+        '</div>' +
+      '</div>' +
+    '</section>';
+  }
+
+  /* ---- TAB RADAR ---- */
+  function renderTabRadar() {
+    return '<section class="es-med-card">' +
+      '<div class="es-med-card-head"><h2 class="es-med-card-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/></svg><span>Radar Competenze Nutrizionista &amp; Benchmark FNOB</span></h2><span class="es-med-badge-tag emerald">Media 94%</span></div>' +
+      radarSvg() +
+      '<div class="es-med-cred-grid" style="margin-top:14px;">' +
+        AXES.map(function (ax, i) { return '<div class="es-med-cred-item"><span>' + esc(ax) + '</span><b>' + V2025[i] + '% <span style="font-size:0.7rem;color:#64748b;">/ Benchm. ' + V2023[i] + '%</span></b></div>'; }).join('') +
+      '</div>' +
+    '</section>';
+  }
+
+  /* ---- TAB CANALE ---- */
+  function renderTabCanale() {
+    return '<section class="es-med-card">' +
+      '<div class="es-med-card-head"><h2 class="es-med-card-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg><span>Canale Staff Sanitario &amp; Tecnico</span></h2><span class="es-med-badge-tag cyan">Staff Attivo</span></div>' +
+      '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;">' +
+        '<div style="background:#060911;border:1px solid rgba(56,189,248,0.18);border-radius:8px;padding:14px;"><strong style="color:#38bdf8;font-size:0.88rem;display:block;margin-bottom:8px;">&#x1F4CB; Comunicazioni Recenti</strong><div style="display:flex;flex-direction:column;gap:8px;font-size:0.78rem;color:#94a3b8;"><div style="border-left:2px solid #38bdf8;padding-left:10px;"><b style="color:#f8fafc;">&#8594; Medico Sociale</b> &#8212; Piano riatletizzazione Peralta condiviso (15/09)</div><div style="border-left:2px solid #4ade80;padding-left:10px;"><b style="color:#f8fafc;">&#8594; Preparatore Atletico</b> &#8212; Sincronizzazione carichi/macros settimana (13/09)</div><div style="border-left:2px solid #fbbf24;padding-left:10px;"><b style="color:#f8fafc;">&#8592; Fisioterapista</b> &#8212; Richiesta piano proteico post-lesione Odjer (12/09)</div></div></div>' +
+        '<div style="background:#060911;border:1px solid rgba(56,189,248,0.12);border-radius:8px;padding:14px;"><strong style="color:#38bdf8;font-size:0.88rem;display:block;margin-bottom:10px;">&#x1F4E3; Nuovo Aggiornamento Nutrizionale</strong><p style="font-size:0.75rem;color:#94a3b8;margin-bottom:10px;">Invia un report nutrizionale o un aggiornamento sui piani in corso al resto dello staff tecnico-sanitario.</p><button type="button" class="es-med-btn-primary" data-nu-act="send-update" style="width:100%;">Invia Aggiornamento</button></div>' +
+      '</div>' +
+    '</section>';
+  }
+
+  /* ---- TAB IMPOSTAZIONI ---- */
+  function renderTabImpostazioni(user) {
+    var name = nuName(user), qual = qualificaOf(user);
+    return '<section class="es-med-card">' +
+      '<div class="es-med-card-head"><h2 class="es-med-card-title"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><circle cx="12" cy="12" r="3"/></svg><span>Profilo &amp; Specializzazione Nutrizionista</span></h2></div>' +
+      '<div class="es-med-cred-grid">' +
+        '<div class="es-med-cred-item"><span>Nome Completo</span><b>' + esc(name) + '</b></div>' +
+        '<div class="es-med-cred-item"><span>Qualifica</span><b>' + esc(qual) + '</b></div>' +
+        '<div class="es-med-cred-item"><span>Iscrizione FNOB</span><b>FNOB-NU-8843</b></div>' +
+        '<div class="es-med-cred-item"><span>Ordine Biologi</span><b>Nazionali #11284 &middot; Scad. 31/12/2026</b></div>' +
+        '<div class="es-med-cred-item"><span>Specializzazione</span><b>Nutrizione Sportiva &amp; Metabolismo</b></div>' +
+        '<div class="es-med-cred-item"><span>Stato Contratto</span><b style="color:#4ade80;">Under Contract</b></div>' +
+      '</div>' +
+      '<div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;">' +
+        '<button type="button" class="es-med-btn-primary" data-nu-act="edit-profile">Modifica Dati Personali</button>' +
+        '<button type="button" class="es-med-btn-secondary" data-nu-act="upload-cert">Carica Certificazioni</button>' +
+      '</div>' +
+    '</section>';
+  }
+
+  function renderActiveTabContent(tab, user, diets) {
+    switch (tab) {
+      case 'dashboard':   return renderTabDashboard(user, diets);
+      case 'piani':       return renderTabPiani(diets);
+      case 'composizione':return renderTabComposizione();
+      case 'integrazione':return renderTabIntegrazione();
+      case 'trasferte':   return renderTabTrasferte();
+      case 'radar':       return renderTabRadar();
+      case 'canale':      return renderTabCanale();
+      case 'impostazioni':return renderTabImpostazioni(user);
+      default:            return renderTabDashboard(user, diets);
+    }
+  }
+
+  /* ---- RENDER PRINCIPALE ---- */
+  function renderHub(user) {
     user = user || userObj();
     if (!isNutrizionista(user)) return;
     hideOthers();
     var host = document.getElementById('es-staff-profile');
     var group = document.getElementById('user-dossier-view-group');
     if (!host) return;
-
     var box = document.getElementById('es-nu');
     if (!box) {
       box = document.createElement('div');
@@ -565,38 +355,113 @@
       box.className = 'es-pd';
       host.insertBefore(box, host.firstChild);
     }
-    box.innerHTML = html(user);
+    host.className = (host.className || '').replace(/\bes-\w+-on\b/g, '').trim() + ' es-nu-on';
+    if (group) group.className = (group.className || '').replace(/\bis-\w+-dash\b/g, '').trim() + ' is-nu-dash';
+    document.body.classList.add('is-nu-mode');
+
+    var name = nuName(user);
+    var club = String(user.squadra || user.club || 'Foggia City').trim();
+    var diets = getDiets();
+
+    var html = '<div class="es-med-shell">' +
+      '<aside class="es-med-sidebar" id="es-nu-sidebar">' +
+        '<div class="es-med-brand-header"><div class="es-med-brand-title">ELISEE <span>SCOUT</span></div><div class="es-med-brand-sub">Area Nutrizionista</div></div>' +
+        '<nav class="es-med-sidebar-nav">' +
+          renderSideBtn('dashboard',   'Dashboard',                         '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>') +
+          renderSideBtn('piani',       'Piani Nutrizionali',                '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>') +
+          renderSideBtn('composizione','Composizione Corporea &amp; BIA',   '<line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/>') +
+          renderSideBtn('integrazione','Integrazione WADA',                 '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>') +
+          renderSideBtn('trasferte',  'Gestione Trasferte &amp; Ritiro',    '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>') +
+          renderSideBtn('radar',      'Radar &amp; Competenze',             '<circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/>') +
+          renderSideBtn('canale',     'Canale Staff',                       '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>') +
+          renderSideBtn('impostazioni','Profilo &amp; Specializzazione',    '<circle cx="12" cy="12" r="3"/>') +
+        '</nav>' +
+        '<div class="es-med-sidebar-badge"><div class="es-med-sidebar-club-card">' +
+          '<img src="immagini/squadre-loghi/1000345699.png?v=20260916_FGCLOGO2" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'immagini/squadre-loghi/foggia-city.png\';">' +
+          '<div><strong>' + esc(club) + '</strong><span>Staff Sanitario Ufficiale</span></div>' +
+        '</div></div>' +
+      '</aside>' +
+      '<main class="es-med-main">' +
+        '<div class="es-med-dash-header">' +
+          '<div class="es-med-header-top-row">' +
+            '<button type="button" class="es-med-mobile-menu-btn" id="btn-toggle-nu-sidebar" aria-label="Menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>' +
+            '<div class="es-med-header-identity">' +
+              '<div class="es-med-header-block">' +
+                '<div class="es-med-licence-badge" title="FNOB / Ordine Biologi"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>' +
+                '<div class="es-med-doc-info"><strong>' + esc(name) + '</strong><span class="role">Biologo Nutrizionista Sportivo FNOB</span><p class="sub">Iscr. FNOB: FNOB-NU-8843 &middot; Ordine Biologi Nazionali #11284 &middot; Scad. 31/12/2026</p></div>' +
+              '</div>' +
+              '<div class="es-med-header-sep"></div>' +
+              '<div class="es-med-header-block es-med-club-info"><img class="crest" src="immagini/squadre-loghi/1000345699.png?v=20260916_FGCLOGO2" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'immagini/squadre-loghi/foggia-city.png\';"><div><strong>' + esc(club) + '</strong><span>Nutrizione Sportiva Ufficiale</span></div></div>' +
+            '</div>' +
+            '<button type="button" class="es-med-btn-quick-jump" data-nu-nav="piani">Nuovo Piano Nutrizionale &#8594;</button>' +
+          '</div>' +
+          '<div class="es-med-header-match-row">' +
+            '<div class="es-med-target-box"><p class="label">Prossima Sessione BIA</p><strong>Bioimpedenziometria Collettiva</strong><span>22/09/2026 &middot; Ore 08:30 (Digiunato)</span></div>' +
+            '<div class="es-med-target-box"><p class="label">Stato Piani Nutrizionali</p><div class="es-med-countdown-nums"><div><strong>24</strong><span>Atleti</span></div><div><strong>3</strong><span>Attivi</span></div><div><strong>95%</strong><span>Aderenza</span></div></div></div>' +
+            '<div class="es-med-target-box"><p class="label">Focus Nutrizionale di Giornata</p><strong style="color:#38bdf8;">Carb Loading pre-trasferta Bari (21/09)</strong><span>Coordinare con Chef e Team Manager</span></div>' +
+          '</div>' +
+        '</div>' +
+        '<nav class="es-med-nav-tabs">' +
+          renderNavTab('dashboard',    'Dashboard',          '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>') +
+          renderNavTab('piani',        'Piani Nutrizionali', '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>') +
+          renderNavTab('composizione', 'BIA &amp; Plicometria','<line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/>') +
+          renderNavTab('integrazione', 'Integrazione WADA',  '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>') +
+          renderNavTab('trasferte',    'Trasferte',          '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>') +
+          renderNavTab('radar',        'Radar',              '<circle cx="12" cy="12" r="8"/>') +
+          renderNavTab('canale',       'Canale Staff',       '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>') +
+        '</nav>' +
+        '<div id="es-nu-active-content">' + renderActiveTabContent(activeTab, user, diets) + '</div>' +
+      '</main>' +
+    '</div>';
+
+    box.innerHTML = html;
     box.hidden = false;
     box.removeAttribute('hidden');
-    box.style.display = 'grid';
+    box.style.display = 'block';
 
-    host.classList.add('es-nu-on');
-    host.classList.remove('es-pd-on', 'es-ds-on', 'es-pres-on', 'es-vice-on', 'es-med-on', 'es-fisio-on', 'es-ma-on', 'es-obs-on', 'es-tm-on', 'es-gk-on', 'es-at-on', 'es-yg-on');
+    box.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-nu-nav]');
+      if (btn) {
+        activeTab = btn.dataset.nuNav;
+        var ac = box.querySelector('#es-nu-active-content');
+        if (ac) ac.innerHTML = renderActiveTabContent(activeTab, user, diets);
+        box.querySelectorAll('[data-nu-nav]').forEach(function (b) {
+          b.classList.toggle('is-active', b.dataset.nuNav === activeTab);
+        });
+        var sb = document.getElementById('es-nu-sidebar');
+        if (sb) sb.classList.remove('is-open');
+        return;
+      }
+      var ab = e.target.closest('[data-nu-act]');
+      if (ab) {
+        var act = ab.dataset.nuAct;
+        if (act === 'new-plan') toast('Nuovo piano nutrizionale.', 'info');
+        else if (act === 'new-bia') toast('Nuova sessione BIA/Plicometria.', 'info');
+        else if (act === 'edit-travel') toast('Modifica piano trasferta.', 'info');
+        else if (act === 'new-travel') toast('Nuovo piano trasferta.', 'info');
+        else if (act === 'send-update') toast('Aggiornamento nutrizionale inviato allo staff.', 'success');
+        else if (act === 'edit-profile') toast('Modifica anagrafica.', 'info');
+        else if (act === 'upload-cert') toast('Upload certificazioni.', 'info');
+      }
+    });
 
-    if (group) {
-      group.classList.add('is-nu-dash');
-      group.classList.remove('is-coach-dash', 'is-ds-dash', 'is-pres-dash', 'is-vice-dash', 'is-med-dash', 'is-fisio-dash', 'is-ma-dash', 'is-obs-dash', 'is-tm-dash', 'is-gk-dash', 'is-at-dash', 'is-yg-dash');
+    var menuBtn = document.getElementById('btn-toggle-nu-sidebar');
+    var sidebarEl = document.getElementById('es-nu-sidebar');
+    if (menuBtn && sidebarEl) {
+      menuBtn.addEventListener('click', function () { sidebarEl.classList.toggle('is-open'); });
     }
-    bind(host);
   }
 
-  window.EliseeNuDash = { render: render, isNutrizionista: isNutrizionista };
+  function boot() {
+    var u = userObj();
+    if (!isNutrizionista(u)) return;
+    renderHub(u);
+  }
 
-  document.addEventListener('elisee:view-changed', function (e) {
-    var d = e && e.detail;
-    if (d && d.view === 'user-dossier') {
-      try {
-        var u = userObj();
-        if (isNutrizionista(u)) render(u);
-      } catch (_) {}
-    }
-  });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
 
-  document.addEventListener('elisee:role-changed', function (e) {
-    var d = e && e.detail;
-    try {
-      var u = (d && d.user) || userObj();
-      if (isNutrizionista(u)) render(u);
-    } catch (_) {}
-  });
+  document.addEventListener('elisee:roleChanged', function () { var u = userObj(); if (isNutrizionista(u)) renderHub(u); });
+  document.addEventListener('elisee:userUpdated', function () { var u = userObj(); if (isNutrizionista(u)) renderHub(u); });
+  window.elisee_nuHub = { render: renderHub };
 })();
