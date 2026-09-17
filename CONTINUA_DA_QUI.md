@@ -3,7 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Connessione server `verify-docs` & anti-fake sync (`VERIFYDOCS1`):
+Ultimo aggiornamento: **2026-09-18** — Blindatura OTP multi-istanza & monitoraggio sync tempo reale (`OTPSYNC1`):
+1. **Blindatura OTP (`api/auth-otp.js`)**: persistenza su Vercel KV (`elisee:otp:<email>`, TTL 600s) + rilascio e verifica di un ticket crittografico firmato stateless (`signOtpTicket` / `verifyOtpTicket` HMAC SHA-256). L'OTP non fallisce più quando le richieste `send` e `verify` cadono su istanze Vercel differenti o con storage effimero.
+2. **Frontend OTP (`verifica-account.js`)**: archiviazione `ticket` in `sessionStorage` e invio contestuale al submit delle 6 cifre con pulizia a verifica avvenuta.
+3. **Trasparenza & Sync Status (`persist-sync.js`, `bacheca-annunci.js`)**: tracciamento dello stato di connessione (`syncState`), ascolto eventi `online`/`offline`, notifica trasparente per gli utenti (feedback salvataggio locale vs cloud) ed eliminazione delle "Due Verità" silenziose.
+4. **File**: `api/auth-otp.js`, `verifica-account.js`, `persist-sync.js`, `bacheca-annunci.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_OTPSYNC1`.
+
+Feature precedente: **Connessione server `verify-docs` & anti-fake sync (`VERIFYDOCS1`):
 1. **Rewrite Vercel**: `/api/auth/verify-docs` reindirizzato via rewrite su `/api/auth/me?path=verify-docs` in `vercel.json` (evita il 404 e rispetta il limite rigido di 12 serverless functions del piano Hobby).
 2. **Backend `api/auth/me.js`**: gestione completa di `start`, `docs` e `close` su Vercel KV / `/tmp` e locale. Aggiunto supporto a `req.query.email` per le richieste GET/POST senza Bearer token.
 3. **Frontend `verifica-account.js`**: invio dell'email utente in tutti i payload POST (`start`, `docs`, `close`); aggiunta sincronizzazione automatica bidirezionale `syncWithServer(u)` al ripristino della sessione / login.

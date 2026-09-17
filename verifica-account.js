@@ -609,6 +609,10 @@
       otpDigits().forEach(function (inp) { inp.value = ''; });
       if (btnSend) btnSend.disabled = false;
       if (data.success) {
+        if (data.ticket) {
+          try { sessionStorage.setItem('elisee_otp_ticket_' + userEmail, data.ticket); } catch (_) {}
+          window.__lastOtpTicket = data.ticket;
+        }
         otpFeedback('Ti abbiamo inviato un codice a 6 cifre su ' + userEmail + '. Aprilo nella casella (anche Spam) e inseriscilo qui. Non è un SMS.', false);
         var first = document.getElementById('otp-d-0');
         if (first) first.focus();
@@ -635,10 +639,14 @@
       btnSubmit.disabled = true;
       btnSubmit.textContent = 'Verifica...';
     }
+    var ticket = window.__lastOtpTicket || '';
+    if (!ticket) {
+      try { ticket = sessionStorage.getItem('elisee_otp_ticket_' + userEmail) || ''; } catch (_) {}
+    }
     fetch('/api/auth-otp?action=verify', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: userEmail, code: entered, action: 'verify' })
+      body: JSON.stringify({ email: userEmail, code: entered, ticket: ticket, action: 'verify' })
     })
     .then(function (res) { return res.json(); })
     .then(function (data) {
@@ -647,6 +655,8 @@
         btnSubmit.textContent = 'Verifica';
       }
       if (data.success && data.verified) {
+        try { sessionStorage.removeItem('elisee_otp_ticket_' + userEmail); } catch (_) {}
+        delete window.__lastOtpTicket;
         var currUser = user() || {};
         currUser.emailVerified = true;
         currUser.isEmailVerified = true;

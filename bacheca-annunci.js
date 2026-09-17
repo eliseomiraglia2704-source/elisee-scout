@@ -608,11 +608,21 @@
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
-    }).then(function (r) { return r.json().catch(function () { return {}; }); }).then(function (j) {
+    }).then(function (r) {
+      if (!r.ok) {
+        toast('Salvato in locale. Sincronizzazione server in attesa.', 'warning');
+        return {};
+      }
+      return r.json().catch(function () { return {}; });
+    }).then(function (j) {
       if (j && j.ok === false && j.fields && j.fields.length) {
         toast('Il server ha rifiutato alcuni campi: ' + j.fields.join(', '), 'error');
+      } else if (j && j.ok) {
+        toast('Annuncio sincronizzato sul cloud.', 'success');
       }
-    }).catch(function () {});
+    }).catch(function () {
+      toast('Salvato in locale (offline). Verrà sincronizzato non appena torna la linea.', 'warning');
+    });
     if (window.EliseeSchede && window.EliseeSchede.ensureJob) {
       try {
         window.EliseeSchede.ensureJob({

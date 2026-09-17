@@ -31,6 +31,26 @@
     return Date.parse(obj.lastUpdatedAt || obj.updatedAt || obj.savedAt || obj.at || '') || 0;
   }
 
+  var syncState = {
+    online: typeof navigator !== 'undefined' && navigator.onLine !== false,
+    lastPushAt: null,
+    lastPullAt: null,
+    lastError: null
+  };
+
+  function notifySync(ok, kind, err) {
+    syncState.online = ok;
+    if (ok) {
+      syncState.lastPushAt = new Date().toISOString();
+      syncState.lastError = null;
+    } else {
+      syncState.lastError = err || 'network_error';
+    }
+    try {
+      document.dispatchEvent(new CustomEvent('elisee:sync-update', { detail: Object.assign({ kind: kind }, syncState) }));
+    } catch (_) {}
+  }
+
   function apiPath(kind, key) {
     var q = '/api/manager?path=' + encodeURIComponent(kind);
     if (key) q += '&key=' + encodeURIComponent(key);
@@ -41,11 +61,24 @@
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
-    }).then(function (r) { return r.json().catch(function () { return {}; }); }).catch(function () { return {}; });
+    }).then(function (r) {
+      if (!r.ok) {
+        notifySync(false, kind, 'HTTP_' + r.status);
+        return { ok: false, status: r.status };
+      }
+      notifySync(true, kind, null);
+      return r.json().catch(function () { return { ok: true }; });
+    }).catch(function (err) {
+      notifySync(false, kind, (err && err.message) || 'offline');
+      return { ok: false, offline: true };
+    });
   }
   function pullDoc(kind, key) {
     return fetch(apiPath(kind, key))
-      .then(function (r) { return r.json(); })
+      .then(function (r) {
+        if (r.ok) syncState.lastPullAt = new Date().toISOString();
+        return r.json();
+      })
       .catch(function () { return null; });
   }
 
@@ -231,8 +264,22 @@
     pushComplaints: pushComplaints,
     pullComplaints: pullComplaints,
     pushAmbassador: pushAmbassador,
-    pullAmbassador: pullAmbassador
+    pullAmbassador: pullAmbassador,
+    syncState: syncState,
+    getSyncStatus: function () { return Object.assign({}, syncState); }
   };
+
+  if (typeof window !== 'undefined') {
+    window.addEventListener('online', function () {
+      syncState.online = true;
+      notifySync(true, 'network', null);
+      bootQueues();
+    });
+    window.addEventListener('offline', function () {
+      syncState.online = false;
+      notifySync(false, 'network', 'offline');
+    });
+  }
 
   function mergeById(local, remote) {
     var by = {};

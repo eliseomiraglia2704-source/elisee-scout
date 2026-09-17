@@ -35,9 +35,53 @@ function saveStore(store) {
   }
 }
 
+const OTP_SECRET = process.env.OTP_SECRET || 'elisee-scout-otp-secret-salt-2026';
+
+async function redisCall(cmdPath) {
+  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+  const tok = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !tok) return null;
+  try {
+    const r = await fetch(String(url).replace(/\/$/, '') + cmdPath, {
+      headers: { Authorization: 'Bearer ' + tok }
+    });
+    const j = await r.json();
+    return j && j.result != null ? j.result : null;
+  } catch (_) {
+    return null;
+  }
+}
+
 function hashOtp(email, code) {
-  const secret = process.env.OTP_SECRET || 'elisee-scout-otp-secret-salt-2026';
-  return crypto.createHmac('sha256', secret).update(String(email).toLowerCase() + ':' + code).digest('hex');
+  return crypto.createHmac('sha256', OTP_SECRET).update(String(email).toLowerCase() + ':' + code).digest('hex');
+}
+
+function signOtpTicket(email, codeHash, expiresAt) {
+  const payload = String(email).toLowerCase() + ':' + expiresAt + ':' + codeHash;
+  const sig = crypto.createHmac('sha256', OTP_SECRET).update(payload).digest('hex');
+  return sig + '.' + expiresAt + '.' + codeHash;
+}
+
+function verifyOtpTicket(email, rawCode, ticket) {
+  if (!ticket || typeof ticket !== 'string') return false;
+  const parts = ticket.split('.');
+  if (parts.length !== 3) return false;
+  const [sig, expStr, expectedHash] = parts;
+  const expiresAt = parseInt(expStr, 10);
+  if (isNaN(expiresAt) || Date.now() > expiresAt) return false;
+  const payload = String(email).toLowerCase() + ':' + expiresAt + ':' + expectedHash;
+  const expectedSig = crypto.createHmac('sha256', OTP_SECRET).update(payload).digest('hex');
+  try {
+    if (!crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expectedSig))) return false;
+  } catch (_) {
+    return false;
+  }
+  const computedHash = hashOtp(email, rawCode);
+  try {
+    return crypto.timingSafeEqual(Buffer.from(computedHash), Buffer.from(expectedHash));
+  } catch (_) {
+    return false;
+  }
 }
 
 function esc(value) {
@@ -333,10 +377,13 @@ module.exports = async function handler(req, res) {
     };
     store[email] = rec;
     saveStore(store);
+    const ticket = signOtpTicket(email, rec.codeHash, rec.expiresAt);
+    await redisCall('/set/' + encodeURIComponent('elisee:otp:' + email) + '/' + encodeURIComponent(JSON.stringify(rec)) + '/ex/600');
     return sendJson(res, 200, {
       success: true,
       message: 'Codice inviato via email. Aprilo nella casella e inserisci le 6 cifre.',
       email: email,
+      ticket: ticket,
       digits: 6,
       expiresIn: 600
     });
@@ -347,19 +394,39 @@ module.exports = async function handler(req, res) {
     if (!code || !/^\d{4,8}$/.test(code)) {
       return sendJson(res, 400, { success: false, error: 'Inserisci il codice numerico ricevuto via email.' });
     }
-    const record = store[email];
+    const ticket = String(body.ticket || query.ticket || '').trim();
+    let record = store[email];
     if (!record) {
+      const kvRaw = await redisCall('/get/' + encodeURIComponent('elisee:otp:' + email));
+      if (kvRaw) {
+        try {
+          record = typeof kvRaw === 'string' ? JSON.parse(kvRaw) : kvRaw;
+        } catch (_) {}
+      }
+    }
+    if (!record) {
+      if (ticket && verifyOtpTicket(email, code, ticket)) {
+        await redisCall('/del/' + encodeURIComponent('elisee:otp:' + email));
+        return sendJson(res, 200, {
+          success: true,
+          verified: true,
+          email: email,
+          verifiedAt: new Date(now).toISOString()
+        });
+      }
       return sendJson(res, 400, { success: false, error: 'Nessun codice attivo per questa email. Premi Invia codice.' });
     }
     if (now > record.expiresAt) {
       delete store[email];
       saveStore(store);
+      await redisCall('/del/' + encodeURIComponent('elisee:otp:' + email));
       return sendJson(res, 400, { success: false, error: 'Il codice OTP è scaduto. Richiedi un nuovo codice.' });
     }
     record.attempts = (record.attempts || 0) + 1;
     if (record.attempts > 5) {
       delete store[email];
       saveStore(store);
+      await redisCall('/del/' + encodeURIComponent('elisee:otp:' + email));
       return sendJson(res, 429, { success: false, error: 'Troppi tentativi. Richiedi un nuovo codice.' });
     }
     let ok = false;
@@ -374,6 +441,9 @@ module.exports = async function handler(req, res) {
         ok = false;
       }
     }
+    if (!ok && ticket) {
+      ok = verifyOtpTicket(email, code, ticket);
+    }
     if (!ok) {
       saveStore(store);
       return sendJson(res, 400, {
@@ -383,6 +453,7 @@ module.exports = async function handler(req, res) {
     }
     delete store[email];
     saveStore(store);
+    await redisCall('/del/' + encodeURIComponent('elisee:otp:' + email));
     return sendJson(res, 200, {
       success: true,
       verified: true,
