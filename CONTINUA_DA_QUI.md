@@ -3,7 +3,26 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Risoluzione Widescreen & Anti-Taglio ActionsGrid per Tutte le Dashboard Staff (`GKALLFIX1`):
+Ultimo aggiornamento: **2026-09-17** — Riprogettazione Area Osservatore & Scout con Architettura Ordinata Speculare a Coach & Vice (`SCOUTPRO1`):
+1. **Allineamento & Ordinamento Completo Dashboard Osservatore & Talent Scout (`obs-dash.css`, `obs-dash.js`, `index.html`)**:
+   - **Richiesta Utente**: l'Area Osservatore & Scout non era ordinata come l'Area Allenatore e Vice Allenatore. Tutte le opzioni e le funzioni andavano riordinate nel miglior modo possibile.
+   - **Interventi Applicati**:
+     - *Sidebar Gestionale a Sinistra (240px)*: introdotta la barra laterale professionale con brand header "ELISEE SCOUT — Area Talent Scouting", 8 voci di navigazione dedicate con icone SVG (*Dashboard, Secret List Stealth, Dossier & Schede, Gare & Missioni, Database Calciatori, Radar & Competenze, Canale DS & Trattative, Profilo & Abilitazione*) e badge societario Foggia City in fondo sticky (`1000345699.png`).
+     - *Header d'Eccellenza a Due Livelli*:
+       - Livello 1: Patentino FIGC Scout, Nome, Tesseramento federale, Logo Foggia City e pulsante d'azione rapida `Secret List Stealth (N) →`.
+       - Livello 2: Prossima Partita da Visionare con avversario, data, ora, stadio, countdown dinamico giorni/ore/minuti, e Obiettivo di Giornata ("Monitoraggio Under 19 & Svincolati").
+     - *Tab Bar Superiore Compatta*: navigazione rapida orizzontale a schede che mantiene la vista costantemente pulita e a fuoco.
+     - *7 Viste Operative Dedicate*:
+       - `Dashboard`: Profilo Scout con barra di completamento (85%), Centro Operativo Stealth con i 3 KPI numerici, Scouting Suite v3.0 a 6 card responsive e registro ultime osservazioni.
+       - `Secret List`: tabella interattiva dei talenti monitorati in modalità stealth (invisibile a terzi) con filtri, potenziale, note, inoltro istantaneo al DS e aggiunta nuovi calciatori.
+       - `Dossier & Schede`: archivio relazioni tecniche (tecnica, tattica, fisica, mentale) con voto e raccomandazione d'ingaggio.
+       - `Gare & Missioni`: calendario delle partite da seguire sul campo con focus scouting.
+       - `Database Calciatori`: discovery globale con filtri per ruolo (Portieri, Difensori, Centrocampisti, Attaccanti).
+       - `Radar & Competenze`: grafico polare a 8 assi vettoriale nitido (Precisione 92%, Conoscenza Mercato 94%, ecc.) con benchmark.
+       - `Canale DS & Trattative`: coordinamento riservato con la Direzione Sportiva, governance/compliance FIGC e Wall dei trasferimenti ufficializzati.
+2. **File aggiornati**: `obs-dash.css`, `obs-dash.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_SCOUTPRO1`.
+
+Feature precedente: **Risoluzione Widescreen & Anti-Taglio ActionsGrid per Tutte le Dashboard Staff (`GKALLFIX1`):**
 1. **Perfezionamento Preparatore Portieri & Standardizzazione Universale ActionsGrid (`gk-dash.css`, `at-dash.css`, `fisio-dash.css`, `med-dash.css`, `nu-dash.css`, `index.html`)**:
    - **Diagnosi del bug visivo riscontrato negli screenshot del Preparatore Portieri**:
      - Nello Screenshot 3, la sezione "GK Suite v3.0" presentava 6 card operative tagliate verticalmente con icone troncate e testo illeggibile a causa del selettore rigido a 3 colonne.
