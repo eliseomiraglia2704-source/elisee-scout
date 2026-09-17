@@ -153,6 +153,50 @@ async function schedeSave(map) {
     fs.writeFileSync(SCHEDE_FILE, JSON.stringify(clean));
   } catch (e) {}
 }
+
+function kvFile(name) {
+  return process.env.VERCEL
+    ? '/tmp/elisee-' + name + '.json'
+    : path.join(process.cwd(), 'data', 'club', name + '.json');
+}
+async function kvDocLoad(name, fallback) {
+  const kv = await getKv();
+  if (kv) {
+    try {
+      const v = await kv.get('elisee:' + name);
+      if (v && typeof v === 'object') return v;
+    } catch (e) {}
+  }
+  try {
+    return JSON.parse(fs.readFileSync(kvFile(name), 'utf8'));
+  } catch (e) {}
+  return fallback;
+}
+async function kvDocSave(name, data) {
+  const kv = await getKv();
+  if (kv) {
+    try { await kv.set('elisee:' + name, data); } catch (e) {}
+  }
+  try {
+    fs.mkdirSync(path.dirname(kvFile(name)), { recursive: true });
+    fs.writeFileSync(kvFile(name), JSON.stringify(data));
+  } catch (e) {}
+}
+function stripHeavyPng(map) {
+  const out = {};
+  Object.keys(map || {}).forEach(function (k) {
+    const row = Object.assign({}, map[k] || {});
+    ['originalPng', 'draftPng', 'facePng'].forEach(function (f) {
+      const v = row[f];
+      if (typeof v === 'string' && v.indexOf('data:') === 0 && v.length > 48000) {
+        if (row[f + 'Url'] && String(row[f + 'Url']).indexOf('http') === 0) row[f] = row[f + 'Url'];
+        else delete row[f];
+      }
+    });
+    out[k] = row;
+  });
+  return out;
+}
 function bachecaStr(v, max) {
   return String(v == null ? '' : v).trim().slice(0, max || 240);
 }
@@ -262,6 +306,40 @@ module.exports = async function handler(req, res) {
       return send(res, 200, { ok: true, job: body.job });
     }
     return send(res, 400, { ok: false, error: 'payload' });
+  }
+  if (url.searchParams.get('path') === 'club' || url.searchParams.get('path') === 'coach') {
+    const kind = url.searchParams.get('path') === 'coach' ? 'coach-rosa' : 'club-master';
+    const map = await kvDocLoad(kind, {});
+    const key = String(url.searchParams.get('key') || (req.method === 'POST' ? '' : '') || '').slice(0, 160);
+    if (req.method === 'GET') {
+      const k = key;
+      if (k) {
+        const row = map[k] || null;
+        return send(res, 200, { ok: true, key: k, data: row && row.data ? row.data : null, updatedAt: row && row.updatedAt });
+      }
+      return send(res, 200, { ok: true, map: map });
+    }
+    if (req.method !== 'POST') return send(res, 405, { ok: false, error: 'method' });
+    const body = await readBody(req);
+    const k = String(body.key || key || '').trim().slice(0, 160);
+    if (!k || !body.data || typeof body.data !== 'object') return send(res, 400, { ok: false, error: 'payload' });
+    map[k] = { updatedAt: new Date().toISOString(), data: body.data };
+    await kvDocSave(kind, map);
+    return send(res, 200, { ok: true, key: k, updatedAt: map[k].updatedAt });
+  }
+  if (url.searchParams.get('path') === 'card') {
+    const doc = await kvDocLoad('card-atelier', { inbox: {}, published: {}, stats: {} });
+    if (req.method === 'GET') {
+      return send(res, 200, { ok: true, inbox: doc.inbox || {}, published: doc.published || {}, stats: doc.stats || {} });
+    }
+    if (req.method !== 'POST') return send(res, 405, { ok: false, error: 'method' });
+    const body = await readBody(req);
+    if (body.inbox && typeof body.inbox === 'object') doc.inbox = Object.assign({}, doc.inbox || {}, stripHeavyPng(body.inbox));
+    if (body.published && typeof body.published === 'object') doc.published = Object.assign({}, doc.published || {}, stripHeavyPng(body.published));
+    if (body.stats && typeof body.stats === 'object') doc.stats = Object.assign({}, doc.stats || {}, body.stats);
+    doc.updatedAt = new Date().toISOString();
+    await kvDocSave('card-atelier', doc);
+    return send(res, 200, { ok: true, updatedAt: doc.updatedAt });
   }
   const st = load();
   if (req.method === 'GET') {

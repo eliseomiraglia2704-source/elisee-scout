@@ -3,7 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Auth admin + persistenza Bacheca/schede (`PERSIST1`):
+Ultimo aggiornamento: **2026-09-18** — Rosa/club e Card sul database (`CLUBCARD1`):
+1. **Club Presidenza** (`elisee_pres_club_master_v3`, rosa inclusa): GET/POST `/api/manager?path=club` keyed per società. Pull all’apertura dashboard, push al salvataggio.
+2. **Rosa/formazione Allenatore-Vice** (`elisee_coach_data`): stesso schema su `path=coach`.
+3. **Card Elisee**: inbox, pubblicate e stats su `path=card`. I PNG grandi vanno su Supabase Storage (`staff-allegati/cards/…`); in KV restano URL/metadati (limite size).
+4. **Niente 13ª funzione**: rewrite in `vercel.json`. File: `persist-sync.js`, `api/manager.js`, `pres-dash.js`, `coach-dash.js`, `vice-dash.js`, `card-atelier.js`. Cache `v20260918_CLUBCARD1`.
+
+Feature precedente: **Auth admin + persistenza Bacheca/schede (`PERSIST1`):
 1. **Control Center**: campi login vuoti (niente `admin`/`admin123` in HTML). Password verificata con hash PBKDF2, username in allowlist. Token firmato obbligatorio al rientro (GET `/api/auth-admin`), non basta il flag `localStorage`.
 2. **Bacheca e schede**: GET/POST su `/api/bacheca` e `/api/schede` (rewrite su `manager`, niente 13ª funzione). Persistenza Vercel KV se presente, file in locale. Il client unisce remoto + `localStorage`.
 3. **File**: `api/auth-admin.js`, `api/manager.js`, `app.js`, `index.html`, `bacheca-annunci.js`, `schede-tecniche.js`, `vercel.json`. Cache `v20260917_PERSIST1`.

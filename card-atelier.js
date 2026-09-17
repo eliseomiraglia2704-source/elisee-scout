@@ -42,6 +42,9 @@
     try { localStorage.setItem(key, JSON.stringify(obj)); } catch (_) {
       toast('Spazio pieno: il PNG è troppo pesante.', 'error');
     }
+    if (window.EliseePersist && typeof window.EliseePersist.pushCard === 'function') {
+      window.EliseePersist.pushCard();
+    }
   }
   function isPngFile(file) {
     if (!file) return false;
@@ -119,7 +122,8 @@
   }
   function faceSrc(u) {
     var pub = publishedOf(u);
-    if (pub && pub.facePng && isPngData(pub.facePng)) return pub.facePng;
+    var src = pub && (pub.facePng || pub.facePngUrl);
+    if (src && (isPngData(src) || /^https?:\/\//i.test(src))) return src;
     return 'immagini/card-elisee/esempio-viso.png?v=20260903_ELISEE10';
   }
   function isPublished(u) { return !!(publishedOf(u) && publishedOf(u).facePng); }
@@ -578,6 +582,9 @@
     ensureAdminUi();
     bindAdmin();
     paintBadge();
+    if (window.EliseePersist && typeof window.EliseePersist.pullCard === 'function') {
+      window.EliseePersist.pullCard(function (ok) { if (ok) paintBadge(); });
+    }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();

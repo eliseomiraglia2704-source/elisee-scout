@@ -1087,6 +1087,9 @@
       localStorage.setItem('elisee_pres_club_master_v3', JSON.stringify(data));
       localStorage.setItem('elisee_pres_club_master_v2', JSON.stringify(data));
       localStorage.setItem('elisee_pres_is_demo_mode', data.isDemoMode ? 'true' : 'false');
+      if (window.EliseePersist && typeof window.EliseePersist.pushClub === 'function') {
+        window.EliseePersist.pushClub(data);
+      }
     } catch (_) {}
   }
 
@@ -4689,6 +4692,12 @@
     prd.removeAttribute('hidden');
     prd.style.display = 'block';
     renderPresidentialSuite();
+    if (!window.__eliseeClubPulled && window.EliseePersist && typeof window.EliseePersist.pullClub === 'function') {
+      window.__eliseeClubPulled = true;
+      window.EliseePersist.pullClub(function (data) {
+        if (data) renderPresidentialSuite();
+      });
+    }
   }
 
   function detach() {

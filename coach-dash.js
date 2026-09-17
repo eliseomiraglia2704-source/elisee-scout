@@ -1254,8 +1254,12 @@
 
   function saveCoachData(data) {
     try {
+      data.updatedAt = new Date().toISOString();
       localStorage.setItem('elisee_coach_data', JSON.stringify(data));
       window.dispatchEvent(new CustomEvent('elisee:coach-updated', { detail: { data: data } }));
+      if (window.EliseePersist && typeof window.EliseePersist.pushCoach === 'function') {
+        window.EliseePersist.pushCoach(data);
+      }
     } catch (_) {}
   }
 
@@ -1283,6 +1287,12 @@
     mount.removeAttribute('hidden');
     mount.style.display = 'block';
     sh.classList.add('es-cd-on');
+    if (!window.__eliseeCoachPulled && window.EliseePersist && typeof window.EliseePersist.pullCoach === 'function') {
+      window.__eliseeCoachPulled = true;
+      window.EliseePersist.pullCoach(function (data) {
+        if (data) renderHub(user);
+      });
+    }
 
     var grp = document.getElementById('user-dossier-view-group');
     if (grp) grp.classList.add('is-coach-dash');
