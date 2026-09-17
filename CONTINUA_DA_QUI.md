@@ -3,7 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Control Center dashboard operativa (`CCDASH1`):
+Ultimo aggiornamento: **2026-09-18** — Auth admin + persistenza Bacheca/schede (`PERSIST1`):
+1. **Control Center**: campi login vuoti (niente `admin`/`admin123` in HTML). Password verificata con hash PBKDF2, username in allowlist. Token firmato obbligatorio al rientro (GET `/api/auth-admin`), non basta il flag `localStorage`.
+2. **Bacheca e schede**: GET/POST su `/api/bacheca` e `/api/schede` (rewrite su `manager`, niente 13ª funzione). Persistenza Vercel KV se presente, file in locale. Il client unisce remoto + `localStorage`.
+3. **File**: `api/auth-admin.js`, `api/manager.js`, `app.js`, `index.html`, `bacheca-annunci.js`, `schede-tecniche.js`, `vercel.json`. Cache `v20260917_PERSIST1`.
+
+Feature precedente: **Control Center dashboard operativa (`CCDASH1`):
 1. **Home Admin**: stat card (job IA, Admin, Privacy, sync, alert), azioni rapide (Autopilot primario, GDPR, Sync, War Room, Auto-Fix), grid 5 moduli, grafici job 24h + donut categorie + % operativa, Governance & Trust, identità sessione.
 2. **Tab**: restano le 5 sezioni. Mission Control Autopilot non è più l’unico contenuto della home: sta nel modulo Autopilot. Privacy ha `#governance-panel-target` (prima mancava, il pannello GDPR non montava).
 3. **Dati**: cluster `EliseeAICluster`, reclami localStorage, step audit, presenza admin/privacy, pending Card Elisee. Nessun dato mock permanente.

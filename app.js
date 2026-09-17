@@ -34,7 +34,44 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.removeItem('elisee_admin_auth');
     localStorage.removeItem('elisee_user_auth');
     localStorage.removeItem('elisee_last_activity');
+    localStorage.removeItem('elisee_admin_session_token');
   }
+
+  window.verifyEliseeAdminSession = function (cb) {
+    var tok = '';
+    try {
+      tok = sessionStorage.getItem('elisee_admin_session_token') || localStorage.getItem('elisee_admin_session_token') || '';
+    } catch (_) {}
+    if (!tok) {
+      try {
+        localStorage.removeItem('elisee_admin_auth');
+        localStorage.removeItem('elisee_privacy_auth');
+      } catch (_) {}
+      if (cb) cb(false);
+      return;
+    }
+    fetch('/api/auth-admin', { headers: { Authorization: 'Bearer ' + tok } })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d && d.authenticated) {
+          if (d.role === 'privacy') {
+            localStorage.setItem('elisee_privacy_auth', 'true');
+            localStorage.removeItem('elisee_admin_auth');
+          } else {
+            localStorage.setItem('elisee_admin_auth', 'true');
+            localStorage.removeItem('elisee_privacy_auth');
+          }
+          if (cb) cb(true, d);
+        } else {
+          localStorage.removeItem('elisee_admin_auth');
+          localStorage.removeItem('elisee_privacy_auth');
+          localStorage.removeItem('elisee_admin_session_token');
+          try { sessionStorage.removeItem('elisee_admin_session_token'); } catch (_) {}
+          if (cb) cb(false);
+        }
+      })
+      .catch(function () { if (cb) cb(false); });
+  };
 
   const navLinks = document.querySelectorAll('.nav-link, .btn-nav-highlight, [data-view="account"], a[href="#account-portal"]');
   const homeViewsGroup = document.getElementById('home-views-group');
@@ -7149,17 +7186,21 @@ document.addEventListener('DOMContentLoaded', () => {
           if (window.EliseeStaff) window.EliseeStaff.applyFlagsFromEmail(uEmail);
         } catch (_) {}
 
-        const isStaff =
-          localStorage.getItem('elisee_admin_auth') === 'true' ||
-          localStorage.getItem('elisee_privacy_auth') === 'true';
         const loginGuard = document.getElementById('admin-login-guard');
         const dash = document.getElementById('admin-authenticated-dashboard');
         if (loginGuard && dash) {
-          if (isStaff) {
-            loginGuard.style.display = 'none';
-            dash.style.display = 'block';
-            try { renderAdminPanel(); } catch (err) { console.error('renderAdminPanel', err); }
-            try { if (window.refreshAdminAnalytics) window.refreshAdminAnalytics(); } catch(e) {}
+          if (typeof window.verifyEliseeAdminSession === 'function') {
+            window.verifyEliseeAdminSession(function (ok) {
+              if (ok) {
+                loginGuard.style.display = 'none';
+                dash.style.display = 'block';
+                try { renderAdminPanel(); } catch (err) { console.error('renderAdminPanel', err); }
+                try { if (window.refreshAdminAnalytics) window.refreshAdminAnalytics(); } catch(e) {}
+              } else {
+                loginGuard.style.display = 'block';
+                dash.style.display = 'none';
+              }
+            });
           } else {
             loginGuard.style.display = 'block';
             dash.style.display = 'none';
@@ -8040,30 +8081,33 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.EliseeStaff) window.EliseeStaff.applyFlagsFromEmail(uEmail);
   } catch (_) {}
 
-  const isAlreadyAuth = localStorage.getItem('elisee_admin_auth') === 'true' || localStorage.getItem('elisee_privacy_auth') === 'true';
   const guardCard = document.getElementById('admin-login-guard');
   const authDashboard = document.getElementById('admin-authenticated-dashboard');
 
-  if (isAlreadyAuth && guardCard && authDashboard) {
-    guardCard.style.display = 'none';
-    authDashboard.style.display = 'block';
-    renderAdminPanel();
-    try { if (window.refreshAdminAnalytics) window.refreshAdminAnalytics(); } catch(e) {}
-  } else if (!isAlreadyAuth && urlUser) {
-    const errorContainer = document.getElementById('admin-login-error-container');
-    if (errorContainer) {
-      errorContainer.style.display = 'block';
-      errorContainer.innerHTML = `
-        <div style="background:rgba(239, 68, 68, 0.15); border:1px solid rgba(239, 68, 68, 0.4); border-radius:8px; padding:0.85rem 1rem; color:#ef4444; font-size:0.85rem; text-align:left; display:flex; align-items:flex-start; gap:0.6rem;">
-          <i data-lucide="shield-alert" style="width:20px; height:20px; flex-shrink:0; margin-top:2px;"></i>
-          <div>
-            <strong>ACCESSO NEGATO:</strong><br/>
-            Impossibile accedere con l'account "<strong>${urlUser}</strong>". Credenziali non autorizzate o profilo privo dei permessi Amministratore / Responsabile Privacy.
-          </div>
-        </div>
-      `;
-      if (window.lucide) lucide.createIcons();
-    }
+  if (guardCard && authDashboard) {
+    window.verifyEliseeAdminSession(function (ok) {
+      if (ok) {
+        guardCard.style.display = 'none';
+        authDashboard.style.display = 'block';
+        renderAdminPanel();
+        try { if (window.refreshAdminAnalytics) window.refreshAdminAnalytics(); } catch(e) {}
+      } else if (urlUser) {
+        const errorContainer = document.getElementById('admin-login-error-container');
+        if (errorContainer) {
+          errorContainer.style.display = 'block';
+          errorContainer.innerHTML = `
+            <div style="background:rgba(239, 68, 68, 0.15); border:1px solid rgba(239, 68, 68, 0.4); border-radius:8px; padding:0.85rem 1rem; color:#ef4444; font-size:0.85rem; text-align:left; display:flex; align-items:flex-start; gap:0.6rem;">
+              <i data-lucide="shield-alert" style="width:20px; height:20px; flex-shrink:0; margin-top:2px;"></i>
+              <div>
+                <strong>ACCESSO NEGATO:</strong><br/>
+                Impossibile accedere con l'account "<strong>${urlUser}</strong>". Credenziali non autorizzate o profilo privo dei permessi Amministratore / Responsabile Privacy.
+              </div>
+            </div>
+          `;
+          if (window.lucide) lucide.createIcons();
+        }
+      }
+    });
   }
 
   const btnEnterUserPortal = document.getElementById('btn-enter-user-portal');
@@ -8157,7 +8201,7 @@ document.addEventListener('DOMContentLoaded', () => {
           sessionStorage.setItem('elisee_admin_session_token', data.token);
           localStorage.setItem('elisee_admin_session_token', data.token);
         } catch (_) {}
-        if (userVal.includes('privacy') || userVal.includes('garante') || userVal.includes('manueltucci') || userVal.includes('tucci2002')) {
+        if ((data.role === 'privacy') || userVal.includes('privacy') || userVal.includes('garante') || userVal.includes('manueltucci')) {
           localStorage.setItem('elisee_privacy_auth', 'true');
           localStorage.removeItem('elisee_admin_auth');
         } else {

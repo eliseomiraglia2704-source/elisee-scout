@@ -114,8 +114,43 @@
   function loadAll() {
     try { return JSON.parse(localStorage.getItem(STORE) || '{}') || {}; } catch (_) { return {}; }
   }
+  var saveTimer = 0;
   function saveAll(map) {
     try { localStorage.setItem(STORE, JSON.stringify(map)); } catch (_) {}
+    try {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(function () {
+        fetch('/api/schede', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ jobs: map })
+        }).catch(function () {});
+      }, 400);
+    } catch (_) {}
+  }
+  function pullRemote() {
+    fetch('/api/schede')
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (!j || !j.ok || !j.jobs || typeof j.jobs !== 'object') return;
+        var local = loadAll();
+        var changed = false;
+        Object.keys(j.jobs).forEach(function (id) {
+          var remote = j.jobs[id];
+          var cur = local[id];
+          var rt = Date.parse((remote && remote.updatedAt) || '') || 0;
+          var lt = Date.parse((cur && cur.updatedAt) || '') || 0;
+          if (!cur || rt >= lt) {
+            local[id] = remote;
+            changed = true;
+          }
+        });
+        if (changed) {
+          try { localStorage.setItem(STORE, JSON.stringify(local)); } catch (_) {}
+          if (typeof render === 'function') render();
+        }
+      })
+      .catch(function () {});
   }
   function matchScore(person, job) {
     var n = 72;
@@ -844,6 +879,7 @@
 
   function boot() {
     bind();
+    pullRemote();
     document.addEventListener('elisee:view-changed', function (e) {
       var d = e && e.detail;
       if (d && (d.view === 'schede' || String(d.hash || '').indexOf('schede') >= 0)) render();

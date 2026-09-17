@@ -73,7 +73,23 @@ const BACHECA_REQ = {
   calciomercato: ['tipo_operazione', 'ruolo', 'categoria_squadra']
 };
 
-function bachecaLoad() {
+async function getKv() {
+  if (!process.env.KV_REST_API_URL && process.env.UPSTASH_REDIS_REST_URL) {
+    process.env.KV_REST_API_URL = process.env.UPSTASH_REDIS_REST_URL;
+  }
+  if (!process.env.KV_REST_API_TOKEN && process.env.UPSTASH_REDIS_REST_TOKEN) {
+    process.env.KV_REST_API_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+  }
+  if (!process.env.KV_REST_API_URL || !process.env.KV_REST_API_TOKEN) return null;
+  try {
+    const mod = await import('@vercel/kv');
+    return mod.kv;
+  } catch (e) {
+    return null;
+  }
+}
+
+function bachecaLoadFile() {
   try {
     const st = JSON.parse(fs.readFileSync(BACHECA_FILE, 'utf8'));
     if (Array.isArray(st)) return st;
@@ -81,10 +97,60 @@ function bachecaLoad() {
   } catch (e) {}
   return [];
 }
-function bachecaSave(items) {
+async function bachecaLoad() {
+  const kv = await getKv();
+  if (kv) {
+    try {
+      const v = await kv.get('elisee:bacheca:annunci');
+      if (Array.isArray(v)) return v;
+      if (v && Array.isArray(v.items)) return v.items;
+    } catch (e) {}
+  }
+  return bachecaLoadFile();
+}
+async function bachecaSave(items) {
+  const slice = (items || []).slice(0, 400);
+  const kv = await getKv();
+  if (kv) {
+    try { await kv.set('elisee:bacheca:annunci', slice); } catch (e) {}
+  }
   try {
     fs.mkdirSync(path.dirname(BACHECA_FILE), { recursive: true });
-    fs.writeFileSync(BACHECA_FILE, JSON.stringify({ items: items.slice(0, 400) }, null, 2));
+    fs.writeFileSync(BACHECA_FILE, JSON.stringify({ items: slice }, null, 2));
+  } catch (e) {}
+}
+
+const SCHEDE_FILE = process.env.ELISEE_SCHEDE_FILE
+  || (process.env.VERCEL ? '/tmp/elisee-schede.json' : path.join(process.cwd(), 'data', 'bacheca', 'schede.json'));
+
+function schedeLoadFile() {
+  try {
+    const st = JSON.parse(fs.readFileSync(SCHEDE_FILE, 'utf8'));
+    if (st && typeof st === 'object' && !Array.isArray(st)) {
+      return st.map ? st : (st.jobs || st);
+    }
+  } catch (e) {}
+  return {};
+}
+async function schedeLoad() {
+  const kv = await getKv();
+  if (kv) {
+    try {
+      const v = await kv.get('elisee:schede:jobs');
+      if (v && typeof v === 'object' && !Array.isArray(v)) return v;
+    } catch (e) {}
+  }
+  return schedeLoadFile();
+}
+async function schedeSave(map) {
+  const clean = map && typeof map === 'object' ? map : {};
+  const kv = await getKv();
+  if (kv) {
+    try { await kv.set('elisee:schede:jobs', clean); } catch (e) {}
+  }
+  try {
+    fs.mkdirSync(path.dirname(SCHEDE_FILE), { recursive: true });
+    fs.writeFileSync(SCHEDE_FILE, JSON.stringify(clean));
   } catch (e) {}
 }
 function bachecaStr(v, max) {
@@ -166,17 +232,36 @@ module.exports = async function handler(req, res) {
   const url = new URL(req.url, 'http://localhost');
   if (url.searchParams.get('path') === 'bacheca') {
     if (req.method === 'GET') {
-      return send(res, 200, { ok: true, items: bachecaLoad(), categorie: BACHECA_CATS });
+      return send(res, 200, { ok: true, items: await bachecaLoad(), categorie: BACHECA_CATS });
     }
     if (req.method !== 'POST') return send(res, 405, { ok: false, error: 'method' });
     const body = await readBody(req);
     const errors = bachecaValidate(body);
     if (errors.length) return send(res, 400, { ok: false, error: 'validazione', fields: errors });
     const item = bachecaItem(body);
-    const items = bachecaLoad();
-    items.unshift(item);
-    bachecaSave(items);
+    const items = await bachecaLoad();
+    const next = items.filter((x) => x && x.id !== item.id);
+    next.unshift(item);
+    await bachecaSave(next);
     return send(res, 200, { ok: true, item: item });
+  }
+  if (url.searchParams.get('path') === 'schede') {
+    if (req.method === 'GET') {
+      return send(res, 200, { ok: true, jobs: await schedeLoad() });
+    }
+    if (req.method !== 'POST') return send(res, 405, { ok: false, error: 'method' });
+    const body = await readBody(req);
+    const current = await schedeLoad();
+    if (body && body.jobs && typeof body.jobs === 'object') {
+      await schedeSave(body.jobs);
+      return send(res, 200, { ok: true, jobs: body.jobs });
+    }
+    if (body && body.job && body.job.id) {
+      current[body.job.id] = body.job;
+      await schedeSave(current);
+      return send(res, 200, { ok: true, job: body.job });
+    }
+    return send(res, 400, { ok: false, error: 'payload' });
   }
   const st = load();
   if (req.method === 'GET') {

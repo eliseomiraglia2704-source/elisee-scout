@@ -58,6 +58,10 @@
     {
       "source": "/api/bacheca",
       "destination": "/api/manager?path=bacheca"
+    },
+    {
+      "source": "/api/schede",
+      "destination": "/api/manager?path=schede"
     }
   ]
 }

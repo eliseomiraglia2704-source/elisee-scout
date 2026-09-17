@@ -19,12 +19,47 @@ const RATE_LIMIT_FILE = process.env.VERCEL
 
 const memoryRateLimit = {};
 
-function getSecret() {
-  return process.env.ADMIN_SECRET || 'Iemmello.9';
-}
+const PW_SALT = 'elisee-staff-v1';
+const PW_ITER = 120000;
+const STAFF_PW_HASH = '21612aefb415ec0957dfd54095eed7fadbeaec288eeca7bf8380989c12919145';
+const LEGACY_PW_HASH = 'de134c138f54a18fb10cd0f5fda4699a81326bb1b6a5d47aeadb26bce167270b';
+const STAFF_ROLES = {
+  admin: 'admin',
+  eliseo: 'admin',
+  'eliseomiraglia2704@gmail.com': 'admin',
+  alessandro: 'admin',
+  'alessandromancini469@gmail.com': 'admin',
+  privacy: 'privacy',
+  garante: 'privacy',
+  manuel: 'privacy',
+  'manueltucci2002@gmail.com': 'privacy'
+};
 
 function getSigningKey() {
   return process.env.TOKEN_SIGNING_KEY || 'elisee-scout-admin-token-key-2026';
+}
+
+function hashPassword(plain) {
+  return crypto.pbkdf2Sync(String(plain), PW_SALT, PW_ITER, 32, 'sha256').toString('hex');
+}
+
+function hashesEqual(a, b) {
+  const aa = Buffer.from(String(a || ''), 'utf8');
+  const bb = Buffer.from(String(b || ''), 'utf8');
+  if (aa.length !== bb.length) return false;
+  return crypto.timingSafeEqual(aa, bb);
+}
+
+function passwordOk(plain) {
+  const computed = hashPassword(plain);
+  if (hashesEqual(computed, STAFF_PW_HASH) || hashesEqual(computed, LEGACY_PW_HASH)) return true;
+  const envSecret = String(process.env.ADMIN_SECRET || '').trim();
+  if (envSecret && hashesEqual(computed, hashPassword(envSecret))) return true;
+  return false;
+}
+
+function roleOfUsername(username) {
+  return STAFF_ROLES[String(username || '').trim().toLowerCase()] || null;
 }
 
 function getRateLimits() {
@@ -175,24 +210,17 @@ module.exports = async function handler(req, res) {
     const body = await readBody(req);
     const providedPin = String(body.pin || body.password || '').trim();
     const username = String(body.username || body.email || '').trim().toLowerCase();
+    const role = roleOfUsername(username);
 
-    if (!providedPin) {
-      return sendJson(res, 400, { success: false, error: 'PIN o Password di amministrazione non fornita' });
+    if (!username || !role) {
+      return sendJson(res, 400, { success: false, error: 'Username staff non riconosciuto.' });
     }
 
-    const correctSecret = getSecret();
-    const pinClean = providedPin.trim();
-    const pinNorm = pinClean.toLowerCase();
-    const secretNorm = correctSecret.trim().toLowerCase();
+    if (!providedPin) {
+      return sendJson(res, 400, { success: false, error: 'Password di amministrazione non fornita' });
+    }
 
-    const isMatch = (
-      pinClean === correctSecret ||
-      pinNorm === secretNorm ||
-      pinClean === 'Iemmello.9' ||
-      pinNorm === 'iemmello.9' ||
-      pinClean === 'Iemmello9' ||
-      pinNorm === 'iemmello9'
-    );
+    const isMatch = passwordOk(providedPin);
 
     if (!isMatch) {
       ipRecord.attempts = (ipRecord.attempts || 0) + 1;
@@ -215,8 +243,6 @@ module.exports = async function handler(req, res) {
     delete rateData[ip];
     saveRateLimits(rateData);
 
-    const isPrivacy = username.indexOf('privacy') >= 0 || username.indexOf('garante') >= 0 || username.indexOf('manueltucci') >= 0 || username === 'manueltucci2002@gmail.com';
-    const role = isPrivacy ? 'privacy' : 'admin';
     const tokenData = generateSignedToken(role, 7200000); // 2 ore
     return sendJson(res, 200, {
       success: true,
@@ -224,7 +250,7 @@ module.exports = async function handler(req, res) {
       role: role,
       token: tokenData.token,
       expiresAt: tokenData.expiresAt,
-      message: isPrivacy ? 'Autenticazione Responsabile Privacy completata' : 'Autenticazione Creatore / Admin completata con successo'
+      message: role === 'privacy' ? 'Autenticazione Responsabile Privacy completata' : 'Autenticazione Creatore / Admin completata con successo'
     });
   }
 

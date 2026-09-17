@@ -543,8 +543,41 @@
   function persistLocal(item) {
     var list = [];
     try { list = JSON.parse(localStorage.getItem(STORE) || '[]') || []; } catch (_) { list = []; }
+    list = list.filter(function (x) { return x && x.id !== item.id; });
     list.unshift(item);
     localStorage.setItem(STORE, JSON.stringify(list.slice(0, 80)));
+  }
+
+  function mergeRemote(items) {
+    if (!Array.isArray(items) || !items.length) return;
+    var local = [];
+    try { local = JSON.parse(localStorage.getItem(STORE) || '[]') || []; } catch (_) { local = []; }
+    var byId = {};
+    local.forEach(function (j) { if (j && j.id) byId[j.id] = j; });
+    items.forEach(function (j) {
+      if (!j || !j.id) return;
+      var cur = byId[j.id];
+      var rt = Date.parse(j.data_creazione || j.createdAt || '') || 0;
+      var lt = cur ? (Date.parse(cur.data_creazione || cur.createdAt || '') || 0) : 0;
+      if (!cur || rt >= lt) byId[j.id] = j;
+    });
+    var next = Object.keys(byId).map(function (k) { return byId[k]; });
+    next.sort(function (a, b) {
+      return (Date.parse(b.data_creazione || b.createdAt || '') || 0) - (Date.parse(a.data_creazione || a.createdAt || '') || 0);
+    });
+    localStorage.setItem(STORE, JSON.stringify(next.slice(0, 80)));
+  }
+
+  function pullRemote() {
+    fetch('/api/bacheca')
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (j && j.ok && Array.isArray(j.items)) {
+          mergeRemote(j.items);
+          if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs();
+        }
+      })
+      .catch(function () {});
   }
 
   function migrateExisting() {
@@ -661,6 +694,7 @@
     window.openPubblicaAnnuncioModal = openModal;
     window.closePubblicaAnnuncioModal = closeModal;
     window.onPubblicaCandidatura = openModal;
+    pullRemote();
     if (!booted) {
       booted = true;
       if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs();
