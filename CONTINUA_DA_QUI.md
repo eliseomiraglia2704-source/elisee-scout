@@ -3,7 +3,20 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Riprogettazione Area Match Analyst & Video Analyst con Architettura Ordinata Speculare a Coach & Vice (`MAPRO1`):
+Ultimo aggiornamento: **2026-09-17** — Refactoring PRO `med-dash.js`, `fisio-dash.js`, `nu-dash.js` (`MEDFISNUDASH_PRO`):
+1. **Refactoring Completo Aree Medico Sociale, Fisioterapista e Nutrizionista — PRO Shell**:
+   - **Richiesta Utente**: le dashboard di Medico Sociale, Fisioterapista e Nutrizionista non erano ordinate come l'Area Allenatore e Vice Allenatore.
+   - **Interventi Applicati** (identici su tutti e 3 i file):
+     - *Sidebar Gestionale 240px* con brand header dedicato, 8-10 voci di navigazione con icone SVG e badge societario Foggia City sticky.
+     - *Header a Due Livelli*: Livello 1 (Badge licenza/ordine, nome, ruolo, tesseramento, logo club, pulsante azione rapida). Livello 2 (Prossima sessione programmata, KPI Rosa/Trattamenti/Piani, Focus di giornata).
+     - *Tab Bar Superiore Compatta* per navigazione rapida orizzontale.
+     - *med-dash.js* — Tab: Dashboard, Visite & Controlli, Infortuni & Diagnosi, Idoneita Agonistica, Prescrizioni & Fisio, Return to Play, Radar & Competenze, Dossier Riservato, Canale Staff, Profilo.
+     - *fisio-dash.js* — Tab: Dashboard, Registro Trattamenti, Protocolli Riabilitativi, Valutazione ROM & Test, Tecniche & Strumentali, Radar & Competenze, Canale Staff, Profilo.
+     - *nu-dash.js* — Tab: Dashboard, Piani Nutrizionali, Composizione Corporea & BIA, Integrazione WADA, Gestione Trasferte & Ritiro, Radar & Competenze, Canale Staff, Profilo.
+2. **File aggiornati**: `med-dash.js`, `fisio-dash.js`, `nu-dash.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260917_MEDFISNUDASH_PRO`.
+3. **Commit**: `7911a446` — push su `main` — deploy Vercel in corso.
+
+Feature precedente: **Riprogettazione Area Match Analyst & Video Analyst con Architettura Ordinata Speculare a Coach & Vice (`MAPRO1`):**
 1. **Allineamento & Ordinamento Completo Dashboard Match Analyst & Video Analyst (`ma-dash.css`, `ma-dash.js`, `index.html`)**:
    - **Richiesta Utente**: l'Area Match Analyst non era ordinata come l'Area Allenatore e Vice Allenatore. Tutte le opzioni e le funzioni andavano riordinate nel miglior modo possibile.
    - **Interventi Applicati**:
