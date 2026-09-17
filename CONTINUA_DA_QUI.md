@@ -3,7 +3,35 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Riprogettazione Completa & Armonica Area Osservatore / Scout (`OBSLUX1`):
+Ultimo aggiornamento: **2026-09-17** — Riprogettazione Completa, Ordinata & Armonica Match Analyst, Preparatore Portieri & Preparatore Atletico (`STAFFLUX1`):
+1. **Ridisegno Integrale Dashboard Match Analyst (`ma-dash.js`, `ma-dash.css`, `index.html`)**:
+   - **Diagnosi**: Layout spezzato da `fillExtra` che appendeva blocchi disordinati sotto la shell generica a 3 colonne, duplicando il profilo e disperdendo 15 bottoni in sotto-griglie frammentate.
+   - **Nuova Architettura Ordinata & Luxury**:
+     - **Dock Sinistro** con icone e tooltip dedicati.
+     - **Top Header Bar** con breadcrumb, badge tattico e due CTA primarie: *"Nuovo Report Tattico"* e *"Inoltra a DS e Mister"*.
+     - **Riga 1 (2 Colonne)**: Profilo Match Analyst (avatar 58px, qualifica Coverciano, completamento 85%, affiliazione) + Laboratorio Tattico con Pitch SVG sovrapposizione heatmap di squadra e quick buttons.
+     - **Riga 2 (ActionsGrid a 3 Colonne)**: 6 card operative (*Report Privato*, *Report Pubblico / Menzione*, *Assegna Badge Tattico*, *Studio Avversario Pre-Gara*, *Clip Hub & Video Tagging*, *Inoltra Dossier allo Staff*).
+     - **Riga 3 (3 Colonne Paritetiche)**: Quadro Tattico (Radar), Attività & Permessi abilitati, Limiti di Ruolo (Rosso Desaturato).
+     - **Riga 4**: Registro Analisi & Dossier Recenti con visual empty-state moderno.
+2. **Ridisegno Integrale Dashboard Preparatore dei Portieri (`gk-dash.js`, `gk-dash.css`, `index.html`)**:
+   - **Diagnosi**: `shellHtml.replace('</main>', ...)` falliva perché la shell non usava `</main>`, lasciando le sezioni orfane o disperse.
+   - **Nuova Architettura Ordinata & Luxury**:
+     - **Top Header Bar** con CTA primarie: *"Nuova Scheda Portieri"* e *"Report al Mister"*.
+     - **Riga 1 (2 Colonne)**: Profilo Preparatore Portieri (UEFA GK) + Metriche di Efficacia GK (parate decisive, uscite aeree, costruzione piede forte/debole, tempo di reazione GPS, comando vocale).
+     - **Riga 2 (ActionsGrid a 3 Colonne)**: 6 card operative (*Stanza dei Portieri & Clip Hub*, *Schede Sviluppo Settimanali*, *Badge Saracinesca 🛡️*, *Badge Piede Educato GK 🎯*, *Menzione Speciale sulla Card*, *Report Tecnico al Mister*).
+     - **Riga 3 (3 Colonne)**: Quadro Tecnico GK (Radar), Drills & Metodologia, Limiti di Ruolo (Rosso Desaturato).
+     - **Riga 4**: Registro Attività & Briefing con visual empty-state.
+3. **Ridisegno Integrale Dashboard Preparatore Atletico (`at-dash.js`, `at-dash.css`, `index.html`)**:
+   - **Diagnosi**: Foglio di stile quasi inesistente (16 righe) e render custom fallito a causa del replace errato.
+   - **Nuova Architettura Ordinata & Luxury**:
+     - **Top Header Bar** con CTA primarie: *"Registra Carico GPS"* e *"Invia Semaforo al Mister"*.
+     - **Riga 1 (2 Colonne)**: Profilo Preparatore Atletico (Scienze Motorie) + Workload Management GPS & Prevenzione Infortuni (semaforo atleti disponibili 🟢, gestione 🟡, infortunati 🔴, rapporto ACWR 1.08, carico settimanale AU, HSR medio).
+     - **Riga 2 (ActionsGrid a 3 Colonne)**: 6 card operative (*Carichi GPS & Workload*, *Schede Forza & Prevenzione*, *Test Fisici Periodici*, *Badge Atleta Top ⭐*, *Badge Resistenza Élite ⚡*, *Semaforo Disponibilità al Mister*).
+     - **Riga 3 (3 Colonne)**: Quadro Fisico Rosa (Radar), Protocolli di Carico, Limiti di Ruolo (Rosso Desaturato).
+     - **Riga 4**: Registro Carichi & Valutazioni Fisiche con visual empty-state.
+4. **File aggiornati**: `ma-dash.js`, `ma-dash.css`, `gk-dash.js`, `gk-dash.css`, `at-dash.js`, `at-dash.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_STAFFLUX1`.
+
+Feature precedente: **Riprogettazione Completa & Armonica Area Osservatore / Scout (`OBSLUX1`):**
 1. **Ridisegno Integrale Dashboard Osservatore & Talent Scout (`obs-dash.js`, `obs-dash.css`, `index.html`)**:
    - **Diagnosi**: La pagina dell'Osservatore soffriva di una stratificazione frammentata (shell a 3 colonne generica sovrapposta a un blocco `.es-obs-extra` appeso in fondo che duplicava credenziali, bottoni e sezioni, creando disordine visivo).
    - **Nuova Architettura Ordinata & Armonica**:
