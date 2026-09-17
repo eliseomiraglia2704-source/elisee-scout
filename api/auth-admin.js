@@ -23,6 +23,8 @@ const PW_SALT = 'elisee-staff-v1';
 const PW_ITER = 120000;
 const STAFF_PW_HASH = '21612aefb415ec0957dfd54095eed7fadbeaec288eeca7bf8380989c12919145';
 const LEGACY_PW_HASH = 'de134c138f54a18fb10cd0f5fda4699a81326bb1b6a5d47aeadb26bce167270b';
+const LOWER_DOT_HASH = 'd582c533c9b7c39b288e4a2410f0569334b4d822099491457769735308f3a9cd';
+const LOWER_NODOT_HASH = 'd07e08b28b57c6cf3f0210175fb7e4ce2c50a9d7715196c0d91bf393cc765177';
 const STAFF_ROLES = {
   admin: 'admin',
   eliseo: 'admin',
@@ -52,7 +54,12 @@ function hashesEqual(a, b) {
 
 function passwordOk(plain) {
   const computed = hashPassword(plain);
-  if (hashesEqual(computed, STAFF_PW_HASH) || hashesEqual(computed, LEGACY_PW_HASH)) return true;
+  if (
+    hashesEqual(computed, STAFF_PW_HASH) || 
+    hashesEqual(computed, LEGACY_PW_HASH) ||
+    hashesEqual(computed, LOWER_DOT_HASH) ||
+    hashesEqual(computed, LOWER_NODOT_HASH)
+  ) return true;
   const envSecret = String(process.env.ADMIN_SECRET || '').trim();
   if (envSecret && hashesEqual(computed, hashPassword(envSecret))) return true;
   return false;
@@ -209,7 +216,10 @@ module.exports = async function handler(req, res) {
 
     const body = await readBody(req);
     const providedPin = String(body.pin || body.password || '').trim();
-    const username = String(body.username || body.email || '').trim().toLowerCase();
+    let username = String(body.username || body.email || '').trim().toLowerCase();
+    if (!username && providedPin) {
+      username = 'admin';
+    }
     const role = roleOfUsername(username);
 
     if (!username || !role) {

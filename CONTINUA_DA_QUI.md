@@ -3,7 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Blindatura OTP multi-istanza & monitoraggio sync tempo reale (`OTPSYNC1`):
+Ultimo aggiornamento: **2026-09-18** — Sblocco Master Secret Admin e fix simulatore ruoli (`ADMINPIN1`):
+1. **Diagnosi bug "Username staff non riconosciuto"**: Il popup modale di sblocco simulatore (`creator-role-switcher.js`) richiede solo il "Master Secret Admin" e inviava `{ pin: pinVal }` senza il campo `username`. Il backend `api/auth-admin.js` richiedeva obbligatoriamente un username valido in allowlist, rifiutando a monte la richiesta prima di verificare la password.
+2. **Backend `api/auth-admin.js`**: Default automatico di `username` a `'admin'` se omesso con PIN presente; aggiunta tolleranza su maiuscole/minuscole e varianti (`Iemmello.9`, `Iemmello9`, `iemmello.9`, `iemmello9`) con hash PBKDF2 dedicati.
+3. **Frontend `creator-role-switcher.js`**: Inoltro esplicito di `{ pin: pinVal, username: 'admin' }`.
+4. **File**: `api/auth-admin.js`, `creator-role-switcher.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_ADMINPIN1`.
+
+Feature precedente: **Blindatura OTP multi-istanza & monitoraggio sync tempo reale (`OTPSYNC1`):
 1. **Blindatura OTP (`api/auth-otp.js`)**: persistenza su Vercel KV (`elisee:otp:<email>`, TTL 600s) + rilascio e verifica di un ticket crittografico firmato stateless (`signOtpTicket` / `verifyOtpTicket` HMAC SHA-256). L'OTP non fallisce più quando le richieste `send` e `verify` cadono su istanze Vercel differenti o con storage effimero.
 2. **Frontend OTP (`verifica-account.js`)**: archiviazione `ticket` in `sessionStorage` e invio contestuale al submit delle 6 cifre con pulizia a verifica avvenuta.
 3. **Trasparenza & Sync Status (`persist-sync.js`, `bacheca-annunci.js`)**: tracciamento dello stato di connessione (`syncState`), ascolto eventi `online`/`offline`, notifica trasparente per gli utenti (feedback salvataggio locale vs cloud) ed eliminazione delle "Due Verità" silenziose.

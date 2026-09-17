@@ -394,7 +394,7 @@
         fetch('/api/auth-admin', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ pin: pinVal })
+          body: JSON.stringify({ pin: pinVal, username: 'admin' })
         })
         .then(function (res) { return res.json(); })
         .then(function (data) {
