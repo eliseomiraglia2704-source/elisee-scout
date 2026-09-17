@@ -4,10 +4,15 @@
    Condivide e integra fedelmente gli stili di coach-dash.css
    ============================================================ */
 
-#es-vd {
+#es-vd,
+.es-vice-root {
   width: 100% !important;
   min-height: 100% !important;
-  display: block;
+  display: block !important;
+  grid-template-columns: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
 }
 
 #es-staff-profile.es-vice-on > :not(#es-vd) {

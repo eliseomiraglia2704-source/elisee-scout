@@ -884,10 +884,8 @@ body.es-tifoso-on #user-dossier-view-group {
    ============================================================ */
 .es-pd,
 #es-pd,
-#es-cd,
 #es-dsd,
 #es-prd,
-#es-vd,
 #es-fd,
 #es-mad,
 #es-md,
@@ -910,6 +908,20 @@ body.es-tifoso-on #user-dossier-view-group {
   grid-template-columns: 56px 1fr !important;
   width: 100% !important;
   box-sizing: border-box !important;
+}
+
+/* Allenatore Capo (#es-cd) e Vice Allenatore (#es-vd) gestiscono autonomamente la propria shell estesa .es-cos-shell */
+#es-cd,
+#es-vd,
+.es-coach-root,
+.es-vice-root {
+  display: block !important;
+  grid-template-columns: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  background: transparent !important;
 }
 
 #es-staff-profile,
@@ -959,10 +971,8 @@ body.es-tifoso-on #user-dossier-view-group {
   .es-pd,
   .es-pd:has(.es-pd-rail),
   #es-pd,
-  #es-cd,
   #es-dsd,
   #es-prd,
-  #es-vd,
   #es-fd,
   #es-mad,
   #es-md,

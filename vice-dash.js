@@ -1282,9 +1282,9 @@
     if (!mount) {
       mount = document.createElement('div');
       mount.id = 'es-vd';
-      mount.className = 'es-pd';
       sh.insertBefore(mount, sh.firstChild);
     }
+    mount.className = 'es-coach-root es-vice-root';
     mount.hidden = false;
     mount.removeAttribute('hidden');
     mount.style.display = 'block';
@@ -5312,13 +5312,13 @@
   };
 
   window.addEventListener('hashchange', function () {
-    if (window.location.hash.indexOf('user-dossier') >= 0 && isCoach()) {
+    if (window.location.hash.indexOf('user-dossier') >= 0 && isVice()) {
       setTimeout(renderHub, 50);
     }
   });
 
   document.addEventListener('DOMContentLoaded', function () {
-    if (window.location.hash.indexOf('user-dossier') >= 0 && isCoach()) {
+    if (window.location.hash.indexOf('user-dossier') >= 0 && isVice()) {
       setTimeout(renderHub, 100);
     }
   });
@@ -5328,7 +5328,7 @@
     if (d && d.view === 'user-dossier') {
       try {
         var u = userObj();
-        if (isCoach(u)) renderHub(u);
+        if (isVice(u)) renderHub(u);
       } catch (_) {}
     }
   });
@@ -5337,7 +5337,7 @@
     var d = e && e.detail;
     try {
       var u = (d && d.user) || userObj();
-      if (isCoach(u)) renderHub(u);
+      if (isVice(u)) renderHub(u);
     } catch (_) {}
   });
 })();

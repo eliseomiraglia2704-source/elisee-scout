@@ -1276,9 +1276,9 @@
     if (!mount) {
       mount = document.createElement('div');
       mount.id = 'es-cd';
-      mount.className = 'es-pd';
       sh.insertBefore(mount, sh.firstChild);
     }
+    mount.className = 'es-coach-root';
     mount.hidden = false;
     mount.removeAttribute('hidden');
     mount.style.display = 'block';

@@ -3,7 +3,18 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Refactoring Universale Dashboard di Ruolo, ActionsGrid a Card & Avatar Safe (`ROLEDASHUP1`):
+Ultimo aggiornamento: **2026-09-17** — Risoluzione Schermata Nera Area Vice Allenatore (`VICEFIX1`):
+1. **Fix Definitivo Schermata Nera Area Vice Allenatore & Allenatore Capo (`dash-luxury.css`, `vice-dash.js`, `coach-dash.js`, `vice-dash.css`, `coach-dash.css`)**:
+   - **Diagnosi**: Nel foglio di stile `dash-luxury.css` le regole universali del layout a due colonne (56px 1fr per le dashboard a dock/rail) includevano erroneamente `#es-cd` e `#es-vd`, confinando la shell completa `.es-cos-shell` in soli 56px di larghezza e lasciando il restante 1fr come cella vuota a sfondo `#050608` (il rettangolo nero che copriva l'intera schermata).
+   - **Risoluzione CSS**:
+     - Rimossi definitivamente `#es-cd` e `#es-vd` da tutte le regole di `display: grid (56px 1fr)` e relative media-query in `dash-luxury.css`.
+     - Introdotta blindatura esplicita su `#es-cd, #es-vd, .es-coach-root, .es-vice-root` con `display: block !important; grid-template-columns: none !important; padding: 0 !important; width: 100% !important; background: transparent !important;`.
+   - **Risoluzione Runtime JS**:
+     - In `vice-dash.js` e `coach-dash.js` i mount container usano ora classi dedicate isolate (`.es-vice-root`, `.es-coach-root`) evitando la classe `.es-pd` per scongiurare interferenze con le dashboard generiche.
+     - Corretti i listener di mount in `vice-dash.js` (da `isCoach(u)` a `isVice(u)`) garantendo il re-render immediato e corretto al cambio di ruolo o navigazione.
+2. **File aggiornati**: `dash-luxury.css`, `vice-dash.js`, `coach-dash.js`, `vice-dash.css`, `coach-dash.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_VICEFIX1`.
+
+Feature precedente: **Refactoring Universale Dashboard di Ruolo, ActionsGrid a Card & Avatar Safe (`ROLEDASHUP1`):**
 1. **Refactoring Universale Tutte le Dashboard di Ruolo (`dash-real.js`, `role-actions-runtime.js`, `dash-luxury.css`, `index.html`)**:
    - **Header Profilo & Avatar Safe**:
      - Risolto definitivamente il bug del riquadro nero vuoto alto 350px: avatar circolare compatto (56px) con bordo ciano soft, ombra e fallback infallibile alle iniziali su gradiente indaco profondo (`.es-pd-ph`).

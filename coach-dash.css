@@ -99,7 +99,9 @@ body.is-vice-mode #user-dossier-portal .container.pf-page-inner,
 body.is-vice-mode #user-dossier-view-group,
 body.is-vice-mode #user-dossier-view-group .pf-page-inner,
 body.is-vice-mode #es-staff-profile,
-body.is-vice-mode #es-vd {
+body.is-vice-mode #es-vd,
+.es-coach-root,
+.es-vice-root {
   padding-top: 0 !important;
   margin-top: 0 !important;
   padding-bottom: 0 !important;
@@ -111,6 +113,8 @@ body.is-vice-mode #es-vd {
   min-height: auto !important;
   overflow: visible !important;
   max-height: none !important;
+  display: block !important;
+  grid-template-columns: none !important;
 }
 
 body.is-coach-mode .es-user-tabs,
