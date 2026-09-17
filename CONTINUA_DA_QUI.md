@@ -3,7 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Rosa/club e Card sul database (`CLUBCARD1`):
+Ultimo aggiornamento: **2026-09-18** — Spezzato `app.js` (`APPSPLIT1`):
+1. **`app-admin-panels.js`**: `renderAdminPanel` / `renderPrivacyPanel` / griglia opzioni (~2000 righe).
+2. **`app-boot-extras.js`**: unlock UI, wire Bacheca, pipeline extra (dopo la chiusura del `DOMContentLoaded` principale).
+3. **`app.js`**: resta il core (nav, login, filtri, sessioni). Helper admin esposti su `window.getActiveUser` ecc.
+4. Cache `v20260918_APPSPLIT1`.
+
+Feature precedente: **Rosa/club e Card sul database (`CLUBCARD1`):
 1. **Club Presidenza** (`elisee_pres_club_master_v3`, rosa inclusa): GET/POST `/api/manager?path=club` keyed per società. Pull all’apertura dashboard, push al salvataggio.
 2. **Rosa/formazione Allenatore-Vice** (`elisee_coach_data`): stesso schema su `path=coach`.
 3. **Card Elisee**: inbox, pubblicate e stats su `path=card`. I PNG grandi vanno su Supabase Storage (`staff-allegati/cards/…`); in KV restano URL/metadati (limite size).
