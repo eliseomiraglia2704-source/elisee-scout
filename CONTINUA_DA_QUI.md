@@ -3,11 +3,11 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Sblocco Master Secret Admin e fix simulatore ruoli (`ADMINPIN1`):
-1. **Diagnosi bug "Username staff non riconosciuto"**: Il popup modale di sblocco simulatore (`creator-role-switcher.js`) richiede solo il "Master Secret Admin" e inviava `{ pin: pinVal }` senza il campo `username`. Il backend `api/auth-admin.js` richiedeva obbligatoriamente un username valido in allowlist, rifiutando a monte la richiesta prima di verificare la password.
-2. **Backend `api/auth-admin.js`**: Default automatico di `username` a `'admin'` se omesso con PIN presente; aggiunta tolleranza su maiuscole/minuscole e varianti (`Iemmello.9`, `Iemmello9`, `iemmello.9`, `iemmello9`) con hash PBKDF2 dedicati.
+Ultimo aggiornamento: **2026-09-18** — Sblocco Master Secret Admin, fix parser body Vercel & simulatore (`ADMINPIN2`):
+1. **Risoluzione Root Cause `req.body`**: Nelle Serverless Functions di Vercel (`@vercel/node`), `req.body` è già parsato e lo stream `req.on('data')` è già concluso. `readBody` in `api/auth-admin.js` e `api/auth-otp.js` attendeva lo stream vuoto tornando `{}`, causando l'errore "Username staff non riconosciuto" e blocco del login. Aggiunto controllo prioritario su `req.body`.
+2. **Backend `api/auth-admin.js`**: Default automatico di `username` a `'admin'` se omesso con PIN presente; tolleranza totale su maiuscole/minuscole e varianti (`Iemmello.9`, `Iemmello9`, `iemmello.9`, `iemmello9`) con hash PBKDF2 dedicati.
 3. **Frontend `creator-role-switcher.js`**: Inoltro esplicito di `{ pin: pinVal, username: 'admin' }`.
-4. **File**: `api/auth-admin.js`, `creator-role-switcher.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_ADMINPIN1`.
+4. **File**: `api/auth-admin.js`, `api/auth-otp.js`, `creator-role-switcher.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_ADMINPIN2`.
 
 Feature precedente: **Blindatura OTP multi-istanza & monitoraggio sync tempo reale (`OTPSYNC1`):
 1. **Blindatura OTP (`api/auth-otp.js`)**: persistenza su Vercel KV (`elisee:otp:<email>`, TTL 600s) + rilascio e verifica di un ticket crittografico firmato stateless (`signOtpTicket` / `verifyOtpTicket` HMAC SHA-256). L'OTP non fallisce più quando le richieste `send` e `verify` cadono su istanze Vercel differenti o con storage effimero.

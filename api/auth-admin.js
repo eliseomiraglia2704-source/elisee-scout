@@ -106,6 +106,12 @@ function sendJson(res, statusCode, data) {
 }
 
 function readBody(req) {
+  if (req.body) {
+    if (typeof req.body === 'string') {
+      try { return Promise.resolve(JSON.parse(req.body)); } catch (_) { return Promise.resolve({}); }
+    }
+    return Promise.resolve(req.body);
+  }
   return new Promise((resolve) => {
     let raw = '';
     req.on('data', (c) => { 
