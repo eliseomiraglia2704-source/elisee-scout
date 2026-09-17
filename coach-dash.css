@@ -79,13 +79,27 @@ body.is-vice-mode #site-public-footer,
 #user-dossier-portal.is-coach-dash .container.pf-page-inner,
 .pf-page-inner.is-coach-inner,
 .container.pf-page-inner.is-coach-inner,
+.pf-page-inner.is-vice-inner,
+.container.pf-page-inner.is-vice-inner,
+#user-dossier-view-group.is-vice-dash,
+#user-dossier-view-group.is-vice-dash #user-dossier-portal,
+#user-dossier-view-group.is-vice-dash .pf-page-inner,
+#user-dossier-portal.is-vice-dash,
+#user-dossier-portal.is-vice-dash .pf-page-inner,
 body.is-coach-mode #user-dossier-portal,
 body.is-coach-mode #user-dossier-portal .pf-page-inner,
 body.is-coach-mode #user-dossier-portal .container.pf-page-inner,
 body.is-coach-mode #user-dossier-view-group,
 body.is-coach-mode #user-dossier-view-group .pf-page-inner,
 body.is-coach-mode #es-staff-profile,
-body.is-coach-mode #es-cd {
+body.is-coach-mode #es-cd,
+body.is-vice-mode #user-dossier-portal,
+body.is-vice-mode #user-dossier-portal .pf-page-inner,
+body.is-vice-mode #user-dossier-portal .container.pf-page-inner,
+body.is-vice-mode #user-dossier-view-group,
+body.is-vice-mode #user-dossier-view-group .pf-page-inner,
+body.is-vice-mode #es-staff-profile,
+body.is-vice-mode #es-vd {
   padding-top: 0 !important;
   margin-top: 0 !important;
   padding-bottom: 0 !important;
@@ -99,7 +113,8 @@ body.is-coach-mode #es-cd {
   max-height: none !important;
 }
 
-body.is-coach-mode .es-user-tabs { display: none !important; }
+body.is-coach-mode .es-user-tabs,
+body.is-vice-mode .es-user-tabs { display: none !important; }
 
 #es-staff-profile.es-cd-on > :not(#es-cd),
 #es-staff-profile.es-vice-on > :not(#es-vd) { display: none !important; }

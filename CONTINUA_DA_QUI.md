@@ -3,15 +3,21 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-16** — Integrazione Logo Ufficiale Foggia City 1000345699.png & Redesign Badge Wrapped (`FGCLOGO2`):
-1. **Logo Ufficiale Circolare Foggia City 2026 FC**:
-   - Sostituito l'esagono segnaposto con sigla testuale `FGC` nell'header dell'Area Staff Tecnico (`coach-dash.js`) con il vero logo ufficiale circolare del Foggia City (`1000345699.png`).
-   - Aggiunta in `coach-dash.css` la classe `.es-cos-crest--img` con forma perfettamente circolare (`border-radius: 50%`, `clip-path: none`), eliminando il taglio poligonale per i loghi tondi e aggiungendo glow azzurro e ombra tridimensionale.
-   - Sincronizzato `1000345699.png` in `immagini/squadre-loghi/` e `archivio-loghi/squadre/` (anche come alias `foggia-city.png`).
-2. **Redesign Pulsante "Test Season Wrapped" nel Simulatore Ruoli**:
-   - In `creator-role-switcher.js` e `creator-role-switcher.css`: rimossa l'emoji `🎬` e il gradiente viola-blu stile videogioco.
-   - Inserita icona SVG Lucide monocromatica `sparkles` a stroke sottile (1.8px) color ciano, con sfondo scuro neutro sobrio (`rgba(15, 23, 42, 0.78)`), bordo sottile 1px e padding orizzontale compatto e defilato rispetto alle card ruolo.
-3. **File aggiornati**: `coach-dash.js`, `coach-dash.css`, `creator-role-switcher.js`, `creator-role-switcher.css`, `immagini/squadre-loghi/1000345699.png`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_FGCLOGO2`.
+Ultimo aggiornamento: **2026-09-17** — Allineamento Speculare Area Vice Allenatore & Zero Dati Fittizi (`VICEMIRROR1`):
+1. **Area Vice Allenatore Gemella all'Area Allenatore (`vice-dash.js`, `vice-dash.css`)**:
+   - Resa l'interfaccia, la shell con sidebar a sinistra e tutte le funzioni del Vice Allenatore identiche all'Area Allenatore:
+     - Sidebar con le 11 macroaree (Dashboard, Rosa, Formazione, Tattica, Allenamenti, Calendario, Analisi Avversario, GPS / Carichi, Report Staff, Comunicazioni, Impostazioni Tecniche).
+     - Header con logo circolare ufficiale Foggia City (`1000345699.png`), patentino circolare UEFA B, ruolo `Allenatore in seconda / Vice Allenatore` e pulsante di salto speculare `Area Allenatore Capo &rarr;`.
+     - Fascia inferiore con Prossima Partita (con countdown reale!), Seduta Odierna reale.
+     - Lavagna tattica interattiva completa (spostamento pedine, frecce corsa/passaggio, zone tattiche, export JSON e salvataggio schemi condivisi nello staff).
+     - Dossier scout con card unica e layout 60/40, selettore partite reali, dropzone video/report e modale con assistente IA.
+2. **Zero Mock e Dati Inventati — 100% Dati Reali Programmati**:
+   - Rimossi definitivamente tutti gli eventi e avversari fittizi hardcoded (`Cerignola Nord`, `Manfredonia`, `San Severo`, `Rifinitura 10:00 - 11:30`, ecc.) sia da `coach-dash.js` sia da `vice-dash.js`.
+   - Introdotta la funzione unificata `syncRealEventsAndMatches()`: la prossima gara, il countdown e la seduta odierna vengono calcolati dinamicamente a partire esclusivamente dagli eventi reali programmati nel calendario (`calendarioEvents`).
+   - Se non ci sono gare o sedute programmate, l'interfaccia mostra stati puliti e professionali ("Nessuna gara in programma", "In attesa di calendario ufficiale", "Nessuna seduta programmata per oggi") senza inventare dati.
+3. **File aggiornati**: `coach-dash.js`, `coach-dash.css`, `vice-dash.js`, `vice-dash.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260917_VICEMIRROR1`.
+
+Feature precedente: **Integrazione Logo Ufficiale Foggia City 1000345699.png & Redesign Badge Wrapped (`FGCLOGO2`):**
 
 Feature precedente: **Creazione e Memorizzazione Cartella Archivio Loghi (`ARCHIVIOLOGHI1`):**
 

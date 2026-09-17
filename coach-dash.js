@@ -1025,6 +1025,102 @@
     saveCoachData(data);
   }
 
+  function syncRealEventsAndMatches(data) {
+    if (!data) return;
+    var events = Array.isArray(data.calendarioEvents) ? data.calendarioEvents : [];
+    var now = new Date();
+    var todayIso = now.toISOString().slice(0, 10);
+
+    // 1. Estrazione e calcolo partite reali
+    var matches = events.filter(function (e) {
+      return e.tipo === 'partita' || e.tipo === 'amichevole';
+    }).map(function (e) {
+      var p = parseEventDateHelper(e.data, e.ora);
+      var timeFormatted = (p.timeStr && p.timeStr.length === 5) ? p.timeStr : '15:30';
+      var matchDate = new Date(p.isoDate + 'T' + timeFormatted + ':00');
+      return {
+        id: e.id,
+        avversario: e.avversario || e.titolo || 'Avversario da definire',
+        data: p.dayStr + '/' + (p.monthKey ? p.monthKey.slice(5) : '09') + '/' + (p.monthKey ? p.monthKey.slice(0, 4) : '2026'),
+        isoDate: p.isoDate,
+        ora: timeFormatted,
+        luogo: e.luogo || 'Campo da definire',
+        competizione: e.competizione || 'Campionato',
+        descrizione: e.descrizione || '',
+        stato: e.stato || 'Programmata',
+        matchDate: matchDate,
+        diffMs: matchDate.getTime() - now.getTime()
+      };
+    });
+
+    // Ordina cronologicamente
+    matches.sort(function (a, b) {
+      return a.matchDate.getTime() - b.matchDate.getTime();
+    });
+
+    // Filtra per le partite future (o in corso oggi fino a 3 ore dopo l'inizio)
+    var futureMatches = matches.filter(function (m) {
+      return m.diffMs > -1000 * 60 * 180;
+    });
+
+    if (futureMatches.length > 0) {
+      var next = futureMatches[0];
+      var targetIso = next.isoDate + 'T' + next.ora + ':00';
+      var cd = getCountdownValues(targetIso);
+      data.nextMatch = {
+        id: next.id,
+        avversario: next.avversario,
+        data: next.data,
+        orario: next.ora,
+        luogo: next.luogo,
+        competizione: next.competizione,
+        giorniMancanti: cd.days,
+        oreMancanti: cd.hours,
+        minutiMancanti: cd.mins,
+        targetIso: targetIso
+      };
+
+      data.prossimeGare = futureMatches.slice(1).map(function (m) {
+        return {
+          id: m.id,
+          avv: m.avversario,
+          data: m.data,
+          comp: m.competizione,
+          stadio: m.luogo,
+          status: m.stato
+        };
+      });
+    } else {
+      data.nextMatch = null;
+      data.prossimeGare = [];
+    }
+
+    // 2. Calcolo Seduta Odierna Reale
+    var todayTraining = events.find(function (e) {
+      if (e.tipo !== 'allenamento') return false;
+      var p = parseEventDateHelper(e.data, e.ora);
+      return p.isoDate === todayIso;
+    });
+
+    if (!todayTraining && Array.isArray(data.trainingsList)) {
+      todayTraining = data.trainingsList.find(function (tr) {
+        var p = parseEventDateHelper(tr.data, tr.orario);
+        return p.isoDate === todayIso;
+      });
+    }
+
+    if (todayTraining) {
+      data.sedutaOdierna = {
+        id: todayTraining.id,
+        tipo: todayTraining.titolo || todayTraining.tipo || 'Seduta di Allenamento',
+        orario: todayTraining.ora || todayTraining.orario || '15:00',
+        stato: todayTraining.stato || 'Programmata'
+      };
+    } else {
+      data.sedutaOdierna = null;
+    }
+  }
+
   function getCoachData() {
     var u = userObj();
     var base = {
@@ -1042,28 +1138,9 @@
       telefono: u.telefono || '+39 340 1234567',
       logoUrl: 'immagini/squadre-loghi/foggia-city.png',
 
-      nextMatch: {
-        id: 'next-cerignola',
-        avversario: 'Cerignola Nord',
-        data: '18/09/2026',
-        orario: '15:30',
-        luogo: 'Campo Comunale Cerignola',
-        competizione: 'Campionato Foggia',
-        giorniMancanti: 2,
-        oreMancanti: 15,
-        minutiMancanti: 24
-      },
-      sedutaOdierna: {
-        id: null,
-        tipo: 'In attesa...',
-        orario: '--',
-        stato: '--'
-      },
-      prossimeGare: [
-        { id: 'm-cerignola', avv: 'Cerignola Nord', data: '18/09/2026', comp: 'Campionato', stadio: 'Cerignola', status: 'Da preparare' },
-        { id: 'm-manfredonia', avv: 'Manfredonia Calcio', data: '25/09/2026', comp: 'Campionato', stadio: 'Foggia', status: 'Programmata' },
-        { id: 'm-san-severo', avv: 'San Severo Team', data: '02/10/2026', comp: 'Coppa', stadio: 'San Severo', status: 'Programmata' }
-      ],
+      nextMatch: null,
+      sedutaOdierna: null,
+      prossimeGare: [],
       ultimaSessione: {
         id: null,
         tipo: 'In attesa...',
@@ -1100,17 +1177,8 @@
       prepPartita: { pct: 0, foot: 'In attesa' },
       reports: [],
       unreadCount: 0,
-      analisiAvversario: {
-        nome: 'Cerignola Nord',
-        campionato: 'Campionato Foggia',
-        modulo: '4-4-2',
-        puntiForza: 'Transizioni rapide sulle corsie laterali e pericolosità sui calci da fermo.',
-        puntiDeboli: 'Spazi concessi dietro i terzini quando salgono in pressione; fatica nel disimpegno sotto pressing.',
-        giocatoriChiave: 'Numero 9 (punta strutturata) e numero 10 (regista basso).',
-        palleInattive: 'Corner a rientrare sul primo palo con blocchi su difensore centrale.',
-        videoReport: 'Nessun video report caricato.'
-      },
-      selectedDossierMatchId: 'm-cerignola',
+      analisiAvversario: null,
+      selectedDossierMatchId: null,
       dossierByMatch: {},
       tacticalBoard: {
         modulo: '4-3-3',
@@ -1124,9 +1192,40 @@
       calendarioEvents: []
     };
 
+    function purgeMockCoachData(s) {
+      if (!s || typeof s !== 'object') return;
+      if (s.selectedDossierMatchId === 'm-cerignola' || s.selectedDossierMatchId === 'next-cerignola') {
+        delete s.selectedDossierMatchId;
+      }
+      if (Array.isArray(s.calendarioEvents)) {
+        s.calendarioEvents = s.calendarioEvents.filter(function (e) {
+          var id = String(e.id || '');
+          var tit = String(e.titolo || '');
+          var avv = String(e.avversario || '');
+          if (/^ev-[1-6]$/.test(id)) return false;
+          if (/cerignola nord/i.test(tit) || /cerignola nord/i.test(avv)) return false;
+          if (/manfredonia calcio/i.test(tit) || /manfredonia calcio/i.test(avv)) return false;
+          if (/san severo team/i.test(tit) || /san severo team/i.test(avv)) return false;
+          return true;
+        });
+      }
+      if (s.nextMatch && (s.nextMatch.id === 'next-cerignola' || /cerignola nord/i.test(s.nextMatch.avversario || ''))) {
+        delete s.nextMatch;
+      }
+      if (Array.isArray(s.prossimeGare)) {
+        s.prossimeGare = s.prossimeGare.filter(function (g) {
+          return !/cerignola|manfredonia|san severo/i.test(g.avv || '');
+        });
+      }
+      if (s.analisiAvversario && /cerignola nord/i.test(s.analisiAvversario.nome || '')) {
+        delete s.analisiAvversario;
+      }
+    }
+
     try {
       var saved = JSON.parse(localStorage.getItem('elisee_coach_data') || '{}');
       if (saved && typeof saved === 'object') {
+        purgeMockCoachData(saved);
         if (saved.moduloPrincipale) base.moduloPrincipale = saved.moduloPrincipale;
         if (Array.isArray(saved.top11) && saved.top11.length === 11) base.top11 = saved.top11;
         if (Array.isArray(saved.panchina)) base.panchina = saved.panchina;
@@ -1143,11 +1242,13 @@
       var merged = Object.assign({}, base, _coachLiveData);
       syncFormationWithRoster(merged);
       syncTacticalBoard(merged);
+      syncRealEventsAndMatches(merged);
       return merged;
     }
 
     syncFormationWithRoster(base);
     syncTacticalBoard(base);
+    syncRealEventsAndMatches(base);
     return base;
   }
 
@@ -1263,38 +1364,61 @@
               '</button>' +
             '</div>' +
 
-            // Fascia Inferiore: Prossima Partita + Countdown + Seduta
+            // Fascia Inferiore: Prossima Partita + Countdown + Seduta (100% Dati Reali Programmati)
             '<div class="es-cos-header-match-row">' +
-              '<div class="es-cos-match-target">' +
-                '<p class="label">Prossima Partita</p>' +
-                '<p class="when" id="match-when">' + esc(data.nextMatch.data) + ' - ' + esc(data.nextMatch.orario) + '</p>' +
-                '<div class="opp">' +
-                  '<div class="crest crest--sm es-cos-crest--sm">CRG</div>' +
+              (data.nextMatch && data.nextMatch.avversario ? (
+                '<div class="es-cos-match-target">' +
+                  '<p class="label">Prossima Partita</p>' +
+                  '<p class="when" id="match-when">' + esc(data.nextMatch.data) + ' - ' + esc(data.nextMatch.orario) + '</p>' +
+                  '<div class="opp">' +
+                    '<div class="crest crest--sm es-cos-crest--sm">' + esc((data.nextMatch.avversario || 'AVV').slice(0, 3).toUpperCase()) + '</div>' +
+                    '<div>' +
+                      '<strong id="match-opp">' + esc(data.nextMatch.avversario) + '</strong>' +
+                      '<span id="match-comp">' + esc(data.nextMatch.competizione || data.categoria) + '</span>' +
+                      '<span id="match-venue">' + esc(data.nextMatch.luogo) + '</span>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>' +
+                '<div class="es-cos-countdown">' +
                   '<div>' +
-                    '<strong id="match-opp">' + esc(data.nextMatch.avversario) + '</strong>' +
-                    '<span id="match-comp">' + esc(data.categoria) + '</span>' +
-                    '<span id="match-venue">' + esc(data.nextMatch.luogo) + '</span>' +
+                    '<p class="label">Mancano</p>' +
+                    '<div class="es-cos-countdown-nums" id="countdown-nums">' +
+                      '<div><strong id="cd-days">' + String(data.nextMatch.giorniMancanti != null ? data.nextMatch.giorniMancanti : 0).padStart(2, '0') + '</strong><span>Giorni</span></div>' +
+                      '<div><strong id="cd-hours">' + String(data.nextMatch.oreMancanti != null ? data.nextMatch.oreMancanti : 0).padStart(2, '0') + '</strong><span>Ore</span></div>' +
+                      '<div><strong id="cd-mins">' + String(data.nextMatch.minutiMancanti != null ? data.nextMatch.minutiMancanti : 0).padStart(2, '0') + '</strong><span>Min</span></div>' +
+                    '</div>' +
+                  '</div>' +
+                '</div>'
+              ) : (
+                '<div class="es-cos-match-target is-empty">' +
+                  '<p class="label">Prossima Partita</p>' +
+                  '<p class="when" id="match-when" style="color:#64748b;">Nessuna gara in programma</p>' +
+                  '<div class="opp" style="opacity:0.75;">' +
+                    '<div class="crest crest--sm es-cos-crest--sm" style="opacity:0.4;">--</div>' +
+                    '<div>' +
+                      '<strong id="match-opp" style="color:#94a3b8; font-weight:600;">In attesa di calendario ufficiale</strong>' +
+                      '<span id="match-comp" style="color:#64748b; font-size:0.75rem;">Programma una gara nella sezione Calendario</span>' +
+                    '</div>' +
                   '</div>' +
                 '</div>' +
-              '</div>' +
-
-              '<div class="es-cos-countdown">' +
-                '<div>' +
-                  '<p class="label">Mancano</p>' +
-                  '<div class="es-cos-countdown-nums" id="countdown-nums">' +
-                    '<div><strong id="cd-days">02</strong><span>Giorni</span></div>' +
-                    '<div><strong id="cd-hours">15</strong><span>Ore</span></div>' +
-                    '<div><strong id="cd-mins">24</strong><span>Min</span></div>' +
+                '<div class="es-cos-countdown is-empty">' +
+                  '<div>' +
+                    '<p class="label">Countdown Gara</p>' +
+                    '<div class="es-cos-countdown-nums" style="opacity:0.4;">' +
+                      '<div><strong id="cd-days">--</strong><span>Giorni</span></div>' +
+                      '<div><strong id="cd-hours">--</strong><span>Ore</span></div>' +
+                      '<div><strong id="cd-mins">--</strong><span>Min</span></div>' +
+                    '</div>' +
                   '</div>' +
-                '</div>' +
-              '</div>' +
+                '</div>'
+              )) +
 
-              '<div class="es-cos-session-pill">' +
+              '<div class="es-cos-session-pill ' + (data.sedutaOdierna && data.sedutaOdierna.tipo ? 'has-session' : 'no-session') + '">' +
                 '<div class="session-head">' +
-                  '<span class="session-dot"></span>' +
+                  '<span class="session-dot" style="' + (data.sedutaOdierna && data.sedutaOdierna.tipo ? '' : 'background:#64748b; box-shadow:none;') + '"></span>' +
                   '<strong>Seduta odierna</strong>' +
                 '</div>' +
-                '<span id="today-session">Rifinitura · 10:00 - 11:30</span>' +
+                '<span id="today-session">' + (data.sedutaOdierna && data.sedutaOdierna.tipo ? (esc(data.sedutaOdierna.tipo) + ' · ' + esc(data.sedutaOdierna.orario || 'Orario da definire')) : 'Nessuna seduta programmata per oggi') + '</span>' +
               '</div>' +
             '</div>' +
           '</div>' +
@@ -2581,132 +2705,11 @@
   }
 
   function getInitCalendarEvents(data) {
-    if (Array.isArray(data.calendarioEvents) && data.calendarioEvents.length > 0) {
+    if (Array.isArray(data.calendarioEvents)) {
       return data.calendarioEvents;
     }
-
-    var baseEvents = [];
-    var clubName = data.clubName || 'Foggia City';
-
-    // 1. Partite note
-    if (Array.isArray(data.prossimeGare) && data.prossimeGare.length > 0) {
-      data.prossimeGare.forEach(function (g, idx) {
-        var parsed = parseEventDateHelper(g.data, '15:30');
-        baseEvents.push({
-          id: g.id || ('ev-match-' + idx),
-          tipo: 'partita',
-          titolo: clubName + ' vs ' + (g.avv || 'Avversario'),
-          avversario: g.avv || '',
-          data: parsed.isoDate,
-          ora: parsed.timeStr,
-          competizione: g.comp || 'Campionato',
-          luogo: g.stadio || 'Campo Comunale',
-          descrizione: 'Gara Ufficiale di ' + (g.comp || 'Campionato') + ' · Consegne tattiche anticipate.',
-          stato: g.status || (idx === 0 ? 'Da preparare' : 'Programmata')
-        });
-      });
-    }
-
-    // 2. Allenamenti noti
-    if (Array.isArray(data.trainingsList) && data.trainingsList.length > 0) {
-      data.trainingsList.forEach(function (tr, idx) {
-        var parsed = parseEventDateHelper(tr.data, tr.orario);
-        baseEvents.push({
-          id: tr.id || ('ev-tr-' + idx),
-          tipo: 'allenamento',
-          titolo: tr.tipo || 'Seduta di Campo',
-          avversario: '',
-          data: parsed.isoDate,
-          ora: parsed.timeStr,
-          competizione: 'Seduta Campo',
-          luogo: tr.luogo || 'Centro Sportivo',
-          descrizione: tr.desc || 'Seduta di preparazione tattica e carichi atletici.',
-          stato: 'Programmata'
-        });
-      });
-    }
-
-    // Fallback completo se nessun evento era pre-esistente
-    if (baseEvents.length === 0) {
-      baseEvents = [
-        {
-          id: 'ev-1',
-          tipo: 'partita',
-          titolo: clubName + ' vs Cerignola Nord',
-          avversario: 'Cerignola Nord',
-          data: '2026-09-18',
-          ora: '15:30',
-          competizione: 'Campionato',
-          luogo: 'Cerignola (Campo Comunale)',
-          descrizione: '1ª Giornata di Campionato · Consegne tattiche anticipate dal Mister.',
-          stato: 'Da preparare'
-        },
-        {
-          id: 'ev-2',
-          tipo: 'allenamento',
-          titolo: 'Seduta Tattica: Sviluppo Catene & Palle Inattive',
-          avversario: '',
-          data: '2026-09-21',
-          ora: '10:00',
-          competizione: 'Seduta Campo',
-          luogo: 'Centro Sportivo Foggia City - Campo 1',
-          descrizione: 'Lavoro per reparti, rifinitura palle inattive e monitoraggio GPS.',
-          stato: 'Programmata'
-        },
-        {
-          id: 'ev-3',
-          tipo: 'allenamento',
-          titolo: 'Rifinitura Pre-Gara & Velocità di Reazione',
-          avversario: '',
-          data: '2026-09-24',
-          ora: '15:00',
-          competizione: 'Rifinitura Tattica',
-          luogo: 'Centro Sportivo Foggia City - Campo 1',
-          descrizione: 'Attivazione neuromuscolare, torello rapido e 11 contro 11 a tema.',
-          stato: 'Programmata'
-        },
-        {
-          id: 'ev-4',
-          tipo: 'partita',
-          titolo: clubName + ' vs Manfredonia Calcio',
-          avversario: 'Manfredonia Calcio',
-          data: '2026-09-25',
-          ora: '15:30',
-          competizione: 'Campionato',
-          luogo: 'Stadio Pino Zaccheria (Foggia)',
-          descrizione: '2ª Giornata di Campionato · Gara casalinga.',
-          stato: 'Programmata'
-        },
-        {
-          id: 'ev-5',
-          tipo: 'partita',
-          titolo: clubName + ' vs San Severo Team',
-          avversario: 'San Severo Team',
-          data: '2026-10-02',
-          ora: '20:30',
-          competizione: 'Coppa Italia',
-          luogo: 'Stadio Ricciardelli (San Severo)',
-          descrizione: 'Turno eliminatorio di Coppa Italia in notturna.',
-          stato: 'Programmata'
-        },
-        {
-          id: 'ev-6',
-          tipo: 'allenamento',
-          titolo: 'Scarico Muscolare, Terapia & Analisi Video',
-          avversario: '',
-          data: '2026-10-05',
-          ora: '10:30',
-          competizione: 'Palestra & Video',
-          luogo: 'Centro Sportivo Foggia City - Palestra & GPS',
-          descrizione: 'Riatletizzazione post-partita e debriefing con Match Analyst.',
-          stato: 'Programmata'
-        }
-      ];
-    }
-
-    data.calendarioEvents = baseEvents;
-    saveCoachData(data);
-    return baseEvents;
+    data.calendarioEvents = [];
+    return data.calendarioEvents;
   }
 
   function renderCalendario(data) {
@@ -3107,13 +3110,6 @@
         data: data.nextMatch.data,
         isNext: true
       });
-    } else {
-      matchesList.push({
-        id: 'next-cerignola',
-        avversario: 'Cerignola Nord',
-        data: '18/09/2026',
-        isNext: true
-      });
     }
 
     if (Array.isArray(data.prossimeGare)) {
@@ -3127,6 +3123,24 @@
           });
         }
       });
+    }
+
+    if (matchesList.length === 0) {
+      return (
+        '<div class="es-cos-panel-card" style="padding:3.5rem 1.5rem; text-align:center; background:#071522; border:1px solid #12344a; border-radius:10px;">' +
+          '<div style="width:56px; height:56px; border-radius:50%; background:rgba(56,189,248,0.1); border:1.5px solid rgba(56,189,248,0.3); display:inline-flex; align-items:center; justify-content:center; color:#38bdf8; margin-bottom:1rem;">' +
+            '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
+          '</div>' +
+          '<h3 style="font-size:1.25rem; font-weight:800; color:#f3f8fc; margin-bottom:0.5rem;">Nessuna gara in programma da analizzare</h3>' +
+          '<p style="font-size:0.85rem; color:#8da8bc; max-width:480px; margin:0 auto 1.5rem auto; line-height:1.5;">' +
+            'Il dossier tattico si attiva automaticamente programmando le partite nel Calendario reale del club.' +
+          '</p>' +
+          '<button type="button" class="es-btn-cos-primary" data-tab-nav="calendario" style="display:inline-flex; align-items:center; gap:6px; font-size:0.85rem; padding:0.6rem 1.25rem;">' +
+            '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
+            '<span>Vai al Calendario &rarr;</span>' +
+          '</button>' +
+        '</div>'
+      );
     }
 
     if (!data.selectedDossierMatchId) {
@@ -4452,14 +4466,16 @@
     mount.querySelectorAll('[data-edit-dossier-field]').forEach(function (card) {
       card.onclick = function () {
         var field = card.getAttribute('data-edit-dossier-field');
-        openDossierEditModal(data, data.selectedDossierMatchId || 'next-cerignola', field);
+        var mId = data.selectedDossierMatchId || (data.nextMatch && data.nextMatch.id) || 'match-current';
+        openDossierEditModal(data, mId, field);
       };
     });
 
     var btnEditAllDossier = mount.querySelector('#btn-edit-all-dossier');
     if (btnEditAllDossier) {
       btnEditAllDossier.onclick = function () {
-        openDossierEditModal(data, data.selectedDossierMatchId || 'next-cerignola', null);
+        var mId = data.selectedDossierMatchId || (data.nextMatch && data.nextMatch.id) || 'match-current';
+        openDossierEditModal(data, mId, null);
       };
     }
 
