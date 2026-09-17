@@ -48,6 +48,9 @@
   var clubCache = null;
   var composerTags = [];
   var composerType = 'article';
+  var activeTab = 'dashboard';
+  var CLUB_CREST = 'immagini/squadre-loghi/1000345699.png?v=20260916_FGCLOGO2';
+  var CLUB_CREST_FALLBACK = 'immagini/squadre-loghi/foggia-city.png';
 
   function esc(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -243,10 +246,103 @@
     }).join('');
   }
 
+  function crestImg(club, cls) {
+    return '<img' + (cls ? ' class="' + cls + '"' : '') + ' src="' + CLUB_CREST + '" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'' + CLUB_CREST_FALLBACK + '\';">';
+  }
+
+  function renderProSideBtn(key, label, svgPath) {
+    return '<button type="button" class="es-pro-side-btn' + (activeTab === key ? ' is-active' : '') + '" data-gd-nav="' + key + '">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke-width="2">' + svgPath + '</svg>' +
+      '<span>' + label + '</span></button>';
+  }
+
+  function renderProNavTab(key, label, svgPath) {
+    return '<button type="button" class="es-pro-tab-btn' + (activeTab === key ? ' is-active' : '') + '" data-gd-nav="' + key + '">' +
+      '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' + svgPath + '</svg>' +
+      '<span>' + label + '</span></button>';
+  }
+
+  function wrapGiornProShell(user, inner) {
+    var name = giornName(user);
+    var club = String(user.squadra || user.club || user.pressOutlet || 'Foggia City').trim() || 'Foggia City';
+    var verified = isPressVerified(user);
+    var licence = verified ? 'Stampa / Giornalista Verificato' : 'Stampa / Giornalista';
+    var icoDash = '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>';
+    var icoEdit = '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>';
+    var icoRas = '<rect x="3" y="4" width="18" height="16" rx="2"/><line x1="7" y1="8" x2="17" y2="8"/><line x1="7" y1="12" x2="13" y2="12"/>';
+    var icoFeed = '<path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/>';
+    var icoCoda = '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>';
+    var icoProf = '<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>';
+    return '<div class="es-pro-shell" data-pro-tab="' + esc(activeTab) + '">' +
+      '<aside class="es-pro-sidebar" id="es-gd-sidebar">' +
+        '<div class="es-pro-brand-header">' +
+          '<div class="es-pro-brand-title">ELISEE <span>SCOUT</span></div>' +
+          '<div class="es-pro-brand-sub">Area Giornalista / Content Creator</div>' +
+        '</div>' +
+        '<nav class="es-pro-sidebar-nav">' +
+          renderProSideBtn('dashboard', 'Dashboard', icoDash) +
+          renderProSideBtn('redazione', 'Redazione', icoEdit) +
+          renderProSideBtn('rassegna', 'Rassegna', icoRas) +
+          renderProSideBtn('feed', 'Feed', icoFeed) +
+          renderProSideBtn('coda', 'Coda', icoCoda) +
+          renderProSideBtn('profilo', 'Profilo', icoProf) +
+        '</nav>' +
+        '<div class="es-pro-sidebar-badge">' +
+          '<div class="es-pro-sidebar-club-card">' +
+            crestImg(club) +
+            '<div><strong>' + esc(club) + '</strong><span>Redazione</span></div>' +
+          '</div>' +
+        '</div>' +
+      '</aside>' +
+      '<main class="es-pro-main">' +
+        '<div class="es-pro-dash-header">' +
+          '<div class="es-pro-header-top-row">' +
+            '<button type="button" class="es-pro-mobile-menu-btn" id="btn-toggle-gd-sidebar" aria-label="Menu">' +
+              '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>' +
+            '</button>' +
+            '<div class="es-pro-header-identity">' +
+              '<div class="es-pro-header-block">' +
+                '<div class="es-pro-licence-badge" title="' + esc(licence) + '">' +
+                  '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' +
+                '</div>' +
+                '<div class="es-pro-coach-info">' +
+                  '<strong>' + esc(name) + '</strong>' +
+                  '<span class="role">' + esc(licence) + '</span>' +
+                  '<p class="sub">Area Giornalista / Content Creator' + (verified ? ' · Badge verificato' : '') + '</p>' +
+                '</div>' +
+              '</div>' +
+              '<div class="es-pro-header-sep"></div>' +
+              '<div class="es-pro-header-block es-pro-club-info">' +
+                crestImg(club, 'crest') +
+                '<div><strong>' + esc(club) + '</strong><span>' + (verified ? 'Badge stampa attivo' : 'Verifica stampa in corso') + '</span></div>' +
+              '</div>' +
+            '</div>' +
+            '<button type="button" class="es-pro-btn-quick-jump" data-gd-nav="redazione">Nuovo Articolo</button>' +
+          '</div>' +
+          '<div class="es-pro-header-match-row">' +
+            '<div class="es-pro-target-box"><p class="label">Licenza</p><strong>' + esc(licence) + '</strong><span>' + (verified ? 'Pubblicazione abilitata' : 'In attesa di verifica') + '</span></div>' +
+            '<div class="es-pro-target-box"><p class="label">Coda redazionale</p><strong style="color:#38bdf8;">Contenuti in attesa</strong><span>Approvazione staff prima del feed</span></div>' +
+            '<div class="es-pro-target-box"><p class="label">Focus</p><strong style="color:#38bdf8;">Copertura territoriale</strong><span>Città, provincia, regione, nazionale</span></div>' +
+          '</div>' +
+        '</div>' +
+        '<nav class="es-pro-nav-tabs">' +
+          renderProNavTab('dashboard', 'Dashboard', icoDash) +
+          renderProNavTab('redazione', 'Redazione', icoEdit) +
+          renderProNavTab('rassegna', 'Rassegna', icoRas) +
+          renderProNavTab('feed', 'Feed', icoFeed) +
+          renderProNavTab('coda', 'Coda', icoCoda) +
+          renderProNavTab('profilo', 'Profilo', icoProf) +
+        '</nav>' +
+        '<div id="es-gd-active-content">' + inner + '</div>' +
+      '</main>' +
+    '</div>';
+  }
+
   function html(user) {
     var verified = isPressVerified(user);
     var mine = loadItems().filter(function (it) { return it.authorEmail === emailOf(user); });
-    var pendingN = mine.filter(function (it) { return it.status === 'pending'; }).length;
+    var pendingMine = mine.filter(function (it) { return it.status === 'pending'; });
+    var pendingN = pendingMine.length;
     var identity = window.EliseeDashReal && window.EliseeDashReal.identityCard
       ? window.EliseeDashReal.identityCard(user, 'Giornalista / Content Creator')
       : '';
@@ -254,17 +350,7 @@
       ? window.EliseeDashReal.compliance(user)
       : '';
 
-    return '<aside class="es-pd-rail">' +
-      '<button type="button" data-gd="home" title="Home">' + ico('<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>') + '</button>' +
-      '<button type="button" class="is-on" data-gd="dash" title="Redazione">' + ico('<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>') + '</button>' +
-      '<button type="button" data-gd="feed" title="Feed Stampa">' + ico('<rect x="3" y="4" width="18" height="16" rx="2"/><line x1="7" y1="8" x2="17" y2="8"/><line x1="7" y1="12" x2="13" y2="12"/>') + '</button>' +
-      '<button type="button" data-gd="msgs" title="Messaggi">' + ico('<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>') + '</button>' +
-      '<button type="button" class="es-pd-rail-end" data-gd="edit" title="Anagrafica">' + ico('<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>') + '</button>' +
-      '</aside><div class="es-pd-body">' +
-      '<div class="es-pd-head"><h1>Elisee Scout — Redazione</h1><strong>Giornalista: ' + esc(giornName(user)) + '</strong>' + pressBadge(user) + '</div>' +
-      '<div class="es-pd-grid">' +
-
-      '<div style="display:flex;flex-direction:column;gap:0.85rem">' +
+    var leftCol = '<div style="display:flex;flex-direction:column;gap:0.85rem">' +
         identity +
         '<section class="es-pd-card">' +
           '<div class="es-pd-card-header"><h2>Badge stampa</h2><span class="es-pd-source-badge">' + (verified ? 'Validato' : 'Da completare') + '</span></div>' +
@@ -274,9 +360,9 @@
           '<div class="es-pd-empty">In coda: ' + pendingN + ' · Pubblicati: ' + mine.filter(function (it) { return it.status === 'approved'; }).length + '</div>' +
         '</section>' +
         '<div id="es-pd-actions-slot"></div>' +
-      '</div>' +
+      '</div>';
 
-      '<div style="display:flex;flex-direction:column;gap:0.85rem">' +
+    var composerCol = '<div style="display:flex;flex-direction:column;gap:0.85rem">' +
         '<section class="es-pd-card">' +
           '<div class="es-pd-card-header"><h2>Nuovo contenuto</h2><span class="es-pd-source-badge">Sito</span></div>' +
           '<div class="es-gd-tabs">' +
@@ -307,9 +393,9 @@
           '<button type="button" class="es-gd-ghost" id="es-gd-draft">Salva bozza</button>' +
           (verified ? '' : '<p class="es-pd-empty">La pubblicazione è bloccata finché lo staff non convalida il badge stampa.</p>') +
         '</section>' +
-      '</div>' +
+      '</div>';
 
-      '<div style="display:flex;flex-direction:column;gap:0.85rem">' +
+    var rightCol = '<div style="display:flex;flex-direction:column;gap:0.85rem">' +
         '<section class="es-pd-card es-pd-comply">' +
           '<div class="es-pd-card-header"><h2>Verifica &amp; compliance</h2>' +
           '<span class="es-pd-source-badge">' + (String(user.badgeVerificaStato || '') === 'approved' ? 'Validato' : 'Da completare') + '</span></div>' +
@@ -319,9 +405,25 @@
           '<div class="es-pd-card-header"><h2>I miei contenuti</h2><span class="es-pd-source-badge">' + (mine.length ? mine.length : 'Vuoto') + '</span></div>' +
           (mine.length ? mine.slice(0, 12).map(itemCard).join('') : '<div class="es-pd-empty">Nessun pezzo in redazione. Il feed pubblico si popola dopo l\'approvazione dello staff.</div>') +
         '</section>' +
-      '</div>' +
+      '</div>';
 
-      '</div></div>';
+    var inner;
+    if (activeTab === 'redazione') {
+      inner = '<div class="es-pd-body es-pro-body">' + composerCol + '</div>';
+    } else if (activeTab === 'rassegna') {
+      inner = '<div class="es-pd-body es-pro-body"><section class="es-pd-card"><div class="es-pd-card-header"><h2>Rassegna stampa</h2></div>' +
+        renderRassegnaCards(RASSEGNA_ITEMS) + '</section></div>';
+    } else if (activeTab === 'coda') {
+      inner = '<div class="es-pd-body es-pro-body"><section class="es-pd-card">' +
+        '<div class="es-pd-card-header"><h2>Coda</h2><span class="es-pd-source-badge">' + (pendingN || 'Vuoto') + '</span></div>' +
+        (pendingMine.length ? pendingMine.map(itemCard).join('') : '<div class="es-pd-empty">Nessun contenuto in attesa di approvazione.</div>') +
+        (isStaffMod(user) ? '<button type="button" class="es-gd-ghost" id="es-gd-open-mod" style="width:auto;margin-top:12px">Apri coda staff</button>' : '') +
+        '</section></div>';
+    } else {
+      inner = '<div class="es-pd-body es-pro-body"><div class="es-pd-grid">' + leftCol + rightCol + '</div></div>';
+    }
+
+    return wrapGiornProShell(user, inner);
   }
 
   function itemCard(it) {
@@ -445,6 +547,27 @@
     if (!host || host.dataset.gdBound === '1') return;
     host.dataset.gdBound = '1';
     host.addEventListener('click', function (e) {
+      var tog = e.target.closest('#btn-toggle-gd-sidebar');
+      if (tog) {
+        var sb = host.querySelector('#es-gd-sidebar') || host.querySelector('.es-pro-sidebar');
+        if (sb) sb.classList.toggle('is-open');
+        return;
+      }
+      if (e.target && e.target.id === 'es-gd-open-mod') {
+        openModeration();
+        return;
+      }
+      var nav = e.target.closest('[data-gd-nav]');
+      if (nav) {
+        var nk = nav.getAttribute('data-gd-nav');
+        if (nk === 'feed') { openFeed(); return; }
+        if (nk === 'profilo') { openEditModal(userObj()); return; }
+        if (nk === 'dashboard' || nk === 'redazione' || nk === 'rassegna' || nk === 'coda') {
+          activeTab = nk;
+          render(userObj());
+        }
+        return;
+      }
       var rail = e.target.closest('[data-gd]');
       if (rail) {
         var k = rail.getAttribute('data-gd');
@@ -452,6 +575,7 @@
         if (k === 'feed') openFeed();
         if (k === 'msgs' && window.openUserMessages) window.openUserMessages();
         if (k === 'edit') openEditModal(userObj());
+        if (k === 'dash') { activeTab = 'redazione'; render(userObj()); }
         return;
       }
       var typ = e.target.closest('[data-gd-type]');
@@ -999,10 +1123,14 @@
     }
     composerType = 'article';
     composerTags = [];
+    document.body.classList.add('is-giorn-mode');
     box.innerHTML = html(user);
     box.hidden = false;
     box.removeAttribute('hidden');
     box.style.display = 'block';
+    box.style.setProperty('display', 'block', 'important');
+    box.style.setProperty('grid-template-columns', 'none', 'important');
+    box.style.setProperty('padding-left', '0', 'important');
     host.hidden = false;
     host.removeAttribute('hidden');
     host.classList.add('es-gd-on');

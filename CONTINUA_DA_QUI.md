@@ -3,7 +3,26 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Refactoring PRO `med-dash.js`, `fisio-dash.js`, `nu-dash.js` (`MEDFISNUDASH_PRO`):
+Ultimo aggiornamento: **2026-09-17** — Conversione PRO Atleta, Giornalista, Presidente (`PRO3DASH1`):
+1. **Tre dashboard allineate al layout PRO di `gk-dash.js` / `gk-dash.css`**:
+   - Sidebar fissa 240px con brand ELISEE SCOUT, voci etichettate e card club Foggia City sticky (`1000345699.png`, onerror `foggia-city.png`).
+   - Header a due livelli + tab bar compatta. Mobile `<1024` sidebar off-canvas.
+   - **player-dash.js**: rail 56px sostituita. Tab: Dashboard, Prestazione, Obiettivi, Card, Messaggi, Anagrafica. CTA «Modifica Profilo». L2: stagione, PGB media, Focus «Crescita & Visibilità». `#es-pd` `display:block`. `body.is-player-mode`. `#es-pc-slot` e `EliseePlayerCard.mountDash` conservati.
+   - **giorn-dash.js**: rail 56px sostituita. Tab: Dashboard, Redazione, Rassegna, Feed, Coda, Profilo. Titolo area «Area Giornalista / Content Creator». Licenza «Stampa / Giornalista» + badge verificato. CTA «Nuovo Articolo». Handler `data-gd` invariati.
+   - **pres-dash.js**: chrome PRO intorno a overview e tutte le subview. Sidebar → `openSubView` (overview, stadium, club-stats, sponsors, standings, schedule, training-center, Profilo). `#es-prd` / `.es-pres-suite` forzati `display:block` senza griglia 56px.
+2. **File aggiornati**: `player-dash.js`, `player-dash.css`, `giorn-dash.js`, `giorn-dash.css`, `pres-dash.js`, `pres-dash.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260917_PRO3DASH1`.
+3. Le rail 56px `.es-pd-rail` non sono più emesse da queste tre dashboard.
+
+Feature precedente: **Conversione PRO Area Preparatore Atletico (`ATPRO1`):
+1. **Allineamento dashboard Preparatore Atletico a Preparatore Portieri**:
+   - Sidebar fissa 240px (brand ELISEE SCOUT / Area Preparatore Atletico, 8 voci, badge Foggia City sticky).
+   - Header a 2 livelli: identità UEFA/FIGC + CTA «Registra Carico GPS +»; Prossima Gara con countdown giorni/ore/min e Focus «ACWR & Prevenzione Infortuni».
+   - Tab bar compatta: Dashboard, GPS, Schede, Test, Badge, Radar, Canale Mister.
+   - Rimossa la rail 56px `.es-pd-rail`; `#es-atd` è `display:block`; `body.is-at-mode` nasconde il footer pubblico.
+   - Fallback club Atalanta/Carlentini → Foggia City. Handler `data-at-act` invariati.
+2. **File aggiornati**: `at-dash.js`, `at-dash.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260917_ATPRO1`.
+
+Feature precedente: **Refactoring PRO `med-dash.js`, `fisio-dash.js`, `nu-dash.js` (`MEDFISNUDASH_PRO`):
 1. **Refactoring Completo Aree Medico Sociale, Fisioterapista e Nutrizionista — PRO Shell**:
    - **Richiesta Utente**: le dashboard di Medico Sociale, Fisioterapista e Nutrizionista non erano ordinate come l'Area Allenatore e Vice Allenatore.
    - **Interventi Applicati** (identici su tutti e 3 i file):

@@ -3672,6 +3672,110 @@
   // ============================================================
   // GESTIONE SUB-VIEWS & ROUTING (PUSHSTATE / POPSTATE)
 
+  var CLUB_CREST = 'immagini/squadre-loghi/1000345699.png?v=20260916_FGCLOGO2';
+  var CLUB_CREST_FALLBACK = 'immagini/squadre-loghi/foggia-city.png';
+
+  function crestImg(club, cls) {
+    return '<img' + (cls ? ' class="' + cls + '"' : '') + ' src="' + CLUB_CREST + '" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'' + CLUB_CREST_FALLBACK + '\';">';
+  }
+
+  function renderPresSideBtn(key, label, svgPath) {
+    var isActive = currentView === key;
+    return '<button type="button" class="es-pro-side-btn' + (isActive ? ' is-active' : '') + '" data-pres-nav="' + key + '">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke-width="2">' + svgPath + '</svg>' +
+      '<span>' + label + '</span></button>';
+  }
+
+  function renderPresNavTab(key, label, svgPath) {
+    var isActive = currentView === key;
+    return '<button type="button" class="es-pro-tab-btn' + (isActive ? ' is-active' : '') + '" data-pres-nav="' + key + '">' +
+      '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' + svgPath + '</svg>' +
+      '<span>' + label + '</span></button>';
+  }
+
+  function wrapPresProChrome(innerHtml, data) {
+    var user = userObj();
+    var name = getUserName(user) || 'Presidente';
+    var club = String((data && (data.clubName || data.squadra)) || user.squadra || user.club || 'Foggia City').trim() || 'Foggia City';
+    var matchStats = computeCompetitionStats((data && data.matches) || []);
+    var pendingDead = ((data && data.deadlines) || []).filter(function (d) { return !d.isCompleted; }).length;
+    var icoDash = '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>';
+    var icoStad = '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>';
+    var icoStats = '<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>';
+    var icoSpon = '<rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/>';
+    var icoStand = '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>';
+    var icoCal = '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>';
+    var icoTrain = '<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>';
+    var icoProf = '<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>';
+    var posLabel = (data && data.position && data.position !== '—') ? data.position : (matchStats.played ? (matchStats.played + ' gare') : 'Stagione');
+    return '<div class="es-pro-shell es-pres-shell" data-pro-tab="' + esc(currentView) + '">' +
+      '<aside class="es-pro-sidebar" id="es-prd-sidebar">' +
+        '<div class="es-pro-brand-header">' +
+          '<div class="es-pro-brand-title">ELISEE <span>SCOUT</span></div>' +
+          '<div class="es-pro-brand-sub">Area Presidente</div>' +
+        '</div>' +
+        '<nav class="es-pro-sidebar-nav">' +
+          renderPresSideBtn('overview', 'Dashboard', icoDash) +
+          renderPresSideBtn('stadium', 'Stadio', icoStad) +
+          renderPresSideBtn('club-stats', 'Statistiche Club', icoStats) +
+          renderPresSideBtn('sponsors', 'Sponsor', icoSpon) +
+          renderPresSideBtn('standings', 'Classifica', icoStand) +
+          renderPresSideBtn('schedule', 'Calendario', icoCal) +
+          renderPresSideBtn('training-center', 'Centro Sportivo', icoTrain) +
+          renderPresSideBtn('profilo', 'Profilo', icoProf) +
+        '</nav>' +
+        '<div class="es-pro-sidebar-badge">' +
+          '<div class="es-pro-sidebar-club-card">' +
+            crestImg(club) +
+            '<div><strong>' + esc(club) + '</strong><span>Governance club</span></div>' +
+          '</div>' +
+        '</div>' +
+      '</aside>' +
+      '<main class="es-pro-main">' +
+        '<div class="es-pro-dash-header">' +
+          '<div class="es-pro-header-top-row">' +
+            '<button type="button" class="es-pro-mobile-menu-btn" id="btn-toggle-prd-sidebar" aria-label="Menu">' +
+              '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>' +
+            '</button>' +
+            '<div class="es-pro-header-identity">' +
+              '<div class="es-pro-header-block">' +
+                '<div class="es-pro-licence-badge" title="Presidente">' +
+                  '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' +
+                '</div>' +
+                '<div class="es-pro-coach-info">' +
+                  '<strong>' + esc(name) + '</strong>' +
+                  '<span class="role">Presidente</span>' +
+                  '<p class="sub">' + esc((data && data.presRole) || 'Titolare della scheda societaria') + '</p>' +
+                '</div>' +
+              '</div>' +
+              '<div class="es-pro-header-sep"></div>' +
+              '<div class="es-pro-header-block es-pro-club-info">' +
+                crestImg(club, 'crest') +
+                '<div><strong>' + esc(club) + '</strong><span>' + esc((data && data.category) || 'Prima Squadra') + '</span></div>' +
+              '</div>' +
+            '</div>' +
+            '<button type="button" class="es-pro-btn-quick-jump" data-pres-cta="publish">Pubblica Candidatura</button>' +
+          '</div>' +
+          '<div class="es-pro-header-match-row">' +
+            '<div class="es-pro-target-box"><p class="label">Stato club</p><strong>' + esc(posLabel) + '</strong><span>' + matchStats.pts + ' punti · ' + esc((data && data.season) || '2026/27') + '</span></div>' +
+            '<div class="es-pro-target-box"><p class="label">Governance</p><strong style="color:#38bdf8;">' + pendingDead + ' scadenze aperte</strong><span>Conformità federale e adempimenti</span></div>' +
+            '<div class="es-pro-target-box"><p class="label">Focus</p><strong style="color:#38bdf8;">Rosa, stadio e mercato</strong><span>Presidenza operativa del club</span></div>' +
+          '</div>' +
+        '</div>' +
+        '<nav class="es-pro-nav-tabs">' +
+          renderPresNavTab('overview', 'Dashboard', icoDash) +
+          renderPresNavTab('stadium', 'Stadio', icoStad) +
+          renderPresNavTab('club-stats', 'Statistiche Club', icoStats) +
+          renderPresNavTab('sponsors', 'Sponsor', icoSpon) +
+          renderPresNavTab('standings', 'Classifica', icoStand) +
+          renderPresNavTab('schedule', 'Calendario', icoCal) +
+          renderPresNavTab('training-center', 'Centro Sportivo', icoTrain) +
+        '</nav>' +
+        '<div id="es-prd-active-content">' + innerHtml + '</div>' +
+      '</main>' +
+    '</div>';
+  }
+
   function openSubView(viewKey, skipHistory) {
     currentView = viewKey;
     if (!skipHistory) {
@@ -3690,13 +3794,21 @@
 
     var data = getPresClubData();
 
-    if (currentView === 'stadium') mount.innerHTML = renderStadiumScreen(data);
-    else if (currentView === 'club-stats') mount.innerHTML = renderClubStatsScreen(data);
-    else if (currentView === 'sponsors') mount.innerHTML = renderSponsorsScreen(data);
-    else if (currentView === 'standings') mount.innerHTML = renderStandingsScreen(data);
-    else if (currentView === 'schedule') mount.innerHTML = renderScheduleScreen(data);
-    else if (currentView === 'training-center') mount.innerHTML = renderTrainingCenterScreen(data);
-    else mount.innerHTML = renderPresidentialOverview(data);
+    var inner;
+    if (currentView === 'stadium') inner = renderStadiumScreen(data);
+    else if (currentView === 'club-stats') inner = renderClubStatsScreen(data);
+    else if (currentView === 'sponsors') inner = renderSponsorsScreen(data);
+    else if (currentView === 'standings') inner = renderStandingsScreen(data);
+    else if (currentView === 'schedule') inner = renderScheduleScreen(data);
+    else if (currentView === 'training-center') inner = renderTrainingCenterScreen(data);
+    else inner = renderPresidentialOverview(data);
+
+    mount.innerHTML = wrapPresProChrome(inner, data);
+    mount.style.display = 'block';
+    mount.style.setProperty('display', 'block', 'important');
+    mount.style.setProperty('grid-template-columns', 'none', 'important');
+    mount.style.setProperty('padding-left', '0', 'important');
+    document.body.classList.add('is-pres-mode');
 
     bindPresidentialEvents(mount);
   }
@@ -3707,6 +3819,24 @@
 
   function bindPresidentialEvents(mount) {
     var data = getPresClubData();
+
+    var tog = mount.querySelector('#btn-toggle-prd-sidebar');
+    var sidebar = mount.querySelector('#es-prd-sidebar') || mount.querySelector('.es-pro-sidebar');
+    if (tog && sidebar) {
+      tog.onclick = function () { sidebar.classList.toggle('is-open'); };
+    }
+
+    mount.querySelectorAll('[data-pres-nav]').forEach(function (btn) {
+      btn.onclick = function (e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        var key = btn.getAttribute('data-pres-nav');
+        if (key === 'profilo') {
+          openEditClubProfileModal(data);
+          return;
+        }
+        if (key) openSubView(key);
+      };
+    });
 
     // Tasti Indietro (go-back)
     mount.querySelectorAll('[data-action="go-back"]').forEach(function (btn) {
@@ -3839,8 +3969,7 @@
     var btnPresOrg = mount.querySelector('#btn-pres-organigramma');
     if (btnPresOrg) btnPresOrg.onclick = function () { openOrganigrammaDelegheModal(data); };
 
-    var btnPresPubJob = mount.querySelector('#btn-pres-publish-job');
-    if (btnPresPubJob) {
+    mount.querySelectorAll('#btn-pres-publish-job, [data-pres-cta="publish"]').forEach(function (btnPresPubJob) {
       btnPresPubJob.onclick = function () {
         if (typeof window.openPubblicaAnnuncioModal === 'function') {
           window.openPubblicaAnnuncioModal();
@@ -3857,7 +3986,7 @@
           }
         }
       };
-    }
+    });
 
     // Modali Card
     var cardRating = mount.querySelector('#card-pres-rating');
@@ -4530,6 +4659,7 @@
     }
 
     group.classList.add('is-pres-dash');
+    document.body.classList.add('is-pres-mode');
     var staffProfile = document.getElementById('es-staff-profile');
     if (!staffProfile) return;
 
@@ -4550,6 +4680,7 @@
   function detach() {
     var group = document.getElementById('user-dossier-view-group');
     if (group) group.classList.remove('is-pres-dash');
+    document.body.classList.remove('is-pres-mode');
     var staffProfile = document.getElementById('es-staff-profile');
     if (staffProfile) staffProfile.classList.remove('es-pres-on');
     var prd = document.getElementById('es-prd');
