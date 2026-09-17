@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260917_PRO3DASH1';
+      var BUILD_VERSION = '20260917_ACCTMENU1';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260916_CANCELBTN1">
+  <link rel="stylesheet" href="style.css?v=20260917_ACCTMENU1">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
@@ -66,33 +66,38 @@
     }
   </style>
   <style id="forced-brand-font-override">
-    /* FORCED LOGO FONT OVERRIDE FOR USER NAME DISPLAY IN NAVBAR */
     #user-name-display,
-    #user-dropdown-name-full,
     .nav-user-name,
     #btn-user-profile span {
-      font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif !important;
-      font-weight: 900 !important;
-      letter-spacing: 0.03em !important;
-      font-size: 0.88rem !important;
+      font-family: Inter, system-ui, -apple-system, sans-serif !important;
+      font-weight: 500 !important;
+      letter-spacing: 0 !important;
+      font-size: 0.82rem !important;
+    }
+    #user-dropdown-name-full {
+      font-family: Inter, system-ui, -apple-system, sans-serif !important;
+      font-weight: 600 !important;
+      letter-spacing: 0 !important;
+      font-size: 0.9rem !important;
     }
     #user-avatar-badge {
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
-      width: 28px !important;
-      height: 28px !important;
-      min-width: 28px !important;
-      border-radius: 50% !important;
+      width: 22px !important;
+      height: 22px !important;
+      min-width: 22px !important;
+      border-radius: 4px !important;
       overflow: hidden !important;
       flex-shrink: 0 !important;
       visibility: visible !important;
       margin: 0 !important;
       padding: 0 !important;
-      background: linear-gradient(135deg, #0284c7, #38bdf8) !important;
-      color: #fff !important;
-      font-size: 0.72rem !important;
-      font-weight: 800 !important;
+      background: #1e2430 !important;
+      border: 1px solid #2a3344 !important;
+      color: #eef1f6 !important;
+      font-size: 0.68rem !important;
+      font-weight: 600 !important;
       line-height: 1 !important;
     }
     #user-avatar-badge img:not([hidden]),
@@ -2123,62 +2128,56 @@
             </svg>
             <span class="es-nav-bell-dot" id="es-nav-bell-dot" hidden></span>
           </button>
-          <button type="button" onclick="toggleUserDropdown()" id="btn-user-profile" style="display:flex; align-items:center; gap:0.5rem; background:rgba(2,132,199,0.18); border:1.5px solid rgba(56,189,248,0.45); padding:0.22rem 0.7rem 0.22rem 0.22rem; border-radius:20px; cursor:pointer; transition:all 0.2s;">
+          <button type="button" onclick="toggleUserDropdown()" id="btn-user-profile" class="es-account-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="user-dropdown-menu">
             <div id="user-avatar-badge"><img id="user-avatar-img" alt="" hidden><span id="user-avatar-initial">E</span></div>
-            <span id="user-name-display" style="color:#ffffff; font-family:'Outfit', 'Inter', sans-serif !important; font-weight:800 !important; font-size:0.84rem; max-width:240px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; letter-spacing:0.02em;">
-              Account
-            </span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.2s;" id="user-dropdown-arrow"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <span id="user-name-display">Account</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="user-dropdown-arrow" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </button>
 
-          <!-- Menu a tendina Profilo Utente -->
-          <div id="user-dropdown-menu" style="display:none; position:absolute; top:calc(100% + 0.6rem); right:0; width:240px; background:#071224; border:1.5px solid rgba(56,189,248,0.4); border-radius:14px; box-shadow:0 20px 50px rgba(0,0,0,0.8); z-index:99999; padding:0.6rem 0; animation:slideUpModal 0.2s ease;">
-            <div style="padding:0.7rem 1rem 0.8rem; border-bottom:1px solid rgba(255,255,255,0.08);">
-              <p id="user-dropdown-name-full" style="color:#e2e8f0; font-size:0.84rem; font-weight:700; margin:0 0 0.25rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"></p>
-              <a id="user-dropdown-email-link" href="#" onclick="return false;" style="display:flex; align-items:center; gap:0.35rem; color:#64748b; font-size:0.72rem; margin:0 0 0.25rem; text-decoration:none; transition:color 0.2s; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" onmouseenter="this.style.color='#38bdf8'" onmouseleave="this.style.color='#64748b'">
-                <i data-lucide="mail" style="width:12px; height:12px; flex-shrink:0;"></i>
-                <span id="user-dropdown-email" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"></span>
+          <div id="user-dropdown-menu" class="es-account-menu" hidden>
+            <div class="es-account-menu-head">
+              <p id="user-dropdown-name-full"></p>
+              <a id="user-dropdown-email-link" href="#" onclick="return false;">
+                <span id="user-dropdown-email"></span>
               </a>
-              <span id="user-dropdown-role" style="color:#22c55e; font-size:0.68rem; font-weight:700; display:block; margin-top:0.1rem;">Sessione Attiva</span>
+              <span id="user-dropdown-role">Account attivo</span>
             </div>
-            <a href="#" id="btn-area-riservata" onclick="event.preventDefault(); event.stopPropagation(); if(window.openAreaRiservataModal){ window.openAreaRiservataModal(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
-              <i data-lucide="user-cog" style="width:16px; height:16px; color:#38bdf8;"></i> La Mia Area Riservata
-            </a>
-            <a href="#dashboard-skills" id="btn-dropdown-curriculum" onclick="event.preventDefault(); event.stopPropagation(); if(window.switchView){ window.switchView('pillars','#dashboard-skills'); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
-              <i data-lucide="file-text" style="width:16px; height:16px; color:#38bdf8;"></i> Curriculum
-            </a>
-            <a href="#tc-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.EliseeTC){ window.EliseeTC.open(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
-              <i data-lucide="clipboard-list" style="width:16px; height:16px; color:#38bdf8;"></i> Pannello Elisee Manager
-            </a>
-            <a href="#bacheca-annunci" onclick="event.preventDefault(); event.stopPropagation(); if(window.switchView){ window.switchView('bacheca','#bacheca-annunci'); } if(window.openPubblicaAnnuncioModal){ window.openPubblicaAnnuncioModal(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
-              <i data-lucide="megaphone" style="width:16px; height:16px; color:#38bdf8;"></i> Pubblica candidatura
-            </a>
-            <a href="#seguo-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.openChiSegui){ window.openChiSegui(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
-              <i data-lucide="users" style="width:16px; height:16px; color:#38bdf8;"></i> Album
-            </a>
-            <a href="#scopri-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.openScopriProfili){ window.openScopriProfili('staff'); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
-              <i data-lucide="user-plus" style="width:16px; height:16px; color:#38bdf8;"></i> Segui lo Staff
-            </a>
-            <a href="#admin-portal" onclick="event.preventDefault(); event.stopPropagation(); if(window.switchView){ window.switchView('admin', '#admin-portal'); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#e2e8f0; font-size:0.83rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
-              <i data-lucide="layout-dashboard" style="width:16px; height:16px; color:#38bdf8;"></i> Control Center
-            </a>
+            <nav class="es-account-menu-nav" aria-label="Account">
+              <a href="#" id="btn-area-riservata" class="es-account-item" onclick="event.preventDefault(); event.stopPropagation(); if(window.openAreaRiservataModal){ window.openAreaRiservataModal(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;">
+                La mia area riservata
+              </a>
+              <a href="#dashboard-skills" id="btn-dropdown-curriculum" class="es-account-item" onclick="event.preventDefault(); event.stopPropagation(); if(window.switchView){ window.switchView('pillars','#dashboard-skills'); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;">
+                Curriculum
+              </a>
+              <a href="#tc-portal" class="es-account-item" onclick="event.preventDefault(); event.stopPropagation(); if(window.EliseeTC){ window.EliseeTC.open(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;">
+                Pannello Elisee Manager
+              </a>
+              <a href="#bacheca-annunci" class="es-account-item" onclick="event.preventDefault(); event.stopPropagation(); if(window.switchView){ window.switchView('bacheca','#bacheca-annunci'); } if(window.openPubblicaAnnuncioModal){ window.openPubblicaAnnuncioModal(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;">
+                Pubblica candidatura
+              </a>
+              <a href="#seguo-portal" class="es-account-item" onclick="event.preventDefault(); event.stopPropagation(); if(window.openChiSegui){ window.openChiSegui(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;">
+                Album
+              </a>
+              <a href="#scopri-portal" class="es-account-item" onclick="event.preventDefault(); event.stopPropagation(); if(window.openScopriProfili){ window.openScopriProfili('staff'); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;">
+                Segui lo staff
+              </a>
+              <a href="#admin-portal" class="es-account-item" onclick="event.preventDefault(); event.stopPropagation(); if(window.switchView){ window.switchView('admin', '#admin-portal'); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;">
+                Control Center
+              </a>
+            </nav>
 
-            <!-- Sezione Strumenti Amministratore (Admin Only — non visibile a utenti standard) -->
-            <div id="user-dropdown-admin-section" style="display:none; border-top:1px solid rgba(255,255,255,0.08); margin:0.4rem 0 0; padding-top:0.35rem;">
-              <div style="padding:0.2rem 1rem 0.35rem; font-size:0.68rem; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.04em;">Strumenti Admin</div>
-              <a href="#" id="btn-creator-roles" onclick="event.preventDefault(); event.stopPropagation(); if(window.EliseeCreatorRole){ window.EliseeCreatorRole.open(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.55rem 1rem; color:#38bdf8; font-size:0.82rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
-                <i data-lucide="shield-check" style="width:15px; height:15px; color:#38bdf8;"></i> Simulatore Ruoli Creatore
+            <div id="user-dropdown-admin-section" class="es-account-menu-admin" hidden>
+              <p class="es-account-menu-label">Strumenti interni</p>
+              <a href="#" id="btn-creator-roles" class="es-account-item" onclick="event.preventDefault(); event.stopPropagation(); if(window.EliseeCreatorRole){ window.EliseeCreatorRole.open(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;">
+                Simulatore ruoli
               </a>
-              <a href="#" id="btn-dropdown-autopilot" onclick="event.preventDefault(); event.stopPropagation(); if(window.EliseeAutoPilot){ window.EliseeAutoPilot.open(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;" style="display:flex; align-items:center; justify-content:space-between; gap:0.65rem; padding:0.55rem 1rem; color:#e2e8f0; font-size:0.82rem; font-weight:600; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(56,189,248,0.1)'" onmouseleave="this.style.background='transparent'">
-                <span style="display:flex; align-items:center; gap:0.65rem;">
-                  <i data-lucide="cpu" style="width:15px; height:15px; color:#38bdf8;"></i> AutoPilot
-                </span>
-                <span id="es-ap-dropdown-status" style="font-size:0.68rem; color:#94a3b8; font-weight:600;"></span>
+              <a href="#" id="btn-dropdown-autopilot" class="es-account-item es-account-item--split" onclick="event.preventDefault(); event.stopPropagation(); if(window.EliseeAutoPilot){ window.EliseeAutoPilot.open(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;">
+                <span>AutoPilot</span>
+                <span id="es-ap-dropdown-status" class="es-account-status"></span>
               </a>
             </div>
-            <div style="border-top:1px solid rgba(255,255,255,0.08); margin:0.4rem 0;"></div>
-            <a href="#" onclick="logoutUser(); return false;" style="display:flex; align-items:center; gap:0.65rem; padding:0.65rem 1rem; color:#f87171; font-size:0.83rem; font-weight:700; text-decoration:none; transition:background 0.2s;" onmouseenter="this.style.background='rgba(239,68,68,0.12)'" onmouseleave="this.style.background='transparent'">
-              <i data-lucide="log-out" style="width:16px; height:16px; color:#f87171;"></i> Disconnetti Account
+            <a href="#" class="es-account-item es-account-item--out" onclick="logoutUser(); return false;">
+              Esci
             </a>
           </div>
         </div>
@@ -5824,7 +5823,7 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="elisee-staff.js?v=20260911_ADMIN2"></script>
-  <script src="app.js?v=20260916_NOFOOTER1"></script>
+  <script src="app.js?v=20260917_ACCTMENU1"></script>
   <script src="player-profile.js?v=20260916_NOFOOTER1"></script>
   <script src="public-rating-system.js?v=20260904_SEASONDROP1"></script>
   <script src="dash-real.js?v=20260917_ALLPRO1"></script>

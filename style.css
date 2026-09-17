@@ -7840,13 +7840,163 @@ html {
   transform: translateY(-1px) !important;
 }
 
-/* User Name Display Logo Font Matching (Outfit 800 - Same Font as ELISEE SCOUT Logo) */
-#user-name-display,
-#user-dropdown-name-full,
-.nav-user-name {
-  font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.02em !important;
+/* Account trigger + dropdown — editorial, aligned to Area Stampa */
+#nav-logged-in-actions {
+  align-items: center;
+  gap: 8px;
+}
+.es-account-trigger {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.45rem !important;
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  border-radius: 8px !important;
+  padding: 0.28rem 0.7rem 0.28rem 0.32rem !important;
+  cursor: pointer;
+  color: #eef1f6 !important;
+  box-shadow: none !important;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.es-account-trigger:hover,
+.es-account-trigger[aria-expanded="true"] {
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  background: transparent !important;
+}
+.es-account-trigger #user-name-display {
+  color: #eef1f6 !important;
+  font-family: Inter, system-ui, sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 0.82rem !important;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: 0 !important;
+}
+.es-account-trigger #user-dropdown-arrow {
+  color: #8a93a3;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+.es-account-trigger[aria-expanded="true"] #user-dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.es-account-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 280px;
+  background: #0b0e14;
+  border: 1px solid #1e2430;
+  border-radius: 8px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+  z-index: 99999;
+  padding: 0;
+  overflow: hidden;
+}
+.es-account-menu[hidden] {
+  display: none !important;
+}
+
+.es-account-menu-head {
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+.es-account-menu-head p,
+#user-dropdown-name-full {
+  color: #eef1f6 !important;
+  font-family: Inter, system-ui, sans-serif !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+  margin: 0 0 4px !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#user-dropdown-email-link {
+  display: block;
+  color: #8a93a3;
+  font-size: 0.75rem;
+  font-weight: 400;
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#user-dropdown-email-link:hover {
+  color: #c5cbd6;
+}
+#user-dropdown-role {
+  display: block;
+  margin-top: 6px;
+  color: #8a93a3 !important;
+  font-size: 0.72rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.02em;
+  text-transform: none !important;
+  background: none !important;
+}
+
+.es-account-menu-nav {
+  padding: 6px 0;
+}
+
+.es-account-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  padding: 9px 16px;
+  color: #eef1f6;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 0.84rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-decoration: none;
+  text-transform: none;
+  background: transparent;
+  border: 0;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.es-account-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
+}
+.es-account-item--split {
+  justify-content: space-between;
+  gap: 12px;
+}
+.es-account-status {
+  font-size: 0.68rem;
+  color: #8a93a3;
+  font-weight: 500;
+}
+.es-account-menu-admin {
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  padding: 8px 0 4px;
+}
+.es-account-menu-admin[hidden] {
+  display: none !important;
+}
+.es-account-menu-label {
+  margin: 0;
+  padding: 4px 16px 6px;
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: #626b79;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.es-account-item--out {
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  color: #9aa3b2;
+}
+.es-account-item--out:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: #eef1f6;
 }
 
 /* Forzo la pagina ad occupare il 100% della larghezza a qualsiasi zoom o risoluzione (senza main) */

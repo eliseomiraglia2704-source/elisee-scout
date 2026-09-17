@@ -11448,14 +11448,9 @@ window.updateNavbarUserUI = function() {
 
     if (nameDisplay) {
       nameDisplay.textContent = fullName;
-      nameDisplay.style.fontFamily = "'Outfit', 'Inter', sans-serif";
-      nameDisplay.style.fontWeight = '800';
-      nameDisplay.style.letterSpacing = '0.02em';
     }
     if (nameFullDisplay) {
       nameFullDisplay.textContent = fullName;
-      nameFullDisplay.style.fontFamily = "'Outfit', 'Inter', sans-serif";
-      nameFullDisplay.style.fontWeight = '800';
     }
     if (emailDisplay) emailDisplay.textContent = email;
     if (emailLink) {
@@ -11505,20 +11500,22 @@ window.updateNavbarUserUI = function() {
     if (roleDisplay) {
       if (ruolo) {
         roleDisplay.textContent = ruolo;
-        roleDisplay.style.background = 'none';
-        roleDisplay.style.color = '#38bdf8';
+      } else if (isAdminAuth) {
+        roleDisplay.textContent = 'Admin Executive';
+      } else if (isPrivacyAuth) {
+        roleDisplay.textContent = 'Responsabile Privacy';
       } else {
-        roleDisplay.textContent = isAdminAuth ? '👑 Admin Executive' : (isPrivacyAuth ? '🔒 Responsabile Privacy' : '🟢 Sessione Attiva');
-        roleDisplay.style.background = 'none';
-        roleDisplay.style.color = isAdminAuth ? '#f59e0b' : (isPrivacyAuth ? '#a78bfa' : '#22c55e');
+        roleDisplay.textContent = 'Account attivo';
       }
+      roleDisplay.style.background = 'none';
+      roleDisplay.style.color = '';
     }
 
-    // Visibilità strumenti riservati admin
     const adminSection = document.getElementById('user-dropdown-admin-section');
     if (adminSection) {
       const isUserAdmin = isAdminAuth || isPrivacyAuth || !!userData.isCreator || userData.role === 'admin' || userData.siteRole === 'admin' || (window.EliseeStaff && window.EliseeStaff.isStaffEmail(userData.email));
-      adminSection.style.display = isUserAdmin ? 'block' : 'none';
+      if (isUserAdmin) adminSection.removeAttribute('hidden');
+      else adminSection.setAttribute('hidden', '');
     }
 
     if (loggedOutActions) {
@@ -11543,20 +11540,27 @@ window.updateNavbarUserUI = function() {
 
 window.toggleUserDropdown = function() {
   const menu = document.getElementById('user-dropdown-menu');
-  const arrow = document.getElementById('user-dropdown-arrow');
+  const btn = document.getElementById('btn-user-profile');
   if (!menu) return;
-  const isHidden = menu.style.display === 'none' || !menu.style.display;
-  menu.style.display = isHidden ? 'block' : 'none';
-  if (arrow) {
-    arrow.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+  const willOpen = menu.hasAttribute('hidden') || menu.style.display === 'none';
+  if (willOpen) {
+    menu.removeAttribute('hidden');
+    menu.style.display = '';
+  } else {
+    menu.setAttribute('hidden', '');
+    menu.style.display = '';
   }
+  if (btn) btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
 };
 
 window.closeUserDropdown = function() {
   const menu = document.getElementById('user-dropdown-menu');
-  const arrow = document.getElementById('user-dropdown-arrow');
-  if (menu) menu.style.display = 'none';
-  if (arrow) arrow.style.transform = 'rotate(0deg)';
+  const btn = document.getElementById('btn-user-profile');
+  if (menu) {
+    menu.setAttribute('hidden', '');
+    menu.style.display = '';
+  }
+  if (btn) btn.setAttribute('aria-expanded', 'false');
 };
 
 window.logoutUser = function() {

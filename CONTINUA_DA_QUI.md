@@ -3,7 +3,16 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Allineamento PRO di tutte le dashboard restanti (`ALLPRO1`):
+Ultimo aggiornamento: **2026-09-17** — Menu account navbar editoriale (`ACCTMENU1`):
+1. **Richiesta**: il tendina utente (chip ciano, icone neon, bordo HUD, Outfit 900) era troppo da videogioco rispetto all'Area Stampa.
+2. **Intervento**:
+   - Pannello `#user-dropdown-menu` allineato alla palette Stampa (`#0b0e14`, bordo `#1e2430`, raggio 8px, hairline, niente glow ciano).
+   - Voci in sentence case, Inter 400, icone rimosse, hover neutro.
+   - Ruolo senza emoji/neon; trigger come Accedi (bordo bianco sottile, niente pillola ciano).
+   - Avatar quadrato 4px, fondo `#1e2430`.
+3. **File**: `index.html`, `style.css`, `app.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260917_ACCTMENU1`.
+
+Feature precedente: **Allineamento PRO di tutte le dashboard restanti (`ALLPRO1`):
 1. **Sblocco griglia 56px** in `dash-luxury.css`: le shell PRO (`es-pro-shell`, `es-gk-shell`, `es-med-shell`, `es-obs-shell`, `es-ma-shell`, `es-at-shell`, `es-cos-shell`) e gli id `#es-gk` `#es-md` `#es-fisio` `#es-nu` `#es-mad` `#es-od` `#es-atd` `#es-dsd` `#es-tmd` `#es-yg` `#es-dg` `#es-ag` `#es-mk` `#es-pr` `#es-eq` `#es-sg` `#es-bt` `#es-td` `#es-pd` `#es-gd` `#es-prd` sono `display:block` (niente colonna nera da 56px). CSS condiviso `.es-pro-*` (sidebar 240px, header 2 livelli, tab bar).
 2. **Preparatore Portieri** (`gk-dash.js` / `gk-dash.css`): shell PRO già pronta, ora sbloccata dalla griglia 56px. Tab: Dashboard, Stanza dei Portieri, Schede, Reattività, Badge, Radar, Canale Mister.
 3. **Preparatore Atletico** (`at-dash.js` / `at-dash.css`): rail 56px rimossa. Sidebar 240px, header 2 livelli, tab Dashboard / GPS / Schede / Test / Badge / Radar / Canale Mister.
