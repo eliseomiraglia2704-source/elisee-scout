@@ -3,7 +3,25 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Riprogettazione Completa & Ordinata Medico Sociale & Staff Sanitario (`MEDLUX1`):
+Ultimo aggiornamento: **2026-09-17** — Riprogettazione Completa & Ordinata Fisioterapista & Riabilitazione (`FISIOLUX1`):
+1. **Ridisegno Integrale Dashboard Fisioterapista (`fisio-dash.js`, `fisio-dash.css`, `index.html`)**:
+   - **Diagnosi**: `fisio-dash.css` conteneva soltanto 16 righe grezze e la pagina caricava un vecchio template a 3 colonne spoglio senza strumenti per la gestione delle terapie manuali, tecarterapia, kinesiotaping, monitoraggio scala VAS del dolore e coordinamento con il Medico Sociale.
+   - **Nuova Architettura Ordinata & Luxury**:
+     - **Dock Laterale Sinistro**: Rail compatto (56px) con icone pulite (*Home, Dashboard, Nuova Terapia, Valutazione Dolore, Messaggi Staff, Anagrafica*).
+     - **Top Header Bar**: Breadcrumb di ruolo, badge ufficiale *Albo FNOFI* e due CTA primarie in alto a destra: **"Registra Trattamento"** (gradiente ciano luxury) e **"Report Riabilitativo allo Staff"**.
+     - **Riga 1 (2 Colonne 50/50)**:
+       - *Profilo Ufficiale Fisioterapista*: avatar circolare 58px con fallback monogramma, logo club con scudetto o status indipendente (senza duplicazioni), barra completamento anagrafica all'**85%** con CTA *"✏️ Modifica Anagrafica"* e specializzazione (Fisioterapia Sportiva / Albo FNOFI).
+       - *Centro Riabilitativo & Terapie Rosa*: griglia KPI riabilitativi (*1 In Terapia Attiva 🟡, 23 Pieno Regime 🟢, 14 Sedute Eseguite Sett., 0 Ricadute Muscolari, 2.1/10 Scala VAS Media, 100% Aderenza Protocolli*) con quick-buttons (*Nuova Terapia, Scala VAS Dolore, Tecar / Manuale, Sinergia Medico*).
+     - **Riga 2 — Strumenti Operativi Fisioterapista (ActionsGrid a 3 Colonne)**:
+       - 6 card operative (*Registra Trattamento Terapico, Valutazione Dolore & ROM, Protocollo Riatletizzazione, Kinesiotaping & Bending, Idroterapia & Crioterapia, Report Riabilitativo allo Staff*).
+     - **Riga 3 — Analisi & Deontologia (3 Colonne Paritetiche)**:
+       - *Quadro Riabilitativo Rosa*: Radar polare ad 8 assi con benchmark di settore.
+       - *Protocolli & Metodologia*: Checklist con check verdi delle tecniche riabilitative approvate.
+       - *Limiti di Ruolo & Deontologia*: Card in rosa/rosso tenue desaturato (`#fda4af`) per prescrizione medica vincolante del Medico Sociale, nessun nulla osta autonomo e nessuna modifica rosa.
+     - **Riga 4 — Registro Trattamenti & Terapie**: visual empty-state moderno con icona morbida e link operativi.
+2. **File aggiornati**: `fisio-dash.js`, `fisio-dash.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_FISIOLUX1`.
+
+Feature precedente: **Riprogettazione Completa & Ordinata Medico Sociale & Staff Sanitario (`MEDLUX1`):**
 1. **Ridisegno Integrale Dashboard Medico Sociale (`med-dash.js`, `med-dash.css`, `index.html`)**:
    - **Diagnosi**: `med-dash.css` conteneva soltanto 16 righe grezze e la logica usava un template a 3 colonne generico senza strumenti clinici operativi, senza controllo scadenze idoneità agonistica, senza prescrizioni per fisioterapia e senza return-to-play.
    - **Nuova Architettura Ordinata & Luxury**:
