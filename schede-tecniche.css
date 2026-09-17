@@ -194,6 +194,25 @@ body.layout-portfolio .es-st-toolbar select {
   text-transform: uppercase;
   color: #7dd3fc !important;
 }
+.es-st-src-banner {
+  margin: 0 0 0.85rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.4;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #cbd5e1;
+  background: transparent;
+}
+.es-st-src-banner.es-st-src-ia {
+  border-color: rgba(251, 191, 36, 0.35);
+  color: #fde68a;
+}
+.es-st-src-banner.es-st-src-club {
+  border-color: rgba(125, 211, 252, 0.35);
+  color: #bae6fd;
+}
 .es-st-locked { color: #fbbf24 !important; }
 .es-st-media {
   display: flex;

@@ -382,6 +382,11 @@
     var html = '<article class="es-st-sheet es-st-dossier" data-sheet="' + esc(s.id) + '">';
     html += '<p class="es-st-ai-kicker">Dossier analitico &amp; scheda tecnica scouting</p>';
     html += '<p class="es-st-export-note">Piattaforma scouting calcistico · Export PDF/Word per Direttore Sportivo</p>';
+    html += '<p class="es-st-src-banner es-st-src-' + esc(s.dataSource || 'ia') + '">' +
+      (s.dataSource === 'club'
+        ? 'Anagrafica e presenze da rosa club. GPS hardware assente, salvo file caricati dallo staff.'
+        : 'Sintesi IA: GPS e carriera stimati. Non usare come certificazione atletica.') +
+      '</p>';
     html += '<div class="es-st-hero">';
     html += '<div class="es-st-ava">' + (s.photoUrl ? '<img src="' + esc(s.photoUrl) + '" alt="">' : esc(initials(s.name))) + '</div>';
     html += '<div><h2>' + esc(s.name) + '</h2>';
@@ -429,7 +434,7 @@
     '</div>';
 
     html += '<h3 class="es-st-sec">4. Metriche fisiche &amp; prestazionali GPS</h3>';
-    html += '<p class="es-st-ai-sub">Fonte dati: tracciamento hardware GPS / smartphone MVP</p>';
+    html += '<p class="es-st-ai-sub">' + esc(sourceCaption(s.gpsSource)) + '</p>';
     html += '<table class="es-st-table"><thead><tr><th>Parametro fisico</th><th>Valore medio / picco</th><th>Riferimento categoria</th></tr></thead><tbody>';
     (s.gps || []).forEach(function (g) {
       html += '<tr><td>' + esc(g.param) + '</td><td>' + esc(g.value) + '</td><td>' + esc(g.ref) + '</td></tr>';
@@ -437,6 +442,7 @@
     html += '</tbody></table>';
 
     html += '<h3 class="es-st-sec">5. Storico statistiche di carriera</h3>';
+    html += '<p class="es-st-ai-sub">' + esc(sourceCaption(s.careerSource === 'club' ? 'club' : (s.careerSource || 'ia'))) + '</p>';
     html += '<table class="es-st-table"><thead><tr><th>Stagione</th><th>Squadra</th><th>Categoria</th><th>Pres. (tit.)</th><th>Minuti</th><th>Gol</th><th>Assist</th><th>Cart. G/R</th></tr></thead><tbody>';
     (s.career || []).forEach(function (c) {
       html += '<tr><td>' + esc(c.season) + '</td><td>' + esc(c.club) + '</td><td>' + esc(c.cat) + '</td><td>' + esc(c.apps) + '</td><td>' + esc(c.min) + '</td><td>' + c.g + '</td><td>' + c.a + '</td><td>' + esc(c.cards) + '</td></tr>';
@@ -558,9 +564,87 @@
     return pack;
   }
 
+  function namesMatch(a, b) {
+    a = String(a || '').toLowerCase().replace(/\s+/g, ' ').trim();
+    b = String(b || '').toLowerCase().replace(/\s+/g, ' ').trim();
+    return !!(a && b && (a === b || a.indexOf(b) >= 0 || b.indexOf(a) >= 0));
+  }
+  function lookupClubPlayer(s) {
+    var name = s && (s.name || s.nome);
+    var buckets = [];
+    try {
+      var coach = JSON.parse(localStorage.getItem('elisee_coach_data') || '{}') || {};
+      if (Array.isArray(coach.roster)) buckets.push(coach.roster);
+    } catch (_) {}
+    try {
+      var club = JSON.parse(localStorage.getItem('elisee_pres_club_master_v3') || localStorage.getItem('elisee_pres_club_master_v2') || '{}') || {};
+      var squad = club.squad || club.rosa || club.players || [];
+      if (Array.isArray(squad)) buckets.push(squad);
+    } catch (_) {}
+    var i, j, p, pn;
+    for (i = 0; i < buckets.length; i++) {
+      for (j = 0; j < buckets[i].length; j++) {
+        p = buckets[i][j] || {};
+        pn = p.name || p.nome || [p.nome, p.cognome].filter(Boolean).join(' ');
+        if (namesMatch(name, pn)) return p;
+      }
+    }
+    return null;
+  }
+  function applyClubPlayer(s, p) {
+    if (!p) return s;
+    s.dataSource = 'club';
+    if (p.role || p.ruolo) s.role = p.role || p.ruolo;
+    if (p.data_nascita) {
+      s.dob = p.data_nascita;
+      var y = parseInt(String(p.data_nascita).slice(0, 4), 10);
+      if (y > 1970) s.year = String(y);
+    } else if (p.birth) s.year = String(p.birth);
+    if (p.height) s.height = p.height;
+    if (p.weight) s.weight = p.weight;
+    if (p.foot || p.piede) s.foot = p.foot || p.piede;
+    if (p.email) s.email = p.email;
+    if (Array.isArray(p.gps) && p.gps.length) {
+      s.gps = p.gps;
+      s.gpsSource = 'gps';
+    } else if (p.load || p.acwr || p.app || p.presenze) {
+      s.gps = [
+        { param: 'Presenze in rosa (stagione)', value: String(p.app || p.presenze || '—'), ref: 'Dato club, non GPS hardware' },
+        { param: 'Carico dichiarato', value: String(p.load || '—'), ref: 'Inserito dallo staff' },
+        { param: 'ACWR', value: String(p.acwr || '—'), ref: 'Inserito dallo staff' }
+      ];
+      s.gpsSource = 'club';
+    }
+    if (Array.isArray(p.career) && p.career.length) {
+      s.career = p.career;
+      s.careerSource = 'club';
+    } else if (p.app || p.presenze) {
+      s.career = [{
+        season: '2025/2026',
+        club: p.squadra || p.club || s.club || s.societa || 'Club',
+        cat: s.categoria || '—',
+        apps: String(p.app || p.presenze),
+        min: '—',
+        g: p.gol != null ? p.gol : '—',
+        a: p.assist != null ? p.assist : '—',
+        cards: '—'
+      }];
+      s.careerTot = { apps: String(p.app || p.presenze), min: '—', g: p.gol != null ? p.gol : '—', a: p.assist != null ? p.assist : '—', cards: '—' };
+      s.careerSource = 'club';
+    }
+    return s;
+  }
+  function sourceCaption(kind) {
+    if (kind === 'gps') return 'Fonte: file GPS caricati dallo staff.';
+    if (kind === 'club') return 'Fonte: rosa / anagrafica club. Non è telemetria da dispositivo.';
+    return 'Sintesi IA — valori stimati, non misurati da GPS o da archivio ufficiale.';
+  }
+
   function ensureScoutFields(s) {
     if (!s) return s;
-    if (s.gps && s.career && s.primaryRole) return s;
+    var hit = lookupClubPlayer(s);
+    if (hit) applyClubPlayer(s, hit);
+    if (s.gps && s.career && s.primaryRole && s.gpsSource) return s;
     var h = hashStr(s.name + (s.role || ''));
     var pack = tacticalPack(s.role, h);
     var year = parseInt(s.year, 10);
@@ -608,7 +692,12 @@
     s.badges = s.badges || pack.badges;
     s.heatmap = s.heatmap || pack.heat;
     s.modulo = s.modulo || pack.modulo;
-    s.heatCert = s.heatCert || 'Validata con sistema intelligente dai dati ufficiali della gara.';
+    s.heatCert = s.heatCert || (s.dataSource === 'club'
+      ? 'Mappa tattica derivata dal ruolo in rosa; non è tracking di gara.'
+      : 'Mappa tattica stimata dall’IA in assenza di tracking di gara.');
+    s.gpsSource = s.gpsSource || 'ia';
+    s.careerSource = s.careerSource || 'ia';
+    s.dataSource = s.dataSource || 'ia';
     s.footLine = s.footLine || (foot + ' (uso opposto: ' + opp + '%)');
     s.contractStatus = s.contractStatus || (free ? 'Svincolato / Cerca squadra' : 'Sotto contratto');
     s.clubLine = s.clubLine || (club + ' (' + cat + ')');

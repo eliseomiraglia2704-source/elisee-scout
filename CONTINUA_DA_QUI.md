@@ -3,7 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Reclami GDPR e Ambassador sul server (`GDPRAMB1`):
+Ultimo aggiornamento: **2026-09-18** — Provenienza dati scheda tecnica (`SCOUTSRC1`):
+1. Se il nominativo è in rosa allenatore/club: anagrafica, presenze, carico, ACWR da lì. Non si spaccia per GPS hardware.
+2. Altrimenti GPS/carriera restano stima IA, con banner «Sintesi IA» su scheda, PDF e Word. Niente più dicitura «tracciamento hardware».
+3. File: `schede-tecniche.js/css`. Cache `v20260918_SCOUTSRC1`.
+
+Feature precedente: **Reclami GDPR e Ambassador sul server (`GDPRAMB1`):
 1. **Reclami Art.30** e **richieste rettifica Art.16**: GET/POST `/api/manager?path=gdpr` (KV). Niente più seed demo se la coda è vuota.
 2. **Pratiche Ambassador**: `/api/manager?path=ambassador`. Firme grandi su Storage, in KV restano URL.
 3. Pull all’avvio e all’apertura tab Privacy. Push a ogni salvataggio. Cache `v20260918_GDPRAMB1`.
