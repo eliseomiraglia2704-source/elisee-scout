@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260917_ACCTMENU1';
+      var BUILD_VERSION = '20260917_PWPOLICY1';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -1487,7 +1487,13 @@
           </div>
           <div style="margin-bottom:0.75rem;">
             <label style="display:block; color:#94a3b8; font-size:0.78rem; font-weight:600; margin-bottom:0.35rem; text-transform:uppercase; letter-spacing:0.04em;">Password *</label>
-            <input type="password" id="reg-password" required autocomplete="new-password" placeholder="Minimo 8 caratteri" style="width:100%; padding:0.7rem 0.9rem; border-radius:9px; background:#0b1222; border:1.5px solid rgba(56,189,248,0.3); color:#ffffff; font-size:0.9rem; box-sizing:border-box; outline:none;" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'">
+            <input type="password" id="reg-password" required autocomplete="new-password" placeholder="8+ caratteri, maiuscola, numero, speciale" style="width:100%; padding:0.7rem 0.9rem; border-radius:9px; background:#0b1222; border:1.5px solid rgba(56,189,248,0.3); color:#ffffff; font-size:0.9rem; box-sizing:border-box; outline:none;" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='rgba(56,189,248,0.3)'" oninput="window.paintPasswordPolicy && window.paintPasswordPolicy('reg-pw-reqs', this.value)">
+            <div id="reg-pw-reqs" class="es-pw-reqs" style="margin-top:0.5rem; display:grid; grid-template-columns:1fr 1fr; gap:0.25rem;">
+              <span data-pw="len" style="font-size:0.72rem; color:#8a93a3;">Minimo 8 caratteri</span>
+              <span data-pw="upper" style="font-size:0.72rem; color:#8a93a3;">Una lettera maiuscola</span>
+              <span data-pw="num" style="font-size:0.72rem; color:#8a93a3;">Un numero</span>
+              <span data-pw="special" style="font-size:0.72rem; color:#8a93a3;">Un carattere speciale</span>
+            </div>
           </div>
           <div style="margin-bottom:0.75rem;">
             <label style="display:block; color:#94a3b8; font-size:0.78rem; font-weight:600; margin-bottom:0.35rem; text-transform:uppercase; letter-spacing:0.04em;">Conferma Password *</label>
@@ -1847,12 +1853,23 @@
           <div id="accesso-method-setpw" style="display:none;">
             <form action="#" onsubmit="return false;" autocomplete="on">
               <p id="accesso-setpw-hello" style="color:#e2e8f0; font-size:0.88rem; line-height:1.45; margin:0 0 0.9rem;">
-                Account Google collegato. Imposta una password di almeno 8 caratteri per accedere anche con email.
+                Imposta una password nuova. Serve per accedere con email: almeno 8 caratteri, una maiuscola, un numero e un carattere speciale.
               </p>
-              <input type="password" id="accesso-setpw-a" minlength="8" autocomplete="new-password" placeholder="Minimo 8 caratteri"
+              <input type="password" id="accesso-setpw-a" minlength="8" autocomplete="new-password" placeholder="Nuova password"
+                     oninput="window.paintPasswordPolicy && window.paintPasswordPolicy('setpw-reqs', this.value)"
                      style="width:100%; box-sizing:border-box; padding:0.75rem 0.85rem; border-radius:10px; background:#121212; border:1px solid rgba(255,255,255,0.12); color:#fff; margin-bottom:0.55rem;">
               <input type="password" id="accesso-setpw-b" minlength="8" autocomplete="new-password" placeholder="Ripeti la password"
-                     style="width:100%; box-sizing:border-box; padding:0.75rem 0.85rem; border-radius:10px; background:#121212; border:1px solid rgba(255,255,255,0.12); color:#fff; margin-bottom:0.85rem;">
+                     style="width:100%; box-sizing:border-box; padding:0.75rem 0.85rem; border-radius:10px; background:#121212; border:1px solid rgba(255,255,255,0.12); color:#fff; margin-bottom:0.65rem;">
+              <div id="setpw-reqs" class="es-pw-reqs" style="background:rgba(255,255,255,0.03); border:1px solid #1e2430; border-radius:8px; padding:0.7rem 0.9rem; margin-bottom:0.85rem;">
+                <p style="color:#8a93a3; font-size:0.72rem; font-weight:600; margin:0 0 0.4rem;">La password deve contenere:</p>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.3rem;">
+                  <span data-pw="len" style="font-size:0.73rem; color:#8a93a3;">Minimo 8 caratteri</span>
+                  <span data-pw="upper" style="font-size:0.73rem; color:#8a93a3;">Una lettera maiuscola</span>
+                  <span data-pw="num" style="font-size:0.73rem; color:#8a93a3;">Un numero</span>
+                  <span data-pw="special" style="font-size:0.73rem; color:#8a93a3;">Un carattere speciale</span>
+                </div>
+              </div>
+              <p id="setpw-error" style="display:none; color:#f87171; font-size:0.78rem; margin:0 0 0.7rem;"></p>
               <button type="button" onclick="window.completeAccessoGooglePassword && window.completeAccessoGooglePassword();"
                       style="width:100%; padding:0.9rem; border:0; border-radius:999px; background:linear-gradient(180deg,#f6e7b2,#e0c36a); color:#111; font-weight:800; cursor:pointer;">
                 Salva password ed entra
@@ -5823,7 +5840,7 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="elisee-staff.js?v=20260911_ADMIN2"></script>
-  <script src="app.js?v=20260917_ACCTMENU1"></script>
+  <script src="app.js?v=20260917_PWPOLICY1"></script>
   <script src="player-profile.js?v=20260916_NOFOOTER1"></script>
   <script src="public-rating-system.js?v=20260904_SEASONDROP1"></script>
   <script src="dash-real.js?v=20260917_ALLPRO1"></script>

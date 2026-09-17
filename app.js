@@ -9965,7 +9965,7 @@ window.showPasswordResetBanner = function (user) {
     if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
     if (typeof window.showAccessoMethod === 'function') window.showAccessoMethod('setpw');
     var hello = document.getElementById('accesso-setpw-hello');
-    if (hello) hello.textContent = 'Scegli una password nuova (minimo 8 caratteri) e tienila da parte.';
+    if (hello) hello.textContent = 'Scegli una password nuova: almeno 8 caratteri, una maiuscola, un numero e un carattere speciale.';
   });
   if (x) x.addEventListener('click', function () {
     b.remove();
@@ -9999,6 +9999,38 @@ window.revealRegisteredUser = function (user, after) {
     window.revealRegisteredUser(pending.user);
   }
 })();
+
+window.checkPasswordPolicy = function (val) {
+  var v = String(val || '');
+  var r = {
+    len: v.length >= 8,
+    upper: /[A-Z]/.test(v),
+    num: /[0-9]/.test(v),
+    special: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(v)
+  };
+  r.ok = r.len && r.upper && r.num && r.special;
+  r.message = !r.len
+    ? 'La password deve avere almeno 8 caratteri.'
+    : (!r.upper
+      ? 'La password deve contenere almeno una lettera maiuscola.'
+      : (!r.num
+        ? 'La password deve contenere almeno un numero.'
+        : (!r.special
+          ? 'La password deve contenere almeno un carattere speciale (es. . ! @ #).'
+          : '')));
+  return r;
+};
+
+window.paintPasswordPolicy = function (rootId, val) {
+  var r = window.checkPasswordPolicy(val);
+  var root = document.getElementById(rootId);
+  if (!root) return r;
+  root.querySelectorAll('[data-pw]').forEach(function (el) {
+    var ok = !!r[el.getAttribute('data-pw')];
+    el.style.color = ok ? '#22c55e' : '#8a93a3';
+  });
+  return r;
+};
 
 window.EliseeAuth = {
   applySession: function (user, token) {
@@ -10209,8 +10241,9 @@ window.submitRegistrazione = function (e) {
       return false;
     }
     /* Il ruolo si sceglie nella schermata successiva (Ente / Squadra / Giocatore / Staff / Tifoso). */
-    if (pass.length < 8) {
-      showRegError('La password deve essere di almeno 8 caratteri.');
+    var pwPolicy = window.checkPasswordPolicy(pass);
+    if (!pwPolicy.ok) {
+      showRegError(pwPolicy.message);
       passEl.focus();
       return false;
     }
@@ -10300,6 +10333,7 @@ window.submitRegistrazione = function (e) {
       const map = {
         email_gia_registrata: 'Questa email è già registrata. Accedi con la tua password.',
         password_corta: 'La password deve avere almeno 8 caratteri.',
+        password_non_conforme: 'La password deve avere 8+ caratteri, una maiuscola, un numero e un carattere speciale.',
         email_non_valida: 'Indirizzo email non valido.',
         ruolo_obbligatorio: 'Seleziona un ruolo.',
         nome_cognome_obbligatori: 'Inserisci nome e cognome.'
@@ -10742,7 +10776,7 @@ function showGooglePasswordStep(user) {
     hello.textContent =
       'Ciao ' +
       ((user && (user.nome || user.email)) || '') +
-      '. Imposta una password di almeno 8 caratteri per accedere anche con email.';
+      '. Imposta una password (8+ caratteri, maiuscola, numero, carattere speciale) per accedere anche con email.';
   }
   if (box) box.style.display = 'block';
 }
@@ -10756,8 +10790,9 @@ function finishGoogleSession(user) {
 window.completeGooglePassword = function () {
   const a = (document.getElementById('reg-google-password') || {}).value || '';
   const b = (document.getElementById('reg-google-password2') || {}).value || '';
-  if (a.length < 8) {
-    setRegSocialStatus('La password deve avere almeno 8 caratteri.', true);
+  var policyG = window.checkPasswordPolicy(a);
+  if (!policyG.ok) {
+    setRegSocialStatus(policyG.message, true);
     return;
   }
   if (a !== b) {
@@ -10895,8 +10930,9 @@ window.completeGoogleSimpleRegister = function () {
     setRegSocialStatus('Inserisci una email Gmail valida (es. nome@gmail.com).', true);
     return;
   }
-  if (pass.length < 8) {
-    setRegSocialStatus('La password deve avere almeno 8 caratteri.', true);
+  var policySimple = window.checkPasswordPolicy(pass);
+  if (!policySimple.ok) {
+    setRegSocialStatus(policySimple.message, true);
     return;
   }
   if (pass !== pass2) {
@@ -10988,56 +11024,12 @@ window.validateAccessoPassword = function() {
   const err = document.getElementById('err-password');
   const reqs = document.getElementById('password-requirements');
   const barWrap = document.getElementById('password-strength-bar-wrap');
-  const bar = document.getElementById('password-strength-bar');
-  const barLabel = document.getElementById('password-strength-label');
   if (!input) return false;
+  if (reqs) reqs.style.display = 'none';
+  if (barWrap) barWrap.style.display = 'none';
   const val = input.value;
-
-  // Mostra sezione requisiti
-  if (reqs) reqs.style.display = val.length > 0 ? 'block' : 'none';
-  if (barWrap) barWrap.style.display = val.length > 0 ? 'block' : 'none';
-
-  const hasLen     = val.length >= 8;
-  const hasUpper   = /[A-Z]/.test(val);
-  const hasNum     = /[0-9]/.test(val);
-  const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(val);
-
-  // Update requisiti UI
-  const updateReq = (id, ok) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const base = el.getAttribute('data-label') || el.textContent.replace(/^[✓✗\s]+/, '');
-    if (!el.getAttribute('data-label')) el.setAttribute('data-label', base);
-    el.style.color = ok ? '#22c55e' : '#ef4444';
-    el.textContent = (ok ? '✓ ' : '✗ ') + base;
-  };
-  updateReq('req-len', hasLen);
-  updateReq('req-upper', hasUpper);
-  updateReq('req-num', hasNum);
-  updateReq('req-special', hasSpecial);
-
-  // Calcola forza
-  const score = [hasLen, hasUpper, hasNum, hasSpecial].filter(Boolean).length;
-  const strengths = [
-    { pct: 25, color: '#ef4444', label: '🔴 Password troppo debole' },
-    { pct: 50, color: '#f97316', label: '🟠 Password debole' },
-    { pct: 75, color: '#eab308', label: '🟡 Password discreta' },
-    { pct: 100, color: '#22c55e', label: '🟢 Password forte!' },
-  ];
-  const s = strengths[score - 1] || strengths[0];
-  if (bar) { bar.style.width = s.pct + '%'; bar.style.background = s.color; }
-  if (barLabel) { barLabel.textContent = s.label; barLabel.style.color = s.color; }
-
-  const allOk = hasLen && hasUpper && hasNum && hasSpecial;
-  if (err) {
-    // In fase di accesso (login) la password è già registrata: non mostrare allarme rosso
-    err.style.display = 'none';
-    if (val.length > 0) {
-      input.style.borderColor = 'rgba(56,189,248,0.5)';
-    } else {
-      input.style.borderColor = 'rgba(56,189,248,0.3)';
-    }
-  }
+  if (err) err.style.display = 'none';
+  input.style.borderColor = val.length > 0 ? 'rgba(255,255,255,0.28)' : 'rgba(255,255,255,0.12)';
   return val.length > 0;
 };
 
@@ -11231,7 +11223,7 @@ window.consumeEliseeOAuthReturn = function () {
         if (hello) {
           hello.textContent =
             'Ciao ' + ((res.user && (res.user.nome || res.user.email)) || '') +
-            '. Imposta una password di almeno 8 caratteri per accedere anche con email.';
+            '. Imposta una password (8+ caratteri, maiuscola, numero, carattere speciale) per accedere anche con email.';
         }
       }
     });
@@ -11245,14 +11237,22 @@ window.completeAccessoGooglePassword = function () {
   const b = ((document.getElementById('accesso-setpw-b') || {}).value || '');
   const box = document.getElementById('accesso-error-general');
   const msg = document.getElementById('accesso-error-msg');
-  if (a.length < 8) {
-    if (box && msg) { msg.textContent = 'La password deve avere almeno 8 caratteri.'; box.style.display = 'block'; }
+  const localErr = document.getElementById('setpw-error');
+  function showSetpwErr(text) {
+    if (localErr) { localErr.textContent = text; localErr.style.display = 'block'; }
+    if (box && msg) { msg.textContent = text; box.style.display = 'block'; }
+  }
+  window.paintPasswordPolicy('setpw-reqs', a);
+  var policy = window.checkPasswordPolicy(a);
+  if (!policy.ok) {
+    showSetpwErr(policy.message);
     return;
   }
   if (a !== b) {
-    if (box && msg) { msg.textContent = 'Le due password non coincidono.'; box.style.display = 'block'; }
+    showSetpwErr('Le due password non coincidono.');
     return;
   }
+  if (localErr) localErr.style.display = 'none';
   window.EliseeAuth.setPassword(a).then(function (res) {
     try {
       var em = String((res.user && res.user.email) || '').toLowerCase();
@@ -11264,7 +11264,11 @@ window.completeAccessoGooglePassword = function () {
     window.revealRegisteredUser(res.user || {});
   }).catch(function (err) {
     if (box && msg) {
-      msg.textContent = 'Impossibile salvare la password: ' + ((err && err.message) || 'errore');
+      var pcode = err && err.payload && err.payload.error;
+      msg.textContent = (err && err.payload && err.payload.message) ||
+        (pcode === 'password_non_conforme'
+          ? 'La password deve avere 8+ caratteri, una maiuscola, un numero e un carattere speciale.'
+          : ('Impossibile salvare la password: ' + ((err && err.message) || 'errore')));
       box.style.display = 'block';
     }
   });

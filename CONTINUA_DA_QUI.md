@@ -3,7 +3,17 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Menu account navbar editoriale (`ACCTMENU1`):
+Ultimo aggiornamento: **2026-09-17** — Allineamento criteri password login / reimposta (`PWPOLICY1`):
+1. **Bug**: Accedi mostrava i 4 requisiti (8 caratteri, maiuscola, numero, speciale) mentre Reimposta password accettava solo 8 caratteri e **non salvava** l'hash sul server. Chi cambiava password senza maiuscola poi non riusciva ad entrare (hash originale invariato + UI di login fuorviante).
+2. **Fix**:
+   - Login: niente checklist di forza. Basta email + password; il server confronta l'hash.
+   - Reimposta / registrazione / set-password: stessi 4 criteri, checklist in tempo reale, blocco se non conformi.
+   - `POST /api/auth/set-password` valida la policy e persiste l'hash (file locale `data/auth/password-overrides.json`, `/tmp` su Vercel, Redis se presente).
+   - Account `eliseomiraglia2704@gmail.com` incluso nel login staff.
+3. **File**: `lib/password-policy.js`, `api/auth/me.js`, `app.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260917_PWPOLICY1`.
+4. **Nota accesso**: la password cambiata senza maiuscola non era stata salvata. Per entrare ora usare la password originale `Iemmello.9`, poi reimpostarla rispettando i 4 criteri.
+
+Feature precedente: **Menu account navbar editoriale (`ACCTMENU1`):
 1. **Richiesta**: il tendina utente (chip ciano, icone neon, bordo HUD, Outfit 900) era troppo da videogioco rispetto all'Area Stampa.
 2. **Intervento**:
    - Pannello `#user-dropdown-menu` allineato alla palette Stampa (`#0b0e14`, bordo `#1e2430`, raggio 8px, hairline, niente glow ciano).
