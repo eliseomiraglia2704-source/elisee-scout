@@ -1173,7 +1173,7 @@
 
   window.unmountAllRoleDashboards = function (keepId) {
     var dashIds = [
-      'es-pd', 'es-cd', 'es-dsd', 'es-prd', 'es-vd', 'es-fd', 'es-mad', 'es-md',
+      'es-pd', 'es-cd', 'es-dsd', 'es-prd', 'es-vd', 'es-fd', 'es-fisio', 'es-mad', 'es-md',
       'es-od', 'es-tmd', 'es-gk', 'es-atd', 'es-yg', 'es-dg', 'es-ag', 'es-mk',
       'es-pr', 'es-nu', 'es-eq', 'es-sg', 'es-bt', 'es-td', 'es-gd'
     ];
@@ -1196,6 +1196,7 @@
       'es-prd': 'es-pres-on',
       'es-vd': 'es-vice-on',
       'es-fd': 'es-fisio-on',
+      'es-fisio': 'es-fisio-on',
       'es-mad': 'es-ma-on',
       'es-md': 'es-med-on',
       'es-od': 'es-obs-on',
@@ -1221,11 +1222,11 @@
       if (keepId && id === keepId) {
         el.hidden = false;
         el.removeAttribute('hidden');
-        el.style.removeProperty('display');
+        el.style.setProperty('display', 'block', 'important');
       } else {
         el.hidden = true;
         el.setAttribute('hidden', '');
-        el.style.removeProperty('display');
+        el.style.setProperty('display', 'none', 'important');
       }
     });
     ['es-player-profile', 'es-staff-profile', 'es-tifoso-profile', 'es-giorn-profile'].forEach(function (hid) {
@@ -1243,24 +1244,41 @@
     if (grp) {
       groupClasses.forEach(function (c) { grp.classList.remove(c); });
     }
-    if (keepId !== 'es-cd') {
-      try {
-        document.body.classList.remove('is-coach-mode');
-        var p = document.getElementById('user-dossier-portal');
-        if (p) {
-          p.classList.remove('is-coach-dash');
-          var inr = p.querySelector('.pf-page-inner');
+    var bodyModeMap = {
+      'es-pd': 'is-player-mode',
+      'es-cd': 'is-coach-mode',
+      'es-vd': 'is-vice-mode',
+      'es-fisio': 'is-fisio-mode',
+      'es-fd': 'is-fisio-mode',
+      'es-gk': 'is-gk-mode',
+      'es-atd': 'is-at-mode',
+      'es-md': 'is-med-mode',
+      'es-nu': 'is-nu-mode',
+      'es-mad': 'is-ma-mode',
+      'es-od': 'is-obs-mode',
+      'es-prd': 'is-pres-mode',
+      'es-gd': 'is-giorn-mode'
+    };
+    var allBodyModes = [
+      'is-player-mode', 'is-coach-mode', 'is-vice-mode', 'is-fisio-mode',
+      'is-gk-mode', 'is-at-mode', 'is-med-mode', 'is-nu-mode', 'is-ma-mode',
+      'is-obs-mode', 'is-pres-mode', 'is-giorn-mode'
+    ];
+    var keepBodyMode = keepId ? (bodyModeMap[keepId] || '') : '';
+    try {
+      allBodyModes.forEach(function (c) {
+        if (c !== keepBodyMode) document.body.classList.remove(c);
+      });
+      var portal = document.getElementById('user-dossier-portal');
+      if (portal) {
+        if (keepId !== 'es-cd') {
+          portal.classList.remove('is-coach-dash');
+          var inr = portal.querySelector('.pf-page-inner');
           if (inr) inr.classList.remove('is-coach-inner');
         }
-      } catch (_) {}
-    }
-    if (keepId !== 'es-vd') {
-      try {
-        document.body.classList.remove('is-vice-mode');
-        var p2 = document.getElementById('user-dossier-portal');
-        if (p2) p2.classList.remove('is-vice-dash');
-      } catch (_) {}
-    }
+        if (keepId !== 'es-vd') portal.classList.remove('is-vice-dash');
+      }
+    } catch (_) {}
     try {
       if (typeof window.updatePublicFooterVisibility === 'function') {
         window.updatePublicFooterVisibility();
@@ -1380,7 +1398,7 @@
         var dsd = document.getElementById('es-dsd');
         var prd = document.getElementById('es-prd');
         var vd = document.getElementById('es-vd');
-        var fd = document.getElementById('es-fd');
+        var fd = document.getElementById('es-fisio') || document.getElementById('es-fd');
         var mad = document.getElementById('es-mad');
         var md = document.getElementById('es-md');
         var od = document.getElementById('es-od');

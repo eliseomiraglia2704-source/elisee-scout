@@ -756,7 +756,8 @@
       var from = btn.getAttribute('data-from') || 'ds';
       if (act === 'generate') {
         e.preventDefault();
-        var qEl = document.getElementById('es-st-ia-q');
+        var shellEl = btn.closest('.es-pro-shell') || btn.closest('.es-pro-panel') || document;
+        var qEl = shellEl.querySelector ? shellEl.querySelector('#es-st-ia-q') : document.getElementById('es-st-ia-q');
         var q = ((qEl && qEl.value) || '').trim();
         if (!q) {
           toast('Inserisci nome, ruolo o società del tesserato.', 'info');
@@ -804,7 +805,7 @@
     w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>Scheda tecnica scouting — ' + esc(s.name) + '</title>' +
       '<style>body{font-family:Segoe UI,Arial,sans-serif;color:#111;padding:24px;max-width:820px;margin:0 auto}h1,h2,h3{margin:1.1em 0 .4em}table{width:100%;border-collapse:collapse;font-size:13px}th,td{border:1px solid #ccc;padding:6px 8px;text-align:left}th{background:#f3f3f3}.bar{height:8px;background:#eee;border-radius:4px}.bar i{display:block;height:100%;background:#0284c7}</style></head><body>');
     w.document.write(renderScoutDossier(s).replace(/class="es-st-bar"/g, 'class="bar"'));
-    w.document.write('<script>window.onload=function(){window.print();}<\\/script></body></html>');
+    w.document.write('<script>window.onload=function(){window.print();}</' + 'script></body></html>');
     w.document.close();
   }
   function exportScoutWord(sid) {

@@ -696,7 +696,7 @@
   }
 
   // ============================================================
-  // DATASET DIMOSTRATIVO (FOGGIA CALCIO 1920)
+  // DATASET DIMOSTRATIVO (FOGGIA CITY)
   // ============================================================
   function getDemoDataset(u) {
     return {
@@ -755,7 +755,7 @@
         appointmentDate: '15/06/2026',
         federationNotified: true,
         notificationProtocol: 'PEC-FIGC-LND-88219/26',
-        contactEmail: 'tutela.minori@foggiacalcio1920.it',
+        contactEmail: 'tutela.minori@foggiacity.it',
         lastUpdatedBy: 'Responsabile Privacy',
         lastUpdatedAt: '26/08/2026 ore 10:00'
       },
@@ -936,7 +936,7 @@
       points: 0,
       standingGap: 'Campionato in fase di caricamento',
       affiliationStatus: 'Affiliazione FIGC Registrata',
-      logoUrl: u.logoUrl || 'immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1',
+      logoUrl: u.logoUrl || (/foggia city/i.test(clubName) ? 'immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1' : ''),
       presName: getUserName(u),
       presRole: 'Ruolo: ' + (u.staffRole || 'Presidente'),
 
@@ -1035,7 +1035,7 @@
     var is1920Name = /foggia calcio 1920|us foggia/.test(name);
     var is1920Logo = /squadre-loghi\/foggia\.png|1000345699/.test(logo);
     if (is1920Name) data.clubName = 'Foggia City';
-    if (is1920Name || is1920Logo || /foggia city/.test(name) || !logo) {
+    if (is1920Name || is1920Logo || /foggia city/.test(name)) {
       data.logoUrl = 'immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1';
     }
     return data;
@@ -2263,7 +2263,7 @@
         '<div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">' +
           '<div class="es-pres-input-group">' +
             '<label>Nome Ufficiale della Squadra *</label>' +
-            '<input type="text" class="es-pres-input-text" id="inp-club-name" required value="' + esc(data.clubName) + '" placeholder="Es. A.S.D. Foggia Calcio">' +
+            '<input type="text" class="es-pres-input-text" id="inp-club-name" required value="' + esc(data.clubName) + '" placeholder="Es. Foggia City">' +
           '</div>' +
           '<div class="es-pres-input-group">' +
             '<label>URL Logo / Stemma Societario (Crest) *</label>' +
@@ -2593,7 +2593,7 @@
 
   // 6. UFFICIALIZZAZIONE OPERAZIONI DI MERCATO SUL WALL (PAG. 4 PDF)
   function openOfficializeTransferModal(data) {
-    var clubName = data.clubName || 'Foggia Calcio';
+    var clubName = data.clubName || 'Foggia City';
     var formHtml =
       '<p style="color:#94a3b8; font-size:0.85rem; margin-bottom:1.2rem; line-height:1.5;">' +
         'Come Presidente, approva ufficialmente il trasferimento per pubblicare la notizia sul <b>Wall delle Trattative Chiuse</b> (feed ufficiale stile FIFA) con grafica <b>UFFICIALE</b> e la Card aggiornata:' +

@@ -200,9 +200,9 @@
 
   function fillMaInbox(host, user) {
     if (!host) return;
-    var body = host.querySelector('.es-pd-body');
+    var body = host.querySelector('#es-pd-actions-slot') || host.querySelector('.es-pro-main') || host.querySelector('.es-pd-body');
     if (!body) return;
-    var old = body.querySelector('.es-ma-staff-inbox');
+    var old = host.querySelector('.es-ma-staff-inbox');
     if (old) old.remove();
     var club = String((user && (user.squadra || user.club)) || '').trim();
     var items = [];

@@ -953,6 +953,34 @@ body.es-tifoso-on #user-dossier-view-group {
   background: transparent !important;
 }
 
+/* display:block !important sopra batte [hidden] (specificità ID). */
+#es-pd[hidden],
+#es-cd[hidden],
+#es-vd[hidden],
+#es-dsd[hidden],
+#es-prd[hidden],
+#es-fd[hidden],
+#es-fisio[hidden],
+#es-mad[hidden],
+#es-md[hidden],
+#es-od[hidden],
+#es-tmd[hidden],
+#es-gk[hidden],
+#es-atd[hidden],
+#es-yg[hidden],
+#es-dg[hidden],
+#es-ag[hidden],
+#es-mk[hidden],
+#es-pr[hidden],
+#es-nu[hidden],
+#es-eq[hidden],
+#es-sg[hidden],
+#es-bt[hidden],
+#es-td[hidden],
+#es-gd[hidden] {
+  display: none !important;
+}
+
 #es-staff-profile,
 #es-player-profile,
 #es-tifoso-profile,
@@ -1003,6 +1031,7 @@ body.es-tifoso-on #user-dossier-view-group {
   #es-dsd,
   #es-prd,
   #es-fd,
+  #es-fisio,
   #es-mad,
   #es-md,
   #es-od,

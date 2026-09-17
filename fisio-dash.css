@@ -39,6 +39,7 @@
 }
 
 /* ---------- Rail Laterale Sinistro ---------- */
+#es-fisio .es-pd-rail,
 #es-fd .es-pd-rail {
   background: #090c12;
   border-right: 1px solid rgba(56, 189, 248, 0.12);
@@ -50,6 +51,7 @@
   z-index: 20;
 }
 
+#es-fisio .es-pd-rail button,
 #es-fd .es-pd-rail button {
   width: 38px;
   height: 38px;
@@ -64,12 +66,14 @@
   transition: all 0.2s ease;
 }
 
+#es-fisio .es-pd-rail button:hover,
 #es-fd .es-pd-rail button:hover {
   color: #38bdf8;
   background: rgba(56, 189, 248, 0.08);
   border-color: rgba(56, 189, 248, 0.2);
 }
 
+#es-fisio .es-pd-rail button.is-on,
 #es-fd .es-pd-rail button.is-on {
   color: #38bdf8;
   background: rgba(56, 189, 248, 0.14);
@@ -77,6 +81,7 @@
   box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
 }
 
+#es-fisio .es-pd-rail-end,
 #es-fd .es-pd-rail-end {
   margin-top: auto;
 }
@@ -594,9 +599,11 @@
 }
 
 @media (max-width: 768px) {
+  #es-staff-profile.es-fisio-on #es-fisio,
   #es-staff-profile.es-fisio-on #es-fd {
     grid-template-columns: 1fr !important;
   }
+  #es-fisio .es-pd-rail,
   #es-fd .es-pd-rail {
     flex-direction: row;
     width: 100%;

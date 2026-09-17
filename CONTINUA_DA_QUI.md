@@ -3,7 +3,16 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Logo Foggia City con licenza, mai Calcio Foggia 1920 (`FGCLIC1`):
+Ultimo aggiornamento: **2026-09-17** — Bugfix ruoli, DS e crest (`BUGFIX1`):
+1. **Cambio ruolo**: `#es-fisio { display:block !important }` batteva l’attributo `hidden` (specificità ID). Le dashboard si sovrapponevano. Unmount ora forza `display:none !important` e CSS `[hidden]` sulle shell.
+2. **Fisio**: host JS è `#es-fisio`, CSS/unmount cercavano ancora `#es-fd`. Inclusi entrambi.
+3. **Classi body residue** (`is-gk-mode`, `is-at-mode`, `is-player-mode`, `is-pres-mode`, …): al cambio ruolo restavano attive e nascondevano footer/tab. Pulizia su tutti i mode.
+4. **DS**: inbox Match Analyst e hub advisor cercavano `.es-pd-body` (tolto dalla shell PRO) → slot `#es-pd-actions-slot` / `.es-pro-main`.
+5. **Presidenza**: logo City solo se il club è Foggia City (niente stemma forzato su altri club); email/fallback demo non usano più Calcio Foggia 1920.
+6. **Export PDF scheda**: chiusura `<script>` spezzata per non rompere il parser; campo ricerca IA scoped alla shell.
+7. **File**: `player-profile.js`, `dash-luxury.css`, `fisio-dash.css`, `ds-dash.js`, `ds-hub.js`, `pres-dash.js`, `schede-tecniche.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260917_BUGFIX1`.
+
+Feature precedente: **Logo Foggia City con licenza, mai Calcio Foggia 1920 (`FGCLIC1`):
 1. **Problema**: Foggia City usava lo stemma satanello di Calcio Foggia 1920 (`foggia.png` / id `1000345699`). Licenza d’uso solo per Foggia City.
 2. **Fix**:
    - Crest di tutte le dashboard staff/atleta/presidente: `immagini/squadre-loghi/foggia-city.png`.

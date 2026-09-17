@@ -418,13 +418,13 @@
     if (!isDs(user)) return;
     var slot = box.querySelector('#es-dsh-slot');
     if (!slot) {
-      var body = box.querySelector('.es-pd-body');
+      var body = box.querySelector('#es-pd-actions-slot') || box.querySelector('.es-pro-main') || box.querySelector('.es-pd-body');
       if (!body) return;
       slot = document.createElement('div');
       slot.id = 'es-dsh-slot';
       var head = body.querySelector('.es-pd-head');
       if (head && head.nextSibling) body.insertBefore(slot, head.nextSibling);
-      else body.insertBefore(slot, body.firstChild);
+      else body.appendChild(slot);
     }
     slot.innerHTML = slotHtml(user);
   }
