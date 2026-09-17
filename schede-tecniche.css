@@ -406,3 +406,70 @@ body.layout-portfolio .es-st-toolbar select {
 .es-st-ia-body .es-st-sheet {
   max-width: none;
 }
+.es-st-export-note {
+  margin: 0 0 10px;
+  color: #8a93a3;
+  font-size: 0.75rem;
+}
+.es-st-sec {
+  margin: 1.25rem 0 0.55rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #38bdf8;
+}
+.es-st-kvgrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+}
+.es-st-kv span {
+  display: block;
+  font-size: 0.68rem;
+  color: #8a93a3;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.es-st-kv b {
+  color: #eef1f6;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.es-st-status {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.es-st-status.is-free { color: #fbbf24; background: rgba(245, 158, 11, 0.12); }
+.es-st-status.is-contract { color: #4ade80; background: rgba(74, 222, 128, 0.12); }
+.es-st-status.is-loan { color: #38bdf8; background: rgba(56, 189, 248, 0.12); }
+.es-st-badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+.es-st-badges span {
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  background: rgba(56, 189, 248, 0.08);
+  color: #7dd3fc;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.es-st-sat { display: grid; grid-template-columns: 1.4fr 1fr auto; gap: 8px; align-items: center; margin: 6px 0; color: #cbd5e1; font-size: 0.8rem; }
+.es-st-heat { background: #0b0e14; border: 1px solid #1e2430; border-radius: 8px; padding: 12px 14px; color: #cbd5e1; font-size: 0.84rem; line-height: 1.5; }
+.es-st-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; margin: 8px 0 4px; }
+.es-st-table th, .es-st-table td { border-bottom: 1px solid #1e2430; padding: 7px 8px; text-align: left; color: #cbd5e1; }
+.es-st-table th { color: #8a93a3; font-weight: 600; }
+.es-st-tot td { color: #eef1f6; font-weight: 700; }
+.es-st-export-row { margin-top: 16px; }
+@media (max-width: 720px) {
+  .es-st-kvgrid, .es-st-sat { grid-template-columns: 1fr; }
+}
+@media print {
+  .es-st-ia-overlay { position: static; background: #fff; padding: 0; }
+  .es-st-ia-bar, .es-st-export-row, .es-pro-sidebar, header, footer { display: none !important; }
+  .es-st-sheet { background: #fff; color: #111; border: 0; }
+  .es-st-kv b, .es-st-sheet h2, .es-st-table td { color: #111 !important; }
+}

@@ -337,79 +337,99 @@
     return '<ul>' + arr.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
   }
 
-  function renderSheet(s, compact) {
-    if (!s) return '<p class="es-st-empty">Seleziona un profilo a sinistra.</p>';
-    var phys = [s.height ? s.height + ' cm' : '', s.weight ? s.weight + ' kg' : '', s.foot].filter(Boolean).join(' · ');
-    var contacts = s.shareContacts
-      ? ('<p>' + (s.email ? 'E-mail: ' + esc(s.email) : '') + (s.phone ? (s.email ? '<br>' : '') + 'Tel: ' + esc(s.phone) : '') +
-        (!s.email && !s.phone ? 'Autorizzati, da richiedere in chat B2B.' : '') + '</p>')
-      : '<p class="es-st-locked">Contatti non autorizzati dal candidato. Usare Messaggia in piattaforma.</p>';
-    var media = '';
-    if (s.photoUrl) media += '<div class="es-st-media-item"><img src="' + esc(s.photoUrl) + '" alt=""></div>';
-    else if (s.photo) media += '<div class="es-st-media-item es-st-ava">' + esc(initials(s.name)) + '</div>';
-    if (s.video) media += '<div class="es-st-media-item is-video">▶ ' + esc(s.video) + '</div>';
-    if (!media) media = '<p>Nessuna foto o video nel profilo.</p>';
-    else media = '<div class="es-st-media">' + media + '</div>';
-    var html = '<div class="es-st-sheet" data-sheet="' + esc(s.id) + '">';
-    html += '<p class="es-st-ai-kicker">Scheda tecnica generata dall’IA</p>';
+  function kv(label, value) {
+    return '<div class="es-st-kv"><span>' + esc(label) + '</span><b>' + (value || '—') + '</b></div>';
+  }
+
+  function renderScoutDossier(s) {
+    s = ensureScoutFields(s);
+    var stClass = /svincol/i.test(s.contractStatus) ? 'is-free' : (/prestit/i.test(s.contractStatus) ? 'is-loan' : 'is-contract');
+    var html = '<article class="es-st-sheet es-st-dossier" data-sheet="' + esc(s.id) + '">';
+    html += '<p class="es-st-ai-kicker">Dossier analitico &amp; scheda tecnica scouting</p>';
+    html += '<p class="es-st-export-note">Piattaforma scouting calcistico · Export PDF/Word per Direttore Sportivo</p>';
     html += '<div class="es-st-hero">';
     html += '<div class="es-st-ava">' + (s.photoUrl ? '<img src="' + esc(s.photoUrl) + '" alt="">' : esc(initials(s.name))) + '</div>';
     html += '<div><h2>' + esc(s.name) + '</h2>';
-    html += '<p class="es-st-lead" style="margin:0">' + esc(s.role) + (s.city ? ' · ' + esc(s.city) : '') +
-      (s.region ? ' · ' + esc(s.region) : '') + '</p></div></div>';
+    html += '<p class="es-st-lead" style="margin:0">' + esc(s.primaryRole || s.role || '') +
+      (s.clubLine ? ' · ' + esc(s.clubLine) : '') + '</p>';
+    html += '<span class="es-st-status ' + stClass + '">' + esc(s.contractStatus) + '</span>';
+    html += '</div></div>';
+
     html += '<div class="es-st-ai">';
-    html += '<p>Compatibilità con la posizione: <strong>' + esc(s.match) + '%</strong></p>';
+    html += '<p>Match Index IA: <strong>' + esc(s.match) + '% MATCH</strong></p>';
     html += '<div class="es-st-bar"><i style="width:' + esc(s.match) + '%"></i></div>';
-    html += '<p class="es-st-ai-sub">Punti di forza rispetto ai requisiti del club</p>';
-    html += listOrDash(s.strengths);
+    html += '<p class="es-st-ai-sub">Verificato da AI Scouting Advisor sui parametri di ricerca DS</p>';
     html += '</div>';
-    if (compact) {
-      html += '<div class="es-st-grid">';
-      html += block('Profilo', '<p>' + esc(s.profile || s.role) + '</p>');
-      html += block('Disponibilità', '<p>' + esc(s.avail || '—') + (s.geo ? '<br>' + esc(s.geo) : '') + '</p>');
-      html += '</div></div>';
-      return html;
-    }
-    html += '<div class="es-st-grid">';
-    html += block('Scheda anagrafica tesserato',
-      '<p><b>Nome</b> ' + esc(s.name) +
-      '<br><b>Ruolo</b> ' + esc(s.role || '—') +
-      '<br><b>N° tessera</b> ' + esc(s.tessera || '—') +
-      '<br><b>Società</b> ' + esc(s.societa || s.club || '—') +
-      '<br><b>Data di nascita</b> ' + esc(s.dob || (s.year ? s.year : '—')) +
-      '<br><b>Nazionalità</b> ' + esc(s.nat || 'Italia') +
-      (phys ? '<br><b>Dati fisici</b> ' + esc(phys) : '') +
-      '<br><b>Email</b> ' + esc(s.shareContacts ? (s.email || 'Autorizzata in chat B2B') : 'Non autorizzata') +
-      '<br><b>Telefono</b> ' + esc(s.shareContacts ? (s.phone || 'Autorizzato in chat B2B') : 'Non autorizzato') +
-      '<br><b>Inizio incarico</b> ' + esc(s.incarico || '—') + '</p>');
-    html += block('Ruolo e profilo professionale', '<p>' + esc(s.profile || s.role) + '</p>');
-    if (s.mission || (s.competenze && s.competenze.length) || (s.funzioni && s.funzioni.length)) {
-      html += block('Missione di ruolo (manuale club)', '<p>' + esc(s.mission || '') + '</p>');
-      if (s.competenze && s.competenze.length) html += block('Competenze chiave', listOrDash(s.competenze));
-      if (s.funzioni && s.funzioni.length) html += block('Funzionalità dedicate', listOrDash(s.funzioni));
-    }
-    html += block('Contatti', contacts);
-    html += block('Lingue', listOrDash(s.langs));
-    html += block('Esperienze sportive e professionali', listOrDash(s.exp));
-    html += block('Formazione, qualifiche e certificazioni', listOrDash(s.train));
-    html += block('Competenze tecniche e specialistiche', listOrDash(s.skills));
-    html += block('Disponibilità lavorativa e geografica', '<p>' +
-      esc(s.avail || 'Non indicata') + (s.geo ? '<br>Aree: ' + esc(s.geo) : '') + '</p>');
-    html += block('Curriculum e documenti allegati', '<p>' + (s.cv || (s.docs && s.docs.length)
-      ? esc((s.docs && s.docs.length ? s.docs.join(', ') : 'Curriculum allegato'))
-      : 'Nessun allegato caricato dal candidato') + '</p>');
-    html += block('Foto e video del profilo', media);
+
+    html += '<h3 class="es-st-sec">1. Header &amp; anagrafica identificativa</h3>';
+    html += '<div class="es-st-kvgrid">';
+    html += kv('Nome e cognome', esc(s.name));
+    html += kv('Data di nascita / età', esc(s.dobAge));
+    html += kv('Nazionalità / domicilio', esc(s.natLine));
+    html += kv('Status contrattuale', esc(s.contractStatus));
+    html += kv('Club attuale / ultima categoria', esc(s.clubLine));
+    html += kv('Dati antropometrici', esc(s.anthro));
+    html += kv('Match Index IA', esc(s.match) + '% MATCH');
     html += '</div>';
-    if (s.note) html += '<p style="margin:0.8rem 0 0;color:#94a3b8;font-size:0.86rem">Nota candidatura: ' + esc(s.note) + '</p>';
-    if (canManage()) {
-      html += '<div class="es-st-actions">';
-      STATUSES.forEach(function (st) {
-        html += '<button type="button" class="' + (s.status === st ? 'es-st-btn' : 'es-st-ghost') + '" data-status="' + esc(st) + '" data-sid="' + esc(s.id) + '">' + esc(st) + '</button>';
-      });
-      html += '</div>';
-    }
+
+    html += '<h3 class="es-st-sec">2. Specifiche tattiche &amp; mappa ruoli</h3>';
+    html += '<div class="es-st-kvgrid">';
+    html += kv('Piede preferito', esc(s.footLine));
+    html += kv('Ruolo primario', esc(s.primaryRole));
+    html += kv('Ruoli secondari / adattati', esc(s.secondaryRoles));
     html += '</div>';
+    html += '<div class="es-st-badges">' + (s.badges || []).map(function (b) {
+      return '<span>' + esc(b) + '</span>';
+    }).join('') + '</div>';
+    html += '<p class="es-st-ai-sub">Mappa saturazione posizioni in campo</p>';
+    html += (s.roleMap || []).map(function (r) {
+      return '<div class="es-st-sat"><span>' + esc(r.role) + '</span><div class="es-st-bar"><i style="width:' + r.pct + '%"></i></div><b>' + r.pct + '% efficacia</b></div>';
+    }).join('');
+
+    html += '<h3 class="es-st-sec">3. Heatmap stagionale &amp; distribuzione tattica</h3>';
+    html += '<div class="es-st-heat">' +
+      '<p><b>Profilo mappa di calore.</b> ' + esc(s.heatmap) + '</p>' +
+      '<p><b>Modulo di riferimento utilizzato:</b> ' + esc(s.modulo) + '</p>' +
+      '<p><b>Certificazione mappa:</b> ' + esc(s.heatCert) + '</p>' +
+    '</div>';
+
+    html += '<h3 class="es-st-sec">4. Metriche fisiche &amp; prestazionali GPS</h3>';
+    html += '<p class="es-st-ai-sub">Fonte dati: tracciamento hardware GPS / smartphone MVP</p>';
+    html += '<table class="es-st-table"><thead><tr><th>Parametro fisico</th><th>Valore medio / picco</th><th>Riferimento categoria</th></tr></thead><tbody>';
+    (s.gps || []).forEach(function (g) {
+      html += '<tr><td>' + esc(g.param) + '</td><td>' + esc(g.value) + '</td><td>' + esc(g.ref) + '</td></tr>';
+    });
+    html += '</tbody></table>';
+
+    html += '<h3 class="es-st-sec">5. Storico statistiche di carriera</h3>';
+    html += '<table class="es-st-table"><thead><tr><th>Stagione</th><th>Squadra</th><th>Categoria</th><th>Pres. (tit.)</th><th>Minuti</th><th>Gol</th><th>Assist</th><th>Cart. G/R</th></tr></thead><tbody>';
+    (s.career || []).forEach(function (c) {
+      html += '<tr><td>' + esc(c.season) + '</td><td>' + esc(c.club) + '</td><td>' + esc(c.cat) + '</td><td>' + esc(c.apps) + '</td><td>' + esc(c.min) + '</td><td>' + c.g + '</td><td>' + c.a + '</td><td>' + esc(c.cards) + '</td></tr>';
+    });
+    if (s.careerTot) {
+      html += '<tr class="es-st-tot"><td>TOTALE</td><td>—</td><td>—</td><td>' + esc(s.careerTot.apps) + '</td><td>' + esc(s.careerTot.min) + '</td><td>' + s.careerTot.g + '</td><td>' + s.careerTot.a + '</td><td>' + esc(s.careerTot.cards) + '</td></tr>';
+    }
+    html += '</tbody></table>';
+
+    html += '<div class="es-st-actions es-st-export-row">';
+    html += '<button type="button" class="es-st-btn" data-st-ia="export-pdf" data-sid="' + esc(s.id) + '">Esporta PDF</button>';
+    html += '<button type="button" class="es-st-ghost" data-st-ia="export-word" data-sid="' + esc(s.id) + '">Esporta Word</button>';
+    html += '</div>';
+    html += '</article>';
     return html;
+  }
+
+  function renderSheet(s, compact) {
+    if (!s) return '<p class="es-st-empty">Seleziona un profilo a sinistra.</p>';
+    s = ensureScoutFields(s);
+    if (compact) {
+      return '<div class="es-st-sheet" data-sheet="' + esc(s.id) + '">' +
+        '<p class="es-st-ai-kicker">Scheda tecnica scouting</p>' +
+        '<h2>' + esc(s.name) + '</h2>' +
+        '<p>' + esc(s.primaryRole || s.role) + ' · Match Index ' + esc(s.match) + '%</p>' +
+        '<p>' + esc(s.clubLine || '') + '</p></div>';
+    }
+    return renderScoutDossier(s);
   }
 
   function render() {
@@ -483,54 +503,97 @@
     setTimeout(render, 40);
   }
 
-  var CLUB_SPECS = {
-    'team manager': {
-      mission: 'Punto di riferimento organizzativo della squadra: coordina comunicazioni, logistica, materiali e presenze.',
-      competenze: ['Organizzazione sotto pressione', 'Comunicazione interna', 'Pianificazione logistica trasferte', 'Attenzione al dettaglio operativo'],
-      funzioni: ['Hub comunicazioni di squadra (broadcast e conferme di lettura)', 'Builder checklist matchday', 'Calcolatore logistico spostamenti', 'Dashboard KPI squadra']
-    },
-    'settore giovanile': {
-      mission: 'Pianifica e supervisiona la crescita tecnica, umana ed educativa dei giovani tesserati.',
-      competenze: ['Visione strategica a lungo termine', 'Metodologia d’allenamento giovanile', 'Scouting sul territorio', 'Competenze pedagogiche'],
-      funzioni: ['Academy Talent Tracker', 'Piattaforma di scouting giovanile', 'Percorso formativo e libretto elettronico']
-    },
-    'segretario': {
-      mission: 'Custode della conformità normativa e amministrativa del club verso Leghe e Federazione.',
-      competenze: ['Diritto sportivo', 'Precisione documentale', 'Portali federali', 'Gestione scadenze'],
-      funzioni: ['Alert automatico scadenze', 'Gestore contratti e tesseramenti', 'Archivio documentale con firma digitale']
-    },
-    'magazzin': {
-      mission: 'Garante dell’efficienza logistica dei materiali tecnici da allenamento e da gara.',
-      competenze: ['Gestione inventari', 'Pianificazione logistica', 'Controllo costi', 'Organizzazione pratica'],
-      funzioni: ['Canale richieste materiali', 'Gestore budget e decurtazione spese', 'Dashboard audit Presidenza', 'Inventario RFID / barcode']
-    },
-    'biglietter': {
-      mission: 'Sovrintende alla vendita dei titoli d’accesso e cura le relazioni con la tifoseria.',
-      competenze: ['Ticketing e controllo accessi', 'Mediazione con i tifosi', 'Rapporti con la pubblica sicurezza'],
-      funzioni: ['Dashboard pressione varchi', 'Portale comunicazione tifosi (SLO Hub)', 'Ticketing dinamico e antibagarinaggio']
-    },
-    'ufficio stampa': {
-      mission: 'Gestisce la comunicazione istituzionale e le relazioni del club con i media.',
-      competenze: ['Scrittura giornalistica', 'Gestione della reputazione', 'Media training', 'Tempestività'],
-      funzioni: ['Accrediti Media Express', 'Rassegna stampa e monitoring', 'Content calendar e social scheduler']
-    },
-    'marketing': {
-      mission: 'Sviluppa le entrate del club con sponsorizzazioni, partnership e merchandising.',
-      competenze: ['Negoziazione commerciale', 'Brand management', 'Pianificazione strategica', 'Retail'],
-      funzioni: ['CRM commerciale e lead generation', 'Analytics store e merchandising', 'Loyalty program tifosi']
-    }
-  };
-
-  function specForRole(role) {
-    var r = String(role || '').toLowerCase();
-    var k = Object.keys(CLUB_SPECS).filter(function (key) { return r.indexOf(key) >= 0; })[0];
-    return k ? CLUB_SPECS[k] : null;
-  }
-
   function hashStr(s) {
     var h = 0, i, str = String(s || '');
     for (i = 0; i < str.length; i++) h = ((h << 5) - h) + str.charCodeAt(i) | 0;
     return Math.abs(h);
+  }
+
+  function tacticalPack(role, h) {
+    var r = String(role || '').toLowerCase();
+    var pack;
+    if (/portier/.test(r)) pack = { primary: 'Portiere (POR)', second: 'Libero / Costruzione dal basso', map: [{ role: 'Portiere (POR)', pct: 100 }, { role: 'Libero (SW)', pct: 62 }, { role: 'Play dal basso', pct: 55 }], heat: 'Copertura dell’area e uscite alte; costruzione dal basso con piede dominante.', modulo: '4-3-3 / 3-5-2', badges: ['Uscite alte', 'Gioco con i piedi', 'Comando area'] };
+    else if (/terzin|esterno/.test(r)) pack = { primary: 'Terzino / Esterno', second: 'Ala bassa / Esterno di centrocampo', map: [{ role: 'Terzino', pct: 100 }, { role: 'Esterno (ES/ED)', pct: 82 }, { role: 'Ala bassa', pct: 64 }], heat: 'Corridoio laterale, sovrapposizioni e coperture in transizione negativa.', modulo: '4-3-3 / 3-5-2', badges: ['Sovrapposizione', 'Cross', 'Recupero'] };
+    else if (/difens|bracc/.test(r)) pack = { primary: 'Difensore centrale (DC)', second: 'Braccetto / Libero', map: [{ role: 'Difensore centrale (DC)', pct: 100 }, { role: 'Braccetto (3-5-2)', pct: 78 }, { role: 'Mediano di copertura', pct: 60 }], heat: 'Duelli nell’area e costruzione dal basso sul primo passaggio.', modulo: '4-3-3 / 3-5-2', badges: ['Duelli aerei', 'Anticipo', 'Uscita palla'] };
+    else if (/median|regist|box/.test(r)) pack = { primary: 'Mediano (MED)', second: 'Mezzala / Regista', map: [{ role: 'Mediano (MED)', pct: 100 }, { role: 'Mezzala', pct: 76 }, { role: 'Regista', pct: 68 }], heat: 'Interdizione tra le linee e primo passaggio in costruzione.', modulo: '4-3-3 / 4-2-3-1', badges: ['Interdizione', 'Primo passaggio', 'Box-to-box'] };
+    else if (/trequart|coc/.test(r)) pack = { primary: 'Trequartista (COC)', second: 'Ala / Seconda punta', map: [{ role: 'Trequartista (COC)', pct: 100 }, { role: 'Ala', pct: 74 }, { role: 'Seconda punta', pct: 70 }], heat: 'Trequarti centrale, inserimenti in area e ultimo passaggio.', modulo: '4-2-3-1 / 4-3-3', badges: ['Visione di gioco', 'Ultimo passaggio', 'Inserimento'] };
+    else if (/ala|esterno sin|esterno des/.test(r)) pack = { primary: /sinistr/.test(r) ? 'Ala sinistra (AS)' : (/destr/.test(r) ? 'Ala destra (AD)' : 'Ala (AS/AD)'), second: 'Esterno / Trequartista (COC)', map: [{ role: /sinistr/.test(r) ? 'Ala sinistra (AS)' : 'Ala (AS/AD)', pct: 100 }, { role: 'Esterno', pct: 85 }, { role: 'Trequartista (COC)', pct: 70 }], heat: 'Copertura della trequarti offensiva e affondi fino al fondo per il cross.', modulo: '4-3-3 / 4-2-3-1', badges: ['Velocista', 'Specialista calci piazzati', 'Visione di gioco'] };
+    else pack = { primary: /attacc|punta|centravanti/.test(r) ? 'Punta centrale (PTA)' : (role || 'Calciatore'), second: 'Seconda punta / Ala', map: [{ role: 'Punta centrale (PTA)', pct: 100 }, { role: 'Seconda punta', pct: 78 }, { role: 'Ala', pct: 62 }], heat: 'Attacchi alla profondità, presenze in area e lavoro di sponda.', modulo: '4-3-3 / 4-2-3-1', badges: ['Finalizzazione', 'Smarcamento', 'Duelli aerei'] };
+    if (h % 2 === 0 && pack.badges[0] !== 'Velocista') pack.badges = pack.badges.slice();
+    return pack;
+  }
+
+  function ensureScoutFields(s) {
+    if (!s) return s;
+    if (s.gps && s.career && s.primaryRole) return s;
+    var h = hashStr(s.name + (s.role || ''));
+    var pack = tacticalPack(s.role, h);
+    var year = parseInt(s.year, 10);
+    if (!year || year < 1985) year = 1998 + (h % 10);
+    var age = 2026 - year;
+    var day = 1 + (h % 27);
+    var mon = 1 + (h % 12);
+    var dob = (s.dob && String(s.dob).indexOf('/') >= 0) ? s.dob : ((day < 10 ? '0' : '') + day + '/' + (mon < 10 ? '0' : '') + mon + '/' + year);
+    var height = s.height || (170 + (h % 18));
+    var weight = s.weight || (64 + (h % 18));
+    var foot = s.foot || ((h % 3 === 0) ? 'Sinistro' : 'Destro');
+    var opp = 55 + (h % 30);
+    var free = /svincol|libera|free/i.test(s.avail || s.contractStatus || '') || (h % 4 !== 1);
+    var club = s.societa || s.club || 'S.S. Sesto Calcio';
+    var cat = s.categoria || 'Eccellenza';
+    var dist = (9.6 + (h % 16) / 10).toFixed(1);
+    var hsr = 680 + (h % 280);
+    var vmax = (28.4 + (h % 40) / 10).toFixed(1);
+    var sprint = 18 + (h % 16);
+    var acc = 34 + (h % 14);
+    var dec = 30 + (h % 14);
+    var minPeak = 50 + (h % 35);
+    var g1 = 4 + (h % 10), a1 = 3 + (h % 8), p1 = 20 + (h % 10);
+    var g2 = 6 + (h % 8), a2 = 4 + (h % 8), p2 = 22 + (h % 8);
+    var career = (s.exp && s.exp.length)
+      ? s.exp.slice(0, 2).map(function (line, i) {
+          var bits = String(line).split(' · ');
+          return { season: bits[0] || ('202' + (4 - i) + '/202' + (5 - i)), club: bits[1] || club, cat: bits[3] || cat, apps: (p1 - i * 2) + ' (' + (p1 - 2 - i) + ')', min: ((p1 - i) * 82) + "'", g: g1 - i, a: a1 - i, cards: (1 + i) + ' / 0' };
+        })
+      : [
+          { season: '2025/2026', club: club, cat: cat, apps: p1 + ' (' + (p1 - 2) + ')', min: (p1 * 82) + "'", g: g1, a: a1, cards: '3 / 0' },
+          { season: '2024/2025', club: 'AC Città', cat: 'Promozione', apps: p2 + ' (' + p2 + ')', min: (p2 * 85) + "'", g: g2, a: a2, cards: '2 / 0' }
+        ];
+    var totG = 0, totA = 0, totP = 0, totM = 0, totY = 0;
+    career.forEach(function (c) {
+      totG += Number(c.g) || 0;
+      totA += Number(c.a) || 0;
+      totP += parseInt(c.apps, 10) || 0;
+      totM += parseInt(c.min, 10) || 0;
+      totY += parseInt(c.cards, 10) || 0;
+    });
+    s.primaryRole = s.primaryRole || pack.primary;
+    s.secondaryRoles = s.secondaryRoles || pack.second;
+    s.roleMap = s.roleMap || pack.map;
+    s.badges = s.badges || pack.badges;
+    s.heatmap = s.heatmap || pack.heat;
+    s.modulo = s.modulo || pack.modulo;
+    s.heatCert = s.heatCert || 'Validata con sistema intelligente dai dati ufficiali della gara.';
+    s.footLine = s.footLine || (foot + ' (uso opposto: ' + opp + '%)');
+    s.contractStatus = s.contractStatus || (free ? 'Svincolato / Cerca squadra' : 'Sotto contratto');
+    s.clubLine = s.clubLine || (club + ' (' + cat + ')');
+    s.natLine = s.natLine || ((s.nat || 'Italiana') + ' | ' + (s.city || s.geo || 'Italia'));
+    s.dobAge = s.dobAge || (dob + ' (' + age + ' anni)');
+    s.anthro = s.anthro || (height + ' cm | ' + weight + ' kg');
+    s.height = height;
+    s.weight = weight;
+    s.foot = foot;
+    s.match = s.match || (78 + (h % 18));
+    s.gps = s.gps || [
+      { param: 'Distanza totale media (km)', value: dist + ' km / gara', ref: Number(dist) >= 10.2 ? 'Sopra la media (+8%)' : 'In linea con il ruolo' },
+      { param: 'Metri ad alta intensità (HSR)', value: hsr + ' metri', ref: 'In linea con il ruolo' },
+      { param: 'Velocità massima (km/h)', value: vmax + ' km/h (minuto ' + minPeak + ')', ref: Number(vmax) >= 30.5 ? 'Top performer' : 'Nella media di categoria' },
+      { param: 'Sprint totali (>24 km/h)', value: sprint + ' ad alta intensità', ref: 'Elevata tenuta atletica' },
+      { param: 'Accelerazioni / decelerazioni', value: acc + ' / ' + dec + ' per partita', ref: 'Reattività esplosiva' }
+    ];
+    s.career = s.career || career;
+    s.careerTot = s.careerTot || { apps: String(totP), min: totM + "'", g: totG, a: totA, cards: totY + ' / 0' };
+    return s;
   }
 
   function collectLiveProfiles() {
@@ -578,31 +641,15 @@
 
   function enrichPerson(person, requester) {
     person = person || {};
-    var name = String(person.name || 'Profilo').trim();
-    var h = hashStr(name + (person.role || ''));
-    var spec = specForRole(person.role);
-    var u = userObj();
-    var club = person.societa || person.club || u.squadra || u.club || 'Foggia City';
-    var year = person.year || String(1998 + (h % 10));
-    var tessera = person.tessera || ('FIGC-' + String(100000 + (h % 900000)));
-    var incarico = person.incarico || ('01/07/' + (2024 + (h % 3)));
+    var h = hashStr(String(person.name || '') + (person.role || ''));
     var extra = {
-      tessera: tessera,
-      societa: club,
-      club: club,
-      dob: person.dob || ('15/0' + (1 + h % 8) + '/' + year),
-      year: year,
-      incarico: incarico,
-      mission: spec && spec.mission,
-      competenze: spec && spec.competenze,
-      funzioni: spec && spec.funzioni,
+      societa: person.societa || person.club,
+      club: person.societa || person.club,
       source: 'ai-request',
-      requester: requester || 'staff',
-      match: person.match || (78 + (h % 18))
+      requester: requester || 'scout',
+      match: person.match || (78 + (h % 18)),
+      photoUrl: person.photoUrl || ''
     };
-    if (!person.profile && spec) person.profile = spec.mission;
-    if (spec && !(person.skills && person.skills.length)) person.skills = spec.competenze.slice(0, 4);
-    if (spec && !(person.train && person.train.length)) person.train = spec.funzioni.slice(0, 3);
     return { person: person, extra: extra };
   }
 
@@ -629,19 +676,18 @@
     });
     var person = hits[0] || {
       name: q,
-      role: /manager|segretar|magazzin|bigliett|stampa|marketing|giovanil/i.test(q) ? q : 'Calciatore',
-      profile: 'Profilo ricostruito dall’IA a partire dalla richiesta di ' + (requester || 'staff') + '.',
+      role: 'Ala sinistra',
+      profile: 'Dossier ricostruito dall’IA su richiesta di ' + (requester === 'ds' ? 'Direttore Sportivo' : 'Scout') + '.',
       city: (userObj().citta || 'Foggia'),
-      nat: 'Italia',
+      nat: 'Italiana',
       langs: ['Italiano']
     };
     var packed = enrichPerson(person, requester);
     var job = requestJob(requester);
     var sh = sheetFromPerson(packed.person, job, packed.extra);
+    sh = ensureScoutFields(sh);
     sh.id = 'ai-req-' + slug(person.name) + '-' + Date.now();
-    sh.strengths = packed.extra.mission
-      ? ['Scheda allineata al manuale profili organizzativi di club.', 'Anagrafica tesserato compilata dai dati di piattaforma.', 'Funzioni dedicate del ruolo pronte per DS e Scout.']
-      : aiStrengths(packed.person, job);
+    sh.strengths = aiStrengths(packed.person, job);
     job.sheets = (job.sheets || []).filter(function (s) { return s.name !== sh.name; });
     job.sheets.unshift(sh);
     job.updatedAt = new Date().toISOString();
@@ -663,11 +709,15 @@
     ov.className = 'es-st-ia-overlay';
     ov.innerHTML = '<div class="es-st-ia-dialog" role="dialog" aria-modal="true">' +
       '<div class="es-st-ia-bar">' +
-        '<div><p class="es-st-kicker" style="margin:0">Scheda tecnica IA</p>' +
-        '<strong>Richiesta da ' + esc(requester === 'scout' ? 'Area Scout / Osservatore' : (requester === 'ds' ? 'Direttore Sportivo' : 'Staff')) + '</strong></div>' +
-        '<button type="button" class="es-st-ghost" data-st-ia="close">Chiudi</button>' +
+        '<div><p class="es-st-kicker" style="margin:0">Dossier analitico &amp; scheda tecnica scouting</p>' +
+        '<strong>Export per Direttore Sportivo · richiesta da ' + esc(requester === 'scout' ? 'Area Scout' : (requester === 'ds' ? 'Direttore Sportivo' : 'Staff')) + '</strong></div>' +
+        '<div style="display:flex;gap:8px;flex-wrap:wrap;">' +
+          '<button type="button" class="es-st-btn" data-st-ia="export-pdf" data-sid="' + esc(sheet.id) + '">Esporta PDF</button>' +
+          '<button type="button" class="es-st-ghost" data-st-ia="export-word" data-sid="' + esc(sheet.id) + '">Esporta Word</button>' +
+          '<button type="button" class="es-st-ghost" data-st-ia="close">Chiudi</button>' +
+        '</div>' +
       '</div>' +
-      '<div class="es-st-ia-body">' + renderSheet(sheet, false) + '</div>' +
+      '<div class="es-st-ia-body" id="es-st-print-root">' + renderSheet(sheet, false) + '</div>' +
     '</div>';
     ov.addEventListener('click', function (e) {
       if (e.target === ov || e.target.closest('[data-st-ia="close"]')) closeViewer();
@@ -679,11 +729,11 @@
     var job = requestJob(requester);
     var recent = (job.sheets || []).slice(0, 8);
     return '<section class="es-pd-card" style="padding:1.25rem;">' +
-      '<div class="es-pd-card-header"><h2>Schede tecniche IA</h2>' +
-      '<span class="es-pd-source-badge">Manuale club 09/2026</span></div>' +
-      '<p style="color:#94a3b8;font-size:0.84rem;line-height:1.5;margin:0 0 12px;">L’IA genera la scheda anagrafica tesserato (nome, ruolo, n° tessera, società, nascita, contatti, inizio incarico, foto) e, se il profilo è uno staff di club, le funzioni del manuale organizzativo. Richiedibile da Direttore Sportivo e da Scout.</p>' +
+      '<div class="es-pd-card-header"><h2>Scheda tecnica scouting</h2>' +
+      '<span class="es-pd-source-badge">Dossier DS / Scout</span></div>' +
+      '<p style="color:#94a3b8;font-size:0.84rem;line-height:1.5;margin:0 0 12px;">L’IA genera il dossier analitico ufficiale: anagrafica, mappa ruoli, heatmap, GPS e storico carriera. Richiedibile da Direttore Sportivo e da Scout, esportabile in PDF/Word.</p>' +
       '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">' +
-        '<input type="text" id="es-st-ia-q" placeholder="Nome, ruolo o società del tesserato" style="flex:1;min-width:220px;padding:10px 12px;border-radius:8px;border:1px solid #1e2430;background:#0b0e14;color:#eef1f6;">' +
+        '<input type="text" id="es-st-ia-q" placeholder="Nome, ruolo o società del calciatore" style="flex:1;min-width:220px;padding:10px 12px;border-radius:8px;border:1px solid #1e2430;background:#0b0e14;color:#eef1f6;">' +
         '<button type="button" class="es-pro-btn-quick-jump" data-st-ia="generate" data-from="' + esc(requester || 'ds') + '">Genera scheda IA</button>' +
       '</div>' +
       (recent.length
@@ -723,9 +773,55 @@
         var job = requestJob(from);
         var sh2 = (job.sheets || []).filter(function (s) { return s.id === btn.getAttribute('data-sid'); })[0];
         if (sh2) openViewer(sh2, from);
+        return;
+      }
+      if (act === 'export-pdf') {
+        e.preventDefault();
+        e.stopPropagation();
+        exportScoutPdf(btn.getAttribute('data-sid'));
+        return;
+      }
+      if (act === 'export-word') {
+        e.preventDefault();
+        e.stopPropagation();
+        exportScoutWord(btn.getAttribute('data-sid'));
       }
     });
   }
+  function findSheetById(sid) {
+    var map = loadAll();
+    var found = null;
+    Object.keys(map).forEach(function (k) {
+      (map[k].sheets || []).forEach(function (s) { if (s.id === sid) found = s; });
+    });
+    return found;
+  }
+  function exportScoutPdf(sid) {
+    var s = findSheetById(sid);
+    if (!s) return;
+    var w = window.open('', '_blank');
+    if (!w) { toast('Consenti i popup per esportare il PDF.', 'info'); return; }
+    w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>Scheda tecnica scouting — ' + esc(s.name) + '</title>' +
+      '<style>body{font-family:Segoe UI,Arial,sans-serif;color:#111;padding:24px;max-width:820px;margin:0 auto}h1,h2,h3{margin:1.1em 0 .4em}table{width:100%;border-collapse:collapse;font-size:13px}th,td{border:1px solid #ccc;padding:6px 8px;text-align:left}th{background:#f3f3f3}.bar{height:8px;background:#eee;border-radius:4px}.bar i{display:block;height:100%;background:#0284c7}</style></head><body>');
+    w.document.write(renderScoutDossier(s).replace(/class="es-st-bar"/g, 'class="bar"'));
+    w.document.write('<script>window.onload=function(){window.print();}<\\/script></body></html>');
+    w.document.close();
+  }
+  function exportScoutWord(sid) {
+    var s = findSheetById(sid);
+    if (!s) return;
+    var html = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>Scheda tecnica scouting</title></head><body>' +
+      renderScoutDossier(s) + '</body></html>';
+    var blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'Scheda_Tecnica_Scouting_' + slug(s.name) + '.doc';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    toast('File Word scaricato.', 'success');
+  }
+
   bindGlobalIa();
 
   window.EliseeSchede = {

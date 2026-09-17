@@ -3,7 +3,18 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Funzioni dedicate Manuale Profili Club (`CLUBOPS1`):
+Ultimo aggiornamento: **2026-09-17** — Scheda tecnica scouting allineata al PDF ufficiale (`SCOUTPDF1`):
+1. **Correzione**: il PDF precedente era il manuale profili club. Il documento corretto è `Scheda_Tecnica_Scouting.pdf` (Dossier analitico & scheda tecnica scouting, export DS).
+2. **Layout a 5 sezioni**:
+   - 1 Header & anagrafica (nome, nascita/età, nazionalità/domicilio, status contrattuale, club/categoria, antropometria, Match Index IA)
+   - 2 Specifiche tattiche & mappa ruoli (piede + uso opposto, ruolo primario/secondari, badge, saturazione posizioni %)
+   - 3 Heatmap stagionale (profilo calore, modulo, certificazione)
+   - 4 Metriche GPS (distanza, HSR, vmax, sprint, acc/dec + riferimento categoria)
+   - 5 Storico carriera (stagione, squadra, categoria, presenze tit., minuti, gol, assist, cartellini, totale)
+3. Richiedibile da **DS** e **Scout**, con **Esporta PDF** e **Esporta Word**.
+4. **File**: `schede-tecniche.js`, `schede-tecniche.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260917_SCOUTPDF1`.
+
+Feature precedente: **Funzioni dedicate Manuale Profili Club (`CLUBOPS1`):
 1. **Richiesta**: aggiornare le 7 aree del PDF `manuale_profili_club_260916_153944.pdf` (Team Manager, Settore Giovanile, Segretario Generale, Magazziniere, Biglietteria/SLO, Ufficio Stampa, Marketing).
 2. **Intervento** (`club-role-ops.js` + nav in `dash-real.js`):
    - **Team Manager**: Hub comunicazioni broadcast/push con conferme; checklist matchday; calcolatore itinerari/km/tempi; prenotazioni strutture **Coming soon / Beta** + lista d’attesa; KPI squadra; scheda anagrafica tesserato.
