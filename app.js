@@ -3374,19 +3374,16 @@ document.addEventListener('DOMContentLoaded', () => {
   try { accountEditRequests = JSON.parse(localStorage.getItem('elisee_account_edit_requests') || '[]') || []; } catch (_) { accountEditRequests = []; }
   try { platformComplaints = JSON.parse(localStorage.getItem('elisee_platform_complaints') || '[]') || []; } catch (_) { platformComplaints = []; }
 
-  if (accountEditRequests.length === 0) {
-    accountEditRequests = [
-      { id: 101, utente: 'Mario Rossi', campo: 'Indirizzo Residenza & Email', motivazione: 'Art. 16 GDPR - Rettifica dati anagrafici su richiesta diretta dell interessato.', stato: 'pending_admin_approval', timestamp: '28/07/2026 21:30 UTC' }
-    ];
-    localStorage.setItem('elisee_account_edit_requests', JSON.stringify(accountEditRequests));
-  }
 
-  if (platformComplaints.length === 0) {
-    platformComplaints = [
-      { id: 201, utente: 'Luigi Verdi', tipo: 'privacy', oggetto: 'Esercizio Diritto all Oblio (Art. 17 GDPR) - Cancellazione Dati GPS Stagione Passata', stato: 'in_lavorazione', sla: '5 giorni lavorativi (2 gg rimanenti)', data: '27/07/2026 14:15 UTC' },
-      { id: 202, utente: 'Marco Bianchi', tipo: 'operativo', oggetto: 'Segnalazione Mancata Visualizzazione Documento Certificato Medico', stato: 'in_lavorazione', sla: '5 giorni lavorativi (4 gg rimanenti)', data: '28/07/2026 09:40 UTC' }
-    ];
-    localStorage.setItem('elisee_platform_complaints', JSON.stringify(platformComplaints));
+
+  function persistPrivacyQueues() {
+    try {
+      localStorage.setItem('elisee_platform_complaints', JSON.stringify(platformComplaints || []));
+      localStorage.setItem('elisee_account_edit_requests', JSON.stringify(accountEditRequests || []));
+    } catch (_) {}
+    if (window.EliseePersist && typeof window.EliseePersist.pushComplaints === 'function') {
+      window.EliseePersist.pushComplaints(platformComplaints || [], accountEditRequests || []);
+    }
   }
 
   window.handleGaranteSubmitRequest = function(e) {
@@ -3413,7 +3410,7 @@ document.addEventListener('DOMContentLoaded', () => {
       stato: 'pending_admin_approval',
       timestamp: new Date().toLocaleString('it-IT') + ' UTC'
     });
-    localStorage.setItem('elisee_account_edit_requests', JSON.stringify(accountEditRequests));
+    persistPrivacyQueues();
     alert('Richiesta di modifica inviata all Admin con successo.');
     
     userIdElem.value = '';
@@ -3424,14 +3421,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.handleAdminApproveRequest = function(reqId) {
     accountEditRequests = accountEditRequests.map(r => r.id === reqId ? { ...r, stato: 'approved' } : r);
-    localStorage.setItem('elisee_account_edit_requests', JSON.stringify(accountEditRequests));
+    persistPrivacyQueues();
     alert('Richiesta del Responsabile Privacy approvata dall Admin con successo!');
     renderAdminPanel();
   };
 
   window.handleAdminRejectRequest = function(reqId) {
     accountEditRequests = accountEditRequests.map(r => r.id === reqId ? { ...r, stato: 'rejected' } : r);
-    localStorage.setItem('elisee_account_edit_requests', JSON.stringify(accountEditRequests));
+    persistPrivacyQueues();
     alert('Richiesta del Responsabile Privacy respinta dall Admin.');
     renderAdminPanel();
   };
@@ -3873,7 +3870,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.handleResolveComplaint = function(complaintId) {
     platformComplaints = platformComplaints.map(c => c.id === complaintId ? { ...c, stato: 'risolto' } : c);
-    localStorage.setItem('elisee_platform_complaints', JSON.stringify(platformComplaints));
+    persistPrivacyQueues();
     alert('Reclamo contrassegnato come RISOLTO ed archiviato nel registro di audit.');
     const isPrivacyAuth = localStorage.getItem('elisee_privacy_auth') === 'true';
     if (isPrivacyAuth) renderPrivacyPanel(); else renderAdminPanel();
@@ -4163,39 +4160,28 @@ document.addEventListener('DOMContentLoaded', () => {
   function getAccountEditRequests() {
     try {
       const data = localStorage.getItem('elisee_account_edit_requests');
-      if (data) return JSON.parse(data);
-    } catch(e) {}
-    return [
-      { 
-        id: 1, 
-        utente: 'Mario Rossi', 
-        campo: 'Indirizzo Residenza & Email', 
-        motivazione: 'Art. 16 GDPR - Rettifica dati anagrafici su richiesta diretta dell\'interessato.', 
-        stato: 'pending_privacy_audit', 
-        garanteViaLibera: false,
-        timestamp: '29/07/2026 14:20 UTC' 
-      },
-      { 
-        id: 2, 
-        utente: 'Giuseppe Verdi', 
-        campo: 'Foto Profilo Reale', 
-        motivazione: 'Aggiornamento primo piano per verifica spunta blu', 
-        stato: 'approved', 
-        garanteViaLibera: true,
-        timestamp: '28/07/2026 10:15 UTC' 
+      if (data) {
+        const parsed = JSON.parse(data);
+        if (Array.isArray(parsed)) return parsed;
       }
-    ];
+    } catch (e) {}
+    return Array.isArray(accountEditRequests) ? accountEditRequests : [];
   }
 
   function getPlatformComplaints() {
     try {
       const data = localStorage.getItem('elisee_platform_complaints');
-      if (data) return JSON.parse(data);
-    } catch(e) {}
-    return [
-      { id: 101, utente: 'Luca Bianchi', tipo: 'generale', ambito: 'SLA Risposta 24h', oggetto: 'Mancato riscontro annuncio selezione provino entro 5 gg', sla: '2 gg rimanenti', stato: 'in_lavorazione' },
-      { id: 102, utente: 'Alessandro Romano', tipo: 'privacy', ambito: 'Privacy & Dati', oggetto: 'Richiesta verifica conservazione tracciato GPS', sla: '1 gg rimanente', stato: 'in_lavorazione' }
-    ];
+      if (data) {
+        const parsed = JSON.parse(data);
+        if (Array.isArray(parsed)) return parsed;
+      }
+    } catch (e) {}
+    return Array.isArray(platformComplaints) ? platformComplaints : [];
+  }
+
+  function setPlatformComplaints(list) {
+    platformComplaints = Array.isArray(list) ? list : [];
+    persistPrivacyQueues();
   }
 
   function ensureFullscreenDocumentViewerDOM() {
@@ -4569,7 +4555,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (req) {
       req.garanteViaLibera = true;
       req.stato = 'ready_for_admin';
-      localStorage.setItem('elisee_account_edit_requests', JSON.stringify(requests));
+      accountEditRequests = requests;
+      persistPrivacyQueues();
       let logs = JSON.parse(localStorage.getItem('elisee_admin_executed_logs') || '[]');
       logs.unshift({ option: `Via Libera Responsabile Privacy (${req.campo})`, target: req.utente, timestamp: new Date().toLocaleString('it-IT') + ' UTC', status: "VIA_LIBERA_GARANTE_OK" });
       localStorage.setItem('elisee_admin_executed_logs', JSON.stringify(logs));
@@ -4583,7 +4570,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const req = requests.find(r => r.id === id);
     if (req && (req.garanteViaLibera || req.stato === 'ready_for_admin')) {
       req.stato = 'approved';
-      localStorage.setItem('elisee_account_edit_requests', JSON.stringify(requests));
+      accountEditRequests = requests;
+      persistPrivacyQueues();
       let logs = JSON.parse(localStorage.getItem('elisee_admin_executed_logs') || '[]');
       logs.unshift({ option: `Approvazione Modifica (${req.campo})`, target: req.utente, timestamp: new Date().toLocaleString('it-IT') + ' UTC', status: "APPROVATO_OK" });
       localStorage.setItem('elisee_admin_executed_logs', JSON.stringify(logs));
@@ -4597,7 +4585,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const req = requests.find(r => r.id === id);
     if (req && (req.garanteViaLibera || req.stato === 'ready_for_admin')) {
       req.stato = 'rejected';
-      localStorage.setItem('elisee_account_edit_requests', JSON.stringify(requests));
+      accountEditRequests = requests;
+      persistPrivacyQueues();
       let logs = JSON.parse(localStorage.getItem('elisee_admin_executed_logs') || '[]');
       logs.unshift({ option: `Rifiuto Modifica (${req.campo})`, target: req.utente, timestamp: new Date().toLocaleString('it-IT') + ' UTC', status: "RESPINTO_OK" });
       localStorage.setItem('elisee_admin_executed_logs', JSON.stringify(logs));
@@ -4611,7 +4600,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const comp = complaints.find(c => c.id === id);
     if (comp) {
       comp.stato = 'risolto';
-      localStorage.setItem('elisee_platform_complaints', JSON.stringify(complaints));
+      setPlatformComplaints(complaints);
       let logs = JSON.parse(localStorage.getItem('elisee_admin_executed_logs') || '[]');
       logs.unshift({ option: `Risoluzione Reclamo (${comp.ambito})`, target: comp.utente, timestamp: new Date().toLocaleString('it-IT') + ' UTC', status: "RISOLTO_OK" });
       localStorage.setItem('elisee_admin_executed_logs', JSON.stringify(logs));
@@ -10449,6 +10438,9 @@ function getAmbassadorApplications() {
 
 function setAmbassadorApplications(list) {
   localStorage.setItem(AMB_APPS_KEY, JSON.stringify(list));
+  if (window.EliseePersist && typeof window.EliseePersist.pushAmbassador === 'function') {
+    window.EliseePersist.pushAmbassador(list);
+  }
 }
 
 function saveAndSendAmbassadorToGarante(pending) {

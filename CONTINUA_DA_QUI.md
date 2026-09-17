@@ -3,7 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Control Center spazi e ordine (`CCSPACE1`):
+Ultimo aggiornamento: **2026-09-18** — Reclami GDPR e Ambassador sul server (`GDPRAMB1`):
+1. **Reclami Art.30** e **richieste rettifica Art.16**: GET/POST `/api/manager?path=gdpr` (KV). Niente più seed demo se la coda è vuota.
+2. **Pratiche Ambassador**: `/api/manager?path=ambassador`. Firme grandi su Storage, in KV restano URL.
+3. Pull all’avvio e all’apertura tab Privacy. Push a ogni salvataggio. Cache `v20260918_GDPRAMB1`.
+
+Feature precedente: **Control Center spazi e ordine (`CCSPACE1`):
 1. Padding laterale 24px (prima era 0 sul `pf-page-inner` admin).
 2. Tab senza doppio riquadro ciano; header con bordo sottile e Esci allineato.
 3. Griglie stats/azioni/moduli `auto-fit` (niente 5 colonne schiacciate).

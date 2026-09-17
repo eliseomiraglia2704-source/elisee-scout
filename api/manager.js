@@ -341,6 +341,36 @@ module.exports = async function handler(req, res) {
     await kvDocSave('card-atelier', doc);
     return send(res, 200, { ok: true, updatedAt: doc.updatedAt });
   }
+  if (url.searchParams.get('path') === 'gdpr' || url.searchParams.get('path') === 'ambassador') {
+    const name = url.searchParams.get('path') === 'gdpr' ? 'gdpr-queue' : 'ambassador-apps';
+    const doc = await kvDocLoad(name, { items: [], requests: [] });
+    if (req.method === 'GET') {
+      return send(res, 200, {
+        ok: true,
+        items: Array.isArray(doc.items) ? doc.items : [],
+        requests: Array.isArray(doc.requests) ? doc.requests : [],
+        updatedAt: doc.updatedAt || ''
+      });
+    }
+    if (req.method !== 'POST') return send(res, 405, { ok: false, error: 'method' });
+    const body = await readBody(req);
+    if (Array.isArray(body.items)) {
+      doc.items = body.items.slice(0, 400).map(function (it) {
+        const o = Object.assign({}, it || {});
+        if (typeof o.signatureDataUrl === 'string' && o.signatureDataUrl.indexOf('data:') === 0 && o.signatureDataUrl.length > 48000) {
+          o.signatureDataUrl = o.signatureUrl || '';
+        }
+        if (typeof o.contractHtml === 'string' && o.contractHtml.length > 24000) {
+          o.contractHtml = o.contractHtml.slice(0, 24000);
+        }
+        return o;
+      });
+    }
+    if (Array.isArray(body.requests)) doc.requests = body.requests.slice(0, 400);
+    doc.updatedAt = new Date().toISOString();
+    await kvDocSave(name, doc);
+    return send(res, 200, { ok: true, updatedAt: doc.updatedAt });
+  }
   const st = load();
   if (req.method === 'GET') {
     const view = url.searchParams.get('view') || 'me';

@@ -63,7 +63,15 @@
     }
     if (pane === 'privacy') {
       try { localStorage.setItem('elisee_active_dashboard_tab', 'privacy'); } catch (_) {}
-      if (typeof window.renderPrivacyPanel === 'function') window.renderPrivacyPanel();
+      var paintPrivacy = function () {
+        if (typeof window.renderPrivacyPanel === 'function') window.renderPrivacyPanel();
+      };
+      if (window.EliseePersist && typeof window.EliseePersist.pullComplaints === 'function') {
+        window.EliseePersist.pullComplaints(function () {
+          if (window.EliseePersist.pullAmbassador) window.EliseePersist.pullAmbassador(paintPrivacy);
+          else paintPrivacy();
+        });
+      } else paintPrivacy();
     }
     if (pane === 'manager' && window.EliseeManager && typeof window.EliseeManager.renderAdmin === 'function') {
       try { window.EliseeManager.renderAdmin(); } catch (_) {}

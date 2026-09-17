@@ -227,6 +227,107 @@
     pullCoach: pullCoach,
     pushCard: pushCard,
     pullCard: pullCard,
-    uploadPng: uploadPng
+    uploadPng: uploadPng,
+    pushComplaints: pushComplaints,
+    pullComplaints: pullComplaints,
+    pushAmbassador: pushAmbassador,
+    pullAmbassador: pullAmbassador
   };
+
+  function mergeById(local, remote) {
+    var by = {};
+    (local || []).forEach(function (x) {
+      if (x && x.id != null) by[String(x.id)] = x;
+    });
+    (remote || []).forEach(function (x) {
+      if (!x || x.id == null) return;
+      var id = String(x.id);
+      var cur = by[id];
+      if (!cur || tsOf(x) >= tsOf(cur)) by[id] = Object.assign({}, cur || {}, x);
+    });
+    return Object.keys(by).map(function (k) { return by[k]; });
+  }
+
+  function pushComplaints(list, requests) {
+    debounce('gdpr', function () {
+      var items = list;
+      var reqs = requests;
+      try {
+        if (!items) items = JSON.parse(localStorage.getItem('elisee_platform_complaints') || '[]') || [];
+      } catch (_) { items = []; }
+      try {
+        if (!reqs) reqs = JSON.parse(localStorage.getItem('elisee_account_edit_requests') || '[]') || [];
+      } catch (_) { reqs = []; }
+      pushDoc('gdpr', { items: items, requests: reqs });
+    });
+  }
+
+  function pullComplaints(cb) {
+    pullDoc('gdpr').then(function (j) {
+      if (!j || !j.ok) { if (cb) cb(null); return; }
+      var localC = [];
+      var localR = [];
+      try { localC = JSON.parse(localStorage.getItem('elisee_platform_complaints') || '[]') || []; } catch (_) {}
+      try { localR = JSON.parse(localStorage.getItem('elisee_account_edit_requests') || '[]') || []; } catch (_) {}
+      var nextC = mergeById(localC, j.items || []);
+      var nextR = mergeById(localR, j.requests || []);
+      try {
+        localStorage.setItem('elisee_platform_complaints', JSON.stringify(nextC));
+        localStorage.setItem('elisee_account_edit_requests', JSON.stringify(nextR));
+      } catch (_) {}
+      if (cb) cb({ complaints: nextC, requests: nextR });
+    });
+  }
+
+  function lightenAmbassador(list) {
+    return (list || []).map(function (row) {
+      var o = Object.assign({}, row);
+      if (o.signatureDataUrl && String(o.signatureDataUrl).indexOf('data:') === 0 && o.signatureUrl) {
+        o.signatureDataUrl = o.signatureUrl;
+      }
+      return o;
+    });
+  }
+
+  function pushAmbassador(list) {
+    debounce('amb', function () {
+      var items = list;
+      try {
+        if (!items) items = JSON.parse(localStorage.getItem('elisee_ambassador_applications') || '[]') || [];
+      } catch (_) { items = []; }
+      var jobs = [];
+      items.forEach(function (row) {
+        if (row && row.signatureDataUrl && String(row.signatureDataUrl).indexOf('data:') === 0) {
+          jobs.push(uploadPng(row.id || row.cf || 'amb', 'firma', row.signatureDataUrl).then(function (url) {
+            if (url && url.indexOf('http') === 0) {
+              row.signatureUrl = url;
+              row.signatureDataUrl = url;
+            }
+          }));
+        }
+      });
+      Promise.all(jobs).then(function () {
+        try { localStorage.setItem('elisee_ambassador_applications', JSON.stringify(items)); } catch (_) {}
+        pushDoc('ambassador', { items: lightenAmbassador(items) });
+      });
+    }, 700);
+  }
+
+  function pullAmbassador(cb) {
+    pullDoc('ambassador').then(function (j) {
+      if (!j || !j.ok) { if (cb) cb(null); return; }
+      var local = [];
+      try { local = JSON.parse(localStorage.getItem('elisee_ambassador_applications') || '[]') || []; } catch (_) {}
+      var next = mergeById(local, j.items || []);
+      try { localStorage.setItem('elisee_ambassador_applications', JSON.stringify(next)); } catch (_) {}
+      if (cb) cb(next);
+    });
+  }
+
+  function bootQueues() {
+    pullComplaints();
+    pullAmbassador();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bootQueues);
+  else bootQueues();
 })();
