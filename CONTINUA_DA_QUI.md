@@ -3,7 +3,25 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-17** — Riprogettazione Completa & Ordinata Fisioterapista & Riabilitazione (`FISIOLUX1`):
+Ultimo aggiornamento: **2026-09-17** — Riprogettazione Completa & Ordinata Nutrizionista & Composizione Corporea (`NUTRILUX1`):
+1. **Ridisegno Integrale Dashboard Nutrizionista (`nu-dash.js`, `nu-dash.css`, `index.html`)**:
+   - **Diagnosi**: Layout collassato da regole CSS asimmetriche a 3 colonne frastagliate con `grid-template-columns: 280px minmax(0, 1fr) 240px` che comprimevano il profilo e sparpagliavano blocchi scollegati senza un vero motore di pianificazione nutrizionale sportiva, esami BIA o timing carboidrati.
+   - **Nuova Architettura Ordinata & Luxury**:
+     - **Dock Laterale Sinistro**: Rail compatto (56px) con icone pulite (*Home, Dashboard, Nuovo Piano Alimentare, BIA & Plicometria, Messaggi Staff, Anagrafica*).
+     - **Top Header Bar**: Breadcrumb, badge ufficiale *Albo Nazionale Biologi / ONB* e due CTA primarie in alto a destra: **"Nuovo Piano Alimentare"** (gradiente ciano luxury con icona torta/mela) e **"Registra BIA / Plicometria"**.
+     - **Riga 1 (2 Colonne 50/50)**:
+       - *Profilo Ufficiale Nutrizionista*: avatar circolare 58px con fallback monogramma, logo club con scudetto o status indipendente (senza duplicazioni), barra completamento anagrafica all'**85%** con CTA *"✏️ Modifica Anagrafica"* e specializzazione (Biologo Nutrizionista dello Sport / ONB).
+       - *Composizione Corporea & Rosa BIA*: griglia KPI nutrizionali (*9.4% Massa Grassa Rosa 🟢, 78.2% Massa Magra FFM 🟢, 64.5% Idratazione TBW, 24/24 Piani Attivi, 0 Carenze, 100% WADA Compliant*) con quick-buttons (*Nuovo Piano, Test BIA / Plico, Idratazione Match, Menu Trasferta*).
+     - **Riga 2 — Strumenti Operativi Nutrizionista (ActionsGrid a 3 Colonne)**:
+       - 6 card operative (*Crea Piano Alimentare, Esame BIA & Plicometria, Protocollo Idratazione Match, Integrazione Certificata WADA, Pianificazione Menu Trasferta, Report Nutrizionale allo Staff*).
+     - **Riga 3 — Analisi & Deontologia (3 Colonne Paritetiche)**:
+       - *Quadro Nutrizionale Rosa*: Radar polare ad 8 assi con benchmark di settore e media personale.
+       - *Protocolli Scientifici*: Checklist con check verdi delle metodologie autorizzate (BIA vettoriale, carb loading, Informed-Sport, finestra anabolica recovery).
+       - *Limiti di Ruolo & Deontologia*: Card in rosa/rosso tenue desaturato (`#fda4af`) per divieto assoluto prescrizione farmaci (riservata al Medico), tolleranza zero contaminanti e nessuna operatività di calciomercato.
+     - **Riga 4 — Registro Piani Alimentari & Misurazioni**: visual empty-state moderno con icona morbida e link operativi.
+2. **File aggiornati**: `nu-dash.js`, `nu-dash.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_NUTRILUX1`.
+
+Feature precedente: **Riprogettazione Completa & Ordinata Fisioterapista & Riabilitazione (`FISIOLUX1`):**
 1. **Ridisegno Integrale Dashboard Fisioterapista (`fisio-dash.js`, `fisio-dash.css`, `index.html`)**:
    - **Diagnosi**: `fisio-dash.css` conteneva soltanto 16 righe grezze e la pagina caricava un vecchio template a 3 colonne spoglio senza strumenti per la gestione delle terapie manuali, tecarterapia, kinesiotaping, monitoraggio scala VAS del dolore e coordinamento con il Medico Sociale.
    - **Nuova Architettura Ordinata & Luxury**:
