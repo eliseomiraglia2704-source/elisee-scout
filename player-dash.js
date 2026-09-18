@@ -354,6 +354,7 @@
           renderProSideBtn('prestazione', 'Prestazione', icoPerf) +
           renderProSideBtn('obiettivi', 'Obiettivi', icoGoal) +
           renderProSideBtn('card', 'Card', icoCard) +
+          renderProSideBtn('avatar3d', 'Avatar 3D', '<circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/><path d="M12 14v7"/>') +
           renderProSideBtn('messaggi', 'Messaggi', icoMsg) +
           renderProSideBtn('anagrafica', 'Anagrafica', icoEdit) +
         '</nav>' +
@@ -400,6 +401,7 @@
           renderProNavTab('prestazione', 'Prestazione', icoPerf) +
           renderProNavTab('obiettivi', 'Obiettivi', icoGoal) +
           renderProNavTab('card', 'Card', icoCard) +
+          renderProNavTab('avatar3d', 'Avatar 3D', '<circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/><path d="M12 14v7"/>') +
           renderProNavTab('messaggi', 'Messaggi', icoMsg) +
           renderProNavTab('anagrafica', 'Anagrafica', icoEdit) +
         '</nav>' +
@@ -471,6 +473,13 @@
     var gdprOk = !!(user.gdprConsent || user.consensoGdpr || user.privacyAccepted || user.consensoTrattamento);
     var imageOk = !!(p.imageRelease || user.liberatoriaImmagine);
     var medOk = !!(user.visitaMedica || p.idoneita);
+    var avatar3dOk = !!(user.avatar3d && user.avatar3d.hasAvatar);
+    try {
+      if (!avatar3dOk && window.EliseeAvatar3D) {
+        var aData = window.EliseeAvatar3D.getData();
+        if (aData && aData.stato_generazione === 'completato') avatar3dOk = true;
+      }
+    } catch (_) {}
 
     var seasonPickerHtml = '<div style="font-size:0.75rem; color:#38bdf8; font-weight:700;">Stagione ' + esc(currentSeason) + '</div>';
     var publicRatingCardHtml = '';
@@ -651,7 +660,25 @@
             '<li><span>Idoneità agonistica</span><span class="es-badge ' + (medOk ? 'es-badge--active' : 'es-badge--pending') + '">' + (medOk ? esc(user.visitaMedica || 'Presente') : 'Non caricata') + '</span></li>' +
             '<li><span>Validazione club / badge</span><span class="es-badge ' + (badgeOk ? 'es-badge--verified' : (docsOk ? 'es-badge--active' : 'es-badge--pending')) + '">' + (badgeOk ? 'Approvato' : (docsOk ? 'In revisione' : 'Non richiesto')) + '</span></li>' +
             '<li><span>Anti-fake</span><span class="es-badge ' + (docsOk ? 'es-badge--active' : 'es-badge--pending') + '">' + (docsOk ? 'Documenti ricevuti' : 'In attesa') + '</span></li>' +
+            '<li><span>Avatar 3D Biometrico</span><span class="es-badge ' + (avatar3dOk ? 'es-badge--verified' : 'es-badge--pending') + '">' + (avatar3dOk ? 'Attivo ✓' : 'Da configurare') + '</span></li>' +
           '</ul>' +
+        '</div>' +
+
+        // Card Avatar 3D Volumetrico
+        '<div class="es-panel-card" style="border:1px solid rgba(56,189,248,0.22); background:radial-gradient(circle at 80% 20%, rgba(56,189,248,0.08) 0%, rgba(13,19,32,0.95) 100%);">' +
+          '<div class="es-panel-card__head">' +
+            '<h4>Avatar 3D Ufficiale</h4>' +
+            '<span class="es-badge ' + (avatar3dOk ? 'es-badge--verified' : 'es-badge--pending') + '">' + (avatar3dOk ? '3D Ready' : 'Biometrico') + '</span>' +
+          '</div>' +
+          '<p class="es-empty-note" style="margin-bottom:14px;">' +
+            (avatar3dOk
+              ? 'Il tuo modello 3D volumetrico è attivo con la divisa sociale ufficiale e le metriche corporee.'
+              : 'Configura il tuo modello 3D con scansione del volto conforme al GDPR Art. 9.') +
+          '</p>' +
+          '<button type="button" class="es-btn es-btn--primary" style="width:100%; display:flex; align-items:center; justify-content:center; gap:8px;" onclick="if(window.EliseeAvatar3D) window.EliseeAvatar3D.open();">' +
+            '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/><path d="M12 14v7"/></svg>' +
+            '<span>' + (avatar3dOk ? 'Apri Visualizzatore 3D (360°)' : 'Attiva il tuo Avatar 3D') + '</span>' +
+          '</button>' +
         '</div>' +
 
         // Card 8: Interesse Scouting & Percorso
@@ -937,6 +964,10 @@
       var nav = e.target.closest('[data-pd-nav]');
       if (nav) {
         var tab = nav.getAttribute('data-pd-nav');
+        if (tab === 'avatar3d') {
+          if (window.EliseeAvatar3D) window.EliseeAvatar3D.open();
+          return;
+        }
         if (tab === 'messaggi') {
           if (window.openUserMessages) window.openUserMessages();
           return;

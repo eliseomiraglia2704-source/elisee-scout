@@ -3,17 +3,14 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Nuova Struttura Sidebar Luxury Multi-Ruolo & Mini-Sidebar Collapsable (`SIDEBARPRO1`):
-1. **Nuova Sidebar Luxury macOS Style (`role-sidebar-pro.css`, `role-sidebar-pro.js`, `index.html`)**:
-   - **Header macOS Traffic Lights**: Tre dots rosso/giallo/verde con bagliore luxury integrati in testata.
-   - **Profilo Utente Integrato**: Mini avatar circolare con anello ciano, etichetta ruolo uppercase `#64748b` e nome utente `#f8fafc`.
-   - **Pulsante Toggle Fluttuante `<` / `>`**: Bottone pill circolare fluttuante sul bordo destro per commutare istantaneamente tra modalità **Espansa** (252px) e **Mini-Sidebar Compatta** (72px) con transizione fluida e persistenza stato in `localStorage`.
-   - **Riallineamento Dinamico Layout**: Il padding sinistro delle dashboard dei ruoli passa fluidamente da `calc(252px + 18px)` a `calc(72px + 18px)`.
-   - **Albero Sottomenu & Flyout Popover**: Linee guida verticali e connettori a L per le sotto-voci in modalità espansa; comparsa automatica di flyout menu floating dark glass a destra per le icone quando la sidebar è contratta a 72px.
-   - **Sezione Rapida Messaggi/Staff**: Mini-lista contatti con avatar verticali, ottimizzati per la visualizzazione compatta.
-   - **Bottom Action Card («Let's start!»)**: Card arrotondata in fondo alla sidebar con descrizione e pulsante CTA ciano «+ Nuova Operazione», che si contrae in un solo elegante bottone rotondo `[+]` nella versione mini.
-   - **Palette Colori Ufficiale**: Dark Glass `#070a12`, accenti ciano elettrico `#38bdf8`, bordi hairline `rgba(255,255,255,0.08)`.
-2. **File**: `role-sidebar-pro.css`, `role-sidebar-pro.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_SIDEBARPRO1`.
+Ultimo aggiornamento: **2026-09-18** — Integrazione Avatar 3D nella Dashboard Giocatore v3.0 & Status Biometrico (`PLAYER3D1`):
+1. **Player Dashboard & Avatar 3D Hub (`player-dash.js`, `index.html`)**:
+   - **Voce «Avatar 3D» nei Nav Tab & Sidebar**: Aggiunto tab orizzontale e pulsante sidebar `avatar3d` con icona 3D per consentire al calciatore di aprire istantaneamente il visualizzatore 3D Three.js.
+   - **Checklist Certificazione & Compliance**: Aggiunta voce di verifica biometrica `Avatar 3D Biometrico` (`Attivo ✓` / `Da configurare`) allineata allo stato effettivo in localStorage / profilo condiviso.
+   - **Card Dedicata Avatar 3D**: Riquadro dark glass con radial gradient ciano nella colonna fiducia & mercato con descrizione e CTA dinamica (*"Apri Visualizzatore 3D (360°)"* se attivo o *"Attiva il tuo Avatar 3D"* con apertura automatica del flow di consenso GDPR Art. 9).
+2. **File**: `player-dash.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_PLAYER3D1`.
+
+Feature precedente: **Nuova Struttura Sidebar Luxury Multi-Ruolo & Mini-Sidebar Collapsable (`SIDEBARPRO1`):
 
 Feature precedente: **Completamento Feature «Avatar 3D» Biometrico Three.js & Compliance GDPR Art. 9 (`AVATAR3D1`):
 
