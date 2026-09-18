@@ -3,17 +3,15 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Spostamento Control Center nel Menù a Tendina Admin/Privacy & Sblocco Freeze/Scroll (`CCDROPDOWN1`):
-1. **Control Center Esclusivo nel Menù a Tendina Admin e Responsabile Privacy (`index.html`, `app.js`)**:
-   - Rimosso completamente `nav.controlCenter` dalla navbar pubblica principale (`nav#nav-menu`) e dal drawer mobile (`#es-m-drawer-links`).
-   - Rimosse le card/link di accesso al Control Center dalla Home pubblica (`#home-portfolio` e `#welcome-access`) e dal menu account generico (`es-account-menu-nav`).
-   - Collocato il link al «Control Center» esclusivamente all'interno di `#user-dropdown-admin-section` (menù a tendina visibile unicamente agli utenti con permessi Admin o Responsabile Privacy GDPR).
-2. **Sblocco Freeze e Ripristino Scorrimento Completo Control Center (`control-center.css`, `control-center.js`, `app.js`)**:
-   - Risolto il blocco di scrolling e visualizzazione tagliata sotto i pulsanti rapidi: impostato `overflow-y: visible !important; height: auto !important; max-height: none !important; pointer-events: auto !important` su `#admin-view-group`, `#admin-portal`, `#admin-authenticated-dashboard` e su tutte le sezioni pane.
-   - Reso idempotente e sicuro il metodo `bind()` in `control-center.js`, esportato su `window.EliseeCC.bind` con gestione `stopPropagation` e anti-blocco su bottoni rapidi (`es-cc-qa-*`) e moduli (`es-cc-mod`).
-   - Sincronizzati i click sulle tab (Admin, Responsabile Privacy GDPR, Autopilot, Manager, Card) con `EliseeCC.showPane` sia da `control-center.js` che dagli handler di `app.js`.
-   - Richiamato `EliseeCC.bind()`, `EliseeCC.showPane()` e `EliseeCC.refresh()` sia in `switchView('admin', ...)` sia al completamento del login con form.
-3. **File**: `index.html`, `control-center.css`, `control-center.js`, `app.js`, `sw.js`, `version.json`. Cache `v20260918_CCDROPDOWN1`.
+Ultimo aggiornamento: **2026-09-18** — Modalità di Caricamento Macroaree con Dots al Neon & Palette Elisee Scout (`LOADER1`):
+1. **Nuovo Loader Globale Animato (`elisee-loader.css`, `elisee-loader.js`, `index.html`)**:
+   - Creato overlay di transizione fluido per cambio macroarea e caricamenti pesanti con l'esatta estetica richiesta (riga di punti orizzontali a diametro progressivo con onda luminosa fluida/glow al neon e dicitura `L O A D I N G . . .` tracking luxury).
+   - Palette colori allineata alla visual identity ufficiale: sfondo Dark Glass `#050608` con backdrop-blur 16px, testo `#e0f2fe`, dots ciano elettrico `#38bdf8` con nucleo bianco brillante `#ffffff` e alone al neon `rgba(56,189,248,0.95)`, con supporto al tema oro `barocco-oro`.
+   - Hook automatico su `window.switchView`: ogni cambio macroarea mostra la transizione fluida con il nome dell'area in apertura (es. "Area Scouting", "Hub Mercato", "Bacheca", "Control Center"), eliminando completamente l'effetto di schermata bloccata/freezata.
+   - API pubblica `window.EliseeLoader`: `.show(label)`, `.hide()`, `.pulse(ms, label)`, `.wrap(promiseOrFn, label)` con timeout di sicurezza a 3.5s per evitare qualsiasi stallo.
+2. **File**: `elisee-loader.css`, `elisee-loader.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_LOADER1`.
+
+Feature precedente: **Spostamento Control Center nel Menù a Tendina Admin/Privacy & Sblocco Freeze/Scroll (`CCDROPDOWN1`):
 
 Feature precedente: **Ripristino Footer Homepage, Link Control Center Macroaree & Ottimizzazione Responsività (`CCFOOTER1`):
 
