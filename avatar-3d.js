@@ -219,33 +219,59 @@
               '<li><strong>Diritto alla Cancellazione Irreversibile (Art. 17 GDPR):</strong> Puoi revocare il consenso ed eliminare definitivamente la foto originale e la mesh 3D in qualsiasi momento tramite il pulsante <em>"Elimina Avatar 3D"</em>.</li>' +
             '</ul>' +
           '</div>' +
-          '<label class="es-a3d-consent-checkbox-row">' +
-            '<input type="checkbox" id="chk-consent-biometric">' +
+          '<div class="es-a3d-consent-checkbox-row" id="row-consent-biometric" role="checkbox" aria-checked="false" tabindex="0">' +
+            '<div class="es-a3d-custom-chk" id="ui-chk-consent">' +
+              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="es-a3d-chk-tick"><polyline points="20 6 9 17 4 12"/></svg>' +
+            '</div>' +
             '<span class="es-a3d-consent-checkbox-label">Ho letto l\'informativa biometrica v1.0 e presto il mio consenso esplicito, libero e informato al trattamento dei dati biometrici per la creazione del mio Avatar 3D volumetrico ai sensi dell\'Art. 9, par. 2, lett. a) del GDPR.</span>' +
-          '</label>' +
-          '<button type="button" class="es-a3d-btn-primary" id="btn-accept-biometric-consent" disabled style="opacity:0.5; cursor:not-allowed;">' +
+            '<input type="checkbox" id="chk-consent-biometric" style="display:none !important;">' +
+          '</div>' +
+          '<button type="button" class="es-a3d-btn-primary" id="btn-accept-biometric-consent" style="cursor:pointer; opacity:0.65; transition:all 0.25s ease;">' +
             '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>' +
-            'Conferma Consenso e Procedi' +
+            '<span>Conferma Consenso e Procedi</span>' +
           '</button>' +
         '</div>' +
       '</div>';
 
+    var row = container.querySelector('#row-consent-biometric');
     var chk = container.querySelector('#chk-consent-biometric');
     var btn = container.querySelector('#btn-accept-biometric-consent');
+    var isChecked = false;
 
-    chk.addEventListener('change', function () {
-      if (chk.checked) {
-        btn.disabled = false;
+    function setChecked(val) {
+      isChecked = !!val;
+      chk.checked = isChecked;
+      if (isChecked) {
+        row.classList.add('is-checked');
+        row.setAttribute('aria-checked', 'true');
         btn.style.opacity = '1';
-        btn.style.cursor = 'pointer';
+        btn.style.boxShadow = '0 0 20px rgba(56, 189, 248, 0.4)';
       } else {
-        btn.disabled = true;
-        btn.style.opacity = '0.5';
-        btn.style.cursor = 'not-allowed';
+        row.classList.remove('is-checked');
+        row.setAttribute('aria-checked', 'false');
+        btn.style.opacity = '0.65';
+        btn.style.boxShadow = 'none';
+      }
+    }
+
+    row.addEventListener('click', function (e) {
+      e.preventDefault();
+      setChecked(!isChecked);
+    });
+
+    row.addEventListener('keydown', function (e) {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        setChecked(!isChecked);
       }
     });
 
-    btn.addEventListener('click', function () {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (!isChecked) {
+        // Auto-check con feedback e procedi immediatamente senza blocchi
+        setChecked(true);
+      }
       var av = getAvatarData();
       av.consenso_biometrico = {
         accettato: true,
@@ -253,6 +279,9 @@
         versione_informativa: CONSENT_VERSION
       };
       saveAvatarData(av);
+      if (typeof window.showToast === 'function') {
+        window.showToast('Consenso biometrico registrato. Carica la foto per avviare il modello 3D!', 'success');
+      }
       renderView();
     });
   }

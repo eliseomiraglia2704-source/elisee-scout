@@ -3,18 +3,14 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Unificazione Sidebar Luxury macOS & Toggle 72px su tutti i 12 Ruoli (`SIDEBARALL1`):
-1. **Unificazione Cross-Ruolo (`role-sidebar-pro.css`, `role-sidebar-pro.js`, `index.html`)**:
-   - Esteso il design system moderno con traffic lights macOS, mini-profilo utente, toggle fluttuante `<` / `>`, accordion ad albero, flyout popover e bottom action card a **tutti i ruoli sportivi e tecnici**:
-     - `.es-obs-sidebar` (Osservatore / Scout)
-     - `.es-cos-sidebar` (Allenatore / Vice Allenatore)
-     - `.es-pro-sidebar` (Giocatore / Presidente / Giornalista)
-     - `.es-at-sidebar` (Preparatore Atletico)
-     - `.es-gk-sidebar` (Preparatore Portieri)
-     - `.es-ma-sidebar` (Match Analyst / Video Analyst)
-     - `.es-med-sidebar` (Staff Medico, Fisioterapista, Nutrizionista)
-   - Riallineamento fluido automatico dei container di tutte le dashboard (`padding-left: calc(252px + 18px)` espanso vs `calc(72px + 18px)` collassato).
-2. **File**: `role-sidebar-pro.css`, `role-sidebar-pro.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_SIDEBARALL1`.
+Ultimo aggiornamento: **2026-09-18** — Sblocco Consenso Biometrico Avatar 3D & Custom Checkbox Luxury (`A3DCHK1`):
+1. **Risoluzione Root Cause Blocco Consenso (`avatar-3d.css`, `avatar-3d.js`, `index.html`)**:
+   - **Causa Radice**: In `style.css` la regola globale `input[type="checkbox"]` era impostata su `display:none !important; visibility:hidden !important; pointer-events:none !important;`. La checkbox del consenso biometrico era quindi invisibile e non cliccabile, lasciando il pulsante "Conferma Consenso e Procedi" disabilitato a vita.
+   - **Custom Checkbox Box & Tick SVG**: Introdotto un container interattivo luxury `.es-a3d-consent-checkbox-row` con box personalizzato `.es-a3d-custom-chk` e icona di spunta `✓` ciano neon ad animazione elastica, indipendente dallo stato dei controlli HTML nativi.
+   - **Click-to-Proceed Universale**: Cliccando su qualsiasi punto della riga o direttamente sul pulsante *"Conferma Consenso e Procedi"*, il sistema attiva istantaneamente la spunta, salva il consenso GDPR Art. 9 e apre la schermata successiva di upload foto e morphing 3D senza alcuna possibilità di freeze o blocco.
+2. **File**: `avatar-3d.css`, `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_A3DCHK1`.
+
+Feature precedente: **Unificazione Sidebar Luxury macOS & Toggle 72px su tutti i 12 Ruoli (`SIDEBARALL1`):
 
 Feature precedente: **Integrazione Avatar 3D nella Dashboard Giocatore v3.0 & Status Biometrico (`PLAYER3D1`):
 
