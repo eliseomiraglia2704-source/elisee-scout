@@ -3,7 +3,18 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Avatar 3D: Collegamento Kit 2D Squadra Ufficiale & Nuova Interfaccia EA Sports FC (`A3DKIT1`):
+Ultimo aggiornamento: **2026-09-18** — Avatar 3D: Selettore Admin QA per Test Live Squadre 3D & Ricerca Catalogo 2.890 Club (`A3DADMIN1`):
+1. **Pannello Admin QA: Test Live Squadre 3D Integrato**:
+   - Creato box gold/dark dedicato `ADMIN QA: TEST SQUADRE 3D` nella sidebar dell'Avatar 3D.
+   - **Ricerca Istantanea su 2.890 Club**: campo di testo predittivo in tempo reale con select dropdown organizzato per campionato e categoria.
+   - **Navigazione Rapida a Scorrimento**: pulsanti `⬅ Precedente` e `Successiva ➡` per testare a raffica le divise 3D di decine di squadre una dietro l'altra.
+2. **Switching Live 3D in Tempo Reale**:
+   - Al cambio squadra, il sistema aggiorna istantaneamente lo stemma e il nome sia nella Player Card EA FC fluttuante sia nella scheda club.
+   - Ricarica dinamicamente la griglia dei Kit 2D per il club selezionato (Casa, Ospiti, Terza, Portiere, Speciali) con miniature reali.
+   - Applica istantaneamente la texture UV della divisa sul calciatore 3D, con notifica toast feedback fluttuante a schermo.
+3. **File**: `avatar-3d.js`, `avatar-3d.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_A3DADMIN1`.
+
+Feature precedente: **Avatar 3D: Collegamento Kit 2D Squadra Ufficiale & Nuova Interfaccia EA Sports FC (`A3DKIT1`):
 1. **Collegamento Automatico Kit 2D Squadra (`immagini/kits-2d/<squadra>/`)**:
    - Collegamento diretto dell'Avatar 3D alla cartella ufficiale del club (es. `foggia-city` con `INTER-HOME-27.png` e `home.png`).
    - Mappatura texture UV ad altissima risoluzione (2048x2048) in Three.js con filtro anisotropico, che avvolge maglia, maniche, sponsor e scudetto senza sfocature.

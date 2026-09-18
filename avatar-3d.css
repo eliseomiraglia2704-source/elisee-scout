@@ -1066,10 +1066,97 @@
   color: #ffffff;
 }
 
-.es-a3d-cam-btn.is-active {
-  background: #38bdf8;
-  color: #030712;
-  border-color: #38bdf8;
+/* Pannello Admin QA / Live Kit & Team Tester */
+.es-a3d-admin-box {
+  border: 1px solid rgba(245, 158, 11, 0.45) !important;
+  background: linear-gradient(145deg, rgba(245, 158, 11, 0.08) 0%, rgba(15, 23, 42, 0.75) 100%) !important;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.12);
+}
+
+.es-a3d-admin-search-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.es-a3d-admin-search-input {
+  width: 100%;
+  background: rgba(10, 15, 24, 0.85);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.es-a3d-admin-search-input:focus {
+  border-color: #fbbf24;
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.25);
+}
+
+.es-a3d-admin-select {
+  width: 100%;
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #f1f5f9;
+  font-size: 0.78rem;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+}
+
+.es-a3d-admin-nav-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.es-a3d-admin-nav-btn {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.es-a3d-admin-nav-btn:hover {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: #fbbf24;
+  color: #ffffff;
+}
+
+.es-a3d-admin-status-toast {
+  position: absolute;
+  top: 75px;
+  left: 20px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid #38bdf8;
+  border-radius: 8px;
+  padding: 6px 12px;
+  color: #38bdf8;
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  z-index: 35;
+  pointer-events: none;
+  transition: opacity 0.3s;
 }
 
 /* Mobile responsive */

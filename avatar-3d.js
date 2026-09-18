@@ -602,6 +602,69 @@
     if (sp) sp.remove();
   }
 
+  // Elenco base immediato squadre top
+  var DEFAULT_TOP_TEAMS = [
+    { id: 'foggia-city', name: 'FOGGIA CITY', logo: 'immagini/squadre-loghi/foggia-city.png' },
+    { id: 'inter', name: 'INTER', logo: 'immagini/squadre-loghi/inter.png' },
+    { id: 'milan', name: 'MILAN', logo: 'immagini/squadre-loghi/milan.png' },
+    { id: 'juventus', name: 'JUVENTUS', logo: 'immagini/squadre-loghi/juventus.png' },
+    { id: 'napoli', name: 'NAPOLI', logo: 'immagini/squadre-loghi/napoli.png' },
+    { id: 'roma', name: 'ROMA', logo: 'immagini/squadre-loghi/roma.png' },
+    { id: 'lazio', name: 'LAZIO', logo: 'immagini/squadre-loghi/lazio.png' },
+    { id: 'atalanta', name: 'ATALANTA', logo: 'immagini/squadre-loghi/atalanta.png' },
+    { id: 'fiorentina', name: 'FIORENTINA', logo: 'immagini/squadre-loghi/fiorentina.png' },
+    { id: 'bologna', name: 'BOLOGNA', logo: 'immagini/squadre-loghi/bologna.png' },
+    { id: 'torino', name: 'TORINO', logo: 'immagini/squadre-loghi/torino.png' },
+    { id: 'palermo', name: 'PALERMO', logo: 'immagini/squadre-loghi/palermo.png' },
+    { id: 'sampdoria', name: 'SAMPDORIA', logo: 'immagini/squadre-loghi/sampdoria.png' },
+    { id: 'bari', name: 'BARI', logo: 'immagini/squadre-loghi/bari.png' },
+    { id: 'catania', name: 'CATANIA', logo: 'immagini/squadre-loghi/catania.png' },
+    { id: 'verona', name: 'VERONA', logo: 'immagini/squadre-loghi/verona.png' },
+    { id: 'genoa', name: 'GENOA', logo: 'immagini/squadre-loghi/genoa.png' },
+    { id: 'salernitana', name: 'SALERNITANA', logo: 'immagini/squadre-loghi/salernitana.png' },
+    { id: 'cagliari', name: 'CAGLIARI', logo: 'immagini/squadre-loghi/cagliari.png' },
+    { id: 'parma', name: 'PARMA', logo: 'immagini/squadre-loghi/parma.png' },
+    { id: 'lecce', name: 'LECCE', logo: 'immagini/squadre-loghi/lecce.png' },
+    { id: 'venezia', name: 'VENEZIA', logo: 'immagini/squadre-loghi/venezia.png' },
+    { id: 'monza', name: 'MONZA', logo: 'immagini/squadre-loghi/monza.png' },
+    { id: 'udinese', name: 'UDINESE', logo: 'immagini/squadre-loghi/udinese.png' },
+    { id: 'empoli', name: 'EMPOLI', logo: 'immagini/squadre-loghi/empoli.png' },
+    { id: 'catanzaro', name: 'CATANZARO', logo: 'immagini/squadre-loghi/catanzaro.png' }
+  ];
+
+  var allCatalogTeams = DEFAULT_TOP_TEAMS.slice();
+  var catalogLoaded = false;
+
+  // Caricamento catalogo completo da data/squadre/catalog.json
+  function loadFullCatalog(callback) {
+    if (catalogLoaded) {
+      if (callback) callback(allCatalogTeams);
+      return;
+    }
+    fetch('data/squadre/catalog.json')
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data && Array.isArray(data.teams) && data.teams.length > 0) {
+          allCatalogTeams = data.teams.map(function (t) {
+            return {
+              id: t.id || (t.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+              name: (t.name || t.id || 'Club').toUpperCase(),
+              logo: t.logo || ('immagini/squadre-loghi/' + t.id + '.png'),
+              league: t.league || '',
+              kits: t.kits || []
+            };
+          });
+          catalogLoaded = true;
+        }
+        if (callback) callback(allCatalogTeams);
+      })
+      .catch(function () {
+        if (callback) callback(allCatalogTeams);
+      });
+  }
+  // Avvia pre-caricamento non bloccante
+  loadFullCatalog();
+
   // Lista kit disponibili per club
   function getAvailableKitsForClub(clubName) {
     var slug = (clubName || 'foggia-city').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');
@@ -621,6 +684,23 @@
         }
       ];
     }
+
+    // Cerca nel catalogo completo
+    var found = allCatalogTeams.find(function (t) {
+      return t.id === slug || (t.name || '').toLowerCase() === (clubName || '').toLowerCase();
+    });
+
+    if (found && Array.isArray(found.kits) && found.kits.length > 0) {
+      return found.kits.map(function (k) {
+        return {
+          id: slug + '_' + (k.key || 'home'),
+          name: found.name + ' ' + (k.label || 'Kits'),
+          path: k.url || ('immagini/kits-2d/' + slug + '/' + (k.key || 'home') + '.png'),
+          badge: (k.key === 'home' ? 'UFFICIALE' : (k.label || 'KIT').slice(0, 8))
+        };
+      });
+    }
+
     return [
       {
         id: slug + '_home',
@@ -640,18 +720,29 @@
     var kits = getAvailableKitsForClub(clubName);
     var activeKitPath = (avatar.divisa_ref && avatar.divisa_ref.selected_kit_path) || kits[0].path;
 
-    // Genera HTML miniature kit
-    var kitsHtml = '';
-    kits.forEach(function (k) {
-      var isActive = (activeKitPath === k.path);
-      kitsHtml +=
-        '<div class="es-a3d-kit-card ' + (isActive ? 'is-active' : '') + '" data-kit-path="' + k.path + '" data-kit-id="' + k.id + '">' +
-          '<div class="es-a3d-kit-thumb-wrap">' +
-            '<img class="es-a3d-kit-thumb-img" src="' + k.path + '" alt="' + k.name + '" onerror="this.onerror=null;this.src=\'immagini/kits-2d/foggia-city/home.png\';">' +
-          '</div>' +
-          '<div class="es-a3d-kit-label">' + k.name + '</div>' +
-          '<span class="es-a3d-kit-badge-tag">' + (isActive ? 'INDOSSATA' : k.badge) + '</span>' +
-        '</div>';
+    function buildKitsHtml(currKits, selectedPath) {
+      var html = '';
+      currKits.forEach(function (k) {
+        var isActive = (selectedPath === k.path);
+        html +=
+          '<div class="es-a3d-kit-card ' + (isActive ? 'is-active' : '') + '" data-kit-path="' + k.path + '" data-kit-id="' + k.id + '">' +
+            '<div class="es-a3d-kit-thumb-wrap">' +
+              '<img class="es-a3d-kit-thumb-img" src="' + k.path + '" alt="' + k.name + '" onerror="this.onerror=null;this.src=\'immagini/kits-2d/foggia-city/home.png\';">' +
+            '</div>' +
+            '<div class="es-a3d-kit-label">' + k.name + '</div>' +
+            '<span class="es-a3d-kit-badge-tag">' + (isActive ? 'INDOSSATA' : k.badge) + '</span>' +
+          '</div>';
+      });
+      return html;
+    }
+
+    var kitsHtml = buildKitsHtml(kits, activeKitPath);
+
+    // Opzioni squadre per il Select Admin
+    var teamOptionsHtml = '';
+    allCatalogTeams.slice(0, 100).forEach(function (t) {
+      var isSel = (t.id === clubName.toLowerCase().replace(/[^a-z0-9]+/g, '-') || t.name === clubName.toUpperCase());
+      teamOptionsHtml += '<option value="' + t.id + '" ' + (isSel ? 'selected' : '') + '>' + t.name + (t.league ? ' (' + t.league + ')' : '') + '</option>';
     });
 
     container.innerHTML =
@@ -665,11 +756,14 @@
           '<div class="es-a3d-card-info">' +
             '<span class="es-a3d-card-name">' + athleteName + '</span>' +
             '<div class="es-a3d-card-club-row">' +
-              '<img src="immagini/squadre-loghi/foggia-city.png" onerror="this.onerror=null;this.src=\'immagini/kits-2d/foggia-city/home.png\';" alt="Logo">' +
-              '<span>' + clubName + '</span>' +
+              '<img id="es-a3d-card-club-logo" src="immagini/squadre-loghi/' + clubName.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '.png" onerror="this.onerror=null;this.src=\'immagini/kits-2d/foggia-city/home.png\';" alt="Logo">' +
+              '<span id="es-a3d-card-club-name">' + clubName + '</span>' +
             '</div>' +
           '</div>' +
         '</div>' +
+
+        '<!-- Feedback Toast Rapido per Test Admin -->' +
+        '<div class="es-a3d-admin-status-toast" id="es-a3d-admin-toast" style="display:none;"></div>' +
 
         '<div class="es-a3d-canvas-wrap" id="es-a3d-canvas-wrap">' +
           '<div class="es-a3d-canvas-overlay-guide" id="es-a3d-drop-guide">' +
@@ -702,17 +796,35 @@
         '</div>' +
       '</div>' +
       '<aside class="es-a3d-sidebar-controls">' +
+        '<!-- Box ADMIN QA: Selettore & Test Live Squadre 3D -->' +
+        '<div class="es-a3d-card-section es-a3d-admin-box" id="es-a3d-admin-qa-box">' +
+          '<div class="es-a3d-section-title" style="color:#fbbf24;">' +
+            '<span>👑 ADMIN QA: TEST SQUADRE 3D</span>' +
+            '<span class="es-a3d-badge-pro" style="background:#fbbf24; color:#0f172a;">LIVE QA</span>' +
+          '</div>' +
+          '<div class="es-a3d-admin-search-wrap">' +
+            '<input type="text" class="es-a3d-admin-search-input" id="es-a3d-admin-search" placeholder="🔍 Cerca tra 2.890 club (es. Inter, Milan, Foggia...)" autocomplete="off">' +
+            '<select class="es-a3d-admin-select" id="es-a3d-admin-select-team">' +
+              teamOptionsHtml +
+            '</select>' +
+            '<div class="es-a3d-admin-nav-btns">' +
+              '<button type="button" class="es-a3d-admin-nav-btn" id="btn-admin-prev-team">⬅ Precedente</button>' +
+              '<button type="button" class="es-a3d-admin-nav-btn" id="btn-admin-next-team">Successiva ➡</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
         '<!-- Sezione 1: Kit 2D & Divisa Ufficiale Club -->' +
         '<div class="es-a3d-card-section">' +
           '<div class="es-a3d-section-title">Kit 2D &amp; Divisa Club <span class="es-a3d-badge-pro">LIVE 3D</span></div>' +
           '<div class="es-a3d-club-kit-row">' +
-            '<img class="es-a3d-club-badge-img" src="immagini/squadre-loghi/foggia-city.png" onerror="this.onerror=null;this.src=\'immagini/kits-2d/foggia-city/home.png\';" alt="Badge">' +
+            '<img class="es-a3d-club-badge-img" id="es-a3d-main-club-badge" src="immagini/squadre-loghi/' + clubName.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '.png" onerror="this.onerror=null;this.src=\'immagini/kits-2d/foggia-city/home.png\';" alt="Badge">' +
             '<div>' +
-              '<div class="es-a3d-club-name">' + clubName + '</div>' +
+              '<div class="es-a3d-club-name" id="es-a3d-main-club-name">' + clubName + '</div>' +
               '<div class="es-a3d-club-kit-sub">' + athleteName + ' · N° ' + (avatar.divisa_ref.numero || 10) + '</div>' +
             '</div>' +
           '</div>' +
-          '<div style="margin-top:6px; font-size:0.75rem; color:#94a3b8; font-weight:600;">Seleziona la divisa da applicare:</div>' +
+          '<div style="margin-top:6px; font-size:0.75rem; color:#94a3b8; font-weight:600;">Divise disponibili per questo club:</div>' +
           '<div class="es-a3d-kit-grid" id="es-a3d-kit-grid">' +
             kitsHtml +
           '</div>' +
@@ -724,7 +836,6 @@
             '<span class="es-a3d-tattoo-badge" id="es-a3d-kit-badge-text">' + (avatar.applica_divisa_club !== false ? 'ATTIVA' : 'ORIGINALE') + '</span>' +
           '</div>' +
         '</div>' +
-
         '<!-- Sezione 2: Modello 3D (.glb) Hyper3D -->' +
         '<div class="es-a3d-card-section">' +
           '<div class="es-a3d-section-title">Modello 3D (.glb) <span class="es-a3d-badge-pro">HYPER3D READY</span></div>' +
@@ -766,31 +877,138 @@
     var btnUpload = container.querySelector('#btn-trigger-upload-glb');
     var canvasWrap = container.querySelector('#es-a3d-canvas-wrap');
     var statusBox = container.querySelector('#es-a3d-glb-status-box');
+    var adminToast = container.querySelector('#es-a3d-admin-toast');
 
-    // Binding Click Selettore Kit 2D
-    var kitCards = container.querySelectorAll('.es-a3d-kit-card');
-    kitCards.forEach(function (card) {
-      card.addEventListener('click', function () {
-        var kPath = card.getAttribute('data-kit-path');
-        var kId = card.getAttribute('data-kit-id');
-        kitCards.forEach(function (c) {
-          c.classList.remove('is-active');
-          var tag = c.querySelector('.es-a3d-kit-badge-tag');
-          if (tag) tag.textContent = (c.getAttribute('data-kit-id') === 'inter_home_27' ? 'SPECIALE' : 'UFFICIALE');
+    // Funzione Toast Feedback Rapido Admin
+    function showAdminToast(msg) {
+      if (!adminToast) return;
+      adminToast.innerHTML =
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>' +
+        '<span>' + msg + '</span>';
+      adminToast.style.display = 'flex';
+      adminToast.style.opacity = '1';
+      clearTimeout(adminToast.__tid);
+      adminToast.__tid = setTimeout(function () {
+        adminToast.style.opacity = '0';
+        setTimeout(function () { adminToast.style.display = 'none'; }, 300);
+      }, 2500);
+    }
+
+    // Binding Click Selettore Kit 2D (Funzione riutilizzabile)
+    function bindKitCards() {
+      var kitCards = container.querySelectorAll('.es-a3d-kit-card');
+      kitCards.forEach(function (card) {
+        card.addEventListener('click', function () {
+          var kPath = card.getAttribute('data-kit-path');
+          var kId = card.getAttribute('data-kit-id');
+          kitCards.forEach(function (c) {
+            c.classList.remove('is-active');
+            var tag = c.querySelector('.es-a3d-kit-badge-tag');
+            if (tag) tag.textContent = (c.getAttribute('data-kit-id') === 'inter_home_27' ? 'SPECIALE' : 'UFFICIALE');
+          });
+          card.classList.add('is-active');
+          var activeTag = card.querySelector('.es-a3d-kit-badge-tag');
+          if (activeTag) activeTag.textContent = 'INDOSSATA';
+
+          avatar.divisa_ref = avatar.divisa_ref || {};
+          avatar.divisa_ref.selected_kit_path = kPath;
+          avatar.divisa_ref.selected_kit_id = kId;
+          saveAvatarData(avatar);
+
+          // Applica la texture direttamente al modello attivo in scena
+          applyKitTextureToActiveModel(kPath);
+          showAdminToast('Kit 3D Applicato: ' + (avatar.divisa_ref.club || 'Club'));
         });
-        card.classList.add('is-active');
-        var activeTag = card.querySelector('.es-a3d-kit-badge-tag');
-        if (activeTag) activeTag.textContent = 'INDOSSATA';
-
-        avatar.divisa_ref = avatar.divisa_ref || {};
-        avatar.divisa_ref.selected_kit_path = kPath;
-        avatar.divisa_ref.selected_kit_id = kId;
-        saveAvatarData(avatar);
-
-        // Applica la texture direttamente al modello attivo in scena
-        applyKitTextureToActiveModel(kPath);
       });
-    });
+    }
+    bindKitCards();
+
+    // Controller ADMIN QA: Selettore Squadra e Test Live 3D
+    var adminSearch = container.querySelector('#es-a3d-admin-search');
+    var adminSelect = container.querySelector('#es-a3d-admin-select-team');
+    var btnPrevTeam = container.querySelector('#btn-admin-prev-team');
+    var btnNextTeam = container.querySelector('#btn-admin-next-team');
+
+    function applyTeamSelection(teamId) {
+      if (!teamId) return;
+      var team = allCatalogTeams.find(function (t) { return t.id === teamId; });
+      if (!team) {
+        team = { id: teamId, name: teamId.toUpperCase(), logo: 'immagini/squadre-loghi/' + teamId + '.png' };
+      }
+
+      // Aggiorna stato avatar
+      avatar.divisa_ref = avatar.divisa_ref || {};
+      avatar.divisa_ref.club = team.name;
+
+      // Aggiorna UI Nomi & Loghi
+      var mainName = container.querySelector('#es-a3d-main-club-name');
+      var mainBadge = container.querySelector('#es-a3d-main-club-badge');
+      var cardName = container.querySelector('#es-a3d-card-club-name');
+      var cardBadge = container.querySelector('#es-a3d-card-club-logo');
+      if (mainName) mainName.textContent = team.name;
+      if (cardName) cardName.textContent = team.name;
+      if (mainBadge) mainBadge.src = team.logo || ('immagini/squadre-loghi/' + team.id + '.png');
+      if (cardBadge) cardBadge.src = team.logo || ('immagini/squadre-loghi/' + team.id + '.png');
+
+      // Ricava Kit disponibili per la squadra
+      var newKits = getAvailableKitsForClub(team.name);
+      var defaultKitPath = newKits[0].path;
+      avatar.divisa_ref.selected_kit_path = defaultKitPath;
+      avatar.divisa_ref.selected_kit_id = newKits[0].id;
+      saveAvatarData(avatar);
+
+      // Rigenera griglia kit
+      var kitGrid = container.querySelector('#es-a3d-kit-grid');
+      if (kitGrid) {
+        kitGrid.innerHTML = buildKitsHtml(newKits, defaultKitPath);
+        bindKitCards();
+      }
+
+      // Applica immediatamente la texture al modello 3D
+      applyKitTextureToActiveModel(defaultKitPath);
+      showAdminToast('👑 SQUADRA TEST: ' + team.name + ' (' + newKits.length + ' kit disponibili)');
+    }
+
+    if (adminSelect) {
+      adminSelect.addEventListener('change', function () {
+        applyTeamSelection(adminSelect.value);
+      });
+    }
+
+    if (btnPrevTeam && adminSelect) {
+      btnPrevTeam.addEventListener('click', function () {
+        if (adminSelect.selectedIndex > 0) {
+          adminSelect.selectedIndex--;
+          applyTeamSelection(adminSelect.value);
+        }
+      });
+    }
+
+    if (btnNextTeam && adminSelect) {
+      btnNextTeam.addEventListener('click', function () {
+        if (adminSelect.selectedIndex < adminSelect.options.length - 1) {
+          adminSelect.selectedIndex++;
+          applyTeamSelection(adminSelect.value);
+        }
+      });
+    }
+
+    if (adminSearch && adminSelect) {
+      adminSearch.addEventListener('input', function () {
+        var q = (adminSearch.value || '').toLowerCase().trim();
+        var filtered = allCatalogTeams.filter(function (t) {
+          return (t.name || '').toLowerCase().indexOf(q) !== -1 || (t.id || '').indexOf(q) !== -1;
+        });
+        var optsHtml = '';
+        filtered.slice(0, 150).forEach(function (t) {
+          optsHtml += '<option value="' + t.id + '">' + t.name + (t.league ? ' (' + t.league + ')' : '') + '</option>';
+        });
+        adminSelect.innerHTML = optsHtml || '<option value="">Nessun club trovato</option>';
+        if (filtered.length > 0) {
+          applyTeamSelection(filtered[0].id);
+        }
+      });
+    }
 
     // Preset Telecamera
     var camBtns = container.querySelectorAll('.es-a3d-cam-btn');
