@@ -40,6 +40,9 @@
       utente_id: (getActiveUser().email || 'user_anon').toLowerCase(),
       foto_originale_url: '',
       texture_volto_url: '',
+      glb_model_url: '',
+      glb_model_nome: '',
+      applica_divisa_club: true,
       corporatura_scelta: 'atletica',
       stile_capelli: 'short_textured',
       tatuaggio_collo: false,
@@ -93,6 +96,83 @@
       }
     } catch (_) {}
     return data;
+  }
+
+  // ============================================================
+  // GESTIONE INDEXEDDB PER MODELLI 3D (.GLB) DI GRANDI DIMENSIONI
+  // ============================================================
+  var GLB_DB_NAME = 'elisee_avatar_db';
+  var GLB_DB_VERSION = 1;
+  var GLB_STORE_NAME = 'glb_models';
+
+  function openGlbDatabase(callback) {
+    if (!window.indexedDB) { if (callback) callback(null); return; }
+    try {
+      var req = indexedDB.open(GLB_DB_NAME, GLB_DB_VERSION);
+      req.onupgradeneeded = function (e) {
+        var db = e.target.result;
+        if (!db.objectStoreNames.contains(GLB_STORE_NAME)) {
+          db.createObjectStore(GLB_STORE_NAME, { keyPath: 'id' });
+        }
+      };
+      req.onsuccess = function (e) { if (callback) callback(e.target.result); };
+      req.onerror = function () { if (callback) callback(null); };
+    } catch (_) {
+      if (callback) callback(null);
+    }
+  }
+
+  function saveGlbBlobToDB(blob, fileName, callback) {
+    openGlbDatabase(function (db) {
+      if (!db) { if (callback) callback(false); return; }
+      try {
+        var tx = db.transaction([GLB_STORE_NAME], 'readwrite');
+        var store = tx.objectStore(GLB_STORE_NAME);
+        var record = {
+          id: 'active_avatar',
+          blob: blob,
+          name: fileName || 'avatar.glb',
+          updatedAt: Date.now()
+        };
+        var req = store.put(record);
+        req.onsuccess = function () { if (callback) callback(true); };
+        req.onerror = function () { if (callback) callback(false); };
+      } catch (_) {
+        if (callback) callback(false);
+      }
+    });
+  }
+
+  function loadGlbBlobFromDB(callback) {
+    openGlbDatabase(function (db) {
+      if (!db) { if (callback) callback(null); return; }
+      try {
+        var tx = db.transaction([GLB_STORE_NAME], 'readonly');
+        var store = tx.objectStore(GLB_STORE_NAME);
+        var req = store.get('active_avatar');
+        req.onsuccess = function (e) {
+          if (callback) callback(e.target.result || null);
+        };
+        req.onerror = function () { if (callback) callback(null); };
+      } catch (_) {
+        if (callback) callback(null);
+      }
+    });
+  }
+
+  function deleteGlbBlobFromDB(callback) {
+    openGlbDatabase(function (db) {
+      if (!db) { if (callback) callback(); return; }
+      try {
+        var tx = db.transaction([GLB_STORE_NAME], 'readwrite');
+        var store = tx.objectStore(GLB_STORE_NAME);
+        var req = store.delete('active_avatar');
+        req.onsuccess = function () { if (callback) callback(); };
+        req.onerror = function () { if (callback) callback(); };
+      } catch (_) {
+        if (callback) callback();
+      }
+    });
   }
 
   // Verifica Salvaguardia Minorenni (Art. 8 GDPR)
@@ -498,6 +578,27 @@
     });
   }
 
+  // Helper indicatore caricamento modello 3D
+  function showModelSpinner(canvasWrap, text) {
+    if (!canvasWrap) return;
+    var existing = canvasWrap.querySelector('#es-a3d-model-spinner');
+    if (!existing) {
+      existing = document.createElement('div');
+      existing.id = 'es-a3d-model-spinner';
+      existing.className = 'es-a3d-model-spinner';
+      canvasWrap.appendChild(existing);
+    }
+    existing.innerHTML =
+      '<div class="es-a3d-model-spinner-ring"></div>' +
+      '<span style="color:#e2e8f0; font-size:0.8rem; font-weight:600;">' + (text || 'Caricamento Modello 3D...') + '</span>';
+  }
+
+  function hideModelSpinner(canvasWrap) {
+    if (!canvasWrap) return;
+    var sp = canvasWrap.querySelector('#es-a3d-model-spinner');
+    if (sp) sp.remove();
+  }
+
   // Visualizzatore 3D Completo Three.js (Stage a sinistra, Controlli a destra)
   function renderStageView(container, avatar) {
     var user = getActiveUser();
@@ -506,7 +607,12 @@
 
     container.innerHTML =
       '<div class="es-a3d-stage-container" id="es-a3d-stage">' +
-        '<div class="es-a3d-canvas-wrap" id="es-a3d-canvas-wrap"></div>' +
+        '<div class="es-a3d-canvas-wrap" id="es-a3d-canvas-wrap">' +
+          '<div class="es-a3d-canvas-overlay-guide" id="es-a3d-drop-guide">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
+            '<span>Trascina qui il file .GLB</span> esportato da Hyper3D' +
+          '</div>' +
+        '</div>' +
         '<div class="es-a3d-orbit-controls-bar">' +
           '<button type="button" class="es-a3d-tool-btn" id="btn-toggle-autorotate" title="Attiva/Pausa rotazione">' +
             '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>' +
@@ -526,50 +632,14 @@
       '</div>' +
       '<aside class="es-a3d-sidebar-controls">' +
         '<div class="es-a3d-card-section">' +
-          '<div class="es-a3d-section-title">Corporatura Modello 3D</div>' +
-          '<div class="es-a3d-bodytype-grid">' +
-            '<button type="button" class="es-a3d-bodytype-btn ' + (avatar.corporatura_scelta === 'snella' ? 'is-selected' : '') + '" data-body="snella">Snella</button>' +
-            '<button type="button" class="es-a3d-bodytype-btn ' + (avatar.corporatura_scelta === 'media' ? 'is-selected' : '') + '" data-body="media">Media</button>' +
-            '<button type="button" class="es-a3d-bodytype-btn ' + (avatar.corporatura_scelta === 'atletica' ? 'is-selected' : '') + '" data-body="atletica">Atletica</button>' +
-          '</div>' +
-        '</div>' +
-        '<div class="es-a3d-card-section">' +
-          '<div class="es-a3d-section-title">Stile Capelli <span class="es-a3d-badge-pro">PRO 3D</span></div>' +
-          '<div class="es-a3d-hair-grid">' +
-            '<button type="button" class="es-a3d-hair-btn ' + (avatar.stile_capelli === 'short_textured' ? 'is-selected' : '') + '" data-hair="short_textured">' +
-              '<span class="es-a3d-hair-dot" style="background:#d7cbab;"></span>' +
-              '<span>Biondo Corto</span>' +
-            '</button>' +
-            '<button type="button" class="es-a3d-hair-btn ' + (avatar.stile_capelli === 'fade_brunette' ? 'is-selected' : '') + '" data-hair="fade_brunette">' +
-              '<span class="es-a3d-hair-dot" style="background:#4a3728;"></span>' +
-              '<span>Castano Sfumato</span>' +
-            '</button>' +
-            '<button type="button" class="es-a3d-hair-btn ' + (avatar.stile_capelli === 'platinum_ice' ? 'is-selected' : '') + '" data-hair="platinum_ice">' +
-              '<span class="es-a3d-hair-dot" style="background:#f1f5f9;"></span>' +
-              '<span>Biondo Platino</span>' +
-            '</button>' +
-            '<button type="button" class="es-a3d-hair-btn ' + (avatar.stile_capelli === 'dark_crop' ? 'is-selected' : '') + '" data-hair="dark_crop">' +
-              '<span class="es-a3d-hair-dot" style="background:#171717;"></span>' +
-              '<span>Nero Corvino</span>' +
-            '</button>' +
-          '</div>' +
-        '</div>' +
-        '<div class="es-a3d-card-section">' +
-          '<div class="es-a3d-section-title">Tatuaggio Collo</div>' +
-          '<div class="es-a3d-tattoo-toggle-row ' + (avatar.tatuaggio_collo !== false ? 'is-active' : '') + '" id="btn-toggle-tattoo">' +
-            '<div class="es-a3d-tattoo-label">' +
-              '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>' +
-              '<span>Tribale Geometrico Collo</span>' +
-            '</div>' +
-            '<span class="es-a3d-tattoo-badge">' + (avatar.tatuaggio_collo !== false ? 'ATTIVO' : 'NO') + '</span>' +
-          '</div>' +
-        '</div>' +
-        '<div class="es-a3d-card-section">' +
-          '<div class="es-a3d-section-title">Illuminazione Scena</div>' +
-          '<div class="es-a3d-light-grid">' +
-            '<button type="button" class="es-a3d-light-btn ' + (avatar.preset_luci === 'elite_neon' ? 'is-selected' : '') + '" data-light="elite_neon">Neon Élite</button>' +
-            '<button type="button" class="es-a3d-light-btn ' + (avatar.preset_luci === 'sunset_match' ? 'is-selected' : '') + '" data-light="sunset_match">Tramonto Gara</button>' +
-            '<button type="button" class="es-a3d-light-btn ' + (avatar.preset_luci === 'studio_hq' ? 'is-selected' : '') + '" data-light="studio_hq">Studio HQ</button>' +
+          '<div class="es-a3d-section-title">Modello 3D (.glb) <span class="es-a3d-badge-pro">HYPER3D READY</span></div>' +
+          '<input type="file" id="es-a3d-input-glb" accept=".glb,.gltf" style="display:none">' +
+          '<button type="button" class="es-a3d-upload-glb-btn" id="btn-trigger-upload-glb">' +
+            '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
+            '<span>Carica File 3D (.glb)</span>' +
+          '</button>' +
+          '<div class="es-a3d-upload-status" id="es-a3d-glb-status-box">' +
+            '<span style="color:#64748b;">Nessun file personalizzato caricato</span>' +
           '</div>' +
         '</div>' +
         '<div class="es-a3d-card-section">' +
@@ -580,6 +650,21 @@
               '<div class="es-a3d-club-name">' + clubName + '</div>' +
               '<div class="es-a3d-club-kit-sub">' + athleteName + ' · N° ' + avatar.divisa_ref.numero + '</div>' +
             '</div>' +
+          '</div>' +
+          '<div class="es-a3d-tattoo-toggle-row ' + (avatar.applica_divisa_club !== false ? 'is-active' : '') + '" id="btn-toggle-club-kit" style="margin-top:10px; cursor:pointer;">' +
+            '<div class="es-a3d-tattoo-label">' +
+              '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>' +
+              '<span>Applica Colori Elisee F.C.</span>' +
+            '</div>' +
+            '<span class="es-a3d-tattoo-badge" id="es-a3d-kit-badge-text">' + (avatar.applica_divisa_club !== false ? 'ATTIVA' : 'ORIGINALE') + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="es-a3d-card-section">' +
+          '<div class="es-a3d-section-title">Illuminazione Scena</div>' +
+          '<div class="es-a3d-light-grid">' +
+            '<button type="button" class="es-a3d-light-btn ' + (avatar.preset_luci === 'elite_neon' ? 'is-selected' : '') + '" data-light="elite_neon">Neon Élite</button>' +
+            '<button type="button" class="es-a3d-light-btn ' + (avatar.preset_luci === 'sunset_match' ? 'is-selected' : '') + '" data-light="sunset_match">Tramonto Gara</button>' +
+            '<button type="button" class="es-a3d-light-btn ' + (avatar.preset_luci === 'studio_hq' ? 'is-selected' : '') + '" data-light="studio_hq">Studio HQ</button>' +
           '</div>' +
         '</div>' +
         '<div class="es-a3d-card-section">' +
@@ -595,40 +680,97 @@
         '</button>' +
       '</aside>';
 
-    // Binding eventi sidebar
-    var bodyBtns = container.querySelectorAll('.es-a3d-bodytype-btn');
-    bodyBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var type = btn.getAttribute('data-body');
-        bodyBtns.forEach(function (b) { b.classList.remove('is-selected'); });
-        btn.classList.add('is-selected');
-        avatar.corporatura_scelta = type;
-        saveAvatarData(avatar);
-        rebuildBodyModel(type);
-      });
-    });
+    var glbInput = container.querySelector('#es-a3d-input-glb');
+    var btnUpload = container.querySelector('#btn-trigger-upload-glb');
+    var canvasWrap = container.querySelector('#es-a3d-canvas-wrap');
+    var statusBox = container.querySelector('#es-a3d-glb-status-box');
 
-    // Stile Capelli
-    var hairBtns = container.querySelectorAll('.es-a3d-hair-btn');
-    hairBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var h = btn.getAttribute('data-hair');
-        hairBtns.forEach(function (b) { b.classList.remove('is-selected'); });
-        btn.classList.add('is-selected');
-        avatar.stile_capelli = h;
+    // Funzione aggiornamento UI status del modello
+    function refreshGlbStatusUI(modelName) {
+      if (!statusBox) return;
+      if (modelName) {
+        statusBox.innerHTML =
+          '<div class="es-a3d-glb-badge-loaded">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>' +
+            '<span>' + modelName + '</span>' +
+          '</div>' +
+          '<button type="button" class="es-a3d-btn-remove-glb" id="btn-remove-active-glb">Rimuovi Modello Personalizzato</button>';
+
+        var btnRem = statusBox.querySelector('#btn-remove-active-glb');
+        if (btnRem) {
+          btnRem.addEventListener('click', function () {
+            deleteGlbBlobFromDB(function () {
+              avatar.glb_model_url = '';
+              avatar.glb_model_nome = '';
+              saveAvatarData(avatar);
+              refreshGlbStatusUI(null);
+              buildAthleteModel(avatar);
+            });
+          });
+        }
+      } else {
+        statusBox.innerHTML = '<span style="color:#64748b;">Nessun file personalizzato caricato</span>';
+      }
+    }
+    window.__eliseeRefreshGlbStatusUI = refreshGlbStatusUI;
+
+    // Trigger upload
+    if (btnUpload && glbInput) {
+      btnUpload.addEventListener('click', function () {
+        glbInput.click();
+      });
+
+      glbInput.addEventListener('change', function () {
+        if (glbInput.files && glbInput.files[0]) {
+          processGlbFile(glbInput.files[0]);
+        }
+      });
+    }
+
+    // Funzione elaborazione file GLB (da input o drag & drop)
+    function processGlbFile(file) {
+      if (!file) return;
+      var name = file.name || 'avatar.glb';
+      if (!/\.(glb|gltf)$/i.test(name)) {
+        alert('Seleziona un file con estensione .glb o .gltf (esportato da Hyper3D o altro modellatore 3D).');
+        return;
+      }
+      showModelSpinner(canvasWrap, 'Salvataggio e caricamento...');
+      saveGlbBlobToDB(file, name, function (ok) {
+        avatar.glb_model_nome = name;
+        avatar.stato_generazione = 'completato';
         saveAvatarData(avatar);
+        refreshGlbStatusUI(name);
         buildAthleteModel(avatar);
       });
-    });
+    }
 
-    // Toggle Tatuaggio Collo
-    var btnTattoo = container.querySelector('#btn-toggle-tattoo');
-    if (btnTattoo) {
-      btnTattoo.addEventListener('click', function () {
-        avatar.tatuaggio_collo = !avatar.tatuaggio_collo;
-        btnTattoo.classList.toggle('is-active', avatar.tatuaggio_collo);
-        var badge = btnTattoo.querySelector('.es-a3d-tattoo-badge');
-        if (badge) badge.textContent = avatar.tatuaggio_collo ? 'ATTIVO' : 'NO';
+    // Drag and Drop sul canvas 3D
+    if (canvasWrap) {
+      canvasWrap.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        canvasWrap.classList.add('is-dragover');
+      });
+      canvasWrap.addEventListener('dragleave', function () {
+        canvasWrap.classList.remove('is-dragover');
+      });
+      canvasWrap.addEventListener('drop', function (e) {
+        e.preventDefault();
+        canvasWrap.classList.remove('is-dragover');
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+          processGlbFile(e.dataTransfer.files[0]);
+        }
+      });
+    }
+
+    // Toggle Divisa Elisee F.C.
+    var btnToggleKit = container.querySelector('#btn-toggle-club-kit');
+    if (btnToggleKit) {
+      btnToggleKit.addEventListener('click', function () {
+        avatar.applica_divisa_club = (avatar.applica_divisa_club === false);
+        btnToggleKit.classList.toggle('is-active', avatar.applica_divisa_club !== false);
+        var bText = btnToggleKit.querySelector('#es-a3d-kit-badge-text');
+        if (bText) bText.textContent = (avatar.applica_divisa_club !== false ? 'ATTIVA' : 'ORIGINALE');
         saveAvatarData(avatar);
         buildAthleteModel(avatar);
       });
@@ -643,7 +785,9 @@
         btn.classList.add('is-selected');
         avatar.preset_luci = l;
         saveAvatarData(avatar);
-        applyLightingPreset(l);
+        if (typeof window.__eliseeApplyLightingPreset === 'function') {
+          window.__eliseeApplyLightingPreset(l);
+        }
       });
     });
 
@@ -655,14 +799,14 @@
     });
 
     container.querySelector('#btn-delete-avatar-gdpr').addEventListener('click', function () {
-      if (confirm('Sei sicuro di voler eliminare definitivamente il tuo Avatar 3D e revocare il consenso biometrico ai sensi dell\'Art. 17 GDPR? La foto originale, la mesh volumetrica e le texture verranno cancellate irreversibilmente.')) {
+      if (confirm('Sei sicuro di voler eliminare definitivamente il tuo Avatar 3D e revocare il consenso biometrico ai sensi dell\'Art. 17 GDPR? I dati 3D salvati verranno cancellati irreversibilmente.')) {
         deleteAvatarPermanently();
       }
     });
 
     // Inizializza o riallinea scena Three.js
     setTimeout(function () {
-      initThreeStage(container.querySelector('#es-a3d-canvas-wrap'), avatar);
+      initThreeStage(canvasWrap, avatar);
     }, 50);
   }
 
@@ -680,29 +824,115 @@
   }
 
   // ============================================================
-  // MOTORE THREE.JS RENDERING STAGE
+  // INTEGRATORE READY PLAYER ME CREATOR & THREE.JS
   // ============================================================
+  function openReadyPlayerMeCreator() {
+    var modal = ensureModalDOM();
+    var existingRpm = modal.querySelector('#es-a3d-rpm-creator-wrap');
+    if (existingRpm) existingRpm.remove();
+
+    var frameUrl = 'https://readyplayer.me/avatar?frameApi&clearCache&bodyType=fullbody';
+
+    var wrap = document.createElement('div');
+    wrap.id = 'es-a3d-rpm-creator-wrap';
+    wrap.className = 'es-a3d-rpm-modal';
+    wrap.innerHTML =
+      '<div class="es-a3d-rpm-header">' +
+        '<div class="es-a3d-rpm-title">' +
+          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>' +
+          '<span>Ready Player Me — Scansione Volto &amp; Creazione Avatar 3D</span>' +
+        '</div>' +
+        '<button type="button" class="es-a3d-close-btn" id="btn-close-rpm-frame" style="color:#fff; font-size:0.8rem; font-weight:700;">&times; Torna allo Stage</button>' +
+      '</div>' +
+      '<iframe id="rpm-frame" class="es-a3d-rpm-iframe" src="' + frameUrl + '" allow="camera *; microphone *; clipboard-write"></iframe>';
+
+    modal.appendChild(wrap);
+
+    function closeRpm() {
+      window.removeEventListener('message', handleRpmMessage);
+      if (wrap.parentNode) wrap.parentNode.removeChild(wrap);
+    }
+
+    wrap.querySelector('#btn-close-rpm-frame').addEventListener('click', closeRpm);
+
+    function handleRpmMessage(event) {
+      var json = event.data;
+      if (typeof json === 'string') {
+        try { json = JSON.parse(json); } catch(_) { return; }
+      }
+      if (!json || !json.eventName) return;
+
+      if (json.eventName === 'v1.frame.ready') {
+        var frame = document.getElementById('rpm-frame');
+        if (frame && frame.contentWindow) {
+          frame.contentWindow.postMessage(
+            JSON.stringify({ target: 'readyplayerme', type: 'subscribe', eventName: 'v1.**' }),
+            '*'
+          );
+        }
+      }
+
+      if (json.eventName === 'v1.avatar.exported') {
+        var exportedUrl = (json.data && json.data.url) || json.url;
+        if (exportedUrl) {
+          var av = getAvatarData();
+          av.rpm_glb_url = exportedUrl;
+          av.stato_generazione = 'completato';
+          saveAvatarData(av);
+          closeRpm();
+          buildAthleteModel(av);
+        }
+      }
+    }
+
+    window.addEventListener('message', handleRpmMessage);
+  }
+
   function loadThreeLibraries(onSuccess) {
-    if (window.THREE && window.THREE.OrbitControls) {
+    if (window.THREE && window.THREE.OrbitControls && window.THREE.GLTFLoader) {
       state.threeLoaded = true;
       onSuccess();
       return;
     }
 
-    var s1 = document.createElement('script');
-    s1.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-    s1.onload = function () {
-      var s2 = document.createElement('script');
-      s2.src = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js';
-      s2.onload = function () {
+    function loadScript(src, cb) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = cb;
+      s.onerror = function () { cb(); };
+      document.head.appendChild(s);
+    }
+
+    if (!window.THREE) {
+      loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js', function () {
+        loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js', function () {
+          loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js', function () {
+            state.threeLoaded = true;
+            onSuccess();
+          });
+        });
+      });
+    } else if (!window.THREE.OrbitControls) {
+      loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js', function () {
+        if (!window.THREE.GLTFLoader) {
+          loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js', function () {
+            state.threeLoaded = true;
+            onSuccess();
+          });
+        } else {
+          state.threeLoaded = true;
+          onSuccess();
+        }
+      });
+    } else if (!window.THREE.GLTFLoader) {
+      loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js', function () {
         state.threeLoaded = true;
         onSuccess();
-      };
-      s2.onerror = function () { console.warn('OrbitControls non caricato'); onSuccess(); };
-      document.head.appendChild(s2);
-    };
-    s1.onerror = function () { console.error('Three.js non caricato'); };
-    document.head.appendChild(s1);
+      });
+    } else {
+      state.threeLoaded = true;
+      onSuccess();
+    }
   }
 
   function initThreeStage(canvasWrap, avatar) {
@@ -1203,377 +1433,199 @@
   }
 
   // ============================================================
-  // COSTRUZIONE ATLETA ULTRA-REALISTICO (TESTA + CORPO + CAPELLI)
+  // CARICATORE THREE.JS GLTF / GLB AD ALTA DEFINIZIONE (HYPER3D)
   // ============================================================
-  function buildAthleteModel(avatar) {
+  function loadGLBToGroup(source, avatar, group, onSuccess, onError) {
     var THREE = window.THREE;
-    if (!THREE || !state.avatarGroup) return;
+    if (!THREE || !THREE.GLTFLoader) {
+      if (onError) onError('GLTFLoader non pronto');
+      return;
+    }
 
-    var group = state.avatarGroup;
+    var loader = new THREE.GLTFLoader();
+    loader.load(
+      source,
+      function (gltf) {
+        while (group.children.length > 0) {
+          group.remove(group.children[0]);
+        }
+
+        var model = gltf.scene;
+
+        // Calcola BoundingBox per normalizzare scala e centratura atletica
+        var bbox = new THREE.Box3().setFromObject(model);
+        var size = new THREE.Vector3();
+        bbox.getSize(size);
+        var center = new THREE.Vector3();
+        bbox.getCenter(center);
+
+        // Scala proporzionale per altezza standard (~1.80m)
+        if (size.y > 0) {
+          var targetHeight = 1.80;
+          var scale = targetHeight / size.y;
+          model.scale.set(scale, scale, scale);
+        }
+
+        // Ricalcolo bounding box con scala applicata
+        bbox.setFromObject(model);
+        bbox.getSize(size);
+        bbox.getCenter(center);
+
+        // Posizionamento: piedi su pedana (y = 0.08) e centrato su X/Z
+        model.position.x = -center.x;
+        model.position.y = 0.08 - bbox.min.y;
+        model.position.z = -center.z;
+
+        // Texture Divisa Ufficiale Elisee F.C.
+        var jerseyTex = (avatar && avatar.applica_divisa_club !== false) ? createProceduralJerseyTexture(avatar) : null;
+
+        // Traversal nodi per ombre e kit
+        model.traverse(function (child) {
+          if (child.isMesh) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+
+            if (jerseyTex && child.material) {
+              var name = (child.name || '').toLowerCase();
+              var isOutfit = name.indexOf('shirt') !== -1 ||
+                             name.indexOf('top') !== -1 ||
+                             name.indexOf('outfit_top') !== -1 ||
+                             name.indexOf('jersey') !== -1 ||
+                             name.indexOf('maglia') !== -1;
+              if (isOutfit) {
+                child.material = new THREE.MeshStandardMaterial({
+                  map: jerseyTex,
+                  roughness: 0.45,
+                  metalness: 0.08
+                });
+              }
+            }
+          }
+        });
+
+        group.add(model);
+        if (onSuccess) onSuccess(model);
+      },
+      undefined,
+      function (err) {
+        console.warn('Errore caricamento GLB:', err);
+        if (onError) onError(err);
+      }
+    );
+  }
+
+  // Silhouette / Ologramma Sportivo d'Attesa (elegante e futuristico, zero manichino deforme)
+  function renderFallbackHologram(avatar, group) {
+    var THREE = window.THREE;
+    if (!THREE) return;
+
     while (group.children.length > 0) {
       group.remove(group.children[0]);
     }
 
-    // 1. Mappa UV Volto Fotorealistica
-    var faceTexture = createProceduralFaceTexture(avatar);
+    var holoGroup = new THREE.Group();
+    group.add(holoGroup);
 
-    // Materiale Volto con Shader PBR
-    var headMat = new THREE.MeshStandardMaterial({
-      map: faceTexture,
-      roughness: 0.52,
-      metalness: 0.08
+    var holoMat = new THREE.MeshStandardMaterial({
+      color: 0x0284c7,
+      roughness: 0.2,
+      metalness: 0.8,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.65
     });
 
-    // Geometria Cranio & Mascella Scolpita Anatomica
-    var headGeo = new THREE.SphereGeometry(0.138, 48, 40);
-    // Modella le proporzioni craniche e la mascella squadrata
-    var pos = headGeo.attributes.position;
-    for (var i = 0; i < pos.count; i++) {
-      var x = pos.getX(i);
-      var y = pos.getY(i);
-      var z = pos.getZ(i);
+    var glowMat = new THREE.MeshBasicMaterial({
+      color: 0x38bdf8,
+      wireframe: false,
+      transparent: true,
+      opacity: 0.15
+    });
 
-      // Allungamento verticale cranio
-      y *= 1.22;
+    // Silhouette atletica slanciata a tronco di cono ellittico moderno
+    var torsoGeo = new THREE.CylinderGeometry(0.22, 0.16, 0.65, 24);
+    torsoGeo.scale(1.2, 1, 0.7);
+    var torsoMesh = new THREE.Mesh(torsoGeo, holoMat);
+    torsoMesh.position.y = 1.25;
+    holoGroup.add(torsoMesh);
 
-      // Jawline definition (stringe la mascella e la rende squadrata in basso)
-      if (y < -0.04 && z > 0) {
-        x *= 1.08; // Mascella più larga
-        z *= 1.05; // Mento proiettato in avanti
-      }
-      // Zigomi alti (High cheekbones)
-      if (y > 0.01 && y < 0.08 && Math.abs(x) > 0.08 && z > 0.04) {
-        x *= 1.07;
-        z *= 1.06;
-      }
+    var glowMesh = new THREE.Mesh(torsoGeo, glowMat);
+    glowMesh.position.y = 1.25;
+    glowMesh.scale.set(1.02, 1.02, 1.02);
+    holoGroup.add(glowMesh);
 
-      pos.setXYZ(i, x, y, z);
-    }
-    headGeo.computeVertexNormals();
-
-    var headMesh = new THREE.Mesh(headGeo, headMat);
+    // Testa geometrica stilizzata
+    var headGeo = new THREE.SphereGeometry(0.12, 20, 20);
+    headGeo.scale(0.9, 1.15, 1);
+    var headMesh = new THREE.Mesh(headGeo, holoMat);
     headMesh.position.y = 1.72;
-    headMesh.castShadow = true;
-    group.add(headMesh);
-    state.headMesh = headMesh;
+    holoGroup.add(headMesh);
 
-    // Naso 3D Affusolato
-    var noseGeo = new THREE.ConeGeometry(0.016, 0.045, 12);
-    noseGeo.rotateX(Math.PI / 2.2);
-    var noseMat = new THREE.MeshStandardMaterial({
-      color: 0xdfba9b,
-      roughness: 0.55
-    });
-    var noseMesh = new THREE.Mesh(noseGeo, noseMat);
-    noseMesh.position.set(0, 1.72, 0.142);
-    group.add(noseMesh);
-
-    // Orecchie Anatomiche
-    [-1, 1].forEach(function (side) {
-      var earGeo = new THREE.SphereGeometry(0.024, 16, 16);
-      earGeo.scale(0.35, 1.2, 0.8);
-      var earMesh = new THREE.Mesh(earGeo, noseMat);
-      earMesh.position.set(side * 0.14, 1.71, -0.01);
-      earMesh.rotation.y = side * 0.2;
-      group.add(earMesh);
+    // Gambe stilizzate in posa atletica
+    [-0.10, 0.10].forEach(function (side) {
+      var legGeo = new THREE.CylinderGeometry(0.065, 0.045, 0.82, 16);
+      var legMesh = new THREE.Mesh(legGeo, holoMat);
+      legMesh.position.set(side, 0.49, 0);
+      holoGroup.add(legMesh);
     });
 
-    // 2. Capigliatura Realistica a Ciocche Volumetriche (Strand-Based Textured Hair)
-    buildUltraHairMesh(avatar, group);
-
-    // 3. Collo Muscoloso con Tatuaggio
-    var neckGeo = new THREE.CylinderGeometry(0.068, 0.088, 0.14, 32);
-    var neckMat = new THREE.MeshStandardMaterial({
-      color: 0xc79973,
-      roughness: 0.6
-    });
-    var neckMesh = new THREE.Mesh(neckGeo, neckMat);
-    neckMesh.position.y = 1.57;
-    neckMesh.castShadow = true;
-    group.add(neckMesh);
-
-    // Pomo d'Adamo (Dettaglio Anatomico Collo)
-    var adamGeo = new THREE.SphereGeometry(0.012, 12, 12);
-    adamGeo.scale(0.8, 1.3, 1.4);
-    var adamMesh = new THREE.Mesh(adamGeo, neckMat);
-    adamMesh.position.set(0, 1.58, 0.075);
-    group.add(adamMesh);
-
-    // 4. Costruzione Corpo Completo da Calciatore Professionista
-    buildBodyComponents(avatar.corporatura_scelta || 'atletica', avatar.divisa_ref, avatar);
-  }
-
-  // Costruzione Capigliatura a Ciocche Multiple Rifinite
-  function buildUltraHairMesh(avatar, group) {
-    var THREE = window.THREE;
-    var style = avatar.stile_capelli || 'short_textured';
-    if (style === 'mogger_blond') style = 'short_textured';
-
-    var hairColors = {
-      short_textured: { base: 0xd7cbab, highlight: 0xf3e9cb, roots: 0x6e5c41 },
-      fade_brunette:  { base: 0x4a3728, highlight: 0x6d523d, roots: 0x241810 },
-      platinum_ice:   { base: 0xe2e8f0, highlight: 0xffffff, roots: 0x64748b },
-      dark_crop:      { base: 0x1c1917, highlight: 0x38332f, roots: 0x09090b }
-    };
-    var hc = hairColors[style] || hairColors.short_textured;
-
-    var hairGroup = new THREE.Group();
-    group.add(hairGroup);
-
-    var baseMat = new THREE.MeshStandardMaterial({
-      color: hc.base,
-      roughness: 0.88,
-      metalness: 0.05
-    });
-
-    var hiMat = new THREE.MeshStandardMaterial({
-      color: hc.highlight,
-      roughness: 0.82,
-      metalness: 0.1
-    });
-
-    // Calotta volumetrica superiore disordinata
-    var hairGeo = new THREE.SphereGeometry(0.144, 32, 28);
-    hairGeo.scale(1.03, 0.72, 1.1);
-    var baseHair = new THREE.Mesh(hairGeo, baseMat);
-    baseHair.position.set(0, 1.81, -0.015);
-    hairGroup.add(baseHair);
-
-    // Ciocche frontali sagomate a volume
-    var strandOffsets = [
-      { x: -0.06, y: 1.83, z: 0.10, rotX: 0.35, rotY: -0.2, rotZ: 0.25, s: 1.1 },
-      { x: -0.03, y: 1.85, z: 0.12, rotX: 0.40, rotY: -0.1, rotZ: 0.1, s: 1.3 },
-      { x: 0.01,  y: 1.86, z: 0.13, rotX: 0.42, rotY: 0.05, rotZ: -0.15, s: 1.4 },
-      { x: 0.05,  y: 1.84, z: 0.11, rotX: 0.38, rotY: 0.2, rotZ: -0.3, s: 1.2 },
-      { x: 0.08,  y: 1.82, z: 0.09, rotX: 0.32, rotY: 0.3, rotZ: -0.4, s: 1.0 },
-      // Strato superiore texturizzato
-      { x: -0.04, y: 1.89, z: 0.04, rotX: 0.15, rotY: -0.3, rotZ: 0.2, s: 1.2 },
-      { x: 0.00,  y: 1.91, z: 0.05, rotX: 0.10, rotY: 0.0, rotZ: 0.0, s: 1.3 },
-      { x: 0.04,  y: 1.90, z: 0.03, rotX: 0.12, rotY: 0.25, rotZ: -0.2, s: 1.2 }
-    ];
-
-    strandOffsets.forEach(function (st, idx) {
-      var sGeo = new THREE.ConeGeometry(0.024 * st.s, 0.09 * st.s, 8);
-      sGeo.rotateX(Math.PI); // Punta verso il basso
-      var sMat = idx % 2 === 0 ? hiMat : baseMat;
-      var sMesh = new THREE.Mesh(sGeo, sMat);
-      sMesh.position.set(st.x, st.y, st.z);
-      sMesh.rotation.set(st.rotX, st.rotY, st.rotZ);
-      sMesh.castShadow = true;
-      hairGroup.add(sMesh);
+    // Braccia slanciate
+    [-0.28, 0.28].forEach(function (side) {
+      var armGeo = new THREE.CylinderGeometry(0.045, 0.035, 0.60, 16);
+      var armMesh = new THREE.Mesh(armGeo, holoMat);
+      armMesh.position.set(side, 1.22, 0);
+      holoGroup.add(armMesh);
     });
   }
 
-  // Costruzione Corpo Completo da Calciatore
-  function buildBodyComponents(bodyType, kitRef, avatar) {
+  // Costruzione Atleta 3D: Caricamento modello GLB reale (IndexedDB o URL)
+  function buildAthleteModel(avatar) {
     var THREE = window.THREE;
     if (!THREE || !state.avatarGroup) return;
 
-    if (state.bodyMeshGroup) {
-      state.avatarGroup.remove(state.bodyMeshGroup);
-    }
-
-    var bodyGroup = new THREE.Group();
-    state.bodyMeshGroup = bodyGroup;
-    state.avatarGroup.add(bodyGroup);
-
-    // Parametri corporatura atletica moderna e proporzionata
-    var scales = {
-      snella:   { chestW: 0.35, waistW: 0.23, armR: 0.038, legR: 0.058 },
-      media:    { chestW: 0.39, waistW: 0.26, armR: 0.044, legR: 0.065 },
-      atletica: { chestW: 0.43, waistW: 0.28, armR: 0.050, legR: 0.072 }
-    };
-    var cfg = scales[bodyType] || scales.atletica;
-
     avatar = avatar || getAvatarData();
+    var group = state.avatarGroup;
+    var canvasWrap = document.getElementById('es-a3d-canvas-wrap');
 
-    // Texture Maglia Traspirante Ufficiale
-    var jerseyTex = createProceduralJerseyTexture(avatar);
-    var jerseyMat = new THREE.MeshStandardMaterial({
-      map: jerseyTex,
-      roughness: 0.48,
-      metalness: 0.08
-    });
+    showModelSpinner(canvasWrap, 'Caricamento Modello 3D...');
 
-    var skinMat = new THREE.MeshStandardMaterial({
-      color: 0xc79973,
-      roughness: 0.65
-    });
-
-    var shortsColor = (avatar.divisa_ref && avatar.divisa_ref.colore_secondario) || '#111111';
-    var shortsMat = new THREE.MeshStandardMaterial({
-      color: shortsColor,
-      roughness: 0.52
-    });
-
-    // 1. Torace a V Atletico
-    var torsoGeo = new THREE.CylinderGeometry(cfg.chestW / 2, cfg.waistW / 2, 0.46, 32);
-    torsoGeo.scale(1.15, 1, 0.75); // Sezione ellittica anatomica
-    var torsoMesh = new THREE.Mesh(torsoGeo, jerseyMat);
-    torsoMesh.position.y = 1.30;
-    torsoMesh.castShadow = true;
-    bodyGroup.add(torsoMesh);
-
-    // Pettorali Sagomati
-    var pecGeo = new THREE.SphereGeometry(cfg.chestW * 0.24, 16, 16);
-    pecGeo.scale(1.2, 0.8, 0.6);
-    [-1, 1].forEach(function (side) {
-      var pecMesh = new THREE.Mesh(pecGeo, jerseyMat);
-      pecMesh.position.set(side * (cfg.chestW * 0.20), 1.38, 0.09);
-      bodyGroup.add(pecMesh);
-    });
-
-    // Colletto Rifinito Bicolore
-    var collarGeo = new THREE.TorusGeometry(cfg.chestW * 0.22, 0.016, 16, 32);
-    var collarMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.3 });
-    var collarMesh = new THREE.Mesh(collarGeo, collarMat);
-    collarMesh.rotation.x = Math.PI / 2;
-    collarMesh.position.set(0, 1.51, 0);
-    bodyGroup.add(collarMesh);
-
-    // 2. Braccia Muscolose (Deltoidi, Bicipiti, Mani con dita)
-    [-1, 1].forEach(function (side) {
-      // Deltoide (Spalla)
-      var deltGeo = new THREE.SphereGeometry(cfg.armR * 1.35, 16, 16);
-      deltGeo.scale(1.1, 1.2, 1.0);
-      var deltMesh = new THREE.Mesh(deltGeo, jerseyMat);
-      deltMesh.position.set(side * (cfg.chestW * 0.54), 1.45, 0);
-      bodyGroup.add(deltMesh);
-
-      // Manica maglia
-      var sleeveGeo = new THREE.CylinderGeometry(cfg.armR * 1.22, cfg.armR * 1.15, 0.16, 20);
-      var sleeveMesh = new THREE.Mesh(sleeveGeo, jerseyMat);
-      sleeveMesh.position.set(side * (cfg.chestW * 0.55), 1.38, 0);
-      sleeveMesh.rotation.z = side * 0.16;
-      bodyGroup.add(sleeveMesh);
-
-      // Bicipite / Braccio Superiore
-      var bicepGeo = new THREE.CylinderGeometry(cfg.armR * 1.05, cfg.armR * 0.95, 0.22, 20);
-      var bicepMesh = new THREE.Mesh(bicepGeo, skinMat);
-      bicepMesh.position.set(side * (cfg.chestW * 0.58), 1.25, 0);
-      bicepMesh.rotation.z = side * 0.16;
-      bodyGroup.add(bicepMesh);
-
-      // Avambraccio Affusolato
-      var forearmGeo = new THREE.CylinderGeometry(cfg.armR * 0.95, cfg.armR * 0.78, 0.26, 20);
-      var forearmMesh = new THREE.Mesh(forearmGeo, skinMat);
-      forearmMesh.position.set(side * (cfg.chestW * 0.63), 1.04, 0.03);
-      forearmMesh.rotation.z = side * 0.12;
-      bodyGroup.add(forearmMesh);
-
-      // Mano Anatomica con Dita Sagomate
-      var handGeo = new THREE.BoxGeometry(0.045, 0.08, 0.024);
-      var handMesh = new THREE.Mesh(handGeo, skinMat);
-      handMesh.position.set(side * (cfg.chestW * 0.66), 0.88, 0.04);
-      handMesh.rotation.z = side * 0.1;
-      bodyGroup.add(handMesh);
-    });
-
-    // 3. Pantaloncini da Calcio con Pieghe
-    var shortsGeo = new THREE.CylinderGeometry(cfg.waistW * 0.52, cfg.waistW * 0.60, 0.28, 32);
-    shortsGeo.scale(1.15, 1, 0.85);
-    var shortsMesh = new THREE.Mesh(shortsGeo, shortsMat);
-    shortsMesh.position.y = 0.95;
-    shortsMesh.castShadow = true;
-    bodyGroup.add(shortsMesh);
-
-    // Striscia laterale pantaloncino
-    var stripeMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
-    [-1, 1].forEach(function (side) {
-      var stripeGeo = new THREE.BoxGeometry(0.01, 0.26, 0.02);
-      var stripeMesh = new THREE.Mesh(stripeGeo, stripeMat);
-      stripeMesh.position.set(side * (cfg.waistW * 0.58), 0.95, 0);
-      bodyGroup.add(stripeMesh);
-    });
-
-    // 4. Gambe Atletiche (Quadricipiti, Polpacci, Calzettoni)
-    [-1, 1].forEach(function (side) {
-      // Coscia Muscolosa
-      var thighGeo = new THREE.CylinderGeometry(cfg.legR * 1.05, cfg.legR * 0.88, 0.32, 20);
-      thighGeo.scale(1, 1, 1.15); // Sagomatura quadricipite
-      var thighMesh = new THREE.Mesh(thighGeo, skinMat);
-      thighMesh.position.set(side * 0.11, 0.72, 0.01);
-      bodyGroup.add(thighMesh);
-
-      // Ginocchio
-      var kneeGeo = new THREE.SphereGeometry(cfg.legR * 0.75, 16, 16);
-      kneeGeo.scale(0.9, 1.1, 1.1);
-      var kneeMesh = new THREE.Mesh(kneeGeo, skinMat);
-      kneeMesh.position.set(side * 0.11, 0.55, 0.02);
-      bodyGroup.add(kneeMesh);
-
-      // Calzettone da Gara con Risvolto
-      var sockGeo = new THREE.CylinderGeometry(cfg.legR * 0.88, cfg.legR * 0.74, 0.44, 20);
-      var sockMesh = new THREE.Mesh(sockGeo, jerseyMat);
-      sockMesh.position.set(side * 0.11, 0.34, 0);
-      sockMesh.castShadow = true;
-      bodyGroup.add(sockMesh);
-
-      // Risvolto superiore calzettone
-      var cuffGeo = new THREE.TorusGeometry(cfg.legR * 0.84, 0.012, 12, 24);
-      var cuffMat = new THREE.MeshStandardMaterial({ color: 0xffffff });
-      var cuffMesh = new THREE.Mesh(cuffGeo, cuffMat);
-      cuffMesh.rotation.x = Math.PI / 2;
-      cuffMesh.position.set(side * 0.11, 0.52, 0);
-      bodyGroup.add(cuffMesh);
-
-      // 5. Scarpino da Calcio Aerodinamico Professionistico
-      var bootGroup = new THREE.Group();
-      bootGroup.position.set(side * 0.11, 0.06, 0.04);
-      bodyGroup.add(bootGroup);
-
-      // Tomaia affusolata
-      var bootUpperGeo = new THREE.BoxGeometry(cfg.legR * 1.15, 0.075, 0.24);
-      var bootMat = new THREE.MeshStandardMaterial({
-        color: 0x0f172a,
-        roughness: 0.25,
-        metalness: 0.4
-      });
-      var bootMesh = new THREE.Mesh(bootUpperGeo, bootMat);
-      bootMesh.position.set(0, 0.02, 0.03);
-      bootMesh.castShadow = true;
-      bootGroup.add(bootMesh);
-
-      // Punta sagomata
-      var toeGeo = new THREE.ConeGeometry(cfg.legR * 0.58, 0.09, 16);
-      toeGeo.rotateX(-Math.PI / 2);
-      var toeMesh = new THREE.Mesh(toeGeo, bootMat);
-      toeMesh.position.set(0, 0.015, 0.16);
-      bootGroup.add(toeMesh);
-
-      // Swoosh / Riga a contrasto ciano neon
-      var stripeMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
-      var stripeBoot = new THREE.Mesh(new THREE.BoxGeometry(0.005, 0.03, 0.14), stripeMat);
-      stripeBoot.position.set(side * (cfg.legR * 0.59), 0.025, 0.04);
-      bootGroup.add(stripeBoot);
-
-      // Suola e Tacchetti Visibili
-      var soleGeo = new THREE.BoxGeometry(cfg.legR * 1.18, 0.018, 0.25);
-      var soleMat = new THREE.MeshStandardMaterial({
-        color: 0x38bdf8,
-        metalness: 0.8,
-        roughness: 0.2
-      });
-      var soleMesh = new THREE.Mesh(soleGeo, soleMat);
-      soleMesh.position.set(0, -0.02, 0.04);
-      bootGroup.add(soleMesh);
-
-      // 4 Tacchetti cilindrici
-      [-0.04, 0.04].forEach(function (tz) {
-        [-0.025, 0.025].forEach(function (tx) {
-          var studGeo = new THREE.CylinderGeometry(0.006, 0.005, 0.014, 8);
-          var studMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, metalness: 0.9 });
-          var studMesh = new THREE.Mesh(studGeo, studMat);
-          studMesh.position.set(tx, -0.032, tz + 0.04);
-          bootGroup.add(studMesh);
+    // 1. Controlla prima in IndexedDB se c'è un file .glb salvato
+    loadGlbBlobFromDB(function (record) {
+      if (record && record.blob) {
+        var blobUrl = URL.createObjectURL(record.blob);
+        loadGLBToGroup(blobUrl, avatar, group, function () {
+          hideModelSpinner(canvasWrap);
+          if (typeof window.__eliseeRefreshGlbStatusUI === 'function') {
+            window.__eliseeRefreshGlbStatusUI(record.name || 'Modello 3D Personalizzato');
+          }
+        }, function () {
+          hideModelSpinner(canvasWrap);
+          renderFallbackHologram(avatar, group);
         });
-      });
-    });
-  }
+        return;
+      }
 
-  function rebuildBodyModel(bodyType) {
-    var av = getAvatarData();
-    buildBodyComponents(bodyType, av.divisa_ref, av);
+      // 2. Altrimenti controlla se c'è un modello URL remoto o locale
+      if (avatar.glb_model_url) {
+        loadGLBToGroup(avatar.glb_model_url, avatar, group, function () {
+          hideModelSpinner(canvasWrap);
+          if (typeof window.__eliseeRefreshGlbStatusUI === 'function') {
+            window.__eliseeRefreshGlbStatusUI(avatar.glb_model_nome || 'Modello 3D');
+          }
+        }, function () {
+          hideModelSpinner(canvasWrap);
+          renderFallbackHologram(avatar, group);
+        });
+        return;
+      }
+
+      // 3. Nessun modello caricato: renderizza l'ologramma moderno d'attesa con guida
+      hideModelSpinner(canvasWrap);
+      renderFallbackHologram(avatar, group);
+      if (typeof window.__eliseeRefreshGlbStatusUI === 'function') {
+        window.__eliseeRefreshGlbStatusUI(null);
+      }
+    });
   }
 
   function disposeThree() {

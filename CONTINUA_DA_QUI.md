@@ -3,7 +3,25 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Avatar 3D Professionale: Integrazione Foto Reale Atleta, Rimozione Marchi Terzi & Fix Layout (`A3DPRO1`):
+Ultimo aggiornamento: **2026-09-18** — Avatar 3D STEP 1: Attivazione GLTF/GLB Loader, Storage IndexedDB & Rimozione Primitive Geometriche (`A3DSTEP1`):
+1. **Attivazione Motore Three.js GLTF/GLB ad Alta Definizione**:
+   - Caricatore standard universale `THREE.GLTFLoader` integrato e pronto a renderizzare modelli 3D realistici esportati da **Hyper3D (Rodin Gen-2)** o scansioni fotogrammetriche.
+   - Normalizzazione automatica: calcolo Bounding Box del file `.glb`, scala proporzionale ad altezza atletica (~1.80m), posizionamento perfetto sui piedi sopra il piedistallo specchiato a $Y = 0.08$.
+   - Ombre dinamiche PBR attivate su ogni sottomesh (`castShadow = true`, `receiveShadow = true`).
+2. **Supporto Storage Locale Illimitato con IndexedDB**:
+   - Creato database browser `elisee_avatar_db` (store `glb_models`) per memorizzare file `.glb` anche pesanti (10-50MB+) senza rischiare il blocco dei 5MB del `localStorage`.
+   - Il modello salvato persiste tra ricaricamenti di pagina e sessioni utente.
+3. **Pulsante di Caricamento & Drag & Drop Diretto**:
+   - Inserito nella sidebar il pulsante luxury: `📁 Carica File 3D (.glb)` con status dinamico e opzione di rimozione immediata.
+   - Abilitato il Drag & Drop diretto su tutto il canvas 3D: trascinando un file `.glb` sullo stage, l'avatar si aggiorna all'istante.
+4. **Rimozione Totale del Vecchio Manichino a Primitive Geometriche**:
+   - Eliminate definitivamente dal codebase tutte le funzioni a cilindri, sfere e cubi (`buildUltraHairMesh`, `buildBodyComponents`, `rebuildBodyModel`).
+   - Sostituito lo stato d'attesa con una raffinata silhouette atletica wireframe/olografica ciano d'élite (`renderFallbackHologram`) con guida all'upload, senza manichini deformi.
+5. **Divisa & Club Ufficiale Elisee F.C.**:
+   - Toggle dedicato `btn-toggle-club-kit` per applicare o disattivare i colori e lo stemma del club sulla mesh della maglia.
+6. **File**: `avatar-3d.js`, `avatar-3d.css`, `index.html`, `sw.js`, `version.json`, `immagini/avatar3d/`. Cache `v20260918_A3DSTEP1`.
+
+Feature precedente: **Avatar 3D Professionale: Integrazione Foto Reale Atleta, Rimozione Marchi Terzi & Fix Layout (`A3DPRO1`):
 1. **Risoluzione Problemi Legali, Naming & Brand (`avatar-3d.js`, `avatar-3d.css`, `index.html`)**:
    - **Rimozione Totale Nomi Terzi**: Eliminato qualsiasi riferimento o badge a *"EA FC 26"*, *"EA Sports"* e *"FC26"*. Sostituito il badge con il nuovo selettore proprietario luxury ciano `<span class="es-a3d-badge-pro">PRO 3D</span>`.
    - **Naming Professionale Capigliature & Tatuaggi**: Eliminato il termine slang/meme "Mogger". Rinominate tutte le acconciature con denominazioni chiare e sobrie da piattaforma scouting d'élite: *Biondo Corto*, *Castano Sfumato*, *Biondo Platino*, *Nero Corvino*. Rinominate le sezioni in *Tatuaggio Geometrico Collo* e *Illuminazione Scena* (*Neon Élite*, *Tramonto Gara*, *Studio HQ*).
