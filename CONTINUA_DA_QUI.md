@@ -3,7 +3,16 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Sblocco Consenso Biometrico Avatar 3D & Custom Checkbox Luxury (`A3DCHK1`):
+Ultimo aggiornamento: **2026-09-18** — Avatar 3D Ultra-Realistico EA FC 26 Pro Clubs («Mogger Athlete Model») (`A3DEAFC1`):
+1. **Trasformazione Modello 3D da Manichino Geometrico ad Atleta Ultra-Realistico (`avatar-3d.js`, `avatar-3d.css`)**:
+   - **Volto Scolpito & Jawline ("Mogger Definition")**: Generatore procedurale canvas 1024x1024 in Three.js con texture iperrealistica della pelle, pori, occhi espressivi con riflesso speculare da studio, sfumatura barba 3-day stubble e tatuaggio tribale sul collo (stile EA FC 26 Pro Clubs).
+   - **Capigliatura a Ciocche Multiple (Strand-Based Textured Hair)**: Modellazione tridimensionale della capigliatura con calotta a volume e 8 ciocche individuali sfalsate ("Textured Fringe / Messy Hair") con ombre e riflessi speculari biondo-cenere (*Mogger Blond*), castano fade, biondo platino ice e corvino crop.
+   - **Kit da Gara Tecnico Aderente**: Mesh anatomica a V (pettorali, deltoidi, braccia e pugni definiti, muscoli quadricipiti e polpacci scolpiti, calzettoni e scarpini affusolati con 4 tacchetti) con maglia tecnica a micro-costine verticali traspiranti e stemma dorato del club Elisee F.C.
+   - **Set Illuminazione Cinematografica EA Sports**: Setup a 5 punti luce (Key light calda a 45° per scolpire zigomi e mascella, Rim light verde neon sinistro EA FC, Rim light ciano destro, Top hair light dorata a 90° e luce d'ambiente soffusa).
+   - **Selettori Interattivi nella Sidebar**: Griglia stili capelli (Biondo Cenere, Sfumato Castano, Platino Ice, Corvino Crop), toggle tatuaggio tribale al collo, selettore corporatura muscolare e preset luci (EA FC Neon, Gara al Tramonto, Studio HQ).
+2. **File**: `avatar-3d.js`, `avatar-3d.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_A3DEAFC1`.
+
+Feature precedente: **Sblocco Consenso Biometrico Avatar 3D & Custom Checkbox Luxury (`A3DCHK1`):
 1. **Risoluzione Root Cause Blocco Consenso (`avatar-3d.css`, `avatar-3d.js`, `index.html`)**:
    - **Causa Radice**: In `style.css` la regola globale `input[type="checkbox"]` era impostata su `display:none !important; visibility:hidden !important; pointer-events:none !important;`. La checkbox del consenso biometrico era quindi invisibile e non cliccabile, lasciando il pulsante "Conferma Consenso e Procedi" disabilitato a vita.
    - **Custom Checkbox Box & Tick SVG**: Introdotto un container interattivo luxury `.es-a3d-consent-checkbox-row` con box personalizzato `.es-a3d-custom-chk` e icona di spunta `✓` ciano neon ad animazione elastica, indipendente dallo stato dei controlli HTML nativi.
