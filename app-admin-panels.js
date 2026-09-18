@@ -1552,6 +1552,7 @@ function renderPrivacyPanel() {
           <p class="text-muted" style="font-size:0.85rem; line-height:1.5; margin-bottom:1.25rem;">Mappatura dei trattamenti ad alto rischio e misure di mitigazione approvate per i 715 agenti IA.</p>
           <ul style="font-size:0.85rem; color:var(--text-muted); list-style:none; padding:0; display:flex; flex-direction:column; gap:0.75rem;">
             <li style="padding:0.75rem 1rem; background:rgba(0,0,0,0.3); border-radius:6px;"><strong>Verifica Identità Biometrica:</strong> Consenso esplicito Art. 9.2.a GDPR + Crittografia AES-256 a riposo.</li>
+            <li style="padding:0.75rem 1rem; background:rgba(0,0,0,0.3); border-radius:6px;"><strong>Avatar 3D & Ricostruzione Volto:</strong> Trattamento biometrico Art. 9.2.a GDPR, consenso versionato v1.0, salvaguardia minori Art. 8 (blocco preventivo under-18), elaborazione client-side Privacy-by-Design senza trasferimento dati extra-UE, diritto all'oblio Art. 17 (cancellazione istantanea foto + mesh).</li>
             <li style="padding:0.75rem 1rem; background:rgba(0,0,0,0.3); border-radius:6px;"><strong>Sistema Multi-Agente:</strong> Minimizzazione dei log e retention limitata a 90 giorni max.</li>
             <li style="padding:0.75rem 1rem; background:rgba(0,0,0,0.3); border-radius:6px;"><strong>Row Level Security (RLS):</strong> Separazione netta delle policy DB tra role: admin e role: privacy_officer.</li>
           </ul>

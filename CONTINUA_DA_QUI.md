@@ -3,13 +3,19 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Modalità di Caricamento Macroaree con Dots al Neon & Palette Elisee Scout (`LOADER1`):
-1. **Nuovo Loader Globale Animato (`elisee-loader.css`, `elisee-loader.js`, `index.html`)**:
-   - Creato overlay di transizione fluido per cambio macroarea e caricamenti pesanti con l'esatta estetica richiesta (riga di punti orizzontali a diametro progressivo con onda luminosa fluida/glow al neon e dicitura `L O A D I N G . . .` tracking luxury).
-   - Palette colori allineata alla visual identity ufficiale: sfondo Dark Glass `#050608` con backdrop-blur 16px, testo `#e0f2fe`, dots ciano elettrico `#38bdf8` con nucleo bianco brillante `#ffffff` e alone al neon `rgba(56,189,248,0.95)`, con supporto al tema oro `barocco-oro`.
-   - Hook automatico su `window.switchView`: ogni cambio macroarea mostra la transizione fluida con il nome dell'area in apertura (es. "Area Scouting", "Hub Mercato", "Bacheca", "Control Center"), eliminando completamente l'effetto di schermata bloccata/freezata.
-   - API pubblica `window.EliseeLoader`: `.show(label)`, `.hide()`, `.pulse(ms, label)`, `.wrap(promiseOrFn, label)` con timeout di sicurezza a 3.5s per evitare qualsiasi stallo.
-2. **File**: `elisee-loader.css`, `elisee-loader.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_LOADER1`.
+Ultimo aggiornamento: **2026-09-18** — Completamento Feature «Avatar 3D» Biometrico Three.js & Compliance GDPR Art. 9 (`AVATAR3D1`):
+1. **Pipeline Completa Avatar 3D (`avatar-3d.css`, `avatar-3d.js`, `index.html`)**:
+   - **Consenso Biometrico Art. 9 GDPR**: Schermata dedicata obbligatoria e separata, testo informativo versionato (`v1.0_2026_BIOMETRIC`), checkbox esplicita salvata prima di consentire qualsiasi upload.
+   - **Salvaguardia Minorenni Art. 8 GDPR**: Blocco preventivo automatico per profili under-18 con messaggio di tutela e richiesta di consenso dell'esercente la responsabilità genitoriale.
+   - **Upload & Face Detection Client-Side**: Validazione formato (JPG/PNG/WebP max 8MB) e rilevamento presenza volto su canvas 2D prima dell'avvio.
+   - **Stage Three.js WebGL**: Scena 3D luxury con luci studio bilanciate (key, fill, rim light), pedestal metallico con anello ciano, orbita a 360°, controlli rotazione/zoom/reset telecamera.
+   - **Modellazione Anatomica & Divisa**: Testa volumetrica con morphing da foto reale + 3 corporature base (`snella`, `media`, `atletica`) + divisa/kit del Club dell'utente con colori primari/secondari e nome/numero atleta.
+   - **Diritto all'Oblio Art. 17 GDPR**: Pulsante dedicato «Elimina Avatar 3D» con cancellazione irreversibile di foto sorgente, mesh e texture, pulizia WebGL e revoca del consenso biometrico.
+   - **Integrazione Multi-Ruolo Condivisa**: Voce «Avatar 3D» iniettata in tutte le sidebar tecniche dei ruoli (Scout, Match Analyst, Preparatore Portieri/Atletico, Medico, Fisioterapista, Nutrizionista, Dirigenza/DS/DG/Presidenza, Allenatore, Giocatore) e nel dropdown profilo: l'avatar è unico a livello di account utente.
+   - **Aggiornamento DPIA Art. 35**: Aggiornata la valutazione d'impatto nella dashboard del Responsabile Privacy in `app-admin-panels.js`.
+2. **File**: `avatar-3d.css`, `avatar-3d.js`, `index.html`, `app-admin-panels.js`, `sw.js`, `version.json`. Cache `v20260918_AVATAR3D1`.
+
+Feature precedente: **Modalità di Caricamento Macroaree con Dots al Neon & Palette Elisee Scout (`LOADER1`):
 
 Feature precedente: **Spostamento Control Center nel Menù a Tendina Admin/Privacy & Sblocco Freeze/Scroll (`CCDROPDOWN1`):
 
