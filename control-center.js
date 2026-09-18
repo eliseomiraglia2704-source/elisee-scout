@@ -300,12 +300,15 @@
 
   function bind() {
     var dash = $('admin-authenticated-dashboard');
-    if (!dash || dash.dataset.ccBound === '1') return;
-    dash.dataset.ccBound = '1';
+    if (!dash) return;
     dash.classList.add('es-cc');
 
     document.querySelectorAll('[data-cc-open]').forEach(function (b) {
-      b.addEventListener('click', function () {
+      if (b.dataset.ccModBound === '1') return;
+      b.dataset.ccModBound = '1';
+      b.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         var t = b.getAttribute('data-cc-open');
         var btn = document.querySelector('[data-cc-tab="' + t + '"]');
         if (btn) btn.click();
@@ -314,41 +317,72 @@
     });
 
     var qaAp = $('es-cc-qa-autopilot');
-    if (qaAp) qaAp.addEventListener('click', function () {
-      if (window.EliseeAutoPilot && window.EliseeAutoPilot.open) window.EliseeAutoPilot.open();
-      else toast('AutoPilot in caricamento…', 'info');
-    });
+    if (qaAp && qaAp.dataset.ccBound !== '1') {
+      qaAp.dataset.ccBound = '1';
+      qaAp.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (window.EliseeAutoPilot && window.EliseeAutoPilot.open) window.EliseeAutoPilot.open();
+        else toast('AutoPilot in caricamento…', 'info');
+      });
+    }
     var qaG = $('es-cc-qa-gdpr');
-    if (qaG) qaG.addEventListener('click', function () {
-      var b = $('btn-show-privacy');
-      if (b) b.click();
-      else showPane('privacy');
-    });
+    if (qaG && qaG.dataset.ccBound !== '1') {
+      qaG.dataset.ccBound = '1';
+      qaG.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var b = $('btn-show-privacy');
+        if (b) b.click();
+        else showPane('privacy');
+      });
+    }
     var qaS = $('es-cc-qa-sync');
-    if (qaS) qaS.addEventListener('click', forceSync);
+    if (qaS && qaS.dataset.ccBound !== '1') {
+      qaS.dataset.ccBound = '1';
+      qaS.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        forceSync();
+      });
+    }
     var qaW = $('es-cc-qa-war');
-    if (qaW) qaW.addEventListener('click', function () {
-      if (window.EliseeWarRoom && window.EliseeWarRoom.open) window.EliseeWarRoom.open();
-      else toast('War Room in caricamento…', 'info');
-    });
+    if (qaW && qaW.dataset.ccBound !== '1') {
+      qaW.dataset.ccBound = '1';
+      qaW.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (window.EliseeWarRoom && window.EliseeWarRoom.open) window.EliseeWarRoom.open();
+        else toast('War Room in caricamento…', 'info');
+      });
+    }
     var qaF = $('es-cc-qa-fix');
-    if (qaF) qaF.addEventListener('click', function () {
-      var b = $('btn-run-autofix-demo');
-      if (b) b.click();
-    });
+    if (qaF && qaF.dataset.ccBound !== '1') {
+      qaF.dataset.ccBound = '1';
+      qaF.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var b = $('btn-run-autofix-demo');
+        if (b) b.click();
+      });
+    }
     var war = $('btn-open-war-room-admin');
     if (war && !war.dataset.ccBound) {
       war.dataset.ccBound = '1';
-      war.addEventListener('click', function () {
+      war.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         if (window.EliseeWarRoom && window.EliseeWarRoom.open) window.EliseeWarRoom.open();
       });
     }
 
     ['btn-show-admin', 'btn-show-privacy', 'btn-show-autopilot', 'btn-show-manager', 'btn-show-card-atelier'].forEach(function (id) {
       var el = $(id);
-      if (!el || el.dataset.ccPaneBound) return;
+      if (!el || el.dataset.ccPaneBound === '1') return;
       el.dataset.ccPaneBound = '1';
-      el.addEventListener('click', function () {
+      el.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         var t = el.getAttribute('data-cc-tab');
         if (t) showPane(t);
       });
@@ -360,7 +394,7 @@
     refresh();
   }
 
-  window.EliseeCC = { showPane: showPane, refresh: refresh };
+  window.EliseeCC = { showPane: showPane, refresh: refresh, bind: bind };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();

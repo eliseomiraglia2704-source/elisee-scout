@@ -49,7 +49,7 @@
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
   <link rel="stylesheet" href="bacheca-board.css?v=20260917_BACHECA7">
-  <link rel="stylesheet" href="control-center.css?v=20260918_CCSPACE1">
+  <link rel="stylesheet" href="control-center.css?v=20260918_CCDROPDOWN1">
   <style id="es-font-nevera">
     @font-face {
       font-family: 'Nevera';
@@ -2052,11 +2052,6 @@
             <span>Hub Mercato B2B</span>
           </a>
 
-          <a href="#admin-portal" class="es-m-drawer-link" data-view="admin" data-target="#admin-portal" onclick="if(window.switchView){window.switchView('admin','#admin-portal');} if(window.closeMobileDrawer){window.closeMobileDrawer();}">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>Control Center</span>
-          </a>
-
           <a href="javascript:void(0);" class="es-m-drawer-link" onclick="if(window.EliseeCookies&&EliseeCookies.openPreferences){EliseeCookies.openPreferences();}else if(window.openPrivacyPolicy){window.openPrivacyPolicy();}else{location.href='privacy-policy.html';}">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
             <span>Privacy &amp; Preferenze Cookie</span>
@@ -2092,7 +2087,6 @@
         <a href="#seguo-portal" class="nav-link" data-view="seguo" onclick="if(window.openChiSegui){window.openChiSegui();}else if(window.switchView){window.switchView('seguo','#seguo-portal');} return false;">Album</a>
         <a href="#ambassador-portal" class="nav-link nav-link-soft" data-view="ambassador" data-i18n="nav.ambassador" onclick="if(window.switchView){ window.switchView('ambassador'); } return false;">Ambassador</a>
         <a href="#minigioco-carriera" class="nav-link nav-link-soft nav-link-minigioco" id="nav-minigioco" data-view="minigioco" data-i18n="nav.minigame" title="Minigiochi" onclick="if(window.switchView){ window.switchView('minigioco'); } else if(window.openMinigiocoCarriera){ window.openMinigiocoCarriera(); } return false;">Minigiochi</a>
-        <a href="#admin-portal" class="nav-link nav-link-soft" id="nav-control-center" data-view="admin" data-i18n="nav.controlCenter" title="Control Center — Governance, Admin &amp; Privacy" onclick="if(window.switchView){ window.switchView('admin', '#admin-portal'); } return false;">Control Center</a>
       </nav>
 
       <div id="nav-user-container" class="portfolio-nav-right">
@@ -2185,13 +2179,14 @@
               <a href="#scopri-portal" class="es-account-item" onclick="event.preventDefault(); event.stopPropagation(); if(window.openScopriProfili){ window.openScopriProfili('staff'); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;">
                 Segui lo staff
               </a>
-              <a href="#admin-portal" class="es-account-item" onclick="event.preventDefault(); event.stopPropagation(); if(window.switchView){ window.switchView('admin', '#admin-portal'); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;">
-                Control Center
-              </a>
             </nav>
 
             <div id="user-dropdown-admin-section" class="es-account-menu-admin" hidden>
               <p class="es-account-menu-label">Strumenti interni</p>
+              <a href="#admin-portal" id="btn-dropdown-control-center" class="es-account-item" onclick="event.preventDefault(); event.stopPropagation(); if(window.switchView){ window.switchView('admin', '#admin-portal'); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;vertical-align:middle;color:#38bdf8;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span>Control Center</span>
+              </a>
               <a href="#" id="btn-creator-roles" class="es-account-item" onclick="event.preventDefault(); event.stopPropagation(); if(window.EliseeCreatorRole){ window.EliseeCreatorRole.open(); } if(window.closeUserDropdown){ window.closeUserDropdown(); } return false;">
                 Simulatore ruoli
               </a>
@@ -2316,11 +2311,6 @@
                 <h3 data-i18n="nav.ambassador">Ambassador</h3>
                 <p data-i18n="home.cardAmbDesc">Programma di rappresentanza e contratto digitale firmabile.</p>
               </article>
-              <article class="portfolio-card" onclick="if(window.switchView){ window.switchView('admin', '#admin-portal'); }">
-                <span class="portfolio-card-icon"><i data-lucide="shield-alert"></i></span>
-                <h3>Control Center</h3>
-                <p>Governance della piattaforma: sicurezza, GDPR Art. 30, IA e monitoraggio operativo.</p>
-              </article>
             </div>
           </div>
         </section>
@@ -2349,11 +2339,6 @@
                 <button type="button" class="auth-btn auth-btn-email" data-i18n="home.emailBtn" onclick="openAccessoModal('email')">
                   <i data-lucide="mail"></i> Accedi con email
                 </button>
-              </div>
-              <div style="margin-top:1.15rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.06);">
-                <a href="#admin-portal" class="welcome-admin-link" onclick="if(window.switchView){ window.switchView('admin', '#admin-portal'); } return false;" style="display:inline-flex; align-items:center; gap:0.5rem; color:#94a3b8; font-size:0.82rem; text-decoration:none; transition:color 0.2s;" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#94a3b8'">
-                  <i data-lucide="lock" style="width:14px;height:14px;color:#38bdf8;"></i> Accedi al Control Center (Governance &amp; Privacy)
-                </a>
               </div>
             </div>
             <div class="portfolio-visual portfolio-visual-soft">
@@ -5946,8 +5931,8 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="elisee-staff.js?v=20260911_ADMIN2"></script>
-  <script src="app-admin-panels.js?v=20260918_CCFOOTER1"></script>
-  <script src="app.js?v=20260918_CCFOOTER1"></script>
+  <script src="app-admin-panels.js?v=20260918_CCDROPDOWN1"></script>
+  <script src="app.js?v=20260918_CCDROPDOWN1"></script>
   <script src="app-boot-extras.js?v=20260918_APPSPLIT1"></script>
   <script src="bacheca-annunci.js?v=20260918_OTPSYNC1"></script>
   <script src="player-profile.js?v=20260917_BUGFIX1"></script>
@@ -5987,7 +5972,7 @@
   <script src="mappa-club.js?v=20260912_ATOECC2"></script>
   <script src="chi-segui.js?v=20260913_ALBUM5"></script>
   <script src="card-atelier.js?v=20260918_CLUBCARD1"></script>
-  <script src="control-center.js?v=20260918_CCFOOTER1"></script>
+  <script src="control-center.js?v=20260918_CCDROPDOWN1"></script>
   <script src="ds-hub.js?v=20260917_BUGFIX1"></script>
   <script src="verifica-account.js?v=20260918_OTPSYNC1"></script>
   <script src="season-wrapped.js?v=20260910_WRAPPED1"></script>

@@ -3,19 +3,19 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Ripristino Footer Homepage, Link Control Center Macroaree & Ottimizzazione Responsività (`CCFOOTER1`):
-1. **Ripristino Footer Homepage (`app.js`, `index.html`)**: Risolta la causa della scomparsa del footer su `#hero` e viste pubbliche: la guardia in `updatePublicFooterVisibility` verificava le classi `is-coach-mode`/`is-vice-mode` sul body anche fuori dal dossier utente. Limitato il nascondimento del footer pubblico esclusivamente all'area riservata staff tecnico in `user-dossier`. Aggiunto unmount automatico di tutte le classi di ruolo dal `document.body` in `switchView` quando si naviga verso pagine pubbliche.
-2. **Accesso Diretto Control Center (`index.html`, `app.js`)**: Aggiunta la voce e i link diretti verso il Control Center (`#admin-portal`):
-   - Nelle **Macroaree** (navbar desktop `#nav-menu`): aggiunto link permanente «Control Center».
-   - Nel **Drawer Mobile** (`#es-m-drawer-links`): aggiunta voce «Control Center» con icona lucchetto.
-   - Nella **Home** (`#home-portfolio`): aggiunta card dedicata «Control Center» (Governance, Admin e Responsabile Privacy GDPR).
-   - Nella sezione **Accesso/Welcome** (`#welcome-access`): aggiunto link discreto di accesso alla Governance.
-   - Nel **Footer pubblico** (`#site-public-footer`): aggiunto «Control Center» sia nella colonna Macroaree sia nei link legali inferiori.
-3. **Ottimizzazione Freeze Control Center (`control-center.js`, `app-admin-panels.js`, `war-room-runtime.js`, `app.js`)**:
-   - Inserito check su `document.hidden` e throttled l'intervallo di refresh live del Control Center da 4s a 8s/10s per evitare reflows continui del DOM e saturazione del thread JS.
-   - Rimosso il log ciclico in `war-room-runtime.js` (`scanRealDOMAnomalies`).
-   - Inserito `#es-admin-auth-overlay` nella lista di overlay rimossi automaticamente in `forceCloseBlockingOverlays` per prevenire click bloccati da backdrop invisibili.
-4. **File**: `index.html`, `app.js`, `control-center.js`, `app-admin-panels.js`, `war-room-runtime.js`, `sw.js`, `version.json`. Cache `v20260918_CCFOOTER1`.
+Ultimo aggiornamento: **2026-09-18** — Spostamento Control Center nel Menù a Tendina Admin/Privacy & Sblocco Freeze/Scroll (`CCDROPDOWN1`):
+1. **Control Center Esclusivo nel Menù a Tendina Admin e Responsabile Privacy (`index.html`, `app.js`)**:
+   - Rimosso completamente `nav.controlCenter` dalla navbar pubblica principale (`nav#nav-menu`) e dal drawer mobile (`#es-m-drawer-links`).
+   - Rimosse le card/link di accesso al Control Center dalla Home pubblica (`#home-portfolio` e `#welcome-access`) e dal menu account generico (`es-account-menu-nav`).
+   - Collocato il link al «Control Center» esclusivamente all'interno di `#user-dropdown-admin-section` (menù a tendina visibile unicamente agli utenti con permessi Admin o Responsabile Privacy GDPR).
+2. **Sblocco Freeze e Ripristino Scorrimento Completo Control Center (`control-center.css`, `control-center.js`, `app.js`)**:
+   - Risolto il blocco di scrolling e visualizzazione tagliata sotto i pulsanti rapidi: impostato `overflow-y: visible !important; height: auto !important; max-height: none !important; pointer-events: auto !important` su `#admin-view-group`, `#admin-portal`, `#admin-authenticated-dashboard` e su tutte le sezioni pane.
+   - Reso idempotente e sicuro il metodo `bind()` in `control-center.js`, esportato su `window.EliseeCC.bind` con gestione `stopPropagation` e anti-blocco su bottoni rapidi (`es-cc-qa-*`) e moduli (`es-cc-mod`).
+   - Sincronizzati i click sulle tab (Admin, Responsabile Privacy GDPR, Autopilot, Manager, Card) con `EliseeCC.showPane` sia da `control-center.js` che dagli handler di `app.js`.
+   - Richiamato `EliseeCC.bind()`, `EliseeCC.showPane()` e `EliseeCC.refresh()` sia in `switchView('admin', ...)` sia al completamento del login con form.
+3. **File**: `index.html`, `control-center.css`, `control-center.js`, `app.js`, `sw.js`, `version.json`. Cache `v20260918_CCDROPDOWN1`.
+
+Feature precedente: **Ripristino Footer Homepage, Link Control Center Macroaree & Ottimizzazione Responsività (`CCFOOTER1`):
 
 Feature precedente: **Sblocco Master Secret Admin, fix parser body Vercel & simulatore (`ADMINPIN2`):
 1. **Risoluzione Root Cause `req.body`**: Nelle Serverless Functions di Vercel (`@vercel/node`), `req.body` è già parsato e lo stream `req.on('data')` è già concluso. `readBody` in `api/auth-admin.js` e `api/auth-otp.js` attendeva lo stream vuoto tornando `{}`, causando l'errore "Username staff non riconosciuto" e blocco del login. Aggiunto controllo prioritario su `req.body`.

@@ -4651,14 +4651,22 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('elisee_active_dashboard_tab', 'admin');
       btnShowAdmin.classList.add('active');
       btnShowPrivacy.classList.remove('active');
-      renderAdminPanel();
+      if (window.EliseeCC && typeof window.EliseeCC.showPane === 'function') {
+        window.EliseeCC.showPane('admin');
+      } else {
+        renderAdminPanel();
+      }
     });
 
     btnShowPrivacy.addEventListener('click', () => {
       localStorage.setItem('elisee_active_dashboard_tab', 'privacy');
       btnShowPrivacy.classList.add('active');
       btnShowAdmin.classList.remove('active');
-      renderPrivacyPanel();
+      if (window.EliseeCC && typeof window.EliseeCC.showPane === 'function') {
+        window.EliseeCC.showPane('privacy');
+      } else {
+        renderPrivacyPanel();
+      }
     });
   }
 
@@ -5132,8 +5140,16 @@ document.addEventListener('DOMContentLoaded', () => {
               if (ok) {
                 loginGuard.style.display = 'none';
                 dash.style.display = 'block';
-                try { renderAdminPanel(); } catch (err) { console.error('renderAdminPanel', err); }
-                try { if (window.refreshAdminAnalytics) window.refreshAdminAnalytics(); } catch(e) {}
+                dash.classList.add('es-cc');
+                if (window.EliseeCC) {
+                  if (typeof window.EliseeCC.bind === 'function') window.EliseeCC.bind();
+                  var currentTab = localStorage.getItem('elisee_active_dashboard_tab') || 'admin';
+                  if (typeof window.EliseeCC.showPane === 'function') window.EliseeCC.showPane(currentTab);
+                  if (typeof window.EliseeCC.refresh === 'function') window.EliseeCC.refresh();
+                } else {
+                  try { renderAdminPanel(); } catch (err) { console.error('renderAdminPanel', err); }
+                  try { if (window.refreshAdminAnalytics) window.refreshAdminAnalytics(); } catch(e) {}
+                }
               } else {
                 loginGuard.style.display = 'block';
                 dash.style.display = 'none';
@@ -6027,8 +6043,17 @@ document.addEventListener('DOMContentLoaded', () => {
       if (ok) {
         guardCard.style.display = 'none';
         authDashboard.style.display = 'block';
-        renderAdminPanel();
-        try { if (window.refreshAdminAnalytics) window.refreshAdminAnalytics(); } catch(e) {}
+        authDashboard.classList.add('es-cc');
+        if (window.EliseeCC) {
+          if (typeof window.EliseeCC.bind === 'function') window.EliseeCC.bind();
+          var isPrv = localStorage.getItem('elisee_privacy_auth') === 'true';
+          var currentTab = isPrv ? 'privacy' : (localStorage.getItem('elisee_active_dashboard_tab') || 'admin');
+          if (typeof window.EliseeCC.showPane === 'function') window.EliseeCC.showPane(currentTab);
+          if (typeof window.EliseeCC.refresh === 'function') window.EliseeCC.refresh();
+        } else {
+          renderAdminPanel();
+          try { if (window.refreshAdminAnalytics) window.refreshAdminAnalytics(); } catch(e) {}
+        }
       } else if (urlUser) {
         const errorContainer = document.getElementById('admin-login-error-container');
         if (errorContainer) {
@@ -6158,8 +6183,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (gCard && aDash) {
           gCard.style.display = 'none';
           aDash.style.display = 'block';
-          renderAdminPanel();
-          try { if (window.refreshAdminAnalytics) window.refreshAdminAnalytics(); } catch(e) {}
+          aDash.classList.add('es-cc');
+          if (window.EliseeCC) {
+            if (typeof window.EliseeCC.bind === 'function') window.EliseeCC.bind();
+            var isPrv = localStorage.getItem('elisee_privacy_auth') === 'true';
+            var initTab = isPrv ? 'privacy' : (localStorage.getItem('elisee_active_dashboard_tab') || 'admin');
+            if (typeof window.EliseeCC.showPane === 'function') window.EliseeCC.showPane(initTab);
+            if (typeof window.EliseeCC.refresh === 'function') window.EliseeCC.refresh();
+          } else {
+            renderAdminPanel();
+            try { if (window.refreshAdminAnalytics) window.refreshAdminAnalytics(); } catch(e) {}
+          }
         }
         if (typeof window.updateNavbarUserUI === 'function') {
           window.updateNavbarUserUI();

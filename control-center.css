@@ -1,4 +1,29 @@
 /* Control Center — dashboard operativa, palette scura desaturata */
+#admin-view-group,
+#admin-portal,
+#admin-authenticated-dashboard,
+#es-cc-overview,
+#es-cc-privacy-section,
+#es-cc-autopilot-section {
+  pointer-events: auto !important;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+  max-height: none !important;
+  height: auto !important;
+  position: relative !important;
+}
+
+#admin-portal .es-cc-qa,
+#admin-portal .es-cc-mod,
+#admin-portal .gov-btn,
+#admin-portal .pf-chips button,
+#admin-portal button {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  position: relative;
+  z-index: 5;
+}
+
 #admin-portal .container.pf-page-inner,
 #admin-portal .pf-page-inner {
   max-width: 1280px !important;
