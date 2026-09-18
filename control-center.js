@@ -365,6 +365,8 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
   setInterval(function () {
-    if ($('admin-authenticated-dashboard') && $('admin-authenticated-dashboard').style.display !== 'none') refresh();
-  }, 4000);
+    if (!document.hidden && $('admin-authenticated-dashboard') && $('admin-authenticated-dashboard').style.display !== 'none') {
+      refresh();
+    }
+  }, 8000);
 })();

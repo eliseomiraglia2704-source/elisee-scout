@@ -4727,7 +4727,8 @@ document.addEventListener('DOMContentLoaded', () => {
       'es-ap-root',
       'modal-war-room-backdrop',
       'governance-action-modal',
-      'fullscreen-document-viewer'
+      'fullscreen-document-viewer',
+      'es-admin-auth-overlay'
     ];
     blockers.forEach((id) => {
       const el = document.getElementById(id);
@@ -4845,10 +4846,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (vd && !vd.hidden && vd.style.display !== 'none') isAreaRiservataStaff = true;
     }
 
-    if (document.body.classList.contains('is-coach-mode') || document.body.classList.contains('is-vice-mode')) {
-      isAreaRiservataStaff = true;
-    }
-
     if (isAreaRiservataStaff) {
       footer.style.setProperty('display', 'none', 'important');
       footer.setAttribute('hidden', '');
@@ -4857,6 +4854,7 @@ document.addEventListener('DOMContentLoaded', () => {
       footer.style.removeProperty('display');
       footer.removeAttribute('hidden');
       footer.classList.remove('is-hidden-staff');
+      footer.style.display = 'block';
     }
   }
   window.updatePublicFooterVisibility = updatePublicFooterVisibility;
@@ -4921,6 +4919,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Nascondi tutto poi riapri solo la destinazione
       hideAllPortals();
+
+      if (viewType !== 'user-dossier') {
+        document.body.classList.remove(
+          'is-coach-mode', 'is-vice-mode', 'is-pres-mode', 'is-player-mode',
+          'is-obs-mode', 'is-ma-mode', 'is-gk-mode', 'is-giorn-mode',
+          'is-at-mode', 'is-med-mode', 'is-fisio-mode', 'is-nu-mode',
+          'is-tm-mode', 'is-ds-mode', 'is-yg-mode', 'is-dg-mode',
+          'is-ag-mode', 'is-mk-mode', 'is-pr-mode', 'is-eq-mode',
+          'is-sg-mode', 'is-bt-mode', 'is-tifoso-mode'
+        );
+      }
 
       try {
         document.querySelectorAll('.nav-link, .es-m-tab-item').forEach((link) => link.classList.remove('active'));
@@ -5100,6 +5109,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       } else if (viewType === 'admin' || targetHash === '#admin-portal') {
         const adminGroup = showEl('admin-view-group');
+        showEl('admin-portal');
+        document.querySelectorAll('.nav-link[data-view="admin"]').forEach(function (l) { l.classList.add('active'); });
         try {
           const activeUserRaw = localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data');
           let uEmail = '';

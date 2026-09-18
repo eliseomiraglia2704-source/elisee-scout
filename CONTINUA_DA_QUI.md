@@ -3,7 +3,21 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Sblocco Master Secret Admin, fix parser body Vercel & simulatore (`ADMINPIN2`):
+Ultimo aggiornamento: **2026-09-18** — Ripristino Footer Homepage, Link Control Center Macroaree & Ottimizzazione Responsività (`CCFOOTER1`):
+1. **Ripristino Footer Homepage (`app.js`, `index.html`)**: Risolta la causa della scomparsa del footer su `#hero` e viste pubbliche: la guardia in `updatePublicFooterVisibility` verificava le classi `is-coach-mode`/`is-vice-mode` sul body anche fuori dal dossier utente. Limitato il nascondimento del footer pubblico esclusivamente all'area riservata staff tecnico in `user-dossier`. Aggiunto unmount automatico di tutte le classi di ruolo dal `document.body` in `switchView` quando si naviga verso pagine pubbliche.
+2. **Accesso Diretto Control Center (`index.html`, `app.js`)**: Aggiunta la voce e i link diretti verso il Control Center (`#admin-portal`):
+   - Nelle **Macroaree** (navbar desktop `#nav-menu`): aggiunto link permanente «Control Center».
+   - Nel **Drawer Mobile** (`#es-m-drawer-links`): aggiunta voce «Control Center» con icona lucchetto.
+   - Nella **Home** (`#home-portfolio`): aggiunta card dedicata «Control Center» (Governance, Admin e Responsabile Privacy GDPR).
+   - Nella sezione **Accesso/Welcome** (`#welcome-access`): aggiunto link discreto di accesso alla Governance.
+   - Nel **Footer pubblico** (`#site-public-footer`): aggiunto «Control Center» sia nella colonna Macroaree sia nei link legali inferiori.
+3. **Ottimizzazione Freeze Control Center (`control-center.js`, `app-admin-panels.js`, `war-room-runtime.js`, `app.js`)**:
+   - Inserito check su `document.hidden` e throttled l'intervallo di refresh live del Control Center da 4s a 8s/10s per evitare reflows continui del DOM e saturazione del thread JS.
+   - Rimosso il log ciclico in `war-room-runtime.js` (`scanRealDOMAnomalies`).
+   - Inserito `#es-admin-auth-overlay` nella lista di overlay rimossi automaticamente in `forceCloseBlockingOverlays` per prevenire click bloccati da backdrop invisibili.
+4. **File**: `index.html`, `app.js`, `control-center.js`, `app-admin-panels.js`, `war-room-runtime.js`, `sw.js`, `version.json`. Cache `v20260918_CCFOOTER1`.
+
+Feature precedente: **Sblocco Master Secret Admin, fix parser body Vercel & simulatore (`ADMINPIN2`):
 1. **Risoluzione Root Cause `req.body`**: Nelle Serverless Functions di Vercel (`@vercel/node`), `req.body` è già parsato e lo stream `req.on('data')` è già concluso. `readBody` in `api/auth-admin.js` e `api/auth-otp.js` attendeva lo stream vuoto tornando `{}`, causando l'errore "Username staff non riconosciuto" e blocco del login. Aggiunto controllo prioritario su `req.body`.
 2. **Backend `api/auth-admin.js`**: Default automatico di `username` a `'admin'` se omesso con PIN presente; tolleranza totale su maiuscole/minuscole e varianti (`Iemmello.9`, `Iemmello9`, `iemmello.9`, `iemmello9`) con hash PBKDF2 dedicati.
 3. **Frontend `creator-role-switcher.js`**: Inoltro esplicito di `{ pin: pinVal, username: 'admin' }`.

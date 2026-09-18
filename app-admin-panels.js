@@ -26,6 +26,7 @@ function renderOptionsGrid(optionsList) {
 if (!window.__eliseeSupervisorsAdminRefresh) {
   window.__eliseeSupervisorsAdminRefresh = setInterval(function () {
     try {
+      if (document.hidden) return;
       var tab = window.currentAdminTab || localStorage.getItem('elisee_active_admin_tab') || '';
       var portal = document.getElementById('admin-portal');
       var visible = portal && !portal.hidden && portal.offsetParent !== null;
@@ -33,7 +34,7 @@ if (!window.__eliseeSupervisorsAdminRefresh) {
         renderAdminPanel();
       }
     } catch (e) { /* ignore */ }
-  }, 4000);
+  }, 10000);
   document.addEventListener('elisee:campionati-anomaly', function () {
     try {
       var tab = window.currentAdminTab || localStorage.getItem('elisee_active_admin_tab') || '';

@@ -229,9 +229,7 @@
             selector: 'window.performance.navigation',
             beforeHTML: 'DOMContentLoaded Latency: ' + domLoad + 'ms',
             afterHTML: 'DOMContentLoaded Optimized: ' + Math.round(domLoad * 0.85) + 'ms (Resource Preload Verified)',
-            applyFix: function () {
-              console.log('[WarRoom] Ottimizzazione risorse DOM applicata.');
-            }
+            applyFix: function () {}
           });
         }
       }
