@@ -3,12 +3,20 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Integrazione Avatar 3D nella Dashboard Giocatore v3.0 & Status Biometrico (`PLAYER3D1`):
-1. **Player Dashboard & Avatar 3D Hub (`player-dash.js`, `index.html`)**:
-   - **Voce «Avatar 3D» nei Nav Tab & Sidebar**: Aggiunto tab orizzontale e pulsante sidebar `avatar3d` con icona 3D per consentire al calciatore di aprire istantaneamente il visualizzatore 3D Three.js.
-   - **Checklist Certificazione & Compliance**: Aggiunta voce di verifica biometrica `Avatar 3D Biometrico` (`Attivo ✓` / `Da configurare`) allineata allo stato effettivo in localStorage / profilo condiviso.
-   - **Card Dedicata Avatar 3D**: Riquadro dark glass con radial gradient ciano nella colonna fiducia & mercato con descrizione e CTA dinamica (*"Apri Visualizzatore 3D (360°)"* se attivo o *"Attiva il tuo Avatar 3D"* con apertura automatica del flow di consenso GDPR Art. 9).
-2. **File**: `player-dash.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_PLAYER3D1`.
+Ultimo aggiornamento: **2026-09-18** — Unificazione Sidebar Luxury macOS & Toggle 72px su tutti i 12 Ruoli (`SIDEBARALL1`):
+1. **Unificazione Cross-Ruolo (`role-sidebar-pro.css`, `role-sidebar-pro.js`, `index.html`)**:
+   - Esteso il design system moderno con traffic lights macOS, mini-profilo utente, toggle fluttuante `<` / `>`, accordion ad albero, flyout popover e bottom action card a **tutti i ruoli sportivi e tecnici**:
+     - `.es-obs-sidebar` (Osservatore / Scout)
+     - `.es-cos-sidebar` (Allenatore / Vice Allenatore)
+     - `.es-pro-sidebar` (Giocatore / Presidente / Giornalista)
+     - `.es-at-sidebar` (Preparatore Atletico)
+     - `.es-gk-sidebar` (Preparatore Portieri)
+     - `.es-ma-sidebar` (Match Analyst / Video Analyst)
+     - `.es-med-sidebar` (Staff Medico, Fisioterapista, Nutrizionista)
+   - Riallineamento fluido automatico dei container di tutte le dashboard (`padding-left: calc(252px + 18px)` espanso vs `calc(72px + 18px)` collassato).
+2. **File**: `role-sidebar-pro.css`, `role-sidebar-pro.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_SIDEBARALL1`.
+
+Feature precedente: **Integrazione Avatar 3D nella Dashboard Giocatore v3.0 & Status Biometrico (`PLAYER3D1`):
 
 Feature precedente: **Nuova Struttura Sidebar Luxury Multi-Ruolo & Mini-Sidebar Collapsable (`SIDEBARPRO1`):
 

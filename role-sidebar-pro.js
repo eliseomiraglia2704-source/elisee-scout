@@ -161,7 +161,7 @@
   // Scansione e upgrade automatico di tutte le sidebar montate
   function scanAndUpgrade() {
     var sidebars = document.querySelectorAll(
-      '.es-obs-sidebar, .es-pro-sidebar, .es-cos-sidebar, .es-modern-sidebar, [id$="-sidebar"]'
+      '.es-obs-sidebar, .es-pro-sidebar, .es-cos-sidebar, .es-modern-sidebar, .es-at-sidebar, .es-med-sidebar, .es-gk-sidebar, .es-ma-sidebar, [id$="-sidebar"], [class*="-sidebar"]'
     );
     sidebars.forEach(function (sb) {
       if (sb.offsetWidth > 0 || sb.offsetHeight > 0 || window.getComputedStyle(sb).display !== 'none') {

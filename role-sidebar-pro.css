@@ -25,7 +25,11 @@
 .es-modern-sidebar,
 .es-pro-sidebar,
 .es-obs-sidebar,
-.es-cos-sidebar {
+.es-cos-sidebar,
+.es-at-sidebar,
+.es-med-sidebar,
+.es-gk-sidebar,
+.es-ma-sidebar {
   width: var(--es-sb-width-expanded) !important;
   min-width: var(--es-sb-width-expanded) !important;
   background: var(--es-sb-bg-glass) !important;
@@ -51,7 +55,12 @@
 
 .es-modern-sidebar::-webkit-scrollbar,
 .es-pro-sidebar::-webkit-scrollbar,
-.es-obs-sidebar::-webkit-scrollbar {
+.es-obs-sidebar::-webkit-scrollbar,
+.es-cos-sidebar::-webkit-scrollbar,
+.es-at-sidebar::-webkit-scrollbar,
+.es-med-sidebar::-webkit-scrollbar,
+.es-gk-sidebar::-webkit-scrollbar,
+.es-ma-sidebar::-webkit-scrollbar {
   display: none;
 }
 
@@ -61,7 +70,11 @@
 body.es-sidebar-is-collapsed .es-modern-sidebar,
 body.es-sidebar-is-collapsed .es-pro-sidebar,
 body.es-sidebar-is-collapsed .es-obs-sidebar,
-body.es-sidebar-is-collapsed .es-cos-sidebar {
+body.es-sidebar-is-collapsed .es-cos-sidebar,
+body.es-sidebar-is-collapsed .es-at-sidebar,
+body.es-sidebar-is-collapsed .es-med-sidebar,
+body.es-sidebar-is-collapsed .es-gk-sidebar,
+body.es-sidebar-is-collapsed .es-ma-sidebar {
   width: var(--es-sb-width-collapsed) !important;
   min-width: var(--es-sb-width-collapsed) !important;
   padding: 16px 8px 20px !important;
@@ -71,7 +84,14 @@ body.es-sidebar-is-collapsed .es-cos-sidebar {
 .es-pro-dash-wrap,
 .es-obs-dash-container,
 .es-cos-dash-wrap,
-.es-player-dash-wrap {
+.es-player-dash-wrap,
+.es-at-dash-container,
+.es-med-dash-container,
+.es-gk-dash-container,
+.es-ma-dash-container,
+.es-pro-main,
+.es-cos-main,
+.es-obs-main {
   transition: padding-left 0.28s var(--es-sb-ease) !important;
   padding-left: calc(var(--es-sb-width-expanded) + 18px) !important;
 }
@@ -79,7 +99,14 @@ body.es-sidebar-is-collapsed .es-cos-sidebar {
 body.es-sidebar-is-collapsed .es-pro-dash-wrap,
 body.es-sidebar-is-collapsed .es-obs-dash-container,
 body.es-sidebar-is-collapsed .es-cos-dash-wrap,
-body.es-sidebar-is-collapsed .es-player-dash-wrap {
+body.es-sidebar-is-collapsed .es-player-dash-wrap,
+body.es-sidebar-is-collapsed .es-at-dash-container,
+body.es-sidebar-is-collapsed .es-med-dash-container,
+body.es-sidebar-is-collapsed .es-gk-dash-container,
+body.es-sidebar-is-collapsed .es-ma-dash-container,
+body.es-sidebar-is-collapsed .es-pro-main,
+body.es-sidebar-is-collapsed .es-cos-main,
+body.es-sidebar-is-collapsed .es-obs-main {
   padding-left: calc(var(--es-sb-width-collapsed) + 18px) !important;
 }
 
