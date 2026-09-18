@@ -3,7 +3,19 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Avatar 3D STEP 1: Attivazione GLTF/GLB Loader, Storage IndexedDB & Rimozione Primitive Geometriche (`A3DSTEP1`):
+Ultimo aggiornamento: **2026-09-18** — Avatar 3D: Collegamento Kit 2D Squadra Ufficiale & Nuova Interfaccia EA Sports FC (`A3DKIT1`):
+1. **Collegamento Automatico Kit 2D Squadra (`immagini/kits-2d/<squadra>/`)**:
+   - Collegamento diretto dell'Avatar 3D alla cartella ufficiale del club (es. `foggia-city` con `INTER-HOME-27.png` e `home.png`).
+   - Mappatura texture UV ad altissima risoluzione (2048x2048) in Three.js con filtro anisotropico, che avvolge maglia, maniche, sponsor e scudetto senza sfocature.
+2. **Selettore Kit 2D con Miniature Reali Cliccabili**:
+   - Griglia luxury con anteprime visive delle divise disponibili per il club.
+   - Switch in tempo reale: cliccando su una divisa, la maglia del modello 3D si aggiorna istantaneamente senza ricaricare la pagina.
+3. **Nuova Interfaccia & Stage Stile EA Sports FC / Ultimate Team**:
+   - **Player Card Fluttuante**: Overall dorato 88, Ruolo, Logo Squadra e Nome Atleta in alto a sinistra.
+   - **Preset Inquadrature Telecamera**: Pulsanti rapidi nella Orbit Bar (`Volto`, `Maglia/Sponsor`, `Figura Intera`) per transizioni cinematografiche.
+4. **File**: `avatar-3d.js`, `avatar-3d.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_A3DKIT1`.
+
+Feature precedente: **Avatar 3D STEP 1: Attivazione GLTF/GLB Loader, Storage IndexedDB & Rimozione Primitive Geometriche (`A3DSTEP1`):
 1. **Attivazione Motore Three.js GLTF/GLB ad Alta Definizione**:
    - Caricatore standard universale `THREE.GLTFLoader` integrato e pronto a renderizzare modelli 3D realistici esportati da **Hyper3D (Rodin Gen-2)** o scansioni fotogrammetriche.
    - Normalizzazione automatica: calcolo Bounding Box del file `.glb`, scala proporzionale ad altezza atletica (~1.80m), posizionamento perfetto sui piedi sopra il piedistallo specchiato a $Y = 0.08$.

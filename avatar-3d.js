@@ -21,7 +21,8 @@
     headMesh: null,
     bodyMeshGroup: null,
     currentBodyType: 'atletica',
-    autoRotate: false
+    autoRotate: false,
+    activeModel: null
   };
 
   // Lettura / Salvataggio Dati Profilo Condiviso
@@ -48,11 +49,13 @@
       tatuaggio_collo: false,
       preset_luci: 'elite_neon',
       divisa_ref: {
-        club: getActiveUser().squadra || 'Elisee F.C.',
+        club: getActiveUser().squadra || 'Foggia City',
         colore_primario: '#c0392b',
         colore_secondario: '#111111',
         numero: 10,
-        cognome: (getActiveUser().cognome || 'ATLETA').toUpperCase()
+        cognome: (getActiveUser().cognome || 'ATLETA').toUpperCase(),
+        selected_kit_path: 'immagini/kits-2d/foggia-city/INTER-HOME-27.png',
+        selected_kit_id: 'inter_home_27'
       },
       stato_generazione: 'non_avviato',
       errore_msg: '',
@@ -599,20 +602,83 @@
     if (sp) sp.remove();
   }
 
-  // Visualizzatore 3D Completo Three.js (Stage a sinistra, Controlli a destra)
+  // Lista kit disponibili per club
+  function getAvailableKitsForClub(clubName) {
+    var slug = (clubName || 'foggia-city').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');
+    if (slug.indexOf('foggia') !== -1) {
+      return [
+        {
+          id: 'inter_home_27',
+          name: 'Inter 24/25 Home (Serie A)',
+          path: 'immagini/kits-2d/foggia-city/INTER-HOME-27.png',
+          badge: 'SPECIALE'
+        },
+        {
+          id: 'foggia_city_home',
+          name: 'Givova Foggia City',
+          path: 'immagini/kits-2d/foggia-city/home.png',
+          badge: 'UFFICIALE'
+        }
+      ];
+    }
+    return [
+      {
+        id: slug + '_home',
+        name: (clubName || 'Club') + ' Home',
+        path: 'immagini/kits-2d/' + slug + '/home.png',
+        badge: 'UFFICIALE'
+      }
+    ];
+  }
+
+  // Visualizzatore 3D Completo Three.js Stile EA FC / Next-Gen
   function renderStageView(container, avatar) {
     var user = getActiveUser();
-    var clubName = avatar.divisa_ref.club || user.squadra || 'Elisee F.C.';
-    var athleteName = ((user.nome || '') + ' ' + (user.cognome || '')).trim() || 'ATLETA';
+    var clubName = (avatar.divisa_ref && avatar.divisa_ref.club) || user.squadra || 'Foggia City';
+    var athleteName = ((user.nome || '') + ' ' + (user.cognome || '')).trim() || 'ELISEE ATLETA';
+    var userRole = (user.ruolo_calcio || user.ruolo || 'ATT').toUpperCase().slice(0, 3);
+    var kits = getAvailableKitsForClub(clubName);
+    var activeKitPath = (avatar.divisa_ref && avatar.divisa_ref.selected_kit_path) || kits[0].path;
+
+    // Genera HTML miniature kit
+    var kitsHtml = '';
+    kits.forEach(function (k) {
+      var isActive = (activeKitPath === k.path);
+      kitsHtml +=
+        '<div class="es-a3d-kit-card ' + (isActive ? 'is-active' : '') + '" data-kit-path="' + k.path + '" data-kit-id="' + k.id + '">' +
+          '<div class="es-a3d-kit-thumb-wrap">' +
+            '<img class="es-a3d-kit-thumb-img" src="' + k.path + '" alt="' + k.name + '" onerror="this.onerror=null;this.src=\'immagini/kits-2d/foggia-city/home.png\';">' +
+          '</div>' +
+          '<div class="es-a3d-kit-label">' + k.name + '</div>' +
+          '<span class="es-a3d-kit-badge-tag">' + (isActive ? 'INDOSSATA' : k.badge) + '</span>' +
+        '</div>';
+    });
 
     container.innerHTML =
       '<div class="es-a3d-stage-container" id="es-a3d-stage">' +
+        '<!-- Player Card Fluttuante Stile EA Sports FC Ultimate Team -->' +
+        '<div class="es-a3d-player-card" id="es-a3d-player-card">' +
+          '<div class="es-a3d-card-ovr-wrap">' +
+            '<span class="es-a3d-card-ovr">88</span>' +
+            '<span class="es-a3d-card-pos">' + userRole + '</span>' +
+          '</div>' +
+          '<div class="es-a3d-card-info">' +
+            '<span class="es-a3d-card-name">' + athleteName + '</span>' +
+            '<div class="es-a3d-card-club-row">' +
+              '<img src="immagini/squadre-loghi/foggia-city.png" onerror="this.onerror=null;this.src=\'immagini/kits-2d/foggia-city/home.png\';" alt="Logo">' +
+              '<span>' + clubName + '</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
         '<div class="es-a3d-canvas-wrap" id="es-a3d-canvas-wrap">' +
           '<div class="es-a3d-canvas-overlay-guide" id="es-a3d-drop-guide">' +
             '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>' +
             '<span>Trascina qui il file .GLB</span> esportato da Hyper3D' +
           '</div>' +
         '</div>' +
+
+        '<!-- Orbit Controls Bar con Inquadrature Rapide Telecamera -->' +
         '<div class="es-a3d-orbit-controls-bar">' +
           '<button type="button" class="es-a3d-tool-btn" id="btn-toggle-autorotate" title="Attiva/Pausa rotazione">' +
             '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>' +
@@ -622,7 +688,12 @@
             '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>' +
             '<span>Reset</span>' +
           '</button>' +
-          '<button type="button" class="es-a3d-tool-btn" id="btn-zoom-in" title="Ingrandisci">' +
+          '<div class="es-a3d-cam-presets">' +
+            '<button type="button" class="es-a3d-cam-btn" id="btn-cam-face" title="Primo Piano Volto">Volto</button>' +
+            '<button type="button" class="es-a3d-cam-btn" id="btn-cam-chest" title="Inquadratura Maglia / Sponsor">Maglia</button>' +
+            '<button type="button" class="es-a3d-cam-btn is-active" id="btn-cam-full" title="Figura Intera">Completa</button>' +
+          '</div>' +
+          '<button type="button" class="es-a3d-tool-btn" id="btn-zoom-in" title="Ingrandisci" style="margin-left:4px;">' +
             '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>' +
           '</button>' +
           '<button type="button" class="es-a3d-tool-btn" id="btn-zoom-out" title="Rimpicciolisci">' +
@@ -631,6 +702,30 @@
         '</div>' +
       '</div>' +
       '<aside class="es-a3d-sidebar-controls">' +
+        '<!-- Sezione 1: Kit 2D & Divisa Ufficiale Club -->' +
+        '<div class="es-a3d-card-section">' +
+          '<div class="es-a3d-section-title">Kit 2D &amp; Divisa Club <span class="es-a3d-badge-pro">LIVE 3D</span></div>' +
+          '<div class="es-a3d-club-kit-row">' +
+            '<img class="es-a3d-club-badge-img" src="immagini/squadre-loghi/foggia-city.png" onerror="this.onerror=null;this.src=\'immagini/kits-2d/foggia-city/home.png\';" alt="Badge">' +
+            '<div>' +
+              '<div class="es-a3d-club-name">' + clubName + '</div>' +
+              '<div class="es-a3d-club-kit-sub">' + athleteName + ' · N° ' + (avatar.divisa_ref.numero || 10) + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div style="margin-top:6px; font-size:0.75rem; color:#94a3b8; font-weight:600;">Seleziona la divisa da applicare:</div>' +
+          '<div class="es-a3d-kit-grid" id="es-a3d-kit-grid">' +
+            kitsHtml +
+          '</div>' +
+          '<div class="es-a3d-tattoo-toggle-row ' + (avatar.applica_divisa_club !== false ? 'is-active' : '') + '" id="btn-toggle-club-kit" style="margin-top:10px; cursor:pointer;">' +
+            '<div class="es-a3d-tattoo-label">' +
+              '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>' +
+              '<span>Texture Kit UV su Modello</span>' +
+            '</div>' +
+            '<span class="es-a3d-tattoo-badge" id="es-a3d-kit-badge-text">' + (avatar.applica_divisa_club !== false ? 'ATTIVA' : 'ORIGINALE') + '</span>' +
+          '</div>' +
+        '</div>' +
+
+        '<!-- Sezione 2: Modello 3D (.glb) Hyper3D -->' +
         '<div class="es-a3d-card-section">' +
           '<div class="es-a3d-section-title">Modello 3D (.glb) <span class="es-a3d-badge-pro">HYPER3D READY</span></div>' +
           '<input type="file" id="es-a3d-input-glb" accept=".glb,.gltf" style="display:none">' +
@@ -642,23 +737,8 @@
             '<span style="color:#64748b;">Nessun file personalizzato caricato</span>' +
           '</div>' +
         '</div>' +
-        '<div class="es-a3d-card-section">' +
-          '<div class="es-a3d-section-title">Divisa &amp; Club Ufficiale</div>' +
-          '<div class="es-a3d-club-kit-row">' +
-            '<img class="es-a3d-club-badge-img" src="immagini/squadre-loghi/foggia-city.png" onerror="this.onerror=null;this.src=\'immagini/kits-2d/foggia-city/home.png\';" alt="Badge">' +
-            '<div>' +
-              '<div class="es-a3d-club-name">' + clubName + '</div>' +
-              '<div class="es-a3d-club-kit-sub">' + athleteName + ' · N° ' + avatar.divisa_ref.numero + '</div>' +
-            '</div>' +
-          '</div>' +
-          '<div class="es-a3d-tattoo-toggle-row ' + (avatar.applica_divisa_club !== false ? 'is-active' : '') + '" id="btn-toggle-club-kit" style="margin-top:10px; cursor:pointer;">' +
-            '<div class="es-a3d-tattoo-label">' +
-              '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>' +
-              '<span>Applica Colori Elisee F.C.</span>' +
-            '</div>' +
-            '<span class="es-a3d-tattoo-badge" id="es-a3d-kit-badge-text">' + (avatar.applica_divisa_club !== false ? 'ATTIVA' : 'ORIGINALE') + '</span>' +
-          '</div>' +
-        '</div>' +
+
+        '<!-- Sezione 3: Illuminazione Scena -->' +
         '<div class="es-a3d-card-section">' +
           '<div class="es-a3d-section-title">Illuminazione Scena</div>' +
           '<div class="es-a3d-light-grid">' +
@@ -667,6 +747,8 @@
             '<button type="button" class="es-a3d-light-btn ' + (avatar.preset_luci === 'studio_hq' ? 'is-selected' : '') + '" data-light="studio_hq">Studio HQ</button>' +
           '</div>' +
         '</div>' +
+
+        '<!-- Sezione 4: Azioni & Privacy -->' +
         '<div class="es-a3d-card-section">' +
           '<div class="es-a3d-section-title">Aggiorna Foto Volto</div>' +
           '<button type="button" class="es-a3d-btn-primary" id="btn-replace-photo" style="width:100%;">' +
@@ -684,6 +766,59 @@
     var btnUpload = container.querySelector('#btn-trigger-upload-glb');
     var canvasWrap = container.querySelector('#es-a3d-canvas-wrap');
     var statusBox = container.querySelector('#es-a3d-glb-status-box');
+
+    // Binding Click Selettore Kit 2D
+    var kitCards = container.querySelectorAll('.es-a3d-kit-card');
+    kitCards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        var kPath = card.getAttribute('data-kit-path');
+        var kId = card.getAttribute('data-kit-id');
+        kitCards.forEach(function (c) {
+          c.classList.remove('is-active');
+          var tag = c.querySelector('.es-a3d-kit-badge-tag');
+          if (tag) tag.textContent = (c.getAttribute('data-kit-id') === 'inter_home_27' ? 'SPECIALE' : 'UFFICIALE');
+        });
+        card.classList.add('is-active');
+        var activeTag = card.querySelector('.es-a3d-kit-badge-tag');
+        if (activeTag) activeTag.textContent = 'INDOSSATA';
+
+        avatar.divisa_ref = avatar.divisa_ref || {};
+        avatar.divisa_ref.selected_kit_path = kPath;
+        avatar.divisa_ref.selected_kit_id = kId;
+        saveAvatarData(avatar);
+
+        // Applica la texture direttamente al modello attivo in scena
+        applyKitTextureToActiveModel(kPath);
+      });
+    });
+
+    // Preset Telecamera
+    var camBtns = container.querySelectorAll('.es-a3d-cam-btn');
+    function setCamPreset(mode) {
+      camBtns.forEach(function (b) { b.classList.remove('is-active'); });
+      if (!state.camera || !state.controls) return;
+      if (mode === 'face') {
+        container.querySelector('#btn-cam-face').classList.add('is-active');
+        state.camera.position.set(0, 1.70, 0.72);
+        state.controls.target.set(0, 1.68, 0);
+      } else if (mode === 'chest') {
+        container.querySelector('#btn-cam-chest').classList.add('is-active');
+        state.camera.position.set(0, 1.38, 1.35);
+        state.controls.target.set(0, 1.32, 0);
+      } else {
+        container.querySelector('#btn-cam-full').classList.add('is-active');
+        state.camera.position.set(0, 1.15, 2.70);
+        state.controls.target.set(0, 1.05, 0);
+      }
+      state.controls.update();
+    }
+
+    var btnCamFace = container.querySelector('#btn-cam-face');
+    if (btnCamFace) btnCamFace.addEventListener('click', function () { setCamPreset('face'); });
+    var btnCamChest = container.querySelector('#btn-cam-chest');
+    if (btnCamChest) btnCamChest.addEventListener('click', function () { setCamPreset('chest'); });
+    var btnCamFull = container.querySelector('#btn-cam-full');
+    if (btnCamFull) btnCamFull.addEventListener('click', function () { setCamPreset('full'); });
 
     // Funzione aggiornamento UI status del modello
     function refreshGlbStatusUI(modelName) {
@@ -1432,6 +1567,55 @@
     return tex;
   }
 
+  // Applica una texture Kit 2D al modello attualmente attivo in scena
+  function applyKitTextureToActiveModel(kitPath) {
+    if (!state.activeModel) return;
+    var THREE = window.THREE;
+    if (!THREE) return;
+
+    var loader = new THREE.TextureLoader();
+    loader.load(
+      kitPath,
+      function (tex) {
+        tex.flipY = false;
+        tex.anisotropy = 8;
+        tex.generateMipmaps = true;
+        tex.minFilter = THREE.LinearMipmapLinearFilter;
+        tex.magFilter = THREE.LinearFilter;
+        tex.needsUpdate = true;
+
+        state.activeModel.traverse(function (child) {
+          if (child.isMesh && child.material) {
+            var name = (child.name || '').toLowerCase();
+            var isOutfit = name.indexOf('shirt') !== -1 ||
+                           name.indexOf('top') !== -1 ||
+                           name.indexOf('outfit') !== -1 ||
+                           name.indexOf('jersey') !== -1 ||
+                           name.indexOf('maglia') !== -1;
+            // Se è una mesh specifica di vestiario, o se il modello è una singola mesh busto
+            if (isOutfit || name === '' || name.indexOf('mesh') !== -1) {
+              if (Array.isArray(child.material)) {
+                child.material.forEach(function (mat) {
+                  mat.map = tex;
+                  mat.needsUpdate = true;
+                });
+              } else {
+                child.material.map = tex;
+                child.material.roughness = 0.40;
+                child.material.metalness = 0.05;
+                child.material.needsUpdate = true;
+              }
+            }
+          }
+        });
+      },
+      undefined,
+      function (err) {
+        console.warn('Impossibile caricare texture kit:', kitPath, err);
+      }
+    );
+  }
+
   // ============================================================
   // CARICATORE THREE.JS GLTF / GLB AD ALTA DEFINIZIONE (HYPER3D)
   // ============================================================
@@ -1451,6 +1635,7 @@
         }
 
         var model = gltf.scene;
+        state.activeModel = model;
 
         // Calcola BoundingBox per normalizzare scala e centratura atletica
         var bbox = new THREE.Box3().setFromObject(model);
@@ -1476,32 +1661,19 @@
         model.position.y = 0.08 - bbox.min.y;
         model.position.z = -center.z;
 
-        // Texture Divisa Ufficiale Elisee F.C.
-        var jerseyTex = (avatar && avatar.applica_divisa_club !== false) ? createProceduralJerseyTexture(avatar) : null;
-
-        // Traversal nodi per ombre e kit
+        // Traversal nodi per ombreggiatura
         model.traverse(function (child) {
           if (child.isMesh) {
             child.castShadow = true;
             child.receiveShadow = true;
-
-            if (jerseyTex && child.material) {
-              var name = (child.name || '').toLowerCase();
-              var isOutfit = name.indexOf('shirt') !== -1 ||
-                             name.indexOf('top') !== -1 ||
-                             name.indexOf('outfit_top') !== -1 ||
-                             name.indexOf('jersey') !== -1 ||
-                             name.indexOf('maglia') !== -1;
-              if (isOutfit) {
-                child.material = new THREE.MeshStandardMaterial({
-                  map: jerseyTex,
-                  roughness: 0.45,
-                  metalness: 0.08
-                });
-              }
-            }
           }
         });
+
+        // Applica texture divisa se attiva
+        if (avatar && avatar.applica_divisa_club !== false) {
+          var kitUrl = (avatar.divisa_ref && avatar.divisa_ref.selected_kit_path) || 'immagini/kits-2d/foggia-city/INTER-HOME-27.png';
+          applyKitTextureToActiveModel(kitUrl);
+        }
 
         group.add(model);
         if (onSuccess) onSuccess(model);
