@@ -3,17 +3,19 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Completamento Feature «Avatar 3D» Biometrico Three.js & Compliance GDPR Art. 9 (`AVATAR3D1`):
-1. **Pipeline Completa Avatar 3D (`avatar-3d.css`, `avatar-3d.js`, `index.html`)**:
-   - **Consenso Biometrico Art. 9 GDPR**: Schermata dedicata obbligatoria e separata, testo informativo versionato (`v1.0_2026_BIOMETRIC`), checkbox esplicita salvata prima di consentire qualsiasi upload.
-   - **Salvaguardia Minorenni Art. 8 GDPR**: Blocco preventivo automatico per profili under-18 con messaggio di tutela e richiesta di consenso dell'esercente la responsabilità genitoriale.
-   - **Upload & Face Detection Client-Side**: Validazione formato (JPG/PNG/WebP max 8MB) e rilevamento presenza volto su canvas 2D prima dell'avvio.
-   - **Stage Three.js WebGL**: Scena 3D luxury con luci studio bilanciate (key, fill, rim light), pedestal metallico con anello ciano, orbita a 360°, controlli rotazione/zoom/reset telecamera.
-   - **Modellazione Anatomica & Divisa**: Testa volumetrica con morphing da foto reale + 3 corporature base (`snella`, `media`, `atletica`) + divisa/kit del Club dell'utente con colori primari/secondari e nome/numero atleta.
-   - **Diritto all'Oblio Art. 17 GDPR**: Pulsante dedicato «Elimina Avatar 3D» con cancellazione irreversibile di foto sorgente, mesh e texture, pulizia WebGL e revoca del consenso biometrico.
-   - **Integrazione Multi-Ruolo Condivisa**: Voce «Avatar 3D» iniettata in tutte le sidebar tecniche dei ruoli (Scout, Match Analyst, Preparatore Portieri/Atletico, Medico, Fisioterapista, Nutrizionista, Dirigenza/DS/DG/Presidenza, Allenatore, Giocatore) e nel dropdown profilo: l'avatar è unico a livello di account utente.
-   - **Aggiornamento DPIA Art. 35**: Aggiornata la valutazione d'impatto nella dashboard del Responsabile Privacy in `app-admin-panels.js`.
-2. **File**: `avatar-3d.css`, `avatar-3d.js`, `index.html`, `app-admin-panels.js`, `sw.js`, `version.json`. Cache `v20260918_AVATAR3D1`.
+Ultimo aggiornamento: **2026-09-18** — Nuova Struttura Sidebar Luxury Multi-Ruolo & Mini-Sidebar Collapsable (`SIDEBARPRO1`):
+1. **Nuova Sidebar Luxury macOS Style (`role-sidebar-pro.css`, `role-sidebar-pro.js`, `index.html`)**:
+   - **Header macOS Traffic Lights**: Tre dots rosso/giallo/verde con bagliore luxury integrati in testata.
+   - **Profilo Utente Integrato**: Mini avatar circolare con anello ciano, etichetta ruolo uppercase `#64748b` e nome utente `#f8fafc`.
+   - **Pulsante Toggle Fluttuante `<` / `>`**: Bottone pill circolare fluttuante sul bordo destro per commutare istantaneamente tra modalità **Espansa** (252px) e **Mini-Sidebar Compatta** (72px) con transizione fluida e persistenza stato in `localStorage`.
+   - **Riallineamento Dinamico Layout**: Il padding sinistro delle dashboard dei ruoli passa fluidamente da `calc(252px + 18px)` a `calc(72px + 18px)`.
+   - **Albero Sottomenu & Flyout Popover**: Linee guida verticali e connettori a L per le sotto-voci in modalità espansa; comparsa automatica di flyout menu floating dark glass a destra per le icone quando la sidebar è contratta a 72px.
+   - **Sezione Rapida Messaggi/Staff**: Mini-lista contatti con avatar verticali, ottimizzati per la visualizzazione compatta.
+   - **Bottom Action Card («Let's start!»)**: Card arrotondata in fondo alla sidebar con descrizione e pulsante CTA ciano «+ Nuova Operazione», che si contrae in un solo elegante bottone rotondo `[+]` nella versione mini.
+   - **Palette Colori Ufficiale**: Dark Glass `#070a12`, accenti ciano elettrico `#38bdf8`, bordi hairline `rgba(255,255,255,0.08)`.
+2. **File**: `role-sidebar-pro.css`, `role-sidebar-pro.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_SIDEBARPRO1`.
+
+Feature precedente: **Completamento Feature «Avatar 3D» Biometrico Three.js & Compliance GDPR Art. 9 (`AVATAR3D1`):
 
 Feature precedente: **Modalità di Caricamento Macroaree con Dots al Neon & Palette Elisee Scout (`LOADER1`):
 
