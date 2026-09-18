@@ -21,7 +21,7 @@
     headMesh: null,
     bodyMeshGroup: null,
     currentBodyType: 'atletica',
-    autoRotate: true
+    autoRotate: false
   };
 
   // Lettura / Salvataggio Dati Profilo Condiviso
@@ -41,9 +41,9 @@
       foto_originale_url: '',
       texture_volto_url: '',
       corporatura_scelta: 'atletica',
-      stile_capelli: 'mogger_blond',
-      tatuaggio_collo: true,
-      preset_luci: 'eafc_neon',
+      stile_capelli: 'short_textured',
+      tatuaggio_collo: false,
+      preset_luci: 'elite_neon',
       divisa_ref: {
         club: getActiveUser().squadra || 'Elisee F.C.',
         colore_primario: '#c0392b',
@@ -65,7 +65,11 @@
       var raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         var parsed = JSON.parse(raw);
-        return Object.assign(def, parsed);
+        var res = Object.assign(def, parsed);
+        // Normalizzazione retrocompatibile da vecchi nomi
+        if (res.stile_capelli === 'mogger_blond') res.stile_capelli = 'short_textured';
+        if (res.preset_luci === 'eafc_neon') res.preset_luci = 'elite_neon';
+        return res;
       }
     } catch (_) {}
     return def;
@@ -192,8 +196,8 @@
       return;
     }
 
-    // 5. Caso Non Avviato (Consenso dato, attesa upload foto)
-    if (avatar.stato_generazione === 'non_avviato' || !avatar.texture_volto_url) {
+    // 5. Caso Non Avviato o Foto Mancante: Richiede Upload Foto e Scansione
+    if (avatar.stato_generazione !== 'completato' || !avatar.texture_volto_url) {
       renderUploadView(body);
       return;
     }
@@ -504,7 +508,7 @@
       '<div class="es-a3d-stage-container" id="es-a3d-stage">' +
         '<div class="es-a3d-canvas-wrap" id="es-a3d-canvas-wrap"></div>' +
         '<div class="es-a3d-orbit-controls-bar">' +
-          '<button type="button" class="es-a3d-tool-btn is-active" id="btn-toggle-autorotate" title="Attiva/Pausa rotazione">' +
+          '<button type="button" class="es-a3d-tool-btn" id="btn-toggle-autorotate" title="Attiva/Pausa rotazione">' +
             '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>' +
             '<span>Rotazione</span>' +
           '</button>' +
@@ -530,19 +534,19 @@
           '</div>' +
         '</div>' +
         '<div class="es-a3d-card-section">' +
-          '<div class="es-a3d-section-title">Stile Capelli <span class="es-a3d-badge-eafc">EA FC 26</span></div>' +
+          '<div class="es-a3d-section-title">Stile Capelli <span class="es-a3d-badge-pro">PRO 3D</span></div>' +
           '<div class="es-a3d-hair-grid">' +
-            '<button type="button" class="es-a3d-hair-btn ' + (avatar.stile_capelli === 'mogger_blond' ? 'is-selected' : '') + '" data-hair="mogger_blond">' +
+            '<button type="button" class="es-a3d-hair-btn ' + (avatar.stile_capelli === 'short_textured' ? 'is-selected' : '') + '" data-hair="short_textured">' +
               '<span class="es-a3d-hair-dot" style="background:#d7cbab;"></span>' +
-              '<span>Biondo Mogger</span>' +
+              '<span>Biondo Corto</span>' +
             '</button>' +
             '<button type="button" class="es-a3d-hair-btn ' + (avatar.stile_capelli === 'fade_brunette' ? 'is-selected' : '') + '" data-hair="fade_brunette">' +
               '<span class="es-a3d-hair-dot" style="background:#4a3728;"></span>' +
-              '<span>Castano Fade</span>' +
+              '<span>Castano Sfumato</span>' +
             '</button>' +
             '<button type="button" class="es-a3d-hair-btn ' + (avatar.stile_capelli === 'platinum_ice' ? 'is-selected' : '') + '" data-hair="platinum_ice">' +
               '<span class="es-a3d-hair-dot" style="background:#f1f5f9;"></span>' +
-              '<span>Platino Ice</span>' +
+              '<span>Biondo Platino</span>' +
             '</button>' +
             '<button type="button" class="es-a3d-hair-btn ' + (avatar.stile_capelli === 'dark_crop' ? 'is-selected' : '') + '" data-hair="dark_crop">' +
               '<span class="es-a3d-hair-dot" style="background:#171717;"></span>' +
@@ -555,16 +559,16 @@
           '<div class="es-a3d-tattoo-toggle-row ' + (avatar.tatuaggio_collo !== false ? 'is-active' : '') + '" id="btn-toggle-tattoo">' +
             '<div class="es-a3d-tattoo-label">' +
               '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>' +
-              '<span>Tribale "Mogger"</span>' +
+              '<span>Tribale Geometrico Collo</span>' +
             '</div>' +
             '<span class="es-a3d-tattoo-badge">' + (avatar.tatuaggio_collo !== false ? 'ATTIVO' : 'NO') + '</span>' +
           '</div>' +
         '</div>' +
         '<div class="es-a3d-card-section">' +
-          '<div class="es-a3d-section-title">Studio Lighting EA Sports</div>' +
+          '<div class="es-a3d-section-title">Illuminazione Scena</div>' +
           '<div class="es-a3d-light-grid">' +
-            '<button type="button" class="es-a3d-light-btn ' + (avatar.preset_luci === 'eafc_neon' ? 'is-selected' : '') + '" data-light="eafc_neon">EA Neon</button>' +
-            '<button type="button" class="es-a3d-light-btn ' + (avatar.preset_luci === 'sunset_match' ? 'is-selected' : '') + '" data-light="sunset_match">Sunset</button>' +
+            '<button type="button" class="es-a3d-light-btn ' + (avatar.preset_luci === 'elite_neon' ? 'is-selected' : '') + '" data-light="elite_neon">Neon Élite</button>' +
+            '<button type="button" class="es-a3d-light-btn ' + (avatar.preset_luci === 'sunset_match' ? 'is-selected' : '') + '" data-light="sunset_match">Tramonto Gara</button>' +
             '<button type="button" class="es-a3d-light-btn ' + (avatar.preset_luci === 'studio_hq' ? 'is-selected' : '') + '" data-light="studio_hq">Studio HQ</button>' +
           '</div>' +
         '</div>' +
@@ -630,7 +634,7 @@
       });
     }
 
-    // Preset Luci EA FC
+    // Preset Luci Scena
     var lightBtns = container.querySelectorAll('.es-a3d-light-btn');
     lightBtns.forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -750,7 +754,7 @@
       state.controls = controls;
     }
     // ============================================================
-    // ILLUMINAZIONE CINEMATOGRAFICA EA SPORTS FC 26 PRO CLUBS
+    // ILLUMINAZIONE CINEMATOGRAFICA STUDIO ÉLITE 3D
     // ============================================================
     var lights = {};
     state.lights = lights;
@@ -768,8 +772,8 @@
     scene.add(keyLight);
     lights.key = keyLight;
 
-    // Rim light sinistra (Verde Neon EA Sports FC)
-    var rimLeft = new THREE.DirectionalLight(0x22c55e, 1.6);
+    // Rim light sinistra (Ciano Élite)
+    var rimLeft = new THREE.DirectionalLight(0x38bdf8, 1.6);
     rimLeft.position.set(-3.2, 2.4, -2.4);
     scene.add(rimLeft);
     lights.rimLeft = rimLeft;
@@ -804,17 +808,17 @@
         lights.rimRight.color.setHex(0x38bdf8);
         lights.rimRight.intensity = 0.9;
       } else {
-        // Default: eafc_neon
+        // Default: elite_neon (Ciano Elettrico e Oro Luxury)
         lights.key.color.setHex(0xfffbeb);
         lights.key.intensity = 1.4;
-        lights.rimLeft.color.setHex(0x22c55e);
+        lights.rimLeft.color.setHex(0x38bdf8);
         lights.rimLeft.intensity = 1.6;
-        lights.rimRight.color.setHex(0x38bdf8);
+        lights.rimRight.color.setHex(0x0284c7);
         lights.rimRight.intensity = 1.5;
       }
     }
     window.__eliseeApplyLightingPreset = applyLightingPreset;
-    applyLightingPreset(avatar.preset_luci || 'eafc_neon');
+    applyLightingPreset(avatar.preset_luci || 'elite_neon');
 
     // Pedestal luxury a terra con specchiatura
     var pedestalGeo = new THREE.CylinderGeometry(1.05, 1.15, 0.08, 64);
@@ -926,7 +930,7 @@
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, 1024, 1024);
 
-    // 2. Ombreggiature Anatomiche della Mascella e Zigomi (Mogger Definition)
+    // 2. Ombreggiature Anatomiche della Mascella e Zigomi (Definizione Pro)
     // Zigomi / Cheekbones
     var cheekL = ctx.createRadialGradient(280, 520, 10, 280, 520, 180);
     cheekL.addColorStop(0, 'rgba(230, 140, 110, 0.28)');
@@ -950,7 +954,40 @@
     ctx.closePath();
     ctx.fill();
 
-    // 3. Occhi Iper-Dettagliati EA FC
+    // Helper Tatuaggio Geometrico Collo
+    function drawNeckTattoo(targetCtx) {
+      targetCtx.save();
+      targetCtx.translate(210, 830);
+      targetCtx.rotate(-0.15);
+      targetCtx.strokeStyle = 'rgba(15, 23, 42, 0.88)';
+      targetCtx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+      targetCtx.lineWidth = 5;
+      targetCtx.lineJoin = 'round';
+
+      targetCtx.beginPath();
+      targetCtx.moveTo(0, 0);
+      targetCtx.bezierCurveTo(35, -40, 75, -55, 110, -20);
+      targetCtx.bezierCurveTo(90, 0, 70, 20, 0, 0);
+      targetCtx.fill();
+      targetCtx.stroke();
+
+      targetCtx.beginPath();
+      targetCtx.moveTo(25, 15);
+      targetCtx.bezierCurveTo(60, -10, 100, -25, 130, 5);
+      targetCtx.bezierCurveTo(105, 25, 80, 40, 25, 15);
+      targetCtx.fill();
+      targetCtx.stroke();
+
+      targetCtx.beginPath();
+      targetCtx.moveTo(45, 40);
+      targetCtx.bezierCurveTo(75, 20, 115, 10, 140, 35);
+      targetCtx.bezierCurveTo(115, 55, 90, 65, 45, 40);
+      targetCtx.fill();
+      targetCtx.stroke();
+      targetCtx.restore();
+    }
+
+    // 3. Occhi Espressivi con Riflesso Speculare Studio
     function drawEye(cx, cy, side) {
       // Sclera
       ctx.fillStyle = '#f8fafc';
@@ -1028,7 +1065,7 @@
     ctx.quadraticCurveTo(512, 705, 430, 660);
     ctx.fill();
 
-    // 6. Barba Incolta da 3 Giorni (3-Day Stubble Mogger Beard)
+    // 6. Barba Sfumata Incolta da Atleta
     ctx.fillStyle = 'rgba(40, 28, 20, 0.28)';
     ctx.beginPath();
     ctx.moveTo(300, 620);
@@ -1046,43 +1083,49 @@
       ctx.fillRect(bx, by, 1.8, 1.8);
     }
 
-    // 7. TATUAGGIO TRIBALE SUL COLLO (Stile EA FC 26 Poster)
+    // 7. Tatuaggio Geometrico Collo
     if (avatar.tatuaggio_collo !== false) {
-      ctx.save();
-      ctx.translate(210, 830);
-      ctx.rotate(-0.15);
-      ctx.strokeStyle = 'rgba(15, 23, 42, 0.88)';
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
-      ctx.lineWidth = 5;
-      ctx.lineJoin = 'round';
-
-      // Disegno ali tribali curve sul collo (come nella foto)
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.bezierCurveTo(35, -40, 75, -55, 110, -20);
-      ctx.bezierCurveTo(90, 0, 70, 20, 0, 0);
-      ctx.fill();
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.moveTo(25, 15);
-      ctx.bezierCurveTo(60, -10, 100, -25, 130, 5);
-      ctx.bezierCurveTo(105, 25, 80, 40, 25, 15);
-      ctx.fill();
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.moveTo(45, 40);
-      ctx.bezierCurveTo(75, 20, 115, 10, 140, 35);
-      ctx.bezierCurveTo(115, 55, 90, 65, 45, 40);
-      ctx.fill();
-      ctx.stroke();
-      ctx.restore();
+      drawNeckTattoo(ctx);
     }
 
     var tex = new THREE.CanvasTexture(canvas);
     tex.generateMipmaps = true;
     tex.minFilter = THREE.LinearMipmapLinearFilter;
+
+    // 8. INTEGRAZIONE VOLTO REALE DALLA FOTO UTENTE (Fotogrammetria)
+    var photoSrc = avatar.texture_volto_url || avatar.foto_originale_url;
+    if (photoSrc) {
+      var userImg = new Image();
+      userImg.crossOrigin = 'anonymous';
+      userImg.onload = function () {
+        ctx.save();
+        // Mascheratura ellittica centrale per il viso dell'atleta
+        ctx.beginPath();
+        ctx.ellipse(512, 505, 195, 245, 0, 0, Math.PI * 2);
+        ctx.clip();
+        ctx.drawImage(userImg, 512 - 195, 505 - 245, 390, 490);
+        ctx.restore();
+
+        // Sfumatura di transizione sui bordi per fondere l'incarnato della foto
+        var blendGrad = ctx.createRadialGradient(512, 505, 140, 512, 505, 205);
+        blendGrad.addColorStop(0, 'rgba(0,0,0,0)');
+        blendGrad.addColorStop(0.7, 'rgba(199, 153, 115, 0.4)');
+        blendGrad.addColorStop(1, 'rgba(199, 153, 115, 1)');
+        ctx.fillStyle = blendGrad;
+        ctx.beginPath();
+        ctx.ellipse(512, 505, 205, 255, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Se il tatuaggio è attivo, lo ridisegna sopra
+        if (avatar.tatuaggio_collo !== false) {
+          drawNeckTattoo(ctx);
+        }
+
+        tex.needsUpdate = true;
+      };
+      userImg.src = photoSrc;
+    }
+
     return tex;
   }
 
@@ -1102,7 +1145,7 @@
     ctx.fillStyle = primary;
     ctx.fillRect(0, 0, 1024, 1024);
 
-    // Micro-Costine Verticali Traspiranti (Trasparenza tecnica da gara EA FC)
+    // Micro-Costine Verticali Traspiranti (Tessuto tecnico da gara)
     ctx.fillStyle = 'rgba(0, 0, 0, 0.12)';
     for (var x = 0; x < 1024; x += 6) {
       ctx.fillRect(x, 0, 2.5, 1024);
@@ -1181,7 +1224,7 @@
       metalness: 0.08
     });
 
-    // Geometria Cranio & Mascella Scolpita Mogger
+    // Geometria Cranio & Mascella Scolpita Anatomica
     var headGeo = new THREE.SphereGeometry(0.138, 48, 40);
     // Modella le proporzioni craniche e la mascella squadrata
     var pos = headGeo.attributes.position;
@@ -1249,29 +1292,30 @@
     neckMesh.castShadow = true;
     group.add(neckMesh);
 
-    // Pomo d'Adamo (Mogger Neck Feature)
+    // Pomo d'Adamo (Dettaglio Anatomico Collo)
     var adamGeo = new THREE.SphereGeometry(0.012, 12, 12);
     adamGeo.scale(0.8, 1.3, 1.4);
     var adamMesh = new THREE.Mesh(adamGeo, neckMat);
     adamMesh.position.set(0, 1.58, 0.075);
     group.add(adamMesh);
 
-    // 4. Costruzione Corpo Completo da Calciatore EA Sports
+    // 4. Costruzione Corpo Completo da Calciatore Professionista
     buildBodyComponents(avatar.corporatura_scelta || 'atletica', avatar.divisa_ref, avatar);
   }
 
-  // Costruzione Capigliatura a Ciocche Multiple EA FC 26
+  // Costruzione Capigliatura a Ciocche Multiple Rifinite
   function buildUltraHairMesh(avatar, group) {
     var THREE = window.THREE;
-    var style = avatar.stile_capelli || 'mogger_blond';
+    var style = avatar.stile_capelli || 'short_textured';
+    if (style === 'mogger_blond') style = 'short_textured';
 
     var hairColors = {
-      mogger_blond: { base: 0xd7cbab, highlight: 0xf3e9cb, roots: 0x6e5c41 },
-      fade_brunette: { base: 0x4a3728, highlight: 0x6d523d, roots: 0x241810 },
-      platinum_ice: { base: 0xe2e8f0, highlight: 0xffffff, roots: 0x64748b },
-      dark_crop: { base: 0x1c1917, highlight: 0x38332f, roots: 0x09090b }
+      short_textured: { base: 0xd7cbab, highlight: 0xf3e9cb, roots: 0x6e5c41 },
+      fade_brunette:  { base: 0x4a3728, highlight: 0x6d523d, roots: 0x241810 },
+      platinum_ice:   { base: 0xe2e8f0, highlight: 0xffffff, roots: 0x64748b },
+      dark_crop:      { base: 0x1c1917, highlight: 0x38332f, roots: 0x09090b }
     };
-    var hc = hairColors[style] || hairColors.mogger_blond;
+    var hc = hairColors[style] || hairColors.short_textured;
 
     var hairGroup = new THREE.Group();
     group.add(hairGroup);
@@ -1295,14 +1339,14 @@
     baseHair.position.set(0, 1.81, -0.015);
     hairGroup.add(baseHair);
 
-    // Ciocche frontali "Textured Fringe / Messy Hair" (come nel Mogger EA FC)
+    // Ciocche frontali sagomate a volume
     var strandOffsets = [
       { x: -0.06, y: 1.83, z: 0.10, rotX: 0.35, rotY: -0.2, rotZ: 0.25, s: 1.1 },
       { x: -0.03, y: 1.85, z: 0.12, rotX: 0.40, rotY: -0.1, rotZ: 0.1, s: 1.3 },
       { x: 0.01,  y: 1.86, z: 0.13, rotX: 0.42, rotY: 0.05, rotZ: -0.15, s: 1.4 },
       { x: 0.05,  y: 1.84, z: 0.11, rotX: 0.38, rotY: 0.2, rotZ: -0.3, s: 1.2 },
       { x: 0.08,  y: 1.82, z: 0.09, rotX: 0.32, rotY: 0.3, rotZ: -0.4, s: 1.0 },
-      // Strato superiore spettinato
+      // Strato superiore texturizzato
       { x: -0.04, y: 1.89, z: 0.04, rotX: 0.15, rotY: -0.3, rotZ: 0.2, s: 1.2 },
       { x: 0.00,  y: 1.91, z: 0.05, rotX: 0.10, rotY: 0.0, rotZ: 0.0, s: 1.3 },
       { x: 0.04,  y: 1.90, z: 0.03, rotX: 0.12, rotY: 0.25, rotZ: -0.2, s: 1.2 }
@@ -1333,11 +1377,11 @@
     state.bodyMeshGroup = bodyGroup;
     state.avatarGroup.add(bodyGroup);
 
-    // Parametri corporatura muscolare
+    // Parametri corporatura atletica moderna e proporzionata
     var scales = {
-      snella:   { chestW: 0.34, waistW: 0.26, armR: 0.050, legR: 0.068 },
-      media:    { chestW: 0.39, waistW: 0.29, armR: 0.058, legR: 0.078 },
-      atletica: { chestW: 0.44, waistW: 0.31, armR: 0.068, legR: 0.088 }
+      snella:   { chestW: 0.35, waistW: 0.23, armR: 0.038, legR: 0.058 },
+      media:    { chestW: 0.39, waistW: 0.26, armR: 0.044, legR: 0.065 },
+      atletica: { chestW: 0.43, waistW: 0.28, armR: 0.050, legR: 0.072 }
     };
     var cfg = scales[bodyType] || scales.atletica;
 
@@ -1473,7 +1517,7 @@
       cuffMesh.position.set(side * 0.11, 0.52, 0);
       bodyGroup.add(cuffMesh);
 
-      // 5. Scarpino da Calcio Aerodinamico EA Sports
+      // 5. Scarpino da Calcio Aerodinamico Professionistico
       var bootGroup = new THREE.Group();
       bootGroup.position.set(side * 0.11, 0.06, 0.04);
       bodyGroup.add(bootGroup);

@@ -3,14 +3,22 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Avatar 3D Ultra-Realistico EA FC 26 Pro Clubs («Mogger Athlete Model») (`A3DEAFC1`):
-1. **Trasformazione Modello 3D da Manichino Geometrico ad Atleta Ultra-Realistico (`avatar-3d.js`, `avatar-3d.css`)**:
-   - **Volto Scolpito & Jawline ("Mogger Definition")**: Generatore procedurale canvas 1024x1024 in Three.js con texture iperrealistica della pelle, pori, occhi espressivi con riflesso speculare da studio, sfumatura barba 3-day stubble e tatuaggio tribale sul collo (stile EA FC 26 Pro Clubs).
-   - **Capigliatura a Ciocche Multiple (Strand-Based Textured Hair)**: Modellazione tridimensionale della capigliatura con calotta a volume e 8 ciocche individuali sfalsate ("Textured Fringe / Messy Hair") con ombre e riflessi speculari biondo-cenere (*Mogger Blond*), castano fade, biondo platino ice e corvino crop.
-   - **Kit da Gara Tecnico Aderente**: Mesh anatomica a V (pettorali, deltoidi, braccia e pugni definiti, muscoli quadricipiti e polpacci scolpiti, calzettoni e scarpini affusolati con 4 tacchetti) con maglia tecnica a micro-costine verticali traspiranti e stemma dorato del club Elisee F.C.
-   - **Set Illuminazione Cinematografica EA Sports**: Setup a 5 punti luce (Key light calda a 45° per scolpire zigomi e mascella, Rim light verde neon sinistro EA FC, Rim light ciano destro, Top hair light dorata a 90° e luce d'ambiente soffusa).
-   - **Selettori Interattivi nella Sidebar**: Griglia stili capelli (Biondo Cenere, Sfumato Castano, Platino Ice, Corvino Crop), toggle tatuaggio tribale al collo, selettore corporatura muscolare e preset luci (EA FC Neon, Gara al Tramonto, Studio HQ).
-2. **File**: `avatar-3d.js`, `avatar-3d.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_A3DEAFC1`.
+Ultimo aggiornamento: **2026-09-18** — Avatar 3D Professionale: Integrazione Foto Reale Atleta, Rimozione Marchi Terzi & Fix Layout (`A3DPRO1`):
+1. **Risoluzione Problemi Legali, Naming & Brand (`avatar-3d.js`, `avatar-3d.css`, `index.html`)**:
+   - **Rimozione Totale Nomi Terzi**: Eliminato qualsiasi riferimento o badge a *"EA FC 26"*, *"EA Sports"* e *"FC26"*. Sostituito il badge con il nuovo selettore proprietario luxury ciano `<span class="es-a3d-badge-pro">PRO 3D</span>`.
+   - **Naming Professionale Capigliature & Tatuaggi**: Eliminato il termine slang/meme "Mogger". Rinominate tutte le acconciature con denominazioni chiare e sobrie da piattaforma scouting d'élite: *Biondo Corto*, *Castano Sfumato*, *Biondo Platino*, *Nero Corvino*. Rinominate le sezioni in *Tatuaggio Geometrico Collo* e *Illuminazione Scena* (*Neon Élite*, *Tramonto Gara*, *Studio HQ*).
+2. **Integrazione Fotogrammetrica del Volto Reale dell'Atleta**:
+   - **Texture Blending della Foto Utente**: In `createProceduralFaceTexture()`, quando l'utente carica la propria fotografia del volto, il motore carica l'immagine con mascheratura ellittica centrale anatomica e gradiente di feathering radiale continuo. Il volto 3D riflette fedelmente i lineamenti reali dell'atleta (occhi, naso, bocca, espressione autentica) integrandosi armoniosamente con l'incarnato, il collo muscoloso e la capigliatura.
+   - **Flusso Naturale Obbligatorio**: Impossibile saltare allo stage senza foto reale: se `stato_generazione !== 'completato'` o manca la foto, il sistema guida sempre l'utente alla schermata di Upload & Scansione Biometrica (`renderUploadView`). Pulsante *"Carica Nuova Foto"* sempre accessibile dallo stage.
+3. **Proporzioni Corporee Calciatore D'Élite & Orientamento Frontale**:
+   - **Risoluzione "Manichino Tozzo"**: Ricalibrate le scale di spalle, bicipiti, avambracci, vita e gambe (`armR: 0.050`, `waistW: 0.28`, `legR: 0.072`). La silhouette da calciatore risulta slanciata, muscolare ed elegante con maglia tecnica aderente a micro-costine.
+   - **Orientamento Frontale & Stop Trottola**: Disattivata l'autorotazione continua all'avvio (`autoRotate: false`). L'atleta accoglie l'utente guardando dritto in camera; il tasto *"Rotazione"* è a disposizione dell'utente per avviare o fermare la rotazione quando desidera.
+4. **Fix Layout, Z-Index & Elementi Spuri**:
+   - **Isolamento Modale**: Elevato `z-index` di `.es-a3d-modal-overlay` a `2147483640 !important` e sfondo opaco `rgba(3, 6, 12, 0.98)`, impedendo a qualsiasi elemento della pagina sottostante (pulsanti galleggianti `+`, cerchi o status dot di debug) di sovrapporsi o trasparire all'interno della modale.
+   - **Pill Bar Orbit Controls**: Alzata la posizione a `bottom: 32px` con `z-index: 50`, eliminando qualsiasi taglio sul bordo inferiore della viewport su schermi notebook o con scaling elevato.
+5. **File**: `avatar-3d.js`, `avatar-3d.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_A3DPRO1`.
+
+Feature precedente: **Avatar 3D Ultra-Realistico EA FC 26 Pro Clubs («Mogger Athlete Model») (`A3DEAFC1`):
 
 Feature precedente: **Sblocco Consenso Biometrico Avatar 3D & Custom Checkbox Luxury (`A3DCHK1`):
 1. **Risoluzione Root Cause Blocco Consenso (`avatar-3d.css`, `avatar-3d.js`, `index.html`)**:
