@@ -3,10 +3,18 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-19** — Avatar 3D: Supporto Universale Mesh GLB & Allineamento Texture Kit 2D/3D (`A3DFIXKIT2`):
-1. **Risoluzione Blocco Applicazione Texture su Modelli Hyper3D/Rodin (`avatar-3d.js`)**:
-   - Risolto il problema per cui i modelli GLB esportati da Hyper3D (Rodin Gen-2) o altri modellatori con nodi generici (`node_0`, `geometry_0`, `Object_0`) venivano ignorati da Three.js.
-   - `applyKitTextureToActiveModel`: introdotto algoritmo di selezione intelligente delle mesh. Se esistono mesh con semantica vestiario (`shirt`, `top`, `jersey`, `body`), applica a quelle escludendo testa/capelli; se il modello è una mesh unificata, la texture viene applicata a tutti i materiali del modello attivo in tempo reale.
+Ultimo aggiornamento: **2026-09-19** — Avatar 3D: Fix Critico Ordine group.add + Colore Materiale Hyper3D (`A3DFIXKIT3`):
+1. **Bug 1 — Ordine sbagliato: texture applicata prima di `group.add(model)` (`avatar-3d.js`)**:
+   - La texture veniva caricata PRIMA che il modello fosse aggiunto alla scena Three.js → Three.js scartava silenziosamente la richiesta.
+   - Fix: spostato `group.add(model)` prima della chiamata a `applyKitTextureToActiveModel`, con `setTimeout(..., 80)` di sicurezza per garantire che il renderer abbia processato il nodo.
+2. **Bug 2 — Colore materiale Hyper3D che azzera la texture (`avatar-3d.js`)**:
+   - I modelli Hyper3D/Rodin hanno materiali con `color` scuro non-bianco. In Three.js il colore moltiplica la texture: `risultato = texture × color`. Con colore scuro la texture diventa quasi invisibile.
+   - Fix: `mat.color.setHex(0xffffff)` + `mat.emissive.setHex(0x000000)` prima di assegnare `mat.map = tex`. Forzato `state.renderer.render()` immediato.
+3. **Retry automatico**: se `state.activeModel` è null al momento del click, la funzione si auto-richiama dopo 200ms.
+4. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260919_A3DFIXKIT3`. Commit `3769467a`.
+
+Feature precedente: **Avatar 3D: Supporto Universale Mesh GLB (`A3DFIXKIT2`)**:
+1. **`applyKitTextureToActiveModel`**: algoritmo dinamico per mesh generiche Hyper3D.
 2. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260919_A3DFIXKIT2`.
 
 Feature precedente: **Avatar 3D: Correzione Corrispondenza Maglie 2D/3D & Separazione Club (`A3DFIXMATCH1`):
