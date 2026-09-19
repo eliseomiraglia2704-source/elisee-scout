@@ -3,15 +3,14 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-19** — Avatar 3D: Fix Critico Ordine group.add + Colore Materiale Hyper3D (`A3DFIXKIT3`):
-1. **Bug 1 — Ordine sbagliato: texture applicata prima di `group.add(model)` (`avatar-3d.js`)**:
-   - La texture veniva caricata PRIMA che il modello fosse aggiunto alla scena Three.js → Three.js scartava silenziosamente la richiesta.
-   - Fix: spostato `group.add(model)` prima della chiamata a `applyKitTextureToActiveModel`, con `setTimeout(..., 80)` di sicurezza per garantire che il renderer abbia processato il nodo.
-2. **Bug 2 — Colore materiale Hyper3D che azzera la texture (`avatar-3d.js`)**:
-   - I modelli Hyper3D/Rodin hanno materiali con `color` scuro non-bianco. In Three.js il colore moltiplica la texture: `risultato = texture × color`. Con colore scuro la texture diventa quasi invisibile.
-   - Fix: `mat.color.setHex(0xffffff)` + `mat.emissive.setHex(0x000000)` prima di assegnare `mat.map = tex`. Forzato `state.renderer.render()` immediato.
-3. **Retry automatico**: se `state.activeModel` è null al momento del click, la funzione si auto-richiama dopo 200ms.
-4. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260919_A3DFIXKIT3`. Commit `3769467a`.
+Ultimo aggiornamento: **2026-09-19** — Avatar 3D: Fix Testa Coperta - Filtraggio Zona Y + Nome Mesh (`A3DFIXKIT4`):
+1. **Bug critico: texture applicata anche al volto/capelli (`avatar-3d.js`)**:
+   - Il fix precedente (A3DFIXKIT3) applicava la texture a tutte le mesh senza eccezioni → il volto dell'atleta risultava coperto dalla grafica della maglia.
+   - Fix: doppio filtraggio automatico prima di applicare la texture:
+     - **Per nome mesh**: esclude mesh che contengono `head`, `hair`, `face`, `eye`, `teeth`, `tooth`, `beard`.
+     - **Per posizione Y**: calcola la bounding box totale del modello → tutto ciò che ha il centro sopra il 78% dell'altezza (zona collo/testa) viene escluso.
+   - Fallback: se tutte le mesh vengono filtrate (modello a mesh unica), applica a tutte (caso limite senza soluzione senza UV separati).
+2. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260919_A3DFIXKIT4`. Commit `8eb1e4c4`. Deploy `dpl_G2maSCtveGvZTJ7hK9s4mTxmr1Uv`.
 
 Feature precedente: **Avatar 3D: Supporto Universale Mesh GLB (`A3DFIXKIT2`)**:
 1. **`applyKitTextureToActiveModel`**: algoritmo dinamico per mesh generiche Hyper3D.
