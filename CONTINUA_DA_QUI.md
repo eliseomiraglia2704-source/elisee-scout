@@ -11,7 +11,7 @@ Ultimo aggiornamento: **2026-09-19** — Avatar 3D: Agente IA Vestizione Maglia 
    - **Texture 360° con Nome & Numero**: Fronte con stemma club e sponsor ufficiale, retro dorsale con Nome e Numero Ufficiale dell'atleta.
    - **Proiezione DecalGeometry**: se supportata, proietta Decal ad alta definizione curvata sul petto per perfetta fusione muscolare.
    - **Modulo UI nella Sidebar**: Box `🤖 AGENTE IA: VESTIZIONE KIT 3D` con status in tempo reale, pulsante "Indossa Maglia con IA", selettori di taglio (Slim Gara, Classica, Morbida) e cursore regolazione millimetrica altezza petto.
-2. **File**: `avatar-3d.js`, `avatar-3d.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260919_A3DJERSEYAI1`.
+2. **File**: `avatar-3d.js`, `avatar-3d.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260919_A3DJERSEYAI1`. Commit `5a62ef30`. Deploy `dpl_A8S9yCiDxQvxetjyjx3FaufjtJ7K`.
 
 Feature precedente: **Avatar 3D: Fix Testa Coperta - Filtraggio Zona Y + Nome Mesh (`A3DFIXKIT4`):
 1. **Bug critico: texture applicata anche al volto/capelli (`avatar-3d.js`)**:
