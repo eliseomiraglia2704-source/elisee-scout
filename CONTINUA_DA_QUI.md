@@ -3,7 +3,17 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-18** — Avatar 3D: Selettore Admin QA per Test Live Squadre 3D & Ricerca Catalogo 2.890 Club (`A3DADMIN1`):
+Ultimo aggiornamento: **2026-09-19** — Avatar 3D: Correzione Corrispondenza Maglie 2D/3D & Separazione Club (`A3DFIXMATCH1`):
+1. **Separazione Netta e Pulita dei Club (Zero Sovrapposizioni)**:
+   - Risolto il disallineamento: rimosso il kit speciale dell'Inter dalla cartella del **Foggia City**, posizionandolo correttamente nella cartella ufficiale `immagini/kits-2d/inter/INTER-HOME-27.png`.
+   - Il **Foggia City** ora mostra ed indossa esclusivamente la propria divisa ufficiale Givova Edil Milanese.
+   - L'**Inter** mostra ed indossa esclusivamente le proprie divise ufficiali (con la divisa 24/25 in prima posizione).
+2. **Generazione & Mappatura Texture UV per Foggia City (`home-uv.png`)**:
+   - Creata la mappa UV 2048x2048 ad alta definizione per la maglia Givova del Foggia City (`immagini/kits-2d/foggia-city/home-uv.png`).
+   - Il modello 3D ora indossa esattamente la maglia mostrata nell'anteprima 2D: strisce nerazzurre, stemma rotondo del Foggia City FC sul petto, sponsor Givova ed EDIL MILANESE. Corrispondenza 100% tra anteprima 2D e resa 3D!
+3. **File**: `avatar-3d.js`, `avatar-3d.css`, `index.html`, `sw.js`, `version.json`, `immagini/kits-2d/foggia-city/home-uv.png`, `immagini/kits-2d/inter/INTER-HOME-27.png`. Cache `v20260919_A3DFIXMATCH1`.
+
+Feature precedente: **Avatar 3D: Selettore Admin QA per Test Live Squadre 3D & Ricerca Catalogo 2.890 Club (`A3DADMIN1`):
 1. **Pannello Admin QA: Test Live Squadre 3D Integrato**:
    - Creato box gold/dark dedicato `ADMIN QA: TEST SQUADRE 3D` nella sidebar dell'Avatar 3D.
    - **Ricerca Istantanea su 2.890 Club**: campo di testo predittivo in tempo reale con select dropdown organizzato per campionato e categoria.

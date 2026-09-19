@@ -50,12 +50,13 @@
       preset_luci: 'elite_neon',
       divisa_ref: {
         club: getActiveUser().squadra || 'Foggia City',
-        colore_primario: '#c0392b',
-        colore_secondario: '#111111',
+        colore_primario: '#0055d4',
+        colore_secondario: '#0b0f19',
         numero: 10,
         cognome: (getActiveUser().cognome || 'ATLETA').toUpperCase(),
-        selected_kit_path: 'immagini/kits-2d/foggia-city/INTER-HOME-27.png',
-        selected_kit_id: 'inter_home_27'
+        selected_kit_path: 'immagini/kits-2d/foggia-city/home.png',
+        selected_kit_uv: 'immagini/kits-2d/foggia-city/home-uv.png',
+        selected_kit_id: 'foggia_city_home'
       },
       stato_generazione: 'non_avviato',
       errore_msg: '',
@@ -668,24 +669,59 @@
   // Lista kit disponibili per club
   function getAvailableKitsForClub(clubName) {
     var slug = (clubName || 'foggia-city').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');
+
+    // FOGGIA CITY: Solo maglie ufficiali del Foggia City!
     if (slug.indexOf('foggia') !== -1) {
       return [
         {
-          id: 'inter_home_27',
-          name: 'Inter 24/25 Home (Serie A)',
-          path: 'immagini/kits-2d/foggia-city/INTER-HOME-27.png',
-          badge: 'SPECIALE'
-        },
-        {
           id: 'foggia_city_home',
-          name: 'Givova Foggia City',
+          name: 'Foggia City Givova (Casa)',
           path: 'immagini/kits-2d/foggia-city/home.png',
+          uvPath: 'immagini/kits-2d/foggia-city/home-uv.png',
           badge: 'UFFICIALE'
         }
       ];
     }
 
-    // Cerca nel catalogo completo
+    // INTER: Kit ufficiali dell'Inter con INTER-HOME-27.png 24/25
+    if (slug === 'inter') {
+      return [
+        {
+          id: 'inter_home_27',
+          name: 'Inter 24/25 Home (Serie A)',
+          path: 'immagini/kits-2d/inter/INTER-HOME-27.png',
+          uvPath: 'immagini/kits-2d/inter/INTER-HOME-27.png',
+          badge: 'SPECIALE'
+        },
+        {
+          id: 'inter_home',
+          name: 'Inter Ufficiale Casa',
+          path: 'immagini/kits-2d/inter/home.png',
+          uvPath: 'immagini/kits-2d/inter/INTER-HOME-27.png',
+          badge: 'UFFICIALE'
+        },
+        {
+          id: 'inter_away',
+          name: 'Inter Ospiti',
+          path: 'immagini/kits-2d/inter/away.png',
+          badge: 'OSPITI'
+        },
+        {
+          id: 'inter_third',
+          name: 'Inter Terza',
+          path: 'immagini/kits-2d/inter/third.png',
+          badge: 'TERZA'
+        },
+        {
+          id: 'inter_gk',
+          name: 'Inter Portiere',
+          path: 'immagini/kits-2d/inter/goalkeeper.png',
+          badge: 'PORTIERE'
+        }
+      ];
+    }
+
+    // Cerca nel catalogo completo per tutte le altre squadre
     var found = allCatalogTeams.find(function (t) {
       return t.id === slug || (t.name || '').toLowerCase() === (clubName || '').toLowerCase();
     });
@@ -694,8 +730,9 @@
       return found.kits.map(function (k) {
         return {
           id: slug + '_' + (k.key || 'home'),
-          name: found.name + ' ' + (k.label || 'Kits'),
+          name: found.name + ' ' + (k.label || 'Kit'),
           path: k.url || ('immagini/kits-2d/' + slug + '/' + (k.key || 'home') + '.png'),
+          uvPath: k.url || ('immagini/kits-2d/' + slug + '/' + (k.key || 'home') + '.png'),
           badge: (k.key === 'home' ? 'UFFICIALE' : (k.label || 'KIT').slice(0, 8))
         };
       });
@@ -706,6 +743,7 @@
         id: slug + '_home',
         name: (clubName || 'Club') + ' Home',
         path: 'immagini/kits-2d/' + slug + '/home.png',
+        uvPath: 'immagini/kits-2d/' + slug + '/home.png',
         badge: 'UFFICIALE'
       }
     ];
@@ -725,7 +763,7 @@
       currKits.forEach(function (k) {
         var isActive = (selectedPath === k.path);
         html +=
-          '<div class="es-a3d-kit-card ' + (isActive ? 'is-active' : '') + '" data-kit-path="' + k.path + '" data-kit-id="' + k.id + '">' +
+          '<div class="es-a3d-kit-card ' + (isActive ? 'is-active' : '') + '" data-kit-path="' + k.path + '" data-kit-uv="' + (k.uvPath || k.path) + '" data-kit-id="' + k.id + '">' +
             '<div class="es-a3d-kit-thumb-wrap">' +
               '<img class="es-a3d-kit-thumb-img" src="' + k.path + '" alt="' + k.name + '" onerror="this.onerror=null;this.src=\'immagini/kits-2d/foggia-city/home.png\';">' +
             '</div>' +
@@ -900,6 +938,7 @@
       kitCards.forEach(function (card) {
         card.addEventListener('click', function () {
           var kPath = card.getAttribute('data-kit-path');
+          var kUv = card.getAttribute('data-kit-uv') || kPath;
           var kId = card.getAttribute('data-kit-id');
           kitCards.forEach(function (c) {
             c.classList.remove('is-active');
@@ -912,11 +951,12 @@
 
           avatar.divisa_ref = avatar.divisa_ref || {};
           avatar.divisa_ref.selected_kit_path = kPath;
+          avatar.divisa_ref.selected_kit_uv = kUv;
           avatar.divisa_ref.selected_kit_id = kId;
           saveAvatarData(avatar);
 
           // Applica la texture direttamente al modello attivo in scena
-          applyKitTextureToActiveModel(kPath);
+          applyKitTextureToActiveModel(kUv);
           showAdminToast('Kit 3D Applicato: ' + (avatar.divisa_ref.club || 'Club'));
         });
       });
@@ -952,20 +992,21 @@
 
       // Ricava Kit disponibili per la squadra
       var newKits = getAvailableKitsForClub(team.name);
-      var defaultKitPath = newKits[0].path;
-      avatar.divisa_ref.selected_kit_path = defaultKitPath;
-      avatar.divisa_ref.selected_kit_id = newKits[0].id;
+      var defaultKit = newKits[0];
+      avatar.divisa_ref.selected_kit_path = defaultKit.path;
+      avatar.divisa_ref.selected_kit_uv = defaultKit.uvPath || defaultKit.path;
+      avatar.divisa_ref.selected_kit_id = defaultKit.id;
       saveAvatarData(avatar);
 
       // Rigenera griglia kit
       var kitGrid = container.querySelector('#es-a3d-kit-grid');
       if (kitGrid) {
-        kitGrid.innerHTML = buildKitsHtml(newKits, defaultKitPath);
+        kitGrid.innerHTML = buildKitsHtml(newKits, defaultKit.path);
         bindKitCards();
       }
 
       // Applica immediatamente la texture al modello 3D
-      applyKitTextureToActiveModel(defaultKitPath);
+      applyKitTextureToActiveModel(defaultKit.uvPath || defaultKit.path);
       showAdminToast('👑 SQUADRA TEST: ' + team.name + ' (' + newKits.length + ' kit disponibili)');
     }
 
@@ -1889,7 +1930,7 @@
 
         // Applica texture divisa se attiva
         if (avatar && avatar.applica_divisa_club !== false) {
-          var kitUrl = (avatar.divisa_ref && avatar.divisa_ref.selected_kit_path) || 'immagini/kits-2d/foggia-city/INTER-HOME-27.png';
+          var kitUrl = (avatar.divisa_ref && (avatar.divisa_ref.selected_kit_uv || avatar.divisa_ref.selected_kit_path)) || 'immagini/kits-2d/foggia-city/home-uv.png';
           applyKitTextureToActiveModel(kitUrl);
         }
 
