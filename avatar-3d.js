@@ -1827,6 +1827,7 @@
   }
 
   // Applica una texture Kit 2D al modello attualmente attivo in scena
+  // Filtraggio automatico: esclude la zona testa (top 22% altezza) e mesh nominate head/hair/face
   function applyKitTextureToActiveModel(kitPath) {
     var THREE = window.THREE;
     if (!THREE) return;
@@ -1850,34 +1851,67 @@
         tex.magFilter = THREE.LinearFilter;
         tex.needsUpdate = true;
 
-        var applied = 0;
+        // Calcola la bounding box TOTALE del modello per determinare la zona testa
+        var modelBbox = new THREE.Box3().setFromObject(state.activeModel);
+        var totalHeight = modelBbox.max.y - modelBbox.min.y;
+        // Il collo si trova a circa il 78% dell'altezza totale dal basso → tutto sopra è testa
+        var neckCutoffY = modelBbox.min.y + (totalHeight * 0.78);
+
+        var bodyMeshes = [];
+        var allMeshes  = [];
 
         state.activeModel.traverse(function (child) {
           if (!child.isMesh) return;
 
+          allMeshes.push(child);
+
+          var name = (child.name || '').toLowerCase();
+
+          // Esclusione per nome (head, hair, face, eye, teeth, ...)
+          var isHeadByName =
+            name.indexOf('head')  !== -1 ||
+            name.indexOf('hair')  !== -1 ||
+            name.indexOf('face')  !== -1 ||
+            name.indexOf('eye')   !== -1 ||
+            name.indexOf('teeth') !== -1 ||
+            name.indexOf('tooth') !== -1 ||
+            name.indexOf('beard') !== -1;
+
+          if (isHeadByName) return; // salta
+
+          // Esclusione per posizione Y: se il centro della mesh è nella zona testa, salta
+          var meshBbox = new THREE.Box3().setFromObject(child);
+          var centerY = (meshBbox.min.y + meshBbox.max.y) / 2;
+
+          if (centerY > neckCutoffY) return; // salta — è nella zona testa
+
+          bodyMeshes.push(child);
+        });
+
+        // Se abbiamo trovato mesh corpo → applica solo a quelle
+        // Fallback: se il modello è una singola mesh unificata, applica a tutto (ma non tocca il colore testa)
+        var targetMeshes = bodyMeshes.length > 0 ? bodyMeshes : allMeshes;
+
+        targetMeshes.forEach(function (child) {
           var mats = Array.isArray(child.material) ? child.material : [child.material];
           mats.forEach(function (mat) {
             if (!mat) return;
 
-            // CRITICO: reset colore a bianco — senza questo il colore del materiale
-            // moltiplica la texture rendendola quasi invisibile o alterandone i colori
-            if (mat.color) {
-              mat.color.setHex(0xffffff);
-            }
+            // Reset colore a bianco: in Three.js il colore moltiplica la texture
+            // senza reset il kit risulterebbe scuro/invisibile
+            if (mat.color) mat.color.setHex(0xffffff);
 
-            // Applica la texture come mappa principale
             mat.map = tex;
 
-            // Se il materiale è MeshStandardMaterial, imposta PBR realistici
-            if (mat.roughness !== undefined) mat.roughness = 0.55;
+            // PBR realistici per tessuto da gara
+            if (mat.roughness !== undefined) mat.roughness = 0.60;
             if (mat.metalness !== undefined) mat.metalness = 0.0;
 
-            // Azzera emissive per non schiarire il risultato
+            // Azzera emissive per non alterare il colore della texture
             if (mat.emissive) mat.emissive.setHex(0x000000);
             if (mat.emissiveMap !== undefined) mat.emissiveMap = null;
 
             mat.needsUpdate = true;
-            applied++;
           });
         });
 
