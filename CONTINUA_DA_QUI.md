@@ -3,7 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-19** — Avatar 3D: Correzione Corrispondenza Maglie 2D/3D & Separazione Club (`A3DFIXMATCH1`):
+Ultimo aggiornamento: **2026-09-19** — Avatar 3D: Supporto Universale Mesh GLB & Allineamento Texture Kit 2D/3D (`A3DFIXKIT2`):
+1. **Risoluzione Blocco Applicazione Texture su Modelli Hyper3D/Rodin (`avatar-3d.js`)**:
+   - Risolto il problema per cui i modelli GLB esportati da Hyper3D (Rodin Gen-2) o altri modellatori con nodi generici (`node_0`, `geometry_0`, `Object_0`) venivano ignorati da Three.js.
+   - `applyKitTextureToActiveModel`: introdotto algoritmo di selezione intelligente delle mesh. Se esistono mesh con semantica vestiario (`shirt`, `top`, `jersey`, `body`), applica a quelle escludendo testa/capelli; se il modello è una mesh unificata, la texture viene applicata a tutti i materiali del modello attivo in tempo reale.
+2. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260919_A3DFIXKIT2`.
+
+Feature precedente: **Avatar 3D: Correzione Corrispondenza Maglie 2D/3D & Separazione Club (`A3DFIXMATCH1`):
 1. **Separazione Netta e Pulita dei Club (Zero Sovrapposizioni)**:
    - Risolto il disallineamento: rimosso il kit speciale dell'Inter dalla cartella del **Foggia City**, posizionandolo correttamente nella cartella ufficiale `immagini/kits-2d/inter/INTER-HOME-27.png`.
    - Il **Foggia City** ora mostra ed indossa esclusivamente la propria divisa ufficiale Givova Edil Milanese.

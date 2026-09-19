@@ -1843,28 +1843,46 @@
         tex.magFilter = THREE.LinearFilter;
         tex.needsUpdate = true;
 
+        var allMeshes = [];
+        var outfitMeshes = [];
+
         state.activeModel.traverse(function (child) {
           if (child.isMesh && child.material) {
+            allMeshes.push(child);
             var name = (child.name || '').toLowerCase();
             var isOutfit = name.indexOf('shirt') !== -1 ||
                            name.indexOf('top') !== -1 ||
                            name.indexOf('outfit') !== -1 ||
                            name.indexOf('jersey') !== -1 ||
-                           name.indexOf('maglia') !== -1;
-            // Se è una mesh specifica di vestiario, o se il modello è una singola mesh busto
-            if (isOutfit || name === '' || name.indexOf('mesh') !== -1) {
-              if (Array.isArray(child.material)) {
-                child.material.forEach(function (mat) {
-                  mat.map = tex;
-                  mat.needsUpdate = true;
-                });
-              } else {
-                child.material.map = tex;
-                child.material.roughness = 0.40;
-                child.material.metalness = 0.05;
-                child.material.needsUpdate = true;
-              }
+                           name.indexOf('maglia') !== -1 ||
+                           name.indexOf('body') !== -1 ||
+                           name.indexOf('divisa') !== -1;
+            var isExcluded = name.indexOf('hair') !== -1 ||
+                            name.indexOf('head') !== -1 ||
+                            name.indexOf('face') !== -1 ||
+                            name.indexOf('eye') !== -1 ||
+                            name.indexOf('teeth') !== -1;
+            if (isOutfit && !isExcluded) {
+              outfitMeshes.push(child);
             }
+          }
+        });
+
+        // Se abbiamo trovato mesh specifiche per il vestiario, applichiamo solo a quelle
+        // Altrimenti, se non ci sono mesh denominate, applichiamo a tutte le mesh disponibili
+        var targetMeshes = outfitMeshes.length > 0 ? outfitMeshes : allMeshes;
+
+        targetMeshes.forEach(function (child) {
+          if (Array.isArray(child.material)) {
+            child.material.forEach(function (mat) {
+              mat.map = tex;
+              mat.needsUpdate = true;
+            });
+          } else if (child.material) {
+            child.material.map = tex;
+            child.material.roughness = 0.40;
+            child.material.metalness = 0.05;
+            child.material.needsUpdate = true;
           }
         });
       },
