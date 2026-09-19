@@ -1828,67 +1828,67 @@
 
   // Applica una texture Kit 2D al modello attualmente attivo in scena
   function applyKitTextureToActiveModel(kitPath) {
-    if (!state.activeModel) return;
     var THREE = window.THREE;
     if (!THREE) return;
+
+    // Retry automatico se il modello non è ancora disponibile
+    if (!state.activeModel) {
+      setTimeout(function () { applyKitTextureToActiveModel(kitPath); }, 200);
+      return;
+    }
 
     var loader = new THREE.TextureLoader();
     loader.load(
       kitPath,
       function (tex) {
         tex.flipY = false;
-        tex.anisotropy = 8;
+        tex.anisotropy = (state.renderer && state.renderer.capabilities)
+          ? Math.min(state.renderer.capabilities.getMaxAnisotropy(), 16)
+          : 8;
         tex.generateMipmaps = true;
         tex.minFilter = THREE.LinearMipmapLinearFilter;
         tex.magFilter = THREE.LinearFilter;
         tex.needsUpdate = true;
 
-        var allMeshes = [];
-        var outfitMeshes = [];
+        var applied = 0;
 
         state.activeModel.traverse(function (child) {
-          if (child.isMesh && child.material) {
-            allMeshes.push(child);
-            var name = (child.name || '').toLowerCase();
-            var isOutfit = name.indexOf('shirt') !== -1 ||
-                           name.indexOf('top') !== -1 ||
-                           name.indexOf('outfit') !== -1 ||
-                           name.indexOf('jersey') !== -1 ||
-                           name.indexOf('maglia') !== -1 ||
-                           name.indexOf('body') !== -1 ||
-                           name.indexOf('divisa') !== -1;
-            var isExcluded = name.indexOf('hair') !== -1 ||
-                            name.indexOf('head') !== -1 ||
-                            name.indexOf('face') !== -1 ||
-                            name.indexOf('eye') !== -1 ||
-                            name.indexOf('teeth') !== -1;
-            if (isOutfit && !isExcluded) {
-              outfitMeshes.push(child);
+          if (!child.isMesh) return;
+
+          var mats = Array.isArray(child.material) ? child.material : [child.material];
+          mats.forEach(function (mat) {
+            if (!mat) return;
+
+            // CRITICO: reset colore a bianco — senza questo il colore del materiale
+            // moltiplica la texture rendendola quasi invisibile o alterandone i colori
+            if (mat.color) {
+              mat.color.setHex(0xffffff);
             }
-          }
+
+            // Applica la texture come mappa principale
+            mat.map = tex;
+
+            // Se il materiale è MeshStandardMaterial, imposta PBR realistici
+            if (mat.roughness !== undefined) mat.roughness = 0.55;
+            if (mat.metalness !== undefined) mat.metalness = 0.0;
+
+            // Azzera emissive per non schiarire il risultato
+            if (mat.emissive) mat.emissive.setHex(0x000000);
+            if (mat.emissiveMap !== undefined) mat.emissiveMap = null;
+
+            mat.needsUpdate = true;
+            applied++;
+          });
         });
 
-        // Se abbiamo trovato mesh specifiche per il vestiario, applichiamo solo a quelle
-        // Altrimenti, se non ci sono mesh denominate, applichiamo a tutte le mesh disponibili
-        var targetMeshes = outfitMeshes.length > 0 ? outfitMeshes : allMeshes;
-
-        targetMeshes.forEach(function (child) {
-          if (Array.isArray(child.material)) {
-            child.material.forEach(function (mat) {
-              mat.map = tex;
-              mat.needsUpdate = true;
-            });
-          } else if (child.material) {
-            child.material.map = tex;
-            child.material.roughness = 0.40;
-            child.material.metalness = 0.05;
-            child.material.needsUpdate = true;
-          }
-        });
+        // Forza il renderer a ridisegnare la scena immediatamente
+        if (state.renderer && state.scene && state.camera) {
+          state.renderer.render(state.scene, state.camera);
+        }
       },
       undefined,
       function (err) {
-        console.warn('Impossibile caricare texture kit:', kitPath, err);
+        console.warn('[Avatar3D] Impossibile caricare texture kit:', kitPath, err);
       }
     );
   }
@@ -1946,13 +1946,18 @@
           }
         });
 
-        // Applica texture divisa se attiva
+        // CRITICO: aggiunge prima il modello alla scena, poi applica texture
+        group.add(model);
+
+        // Applica texture divisa se attiva (dopo group.add per garantire che Three.js abbia il modello)
         if (avatar && avatar.applica_divisa_club !== false) {
           var kitUrl = (avatar.divisa_ref && (avatar.divisa_ref.selected_kit_uv || avatar.divisa_ref.selected_kit_path)) || 'immagini/kits-2d/foggia-city/home-uv.png';
-          applyKitTextureToActiveModel(kitUrl);
+          // Piccolo delay per assicurare che il renderer abbia processato il modello
+          setTimeout(function () {
+            applyKitTextureToActiveModel(kitUrl);
+          }, 80);
         }
 
-        group.add(model);
         if (onSuccess) onSuccess(model);
       },
       undefined,
