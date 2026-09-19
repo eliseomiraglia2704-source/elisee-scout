@@ -874,6 +874,39 @@
             '<span class="es-a3d-tattoo-badge" id="es-a3d-kit-badge-text">' + (avatar.applica_divisa_club !== false ? 'ATTIVA' : 'ORIGINALE') + '</span>' +
           '</div>' +
         '</div>' +
+        '<!-- Box AGENTE IA: VESTIZIONE KIT 3D SPECIALIST -->' +
+        '<div class="es-a3d-card-section es-a3d-ai-box" id="es-a3d-ai-fitting-box">' +
+          '<div class="es-a3d-section-title" style="color:#38bdf8;">' +
+            '<span>🤖 AGENTE IA: VESTIZIONE KIT 3D</span>' +
+            '<span class="es-a3d-badge-ai">SPECIALISTA ATTIVO</span>' +
+          '</div>' +
+          '<div class="es-a3d-ai-desc">' +
+            'Scansiona la volumetria anatomica del busto, rimuove la maglia Elisee Scout e adatta la divisa ufficiale calzata su misura atletica.' +
+          '</div>' +
+          '<button type="button" class="es-a3d-btn-ai-fit" id="btn-ai-fit-jersey">' +
+            '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>' +
+            '<span>⚡ Agente IA: Indossa Maglia Ufficiale</span>' +
+          '</button>' +
+          '<div class="es-a3d-ai-status-row" id="es-a3d-ai-status-box">' +
+            '<span class="es-a3d-ai-dot"></span>' +
+            '<span class="es-a3d-ai-status-txt" id="es-a3d-ai-status-txt">Maglia ufficiale pronta per la vestizione</span>' +
+          '</div>' +
+          '<div class="es-a3d-ai-controls">' +
+            '<div class="es-a3d-fit-row">' +
+              '<span class="es-a3d-fit-label">Taglio / Taglia:</span>' +
+              '<div class="es-a3d-fit-pills">' +
+                '<button type="button" class="es-a3d-fit-pill is-active" data-fit="slim">Slim Gara</button>' +
+                '<button type="button" class="es-a3d-fit-pill" data-fit="regular">Classica</button>' +
+                '<button type="button" class="es-a3d-fit-pill" data-fit="loose">Morbida</button>' +
+              '</div>' +
+            '</div>' +
+            '<div class="es-a3d-fit-row" style="margin-top:8px;">' +
+              '<span class="es-a3d-fit-label">Altezza Petto:</span>' +
+              '<input type="range" class="es-a3d-range" id="es-a3d-range-offset-y" min="-12" max="12" value="0">' +
+              '<span class="es-a3d-range-val" id="es-a3d-offset-y-val">0 cm</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
         '<!-- Sezione 2: Modello 3D (.glb) Hyper3D -->' +
         '<div class="es-a3d-card-section">' +
           '<div class="es-a3d-section-title">Modello 3D (.glb) <span class="es-a3d-badge-pro">HYPER3D READY</span></div>' +
@@ -1157,7 +1190,7 @@
       });
     }
 
-    // Toggle Divisa Elisee F.C.
+    // Toggle Divisa Ufficiale tramite Agente IA
     var btnToggleKit = container.querySelector('#btn-toggle-club-kit');
     if (btnToggleKit) {
       btnToggleKit.addEventListener('click', function () {
@@ -1166,7 +1199,56 @@
         var bText = btnToggleKit.querySelector('#es-a3d-kit-badge-text');
         if (bText) bText.textContent = (avatar.applica_divisa_club !== false ? 'ATTIVA' : 'ORIGINALE');
         saveAvatarData(avatar);
-        buildAthleteModel(avatar);
+        if (avatar.applica_divisa_club === false) {
+          EliseeJerseyAIAgent.removeExistingJersey(state.activeModel);
+          EliseeJerseyAIAgent.restoreOriginalBaseMaterials(state.activeModel);
+          if (state.renderer && state.scene && state.camera) state.renderer.render(state.scene, state.camera);
+          if (typeof updateAiStatus === 'function') updateAiStatus('Visualizzazione corpo originale (Kit disattivato)');
+          showAdminToast('Corpo originale ripristinato');
+        } else {
+          var currKit = (avatar.divisa_ref && (avatar.divisa_ref.selected_kit_uv || avatar.divisa_ref.selected_kit_path)) || 'immagini/kits-2d/foggia-city/home-uv.png';
+          applyKitTextureToActiveModel(currKit, updateAiStatus);
+          showAdminToast('Maglia ufficiale indossata con IA');
+        }
+      });
+    }
+
+    // Controller AGENTE IA: Vestizione Kit 3D
+    var btnAiFit = container.querySelector('#btn-ai-fit-jersey');
+    var aiStatusTxt = container.querySelector('#es-a3d-ai-status-txt');
+    var fitPills = container.querySelectorAll('.es-a3d-fit-pill');
+    var rangeOffsetY = container.querySelector('#es-a3d-range-offset-y');
+    var valOffsetY = container.querySelector('#es-a3d-offset-y-val');
+
+    function updateAiStatus(msg) {
+      if (aiStatusTxt) aiStatusTxt.textContent = msg;
+    }
+
+    if (btnAiFit) {
+      btnAiFit.addEventListener('click', function () {
+        var currKit = (avatar.divisa_ref && (avatar.divisa_ref.selected_kit_uv || avatar.divisa_ref.selected_kit_path)) || 'immagini/kits-2d/foggia-city/home-uv.png';
+        applyKitTextureToActiveModel(currKit, updateAiStatus);
+        showAdminToast('🤖 Agente IA: Vestizione kit avviata!');
+      });
+    }
+
+    fitPills.forEach(function (pill) {
+      pill.addEventListener('click', function () {
+        fitPills.forEach(function (p) { p.classList.remove('is-active'); });
+        pill.classList.add('is-active');
+        EliseeJerseyAIAgent.fitMode = pill.getAttribute('data-fit') || 'slim';
+        var currKit = (avatar.divisa_ref && (avatar.divisa_ref.selected_kit_uv || avatar.divisa_ref.selected_kit_path)) || 'immagini/kits-2d/foggia-city/home-uv.png';
+        applyKitTextureToActiveModel(currKit, updateAiStatus);
+      });
+    });
+
+    if (rangeOffsetY && valOffsetY) {
+      rangeOffsetY.addEventListener('input', function () {
+        var val = parseInt(rangeOffsetY.value, 10) || 0;
+        valOffsetY.textContent = (val > 0 ? '+' : '') + val + ' cm';
+        EliseeJerseyAIAgent.offsetY = val;
+        var currKit = (avatar.divisa_ref && (avatar.divisa_ref.selected_kit_uv || avatar.divisa_ref.selected_kit_path)) || 'immagini/kits-2d/foggia-city/home-uv.png';
+        applyKitTextureToActiveModel(currKit, updateAiStatus);
       });
     }
 
@@ -1283,12 +1365,6 @@
   }
 
   function loadThreeLibraries(onSuccess) {
-    if (window.THREE && window.THREE.OrbitControls && window.THREE.GLTFLoader) {
-      state.threeLoaded = true;
-      onSuccess();
-      return;
-    }
-
     function loadScript(src, cb) {
       var s = document.createElement('script');
       s.src = src;
@@ -1297,12 +1373,32 @@
       document.head.appendChild(s);
     }
 
+    function ensureDecal(cb) {
+      if (window.THREE && !window.THREE.DecalGeometry) {
+        loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/DecalGeometry.js', function () {
+          cb();
+        });
+      } else {
+        cb();
+      }
+    }
+
+    if (window.THREE && window.THREE.OrbitControls && window.THREE.GLTFLoader) {
+      ensureDecal(function () {
+        state.threeLoaded = true;
+        onSuccess();
+      });
+      return;
+    }
+
     if (!window.THREE) {
       loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js', function () {
         loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js', function () {
           loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js', function () {
-            state.threeLoaded = true;
-            onSuccess();
+            ensureDecal(function () {
+              state.threeLoaded = true;
+              onSuccess();
+            });
           });
         });
       });
@@ -1310,22 +1406,30 @@
       loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js', function () {
         if (!window.THREE.GLTFLoader) {
           loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js', function () {
+            ensureDecal(function () {
+              state.threeLoaded = true;
+              onSuccess();
+            });
+          });
+        } else {
+          ensureDecal(function () {
             state.threeLoaded = true;
             onSuccess();
           });
-        } else {
-          state.threeLoaded = true;
-          onSuccess();
         }
       });
     } else if (!window.THREE.GLTFLoader) {
       loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js', function () {
+        ensureDecal(function () {
+          state.threeLoaded = true;
+          onSuccess();
+        });
+      });
+    } else {
+      ensureDecal(function () {
         state.threeLoaded = true;
         onSuccess();
       });
-    } else {
-      state.threeLoaded = true;
-      onSuccess();
     }
   }
 
@@ -1826,105 +1930,284 @@
     return tex;
   }
 
-  // Applica una texture Kit 2D al modello attualmente attivo in scena
-  // Filtraggio automatico: esclude la zona testa (top 22% altezza) e mesh nominate head/hair/face
-  function applyKitTextureToActiveModel(kitPath) {
-    var THREE = window.THREE;
-    if (!THREE) return;
+  // ============================================================
+  // AGENTE IA VESTIZIONE MAGLIA 3D & ADATTAMENTO ANATOMICO PRO
+  // Sostituzione dinamica maglia Elisee Scout & Calzata 360°
+  // ============================================================
+  var EliseeJerseyAIAgent = {
+    name: 'Elisee Kit Fitting AI Agent',
+    version: '2.0.0',
+    fitMode: 'slim', // 'slim', 'regular', 'loose'
+    offsetY: 0, // da -12 a +12 cm
+    isBusy: false,
+    activeJerseyGroup: null,
 
-    // Retry automatico se il modello non è ancora disponibile
-    if (!state.activeModel) {
-      setTimeout(function () { applyKitTextureToActiveModel(kitPath); }, 200);
-      return;
-    }
+    // Ripristina i materiali originali per preservare volto, capelli, pelle e dettagli
+    restoreOriginalBaseMaterials: function (model) {
+      if (!model) return;
+      model.traverse(function (child) {
+        if (child.isMesh && child.__originalMaterial) {
+          child.material = child.__originalMaterial.clone ? child.__originalMaterial.clone() : child.__originalMaterial;
+          if (child.material.color) child.material.color.setHex(0xffffff);
+          child.material.needsUpdate = true;
+        }
+      });
+    },
 
-    var loader = new THREE.TextureLoader();
-    loader.load(
-      kitPath,
-      function (tex) {
-        tex.flipY = false;
-        tex.anisotropy = (state.renderer && state.renderer.capabilities)
-          ? Math.min(state.renderer.capabilities.getMaxAnisotropy(), 16)
-          : 8;
+    // Rimuove qualsiasi maglia precedente (Elisee Scout, vecchie decal o fitted layers)
+    removeExistingJersey: function (model) {
+      if (!model) return;
+      var toRemove = [];
+      model.traverse(function (child) {
+        if (child.name === '__elisee_fitted_jersey' || child.name === '__elisee_decal_front' || child.__isEliseeJerseyMesh) {
+          toRemove.push(child);
+        }
+      });
+      toRemove.forEach(function (obj) {
+        if (obj.parent) obj.parent.remove(obj);
+        if (obj.geometry) { try { obj.geometry.dispose(); } catch (_) {} }
+        if (obj.material) {
+          try {
+            if (Array.isArray(obj.material)) {
+              obj.material.forEach(function (m) { if (m.map) m.map.dispose(); m.dispose(); });
+            } else {
+              if (obj.material.map) obj.material.map.dispose();
+              obj.material.dispose();
+            }
+          } catch (_) {}
+        }
+      });
+      this.activeJerseyGroup = null;
+    },
+
+    // Genera la texture della divisa 360° per la maglia (Fronte con kit + Retro con Numero & Nome Atleta)
+    generateJerseyTexture: function (kitUrl, clubName, athleteName, athleteNumber, callback) {
+      var canvas = document.createElement('canvas');
+      canvas.width = 1024;
+      canvas.height = 1024;
+      var ctx = canvas.getContext('2d');
+
+      var img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = function () {
+        // Fondo base scuro neutrale traspirante
+        ctx.fillStyle = '#0a0e1a';
+        ctx.fillRect(0, 0, 1024, 1024);
+
+        // Mappatura cilindrica:
+        // U: 0.25 -> 0.75 corrisponde al Fronte del Torso (petto)
+        // U: 0.0 -> 0.25 e 0.75 -> 1.0 corrisponde al Retro del Torso (schiena)
+        var fw = 520;
+        var fh = 700;
+        var fx = (1024 - fw) / 2;
+        var fy = 70;
+        ctx.drawImage(img, fx, fy, fw, fh);
+
+        // Micro-costine atletiche traspiranti per realismo tessuto tecnico
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
+        for (var i = 0; i < 1024; i += 4) {
+          ctx.fillRect(i, 0, 1.6, 1024);
+        }
+
+        // Retro della Maglia: Nome Atleta e Numero Ufficiale
+        var dorsalNum = athleteNumber || 10;
+        var dorsalName = (athleteName || 'ATLETA').toUpperCase().split(' ').pop();
+
+        ctx.save();
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#ffffff';
+        ctx.shadowColor = 'rgba(0,0,0,0.85)';
+        ctx.shadowBlur = 8;
+
+        // Disegno sulla zona dorsale posteriore (attorno a x=120)
+        var backX = 130;
+        ctx.font = '900 28px sans-serif';
+        ctx.letterSpacing = '3px';
+        ctx.fillText(dorsalName, backX, 320);
+
+        ctx.font = '900 120px sans-serif';
+        ctx.fillText(String(dorsalNum), backX, 480);
+        ctx.strokeStyle = 'rgba(0,0,0,0.6)';
+        ctx.lineWidth = 5;
+        ctx.strokeText(String(dorsalNum), backX, 480);
+        ctx.restore();
+
+        var THREE = window.THREE;
+        var tex = new THREE.CanvasTexture(canvas);
         tex.generateMipmaps = true;
         tex.minFilter = THREE.LinearMipmapLinearFilter;
         tex.magFilter = THREE.LinearFilter;
         tex.needsUpdate = true;
+        callback(tex, img);
+      };
 
-        // Calcola la bounding box TOTALE del modello per determinare la zona testa
-        var modelBbox = new THREE.Box3().setFromObject(state.activeModel);
-        var totalHeight = modelBbox.max.y - modelBbox.min.y;
-        // Il collo si trova a circa il 78% dell'altezza totale dal basso → tutto sopra è testa
-        var neckCutoffY = modelBbox.min.y + (totalHeight * 0.78);
+      img.onerror = function () {
+        var THREE = window.THREE;
+        ctx.fillStyle = '#1e293b';
+        ctx.fillRect(0, 0, 1024, 1024);
+        var tex = new THREE.CanvasTexture(canvas);
+        callback(tex, null);
+      };
 
-        var bodyMeshes = [];
-        var allMeshes  = [];
+      img.src = kitUrl;
+    },
 
-        state.activeModel.traverse(function (child) {
-          if (!child.isMesh) return;
+    // Calibrazione & Vestizione 3D Intelligente sul Torso dell'Atleta
+    fit: function (model, kitUrl, avatar, onProgress) {
+      var self = this;
+      var THREE = window.THREE;
+      if (!THREE) return;
 
-          allMeshes.push(child);
+      model = model || state.activeModel;
+      if (!model) {
+        setTimeout(function () { self.fit(model, kitUrl, avatar, onProgress); }, 200);
+        return;
+      }
 
-          var name = (child.name || '').toLowerCase();
+      var user = (typeof getActiveUser === 'function') ? getActiveUser() : {};
+      avatar = avatar || (typeof getAvatarData === 'function' ? getAvatarData() : {});
+      var clubName = (avatar && avatar.divisa_ref && avatar.divisa_ref.club) || user.squadra || 'Club';
+      var athleteName = ((user.nome || '') + ' ' + (user.cognome || '')).trim() || 'ELISEE ATLETA';
+      var athleteNumber = (avatar && avatar.divisa_ref && avatar.divisa_ref.numero) || 10;
 
-          // Esclusione per nome (head, hair, face, eye, teeth, ...)
-          var isHeadByName =
-            name.indexOf('head')  !== -1 ||
-            name.indexOf('hair')  !== -1 ||
-            name.indexOf('face')  !== -1 ||
-            name.indexOf('eye')   !== -1 ||
-            name.indexOf('teeth') !== -1 ||
-            name.indexOf('tooth') !== -1 ||
-            name.indexOf('beard') !== -1;
+      if (onProgress) onProgress('Scansione volumetrica del busto...');
 
-          if (isHeadByName) return; // salta
+      // 1. Ripristina i materiali originali di base del modello per salvaguardare viso, capelli e pelle
+      self.restoreOriginalBaseMaterials(model);
 
-          // Esclusione per posizione Y: se il centro della mesh è nella zona testa, salta
-          var meshBbox = new THREE.Box3().setFromObject(child);
-          var centerY = (meshBbox.min.y + meshBbox.max.y) / 2;
+      // 2. Rimuove qualsiasi maglia precedente (Elisee Scout o vestizioni pregresse)
+      self.removeExistingJersey(model);
 
-          if (centerY > neckCutoffY) return; // salta — è nella zona testa
+      if (onProgress) onProgress('Isolamento coordinate anatomiche del torso...');
 
-          bodyMeshes.push(child);
+      // 3. Calcolo bounding box del modello attivo
+      var bbox = new THREE.Box3().setFromObject(model);
+      var size = new THREE.Vector3();
+      bbox.getSize(size);
+      var center = new THREE.Vector3();
+      bbox.getCenter(center);
+
+      var totalH = size.y || 1.80;
+      var torsoH = totalH * 0.36; // Busto proporzionato (~65 cm)
+      var torsoCenterY = bbox.min.y + (totalH * 0.62) + (self.offsetY * 0.01);
+
+      // Fattore di vestibilità
+      var fitScale = (self.fitMode === 'regular' ? 1.02 : (self.fitMode === 'loose' ? 1.05 : 0.995));
+      var radiusX = (size.x * 0.5) * 0.92 * fitScale;
+      var radiusZ = (size.z * 0.5) * 0.88 * fitScale;
+
+      // 4. Creazione gruppo maglia
+      var jerseyGroup = new THREE.Group();
+      jerseyGroup.name = '__elisee_fitted_jersey';
+      jerseyGroup.__isEliseeJerseyMesh = true;
+
+      if (onProgress) onProgress('Sostituzione maglia Elisee Scout in corso...');
+
+      // 5. Generazione texture composita e montaggio mesh 3D da gara
+      self.generateJerseyTexture(kitUrl, clubName, athleteName, athleteNumber, function (tex, rawImg) {
+        // A) Guaina Torso Anatomica da Gara (Cilindro ellittico sagomato a filo pelle)
+        var torsoGeo = new THREE.CylinderGeometry(radiusX * 1.03, radiusX * 0.94, torsoH, 48, 16, true);
+        torsoGeo.scale(1, 1, radiusZ / radiusX);
+
+        var torsoMat = new THREE.MeshStandardMaterial({
+          map: tex,
+          roughness: 0.60,
+          metalness: 0.05,
+          side: THREE.DoubleSide,
+          transparent: true,
+          opacity: 0.99,
+          depthWrite: true,
+          polygonOffset: true,
+          polygonOffsetFactor: -2,
+          polygonOffsetUnits: -2
         });
 
-        // Se abbiamo trovato mesh corpo → applica solo a quelle
-        // Fallback: se il modello è una singola mesh unificata, applica a tutto (ma non tocca il colore testa)
-        var targetMeshes = bodyMeshes.length > 0 ? bodyMeshes : allMeshes;
+        var torsoMesh = new THREE.Mesh(torsoGeo, torsoMat);
+        torsoMesh.position.set(center.x, torsoCenterY, center.z);
+        torsoMesh.rotation.y = Math.PI / 2; // Orienta il fronte stemma in avanti verso Z
+        torsoMesh.castShadow = true;
+        torsoMesh.receiveShadow = true;
+        jerseyGroup.add(torsoMesh);
 
-        targetMeshes.forEach(function (child) {
-          var mats = Array.isArray(child.material) ? child.material : [child.material];
-          mats.forEach(function (mat) {
-            if (!mat) return;
-
-            // Reset colore a bianco: in Three.js il colore moltiplica la texture
-            // senza reset il kit risulterebbe scuro/invisibile
-            if (mat.color) mat.color.setHex(0xffffff);
-
-            mat.map = tex;
-
-            // PBR realistici per tessuto da gara
-            if (mat.roughness !== undefined) mat.roughness = 0.60;
-            if (mat.metalness !== undefined) mat.metalness = 0.0;
-
-            // Azzera emissive per non alterare il colore della texture
-            if (mat.emissive) mat.emissive.setHex(0x000000);
-            if (mat.emissiveMap !== undefined) mat.emissiveMap = null;
-
-            mat.needsUpdate = true;
-          });
+        // B) Manicotti Deltoidi / Spalle (Maniche corte da gara coordinate)
+        var sleeveRadius = radiusX * 0.32;
+        var sleeveLen = torsoH * 0.32;
+        var sleeveGeo = new THREE.CylinderGeometry(sleeveRadius * 1.08, sleeveRadius * 0.90, sleeveLen, 24);
+        var sleeveMat = new THREE.MeshStandardMaterial({
+          map: tex,
+          roughness: 0.60,
+          metalness: 0.05,
+          side: THREE.DoubleSide,
+          transparent: true
         });
 
-        // Forza il renderer a ridisegnare la scena immediatamente
+        // Manica Sinistra
+        var sleeveL = new THREE.Mesh(sleeveGeo, sleeveMat);
+        sleeveL.position.set(center.x - radiusX * 0.95, torsoCenterY + torsoH * 0.28, center.z);
+        sleeveL.rotation.z = 0.28;
+        jerseyGroup.add(sleeveL);
+
+        // Manica Destra
+        var sleeveR = new THREE.Mesh(sleeveGeo, sleeveMat);
+        sleeveR.position.set(center.x + radiusX * 0.95, torsoCenterY + torsoH * 0.28, center.z);
+        sleeveR.rotation.z = -0.28;
+        jerseyGroup.add(sleeveR);
+
+        // C) Integrazione DecalGeometry sul Petto (se DecalGeometry è pronto e trova mesh target)
+        if (THREE.DecalGeometry && rawImg) {
+          try {
+            var targetMesh = null;
+            model.traverse(function (child) {
+              if (!targetMesh && child.isMesh && (child.name || '').toLowerCase().indexOf('head') === -1) {
+                targetMesh = child;
+              }
+            });
+            if (targetMesh) {
+              var decalPos = new THREE.Vector3(center.x, torsoCenterY + torsoH * 0.06, bbox.max.z + 0.005);
+              var decalDir = new THREE.Vector3(0, 0, 1);
+              var decalSize = new THREE.Vector3(radiusX * 1.6, torsoH * 0.85, radiusZ * 1.4);
+              var decalGeo = new THREE.DecalGeometry(targetMesh, decalPos, decalDir, decalSize);
+              var decalMat = new THREE.MeshStandardMaterial({
+                map: tex,
+                transparent: true,
+                depthTest: true,
+                depthWrite: false,
+                polygonOffset: true,
+                polygonOffsetFactor: -4,
+                roughness: 0.60,
+                metalness: 0.05
+              });
+              var decalMesh = new THREE.Mesh(decalGeo, decalMat);
+              decalMesh.name = '__elisee_decal_front';
+              jerseyGroup.add(decalMesh);
+            }
+          } catch (e) {
+            console.log('[JerseyAIAgent] Decal fallback active:', e);
+          }
+        }
+
+        // Aggiunge la maglia ufficiale al modello attivo
+        model.add(jerseyGroup);
+        self.activeJerseyGroup = jerseyGroup;
+
+        // Render immediato
         if (state.renderer && state.scene && state.camera) {
           state.renderer.render(state.scene, state.camera);
         }
-      },
-      undefined,
-      function (err) {
-        console.warn('[Avatar3D] Impossibile caricare texture kit:', kitPath, err);
-      }
-    );
+
+        if (onProgress) onProgress('Vestizione Kit ' + clubName + ' completata alla perfezione!');
+      });
+    }
+  };
+  window.EliseeJerseyAIAgent = EliseeJerseyAIAgent;
+
+  // Applica una texture Kit 2D al modello attualmente attivo tramite Agente IA
+  function applyKitTextureToActiveModel(kitPath, onProgress) {
+    if (!state.activeModel) {
+      setTimeout(function () { applyKitTextureToActiveModel(kitPath, onProgress); }, 200);
+      return;
+    }
+    EliseeJerseyAIAgent.fit(state.activeModel, kitPath, getAvatarData(), onProgress);
   }
 
   // ============================================================
@@ -1972,11 +2255,14 @@
         model.position.y = 0.08 - bbox.min.y;
         model.position.z = -center.z;
 
-        // Traversal nodi per ombreggiatura
+        // Traversal nodi per ombreggiatura e backup fedele del materiale originale
         model.traverse(function (child) {
           if (child.isMesh) {
             child.castShadow = true;
             child.receiveShadow = true;
+            if (!child.__originalMaterial && child.material) {
+              child.__originalMaterial = child.material.clone ? child.material.clone() : child.material;
+            }
           }
         });
 

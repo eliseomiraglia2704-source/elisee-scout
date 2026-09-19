@@ -1,7 +1,7 @@
 /* ELISEE SCOUT — Cache Wipe & Self-Unregister Service Worker
    Assicura che nessun asset obsoleto rimanga memorizzato nella cache del browser.
 */
-const CACHE = 'elisee-scout-v20260919-a3dfixkit4';
+const CACHE = 'elisee-scout-v20260919-a3djerseyai1';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -20,10 +20,10 @@ self.addEventListener('activate', (event) => {
           try {
             client.postMessage({
               type: 'FORCE_RELOAD',
-              version: '20260919_A3DFIXKIT4',
-              updatedAt: '2026-09-19T12:39:00Z',
-              ts: '20260919_123900',
-              bust: 'v20260919_A3DFIXKIT4'
+              version: '20260919_A3DJERSEYAI1',
+              updatedAt: '2026-09-19T13:16:00Z',
+              ts: '20260919_131600',
+              bust: 'v20260919_A3DJERSEYAI1'
             });
           } catch (e) {}
         });

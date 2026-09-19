@@ -1159,6 +1159,150 @@
   transition: opacity 0.3s;
 }
 
+/* Box AGENTE IA: Vestizione Kit 3D Specialist */
+.es-a3d-ai-box {
+  border: 1px solid rgba(56, 189, 248, 0.45) !important;
+  background: linear-gradient(145deg, rgba(56, 189, 248, 0.08) 0%, rgba(15, 23, 42, 0.85) 100%) !important;
+  box-shadow: 0 6px 24px rgba(56, 189, 248, 0.14);
+}
+
+.es-a3d-badge-ai {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #0f172a;
+  background: #38bdf8;
+  padding: 2px 7px;
+  border-radius: 999px;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}
+
+.es-a3d-ai-desc {
+  font-size: 0.73rem;
+  line-height: 1.45;
+  color: #94a3b8;
+  margin-top: 2px;
+  margin-bottom: 8px;
+}
+
+.es-a3d-btn-ai-fit {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #0284c7 0%, #0284c7 50%, #0369a1 100%);
+  border: 1px solid #38bdf8;
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 9px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(2, 132, 199, 0.35);
+  transition: all 0.22s ease;
+}
+
+.es-a3d-btn-ai-fit:hover {
+  background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+  transform: translateY(-1px);
+}
+
+.es-a3d-ai-status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  border-radius: 6px;
+}
+
+.es-a3d-ai-dot {
+  width: 8px;
+  height: 8px;
+  min-width: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #22c55e;
+  animation: esA3dPulse 1.8s infinite;
+}
+
+@keyframes esA3dPulse {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+.es-a3d-ai-status-txt {
+  font-size: 0.72rem;
+  color: #cbd5e1;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.es-a3d-ai-controls {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.es-a3d-fit-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.es-a3d-fit-label {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-weight: 700;
+}
+
+.es-a3d-fit-pills {
+  display: flex;
+  gap: 4px;
+}
+
+.es-a3d-fit-pill {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #94a3b8;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.es-a3d-fit-pill.is-active,
+.es-a3d-fit-pill:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+  color: #ffffff;
+}
+
+.es-a3d-range {
+  flex: 1;
+  accent-color: #38bdf8;
+  cursor: pointer;
+}
+
+.es-a3d-range-val {
+  font-size: 0.72rem;
+  color: #38bdf8;
+  font-weight: 800;
+  min-width: 32px;
+  text-align: right;
+}
+
 /* Mobile responsive */
 @media (max-width: 900px) {
   .es-a3d-dialog {

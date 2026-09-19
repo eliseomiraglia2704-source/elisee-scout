@@ -3,13 +3,19 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-19** — Avatar 3D: Fix Testa Coperta - Filtraggio Zona Y + Nome Mesh (`A3DFIXKIT4`):
+Ultimo aggiornamento: **2026-09-19** — Avatar 3D: Agente IA Vestizione Maglia 3D & Sostituzione Maglia Elisee Scout (`A3DJERSEYAI1`):
+1. **Creazione Agente IA Dedicato (`EliseeJerseyAIAgent` in `avatar-3d.js`)**:
+   - Risolto alla radice il problema dell'oscuramento/distorsione texture: le mesh originali del modello 3D (viso, capelli, pelle, arti) mantengono intatta la loro texture fotorealistica con backup clone del materiale originale (`__originalMaterial`).
+   - L'Agente IA effettua la **scansione volumetrica del busto** calcolando bounding box, centro petto Y, altezza torso e raggi anatomici.
+   - **Sostituzione 100% Maglia Elisee Scout**: l'Agente rimuove qualsiasi precedente maglia procedurale o decal "Elisee Scout" e genera una **Guaina Anatomica Sagomata da Gara 3D** (torso e maniche coordinate) aderente a filo pelle.
+   - **Texture 360° con Nome & Numero**: Fronte con stemma club e sponsor ufficiale, retro dorsale con Nome e Numero Ufficiale dell'atleta.
+   - **Proiezione DecalGeometry**: se supportata, proietta Decal ad alta definizione curvata sul petto per perfetta fusione muscolare.
+   - **Modulo UI nella Sidebar**: Box `🤖 AGENTE IA: VESTIZIONE KIT 3D` con status in tempo reale, pulsante "Indossa Maglia con IA", selettori di taglio (Slim Gara, Classica, Morbida) e cursore regolazione millimetrica altezza petto.
+2. **File**: `avatar-3d.js`, `avatar-3d.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260919_A3DJERSEYAI1`.
+
+Feature precedente: **Avatar 3D: Fix Testa Coperta - Filtraggio Zona Y + Nome Mesh (`A3DFIXKIT4`):
 1. **Bug critico: texture applicata anche al volto/capelli (`avatar-3d.js`)**:
-   - Il fix precedente (A3DFIXKIT3) applicava la texture a tutte le mesh senza eccezioni → il volto dell'atleta risultava coperto dalla grafica della maglia.
-   - Fix: doppio filtraggio automatico prima di applicare la texture:
-     - **Per nome mesh**: esclude mesh che contengono `head`, `hair`, `face`, `eye`, `teeth`, `tooth`, `beard`.
-     - **Per posizione Y**: calcola la bounding box totale del modello → tutto ciò che ha il centro sopra il 78% dell'altezza (zona collo/testa) viene escluso.
-   - Fallback: se tutte le mesh vengono filtrate (modello a mesh unica), applica a tutte (caso limite senza soluzione senza UV separati).
+   - Fix temporaneo con filtraggio coordinate Y e nomi mesh prima dell'introduzione dell'Agente IA completo.
 2. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260919_A3DFIXKIT4`. Commit `8eb1e4c4`. Deploy `dpl_G2maSCtveGvZTJ7hK9s4mTxmr1Uv`.
 
 Feature precedente: **Avatar 3D: Supporto Universale Mesh GLB (`A3DFIXKIT2`)**:
