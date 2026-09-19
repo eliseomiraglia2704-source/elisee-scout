@@ -2201,10 +2201,17 @@
   };
   window.EliseeJerseyAIAgent = EliseeJerseyAIAgent;
 
-  // Applica una texture Kit 2D al modello attualmente attivo tramite Agente IA
-  function applyKitTextureToActiveModel(kitPath, onProgress) {
+  // Applica una texture Kit 2D al modello attivamente attivo tramite Agente IA
+  // Retry limitato (max 20 tentativi = 4s) per attendere il caricamento del modello GLB
+  function applyKitTextureToActiveModel(kitPath, onProgress, _retryCount) {
+    var retries = _retryCount || 0;
     if (!state.activeModel) {
-      setTimeout(function () { applyKitTextureToActiveModel(kitPath, onProgress); }, 200);
+      if (retries >= 20) {
+        // Nessun modello GLB: l'ologramma è in scena (wireframe procedurale senza mesh unificata)
+        if (onProgress) onProgress('⚠️ Carica un modello .GLB da Hyper3D per indossare la maglia 3D');
+        return;
+      }
+      setTimeout(function () { applyKitTextureToActiveModel(kitPath, onProgress, retries + 1); }, 200);
       return;
     }
     EliseeJerseyAIAgent.fit(state.activeModel, kitPath, getAvatarData(), onProgress);
