@@ -5,7 +5,7 @@ File di passaggio tra sessioni / account Grok.
 
 Ultimo aggiornamento: **2026-09-19** — Avatar 3D: Fix Retry Loop + Feedback UI ologramma (`A3DJERSEYAI2`):
 1. **Fix loop infinito `applyKitTextureToActiveModel`**: aggiunto limite massimo di 20 retry (4 secondi). Se il modello GLB non è disponibile (scena con solo ologramma wireframe), l'agente mostra un messaggio chiaro: `⚠️ Carica un modello .GLB da Hyper3D per indossare la maglia 3D`.
-2. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260919_A3DJERSEYAI2`.
+2. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260919_A3DJERSEYAI2`. Commit `fd31bae7`. Deploy live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **Avatar 3D: Agente IA Vestizione Maglia 3D & Sostituzione Maglia Elisee Scout (`A3DJERSEYAI1`):
 1. **Creazione Agente IA Dedicato (`EliseeJerseyAIAgent` in `avatar-3d.js`)**:
