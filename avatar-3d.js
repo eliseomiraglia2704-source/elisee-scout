@@ -2295,7 +2295,7 @@
     );
   }
 
-  // Silhouette / Ologramma Sportivo d'Attesa (elegante e futuristico, zero manichino deforme)
+  // Silhouette / Ologramma Sportivo d'Emergenza (fallback minimale di sicurezza WebGL)
   function renderFallbackHologram(avatar, group) {
     var THREE = window.THREE;
     if (!THREE) return;
@@ -2323,7 +2323,6 @@
       opacity: 0.15
     });
 
-    // Silhouette atletica slanciata a tronco di cono ellittico moderno
     var torsoGeo = new THREE.CylinderGeometry(0.22, 0.16, 0.65, 24);
     torsoGeo.scale(1.2, 1, 0.7);
     var torsoMesh = new THREE.Mesh(torsoGeo, holoMat);
@@ -2335,14 +2334,12 @@
     glowMesh.scale.set(1.02, 1.02, 1.02);
     holoGroup.add(glowMesh);
 
-    // Testa geometrica stilizzata
     var headGeo = new THREE.SphereGeometry(0.12, 20, 20);
     headGeo.scale(0.9, 1.15, 1);
     var headMesh = new THREE.Mesh(headGeo, holoMat);
     headMesh.position.y = 1.72;
     holoGroup.add(headMesh);
 
-    // Gambe stilizzate in posa atletica
     [-0.10, 0.10].forEach(function (side) {
       var legGeo = new THREE.CylinderGeometry(0.065, 0.045, 0.82, 16);
       var legMesh = new THREE.Mesh(legGeo, holoMat);
@@ -2350,7 +2347,6 @@
       holoGroup.add(legMesh);
     });
 
-    // Braccia slanciate
     [-0.28, 0.28].forEach(function (side) {
       var armGeo = new THREE.CylinderGeometry(0.045, 0.035, 0.60, 16);
       var armMesh = new THREE.Mesh(armGeo, holoMat);
@@ -2359,7 +2355,403 @@
     });
   }
 
-  // Costruzione Atleta 3D: Caricamento modello GLB reale (IndexedDB o URL)
+  // Costruzione Capigliatura Atleta a Ciocche Multiple Rifinite
+  function buildUltraHairMesh(avatar, group) {
+    var THREE = window.THREE;
+    var style = (avatar && avatar.stile_capelli) || 'short_textured';
+    if (style === 'mogger_blond') style = 'short_textured';
+
+    var hairColors = {
+      short_textured: { base: 0x4a3728, highlight: 0x6d523d, roots: 0x241810 },
+      fade_brunette:  { base: 0x2a1d15, highlight: 0x443022, roots: 0x140e0a },
+      platinum_ice:   { base: 0xe2e8f0, highlight: 0xffffff, roots: 0x64748b },
+      dark_crop:      { base: 0x1c1917, highlight: 0x38332f, roots: 0x09090b }
+    };
+    var hc = hairColors[style] || hairColors.short_textured;
+
+    var hairGroup = new THREE.Group();
+    hairGroup.name = 'athlete_hair';
+    group.add(hairGroup);
+
+    var baseMat = new THREE.MeshStandardMaterial({
+      color: hc.base,
+      roughness: 0.88,
+      metalness: 0.05
+    });
+
+    // Calotta volumetrica superiore sagomata
+    var hairGeo = new THREE.SphereGeometry(0.144, 32, 28);
+    hairGeo.scale(1.03, 0.72, 1.1);
+    var baseHair = new THREE.Mesh(hairGeo, baseMat);
+    baseHair.position.set(0, 1.81, -0.015);
+    baseHair.castShadow = true;
+    hairGroup.add(baseHair);
+
+    // Ciocche frontali sagomate a volume
+    var strandOffsets = [
+      { x: -0.06, y: 1.83, z: 0.10, rotX: 0.35, rotY: -0.2, rotZ: 0.25, s: 1.1 },
+      { x: -0.03, y: 1.85, z: 0.12, rotX: 0.40, rotY: -0.1, rotZ: 0.1, s: 1.3 },
+      { x: 0.01,  y: 1.86, z: 0.13, rotX: 0.42, rotY: 0.05, rotZ: -0.15, s: 1.4 },
+      { x: 0.05,  y: 1.84, z: 0.11, rotX: 0.38, rotY: 0.2, rotZ: -0.3, s: 1.2 },
+      { x: 0.08,  y: 1.82, z: 0.09, rotX: 0.32, rotY: 0.3, rotZ: -0.4, s: 1.0 },
+      { x: -0.04, y: 1.89, z: 0.04, rotX: 0.15, rotY: -0.3, rotZ: 0.2, s: 1.2 },
+      { x: 0.00,  y: 1.91, z: 0.05, rotX: 0.10, rotY: 0.0, rotZ: 0.0, s: 1.3 },
+      { x: 0.04,  y: 1.90, z: 0.03, rotX: 0.12, rotY: 0.25, rotZ: -0.2, s: 1.2 }
+    ];
+
+    strandOffsets.forEach(function (st) {
+      var sg = new THREE.ConeGeometry(0.018 * st.s, 0.06 * st.s, 8);
+      sg.rotateX(st.rotX);
+      sg.rotateY(st.rotY);
+      sg.rotateZ(st.rotZ);
+      var sm = new THREE.Mesh(sg, baseMat);
+      sm.position.set(st.x, st.y, st.z);
+      sm.castShadow = true;
+      hairGroup.add(sm);
+    });
+  }
+
+  // Costruzione Componenti Corpo Calciatore Solido Completo
+  function buildBodyComponents(bodyType, kitRef, avatar, targetGroup) {
+    var THREE = window.THREE;
+    if (!THREE || !targetGroup) return;
+
+    var scales = {
+      snella:   { chestW: 0.35, waistW: 0.23, armR: 0.038, legR: 0.058 },
+      media:    { chestW: 0.39, waistW: 0.26, armR: 0.044, legR: 0.065 },
+      atletica: { chestW: 0.43, waistW: 0.28, armR: 0.050, legR: 0.072 }
+    };
+    var cfg = scales[bodyType] || scales.atletica;
+
+    avatar = avatar || getAvatarData();
+
+    // Materiale Maglia / Jersey base procedurale
+    var jerseyTex = createProceduralJerseyTexture(avatar);
+    var jerseyMat = new THREE.MeshStandardMaterial({
+      map: jerseyTex,
+      roughness: 0.50,
+      metalness: 0.05
+    });
+
+    var skinMat = new THREE.MeshStandardMaterial({
+      color: 0xc79973,
+      roughness: 0.65,
+      metalness: 0.02
+    });
+
+    var shortsColor = (avatar.divisa_ref && avatar.divisa_ref.colore_secondario) || '#0f172a';
+    var shortsMat = new THREE.MeshStandardMaterial({
+      color: shortsColor,
+      roughness: 0.52
+    });
+
+    // 1. Torace a V Atletico
+    var torsoGeo = new THREE.CylinderGeometry(cfg.chestW / 2, cfg.waistW / 2, 0.46, 32);
+    torsoGeo.scale(1.15, 1, 0.75);
+    var torsoMesh = new THREE.Mesh(torsoGeo, jerseyMat);
+    torsoMesh.name = 'athlete_torso';
+    torsoMesh.position.y = 1.30;
+    torsoMesh.castShadow = true;
+    torsoMesh.receiveShadow = true;
+    targetGroup.add(torsoMesh);
+
+    // Pettorali Sagomati
+    var pecGeo = new THREE.SphereGeometry(cfg.chestW * 0.24, 16, 16);
+    pecGeo.scale(1.2, 0.8, 0.6);
+    [-1, 1].forEach(function (side) {
+      var pecMesh = new THREE.Mesh(pecGeo, jerseyMat);
+      pecMesh.name = 'athlete_pec_' + (side > 0 ? 'r' : 'l');
+      pecMesh.position.set(side * (cfg.chestW * 0.20), 1.38, 0.09);
+      pecMesh.castShadow = true;
+      targetGroup.add(pecMesh);
+    });
+
+    // Colletto Rifinito Bicolore
+    var collarGeo = new THREE.TorusGeometry(cfg.chestW * 0.22, 0.016, 16, 32);
+    var collarMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.3 });
+    var collarMesh = new THREE.Mesh(collarGeo, collarMat);
+    collarMesh.name = 'athlete_collar';
+    collarMesh.rotation.x = Math.PI / 2;
+    collarMesh.position.set(0, 1.51, 0);
+    targetGroup.add(collarMesh);
+
+    // 2. Braccia Muscolose (Deltoidi, Maniche, Bicipiti, Avambracci, Mani con dita)
+    [-1, 1].forEach(function (side) {
+      var sideKey = side > 0 ? 'r' : 'l';
+
+      // Deltoide (Spalla)
+      var deltGeo = new THREE.SphereGeometry(cfg.armR * 1.35, 16, 16);
+      deltGeo.scale(1.1, 1.2, 1.0);
+      var deltMesh = new THREE.Mesh(deltGeo, jerseyMat);
+      deltMesh.name = 'athlete_delt_' + sideKey;
+      deltMesh.position.set(side * (cfg.chestW * 0.54), 1.45, 0);
+      deltMesh.castShadow = true;
+      targetGroup.add(deltMesh);
+
+      // Manica maglia
+      var sleeveGeo = new THREE.CylinderGeometry(cfg.armR * 1.22, cfg.armR * 1.15, 0.16, 20);
+      var sleeveMesh = new THREE.Mesh(sleeveGeo, jerseyMat);
+      sleeveMesh.name = 'athlete_sleeve_' + sideKey;
+      sleeveMesh.position.set(side * (cfg.chestW * 0.55), 1.38, 0);
+      sleeveMesh.rotation.z = side * 0.16;
+      sleeveMesh.castShadow = true;
+      targetGroup.add(sleeveMesh);
+
+      // Bicipite / Braccio Superiore
+      var bicepGeo = new THREE.CylinderGeometry(cfg.armR * 1.05, cfg.armR * 0.95, 0.22, 20);
+      var bicepMesh = new THREE.Mesh(bicepGeo, skinMat);
+      bicepMesh.name = 'athlete_bicep_' + sideKey;
+      bicepMesh.position.set(side * (cfg.chestW * 0.58), 1.25, 0);
+      bicepMesh.rotation.z = side * 0.16;
+      bicepMesh.castShadow = true;
+      targetGroup.add(bicepMesh);
+
+      // Avambraccio Affusolato
+      var forearmGeo = new THREE.CylinderGeometry(cfg.armR * 0.95, cfg.armR * 0.78, 0.26, 20);
+      var forearmMesh = new THREE.Mesh(forearmGeo, skinMat);
+      forearmMesh.name = 'athlete_forearm_' + sideKey;
+      forearmMesh.position.set(side * (cfg.chestW * 0.63), 1.04, 0.03);
+      forearmMesh.rotation.z = side * 0.12;
+      forearmMesh.castShadow = true;
+      targetGroup.add(forearmMesh);
+
+      // Mano Anatomica con Dita Sagomate
+      var handGeo = new THREE.BoxGeometry(0.045, 0.08, 0.024);
+      var handMesh = new THREE.Mesh(handGeo, skinMat);
+      handMesh.name = 'athlete_hand_' + sideKey;
+      handMesh.position.set(side * (cfg.chestW * 0.66), 0.88, 0.04);
+      handMesh.rotation.z = side * 0.1;
+      handMesh.castShadow = true;
+      targetGroup.add(handMesh);
+    });
+
+    // 3. Pantaloncini da Calcio con Pieghe
+    var shortsGeo = new THREE.CylinderGeometry(cfg.waistW * 0.52, cfg.waistW * 0.60, 0.28, 32);
+    shortsGeo.scale(1.15, 1, 0.85);
+    var shortsMesh = new THREE.Mesh(shortsGeo, shortsMat);
+    shortsMesh.name = 'athlete_shorts';
+    shortsMesh.position.y = 0.95;
+    shortsMesh.castShadow = true;
+    targetGroup.add(shortsMesh);
+
+    // Striscia laterale pantaloncino
+    var stripeMat = new THREE.MeshBasicMaterial({ color: 0x38bdf8 });
+    [-1, 1].forEach(function (side) {
+      var stripeGeo = new THREE.BoxGeometry(0.01, 0.26, 0.02);
+      var stripeMesh = new THREE.Mesh(stripeGeo, stripeMat);
+      stripeMesh.position.set(side * (cfg.waistW * 0.58), 0.95, 0);
+      targetGroup.add(stripeMesh);
+    });
+
+    // 4. Gambe Atletiche (Quadricipiti, Ginocchia, Calzettoni)
+    [-1, 1].forEach(function (side) {
+      var sideKey = side > 0 ? 'r' : 'l';
+
+      // Coscia Muscolosa
+      var thighGeo = new THREE.CylinderGeometry(cfg.legR * 1.05, cfg.legR * 0.88, 0.32, 20);
+      thighGeo.scale(1, 1, 1.15);
+      var thighMesh = new THREE.Mesh(thighGeo, skinMat);
+      thighMesh.name = 'athlete_thigh_' + sideKey;
+      thighMesh.position.set(side * 0.11, 0.72, 0.01);
+      thighMesh.castShadow = true;
+      targetGroup.add(thighMesh);
+
+      // Ginocchio
+      var kneeGeo = new THREE.SphereGeometry(cfg.legR * 0.75, 16, 16);
+      kneeGeo.scale(0.9, 1.1, 1.1);
+      var kneeMesh = new THREE.Mesh(kneeGeo, skinMat);
+      kneeMesh.name = 'athlete_knee_' + sideKey;
+      kneeMesh.position.set(side * 0.11, 0.55, 0.02);
+      kneeMesh.castShadow = true;
+      targetGroup.add(kneeMesh);
+
+      // Calzettone da Gara con Risvolto
+      var sockGeo = new THREE.CylinderGeometry(cfg.legR * 0.88, cfg.legR * 0.74, 0.44, 20);
+      var sockMesh = new THREE.Mesh(sockGeo, jerseyMat);
+      sockMesh.name = 'athlete_sock_' + sideKey;
+      sockMesh.position.set(side * 0.11, 0.34, 0);
+      sockMesh.castShadow = true;
+      targetGroup.add(sockMesh);
+
+      // Risvolto superiore calzettone
+      var cuffGeo = new THREE.TorusGeometry(cfg.legR * 0.84, 0.012, 12, 24);
+      var cuffMat = new THREE.MeshStandardMaterial({ color: 0xffffff });
+      var cuffMesh = new THREE.Mesh(cuffGeo, cuffMat);
+      cuffMesh.rotation.x = Math.PI / 2;
+      cuffMesh.position.set(side * 0.11, 0.52, 0);
+      targetGroup.add(cuffMesh);
+
+      // 5. Scarpino da Calcio Aerodinamico EA Sports
+      var bootGroup = new THREE.Group();
+      bootGroup.name = 'athlete_boot_' + sideKey;
+      bootGroup.position.set(side * 0.11, 0.06, 0.04);
+      targetGroup.add(bootGroup);
+
+      // Tomaia affusolata
+      var bootUpperGeo = new THREE.BoxGeometry(cfg.legR * 1.15, 0.075, 0.24);
+      var bootMat = new THREE.MeshStandardMaterial({
+        color: 0x0f172a,
+        roughness: 0.25,
+        metalness: 0.4
+      });
+      var bootMesh = new THREE.Mesh(bootUpperGeo, bootMat);
+      bootMesh.position.set(0, 0.02, 0.03);
+      bootMesh.castShadow = true;
+      bootGroup.add(bootMesh);
+
+      // Punta sagomata
+      var toeGeo = new THREE.ConeGeometry(cfg.legR * 0.58, 0.09, 16);
+      toeGeo.rotateX(-Math.PI / 2);
+      var toeMesh = new THREE.Mesh(toeGeo, bootMat);
+      toeMesh.position.set(0, 0.015, 0.16);
+      bootGroup.add(toeMesh);
+
+      // Swoosh ciano neon
+      var stripeBoot = new THREE.Mesh(new THREE.BoxGeometry(0.005, 0.03, 0.14), stripeMat);
+      stripeBoot.position.set(side * (cfg.legR * 0.59), 0.025, 0.04);
+      bootGroup.add(stripeBoot);
+
+      // Suola e Tacchetti Visibili
+      var soleGeo = new THREE.BoxGeometry(cfg.legR * 1.18, 0.018, 0.25);
+      var soleMat = new THREE.MeshStandardMaterial({
+        color: 0x38bdf8,
+        metalness: 0.8,
+        roughness: 0.2
+      });
+      var soleMesh = new THREE.Mesh(soleGeo, soleMat);
+      soleMesh.position.set(0, -0.02, 0.04);
+      bootGroup.add(soleMesh);
+
+      // 4 Tacchetti cilindrici
+      [-0.04, 0.04].forEach(function (tz) {
+        [-0.025, 0.025].forEach(function (tx) {
+          var studGeo = new THREE.CylinderGeometry(0.006, 0.005, 0.014, 8);
+          var studMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, metalness: 0.9 });
+          var studMesh = new THREE.Mesh(studGeo, studMat);
+          studMesh.position.set(tx, -0.032, tz + 0.04);
+          bootGroup.add(studMesh);
+        });
+      });
+    });
+  }
+
+  // Costruzione Calciatore 3D Solido Predefinito di Elisee Scout
+  function buildDefaultAthlete(avatar, group) {
+    var THREE = window.THREE;
+    if (!THREE || !group) return;
+
+    avatar = avatar || getAvatarData();
+
+    while (group.children.length > 0) {
+      group.remove(group.children[0]);
+    }
+
+    var athleteGroup = new THREE.Group();
+    athleteGroup.name = '__elisee_default_athlete';
+    group.add(athleteGroup);
+
+    // A) Testa con mappa UV viso fotorealistica
+    var faceTexture = createProceduralFaceTexture(avatar);
+    var headMat = new THREE.MeshStandardMaterial({
+      map: faceTexture,
+      roughness: 0.52,
+      metalness: 0.08
+    });
+
+    var headGeo = new THREE.SphereGeometry(0.138, 48, 40);
+    var pos = headGeo.attributes.position;
+    for (var i = 0; i < pos.count; i++) {
+      var x = pos.getX(i);
+      var y = pos.getY(i);
+      var z = pos.getZ(i);
+      y *= 1.22;
+      if (y < -0.04 && z > 0) {
+        x *= 1.08;
+        z *= 1.05;
+      }
+      if (y > 0.01 && y < 0.08 && Math.abs(x) > 0.08 && z > 0.04) {
+        x *= 1.07;
+        z *= 1.06;
+      }
+      pos.setXYZ(i, x, y, z);
+    }
+    headGeo.computeVertexNormals();
+
+    var headMesh = new THREE.Mesh(headGeo, headMat);
+    headMesh.name = 'athlete_head';
+    headMesh.position.y = 1.72;
+    headMesh.castShadow = true;
+    athleteGroup.add(headMesh);
+
+    // Naso 3D Affusolato
+    var noseGeo = new THREE.ConeGeometry(0.016, 0.045, 12);
+    noseGeo.rotateX(Math.PI / 2.2);
+    var noseMat = new THREE.MeshStandardMaterial({ color: 0xdfba9b, roughness: 0.55 });
+    var noseMesh = new THREE.Mesh(noseGeo, noseMat);
+    noseMesh.name = 'athlete_nose';
+    noseMesh.position.set(0, 1.72, 0.142);
+    athleteGroup.add(noseMesh);
+
+    // Orecchie Anatomiche
+    [-1, 1].forEach(function (side) {
+      var earGeo = new THREE.SphereGeometry(0.024, 16, 16);
+      earGeo.scale(0.35, 1.2, 0.8);
+      var earMesh = new THREE.Mesh(earGeo, noseMat);
+      earMesh.name = 'athlete_ear_' + (side > 0 ? 'r' : 'l');
+      earMesh.position.set(side * 0.14, 1.71, -0.01);
+      earMesh.rotation.y = side * 0.2;
+      athleteGroup.add(earMesh);
+    });
+
+    // B) Capigliatura
+    buildUltraHairMesh(avatar, athleteGroup);
+
+    // C) Collo Muscoloso & Pomo d'Adamo
+    var neckGeo = new THREE.CylinderGeometry(0.068, 0.088, 0.14, 32);
+    var neckMat = new THREE.MeshStandardMaterial({ color: 0xc79973, roughness: 0.6 });
+    var neckMesh = new THREE.Mesh(neckGeo, neckMat);
+    neckMesh.name = 'athlete_neck';
+    neckMesh.position.y = 1.57;
+    neckMesh.castShadow = true;
+    athleteGroup.add(neckMesh);
+
+    var adamGeo = new THREE.SphereGeometry(0.012, 12, 12);
+    adamGeo.scale(0.8, 1.3, 1.4);
+    var adamMesh = new THREE.Mesh(adamGeo, neckMat);
+    adamMesh.position.set(0, 1.58, 0.075);
+    athleteGroup.add(adamMesh);
+
+    // D) Corpo Completo da Calciatore Professionista
+    buildBodyComponents(avatar.corporatura_scelta || 'atletica', avatar.divisa_ref, avatar, athleteGroup);
+
+    // Imposta activeModel per Three.js e Agente IA
+    state.activeModel = athleteGroup;
+
+    // Backup materiali originali e attivazione ombre
+    athleteGroup.traverse(function (child) {
+      if (child.isMesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+        if (!child.__originalMaterial && child.material) {
+          child.__originalMaterial = child.material.clone ? child.material.clone() : child.material;
+        }
+      }
+    });
+
+    // Se attiva la divisa, applica il kit al calciatore attivo
+    if (avatar && avatar.applica_divisa_club !== false) {
+      var kitUrl = (avatar.divisa_ref && (avatar.divisa_ref.selected_kit_uv || avatar.divisa_ref.selected_kit_path)) || 'immagini/kits-2d/foggia-city/home-uv.png';
+      setTimeout(function () {
+        applyKitTextureToActiveModel(kitUrl);
+      }, 100);
+    }
+
+    if (state.renderer && state.scene && state.camera) {
+      state.renderer.render(state.scene, state.camera);
+    }
+  }
+
+  // Costruzione Atleta 3D: Caricamento modello GLB reale o Calciatore 3D Ufficiale
   function buildAthleteModel(avatar) {
     var THREE = window.THREE;
     if (!THREE || !state.avatarGroup) return;
@@ -2381,7 +2773,7 @@
           }
         }, function () {
           hideModelSpinner(canvasWrap);
-          renderFallbackHologram(avatar, group);
+          buildDefaultAthlete(avatar, group);
         });
         return;
       }
@@ -2395,19 +2787,20 @@
           }
         }, function () {
           hideModelSpinner(canvasWrap);
-          renderFallbackHologram(avatar, group);
+          buildDefaultAthlete(avatar, group);
         });
         return;
       }
 
-      // 3. Nessun modello caricato: renderizza l'ologramma moderno d'attesa con guida
+      // 3. Nessun modello GLB personalizzato: carica il Calciatore 3D Solido Ufficiale
       hideModelSpinner(canvasWrap);
-      renderFallbackHologram(avatar, group);
+      buildDefaultAthlete(avatar, group);
       if (typeof window.__eliseeRefreshGlbStatusUI === 'function') {
-        window.__eliseeRefreshGlbStatusUI(null);
+        window.__eliseeRefreshGlbStatusUI('Calciatore 3D Ufficiale');
       }
     });
   }
+
 
   function disposeThree() {
     if (state.animationId) {

@@ -3,7 +3,22 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-19** — Avatar 3D: Fix Retry Loop + Feedback UI ologramma (`A3DJERSEYAI2`):
+Ultimo aggiornamento: **2026-09-20** — Avatar 3D: PASSAGGIO 1 — Calciatore 3D Solido Ufficiale Predefinito (`A3DSTEP1`):
+1. **Calciatore 3D Solido & Completo Sempre Presente sullo Stage**:
+   - Risolto il blocco per cui, in assenza di un file `.glb` caricato, veniva mostrato solo un ologramma filigranato vuoto che impediva la corretta visualizzazione e vestizione della divisa.
+   - Creato `buildDefaultAthlete(avatar, group)`: un modello di atleta 3D solido e proporzionato con anatomia calcistica rifinita:
+     - **Testa & Volto**: mappa UV ad alta definizione (`createProceduralFaceTexture`), cranio e mascella scolpiti, zigomi alti, naso e orecchie anatomiche.
+     - **Capigliatura**: ciocche volumetriche sagomate (`buildUltraHairMesh`).
+     - **Corpo Calciatore (`buildBodyComponents`)**: torace atletico a V, pettorali, colletto bicolore, spalle e deltoidi, braccia muscolose con bicipiti, avambracci e mani con dita sagomate.
+     - **Pantaloncini da Calcio da Gara (Shorts)** con pieghe e striscia laterale a contrasto.
+     - **Gambe Muscolose**: quadricipiti, ginocchia e calzettoni da gara con risvolto elastico.
+     - **Scarpini da Calcio EA Sports Style**: tomaia affusolata, swoosh neon ciano, suola e tacchetti 3D visibili.
+   - Assegnato immediatamente a `state.activeModel` con ombre PBR attive e backup dei materiali originali (`__originalMaterial`).
+   - Se l'utente carica un file `.glb` esterno (Hyper3D/Rodin), questo sostituisce il calciatore default; se viene rimosso, il calciatore predefinito torna attivo all'istante.
+   - La divisa ufficiale selezionata viene subito applicata al corpo solido senza ritardi o blocchi.
+2. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260920_A3DSTEP1`.
+
+Feature precedente: **Avatar 3D: Fix Retry Loop + Feedback UI ologramma (`A3DJERSEYAI2`):
 1. **Fix loop infinito `applyKitTextureToActiveModel`**: aggiunto limite massimo di 20 retry (4 secondi). Se il modello GLB non è disponibile (scena con solo ologramma wireframe), l'agente mostra un messaggio chiaro: `⚠️ Carica un modello .GLB da Hyper3D per indossare la maglia 3D`.
 2. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260919_A3DJERSEYAI2`. Commit `fd31bae7`. Deploy live su `https://elisee-scout.vercel.app`.
 
