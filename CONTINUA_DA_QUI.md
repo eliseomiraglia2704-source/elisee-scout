@@ -16,7 +16,7 @@ Ultimo aggiornamento: **2026-09-20** — Avatar 3D: PASSAGGIO 1 — Calciatore 3
    - Assegnato immediatamente a `state.activeModel` con ombre PBR attive e backup dei materiali originali (`__originalMaterial`).
    - Se l'utente carica un file `.glb` esterno (Hyper3D/Rodin), questo sostituisce il calciatore default; se viene rimosso, il calciatore predefinito torna attivo all'istante.
    - La divisa ufficiale selezionata viene subito applicata al corpo solido senza ritardi o blocchi.
-2. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260920_A3DSTEP1`. Commit `e723dc66`.
+2. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260920_A3DSTEP1`. Commit `e723dc66`. Deploy `dpl_Eg12w3wzbmCmNonRoJaqPHHFQavj` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **Avatar 3D: Fix Retry Loop + Feedback UI ologramma (`A3DJERSEYAI2`):
 1. **Fix loop infinito `applyKitTextureToActiveModel`**: aggiunto limite massimo di 20 retry (4 secondi). Se il modello GLB non è disponibile (scena con solo ologramma wireframe), l'agente mostra un messaggio chiaro: `⚠️ Carica un modello .GLB da Hyper3D per indossare la maglia 3D`.
