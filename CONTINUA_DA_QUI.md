@@ -15,7 +15,7 @@ Ultimo aggiornamento: **2026-09-20** — Avatar 3D: PASSAGGIO 2 — Corrisponden
      - `EliseeJerseyAIAgent.fit` aggiorna istantaneamente `athlete_torso`, `athlete_pec_l/r`, `athlete_sleeve_l/r` e `athlete_sock_l/r`.
      - I pantaloncini da gara (`athlete_shorts`) vengono sincronizzati col colore secondario del club.
      - Per modelli GLB esterni: la guaina anatomica sagomata `__elisee_fitted_jersey` veste il torso senza alcuna compenetrazione.
-2. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260920_A3DSTEP2`.
+2. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260920_A3DSTEP2`. Commit `ee1511b6`. Deploy `dpl_voxWAP1bt87pCUzH1n95Ne67Ua8v` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **Avatar 3D: PASSAGGIO 1 — Calciatore 3D Solido Ufficiale Predefinito (`A3DSTEP1`):
 1. **Calciatore 3D Solido & Completo Sempre Presente sullo Stage**:
