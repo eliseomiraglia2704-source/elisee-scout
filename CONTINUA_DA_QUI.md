@@ -3,7 +3,22 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-20** — Avatar 3D: PASSAGGIO 2 — Corrispondenza Kit 2D Ufficiale & Rimozione Totale Elisee Scout dalla Maglia (`A3DSTEP2`):
+Ultimo aggiornamento: **2026-09-20** — Avatar 3D: PASSAGGIO 3 — Stemma Reale HD, Colletto Sagomato, Fotogrammetria Volto & Esportazione Card EA Sports FC (`A3DSTEP3`):
+1. **Tris di Innovazioni Completate**:
+   - **Miglioramento Visivo del Kit Ufficiale**:
+     - **Stemma Club Ufficiale Reale (PNG ad Alta Definizione)**: caricamento e renderizzazione automatica del logo ufficiale del club dal catalogo (da `immagini/squadre-loghi/<id>.png`) con bordatura e ombra morbida sul petto sinistro.
+     - **Colletto Sagomato a V / Girocollo Sportivo Tecnico Bicolore**: disegnato sulla texture con bordo elastico coordinato e sincronizzazione diretta della mesh 3D `athlete_collar` con il colore secondario del club o bianco gara.
+     - **Numero Gara Frontale Ufficiale**: aggiunto sul petto destro in carattere sportivo ad alta visibilità con contorno scuro, coordinato al grande dorsale a 360° e al nome atleta sul retro.
+   - **Fotogrammetria Volto Avanzata & Live Refresh**:
+     - Mascheratura anatomica con proporzioni auree e sfumatura radiale a gradiente (feathering) per fondere perfettamente l'incarnato della foto reale con il collo, le orecchie e la calotta cranica 3D.
+     - Funzione `updateAthleteHeadTexture` per l'aggiornamento immediato in tempo reale della testa `athlete_head` senza interruzione della scena Three.js.
+   - **Esportazione Player Card EA Sports FC Ultimate Team (HD 1080x1440 PNG)**:
+     - Motore di renderizzazione `exportEASportsCard` con snapshot WebGL ad alta definizione (`preserveDrawingBuffer: true`).
+     - Creazione canvas 1080x1440 px in stile Ultimate Team con scudo metallizzato dorato/ossidiana, OVR 88, ruolo, tricolore italiano, stemma ufficiale del club, render 3D dell'atleta in divisa, nome, club, 6 statistiche di gara (PAC, SHO, PAS, DRI, DEF, PHY) e badge ufficiale Elisee Scout.
+     - Pulsante dedicato *"⭐ Scarica Card EA FC"* nella barra orbitale inferiore e box dedicato *"⭐ CARD EA SPORTS FC"* nella sidebar comandi, oltre al click diretto sulla card fluttuante. Download automatico in PNG.
+2. **File**: `avatar-3d.js`, `avatar-3d.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260920_A3DSTEP3`.
+
+Feature precedente: **Avatar 3D: PASSAGGIO 2 — Corrispondenza Kit 2D Ufficiale & Rimozione Totale Elisee Scout dalla Maglia (`A3DSTEP2`):
 1. **Risolta la Mancata Corrispondenza Maglia 2D ↔ Modello 3D**:
    - **Eliminazione Radicale di "ELISEE SCOUT" e "ELISEE F.C."**: rimosse le scritte hardcoded che sovrascrivevano la divisa del club scelto.
    - **Generatore Dinamico Basato su Kit 2D Reale (`EliseeJerseyAIAgent.generateJerseyTexture`)**:

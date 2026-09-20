@@ -751,6 +751,257 @@
     ];
   }
 
+  // ============================================================
+  // ESPORTAZIONE PLAYER CARD EA SPORTS FC ULTIMATE TEAM (HD PNG)
+  // ============================================================
+  function exportEASportsCard() {
+    var user = (typeof getActiveUser === 'function') ? getActiveUser() : {};
+    var avatar = (typeof getAvatarData === 'function') ? getAvatarData() : {};
+    var clubName = (avatar.divisa_ref && avatar.divisa_ref.club) || user.squadra || 'Foggia City';
+    var athleteName = ((user.nome || '') + ' ' + (user.cognome || '')).trim() || 'ELISEE ATLETA';
+    var userRole = (user.ruolo_calcio || user.ruolo || 'ATT').toUpperCase().slice(0, 3);
+    var jerseyNum = (avatar.divisa_ref && avatar.divisa_ref.numero) || 10;
+
+    var team = allCatalogTeams.find(function (t) {
+      return (t.name || '').toUpperCase() === (clubName || '').toUpperCase() ||
+             (t.id || '') === (clubName || '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    });
+    var logoUrl = (team && team.logo) || ('immagini/squadre-loghi/' + (team ? team.id : clubName.toLowerCase().replace(/[^a-z0-9]+/g, '-')) + '.png');
+
+    if (!state.renderer || !state.scene || !state.camera) {
+      alert('La visualizzazione 3D non è ancora pronta. Attendi qualche istante.');
+      return;
+    }
+
+    var adminToast = document.getElementById('es-a3d-admin-toast');
+    if (adminToast) {
+      adminToast.innerHTML = '<span>⭐ Generazione Card EA Sports FC in corso...</span>';
+      adminToast.style.display = 'flex';
+      adminToast.style.opacity = '1';
+    }
+
+    // 1. Snapshot Three.js del modello 3D
+    var origPos = state.camera.position.clone();
+    var origTarget = state.controls ? state.controls.target.clone() : new window.THREE.Vector3(0, 1.25, 0);
+    var origAspect = state.camera.aspect;
+
+    // Inquadratura mezzobusto da gara per la card
+    state.camera.position.set(0, 1.38, 1.55);
+    if (state.controls) state.controls.target.set(0, 1.30, 0);
+    state.camera.lookAt(0, 1.30, 0);
+    state.renderer.render(state.scene, state.camera);
+
+    var athleteDataUrl = state.renderer.domElement.toDataURL('image/png');
+
+    // Ripristina telecamera
+    state.camera.position.copy(origPos);
+    if (state.controls) state.controls.target.copy(origTarget);
+    state.camera.aspect = origAspect;
+    state.camera.updateProjectionMatrix();
+    state.renderer.render(state.scene, state.camera);
+
+    // 2. Creazione Canvas HD 1080x1440
+    var cardCanvas = document.createElement('canvas');
+    cardCanvas.width = 1080;
+    cardCanvas.height = 1440;
+    var ctx = cardCanvas.getContext('2d');
+
+    function loadImg(src, cb) {
+      if (!src) { cb(null); return; }
+      var img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = function () { cb(img); };
+      img.onerror = function () { cb(null); };
+      img.src = src;
+    }
+
+    loadImg(logoUrl, function (clubLogoImg) {
+      loadImg(athleteDataUrl, function (athleteImg) {
+        ctx.clearRect(0, 0, 1080, 1440);
+
+        ctx.save();
+        var pad = 40;
+        var top = 50;
+        var w = 1080 - pad * 2;
+        var h = 1440 - top * 2;
+
+        // Sagoma Scudo EA FC
+        ctx.beginPath();
+        ctx.moveTo(pad + 60, top);
+        ctx.lineTo(pad + w - 60, top);
+        ctx.quadraticCurveTo(pad + w, top, pad + w, top + 60);
+        ctx.lineTo(pad + w, top + h - 280);
+        ctx.lineTo(pad + w / 2, top + h);
+        ctx.lineTo(pad, top + h - 280);
+        ctx.lineTo(pad, top + 60);
+        ctx.quadraticCurveTo(pad, top, pad + 60, top);
+        ctx.closePath();
+
+        // Sfondo Luxury Dark Obsidian & Gold
+        var bgGrad = ctx.createRadialGradient(540, 480, 50, 540, 720, 750);
+        bgGrad.addColorStop(0, '#1c2638');
+        bgGrad.addColorStop(0.5, '#0b111e');
+        bgGrad.addColorStop(1, '#05070d');
+        ctx.fillStyle = bgGrad;
+        ctx.fill();
+
+        // Bordo Dorato Luxury
+        ctx.strokeStyle = '#f59e0b';
+        ctx.lineWidth = 14;
+        ctx.stroke();
+
+        ctx.strokeStyle = 'rgba(254, 240, 138, 0.45)';
+        ctx.lineWidth = 4;
+        ctx.stroke();
+
+        ctx.clip();
+
+        // Raggi di luce geometrici
+        ctx.fillStyle = 'rgba(251, 191, 36, 0.04)';
+        for (var i = -400; i < 1400; i += 120) {
+          ctx.beginPath();
+          ctx.moveTo(i, 0);
+          ctx.lineTo(i + 300, 1440);
+          ctx.lineTo(i + 340, 1440);
+          ctx.lineTo(i + 40, 0);
+          ctx.fill();
+        }
+
+        // Modello 3D al centro
+        if (athleteImg) {
+          ctx.drawImage(athleteImg, 80, 120, 920, 920);
+        }
+
+        // Sfumatura inferiore per i testi
+        var bottomFade = ctx.createLinearGradient(0, 750, 0, 1100);
+        bottomFade.addColorStop(0, 'rgba(11, 17, 30, 0)');
+        bottomFade.addColorStop(0.5, 'rgba(11, 17, 30, 0.88)');
+        bottomFade.addColorStop(1, 'rgba(11, 17, 30, 0.98)');
+        ctx.fillStyle = bottomFade;
+        ctx.fillRect(pad, 750, w, 550);
+
+        // OVR & Ruolo & Stemma Top Left
+        var infoX = 140;
+        ctx.fillStyle = '#fef08a';
+        ctx.font = '900 110px sans-serif';
+        ctx.shadowColor = 'rgba(0,0,0,0.9)';
+        ctx.shadowBlur = 12;
+        ctx.fillText('88', infoX, 220);
+
+        ctx.font = '800 48px sans-serif';
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillText(userRole, infoX, 280);
+
+        ctx.strokeStyle = 'rgba(245, 158, 11, 0.6)';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(infoX - 10, 310);
+        ctx.lineTo(infoX + 110, 310);
+        ctx.stroke();
+
+        // Bandiera Italia
+        var flagX = infoX;
+        var flagY = 330;
+        var flw = 28, flh = 44;
+        ctx.fillStyle = '#16a34a'; ctx.fillRect(flagX, flagY, flw, flh);
+        ctx.fillStyle = '#ffffff'; ctx.fillRect(flagX + flw, flagY, flw, flh);
+        ctx.fillStyle = '#dc2626'; ctx.fillRect(flagX + flw * 2, flagY, flw, flh);
+        ctx.strokeStyle = 'rgba(0,0,0,0.5)'; ctx.lineWidth = 2;
+        ctx.strokeRect(flagX, flagY, flw * 3, flh);
+
+        // Stemma Club PNG Ufficiale
+        if (clubLogoImg) {
+          ctx.drawImage(clubLogoImg, infoX, 400, 84, 84);
+        } else {
+          ctx.fillStyle = '#f59e0b';
+          ctx.beginPath();
+          ctx.arc(infoX + 42, 442, 40, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Nome Atleta
+        ctx.textAlign = 'center';
+        ctx.shadowColor = 'rgba(0,0,0,0.95)';
+        ctx.shadowBlur = 16;
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '900 68px sans-serif';
+        ctx.letterSpacing = '4px';
+        ctx.fillText(athleteName.toUpperCase(), 540, 940);
+
+        // Nome Club & Numero
+        ctx.font = '800 32px sans-serif';
+        ctx.fillStyle = '#38bdf8';
+        ctx.letterSpacing = '2px';
+        ctx.fillText(clubName.toUpperCase() + ' · N° ' + jerseyNum, 540, 995);
+
+        // Divisorio dorato
+        var divGrad = ctx.createLinearGradient(200, 0, 880, 0);
+        divGrad.addColorStop(0, 'rgba(245, 158, 11, 0)');
+        divGrad.addColorStop(0.5, 'rgba(245, 158, 11, 0.9)');
+        divGrad.addColorStop(1, 'rgba(245, 158, 11, 0)');
+        ctx.fillStyle = divGrad;
+        ctx.fillRect(200, 1025, 680, 4);
+
+        // 6 Statistiche Ultimate Team
+        var statCol1X = 350;
+        var statCol2X = 640;
+        var statY1 = 1090;
+        var statY2 = 1150;
+        var statY3 = 1210;
+
+        function drawStat(label, val, x, y) {
+          ctx.textAlign = 'right';
+          ctx.fillStyle = '#fef08a';
+          ctx.font = '900 44px sans-serif';
+          ctx.fillText(String(val), x, y);
+
+          ctx.textAlign = 'left';
+          ctx.fillStyle = '#94a3b8';
+          ctx.font = '800 32px sans-serif';
+          ctx.fillText(label, x + 16, y - 2);
+        }
+
+        drawStat('PAC', 89, statCol1X, statY1);
+        drawStat('SHO', 87, statCol1X, statY2);
+        drawStat('PAS', 84, statCol1X, statY3);
+
+        drawStat('DRI', 90, statCol2X, statY1);
+        drawStat('DEF', 52, statCol2X, statY2);
+        drawStat('PHY', 84, statCol2X, statY3);
+
+        // Footer Card
+        ctx.textAlign = 'center';
+        ctx.font = '800 22px sans-serif';
+        ctx.fillStyle = '#e2e8f0';
+        ctx.letterSpacing = '3px';
+        ctx.fillText('★ ELISEE SCOUT · OFFICIAL 3D TALENT ★', 540, 1290);
+
+        ctx.restore();
+
+        // 3. Download automatico in PNG
+        var slugAthlete = athleteName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        var slugClub = clubName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        var fileName = 'elisee-scout-card-' + slugAthlete + '-' + slugClub + '.png';
+
+        var a = document.createElement('a');
+        a.download = fileName;
+        a.href = cardCanvas.toDataURL('image/png');
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        if (adminToast) {
+          adminToast.innerHTML = '<span>⭐ Card EA Sports FC scaricata con successo!</span>';
+          setTimeout(function () {
+            adminToast.style.opacity = '0';
+            setTimeout(function () { adminToast.style.display = 'none'; }, 300);
+          }, 2500);
+        }
+      });
+    });
+  }
+  window.__eliseeExportEASportsCard = exportEASportsCard;
+
   // Visualizzatore 3D Completo Three.js Stile EA FC / Next-Gen
   function renderStageView(container, avatar) {
     var user = getActiveUser();
@@ -814,6 +1065,10 @@
 
         '<!-- Orbit Controls Bar con Inquadrature Rapide Telecamera -->' +
         '<div class="es-a3d-orbit-controls-bar">' +
+          '<button type="button" class="es-a3d-tool-btn es-a3d-export-card-btn" id="btn-export-ea-card" title="Scarica Card EA Sports FC in alta definizione">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' +
+            '<span style="color:#fbbf24; font-weight:700;">Scarica Card EA FC</span>' +
+          '</button>' +
           '<button type="button" class="es-a3d-tool-btn" id="btn-toggle-autorotate" title="Attiva/Pausa rotazione">' +
             '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>' +
             '<span>Rotazione</span>' +
@@ -932,7 +1187,20 @@
           '</div>' +
         '</div>' +
 
-        '<!-- Sezione 4: Azioni & Privacy -->' +
+        '<!-- Sezione 4: Esportazione Card EA Sports FC -->' +
+        '<div class="es-a3d-card-section es-a3d-export-section">' +
+          '<div class="es-a3d-section-title" style="color:#fbbf24;">' +
+            '<span>⭐ CARD EA SPORTS FC</span>' +
+            '<span class="es-a3d-badge-pro" style="background:#fbbf24; color:#0f172a;">HD PNG</span>' +
+          '</div>' +
+          '<div style="font-size:0.75rem; color:#94a3b8; margin:0 0 10px 0;">Esporta la tua Player Card ufficiale Ultimate Team con il calciatore 3D, stemma del club e statistiche.</div>' +
+          '<button type="button" class="es-a3d-btn-export-card" id="btn-sidebar-export-card">' +
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
+            '<span>Scarica Card Ufficiale (1080x1440)</span>' +
+          '</button>' +
+        '</div>' +
+
+        '<!-- Sezione 5: Azioni & Privacy -->' +
         '<div class="es-a3d-card-section">' +
           '<div class="es-a3d-section-title">Aggiorna Foto Volto</div>' +
           '<button type="button" class="es-a3d-btn-primary" id="btn-replace-photo" style="width:100%;">' +
@@ -1282,6 +1550,18 @@
       }
     });
 
+    // Event Listeners Esportazione Card EA Sports FC
+    var btnExpCard1 = container.querySelector('#btn-export-ea-card');
+    var btnExpCard2 = container.querySelector('#btn-sidebar-export-card');
+    var floatCard = container.querySelector('#es-a3d-player-card');
+
+    if (btnExpCard1) btnExpCard1.addEventListener('click', exportEASportsCard);
+    if (btnExpCard2) btnExpCard2.addEventListener('click', exportEASportsCard);
+    if (floatCard) {
+      floatCard.title = 'Clicca per scaricare la Card EA Sports FC';
+      floatCard.addEventListener('click', exportEASportsCard);
+    }
+
     // Inizializza o riallinea scena Three.js
     setTimeout(function () {
       initThreeStage(canvasWrap, avatar);
@@ -1461,7 +1741,7 @@
     state.camera = camera;
 
     // Renderer WebGL
-    var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
@@ -1822,28 +2102,28 @@
     tex.generateMipmaps = true;
     tex.minFilter = THREE.LinearMipmapLinearFilter;
 
-    // 8. INTEGRAZIONE VOLTO REALE DALLA FOTO UTENTE (Fotogrammetria)
+    // 8. INTEGRAZIONE VOLTO REALE DALLA FOTO UTENTE (Fotogrammetria Avanzata)
     var photoSrc = avatar.texture_volto_url || avatar.foto_originale_url;
     if (photoSrc) {
       var userImg = new Image();
       userImg.crossOrigin = 'anonymous';
       userImg.onload = function () {
         ctx.save();
-        // Mascheratura ellittica centrale per il viso dell'atleta
+        // Mascheratura anatomica del viso con proporzioni auree
         ctx.beginPath();
-        ctx.ellipse(512, 505, 195, 245, 0, 0, Math.PI * 2);
+        ctx.ellipse(512, 510, 195, 245, 0, 0, Math.PI * 2);
         ctx.clip();
-        ctx.drawImage(userImg, 512 - 195, 505 - 245, 390, 490);
+        ctx.drawImage(userImg, 512 - 195, 510 - 245, 390, 490);
         ctx.restore();
 
-        // Sfumatura di transizione sui bordi per fondere l'incarnato della foto
-        var blendGrad = ctx.createRadialGradient(512, 505, 140, 512, 505, 205);
+        // Sfumatura di transizione radiale sui bordi per fondere l'incarnato della foto con la mesh
+        var blendGrad = ctx.createRadialGradient(512, 510, 142, 512, 510, 212);
         blendGrad.addColorStop(0, 'rgba(0,0,0,0)');
-        blendGrad.addColorStop(0.7, 'rgba(199, 153, 115, 0.4)');
-        blendGrad.addColorStop(1, 'rgba(199, 153, 115, 1)');
+        blendGrad.addColorStop(0.65, 'rgba(215, 170, 135, 0.45)');
+        blendGrad.addColorStop(1, 'rgba(215, 170, 135, 1)');
         ctx.fillStyle = blendGrad;
         ctx.beginPath();
-        ctx.ellipse(512, 505, 205, 255, 0, 0, Math.PI * 2);
+        ctx.ellipse(512, 510, 212, 260, 0, 0, Math.PI * 2);
         ctx.fill();
 
         // Se il tatuaggio è attivo, lo ridisegna sopra
@@ -1852,12 +2132,32 @@
         }
 
         tex.needsUpdate = true;
+        if (state.renderer && state.scene && state.camera) {
+          state.renderer.render(state.scene, state.camera);
+        }
       };
       userImg.src = photoSrc;
     }
 
     return tex;
   }
+
+  // Aggiornamento dinamico live della testa 3D senza ricaricare la scena
+  function updateAthleteHeadTexture(avatar) {
+    if (!state.activeModel) return;
+    avatar = avatar || getAvatarData();
+    var newFaceTex = createProceduralFaceTexture(avatar);
+    state.activeModel.traverse(function (child) {
+      if (child.isMesh && (child.name === 'athlete_head' || (child.name && child.name.toLowerCase().indexOf('head') !== -1))) {
+        child.material.map = newFaceTex;
+        child.material.needsUpdate = true;
+      }
+    });
+    if (state.renderer && state.scene && state.camera) {
+      state.renderer.render(state.scene, state.camera);
+    }
+  }
+  window.__eliseeUpdateAthleteHeadTexture = updateAthleteHeadTexture;
 
   // ============================================================
   // GENERATORE TEXTURE MAGLIA DA GARA (MICRO-COSTINE TRASPIRANTI)
@@ -1882,6 +2182,8 @@
 
     var primary = (avatar.divisa_ref && avatar.divisa_ref.colore_primario) || (team && team.primary) || '#c0392b';
     var secondary = (avatar.divisa_ref && avatar.divisa_ref.colore_secondario) || (team && team.secondary) || '#111111';
+    var dorsalNum = (avatar.divisa_ref && avatar.divisa_ref.numero) || 10;
+    var logoUrl = (team && team.logo) || ('immagini/squadre-loghi/' + (team ? team.id : clubName.toLowerCase().replace(/[^a-z0-9]+/g, '-')) + '.png');
 
     // Base colore maglia ufficiale
     ctx.fillStyle = primary;
@@ -1901,7 +2203,21 @@
     ctx.fillStyle = bodyShade;
     ctx.fillRect(0, 0, 1024, 1024);
 
-    // Stemma Club Ricamato Ufficiale (Petto Sinistro, U: 0.35 circa)
+    // Colletto Sagomato a V / Girocollo Sportivo Tecnico Bicolore
+    ctx.save();
+    ctx.strokeStyle = secondary || '#ffffff';
+    ctx.lineWidth = 16;
+    ctx.beginPath();
+    ctx.ellipse(512, 65, 95, 38, 0, 0, Math.PI);
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.ellipse(512, 65, 88, 34, 0, 0, Math.PI);
+    ctx.stroke();
+    ctx.restore();
+
+    // Stemma Club Ufficiale di Base (Petto Sinistro, U: 0.35 circa)
     ctx.fillStyle = secondary;
     ctx.beginPath();
     ctx.ellipse(340, 360, 48, 56, 0, 0, Math.PI * 2);
@@ -1916,7 +2232,7 @@
     ctx.textAlign = 'center';
     ctx.fillText('★', 340, 302);
 
-    // Nome Club nello stemma (dinamico, non più Elisee FC)
+    // Nome Club nello stemma
     var shortClub = (clubName || 'CLUB').toUpperCase().split(' ')[0].slice(0, 8);
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 15px sans-serif';
@@ -1933,10 +2249,38 @@
     ctx.quadraticCurveTo(700, 375, 750, 335);
     ctx.stroke();
 
+    // Numero di Gara Frontale Ufficiale (Petto Destro / Centro)
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '900 38px sans-serif';
+    ctx.shadowColor = 'rgba(0,0,0,0.85)';
+    ctx.shadowBlur = 8;
+    ctx.fillText(String(dorsalNum), 640, 260);
+    ctx.strokeStyle = 'rgba(0,0,0,0.6)';
+    ctx.lineWidth = 3;
+    ctx.strokeText(String(dorsalNum), 640, 260);
+    ctx.restore();
+
     var THREE = window.THREE;
     var tex = new THREE.CanvasTexture(canvas);
     tex.generateMipmaps = true;
     tex.minFilter = THREE.LinearMipmapLinearFilter;
+
+    // Caricamento asincrono Stemma Club PNG Ufficiale Reale
+    var badgeImg = new Image();
+    badgeImg.crossOrigin = 'anonymous';
+    badgeImg.onload = function () {
+      ctx.save();
+      ctx.shadowColor = 'rgba(0,0,0,0.75)';
+      ctx.shadowBlur = 12;
+      ctx.drawImage(badgeImg, 305, 315, 72, 72);
+      ctx.restore();
+      tex.needsUpdate = true;
+      if (state.renderer && state.scene && state.camera) state.renderer.render(state.scene, state.camera);
+    };
+    badgeImg.src = logoUrl;
+
     return tex;
   }
 
@@ -2004,9 +2348,84 @@
       });
       var primaryColor = (team && team.primary) || '#c0392b';
       var secondaryColor = (team && team.secondary) || '#111111';
+      var logoUrl = (team && team.logo) || ('immagini/squadre-loghi/' + (team ? team.id : clubName.toLowerCase().replace(/[^a-z0-9]+/g, '-')) + '.png');
+      var dorsalNum = athleteNumber || 10;
+      var dorsalName = (athleteName || 'ATLETA').toUpperCase().split(' ').pop();
 
       var img = new Image();
       img.crossOrigin = 'anonymous';
+
+      function applyDetailsAndFinalize() {
+        // 1. Colletto Sagomato a V / Girocollo Sportivo Tecnico Bicolore
+        ctx.save();
+        ctx.strokeStyle = secondaryColor || '#ffffff';
+        ctx.lineWidth = 16;
+        ctx.beginPath();
+        ctx.ellipse(512, 65, 95, 38, 0, 0, Math.PI);
+        ctx.stroke();
+        ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.ellipse(512, 65, 88, 34, 0, 0, Math.PI);
+        ctx.stroke();
+        ctx.restore();
+
+        // 2. Numero di Gara Frontale Ufficiale sul Petto
+        ctx.save();
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '900 38px sans-serif';
+        ctx.shadowColor = 'rgba(0,0,0,0.85)';
+        ctx.shadowBlur = 8;
+        ctx.fillText(String(dorsalNum), 640, 260);
+        ctx.strokeStyle = 'rgba(0,0,0,0.6)';
+        ctx.lineWidth = 3;
+        ctx.strokeText(String(dorsalNum), 640, 260);
+        ctx.restore();
+
+        // 3. Retro della Maglia: Nome Atleta e Numero Ufficiale a 360° (centro dorso X=128)
+        ctx.save();
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#ffffff';
+        ctx.shadowColor = 'rgba(0,0,0,0.9)';
+        ctx.shadowBlur = 10;
+
+        var backX = 128;
+        ctx.font = '900 28px sans-serif';
+        ctx.letterSpacing = '2px';
+        ctx.fillText(dorsalName, backX, 320);
+
+        ctx.font = '900 120px sans-serif';
+        ctx.fillText(String(dorsalNum), backX, 480);
+        ctx.strokeStyle = 'rgba(0,0,0,0.6)';
+        ctx.lineWidth = 6;
+        ctx.strokeText(String(dorsalNum), backX, 480);
+        ctx.restore();
+
+        var THREE = window.THREE;
+        var tex = new THREE.CanvasTexture(canvas);
+        tex.generateMipmaps = true;
+        tex.minFilter = THREE.LinearMipmapLinearFilter;
+        tex.magFilter = THREE.LinearFilter;
+        tex.needsUpdate = true;
+
+        // 4. Stemma Ufficiale del Club sul Petto Sinistro (X=330, Y=210)
+        var badgeImg = new Image();
+        badgeImg.crossOrigin = 'anonymous';
+        badgeImg.onload = function () {
+          ctx.save();
+          ctx.shadowColor = 'rgba(0,0,0,0.75)';
+          ctx.shadowBlur = 12;
+          ctx.drawImage(badgeImg, 325, 205, 72, 72);
+          ctx.restore();
+          tex.needsUpdate = true;
+          if (state.renderer && state.scene && state.camera) state.renderer.render(state.scene, state.camera);
+        };
+        badgeImg.src = logoUrl;
+
+        callback(tex, img, primaryColor, secondaryColor);
+      }
+
       img.onload = function () {
         var isUv = (kitUrl && (kitUrl.indexOf('-uv') !== -1 || kitUrl.indexOf('_uv') !== -1 || kitUrl.indexOf('INTER-HOME-27') !== -1)) ||
                    (img.width === img.height && img.width >= 1024);
@@ -2042,43 +2461,14 @@
           ctx.drawImage(img, fx, fy, fw, fh);
         }
 
-        // Retro della Maglia: Nome Atleta e Numero Ufficiale da gara a 360° (centro dorso X=128)
-        var dorsalNum = athleteNumber || 10;
-        var dorsalName = (athleteName || 'ATLETA').toUpperCase().split(' ').pop();
-
-        ctx.save();
-        ctx.textAlign = 'center';
-        ctx.fillStyle = '#ffffff';
-        ctx.shadowColor = 'rgba(0,0,0,0.9)';
-        ctx.shadowBlur = 10;
-
-        var backX = 128;
-        ctx.font = '900 28px sans-serif';
-        ctx.letterSpacing = '2px';
-        ctx.fillText(dorsalName, backX, 320);
-
-        ctx.font = '900 120px sans-serif';
-        ctx.fillText(String(dorsalNum), backX, 480);
-        ctx.strokeStyle = 'rgba(0,0,0,0.6)';
-        ctx.lineWidth = 6;
-        ctx.strokeText(String(dorsalNum), backX, 480);
-        ctx.restore();
-
-        var THREE = window.THREE;
-        var tex = new THREE.CanvasTexture(canvas);
-        tex.generateMipmaps = true;
-        tex.minFilter = THREE.LinearMipmapLinearFilter;
-        tex.magFilter = THREE.LinearFilter;
-        tex.needsUpdate = true;
-        callback(tex, img, primaryColor, secondaryColor);
+        applyDetailsAndFinalize();
       };
 
       img.onerror = function () {
         var THREE = window.THREE;
         ctx.fillStyle = primaryColor;
         ctx.fillRect(0, 0, 1024, 1024);
-        var tex = new THREE.CanvasTexture(canvas);
-        callback(tex, null, primaryColor, secondaryColor);
+        applyDetailsAndFinalize();
       };
 
       img.src = kitUrl;
@@ -2148,6 +2538,11 @@
               if (child.material.color) child.material.color.setHex(0xffffff);
               child.material.needsUpdate = true;
               foundNativeMesh = true;
+            }
+            // Aggiorna Colletto coordinato con colore secondario o bianco gara
+            if (child.name === 'athlete_collar' && secondaryColor) {
+              if (child.material.color) child.material.color.setStyle(secondaryColor || '#ffffff');
+              child.material.needsUpdate = true;
             }
             // Aggiorna Pantaloncini con il colore secondario coordinato del club
             if (child.name === 'athlete_shorts' && secondaryColor) {
@@ -2943,6 +3338,8 @@
     getData: getAvatarData,
     saveData: saveAvatarData,
     isMinor: isUserMinor,
-    injectTriggers: injectSidebarTriggers
+    injectTriggers: injectSidebarTriggers,
+    exportCard: exportEASportsCard,
+    updateHeadTexture: updateAthleteHeadTexture
   };
 })();
