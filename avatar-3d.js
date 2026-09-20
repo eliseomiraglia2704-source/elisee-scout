@@ -652,6 +652,8 @@
               name: (t.name || t.id || 'Club').toUpperCase(),
               logo: t.logo || ('immagini/squadre-loghi/' + t.id + '.png'),
               league: t.league || '',
+              primary: t.primary || '',
+              secondary: t.secondary || '',
               kits: t.kits || []
             };
           });
@@ -1860,16 +1862,28 @@
   // ============================================================
   // GENERATORE TEXTURE MAGLIA DA GARA (MICRO-COSTINE TRASPIRANTI)
   // ============================================================
+  // ============================================================
+  // GENERATORE TEXTURE MAGLIA DA GARA UFFICIALE (COLORI CLUB & NO ELISEE SCOUT)
+  // ============================================================
   function createProceduralJerseyTexture(avatar) {
     var canvas = document.createElement('canvas');
     canvas.width = 1024;
     canvas.height = 1024;
     var ctx = canvas.getContext('2d');
 
-    var primary = (avatar.divisa_ref && avatar.divisa_ref.colore_primario) || '#c0392b';
-    var secondary = (avatar.divisa_ref && avatar.divisa_ref.colore_secondario) || '#111111';
+    avatar = avatar || (typeof getAvatarData === 'function' ? getAvatarData() : {});
+    var clubName = (avatar.divisa_ref && avatar.divisa_ref.club) || 'Foggia City';
 
-    // Base colore maglia
+    // Ricerca colori ufficiali del club nel catalogo
+    var team = allCatalogTeams.find(function (t) {
+      return (t.name || '').toUpperCase() === (clubName || '').toUpperCase() ||
+             (t.id || '') === (clubName || '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    });
+
+    var primary = (avatar.divisa_ref && avatar.divisa_ref.colore_primario) || (team && team.primary) || '#c0392b';
+    var secondary = (avatar.divisa_ref && avatar.divisa_ref.colore_secondario) || (team && team.secondary) || '#111111';
+
+    // Base colore maglia ufficiale
     ctx.fillStyle = primary;
     ctx.fillRect(0, 0, 1024, 1024);
 
@@ -1887,27 +1901,28 @@
     ctx.fillStyle = bodyShade;
     ctx.fillRect(0, 0, 1024, 1024);
 
-    // Stemma Club Ricamato (Petto Sinistro)
+    // Stemma Club Ricamato Ufficiale (Petto Sinistro, U: 0.35 circa)
     ctx.fillStyle = secondary;
     ctx.beginPath();
-    ctx.ellipse(320, 360, 48, 56, 0, 0, Math.PI * 2);
+    ctx.ellipse(340, 360, 48, 56, 0, 0, Math.PI * 2);
     ctx.fill();
     ctx.strokeStyle = '#f59e0b'; // Bordo dorato
     ctx.lineWidth = 4;
     ctx.stroke();
 
-    // Stella d'oro
+    // Stella d'oro stemma
     ctx.fillStyle = '#f59e0b';
     ctx.font = 'bold 22px sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('★', 320, 302);
+    ctx.fillText('★', 340, 302);
 
-    // Testo stemma
+    // Nome Club nello stemma (dinamico, non più Elisee FC)
+    var shortClub = (clubName || 'CLUB').toUpperCase().split(' ')[0].slice(0, 8);
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 15px sans-serif';
-    ctx.fillText('ELISEE', 320, 355);
-    ctx.font = '900 13px sans-serif';
-    ctx.fillText('F.C.', 320, 375);
+    ctx.fillText(shortClub, 340, 358);
+    ctx.font = '900 12px sans-serif';
+    ctx.fillText('OFFICIAL', 340, 376);
 
     // Sponsor Tecnico (Petto Destro)
     ctx.strokeStyle = '#ffffff';
@@ -1918,12 +1933,7 @@
     ctx.quadraticCurveTo(700, 375, 750, 335);
     ctx.stroke();
 
-    // Sponsor Centrale "ELISEE SCOUT"
-    ctx.fillStyle = '#ffffff';
-    ctx.font = '900 38px sans-serif';
-    ctx.letterSpacing = '4px';
-    ctx.fillText('ELISEE SCOUT', 512, 540);
-
+    var THREE = window.THREE;
     var tex = new THREE.CanvasTexture(canvas);
     tex.generateMipmaps = true;
     tex.minFilter = THREE.LinearMipmapLinearFilter;
@@ -1936,7 +1946,7 @@
   // ============================================================
   var EliseeJerseyAIAgent = {
     name: 'Elisee Kit Fitting AI Agent',
-    version: '2.0.0',
+    version: '2.1.0',
     fitMode: 'slim', // 'slim', 'regular', 'loose'
     offsetY: 0, // da -12 a +12 cm
     isBusy: false,
@@ -1954,7 +1964,7 @@
       });
     },
 
-    // Rimuove qualsiasi maglia precedente (Elisee Scout, vecchie decal o fitted layers)
+    // Rimuove qualsiasi maglia precedente (vecchie decal o fitted layers)
     removeExistingJersey: function (model) {
       if (!model) return;
       var toRemove = [];
@@ -1987,48 +1997,70 @@
       canvas.height = 1024;
       var ctx = canvas.getContext('2d');
 
+      // Trova squadra nel catalogo per i colori ufficiali
+      var team = allCatalogTeams.find(function (t) {
+        return (t.name || '').toUpperCase() === (clubName || '').toUpperCase() ||
+               (t.id || '') === (clubName || '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      });
+      var primaryColor = (team && team.primary) || '#c0392b';
+      var secondaryColor = (team && team.secondary) || '#111111';
+
       var img = new Image();
       img.crossOrigin = 'anonymous';
       img.onload = function () {
-        // Fondo base scuro neutrale traspirante
-        ctx.fillStyle = '#0a0e1a';
-        ctx.fillRect(0, 0, 1024, 1024);
+        var isUv = (kitUrl && (kitUrl.indexOf('-uv') !== -1 || kitUrl.indexOf('_uv') !== -1 || kitUrl.indexOf('INTER-HOME-27') !== -1)) ||
+                   (img.width === img.height && img.width >= 1024);
 
-        // Mappatura cilindrica:
-        // U: 0.25 -> 0.75 corrisponde al Fronte del Torso (petto)
-        // U: 0.0 -> 0.25 e 0.75 -> 1.0 corrisponde al Retro del Torso (schiena)
-        var fw = 520;
-        var fh = 700;
-        var fx = (1024 - fw) / 2;
-        var fy = 70;
-        ctx.drawImage(img, fx, fy, fw, fh);
+        if (isUv) {
+          // Texture UV completa ufficiale (es. Foggia City home-uv.png o Inter 27)
+          ctx.drawImage(img, 0, 0, 1024, 1024);
+        } else {
+          // Kit 2D standard (disegno piana della divisa ufficiale del club):
+          // 1. Fondo base con colore primario ufficiale del club
+          ctx.fillStyle = primaryColor;
+          ctx.fillRect(0, 0, 1024, 1024);
 
-        // Micro-costine atletiche traspiranti per realismo tessuto tecnico
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
-        for (var i = 0; i < 1024; i += 4) {
-          ctx.fillRect(i, 0, 1.6, 1024);
+          // 2. Micro-costine atletiche traspiranti per realismo tessuto tecnico
+          ctx.fillStyle = 'rgba(0, 0, 0, 0.12)';
+          for (var x = 0; x < 1024; x += 6) {
+            ctx.fillRect(x, 0, 2.2, 1024);
+          }
+
+          // 3. Effetto gradiente luci e ombre muscolari sul torso
+          var bodyShade = ctx.createLinearGradient(0, 0, 1024, 0);
+          bodyShade.addColorStop(0, 'rgba(0,0,0,0.3)');
+          bodyShade.addColorStop(0.5, 'rgba(255,255,255,0.06)');
+          bodyShade.addColorStop(1, 'rgba(0,0,0,0.3)');
+          ctx.fillStyle = bodyShade;
+          ctx.fillRect(0, 0, 1024, 1024);
+
+          // 4. Centratura del Kit 2D ufficiale sul petto frontale (coordinate U Three.js: 0.25 -> 0.75, X: 256 -> 768)
+          var fw = 512;
+          var fh = 680;
+          var fx = 256;
+          var fy = 50;
+          ctx.drawImage(img, fx, fy, fw, fh);
         }
 
-        // Retro della Maglia: Nome Atleta e Numero Ufficiale
+        // Retro della Maglia: Nome Atleta e Numero Ufficiale da gara a 360° (centro dorso X=128)
         var dorsalNum = athleteNumber || 10;
         var dorsalName = (athleteName || 'ATLETA').toUpperCase().split(' ').pop();
 
         ctx.save();
         ctx.textAlign = 'center';
         ctx.fillStyle = '#ffffff';
-        ctx.shadowColor = 'rgba(0,0,0,0.85)';
-        ctx.shadowBlur = 8;
+        ctx.shadowColor = 'rgba(0,0,0,0.9)';
+        ctx.shadowBlur = 10;
 
-        // Disegno sulla zona dorsale posteriore (attorno a x=120)
-        var backX = 130;
+        var backX = 128;
         ctx.font = '900 28px sans-serif';
-        ctx.letterSpacing = '3px';
+        ctx.letterSpacing = '2px';
         ctx.fillText(dorsalName, backX, 320);
 
         ctx.font = '900 120px sans-serif';
         ctx.fillText(String(dorsalNum), backX, 480);
         ctx.strokeStyle = 'rgba(0,0,0,0.6)';
-        ctx.lineWidth = 5;
+        ctx.lineWidth = 6;
         ctx.strokeText(String(dorsalNum), backX, 480);
         ctx.restore();
 
@@ -2038,15 +2070,15 @@
         tex.minFilter = THREE.LinearMipmapLinearFilter;
         tex.magFilter = THREE.LinearFilter;
         tex.needsUpdate = true;
-        callback(tex, img);
+        callback(tex, img, primaryColor, secondaryColor);
       };
 
       img.onerror = function () {
         var THREE = window.THREE;
-        ctx.fillStyle = '#1e293b';
+        ctx.fillStyle = primaryColor;
         ctx.fillRect(0, 0, 1024, 1024);
         var tex = new THREE.CanvasTexture(canvas);
-        callback(tex, null);
+        callback(tex, null, primaryColor, secondaryColor);
       };
 
       img.src = kitUrl;
@@ -2075,7 +2107,7 @@
       // 1. Ripristina i materiali originali di base del modello per salvaguardare viso, capelli e pelle
       self.restoreOriginalBaseMaterials(model);
 
-      // 2. Rimuove qualsiasi maglia precedente (Elisee Scout o vestizioni pregresse)
+      // 2. Rimuove qualsiasi maglia precedente
       self.removeExistingJersey(model);
 
       if (onProgress) onProgress('Isolamento coordinate anatomiche del torso...');
@@ -2096,7 +2128,7 @@
       var radiusX = (size.x * 0.5) * 0.92 * fitScale;
       var radiusZ = (size.z * 0.5) * 0.88 * fitScale;
 
-      // 4. Creazione gruppo maglia
+      // 4. Creazione gruppo maglia per modelli GLB
       var jerseyGroup = new THREE.Group();
       jerseyGroup.name = '__elisee_fitted_jersey';
       jerseyGroup.__isEliseeJerseyMesh = true;
@@ -2104,91 +2136,110 @@
       if (onProgress) onProgress('Sostituzione maglia Elisee Scout in corso...');
 
       // 5. Generazione texture composita e montaggio mesh 3D da gara
-      self.generateJerseyTexture(kitUrl, clubName, athleteName, athleteNumber, function (tex, rawImg) {
-        // A) Guaina Torso Anatomica da Gara (Cilindro ellittico sagomato a filo pelle)
-        var torsoGeo = new THREE.CylinderGeometry(radiusX * 1.03, radiusX * 0.94, torsoH, 48, 16, true);
-        torsoGeo.scale(1, 1, radiusZ / radiusX);
-
-        var torsoMat = new THREE.MeshStandardMaterial({
-          map: tex,
-          roughness: 0.60,
-          metalness: 0.05,
-          side: THREE.DoubleSide,
-          transparent: true,
-          opacity: 0.99,
-          depthWrite: true,
-          polygonOffset: true,
-          polygonOffsetFactor: -2,
-          polygonOffsetUnits: -2
-        });
-
-        var torsoMesh = new THREE.Mesh(torsoGeo, torsoMat);
-        torsoMesh.position.set(center.x, torsoCenterY, center.z);
-        torsoMesh.rotation.y = Math.PI / 2; // Orienta il fronte stemma in avanti verso Z
-        torsoMesh.castShadow = true;
-        torsoMesh.receiveShadow = true;
-        jerseyGroup.add(torsoMesh);
-
-        // B) Manicotti Deltoidi / Spalle (Maniche corte da gara coordinate)
-        var sleeveRadius = radiusX * 0.32;
-        var sleeveLen = torsoH * 0.32;
-        var sleeveGeo = new THREE.CylinderGeometry(sleeveRadius * 1.08, sleeveRadius * 0.90, sleeveLen, 24);
-        var sleeveMat = new THREE.MeshStandardMaterial({
-          map: tex,
-          roughness: 0.60,
-          metalness: 0.05,
-          side: THREE.DoubleSide,
-          transparent: true
-        });
-
-        // Manica Sinistra
-        var sleeveL = new THREE.Mesh(sleeveGeo, sleeveMat);
-        sleeveL.position.set(center.x - radiusX * 0.95, torsoCenterY + torsoH * 0.28, center.z);
-        sleeveL.rotation.z = 0.28;
-        jerseyGroup.add(sleeveL);
-
-        // Manica Destra
-        var sleeveR = new THREE.Mesh(sleeveGeo, sleeveMat);
-        sleeveR.position.set(center.x + radiusX * 0.95, torsoCenterY + torsoH * 0.28, center.z);
-        sleeveR.rotation.z = -0.28;
-        jerseyGroup.add(sleeveR);
-
-        // C) Integrazione DecalGeometry sul Petto (se DecalGeometry è pronto e trova mesh target)
-        if (THREE.DecalGeometry && rawImg) {
-          try {
-            var targetMesh = null;
-            model.traverse(function (child) {
-              if (!targetMesh && child.isMesh && (child.name || '').toLowerCase().indexOf('head') === -1) {
-                targetMesh = child;
-              }
-            });
-            if (targetMesh) {
-              var decalPos = new THREE.Vector3(center.x, torsoCenterY + torsoH * 0.06, bbox.max.z + 0.005);
-              var decalDir = new THREE.Vector3(0, 0, 1);
-              var decalSize = new THREE.Vector3(radiusX * 1.6, torsoH * 0.85, radiusZ * 1.4);
-              var decalGeo = new THREE.DecalGeometry(targetMesh, decalPos, decalDir, decalSize);
-              var decalMat = new THREE.MeshStandardMaterial({
-                map: tex,
-                transparent: true,
-                depthTest: true,
-                depthWrite: false,
-                polygonOffset: true,
-                polygonOffsetFactor: -4,
-                roughness: 0.60,
-                metalness: 0.05
-              });
-              var decalMesh = new THREE.Mesh(decalGeo, decalMat);
-              decalMesh.name = '__elisee_decal_front';
-              jerseyGroup.add(decalMesh);
+      self.generateJerseyTexture(kitUrl, clubName, athleteName, athleteNumber, function (tex, rawImg, primaryColor, secondaryColor) {
+        // A) Sostituzione diretta della maglia sulle mesh native dell'atleta solido
+        var foundNativeMesh = false;
+        model.traverse(function (child) {
+          if (child.isMesh && child.name) {
+            // Aggiorna Torso, Pettorali, Maniche e Calzettoni
+            if (child.name === 'athlete_torso' || child.name.indexOf('athlete_pec') !== -1 ||
+                child.name.indexOf('athlete_sleeve') !== -1 || child.name.indexOf('athlete_sock') !== -1) {
+              child.material.map = tex;
+              if (child.material.color) child.material.color.setHex(0xffffff);
+              child.material.needsUpdate = true;
+              foundNativeMesh = true;
             }
-          } catch (e) {
-            console.log('[JerseyAIAgent] Decal fallback active:', e);
+            // Aggiorna Pantaloncini con il colore secondario coordinato del club
+            if (child.name === 'athlete_shorts' && secondaryColor) {
+              if (child.material.color) child.material.color.setStyle(secondaryColor);
+              child.material.needsUpdate = true;
+            }
           }
-        }
+        });
 
-        // Aggiunge la maglia ufficiale al modello attivo
-        model.add(jerseyGroup);
-        self.activeJerseyGroup = jerseyGroup;
+        // B) Se il modello è un GLB esterno (non ha le mesh native athlete_torso), applica la guaina sagomata da gara
+        if (!foundNativeMesh) {
+          var torsoGeo = new THREE.CylinderGeometry(radiusX * 1.03, radiusX * 0.94, torsoH, 48, 16, true);
+          torsoGeo.scale(1, 1, radiusZ / radiusX);
+
+          var torsoMat = new THREE.MeshStandardMaterial({
+            map: tex,
+            roughness: 0.60,
+            metalness: 0.05,
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: 0.99,
+            depthWrite: true,
+            polygonOffset: true,
+            polygonOffsetFactor: -2,
+            polygonOffsetUnits: -2
+          });
+
+          var torsoMesh = new THREE.Mesh(torsoGeo, torsoMat);
+          torsoMesh.position.set(center.x, torsoCenterY, center.z);
+          torsoMesh.rotation.y = Math.PI / 2; // Orienta il fronte stemma in avanti verso Z
+          torsoMesh.castShadow = true;
+          torsoMesh.receiveShadow = true;
+          jerseyGroup.add(torsoMesh);
+
+          // Manicotti Deltoidi / Spalle
+          var sleeveRadius = radiusX * 0.32;
+          var sleeveLen = torsoH * 0.32;
+          var sleeveGeo = new THREE.CylinderGeometry(sleeveRadius * 1.08, sleeveRadius * 0.90, sleeveLen, 24);
+          var sleeveMat = new THREE.MeshStandardMaterial({
+            map: tex,
+            roughness: 0.60,
+            metalness: 0.05,
+            side: THREE.DoubleSide,
+            transparent: true
+          });
+
+          var sleeveL = new THREE.Mesh(sleeveGeo, sleeveMat);
+          sleeveL.position.set(center.x - radiusX * 0.95, torsoCenterY + torsoH * 0.28, center.z);
+          sleeveL.rotation.z = 0.28;
+          jerseyGroup.add(sleeveL);
+
+          var sleeveR = new THREE.Mesh(sleeveGeo, sleeveMat);
+          sleeveR.position.set(center.x + radiusX * 0.95, torsoCenterY + torsoH * 0.28, center.z);
+          sleeveR.rotation.z = -0.28;
+          jerseyGroup.add(sleeveR);
+
+          // Decal petto curvata se disponibile
+          if (THREE.DecalGeometry && rawImg) {
+            try {
+              var targetMesh = null;
+              model.traverse(function (child) {
+                if (!targetMesh && child.isMesh && (child.name || '').toLowerCase().indexOf('head') === -1) {
+                  targetMesh = child;
+                }
+              });
+              if (targetMesh) {
+                var decalPos = new THREE.Vector3(center.x, torsoCenterY + torsoH * 0.06, bbox.max.z + 0.005);
+                var decalDir = new THREE.Vector3(0, 0, 1);
+                var decalSize = new THREE.Vector3(radiusX * 1.6, torsoH * 0.85, radiusZ * 1.4);
+                var decalGeo = new THREE.DecalGeometry(targetMesh, decalPos, decalDir, decalSize);
+                var decalMat = new THREE.MeshStandardMaterial({
+                  map: tex,
+                  transparent: true,
+                  depthTest: true,
+                  depthWrite: false,
+                  polygonOffset: true,
+                  polygonOffsetFactor: -4,
+                  roughness: 0.60,
+                  metalness: 0.05
+                });
+                var decalMesh = new THREE.Mesh(decalGeo, decalMat);
+                decalMesh.name = '__elisee_decal_front';
+                jerseyGroup.add(decalMesh);
+              }
+            } catch (e) {
+              console.log('[JerseyAIAgent] Decal fallback active:', e);
+            }
+          }
+
+          model.add(jerseyGroup);
+          self.activeJerseyGroup = jerseyGroup;
+        }
 
         // Render immediato
         if (state.renderer && state.scene && state.camera) {

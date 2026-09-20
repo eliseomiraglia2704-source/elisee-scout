@@ -3,7 +3,21 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-20** — Avatar 3D: PASSAGGIO 1 — Calciatore 3D Solido Ufficiale Predefinito (`A3DSTEP1`):
+Ultimo aggiornamento: **2026-09-20** — Avatar 3D: PASSAGGIO 2 — Corrispondenza Kit 2D Ufficiale & Rimozione Totale Elisee Scout dalla Maglia (`A3DSTEP2`):
+1. **Risolta la Mancata Corrispondenza Maglia 2D ↔ Modello 3D**:
+   - **Eliminazione Radicale di "ELISEE SCOUT" e "ELISEE F.C."**: rimosse le scritte hardcoded che sovrascrivevano la divisa del club scelto.
+   - **Generatore Dinamico Basato su Kit 2D Reale (`EliseeJerseyAIAgent.generateJerseyTexture`)**:
+     - Supporto ibrido intelligente per UV Map (`home-uv.png`, `INTER-HOME-27.png`) a 1024x1024 a piena copertura e Kit 2D standard (`home.png` 500x500).
+     - Riconoscimento automatico dei colori sociali (`primary` e `secondary`) dal catalogo di 2.890 club (`loadFullCatalog` arricchito con `primary`/`secondary`).
+     - Trama tecnica con micro-costine traspiranti verticali e gradiente muscolare PBR.
+     - Retro della maglia a 360° con Nome Atleta e Numero Ufficiale in font geometrico ad alta visibilità con ombra da gara.
+   - **Applicazione Diretta a Tutte le Mesh della Divisa**:
+     - `EliseeJerseyAIAgent.fit` aggiorna istantaneamente `athlete_torso`, `athlete_pec_l/r`, `athlete_sleeve_l/r` e `athlete_sock_l/r`.
+     - I pantaloncini da gara (`athlete_shorts`) vengono sincronizzati col colore secondario del club.
+     - Per modelli GLB esterni: la guaina anatomica sagomata `__elisee_fitted_jersey` veste il torso senza alcuna compenetrazione.
+2. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260920_A3DSTEP2`.
+
+Feature precedente: **Avatar 3D: PASSAGGIO 1 — Calciatore 3D Solido Ufficiale Predefinito (`A3DSTEP1`):
 1. **Calciatore 3D Solido & Completo Sempre Presente sullo Stage**:
    - Risolto il blocco per cui, in assenza di un file `.glb` caricato, veniva mostrato solo un ologramma filigranato vuoto che impediva la corretta visualizzazione e vestizione della divisa.
    - Creato `buildDefaultAthlete(avatar, group)`: un modello di atleta 3D solido e proporzionato con anatomia calcistica rifinita:
