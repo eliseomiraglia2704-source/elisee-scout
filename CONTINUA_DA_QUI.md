@@ -17,7 +17,7 @@ Ultimo aggiornamento: **2026-09-21** — BUGFIX1 — Audit e correzioni Avatar 3
    - `isPreVerified` copre anche `staffRole`, `ruoloDettagliato` e staff email.
    - Banner `:empty` / `[hidden]` nascosto in CSS; pulizia stili inline al hide.
 3. **Cache SW**: `FORCE_RELOAD` allineato a `version.json` (non più `A3DSTEP3` stantio).
-4. **File**: `avatar-3d.js`, `verifica-account.js`, `verifica-account.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_BUGFIX1`.
+4. **File**: `avatar-3d.js`, `verifica-account.js`, `verifica-account.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_BUGFIX1`. Commit `a70774fb`. Deploy `HgriMFrDfxdSsgAXWxQgGMUDSJHT` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **2026-09-20** — KITFIX — Kit 3D applicato direttamente sulle mesh del GLB (eliminati cilindri galleggianti), banner anti-fake nascosto per Admin Executive (`KITFIX`):
 1. **Fix Kit 3D su modello GLB importato**:
