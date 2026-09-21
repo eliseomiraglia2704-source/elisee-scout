@@ -3,7 +3,23 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-20** — KITFIX — Kit 3D applicato direttamente sulle mesh del GLB (eliminati cilindri galleggianti), banner anti-fake nascosto per Admin Executive (`KITFIX`):
+Ultimo aggiornamento: **2026-09-21** — BUGFIX1 — Audit e correzioni Avatar 3D + banner anti-fake (`BUGFIX1`):
+1. **Avatar 3D — bug visivi e di vestizione**:
+   - `restoreOriginalBaseMaterials` non forza più il colore bianco su tutte le mesh: viso, collo, pelle e capelli restano integri al cambio kit o al toggle «ORIGINALE».
+   - `fit()` non entra più in retry infinito se il modello manca: usa `state.activeModel`, massimo 20 tentativi.
+   - Cambio kit rapido: token `_fitGen` ignora i callback stantii (niente maglia sbagliata dopo click consecutivi).
+   - Filtro GLB ristretto (niente più `mesh|skin|root|Armature` che tingeva gambe/mani). `offsetY` e taglio Slim/Classica/Morbida spostano le soglie Y.
+   - `disposeThree` azzera `state.activeModel` (niente modello staccato dopo chiusura modale).
+   - Backup materiali anche per array multi-materiale; encoding sRGB sul renderer e sulle texture canvas.
+   - Crash UI se `divisa_ref` era assente; badge kit Ospiti/Terza/Portiere non più resettati a «UFFICIALE».
+   - Player Card: etichette Elisee Scout al posto di marchi EA Sports (VEL/TIR/PAS/DRI/DIF/FIS).
+2. **Banner anti-fake vuoto**:
+   - `isPreVerified` copre anche `staffRole`, `ruoloDettagliato` e staff email.
+   - Banner `:empty` / `[hidden]` nascosto in CSS; pulizia stili inline al hide.
+3. **Cache SW**: `FORCE_RELOAD` allineato a `version.json` (non più `A3DSTEP3` stantio).
+4. **File**: `avatar-3d.js`, `verifica-account.js`, `verifica-account.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_BUGFIX1`.
+
+Feature precedente: **2026-09-20** — KITFIX — Kit 3D applicato direttamente sulle mesh del GLB (eliminati cilindri galleggianti), banner anti-fake nascosto per Admin Executive (`KITFIX`):
 1. **Fix Kit 3D su modello GLB importato**:
    - Eliminati completamente i `CylinderGeometry` (`torsoMesh`, `sleeveL`, `sleeveR`) che fluttuavano attorno al modello come fusti rigidi.
    - Nuovo branch B in `EliseeJerseyAIAgent.fit`: traversa tutte le mesh reali del GLB importato, filtra per Y (esclude testa/capelli/viso via regex `head|hair|face|eye|...` e soglia `headThreshY = bbox.min.y + totalH * 0.78`), e applica `material.map = tex; material.needsUpdate = true` direttamente sui materiali originali.

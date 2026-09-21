@@ -30,13 +30,19 @@
   function isPreVerified(u) {
     if (!u) return false;
     if (u.verifiedByAdmin || u.skipDocVerify) return true;
-    // Admin Executive, creatore e admin non necessitano verifica documenti
-    var r = String(u.ruolo || u.role || u.siteRoleFamily || '').toLowerCase();
-    if (r === 'admin executive' || r === 'admin' || r === 'creator' || r === 'creatore') return true;
     if (u.isAdmin || u.isCreator) return true;
     var em = emailOf(u);
     if (em === 'eliseomiraglia2704@gmail.com') return true;
     if (window.EliseeStaff && window.EliseeStaff.isStaffEmail(em)) return true;
+    try {
+      if (localStorage.getItem('elisee_admin_auth') === 'true' &&
+          window.EliseeStaff && window.EliseeStaff.isStaffEmail(em)) return true;
+    } catch (_) {}
+    var blob = [u.ruolo, u.role, u.staffRole, u.ruoloDettagliato, u.siteRole, u.siteRoleFamily]
+      .filter(Boolean).join(' ').toLowerCase();
+    if (blob.indexOf('admin executive') !== -1) return true;
+    if (/(^|\s)admin(\s|$)/.test(blob) || blob === 'admin') return true;
+    if (blob.indexOf('creator') !== -1 || blob.indexOf('creatore') !== -1) return true;
     return false;
   }
 
@@ -145,9 +151,10 @@
   function paintBanner(u) {
     var el = document.getElementById('es-verify-banner');
     if (!el) return;
-    if (!u || !hasRole(u) || isSpectator(u) || docsOk(u) || u.accountClosed) {
+    if (!u || !hasRole(u) || isSpectator(u) || isPreVerified(u) || docsOk(u) || u.accountClosed) {
       el.hidden = true;
       el.innerHTML = '';
+      el.removeAttribute('style');
       document.body.classList.remove('es-verify-on');
       paintCard(u);
       return;
