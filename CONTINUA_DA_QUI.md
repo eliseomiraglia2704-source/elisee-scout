@@ -7,7 +7,7 @@ Ultimo aggiornamento: **2026-09-21** — FACESCAN1 — Scan Face sul modello 3D 
 1. **Sì, si può fare senza pagare generatori 3D**: il volto va sul calciatore 3D già in Elisee Scout (`athlete_head`), non serve GLB a pagamento.
 2. **Nuova modalità Scan Face**: fotocamera con ovale guida (stile scan viso), rilevamento volto se il browser lo supporta, tasto Scatta. Il JPEG viene mappato subito sulla texture UV della testa 3D.
 3. **Tempi**: niente attesa finta di ricostruzione mesh; da scan/foto si entra nello stage 3D. Dallo stage: «Scansiona il volto» aggiorna la testa live senza ricaricare la scena.
-4. **File**: `avatar-3d.js`, `avatar-3d.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_FACESCAN1`.
+4. **File**: `avatar-3d.js`, `avatar-3d.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_FACESCAN1`. Commit `adbf5f90`. Deploy `4Kcyjz8Wmq1rGTpUiDrmMVhVWJP7` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **2026-09-21** — A3DCLEAN1 — Pulizia sidebar Avatar 3D (pallini macOS, box Admin QA, pulsante +):
 1. **Pallini macOS + logo circolare** in cima al pannello destro: la sidebar ruoli (`[class*="-sidebar"]`) innestava dots/avatar nella modale. Esclusa `.es-a3d-sidebar-controls` da `scanAndUpgrade`.
