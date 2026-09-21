@@ -3,12 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-21** — JERSEYREAL1 — Vestizione 3D Reale Anatomica del Kit Ufficiale (Risoluzione definitiva problema 3 settimane):
-1. **Causa del blocco storico**: per i modelli personalizzati `.glb` (es. Hyper3D), la vecchia decal frontale era invisibile/clippata per coordinate locali non scalate nel modello, lasciando visibile la vecchia texture generata con la maglietta verde/blu "Elisee Scout". Inoltre `kitToAlphaCanvas` cancellava i pixel scuri (d[i] < 20), distruggendo le strisce nere dell'Inter e di altri club.
-2. **Vestizione 3D Anatomica su GLB (`__elisee_fitted_jersey`)**: generato gruppo 3D sagomato (Torso cilindrico ellittico proporzionato alla bounding box + Maniche coordinate + Colletto) agganciato al root group Three.js in coordinate globali 1:1, con mapping frontale perfetto senza clipping né z-fighting.
-3. **Mappatura 360° senza Seam Frontale**: texture 1024x1024 con kit ufficiale 2D (`home.png`) centrato e non alterato, sfumatura volumetrica e colore primario/secondario del club.
-4. **Calciatore 3D Nativo & GLB coordinati**: funziona identicamente sia per il modello procedurale (`athlete_torso`) sia per il modello personalizzato caricato dall'utente.
-5. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_JERSEYREAL1`. Commit `9c85d921`. Deploy `dpl_5Pno3s942PuNA3pHKFCVctgdCBAm` live su `https://elisee-scout.vercel.app`.
+Ultimo aggiornamento: **2026-09-21** — MESHKIT1 — Fix definitivo Avatar 3D: texture kit applicata direttamente sulla mesh GLB reale:
+1. **Eliminazione geometrie fittizie**: rimosso completamente il cilindro fittizio (`CylinderGeometry`, `__elisee_fitted_jersey`) che galleggiava davanti al busto. Rimossa anche la procedura `generateJerseyTexture` con Canvas.
+2. **Applicazione diretta via `THREE.TextureLoader`**: `EliseeJerseyAIAgent.fit` ora carica la texture con `loader.load(kitUrl)`, imposta `flipY = false` e `colorSpace = SRGBColorSpace`, poi la applica come `child.material.map = kitTexture` sulle mesh reali del GLB.
+3. **Riconoscimento mesh outfit**: traverse con `console.log` di tutti i nomi (debug visibile in console), matching su `/top|shirt|jersey|outfit.*top/i` (Ready Player Me: `Wolf3D_Outfit_Top`). Fallback su `/torso|cloth|upper|body|avatar|mesh/i` escludendo testa/arti.
+4. **`resolve2dKitUrl` semplificata**: restituisce `kitUrl` invariato (niente più sostituzione `INTER-HOME-27.png → home.png`).
+5. **uvPath corretto**: `inter_home_27` ora punta a `immagini/kits-2d/inter/INTER-HOME-27.png` (il template UV reale). `bindKitCards` e tutti i listener UI ora preferiscono `selected_kit_uv` su `selected_kit_path`.
+6. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_MESHKIT1`. Commit `35a54101`. Deploy `dpl_F3tZ1nAKb8btnybLgMWdjcRuXkBU` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **2026-09-21** — JERSEYFIX1 — Fix preliminare maglia 2D:
 1. `loadImageSafe`: rimosso `crossOrigin='anonymous'` per URL relative/same-origin.
