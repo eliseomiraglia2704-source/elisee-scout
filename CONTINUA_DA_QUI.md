@@ -8,7 +8,7 @@ Ultimo aggiornamento: **2026-09-21** — JERSEYREAL1 — Vestizione 3D Reale Ana
 2. **Vestizione 3D Anatomica su GLB (`__elisee_fitted_jersey`)**: generato gruppo 3D sagomato (Torso cilindrico ellittico proporzionato alla bounding box + Maniche coordinate + Colletto) agganciato al root group Three.js in coordinate globali 1:1, con mapping frontale perfetto senza clipping né z-fighting.
 3. **Mappatura 360° senza Seam Frontale**: texture 1024x1024 con kit ufficiale 2D (`home.png`) centrato e non alterato, sfumatura volumetrica e colore primario/secondario del club.
 4. **Calciatore 3D Nativo & GLB coordinati**: funziona identicamente sia per il modello procedurale (`athlete_torso`) sia per il modello personalizzato caricato dall'utente.
-5. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_JERSEYREAL1`.
+5. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_JERSEYREAL1`. Commit `9c85d921`. Deploy `dpl_5Pno3s942PuNA3pHKFCVctgdCBAm` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **2026-09-21** — JERSEYFIX1 — Fix preliminare maglia 2D:
 1. `loadImageSafe`: rimosso `crossOrigin='anonymous'` per URL relative/same-origin.
