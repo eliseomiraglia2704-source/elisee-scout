@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260921_HOMEBAR1">
+  <link rel="stylesheet" href="style.css?v=20260921_NAVSCROLL1">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
@@ -197,13 +197,17 @@
     header.main-header,
     header.portfolio-header,
     .main-header,
-    .portfolio-header {
+    .portfolio-header,
+    header.main-header.is-scrolled,
+    .portfolio-header.is-scrolled {
       height: 72px !important;
       max-height: 72px !important;
       padding: 0 !important;
       margin: 0 !important;
       box-shadow: none !important;
       border-bottom: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
     }
     .navbar.portfolio-navbar,
     .portfolio-navbar,
@@ -212,13 +216,28 @@
       max-height: 72px !important;
     }
     .nav-menu,
-    .portfolio-nav {
+    .portfolio-nav,
+    header .nav-menu,
+    header .portfolio-nav {
+      overflow: hidden !important;
       scrollbar-width: none !important;
     }
     .nav-menu::-webkit-scrollbar,
-    .portfolio-nav::-webkit-scrollbar {
+    .portfolio-nav::-webkit-scrollbar,
+    header::-webkit-scrollbar,
+    .navbar::-webkit-scrollbar {
       display: none !important;
+      width: 0 !important;
       height: 0 !important;
+    }
+    .nav-link::before,
+    .nav-link::after,
+    .nav-link.active::after {
+      content: none !important;
+      display: none !important;
+      background: none !important;
+      border: 0 !important;
+      box-shadow: none !important;
     }
     #es-verify-banner[hidden],
     #es-verify-banner:empty,

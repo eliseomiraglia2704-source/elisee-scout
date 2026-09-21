@@ -3,7 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-21** — FACESCAN1 — Scan Face sul modello 3D Elisee (niente Hyper3D / abbonamenti):
+Ultimo aggiornamento: **2026-09-21** — NAVSCROLL1 — Badge ciano sotto Album: era la scrollbar overlay della nav + blur header:
+1. `.nav-menu` ora `overflow: hidden` (niente più thumb ciano Windows/Chrome sotto Album).
+2. Header senza `backdrop-filter` / bordo: sparisce la fascia nera sotto la navbar.
+3. **File**: `style.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_NAVSCROLL1`.
+
+Feature precedente: **2026-09-21** — FACESCAN1 — Scan Face sul modello 3D Elisee (niente Hyper3D / abbonamenti):
 1. **Sì, si può fare senza pagare generatori 3D**: il volto va sul calciatore 3D già in Elisee Scout (`athlete_head`), non serve GLB a pagamento.
 2. **Nuova modalità Scan Face**: fotocamera con ovale guida (stile scan viso), rilevamento volto se il browser lo supporta, tasto Scatta. Il JPEG viene mappato subito sulla texture UV della testa 3D.
 3. **Tempi**: niente attesa finta di ricostruzione mesh; da scan/foto si entra nello stage 3D. Dallo stage: «Scansiona il volto» aggiorna la testa live senza ricaricare la scena.
