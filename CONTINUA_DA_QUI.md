@@ -3,7 +3,14 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-21** — KITWRAP1 — Kit 2D sul 3D: stop minestrone UV:
+Ultimo aggiornamento: **2026-09-21** — JERSEYFIX1 — Fix definitivo maglia 2D sul torso 3D:
+1. `loadImageSafe`: rimosso `crossOrigin='anonymous'` per URL relative/same-origin (causava canvas "tainted" → SecurityError su `getImageData` silenzioso).
+2. `kitToAlphaCanvas`: fallback robusto — se `getImageData` fallisce (CORS/file://), ritorna il canvas con la maglia opaca invece di uno canvas vuoto.
+3. `fit()`: il torso nativo (`athlete_torso`) ora riceve `mat.map = tex` (la PNG della maglia) tramite `paintJerseyTex()` invece del solo colore primario del club.
+4. Decal fallback (modelli GLB esterni): `alphaTest` ridotto a `0.04`, `premultipliedAlpha: false`, dimensioni adattive alla bounding box.
+5. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_JERSEYFIX1`. Commit `3abcd4b1`. Deploy `dpl_46343psFjMfhHGbP2DwHcz86CBHd` live su `https://elisee-scout.vercel.app`.
+
+Feature precedente: **2026-09-21** — KITWRAP1 — Kit 2D sul 3D: stop minestrone UV:
 1. **Causa**: il foglio UV FIFA (`INTER-HOME-27.png`) veniva avvolto intero su cilindri/sfere (torso, pettorali, maniche, calzettoni) con UV sbagliati.
 2. **Fix**: si usa sempre la foto 2D della maglia (`home.png`), ritagliata dal nero; sul torso UV rimappati col petto al centro. Pettorali/maniche/calzettoni: solo colore club, niente mappa UV. Testa/capelli/pelle mai tinte.
 3. Click kit applica `path` 2D, non lo sheet UV. Inter 24/25 Home punta a `home.png`.
