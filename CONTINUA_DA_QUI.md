@@ -7,7 +7,7 @@ Ultimo aggiornamento: **2026-09-21** — A3DCLEAN1 — Pulizia sidebar Avatar 3D
 1. **Pallini macOS + logo circolare** in cima al pannello destro: la sidebar ruoli (`[class*="-sidebar"]`) innestava dots/avatar nella modale. Esclusa `.es-a3d-sidebar-controls` da `scanAndUpgrade`.
 2. **Box ADMIN QA: TEST SQUADRE 3D** rimosso dalla sidebar Avatar 3D.
 3. **Pulsante + ciano**: era il CTA collassato «Nuova Operazione» iniettato nella stessa sidebar. Nascosto/rimosso in modale.
-4. **File**: `avatar-3d.js`, `avatar-3d.css`, `role-sidebar-pro.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_A3DCLEAN1`.
+4. **File**: `avatar-3d.js`, `avatar-3d.css`, `role-sidebar-pro.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_A3DCLEAN1`. Commit `575e3d83`. Deploy `BDz1MVF6jbqyJBqpc3g8ppPJEHWe` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **2026-09-21** — HOMEBAR1 — Rimossa fascia nera sotto navbar e badge ciano spuri in Home:
 1. **Fascia nera inutilizzata sotto la navbar**: header bloccato a 72px, niente extra padding/ombra/bordo. Hero attaccato alla navbar.
