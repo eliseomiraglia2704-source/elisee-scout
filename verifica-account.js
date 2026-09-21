@@ -30,7 +30,13 @@
   function isPreVerified(u) {
     if (!u) return false;
     if (u.verifiedByAdmin || u.skipDocVerify) return true;
-    if (window.EliseeStaff && window.EliseeStaff.isStaffEmail(emailOf(u))) return true;
+    // Admin Executive, creatore e admin non necessitano verifica documenti
+    var r = String(u.ruolo || u.role || u.siteRoleFamily || '').toLowerCase();
+    if (r === 'admin executive' || r === 'admin' || r === 'creator' || r === 'creatore') return true;
+    if (u.isAdmin || u.isCreator) return true;
+    var em = emailOf(u);
+    if (em === 'eliseomiraglia2704@gmail.com') return true;
+    if (window.EliseeStaff && window.EliseeStaff.isStaffEmail(em)) return true;
     return false;
   }
 
