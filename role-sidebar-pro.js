@@ -47,9 +47,19 @@
     }
   }
 
+  function isAvatar3dChrome(sidebar) {
+    if (!sidebar || !sidebar.closest) return false;
+    if (sidebar.classList && sidebar.classList.contains('es-a3d-sidebar-controls')) return true;
+    if (sidebar.getAttribute && sidebar.getAttribute('data-msb-skip') === 'true') return true;
+    if (sidebar.closest('#elisee-avatar3d-modal, .es-a3d-modal-overlay, .es-a3d-dialog')) return true;
+    var cls = String(sidebar.className || '');
+    return cls.indexOf('a3d') !== -1 || cls.indexOf('avatar3d') !== -1;
+  }
+
   // Iniezione o upgrade di una sidebar esistente
   function upgradeSidebar(sidebar) {
-    if (!sidebar || sidebar.getAttribute('data-msb-upgraded') === 'true') return;
+    if (!sidebar || isAvatar3dChrome(sidebar)) return;
+    if (sidebar.getAttribute('data-msb-upgraded') === 'true') return;
     sidebar.setAttribute('data-msb-upgraded', 'true');
 
     var user = getActiveUser();
@@ -164,6 +174,7 @@
       '.es-obs-sidebar, .es-pro-sidebar, .es-cos-sidebar, .es-modern-sidebar, .es-at-sidebar, .es-med-sidebar, .es-gk-sidebar, .es-ma-sidebar, [id$="-sidebar"], [class*="-sidebar"]'
     );
     sidebars.forEach(function (sb) {
+      if (isAvatar3dChrome(sb)) return;
       if (sb.offsetWidth > 0 || sb.offsetHeight > 0 || window.getComputedStyle(sb).display !== 'none') {
         upgradeSidebar(sb);
       }

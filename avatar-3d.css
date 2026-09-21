@@ -28,6 +28,20 @@
   pointer-events: auto;
 }
 
+#elisee-avatar3d-modal .es-msb-mac-dots,
+#elisee-avatar3d-modal .es-msb-user-card,
+#elisee-avatar3d-modal .es-msb-contacts-section,
+#elisee-avatar3d-modal .es-msb-bottom-action,
+#elisee-avatar3d-modal .es-msb-floating-toggle,
+#elisee-avatar3d-modal .es-msb-cta-btn,
+#elisee-avatar3d-modal .es-a3d-admin-box,
+body.es-a3d-open .es-msb-floating-toggle,
+body.es-a3d-open .es-msb-cta-btn {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 .es-a3d-dialog {
   width: 95vw;
   max-width: 1180px;

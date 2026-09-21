@@ -3,7 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-21** — HOMEBAR1 — Rimossa fascia nera sotto navbar e badge ciano spuri in Home:
+Ultimo aggiornamento: **2026-09-21** — A3DCLEAN1 — Pulizia sidebar Avatar 3D (pallini macOS, box Admin QA, pulsante +):
+1. **Pallini macOS + logo circolare** in cima al pannello destro: la sidebar ruoli (`[class*="-sidebar"]`) innestava dots/avatar nella modale. Esclusa `.es-a3d-sidebar-controls` da `scanAndUpgrade`.
+2. **Box ADMIN QA: TEST SQUADRE 3D** rimosso dalla sidebar Avatar 3D.
+3. **Pulsante + ciano**: era il CTA collassato «Nuova Operazione» iniettato nella stessa sidebar. Nascosto/rimosso in modale.
+4. **File**: `avatar-3d.js`, `avatar-3d.css`, `role-sidebar-pro.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_A3DCLEAN1`.
+
+Feature precedente: **2026-09-21** — HOMEBAR1 — Rimossa fascia nera sotto navbar e badge ciano spuri in Home:
 1. **Fascia nera inutilizzata sotto la navbar**: header bloccato a 72px, niente extra padding/ombra/bordo. Hero attaccato alla navbar.
 2. **Badge ciano al centro (sotto Album)**: nascosta la scrollbar orizzontale della nav (thumb ciano) e il banner anti-fake vuoto (`#es-verify-banner` visibile solo con contenuto reale e `body.es-verify-on`).
 3. **File**: `style.css`, `verifica-account.css`, `verifica-account.js`, `creator-role-switcher.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_HOMEBAR1`. Commit `f51f3bed`. Deploy `79W4B6HE83rj8stXX83cvdNtbeXQ` live su `https://elisee-scout.vercel.app`.

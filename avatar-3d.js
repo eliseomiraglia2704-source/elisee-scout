@@ -1034,13 +1034,6 @@
 
     var kitsHtml = buildKitsHtml(kits, activeKitPath);
 
-    // Opzioni squadre per il Select Admin
-    var teamOptionsHtml = '';
-    allCatalogTeams.slice(0, 100).forEach(function (t) {
-      var isSel = (t.id === clubName.toLowerCase().replace(/[^a-z0-9]+/g, '-') || t.name === clubName.toUpperCase());
-      teamOptionsHtml += '<option value="' + t.id + '" ' + (isSel ? 'selected' : '') + '>' + t.name + (t.league ? ' (' + t.league + ')' : '') + '</option>';
-    });
-
     container.innerHTML =
       '<div class="es-a3d-stage-container" id="es-a3d-stage">' +
         '<!-- Player Card Fluttuante Stile EA Sports FC Ultimate Team -->' +
@@ -1095,25 +1088,7 @@
           '</button>' +
         '</div>' +
       '</div>' +
-      '<aside class="es-a3d-sidebar-controls">' +
-        '<!-- Box ADMIN QA: Selettore & Test Live Squadre 3D -->' +
-        '<div class="es-a3d-card-section es-a3d-admin-box" id="es-a3d-admin-qa-box">' +
-          '<div class="es-a3d-section-title" style="color:#fbbf24;">' +
-            '<span>👑 ADMIN QA: TEST SQUADRE 3D</span>' +
-            '<span class="es-a3d-badge-pro" style="background:#fbbf24; color:#0f172a;">LIVE QA</span>' +
-          '</div>' +
-          '<div class="es-a3d-admin-search-wrap">' +
-            '<input type="text" class="es-a3d-admin-search-input" id="es-a3d-admin-search" placeholder="🔍 Cerca tra 2.890 club (es. Inter, Milan, Foggia...)" autocomplete="off">' +
-            '<select class="es-a3d-admin-select" id="es-a3d-admin-select-team">' +
-              teamOptionsHtml +
-            '</select>' +
-            '<div class="es-a3d-admin-nav-btns">' +
-              '<button type="button" class="es-a3d-admin-nav-btn" id="btn-admin-prev-team">⬅ Precedente</button>' +
-              '<button type="button" class="es-a3d-admin-nav-btn" id="btn-admin-next-team">Successiva ➡</button>' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
-
+      '<aside class="es-a3d-sidebar-controls" data-msb-skip="true">' +
         '<!-- Sezione 1: Kit 2D & Divisa Ufficiale Club -->' +
         '<div class="es-a3d-card-section">' +
           '<div class="es-a3d-section-title">Kit 2D &amp; Divisa Club <span class="es-a3d-badge-pro">LIVE 3D</span></div>' +
@@ -1271,93 +1246,9 @@
     }
     bindKitCards();
 
-    // Controller ADMIN QA: Selettore Squadra e Test Live 3D
-    var adminSearch = container.querySelector('#es-a3d-admin-search');
-    var adminSelect = container.querySelector('#es-a3d-admin-select-team');
-    var btnPrevTeam = container.querySelector('#btn-admin-prev-team');
-    var btnNextTeam = container.querySelector('#btn-admin-next-team');
-
-    function applyTeamSelection(teamId) {
-      if (!teamId) return;
-      var team = allCatalogTeams.find(function (t) { return t.id === teamId; });
-      if (!team) {
-        team = { id: teamId, name: teamId.toUpperCase(), logo: 'immagini/squadre-loghi/' + teamId + '.png' };
-      }
-
-      // Aggiorna stato avatar
-      avatar.divisa_ref = avatar.divisa_ref || {};
-      avatar.divisa_ref.club = team.name;
-
-      // Aggiorna UI Nomi & Loghi
-      var mainName = container.querySelector('#es-a3d-main-club-name');
-      var mainBadge = container.querySelector('#es-a3d-main-club-badge');
-      var cardName = container.querySelector('#es-a3d-card-club-name');
-      var cardBadge = container.querySelector('#es-a3d-card-club-logo');
-      if (mainName) mainName.textContent = team.name;
-      if (cardName) cardName.textContent = team.name;
-      if (mainBadge) mainBadge.src = team.logo || ('immagini/squadre-loghi/' + team.id + '.png');
-      if (cardBadge) cardBadge.src = team.logo || ('immagini/squadre-loghi/' + team.id + '.png');
-
-      // Ricava Kit disponibili per la squadra
-      var newKits = getAvailableKitsForClub(team.name);
-      var defaultKit = newKits[0];
-      avatar.divisa_ref.selected_kit_path = defaultKit.path;
-      avatar.divisa_ref.selected_kit_uv = defaultKit.uvPath || defaultKit.path;
-      avatar.divisa_ref.selected_kit_id = defaultKit.id;
-      saveAvatarData(avatar);
-
-      // Rigenera griglia kit
-      var kitGrid = container.querySelector('#es-a3d-kit-grid');
-      if (kitGrid) {
-        kitGrid.innerHTML = buildKitsHtml(newKits, defaultKit.path);
-        bindKitCards();
-      }
-
-      // Applica immediatamente la texture al modello 3D
-      applyKitTextureToActiveModel(defaultKit.uvPath || defaultKit.path);
-      showAdminToast('👑 SQUADRA TEST: ' + team.name + ' (' + newKits.length + ' kit disponibili)');
-    }
-
-    if (adminSelect) {
-      adminSelect.addEventListener('change', function () {
-        applyTeamSelection(adminSelect.value);
-      });
-    }
-
-    if (btnPrevTeam && adminSelect) {
-      btnPrevTeam.addEventListener('click', function () {
-        if (adminSelect.selectedIndex > 0) {
-          adminSelect.selectedIndex--;
-          applyTeamSelection(adminSelect.value);
-        }
-      });
-    }
-
-    if (btnNextTeam && adminSelect) {
-      btnNextTeam.addEventListener('click', function () {
-        if (adminSelect.selectedIndex < adminSelect.options.length - 1) {
-          adminSelect.selectedIndex++;
-          applyTeamSelection(adminSelect.value);
-        }
-      });
-    }
-
-    if (adminSearch && adminSelect) {
-      adminSearch.addEventListener('input', function () {
-        var q = (adminSearch.value || '').toLowerCase().trim();
-        var filtered = allCatalogTeams.filter(function (t) {
-          return (t.name || '').toLowerCase().indexOf(q) !== -1 || (t.id || '').indexOf(q) !== -1;
-        });
-        var optsHtml = '';
-        filtered.slice(0, 150).forEach(function (t) {
-          optsHtml += '<option value="' + t.id + '">' + t.name + (t.league ? ' (' + t.league + ')' : '') + '</option>';
-        });
-        adminSelect.innerHTML = optsHtml || '<option value="">Nessun club trovato</option>';
-        if (filtered.length > 0) {
-          applyTeamSelection(filtered[0].id);
-        }
-      });
-    }
+    container.querySelectorAll('.es-msb-mac-dots, .es-msb-user-card, .es-msb-contacts-section, .es-msb-bottom-action, .es-msb-floating-toggle').forEach(function (el) {
+      if (el && el.parentNode) el.parentNode.removeChild(el);
+    });
 
     // Preset Telecamera
     var camBtns = container.querySelectorAll('.es-a3d-cam-btn');
@@ -3344,6 +3235,7 @@
   // API Pubblica
   function open() {
     state.isOpen = true;
+    document.body.classList.add('es-a3d-open');
     var modal = ensureModalDOM();
     modal.classList.add('is-open');
     renderView();
@@ -3351,6 +3243,7 @@
 
   function close() {
     state.isOpen = false;
+    document.body.classList.remove('es-a3d-open');
     var modal = document.getElementById('elisee-avatar3d-modal');
     if (modal) modal.classList.remove('is-open');
     disposeThree();
