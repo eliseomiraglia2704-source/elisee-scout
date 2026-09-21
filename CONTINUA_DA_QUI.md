@@ -3,12 +3,16 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-21** — JERSEYFIX1 — Fix definitivo maglia 2D sul torso 3D:
-1. `loadImageSafe`: rimosso `crossOrigin='anonymous'` per URL relative/same-origin (causava canvas "tainted" → SecurityError su `getImageData` silenzioso).
-2. `kitToAlphaCanvas`: fallback robusto — se `getImageData` fallisce (CORS/file://), ritorna il canvas con la maglia opaca invece di uno canvas vuoto.
-3. `fit()`: il torso nativo (`athlete_torso`) ora riceve `mat.map = tex` (la PNG della maglia) tramite `paintJerseyTex()` invece del solo colore primario del club.
-4. Decal fallback (modelli GLB esterni): `alphaTest` ridotto a `0.04`, `premultipliedAlpha: false`, dimensioni adattive alla bounding box.
-5. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_JERSEYFIX1`. Commit `3abcd4b1`. Deploy `dpl_46343psFjMfhHGbP2DwHcz86CBHd` live su `https://elisee-scout.vercel.app`.
+Ultimo aggiornamento: **2026-09-21** — JERSEYREAL1 — Vestizione 3D Reale Anatomica del Kit Ufficiale (Risoluzione definitiva problema 3 settimane):
+1. **Causa del blocco storico**: per i modelli personalizzati `.glb` (es. Hyper3D), la vecchia decal frontale era invisibile/clippata per coordinate locali non scalate nel modello, lasciando visibile la vecchia texture generata con la maglietta verde/blu "Elisee Scout". Inoltre `kitToAlphaCanvas` cancellava i pixel scuri (d[i] < 20), distruggendo le strisce nere dell'Inter e di altri club.
+2. **Vestizione 3D Anatomica su GLB (`__elisee_fitted_jersey`)**: generato gruppo 3D sagomato (Torso cilindrico ellittico proporzionato alla bounding box + Maniche coordinate + Colletto) agganciato al root group Three.js in coordinate globali 1:1, con mapping frontale perfetto senza clipping né z-fighting.
+3. **Mappatura 360° senza Seam Frontale**: texture 1024x1024 con kit ufficiale 2D (`home.png`) centrato e non alterato, sfumatura volumetrica e colore primario/secondario del club.
+4. **Calciatore 3D Nativo & GLB coordinati**: funziona identicamente sia per il modello procedurale (`athlete_torso`) sia per il modello personalizzato caricato dall'utente.
+5. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_JERSEYREAL1`.
+
+Feature precedente: **2026-09-21** — JERSEYFIX1 — Fix preliminare maglia 2D:
+1. `loadImageSafe`: rimosso `crossOrigin='anonymous'` per URL relative/same-origin.
+2. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_JERSEYFIX1`. Commit `3abcd4b1`. Deploy `dpl_46343psFjMfhHGbP2DwHcz86CBHd`.
 
 Feature precedente: **2026-09-21** — KITWRAP1 — Kit 2D sul 3D: stop minestrone UV:
 1. **Causa**: il foglio UV FIFA (`INTER-HOME-27.png`) veniva avvolto intero su cilindri/sfere (torso, pettorali, maniche, calzettoni) con UV sbagliati.

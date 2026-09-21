@@ -2409,7 +2409,6 @@
   }
 
   function kitToAlphaCanvas(src) {
-    // src può essere HTMLImageElement o HTMLCanvasElement
     var srcW = src.naturalWidth || src.width || 2;
     var srcH = src.naturalHeight || src.height || 2;
     var c = document.createElement('canvas');
@@ -2417,26 +2416,12 @@
     c.height = srcH;
     var ctx = c.getContext('2d');
     ctx.drawImage(src, 0, 0, srcW, srcH);
-    // Tenta di rimuovere il fondo nero. Se getImageData fallisce (es. CORS/file://),
-    // restituisce il canvas così com'è (con la maglia visibile, senza trasparenza).
-    try {
-      var imageData = ctx.getImageData(0, 0, c.width, c.height);
-      var d = imageData.data;
-      for (var i = 0; i < d.length; i += 4) {
-        // Scarta solo i pixel quasi-neri puri
-        if (d[i] < 20 && d[i + 1] < 20 && d[i + 2] < 20) d[i + 3] = 0;
-      }
-      ctx.putImageData(imageData, 0, 0);
-    } catch (_) {
-      // getImageData bloccato (CORS/tainted): ritorna il canvas con l'immagine opaca.
-      // La maglia sarà visibile anche senza trasparenza sul fondo.
-    }
     return c;
   }
 
   function cropKitFrontSprite(img, asUvSheet) {
-    var w = img.width || 1;
-    var h = img.height || 1;
+    var w = img.naturalWidth || img.width || 1;
+    var h = img.naturalHeight || img.height || 1;
     var c = document.createElement('canvas');
     var sx = 0, sy = 0, sw = w, sh = h;
     if (asUvSheet) {
@@ -2444,40 +2429,11 @@
       sy = Math.floor(h * 0.02);
       sw = Math.floor(w * 0.40);
       sh = Math.floor(h * 0.76);
-    } else {
-      try {
-        var tmp = document.createElement('canvas');
-        tmp.width = w;
-        tmp.height = h;
-        var tctx = tmp.getContext('2d');
-        tctx.drawImage(img, 0, 0);
-        var data = tctx.getImageData(0, 0, w, h).data;
-        var minX = w, minY = h, maxX = 0, maxY = 0;
-        for (var y = 0; y < h; y += 2) {
-          for (var x = 0; x < w; x += 2) {
-            var i = (y * w + x) * 4;
-            var r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3];
-            if (a < 24) continue;
-            if (r < 16 && g < 16 && b < 16) continue;
-            if (x < minX) minX = x;
-            if (y < minY) minY = y;
-            if (x > maxX) maxX = x;
-            if (y > maxY) maxY = y;
-          }
-        }
-        if (maxX > minX && maxY > minY) {
-          var pad = Math.floor(Math.min(w, h) * 0.008);
-          sx = Math.max(0, minX - pad);
-          sy = Math.max(0, minY - pad);
-          sw = Math.min(w - sx, maxX - minX + pad * 2);
-          sh = Math.min(h - sy, maxY - minY + pad * 2);
-        }
-      } catch (_) {}
     }
     c.width = Math.max(8, sw);
     c.height = Math.max(8, sh);
     c.getContext('2d').drawImage(img, sx, sy, sw, sh, 0, 0, c.width, c.height);
-    return kitToAlphaCanvas(c);
+    return c;
   }
 
   function sampleKitPrimary(canvas) {
@@ -2492,23 +2448,23 @@
         if (r < 18 && g < 18 && b < 18) continue;
         rs += r; gs += g; bs += b; n++;
       }
-      if (!n) return '#0a1628';
+      if (!n) return '#0055d4';
       return 'rgb(' + Math.round(rs / n) + ',' + Math.round(gs / n) + ',' + Math.round(bs / n) + ')';
     } catch (_) {
-      return '#0a1628';
+      return '#0055d4';
     }
   }
 
   var EliseeJerseyAIAgent = {
     name: 'Elisee Kit Fitting AI Agent',
-    version: '2.3.0',
+    version: '2.4.0',
     fitMode: 'slim', // 'slim', 'regular', 'loose'
     offsetY: 0, // da -12 a +12 cm
     isBusy: false,
     _fitGen: 0,
     _fitRetries: 0,
     activeJerseyGroup: null,
-    activeJerseyMeshes: null, // mesh del GLB esterno a cui è stata applicata la texture
+    activeJerseyMeshes: null,
 
     _cloneMat: function (src) {
       if (!src) return src;
@@ -2554,33 +2510,23 @@
       });
     },
 
-    // Rimuove qualsiasi maglia precedente (vecchie decal o fitted layers) e ripristina i materiali
+    // Rimuove qualsiasi maglia precedente (fitted layers o decal) e ripristina la scena
     removeExistingJersey: function (model) {
-      if (!model) return;
-      // Ripristina le mesh GLB tinte nel branch B
-      if (this.activeJerseyMeshes && this.activeJerseyMeshes.length) {
-        this.activeJerseyMeshes.forEach(function (child) {
-          if (child.__eliseeJerseyApplied && child.__eliseeOrigMat) {
-            child.material = Array.isArray(child.__eliseeOrigMat)
-              ? child.__eliseeOrigMat.map(function (m) { return m.clone ? m.clone() : m; })
-              : (child.__eliseeOrigMat.clone ? child.__eliseeOrigMat.clone() : child.__eliseeOrigMat);
-            if (Array.isArray(child.material)) {
-              child.material.forEach(function (m) { m.needsUpdate = true; });
-            } else {
-              child.material.needsUpdate = true;
-            }
-            child.__eliseeJerseyApplied = false;
+      if (this.activeJerseyGroup && this.activeJerseyGroup.parent) {
+        this.activeJerseyGroup.parent.remove(this.activeJerseyGroup);
+        this.activeJerseyGroup = null;
+      }
+      var toRemove = [];
+      var sweep = function (parent) {
+        if (!parent) return;
+        parent.traverse(function (child) {
+          if (child.name === '__elisee_fitted_jersey' || child.name === '__elisee_decal_front' || child.__isEliseeJerseyMesh) {
+            toRemove.push(child);
           }
         });
-        this.activeJerseyMeshes = null;
-      }
-      // Rimuove eventuali group jersey (modello nativo athlete_torso)
-      var toRemove = [];
-      model.traverse(function (child) {
-        if (child.name === '__elisee_fitted_jersey' || child.name === '__elisee_decal_front' || child.__isEliseeJerseyMesh) {
-          toRemove.push(child);
-        }
-      });
+      };
+      sweep(state.avatarGroup);
+      if (model) sweep(model);
       toRemove.forEach(function (obj) {
         if (obj.parent) obj.parent.remove(obj);
         if (obj.geometry) { try { obj.geometry.dispose(); } catch (_) {} }
@@ -2595,13 +2541,14 @@
           } catch (_) {}
         }
       });
-      this.activeJerseyGroup = null;
-      model.traverse(function (child) {
-        if (child.name && child.name.indexOf('athlete_pec') === 0) child.visible = true;
-      });
+      if (model) {
+        model.traverse(function (child) {
+          if (child.name && child.name.indexOf('athlete_pec') === 0) child.visible = true;
+        });
+      }
     },
 
-    // Genera la texture della divisa 360° per la maglia (Fronte con kit + Retro con Numero & Nome Atleta)
+    // Genera la texture della divisa 360° per la maglia (Fronte con kit 2D + Retro coordinato)
     generateJerseyTexture: function (kitUrl, clubName, athleteName, athleteNumber, callback) {
       var canvas = document.createElement('canvas');
       canvas.width = 1024;
@@ -2614,46 +2561,57 @@
         return (t.name || '').toUpperCase() === (clubName || '').toUpperCase() ||
                (t.id || '') === clubSlug;
       });
-      var primaryColor = (team && team.primary) || '#0a1628';
-      var secondaryColor = (team && team.secondary) || '#111111';
-      var logoUrl = (team && team.logo) || ('immagini/squadre-loghi/' + (team ? team.id : clubSlug) + '.png');
+      var primaryColor = (team && team.primary) || '#0055d4';
+      var secondaryColor = (team && team.secondary) || '#0b0f19';
       var loadUrl = resolve2dKitUrl(kitUrl);
 
-      function emit(frontCanvas, primary, secondary) {
-        var THREE = window.THREE;
-        var src = frontCanvas || canvas;
-        if (!frontCanvas) {
-          ctx.fillStyle = primary || '#0a1628';
-          ctx.fillRect(0, 0, 1024, 1024);
-        }
-        var tex = EliseeJerseyAIAgent._prepKitTex(new THREE.CanvasTexture(src));
-        if (typeof callback === 'function') callback(tex, frontCanvas || null, primary, secondary);
-      }
+      function renderJerseyCanvas(frontImg) {
+        // 1. Sfondo colore primario club
+        ctx.fillStyle = primaryColor;
+        ctx.fillRect(0, 0, 1024, 1024);
 
-      function ingest(loadedImg, sourceUrl) {
-        try {
-          var uvSheet = isUvKitSheet(sourceUrl, loadedImg);
-          var front = cropKitFrontSprite(loadedImg, uvSheet);
-          var sampled = sampleKitPrimary(front);
-          emit(front, sampled || primaryColor, secondaryColor);
-        } catch (err) {
-          emit(null, primaryColor, secondaryColor);
+        // 2. Ombreggiatura volumetrica / pieghe tessuto
+        var grad = ctx.createLinearGradient(0, 0, 1024, 0);
+        grad.addColorStop(0, 'rgba(0,0,0,0.32)');
+        grad.addColorStop(0.25, 'rgba(255,255,255,0.06)');
+        grad.addColorStop(0.5, 'rgba(0,0,0,0.28)');
+        grad.addColorStop(0.75, 'rgba(255,255,255,0.06)');
+        grad.addColorStop(1, 'rgba(0,0,0,0.32)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, 1024, 1024);
+
+        // 3. FRONTE KIT: Centrato a X = 512 (U = 0.5)
+        if (frontImg) {
+          var natW = frontImg.naturalWidth || frontImg.width || 500;
+          var natH = frontImg.naturalHeight || frontImg.height || 500;
+          var fw = 520;
+          var fh = Math.round(fw * (natH / natW));
+          if (fh > 940) {
+            fh = 940;
+            fw = Math.round(fh * (natW / natH));
+          }
+          var fx = Math.round(512 - fw / 2);
+          var fy = Math.round(512 - fh / 2 + 10);
+          ctx.drawImage(frontImg, fx, fy, fw, fh);
         }
+
+        var THREE = window.THREE;
+        var tex = EliseeJerseyAIAgent._prepKitTex(new THREE.CanvasTexture(canvas));
+        if (typeof callback === 'function') callback(tex, canvas, primaryColor, secondaryColor);
       }
 
       loadImageSafe(loadUrl || kitUrl, function (img) {
         if (img) {
-          ingest(img, loadUrl || kitUrl);
+          renderJerseyCanvas(img);
           return;
         }
         if (loadUrl && kitUrl && loadUrl !== kitUrl) {
           loadImageSafe(kitUrl, function (img2) {
-            if (img2) ingest(img2, kitUrl);
-            else emit(null, primaryColor, secondaryColor);
+            renderJerseyCanvas(img2 || null);
           });
           return;
         }
-        emit(null, primaryColor, secondaryColor);
+        renderJerseyCanvas(null);
       });
     },
 
@@ -2667,7 +2625,7 @@
       if (!model || !state.renderer) {
         if (self._fitRetries >= 20) {
           self._fitRetries = 0;
-          if (onProgress) onProgress('⚠️ Carica un modello .GLB da Hyper3D per indossare la maglia 3D');
+          if (onProgress) onProgress('⚠️ Carica un modello .GLB per indossare la maglia 3D');
           return;
         }
         self._fitRetries += 1;
@@ -2693,19 +2651,17 @@
 
       if (onProgress) onProgress('Isolamento coordinate anatomiche del torso...');
 
-      // 3. Calcolo bounding box del modello attivo
+      // 3. Calcolo bounding box del modello attivo in coordinate mondo
       var bbox = new THREE.Box3().setFromObject(model);
       var size = new THREE.Vector3();
       bbox.getSize(size);
 
       var totalH = size.y || 1.80;
-      var yShift = (self.offsetY || 0) * 0.01;
-      var band = (self.fitMode === 'regular' ? 0.04 : (self.fitMode === 'loose' ? 0.08 : 0));
 
-      if (onProgress) onProgress('Sostituzione maglia Elisee Scout in corso...');
+      if (onProgress) onProgress('Vestizione divisa ufficiale in corso...');
 
-      // 5. Generazione texture composita e montaggio mesh 3D da gara
-      self.generateJerseyTexture(kitUrl, clubName, athleteName, athleteNumber, function (tex, rawImg, primaryColor, secondaryColor) {
+      // 4. Generazione texture 360° e applicazione al modello
+      self.generateJerseyTexture(kitUrl, clubName, athleteName, athleteNumber, function (tex, rawCanvas, primaryColor, secondaryColor) {
         if (gen !== self._fitGen || !state.activeModel || !state.renderer) return;
         model = state.activeModel;
         self._prepKitTex(tex);
@@ -2722,7 +2678,6 @@
           mesh.material = mat;
         };
 
-        // Applica la texture della maglia direttamente su una mesh (torso, sleeve, ecc.)
         var paintJerseyTex = function (mesh, kTex) {
           if (!mesh || !kTex) return;
           var mat = mesh.material && mesh.material.clone ? mesh.material.clone() : mesh.material;
@@ -2736,24 +2691,21 @@
           mesh.material = mat;
         };
 
+        // A) Calciatore 3D Nativo (mesh nominate athlete_torso, athlete_sleeve, ecc.)
         var foundNativeMesh = false;
-        var torsoMesh = null;
         model.traverse(function (child) {
           if (!child.isMesh || !child.name) return;
           var nm = child.name;
           if (nm === 'athlete_torso') {
-            // Applica la texture PNG della maglia direttamente sul torso cilindrico
             if (tex) {
               paintJerseyTex(child, tex);
             } else {
               paintColorOnly(child, primaryColor);
             }
-            torsoMesh = child;
             foundNativeMesh = true;
             return;
           }
           if (nm.indexOf('athlete_pec') === 0) {
-            // Nascondi i pettorali: la maglia copre il torso
             child.visible = false;
             foundNativeMesh = true;
             return;
@@ -2776,29 +2728,68 @@
           }
         });
 
-        // Fallback per modelli GLB esterni senza mesh 'athlete_torso' nominate:
-        // applica una decal frontale che segue la bounding box del modello caricato.
-        if (!foundNativeMesh && tex) {
-          var chestY = bbox.min.y + totalH * 0.58;
-          var chestZ = Math.max(0.14, size.z * 0.52);
-          var decalW = Math.max(0.35, size.x * 0.55);
-          var decalH = Math.max(0.48, totalH * 0.38);
-          var decalMatG = new THREE.MeshStandardMaterial({
+        // B) Modello GLB esterno (Hyper3D / upload): vestizione 3D anatomica completa
+        if (!foundNativeMesh && tex && state.avatarGroup) {
+          var jerseyGroup = new THREE.Group();
+          jerseyGroup.name = '__elisee_fitted_jersey';
+          jerseyGroup.__isEliseeJerseyMesh = true;
+
+          var torsoH = totalH * 0.27;
+          var torsoCenterY = bbox.min.y + totalH * 0.61;
+          var torsoRadiusTop = Math.max(0.21, size.x * 0.38);
+          var torsoRadiusBot = Math.max(0.17, size.x * 0.31);
+          var torsoDepthRatio = Math.max(0.60, size.z / (size.x || 1) * 0.90);
+
+          // 1. Torso cilindrico sagomato con texture 360° del kit
+          var torsoGeo = new THREE.CylinderGeometry(torsoRadiusTop, torsoRadiusBot, torsoH, 40, 1, true);
+          torsoGeo.scale(1.08, 1.0, torsoDepthRatio);
+          remapCylinderFrontUVs(torsoGeo);
+          var torsoMat = new THREE.MeshStandardMaterial({
             map: tex,
-            transparent: true,
-            alphaTest: 0.04,  // soglia bassa: mostra la maglia anche se i bordi non sono perfetti
-            roughness: 0.48,
+            roughness: 0.50,
             metalness: 0.04,
-            depthWrite: false,
-            premultipliedAlpha: false,
-            color: 0xffffff
+            side: THREE.DoubleSide,
+            polygonOffset: true,
+            polygonOffsetFactor: -2,
+            polygonOffsetUnits: -2
           });
-          var decalG = new THREE.Mesh(new THREE.PlaneGeometry(decalW, decalH), decalMatG);
-          decalG.name = '__elisee_decal_front';
-          decalG.__isEliseeJerseyMesh = true;
-          decalG.position.set(0, chestY, chestZ);
-          decalG.renderOrder = 2;
-          model.add(decalG);
+          var torsoMesh = new THREE.Mesh(torsoGeo, torsoMat);
+          torsoMesh.position.set(0, torsoCenterY, 0.006);
+          torsoMesh.castShadow = true;
+          jerseyGroup.add(torsoMesh);
+
+          // 2. Maniche corte da gara coordinate
+          var sleeveRadius = torsoRadiusTop * 0.34;
+          var sleeveLen = torsoH * 0.34;
+          var sleeveMat = new THREE.MeshStandardMaterial({
+            color: new THREE.Color(primaryColor || '#0055d4'),
+            roughness: 0.52,
+            metalness: 0.04
+          });
+
+          [-1, 1].forEach(function (side) {
+            var sGeo = new THREE.CylinderGeometry(sleeveRadius * 1.08, sleeveRadius * 0.90, sleeveLen, 24);
+            var sMesh = new THREE.Mesh(sGeo, sleeveMat);
+            sMesh.position.set(side * (torsoRadiusTop * 1.06), torsoCenterY + torsoH * 0.26, 0);
+            sMesh.rotation.z = -side * 0.28;
+            sMesh.castShadow = true;
+            jerseyGroup.add(sMesh);
+          });
+
+          // 3. Colletto coordinato
+          var collarGeo = new THREE.TorusGeometry(torsoRadiusTop * 0.44, 0.016, 16, 32);
+          var collarMat = new THREE.MeshStandardMaterial({
+            color: new THREE.Color(secondaryColor || '#ffffff'),
+            roughness: 0.4
+          });
+          var collarMesh = new THREE.Mesh(collarGeo, collarMat);
+          collarMesh.rotation.x = Math.PI / 2;
+          collarMesh.position.set(0, torsoCenterY + torsoH * 0.49, 0);
+          jerseyGroup.add(collarMesh);
+
+          // Aggiunge al gruppo radice della scena 3D
+          state.avatarGroup.add(jerseyGroup);
+          self.activeJerseyGroup = jerseyGroup;
         }
 
         // Render immediato

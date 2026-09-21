@@ -1,7 +1,7 @@
 /* ELISEE SCOUT — Cache Wipe & Self-Unregister Service Worker
    Assicura che nessun asset obsoleto rimanga memorizzato nella cache del browser.
 */
-const CACHE = 'elisee-scout-v20260921-jerseyfix1';
+const CACHE = 'elisee-scout-v20260921-jerseyreal1';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -20,10 +20,10 @@ self.addEventListener('activate', (event) => {
           try {
             client.postMessage({
               type: 'FORCE_RELOAD',
-              version: '20260921_KITDECAL1',
-              updatedAt: '2026-09-21T17:00:00Z',
-              ts: '20260921_170000',
-              bust: 'v20260921_KITDECAL1'
+              version: '20260921_JERSEYREAL1',
+              updatedAt: '2026-09-21T15:45:00Z',
+              ts: '20260921_154500',
+              bust: 'v20260921_JERSEYREAL1'
             });
           } catch (e) {}
         });
