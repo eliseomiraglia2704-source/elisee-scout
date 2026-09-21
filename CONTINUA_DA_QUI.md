@@ -3,7 +3,17 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-20** — Avatar 3D: PASSAGGIO 3 — Stemma Reale HD, Colletto Sagomato, Fotogrammetria Volto & Esportazione Card EA Sports FC (`A3DSTEP3`):
+Ultimo aggiornamento: **2026-09-20** — KITFIX — Kit 3D applicato direttamente sulle mesh del GLB (eliminati cilindri galleggianti), banner anti-fake nascosto per Admin Executive (`KITFIX`):
+1. **Fix Kit 3D su modello GLB importato**:
+   - Eliminati completamente i `CylinderGeometry` (`torsoMesh`, `sleeveL`, `sleeveR`) che fluttuavano attorno al modello come fusti rigidi.
+   - Nuovo branch B in `EliseeJerseyAIAgent.fit`: traversa tutte le mesh reali del GLB importato, filtra per Y (esclude testa/capelli/viso via regex `head|hair|face|eye|...` e soglia `headThreshY = bbox.min.y + totalH * 0.78`), e applica `material.map = tex; material.needsUpdate = true` direttamente sui materiali originali.
+   - Salvataggio `__eliseeOrigMat` per ripristino corretto al cambio kit o reset.
+   - `removeExistingJersey` aggiornato per ripristinare i materiali delle mesh tinte tramite `activeJerseyMeshes`.
+   - `EliseeJerseyAIAgent` versione `2.2.0`.
+2. **Fix banner anti-fake per Admin Executive**:
+   - `isPreVerified(u)` in `verifica-account.js` ora restituisce `true` per ruolo `Admin Executive`, `admin`, `creator`, `creatore`, email `eliseomiraglia2704@gmail.com`, `u.isAdmin`, `u.isCreator`.
+   - Nessun banner vuoto appare sotto la navbar per gli admin.
+3. **File**: `avatar-3d.js`, `verifica-account.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260920_KITFIX`. Commit `48db231e`. Deploy `dpl_6zwfmHExxsennJ7fzv4xBggXp2hA` live su `https://elisee-scout.vercel.app`.
 1. **Tris di Innovazioni Completate**:
    - **Miglioramento Visivo del Kit Ufficiale**:
      - **Stemma Club Ufficiale Reale (PNG ad Alta Definizione)**: caricamento e renderizzazione automatica del logo ufficiale del club dal catalogo (da `immagini/squadre-loghi/<id>.png`) con bordatura e ombra morbida sul petto sinistro.
