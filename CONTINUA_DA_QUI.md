@@ -3,7 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-21** — BUGFIX1 — Audit e correzioni Avatar 3D + banner anti-fake (`BUGFIX1`):
+Ultimo aggiornamento: **2026-09-21** — HOMEBAR1 — Rimossa fascia nera sotto navbar e badge ciano spuri in Home:
+1. **Fascia nera inutilizzata sotto la navbar**: header bloccato a 72px, niente extra padding/ombra/bordo. Hero attaccato alla navbar.
+2. **Badge ciano al centro (sotto Album)**: nascosta la scrollbar orizzontale della nav (thumb ciano) e il banner anti-fake vuoto (`#es-verify-banner` visibile solo con contenuto reale e `body.es-verify-on`).
+3. **File**: `style.css`, `verifica-account.css`, `verifica-account.js`, `creator-role-switcher.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_HOMEBAR1`.
+
+Feature precedente: **2026-09-21** — BUGFIX1 — Audit e correzioni Avatar 3D + banner anti-fake (`BUGFIX1`):
 1. **Avatar 3D — bug visivi e di vestizione**:
    - `restoreOriginalBaseMaterials` non forza più il colore bianco su tutte le mesh: viso, collo, pelle e capelli restano integri al cambio kit o al toggle «ORIGINALE».
    - `fit()` non entra più in retry infinito se il modello manca: usa `state.activeModel`, massimo 20 tentativi.

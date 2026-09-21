@@ -154,7 +154,7 @@
     if (!u || !hasRole(u) || isSpectator(u) || isPreVerified(u) || docsOk(u) || u.accountClosed) {
       el.hidden = true;
       el.innerHTML = '';
-      el.removeAttribute('style');
+      el.style.display = 'none';
       document.body.classList.remove('es-verify-on');
       paintCard(u);
       return;
@@ -164,6 +164,7 @@
     var copy = warnCopy(u);
     document.body.classList.add('es-verify-on');
     el.hidden = false;
+    el.style.display = '';
     el.className = 'es-verify-banner' + (d <= 3 ? ' is-urgent' : '');
     el.innerHTML =
       '<div class="es-verify-inner">' +

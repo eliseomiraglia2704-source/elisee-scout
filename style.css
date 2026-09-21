@@ -769,9 +769,14 @@ button > *,
   left: 0;
   width: 100%;
   z-index: 1000;
+  height: 72px;
+  max-height: 72px;
+  padding: 0;
+  margin: 0;
   background: transparent;
   backdrop-filter: none;
   border-bottom: none;
+  box-shadow: none;
   transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease;
 }
 
@@ -3748,7 +3753,9 @@ body.focus-hub {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  height: 72px;
+  height: 72px !important;
+  max-height: 72px !important;
+  min-height: 72px !important;
   gap: 0.75rem;
 }
 
@@ -3848,10 +3855,17 @@ body.focus-hub {
   flex-wrap: nowrap;
   min-width: 0;
   overflow-x: auto;
-  scrollbar-width: none;
+  overflow-y: hidden;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none;
 }
 .nav-menu::-webkit-scrollbar,
-.portfolio-nav::-webkit-scrollbar { display: none; }
+.portfolio-nav::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
 
 .portfolio-nav .nav-link + .nav-link,
 .nav-menu .nav-link + .nav-link {
@@ -9144,7 +9158,20 @@ main {
   left: 0 !important;
   right: 0 !important;
   width: 100% !important;
+  height: 72px !important;
+  max-height: 72px !important;
+  padding: 0 !important;
+  margin: 0 !important;
   z-index: 10050 !important;
+  box-shadow: none !important;
+  border-bottom: none !important;
+}
+body.layout-portfolio #home-views-group,
+body.layout-portfolio #view-home,
+body.layout-portfolio #hero,
+body.layout-portfolio .hero-section {
+  margin-top: 0 !important;
+  border-top: 0 !important;
 }
 /* Tutte le macro-view sotto l'header */
 #view-account,

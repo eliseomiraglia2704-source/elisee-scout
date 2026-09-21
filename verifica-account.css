@@ -1,25 +1,33 @@
 .es-verify-banner {
-  display: block;
+  display: none;
   position: fixed;
   left: 0;
   right: 0;
-  top: 4.35rem;
+  top: 72px;
   z-index: 1100;
   background: #0c4a6e;
   color: #e0f2fe;
   border-bottom: 1px solid rgba(56, 189, 248, 0.35);
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
 }
+body.es-verify-on .es-verify-banner:has(.es-verify-inner) {
+  display: block;
+}
 .es-verify-banner[hidden],
-.es-verify-banner:empty {
+.es-verify-banner:empty,
+.es-verify-banner:not(:has(.es-verify-inner)),
+body:not(.es-verify-on) .es-verify-banner {
   display: none !important;
+  visibility: hidden !important;
   border: 0 !important;
   box-shadow: none !important;
   height: 0 !important;
+  max-height: 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
   overflow: hidden !important;
   pointer-events: none !important;
-  padding: 0 !important;
-  min-height: 0 !important;
 }
 .es-verify-banner.is-urgent {
   background: #7f1d1d;

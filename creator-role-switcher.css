@@ -225,6 +225,9 @@
 }
 
 /* Toast notifica cambio ruolo */
+.es-creator-toast:not(.is-visible) {
+  display: none !important;
+}
 .es-creator-toast {
   position: fixed;
   top: 80px;
