@@ -2396,50 +2396,88 @@
     uv.needsUpdate = true;
   }
 
+  function loadImageSafe(url, done) {
+    var img = new Image();
+    // NON impostare crossOrigin per URL relative o same-origin: causerebbe
+    // SecurityError su getImageData anche su file:// o 127.0.0.1 senza CORS header.
+    var isAbsExternal = url && /^https?:\/\//i.test(url) &&
+      typeof location !== 'undefined' && url.indexOf(location.origin) !== 0;
+    if (isAbsExternal) img.crossOrigin = 'anonymous';
+    img.onload = function () { done(img); };
+    img.onerror = function () { done(null); };
+    img.src = url;
+  }
+
+  function kitToAlphaCanvas(src) {
+    // src può essere HTMLImageElement o HTMLCanvasElement
+    var srcW = src.naturalWidth || src.width || 2;
+    var srcH = src.naturalHeight || src.height || 2;
+    var c = document.createElement('canvas');
+    c.width = srcW;
+    c.height = srcH;
+    var ctx = c.getContext('2d');
+    ctx.drawImage(src, 0, 0, srcW, srcH);
+    // Tenta di rimuovere il fondo nero. Se getImageData fallisce (es. CORS/file://),
+    // restituisce il canvas così com'è (con la maglia visibile, senza trasparenza).
+    try {
+      var imageData = ctx.getImageData(0, 0, c.width, c.height);
+      var d = imageData.data;
+      for (var i = 0; i < d.length; i += 4) {
+        // Scarta solo i pixel quasi-neri puri
+        if (d[i] < 20 && d[i + 1] < 20 && d[i + 2] < 20) d[i + 3] = 0;
+      }
+      ctx.putImageData(imageData, 0, 0);
+    } catch (_) {
+      // getImageData bloccato (CORS/tainted): ritorna il canvas con l'immagine opaca.
+      // La maglia sarà visibile anche senza trasparenza sul fondo.
+    }
+    return c;
+  }
+
   function cropKitFrontSprite(img, asUvSheet) {
     var w = img.width || 1;
     var h = img.height || 1;
     var c = document.createElement('canvas');
-    var sx, sy, sw, sh;
+    var sx = 0, sy = 0, sw = w, sh = h;
     if (asUvSheet) {
       sx = Math.floor(w * 0.30);
       sy = Math.floor(h * 0.02);
       sw = Math.floor(w * 0.40);
       sh = Math.floor(h * 0.76);
     } else {
-      var tmp = document.createElement('canvas');
-      tmp.width = w;
-      tmp.height = h;
-      var tctx = tmp.getContext('2d');
-      tctx.drawImage(img, 0, 0);
-      var data = tctx.getImageData(0, 0, w, h).data;
-      var minX = w, minY = h, maxX = 0, maxY = 0;
-      for (var y = 0; y < h; y += 2) {
-        for (var x = 0; x < w; x += 2) {
-          var i = (y * w + x) * 4;
-          var r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3];
-          if (a < 24) continue;
-          if (r < 16 && g < 16 && b < 16) continue;
-          if (x < minX) minX = x;
-          if (y < minY) minY = y;
-          if (x > maxX) maxX = x;
-          if (y > maxY) maxY = y;
+      try {
+        var tmp = document.createElement('canvas');
+        tmp.width = w;
+        tmp.height = h;
+        var tctx = tmp.getContext('2d');
+        tctx.drawImage(img, 0, 0);
+        var data = tctx.getImageData(0, 0, w, h).data;
+        var minX = w, minY = h, maxX = 0, maxY = 0;
+        for (var y = 0; y < h; y += 2) {
+          for (var x = 0; x < w; x += 2) {
+            var i = (y * w + x) * 4;
+            var r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3];
+            if (a < 24) continue;
+            if (r < 16 && g < 16 && b < 16) continue;
+            if (x < minX) minX = x;
+            if (y < minY) minY = y;
+            if (x > maxX) maxX = x;
+            if (y > maxY) maxY = y;
+          }
         }
-      }
-      if (maxX <= minX || maxY <= minY) {
-        sx = 0; sy = 0; sw = w; sh = h;
-      } else {
-        var pad = Math.floor(Math.min(w, h) * 0.01);
-        sx = Math.max(0, minX - pad);
-        sy = Math.max(0, minY - pad);
-        sw = Math.min(w - sx, maxX - minX + pad * 2);
-        sh = Math.min(h - sy, maxY - minY + pad * 2);
-      }
+        if (maxX > minX && maxY > minY) {
+          var pad = Math.floor(Math.min(w, h) * 0.008);
+          sx = Math.max(0, minX - pad);
+          sy = Math.max(0, minY - pad);
+          sw = Math.min(w - sx, maxX - minX + pad * 2);
+          sh = Math.min(h - sy, maxY - minY + pad * 2);
+        }
+      } catch (_) {}
     }
     c.width = Math.max(8, sw);
     c.height = Math.max(8, sh);
     c.getContext('2d').drawImage(img, sx, sy, sw, sh, 0, 0, c.width, c.height);
-    return c;
+    return kitToAlphaCanvas(c);
   }
 
   function sampleKitPrimary(canvas) {
@@ -2558,6 +2596,9 @@
         }
       });
       this.activeJerseyGroup = null;
+      model.traverse(function (child) {
+        if (child.name && child.name.indexOf('athlete_pec') === 0) child.visible = true;
+      });
     },
 
     // Genera la texture della divisa 360° per la maglia (Fronte con kit + Retro con Numero & Nome Atleta)
@@ -2578,46 +2619,42 @@
       var logoUrl = (team && team.logo) || ('immagini/squadre-loghi/' + (team ? team.id : clubSlug) + '.png');
       var loadUrl = resolve2dKitUrl(kitUrl);
 
-      function finish(texImg, primary, secondary) {
+      function emit(frontCanvas, primary, secondary) {
         var THREE = window.THREE;
-        var tex = EliseeJerseyAIAgent._prepKitTex(new THREE.CanvasTexture(canvas));
-        if (typeof callback === 'function') callback(tex, texImg || null, primary, secondary);
-      }
-
-      function paintWrap(front, primary, secondary) {
-        ctx.fillStyle = primary || '#0a1628';
-        ctx.fillRect(0, 0, 1024, 1024);
-        ctx.fillStyle = 'rgba(0,0,0,0.28)';
-        ctx.fillRect(0, 0, 220, 1024);
-        ctx.fillRect(804, 0, 220, 1024);
-        if (front) {
-          ctx.drawImage(front, 200, 8, 624, 1008);
+        var src = frontCanvas || canvas;
+        if (!frontCanvas) {
+          ctx.fillStyle = primary || '#0a1628';
+          ctx.fillRect(0, 0, 1024, 1024);
         }
-        finish(front, primary, secondary);
+        var tex = EliseeJerseyAIAgent._prepKitTex(new THREE.CanvasTexture(src));
+        if (typeof callback === 'function') callback(tex, frontCanvas || null, primary, secondary);
       }
 
       function ingest(loadedImg, sourceUrl) {
-        var uvSheet = isUvKitSheet(sourceUrl, loadedImg);
-        var front = cropKitFrontSprite(loadedImg, uvSheet);
-        var sampled = sampleKitPrimary(front);
-        paintWrap(front, sampled || primaryColor, secondaryColor);
+        try {
+          var uvSheet = isUvKitSheet(sourceUrl, loadedImg);
+          var front = cropKitFrontSprite(loadedImg, uvSheet);
+          var sampled = sampleKitPrimary(front);
+          emit(front, sampled || primaryColor, secondaryColor);
+        } catch (err) {
+          emit(null, primaryColor, secondaryColor);
+        }
       }
 
-      var img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.onload = function () { ingest(img, loadUrl); };
-      img.onerror = function () {
-        if (loadUrl !== kitUrl && kitUrl) {
-          var fallback = new Image();
-          fallback.crossOrigin = 'anonymous';
-          fallback.onload = function () { ingest(fallback, kitUrl); };
-          fallback.onerror = function () { paintWrap(null, primaryColor, secondaryColor); };
-          fallback.src = kitUrl;
+      loadImageSafe(loadUrl || kitUrl, function (img) {
+        if (img) {
+          ingest(img, loadUrl || kitUrl);
           return;
         }
-        paintWrap(null, primaryColor, secondaryColor);
-      };
-      img.src = loadUrl || kitUrl;
+        if (loadUrl && kitUrl && loadUrl !== kitUrl) {
+          loadImageSafe(kitUrl, function (img2) {
+            if (img2) ingest(img2, kitUrl);
+            else emit(null, primaryColor, secondaryColor);
+          });
+          return;
+        }
+        emit(null, primaryColor, secondaryColor);
+      });
     },
 
     // Calibrazione & Vestizione 3D Intelligente sul Torso dell'Atleta
@@ -2684,32 +2721,44 @@
           mat.needsUpdate = true;
           mesh.material = mat;
         };
-        var paintJerseyMap = function (mesh, remapUv) {
-          if (!mesh) return;
-          if (remapUv && mesh.geometry && !mesh.geometry.__eliseeFrontUv) {
-            remapCylinderFrontUVs(mesh.geometry);
-            mesh.geometry.__eliseeFrontUv = true;
-          }
+
+        // Applica la texture della maglia direttamente su una mesh (torso, sleeve, ecc.)
+        var paintJerseyTex = function (mesh, kTex) {
+          if (!mesh || !kTex) return;
           var mat = mesh.material && mesh.material.clone ? mesh.material.clone() : mesh.material;
           if (!mat) return;
-          mat.map = tex;
+          mat.map = kTex;
           if (mat.color) mat.color.setHex(0xffffff);
-          mat.roughness = 0.52;
+          mat.transparent = false;
+          mat.roughness = 0.50;
           mat.metalness = 0.04;
           mat.needsUpdate = true;
           mesh.material = mat;
         };
 
         var foundNativeMesh = false;
+        var torsoMesh = null;
         model.traverse(function (child) {
           if (!child.isMesh || !child.name) return;
           var nm = child.name;
           if (nm === 'athlete_torso') {
-            paintJerseyMap(child, true);
+            // Applica la texture PNG della maglia direttamente sul torso cilindrico
+            if (tex) {
+              paintJerseyTex(child, tex);
+            } else {
+              paintColorOnly(child, primaryColor);
+            }
+            torsoMesh = child;
             foundNativeMesh = true;
             return;
           }
-          if (nm.indexOf('athlete_pec') === 0 || nm.indexOf('athlete_delt') === 0 || nm.indexOf('athlete_sleeve') === 0) {
+          if (nm.indexOf('athlete_pec') === 0) {
+            // Nascondi i pettorali: la maglia copre il torso
+            child.visible = false;
+            foundNativeMesh = true;
+            return;
+          }
+          if (nm.indexOf('athlete_delt') === 0 || nm.indexOf('athlete_sleeve') === 0) {
             paintColorOnly(child, primaryColor);
             foundNativeMesh = true;
             return;
@@ -2727,34 +2776,29 @@
           }
         });
 
-        if (!foundNativeMesh) {
-          var EXCLUDE_RE = /head|hair|face|eye|ear|brow|lip|nose|teeth|tongue|eyelash|skull|jaw|mouth|beard|pupil|iris|scalp/i;
-          var TORSO_RE = /torso|body|shirt|jersey|cloth|top|upper|chest|trunk|abdomen|pelvis|spine/i;
-          var headThreshY = bbox.min.y + totalH * (0.78 + band) + yShift;
-          var legsThreshY = bbox.min.y + totalH * (0.34 - band) + yShift;
-
-          var meshesToTint = [];
-          model.traverse(function (child) {
-            if (!child.isMesh) return;
-            var nm = (child.name || '').toLowerCase();
-            if (EXCLUDE_RE.test(nm)) return;
-            var childBB = new THREE.Box3().setFromObject(child);
-            var childCenter = new THREE.Vector3();
-            childBB.getCenter(childCenter);
-            if (childCenter.y > headThreshY) return;
-            if (childCenter.y < legsThreshY && !TORSO_RE.test(nm)) return;
-            meshesToTint.push(child);
+        // Fallback per modelli GLB esterni senza mesh 'athlete_torso' nominate:
+        // applica una decal frontale che segue la bounding box del modello caricato.
+        if (!foundNativeMesh && tex) {
+          var chestY = bbox.min.y + totalH * 0.58;
+          var chestZ = Math.max(0.14, size.z * 0.52);
+          var decalW = Math.max(0.35, size.x * 0.55);
+          var decalH = Math.max(0.48, totalH * 0.38);
+          var decalMatG = new THREE.MeshStandardMaterial({
+            map: tex,
+            transparent: true,
+            alphaTest: 0.04,  // soglia bassa: mostra la maglia anche se i bordi non sono perfetti
+            roughness: 0.48,
+            metalness: 0.04,
+            depthWrite: false,
+            premultipliedAlpha: false,
+            color: 0xffffff
           });
-
-          meshesToTint.forEach(function (child) {
-            if (!child.__eliseeOrigMat && child.material) {
-              child.__eliseeOrigMat = self._cloneMat(child.material);
-            }
-            paintJerseyMap(child, false);
-            child.__eliseeJerseyApplied = true;
-          });
-
-          self.activeJerseyMeshes = meshesToTint;
+          var decalG = new THREE.Mesh(new THREE.PlaneGeometry(decalW, decalH), decalMatG);
+          decalG.name = '__elisee_decal_front';
+          decalG.__isEliseeJerseyMesh = true;
+          decalG.position.set(0, chestY, chestZ);
+          decalG.renderOrder = 2;
+          model.add(decalG);
         }
 
         // Render immediato
