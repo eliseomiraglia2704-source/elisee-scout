@@ -25,6 +25,13 @@
     activeModel: null
   };
 
+  var faceScan = {
+    stream: null,
+    raf: 0,
+    lastBox: null,
+    lockMs: 0
+  };
+
   // Lettura / Salvataggio Dati Profilo Condiviso
   function getActiveUser() {
     try {
@@ -380,25 +387,188 @@
       };
       saveAvatarData(av);
       if (typeof window.showToast === 'function') {
-        window.showToast('Consenso biometrico registrato. Carica la foto per avviare il modello 3D!', 'success');
+        window.showToast('Consenso biometrico registrato. Scansiona il volto per applicarlo sul modello 3D.', 'success');
       }
       renderView();
     });
   }
 
-  // Schermata Upload Foto e Rilevamento Volto
+  function stopFaceScanStudio() {
+    if (faceScan.raf) {
+      cancelAnimationFrame(faceScan.raf);
+      faceScan.raf = 0;
+    }
+    if (faceScan.stream) {
+      try {
+        faceScan.stream.getTracks().forEach(function (t) { t.stop(); });
+      } catch (_) {}
+      faceScan.stream = null;
+    }
+    faceScan.lastBox = null;
+    faceScan.lockMs = 0;
+    var overlay = document.getElementById('es-a3d-facescan-overlay');
+    if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+  }
+
+  function applyFaceScanToAvatar(dataUrl, stayOnStage) {
+    var av = getAvatarData();
+    av.foto_originale_url = dataUrl;
+    av.texture_volto_url = dataUrl;
+    av.stato_generazione = 'completato';
+    av.data_creazione = av.data_creazione || new Date().toISOString();
+    saveAvatarData(av);
+    stopFaceScanStudio();
+    if (stayOnStage && state.activeModel) {
+      updateAthleteHeadTexture(av);
+      if (typeof window.showToast === 'function') {
+        window.showToast('Volto applicato sul modello 3D', 'success');
+      }
+      return;
+    }
+    renderView();
+  }
+
+  function captureFaceFromVideo(video, box) {
+    var vw = video.videoWidth || 640;
+    var vh = video.videoHeight || 480;
+    var sx, sy, sw, sh;
+    if (box && box.width > 20 && box.height > 20) {
+      var padX = box.width * 0.38;
+      var padY = box.height * 0.5;
+      sx = Math.max(0, box.x - padX);
+      sy = Math.max(0, box.y - padY * 0.85);
+      sw = Math.min(vw - sx, box.width + padX * 2);
+      sh = Math.min(vh - sy, box.height + padY * 1.55);
+    } else {
+      var side = Math.min(vw, vh) * 0.7;
+      sx = (vw - side) / 2;
+      sy = Math.max(0, (vh - side * 1.22) * 0.32);
+      sw = side;
+      sh = Math.min(vh - sy, side * 1.22);
+    }
+    var out = document.createElement('canvas');
+    out.width = 768;
+    out.height = 768;
+    var ctx = out.getContext('2d');
+    ctx.drawImage(video, sx, sy, sw, sh, 0, 0, 768, 768);
+    return out.toDataURL('image/jpeg', 0.92);
+  }
+
+  function openFaceScanStudio(stayOnStage) {
+    var modal = ensureModalDOM();
+    var dialog = modal.querySelector('.es-a3d-dialog') || modal;
+    stopFaceScanStudio();
+
+    var overlay = document.createElement('div');
+    overlay.id = 'es-a3d-facescan-overlay';
+    overlay.className = 'es-a3d-facescan';
+    overlay.innerHTML =
+      '<div class="es-a3d-facescan-stage">' +
+        '<video id="es-a3d-facescan-video" autoplay playsinline muted></video>' +
+        '<div class="es-a3d-facescan-mask" aria-hidden="true"></div>' +
+        '<div class="es-a3d-facescan-oval" id="es-a3d-facescan-oval"></div>' +
+        '<div class="es-a3d-facescan-status" id="es-a3d-facescan-status">Concedi l\'accesso alla fotocamera</div>' +
+      '</div>' +
+      '<div class="es-a3d-facescan-actions">' +
+        '<button type="button" class="es-a3d-facescan-btn es-a3d-facescan-btn-ghost" id="es-a3d-facescan-cancel">Annulla</button>' +
+        '<button type="button" class="es-a3d-facescan-btn es-a3d-facescan-btn-shot" id="es-a3d-facescan-shot">Scatta</button>' +
+        '<button type="button" class="es-a3d-facescan-btn es-a3d-facescan-btn-ghost" id="es-a3d-facescan-file">Usa una foto</button>' +
+        '<input type="file" id="es-a3d-facescan-file-input" accept="image/jpeg,image/png,image/webp" hidden>' +
+      '</div>';
+    dialog.appendChild(overlay);
+
+    var video = overlay.querySelector('#es-a3d-facescan-video');
+    var oval = overlay.querySelector('#es-a3d-facescan-oval');
+    var statusEl = overlay.querySelector('#es-a3d-facescan-status');
+    var fileInput = overlay.querySelector('#es-a3d-facescan-file-input');
+
+    function setStatus(msg, ok) {
+      if (!statusEl) return;
+      statusEl.textContent = msg;
+      statusEl.classList.toggle('is-ok', !!ok);
+    }
+
+    overlay.querySelector('#es-a3d-facescan-cancel').addEventListener('click', function () {
+      stopFaceScanStudio();
+    });
+    overlay.querySelector('#es-a3d-facescan-file').addEventListener('click', function () {
+      fileInput.click();
+    });
+    fileInput.addEventListener('change', function () {
+      if (fileInput.files && fileInput.files[0]) {
+        handleFileSelection(fileInput.files[0], statusEl);
+      }
+    });
+    overlay.querySelector('#es-a3d-facescan-shot').addEventListener('click', function () {
+      if (!video || video.readyState < 2) return;
+      var dataUrl = captureFaceFromVideo(video, faceScan.lastBox);
+      applyFaceScanToAvatar(dataUrl, stayOnStage);
+    });
+
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setStatus('Fotocamera non disponibile su questo dispositivo. Usa una foto.');
+      return;
+    }
+
+    navigator.mediaDevices.getUserMedia({
+      video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } },
+      audio: false
+    }).then(function (stream) {
+      faceScan.stream = stream;
+      video.srcObject = stream;
+      return video.play();
+    }).then(function () {
+      setStatus('Inquadra il viso nell\'ovale, poi scatta');
+      var detector = null;
+      try {
+        if (typeof window.FaceDetector === 'function') {
+          detector = new window.FaceDetector({ fastMode: true, maxDetectedFaces: 1 });
+        }
+      } catch (_) {}
+
+      var lastDetect = 0;
+      function tick(ts) {
+        if (!faceScan.stream) return;
+        faceScan.raf = requestAnimationFrame(tick);
+        if (!detector || (ts - lastDetect) < 180) return;
+        lastDetect = ts;
+        detector.detect(video).then(function (faces) {
+          if (!faces || !faces.length) {
+            faceScan.lastBox = null;
+            faceScan.lockMs = 0;
+            oval.classList.remove('is-lock');
+            setStatus('Inquadra il viso nell\'ovale, poi scatta');
+            return;
+          }
+          var b = faces[0].boundingBox;
+          faceScan.lastBox = { x: b.x, y: b.y, width: b.width, height: b.height };
+          oval.classList.add('is-lock');
+          setStatus('Volto rilevato — scatta o resta fermo', true);
+        }).catch(function () {});
+      }
+      faceScan.raf = requestAnimationFrame(tick);
+    }).catch(function () {
+      setStatus('Accesso fotocamera negato. Puoi usare una foto dal dispositivo.');
+    });
+  }
+
+  // Schermata Upload Foto e Scan Face sul modello 3D Elisee
   function renderUploadView(container) {
     container.innerHTML =
       '<div class="es-a3d-consent-view">' +
         '<div class="es-a3d-consent-card" style="max-width:540px;">' +
-          '<h3 class="es-a3d-consent-title" style="text-align:center;">Carica la foto del tuo volto</h3>' +
-          '<p style="font-size:0.82rem; color:#94a3b8; text-align:center; margin:0 0 10px 0;">' +
-            'Usa una foto frontale con buona illuminazione, sfondo neutro ed espressione naturale.' +
+          '<h3 class="es-a3d-consent-title" style="text-align:center;">Scan Face sul modello 3D</h3>' +
+          '<p style="font-size:0.82rem; color:#94a3b8; text-align:center; margin:0 0 16px 0;">' +
+            'Scansiona il volto con la fotocamera: lo applichiamo subito sul calciatore 3D Elisee. Nessun abbonamento a generatori 3D esterni.' +
           '</p>' +
+          '<button type="button" class="es-a3d-btn-primary" id="es-a3d-btn-scan-face" style="width:100%; margin-bottom:14px;">' +
+            '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>' +
+            '<span>Scansiona il volto</span>' +
+          '</button>' +
           '<div class="es-a3d-upload-dropzone" id="es-a3d-dropzone">' +
-            '<svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>' +
-            '<span style="font-size:0.86rem; font-weight:700; color:#f8fafc;">Trascina qui la foto o clicca per sfogliare</span>' +
-            '<span style="font-size:0.72rem; color:#64748b;">Formati supportati: JPG, PNG, WebP (max 8MB)</span>' +
+            '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>' +
+            '<span style="font-size:0.86rem; font-weight:700; color:#f8fafc;">Oppure carica una foto</span>' +
+            '<span style="font-size:0.72rem; color:#64748b;">JPG, PNG, WebP · primo piano frontale</span>' +
             '<input type="file" id="es-a3d-file-input" accept="image/jpeg,image/png,image/webp" style="display:none;">' +
           '</div>' +
           '<div id="es-a3d-upload-feedback" style="font-size:0.8rem; color:#f87171; display:none; text-align:center;"></div>' +
@@ -408,6 +578,10 @@
     var dropzone = container.querySelector('#es-a3d-dropzone');
     var fileInput = container.querySelector('#es-a3d-file-input');
     var feedback = container.querySelector('#es-a3d-upload-feedback');
+    var scanBtn = container.querySelector('#es-a3d-btn-scan-face');
+    if (scanBtn) {
+      scanBtn.addEventListener('click', function () { openFaceScanStudio(false); });
+    }
 
     dropzone.addEventListener('click', function () { fileInput.click(); });
 
@@ -464,6 +638,7 @@
   }
 
   function showFeedback(el, msg) {
+    if (typeof window.showToast === 'function') window.showToast(msg, 'error');
     if (!el) return;
     el.textContent = msg;
     el.style.display = 'block';
@@ -503,14 +678,7 @@
       return;
     }
 
-    // Volto rilevato con successo: avvia pipeline fotogrammetrica
-    var av = getAvatarData();
-    av.foto_originale_url = dataUrl;
-    av.stato_generazione = 'in_elaborazione';
-    saveAvatarData(av);
-    renderView();
-
-    simulate3DReconstruction(canvas.toDataURL('image/jpeg', 0.92));
+    applyFaceScanToAvatar(canvas.toDataURL('image/jpeg', 0.92), !!state.activeModel);
   }
 
   // Pipeline Fotogrammetrica (simulata in step con progress bar)
@@ -1180,12 +1348,15 @@
           '</button>' +
         '</div>' +
 
-        '<!-- Sezione 5: Azioni & Privacy -->' +
+        '<!-- Sezione 5: Scan Face sul modello 3D -->' +
         '<div class="es-a3d-card-section">' +
-          '<div class="es-a3d-section-title">Aggiorna Foto Volto</div>' +
-          '<button type="button" class="es-a3d-btn-primary" id="btn-replace-photo" style="width:100%;">' +
-            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>' +
-            'Carica Nuova Foto' +
+          '<div class="es-a3d-section-title">Scan Face</div>' +
+          '<button type="button" class="es-a3d-btn-primary" id="btn-scan-face-live" style="width:100%;">' +
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>' +
+            'Scansiona il volto' +
+          '</button>' +
+          '<button type="button" class="es-a3d-btn-primary" id="btn-replace-photo" style="width:100%; margin-top:8px; background:transparent; color:#e2e8f0; border:1px solid rgba(148,163,184,0.28); box-shadow:none;">' +
+            'Carica una foto' +
           '</button>' +
         '</div>' +
         '<button type="button" class="es-a3d-btn-delete" id="btn-delete-avatar-gdpr">' +
@@ -1433,11 +1604,22 @@
       });
     });
 
+    var btnScanLive = container.querySelector('#btn-scan-face-live');
+    if (btnScanLive) {
+      btnScanLive.addEventListener('click', function () {
+        openFaceScanStudio(true);
+      });
+    }
     container.querySelector('#btn-replace-photo').addEventListener('click', function () {
-      avatar.stato_generazione = 'non_avviato';
-      saveAvatarData(avatar);
-      disposeThree();
-      renderView();
+      var input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/jpeg,image/png,image/webp';
+      input.addEventListener('change', function () {
+        if (input.files && input.files[0]) {
+          handleFileSelection(input.files[0], null);
+        }
+      });
+      input.click();
     });
 
     container.querySelector('#btn-delete-avatar-gdpr').addEventListener('click', function () {
@@ -3244,6 +3426,7 @@
   function close() {
     state.isOpen = false;
     document.body.classList.remove('es-a3d-open');
+    stopFaceScanStudio();
     var modal = document.getElementById('elisee-avatar3d-modal');
     if (modal) modal.classList.remove('is-open');
     disposeThree();
