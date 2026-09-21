@@ -1,7 +1,7 @@
 /* ELISEE SCOUT — Cache Wipe & Self-Unregister Service Worker
    Assicura che nessun asset obsoleto rimanga memorizzato nella cache del browser.
 */
-const CACHE = 'elisee-scout-v20260921-navscroll1';
+const CACHE = 'elisee-scout-v20260921-kitwrap1';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -20,10 +20,10 @@ self.addEventListener('activate', (event) => {
           try {
             client.postMessage({
               type: 'FORCE_RELOAD',
-              version: '20260921_NAVSCROLL1',
-              updatedAt: '2026-09-21T15:00:00Z',
-              ts: '20260921_150000',
-              bust: 'v20260921_NAVSCROLL1'
+              version: '20260921_KITWRAP1',
+              updatedAt: '2026-09-21T16:00:00Z',
+              ts: '20260921_160000',
+              bust: 'v20260921_KITWRAP1'
             });
           } catch (e) {}
         });

@@ -62,7 +62,7 @@
         numero: 10,
         cognome: (getActiveUser().cognome || 'ATLETA').toUpperCase(),
         selected_kit_path: 'immagini/kits-2d/foggia-city/home.png',
-        selected_kit_uv: 'immagini/kits-2d/foggia-city/home-uv.png',
+        selected_kit_uv: 'immagini/kits-2d/foggia-city/home.png',
         selected_kit_id: 'foggia_city_home'
       },
       stato_generazione: 'non_avviato',
@@ -864,15 +864,15 @@
         {
           id: 'inter_home_27',
           name: 'Inter 24/25 Home (Serie A)',
-          path: 'immagini/kits-2d/inter/INTER-HOME-27.png',
-          uvPath: 'immagini/kits-2d/inter/INTER-HOME-27.png',
+          path: 'immagini/kits-2d/inter/home.png',
+          uvPath: 'immagini/kits-2d/inter/home.png',
           badge: 'SPECIALE'
         },
         {
           id: 'inter_home',
           name: 'Inter Ufficiale Casa',
           path: 'immagini/kits-2d/inter/home.png',
-          uvPath: 'immagini/kits-2d/inter/INTER-HOME-27.png',
+          uvPath: 'immagini/kits-2d/inter/home.png',
           badge: 'UFFICIALE'
         },
         {
@@ -1410,7 +1410,7 @@
           saveAvatarData(avatar);
 
           // Applica la texture direttamente al modello attivo in scena
-          applyKitTextureToActiveModel(kUv);
+          applyKitTextureToActiveModel(kPath);
           showAdminToast('Kit 3D Applicato: ' + (avatar.divisa_ref.club || 'Club'));
         });
       });
@@ -1543,7 +1543,7 @@
           if (typeof updateAiStatus === 'function') updateAiStatus('Visualizzazione corpo originale (Kit disattivato)');
           showAdminToast('Corpo originale ripristinato');
         } else {
-          var currKit = (avatar.divisa_ref && (avatar.divisa_ref.selected_kit_uv || avatar.divisa_ref.selected_kit_path)) || 'immagini/kits-2d/foggia-city/home-uv.png';
+          var currKit = (avatar.divisa_ref && (avatar.divisa_ref.selected_kit_path || avatar.divisa_ref.selected_kit_uv)) || 'immagini/kits-2d/foggia-city/home.png';
           applyKitTextureToActiveModel(currKit, updateAiStatus);
           showAdminToast('Maglia ufficiale indossata con IA');
         }
@@ -1563,7 +1563,7 @@
 
     if (btnAiFit) {
       btnAiFit.addEventListener('click', function () {
-        var currKit = (avatar.divisa_ref && (avatar.divisa_ref.selected_kit_uv || avatar.divisa_ref.selected_kit_path)) || 'immagini/kits-2d/foggia-city/home-uv.png';
+        var currKit = (avatar.divisa_ref && (avatar.divisa_ref.selected_kit_path || avatar.divisa_ref.selected_kit_uv)) || 'immagini/kits-2d/foggia-city/home.png';
         applyKitTextureToActiveModel(currKit, updateAiStatus);
         showAdminToast('🤖 Agente IA: Vestizione kit avviata!');
       });
@@ -1574,7 +1574,7 @@
         fitPills.forEach(function (p) { p.classList.remove('is-active'); });
         pill.classList.add('is-active');
         EliseeJerseyAIAgent.fitMode = pill.getAttribute('data-fit') || 'slim';
-        var currKit = (avatar.divisa_ref && (avatar.divisa_ref.selected_kit_uv || avatar.divisa_ref.selected_kit_path)) || 'immagini/kits-2d/foggia-city/home-uv.png';
+        var currKit = (avatar.divisa_ref && (avatar.divisa_ref.selected_kit_path || avatar.divisa_ref.selected_kit_uv)) || 'immagini/kits-2d/foggia-city/home.png';
         applyKitTextureToActiveModel(currKit, updateAiStatus);
       });
     });
@@ -1584,7 +1584,7 @@
         var val = parseInt(rangeOffsetY.value, 10) || 0;
         valOffsetY.textContent = (val > 0 ? '+' : '') + val + ' cm';
         EliseeJerseyAIAgent.offsetY = val;
-        var currKit = (avatar.divisa_ref && (avatar.divisa_ref.selected_kit_uv || avatar.divisa_ref.selected_kit_path)) || 'immagini/kits-2d/foggia-city/home-uv.png';
+        var currKit = (avatar.divisa_ref && (avatar.divisa_ref.selected_kit_path || avatar.divisa_ref.selected_kit_uv)) || 'immagini/kits-2d/foggia-city/home.png';
         applyKitTextureToActiveModel(currKit, updateAiStatus);
       });
     }
@@ -2369,6 +2369,98 @@
   // AGENTE IA VESTIZIONE MAGLIA 3D & ADATTAMENTO ANATOMICO PRO
   // Sostituzione dinamica maglia Elisee Scout & Calzata 360°
   // ============================================================
+  function isUvKitSheet(url, img) {
+    var u = String(url || '').toLowerCase();
+    if (u.indexOf('-uv') !== -1 || u.indexOf('_uv') !== -1) return true;
+    if (u.indexOf('inter-home-27') !== -1) return true;
+    return !!(img && img.width === img.height && img.width >= 1500);
+  }
+
+  function resolve2dKitUrl(kitUrl) {
+    var u = String(kitUrl || '');
+    if (/INTER-HOME-27/i.test(u)) return u.replace(/INTER-HOME-27\.png/ig, 'home.png');
+    if (/[-_]uv/i.test(u)) return u.replace(/[-_]uv/ig, '');
+    return u;
+  }
+
+  function remapCylinderFrontUVs(geometry) {
+    if (!geometry || !geometry.attributes || !geometry.attributes.uv || !geometry.attributes.position) return;
+    var uv = geometry.attributes.uv;
+    var pos = geometry.attributes.position;
+    for (var i = 0; i < uv.count; i++) {
+      var x = pos.getX(i);
+      var z = pos.getZ(i);
+      var angle = Math.atan2(x, z);
+      uv.setX(i, 0.5 + (angle / Math.PI) * 0.5);
+    }
+    uv.needsUpdate = true;
+  }
+
+  function cropKitFrontSprite(img, asUvSheet) {
+    var w = img.width || 1;
+    var h = img.height || 1;
+    var c = document.createElement('canvas');
+    var sx, sy, sw, sh;
+    if (asUvSheet) {
+      sx = Math.floor(w * 0.30);
+      sy = Math.floor(h * 0.02);
+      sw = Math.floor(w * 0.40);
+      sh = Math.floor(h * 0.76);
+    } else {
+      var tmp = document.createElement('canvas');
+      tmp.width = w;
+      tmp.height = h;
+      var tctx = tmp.getContext('2d');
+      tctx.drawImage(img, 0, 0);
+      var data = tctx.getImageData(0, 0, w, h).data;
+      var minX = w, minY = h, maxX = 0, maxY = 0;
+      for (var y = 0; y < h; y += 2) {
+        for (var x = 0; x < w; x += 2) {
+          var i = (y * w + x) * 4;
+          var r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3];
+          if (a < 24) continue;
+          if (r < 16 && g < 16 && b < 16) continue;
+          if (x < minX) minX = x;
+          if (y < minY) minY = y;
+          if (x > maxX) maxX = x;
+          if (y > maxY) maxY = y;
+        }
+      }
+      if (maxX <= minX || maxY <= minY) {
+        sx = 0; sy = 0; sw = w; sh = h;
+      } else {
+        var pad = Math.floor(Math.min(w, h) * 0.01);
+        sx = Math.max(0, minX - pad);
+        sy = Math.max(0, minY - pad);
+        sw = Math.min(w - sx, maxX - minX + pad * 2);
+        sh = Math.min(h - sy, maxY - minY + pad * 2);
+      }
+    }
+    c.width = Math.max(8, sw);
+    c.height = Math.max(8, sh);
+    c.getContext('2d').drawImage(img, sx, sy, sw, sh, 0, 0, c.width, c.height);
+    return c;
+  }
+
+  function sampleKitPrimary(canvas) {
+    try {
+      var ctx = canvas.getContext('2d');
+      var w = canvas.width, h = canvas.height;
+      var d = ctx.getImageData(Math.floor(w * 0.3), Math.floor(h * 0.3), Math.floor(w * 0.4), Math.floor(h * 0.4)).data;
+      var rs = 0, gs = 0, bs = 0, n = 0;
+      for (var i = 0; i < d.length; i += 16) {
+        var r = d[i], g = d[i + 1], b = d[i + 2], a = d[i + 3];
+        if (a < 40) continue;
+        if (r < 18 && g < 18 && b < 18) continue;
+        rs += r; gs += g; bs += b; n++;
+      }
+      if (!n) return '#0a1628';
+      return 'rgb(' + Math.round(rs / n) + ',' + Math.round(gs / n) + ',' + Math.round(bs / n) + ')';
+    } catch (_) {
+      return '#0a1628';
+    }
+  }
+
   var EliseeJerseyAIAgent = {
     name: 'Elisee Kit Fitting AI Agent',
     version: '2.3.0',
@@ -2475,136 +2567,57 @@
       canvas.height = 1024;
       var ctx = canvas.getContext('2d');
 
-      // Trova squadra nel catalogo per i colori ufficiali
       var teamList = Array.isArray(allCatalogTeams) ? allCatalogTeams : [];
       var clubSlug = String(clubName || 'club').toLowerCase().replace(/[^a-z0-9]+/g, '-');
       var team = teamList.find(function (t) {
         return (t.name || '').toUpperCase() === (clubName || '').toUpperCase() ||
                (t.id || '') === clubSlug;
       });
-      var primaryColor = (team && team.primary) || '#c0392b';
+      var primaryColor = (team && team.primary) || '#0a1628';
       var secondaryColor = (team && team.secondary) || '#111111';
       var logoUrl = (team && team.logo) || ('immagini/squadre-loghi/' + (team ? team.id : clubSlug) + '.png');
-      var dorsalNum = athleteNumber || 10;
-      var dorsalName = (athleteName || 'ATLETA').toUpperCase().split(' ').pop();
+      var loadUrl = resolve2dKitUrl(kitUrl);
+
+      function finish(texImg, primary, secondary) {
+        var THREE = window.THREE;
+        var tex = EliseeJerseyAIAgent._prepKitTex(new THREE.CanvasTexture(canvas));
+        if (typeof callback === 'function') callback(tex, texImg || null, primary, secondary);
+      }
+
+      function paintWrap(front, primary, secondary) {
+        ctx.fillStyle = primary || '#0a1628';
+        ctx.fillRect(0, 0, 1024, 1024);
+        ctx.fillStyle = 'rgba(0,0,0,0.28)';
+        ctx.fillRect(0, 0, 220, 1024);
+        ctx.fillRect(804, 0, 220, 1024);
+        if (front) {
+          ctx.drawImage(front, 200, 8, 624, 1008);
+        }
+        finish(front, primary, secondary);
+      }
+
+      function ingest(loadedImg, sourceUrl) {
+        var uvSheet = isUvKitSheet(sourceUrl, loadedImg);
+        var front = cropKitFrontSprite(loadedImg, uvSheet);
+        var sampled = sampleKitPrimary(front);
+        paintWrap(front, sampled || primaryColor, secondaryColor);
+      }
 
       var img = new Image();
       img.crossOrigin = 'anonymous';
-
-      function applyDetailsAndFinalize() {
-        // 1. Colletto Sagomato a V / Girocollo Sportivo Tecnico Bicolore
-        ctx.save();
-        ctx.strokeStyle = secondaryColor || '#ffffff';
-        ctx.lineWidth = 16;
-        ctx.beginPath();
-        ctx.ellipse(512, 65, 95, 38, 0, 0, Math.PI);
-        ctx.stroke();
-        ctx.strokeStyle = 'rgba(255,255,255,0.7)';
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        ctx.ellipse(512, 65, 88, 34, 0, 0, Math.PI);
-        ctx.stroke();
-        ctx.restore();
-
-        // 2. Numero di Gara Frontale Ufficiale sul Petto
-        ctx.save();
-        ctx.textAlign = 'center';
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '900 38px sans-serif';
-        ctx.shadowColor = 'rgba(0,0,0,0.85)';
-        ctx.shadowBlur = 8;
-        ctx.fillText(String(dorsalNum), 640, 260);
-        ctx.strokeStyle = 'rgba(0,0,0,0.6)';
-        ctx.lineWidth = 3;
-        ctx.strokeText(String(dorsalNum), 640, 260);
-        ctx.restore();
-
-        // 3. Retro della Maglia: Nome Atleta e Numero Ufficiale a 360° (centro dorso X=128)
-        ctx.save();
-        ctx.textAlign = 'center';
-        ctx.fillStyle = '#ffffff';
-        ctx.shadowColor = 'rgba(0,0,0,0.9)';
-        ctx.shadowBlur = 10;
-
-        var backX = 128;
-        ctx.font = '900 28px sans-serif';
-        ctx.letterSpacing = '2px';
-        ctx.fillText(dorsalName, backX, 320);
-
-        ctx.font = '900 120px sans-serif';
-        ctx.fillText(String(dorsalNum), backX, 480);
-        ctx.strokeStyle = 'rgba(0,0,0,0.6)';
-        ctx.lineWidth = 6;
-        ctx.strokeText(String(dorsalNum), backX, 480);
-        ctx.restore();
-
-        var THREE = window.THREE;
-        var tex = EliseeJerseyAIAgent._prepKitTex(new THREE.CanvasTexture(canvas));
-
-        // 4. Stemma Ufficiale del Club sul Petto Sinistro (X=330, Y=210)
-        var badgeImg = new Image();
-        badgeImg.crossOrigin = 'anonymous';
-        badgeImg.onload = function () {
-          ctx.save();
-          ctx.shadowColor = 'rgba(0,0,0,0.75)';
-          ctx.shadowBlur = 12;
-          ctx.drawImage(badgeImg, 325, 205, 72, 72);
-          ctx.restore();
-          tex.needsUpdate = true;
-          if (state.renderer && state.scene && state.camera) state.renderer.render(state.scene, state.camera);
-        };
-        badgeImg.onerror = function () {};
-        badgeImg.src = logoUrl;
-
-        if (typeof callback === 'function') callback(tex, img, primaryColor, secondaryColor);
-      }
-
-      img.onload = function () {
-        var isUv = (kitUrl && (kitUrl.indexOf('-uv') !== -1 || kitUrl.indexOf('_uv') !== -1 || kitUrl.indexOf('INTER-HOME-27') !== -1)) ||
-                   (img.width === img.height && img.width >= 1024);
-
-        if (isUv) {
-          // Texture UV completa ufficiale (es. Foggia City home-uv.png o Inter 27)
-          ctx.drawImage(img, 0, 0, 1024, 1024);
-        } else {
-          // Kit 2D standard (disegno piana della divisa ufficiale del club):
-          // 1. Fondo base con colore primario ufficiale del club
-          ctx.fillStyle = primaryColor;
-          ctx.fillRect(0, 0, 1024, 1024);
-
-          // 2. Micro-costine atletiche traspiranti per realismo tessuto tecnico
-          ctx.fillStyle = 'rgba(0, 0, 0, 0.12)';
-          for (var x = 0; x < 1024; x += 6) {
-            ctx.fillRect(x, 0, 2.2, 1024);
-          }
-
-          // 3. Effetto gradiente luci e ombre muscolari sul torso
-          var bodyShade = ctx.createLinearGradient(0, 0, 1024, 0);
-          bodyShade.addColorStop(0, 'rgba(0,0,0,0.3)');
-          bodyShade.addColorStop(0.5, 'rgba(255,255,255,0.06)');
-          bodyShade.addColorStop(1, 'rgba(0,0,0,0.3)');
-          ctx.fillStyle = bodyShade;
-          ctx.fillRect(0, 0, 1024, 1024);
-
-          // 4. Centratura del Kit 2D ufficiale sul petto frontale (coordinate U Three.js: 0.25 -> 0.75, X: 256 -> 768)
-          var fw = 512;
-          var fh = 680;
-          var fx = 256;
-          var fy = 50;
-          ctx.drawImage(img, fx, fy, fw, fh);
-        }
-
-        applyDetailsAndFinalize();
-      };
-
+      img.onload = function () { ingest(img, loadUrl); };
       img.onerror = function () {
-        var THREE = window.THREE;
-        ctx.fillStyle = primaryColor;
-        ctx.fillRect(0, 0, 1024, 1024);
-        applyDetailsAndFinalize();
+        if (loadUrl !== kitUrl && kitUrl) {
+          var fallback = new Image();
+          fallback.crossOrigin = 'anonymous';
+          fallback.onload = function () { ingest(fallback, kitUrl); };
+          fallback.onerror = function () { paintWrap(null, primaryColor, secondaryColor); };
+          fallback.src = kitUrl;
+          return;
+        }
+        paintWrap(null, primaryColor, secondaryColor);
       };
-
-      img.src = kitUrl;
+      img.src = loadUrl || kitUrl;
     },
 
     // Calibrazione & Vestizione 3D Intelligente sul Torso dell'Atleta
@@ -2660,30 +2673,57 @@
         model = state.activeModel;
         self._prepKitTex(tex);
 
-        var applyJerseyMat = function (mat) {
+        var paintColorOnly = function (mesh, color) {
+          if (!mesh) return;
+          var mat = mesh.material && mesh.material.clone ? mesh.material.clone() : mesh.material;
+          if (!mat) return;
+          mat.map = null;
+          if (mat.color && color) mat.color.setStyle(color);
+          mat.roughness = 0.52;
+          mat.metalness = 0.04;
+          mat.needsUpdate = true;
+          mesh.material = mat;
+        };
+        var paintJerseyMap = function (mesh, remapUv) {
+          if (!mesh) return;
+          if (remapUv && mesh.geometry && !mesh.geometry.__eliseeFrontUv) {
+            remapCylinderFrontUVs(mesh.geometry);
+            mesh.geometry.__eliseeFrontUv = true;
+          }
+          var mat = mesh.material && mesh.material.clone ? mesh.material.clone() : mesh.material;
           if (!mat) return;
           mat.map = tex;
           if (mat.color) mat.color.setHex(0xffffff);
-          mat.roughness = 0.55;
+          mat.roughness = 0.52;
           mat.metalness = 0.04;
           mat.needsUpdate = true;
+          mesh.material = mat;
         };
 
         var foundNativeMesh = false;
         model.traverse(function (child) {
           if (!child.isMesh || !child.name) return;
-          if (child.name === 'athlete_torso' || child.name.indexOf('athlete_pec') !== -1 ||
-              child.name.indexOf('athlete_sleeve') !== -1 || child.name.indexOf('athlete_sock') !== -1) {
-            applyJerseyMat(child.material);
+          var nm = child.name;
+          if (nm === 'athlete_torso') {
+            paintJerseyMap(child, true);
             foundNativeMesh = true;
+            return;
           }
-          if (child.name === 'athlete_collar' && secondaryColor) {
-            if (child.material && child.material.color) child.material.color.setStyle(secondaryColor || '#ffffff');
-            if (child.material) child.material.needsUpdate = true;
+          if (nm.indexOf('athlete_pec') === 0 || nm.indexOf('athlete_delt') === 0 || nm.indexOf('athlete_sleeve') === 0) {
+            paintColorOnly(child, primaryColor);
+            foundNativeMesh = true;
+            return;
           }
-          if (child.name === 'athlete_shorts' && secondaryColor) {
-            if (child.material && child.material.color) child.material.color.setStyle(secondaryColor);
-            if (child.material) child.material.needsUpdate = true;
+          if (nm.indexOf('athlete_sock') === 0) {
+            paintColorOnly(child, secondaryColor || primaryColor || '#111111');
+            foundNativeMesh = true;
+            return;
+          }
+          if (nm === 'athlete_collar') {
+            paintColorOnly(child, secondaryColor || '#ffffff');
+          }
+          if (nm === 'athlete_shorts') {
+            paintColorOnly(child, secondaryColor || '#0f172a');
           }
         });
 
@@ -2706,24 +2746,11 @@
             meshesToTint.push(child);
           });
 
-          if (meshesToTint.length === 0) {
-            model.traverse(function (child) {
-              if (!child.isMesh) return;
-              var nm = (child.name || '').toLowerCase();
-              if (EXCLUDE_RE.test(nm)) return;
-              var childBB = new THREE.Box3().setFromObject(child);
-              var childCenter = new THREE.Vector3();
-              childBB.getCenter(childCenter);
-              if (childCenter.y > headThreshY) return;
-              meshesToTint.push(child);
-            });
-          }
-
           meshesToTint.forEach(function (child) {
             if (!child.__eliseeOrigMat && child.material) {
               child.__eliseeOrigMat = self._cloneMat(child.material);
             }
-            self._touchMat(child.material, applyJerseyMat);
+            paintJerseyMap(child, false);
             child.__eliseeJerseyApplied = true;
           });
 
@@ -2818,7 +2845,7 @@
 
         // Applica texture divisa se attiva (dopo group.add per garantire che Three.js abbia il modello)
         if (avatar && avatar.applica_divisa_club !== false) {
-          var kitUrl = (avatar.divisa_ref && (avatar.divisa_ref.selected_kit_uv || avatar.divisa_ref.selected_kit_path)) || 'immagini/kits-2d/foggia-city/home-uv.png';
+          var kitUrl = (avatar.divisa_ref && (avatar.divisa_ref.selected_kit_path || avatar.divisa_ref.selected_kit_uv)) || 'immagini/kits-2d/foggia-city/home.png';
           // Piccolo delay per assicurare che il renderer abbia processato il modello
           setTimeout(function () {
             if (!state.activeModel || !state.renderer) return;
@@ -2924,6 +2951,7 @@
     var hairGeo = new THREE.SphereGeometry(0.144, 32, 28);
     hairGeo.scale(1.03, 0.72, 1.1);
     var baseHair = new THREE.Mesh(hairGeo, baseMat);
+    baseHair.name = 'athlete_hair';
     baseHair.position.set(0, 1.81, -0.015);
     baseHair.castShadow = true;
     hairGroup.add(baseHair);
@@ -2946,6 +2974,7 @@
       sg.rotateY(st.rotY);
       sg.rotateZ(st.rotZ);
       var sm = new THREE.Mesh(sg, baseMat);
+      sm.name = 'athlete_hair_strand';
       sm.position.set(st.x, st.y, st.z);
       sm.castShadow = true;
       hairGroup.add(sm);
@@ -2970,8 +2999,18 @@
     var jerseyTex = createProceduralJerseyTexture(avatar);
     var jerseyMat = new THREE.MeshStandardMaterial({
       map: jerseyTex,
+      color: 0xffffff,
       roughness: 0.50,
       metalness: 0.05
+    });
+    var sleeveMat = new THREE.MeshStandardMaterial({
+      color: (avatar.divisa_ref && avatar.divisa_ref.colore_primario) || '#0a1628',
+      roughness: 0.50,
+      metalness: 0.04
+    });
+    var sockSolidMat = new THREE.MeshStandardMaterial({
+      color: (avatar.divisa_ref && avatar.divisa_ref.colore_secondario) || '#111111',
+      roughness: 0.55
     });
 
     var skinMat = new THREE.MeshStandardMaterial({
@@ -2989,6 +3028,8 @@
     // 1. Torace a V Atletico
     var torsoGeo = new THREE.CylinderGeometry(cfg.chestW / 2, cfg.waistW / 2, 0.46, 32);
     torsoGeo.scale(1.15, 1, 0.75);
+    remapCylinderFrontUVs(torsoGeo);
+    torsoGeo.__eliseeFrontUv = true;
     var torsoMesh = new THREE.Mesh(torsoGeo, jerseyMat);
     torsoMesh.name = 'athlete_torso';
     torsoMesh.position.y = 1.30;
@@ -3000,7 +3041,7 @@
     var pecGeo = new THREE.SphereGeometry(cfg.chestW * 0.24, 16, 16);
     pecGeo.scale(1.2, 0.8, 0.6);
     [-1, 1].forEach(function (side) {
-      var pecMesh = new THREE.Mesh(pecGeo, jerseyMat);
+      var pecMesh = new THREE.Mesh(pecGeo, sleeveMat.clone());
       pecMesh.name = 'athlete_pec_' + (side > 0 ? 'r' : 'l');
       pecMesh.position.set(side * (cfg.chestW * 0.20), 1.38, 0.09);
       pecMesh.castShadow = true;
@@ -3023,7 +3064,7 @@
       // Deltoide (Spalla)
       var deltGeo = new THREE.SphereGeometry(cfg.armR * 1.35, 16, 16);
       deltGeo.scale(1.1, 1.2, 1.0);
-      var deltMesh = new THREE.Mesh(deltGeo, jerseyMat);
+      var deltMesh = new THREE.Mesh(deltGeo, sleeveMat.clone());
       deltMesh.name = 'athlete_delt_' + sideKey;
       deltMesh.position.set(side * (cfg.chestW * 0.54), 1.45, 0);
       deltMesh.castShadow = true;
@@ -3031,7 +3072,7 @@
 
       // Manica maglia
       var sleeveGeo = new THREE.CylinderGeometry(cfg.armR * 1.22, cfg.armR * 1.15, 0.16, 20);
-      var sleeveMesh = new THREE.Mesh(sleeveGeo, jerseyMat);
+      var sleeveMesh = new THREE.Mesh(sleeveGeo, sleeveMat.clone());
       sleeveMesh.name = 'athlete_sleeve_' + sideKey;
       sleeveMesh.position.set(side * (cfg.chestW * 0.55), 1.38, 0);
       sleeveMesh.rotation.z = side * 0.16;
@@ -3108,7 +3149,7 @@
 
       // Calzettone da Gara con Risvolto
       var sockGeo = new THREE.CylinderGeometry(cfg.legR * 0.88, cfg.legR * 0.74, 0.44, 20);
-      var sockMesh = new THREE.Mesh(sockGeo, jerseyMat);
+      var sockMesh = new THREE.Mesh(sockGeo, sockSolidMat.clone());
       sockMesh.name = 'athlete_sock_' + sideKey;
       sockMesh.position.set(side * 0.11, 0.34, 0);
       sockMesh.castShadow = true;
@@ -3281,7 +3322,7 @@
 
     // Se attiva la divisa, applica il kit al calciatore attivo
     if (avatar && avatar.applica_divisa_club !== false) {
-      var kitUrl = (avatar.divisa_ref && (avatar.divisa_ref.selected_kit_uv || avatar.divisa_ref.selected_kit_path)) || 'immagini/kits-2d/foggia-city/home-uv.png';
+      var kitUrl = (avatar.divisa_ref && (avatar.divisa_ref.selected_kit_path || avatar.divisa_ref.selected_kit_uv)) || 'immagini/kits-2d/foggia-city/home.png';
       setTimeout(function () {
         if (!state.activeModel || !state.renderer) return;
         applyKitTextureToActiveModel(kitUrl);

@@ -3,7 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-21** — NAVSCROLL1 — Badge ciano sotto Album: era la scrollbar overlay della nav + blur header:
+Ultimo aggiornamento: **2026-09-21** — KITWRAP1 — Kit 2D sul 3D: stop minestrone UV:
+1. **Causa**: il foglio UV FIFA (`INTER-HOME-27.png`) veniva avvolto intero su cilindri/sfere (torso, pettorali, maniche, calzettoni) con UV sbagliati.
+2. **Fix**: si usa sempre la foto 2D della maglia (`home.png`), ritagliata dal nero; sul torso UV rimappati col petto al centro. Pettorali/maniche/calzettoni: solo colore club, niente mappa UV. Testa/capelli/pelle mai tinte.
+3. Click kit applica `path` 2D, non lo sheet UV. Inter 24/25 Home punta a `home.png`.
+4. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_KITWRAP1`.
+
+Feature precedente: **2026-09-21** — NAVSCROLL1 — Badge ciano sotto Album: era la scrollbar overlay della nav + blur header:
 1. `.nav-menu` ora `overflow: hidden` (niente più thumb ciano Windows/Chrome sotto Album).
 2. Header senza `backdrop-filter` / bordo: sparisce la fascia nera sotto la navbar.
 3. **File**: `style.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_NAVSCROLL1`. Commit `88fc7060`. Deploy `5oLk2siov4u3cyTQUmVeQzT1XxKG` live su `https://elisee-scout.vercel.app`.
