@@ -6,7 +6,7 @@ File di passaggio tra sessioni / account Grok.
 Ultimo aggiornamento: **2026-09-21** — NAVSCROLL1 — Badge ciano sotto Album: era la scrollbar overlay della nav + blur header:
 1. `.nav-menu` ora `overflow: hidden` (niente più thumb ciano Windows/Chrome sotto Album).
 2. Header senza `backdrop-filter` / bordo: sparisce la fascia nera sotto la navbar.
-3. **File**: `style.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_NAVSCROLL1`.
+3. **File**: `style.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_NAVSCROLL1`. Commit `88fc7060`. Deploy `5oLk2siov4u3cyTQUmVeQzT1XxKG` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **2026-09-21** — FACESCAN1 — Scan Face sul modello 3D Elisee (niente Hyper3D / abbonamenti):
 1. **Sì, si può fare senza pagare generatori 3D**: il volto va sul calciatore 3D già in Elisee Scout (`athlete_head`), non serve GLB a pagamento.
