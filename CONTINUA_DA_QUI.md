@@ -7,7 +7,7 @@ Ultimo aggiornamento: **2026-09-22** — INSPECT1 — Avatar 3D: Fase 1 ispezion
 1. **Esposizione globale `window.avatarModel`**: collegato tramite getter dinamico a `state.activeModel` in modo che qualsiasi script da console (es. `avatarModel.traverse(...)`) acceda direttamente al modello 3D attivo senza `ReferenceError`.
 2. **Auto-logging diagnostico Fase 1**: creata `logModelInspectionFase1(model)` che stampa in console l'elenco esatto di ogni singola mesh con nome, tipo (singolo o multi-material) e nomi dei materiali associati al momento del caricamento (sia per modelli GLB che per il Calciatore 3D Ufficiale).
 3. **Helper console `window.inspectAvatarModel()`**: invocabile in qualunque momento da DevTools per ispezionare istantaneamente il modello aperto.
-4. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260922_INSPECT1`. Commit TODO. Deploy TODO.
+4. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260922_INSPECT1`. Commit `8f768f2d`. Deploy `dpl_61ZT9i4XpEs4rFfRFjB1WcEduK8w` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **2026-09-21** — MESHKIT2 — Fix collegamento click UI → mesh 3D (kit non si applicava nonostante il badge "INDOSSATA"):
 1. **Root cause**: la guard `gen !== self._fitGen` in `fit()` scalzava silenziosamente la callback del TextureLoader quando una seconda `fit()` veniva chiamata durante il caricamento async — o quando il callback scattava dopo un re-render del modello.
