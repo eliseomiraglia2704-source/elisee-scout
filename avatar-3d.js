@@ -1410,7 +1410,12 @@
           saveAvatarData(avatar);
 
           // Applica la texture direttamente al modello attivo in scena
-          applyKitTextureToActiveModel(kUv || kPath);
+          // Passa updateAiStatus come onProgress per feedback visibile nel pannello AI
+          var statusEl = container.querySelector('#es-a3d-ai-status-txt');
+          function _kitOnProgress(msg) { if (statusEl) statusEl.textContent = msg; }
+          // Forza _fitGen a 0 per garantire che questa chiamata utente non venga scalzata
+          EliseeJerseyAIAgent._fitGen = 0;
+          applyKitTextureToActiveModel(kUv || kPath, _kitOnProgress);
           showAdminToast('Kit 3D Applicato: ' + (avatar.divisa_ref.club || 'Club'));
         });
       });
@@ -2552,8 +2557,9 @@
       var THREE = window.THREE;
       if (!THREE) return;
 
-      model = model || state.activeModel;
-      if (!model || !state.renderer) {
+      // Cattura il modello nella closure PRIMA di qualsiasi check asincrono
+      var capturedModel = model || state.activeModel;
+      if (!capturedModel || !state.renderer) {
         if (self._fitRetries >= 20) {
           self._fitRetries = 0;
           if (onProgress) onProgress('⚠️ Carica un modello .GLB per indossare la maglia 3D');
@@ -2567,16 +2573,15 @@
 
       var user = (typeof getActiveUser === 'function') ? getActiveUser() : {};
       avatar = avatar || (typeof getAvatarData === 'function' ? getAvatarData() : {});
-      var clubName = (avatar && avatar.divisa_ref && avatar.divisa_ref.club) || user.squadra || 'Club';
       var gen = ++self._fitGen;
 
       if (onProgress) onProgress('Preparazione mesh e materiali...');
 
       // 1. Ripristina i materiali originali di base del modello per salvaguardare viso, capelli, pelle e dettagli
-      self.restoreOriginalBaseMaterials(model);
+      self.restoreOriginalBaseMaterials(capturedModel);
 
       // 2. Rimuove qualsiasi oggetto superfluo
-      self.removeExistingJersey(model);
+      self.removeExistingJersey(capturedModel);
 
       var targetKitUrl = resolve2dKitUrl(kitUrl);
       if (!targetKitUrl) {
@@ -2584,6 +2589,7 @@
         return;
       }
 
+      console.log('[Avatar 3D] Avvio caricamento texture kit:', targetKitUrl, '| gen:', gen);
       if (onProgress) onProgress('Caricamento texture kit UV sulla mesh...');
 
       // 3. Fase 2: Caricamento texture e applicazione corretta come materiale sulla mesh
@@ -2591,8 +2597,19 @@
       loader.load(
         targetKitUrl,
         function (kitTexture) {
-          if (gen !== self._fitGen || !state.activeModel || !state.renderer) return;
-          model = state.activeModel;
+          // Non bloccare se gen è stato scalzato da una chiamata utente (gen = 0 = forza sempre)
+          // La guard rimane solo se lo stesso gen è in corso per evitare doppi render
+          if (gen !== self._fitGen && gen !== 0) {
+            console.log('[Avatar 3D] Callback texture scalzata (gen obsoleto):', gen, 'vs', self._fitGen);
+            return;
+          }
+          // Usa il modello catturato nella closure; fallback a state.activeModel se nel frattempo è cambiato
+          var activeModel = (state.activeModel || capturedModel);
+          if (!activeModel || !state.renderer) {
+            console.warn('[Avatar 3D] Nessun modello attivo al momento dell\'applicazione texture');
+            if (onProgress) onProgress('⚠️ Nessun modello attivo per applicare la texture');
+            return;
+          }
 
           // Convenzione glTF (UV invertito verticalmente rispetto al piano 2D standard)
           kitTexture.flipY = false;
@@ -2607,10 +2624,10 @@
             try { kitTexture.anisotropy = state.renderer.capabilities.getMaxAnisotropy(); } catch (_) {}
           }
 
-          // Ispezione struttura del modello GLB (Fase 2: logging delle mesh)
+          // Ispezione struttura del modello GLB (logging delle mesh)
           var allMeshNames = [];
           var targetMeshes = [];
-          model.traverse(function (child) {
+          activeModel.traverse(function (child) {
             if (!child.isMesh) return;
             var nm = child.name || '(senza-nome)';
             allMeshNames.push(nm);
@@ -2620,28 +2637,40 @@
               targetMeshes.push(child);
             }
           });
-          console.log('[Avatar 3D] Tutte le mesh nel GLB caricato:', allMeshNames);
+          console.log('[Avatar 3D] Tutte le mesh nel modello:', allMeshNames);
 
           // Se non troviamo una mesh con 'top'/'shirt'/'jersey', cerchiamo mesh corpo/outfit escludendo testa, arti inferiori e accessori
           if (targetMeshes.length === 0) {
             var EXCLUDE = /head|hair|face|eye|teeth|mouth|brow|lash|beard|glasses|footwear|shoe|boot|bottom|pant|leg|hand|finger/i;
-            model.traverse(function (child) {
+            activeModel.traverse(function (child) {
               if (!child.isMesh) return;
-              var lnm = (child.name || '').toLowerCase();
-              if (!EXCLUDE.test(lnm) && /torso|cloth|upper|body|avatar|mesh/i.test(lnm)) {
+              var lnm2 = (child.name || '').toLowerCase();
+              if (!EXCLUDE.test(lnm2) && /torso|cloth|upper|body|avatar|mesh/i.test(lnm2)) {
                 targetMeshes.push(child);
               }
             });
           }
 
-          console.log('[Avatar 3D] Mesh outfit selezionate per applicazione materiale kit:', targetMeshes.map(function (m) { return m.name; }));
+          // Fallback finale: applica a TUTTE le mesh non-testa se ancora nessuna trovata
+          if (targetMeshes.length === 0) {
+            var EXCLUDE2 = /head|hair|face|eye|teeth|mouth|brow|lash|beard|glasses/i;
+            activeModel.traverse(function (child) {
+              if (!child.isMesh) return;
+              if (!EXCLUDE2.test((child.name || '').toLowerCase())) {
+                targetMeshes.push(child);
+              }
+            });
+            console.warn('[Avatar 3D] Fallback: applicazione texture a tutte le mesh non-testa:', targetMeshes.map(function(m){return m.name;}));
+          }
+
+          console.log('[Avatar 3D] Mesh outfit selezionate per kit:', targetMeshes.map(function (m) { return m.name; }));
 
           // Applicazione del materiale sulla mesh outfit reale
           targetMeshes.forEach(function (child) {
             if (!child.__originalMaterial && child.material) {
               child.__originalMaterial = EliseeJerseyAIAgent._cloneMat(child.material);
             }
-            // Clonare il materiale per non intaccare istanze condivise
+            // Clona il materiale per non intaccare istanze condivise
             child.material = child.material && child.material.clone ? child.material.clone() : child.material;
             child.material.map = kitTexture;
             if (child.material.color) child.material.color.setHex(0xffffff);
@@ -2652,7 +2681,7 @@
           });
 
           // Gestione parti accessorie calciatore nativo se presenti
-          model.traverse(function (child) {
+          activeModel.traverse(function (child) {
             if (!child.isMesh || !child.name) return;
             var nm = child.name;
             if (nm.indexOf('athlete_pec') === 0) {
@@ -2672,12 +2701,13 @@
           }
 
           var targetNames = targetMeshes.map(function (m) { return m.name; }).join(', ');
-          if (onProgress) onProgress('Texture divisa applicata sulla mesh outfit (' + (targetNames || 'Modello 3D') + ')');
+          console.log('[Avatar 3D] Texture kit applicata su:', targetNames || '(nessuna mesh)');
+          if (onProgress) onProgress('✅ Maglia applicata sulla mesh (' + (targetNames || 'Modello 3D') + ')');
         },
         undefined,
         function (err) {
-          console.warn('[Avatar 3D] Errore caricamento texture kit:', err);
-          if (onProgress) onProgress('Errore nel caricamento della texture divisa');
+          console.warn('[Avatar 3D] Errore caricamento texture kit:', targetKitUrl, err);
+          if (onProgress) onProgress('❌ Errore caricamento texture: ' + targetKitUrl);
         }
       );
     }

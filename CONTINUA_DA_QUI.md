@@ -3,7 +3,16 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-21** — MESHKIT1 — Fix definitivo Avatar 3D: texture kit applicata direttamente sulla mesh GLB reale:
+Ultimo aggiornamento: **2026-09-21** — MESHKIT2 — Fix collegamento click UI → mesh 3D (kit non si applicava nonostante il badge "INDOSSATA"):
+1. **Root cause**: la guard `gen !== self._fitGen` in `fit()` scalzava silenziosamente la callback del TextureLoader quando una seconda `fit()` veniva chiamata durante il caricamento async — o quando il callback scattava dopo un re-render del modello.
+2. **Fix guard**: al click utente esplicito si azzera `_fitGen` a 0 prima della chiamata; la guard non blocca più le callback con `gen === 0`. Rimane solo contro le chiamate davvero stale (gen vecchio > 0).
+3. **Fix closure**: la `fit()` ora cattura il `model` nella variabile `capturedModel` prima di qualsiasi operazione async; il callback usa `state.activeModel || capturedModel` invece di solo `state.activeModel` (che poteva essere null nel frattempo).
+4. **Fallback mesh totale**: se nessuna mesh corrisponde a `top|shirt|jersey|athlete_torso`, ora si applica la texture a tutte le mesh non-testa (fallback di sicurezza — prima si abbandonava silenziosamente).
+5. **Feedback visivo**: il click sulla card kit ora passa `onProgress` allo status text del pannello AI → l'utente vede `✅ Maglia applicata sulla mesh (athlete_torso)` o `❌ Errore caricamento texture: ...`.
+6. **Console.log diagnostici**: tutti i passaggi critici (avvio caricamento, nomi mesh, esito) sono loggati con `[Avatar 3D]` per debug futuro.
+7. **File**: `avatar-3d.js`, `sw.js`, `version.json`. Cache `v20260921_MESHKIT2`. Commit TODO. Deploy TODO.
+
+Feature precedente: **2026-09-21** — MESHKIT1 — Fix definitivo Avatar 3D: texture kit applicata direttamente sulla mesh GLB reale:
 1. **Eliminazione geometrie fittizie**: rimosso completamente il cilindro fittizio (`CylinderGeometry`, `__elisee_fitted_jersey`) che galleggiava davanti al busto. Rimossa anche la procedura `generateJerseyTexture` con Canvas.
 2. **Applicazione diretta via `THREE.TextureLoader`**: `EliseeJerseyAIAgent.fit` ora carica la texture con `loader.load(kitUrl)`, imposta `flipY = false` e `colorSpace = SRGBColorSpace`, poi la applica come `child.material.map = kitTexture` sulle mesh reali del GLB.
 3. **Riconoscimento mesh outfit**: traverse con `console.log` di tutti i nomi (debug visibile in console), matching su `/top|shirt|jersey|outfit.*top/i` (Ready Player Me: `Wolf3D_Outfit_Top`). Fallback su `/torso|cloth|upper|body|avatar|mesh/i` escludendo testa/arti.

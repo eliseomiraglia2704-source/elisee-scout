@@ -1,7 +1,7 @@
 /* ELISEE SCOUT — Cache Wipe & Self-Unregister Service Worker
    Assicura che nessun asset obsoleto rimanga memorizzato nella cache del browser.
 */
-const CACHE = 'elisee-scout-v20260921-meshkit1';
+const CACHE = 'elisee-scout-v20260921-meshkit2';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -20,10 +20,10 @@ self.addEventListener('activate', (event) => {
           try {
             client.postMessage({
               type: 'FORCE_RELOAD',
-              version: '20260921_MESHKIT1',
-              updatedAt: '2026-09-21T18:18:00Z',
-              ts: '20260921_181800',
-              bust: 'v20260921_MESHKIT1'
+              version: '20260921_MESHKIT2',
+              updatedAt: '2026-09-21T21:42:00Z',
+              ts: '20260921_214200',
+              bust: 'v20260921_MESHKIT2'
             });
           } catch (e) {}
         });
