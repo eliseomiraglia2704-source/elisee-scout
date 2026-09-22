@@ -10,7 +10,7 @@ Ultimo aggiornamento: **2026-09-21** — MESHKIT2 — Fix collegamento click UI 
 4. **Fallback mesh totale**: se nessuna mesh corrisponde a `top|shirt|jersey|athlete_torso`, ora si applica la texture a tutte le mesh non-testa (fallback di sicurezza — prima si abbandonava silenziosamente).
 5. **Feedback visivo**: il click sulla card kit ora passa `onProgress` allo status text del pannello AI → l'utente vede `✅ Maglia applicata sulla mesh (athlete_torso)` o `❌ Errore caricamento texture: ...`.
 6. **Console.log diagnostici**: tutti i passaggi critici (avvio caricamento, nomi mesh, esito) sono loggati con `[Avatar 3D]` per debug futuro.
-7. **File**: `avatar-3d.js`, `sw.js`, `version.json`. Cache `v20260921_MESHKIT2`. Commit TODO. Deploy TODO.
+7. **File**: `avatar-3d.js`, `sw.js`, `version.json`. Cache `v20260921_MESHKIT2`. Commit `174d2ff3`. Deploy `dpl_FeFKLhkZN47oAndiVRbxV6jbyrYY` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **2026-09-21** — MESHKIT1 — Fix definitivo Avatar 3D: texture kit applicata direttamente sulla mesh GLB reale:
 1. **Eliminazione geometrie fittizie**: rimosso completamente il cilindro fittizio (`CylinderGeometry`, `__elisee_fitted_jersey`) che galleggiava davanti al busto. Rimossa anche la procedura `generateJerseyTexture` con Canvas.
