@@ -2731,6 +2731,35 @@
   }
 
   // ============================================================
+  // FASE 1: ISPEZIONE E LOGGING STRUTTURA DEL MODELLO REALE
+  // ============================================================
+  function logModelInspectionFase1(model, label) {
+    if (!model) return;
+    console.log('%c[Avatar 3D] === FASE 1: ISPEZIONE MODELLO REALE (' + (label || 'Attivo') + ') ===', 'color:#38bdf8; font-weight:bold;');
+    var count = 0;
+    model.traverse(function (child) {
+      if (child.isMesh) {
+        count++;
+        var isMulti = Array.isArray(child.material);
+        var matName = isMulti
+          ? child.material.map(function (m) { return (m && m.name) || '(senza-nome)'; })
+          : ((child.material && child.material.name) || '(senza-nome)');
+        console.log('MESH:', child.name, '— materiali:', matName, isMulti ? '(MULTI-MATERIAL)' : '(singolo)');
+      }
+    });
+    console.log('%c[Avatar 3D] Totale mesh rilevate: ' + count, 'color:#38bdf8; font-weight:bold;');
+    console.log('%c[Avatar 3D] ====================================================', 'color:#38bdf8;');
+  }
+  window.inspectAvatarModel = function () {
+    var m = window.avatarModel || (state && state.activeModel);
+    if (!m) {
+      console.warn('[Avatar 3D] Nessun avatarModel attivo trovato. Apri prima il modale Avatar 3D.');
+      return;
+    }
+    logModelInspectionFase1(m, 'Manuale Console');
+  };
+
+  // ============================================================
   // CARICATORE THREE.JS GLTF / GLB AD ALTA DEFINIZIONE (HYPER3D)
   // ============================================================
   function loadGLBToGroup(source, avatar, group, onSuccess, onError) {
@@ -2750,6 +2779,8 @@
 
         var model = gltf.scene;
         state.activeModel = model;
+        window.avatarModel = model;
+        logModelInspectionFase1(model, 'GLB');
 
         // Calcola BoundingBox per normalizzare scala e centratura atletica
         var bbox = new THREE.Box3().setFromObject(model);
@@ -3254,6 +3285,8 @@
 
     // Imposta activeModel per Three.js e Agente IA
     state.activeModel = athleteGroup;
+    window.avatarModel = athleteGroup;
+    logModelInspectionFase1(athleteGroup, 'Calciatore 3D Ufficiale');
 
     // Backup materiali originali e attivazione ombre
     athleteGroup.traverse(function (child) {
@@ -3427,6 +3460,19 @@
     isMinor: isUserMinor,
     injectTriggers: injectSidebarTriggers,
     exportCard: exportEASportsCard,
-    updateHeadTexture: updateAthleteHeadTexture
+    updateHeadTexture: updateAthleteHeadTexture,
+    inspectModel: function () {
+      if (typeof window.inspectAvatarModel === 'function') window.inspectAvatarModel();
+    }
   };
+
+  try {
+    Object.defineProperty(window, 'avatarModel', {
+      get: function () { return state ? state.activeModel : null; },
+      set: function (m) { if (state) state.activeModel = m; },
+      configurable: true
+    });
+  } catch (_) {
+    window.avatarModel = null;
+  }
 })();
