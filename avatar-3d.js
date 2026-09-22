@@ -2588,6 +2588,9 @@
         if (onProgress) onProgress('Nessun kit selezionato');
         return;
       }
+      // Cache-bust esplicito sull'URL della texture per invalidare la cache del browser e CDN
+      var _sep = targetKitUrl.indexOf('?') === -1 ? '?' : '&';
+      targetKitUrl = targetKitUrl + _sep + 'tcb=' + Date.now();
 
       console.log('[Avatar 3D] Avvio caricamento texture kit:', targetKitUrl, '| gen:', gen);
       if (onProgress) onProgress('Caricamento texture kit UV sulla mesh...');
@@ -2624,53 +2627,28 @@
             try { kitTexture.anisotropy = state.renderer.capabilities.getMaxAnisotropy(); } catch (_) {}
           }
 
-          // Ispezione struttura del modello GLB (logging delle mesh)
-          var allMeshNames = [];
+          // Corrispondenza ESATTA (===) con la sola mesh outfit verificata
+          // - 'athlete_torso' per il Calciatore 3D Ufficiale di Elisee Scout
+          // - 'Wolf3D_Outfit_Top' per modelli Ready Player Me (.glb)
           var targetMeshes = [];
+          var allMeshNames = [];
           activeModel.traverse(function (child) {
             if (!child.isMesh) return;
-            var nm = child.name || '(senza-nome)';
+            var nm = child.name || '';
             allMeshNames.push(nm);
-            var lnm = nm.toLowerCase();
-            // Identifica la mesh dell'outfit/maglia (es. Wolf3D_Outfit_Top per Ready Player Me, o athlete_torso per il modello nativo)
-            if (/top|shirt|jersey|tshirt|outfit.*top/i.test(lnm) || nm === 'athlete_torso') {
+            if (nm === 'athlete_torso' || nm === 'Wolf3D_Outfit_Top') {
               targetMeshes.push(child);
             }
           });
-          console.log('[Avatar 3D] Tutte le mesh nel modello:', allMeshNames);
+          console.log('[Avatar 3D] Tutte le mesh rilevate:', allMeshNames);
+          console.log('[Avatar 3D] Mesh outfit target (uguaglianza esatta ===):', targetMeshes.map(function (m) { return m.name; }));
 
-          // Se non troviamo una mesh con 'top'/'shirt'/'jersey', cerchiamo mesh corpo/outfit escludendo testa, arti inferiori e accessori
-          if (targetMeshes.length === 0) {
-            var EXCLUDE = /head|hair|face|eye|teeth|mouth|brow|lash|beard|glasses|footwear|shoe|boot|bottom|pant|leg|hand|finger/i;
-            activeModel.traverse(function (child) {
-              if (!child.isMesh) return;
-              var lnm2 = (child.name || '').toLowerCase();
-              if (!EXCLUDE.test(lnm2) && /torso|cloth|upper|body|avatar|mesh/i.test(lnm2)) {
-                targetMeshes.push(child);
-              }
-            });
-          }
-
-          // Fallback finale: applica a TUTTE le mesh non-testa se ancora nessuna trovata
-          if (targetMeshes.length === 0) {
-            var EXCLUDE2 = /head|hair|face|eye|teeth|mouth|brow|lash|beard|glasses/i;
-            activeModel.traverse(function (child) {
-              if (!child.isMesh) return;
-              if (!EXCLUDE2.test((child.name || '').toLowerCase())) {
-                targetMeshes.push(child);
-              }
-            });
-            console.warn('[Avatar 3D] Fallback: applicazione texture a tutte le mesh non-testa:', targetMeshes.map(function(m){return m.name;}));
-          }
-
-          console.log('[Avatar 3D] Mesh outfit selezionate per kit:', targetMeshes.map(function (m) { return m.name; }));
-
-          // Applicazione del materiale sulla mesh outfit reale
+          // Applicazione del materiale ESCLUSIVAMENTE sulla sola mesh outfit reale
           targetMeshes.forEach(function (child) {
             if (!child.__originalMaterial && child.material) {
               child.__originalMaterial = EliseeJerseyAIAgent._cloneMat(child.material);
             }
-            // Clona il materiale per non intaccare istanze condivise
+            // Clona il materiale per isolarlo da qualsiasi altra mesh o condivisione
             child.material = child.material && child.material.clone ? child.material.clone() : child.material;
             child.material.map = kitTexture;
             if (child.material.color) child.material.color.setHex(0xffffff);
@@ -2680,18 +2658,14 @@
             child.__eliseeJerseyApplied = true;
           });
 
-          // Gestione parti accessorie calciatore nativo se presenti
+          // Gestione parti ausiliarie del solo Calciatore 3D nativo:
+          // Nascondi i pettorali fittizi a rilievo per garantire visione perfetta della maglia
+          // NOTA CRITICA: MAI toccare athlete_collar o la testa per evitare qualunque bleed su mento o collo!
           activeModel.traverse(function (child) {
             if (!child.isMesh || !child.name) return;
             var nm = child.name;
-            if (nm.indexOf('athlete_pec') === 0) {
+            if (nm === 'athlete_pec_l' || nm === 'athlete_pec_r') {
               child.visible = false;
-            } else if (nm === 'athlete_collar' || nm.indexOf('athlete_sleeve') === 0) {
-              if (child.material) {
-                child.material = child.material && child.material.clone ? child.material.clone() : child.material;
-                child.material.map = kitTexture;
-                child.material.needsUpdate = true;
-              }
             }
           });
 

@@ -3,7 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-22** — INSPECT1 — Avatar 3D: Fase 1 ispezione obbligatoria del modello reale (prevenzione invasione texture su viso e capelli):
+Ultimo aggiornamento: **2026-09-22** — KITBLEED1 — Avatar 3D: Risoluzione invasione texture su viso/capelli e isolamento chirurgico mesh outfit:
+1. **Corrispondenza esatta (===)**: sostituito qualsiasi matching permissivo con verifica rigorosa su `child.name === 'athlete_torso'` (per il Calciatore 3D Ufficiale) e `child.name === 'Wolf3D_Outfit_Top'` (per modelli GLB Ready Player Me). Nessun fallback cieco su altre mesh.
+2. **Protezione totale viso, testa, capelli e colletto**: rimosso esplicitamente qualsiasi assegnazione di `material.map` su `athlete_collar` (che toccava mento e mandibola) e sulle parti anatomiche. Testa, capelli, occhi, orecchie, collo e colletto restano totalmente inalterati con i loro materiali nativi.
+3. **Cache-bust dedicato sull'asset della texture**: aggiunto parametro `?tcb=<timestamp>` all'URL della texture per forzare l'immediata invalidazione della cache da parte di browser e CDN.
+4. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260922_KITBLEED1`. Commit TODO. Deploy TODO.
+
+Feature precedente: **2026-09-22** — INSPECT1 — Avatar 3D: Fase 1 ispezione obbligatoria del modello reale (prevenzione invasione texture su viso e capelli):
 1. **Esposizione globale `window.avatarModel`**: collegato tramite getter dinamico a `state.activeModel` in modo che qualsiasi script da console (es. `avatarModel.traverse(...)`) acceda direttamente al modello 3D attivo senza `ReferenceError`.
 2. **Auto-logging diagnostico Fase 1**: creata `logModelInspectionFase1(model)` che stampa in console l'elenco esatto di ogni singola mesh con nome, tipo (singolo o multi-material) e nomi dei materiali associati al momento del caricamento (sia per modelli GLB che per il Calciatore 3D Ufficiale).
 3. **Helper console `window.inspectAvatarModel()`**: invocabile in qualunque momento da DevTools per ispezionare istantaneamente il modello aperto.
