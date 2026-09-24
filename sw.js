@@ -1,7 +1,7 @@
 /* ELISEE SCOUT — Cache Wipe & Self-Unregister Service Worker
    Assicura che nessun asset obsoleto rimanga memorizzato nella cache del browser.
 */
-const CACHE = 'elisee-scout-v20260924-loginotp1';
+const CACHE = 'elisee-scout-v20260924-glassmenu1';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -20,10 +20,10 @@ self.addEventListener('activate', (event) => {
           try {
             client.postMessage({
               type: 'FORCE_RELOAD',
-              version: '20260924_LOGINOTP1',
-              updatedAt: '2026-09-24T19:00:00Z',
-              ts: '20260924_190000',
-              bust: 'v20260924_LOGINOTP1'
+              version: '20260924_GLASSMENU1',
+              updatedAt: '2026-09-24T19:40:00Z',
+              ts: '20260924_194000',
+              bust: 'v20260924_GLASSMENU1'
             });
           } catch (e) {}
         });

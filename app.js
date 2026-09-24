@@ -9831,7 +9831,7 @@ window.updateNavbarUserUI = function() {
     const avatarInit = document.getElementById('user-avatar-initial');
     const initial = (fullName || 'A').trim().charAt(0).toUpperCase();
     if (avatarBadge) {
-      avatarBadge.style.setProperty('display', 'inline-flex', 'important');
+      avatarBadge.hidden = true;
     }
     if (avatarInit) avatarInit.textContent = initial || 'A';
     if (photo) {
@@ -9899,17 +9899,42 @@ window.updateNavbarUserUI = function() {
   }
 };
 
+function esUserGoTo(name) {
+  var root = document.getElementById('es-user-dd');
+  if (!root) return;
+  var menu = root.querySelector('.es-glass-menu');
+  var pages = root.querySelectorAll('.es-glass-page');
+  var wrap = root.querySelector('.es-glass-pages');
+  var changed = false;
+  pages.forEach(function (page) {
+    var current = page.dataset.page === name;
+    if (current !== page.classList.contains('is-active')) changed = true;
+    page.classList.toggle('is-active', current);
+    page.setAttribute('aria-hidden', current ? 'false' : 'true');
+    if (current && menu) menu.style.setProperty('--h', page.offsetHeight + 'px');
+  });
+  if (changed && wrap) {
+    wrap.classList.add('in-flight');
+    setTimeout(function () { wrap.classList.remove('in-flight'); }, 280);
+  }
+}
+
 window.toggleUserDropdown = function() {
   const menu = document.getElementById('user-dropdown-menu');
   const btn = document.getElementById('btn-user-profile');
+  const root = document.getElementById('es-user-dd');
   if (!menu) return;
   const willOpen = menu.hasAttribute('hidden') || menu.style.display === 'none';
   if (willOpen) {
     menu.removeAttribute('hidden');
     menu.style.display = '';
+    if (root) root.classList.add('open');
+    esUserGoTo('root');
   } else {
     menu.setAttribute('hidden', '');
     menu.style.display = '';
+    if (root) root.classList.remove('open');
+    esUserGoTo('root');
   }
   if (btn) btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
 };
@@ -9917,12 +9942,33 @@ window.toggleUserDropdown = function() {
 window.closeUserDropdown = function() {
   const menu = document.getElementById('user-dropdown-menu');
   const btn = document.getElementById('btn-user-profile');
+  const root = document.getElementById('es-user-dd');
   if (menu) {
     menu.setAttribute('hidden', '');
     menu.style.display = '';
   }
+  if (root) root.classList.remove('open');
   if (btn) btn.setAttribute('aria-expanded', 'false');
+  esUserGoTo('root');
 };
+
+document.addEventListener('click', function (e) {
+  var root = document.getElementById('es-user-dd');
+  if (!root || !root.classList.contains('open')) return;
+  var drill = e.target.closest && e.target.closest('[data-open]');
+  var back = e.target.closest && e.target.closest('[data-back]');
+  if (drill && root.contains(drill)) {
+    e.preventDefault();
+    esUserGoTo(drill.getAttribute('data-open'));
+  } else if (back && root.contains(back)) {
+    e.preventDefault();
+    esUserGoTo('root');
+  }
+});
+
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape' && window.closeUserDropdown) window.closeUserDropdown();
+});
 
 window.logoutUser = function() {
   localStorage.removeItem('elisee_user_auth');

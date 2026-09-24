@@ -3,7 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-24** — LOGINOTP1 — Codice OTP come nel video (4 caselle, messaggio, orbita):
+Ultimo aggiornamento: **2026-09-24** — GLASSMENU1 — Menu a tendina in vetro con pagine che scorrono:
+1. Il menu dell’account (in alto a destra, da loggato) è il pulsante col nome e il chevron. Si apre in vetro smerigliato. Il chevron ruota.
+2. Voci: Impostazioni, Account, Squadra, Esci. Impostazioni, Account e Squadra scorrono di lato (Notifiche, Area riservata, Annuncio, Album…). La freccia indietro torna alla prima pagina. Per lo staff c’è anche Strumenti.
+3. Il menu della lingua usa lo stesso vetro.
+4. **File**: `index.html`, `glass-menu.css`, `app.js`, `sw.js`, `version.json`. Cache `v20260924_GLASSMENU1`.
+
+Feature precedente: **2026-09-24** — LOGINOTP1 — Codice OTP come nel video (4 caselle, messaggio, orbita):
 1. Dopo il numero WhatsApp si apre il pannello scuro **Verifica il numero**. Quattro caselle, la prima con l’anello tratteggiato.
 2. Si scrive, si incolla, oppure **Compila** legge il codice dagli appunti. A 4 cifre le caselle ruotano e si chiudono a croce sul cerchio tratteggiato.
 3. Il messaggio in basso mostra il codice (come nel video) e **Compila** lo scrive nelle caselle. Se coincide, i bordi diventano verdi; se no, rossi. «Reinvia tra 30s» compare dopo l’orbita. Non fa entrare: WhatsApp vero non è ancora collegato.
