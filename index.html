@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260921_NAVSCROLL1">
+  <link rel="stylesheet" href="style.css?v=20260924_LOGINSLIDE1">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
@@ -52,6 +52,7 @@
   <link rel="stylesheet" href="control-center.css?v=20260918_CCDROPDOWN1">
   <link rel="stylesheet" href="elisee-loader.css?v=20260918_LOADER1">
   <link rel="stylesheet" href="avatar-3d.css?v=20260921_FACESCAN1">
+  <link rel="stylesheet" href="login-slide.css?v=20260924_LOGINSLIDE1">
   <link rel="stylesheet" href="role-sidebar-pro.css?v=20260921_A3DCLEAN1">
   <style id="es-font-nevera">
     @font-face {
@@ -1667,291 +1668,171 @@
     </div>
   </div>
 
-  <!-- ================================================================ -->
-  <!-- MODAL UNIFICATO: ACCESSO ELISEE SCOUT                            -->
-  <!-- (aperto da Google / Apple / SPID / Accedi con Email)             -->
-  <!-- ================================================================ -->
-  <div id="modal-accesso-unificato"
-       style="display:none; position:fixed; inset:0; z-index:99997;
-              background:rgba(0,0,0,0.82); backdrop-filter:blur(12px);
-              align-items:center; justify-content:center; padding:1rem; overflow-y:auto; overflow-x:hidden;"
-       onclick="if(event.target===this) closeAccessoModal()">
-    <div style="width:100%; max-width:460px; margin:auto;
-                background:linear-gradient(160deg,#060e1c 0%,#0a1628 100%);
-                border:1.5px solid rgba(56,189,248,0.45); border-radius:22px;
-                box-shadow:0 40px 90px rgba(0,0,0,0.8), 0 0 60px rgba(2,132,199,0.15);
-                animation:slideUpModal 0.35s ease; overflow:hidden;">
+    <!-- MODAL ACCESSO / ISCRIZIONE — card scorrevole -->
+  <div id="modal-accesso-unificato" class="es-login-modal" onclick="if(event.target===this) closeAccessoModal()">
+    <div class="es-login-stage">
+      <button type="button" class="es-login-x" onclick="closeAccessoModal()" aria-label="Chiudi">&times;</button>
+      <div class="es-login-card" id="es-login-card" role="dialog" aria-modal="true" aria-labelledby="es-login-title">
+        <div class="es-login-bg" aria-hidden="true"></div>
 
-      <!-- HEADER con logo ELISEE SCOUT -->
-      <div style="background:linear-gradient(135deg,rgba(2,132,199,0.55),rgba(56,189,248,0.2));
-                  padding:1.75rem 2rem 1.5rem; text-align:center;
-                  border-bottom:1px solid rgba(56,189,248,0.25); position:relative;">
-        <img src="immagini/logo/logo-site.png?v=20260831_121117" alt="ELISEE SCOUT" width="56" height="56"
-             style="display:block; margin:0 auto 0.65rem; width:56px; height:56px; object-fit:contain; border:none; border-radius:0; box-shadow:none; background:transparent;">
-        <div style="font-family:'Outfit',sans-serif; font-size:1.55rem; font-weight:900;
-                    color:#e8c872; letter-spacing:0.08em;">
-          ACCEDI
-        </div>
-        <p id="accesso-modal-subtitle" style="color:#94a3b8; font-size:0.82rem; margin:0.4rem 0 0;">
-          Area personale ELISEE SCOUT
-        </p>
-        <!-- Badge provider selezionato -->
-        <div id="accesso-provider-badge" style="display:none; margin-top:0.85rem; justify-content:center; gap:0.5rem; align-items:center;">
-          <span id="accesso-provider-icon" style="font-size:1.1rem;"></span>
-          <span id="accesso-provider-label" style="color:#38bdf8; font-size:0.82rem; font-weight:700;"></span>
-        </div>
-        <button onclick="closeAccessoModal()"
-                style="position:absolute; top:1rem; right:1.25rem;
-                       background:rgba(255,255,255,0.08); border:none; color:#94a3b8;
-                       width:32px; height:32px; border-radius:50%; font-size:1.1rem;
-                       cursor:pointer; line-height:32px;">&times;</button>
-      </div>
+        <section class="es-login-hero login">
+          <h2>Ciao</h2>
+          <p>Inizia il tuo percorso su Elisee Scout.</p>
+          <button type="button" class="es-login-switch" onclick="window.setAccessoPanel('register')">Iscriviti</button>
+        </section>
+        <section class="es-login-hero register">
+          <h2>Bentornato</h2>
+          <p>Accedi per riprendere da dove eri rimasto.</p>
+          <button type="button" class="es-login-switch" onclick="window.setAccessoPanel('login')">Accedi</button>
+        </section>
 
-      <!-- BODY FORM -->
-      <div style="padding:1.75rem 2rem 2rem;">
-
-        <!-- BLOCCO SPID: selettore provider (visibile solo per SPID) -->
-        <div id="accesso-spid-block" style="display:none;">
-          <p style="color:#94a3b8; font-size:0.83rem; margin:0 0 1rem; text-align:center;">
-            Seleziona il tuo Identity Provider SPID:
-          </p>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.7rem; margin-bottom:1.25rem;">
-            <button type="button" onclick="selectSpidProvider('Poste ID','#0047BB')" class="spid-provider-btn"
-                    style="display:flex;align-items:center;justify-content:center;min-height:58px;padding:0.55rem 0.75rem;background:#fff;border:1px solid #d0d5dd;border-radius:10px;cursor:pointer;">
-              <img src="immagini/10-auth-spid-posteid/spid-posteid.svg?v=20260831_121117" alt="Poste ID" style="height:36px;width:auto;max-width:100%;object-fit:contain;background:transparent;border:0;box-shadow:none;filter:none;">
-            </button>
-            <button type="button" onclick="selectSpidProvider('Intesi Group','#0066CC')" class="spid-provider-btn"
-                    style="display:flex;align-items:center;justify-content:center;min-height:58px;padding:0.55rem 0.75rem;background:#fff;border:1px solid #d0d5dd;border-radius:10px;cursor:pointer;">
-              <img src="immagini/11-auth-spid-intesa/spid-intesa.svg?v=20260831_121117" alt="Intesi Group" style="height:36px;width:auto;max-width:100%;object-fit:contain;background:transparent;border:0;box-shadow:none;filter:none;">
-            </button>
-            <button type="button" onclick="selectSpidProvider('Aruba.it ID','#FF5500')" class="spid-provider-btn"
-                    style="display:flex;align-items:center;justify-content:center;min-height:58px;padding:0.55rem 0.75rem;background:#fff;border:1px solid #d0d5dd;border-radius:10px;cursor:pointer;">
-              <img src="immagini/12-auth-spid-aruba/spid-aruba.svg?v=20260831_121117" alt="Aruba.it ID" style="height:36px;width:auto;max-width:100%;object-fit:contain;background:transparent;border:0;box-shadow:none;filter:none;">
-            </button>
-            <button type="button" onclick="selectSpidProvider('TIM id','#007CBA')" class="spid-provider-btn"
-                    style="display:flex;align-items:center;justify-content:center;min-height:58px;padding:0.55rem 0.75rem;background:#fff;border:1px solid #d0d5dd;border-radius:10px;cursor:pointer;">
-              <img src="immagini/13-auth-spid-tim/spid-tim.svg?v=20260831_121117" alt="TIM id" style="height:36px;width:auto;max-width:100%;object-fit:contain;background:transparent;border:0;box-shadow:none;filter:none;">
-            </button>
-            <button type="button" onclick="selectSpidProvider('Namirial ID','#E30613')" class="spid-provider-btn"
-                    style="display:flex;align-items:center;justify-content:center;min-height:58px;padding:0.55rem 0.75rem;background:#fff;border:1px solid #d0d5dd;border-radius:10px;cursor:pointer;">
-              <img src="immagini/14-auth-spid-namirial/spid-namirial.svg?v=20260831_121117" alt="Namirial ID" style="height:36px;width:auto;max-width:100%;object-fit:contain;background:transparent;border:0;box-shadow:none;filter:none;">
-            </button>
-            <button type="button" onclick="selectSpidProvider('InfoCert ID','#0055B8')" class="spid-provider-btn"
-                    style="display:flex;align-items:center;justify-content:center;min-height:58px;padding:0.55rem 0.75rem;background:#fff;border:1px solid #d0d5dd;border-radius:10px;cursor:pointer;">
-              <img src="immagini/15-auth-spid-infocert/spid-infocert.svg?v=20260831_121117" alt="InfoCert ID" style="height:36px;width:auto;max-width:100%;object-fit:contain;background:transparent;border:0;box-shadow:none;filter:none;">
-            </button>
+        <form class="es-login-form login" id="accesso-form-block" action="#" onsubmit="submitAccessoForm(); return false;" autocomplete="on">
+          <h2 id="es-login-title">Accedi</h2>
+          <p id="accesso-modal-subtitle" hidden>Area personale ELISEE SCOUT</p>
+          <div id="accesso-provider-badge" hidden>
+            <span id="accesso-provider-icon"></span>
+            <span id="accesso-provider-label"></span>
           </div>
-          <p style="color:#64748b; font-size:0.75rem; text-align:center; margin:0;">
-            Connessione crittografata AgID · TLS 1.3
-          </p>
-        </div>
 
-        <!-- FORM EMAIL + PASSWORD + OPPURE ACCEDI CON (stesso flusso del video) -->
-        <div id="accesso-form-block">
+          <div id="accesso-spid-block" style="display:none;">
+            <p>Seleziona il tuo Identity Provider SPID:</p>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.45rem;">
+              <button type="button" class="es-social" style="width:100%; height:48px;" onclick="selectSpidProvider('Poste ID','#0047BB')">Poste</button>
+              <button type="button" class="es-social" style="width:100%; height:48px;" onclick="selectSpidProvider('Intesi Group','#0066CC')">Intesi</button>
+              <button type="button" class="es-social" style="width:100%; height:48px;" onclick="selectSpidProvider('Aruba.it ID','#FF5500')">Aruba</button>
+              <button type="button" class="es-social" style="width:100%; height:48px;" onclick="selectSpidProvider('TIM id','#007CBA')">TIM</button>
+              <button type="button" class="es-social" style="width:100%; height:48px;" onclick="selectSpidProvider('Namirial ID','#E30613')">Namirial</button>
+              <button type="button" class="es-social" style="width:100%; height:48px;" onclick="selectSpidProvider('InfoCert ID','#0055B8')">InfoCert</button>
+            </div>
+          </div>
 
           <div id="accesso-method-email">
-            <div style="margin-bottom:0.9rem;">
-              <label for="accesso-email" style="display:block; color:#cbd5e1; font-size:0.8rem; font-weight:600; margin-bottom:0.35rem;">Email</label>
-              <input type="email" id="accesso-email" autocomplete="email"
-                     placeholder=""
-                     oninput="validateAccessoEmail()"
-                     style="width:100%; padding:0.8rem 0.9rem; border-radius:10px;
-                            background:#121212; border:1px solid rgba(255,255,255,0.12);
-                            color:#ffffff; font-size:0.93rem; outline:none;
-                            box-sizing:border-box; transition:border-color 0.25s;"
-                     onfocus="this.style.borderColor='rgba(232,200,114,0.55)'"
-                     onblur="validateAccessoEmail()">
-              <p id="err-email" style="color:#f87171; font-size:0.77rem; margin:0.3rem 0 0; display:none;">
-                Inserisci un indirizzo email valido (es: nome@dominio.it)
-              </p>
-            </div>
+            <label class="es-login-lbl" for="accesso-email">Email</label>
+            <input type="email" id="accesso-email" autocomplete="email" placeholder="nome@email.it" oninput="validateAccessoEmail()" onblur="validateAccessoEmail()">
+            <p id="err-email" class="es-login-err" style="display:none;">Inserisci un indirizzo email valido.</p>
 
-            <div style="margin-bottom:0.95rem;">
-              <label for="accesso-password" style="display:block; color:#cbd5e1; font-size:0.8rem; font-weight:600; margin-bottom:0.35rem;">Password</label>
-              <div style="position:relative;">
-                <input type="password" id="accesso-password" autocomplete="current-password"
-                       placeholder=""
-                       oninput="validateAccessoPassword()"
-                       style="width:100%; padding:0.8rem 2.6rem 0.8rem 0.9rem; border-radius:10px;
-                              background:#121212; border:1px solid rgba(255,255,255,0.12);
-                              color:#ffffff; font-size:0.93rem; outline:none;
-                              box-sizing:border-box; transition:border-color 0.25s;"
-                       onfocus="this.style.borderColor='rgba(232,200,114,0.55)'"
-                       onblur="validateAccessoPassword()">
-                <button type="button" onclick="toggleAccessoPasswordVisibility()"
-                        style="position:absolute; right:0.75rem; top:50%; transform:translateY(-50%);
-                               background:none; border:none; color:#64748b; cursor:pointer; font-size:0.9rem;"
-                        title="Mostra/Nascondi password">&#128065;</button>
-              </div>
-              <div id="password-strength-bar-wrap" style="display:none; margin-top:0.55rem;">
-                <div style="height:4px; background:rgba(255,255,255,0.08); border-radius:4px; overflow:hidden;">
-                  <div id="password-strength-bar" style="height:100%; width:0%; border-radius:4px; transition:all 0.3s;"></div>
-                </div>
-                <p id="password-strength-label" style="color:#64748b; font-size:0.73rem; margin:0.3rem 0 0;"></p>
-              </div>
-              <p id="err-password" style="color:#f87171; font-size:0.77rem; margin:0.3rem 0 0; display:none;"></p>
-            </div>
-
-            <div id="password-requirements" style="display:none; background:rgba(56,189,248,0.05);
-                  border:1px solid rgba(56,189,248,0.15); border-radius:8px; padding:0.75rem 1rem;
-                  margin-bottom:1rem;">
-              <p style="color:#64748b; font-size:0.73rem; font-weight:700; margin:0 0 0.4rem; text-transform:uppercase; letter-spacing:0.04em;">Requisiti password:</p>
-              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.3rem;">
-                <span id="req-len" style="font-size:0.73rem; color:#ef4444;">Minimo 8 caratteri</span>
-                <span id="req-upper" style="font-size:0.73rem; color:#ef4444;">Una lettera maiuscola</span>
-                <span id="req-num" style="font-size:0.73rem; color:#ef4444;">Un numero</span>
-                <span id="req-special" style="font-size:0.73rem; color:#ef4444;">Un carattere speciale</span>
-              </div>
-            </div>
-
-            <div id="accesso-error-general" style="display:none; background:rgba(239,68,68,0.12);
-                  border:1px solid rgba(239,68,68,0.4); border-radius:8px; padding:0.75rem 1rem;
-                  margin-bottom:1rem;">
-              <p id="accesso-error-msg" style="color:#f87171; font-size:0.82rem; margin:0; font-weight:600;"></p>
-            </div>
-
-            <button type="button" id="accesso-submit-btn" onclick="submitAccessoForm()"
-                    style="width:100%; padding:0.95rem 1rem; border:none; border-radius:999px;
-                           background:linear-gradient(180deg,#f6e7b2,#e0c36a);
-                           color:#111; font-weight:800; font-size:0.95rem;
-                           cursor:pointer; letter-spacing:0.01em;
-                           box-shadow:0 8px 22px rgba(224,195,106,0.28);
-                           transition:opacity 0.2s, transform 0.15s;"
-                    onmouseenter="this.style.transform='translateY(-1px)'"
-                    onmouseleave="this.style.transform='translateY(0)'">
-              Accedi con password
-            </button>
-
-            <div style="position:relative; margin:1.35rem 0 1rem;">
-              <div style="height:1px; background:rgba(255,255,255,0.1);"></div>
-              <span style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-                           background:#0a1628; padding:0 0.7rem; color:rgba(255,255,255,0.42);
-                           font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; white-space:nowrap;">
-                OPPURE ACCEDI CON
-              </span>
-            </div>
-
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.7rem;">
-              <div id="accesso-google-gis" style="display:flex; align-items:center; justify-content:center; min-height:40px; overflow:hidden;"></div>
-              <button type="button" id="accesso-btn-passkey" onclick="window.showAccessoMethod && window.showAccessoMethod('passkey');"
-                      style="display:flex; align-items:center; justify-content:center; gap:0.5rem;
-                             padding:0.85rem 0.6rem; border-radius:999px; cursor:pointer;
-                             background:#161616; color:#fff; font-weight:700; font-size:0.88rem;
-                             border:1px solid rgba(255,255,255,0.12);">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e8c872" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 11.25v2.25M10.5 14.25h3"/></svg>
-                Passkey
+            <label class="es-login-lbl" for="accesso-password">Password</label>
+            <div class="es-login-pw">
+              <input type="password" id="accesso-password" autocomplete="current-password" placeholder="••••••••" oninput="validateAccessoPassword()" onblur="validateAccessoPassword()">
+              <button type="button" class="es-login-eye" onclick="toggleAccessoPasswordVisibility('accesso-password')" aria-label="Mostra password">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3l18 18"/><path d="M10.6 10.6A2 2 0 0 0 12 14a2 2 0 0 0 1.4-.6"/><path d="M9.9 5.1A10.8 10.8 0 0 1 12 5c5 0 9.3 3.1 11 7-0.6 1.4-1.6 2.7-2.8 3.8"/><path d="M6.1 6.1C4.2 7.3 2.7 9 2 12c1.7 3.9 6 7 10 7 1.5 0 2.9-.3 4.2-.9"/></svg>
               </button>
             </div>
+            <p id="err-password" class="es-login-err" style="display:none;"></p>
+            <div id="password-strength-bar-wrap"><div id="password-strength-bar"></div><p id="password-strength-label"></p></div>
+            <div id="password-requirements">
+              <span id="req-len"></span><span id="req-upper"></span><span id="req-num"></span><span id="req-special"></span>
+            </div>
 
-            <button type="button" id="accesso-btn-whatsapp" onclick="window.showAccessoMethod && window.showAccessoMethod('whatsapp');"
-                    style="width:100%; margin-top:0.7rem; display:flex; align-items:center; justify-content:center; gap:0.55rem;
-                           padding:0.85rem 0.8rem; border-radius:999px; cursor:pointer;
-                           background:#161616; color:#fff; font-weight:700; font-size:0.88rem;
-                           border:1px solid rgba(255,255,255,0.12);">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.717-1.458L0 24z"/></svg>
-              Accedi tramite WhatsApp (OTP)
-            </button>
+            <div class="es-login-row">
+              <label class="es-login-check"><input type="checkbox" id="accesso-remember"> Ricordami</label>
+              <button type="button" class="es-login-link" onclick="window.forgotAccessoPassword && window.forgotAccessoPassword()">Password dimenticata?</button>
+            </div>
 
-            <button type="button" onclick="window.showAccessoMethod && window.showAccessoMethod('qr');"
-                    style="display:block; width:100%; margin-top:0.85rem; background:none; border:none;
-                           color:#e8c872; font-size:0.75rem; cursor:pointer; text-align:center;">
-              &larr; Usa l'accesso rapido con smartphone (QR)
-            </button>
+            <div id="accesso-error-general" class="es-login-alert">
+              <p id="accesso-error-msg" style="margin:0;"></p>
+            </div>
+
+            <button type="submit" id="accesso-submit-btn" class="es-login-submit">Accedi</button>
           </div>
 
           <div id="accesso-method-whatsapp" style="display:none;">
             <div id="accesso-wa-phone-step">
-              <p style="color:#94a3b8; font-size:0.84rem; line-height:1.45; margin:0 0 0.9rem;">
-                Inserisci il numero associato a WhatsApp. Ti invieremo un codice temporaneo (OTP).
-              </p>
-              <label style="display:block; color:#cbd5e1; font-size:0.8rem; font-weight:600; margin-bottom:0.35rem;">Numero di telefono</label>
-              <input type="tel" id="accesso-wa-phone" placeholder="Es. +39 347 1234567"
-                     style="width:100%; box-sizing:border-box; padding:0.8rem 0.9rem; border-radius:10px; background:#121212; border:1px solid rgba(255,255,255,0.12); color:#fff; margin-bottom:0.85rem;">
-              <button type="button" onclick="window.submitWhatsAppOtp && window.submitWhatsAppOtp();"
-                      style="width:100%; padding:0.9rem; border:0; border-radius:999px; background:#25D366; color:#fff; font-weight:800; cursor:pointer;">
-                Invia codice su WhatsApp
-              </button>
+              <p class="es-login-or" style="margin-top:0;">Codice su WhatsApp</p>
+              <label class="es-login-lbl" for="accesso-wa-phone">Numero</label>
+              <input type="tel" id="accesso-wa-phone" placeholder="+39 347 1234567">
+              <button type="button" class="es-login-submit" style="margin-top:10px; background:#25D366;" onclick="window.submitWhatsAppOtp && window.submitWhatsAppOtp();">Invia codice</button>
             </div>
             <div id="accesso-wa-code-step" style="display:none;">
-              <p style="color:#94a3b8; font-size:0.84rem; margin:0 0 0.9rem;">Inserisci il codice di 6 cifre inviato su WhatsApp.</p>
-              <input type="text" id="accesso-wa-code" maxlength="6" placeholder="000000"
-                     style="width:100%; box-sizing:border-box; padding:0.8rem; border-radius:10px; background:#121212; border:1px solid rgba(255,255,255,0.12); color:#fff; text-align:center; letter-spacing:0.4em; font-size:1.15rem; font-weight:800; margin-bottom:0.85rem;">
-              <button type="button" onclick="window.verifyWhatsAppOtp && window.verifyWhatsAppOtp();"
-                      style="width:100%; padding:0.9rem; border:0; border-radius:999px; background:#25D366; color:#fff; font-weight:800; cursor:pointer;">
-                Verifica codice
-              </button>
+              <label class="es-login-lbl" for="accesso-wa-code">Codice</label>
+              <input type="text" id="accesso-wa-code" maxlength="6" placeholder="000000">
+              <button type="button" class="es-login-submit" style="margin-top:10px; background:#25D366;" onclick="window.verifyWhatsAppOtp && window.verifyWhatsAppOtp();">Verifica</button>
             </div>
-            <button type="button" onclick="window.showAccessoMethod && window.showAccessoMethod('email');"
-                    style="display:block; width:100%; margin-top:1rem; background:none; border:none; color:#e8c872; font-size:0.75rem; cursor:pointer;">
-              &larr; Torna all'accesso classico con email
-            </button>
+            <button type="button" class="es-login-link" style="margin-top:8px;" onclick="window.showAccessoMethod && window.showAccessoMethod('email');">Torna all'email</button>
           </div>
 
-          <div id="accesso-method-passkey" style="display:none; text-align:center; padding:1.4rem 0.4rem 0.4rem;">
-            <div style="width:52px; height:52px; border-radius:50%; margin:0 auto 0.9rem; border:1px solid rgba(232,200,114,0.35); background:rgba(232,200,114,0.08); display:flex; align-items:center; justify-content:center;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e8c872" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/></svg>
-            </div>
-            <p style="color:#e2e8f0; font-weight:700; margin:0 0 0.4rem;">Verifica della Passkey in corso...</p>
-            <p style="color:#64748b; font-size:0.8rem; margin:0 0 1rem;">Usa il volto (FaceID) o l'impronta (TouchID) per accedere.</p>
-            <button type="button" onclick="window.showAccessoMethod && window.showAccessoMethod('email');"
-                    style="background:none; border:none; color:#e8c872; font-size:0.75rem; cursor:pointer;">
-              Annulla e usa email
-            </button>
+          <div id="accesso-method-passkey" style="display:none;">
+            <p class="es-login-or">Verifica della Passkey in corso…</p>
+            <button type="button" class="es-login-link" onclick="window.showAccessoMethod && window.showAccessoMethod('email');">Annulla</button>
           </div>
 
-          <div id="accesso-method-qr" style="display:none; text-align:center;">
-            <h3 style="color:#fff; font-size:0.88rem; letter-spacing:0.08em; text-transform:uppercase; margin:0 0 0.4rem;">Accedi rapidamente</h3>
-            <p style="color:#94a3b8; font-size:0.78rem; max-width:280px; margin:0 auto 1rem;">
-              Inquadra questo QR Code con il telefono per accedere all'istante con Google o Passkey.
-            </p>
-            <div style="width:200px; height:200px; margin:0 auto 1rem; border-radius:18px; border:1px solid rgba(232,200,114,0.25); background:#111; display:flex; align-items:center; justify-content:center; overflow:hidden;">
-              <img id="accesso-qr-img" alt="QR login" width="180" height="180" style="display:none; width:180px; height:180px; border-radius:10px;">
-            </div>
-            <button type="button" onclick="window.showAccessoMethod && window.showAccessoMethod('email');"
-                    style="background:none; border:none; color:#e8c872; font-size:0.75rem; cursor:pointer;">
-              Oppure usa le credenziali su questo computer
-            </button>
+          <div id="accesso-method-qr" style="display:none;">
+            <p class="es-login-or">Inquadra il QR con il telefono</p>
+            <img id="accesso-qr-img" alt="QR login" width="160" height="160" style="display:none; margin:0 auto; border-radius:12px;">
+            <button type="button" class="es-login-link" onclick="window.showAccessoMethod && window.showAccessoMethod('email');">Usa email su questo computer</button>
           </div>
 
           <div id="accesso-method-setpw" style="display:none;">
-            <form action="#" onsubmit="return false;" autocomplete="on">
-              <p id="accesso-setpw-hello" style="color:#e2e8f0; font-size:0.88rem; line-height:1.45; margin:0 0 0.9rem;">
-                Imposta una password nuova. Serve per accedere con email: almeno 8 caratteri, una maiuscola, un numero e un carattere speciale.
-              </p>
-              <input type="password" id="accesso-setpw-a" minlength="8" autocomplete="new-password" placeholder="Nuova password"
-                     oninput="window.paintPasswordPolicy && window.paintPasswordPolicy('setpw-reqs', this.value)"
-                     style="width:100%; box-sizing:border-box; padding:0.75rem 0.85rem; border-radius:10px; background:#121212; border:1px solid rgba(255,255,255,0.12); color:#fff; margin-bottom:0.55rem;">
-              <input type="password" id="accesso-setpw-b" minlength="8" autocomplete="new-password" placeholder="Ripeti la password"
-                     style="width:100%; box-sizing:border-box; padding:0.75rem 0.85rem; border-radius:10px; background:#121212; border:1px solid rgba(255,255,255,0.12); color:#fff; margin-bottom:0.65rem;">
-              <div id="setpw-reqs" class="es-pw-reqs" style="background:rgba(255,255,255,0.03); border:1px solid #1e2430; border-radius:8px; padding:0.7rem 0.9rem; margin-bottom:0.85rem;">
-                <p style="color:#8a93a3; font-size:0.72rem; font-weight:600; margin:0 0 0.4rem;">La password deve contenere:</p>
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.3rem;">
-                  <span data-pw="len" style="font-size:0.73rem; color:#8a93a3;">Minimo 8 caratteri</span>
-                  <span data-pw="upper" style="font-size:0.73rem; color:#8a93a3;">Una lettera maiuscola</span>
-                  <span data-pw="num" style="font-size:0.73rem; color:#8a93a3;">Un numero</span>
-                  <span data-pw="special" style="font-size:0.73rem; color:#8a93a3;">Un carattere speciale</span>
-                </div>
-              </div>
-              <p id="setpw-error" style="display:none; color:#f87171; font-size:0.78rem; margin:0 0 0.7rem;"></p>
-              <button type="button" onclick="window.completeAccessoGooglePassword && window.completeAccessoGooglePassword();"
-                      style="width:100%; padding:0.9rem; border:0; border-radius:999px; background:linear-gradient(180deg,#f6e7b2,#e0c36a); color:#111; font-weight:800; cursor:pointer;">
-                Salva password ed entra
-              </button>
-            </form>
+            <p id="accesso-setpw-hello" class="es-login-or" style="text-align:left;">Imposta una password nuova. Almeno 8 caratteri, una maiuscola, un numero e un carattere speciale.</p>
+            <input type="password" id="accesso-setpw-a" minlength="8" autocomplete="new-password" placeholder="Nuova password" oninput="window.paintPasswordPolicy && window.paintPasswordPolicy('setpw-reqs', this.value)">
+            <input type="password" id="accesso-setpw-b" minlength="8" autocomplete="new-password" placeholder="Ripeti la password" style="margin-top:8px;">
+            <div id="setpw-reqs" class="es-pw-reqs" style="margin:8px 0;">
+              <span data-pw="len">Minimo 8 caratteri</span>
+              <span data-pw="upper">Una lettera maiuscola</span>
+              <span data-pw="num">Un numero</span>
+              <span data-pw="special">Un carattere speciale</span>
+            </div>
+            <p id="setpw-error" class="es-login-err" style="display:none;"></p>
+            <button type="button" class="es-login-submit" onclick="window.completeAccessoGooglePassword && window.completeAccessoGooglePassword();">Salva password ed entra</button>
           </div>
 
-          <p style="text-align:center; color:#64748b; font-size:0.78rem; margin-top:1.15rem; margin-bottom:0; border-top:1px solid rgba(255,255,255,0.06); padding-top:0.95rem;">
-            Non hai un account?
-            <a href="#" onclick="closeAccessoModal(); openRegistrazioneModal();"
-               style="color:#e8c872; font-weight:700;">Registrati ora</a>
-          </p>
-        </div>
+          <p class="es-login-or">Oppure accedi con</p>
+          <div class="es-login-socials">
+            <button type="button" class="es-social" aria-label="Facebook" onclick="window.eliseeSocialSoon && window.eliseeSocialSoon('Facebook')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2"><path d="M15.1 8.5h-2V7.1c0-.5.3-.6.6-.6h1.4V4.1L12.7 4c-2.3 0-2.8 1.7-2.8 2.8v1.7H8v2.6h1.9V20h2.6v-8.9h2.1l.5-2.6z"/></svg>
+            </button>
+            <button type="button" class="es-social" aria-label="Google" onclick="window.startEliseeGoogleOAuth && window.startEliseeGoogleOAuth()">
+              <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.5c-.3 1.5-1.2 2.8-2.5 3.6v3h4c2.4-2.2 3.5-5.4 3.5-8.7z"/><path fill="#34A853" d="M12 24c3.2 0 5.9-1.1 7.9-2.9l-4-3c-1.1.7-2.4 1.2-3.9 1.2-3 0-5.6-2-6.5-4.8H1.4v3.1C3.4 21.3 7.4 24 12 24z"/><path fill="#FBBC05" d="M5.5 14.5c-.2-.7-.4-1.4-.4-2.2s.1-1.5.4-2.2V7H1.4C.5 8.6 0 10.3 0 12s.5 3.4 1.4 5l4.1-2.5z"/><path fill="#EA4335" d="M12 4.8c1.7 0 3.2.6 4.4 1.7l3.3-3.3C17.9 1.2 15.2 0 12 0 7.4 0 3.4 2.7 1.4 7l4.1 2.5C6.4 6.8 9 4.8 12 4.8z"/></svg>
+              <span id="accesso-google-gis" class="es-gis-hit"></span>
+            </button>
+            <button type="button" class="es-social" aria-label="Apple" onclick="window.eliseeSocialSoon && window.eliseeSocialSoon('Apple')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#111"><path d="M16.7 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.2-2.8.9-3.5.9s-1.8-.8-3-.8c-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.3 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7 2-.1 2.9-2.3c.7-1 1.2-2 1.5-3.1-3.9-1.5-3.8-5.7-3.8-5.3zM14.5 6.1c.6-.8 1.1-1.9.9-3-1 .1-2.1.6-2.8 1.4-.6.7-1.2 1.8-1 2.9 1.1.1 2.2-.5 2.9-1.3z"/></svg>
+            </button>
+          </div>
+          <p class="es-login-mobile-switch">Non hai un account? <button type="button" onclick="window.setAccessoPanel('register')">Iscriviti</button></p>
+        </form>
 
+        <form class="es-login-form register" action="#" onsubmit="return window.submitSlideRegistrazione(event);" autocomplete="on">
+          <h2>Iscriviti</h2>
+          <label class="es-login-lbl" for="es-slide-nome">Nome</label>
+          <input type="text" id="es-slide-nome" autocomplete="name" placeholder="Nome Cognome">
+          <label class="es-login-lbl" for="es-slide-email">Email</label>
+          <input type="email" id="es-slide-email" autocomplete="email" placeholder="nome@email.it">
+          <label class="es-login-lbl" for="es-slide-dob">Data di nascita</label>
+          <input type="date" id="es-slide-dob" autocomplete="bday">
+          <label class="es-login-lbl" for="es-slide-password">Password</label>
+          <div class="es-login-pw">
+            <input type="password" id="es-slide-password" autocomplete="new-password" placeholder="••••••••">
+            <button type="button" class="es-login-eye" onclick="toggleAccessoPasswordVisibility('es-slide-password')" aria-label="Mostra password">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3l18 18"/><path d="M10.6 10.6A2 2 0 0 0 12 14a2 2 0 0 0 1.4-.6"/><path d="M9.9 5.1A10.8 10.8 0 0 1 12 5c5 0 9.3 3.1 11 7-0.6 1.4-1.6 2.7-2.8 3.8"/><path d="M6.1 6.1C4.2 7.3 2.7 9 2 12c1.7 3.9 6 7 10 7 1.5 0 2.9-.3 4.2-.9"/></svg>
+            </button>
+          </div>
+          <label class="es-login-consent">
+            <input type="checkbox" id="es-slide-tos">
+            <span>Accetto i <a href="privacy-policy.html" target="_blank" rel="noopener">Termini</a> e l'<a href="privacy-policy.html" target="_blank" rel="noopener">informativa privacy</a>.</span>
+          </label>
+          <p id="es-login-reg-error" class="es-login-err" hidden></p>
+          <button type="submit" class="es-login-submit">Iscriviti</button>
+          <p class="es-login-or">Oppure accedi con</p>
+          <div class="es-login-socials">
+            <button type="button" class="es-social" aria-label="Facebook" onclick="window.eliseeSocialSoon && window.eliseeSocialSoon('Facebook')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2"><path d="M15.1 8.5h-2V7.1c0-.5.3-.6.6-.6h1.4V4.1L12.7 4c-2.3 0-2.8 1.7-2.8 2.8v1.7H8v2.6h1.9V20h2.6v-8.9h2.1l.5-2.6z"/></svg>
+            </button>
+            <button type="button" class="es-social" aria-label="Google" onclick="window.startEliseeGoogleOAuth && window.startEliseeGoogleOAuth()">
+              <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.5c-.3 1.5-1.2 2.8-2.5 3.6v3h4c2.4-2.2 3.5-5.4 3.5-8.7z"/><path fill="#34A853" d="M12 24c3.2 0 5.9-1.1 7.9-2.9l-4-3c-1.1.7-2.4 1.2-3.9 1.2-3 0-5.6-2-6.5-4.8H1.4v3.1C3.4 21.3 7.4 24 12 24z"/><path fill="#FBBC05" d="M5.5 14.5c-.2-.7-.4-1.4-.4-2.2s.1-1.5.4-2.2V7H1.4C.5 8.6 0 10.3 0 12s.5 3.4 1.4 5l4.1-2.5z"/><path fill="#EA4335" d="M12 4.8c1.7 0 3.2.6 4.4 1.7l3.3-3.3C17.9 1.2 15.2 0 12 0 7.4 0 3.4 2.7 1.4 7l4.1 2.5C6.4 6.8 9 4.8 12 4.8z"/></svg>
+            </button>
+            <button type="button" class="es-social" aria-label="Apple" onclick="window.eliseeSocialSoon && window.eliseeSocialSoon('Apple')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#111"><path d="M16.7 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.2-2.8.9-3.5.9s-1.8-.8-3-.8c-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.3 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7 2-.1 2.9-2.3c.7-1 1.2-2 1.5-3.1-3.9-1.5-3.8-5.7-3.8-5.3zM14.5 6.1c.6-.8 1.1-1.9.9-3-1 .1-2.1.6-2.8 1.4-.6.7-1.2 1.8-1 2.9 1.1.1 2.2-.5 2.9-1.3z"/></svg>
+            </button>
+          </div>
+          <p class="es-login-mobile-switch">Hai già un account? <button type="button" onclick="window.setAccessoPanel('login')">Accedi</button></p>
+        </form>
       </div>
     </div>
   </div>
 
-  <!-- ================================================================ -->
+
+<!-- ================================================================ -->
   <!-- MODAL: SPID kept only as provider selection — opens accesso modal -->
   <!-- (legacy id kept for backward compat) -->
   <div id="modal-google-login" style="display:none;"></div>
@@ -5998,7 +5879,7 @@
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="elisee-staff.js?v=20260911_ADMIN2"></script>
   <script src="app-admin-panels.js?v=20260918_CCDROPDOWN1"></script>
-  <script src="app.js?v=20260918_CCDROPDOWN1"></script>
+  <script src="app.js?v=20260924_LOGINSLIDE1"></script>
   <script src="elisee-loader.js?v=20260918_LOADER1"></script>
   <!-- Three.js WebGL, OrbitControls, GLTFLoader & DecalGeometry Runtime per Avatar 3D Hyper3D / GLB -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

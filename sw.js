@@ -1,7 +1,7 @@
 /* ELISEE SCOUT — Cache Wipe & Self-Unregister Service Worker
    Assicura che nessun asset obsoleto rimanga memorizzato nella cache del browser.
 */
-const CACHE = 'elisee-scout-v20260924-kitbug1';
+const CACHE = 'elisee-scout-v20260924-loginslide1';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -20,10 +20,10 @@ self.addEventListener('activate', (event) => {
           try {
             client.postMessage({
               type: 'FORCE_RELOAD',
-              version: '20260924_KITBUG1',
-              updatedAt: '2026-09-24T12:00:00Z',
-              ts: '20260924_120000',
-              bust: 'v20260924_KITBUG1'
+              version: '20260924_LOGINSLIDE1',
+              updatedAt: '2026-09-24T18:30:00Z',
+              ts: '20260924_183000',
+              bust: 'v20260924_LOGINSLIDE1'
             });
           } catch (e) {}
         });

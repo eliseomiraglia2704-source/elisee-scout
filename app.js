@@ -7474,6 +7474,10 @@ window.restoreAuthReturn = function () {
 };
 
 window.openRegistrazioneModal = function() {
+  if (typeof window.openAccessoModal === 'function') {
+    window.openAccessoModal('register');
+    return;
+  }
   window.rememberAuthReturn();
   const modal = document.getElementById('modal-registrazione');
   if (modal) {
@@ -7498,6 +7502,11 @@ window.closeRegistrazioneModal = function() {
 };
 
 function showRegError(msg) {
+  const slide = document.getElementById('es-login-reg-error');
+  if (slide) {
+    slide.hidden = false;
+    slide.textContent = msg;
+  }
   let box = document.getElementById('reg-error-box');
   if (!box) {
     const form = document.getElementById('form-registrazione');
@@ -7523,6 +7532,11 @@ function showRegError(msg) {
 function clearRegError() {
   const box = document.getElementById('reg-error-box');
   if (box) box.style.display = 'none';
+  const slide = document.getElementById('es-login-reg-error');
+  if (slide) {
+    slide.hidden = true;
+    slide.textContent = '';
+  }
 }
 
 function displayNameFromUser(user) {
@@ -8609,27 +8623,112 @@ window.openAccessoModal = function openAccessoModal(provider, iconHtml, label) {
     if (subtitle) subtitle.textContent = 'Accedi alla tua area personale';
   }
 
-  // Per SPID: mostra selettore provider, nascondi form
+  resetAccessoForm();
+
   const spidBlock = document.getElementById('accesso-spid-block');
-  const formBlock = document.getElementById('accesso-form-block');
+  const emailMethod = document.getElementById('accesso-method-email');
   if (provider === 'spid') {
     if (spidBlock) spidBlock.style.display = 'block';
-    if (formBlock) formBlock.style.display = 'none';
-  } else {
-    if (spidBlock) spidBlock.style.display = 'none';
-    if (formBlock) formBlock.style.display = 'block';
+    if (emailMethod) emailMethod.style.display = 'none';
+  } else if (spidBlock) {
+    spidBlock.style.display = 'none';
   }
+  if (typeof window.setAccessoPanel === 'function') {
+    window.setAccessoPanel(provider === 'register' ? 'register' : 'login');
+  }
+  try {
+    var remembered = localStorage.getItem('elisee_login_remember') || '';
+    var emailInput = document.getElementById('accesso-email');
+    var rememberBox = document.getElementById('accesso-remember');
+    if (remembered && emailInput) emailInput.value = remembered;
+    if (rememberBox) rememberBox.checked = !!remembered;
+  } catch (_) {}
 
-  // Reset form
-  resetAccessoForm();
-  // Focus email
   if (provider !== 'spid') {
     setTimeout(() => {
-      const em = document.getElementById('accesso-email');
+      const em = document.getElementById(provider === 'register' ? 'es-slide-nome' : 'accesso-email');
       if (em) em.focus();
     }, 200);
   }
 }
+
+window.setAccessoPanel = function (mode) {
+  var card = document.getElementById('es-login-card');
+  if (card) card.classList.toggle('is-register', mode === 'register');
+};
+
+window.forgotAccessoPassword = function () {
+  var box = document.getElementById('accesso-error-general');
+  var msg = document.getElementById('accesso-error-msg');
+  if (box && msg) {
+    msg.textContent = 'Per entrare senza password usa Google, oppure chiedi un codice su WhatsApp.';
+    box.style.display = 'block';
+  }
+  if (typeof window.showAccessoMethod === 'function') window.showAccessoMethod('whatsapp');
+};
+
+window.eliseeSocialSoon = function (name) {
+  var text = name + ' non è ancora collegato. Usa Google oppure email e password.';
+  var card = document.getElementById('es-login-card');
+  var onRegister = card && card.classList.contains('is-register');
+  if (onRegister) {
+    var reg = document.getElementById('es-login-reg-error');
+    if (reg) {
+      reg.hidden = false;
+      reg.textContent = text;
+    }
+    return;
+  }
+  var box = document.getElementById('accesso-error-general');
+  var msg = document.getElementById('accesso-error-msg');
+  if (box && msg) {
+    msg.textContent = text;
+    box.style.display = 'block';
+  }
+};
+
+window.submitSlideRegistrazione = function (e) {
+  if (e && e.preventDefault) e.preventDefault();
+  var err = document.getElementById('es-login-reg-error');
+  function fail(m) {
+    if (err) {
+      err.hidden = false;
+      err.textContent = m;
+    }
+    return false;
+  }
+  var nomeFull = ((document.getElementById('es-slide-nome') || {}).value || '').trim();
+  var email = ((document.getElementById('es-slide-email') || {}).value || '').trim();
+  var dob = ((document.getElementById('es-slide-dob') || {}).value || '').trim();
+  var pass = (document.getElementById('es-slide-password') || {}).value || '';
+  var tos = document.getElementById('es-slide-tos');
+  if (!nomeFull) return fail('Inserisci nome e cognome.');
+  var parts = nomeFull.split(/\s+/);
+  var nome = parts.shift();
+  var cognome = parts.join(' ');
+  if (!cognome) return fail('Scrivi anche il cognome, nello stesso campo.');
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail('Inserisci un indirizzo email valido.');
+  if (!dob) return fail('Inserisci la data di nascita.');
+  if (!tos || !tos.checked) return fail('Accetta i Termini e l\'informativa privacy.');
+  var policy = window.checkPasswordPolicy ? window.checkPasswordPolicy(pass) : { ok: pass.length >= 8 };
+  if (!policy.ok) return fail(policy.message || 'Password non valida.');
+  var missingReg = ['reg-nome', 'reg-cognome', 'reg-email', 'reg-dob', 'reg-password', 'reg-password2'].some(function (id) {
+    return !document.getElementById(id);
+  });
+  if (missingReg) return fail('Modulo di registrazione non disponibile. Ricarica la pagina.');
+  document.getElementById('reg-nome').value = nome;
+  document.getElementById('reg-cognome').value = cognome;
+  document.getElementById('reg-email').value = email;
+  document.getElementById('reg-dob').value = dob;
+  document.getElementById('reg-password').value = pass;
+  document.getElementById('reg-password2').value = pass;
+  var tosEl = document.getElementById('reg-tos');
+  var privacyEl = document.getElementById('reg-privacy');
+  if (tosEl) tosEl.checked = true;
+  if (privacyEl) privacyEl.checked = true;
+  if (err) err.hidden = true;
+  return window.submitRegistrazione(e);
+};
 
 window.closeAccessoModal = function() {
   const modal = document.getElementById('modal-accesso-unificato');
@@ -8645,14 +8744,14 @@ window.closeAccessoModal = function() {
 function resetAccessoForm() {
   ['accesso-email', 'accesso-password'].forEach(id => {
     const el = document.getElementById(id);
-    if (el) { el.value = ''; el.style.borderColor = 'rgba(56,189,248,0.3)'; }
+    if (el) { el.value = ''; el.style.borderColor = ''; }
   });
   ['err-email', 'err-password', 'accesso-error-general', 'password-requirements', 'password-strength-bar-wrap'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.style.display = 'none';
   });
   const btn = document.getElementById('accesso-submit-btn');
-  if (btn) { btn.disabled = false; btn.innerHTML = 'Accedi con password'; btn.style.opacity = '1'; }
+  if (btn) { btn.disabled = false; btn.innerHTML = 'Accedi'; btn.style.opacity = '1'; }
   if (typeof window.showAccessoMethod === 'function') window.showAccessoMethod('email');
 }
 
@@ -8660,12 +8759,11 @@ function resetAccessoForm() {
 window.selectSpidProvider = function(name, color) {
   _accessoProvider = 'spid_' + name;
   const spidBlock = document.getElementById('accesso-spid-block');
-  const formBlock = document.getElementById('accesso-form-block');
   const labelEl = document.getElementById('accesso-provider-label');
   const iconEl = document.getElementById('accesso-provider-icon');
   const badge = document.getElementById('accesso-provider-badge');
   if (spidBlock) spidBlock.style.display = 'none';
-  if (formBlock) formBlock.style.display = 'block';
+  if (typeof window.showAccessoMethod === 'function') window.showAccessoMethod('email');
   if (labelEl) labelEl.textContent = '· SPID via ' + name;
   if (iconEl) iconEl.innerHTML = '<img src="immagini/09-auth-spid-logo/spid-logo.svg?v=20260831_121117" style="height:22px; width:auto; vertical-align:middle; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6)) drop-shadow(0 0 10px rgba(0,102,204,0.7));">';
   if (badge) badge.style.display = 'flex';
@@ -9039,7 +9137,7 @@ window.validateAccessoEmail = function() {
   const valid = emailRegex.test(val);
   if (!val) {
     err.style.display = 'none';
-    input.style.borderColor = 'rgba(56,189,248,0.3)';
+    input.style.borderColor = '';
     return false;
   }
   if (!valid) {
@@ -9048,7 +9146,7 @@ window.validateAccessoEmail = function() {
     return false;
   }
   err.style.display = 'none';
-  input.style.borderColor = '#22c55e';
+  input.style.borderColor = '';
   return true;
 };
 
@@ -9065,17 +9163,20 @@ window.validateAccessoPassword = function() {
   if (barWrap) barWrap.style.display = 'none';
   const val = input.value;
   if (err) err.style.display = 'none';
-  input.style.borderColor = val.length > 0 ? 'rgba(255,255,255,0.28)' : 'rgba(255,255,255,0.12)';
+  input.style.borderColor = '';
   return val.length > 0;
 };
 
 // =====================================================================
 // MOSTRA / NASCONDI PASSWORD
 // =====================================================================
-window.toggleAccessoPasswordVisibility = function() {
-  const inp = document.getElementById('accesso-password');
+window.toggleAccessoPasswordVisibility = function(id) {
+  const inp = document.getElementById(id || 'accesso-password');
   if (!inp) return;
-  inp.type = inp.type === 'password' ? 'text' : 'password';
+  var show = inp.type === 'password';
+  inp.type = show ? 'text' : 'password';
+  var btn = inp.parentNode && inp.parentNode.querySelector('.es-login-eye');
+  if (btn) btn.setAttribute('aria-label', show ? 'Nascondi password' : 'Mostra password');
 };
 
 function _accessoMethodEls() {
@@ -9360,6 +9461,11 @@ window.submitAccessoForm = function() {
   }
 
   if (errBox) errBox.style.display = 'none';
+  try {
+    var remember = document.getElementById('accesso-remember');
+    if (remember && remember.checked) localStorage.setItem('elisee_login_remember', emailVal);
+    else localStorage.removeItem('elisee_login_remember');
+  } catch (_) {}
   const btn = document.getElementById('accesso-submit-btn');
   if (btn) {
     btn.disabled = true;
@@ -9379,7 +9485,7 @@ window.submitAccessoForm = function() {
   }).catch(function (err) {
     if (btn) {
       btn.disabled = false;
-      btn.innerHTML = 'Accedi con password';
+      btn.innerHTML = 'Accedi';
       btn.style.opacity = '1';
     }
     if (errBox && errMsg) {
