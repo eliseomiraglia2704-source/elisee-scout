@@ -3,7 +3,14 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-24** — GLASSMENU1 — Menu a tendina in vetro con pagine che scorrono:
+Ultimo aggiornamento: **2026-09-24** — HOVERSIDE1 — Sidebar che si apre al passaggio del mouse, e login sulla palette del sito:
+1. **Sidebar delle aree ruolo** (atleta, staff, osservatore e le altre): a riposo è una colonna stretta con icona, avatar e azioni in colonna. Al passaggio del mouse si allarga, compaiono nome, ruolo, campo Cerca e le etichette. La voce attiva ha la pillola ciano. In basso tema, impostazioni, nuova operazione ed esci si mettono in fila. Sul telefono resta il pannello che entra da sinistra.
+2. **Colori del sito**, non quelli del video di riferimento: vetro scuro, testo bianco, accento `#38bdf8`. Il tasto tema passa al preset chiaro già presente (`mimetico-chiaro`). Cerca filtra le voci.
+3. **Login Accedi / Iscriviti**: stessa card scorrevole, ma sfondo scuro, campi neri, bottone e link ciano. Niente più card bianca e bottone nero.
+4. **File**: `index.html`, `login-slide.css`, `role-sidebar-pro.css`, `role-sidebar-pro.js`, `sw.js`, `version.json`. Cache `v20260924_HOVERSIDE1`. Commit `17209e26`.
+5. Il menu in vetro GLASSMENU1 (commit `c1c3c23e`) era rimasto solo in locale: il push di quella sera non ha raggiunto GitHub e online c’era ancora `LOGINOTP1`. Questo giro lo pubblica insieme.
+
+Feature precedente: **2026-09-24** — GLASSMENU1 — Menu a tendina in vetro con pagine che scorrono:
 1. Il menu dell’account (in alto a destra, da loggato) è il pulsante col nome e il chevron. Si apre in vetro smerigliato. Il chevron ruota.
 2. Voci: Impostazioni, Account, Squadra, Esci. Impostazioni, Account e Squadra scorrono di lato (Notifiche, Area riservata, Annuncio, Album…). La freccia indietro torna alla prima pagina. Per lo staff c’è anche Strumenti.
 3. Il menu della lingua usa lo stesso vetro.
