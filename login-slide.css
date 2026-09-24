@@ -4,7 +4,7 @@
   position: fixed;
   inset: 0;
   z-index: 99997;
-  background: rgba(232, 233, 230, 0.82);
+  background: rgba(5, 6, 8, 0.78);
   backdrop-filter: blur(8px);
   align-items: center;
   justify-content: center;
@@ -25,10 +25,10 @@
   z-index: 5;
   width: 32px;
   height: 32px;
-  border: 0;
+  border: 1px solid rgba(56, 189, 248, 0.35);
   border-radius: 50%;
-  background: #fff;
-  color: #6b7280;
+  background: #0e1118;
+  color: #e2e8f0;
   font-size: 1.15rem;
   line-height: 32px;
   cursor: pointer;
@@ -41,12 +41,12 @@
   width: 100%;
   height: 560px;
   border-radius: 24px;
-  background: #ffffff;
-  border: 8px solid #ffffff;
-  box-shadow: 0 12px 80px rgba(41, 30, 13, 0.12);
+  background: #0b0e14;
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(56, 189, 248, 0.08);
   font-family: Inter, Outfit, sans-serif;
-  color: #1c1c1c;
-  color-scheme: light;
+  color: #f8fafc;
+  color-scheme: dark;
 }
 
 .es-login-card h2,
@@ -165,7 +165,7 @@
   justify-content: center;
   padding: 28px 32px 22px;
   overflow: auto;
-  background: #fff;
+  background: transparent;
 }
 
 .es-login-form.login { left: 0; }
@@ -180,7 +180,7 @@
   font-weight: 800;
   letter-spacing: -0.02em;
   text-transform: none;
-  color: #161616;
+  color: #f8fafc;
 }
 
 .es-login-form label.es-login-lbl {
@@ -188,7 +188,7 @@
   margin: 8px 0 4px;
   font-size: 0.82rem;
   font-weight: 600;
-  color: #1f2937;
+  color: #cbd5e1;
 }
 
 .es-login-form input[type="email"],
@@ -200,16 +200,17 @@
   box-sizing: border-box;
   height: 44px;
   padding: 0 14px;
-  border: 0;
+  border: 1px solid rgba(148, 163, 184, 0.22);
   border-radius: 12px;
-  background: #eef0f4;
-  color: #1f2937;
+  background: #050608;
+  color: #f8fafc;
   font-size: 0.92rem;
   font-family: inherit;
   outline: none;
 }
 
-.es-login-form input::placeholder { color: #9aa1ab; }
+.es-login-form input::placeholder { color: #64748b; }
+.es-login-form input:focus { border-color: #38bdf8; box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18); }
 
 .es-login-pw { position: relative; }
 .es-login-pw input { padding-right: 42px; }
@@ -243,18 +244,18 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #374151;
+  color: #cbd5e1;
   font-weight: 600;
   cursor: pointer;
 }
 
-.es-login-check input { accent-color: #0f766e; width: 15px; height: 15px; }
+.es-login-check input { accent-color: #38bdf8; width: 15px; height: 15px; }
 
 .es-login-link {
   border: 0;
   background: none;
   padding: 0;
-  color: #0f766e;
+  color: #38bdf8;
   font-weight: 600;
   font-size: 0.78rem;
   cursor: pointer;
@@ -267,8 +268,8 @@
   margin-top: 4px;
   border: 0;
   border-radius: 12px;
-  background: #111111;
-  color: #fff;
+  background: #38bdf8;
+  color: #041018;
   font-family: inherit;
   font-size: 0.98rem;
   font-weight: 700;
@@ -296,7 +297,8 @@
   height: 46px;
   border: 0;
   border-radius: 12px;
-  background: #f3f4f6;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(148, 163, 184, 0.2);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -304,7 +306,7 @@
   overflow: hidden;
 }
 
-.es-social:hover { background: #e7e9ee; }
+.es-social:hover { background: rgba(56, 189, 248, 0.14); }
 
 .es-gis-hit {
   position: absolute;
@@ -324,8 +326,8 @@
   margin: 8px 0;
   padding: 8px 10px;
   border-radius: 10px;
-  background: #fef2f2;
-  color: #b91c1c;
+  background: rgba(239, 68, 68, 0.12);
+  color: #fecaca;
   font-size: 0.78rem;
   font-weight: 600;
 }
@@ -337,26 +339,26 @@
   margin: 10px 0 8px;
   font-size: 0.72rem;
   line-height: 1.35;
-  color: #4b5563;
+  color: #94a3b8;
   cursor: pointer;
 }
 
-.es-login-consent a { color: #0f766e; }
+.es-login-consent a { color: #38bdf8; }
 
-.es-login-consent input { margin-top: 2px; accent-color: #111; }
+.es-login-consent input { margin-top: 2px; accent-color: #38bdf8; }
 
 .es-login-mobile-switch {
   display: none;
   margin: 12px 0 0;
   text-align: center;
   font-size: 0.78rem;
-  color: #6b7280;
+  color: #94a3b8;
 }
 
 .es-login-mobile-switch button {
   border: 0;
   background: none;
-  color: #111;
+  color: #38bdf8;
   font-weight: 700;
   cursor: pointer;
   font-family: inherit;
@@ -364,7 +366,7 @@
 }
 
 #accesso-spid-block { margin-bottom: 8px; }
-#accesso-spid-block p { color: #6b7280; font-size: 0.78rem; }
+#accesso-spid-block p { color: #94a3b8; font-size: 0.78rem; }
 
 #password-requirements,
 #password-strength-bar-wrap { display: none !important; }
