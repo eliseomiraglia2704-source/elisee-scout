@@ -7,7 +7,7 @@ Ultimo aggiornamento: **2026-09-24** — LOGINSLIDE1 — Nuova interfaccia Acced
 1. **Card bianca 660×560** come nel video: a sinistra il form, a destra il pannello scuro con la foto. Il tasto Iscriviti fa scorrere il pannello a sinistra e porta il form di iscrizione.
 2. **Accedi**: email, password con occhio, Ricordami, Password dimenticata (WhatsApp), bottone nero, Facebook / Google / Apple. Google usa l’accesso già collegato. Facebook e Apple dicono che non sono ancora attivi.
 3. **Iscriviti** (anche dal tasto in navbar) usa la stessa card: nome, email, data di nascita, password, consenso privacy, poi la registrazione vera e la scelta del ruolo.
-4. **File**: `index.html`, `login-slide.css`, `app.js`, `immagini/login-hero.jpg`, `sw.js`, `version.json`. Cache `v20260924_LOGINSLIDE1`.
+4. **File**: `index.html`, `login-slide.css`, `app.js`, `immagini/login-hero.jpg`, `sw.js`, `version.json`. Cache `v20260924_LOGINSLIDE1`. Commit `bde07862`.
 
 Feature precedente: **2026-09-24** — KITBUG1 — Avatar 3D: maglia 2D vera sul busto, niente foglio UV, taglio e altezza petto di nuovo attivi, niente falso «INDOSSATA»:
 1. **Foto maglia, non foglio UV**. `home-uv.png` e `INTER-HOME-27.png` non vengono più avvolti sul torso (collage). Si usa sempre la foto 2D (`home.png`). Vale anche per un kit già salvato nel browser.
