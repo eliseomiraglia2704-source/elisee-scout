@@ -10,7 +10,7 @@ Ultimo aggiornamento: **2026-09-24** — KITBUG1 — Avatar 3D: maglia 2D vera s
 4. **Taglio Slim / Classica / Morbida e altezza petto** spostano torso, maniche e spalle del calciatore ufficiale senza ricaricare la texture a ogni scatto dello slider. «ORIGINALE» riporta scala e altezza.
 5. **Pelle non più condivisa**: braccia, mani e gambe hanno materiali separati, così una tinta non si propaga a tutto il corpo.
 6. **Service worker**: il messaggio `FORCE_RELOAD` non resta fermo a `MESHKIT2`. Cache `v20260924_KITBUG1`.
-7. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Commit e deploy in questo giro.
+7. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260924_KITBUG1`. Commit `ef19b677`. Deploy in corso su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **2026-09-22** — KITBLEED1 — Avatar 3D: Risoluzione invasione texture su viso/capelli e isolamento chirurgico mesh outfit:
 1. **Corrispondenza esatta (===)**: sostituito qualsiasi matching permissivo con verifica rigorosa su `child.name === 'athlete_torso'` (per il Calciatore 3D Ufficiale) e `child.name === 'Wolf3D_Outfit_Top'` (per modelli GLB Ready Player Me). Nessun fallback cieco su altre mesh.
