@@ -570,27 +570,91 @@
   }
 
   function otpFeedback(text, isErr) {
-    var errMsg = document.getElementById('otp-error-msg');
     var infoMsg = document.getElementById('otp-info-msg');
-    if (isErr) {
-      if (infoMsg) { infoMsg.style.display = 'none'; infoMsg.setAttribute('hidden', ''); }
-      if (errMsg) {
-        errMsg.textContent = text;
-        errMsg.removeAttribute('hidden');
-        errMsg.style.display = 'block';
-      }
-    } else {
-      if (errMsg) { errMsg.style.display = 'none'; errMsg.setAttribute('hidden', ''); }
-      if (infoMsg) {
-        infoMsg.textContent = text;
-        infoMsg.removeAttribute('hidden');
-        infoMsg.style.display = 'block';
-      }
-    }
+    var root = document.getElementById('es-otp-bottom-banner');
+    if (infoMsg) infoMsg.textContent = text;
+    if (root) root.classList.toggle('is-bad', !!isErr);
+  }
+
+  var mailOtpLeft = 0;
+  var mailOtpTimer = null;
+
+  function mailOtpRoot() {
+    return document.getElementById('es-otp-bottom-banner');
   }
 
   function otpDigits() {
-    return document.querySelectorAll('#es-otp-bottom-banner .es-otp-digit');
+    return document.querySelectorAll('#es-otp-bottom-banner .es-mailotp-slot input');
+  }
+
+  function paintMailFocus() {
+    var active = document.activeElement;
+    otpDigits().forEach(function (el) {
+      var slot = el && el.parentNode;
+      if (!slot) return;
+      slot.classList.toggle('is-on', el === active || !!el.value);
+      slot.classList.toggle('is-spin', el === active && !el.value);
+    });
+  }
+
+  function mailCode() {
+    return Array.prototype.map.call(otpDigits(), function (el) {
+      return String((el && el.value) || '').replace(/\D/g, '').slice(0, 1);
+    }).join('');
+  }
+
+  function setMailSlotsEnabled(on) {
+    otpDigits().forEach(function (inp) { inp.disabled = !on; });
+    var root = mailOtpRoot();
+    if (root) root.classList.toggle('is-ready', !!on);
+  }
+
+  function tickMailResend() {
+    var count = document.getElementById('es-mailotp-count');
+    var btn = document.getElementById('btn-trigger-otp');
+    var resend = document.getElementById('es-mailotp-resend');
+    if (count) count.textContent = mailOtpLeft > 0 ? ('tra ' + mailOtpLeft + 's') : '';
+    if (resend) resend.hidden = !(btn && btn.dataset.sent === '1');
+    if (btn && btn.dataset.sent === '1') {
+      btn.disabled = mailOtpLeft > 0;
+      btn.textContent = 'Reinvia';
+    }
+  }
+
+  function startMailTimer() {
+    mailOtpLeft = 30;
+    tickMailResend();
+    clearInterval(mailOtpTimer);
+    mailOtpTimer = setInterval(function () {
+      mailOtpLeft -= 1;
+      if (mailOtpLeft <= 0) {
+        mailOtpLeft = 0;
+        clearInterval(mailOtpTimer);
+      }
+      tickMailResend();
+    }, 1000);
+  }
+
+  function writeMailDigits(raw) {
+    var digits = String(raw || '').replace(/\D/g, '').slice(0, 6).split('');
+    var list = otpDigits();
+    var root = mailOtpRoot();
+    if (root) {
+      root._esWriting = true;
+      root.classList.remove('is-bad', 'is-ok', 'is-filled');
+    }
+    list.forEach(function (el, i) {
+      if (!el || el.disabled) return;
+      el.value = digits[i] || '';
+    });
+    if (root) root._esWriting = false;
+    paintMailFocus();
+    if (digits.length === 6) {
+      if (root) root.classList.add('is-filled');
+      setTimeout(function () { doVerifyOtp(); }, 450);
+    } else if (list[digits.length] && !list[digits.length].disabled) {
+      list[digits.length].focus();
+    }
   }
 
   function sendOtpRequest() {
@@ -600,8 +664,14 @@
       return;
     }
     var btnSend = document.getElementById('btn-trigger-otp');
-    if (btnSend) btnSend.disabled = true;
+    if (btnSend) {
+      if (btnSend.dataset.sent === '1' && mailOtpLeft > 0) return;
+      btnSend.disabled = true;
+      btnSend.textContent = 'Invio…';
+    }
     otpDigits().forEach(function (inp) { inp.value = ''; });
+    var root = mailOtpRoot();
+    if (root) root.classList.remove('is-bad', 'is-ok', 'is-filled');
     otpFeedback('Invio del codice a ' + userEmail + ' in corso…', false);
 
     var u = user() || {};
@@ -621,38 +691,50 @@
     .then(function (res) { return res.json().then(function (data) { data._http = res.status; return data; }); })
     .then(function (data) {
       otpDigits().forEach(function (inp) { inp.value = ''; });
-      if (btnSend) btnSend.disabled = false;
       if (data.success) {
         if (data.ticket) {
           try { sessionStorage.setItem('elisee_otp_ticket_' + userEmail, data.ticket); } catch (_) {}
           window.__lastOtpTicket = data.ticket;
         }
-        otpFeedback('Ti abbiamo inviato un codice a 6 cifre su ' + userEmail + '. Aprilo nella casella (anche Spam) e inseriscilo qui. Non è un SMS.', false);
+        if (btnSend) btnSend.dataset.sent = '1';
+        setMailSlotsEnabled(true);
+        startMailTimer();
+        otpFeedback('Codice inviato a ' + userEmail + '. Controlla la casella, anche Spam. Non è un SMS.', false);
         var first = document.getElementById('otp-d-0');
         if (first) first.focus();
+        paintMailFocus();
       } else {
+        if (btnSend) {
+          btnSend.disabled = false;
+          btnSend.textContent = btnSend.dataset.sent === '1' ? 'Reinvia' : 'Invia codice';
+        }
         otpFeedback(data.error || 'Errore durante l\'invio del codice OTP', true);
       }
     })
     .catch(function () {
-      if (btnSend) btnSend.disabled = false;
+      if (btnSend) {
+        btnSend.disabled = false;
+        btnSend.textContent = btnSend.dataset.sent === '1' ? 'Reinvia' : 'Invia codice';
+      }
       otpFeedback('Servizio temporaneamente non disponibile. Riprova.', true);
     });
   }
 
   function doVerifyOtp() {
     var userEmail = otpEmailOf();
-    var inputs = otpDigits();
-    var entered = Array.prototype.map.call(inputs, function (i) { return i.value; }).join('');
-    if (entered.length < 6) {
-      otpFeedback('Inserisci tutte le 6 cifre del codice ricevuto via email', true);
+    var root = mailOtpRoot();
+    if (root && root._esVerifying) return;
+    var entered = mailCode();
+    if (otpDigits()[0] && otpDigits()[0].disabled) {
+      otpFeedback('Prima premi Invia codice. Il codice arriva solo via email.', true);
       return;
     }
-    var btnSubmit = document.getElementById('btn-submit-otp');
-    if (btnSubmit) {
-      btnSubmit.disabled = true;
-      btnSubmit.textContent = 'Verifica...';
+    if (entered.length < 6) {
+      otpFeedback('Inserisci tutte le 6 cifre del codice ricevuto via email.', true);
+      return;
     }
+    if (root) root._esVerifying = true;
+    otpFeedback('Verifica del codice in corso…', false);
     var ticket = window.__lastOtpTicket || '';
     if (!ticket) {
       try { ticket = sessionStorage.getItem('elisee_otp_ticket_' + userEmail) || ''; } catch (_) {}
@@ -664,10 +746,7 @@
     })
     .then(function (res) { return res.json(); })
     .then(function (data) {
-      if (btnSubmit) {
-        btnSubmit.disabled = false;
-        btnSubmit.textContent = 'Verifica';
-      }
+      if (root) root._esVerifying = false;
       if (data.success && data.verified) {
         try { sessionStorage.removeItem('elisee_otp_ticket_' + userEmail); } catch (_) {}
         delete window.__lastOtpTicket;
@@ -677,21 +756,29 @@
         currUser.email_verified = true;
         currUser.emailVerifiedAt = data.verifiedAt || new Date().toISOString();
         saveUser(currUser);
+        if (root) {
+          root.classList.remove('is-bad', 'is-filled');
+          root.classList.add('is-ok');
+        }
+        otpFeedback('Indirizzo email verificato.', false);
         killOtpOverlay();
-        var banner = document.getElementById('es-otp-bottom-banner');
-        if (banner) banner.remove();
+        setTimeout(function () {
+          var banner = document.getElementById('es-otp-bottom-banner');
+          if (banner) banner.remove();
+        }, 700);
         if (window.showToast) window.showToast('Indirizzo email verificato.', 'success');
         try { document.dispatchEvent(new CustomEvent('elisee:email-verified', { detail: { user: currUser } })); } catch (_) {}
         try { document.dispatchEvent(new CustomEvent('elisee:auth-changed', { detail: { user: currUser } })); } catch (_) {}
       } else {
+        if (root) {
+          root.classList.remove('is-filled', 'is-ok');
+          root.classList.add('is-bad');
+        }
         otpFeedback(data.error || 'Codice OTP non valido o scaduto', true);
       }
     })
     .catch(function () {
-      if (btnSubmit) {
-        btnSubmit.disabled = false;
-        btnSubmit.textContent = 'Verifica';
-      }
+      if (root) root._esVerifying = false;
       otpFeedback('Errore di connessione. Riprova.', true);
     });
   }
@@ -699,26 +786,46 @@
   function bindOtpBanner(root) {
     if (!root || root.dataset.otpBound === '1') return;
     root.dataset.otpBound = '1';
-    var inputs = root.querySelectorAll('.es-otp-digit');
-    inputs.forEach(function (inp, idx) {
-      inp.addEventListener('input', function () {
-        var val = inp.value.replace(/[^0-9]/g, '');
-        inp.value = val ? val.slice(-1) : '';
-        if (val && idx < inputs.length - 1) inputs[idx + 1].focus();
-      });
-      inp.addEventListener('keydown', function (e) {
-        if (e.key === 'Backspace' && !inp.value && idx > 0) inputs[idx - 1].focus();
-      });
-      inp.addEventListener('paste', function (e) {
-        e.preventDefault();
-        var paste = ((e.clipboardData || window.clipboardData).getData('text') || '').replace(/[^0-9]/g, '');
-        for (var i = 0; i < inputs.length; i++) inputs[i].value = paste[i] || '';
-      });
+    root.addEventListener('input', function (e) {
+      var el = e.target;
+      if (!el || el.tagName !== 'INPUT' || el.disabled) return;
+      var d = (el.value || '').replace(/\D/g, '');
+      if (d.length > 1) { writeMailDigits(d); return; }
+      el.value = d.slice(0, 1);
+      paintMailFocus();
+      var list = otpDigits();
+      var i = Array.prototype.indexOf.call(list, el);
+      if (d && i >= 0 && list[i + 1]) list[i + 1].focus();
+      if (mailCode().length === 6 && !root._esWriting) {
+        root.classList.add('is-filled');
+        setTimeout(function () { doVerifyOtp(); }, 450);
+      } else {
+        root.classList.remove('is-filled', 'is-ok', 'is-bad');
+      }
     });
+    root.addEventListener('keydown', function (e) {
+      var el = e.target;
+      if (!el || el.tagName !== 'INPUT') return;
+      if (e.key !== 'Backspace' || el.value) return;
+      var list = otpDigits();
+      var i = Array.prototype.indexOf.call(list, el);
+      if (i > 0) {
+        list[i - 1].value = '';
+        list[i - 1].focus();
+        paintMailFocus();
+        root.classList.remove('is-filled', 'is-ok', 'is-bad');
+      }
+    });
+    root.addEventListener('paste', function (e) {
+      var text = (e.clipboardData && e.clipboardData.getData('text')) || '';
+      if (!/\d/.test(text)) return;
+      e.preventDefault();
+      writeMailDigits(text);
+    });
+    root.addEventListener('focusin', paintMailFocus);
+    root.addEventListener('focusout', function () { setTimeout(paintMailFocus, 0); });
     var send = root.querySelector('#btn-trigger-otp');
     if (send) send.addEventListener('click', function (e) { e.preventDefault(); sendOtpRequest(); });
-    var verify = root.querySelector('#btn-submit-otp');
-    if (verify) verify.addEventListener('click', function (e) { e.preventDefault(); doVerifyOtp(); });
   }
 
   function paintOtpBanner(u) {
@@ -738,31 +845,28 @@
     if (!existing) {
       existing = document.createElement('div');
       existing.id = 'es-otp-bottom-banner';
-      existing.className = 'es-otp-bottom-banner';
+      existing.className = 'es-mailotp-dock';
       var mail = otpEmailOf(u);
       var gmailLink = /@gmail\.com$/.test(mail)
-        ? ' <a href="https://mail.google.com/mail/u/0/#search/subject%3A%22Codice+di+verifica+Elisee+Scout%22" target="_blank" rel="noopener" class="es-otp-inbox-link">Apri Gmail</a>'
+        ? '<a href="https://mail.google.com/mail/u/0/#search/subject%3A%22Codice+di+verifica+Elisee+Scout%22" target="_blank" rel="noopener" class="es-mailotp-gmail">Apri Gmail</a>'
         : '';
+      var slots = '';
+      for (var si = 0; si < 6; si++) {
+        slots += '<label class="es-mailotp-slot"><input type="text" maxlength="1" inputmode="numeric" autocomplete="' + (si === 0 ? 'one-time-code' : 'off') + '" class="es-mailotp-digit" id="otp-d-' + si + '" aria-label="Cifra ' + (si + 1) + '" disabled></label>';
+      }
       existing.innerHTML =
-        '<div class="es-otp-banner-inner es-otp-banner-flow">' +
-          '<div class="es-otp-banner-text">' +
-            '<strong>Verifica email</strong>' +
-            '<span>Invieremo un codice OTP a <b class="es-otp-mail">' + otpEsc(mail || '—') + '</b>. Aprilo nella casella e inseriscilo qui. Non è un SMS.' + gmailLink + '</span>' +
+        '<div class="es-mailotp" id="es-mailotp">' +
+          '<span class="es-mailotp-notch" aria-hidden="true"></span>' +
+          '<h2>Verifica email</h2>' +
+          '<p class="es-mailotp-sub">Codice a 6 cifre inviato a <strong>' + otpEsc(mail || '—') + '</strong>. Non è un SMS.</p>' +
+          '<div class="es-mailotp-slots" role="group" aria-label="Codice OTP a 6 cifre">' + slots + '</div>' +
+          '<p class="es-mailotp-resend" id="es-mailotp-resend" hidden>Puoi reinviare <span id="es-mailotp-count"></span></p>' +
+          '<div class="es-mailotp-toast">' +
+            '<span class="es-mailotp-bubble" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg></span>' +
+            '<span class="es-mailotp-toast-txt"><small>EMAIL · OTP</small><strong id="otp-info-msg">Premi Invia codice, poi scrivi le 6 cifre della mail.</strong></span>' +
+            '<button type="button" class="es-mailotp-fill" id="btn-trigger-otp">Invia codice</button>' +
           '</div>' +
-          '<div class="es-otp-inputs-wrap es-otp-inputs-inline" role="group" aria-label="Codice OTP a 6 cifre">' +
-            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-0" autocomplete="one-time-code" aria-label="Cifra 1">' +
-            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-1" autocomplete="off" aria-label="Cifra 2">' +
-            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-2" autocomplete="off" aria-label="Cifra 3">' +
-            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-3" autocomplete="off" aria-label="Cifra 4">' +
-            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-4" autocomplete="off" aria-label="Cifra 5">' +
-            '<input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="es-otp-digit" id="otp-d-5" autocomplete="off" aria-label="Cifra 6">' +
-          '</div>' +
-          '<div class="es-otp-banner-actions">' +
-            '<button type="button" class="es-otp-btn-send" id="btn-trigger-otp">Invia codice</button>' +
-            '<button type="button" class="es-otp-btn-verify" id="btn-submit-otp">Verifica</button>' +
-          '</div>' +
-          '<p id="otp-error-msg" hidden></p>' +
-          '<p id="otp-info-msg" hidden></p>' +
+          gmailLink +
         '</div>';
       document.body.appendChild(existing);
       bindOtpBanner(existing);
