@@ -614,10 +614,10 @@
     var btn = document.getElementById('btn-trigger-otp');
     var resend = document.getElementById('es-mailotp-resend');
     if (count) count.textContent = mailOtpLeft > 0 ? ('tra ' + mailOtpLeft + 's') : '';
-    if (resend) resend.hidden = !(btn && btn.dataset.sent === '1');
+    if (resend) resend.hidden = true;
     if (btn && btn.dataset.sent === '1') {
       btn.disabled = mailOtpLeft > 0;
-      btn.textContent = 'Reinvia';
+      btn.textContent = mailOtpLeft > 0 ? ('Reinvia tra ' + mailOtpLeft + 's') : 'Reinvia';
     }
   }
 
@@ -856,17 +856,13 @@
       }
       existing.innerHTML =
         '<div class="es-mailotp" id="es-mailotp">' +
-          '<span class="es-mailotp-notch" aria-hidden="true"></span>' +
-          '<h2>Verifica email</h2>' +
-          '<p class="es-mailotp-sub">Codice a 6 cifre inviato a <strong>' + otpEsc(mail || '—') + '</strong>. Non è un SMS.</p>' +
-          '<div class="es-mailotp-slots" role="group" aria-label="Codice OTP a 6 cifre">' + slots + '</div>' +
-          '<p class="es-mailotp-resend" id="es-mailotp-resend" hidden>Puoi reinviare <span id="es-mailotp-count"></span></p>' +
-          '<div class="es-mailotp-toast">' +
-            '<span class="es-mailotp-bubble" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg></span>' +
-            '<span class="es-mailotp-toast-txt"><small>EMAIL · OTP</small><strong id="otp-info-msg">Premi Invia codice, poi scrivi le 6 cifre della mail.</strong></span>' +
+          '<div class="es-mailotp-row">' +
+            '<p class="es-mailotp-sub">Verifica email · <strong>' + otpEsc(mail || '—') + '</strong>' + gmailLink + '</p>' +
+            '<div class="es-mailotp-slots" role="group" aria-label="Codice a 6 cifre">' + slots + '</div>' +
             '<button type="button" class="es-mailotp-fill" id="btn-trigger-otp">Invia codice</button>' +
           '</div>' +
-          gmailLink +
+          '<p class="es-mailotp-status" id="otp-info-msg"></p>' +
+          '<p class="es-mailotp-resend" id="es-mailotp-resend" hidden><span id="es-mailotp-count"></span></p>' +
         '</div>';
       document.body.appendChild(existing);
       bindOtpBanner(existing);
