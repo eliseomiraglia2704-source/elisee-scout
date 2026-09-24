@@ -3,7 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-24** — FINISH1 — Pubblicato il lavoro rimasto solo in locale (ricerca, vetro, tabelle, OTP):
+Ultimo aggiornamento: **2026-09-25** — MAILOTP1 — La verifica email in basso nel dossier non è più la fascia vecchia:
+1. Quella fascia («Verifica email», Invia codice, Verifica, sei quadretti tagliati a destra) era un OTP diverso da quello del login. FINISH1 aveva toccato solo il login.
+2. Ora è una card scura, come il pannello del login: sei caselle arrotondate, anello tratteggiato sulla cifra attiva, messaggio EMAIL · OTP e tasto bianco **Invia codice**.
+3. Le caselle si accendono dopo l’invio. A 6 cifre parte la verifica da sola. Verde se è giusto, rosso se no. Reinvia dopo 30 secondi. Il codice resta solo nella mail, non a schermo.
+4. **File**: `verifica-account.js`, `verifica-account.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260924_MAILOTP1`. Commit `12ec2c79`.
+
+Feature precedente: **2026-09-24** — FINISH1 — Pubblicato il lavoro rimasto solo in locale (ricerca, vetro, tabelle, OTP):
 1. **Ricerca in navbar**: il tasto lente apre il campo con il flip 3D, bordo che si disegna e frasi che si scrivono da sole. Invio porta il testo nella bacheca (profili). Il toast dice «Ricerca», non il nome del video di riferimento.
 2. **Control Center e numeri in home**: pannelli e schede KPI in vetro scuro, si alzano al passaggio del mouse.
 3. **Tabelle ordinabili**: nelle tabelle admin, operazioni, dossier e atelier il click sul titolo di colonna ordina (numero, data o testo) e mostra la freccia.
