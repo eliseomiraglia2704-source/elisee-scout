@@ -52,7 +52,7 @@
   <link rel="stylesheet" href="control-center.css?v=20260918_CCDROPDOWN1">
   <link rel="stylesheet" href="elisee-loader.css?v=20260918_LOADER1">
   <link rel="stylesheet" href="avatar-3d.css?v=20260921_FACESCAN1">
-  <link rel="stylesheet" href="login-slide.css?v=20260924_LOGINSLIDE1">
+  <link rel="stylesheet" href="login-slide.css?v=20260924_LOGINOTP1">
   <link rel="stylesheet" href="role-sidebar-pro.css?v=20260921_A3DCLEAN1">
   <style id="es-font-nevera">
     @font-face {
@@ -1744,9 +1744,7 @@
               <button type="button" class="es-login-submit" style="margin-top:10px; background:#25D366;" onclick="window.submitWhatsAppOtp && window.submitWhatsAppOtp();">Invia codice</button>
             </div>
             <div id="accesso-wa-code-step" style="display:none;">
-              <label class="es-login-lbl" for="accesso-wa-code">Codice</label>
-              <input type="text" id="accesso-wa-code" maxlength="6" placeholder="000000">
-              <button type="button" class="es-login-submit" style="margin-top:10px; background:#25D366;" onclick="window.verifyWhatsAppOtp && window.verifyWhatsAppOtp();">Verifica</button>
+              <input type="hidden" id="accesso-wa-code" value="">
             </div>
             <button type="button" class="es-login-link" style="margin-top:8px;" onclick="window.showAccessoMethod && window.showAccessoMethod('email');">Torna all'email</button>
           </div>
@@ -1827,6 +1825,39 @@
           </div>
           <p class="es-login-mobile-switch">Hai già un account? <button type="button" onclick="window.setAccessoPanel('login')">Accedi</button></p>
         </form>
+
+        <div class="es-otp" id="es-otp" hidden>
+          <div class="es-otp-phone">
+            <span class="es-otp-notch" aria-hidden="true"></span>
+            <h2>Verifica il numero</h2>
+            <p class="es-otp-sub">Inserisci il codice a 4 cifre inviato a <strong id="es-otp-dest">+39 ••• ••••</strong>.</p>
+            <div class="es-otp-stage" id="es-otp-stage">
+              <svg class="es-otp-ring" viewBox="0 0 240 240" aria-hidden="true">
+                <circle cx="120" cy="120" r="86"></circle>
+              </svg>
+              <span class="es-otp-hub" aria-hidden="true"></span>
+              <div class="es-otp-slots">
+                <label class="es-otp-slot"><input maxlength="1" inputmode="numeric" autocomplete="one-time-code" aria-label="Cifra 1"></label>
+                <label class="es-otp-slot"><input maxlength="1" inputmode="numeric" aria-label="Cifra 2"></label>
+                <label class="es-otp-slot"><input maxlength="1" inputmode="numeric" aria-label="Cifra 3"></label>
+                <label class="es-otp-slot"><input maxlength="1" inputmode="numeric" aria-label="Cifra 4"></label>
+              </div>
+            </div>
+            <p class="es-otp-resend" id="es-otp-resend" hidden>Non hai ricevuto il codice? <button type="button" id="es-otp-resend-btn">Reinvia</button> <span id="es-otp-count"></span></p>
+            <div class="es-otp-toast" id="es-otp-toast">
+              <span class="es-otp-bubble" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8h12M6 12h8"/><rect x="4" y="5" width="16" height="12" rx="3"/><path d="M8 17l-2 3 4-3"/></svg>
+              </span>
+              <span class="es-otp-toast-txt">
+                <small>MESSAGGIO · OTP</small>
+                <strong id="es-otp-toast-msg">Il codice è nel messaggio WhatsApp.</strong>
+              </span>
+              <button type="button" class="es-otp-fill" id="es-otp-fill">Compila</button>
+            </div>
+            <p class="es-otp-hint" id="es-otp-hint">Scrivilo, incollalo, oppure fai compilare dal messaggio.</p>
+            <button type="button" class="es-otp-back" id="es-otp-back">Torna all'email</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -5879,7 +5910,7 @@
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="elisee-staff.js?v=20260911_ADMIN2"></script>
   <script src="app-admin-panels.js?v=20260918_CCDROPDOWN1"></script>
-  <script src="app.js?v=20260924_LOGINSLIDE1"></script>
+  <script src="app.js?v=20260924_LOGINOTP1"></script>
   <script src="elisee-loader.js?v=20260918_LOADER1"></script>
   <!-- Three.js WebGL, OrbitControls, GLTFLoader & DecalGeometry Runtime per Avatar 3D Hyper3D / GLB -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

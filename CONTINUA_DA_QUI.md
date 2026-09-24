@@ -3,7 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-24** — LOGINSLIDE1 — Nuova interfaccia Accedi / Iscriviti a card scorrevole:
+Ultimo aggiornamento: **2026-09-24** — LOGINOTP1 — Codice OTP come nel video (4 caselle, messaggio, orbita):
+1. Dopo il numero WhatsApp si apre il pannello scuro **Verifica il numero**. Quattro caselle, la prima con l’anello tratteggiato.
+2. Si scrive, si incolla, oppure **Compila** legge il codice dagli appunti. A 4 cifre le caselle ruotano e si chiudono a croce sul cerchio tratteggiato.
+3. Il messaggio in basso mostra il codice (come nel video) e **Compila** lo scrive nelle caselle. Se coincide, i bordi diventano verdi; se no, rossi. «Reinvia tra 30s» compare dopo l’orbita. Non fa entrare: WhatsApp vero non è ancora collegato.
+4. **File**: `index.html`, `login-slide.css`, `app.js`, `sw.js`, `version.json`. Cache `v20260924_LOGINOTP1`.
+
+Feature precedente: **2026-09-24** — LOGINSLIDE1 — Nuova interfaccia Accedi / Iscriviti a card scorrevole:
 1. **Card bianca 660×560** come nel video: a sinistra il form, a destra il pannello scuro con la foto. Il tasto Iscriviti fa scorrere il pannello a sinistra e porta il form di iscrizione.
 2. **Accedi**: email, password con occhio, Ricordami, Password dimenticata (WhatsApp), bottone nero, Facebook / Google / Apple. Google usa l’accesso già collegato. Facebook e Apple dicono che non sono ancora attivi.
 3. **Iscriviti** (anche dal tasto in navbar) usa la stessa card: nome, email, data di nascita, password, consenso privacy, poi la registrazione vera e la scelta del ruolo.

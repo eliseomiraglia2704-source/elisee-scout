@@ -9194,6 +9194,12 @@ window.showAccessoMethod = function (method) {
   Object.keys(els).forEach(function (k) {
     if (els[k]) els[k].style.display = k === method ? 'block' : 'none';
   });
+  if (method !== 'whatsapp') {
+    var card = document.getElementById('es-login-card');
+    var otp = document.getElementById('es-otp');
+    if (card) card.classList.remove('is-otp');
+    if (otp) otp.hidden = true;
+  }
   if (method === 'qr') {
     const img = document.getElementById('accesso-qr-img');
     if (img) {
@@ -9415,7 +9421,7 @@ window.submitWhatsAppOtp = function () {
   const phone = ((document.getElementById('accesso-wa-phone') || {}).value || '').trim();
   const box = document.getElementById('accesso-error-general');
   const msg = document.getElementById('accesso-error-msg');
-  if (!phone) {
+  if (!phone || phone.replace(/\D/g, '').length < 8) {
     if (box && msg) { msg.textContent = 'Inserisci un numero di telefono valido.'; box.style.display = 'block'; }
     return;
   }
@@ -9424,21 +9430,230 @@ window.submitWhatsAppOtp = function () {
   if (step1) step1.style.display = 'none';
   if (step2) step2.style.display = 'block';
   if (box) box.style.display = 'none';
+  if (typeof window.openEliseeOtp === 'function') window.openEliseeOtp(phone);
 };
 
 window.verifyWhatsAppOtp = function () {
   const code = ((document.getElementById('accesso-wa-code') || {}).value || '').trim();
-  const box = document.getElementById('accesso-error-general');
-  const msg = document.getElementById('accesso-error-msg');
-  if (code.length < 6) {
-    if (box && msg) { msg.textContent = 'Inserisci il codice di 6 cifre.'; box.style.display = 'block'; }
+  const root = document.getElementById('es-otp');
+  const hint = document.getElementById('es-otp-hint');
+  const expected = (root && root.dataset.code) || '';
+  if (code.length < 4) {
+    if (root) { root.classList.remove('is-ok'); root.classList.add('is-bad'); }
+    if (hint) hint.textContent = 'Inserisci le 4 cifre.';
     return;
   }
-  if (box && msg) {
-    msg.textContent = 'WhatsApp OTP sarà collegato al numero verificato. Per ora usa Google (stesso selettore account del video) o email e password.';
-    box.style.display = 'block';
+  if (expected && code === expected) {
+    if (root) { root.classList.remove('is-bad'); root.classList.add('is-ok'); }
+    if (hint) hint.textContent = 'Codice giusto. L’ingresso con WhatsApp si attiva quando il numero è collegato.';
+    return;
   }
+  if (root) { root.classList.remove('is-ok'); root.classList.add('is-bad'); }
+  if (hint) hint.textContent = 'Codice non valido.';
 };
+
+(function () {
+  var otpTimer = 0;
+  var otpLeft = 0;
+
+  function slots() {
+    return Array.prototype.slice.call(document.querySelectorAll('#es-otp .es-otp-slot'));
+  }
+  function inputs() {
+    return slots().map(function (s) { return s.querySelector('input'); });
+  }
+  function maskPhone(phone) {
+    var d = String(phone || '').replace(/\D/g, '');
+    if (d.length < 4) return phone || '';
+    var last = d.slice(-4);
+    var head = d.indexOf('39') === 0 ? '+39' : ('+' + d.slice(0, Math.max(1, d.length - 8)));
+    return head + ' ••• ••• ' + last;
+  }
+  function points(mode) {
+    if (mode === 'row') {
+      return [0, 1, 2, 3].map(function (i) { return { x: (i - 1.5) * 72, y: 0 }; });
+    }
+    var r = 78;
+    return [{ x: 0, y: -r }, { x: r, y: 0 }, { x: 0, y: r }, { x: -r, y: 0 }];
+  }
+  function place(mode, animate) {
+    var pos = points(mode);
+    slots().forEach(function (slot, i) {
+      var from = slot._esPos || pos[i];
+      var to = pos[i];
+      slot._esPos = to;
+      var end = 'translate(' + to.x + 'px,' + to.y + 'px) rotate(0deg)';
+      if (animate && slot.animate) {
+        slot.animate([
+          { transform: 'translate(' + from.x + 'px,' + from.y + 'px) rotate(0deg)' },
+          { transform: 'translate(' + to.x + 'px,' + to.y + 'px) rotate(450deg)' }
+        ], { duration: 800, easing: 'cubic-bezier(.16,.84,.22,1)', fill: 'forwards' });
+      } else {
+        slot.style.transform = end;
+      }
+    });
+  }
+  function codeValue() {
+    return inputs().map(function (el) { return (el && el.value || '').replace(/\D/g, '').slice(0, 1); }).join('');
+  }
+  function syncHidden() {
+    var hidden = document.getElementById('accesso-wa-code');
+    if (hidden) hidden.value = codeValue();
+  }
+  function paintFocus() {
+    var list = inputs();
+    var active = document.activeElement;
+    list.forEach(function (el, i) {
+      var slot = el && el.parentNode;
+      if (!slot) return;
+      var on = el === active;
+      slot.classList.toggle('is-on', on || !!el.value);
+      slot.classList.toggle('is-spin', on && !el.value);
+    });
+  }
+  function writeDigits(raw) {
+    var digits = String(raw || '').replace(/\D/g, '').slice(0, 4).split('');
+    var list = inputs();
+    list.forEach(function (el, i) { if (el) el.value = digits[i] || ''; });
+    syncHidden();
+    paintFocus();
+    if (digits.length === 4) finishOrbit();
+    else if (list[digits.length]) list[digits.length].focus();
+  }
+  function finishOrbit() {
+    var root = document.getElementById('es-otp');
+    if (!root || root.classList.contains('is-orbit')) return;
+    root.classList.add('is-orbit');
+    root.classList.remove('is-ok', 'is-bad');
+    place('orbit', true);
+    var resend = document.getElementById('es-otp-resend');
+    if (resend) resend.hidden = false;
+    setTimeout(function () {
+      if (window.verifyWhatsAppOtp) window.verifyWhatsAppOtp();
+    }, 820);
+  }
+  function tick() {
+    var count = document.getElementById('es-otp-count');
+    var btn = document.getElementById('es-otp-resend-btn');
+    if (count) count.textContent = otpLeft > 0 ? ('tra ' + otpLeft + 's') : '';
+    if (btn) btn.disabled = otpLeft > 0;
+  }
+  function startTimer() {
+    otpLeft = 30;
+    tick();
+    clearInterval(otpTimer);
+    otpTimer = setInterval(function () {
+      otpLeft -= 1;
+      if (otpLeft <= 0) {
+        otpLeft = 0;
+        clearInterval(otpTimer);
+      }
+      tick();
+    }, 1000);
+  }
+  function bindOnce() {
+    var root = document.getElementById('es-otp');
+    if (!root || root._esBound) return;
+    root._esBound = true;
+    root.addEventListener('input', function (e) {
+      var el = e.target;
+      if (!el || el.tagName !== 'INPUT') return;
+      var d = (el.value || '').replace(/\D/g, '');
+      if (d.length > 1) { writeDigits(d); return; }
+      el.value = d.slice(0, 1);
+      syncHidden();
+      paintFocus();
+      var list = inputs();
+      var i = list.indexOf(el);
+      if (d && i >= 0 && list[i + 1]) list[i + 1].focus();
+      if (codeValue().length === 4) finishOrbit();
+      else {
+        var panel = document.getElementById('es-otp');
+        if (panel && panel.classList.contains('is-orbit')) {
+          panel.classList.remove('is-orbit', 'is-ok', 'is-bad');
+          place('row', false);
+          var again = document.getElementById('es-otp-resend');
+          if (again) again.hidden = true;
+        }
+      }
+    });
+    root.addEventListener('keydown', function (e) {
+      var el = e.target;
+      if (!el || el.tagName !== 'INPUT') return;
+      if (e.key !== 'Backspace' || el.value) return;
+      var list = inputs();
+      var i = list.indexOf(el);
+      if (i > 0) {
+        list[i - 1].value = '';
+        list[i - 1].focus();
+        syncHidden();
+        paintFocus();
+      }
+    });
+    root.addEventListener('paste', function (e) {
+      var text = (e.clipboardData && e.clipboardData.getData('text')) || '';
+      if (!/\d/.test(text)) return;
+      e.preventDefault();
+      writeDigits(text);
+    });
+    root.addEventListener('focusin', paintFocus);
+    root.addEventListener('focusout', function () { setTimeout(paintFocus, 0); });
+    var fill = document.getElementById('es-otp-fill');
+    if (fill) fill.addEventListener('click', function () {
+      var panel = document.getElementById('es-otp');
+      var demo = (panel && panel.dataset.code) || '';
+      if (demo) writeDigits(demo);
+    });
+    var again = document.getElementById('es-otp-resend-btn');
+    if (again) again.addEventListener('click', function () {
+      if (otpLeft > 0) return;
+      window.openEliseeOtp((document.getElementById('accesso-wa-phone') || {}).value || '');
+    });
+    var back = document.getElementById('es-otp-back');
+    if (back) back.addEventListener('click', function () { window.closeEliseeOtp(); });
+  }
+
+  window.openEliseeOtp = function (phone) {
+    bindOnce();
+    var card = document.getElementById('es-login-card');
+    var root = document.getElementById('es-otp');
+    if (!card || !root) return;
+    card.classList.add('is-otp');
+    root.hidden = false;
+    root.classList.remove('is-orbit', 'is-ok', 'is-bad');
+    var dest = document.getElementById('es-otp-dest');
+    if (dest) dest.textContent = maskPhone(phone);
+    var toast = document.getElementById('es-otp-toast');
+    var resend = document.getElementById('es-otp-resend');
+    var hint = document.getElementById('es-otp-hint');
+    var demo = String(Math.floor(1000 + Math.random() * 9000));
+    root.dataset.code = demo;
+    var toastMsg = document.getElementById('es-otp-toast-msg');
+    if (toastMsg) toastMsg.textContent = demo + ' è il tuo codice di verifica.';
+    if (toast) toast.style.display = '';
+    if (resend) resend.hidden = true;
+    if (hint) hint.textContent = 'Scrivilo, incollalo, oppure fai compilare dal messaggio.';
+    inputs().forEach(function (el) { if (el) el.value = ''; });
+    syncHidden();
+    place('row', false);
+    startTimer();
+    var first = inputs()[0];
+    if (first) first.focus();
+    paintFocus();
+  };
+
+  window.closeEliseeOtp = function () {
+    var card = document.getElementById('es-login-card');
+    var root = document.getElementById('es-otp');
+    if (card) card.classList.remove('is-otp');
+    if (root) {
+      root.hidden = true;
+      root.classList.remove('is-orbit', 'is-ok', 'is-bad');
+    }
+    clearInterval(otpTimer);
+    if (typeof window.showAccessoMethod === 'function') window.showAccessoMethod('email');
+  };
+})();
 
 // =====================================================================
 // SUBMIT FORM CON VALIDAZIONE COMPLETA
