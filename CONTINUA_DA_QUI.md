@@ -3,11 +3,20 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-22** — KITBLEED1 — Avatar 3D: Risoluzione invasione texture su viso/capelli e isolamento chirurgico mesh outfit:
+Ultimo aggiornamento: **2026-09-24** — KITBUG1 — Avatar 3D: maglia 2D vera sul busto, niente foglio UV, taglio e altezza petto di nuovo attivi, niente falso «INDOSSATA»:
+1. **Foto maglia, non foglio UV**. `home-uv.png` e `INTER-HOME-27.png` non vengono più avvolti sul torso (collage). Si usa sempre la foto 2D (`home.png`). Vale anche per un kit già salvato nel browser.
+2. **Texture solo sulla maglia** (`athlete_torso`, `Wolf3D_Outfit_Top`, nomi espliciti jersey/shirt). Testa, capelli, colletto, pelle e arti non ricevono la mappa. Maniche, spalle e strisce prendono il colore della maglia; pantaloncini e calzettoni il colore secondario. Materiali multi-materiale non fanno più crashare il click.
+3. **Se nessuna mesh maglia c’è, il badge non dice INDOSSATA.** Il messaggio di errore resta nel pannello. Prima il successo veniva mostrato anche a vuoto.
+4. **Taglio Slim / Classica / Morbida e altezza petto** spostano torso, maniche e spalle del calciatore ufficiale senza ricaricare la texture a ogni scatto dello slider. «ORIGINALE» riporta scala e altezza.
+5. **Pelle non più condivisa**: braccia, mani e gambe hanno materiali separati, così una tinta non si propaga a tutto il corpo.
+6. **Service worker**: il messaggio `FORCE_RELOAD` non resta fermo a `MESHKIT2`. Cache `v20260924_KITBUG1`.
+7. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Commit e deploy in questo giro.
+
+Feature precedente: **2026-09-22** — KITBLEED1 — Avatar 3D: Risoluzione invasione texture su viso/capelli e isolamento chirurgico mesh outfit:
 1. **Corrispondenza esatta (===)**: sostituito qualsiasi matching permissivo con verifica rigorosa su `child.name === 'athlete_torso'` (per il Calciatore 3D Ufficiale) e `child.name === 'Wolf3D_Outfit_Top'` (per modelli GLB Ready Player Me). Nessun fallback cieco su altre mesh.
 2. **Protezione totale viso, testa, capelli e colletto**: rimosso esplicitamente qualsiasi assegnazione di `material.map` su `athlete_collar` (che toccava mento e mandibola) e sulle parti anatomiche. Testa, capelli, occhi, orecchie, collo e colletto restano totalmente inalterati con i loro materiali nativi.
 3. **Cache-bust dedicato sull'asset della texture**: aggiunto parametro `?tcb=<timestamp>` all'URL della texture per forzare l'immediata invalidazione della cache da parte di browser e CDN.
-4. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260922_KITBLEED1`. Commit TODO. Deploy TODO.
+4. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260922_KITBLEED1`. Commit `a3d48972`. Il deploy di questo passo non era stato confermato; lo copre KITBUG1.
 
 Feature precedente: **2026-09-22** — INSPECT1 — Avatar 3D: Fase 1 ispezione obbligatoria del modello reale (prevenzione invasione texture su viso e capelli):
 1. **Esposizione globale `window.avatarModel`**: collegato tramite getter dinamico a `state.activeModel` in modo che qualsiasi script da console (es. `avatarModel.traverse(...)`) acceda direttamente al modello 3D attivo senza `ReferenceError`.
