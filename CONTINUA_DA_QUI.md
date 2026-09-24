@@ -3,7 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — MAILOTP1 — La verifica email in basso nel dossier non è più la fascia vecchia:
+Ultimo aggiornamento: **2026-09-25** — CALM1 — Verifica email ridotta a una riga, senza card sopra il dossier:
+1. Via la card con notch, toast, icona e scritta EMAIL · OTP. Restano email, sei caselle e un tasto.
+2. Il dossier non viene più spinto in alto di mezzo schermo.
+3. **File**: `verifica-account.js`, `verifica-account.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_CALM1`. Commit `d5b59a96`.
+
+Feature precedente: **2026-09-25** — MAILOTP1 — La verifica email in basso nel dossier non è più la fascia vecchia:
 1. Quella fascia («Verifica email», Invia codice, Verifica, sei quadretti tagliati a destra) era un OTP diverso da quello del login. FINISH1 aveva toccato solo il login.
 2. Ora è una card scura, come il pannello del login: sei caselle arrotondate, anello tratteggiato sulla cifra attiva, messaggio EMAIL · OTP e tasto bianco **Invia codice**.
 3. Le caselle si accendono dopo l’invio. A 6 cifre parte la verifica da sola. Verde se è giusto, rosso se no. Reinvia dopo 30 secondi. Il codice resta solo nella mail, non a schermo.
