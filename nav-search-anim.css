@@ -1,0 +1,247 @@
+/* Nav search: 3D flip (rotateX) + gradient border + typewriter */
+.es-nav-search {
+  --es-ns-size: 40px;
+  --es-ns-open-w: min(300px, 46vw);
+  --es-ns-bg: #fff;
+  --es-ns-ink: #0b1220;
+  --es-ns-muted: #94a3b8;
+  --es-ns-accent: #1e3a8a;
+  --es-ns-ease: cubic-bezier(.55, .08, .4, .95);
+  position: relative;
+  z-index: 320;
+  flex: 0 0 auto;
+  width: var(--es-ns-size);
+  height: var(--es-ns-size);
+  perspective: calc(var(--es-ns-open-w) * 2.2);
+}
+
+.es-nav-search__shell {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--es-ns-size);
+  height: var(--es-ns-size);
+  transform-style: preserve-3d;
+  transition: width .52s var(--es-ns-ease);
+}
+
+.es-nav-search[data-state="open"] .es-nav-search__shell {
+  width: var(--es-ns-open-w);
+}
+
+.es-nav-search__shadow {
+  position: absolute;
+  inset: 6px 10px -8px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, .25);
+  filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease;
+}
+
+.es-nav-search[data-state="open"] .es-nav-search__shadow { opacity: 1; }
+
+.es-nav-search__field {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  border-radius: 999px;
+  background: var(--es-ns-bg);
+  box-shadow:
+    0 6px 18px rgba(15, 23, 42, .18),
+    inset 0 0 0 1px rgba(148, 163, 184, .35);
+  transform-origin: 50% 50%;
+  transform: rotateX(-90deg);
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+  transition:
+    transform .633s var(--es-ns-ease),
+    opacity .25s ease,
+    box-shadow .28s ease,
+    scale .28s var(--es-ns-ease);
+}
+
+.es-nav-search[data-state="open"] .es-nav-search__field {
+  transform: rotateX(0deg);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.es-nav-search[data-state="open"]:hover .es-nav-search__field,
+.es-nav-search[data-state="open"]:focus-within .es-nav-search__field {
+  scale: 1.02;
+  box-shadow:
+    0 10px 28px rgba(124, 58, 237, .22),
+    inset 0 0 0 1px rgba(148, 163, 184, .2);
+}
+
+.es-nav-search__sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(115deg, rgba(255,255,255,.55), transparent 45%, transparent 58%, rgba(124,58,237,.08));
+  pointer-events: none;
+}
+
+.es-nav-search__border {
+  position: absolute;
+  inset: -1px;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.es-nav-search[data-state="open"] .es-nav-search__border { opacity: 1; }
+
+.es-nav-search__border rect {
+  fill: none;
+  stroke: url(#es-nav-search-grad);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  rx: 999px;
+  ry: 999px;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset .65s var(--es-ns-ease);
+}
+
+.es-nav-search[data-state="open"]:hover .es-nav-search__border rect,
+.es-nav-search[data-state="open"]:focus-within .es-nav-search__border rect,
+.es-nav-search.is-border .es-nav-search__border rect {
+  stroke-dashoffset: 0;
+}
+
+.es-nav-search__input-wrap {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 44px 0 16px;
+}
+
+.es-nav-search__input {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--es-ns-ink);
+  font: 500 .92rem/1 Inter, Outfit, system-ui, sans-serif;
+}
+
+.es-nav-search__ph {
+  position: absolute;
+  left: 16px;
+  right: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--es-ns-muted);
+  font: 500 .9rem/1 Inter, Outfit, system-ui, sans-serif;
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.es-nav-search[data-state="open"] .es-nav-search__ph.is-on { opacity: 1; }
+
+.es-nav-search__ph-cursor {
+  display: inline-block;
+  width: 1px;
+  height: .95em;
+  margin-left: 1px;
+  background: var(--es-ns-muted);
+  vertical-align: -.12em;
+  animation: esNavCaret 1s steps(1) infinite;
+}
+
+@keyframes esNavCaret {
+  0%, 45% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Button stays outside the flipping field so closed state remains visible */
+.es-nav-search__btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 5;
+  width: var(--es-ns-size);
+  height: var(--es-ns-size);
+  border: 0;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--es-ns-bg);
+  color: var(--es-ns-accent);
+  cursor: pointer;
+  box-shadow:
+    0 6px 18px rgba(15, 23, 42, .18),
+    inset 0 0 0 1px rgba(148, 163, 184, .35);
+  transition: width .35s var(--es-ns-ease), height .35s var(--es-ns-ease), margin .35s var(--es-ns-ease), background .2s ease, color .2s ease;
+}
+
+.es-nav-search[data-state="open"] .es-nav-search__btn {
+  top: 4px;
+  right: 4px;
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  color: #fff;
+  box-shadow: none;
+}
+
+.es-nav-search__btn svg {
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+
+.es-nav-search__btn .ico-x { display: none; }
+.es-nav-search[data-state="open"] .es-nav-search__btn .ico-search { display: none; }
+.es-nav-search[data-state="open"] .es-nav-search__btn .ico-x { display: block; }
+
+.es-nav-search__toast {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 170px;
+  max-width: min(320px, 72vw);
+  padding: .55rem .75rem;
+  border-radius: 10px;
+  background: rgba(12, 18, 28, .92);
+  color: #e8eef7;
+  font: 500 .78rem/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  box-shadow: 0 12px 28px rgba(0,0,0,.35);
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity .2s ease, transform .26s var(--es-ns-ease);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.es-nav-search__toast strong { color: #c4b5fd; font-weight: 600; }
+
+.es-nav-search.is-toast .es-nav-search__toast {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 720px) {
+  .es-nav-search {
+    --es-ns-size: 34px;
+    --es-ns-open-w: min(220px, 62vw);
+  }
+  .es-nav-search__btn svg { width: 16px; height: 16px; }
+  .es-nav-search[data-state="open"] .es-nav-search__btn { width: 28px; height: 28px; }
+}

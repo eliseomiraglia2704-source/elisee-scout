@@ -9483,6 +9483,9 @@ window.verifyWhatsAppOtp = function () {
       var to = pos[i];
       slot._esPos = to;
       var end = 'translate(' + to.x + 'px,' + to.y + 'px) rotate(0deg)';
+      if (typeof slot.getAnimations === 'function') {
+        slot.getAnimations().forEach(function (a) { try { a.cancel(); } catch (e) {} });
+      }
       if (animate && slot.animate) {
         slot.animate([
           { transform: 'translate(' + from.x + 'px,' + from.y + 'px) rotate(0deg)' },
@@ -9514,11 +9517,23 @@ window.verifyWhatsAppOtp = function () {
   function writeDigits(raw) {
     var digits = String(raw || '').replace(/\D/g, '').slice(0, 4).split('');
     var list = inputs();
-    list.forEach(function (el, i) { if (el) el.value = digits[i] || ''; });
+    var root = document.getElementById('es-otp');
+    if (root) root._esWriting = true;
+    list.forEach(function (el, i) {
+      if (!el) return;
+      el.value = digits[i] || '';
+      try { el.dispatchEvent(new Event('input', { bubbles: true })); } catch (e) {}
+    });
+    if (root) root._esWriting = false;
     syncHidden();
     paintFocus();
-    if (digits.length === 4) finishOrbit();
-    else if (list[digits.length]) list[digits.length].focus();
+    if (digits.length === 4) {
+      if (root) root.classList.add('is-filled');
+      // Leave digits visible briefly before orbit hides the toast
+      setTimeout(function () { finishOrbit(); }, 700);
+    } else if (list[digits.length]) {
+      list[digits.length].focus();
+    }
   }
   function finishOrbit() {
     var root = document.getElementById('es-otp');
@@ -9566,9 +9581,13 @@ window.verifyWhatsAppOtp = function () {
       var list = inputs();
       var i = list.indexOf(el);
       if (d && i >= 0 && list[i + 1]) list[i + 1].focus();
-      if (codeValue().length === 4) finishOrbit();
+      if (codeValue().length === 4 && !(root && root._esWriting)) {
+        root.classList.add('is-filled');
+        setTimeout(function () { finishOrbit(); }, 700);
+      }
       else {
         var panel = document.getElementById('es-otp');
+        if (panel) panel.classList.remove('is-filled');
         if (panel && panel.classList.contains('is-orbit')) {
           panel.classList.remove('is-orbit', 'is-ok', 'is-bad');
           place('row', false);
@@ -9599,10 +9618,24 @@ window.verifyWhatsAppOtp = function () {
     root.addEventListener('focusin', paintFocus);
     root.addEventListener('focusout', function () { setTimeout(paintFocus, 0); });
     var fill = document.getElementById('es-otp-fill');
-    if (fill) fill.addEventListener('click', function () {
+    if (fill) fill.addEventListener('click', function (ev) {
+      if (ev && ev.preventDefault) ev.preventDefault();
       var panel = document.getElementById('es-otp');
-      var demo = (panel && panel.dataset.code) || '';
-      if (demo) writeDigits(demo);
+      var demo = '';
+      if (panel) {
+        demo = panel.getAttribute('data-code') || panel.dataset.code || '';
+      }
+      if (!demo) {
+        var toastMsg = document.getElementById('es-otp-toast-msg');
+        var m = toastMsg && toastMsg.textContent ? toastMsg.textContent.match(/\b(\d{4})\b/) : null;
+        demo = m ? m[1] : '';
+      }
+      if (!demo) {
+        var hint = document.getElementById('es-otp-hint');
+        if (hint) hint.textContent = 'Nessun codice da compilare. Tocca Reinvia e riprova.';
+        return;
+      }
+      writeDigits(demo);
     });
     var again = document.getElementById('es-otp-resend-btn');
     if (again) again.addEventListener('click', function () {
@@ -9620,7 +9653,14 @@ window.verifyWhatsAppOtp = function () {
     if (!card || !root) return;
     card.classList.add('is-otp');
     root.hidden = false;
-    root.classList.remove('is-orbit', 'is-ok', 'is-bad');
+    root.classList.remove('is-orbit', 'is-ok', 'is-bad', 'is-filled');
+    slots().forEach(function (slot) {
+      if (typeof slot.getAnimations === 'function') {
+        slot.getAnimations().forEach(function (a) { try { a.cancel(); } catch (e) {} });
+      }
+      slot.style.transform = '';
+      slot._esPos = null;
+    });
     var dest = document.getElementById('es-otp-dest');
     if (dest) dest.textContent = maskPhone(phone);
     var toast = document.getElementById('es-otp-toast');
@@ -9628,6 +9668,7 @@ window.verifyWhatsAppOtp = function () {
     var hint = document.getElementById('es-otp-hint');
     var demo = String(Math.floor(1000 + Math.random() * 9000));
     root.dataset.code = demo;
+    root.setAttribute('data-code', demo);
     var toastMsg = document.getElementById('es-otp-toast-msg');
     if (toastMsg) toastMsg.textContent = demo + ' è il tuo codice di verifica.';
     if (toast) toast.style.display = '';
@@ -9648,7 +9689,7 @@ window.verifyWhatsAppOtp = function () {
     if (card) card.classList.remove('is-otp');
     if (root) {
       root.hidden = true;
-      root.classList.remove('is-orbit', 'is-ok', 'is-bad');
+      root.classList.remove('is-orbit', 'is-ok', 'is-bad', 'is-filled');
     }
     clearInterval(otpTimer);
     if (typeof window.showAccessoMethod === 'function') window.showAccessoMethod('email');

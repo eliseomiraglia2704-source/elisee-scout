@@ -621,6 +621,17 @@
 
 .es-otp.is-orbit .es-otp-toast { display: none; }
 
+.es-otp.is-filled .es-otp-slot {
+  border-color: #dceaff;
+  box-shadow: 0 0 0 1px #dceaff, 0 0 18px rgba(220, 234, 255, 0.25);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.es-otp.is-filled .es-otp-slot input {
+  color: #fff;
+  font-size: 1.55rem;
+}
+
+
 @media (max-width: 720px) {
   .es-login-card { height: auto; min-height: 0; }
   .es-login-bg,

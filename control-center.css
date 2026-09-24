@@ -454,3 +454,105 @@
     align-items: flex-start;
   }
 }
+
+/* === GLASSY DASHBOARD (ref video) === */
+/* Glassmorphism panels + KPI cards with hover lift (y: -5) */
+
+#admin-authenticated-dashboard.es-cc,
+#admin-portal .es-cc,
+#admin-authenticated-dashboard {
+  --es-glass-bg: rgba(18, 22, 32, 0.42);
+  --es-glass-border: rgba(255, 255, 255, 0.12);
+  --es-glass-highlight: rgba(255, 255, 255, 0.06);
+}
+
+#admin-portal .es-cc-panel,
+#admin-authenticated-dashboard .es-cc-panel,
+#admin-authenticated-dashboard.es-cc .es-cc-panel {
+  background: rgba(18, 22, 32, 0.42) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 18px !important;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+  backdrop-filter: blur(22px) saturate(1.2) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(1.2) !important;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+#admin-portal .es-cc-panel:hover,
+#admin-authenticated-dashboard .es-cc-panel:hover {
+  transform: translateY(-4px);
+  border-color: rgba(167, 139, 250, 0.35) !important;
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(124, 58, 237, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+#admin-portal .es-cc-stat,
+#admin-authenticated-dashboard .es-cc-stat,
+#admin-authenticated-dashboard.es-cc .es-cc-stat {
+  background: rgba(12, 16, 26, 0.55) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 16px !important;
+  backdrop-filter: blur(18px) saturate(1.15) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(1.15) !important;
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease, border-color 0.28s ease, background 0.28s ease;
+  cursor: default;
+}
+
+#admin-portal .es-cc-stat:hover,
+#admin-authenticated-dashboard .es-cc-stat:hover {
+  transform: translateY(-5px);
+  border-color: rgba(167, 139, 250, 0.4) !important;
+  background: rgba(22, 18, 40, 0.62) !important;
+  box-shadow:
+    0 14px 32px rgba(76, 29, 149, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+#admin-portal .es-cc-stat-val,
+#admin-authenticated-dashboard .es-cc-stat-val {
+  background: linear-gradient(135deg, #f8fafc, #c4b5fd);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Home portfolio stats — same glass family */
+.portfolio-stat-row .portfolio-stat {
+  background: rgba(18, 22, 32, 0.45) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 16px !important;
+  backdrop-filter: blur(16px) saturate(1.15) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.15) !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+.portfolio-stat-row .portfolio-stat:hover {
+  transform: translateY(-5px);
+  border-color: rgba(167, 139, 250, 0.4) !important;
+  box-shadow: 0 14px 30px rgba(76, 29, 149, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #admin-portal .es-cc-panel,
+  #admin-portal .es-cc-stat,
+  #admin-authenticated-dashboard .es-cc-panel,
+  #admin-authenticated-dashboard .es-cc-stat,
+  .portfolio-stat-row .portfolio-stat {
+    transition: none !important;
+  }
+  #admin-portal .es-cc-panel:hover,
+  #admin-portal .es-cc-stat:hover,
+  #admin-authenticated-dashboard .es-cc-panel:hover,
+  #admin-authenticated-dashboard .es-cc-stat:hover,
+  .portfolio-stat-row .portfolio-stat:hover {
+    transform: none !important;
+  }
+}

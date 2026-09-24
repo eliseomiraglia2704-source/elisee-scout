@@ -49,11 +49,13 @@
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
   <link rel="stylesheet" href="bacheca-board.css?v=20260917_BACHECA7">
-  <link rel="stylesheet" href="control-center.css?v=20260918_CCDROPDOWN1">
+  <link rel="stylesheet" href="control-center.css?v=20260924_FINISH1">
+  <link rel="stylesheet" href="sortable-table.css?v=20260924_FINISH1">
   <link rel="stylesheet" href="elisee-loader.css?v=20260918_LOADER1">
   <link rel="stylesheet" href="avatar-3d.css?v=20260921_FACESCAN1">
-  <link rel="stylesheet" href="login-slide.css?v=20260924_HOVERSIDE1">
+  <link rel="stylesheet" href="login-slide.css?v=20260924_FINISH1">
   <link rel="stylesheet" href="glass-menu.css?v=20260924_GLASSMENU1">
+  <link rel="stylesheet" href="nav-search-anim.css?v=20260924_FINISH1">
   <link rel="stylesheet" href="role-sidebar-pro.css?v=20260924_HOVERSIDE1">
   <style id="es-font-nevera">
     @font-face {
@@ -2066,7 +2068,42 @@
 
       <div id="nav-user-container" class="portfolio-nav-right">
         <div class="nav-auth-actions" id="nav-right-actions">
-          <!-- Lingua: stesso stile pill di Accedi / Iscriviti -->
+          <!-- Search animata: flip 3D rotateX + bordo gradient + typewriter (ref video) -->
+          <div class="es-nav-search" id="es-nav-search" data-state="closed">
+            <div class="es-nav-search__shell">
+              <span class="es-nav-search__shadow" aria-hidden="true"></span>
+              <div class="es-nav-search__field" role="search">
+                <svg class="es-nav-search__border" viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="es-nav-search-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#7c3aed"/>
+                      <stop offset="55%" stop-color="#ec4899"/>
+                      <stop offset="100%" stop-color="#f472b6"/>
+                    </linearGradient>
+                  </defs>
+                  <rect x="1.1" y="1.1" width="297.8" height="37.8" pathLength="1"></rect>
+                </svg>
+                <span class="es-nav-search__sheen" aria-hidden="true"></span>
+                <div class="es-nav-search__input-wrap">
+                  <span class="es-nav-search__ph is-on" id="es-nav-search-ph" aria-hidden="true"></span>
+                  <input type="search" class="es-nav-search__input" id="es-nav-search-input" placeholder="" autocomplete="off" spellcheck="false" aria-label="Cerca su Elisee Scout">
+                </div>
+              </div>
+              <button type="button" class="es-nav-search__btn" id="es-nav-search-btn" aria-label="Apri ricerca" title="Cerca">
+                <svg class="ico-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="7"></circle>
+                  <path d="m20 20-3.5-3.5"></path>
+                </svg>
+                <svg class="ico-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+                  <path d="M18 6 6 18M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="es-nav-search__toast" id="es-nav-search-toast" aria-live="polite"></div>
+          </div>
+
+
+<!-- Lingua: stesso stile pill di Accedi / Iscriviti -->
           <div class="nav-lang es-glass-dd" id="lang-switcher">
             <button type="button" class="btn-nav-accedi nav-lang-btn es-glass-trigger es-glass-trigger--slim" id="lang-switcher-btn" aria-haspopup="listbox" aria-expanded="false" title="Lingua">
               <i data-lucide="globe" class="nav-lang-globe"></i>
@@ -5902,7 +5939,9 @@
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="elisee-staff.js?v=20260911_ADMIN2"></script>
   <script src="app-admin-panels.js?v=20260918_CCDROPDOWN1"></script>
-  <script src="app.js?v=20260924_GLASSMENU1"></script>
+  <script src="app.js?v=20260924_FINISH1"></script>
+  <script src="nav-search-anim.js?v=20260924_FINISH1"></script>
+  <script src="sortable-table.js?v=20260924_FINISH1"></script>
   <script src="elisee-loader.js?v=20260918_LOADER1"></script>
   <!-- Three.js WebGL, OrbitControls, GLTFLoader & DecalGeometry Runtime per Avatar 3D Hyper3D / GLB -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -6375,6 +6414,6 @@
       }
     }
   </style>
-  <script src="mobile-webapp.js?v=20260906_NOLINE2"></script>
+  <script src="mobile-webapp.js?v=20260924_FINISH1"></script>
 </body>
 </html>
