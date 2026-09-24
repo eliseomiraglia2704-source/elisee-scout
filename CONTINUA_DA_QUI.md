@@ -3,7 +3,15 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-24** — HOVERSIDE1 — Sidebar che si apre al passaggio del mouse, e login sulla palette del sito:
+Ultimo aggiornamento: **2026-09-24** — FINISH1 — Pubblicato il lavoro rimasto solo in locale (ricerca, vetro, tabelle, OTP):
+1. **Ricerca in navbar**: il tasto lente apre il campo con il flip 3D, bordo che si disegna e frasi che si scrivono da sole. Invio porta il testo nella bacheca (profili). Il toast dice «Ricerca», non il nome del video di riferimento.
+2. **Control Center e numeri in home**: pannelli e schede KPI in vetro scuro, si alzano al passaggio del mouse.
+3. **Tabelle ordinabili**: nelle tabelle admin, operazioni, dossier e atelier il click sul titolo di colonna ordina (numero, data o testo) e mostra la freccia.
+4. **OTP**: dopo 4 cifre (scritte, incollate o con Compila) le caselle restano accese un attimo, poi parte l’orbita. Compila legge anche il codice dal messaggio se manca `data-code`.
+5. **Codifica**: `index.html` era stato risalvato con le accentate illeggibili. Ripristinate prima del commit.
+6. **File**: `index.html`, `nav-search-anim.css`, `nav-search-anim.js`, `control-center.css`, `sortable-table.css`, `sortable-table.js`, `login-slide.css`, `app.js`, `sw.js`, `version.json`. Cache `v20260924_FINISH1`. Commit `4f798c27`.
+
+Feature precedente: **2026-09-24** — HOVERSIDE1 — Sidebar che si apre al passaggio del mouse, e login sulla palette del sito:
 1. **Sidebar delle aree ruolo** (atleta, staff, osservatore e le altre): a riposo è una colonna stretta con icona, avatar e azioni in colonna. Al passaggio del mouse si allarga, compaiono nome, ruolo, campo Cerca e le etichette. La voce attiva ha la pillola ciano. In basso tema, impostazioni, nuova operazione ed esci si mettono in fila. Sul telefono resta il pannello che entra da sinistra.
 2. **Colori del sito**, non quelli del video di riferimento: vetro scuro, testo bianco, accento `#38bdf8`. Il tasto tema passa al preset chiaro già presente (`mimetico-chiaro`). Cerca filtra le voci.
 3. **Login Accedi / Iscriviti**: stessa card scorrevole, ma sfondo scuro, campi neri, bottone e link ciano. Niente più card bianca e bottone nero.
