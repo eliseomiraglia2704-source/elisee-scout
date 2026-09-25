@@ -3,7 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — ANALYTICS1 — Dashboard Admin e Privacy come il pannello analitico:
+Ultimo aggiornamento: **2026-09-25** — PALETTE1 — Le modifiche recenti usano la palette del sito (scuro, ciano `#38bdf8`):
+1. Login di nuovo scuro, campi neri, bottone e link ciano. Lo scorrimento Accedi / Iscriviti resta.
+2. Ricerca, tabelle, vetro del Control Center, flusso contatti, dashboard analitica, verifica email e spunta OTP: via viola, verde acqua e rosa. Resta il rosso solo sull'errore.
+3. **File**: `login-slide.css`, `nav-search-anim.css`, `apple-nav.css`, `sortable-table.css`, `control-center.css`, `cc-analytics.css`, `flusso-contatti.css`, `verifica-account.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_PALETTE1`. Commit `7da30925`.
+
+Feature precedente: **2026-09-25** — ANALYTICS1 — Dashboard Admin e Privacy come il pannello analitico:
 1. Stessa struttura: colonna a sinistra (viste, anno, metrica, area, canale, ruolo), numeri in alto con confronto sull'anno scorso, barre mensili, tre gruppi, tabella e classifica a destra.
 2. Colori Elisee: ciano su scuro. Admin mostra profili, verifiche, reclami e job. Privacy mostra consensi, reclami Art. 30, accessi e audit.
 3. Panoramica e Governance passano da una scheda all'altra. I filtri cambiano i numeri.
