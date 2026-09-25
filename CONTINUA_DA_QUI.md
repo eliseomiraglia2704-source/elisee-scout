@@ -3,7 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — TRASH1 — Bottone Elimina animato, in basso a sinistra:
+Ultimo aggiornamento: **2026-09-25** — RCARD1 — Schede profilo in bacheca come la card del video:
+1. Foto grande, nome, ruolo, riga su squadra e stato, etichette, **Apri profilo** e cuore per seguire.
+2. Bottone ciano, card scura. Il cuore pieno vuol dire che lo segui già.
+3. **File**: `react-card.css`, `app.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_RCARD1`. Commit `f3ce1197`.
+
+Feature precedente: **2026-09-25** — TRASH1 — Bottone Elimina animato, in basso a sinistra:
 1. Al click il coperchio del cestino si alza e la carta cade. Dopo 2,5 secondi torna com'era.
 2. Non cancella account né dati. Colori del sito, non il rosa del video.
 3. **File**: `trash-btn.css`, `trash-btn.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_TRASH1`. Commit `a4e54442`.
