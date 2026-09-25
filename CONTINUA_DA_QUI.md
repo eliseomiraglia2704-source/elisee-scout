@@ -3,7 +3,17 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX25 — Radius System Zero-Latency Architecture:
+Ultimo aggiornamento: **2026-09-26** — HEROUX26 — Dynamic Live Reactive Badges & Mathematical Radius Store:
+1. **Dynamic Sync Controller Zero-Latency (`dynamic-sync.js`, `js/dynamic-sync.js`)**:
+   - Creato store reattivo bidirezionale per `localStorage['elisee_user_badges']` e `localStorage['elisee_user_radius']`.
+   - `syncAllBadges()` applica i contatori in tempo reale tramite `window.updateBadge` con zero latenza.
+   - `syncAllRadius()` applica i raggi matematici (card, chip, button, pill, edges, ringGap, image) tramite il sistema geometrico HEROUX25.
+   - Esposizione globale `window.EliseeDynamicSync`: `setBadge(key, count)`, `updateBadges(obj)`, `updateRadius(obj)`, `applyAll()`, `demo()`.
+   - Event listeners attivi su cross-tab `storage` e custom events `elisee:sync-badges` e `elisee:sync-radius`.
+   - Benchmark `performance.now()` (< 40ms verificato con log console `[HEROUX26]`).
+2. **File**: `dynamic-sync.js`, `js/dynamic-sync.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX26`.
+
+Feature precedente: **2026-09-26** — HEROUX25 — Radius System Zero-Latency Architecture:
 1. **Sistema Matematico Radius Completo (`radius-system.css`, `radius-handler.js`, `styles/radius-system.css`, `js/radius-handler.js`)**:
    - Implementate le regole matematiche dei raggi d'angolo:
      - Nested corners (`calc(var(--outer) - var(--inner))`).
