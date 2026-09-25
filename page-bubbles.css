@@ -1,0 +1,43 @@
+/* Cambio pagina: una bolla ciano copre lo schermo, poi il fondo del sito la segue. */
+.es-bubbles-first,
+.es-bubbles-second {
+  position: fixed;
+  z-index: 12000;
+  top: 0;
+  left: 50%;
+  translate: -50% 100%;
+  width: 250vw;
+  height: 250vw;
+  border-radius: 250vw;
+  pointer-events: none;
+  animation-duration: 1.1s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+.es-bubbles-first { background: #38bdf8; }
+.es-bubbles-second { background: #050608; }
+[data-theme="mimetico-chiaro"] .es-bubbles-second { background: #f8fafc; }
+.es-bubbles.is-covering .es-bubbles-first {
+  animation-name: es-bubble-move;
+  pointer-events: auto;
+}
+.es-bubbles.is-covering .es-bubbles-second { animation-name: es-bubble-second; }
+.es-bubbles.is-holding .es-bubbles-second {
+  animation-name: es-bubble-hold;
+  animation-duration: 0.2s;
+}
+@keyframes es-bubble-move {
+  20% { border-radius: 250vw; }
+  50%, 100% { translate: -50% 0; border-radius: 0; }
+}
+@keyframes es-bubble-second {
+  30% { translate: -50% 100%; }
+  50% { border-radius: 250vw; }
+  100% { translate: -50% 0; border-radius: 0; }
+}
+@keyframes es-bubble-hold {
+  from, to { translate: -50% 0; border-radius: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .es-bubbles-first, .es-bubbles-second { animation: none !important; }
+}
