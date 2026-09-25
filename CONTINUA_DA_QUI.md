@@ -3,7 +3,20 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — HEROUX1 — Ottimizzazione Hero, Rimozione Overlay e Floating Shield, Navbar Dropdown Altro e Card Giocatore Realistica:
+Ultimo aggiornamento: **2026-09-25** — HEROUX2 — Armonizzazione Light Mode (Header, Card Giocatore, Contrasto Testo e Coerenza Visiva):
+1. **Adattamento Header / Navbar in Light Mode**:
+   - La pillola fluttuante desktop (`.portfolio-navbar`, `apple-nav.css`) ora adotta sfondo chiaro traslucido `rgba(255, 255, 255, 0.94)`, bordo delicato `rgba(0,0,0,0.08)` e ombra morbida `0 12px 35px rgba(15, 23, 42, 0.08)`, eliminando l'effetto "sticker scuro" sulla pagina bianca.
+   - Tutti i link (`.nav-link`), il menu dropdown "Altro", le icone e i pulsanti (`#btn-user-profile`, lingua, cerca, mail, notifiche) assumono contrasto scuro nitido (`#0f172a` / `#334155`) con hover ciano `#0284c7`.
+2. **Uniformazione Card Giocatore a Destra in Light Mode**:
+   - Sostituito lo sfondo blu scuro/nero della card atleta con un layout chiaro coerente: `background: linear-gradient(170deg, #ffffff 0%, #f8fafc 100%)`, bordo ciano trasparente, chip OVR e GPS con sfondo bianco e testi scuri nitidi, nome giocatore `#0f172a`, statistiche con sfondo chiaro `#f1f5f9` e valori scuri.
+3. **Alto Contrasto per Testo Descrittivo e Hero**:
+   - Il paragrafo descrittivo in Light Mode è stato convertito a un grigio scuro nitido e profondo (`#334155 !important;`), garantendo leggibilità istantanea su sfondo bianco.
+   - Rimossi gli stili scuri hardcodati in cima ad `index.html` sotto `[data-theme="mimetico-chiaro"]`.
+4. **Verifica Assoluta di Rimozione Overlay OTP e Floating Shield**:
+   - Blindata ulteriormente l'assoluta scomparsa di `#es-otp-bottom-banner` e del pulsante scudo sia in dark che in light mode su tutta la schermata home.
+5. **File**: `apple-nav.css`, `style.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX2`.
+
+Feature precedente: **2026-09-25** — HEROUX1 — Ottimizzazione Hero, Rimozione Overlay e Floating Shield, Navbar Dropdown Altro e Card Giocatore Realistica:
 1. **Rimozione Overlay OTP e Floating Shield**:
    - Rimosso l'overlay dock di verifica email (`#es-otp-bottom-banner`) dalla schermata iniziale e dalla vista Home per evitare sovrapposizioni visive (`paintOtpBanner` in `verifica-account.js`).
    - Rimosso il pulsante fisso fluttuante con lo scudo di sicurezza a sinistra (`cookie-profiling.js`, `style.css`) che copriva i testi della hero.
@@ -16,7 +29,7 @@ Ultimo aggiornamento: **2026-09-25** — HEROUX1 — Ottimizzazione Hero, Rimozi
    - Raggruppate le voci secondarie (Stampa, Album Figurine, Ambassador, Minigiochi) all'interno di un dropdown dedicato "Altro ▾" (`.es-nav-dropdown`) con glassmorphism, icone e micro-descrizioni, snellendo l'header e mantenendo in primo piano solo Home, Chi siamo, Bacheca e Mappa.
 5. **Card Giocatore Realistica con Statistiche d'Esempio**:
    - Sostituita la vecchia silhouette con una card atleta (`.es-hero-player-card`) d'impatto: foto ad altissima definizione di un giovane calciatore in divisa atletica, badge "PROFILO VERIFICATO" con pulse verde, chip OVR 92 ATT, chip telemetria GPS (33.8 km/h), dati anagrafici (Marco Rossi - Serie D) e griglia statistiche FIFA/Scouting a 6 valori (VEL 94, TIR 89, PAS 85, DRI 91, DIF 62, FIS 87).
-6. **File**: `index.html`, `style.css`, `verifica-account.js`, `cookie-profiling.js`, `app.js`, `sw.js`, `version.json`, `immagini/03-calciatore-ritratto/player-card-showcase.jpg`. Cache `v20260925_HEROUX1`.
+6. **File**: `index.html`, `style.css`, `verifica-account.js`, `cookie-profiling.js`, `app.js`, `sw.js`, `version.json`, `immagini/03-calciatore-ritratto/player-card-showcase.jpg`. Cache `v20260925_HEROUX1`. Commit `074e8f15`.
 
 Feature precedente: **2026-09-25** — NAVUSER1 — Rimozione email, ruolo e avatar residui dal menu utente in navbar:
 1. Rimossi dal corpo del menu a tendina account (`#user-dropdown-menu`) i campi email (`#user-dropdown-email-link`) e ruolo (`#user-dropdown-role`) che si sovrapponevano alle voci di navigazione.

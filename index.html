@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260925_HEROUX1">
+  <link rel="stylesheet" href="style.css?v=20260925_HEROUX2">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
@@ -58,7 +58,7 @@
   <link rel="stylesheet" href="login-slide.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="glass-menu.css?v=20260924_GLASSMENU1">
   <link rel="stylesheet" href="nav-search-anim.css?v=20260925_PALETTE1">
-  <link rel="stylesheet" href="apple-nav.css?v=20260925_PALETTE1">
+  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX2">
   <link rel="stylesheet" href="btn-label-anim.css?v=20260925_BTNANIM1">
   <link rel="stylesheet" href="share-btn.css?v=20260925_SHARE1">
   <link rel="stylesheet" href="theme-switch.css?v=20260925_THEME1">
@@ -205,10 +205,29 @@
        Background on outer wrapper (width: 100% full-bleed),
        max-width (1400px), margin: 0 auto & padding: 0 40px ONLY on inner content containers */
     
-    html, body, main, #app, #home-views-group, #view-home, .site-main,
-    .main-header, .portfolio-header,
-    #hero, .hero-section, .hero-portfolio {
+    html:not([data-theme="mimetico-chiaro"]) body,
+    html:not([data-theme="mimetico-chiaro"]) main,
+    html:not([data-theme="mimetico-chiaro"]) #app,
+    html:not([data-theme="mimetico-chiaro"]) #home-views-group,
+    html:not([data-theme="mimetico-chiaro"]) #view-home,
+    html:not([data-theme="mimetico-chiaro"]) .site-main,
+    html:not([data-theme="mimetico-chiaro"]) #hero,
+    html:not([data-theme="mimetico-chiaro"]) .hero-section,
+    html:not([data-theme="mimetico-chiaro"]) .hero-portfolio {
       background-color: #050810 !important;
+    }
+    html[data-theme="mimetico-chiaro"] body,
+    html[data-theme="mimetico-chiaro"] main,
+    html[data-theme="mimetico-chiaro"] #app,
+    html[data-theme="mimetico-chiaro"] #home-views-group,
+    html[data-theme="mimetico-chiaro"] #view-home,
+    html[data-theme="mimetico-chiaro"] .site-main,
+    html[data-theme="mimetico-chiaro"] #hero,
+    html[data-theme="mimetico-chiaro"] .hero-section,
+    html[data-theme="mimetico-chiaro"] .hero-portfolio,
+    html[data-theme="mimetico-chiaro"] #home-about {
+      background-color: #ffffff !important;
+      background: #ffffff !important;
     }
     header.main-header,
     header.portfolio-header,
