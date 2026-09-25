@@ -3,7 +3,15 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX22 — Zero-Latency Badge UI System & Topbar Integration:
+Ultimo aggiornamento: **2026-09-26** — HEROUX23 — Micro-Interactions Ultra-Premium & Neon Luminescent Ripple:
+1. **Micro-Interactions Desktop & Universali (`micro-interactions.css`, `micro-interactions.js`)**:
+   - Creato controller ultra-performante per micro-interazioni aptico-visive a 60/120 fps.
+   - Ripple luminescente al neon ciano Elisee (`.es-ripple` con gradiente radiale ciano) calcolato al `pointerdown` con `requestAnimationFrame` e rimosso a 240ms senza reflow.
+   - Feedback micro-scale `scale(0.98)` immediato (40ms) su `:active` per tutti i bottoni (`.btn`, `.btn-primary`, `.btn-secondary`, `.btn-nav-accedi`, `.nav-brand`, `.es-touchable`).
+   - Zero lock di layout, zero lag, memoria deallocata istantaneamente.
+2. **File**: `micro-interactions.css`, `micro-interactions.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX23`.
+
+Feature precedente: **2026-09-26** — HEROUX22 — Zero-Latency Badge UI System & Topbar Integration:
 1. **Badge System Zero-Latency (`badge-system.css`, `badge-handler.js`)**:
    - Creato modulo CSS/JS autonomo per la gestione zero-latenza di badge conteggio e status (`updateBadge(id, count)`, `clearBadge(id)`, `pinToCorner(selector, anchored)`).
    - Cap automatico `99+` con classe `.capped` e transizione neon/locked a 40ms.

@@ -1,0 +1,58 @@
+/* ============================================= */
+/* HEROUX23 – Micro-Interactions Ultra-Premium  */
+/* Zero-Latency, 40ms scale, 220ms luminescent ripple */
+/* ============================================= */
+
+.es-ripple-host {
+  position: relative !important;
+  overflow: hidden !important;
+  touch-action: manipulation;
+}
+
+/* Micro-Scale feedback ultra-rapido (40ms) */
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-nav-accedi,
+.nav-brand,
+.nav-item,
+.es-touchable,
+.hero-buttons-row .btn {
+  transition: transform 40ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 120ms ease, opacity 120ms ease !important;
+  will-change: transform;
+}
+
+.btn:active,
+.btn-primary:active,
+.btn-secondary:active,
+.btn-nav-accedi:active,
+.nav-brand:active,
+.nav-item:active,
+.es-touchable:active,
+.hero-buttons-row .btn:active {
+  transform: scale(0.98) !important;
+}
+
+/* Ripple luminescente al neon ciano Elisee */
+.es-ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.4) 0%, rgba(56, 189, 248, 0.12) 55%, transparent 100%);
+  transform: translate3d(-50%, -50%, 0) scale(0);
+  opacity: 1;
+  animation: esRippleAnim 220ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+  z-index: 99;
+}
+
+@keyframes esRippleAnim {
+  0% {
+    transform: translate3d(-50%, -50%, 0) scale(0);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate3d(-50%, -50%, 0) scale(2.6);
+    opacity: 0;
+  }
+}
