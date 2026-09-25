@@ -1,0 +1,247 @@
+/* Navbar a pillola, stile del video 2026-09-25 09:32. Sotto i 721px resta il menu del telefono. */
+.es-nav-theme {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex: 0 0 auto;
+  padding: 0;
+}
+@media (min-width: 721px) {
+  .main-header,
+  .portfolio-header,
+  .main-header.is-scrolled,
+  .portfolio-header.is-scrolled {
+    height: 84px;
+    max-height: none;
+    background: transparent !important;
+    border: 0;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .portfolio-navbar,
+  .navbar.portfolio-navbar {
+    pointer-events: auto;
+    display: flex !important;
+    align-items: center;
+    gap: 6px;
+    width: min(1080px, calc(100% - 28px)) !important;
+    max-width: 1080px !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    max-height: 52px !important;
+    margin: 0 auto !important;
+    padding: 0 8px 0 12px !important;
+    border-radius: 999px;
+    background: rgba(28, 30, 36, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.38);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    overflow: visible;
+    grid-template-columns: none !important;
+  }
+
+  .portfolio-navbar .site-brand {
+    gap: 8px;
+    margin-right: 4px;
+  }
+
+  .portfolio-navbar .site-logo-img {
+    width: 26px;
+    height: 26px;
+  }
+
+  .portfolio-navbar .logo-text-large {
+    font-size: 0.92rem;
+    letter-spacing: 0.04em;
+    color: #fff;
+  }
+
+  .portfolio-navbar .nav-menu,
+  .portfolio-navbar .portfolio-nav {
+    flex: 1 1 auto;
+    justify-content: center;
+    gap: 2px;
+    overflow: visible !important;
+    min-width: 0;
+  }
+
+  .portfolio-navbar .nav-link,
+  .portfolio-navbar .nav-link + .nav-link {
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 6px 8px !important;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .portfolio-navbar .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 2px;
+    height: 1px;
+    background: #fff;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.22s ease;
+  }
+
+  .portfolio-navbar .nav-link:hover,
+  .portfolio-navbar .nav-link.active {
+    color: #fff;
+  }
+
+  .portfolio-navbar .nav-link:hover::after,
+  .portfolio-navbar .nav-link.active::after {
+    transform: scaleX(1);
+  }
+
+  .portfolio-nav-right,
+  .nav-auth-actions,
+  .nav-auth-actions-inner {
+    gap: 4px !important;
+  }
+
+  .es-nav-theme {
+    width: 32px;
+    height: 32px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.8);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex: 0 0 auto;
+  }
+
+  .es-nav-theme:hover { color: #fff; background: rgba(255, 255, 255, 0.06); }
+
+  .portfolio-navbar .btn-nav-accedi,
+  .portfolio-navbar .btn-nav-iscriviti {
+    height: 32px !important;
+    min-height: 32px !important;
+    padding: 0 12px !important;
+    border-radius: 999px !important;
+    font-size: 0.78rem !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: none !important;
+  }
+
+  .portfolio-navbar .btn-nav-accedi:hover,
+  .portfolio-navbar .btn-nav-iscriviti:hover {
+    background: rgba(255, 255, 255, 0.14) !important;
+  }
+
+  .portfolio-navbar .nav-lang-btn {
+    height: 32px !important;
+    min-height: 32px !important;
+    background: transparent !important;
+    border: 0 !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    box-shadow: none !important;
+  }
+
+  /* Ricerca dentro la pillola: icona, poi campo con ESC */
+  .portfolio-navbar .es-nav-search {
+    width: 32px;
+    height: 32px;
+    perspective: none;
+    transition: width 0.28s ease;
+  }
+
+  .portfolio-navbar .es-nav-search[data-state="open"] {
+    width: 210px;
+  }
+
+  .portfolio-navbar .es-nav-search__shell,
+  .portfolio-navbar .es-nav-search[data-state="open"] .es-nav-search__shell {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 100%;
+    height: 32px;
+  }
+
+  .portfolio-navbar .es-nav-search__shadow,
+  .portfolio-navbar .es-nav-search__border,
+  .portfolio-navbar .es-nav-search__sheen,
+  .portfolio-navbar .es-nav-search__ph { display: none !important; }
+
+  .portfolio-navbar .es-nav-search__field {
+    transform: none !important;
+    opacity: 0;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.35);
+    box-shadow: none;
+    border-radius: 999px;
+    border: 1px solid transparent;
+  }
+
+  .portfolio-navbar .es-nav-search[data-state="open"] .es-nav-search__field {
+    opacity: 1;
+    pointer-events: auto;
+    border-color: rgba(255, 255, 255, 0.22);
+    scale: 1;
+  }
+
+  .portfolio-navbar .es-nav-search__input {
+    color: #fff;
+    font-size: 0.82rem;
+  }
+
+  .portfolio-navbar .es-nav-search[data-state="open"] .es-nav-search__input-wrap {
+    padding-right: 72px;
+  }
+
+  .portfolio-navbar .es-nav-search[data-state="open"] .es-nav-search__field::after {
+    content: "ESC";
+    position: absolute;
+    right: 34px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 5px;
+    padding: 1px 4px;
+    pointer-events: none;
+  }
+
+  .portfolio-navbar .es-nav-search__btn,
+  .portfolio-navbar .es-nav-search[data-state="open"] .es-nav-search__btn {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.85);
+    box-shadow: none;
+    width: 32px;
+    height: 32px;
+    top: 0;
+  }
+
+  .portfolio-navbar .es-nav-search__toast {
+    background: rgba(16, 18, 22, 0.96);
+  }
+
+  .portfolio-navbar .es-nav-mail,
+  .portfolio-navbar .es-nav-bell {
+    color: rgba(255, 255, 255, 0.85);
+  }
+}

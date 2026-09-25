@@ -1,7 +1,7 @@
 /* ELISEE SCOUT — Cache Wipe & Self-Unregister Service Worker
    Assicura che nessun asset obsoleto rimanga memorizzato nella cache del browser.
 */
-const CACHE = 'elisee-scout-v20260925-loginv4';
+const CACHE = 'elisee-scout-v20260925-navpill1';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -20,10 +20,10 @@ self.addEventListener('activate', (event) => {
           try {
             client.postMessage({
               type: 'FORCE_RELOAD',
-              version: '20260925_LOGINV4',
-              updatedAt: '2026-09-25T10:10:00Z',
-              ts: '20260925_101000',
-              bust: 'v20260925_LOGINV4'
+              version: '20260925_NAVPILL1',
+              updatedAt: '2026-09-25T10:40:00Z',
+              ts: '20260925_104000',
+              bust: 'v20260925_NAVPILL1'
             });
           } catch (e) {}
         });

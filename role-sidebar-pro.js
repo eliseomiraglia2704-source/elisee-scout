@@ -76,6 +76,7 @@
       try { localStorage.setItem('elisee_ui_theme', 'mimetico-chiaro'); } catch (_) {}
     }
   }
+  window.toggleSiteTheme = toggleSiteTheme;
 
   function go(view) {
     if (typeof window.switchView === 'function') window.switchView(view);
