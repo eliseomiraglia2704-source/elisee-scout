@@ -639,3 +639,82 @@
     padding: 1.25rem 0 2.5rem;
   }
 }
+
+/* ============================================= */
+/* HEROUX34 – Chi Siamo (Zero-Latency)           */
+/* ============================================= */
+.chi-siamo-container {
+  background: #0a0a0a;
+  min-height: 80vh;
+  padding: 80px 20px 40px;
+  line-height: 1.7;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.chi-siamo-header {
+  max-width: 920px;
+  margin: 0 auto 60px;
+  text-align: center;
+}
+
+.chi-siamo-header h1 {
+  font-size: 42px;
+  color: #00f5d4;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 800;
+}
+
+.chi-siamo-header p {
+  font-size: 18px;
+  color: #aaa;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.chi-siamo-container .content {
+  max-width: 920px;
+  margin: 0 auto;
+  font-size: 19px;
+  color: #ddd;
+}
+
+.chi-siamo-container .content p {
+  margin-bottom: 28px;
+}
+
+.chi-siamo-container .content p strong {
+  color: #ff2d55;
+  font-weight: 700;
+}
+
+.chi-siamo-container .highlight {
+  background: linear-gradient(90deg, rgba(0,245,212,0.08), transparent);
+  padding: 2px 8px;
+  border-radius: 4px;
+  transition: all 40ms;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.chi-siamo-container .content p:hover .highlight {
+  color: #00f5d4;
+  box-shadow: 0 0 20px rgba(0,245,212,0.3);
+}
+
+.chi-siamo-container .footer-link {
+  margin-top: 80px;
+  text-align: center;
+  font-size: 15px;
+  color: #666;
+  cursor: pointer;
+  transition: all 40ms;
+}
+
+.chi-siamo-container .footer-link:hover {
+  color: #00f5d4;
+  transform: translateY(-2px);
+}
+

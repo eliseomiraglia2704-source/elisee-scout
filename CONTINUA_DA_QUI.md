@@ -3,7 +3,17 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX33 — Bacheca Opportunità Zero-Latency (Filtri Reattivi + Card Selezionate + Menu ⋯):
+Ultimo aggiornamento: **2026-09-26** — HEROUX34 — Chi Siamo (Zero-Latency + Micro-interazioni Neon):
+1. **Chi Siamo Engine (`styles/chi-siamo.css`, `chi-siamo.css`, `js/chi-siamo-handler.js`, `chi-siamo-handler.js`)**:
+   - Implementazione zero-latenza (<40ms):
+     - Layout minimale e pulito in dark mode (`#0a0a0a`), tipografia ad alta leggibilità, headline neon ciano `#00f5d4` in maiuscolo spaziato.
+     - Micro-interazioni sulle keyword ("zero fake account", "opportunità reali", "nessun rischio") con classe `.highlight`: hover ultra-reattivo a 40ms, scale 1.08 e glow neon ciano (`box-shadow: 0 0 20px rgba(0,245,212,0.3)`).
+     - Link cronologia con ripple effect nativo (`createRipple`) e toast reversibile `EliseeSuccessSystem.showToast`.
+     - Piena conformità GDPR Art. 13-30 e tracciamento GPS valorizzati graficamente.
+   - Esposizione globale: `window.EliseeChiSiamo` (`init`).
+2. **File**: `styles/chi-siamo.css`, `chi-siamo.css`, `js/chi-siamo-handler.js`, `chi-siamo-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX34`.
+
+Feature precedente: **2026-09-26** — HEROUX33 — Bacheca Opportunità Zero-Latency (Filtri Reattivi + Card Selezionate + Menu ⋯):
 1. **Bacheca Engine (`bacheca.css`, `bacheca-handler.js`, `styles/bacheca.css`, `js/bacheca-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Dashboard annunci con filtri a cascata (Ruoli: DS, Scout, Analyst / Categorie: Wall Transfer, Annuncio, Squadre / Zone: Città, Provincia, Regione, Italia).
