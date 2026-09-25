@@ -34,6 +34,7 @@
     var map = {
       admin: 'es-cc-overview',
       privacy: 'es-cc-privacy-section',
+      flusso: 'es-cc-flusso',
       autopilot: 'es-cc-autopilot-section',
       manager: 'es-mgr-admin-wrap',
       card: 'es-card-admin-wrap'
@@ -60,6 +61,9 @@
     if (pane === 'admin') {
       try { localStorage.setItem('elisee_active_dashboard_tab', 'admin'); } catch (_) {}
       refresh();
+    }
+    if (pane === 'flusso' && window.EliseeFlusso && typeof window.EliseeFlusso.open === 'function') {
+      try { window.EliseeFlusso.open(); } catch (_) {}
     }
     if (pane === 'privacy') {
       try { localStorage.setItem('elisee_active_dashboard_tab', 'privacy'); } catch (_) {}
@@ -326,6 +330,17 @@
         else toast('AutoPilot in caricamento…', 'info');
       });
     }
+    var qaF2 = $('es-cc-qa-flusso');
+    if (qaF2 && qaF2.dataset.ccBound !== '1') {
+      qaF2.dataset.ccBound = '1';
+      qaF2.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var b = $('btn-show-flusso');
+        if (b) b.click();
+        else showPane('flusso');
+      });
+    }
     var qaG = $('es-cc-qa-gdpr');
     if (qaG && qaG.dataset.ccBound !== '1') {
       qaG.dataset.ccBound = '1';
@@ -376,7 +391,7 @@
       });
     }
 
-    ['btn-show-admin', 'btn-show-privacy', 'btn-show-autopilot', 'btn-show-manager', 'btn-show-card-atelier'].forEach(function (id) {
+    ['btn-show-admin', 'btn-show-privacy', 'btn-show-flusso', 'btn-show-autopilot', 'btn-show-manager', 'btn-show-card-atelier'].forEach(function (id) {
       var el = $(id);
       if (!el || el.dataset.ccPaneBound === '1') return;
       el.dataset.ccPaneBound = '1';

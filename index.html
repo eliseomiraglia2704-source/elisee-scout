@@ -49,7 +49,8 @@
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
   <link rel="stylesheet" href="bacheca-board.css?v=20260917_BACHECA7">
-  <link rel="stylesheet" href="control-center.css?v=20260924_FINISH1">
+  <link rel="stylesheet" href="control-center.css?v=20260925_FLUSSO1">
+  <link rel="stylesheet" href="flusso-contatti.css?v=20260925_FLUSSO1">
   <link rel="stylesheet" href="sortable-table.css?v=20260924_FINISH1">
   <link rel="stylesheet" href="elisee-loader.css?v=20260918_LOADER1">
   <link rel="stylesheet" href="avatar-3d.css?v=20260921_FACESCAN1">
@@ -3557,6 +3558,7 @@
               <div class="pf-chips">
                 <button type="button" class="gov-btn active pf-chip-btn" id="btn-show-admin" data-cc-tab="admin">Dashboard Admin</button>
                 <button type="button" class="gov-btn pf-chip-btn" id="btn-show-privacy" data-cc-tab="privacy">Responsabile Privacy GDPR</button>
+                <button type="button" class="gov-btn pf-chip-btn" id="btn-show-flusso" data-cc-tab="flusso" title="Simulazione flusso profili: Admin e Responsabile Privacy">Flusso contatti</button>
                 <button type="button" class="gov-btn pf-chip-btn" id="btn-show-autopilot" data-cc-tab="autopilot" title="Mission Control AutoPilot (solo Admin)">AutoPilot</button>
                 <button type="button" class="gov-btn pf-chip-btn" id="btn-show-manager" data-cc-tab="manager" title="Candidature e proposte Manager Elisee Scout">Manager Elisee</button>
                 <button type="button" class="gov-btn pf-chip-btn" id="btn-show-card-atelier" data-cc-tab="card">Card Elisee <span id="es-card-chip-n" class="es-card-chip-n" hidden></span></button>
@@ -3606,6 +3608,10 @@
                 <button type="button" class="es-cc-qa es-cc-qa--primary" id="es-cc-qa-autopilot">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
                   <span>Apri Autopilot</span>
+                </button>
+                <button type="button" class="es-cc-qa" id="es-cc-qa-flusso">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="5" height="16" rx="1"/><rect x="10" y="4" width="5" height="10" rx="1"/><rect x="17" y="4" width="4" height="7" rx="1"/></svg>
+                  <span>Flusso contatti</span>
                 </button>
                 <button type="button" class="es-cc-qa" id="es-cc-qa-gdpr">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -3726,6 +3732,10 @@
                   </div>
                 </div>
               </div>
+            </div>
+
+            <div id="es-cc-flusso" data-cc-pane="flusso" hidden>
+              <div id="es-cc-flusso-root"></div>
             </div>
 
             <div id="es-cc-privacy-section" data-cc-pane="privacy" hidden>
@@ -6016,7 +6026,8 @@
   <script src="mappa-club.js?v=20260912_ATOECC2"></script>
   <script src="chi-segui.js?v=20260913_ALBUM5"></script>
   <script src="card-atelier.js?v=20260918_CLUBCARD1"></script>
-  <script src="control-center.js?v=20260918_CCDROPDOWN1"></script>
+  <script src="control-center.js?v=20260925_FLUSSO1"></script>
+  <script src="flusso-contatti.js?v=20260925_FLUSSO1"></script>
   <script src="ds-hub.js?v=20260917_BUGFIX1"></script>
   <script src="verifica-account.js?v=20260925_CALM1"></script>
   <script src="season-wrapped.js?v=20260910_WRAPPED1"></script>
