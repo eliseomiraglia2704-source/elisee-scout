@@ -3,7 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — LOGINV4 — Login come nel video delle 09:27 (card bianca che scorre):
+Ultimo aggiornamento: **2026-09-25** — NAVPILL1 — Navbar a pillola come nel video delle 09:32:
+1. Barra di vetro scuro, centrata, non più a tutta larghezza. Logo, le voci, ricerca, tema, lingua e Accedi stanno nella stessa capsula.
+2. La lente apre il campo dentro la barra, con la scritta ESC. Il sole cambia tema chiaro/scuro. La sottolineatura compare sulla voce sotto il mouse.
+3. Sul telefono resta il menu di prima.
+4. **File**: `apple-nav.css`, `index.html`, `role-sidebar-pro.js`, `sw.js`, `version.json`. Cache `v20260925_NAVPILL1`. Commit `7bd6ee90`.
+
+Feature precedente: **2026-09-25** — LOGINV4 — Login come nel video delle 09:27 (card bianca che scorre):
 1. Card bianca 660×560, bordo bianco, ombra morbida. A sinistra Accedi (campi chiari, bottone nero, Facebook / Google / Apple). A destra la foto con «Ciao» e **Iscriviti**.
 2. Iscriviti fa scorrere la foto a sinistra («Bentornato» / **Accedi**) e il modulo a destra. Stessi tempi del video: 0,65 s.
 3. Il codice OTP del numero resta il pannello scuro sopra la card.
