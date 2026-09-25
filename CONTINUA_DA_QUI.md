@@ -3,7 +3,19 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX28 — Action Menu Zero-Latency & Success System Connected Architecture:
+Ultimo aggiornamento: **2026-09-26** — HEROUX29 — Market Hub Stealth & FIFA Wall Style Architecture:
+1. **Market Hub Stealth Engine (`market-hub.css`, `market-hub-handler.js`, `styles/market-hub.css`, `js/market-hub-handler.js`)**:
+   - Implementazione zero-latenza (<40ms):
+     - Secret List stealth con bordo ciano `#00f5d4` e sfondo speculare.
+     - Wall Trasferimenti stile FIFA con badge incrementale e gradient animato.
+     - Tabs switch reattivo (`Available` / `Secret List`).
+     - Ripple effect al tocco integrato con `window.createRipple`.
+     - Aggiornamento istantaneo del contatore badge globale (`EliseeDynamicSync.setBadge('badge-mobile-msgs', count)`).
+     - Notifica toast reversibile (`EliseeSuccessSystem.showToast`).
+   - Esposizione globale: `window.EliseeMarketHub` (`init`, `switchTab`, `addToSecret`).
+2. **File**: `market-hub.css`, `market-hub-handler.js`, `styles/market-hub.css`, `js/market-hub-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX29`.
+
+Feature precedente: **2026-09-26** — HEROUX28 — Action Menu Zero-Latency & Success System Connected Architecture:
 1. **Action Menu Zero-Latency Engine (`action-menu.css`, `action-menu-handler.js`, `styles/action-menu.css`, `js/action-menu-handler.js`)**:
    - Implementate le regole matematiche del video (HEROUX28):
      - Trigger pulsante con glow (#ff00ff / ciano) e drop-shadow preciso.
