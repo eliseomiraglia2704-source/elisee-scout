@@ -998,16 +998,39 @@ body:not(.is-in-role-dashboard):not(.is-player-mode):not(.is-pres-mode):not(.is-
 }
 
 /* Sulle sezioni home e landing page (#hero, #home-about, #view-home), nessuna sidebar può mai apparire */
-#view-home:not([hidden]) ~ * .es-sb-hover,
-#view-home:not([hidden]) ~ * .es-pro-sidebar,
-#view-home:not([hidden]) ~ * [class*="-sidebar"],
-#view-home:not([hidden]) .es-sb-hover,
-#view-home:not([hidden]) .es-pro-sidebar,
-#hero ~ * .es-sb-hover,
-#hero ~ * .es-pro-sidebar,
+body.is-public-landing .es-sb-hover,
+body.is-public-landing .es-pro-sidebar,
+body.is-public-landing .es-obs-sidebar,
+body.is-public-landing .es-modern-sidebar,
+body.is-public-landing .es-cos-sidebar,
+body.is-public-landing .es-at-sidebar,
+body.is-public-landing .es-med-sidebar,
+body.is-public-landing .es-gk-sidebar,
+body.is-public-landing .es-ma-sidebar,
+body.is-public-landing [id$="-sidebar"],
+body.is-public-landing [class*="-sidebar"],
+body.is-public-landing #es-trash,
+body.is-public-landing #es-share,
 body:has(#hero:not([hidden])) .es-sb-hover,
 body:has(#hero:not([hidden])) .es-pro-sidebar,
-body:has(#hero:not([hidden])) [class*="-sidebar"] {
+body:has(#hero:not([hidden])) [class*="-sidebar"],
+body:has(#hero:not([hidden])) #es-trash,
+body:has(#hero:not([hidden])) #es-share,
+body:has(#view-home:not([hidden])) .es-sb-hover,
+body:has(#view-home:not([hidden])) .es-pro-sidebar,
+body:has(#view-home:not([hidden])) [class*="-sidebar"],
+body:has(#view-home:not([hidden])) #es-trash,
+body:has(#view-home:not([hidden])) #es-share,
+#hero .es-sb-hover,
+#hero .es-pro-sidebar,
+#hero [class*="-sidebar"],
+#view-home .es-sb-hover,
+#view-home .es-pro-sidebar,
+#view-home [class*="-sidebar"] {
   display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  transform: translateX(-9999px) !important;
 }
 

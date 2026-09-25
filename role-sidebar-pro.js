@@ -163,29 +163,27 @@
   function isPublicView() {
     try {
       var h = (window.location.hash || '').toLowerCase();
-      // Viste pubbliche esplicite
-      if (!h || h === '#hero' || h === '#home' || h === '#about' || h === '#home-about' ||
+      // 1. Se l'hash è assente, vuoto o punta ad una sezione pubblica istituzionale
+      if (!h || h === '' || h === '#' || h === '#hero' || h === '#home' || h === '#about' || h === '#home-about' ||
           h === '#bacheca' || h === '#bacheca-annunci' || h === '#bacheca-network' ||
           h === '#stampa-portal' || h === '#mappa-portal' || h === '#seguo-portal' ||
           h === '#ambassador-portal' || h === '#minigioco-carriera') {
         return true;
       }
+      // 2. Se view-home o home-views-group è attivo e visibile a schermo
       var vHome = document.getElementById('view-home');
       if (vHome && !vHome.hidden && window.getComputedStyle(vHome).display !== 'none') {
         return true;
       }
-      var roleClasses = [
-        'is-coach-mode', 'is-vice-mode', 'is-pres-mode', 'is-player-mode',
-        'is-obs-mode', 'is-ma-mode', 'is-gk-mode', 'is-giorn-mode',
-        'is-at-mode', 'is-med-mode', 'is-fisio-mode', 'is-nu-mode',
-        'is-tm-mode', 'is-ds-mode', 'is-yg-mode', 'is-dg-mode',
-        'is-ag-mode', 'is-mk-mode', 'is-pr-mode', 'is-eq-mode',
-        'is-sg-mode', 'is-bt-mode', 'is-tifoso-mode', 'is-in-role-dashboard'
-      ];
-      var hasRole = roleClasses.some(function (cls) {
-        return document.body.classList.contains(cls);
-      });
-      if (!hasRole) return true;
+      var homeGroup = document.getElementById('home-views-group');
+      if (homeGroup && !homeGroup.hidden && window.getComputedStyle(homeGroup).display !== 'none') {
+        return true;
+      }
+      // 3. È dashboard privata SOLO se l'hash contiene esplicitamente una dashboard di ruolo
+      var isRoleHash = /#(es-|role-|user-dossier|player-dossier|pres-|coach-|vice-|ds-|obs-|at-|med-|gk-|ma-|giorn-|tm-|yg-|dg-|ag-|mk-|pr-|eq-|sg-|bt-|tifoso-|nu-|fisio-)/.test(h);
+      if (!isRoleHash) {
+        return true;
+      }
     } catch (_) {}
     return false;
   }
@@ -193,36 +191,62 @@
   // Scansione e upgrade automatico di tutte le sidebar montate
   function scanAndUpgrade() {
     var publicPage = isPublicView();
+    if (publicPage) {
+      document.body.classList.add('is-public-landing');
+    } else {
+      document.body.classList.remove('is-public-landing');
+    }
+
     var sidebars = document.querySelectorAll(
-      '.es-obs-sidebar, .es-pro-sidebar, .es-cos-sidebar, .es-modern-sidebar, .es-at-sidebar, .es-med-sidebar, .es-gk-sidebar, .es-ma-sidebar, [id$="-sidebar"], [class*="-sidebar"]'
+      '.es-obs-sidebar, .es-pro-sidebar, .es-cos-sidebar, .es-modern-sidebar, .es-at-sidebar, .es-med-sidebar, .es-gk-sidebar, .es-ma-sidebar, .es-sb-hover, [id$="-sidebar"], [class*="-sidebar"]'
     );
     sidebars.forEach(function (sb) {
       if (isAvatar3dChrome(sb)) return;
       if (sb.tagName === 'NAV') return;
       var cls = String(sb.className || '');
       if (/sidebar-(nav|badge|club|btn)/.test(cls)) return;
-      if (sb.parentElement && sb.parentElement.closest('[data-msb-upgraded="true"]')) return;
 
-      // Nelle pagine pubbliche (Landing, Home, Chi siamo, Bacheca...), la sidebar è sempre rimossa/nascosta
+      // Nelle pagine pubbliche (Landing, Home, Chi siamo, Bacheca...), la sidebar è TASSATIVAMENTE rimossa/nascosta
       if (publicPage) {
         sb.style.setProperty('display', 'none', 'important');
+        sb.style.setProperty('visibility', 'hidden', 'important');
+        sb.style.setProperty('pointer-events', 'none', 'important');
+        sb.style.setProperty('opacity', '0', 'important');
         sb.setAttribute('aria-hidden', 'true');
         return;
       }
 
       // Nelle aree private / dashboard riservate di ruolo, la sidebar è visibile ed attiva
       sb.style.removeProperty('display');
+      sb.style.removeProperty('visibility');
+      sb.style.removeProperty('pointer-events');
+      sb.style.removeProperty('opacity');
       sb.removeAttribute('aria-hidden');
       if (sb.offsetWidth > 0 || sb.offsetHeight > 0 || window.getComputedStyle(sb).display !== 'none') {
         upgradeSidebar(sb);
       }
     });
 
-    // Assicura che anche il tasto animato trash non compaia nella home pubblica
+    // Assicura che anche il tasto animato trash e share non compaiano nella home pubblica
     var trash = document.getElementById('es-trash');
     if (trash) {
-      if (publicPage) trash.style.setProperty('display', 'none', 'important');
-      else trash.style.removeProperty('display');
+      if (publicPage) {
+        trash.style.setProperty('display', 'none', 'important');
+        trash.style.setProperty('visibility', 'hidden', 'important');
+      } else {
+        trash.style.removeProperty('display');
+        trash.style.removeProperty('visibility');
+      }
+    }
+    var share = document.getElementById('es-share');
+    if (share) {
+      if (publicPage) {
+        share.style.setProperty('display', 'none', 'important');
+        share.style.setProperty('visibility', 'hidden', 'important');
+      } else {
+        share.style.removeProperty('display');
+        share.style.removeProperty('visibility');
+      }
     }
   }
 

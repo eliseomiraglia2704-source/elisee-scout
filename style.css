@@ -10878,27 +10878,40 @@ html[data-theme="mimetico-chiaro"] .es-card-dossier-btn:hover,
    ========================================================================== */
 #view-home:not([hidden]) ~ * .es-sb-hover,
 #view-home:not([hidden]) ~ * .es-pro-sidebar,
-#view-home:not([hidden]) ~ * [class*="-sidebar"],
-#view-home:not([hidden]) .es-sb-hover,
-#view-home:not([hidden]) .es-pro-sidebar,
-#hero ~ * .es-sb-hover,
-#hero ~ * .es-pro-sidebar,
-#hero .es-sb-hover,
-#hero .es-pro-sidebar,
+body.is-public-landing .es-sb-hover,
+body.is-public-landing .es-pro-sidebar,
+body.is-public-landing .es-obs-sidebar,
+body.is-public-landing .es-modern-sidebar,
+body.is-public-landing .es-cos-sidebar,
+body.is-public-landing .es-at-sidebar,
+body.is-public-landing .es-med-sidebar,
+body.is-public-landing .es-gk-sidebar,
+body.is-public-landing .es-ma-sidebar,
+body.is-public-landing [id$="-sidebar"],
+body.is-public-landing [class*="-sidebar"],
+body.is-public-landing #es-trash,
+body.is-public-landing #es-share,
 body:has(#hero:not([hidden])) .es-sb-hover,
 body:has(#hero:not([hidden])) .es-pro-sidebar,
 body:has(#hero:not([hidden])) [class*="-sidebar"],
-body:not(.is-in-role-dashboard):not(.is-player-mode):not(.is-pres-mode):not(.is-coach-mode):not(.is-vice-mode):not(.is-ds-mode):not(.is-obs-mode):not(.is-at-mode):not(.is-med-mode):not(.is-gk-mode):not(.is-ma-mode):not(.is-giorn-mode):not(.is-tm-mode):not(.is-yg-mode):not(.is-dg-mode):not(.is-ag-mode):not(.is-mk-mode):not(.is-pr-mode):not(.is-eq-mode):not(.is-sg-mode):not(.is-bt-mode):not(.is-tifoso-mode):not(.is-nu-mode):not(.is-fisio-mode) .es-sb-hover,
-body:not(.is-in-role-dashboard):not(.is-player-mode):not(.is-pres-mode):not(.is-coach-mode):not(.is-vice-mode):not(.is-ds-mode):not(.is-obs-mode):not(.is-at-mode):not(.is-med-mode):not(.is-gk-mode):not(.is-ma-mode):not(.is-giorn-mode):not(.is-tm-mode):not(.is-yg-mode):not(.is-dg-mode):not(.is-ag-mode):not(.is-mk-mode):not(.is-pr-mode):not(.is-eq-mode):not(.is-sg-mode):not(.is-bt-mode):not(.is-tifoso-mode):not(.is-nu-mode):not(.is-fisio-mode) .es-pro-sidebar,
-body:not(.is-in-role-dashboard):not(.is-player-mode):not(.is-pres-mode):not(.is-coach-mode):not(.is-vice-mode):not(.is-ds-mode):not(.is-obs-mode):not(.is-at-mode):not(.is-med-mode):not(.is-gk-mode):not(.is-ma-mode):not(.is-giorn-mode):not(.is-tm-mode):not(.is-yg-mode):not(.is-dg-mode):not(.is-ag-mode):not(.is-mk-mode):not(.is-pr-mode):not(.is-eq-mode):not(.is-sg-mode):not(.is-bt-mode):not(.is-tifoso-mode):not(.is-nu-mode):not(.is-fisio-mode) [class*="-sidebar"] {
+body:has(#hero:not([hidden])) #es-trash,
+body:has(#hero:not([hidden])) #es-share,
+body:has(#view-home:not([hidden])) .es-sb-hover,
+body:has(#view-home:not([hidden])) .es-pro-sidebar,
+body:has(#view-home:not([hidden])) [class*="-sidebar"],
+body:has(#view-home:not([hidden])) #es-trash,
+body:has(#view-home:not([hidden])) #es-share,
+#hero .es-sb-hover,
+#hero .es-pro-sidebar,
+#hero [class*="-sidebar"],
+#view-home .es-sb-hover,
+#view-home .es-pro-sidebar,
+#view-home [class*="-sidebar"] {
   display: none !important;
-}
-
-/* Nascondi il tasto trash dalla vista home */
-#view-home:not([hidden]) ~ * .es-trash,
-#view-home:not([hidden]) .es-trash,
-body:has(#hero:not([hidden])) .es-trash {
-  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  transform: translateX(-9999px) !important;
 }
 
 /* ==========================================================================

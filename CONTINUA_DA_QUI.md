@@ -3,7 +3,16 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — HEROUX10 — Reset d'Emergenza Globale Header, Componente PublicHeader & Eliminazione Disallineamento Hero:
+Ultimo aggiornamento: **2026-09-25** — HEROUX11 — Rimozione Definitiva Sidebar Fluttuante e Bottoni Fixed su Landing Page Pubblica:
+1. **Risoluzione Bug Rilevamento Vista Pubblica (`role-sidebar-pro.js`)**:
+   - Individuato e risolto il bug logico per cui un utente autenticato con ruolo (o admin) manteneva attive le classi di ruolo su `<body>` e la funzione `isPublicView()` ritornava `false` anche se l'utente si trovava sulla Home Page (`#hero`), mostrando la sidebar laterale fissa a sinistra.
+   - Corretta `isPublicView()`: ritorna sempre `true` sulle pagine pubbliche (`#hero`, `#home`, `#about`, `#bacheca`, ecc.), aggiunge `is-public-landing` a `document.body` e attiva la soppressione totale.
+2. **Blindatura CSS Assoluta Sidebar & Elementi Fixed**:
+   - In `role-sidebar-pro.css`, `style.css` e nel blocco head di `index.html`:
+     - `body.is-public-landing .es-pro-sidebar`, `.es-sb-hover`, `[class*="-sidebar"]`, `#es-trash`, `#es-share` e `body:has(#hero:not([hidden]))` forzati a `display: none !important; visibility: hidden !important; pointer-events: none !important; opacity: 0 !important; transform: translateX(-9999px) !important;`.
+3. **File**: `role-sidebar-pro.js`, `role-sidebar-pro.css`, `style.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX11`.
+
+Feature precedente: **2026-09-25** — HEROUX10 — Reset d'Emergenza Globale Header, Componente PublicHeader & Eliminazione Disallineamento Hero:
 1. **Reset d'Emergenza Globale Navbar**:
    - Inserite le 3 regole nel CSS globale (`style.css` e blocco critico in `index.html`):
      - `header, .navbar, nav, .public-header, .public-navbar { box-sizing: border-box !important; max-height: 64px !important; height: 64px !important; min-height: 64px !important; overflow: hidden !important; }`
