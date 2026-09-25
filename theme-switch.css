@@ -1,0 +1,89 @@
+/* Switch giorno / notte: il sole scorre, le nuvole restano, la luna esce di notte. */
+.es-dn {
+  width: 78px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  flex: 0 0 auto;
+  position: relative;
+}
+.es-dn-sky {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  overflow: hidden;
+  background: linear-gradient(180deg, #020617, #0b1220);
+  box-shadow: inset 0 0 0 1px rgba(56, 189, 248, 0.28);
+  transition: background 0.55s ease;
+}
+.es-dn.is-day .es-dn-sky {
+  background: linear-gradient(180deg, #7dd3fc, #38bdf8);
+}
+.es-dn-stars,
+.es-dn-cloud,
+.es-dn-sun,
+.es-dn-moon,
+.es-dn-knob { position: absolute; pointer-events: none; }
+.es-dn-stars {
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 30%, #fff 0.7px, transparent 1px),
+    radial-gradient(circle at 32% 58%, #fff 0.6px, transparent 1px),
+    radial-gradient(circle at 48% 24%, #fff 0.7px, transparent 1px),
+    radial-gradient(circle at 62% 46%, #fff 0.5px, transparent 1px);
+  opacity: 0.85;
+  transition: opacity 0.45s ease;
+}
+.es-dn.is-day .es-dn-stars { opacity: 0; }
+.es-dn-cloud {
+  left: -20%;
+  bottom: -6px;
+  width: 140%;
+  height: 14px;
+  background:
+    radial-gradient(circle at 12px 10px, #fff 7px, transparent 8px),
+    radial-gradient(circle at 28px 8px, #e0f2fe 8px, transparent 9px),
+    radial-gradient(circle at 46px 11px, #fff 7px, transparent 8px),
+    radial-gradient(circle at 64px 8px, #e0f2fe 8px, transparent 9px),
+    radial-gradient(circle at 84px 11px, #fff 7px, transparent 8px);
+  animation: esDnCloud 16s linear infinite;
+  opacity: 0.95;
+}
+@keyframes esDnCloud { to { transform: translateX(-28px); } }
+.es-dn-sun,
+.es-dn-moon {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  top: 6px;
+  transition: opacity 0.4s ease;
+}
+.es-dn-sun { right: 10px; background: #fde68a; box-shadow: 0 0 8px #fde68a; opacity: 0; }
+.es-dn.is-day .es-dn-sun { opacity: 1; }
+.es-dn-moon {
+  left: 10px;
+  background: transparent;
+  box-shadow: inset -4px -2px 0 0 #fde68a;
+  opacity: 1;
+}
+.es-dn.is-day .es-dn-moon { opacity: 0; }
+.es-dn-knob {
+  top: 3px;
+  left: calc(100% - 29px);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #f8fafc;
+  box-shadow: 0 0 12px rgba(248, 250, 252, 0.85);
+  transition: left 0.55s cubic-bezier(.2, .8, .2, 1);
+}
+.es-dn.is-day .es-dn-knob { left: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  .es-dn-sky, .es-dn-knob, .es-dn-stars, .es-dn-sun, .es-dn-moon { transition: none; }
+  .es-dn-cloud { animation: none; }
+}

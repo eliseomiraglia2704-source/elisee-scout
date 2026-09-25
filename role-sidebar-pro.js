@@ -64,6 +64,16 @@
       var saved = localStorage.getItem('elisee_ui_theme') || '';
       if (saved === 'mimetico-chiaro') document.documentElement.setAttribute('data-theme', saved);
     } catch (_) {}
+    syncDayNight();
+  }
+
+  function syncDayNight() {
+    var light = document.documentElement.getAttribute('data-theme') === 'mimetico-chiaro';
+    var btn = document.getElementById('es-nav-theme');
+    if (!btn) return;
+    btn.classList.toggle('is-day', light);
+    btn.setAttribute('aria-pressed', light ? 'true' : 'false');
+    btn.setAttribute('aria-label', light ? 'Passa al tema notte' : 'Passa al tema giorno');
   }
 
   function toggleSiteTheme() {
@@ -75,6 +85,7 @@
       document.documentElement.setAttribute('data-theme', 'mimetico-chiaro');
       try { localStorage.setItem('elisee_ui_theme', 'mimetico-chiaro'); } catch (_) {}
     }
+    syncDayNight();
   }
   window.toggleSiteTheme = toggleSiteTheme;
 
