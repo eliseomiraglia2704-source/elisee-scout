@@ -3,7 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — SHARE1 — Bottone Condividi in basso a destra:
+Ultimo aggiornamento: **2026-09-25** — THEME1 — Switch giorno/notte nella navbar:
+1. Al posto del sole c'è la capsula: di notte luna e stelle, manopola a destra. Di giorno cielo ciano, sole e nuvole, manopola a sinistra.
+2. Cambia il tema del sito (`mimetico-chiaro` / scuro) e lo ricorda.
+3. **File**: `theme-switch.css`, `role-sidebar-pro.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_THEME1`. Commit `f5aa7c0d`.
+
+Feature precedente: **2026-09-25** — SHARE1 — Bottone Condividi in basso a destra:
 1. Si apre a ventaglio: WhatsApp, LinkedIn, Email, X e copia link. La × lo richiude.
 2. Copia link scrive l'indirizzo della pagina e mostra «Link copiato». Gli altri canali aprono la condivisione.
 3. Colori del sito: disco scuro, icone ciano.
