@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260925_HEROUX32';
+      var BUILD_VERSION = '20260925_HEROUX33';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260925_HEROUX32">
+  <link rel="stylesheet" href="style.css?v=20260925_HEROUX33">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
@@ -58,7 +58,7 @@
   <link rel="stylesheet" href="login-slide.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="glass-menu.css?v=20260924_GLASSMENU1">
   <link rel="stylesheet" href="nav-search-anim.css?v=20260925_PALETTE1">
-  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX32">
+  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX33">
   <link rel="stylesheet" href="btn-label-anim.css?v=20260925_BTNANIM1">
   <link rel="stylesheet" href="share-btn.css?v=20260925_SHARE1">
   <link rel="stylesheet" href="theme-switch.css?v=20260925_THEME1">
@@ -67,18 +67,19 @@
   <link rel="stylesheet" href="trash-btn.css?v=20260925_TRASH1">
   <link rel="stylesheet" href="react-card.css?v=20260925_RCARD1">
   <link rel="stylesheet" href="page-bubbles.css?v=20260925_BUBBLE1">
-  <link rel="stylesheet" href="parallax.css?v=20260925_HEROUX32">
-  <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX32">
-  <link rel="stylesheet" href="es-nav-ux.css?v=20260925_HEROUX32">
-  <link rel="stylesheet" href="badge-system.css?v=20260925_HEROUX32">
-  <link rel="stylesheet" href="micro-interactions.css?v=20260925_HEROUX32">
-  <link rel="stylesheet" href="radius-system.css?v=20260925_HEROUX32">
-  <link rel="stylesheet" href="success-system.css?v=20260925_HEROUX32">
-  <link rel="stylesheet" href="action-menu.css?v=20260925_HEROUX32">
-  <link rel="stylesheet" href="market-hub.css?v=20260925_HEROUX32">
-  <link rel="stylesheet" href="radar.css?v=20260925_HEROUX32">
-  <link rel="stylesheet" href="candidature.css?v=20260925_HEROUX32">
-  <link rel="stylesheet" href="market-hub-pro.css?v=20260925_HEROUX32">
+  <link rel="stylesheet" href="parallax.css?v=20260925_HEROUX33">
+  <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX33">
+  <link rel="stylesheet" href="es-nav-ux.css?v=20260925_HEROUX33">
+  <link rel="stylesheet" href="badge-system.css?v=20260925_HEROUX33">
+  <link rel="stylesheet" href="micro-interactions.css?v=20260925_HEROUX33">
+  <link rel="stylesheet" href="radius-system.css?v=20260925_HEROUX33">
+  <link rel="stylesheet" href="success-system.css?v=20260925_HEROUX33">
+  <link rel="stylesheet" href="action-menu.css?v=20260925_HEROUX33">
+  <link rel="stylesheet" href="market-hub.css?v=20260925_HEROUX33">
+  <link rel="stylesheet" href="radar.css?v=20260925_HEROUX33">
+  <link rel="stylesheet" href="candidature.css?v=20260925_HEROUX33">
+  <link rel="stylesheet" href="market-hub-pro.css?v=20260925_HEROUX33">
+  <link rel="stylesheet" href="bacheca.css?v=20260925_HEROUX33">
   <style id="es-font-nevera">
     @font-face {
       font-family: 'Nevera';
@@ -4877,6 +4878,108 @@
             <button type="button" class="market-btn-export" onclick="exportMarketReport()">📄 Export Report Secret List</button>
           </div>
         </section>
+
+        <!-- AREA BACHECA – HEROUX33 -->
+        <section class="bacheca-container" id="area-bacheca-pro">
+          <div class="header">
+            <h2 style="color:#00f5d4; font-size:26px; margin:0; font-weight:800; letter-spacing:-0.5px;">📋 BACHECA OPPORTUNITÀ ZERO-LATENCY</h2>
+            <div class="header-buttons">
+              <button onclick="if(window.createRipple)window.createRipple(event.clientX, event.clientY); if(window.EliseeSuccessSystem)window.EliseeSuccessSystem.showToast('Nuovo annuncio pronto per la pubblicazione', 1800);" class="btn primary">Nuovo annuncio</button>
+              <button onclick="if(window.createRipple)window.createRipple(event.clientX, event.clientY); if(window.EliseeSuccessSystem)window.EliseeSuccessSystem.showToast('Creazione profilo avviata', 1800);" class="btn primary">Crea profilo</button>
+            </div>
+          </div>
+          <!-- Filtri -->
+          <div class="filter-bar">
+            <div class="filter-group">
+              <select>
+                <option>Tutti i ruoli</option>
+                <option>Direttore Sportivo</option>
+                <option>Scout</option>
+                <option>Analyst</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <select>
+                <option>Tutte le categorie</option>
+                <option>Wall Transfer</option>
+                <option>Annuncio</option>
+                <option>Squadre</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <select>
+                <option>Tutte le zone</option>
+                <option>Città</option>
+                <option>Provincia</option>
+                <option>Regione</option>
+                <option>Italia</option>
+              </select>
+            </div>
+          </div>
+          <!-- Opzioni selezionate -->
+          <div class="opportunita-grid">
+            <div class="opportunita-card">
+              <div class="card-header">
+                <h3 class="card-title">Northwind Labs</h3>
+                <span class="card-badge">€2,400</span>
+              </div>
+              <div class="card-footer">
+                <span>Wall Transfer • Sent</span>
+                <span class="menu-item" title="Opzioni">⋯</span>
+              </div>
+            </div>
+            <div class="opportunita-card">
+              <div class="card-header">
+                <h3 class="card-title">Halcyon Bank</h3>
+                <span class="card-badge">€1,800</span>
+              </div>
+              <div class="card-footer">
+                <span>Finanziamento Club • Opened</span>
+                <span class="menu-item" title="Opzioni">⋯</span>
+              </div>
+            </div>
+            <div class="opportunita-card">
+              <div class="card-header">
+                <h3 class="card-title">Nova FC</h3>
+                <span class="card-badge">€950</span>
+              </div>
+              <div class="card-footer">
+                <span>Scouting Target • Paid</span>
+                <span class="menu-item" title="Opzioni">⋯</span>
+              </div>
+            </div>
+            <div class="opportunita-card">
+              <div class="card-header">
+                <h3 class="card-title">Real Madrid Talent</h3>
+                <span class="card-badge">€4,100</span>
+              </div>
+              <div class="card-footer">
+                <span>Top Scouting • Active</span>
+                <span class="menu-item" title="Opzioni">⋯</span>
+              </div>
+            </div>
+            <div class="opportunita-card">
+              <div class="card-header">
+                <h3 class="card-title">Manchester City Academy</h3>
+                <span class="card-badge">€2,750</span>
+              </div>
+              <div class="card-footer">
+                <span>Analyst Report • In Review</span>
+                <span class="menu-item" title="Opzioni">⋯</span>
+              </div>
+            </div>
+            <div class="opportunita-card">
+              <div class="card-header">
+                <h3 class="card-title">Club America Recruits</h3>
+                <span class="card-badge">€3,200</span>
+              </div>
+              <div class="card-footer">
+                <span>Secret Transfer • Sent</span>
+                <span class="menu-item" title="Opzioni">⋯</span>
+              </div>
+            </div>
+          </div>
+        </section>
       </section>
     </div>
 
@@ -6875,17 +6978,18 @@
     </div>
   </div>
 
-  <script src="badge-handler.js?v=20260925_HEROUX32"></script>
-  <script src="mobile-webapp.js?v=20260925_HEROUX32"></script>
-  <script src="es-nav-ux.js?v=20260925_HEROUX32"></script>
-  <script src="micro-interactions.js?v=20260925_HEROUX32"></script>
-  <script src="radius-handler.js?v=20260925_HEROUX32" defer></script>
-  <script src="dynamic-sync.js?v=20260925_HEROUX32" defer></script>
-  <script src="success-handler.js?v=20260925_HEROUX32" defer></script>
-  <script src="action-menu-handler.js?v=20260925_HEROUX32" defer></script>
-  <script src="market-hub-handler.js?v=20260925_HEROUX32" defer></script>
-  <script src="radar-handler.js?v=20260925_HEROUX32" defer></script>
-  <script src="candidature-handler.js?v=20260925_HEROUX32" defer></script>
-  <script src="market-hub-pro-handler.js?v=20260925_HEROUX32" defer></script>
+  <script src="badge-handler.js?v=20260925_HEROUX33"></script>
+  <script src="mobile-webapp.js?v=20260925_HEROUX33"></script>
+  <script src="es-nav-ux.js?v=20260925_HEROUX33"></script>
+  <script src="micro-interactions.js?v=20260925_HEROUX33"></script>
+  <script src="radius-handler.js?v=20260925_HEROUX33" defer></script>
+  <script src="dynamic-sync.js?v=20260925_HEROUX33" defer></script>
+  <script src="success-handler.js?v=20260925_HEROUX33" defer></script>
+  <script src="action-menu-handler.js?v=20260925_HEROUX33" defer></script>
+  <script src="market-hub-handler.js?v=20260925_HEROUX33" defer></script>
+  <script src="radar-handler.js?v=20260925_HEROUX33" defer></script>
+  <script src="candidature-handler.js?v=20260925_HEROUX33" defer></script>
+  <script src="market-hub-pro-handler.js?v=20260925_HEROUX33" defer></script>
+  <script src="bacheca-handler.js?v=20260925_HEROUX33" defer></script>
 </body>
 </html>

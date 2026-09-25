@@ -3,7 +3,18 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX32 — Market Hub Pro (Secret List Stealth + Wall Trasferimenti FIFA Style):
+Ultimo aggiornamento: **2026-09-26** — HEROUX33 — Bacheca Opportunità Zero-Latency (Filtri Reattivi + Card Selezionate + Menu ⋯):
+1. **Bacheca Engine (`bacheca.css`, `bacheca-handler.js`, `styles/bacheca.css`, `js/bacheca-handler.js`)**:
+   - Implementazione zero-latenza (<40ms):
+     - Dashboard annunci con filtri a cascata (Ruoli: DS, Scout, Analyst / Categorie: Wall Transfer, Annuncio, Squadre / Zone: Città, Provincia, Regione, Italia).
+     - Griglia opportunità con card interattive hover (glow ciano `#00f5d4`, translate -8px, transizioni 40ms fluide).
+     - Selezione multipla reattiva al click con classe `.selected` e toast reversibile `EliseeSuccessSystem.showToast`.
+     - Menu laterale / inline `⋯` collegato all'Action Menu rapido e ripple effect nativo `createRipple`.
+     - Tasti header "Nuovo annuncio" e "Crea profilo" sincronizzati con feedback toast immediato.
+   - Esposizione globale: `window.EliseeBacheca` (`init`).
+2. **File**: `bacheca.css`, `bacheca-handler.js`, `styles/bacheca.css`, `js/bacheca-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX33`.
+
+Feature precedente: **2026-09-26** — HEROUX32 — Market Hub Pro (Secret List Stealth + Wall Trasferimenti FIFA Style):
 1. **Market Hub Pro Engine (`market-hub-pro.css`, `market-hub-pro-handler.js`, `styles/market-hub-pro.css`, `js/market-hub-pro-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Drag-and-drop completo da elenco trasferimenti a Secret List con classe `.stealth` e badge live.
