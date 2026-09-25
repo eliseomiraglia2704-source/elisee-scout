@@ -455,3 +455,27 @@ header.public-header .main-nav a.active {
   border: none !important;
 }
 
+/* Soppressione barra personalizzazione invasiva sopra navbar */
+#elisee-personalization-bar {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Mobile: adattamento padding viste interne con topbar mobile */
+@media (max-width: 767px) {
+  html body.is-internal-view #about,
+  html body.is-internal-view #home-about,
+  html body.is-internal-view .about-dossier-wrap,
+  html body.is-internal-view #view-about,
+  html body.is-internal-view #view-bacheca,
+  html body.is-internal-view #bacheca-annunci,
+  html body.is-internal-view #view-mappa,
+  html body.is-internal-view #mappa-portal,
+  html body.is-internal-view [data-view-root] {
+    padding-top: calc(56px + env(safe-area-inset-top, 0px)) !important;
+  }
+}
+
+

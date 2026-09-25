@@ -466,60 +466,13 @@
 
   function applyPersonalization() {
     var c = getConsent();
-    var bar = document.getElementById('elisee-personalization-bar');
+    hidePersonalizationBar();
     if (!c.profiling) {
-      hidePersonalizationBar();
       document.documentElement.removeAttribute('data-profiled');
       return;
     }
     document.documentElement.setAttribute('data-profiled', '1');
-    var p = getProfile();
-    var tops = (p.scoreTags || []).slice(0, 4);
-    if (!tops.length) {
-      hidePersonalizationBar();
-      return;
-    }
-
-    if (!bar) {
-      bar = document.createElement('div');
-      bar.id = 'elisee-personalization-bar';
-      bar.setAttribute(
-        'style',
-        'position:fixed;top:0;left:0;right:0;z-index:99990;display:none;' +
-          'background:linear-gradient(90deg,rgba(2,132,199,0.95),rgba(14,165,233,0.9));' +
-          'color:#fff;font-size:0.78rem;padding:0.4rem 1rem;text-align:center;' +
-          'box-shadow:0 2px 12px rgba(0,0,0,0.25);font-family:Inter,system-ui,sans-serif;' +
-          'transition:opacity 0.35s ease;'
-      );
-      document.body.appendChild(bar);
-    }
-    bar.innerHTML =
-      '✦ Contenuti personalizzati in base al tuo profilo: <strong>' +
-      tops
-        .map(function (t) {
-          return escapeHtml(t);
-        })
-        .join(' · ') +
-      '</strong>';
-    bar.style.display = 'block';
-    bar.style.opacity = '1';
-    document.body.style.paddingTop = '28px';
-
-    // Mostra solo 1,5 secondi, poi sparisce
-    if (personalizationHideTimer) clearTimeout(personalizationHideTimer);
-    personalizationHideTimer = setTimeout(function () {
-      var b = document.getElementById('elisee-personalization-bar');
-      if (b) {
-        b.style.opacity = '0';
-        setTimeout(function () {
-          hidePersonalizationBar();
-        }, 350);
-      } else {
-        hidePersonalizationBar();
-      }
-    }, 1500);
-
-    // Non evidenziare logo/nav con riquadri: resta solo il toast 1.5s
+    // Overlay bar disabilitato per non coprire la navbar di navigazione
   }
 
   function escapeHtml(s) {

@@ -3,7 +3,16 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — HEROUX15 — Fix Viste Interne: Glass Header Specificity, Follower Lerp Attivo e Padding-Top Titoli:
+Ultimo aggiornamento: **2026-09-25** — HEROUX16 — Soppressione Barra Personalizzazione Coprente e Adattamento Mobile Responsive:
+1. **Soppressione Barra Personalizzazione Coprente (`cookie-profiling.js`, `es-nav-ux.css`)**:
+   - Disabilitata la visualizzazione fissa in cima di `#elisee-personalization-bar` (`top: 0; z-index: 99990`) che copriva la navbar pubblica.
+   - Azzerata completamente l'iniezione invasiva di `document.body.style.paddingTop = '28px'`.
+   - Regola CSS globale di soppressione `#elisee-personalization-bar { display: none !important; }`.
+2. **Adattamento Mobile Responsive Viste Interne (`es-nav-ux.css`)**:
+   - Regola `@media (max-width: 767px)` per le viste interne con padding-top ottimizzato a `calc(56px + env(safe-area-inset-top, 0px))` per convivere perfettamente con la topbar mobile senza spazi bianchi eccessivi.
+3. **File**: `cookie-profiling.js`, `es-nav-ux.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX16`.
+
+Feature precedente: **2026-09-25** — HEROUX15 — Fix Viste Interne: Glass Header Specificity, Follower Lerp Attivo e Padding-Top Titoli:
 1. **Glass Header su Viste Interne (`is-internal-view`)**:
    - Eliminato il residuo globale di `background: transparent !important` che vinceva sulle pagine interne in `index.html` e `style.css`.
    - Aggiunto selettore iper-specifico `html body.is-internal-view header.public-header...` con `rgba(5, 6, 8, 0.72) !important` e `backdrop-filter: blur(14px) !important`.
