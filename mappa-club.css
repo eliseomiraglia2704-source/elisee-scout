@@ -34,15 +34,12 @@ html, body {
   font-family: var(--es-font);
 }
 
-body:has(#view-mappa:not([style*="none"])),
 body.is-view-mappa,
 body.view-mappa {
   background: var(--es-bg, #0b0e14) !important;
   background-color: var(--es-bg, #0b0e14) !important;
 }
 
-body:has(#view-mappa:not([style*="none"])) header.main-header,
-body:has(#view-mappa:not([style*="none"])) .portfolio-header,
 body.is-view-mappa header.main-header,
 body.is-view-mappa .portfolio-header {
   background: rgba(5, 6, 8, 0.72) !important;

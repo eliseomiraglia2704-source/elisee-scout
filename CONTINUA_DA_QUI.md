@@ -3,7 +3,16 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX19 — Reset Sincrono Totale Logo Brand con rAF di Rinforzo e Pulizia SwitchView:
+Ultimo aggiornamento: **2026-09-26** — HEROUX20 — Hash #hero Sincrono Diretto, Drop is-scrolled, Reset Header Trasparente e Rimozione Selettore :has Mappa:
+1. **Rimozione Selettore :has in `mappa-club.css`**:
+   - Eliminato `body:has(#view-mappa:not([style*="none"])) header...`: il selettore teneva l'header a `background: rgba(5,6,8,0.72)` anche a classi già rimosse finché `#view-mappa` restava nel DOM.
+2. **Forzatura Hash e Trasparenza Sincrona nel Capture Handler (`es-nav-ux.js`)**:
+   - `window.history.replaceState(null, '', '#hero')` e `location.hash = '#hero'` nello stesso tick.
+   - Rimozione immediata di `is-scrolled` dall'header con impostazione temporanea inline `background: transparent !important; backdrop-filter: none !important;` tolta poi al frame successivo (rAF) non appena lo stato home è stabile.
+   - `#view-mappa.style.display = 'none'` immediato e `window.scrollTo(0, 0)` secco (`behavior: 'auto'`) per azzerare istantaneamente `window.scrollY`.
+3. **File**: `mappa-club.css`, `es-nav-ux.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX20`.
+
+Feature precedente: **2026-09-26** — HEROUX19 — Reset Sincrono Totale Logo Brand con rAF di Rinforzo e Pulizia SwitchView:
 1. **Reset Sincrono Totale Logo Brand (`es-nav-ux.js`)**:
    - Handler capture phase con rimozione sincrona immediata di `is-internal-view`, `is-view-mappa`, `is-view-stampa` e classe `.is-on` dall'indicatore, seguito da `syncActiveLink('home', true)` e `switchView('home', '#hero')`.
    - `requestAnimationFrame` di rinforzo che riafferma lo stato pulito su eventuali ritardi del task loop.

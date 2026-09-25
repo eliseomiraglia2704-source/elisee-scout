@@ -209,23 +209,57 @@
           try { e.preventDefault(); } catch (_) {}
           try { e.stopPropagation(); } catch (_) {}
         }
+        // 1. Sincrono: Hash #hero immediato
+        try {
+          if (window.history && window.history.replaceState) {
+            window.history.replaceState(null, '', '#hero');
+          }
+        } catch (_) {}
+        try { location.hash = '#hero'; } catch (_) {}
+
+        // 2. Classi body pulite all'istante
         document.body.classList.remove('is-internal-view', 'is-view-mappa', 'is-view-stampa');
+
+        // 3. Header: drop is-scrolled e trasparenza forzata nello stesso tick
+        var header = document.querySelector('header.public-header, header.main-header, .portfolio-header');
+        if (header) {
+          header.classList.remove('is-scrolled');
+          header.style.setProperty('background', 'transparent', 'important');
+          header.style.setProperty('backdrop-filter', 'none', 'important');
+          header.style.setProperty('-webkit-backdrop-filter', 'none', 'important');
+        }
+
+        // 4. Indicatore spento
         var ind = document.querySelector('.nav-indicator');
         if (ind) ind.classList.remove('is-on');
         if (window.__esNavUX && window.__esNavUX.syncActiveLink) {
           window.__esNavUX.syncActiveLink('home', true);
         }
+
+        // 5. Nascondi view-mappa nel DOM se ancora visibile
+        var vm = document.getElementById('view-mappa');
+        if (vm) vm.style.display = 'none';
+
+        // 6. Esegui switchView('home', '#hero')
         if (window.switchView) {
           window.switchView('home', '#hero');
-        } else {
-          location.hash = '#hero';
         }
+
+        // 7. Scroll a 0 immediato senza lag (auto)
+        window.scrollTo(0, 0);
+
+        // 8. Pulizia inline styles nello rAF
         requestAnimationFrame(function () {
           document.body.classList.remove('is-internal-view', 'is-view-mappa', 'is-view-stampa');
           var ind2 = document.querySelector('.nav-indicator');
           if (ind2) ind2.classList.remove('is-on');
+          if (header) {
+            header.classList.remove('is-scrolled');
+            header.style.removeProperty('background');
+            header.style.removeProperty('backdrop-filter');
+            header.style.removeProperty('-webkit-backdrop-filter');
+          }
         });
-        window.scrollTo({ top: 0, left: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
       }, true);
     });
 
@@ -280,6 +314,13 @@
       if (reduced || !activeOutgoing || targetView === 'home') {
         var res = orig.apply(this, arguments);
         document.body.classList.remove('is-internal-view', 'is-view-mappa', 'is-view-stampa');
+        var header = document.querySelector('header.public-header, header.main-header, .portfolio-header');
+        if (header) {
+          header.classList.remove('is-scrolled');
+          header.style.setProperty('background', 'transparent', 'important');
+          header.style.setProperty('backdrop-filter', 'none', 'important');
+          header.style.setProperty('-webkit-backdrop-filter', 'none', 'important');
+        }
         var ind = document.querySelector('.nav-indicator');
         if (ind) ind.classList.remove('is-on');
         syncActiveLink('home', true);
@@ -287,6 +328,12 @@
           document.body.classList.remove('is-internal-view', 'is-view-mappa', 'is-view-stampa');
           var ind2 = document.querySelector('.nav-indicator');
           if (ind2) ind2.classList.remove('is-on');
+          if (header) {
+            header.classList.remove('is-scrolled');
+            header.style.removeProperty('background');
+            header.style.removeProperty('backdrop-filter');
+            header.style.removeProperty('-webkit-backdrop-filter');
+          }
         });
         return res;
       }
