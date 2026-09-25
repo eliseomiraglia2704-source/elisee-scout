@@ -3,7 +3,14 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — HEROUX12 — Fix Linea Navbar: Trasparenza Pura Header, Azzeramento Background Sovrapposti e Hero Padding:
+Ultimo aggiornamento: **2026-09-25** — HEROUX13 — Allineamento Glow Hero dal Top Viewport ed Eliminazione Fascia Scura:
+1. **Glow Hero dal Top Viewport (`.es-plx`)**:
+   - Sostituita la precedente regola parallax (`background-size: 100% 160%`) che spingeva il glow in basso lasciando una lastra scura sotto la navbar.
+   - Forzato `background-size: 100% 100% !important; background-position: 50% 0 !important;` con radial-gradient ellittico che parte da `-10%` in alto (`radial-gradient(ellipse 80% 55% at 50% -10%, rgba(56, 189, 248, 0.38) 0%, rgba(14, 58, 77, 0.22) 42%, transparent 70%)`) e linear-gradient coordinato (`180deg, #07131c 0%, #0a3040 42%, #050608 100%`).
+   - Uniformato il background base dell'intera colonna (`html, body, main, #app, #view-home, #hero, .hero-section, .hero-portfolio` a `#07131c !important;`) azzerando qualsiasi scalino cromatico.
+2. **File**: `parallax.css`, `index.html`, `style.css`, `sw.js`, `version.json`. Cache `v20260925_HEROUX13`.
+
+Feature precedente: **2026-09-25** — HEROUX12 — Fix Linea Navbar: Trasparenza Pura Header, Azzeramento Background Sovrapposti e Hero Padding:
 1. **Fix Linea Navbar e Trasparenza Totale**:
    - Rimosse tutte le regole in conflitto con sfondi solidi o bordi scuri (`#0b111e`, `#0d131d`, `border-bottom: 1px solid rgba(255,255,255,.1)`) da `apple-nav.css`, `style.css` e dal blocco critico in `index.html`.
    - Inserito in fondo a tutti i fogli di stile e in `<head>` il blocco prioritario definitivo:

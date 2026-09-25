@@ -2,16 +2,24 @@
 #hero,
 #about { position: relative; }
 .es-plx {
-  position: absolute;
-  inset: 0;
+  position: absolute !important;
+  inset: 0 !important;
   z-index: 0;
   pointer-events: none;
-  background-repeat: no-repeat;
-  background-size: 100% 160%;
-  background-position: 50% 0;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+  background-position: 50% 0 !important;
   background-image:
-    radial-gradient(ellipse at 50% 30%, rgba(56, 189, 248, 0.28), transparent 55%),
-    linear-gradient(180deg, #050608 0%, #0a3040 50%, #050608 100%);
+    radial-gradient(ellipse 80% 55% at 50% -10%,
+      rgba(56, 189, 248, 0.38) 0%,
+      rgba(14, 58, 77, 0.22) 42%,
+      transparent 70%),
+    linear-gradient(
+      180deg,
+      #07131c 0%,
+      #0a3040 42%,
+      #050608 100%
+    ) !important;
 }
 .es-plx-alt {
   background-image:
