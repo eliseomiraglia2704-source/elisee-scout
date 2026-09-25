@@ -3,7 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — WCF1 — Season Wrapped a carosello coverflow:
+Ultimo aggiornamento: **2026-09-25** — PWLIVE1 — Controllo password mentre si scrive:
+1. Nel login, in Iscriviti e in «nuova password» l'etichetta sale nel campo e sotto compare la barra.
+2. Debole (rosso, un terzo), media (ciano chiaro, due terzi), forte (ciano pieno). Conta minuscola, maiuscola, numero, simbolo e 16 caratteri.
+3. **File**: `pw-live.js`, `pw-live.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_PWLIVE1`. Commit `965de718`.
+
+Feature precedente: **2026-09-25** — WCF1 — Season Wrapped a carosello coverflow:
 1. Le schede della stagione stanno una accanto all'altra. Quella al centro è a colori, con titolo e **Apri**. Quelle ai lati sono inclinate e in grigio.
 2. Si trascina con il mouse. I pallini in basso seguono la scheda. Colori del sito, ciano.
 3. **File**: `season-wrapped.js`, `season-wrapped.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_WCF1`. Commit `72c9b212`.
