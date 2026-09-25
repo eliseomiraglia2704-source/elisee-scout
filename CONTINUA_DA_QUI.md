@@ -3,11 +3,20 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — HEROUX9 — Risoluzione Sintassi CSS & Chiusura @media Non Chiusa in style.css:
-1. **Risoluzione Errore Sintassi `style.css`**:
-   - Risolto l'errore IDE `} expected`: mancava la parentesi graffa di chiusura `}` per il blocco `@media screen and (max-width: 768px)` a riga 10053/10090.
-   - Bilanciamento sintattico verificato con parser Python: tutte le graffe del file ora combaciano perfettamente al 100%.
-2. **File**: `style.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX9`.
+Ultimo aggiornamento: **2026-09-25** — HEROUX10 — Reset d'Emergenza Globale Header, Componente PublicHeader & Eliminazione Disallineamento Hero:
+1. **Reset d'Emergenza Globale Navbar**:
+   - Inserite le 3 regole nel CSS globale (`style.css` e blocco critico in `index.html`):
+     - `header, .navbar, nav, .public-header, .public-navbar { box-sizing: border-box !important; max-height: 64px !important; height: 64px !important; min-height: 64px !important; overflow: hidden !important; }`
+     - `header *, .navbar *, .public-header * { box-sizing: border-box; }`
+     - `.nav-container, .nav-menu, .main-nav, header nav, .public-header nav { display: flex !important; align-items: center !important; flex-wrap: nowrap !important; min-width: 0 !important; }`
+2. **Adozione Componente Header Pubblico (.public-header)**:
+   - Sostituito l'header con la struttura pura:
+     - `.brand-logo` (`ELISEE <span>SCOUT</span>`)
+     - `.main-nav` (`Chi siamo`, `Bacheca`, `Mappa`)
+     - `.header-actions` (Toggle tema `🌙`, Lingua `IT ▾`, Bottone `.btn-login` `Accedi`)
+3. **Allineamento Sezione Hero**:
+   - Impostato `#hero` con `align-items: flex-start`, `min-height: calc(100vh - 64px)` e `.hero-portfolio-stage` con `padding-top: 24px`, eliminando la spinta a metà schermo che generava la fascia scura vuota.
+4. **File**: `index.html`, `style.css`, `apple-nav.css`, `sw.js`, `version.json`. Cache `v20260925_HEROUX10`.
 
 Feature precedente: **2026-09-25** — HEROUX8 — Rimozione Fascia Scura Sotto Navbar & Riassegnazione Padding Sezione Hero:
 1. **Rettifica Altezza & Padding Header (64px rigorosi)**:

@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260925_HEROUX9';
+      var BUILD_VERSION = '20260925_HEROUX10';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260925_HEROUX9">
+  <link rel="stylesheet" href="style.css?v=20260925_HEROUX10">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
@@ -58,7 +58,7 @@
   <link rel="stylesheet" href="login-slide.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="glass-menu.css?v=20260924_GLASSMENU1">
   <link rel="stylesheet" href="nav-search-anim.css?v=20260925_PALETTE1">
-  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX9">
+  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX10">
   <link rel="stylesheet" href="btn-label-anim.css?v=20260925_BTNANIM1">
   <link rel="stylesheet" href="share-btn.css?v=20260925_SHARE1">
   <link rel="stylesheet" href="theme-switch.css?v=20260925_THEME1">
@@ -232,11 +232,23 @@
     header,
     .public-navbar,
     header.main-header,
-    header.portfolio-header,
-    .main-header,
-    .portfolio-header,
-    header.main-header.is-scrolled,
-    .portfolio-header.is-scrolled {
+    header, .navbar, nav, .public-header, .public-navbar {
+      box-sizing: border-box !important;
+      max-height: 64px !important;
+      height: 64px !important;
+      min-height: 64px !important;
+      overflow: hidden !important;
+    }
+    header *, .navbar *, .public-header * {
+      box-sizing: border-box;
+    }
+    .nav-container, .nav-menu, .main-nav, header nav, .public-header nav {
+      display: flex !important;
+      align-items: center !important;
+      flex-wrap: nowrap !important;
+      min-width: 0 !important;
+    }
+    .public-header {
       width: 100% !important;
       height: 64px !important;
       min-height: 64px !important;
@@ -2142,26 +2154,24 @@
   </div>
 
   <div id="es-verify-banner" class="es-verify-banner" hidden></div>
-  <header class="public-navbar main-header portfolio-header">
-    <!-- 1. LOGO A SINISTRA -->
-    <div class="nav-logo">
-      <a href="#hero" class="site-brand" onclick="if(window.switchView){window.switchView('home','#hero');} return false;">
-        <span class="logo-text">ELISEE <strong>SCOUT</strong></span>
-      </a>
+  <header class="public-header public-navbar main-header portfolio-header">
+    <!-- Logo -->
+    <div class="brand-logo nav-logo">
+      <a href="#hero" class="site-brand" onclick="if(window.switchView){window.switchView('home','#hero');} return false;">ELISEE <span>SCOUT</span></a>
     </div>
 
-    <!-- 2. LINK ESSENZIALI AL CENTRO -->
-    <nav class="nav-menu">
+    <!-- Navigazione Soltanto Pubblica -->
+    <nav class="main-nav nav-menu">
       <a href="#about" onclick="if(window.switchView){ window.switchView('about'); } return false;">Chi siamo</a>
       <a href="#bacheca-annunci" onclick="if(window.switchView){ window.switchView('bacheca'); } return false;">Bacheca</a>
       <a href="#mappa-portal" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){window.switchView('mappa','#mappa-portal');} return false;">Mappa</a>
     </nav>
 
-    <!-- 3. AZIONI A DESTRA -->
-    <div class="nav-actions">
+    <!-- Azioni Destra -->
+    <div class="header-actions nav-actions">
       <button type="button" class="theme-toggle" id="es-nav-theme" onclick="if(window.toggleSiteTheme){window.toggleSiteTheme();}" title="Tema" aria-label="Cambia tema">🌙</button>
-      <div class="lang-select" id="lang-switcher-simple" title="Lingua">IT ▾</div>
-      <button type="button" class="btn-login" onclick="if(window.openAccessoModal){window.openAccessoModal('email');} return false;">Accedi</button>
+      <span class="lang" id="lang-switcher-simple" title="Lingua">IT ▾</span>
+      <a href="#login" class="btn-login" onclick="if(window.openAccessoModal){window.openAccessoModal('email');} return false;">Accedi</a>
     </div>
   </header>
 

@@ -6967,10 +6967,10 @@ html {
 .hero-portfolio {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  min-height: calc(100vh - 64px);
   overflow: hidden;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
@@ -7012,10 +7012,10 @@ html {
   width: 100% !important;
   max-width: 100% !important;
   margin: 0 !important;
-  padding: 0 1.5rem !important;
+  padding: 24px 1.5rem 2rem 1.5rem !important;
   display: flex;
-  align-items: center;
-  min-height: 100vh;
+  align-items: flex-start;
+  min-height: auto;
 }
 
 /* 6. Blocco tipografico sinistro */
@@ -10899,6 +10899,147 @@ body:not(.is-in-role-dashboard):not(.is-player-mode):not(.is-pres-mode):not(.is-
 #view-home:not([hidden]) .es-trash,
 body:has(#hero:not([hidden])) .es-trash {
   display: none !important;
+}
+
+/* ==========================================================================
+   RESET GLOBALE HEADER & NAVBAR (Punto 1: Reset d'Emergenza nel CSS Globale)
+   ========================================================================== */
+/* 1. Blocca l'Header principale */
+header, .navbar, nav, .public-header, .public-navbar {
+  box-sizing: border-box !important;
+  max-height: 64px !important;
+  height: 64px !important;
+  min-height: 64px !important;
+  overflow: hidden !important; /* Impedisce al contenuto di uscire fuori */
+}
+
+/* 2. Disattiva il wrap per tutti i contenitori di navigazione */
+header *, .navbar *, .public-header * {
+  box-sizing: border-box;
+}
+
+.nav-container, .nav-menu, .main-nav, header nav, .public-header nav {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important; /* VIETA di andare a capo */
+  min-width: 0 !important;      /* Impedisce l'espansione fantasma dei flex item */
+}
+
+/* 3. Componente Header Pubblico (.public-header) */
+.public-header {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 64px !important;
+  min-height: 64px !important;
+  max-height: 64px !important;
+  padding: 0 32px !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background-color: #0b111e !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  z-index: 1000 !important;
+  box-sizing: border-box !important;
+}
+
+html[data-theme="mimetico-chiaro"] .public-header {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+.public-header .brand-logo a {
+  font-family: var(--font-heading, 'Outfit', sans-serif);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ffffff !important;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+html[data-theme="mimetico-chiaro"] .public-header .brand-logo a {
+  color: #0f172a !important;
+}
+
+.public-header .brand-logo a span {
+  color: #38bdf8;
+}
+
+.public-header .main-nav {
+  display: flex !important;
+  align-items: center !important;
+  gap: 28px !important;
+  margin: 0 auto !important;
+}
+
+.public-header .main-nav a {
+  color: rgba(255, 255, 255, 0.82) !important;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  white-space: nowrap !important;
+}
+
+html[data-theme="mimetico-chiaro"] .public-header .main-nav a {
+  color: #334155 !important;
+}
+
+.public-header .main-nav a:hover {
+  color: #38bdf8 !important;
+}
+
+.public-header .header-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+}
+
+.public-header .header-actions .theme-toggle {
+  background: transparent;
+  border: none;
+  font-size: 1.15rem;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+}
+
+.public-header .header-actions .lang {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+html[data-theme="mimetico-chiaro"] .public-header .header-actions .lang {
+  color: #334155;
+}
+
+.public-header .header-actions .btn-login {
+  background: #0284c7 !important;
+  color: #ffffff !important;
+  padding: 7px 18px !important;
+  border-radius: 999px !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: background 0.2s ease;
+  white-space: nowrap !important;
+}
+
+.public-header .header-actions .btn-login:hover {
+  background: #0369a1 !important;
 }
 
 
