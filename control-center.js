@@ -61,12 +61,14 @@
     if (pane === 'admin') {
       try { localStorage.setItem('elisee_active_dashboard_tab', 'admin'); } catch (_) {}
       refresh();
+      if (window.EliseeAnalytics) window.EliseeAnalytics.paint('admin');
     }
     if (pane === 'flusso' && window.EliseeFlusso && typeof window.EliseeFlusso.open === 'function') {
       try { window.EliseeFlusso.open(); } catch (_) {}
     }
     if (pane === 'privacy') {
       try { localStorage.setItem('elisee_active_dashboard_tab', 'privacy'); } catch (_) {}
+      if (window.EliseeAnalytics) window.EliseeAnalytics.paint('privacy');
       var paintPrivacy = function () {
         if (typeof window.renderPrivacyPanel === 'function') window.renderPrivacyPanel();
       };
