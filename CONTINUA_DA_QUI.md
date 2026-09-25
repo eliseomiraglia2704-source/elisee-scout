@@ -3,7 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — BTNANIM1 — Lettere dei bottoni come nel video delle 09:35:
+Ultimo aggiornamento: **2026-09-25** — FLUSSO1 — Simulazione flusso contatti nel Control Center:
+1. Scheda **Flusso contatti**, accanto a Responsabile Privacy. La vedono Admin e Responsabile Privacy.
+2. 50 profili al mese. Il ciclo è lento: backlog e «senza movimento» crescono fino al mese 24. Chiusure del mese restano a 0, ritmo atteso 1.
+3. Colonne: Nuovi, Tentativo di contatto, Follow-up, Visita / provino, Trattativa, Chiusura. Nomi fittizi, non sono utenti veri. **Avvia** fa scorrere i mesi.
+4. **File**: `flusso-contatti.js`, `flusso-contatti.css`, `control-center.js`, `control-center.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_FLUSSO1`. Commit `b3ccd06d`.
+
+Feature precedente: **2026-09-25** — BTNANIM1 — Lettere dei bottoni come nel video delle 09:35:
 1. Passando il mouse, le lettere si muovono una dopo l'altra. Se il cursore entra da destra, partono da destra.
 2. **Accedi** e il bottone nero del login saltano. **Iscriviti** scorre via sfocato. I tasti sulla foto del login si sfumano.
 3. **File**: `btn-label-anim.js`, `btn-label-anim.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_BTNANIM1`. Commit `249320fb`.
