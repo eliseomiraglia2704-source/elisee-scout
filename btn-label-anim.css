@@ -1,0 +1,43 @@
+/* Lettere dei bottoni: salto, fumo, scorrimento. La direzione segue il lato da cui entra il puntatore. */
+.gbtn-label { display: inline-block; white-space: nowrap; }
+.gbtn .g {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
+.gbtn.is-go .g {
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(.2, .7, .2, 1);
+  animation-delay: calc(var(--step) * (var(--i) + var(--rev) * (var(--n) - 1 - 2 * var(--i))));
+}
+.gbtn.is-go[data-fx="jump"] .g { animation-name: g-jump; }
+.gbtn.is-go[data-fx="smoke"] .g { animation-name: g-smoke; }
+.gbtn.is-go[data-fx="drive"] .g { animation-name: g-drive; }
+
+@keyframes g-jump {
+  0% { transform: translateY(0); }
+  35% { transform: translateY(-0.42em); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes g-smoke {
+  40% {
+    transform: translateX(var(--shift, -0.4em)) scaleX(1.9);
+    filter: blur(0.12em);
+    opacity: 0.05;
+  }
+  100% { transform: none; filter: none; opacity: 1; }
+}
+
+@keyframes g-drive {
+  42% {
+    transform: translateX(var(--shift, -1.15em)) scaleX(2.2);
+    filter: blur(0.11em);
+    opacity: 0;
+    animation-timing-function: steps(1, end);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gbtn.is-go .g { animation: none !important; }
+}
