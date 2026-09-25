@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
   if (window.lucide) {
     lucide.createIcons();
   }
@@ -10036,7 +10036,33 @@ document.addEventListener('click', function (e) {
 });
 
 document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape' && window.closeUserDropdown) window.closeUserDropdown();
+  if (e.key === 'Escape') {
+    if (window.closeUserDropdown) window.closeUserDropdown();
+    var altroDd = document.getElementById('nav-dropdown-altro');
+    if (altroDd) {
+      altroDd.classList.remove('is-open');
+      var altroBtn = document.getElementById('btn-nav-dropdown-more');
+      if (altroBtn) altroBtn.setAttribute('aria-expanded', 'false');
+    }
+  }
+});
+
+// Dropdown "Altro" navbar desktop/tablet
+document.addEventListener('click', function (e) {
+  var dd = document.getElementById('nav-dropdown-altro');
+  if (!dd) return;
+  var trigger = e.target.closest && e.target.closest('#btn-nav-dropdown-more');
+  if (trigger) {
+    e.preventDefault();
+    var isOpen = dd.classList.toggle('is-open');
+    trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    return;
+  }
+  if (!dd.contains(e.target)) {
+    dd.classList.remove('is-open');
+    var btn = document.getElementById('btn-nav-dropdown-more');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  }
 });
 
 window.logoutUser = function() {

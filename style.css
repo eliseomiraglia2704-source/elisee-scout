@@ -3856,7 +3856,7 @@ body.focus-hub {
   gap: 0;
   flex-wrap: nowrap;
   min-width: 0;
-  overflow: hidden !important;
+  overflow: visible;
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
 }
@@ -9959,7 +9959,551 @@ body:has(#view-tc-panel:not([style*="display: none"])) .es-pd-rail {
     border-right: none !important;
     border-bottom: 1px solid rgba(56, 189, 248, 0.15) !important;
     z-index: 25 !important;
-    box-sizing: border-box !important;
+}
+
+/* ==========================================================================
+   HERO REFINEMENT & NAVBAR ENHANCEMENTS (v20260925_HEROUX1)
+   ========================================================================== */
+
+/* 1. Rimozione forzata badge scudo cookie e dock verifica email su schermata Home */
+.elisee-cookie-badge-btn,
+#elisee-cookie-settings-btn {
+  display: none !important;
+}
+
+#view-home:not([hidden]) ~ #es-otp-bottom-banner,
+body[data-active-view="home"] #es-otp-bottom-banner {
+  display: none !important;
+}
+
+/* 2. Menu a tendina navbar compatto ed elegante */
+.es-nav-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.portfolio-nav .nav-link + .es-nav-dropdown {
+  border-left: 1px solid rgba(226, 232, 240, 0.42);
+  margin-left: 0.45rem;
+  padding-left: 0.55rem;
+}
+
+.es-nav-dropdown-trigger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.82rem;
+  color: rgba(226, 232, 240, 0.78);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+  padding: 0.35rem 0.2rem;
+  transition: color 0.2s ease;
+}
+
+.es-nav-dropdown-trigger:hover,
+.es-nav-dropdown:hover .es-nav-dropdown-trigger,
+.es-nav-dropdown:focus-within .es-nav-dropdown-trigger {
+  color: #38bdf8;
+}
+
+.es-nav-caret {
+  transition: transform 0.2s ease;
+  opacity: 0.7;
+}
+
+.es-nav-dropdown:hover .es-nav-caret,
+.es-nav-dropdown:focus-within .es-nav-caret {
+  transform: rotate(180deg);
+  opacity: 1;
+}
+
+.es-nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  min-width: 250px;
+  background: rgba(10, 15, 26, 0.96);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 20px rgba(56, 189, 248, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 0.45rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s;
+  z-index: 9999;
+}
+
+.es-nav-dropdown:hover .es-nav-dropdown-menu,
+.es-nav-dropdown:focus-within .es-nav-dropdown-menu,
+.es-nav-dropdown.is-open .es-nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.es-nav-dropdown.is-open .es-nav-caret {
+  transform: rotate(180deg);
+  opacity: 1;
+}
+
+.es-nav-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #cbd5e1;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.es-nav-dropdown-item:hover {
+  background: rgba(56, 189, 248, 0.1);
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+.es-nav-item-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.es-nav-item-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.es-nav-item-text strong {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.es-nav-item-text small {
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+/* 3. Hero Section Spacing, Contrasto e Layout a 2 Colonne */
+.es-hero-about-split {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 3.5rem;
+  align-items: center;
+  padding-top: 1.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.es-hero-heading {
+  margin: 0.6rem 0 1.75rem 0 !important;
+  font-size: clamp(2rem, 4vw, 3.1rem) !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.02em !important;
+  color: #ffffff !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6) !important;
+}
+
+.es-hero-desc {
+  font-size: 1.125rem !important;
+  line-height: 1.8 !important;
+  color: #e2e8f0 !important; /* Contrasto elevato rispetto a #94a3b8 */
+  max-width: 620px !important;
+  margin-bottom: 2rem !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* 4. Call to Action Chiari e Moderni */
+.es-hero-cta-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.es-cta-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%) !important;
+  color: #030712 !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  padding: 0.85rem 1.6rem !important;
+  border-radius: 9999px !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4), 0 0 12px rgba(56, 189, 248, 0.25) !important;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.es-cta-btn-primary:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 10px 28px rgba(56, 189, 248, 0.55), 0 0 18px rgba(56, 189, 248, 0.4) !important;
+}
+
+.es-cta-bolt {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.es-cta-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgba(15, 23, 42, 0.7) !important;
+  color: #f1f5f9 !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  padding: 0.85rem 1.5rem !important;
+  border-radius: 9999px !important;
+  border: 1px solid rgba(56, 189, 248, 0.38) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.es-cta-btn-secondary:hover {
+  background: rgba(56, 189, 248, 0.15) !important;
+  border-color: #38bdf8 !important;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+}
+
+.es-hero-trust-badges {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  padding-top: 0.5rem;
+}
+
+.es-trust-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.es-trust-badge svg {
+  color: #38bdf8;
+  flex-shrink: 0;
+}
+
+/* 5. Card Giocatore d'Esempio Realistica e Spettacolare */
+.es-hero-card-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.es-hero-player-card {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  background: linear-gradient(170deg, rgba(15, 23, 42, 0.94) 0%, rgba(6, 11, 24, 0.98) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 20px;
+  padding: 1.25rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 35px rgba(56, 189, 248, 0.15);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.es-hero-player-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 0 0 45px rgba(56, 189, 248, 0.25);
+}
+
+/* Angoli decorativi HUD */
+.es-card-bracket {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: #38bdf8;
+  border-style: solid;
+  pointer-events: none;
+}
+.bracket-tl { top: -2px; left: -2px; border-width: 2px 0 0 2px; border-top-left-radius: 6px; }
+.bracket-tr { top: -2px; right: -2px; border-width: 2px 2px 0 0; border-top-right-radius: 6px; }
+.bracket-bl { bottom: -2px; left: -2px; border-width: 0 0 2px 2px; border-bottom-left-radius: 6px; }
+.bracket-br { bottom: -2px; right: -2px; border-width: 0 2px 2px 0; border-bottom-right-radius: 6px; }
+
+/* Top Header Card */
+.es-player-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.9rem;
+}
+
+.es-verified-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(52, 211, 153, 0.45);
+  padding: 0.28rem 0.7rem;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  color: #34d399;
+  letter-spacing: 0.04em;
+}
+
+.es-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981;
+  animation: esDotPulse 2s infinite ease-in-out;
+}
+
+@keyframes esDotPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.6; }
+}
+
+.es-card-id-tag {
+  font-size: 0.68rem;
+  color: #64748b;
+  font-family: monospace;
+  letter-spacing: 0.05em;
+}
+
+/* Visual Atleta */
+.es-player-card-visual {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #020617;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.es-player-card-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.es-player-card-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(6, 11, 24, 0.85) 85%, rgba(6, 11, 24, 0.98) 100%);
+  pointer-events: none;
+}
+
+/* Chip OVR e GPS */
+.es-card-ovr-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(3, 7, 18, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.5);
+  border-radius: 10px;
+  padding: 0.35rem 0.55rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+}
+
+.es-ovr-val {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #38bdf8;
+  line-height: 1;
+}
+
+.es-ovr-pos {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+}
+
+.es-ovr-flag {
+  font-size: 0.75rem;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.es-card-gps-badge {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(3, 7, 18, 0.88);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 10px;
+  padding: 0.35rem 0.65rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+}
+
+.es-gps-icon {
+  font-size: 1rem;
+  color: #38bdf8;
+}
+
+.es-gps-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.es-gps-text strong {
+  font-size: 0.8rem;
+  color: #f8fafc;
+  line-height: 1.1;
+}
+
+.es-gps-text small {
+  font-size: 0.62rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Body Card */
+.es-player-card-body {
+  padding-top: 0.85rem;
+}
+
+.es-card-player-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: 0.03em;
+}
+
+.es-card-player-role {
+  font-size: 0.78rem;
+  color: #38bdf8;
+  margin: 0.2rem 0 0.85rem 0;
+  font-weight: 500;
+}
+
+/* Griglia Statistiche 6 Box */
+.es-card-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.35rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 0.55rem 0.35rem;
+  margin-bottom: 0.85rem;
+  text-align: center;
+}
+
+.es-card-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-n {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.stat-l {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #64748b;
+  margin-top: 3px;
+  letter-spacing: 0.04em;
+}
+
+/* Footer Card */
+.es-player-card-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.es-card-cert-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+  color: #94a3b8;
+}
+
+.es-cert-check {
+  color: #34d399;
+  font-weight: bold;
+}
+
+.es-card-dossier-btn {
+  width: 100%;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.es-card-dossier-btn:hover {
+  background: rgba(56, 189, 248, 0.25);
+  border-color: #38bdf8;
+  color: #ffffff;
+}
+
+/* Responsive */
+@media screen and (max-width: 900px) {
+  .es-hero-about-split {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    text-align: center;
+  }
+  .es-hero-desc {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .es-hero-cta-group {
+    justify-content: center;
+  }
+  .es-hero-trust-badges {
+    justify-content: center;
   }
 }
 

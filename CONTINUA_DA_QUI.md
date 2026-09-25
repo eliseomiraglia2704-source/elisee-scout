@@ -3,7 +3,22 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — NAVUSER1 — Rimozione email, ruolo e avatar residui dal menu utente in navbar:
+Ultimo aggiornamento: **2026-09-25** — HEROUX1 — Ottimizzazione Hero, Rimozione Overlay e Floating Shield, Navbar Dropdown Altro e Card Giocatore Realistica:
+1. **Rimozione Overlay OTP e Floating Shield**:
+   - Rimosso l'overlay dock di verifica email (`#es-otp-bottom-banner`) dalla schermata iniziale e dalla vista Home per evitare sovrapposizioni visive (`paintOtpBanner` in `verifica-account.js`).
+   - Rimosso il pulsante fisso fluttuante con lo scudo di sicurezza a sinistra (`cookie-profiling.js`, `style.css`) che copriva i testi della hero.
+2. **Spaziatura, Margini e Contrasto Testo Hero**:
+   - Aumentato lo spazio verticale sotto il titolo "DIGITALIZZIAMO IL CALCIOMERCATO DILETTANTISTICO" per dare ampio respiro al layout.
+   - Elevato il contrasto del testo descrittivo (`color: #e2e8f0`, `font-size: 1.125rem`, `line-height: 1.8`) per una lettura chiara e nitida su sfondo dark.
+3. **Call to Action (CTA) Chiari e Accattivanti**:
+   - Aggiunti sotto la descrizione i pulsanti primario con glow ciano ("⚡ Registrati come Calciatore / Società") e secondario glassmorphic ("🔍 Esplora la Piattaforma"), oltre ai badge di garanzia FIGC/LND, telemetria GPS e privacy GDPR.
+4. **Header / Navbar Pulita ed Essenziale**:
+   - Raggruppate le voci secondarie (Stampa, Album Figurine, Ambassador, Minigiochi) all'interno di un dropdown dedicato "Altro ▾" (`.es-nav-dropdown`) con glassmorphism, icone e micro-descrizioni, snellendo l'header e mantenendo in primo piano solo Home, Chi siamo, Bacheca e Mappa.
+5. **Card Giocatore Realistica con Statistiche d'Esempio**:
+   - Sostituita la vecchia silhouette con una card atleta (`.es-hero-player-card`) d'impatto: foto ad altissima definizione di un giovane calciatore in divisa atletica, badge "PROFILO VERIFICATO" con pulse verde, chip OVR 92 ATT, chip telemetria GPS (33.8 km/h), dati anagrafici (Marco Rossi - Serie D) e griglia statistiche FIFA/Scouting a 6 valori (VEL 94, TIR 89, PAS 85, DRI 91, DIF 62, FIS 87).
+6. **File**: `index.html`, `style.css`, `verifica-account.js`, `cookie-profiling.js`, `app.js`, `sw.js`, `version.json`, `immagini/03-calciatore-ritratto/player-card-showcase.jpg`. Cache `v20260925_HEROUX1`.
+
+Feature precedente: **2026-09-25** — NAVUSER1 — Rimozione email, ruolo e avatar residui dal menu utente in navbar:
 1. Rimossi dal corpo del menu a tendina account (`#user-dropdown-menu`) i campi email (`#user-dropdown-email-link`) e ruolo (`#user-dropdown-role`) che si sovrapponevano alle voci di navigazione.
 2. Rimosso dal trigger di apertura (`#btn-user-profile`) il badge con l'iniziale spuria "E", mantenendo solo icona utente, nome account ("Eliseo Miraglia") e chevron.
 3. Impostato `display: none !important` in `style.css` sui campi testuali eliminati per prevenire riapparizioni dinamiche.

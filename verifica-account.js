@@ -828,7 +828,21 @@
     if (send) send.addEventListener('click', function (e) { e.preventDefault(); sendOtpRequest(); });
   }
 
-  function paintOtpBanner(u) {
+  function isHomeScreen() {
+    try {
+      var h = (window.location.hash || '').toLowerCase();
+      if (!h || h === '#hero' || h === '#home' || h === '#about' || h === '#home-about') return true;
+      var vHome = document.getElementById('view-home');
+      if (vHome && !vHome.hidden && window.getComputedStyle(vHome).display !== 'none') {
+        // Se c'è una vista diversa attiva, non è home
+        var anyOther = document.querySelector('.main-view:not(#view-home):not([hidden])');
+        if (!anyOther) return true;
+      }
+    } catch (_) {}
+    return false;
+  }
+
+  function paintOtpBanner(u, forceModal) {
     u = u || user();
     killOtpOverlay();
     var existing = document.getElementById('es-otp-bottom-banner');
@@ -837,7 +851,9 @@
       isAuth = localStorage.getItem('elisee_user_auth') === 'true' && !!(u && (u.email || u.id));
     } catch (_) {}
 
-    if (!isAuth || isOtpVerified(u) || (u && u.accountClosed)) {
+    // Rimuovi sempre dalla schermata iniziale/home per non disturbare la navigazione,
+    // e per account già verificati o chiusi.
+    if (!isAuth || isOtpVerified(u) || (u && u.accountClosed) || (!forceModal && isHomeScreen())) {
       if (existing) existing.remove();
       return;
     }
@@ -870,7 +886,7 @@
   }
 
   function openOtpModal(u) {
-    paintOtpBanner(u || user());
+    paintOtpBanner(u || user(), true);
   }
 
   window.openEmailOtpModal = openOtpModal;
