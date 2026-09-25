@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260925_HEROUX11';
+      var BUILD_VERSION = '20260925_HEROUX12';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260925_HEROUX11">
+  <link rel="stylesheet" href="style.css?v=20260925_HEROUX12">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
@@ -58,7 +58,7 @@
   <link rel="stylesheet" href="login-slide.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="glass-menu.css?v=20260924_GLASSMENU1">
   <link rel="stylesheet" href="nav-search-anim.css?v=20260925_PALETTE1">
-  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX11">
+  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX12">
   <link rel="stylesheet" href="btn-label-anim.css?v=20260925_BTNANIM1">
   <link rel="stylesheet" href="share-btn.css?v=20260925_SHARE1">
   <link rel="stylesheet" href="theme-switch.css?v=20260925_THEME1">
@@ -68,7 +68,7 @@
   <link rel="stylesheet" href="react-card.css?v=20260925_RCARD1">
   <link rel="stylesheet" href="page-bubbles.css?v=20260925_BUBBLE1">
   <link rel="stylesheet" href="parallax.css?v=20260925_PARALLAX1">
-  <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX11">
+  <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX12">
   <style id="es-font-nevera">
     @font-face {
       font-family: 'Nevera';
@@ -248,7 +248,17 @@
       flex-wrap: nowrap !important;
       min-width: 0 !important;
     }
-    .public-header {
+    /* === FIX LINEA NAVBAR: deve stare PER ULTIMO === */
+    header.public-header.public-navbar.main-header.portfolio-header,
+    header.public-header,
+    header.public-navbar,
+    header.main-header,
+    header.portfolio-header,
+    .public-header.public-navbar.main-header,
+    .public-navbar,
+    .public-header,
+    .main-header,
+    .portfolio-header {
       width: 100% !important;
       height: 64px !important;
       min-height: 64px !important;
@@ -258,28 +268,43 @@
       display: flex !important;
       align-items: center !important;
       justify-content: space-between !important;
-      background-color: #0b111e !important;
       position: fixed !important;
       top: 0 !important;
       left: 0 !important;
       z-index: 1000 !important;
       box-sizing: border-box !important;
       border-radius: 0 !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+      background: transparent !important;
+      background-color: transparent !important;
+      border: 0 !important;
+      border-bottom: none !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
     }
-    .hero-section,
+
+    /* l'hero deve arrivare sotto la navbar, non partire 64px dopo */
     #hero,
+    .hero-section,
+    .hero-section.hero-portfolio,
+    .hero-portfolio,
     main {
-      padding-top: 64px !important;
+      padding-top: 0 !important;
       margin-top: 0 !important;
     }
-    .hero-portfolio-stage,
-    .hero-portfolio-inner,
-    .hero-typography-left {
-      min-height: auto !important;
-      height: auto !important;
-      justify-content: flex-start !important;
-      padding-top: 24px !important;
+
+    /* il titolo non deve finire sotto i 64px della barra */
+    #hero .hero-portfolio-stage,
+    .hero-section.hero-portfolio .hero-portfolio-stage {
+      padding-top: 88px !important;
+    }
+
+    /* Se dopo lo scroll vuoi di nuovo uno sfondo, solo allora: */
+    header.public-header.is-scrolled {
+      background: rgba(5, 6, 8, 0.88) !important;
+      backdrop-filter: blur(12px) !important;
+      border-bottom: none !important;
+      box-shadow: none !important;
     }
     body.is-public-landing .es-sb-hover,
     body.is-public-landing .es-pro-sidebar,
@@ -2199,6 +2224,21 @@
       <a href="#login" class="btn-login" onclick="if(window.openAccessoModal){window.openAccessoModal('email');} return false;">Accedi</a>
     </div>
   </header>
+  <script>
+    (function () {
+      function onScroll() {
+        var h = document.querySelector('header.public-header');
+        if (!h) return;
+        if (window.scrollY > 20) {
+          h.classList.add('is-scrolled');
+        } else {
+          h.classList.remove('is-scrolled');
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('DOMContentLoaded', onScroll);
+    })();
+  </script>
 
   <main>
     <div id="home-views-group">

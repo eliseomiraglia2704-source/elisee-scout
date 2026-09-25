@@ -3,7 +3,18 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — HEROUX11 — Rimozione Definitiva Sidebar Fluttuante e Bottoni Fixed su Landing Page Pubblica:
+Ultimo aggiornamento: **2026-09-25** — HEROUX12 — Fix Linea Navbar: Trasparenza Pura Header, Azzeramento Background Sovrapposti e Hero Padding:
+1. **Fix Linea Navbar e Trasparenza Totale**:
+   - Rimosse tutte le regole in conflitto con sfondi solidi o bordi scuri (`#0b111e`, `#0d131d`, `border-bottom: 1px solid rgba(255,255,255,.1)`) da `apple-nav.css`, `style.css` e dal blocco critico in `index.html`.
+   - Inserito in fondo a tutti i fogli di stile e in `<head>` il blocco prioritario definitivo:
+     - `header.public-header... { background: transparent !important; background-color: transparent !important; border: 0 !important; border-bottom: none !important; box-shadow: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }`
+     - `#hero, .hero-section, main { padding-top: 0 !important; margin-top: 0 !important; }`
+     - `#hero .hero-portfolio-stage { padding-top: 88px !important; }`
+     - `header.public-header.is-scrolled { background: rgba(5, 6, 8, 0.88) !important; backdrop-filter: blur(12px) !important; border-bottom: none !important; box-shadow: none !important; }`
+   - Aggiunto listener JS passivo su scroll per attivare `.is-scrolled` solo dopo 20px di discesa.
+2. **File**: `index.html`, `style.css`, `apple-nav.css`, `sw.js`, `version.json`. Cache `v20260925_HEROUX12`.
+
+Feature precedente: **2026-09-25** — HEROUX11 — Rimozione Definitiva Sidebar Fluttuante e Bottoni Fixed su Landing Page Pubblica:
 1. **Risoluzione Bug Rilevamento Vista Pubblica (`role-sidebar-pro.js`)**:
    - Individuato e risolto il bug logico per cui un utente autenticato con ruolo (o admin) manteneva attive le classi di ruolo su `<body>` e la funzione `isPublicView()` ritornava `false` anche se l'utente si trovava sulla Home Page (`#hero`), mostrando la sidebar laterale fissa a sinistra.
    - Corretta `isPublicView()`: ritorna sempre `true` sulle pagine pubbliche (`#hero`, `#home`, `#about`, `#bacheca`, ecc.), aggiunge `is-public-landing` a `document.body` e attiva la soppressione totale.

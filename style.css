@@ -3760,8 +3760,8 @@ body.focus-hub {
   width: 100% !important;
   height: 64px !important;
   padding: 0 32px !important;
-  background-color: #0d131d !important; /* Colore di sfondo scuro coerente */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: transparent !important;
+  border-bottom: none !important;
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
@@ -9259,18 +9259,19 @@ header,
   padding: 0 32px !important;
   margin: 0 !important;
   border-radius: 0 !important;
-  background-color: #0b111e !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
   z-index: 1000 !important;
   box-sizing: border-box !important;
 }
 
-/* Imposta il padding-top della sezione principale pari all'altezza dell'header */
+/* Imposta l'hero a partire da 0 */
 .hero-section,
 #hero,
 main {
-  padding-top: 64px !important;
+  padding-top: 0 !important;
   margin-top: 0 !important;
 }
 
@@ -10952,15 +10953,16 @@ header *, .navbar *, .public-header * {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  background-color: #0b111e !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: transparent !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
   z-index: 1000 !important;
   box-sizing: border-box !important;
 }
 
 html[data-theme="mimetico-chiaro"] .public-header {
-  background-color: #ffffff !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  background-color: transparent !important;
+  border-bottom: none !important;
 }
 
 .public-header .brand-logo a {
@@ -11054,6 +11056,51 @@ html[data-theme="mimetico-chiaro"] .public-header .header-actions .lang {
 .public-header .header-actions .btn-login:hover {
   background: #0369a1 !important;
 }
+
+/* === FIX LINEA NAVBAR: deve stare PER ULTIMO === */
+header.public-header.public-navbar.main-header.portfolio-header,
+header.public-header,
+header.public-navbar,
+header.main-header,
+header.portfolio-header,
+.public-header.public-navbar.main-header,
+.public-navbar,
+.public-header,
+.main-header,
+.portfolio-header {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* l'hero deve arrivare sotto la navbar, non partire 64px dopo */
+#hero,
+.hero-section,
+.hero-section.hero-portfolio,
+.hero-portfolio,
+main {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* il titolo non deve finire sotto i 64px della barra */
+#hero .hero-portfolio-stage,
+.hero-section.hero-portfolio .hero-portfolio-stage {
+  padding-top: 88px !important;
+}
+
+/* Se dopo lo scroll vuoi di nuovo uno sfondo, solo allora: */
+header.public-header.is-scrolled {
+  background: rgba(5, 6, 8, 0.88) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
 
 
 
