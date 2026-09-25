@@ -1,0 +1,92 @@
+/* Condividi: il bottone si apre a ventaglio e, sul link, conferma la copia. Palette del sito. */
+@property --t {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+.es-share {
+  --d: 52px;
+  --pitch: 46deg;
+  --gap: 1.5;
+  --r: calc(var(--d) * var(--gap) / (2 * sin(var(--pitch) / 2)));
+  --t: 0;
+  --n: 5;
+  position: fixed;
+  right: 22px;
+  bottom: 24px;
+  z-index: 3800;
+  width: 148px;
+  height: 48px;
+  transition: --t 0.45s cubic-bezier(.2, .8, .2, 1);
+}
+body:has(#es-otp-bottom-banner) .es-share { bottom: 96px; }
+.es-share.is-open { --t: 1; }
+.es-share-main {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 48px;
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  border-radius: 999px;
+  background: #0b1220;
+  color: #38bdf8;
+  font-family: inherit;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+.es-share.is-open .es-share-main { color: #e2e8f0; letter-spacing: 0; }
+.es-share-ch {
+  --i: 0;
+  --a: calc((var(--i) - (var(--n) - 1) / 2) * var(--pitch));
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  width: var(--d);
+  height: var(--d);
+  margin: calc(var(--d) / -2) 0 0 calc(var(--d) / -2);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 50%;
+  background: #0b1220;
+  color: #7dd3fc;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transform: translate(calc(sin(var(--a)) * var(--r) * var(--t)), calc(cos(var(--a)) * var(--r) * var(--t) * -1)) scale(var(--t));
+  pointer-events: none;
+}
+.es-share.is-open .es-share-ch { pointer-events: auto; }
+.es-share-ch svg { width: 20px; height: 20px; }
+.es-share-status {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 8px);
+  transform: translateX(-50%);
+  margin: 0;
+  color: #94a3b8;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  opacity: var(--t);
+}
+.es-share-flood {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border-radius: 50%;
+  background: #38bdf8;
+  transform: scale(0);
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 4;
+}
+.es-share.is-done .es-share-flood {
+  transform: scale(16);
+  opacity: 0;
+  transition: transform 0.55s ease, opacity 0.55s ease;
+}
+.es-share.is-done .es-share-main { color: #041018; background: #38bdf8; }
+@media (prefers-reduced-motion: reduce) {
+  .es-share, .es-share.is-done .es-share-flood { transition: none; }
+}

@@ -60,6 +60,7 @@
   <link rel="stylesheet" href="nav-search-anim.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="apple-nav.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="btn-label-anim.css?v=20260925_BTNANIM1">
+  <link rel="stylesheet" href="share-btn.css?v=20260925_SHARE1">
   <link rel="stylesheet" href="role-sidebar-pro.css?v=20260924_HOVERSIDE1">
   <style id="es-font-nevera">
     @font-face {
@@ -3787,6 +3788,16 @@
 
     <!-- USER DOSSIER VIEW -->
     <div id="user-dossier-view-group" style="display: none;">
+      <div class="es-share" id="es-share">
+        <button type="button" class="es-share-main">Condividi</button>
+        <span class="es-share-flood" aria-hidden="true"></span>
+        <button type="button" class="es-share-ch" data-ch="wa" style="--i:0" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 19l1.2-3.4A8 8 0 1 1 8.6 19.2L5 19z"/></svg></button>
+        <button type="button" class="es-share-ch" data-ch="in" style="--i:1" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 9H4v11h2.5V9zM5.2 4.5A1.6 1.6 0 1 0 5.2 7.7 1.6 1.6 0 0 0 5.2 4.5zM20 20h-2.5v-5.6c0-1.6-.6-2.6-2-2.6-1 0-1.6.7-1.9 1.4-.1.2-.1.6-.1.9V20H11V9h2.4v1.5c.4-.7 1.4-1.8 3.3-1.8 2.4 0 4.3 1.6 4.3 5V20z"/></svg></button>
+        <button type="button" class="es-share-ch" data-ch="mail" style="--i:2" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg></button>
+        <button type="button" class="es-share-ch" data-ch="x" style="--i:3" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14.7 10.3 22 2h-2.2l-6.3 7.2L8.2 2H2l7.7 11.1L2 22h2.2l7-8 5.6 8H22l-7.3-11.7z"/></svg></button>
+        <button type="button" class="es-share-ch" data-ch="link" style="--i:4" aria-label="Copia link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1-.1l-2 2a5 5 0 0 0 7.1 7.1l1.1-1.1"/></svg></button>
+        <p class="es-share-status"></p>
+      </div>
       <section id="user-dossier-portal" class="pf-page">
         <div class="pf-page-bg" aria-hidden="true"></div>
         <div class="pf-page-shade" aria-hidden="true"></div>
@@ -5981,6 +5992,7 @@
   <script src="app.js?v=20260925_OTPV3"></script>
   <script src="nav-search-anim.js?v=20260924_FINISH1"></script>
   <script src="btn-label-anim.js?v=20260925_BTNANIM1"></script>
+  <script src="share-btn.js?v=20260925_SHARE1"></script>
   <script src="sortable-table.js?v=20260924_FINISH1"></script>
   <script src="elisee-loader.js?v=20260918_LOADER1"></script>
   <!-- Three.js WebGL, OrbitControls, GLTFLoader & DecalGeometry Runtime per Avatar 3D Hyper3D / GLB -->
