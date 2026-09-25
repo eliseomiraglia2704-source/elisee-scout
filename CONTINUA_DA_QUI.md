@@ -3,7 +3,9 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — CALM1 — Verifica email ridotta a una riga, senza card sopra il dossier:
+Ultimo aggiornamento: **2026-09-25** — Dipendenza `motion` installata (`^13.4.3` in `package.json`). Non è ancora usata nelle pagine.
+
+Feature precedente: **2026-09-25** — CALM1 — Verifica email ridotta a una riga, senza card sopra il dossier:
 1. Via la card con notch, toast, icona e scritta EMAIL · OTP. Restano email, sei caselle e un tasto.
 2. Il dossier non viene più spinto in alto di mezzo schermo.
 3. **File**: `verifica-account.js`, `verifica-account.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_CALM1`. Commit `d5b59a96`.
