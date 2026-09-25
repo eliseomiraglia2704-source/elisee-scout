@@ -7,7 +7,7 @@ Ultimo aggiornamento: **2026-09-25** — NAVUSER1 — Rimozione email, ruolo e a
 1. Rimossi dal corpo del menu a tendina account (`#user-dropdown-menu`) i campi email (`#user-dropdown-email-link`) e ruolo (`#user-dropdown-role`) che si sovrapponevano alle voci di navigazione.
 2. Rimosso dal trigger di apertura (`#btn-user-profile`) il badge con l'iniziale spuria "E", mantenendo solo icona utente, nome account ("Eliseo Miraglia") e chevron.
 3. Impostato `display: none !important` in `style.css` sui campi testuali eliminati per prevenire riapparizioni dinamiche.
-4. **File**: `index.html`, `style.css`, `sw.js`, `version.json`, `focus.html`. Cache `v20260925_NAVUSER1`.
+4. **File**: `index.html`, `style.css`, `sw.js`, `version.json`, `focus.html`. Cache `v20260925_NAVUSER1`. Commit `9ede8d27`.
 
 Feature precedente: **2026-09-25** — HEROCLEAN1 — Rimozione card grafica ritratto atleta dalla sezione Chi siamo in Home:
 1. Rimossa la card `.portfolio-visual` contenente l'SVG del ritratto atleta con reticolo/HUD e badge "PROFILO VERIFICATO" dalla sezione `#home-about`.
