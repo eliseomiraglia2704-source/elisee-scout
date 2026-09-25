@@ -1,0 +1,32 @@
+/* Sfondo: gradiente lento nei colori del sito. Le card restano opache. */
+body {
+  background-color: #050608;
+  background-image:
+    radial-gradient(ellipse at 18% 12%, rgba(56, 189, 248, 0.22), transparent 46%),
+    radial-gradient(ellipse at 86% 78%, rgba(2, 132, 199, 0.18), transparent 42%),
+    linear-gradient(125deg, #050608 0%, #07141c 38%, #0a3040 62%, #050608 100%);
+  background-size: 160% 160%, 160% 160%, 280% 280%;
+  background-attachment: fixed;
+  animation: esSiteBg 22s ease-in-out infinite;
+}
+#hero,
+.hero-section,
+.hero-portfolio,
+.hero-section.hero-portfolio {
+  background: transparent !important;
+}
+[data-theme="mimetico-chiaro"] body {
+  background-color: #f8fafc;
+  background-image:
+    radial-gradient(ellipse at 16% 10%, rgba(56, 189, 248, 0.35), transparent 48%),
+    radial-gradient(ellipse at 84% 80%, rgba(125, 211, 252, 0.45), transparent 46%),
+    linear-gradient(125deg, #f8fafc 0%, #e0f2fe 42%, #f8fafc 100%);
+}
+@keyframes esSiteBg {
+  0% { background-position: 0% 40%, 100% 60%, 0% 50%; }
+  50% { background-position: 80% 20%, 10% 80%, 100% 50%; }
+  100% { background-position: 0% 40%, 100% 60%, 0% 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body { animation: none; }
+}
