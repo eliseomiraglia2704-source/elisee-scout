@@ -3,7 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — RCARD1 — Schede profilo in bacheca come la card del video:
+Ultimo aggiornamento: **2026-09-25** — BUBBLE1 — Transizione a bolle fra le sezioni:
+1. Cliccando una voce del menu, una bolla ciano sale e copre la pagina. Subito dopo una bolla del colore del sito scopre la sezione nuova.
+2. Non parte al primo caricamento. Se sei già su quella sezione, non si ripete. Con «riduci movimento» il cambio è immediato.
+3. **File**: `page-bubbles.js`, `page-bubbles.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_BUBBLE1`. Commit `f83b3d1a`.
+
+Feature precedente: **2026-09-25** — RCARD1 — Schede profilo in bacheca come la card del video:
 1. Foto grande, nome, ruolo, riga su squadra e stato, etichette, **Apri profilo** e cuore per seguire.
 2. Bottone ciano, card scura. Il cuore pieno vuol dire che lo segui già.
 3. **File**: `react-card.css`, `app.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_RCARD1`. Commit `f3ce1197`.
