@@ -406,3 +406,52 @@ html[data-theme="mimetico-chiaro"] header.public-header .btn-login:hover {
     transition: opacity 80ms ease !important;
   }
 }
+
+/* ============================================================
+   OVERLAY FIX: Massima specificita per viste interne & indicator
+   ============================================================ */
+html body.is-internal-view header.public-header.public-navbar.main-header.portfolio-header,
+html body.layout-portfolio.is-internal-view header.public-header,
+html body.is-internal-view header.public-header,
+html body.is-internal-view .portfolio-header {
+  background: rgba(5, 6, 8, 0.72) !important;
+  background-color: rgba(5, 6, 8, 0.72) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="mimetico-chiaro"] body.is-internal-view header.public-header.public-navbar.main-header.portfolio-header,
+html[data-theme="mimetico-chiaro"] body.layout-portfolio.is-internal-view header.public-header {
+  background: rgba(255, 255, 255, 0.96) !important;
+  background-color: rgba(255, 255, 255, 0.96) !important;
+}
+
+html body.is-internal-view #about,
+html body.is-internal-view #home-about,
+html body.is-internal-view .about-dossier-wrap,
+html body.is-internal-view #view-about,
+html body.is-internal-view #view-bacheca,
+html body.is-internal-view #bacheca-annunci,
+html body.is-internal-view #view-mappa,
+html body.is-internal-view #mappa-portal,
+html body.is-internal-view #view-stampa,
+html body.is-internal-view #view-squadre,
+html body.is-internal-view #view-tc-panel,
+html body.is-internal-view #view-mercato,
+html body.is-internal-view #view-schede,
+html body.is-internal-view [data-view-root] {
+  padding-top: calc(var(--nav-h, 64px) + 24px) !important;
+}
+
+header.public-header .main-nav .nav-indicator.is-on {
+  opacity: 1 !important;
+}
+
+header.public-header .main-nav a.nav-link.active,
+header.public-header .main-nav a.active {
+  background: transparent !important;
+  border: none !important;
+}
+

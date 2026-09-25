@@ -11077,6 +11077,18 @@ header.portfolio-header,
   -webkit-backdrop-filter: none !important;
 }
 
+body.is-internal-view header.public-header.public-navbar.main-header.portfolio-header,
+body.is-internal-view header.public-header,
+body.is-internal-view header.main-header,
+body.is-internal-view .portfolio-header {
+  background: rgba(5, 6, 8, 0.72) !important;
+  background-color: rgba(5, 6, 8, 0.72) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
 /* l'hero deve arrivare sotto la navbar, non partire 64px dopo */
 #hero,
 .hero-section,

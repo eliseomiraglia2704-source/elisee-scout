@@ -3,7 +3,19 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — HEROUX14 — Porting Navigation UI & View Transitions Ultra-Avanzate (Zero Dipendenze):
+Ultimo aggiornamento: **2026-09-25** — HEROUX15 — Fix Viste Interne: Glass Header Specificity, Follower Lerp Attivo e Padding-Top Titoli:
+1. **Glass Header su Viste Interne (`is-internal-view`)**:
+   - Eliminato il residuo globale di `background: transparent !important` che vinceva sulle pagine interne in `index.html` e `style.css`.
+   - Aggiunto selettore iper-specifico `html body.is-internal-view header.public-header...` con `rgba(5, 6, 8, 0.72) !important` e `backdrop-filter: blur(14px) !important`.
+2. **Follower Lerp Attivo e Modulo Esploso (`es-nav-ux.js`)**:
+   - `window.__esNavUX` espone `{ ready: true, moveIndicatorTo, syncActiveLink }`.
+   - `.nav-indicator.is-on` con `opacity: 1 !important` quando attiva una voce.
+   - Eliminati background e bordi fissi dai link `.active` per lasciare il disegno interamente all'indicatore fluido.
+3. **Padding-Top Viste Interne (Stacco sotto la Navbar)**:
+   - Applicato `padding-top: calc(var(--nav-h, 64px) + 24px) !important;` su tutte le radici di vista interna (`#about`, `#view-about`, `.about-dossier-wrap`, `#view-bacheca`, `#view-mappa`, ecc.), evitando che titoli come "VERIFICATO." finiscano sotto l'header.
+4. **File**: `es-nav-ux.css`, `es-nav-ux.js`, `index.html`, `style.css`, `sw.js`, `version.json`. Cache `v20260925_HEROUX15`.
+
+Feature precedente: **2026-09-25** — HEROUX14 — Porting Navigation UI & View Transitions Ultra-Avanzate (Zero Dipendenze):
 1. **Pill Indicator Fluido e Micro-Interazioni (`es-nav-ux.css`, `es-nav-ux.js`)**:
    - Indicator fluido (`.nav-indicator`) calcolato in rAF con fisica lerp a ~0.18, che scorre via GPU `transform: translate3d(...)` e `width`, senza layout shift e senza mai toccare `left`.
    - Hover follow abilitato esclusivamente per periferiche con puntatore fine (`@media (hover: hover) and (pointer: fine)`).

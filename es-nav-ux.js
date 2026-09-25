@@ -6,8 +6,7 @@
  */
 (function () {
   'use strict';
-  if (window.__esNavUX) return;
-  window.__esNavUX = true;
+  if (window.__esNavUX && window.__esNavUX.ready) return;
 
   var prefersReducedMotion = function () {
     return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -76,15 +75,17 @@
     }
   }
 
-  function updateIndicatorTarget(immediate) {
-    var target = hoveredLink || activeLink;
-    if (target && navEl && navEl.offsetParent !== null) {
+  function moveIndicatorTo(target, immediate) {
+    if (!indicatorEl || !navEl) return;
+    if (target && target.offsetParent !== null) {
       var m = measureLink(target);
       tgtX = m.x;
       tgtW = m.w;
       tgtO = 1;
+      indicatorEl.classList.add('is-on');
     } else {
       tgtO = 0;
+      indicatorEl.classList.remove('is-on');
     }
 
     if (immediate || prefersReducedMotion()) {
@@ -102,11 +103,14 @@
     }
   }
 
-  function syncActiveLink(view) {
+  function syncActiveLink(view, immediate) {
     if (!navEl) return;
+    var cleanView = String(view || 'home').toLowerCase();
+    activeLink = null;
+
     links.forEach(function (l) {
       var v = l.getAttribute('data-view');
-      if (v && v === view) {
+      if (v && v === cleanView) {
         l.classList.add('active');
         activeLink = l;
       } else {
@@ -114,10 +118,18 @@
       }
     });
 
-    if (view === 'home' || !view) {
-      activeLink = null;
+    var isInternal = (cleanView !== 'home');
+    document.body.classList.toggle('is-internal-view', isInternal);
+
+    if (indicatorEl) {
+      indicatorEl.classList.toggle('is-on', isInternal && !!activeLink);
     }
-    updateIndicatorTarget(false);
+
+    if (hoveredLink) {
+      moveIndicatorTo(hoveredLink, false);
+    } else {
+      moveIndicatorTo(activeLink, !!immediate);
+    }
   }
 
   // --- Scroll Header Handling (Throttled rAF, soglia 8px) ---
@@ -143,7 +155,7 @@
   function onResize() {
     if (resizeTimer) cancelAnimationFrame(resizeTimer);
     resizeTimer = requestAnimationFrame(function () {
-      updateIndicatorTarget(true);
+      moveIndicatorTo(hoveredLink || activeLink, true);
     });
   }
 
@@ -174,7 +186,7 @@
       if (isHoverCapable()) {
         link.addEventListener('mouseenter', function () {
           hoveredLink = link;
-          updateIndicatorTarget(false);
+          moveIndicatorTo(link, false);
         });
       }
     });
@@ -182,7 +194,7 @@
     if (isHoverCapable()) {
       navEl.addEventListener('mouseleave', function () {
         hoveredLink = null;
-        updateIndicatorTarget(false);
+        moveIndicatorTo(activeLink, false);
       });
     }
 
@@ -196,9 +208,7 @@
       else initialView = localStorage.getItem('elisee_view') || 'home';
     } catch (_) {}
 
-    document.body.classList.toggle('is-internal-view', initialView !== 'home');
-    syncActiveLink(initialView);
-    updateIndicatorTarget(true);
+    syncActiveLink(initialView, true);
   }
 
   // --- Wrap Fluido per window.switchView ---
@@ -233,13 +243,12 @@
       }
 
       // Aggiorna stato navbar e header background
-      document.body.classList.toggle('is-internal-view', targetView !== 'home');
-      syncActiveLink(targetView);
+      syncActiveLink(targetView, false);
 
       // Se reduced motion o prima home, switch secco ma controllato
       if (reduced || !activeOutgoing) {
         var res = orig.apply(this, arguments);
-        updateIndicatorTarget(false);
+        setTimeout(function () { syncActiveLink(targetView, true); }, 20);
         return res;
       }
 
@@ -272,7 +281,7 @@
           });
         }
 
-        updateIndicatorTarget(false);
+        syncActiveLink(targetView, false);
         return res;
       }, 100);
 
@@ -288,18 +297,39 @@
     window.addEventListener('resize', onResize, { passive: true });
     onScroll();
 
+    window.addEventListener('hashchange', function () {
+      var h = (window.location.hash || '').toLowerCase();
+      var v = 'home';
+      if (h.indexOf('about') >= 0) v = 'about';
+      else if (h.indexOf('bacheca') >= 0 || h.indexOf('persone') >= 0) v = 'bacheca';
+      else if (h.indexOf('mappa') >= 0) v = 'mappa';
+      syncActiveLink(v, true);
+    });
+
     // Ricalcola al load completo per font caricati
     window.addEventListener('load', function () {
-      setTimeout(function () { updateIndicatorTarget(true); }, 50);
+      setTimeout(function () {
+        var v = localStorage.getItem('elisee_view') || 'home';
+        syncActiveLink(v, true);
+      }, 50);
+      setTimeout(function () {
+        var v = localStorage.getItem('elisee_view') || 'home';
+        syncActiveLink(v, true);
+      }, 300);
     });
 
     // Ascolta eventi cambio vista custom
     document.addEventListener('elisee:view-changed', function (ev) {
       if (ev && ev.detail && ev.detail.view) {
-        document.body.classList.toggle('is-internal-view', ev.detail.view !== 'home');
-        syncActiveLink(ev.detail.view);
+        syncActiveLink(ev.detail.view, false);
       }
     });
+
+    window.__esNavUX = {
+      ready: true,
+      moveIndicatorTo: moveIndicatorTo,
+      syncActiveLink: syncActiveLink
+    };
   }
 
   if (document.readyState === 'loading') {
