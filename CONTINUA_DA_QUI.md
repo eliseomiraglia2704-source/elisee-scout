@@ -3,7 +3,18 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — HEROUX4 — Risoluzione Header Wrapping, Overflow Clip e Compattazione Dropdown Menu:
+Ultimo aggiornamento: **2026-09-25** — HEROUX5 — Trasformazione Header in Navbar Classica Full-Width (Eliminazione Floating Pill e Banda Scura):
+1. **Trasformazione Header in Navbar Classica Full-Width**:
+   - Eliminato il layout a "pillola fluttuante" che causava altezze incontrollate e una spessa banda vuota scura sotto i link.
+   - L'header (`header.main-header`, `.portfolio-header`) è ora una barra full-width aderente in cima allo schermo (`position: fixed; top: 0; left: 0; width: 100%; height: 64px; max-height: 64px; border-radius: 0; padding: 0 24px;`), con sfondo coerente semitrasparente (`rgba(10, 15, 30, 0.92)` in Dark, `rgba(255, 255, 255, 0.96)` in Light), `backdrop-filter: blur(12px)` e sottile `border-bottom: 1px solid rgba(255, 255, 255, 0.08)`.
+2. **Container Interno Centrato e Pulito**:
+   - `.portfolio-navbar` configurata a larghezza piena (`max-width: 1440px; margin: 0 auto; height: 64px; padding: 0; border: none; border-radius: 0; box-shadow: none; background: transparent;`) con allineamento verticale centrato (`align-items: center; justify-content: space-between; gap: 12px;`).
+3. **Eliminazione Radicale di Sottotitoli e Compattazione Blocco Destro**:
+   - Forzata la rimozione e il `display: none !important;` su ogni elemento `<small>` o testo descrittivo prolisso dentro l'header e i menu di navigazione.
+   - Blocco azioni destro (`.portfolio-nav-right`, `.nav-auth-actions`, lingua, ricerca, profilo utente) compattato con `gap: 6px;` e allineamento inline senza provocare distorsioni verticali.
+4. **File**: `index.html`, `style.css`, `apple-nav.css`, `sw.js`, `version.json`. Cache `v20260925_HEROUX5`.
+
+Feature precedente: **2026-09-25** — HEROUX4 — Risoluzione Header Wrapping, Overflow Clip e Compattazione Dropdown Menu:
 1. **Compattazione Dropdown Menu e Rimozione Testi Verbosi nell'Header**:
    - Rimosse tutte le descrizioni estese multilinea ("Collezione e profili seguiti", "Programma talent & testimonial", "Carriera RPG e quiz tattici", "Notizie, interviste e comunicati") dalla barra di navigazione orizzontale, convertite in attributi `title` (tooltip nativi informativi) e mantenendo esclusivamente i titoli sintetici compatti (`📰 Stampa`, `🎴 Album`, `🤝 Ambassador`, `🎮 Minigiochi`).
    - Forzato `display: none !important;` in `style.css` su `.es-nav-item-desc` e `.es-nav-item-text small` per prevenire qualsiasi riespansione orizzontale/verticale.
