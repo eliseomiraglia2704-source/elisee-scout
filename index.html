@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260925_HEROUX27';
+      var BUILD_VERSION = '20260925_HEROUX28';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260925_HEROUX27">
+  <link rel="stylesheet" href="style.css?v=20260925_HEROUX28">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
@@ -58,7 +58,7 @@
   <link rel="stylesheet" href="login-slide.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="glass-menu.css?v=20260924_GLASSMENU1">
   <link rel="stylesheet" href="nav-search-anim.css?v=20260925_PALETTE1">
-  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX27">
+  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX28">
   <link rel="stylesheet" href="btn-label-anim.css?v=20260925_BTNANIM1">
   <link rel="stylesheet" href="share-btn.css?v=20260925_SHARE1">
   <link rel="stylesheet" href="theme-switch.css?v=20260925_THEME1">
@@ -67,13 +67,14 @@
   <link rel="stylesheet" href="trash-btn.css?v=20260925_TRASH1">
   <link rel="stylesheet" href="react-card.css?v=20260925_RCARD1">
   <link rel="stylesheet" href="page-bubbles.css?v=20260925_BUBBLE1">
-  <link rel="stylesheet" href="parallax.css?v=20260925_HEROUX27">
-  <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX27">
-  <link rel="stylesheet" href="es-nav-ux.css?v=20260925_HEROUX27">
-  <link rel="stylesheet" href="badge-system.css?v=20260925_HEROUX27">
-  <link rel="stylesheet" href="micro-interactions.css?v=20260925_HEROUX27">
-  <link rel="stylesheet" href="radius-system.css?v=20260925_HEROUX27">
-  <link rel="stylesheet" href="success-system.css?v=20260925_HEROUX27">
+  <link rel="stylesheet" href="parallax.css?v=20260925_HEROUX28">
+  <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX28">
+  <link rel="stylesheet" href="es-nav-ux.css?v=20260925_HEROUX28">
+  <link rel="stylesheet" href="badge-system.css?v=20260925_HEROUX28">
+  <link rel="stylesheet" href="micro-interactions.css?v=20260925_HEROUX28">
+  <link rel="stylesheet" href="radius-system.css?v=20260925_HEROUX28">
+  <link rel="stylesheet" href="success-system.css?v=20260925_HEROUX28">
+  <link rel="stylesheet" href="action-menu.css?v=20260925_HEROUX28">
   <style id="es-font-nevera">
     @font-face {
       font-family: 'Nevera';
@@ -6630,12 +6631,50 @@
     <div id="ux-engine" style="background:#0a0a0a; padding:16px; border-radius:12px; margin-top:16px;"></div>
   </div>
 
-  <script src="badge-handler.js?v=20260925_HEROUX27"></script>
-  <script src="mobile-webapp.js?v=20260925_HEROUX27"></script>
-  <script src="es-nav-ux.js?v=20260925_HEROUX27"></script>
-  <script src="micro-interactions.js?v=20260925_HEROUX27"></script>
-  <script src="radius-handler.js?v=20260925_HEROUX27" defer></script>
-  <script src="dynamic-sync.js?v=20260925_HEROUX27" defer></script>
-  <script src="success-handler.js?v=20260925_HEROUX27" defer></script>
+  <!-- ACTION MENU – HEROUX28 -->
+  <div id="action-menu-dock" style="position:fixed; bottom:24px; left:24px; z-index:999990;">
+    <div id="action-menu" class="action-menu">
+      <button id="am-trigger" class="am_trigger" aria-haspopup="menu" aria-expanded="false" aria-controls="menu" title="Menu Azioni Rapide">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/>
+        </svg>
+      </button>
+
+      <div id="menu" class="am_menu" role="menu">
+        <div class="am_sheet" aria-hidden="true"></div>
+        <div class="am_plate">
+          <div class="am_glow"></div>
+        </div>
+        <div class="am_list">
+          <button type="button" class="am_item" data-action="profile">
+            <span class="am_icon">👤</span>
+            <span>Profilo Scout</span>
+          </button>
+          <button type="button" class="am_item" data-action="sheets">
+            <span class="am_icon">⚡</span>
+            <span>Schede Tecniche IA</span>
+          </button>
+          <button type="button" class="am_item" data-action="secret-list">
+            <span class="am_icon">🔒</span>
+            <span>Secret List Stealth</span>
+          </button>
+          <div class="am_divider"></div>
+          <button type="button" class="am_item danger" data-action="reset">
+            <span class="am_icon">🗑️</span>
+            <span>Reset Sessione</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="badge-handler.js?v=20260925_HEROUX28"></script>
+  <script src="mobile-webapp.js?v=20260925_HEROUX28"></script>
+  <script src="es-nav-ux.js?v=20260925_HEROUX28"></script>
+  <script src="micro-interactions.js?v=20260925_HEROUX28"></script>
+  <script src="radius-handler.js?v=20260925_HEROUX28" defer></script>
+  <script src="dynamic-sync.js?v=20260925_HEROUX28" defer></script>
+  <script src="success-handler.js?v=20260925_HEROUX28" defer></script>
+  <script src="action-menu-handler.js?v=20260925_HEROUX28" defer></script>
 </body>
 </html>

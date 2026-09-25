@@ -3,7 +3,20 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX27 — Success is a System Architecture:
+Ultimo aggiornamento: **2026-09-26** — HEROUX28 — Action Menu Zero-Latency Architecture:
+1. **Action Menu Zero-Latency Engine (`action-menu.css`, `action-menu-handler.js`, `styles/action-menu.css`, `js/action-menu-handler.js`)**:
+   - Implementate le regole matematiche del video (HEROUX28):
+     - Trigger pulsante con glow (#ff00ff / ciano) e drop-shadow preciso.
+     - Sheet con fade-in/blur rapido (180ms cubic-bezier).
+     - Plate glide con border-radius dinamico e ombra speculare magenta/ciano.
+     - Radial glow ink su puntatore (`pointermove`, `am_glow`).
+     - Render lista con icone, divider e stati attivi/danger.
+     - Navigazione da tastiera completa zero-latency (<40ms glide): `ArrowUp`, `ArrowDown`, `Home`, `End`, `Enter`, `Escape`, `Tab`.
+     - Chiusura click-outside ed eventi dedicati.
+   - Esposizione globale: `window.EliseeActionMenu` (`init`, `toggle`, `close`, `setActive`, `moveActive`, `chooseItem`).
+2. **File**: `action-menu.css`, `action-menu-handler.js`, `styles/action-menu.css`, `js/action-menu-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX28`.
+
+Feature precedente: **2026-09-26** — HEROUX27 — Success is a System Architecture:
 1. **Success is a System Engine (`success-system.css`, `success-handler.js`, `styles/success-system.css`, `js/success-handler.js`)**:
    - Implementate le 8 regole matematiche del video:
      - 3 Done Screens + "one keeps the user" (`nextSteps`).

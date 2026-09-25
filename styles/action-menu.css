@@ -1,0 +1,189 @@
+/* ============================================= */
+/* HEROUX28 – Action Menu (Zero-Latency)         */
+/* ============================================= */
+.action-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.am_trigger {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 0, 255, 0.3);
+  border-radius: 12px;
+  color: #ff00ff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 40ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.am_trigger:hover {
+  background: rgba(255, 0, 255, 0.15);
+  border-color: #ff00ff;
+  box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
+}
+
+.am_trigger svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  filter: drop-shadow(0 0 8px rgba(255, 0, 255, 0.6));
+}
+
+.am_menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 260px;
+  background: rgba(12, 14, 20, 0.98);
+  border: 1px solid rgba(255, 0, 255, 0.3);
+  border-radius: var(--item-radius, 14px);
+  box-shadow: 0 20px 40px -10px rgba(255, 0, 255, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  padding: 6px;
+  opacity: 0;
+  transform: translateY(-8px) scale(0.98);
+  pointer-events: none;
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 160ms ease;
+  z-index: 99999;
+}
+
+#action-menu-dock .am_menu {
+  top: auto;
+  bottom: calc(100% + 8px);
+  left: 0;
+  right: auto;
+  transform: translateY(8px) scale(0.98);
+}
+
+.action-menu.is-visible .am_menu {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+
+.am_sheet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  border-radius: inherit;
+}
+
+.action-menu.is-visible .am_sheet {
+  opacity: 1;
+}
+
+.am_plate {
+  position: absolute;
+  top: var(--plate-y, 6px);
+  left: 6px;
+  right: 6px;
+  height: 40px;
+  background: rgba(255, 0, 255, 0.12);
+  border: 1px solid rgba(255, 0, 255, 0.35);
+  border-radius: 8px;
+  box-shadow: 0 0 16px rgba(255, 0, 255, 0.2);
+  opacity: 0;
+  transform: translateY(0) scale(0.985);
+  transition: top 140ms cubic-bezier(0.22, 1, 0.36, 1),
+              transform 140ms cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 120ms ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.am_plate.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.am_plate.is-pressed {
+  transform: translateY(0) scale(0.96);
+}
+
+.am_list {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+}
+
+.am_item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  color: var(--text, #e6edf3);
+  font-size: 14px;
+  font-weight: 500;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: color 80ms ease, background 80ms ease;
+  outline: none;
+}
+
+.am_item:hover,
+.am_item.is-active {
+  color: #fff;
+}
+
+.am_item.danger {
+  color: #ff2d55;
+}
+
+.am_item.danger:hover,
+.am_item.danger.is-active {
+  color: #ff6b81;
+}
+
+.am_item.is-active .am_icon {
+  color: var(--accent, #00f5d4);
+  transform: scale(1.1);
+}
+
+.am_icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 120ms ease, color 120ms ease;
+}
+
+.am_divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 4px 6px;
+}
+
+.am_glow {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 14px;
+  height: 8px;
+  background: radial-gradient(closest-side, var(--glow-ink, rgba(0, 245, 212, 0.8)) 0%, transparent 100%);
+  transform: translate(calc(var(--glow-x, 0px) - 50%), -50%);
+  transition: transform 0.14s ease-out;
+  pointer-events: none;
+}
