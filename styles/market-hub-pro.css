@@ -1,0 +1,170 @@
+/* ============================================= */
+/* HEROUX32 – Market Hub Pro (Secret List + Wall) */
+/* ============================================= */
+.market-hub-pro {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.market-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .market-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.market-list {
+  background: rgba(10, 10, 10, 0.95);
+  border-radius: var(--radius, 16px);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.market-item {
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: all 40ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: grab;
+  position: relative;
+  color: #fff;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.market-item:active { cursor: grabbing; }
+
+.market-item.dragging {
+  opacity: 0.5;
+  border: 2px dashed #00f5d4;
+}
+
+.market-item.stealth {
+  border-left: 4px solid #00f5d4;
+  background: rgba(0, 20, 30, 0.6);
+}
+
+.market-item.stealth::before {
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(#00f5d4, #ff2d55);
+}
+
+.market-pill {
+  background: linear-gradient(90deg, #ff2d55, #ff6b9d);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-right: 12px;
+  display: inline-block;
+}
+
+.market-badge {
+  background: #ff2d55;
+  color: #fff;
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 900;
+  box-shadow: 0 0 0 3px rgba(255,45,85,0.3);
+  margin-left: auto;
+}
+
+.market-timeline {
+  background: rgba(10,10,10,0.95);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.timeline-item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  color: #ddd;
+  font-size: 13px;
+}
+
+.timeline-item:last-child { border-bottom: none; }
+
+.timeline-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+.sent { background: #00f5d4; }
+.opened { background: #ff2d55; }
+.paid { background: #00f5d4; }
+.locked { background: #666; }
+
+.market-wall {
+  background: linear-gradient(90deg, rgba(0,245,212,0.1), rgba(255,0,255,0.1));
+  border: 2px dashed rgba(0,245,212,0.5);
+  padding: 32px 20px;
+  border-radius: var(--radius, 16px);
+  text-align: center;
+  cursor: pointer;
+  transition: all 40ms;
+  position: relative;
+  overflow: hidden;
+  margin-top: 24px;
+}
+
+.market-wall::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(0,245,212,0.15) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+.market-wall:hover::after { opacity: 1; }
+.market-wall:hover { transform: scale(1.02); border-color: #00f5d4; }
+
+.market-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  justify-content: flex-end;
+}
+
+.market-btn-export {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(0,245,212,0.4);
+  color: #00f5d4;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 40ms;
+}
+
+.market-btn-export:hover {
+  background: rgba(0,245,212,0.15);
+  transform: scale(1.02);
+}

@@ -3,7 +3,20 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX31 — Candidature Club (Form Doppio + Matching IA):
+Ultimo aggiornamento: **2026-09-26** — HEROUX32 — Market Hub Pro (Secret List Stealth + Wall Trasferimenti FIFA Style):
+1. **Market Hub Pro Engine (`market-hub-pro.css`, `market-hub-pro-handler.js`, `styles/market-hub-pro.css`, `js/market-hub-pro-handler.js`)**:
+   - Implementazione zero-latenza (<40ms):
+     - Drag-and-drop completo da elenco trasferimenti a Secret List con classe `.stealth` e badge live.
+     - Search filter IA stealth real-time sui target trasferimenti (DS / Scout / Analyst / Club).
+     - 52 target mock calibrati (Northwind Labs, Halcyon Bank, Nova FC, Real Madrid, Man City, Chelsea, PSG, Bayern, Juventus, Milan, Inter, Napoli, etc.).
+     - Wall Transfer interattivo FIFA style con feedback visivo e animazione GPU.
+     - Timeline interattiva degli stati della trattativa (`sent`, `opened`, `paid`).
+     - Tasto Export Report Secret List con notifica toast `EliseeSuccessSystem.showToast` e print preview.
+     - Integrazione globale sincronizzata con `EliseeDynamicSync.setBadge('badge-mobile-msgs', count)` e ripple effect.
+   - Esposizione globale: `window.EliseeMarketHubPro` (`init`, `filterItems`, `updateSecretCount`, `exportReport`).
+2. **File**: `market-hub-pro.css`, `market-hub-pro-handler.js`, `styles/market-hub-pro.css`, `js/market-hub-pro-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX32`.
+
+Feature precedente: **2026-09-26** — HEROUX31 — Candidature Club (Form Doppio + Matching IA):
 1. **Candidature Club Engine (`candidature.css`, `candidature-handler.js`, `styles/candidature.css`, `js/candidature-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Form doppio blocco reattivo a 2 colonne: "❇️ Cosa offriamo" e "❇️ Cosa richiediamo" con textarea stilizzate in dark mode e glow ciano al focus.

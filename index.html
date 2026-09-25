@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260925_HEROUX31';
+      var BUILD_VERSION = '20260925_HEROUX32';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260925_HEROUX31">
+  <link rel="stylesheet" href="style.css?v=20260925_HEROUX32">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
@@ -58,7 +58,7 @@
   <link rel="stylesheet" href="login-slide.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="glass-menu.css?v=20260924_GLASSMENU1">
   <link rel="stylesheet" href="nav-search-anim.css?v=20260925_PALETTE1">
-  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX31">
+  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX32">
   <link rel="stylesheet" href="btn-label-anim.css?v=20260925_BTNANIM1">
   <link rel="stylesheet" href="share-btn.css?v=20260925_SHARE1">
   <link rel="stylesheet" href="theme-switch.css?v=20260925_THEME1">
@@ -67,17 +67,18 @@
   <link rel="stylesheet" href="trash-btn.css?v=20260925_TRASH1">
   <link rel="stylesheet" href="react-card.css?v=20260925_RCARD1">
   <link rel="stylesheet" href="page-bubbles.css?v=20260925_BUBBLE1">
-  <link rel="stylesheet" href="parallax.css?v=20260925_HEROUX31">
-  <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX31">
-  <link rel="stylesheet" href="es-nav-ux.css?v=20260925_HEROUX31">
-  <link rel="stylesheet" href="badge-system.css?v=20260925_HEROUX31">
-  <link rel="stylesheet" href="micro-interactions.css?v=20260925_HEROUX31">
-  <link rel="stylesheet" href="radius-system.css?v=20260925_HEROUX31">
-  <link rel="stylesheet" href="success-system.css?v=20260925_HEROUX31">
-  <link rel="stylesheet" href="action-menu.css?v=20260925_HEROUX31">
-  <link rel="stylesheet" href="market-hub.css?v=20260925_HEROUX31">
-  <link rel="stylesheet" href="radar.css?v=20260925_HEROUX31">
-  <link rel="stylesheet" href="candidature.css?v=20260925_HEROUX31">
+  <link rel="stylesheet" href="parallax.css?v=20260925_HEROUX32">
+  <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX32">
+  <link rel="stylesheet" href="es-nav-ux.css?v=20260925_HEROUX32">
+  <link rel="stylesheet" href="badge-system.css?v=20260925_HEROUX32">
+  <link rel="stylesheet" href="micro-interactions.css?v=20260925_HEROUX32">
+  <link rel="stylesheet" href="radius-system.css?v=20260925_HEROUX32">
+  <link rel="stylesheet" href="success-system.css?v=20260925_HEROUX32">
+  <link rel="stylesheet" href="action-menu.css?v=20260925_HEROUX32">
+  <link rel="stylesheet" href="market-hub.css?v=20260925_HEROUX32">
+  <link rel="stylesheet" href="radar.css?v=20260925_HEROUX32">
+  <link rel="stylesheet" href="candidature.css?v=20260925_HEROUX32">
+  <link rel="stylesheet" href="market-hub-pro.css?v=20260925_HEROUX32">
   <style id="es-font-nevera">
     @font-face {
       font-family: 'Nevera';
@@ -4777,6 +4778,105 @@
             </div>
           </div>
         </section>
+
+        <!-- HUB MERCATO PRO – HEROUX32 -->
+        <section id="market-hub-pro" class="market-hub-pro">
+          <div class="market-grid">
+            <!-- Available Transfers -->
+            <div class="market-list">
+              <div style="padding:16px;">
+                <input type="text" id="market-filter" placeholder="🔍 Search IA stealth... (DS / Scout / Wall / Club)" class="market-filter" style="width:100%; padding:14px 20px; background:rgba(0,0,0,0.6); border:1px solid rgba(255,255,255,0.12); border-radius:9999px; color:#fff; font-size:14px; box-sizing:border-box;">
+              </div>
+              
+              <div class="market-item" draggable="true" data-role="DS"><span>Northwind Labs • €2,400 • Wall Transfer</span><span class="market-pill">DS</span></div>
+              <div class="market-item" draggable="true" data-role="Scout"><span>Halcyon Bank • €1,800 • Wall Transfer</span><span class="market-pill">SCOUT</span></div>
+              <div class="market-item" draggable="true" data-role="Analyst"><span>Nova FC • €950 • Wall Transfer</span><span class="market-pill">ANALYST</span></div>
+              <div class="market-item" draggable="true" data-role="DS"><span>Club America • €3,200 • Wall Transfer</span><span class="market-pill">DS</span></div>
+              <div class="market-item" draggable="true" data-role="Scout"><span>Real Madrid • €4,100 • Wall Transfer</span><span class="market-pill">SCOUT</span></div>
+              <div class="market-item" draggable="true" data-role="Analyst"><span>Manchester City • €2,750 • Wall Transfer</span><span class="market-pill">ANALYST</span></div>
+              <div class="market-item" draggable="true" data-role="DS"><span>Chelsea FC • €2,900 • Wall Transfer</span><span class="market-pill">DS</span></div>
+              <div class="market-item" draggable="true" data-role="Scout"><span>Paris Saint-Germain • €3,500 • Wall Transfer</span><span class="market-pill">SCOUT</span></div>
+              <div class="market-item" draggable="true" data-role="Analyst"><span>Bayern Monaco • €3,100 • Wall Transfer</span><span class="market-pill">ANALYST</span></div>
+              <div class="market-item" draggable="true" data-role="DS"><span>Juventus • €2,600 • Wall Transfer</span><span class="market-pill">DS</span></div>
+              <div class="market-item" draggable="true" data-role="Scout"><span>AC Milan • €2,300 • Wall Transfer</span><span class="market-pill">SCOUT</span></div>
+              <div class="market-item" draggable="true" data-role="Analyst"><span>Inter • €2,550 • Wall Transfer</span><span class="market-pill">ANALYST</span></div>
+              <div class="market-item" draggable="true" data-role="DS"><span>Napoli • €2,100 • Wall Transfer</span><span class="market-pill">DS</span></div>
+              <div class="market-item" draggable="true" data-role="Scout"><span>Roma • €1,950 • Wall Transfer</span><span class="market-pill">SCOUT</span></div>
+              <div class="market-item" draggable="true" data-role="Analyst"><span>Lazio • €1,800 • Wall Transfer</span><span class="market-pill">ANALYST</span></div>
+              <div class="market-item" draggable="true" data-role="DS"><span>Fiorentina • €1,650 • Wall Transfer</span><span class="market-pill">DS</span></div>
+              <div class="market-item" draggable="true" data-role="Scout"><span>Atalanta • €2,450 • Wall Transfer</span><span class="market-pill">SCOUT</span></div>
+              <div class="market-item" draggable="true" data-role="Analyst"><span>Benfica • €2,200 • Wall Transfer</span><span class="market-pill">ANALYST</span></div>
+              <div class="market-item" draggable="true" data-role="DS"><span>Porto • €2,050 • Wall Transfer</span><span class="market-pill">DS</span></div>
+              <div class="market-item" draggable="true" data-role="Scout"><span>Ajax • €1,900 • Wall Transfer</span><span class="market-pill">SCOUT</span></div>
+              <div class="market-item" draggable="true" data-role="Analyst"><span>Borussia Dortmund • €2,800 • Wall Transfer</span><span class="market-pill">ANALYST</span></div>
+              <div class="market-item" draggable="true" data-role="DS"><span>Bayer Leverkusen • €2,700 • Wall Transfer</span><span class="market-pill">DS</span></div>
+              <div class="market-item" draggable="true" data-role="Scout"><span>Atletico Madrid • €2,650 • Wall Transfer</span><span class="market-pill">SCOUT</span></div>
+              <div class="market-item" draggable="true" data-role="Analyst"><span>Barcelona • €3,800 • Wall Transfer</span><span class="market-pill">ANALYST</span></div>
+              <div class="market-item" draggable="true" data-role="DS"><span>Liverpool • €3,400 • Wall Transfer</span><span class="market-pill">DS</span></div>
+              <div class="market-item" draggable="true" data-role="Scout"><span>Arsenal • €3,000 • Wall Transfer</span><span class="market-pill">SCOUT</span></div>
+              <div class="market-item" draggable="true" data-role="Analyst"><span>Tottenham Hotspur • €2,100 • Wall Transfer</span><span class="market-pill">ANALYST</span></div>
+              <div class="market-item" draggable="true" data-role="DS"><span>Newcastle United • €2,250 • Wall Transfer</span><span class="market-pill">DS</span></div>
+              <div class="market-item" draggable="true" data-role="Scout"><span>Aston Villa • €1,950 • Wall Transfer</span><span class="market-pill">SCOUT</span></div>
+              <div class="market-item" draggable="true" data-role="Analyst"><span>West Ham • €1,600 • Wall Transfer</span><span class="market-pill">ANALYST</span></div>
+              <div class="market-item" draggable="true" data-role="DS"><span>Sporting CP • €2,150 • Wall Transfer</span><span class="market-pill">DS</span></div>
+              <div class="market-item" draggable="true" data-role="Scout"><span>PSV Eindhoven • €1,750 • Wall Transfer</span><span class="market-pill">SCOUT</span></div>
+              <div class="market-item" draggable="true" data-role="Analyst"><span>Feyenoord • €1,500 • Wall Transfer</span><span class="market-pill">ANALYST</span></div>
+              <div class="market-item" draggable="true" data-role="DS"><span>Celtic • €1,300 • Wall Transfer</span><span class="market-pill">DS</span></div>
+              <div class="market-item" draggable="true" data-role="Scout"><span>Rangers FC • €1,250 • Wall Transfer</span><span class="market-pill">SCOUT</span></div>
+              <div class="market-item" draggable="true" data-role="Analyst"><span>Olympique Marseille • €1,850 • Wall Transfer</span><span class="market-pill">ANALYST</span></div>
+              <div class="market-item" draggable="true" data-role="DS"><span>Olympique Lyon • €1,700 • Wall Transfer</span><span class="market-pill">DS</span></div>
+              <div class="market-item" draggable="true" data-role="Scout"><span>AS Monaco • €2,300 • Wall Transfer</span><span class="market-pill">SCOUT</span></div>
+              <div class="market-item" draggable="true" data-role="Analyst"><span>Sevilla FC • €1,800 • Wall Transfer</span><span class="market-pill">ANALYST</span></div>
+              <div class="market-item" draggable="true" data-role="DS"><span>Real Betis • €1,600 • Wall Transfer</span><span class="market-pill">DS</span></div>
+              <div class="market-item" draggable="true" data-role="Scout"><span>Villarreal • €1,900 • Wall Transfer</span><span class="market-pill">SCOUT</span></div>
+              <div class="market-item" draggable="true" data-role="Analyst"><span>Valencia CF • €1,550 • Wall Transfer</span><span class="market-pill">ANALYST</span></div>
+              <div class="market-item" draggable="true" data-role="DS"><span>Athletic Club • €1,750 • Wall Transfer</span><span class="market-pill">DS</span></div>
+              <div class="market-item" draggable="true" data-role="Scout"><span>Real Sociedad • €1,850 • Wall Transfer</span><span class="market-pill">SCOUT</span></div>
+              <div class="market-item" draggable="true" data-role="Analyst"><span>Galatasaray • €1,400 • Wall Transfer</span><span class="market-pill">ANALYST</span></div>
+              <div class="market-item" draggable="true" data-role="DS"><span>Fenerbahce • €1,350 • Wall Transfer</span><span class="market-pill">DS</span></div>
+              <div class="market-item" draggable="true" data-role="Scout"><span>Besiktas • €1,200 • Wall Transfer</span><span class="market-pill">SCOUT</span></div>
+              <div class="market-item" draggable="true" data-role="Analyst"><span>River Plate • €1,650 • Wall Transfer</span><span class="market-pill">ANALYST</span></div>
+              <div class="market-item" draggable="true" data-role="DS"><span>Boca Juniors • €1,600 • Wall Transfer</span><span class="market-pill">DS</span></div>
+              <div class="market-item" draggable="true" data-role="Scout"><span>Flamengo • €1,950 • Wall Transfer</span><span class="market-pill">SCOUT</span></div>
+              <div class="market-item" draggable="true" data-role="Analyst"><span>Palmeiras • €2,000 • Wall Transfer</span><span class="market-pill">ANALYST</span></div>
+              <div class="market-item" draggable="true" data-role="DS"><span>Santos FC • €1,450 • Wall Transfer</span><span class="market-pill">DS</span></div>
+            </div>
+
+            <!-- Secret List -->
+            <div class="market-list market-secret-list">
+              <div style="padding:16px 20px; border-bottom:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:space-between;">
+                <h3 style="margin:0; color:#00f5d4; font-size:16px;">🔒 Secret List Stealth</h3>
+                <span class="market-badge">2</span>
+              </div>
+              <div class="market-item stealth">
+                <span>Northwind Labs • Scouting Target</span>
+                <span class="market-pill">SCOUT</span>
+              </div>
+              <div class="market-item stealth">
+                <span>Halcyon Bank • Finanziamento Club</span>
+                <span class="market-pill">WALL</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wall Transfer Interactive -->
+          <div class="market-wall" onclick="this.style.transition='none'; this.innerHTML='<h3>💥 Wall Transfer Activated</h3><p>Drop to Secret List</p>'; setTimeout(() => location.reload(), 1800)">
+            <h3 style="color:#00f5d4; margin-bottom:8px;">💥 Wall Transfer FIFA Style</h3>
+            <p style="color:#bbb; margin:0;">Trascina un elemento nella Secret List per renderlo Stealth • Zero Latenza</p>
+          </div>
+
+          <!-- Timeline mock -->
+          <div class="market-timeline">
+            <div class="timeline-item"><span class="timeline-dot sent"></span> Sent to ap@northwind.example (Sep 23)</div>
+            <div class="timeline-item"><span class="timeline-dot opened"></span> Opened by Northwind Labs (Sep 23)</div>
+            <div class="timeline-item"><span class="timeline-dot paid"></span> Paid via Halcyon Bank • Trattativa Conclusa</div>
+          </div>
+
+          <!-- Action bar -->
+          <div class="market-actions">
+            <button type="button" class="market-btn-export" onclick="exportMarketReport()">📄 Export Report Secret List</button>
+          </div>
+        </section>
       </section>
     </div>
 
@@ -6775,16 +6875,17 @@
     </div>
   </div>
 
-  <script src="badge-handler.js?v=20260925_HEROUX31"></script>
-  <script src="mobile-webapp.js?v=20260925_HEROUX31"></script>
-  <script src="es-nav-ux.js?v=20260925_HEROUX31"></script>
-  <script src="micro-interactions.js?v=20260925_HEROUX31"></script>
-  <script src="radius-handler.js?v=20260925_HEROUX31" defer></script>
-  <script src="dynamic-sync.js?v=20260925_HEROUX31" defer></script>
-  <script src="success-handler.js?v=20260925_HEROUX31" defer></script>
-  <script src="action-menu-handler.js?v=20260925_HEROUX31" defer></script>
-  <script src="market-hub-handler.js?v=20260925_HEROUX31" defer></script>
-  <script src="radar-handler.js?v=20260925_HEROUX31" defer></script>
-  <script src="candidature-handler.js?v=20260925_HEROUX31" defer></script>
+  <script src="badge-handler.js?v=20260925_HEROUX32"></script>
+  <script src="mobile-webapp.js?v=20260925_HEROUX32"></script>
+  <script src="es-nav-ux.js?v=20260925_HEROUX32"></script>
+  <script src="micro-interactions.js?v=20260925_HEROUX32"></script>
+  <script src="radius-handler.js?v=20260925_HEROUX32" defer></script>
+  <script src="dynamic-sync.js?v=20260925_HEROUX32" defer></script>
+  <script src="success-handler.js?v=20260925_HEROUX32" defer></script>
+  <script src="action-menu-handler.js?v=20260925_HEROUX32" defer></script>
+  <script src="market-hub-handler.js?v=20260925_HEROUX32" defer></script>
+  <script src="radar-handler.js?v=20260925_HEROUX32" defer></script>
+  <script src="candidature-handler.js?v=20260925_HEROUX32" defer></script>
+  <script src="market-hub-pro-handler.js?v=20260925_HEROUX32" defer></script>
 </body>
 </html>
