@@ -3,7 +3,16 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — HEROUX18 — Click Logo Istantaneo al Primo Colpo (Capture Phase & StopPropagation):
+Ultimo aggiornamento: **2026-09-26** — HEROUX19 — Reset Sincrono Totale Logo Brand con rAF di Rinforzo e Pulizia SwitchView:
+1. **Reset Sincrono Totale Logo Brand (`es-nav-ux.js`)**:
+   - Handler capture phase con rimozione sincrona immediata di `is-internal-view`, `is-view-mappa`, `is-view-stampa` e classe `.is-on` dall'indicatore, seguito da `syncActiveLink('home', true)` e `switchView('home', '#hero')`.
+   - `requestAnimationFrame` di rinforzo che riafferma lo stato pulito su eventuali ritardi del task loop.
+   - `wrapSwitchView()` ora riconosce `targetView === 'home'` bypassando qualsiasi timeout o animazione leave ritardata (switch sincrono istantaneo a Home).
+2. **Hardening `coreSwitchView` & `switchView` (`index.html`, `app.js`)**:
+   - Ramo `home` di `coreSwitchView` (index.html) e `switchView` (app.js) integrato con la rimozione esplicita garantita delle classi di vista interna e spegnimento indicatore.
+3. **File**: `es-nav-ux.js`, `index.html`, `app.js`, `sw.js`, `version.json`. Cache `v20260925_HEROUX19`.
+
+Feature precedente: **2026-09-25** — HEROUX18 — Click Logo Istantaneo al Primo Colpo (Capture Phase & StopPropagation):
 1. **Click Logo / Brand in Capture Phase (`es-nav-ux.js`)**:
    - Registrato il click listener su `.site-brand, a[href="#hero"], a[href="#view-home"]` in Capture Phase (`useCapture: true`) con `preventDefault()` e `stopPropagation()`.
    - Risolto il caso di potenziale corsa/inghiottimento da `#mappa-portal`: ora il primo singolo click sul brand resetta all'istante l'hash a `#hero`, rimuove le classi `is-internal-view`, `is-view-mappa` e `is-view-stampa`, spegne la pillola Lerp GPU e riporta l'header allo stato 100% trasparente senza ritardi.

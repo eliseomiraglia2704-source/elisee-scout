@@ -210,12 +210,21 @@
           try { e.stopPropagation(); } catch (_) {}
         }
         document.body.classList.remove('is-internal-view', 'is-view-mappa', 'is-view-stampa');
+        var ind = document.querySelector('.nav-indicator');
+        if (ind) ind.classList.remove('is-on');
+        if (window.__esNavUX && window.__esNavUX.syncActiveLink) {
+          window.__esNavUX.syncActiveLink('home', true);
+        }
         if (window.switchView) {
           window.switchView('home', '#hero');
         } else {
-          window.location.hash = '#hero';
+          location.hash = '#hero';
         }
-        syncActiveLink('home', true);
+        requestAnimationFrame(function () {
+          document.body.classList.remove('is-internal-view', 'is-view-mappa', 'is-view-stampa');
+          var ind2 = document.querySelector('.nav-indicator');
+          if (ind2) ind2.classList.remove('is-on');
+        });
         window.scrollTo({ top: 0, left: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
       }, true);
     });
@@ -267,10 +276,18 @@
       // Aggiorna stato navbar e header background
       syncActiveLink(targetView, false);
 
-      // Se reduced motion o prima home, switch secco ma controllato
-      if (reduced || !activeOutgoing) {
+      // Se reduced motion, prima home o ritorno esplicito a home: switch secco e sincrono
+      if (reduced || !activeOutgoing || targetView === 'home') {
         var res = orig.apply(this, arguments);
-        setTimeout(function () { syncActiveLink(targetView, true); }, 20);
+        document.body.classList.remove('is-internal-view', 'is-view-mappa', 'is-view-stampa');
+        var ind = document.querySelector('.nav-indicator');
+        if (ind) ind.classList.remove('is-on');
+        syncActiveLink('home', true);
+        requestAnimationFrame(function () {
+          document.body.classList.remove('is-internal-view', 'is-view-mappa', 'is-view-stampa');
+          var ind2 = document.querySelector('.nav-indicator');
+          if (ind2) ind2.classList.remove('is-on');
+        });
         return res;
       }
 

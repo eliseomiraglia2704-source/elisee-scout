@@ -5204,6 +5204,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           showEl('home-views-group');
           showEl('view-home');
+          document.body.classList.remove('is-internal-view', 'is-view-mappa', 'is-view-stampa');
+          try {
+            var ind = document.querySelector('.nav-indicator');
+            if (ind) ind.classList.remove('is-on');
+          } catch (_) {}
         }
       } catch (e2) {
         console.error(e2);
