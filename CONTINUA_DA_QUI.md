@@ -3,7 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — OTPV3 — Verifica numero (login WhatsApp) come nel video delle 09:25:
+Ultimo aggiornamento: **2026-09-25** — LOGINV4 — Login come nel video delle 09:27 (card bianca che scorre):
+1. Card bianca 660×560, bordo bianco, ombra morbida. A sinistra Accedi (campi chiari, bottone nero, Facebook / Google / Apple). A destra la foto con «Ciao» e **Iscriviti**.
+2. Iscriviti fa scorrere la foto a sinistra («Bentornato» / **Accedi**) e il modulo a destra. Stessi tempi del video: 0,65 s.
+3. Il codice OTP del numero resta il pannello scuro sopra la card.
+4. **File**: `login-slide.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_LOGINV4`. Commit `f57683bf`.
+
+Feature precedente: **2026-09-25** — OTPV3 — Verifica numero (login WhatsApp) come nel video delle 09:25:
 1. Quattro caselle in riga. A 4 cifre ruotano sul cerchio tratteggiato (origine sul centro, non un percorso interpolato).
 2. Se il codice è quello del messaggio, le caselle si chiudono al centro: «Numero verificato», spunta verde, **Continua**.
 3. Si apre da Accedi → numero WhatsApp. Non è la riga email in basso nel dossier.
