@@ -3,7 +3,19 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX24 — Zero-Latency Navigation Controller on All Internal Views:
+Ultimo aggiornamento: **2026-09-26** — HEROUX25 — Radius System Zero-Latency Architecture:
+1. **Sistema Matematico Radius Completo (`radius-system.css`, `radius-handler.js`, `styles/radius-system.css`, `js/radius-handler.js`)**:
+   - Implementate le regole matematiche dei raggi d'angolo:
+     - Nested corners (`calc(var(--outer) - var(--inner))`).
+     - Scale proportion (radius follows component size).
+     - Pill geometry (`border-radius: 9999px; padding: 2px 12px;`).
+     - Edges layout (`border-radius: 16px 16px 0 0;`).
+     - Outer ring with gap (`calc(var(--outer) + var(--gap))`).
+     - Image clipping (`.radius-image.clip` con gradiente di luce speculare).
+   - Controller JS zero-latenza (`applyRadius`, `applyPill`, `applyEdges`, `applyRing`, `clipImage`) esposto come `window.EliseeRadiusSystem` e auto-eseguito su `DOMContentLoaded`.
+2. **File**: `radius-system.css`, `radius-handler.js`, `styles/radius-system.css`, `js/radius-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX25`.
+
+Feature precedente: **2026-09-26** — HEROUX24 — Zero-Latency Navigation Controller on All Internal Views:
 1. **Navigazione Sincrona Zero-Latenza su Tutte le Viste (`es-nav-ux.js`, `es-nav-ux.css`)**:
    - Rimosso ogni timeout artificiale e delay di uscita: `wrapSwitchView()` esegue `orig.apply(this, arguments)` sincrono a t=0ms per tutte le viste (Bacheca, Stampa, Mappa, About, TC Panel, Iscrizioni, Mercato Hub, Schede Tecniche, Squadre).
    - Scroll reset immediato `window.scrollTo(0, 0)` e sblocco overflow (`document.body.style.overflow = ''`) al cambio vista.

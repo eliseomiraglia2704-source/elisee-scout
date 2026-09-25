@@ -1,0 +1,66 @@
+/* ============================================= */
+/* HEROUX25 – Radius System (Zero-Latency)      */
+/* ============================================= */
+.radius-box {
+  position: relative;
+  border-radius: var(--radius, 8px);
+  overflow: hidden;
+  transition: all 40ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Nested corner = outer - padding */
+.radius-box.nested {
+  --outer: 12px;
+  --inner: 4px;
+  border-radius: calc(var(--outer) - var(--inner));
+}
+
+/* Pill = full radius su una linea */
+.radius-pill {
+  border-radius: 9999px;
+  padding: 2px 12px;
+}
+
+/* Edges: no corner */
+.radius-edges {
+  border-radius: 16px 16px 0 0;
+}
+
+/* Ring: outer = inner + gap */
+.radius-ring {
+  --gap: 2px;
+  border: var(--gap) solid transparent;
+  border-radius: calc(var(--outer) + var(--gap));
+}
+
+/* Image clipping */
+.radius-image {
+  border-radius: var(--radius, 8px);
+  overflow: hidden;
+}
+
+/* Square corner pokes out */
+.radius-image.square {
+  border-radius: 0;
+}
+
+/* Clip the image */
+.radius-image.clip {
+  border-radius: var(--radius, 8px);
+  overflow: hidden;
+  position: relative;
+}
+
+.radius-image.clip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3));
+  z-index: 1;
+}
+
+/* Full system demo */
+.radius-demo {
+  --radius: 8px;
+  border-radius: var(--radius);
+}
