@@ -1,0 +1,74 @@
+/* Bottone Elimina: il coperchio si alza e la carta si strappa. Non cancella dati. */
+.es-trash {
+  position: fixed;
+  left: 22px;
+  bottom: 24px;
+  z-index: 3800;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 16px 0 18px;
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  border-radius: 14px;
+  background: #0b1220;
+  color: #38bdf8;
+  font-family: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+body:has(#es-otp-bottom-banner) .es-trash { bottom: 96px; }
+.es-trash-bin {
+  position: relative;
+  width: 16px;
+  height: 18px;
+}
+.es-trash-lid,
+.es-trash-can,
+.es-trash-paper { position: absolute; left: 0; right: 0; }
+.es-trash-lid {
+  top: 0;
+  height: 3px;
+  border: 1.5px solid #7dd3fc;
+  border-bottom: 0;
+  border-radius: 2px 2px 0 0;
+  transform-origin: 10% 100%;
+  transition: transform 0.35s ease;
+}
+.es-trash-lid::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: -3px;
+  width: 6px;
+  height: 3px;
+  border: 1.5px solid #7dd3fc;
+  border-bottom: 0;
+  border-radius: 2px 2px 0 0;
+}
+.es-trash-can {
+  top: 4px;
+  bottom: 0;
+  border: 1.5px solid #7dd3fc;
+  border-radius: 0 0 3px 3px;
+}
+.es-trash-paper {
+  top: 5px;
+  left: 4px;
+  width: 8px;
+  height: 8px;
+  background:
+    linear-gradient(#38bdf8, #38bdf8) 0 0 / 2px 100% no-repeat,
+    linear-gradient(#38bdf8, #38bdf8) 3px 0 / 2px 100% no-repeat,
+    linear-gradient(#38bdf8, #38bdf8) 6px 0 / 2px 100% no-repeat;
+  opacity: 0;
+}
+.es-trash.is-deleting .es-trash-lid { transform: translateY(-3px) rotate(-28deg); }
+.es-trash.is-deleting .es-trash-paper { animation: esTrashFall 0.9s 0.28s ease forwards; }
+@keyframes esTrashFall {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(10px) scaleY(0.4); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .es-trash-lid, .es-trash-paper { transition: none; animation: none; }
+}

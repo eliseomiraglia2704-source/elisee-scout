@@ -64,6 +64,7 @@
   <link rel="stylesheet" href="theme-switch.css?v=20260925_THEME1">
   <link rel="stylesheet" href="pw-live.css?v=20260925_PWLIVE1">
   <link rel="stylesheet" href="site-bg.css?v=20260925_BG1">
+  <link rel="stylesheet" href="trash-btn.css?v=20260925_TRASH1">
   <link rel="stylesheet" href="role-sidebar-pro.css?v=20260924_HOVERSIDE1">
   <style id="es-font-nevera">
     @font-face {
@@ -3807,6 +3808,14 @@
 
     <!-- USER DOSSIER VIEW -->
     <div id="user-dossier-view-group" style="display: none;">
+      <button type="button" class="es-trash" id="es-trash" aria-label="Animazione elimina, non cancella dati">
+        <span class="es-trash-txt">Elimina</span>
+        <span class="es-trash-bin" aria-hidden="true">
+          <span class="es-trash-lid"></span>
+          <span class="es-trash-can"></span>
+          <span class="es-trash-paper"></span>
+        </span>
+      </button>
       <div class="es-share" id="es-share">
         <button type="button" class="es-share-main">Condividi</button>
         <span class="es-share-flood" aria-hidden="true"></span>
@@ -6013,6 +6022,7 @@
   <script src="btn-label-anim.js?v=20260925_BTNANIM1"></script>
   <script src="share-btn.js?v=20260925_SHARE1"></script>
   <script src="pw-live.js?v=20260925_PWLIVE1"></script>
+  <script src="trash-btn.js?v=20260925_TRASH1"></script>
   <script src="sortable-table.js?v=20260924_FINISH1"></script>
   <script src="elisee-loader.js?v=20260918_LOADER1"></script>
   <!-- Three.js WebGL, OrbitControls, GLTFLoader & DecalGeometry Runtime per Avatar 3D Hyper3D / GLB -->
