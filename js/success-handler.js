@@ -1,4 +1,4 @@
-// HEROUX27 – Success is a System Handler
+// HEROUX28 – Success System + Badge & Radius Dinamici
 // Zero-Latency (< 40 ms)
 
 window.EliseeSuccessSystem = {
@@ -44,7 +44,7 @@ window.EliseeSuccessSystem = {
   },
 
   triggerConfetti: function (count) {
-    if (typeof count === 'undefined') count = 30;
+    if (typeof count === 'undefined') count = 40;
     for (var i = 0; i < count; i++) {
       (function () {
         var conf = document.createElement('div');
@@ -117,10 +117,67 @@ window.EliseeSuccessSystem = {
       '  <span style="color:#aaa;">Kill the AI look</span>',
       '</div>'
     ].join('');
+  },
+
+  // HEROUX28 – Connessione reattiva a Badge & Radius
+  connectToStore: function () {
+    var t0 = performance.now();
+    var badges = JSON.parse(localStorage.getItem('elisee_user_badges') || '{}');
+    var radius = JSON.parse(localStorage.getItem('elisee_user_radius') || '{}');
+
+    EliseeSuccessSystem.onMilestonePaid = function () {
+      var b = JSON.parse(localStorage.getItem('elisee_user_badges') || '{}');
+      var r = JSON.parse(localStorage.getItem('elisee_user_radius') || '{}');
+      b['badge-mobile-msgs'] = (b['badge-mobile-msgs'] || 0) + 3;
+      b['badge-inbox'] = (b['badge-inbox'] || 0) + 1;
+      r.pill = 9999;
+      r.ringGap = 4;
+
+      if (window.EliseeDynamicSync) {
+        window.EliseeDynamicSync.updateBadges(b);
+        window.EliseeDynamicSync.updateRadius(r);
+      }
+
+      EliseeSuccessSystem.triggerConfetti(40);
+      EliseeSuccessSystem.showToast('€2,400 milestone! Confetti + Badge + Radius updated', 3000);
+      var dur = (performance.now() - t0).toFixed(2);
+      console.log('[HEROUX28] Milestone paid in ' + dur + ' ms | Badge: ' + b['badge-mobile-msgs']);
+    };
+
+    var triggerBtn = document.getElementById('trigger-milestone');
+    if (triggerBtn) {
+      triggerBtn.addEventListener('click', EliseeSuccessSystem.onMilestonePaid);
+    }
+  },
+
+  onMilestonePaid: function () {
+    var badges = JSON.parse(localStorage.getItem('elisee_user_badges') || '{}');
+    badges['badge-mobile-msgs'] = (badges['badge-mobile-msgs'] || 0) + 3;
+    if (window.EliseeDynamicSync) {
+      window.EliseeDynamicSync.updateBadges(badges);
+    }
+    EliseeSuccessSystem.triggerConfetti(40);
+    EliseeSuccessSystem.showToast('€2,400 milestone! Confetti + badge aggiornato', 3000);
+  },
+
+  connectRadiusPill: function () {
+    var badgePill = document.querySelector('.badge-pill');
+    if (badgePill) {
+      badgePill.style.transition = 'transform 40ms';
+      badgePill.addEventListener('click', function () {
+        var radius = JSON.parse(localStorage.getItem('elisee_user_radius') || '{}');
+        radius.pill = 9999;
+        if (window.EliseeDynamicSync) {
+          window.EliseeDynamicSync.updateRadius(radius);
+        }
+      });
+    }
   }
 };
 
 // Auto-init on load
 window.addEventListener('DOMContentLoaded', function () {
   EliseeSuccessSystem.uxEngine();
+  EliseeSuccessSystem.connectToStore();
+  EliseeSuccessSystem.connectRadiusPill();
 });

@@ -3,7 +3,7 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX28 — Action Menu Zero-Latency Architecture:
+Ultimo aggiornamento: **2026-09-26** — HEROUX28 — Action Menu Zero-Latency & Success System Connected Architecture:
 1. **Action Menu Zero-Latency Engine (`action-menu.css`, `action-menu-handler.js`, `styles/action-menu.css`, `js/action-menu-handler.js`)**:
    - Implementate le regole matematiche del video (HEROUX28):
      - Trigger pulsante con glow (#ff00ff / ciano) e drop-shadow preciso.
@@ -14,7 +14,12 @@ Ultimo aggiornamento: **2026-09-26** — HEROUX28 — Action Menu Zero-Latency A
      - Navigazione da tastiera completa zero-latency (<40ms glide): `ArrowUp`, `ArrowDown`, `Home`, `End`, `Enter`, `Escape`, `Tab`.
      - Chiusura click-outside ed eventi dedicati.
    - Esposizione globale: `window.EliseeActionMenu` (`init`, `toggle`, `close`, `setActive`, `moveActive`, `chooseItem`).
-2. **File**: `action-menu.css`, `action-menu-handler.js`, `styles/action-menu.css`, `js/action-menu-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX28`.
+2. **Success System + Badge & Radius Dinamici Connessi (`success-handler.js`, `js/success-handler.js`)**:
+   - `connectToStore()`: unione diretta con `localStorage['elisee_user_badges']` e `localStorage['elisee_user_radius']`.
+   - `onMilestonePaid()`: incrementa badge mobile msgs (+3), badge inbox (+1), imposta `radius.pill = 9999` (pill infinito), attiva confetti (40) e visualizza toast con benchmark <40 ms.
+   - `connectRadiusPill()`: toggle interattivo per la pillola raggio matematico.
+   - Demo `#success-system` con conteggio live del badge in millisecondi.
+3. **File**: `action-menu.css`, `action-menu-handler.js`, `styles/action-menu.css`, `js/action-menu-handler.js`, `success-handler.js`, `js/success-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX28`.
 
 Feature precedente: **2026-09-26** — HEROUX27 — Success is a System Architecture:
 1. **Success is a System Engine (`success-system.css`, `success-handler.js`, `styles/success-system.css`, `js/success-handler.js`)**:

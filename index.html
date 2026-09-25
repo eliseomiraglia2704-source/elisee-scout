@@ -6603,33 +6603,36 @@
       <img src="immagini/logo/logo-site.png" alt="Image" />
     </div>
   </div>
-  <!-- SUCCESS IS A SYSTEM – HEROUX27 -->
-  <div id="success-system" style="display:none;" aria-hidden="true">
+  <!-- SUCCESS IS A SYSTEM – HEROUX28 -->
+  <div id="success-system" class="success-box" style="display:none;" aria-hidden="true">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-      <span class="success-pill">Success Engine</span>
+      <h2 style="font-size:16px; margin:0; color:#fff;">Success is a System • HEROUX28</h2>
       <button onclick="document.getElementById('success-system').style.display='none'" style="background:none; border:none; color:#888; font-size:18px; cursor:pointer;">&times;</button>
     </div>
-    <!-- Done screens, toast, confetti, open loop, rare joy, 5 decisions, UX Engine -->
     <div style="display:flex; flex-direction:column; gap:8px;">
-      <button onclick="EliseeSuccessSystem.createDoneScreen('Invoice Sent', 'Northwind Labs • €2,400 due Oct 12', 2)" class="es-btn es-btn-sm" style="background:#00f5d4; color:#000; font-weight:700; border-radius:9999px;">Trigger Done Screen</button>
-      <button onclick="EliseeSuccessSystem.showToast('Notifications saved', 2500)" class="es-btn es-btn-sm" style="border-radius:9999px;">Show Toast (reversible)</button>
-      <button onclick="EliseeSuccessSystem.triggerConfetti(30)" class="es-btn es-btn-sm" style="border-radius:9999px;">Trigger Confetti (milestone)</button>
-      <button onclick="EliseeSuccessSystem.showRareJoy()" class="es-btn es-btn-sm" style="border-radius:9999px;">Rare Joy (first paid)</button>
+      <button id="trigger-milestone" class="success-pill" style="border:none; text-align:center;">Trigger Milestone Paid €2,400</button>
+      <button onclick="EliseeSuccessSystem.showToast('Reversible toast - notifications saved', 2500)" class="es-btn es-btn-sm" style="border-radius:9999px;">Reversible Toast</button>
+      <button onclick="EliseeSuccessSystem.triggerConfetti(30)" class="es-btn es-btn-sm" style="border-radius:9999px;">Confetti (milestone only)</button>
+      <button onclick="EliseeSuccessSystem.showRareJoy()" class="es-btn es-btn-sm" style="border-radius:9999px;">Rare Joy (First Invoice Paid)</button>
       <button onclick="EliseeSuccessSystem.openLoop('INV-2051')" class="es-btn es-btn-sm" style="border-radius:9999px;">Open Loop</button>
     </div>
-    
-    <!-- 5 Decisions One Screen -->
-    <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin:20px 0;">
-      <div onclick="this.style.background='#00f5d4'; this.style.color='#000'" class="success-pill" style="text-align:center; padding:4px 6px; font-size:10px;">Specific</div>
-      <div onclick="this.style.background='#00f5d4'; this.style.color='#000'" class="success-pill" style="text-align:center; padding:4px 6px; font-size:10px;">Next Step</div>
-      <div onclick="this.style.background='#00f5d4'; this.style.color='#000'" class="success-pill" style="text-align:center; padding:4px 6px; font-size:10px;">Stakes</div>
-      <div onclick="this.style.background='#00f5d4'; this.style.color='#000'" class="success-pill" style="text-align:center; padding:4px 6px; font-size:10px;">Open Loop</div>
-      <div onclick="this.style.background='#00f5d4'; this.style.color='#000'" class="success-pill" style="text-align:center; padding:4px 6px; font-size:10px;">Rare Joy</div>
+
+    <!-- Badge reattivo -->
+    <div class="badge-pill" style="margin-top:20px; padding:8px 20px; border-radius:9999px; background:#ff2d55; color:#fff; font-weight:700; font-size:13px; text-align:center; cursor:pointer;">
+      Badge Mobile Msgs: <span id="live-badge">3</span>
     </div>
 
-    <!-- UX Engine -->
-    <div id="ux-engine" style="background:#0a0a0a; padding:16px; border-radius:12px; margin-top:16px;"></div>
+    <!-- UX Engine collegato -->
+    <div id="ux-engine" class="success-box" style="margin-top:16px;"></div>
   </div>
+  <script>
+    // Aggiornamento live badge
+    setInterval(function () {
+      var badges = JSON.parse(localStorage.getItem('elisee_user_badges') || '{}');
+      var lb = document.getElementById('live-badge');
+      if (lb) lb.textContent = badges['badge-mobile-msgs'] || 0;
+    }, 800);
+  </script>
 
   <!-- ACTION MENU – HEROUX28 -->
   <div id="action-menu-dock" style="position:fixed; bottom:24px; left:24px; z-index:999990;">
