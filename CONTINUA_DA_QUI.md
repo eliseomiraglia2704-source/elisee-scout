@@ -3,7 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — HEROUX17 — Allineamento Glass Header Mappa e Click Logo Resiliente a Doppia Pressione:
+Ultimo aggiornamento: **2026-09-25** — HEROUX18 — Click Logo Istantaneo al Primo Colpo (Capture Phase & StopPropagation):
+1. **Click Logo / Brand in Capture Phase (`es-nav-ux.js`)**:
+   - Registrato il click listener su `.site-brand, a[href="#hero"], a[href="#view-home"]` in Capture Phase (`useCapture: true`) con `preventDefault()` e `stopPropagation()`.
+   - Risolto il caso di potenziale corsa/inghiottimento da `#mappa-portal`: ora il primo singolo click sul brand resetta all'istante l'hash a `#hero`, rimuove le classi `is-internal-view`, `is-view-mappa` e `is-view-stampa`, spegne la pillola Lerp GPU e riporta l'header allo stato 100% trasparente senza ritardi.
+2. **File**: `es-nav-ux.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX18`.
+
+Feature precedente: **2026-09-25** — HEROUX17 — Allineamento Glass Header Mappa e Click Logo Resiliente a Doppia Pressione:
 1. **Allineamento Token Glass Header Mappa (`mappa-club.css`, `es-nav-ux.css`)**:
    - Sostituito l'override opaco `background: rgba(11, 14, 20, 0.96) !important;` su `body.is-view-mappa` con il token unificato `background: rgba(5, 6, 8, 0.72) !important; backdrop-filter: blur(14px) !important;` per perfetta coerenza con *Chi siamo* e *Bacheca*.
 2. **Click Logo / Brand Resiliente (`es-nav-ux.js`, `index.html`)**:
