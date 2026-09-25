@@ -9243,7 +9243,9 @@ main {
   min-height: 0 !important;
   padding-top: 0 !important; /* padding sulle view/inner, non su main */
 }
-/* Header fisso full-width classico: contenuto sempre sotto */
+/* Header fisso full-width classico ed essenziale */
+header,
+.public-navbar,
 .portfolio-header,
 .main-header {
   position: fixed !important;
@@ -9252,23 +9254,34 @@ main {
   right: 0 !important;
   width: 100% !important;
   height: 64px !important;
+  min-height: 64px !important;
   max-height: 64px !important;
-  padding: 0 24px !important;
+  padding: 0 32px !important;
   margin: 0 !important;
   border-radius: 0 !important;
-  background-color: rgba(10, 15, 30, 0.92) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
-  z-index: 10050 !important;
+  background-color: #0b111e !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+  z-index: 1000 !important;
+  box-sizing: border-box !important;
 }
-body.layout-portfolio #home-views-group,
-body.layout-portfolio #view-home,
-body.layout-portfolio #hero,
-body.layout-portfolio .hero-section {
+
+/* Imposta il padding-top della sezione principale pari all'altezza dell'header */
+.hero-section,
+#hero,
+main {
+  padding-top: 64px !important;
   margin-top: 0 !important;
-  border-top: 0 !important;
+}
+
+/* Rimuovi fascia vuota/spazio nero enorme sopra al titolo Hero */
+.hero-portfolio-stage,
+.hero-portfolio-inner,
+.hero-typography-left {
+  min-height: auto !important;
+  height: auto !important;
+  justify-content: flex-start !important;
+  padding-top: 24px !important;
 }
 /* Tutte le macro-view sotto l'header */
 #view-account,

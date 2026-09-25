@@ -14,6 +14,8 @@
   padding: 0;
 }
 @media (min-width: 721px) {
+  header,
+  .public-navbar,
   .main-header,
   .portfolio-header,
   .main-header.is-scrolled,
@@ -28,18 +30,17 @@
     max-height: 64px !important;
     border-radius: 0 !important;
     margin: 0 !important;
-    padding: 0 24px !important;
-    background: rgba(10, 15, 30, 0.92) !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
+    padding: 0 32px !important;
+    background: #0b111e !important;
     border: none !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
     display: flex !important;
     align-items: center !important;
-    justify-content: center !important;
+    justify-content: space-between !important;
     pointer-events: auto !important;
-    z-index: 10050 !important;
+    z-index: 1000 !important;
+    box-sizing: border-box !important;
   }
 
   .portfolio-navbar,

@@ -3,7 +3,15 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — HEROUX7 — Adozione Struttura Pulita Navbar Pubblica e Isolamento Aree Riservate:
+Ultimo aggiornamento: **2026-09-25** — HEROUX8 — Rimozione Fascia Scura Sotto Navbar & Riassegnazione Padding Sezione Hero:
+1. **Rettifica Altezza & Padding Header (64px rigorosi)**:
+   - Applicate le correzioni fornite: `header, .public-navbar { width: 100%; height: 64px !important; min-height: 64px !important; max-height: 64px !important; padding: 0 32px !important; margin: 0 !important; display: flex !important; align-items: center !important; justify-content: space-between !important; background-color: #0b111e !important; position: fixed !important; top: 0 !important; left: 0 !important; z-index: 1000 !important; box-sizing: border-box !important; }`.
+2. **Eliminazione Vuoto/Fascia Scura Hero**:
+   - Impostato `.hero-section, #hero, main { padding-top: 64px !important; margin-top: 0 !important; }` per fare aderire perfettamente la sezione Hero subito sotto la navbar senza sovrapposizioni né distacchi sproporzionati.
+   - Resettato il posizionamento verticale su `.hero-portfolio-stage, .hero-portfolio-inner, .hero-typography-left` con `min-height: auto !important; height: auto !important; justify-content: flex-start !important; padding-top: 24px !important;`, eliminando il `min-height: 100vh` e `justify-content: center` che spingevano il titolo verso il fondo creando la fascia vuota.
+3. **File**: `index.html`, `style.css`, `apple-nav.css`, `sw.js`, `version.json`. Cache `v20260925_HEROUX8`.
+
+Feature precedente: **2026-09-25** — HEROUX7 — Adozione Struttura Pulita Navbar Pubblica e Isolamento Aree Riservate:
 1. **Header Pubblico a 3 Blocchi Essenziali (.public-navbar)**:
    - Sostituito l'intero header dell'homepage pubblica con la specifica fornita da Eliseo:
      - Sinistra: `.nav-logo` con scritta nitida `ELISEE SCOUT`.
