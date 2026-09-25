@@ -4,8 +4,8 @@
   position: fixed;
   inset: 0;
   z-index: 99997;
-  background: rgba(236, 238, 242, 0.88);
-  backdrop-filter: blur(6px);
+  background: rgba(5, 6, 8, 0.78);
+  backdrop-filter: blur(8px);
   align-items: center;
   justify-content: center;
   padding: 1.25rem;
@@ -25,10 +25,10 @@
   z-index: 5;
   width: 32px;
   height: 32px;
-  border: 0;
+  border: 1px solid rgba(56, 189, 248, 0.35);
   border-radius: 50%;
-  background: #111;
-  color: #fff;
+  background: #0e1118;
+  color: #e2e8f0;
   font-size: 1.15rem;
   line-height: 32px;
   cursor: pointer;
@@ -41,12 +41,12 @@
   width: 100%;
   height: 560px;
   border-radius: 24px;
-  background: #fff;
-  border: 8px solid #fff;
-  box-shadow: 0 12px 80px rgba(41, 30, 113, 0.12);
+  background: #0b0e14;
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
   font-family: Inter, Outfit, sans-serif;
-  color: #16181d;
-  color-scheme: light;
+  color: #f8fafc;
+  color-scheme: dark;
 }
 
 .es-login-card.is-otp {
@@ -161,8 +161,8 @@
 }
 
 .es-login-switch:hover {
-  color: #212625;
-  background: #f9f9f9;
+  color: #041018;
+  background: #38bdf8;
 }
 
 .es-login-form {
@@ -187,7 +187,7 @@
   font-weight: 800;
   letter-spacing: -0.02em;
   text-transform: none;
-  color: #16181d;
+  color: #f8fafc;
 }
 
 .es-login-form label.es-login-lbl {
@@ -195,7 +195,7 @@
   margin: 8px 0 4px;
   font-size: 0.82rem;
   font-weight: 600;
-  color: #1f2430;
+  color: #cbd5e1;
 }
 
 .es-login-form input[type="email"],
@@ -207,17 +207,17 @@
   box-sizing: border-box;
   height: 44px;
   padding: 0 14px;
-  border: 0;
+  border: 1px solid rgba(148, 163, 184, 0.22);
   border-radius: 12px;
-  background: #eef0f4;
-  color: #16181d;
+  background: #050608;
+  color: #f8fafc;
   font-size: 0.92rem;
   font-family: inherit;
   outline: none;
 }
 
 .es-login-form input::placeholder { color: #9aa1ab; }
-.es-login-form input:focus { box-shadow: 0 0 0 2px rgba(15, 118, 110, 0.35); }
+.es-login-form input:focus { border-color: #38bdf8; box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.18); }
 
 .es-login-pw { position: relative; }
 .es-login-pw input { padding-right: 42px; }
@@ -251,18 +251,18 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #1f2430;
+  color: #cbd5e1;
   font-weight: 600;
   cursor: pointer;
 }
 
-.es-login-check input { accent-color: #0f766e; width: 15px; height: 15px; }
+.es-login-check input { accent-color: #38bdf8; width: 15px; height: 15px; }
 
 .es-login-link {
   border: 0;
   background: none;
   padding: 0;
-  color: #0f766e;
+  color: #38bdf8;
   font-weight: 600;
   font-size: 0.78rem;
   cursor: pointer;
@@ -275,8 +275,8 @@
   margin-top: 4px;
   border: 0;
   border-radius: 12px;
-  background: #111;
-  color: #fff;
+  background: #38bdf8;
+  color: #041018;
   font-family: inherit;
   font-size: 0.98rem;
   font-weight: 700;
@@ -304,7 +304,8 @@
   height: 46px;
   border: 0;
   border-radius: 14px;
-  background: #f3f4f6;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(148, 163, 184, 0.2);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -312,7 +313,7 @@
   overflow: hidden;
 }
 
-.es-social:hover { background: #e7e9ee; }
+.es-social:hover { background: rgba(56, 189, 248, 0.14); }
 
 .es-gis-hit {
   position: absolute;
@@ -332,8 +333,8 @@
   margin: 8px 0;
   padding: 8px 10px;
   border-radius: 10px;
-  background: #fde8ea;
-  color: #9f1239;
+  background: rgba(239, 68, 68, 0.12);
+  color: #fecaca;
   font-size: 0.78rem;
   font-weight: 600;
 }
@@ -345,26 +346,26 @@
   margin: 10px 0 8px;
   font-size: 0.72rem;
   line-height: 1.35;
-  color: #4b5160;
+  color: #94a3b8;
   cursor: pointer;
 }
 
-.es-login-consent a { color: #0f766e; }
+.es-login-consent a { color: #38bdf8; }
 
-.es-login-consent input { margin-top: 2px; accent-color: #0f766e; }
+.es-login-consent input { margin-top: 2px; accent-color: #38bdf8; }
 
 .es-login-mobile-switch {
   display: none;
   margin: 12px 0 0;
   text-align: center;
   font-size: 0.78rem;
-  color: #4b5160;
+  color: #94a3b8;
 }
 
 .es-login-mobile-switch button {
   border: 0;
   background: none;
-  color: #0f766e;
+  color: #38bdf8;
   font-weight: 700;
   cursor: pointer;
   font-family: inherit;
@@ -523,11 +524,11 @@
 @keyframes esOtpSpin { to { transform: rotate(360deg); } }
 
 .es-otp.is-ok .es-otp-slot {
-  border-color: #2ee6a8;
-  box-shadow: 0 0 0 1px rgba(46, 230, 168, 0.35);
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.35);
 }
 
-.es-otp.is-ok .es-otp-slot input { color: #2ee6a8; }
+.es-otp.is-ok .es-otp-slot input { color: #38bdf8; }
 
 .es-otp.is-bad .es-otp-slot {
   border-color: #ff4d6a;
@@ -599,8 +600,8 @@
 
 .es-otp-fill {
   border: 0;
-  background: #fff;
-  color: #111;
+  background: #38bdf8;
+  color: #041018;
   border-radius: 999px;
   padding: 8px 14px;
   font-weight: 700;
@@ -643,7 +644,7 @@
   width: 100%;
 }
 .es-otp-done h2 {
-  color: #2ee6a8;
+  color: #38bdf8;
   font-size: 1.35rem;
   margin: 8px 0 6px;
 }
@@ -658,7 +659,7 @@
 .es-otp-seal-ring {
   position: absolute;
   inset: 28px;
-  border: 1.5px dashed rgba(46, 230, 168, 0.55);
+  border: 1.5px dashed rgba(56, 189, 248, 0.55);
   border-radius: 28px;
 }
 .es-otp-seal-ring--2 {
@@ -670,12 +671,12 @@
   width: 68px;
   height: 74px;
   border-radius: 18px;
-  border: 2px solid #2ee6a8;
+  border: 2px solid #38bdf8;
   background: #101216;
-  color: #2ee6a8;
+  color: #38bdf8;
   display: grid;
   place-items: center;
-  box-shadow: 0 0 28px rgba(46, 230, 168, 0.35);
+  box-shadow: 0 0 28px rgba(56, 189, 248, 0.35);
   z-index: 1;
 }
 .es-otp-dot {
@@ -683,7 +684,7 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #2ee6a8;
+  background: #38bdf8;
   opacity: 0.75;
 }
 .es-otp-dot:nth-child(3) { top: 10px; left: 36px; }
@@ -703,15 +704,15 @@
 .es-otp-continue {
   margin-top: 16px;
   border: 0;
-  background: #14c98a;
-  color: #04261c;
+  background: #38bdf8;
+  color: #041018;
   font-weight: 800;
   font-family: inherit;
   font-size: 1rem;
   border-radius: 999px;
   padding: 12px 42px;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(20, 201, 138, 0.28);
+  box-shadow: 0 8px 24px rgba(56, 189, 248, 0.28);
 }
 .es-otp-continue:hover { filter: brightness(1.06); }
 

@@ -17,7 +17,8 @@
   color: #e8f4fc;
 }
 .es-an-side {
-  background: linear-gradient(180deg, #0c4a6e 0%, #082f49 55%, #071018 100%);
+  background: #0b1220;
+  border-right: 1px solid rgba(56, 189, 248, 0.22);
   padding: 16px 14px 18px;
   display: flex;
   flex-direction: column;
@@ -66,8 +67,8 @@
 }
 .es-an-kpi span { display: block; color: #94a3b8; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.04em; }
 .es-an-kpi strong { display: block; margin: 3px 0; font-size: 1.15rem; color: #f0f9ff; }
-.es-an-kpi em { font-style: normal; font-size: 0.68rem; color: #5eead4; }
-.es-an-kpi em.is-down { color: #fb7185; }
+.es-an-kpi em { font-style: normal; font-size: 0.68rem; color: #7dd3fc; }
+.es-an-kpi em.is-down { color: #f87171; }
 .es-an-grid { display: grid; grid-template-columns: minmax(0, 1fr) 230px; gap: 12px; }
 .es-an-panel {
   background: #0c1524;

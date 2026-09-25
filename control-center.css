@@ -484,10 +484,10 @@
 #admin-portal .es-cc-panel:hover,
 #admin-authenticated-dashboard .es-cc-panel:hover {
   transform: translateY(-4px);
-  border-color: rgba(167, 139, 250, 0.35) !important;
+  border-color: rgba(56, 189, 248, 0.4) !important;
   box-shadow:
     0 16px 40px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(124, 58, 237, 0.12),
+    0 0 0 1px rgba(56, 189, 248, 0.16),
     inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
 }
 
@@ -509,16 +509,16 @@
 #admin-portal .es-cc-stat:hover,
 #admin-authenticated-dashboard .es-cc-stat:hover {
   transform: translateY(-5px);
-  border-color: rgba(167, 139, 250, 0.4) !important;
-  background: rgba(22, 18, 40, 0.62) !important;
+  border-color: rgba(56, 189, 248, 0.4) !important;
+  background: rgba(8, 20, 32, 0.72) !important;
   box-shadow:
-    0 14px 32px rgba(76, 29, 149, 0.28),
+    0 14px 32px rgba(2, 132, 199, 0.22),
     inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
 }
 
 #admin-portal .es-cc-stat-val,
 #admin-authenticated-dashboard .es-cc-stat-val {
-  background: linear-gradient(135deg, #f8fafc, #c4b5fd);
+  background: linear-gradient(135deg, #f8fafc, #38bdf8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -537,8 +537,8 @@
 
 .portfolio-stat-row .portfolio-stat:hover {
   transform: translateY(-5px);
-  border-color: rgba(167, 139, 250, 0.4) !important;
-  box-shadow: 0 14px 30px rgba(76, 29, 149, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border-color: rgba(56, 189, 248, 0.4) !important;
+  box-shadow: 0 14px 30px rgba(2, 132, 199, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 @media (prefers-reduced-motion: reduce) {

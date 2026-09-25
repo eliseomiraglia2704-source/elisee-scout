@@ -5,7 +5,7 @@
   --es-ns-bg: #fff;
   --es-ns-ink: #0b1220;
   --es-ns-muted: #94a3b8;
-  --es-ns-accent: #1e3a8a;
+  --es-ns-accent: #38bdf8;
   --es-ns-ease: cubic-bezier(.55, .08, .4, .95);
   position: relative;
   z-index: 320;
@@ -82,7 +82,7 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(115deg, rgba(255,255,255,.55), transparent 45%, transparent 58%, rgba(124,58,237,.08));
+  background: linear-gradient(115deg, rgba(255,255,255,.55), transparent 45%, transparent 58%, rgba(56,189,248,.12));
   pointer-events: none;
 }
 
@@ -194,8 +194,8 @@
   right: 4px;
   width: 32px;
   height: 32px;
-  background: linear-gradient(135deg, #7c3aed, #ec4899);
-  color: #fff;
+  background: #38bdf8;
+  color: #041018;
   box-shadow: none;
 }
 
@@ -230,7 +230,7 @@
   text-overflow: ellipsis;
 }
 
-.es-nav-search__toast strong { color: #c4b5fd; font-weight: 600; }
+.es-nav-search__toast strong { color: #7dd3fc; font-weight: 600; }
 
 .es-nav-search.is-toast .es-nav-search__toast {
   opacity: 1;
