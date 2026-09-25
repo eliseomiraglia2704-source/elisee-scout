@@ -3,7 +3,22 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — HEROUX6 — Ripristino e Blindatura Struttura Navbar (Codice di Emergenza, Eliminazione Sottotitoli, Dropdown Risorse e No-Wrap):
+Ultimo aggiornamento: **2026-09-25** — HEROUX7 — Adozione Struttura Pulita Navbar Pubblica e Isolamento Aree Riservate:
+1. **Header Pubblico a 3 Blocchi Essenziali (.public-navbar)**:
+   - Sostituito l'intero header dell'homepage pubblica con la specifica fornita da Eliseo:
+     - Sinistra: `.nav-logo` con scritta nitida `ELISEE SCOUT`.
+     - Centro: `.nav-menu` con solo i link essenziali: `Chi siamo`, `Bacheca`, `Mappa` (`white-space: nowrap !important; flex-wrap: nowrap !important; gap: 24px;`).
+     - Destra: `.nav-actions` con toggle tema 🌙, selettore lingua `IT ▾` e pulsante `.btn-login` con etichetta `Accedi`.
+   - Rimozione totale dall'header pubblico di qualsiasi voce di intrattenimento (Stampa, Album, Ambassador, Minigiochi) e di tutti i dropdown che potevano generare sdoppiamenti o il rettangolo bianco/giallo fluttuante.
+2. **CSS Puro .public-navbar & No-Wrap Assoluto**:
+   - `height: 64px; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background-color: #0d131d; border-bottom: 1px solid rgba(255, 255, 255, 0.1);`.
+   - Compatibilità istantanea Light Mode (`background-color: #ffffff !important; border-bottom: 1px solid rgba(0, 0, 0, 0.08);`).
+   - `#nav-dropdown-altro, #menu-nav-dropdown-more, .es-nav-dropdown { display: none !important; }`.
+3. **Card Atleta Integrata**:
+   - Rimosso qualsiasi testo grezzo o statistiche a cascata (`94VEL, 89TIR...`) non formattate sotto l'immagine della landing page, mantenendo la card pulita con foto ad alta definizione e badge grafici integrati.
+4. **File**: `index.html`, `style.css`, `apple-nav.css`, `sw.js`, `version.json`. Cache `v20260925_HEROUX7`.
+
+Feature precedente: **2026-09-25** — HEROUX6 — Ripristino e Blindatura Struttura Navbar (Codice di Emergenza, Eliminazione Sottotitoli, Dropdown Risorse e No-Wrap):
 1. **Applicazione Codice di Emergenza Layout Navbar**:
    - Sostituito il vecchio `display: grid; grid-template-columns: auto minmax(0, 1fr) auto;` in `style.css` con il layout flexbox raccomandato: `.navbar, .portfolio-navbar { display: flex !important; align-items: center !important; justify-content: space-between !important; height: 64px !important; padding: 0 24px !important; flex-wrap: nowrap !important; white-space: nowrap !important; }`.
    - Implementato `.nav-links` su `nav#nav-menu` con `display: flex !important; align-items: center !important; gap: 16px !important; white-space: nowrap !important; flex-wrap: nowrap !important;`.

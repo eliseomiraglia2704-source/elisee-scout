@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260925_HEROUX6';
+      var BUILD_VERSION = '20260925_HEROUX7';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260925_HEROUX6">
+  <link rel="stylesheet" href="style.css?v=20260925_HEROUX7">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
@@ -58,7 +58,7 @@
   <link rel="stylesheet" href="login-slide.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="glass-menu.css?v=20260924_GLASSMENU1">
   <link rel="stylesheet" href="nav-search-anim.css?v=20260925_PALETTE1">
-  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX6">
+  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX7">
   <link rel="stylesheet" href="btn-label-anim.css?v=20260925_BTNANIM1">
   <link rel="stylesheet" href="share-btn.css?v=20260925_SHARE1">
   <link rel="stylesheet" href="theme-switch.css?v=20260925_THEME1">
@@ -2133,197 +2133,26 @@
   </div>
 
   <div id="es-verify-banner" class="es-verify-banner" hidden></div>
-  <header class="main-header portfolio-header">
-    <div class="container navbar portfolio-navbar">
-
-      <!-- Logo sito -->
-      <a href="#hero" class="brand-logo site-brand" onclick="if(window.switchView){window.switchView('home','#hero');} return false;" title="ELISEE SCOUT — Home">
-        <img src="immagini/logo/logo-site.png?v=20260925_150256" alt="ELISEE SCOUT" class="site-logo-img" width="44" height="44">
-        <span class="logo-text-large">ELISEE <span>SCOUT</span></span>
+  <header class="public-navbar main-header portfolio-header">
+    <!-- 1. LOGO A SINISTRA -->
+    <div class="nav-logo">
+      <a href="#hero" class="site-brand" onclick="if(window.switchView){window.switchView('home','#hero');} return false;">
+        <span class="logo-text">ELISEE <strong>SCOUT</strong></span>
       </a>
+    </div>
 
-      <!-- Nav principale: essenziale, pulita e raggruppata -->
-      <nav class="nav-menu portfolio-nav nav-links" id="nav-menu">
-        <a href="#hero" class="nav-link nav-item active" data-view="home" data-i18n="nav.home" onclick="if(window.switchView){ window.switchView('home'); } return false;">Home</a>
-        <a href="#about" class="nav-link nav-item" data-view="about" data-i18n="nav.about" onclick="if(window.switchView){ window.switchView('about'); } return false;">Chi siamo</a>
-        <a href="#bacheca-annunci" class="nav-link nav-item" data-view="bacheca" data-i18n="nav.portfolio" onclick="if(window.switchView){ window.switchView('bacheca'); } return false;">Bacheca</a>
-        <a href="#mappa-portal" class="nav-link nav-item" data-view="mappa" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){window.switchView('mappa','#mappa-portal');} return false;">Mappa</a>
+    <!-- 2. LINK ESSENZIALI AL CENTRO -->
+    <nav class="nav-menu">
+      <a href="#about" onclick="if(window.switchView){ window.switchView('about'); } return false;">Chi siamo</a>
+      <a href="#bacheca-annunci" onclick="if(window.switchView){ window.switchView('bacheca'); } return false;">Bacheca</a>
+      <a href="#mappa-portal" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){window.switchView('mappa','#mappa-portal');} return false;">Mappa</a>
+    </nav>
 
-        <!-- Menu a tendina Risorse -->
-        <div class="es-nav-dropdown" id="nav-dropdown-altro">
-          <button type="button" class="nav-link nav-item es-nav-dropdown-trigger" id="btn-nav-dropdown-more" aria-expanded="false" aria-haspopup="true" title="Altre risorse e sezioni">
-            <span>Risorse</span>
-            <svg class="es-nav-caret" viewBox="0 0 20 20" fill="currentColor" width="13" height="13" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
-          </button>
-          <div class="es-nav-dropdown-menu" id="menu-nav-dropdown-more" role="menu">
-            <a href="#stampa-portal" class="es-nav-dropdown-item" role="menuitem" data-view="stampa" onclick="if(window.openStampaFeed){window.openStampaFeed();}else if(window.switchView){window.switchView('stampa','#stampa-portal');} return false;">
-              <span class="es-nav-item-icon">📰</span>
-              <span class="es-nav-item-title">Stampa</span>
-            </a>
-            <a href="#seguo-portal" class="es-nav-dropdown-item" role="menuitem" data-view="seguo" onclick="if(window.openChiSegui){window.openChiSegui();}else if(window.switchView){window.switchView('seguo','#seguo-portal');} return false;">
-              <span class="es-nav-item-icon">🎴</span>
-              <span class="es-nav-item-title">Album</span>
-            </a>
-            <a href="#ambassador-portal" class="es-nav-dropdown-item" role="menuitem" data-view="ambassador" onclick="if(window.switchView){ window.switchView('ambassador'); } return false;">
-              <span class="es-nav-item-icon">🤝</span>
-              <span class="es-nav-item-title">Ambassador</span>
-            </a>
-            <a href="#minigioco-carriera" class="es-nav-dropdown-item" role="menuitem" id="nav-minigioco" data-view="minigioco" onclick="if(window.switchView){ window.switchView('minigioco'); } else if(window.openMinigiocoCarriera){ window.openMinigiocoCarriera(); } return false;">
-              <span class="es-nav-item-icon">🎮</span>
-              <span class="es-nav-item-title">Minigiochi</span>
-            </a>
-          </div>
-        </div>
-      </nav>
-
-      <div id="nav-user-container" class="portfolio-nav-right">
-        <div class="nav-auth-actions" id="nav-right-actions">
-          <!-- Search animata: flip 3D rotateX + bordo gradient + typewriter (ref video) -->
-          <div class="es-nav-search" id="es-nav-search" data-state="closed">
-            <div class="es-nav-search__shell">
-              <span class="es-nav-search__shadow" aria-hidden="true"></span>
-              <div class="es-nav-search__field" role="search">
-                <svg class="es-nav-search__border" viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true">
-                  <defs>
-                    <linearGradient id="es-nav-search-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stop-color="#0284c7"/>
-                      <stop offset="55%" stop-color="#38bdf8"/>
-                      <stop offset="100%" stop-color="#7dd3fc"/>
-                    </linearGradient>
-                  </defs>
-                  <rect x="1.1" y="1.1" width="297.8" height="37.8" pathLength="1"></rect>
-                </svg>
-                <span class="es-nav-search__sheen" aria-hidden="true"></span>
-                <div class="es-nav-search__input-wrap">
-                  <span class="es-nav-search__ph is-on" id="es-nav-search-ph" aria-hidden="true"></span>
-                  <input type="search" class="es-nav-search__input" id="es-nav-search-input" placeholder="Cerca" autocomplete="off" spellcheck="false" aria-label="Cerca su Elisee Scout">
-                </div>
-              </div>
-              <button type="button" class="es-nav-search__btn" id="es-nav-search-btn" aria-label="Apri ricerca" title="Cerca">
-                <svg class="ico-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <circle cx="11" cy="11" r="7"></circle>
-                  <path d="m20 20-3.5-3.5"></path>
-                </svg>
-                <svg class="ico-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
-                  <path d="M18 6 6 18M6 6l12 12"></path>
-                </svg>
-              </button>
-            </div>
-            <div class="es-nav-search__toast" id="es-nav-search-toast" aria-live="polite"></div>
-          </div>
-
-
-<!-- Lingua: stesso stile pill di Accedi / Iscriviti -->
-          <button type="button" class="es-dn" id="es-nav-theme" aria-pressed="false" aria-label="Passa al tema giorno" title="Tema" onclick="if(window.toggleSiteTheme){window.toggleSiteTheme();}">
-            <span class="es-dn-sky" aria-hidden="true">
-              <span class="es-dn-stars"></span>
-              <span class="es-dn-cloud"></span>
-              <span class="es-dn-sun"></span>
-              <span class="es-dn-moon"></span>
-              <span class="es-dn-knob"></span>
-            </span>
-          </button>
-          <div class="nav-lang es-glass-dd" id="lang-switcher">
-            <button type="button" class="btn-nav-accedi nav-lang-btn es-glass-trigger es-glass-trigger--slim" id="lang-switcher-btn" aria-haspopup="listbox" aria-expanded="false" title="Lingua">
-              <i data-lucide="globe" class="nav-lang-globe"></i>
-              <span id="lang-current-label">IT</span>
-              <i data-lucide="chevron-down" class="nav-lang-chevron"></i>
-            </button>
-            <div class="nav-lang-menu es-glass-menu es-glass-menu--flat" id="lang-switcher-menu" role="listbox" hidden>
-              <button type="button" class="nav-lang-item is-active" data-lang="it" role="option">
-                <span class="nav-lang-name">Italiano</span>
-                <i data-lucide="check" class="nav-lang-check"></i>
-              </button>
-              <button type="button" class="nav-lang-item" data-lang="en" role="option">
-                <span class="nav-lang-name">English</span>
-                <i data-lucide="check" class="nav-lang-check"></i>
-              </button>
-              <button type="button" class="nav-lang-item" data-lang="es" role="option">
-                <span class="nav-lang-name">Español</span>
-                <i data-lucide="check" class="nav-lang-check"></i>
-              </button>
-              <button type="button" class="nav-lang-item" data-lang="fr" role="option">
-                <span class="nav-lang-name">Français</span>
-                <i data-lucide="check" class="nav-lang-check"></i>
-              </button>
-            </div>
-          </div>
-
-          <div id="nav-logged-out-actions" class="nav-auth-actions-inner">
-            <button type="button" class="btn-nav-accedi" id="btn-nav-accedi" data-i18n="nav.login" onclick="event.preventDefault();event.stopPropagation();if(window.openAccessoModal){window.openAccessoModal('email');}return false;">
-              Accedi
-            </button>
-            <button type="button" class="btn-nav-iscriviti" data-i18n="nav.signup" onclick="openRegistrazioneModal()">
-              Iscriviti
-            </button>
-          </div>
-        </div>
-
-        <!-- Stato Loggato (bottone utente compatto e pulito senza cerchio avatar) -->
-        <div id="nav-logged-in-actions" style="display:none; position:relative;">
-          <button type="button" class="es-nav-mail" id="btn-nav-msgs" title="Messaggi B2B" aria-label="Messaggi"
-            onclick="event.preventDefault();event.stopPropagation();if(window.openUserMessages){window.openUserMessages();}return false;">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="3" y="5" width="18" height="14" rx="2"/>
-              <path d="M3 7l9 7 9-7"/>
-            </svg>
-            <span class="es-nav-mail-dot" id="es-nav-mail-dot" hidden></span>
-          </button>
-          <button type="button" class="es-nav-bell" id="btn-nav-notifs" title="Notifiche" aria-label="Notifiche"
-            onclick="event.preventDefault();event.stopPropagation();if(window.openUserNotifications){window.openUserNotifications();}return false;">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9"/>
-              <path d="M10 20a2 2 0 0 0 4 0"/>
-            </svg>
-            <span class="es-nav-bell-dot" id="es-nav-bell-dot" hidden></span>
-          </button>
-          <div class="es-glass-dd" id="es-user-dd">
-          <button type="button" onclick="toggleUserDropdown()" id="btn-user-profile" class="es-glass-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="user-dropdown-menu">
-            <span class="es-glass-ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 19.2c1.1-2.8 3.4-4.2 6.5-4.2s5.4 1.4 6.5 4.2"/></svg></span>
-            <span id="user-name-display">Account</span>
-            <svg class="es-glass-chevron" id="user-dropdown-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </button>
-
-          <div id="user-dropdown-menu" class="es-glass-menu" hidden>
-            <div class="es-glass-pages" id="es-user-pages">
-              <div class="es-glass-page is-active" data-page="root" data-level="0">
-                <button type="button" class="es-glass-row" data-open="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/></svg><span>Impostazioni</span><svg class="es-glass-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg></button>
-                <button type="button" class="es-glass-row" data-open="account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 8h6M9 12h6"/></svg><span>Account</span><svg class="es-glass-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg></button>
-                <button type="button" class="es-glass-row" data-open="team"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="8" cy="9" r="2.2"/><circle cx="16" cy="9" r="2.2"/><path d="M4 18c.6-2.2 2.2-3.4 4-3.4s3.4 1.2 4 3.4M12 18c.6-2.2 2.2-3.4 4-3.4 1.6 0 3 .9 3.6 2.6"/></svg><span>Squadra</span><svg class="es-glass-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg></button>
-                <button type="button" class="es-glass-row" data-open="tools" id="user-dropdown-admin-section" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>Strumenti</span><svg class="es-glass-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg></button>
-                <button type="button" class="es-glass-row" onclick="logoutUser(); return false;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10 7V5a2 2 0 0 1 2-2h7v18h-7a2 2 0 0 1-2-2v-2"/><path d="M4 12h10M11 9l3 3-3 3"/></svg><span>Esci</span></button>
-              </div>
-              <div class="es-glass-page" data-page="settings" data-level="1" aria-hidden="true">
-                <button type="button" class="es-glass-row es-glass-back" data-back><svg class="es-glass-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 6 9 12 15 18"/></svg><span>Impostazioni</span></button>
-                <button type="button" class="es-glass-row" onclick="event.preventDefault(); if(window.openUserNotifications){window.openUserNotifications();} if(window.closeUserDropdown){window.closeUserDropdown();}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><span>Notifiche</span></button>
-                <button type="button" class="es-glass-row" onclick="event.preventDefault(); if(window.openUserMessages){window.openUserMessages();} if(window.closeUserDropdown){window.closeUserDropdown();}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg><span>Messaggi</span></button>
-                <a class="es-glass-row" href="privacy-policy.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l8 3v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6l8-3z"/></svg><span>Privacy</span></a>
-              </div>
-              <div class="es-glass-page" data-page="account" data-level="1" aria-hidden="true">
-                <button type="button" class="es-glass-row es-glass-back" data-back><svg class="es-glass-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 6 9 12 15 18"/></svg><span>Account</span></button>
-                <button type="button" class="es-glass-row" id="btn-area-riservata" onclick="event.preventDefault(); if(window.openAreaRiservataModal){window.openAreaRiservataModal();} if(window.closeUserDropdown){window.closeUserDropdown();}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3"/><path d="M5 19c1.2-3 3.4-4.5 7-4.5S17.8 16 19 19"/></svg><span>Area riservata</span></button>
-                <button type="button" class="es-glass-row" id="btn-dropdown-curriculum" onclick="event.preventDefault(); if(window.switchView){window.switchView('pillars','#dashboard-skills');} if(window.closeUserDropdown){window.closeUserDropdown();}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v5h5M9 13h6M9 17h6"/></svg><span>Curriculum</span></button>
-                <button type="button" class="es-glass-row" id="btn-dropdown-avatar3d" onclick="event.preventDefault(); if(window.EliseeAvatar3D){window.EliseeAvatar3D.open();} if(window.closeUserDropdown){window.closeUserDropdown();}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3"/><path d="M7 20v-1a5 5 0 0 1 10 0v1"/></svg><span>Avatar 3D</span></button>
-              </div>
-              <div class="es-glass-page" data-page="team" data-level="1" aria-hidden="true">
-                <button type="button" class="es-glass-row es-glass-back" data-back><svg class="es-glass-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 6 9 12 15 18"/></svg><span>Squadra</span></button>
-                <button type="button" class="es-glass-row" onclick="event.preventDefault(); if(window.switchView){window.switchView('bacheca','#bacheca-annunci');} if(window.openPubblicaAnnuncioModal){window.openPubblicaAnnuncioModal();} if(window.closeUserDropdown){window.closeUserDropdown();}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 5v14M5 12h14"/></svg><span>Nuovo annuncio</span></button>
-                <button type="button" class="es-glass-row" onclick="event.preventDefault(); if(window.openChiSegui){window.openChiSegui();} if(window.closeUserDropdown){window.closeUserDropdown();}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="5" width="16" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M4 16l4-3 3 2 4-4 5 4"/></svg><span>Album</span></button>
-                <button type="button" class="es-glass-row" onclick="event.preventDefault(); if(window.openScopriProfili){window.openScopriProfili('staff');} if(window.closeUserDropdown){window.closeUserDropdown();}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="2.4"/><path d="M4.5 18c.8-2.4 2.4-3.6 4.5-3.6s3.7 1.2 4.5 3.6"/><path d="M16 11v6M13 14h6"/></svg><span>Segui lo staff</span></button>
-                <button type="button" class="es-glass-row" onclick="event.preventDefault(); if(window.EliseeTC){window.EliseeTC.open();} if(window.closeUserDropdown){window.closeUserDropdown();}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 20h8"/></svg><span>Pannello Elisee</span></button>
-              </div>
-              <div class="es-glass-page" data-page="tools" data-level="1" aria-hidden="true">
-                <button type="button" class="es-glass-row es-glass-back" data-back><svg class="es-glass-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 6 9 12 15 18"/></svg><span>Strumenti</span></button>
-                <button type="button" class="es-glass-row" id="btn-dropdown-control-center" onclick="event.preventDefault(); if(window.switchView){window.switchView('admin','#admin-portal');} if(window.closeUserDropdown){window.closeUserDropdown();}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 20h10"/></svg><span>Control Center</span></button>
-                <button type="button" class="es-glass-row" id="btn-creator-roles" onclick="event.preventDefault(); if(window.EliseeCreatorRole){window.EliseeCreatorRole.open();} if(window.closeUserDropdown){window.closeUserDropdown();}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="8" cy="8" r="2"/><circle cx="16" cy="8" r="2"/><circle cx="12" cy="16" r="2"/></svg><span>Simulatore ruoli</span></button>
-                <button type="button" class="es-glass-row" id="btn-dropdown-autopilot" onclick="event.preventDefault(); if(window.EliseeAutoPilot){window.EliseeAutoPilot.open();} if(window.closeUserDropdown){window.closeUserDropdown();}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 14l5-5 3 3 8-8"/><path d="M14 4h6v6"/></svg><span>AutoPilot</span><span id="es-ap-dropdown-status" class="es-account-status"></span></button>
-              </div>
-            </div>
-          </div>
-          </div>
-        </div>
-      </div>
-
+    <!-- 3. AZIONI A DESTRA -->
+    <div class="nav-actions">
+      <button type="button" class="theme-toggle" id="es-nav-theme" onclick="if(window.toggleSiteTheme){window.toggleSiteTheme();}" title="Tema" aria-label="Cambia tema">🌙</button>
+      <div class="lang-select" id="lang-switcher-simple" title="Lingua">IT ▾</div>
+      <button type="button" class="btn-login" onclick="if(window.openAccessoModal){window.openAccessoModal('email');} return false;">Accedi</button>
     </div>
   </header>
 
@@ -2416,7 +2245,7 @@
                   <span class="es-card-id-tag">ID #ES-2026-IT</span>
                 </div>
 
-                <!-- Foto Atleta e Overlay Dati Dinamici -->
+                <!-- Foto Atleta e Overlay Grafico Integrato -->
                 <div class="es-player-card-visual">
                   <img src="immagini/03-calciatore-ritratto/player-card-showcase.jpg?v=20260925_HEROUX1" alt="Profilo Atleta Verificato" class="es-player-card-photo" loading="eager" width="400" height="500">
                   <div class="es-player-card-shade"></div>
@@ -2436,34 +2265,11 @@
                       <small>Top Speed GPS</small>
                     </div>
                   </div>
-                </div>
 
-                <!-- Dati Anagrafici & Ruolo -->
-                <div class="es-player-card-body">
-                  <div class="es-card-player-info">
+                  <!-- Dati Atleta integrati graficamente sull'immagine -->
+                  <div class="es-card-footer-overlay">
                     <h3 class="es-card-player-name">MARCO ROSSI</h3>
-                    <p class="es-card-player-role">Attaccante Esterno · 2004 · Serie D / Nazionali</p>
-                  </div>
-
-                  <!-- Statistiche EA FC / Scout -->
-                  <div class="es-card-stats-grid">
-                    <div class="es-card-stat"><span class="stat-n">94</span><span class="stat-l">VEL</span></div>
-                    <div class="es-card-stat"><span class="stat-n">89</span><span class="stat-l">TIR</span></div>
-                    <div class="es-card-stat"><span class="stat-n">85</span><span class="stat-l">PAS</span></div>
-                    <div class="es-card-stat"><span class="stat-n">91</span><span class="stat-l">DRI</span></div>
-                    <div class="es-card-stat"><span class="stat-n">62</span><span class="stat-l">DIF</span></div>
-                    <div class="es-card-stat"><span class="stat-n">87</span><span class="stat-l">FIS</span></div>
-                  </div>
-
-                  <!-- Footer Card con Certificazione -->
-                  <div class="es-player-card-footer">
-                    <div class="es-card-cert-row">
-                      <span class="es-cert-check">✓</span>
-                      <span>Dossier Completo · Highlights 4K · Visita Medica OK</span>
-                    </div>
-                    <button type="button" class="es-card-dossier-btn" onclick="if(window.openPlayerPreviewModal){ window.openPlayerPreviewModal(); } else if(window.switchView){ window.switchView('bacheca'); }">
-                      Esplora Dossier Atleta →
-                    </button>
+                    <p class="es-card-player-role">Attaccante · 2004 · Dossier Certificato FIGC/LND ✓</p>
                   </div>
                 </div>
               </div>

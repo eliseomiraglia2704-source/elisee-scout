@@ -3752,49 +3752,143 @@ body.focus-hub {
   padding: 1.25rem 0.5rem !important;
 }
 
-/* Container principale dell'Header */
-.navbar,
-.portfolio-navbar {
+/* Header compatto full-width fisso in alto */
+.public-navbar {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
+  width: 100% !important;
   height: 64px !important;
-  max-height: 64px !important;
-  min-height: 64px !important;
-  padding: 0 24px !important;
+  padding: 0 32px !important;
+  background-color: #0d131d !important; /* Colore di sfondo scuro coerente */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  z-index: 1000 !important;
   box-sizing: border-box !important;
-  flex-wrap: nowrap !important;
-  white-space: nowrap !important;
 }
 
-/* Container della lista dei link */
-.nav-links,
-.portfolio-navbar .nav-menu,
-.portfolio-navbar .portfolio-nav,
-.navbar .nav-menu,
-.nav-menu,
-.portfolio-nav {
+/* Impedisce al logo di essere schiacciato o sovrapposto */
+.nav-logo {
+  flex-shrink: 0 !important;
+  font-size: 18px !important;
+  color: #ffffff !important;
+  white-space: nowrap !important;
   display: flex !important;
   align-items: center !important;
-  gap: 16px !important; /* Spazio tra una voce e l'altra */
-  white-space: nowrap !important; /* FONDAMENTALE: Impedisce al testo di andare a capo */
-  flex-wrap: nowrap !important; /* Impedisce di creare nuove righe */
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow: visible !important;
 }
 
-/* Per le voci di testo e icone */
-.nav-item,
-.portfolio-navbar .nav-link,
-.portfolio-nav .nav-link,
-.nav-menu .nav-link {
-  font-size: 14px !important;
-  font-weight: 500 !important;
+.nav-logo a,
+.nav-logo .site-brand {
+  text-decoration: none !important;
+  color: #ffffff !important;
   display: inline-flex !important;
   align-items: center !important;
-  white-space: nowrap !important;
+  gap: 8px !important;
+}
+
+.nav-logo .logo-text {
+  font-size: 18px !important;
+  letter-spacing: 0.04em !important;
+  color: #ffffff !important;
+}
+
+/* Menu centrale coordinato ed essenziale */
+.nav-menu {
+  display: flex !important;
+  align-items: center !important;
+  gap: 24px !important;
+  white-space: nowrap !important; /* IMPEDISCE DI ANDARE A CAPO */
+  flex-wrap: nowrap !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.nav-menu a {
+  color: #a0aec0 !important;
+  text-decoration: none !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  transition: color 0.2s !important;
+}
+
+.nav-menu a:hover {
+  color: #ffffff !important;
+}
+
+/* Pulsanti e impostazioni a destra */
+.nav-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
   flex-shrink: 0 !important;
+}
+
+.theme-toggle {
+  background: transparent !important;
+  border: none !important;
+  font-size: 18px !important;
+  cursor: pointer !important;
+  padding: 4px 8px !important;
+  line-height: 1 !important;
+}
+
+.lang-select {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #a0aec0 !important;
+  cursor: pointer !important;
+}
+
+.btn-login {
+  background-color: #0070f3 !important;
+  color: #ffffff !important;
+  padding: 8px 16px !important;
+  border-radius: 6px !important;
+  font-size: 14px !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s !important;
+}
+
+.btn-login:hover {
+  background-color: #005bb5 !important;
+}
+
+/* Light mode */
+html[data-theme="mimetico-chiaro"] .public-navbar {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+html[data-theme="mimetico-chiaro"] .nav-logo,
+html[data-theme="mimetico-chiaro"] .nav-logo a,
+html[data-theme="mimetico-chiaro"] .nav-logo .logo-text {
+  color: #0f172a !important;
+}
+
+html[data-theme="mimetico-chiaro"] .nav-menu a {
+  color: #475569 !important;
+}
+
+html[data-theme="mimetico-chiaro"] .nav-menu a:hover {
+  color: #0284c7 !important;
+}
+
+html[data-theme="mimetico-chiaro"] .lang-select {
+  color: #475569 !important;
+}
+
+/* NASCONDI DEFINITIVAMENTE QUALSIASI RESIDUO DROPDOWN VECCHIO */
+#nav-dropdown-altro,
+#menu-nav-dropdown-more,
+.es-nav-dropdown,
+.es-nav-dropdown-menu,
+.es-nav-dropdown-trigger {
+  display: none !important;
 }
 
 .brand-logo {
