@@ -3,7 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — SYNC1 — Ottimizzazione script immagini, sincronizzazione cache-bust e audit di integrità JS:
+Ultimo aggiornamento: **2026-09-25** — HEROCLEAN1 — Rimozione card grafica ritratto atleta dalla sezione Chi siamo in Home:
+1. Rimossa la card `.portfolio-visual` contenente l'SVG del ritratto atleta con reticolo/HUD e badge "PROFILO VERIFICATO" dalla sezione `#home-about`.
+2. Adattato il contenitore per un layout pulito, elegante e leggibile del blocco testuale e dei pulsanti d'azione.
+3. **File**: `index.html`, `sw.js`, `version.json`, `focus.html`. Cache `v20260925_HEROCLEAN1`.
+
+Feature precedente: **2026-09-25** — SYNC1 — Ottimizzazione script immagini, sincronizzazione cache-bust e audit di integrità JS:
 1. Ottimizzazione di `immagini/aggiorna-immagini.ps1`: scansione mirata dei soli file JS di radice ed `elisee-world`, evitando traversata bloccante di `node_modules`.
 2. Sincronizzazione automatica e cache-bust completo di tutti i percorsi immagini e script in `index.html`, `style.css`, `app.js`, `focus.html`.
 3. Validazione sintattica con `node --check` al 100% su tutti i moduli JS del sito e di `elisee-world/` (tutti superati).
