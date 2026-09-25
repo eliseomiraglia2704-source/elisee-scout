@@ -5449,28 +5449,24 @@ document.addEventListener('DOMContentLoaded', () => {
       const isFollowing = followed.includes(p.id);
       const followerCount = isFollowing ? p.followers + 1 : p.followers;
 
+      var bio = (p.team || '') + (p.status ? ' · ' + p.status : '');
       return `
-        <article class="pf-person-card">
-          <div class="pf-person-top">
-            <img src="${p.image}" alt="${p.name}" class="pf-person-avatar">
-            <div class="pf-person-id">
-              <h4 class="pf-person-name" title="${p.name}">${p.name}</h4>
-              <div class="pf-person-badges">
-                <span class="pf-person-pill">${p.role}</span>
-                <span class="pf-person-pill pf-person-pill-muted">${p.category}</span>
-              </div>
+        <article class="es-rcard">
+          <img class="es-rcard-img" src="${p.image}" alt="${p.name}">
+          <div class="es-rcard-body">
+            <h2>${p.name}</h2>
+            <h3>${p.role}</h3>
+            <p title="${bio}">${bio}</p>
+            <div class="es-rcard-tags">
+              <span>${p.category}</span>
+              <span>${followerCount.toLocaleString('it-IT')} follower</span>
             </div>
-          </div>
-          <p class="pf-person-team" title="${p.team}">${p.team}</p>
-          <div class="pf-person-meta">
-            <span class="pf-person-status" title="${p.status}">${p.status}</span>
-            <span class="pf-person-followers">${followerCount.toLocaleString('it-IT')} follower</span>
-          </div>
-          <div class="pf-person-actions">
-            <button type="button" class="btn btn-outline-pill pf-mini ${isFollowing ? 'pf-btn-solid' : ''}" onclick="toggleFollowUser('${p.id}')">
-              ${isFollowing ? 'Segui già' : 'Segui'}
-            </button>
-            <button type="button" class="btn btn-outline-pill pf-mini" onclick="switchView('account');">Dossier</button>
+            <div class="es-rcard-actions">
+              <button type="button" class="es-rcard-go" onclick="switchView('account');">Apri profilo</button>
+              <button type="button" class="es-rcard-fav ${isFollowing ? 'is-on' : ''}" onclick="toggleFollowUser('${p.id}')" aria-label="${isFollowing ? 'Non seguire più' : 'Segui'}">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="${isFollowing ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="1.8"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2 4 4 0 0 1 7 2c0 4.6-7 9-7 9z"/></svg>
+              </button>
+            </div>
           </div>
         </article>
       `;

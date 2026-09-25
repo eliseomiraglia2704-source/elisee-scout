@@ -1,0 +1,77 @@
+/* Schede profilo in bacheca: foto, ruolo, testo, etichette, Apri e cuore. */
+.es-rcard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #0f161d;
+  color: #f4f4f6;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 28px;
+  padding: 8px;
+  min-width: 0;
+}
+.es-rcard-img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+.es-rcard-body { padding: 0 12px 10px; min-width: 0; }
+.es-rcard h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+  color: #f8fafc;
+}
+.es-rcard h3 {
+  margin: 2px 0 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  color: #94a3b8;
+}
+.es-rcard p {
+  position: relative;
+  margin: 0 0 12px;
+  color: #94a3b8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.es-rcard-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.es-rcard-tags span {
+  padding: 4px 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  font-size: 0.8rem;
+}
+.es-rcard-actions { display: flex; gap: 8px; align-items: center; }
+.es-rcard-go {
+  flex: 1;
+  height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: #38bdf8;
+  color: #041018;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+}
+.es-rcard-go:hover { filter: brightness(1.08); }
+.es-rcard-fav {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.es-rcard-fav.is-on { color: #38bdf8; background: rgba(56, 189, 248, 0.16); }
