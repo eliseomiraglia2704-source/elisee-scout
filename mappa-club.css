@@ -45,7 +45,12 @@ body:has(#view-mappa:not([style*="none"])) header.main-header,
 body:has(#view-mappa:not([style*="none"])) .portfolio-header,
 body.is-view-mappa header.main-header,
 body.is-view-mappa .portfolio-header {
-  background: rgba(11, 14, 20, 0.96) !important;
+  background: rgba(5, 6, 8, 0.72) !important;
+  background-color: rgba(5, 6, 8, 0.72) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border: 0 !important;
+  box-shadow: none !important;
 }
 
 .es-map-page,

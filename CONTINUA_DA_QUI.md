@@ -3,7 +3,15 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — HEROUX16 — Soppressione Barra Personalizzazione Coprente e Adattamento Mobile Responsive:
+Ultimo aggiornamento: **2026-09-25** — HEROUX17 — Allineamento Glass Header Mappa e Click Logo Resiliente a Doppia Pressione:
+1. **Allineamento Token Glass Header Mappa (`mappa-club.css`, `es-nav-ux.css`)**:
+   - Sostituito l'override opaco `background: rgba(11, 14, 20, 0.96) !important;` su `body.is-view-mappa` con il token unificato `background: rgba(5, 6, 8, 0.72) !important; backdrop-filter: blur(14px) !important;` per perfetta coerenza con *Chi siamo* e *Bacheca*.
+2. **Click Logo / Brand Resiliente (`es-nav-ux.js`, `index.html`)**:
+   - Aggiunto listener click esplicito su `.site-brand, a[href="#hero"], a[href="#view-home"]` che garantisce reset all'istante anche per chiamate programmatiche `.click()` o doppie pressioni con hash già `#hero`.
+   - Rimozione pulita e immediata di `is-internal-view`, `is-view-mappa` e `is-view-stampa` durante il ritorno a Home e smooth scroll verso `top: 0`.
+3. **File**: `mappa-club.css`, `es-nav-ux.css`, `es-nav-ux.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX17`.
+
+Feature precedente: **2026-09-25** — HEROUX16 — Soppressione Barra Personalizzazione Coprente e Adattamento Mobile Responsive:
 1. **Soppressione Barra Personalizzazione Coprente (`cookie-profiling.js`, `es-nav-ux.css`)**:
    - Disabilitata la visualizzazione fissa in cima di `#elisee-personalization-bar` (`top: 0; z-index: 99990`) che copriva la navbar pubblica.
    - Azzerata completamente l'iniezione invasiva di `document.body.style.paddingTop = '28px'`.

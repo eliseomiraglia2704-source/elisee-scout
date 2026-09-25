@@ -120,6 +120,9 @@
 
     var isInternal = (cleanView !== 'home');
     document.body.classList.toggle('is-internal-view', isInternal);
+    if (!isInternal) {
+      document.body.classList.remove('is-view-mappa', 'is-view-stampa');
+    }
 
     if (indicatorEl) {
       indicatorEl.classList.toggle('is-on', isInternal && !!activeLink);
@@ -197,6 +200,19 @@
         moveIndicatorTo(activeLink, false);
       });
     }
+
+    // Gestione click esplicito su Logo / Brand -> Reset a Home garantito
+    var brandLinks = document.querySelectorAll('.site-brand, a[href="#hero"], a[href="#view-home"]');
+    brandLinks.forEach(function (b) {
+      b.addEventListener('click', function () {
+        document.body.classList.remove('is-internal-view', 'is-view-mappa', 'is-view-stampa');
+        if (window.switchView) {
+          window.switchView('home', '#hero');
+        }
+        syncActiveLink('home', true);
+        window.scrollTo({ top: 0, left: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+      });
+    });
 
     // Ricava vista iniziale
     var initialView = 'home';

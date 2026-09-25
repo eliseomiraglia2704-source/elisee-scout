@@ -413,7 +413,11 @@ html[data-theme="mimetico-chiaro"] header.public-header .btn-login:hover {
 html body.is-internal-view header.public-header.public-navbar.main-header.portfolio-header,
 html body.layout-portfolio.is-internal-view header.public-header,
 html body.is-internal-view header.public-header,
-html body.is-internal-view .portfolio-header {
+html body.is-internal-view .portfolio-header,
+html body.is-view-mappa header.public-header.public-navbar.main-header.portfolio-header,
+html body.is-view-mappa header.public-header,
+html body.is-view-mappa .portfolio-header,
+html body.view-mappa header.public-header {
   background: rgba(5, 6, 8, 0.72) !important;
   background-color: rgba(5, 6, 8, 0.72) !important;
   backdrop-filter: blur(14px) !important;
@@ -423,7 +427,8 @@ html body.is-internal-view .portfolio-header {
 }
 
 html[data-theme="mimetico-chiaro"] body.is-internal-view header.public-header.public-navbar.main-header.portfolio-header,
-html[data-theme="mimetico-chiaro"] body.layout-portfolio.is-internal-view header.public-header {
+html[data-theme="mimetico-chiaro"] body.layout-portfolio.is-internal-view header.public-header,
+html[data-theme="mimetico-chiaro"] body.is-view-mappa header.public-header {
   background: rgba(255, 255, 255, 0.96) !important;
   background-color: rgba(255, 255, 255, 0.96) !important;
 }
