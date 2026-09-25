@@ -51,13 +51,15 @@ function Get-ImageFiles($dir) {
 function Check-JSFiles {
     param([string]$RootPath)
     Write-Host "=== Controllo sintassi JavaScript ==="
-    $jsFiles = Get-ChildItem -Path $RootPath -Recurse -Include *.js -File -ErrorAction SilentlyContinue
+    $rootJs = Get-ChildItem -Path $RootPath -Filter *.js -File
+    $ewJs = if (Test-Path (Join-Path $RootPath "elisee-world")) { Get-ChildItem -Path (Join-Path $RootPath "elisee-world") -Recurse -Filter *.js -File } else { @() }
+    $jsFiles = @($rootJs) + @($ewJs)
     foreach ($file in $jsFiles) {
         try {
             node --check $file.FullName
-            Write-Host ("OK    " + $file.FullName)
+            Write-Host ("OK    " + $file.Name)
         } catch {
-            Write-Host ("ERR   " + $file.FullName + " - " + $_.Exception.Message)
+            Write-Host ("ERR   " + $file.Name + " - " + $_.Exception.Message)
         }
     }
 }

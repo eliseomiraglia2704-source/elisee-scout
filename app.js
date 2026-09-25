@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+﻿document.addEventListener('DOMContentLoaded', () => {
   if (window.lucide) {
     lucide.createIcons();
   }
@@ -5214,16 +5214,16 @@ document.addEventListener('DOMContentLoaded', () => {
   window.activePeopleType = 'all';
 
   const mockPeopleData = [
-    { id: 'usr_1', name: 'Marco Rossi', type: 'calciatore', role: 'Attaccante', category: 'Serie D', team: 'ASD Foggia Calcio', status: 'Svincolato Art. 107', score: '98.4', image: 'immagini/03-calciatore-ritratto/footballer-portrait.svg?v=20260831_121117', followers: 1420 },
-    { id: 'usr_2', name: 'Lorenzo Bianchi', type: 'calciatore', role: 'Centrocampista', category: 'Eccellenza', team: 'US San Severo', status: 'Tesserato FIGC', score: '95.1', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 890 },
-    { id: 'usr_3', name: 'Andrea Moretti', type: 'scout', role: 'Scout FIGC', category: 'Serie D', team: 'Elisee Scout Network', status: 'Scout Ufficiale', score: '99.0', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 2310 },
-    { id: 'usr_4', name: 'Giulia Conti', type: 'staff', role: 'Match Analyst', category: 'Under 19', team: 'Accademia Calcio', status: 'Certificata WyScout', score: '96.8', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 1150 },
-    { id: 'usr_5', name: 'Matteo Ferrari', type: 'calciatore', role: 'Difensore', category: 'Promozione', team: 'Manfredonia Calcio', status: 'Fuoriquota Under 2005', score: '92.4', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 670 },
-    { id: 'usr_6', name: 'Stefano Ricci', type: 'scout', role: 'Direttore Sportivo', category: 'Serie D', team: 'Audace Cerignola', status: 'Direttore Sportivo', score: '97.6', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 3450 },
-    { id: 'usr_7', name: 'Roberto Barbieri', type: 'calciatore', role: 'Portiere', category: 'Eccellenza', team: 'Lucera Calcio', status: 'Svincolato Art. 108', score: '94.2', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 530 },
-    { id: 'usr_8', name: 'Elena Santoro', type: 'staff', role: 'Preparatore Atletico', category: 'Serie D', team: 'Foggia In Motion', status: 'Preparatore FIGC', score: '98.0', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 1820 },
-    { id: 'usr_9', name: 'US Foggia 1920', type: 'squadra', role: 'Società Calcistica', category: 'Serie D', team: 'Foggia (FG)', status: 'Club Verificato', score: '99.5', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 12800 },
-    { id: 'usr_10', name: 'Lucera Calcio', type: 'squadra', role: 'Società Calcistica', category: 'Eccellenza', team: 'Lucera (FG)', status: 'Club Verificato', score: '93.2', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260831_121117', followers: 2940 }
+    { id: 'usr_1', name: 'Marco Rossi', type: 'calciatore', role: 'Attaccante', category: 'Serie D', team: 'ASD Foggia Calcio', status: 'Svincolato Art. 107', score: '98.4', image: 'immagini/03-calciatore-ritratto/footballer-portrait.svg?v=20260925_150256', followers: 1420 },
+    { id: 'usr_2', name: 'Lorenzo Bianchi', type: 'calciatore', role: 'Centrocampista', category: 'Eccellenza', team: 'US San Severo', status: 'Tesserato FIGC', score: '95.1', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260925_150256', followers: 890 },
+    { id: 'usr_3', name: 'Andrea Moretti', type: 'scout', role: 'Scout FIGC', category: 'Serie D', team: 'Elisee Scout Network', status: 'Scout Ufficiale', score: '99.0', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260925_150256', followers: 2310 },
+    { id: 'usr_4', name: 'Giulia Conti', type: 'staff', role: 'Match Analyst', category: 'Under 19', team: 'Accademia Calcio', status: 'Certificata WyScout', score: '96.8', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260925_150256', followers: 1150 },
+    { id: 'usr_5', name: 'Matteo Ferrari', type: 'calciatore', role: 'Difensore', category: 'Promozione', team: 'Manfredonia Calcio', status: 'Fuoriquota Under 2005', score: '92.4', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260925_150256', followers: 670 },
+    { id: 'usr_6', name: 'Stefano Ricci', type: 'scout', role: 'Direttore Sportivo', category: 'Serie D', team: 'Audace Cerignola', status: 'Direttore Sportivo', score: '97.6', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260925_150256', followers: 3450 },
+    { id: 'usr_7', name: 'Roberto Barbieri', type: 'calciatore', role: 'Portiere', category: 'Eccellenza', team: 'Lucera Calcio', status: 'Svincolato Art. 108', score: '94.2', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260925_150256', followers: 530 },
+    { id: 'usr_8', name: 'Elena Santoro', type: 'staff', role: 'Preparatore Atletico', category: 'Serie D', team: 'Foggia In Motion', status: 'Preparatore FIGC', score: '98.0', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260925_150256', followers: 1820 },
+    { id: 'usr_9', name: 'US Foggia 1920', type: 'squadra', role: 'Società Calcistica', category: 'Serie D', team: 'Foggia (FG)', status: 'Club Verificato', score: '99.5', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260925_150256', followers: 12800 },
+    { id: 'usr_10', name: 'Lucera Calcio', type: 'squadra', role: 'Società Calcistica', category: 'Eccellenza', team: 'Lucera (FG)', status: 'Club Verificato', score: '93.2', image: 'immagini/06-placeholder-utente/user-placeholder.svg?v=20260925_150256', followers: 2940 }
   ];
 
   window.switchBachecaTab = function(tabName) {
@@ -7553,7 +7553,7 @@ window.showAuthLoadingScreen = function (label) {
   }
   el.innerHTML =
     '<div style="text-align:center;padding:2rem;">' +
-    '<img src="immagini/logo/logo-site.png?v=20260831_121117" alt="ELISEE SCOUT" style="width:64px;height:64px;object-fit:contain;display:block;margin:0 auto 1rem;">' +
+    '<img src="immagini/logo/logo-site.png?v=20260925_150256" alt="ELISEE SCOUT" style="width:64px;height:64px;object-fit:contain;display:block;margin:0 auto 1rem;">' +
     '<div style="width:42px;height:42px;margin:0 auto 1rem;border-radius:50%;border:3px solid rgba(56,189,248,0.2);border-top-color:#38bdf8;animation:esAuthSpin 0.7s linear infinite;"></div>' +
     '<p style="color:#fff;font-family:Outfit,sans-serif;font-weight:800;letter-spacing:0.04em;font-size:1.05rem;margin:0 0 0.35rem;">Registrazione completata</p>' +
     '<p id="elisee-auth-loading-sub" style="color:#94a3b8;font-size:0.84rem;margin:0;"></p>' +
@@ -8761,7 +8761,7 @@ window.selectSpidProvider = function(name, color) {
   if (spidBlock) spidBlock.style.display = 'none';
   if (typeof window.showAccessoMethod === 'function') window.showAccessoMethod('email');
   if (labelEl) labelEl.textContent = '· SPID via ' + name;
-  if (iconEl) iconEl.innerHTML = '<img src="immagini/09-auth-spid-logo/spid-logo.svg?v=20260831_121117" style="height:22px; width:auto; vertical-align:middle; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6)) drop-shadow(0 0 10px rgba(0,102,204,0.7));">';
+  if (iconEl) iconEl.innerHTML = '<img src="immagini/09-auth-spid-logo/spid-logo.svg?v=20260925_150256" style="height:22px; width:auto; vertical-align:middle; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6)) drop-shadow(0 0 10px rgba(0,102,204,0.7));">';
   if (badge) badge.style.display = 'flex';
   setTimeout(() => { const em = document.getElementById('accesso-email'); if (em) em.focus(); }, 100);
 };
@@ -8773,7 +8773,7 @@ window.openGoogleModal = function() {
 };
 window.closeGoogleModal = window.closeAccessoModal;
 window.openAppleModal = function() {
-  openAccessoModal('apple', '<img src="immagini/08-auth-apple/apple-logo.svg?v=20260831_121117" style="width:22px; height:22px; vertical-align:middle; filter:drop-shadow(0 3px 6px rgba(0,0,0,0.5)) drop-shadow(0 0 8px rgba(255,255,255,0.4));">', 'Apple ID');
+  openAccessoModal('apple', '<img src="immagini/08-auth-apple/apple-logo.svg?v=20260925_150256" style="width:22px; height:22px; vertical-align:middle; filter:drop-shadow(0 3px 6px rgba(0,0,0,0.5)) drop-shadow(0 0 8px rgba(255,255,255,0.4));">', 'Apple ID');
 };
 window.closeAppleModal = window.closeAccessoModal;
 
@@ -9110,7 +9110,7 @@ window.registerWithApple = function () {
   );
 };
 window.openSpidModal = function() {
-  openAccessoModal('spid', '<img src="immagini/09-auth-spid-logo/spid-logo.svg?v=20260831_121117" style="height:22px; width:auto; vertical-align:middle; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6)) drop-shadow(0 0 10px rgba(0,102,204,0.7));">', 'SPID');
+  openAccessoModal('spid', '<img src="immagini/09-auth-spid-logo/spid-logo.svg?v=20260925_150256" style="height:22px; width:auto; vertical-align:middle; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6)) drop-shadow(0 0 10px rgba(0,102,204,0.7));">', 'SPID');
 };
 window.closeSpidModal = window.closeAccessoModal;
 
@@ -11635,7 +11635,7 @@ window.getStoredProfilePhoto = function (profilo, user) {
     var name = String((user && (user.nome || user.name)) || (profilo && (profilo.nome || profilo.name)) || localStorage.getItem('elisee_user_name') || '').toLowerCase();
     var isAdmin = localStorage.getItem('elisee_admin_auth') === 'true' || (user && user.isCreator);
     if (isAdmin || email.includes('eliseomiraglia') || name.includes('eliseo') || name.includes('miraglia')) {
-      photo = 'immagini/02-chi-siamo-ritratto/about-portrait.jpg?v=20260831_121117';
+      photo = 'immagini/02-chi-siamo-ritratto/about-portrait.jpg?v=20260925_150256';
     }
   }
 

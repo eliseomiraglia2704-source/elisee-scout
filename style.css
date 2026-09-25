@@ -1,4 +1,4 @@
-@font-face {
+﻿@font-face {
   font-family: 'Nevera';
   src: url('fonts/Nevera-Regular.otf') format('opentype');
   font-weight: 100 900;
@@ -1084,7 +1084,7 @@ body.layout-portfolio #view-pillars {
 .pf-page-bg {
   position: absolute;
   inset: 0;
-  background-image: url('immagini/01-home-hero/hero-workspace.jpg?v=20260831_121117');
+  background-image: url('immagini/01-home-hero/hero-workspace.jpg?v=20260925_150256');
   background-size: cover;
   background-position: center;
   opacity: 0.22;
@@ -2358,7 +2358,7 @@ select.pf-input {
 .resume-page-bg {
   position: absolute;
   inset: 0;
-  background-image: url('immagini/01-home-hero/hero-workspace.jpg?v=20260831_121117');
+  background-image: url('immagini/01-home-hero/hero-workspace.jpg?v=20260925_150256');
   background-size: cover;
   background-position: center right;
   opacity: 0.22;
