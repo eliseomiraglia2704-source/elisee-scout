@@ -70,6 +70,7 @@
     if (backdrop) {
       backdrop.classList.add('is-open');
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
     }
   }
 
@@ -77,21 +78,106 @@
     var backdrop = document.getElementById('es-m-drawer-backdrop');
     if (backdrop) {
       backdrop.classList.remove('is-open');
-      document.body.style.overflow = '';
+      var drawer = backdrop.querySelector('.es-m-drawer');
+      if (drawer) drawer.style.transform = '';
     }
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
   }
 
   function navigateTo(viewKey, hash) {
+    var t0 = (window.performance && window.performance.now) ? performance.now() : 0;
     closeDrawer();
-    if (typeof window.switchView === 'function') {
-      window.switchView(viewKey, hash);
+
+    if (viewKey === 'home' || hash === '#hero' || hash === '#home') {
+      try {
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState(null, '', '#hero');
+        }
+      } catch (_) {}
+      try { location.hash = '#hero'; } catch (_) {}
+
+      document.body.classList.remove('is-internal-view', 'is-view-mappa', 'is-view-stampa');
+      var ind = document.querySelector('.nav-indicator');
+      if (ind) ind.classList.remove('is-on');
+
+      var vm = document.getElementById('view-mappa');
+      if (vm) vm.style.display = 'none';
+
+      if (typeof window.switchView === 'function') {
+        window.switchView('home', '#hero');
+      }
+      window.scrollTo(0, 0);
     } else {
-      window.location.hash = hash;
+      if (typeof window.switchView === 'function') {
+        window.switchView(viewKey, hash);
+      } else {
+        window.location.hash = hash;
+      }
     }
-    setTimeout(syncActiveTab, 100);
+
+    syncActiveTab();
+
+    if (t0 > 0 && window.performance && window.performance.now) {
+      var diff = performance.now() - t0;
+      if (window.console && console.debug) {
+        console.debug('[EliseeMobile] Nav to ' + hash + ' rendered in ' + diff.toFixed(1) + 'ms');
+      }
+    }
+  }
+
+  function initSwipeGesture() {
+    var drawer = document.querySelector('.es-m-drawer');
+    if (!drawer) return;
+
+    var startX = 0;
+    var currentX = 0;
+    var isDragging = false;
+
+    drawer.addEventListener('touchstart', function (e) {
+      if (e.touches && e.touches.length === 1) {
+        startX = e.touches[0].clientX;
+        currentX = startX;
+        isDragging = true;
+      }
+    }, { passive: true });
+
+    drawer.addEventListener('touchmove', function (e) {
+      if (!isDragging || !e.touches || e.touches.length !== 1) return;
+      currentX = e.touches[0].clientX;
+      var diff = currentX - startX;
+      if (diff > 0) {
+        drawer.style.transform = 'translateX(' + diff + 'px)';
+        drawer.style.transition = 'none';
+      }
+    }, { passive: true });
+
+    drawer.addEventListener('touchend', function () {
+      if (!isDragging) return;
+      isDragging = false;
+      var diff = currentX - startX;
+      drawer.style.transition = '';
+      if (diff > 75) {
+        closeDrawer();
+      } else {
+        drawer.style.transform = '';
+      }
+    });
   }
 
   function bindEvents() {
+    // 0. Brand Mobile clicks (Capture Phase)
+    var mobileBrands = document.querySelectorAll('.es-m-brand, a[href="#hero"].es-m-brand');
+    mobileBrands.forEach(function (b) {
+      b.addEventListener('click', function (e) {
+        if (e) {
+          try { e.preventDefault(); } catch (_) {}
+          try { e.stopPropagation(); } catch (_) {}
+        }
+        navigateTo('home', '#hero');
+      }, true);
+    });
+
     // 1. Bottom Bar Tab clicks
     var tabs = document.querySelectorAll('.es-m-tab-item');
     tabs.forEach(function (tab) {
@@ -128,6 +214,9 @@
         }
       });
     }
+
+    // Gesture swipe to close
+    initSwipeGesture();
 
     // 3. Drawer Links
     var drawerLinks = document.querySelectorAll('.es-m-drawer-link');

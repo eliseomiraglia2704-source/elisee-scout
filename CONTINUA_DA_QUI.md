@@ -3,7 +3,18 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX20 — Hash #hero Sincrono Diretto, Drop is-scrolled, Reset Header Trasparente e Rimozione Selettore :has Mappa:
+Ultimo aggiornamento: **2026-09-26** — HEROUX21 — Mobile Web App Optimization & Drawer Zero-Latency Swipe:
+1. **Zero-Latency Mobile Navigation & Reset (`mobile-webapp.js`)**:
+   - `navigateTo(viewKey, hash)` allineato alla logica HEROUX20: click su Home / Brand / Hero esegue immediato `location.hash = '#hero'`, chiude il drawer, azzera classi interne, resetta `is-scrolled`, nasconde `#view-mappa` e fa `window.scrollTo(0, 0)` secco.
+   - Click handler in capture phase su tutti i brand mobile (`.es-m-brand`).
+   - Sblocco immediato dello scroll (`document.body.style.overflow = ''` e `html`) alla chiusura del drawer senza ritardi su iOS Safari.
+2. **Gesture Swipe-to-Close (`mobile-webapp.js`, `mobile-webapp.css`)**:
+   - Implementato touch swipe orizzontale fluido verso destra su `.es-m-drawer` (`touch-action: pan-y`, `will-change: transform`, `translate3d`).
+3. **Micro-Interaction Touch Ultra-Smooth (`mobile-webapp.css`)**:
+   - Feedback aptico-visivo micro-scale `scale(0.96)` su `:active` per `.es-m-brand`, `.es-m-btn-icon`, `.es-m-btn-hamburger`, `.es-m-tab-item`, `.es-m-drawer-link` con transizione a 40ms.
+4. **File**: `mobile-webapp.js`, `mobile-webapp.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX21`.
+
+Feature precedente: **2026-09-26** — HEROUX20 — Hash #hero Sincrono Diretto, Drop is-scrolled, Reset Header Trasparente e Rimozione Selettore :has Mappa:
 1. **Rimozione Selettore :has in `mappa-club.css`**:
    - Eliminato `body:has(#view-mappa:not([style*="none"])) header...`: il selettore teneva l'header a `background: rgba(5,6,8,0.72)` anche a classi già rimosse finché `#view-mappa` restava nel DOM.
 2. **Forzatura Hash e Trasparenza Sincrona nel Capture Handler (`es-nav-ux.js`)**:

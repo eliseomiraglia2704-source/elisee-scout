@@ -400,7 +400,7 @@
   .es-m-drawer-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     z-index: 10100;
@@ -410,6 +410,7 @@
     visibility: hidden;
     pointer-events: none;
     transition: opacity 0.25s ease, visibility 0.25s ease;
+    will-change: opacity;
   }
 
   .es-m-drawer-backdrop.is-open {
@@ -426,16 +427,38 @@
     display: flex;
     flex-direction: column;
     box-shadow: -12px 0 36px rgba(0, 0, 0, 0.7);
-    transform: translateX(100%);
+    transform: translate3d(100%, 0, 0);
     transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
     padding: calc(1rem + env(safe-area-inset-top, 0px)) 1.25rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
     box-sizing: border-box;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
   }
 
   .es-m-drawer-backdrop.is-open .es-m-drawer {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  /* Micro-Interaction Touch Feedback Ultra-Smooth (40ms scale 0.96) */
+  .es-m-brand,
+  .es-m-btn-icon,
+  .es-m-btn-hamburger,
+  .es-m-tab-item,
+  .es-m-drawer-link,
+  .es-m-drawer-close {
+    transition: transform 40ms cubic-bezier(0.4, 0, 0.2, 1), opacity 0.12s ease !important;
+    touch-action: manipulation;
+  }
+
+  .es-m-brand:active,
+  .es-m-btn-icon:active,
+  .es-m-btn-hamburger:active,
+  .es-m-tab-item:active,
+  .es-m-drawer-link:active,
+  .es-m-drawer-close:active {
+    transform: scale(0.96) !important;
   }
 
   .es-m-drawer-head {
