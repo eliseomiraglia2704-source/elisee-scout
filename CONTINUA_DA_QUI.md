@@ -3,7 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — PWLIVE1 — Controllo password mentre si scrive:
+Ultimo aggiornamento: **2026-09-25** — BG1 — Sfondo con gradiente lento:
+1. Tra gli sfondi del video ho scelto il gradiente animato. Sul sito è nero e ciano, non viola.
+2. Si muove piano dietro la home. Le card restano piene. Di giorno il gradiente è chiaro. Con «riduci movimento» sta fermo.
+3. **File**: `site-bg.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_BG1`. Commit `e537e94e`.
+
+Feature precedente: **2026-09-25** — PWLIVE1 — Controllo password mentre si scrive:
 1. Nel login, in Iscriviti e in «nuova password» l'etichetta sale nel campo e sotto compare la barra.
 2. Debole (rosso, un terzo), media (ciano chiaro, due terzi), forte (ciano pieno). Conta minuscola, maiuscola, numero, simbolo e 16 caratteri.
 3. **File**: `pw-live.js`, `pw-live.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_PWLIVE1`. Commit `965de718`.
