@@ -3,7 +3,15 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX21 — Mobile Web App Optimization & Drawer Zero-Latency Swipe:
+Ultimo aggiornamento: **2026-09-26** — HEROUX22 — Zero-Latency Badge UI System & Topbar Integration:
+1. **Badge System Zero-Latency (`badge-system.css`, `badge-handler.js`)**:
+   - Creato modulo CSS/JS autonomo per la gestione zero-latenza di badge conteggio e status (`updateBadge(id, count)`, `clearBadge(id)`, `pinToCorner(selector, anchored)`).
+   - Cap automatico `99+` con classe `.capped` e transizione neon/locked a 40ms.
+   - Sfumature curate: count-badge `#ff2d55 -> #ff6b9d`, status/capped `#00f5d4 -> #00c4a8`.
+   - Agganciati i badge id `#badge-mobile-msgs` e `#badge-mobile-notifs` ai pulsanti della topbar mobile.
+2. **File**: `badge-system.css`, `badge-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX22`.
+
+Feature precedente: **2026-09-26** — HEROUX21 — Mobile Web App Optimization & Drawer Zero-Latency Swipe:
 1. **Zero-Latency Mobile Navigation & Reset (`mobile-webapp.js`)**:
    - `navigateTo(viewKey, hash)` allineato alla logica HEROUX20: click su Home / Brand / Hero esegue immediato `location.hash = '#hero'`, chiude il drawer, azzera classi interne, resetta `is-scrolled`, nasconde `#view-mappa` e fa `window.scrollTo(0, 0)` secco.
    - Click handler in capture phase su tutti i brand mobile (`.es-m-brand`).

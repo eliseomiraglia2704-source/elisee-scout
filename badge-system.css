@@ -1,0 +1,84 @@
+/* ============================================= */
+/* HEROUX22 – Badge System – Zero-Latency       */
+/* ============================================= */
+.badge-container {
+  position: relative;
+  display: inline-block;
+}
+
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  min-width: 20px;
+  height: 18px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+  padding: 0 5px;
+  border-radius: 9999px;
+  background: linear-gradient(145deg, #ff2d55, #ff6b9d);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(255, 45, 85, 0.4);
+  z-index: 10;
+  transition: all 40ms cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  pointer-events: none;
+  font-family: Outfit, Inter, system-ui, sans-serif;
+  box-sizing: border-box;
+}
+
+.badge.visible {
+  opacity: 1;
+  transform: translate(50%, -50%) scale(1);
+}
+
+.badge.capped {
+  background: linear-gradient(145deg, #00f5d4, #00c4a8);
+  min-width: 28px;
+}
+
+.badge.locked {
+  background: linear-gradient(145deg, #00f5d4, #00c4a8);
+  box-shadow: 0 2px 8px rgba(0, 245, 212, 0.4);
+}
+
+/* Pin to corner */
+.pin-anchored .badge {
+  right: 0;
+  transform: translate(0, -50%);
+}
+
+.pin-reflowing .badge {
+  right: 0;
+  transform: translate(0, -50%);
+}
+
+/* Status vs Count distinction */
+.count-badge {
+  background: linear-gradient(145deg, #ff2d55, #ff6b9d);
+}
+
+.status-badge {
+  background: linear-gradient(145deg, #00f5d4, #00c4a8);
+  box-shadow: 0 2px 8px rgba(0, 245, 212, 0.4);
+}
+
+.two-signals .badge {
+  top: 8px;
+  right: 8px;
+}
+
+/* Clean on open */
+.inbox-badge .badge {
+  right: -6px;
+  top: 6px;
+  transform: translate(50%, -50%);
+}
+
+/* Count only climb */
+.badge.no-blink {
+  transition: none;
+}

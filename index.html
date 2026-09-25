@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260925_HEROUX21';
+      var BUILD_VERSION = '20260925_HEROUX22';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260925_HEROUX21">
+  <link rel="stylesheet" href="style.css?v=20260925_HEROUX22">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
@@ -58,7 +58,7 @@
   <link rel="stylesheet" href="login-slide.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="glass-menu.css?v=20260924_GLASSMENU1">
   <link rel="stylesheet" href="nav-search-anim.css?v=20260925_PALETTE1">
-  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX21">
+  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX22">
   <link rel="stylesheet" href="btn-label-anim.css?v=20260925_BTNANIM1">
   <link rel="stylesheet" href="share-btn.css?v=20260925_SHARE1">
   <link rel="stylesheet" href="theme-switch.css?v=20260925_THEME1">
@@ -67,9 +67,10 @@
   <link rel="stylesheet" href="trash-btn.css?v=20260925_TRASH1">
   <link rel="stylesheet" href="react-card.css?v=20260925_RCARD1">
   <link rel="stylesheet" href="page-bubbles.css?v=20260925_BUBBLE1">
-  <link rel="stylesheet" href="parallax.css?v=20260925_HEROUX21">
-  <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX21">
-  <link rel="stylesheet" href="es-nav-ux.css?v=20260925_HEROUX21">
+  <link rel="stylesheet" href="parallax.css?v=20260925_HEROUX22">
+  <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX22">
+  <link rel="stylesheet" href="es-nav-ux.css?v=20260925_HEROUX22">
+  <link rel="stylesheet" href="badge-system.css?v=20260925_HEROUX22">
   <style id="es-font-nevera">
     @font-face {
       font-family: 'Nevera';
@@ -2089,20 +2090,22 @@
 
       <div class="es-m-top-actions">
         <!-- Messaggi -->
-        <button type="button" class="es-m-btn-icon" id="es-m-btn-msgs" title="Messaggi" aria-label="Messaggi">
+        <button type="button" class="es-m-btn-icon badge-container count-badge" id="es-m-btn-msgs" title="Messaggi" aria-label="Messaggi">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <rect x="3" y="5" width="18" height="14" rx="2"/>
             <path d="M3 7l9 7 9-7"/>
           </svg>
+          <span class="badge" id="badge-mobile-msgs"></span>
           <span class="es-m-dot" id="es-m-msg-dot" hidden></span>
         </button>
 
         <!-- Notifiche -->
-        <button type="button" class="es-m-btn-icon" id="es-m-btn-notifs" title="Notifiche" aria-label="Notifiche">
+        <button type="button" class="es-m-btn-icon badge-container count-badge" id="es-m-btn-notifs" title="Notifiche" aria-label="Notifiche">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9"/>
             <path d="M10 20a2 2 0 0 0 4 0"/>
           </svg>
+          <span class="badge" id="badge-mobile-notifs"></span>
           <span class="es-m-dot" id="es-m-notif-dot" hidden></span>
         </button>
 
@@ -6586,7 +6589,8 @@
       }
     }
   </style>
-  <script src="mobile-webapp.js?v=20260925_HEROUX21"></script>
-  <script src="es-nav-ux.js?v=20260925_HEROUX21"></script>
+  <script src="badge-handler.js?v=20260925_HEROUX22"></script>
+  <script src="mobile-webapp.js?v=20260925_HEROUX22"></script>
+  <script src="es-nav-ux.js?v=20260925_HEROUX22"></script>
 </body>
 </html>
