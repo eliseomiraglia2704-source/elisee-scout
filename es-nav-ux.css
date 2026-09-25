@@ -317,24 +317,31 @@ html[data-theme="mimetico-chiaro"] header.public-header .btn-login:hover {
   transform: translateY(0) scale(0.98);
 }
 
-/* 6. Transizioni tra Viste (Hardware Accelerated Crossfade & Slide) */
+/* 6. Transizioni tra Viste (Zero-Latency Hardware Accelerated) */
 .es-view-leaving {
-  opacity: 0 !important;
-  transform: translateY(10px) !important;
-  transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out) !important;
-  pointer-events: none !important;
+  display: none !important;
 }
 
 .es-view-entering-start {
-  opacity: 0 !important;
-  transform: translateY(14px) !important;
+  opacity: 0.4 !important;
+  transform: translateY(6px) !important;
   transition: none !important;
 }
 
 .es-view-entering {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-  transition: opacity 260ms var(--ease-out) 60ms, transform 260ms var(--ease-out) 60ms !important;
+  animation: esViewEnterAnim 180ms cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  will-change: opacity, transform !important;
+}
+
+@keyframes esViewEnterAnim {
+  0% {
+    opacity: 0.5;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* 7. Modal Scrim & Dialog Transition */

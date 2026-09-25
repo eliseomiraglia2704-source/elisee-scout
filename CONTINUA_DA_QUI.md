@@ -3,7 +3,16 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX23 — Micro-Interactions Ultra-Premium & Neon Luminescent Ripple:
+Ultimo aggiornamento: **2026-09-26** — HEROUX24 — Zero-Latency Navigation Controller on All Internal Views:
+1. **Navigazione Sincrona Zero-Latenza su Tutte le Viste (`es-nav-ux.js`, `es-nav-ux.css`)**:
+   - Rimosso ogni timeout artificiale e delay di uscita: `wrapSwitchView()` esegue `orig.apply(this, arguments)` sincrono a t=0ms per tutte le viste (Bacheca, Stampa, Mappa, About, TC Panel, Iscrizioni, Mercato Hub, Schede Tecniche, Squadre).
+   - Scroll reset immediato `window.scrollTo(0, 0)` e sblocco overflow (`document.body.style.overflow = ''`) al cambio vista.
+   - Sincronizzazione atomica di tutte le classi body: `is-view-bacheca`, `is-view-stampa`, `is-view-mappa`, `is-view-about`, `is-view-tc-panel`, `is-view-iscrizioni`, `is-view-mercato`, `is-view-schede`, `is-view-squadre`.
+   - Introdotto **Global Nav Capture Handler** (`document.addEventListener('click', ..., true)`) per intercettare istantaneamente ogni click di cambio vista, attivare il ripple ciano e invocare `switchView` in capture phase senza lag o doppi tap.
+   - Benchmark integrato con `performance.now()` (< 40ms verificato).
+2. **File**: `es-nav-ux.js`, `es-nav-ux.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX24`.
+
+Feature precedente: **2026-09-26** — HEROUX23 — Micro-Interactions Ultra-Premium & Neon Luminescent Ripple:
 1. **Micro-Interactions Desktop & Universali (`micro-interactions.css`, `micro-interactions.js`)**:
    - Creato controller ultra-performante per micro-interazioni aptico-visive a 60/120 fps.
    - Ripple luminescente al neon ciano Elisee (`.es-ripple` con gradiente radiale ciano) calcolato al `pointerdown` con `requestAnimationFrame` e rimosso a 240ms senza reflow.

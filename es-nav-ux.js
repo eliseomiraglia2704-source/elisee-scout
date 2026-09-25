@@ -120,8 +120,21 @@
 
     var isInternal = (cleanView !== 'home');
     document.body.classList.toggle('is-internal-view', isInternal);
+    document.body.classList.toggle('is-view-mappa', cleanView === 'mappa');
+    document.body.classList.toggle('is-view-stampa', cleanView === 'stampa');
+    document.body.classList.toggle('is-view-bacheca', cleanView === 'bacheca' || cleanView === 'persone');
+    document.body.classList.toggle('is-view-about', cleanView === 'about');
+    document.body.classList.toggle('is-view-tc-panel', cleanView === 'tc' || cleanView === 'tc-panel');
+    document.body.classList.toggle('is-view-iscrizioni', cleanView === 'iscrizione' || cleanView === 'iscrizioni');
+    document.body.classList.toggle('is-view-mercato', cleanView === 'mercato');
+    document.body.classList.toggle('is-view-schede', cleanView === 'schede');
+    document.body.classList.toggle('is-view-squadre', cleanView === 'squadre');
+
     if (!isInternal) {
-      document.body.classList.remove('is-view-mappa', 'is-view-stampa');
+      document.body.classList.remove(
+        'is-view-mappa', 'is-view-stampa', 'is-view-bacheca', 'is-view-about',
+        'is-view-tc-panel', 'is-view-iscrizioni', 'is-view-mercato', 'is-view-schede', 'is-view-squadre'
+      );
     }
 
     if (indicatorEl) {
@@ -276,44 +289,38 @@
     syncActiveLink(initialView, true);
   }
 
-  // --- Wrap Fluido per window.switchView ---
-  var currentTransitionTimeout = null;
-
+  // --- Wrap Zero-Latenza per window.switchView ---
   function wrapSwitchView() {
     var orig = window.switchView;
     if (typeof orig !== 'function') return;
 
     window.switchView = function (viewType, targetHash, opts) {
+      var t0 = (window.performance && window.performance.now) ? performance.now() : 0;
       var targetView = viewType || 'home';
       var reduced = prefersReducedMotion();
 
-      // Cancella transizione in corso se click rapido
-      if (currentTransitionTimeout) {
-        clearTimeout(currentTransitionTimeout);
-        currentTransitionTimeout = null;
-        document.querySelectorAll('.es-view-leaving, .es-view-entering, .es-view-entering-start').forEach(function (el) {
-          el.classList.remove('es-view-leaving', 'es-view-entering', 'es-view-entering-start');
-        });
-      }
+      // Cancella eventuali classi di animazione precedenti
+      document.querySelectorAll('.es-view-leaving, .es-view-entering, .es-view-entering-start').forEach(function (el) {
+        el.classList.remove('es-view-leaving', 'es-view-entering', 'es-view-entering-start');
+      });
 
-      // Vista attiva uscente
-      var activeOutgoing = null;
-      var viewGroups = ['#view-home', '#home-views-group', '#view-about', '#view-bacheca', '#view-mappa', '#view-stampa', '#view-squadre', '#view-tc-panel', '#view-mercato', '#view-schede', '#view-account'];
-      for (var i = 0; i < viewGroups.length; i++) {
-        var el = document.querySelector(viewGroups[i]);
-        if (el && window.getComputedStyle(el).display !== 'none' && el.offsetHeight > 0) {
-          activeOutgoing = el;
-          break;
-        }
-      }
+      // 1. Esecuzione IMMEDIATA (t = 0 ms sincrono)
+      var res = orig.apply(this, arguments);
 
-      // Aggiorna stato navbar e header background
+      // 2. Sblocco scroll immediato (evita blocchi iOS)
+      try {
+        document.body.style.overflow = '';
+        if (document.documentElement) document.documentElement.style.overflow = '';
+      } catch (_) {}
+
+      // 3. Scroll a inizio pagina secco
+      window.scrollTo(0, 0);
+
+      // 4. Gestione stato nav & classi body per la vista
       syncActiveLink(targetView, false);
 
-      // Se reduced motion, prima home o ritorno esplicito a home: switch secco e sincrono
-      if (reduced || !activeOutgoing || targetView === 'home') {
-        var res = orig.apply(this, arguments);
-        document.body.classList.remove('is-internal-view', 'is-view-mappa', 'is-view-stampa');
+      if (targetView === 'home') {
+        // Drop is-scrolled e trasparenza forzata nello stesso tick
         var header = document.querySelector('header.public-header, header.main-header, .portfolio-header');
         if (header) {
           header.classList.remove('is-scrolled');
@@ -325,7 +332,6 @@
         if (ind) ind.classList.remove('is-on');
         syncActiveLink('home', true);
         requestAnimationFrame(function () {
-          document.body.classList.remove('is-internal-view', 'is-view-mappa', 'is-view-stampa');
           var ind2 = document.querySelector('.nav-indicator');
           if (ind2) ind2.classList.remove('is-on');
           if (header) {
@@ -335,50 +341,100 @@
             header.style.removeProperty('-webkit-backdrop-filter');
           }
         });
-        return res;
-      }
-
-      // Animazione uscente
-      activeOutgoing.classList.add('es-view-leaving');
-
-      currentTransitionTimeout = setTimeout(function () {
-        activeOutgoing.classList.remove('es-view-leaving');
-        var res = orig.call(window, viewType, targetHash, opts);
-
-        // Trova vista entrante
-        var incoming = null;
+      } else if (!reduced) {
+        // Transizione morbida GPU entrante istantanea (zero ritardo di esecuzione)
+        var viewGroups = ['#view-home', '#home-views-group', '#view-about', '#view-bacheca', '#view-mappa', '#view-stampa', '#view-squadre', '#view-tc-panel', '#view-mercato', '#view-schede', '#view-account', '#view-iscrizione'];
         for (var j = 0; j < viewGroups.length; j++) {
           var inEl = document.querySelector(viewGroups[j]);
           if (inEl && window.getComputedStyle(inEl).display !== 'none' && inEl.offsetHeight > 0) {
-            incoming = inEl;
+            inEl.classList.add('es-view-entering');
+            (function (el) {
+              setTimeout(function () {
+                el.classList.remove('es-view-entering');
+              }, 220);
+            })(inEl);
             break;
           }
         }
+      }
 
-        if (incoming) {
-          incoming.classList.add('es-view-entering-start');
-          requestAnimationFrame(function () {
-            incoming.classList.remove('es-view-entering-start');
-            incoming.classList.add('es-view-entering');
-            currentTransitionTimeout = setTimeout(function () {
-              incoming.classList.remove('es-view-entering');
-              currentTransitionTimeout = null;
-            }, 320);
-          });
-        }
+      if (t0 && window.performance && window.performance.now) {
+        var t1 = performance.now();
+        console.log('[Zero-Latency Nav] switched to ' + targetView + ' in ' + (t1 - t0).toFixed(2) + 'ms');
+      }
 
-        syncActiveLink(targetView, false);
-        return res;
-      }, 100);
-
-      return true;
+      return res;
     };
+  }
+
+  // --- Capture Phase Handler Globale per Viste Interne (Bacheca, Stampa, About, TC, Mercato, ecc.) ---
+  function bindGlobalNavCapture() {
+    document.addEventListener('click', function (e) {
+      var target = e.target;
+      if (!target) return;
+      var link = target.closest('a[href], button[data-view], [data-view-target]');
+      if (!link) return;
+
+      var href = (link.getAttribute('href') || '').trim();
+      var dataView = link.getAttribute('data-view') || link.getAttribute('data-view-target');
+
+      var targetView = null;
+      var targetHash = null;
+
+      if (dataView) {
+        targetView = dataView;
+        targetHash = href.indexOf('#') === 0 ? href : null;
+      } else if (href.indexOf('#') === 0) {
+        var h = href.toLowerCase();
+        if (h === '#hero' || h === '#view-home' || h === '#home') {
+          targetView = 'home';
+          targetHash = '#hero';
+        } else if (h.indexOf('bacheca') >= 0 || h.indexOf('persone') >= 0) {
+          targetView = 'bacheca';
+          targetHash = href;
+        } else if (h.indexOf('stampa') >= 0) {
+          targetView = 'stampa';
+          targetHash = '#stampa-portal';
+        } else if (h.indexOf('mappa') >= 0) {
+          targetView = 'mappa';
+          targetHash = '#mappa-portal';
+        } else if (h.indexOf('about') >= 0 || h.indexOf('chi-siamo') >= 0) {
+          targetView = 'about';
+          targetHash = '#about';
+        } else if (h.indexOf('tc-') >= 0 || h.indexOf('tc_') >= 0) {
+          targetView = 'tc';
+          targetHash = href;
+        } else if (h.indexOf('iscrizione') >= 0) {
+          targetView = 'iscrizione';
+          targetHash = href;
+        } else if (h.indexOf('mercato') >= 0 || h.indexOf('wall-') >= 0 || h.indexOf('secret-') >= 0) {
+          targetView = 'mercato';
+          targetHash = href;
+        } else if (h.indexOf('schede') >= 0) {
+          targetView = 'schede';
+          targetHash = href;
+        } else if (h.indexOf('squadre') >= 0) {
+          targetView = 'squadre';
+          targetHash = href;
+        }
+      }
+
+      if (targetView && typeof window.switchView === 'function') {
+        if (window.createRipple && e.clientX && e.clientY) {
+          window.createRipple(link, e.clientX, e.clientY);
+        }
+        try { e.preventDefault(); } catch (_) {}
+        try { e.stopPropagation(); } catch (_) {}
+        window.switchView(targetView, targetHash || ('#' + targetView));
+      }
+    }, true);
   }
 
   // --- Boot Handler ---
   function boot() {
     initNav();
     wrapSwitchView();
+    bindGlobalNavCapture();
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onResize, { passive: true });
     onScroll();
