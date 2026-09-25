@@ -3,7 +3,18 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX30 — Schede Tecniche IA (Radar 3vs3 + Score Predittivo 1-10):
+Ultimo aggiornamento: **2026-09-26** — HEROUX31 — Candidature Club (Form Doppio + Matching IA):
+1. **Candidature Club Engine (`candidature.css`, `candidature-handler.js`, `styles/candidature.css`, `js/candidature-handler.js`)**:
+   - Implementazione zero-latenza (<40ms):
+     - Form doppio blocco reattivo a 2 colonne: "❇️ Cosa offriamo" e "❇️ Cosa richiediamo" con textarea stilizzate in dark mode e glow ciano al focus.
+     - Calcolo predittivo Auto-Match IA algoritmico con doughnut score circolare conic-gradient.
+     - Valutazione dinamica del match (alto / medio) con testo di compatibilità ruolo DS / Scout.
+     - Tasti di invio dedicati con toast reversibili `EliseeSuccessSystem.showToast` e reset pulito del match.
+     - Live ticker badge sincrono (800ms) integrato con `EliseeDynamicSync.setBadge('badge-mobile-msgs', count)`.
+   - Esposizione globale: `window.EliseeCandidature` (`match`, `submitOffriamo`, `submitRichiediamo`, `clearMatch`).
+2. **File**: `candidature.css`, `candidature-handler.js`, `styles/candidature.css`, `js/candidature-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX31`.
+
+Feature precedente: **2026-09-26** — HEROUX30 — Schede Tecniche IA (Radar 3vs3 + Score Predittivo 1-10):
 1. **Radar 3vs3 IA Engine (`radar.css`, `radar-handler.js`, `styles/radar.css`, `js/radar-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Confronto radar 3vs3 con card interattive hover (scale + glow ciano `#00f5d4`).

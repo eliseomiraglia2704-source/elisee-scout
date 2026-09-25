@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260925_HEROUX30';
+      var BUILD_VERSION = '20260925_HEROUX31';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260925_HEROUX30">
+  <link rel="stylesheet" href="style.css?v=20260925_HEROUX31">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
@@ -58,7 +58,7 @@
   <link rel="stylesheet" href="login-slide.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="glass-menu.css?v=20260924_GLASSMENU1">
   <link rel="stylesheet" href="nav-search-anim.css?v=20260925_PALETTE1">
-  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX30">
+  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX31">
   <link rel="stylesheet" href="btn-label-anim.css?v=20260925_BTNANIM1">
   <link rel="stylesheet" href="share-btn.css?v=20260925_SHARE1">
   <link rel="stylesheet" href="theme-switch.css?v=20260925_THEME1">
@@ -67,16 +67,17 @@
   <link rel="stylesheet" href="trash-btn.css?v=20260925_TRASH1">
   <link rel="stylesheet" href="react-card.css?v=20260925_RCARD1">
   <link rel="stylesheet" href="page-bubbles.css?v=20260925_BUBBLE1">
-  <link rel="stylesheet" href="parallax.css?v=20260925_HEROUX30">
-  <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX30">
-  <link rel="stylesheet" href="es-nav-ux.css?v=20260925_HEROUX30">
-  <link rel="stylesheet" href="badge-system.css?v=20260925_HEROUX30">
-  <link rel="stylesheet" href="micro-interactions.css?v=20260925_HEROUX30">
-  <link rel="stylesheet" href="radius-system.css?v=20260925_HEROUX30">
-  <link rel="stylesheet" href="success-system.css?v=20260925_HEROUX30">
-  <link rel="stylesheet" href="action-menu.css?v=20260925_HEROUX30">
-  <link rel="stylesheet" href="market-hub.css?v=20260925_HEROUX30">
-  <link rel="stylesheet" href="radar.css?v=20260925_HEROUX30">
+  <link rel="stylesheet" href="parallax.css?v=20260925_HEROUX31">
+  <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX31">
+  <link rel="stylesheet" href="es-nav-ux.css?v=20260925_HEROUX31">
+  <link rel="stylesheet" href="badge-system.css?v=20260925_HEROUX31">
+  <link rel="stylesheet" href="micro-interactions.css?v=20260925_HEROUX31">
+  <link rel="stylesheet" href="radius-system.css?v=20260925_HEROUX31">
+  <link rel="stylesheet" href="success-system.css?v=20260925_HEROUX31">
+  <link rel="stylesheet" href="action-menu.css?v=20260925_HEROUX31">
+  <link rel="stylesheet" href="market-hub.css?v=20260925_HEROUX31">
+  <link rel="stylesheet" href="radar.css?v=20260925_HEROUX31">
+  <link rel="stylesheet" href="candidature.css?v=20260925_HEROUX31">
   <style id="es-font-nevera">
     @font-face {
       font-family: 'Nevera';
@@ -4749,6 +4750,33 @@
             </div>
           </div>
         </section>
+
+        <!-- Candidature Club – HEROUX31 -->
+        <section id="candidature-club" class="candidature-section">
+          <h2>Candidature Club • Matching IA</h2>
+          <div class="form-grid">
+            <!-- Offriamo -->
+            <div class="form-block">
+              <h3>❇️ Cosa offriamo</h3>
+              <textarea id="offriamo" rows="6" placeholder="Es: Accesso privilegiato al Wall Transfer, Segnalazioni riservate, Partner branding..."></textarea>
+              <button type="button" onclick="submitOffriamo()">Invia Offerta</button>
+            </div>
+            <!-- Richiediamo -->
+            <div class="form-block">
+              <h3>❇️ Cosa richiediamo</h3>
+              <textarea id="richiediamo" rows="6" placeholder="Es: Esperienza DS, Network sul Wall, Budget allocation..."></textarea>
+              <button type="button" onclick="submitRichiediamo()">Invia Richiesta</button>
+            </div>
+          </div>
+          <!-- Matching IA risultato -->
+          <div id="matching-result" class="matching-result"></div>
+          <!-- Live Badge 800ms -->
+          <div style="text-align:center; margin-top:24px;">
+            <div class="badge-pill" style="padding:10px 24px; border-radius:9999px; background:#00f5d4; color:#000; font-weight:800; font-size:13px; display:inline-block; cursor:pointer;">
+              Live Ticker Badge: <span id="live-badge">0</span>
+            </div>
+          </div>
+        </section>
       </section>
     </div>
 
@@ -6747,15 +6775,16 @@
     </div>
   </div>
 
-  <script src="badge-handler.js?v=20260925_HEROUX30"></script>
-  <script src="mobile-webapp.js?v=20260925_HEROUX30"></script>
-  <script src="es-nav-ux.js?v=20260925_HEROUX30"></script>
-  <script src="micro-interactions.js?v=20260925_HEROUX30"></script>
-  <script src="radius-handler.js?v=20260925_HEROUX30" defer></script>
-  <script src="dynamic-sync.js?v=20260925_HEROUX30" defer></script>
-  <script src="success-handler.js?v=20260925_HEROUX30" defer></script>
-  <script src="action-menu-handler.js?v=20260925_HEROUX30" defer></script>
-  <script src="market-hub-handler.js?v=20260925_HEROUX30" defer></script>
-  <script src="radar-handler.js?v=20260925_HEROUX30" defer></script>
+  <script src="badge-handler.js?v=20260925_HEROUX31"></script>
+  <script src="mobile-webapp.js?v=20260925_HEROUX31"></script>
+  <script src="es-nav-ux.js?v=20260925_HEROUX31"></script>
+  <script src="micro-interactions.js?v=20260925_HEROUX31"></script>
+  <script src="radius-handler.js?v=20260925_HEROUX31" defer></script>
+  <script src="dynamic-sync.js?v=20260925_HEROUX31" defer></script>
+  <script src="success-handler.js?v=20260925_HEROUX31" defer></script>
+  <script src="action-menu-handler.js?v=20260925_HEROUX31" defer></script>
+  <script src="market-hub-handler.js?v=20260925_HEROUX31" defer></script>
+  <script src="radar-handler.js?v=20260925_HEROUX31" defer></script>
+  <script src="candidature-handler.js?v=20260925_HEROUX31" defer></script>
 </body>
 </html>
