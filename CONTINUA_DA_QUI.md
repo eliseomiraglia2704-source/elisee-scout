@@ -3,7 +3,17 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX29 — Market Hub Stealth & FIFA Wall Style Architecture:
+Ultimo aggiornamento: **2026-09-26** — HEROUX30 — Schede Tecniche IA (Radar 3vs3 + Score Predittivo 1-10):
+1. **Radar 3vs3 IA Engine (`radar.css`, `radar-handler.js`, `styles/radar.css`, `js/radar-handler.js`)**:
+   - Implementazione zero-latenza (<40ms):
+     - Confronto radar 3vs3 con card interattive hover (scale + glow ciano `#00f5d4`).
+     - Donut chart circolare con conic-gradient ad alta precisione basato sullo score calcolato (1-10) per ruolo (`DS-Top: 9.8`, `Scout-Expert: 7.4`, `Analyst: 6.1`).
+     - Progress bar con linear-gradient ciano/magenta per livello di compatibilità.
+     - Badge reattivo live con loop temporizzato a 1200ms sincrono con `EliseeDynamicSync.setBadge('badge-mobile-msgs', count)`.
+   - Esposizione globale: `window.EliseeRadarSystem` (`init`, `calculateScore`, `scores`).
+2. **File**: `radar.css`, `radar-handler.js`, `styles/radar.css`, `js/radar-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX30`.
+
+Feature precedente: **2026-09-26** — HEROUX29 — Market Hub Stealth & FIFA Wall Style Architecture:
 1. **Market Hub Stealth Engine (`market-hub.css`, `market-hub-handler.js`, `styles/market-hub.css`, `js/market-hub-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Secret List stealth con bordo ciano `#00f5d4` e sfondo speculare.

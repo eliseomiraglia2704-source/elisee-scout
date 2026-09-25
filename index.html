@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260925_HEROUX29';
+      var BUILD_VERSION = '20260925_HEROUX30';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260925_HEROUX29">
+  <link rel="stylesheet" href="style.css?v=20260925_HEROUX30">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
@@ -58,7 +58,7 @@
   <link rel="stylesheet" href="login-slide.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="glass-menu.css?v=20260924_GLASSMENU1">
   <link rel="stylesheet" href="nav-search-anim.css?v=20260925_PALETTE1">
-  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX29">
+  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX30">
   <link rel="stylesheet" href="btn-label-anim.css?v=20260925_BTNANIM1">
   <link rel="stylesheet" href="share-btn.css?v=20260925_SHARE1">
   <link rel="stylesheet" href="theme-switch.css?v=20260925_THEME1">
@@ -67,15 +67,16 @@
   <link rel="stylesheet" href="trash-btn.css?v=20260925_TRASH1">
   <link rel="stylesheet" href="react-card.css?v=20260925_RCARD1">
   <link rel="stylesheet" href="page-bubbles.css?v=20260925_BUBBLE1">
-  <link rel="stylesheet" href="parallax.css?v=20260925_HEROUX29">
-  <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX29">
-  <link rel="stylesheet" href="es-nav-ux.css?v=20260925_HEROUX29">
-  <link rel="stylesheet" href="badge-system.css?v=20260925_HEROUX29">
-  <link rel="stylesheet" href="micro-interactions.css?v=20260925_HEROUX29">
-  <link rel="stylesheet" href="radius-system.css?v=20260925_HEROUX29">
-  <link rel="stylesheet" href="success-system.css?v=20260925_HEROUX29">
-  <link rel="stylesheet" href="action-menu.css?v=20260925_HEROUX29">
-  <link rel="stylesheet" href="market-hub.css?v=20260925_HEROUX29">
+  <link rel="stylesheet" href="parallax.css?v=20260925_HEROUX30">
+  <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX30">
+  <link rel="stylesheet" href="es-nav-ux.css?v=20260925_HEROUX30">
+  <link rel="stylesheet" href="badge-system.css?v=20260925_HEROUX30">
+  <link rel="stylesheet" href="micro-interactions.css?v=20260925_HEROUX30">
+  <link rel="stylesheet" href="radius-system.css?v=20260925_HEROUX30">
+  <link rel="stylesheet" href="success-system.css?v=20260925_HEROUX30">
+  <link rel="stylesheet" href="action-menu.css?v=20260925_HEROUX30">
+  <link rel="stylesheet" href="market-hub.css?v=20260925_HEROUX30">
+  <link rel="stylesheet" href="radar.css?v=20260925_HEROUX30">
   <style id="es-font-nevera">
     @font-face {
       font-family: 'Nevera';
@@ -4702,6 +4703,52 @@
           <div class="es-st-list" id="es-st-list"></div>
           <div id="es-st-detail"></div>
         </div>
+
+        <!-- Schede Tecniche IA – HEROUX30 -->
+        <section id="schede-tecniche" class="radar-section">
+          <h2>Schede Tecniche IA • Radar 3vs3</h2>
+          <div class="radar-grid">
+            <!-- Radar 1 -->
+            <div class="radar-card" data-role="DS-Top">
+              <h3>Northwind Labs</h3>
+              <div class="score-circle" style="--score: 9.8">
+                <span class="score-circle-val">9.8</span>
+              </div>
+              <div class="radar-bar">
+                <span class="bar" style="width:98%"></span>
+              </div>
+              <p>Predizione: DS-Top • Ruolo: Lead Scout</p>
+            </div>
+            <!-- Radar 2 -->
+            <div class="radar-card" data-role="Scout-Expert">
+              <h3>Halcyon Bank</h3>
+              <div class="score-circle" style="--score: 7.4">
+                <span class="score-circle-val">7.4</span>
+              </div>
+              <div class="radar-bar">
+                <span class="bar" style="width:74%"></span>
+              </div>
+              <p>Predizione: Scout-Expert • Ruolo: Wall Transfer</p>
+            </div>
+            <!-- Radar 3 -->
+            <div class="radar-card" data-role="Analyst">
+              <h3>Nova FC</h3>
+              <div class="score-circle" style="--score: 6.1">
+                <span class="score-circle-val">6.1</span>
+              </div>
+              <div class="radar-bar">
+                <span class="bar" style="width:61%"></span>
+              </div>
+              <p>Predizione: Analyst • Ruolo: Market Scout</p>
+            </div>
+          </div>
+          <!-- Badge reattivo live -->
+          <div style="text-align:center; margin-top:24px;">
+            <div class="badge-pill" style="padding:10px 24px; border-radius:9999px; background:#ff2d55; color:#fff; font-weight:700; font-size:13px; display:inline-block; cursor:pointer;">
+              Badge Mobile Msgs: <span id="live-radar-badge">0</span>
+            </div>
+          </div>
+        </section>
       </section>
     </div>
 
@@ -6700,14 +6747,15 @@
     </div>
   </div>
 
-  <script src="badge-handler.js?v=20260925_HEROUX29"></script>
-  <script src="mobile-webapp.js?v=20260925_HEROUX29"></script>
-  <script src="es-nav-ux.js?v=20260925_HEROUX29"></script>
-  <script src="micro-interactions.js?v=20260925_HEROUX29"></script>
-  <script src="radius-handler.js?v=20260925_HEROUX29" defer></script>
-  <script src="dynamic-sync.js?v=20260925_HEROUX29" defer></script>
-  <script src="success-handler.js?v=20260925_HEROUX29" defer></script>
-  <script src="action-menu-handler.js?v=20260925_HEROUX29" defer></script>
-  <script src="market-hub-handler.js?v=20260925_HEROUX29" defer></script>
+  <script src="badge-handler.js?v=20260925_HEROUX30"></script>
+  <script src="mobile-webapp.js?v=20260925_HEROUX30"></script>
+  <script src="es-nav-ux.js?v=20260925_HEROUX30"></script>
+  <script src="micro-interactions.js?v=20260925_HEROUX30"></script>
+  <script src="radius-handler.js?v=20260925_HEROUX30" defer></script>
+  <script src="dynamic-sync.js?v=20260925_HEROUX30" defer></script>
+  <script src="success-handler.js?v=20260925_HEROUX30" defer></script>
+  <script src="action-menu-handler.js?v=20260925_HEROUX30" defer></script>
+  <script src="market-hub-handler.js?v=20260925_HEROUX30" defer></script>
+  <script src="radar-handler.js?v=20260925_HEROUX30" defer></script>
 </body>
 </html>
