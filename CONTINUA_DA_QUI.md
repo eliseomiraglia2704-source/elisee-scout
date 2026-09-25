@@ -3,7 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — NAVPILL1 — Navbar a pillola come nel video delle 09:32:
+Ultimo aggiornamento: **2026-09-25** — BTNANIM1 — Lettere dei bottoni come nel video delle 09:35:
+1. Passando il mouse, le lettere si muovono una dopo l'altra. Se il cursore entra da destra, partono da destra.
+2. **Accedi** e il bottone nero del login saltano. **Iscriviti** scorre via sfocato. I tasti sulla foto del login si sfumano.
+3. **File**: `btn-label-anim.js`, `btn-label-anim.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_BTNANIM1`. Commit `249320fb`.
+
+Feature precedente: **2026-09-25** — NAVPILL1 — Navbar a pillola come nel video delle 09:32:
 1. Barra di vetro scuro, centrata, non più a tutta larghezza. Logo, le voci, ricerca, tema, lingua e Accedi stanno nella stessa capsula.
 2. La lente apre il campo dentro la barra, con la scritta ESC. Il sole cambia tema chiaro/scuro. La sottolineatura compare sulla voce sotto il mouse.
 3. Sul telefono resta il menu di prima.
