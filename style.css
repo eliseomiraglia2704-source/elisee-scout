@@ -1,4 +1,4 @@
-﻿@font-face {
+@font-face {
   font-family: 'Nevera';
   src: url('fonts/Nevera-Regular.otf') format('opentype');
   font-weight: 100 900;
@@ -7922,39 +7922,16 @@ html {
   border-bottom: 1px solid rgba(255, 255, 255, 0.09);
 }
 .es-account-menu-head p,
-#user-dropdown-name-full {
-  color: #eef1f6 !important;
-  font-family: Inter, system-ui, sans-serif !important;
-  font-size: 0.9rem !important;
-  font-weight: 600 !important;
-  letter-spacing: 0 !important;
-  margin: 0 0 4px !important;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-#user-dropdown-email-link {
-  display: block;
-  color: #8a93a3;
-  font-size: 0.75rem;
-  font-weight: 400;
-  text-decoration: none;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-#user-dropdown-email-link:hover {
-  color: #c5cbd6;
-}
-#user-dropdown-role {
-  display: block;
-  margin-top: 6px;
-  color: #8a93a3 !important;
-  font-size: 0.72rem !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.02em;
-  text-transform: none !important;
-  background: none !important;
+#user-dropdown-name-full,
+#user-dropdown-email-link,
+#user-dropdown-role,
+#user-avatar-badge {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
 }
 
 .es-account-menu-nav {
