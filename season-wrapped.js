@@ -1126,6 +1126,60 @@
     document.body.style.overflow = 'hidden';
 
     renderSlide(0);
+    mountCoverflow();
+  }
+
+  function mountCoverflow() {
+    var modal = document.getElementById('elisee-wrapped-modal');
+    var wrap = document.getElementById('es-wcf-wrap');
+    if (!modal || !wrap || typeof Swiper !== 'function') return;
+    if (_wrappedState.swiper) {
+      try { _wrappedState.swiper.destroy(true, true); } catch (e) {}
+      _wrappedState.swiper = null;
+    }
+    var slides = _wrappedState.slides || [];
+    var tones = [
+      'linear-gradient(165deg,#0b1220 10%,#0369a1 100%)',
+      'linear-gradient(165deg,#0f172a 10%,#0e7490 100%)',
+      'linear-gradient(165deg,#111827 10%,#0284c7 100%)',
+      'linear-gradient(165deg,#0b1220 20%,#155e75 100%)',
+      'linear-gradient(165deg,#020617 10%,#38bdf8 120%)'
+    ];
+    wrap.innerHTML = slides.map(function (s, i) {
+      var title = String(s.hero || s.sub || 'Wrapped').replace(/</g, '');
+      var sub = String(s.sub || '').replace(/</g, '');
+      return '<div class="swiper-slide"><div class="es-wcf-card" style="background:' + tones[i % tones.length] + '">' +
+        '<h2>' + title + '</h2><p>' + sub + '</p>' +
+        '<button type="button" data-wcf="' + i + '">Apri</button></div></div>';
+    }).join('');
+    modal.classList.add('is-coverflow');
+    cancelAnimationFrame(_animFrame);
+    _wrappedState.swiper = new Swiper('#es-wcf', {
+      effect: 'coverflow',
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: 1.25,
+      speed: 600,
+      coverflowEffect: { rotate: 10, stretch: 0, depth: 100, modifier: 3, slideShadows: true },
+      loop: slides.length > 3,
+      pagination: { el: '#es-wcf .swiper-pagination', clickable: false },
+      breakpoints: { 760: { slidesPerView: 2.75 } },
+      on: {
+        slideChange: function (sw) {
+          var idx = sw.realIndex || 0;
+          _wrappedState.currentSlideIdx = idx;
+        }
+      }
+    });
+    wrap.querySelectorAll('[data-wcf]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var idx = parseInt(btn.getAttribute('data-wcf'), 10) || 0;
+        _wrappedState.currentSlideIdx = idx;
+        if (_wrappedState.swiper && _wrappedState.swiper.slideToLoop) {
+          _wrappedState.swiper.slideToLoop(idx);
+        }
+      });
+    });
   }
 
   function closeWrappedViewer() {
@@ -1136,6 +1190,12 @@
     }
     _wrappedState.isOpen = false;
     cancelAnimationFrame(_animFrame);
+    if (_wrappedState.swiper) {
+      try { _wrappedState.swiper.destroy(true, true); } catch (e) {}
+      _wrappedState.swiper = null;
+    }
+    var modalCf = document.getElementById('elisee-wrapped-modal');
+    if (modalCf) modalCf.classList.remove('is-coverflow');
     document.body.style.overflow = '';
   }
 
