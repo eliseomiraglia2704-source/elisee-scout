@@ -3,7 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — Dipendenza `motion` installata (`^13.4.3` in `package.json`). Non è ancora usata nelle pagine.
+Ultimo aggiornamento: **2026-09-25** — OTPV3 — Verifica numero (login WhatsApp) come nel video delle 09:25:
+1. Quattro caselle in riga. A 4 cifre ruotano sul cerchio tratteggiato (origine sul centro, non un percorso interpolato).
+2. Se il codice è quello del messaggio, le caselle si chiudono al centro: «Numero verificato», spunta verde, **Continua**.
+3. Si apre da Accedi → numero WhatsApp. Non è la riga email in basso nel dossier.
+4. **File**: `index.html`, `login-slide.css`, `app.js`, `sw.js`, `version.json`. Cache `v20260925_OTPV3`. Commit `eab76919`.
+
+Feature precedente: **2026-09-25** — Dipendenza `motion` installata (`^13.4.3` in `package.json`). Non è ancora usata nelle pagine.
 
 Feature precedente: **2026-09-25** — CALM1 — Verifica email ridotta a una riga, senza card sopra il dossier:
 1. Via la card con notch, toast, icona e scritta EMAIL · OTP. Restano email, sei caselle e un tasto.
