@@ -10717,4 +10717,33 @@ html[data-theme="mimetico-chiaro"] .es-card-dossier-btn:hover,
   color: #ffffff !important;
 }
 
+/* ==========================================================================
+   ISOLAMENTO SIDEBAR: SOLO DASHBOARD PRIVATE (NIENTE SULLA LANDING PAGE)
+   ========================================================================== */
+#view-home:not([hidden]) ~ * .es-sb-hover,
+#view-home:not([hidden]) ~ * .es-pro-sidebar,
+#view-home:not([hidden]) ~ * [class*="-sidebar"],
+#view-home:not([hidden]) .es-sb-hover,
+#view-home:not([hidden]) .es-pro-sidebar,
+#hero ~ * .es-sb-hover,
+#hero ~ * .es-pro-sidebar,
+#hero .es-sb-hover,
+#hero .es-pro-sidebar,
+body:has(#hero:not([hidden])) .es-sb-hover,
+body:has(#hero:not([hidden])) .es-pro-sidebar,
+body:has(#hero:not([hidden])) [class*="-sidebar"],
+body:not(.is-in-role-dashboard):not(.is-player-mode):not(.is-pres-mode):not(.is-coach-mode):not(.is-vice-mode):not(.is-ds-mode):not(.is-obs-mode):not(.is-at-mode):not(.is-med-mode):not(.is-gk-mode):not(.is-ma-mode):not(.is-giorn-mode):not(.is-tm-mode):not(.is-yg-mode):not(.is-dg-mode):not(.is-ag-mode):not(.is-mk-mode):not(.is-pr-mode):not(.is-eq-mode):not(.is-sg-mode):not(.is-bt-mode):not(.is-tifoso-mode):not(.is-nu-mode):not(.is-fisio-mode) .es-sb-hover,
+body:not(.is-in-role-dashboard):not(.is-player-mode):not(.is-pres-mode):not(.is-coach-mode):not(.is-vice-mode):not(.is-ds-mode):not(.is-obs-mode):not(.is-at-mode):not(.is-med-mode):not(.is-gk-mode):not(.is-ma-mode):not(.is-giorn-mode):not(.is-tm-mode):not(.is-yg-mode):not(.is-dg-mode):not(.is-ag-mode):not(.is-mk-mode):not(.is-pr-mode):not(.is-eq-mode):not(.is-sg-mode):not(.is-bt-mode):not(.is-tifoso-mode):not(.is-nu-mode):not(.is-fisio-mode) .es-pro-sidebar,
+body:not(.is-in-role-dashboard):not(.is-player-mode):not(.is-pres-mode):not(.is-coach-mode):not(.is-vice-mode):not(.is-ds-mode):not(.is-obs-mode):not(.is-at-mode):not(.is-med-mode):not(.is-gk-mode):not(.is-ma-mode):not(.is-giorn-mode):not(.is-tm-mode):not(.is-yg-mode):not(.is-dg-mode):not(.is-ag-mode):not(.is-mk-mode):not(.is-pr-mode):not(.is-eq-mode):not(.is-sg-mode):not(.is-bt-mode):not(.is-tifoso-mode):not(.is-nu-mode):not(.is-fisio-mode) [class*="-sidebar"] {
+  display: none !important;
+}
+
+/* Nascondi il tasto trash dalla vista home */
+#view-home:not([hidden]) ~ * .es-trash,
+#view-home:not([hidden]) .es-trash,
+body:has(#hero:not([hidden])) .es-trash {
+  display: none !important;
+}
+
+
 

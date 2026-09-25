@@ -3,7 +3,17 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — HEROUX2 — Armonizzazione Light Mode (Header, Card Giocatore, Contrasto Testo e Coerenza Visiva):
+Ultimo aggiornamento: **2026-09-25** — HEROUX3 — Separazione Rigida Viste Pubbliche vs Dashboard Riservate (Rimozione Sidebar dalla Landing Page):
+1. **Rimozione Sidebar dalle Pagine Pubbliche (Home, Chi siamo, Bacheca, Mappa)**:
+   - Eliminata la sidebar fluttuante a sinistra (`.es-sb-hover`, `.es-pro-sidebar`, `.es-modern-sidebar`, `[class*="-sidebar"]`) dalla landing page pubblica (`#hero`, `#home-about`, `#view-home`, ecc.) che copriva direttamente le lettere del titolo "ELISEE SCOUT" e duplicava le funzioni della Navbar.
+   - Creata in `role-sidebar-pro.js` la funzione `isPublicView()` che rileva istantaneamente se l'utente naviga su una pagina pubblica o istituzionale, disattivando e nascondendo qualsiasi sidebar.
+2. **Attivazione Esclusiva nelle Dashboard Private / Riservate di Ruolo**:
+   - La sidebar gestionale interna rimane abilitata esclusivamente quando l'utente si trova all'interno di una dashboard privata autenticata di ruolo (`is-player-mode`, `is-pres-mode`, `is-coach-mode`, `is-ds-mode`, `is-obs-mode`, `is-in-role-dashboard`, ecc.).
+3. **Blindatura CSS e Rimozione Trash Button**:
+   - Aggiunte regole CSS tassative in `role-sidebar-pro.css` e `style.css` per forzare `display: none !important;` su tutte le sidebar e sul pulsante trash animato (`#es-trash`) nelle sezioni pubbliche.
+4. **File**: `role-sidebar-pro.js`, `role-sidebar-pro.css`, `style.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX3`.
+
+Feature precedente: **2026-09-25** — HEROUX2 — Armonizzazione Light Mode (Header, Card Giocatore, Contrasto Testo e Coerenza Visiva):
 1. **Adattamento Header / Navbar in Light Mode**:
    - La pillola fluttuante desktop (`.portfolio-navbar`, `apple-nav.css`) ora adotta sfondo chiaro traslucido `rgba(255, 255, 255, 0.94)`, bordo delicato `rgba(0,0,0,0.08)` e ombra morbida `0 12px 35px rgba(15, 23, 42, 0.08)`, eliminando l'effetto "sticker scuro" sulla pagina bianca.
    - Tutti i link (`.nav-link`), il menu dropdown "Altro", le icone e i pulsanti (`#btn-user-profile`, lingua, cerca, mail, notifiche) assumono contrasto scuro nitido (`#0f172a` / `#334155`) con hover ciano `#0284c7`.
@@ -14,7 +24,7 @@ Ultimo aggiornamento: **2026-09-25** — HEROUX2 — Armonizzazione Light Mode (
    - Rimossi gli stili scuri hardcodati in cima ad `index.html` sotto `[data-theme="mimetico-chiaro"]`.
 4. **Verifica Assoluta di Rimozione Overlay OTP e Floating Shield**:
    - Blindata ulteriormente l'assoluta scomparsa di `#es-otp-bottom-banner` e del pulsante scudo sia in dark che in light mode su tutta la schermata home.
-5. **File**: `apple-nav.css`, `style.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX2`.
+5. **File**: `apple-nav.css`, `style.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX2`. Commit `0d27963d`.
 
 Feature precedente: **2026-09-25** — HEROUX1 — Ottimizzazione Hero, Rimozione Overlay e Floating Shield, Navbar Dropdown Altro e Card Giocatore Realistica:
 1. **Rimozione Overlay OTP e Floating Shield**:

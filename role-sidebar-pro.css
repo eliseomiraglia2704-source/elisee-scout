@@ -982,3 +982,32 @@ body.es-sidebar-is-collapsed .es-msb-cta-btn {
     padding: 18px 16px !important;
   }
 }
+
+/* ============================================================
+   SEPARAZIONE RIGIDA: VISTE PUBBLICHE VS DASHBOARD RISERVATE
+   Nelle viste pubbliche (Landing Page, Home, Chi siamo, Bacheca, Mappa...),
+   la sidebar a sinistra è tassativamente nascosta per non coprire il titolo
+   principale "ELISEE SCOUT" e non duplicare le funzioni della Navbar.
+   ============================================================ */
+body:not(.is-in-role-dashboard):not(.is-player-mode):not(.is-pres-mode):not(.is-coach-mode):not(.is-vice-mode):not(.is-ds-mode):not(.is-obs-mode):not(.is-at-mode):not(.is-med-mode):not(.is-gk-mode):not(.is-ma-mode):not(.is-giorn-mode):not(.is-tm-mode):not(.is-yg-mode):not(.is-dg-mode):not(.is-ag-mode):not(.is-mk-mode):not(.is-pr-mode):not(.is-eq-mode):not(.is-sg-mode):not(.is-bt-mode):not(.is-tifoso-mode):not(.is-nu-mode):not(.is-fisio-mode) .es-sb-hover,
+body:not(.is-in-role-dashboard):not(.is-player-mode):not(.is-pres-mode):not(.is-coach-mode):not(.is-vice-mode):not(.is-ds-mode):not(.is-obs-mode):not(.is-at-mode):not(.is-med-mode):not(.is-gk-mode):not(.is-ma-mode):not(.is-giorn-mode):not(.is-tm-mode):not(.is-yg-mode):not(.is-dg-mode):not(.is-ag-mode):not(.is-mk-mode):not(.is-pr-mode):not(.is-eq-mode):not(.is-sg-mode):not(.is-bt-mode):not(.is-tifoso-mode):not(.is-nu-mode):not(.is-fisio-mode) .es-pro-sidebar,
+body:not(.is-in-role-dashboard):not(.is-player-mode):not(.is-pres-mode):not(.is-coach-mode):not(.is-vice-mode):not(.is-ds-mode):not(.is-obs-mode):not(.is-at-mode):not(.is-med-mode):not(.is-gk-mode):not(.is-ma-mode):not(.is-giorn-mode):not(.is-tm-mode):not(.is-yg-mode):not(.is-dg-mode):not(.is-ag-mode):not(.is-mk-mode):not(.is-pr-mode):not(.is-eq-mode):not(.is-sg-mode):not(.is-bt-mode):not(.is-tifoso-mode):not(.is-nu-mode):not(.is-fisio-mode) .es-obs-sidebar,
+body:not(.is-in-role-dashboard):not(.is-player-mode):not(.is-pres-mode):not(.is-coach-mode):not(.is-vice-mode):not(.is-ds-mode):not(.is-obs-mode):not(.is-at-mode):not(.is-med-mode):not(.is-gk-mode):not(.is-ma-mode):not(.is-giorn-mode):not(.is-tm-mode):not(.is-yg-mode):not(.is-dg-mode):not(.is-ag-mode):not(.is-mk-mode):not(.is-pr-mode):not(.is-eq-mode):not(.is-sg-mode):not(.is-bt-mode):not(.is-tifoso-mode):not(.is-nu-mode):not(.is-fisio-mode) .es-modern-sidebar,
+body:not(.is-in-role-dashboard):not(.is-player-mode):not(.is-pres-mode):not(.is-coach-mode):not(.is-vice-mode):not(.is-ds-mode):not(.is-obs-mode):not(.is-at-mode):not(.is-med-mode):not(.is-gk-mode):not(.is-ma-mode):not(.is-giorn-mode):not(.is-tm-mode):not(.is-yg-mode):not(.is-dg-mode):not(.is-ag-mode):not(.is-mk-mode):not(.is-pr-mode):not(.is-eq-mode):not(.is-sg-mode):not(.is-bt-mode):not(.is-tifoso-mode):not(.is-nu-mode):not(.is-fisio-mode) [class*="-sidebar"] {
+  display: none !important;
+}
+
+/* Sulle sezioni home e landing page (#hero, #home-about, #view-home), nessuna sidebar può mai apparire */
+#view-home:not([hidden]) ~ * .es-sb-hover,
+#view-home:not([hidden]) ~ * .es-pro-sidebar,
+#view-home:not([hidden]) ~ * [class*="-sidebar"],
+#view-home:not([hidden]) .es-sb-hover,
+#view-home:not([hidden]) .es-pro-sidebar,
+#hero ~ * .es-sb-hover,
+#hero ~ * .es-pro-sidebar,
+body:has(#hero:not([hidden])) .es-sb-hover,
+body:has(#hero:not([hidden])) .es-pro-sidebar,
+body:has(#hero:not([hidden])) [class*="-sidebar"] {
+  display: none !important;
+}
+

@@ -160,8 +160,39 @@
     sidebar.appendChild(actions);
   }
 
+  function isPublicView() {
+    try {
+      var h = (window.location.hash || '').toLowerCase();
+      // Viste pubbliche esplicite
+      if (!h || h === '#hero' || h === '#home' || h === '#about' || h === '#home-about' ||
+          h === '#bacheca' || h === '#bacheca-annunci' || h === '#bacheca-network' ||
+          h === '#stampa-portal' || h === '#mappa-portal' || h === '#seguo-portal' ||
+          h === '#ambassador-portal' || h === '#minigioco-carriera') {
+        return true;
+      }
+      var vHome = document.getElementById('view-home');
+      if (vHome && !vHome.hidden && window.getComputedStyle(vHome).display !== 'none') {
+        return true;
+      }
+      var roleClasses = [
+        'is-coach-mode', 'is-vice-mode', 'is-pres-mode', 'is-player-mode',
+        'is-obs-mode', 'is-ma-mode', 'is-gk-mode', 'is-giorn-mode',
+        'is-at-mode', 'is-med-mode', 'is-fisio-mode', 'is-nu-mode',
+        'is-tm-mode', 'is-ds-mode', 'is-yg-mode', 'is-dg-mode',
+        'is-ag-mode', 'is-mk-mode', 'is-pr-mode', 'is-eq-mode',
+        'is-sg-mode', 'is-bt-mode', 'is-tifoso-mode', 'is-in-role-dashboard'
+      ];
+      var hasRole = roleClasses.some(function (cls) {
+        return document.body.classList.contains(cls);
+      });
+      if (!hasRole) return true;
+    } catch (_) {}
+    return false;
+  }
+
   // Scansione e upgrade automatico di tutte le sidebar montate
   function scanAndUpgrade() {
+    var publicPage = isPublicView();
     var sidebars = document.querySelectorAll(
       '.es-obs-sidebar, .es-pro-sidebar, .es-cos-sidebar, .es-modern-sidebar, .es-at-sidebar, .es-med-sidebar, .es-gk-sidebar, .es-ma-sidebar, [id$="-sidebar"], [class*="-sidebar"]'
     );
@@ -171,10 +202,28 @@
       var cls = String(sb.className || '');
       if (/sidebar-(nav|badge|club|btn)/.test(cls)) return;
       if (sb.parentElement && sb.parentElement.closest('[data-msb-upgraded="true"]')) return;
+
+      // Nelle pagine pubbliche (Landing, Home, Chi siamo, Bacheca...), la sidebar è sempre rimossa/nascosta
+      if (publicPage) {
+        sb.style.setProperty('display', 'none', 'important');
+        sb.setAttribute('aria-hidden', 'true');
+        return;
+      }
+
+      // Nelle aree private / dashboard riservate di ruolo, la sidebar è visibile ed attiva
+      sb.style.removeProperty('display');
+      sb.removeAttribute('aria-hidden');
       if (sb.offsetWidth > 0 || sb.offsetHeight > 0 || window.getComputedStyle(sb).display !== 'none') {
         upgradeSidebar(sb);
       }
     });
+
+    // Assicura che anche il tasto animato trash non compaia nella home pubblica
+    var trash = document.getElementById('es-trash');
+    if (trash) {
+      if (publicPage) trash.style.setProperty('display', 'none', 'important');
+      else trash.style.removeProperty('display');
+    }
   }
 
   // Inizializzazione
@@ -191,8 +240,13 @@
     scanAndUpgrade();
   }
 
+  window.addEventListener('hashchange', scanAndUpgrade);
+  window.addEventListener('popstate', scanAndUpgrade);
+  document.addEventListener('elisee:view-changed', scanAndUpgrade);
+  document.addEventListener('elisee:auth-changed', scanAndUpgrade);
+
   // Polling leggero per intercettare i cambi vista
-  setInterval(scanAndUpgrade, 1400);
+  setInterval(scanAndUpgrade, 1000);
 
   // API Pubblica
   window.EliseeRoleSidebar = {
@@ -200,6 +254,8 @@
     setCollapsed: setCollapsed,
     toggle: toggle,
     upgrade: upgradeSidebar,
-    scan: scanAndUpgrade
+    scan: scanAndUpgrade,
+    isPublicView: isPublicView
   };
 })();
+
