@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260925_HEROUX13';
+      var BUILD_VERSION = '20260925_HEROUX14';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260925_HEROUX13">
+  <link rel="stylesheet" href="style.css?v=20260925_HEROUX14">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
@@ -58,7 +58,7 @@
   <link rel="stylesheet" href="login-slide.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="glass-menu.css?v=20260924_GLASSMENU1">
   <link rel="stylesheet" href="nav-search-anim.css?v=20260925_PALETTE1">
-  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX13">
+  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX14">
   <link rel="stylesheet" href="btn-label-anim.css?v=20260925_BTNANIM1">
   <link rel="stylesheet" href="share-btn.css?v=20260925_SHARE1">
   <link rel="stylesheet" href="theme-switch.css?v=20260925_THEME1">
@@ -67,8 +67,9 @@
   <link rel="stylesheet" href="trash-btn.css?v=20260925_TRASH1">
   <link rel="stylesheet" href="react-card.css?v=20260925_RCARD1">
   <link rel="stylesheet" href="page-bubbles.css?v=20260925_BUBBLE1">
-  <link rel="stylesheet" href="parallax.css?v=20260925_HEROUX13">
-  <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX13">
+  <link rel="stylesheet" href="parallax.css?v=20260925_HEROUX14">
+  <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX14">
+  <link rel="stylesheet" href="es-nav-ux.css?v=20260925_HEROUX14">
   <style id="es-font-nevera">
     @font-face {
       font-family: 'Nevera';
@@ -2238,33 +2239,19 @@
 
     <!-- Navigazione Soltanto Pubblica -->
     <nav class="main-nav nav-menu">
-      <a href="#about" onclick="if(window.switchView){ window.switchView('about'); } return false;">Chi siamo</a>
-      <a href="#bacheca-annunci" onclick="if(window.switchView){ window.switchView('bacheca'); } return false;">Bacheca</a>
-      <a href="#mappa-portal" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){window.switchView('mappa','#mappa-portal');} return false;">Mappa</a>
+      <span class="nav-indicator" aria-hidden="true"></span>
+      <a href="#about" class="nav-link" data-view="about" onclick="if(window.switchView){ window.switchView('about'); } return false;">Chi siamo</a>
+      <a href="#bacheca-annunci" class="nav-link" data-view="bacheca" onclick="if(window.switchView){ window.switchView('bacheca'); } return false;">Bacheca</a>
+      <a href="#mappa-portal" class="nav-link" data-view="mappa" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){window.switchView('mappa','#mappa-portal');} return false;">Mappa</a>
     </nav>
 
     <!-- Azioni Destra -->
     <div class="header-actions nav-actions">
-      <button type="button" class="theme-toggle" id="es-nav-theme" onclick="if(window.toggleSiteTheme){window.toggleSiteTheme();}" title="Tema" aria-label="Cambia tema">🌙</button>
-      <span class="lang" id="lang-switcher-simple" title="Lingua">IT ▾</span>
+      <button type="button" class="theme-toggle" id="es-nav-theme" onclick="if(window.toggleSiteTheme){window.toggleSiteTheme();}" title="Cambia tema" aria-label="Cambia tema">🌙</button>
+      <span class="lang" id="lang-switcher-simple" title="Seleziona lingua">IT ▾</span>
       <a href="#login" class="btn-login" onclick="if(window.openAccessoModal){window.openAccessoModal('email');} return false;">Accedi</a>
     </div>
   </header>
-  <script>
-    (function () {
-      function onScroll() {
-        var h = document.querySelector('header.public-header');
-        if (!h) return;
-        if (window.scrollY > 20) {
-          h.classList.add('is-scrolled');
-        } else {
-          h.classList.remove('is-scrolled');
-        }
-      }
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('DOMContentLoaded', onScroll);
-    })();
-  </script>
 
   <main>
     <div id="home-views-group">
@@ -6583,5 +6570,6 @@
     }
   </style>
   <script src="mobile-webapp.js?v=20260925_150256"></script>
+  <script src="es-nav-ux.js?v=20260925_HEROUX14"></script>
 </body>
 </html>

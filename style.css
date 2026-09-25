@@ -11127,6 +11127,21 @@ html, body, main, #app, #view-home, #hero,
   background: #07131c !important;
 }
 
+/* ============================================================
+   ES-NAV-UX: Tokens & Component Coordination
+   ============================================================ */
+:root {
+  --nav-h: 64px;
+  --bg-0: #07131c;
+  --accent: #38bdf8;
+  --text: rgba(255, 255, 255, 0.88);
+  --text-dim: rgba(255, 255, 255, 0.62);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast: 160ms;
+  --t-med: 240ms;
+}
+
+
 
 
 

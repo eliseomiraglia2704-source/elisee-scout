@@ -3,7 +3,20 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — HEROUX13 — Allineamento Glow Hero dal Top Viewport ed Eliminazione Fascia Scura:
+Ultimo aggiornamento: **2026-09-25** — HEROUX14 — Porting Navigation UI & View Transitions Ultra-Avanzate (Zero Dipendenze):
+1. **Pill Indicator Fluido e Micro-Interazioni (`es-nav-ux.css`, `es-nav-ux.js`)**:
+   - Indicator fluido (`.nav-indicator`) calcolato in rAF con fisica lerp a ~0.18, che scorre via GPU `transform: translate3d(...)` e `width`, senza layout shift e senza mai toccare `left`.
+   - Hover follow abilitato esclusivamente per periferiche con puntatore fine (`@media (hover: hover) and (pointer: fine)`).
+   - Micro-press logo con scale(.98) e glow ciano controllato su `SCOUT`.
+   - Pulsante "Accedi" e pulsanti hero `.btn` con fill animato dal basso via `::before` con `scaleY(0) -> scaleY(1)` e `translateY(-1px)`. Anello focus-visible 2px offset 3px.
+   - Hit-area minima 44×44px per switch tema e lingua.
+2. **Transizioni Viste e Header Intelligente**:
+   - Wrap non invasivo e idempotente di `window.switchView` con crossfade fluido: uscita `translateY(10px) + opacity 0` in 180ms e ingresso `translateY(14px) -> 0 + opacity 1` in 260ms (delay 60ms).
+   - Header trasparente su home e attivazione sfocatura `rgba(5, 6, 8, 0.72) + backdrop-filter: blur(14px)` su scroll (>8px) o sulle viste interne (`is-internal-view`), senza bordi né ombre.
+   - Pieno supporto `prefers-reduced-motion: reduce` (solo opacity 80ms, zero transform).
+3. **File**: `es-nav-ux.css`, `es-nav-ux.js`, `index.html`, `style.css`, `sw.js`, `version.json`. Cache `v20260925_HEROUX14`.
+
+Feature precedente: **2026-09-25** — HEROUX13 — Allineamento Glow Hero dal Top Viewport ed Eliminazione Fascia Scura:
 1. **Glow Hero dal Top Viewport (`.es-plx`)**:
    - Sostituita la precedente regola parallax (`background-size: 100% 160%`) che spingeva il glow in basso lasciando una lastra scura sotto la navbar.
    - Forzato `background-size: 100% 100% !important; background-position: 50% 0 !important;` con radial-gradient ellittico che parte da `-10%` in alto (`radial-gradient(ellipse 80% 55% at 50% -10%, rgba(56, 189, 248, 0.38) 0%, rgba(14, 58, 77, 0.22) 42%, transparent 70%)`) e linear-gradient coordinato (`180deg, #07131c 0%, #0a3040 42%, #050608 100%`).

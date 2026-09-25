@@ -1,0 +1,408 @@
+/* ============================================================
+   ES-NAV-UX: Ultra-Advanced Navigation & View Transitions
+   Hardware accelerated, zero dependencies, responsive
+   ============================================================ */
+
+:root {
+  --nav-h: 64px;
+  --bg-0: #07131c;
+  --accent: #38bdf8;
+  --text: rgba(255, 255, 255, 0.88);
+  --text-dim: rgba(255, 255, 255, 0.62);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast: 160ms;
+  --t-med: 240ms;
+}
+
+/* 1. Header Desktop Layout & Base */
+header.public-header.public-navbar.main-header.portfolio-header,
+header.public-header {
+  height: var(--nav-h) !important;
+  min-height: var(--nav-h) !important;
+  max-height: var(--nav-h) !important;
+  padding: 0 32px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  z-index: 1000 !important;
+  border: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  transition: background 200ms var(--ease-out), backdrop-filter 200ms var(--ease-out), -webkit-backdrop-filter 200ms var(--ease-out) !important;
+}
+
+/* Home a scroll 0: trasparente pura */
+body:not(.is-internal-view) header.public-header:not(.is-scrolled) {
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Home con scroll > 8px OPPURE vista interna (about, bacheca, mappa...): glass scuro perfetto */
+body:not(.is-internal-view) header.public-header.is-scrolled,
+body.is-internal-view header.public-header {
+  background: rgba(5, 6, 8, 0.72) !important;
+  background-color: rgba(5, 6, 8, 0.72) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+/* Fallback se backdrop-filter non e supportato */
+@supports not (backdrop-filter: blur(14px)) {
+  body:not(.is-internal-view) header.public-header.is-scrolled,
+  body.is-internal-view header.public-header {
+    background: #07131c !important;
+  }
+}
+
+/* Tema Chiaro */
+html[data-theme="mimetico-chiaro"] body:not(.is-internal-view) header.public-header.is-scrolled,
+html[data-theme="mimetico-chiaro"] body.is-internal-view header.public-header {
+  background: rgba(255, 255, 255, 0.96) !important;
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  border: none !important;
+  border-bottom: none !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* 2. Logo Brand micro-press & scout glow */
+header.public-header .site-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  color: #fff !important;
+  transition: transform var(--t-fast) var(--ease-out);
+  user-select: none;
+}
+header.public-header .site-brand span {
+  color: var(--accent) !important;
+  transition: text-shadow var(--t-med) var(--ease-out), filter var(--t-med) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  header.public-header .site-brand:hover span {
+    text-shadow: 0 0 14px rgba(56, 189, 248, 0.75);
+  }
+}
+header.public-header .site-brand:active {
+  transform: scale(0.98);
+}
+html[data-theme="mimetico-chiaro"] header.public-header .site-brand {
+  color: #0f172a !important;
+}
+
+/* 3. Navigation Links & Fluid Indicator */
+header.public-header .main-nav {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 28px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+header.public-header .main-nav a.nav-link,
+header.public-header .main-nav a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px !important;
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+  color: var(--text-dim) !important;
+  text-decoration: none !important;
+  border-bottom: none !important;
+  background: transparent !important;
+  border-radius: 999px;
+  transition: color var(--t-fast) var(--ease-out) !important;
+  white-space: nowrap !important;
+  z-index: 2;
+  user-select: none;
+}
+
+/* Sottolineature disabilitate categoricamente */
+header.public-header .main-nav a::after,
+header.public-header .main-nav a::before {
+  display: none !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  header.public-header .main-nav a.nav-link:hover,
+  header.public-header .main-nav a:hover {
+    color: var(--accent) !important;
+  }
+}
+
+header.public-header .main-nav a.nav-link.active,
+header.public-header .main-nav a.active {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+html[data-theme="mimetico-chiaro"] header.public-header .main-nav a.nav-link,
+html[data-theme="mimetico-chiaro"] header.public-header .main-nav a {
+  color: #475569 !important;
+}
+html[data-theme="mimetico-chiaro"] header.public-header .main-nav a.nav-link.active,
+html[data-theme="mimetico-chiaro"] header.public-header .main-nav a.active {
+  color: #0f172a !important;
+}
+
+/* Pill Indicator Fluido */
+header.public-header .main-nav .nav-indicator {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 34px;
+  transform: translateY(-50%) translate3d(var(--ind-x, 0px), 0, 0);
+  width: var(--ind-w, 0px);
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  border-radius: 999px;
+  pointer-events: none;
+  opacity: var(--ind-o, 0);
+  transition: opacity var(--t-fast) ease;
+  z-index: 1;
+  will-change: transform, width, opacity;
+  box-sizing: border-box;
+}
+
+html[data-theme="mimetico-chiaro"] header.public-header .main-nav .nav-indicator {
+  background: rgba(14, 165, 233, 0.12);
+  border-color: rgba(14, 165, 233, 0.25);
+}
+
+/* 4. Actions: Theme, Lingua, Accedi */
+header.public-header .header-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+header.public-header .theme-toggle,
+header.public-header .lang {
+  min-width: 44px !important;
+  min-height: 44px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer;
+  background: transparent !important;
+  border: none !important;
+  color: var(--text-dim) !important;
+  border-radius: 8px;
+  transition: color var(--t-fast) ease, transform 120ms ease;
+  user-select: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+@media (hover: hover) and (pointer: fine) {
+  header.public-header .theme-toggle:hover,
+  header.public-header .lang:hover {
+    color: var(--accent) !important;
+  }
+}
+header.public-header .theme-toggle:active,
+header.public-header .lang:active {
+  transform: scale(0.95);
+}
+
+/* Bottone Accedi con fill dal basso */
+header.public-header .btn-login {
+  position: relative !important;
+  overflow: hidden !important;
+  z-index: 1 !important;
+  isolation: isolate;
+  background: transparent !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(56, 189, 248, 0.45) !important;
+  border-radius: 999px !important;
+  padding: 8px 20px !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: color var(--t-fast) ease, border-color var(--t-fast) ease, transform 120ms ease !important;
+}
+header.public-header .btn-login::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #0284c7;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform var(--t-fast) var(--ease-out);
+  z-index: -1;
+  border-radius: inherit;
+}
+@media (hover: hover) and (pointer: fine) {
+  header.public-header .btn-login:hover::before {
+    transform: scaleY(1);
+  }
+  header.public-header .btn-login:hover {
+    border-color: #38bdf8 !important;
+    transform: translateY(-1px);
+  }
+}
+header.public-header .btn-login:active {
+  transform: translateY(0) scale(0.98);
+}
+header.public-header .btn-login:focus-visible {
+  outline: 2px solid #38bdf8 !important;
+  outline-offset: 3px !important;
+}
+
+html[data-theme="mimetico-chiaro"] header.public-header .btn-login {
+  color: #0284c7 !important;
+  border-color: rgba(2, 132, 199, 0.4) !important;
+}
+html[data-theme="mimetico-chiaro"] header.public-header .btn-login:hover {
+  color: #ffffff !important;
+}
+
+/* 5. Bottoni Hero CTA (.btn) con fill dal basso */
+#hero .btn,
+.hero-portfolio-stage .btn,
+.hero-cta-group a.btn {
+  position: relative !important;
+  overflow: hidden !important;
+  z-index: 1 !important;
+  isolation: isolate;
+  transition: transform var(--t-fast) var(--ease-out), border-color var(--t-fast) ease, color var(--t-fast) ease !important;
+}
+#hero .btn::before,
+.hero-portfolio-stage .btn::before,
+.hero-cta-group a.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(56, 189, 248, 0.22);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform var(--t-fast) var(--ease-out);
+  z-index: -1;
+  border-radius: inherit;
+}
+@media (hover: hover) and (pointer: fine) {
+  #hero .btn:hover::before,
+  .hero-portfolio-stage .btn:hover::before,
+  .hero-cta-group a.btn:hover::before {
+    transform: scaleY(1);
+  }
+  #hero .btn:hover,
+  .hero-portfolio-stage .btn:hover,
+  .hero-cta-group a.btn:hover {
+    transform: translateY(-1px);
+    border-color: #38bdf8 !important;
+  }
+}
+#hero .btn:active,
+.hero-portfolio-stage .btn:active,
+.hero-cta-group a.btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* 6. Transizioni tra Viste (Hardware Accelerated Crossfade & Slide) */
+.es-view-leaving {
+  opacity: 0 !important;
+  transform: translateY(10px) !important;
+  transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out) !important;
+  pointer-events: none !important;
+}
+
+.es-view-entering-start {
+  opacity: 0 !important;
+  transform: translateY(14px) !important;
+  transition: none !important;
+}
+
+.es-view-entering {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: opacity 260ms var(--ease-out) 60ms, transform 260ms var(--ease-out) 60ms !important;
+}
+
+/* 7. Modal Scrim & Dialog Transition */
+.modal-backdrop,
+.es-modal-backdrop,
+.login-backdrop {
+  transition: opacity 150ms var(--ease-out) !important;
+}
+.modal-card,
+.es-modal-card,
+.login-card {
+  transition: transform 180ms var(--ease-out), opacity 150ms var(--ease-out) !important;
+}
+.modal-opening .modal-card,
+.es-modal-opening .es-modal-card {
+  transform: translateY(12px);
+  opacity: 0;
+}
+
+/* 8. Media Queries & Responsive */
+@media (min-width: 1080px) {
+  header.public-header {
+    padding: 0 32px !important;
+  }
+  header.public-header .main-nav {
+    gap: 28px !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1079px) {
+  header.public-header {
+    padding: 0 20px !important;
+  }
+  header.public-header .main-nav {
+    gap: 18px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  header.public-header {
+    display: none !important;
+  }
+  .es-m-bottombar {
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+  }
+}
+
+/* 9. Prefers-Reduced-Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 80ms !important;
+  }
+  .es-view-leaving {
+    transform: none !important;
+    opacity: 0 !important;
+    transition: opacity 80ms ease !important;
+  }
+  .es-view-entering-start {
+    transform: none !important;
+    opacity: 0 !important;
+  }
+  .es-view-entering {
+    transform: none !important;
+    opacity: 1 !important;
+    transition: opacity 80ms ease !important;
+  }
+}
