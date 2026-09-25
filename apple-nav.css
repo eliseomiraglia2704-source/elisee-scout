@@ -85,10 +85,13 @@
   }
 
   .portfolio-navbar .nav-menu,
-  .portfolio-navbar .portfolio-nav {
+  .portfolio-navbar .portfolio-nav,
+  .portfolio-navbar .nav-links {
     flex: 1 1 auto;
-    justify-content: center;
-    gap: 2px;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 16px !important;
     overflow: visible !important;
     flex-wrap: nowrap !important;
     white-space: nowrap !important;
@@ -96,13 +99,15 @@
   }
 
   .portfolio-navbar .nav-link,
+  .portfolio-navbar .nav-item,
   .portfolio-navbar .nav-link + .nav-link {
     border: 0 !important;
     margin: 0 !important;
-    padding: 6px 8px !important;
-    color: rgba(255, 255, 255, 0.62);
-    font-size: 0.8rem;
-    font-weight: 500;
+    padding: 6px 10px !important;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    white-space: nowrap !important;
   }
 
   .portfolio-navbar .nav-link::after {

@@ -3,7 +3,19 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — HEROUX5 — Trasformazione Header in Navbar Classica Full-Width (Eliminazione Floating Pill e Banda Scura):
+Ultimo aggiornamento: **2026-09-25** — HEROUX6 — Ripristino e Blindatura Struttura Navbar (Codice di Emergenza, Eliminazione Sottotitoli, Dropdown Risorse e No-Wrap):
+1. **Applicazione Codice di Emergenza Layout Navbar**:
+   - Sostituito il vecchio `display: grid; grid-template-columns: auto minmax(0, 1fr) auto;` in `style.css` con il layout flexbox raccomandato: `.navbar, .portfolio-navbar { display: flex !important; align-items: center !important; justify-content: space-between !important; height: 64px !important; padding: 0 24px !important; flex-wrap: nowrap !important; white-space: nowrap !important; }`.
+   - Implementato `.nav-links` su `nav#nav-menu` con `display: flex !important; align-items: center !important; gap: 16px !important; white-space: nowrap !important; flex-wrap: nowrap !important;`.
+   - Voci `.nav-item` / `.nav-link` a `font-size: 14px !important; font-weight: 500 !important; white-space: nowrap !important;`.
+2. **Menu a Tendina "Risorse ▾" e Isolamento Assoluto**:
+   - Adottata la soluzione rapida suggerita: tutte le voci secondarie (📰 Stampa, 🎴 Album, 🤝 Ambassador, 🎮 Minigiochi) sono state raggruppate dentro l'unico menu a tendina "Risorse ▾" (`#nav-dropdown-altro`), eliminando qualsiasi sottotitolo o testo prolisso dalla barra visibile.
+   - Il dropdown popup `#menu-nav-dropdown-more` è rigorosamente `position: absolute !important; display: none !important;` quando chiuso, evitando che i link partecipino al flusso dell'header o provochino sdoppiamenti e wrapping su più righe.
+3. **Hard Cache-Wipe & Disattivazione SW Vecchi**:
+   - Aggiornato `BUILD_VERSION = '20260925_HEROUX6'` nello script in `index.html` per forzare l'immediata eliminazione delle cache statiche e deregistrazione dei service worker obsoleti che servivano la vecchia navbar HTML.
+4. **File**: `index.html`, `style.css`, `apple-nav.css`, `sw.js`, `version.json`. Cache `v20260925_HEROUX6`.
+
+Feature precedente: **2026-09-25** — HEROUX5 — Trasformazione Header in Navbar Classica Full-Width (Eliminazione Floating Pill e Banda Scura):
 1. **Trasformazione Header in Navbar Classica Full-Width**:
    - Eliminato il layout a "pillola fluttuante" che causava altezze incontrollate e una spessa banda vuota scura sotto i link.
    - L'header (`header.main-header`, `.portfolio-header`) è ora una barra full-width aderente in cima allo schermo (`position: fixed; top: 0; left: 0; width: 100%; height: 64px; max-height: 64px; border-radius: 0; padding: 0 24px;`), con sfondo coerente semitrasparente (`rgba(10, 15, 30, 0.92)` in Dark, `rgba(255, 255, 255, 0.96)` in Light), `backdrop-filter: blur(12px)` e sottile `border-bottom: 1px solid rgba(255, 255, 255, 0.08)`.

@@ -3752,32 +3752,49 @@ body.focus-hub {
   padding: 1.25rem 0.5rem !important;
 }
 
+/* Container principale dell'Header */
 .navbar,
 .portfolio-navbar {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  height: 72px !important;
-  max-height: 72px !important;
-  min-height: 72px !important;
-  gap: 0.75rem;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  height: 64px !important;
+  max-height: 64px !important;
+  min-height: 64px !important;
+  padding: 0 24px !important;
+  box-sizing: border-box !important;
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
 }
 
-.portfolio-navbar .site-brand,
-.navbar .site-brand {
-  justify-self: start;
-}
-
+/* Container della lista dei link */
+.nav-links,
 .portfolio-navbar .nav-menu,
 .portfolio-navbar .portfolio-nav,
-.navbar .nav-menu {
-  justify-self: center;
+.navbar .nav-menu,
+.nav-menu,
+.portfolio-nav {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important; /* Spazio tra una voce e l'altra */
+  white-space: nowrap !important; /* FONDAMENTALE: Impedisce al testo di andare a capo */
+  flex-wrap: nowrap !important; /* Impedisce di creare nuove righe */
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
 }
 
-.portfolio-navbar .portfolio-nav-right,
-.navbar .portfolio-nav-right {
-  justify-self: end;
-  margin-left: 0;
+/* Per le voci di testo e icone */
+.nav-item,
+.portfolio-navbar .nav-link,
+.portfolio-nav .nav-link,
+.nav-menu .nav-link {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
 }
 
 .brand-logo {
@@ -10004,18 +10021,19 @@ body[data-active-view="home"] #es-otp-bottom-banner {
 }
 
 .es-nav-dropdown-trigger {
-  background: none;
-  border: none;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
   cursor: pointer;
   font-family: inherit;
-  font-size: 0.82rem;
-  color: rgba(226, 232, 240, 0.85);
+  font-size: 14px !important;
+  color: rgba(226, 232, 240, 0.85) !important;
   font-weight: 500;
-  display: inline-flex;
-  align-items: center;
+  display: inline-flex !important;
+  align-items: center !important;
   gap: 0.28rem;
-  padding: 0.3rem 0.4rem;
-  border-radius: 999px;
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
   white-space: nowrap !important;
   transition: color 0.18s ease, background 0.18s ease;
 }
@@ -10024,8 +10042,8 @@ body[data-active-view="home"] #es-otp-bottom-banner {
 .es-nav-dropdown:hover .es-nav-dropdown-trigger,
 .es-nav-dropdown:focus-within .es-nav-dropdown-trigger,
 .es-nav-dropdown.is-open .es-nav-dropdown-trigger {
-  color: #38bdf8;
-  background: rgba(56, 189, 248, 0.08);
+  color: #38bdf8 !important;
+  background: rgba(56, 189, 248, 0.1) !important;
 }
 
 .es-nav-caret {
@@ -10044,25 +10062,25 @@ body[data-active-view="home"] #es-otp-bottom-banner {
 .es-nav-dropdown-menu {
   position: absolute !important;
   top: calc(100% + 8px) !important;
-  left: 50% !important;
-  transform: translateX(-50%) translateY(4px);
-  min-width: 170px !important;
+  left: 0 !important;
+  transform: none !important;
+  min-width: 165px !important;
   width: max-content !important;
-  max-width: 240px !important;
+  max-width: 220px !important;
   background: rgba(10, 15, 26, 0.98) !important;
   border: 1px solid rgba(56, 189, 248, 0.28) !important;
-  border-radius: 12px !important;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(56, 189, 248, 0.12) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75), 0 0 20px rgba(56, 189, 248, 0.12) !important;
   backdrop-filter: blur(18px) !important;
   -webkit-backdrop-filter: blur(18px) !important;
   padding: 0.35rem !important;
   display: none !important;
   flex-direction: column !important;
-  gap: 0.18rem !important;
+  gap: 0.2rem !important;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
   z-index: 999999 !important;
 }
 
