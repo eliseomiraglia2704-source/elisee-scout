@@ -1,0 +1,102 @@
+/* ============================================= */
+/* HEROUX27 – Success is a System (Zero-Latency) */
+/* ============================================= */
+.success-box {
+  position: relative;
+  background: rgba(18, 20, 26, 0.95);
+  color: #fff;
+  padding: 24px;
+  margin: 16px auto;
+  max-width: 480px;
+  border-radius: var(--radius, 12px);
+  overflow: hidden;
+  transition: all 40ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.08);
+  border-left: 3px solid #00f5d4;
+  backdrop-filter: blur(12px);
+}
+
+.success-box.nested {
+  --outer: 16px;
+  --inner: 6px;
+  border-radius: calc(var(--outer) - var(--inner));
+}
+
+.success-pill {
+  display: inline-block;
+  background: rgba(0, 245, 212, 0.15);
+  color: #00f5d4;
+  border: 1px solid rgba(0, 245, 212, 0.3);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 9999px;
+  padding: 4px 16px;
+  cursor: pointer;
+  transition: all 40ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.success-edges {
+  border-radius: 16px 16px 0 0;
+}
+
+.success-ring {
+  --gap: 3px;
+  border: var(--gap) solid transparent;
+  border-radius: calc(var(--outer) + var(--gap));
+}
+
+.success-image.clip {
+  border-radius: var(--radius, 12px);
+  overflow: hidden;
+}
+
+.success-toast {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10, 12, 16, 0.95);
+  color: #00f5d4;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid rgba(0, 245, 212, 0.4);
+  box-shadow: 0 0 30px rgba(0,245,212,0.4);
+  animation: toastPop 400ms cubic-bezier(0.16,1,0.3,1) forwards;
+  z-index: 999999;
+  backdrop-filter: blur(16px);
+}
+
+@keyframes toastPop {
+  0% { transform: translate(-50%, 20px); opacity: 0; }
+  100% { transform: translate(-50%, 0); opacity: 1; }
+}
+
+/* Reversible = toast + money = page */
+.reversible-toast {
+  animation: toastPop 400ms;
+  background: linear-gradient(90deg, #00f5d4, #ff2d55);
+}
+
+/* Container Success System */
+#success-system {
+  display: none;
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  max-width: 420px;
+  background: rgba(13, 17, 23, 0.96);
+  border: 1px solid rgba(0, 245, 212, 0.3);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  z-index: 999990;
+  backdrop-filter: blur(20px);
+}
+
+#success-system.is-visible {
+  display: block;
+}

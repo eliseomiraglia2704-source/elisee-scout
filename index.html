@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260925_HEROUX26';
+      var BUILD_VERSION = '20260925_HEROUX27';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260925_HEROUX26">
+  <link rel="stylesheet" href="style.css?v=20260925_HEROUX27">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
@@ -58,7 +58,7 @@
   <link rel="stylesheet" href="login-slide.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="glass-menu.css?v=20260924_GLASSMENU1">
   <link rel="stylesheet" href="nav-search-anim.css?v=20260925_PALETTE1">
-  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX26">
+  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX27">
   <link rel="stylesheet" href="btn-label-anim.css?v=20260925_BTNANIM1">
   <link rel="stylesheet" href="share-btn.css?v=20260925_SHARE1">
   <link rel="stylesheet" href="theme-switch.css?v=20260925_THEME1">
@@ -67,12 +67,13 @@
   <link rel="stylesheet" href="trash-btn.css?v=20260925_TRASH1">
   <link rel="stylesheet" href="react-card.css?v=20260925_RCARD1">
   <link rel="stylesheet" href="page-bubbles.css?v=20260925_BUBBLE1">
-  <link rel="stylesheet" href="parallax.css?v=20260925_HEROUX26">
-  <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX26">
-  <link rel="stylesheet" href="es-nav-ux.css?v=20260925_HEROUX26">
-  <link rel="stylesheet" href="badge-system.css?v=20260925_HEROUX26">
-  <link rel="stylesheet" href="micro-interactions.css?v=20260925_HEROUX26">
-  <link rel="stylesheet" href="radius-system.css?v=20260925_HEROUX26">
+  <link rel="stylesheet" href="parallax.css?v=20260925_HEROUX27">
+  <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX27">
+  <link rel="stylesheet" href="es-nav-ux.css?v=20260925_HEROUX27">
+  <link rel="stylesheet" href="badge-system.css?v=20260925_HEROUX27">
+  <link rel="stylesheet" href="micro-interactions.css?v=20260925_HEROUX27">
+  <link rel="stylesheet" href="radius-system.css?v=20260925_HEROUX27">
+  <link rel="stylesheet" href="success-system.css?v=20260925_HEROUX27">
   <style id="es-font-nevera">
     @font-face {
       font-family: 'Nevera';
@@ -6601,11 +6602,40 @@
       <img src="immagini/logo/logo-site.png" alt="Image" />
     </div>
   </div>
-  <script src="badge-handler.js?v=20260925_HEROUX26"></script>
-  <script src="mobile-webapp.js?v=20260925_HEROUX26"></script>
-  <script src="es-nav-ux.js?v=20260925_HEROUX26"></script>
-  <script src="micro-interactions.js?v=20260925_HEROUX26"></script>
-  <script src="radius-handler.js?v=20260925_HEROUX26" defer></script>
-  <script src="dynamic-sync.js?v=20260925_HEROUX26" defer></script>
+  <!-- SUCCESS IS A SYSTEM – HEROUX27 -->
+  <div id="success-system" style="display:none;" aria-hidden="true">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <span class="success-pill">Success Engine</span>
+      <button onclick="document.getElementById('success-system').style.display='none'" style="background:none; border:none; color:#888; font-size:18px; cursor:pointer;">&times;</button>
+    </div>
+    <!-- Done screens, toast, confetti, open loop, rare joy, 5 decisions, UX Engine -->
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <button onclick="EliseeSuccessSystem.createDoneScreen('Invoice Sent', 'Northwind Labs • €2,400 due Oct 12', 2)" class="es-btn es-btn-sm" style="background:#00f5d4; color:#000; font-weight:700; border-radius:9999px;">Trigger Done Screen</button>
+      <button onclick="EliseeSuccessSystem.showToast('Notifications saved', 2500)" class="es-btn es-btn-sm" style="border-radius:9999px;">Show Toast (reversible)</button>
+      <button onclick="EliseeSuccessSystem.triggerConfetti(30)" class="es-btn es-btn-sm" style="border-radius:9999px;">Trigger Confetti (milestone)</button>
+      <button onclick="EliseeSuccessSystem.showRareJoy()" class="es-btn es-btn-sm" style="border-radius:9999px;">Rare Joy (first paid)</button>
+      <button onclick="EliseeSuccessSystem.openLoop('INV-2051')" class="es-btn es-btn-sm" style="border-radius:9999px;">Open Loop</button>
+    </div>
+    
+    <!-- 5 Decisions One Screen -->
+    <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin:20px 0;">
+      <div onclick="this.style.background='#00f5d4'; this.style.color='#000'" class="success-pill" style="text-align:center; padding:4px 6px; font-size:10px;">Specific</div>
+      <div onclick="this.style.background='#00f5d4'; this.style.color='#000'" class="success-pill" style="text-align:center; padding:4px 6px; font-size:10px;">Next Step</div>
+      <div onclick="this.style.background='#00f5d4'; this.style.color='#000'" class="success-pill" style="text-align:center; padding:4px 6px; font-size:10px;">Stakes</div>
+      <div onclick="this.style.background='#00f5d4'; this.style.color='#000'" class="success-pill" style="text-align:center; padding:4px 6px; font-size:10px;">Open Loop</div>
+      <div onclick="this.style.background='#00f5d4'; this.style.color='#000'" class="success-pill" style="text-align:center; padding:4px 6px; font-size:10px;">Rare Joy</div>
+    </div>
+
+    <!-- UX Engine -->
+    <div id="ux-engine" style="background:#0a0a0a; padding:16px; border-radius:12px; margin-top:16px;"></div>
+  </div>
+
+  <script src="badge-handler.js?v=20260925_HEROUX27"></script>
+  <script src="mobile-webapp.js?v=20260925_HEROUX27"></script>
+  <script src="es-nav-ux.js?v=20260925_HEROUX27"></script>
+  <script src="micro-interactions.js?v=20260925_HEROUX27"></script>
+  <script src="radius-handler.js?v=20260925_HEROUX27" defer></script>
+  <script src="dynamic-sync.js?v=20260925_HEROUX27" defer></script>
+  <script src="success-handler.js?v=20260925_HEROUX27" defer></script>
 </body>
 </html>
