@@ -619,7 +619,95 @@
   font-family: inherit;
 }
 
-.es-otp.is-orbit .es-otp-toast { display: none; }
+.es-otp.is-orbit .es-otp-toast,
+.es-otp.is-orbit .es-otp-hint { display: none; }
+
+.es-otp-done { display: none; }
+.es-otp.is-done .es-otp-head,
+.es-otp.is-done .es-otp-stage,
+.es-otp.is-done .es-otp-resend,
+.es-otp.is-done .es-otp-toast,
+.es-otp.is-done .es-otp-hint,
+.es-otp.is-done .es-otp-back { display: none !important; }
+.es-otp.is-done .es-otp-done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+.es-otp-done h2 {
+  color: #2ee6a8;
+  font-size: 1.35rem;
+  margin: 8px 0 6px;
+}
+.es-otp-seal {
+  position: relative;
+  width: 188px;
+  height: 188px;
+  margin: 16px 0 6px;
+  display: grid;
+  place-items: center;
+}
+.es-otp-seal-ring {
+  position: absolute;
+  inset: 28px;
+  border: 1.5px dashed rgba(46, 230, 168, 0.55);
+  border-radius: 28px;
+}
+.es-otp-seal-ring--2 {
+  inset: 4px;
+  border-radius: 40px;
+  opacity: 0.65;
+}
+.es-otp-check {
+  width: 68px;
+  height: 74px;
+  border-radius: 18px;
+  border: 2px solid #2ee6a8;
+  background: #101216;
+  color: #2ee6a8;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 28px rgba(46, 230, 168, 0.35);
+  z-index: 1;
+}
+.es-otp-dot {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #2ee6a8;
+  opacity: 0.75;
+}
+.es-otp-dot:nth-child(3) { top: 10px; left: 36px; }
+.es-otp-dot:nth-child(4) { top: 28px; right: 14px; }
+.es-otp-dot:nth-child(5) { bottom: 24px; right: 22px; }
+.es-otp-dot:nth-child(6) { bottom: 12px; left: 48px; }
+.es-otp-dot:nth-child(7) { top: 46px; left: 8px; }
+.es-otp-dot:nth-child(8) { bottom: 40px; left: 16px; width: 3px; height: 3px; }
+.es-otp-secure {
+  margin: 4px 0 0;
+  color: #9aa3ad;
+  font-size: 0.86rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.es-otp-continue {
+  margin-top: 16px;
+  border: 0;
+  background: #14c98a;
+  color: #04261c;
+  font-weight: 800;
+  font-family: inherit;
+  font-size: 1rem;
+  border-radius: 999px;
+  padding: 12px 42px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(20, 201, 138, 0.28);
+}
+.es-otp-continue:hover { filter: brightness(1.06); }
 
 .es-otp.is-filled .es-otp-slot {
   border-color: #dceaff;

@@ -53,7 +53,7 @@
   <link rel="stylesheet" href="sortable-table.css?v=20260924_FINISH1">
   <link rel="stylesheet" href="elisee-loader.css?v=20260918_LOADER1">
   <link rel="stylesheet" href="avatar-3d.css?v=20260921_FACESCAN1">
-  <link rel="stylesheet" href="login-slide.css?v=20260924_FINISH1">
+  <link rel="stylesheet" href="login-slide.css?v=20260925_OTPV3">
   <link rel="stylesheet" href="glass-menu.css?v=20260924_GLASSMENU1">
   <link rel="stylesheet" href="nav-search-anim.css?v=20260924_FINISH1">
   <link rel="stylesheet" href="role-sidebar-pro.css?v=20260924_HOVERSIDE1">
@@ -1832,8 +1832,10 @@
         <div class="es-otp" id="es-otp" hidden>
           <div class="es-otp-phone">
             <span class="es-otp-notch" aria-hidden="true"></span>
-            <h2>Verifica il numero</h2>
-            <p class="es-otp-sub">Inserisci il codice a 4 cifre inviato a <strong id="es-otp-dest">+39 ••• ••••</strong>.</p>
+            <div class="es-otp-head">
+              <h2>Verifica il numero</h2>
+              <p class="es-otp-sub">Inserisci il codice a 4 cifre inviato a <strong id="es-otp-dest">+39 ••• ••••</strong>.</p>
+            </div>
             <div class="es-otp-stage" id="es-otp-stage">
               <svg class="es-otp-ring" viewBox="0 0 240 240" aria-hidden="true">
                 <circle cx="120" cy="120" r="86"></circle>
@@ -1859,6 +1861,25 @@
             </div>
             <p class="es-otp-hint" id="es-otp-hint">Scrivilo, incollalo, oppure fai compilare dal messaggio.</p>
             <button type="button" class="es-otp-back" id="es-otp-back">Torna all'email</button>
+            <div class="es-otp-done" id="es-otp-done">
+              <h2>Numero verificato</h2>
+              <p class="es-otp-sub">Il numero è stato verificato.</p>
+              <div class="es-otp-seal" aria-hidden="true">
+                <span class="es-otp-seal-ring"></span>
+                <span class="es-otp-seal-ring es-otp-seal-ring--2"></span>
+                <span class="es-otp-dot"></span>
+                <span class="es-otp-dot"></span>
+                <span class="es-otp-dot"></span>
+                <span class="es-otp-dot"></span>
+                <span class="es-otp-dot"></span>
+                <span class="es-otp-dot"></span>
+                <span class="es-otp-check">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 9.2 17 19 7"/></svg>
+                </span>
+              </div>
+              <p class="es-otp-secure"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Verificato e al sicuro</p>
+              <button type="button" class="es-otp-continue" id="es-otp-continue">Continua</button>
+            </div>
           </div>
         </div>
       </div>
@@ -5939,7 +5960,7 @@
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="elisee-staff.js?v=20260911_ADMIN2"></script>
   <script src="app-admin-panels.js?v=20260918_CCDROPDOWN1"></script>
-  <script src="app.js?v=20260924_FINISH1"></script>
+  <script src="app.js?v=20260925_OTPV3"></script>
   <script src="nav-search-anim.js?v=20260924_FINISH1"></script>
   <script src="sortable-table.js?v=20260924_FINISH1"></script>
   <script src="elisee-loader.js?v=20260918_LOADER1"></script>

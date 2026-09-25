@@ -9445,7 +9445,7 @@ window.verifyWhatsAppOtp = function () {
   }
   if (expected && code === expected) {
     if (root) { root.classList.remove('is-bad'); root.classList.add('is-ok'); }
-    if (hint) hint.textContent = 'Codice giusto. L’ingresso con WhatsApp si attiva quando il numero è collegato.';
+    if (window.showEliseeOtpSuccess) window.showEliseeOtpSuccess();
     return;
   }
   if (root) { root.classList.remove('is-ok'); root.classList.add('is-bad'); }
@@ -9476,24 +9476,44 @@ window.verifyWhatsAppOtp = function () {
     var r = 78;
     return [{ x: 0, y: -r }, { x: r, y: 0 }, { x: 0, y: r }, { x: -r, y: 0 }];
   }
+  function cancelSlotMotion(slot) {
+    if (typeof slot.getAnimations === 'function') {
+      slot.getAnimations().forEach(function (a) { try { a.cancel(); } catch (e) {} });
+    }
+  }
   function place(mode, animate) {
     var pos = points(mode);
+    var halfW = 29;
+    var halfH = 32;
     slots().forEach(function (slot, i) {
-      var from = slot._esPos || pos[i];
       var to = pos[i];
       slot._esPos = to;
-      var end = 'translate(' + to.x + 'px,' + to.y + 'px) rotate(0deg)';
-      if (typeof slot.getAnimations === 'function') {
-        slot.getAnimations().forEach(function (a) { try { a.cancel(); } catch (e) {} });
-      }
-      if (animate && slot.animate) {
+      slot.style.opacity = '';
+      cancelSlotMotion(slot);
+      if (mode === 'orbit' && animate && slot.animate) {
+        // Origin on the hub: rotate() alone draws the circle. Do not blend the row position in.
+        slot.style.transformOrigin = (halfW - to.x) + 'px ' + (halfH - to.y) + 'px';
         slot.animate([
-          { transform: 'translate(' + from.x + 'px,' + from.y + 'px) rotate(0deg)' },
-          { transform: 'translate(' + to.x + 'px,' + to.y + 'px) rotate(450deg)' }
-        ], { duration: 800, easing: 'cubic-bezier(.16,.84,.22,1)', fill: 'forwards' });
+          { transform: 'rotate(0deg) translate(' + to.x + 'px,' + to.y + 'px)' },
+          { transform: 'rotate(450deg) translate(' + to.x + 'px,' + to.y + 'px)' }
+        ], { duration: 800, easing: 'cubic-bezier(.7,0,.15,1)', fill: 'forwards' });
       } else {
-        slot.style.transform = end;
+        slot.style.transformOrigin = '50% 50%';
+        slot.style.transform = 'translate(' + to.x + 'px,' + to.y + 'px)';
       }
+    });
+  }
+  function collapseToSeal() {
+    slots().forEach(function (slot) {
+      var to = slot._esPos || { x: 0, y: 0 };
+      if (!slot.animate) {
+        slot.style.opacity = '0';
+        return;
+      }
+      slot.animate([
+        { transform: 'rotate(450deg) translate(' + to.x + 'px,' + to.y + 'px)', opacity: 1 },
+        { transform: 'rotate(520deg) translate(0px,0px)', opacity: 0 }
+      ], { duration: 460, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'forwards' });
     });
   }
   function codeValue() {
@@ -9511,7 +9531,6 @@ window.verifyWhatsAppOtp = function () {
       if (!slot) return;
       var on = el === active;
       slot.classList.toggle('is-on', on || !!el.value);
-      slot.classList.toggle('is-spin', on && !el.value);
     });
   }
   function writeDigits(raw) {
@@ -9644,7 +9663,20 @@ window.verifyWhatsAppOtp = function () {
     });
     var back = document.getElementById('es-otp-back');
     if (back) back.addEventListener('click', function () { window.closeEliseeOtp(); });
+    var go = document.getElementById('es-otp-continue');
+    if (go) go.addEventListener('click', function () { window.closeEliseeOtp(); });
   }
+
+  window.showEliseeOtpSuccess = function () {
+    var root = document.getElementById('es-otp');
+    if (!root || root.classList.contains('is-done')) return;
+    collapseToSeal();
+    setTimeout(function () {
+      root.classList.add('is-done');
+      var go = document.getElementById('es-otp-continue');
+      if (go) go.focus();
+    }, 420);
+  };
 
   window.openEliseeOtp = function (phone) {
     bindOnce();
@@ -9653,7 +9685,7 @@ window.verifyWhatsAppOtp = function () {
     if (!card || !root) return;
     card.classList.add('is-otp');
     root.hidden = false;
-    root.classList.remove('is-orbit', 'is-ok', 'is-bad', 'is-filled');
+    root.classList.remove('is-orbit', 'is-ok', 'is-bad', 'is-filled', 'is-done');
     slots().forEach(function (slot) {
       if (typeof slot.getAnimations === 'function') {
         slot.getAnimations().forEach(function (a) { try { a.cancel(); } catch (e) {} });
@@ -9689,7 +9721,7 @@ window.verifyWhatsAppOtp = function () {
     if (card) card.classList.remove('is-otp');
     if (root) {
       root.hidden = true;
-      root.classList.remove('is-orbit', 'is-ok', 'is-bad', 'is-filled');
+      root.classList.remove('is-orbit', 'is-ok', 'is-bad', 'is-filled', 'is-done');
     }
     clearInterval(otpTimer);
     if (typeof window.showAccessoMethod === 'function') window.showAccessoMethod('email');
