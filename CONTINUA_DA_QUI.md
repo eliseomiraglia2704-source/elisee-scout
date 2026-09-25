@@ -7,7 +7,7 @@ Ultimo aggiornamento: **2026-09-25** — SYNC1 — Ottimizzazione script immagin
 1. Ottimizzazione di `immagini/aggiorna-immagini.ps1`: scansione mirata dei soli file JS di radice ed `elisee-world`, evitando traversata bloccante di `node_modules`.
 2. Sincronizzazione automatica e cache-bust completo di tutti i percorsi immagini e script in `index.html`, `style.css`, `app.js`, `focus.html`.
 3. Validazione sintattica con `node --check` al 100% su tutti i moduli JS del sito e di `elisee-world/` (tutti superati).
-4. **File**: `immagini/aggiorna-immagini.ps1`, `index.html`, `style.css`, `app.js`, `focus.html`, `sw.js`, `version.json`. Cache `v20260925_SYNC1`.
+4. **File**: `immagini/aggiorna-immagini.ps1`, `index.html`, `style.css`, `app.js`, `focus.html`, `sw.js`, `version.json`. Cache `v20260925_SYNC1`. Commit `ecef4bd1`.
 
 Feature precedente: **2026-09-25** — PARALLAX1 — Sfondo che scorre più piano del testo:
 1. In home e in Chi siamo il fondo ciano si muove meno del contenuto mentre scorri.
