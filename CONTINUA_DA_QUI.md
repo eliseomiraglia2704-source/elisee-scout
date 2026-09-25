@@ -3,7 +3,21 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — HEROUX3 — Separazione Rigida Viste Pubbliche vs Dashboard Riservate (Rimozione Sidebar dalla Landing Page):
+Ultimo aggiornamento: **2026-09-25** — HEROUX4 — Risoluzione Header Wrapping, Overflow Clip e Compattazione Dropdown Menu:
+1. **Compattazione Dropdown Menu e Rimozione Testi Verbosi nell'Header**:
+   - Rimosse tutte le descrizioni estese multilinea ("Collezione e profili seguiti", "Programma talent & testimonial", "Carriera RPG e quiz tattici", "Notizie, interviste e comunicati") dalla barra di navigazione orizzontale, convertite in attributi `title` (tooltip nativi informativi) e mantenendo esclusivamente i titoli sintetici compatti (`📰 Stampa`, `🎴 Album`, `🤝 Ambassador`, `🎮 Minigiochi`).
+   - Forzato `display: none !important;` in `style.css` su `.es-nav-item-desc` e `.es-nav-item-text small` per prevenire qualsiasi riespansione orizzontale/verticale.
+2. **Posizionamento Assoluto Rigoroso del Menu a Tendina (`.es-nav-dropdown-menu`)**:
+   - Impostato `position: absolute !important;` e `display: none !important;` quando chiuso, con apertura in `display: flex !important;` solo in caso di classe `.is-open`, hover o focus.
+   - Svincolato completamente il menu dal flusso normale dell'header, impedendo che spinga le altre voci a capo o aumenti l'altezza della navbar.
+3. **Gestione Flexbox No-Wrap e Ripristino Overflow Header**:
+   - Applicato `flex-wrap: nowrap !important;` e `white-space: nowrap !important;` a tutti i container nav (`.portfolio-navbar`, `.navbar`, `header.main-header .navbar`, `.nav-menu`, `.portfolio-nav`, `#nav-menu`).
+   - Rimosso il clipping distruttivo `overflow: hidden !important;` che tagliava la riga superiore delle voci o mozzava i menu a comparsa, impostando `overflow: visible !important;` a 52px di altezza esatta conforme ad Apple/macOS design.
+4. **Armonizzazione Dropdown in Light Mode**:
+   - Assicurato contrasto nitido per i titoli sintetici del dropdown in Light Mode (`#0f172a` con hover ciano `#0284c7`).
+5. **File**: `index.html`, `style.css`, `apple-nav.css`, `sw.js`, `version.json`. Cache `v20260925_HEROUX4`.
+
+Feature precedente: **2026-09-25** — HEROUX3 — Separazione Rigida Viste Pubbliche vs Dashboard Riservate (Rimozione Sidebar dalla Landing Page):
 1. **Rimozione Sidebar dalle Pagine Pubbliche (Home, Chi siamo, Bacheca, Mappa)**:
    - Eliminata la sidebar fluttuante a sinistra (`.es-sb-hover`, `.es-pro-sidebar`, `.es-modern-sidebar`, `[class*="-sidebar"]`) dalla landing page pubblica (`#hero`, `#home-about`, `#view-home`, ecc.) che copriva direttamente le lettere del titolo "ELISEE SCOUT" e duplicava le funzioni della Navbar.
    - Creata in `role-sidebar-pro.js` la funzione `isPublicView()` che rileva istantaneamente se l'utente naviga su una pagina pubblica o istituzionale, disattivando e nascondendo qualsiasi sidebar.

@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260925_HEROUX2">
+  <link rel="stylesheet" href="style.css?v=20260925_HEROUX4">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260910_TRUST1">
@@ -58,7 +58,7 @@
   <link rel="stylesheet" href="login-slide.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="glass-menu.css?v=20260924_GLASSMENU1">
   <link rel="stylesheet" href="nav-search-anim.css?v=20260925_PALETTE1">
-  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX2">
+  <link rel="stylesheet" href="apple-nav.css?v=20260925_HEROUX4">
   <link rel="stylesheet" href="btn-label-anim.css?v=20260925_BTNANIM1">
   <link rel="stylesheet" href="share-btn.css?v=20260925_SHARE1">
   <link rel="stylesheet" href="theme-switch.css?v=20260925_THEME1">
@@ -247,14 +247,19 @@
     .navbar.portfolio-navbar,
     .portfolio-navbar,
     header.main-header .navbar {
-      height: 72px !important;
-      max-height: 72px !important;
+      height: 52px !important;
+      max-height: 52px !important;
+      flex-wrap: nowrap !important;
+      white-space: nowrap !important;
+      overflow: visible !important;
     }
     .nav-menu,
     .portfolio-nav,
     header .nav-menu,
     header .portfolio-nav {
-      overflow: hidden !important;
+      overflow: visible !important;
+      flex-wrap: nowrap !important;
+      white-space: nowrap !important;
       scrollbar-width: none !important;
     }
     .nav-menu::-webkit-scrollbar,
@@ -2123,40 +2128,28 @@
         <a href="#bacheca-annunci" class="nav-link" data-view="bacheca" data-i18n="nav.portfolio" onclick="if(window.switchView){ window.switchView('bacheca'); } return false;">Bacheca</a>
         <a href="#mappa-portal" class="nav-link" data-view="mappa" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){window.switchView('mappa','#mappa-portal');} return false;">Mappa</a>
 
-        <!-- Menu a tendina Altro / Esplora -->
+        <!-- Menu a tendina Altro / Risorse -->
         <div class="es-nav-dropdown" id="nav-dropdown-altro">
-          <button type="button" class="nav-link es-nav-dropdown-trigger" id="btn-nav-dropdown-more" aria-expanded="false" aria-haspopup="true">
+          <button type="button" class="nav-link es-nav-dropdown-trigger" id="btn-nav-dropdown-more" aria-expanded="false" aria-haspopup="true" title="Altre sezioni e risorse">
             <span>Altro</span>
             <svg class="es-nav-caret" viewBox="0 0 20 20" fill="currentColor" width="13" height="13" aria-hidden="true"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
           </button>
           <div class="es-nav-dropdown-menu" id="menu-nav-dropdown-more" role="menu">
-            <a href="#stampa-portal" class="es-nav-dropdown-item" role="menuitem" data-view="stampa" onclick="if(window.openStampaFeed){window.openStampaFeed();}else if(window.switchView){window.switchView('stampa','#stampa-portal');} return false;">
+            <a href="#stampa-portal" class="es-nav-dropdown-item" role="menuitem" data-view="stampa" title="Notizie, interviste e comunicati" onclick="if(window.openStampaFeed){window.openStampaFeed();}else if(window.switchView){window.switchView('stampa','#stampa-portal');} return false;">
               <span class="es-nav-item-icon">📰</span>
-              <span class="es-nav-item-text">
-                <strong>Stampa</strong>
-                <small>Notizie, interviste e comunicati</small>
-              </span>
+              <span class="es-nav-item-title">Stampa</span>
             </a>
-            <a href="#seguo-portal" class="es-nav-dropdown-item" role="menuitem" data-view="seguo" onclick="if(window.openChiSegui){window.openChiSegui();}else if(window.switchView){window.switchView('seguo','#seguo-portal');} return false;">
+            <a href="#seguo-portal" class="es-nav-dropdown-item" role="menuitem" data-view="seguo" title="Collezione figurine e profili seguiti" onclick="if(window.openChiSegui){window.openChiSegui();}else if(window.switchView){window.switchView('seguo','#seguo-portal');} return false;">
               <span class="es-nav-item-icon">🎴</span>
-              <span class="es-nav-item-text">
-                <strong>Album Figurine</strong>
-                <small>Collezione e profili seguiti</small>
-              </span>
+              <span class="es-nav-item-title">Album</span>
             </a>
-            <a href="#ambassador-portal" class="es-nav-dropdown-item" role="menuitem" data-view="ambassador" onclick="if(window.switchView){ window.switchView('ambassador'); } return false;">
+            <a href="#ambassador-portal" class="es-nav-dropdown-item" role="menuitem" data-view="ambassador" title="Programma talent & testimonial" onclick="if(window.switchView){ window.switchView('ambassador'); } return false;">
               <span class="es-nav-item-icon">🤝</span>
-              <span class="es-nav-item-text">
-                <strong>Ambassador</strong>
-                <small>Programma talent & testimonial</small>
-              </span>
+              <span class="es-nav-item-title">Ambassador</span>
             </a>
-            <a href="#minigioco-carriera" class="es-nav-dropdown-item" role="menuitem" id="nav-minigioco" data-view="minigioco" onclick="if(window.switchView){ window.switchView('minigioco'); } else if(window.openMinigiocoCarriera){ window.openMinigiocoCarriera(); } return false;">
+            <a href="#minigioco-carriera" class="es-nav-dropdown-item" role="menuitem" id="nav-minigioco" data-view="minigioco" title="Carriera RPG e quiz tattici" onclick="if(window.switchView){ window.switchView('minigioco'); } else if(window.openMinigiocoCarriera){ window.openMinigiocoCarriera(); } return false;">
               <span class="es-nav-item-icon">🎮</span>
-              <span class="es-nav-item-text">
-                <strong>Minigiochi</strong>
-                <small>Carriera RPG e quiz tattici</small>
-              </span>
+              <span class="es-nav-item-title">Minigiochi</span>
             </a>
           </div>
         </div>

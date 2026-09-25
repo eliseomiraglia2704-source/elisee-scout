@@ -9977,16 +9977,26 @@ body[data-active-view="home"] #es-otp-bottom-banner {
 }
 
 /* 2. Menu a tendina navbar compatto ed elegante */
+/* 2. Menu a tendina navbar compatto ed elegante */
+.portfolio-navbar,
+.portfolio-nav,
+.nav-menu {
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+}
+
 .es-nav-dropdown {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
+  white-space: nowrap !important;
 }
 
 .portfolio-nav .nav-link + .es-nav-dropdown {
-  border-left: 1px solid rgba(226, 232, 240, 0.42);
-  margin-left: 0.45rem;
-  padding-left: 0.55rem;
+  border-left: 1px solid rgba(226, 232, 240, 0.35);
+  margin-left: 0.35rem;
+  padding-left: 0.45rem;
 }
 
 .es-nav-dropdown-trigger {
@@ -9995,106 +10005,109 @@ body[data-active-view="home"] #es-otp-bottom-banner {
   cursor: pointer;
   font-family: inherit;
   font-size: 0.82rem;
-  color: rgba(226, 232, 240, 0.78);
+  color: rgba(226, 232, 240, 0.85);
   font-weight: 500;
   display: inline-flex;
   align-items: center;
   gap: 0.28rem;
-  padding: 0.35rem 0.2rem;
-  transition: color 0.2s ease;
+  padding: 0.3rem 0.4rem;
+  border-radius: 999px;
+  white-space: nowrap !important;
+  transition: color 0.18s ease, background 0.18s ease;
 }
 
 .es-nav-dropdown-trigger:hover,
 .es-nav-dropdown:hover .es-nav-dropdown-trigger,
-.es-nav-dropdown:focus-within .es-nav-dropdown-trigger {
+.es-nav-dropdown:focus-within .es-nav-dropdown-trigger,
+.es-nav-dropdown.is-open .es-nav-dropdown-trigger {
   color: #38bdf8;
+  background: rgba(56, 189, 248, 0.08);
 }
 
 .es-nav-caret {
   transition: transform 0.2s ease;
   opacity: 0.7;
+  pointer-events: none;
 }
 
 .es-nav-dropdown:hover .es-nav-caret,
-.es-nav-dropdown:focus-within .es-nav-caret {
-  transform: rotate(180deg);
-  opacity: 1;
-}
-
-.es-nav-dropdown-menu {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%) translateY(6px);
-  min-width: 250px;
-  background: rgba(10, 15, 26, 0.96);
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  border-radius: 14px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 20px rgba(56, 189, 248, 0.12);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  padding: 0.45rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s;
-  z-index: 9999;
-}
-
-.es-nav-dropdown:hover .es-nav-dropdown-menu,
-.es-nav-dropdown:focus-within .es-nav-dropdown-menu,
-.es-nav-dropdown.is-open .es-nav-dropdown-menu {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
-}
-
+.es-nav-dropdown:focus-within .es-nav-caret,
 .es-nav-dropdown.is-open .es-nav-caret {
   transform: rotate(180deg);
   opacity: 1;
 }
 
+.es-nav-dropdown-menu {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  left: 50% !important;
+  transform: translateX(-50%) translateY(4px);
+  min-width: 170px !important;
+  width: max-content !important;
+  max-width: 240px !important;
+  background: rgba(10, 15, 26, 0.98) !important;
+  border: 1px solid rgba(56, 189, 248, 0.28) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(56, 189, 248, 0.12) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  padding: 0.35rem !important;
+  display: none !important;
+  flex-direction: column !important;
+  gap: 0.18rem !important;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+  z-index: 999999 !important;
+}
+
+.es-nav-dropdown:hover .es-nav-dropdown-menu,
+.es-nav-dropdown:focus-within .es-nav-dropdown-menu,
+.es-nav-dropdown.is-open .es-nav-dropdown-menu {
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: translateX(-50%) translateY(0);
+}
+
 .es-nav-dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.6rem 0.75rem;
-  border-radius: 10px;
-  text-decoration: none;
-  color: #cbd5e1;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.6rem !important;
+  padding: 0.45rem 0.65rem !important;
+  border-radius: 8px !important;
+  text-decoration: none !important;
+  color: #cbd5e1 !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
   transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
 }
 
 .es-nav-dropdown-item:hover {
-  background: rgba(56, 189, 248, 0.1);
-  color: #ffffff;
-  transform: translateX(3px);
+  background: rgba(56, 189, 248, 0.12) !important;
+  color: #ffffff !important;
+  transform: translateX(2px);
 }
 
 .es-nav-item-icon {
-  font-size: 1.25rem;
+  font-size: 1.05rem;
   line-height: 1;
   flex-shrink: 0;
 }
 
-.es-nav-item-text {
-  display: flex;
-  flex-direction: column;
-}
-
-.es-nav-item-text strong {
-  font-size: 0.84rem;
+.es-nav-item-title {
+  font-size: 0.82rem;
   font-weight: 600;
-  color: #f1f5f9;
+  color: inherit;
+  white-space: nowrap;
 }
 
-.es-nav-item-text small {
-  font-size: 0.72rem;
-  color: #94a3b8;
+.es-nav-item-text small,
+.es-nav-item-desc {
+  display: none !important;
 }
 
 /* 3. Hero Section Spacing, Contrasto e Layout a 2 Colonne */

@@ -74,6 +74,8 @@
     justify-content: center;
     gap: 2px;
     overflow: visible !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
     min-width: 0;
   }
 
@@ -342,6 +344,14 @@ html[data-theme="mimetico-chiaro"] .portfolio-navbar .es-nav-dropdown-item {
 
 html[data-theme="mimetico-chiaro"] .portfolio-navbar .es-nav-dropdown-item:hover {
   background: rgba(2, 132, 199, 0.08) !important;
+  color: #0284c7 !important;
+}
+
+html[data-theme="mimetico-chiaro"] .portfolio-navbar .es-nav-item-title {
+  color: #0f172a !important;
+}
+
+html[data-theme="mimetico-chiaro"] .portfolio-navbar .es-nav-dropdown-item:hover .es-nav-item-title {
   color: #0284c7 !important;
 }
 
