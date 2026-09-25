@@ -1,0 +1,30 @@
+/* Lo sfondo scorre più piano del testo, nei colori del sito. */
+#hero,
+#about { position: relative; }
+.es-plx {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: 100% 160%;
+  background-position: 50% 0;
+  background-image:
+    radial-gradient(ellipse at 50% 30%, rgba(56, 189, 248, 0.28), transparent 55%),
+    linear-gradient(180deg, #050608 0%, #0a3040 50%, #050608 100%);
+}
+.es-plx-alt {
+  background-image:
+    radial-gradient(ellipse at 70% 40%, rgba(2, 132, 199, 0.22), transparent 50%),
+    linear-gradient(180deg, #071018 0%, #0e3a4d 48%, #050608 100%);
+}
+#hero .hero-portfolio-stage,
+#about .about-dossier-wrap {
+  position: relative;
+  z-index: 1;
+}
+[data-theme="mimetico-chiaro"] .es-plx {
+  background-image:
+    radial-gradient(ellipse at 50% 30%, rgba(56, 189, 248, 0.35), transparent 55%),
+    linear-gradient(180deg, #f8fafc 0%, #e0f2fe 50%, #f8fafc 100%);
+}
