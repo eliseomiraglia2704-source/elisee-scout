@@ -3,7 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-25** — THEME1 — Switch giorno/notte nella navbar:
+Ultimo aggiornamento: **2026-09-25** — WCF1 — Season Wrapped a carosello coverflow:
+1. Le schede della stagione stanno una accanto all'altra. Quella al centro è a colori, con titolo e **Apri**. Quelle ai lati sono inclinate e in grigio.
+2. Si trascina con il mouse. I pallini in basso seguono la scheda. Colori del sito, ciano.
+3. **File**: `season-wrapped.js`, `season-wrapped.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_WCF1`. Commit `72c9b212`.
+
+Feature precedente: **2026-09-25** — THEME1 — Switch giorno/notte nella navbar:
 1. Al posto del sole c'è la capsula: di notte luna e stelle, manopola a destra. Di giorno cielo ciano, sole e nuvole, manopola a sinistra.
 2. Cambia il tema del sito (`mimetico-chiaro` / scuro) e lo ricorda.
 3. **File**: `theme-switch.css`, `role-sidebar-pro.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_THEME1`. Commit `f5aa7c0d`.
