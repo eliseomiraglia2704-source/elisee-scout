@@ -1,0 +1,75 @@
+/* Controllo password in diretta: etichetta che sale e barra che si riempie. */
+.es-pwbox {
+  --color-primary: #38bdf8;
+  --color-muted: #94a3b8;
+  position: relative;
+  margin-top: 8px;
+}
+.es-pwbox label,
+.es-pwbox input { transition: 0.3s; }
+.es-pwbox label {
+  position: absolute;
+  top: 18px;
+  left: 16px;
+  translate: 0 0;
+  transform-origin: 0 50%;
+  pointer-events: none;
+  color: var(--color-muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+.es-pwbox input:focus ~ label,
+.es-pwbox input:not(:placeholder-shown) ~ label {
+  scale: 0.725;
+  translate: 0 -112%;
+}
+.es-pwbox input {
+  height: 52px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px 42px 0 16px;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 12px;
+  background: #050608;
+  outline: none;
+  color: #f8fafc;
+  font-family: inherit;
+  box-shadow: 0 0 0 2px transparent;
+}
+.es-pwbox input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary);
+}
+.es-pwbars {
+  margin: 8px 0 0;
+  display: flex;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(148, 163, 184, 0.25);
+  overflow: hidden;
+}
+.es-pwbars div {
+  height: 6px;
+  border-radius: 3px;
+  width: 0%;
+  transition: 0.4s;
+  background: transparent;
+}
+.es-pwbars.weak div { background: #f87171; width: 33.33%; }
+.es-pwbars.medium div { background: #7dd3fc; width: 66.66%; }
+.es-pwbars.strong div { background: #38bdf8; width: 100%; }
+.es-pwstrength {
+  margin: 4px 0 0;
+  min-height: 18px;
+  text-align: left;
+  font-size: 13px;
+  text-transform: capitalize;
+  color: var(--color-muted);
+}
+.es-login-form .es-pwbox input[type="password"] {
+  height: 52px;
+  padding: 16px 42px 0 16px;
+  background: #050608;
+  border-radius: 12px;
+}
+.es-pwbox .es-login-eye { top: 16px; transform: none; }

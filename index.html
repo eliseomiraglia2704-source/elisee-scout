@@ -62,6 +62,7 @@
   <link rel="stylesheet" href="btn-label-anim.css?v=20260925_BTNANIM1">
   <link rel="stylesheet" href="share-btn.css?v=20260925_SHARE1">
   <link rel="stylesheet" href="theme-switch.css?v=20260925_THEME1">
+  <link rel="stylesheet" href="pw-live.css?v=20260925_PWLIVE1">
   <link rel="stylesheet" href="role-sidebar-pro.css?v=20260924_HOVERSIDE1">
   <style id="es-font-nevera">
     @font-face {
@@ -1721,12 +1722,14 @@
             <input type="email" id="accesso-email" autocomplete="email" placeholder="nome@email.it" oninput="validateAccessoEmail()" onblur="validateAccessoEmail()">
             <p id="err-email" class="es-login-err" style="display:none;">Inserisci un indirizzo email valido.</p>
 
-            <label class="es-login-lbl" for="accesso-password">Password</label>
-            <div class="es-login-pw">
-              <input type="password" id="accesso-password" autocomplete="current-password" placeholder="••••••••" oninput="validateAccessoPassword()" onblur="validateAccessoPassword()">
+            <div class="es-pwbox">
+              <input type="password" id="accesso-password" autocomplete="current-password" placeholder=" " spellcheck="false" oninput="validateAccessoPassword()" onblur="validateAccessoPassword()">
+              <label for="accesso-password">Password</label>
               <button type="button" class="es-login-eye" onclick="toggleAccessoPasswordVisibility('accesso-password')" aria-label="Mostra password">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3l18 18"/><path d="M10.6 10.6A2 2 0 0 0 12 14a2 2 0 0 0 1.4-.6"/><path d="M9.9 5.1A10.8 10.8 0 0 1 12 5c5 0 9.3 3.1 11 7-0.6 1.4-1.6 2.7-2.8 3.8"/><path d="M6.1 6.1C4.2 7.3 2.7 9 2 12c1.7 3.9 6 7 10 7 1.5 0 2.9-.3 4.2-.9"/></svg>
               </button>
+              <div class="es-pwbars" aria-hidden="true"><div></div></div>
+              <p class="es-pwstrength"></p>
             </div>
             <p id="err-password" class="es-login-err" style="display:none;"></p>
             <div id="password-strength-bar-wrap"><div id="password-strength-bar"></div><p id="password-strength-label"></p></div>
@@ -1772,7 +1775,12 @@
 
           <div id="accesso-method-setpw" style="display:none;">
             <p id="accesso-setpw-hello" class="es-login-or" style="text-align:left;">Imposta una password nuova. Almeno 8 caratteri, una maiuscola, un numero e un carattere speciale.</p>
-            <input type="password" id="accesso-setpw-a" minlength="8" autocomplete="new-password" placeholder="Nuova password" oninput="window.paintPasswordPolicy && window.paintPasswordPolicy('setpw-reqs', this.value)">
+            <div class="es-pwbox">
+              <input type="password" id="accesso-setpw-a" minlength="8" autocomplete="new-password" placeholder=" " spellcheck="false" required oninput="window.paintPasswordPolicy && window.paintPasswordPolicy('setpw-reqs', this.value)">
+              <label for="accesso-setpw-a">Nuova password</label>
+              <div class="es-pwbars" aria-hidden="true"><div></div></div>
+              <p class="es-pwstrength"></p>
+            </div>
             <input type="password" id="accesso-setpw-b" minlength="8" autocomplete="new-password" placeholder="Ripeti la password" style="margin-top:8px;">
             <div id="setpw-reqs" class="es-pw-reqs" style="margin:8px 0;">
               <span data-pw="len">Minimo 8 caratteri</span>
@@ -1808,12 +1816,14 @@
           <input type="email" id="es-slide-email" autocomplete="email" placeholder="nome@email.it">
           <label class="es-login-lbl" for="es-slide-dob">Data di nascita</label>
           <input type="date" id="es-slide-dob" autocomplete="bday">
-          <label class="es-login-lbl" for="es-slide-password">Password</label>
-          <div class="es-login-pw">
-            <input type="password" id="es-slide-password" autocomplete="new-password" placeholder="••••••••">
+          <div class="es-pwbox">
+            <input type="password" id="es-slide-password" autocomplete="new-password" placeholder=" " spellcheck="false" required>
+            <label for="es-slide-password">Password</label>
             <button type="button" class="es-login-eye" onclick="toggleAccessoPasswordVisibility('es-slide-password')" aria-label="Mostra password">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3l18 18"/><path d="M10.6 10.6A2 2 0 0 0 12 14a2 2 0 0 0 1.4-.6"/><path d="M9.9 5.1A10.8 10.8 0 0 1 12 5c5 0 9.3 3.1 11 7-0.6 1.4-1.6 2.7-2.8 3.8"/><path d="M6.1 6.1C4.2 7.3 2.7 9 2 12c1.7 3.9 6 7 10 7 1.5 0 2.9-.3 4.2-.9"/></svg>
             </button>
+            <div class="es-pwbars" aria-hidden="true"><div></div></div>
+            <p class="es-pwstrength"></p>
           </div>
           <label class="es-login-consent">
             <input type="checkbox" id="es-slide-tos">
@@ -6001,6 +6011,7 @@
   <script src="nav-search-anim.js?v=20260924_FINISH1"></script>
   <script src="btn-label-anim.js?v=20260925_BTNANIM1"></script>
   <script src="share-btn.js?v=20260925_SHARE1"></script>
+  <script src="pw-live.js?v=20260925_PWLIVE1"></script>
   <script src="sortable-table.js?v=20260924_FINISH1"></script>
   <script src="elisee-loader.js?v=20260918_LOADER1"></script>
   <!-- Three.js WebGL, OrbitControls, GLTFLoader & DecalGeometry Runtime per Avatar 3D Hyper3D / GLB -->
