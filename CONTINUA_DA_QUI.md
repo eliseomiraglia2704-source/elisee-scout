@@ -3,7 +3,18 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX42 — Full Homepage & Public Pages Light Mode Suite:
+Ultimo aggiornamento: **2026-09-26** — HEROUX43 — Glow Cards Spotlight Cursor-Tracking (3 Pilastri Network):
+1. **Interactive Glow Cards Showcase (Spotlight Mouse Tracking)**:
+   - Integrato il pattern interattivo Spotlight Glow con tracciamento real-time del cursore su coordinate CSS dinamiche (`--x`, `--y`).
+   - 3 card esclusive dedicate ai pilastri di Elisee Scout:
+     - **glow-card--blue**: Calciatori & Atleti (Dossier con telemetria GPS, highlights e visibilità diretta).
+     - **glow-card--gold**: Società & Club LND (Annunci ingaggi, formazioni e matching IA).
+     - **glow-card--red**: Scout & Procuratori FIGC/FIFA (Secret List stealth, radar IA 3vs3 e monitoraggio territoriale).
+   - Micro-interazioni fluide: hover lift a `-5px`, comparsa progressiva del bagliore radiale `opacity: 1`, freccia CTA ad animazione elastica.
+   - Piena compatibilità con Dark Mode e Light Mode (`html[data-theme="mimetico-chiaro"]`).
+2. **File**: `index.html`, `style.css`, `glow-cards-handler.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX43`.
+
+Feature precedente: **2026-09-26** — HEROUX42 — Full Homepage & Public Pages Light Mode Suite:
 1. **Light Mode Globale per Tutta la Homepage e Sezioni Pubbliche**:
    - Risolto il disallineamento cromatico dove solo l'header recepiva il tema chiaro mentre il resto della homepage (#home-resume, #home-portfolio, #welcome-access, footer) rimaneva con sfondi scuri.
    - Sfondi calibrati alternati (`#ffffff` e `#f8fafc`) con bordi delicati `border-top: 1px solid rgba(15, 23, 42, 0.08)`.

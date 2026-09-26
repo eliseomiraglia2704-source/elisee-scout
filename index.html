@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260926_HEROUX42';
+      var BUILD_VERSION = '20260926_HEROUX43';
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -2445,6 +2445,46 @@
             </div>
             <div class="hero-buttons-row" style="justify-content:center; margin-top:2rem;">
               <a href="#dashboard-skills" class="btn btn-outline-pill" data-i18n="home.openResume" onclick="if(window.switchView){ window.switchView('pillars'); } return false;">Apri curriculum</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- GLOW CARDS SHOWCASE: 3 PILASTRI DEL NETWORK -->
+        <section id="home-pillars-glow" class="portfolio-section" style="padding: 4.5rem 0;">
+          <div class="container text-center">
+            <p class="portfolio-kicker">ECOSISTEMA VERIFICATO</p>
+            <h2 class="portfolio-heading">I 3 PILASTRI DEL NETWORK</h2>
+            <p class="portfolio-text portfolio-text-center" style="margin-bottom: 2rem;">
+              Dossier atleti con telemetria GPS, gestione club per Serie D ed Eccellenza, e radar scouting avanzato per DS e agenti.
+            </p>
+            <div class="glow-container">
+              <div class="glow-card glow-card--blue" onclick="if(window.openAuthModal){ window.openAuthModal('register'); } else if(window.switchView){ window.switchView('bacheca'); }">
+                <div class="glow-card-content">
+                  <div class="glow-badge glow-badge--blue">ATLETA</div>
+                  <div class="glow-icon">⚡</div>
+                  <h3 class="glow-title">Calciatori</h3>
+                  <p class="glow-desc">Dossier sportivo certificato, telemetria GPS, video highlights e visibilità diretta a società e scout.</p>
+                  <span class="glow-cta">Esplora profilo &rarr;</span>
+                </div>
+              </div>
+              <div class="glow-card glow-card--gold" onclick="if(window.openAuthModal){ window.openAuthModal('register'); } else if(window.switchView){ window.switchView('bacheca'); }">
+                <div class="glow-card-content">
+                  <div class="glow-badge glow-badge--gold">SOCIETÀ</div>
+                  <div class="glow-icon">🛡️</div>
+                  <h3 class="glow-title">Club &amp; Squadre</h3>
+                  <p class="glow-desc">Pubblicazione annunci ingaggi, formazioni, matching IA automatico e bacheca di recruitment.</p>
+                  <span class="glow-cta">Iscrivi club &rarr;</span>
+                </div>
+              </div>
+              <div class="glow-card glow-card--red" onclick="if(window.openAuthModal){ window.openAuthModal('login'); } else if(window.switchView){ window.switchView('bacheca'); }">
+                <div class="glow-card-content">
+                  <div class="glow-badge glow-badge--red">AREA TECNICA</div>
+                  <div class="glow-icon">🎯</div>
+                  <h3 class="glow-title">Scout &amp; Agenti</h3>
+                  <p class="glow-desc">Secret List stealth, radar IA 3vs3, notifiche trattative e monitoraggio talenti su base regionale.</p>
+                  <span class="glow-cta">Accedi scouting &rarr;</span>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -7090,5 +7130,6 @@
   <script src="chi-siamo-handler.js?v=20260925_HEROUX41" defer></script>
   <script src="radar-pro-handler.js?v=20260925_HEROUX41" defer></script>
   <script src="candidature-pro-handler.js?v=20260925_HEROUX41" defer></script>
+  <script src="glow-cards-handler.js?v=20260926_HEROUX43" defer></script>
 </body>
 </html>
