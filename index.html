@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260926_HEROUX45';
+      var BUILD_VERSION = '20260926_HEROUX46';
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
         if (savedTheme) {
@@ -53,7 +53,7 @@
   <link rel="stylesheet" href="style.css?v=20260926_HEROUX44">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
-  <link rel="stylesheet" href="chi-siamo.css?v=20260925_HEROUX41">
+  <link rel="stylesheet" href="chi-siamo.css?v=20260926_HEROUX46">
   <link rel="stylesheet" href="bacheca-board.css?v=20260917_BACHECA7">
   <link rel="stylesheet" href="control-center.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="flusso-contatti.css?v=20260925_PALETTE1">
@@ -2592,44 +2592,19 @@
       <!-- ============================================================ -->
       <div id="view-about" style="display: none;">
 
-        <!-- AREA CHI SIAMO – HEROUX34 -->
-        <section class="chi-siamo-container">
-          <div class="chi-siamo-header">
-            <h1>Chi Siamo</h1>
-            <p>La nostra missione</p>
-          </div>
-
-          <div class="content">
-            <p>
-              Connettiamo il sistema calcistico italiano — dalla Serie D alla Terza Categoria — 
-              con un <span class="highlight">unico principio guida</span>: 
-              <strong>zero fake account</strong>, 
-              <strong>opportunità reali</strong>, 
-              <strong>nessun rischio</strong> per chi si affida alla piattaforma.
-            </p>
-            <p>
-              Ogni profilo è verificato tramite documento d'identità, 
-              ogni dato sportivo è tracciato con <strong>GPS</strong>, 
-              e ogni trattamento — a partire dagli atleti minorenni — 
-              segue gli articoli 13 e 30 del GDPR con <strong>consenso genitoriale obbligatorio</strong>.
-            </p>
-          </div>
-
-          <div class="footer-link">
-            Vai alla cronologia completa
-          </div>
-        </section>
-
         <section id="about" class="about-dossier">
           <div class="es-plx es-plx-alt" aria-hidden="true"></div>
           <div class="about-dossier-wrap">
 
+            <!-- HERO A DUE COLONNE: Titolo + intro a sinistra, card info ben separata a destra -->
             <header class="cs-hero">
               <div class="cs-hero-grid">
-                <div>
+                <div class="cs-hero-left">
                   <div class="cs-eyebrow" data-i18n="about.pageTitle">Chi siamo</div>
-                  <h1 class="cs-headline" data-i18n="about.headline">Il mercato del calcio italiano, verificato.</h1>
-                  <p class="cs-lede" data-i18n="about.lede">Elisee Scout digitalizza il reclutamento nel calcio dilettantistico, giovanile e degli svincolati in Italia, collegando calciatori, società, scout e staff tecnico con dossier verificati, dati GPS e video highlights, in piena conformità GDPR.</p>
+                  <h1 class="cs-headline" data-i18n="about.missionLabel">La nostra missione</h1>
+                  <p class="cs-lede" data-i18n="about.lede">
+                    Elisee Scout digitalizza il reclutamento nel calcio dilettantistico, giovanile e degli svincolati in Italia, collegando calciatori, società, scout e staff tecnico con dossier verificati, dati GPS e video highlights, in piena conformità GDPR.
+                  </p>
                 </div>
                 <div class="cs-hero-meta">
                   <dl>
@@ -2644,17 +2619,15 @@
               </div>
             </header>
 
-            <section class="cs-mission" aria-labelledby="cs-mission-label">
-              <div class="cs-mission-grid">
-                <div class="cs-mission-label" id="cs-mission-label" data-i18n="about.missionLabel">La nostra missione</div>
-                <div>
-                  <p>
-                    <span data-i18n="about.mission1a">Connettiamo il sistema calcistico italiano — dalla Serie D alla Terza Categoria — con un unico principio guida:</span>
-                    <em data-i18n="about.mission1em">zero fake account, opportunità reali, nessun rischio</em>
-                    <span data-i18n="about.mission1b"> per chi si affida alla piattaforma.</span>
-                  </p>
-                  <p data-i18n="about.mission2">Ogni profilo è verificato tramite documento d'identità, ogni dato sportivo è tracciato con GPS, e ogni trattamento — a partire dagli atleti minorenni — segue gli articoli 13 e 30 del GDPR con consenso genitoriale obbligatorio.</p>
-                </div>
+            <!-- SEZIONE MISSIONE: larghezza di lettura contenuta (~68ch), accenti colorati coerenti e spaziatura armoniosa -->
+            <section class="cs-mission" aria-label="La nostra missione dettagliata">
+              <div class="cs-mission-content">
+                <p class="cs-mission-p">
+                  Connettiamo il sistema calcistico italiano — dalla Serie D alla Terza Categoria — con un <span class="cs-tag-principio">unico principio guida</span> : <span class="cs-accent-coral">zero fake account</span>, <span class="cs-accent-coral">opportunità reali</span>, <span class="cs-accent-coral">nessun rischio</span> per chi si affida alla piattaforma.
+                </p>
+                <p class="cs-mission-p">
+                  Ogni profilo è verificato tramite documento d'identità, ogni dato sportivo è tracciato con <span class="cs-accent-teal">GPS</span>, e ogni trattamento — a partire dagli atleti minorenni — segue gli articoli 13 e 30 del GDPR con <span class="cs-accent-coral">consenso genitoriale obbligatorio</span>.
+                </p>
               </div>
             </section>
 

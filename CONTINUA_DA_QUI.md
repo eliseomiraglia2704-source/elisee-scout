@@ -3,7 +3,19 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX45 — Universal Nimbus Publish Button Component (Idle -> Loading -> Done):
+Ultimo aggiornamento: **2026-09-26** — HEROUX46 — Riorganizzazione Sezione Chi Siamo / About (#about):
+1. **Eliminazione Sovrapposizione e Duplicazione Blocco Chi Siamo**:
+   - Rimosso il vecchio contenitore duplicato `.chi-siamo-container` che causava l'accavallamento dei titoli centrali ("CHI SIAMO" / "La nostra missione") sopra l'header istituzionale.
+2. **Hero Istituzionale a Due Colonne Pulita**:
+   - Colonna sinistra: Kicker `.cs-eyebrow` in ciano `#00f5d4`, titolo principale `h1.cs-headline` ("La nostra missione") grande e pulito, testo introduttivo `.cs-lede` con interlinea confortevole.
+   - Colonna destra: Box informativo `.cs-hero-meta` trasformato in una card scura elegante e ben definita con angoli arrotondati (`border-radius: 16px`), bordo delicato e griglia tabellare spaziata (Sede, Contatti mail ciano, Ambito).
+3. **Sezione Missione a Larghezza di Lettura Contenuta (~68ch)**:
+   - Contenitore `.cs-mission-content` con `max-width: 68ch` per evitare righe eccessivamente lunghe.
+   - Spaziatura coerente tra i paragrafi, badge satinato `.cs-tag-principio` per "unico principio guida", accenti coral `#ff3366` per i concetti chiave ("zero fake account", "opportunità reali", "nessun rischio", "consenso genitoriale obbligatorio") e teal `#00f5d4` per i dati tecnici ("GPS").
+   - Pieno supporto Dark Mode e Light Mode con colori istituzionali adattati.
+4. **File**: `index.html`, `chi-siamo.css`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX46`.
+
+Feature precedente: **2026-09-26** — HEROUX45 — Universal Nimbus Publish Button Component (Idle -> Loading -> Done):
 1. **Pulsante di Pubblicazione Nimbus con Micro-Animazione SVG**:
    - Creato modulo CSS dedicato [publish-btn.css](publish-btn.css) con animazione fluida trifase:
      - **Idle**: icona nuvola e freccia vettoriale pronta all'invio.
