@@ -3,7 +3,16 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX55 — Sostituzione Tre Filtri Dropdown con Barra di Ricerca Unica Integrata:
+Ultimo aggiornamento: **2026-09-26** — HEROUX56 — Correzione Stile Dark Theme Barra di Ricerca Unica Bacheca (#main-search-input):
+1. **Adeguamento Nativo Dark Theme (`scry-search.css`)**:
+   - Risolto il contrasto chiaro/grigio visibile su sfondi scuri dell'applicazione.
+   - Sfondo wrapper `.search-input-wrapper`: `#0b0e14` (palette filtri scuri nativi) con bordo `1px solid #1e293b` e raggio curvatura `20px`.
+   - Focus dinamico (`:focus-within`): bordo azzurro neon `#38bdf8` con alone luminoso `box-shadow: 0 0 8px rgba(56, 189, 248, 0.25)`.
+   - Input `#main-search-input`: forzata trasparenza background (`background: transparent !important`), testo bianco puro `#ffffff !important` e placeholder `#64748b`.
+   - Pulsante reset `✕` (`#clear-search-btn`): circolare 28px con sfondo `#1e293b`, icona `#94a3b8` ed effetto hover `#334155` / `#ffffff`.
+2. **File**: `scry-search.css`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX56`.
+
+Feature precedente: **2026-09-26** — HEROUX55 — Sostituzione Tre Filtri Dropdown con Barra di Ricerca Unica Integrata:
 1. **Sostituzione Griglia Dropdown con Barra di Ricerca Unica**:
    - Rimossa la griglia `.bacheca-filter-row-primary` con i tre filtri a discesa (Ruolo, Categoria, Zona specifica).
    - Inserita al suo posto la barra di ricerca unificata `.search-bar-container` con `#main-search-input` ("Cerca annunci, club o calciatori...") e pulsante di svuotamento rapido `#clear-search-btn` (`✕`).

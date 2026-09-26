@@ -1,6 +1,7 @@
 /* ==========================================================================
-   ELISEE SCOUT — SEARCH BAR & SCRY STYLES
-   Barra di ricerca unica in Bacheca annunci e micro-interazioni di ricerca.
+   ELISEE SCOUT — SEARCH BAR & SCRY STYLES (DARK THEME NATIVO)
+   Barra di ricerca unica in Bacheca annunci integrata con la palette scura
+   dell'applicazione (#0b0e14 / #1e293b / #38bdf8).
    ========================================================================== */
 
 :root {
@@ -8,33 +9,39 @@
 }
 
 /* --------------------------------------------------------------------------
-   1. Barra di Ricerca Unica Bacheca (.search-bar-container, .search-input-wrapper)
-   Sostituisce interamente i tre filtri a discesa (Ruolo, Categoria, Zona)
+   1. Contenitore della barra di ricerca
    -------------------------------------------------------------------------- */
 .search-bar-container {
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto 20px auto;
+  margin-bottom: 20px;
   position: relative;
   z-index: 5;
 }
 
+/* --------------------------------------------------------------------------
+   2. Wrapper integrato nella palette del sito (Dark Mode)
+   -------------------------------------------------------------------------- */
 .search-input-wrapper {
   display: flex;
   align-items: center;
-  background-color: #ffffff;
-  border-radius: 30px;
-  padding: 5px 10px 5px 20px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  background-color: #0b0e14; /* Stesso sfondo scuro dei filtri */
+  border: 1px solid #1e293b; /* Bordo scuro sottile */
+  border-radius: 20px;
+  padding: 6px 12px 6px 18px;
   box-sizing: border-box;
-  transition: box-shadow .2s ease, transform .15s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
   position: relative;
 }
 
+/* Stato di focus (attivo) */
 .search-input-wrapper:focus-within {
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28), 0 0 0 2px #4f83ff;
+  border-color: #38bdf8; /* Azzurro luminoso del tema */
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.25);
 }
 
+/* --------------------------------------------------------------------------
+   3. Campo di testo & placeholder
+   -------------------------------------------------------------------------- */
 .search-input-wrapper input,
 #main-search-input {
   flex: 1;
@@ -43,69 +50,98 @@
   background: transparent !important;
   background-color: transparent !important;
   box-shadow: none !important;
-  font-size: 1rem;
-  color: #1a1a1a !important;
-  padding: 8px 6px 8px 0;
+  -webkit-appearance: none;
+  appearance: none;
+  font-size: 0.95rem;
+  color: #ffffff !important; /* Testo bianco ben leggibile */
+  padding: 6px 8px 6px 0;
   font-family: inherit;
   font-weight: 500;
   box-sizing: border-box;
 }
 
+/* Placeholder grigio scuro/medio */
 .search-input-wrapper input::placeholder {
-  color: #9aa1b8;
-  font-weight: 400;
+  color: #64748b;
+  opacity: 1;
 }
 
+/* --------------------------------------------------------------------------
+   4. Pulsante di cancellazione/reset (✕)
+   -------------------------------------------------------------------------- */
 .search-input-wrapper button {
-  background-color: #0e1830;
-  color: #ffffff;
+  background-color: #1e293b;
+  color: #94a3b8;
   border: none;
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
+  width: 28px;
+  height: 28px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 0.85rem;
   font-weight: 700;
   line-height: 1;
-  transition: transform .15s ease, background-color .2s ease, opacity .2s ease;
+  transition: all 0.2s ease;
   flex-shrink: 0;
+  padding: 0;
 }
 
 .search-input-wrapper button:hover {
-  transform: scale(1.08);
-  background-color: #1f9d6b;
+  background-color: #334155;
+  color: #ffffff;
 }
 
 .search-input-wrapper button:active {
-  transform: scale(0.95);
+  transform: scale(0.92);
 }
 
-/* Micro-animazione di successo/invio sulla barra */
+/* Micro-animazione di invio (feedback visivo) */
 .search-input-wrapper.submitted {
-  animation: search-bar-ring .6s ease;
+  border-color: #1f9d6b;
+  box-shadow: 0 0 10px rgba(31, 157, 107, 0.35);
 }
 
 .search-input-wrapper.submitted button {
   background-color: #1f9d6b !important;
-}
-
-@keyframes search-bar-ring {
-  0% {
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18), 0 0 0 0 rgba(31, 157, 107, .45);
-  }
-  70% {
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18), 0 0 0 14px rgba(31, 157, 107, 0);
-  }
-  100% {
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18), 0 0 0 0 rgba(31, 157, 107, 0);
-  }
+  color: #ffffff !important;
 }
 
 /* --------------------------------------------------------------------------
-   2. Nav Quick Search Trigger (Lente Header Desktop)
+   5. Supporto Light Mode (quando attivo html[data-theme="mimetico-chiaro"])
+   -------------------------------------------------------------------------- */
+html[data-theme="mimetico-chiaro"] .search-input-wrapper {
+  background-color: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+html[data-theme="mimetico-chiaro"] .search-input-wrapper:focus-within {
+  border-color: #0284c7;
+  box-shadow: 0 0 8px rgba(2, 132, 199, 0.25);
+}
+
+html[data-theme="mimetico-chiaro"] .search-input-wrapper input,
+html[data-theme="mimetico-chiaro"] #main-search-input {
+  color: #0e1830 !important;
+}
+
+html[data-theme="mimetico-chiaro"] .search-input-wrapper input::placeholder {
+  color: #94a3b8;
+}
+
+html[data-theme="mimetico-chiaro"] .search-input-wrapper button {
+  background-color: #e2e8f0;
+  color: #475569;
+}
+
+html[data-theme="mimetico-chiaro"] .search-input-wrapper button:hover {
+  background-color: #cbd5e1;
+  color: #0e1830;
+}
+
+/* --------------------------------------------------------------------------
+   6. Nav Quick Search Trigger (Lente Header Desktop)
    -------------------------------------------------------------------------- */
 .nav-search-trigger {
   background: transparent;
