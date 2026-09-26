@@ -1,137 +1,124 @@
 /* ==========================================================================
-   ELISEE SCOUT — SCRY SEARCH CONTROLLER
-   Gestione interattiva della barra di ricerca 3D flip con dispatch su Bacheca
-   e Mappa Club.
+   ELISEE SCOUT — MAIN SEARCH CONTROLLER
+   Gestione della barra di ricerca unica in Bacheca annunci (#main-search-input)
+   con filtraggio dinamico real-time e pulsante di svuotamento (#clear-search-btn).
    ========================================================================== */
 
 (function () {
   'use strict';
 
-  function initScry() {
-    const scry = document.getElementById('scry');
-    const input = document.getElementById('scryInput');
-    const btn = document.getElementById('scryBtn');
+  function initMainSearch() {
+    const searchInput = document.getElementById('main-search-input') || document.getElementById('scryInput');
+    const clearBtn = document.getElementById('clear-search-btn') || document.getElementById('scryBtn');
+    const wrapper = searchInput ? searchInput.closest('.search-input-wrapper') : null;
 
-    if (!scry || !input || !btn) return;
-    if (scry._scryInitialized) return;
-    scry._scryInitialized = true;
+    if (!searchInput) return;
+    if (searchInput._searchBound) return;
+    searchInput._searchBound = true;
 
-    const isOpen = () => scry.dataset.state === 'open';
-    const hasText = () => input.value.trim().length > 0;
+    // Funzione di filtraggio globale
+    function filterOpportunities(query) {
+      const searchTerm = String(query || '').toLowerCase().trim();
+      window._scryQuery = searchTerm;
 
-    function open() {
-      if (isOpen()) return;
-      scry.dataset.state = 'open';
-      setTimeout(() => input.focus(), 260);
-    }
-
-    function close({ focusBtn = false } = {}) {
-      scry.dataset.state = 'closed';
-      input.value = '';
-      if (focusBtn) btn.focus();
-      // Ripristina i filtri quando la ricerca viene chiusa
-      if (window._scryQuery) {
-        window._scryQuery = '';
-        executeLiveSearch('');
-      }
-    }
-
-    function clear() {
-      input.value = '';
-      input.focus();
-      if (window._scryQuery) {
-        window._scryQuery = '';
-        executeLiveSearch('');
-      }
-    }
-
-    btn.addEventListener('click', () => {
-      if (!isOpen()) { open(); return; }
-      if (hasText()) { clear(); return; }
-      close({ focusBtn: true });
-    });
-
-    let submitTimer = null;
-    function submit(query) {
-      scry.classList.add('submitted');
-      clearTimeout(submitTimer);
-      submitTimer = setTimeout(() => scry.classList.remove('submitted'), 900);
-
-      // COLLEGA QUI: Esecuzione reale del filtro su Bacheca annunci e Mappa Club
-      executeLiveSearch(query);
-
-      // Trigger evento Custom standard
-      scry.dispatchEvent(new CustomEvent('scry:search', { detail: { query } }));
-    }
-
-    function executeLiveSearch(query) {
-      const q = String(query || '').trim();
-      window._scryQuery = q;
-
-      // 1. Filtro Bacheca Annunci (Vista 1)
+      // 1. Esegui il render filtrato nativo dei dati di bacheca
       if (typeof window.filterAndRenderJobs === 'function') {
-        try { window.filterAndRenderJobs(); } catch (err) { console.error('scry filterAndRenderJobs', err); }
+        try { window.filterAndRenderJobs(); } catch (err) { console.error('filterAndRenderJobs error', err); }
       }
 
-      // 2. Filtro Persone & Squadre (Vista 2)
+      // 2. Filtro aggiuntivo diretto sulle schede/annunci renderizzati
+      const cards = document.querySelectorAll('#jobs-container .es-card, .opportunity-card');
+      if (cards && cards.length) {
+        cards.forEach(card => {
+          const textContent = (card.innerText || card.textContent || '').toLowerCase();
+          if (!searchTerm || textContent.includes(searchTerm)) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+
+      // 3. Sincronizzazione Tab Persone & Squadre
       const peopleInput = document.getElementById('search-people-query');
-      if (peopleInput) {
-        peopleInput.value = q;
+      if (peopleInput && peopleInput !== searchInput) {
+        peopleInput.value = searchTerm;
         try { peopleInput.dispatchEvent(new Event('input', { bubbles: true })); } catch (_) {}
         if (typeof window.filterPeopleCards === 'function') {
-          try { window.filterPeopleCards(); } catch (err) { console.error('scry filterPeopleCards', err); }
+          try { window.filterPeopleCards(); } catch (err) { console.error('filterPeopleCards error', err); }
         }
       }
 
-      // 3. Filtro Mappa Club
+      // 4. Sincronizzazione Mappa Club
       const clubInput = document.getElementById('club-search') || document.getElementById('es-map-search-input');
       if (clubInput) {
-        clubInput.value = q;
+        clubInput.value = searchTerm;
         try { clubInput.dispatchEvent(new Event('input', { bubbles: true })); } catch (_) {}
       }
 
-      // 4. Feedback visivo
-      if (q && typeof window.showToast === 'function') {
-        window.showToast('Risultati per: «' + q + '»', 'info');
-      }
+      // 5. Trigger CustomEvent standard per integrazioni terze
+      document.dispatchEvent(new CustomEvent('opportunities:search', { detail: { query: searchTerm } }));
+      document.dispatchEvent(new CustomEvent('scry:search', { detail: { query: searchTerm } }));
     }
 
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') close({ focusBtn: true });
-      if (e.key === 'Enter') {
-        const query = input.value.trim();
-        if (!query) return;
-        submit(query);
+    // Evento di digitazione real-time
+    searchInput.addEventListener('input', (e) => {
+      filterOpportunities(e.target.value);
+    });
+
+    // Evento Invio con feedback visivo d'anello
+    let pulseTimer = null;
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        searchInput.value = '';
+        filterOpportunities('');
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const val = searchInput.value.trim();
+        filterOpportunities(val);
+        if (wrapper && val) {
+          wrapper.classList.add('submitted');
+          clearTimeout(pulseTimer);
+          pulseTimer = setTimeout(() => wrapper.classList.remove('submitted'), 700);
+        }
       }
     });
 
-    const KEYS = new Set(['Tab', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', ' ']);
-    document.addEventListener('keydown', (e) => {
-      if (KEYS.has(e.key)) scry.classList.add('kbd');
-    });
-    document.addEventListener('mousedown', () => scry.classList.remove('kbd'));
+    // Evento pulsante svuota / cancella
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        filterOpportunities('');
+        searchInput.focus();
+      });
+    }
 
-    // Esposizione per controlli esterni (es. quick search dalla nav)
+    // Esposizione globale per controlli esterni (es. quick search dalla navbar)
     window.openScrySearch = function (presetQuery) {
       if (typeof window.switchView === 'function') {
         window.switchView('bacheca', '#bacheca-annunci');
       }
       setTimeout(() => {
-        open();
+        searchInput.focus();
         if (presetQuery) {
-          input.value = presetQuery;
-          submit(presetQuery);
+          searchInput.value = presetQuery;
+          filterOpportunities(presetQuery);
         }
-        scry.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }, 120);
     };
 
-    window.closeScrySearch = close;
+    window.closeScrySearch = function () {
+      if (searchInput) {
+        searchInput.value = '';
+        filterOpportunities('');
+      }
+    };
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initScry);
+    document.addEventListener('DOMContentLoaded', initMainSearch);
   } else {
-    initScry();
+    initMainSearch();
   }
 })();

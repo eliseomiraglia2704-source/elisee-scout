@@ -3,7 +3,21 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX54 — Search Bar Animata 3D Flip (SCRY) con Conferma Visiva & Filtro Real-Time:
+Ultimo aggiornamento: **2026-09-26** — HEROUX55 — Sostituzione Tre Filtri Dropdown con Barra di Ricerca Unica Integrata:
+1. **Sostituzione Griglia Dropdown con Barra di Ricerca Unica**:
+   - Rimossa la griglia `.bacheca-filter-row-primary` con i tre filtri a discesa (Ruolo, Categoria, Zona specifica).
+   - Inserita al suo posto la barra di ricerca unificata `.search-bar-container` con `#main-search-input` ("Cerca annunci, club o calciatori...") e pulsante di svuotamento rapido `#clear-search-btn` (`✕`).
+   - Mantenuta al di sotto la riga filtri secondari (`.bacheca-filter-row-secondary`: Raggio geografico e chip opzioni Fuoriquota Under, Vitto e alloggio, Svincolato).
+2. **Filtraggio Dinamico Real-Time (`scry-search.js`, `app.js`)**:
+   - Evento `input` istantaneo: filtra in tempo reale gli annunci confrontando il testo digitato con titolo, ruolo, club, città, categoria, offerta e requisiti (`filterAndRenderJobs()`).
+   - Sincronizzazione automatica con le schede già nel DOM (`.es-card` e `.opportunity-card`) e con la tab "Persone & squadre" (`#search-people-query` + `filterPeopleCards()`).
+   - Click su `✕`: svuota immediatamente il campo di ricerca e ripristina la visualizzazione di tutte le opportunità.
+3. **Stili & Integrazione UI (`scry-search.css`)**:
+   - Barra centrata con `max-width: 600px`, `border-radius: 30px`, ombra morbida e pulsante circolare scuro a destra (`#0e1830` con hover `#1f9d6b`).
+   - Input con trasparenza forzata per garantire massima pulizia estetica sia in Dark Mode che in Light Mode.
+4. **File**: `scry-search.css`, `scry-search.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX55`.
+
+Feature precedente: **2026-09-26** — HEROUX54 — Search Bar Animata 3D Flip (SCRY) con Conferma Visiva & Filtro Real-Time:
 1. **Componente 3D Flip Search Bar (`scry-search.css`, `scry-search.js`)**:
    - Apertura con prospettiva 3D dinamica (`perspective: 900px`, `transform: rotateX(-90deg)` → `rotateX(0deg)` con timing `cubic-bezier(.55,.08,.4,.95)`).
    - Bottone circolare `.scry__btn` che scivola da centro (`left: calc(50% - 28px)`) all'estremità destra (`left: calc(100% - 56px)`) con morphing icona da lente (`.ic-search`) a chiusura (`.ic-close`).
