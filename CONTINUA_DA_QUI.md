@@ -3,7 +3,28 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX50 — Fix Layout Bacheca (Header Static, Tabs Sticky) e Ristilizzazione Action Menu:
+Ultimo aggiornamento: **2026-09-26** — HEROUX51 — Unificazione Tema Sezione Mappa & Micro-Interazioni Responsive:
+1. **Unificazione Token Tema Globale (#mappa-portal, vista mappa e panoramica territoriale)**:
+   - Sostituiti tutti i colori scuri fissi / hardcoded in `mappa-club.css` con il sistema standard di variabili di tema: `--bg`, `--panel`, `--text`, `--text-dim`, `--line`, `--blue`, `--track`.
+   - Supporto completo e reattivo per:
+     - Default Light: `:root` (`--bg: #ffffff; --panel: #f7f8fb; --text: #0e1830; --text-dim: #667085; --line: #e4e7ee; --blue: #1d4fd6; --track: #e4e7ee;`)
+     - Dark Scheme automatico: `@media (prefers-color-scheme: dark)` (`--bg: #0b0e1a; --panel: #12162a; --text: #eef0f7; --text-dim: #9aa1b8; --line: #232840; --blue: #4f83ff; --track: #232840;`)
+     - Attributi espliciti: `html[data-theme="light"]`, `html[data-theme="mimetico-chiaro"]` e `html[data-theme="dark"]`.
+   - Rimappate le variabili interne `--es-*` sul sistema a token.
+   - Sbloccato `#mappa-portal` da `color-scheme: dark` forzato e `background: #0b0e14`, ora reattivo a `var(--bg)` e `var(--text)`.
+2. **Aggiornamento Componenti Mappa ai Token e alle Micro-Interazioni**:
+   - Barra superiore contatore club: `.mappa-counter-bar` / `.es-map-topbar` agganciata a `var(--panel)`, `var(--line)` e `var(--text)`.
+   - Bottone CTA geolocalizzazione: `.mappa-cta` / `.es-map-cta` con `background: var(--blue)`, `color: #fff`, `border-radius: 999px`, transizione con cubic-bezier `translateY(-2px)` e ombra morbida.
+   - Box di ricerca club: `.map-search-box` con transizione su `border-color` e `:focus-within` ring `box-shadow: 0 0 0 3px rgba(29,79,214,.15)`.
+   - Controlli zoom / fullscreen: `.map-zoom-btn` / `.es-map-fs` con scala fluida al passaggio del mouse (`transform: scale(1.06)`).
+3. **Card Regioni & Layout Responsive**:
+   - Griglia regioni `.regions-grid` / `.es-region-grid`: 5 colonne desktop, 3 colonne tablet (<=1024px), 2 colonne mobile (<=640px) con gap 16px.
+   - Card regione `.region-card` / `.es-region-card`: `background: var(--panel)`, `border: 1px solid var(--line)`, `border-radius: 12px`, padding 16px, transizione cubic-bezier `.25s cubic-bezier(.34,1.2,.4,1)`, hover `translateY(-3px)`, `border-color: var(--blue)` e ombra morbida `0 10px 24px rgba(0,0,0,.12)`.
+   - Barra proporzionale: track `.bar-track` con `background: var(--track)` e fill `.bar-fill` con `background: var(--blue)` e animazione fluidificata.
+   - Pannello espanso squadre regionali (`.es-region-teams`) e chip società (`.es-region-team-chip`) coordinati ai token di tema.
+4. **File**: `mappa-club.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX51`.
+
+Feature precedente: **2026-09-26** — HEROUX50 — Fix Layout Bacheca (Header Static, Tabs Sticky) e Ristilizzazione Action Menu:
 1. **Fix Header Intro Bacheca (Sbloccato da Fixed)**:
    - Rimosso l'aggancio fixed accidentale causato dal selettore non qualificato `header,` in `apple-nav.css` (ora limitato a `header.public-header`).
    - `.pf-header-bacheca` e `.bacheca-intro` impostati esplicitamente a `position: static !important; height: auto !important;`: ora scorrono normalmente con la pagina, eliminando il blocco fisso a schermo e l'enorme spazio vuoto.
