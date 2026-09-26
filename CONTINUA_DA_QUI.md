@@ -3,7 +3,17 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX56 — Correzione Stile Dark Theme Barra di Ricerca Unica Bacheca (#main-search-input):
+Ultimo aggiornamento: **2026-09-26** — HEROUX57 — Integrazione Design System Glassmorphic su Barra di Ricerca Unica Bacheca:
+1. **Applicazione Variabili CSS Native del Progetto (`scry-search.css`)**:
+   - Definite le variabili native `:root` (`--glass`, `--ink`, `--ink-2`, `--ink-3`, `--hover`, `--radius`, `--spring`).
+   - Contenitore `.search-bar-container`: `width: 100%`, `max-width: 600px`, `margin: 0 auto 20px auto`.
+   - Wrapper `.search-input-wrapper`: `height: 52px`, `padding: 0 16px`, `gap: 10px`, `background: var(--glass)`, `backdrop-filter: blur(50px)`, `border-radius: var(--radius)`, box-shadow multistrato (bagliori interni `rgba(255, 255, 255, 0.16)` e profondità `0 16px 40px -12px rgba(0, 0, 0, 0.55)`). Transizione fluida `400ms var(--spring)`.
+   - Focus dinamico (`:focus-within`): bordo luminoso `inset 0 0 0 1px rgba(255, 255, 255, 0.4)` e alone neon `0 0 20px rgba(56, 189, 248, 0.25)`.
+   - Input `#main-search-input`: font-size `16px`, `color: var(--ink)`, placeholder `var(--ink-2)`, trasparenza di sfondo forzata.
+   - Pulsante Reset `✕` (`#clear-search-btn`): `color: var(--ink-3)`, hover con sfondo `var(--hover)` e colore `var(--ink)`, transizione con curva elastica `var(--spring)`.
+2. **File**: `scry-search.css`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX57`.
+
+Feature precedente: **2026-09-26** — HEROUX56 — Correzione Stile Dark Theme Barra di Ricerca Unica Bacheca (#main-search-input):
 1. **Adeguamento Nativo Dark Theme (`scry-search.css`)**:
    - Risolto il contrasto chiaro/grigio visibile su sfondi scuri dell'applicazione.
    - Sfondo wrapper `.search-input-wrapper`: `#0b0e14` (palette filtri scuri nativi) con bordo `1px solid #1e293b` e raggio curvatura `20px`.
