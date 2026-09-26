@@ -3,7 +3,24 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX51 — Unificazione Tema Sezione Mappa & Micro-Interazioni Responsive:
+Ultimo aggiornamento: **2026-09-26** — HEROUX52 — TIDE Download Button con Progresso Reale, Anello SVG e Gestione Esiti:
+1. **Componente TIDE Download Button (@code_and_chill inspired, `tide-button.css`, `tide-button.js`)**:
+   - Bottone circolare animato `.tide-btn` (58px, border-radius 50%, hover `translateY(-2px)`, active `scale(.97)`).
+   - Anello circolare SVG `.tide-ring` con circonferenza esatta `302` (`r="48"`), `.track` traslucida e `.arc` progressiva sincronizzata alla percentuale live numerica `.ic-pct`.
+   - Micro-animazioni SVG fluide (`.tide-icon`): morphing/dissolvenza tra freccia download (`.ic-arrow`), percentuale live numerica, spunta di successo verde (`.ic-check`, sfondo `#10b981`) e croce di errore rossa (`.ic-x`, sfondo `#e0304a`, `data-state="fail"`).
+   - Integrazione con elegante pillola descrittiva `.tide-download-wrap` (titolo e sottotitolo coordinati con `var(--panel)` e `var(--line)`).
+2. **Collegamento ai Download Reali & Gestione Fallimenti**:
+   - Gestione nativa del progresso reale:
+     - Tramite `XMLHttpRequest` con evento di progresso reale `e.loaded / e.total` per il download di file e risorse statiche / streaming.
+     - Tramite pipeline asincrona reale con `jsPDF` (`new window.jspdf.jsPDF()`) e Blob binario per "Scarica CV / Dossier PDF" (`data-action="cv-dossier"`) e "Export Report Secret List" (`data-action="market-report"`).
+     - Gestione reale degli errori (`try / catch` e `xhr.onerror` / HTTP != 200) che commuta lo stato del bottone in `data-state="fail"`, attiva il toast di notifica errore e ripristina lo stato dopo il feedback visivo.
+3. **Sostituzione Pulsanti Statici in Piattaforma**:
+   - Sostituito il pulsante statico "📄 Scarica CV / Dossier PDF" in `#user-dossier-portal` (`.cv-actions-group`) con il TIDE button con badge "Passaporto Atletico Ufficiale".
+   - Sostituito il pulsante statico "📄 Export Report Secret List" in `#mercato-hub` (`.market-actions`) con il TIDE button con badge "Dossier Riservato DS / Scout".
+   - Mantenuta retrocompatibilità completa per chiamate programmatiche `window.exportActiveUserProfilePDF()` e `window.exportMarketReport()`.
+4. **File**: `tide-button.css`, `tide-button.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX52`.
+
+Feature precedente: **2026-09-26** — HEROUX51 — Unificazione Tema Sezione Mappa & Micro-Interazioni Responsive:
 1. **Unificazione Token Tema Globale (#mappa-portal, vista mappa e panoramica territoriale)**:
    - Sostituiti tutti i colori scuri fissi / hardcoded in `mappa-club.css` con il sistema standard di variabili di tema: `--bg`, `--panel`, `--text`, `--text-dim`, `--line`, `--blue`, `--track`.
    - Supporto completo e reattivo per:

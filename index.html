@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260926_HEROUX51';
+      var BUILD_VERSION = '20260926_HEROUX52';
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
         if (savedTheme) {
@@ -89,6 +89,7 @@
   <link rel="stylesheet" href="candidature-pro.css?v=20260925_HEROUX41">
   <link rel="stylesheet" href="market-hub-pro.css?v=20260925_HEROUX41">
   <link rel="stylesheet" href="bacheca.css?v=20260925_HEROUX41">
+  <link rel="stylesheet" href="tide-button.css?v=20260926_HEROUX52">
   <style id="es-font-nevera">
     @font-face {
       font-family: 'Nevera';
@@ -3006,9 +3007,24 @@
                 <button type="button" class="btn btn-outline-pill" onclick="if(window.showToast){ window.showToast('⭐ Profilo aggiunto alle tue schede di monitoraggio!', 'success'); }">
                   ⭐ Aggiungi a Secret List
                 </button>
-                <button type="button" class="btn btn-outline-pill pf-btn-solid" onclick="if(window.exportActiveUserProfilePDF){ window.exportActiveUserProfilePDF(); } else if(window.exportPlayerDossierPDF){ window.exportPlayerDossierPDF(); } else if(window.showToast){ window.showToast('📄 Generazione Passaporto Atletico PDF in corso...', 'info'); }">
-                  📄 Scarica CV / Dossier PDF
-                </button>
+                <div class="tide-download-wrap" title="Scarica CV / Dossier PDF">
+                  <button type="button" class="tide-btn" data-state="idle" data-action="cv-dossier" aria-label="Scarica CV / Dossier PDF">
+                    <svg class="tide-ring" viewBox="0 0 100 100">
+                      <circle class="track" cx="50" cy="50" r="48"/>
+                      <circle class="arc" cx="50" cy="50" r="48"/>
+                    </svg>
+                    <div class="tide-icon">
+                      <svg class="ic-arrow" viewBox="0 0 24 24"><path d="M12 3v14"/><path d="M6 12l6 6 6-6"/></svg>
+                      <svg class="ic-check" viewBox="0 0 24 24"><path d="M5 13l4.5 4.5L19 8"/></svg>
+                      <svg class="ic-x" viewBox="0 0 24 24"><path d="M7 7l10 10"/><path d="M17 7L7 17"/></svg>
+                    </div>
+                    <div class="ic-pct">0%</div>
+                  </button>
+                  <div class="tide-download-info">
+                    <span class="tide-download-title">Scarica CV / Dossier PDF</span>
+                    <span class="tide-download-sub">Passaporto Atletico Ufficiale</span>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -4980,7 +4996,24 @@
 
           <!-- Action bar -->
           <div class="market-actions">
-            <button type="button" class="market-btn-export" onclick="exportMarketReport()">📄 Export Report Secret List</button>
+            <div class="tide-download-wrap" title="Export Report Secret List">
+              <button type="button" class="tide-btn" data-state="idle" data-action="market-report" aria-label="Export Report Secret List">
+                <svg class="tide-ring" viewBox="0 0 100 100">
+                  <circle class="track" cx="50" cy="50" r="48"/>
+                  <circle class="arc" cx="50" cy="50" r="48"/>
+                </svg>
+                <div class="tide-icon">
+                  <svg class="ic-arrow" viewBox="0 0 24 24"><path d="M12 3v14"/><path d="M6 12l6 6 6-6"/></svg>
+                  <svg class="ic-check" viewBox="0 0 24 24"><path d="M5 13l4.5 4.5L19 8"/></svg>
+                  <svg class="ic-x" viewBox="0 0 24 24"><path d="M7 7l10 10"/><path d="M17 7L7 17"/></svg>
+                </div>
+                <div class="ic-pct">0%</div>
+              </button>
+              <div class="tide-download-info">
+                <span class="tide-download-title">Export Report Secret List</span>
+                <span class="tide-download-sub">Dossier Riservato DS / Scout</span>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -7145,5 +7178,6 @@
   <script src="candidature-pro-handler.js?v=20260925_HEROUX41" defer></script>
   <script src="glow-cards-handler.js?v=20260926_HEROUX43" defer></script>
   <script src="publish-btn.js?v=20260926_HEROUX45" defer></script>
+  <script src="tide-button.js?v=20260926_HEROUX52" defer></script>
 </body>
 </html>
