@@ -6,15 +6,17 @@
 :root {
   --nav-h: 64px;
   --bg-0: #07131c;
-  --accent: #38bdf8;
-  --text: rgba(255, 255, 255, 0.88);
-  --text-dim: rgba(255, 255, 255, 0.62);
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --accent: #00f5d4;
+  --accent-2: #38bdf8;
+  --text: rgba(255, 255, 255, 0.92);
+  --text-dim: rgba(255, 255, 255, 0.68);
+  --ease-framer: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --t-fast: 160ms;
-  --t-med: 240ms;
+  --t-med: 260ms;
 }
 
-/* 1. Header Desktop Layout & Base */
+/* 1. Header Desktop Layout & Ultra-Modern Glassmorphism */
 header.public-header.public-navbar.main-header.portfolio-header,
 header.public-header {
   height: var(--nav-h) !important;
@@ -31,86 +33,92 @@ header.public-header {
   width: 100% !important;
   z-index: 1000 !important;
   border: none !important;
-  border-bottom: none !important;
-  box-shadow: none !important;
-  transition: background 200ms var(--ease-out), backdrop-filter 200ms var(--ease-out), -webkit-backdrop-filter 200ms var(--ease-out) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25) !important;
+  transition: background 260ms var(--ease-framer), backdrop-filter 260ms var(--ease-framer), -webkit-backdrop-filter 260ms var(--ease-framer), border-color 260ms var(--ease-framer) !important;
 }
 
-/* Home a scroll 0: trasparente pura */
+/* Home a scroll 0: trasparenza pura con contrasto minimale */
 body:not(.is-internal-view) header.public-header:not(.is-scrolled) {
   background: transparent !important;
   background-color: transparent !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-}
-
-/* Home con scroll > 8px OPPURE vista interna (about, bacheca, mappa...): glass scuro perfetto */
-body:not(.is-internal-view) header.public-header.is-scrolled,
-body.is-internal-view header.public-header {
-  background: rgba(5, 6, 8, 0.72) !important;
-  background-color: rgba(5, 6, 8, 0.72) !important;
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
-  border: none !important;
-  border-bottom: none !important;
+  border-bottom: 1px solid transparent !important;
   box-shadow: none !important;
 }
 
-/* Fallback se backdrop-filter non e supportato */
-@supports not (backdrop-filter: blur(14px)) {
-  body:not(.is-internal-view) header.public-header.is-scrolled,
-  body.is-internal-view header.public-header {
-    background: #07131c !important;
-  }
+/* Home con scroll > 8px OPPURE vista interna: Glass Scuro Moderno Framer-Style */
+body:not(.is-internal-view) header.public-header.is-scrolled,
+body.is-internal-view header.public-header {
+  background: rgba(10, 14, 22, 0.78) !important;
+  background-color: rgba(10, 14, 22, 0.78) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* Tema Chiaro */
+/* Light Mode: Glass Bianco Perlaceo con contrasti perfetti */
 html[data-theme="mimetico-chiaro"] body:not(.is-internal-view) header.public-header.is-scrolled,
 html[data-theme="mimetico-chiaro"] body.is-internal-view header.public-header {
-  background: rgba(255, 255, 255, 0.96) !important;
-  background-color: rgba(255, 255, 255, 0.96) !important;
-  border: none !important;
-  border-bottom: none !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  background: rgba(255, 255, 255, 0.88) !important;
+  background-color: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
 }
 
-/* 2. Logo Brand micro-press & scout glow */
+/* 2. Logo Brand con Micro-Interazione Fluida */
 header.public-header .site-brand {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   font-weight: 800;
   letter-spacing: -0.02em;
   text-decoration: none;
-  color: #fff !important;
-  transition: transform var(--t-fast) var(--ease-out);
+  color: #ffffff !important;
+  font-size: 1.05rem;
+  transition: transform var(--t-fast) var(--ease-framer);
   user-select: none;
 }
 header.public-header .site-brand span {
   color: var(--accent) !important;
-  transition: text-shadow var(--t-med) var(--ease-out), filter var(--t-med) var(--ease-out);
+  transition: text-shadow var(--t-med) var(--ease-framer), filter var(--t-med) var(--ease-framer);
 }
 @media (hover: hover) and (pointer: fine) {
+  header.public-header .site-brand:hover {
+    transform: translateY(-1px);
+  }
   header.public-header .site-brand:hover span {
-    text-shadow: 0 0 14px rgba(56, 189, 248, 0.75);
+    text-shadow: 0 0 16px rgba(0, 245, 212, 0.7);
   }
 }
 header.public-header .site-brand:active {
-  transform: scale(0.98);
+  transform: scale(0.96);
 }
 html[data-theme="mimetico-chiaro"] header.public-header .site-brand {
   color: #0f172a !important;
 }
 
-/* 3. Navigation Links & Fluid Indicator */
+/* 3. Navigation Links & Gliding Magnetic Indicator (Framer Motion Feel) */
 header.public-header .main-nav {
   position: relative !important;
   display: flex !important;
   align-items: center !important;
-  gap: 28px !important;
+  gap: 16px !important;
   margin: 0 !important;
-  padding: 0 !important;
+  padding: 4px 8px !important;
   list-style: none !important;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+html[data-theme="mimetico-chiaro"] header.public-header .main-nav {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.06);
 }
 
 header.public-header .main-nav a.nav-link,
@@ -119,21 +127,22 @@ header.public-header .main-nav a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 14px !important;
-  font-size: 0.95rem !important;
+  padding: 7px 16px !important;
+  font-size: 0.88rem !important;
   font-weight: 500 !important;
+  letter-spacing: 0.01em;
   color: var(--text-dim) !important;
   text-decoration: none !important;
   border-bottom: none !important;
   background: transparent !important;
   border-radius: 999px;
-  transition: color var(--t-fast) var(--ease-out) !important;
+  transition: color 200ms var(--ease-framer), transform 200ms var(--ease-framer) !important;
   white-space: nowrap !important;
   z-index: 2;
   user-select: none;
 }
 
-/* Sottolineature disabilitate categoricamente */
+/* Disabilita vecchie sottolineature rigide */
 header.public-header .main-nav a::after,
 header.public-header .main-nav a::before {
   display: none !important;
@@ -142,8 +151,13 @@ header.public-header .main-nav a::before {
 @media (hover: hover) and (pointer: fine) {
   header.public-header .main-nav a.nav-link:hover,
   header.public-header .main-nav a:hover {
-    color: var(--accent) !important;
+    color: #ffffff !important;
+    transform: translateY(-1px);
   }
+}
+header.public-header .main-nav a.nav-link:active,
+header.public-header .main-nav a:active {
+  transform: scale(0.95);
 }
 
 header.public-header .main-nav a.nav-link.active,
@@ -156,123 +170,250 @@ html[data-theme="mimetico-chiaro"] header.public-header .main-nav a.nav-link,
 html[data-theme="mimetico-chiaro"] header.public-header .main-nav a {
   color: #475569 !important;
 }
+html[data-theme="mimetico-chiaro"] header.public-header .main-nav a.nav-link:hover,
+html[data-theme="mimetico-chiaro"] header.public-header .main-nav a:hover {
+  color: #0f172a !important;
+}
 html[data-theme="mimetico-chiaro"] header.public-header .main-nav a.nav-link.active,
 html[data-theme="mimetico-chiaro"] header.public-header .main-nav a.active {
   color: #0f172a !important;
 }
 
-/* Pill Indicator Fluido */
+/* Dropdown Menu "Altro ▾" in stile Framer Motion */
+header.public-header .es-nav-dropdown {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  z-index: 2;
+}
+
+header.public-header .es-nav-dropdown-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  cursor: pointer !important;
+  background: transparent !important;
+  border: none !important;
+}
+header.public-header .es-nav-dropdown-btn svg {
+  transition: transform 220ms var(--ease-spring);
+}
+header.public-header .es-nav-dropdown:hover .es-nav-dropdown-btn svg,
+header.public-header .es-nav-dropdown.is-open .es-nav-dropdown-btn svg {
+  transform: rotate(180deg);
+}
+
+header.public-header .es-nav-dropdown-menu {
+  position: absolute !important;
+  top: calc(100% + 10px) !important;
+  left: 50% !important;
+  transform: translateX(-50%) translateY(8px) scale(0.96) !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  background: rgba(14, 18, 28, 0.92) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 245, 212, 0.15) !important;
+  border-radius: 16px !important;
+  padding: 8px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  min-width: 175px !important;
+  z-index: 999999 !important;
+  transition: transform 220ms var(--ease-spring), opacity 180ms ease, visibility 180ms ease !important;
+}
+
+header.public-header .es-nav-dropdown:hover .es-nav-dropdown-menu,
+header.public-header .es-nav-dropdown.is-open .es-nav-dropdown-menu {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: translateX(-50%) translateY(0) scale(1) !important;
+}
+
+header.public-header .es-nav-dropdown-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 8px 12px !important;
+  border-radius: 10px !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 0.84rem !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  transition: background 150ms ease, color 150ms ease, transform 150ms var(--ease-framer) !important;
+  white-space: nowrap !important;
+}
+header.public-header .es-nav-dropdown-item svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+@media (hover: hover) and (pointer: fine) {
+  header.public-header .es-nav-dropdown-item:hover {
+    background: rgba(0, 245, 212, 0.12) !important;
+    color: #ffffff !important;
+    transform: translateX(4px) !important;
+  }
+  header.public-header .es-nav-dropdown-item:hover svg {
+    filter: drop-shadow(0 0 8px rgba(0, 245, 212, 0.6));
+  }
+}
+
+html[data-theme="mimetico-chiaro"] header.public-header .es-nav-dropdown-menu {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+}
+html[data-theme="mimetico-chiaro"] header.public-header .es-nav-dropdown-item {
+  color: #1e293b !important;
+}
+html[data-theme="mimetico-chiaro"] header.public-header .es-nav-dropdown-item:hover {
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: #0284c7 !important;
+}
+
+/* Gliding Magnetic Pill Indicator */
 header.public-header .main-nav .nav-indicator {
   position: absolute;
   top: 50%;
   left: 0;
-  height: 34px;
+  height: 32px;
   transform: translateY(-50%) translate3d(var(--ind-x, 0px), 0, 0);
   width: var(--ind-w, 0px);
-  background: rgba(56, 189, 248, 0.12);
-  border: 1px solid rgba(56, 189, 248, 0.28);
+  background: linear-gradient(135deg, rgba(0, 245, 212, 0.16), rgba(56, 189, 248, 0.1));
+  border: 1px solid rgba(0, 245, 212, 0.35);
+  box-shadow: 0 0 16px rgba(0, 245, 212, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   border-radius: 999px;
   pointer-events: none;
   opacity: var(--ind-o, 0);
-  transition: opacity var(--t-fast) ease;
+  transition: opacity var(--t-fast) var(--ease-framer);
   z-index: 1;
   will-change: transform, width, opacity;
   box-sizing: border-box;
 }
 
 html[data-theme="mimetico-chiaro"] header.public-header .main-nav .nav-indicator {
-  background: rgba(14, 165, 233, 0.12);
-  border-color: rgba(14, 165, 233, 0.25);
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
 }
 
-/* 4. Actions: Theme, Lingua, Accedi */
+/* 4. Azioni Destra: Theme, Lingua, Accedi con micro-interazioni Framer-Style */
 header.public-header .header-actions {
   display: flex !important;
   align-items: center !important;
-  gap: 12px !important;
+  gap: 10px !important;
 }
 
-header.public-header .theme-toggle,
-header.public-header .lang {
-  min-width: 44px !important;
-  min-height: 44px !important;
+/* Toggle Tema con Rotazione Fluida */
+header.public-header .theme-toggle {
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   cursor: pointer;
-  background: transparent !important;
-  border: none !important;
-  color: var(--text-dim) !important;
-  border-radius: 8px;
-  transition: color var(--t-fast) ease, transform 120ms ease;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: var(--text) !important;
+  border-radius: 999px;
+  transition: transform 300ms var(--ease-spring), background 200ms ease, border-color 200ms ease !important;
   user-select: none;
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: 0.92rem;
+  padding: 0;
 }
 @media (hover: hover) and (pointer: fine) {
-  header.public-header .theme-toggle:hover,
-  header.public-header .lang:hover {
-    color: var(--accent) !important;
+  header.public-header .theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border-color: rgba(0, 245, 212, 0.4) !important;
+    transform: scale(1.08) rotate(18deg) !important;
   }
 }
-header.public-header .theme-toggle:active,
-header.public-header .lang:active {
-  transform: scale(0.95);
+header.public-header .theme-toggle:active {
+  transform: scale(0.92) rotate(-15deg) !important;
+}
+html[data-theme="mimetico-chiaro"] header.public-header .theme-toggle {
+  background: rgba(0, 0, 0, 0.05) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #0f172a !important;
 }
 
-/* Bottone Accedi con fill dal basso */
+/* Pillola Lingua */
+header.public-header .lang {
+  height: 36px !important;
+  min-height: 36px !important;
+  padding: 0 12px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: var(--text-dim) !important;
+  border-radius: 999px;
+  transition: all 200ms var(--ease-framer) !important;
+  user-select: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+@media (hover: hover) and (pointer: fine) {
+  header.public-header .lang:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+    color: var(--accent) !important;
+    border-color: rgba(0, 245, 212, 0.4) !important;
+    transform: translateY(-1px) !important;
+  }
+}
+header.public-header .lang:active {
+  transform: scale(0.95) !important;
+}
+html[data-theme="mimetico-chiaro"] header.public-header .lang {
+  background: rgba(0, 0, 0, 0.05) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #475569 !important;
+}
+
+/* Pulsante Accedi: Modern Pillola con Neon Gradient Glow */
 header.public-header .btn-login {
   position: relative !important;
   overflow: hidden !important;
   z-index: 1 !important;
   isolation: isolate;
-  background: transparent !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(56, 189, 248, 0.45) !important;
+  background: linear-gradient(135deg, #00f5d4 0%, #38bdf8 100%) !important;
+  color: #050608 !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
   border-radius: 999px !important;
-  padding: 8px 20px !important;
-  font-size: 0.9rem !important;
-  font-weight: 600 !important;
+  padding: 7px 18px !important;
+  height: 36px !important;
+  font-size: 0.84rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em;
   text-decoration: none !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  transition: color var(--t-fast) ease, border-color var(--t-fast) ease, transform 120ms ease !important;
-}
-header.public-header .btn-login::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: #0284c7;
-  transform: scaleY(0);
-  transform-origin: bottom;
-  transition: transform var(--t-fast) var(--ease-out);
-  z-index: -1;
-  border-radius: inherit;
+  box-shadow: 0 4px 14px rgba(0, 245, 212, 0.28) !important;
+  transition: transform 200ms var(--ease-spring), box-shadow 200ms ease, filter 200ms ease !important;
 }
 @media (hover: hover) and (pointer: fine) {
-  header.public-header .btn-login:hover::before {
-    transform: scaleY(1);
-  }
   header.public-header .btn-login:hover {
-    border-color: #38bdf8 !important;
-    transform: translateY(-1px);
+    transform: translateY(-1px) scale(1.03) !important;
+    box-shadow: 0 6px 20px rgba(0, 245, 212, 0.45) !important;
+    filter: brightness(1.08) !important;
   }
 }
 header.public-header .btn-login:active {
-  transform: translateY(0) scale(0.98);
+  transform: scale(0.95) !important;
 }
 header.public-header .btn-login:focus-visible {
-  outline: 2px solid #38bdf8 !important;
+  outline: 2px solid var(--accent) !important;
   outline-offset: 3px !important;
-}
-
-html[data-theme="mimetico-chiaro"] header.public-header .btn-login {
-  color: #0284c7 !important;
-  border-color: rgba(2, 132, 199, 0.4) !important;
-}
-html[data-theme="mimetico-chiaro"] header.public-header .btn-login:hover {
-  color: #ffffff !important;
 }
 
 /* 5. Bottoni Hero CTA (.btn) con fill dal basso */

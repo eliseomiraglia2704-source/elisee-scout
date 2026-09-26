@@ -49,14 +49,14 @@
     var dw = tgtW - curW;
     var do_ = tgtO - curO;
 
-    var speed = 0.18;
+    var speed = 0.24;
     curX += dx * speed;
     curW += dw * speed;
     curO += do_ * speed;
 
     applyIndicatorStyle(curX, curW, curO);
 
-    if (Math.abs(dx) > 0.2 || Math.abs(dw) > 0.2 || Math.abs(do_) > 0.01) {
+    if (Math.abs(dx) > 0.15 || Math.abs(dw) > 0.15 || Math.abs(do_) > 0.008) {
       rafId = requestAnimationFrame(lerpStep);
     } else {
       curX = tgtX;
@@ -199,6 +199,11 @@
         else if (href.indexOf('mappa') >= 0) link.setAttribute('data-view', 'mappa');
       }
 
+      link.addEventListener('click', function () {
+        activeLink = link;
+        moveIndicatorTo(link, false);
+      });
+
       if (isHoverCapable()) {
         link.addEventListener('mouseenter', function () {
           hoveredLink = link;
@@ -211,6 +216,32 @@
       navEl.addEventListener('mouseleave', function () {
         hoveredLink = null;
         moveIndicatorTo(activeLink, false);
+      });
+    }
+
+    // Gestione Dropdown "Altro ▾" (click, mobile touch e close outside)
+    var dropdownEl = document.getElementById('menu-nav-dropdown-more');
+    if (dropdownEl) {
+      var dropBtn = dropdownEl.querySelector('.es-nav-dropdown-btn');
+      if (dropBtn) {
+        dropBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var isOpen = dropdownEl.classList.toggle('is-open');
+          dropBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+      }
+      document.addEventListener('click', function (e) {
+        if (dropdownEl && !dropdownEl.contains(e.target)) {
+          dropdownEl.classList.remove('is-open');
+          if (dropBtn) dropBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+      var dropItems = dropdownEl.querySelectorAll('.es-nav-dropdown-item');
+      dropItems.forEach(function (item) {
+        item.addEventListener('click', function () {
+          dropdownEl.classList.remove('is-open');
+          if (dropBtn) dropBtn.setAttribute('aria-expanded', 'false');
+        });
       });
     }
 
