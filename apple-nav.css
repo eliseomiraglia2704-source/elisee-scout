@@ -14,7 +14,7 @@
   padding: 0;
 }
 @media (min-width: 721px) {
-  header,
+  header.public-header,
   .public-navbar,
   .main-header,
   .portfolio-header,

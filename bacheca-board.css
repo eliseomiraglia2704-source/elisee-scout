@@ -65,11 +65,17 @@
   font-family: 'Inter', system-ui, sans-serif;
 }
 
-#bacheca-annunci .pf-header-bacheca {
+#bacheca-annunci .pf-header-bacheca,
+.bacheca-intro {
+  position: static !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
   align-items: flex-start;
   margin-bottom: 2rem;
   border-bottom: none;
   padding-bottom: 0;
+  width: 100% !important;
 }
 
 #bacheca-annunci .pf-title {
@@ -78,12 +84,39 @@
   color: var(--text-main, #fff);
   margin: 0 0 8px;
 }
+html[data-theme="mimetico-chiaro"] #bacheca-annunci .pf-title,
+[data-theme="mimetico-chiaro"] #bacheca-annunci .pf-title {
+  color: #0e1830 !important;
+}
 
 #bacheca-annunci .pf-lead {
   font-size: 15px;
   color: var(--text-muted, #94a3b8);
   max-width: 480px;
   line-height: 1.5;
+}
+html[data-theme="mimetico-chiaro"] #bacheca-annunci .pf-lead,
+[data-theme="mimetico-chiaro"] #bacheca-annunci .pf-lead {
+  color: #64748b !important;
+}
+
+/* Barra dei Tab Sticky (Bacheca annunci / Persone & squadre / Wall trattative / Squadre) */
+#bacheca-annunci .bacheca-nav-tabs,
+.bacheca-tabs {
+  position: sticky !important;
+  top: 64px !important;
+  background: var(--bg-primary, #050608) !important;
+  z-index: 20 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  padding: 10px 0 !important;
+  margin-bottom: 1.5rem !important;
+}
+html[data-theme="mimetico-chiaro"] #bacheca-annunci .bacheca-nav-tabs,
+html[data-theme="mimetico-chiaro"] .bacheca-tabs,
+[data-theme="mimetico-chiaro"] #bacheca-annunci .bacheca-nav-tabs,
+[data-theme="mimetico-chiaro"] .bacheca-tabs {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e4e7ee !important;
 }
 
 #bacheca-annunci .pf-header-actions {

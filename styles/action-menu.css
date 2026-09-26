@@ -6,33 +6,37 @@
   display: inline-block;
 }
 
-.am_trigger {
+.am_trigger,
+.fab-widget {
   position: relative;
   width: 44px;
   height: 44px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 0, 255, 0.3);
-  border-radius: 12px;
-  color: #ff00ff;
+  background: #ffffff !important;
+  border: 1px solid #0e1830 !important;
+  border-radius: 12px !important;
+  color: #0e1830 !important;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   z-index: 10;
-  transition: all 40ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px rgba(14, 24, 48, 0.18) !important;
+  transition: transform 0.2s cubic-bezier(0.34, 1.4, 0.4, 1), box-shadow 0.2s ease, background 0.2s ease;
 }
 
-.am_trigger:hover {
-  background: rgba(255, 0, 255, 0.15);
-  border-color: #ff00ff;
-  box-shadow: 0 0 15px rgba(255, 0, 255, 0.4);
+.am_trigger:hover,
+.fab-widget:hover {
+  background: #f7f8fb !important;
+  border-color: #0e1830 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(14, 24, 48, 0.22) !important;
 }
 
 .am_trigger svg {
-  width: 24px;
-  height: 24px;
-  fill: currentColor;
-  filter: drop-shadow(0 0 8px rgba(255, 0, 255, 0.6));
+  width: 22px;
+  height: 22px;
+  fill: #0e1830 !important;
+  filter: none !important;
 }
 
 .am_menu {
@@ -40,10 +44,10 @@
   top: calc(100% + 8px);
   right: 0;
   width: 260px;
-  background: rgba(12, 14, 20, 0.98);
-  border: 1px solid rgba(255, 0, 255, 0.3);
+  background: #ffffff !important;
+  border: 1px solid #e4e7ee !important;
   border-radius: var(--item-radius, 14px);
-  box-shadow: 0 20px 40px -10px rgba(255, 0, 255, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 20px 40px rgba(14, 24, 48, 0.15) !important;
   backdrop-filter: blur(16px);
   padding: 6px;
   opacity: 0;
@@ -52,6 +56,11 @@
   transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
               opacity 160ms ease;
   z-index: 99999;
+}
+html:not([data-theme="mimetico-chiaro"]) .am_menu {
+  background: #0e1830 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6) !important;
 }
 
 #action-menu-dock .am_menu {

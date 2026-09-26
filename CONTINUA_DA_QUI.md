@@ -3,7 +3,21 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX49 — Implementazione Specifica Esatta Prompt (Nav, Bottoni e Card Calciatore):
+Ultimo aggiornamento: **2026-09-26** — HEROUX50 — Fix Layout Bacheca (Header Static, Tabs Sticky) e Ristilizzazione Action Menu:
+1. **Fix Header Intro Bacheca (Sbloccato da Fixed)**:
+   - Rimosso l'aggancio fixed accidentale causato dal selettore non qualificato `header,` in `apple-nav.css` (ora limitato a `header.public-header`).
+   - `.pf-header-bacheca` e `.bacheca-intro` impostati esplicitamente a `position: static !important; height: auto !important;`: ora scorrono normalmente con la pagina, eliminando il blocco fisso a schermo e l'enorme spazio vuoto.
+2. **Barra dei Tab Sticky (`.bacheca-nav-tabs`, `.bacheca-tabs`)**:
+   - Resa `position: sticky !important; top: 64px !important; z-index: 20 !important;` con background `#fff` in light mode e `#050608` in dark mode, con bordo inferiore coordinato.
+   - Rimane comodamente agganciata durante tutto lo scroll della bacheca garantendo l'accesso continuo a *Bacheca annunci / Persone & squadre / Wall trattative / Squadre*.
+3. **Widget Flottante (Action Menu Rapido `⋮`)**:
+   - Ristilizzato completamente da magenta/fucsia (`#ff00ff`) alla palette ufficiale del sito: sfondo `#ffffff`, bordo `#0e1830`, testo/icona `#0e1830`, ombra `box-shadow: 0 8px 20px rgba(14,24,48,.18)`.
+   - Spiegata chiaramente la funzione reale del widget (menu di scorciatoie rapide introdotto in HEROUX28).
+4. **Distanziamento Pulsanti Flottanti Sovrapposti**:
+   - Separati i due FAB in basso a sinistra: Action Menu a `bottom: 24px; left: 24px;` e pulsante secondario a `bottom: 88px; left: 24px;`, prevenendo qualsiasi accavallamento.
+5. **File**: `apple-nav.css`, `bacheca-board.css`, `action-menu.css`, `styles/action-menu.css`, `trash-btn.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX50`.
+
+Feature precedente: **2026-09-26** — HEROUX49 — Implementazione Specifica Esatta Prompt (Nav, Bottoni e Card Calciatore):
 1. **Navigazione & Indicatore Animato Scorrevole**:
    - Inclusa la struttura esatta con `.nav-links`, `.nav-indicator`, e selettori per classi attive / hover con easing `cubic-bezier(.34,1.1,.4,1)`.
    - Pulsante `Accedi` / `.accedi` con colore navy scuro `--navy: #0e1830`, testo `#fff`, border-radius 999px e hover morbido senza blu elettrico.
