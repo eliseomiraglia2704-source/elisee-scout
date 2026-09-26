@@ -1,0 +1,103 @@
+/* ============================================= */
+/* HEROUX37 – Candidature Club Pro (Form + Match) */
+/* ============================================= */
+.candidature-section {
+  padding: 80px 20px;
+  max-width: 1280px;
+  margin: 0 auto;
+  background: #0a0a0a;
+}
+
+.candidature-section .form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 40px;
+}
+
+.candidature-section .form-block {
+  background: rgba(20, 20, 20, 0.6);
+  border-radius: var(--radius, 16px);
+  padding: 32px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.candidature-section .form-block h3 {
+  color: #00f5d4;
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.candidature-section .form-block textarea {
+  width: 100%;
+  min-height: 220px;
+  background: rgba(10, 10, 10, 0.9);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius, 12px);
+  padding: 18px;
+  color: #fff;
+  font-size: 16px;
+  transition: all 40ms;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.candidature-section .form-block textarea:focus {
+  border-color: #00f5d4;
+  box-shadow: 0 0 0 4px rgba(0,245,212,0.15);
+  outline: none;
+}
+
+.candidature-section .submit-btn {
+  background: linear-gradient(90deg, #00f5d4, #ff2d55);
+  color: #000;
+  padding: 16px 48px;
+  border: none;
+  border-radius: 9999px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 40ms;
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+.candidature-section .submit-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(0,245,212,0.4);
+}
+
+.candidature-section .matching-result {
+  text-align: center;
+  margin-top: 60px;
+  padding: 40px;
+  background: rgba(20, 20, 20, 0.6);
+  border-radius: 16px;
+  border: 1px solid rgba(0,245,212,0.2);
+  display: none;
+}
+
+.candidature-section .matching-result.is-visible {
+  display: block;
+}
+
+.candidature-section .score-circle {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 24px;
+  border-radius: 9999px;
+  background: conic-gradient(#00f5d4 calc(var(--score, 7) * 36deg), #222 0deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56px;
+  font-weight: 900;
+  color: #fff;
+  box-shadow: 0 0 0 20px rgba(0,245,212,0.3);
+}
+
+.candidature-section .matching-result p {
+  color: #fff;
+  font-size: 18px;
+  margin: 16px 0 24px;
+  line-height: 1.6;
+}

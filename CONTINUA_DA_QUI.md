@@ -3,7 +3,18 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX36 — Schede Tecniche IA Pro (Canvas Grafico + Radar Live + API Mock):
+Ultimo aggiornamento: **2026-09-26** — HEROUX37 — Candidature Club Pro (Form a Due Blocchi + Auto-Match IA Full):
+1. **Candidature Club Pro Engine (`styles/candidature-pro.css`, `candidature-pro.css`, `js/candidature-pro-handler.js`, `candidature-pro-handler.js`)**:
+   - Implementazione zero-latenza (<40ms):
+     - Form a due blocchi ("Cosa offriamo" e "Cosa richiediamo") con textarea stilizzate in dark neon e focus ciano (`#00f5d4`).
+     - Pulsanti submit "Invia Offerta" e "Invia Richiesta" con gradiente ciano-magenta, hover scale 1.05 e glow neon a 30px.
+     - Auto-match IA full con calcolo dinamico del punteggio (score donut con conic-gradient, predizione dettagliata per DS/Scout & Wall Transfer).
+     - Integrazione nativa con `createRipple` (onde neon) e `EliseeSuccessSystem.showToast` (feedback istantaneo).
+     - Azione "Nuova candidatura" per reset rapido del modulo matching.
+   - Esposizione globale: `window.EliseeCandidaturePro` (`match`, `submitOffriamo`, `submitRichiediamo`, `clearMatch`).
+2. **File**: `styles/candidature-pro.css`, `candidature-pro.css`, `js/candidature-pro-handler.js`, `candidature-pro-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX37`.
+
+Feature precedente: **2026-09-26** — HEROUX36 — Schede Tecniche IA Pro (Canvas Grafico + Radar Live + API Mock):
 1. **Schede Tecniche IA Pro Engine (`styles/radar-pro.css`, `radar-pro.css`, `js/radar-pro-handler.js`, `radar-pro-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Sezione `#schede-tecniche-pro` con griglia radar ad alta risoluzione in stile dark neon.
