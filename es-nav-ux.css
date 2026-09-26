@@ -617,18 +617,206 @@ header.public-header .main-nav a.active {
 }
 
 /* Mobile: adattamento padding viste interne con topbar mobile */
-@media (max-width: 767px) {
-  html body.is-internal-view #about,
-  html body.is-internal-view #home-about,
-  html body.is-internal-view .about-dossier-wrap,
-  html body.is-internal-view #view-about,
-  html body.is-internal-view #view-bacheca,
-  html body.is-internal-view #bacheca-annunci,
-  html body.is-internal-view #view-mappa,
-  html body.is-internal-view #mappa-portal,
-  html body.is-internal-view [data-view-root] {
-    padding-top: calc(56px + env(safe-area-inset-top, 0px)) !important;
+/* ============================================================
+   HEROUX48: Fluid Cubic-Bezier Micro-Interactions & Responsive Nav
+   ============================================================ */
+
+/* 1. Nav Indicatore Scorrevole (Sliding Pill con Easing Morbido) */
+header.public-header .main-nav {
+  position: relative !important;
+}
+
+header.public-header .main-nav .nav-indicator {
+  position: absolute !important;
+  top: 50% !important;
+  left: 0 !important;
+  height: 34px !important;
+  transform: translateY(-50%) translate3d(var(--ind-x, 0px), 0, 0) !important;
+  width: var(--ind-w, 0px) !important;
+  border-radius: 999px !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+  opacity: var(--ind-o, 0) !important;
+  transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1),
+              width 280ms cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 200ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: transform, width, opacity;
+  box-sizing: border-box !important;
+}
+
+header.public-header .main-nav .nav-indicator.is-visible,
+header.public-header .main-nav .nav-indicator.is-on {
+  opacity: 1 !important;
+}
+
+/* Dark mode: pillola satinata con bordino ciano/azzurro e bagliore tenue */
+html:not([data-theme="mimetico-chiaro"]) header.public-header .main-nav .nav-indicator {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(0, 245, 212, 0.35) !important;
+  box-shadow: 0 0 16px rgba(0, 245, 212, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Light mode: pillola chiara satinata con azzurro delicato */
+html[data-theme="mimetico-chiaro"] header.public-header .main-nav .nav-indicator,
+[data-theme="mimetico-chiaro"] header.public-header .main-nav .nav-indicator {
+  background: rgba(2, 132, 199, 0.08) !important;
+  border: 1px solid rgba(2, 132, 199, 0.2) !important;
+  box-shadow: 0 2px 10px rgba(2, 132, 199, 0.08) !important;
+}
+
+header.public-header .main-nav .nav-link,
+header.public-header .main-nav .es-nav-dropdown-btn {
+  position: relative !important;
+  z-index: 2 !important;
+  transition: color 200ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* 2. Hover sui Pulsanti: sollevamento, ombra morbida ed espansione graduale icona */
+.btn,
+.btn-primary,
+.btn-login,
+.es-cta-btn-primary,
+.es-cta-btn-secondary,
+.btn-outline-pill,
+.es-cta-btn {
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 260ms cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+              color 200ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: transform, box-shadow;
+}
+
+.btn:hover,
+.btn-primary:hover,
+.btn-login:hover,
+.es-cta-btn-primary:hover,
+.es-cta-btn-secondary:hover,
+.btn-outline-pill:hover,
+.es-cta-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 24px -4px rgba(0, 0, 0, 0.26), 0 4px 10px -2px rgba(0, 0, 0, 0.14) !important;
+}
+
+html[data-theme="mimetico-chiaro"] .btn:hover,
+html[data-theme="mimetico-chiaro"] .btn-primary:hover,
+html[data-theme="mimetico-chiaro"] .btn-login:hover,
+html[data-theme="mimetico-chiaro"] .es-cta-btn-primary:hover,
+html[data-theme="mimetico-chiaro"] .es-cta-btn-secondary:hover,
+html[data-theme="mimetico-chiaro"] .btn-outline-pill:hover {
+  box-shadow: 0 10px 24px -4px rgba(2, 132, 199, 0.22), 0 4px 8px -2px rgba(15, 23, 42, 0.08) !important;
+}
+
+.btn svg,
+.btn .es-cta-bolt,
+.es-cta-btn-primary svg,
+.es-cta-btn-primary .es-cta-bolt,
+.es-cta-btn-secondary svg,
+.btn-outline-pill svg {
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: inline-block;
+  will-change: transform;
+}
+
+.btn:hover svg,
+.btn:hover .es-cta-bolt,
+.es-cta-btn-primary:hover svg,
+.es-cta-btn-primary:hover .es-cta-bolt,
+.es-cta-btn-secondary:hover svg,
+.btn-outline-pill:hover svg {
+  transform: scale(1.12) !important;
+}
+
+.btn:active,
+.btn-primary:active,
+.btn-login:active,
+.es-cta-btn-primary:active,
+.es-cta-btn-secondary:active,
+.btn-outline-pill:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+/* 3. Micro-interazione sulla Card del Calciatore */
+.es-hero-player-card {
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 320ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 260ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: transform, box-shadow;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .es-hero-player-card:hover {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.35), 0 10px 20px -6px rgba(0, 0, 0, 0.18) !important;
+  }
+  html[data-theme="mimetico-chiaro"] .es-hero-player-card:hover {
+    box-shadow: 0 24px 50px -12px rgba(2, 132, 199, 0.2), 0 10px 20px -6px rgba(15, 23, 42, 0.08) !important;
   }
 }
+
+/* 4. Hamburger Animato Responsive sotto 820px */
+.es-nav-hamburger {
+  display: none;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border-radius: 8px;
+  transition: background 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1002;
+  box-sizing: border-box;
+}
+
+.es-nav-hamburger:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+html[data-theme="mimetico-chiaro"] .es-nav-hamburger:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.es-hamburger-bar {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background-color: #ffffff;
+  border-radius: 2px;
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 240ms cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 200ms ease;
+  transform-origin: center;
+  pointer-events: none;
+}
+html[data-theme="mimetico-chiaro"] .es-hamburger-bar {
+  background-color: #0f172a;
+}
+
+.es-nav-hamburger.is-open .es-hamburger-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.es-nav-hamburger.is-open .es-hamburger-bar:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.es-nav-hamburger.is-open .es-hamburger-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 820px) {
+  header.public-header .main-nav,
+  .portfolio-navbar .nav-menu {
+    display: none !important;
+  }
+  .es-nav-hamburger {
+    display: inline-flex !important;
+  }
+}
+
 
 

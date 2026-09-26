@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260926_HEROUX47';
+      var BUILD_VERSION = '20260926_HEROUX48';
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
         if (savedTheme) {
@@ -76,7 +76,7 @@
   <link rel="stylesheet" href="page-bubbles.css?v=20260925_BUBBLE1">
   <link rel="stylesheet" href="parallax.css?v=20260925_HEROUX41">
   <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX41">
-  <link rel="stylesheet" href="es-nav-ux.css?v=20260925_HEROUX41">
+  <link rel="stylesheet" href="es-nav-ux.css?v=20260926_HEROUX48">
   <link rel="stylesheet" href="badge-system.css?v=20260925_HEROUX41">
   <link rel="stylesheet" href="micro-interactions.css?v=20260925_HEROUX41">
   <link rel="stylesheet" href="radius-system.css?v=20260925_HEROUX41">
@@ -2345,6 +2345,13 @@
       <button type="button" class="theme-toggle" id="es-nav-theme" onclick="if(window.toggleSiteTheme){window.toggleSiteTheme();}" title="Cambia tema" aria-label="Cambia tema">🌙</button>
       <span class="lang" id="lang-switcher-simple" title="Seleziona lingua">IT ▾</span>
       <a href="#login" class="btn-login" onclick="if(window.openAccessoModal){window.openAccessoModal('email');} return false;">Accedi</a>
+      
+      <!-- Hamburger Menu Animato (<820px) -->
+      <button type="button" class="es-nav-hamburger" id="es-nav-hamburger" aria-label="Menu" aria-expanded="false">
+        <span class="es-hamburger-bar"></span>
+        <span class="es-hamburger-bar"></span>
+        <span class="es-hamburger-bar"></span>
+      </button>
     </div>
   </header>
 
@@ -7129,7 +7136,7 @@
 
   <script src="badge-handler.js?v=20260925_HEROUX41"></script>
   <script src="mobile-webapp.js?v=20260925_HEROUX41"></script>
-  <script src="es-nav-ux.js?v=20260925_HEROUX41"></script>
+  <script src="es-nav-ux.js?v=20260926_HEROUX48"></script>
   <script src="micro-interactions.js?v=20260925_HEROUX41"></script>
   <script src="radius-handler.js?v=20260925_HEROUX41" defer></script>
   <script src="dynamic-sync.js?v=20260925_HEROUX41" defer></script>

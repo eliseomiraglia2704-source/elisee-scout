@@ -3,7 +3,23 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX47 — Fix Macchia Scura / Vignetta Glow su Hero in Light Mode:
+Ultimo aggiornamento: **2026-09-26** — HEROUX48 — Micro-Interazioni Cubic-Bezier, Indicatore Scorrevole e Nav Responsive:
+1. **Nav con Indicatore Animato (Sliding Pill con Easing Morbido)**:
+   - Pillola di sfondo `.nav-indicator` che scivola sotto la voce attiva/hoverata su `.main-nav` (`a.nav-link`, `.es-nav-dropdown-btn`).
+   - Movimento orizzontale fluido con curva `cubic-bezier(0.16, 1, 0.3, 1)` a 280ms su GPU (`translate3d`), con pillola satinata coordinata sia in Dark Mode (glow ciano/azzurro) che in Light Mode (azzurro tenue satinato `#0284c7`).
+   - Fadeout delicato al `mouseleave` se non vi è voce attiva (es. Home).
+2. **Hover sui Pulsanti (Sollevamento, Ombra Graduale ed Espansione Icone)**:
+   - Sollevamento leggero `translateY(-2px)`, ombra morbida che entra in dolcezza (`box-shadow`), icona SVG / bolla che si ingrandisce appena (`scale(1.12)`).
+   - Movimento governato da `cubic-bezier(0.16, 1, 0.3, 1)`.
+3. **Micro-Interazione sulla Card del Calciatore**:
+   - Sollevamento morbido `translateY(-6px)` su passaggio del mouse con espansione dell'ombra (`box-shadow: 0 24px 50px -12px rgba(...)`).
+4. **Nav Responsive con Hamburger Animato (<820px)**:
+   - Sotto 820px, la barra centrale dei link si nasconde per prevenire accavallamenti e rotture di layout.
+   - Compare il pulsante `.es-nav-hamburger` con 3 linee che si trasformano con animazione fluida in una "X" (`.is-open`).
+   - Il pulsante apre e chiude il drawer laterale mobile in modo sincronizzato e reattivo.
+5. **File**: `index.html`, `es-nav-ux.css`, `es-nav-ux.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX48`.
+
+Feature precedente: **2026-09-26** — HEROUX47 — Fix Macchia Scura / Vignetta Glow su Hero in Light Mode:
 1. **Rimosso Glow e Vignetta Scura in Light Mode**:
    - Individuato il responsabile esatto della fascia grigio-scura sfumata che appariva nella Schermata Iniziale (#hero) in modalità giorno: il pseudo-elemento `.hero-typography-left::before`, configurato con `radial-gradient(ellipse at center left, rgba(0, 0, 0, 0.7)...)` e `filter: blur(12px / 20px)`.
    - Vincolato tale glow unicamente a Dark Mode (`html:not([data-theme="mimetico-chiaro"]) .hero-typography-left::before`).

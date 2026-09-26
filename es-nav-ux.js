@@ -82,10 +82,10 @@
       tgtX = m.x;
       tgtW = m.w;
       tgtO = 1;
-      indicatorEl.classList.add('is-on');
+      indicatorEl.classList.add('is-on', 'is-visible');
     } else {
       tgtO = 0;
-      indicatorEl.classList.remove('is-on');
+      indicatorEl.classList.remove('is-on', 'is-visible');
     }
 
     if (immediate || prefersReducedMotion()) {
@@ -189,18 +189,20 @@
       navEl.prepend(indicatorEl);
     }
 
-    links = Array.prototype.slice.call(navEl.querySelectorAll('a'));
+    links = Array.prototype.slice.call(navEl.querySelectorAll('a, .es-nav-dropdown-btn'));
     links.forEach(function (link) {
       link.classList.add('nav-link');
       var href = link.getAttribute('href') || '';
-      if (!link.getAttribute('data-view')) {
+      if (!link.getAttribute('data-view') && link.tagName === 'A') {
         if (href.indexOf('about') >= 0) link.setAttribute('data-view', 'about');
         else if (href.indexOf('bacheca') >= 0) link.setAttribute('data-view', 'bacheca');
         else if (href.indexOf('mappa') >= 0) link.setAttribute('data-view', 'mappa');
       }
 
       link.addEventListener('click', function () {
-        activeLink = link;
+        if (link.tagName === 'A') {
+          activeLink = link;
+        }
         moveIndicatorTo(link, false);
       });
 
@@ -244,6 +246,52 @@
         });
       });
     }
+
+    // Gestione Hamburger Animato (<820px) collegato al Mobile Drawer
+    var hamburgerBtn = document.getElementById('es-nav-hamburger');
+    var mobileBackdrop = document.getElementById('es-m-drawer-backdrop');
+    var mobileCloseBtn = document.getElementById('es-m-drawer-close');
+
+    function syncHamburgerState(isOpen) {
+      if (!hamburgerBtn) return;
+      hamburgerBtn.classList.toggle('is-open', !!isOpen);
+      hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+
+    if (hamburgerBtn && mobileBackdrop) {
+      hamburgerBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var willOpen = !mobileBackdrop.classList.contains('is-open');
+        mobileBackdrop.classList.toggle('is-open', willOpen);
+        syncHamburgerState(willOpen);
+        if (willOpen) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = '';
+        }
+      });
+    }
+
+    if (mobileCloseBtn && mobileBackdrop) {
+      mobileCloseBtn.addEventListener('click', function () {
+        syncHamburgerState(false);
+      });
+    }
+
+    if (mobileBackdrop) {
+      mobileBackdrop.addEventListener('click', function (e) {
+        if (e.target === mobileBackdrop) {
+          syncHamburgerState(false);
+        }
+      });
+    }
+
+    var drawerLinks = document.querySelectorAll('.es-m-drawer-link');
+    drawerLinks.forEach(function (dl) {
+      dl.addEventListener('click', function () {
+        syncHamburgerState(false);
+      });
+    });
 
     // Gestione click esplicito su Logo / Brand -> Reset a Home garantito (Capture Phase)
     var brandLinks = document.querySelectorAll('.site-brand, a[href="#hero"], a[href="#view-home"]');
