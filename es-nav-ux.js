@@ -293,6 +293,23 @@
       });
     });
 
+    // Prompt specification hook: ready class & navToggle
+    if (navEl) {
+      navEl.classList.add('ready');
+      var initActive = navEl.querySelector('.active') || links[0];
+      if (initActive) {
+        requestAnimationFrame(function () {
+          moveIndicatorTo(initActive, true);
+        });
+      }
+    }
+    var toggleBtn = document.getElementById('navToggle') || hamburgerBtn;
+    if (toggleBtn && navEl) {
+      toggleBtn.addEventListener('click', function () {
+        navEl.classList.toggle('open');
+      });
+    }
+
     // Gestione click esplicito su Logo / Brand -> Reset a Home garantito (Capture Phase)
     var brandLinks = document.querySelectorAll('.site-brand, a[href="#hero"], a[href="#view-home"]');
     brandLinks.forEach(function (b) {

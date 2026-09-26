@@ -3,7 +3,23 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX48 — Micro-Interazioni Cubic-Bezier, Indicatore Scorrevole e Nav Responsive:
+Ultimo aggiornamento: **2026-09-26** — HEROUX49 — Implementazione Specifica Esatta Prompt (Nav, Bottoni e Card Calciatore):
+1. **Navigazione & Indicatore Animato Scorrevole**:
+   - Inclusa la struttura esatta con `.nav-links`, `.nav-indicator`, e selettori per classi attive / hover con easing `cubic-bezier(.34,1.1,.4,1)`.
+   - Pulsante `Accedi` / `.accedi` con colore navy scuro `--navy: #0e1830`, testo `#fff`, border-radius 999px e hover morbido senza blu elettrico.
+   - Sotto 820px, gestione responsive e toggle `.open`.
+2. **Bottoni CTA Schermata Iniziale**:
+   - Primario `.btn-primary`: `"Registrati come calciatore o società"` (senza emoji, senza maiuscolo pieno) con icona SVG pulita e sfondo `--navy: #0e1830`.
+   - Secondario `.btn-secondary`: `"Esplora la piattaforma"` (senza emoji, senza maiuscolo pieno) con icona SVG pulita, sfondo bianco e bordo `--line: #e4e7ee`.
+3. **Card del Calciatore**:
+   - Rimosse tutte le parentesi angolari HUD (`.bracket-*`).
+   - Sostituita la pillola verde con `.verified` (`✓ Profilo verificato`, sfondo chiarissimo `#f2faf9`, bordo sottile `#cfe8e4`, colore `--teal: #0f9488`).
+   - Box statistica convertito in `.stat-chip` (`92 ATT` pulito).
+   - Box velocità convertito in `.speed-chip` (`33.8 km/h` e `Top speed · GPS` senza emoji del fulmine, con icona SVG cronometro).
+   - Micro-interazione `.card:hover` con sollevamento `translateY(-4px)` ed ombra diffusa.
+4. **File**: `index.html`, `es-nav-ux.css`, `es-nav-ux.js`, `style.css`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX49`.
+
+Feature precedente: **2026-09-26** — HEROUX48 — Micro-Interazioni Cubic-Bezier, Indicatore Scorrevole e Nav Responsive:
 1. **Nav con Indicatore Animato (Sliding Pill con Easing Morbido)**:
    - Pillola di sfondo `.nav-indicator` che scivola sotto la voce attiva/hoverata su `.main-nav` (`a.nav-link`, `.es-nav-dropdown-btn`).
    - Movimento orizzontale fluido con curva `cubic-bezier(0.16, 1, 0.3, 1)` a 280ms su GPU (`translate3d`), con pillola satinata coordinata sia in Dark Mode (glow ciano/azzurro) che in Light Mode (azzurro tenue satinato `#0284c7`).

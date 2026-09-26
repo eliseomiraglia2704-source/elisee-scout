@@ -10762,8 +10762,11 @@ html[data-theme="mimetico-chiaro"] .es-hero-player-card:hover,
 }
 
 html[data-theme="mimetico-chiaro"] .es-card-bracket,
-[data-theme="mimetico-chiaro"] .es-card-bracket {
-  border-color: #0284c7 !important;
+[data-theme="mimetico-chiaro"] .es-card-bracket,
+.es-card-bracket {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
 
 html[data-theme="mimetico-chiaro"] .es-verified-pill,
@@ -11360,12 +11363,13 @@ html[data-theme="mimetico-chiaro"] .public-header .header-actions .lang {
   color: #334155;
 }
 
-.public-header .header-actions .btn-login {
-  background: #0284c7 !important;
+.public-header .header-actions .btn-login,
+.public-header .header-actions .accedi {
+  background: #0e1830 !important;
   color: #ffffff !important;
-  padding: 7px 18px !important;
+  padding: 9px 20px !important;
   border-radius: 999px !important;
-  font-size: 0.875rem !important;
+  font-size: 14px !important;
   font-weight: 600 !important;
   text-decoration: none !important;
   display: inline-flex !important;
@@ -11373,12 +11377,15 @@ html[data-theme="mimetico-chiaro"] .public-header .header-actions .lang {
   justify-content: center !important;
   border: none !important;
   cursor: pointer !important;
-  transition: background 0.2s ease;
+  transition: transform .22s cubic-bezier(.34,1.4,.4,1), box-shadow .22s ease, background .22s ease !important;
   white-space: nowrap !important;
 }
 
-.public-header .header-actions .btn-login:hover {
-  background: #0369a1 !important;
+.public-header .header-actions .btn-login:hover,
+.public-header .header-actions .accedi:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 18px rgba(14,24,48,.22) !important;
+  background: #182444 !important;
 }
 
 /* === FIX LINEA NAVBAR: deve stare PER ULTIMO === */
