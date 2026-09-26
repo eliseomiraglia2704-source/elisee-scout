@@ -1,0 +1,153 @@
+/* ============================================================
+   ELISEE SCOUT — UNIVERSAL NIMBUS PUBLISH BUTTON
+   Micro-interazione: Idle -> Loading (Spin) -> Done (Check Drawing)
+   Supporta switch automatico di sistema (prefers-color-scheme)
+   e switch manuale Elisee Scout (mimetico-chiaro / vault-neon).
+   ============================================================ */
+
+:root {
+  --face: #12161c;
+  --on: #ffffff;
+  --veil: 0.4;
+}
+
+/* Rilevamento automatico giorno/notte dal sistema operativo */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --face: #00f5d4;
+    --on: #07131c;
+    --veil: 0.5;
+  }
+}
+
+/* Override basato sul tema attivo di Elisee Scout */
+html[data-theme="light"],
+html[data-theme="mimetico-chiaro"] {
+  --face: #0284c7;
+  --on: #ffffff;
+  --veil: 0.45;
+}
+
+html[data-theme="dark"],
+html[data-theme="vault-neon"] {
+  --face: #00f5d4;
+  --on: #07131c;
+  --veil: 0.5;
+}
+
+.publish-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 999px;
+  background: var(--face);
+  color: var(--on);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.15s ease, box-shadow 0.25s ease, opacity 0.2s ease;
+  user-select: none;
+  text-decoration: none;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+}
+
+.publish-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0, 245, 212, 0.25);
+}
+
+html[data-theme="mimetico-chiaro"] .publish-btn:hover {
+  box-shadow: 0 8px 24px rgba(2, 132, 199, 0.25);
+}
+
+.publish-btn:active {
+  transform: scale(0.97);
+}
+
+.publish-btn:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+
+.nimbus-icon {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.nimbus-cloud {
+  fill: var(--on);
+  opacity: var(--veil);
+  transition: opacity 0.25s ease, fill 0.25s ease;
+}
+
+.nimbus-arrow,
+.nimbus-check {
+  fill: none;
+  stroke: var(--on);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nimbus-arrow {
+  opacity: 1;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.nimbus-check {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  opacity: 0;
+  transition: stroke-dashoffset 0.35s ease, opacity 0.15s ease;
+}
+
+/* Loading: icona nuvola ruota in modo continuo */
+.publish-btn[data-state="loading"] .nimbus-icon {
+  animation: nimbus-spin 0.9s linear infinite;
+}
+
+.publish-btn[data-state="loading"] .nimbus-arrow {
+  opacity: 0.3;
+}
+
+/* Done: freccia sparisce, check si disegna fluidamente */
+.publish-btn[data-state="done"] .nimbus-icon {
+  animation: none;
+}
+
+.publish-btn[data-state="done"] .nimbus-arrow {
+  opacity: 0;
+}
+
+.publish-btn[data-state="done"] .nimbus-check {
+  opacity: 1;
+  stroke-dashoffset: 0;
+}
+
+/* Success flash animato */
+.publish-btn[data-state="done"] {
+  background: #10b981 !important;
+  color: #ffffff !important;
+}
+
+.publish-btn[data-state="done"] .nimbus-cloud {
+  fill: #ffffff !important;
+  opacity: 0.35 !important;
+}
+
+.publish-btn[data-state="done"] .nimbus-check {
+  stroke: #ffffff !important;
+}
+
+@keyframes nimbus-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

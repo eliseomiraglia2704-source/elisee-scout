@@ -3,7 +3,21 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX44 — Fix Schermata Iniziale (#hero) in Modalità Giorno / Light Mode:
+Ultimo aggiornamento: **2026-09-26** — HEROUX45 — Universal Nimbus Publish Button Component (Idle -> Loading -> Done):
+1. **Pulsante di Pubblicazione Nimbus con Micro-Animazione SVG**:
+   - Creato modulo CSS dedicato [publish-btn.css](publish-btn.css) con animazione fluida trifase:
+     - **Idle**: icona nuvola e freccia vettoriale pronta all'invio.
+     - **Loading**: rotazione continua a 360° della nuvola (`animation: nimbus-spin .9s linear infinite`) con freccia a bassa opacità.
+     - **Done**: scomparsa della freccia e disegno progressivo del checkmark con `stroke-dasharray / stroke-dashoffset` multi-browser, sfondo verde smeraldo `#10b981`.
+   - **Switch Automatico Giorno/Notte**:
+     - Riconoscimento automatico del tema di sistema (`@media (prefers-color-scheme: dark)`).
+     - Integrazione completa con i temi manuali del sito (`html[data-theme="vault-neon"]` / `dark`, e `html[data-theme="mimetico-chiaro"]` / `light`).
+   - Creato modulo runtime universale [publish-btn.js](publish-btn.js) con API:
+     - `window.EliseePublishButton.bind(target, asyncFn, options)` / `window.bindPublishButton()`
+     - Auto-aggancio immediato a **Candidature Club Pro** (`#submit-offriamo`, `#submit-richiediamo`), **Bacheca Annunci LND** e **Area Redazione / Ufficio Stampa**.
+2. **File**: `publish-btn.css`, `publish-btn.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX45`.
+
+Feature precedente: **2026-09-26** — HEROUX44 — Fix Schermata Iniziale (#hero) in Modalità Giorno / Light Mode:
 1. **Risolto Sfondo Scuro Hardcoded su #hero e .es-plx**:
    - Rimosso il selettore `html, body, #hero { background: #07131c !important; }` incondizionato che prevaleva su tutto l'hero.
    - Limitato lo sfondo nero-blu esclusivamente a `html:not([data-theme="mimetico-chiaro"])`.
