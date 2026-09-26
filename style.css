@@ -10875,6 +10875,330 @@ html[data-theme="mimetico-chiaro"] .es-card-dossier-btn:hover,
 }
 
 /* ==========================================================================
+   HEROUX42: FULL HOMEPAGE & PUBLIC PAGES LIGHT MODE SUITE
+   ========================================================================== */
+
+/* 1. Sfondo e Sezioni dell'intera Homepage */
+html[data-theme="mimetico-chiaro"] body,
+[data-theme="mimetico-chiaro"] body,
+html[data-theme="mimetico-chiaro"] #view-home,
+[data-theme="mimetico-chiaro"] #view-home,
+html[data-theme="mimetico-chiaro"] .portfolio-section,
+[data-theme="mimetico-chiaro"] .portfolio-section {
+  background: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+html[data-theme="mimetico-chiaro"] #hero,
+[data-theme="mimetico-chiaro"] #hero,
+html[data-theme="mimetico-chiaro"] #home-about,
+[data-theme="mimetico-chiaro"] #home-about,
+html[data-theme="mimetico-chiaro"] .portfolio-about,
+[data-theme="mimetico-chiaro"] .portfolio-about,
+html[data-theme="mimetico-chiaro"] #home-portfolio,
+[data-theme="mimetico-chiaro"] #home-portfolio,
+html[data-theme="mimetico-chiaro"] .portfolio-works,
+[data-theme="mimetico-chiaro"] .portfolio-works {
+  background: #ffffff !important;
+  border-top: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+html[data-theme="mimetico-chiaro"] #home-resume,
+[data-theme="mimetico-chiaro"] #home-resume,
+html[data-theme="mimetico-chiaro"] .portfolio-resume,
+[data-theme="mimetico-chiaro"] .portfolio-resume,
+html[data-theme="mimetico-chiaro"] #welcome-access,
+[data-theme="mimetico-chiaro"] #welcome-access,
+html[data-theme="mimetico-chiaro"] .portfolio-access,
+[data-theme="mimetico-chiaro"] .portfolio-access {
+  background: #f8fafc !important;
+  border-top: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+/* 2. Titoli, Kicker e Testi ad alto contrasto */
+html[data-theme="mimetico-chiaro"] .portfolio-heading,
+[data-theme="mimetico-chiaro"] .portfolio-heading {
+  color: #0f172a !important;
+  text-shadow: none !important;
+}
+
+html[data-theme="mimetico-chiaro"] .portfolio-kicker,
+[data-theme="mimetico-chiaro"] .portfolio-kicker {
+  color: #0284c7 !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.25em !important;
+}
+
+html[data-theme="mimetico-chiaro"] .portfolio-text,
+[data-theme="mimetico-chiaro"] .portfolio-text,
+html[data-theme="mimetico-chiaro"] .portfolio-text-center,
+[data-theme="mimetico-chiaro"] .portfolio-text-center {
+  color: #334155 !important;
+  font-weight: 500 !important;
+  text-shadow: none !important;
+}
+
+/* 3. Statistiche Resume (Curriculum) */
+html[data-theme="mimetico-chiaro"] .portfolio-stat,
+[data-theme="mimetico-chiaro"] .portfolio-stat {
+  background: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04) !important;
+}
+
+html[data-theme="mimetico-chiaro"] .portfolio-stat strong,
+[data-theme="mimetico-chiaro"] .portfolio-stat strong {
+  color: #0f172a !important;
+}
+
+html[data-theme="mimetico-chiaro"] .portfolio-stat span,
+[data-theme="mimetico-chiaro"] .portfolio-stat span {
+  color: #64748b !important;
+  font-weight: 600 !important;
+}
+
+/* 4. Pulsanti Outline Pill in Light Mode */
+html[data-theme="mimetico-chiaro"] .btn-outline-pill,
+[data-theme="mimetico-chiaro"] .btn-outline-pill {
+  border: 1.5px solid #0284c7 !important;
+  color: #0284c7 !important;
+  background: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.08) !important;
+}
+
+html[data-theme="mimetico-chiaro"] .btn-outline-pill:hover,
+[data-theme="mimetico-chiaro"] .btn-outline-pill:hover {
+  background: rgba(2, 132, 199, 0.08) !important;
+  border-color: #0369a1 !important;
+  color: #0369a1 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 18px rgba(2, 132, 199, 0.16) !important;
+}
+
+/* 5. Card Bacheca (Cosa puoi fare sulla piattaforma) */
+html[data-theme="mimetico-chiaro"] .portfolio-card,
+[data-theme="mimetico-chiaro"] .portfolio-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04) !important;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+html[data-theme="mimetico-chiaro"] .portfolio-card:hover,
+[data-theme="mimetico-chiaro"] .portfolio-card:hover {
+  border-color: #0284c7 !important;
+  background: #ffffff !important;
+  box-shadow: 0 12px 30px rgba(2, 132, 199, 0.12) !important;
+  transform: translateY(-4px) !important;
+}
+
+html[data-theme="mimetico-chiaro"] .portfolio-card h3,
+[data-theme="mimetico-chiaro"] .portfolio-card h3 {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+html[data-theme="mimetico-chiaro"] .portfolio-card p,
+[data-theme="mimetico-chiaro"] .portfolio-card p {
+  color: #475569 !important;
+  font-weight: 500 !important;
+}
+
+html[data-theme="mimetico-chiaro"] .portfolio-card-icon,
+[data-theme="mimetico-chiaro"] .portfolio-card-icon {
+  background: rgba(2, 132, 199, 0.1) !important;
+  color: #0284c7 !important;
+}
+
+/* 6. Sezione Accesso e Bottoni Auth */
+html[data-theme="mimetico-chiaro"] .auth-btn-google,
+[data-theme="mimetico-chiaro"] .auth-btn-google {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: 1.5px solid rgba(15, 23, 42, 0.15) !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06) !important;
+}
+
+html[data-theme="mimetico-chiaro"] .auth-btn-apple,
+[data-theme="mimetico-chiaro"] .auth-btn-apple {
+  background: #0f172a !important;
+  color: #ffffff !important;
+  border: 1.5px solid #0f172a !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.12) !important;
+}
+
+html[data-theme="mimetico-chiaro"] .auth-btn-apple svg,
+[data-theme="mimetico-chiaro"] .auth-btn-apple svg {
+  fill: #ffffff !important;
+}
+
+html[data-theme="mimetico-chiaro"] .auth-btn-spid,
+[data-theme="mimetico-chiaro"] .auth-btn-spid {
+  background: #0066cc !important;
+  color: #ffffff !important;
+  border: 1.5px solid #0052a3 !important;
+  box-shadow: 0 4px 14px rgba(0, 102, 204, 0.22) !important;
+}
+
+html[data-theme="mimetico-chiaro"] .auth-btn-email,
+[data-theme="mimetico-chiaro"] .auth-btn-email {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: 1.5px solid rgba(15, 23, 42, 0.25) !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+}
+
+html[data-theme="mimetico-chiaro"] .portfolio-visual img,
+[data-theme="mimetico-chiaro"] .portfolio-visual img {
+  border: 1px solid rgba(15, 23, 42, 0.1) !important;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08) !important;
+  filter: none !important;
+}
+
+/* 7. Footer Globale in Light Mode */
+html[data-theme="mimetico-chiaro"] #site-public-footer,
+[data-theme="mimetico-chiaro"] #site-public-footer,
+html[data-theme="mimetico-chiaro"] .site-footer,
+[data-theme="mimetico-chiaro"] .site-footer,
+html[data-theme="mimetico-chiaro"] .pf-footer,
+[data-theme="mimetico-chiaro"] .pf-footer {
+  background: #ffffff !important;
+  border-top: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+html[data-theme="mimetico-chiaro"] .pf-footer-brand span,
+[data-theme="mimetico-chiaro"] .pf-footer-brand span {
+  color: #0f172a !important;
+}
+
+html[data-theme="mimetico-chiaro"] .pf-footer-brand span span,
+[data-theme="mimetico-chiaro"] .pf-footer-brand span span {
+  color: #0284c7 !important;
+}
+
+html[data-theme="mimetico-chiaro"] .pf-footer-heading,
+[data-theme="mimetico-chiaro"] .pf-footer-heading {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+html[data-theme="mimetico-chiaro"] .pf-footer-links a,
+[data-theme="mimetico-chiaro"] .pf-footer-links a {
+  color: #475569 !important;
+  font-weight: 500 !important;
+}
+
+html[data-theme="mimetico-chiaro"] .pf-footer-links a:hover,
+[data-theme="mimetico-chiaro"] .pf-footer-links a:hover {
+  color: #0284c7 !important;
+}
+
+html[data-theme="mimetico-chiaro"] .pf-footer-links li,
+[data-theme="mimetico-chiaro"] .pf-footer-links li {
+  color: #64748b !important;
+}
+
+html[data-theme="mimetico-chiaro"] .pf-footer-social a,
+[data-theme="mimetico-chiaro"] .pf-footer-social a {
+  background: rgba(15, 23, 42, 0.05) !important;
+  border: 1px solid rgba(15, 23, 42, 0.1) !important;
+  color: #0f172a !important;
+}
+
+html[data-theme="mimetico-chiaro"] .pf-footer-social a:hover,
+[data-theme="mimetico-chiaro"] .pf-footer-social a:hover {
+  background: rgba(2, 132, 199, 0.1) !important;
+  color: #0284c7 !important;
+  border-color: #0284c7 !important;
+}
+
+html[data-theme="mimetico-chiaro"] .pf-footer-bottom,
+[data-theme="mimetico-chiaro"] .pf-footer-bottom {
+  border-top: 1px solid rgba(15, 23, 42, 0.08) !important;
+  color: #64748b !important;
+}
+
+html[data-theme="mimetico-chiaro"] .pf-footer-bottom a,
+[data-theme="mimetico-chiaro"] .pf-footer-bottom a {
+  color: #64748b !important;
+  font-weight: 500 !important;
+}
+
+html[data-theme="mimetico-chiaro"] .pf-footer-bottom a:hover,
+[data-theme="mimetico-chiaro"] .pf-footer-bottom a:hover {
+  color: #0284c7 !important;
+}
+
+html[data-theme="mimetico-chiaro"] .pf-footer-back-top,
+[data-theme="mimetico-chiaro"] .pf-footer-back-top {
+  background: rgba(2, 132, 199, 0.1) !important;
+  color: #0284c7 !important;
+  border: 1px solid rgba(2, 132, 199, 0.25) !important;
+}
+
+html[data-theme="mimetico-chiaro"] .pf-footer-back-top:hover,
+[data-theme="mimetico-chiaro"] .pf-footer-back-top:hover {
+  background: #0284c7 !important;
+  color: #ffffff !important;
+}
+
+/* 8. Sezione Chi Siamo Dettaglio (#view-about) in Light Mode */
+html[data-theme="mimetico-chiaro"] #view-about,
+[data-theme="mimetico-chiaro"] #view-about {
+  background: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+html[data-theme="mimetico-chiaro"] .chi-siamo-container,
+[data-theme="mimetico-chiaro"] .chi-siamo-container {
+  background: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04) !important;
+  color: #0f172a !important;
+}
+
+html[data-theme="mimetico-chiaro"] .chi-siamo-header h1,
+[data-theme="mimetico-chiaro"] .chi-siamo-header h1 {
+  color: #0f172a !important;
+}
+
+html[data-theme="mimetico-chiaro"] .chi-siamo-container .content p,
+[data-theme="mimetico-chiaro"] .chi-siamo-container .content p {
+  color: #334155 !important;
+}
+
+html[data-theme="mimetico-chiaro"] .about-dossier,
+[data-theme="mimetico-chiaro"] .about-dossier {
+  background: #ffffff !important;
+}
+
+html[data-theme="mimetico-chiaro"] .cs-headline,
+[data-theme="mimetico-chiaro"] .cs-headline {
+  color: #0f172a !important;
+}
+
+html[data-theme="mimetico-chiaro"] .cs-lede,
+[data-theme="mimetico-chiaro"] .cs-lede {
+  color: #334155 !important;
+}
+
+html[data-theme="mimetico-chiaro"] .cs-hero-meta dl,
+[data-theme="mimetico-chiaro"] .cs-hero-meta dl {
+  background: #f8fafc !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+html[data-theme="mimetico-chiaro"] .cs-hero-meta dt,
+[data-theme="mimetico-chiaro"] .cs-hero-meta dt {
+  color: #64748b !important;
+}
+
+html[data-theme="mimetico-chiaro"] .cs-hero-meta dd,
+[data-theme="mimetico-chiaro"] .cs-hero-meta dd {
+  color: #0f172a !important;
+}
+
+/* ==========================================================================
    ISOLAMENTO SIDEBAR: SOLO DASHBOARD PRIVATE (NIENTE SULLA LANDING PAGE)
    ========================================================================== */
 #view-home:not([hidden]) ~ * .es-sb-hover,

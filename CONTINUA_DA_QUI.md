@@ -3,7 +3,18 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX41 — Suite Consolidata & Modern Navigation UI (Framer Motion Feel):
+Ultimo aggiornamento: **2026-09-26** — HEROUX42 — Full Homepage & Public Pages Light Mode Suite:
+1. **Light Mode Globale per Tutta la Homepage e Sezioni Pubbliche**:
+   - Risolto il disallineamento cromatico dove solo l'header recepiva il tema chiaro mentre il resto della homepage (#home-resume, #home-portfolio, #welcome-access, footer) rimaneva con sfondi scuri.
+   - Sfondi calibrati alternati (`#ffffff` e `#f8fafc`) con bordi delicati `border-top: 1px solid rgba(15, 23, 42, 0.08)`.
+   - Contrasto tipografico nitido su tutte le sezioni (`.portfolio-heading` in `#0f172a`, `.portfolio-kicker` in `#0284c7`, `.portfolio-text` in `#334155`).
+   - Statistiche Curriculum (`.portfolio-stat`) e card bacheca (`.portfolio-card`) con background bianco, border subtle e shadow morbida multilivello.
+   - Pulsanti outline pill (`.btn-outline-pill`) con bordo e testo `#0284c7` su fondo bianco.
+   - Stack di autenticazione (`.auth-btn-google`, `.auth-btn-apple`, `.auth-btn-spid`, `.auth-btn-email`) adattato graficamente al tema chiaro con pulsante Apple nero a contrasto e SPID ufficiale blu.
+   - Footer pubblico globale (`#site-public-footer`, `.pf-footer`) e sezione Chi Siamo (`#view-about`) allineati con background chiaro, testi scuri ad alta leggibilità e social links ciano/blu.
+2. **File**: `style.css`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX42`.
+
+Feature precedente: **2026-09-26** — HEROUX41 — Suite Consolidata & Modern Navigation UI (Framer Motion Feel):
 1. **Modern Navigation UI (Framer Motion Feel in Vanilla CSS/JS)**:
    - Header ultra-moderno con glassmorphism `backdrop-filter: blur(20px) saturate(180%)`, bordo sottile luminescente e shadow multilivello.
    - **Gliding Magnetic Indicator** (`.nav-indicator`): Scorrimento GPU elastico su rAF con fisica lerp (`speed = 0.24`), gradiente ciano-azzurro neon, glow sottile a 16px e tracking istantaneo di hover e click.
