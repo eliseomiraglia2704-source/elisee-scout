@@ -1,12 +1,13 @@
 /* ============================================= */
-/* HEROUX33 – Bacheca Annunci (Zero-Latency)    */
+/* HEROUX35 – Bacheca Annunci (Zero-Latency)    */
 /* ============================================= */
 .bacheca-container {
   background: #0a0a0a;
-  min-height: 60vh;
+  min-height: 100vh;
   padding: 40px 20px;
   max-width: 1280px;
   margin: 0 auto;
+  position: relative;
 }
 
 .bacheca-container .header {
@@ -16,6 +17,35 @@
   margin-bottom: 40px;
   flex-wrap: wrap;
   gap: 16px;
+}
+
+.bacheca-container .header h1 {
+  color: #00f5d4;
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.bacheca-container .header-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.bacheca-container .btn.primary {
+  background: linear-gradient(90deg, #00f5d4, #ff2d55);
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 40ms;
+}
+
+.bacheca-container .btn.primary:hover {
+  transform: scale(1.04);
 }
 
 .bacheca-container .filter-bar {
@@ -103,9 +133,30 @@
   font-size: 13px;
 }
 
+.bacheca-container .menu-laterale {
+  position: absolute;
+  left: -60px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(20, 20, 20, 0.95);
+  border-radius: var(--radius, 12px);
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 999;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+@media (max-width: 1400px) {
+  .bacheca-container .menu-laterale {
+    display: none;
+  }
+}
+
 .bacheca-container .menu-item {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -113,6 +164,7 @@
   cursor: pointer;
   transition: all 40ms;
   background: rgba(255,255,255,0.05);
+  color: #fff;
   font-size: 18px;
 }
 
@@ -122,29 +174,14 @@
   color: #00f5d4;
 }
 
+.bacheca-container .menu-item .icon {
+  font-size: 20px;
+  color: #00f5d4;
+}
+
 .bacheca-container .opportunita-card.selected {
-  background: rgba(0,245,212,0.12);
+  background: rgba(0,245,212,0.15);
   border-color: #00f5d4;
-  box-shadow: 0 0 24px rgba(0,245,212,0.2);
-}
-
-.bacheca-container .header-buttons {
-  display: flex;
-  gap: 12px;
-}
-
-.bacheca-container .btn.primary {
-  background: linear-gradient(90deg, #00f5d4, #ff2d55);
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 9999px;
-  font-weight: 800;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 40ms;
-}
-
-.bacheca-container .btn.primary:hover {
-  transform: scale(1.04);
+  color: #00f5d4;
+  box-shadow: 0 0 24px rgba(0,245,212,0.25);
 }

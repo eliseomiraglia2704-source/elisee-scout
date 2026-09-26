@@ -1,37 +1,33 @@
-// HEROUX33 – Bacheca Handler Zero-Latency
+// HEROUX35 – Bacheca Handler Zero-Latency
 window.EliseeBacheca = {
-  init: function () {
-    // Filtri reattivi
-    var filterSelects = document.querySelectorAll('.bacheca-container .filter-group select');
-    filterSelects.forEach(function (select) {
-      select.addEventListener('change', function () {
-        console.log('[HEROUX33] Filtro cambiato: ' + select.value);
+  init: () => {
+    document.querySelectorAll('.bacheca-container .filter-group select').forEach(select => {
+      select.addEventListener('change', () => {
+        console.log(`[HEROUX35] Filtro cambiato: ${select.value}`);
         if (window.EliseeSuccessSystem && typeof window.EliseeSuccessSystem.showToast === 'function') {
           window.EliseeSuccessSystem.showToast('Filtro applicato: ' + select.value, 1200);
         }
       });
     });
 
-    // Opzioni selezionate (click card)
-    var cards = document.querySelectorAll('.bacheca-container .opportunita-card');
-    cards.forEach(function (card) {
-      card.addEventListener('click', function (e) {
+    document.querySelectorAll('.bacheca-container .opportunita-card').forEach(card => {
+      card.addEventListener('click', (e) => {
         if (e.target.closest('.menu-item')) return;
         card.classList.toggle('selected');
         if (window.createRipple && typeof window.createRipple === 'function') {
-          window.createRipple(e.clientX, e.clientY);
+          window.createRipple(e.clientX || card.getBoundingClientRect().left + 40, e.clientY || card.getBoundingClientRect().top + 20);
         }
         if (window.EliseeSuccessSystem && typeof window.EliseeSuccessSystem.showToast === 'function') {
-          var isSel = card.classList.contains('selected');
+          const isSel = card.classList.contains('selected');
           window.EliseeSuccessSystem.showToast(isSel ? 'Opportunità aggiunta alla selezione' : 'Opportunità rimossa', 1500);
         }
       });
     });
 
-    // Menu item ⋯
-    var menuDots = document.querySelectorAll('.bacheca-container .menu-item');
-    menuDots.forEach(function (item) {
-      item.addEventListener('click', function (e) {
+    document.querySelectorAll('.bacheca-container .menu-item').forEach(item => {
+      item.addEventListener('mouseenter', () => { item.style.transform = 'scale(1.1)'; });
+      item.addEventListener('mouseleave', () => { item.style.transform = 'scale(1)'; });
+      item.addEventListener('click', (e) => {
         e.stopPropagation();
         if (window.createRipple && typeof window.createRipple === 'function') {
           window.createRipple(e.clientX, e.clientY);
@@ -44,15 +40,12 @@ window.EliseeBacheca = {
       });
     });
 
-    console.log('[HEROUX33] EliseeBacheca initialized (<40ms)');
+    console.log('[HEROUX35] EliseeBacheca initialized (<40ms)');
   }
 };
 
-// Auto-init
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', function () {
-    window.EliseeBacheca.init();
-  });
+  document.addEventListener('DOMContentLoaded', () => EliseeBacheca.init());
 } else {
-  window.EliseeBacheca.init();
+  EliseeBacheca.init();
 }

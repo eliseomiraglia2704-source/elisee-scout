@@ -3,7 +3,17 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX34 — Chi Siamo (Zero-Latency + Micro-interazioni Neon):
+Ultimo aggiornamento: **2026-09-26** — HEROUX35 — Bacheca Annunci & Chi Siamo Full Synergy (Zero-Latency + Menu ⋯ + Micro-interazioni):
+1. **Bacheca & Chi Siamo Synergy Engine (`styles/bacheca.css`, `bacheca.css`, `js/bacheca-handler.js`, `bacheca-handler.js`, `styles/chi-siamo.css`, `chi-siamo.css`, `js/chi-siamo-handler.js`, `chi-siamo-handler.js`)**:
+   - Implementazione zero-latenza (<40ms):
+     - Bacheca Annunci moderna con header branding `ELISEE SCOUT` in ciano `#00f5d4`, bottoni "Nuovo annuncio" e "Crea profilo" con ripple e toast istantaneo.
+     - Griglia opportunità con card hover elevate (-8px, box-shadow ciano `rgba(0,245,212,0.25)`), toggle selezione `.selected` con toast reversibile.
+     - Menu laterale e bottoni `⋯` con hover animato (scale 1.1) e apertura facilitata tramite `EliseeActionMenu`.
+     - Chi Siamo rifinito con micro-interazioni neon sulle parole chiave ("zero fake account", "opportunità reali", "nessun rischio") a latenza <40ms.
+   - Esposizione globale: `window.EliseeBacheca` (`init`), `window.EliseeChiSiamo` (`init`).
+2. **File**: `styles/bacheca.css`, `bacheca.css`, `js/bacheca-handler.js`, `bacheca-handler.js`, `styles/chi-siamo.css`, `chi-siamo.css`, `js/chi-siamo-handler.js`, `chi-siamo-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX35`.
+
+Feature precedente: **2026-09-26** — HEROUX34 — Chi Siamo (Zero-Latency + Micro-interazioni Neon):
 1. **Chi Siamo Engine (`styles/chi-siamo.css`, `chi-siamo.css`, `js/chi-siamo-handler.js`, `chi-siamo-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Layout minimale e pulito in dark mode (`#0a0a0a`), tipografia ad alta leggibilità, headline neon ciano `#00f5d4` in maiuscolo spaziato.
