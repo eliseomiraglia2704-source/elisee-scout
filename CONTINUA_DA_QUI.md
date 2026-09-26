@@ -3,7 +3,26 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX53 — Pulsante Glow Animato Conic Gradient con Punti Luce Rotanti & Alone 3D:
+Ultimo aggiornamento: **2026-09-26** — HEROUX54 — Search Bar Animata 3D Flip (SCRY) con Conferma Visiva & Filtro Real-Time:
+1. **Componente 3D Flip Search Bar (`scry-search.css`, `scry-search.js`)**:
+   - Apertura con prospettiva 3D dinamica (`perspective: 900px`, `transform: rotateX(-90deg)` → `rotateX(0deg)` con timing `cubic-bezier(.55,.08,.4,.95)`).
+   - Bottone circolare `.scry__btn` che scivola da centro (`left: calc(50% - 28px)`) all'estremità destra (`left: calc(100% - 56px)`) con morphing icona da lente (`.ic-search`) a chiusura (`.ic-close`).
+   - Conferma visiva all'invio (`.scry.submitted`):
+     - Checkmark verde pop animato (`.ic-check`, sfondo `#1f9d6b`, keyframe `scry-pop`).
+     - Anello di pulsazione d'urto ad espansione sul box (`box-shadow`, keyframe `scry-ring`).
+   - Gestione tastiera (`Escape` per chiudere, `Enter` per inviare, flag `.kbd` per accessibilità outline).
+2. **Collegamento ai Filtri Reali di Elisee Scout**:
+   - Evento standard `scry:search` + trigger integrato in `scry-search.js`:
+     - **Bacheca annunci**: memorizza `window._scryQuery` e attiva il filtro full-text `filterAndRenderJobs()` in `app.js` (cerca su titolo, ruolo, club, città, categoria, offerta e requisiti).
+     - **Persone & squadre**: sincronizza il campo `#search-people-query` ed esegue `filterPeopleCards()`.
+     - **Mappa Club**: sincronizza `#club-search` ed invia l'evento input per la visualizzazione immediata dei club geolocalizzati.
+     - Reset istantaneo: alla chiusura o cancellazione del testo (`clear()`), ripristina la visualizzazione completa senza ricaricare la pagina.
+3. **Integrazione UI**:
+   - Posizionata in modo evidente e centrato nella testata filtri della **Bacheca annunci** (`.bacheca-scry-row`, `#bacheca-tab-annunci`).
+   - Aggiunto trigger rapido nella **barra di navigazione pubblica** (`#es-nav-quick-search`) per apertura istantanea con scroll animato.
+4. **File**: `scry-search.css`, `scry-search.js`, `app.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX54`.
+
+Feature precedente: **2026-09-26** — HEROUX53 — Pulsante Glow Animato Conic Gradient con Punti Luce Rotanti & Alone 3D:
 1. **Componente Glow Button (`glow-button.css`)**:
    - Proprietà animata nativa `@property --angle` (`syntax: '<angle>'`, rotazione 0deg → 360deg a 3.5s infinita).
    - Wrapper `.glow-wrap` con anello di padding (2px) e doppio gradiente conico `conic-gradient`:

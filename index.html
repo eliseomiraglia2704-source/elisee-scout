@@ -91,6 +91,7 @@
   <link rel="stylesheet" href="bacheca.css?v=20260925_HEROUX41">
   <link rel="stylesheet" href="tide-button.css?v=20260926_HEROUX52">
   <link rel="stylesheet" href="glow-button.css?v=20260926_HEROUX53">
+  <link rel="stylesheet" href="scry-search.css?v=20260926_HEROUX54">
   <style id="es-font-nevera">
     @font-face {
       font-family: 'Nevera';
@@ -2350,6 +2351,9 @@
 
     <!-- Azioni Destra -->
     <div class="header-actions nav-actions nav-right">
+      <button type="button" class="nav-search-trigger" id="es-nav-quick-search" onclick="if(window.openScrySearch){window.openScrySearch();}else if(window.switchView){window.switchView('bacheca','#bacheca-annunci');}" title="Cerca su Elisee Scout" aria-label="Cerca">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
       <button type="button" class="theme-toggle" id="es-nav-theme" onclick="if(window.toggleSiteTheme){window.toggleSiteTheme();}" title="Cambia tema" aria-label="Cambia tema">🌙</button>
       <span class="lang" id="lang-switcher-simple" title="Seleziona lingua">IT ▾</span>
       <div class="glow-wrap glow-wrap--nav">
@@ -3089,6 +3093,21 @@
             <!-- VISTA 1: BACHECA ANNUNCI (Filtri unificati + Griglia + Sidebar) -->
             <!-- ============================================================ -->
             <div id="bacheca-tab-annunci" class="bacheca-tab-pane is-active" role="tabpanel">
+
+              <!-- Barra di Ricerca Animata 3D Flip (SCRY) -->
+              <div class="bacheca-scry-row">
+                <div class="scry" id="scry" data-state="closed">
+                  <span class="scry__shadow"></span>
+                  <div class="scry__field">
+                    <input class="scry__input" id="scryInput" type="search" placeholder="Cerca annunci, club o calciatori…" autocomplete="off">
+                  </div>
+                  <button class="scry__btn" id="scryBtn" type="button" aria-label="Apri ricerca">
+                    <svg class="ic-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+                    <svg class="ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+                    <svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4.5 4.5L19 8"/></svg>
+                  </button>
+                </div>
+              </div>
 
               <!-- Pannello Filtri Unificato -->
               <div class="bacheca-filter-panel">
@@ -7190,5 +7209,6 @@
   <script src="glow-cards-handler.js?v=20260926_HEROUX43" defer></script>
   <script src="publish-btn.js?v=20260926_HEROUX45" defer></script>
   <script src="tide-button.js?v=20260926_HEROUX52" defer></script>
+  <script src="scry-search.js?v=20260926_HEROUX54" defer></script>
 </body>
 </html>

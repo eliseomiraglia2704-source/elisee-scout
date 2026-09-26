@@ -6832,6 +6832,15 @@ document.addEventListener('DOMContentLoaded', () => {
     var geo = geoBtn ? Number(geoBtn.getAttribute('data-geo') || 0) : 0;
     var filtered = allJobs.filter(job => {
       if (job.stato && job.stato !== 'attivo') return false;
+      if (window._scryQuery) {
+        var sq = String(window._scryQuery).trim().toLowerCase();
+        var blob = [
+          job.title, job.titolo, job.role, job.ruolo, job.ruolo_campo, job.ruolo_cercato,
+          job.club, job.societa, job.location, job.zona, job.zona_citta, job.description,
+          job.desc, job.categoria, job.category, job.offer, job.req
+        ].filter(Boolean).join(' ').toLowerCase();
+        if (blob.indexOf(sq) < 0) return false;
+      }
       if (roleVal !== 'all') {
         var roleBlob = [job.role, job.ruolo, job.ruolo_campo, job.ruolo_cercato].join(' ').toLowerCase();
         if (job.role !== roleVal && roleBlob.indexOf(String(roleVal).toLowerCase()) < 0) return false;
@@ -6937,6 +6946,8 @@ document.addEventListener('DOMContentLoaded', () => {
       var el = document.getElementById(id);
       if (el) el.checked = false;
     });
+    window._scryQuery = '';
+    if (typeof window.closeScrySearch === 'function') window.closeScrySearch();
     if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs();
   };
   window.widenBachecaSearch = window.resetBachecaFilters;

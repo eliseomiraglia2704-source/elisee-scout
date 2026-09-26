@@ -1,0 +1,234 @@
+/* ==========================================================================
+   ELISEE SCOUT — SCRY ANIMATED 3D FLIP SEARCH BAR
+   Icona che si apre con un flip 3D in una barra di ricerca a tutta larghezza,
+   con micro-animazioni di invio, check verde ed anello di conferma.
+   ========================================================================== */
+
+:root {
+  --ease-open: cubic-bezier(.55, .08, .4, .95);
+}
+
+.scry {
+  position: relative;
+  width: min(92vw, 380px);
+  height: 56px;
+  perspective: 900px;
+  margin: 0 auto;
+}
+
+.scry__shadow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 999px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, .35);
+  pointer-events: none;
+  transition: left .5s var(--ease-open), width .5s var(--ease-open), opacity .3s ease;
+}
+
+.scry[data-state="closed"] .scry__shadow {
+  left: calc(50% - 28px);
+  width: 56px;
+  opacity: .5;
+}
+
+.scry[data-state="open"] .scry__shadow {
+  left: 0;
+  width: 100%;
+  opacity: .9;
+}
+
+.scry__field {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: #ffffff;
+  overflow: hidden;
+  transform-origin: 50% 50%;
+  transform: rotateX(-90deg);
+  transition: transform .5s var(--ease-open);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .18);
+  backface-visibility: hidden;
+}
+
+.scry[data-state="open"] .scry__field {
+  transform: rotateX(0deg);
+}
+
+.scry__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0 66px 0 24px;
+  font-size: 15px;
+  font-family: inherit;
+  font-weight: 500;
+  color: #0e1830;
+  opacity: 0;
+  transition: opacity .25s ease .15s;
+  box-sizing: border-box;
+}
+
+.scry[data-state="open"] .scry__input {
+  opacity: 1;
+}
+
+.scry__input::placeholder {
+  color: #9aa1b8;
+  font-weight: 400;
+}
+
+.scry__btn {
+  position: absolute;
+  top: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: #0e1830;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: left .5s var(--ease-open), transform .15s ease, background .25s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .25);
+}
+
+.scry[data-state="closed"] .scry__btn {
+  left: calc(50% - 28px);
+}
+
+.scry[data-state="open"] .scry__btn {
+  left: calc(100% - 56px);
+}
+
+.scry__btn:hover {
+  transform: scale(1.05);
+}
+
+.scry__btn:active {
+  transform: scale(.95);
+}
+
+.scry__btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+}
+
+.scry__btn .ic-close {
+  display: none;
+}
+
+.scry__btn .ic-check {
+  display: none;
+}
+
+.scry[data-state="open"] .scry__btn .ic-search {
+  display: none;
+}
+
+.scry[data-state="open"] .scry__btn .ic-close {
+  display: block;
+}
+
+/* Conferma d'invio: il bottone mostra un check per un istante */
+.scry.submitted .scry__btn .ic-close {
+  display: none;
+}
+
+.scry.submitted .scry__btn .ic-check {
+  display: block;
+}
+
+.scry.submitted .scry__btn {
+  background: #1f9d6b !important;
+}
+
+.scry.submitted .scry__btn svg.ic-check {
+  animation: scry-pop .35s ease;
+}
+
+@keyframes scry-pop {
+  0% {
+    transform: scale(.4);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Il pannello lancia un anello di conferma quando la ricerca parte */
+.scry.submitted .scry__field {
+  animation: scry-ring .6s ease;
+}
+
+@keyframes scry-ring {
+  0% {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, .18), 0 0 0 0 rgba(31, 157, 107, .45);
+  }
+  70% {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, .18), 0 0 0 16px rgba(31, 157, 107, 0);
+  }
+  100% {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, .18), 0 0 0 0 rgba(31, 157, 107, 0);
+  }
+}
+
+.scry.kbd .scry__input:focus {
+  outline: 2px solid #4f83ff;
+  outline-offset: -2px;
+}
+
+/* Container di layout per Bacheca */
+.bacheca-scry-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.75rem auto 1.5rem auto;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+/* Nav quick search trigger button */
+.nav-search-trigger {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+  padding: 0;
+  margin-right: 6px;
+}
+
+.nav-search-trigger:hover {
+  transform: scale(1.08);
+  border-color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="mimetico-chiaro"] .nav-search-trigger {
+  color: #0e1830;
+  border-color: #e2e8f0;
+}
+html[data-theme="mimetico-chiaro"] .nav-search-trigger:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
