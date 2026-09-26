@@ -3,7 +3,18 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX38 — Market Hub Pro Avanzato (Drag & Drop + Notifiche Stealth + Timeline + Export):
+Ultimo aggiornamento: **2026-09-26** — HEROUX39 — Market Hub Pro Avanzato (Evoluzione Nativa HTML5 + Secret List Sync):
+1. **Market Hub Pro Avanzato Engine (`styles/market-hub-pro.css`, `market-hub-pro.css`, `js/market-hub-pro-handler.js`, `market-hub-pro-handler.js`)**:
+   - Implementazione zero-latenza (<40ms):
+     - Drag & Drop nativo HTML5 ultra-fluido: spostamento di elementi verso la `Secret List Stealth` con highlight dinamico e drop target immediato.
+     - Notifiche stealth con toast non invasivo `EliseeSuccessSystem.showToast('Added to Secret List (Notifica Stealth)', 1800)`.
+     - Sincronizzazione contatori dinamica Secret List (badge 10, split 6 Scout + 4 Wall) e sync su barra mobile/dock (`EliseeDynamicSync.setBadge`).
+     - Filtro IA stealth a digitazione in tempo reale su club e ruoli (`DS`, `Scout`, `Analyst`, `Wall Transfer`).
+     - Wall Transfer interattivo e funzione di esportazione report per DS/Scout (`exportReport` / `window.exportMarketReport`).
+   - Esposizione globale: `window.EliseeMarketHubPro` (`init`, `filterItems`, `updateSecretCount`, `exportReport`).
+2. **File**: `styles/market-hub-pro.css`, `market-hub-pro.css`, `js/market-hub-pro-handler.js`, `market-hub-pro-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX39`.
+
+Feature precedente: **2026-09-26** — HEROUX38 — Market Hub Pro Avanzato (Drag & Drop + Notifiche Stealth + Timeline + Export):
 1. **Market Hub Pro Avanzato Engine (`styles/market-hub-pro.css`, `market-hub-pro.css`, `js/market-hub-pro-handler.js`, `market-hub-pro-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Drag & Drop reattivo: trascinamento istantaneo di qualsiasi club dalla lista generale alla `Secret List Stealth`.

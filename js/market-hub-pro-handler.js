@@ -1,4 +1,4 @@
-// HEROUX38 – Market Hub Pro Avanzato (Drag & Drop + Notifiche Stealth + Timeline + Export)
+// HEROUX39 – Market Hub Pro Avanzato (Drag & Drop + Notifiche Stealth + Timeline + Export)
 window.EliseeMarketHubPro = {
   items: [],
   currentFilter: '',
@@ -60,7 +60,7 @@ window.EliseeMarketHubPro = {
       }
     });
 
-    console.log('[HEROUX38] EliseeMarketHubPro initialized (<40ms)');
+    console.log('[HEROUX39] EliseeMarketHubPro initialized (<40ms)');
   },
 
   filterItems: () => {
