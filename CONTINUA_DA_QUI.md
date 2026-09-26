@@ -3,7 +3,15 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX46 — Riorganizzazione Sezione Chi Siamo / About (#about):
+Ultimo aggiornamento: **2026-09-26** — HEROUX47 — Fix Macchia Scura / Vignetta Glow su Hero in Light Mode:
+1. **Rimosso Glow e Vignetta Scura in Light Mode**:
+   - Individuato il responsabile esatto della fascia grigio-scura sfumata che appariva nella Schermata Iniziale (#hero) in modalità giorno: il pseudo-elemento `.hero-typography-left::before`, configurato con `radial-gradient(ellipse at center left, rgba(0, 0, 0, 0.7)...)` e `filter: blur(12px / 20px)`.
+   - Vincolato tale glow unicamente a Dark Mode (`html:not([data-theme="mimetico-chiaro"]) .hero-typography-left::before`).
+   - Disattivato esplicitamente per Light Mode (`html[data-theme="mimetico-chiaro"]`, `html[data-theme="light"]`, ecc.) con `content: none !important; display: none !important; background: none !important; filter: none !important; opacity: 0 !important;`.
+   - Rimossi anche i text-shadow neri su `.hero-name`, `.hero-name-bold`, `.hero-role` in Light Mode per garantire contorni nitidi e puliti su fondo bianco puro.
+2. **File**: `index.html`, `style.css`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX47`.
+
+Feature precedente: **2026-09-26** — HEROUX46 — Riorganizzazione Sezione Chi Siamo / About (#about):
 1. **Eliminazione Sovrapposizione e Duplicazione Blocco Chi Siamo**:
    - Rimosso il vecchio contenitore duplicato `.chi-siamo-container` che causava l'accavallamento dei titoli centrali ("CHI SIAMO" / "La nostra missione") sopra l'header istituzionale.
 2. **Hero Istituzionale a Due Colonne Pulita**:

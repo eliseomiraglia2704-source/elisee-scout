@@ -3,7 +3,7 @@
 <head>
   <script>
     (function () {
-      var BUILD_VERSION = '20260926_HEROUX46';
+      var BUILD_VERSION = '20260926_HEROUX47';
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
         if (savedTheme) {
@@ -50,7 +50,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20260926_HEROUX44">
+  <link rel="stylesheet" href="style.css?v=20260926_HEROUX47">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260926_HEROUX46">
@@ -443,16 +443,26 @@
       visibility: hidden !important;
       pointer-events: none !important;
     }
-    #hero, .hero-section, .hero-portfolio {
+    html:not([data-theme="mimetico-chiaro"]) #hero,
+    html:not([data-theme="mimetico-chiaro"]) .hero-section,
+    html:not([data-theme="mimetico-chiaro"]) .hero-portfolio {
       background: #050810 !important;
     }
+    html[data-theme="mimetico-chiaro"] #hero,
+    html[data-theme="mimetico-chiaro"] .hero-section,
+    html[data-theme="mimetico-chiaro"] .hero-portfolio,
+    [data-theme="mimetico-chiaro"] #hero,
+    [data-theme="mimetico-chiaro"] .hero-section,
+    [data-theme="mimetico-chiaro"] .hero-portfolio {
+      background: #ffffff !important;
+    }
     
-    /* FORCED REDUCED TIGHT BLACK GLOW UNDERNEATH HERO TEXT (SFOCATURA NERA MOLTO RIDOTTA) */
+    /* GLOW RADIALE SCURO SOTTO AL TESTO HERO — SOLO IN DARK MODE */
     .hero-typography-left {
       position: relative !important;
       z-index: 10 !important;
     }
-    .hero-typography-left::before {
+    html:not([data-theme="mimetico-chiaro"]) .hero-typography-left::before {
       content: '' !important;
       position: absolute !important;
       inset: -0.5rem 0.5rem -0.5rem -0.5rem !important;
@@ -462,14 +472,37 @@
       border-radius: 16px !important;
       pointer-events: none !important;
     }
-    .hero-name,
-    .hero-name-bold,
-    .hero-role,
-    .logo-text-large,
-    .brand-logo {
+    /* IN LIGHT MODE: NESSUN GLOW / NESSUNA MACCHIA SCURA */
+    html[data-theme="mimetico-chiaro"] .hero-typography-left::before,
+    [data-theme="mimetico-chiaro"] .hero-typography-left::before,
+    html[data-theme="light"] .hero-typography-left::before,
+    [data-theme="light"] .hero-typography-left::before {
+      content: none !important;
+      display: none !important;
+      background: none !important;
+      filter: none !important;
+      box-shadow: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+
+    html:not([data-theme="mimetico-chiaro"]) .hero-name,
+    html:not([data-theme="mimetico-chiaro"]) .hero-name-bold,
+    html:not([data-theme="mimetico-chiaro"]) .hero-role,
+    html:not([data-theme="mimetico-chiaro"]) .logo-text-large,
+    html:not([data-theme="mimetico-chiaro"]) .brand-logo {
       text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 0, 0, 0.6) !important;
     }
-    .hero-buttons-row .btn {
+    html[data-theme="mimetico-chiaro"] .hero-name,
+    html[data-theme="mimetico-chiaro"] .hero-name-bold,
+    html[data-theme="mimetico-chiaro"] .hero-role,
+    [data-theme="mimetico-chiaro"] .hero-name,
+    [data-theme="mimetico-chiaro"] .hero-name-bold,
+    [data-theme="mimetico-chiaro"] .hero-role {
+      text-shadow: none !important;
+    }
+
+    html:not([data-theme="mimetico-chiaro"]) .hero-buttons-row .btn {
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
       backdrop-filter: blur(6px) !important;
     }

@@ -4277,7 +4277,7 @@ header.main-header::-webkit-scrollbar {
   z-index: 10 !important;
 }
 
-.hero-typography-left::before {
+html:not([data-theme="mimetico-chiaro"]) .hero-typography-left::before {
   content: '' !important;
   position: absolute !important;
   inset: -1.5rem 1rem -1.5rem -1.5rem !important;
@@ -11504,6 +11504,24 @@ html[data-theme="mimetico-chiaro"] .es-plx,
       #f8fafc 100%
     ) !important;
   opacity: 1 !important;
+}
+
+/* Annullamento totale di glow / vignetta / ombre scure su Hero in Light Mode */
+html[data-theme="mimetico-chiaro"] .hero-typography-left::before,
+[data-theme="mimetico-chiaro"] .hero-typography-left::before,
+html[data-theme="light"] .hero-typography-left::before,
+[data-theme="light"] .hero-typography-left::before,
+html[data-theme="mimetico-chiaro"] #hero::before,
+[data-theme="mimetico-chiaro"] #hero::before,
+html[data-theme="mimetico-chiaro"] #hero::after,
+[data-theme="mimetico-chiaro"] #hero::after {
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  background: none !important;
+  filter: none !important;
+  box-shadow: none !important;
 }
 
 /* Tipografia della Schermata Iniziale (#hero) in Light Mode */
