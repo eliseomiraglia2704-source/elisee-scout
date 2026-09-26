@@ -3,7 +3,19 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX37 — Candidature Club Pro (Form a Due Blocchi + Auto-Match IA Full):
+Ultimo aggiornamento: **2026-09-26** — HEROUX38 — Market Hub Pro Avanzato (Drag & Drop + Notifiche Stealth + Timeline + Export):
+1. **Market Hub Pro Avanzato Engine (`styles/market-hub-pro.css`, `market-hub-pro.css`, `js/market-hub-pro-handler.js`, `market-hub-pro-handler.js`)**:
+   - Implementazione zero-latenza (<40ms):
+     - Drag & Drop reattivo: trascinamento istantaneo di qualsiasi club dalla lista generale alla `Secret List Stealth`.
+     - Notifica stealth automatica all'aggiunta (`Added to Secret List (Notifica Stealth)`) con toast reversibile `EliseeSuccessSystem`.
+     - Aggiornamento automatico del contatore `market-badge` e sincronizzazione globale badge messaggi tramite `EliseeDynamicSync.setBadge('badge-mobile-msgs', count)`.
+     - Filtro IA stealth istantaneo a digitazione su nome club, ruolo (DS, Scout, Analyst) e tipo offerta.
+     - Wall Transfer FIFA Style interattivo con feedback visivo e reload assistito.
+     - Esportazione report Secret List (`exportReport` / `window.exportMarketReport` con dialog di stampa e toast).
+   - Esposizione globale: `window.EliseeMarketHubPro` (`init`, `filterItems`, `updateSecretCount`, `exportReport`).
+2. **File**: `styles/market-hub-pro.css`, `market-hub-pro.css`, `js/market-hub-pro-handler.js`, `market-hub-pro-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX38`.
+
+Feature precedente: **2026-09-26** — HEROUX37 — Candidature Club Pro (Form a Due Blocchi + Auto-Match IA Full):
 1. **Candidature Club Pro Engine (`styles/candidature-pro.css`, `candidature-pro.css`, `js/candidature-pro-handler.js`, `candidature-pro-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Form a due blocchi ("Cosa offriamo" e "Cosa richiediamo") con textarea stilizzate in dark neon e focus ciano (`#00f5d4`).
