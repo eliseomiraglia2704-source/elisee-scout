@@ -11457,11 +11457,146 @@ header.public-header.is-scrolled {
     ) !important;
 }
 
-/* stesso nero-blu di partenza su tutta la colonna, niente “scalino” */
-html, body, main, #app, #view-home, #hero,
-.hero-section, .hero-portfolio, .hero-section.hero-portfolio {
+/* stesso nero-blu di partenza su tutta la colonna in Dark Mode */
+html:not([data-theme="mimetico-chiaro"]),
+html:not([data-theme="mimetico-chiaro"]) body,
+html:not([data-theme="mimetico-chiaro"]) main,
+html:not([data-theme="mimetico-chiaro"]) #app,
+html:not([data-theme="mimetico-chiaro"]) #view-home,
+html:not([data-theme="mimetico-chiaro"]) #hero,
+html:not([data-theme="mimetico-chiaro"]) .hero-section,
+html:not([data-theme="mimetico-chiaro"]) .hero-portfolio,
+html:not([data-theme="mimetico-chiaro"]) .hero-section.hero-portfolio {
   background: #07131c !important;
 }
+
+/* ============================================================
+   LIGHT MODE DEFINITIVO PER LA SCHERMATA INIZIALE (#hero)
+   ============================================================ */
+html[data-theme="mimetico-chiaro"],
+html[data-theme="mimetico-chiaro"] body,
+html[data-theme="mimetico-chiaro"] main,
+html[data-theme="mimetico-chiaro"] #app,
+html[data-theme="mimetico-chiaro"] #view-home,
+html[data-theme="mimetico-chiaro"] #hero,
+html[data-theme="mimetico-chiaro"] .hero-section,
+html[data-theme="mimetico-chiaro"] .hero-portfolio,
+html[data-theme="mimetico-chiaro"] .hero-section.hero-portfolio,
+[data-theme="mimetico-chiaro"] #hero,
+[data-theme="mimetico-chiaro"] .hero-section,
+[data-theme="mimetico-chiaro"] .hero-portfolio {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+/* Overlay sfumato per la schermata iniziale in Light Mode */
+html[data-theme="mimetico-chiaro"] .es-plx,
+[data-theme="mimetico-chiaro"] .es-plx {
+  background: #ffffff !important;
+  background-image:
+    radial-gradient(ellipse 80% 55% at 50% -10%,
+      rgba(2, 132, 199, 0.08) 0%,
+      rgba(240, 249, 255, 0.6) 42%,
+      transparent 70%),
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f8fafc 100%
+    ) !important;
+  opacity: 1 !important;
+}
+
+/* Tipografia della Schermata Iniziale (#hero) in Light Mode */
+html[data-theme="mimetico-chiaro"] .hero-typography-left h1,
+html[data-theme="mimetico-chiaro"] .hero-name,
+[data-theme="mimetico-chiaro"] .hero-typography-left h1,
+[data-theme="mimetico-chiaro"] .hero-name {
+  color: #0f172a !important;
+  text-shadow: none !important;
+}
+
+html[data-theme="mimetico-chiaro"] .hero-name-bold,
+[data-theme="mimetico-chiaro"] .hero-name-bold {
+  color: #0284c7 !important;
+  text-shadow: none !important;
+}
+
+html[data-theme="mimetico-chiaro"] .hero-typography-left .title-sub,
+html[data-theme="mimetico-chiaro"] .hero-role,
+[data-theme="mimetico-chiaro"] .hero-typography-left .title-sub,
+[data-theme="mimetico-chiaro"] .hero-role {
+  color: #475569 !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.28em !important;
+  text-shadow: none !important;
+}
+
+/* Pulsanti Hero in Light Mode */
+html[data-theme="mimetico-chiaro"] #hero .btn-outline-pill,
+[data-theme="mimetico-chiaro"] #hero .btn-outline-pill {
+  border: 1.5px solid #0284c7 !important;
+  background: #ffffff !important;
+  color: #0284c7 !important;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.12) !important;
+}
+
+html[data-theme="mimetico-chiaro"] #hero .btn-outline-pill:hover,
+[data-theme="mimetico-chiaro"] #hero .btn-outline-pill:hover {
+  background: #0284c7 !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 22px rgba(2, 132, 199, 0.28) !important;
+}
+
+/* Header in Light Mode sia a scroll 0 che scrollato */
+html[data-theme="mimetico-chiaro"] header.public-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+html[data-theme="mimetico-chiaro"] body:not(.is-internal-view) header.public-header:not(.is-scrolled) {
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
+}
+
+html[data-theme="mimetico-chiaro"] header.public-header .site-brand {
+  color: #0f172a !important;
+}
+
+html[data-theme="mimetico-chiaro"] header.public-header .site-brand span {
+  color: #0284c7 !important;
+  text-shadow: none !important;
+}
+
+html[data-theme="mimetico-chiaro"] header.public-header .nav-link,
+html[data-theme="mimetico-chiaro"] header.public-header .nav-item-title {
+  color: #334155 !important;
+}
+
+html[data-theme="mimetico-chiaro"] header.public-header .nav-link:hover,
+html[data-theme="mimetico-chiaro"] header.public-header .nav-item-title:hover {
+  color: #0284c7 !important;
+}
+
+html[data-theme="mimetico-chiaro"] header.public-header .nav-dropdown-btn,
+html[data-theme="mimetico-chiaro"] header.public-header .lang {
+  color: #334155 !important;
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+html[data-theme="mimetico-chiaro"] header.public-header .theme-toggle {
+  color: #0f172a !important;
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+html[data-theme="mimetico-chiaro"] header.public-header .nav-indicator {
+  background: linear-gradient(90deg, #0284c7, #0ea5e9) !important;
+  box-shadow: 0 0 14px rgba(2, 132, 199, 0.3) !important;
+}
+
 
 /* ============================================================
    ES-NAV-UX: Tokens & Component Coordination

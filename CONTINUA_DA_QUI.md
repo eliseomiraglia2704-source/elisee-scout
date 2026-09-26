@@ -3,7 +3,18 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX43 — Glow Cards Spotlight Cursor-Tracking (3 Pilastri Network):
+Ultimo aggiornamento: **2026-09-26** — HEROUX44 — Fix Schermata Iniziale (#hero) in Modalità Giorno / Light Mode:
+1. **Risolto Sfondo Scuro Hardcoded su #hero e .es-plx**:
+   - Rimosso il selettore `html, body, #hero { background: #07131c !important; }` incondizionato che prevaleva su tutto l'hero.
+   - Limitato lo sfondo nero-blu esclusivamente a `html:not([data-theme="mimetico-chiaro"])`.
+   - Per `html[data-theme="mimetico-chiaro"]`: `#hero`, `.hero-section`, `.hero-portfolio` impostati a `#ffffff !important;`.
+   - `.es-plx` in Light Mode adotta un gradiente luminoso sfumato azzurro/bianco `radial-gradient(...) linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;` invece del vecchio overlay nero.
+   - Tipografia `.hero-name` e `h1` in nero ardesia `#0f172a`, `.hero-name-bold` in `#0284c7`, `.hero-role` in `#475569`.
+   - Bottoni outline `#hero .btn-outline-pill` con bordo e testo `#0284c7` su fondo bianco.
+   - Header a scroll 0 in Light Mode con glassmorphism chiaro semitrasparente e logo/voci con testo scuro e pulsante tema sincrono `☀️/🌙`.
+2. **File**: `style.css`, `index.html`, `role-sidebar-pro.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX44`.
+
+Feature precedente: **2026-09-26** — HEROUX43 — Glow Cards Spotlight Cursor-Tracking (3 Pilastri Network):
 1. **Interactive Glow Cards Showcase (Spotlight Mouse Tracking)**:
    - Integrato il pattern interattivo Spotlight Glow con tracciamento real-time del cursore su coordinate CSS dinamiche (`--x`, `--y`).
    - 3 card esclusive dedicate ai pilastri di Elisee Scout:
