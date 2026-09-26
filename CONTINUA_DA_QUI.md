@@ -3,7 +3,18 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX35 — Bacheca Annunci & Chi Siamo Full Synergy (Zero-Latency + Menu ⋯ + Micro-interazioni):
+Ultimo aggiornamento: **2026-09-26** — HEROUX36 — Schede Tecniche IA Pro (Canvas Grafico + Radar Live + API Mock):
+1. **Schede Tecniche IA Pro Engine (`styles/radar-pro.css`, `radar-pro.css`, `js/radar-pro-handler.js`, `radar-pro-handler.js`)**:
+   - Implementazione zero-latenza (<40ms):
+     - Sezione `#schede-tecniche-pro` con griglia radar ad alta risoluzione in stile dark neon.
+     - Donut score circolare con `conic-gradient` dinamico (score da 0 a 10), box shadow a 20px rgba ciano neon `rgba(0,245,212,0.25)`.
+     - Barra di progresso predittiva animate a 400ms cubic-bezier con gradiente ciano-magenta (`#00f5d4` a `#ff2d55`).
+     - Micro-interazioni su card (hover -8px, glow a 40px) e click predizione con toast reversibile `EliseeSuccessSystem.showToast` e ripple nativo `createRipple`.
+     - Mock prediction scores per club e profili (Northwind Labs 9.8, Halcyon Bank 7.4, Nova FC 6.1, Real Madrid 9.2, Chelsea 8.1, PSG 9.5).
+   - Esposizione globale: `window.EliseeRadarPro` (`init`, `scores`).
+2. **File**: `styles/radar-pro.css`, `radar-pro.css`, `js/radar-pro-handler.js`, `radar-pro-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX36`.
+
+Feature precedente: **2026-09-26** — HEROUX35 — Bacheca Annunci & Chi Siamo Full Synergy (Zero-Latency + Menu ⋯ + Micro-interazioni):
 1. **Bacheca & Chi Siamo Synergy Engine (`styles/bacheca.css`, `bacheca.css`, `js/bacheca-handler.js`, `bacheca-handler.js`, `styles/chi-siamo.css`, `chi-siamo.css`, `js/chi-siamo-handler.js`, `chi-siamo-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Bacheca Annunci moderna con header branding `ELISEE SCOUT` in ciano `#00f5d4`, bottoni "Nuovo annuncio" e "Crea profilo" con ripple e toast istantaneo.
