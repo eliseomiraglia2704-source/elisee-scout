@@ -3,7 +3,25 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX52 — TIDE Download Button con Progresso Reale, Anello SVG e Gestione Esiti:
+Ultimo aggiornamento: **2026-09-26** — HEROUX53 — Pulsante Glow Animato Conic Gradient con Punti Luce Rotanti & Alone 3D:
+1. **Componente Glow Button (`glow-button.css`)**:
+   - Proprietà animata nativa `@property --angle` (`syntax: '<angle>'`, rotazione 0deg → 360deg a 3.5s infinita).
+   - Wrapper `.glow-wrap` con anello di padding (2px) e doppio gradiente conico `conic-gradient`:
+     - Anello perimetrale nitido (`::before`) con punti luce rotanti magenta (`#ff2fd3`) e ciano (`#2fa8ff`).
+     - Alone sfocato diffuso posteriore (`::after`) con `filter: blur(24px)` e `opacity: .5` sempre acceso, intensificato a `opacity: 1` in hover.
+   - Faccia del pulsante `.glow-btn`: background `#0d1017` solido, tipografia contrastata e nitida, leggera spaziatura lettere, micro-effetto 3D alla pressione (`:active` con `translateY(2px) scale(.99)` ed inset shadow ridotto).
+   - Varianti di contesto e responsive:
+     - `.glow-wrap--nav` e `.glow-btn--nav`: adattato alla barra di navigazione con altezza 36px, `border-radius: 999px` e padding proporzionato.
+     - `.es-cta-glow-wrap` e `.glow-btn--hero`: per la CTA principale ("Registrati come calciatore o società").
+     - `.glow-wrap--full` e `.glow-btn--full`: per layout a tutta larghezza in modal di autenticazione e drawer mobile.
+2. **Integrazione nei Punti Chiave di Elisee Scout**:
+   - Schermata Iniziale / Hero (#home-about): CTA principale `"Registrati come calciatore o società"` racchiusa nel wrapper glow animato.
+   - Barra di navigazione pubblica (Header Desktop): pulsante `"Accedi"` dotato del bordo rotante e dell'alone neon coordinato.
+   - Drawer laterale responsive (<820px): pulsante `"Accedi / Iscriviti"` a tutta larghezza con effetto glow.
+   - Modal Unificato Accedi / Iscrizione: pulsanti submit `"Accedi"` e `"Iscriviti"` potenziati con la cornice glow animata.
+3. **File**: `glow-button.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX53`.
+
+Feature precedente: **2026-09-26** — HEROUX52 — TIDE Download Button con Progresso Reale, Anello SVG e Gestione Esiti:
 1. **Componente TIDE Download Button (@code_and_chill inspired, `tide-button.css`, `tide-button.js`)**:
    - Bottone circolare animato `.tide-btn` (58px, border-radius 50%, hover `translateY(-2px)`, active `scale(.97)`).
    - Anello circolare SVG `.tide-ring` con circonferenza esatta `302` (`r="48"`), `.track` traslucida e `.arc` progressiva sincronizzata alla percentuale live numerica `.ic-pct`.

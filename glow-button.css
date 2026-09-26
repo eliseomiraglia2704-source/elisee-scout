@@ -1,0 +1,210 @@
+/* ==========================================================================
+   ELISEE SCOUT — GLOW BUTTON COMPONENT
+   Bordo glow animato con 2 punti luce (magenta/ciano) rotanti lungo il perimetro,
+   alone sempre acceso dietro, e leggero effetto 3D alla pressione.
+   ========================================================================== */
+
+@property --angle {
+  syntax: '<angle>';
+  inherits: true;
+  initial-value: 0deg;
+}
+
+.glow-wrap {
+  --angle: 0deg;
+  position: relative;
+  display: inline-block;
+  border-radius: 16px;
+  padding: 2px; /* spessore dell'anello */
+  animation: glow-spin 3.5s linear infinite;
+  box-sizing: border-box;
+  text-decoration: none;
+  vertical-align: middle;
+  isolation: isolate; /* Garantisce che z-index:-1 dell'alone rimanga visibile sopra il background della pagina */
+}
+
+/* Anello sottile: sfondo del wrapper, visibile solo nei 2px di padding */
+.glow-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: conic-gradient(from var(--angle),
+    transparent 0deg,
+    #ff2fd3 18deg,
+    transparent 55deg,
+    transparent 145deg,
+    #2fa8ff 198deg,
+    transparent 235deg,
+    transparent 325deg,
+    #ff2fd3 342deg,
+    transparent 360deg);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Alone sfocato dietro: sempre acceso, si intensifica in hover */
+.glow-wrap::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--angle),
+    transparent 0deg,
+    #ff2fd3 18deg,
+    transparent 55deg,
+    transparent 145deg,
+    #2fa8ff 198deg,
+    transparent 235deg,
+    transparent 325deg,
+    #ff2fd3 342deg,
+    transparent 360deg);
+  filter: blur(24px);
+  opacity: .5;
+  z-index: -1;
+  transition: opacity .35s ease;
+  pointer-events: none;
+}
+
+.glow-wrap:hover::after {
+  opacity: 1;
+}
+
+@keyframes glow-spin {
+  to {
+    --angle: 360deg;
+  }
+}
+
+/* Faccia del pulsante: copre il centro, lascia visibile solo l'anello */
+.glow-btn {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 16px 40px;
+  border: none !important;
+  border-radius: 14px;
+  background: #0d1017 !important;
+  color: #fff !important;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  line-height: 1.2;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, .06) inset,
+    0 6px 14px rgba(0, 0, 0, .5),
+    0 2px 0 rgba(0, 0, 0, .4) !important;
+}
+
+.glow-btn:hover {
+  filter: brightness(1.06);
+  color: #ffffff !important;
+}
+
+.glow-btn:active {
+  transform: translateY(2px) scale(.99) !important;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, .04) inset,
+    0 2px 6px rgba(0, 0, 0, .5) !important;
+}
+
+/* --- Override Specifici per Coerenza con Bottoni di Piattaforma --- */
+
+/* Variante Barra di Navigazione Header (.glow-wrap--nav) */
+.glow-wrap--nav {
+  border-radius: 999px;
+  padding: 2px;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 4px;
+}
+
+.glow-wrap--nav::after {
+  inset: -6px;
+  filter: blur(14px);
+  opacity: .45;
+}
+.glow-wrap--nav:hover::after {
+  opacity: .95;
+}
+
+.glow-wrap--nav .glow-btn,
+.glow-btn--nav {
+  padding: 8px 22px !important;
+  height: 36px !important;
+  border-radius: 999px !important;
+  font-size: 0.85rem !important;
+  letter-spacing: 0.8px !important;
+  font-weight: 700 !important;
+  white-space: nowrap;
+}
+
+/* Variante CTA Principale Schermata Iniziale (.es-cta-glow-wrap) */
+.es-cta-glow-wrap {
+  border-radius: 999px;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.es-cta-glow-wrap .glow-btn,
+.glow-btn--hero {
+  border-radius: 999px !important;
+  padding: 13px 26px !important;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.6px !important;
+  font-weight: 700 !important;
+  text-transform: none;
+}
+
+.es-cta-glow-wrap .glow-btn svg {
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+.es-cta-glow-wrap:hover .glow-btn svg {
+  transform: scale(1.15);
+}
+
+/* Variante Full Width per Modal & Mobile Drawer (.glow-wrap--full) */
+.glow-wrap--full {
+  display: block !important;
+  width: 100% !important;
+  border-radius: 14px;
+}
+
+.glow-wrap--full .glow-btn,
+.glow-btn--full {
+  width: 100% !important;
+  padding: 13px 20px !important;
+  border-radius: 12px !important;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.8px !important;
+}
+
+/* Neutralizzazione conflitti con stili legacy !important */
+header.public-header .glow-btn.btn-login,
+.es-hero-cta-group .glow-btn.es-cta-btn-primary,
+.es-login-stage .glow-btn.es-login-submit,
+.welcome-auth-stack .glow-btn.auth-btn-email {
+  background: #0d1017 !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+header.public-header .glow-btn.btn-login:hover,
+.es-hero-cta-group .glow-btn.es-cta-btn-primary:hover,
+.es-login-stage .glow-btn.es-login-submit:hover,
+.welcome-auth-stack .glow-btn.auth-btn-email:hover {
+  filter: brightness(1.1) !important;
+  color: #ffffff !important;
+}

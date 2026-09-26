@@ -90,6 +90,7 @@
   <link rel="stylesheet" href="market-hub-pro.css?v=20260925_HEROUX41">
   <link rel="stylesheet" href="bacheca.css?v=20260925_HEROUX41">
   <link rel="stylesheet" href="tide-button.css?v=20260926_HEROUX52">
+  <link rel="stylesheet" href="glow-button.css?v=20260926_HEROUX53">
   <style id="es-font-nevera">
     @font-face {
       font-family: 'Nevera';
@@ -1964,7 +1965,9 @@
               <p id="accesso-error-msg" style="margin:0;"></p>
             </div>
 
-            <button type="submit" id="accesso-submit-btn" class="es-login-submit">Accedi</button>
+            <div class="glow-wrap glow-wrap--full" style="margin-top:14px;">
+              <button type="submit" id="accesso-submit-btn" class="glow-btn glow-btn--full es-login-submit">Accedi</button>
+            </div>
           </div>
 
           <div id="accesso-method-whatsapp" style="display:none;">
@@ -2048,7 +2051,9 @@
             <span>Accetto i <a href="privacy-policy.html" target="_blank" rel="noopener">Termini</a> e l'<a href="privacy-policy.html" target="_blank" rel="noopener">informativa privacy</a>.</span>
           </label>
           <p id="es-login-reg-error" class="es-login-err" hidden></p>
-          <button type="submit" class="es-login-submit">Iscriviti</button>
+          <div class="glow-wrap glow-wrap--full" style="margin-top:14px;">
+            <button type="submit" class="glow-btn glow-btn--full es-login-submit">Iscriviti</button>
+          </div>
           <p class="es-login-or">Oppure accedi con</p>
           <div class="es-login-socials">
             <button type="button" class="es-social" aria-label="Facebook" onclick="window.eliseeSocialSoon && window.eliseeSocialSoon('Facebook')">
@@ -2294,9 +2299,11 @@
         </div>
 
         <div class="es-m-drawer-footer">
-          <button type="button" class="btn btn-primary" id="es-m-drawer-auth-btn" style="width:100%;border-radius:999px;font-size:0.9rem;" onclick="if(window.openAccessoModal){window.openAccessoModal('email');}">
-            Accedi / Iscriviti
-          </button>
+          <div class="glow-wrap glow-wrap--full">
+            <button type="button" class="glow-btn glow-btn--full" id="es-m-drawer-auth-btn" onclick="if(window.openAccessoModal){window.openAccessoModal('email');}">
+              Accedi / Iscriviti
+            </button>
+          </div>
         </div>
       </aside>
     </div>
@@ -2345,7 +2352,9 @@
     <div class="header-actions nav-actions nav-right">
       <button type="button" class="theme-toggle" id="es-nav-theme" onclick="if(window.toggleSiteTheme){window.toggleSiteTheme();}" title="Cambia tema" aria-label="Cambia tema">🌙</button>
       <span class="lang" id="lang-switcher-simple" title="Seleziona lingua">IT ▾</span>
-      <a href="#login" class="btn-login accedi" onclick="if(window.openAccessoModal){window.openAccessoModal('email');} return false;">Accedi</a>
+      <div class="glow-wrap glow-wrap--nav">
+        <a href="#login" class="glow-btn glow-btn--nav btn-login accedi" onclick="if(window.openAccessoModal){window.openAccessoModal('email');} return false;">Accedi</a>
+      </div>
       
       <!-- Hamburger Menu Animato (<820px) -->
       <button type="button" class="es-nav-hamburger nav-toggle" id="es-nav-hamburger" aria-label="Menu" aria-expanded="false">
@@ -2402,10 +2411,12 @@
 
               <!-- Call to Action Chiari e Accattivanti -->
               <div class="es-hero-cta-group">
-                <button type="button" class="btn btn-primary es-cta-btn-primary" onclick="if(window.openAuthModal){ window.openAuthModal('register'); } else if(window.switchView){ window.switchView('bacheca'); }">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                  <span>Registrati come calciatore o società</span>
-                </button>
+                <div class="glow-wrap es-cta-glow-wrap">
+                  <button type="button" class="glow-btn es-cta-btn-primary" onclick="if(window.openAuthModal){ window.openAuthModal('register'); } else if(window.switchView){ window.switchView('bacheca'); }">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Registrati come calciatore o società</span>
+                  </button>
+                </div>
                 <a href="#bacheca-annunci" class="btn btn-secondary es-cta-btn-secondary" onclick="if(window.switchView){ window.switchView('bacheca'); } return false;">
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                   <span>Esplora la piattaforma</span>
