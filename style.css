@@ -6073,8 +6073,8 @@ body.layout-portfolio {
 
 #view-about,
 #view-about .about-dossier {
-  background: var(--bg-primary) !important;
-  background-color: var(--bg-primary) !important;
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 main {

@@ -13,7 +13,7 @@
 }
 
 .about-dossier {
-  --cs-bg: var(--bg-primary);
+  --cs-bg: transparent;
   --cs-line: rgba(255, 255, 255, 0.08);
   --cs-line-strong: rgba(255, 255, 255, 0.14);
   --cs-text: var(--text-main);
@@ -21,7 +21,7 @@
   --cs-faint: var(--text-dim);
   --cs-accent: var(--accent-primary);
   --cs-accent-dim: var(--accent-glow);
-  background: var(--cs-bg);
+  background: transparent !important;
   color: var(--cs-text);
   font-family: 'Inter', system-ui, sans-serif;
   line-height: 1.6;
@@ -60,10 +60,24 @@
   border-bottom: 1px solid var(--cs-line);
 }
 
-/* ----- Hero + letterhead ----- */
-.about-dossier .cs-hero {
-  padding: 4.5rem 0 3.25rem;
+/* ----- Hero + letterhead (Spaziatura per compensare la navbar fixed a 64px) ----- */
+.about-dossier .cs-hero,
+.mission-hero,
+.chi-siamo-intro {
+  position: static !important;
+  display: block !important;
+  height: auto !important;
+  min-height: auto !important;
+  padding: calc(var(--nav-h, 64px) + 24px) 0 3.25rem !important; /* 88px di padding superiore */
+  margin: 0 !important;
   animation: csFadeUp 0.7s ease;
+  overflow: visible !important;
+}
+
+/* Spacer removal utility */
+.hero-spacer,
+.chi-siamo-header-gap {
+  display: none !important;
 }
 
 @keyframes csFadeUp {
@@ -76,15 +90,20 @@
 }
 
 .about-dossier .cs-hero-grid {
-  display: grid;
+  display: grid !important;
   grid-template-columns: 1.4fr 1fr;
   gap: 56px;
   align-items: start;
+  height: auto !important;
+  min-height: auto !important;
 }
 
 .about-dossier .cs-hero-left {
-  display: flex;
-  flex-direction: column;
+  display: flex !important;
+  flex-direction: column !important;
+  height: auto !important;
+  min-height: auto !important;
+  gap: 8px;
 }
 
 .about-dossier .cs-eyebrow {
@@ -700,8 +719,11 @@ html[data-theme="mimetico-chiaro"] .about-dossier .cs-accent-teal {
 }
 
 @media (max-width: 768px) {
-  .about-dossier .cs-hero {
-    padding: 1.25rem 0 2.5rem;
+  .about-dossier .cs-hero,
+  .mission-hero,
+  .chi-siamo-intro {
+    padding-top: calc(var(--nav-h, 64px) + 20px) !important;
+    padding-bottom: 2rem !important;
   }
 }
 

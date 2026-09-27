@@ -3,7 +3,18 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-27** — HEROUX61 — Componente Drag & Drop dz-card con Contatore Anti-Flicker, Progress Bar & Verifica Documenti:
+Ultimo aggiornamento: **2026-09-27** — HEROUX62 — Chi Siamo / La Nostra Missione: Risoluzione Taglio Navbar Fissa e Rimozione Fascia Scura:
+1. **Scostamento Assoluto dalla Navbar Fissa (`chi-siamo.css`, `index.html`, `style.css`)**:
+   - Assegnate le classi semantiche `.mission-hero .chi-siamo-intro` all'header `.cs-hero` dell'area Chi siamo.
+   - Applicato `position: static !important; padding-top: 88px !important;` (pari all'altezza reale della navbar a 64px + 24px di respiro confortevole) per garantire che il kicker "Chi siamo", il titolo principale "LA NOSTRA MISSIONE" e la card info Sede/Contatti/Ambito non vengano mai clippati o coperti dalla barra fissa.
+   - Su mobile (< 768px), padding-top calibrato a 84px per una visualizzazione fluida.
+2. **Eliminazione Fascia Nera Vuota & Continuità Visiva Sfondo**:
+   - Rimosso dal markup di `index.html` il div vuoto spaziatore/parallax non necessario `<div class="es-plx es-plx-alt" aria-hidden="true"></div>`.
+   - Impostato `background: transparent !important;` su `#view-about` e `.about-dossier` in `style.css`, `chi-siamo.css` e `index.html`, permettendo allo sfondo originale scuro-teal/gradiente del sito di scorrere continuo e uniforme senza stacchi di colore.
+   - Configurato `display: none !important;` su classi spacer superflue (`.hero-spacer, .chi-siamo-header-gap, .es-plx-alt`).
+3. **File**: `index.html`, `chi-siamo.css`, `style.css`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260927_HEROUX62`.
+
+Feature precedente: **2026-09-27** — HEROUX61 — Componente Drag & Drop dz-card con Contatore Anti-Flicker, Progress Bar & Verifica Documenti:
 1. **Componente Drag & Drop `dz-card` (`file-dropzone.css`, `file-dropzone.js`)**:
    - Creato modulo dedicato `EliseeDropzone` con contatore anti-flicker (`dragCounter` incrementale su `dragenter` e decrementale su `dragleave`), prevenendo qualsiasi instabilità visiva o perdita di stato quando il cursore passa sopra elementi figli del dropzone.
    - Supporto file multipli, formati configurabili (`.pdf,.jpg,.jpeg,.png`) e limite configurabile.

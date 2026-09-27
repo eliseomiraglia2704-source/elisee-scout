@@ -363,6 +363,54 @@
       box-shadow: none !important;
     }
 
+    /* Chi siamo: scostamento navbar fissa e continuità visiva sfondo */
+    #view-about,
+    #view-about .about-dossier,
+    #about,
+    .about-dossier {
+      position: static !important;
+      background: transparent !important;
+      background-color: transparent !important;
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+    #view-about .about-dossier-wrap,
+    #about .about-dossier-wrap,
+    .about-dossier-wrap {
+      padding-top: 0 !important;
+    }
+    .about-dossier .cs-hero,
+    .mission-hero,
+    .chi-siamo-intro {
+      position: static !important;
+      display: block !important;
+      height: auto !important;
+      min-height: auto !important;
+      padding-top: 88px !important;
+      padding-bottom: 3.25rem !important;
+      margin-top: 0 !important;
+    }
+    .about-dossier .cs-mission {
+      display: block !important;
+      clear: both !important;
+      position: static !important;
+      padding: 56px 0 64px !important;
+      margin-top: 0 !important;
+    }
+    @media (max-width: 768px) {
+      .about-dossier .cs-hero,
+      .mission-hero,
+      .chi-siamo-intro {
+        padding-top: 84px !important;
+        padding-bottom: 2rem !important;
+      }
+    }
+    .hero-spacer,
+    .chi-siamo-header-gap,
+    .es-plx-alt {
+      display: none !important;
+    }
+
     /* l'hero deve arrivare sotto la navbar, non partire 64px dopo */
     #hero,
     .hero-section,
@@ -2687,11 +2735,10 @@
       <div id="view-about" style="display: none;">
 
         <section id="about" class="about-dossier">
-          <div class="es-plx es-plx-alt" aria-hidden="true"></div>
           <div class="about-dossier-wrap">
 
             <!-- HERO A DUE COLONNE: Titolo + intro a sinistra, card info ben separata a destra -->
-            <header class="cs-hero">
+            <header class="cs-hero mission-hero chi-siamo-intro">
               <div class="cs-hero-grid">
                 <div class="cs-hero-left">
                   <div class="cs-eyebrow" data-i18n="about.pageTitle">Chi siamo</div>
