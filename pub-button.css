@@ -1,0 +1,106 @@
+/* ==========================================================================
+   ELISEE SCOUT — ANIMATED PUBLISH BUTTON (.pub-btn)
+   Transizione documento volante, testo wipe ed esito check verde con anello
+   ========================================================================== */
+
+.pub-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  background: #0e1830;
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  transition: background .4s ease, transform .15s ease, box-shadow .4s ease;
+  box-shadow: 0 8px 20px rgba(14, 24, 48, .18);
+  user-select: none;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.pub-btn:active { transform: scale(.98); }
+
+.pub-btn .icon { position: relative; width: 20px; height: 20px; flex: none; display: flex; align-items: center; justify-content: center; }
+.pub-btn .icon svg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  stroke: #fff; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+  opacity: 0;
+}
+.pub-btn .ic-doc { opacity: 1; }
+
+.pub-btn .trail { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+.pub-btn .trail svg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  stroke: #8fb8ff; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+}
+
+.pub-btn[data-state="exiting"] .ic-doc {
+  opacity: 1;
+  animation: pub-fly-out .5s cubic-bezier(.4, 0, .7, .4) forwards;
+}
+.pub-btn[data-state="exiting"] .trail {
+  animation: pub-trail .5s cubic-bezier(.4, 0, .7, .4) forwards;
+}
+@keyframes pub-fly-out {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translate(22px, -20px) rotate(48deg) scale(.35); opacity: 0; }
+}
+@keyframes pub-trail {
+  0% { opacity: 0; }
+  40% { opacity: .55; }
+  100% { opacity: 0; }
+}
+
+.pub-btn[data-state="success"] .ic-doc { opacity: 0; }
+.pub-btn[data-state="success"] .ic-check {
+  animation: pub-fly-in .46s cubic-bezier(.2, .8, .3, 1.15) forwards;
+}
+@keyframes pub-fly-in {
+  0% { transform: translate(22px, -20px) rotate(48deg) scale(.35); opacity: 0; }
+  70% { transform: translate(-2px, 2px) rotate(-6deg) scale(1.12); opacity: 1; }
+  100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; }
+}
+
+.pub-btn[data-state="success"] {
+  background: #1f9d6b !important;
+  box-shadow: 0 10px 24px rgba(31, 157, 107, .35) !important;
+}
+.pub-btn[data-state="success"]::after {
+  content: "";
+  position: absolute; inset: 0; border-radius: inherit;
+  animation: pub-ring .6s ease;
+  pointer-events: none;
+}
+@keyframes pub-ring {
+  0% { box-shadow: 0 0 0 0 rgba(31, 157, 107, .55); }
+  100% { box-shadow: 0 0 0 18px rgba(31, 157, 107, 0); }
+}
+
+.pub-btn .label {
+  position: relative;
+  display: inline-block;
+  clip-path: inset(0 0 0 0);
+  white-space: nowrap;
+}
+.pub-btn[data-state="exiting"] .label {
+  animation: pub-wipe-out .38s ease-in forwards;
+}
+@keyframes pub-wipe-out {
+  to { clip-path: inset(0 0 0 100%); }
+}
+.pub-btn[data-state="success"] .label {
+  clip-path: inset(0 100% 0 0);
+  animation: pub-wipe-in .4s ease-out .06s forwards;
+}
+@keyframes pub-wipe-in {
+  to { clip-path: inset(0 0 0 0); }
+}

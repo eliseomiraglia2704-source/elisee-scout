@@ -395,7 +395,14 @@
     var actions = wizardStep === 1
       ? '<button type="button" class="btn btn-outline-pill" id="ann-cancel">Annulla</button>'
       : '<button type="button" class="btn btn-outline-pill" id="ann-back">Indietro</button>' +
-        '<button type="button" class="btn btn-outline-pill pf-btn-solid" id="ann-submit">Pubblica annuncio</button>';
+        '<button class="pub-btn pf-btn-solid" id="ann-submit" data-state="idle" type="button">' +
+          '<span class="icon">' +
+            '<svg class="ic-doc" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M9.5 13h5M9.5 16.5h5"/></svg>' +
+            '<svg class="ic-check" viewBox="0 0 24 24" stroke-width="2.6"><path d="M5 13l4.5 4.5L19 8"/></svg>' +
+            '<span class="trail"><svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/></svg></span>' +
+          '</span>' +
+          '<span class="label" id="ann-submit-label">Pubblica annuncio</span>' +
+        '</button>';
     form.innerHTML = body + '<div class="es-pub-actions">' + actions + '</div>';
     form.querySelectorAll('[data-ann-cat]').forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -603,49 +610,64 @@
       toast('Completa i campi obbligatori evidenziati.', 'error');
       return;
     }
-    persistLocal(payload);
-    fetch('/api/bacheca', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    }).then(function (r) {
-      if (!r.ok) {
-        toast('Salvato in locale. Sincronizzazione server in attesa.', 'warning');
-        return {};
-      }
-      return r.json().catch(function () { return {}; });
-    }).then(function (j) {
-      if (j && j.ok === false && j.fields && j.fields.length) {
-        toast('Il server ha rifiutato alcuni campi: ' + j.fields.join(', '), 'error');
-      } else if (j && j.ok) {
-        toast('Annuncio sincronizzato sul cloud.', 'success');
-      }
-    }).catch(function () {
-      toast('Salvato in locale (offline). Verrà sincronizzato non appena torna la linea.', 'warning');
-    });
-    if (window.EliseeSchede && window.EliseeSchede.ensureJob) {
-      try {
-        window.EliseeSchede.ensureJob({
-          id: payload.id,
-          title: payload.titolo,
-          club: payload.societa,
-          role: payload.ruolo,
-          location: payload.zona_citta,
-          ai: payload.ai
-        });
-      } catch (_) {}
+    var submitBtn = document.getElementById('ann-submit');
+    if (submitBtn && window.EliseePubButton && typeof window.EliseePubButton.animate === 'function') {
+      window.EliseePubButton.animate(submitBtn, function () {
+        return executeSubmission(payload);
+      });
+      return;
     }
-    closeModal();
-    if (typeof window.switchView === 'function') window.switchView('bacheca', '#bacheca-annunci');
-    setTimeout(function () {
-      writeCatParam(payload.categoria);
-      applyCatParam();
-      if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs();
-      if (typeof window.trackEliseeActivity === 'function') window.trackEliseeActivity('candidatura', { nome: payload.societa || payload.titolo });
-      toast('Annuncio pubblicato in «' + LABEL[payload.categoria] + '».', 'success');
-      var jobs = document.getElementById('jobs-container');
-      if (jobs) jobs.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 80);
+    executeSubmission(payload);
+  }
+
+  function executeSubmission(payload) {
+    return new Promise(function (resolve) {
+      persistLocal(payload);
+      fetch('/api/bacheca', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (r) {
+        if (!r.ok) {
+          toast('Salvato in locale. Sincronizzazione server in attesa.', 'warning');
+          return {};
+        }
+        return r.json().catch(function () { return {}; });
+      }).then(function (j) {
+        if (j && j.ok === false && j.fields && j.fields.length) {
+          toast('Il server ha rifiutato alcuni campi: ' + j.fields.join(', '), 'error');
+        } else if (j && j.ok) {
+          toast('Annuncio sincronizzato sul cloud.', 'success');
+        }
+      }).catch(function () {
+        toast('Salvato in locale (offline). Verrà sincronizzato non appena torna la linea.', 'warning');
+      }).finally(function () {
+        if (window.EliseeSchede && window.EliseeSchede.ensureJob) {
+          try {
+            window.EliseeSchede.ensureJob({
+              id: payload.id,
+              title: payload.titolo,
+              club: payload.societa,
+              role: payload.ruolo,
+              location: payload.zona_citta,
+              ai: payload.ai
+            });
+          } catch (_) {}
+        }
+        resolve();
+        setTimeout(function () {
+          closeModal();
+          if (typeof window.switchView === 'function') window.switchView('bacheca', '#bacheca-annunci');
+          writeCatParam(payload.categoria);
+          applyCatParam();
+          if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs();
+          if (typeof window.trackEliseeActivity === 'function') window.trackEliseeActivity('candidatura', { nome: payload.societa || payload.titolo });
+          toast('Annuncio pubblicato in «' + LABEL[payload.categoria] + '».', 'success');
+          var jobs = document.getElementById('jobs-container');
+          if (jobs) jobs.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 1200);
+      });
+    });
   }
 
   function openModal() {
@@ -685,7 +707,7 @@
 
   function patchCtas() {
     var pub = document.getElementById('btn-bacheca-pubblica');
-    if (pub) {
+    if (pub && !pub.classList.contains('pub-btn')) {
       pub.textContent = 'Nuovo annuncio';
       pub.setAttribute('title', 'Pubblica un nuovo annuncio');
     }

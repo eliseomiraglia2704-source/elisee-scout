@@ -3,7 +3,26 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-27** — HEROUX58 — Backend Completo per Barra di Ricerca Unica & Bacheca Annunci:
+Ultimo aggiornamento: **2026-09-27** — HEROUX59 — Pulsante Animato "Pubblica annuncio" con Volo Documento, Wipe Text & Check Verde:
+1. **Componente Animato Publish Button (`pub-button.css`, `pub-button.js`)**:
+   - Bottone `.pub-btn` con `isolation: isolate`, transizione fluida e ombra morbida `box-shadow: 0 8px 20px rgba(14,24,48,.18)`.
+   - Struttura icone SVG sovrapposte (`.icon` con `.ic-doc`, `.ic-check`, `.trail`).
+   - Stato `data-state="exiting"`:
+     - Documento che vola via in diagonale (`pub-fly-out`: `translate(22px,-20px) rotate(48deg) scale(.35)`).
+     - Scia azzurra che sfuma in avanti (`pub-trail`).
+     - Testo con effetto wipe da sinistra verso destra (`pub-wipe-out`: `clip-path: inset(0 0 0 100%)`).
+   - Stato `data-state="success"`:
+     - Background che diventa verde smeraldo `#1f9d6b` con bagliore dedicato `box-shadow: 0 10px 24px rgba(31,157,107,.35)`.
+     - Anello d'urto radiante ad espansione (`pub-ring`: da raggio 0 a 18px con dissolvenza).
+     - Icona check che plana al centro (`pub-fly-in`) con rimbalzo elastico.
+     - Testo che entra con wipe inverso (`pub-wipe-in`) trasformandosi in "Annuncio pubblicato".
+   - Reset automatico a `idle` dopo 2.2 secondi.
+2. **Integrazione UI e Pipeline di Pubblicazione Reale**:
+   - **Header Bacheca Reclutamento (`index.html`)**: sostituito `#btn-bacheca-pubblica` con il markup `.pub-btn`.
+   - **Form di Invio Annuncio (`bacheca-annunci.js`)**: il bottone `#ann-submit` nello Step 2 del wizard usa ora la medesima struttura `.pub-btn` ed attiva la chiamata reale `fetch('/api/bacheca', { method: 'POST' })` durante la fase di volo, confermando visivamente l'avvenuta pubblicazione prima della chiusura del modale e del refresh della lista opportunità.
+3. **File**: `pub-button.css`, `pub-button.js`, `index.html`, `bacheca-annunci.js`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260927_HEROUX59`.
+
+Feature precedente: **2026-09-27** — HEROUX58 — Backend Completo per Barra di Ricerca Unica & Bacheca Annunci:
 1. **Motore di Ricerca Full-Text & Ranking Server-Side (`api/manager.js`, `elisee_up.py`)**:
    - Creato motore di ricerca e ranking pesato `bachecaSearch`: ricerca multi-termine su titolo, ruolo, club, città, categoria, descrizione, benefit e condizioni.
    - Punteggi di pertinenza: exact match titolo/club (+100), prefisso (+60), parziale (+40), ruolo (+30), città (+25), descrizione (+15). Ordinamento secondario cronologico decrescente.
