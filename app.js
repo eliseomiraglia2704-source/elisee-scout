@@ -12090,19 +12090,16 @@ window.openRequestBadgeModal = function() {
           <p style="margin:0;font-size:0.8rem;color:#94a3b8;">Processo GDPR Art. 5(1)(d) — autenticità e accuratezza dati</p>
         </div>
       </div>
-      <div style="margin-bottom:1rem;">
-        <label style="font-size:0.82rem;color:#94a3b8;font-weight:bold;letter-spacing:0.05em;display:block;margin-bottom:0.4rem;">DOCUMENTO D'IDENTITÀ (PDF / JPG)</label>
-        <input type="file" id="badge-doc-upload" accept=".pdf,.jpg,.jpeg,.png"
-          style="width:100%;padding:0.6rem;background:rgba(255,255,255,0.05);border:1px solid rgba(56,189,248,0.25);border-radius:8px;color:#e2e8f0;font-size:0.85rem;">
-      </div>
-      <div style="margin-bottom:1rem;">
-        <label style="font-size:0.82rem;color:#94a3b8;font-weight:bold;letter-spacing:0.05em;display:block;margin-bottom:0.4rem;">SELFIE LIVE ANTI-FAKE (JPG / PNG)</label>
-        <input type="file" id="badge-selfie-upload" accept=".jpg,.jpeg,.png"
-          style="width:100%;padding:0.6rem;background:rgba(255,255,255,0.05);border:1px solid rgba(56,189,248,0.25);border-radius:8px;color:#e2e8f0;font-size:0.85rem;">
-      </div>
+      <!-- Componente Drag & Drop con contatore anti-flicker e progress bar per file/aggregata -->
+      <div id="badge-doc-dropzone-mount" style="margin-bottom:1.25rem;"></div>
+      
+      <!-- Input file nascosti per interoperabilità retrocompatibile -->
+      <input type="file" id="badge-doc-upload" accept=".pdf,.jpg,.jpeg,.png" style="display:none;">
+      <input type="file" id="badge-selfie-upload" accept=".jpg,.jpeg,.png" style="display:none;">
+
       <div style="margin-bottom:1.25rem;">
         <label style="font-size:0.82rem;color:#94a3b8;font-weight:bold;letter-spacing:0.05em;display:block;margin-bottom:0.4rem;">NOTE AGGIUNTIVE (opzionale)</label>
-        <textarea id="badge-notes" rows="3" placeholder="Es: documento in scadenza, selfie con carta d'identità mostrata..."
+        <textarea id="badge-notes" rows="2" placeholder="Es: documento in scadenza, selfie con carta d'identità mostrata..."
           style="width:100%;padding:0.6rem;background:rgba(255,255,255,0.05);border:1px solid rgba(56,189,248,0.25);border-radius:8px;color:#e2e8f0;font-size:0.85rem;resize:vertical;box-sizing:border-box;"></textarea>
       </div>
       <div style="background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.2);border-radius:10px;padding:0.75rem;margin-bottom:1.25rem;font-size:0.78rem;color:#94a3b8;line-height:1.5;">
@@ -12115,6 +12112,32 @@ window.openRequestBadgeModal = function() {
     </div>
   `;
   document.body.appendChild(modal);
+
+  // Inizializza Dropzone interattivo
+  try {
+    if (window.EliseeDropzone && window.EliseeDropzone.create) {
+      window._activeBadgeDropzone = window.EliseeDropzone.create(document.getElementById('badge-doc-dropzone-mount'), {
+        title: "Carica Documento d'Identità & Selfie",
+        subtitle: "Trascina carta d'identità, patente o passaporto (PDF, JPG, PNG)",
+        accept: ".pdf,.jpg,.jpeg,.png",
+        multiple: true,
+        maxFiles: 4,
+        onComplete: function(files) {
+          // Trasferisce i file agli input per verifica-account.js
+          try {
+            var dt1 = new DataTransfer();
+            var dt2 = new DataTransfer();
+            if (files[0]) dt1.items.add(files[0]);
+            if (files[1]) dt2.items.add(files[1]); else if (files[0]) dt2.items.add(files[0]);
+            var inp1 = document.getElementById('badge-doc-upload');
+            var inp2 = document.getElementById('badge-selfie-upload');
+            if (inp1) inp1.files = dt1.files;
+            if (inp2) inp2.files = dt2.files;
+          } catch (_) {}
+        }
+      });
+    }
+  } catch (_) {}
   if (window.lucide) lucide.createIcons();
 };
 

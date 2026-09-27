@@ -3,7 +3,20 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-27** — HEROUX60 — Centratura Assoluta Navbar a 3 Colonne Grid e Supporto Parentesi Decorative Sottili:
+Ultimo aggiornamento: **2026-09-27** — HEROUX61 — Componente Drag & Drop dz-card con Contatore Anti-Flicker, Progress Bar & Verifica Documenti:
+1. **Componente Drag & Drop `dz-card` (`file-dropzone.css`, `file-dropzone.js`)**:
+   - Creato modulo dedicato `EliseeDropzone` con contatore anti-flicker (`dragCounter` incrementale su `dragenter` e decrementale su `dragleave`), prevenendo qualsiasi instabilità visiva o perdita di stato quando il cursore passa sopra elementi figli del dropzone.
+   - Supporto file multipli, formati configurabili (`.pdf,.jpg,.jpeg,.png`) e limite configurabile.
+   - Barra di avanzamento per singolo file (`.dz-file-bar`) fluida con animazione CSS, e **avanzamento complessivo aggregato** (`.dz-aggregate-bar`).
+   - Stato di conferma: transizione a `.dz-dropzone--success` al completamento di tutti i caricamenti, con check verde, feedback testuale positivo e notifica toast.
+   - Pulsante rimozione per file (`.dz-file-remove`) con ricalcolo live del progresso aggregato.
+   - Supporto pieno sia in Light Mode che in Dark Mode tramite le variabili del design system di Elisee Scout.
+2. **Integrazione Verifica Profilo & Documento Anti-Fake (`app.js`, `index.html`)**:
+   - Integrato nel modal di richiesta **Badge di Verifica** (`#elisee-badge-request-modal`) per il caricamento conforme al regolamento dei 30 giorni (documento d'identità / patente / passaporto + selfie anti-fake).
+   - Collegamento trasparente e retrocompatibile con gli input file nascosti per il runtime di `verifica-account.js`.
+3. **File**: `file-dropzone.css`, `file-dropzone.js`, `app.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260927_HEROUX61`.
+
+Feature precedente: **2026-09-27** — HEROUX60 — Centratura Assoluta Navbar a 3 Colonne Grid e Supporto Parentesi Decorative Sottili:
 1. **Centratura Geometrica Assoluta della Navbar (`index.html`, `style.css`, `es-nav-ux.css`, `apple-nav.css`)**:
    - Sostituito il layout flex asimmetrico (`justify-content: space-between`) con **CSS Grid a 3 colonne** simmetriche: `grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 40px;`.
    - Allineamento delle tre aree:
