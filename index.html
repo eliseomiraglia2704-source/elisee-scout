@@ -272,7 +272,7 @@
       flex-wrap: nowrap !important;
       min-width: 0 !important;
     }
-    /* === FIX LINEA NAVBAR: deve stare PER ULTIMO === */
+    /* === FIX LINEA NAVBAR: layout a 3 colonne centratura assoluta === */
     header.public-header.public-navbar.main-header.portfolio-header,
     header.public-header,
     header.public-navbar,
@@ -287,11 +287,11 @@
       height: 64px !important;
       min-height: 64px !important;
       max-height: 64px !important;
-      padding: 0 32px !important;
+      padding: 0 40px !important;
       margin: 0 !important;
-      display: flex !important;
+      display: grid !important;
+      grid-template-columns: 1fr auto 1fr !important;
       align-items: center !important;
-      justify-content: space-between !important;
       position: fixed !important;
       top: 0 !important;
       left: 0 !important;
@@ -305,6 +305,49 @@
       box-shadow: none !important;
       backdrop-filter: none !important;
       -webkit-backdrop-filter: none !important;
+    }
+
+    header.public-header .brand-logo,
+    header.public-header .nav-logo,
+    header.public-header .logo,
+    .public-header .brand-logo,
+    .public-header .nav-logo,
+    .public-header .logo {
+      justify-self: start !important;
+      display: flex !important;
+      align-items: center !important;
+    }
+
+    header.public-header nav.main-nav,
+    header.public-header .nav-links,
+    header.public-header .nav-menu,
+    .public-header nav.main-nav,
+    .public-header .nav-links,
+    .public-header .nav-menu {
+      justify-self: center !important;
+      margin: 0 auto !important;
+    }
+
+    header.public-header .header-actions,
+    header.public-header .nav-actions,
+    header.public-header .nav-right,
+    .public-header .header-actions,
+    .public-header .nav-actions,
+    .public-header .nav-right {
+      justify-self: end !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-end !important;
+    }
+
+    @media (max-width: 820px) {
+      header.public-header.public-navbar.main-header.portfolio-header,
+      header.public-header,
+      .public-header {
+        display: flex !important;
+        justify-content: space-between !important;
+        padding: 0 20px !important;
+      }
     }
 
     body.is-internal-view header.public-header.public-navbar.main-header.portfolio-header,
@@ -2314,7 +2357,7 @@
   <div id="es-verify-banner" class="es-verify-banner" hidden></div>
   <header class="public-header public-navbar main-header portfolio-header">
     <!-- Logo -->
-    <div class="brand-logo nav-logo">
+    <div class="brand-logo nav-logo logo">
       <a href="#hero" class="site-brand" onclick="if(window.switchView){window.switchView('home','#hero');} return false;">ELISEE <span>SCOUT</span></a>
     </div>
 

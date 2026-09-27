@@ -11266,7 +11266,7 @@ header *, .navbar *, .public-header * {
   min-width: 0 !important;      /* Impedisce l'espansione fantasma dei flex item */
 }
 
-/* 3. Componente Header Pubblico (.public-header) */
+/* 3. Componente Header Pubblico (.public-header) - Grid a 3 colonne centratura assoluta */
 .public-header {
   position: fixed !important;
   top: 0 !important;
@@ -11275,16 +11275,42 @@ header *, .navbar *, .public-header * {
   height: 64px !important;
   min-height: 64px !important;
   max-height: 64px !important;
-  padding: 0 32px !important;
+  padding: 0 40px !important;
   margin: 0 !important;
-  display: flex !important;
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr !important;
   align-items: center !important;
-  justify-content: space-between !important;
   background-color: transparent !important;
   border-bottom: none !important;
   box-shadow: none !important;
   z-index: 1000 !important;
   box-sizing: border-box !important;
+}
+
+.public-header .brand-logo,
+.public-header .nav-logo,
+.public-header .logo {
+  justify-self: start !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.public-header .main-nav,
+.public-header .nav-links,
+.public-header .nav-menu {
+  justify-self: center !important;
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 auto !important;
+}
+
+.public-header .header-actions,
+.public-header .nav-actions,
+.public-header .nav-right {
+  justify-self: end !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
 }
 
 html[data-theme="mimetico-chiaro"] .public-header {
@@ -11815,11 +11841,30 @@ html[data-theme="mimetico-chiaro"] .glow-card--gold::before {
 }
 html[data-theme="mimetico-chiaro"] .glow-card--red::before {
   background: radial-gradient(circle, rgba(220, 38, 38, 0.22), transparent 70%);
+/* ============================================================
+   HEROUX60: Parentesi Decorative Sottili Hero & Sezioni
+   ============================================================ */
+.hero-bracket {
+  background: none !important;
+  border: none !important;
+  width: 28px !important;
+  height: 90px !important;
+  pointer-events: none;
 }
-
-
-
-
+.hero-bracket--left {
+  border-left: 2px solid #2fe0c8 !important;
+  border-top: 2px solid #2fe0c8 !important;
+  border-bottom: 2px solid #2fe0c8 !important;
+  border-top-left-radius: 12px !important;
+  border-bottom-left-radius: 12px !important;
+}
+.hero-bracket--right {
+  border-right: 2px solid #2fe0c8 !important;
+  border-top: 2px solid #2fe0c8 !important;
+  border-bottom: 2px solid #2fe0c8 !important;
+  border-top-right-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
+}
 
 
 

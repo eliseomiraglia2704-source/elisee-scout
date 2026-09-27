@@ -3,7 +3,24 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-27** — HEROUX59 — Pulsante Animato "Pubblica annuncio" con Volo Documento, Wipe Text & Check Verde:
+Ultimo aggiornamento: **2026-09-27** — HEROUX60 — Centratura Assoluta Navbar a 3 Colonne Grid e Supporto Parentesi Decorative Sottili:
+1. **Centratura Geometrica Assoluta della Navbar (`index.html`, `style.css`, `es-nav-ux.css`, `apple-nav.css`)**:
+   - Sostituito il layout flex asimmetrico (`justify-content: space-between`) con **CSS Grid a 3 colonne** simmetriche: `grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 40px;`.
+   - Allineamento delle tre aree:
+     - Sinistra: `.brand-logo, .nav-logo, .logo { justify-self: start; }`.
+     - Centro: `nav.main-nav, .nav-links, .nav-menu { justify-self: center; margin: 0 auto; }`.
+     - Destra: `.header-actions, .nav-actions, .nav-right { justify-self: end; }`.
+   - La fascia pillola centrale *"Chi siamo / Bacheca / Mappa"* risulta ora centrata con precisione millimetrica rispetto all'asse della viewport (`diff = 0.0px`), indipendentemente dalla disparità di larghezza tra il logo e il gruppo azioni di destra.
+   - Sotto gli 820px (mobile), fallback pulito a `display: flex; justify-content: space-between; padding: 0 20px;`.
+2. **Definizione e Supporto Parentesi Decorative Sottili (`.hero-bracket`)**:
+   - Chiarito l'equivoco dello screenshot in cui i tratti azzurri disegnati a mano con il pennarello di Windows erano stati scambiati per barre spesse/elementi pieni blu notte.
+   - Integrate le regole CSS esatte richieste per parentesi decorative sottili stile HUD/tech prive di qualsiasi riempimento solido:
+     - `.hero-bracket`: `background: none !important; border: none !important; width: 28px; height: 90px; pointer-events: none;`.
+     - `.hero-bracket--left`: `border-left: 2px solid #2fe0c8; border-top: 2px solid #2fe0c8; border-bottom: 2px solid #2fe0c8; border-top-left-radius: 12px; border-bottom-left-radius: 12px;`.
+     - `.hero-bracket--right`: `border-right: 2px solid #2fe0c8; border-top: 2px solid #2fe0c8; border-bottom: 2px solid #2fe0c8; border-top-right-radius: 12px; border-bottom-right-radius: 12px;`.
+3. **File**: `index.html`, `style.css`, `es-nav-ux.css`, `apple-nav.css`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260927_HEROUX60`.
+
+Feature precedente: **2026-09-27** — HEROUX59 — Pulsante Animato "Pubblica annuncio" con Volo Documento, Wipe Text & Check Verde:
 1. **Componente Animato Publish Button (`pub-button.css`, `pub-button.js`)**:
    - Bottone `.pub-btn` con `isolation: isolate`, transizione fluida e ombra morbida `box-shadow: 0 8px 20px rgba(14,24,48,.18)`.
    - Struttura icone SVG sovrapposte (`.icon` con `.ic-doc`, `.ic-check`, `.trail`).

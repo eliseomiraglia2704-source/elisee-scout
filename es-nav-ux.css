@@ -16,17 +16,17 @@
   --t-med: 260ms;
 }
 
-/* 1. Header Desktop Layout & Ultra-Modern Glassmorphism */
+/* 1. Header Desktop Layout & Ultra-Modern Glassmorphism (Layout 3 colonne con centratura geometrica assoluta) */
 header.public-header.public-navbar.main-header.portfolio-header,
 header.public-header {
   height: var(--nav-h) !important;
   min-height: var(--nav-h) !important;
   max-height: var(--nav-h) !important;
-  padding: 0 32px !important;
+  padding: 0 40px !important;
   box-sizing: border-box !important;
-  display: flex !important;
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr !important;
   align-items: center !important;
-  justify-content: space-between !important;
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
@@ -36,6 +36,32 @@ header.public-header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25) !important;
   transition: background 260ms var(--ease-framer), backdrop-filter 260ms var(--ease-framer), -webkit-backdrop-filter 260ms var(--ease-framer), border-color 260ms var(--ease-framer) !important;
+}
+
+header.public-header .brand-logo,
+header.public-header .nav-logo,
+header.public-header .logo {
+  justify-self: start !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+header.public-header .main-nav,
+header.public-header .nav-links,
+header.public-header .nav-menu {
+  justify-self: center !important;
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 auto !important;
+}
+
+header.public-header .header-actions,
+header.public-header .nav-actions,
+header.public-header .nav-right {
+  justify-self: end !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
 }
 
 /* Home a scroll 0: trasparenza pura con contrasto minimale */
@@ -1021,11 +1047,27 @@ html[data-theme="mimetico-chiaro"] .es-hamburger-bar {
 }
 .speed-chip .lbl {
   color: #c6cbdc;
-  font-size: 11px;
-  margin-left: auto;
-  font-weight: 500;
+/* ============================================================
+   HEROUX60: Parentesi Decorative Sottili Hero & Sezioni
+   ============================================================ */
+.hero-bracket {
+  background: none !important;
+  border: none !important;
+  width: 28px !important;
+  height: 90px !important;
+  pointer-events: none;
 }
-
-
-
-
+.hero-bracket--left {
+  border-left: 2px solid #2fe0c8 !important;
+  border-top: 2px solid #2fe0c8 !important;
+  border-bottom: 2px solid #2fe0c8 !important;
+  border-top-left-radius: 12px !important;
+  border-bottom-left-radius: 12px !important;
+}
+.hero-bracket--right {
+  border-right: 2px solid #2fe0c8 !important;
+  border-top: 2px solid #2fe0c8 !important;
+  border-bottom: 2px solid #2fe0c8 !important;
+  border-top-right-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
+}

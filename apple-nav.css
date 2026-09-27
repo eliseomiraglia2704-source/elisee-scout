@@ -30,14 +30,14 @@
     max-height: 64px !important;
     border-radius: 0 !important;
     margin: 0 !important;
-    padding: 0 32px !important;
+    padding: 0 40px !important;
     background: transparent !important;
     border: none !important;
     border-bottom: none !important;
     box-shadow: none !important;
-    display: flex !important;
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr !important;
     align-items: center !important;
-    justify-content: space-between !important;
     pointer-events: auto !important;
     z-index: 1000 !important;
     box-sizing: border-box !important;
@@ -46,17 +46,16 @@
   .portfolio-navbar,
   .navbar.portfolio-navbar {
     pointer-events: auto !important;
-    display: flex !important;
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr !important;
     align-items: center !important;
-    justify-content: space-between !important;
     gap: 12px !important;
     width: 100% !important;
-    max-width: 1440px !important;
     height: 64px !important;
     min-height: 64px !important;
     max-height: 64px !important;
     margin: 0 auto !important;
-    padding: 0 !important;
+    padding: 0 40px !important;
     border-radius: 0 !important;
     background: transparent !important;
     border: none !important;
@@ -64,9 +63,32 @@
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     overflow: visible !important;
-    flex-wrap: nowrap !important;
-    white-space: nowrap !important;
-    grid-template-columns: none !important;
+  }
+
+  .portfolio-navbar .brand-logo,
+  .portfolio-navbar .nav-logo,
+  .portfolio-navbar .logo {
+    justify-self: start !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .portfolio-navbar .nav-menu,
+  .portfolio-navbar .nav-links,
+  .portfolio-navbar .main-nav {
+    justify-self: center !important;
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 auto !important;
+  }
+
+  .portfolio-navbar .header-actions,
+  .portfolio-navbar .nav-actions,
+  .portfolio-navbar .nav-right {
+    justify-self: end !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
   }
 
   .portfolio-navbar .site-brand {
