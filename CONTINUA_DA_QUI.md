@@ -3,7 +3,24 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-26** — HEROUX57 — Integrazione Design System Glassmorphic su Barra di Ricerca Unica Bacheca:
+Ultimo aggiornamento: **2026-09-27** — HEROUX58 — Backend Completo per Barra di Ricerca Unica & Bacheca Annunci:
+1. **Motore di Ricerca Full-Text & Ranking Server-Side (`api/manager.js`, `elisee_up.py`)**:
+   - Creato motore di ricerca e ranking pesato `bachecaSearch`: ricerca multi-termine su titolo, ruolo, club, città, categoria, descrizione, benefit e condizioni.
+   - Punteggi di pertinenza: exact match titolo/club (+100), prefisso (+60), parziale (+40), ruolo (+30), città (+25), descrizione (+15). Ordinamento secondario cronologico decrescente.
+   - Supporto filtri avanzati: `q`, `cat`, `ruolo`, `location`, `under`, `housing`, `svincolato`, con paginazione `limit` e `offset`.
+2. **Endpoint Ricerca Federata Globale (`/api/search`, `vercel.json`)**:
+   - Ricerca simultanea aggregata su **Annunci**, **Club** (`catalog.json`) e **Calciatori / Utenti** (`users.json`), rispondente alla promessa "Cerca annunci, club o calciatori...".
+   - Restituisce aggregazione strutturata con conteggi e risultati categorizzati.
+   - Aggiunta route rewrite in `vercel.json` (`/api/search` -> `/api/manager?path=search`).
+3. **Allineamento Server Locale Indistruttibile (`elisee_up.py`)**:
+   - Implementato `_bacheca_search_api` per gestione locale autonoma di `/api/bacheca`, `/api/search` e `/api/schede`.
+   - Persistenza atomica su `data/bacheca/annunci.json` con validazione campi, calcolo flag booleani e generazione ID.
+4. **Sincronizzazione Asincrona Real-Time Debounced (`scry-search.js`, `bacheca-annunci.js`)**:
+   - Integrata funzione `syncBackendSearch` (debounce 300ms) che effettua chiamate `/api/bacheca?q=` unendo gli annunci remoti con latenza zero nel DOM.
+   - Esposta `window.EliseeGlobalSearch(q, type)` per interrogazioni globali federate da qualsiasi modulo.
+5. **File**: `api/manager.js`, `elisee_up.py`, `vercel.json`, `scry-search.js`, `bacheca-annunci.js`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260927_HEROUX58`.
+
+Feature precedente: **2026-09-26** — HEROUX57 — Integrazione Design System Glassmorphic su Barra di Ricerca Unica Bacheca:
 1. **Applicazione Variabili CSS Native del Progetto (`scry-search.css`)**:
    - Definite le variabili native `:root` (`--glass`, `--ink`, `--ink-2`, `--ink-3`, `--hover`, `--radius`, `--spring`).
    - Contenitore `.search-bar-container`: `width: 100%`, `max-width: 600px`, `margin: 0 auto 20px auto`.

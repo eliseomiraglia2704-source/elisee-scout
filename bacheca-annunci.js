@@ -720,6 +720,8 @@
     badgeHtml: badgeHtml,
     applyCatParam: applyCatParam,
     syncCatParam: syncCatParam,
+    mergeRemote: mergeRemote,
+    pullRemote: pullRemote,
     open: openModal,
     close: closeModal
   };

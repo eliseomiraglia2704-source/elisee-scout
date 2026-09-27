@@ -268,15 +268,205 @@ function bachecaItem(b) {
   };
 }
 
+function computeRelevanceScore(item, q) {
+  let score = 0;
+  const tit = String(item.titolo || item.title || '').toLowerCase();
+  const soc = String(item.societa || item.club || '').toLowerCase();
+  const r = String(item.ruolo || item.ruolo_campo || item.ruolo_cercato || '').toLowerCase();
+  const loc = String(item.zona_citta || item.location || item.zona || '').toLowerCase();
+  const desc = String(item.descrizione || item.desc || '').toLowerCase();
+
+  if (tit === q || soc === q) score += 100;
+  else if (tit.startsWith(q) || soc.startsWith(q)) score += 60;
+  else if (tit.includes(q) || soc.includes(q)) score += 40;
+
+  if (r.includes(q)) score += 30;
+  if (loc.includes(q)) score += 25;
+  if (desc.includes(q)) score += 15;
+  return score;
+}
+
+function bachecaSearch(items, params) {
+  const q = String(params.get('q') || '').trim().toLowerCase();
+  const cat = String(params.get('categoria') || params.get('cat') || '').trim();
+  const role = String(params.get('ruolo') || params.get('role') || '').trim().toLowerCase();
+  const loc = String(params.get('location') || params.get('zona') || params.get('citta') || '').trim().toLowerCase();
+  const isUnder = params.get('under') === 'true' || params.get('under') === '1';
+  const isHousing = params.get('housing') === 'true' || params.get('housing') === '1';
+  const isSvincolato = params.get('svincolato') === 'true' || params.get('svincolato') === '1';
+  const limit = Math.min(200, Math.max(1, parseInt(params.get('limit') || '100', 10) || 100));
+  const offset = Math.max(0, parseInt(params.get('offset') || '0', 10) || 0);
+
+  let filtered = (items || []).filter((item) => {
+    if (!item) return false;
+    if (item.stato && item.stato !== 'attivo') return false;
+
+    if (cat && cat !== 'all' && item.categoria !== cat) return false;
+
+    if (role && role !== 'all') {
+      const rBlob = [item.ruolo, item.ruolo_campo, item.ruolo_cercato, item.role].filter(Boolean).join(' ').toLowerCase();
+      if (!rBlob.includes(role)) return false;
+    }
+
+    if (loc && loc !== 'all') {
+      const lBlob = [item.zona_citta, item.zona_provincia, item.zona_regione, item.zona, item.location].filter(Boolean).join(' ').toLowerCase();
+      if (!lBlob.includes(loc)) return false;
+    }
+
+    if (isUnder && !item.under && (Number(item.eta) > 20 || Number(item.eta_max) > 20)) return false;
+    if (isHousing && !item.housing && !(item.benefit && /vitto|alloggio/i.test(item.benefit))) return false;
+    if (isSvincolato && !item.svincolato && item.disponibilita !== 'svincolato' && item.tipo_operazione !== 'svincolo') return false;
+
+    if (q) {
+      const searchBlob = [
+        item.titolo, item.title,
+        item.societa, item.club,
+        item.ruolo, item.ruolo_campo, item.ruolo_cercato, item.role,
+        item.zona_citta, item.zona_provincia, item.zona_regione, item.location, item.zona,
+        item.categoria, item.categoria_club, item.categoria_squadra, item.categoria_attuale,
+        item.descrizione, item.desc, item.condizioni, item.qualifica_richiesta
+      ].filter(Boolean).join(' ').toLowerCase();
+
+      const words = q.split(/\s+/).filter(Boolean);
+      for (const w of words) {
+        if (!searchBlob.includes(w)) return false;
+      }
+    }
+    return true;
+  });
+
+  if (q) {
+    filtered.sort((a, b) => {
+      const sA = computeRelevanceScore(a, q);
+      const sB = computeRelevanceScore(b, q);
+      if (sB !== sA) return sB - sA;
+      const tA = Date.parse(a.data_creazione || a.createdAt || '') || 0;
+      const tB = Date.parse(b.data_creazione || b.createdAt || '') || 0;
+      return tB - tA;
+    });
+  } else {
+    filtered.sort((a, b) => {
+      const tA = Date.parse(a.data_creazione || a.createdAt || '') || 0;
+      const tB = Date.parse(b.data_creazione || b.createdAt || '') || 0;
+      return tB - tA;
+    });
+  }
+
+  const total = filtered.length;
+  const paged = filtered.slice(offset, offset + limit);
+  return { total, items: paged, limit, offset };
+}
+
+async function searchGlobal(params) {
+  const q = String(params.get('q') || '').trim().toLowerCase();
+  const type = String(params.get('type') || 'all').toLowerCase();
+  const limit = Math.min(60, Math.max(1, parseInt(params.get('limit') || '20', 10) || 20));
+
+  const results = {
+    annunci: [],
+    clubs: [],
+    players: []
+  };
+
+  if (type === 'all' || type === 'annunci') {
+    const allAnnunci = await bachecaLoad();
+    const searchRes = bachecaSearch(allAnnunci, params);
+    results.annunci = searchRes.items.slice(0, limit);
+  }
+
+  if ((type === 'all' || type === 'clubs') && q) {
+    try {
+      const catPath = path.join(process.cwd(), 'data', 'squadre', 'catalog.json');
+      if (fs.existsSync(catPath)) {
+        const catData = JSON.parse(fs.readFileSync(catPath, 'utf8'));
+        const teams = Array.isArray(catData) ? catData : (catData.teams || catData.squadre || []);
+        results.clubs = teams
+          .filter((t) => {
+            if (!t) return false;
+            const name = String(t.name || t.nome || '').toLowerCase();
+            const city = String(t.city || t.citta || '').toLowerCase();
+            return name.includes(q) || city.includes(q);
+          })
+          .slice(0, limit)
+          .map((t) => ({
+            id: t.id || t.slug || t.name,
+            name: t.name || t.nome,
+            category: t.category || t.campionato || '',
+            city: t.city || t.citta || '',
+            logo: t.logo || ''
+          }));
+      }
+    } catch (_) {}
+  }
+
+  if ((type === 'all' || type === 'calciatori' || type === 'players') && q) {
+    try {
+      const usersPath = path.join(process.cwd(), 'data', 'auth', 'users.json');
+      if (fs.existsSync(usersPath)) {
+        const usersData = JSON.parse(fs.readFileSync(usersPath, 'utf8'));
+        const users = Array.isArray(usersData) ? usersData : (usersData.users || []);
+        results.players = users
+          .filter((u) => {
+            if (!u) return false;
+            const fullName = [u.nome, u.cognome].filter(Boolean).join(' ').toLowerCase();
+            const role = String(u.ruolo || '').toLowerCase();
+            const team = String(u.team || u.squadra || '').toLowerCase();
+            return fullName.includes(q) || role.includes(q) || team.includes(q);
+          })
+          .slice(0, limit)
+          .map((u) => ({
+            id: u.id,
+            nome: u.nome,
+            cognome: u.cognome,
+            ruolo: u.ruolo,
+            team: u.team || u.squadra || 'Svincolato',
+            categoria: u.categoria || ''
+          }));
+      }
+    } catch (_) {}
+  }
+
+  return {
+    ok: true,
+    q,
+    type,
+    results,
+    counts: {
+      annunci: results.annunci.length,
+      clubs: results.clubs.length,
+      players: results.players.length,
+      total: results.annunci.length + results.clubs.length + results.players.length
+    }
+  };
+}
+
 module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') {
     send(res, 204, {});
     return;
   }
   const url = new URL(req.url, 'http://localhost');
-  if (url.searchParams.get('path') === 'bacheca') {
+  const pathParam = url.searchParams.get('path');
+
+  if (pathParam === 'search') {
+    if (req.method !== 'GET') return send(res, 405, { ok: false, error: 'method' });
+    const searchRes = await searchGlobal(url.searchParams);
+    return send(res, 200, searchRes);
+  }
+
+  if (pathParam === 'bacheca') {
     if (req.method === 'GET') {
-      return send(res, 200, { ok: true, items: await bachecaLoad(), categorie: BACHECA_CATS });
+      const all = await bachecaLoad();
+      const resData = bachecaSearch(all, url.searchParams);
+      return send(res, 200, {
+        ok: true,
+        query: url.searchParams.get('q') || '',
+        total: resData.total,
+        items: resData.items,
+        limit: resData.limit,
+        offset: resData.offset,
+        categorie: BACHECA_CATS
+      });
     }
     if (req.method !== 'POST') return send(res, 405, { ok: false, error: 'method' });
     const body = await readBody(req);

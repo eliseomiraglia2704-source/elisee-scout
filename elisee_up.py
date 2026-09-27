@@ -634,6 +634,8 @@ class Handler(SimpleHTTPRequestHandler):
             return self._proxy_fetch(target)
         if path.startswith("/api/auth") or path == "/auth/callback":
             return self._auth_api(path, self.command.upper())
+        if path in ("/api/bacheca", "/api/search", "/api/schede") or (path.startswith("/api/manager") and any(f"path={p}" in (parsed.query or "") for p in ("bacheca", "search", "schede"))):
+            return self._bacheca_search_api(path, self.command.upper())
         if path.startswith("/api/manager"):
             return self._manager_api(path, self.command.upper())
         if not path.startswith("/api/autopilot"):
@@ -1091,6 +1093,280 @@ class Handler(SimpleHTTPRequestHandler):
             log("manager_api: " + str(e))
             self._json(500, {"ok": False, "error": str(e)})
             return True
+
+    def _bacheca_search_api(self, path: str, method: str) -> bool:
+        if method == "OPTIONS":
+            self.send_response(204)
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Elisee-Admin")
+            self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+            self.end_headers()
+            return True
+
+        parsed = urlparse(self.path)
+        qs = parse_qs(parsed.query or "")
+        path_param = (qs.get("path") or [""])[0].lower()
+        sub = "bacheca"
+        if path == "/api/search" or path_param == "search":
+            sub = "search"
+        elif path == "/api/schede" or path_param == "schede":
+            sub = "schede"
+
+        bacheca_file = ROOT / "data" / "bacheca" / "annunci.json"
+        schede_file = ROOT / "data" / "bacheca" / "schede.json"
+
+        def load_annunci():
+            try:
+                if bacheca_file.exists():
+                    data = json.loads(bacheca_file.read_text(encoding="utf-8"))
+                    if isinstance(data, list):
+                        return data
+                    if isinstance(data, dict) and isinstance(data.get("items"), list):
+                        return data["items"]
+            except Exception:
+                pass
+            return []
+
+        def save_annunci(items):
+            try:
+                bacheca_file.parent.mkdir(parents=True, exist_ok=True)
+                bacheca_file.write_text(json.dumps({"items": (items or [])[:400]}, ensure_ascii=False, indent=2), encoding="utf-8")
+            except Exception:
+                pass
+
+        if sub == "search" and method in ("GET", "HEAD"):
+            q = str((qs.get("q") or [""])[0] or "").strip().lower()
+            stype = str((qs.get("type") or ["all"])[0] or "all").lower()
+            limit = min(60, max(1, int((qs.get("limit") or ["20"])[0] or 20)))
+
+            results = {"annunci": [], "clubs": [], "players": []}
+
+            if stype in ("all", "annunci"):
+                ann_list = load_annunci()
+                if q:
+                    words = q.split()
+                    matched = []
+                    for item in ann_list:
+                        blob = " ".join([
+                            str(item.get("titolo") or item.get("title") or ""),
+                            str(item.get("societa") or item.get("club") or ""),
+                            str(item.get("ruolo") or item.get("ruolo_campo") or item.get("ruolo_cercato") or ""),
+                            str(item.get("zona_citta") or item.get("location") or item.get("zona") or ""),
+                            str(item.get("categoria") or item.get("categoria_club") or ""),
+                            str(item.get("descrizione") or item.get("desc") or ""),
+                        ]).lower()
+                        if all(w in blob for w in words):
+                            matched.append(item)
+                    results["annunci"] = matched[:limit]
+                else:
+                    results["annunci"] = ann_list[:limit]
+
+            if stype in ("all", "clubs") and q:
+                try:
+                    cat_path = ROOT / "data" / "squadre" / "catalog.json"
+                    if cat_path.exists():
+                        cat_data = json.loads(cat_path.read_text(encoding="utf-8"))
+                        teams = cat_data if isinstance(cat_data, list) else (cat_data.get("teams") or cat_data.get("squadre") or [])
+                        matched_teams = []
+                        for t in teams:
+                            name = str(t.get("name") or t.get("nome") or "").lower()
+                            city = str(t.get("city") or t.get("citta") or "").lower()
+                            if q in name or q in city:
+                                matched_teams.append({
+                                    "id": t.get("id") or t.get("slug") or t.get("name"),
+                                    "name": t.get("name") or t.get("nome"),
+                                    "category": t.get("category") or t.get("campionato") or "",
+                                    "city": t.get("city") or t.get("citta") or "",
+                                    "logo": t.get("logo") or "",
+                                })
+                        results["clubs"] = matched_teams[:limit]
+                except Exception:
+                    pass
+
+            if stype in ("all", "calciatori", "players") and q:
+                try:
+                    users_path = ROOT / "data" / "auth" / "users.json"
+                    if users_path.exists():
+                        users_data = json.loads(users_path.read_text(encoding="utf-8"))
+                        users = users_data if isinstance(users_data, list) else (users_data.get("users") or [])
+                        matched_u = []
+                        for u in users:
+                            full_name = f"{u.get('nome') or ''} {u.get('cognome') or ''}".strip().lower()
+                            role = str(u.get("ruolo") or "").lower()
+                            team = str(u.get("team") or u.get("squadra") or "").lower()
+                            if q in full_name or q in role or q in team:
+                                matched_u.append({
+                                    "id": u.get("id"),
+                                    "nome": u.get("nome"),
+                                    "cognome": u.get("cognome"),
+                                    "ruolo": u.get("ruolo"),
+                                    "team": u.get("team") or u.get("squadra") or "Svincolato",
+                                    "categoria": u.get("categoria") or "",
+                                })
+                        results["players"] = matched_u[:limit]
+                except Exception:
+                    pass
+
+            counts = {
+                "annunci": len(results["annunci"]),
+                "clubs": len(results["clubs"]),
+                "players": len(results["players"]),
+                "total": len(results["annunci"]) + len(results["clubs"]) + len(results["players"])
+            }
+            self._json(200, {"ok": True, "q": q, "type": stype, "results": results, "counts": counts})
+            return True
+
+        if sub == "bacheca":
+            if method in ("GET", "HEAD"):
+                items = load_annunci()
+                q = str((qs.get("q") or [""])[0] or "").strip().lower()
+                cat = str((qs.get("categoria") or qs.get("cat") or [""])[0] or "").strip()
+                role = str((qs.get("ruolo") or qs.get("role") or [""])[0] or "").strip().lower()
+                loc = str((qs.get("location") or qs.get("zona") or qs.get("citta") or [""])[0] or "").strip().lower()
+                is_under = (qs.get("under") or [""])[0] in ("true", "1")
+                is_housing = (qs.get("housing") or [""])[0] in ("true", "1")
+                is_svincolato = (qs.get("svincolato") or [""])[0] in ("true", "1")
+                limit = min(200, max(1, int((qs.get("limit") or ["100"])[0] or 100)))
+                offset = max(0, int((qs.get("offset") or ["0"])[0] or 0))
+
+                filtered = []
+                for item in items:
+                    if not item or (item.get("stato") and item.get("stato") != "attivo"):
+                        continue
+                    if cat and cat != "all" and item.get("categoria") != cat:
+                        continue
+                    if role and role != "all":
+                        r_blob = f"{item.get('ruolo') or ''} {item.get('ruolo_campo') or ''} {item.get('ruolo_cercato') or ''} {item.get('role') or ''}".lower()
+                        if role not in r_blob:
+                            continue
+                    if loc and loc != "all":
+                        l_blob = f"{item.get('zona_citta') or ''} {item.get('zona_provincia') or ''} {item.get('zona_regione') or ''} {item.get('zona') or ''} {item.get('location') or ''}".lower()
+                        if loc not in l_blob:
+                            continue
+                    if is_under and not item.get("under") and (int(item.get("eta") or 99) > 20):
+                        continue
+                    if is_housing and not item.get("housing") and "vitto" not in str(item.get("benefit") or "").lower():
+                        continue
+                    if is_svincolato and not item.get("svincolato") and item.get("disponibilita") != "svincolato" and item.get("tipo_operazione") != "svincolo":
+                        continue
+
+                    if q:
+                        blob = " ".join([
+                            str(item.get("titolo") or item.get("title") or ""),
+                            str(item.get("societa") or item.get("club") or ""),
+                            str(item.get("ruolo") or item.get("ruolo_campo") or item.get("ruolo_cercato") or ""),
+                            str(item.get("zona_citta") or item.get("location") or item.get("zona") or ""),
+                            str(item.get("categoria") or item.get("categoria_club") or ""),
+                            str(item.get("descrizione") or item.get("desc") or ""),
+                        ]).lower()
+                        words = q.split()
+                        if not all(w in blob for w in words):
+                            continue
+                    filtered.append(item)
+
+                if q:
+                    def score(it):
+                        sc = 0
+                        tit = str(it.get("titolo") or it.get("title") or "").lower()
+                        soc = str(it.get("societa") or it.get("club") or "").lower()
+                        r = str(it.get("ruolo") or it.get("ruolo_campo") or it.get("ruolo_cercato") or "").lower()
+                        if tit == q or soc == q: sc += 100
+                        elif tit.startswith(q) or soc.startswith(q): sc += 60
+                        elif tit in q or soc in q or q in tit or q in soc: sc += 40
+                        if q in r: sc += 30
+                        return sc
+                    filtered.sort(key=score, reverse=True)
+
+                paged = filtered[offset:offset + limit]
+                cats = [
+                    "cerco_squadra", "cerco_giocatore", "cerco_allenatore",
+                    "cerco_arbitro", "cerco_amichevole", "cerco_sponsor", "calciomercato"
+                ]
+                self._json(200, {
+                    "ok": True,
+                    "query": q,
+                    "total": len(filtered),
+                    "items": paged,
+                    "limit": limit,
+                    "offset": offset,
+                    "categorie": cats
+                })
+                return True
+
+            if method == "POST":
+                body = self._read_json_body()
+                cat = str(body.get("categoria") or "").strip()
+                titolo = str(body.get("titolo") or body.get("title") or "").strip()
+                desc = str(body.get("descrizione") or body.get("desc") or "").strip()
+                citta = str(body.get("zona_citta") or body.get("zona") or body.get("location") or "").strip()
+                if not cat or not titolo or not desc or not citta:
+                    self._json(400, {"ok": False, "error": "validazione", "fields": ["categoria", "titolo", "descrizione", "zona_citta"]})
+                    return True
+
+                now_iso = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+                item_id = str(body.get("id") or f"ann-{int(time.time() * 1000)}")
+                new_item = {
+                    "id": item_id,
+                    "categoria": cat,
+                    "titolo": titolo,
+                    "descrizione": desc,
+                    "societa": str(body.get("societa") or body.get("club") or "Annuncio").strip(),
+                    "zona_citta": citta,
+                    "zona_provincia": str(body.get("zona_provincia") or "").strip(),
+                    "zona_regione": str(body.get("zona_regione") or "").strip(),
+                    "data_creazione": now_iso,
+                    "data_scadenza": str(body.get("data_scadenza") or "").strip(),
+                    "stato": "attivo",
+                    "autore_id": str(body.get("autore_id") or "").strip(),
+                    "ruolo_campo": str(body.get("ruolo_campo") or "").strip(),
+                    "ruolo_cercato": str(body.get("ruolo_cercato") or "").strip(),
+                    "ruolo": str(body.get("ruolo") or body.get("ruolo_cercato") or body.get("ruolo_campo") or "").strip(),
+                    "categoria_club": str(body.get("categoria_club") or "").strip(),
+                    "categoria_squadra": str(body.get("categoria_squadra") or "").strip(),
+                    "condizioni": str(body.get("condizioni") or "").strip(),
+                    "ai": body.get("ai") is not False,
+                    "under": bool(body.get("under")),
+                    "housing": bool(body.get("housing")),
+                    "svincolato": bool(body.get("svincolato")),
+                    "raggio": int(body.get("raggio") or 4),
+                }
+                items = load_annunci()
+                items = [x for x in items if x and x.get("id") != item_id]
+                items.insert(0, new_item)
+                save_annunci(items)
+                self._json(200, {"ok": True, "item": new_item})
+                return True
+
+        if sub == "schede":
+            if method in ("GET", "HEAD"):
+                try:
+                    if schede_file.exists():
+                        data = json.loads(schede_file.read_text(encoding="utf-8"))
+                        self._json(200, {"ok": True, "jobs": data if isinstance(data, dict) else {}})
+                        return True
+                except Exception:
+                    pass
+                self._json(200, {"ok": True, "jobs": {}})
+                return True
+            if method == "POST":
+                body = self._read_json_body()
+                cur = {}
+                try:
+                    if schede_file.exists():
+                        cur = json.loads(schede_file.read_text(encoding="utf-8"))
+                except Exception:
+                    cur = {}
+                if isinstance(body.get("jobs"), dict):
+                    cur = body["jobs"]
+                elif isinstance(body.get("job"), dict) and body["job"].get("id"):
+                    cur[body["job"]["id"]] = body["job"]
+                schede_file.parent.mkdir(parents=True, exist_ok=True)
+                schede_file.write_text(json.dumps(cur, ensure_ascii=False, indent=2), encoding="utf-8")
+                self._json(200, {"ok": True, "jobs": cur})
+                return True
+
+        self._json(404, {"ok": False, "error": "not_found", "sub": sub})
+        return True
 
     def _site_origin(self) -> str:
         host = (self.headers.get("Host") or f"{HOST}:{PORT}").split(",")[0].strip()

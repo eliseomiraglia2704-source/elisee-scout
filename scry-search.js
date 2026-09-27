@@ -59,7 +59,41 @@
       // 5. Trigger CustomEvent standard per integrazioni terze
       document.dispatchEvent(new CustomEvent('opportunities:search', { detail: { query: searchTerm } }));
       document.dispatchEvent(new CustomEvent('scry:search', { detail: { query: searchTerm } }));
+
+      // 6. Sincronizzazione debounced asincrona con il backend (/api/bacheca?q=...)
+      syncBackendSearch(searchTerm);
     }
+
+    let backendSearchTimer = null;
+    function syncBackendSearch(query) {
+      clearTimeout(backendSearchTimer);
+      if (!query || query.length < 2) return;
+      backendSearchTimer = setTimeout(() => {
+        fetch('/api/bacheca?q=' + encodeURIComponent(query))
+          .then(r => r.json())
+          .then(data => {
+            if (data && data.ok && Array.isArray(data.items) && data.items.length) {
+              if (window.EliseeBacheca && typeof window.EliseeBacheca.mergeRemote === 'function') {
+                window.EliseeBacheca.mergeRemote(data.items);
+                if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs();
+              }
+            }
+          })
+          .catch(() => {});
+      }, 300);
+    }
+
+    // Ricerca federata unificata su Annunci, Club e Calciatori (/api/search)
+    window.EliseeGlobalSearch = async function (q, type) {
+      try {
+        const url = '/api/search?q=' + encodeURIComponent(q || '') + (type ? '&type=' + encodeURIComponent(type) : '');
+        const res = await fetch(url);
+        return await res.json();
+      } catch (err) {
+        console.error('EliseeGlobalSearch error', err);
+        return { ok: false, error: String(err) };
+      }
+    };
 
     // Evento di digitazione real-time
     searchInput.addEventListener('input', (e) => {
