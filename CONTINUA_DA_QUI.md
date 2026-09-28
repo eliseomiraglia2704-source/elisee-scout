@@ -3,7 +3,12 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-28** — HEROUX66 — Sfondo continuo fino al footer:
+Ultimo aggiornamento: **2026-09-28** — HEROUX67 — Carosello isole sulla home, dopo la hero:
+1. Sezione `#funzioni` subito dopo `#hero`. Navbar, sfondo, Chi siamo, Bacheca, Mappa e footer non toccati.
+2. Cinque card demo (verifica, GPS, bacheca, trattative, GDPR minori) con badge Esempio. Dati solo nell'array `SLIDES` di `island-carousel.js`. Testi IT/EN in `i18n.js`.
+3. Scroll-snap, frecce, puntini, IntersectionObserver, autoplay 5s che si ferma dopo un gesto. File: `island-carousel.css`, `island-carousel.js`, `index.html`, `i18n.js`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX67`.
+
+Feature precedente: **2026-09-28** — HEROUX66 — Sfondo continuo fino al footer:
 1. Il gradiente non è più sul body con `background-attachment`. Sta su `body.layout-portfolio::before` (`position: fixed; inset: 0; z-index: -1`). html ha solo `--bg-base`.
 2. Tab Bacheca (`.bacheca-nav-tabs`) trasparenti: resta la linea e la tab attiva teal.
 3. Footer trasparente, separato da `border-top: 1px rgba(255,255,255,0.06)`.
