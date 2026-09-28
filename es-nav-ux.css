@@ -334,40 +334,7 @@ header.public-header .header-actions {
   gap: 10px !important;
 }
 
-/* Toggle Tema con Rotazione Fluida */
-header.public-header .theme-toggle {
-  width: 36px !important;
-  height: 36px !important;
-  min-width: 36px !important;
-  min-height: 36px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  cursor: pointer;
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  color: var(--text) !important;
-  border-radius: 999px;
-  transition: transform 300ms var(--ease-spring), background 200ms ease, border-color 200ms ease !important;
-  user-select: none;
-  font-size: 0.92rem;
-  padding: 0;
-}
-@media (hover: hover) and (pointer: fine) {
-  header.public-header .theme-toggle:hover {
-    background: rgba(255, 255, 255, 0.12) !important;
-    border-color: rgba(0, 245, 212, 0.4) !important;
-    transform: scale(1.08) rotate(18deg) !important;
-  }
-}
-header.public-header .theme-toggle:active {
-  transform: scale(0.92) rotate(-15deg) !important;
-}
-html[data-theme="mimetico-chiaro"] header.public-header .theme-toggle {
-  background: rgba(0, 0, 0, 0.05) !important;
-  border-color: rgba(0, 0, 0, 0.1) !important;
-  color: #0f172a !important;
-}
+/* Toggle Tema: gestito esclusivamente da realistic-switch.css */
 
 /* Pillola Lingua */
 header.public-header .lang {

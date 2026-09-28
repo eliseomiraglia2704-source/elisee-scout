@@ -3,7 +3,22 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-28** — HEROUX71 — Fix sovrascrittura Realistic Switch da role-sidebar-pro e forzatura cache-bust globale:
+Ultimo aggiornamento: **2026-09-28** — HEROUX72 — Rimozione riquadro esterno e blindatura totale movimento Realistic Switch:
+1. **Risoluzione Bug 1 (Riquadro attorno al pulsante)**:
+   - Identificati e rimossi tutti i vecchi selettori responsabili (`header.public-header .theme-toggle`, `.theme-toggle:hover`, `.theme-toggle:active` in `es-nav-ux.css`, e `.theme-toggle` in `style.css` e `apple-nav.css`).
+   - Rimosso `theme-toggle` dalla classe di `#es-nav-theme` in `index.html` (ora ha esclusivamente `class="realistic-switch"`).
+   - Reset completo applicato a `.realistic-switch`: `background: none; border: 0; padding: 0; margin: 0; box-shadow: none; filter: none; backdrop-filter: none; outline: none; border-radius: 0; overflow: visible; appearance: none; contain: layout;`.
+   - Hit area minima 44×44px garantita tramite `::before` trasparente senza sfondi né bordi; rimosso qualsiasi `::after`.
+   - Ombra e rilievo solo ed esclusivamente su `.rs-key` tramite `box-shadow` curvilineo.
+2. **Risoluzione Bug 2 (Movimento in hover, pressione e click)**:
+   - Eliminati tutti i transform, rotazioni, scale e transizioni residue da hover e active (`scale(1.08) rotate(18deg)` e `scale(0.92) rotate(-15deg)` in `es-nav-ux.css`).
+   - Rimossa la regola di affondamento/pressione `translateY(1px) scale(0.97)` da CSS e JS; rimossi i listener `pointerdown`/`keyup`/`is-pressing` da `realistic-switch.js`.
+   - Blindatura totale: `transform: none !important; animation: none !important;` imposto su `.realistic-switch`, `.rs-key`, `.rs-slot` in `:hover`, `:active`, `:focus`, `:focus-visible`.
+   - L'UNICO elemento che si muove è la levetta `.rs-thumb` tra le due posizioni (translateY) guidata esclusivamente da `aria-checked`.
+   - Accessibilità: anello statico `outline: 2px solid #2fe0c8` visibile esclusivamente da tastiera (`:focus-visible`), nessun anello al click col mouse.
+3. **File**: `es-nav-ux.css`, `style.css`, `apple-nav.css`, `realistic-switch.css`, `realistic-switch.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX72`.
+
+Feature precedente: **2026-09-28** — HEROUX71 — Fix sovrascrittura Realistic Switch da role-sidebar-pro e forzatura cache-bust globale:
 1. **Risoluzione sovrascrittura Realistic Switch**: eliminata del tutto l'assegnazione `btn.textContent = light ? '☀️' : '🌙'` da `role-sidebar-pro.js` che distruggeva il markup interno del pulsante skeuomorfico ripristinando la luna gialla.
 2. **Auto-ripristino difensivo (`realistic-switch.js`)**: implementata la funzione `ensureSwitchMarkup()` che controlla e ricrea istantaneamente i nodi 3D `.rs-key`, `.rs-slot`, `.rs-thumb`, `.rs-led` qualora un elemento terzo provi a modificare il testo o i figli del pulsante.
 3. **Cache-bust globale**: aggiornato `BUILD_VERSION = '20260928_HEROUX71'` nello script inline all'avvio di `index.html` per forzare l'unregistration immediata dei vecchi Service Worker e azzerare le cache obsolete nel browser dell'utente, aggiornati i timestamp in `index.html`, `version.json` e `sw.js`.

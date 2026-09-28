@@ -1,36 +1,49 @@
 /* ============================================================
    ELISEE SCOUT — REALISTIC SWITCH (.realistic-switch / .rs-*)
    Controllo skeuomorfico 3D tattile per il cambio tema.
-   Isolato con prefisso .realistic-switch e .rs-
+   Totalmente isolato, reset pulito, zero riquadri esterni,
+   nessun movimento del tasto su hover/pressione/click.
    ============================================================ */
 
-/* Variabili di base e ombre per tema scuro (default) e chiaro */
 :root {
   --rs-size: 38px;
   --rs-shadow-key: 0 4px 10px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.22), inset 0 -2px 3px rgba(0, 0, 0, 0.45);
-  --rs-shadow-key-press: 0 2px 4px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.18), inset 0 -1px 2px rgba(0, 0, 0, 0.5);
   --rs-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 html[data-theme="mimetico-chiaro"] {
   --rs-shadow-key: 0 4px 10px rgba(20, 184, 166, 0.25), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.6), inset 0 -2px 3px rgba(6, 78, 59, 0.35);
-  --rs-shadow-key-press: 0 2px 4px rgba(20, 184, 166, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.5), inset 0 -1px 2px rgba(6, 78, 59, 0.4);
 }
 
-/* Pulsante contenitore: hit area garantita 44x44px minima */
+/* ------------------------------------------------------------
+   1. RESET COMPLETO CONTENITORE .realistic-switch
+   Nessun riquadro scuro, bordo, ombra o filtro attorno al tasto.
+   ------------------------------------------------------------ */
 .realistic-switch,
-header.public-header .realistic-switch.theme-toggle,
-.theme-toggle.realistic-switch {
+button.realistic-switch,
+header.public-header .realistic-switch,
+.public-header .header-actions .realistic-switch {
   width: var(--rs-size) !important;
   height: var(--rs-size) !important;
   min-width: var(--rs-size) !important;
   min-height: var(--rs-size) !important;
+  max-width: var(--rs-size) !important;
+  max-height: var(--rs-size) !important;
   padding: 0 !important;
   margin: 0 !important;
-  background: transparent !important;
-  border: none !important;
+  background: none !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border-color: transparent !important;
   border-radius: 0 !important;
   box-shadow: none !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  outline: none !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  overflow: visible !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -39,11 +52,13 @@ header.public-header .realistic-switch.theme-toggle,
   touch-action: manipulation;
   user-select: none;
   -webkit-user-select: none;
-  transform: none !important;
-  outline: none;
+  contain: layout;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  color: transparent !important;
 }
 
-/* Hit area estesa per mobile / touch (almeno 44x44px) */
+/* Hit area estesa per mobile / touch (almeno 44x44px invisibile) */
 .realistic-switch::before {
   content: '';
   position: absolute;
@@ -52,10 +67,43 @@ header.public-header .realistic-switch.theme-toggle,
   transform: translate(-50%, -50%);
   width: max(44px, 100%);
   height: max(44px, 100%);
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
   pointer-events: auto;
+  z-index: 1;
 }
 
-/* 1. .rs-key: squircle tasto 3D con effetto rilievo */
+.realistic-switch::after {
+  display: none !important;
+}
+
+/* ------------------------------------------------------------
+   2. BLINDATURA TOTALE CONTRO MOVIMENTI SU TASTO, SLOT E HOVER
+   Nessun movimento/scale/translate/rotate in :hover, :active, :focus
+   ------------------------------------------------------------ */
+.realistic-switch,
+.realistic-switch:hover,
+.realistic-switch:active,
+.realistic-switch:focus,
+.realistic-switch:focus-visible,
+.realistic-switch .rs-key,
+.realistic-switch:hover .rs-key,
+.realistic-switch:active .rs-key,
+.realistic-switch:focus .rs-key,
+.realistic-switch:focus-visible .rs-key,
+.realistic-switch .rs-slot,
+.realistic-switch:hover .rs-slot,
+.realistic-switch:active .rs-slot,
+.realistic-switch:focus .rs-slot,
+.realistic-switch:focus-visible .rs-slot {
+  transform: none !important;
+  animation: none !important;
+}
+
+/* ------------------------------------------------------------
+   3. .rs-key: SQUIRCLE TASTO 3D (Rilievo ed Ombre solo qui)
+   ------------------------------------------------------------ */
 .realistic-switch .rs-key {
   width: 100%;
   height: 100%;
@@ -68,17 +116,21 @@ header.public-header .realistic-switch.theme-toggle,
   background: linear-gradient(180deg, #3a3a42 0%, #2a2a31 100%);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: var(--rs-shadow-key);
-  transition: transform 150ms ease, background 350ms ease, border-color 350ms ease, box-shadow 350ms ease;
+  /* Transizione solo su colori e ombre per cambio tema, MAI su transform */
+  transition: background 350ms ease, border-color 350ms ease, box-shadow 350ms ease;
+  pointer-events: none; /* Gli eventi restano sul button contenitore */
 }
 
-/* Stato Pressione (pointerdown / active) */
-.realistic-switch:active .rs-key,
-.realistic-switch.is-pressing .rs-key {
-  transform: translateY(1px) scale(0.97);
-  box-shadow: var(--rs-shadow-key-press);
+/* Nessuna variazione visibile su hover: solo cursore pointer */
+.realistic-switch:hover .rs-key {
+  background: linear-gradient(180deg, #3a3a42 0%, #2a2a31 100%);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: var(--rs-shadow-key);
 }
 
-/* 2. .rs-slot: incavo interno verticale con inset shadow */
+/* ------------------------------------------------------------
+   4. .rs-slot: INCAVO INTERNO VERTICALE (Pill con inset shadow)
+   ------------------------------------------------------------ */
 .realistic-switch .rs-slot {
   width: 34%;
   height: 52%;
@@ -93,9 +145,12 @@ header.public-header .realistic-switch.theme-toggle,
   flex-direction: column;
   justify-content: flex-start;
   transition: background 350ms ease, box-shadow 350ms ease;
+  pointer-events: none;
 }
 
-/* 3. .rs-thumb: la levetta che scorre tra basso e alto */
+/* ------------------------------------------------------------
+   5. .rs-thumb: L'UNICO ELEMENTO CHE SI MUOVE (tra basso e alto)
+   ------------------------------------------------------------ */
 .realistic-switch .rs-thumb {
   width: 100%;
   height: 50%;
@@ -109,9 +164,10 @@ header.public-header .realistic-switch.theme-toggle,
   box-sizing: border-box;
   transform: translateY(100%); /* OFF (Dark): posizione bassa */
   transition: transform 350ms var(--rs-ease-spring), background 350ms ease, box-shadow 350ms ease;
+  pointer-events: none;
 }
 
-/* LED luminoso sul thumb */
+/* Micro-LED luminoso sul thumb */
 .realistic-switch .rs-led {
   width: 3px;
   height: 3px;
@@ -119,6 +175,7 @@ header.public-header .realistic-switch.theme-toggle,
   background: #64748b;
   opacity: 0.35;
   transition: background 350ms ease, box-shadow 350ms ease, opacity 350ms ease;
+  pointer-events: none;
 }
 
 /* ============================================================
@@ -133,7 +190,14 @@ header.public-header .realistic-switch.theme-toggle,
   box-shadow: var(--rs-shadow-key);
 }
 
-/* Slot interno più scuro e contrastato */
+.realistic-switch[aria-checked="true"]:hover .rs-key,
+.realistic-switch.is-on:hover .rs-key {
+  background: linear-gradient(180deg, #2fe0c8 0%, #14b8a6 48%, #0d9488 100%);
+  border-color: rgba(13, 148, 136, 0.9);
+  box-shadow: var(--rs-shadow-key);
+}
+
+/* Slot interno teal scuro */
 .realistic-switch[aria-checked="true"] .rs-slot,
 .realistic-switch.is-on .rs-slot {
   background: #064e4a;
@@ -148,7 +212,7 @@ header.public-header .realistic-switch.theme-toggle,
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35), inset 0 1px 1px #ffffff, 0 0 6px rgba(47, 224, 200, 0.35);
 }
 
-/* LED acceso con glow ciano/teal del brand */
+/* LED acceso con glow ciano/teal */
 .realistic-switch[aria-checked="true"] .rs-led,
 .realistic-switch.is-on .rs-led {
   background: #2fe0c8;
@@ -156,29 +220,33 @@ header.public-header .realistic-switch.theme-toggle,
   box-shadow: 0 0 5px #2fe0c8, 0 0 2px #ffffff;
 }
 
-/* Focus da tastiera coerente col resto della navbar */
+/* ------------------------------------------------------------
+   6. ACCESSIBILITÀ: FOCUS RING SOLO DA TASTIERA (:focus-visible)
+   Nessun anello al click con mouse. Anello statico senza animazioni.
+   ------------------------------------------------------------ */
+.realistic-switch:focus:not(:focus-visible) {
+  outline: none !important;
+}
+
 .realistic-switch:focus-visible .rs-key {
-  outline: 2px solid #2fe0c8;
-  outline-offset: 3px;
+  outline: 2px solid #2fe0c8 !important;
+  outline-offset: 3px !important;
 }
 
 /* ============================================================
-   TRANSIZIONE FLUIDA SFONDO GLOBALE (Dissolvenza ~400ms)
+   7. TRANSIZIONE SFONDO GLOBALE (Dissolvenza ~400ms)
    ============================================================ */
-
 body.layout-portfolio::before {
   transition: background 400ms ease, opacity 400ms ease;
 }
 
-/* Transizione morbida sui colori di testo e sezioni principali */
 body, main, header.public-header {
   transition: color 350ms ease, background-color 350ms ease;
 }
 
 /* ============================================================
-   PREFERS-REDUCED-MOTION: cambio istantaneo, niente transizioni
+   8. PREFERS-REDUCED-MOTION: cambio istantaneo, zero transizioni
    ============================================================ */
-
 @media (prefers-reduced-motion: reduce) {
   .realistic-switch .rs-key,
   .realistic-switch .rs-slot,

@@ -78,45 +78,12 @@
 
     syncAllSwitches();
 
-    // Event delegation per pointerdown / pointerup / pointerleave (effetto pressione fisica)
-    document.addEventListener('pointerdown', function (e) {
-      const sw = e.target.closest('.realistic-switch');
-      if (sw) {
-        sw.classList.add('is-pressing');
-      }
-    });
-
-    function releasePress(e) {
-      const switches = document.querySelectorAll('.realistic-switch.is-pressing');
-      switches.forEach(function (sw) {
-        sw.classList.remove('is-pressing');
-      });
-    }
-
-    document.addEventListener('pointerup', releasePress);
-    document.addEventListener('pointercancel', releasePress);
-
     // Event delegation per click sul realistic-switch
     document.addEventListener('click', function (e) {
       const sw = e.target.closest('.realistic-switch');
       if (!sw) return;
       e.preventDefault();
       handleSwitchTrigger(sw);
-    });
-
-    // Supporto tastiera (Enter e Space sono standard su button, ma garantiamo feedback visivo)
-    document.addEventListener('keydown', function (e) {
-      const sw = e.target.closest('.realistic-switch');
-      if (sw && (e.key === ' ' || e.key === 'Enter')) {
-        sw.classList.add('is-pressing');
-      }
-    });
-
-    document.addEventListener('keyup', function (e) {
-      const sw = e.target.closest('.realistic-switch');
-      if (sw && (e.key === ' ' || e.key === 'Enter')) {
-        sw.classList.remove('is-pressing');
-      }
     });
 
     // Observer su variazioni di attributo data-theme (scatenate da altrove)

@@ -3825,14 +3825,6 @@ body.focus-hub {
   flex-shrink: 0 !important;
 }
 
-.theme-toggle {
-  background: transparent !important;
-  border: none !important;
-  font-size: 18px !important;
-  cursor: pointer !important;
-  padding: 4px 8px !important;
-  line-height: 1 !important;
-}
 
 .lang-select {
   font-size: 14px !important;
@@ -11369,14 +11361,6 @@ html[data-theme="mimetico-chiaro"] .public-header .main-nav a {
   gap: 16px !important;
 }
 
-.public-header .header-actions .theme-toggle {
-  background: transparent;
-  border: none;
-  font-size: 1.15rem;
-  cursor: pointer;
-  padding: 4px;
-  line-height: 1;
-}
 
 .public-header .header-actions .lang {
   color: rgba(255, 255, 255, 0.85);
@@ -11638,11 +11622,6 @@ html[data-theme="mimetico-chiaro"] header.public-header .lang {
   border-color: rgba(0, 0, 0, 0.1) !important;
 }
 
-html[data-theme="mimetico-chiaro"] header.public-header .theme-toggle {
-  color: #0f172a !important;
-  background: rgba(0, 0, 0, 0.04) !important;
-  border-color: rgba(0, 0, 0, 0.1) !important;
-}
 
 html[data-theme="mimetico-chiaro"] header.public-header .nav-indicator {
   background: linear-gradient(90deg, #0284c7, #0ea5e9) !important;
