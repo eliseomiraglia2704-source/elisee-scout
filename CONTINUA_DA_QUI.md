@@ -3,7 +3,17 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-28** — HEROUX67 — Carosello isole sulla home, dopo la hero:
+Ultimo aggiornamento: **2026-09-28** — HEROUX68 — Componente Parallax Card 3D dopo #funzioni:
+1. Nuova sezione `#profili` posizionata tra `#funzioni` e `#home-about`, `background: transparent`, scroll-margin-top e padding coerenti. Nessun link aggiunto in navbar. Sfondo globale e sezioni esistenti invariati.
+2. Intestazione nello stesso stile delle altre sezioni: eyebrow teal «Per chi è», titolo «Una piattaforma, tre ruoli», sottotitolo di una riga. Supporto i18n completo (IT, EN, ES, FR).
+3. 3 card affiancate (Giocatori, Società, Scout & staff) a 1366px (gap 2rem, 300x400px, border-radius 20px), responsive a 2 colonne su tablet (768px) e 1 colonna impilata su mobile (≤600px).
+4. Palette gradienti brand su fondo scuro: teal per Giocatori, azzurro per Società, rosa/rosso accent per Scout & staff in entrambi i temi (dark e light).
+5. Effetto tilt 3D e parallax opposto: rotazione max ±14° su `pointermove` calcolata su coordinate relative (-0.5…0.5) con `requestAnimationFrame`, elemento illustrato centrale (pallone da calcio, scudetto societario, lente su campo tattico in SVG originali <3KB) elevato a `translateZ(90px) scale(1.15)` e drop-shadow dinamica che esce dalla card. Slot `<img>` opzionale con le medesime proprietà.
+6. Scritte decorative di sfondo uppercase ("GIOCATORI" / "VERIFICATI", "SOCIETÀ" / "ANNUNCI", "SCOUT" / "TRATTATIVE") e titolo + CTA che compaiono con transizione fluida in hover/focus (`opacity: 1`, `translateZ(50px)` e `translateZ(20px)`).
+7. Accessibilità completa: focus-visible tastiera con Tab (:focus-within attiva lo stato visivo), fallback touch (@media (hover: none)) e `prefers-reduced-motion` con contenuti sempre visibili senza tilt.
+8. File: `parallax-cards.css`, `parallax-cards.js`, `index.html`, `i18n.js`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX68`.
+
+Feature precedente: **2026-09-28** — HEROUX67 — Carosello isole sulla home, dopo la hero:
 1. Sezione `#funzioni` subito dopo `#hero`. Navbar, sfondo, Chi siamo, Bacheca, Mappa e footer non toccati.
 2. Cinque card demo (verifica, GPS, bacheca, trattative, GDPR minori) con badge Esempio. Dati solo nell'array `SLIDES` di `island-carousel.js`. Testi IT/EN in `i18n.js`.
 3. Scroll-snap, frecce, puntini, IntersectionObserver, autoplay 5s che si ferma dopo un gesto. File: `island-carousel.css`, `island-carousel.js`, `index.html`, `i18n.js`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX67`.

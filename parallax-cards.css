@@ -1,0 +1,435 @@
+/* ============================================================
+   ELISEE SCOUT — PARALLAX 3D CARDS (.parallax-*)
+   Card 3D con effetto tilt, profondità Z ed elemento che esce.
+   Tutti gli stili sono rigorosamente isolati con prefisso .parallax-
+   ============================================================ */
+
+.parallax-section {
+  background: transparent;
+  scroll-margin-top: var(--nav-h, 64px);
+  padding: 56px 0 76px;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Intestazione sezione (coerente con #funzioni e #home-about) */
+.parallax-head {
+  max-width: 760px;
+  margin: 0 auto 36px;
+  padding: 0 24px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.parallax-eyebrow {
+  margin: 0 0 8px;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #2fe0c8;
+}
+
+.parallax-title {
+  margin: 0 0 10px;
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: #ffffff;
+}
+
+.parallax-sub {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #94a3b8;
+}
+
+/* Scena 3D contenitore */
+.parallax-scene {
+  perspective: 1000px;
+  display: grid;
+  grid-template-columns: repeat(3, 300px);
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 24px 44px;
+  box-sizing: border-box;
+}
+
+/* Card 3D */
+.parallax-card {
+  position: relative;
+  width: 300px;
+  height: 400px;
+  border-radius: 20px;
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.35s ease-out, box-shadow 0.35s ease-out;
+  outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* Durante il movimento (pointermove): nessuna transizione su transform per eliminare ogni lag */
+.parallax-card.is-moving {
+  transition: box-shadow 0.2s ease;
+}
+
+.parallax-card.is-moving .parallax-card__visual {
+  transition: filter 0.35s ease;
+}
+
+/* Palette & Gradienti Brand (le card restano scure con gradiente in entrambi i temi) */
+.parallax-card--giocatori {
+  --card-glow: rgba(47, 224, 200, 0.32);
+  --card-border-hover: rgba(47, 224, 200, 0.5);
+  --card-bg-gradient: linear-gradient(135deg, #05060c 15%, #071c20 55%, rgba(20, 184, 166, 0.45) 100%);
+  --card-accent-btn: #14b8a6;
+  --card-accent-hover: #2fe0c8;
+}
+
+.parallax-card--societa {
+  --card-glow: rgba(56, 189, 248, 0.32);
+  --card-border-hover: rgba(56, 189, 248, 0.5);
+  --card-bg-gradient: linear-gradient(135deg, #05060c 15%, #081a2e 55%, rgba(56, 189, 248, 0.45) 100%);
+  --card-accent-btn: #0284c7;
+  --card-accent-hover: #38bdf8;
+}
+
+.parallax-card--scout {
+  --card-glow: rgba(244, 63, 94, 0.32);
+  --card-border-hover: rgba(244, 63, 94, 0.5);
+  --card-bg-gradient: linear-gradient(135deg, #05060c 15%, #240b17 55%, rgba(244, 63, 94, 0.45) 100%);
+  --card-accent-btn: #e11d48;
+  --card-accent-hover: #fb7185;
+}
+
+/* Sfondo della card (ritaglia solo i testi decorativi e i gradienti interni ai 20px) */
+.parallax-card__bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--card-bg-gradient);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Grandi scritte decorative di sfondo (::before in alto a sx, ::after in basso a dx corsivo) */
+.parallax-card__words {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+  transform: translateZ(20px);
+  transform-style: preserve-3d;
+}
+
+.parallax-card__words::before {
+  content: attr(data-word-top);
+  position: absolute;
+  top: 52px;
+  left: 14px;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: clamp(3rem, 11vw, 3.8rem);
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.08);
+  opacity: 0;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.parallax-card__words::after {
+  content: attr(data-word-bottom);
+  position: absolute;
+  bottom: 22px;
+  right: 14px;
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(2.8rem, 10vw, 3.6rem);
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* Reflex sottile: gradiente radiale bianco ~8% che segue il cursore */
+.parallax-card__glare {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  background: radial-gradient(circle 240px at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.08), transparent 75%);
+  z-index: 2;
+}
+
+/* Elemento illustrato centrale che "esce" dalla card */
+.parallax-card__visual {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 3;
+  transform-style: preserve-3d;
+  transform: translateZ(var(--elem-tz, 0px)) scale(var(--elem-scale, 1)) translate3d(var(--elem-px, 0px), var(--elem-py, 0px), 0);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.3, 1), filter 0.35s ease;
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.45));
+}
+
+.parallax-card__svg,
+.parallax-card__img {
+  width: 175px;
+  height: 175px;
+  max-width: 68%;
+  max-height: 68%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Titolo in alto (invisibile a riposo, visibile in hover/focus) */
+.parallax-card__title {
+  position: absolute;
+  top: 22px;
+  left: 22px;
+  right: 22px;
+  margin: 0;
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 25px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-transform: none !important;
+  color: #ffffff;
+  z-index: 4;
+  transform: translateZ(50px);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+/* Bottone CTA in basso a sinistra (invisibile a riposo, visibile in hover/focus) */
+.parallax-card__cta {
+  position: absolute;
+  bottom: 22px;
+  left: 22px;
+  z-index: 10;
+  transform: translateZ(50px);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s ease, border-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  pointer-events: auto;
+}
+
+.parallax-card__cta:hover {
+  background: var(--card-accent-btn);
+  border-color: var(--card-accent-hover);
+  color: #ffffff;
+  box-shadow: 0 8px 24px var(--card-glow);
+}
+
+/* ============================================================
+   STATI HOVER & FOCUS-WITHIN
+   ============================================================ */
+
+.parallax-card:hover,
+.parallax-card:focus-within {
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.7), 0 0 32px var(--card-glow), 0 0 0 1px var(--card-border-hover);
+}
+
+.parallax-card:hover .parallax-card__words::before,
+.parallax-card:hover .parallax-card__words::after,
+.parallax-card:focus-within .parallax-card__words::before,
+.parallax-card:focus-within .parallax-card__words::after {
+  opacity: 1;
+}
+
+.parallax-card:hover .parallax-card__glare,
+.parallax-card:focus-within .parallax-card__glare {
+  opacity: 1;
+}
+
+.parallax-card:hover .parallax-card__visual,
+.parallax-card:focus-within .parallax-card__visual {
+  --elem-tz: 90px;
+  --elem-scale: 1.15;
+  filter: drop-shadow(0 28px 42px rgba(0, 0, 0, 0.8)) drop-shadow(0 8px 18px var(--card-glow));
+}
+
+.parallax-card:hover .parallax-card__title,
+.parallax-card:hover .parallax-card__cta,
+.parallax-card:focus-within .parallax-card__title,
+.parallax-card:focus-within .parallax-card__cta {
+  opacity: 1;
+}
+
+/* Focus da tastiera */
+.parallax-card:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 4px;
+}
+
+.parallax-card__cta:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   TEMA CHIARO: token testuali header (card scure invariate)
+   ============================================================ */
+
+html[data-theme="mimetico-chiaro"] .parallax-title {
+  color: #0f172a;
+}
+
+html[data-theme="mimetico-chiaro"] .parallax-sub {
+  color: #475569;
+}
+
+html[data-theme="mimetico-chiaro"] .parallax-eyebrow {
+  color: #0d9488;
+}
+
+/* ============================================================
+   RESPONSIVE: Tablet (2 col) & Mobile (1 col)
+   ============================================================ */
+
+@media (max-width: 960px) and (min-width: 601px) {
+  .parallax-scene {
+    grid-template-columns: repeat(2, minmax(280px, 320px));
+    gap: 1.75rem;
+  }
+  .parallax-scene > :nth-child(3) {
+    grid-column: span 2;
+    justify-self: center;
+    width: 320px;
+  }
+}
+
+@media (max-width: 600px) {
+  .parallax-section {
+    padding: 44px 0 60px;
+  }
+  .parallax-scene {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 1.75rem;
+    padding-inline: 16px;
+  }
+  .parallax-card {
+    width: 100%;
+    max-width: 340px;
+  }
+  /* Su mobile contenuti sempre visibili per evitare dipendenza da hover */
+  .parallax-card {
+    transform: none !important;
+  }
+  .parallax-card .parallax-card__words::before,
+  .parallax-card .parallax-card__words::after,
+  .parallax-card .parallax-card__title,
+  .parallax-card .parallax-card__cta {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .parallax-card .parallax-card__visual {
+    transform: scale(1.08) !important;
+    filter: drop-shadow(0 16px 26px rgba(0, 0, 0, 0.65)) drop-shadow(0 6px 14px var(--card-glow)) !important;
+  }
+  .parallax-card .parallax-card__glare {
+    display: none;
+  }
+}
+
+/* ============================================================
+   TOUCH DEVICES: niente tilt, contenuto sempre visibile
+   ============================================================ */
+
+@media (hover: none) {
+  .parallax-card {
+    transform: none !important;
+  }
+  .parallax-card .parallax-card__words::before,
+  .parallax-card .parallax-card__words::after,
+  .parallax-card .parallax-card__title,
+  .parallax-card .parallax-card__cta {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .parallax-card .parallax-card__visual {
+    transform: scale(1.08) !important;
+    filter: drop-shadow(0 16px 26px rgba(0, 0, 0, 0.65)) drop-shadow(0 6px 14px var(--card-glow)) !important;
+  }
+  .parallax-card .parallax-card__glare {
+    display: none;
+  }
+}
+
+/* ============================================================
+   PREFERS-REDUCED-MOTION: nessun tilt né transizioni
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-card {
+    transform: none !important;
+    transition: none !important;
+  }
+  .parallax-card .parallax-card__visual,
+  .parallax-card .parallax-card__words::before,
+  .parallax-card .parallax-card__words::after,
+  .parallax-card .parallax-card__title,
+  .parallax-card .parallax-card__cta,
+  .parallax-card .parallax-card__glare {
+    transition: none !important;
+  }
+  .parallax-card .parallax-card__words::before,
+  .parallax-card .parallax-card__words::after,
+  .parallax-card .parallax-card__title,
+  .parallax-card .parallax-card__cta {
+    opacity: 1 !important;
+  }
+  .parallax-card .parallax-card__visual {
+    transform: translateZ(20px) scale(1.05) !important;
+  }
+}

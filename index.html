@@ -741,6 +741,7 @@
   <link rel="stylesheet" href="mobile-webapp.css?v=20260925_HEROUX21">
   <link rel="stylesheet" href="landing-unify.css?v=20260928_HEROUX66">
   <link rel="stylesheet" href="island-carousel.css?v=20260928_HEROUX67">
+  <link rel="stylesheet" href="parallax-cards.css?v=20260928_HEROUX68">
   <style id="es-force-no-lines">
     @media screen and (max-width: 768px) {
       #es-mobile-app-shell,
@@ -2487,6 +2488,180 @@
             </button>
           </div>
           <div class="island-dots" id="island-dots"></div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- PROFILI: PARALLAX 3D CARDS (HEROUX68) -->
+        <!-- ============================================================ -->
+        <section id="profili" class="parallax-section">
+          <div class="parallax-head">
+            <p class="parallax-eyebrow" data-i18n="profili.eyebrow">Per chi è</p>
+            <h2 class="parallax-title" data-i18n="profili.title">Una piattaforma, tre ruoli</h2>
+            <p class="parallax-sub" data-i18n="profili.sub">Dai giovani talenti ai club e agli osservatori: strumenti su misura per ogni figura.</p>
+          </div>
+          <div class="parallax-scene" role="region" aria-label="Ruoli della piattaforma">
+            
+            <!-- Card 1: GIOCATORI -->
+            <article class="parallax-card parallax-card--giocatori" role="group" aria-label="Profilo Calciatori" tabindex="0">
+              <div class="parallax-card__bg">
+                <div class="parallax-card__words" data-word-top="GIOCATORI" data-word-bottom="VERIFICATI" data-i18n-word-top="profili.c1.wordTop" data-i18n-word-bottom="profili.c1.wordBottom"></div>
+              </div>
+              <div class="parallax-card__glare" aria-hidden="true"></div>
+              <div class="parallax-card__visual">
+                <!-- Slot <img> opzionale con PNG a sfondo trasparente (stesse regole CSS) -->
+                <svg class="parallax-card__svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <defs>
+                    <radialGradient id="px-ball-base" cx="36%" cy="32%" r="68%">
+                      <stop offset="0%" stop-color="#ffffff"/>
+                      <stop offset="60%" stop-color="#cbd5e1"/>
+                      <stop offset="88%" stop-color="#64748b"/>
+                      <stop offset="100%" stop-color="#334155"/>
+                    </radialGradient>
+                    <radialGradient id="px-ball-teal-glow" cx="72%" cy="82%" r="48%">
+                      <stop offset="0%" stop-color="#2fe0c8" stop-opacity="0.45"/>
+                      <stop offset="100%" stop-color="#2fe0c8" stop-opacity="0"/>
+                    </radialGradient>
+                    <linearGradient id="px-patch-c" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#1e293b"/>
+                      <stop offset="100%" stop-color="#090d16"/>
+                    </linearGradient>
+                    <linearGradient id="px-patch-tl" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#334155"/>
+                      <stop offset="100%" stop-color="#0f172a"/>
+                    </linearGradient>
+                    <linearGradient id="px-patch-tr" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#1e293b"/>
+                      <stop offset="100%" stop-color="#050811"/>
+                    </linearGradient>
+                  </defs>
+                  <circle cx="100" cy="100" r="76" fill="url(#px-ball-base)"/>
+                  <circle cx="100" cy="100" r="76" fill="url(#px-ball-teal-glow)"/>
+                  <path d="M100 68 L124 85 L115 113 L85 113 L76 85 Z" fill="url(#px-patch-c)" stroke="#475569" stroke-width="2.2" stroke-linejoin="round"/>
+                  <path d="M100 68 L100 36" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="M124 85 L154 75" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="M115 113 L142 138" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="M85 113 L58 138" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="M76 85 L46 75" stroke="#475569" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="M84 25 C94 24 106 24 116 25 L100 36 Z" fill="url(#px-patch-tl)" stroke="#475569" stroke-width="1.8"/>
+                  <path d="M154 75 L168 62 C172 74 174 86 174 96 L148 102 L154 75 Z" fill="url(#px-patch-tr)" stroke="#475569" stroke-width="1.8"/>
+                  <path d="M46 75 L32 62 C28 74 26 86 26 96 L52 102 L46 75 Z" fill="url(#px-patch-tl)" stroke="#475569" stroke-width="1.8"/>
+                  <path d="M142 138 L152 150 C144 158 134 165 124 170 L118 145 Z" fill="url(#px-patch-tr)" stroke="#475569" stroke-width="1.8"/>
+                  <path d="M58 138 L48 150 C56 158 66 165 76 170 L82 145 Z" fill="url(#px-patch-tl)" stroke="#475569" stroke-width="1.8"/>
+                  <ellipse cx="76" cy="62" rx="30" ry="18" fill="#ffffff" opacity="0.32" transform="rotate(-30 76 62)"/>
+                  <circle cx="70" cy="54" r="7" fill="#ffffff" opacity="0.55"/>
+                </svg>
+              </div>
+              <h3 class="parallax-card__title" data-i18n="profili.c1.title">Giocatori</h3>
+              <button type="button" class="parallax-card__cta" data-bacheca-action="crea-profilo" data-i18n="profili.c1.cta" onclick="if(window.onCreaProfilo){ window.onCreaProfilo(); } else if(window.openRegistrazioneModal){ window.openRegistrazioneModal(); } else if(window.openAuthModal){ window.openAuthModal('register'); }">Crea profilo</button>
+            </article>
+
+            <!-- Card 2: SOCIETÀ -->
+            <article class="parallax-card parallax-card--societa" role="group" aria-label="Profilo Società e Club" tabindex="0">
+              <div class="parallax-card__bg">
+                <div class="parallax-card__words" data-word-top="SOCIETÀ" data-word-bottom="ANNUNCI" data-i18n-word-top="profili.c2.wordTop" data-i18n-word-bottom="profili.c2.wordBottom"></div>
+              </div>
+              <div class="parallax-card__glare" aria-hidden="true"></div>
+              <div class="parallax-card__visual">
+                <!-- Slot <img> opzionale con PNG a sfondo trasparente (stesse regole CSS) -->
+                <svg class="parallax-card__svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="px-crest-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#38bdf8"/>
+                      <stop offset="50%" stop-color="#0284c7"/>
+                      <stop offset="100%" stop-color="#0369a1"/>
+                    </linearGradient>
+                    <linearGradient id="px-crest-plate" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="#0f1d32"/>
+                      <stop offset="100%" stop-color="#040812"/>
+                    </linearGradient>
+                    <linearGradient id="px-crest-stripe" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35"/>
+                      <stop offset="100%" stop-color="#0284c7" stop-opacity="0.08"/>
+                    </linearGradient>
+                    <linearGradient id="px-star-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#fcd34d"/>
+                      <stop offset="100%" stop-color="#f59e0b"/>
+                    </linearGradient>
+                    <linearGradient id="px-crest-sheen" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.22"/>
+                      <stop offset="45%" stop-color="#ffffff" stop-opacity="0.06"/>
+                      <stop offset="55%" stop-color="#ffffff" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M100 22 C138 22 168 34 168 46 C168 116 142 158 100 180 C58 158 32 116 32 46 C32 34 62 22 100 22 Z" fill="url(#px-crest-gold)"/>
+                  <path d="M100 28 C134 28 161 38 161 49 C161 112 138 150 100 171 C62 150 39 112 39 49 C39 38 66 28 100 28 Z" fill="url(#px-crest-plate)"/>
+                  <path d="M60 34 L120 34 L70 152 L45 132 Z" fill="url(#px-crest-stripe)"/>
+                  <path d="M100 30 L150 38 L95 168 L76 158 Z" fill="url(#px-crest-stripe)"/>
+                  <polygon points="100,42 103,50 112,50 105,55 108,63 100,58 92,63 95,55 88,50 97,50" fill="url(#px-star-gold)"/>
+                  <circle cx="100" cy="104" r="32" stroke="#38bdf8" stroke-width="2.5" fill="#071220"/>
+                  <circle cx="100" cy="104" r="28" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1.5" stroke-dasharray="4 3"/>
+                  <path d="M84 104 C84 94 92 88 100 88 C108 88 116 94 116 104 C116 114 108 120 100 120 C92 120 84 114 84 104 Z" stroke="#38bdf8" stroke-width="1.8"/>
+                  <line x1="84" y1="104" x2="116" y2="104" stroke="#38bdf8" stroke-width="1.6"/>
+                  <line x1="100" y1="88" x2="100" y2="120" stroke="#38bdf8" stroke-width="1.6"/>
+                  <circle cx="100" cy="104" r="4.5" fill="#38bdf8"/>
+                  <path d="M72 136 C78 145 88 152 100 156 C112 152 122 145 128 136" stroke="#0284c7" stroke-width="2.4" stroke-linecap="round"/>
+                  <path d="M100 28 C134 28 161 38 161 49 C161 75 155 100 144 122 L72 32 C81 29 90 28 100 28 Z" fill="url(#px-crest-sheen)"/>
+                </svg>
+              </div>
+              <h3 class="parallax-card__title" data-i18n="profili.c2.title">Società</h3>
+              <a href="#bacheca-annunci" class="parallax-card__cta" data-bacheca-action="pubblica" data-i18n="profili.c2.cta" onclick="if(window.onPubblicaCandidatura){ window.onPubblicaCandidatura(); } else if(window.openPubblicaAnnuncioModal){ window.openPubblicaAnnuncioModal(); } else if(window.switchView){ window.switchView('bacheca','#bacheca-annunci'); }">Pubblica annuncio</a>
+            </article>
+
+            <!-- Card 3: SCOUT & STAFF -->
+            <article class="parallax-card parallax-card--scout" role="group" aria-label="Profilo Scout e Staff Tecnico" tabindex="0">
+              <div class="parallax-card__bg">
+                <div class="parallax-card__words" data-word-top="SCOUT" data-word-bottom="TRATTATIVE" data-i18n-word-top="profili.c3.wordTop" data-i18n-word-bottom="profili.c3.wordBottom"></div>
+              </div>
+              <div class="parallax-card__glare" aria-hidden="true"></div>
+              <div class="parallax-card__visual">
+                <!-- Slot <img> opzionale con PNG a sfondo trasparente (stesse regole CSS) -->
+                <svg class="parallax-card__svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="px-field-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#0f2621"/>
+                      <stop offset="100%" stop-color="#041210"/>
+                    </linearGradient>
+                    <linearGradient id="px-lens-rim" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#fb7185"/>
+                      <stop offset="50%" stop-color="#e11d48"/>
+                      <stop offset="100%" stop-color="#881337"/>
+                    </linearGradient>
+                    <radialGradient id="px-lens-glass" cx="38%" cy="36%" r="62%">
+                      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.32"/>
+                      <stop offset="60%" stop-color="#f43f5e" stop-opacity="0.14"/>
+                      <stop offset="100%" stop-color="#f43f5e" stop-opacity="0.35"/>
+                    </radialGradient>
+                    <linearGradient id="px-lens-handle" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#cbd5e1"/>
+                      <stop offset="50%" stop-color="#64748b"/>
+                      <stop offset="100%" stop-color="#1e293b"/>
+                    </linearGradient>
+                  </defs>
+                  <polygon points="100,64 168,102 100,140 32,102" fill="url(#px-field-grad)" stroke="#14b8a6" stroke-width="2" stroke-opacity="0.75"/>
+                  <line x1="66" y1="83" x2="134" y2="121" stroke="#14b8a6" stroke-width="1.6" stroke-opacity="0.7"/>
+                  <ellipse cx="100" cy="102" rx="16" ry="9" stroke="#14b8a6" stroke-width="1.6" stroke-opacity="0.7"/>
+                  <polygon points="100,64 122,76 112,82 90,70" fill="none" stroke="#14b8a6" stroke-width="1.4" stroke-opacity="0.6"/>
+                  <polygon points="100,140 78,128 88,122 110,134" fill="none" stroke="#14b8a6" stroke-width="1.4" stroke-opacity="0.6"/>
+                  <path d="M128 130 L166 168" stroke="url(#px-lens-handle)" stroke-width="10" stroke-linecap="round"/>
+                  <path d="M132 134 L138 140" stroke="#f43f5e" stroke-width="12" stroke-linecap="square"/>
+                  <circle cx="166" cy="168" r="4" fill="#fb7185"/>
+                  <circle cx="94" cy="94" r="48" stroke="url(#px-lens-rim)" stroke-width="7" fill="none"/>
+                  <circle cx="94" cy="94" r="44.5" fill="url(#px-lens-glass)"/>
+                  <circle cx="94" cy="94" r="32" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.8"/>
+                  <circle cx="94" cy="94" r="18" stroke="#fb7185" stroke-width="1.2" opacity="0.9"/>
+                  <line x1="94" y1="56" x2="94" y2="132" stroke="#fb7185" stroke-width="1.5" stroke-opacity="0.85"/>
+                  <line x1="56" y1="94" x2="132" y2="94" stroke="#fb7185" stroke-width="1.5" stroke-opacity="0.85"/>
+                  <circle cx="94" cy="94" r="5" fill="#ffffff"/>
+                  <circle cx="94" cy="94" r="2.5" fill="#e11d48"/>
+                  <path d="M68 70 C76 60 88 56 100 56" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.65"/>
+                  <path d="M106 58 C112 60 118 64 122 70" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity="0.45"/>
+                </svg>
+              </div>
+              <h3 class="parallax-card__title" data-i18n="profili.c3.title">Scout &amp; staff</h3>
+              <a href="#scopri-portal" class="parallax-card__cta" data-i18n="profili.c3.cta" onclick="if(window.openScopriProfili){ window.openScopriProfili('staff'); } else if(window.switchView){ window.switchView('scopri','#scopri-portal'); } else { location.hash = '#bacheca-network'; }">Scopri i profili</a>
+            </article>
+
+          </div>
         </section>
 
         <!-- ABOUT (scroll portfolio) -->
@@ -6572,8 +6747,9 @@
   </script>
   <script src="cookie-profiling.js?v=20260925_HEROUX1"></script>
   <script src="ai-gdpr-monitor.js?v=20260806_NOCORS"></script>
-  <script src="i18n.js?v=20260928_HEROUX67"></script>
+  <script src="i18n.js?v=20260928_HEROUX68"></script>
   <script src="island-carousel.js?v=20260928_HEROUX67"></script>
+  <script src="parallax-cards.js?v=20260928_HEROUX68"></script>
   <script src="agents-runtime.js?v=20260806_NOCORS"></script>
   <script src="piramide-italia.js?v=20260831_GENDERSVG1"></script>
   <script src="club-storia.js?v=20260903_TIERPROMO1"></script>
