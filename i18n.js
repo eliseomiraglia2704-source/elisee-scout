@@ -49,7 +49,7 @@
       'home.emailBtn': 'Accedi con email',
       'about.pageTitle': 'Chi siamo',
       'about.headline': 'Il mercato del calcio italiano, verificato.',
-      'about.lede': 'Elisee Scout digitalizza il reclutamento nel calcio dilettantistico, giovanile e degli svincolati in Italia, collegando calciatori, società, scout e staff tecnico con dossier verificati, dati GPS e video highlights, in piena conformità GDPR.',
+      'about.lede': 'Elisee Scout digitalizza il reclutamento calcistico dilettantistico, giovanile e degli svincolati in Italia, collegando calciatori, società, scout e staff tecnico con dossier verificati, dati GPS e video highlights, in piena conformità GDPR.',
       'about.bio1': 'ELISEE SCOUT è la piattaforma di recruitment calcistico nata per digitalizzare il mercato dilettantistico, giovanile e svincolati in Italia.',
       'about.bio2': 'Connettiamo calciatori, società, scout e staff tecnico con dossier verificati, dati GPS, video highlights e compliance GDPR. La nostra forza è la fiducia: zero fake account, opportunità reali, mai un rischio.',
       'about.city': 'Italia · Puglia',

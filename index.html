@@ -53,7 +53,7 @@
   <link rel="stylesheet" href="style.css?v=20260926_HEROUX47">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
-  <link rel="stylesheet" href="chi-siamo.css?v=20260926_HEROUX46">
+  <link rel="stylesheet" href="chi-siamo.css?v=20260928_HEROUX64">
   <link rel="stylesheet" href="bacheca-board.css?v=20260926_HEROUX50">
   <link rel="stylesheet" href="control-center.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="flusso-contatti.css?v=20260925_PALETTE1">
@@ -363,7 +363,18 @@
       box-shadow: none !important;
     }
 
-    /* Chi siamo: scostamento navbar fissa e continuità visiva sfondo */
+    /* Chi siamo: annulla i padding-top impilati da es-nav-ux (vista + sezione + wrap).
+       L'unico distacco dalla navbar è su .cs-hero in chi-siamo.css. */
+    html body.is-internal-view #view-about#view-about,
+    html body.is-internal-view #about#about,
+    html body.is-internal-view #view-about .about-dossier,
+    html body.is-internal-view #view-about .about-dossier-wrap,
+    html body.is-internal-view #about .about-dossier-wrap {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+      min-height: 0 !important;
+      height: auto !important;
+    }
     #view-about,
     #view-about .about-dossier,
     #about,
@@ -371,59 +382,6 @@
       position: static !important;
       background: transparent !important;
       background-color: transparent !important;
-      padding-top: 0 !important;
-      margin-top: 0 !important;
-    }
-    #view-about .about-dossier-wrap,
-    #about .about-dossier-wrap,
-    .about-dossier-wrap {
-      padding-top: 0 !important;
-    }
-    .about-dossier .cs-hero,
-    .mission-hero,
-    .chi-siamo-intro {
-      position: relative !important;
-      display: block !important;
-      height: auto !important;
-      min-height: auto !important;
-      padding-top: 88px !important;
-      padding-bottom: 48px !important;
-      margin-top: 0 !important;
-      margin-bottom: 32px !important;
-      clear: both !important;
-    }
-    .about-dossier .cs-hero-grid {
-      display: grid !important;
-      grid-template-columns: 1.35fr 1fr !important;
-      gap: 48px !important;
-      align-items: start !important;
-      position: relative !important;
-    }
-    .about-dossier .cs-hero-left {
-      display: flex !important;
-      flex-direction: column !important;
-      gap: 12px !important;
-      position: relative !important;
-    }
-    .about-dossier .cs-mission {
-      position: relative !important;
-      display: block !important;
-      clear: both !important;
-      margin-top: 32px !important;
-      padding: 48px 0 64px !important;
-    }
-    @media (max-width: 768px) {
-      .about-dossier .cs-hero,
-      .mission-hero,
-      .chi-siamo-intro {
-        padding-top: 84px !important;
-        padding-bottom: 32px !important;
-        margin-bottom: 24px !important;
-      }
-      .about-dossier .cs-mission {
-        margin-top: 24px !important;
-        padding-top: 32px !important;
-      }
     }
     .hero-spacer,
     .chi-siamo-header-gap,
@@ -2757,17 +2715,22 @@
         <section id="about" class="about-dossier">
           <div class="about-dossier-wrap">
 
-            <!-- HERO A DUE COLONNE: Titolo + intro a sinistra, card info ben separata a destra -->
-            <header class="cs-hero mission-hero chi-siamo-intro">
+            <div class="cs-hero mission-hero chi-siamo-intro">
               <div class="cs-hero-grid">
                 <div class="cs-hero-left">
                   <div class="cs-eyebrow" data-i18n="about.pageTitle">Chi siamo</div>
                   <h1 class="cs-headline" data-i18n="about.missionLabel">La nostra missione</h1>
                   <p class="cs-lede" data-i18n="about.lede">
-                    Elisee Scout digitalizza il reclutamento nel calcio dilettantistico, giovanile e degli svincolati in Italia, collegando calciatori, società, scout e staff tecnico con dossier verificati, dati GPS e video highlights, in piena conformità GDPR.
+                    Elisee Scout digitalizza il reclutamento calcistico dilettantistico, giovanile e degli svincolati in Italia, collegando calciatori, società, scout e staff tecnico con dossier verificati, dati GPS e video highlights, in piena conformità GDPR.
+                  </p>
+                  <p class="cs-mission-p">
+                    Colleghiamo il sistema calcistico italiano — dalla Serie D alla Terza Categoria — con un <span class="cs-accent-teal">unico principio guida</span>: <span class="cs-accent-coral">zero fake account</span>, <span class="cs-accent-coral">opportunità reali</span>, <span class="cs-accent-coral">nessun rischio</span> per chi si affida alla piattaforma.
+                  </p>
+                  <p class="cs-mission-p">
+                    Ogni profilo è verificato tramite documento d'identità, ogni dato sportivo è tracciato con <span class="cs-accent-teal">GPS</span>, e ogni trattamento — a partire dagli atleti minorenni — segue gli articoli 13 e 30 del GDPR con <span class="cs-accent-coral">consenso genitoriale obbligatorio</span>.
                   </p>
                 </div>
-                <div class="cs-hero-meta">
+                <aside class="cs-hero-meta">
                   <dl>
                     <dt data-i18n="about.metaSeat">Sede</dt>
                     <dd data-i18n="about.metaSeatVal">Foggia, Italia</dd>
@@ -2776,21 +2739,9 @@
                     <dt data-i18n="about.metaScope">Ambito</dt>
                     <dd data-i18n="about.metaScopeVal">Reclutamento calcistico</dd>
                   </dl>
-                </div>
+                </aside>
               </div>
-            </header>
-
-            <!-- SEZIONE MISSIONE: larghezza di lettura contenuta (~68ch), accenti colorati coerenti e spaziatura armoniosa -->
-            <section class="cs-mission" aria-label="La nostra missione dettagliata">
-              <div class="cs-mission-content">
-                <p class="cs-mission-p">
-                  Connettiamo il sistema calcistico italiano — dalla Serie D alla Terza Categoria — con un <span class="cs-tag-principio">unico principio guida</span> : <span class="cs-accent-coral">zero fake account</span>, <span class="cs-accent-coral">opportunità reali</span>, <span class="cs-accent-coral">nessun rischio</span> per chi si affida alla piattaforma.
-                </p>
-                <p class="cs-mission-p">
-                  Ogni profilo è verificato tramite documento d'identità, ogni dato sportivo è tracciato con <span class="cs-accent-teal">GPS</span>, e ogni trattamento — a partire dagli atleti minorenni — segue gli articoli 13 e 30 del GDPR con <span class="cs-accent-coral">consenso genitoriale obbligatorio</span>.
-                </p>
-              </div>
-            </section>
+            </div>
 
             <section class="es-about" aria-labelledby="es-about-title">
               <div class="es-about__head">
@@ -6603,7 +6554,7 @@
   </script>
   <script src="cookie-profiling.js?v=20260925_HEROUX1"></script>
   <script src="ai-gdpr-monitor.js?v=20260806_NOCORS"></script>
-  <script src="i18n.js?v=20260925_150256"></script>
+  <script src="i18n.js?v=20260928_HEROUX64"></script>
   <script src="agents-runtime.js?v=20260806_NOCORS"></script>
   <script src="piramide-italia.js?v=20260831_GENDERSVG1"></script>
   <script src="club-storia.js?v=20260903_TIERPROMO1"></script>

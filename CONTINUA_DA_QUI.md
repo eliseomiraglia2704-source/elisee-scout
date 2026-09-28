@@ -3,7 +3,18 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-28** — HEROUX63 — Chi Siamo: Distanziamento Verticale Fluido & Separazione Fisica Anti-Overlap tra Hero e Mission:
+Ultimo aggiornamento: **2026-09-28** — HEROUX64 — Chi Siamo: spazio vuoto sopra il titolo e paragrafi sovrapposti:
+1. **Un solo distacco dalla navbar** (`chi-siamo.css`, `index.html`):
+   - Azzerato il padding-top impilato su `#view-about`, `#about` e `.about-dossier-wrap` (prima circa 88px × 3, più altri 88px sull'hero).
+   - Padding-top unico su `.cs-hero`: 120px desktop, 96px sotto i 900px. Niente min-height a schermo intero e niente animazione reveal.
+2. **Testo in flusso, una sola copia** (`index.html`, `chi-siamo.css`):
+   - I tre paragrafi (intro, principio guida, verifica) stanno nella colonna sinistra, uno sotto l'altro. Rimossa la sezione `.cs-mission`.
+   - Il blocco non è più un `<header>`: la regola globale `header { height/max-height: 64px }` lo schiacciava e la sezione «Cosa facciamo» ci finiva sopra. Ora è un `div.cs-hero` con `max-height: none`.
+   - Griglia 60/40, gap 48px, card info sticky solo da 901px (`top: 100px`). Sotto i 900px la card va sotto il testo.
+   - Highlight solo colore e peso: tolto il riquadro su «unico principio guida». Chiave i18n `about.lede` invariata, aggiornata solo la frase italiana.
+3. **File**: `index.html`, `chi-siamo.css`, `i18n.js`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX64`.
+
+Feature precedente: **2026-09-28** — HEROUX63 — Chi Siamo: Distanziamento Verticale Fluido & Separazione Fisica Anti-Overlap tra Hero e Mission:
 1. **Distanziamento Garantito e Separazione Anti-Overlap (`chi-siamo.css`, `index.html`)**:
    - Risolto il contatto/sovrapposizione tra il paragrafo descrittivo della hero (`.cs-lede`) e la sezione missione (`.cs-mission`):
      - Assegnato a `.about-dossier .cs-hero` un `padding-bottom: 48px !important;` e `margin-bottom: 32px !important;`.
