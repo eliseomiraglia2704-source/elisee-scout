@@ -23,8 +23,16 @@
     return (document.documentElement.lang || 'it').toLowerCase().startsWith('en') ? 'en' : 'it';
   }
 
+  function ensureSwitchMarkup(btn) {
+    if (!btn) return;
+    if (!btn.querySelector('.rs-key')) {
+      btn.innerHTML = '<span class="rs-key"><span class="rs-slot"><span class="rs-thumb"><span class="rs-led" aria-hidden="true"></span></span></span></span>';
+    }
+  }
+
   function updateSwitchVisual(btn, isLight) {
     if (!btn) return;
+    ensureSwitchMarkup(btn);
     btn.setAttribute('aria-checked', isLight ? 'true' : 'false');
     btn.classList.toggle('is-on', isLight);
     btn.classList.toggle('is-active', isLight);

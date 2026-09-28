@@ -3,7 +3,13 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-28** — HEROUX70 — Rimozione emoji dalle card I 3 Pilastri del Network:
+Ultimo aggiornamento: **2026-09-28** — HEROUX71 — Fix sovrascrittura Realistic Switch da role-sidebar-pro e forzatura cache-bust globale:
+1. **Risoluzione sovrascrittura Realistic Switch**: eliminata del tutto l'assegnazione `btn.textContent = light ? '☀️' : '🌙'` da `role-sidebar-pro.js` che distruggeva il markup interno del pulsante skeuomorfico ripristinando la luna gialla.
+2. **Auto-ripristino difensivo (`realistic-switch.js`)**: implementata la funzione `ensureSwitchMarkup()` che controlla e ricrea istantaneamente i nodi 3D `.rs-key`, `.rs-slot`, `.rs-thumb`, `.rs-led` qualora un elemento terzo provi a modificare il testo o i figli del pulsante.
+3. **Cache-bust globale**: aggiornato `BUILD_VERSION = '20260928_HEROUX71'` nello script inline all'avvio di `index.html` per forzare l'unregistration immediata dei vecchi Service Worker e azzerare le cache obsolete nel browser dell'utente, aggiornati i timestamp in `index.html`, `version.json` e `sw.js`.
+4. **File**: `role-sidebar-pro.js`, `realistic-switch.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX71`.
+
+Feature precedente: **2026-09-28** — HEROUX70 — Rimozione emoji dalle card I 3 Pilastri del Network:
 1. **Rimozione emoji**: rimosse le emoji ⚡ (fulmine su Calciatori), 🛡️ (scudo su Club & Squadre) e 🎯 (bersaglio su Scout & Agenti) dalla sezione `#home-pillars-glow` ("I 3 PILASTRI DEL NETWORK") in `index.html`.
 2. **Layout e tipografia puliti**: i badge `ATLETA`, `SOCIETÀ` e `AREA TECNICA` distano ora con precisione dai titoli delle card mantenendo un look minimale, pulito e professionale.
 3. **File**: `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX70`.
