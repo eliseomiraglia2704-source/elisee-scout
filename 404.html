@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Pagina non trovata · Elisee Scout</title>
+  <link rel="icon" type="image/png" href="/immagini/logo/favicon.png">
+  <link rel="shortcut icon" type="image/png" href="/immagini/logo/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/404.css">
+</head>
+<body class="neon404">
+  <a class="neon404-logo" href="/">ELISEE <span>SCOUT</span></a>
+  <main class="neon404-stage">
+    <h1 class="neon404-sr" id="neon404-h1" data-en="Page not found">Pagina non trovata</h1>
+    <div class="neon404-sign">
+      <svg class="neon404-svg" viewBox="0 0 660 210" role="img" aria-label="Errore 404">
+        <g class="neon404-digit neon404-digit--1" transform="translate(8,12)">
+          <path class="neon404-tube neon404-tube--halo" pathLength="100" d="M158 8 V184 M18 108 H176 M20 114 L138 12"/>
+          <path class="neon404-tube neon404-tube--core" pathLength="100" d="M158 8 V184 M18 108 H176 M20 114 L138 12"/>
+        </g>
+        <g class="neon404-digit neon404-digit--0" transform="translate(214,14)">
+          <path class="neon404-tube neon404-tube--halo" pathLength="100" d="M116 18 A78 82 0 1 1 115.8 18 M36 150 L196 28"/>
+          <path class="neon404-tube neon404-tube--core" pathLength="100" d="M116 18 A78 82 0 1 1 115.8 18 M36 150 L196 28"/>
+        </g>
+        <g class="neon404-digit neon404-digit--4" transform="translate(452,12)">
+          <g class="neon404-spark">
+            <path class="neon404-tube neon404-tube--halo" pathLength="100" d="M158 8 V184 M18 108 H176 M20 114 L138 12"/>
+            <path class="neon404-tube neon404-tube--core" pathLength="100" d="M158 8 V184 M18 108 H176 M20 114 L138 12"/>
+          </g>
+        </g>
+      </svg>
+      <p class="neon404-kicker" id="neon404-kicker" data-en="Page not found" aria-hidden="true">Pagina non trovata</p>
+    </div>
+    <p class="neon404-sub" id="neon404-sub" data-en="This link does not exist or has been moved.">Il link non esiste o è stato spostato.</p>
+    <div class="neon404-actions">
+      <a class="neon404-btn" id="neon404-home" href="/" data-en="Back to home">Torna alla home</a>
+      <a class="neon404-btn" id="neon404-board" href="/#bacheca-annunci" data-en="Go to the board">Vai alla bacheca</a>
+    </div>
+  </main>
+  <script>
+    (function () {
+      var lang = (navigator.language || "it").toLowerCase();
+      if (lang.indexOf("en") !== 0) return;
+      document.documentElement.lang = "en";
+      document.title = "Page not found · Elisee Scout";
+      document.querySelectorAll("[data-en]").forEach(function (el) {
+        el.textContent = el.getAttribute("data-en");
+      });
+    })();
+  </script>
+</body>
+</html>

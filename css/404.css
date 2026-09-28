@@ -1,0 +1,284 @@
+/* 404 neon. Sempre scuro, isolato sotto .neon404- */
+@property --neon {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #00f5d4;
+}
+
+:root {
+  --bg-base: #07131c;
+  --bg-glow-1: rgba(56, 189, 248, 0.38);
+  --bg-glow-2: rgba(14, 58, 77, 0.22);
+  --neon: #00f5d4;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg-base);
+  color: #fff;
+}
+
+body.neon404 {
+  min-height: 100dvh;
+  position: relative;
+  z-index: 0;
+  overflow-x: hidden;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+body.neon404::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--bg-base);
+  background-image:
+    radial-gradient(ellipse 80% 55% at 50% -10%, var(--bg-glow-1) 0%, var(--bg-glow-2) 42%, transparent 70%),
+    linear-gradient(180deg, #07131c 0%, #0a3040 42%, #050608 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.neon404-logo {
+  position: absolute;
+  top: 28px;
+  left: 40px;
+  z-index: 2;
+  font-family: "Outfit", system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: 0.08em;
+  color: #fff;
+  text-decoration: none;
+}
+
+.neon404-logo span {
+  color: #38bdf8;
+}
+
+.neon404-stage {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 96px 20px 48px;
+  box-sizing: border-box;
+}
+
+.neon404-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.neon404-sign {
+  --neon: #00f5d4;
+  color: var(--neon);
+  animation: neon404-hue 12s linear infinite;
+}
+
+.neon404-svg {
+  width: min(600px, 90vw);
+  height: auto;
+  display: block;
+  overflow: visible;
+  margin: 0 auto;
+}
+
+.neon404-tube {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+
+.neon404-tube--halo {
+  stroke: var(--neon);
+  stroke-width: 16;
+  opacity: 0.45;
+  filter:
+    drop-shadow(0 0 4px var(--neon))
+    drop-shadow(0 0 12px var(--neon))
+    drop-shadow(0 0 28px var(--neon));
+}
+
+.neon404-tube--core {
+  stroke: #f7feff;
+  stroke-width: 3.4;
+  filter:
+    drop-shadow(0 0 2px #fff)
+    drop-shadow(0 0 8px var(--neon));
+}
+
+.neon404-digit--1 .neon404-tube {
+  animation: neon404-draw 0.42s ease forwards;
+}
+
+.neon404-digit--0 .neon404-tube {
+  animation: neon404-draw 0.42s ease 0.38s forwards;
+}
+
+.neon404-digit--4 .neon404-tube {
+  animation: neon404-draw 0.42s ease 0.76s forwards;
+}
+
+.neon404-digit--1 {
+  animation: neon404-ignite 0.55s ease 0.4s both;
+}
+
+.neon404-digit--0 {
+  animation: neon404-ignite 0.55s ease 0.88s both;
+}
+
+.neon404-spark {
+  animation: neon404-spark 6s linear 2.2s infinite;
+}
+
+.neon404-kicker {
+  margin: 18px 0 0;
+  font-family: "Outfit", system-ui, sans-serif;
+  font-size: clamp(14px, 2.4vw, 22px);
+  font-weight: 700;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--neon);
+  text-shadow: 0 0 8px var(--neon), 0 0 18px var(--neon);
+  opacity: 0;
+  animation: neon404-in 0.6s ease 1.4s forwards;
+}
+
+.neon404-sub {
+  margin: 14px 0 0;
+  max-width: 36rem;
+  color: #94a3b8;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.neon404-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.85rem;
+  margin-top: 28px;
+}
+
+.neon404-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1.75rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  background: transparent;
+  color: #fff;
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+}
+
+.neon404-btn:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(56, 189, 248, 0.18) 45%, rgba(255, 255, 255, 0.1) 100%);
+  border-color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 8px 22px rgba(0, 0, 0, 0.35);
+}
+
+.neon404-btn:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 3px;
+}
+
+@keyframes neon404-hue {
+  0%, 100% { --neon: #00f5d4; }
+  33% { --neon: #38bdf8; }
+  66% { --neon: #ff3366; }
+}
+
+@keyframes neon404-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes neon404-ignite {
+  0% { opacity: 0.2; }
+  20% { opacity: 1; }
+  36% { opacity: 0.4; }
+  52% { opacity: 1; }
+  68% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+@keyframes neon404-spark {
+  0%, 82%, 100% { opacity: 1; }
+  86% { opacity: 0.3; }
+  89% { opacity: 1; }
+  92% { opacity: 0.5; }
+  95% { opacity: 1; }
+}
+
+@keyframes neon404-in {
+  to { opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  .neon404-logo {
+    left: 20px;
+    top: 20px;
+    font-size: 1rem;
+  }
+
+  .neon404-svg {
+    width: 90vw;
+  }
+
+  .neon404-actions {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .neon404-btn {
+    width: 100%;
+    max-width: 320px;
+    box-sizing: border-box;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .neon404-sign,
+  .neon404-digit--1,
+  .neon404-digit--0,
+  .neon404-spark,
+  .neon404-kicker,
+  .neon404-tube {
+    animation: none;
+  }
+
+  .neon404-sign {
+    --neon: #00f5d4;
+  }
+
+  .neon404-tube {
+    stroke-dashoffset: 0;
+  }
+
+  .neon404-kicker,
+  .neon404-digit--1,
+  .neon404-digit--0,
+  .neon404-spark {
+    opacity: 1;
+  }
+}
