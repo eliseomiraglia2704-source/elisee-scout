@@ -3,7 +3,16 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-27** — HEROUX62 — Chi Siamo / La Nostra Missione: Risoluzione Taglio Navbar Fissa e Rimozione Fascia Scura:
+Ultimo aggiornamento: **2026-09-28** — HEROUX63 — Chi Siamo: Distanziamento Verticale Fluido & Separazione Fisica Anti-Overlap tra Hero e Mission:
+1. **Distanziamento Garantito e Separazione Anti-Overlap (`chi-siamo.css`, `index.html`)**:
+   - Risolto il contatto/sovrapposizione tra il paragrafo descrittivo della hero (`.cs-lede`) e la sezione missione (`.cs-mission`):
+     - Assegnato a `.about-dossier .cs-hero` un `padding-bottom: 48px !important;` e `margin-bottom: 32px !important;`.
+     - Assegnato a `.about-dossier .cs-mission` un `margin-top: 32px !important;`, `padding-top: 48px !important;` e `clear: both !important;`.
+     - Impostato `position: relative !important;` con flusso naturale per tutte le colonne interne (`.cs-hero-grid`, `.cs-hero-left`), garantendo che il testo non flotti mai sopra la sezione successiva.
+   - Su mobile (< 768px), distanziamenti proporzionati con 32px di padding-bottom e 24px di margine.
+2. **File**: `index.html`, `chi-siamo.css`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX63`.
+
+Feature precedente: **2026-09-27** — HEROUX62 — Chi Siamo / La Nostra Missione: Risoluzione Taglio Navbar Fissa e Rimozione Fascia Scura:
 1. **Scostamento Assoluto dalla Navbar Fissa (`chi-siamo.css`, `index.html`, `style.css`)**:
    - Assegnate le classi semantiche `.mission-hero .chi-siamo-intro` all'header `.cs-hero` dell'area Chi siamo.
    - Applicato `position: static !important; padding-top: 88px !important;` (pari all'altezza reale della navbar a 64px + 24px di respiro confortevole) per garantire che il kicker "Chi siamo", il titolo principale "LA NOSTRA MISSIONE" e la card info Sede/Contatti/Ambito non vengano mai clippati o coperti dalla barra fissa.

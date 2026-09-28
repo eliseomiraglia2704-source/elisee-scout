@@ -382,27 +382,47 @@
     .about-dossier .cs-hero,
     .mission-hero,
     .chi-siamo-intro {
-      position: static !important;
+      position: relative !important;
       display: block !important;
       height: auto !important;
       min-height: auto !important;
       padding-top: 88px !important;
-      padding-bottom: 3.25rem !important;
+      padding-bottom: 48px !important;
       margin-top: 0 !important;
+      margin-bottom: 32px !important;
+      clear: both !important;
+    }
+    .about-dossier .cs-hero-grid {
+      display: grid !important;
+      grid-template-columns: 1.35fr 1fr !important;
+      gap: 48px !important;
+      align-items: start !important;
+      position: relative !important;
+    }
+    .about-dossier .cs-hero-left {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+      position: relative !important;
     }
     .about-dossier .cs-mission {
+      position: relative !important;
       display: block !important;
       clear: both !important;
-      position: static !important;
-      padding: 56px 0 64px !important;
-      margin-top: 0 !important;
+      margin-top: 32px !important;
+      padding: 48px 0 64px !important;
     }
     @media (max-width: 768px) {
       .about-dossier .cs-hero,
       .mission-hero,
       .chi-siamo-intro {
         padding-top: 84px !important;
-        padding-bottom: 2rem !important;
+        padding-bottom: 32px !important;
+        margin-bottom: 24px !important;
+      }
+      .about-dossier .cs-mission {
+        margin-top: 24px !important;
+        padding-top: 32px !important;
       }
     }
     .hero-spacer,

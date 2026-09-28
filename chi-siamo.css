@@ -64,14 +64,17 @@
 .about-dossier .cs-hero,
 .mission-hero,
 .chi-siamo-intro {
-  position: static !important;
+  position: relative !important;
   display: block !important;
   height: auto !important;
   min-height: auto !important;
-  padding: calc(var(--nav-h, 64px) + 24px) 0 3.25rem !important; /* 88px di padding superiore */
-  margin: 0 !important;
+  padding-top: calc(var(--nav-h, 64px) + 24px) !important; /* 88px di padding superiore */
+  padding-bottom: 48px !important;
+  margin-top: 0 !important;
+  margin-bottom: 32px !important;
   animation: csFadeUp 0.7s ease;
   overflow: visible !important;
+  clear: both !important;
 }
 
 /* Spacer removal utility */
@@ -91,11 +94,12 @@
 
 .about-dossier .cs-hero-grid {
   display: grid !important;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 56px;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 48px;
   align-items: start;
   height: auto !important;
   min-height: auto !important;
+  position: relative !important;
 }
 
 .about-dossier .cs-hero-left {
@@ -103,7 +107,8 @@
   flex-direction: column !important;
   height: auto !important;
   min-height: auto !important;
-  gap: 8px;
+  gap: 12px;
+  position: relative !important;
 }
 
 .about-dossier .cs-eyebrow {
@@ -183,7 +188,11 @@
 
 /* ----- Missione (larghezza di lettura ~68ch, spaziatura coerente) ----- */
 .about-dossier .cs-mission {
-  padding: 56px 0 64px;
+  position: relative !important;
+  display: block !important;
+  clear: both !important;
+  margin-top: 32px !important;
+  padding: 48px 0 64px !important;
 }
 
 .about-dossier .cs-mission-content {
