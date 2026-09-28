@@ -2,8 +2,20 @@
 
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
+Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-09-28** — HEROUX73 — Implementazione delle 6 Regole UX per ricerche, date e selezioni su tutta la piattaforma:
+Ultimo aggiornamento: **2026-09-29** — SECFIX2 — Security Remediation Blocchi 1 e 2:
+1. **Blocco 1 (Autenticazione & Segreti)**:
+   - Sostituito bypass admin `X-Elisee-Admin: admin123` con verifica firma HMAC-SHA256 (`lib/admin-token-verify.js` e `api/manager.js`).
+   - Separati gli hash password PBKDF2 per Manuel, Alessandro ed Eliseo con `mustResetPassword: true` e rimossa password master condivisa da `api/auth/me.js`.
+   - Segreti hardcoded rimossi e sostituiti con fail-closed via variabili d'ambiente (`TOKEN_SIGNING_KEY`, `OTP_SECRET`, `ELISEE_AUTH_SECRET`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`).
+   - Generate password temporanee sicure in `CREDENZIALI_TEMPORANEE.txt` (file locale gitignored da eliminare dopo la consegna).
+2. **Blocco 2 (Persistenza KV & Rate Limiting OTP)**:
+   - `api/manager.js`: stato manager persistito su Vercel KV (`elisee:manager:state`) con fallback locale su file per evitare perdita formazioni/candidature nei riavvii container serverless.
+   - `api/auth-otp.js`: rate limiting attivo su `action=send` (max 3 codici ogni 10 minuti per email) per mitigare spam e abuso invio email.
+3. **File**: `lib/admin-token-verify.js`, `api/manager.js`, `api/auth-admin.js`, `api/auth-otp.js`, `lib/auth-oauth.js`, `api/auth/me.js`, `version.json`, `sw.js`, `.gitignore`, `CONTINUA_DA_QUI.md`. Cache `v20260929_SECFIX2`.
+
+Feature precedente: **2026-09-28** — HEROUX73 — Implementazione delle 6 Regole UX per ricerche, date e selezioni su tutta la piattaforma:
 1. **Audit completo & Classificazione Controlli**:
    - Censiti tutti i controlli nativi ed emulati (Bacheca, Ricerca Navbar, Mappa Club, Filtri, Form pubblica annuncio, Date di nascita registrazione/slide, Piede, Campionati, ecc.).
 2. **Regola 1 (Type to filter, >10 opzioni)**:

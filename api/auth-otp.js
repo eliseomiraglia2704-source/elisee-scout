@@ -364,6 +364,21 @@ module.exports = async function handler(req, res) {
   });
 
   if (action === 'send') {
+    // Rate limit: max 3 invii per email ogni 10 minuti
+    const existing = store[email];
+    if (existing) {
+      const windowStart = existing.sendWindowStart || existing.expiresAt - 600000;
+      const sendCount = existing.sendCount || 1;
+      const windowAge = now - windowStart;
+      if (windowAge < 600000 && sendCount >= 3) {
+        const waitSec = Math.ceil((600000 - windowAge) / 1000);
+        return sendJson(res, 429, {
+          success: false,
+          error: `Troppi codici inviati. Attendi ${waitSec} secondi prima di richiederne un altro.`
+        });
+      }
+    }
+
     const rawCode = String(crypto.randomInt(100000, 1000000)).padStart(6, '0');
     const bodies = mailBodies(rawCode, {
       nome: body.nome || query.nome || '',
@@ -379,11 +394,15 @@ module.exports = async function handler(req, res) {
         email: email
       });
     }
+    const prevSendCount = (existing && existing.sendCount) || 0;
+    const prevWindowStart = (existing && existing.sendWindowStart) || now;
     const rec = {
       expiresAt: now + 600000,
       attempts: 0,
       via: via,
-      codeHash: hashOtp(email, rawCode)
+      codeHash: hashOtp(email, rawCode),
+      sendCount: prevSendCount + 1,
+      sendWindowStart: prevWindowStart
     };
     store[email] = rec;
     saveStore(store);

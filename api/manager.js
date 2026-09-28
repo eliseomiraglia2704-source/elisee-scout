@@ -1,6 +1,7 @@
 /**
  * Vercel serverless — stesso contratto di /api/manager sul server locale.
- * Persistenza su /tmp (ephemeral). In locale usa elisee_up.py.
+ * Persistenza: Vercel KV (primario) con fallback /tmp (locale/cold-start).
+ * In locale usa elisee_up.py (file data/manager/state.json).
  */
 const fs = require('fs');
 const path = require('path');
@@ -17,20 +18,42 @@ function now() {
 function uid() {
   return now().slice(0, 10).replace(/-/g, '') + '-' + Math.random().toString(16).slice(2, 10);
 }
-function load() {
+const KV_STATE_KEY = 'elisee:manager:state';
+
+function normalizeState(st) {
+  const s = st && typeof st === 'object' ? st : {};
+  if (!s.applications) s.applications = [];
+  if (!s.proposals) s.proposals = [];
+  if (!s.managers) s.managers = [];
+  if (!s.lineups) s.lineups = [];
+  if (!s.officialLineups) s.officialLineups = {};
+  return s;
+}
+
+function loadFile() {
   try {
-    const st = JSON.parse(fs.readFileSync(FILE, 'utf8')) || {};
-    if (!st.applications) st.applications = [];
-    if (!st.proposals) st.proposals = [];
-    if (!st.managers) st.managers = [];
-    if (!st.lineups) st.lineups = [];
-    if (!st.officialLineups) st.officialLineups = {};
-    return st;
+    return normalizeState(JSON.parse(fs.readFileSync(FILE, 'utf8')));
   } catch (e) {
-    return { applications: [], proposals: [], managers: [], lineups: [], officialLineups: {} };
+    return normalizeState({});
   }
 }
-function save(st) {
+
+async function load() {
+  const kv = await getKv();
+  if (kv) {
+    try {
+      const v = await kv.get(KV_STATE_KEY);
+      if (v && typeof v === 'object') return normalizeState(v);
+    } catch (e) {}
+  }
+  return loadFile();
+}
+
+async function save(st) {
+  const kv = await getKv();
+  if (kv) {
+    try { await kv.set(KV_STATE_KEY, st); } catch (e) {}
+  }
   try {
     fs.mkdirSync(path.dirname(FILE), { recursive: true });
     fs.writeFileSync(FILE, JSON.stringify(st, null, 2));
@@ -559,7 +582,7 @@ module.exports = async function handler(req, res) {
     await kvDocSave(name, doc);
     return send(res, 200, { ok: true, updatedAt: doc.updatedAt });
   }
-  const st = load();
+  const st = await load();
   if (req.method === 'GET') {
     const view = url.searchParams.get('view') || 'me';
     if (view === 'admin') {
@@ -613,7 +636,7 @@ module.exports = async function handler(req, res) {
       createdAt: now()
     };
     st.applications.unshift(row);
-    save(st);
+    await save(st);
     return send(res, 200, { ok: true, application: row });
   }
   if (action === 'propose') {
@@ -639,7 +662,7 @@ module.exports = async function handler(req, res) {
       applied: false
     };
     st.proposals.unshift(row);
-    save(st);
+    await save(st);
     return send(res, 200, { ok: true, proposal: row });
   }
   if (action === 'propose-lineup') {
@@ -666,7 +689,7 @@ module.exports = async function handler(req, res) {
       applied: false
     };
     st.lineups.unshift(row);
-    save(st);
+    await save(st);
     return send(res, 200, { ok: true, lineup: row });
   }
   if (action === 'decide') {
@@ -696,7 +719,7 @@ module.exports = async function handler(req, res) {
       };
       row.applied = true;
     }
-    save(st);
+    await save(st);
     return send(res, 200, { ok: true, item: row, applied: !!row.applied });
   }
   return send(res, 400, { ok: false, error: 'azione_sconosciuta' });
