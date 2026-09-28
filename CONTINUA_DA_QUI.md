@@ -3,7 +3,22 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-28** — HEROUX68 — Componente Parallax Card 3D dopo #funzioni:
+Ultimo aggiornamento: **2026-09-28** — HEROUX70 — Rimozione emoji dalle card I 3 Pilastri del Network:
+1. **Rimozione emoji**: rimosse le emoji ⚡ (fulmine su Calciatori), 🛡️ (scudo su Club & Squadre) e 🎯 (bersaglio su Scout & Agenti) dalla sezione `#home-pillars-glow` ("I 3 PILASTRI DEL NETWORK") in `index.html`.
+2. **Layout e tipografia puliti**: i badge `ATLETA`, `SOCIETÀ` e `AREA TECNICA` distano ora con precisione dai titoli delle card mantenendo un look minimale, pulito e professionale.
+3. **File**: `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX70`.
+
+Feature precedente: **2026-09-28** — HEROUX69 — Realistic Switch Skeuomorfico per il tema (luna/sole):
+1. **Sostituzione Toggle Tema skeuomorfico**: il vecchio bottone luna/sole 🌙/☀️ (`#es-nav-theme`) è ora un componente riutilizzabile `.realistic-switch` 3D tattile a 3 layer (solo CSS, nessuna immagine o asset esterno):
+   - `.rs-key`: squircle rilievo 3D con border-radius 32%, gradiente verticale (#3a3a42 → #2a2a31 in Dark, teal #2fe0c8 → #14b8a6 → #0d9488 in Light), bordo sottile e doppie ombre interne ed esterne.
+   - `.rs-slot`: incavo interno pill verticale (34% larghezza × 52% altezza) con inset shadow pronunciata.
+   - `.rs-thumb`: levetta pill lucida con highlight superiore e micro-LED laterale. In dark (OFF) si trova in posizione bassa con LED tenue; in light (ON) scorre in posizione alta con molla elastica `cubic-bezier(.34,1.56,.64,1)` a 350ms e micro-LED teal acceso con lieve glow.
+2. **Dimensionamento & Navbar intatta**: dimensione governata da `--rs-size: 38px`, hit area minima touch garantita a 44×44px tramite pseudo-elemento invisibile `::before`. L'altezza e l'allineamento della navbar restano invariati al 100%.
+3. **Logica tema preservata**: preservato il data-theme (`vault-neon` e `mimetico-chiaro`), `localStorage['elisee_ui_theme']`, `window.toggleSiteTheme()`, transizione dello sfondo su `body.layout-portfolio::before` a 400ms senza flash bianchi né layout shift.
+4. **Accessibilità & Sincronizzazione**: tag nativo `<button role="switch">`, feedback da tastiera (Enter/Space con `.is-pressing`), focus outline ring teal visibile, tooltip dinamico `aria-label`/`title` ("Passa al tema chiaro" / "Passa al tema scuro" e corrispettivi EN). `MutationObserver` su `data-theme` e storage listener sincronizzano istantaneamente lo switch con sidebar o altre schede del browser. `prefers-reduced-motion` supportato.
+5. **File**: `realistic-switch.css`, `realistic-switch.js`, `role-sidebar-pro.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX69`.
+
+Feature precedente: **2026-09-28** — HEROUX68 — Componente Parallax Card 3D dopo #funzioni:
 1. Nuova sezione `#profili` posizionata tra `#funzioni` e `#home-about`, `background: transparent`, scroll-margin-top e padding coerenti. Nessun link aggiunto in navbar. Sfondo globale e sezioni esistenti invariati.
 2. Intestazione nello stesso stile delle altre sezioni: eyebrow teal «Per chi è», titolo «Una piattaforma, tre ruoli», sottotitolo di una riga. Supporto i18n completo (IT, EN, ES, FR).
 3. 3 card affiancate (Giocatori, Società, Scout & staff) a 1366px (gap 2rem, 300x400px, border-radius 20px), responsive a 2 colonne su tablet (768px) e 1 colonna impilata su mobile (≤600px).

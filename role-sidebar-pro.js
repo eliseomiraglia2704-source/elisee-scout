@@ -70,9 +70,10 @@
   function syncDayNight() {
     var light = document.documentElement.getAttribute('data-theme') === 'mimetico-chiaro';
     var btn = document.getElementById('es-nav-theme');
-    if (!btn) return;
     btn.classList.toggle('is-day', light);
-    btn.textContent = light ? '☀️' : '🌙';
+    if (!btn.classList.contains('realistic-switch')) {
+      btn.textContent = light ? '☀️' : '🌙';
+    }
     btn.setAttribute('aria-pressed', light ? 'true' : 'false');
     btn.setAttribute('aria-label', light ? 'Passa al tema notte' : 'Passa al tema giorno');
   }
