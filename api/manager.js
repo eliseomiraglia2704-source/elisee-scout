@@ -4,6 +4,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const { isAdmin } = require('../lib/admin-token-verify');
 
 const FILE = process.env.ELISEE_MANAGER_FILE
   || (process.env.VERCEL ? '/tmp/elisee-manager.json' : path.join(process.cwd(), 'data', 'manager', 'state.json'));
@@ -35,15 +36,12 @@ function save(st) {
     fs.writeFileSync(FILE, JSON.stringify(st, null, 2));
   } catch (e) {}
 }
-function isAdmin(req) {
-  const k = String(req.headers['x-elisee-admin'] || '');
-  return k === 'admin123' || k === '1' || k === 'true' || k === 'admin';
-}
+// isAdmin importato da lib/admin-token-verify — verifica token HMAC-SHA256 firmato
 function send(res, code, body) {
   res.statusCode = code;
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Elisee-Admin');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Admin-Token');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.end(JSON.stringify(body));
 }

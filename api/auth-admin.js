@@ -38,7 +38,13 @@ const STAFF_ROLES = {
 };
 
 function getSigningKey() {
-  return process.env.TOKEN_SIGNING_KEY || 'elisee-scout-admin-token-key-2026';
+  const key = process.env.TOKEN_SIGNING_KEY;
+  if (!key) {
+    // Fail-closed: nessun token admin può essere emesso o verificato senza questa chiave.
+    // Impostare TOKEN_SIGNING_KEY come variabile d'ambiente su Vercel.
+    throw new Error('[AUTH-ADMIN] TOKEN_SIGNING_KEY non configurata. Impostare la variabile d ambiente su Vercel.');
+  }
+  return key;
 }
 
 function hashPassword(plain) {

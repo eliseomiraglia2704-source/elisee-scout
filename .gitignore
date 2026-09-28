@@ -16,6 +16,9 @@ node_modules/
 .env.local
 
 # Auth secrets / sessions — never commit
+# Credenziali temporanee staff — eliminare dopo aver consegnato le password
+CREDENZIALI_TEMPORANEE.txt
+
 data/auth/config.json
 data/auth/users.json
 data/auth/sessions.json
@@ -37,3 +40,6 @@ data/fc26_frames_ref/
 # Autopilot runtime
 data/autopilot/watchdog.lock
 data/autopilot/log.jsonl
+
+# Claude Code local settings
+.claude/settings.local.json

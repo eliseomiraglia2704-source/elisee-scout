@@ -14,8 +14,8 @@ const OTP_STORE_FILE = process.env.VERCEL
   : path.join(process.cwd(), 'data', 'auth', 'otp-store.json');
 
 const memoryStore = {};
-const SUPABASE_URL = (process.env.SUPABASE_URL || 'https://uautnlmnpxgbajtucuko.supabase.co').replace(/\/$/, '');
-const SUPABASE_KEY = process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_KEY || 'sb_publishable_1e-KMVmQHAf9GduUTMKn8Q_9ibW1BK_';
+const SUPABASE_URL = (process.env.SUPABASE_URL || '').replace(/\/$/, '');
+const SUPABASE_KEY = (process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_KEY || '').trim();
 
 function getStore() {
   try {
@@ -35,7 +35,11 @@ function saveStore(store) {
   }
 }
 
-const OTP_SECRET = process.env.OTP_SECRET || 'elisee-scout-otp-secret-salt-2026';
+const OTP_SECRET = (() => {
+  const s = process.env.OTP_SECRET;
+  if (!s) throw new Error('[AUTH-OTP] OTP_SECRET non configurata. Impostare la variabile d ambiente su Vercel.');
+  return s;
+})();
 
 async function redisCall(cmdPath) {
   const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;

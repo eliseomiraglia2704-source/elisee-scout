@@ -12,9 +12,13 @@ const { checkPasswordPolicy } = require('../../lib/password-policy');
 
 const SALT = 'elisee-staff-v1';
 const ITER = 120000;
-const MANUEL_HASH = '21612aefb415ec0957dfd54095eed7fadbeaec288eeca7bf8380989c12919145';
-const ALESSANDRO_HASH = '21612aefb415ec0957dfd54095eed7fadbeaec288eeca7bf8380989c12919145';
-const LEGACY_HASH = 'de134c138f54a18fb10cd0f5fda4699a81326bb1b6a5d47aeadb26bce167270b';
+// Hash PBKDF2 distinti per ogni account staff — generati il 2026-09-28.
+// Tutti e tre hanno mustResetPassword: true: al primo accesso devono scegliere una password personale.
+// Per rigenerate: node -e "require('crypto').pbkdf2Sync('NUOVA_PW','elisee-staff-v1',120000,32,'sha256').toString('hex')"
+const MANUEL_HASH     = '3aa3b1bbacc051b5823bf78c99a10ddd7933ff021744762bb9a75ed9d6ea731a';
+const ALESSANDRO_HASH = '2a497e077a3b9d59d924ef1c42cb8f7c33b81ac64e77812c1f9d49841b79c923';
+const ELISEO_HASH     = '769c6f76c7a2aa4464e78e2adbc797a67c18dce552d5fb68966c8ed7aa7d2b46';
+// LEGACY_HASH rimosso: era condiviso tra tutti gli account, non usarlo.
 const OVERRIDE_FILE = process.env.VERCEL
   ? '/tmp/elisee-password-overrides.json'
   : path.join(process.cwd(), 'data', 'auth', 'password-overrides.json');
@@ -50,7 +54,7 @@ const STAFF = {
     verifiedByAdmin: true,
     skipDocVerify: true,
     badgeVerificaStato: 'approved',
-    mustResetPassword: false,
+    mustResetPassword: true,
     passwordHash: ALESSANDRO_HASH
   },
   'eliseomiraglia2704@gmail.com': {
@@ -64,9 +68,9 @@ const STAFF = {
     verifiedByAdmin: true,
     skipDocVerify: true,
     badgeVerificaStato: 'approved',
-    mustResetPassword: false,
+    mustResetPassword: true,
     isCreator: true,
-    passwordHash: MANUEL_HASH
+    passwordHash: ELISEO_HASH
   }
 };
 
@@ -254,7 +258,8 @@ module.exports = async function handler(req, res) {
       const computedHash = hashPassword(password);
       const saved = await getOverrideHash(email);
       const okSaved = saved && hashesEqual(computedHash, saved);
-      const okDefault = hashesEqual(computedHash, rec.passwordHash) || hashesEqual(computedHash, LEGACY_HASH);
+      const okDefault = hashesEqual(computedHash, rec.passwordHash);
+      // LEGACY_HASH rimosso: non accettare più la password condivisa precedente
       if (!okSaved && !okDefault) {
         return json(res, 401, { ok: false, error: 'credenziali_non_valide' });
       }
