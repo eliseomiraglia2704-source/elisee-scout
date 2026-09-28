@@ -81,7 +81,7 @@ html body.is-internal-view #about .about-dossier-wrap {
   max-height: none !important;
   min-height: 0 !important;
   z-index: auto !important;
-  padding: 120px 0 56px !important;
+  padding: calc(var(--nav-h, 64px) + 28px) 0 56px !important;
   margin: 0 !important;
   animation: none !important;
   transform: none !important;
@@ -710,7 +710,7 @@ html[data-theme="mimetico-chiaro"] .about-dossier .cs-accent-teal {
   .about-dossier .cs-hero,
   .mission-hero,
   .chi-siamo-intro {
-    padding: 96px 0 40px !important;
+    padding: calc(var(--nav-h, 64px) + 28px) 0 40px !important;
   }
 
   .about-dossier .cs-hero-grid {

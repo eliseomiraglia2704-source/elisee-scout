@@ -3,7 +3,17 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-28** — HEROUX64 — Chi Siamo: spazio vuoto sopra il titolo e paragrafi sovrapposti:
+Ultimo aggiornamento: **2026-09-28** — HEROUX65 — Navbar e sfondo uguali su Home, Chi siamo, Bacheca e Mappa:
+1. **Una sola barra** (`landing-unify.css`, `es-nav-ux.css`, `style.css`, `index.html`):
+   - Tolto lo sfondo opaco delle viste interne (`body.is-internal-view` / `is-view-mappa` / `.is-scrolled`): la barra resta trasparente, senza bordo e senza fascia.
+   - La pillola Chi siamo / Bacheca / Mappa ha gli stessi vetro, blur e raggio ovunque. Cambia solo il link attivo.
+2. **Uno sfondo** (`landing-unify.css`, `mappa-club.css`, `bacheca-board.css`):
+   - Variabili `--bg-base`, `--bg-glow-1`, `--bg-glow-2`. Il gradiente della home è sul body, fisso. Le quattro sezioni sono trasparenti. Il navy della mappa non copre più la pagina.
+   - Tema chiaro: stesso schema, con il gradiente chiaro della home.
+3. **Spazio sopra i titoli**: padding unico `altezza navbar + 28px` su hero, Chi siamo, bacheca e mappa. Niente padding-top impilati.
+4. **File**: `landing-unify.css`, `index.html`, `es-nav-ux.css`, `style.css`, `chi-siamo.css`, `bacheca-board.css`, `mappa-club.css`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX65`.
+
+Feature precedente: **2026-09-28** — HEROUX64 — Chi Siamo: spazio vuoto sopra il titolo e paragrafi sovrapposti:
 1. **Un solo distacco dalla navbar** (`chi-siamo.css`, `index.html`):
    - Azzerato il padding-top impilato su `#view-about`, `#about` e `.about-dossier-wrap` (prima circa 88px × 3, più altri 88px sull'hero).
    - Padding-top unico su `.cs-hero`: 120px desktop, 96px sotto i 900px. Niente min-height a schermo intero e niente animazione reveal.

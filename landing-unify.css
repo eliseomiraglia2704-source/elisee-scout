@@ -1,0 +1,156 @@
+/* Un solo header e un solo sfondo per #hero, #about, #bacheca-annunci, #mappa-portal.
+   Il riferimento è il gradiente della homepage. Le card tengono il proprio fondo. */
+
+:root {
+  --bg-base: #07131c;
+  --bg-glow-1: rgba(56, 189, 248, 0.38);
+  --bg-glow-2: rgba(14, 58, 77, 0.22);
+  --nav-h: 64px;
+  --section-pad: calc(var(--nav-h) + 28px);
+}
+
+html[data-theme="mimetico-chiaro"] {
+  --bg-base: #f8fafc;
+  --bg-glow-1: rgba(2, 132, 199, 0.16);
+  --bg-glow-2: rgba(240, 249, 255, 0.72);
+}
+
+html:not([data-theme="mimetico-chiaro"]),
+html:not([data-theme="mimetico-chiaro"]) body.layout-portfolio,
+html:not([data-theme="mimetico-chiaro"]) body.layout-portfolio.is-internal-view,
+html:not([data-theme="mimetico-chiaro"]) body.layout-portfolio.is-view-mappa,
+html:not([data-theme="mimetico-chiaro"]) body.layout-portfolio.view-mappa {
+  background-color: var(--bg-base) !important;
+  background-image:
+    radial-gradient(ellipse 80% 55% at 50% -10%, var(--bg-glow-1) 0%, var(--bg-glow-2) 42%, transparent 70%),
+    linear-gradient(180deg, #07131c 0%, #0a3040 42%, #050608 100%) !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+}
+
+html[data-theme="mimetico-chiaro"],
+html[data-theme="mimetico-chiaro"] body.layout-portfolio,
+html[data-theme="mimetico-chiaro"] body.layout-portfolio.is-internal-view,
+html[data-theme="mimetico-chiaro"] body.layout-portfolio.is-view-mappa,
+html[data-theme="mimetico-chiaro"] body.layout-portfolio.view-mappa {
+  background-color: var(--bg-base) !important;
+  background-image:
+    radial-gradient(ellipse 80% 55% at 50% -10%, var(--bg-glow-1) 0%, var(--bg-glow-2) 42%, transparent 70%),
+    linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% 100% !important;
+}
+
+html:not([data-theme="mimetico-chiaro"]) body #app,
+html:not([data-theme="mimetico-chiaro"]) body main,
+html:not([data-theme="mimetico-chiaro"]) body #home-views-group,
+html:not([data-theme="mimetico-chiaro"]) body #view-home,
+html:not([data-theme="mimetico-chiaro"]) body #hero,
+html:not([data-theme="mimetico-chiaro"]) body .hero-section,
+html:not([data-theme="mimetico-chiaro"]) body .hero-portfolio,
+html[data-theme="mimetico-chiaro"] body #app,
+html[data-theme="mimetico-chiaro"] body main,
+html[data-theme="mimetico-chiaro"] body #view-home,
+html[data-theme="mimetico-chiaro"] body #hero,
+html[data-theme="mimetico-chiaro"] body .hero-section,
+html body #view-about,
+html body #about,
+html body .about-dossier,
+html body .about-dossier-wrap,
+html body #view-bacheca,
+html body #bacheca-annunci,
+html body #bacheca-annunci.pf-page,
+html body #view-mappa,
+html body #mappa-portal,
+html body .es-map-page,
+html body .es-map,
+html body #hero .es-plx {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+html body #bacheca-annunci.pf-page {
+  min-height: 0 !important;
+}
+
+html body header.public-header,
+html body header.public-header.is-scrolled,
+html body.is-internal-view header.public-header.public-navbar.main-header.portfolio-header,
+html body.is-internal-view header.public-header,
+html body.is-view-mappa header.public-header,
+html body.view-mappa header.public-header,
+html[data-theme="mimetico-chiaro"] body header.public-header,
+html[data-theme="mimetico-chiaro"] body header.public-header.is-scrolled,
+html[data-theme="mimetico-chiaro"] body.is-internal-view header.public-header,
+html[data-theme="mimetico-chiaro"] body.is-view-mappa header.public-header,
+html[data-theme="mimetico-chiaro"] body:not(.is-internal-view) header.public-header:not(.is-scrolled) {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 0 !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+html body header.public-header .main-nav {
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(18px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(160%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 999px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  padding: 4px 8px !important;
+}
+
+html[data-theme="mimetico-chiaro"] body header.public-header .main-nav {
+  background: rgba(255, 255, 255, 0.62) !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+html body #hero,
+html body #about,
+html body #bacheca-annunci,
+html body #mappa-portal {
+  scroll-margin-top: var(--nav-h) !important;
+}
+
+html body.is-internal-view #view-about,
+html body.is-internal-view #about,
+html body.is-internal-view #about.about-dossier,
+html body.is-internal-view .about-dossier-wrap,
+html body.is-internal-view #view-bacheca,
+html body.is-internal-view #bacheca-annunci,
+html body.is-internal-view #view-mappa,
+html body.is-internal-view #mappa-portal {
+  padding-top: 0 !important;
+}
+
+html body #hero.hero-portfolio .hero-portfolio-stage,
+html body .about-dossier .cs-hero,
+html body #bacheca-annunci.pf-page .pf-page-inner,
+html body #view-bacheca #bacheca-annunci .pf-page-inner,
+html body #mappa-portal.es-map-page {
+  padding-top: var(--section-pad) !important;
+}
+
+@media (max-width: 768px) {
+  html body .es-m-topbar {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  html body .about-dossier .cs-hero,
+  html body #bacheca-annunci.pf-page .pf-page-inner,
+  html body #mappa-portal.es-map-page,
+  html body #hero.hero-portfolio .hero-portfolio-stage {
+    padding-top: calc(52px + 28px) !important;
+  }
+}

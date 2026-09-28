@@ -9419,7 +9419,7 @@ main {
 /* Bacheca: meno spazio sotto navbar, senza kicker */
 #view-bacheca .pf-page-inner,
 #bacheca-annunci .pf-page-inner {
-  padding-top: 5.25rem !important;
+  padding-top: calc(var(--nav-h, 64px) + 28px) !important;
 }
 #view-bacheca .pf-header-bacheca,
 #bacheca-annunci .pf-header-bacheca {
@@ -11438,10 +11438,10 @@ body.is-internal-view header.public-header.public-navbar.main-header.portfolio-h
 body.is-internal-view header.public-header,
 body.is-internal-view header.main-header,
 body.is-internal-view .portfolio-header {
-  background: rgba(5, 6, 8, 0.72) !important;
-  background-color: rgba(5, 6, 8, 0.72) !important;
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   border: 0 !important;
   box-shadow: none !important;
 }
@@ -11464,8 +11464,8 @@ main {
 
 /* Se dopo lo scroll vuoi di nuovo uno sfondo, solo allora: */
 header.public-header.is-scrolled {
-  background: rgba(5, 6, 8, 0.88) !important;
-  backdrop-filter: blur(12px) !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
   border-bottom: none !important;
   box-shadow: none !important;
 }

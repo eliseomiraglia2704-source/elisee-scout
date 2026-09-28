@@ -4,8 +4,8 @@
    ============================================================ */
 
 #bacheca-annunci.pf-page {
-  background: var(--bg-primary, #050608);
-  min-height: auto;
+  background: transparent;
+  min-height: 0;
 }
 
 #bacheca-annunci .tab-icon {
@@ -52,7 +52,7 @@
 #bacheca-annunci .pf-page-inner {
   max-width: 1180px;
   margin: 0 auto;
-  padding-top: 7.25rem !important;
+  padding-top: calc(var(--nav-h, 64px) + 28px) !important;
   padding-bottom: 6rem !important;
 }
 

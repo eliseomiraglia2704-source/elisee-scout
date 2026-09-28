@@ -74,26 +74,26 @@ body:not(.is-internal-view) header.public-header:not(.is-scrolled) {
   box-shadow: none !important;
 }
 
-/* Home con scroll > 8px OPPURE vista interna: Glass Scuro Moderno Framer-Style */
+/* Scroll e viste interne usano la stessa barra trasparente della home.
+   Il vetro sta solo sulla pillola, non su una fascia dietro. */
 body:not(.is-internal-view) header.public-header.is-scrolled,
 body.is-internal-view header.public-header {
-  background: rgba(10, 14, 22, 0.78) !important;
-  background-color: rgba(10, 14, 22, 0.78) !important;
-  backdrop-filter: blur(20px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
 }
 
-/* Light Mode: Glass Bianco Perlaceo con contrasti perfetti */
 html[data-theme="mimetico-chiaro"] body:not(.is-internal-view) header.public-header.is-scrolled,
 html[data-theme="mimetico-chiaro"] body.is-internal-view header.public-header {
-  background: rgba(255, 255, 255, 0.88) !important;
-  background-color: rgba(255, 255, 255, 0.88) !important;
-  backdrop-filter: blur(20px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
 }
 
 /* 2. Logo Brand con Micro-Interazione Fluida */
@@ -591,30 +591,18 @@ html body.is-internal-view .portfolio-header,
 html body.is-view-mappa header.public-header.public-navbar.main-header.portfolio-header,
 html body.is-view-mappa header.public-header,
 html body.is-view-mappa .portfolio-header,
-html body.view-mappa header.public-header {
-  background: rgba(5, 6, 8, 0.72) !important;
-  background-color: rgba(5, 6, 8, 0.72) !important;
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
+html body.view-mappa header.public-header,
+html[data-theme="mimetico-chiaro"] body.is-internal-view header.public-header.public-navbar.main-header.portfolio-header,
+html[data-theme="mimetico-chiaro"] body.layout-portfolio.is-internal-view header.public-header,
+html[data-theme="mimetico-chiaro"] body.is-view-mappa header.public-header {
+  background: transparent !important;
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   border: 0 !important;
   box-shadow: none !important;
 }
 
-html[data-theme="mimetico-chiaro"] body.is-internal-view header.public-header.public-navbar.main-header.portfolio-header,
-html[data-theme="mimetico-chiaro"] body.layout-portfolio.is-internal-view header.public-header,
-html[data-theme="mimetico-chiaro"] body.is-view-mappa header.public-header {
-  background: rgba(255, 255, 255, 0.96) !important;
-  background-color: rgba(255, 255, 255, 0.96) !important;
-}
-
-html body.is-internal-view #about,
-html body.is-internal-view #home-about,
-html body.is-internal-view .about-dossier-wrap,
-html body.is-internal-view #view-about,
-html body.is-internal-view #view-bacheca,
-html body.is-internal-view #bacheca-annunci,
-html body.is-internal-view #view-mappa,
-html body.is-internal-view #mappa-portal,
 html body.is-internal-view #view-stampa,
 html body.is-internal-view #view-squadre,
 html body.is-internal-view #view-tc-panel,

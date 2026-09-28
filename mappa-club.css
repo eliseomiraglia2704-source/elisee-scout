@@ -88,25 +88,23 @@ html[data-theme="vault-neon"] {
 
 html, body {
   margin: 0;
-  background: var(--bg);
 }
 
 #view-mappa,
 #mappa-portal,
 .es-map-page,
 .es-map {
-  background: var(--bg) !important;
-  background-color: var(--bg) !important;
+  background: transparent !important;
+  background-color: transparent !important;
   color: var(--text) !important;
-  min-height: auto;
+  min-height: 0;
   color-scheme: normal;
   font-family: var(--es-font);
 }
 
 body.is-view-mappa,
 body.view-mappa {
-  background: var(--bg) !important;
-  background-color: var(--bg) !important;
+  background-color: transparent;
 }
 
 body.is-view-mappa header.main-header,
@@ -117,7 +115,7 @@ body.is-view-mappa .portfolio-header {
 
 .es-map-page,
 .es-map {
-  padding: 96px 24px 96px;
+  padding: calc(var(--nav-h, 64px) + 28px) 24px 96px;
   font-family: var(--es-font);
   color: var(--text);
   max-width: 100%;
