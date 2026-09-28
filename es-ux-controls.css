@@ -1,0 +1,684 @@
+/* ==========================================================================
+   ELISEE SCOUT — UNIFIED UX CONTROLS (.es-combobox, .es-segmented, ecc.)
+   Implementazione delle 6 regole UX su menu a tendina, ricerche e selezioni.
+   Token di design: brand Elisee Scout (teal #2fe0c8 / #00f5d4, navy #0b1220 / #050811).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. RESET & BASE TOKENS
+   -------------------------------------------------------------------------- */
+:root {
+  --es-ctrl-bg: rgba(11, 18, 32, 0.95);
+  --es-ctrl-border: rgba(56, 189, 248, 0.28);
+  --es-ctrl-border-focus: rgba(47, 224, 200, 0.85);
+  --es-ctrl-text: #f8fafc;
+  --es-ctrl-text-muted: #94a3b8;
+  --es-ctrl-accent: #2fe0c8;
+  --es-ctrl-accent-glow: rgba(47, 224, 200, 0.25);
+  --es-ctrl-hover-bg: rgba(47, 224, 200, 0.1);
+  --es-ctrl-selected-bg: rgba(47, 224, 200, 0.18);
+  --es-ctrl-disabled-bg: rgba(15, 23, 42, 0.6);
+  --es-ctrl-disabled-border: rgba(148, 163, 184, 0.2);
+  --es-ctrl-radius: 10px;
+  --es-ctrl-item-radius: 6px;
+  --es-ctrl-shadow: 0 14px 35px -5px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="mimetico-chiaro"] {
+  --es-ctrl-bg: rgba(255, 255, 255, 0.97);
+  --es-ctrl-border: rgba(20, 184, 166, 0.35);
+  --es-ctrl-border-focus: rgba(13, 148, 136, 0.9);
+  --es-ctrl-text: #0f172a;
+  --es-ctrl-text-muted: #64748b;
+  --es-ctrl-accent: #0d9488;
+  --es-ctrl-accent-glow: rgba(20, 184, 166, 0.2);
+  --es-ctrl-hover-bg: rgba(20, 184, 166, 0.08);
+  --es-ctrl-selected-bg: rgba(20, 184, 166, 0.15);
+  --es-ctrl-disabled-bg: rgba(241, 245, 249, 0.8);
+  --es-ctrl-disabled-border: rgba(203, 213, 225, 0.6);
+  --es-ctrl-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+
+/* --------------------------------------------------------------------------
+   REGOLA 6: SEGMENTED CONTROL (2-4 opzioni o radio rapide)
+   -------------------------------------------------------------------------- */
+.es-segmented {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid var(--es-ctrl-border);
+  border-radius: var(--es-ctrl-radius);
+  padding: 3px;
+  gap: 3px;
+  user-select: none;
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+html[data-theme="mimetico-chiaro"] .es-segmented {
+  background: rgba(241, 245, 249, 0.9);
+  border-color: rgba(203, 213, 225, 0.8);
+}
+
+.es-segmented__btn {
+  flex: 1 1 auto;
+  min-height: 36px;
+  padding: 6px 14px;
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--es-ctrl-text-muted);
+  background: transparent;
+  border: none;
+  border-radius: calc(var(--es-ctrl-radius) - 3px);
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: color 150ms ease, background 150ms ease, box-shadow 150ms ease;
+  outline: none;
+}
+
+.es-segmented__btn:hover {
+  color: var(--es-ctrl-text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+html[data-theme="mimetico-chiaro"] .es-segmented__btn:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.es-segmented__btn[aria-checked="true"],
+.es-segmented__btn.is-selected {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, rgba(47, 224, 200, 0.85) 0%, rgba(13, 148, 136, 0.95) 100%) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35), 0 0 12px var(--es-ctrl-accent-glow);
+  font-weight: 700;
+}
+
+html[data-theme="mimetico-chiaro"] .es-segmented__btn[aria-checked="true"],
+html[data-theme="mimetico-chiaro"] .es-segmented__btn.is-selected {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%) !important;
+  box-shadow: 0 2px 6px rgba(13, 148, 136, 0.3);
+}
+
+.es-segmented__btn:focus-visible {
+  outline: 2px solid var(--es-ctrl-accent);
+  outline-offset: 1px;
+}
+
+/* --------------------------------------------------------------------------
+   TRIGGER CONTROLLO (.es-ctrl-trigger: per Combobox, Listbox, MultiSelect)
+   -------------------------------------------------------------------------- */
+.es-ctrl-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.es-ctrl-trigger {
+  width: 100%;
+  min-height: 42px;
+  padding: 0.55rem 0.85rem;
+  background: var(--es-ctrl-bg);
+  border: 1px solid var(--es-ctrl-border);
+  border-radius: var(--es-ctrl-radius);
+  color: var(--es-ctrl-text);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  cursor: pointer;
+  text-align: left;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+  user-select: none;
+}
+
+.es-ctrl-trigger:hover:not([aria-disabled="true"]):not(:disabled) {
+  border-color: var(--es-ctrl-accent);
+}
+
+.es-ctrl-trigger:focus-visible,
+.es-ctrl-trigger.is-open {
+  border-color: var(--es-ctrl-border-focus);
+  box-shadow: 0 0 0 3px var(--es-ctrl-accent-glow);
+}
+
+.es-ctrl-trigger__label {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.es-ctrl-trigger__label.is-placeholder {
+  color: var(--es-ctrl-text-muted);
+}
+
+.es-ctrl-trigger__arrow {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  color: var(--es-ctrl-text-muted);
+  transition: transform 150ms ease;
+}
+
+.es-ctrl-trigger.is-open .es-ctrl-trigger__arrow {
+  transform: rotate(180deg);
+  color: var(--es-ctrl-accent);
+}
+
+#es-ux-portal-root {
+  position: relative;
+  z-index: 2147483647;
+}
+
+.es-portal-panel {
+  position: fixed;
+  z-index: 2147483647;
+  background: var(--es-ctrl-bg);
+  border: 1px solid var(--es-ctrl-border);
+  border-radius: var(--es-ctrl-radius);
+  box-shadow: var(--es-ctrl-shadow);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--es-ctrl-text);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 380px;
+  opacity: 0;
+  transform: translateY(-4px) scale(0.99);
+  pointer-events: none;
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+
+.es-portal-panel.is-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.es-portal-panel.is-flipped {
+  transform: translateY(4px) scale(0.99);
+}
+
+.es-portal-panel.is-flipped.is-open {
+  transform: translateY(0) scale(1);
+}
+
+/* --------------------------------------------------------------------------
+   REGOLA 1: TYPE TO FILTER (Header di ricerca nel combobox)
+   -------------------------------------------------------------------------- */
+.es-combobox__search-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 8px 10px;
+  background: inherit;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+html[data-theme="mimetico-chiaro"] .es-combobox__search-header {
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+.es-combobox__search-input {
+  width: 100%;
+  padding: 7px 10px 7px 30px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--es-ctrl-border);
+  border-radius: var(--es-ctrl-item-radius);
+  color: var(--es-ctrl-text);
+  font-family: inherit;
+  font-size: 0.85rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+html[data-theme="mimetico-chiaro"] .es-combobox__search-input {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.es-combobox__search-input:focus {
+  border-color: var(--es-ctrl-accent);
+  box-shadow: 0 0 0 2px var(--es-ctrl-accent-glow);
+}
+
+.es-combobox__search-icon {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  color: var(--es-ctrl-text-muted);
+  pointer-events: none;
+}
+
+.es-combobox__meta {
+  padding: 4px 10px;
+  font-size: 0.74rem;
+  color: var(--es-ctrl-text-muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Lista opzioni */
+.es-portal-panel__list {
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+  overflow-y: auto;
+  flex: 1 1 auto;
+  max-height: 300px;
+  scroll-behavior: smooth;
+}
+
+.es-portal-panel__list::-webkit-scrollbar {
+  width: 6px;
+}
+.es-portal-panel__list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+}
+
+.es-portal-option {
+  padding: 8px 12px;
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--es-ctrl-text);
+  border-radius: var(--es-ctrl-item-radius);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  user-select: none;
+  transition: background 80ms ease, color 80ms ease;
+}
+
+.es-portal-option:hover,
+.es-portal-option.is-focused {
+  background: var(--es-ctrl-hover-bg);
+  color: var(--es-ctrl-accent);
+}
+
+.es-portal-option[aria-selected="true"],
+.es-portal-option.is-selected {
+  background: var(--es-ctrl-selected-bg);
+  color: var(--es-ctrl-accent);
+  font-weight: 700;
+}
+
+.es-portal-option mark,
+.es-portal-option .es-highlight {
+  background: transparent;
+  color: #38bdf8;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Stato vuoto esplicito */
+.es-portal-empty {
+  padding: 18px 14px;
+  text-align: center;
+  color: var(--es-ctrl-text-muted);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.es-portal-empty strong {
+  display: block;
+  color: var(--es-ctrl-text);
+  margin-bottom: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   REGOLA 3: MULTI-SELECT (Resta aperto, checkbox, chip e bottoni Fatto/Azzera)
+   -------------------------------------------------------------------------- */
+.es-multiselect__footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  padding: 8px 10px;
+  background: inherit;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.es-multiselect__btn-reset {
+  background: transparent;
+  border: none;
+  color: var(--es-ctrl-text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.es-multiselect__btn-reset:hover {
+  color: var(--es-ctrl-text);
+}
+
+.es-multiselect__btn-done {
+  background: var(--es-ctrl-accent);
+  border: none;
+  color: #040912;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 6px 14px;
+  border-radius: var(--es-ctrl-item-radius);
+  transition: filter 150ms ease;
+}
+
+.es-multiselect__btn-done:hover {
+  filter: brightness(1.1);
+}
+
+.es-multiselect-checkbox {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1.5px solid var(--es-ctrl-border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  flex-shrink: 0;
+  transition: all 120ms ease;
+}
+
+.es-portal-option[aria-selected="true"] .es-multiselect-checkbox {
+  background: var(--es-ctrl-accent);
+  border-color: var(--es-ctrl-accent);
+  color: #040912;
+}
+
+/* Chip per elementi selezionati */
+.es-selected-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.es-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  background: rgba(47, 224, 200, 0.14);
+  border: 1px solid rgba(47, 224, 200, 0.35);
+  color: var(--es-ctrl-text);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.es-chip__remove {
+  background: transparent;
+  border: none;
+  color: var(--es-ctrl-text-muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0;
+  display: inline-flex;
+  line-height: 1;
+}
+
+.es-chip__remove:hover {
+  color: #ef4444;
+}
+
+/* --------------------------------------------------------------------------
+   REGOLA 2: DATE DIGITABILI (.es-datefield)
+   -------------------------------------------------------------------------- */
+.es-datefield {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+}
+
+.es-datefield__input {
+  width: 100%;
+  min-height: 42px;
+  padding: 0.55rem 2.4rem 0.55rem 0.85rem;
+  background: var(--es-ctrl-bg);
+  border: 1px solid var(--es-ctrl-border);
+  border-radius: var(--es-ctrl-radius);
+  color: var(--es-ctrl-text);
+  font-family: inherit;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.es-datefield__input:focus {
+  border-color: var(--es-ctrl-border-focus);
+  box-shadow: 0 0 0 3px var(--es-ctrl-accent-glow);
+}
+
+.es-datefield__input.is-invalid {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25) !important;
+}
+
+.es-datefield__btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--es-ctrl-text-muted);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.es-datefield__btn:hover {
+  color: var(--es-ctrl-accent);
+}
+
+.es-datefield__feedback {
+  font-size: 0.76rem;
+  margin-top: 4px;
+  line-height: 1.35;
+}
+
+.es-datefield__feedback.is-error {
+  color: #f87171;
+  font-weight: 600;
+}
+
+.es-datefield__feedback.is-hint {
+  color: var(--es-ctrl-text-muted);
+}
+
+/* Calendario Popup Rapido */
+.es-calendar-panel {
+  padding: 12px;
+  width: 290px;
+}
+
+.es-calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  gap: 6px;
+}
+
+.es-calendar-select {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--es-ctrl-border);
+  color: var(--es-ctrl-text);
+  border-radius: 6px;
+  padding: 4px 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  outline: none;
+  cursor: pointer;
+}
+
+html[data-theme="mimetico-chiaro"] .es-calendar-select {
+  background: #f1f5f9;
+}
+
+.es-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+  text-align: center;
+}
+
+.es-calendar-day-header {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--es-ctrl-text-muted);
+  padding: 4px 0;
+}
+
+.es-calendar-day {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--es-ctrl-text);
+  background: transparent;
+  border: none;
+}
+
+.es-calendar-day:hover:not(:disabled) {
+  background: var(--es-ctrl-hover-bg);
+  color: var(--es-ctrl-accent);
+}
+
+.es-calendar-day.is-selected {
+  background: var(--es-ctrl-accent) !important;
+  color: #040912 !important;
+  font-weight: 700;
+}
+
+.es-calendar-day:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* --------------------------------------------------------------------------
+   REGOLA 5: MOTIVI, NON GRIGIO (.es-ctrl-disabled-hint)
+   Mostra in linea il motivo e l'unica azione cliccabile che lo sblocca
+   -------------------------------------------------------------------------- */
+.es-ctrl-trigger[aria-disabled="true"],
+.es-ctrl-trigger:disabled {
+  background: var(--es-ctrl-disabled-bg);
+  border-color: var(--es-ctrl-disabled-border);
+  color: var(--es-ctrl-text-muted);
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.es-disabled-reason-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  margin-top: 4px;
+  color: #f59e0b;
+}
+
+.es-disabled-reason-btn {
+  background: transparent;
+  border: none;
+  color: var(--es-ctrl-accent);
+  font-weight: 700;
+  font-size: 0.76rem;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.es-disabled-reason-btn:hover {
+  filter: brightness(1.2);
+}
+
+/* --------------------------------------------------------------------------
+   MOBILE BOTTOM SHEET (≤600px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 600px) {
+  .es-portal-panel.is-mobile-sheet {
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    max-height: 80vh !important;
+    border-radius: 18px 18px 0 0 !important;
+    border-bottom: none !important;
+    transform: translateY(100%) !important;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8) !important;
+  }
+
+  .es-portal-panel.is-mobile-sheet.is-open {
+    transform: translateY(0) !important;
+  }
+
+  .es-mobile-sheet__drag-bar {
+    width: 38px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+    margin: 8px auto 4px auto;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   PREFERS-REDUCED-MOTION
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .es-portal-panel,
+  .es-segmented__btn,
+  .es-ctrl-trigger,
+  .es-ctrl-trigger__arrow,
+  .es-portal-option,
+  .es-datefield__input {
+    transition: none !important;
+    animation: none !important;
+  }
+}

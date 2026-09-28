@@ -3,7 +3,24 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-28** — HEROUX72 — Rimozione riquadro esterno e blindatura totale movimento Realistic Switch:
+Ultimo aggiornamento: **2026-09-28** — HEROUX73 — Implementazione delle 6 Regole UX per ricerche, date e selezioni su tutta la piattaforma:
+1. **Audit completo & Classificazione Controlli**:
+   - Censiti tutti i controlli nativi ed emulati (Bacheca, Ricerca Navbar, Mappa Club, Filtri, Form pubblica annuncio, Date di nascita registrazione/slide, Piede, Campionati, ecc.).
+2. **Regola 1 (Type to filter, >10 opzioni)**:
+   - Combobox con campo di ricerca sticky in cima, debounce 80ms, normalizzazione NFD accent-insensitive, priorità ai match di inizio parola, finestra max 50 risultati, empty state esplicito e contatore con live region `aria-live="polite"`.
+3. **Regola 2 (Date digitabili fluide)**:
+   - Input testuale permissivo che accetta `gg/mm/aaaa`, `g-m-aaaa`, `gg.mm.aa`, `ggmmaaaa` a 8 cifre continue. Validazione immediata su blur con errori espliciti in linea (es. "Data non valida: il 31 aprile non esiste", "Il mese 13 non esiste"). Salvaguardia integrale del valore ISO per i calcoli GDPR minori su `#reg-dob`.
+4. **Regola 3 (Resta aperto dopo la scelta)**:
+   - Multi-selezione persistente che rimane aperta a ogni tocco, checkbox stilizzate con spunta teal, contatore dinamico ("2 selezionati"), chip con "×" per rimozione rapida, footer con pulsanti espliciti "Azzera" e "Fatto".
+5. **Regola 4 (Consapevoli delle collisioni)**:
+   - Portale dinamico `position: fixed` a z-index elevato (`#es-ux-portal-root`), calcolo delle collisioni dei bordi con flip verticale verso l'alto (`.is-flipped`) quando lo spazio inferiore è insufficiente, e Mobile Bottom Sheet nativo su schermi `<=600px` con drag bar.
+6. **Regola 5 (Motivi, non grigio)**:
+   - Controlli disabilitati con `aria-disabled="true"` e spiegazione del prerequisito mancante ("Scegli prima la regione per sbloccare le province"), con azione di sblocco in linea che sposta direttamente il focus sul campo propedeutico.
+7. **Regola 6 (Nessun menu sotto 5)**:
+   - Selezioni con 2-4 opzioni trasformate in Segmented Control a tocco singolo con radiogroup e pillola attiva teal ad alto contrasto.
+8. **File**: `es-ux-controls.css`, `es-ux-controls.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX73`.
+
+Feature precedente: **2026-09-28** — HEROUX72 — Rimozione riquadro esterno e blindatura totale movimento Realistic Switch:
 1. **Risoluzione Bug 1 (Riquadro attorno al pulsante)**:
    - Identificati e rimossi tutti i vecchi selettori responsabili (`header.public-header .theme-toggle`, `.theme-toggle:hover`, `.theme-toggle:active` in `es-nav-ux.css`, e `.theme-toggle` in `style.css` e `apple-nav.css`).
    - Rimosso `theme-toggle` dalla classe di `#es-nav-theme` in `index.html` (ora ha esclusivamente `class="realistic-switch"`).
