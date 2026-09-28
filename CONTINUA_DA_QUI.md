@@ -3,7 +3,14 @@
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 
-Ultimo aggiornamento: **2026-09-28** — HEROUX65 — Navbar e sfondo uguali su Home, Chi siamo, Bacheca e Mappa:
+Ultimo aggiornamento: **2026-09-28** — HEROUX66 — Sfondo continuo fino al footer:
+1. Il gradiente non è più sul body con `background-attachment`. Sta su `body.layout-portfolio::before` (`position: fixed; inset: 0; z-index: -1`). html ha solo `--bg-base`.
+2. Tab Bacheca (`.bacheca-nav-tabs`) trasparenti: resta la linea e la tab attiva teal.
+3. Footer trasparente, separato da `border-top: 1px rgba(255,255,255,0.06)`.
+4. Card (filtri, annunci, «Non hai trovato il ruolo giusto?», info mappa, card Chi siamo) usano `--card-bg` e `--card-border`.
+5. File: `landing-unify.css`, `bacheca-board.css`, `style.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX66`.
+
+Feature precedente: **2026-09-28** — HEROUX65 — Navbar e sfondo uguali su Home, Chi siamo, Bacheca e Mappa:
 1. **Una sola barra** (`landing-unify.css`, `es-nav-ux.css`, `style.css`, `index.html`):
    - Tolto lo sfondo opaco delle viste interne (`body.is-internal-view` / `is-view-mappa` / `.is-scrolled`): la barra resta trasparente, senza bordo e senza fascia.
    - La pillola Chi siamo / Bacheca / Mappa ha gli stessi vetro, blur e raggio ovunque. Cambia solo il link attivo.

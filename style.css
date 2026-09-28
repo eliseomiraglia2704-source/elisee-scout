@@ -6050,14 +6050,14 @@ body.layout-portfolio #cookie-banner {
   text-align: right;
 }
 
-/* Footer premium — pure site black (no blue cast) */
+/* Footer trasparente: lo sfondo è il layer fisso del body */
 .pf-footer,
 .site-footer,
 footer.site-footer,
 body.layout-portfolio footer {
-  background: #050608 !important;
-  background-color: #050608 !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  background: transparent !important;
+  background-color: transparent !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
   padding: 3.5rem 0 2rem;
   margin-top: 0;
   color: #94a3b8;
@@ -11065,7 +11065,8 @@ html[data-theme="mimetico-chiaro"] .site-footer,
 [data-theme="mimetico-chiaro"] .site-footer,
 html[data-theme="mimetico-chiaro"] .pf-footer,
 [data-theme="mimetico-chiaro"] .pf-footer {
-  background: #ffffff !important;
+  background: transparent !important;
+  background-color: transparent !important;
   border-top: 1px solid rgba(15, 23, 42, 0.08) !important;
 }
 

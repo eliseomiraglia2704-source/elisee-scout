@@ -5,6 +5,8 @@
   --bg-base: #07131c;
   --bg-glow-1: rgba(56, 189, 248, 0.38);
   --bg-glow-2: rgba(14, 58, 77, 0.22);
+  --card-bg: rgba(255, 255, 255, 0.04);
+  --card-border: rgba(255, 255, 255, 0.08);
   --nav-h: 64px;
   --section-pad: calc(var(--nav-h) + 28px);
 }
@@ -13,34 +15,53 @@ html[data-theme="mimetico-chiaro"] {
   --bg-base: #f8fafc;
   --bg-glow-1: rgba(2, 132, 199, 0.16);
   --bg-glow-2: rgba(240, 249, 255, 0.72);
+  --card-bg: rgba(255, 255, 255, 0.72);
+  --card-border: rgba(15, 23, 42, 0.08);
 }
 
+html,
 html:not([data-theme="mimetico-chiaro"]),
+html[data-theme="mimetico-chiaro"] {
+  background-color: var(--bg-base) !important;
+  background-image: none !important;
+  min-height: 100%;
+}
+
+html body.layout-portfolio,
 html:not([data-theme="mimetico-chiaro"]) body.layout-portfolio,
 html:not([data-theme="mimetico-chiaro"]) body.layout-portfolio.is-internal-view,
 html:not([data-theme="mimetico-chiaro"]) body.layout-portfolio.is-view-mappa,
-html:not([data-theme="mimetico-chiaro"]) body.layout-portfolio.view-mappa {
-  background-color: var(--bg-base) !important;
-  background-image:
-    radial-gradient(ellipse 80% 55% at 50% -10%, var(--bg-glow-1) 0%, var(--bg-glow-2) 42%, transparent 70%),
-    linear-gradient(180deg, #07131c 0%, #0a3040 42%, #050608 100%) !important;
-  background-attachment: fixed !important;
-  background-repeat: no-repeat !important;
-  background-size: 100% 100% !important;
-}
-
-html[data-theme="mimetico-chiaro"],
+html:not([data-theme="mimetico-chiaro"]) body.layout-portfolio.view-mappa,
 html[data-theme="mimetico-chiaro"] body.layout-portfolio,
 html[data-theme="mimetico-chiaro"] body.layout-portfolio.is-internal-view,
 html[data-theme="mimetico-chiaro"] body.layout-portfolio.is-view-mappa,
 html[data-theme="mimetico-chiaro"] body.layout-portfolio.view-mappa {
-  background-color: var(--bg-base) !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  background-attachment: scroll !important;
+  min-height: 100%;
+  position: relative;
+  z-index: 0;
+}
+
+html body.layout-portfolio::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--bg-base);
   background-image:
     radial-gradient(ellipse 80% 55% at 50% -10%, var(--bg-glow-1) 0%, var(--bg-glow-2) 42%, transparent 70%),
-    linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
-  background-attachment: fixed !important;
-  background-repeat: no-repeat !important;
-  background-size: 100% 100% !important;
+    linear-gradient(180deg, #07131c 0%, #0a3040 42%, #050608 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+html[data-theme="mimetico-chiaro"] body.layout-portfolio::before {
+  background-image:
+    radial-gradient(ellipse 80% 55% at 50% -10%, var(--bg-glow-1) 0%, var(--bg-glow-2) 42%, transparent 70%),
+    linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
 }
 
 html:not([data-theme="mimetico-chiaro"]) body #app,
@@ -137,6 +158,55 @@ html body #bacheca-annunci.pf-page .pf-page-inner,
 html body #view-bacheca #bacheca-annunci .pf-page-inner,
 html body #mappa-portal.es-map-page {
   padding-top: var(--section-pad) !important;
+}
+
+html body.layout-portfolio footer,
+html body.layout-portfolio footer.site-footer,
+html body .pf-footer,
+html body .site-footer,
+html[data-theme="mimetico-chiaro"] body .site-footer,
+html[data-theme="mimetico-chiaro"] body .pf-footer,
+html[data-theme="mimetico-chiaro"] #site-public-footer {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+html[data-theme="mimetico-chiaro"] body .site-footer,
+html[data-theme="mimetico-chiaro"] body .pf-footer {
+  border-top-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+html body #bacheca-annunci .bacheca-nav-tabs,
+html body .bacheca-tabs,
+html[data-theme="mimetico-chiaro"] body #bacheca-annunci .bacheca-nav-tabs,
+html[data-theme="mimetico-chiaro"] body .bacheca-tabs {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+html body #bacheca-annunci .bacheca-filter-panel,
+html body #bacheca-annunci .es-card,
+html body #bacheca-annunci .es-cta-strip,
+html body .about-dossier .cs-hero-meta,
+html body .es-map-info,
+html body .es-map-banner p,
+html body .es-map-search__bar {
+  background: var(--card-bg) !important;
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--card-border) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+html body .es-map-frame,
+html body .es-map-wrap {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--card-border) !important;
 }
 
 @media (max-width: 768px) {
