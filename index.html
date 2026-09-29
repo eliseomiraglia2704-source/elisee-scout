@@ -736,7 +736,7 @@
   <link rel="stylesheet" href="scopri-profili.css?v=20260913_ALBUM5">
   <link rel="stylesheet" href="messaggi.css?v=20260820_DARK1">
   <link rel="stylesheet" href="mercato-hub.css?v=20260830_ECCB1">
-  <link rel="stylesheet" href="schede-tecniche.css?v=20260918_SCOUTSRC1">
+  <link rel="stylesheet" href="schede-tecniche.css?v=20260929_HEROUX86">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <link rel="stylesheet" href="season-wrapped.css?v=20260925_WCF1">
   <link rel="stylesheet" href="creator-role-switcher.css?v=20260921_HOMEBAR1">
@@ -5085,7 +5085,21 @@
           </select>
         </div>
         <div class="es-st-split">
-          <div class="es-st-list" id="es-st-list"></div>
+          <div class="es-st-list-col">
+            <!-- UX Kanban Fase 4: toolbar sticky con count pill e toggle collasso -->
+            <div class="es-st-hbar">
+              <h4>Candidature <span class="es-st-count" id="es-st-count" aria-live="polite" aria-atomic="true">0</span></h4>
+              <button type="button" class="es-st-toggle" id="btn-toggle-sheets"
+                aria-expanded="true" aria-controls="es-st-list" aria-label="Comprimi lista schede">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <polyline points="2,4 6,8 10,4"/>
+                </svg>
+              </button>
+            </div>
+            <div class="es-st-list-wrap" id="es-st-list-wrap">
+              <div class="es-st-list" id="es-st-list"></div>
+            </div>
+          </div>
           <div id="es-st-detail"></div>
         </div>
 

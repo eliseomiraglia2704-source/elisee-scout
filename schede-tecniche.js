@@ -473,6 +473,59 @@
     return renderScoutDossier(s);
   }
 
+  /* ---- UX Kanban Fase 4: toolbar sticky schede ---- */
+  var _sheetsCollapsed = false;
+  var _sheetsBarBound = false;
+
+  function _updateSheetsBar(job) {
+    var j = job || getJob(currentJob);
+    var sheets = j ? (j.sheets || []) : [];
+    var st = ((document.getElementById('es-st-filter') || {}).value) || '';
+    var count = st ? sheets.filter(function (s) { return s.status === st; }).length : sheets.length;
+
+    var pill = document.getElementById('es-st-count');
+    if (pill) pill.textContent = count;
+
+    var list = document.getElementById('es-st-list');
+    var wrap = document.getElementById('es-st-list-wrap');
+    if (list && wrap) {
+      var isOverflow = list.scrollHeight > list.clientHeight + 4;
+      wrap.classList.toggle('has-overflow', !_sheetsCollapsed && isOverflow);
+      list.addEventListener('scroll', function () {
+        wrap.classList.toggle('has-overflow', !_sheetsCollapsed && list.scrollHeight > list.clientHeight + 4);
+      }, { passive: true });
+    }
+
+    if (_sheetsBarBound) return;
+    _sheetsBarBound = true;
+
+    var btn = document.getElementById('btn-toggle-sheets');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        _sheetsCollapsed = !_sheetsCollapsed;
+        var l = document.getElementById('es-st-list');
+        var w = document.getElementById('es-st-list-wrap');
+        if (l) l.classList.toggle('is-collapsed', _sheetsCollapsed);
+        if (w) w.classList.toggle('is-collapsed', _sheetsCollapsed);
+        btn.setAttribute('aria-expanded', String(!_sheetsCollapsed));
+        btn.setAttribute('aria-label', _sheetsCollapsed ? 'Espandi lista schede' : 'Comprimi lista schede');
+        if (w) w.classList.toggle('has-overflow', !_sheetsCollapsed && (l ? l.scrollHeight > l.clientHeight + 4 : false));
+      });
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && _sheetsCollapsed) {
+        _sheetsCollapsed = false;
+        var l = document.getElementById('es-st-list');
+        var w = document.getElementById('es-st-list-wrap');
+        var b = document.getElementById('btn-toggle-sheets');
+        if (l) l.classList.remove('is-collapsed');
+        if (w) w.classList.remove('is-collapsed');
+        if (b) { b.setAttribute('aria-expanded', 'true'); b.setAttribute('aria-label', 'Comprimi lista schede'); }
+      }
+    });
+  }
+
   function render() {
     var root = document.getElementById('schede-portal');
     if (!root) return;
@@ -494,7 +547,9 @@
     } else if (detail) {
       detail.innerHTML = renderSheet(sheet, false);
     }
+    _updateSheetsBar(job);
   }
+
 
   function bind() {
     var hub = document.getElementById('schede-portal');

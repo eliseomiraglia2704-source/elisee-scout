@@ -4,15 +4,15 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-09-29** — HEROUX85 — UX Kanban Fase 3: Ricerca/Autocomplete Club sulla Mappa (debounce, tastiera ↑↓, count pill, fade-mask, Escape globale):
+Ultimo aggiornamento: **2026-09-29** — HEROUX86 — UX Kanban Fase 4: Lista Schede Tecniche (toolbar sticky, count pill, collasso, fade-mask, Escape):
 
-1. **Fase 3 — Dropdown autocomplete + pannello regioni mappa** (`mappa-club.css`, `mappa-club.js`, `index.html`):
-   - **`mappa-club.css`**: dropdown `#club-search-results` — animazione smooth `opacity`+`scaleY` (sostituisce `display:none`), scrollbar thin 4px custom, fade-bottom mask `.es-map-search__results-wrap::after`, pill count `.es-map-search__count`, `prefers-reduced-motion`. Pannello `.es-region-teams__list` — avvolto in `.es-region-teams__list-wrap` con fade-bottom mask, scrollbar thin 4px, `max-height` ridotto a 320px, `prefers-reduced-motion`.
-   - **`mappa-club.js`**: `initClubSearch()` potenziata: debounce 250ms sull'input (`clearTimeout`), navigazione tastiera `ArrowDown`/`ArrowUp`/`Enter` tra i risultati con `is-focused`, `_selectItem()` centralizzata, count pill `_updateSearchCount()`, overflow detection `_updateSearchOverflow()` (scroll event + dopo ogni render), Escape per chiudere dropdown + blur, Escape globale per chiudere pannello regione espanso. `teamsPanelHTML` aggiornato: lista avvolta in `.es-region-teams__list-wrap`, overflow detection post-render.
-   - **`index.html`**: aggiunto `<span id="es-map-search-count">` (pill count, `aria-live="polite"`), `?v=` bumped a HEROUX85.
-   - **Fase 1 (Wall Trattative)**: completata sessione precedente.
-   - **Fase 2 (Lista Bacheca)**: completata sessione precedente (HEROUX84).
-2. **File**: `mappa-club.css`, `mappa-club.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX85`.
+1. **Fase 4 — Lista Schede Tecniche** (`schede-tecniche.css`, `schede-tecniche.js`, `index.html`):
+   - **`schede-tecniche.css`**: aggiunto `.es-st-list-col` (flex column), `.es-st-hbar` (toolbar sticky `position:sticky`, backdrop-blur, `z-index:8`), `.es-st-count` (pill turchese), `.es-st-toggle` (pulsante chevron rotate 180° quando collassato), `.es-st-list-wrap::after` (fade-bottom mask), scrollbar 4px custom (`scrollbar-width: thin`, `::-webkit-scrollbar`), `.es-st-list.is-collapsed` (max-height:0, overflow:hidden), `.es-st-list-wrap.is-collapsed::after` (opacity:0), `max-height` ridotto da 72vh a 520px, `prefers-reduced-motion`, mobile ≤680px (max-height:320px).
+   - **`schede-tecniche.js`**: aggiunta `_updateSheetsBar(job)` — aggiorna pill contatore (rispetta filtro stato attivo), overflow detection + scroll listener, binding click toggle e Escape globale idempotente (via `_sheetsBarBound`). Chiamata alla fine di ogni `render()`.
+   - **`index.html`**: sostituito `<div class="es-st-list">` con struttura `es-st-list-col > es-st-hbar (h4 + pill#es-st-count + btn#btn-toggle-sheets) + es-st-list-wrap > es-st-list`. Bump CSS a HEROUX86.
+   - **Fasi 1-3**: già completate (Wall Trattative, Lista Bacheca, Ricerca Mappa).
+2. **File**: `schede-tecniche.css`, `schede-tecniche.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX86`.
+
 
 
 Feature precedente: **2026-09-29** — HEROUX83 — Bonifica `scrollbar-width` & `scrollbar-gutter` con `@supports` Cross-Browser:

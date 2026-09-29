@@ -90,12 +90,146 @@ body.layout-portfolio .es-st-toolbar select {
   gap: 1rem;
   align-items: start;
 }
+
+/* ---- UX Kanban Fase 4: Lista Schede Tecniche ---- */
+
+/* Colonna sinistra: wrapping container per toolbar sticky + lista */
+.es-st-list-col {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Toolbar sticky sopra la lista: count pill + collasso */
+.es-st-hbar {
+  position: sticky;
+  top: 0;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 0 8px;
+  background: rgba(12, 18, 32, 0.92);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.12);
+  margin-bottom: 8px;
+}
+
+.es-st-hbar h4 {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(148, 163, 184, 0.8);
+}
+
+/* Pill contatore schede */
+.es-st-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 20px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: rgba(56, 189, 248, 0.15);
+  color: #7dd3fc;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: var(--es-font);
+  flex-shrink: 0;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* Pulsante collasso lista */
+.es-st-toggle {
+  background: none;
+  border: none;
+  color: rgba(148, 163, 184, 0.7);
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: color 0.15s ease, background 0.15s ease;
+  flex-shrink: 0;
+}
+.es-st-toggle:hover {
+  color: #7dd3fc;
+  background: rgba(56, 189, 248, 0.08);
+}
+.es-st-toggle svg {
+  display: block;
+  transition: transform 0.2s ease;
+}
+.es-st-toggle[aria-expanded="false"] svg {
+  transform: rotate(180deg);
+}
+
+/* Wrapper con fade-bottom mask */
+.es-st-list-wrap {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+.es-st-list-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: linear-gradient(to bottom, transparent, rgba(12, 18, 32, 0.95));
+  border-radius: 0 0 8px 8px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.es-st-list-wrap.has-overflow::after {
+  opacity: 1;
+}
+
+/* Lista vera con scroll interno capped */
 .es-st-list {
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
-  max-height: 72vh;
-  overflow: auto;
+  max-height: 520px;
+  overflow-y: auto;
+  padding-bottom: 4px;
+  /* Scrollbar sottile 4px */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56, 189, 248, 0.3) transparent;
+}
+.es-st-list::-webkit-scrollbar { width: 4px; }
+.es-st-list::-webkit-scrollbar-track { background: transparent; }
+.es-st-list::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.3);
+  border-radius: 4px;
+}
+
+/* Stato collassato: lista nascosta con transizione */
+.es-st-list.is-collapsed {
+  max-height: 0;
+  overflow: hidden;
+}
+.es-st-list-wrap.is-collapsed::after {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .es-st-toggle svg,
+  .es-st-list-wrap::after,
+  .es-st-list {
+    transition: none;
+  }
+}
+
+@media (max-width: 680px) {
+  .es-st-list { max-height: 320px; }
 }
 .es-st-item {
   text-align: left;
