@@ -4,7 +4,20 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-09-29** — HEROUX75 — Configurazione & Sblocco Segreti Vercel Production:
+Ultimo aggiornamento: **2026-09-29** — HEROUX76 — Scheda Giocatore Pubblica Condivisibile & Deep-Linking:
+1. **Scheda Giocatore Pubblica Condivisibile (`public-profile.css`, `public-profile.js`)**:
+   - Deep-linking & Hash Routing: supporto URL diretti `#profilo?id=<id>` e `#player?id=<id>` con apertura automatica e gestione trasparente dell'history browser.
+   - Header dinamico: avatar/iniziali, nome, ruolo primario/FM, status svincolato o club, piede dominante, nazionalità e città/regione.
+   - Pulsante "🔗 Copia Link Profilo" con copia nativa negli appunti (`navigator.clipboard` + fallback), feedback aptico se supportato e toast notifica fluida.
+   - Pulsanti di azione scouting: "✉️ Proponi Provino / Contatta" (connesso al messenger B2B) e "⭐ Salva in Secret List" (per profili DS/Scout).
+   - Statistiche & Rendimento: griglia a card con presenze, minuti, gol, assist, rating partita e duelli vinti.
+   - Attributi atletici/tecnici: velocità, tiro, passaggio, dribbling, difesa e fisico. Video Hub Highlights integrato.
+2. **Integrazione "Scopri Profili" & Dashboard Calciatore (`scopri-profili.css`, `player-dash.js`)**:
+   - Tutte le card atleta in `#scopri-portal` hanno ora cursore puntatore e aprono istantaneamente il profilo pubblico al click.
+   - Aggiunto il pulsante "🔗 Condividi Scheda Pubblica Atleta" all'interno del pannello obiettivi della dashboard atleta.
+3. **File**: `public-profile.css`, `public-profile.js`, `scopri-profili.css`, `player-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX76`.
+
+Feature precedente: **2026-09-29** — HEROUX75 — Configurazione & Sblocco Segreti Vercel Production:
 1. **Configurazione Automatica Variabili d'Ambiente su Vercel (`vercel env add`)**:
    - `ADMIN_SECRET`: configurata per il login master amministrativo (`Iemmello.9`).
    - `TOKEN_SIGNING_KEY`: generata chiave crittografica sicura 256-bit ed iniettata su Vercel Production per la firma HMAC-SHA256 dei token admin (`lib/admin-token-verify.js` e `api/auth-admin.js`).

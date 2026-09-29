@@ -114,11 +114,13 @@ body.layout-portfolio .es-sc-filters select {
   border: 1px solid rgba(56, 189, 248, 0.2);
   border-radius: 6px;
   padding: 0.9rem 1.25rem;
-  transition: border-color 0.2s, background 0.2s;
+  transition: border-color 0.2s, background 0.2s, transform 0.2s;
+  cursor: pointer;
 }
 .es-sc-card:hover {
   border-color: rgba(56, 189, 248, 0.45);
   background: #0d1525;
+  transform: translateY(-1px);
 }
 .es-sc-main-info {
   display: flex;

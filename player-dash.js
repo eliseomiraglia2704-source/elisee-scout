@@ -542,6 +542,7 @@
             '<dd class="' + (contactPref ? '' : 'muted') + '">' + esc(contactPref || 'Non dichiarate') + '</dd>' +
           '</dl>' +
           '<button type="button" class="es-btn es-btn--primary" style="width:100%; margin-top:16px;" data-pd="edit">Modifica Profilo &amp; Autovalutazione</button>' +
+          '<button type="button" class="es-btn es-btn--secondary" style="width:100%; margin-top:8px; border:1px solid #38bdf8; color:#38bdf8; background:rgba(56,189,248,0.08); font-weight:700;" data-pd="share-public">🔗 Condividi Scheda Pubblica Atleta</button>' +
         '</div>';
 
     var prestazioneCol =
@@ -991,6 +992,14 @@
         if (k === 'msgs' && window.openUserMessages) window.openUserMessages();
         if (k === 'edit') {
           openEditModal(userObj());
+        }
+        if (k === 'share-public') {
+          var me = userObj();
+          if (window.openPublicPlayerProfile) {
+            window.openPublicPlayerProfile(me);
+          } else if (window.copyPlayerProfileLink) {
+            window.copyPlayerProfileLink(me.id || 'me');
+          }
         }
         return;
       }
