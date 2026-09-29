@@ -1,4 +1,4 @@
-/* Mappa club — pin con stemmi, geolocalizzazione club e coordinamento catalogo squadre */
+﻿/* Mappa club — pin con stemmi, geolocalizzazione club e coordinamento catalogo squadre */
 (function () {
   'use strict';
 
@@ -402,7 +402,7 @@
 
     var listHtml = '';
     if (displayed && displayed.length) {
-      listHtml = '<div class="es-region-teams__list">' +
+      listHtml = '<div class="es-region-teams__list-wrap"><div class="es-region-teams__list">' +
         displayed.map(function (c) {
           var logoUrl = c.logo || (c.id ? 'immagini/squadre-loghi/' + c.id + '.png' : '');
           logoUrl = logoBust(logoUrl);
@@ -550,7 +550,7 @@
     };
   }
 
-  /* Ricerca club autocomplete — ricostruita con vera sorgente dati e centratura mappa */
+  /* Ricerca club autocomplete - ricostruita con vera sorgente dati e centratura mappa */
   var searchBound = false;
   function initClubSearch() {
     if (searchBound) return;
@@ -570,6 +570,8 @@
       if (!query) {
         resultsBox.classList.remove('is-open');
         resultsBox.innerHTML = '';
+        _updateSearchCount(0, false);
+        _updateSearchOverflow();
         return;
       }
       var q = query.toLowerCase();
@@ -588,25 +590,70 @@
 
         if (!match.length) {
           resultsBox.innerHTML = '<div class="es-map-search__empty">Nessun club trovato per &ldquo;' + esc(query) + '&rdquo;</div>';
+          _updateSearchCount(0, false);
         } else {
           resultsBox.innerHTML = match.map(function (c) {
             var meta = esc(c.city ? (c.city + (c.region ? ' (' + c.region + ')' : '')) : (c.region || ''));
             return (
-              '<div class="es-map-search__result" data-club-id="' + esc(c.id) + '" data-nome="' + esc(c.name) + '">' +
+              '<div class="es-map-search__result" data-club-id="' + esc(c.id) + '" data-nome="' + esc(c.name) + '" tabindex="-1" role="option">' +
                 '<span class="es-map-search__result-name">' + esc(c.name) + '</span>' +
                 '<span class="es-map-search__result-meta">' + meta + '</span>' +
               '</div>'
             );
           }).join('');
+          _updateSearchCount(match.length, true);
         }
+        _focusedIdx = -1;
         resultsBox.classList.add('is-open');
+        _updateSearchOverflow();
       });
     }
 
+    /* Aggiorna la pill contatore nella barra ricerca */
+    function _updateSearchCount(n, visible) {
+      var pill = document.getElementById('es-map-search-count');
+      if (!pill) return;
+      pill.textContent = n;
+      pill.classList.toggle('is-visible', visible && n > 0);
+    }
+
+    /* Aggiorna la fade-bottom mask in base allo scroll reale */
+    function _updateSearchOverflow() {
+      if (!searchContainer) return;
+      var isOverflow = resultsBox.scrollHeight > resultsBox.clientHeight + 4;
+      searchContainer.classList.toggle('has-overflow', isOverflow);
+    }
+
+    resultsBox.addEventListener('scroll', _updateSearchOverflow);
+
+    /* Indice riga con focus da tastiera */
+    var _focusedIdx = -1;
+
+    function _getFocusableItems() {
+      return Array.prototype.slice.call(resultsBox.querySelectorAll('.es-map-search__result'));
+    }
+
+    function _setFocused(idx) {
+      var items = _getFocusableItems();
+      items.forEach(function (el) { el.classList.remove('is-focused'); });
+      if (idx >= 0 && idx < items.length) {
+        items[idx].classList.add('is-focused');
+        items[idx].scrollIntoView({ block: 'nearest' });
+        _focusedIdx = idx;
+      } else {
+        _focusedIdx = -1;
+      }
+    }
+
+    /* Debounce sull'input - evita chiamate eccessive a loadClubs */
+    var _debounceTimer = null;
     input.addEventListener('input', function (e) {
       var val = e.target.value.trim();
       if (clearBtn) clearBtn.classList.toggle('is-visible', !!val);
-      renderResults(val);
+      clearTimeout(_debounceTimer);
+      _debounceTimer = setTimeout(function () {
+        renderResults(val);
+      }, 250);
     });
 
     input.addEventListener('focus', function () {
@@ -616,16 +663,23 @@
     document.addEventListener('click', function (e) {
       if (!e.target.closest('.es-map-search') && !e.target.closest('#es-map-search-container')) {
         resultsBox.classList.remove('is-open');
+        _updateSearchCount(0, false);
       }
     });
 
     resultsBox.addEventListener('click', function (e) {
       var item = e.target.closest('.es-map-search__result');
       if (!item) return;
+      _selectItem(item);
+    });
+
+    function _selectItem(item) {
       var clubId = item.getAttribute('data-club-id');
       var clubNome = item.getAttribute('data-nome');
       input.value = clubNome;
       resultsBox.classList.remove('is-open');
+      _updateSearchCount(0, false);
+      if (clearBtn) clearBtn.classList.add('is-visible');
 
       loadClubs(function (all) {
         var found = all.find(function (c) {
@@ -650,20 +704,45 @@
           }
         }
       });
-    });
+    }
 
     if (clearBtn) {
       clearBtn.addEventListener('click', function () {
         input.value = '';
         clearBtn.classList.remove('is-visible');
         resultsBox.classList.remove('is-open');
+        _updateSearchCount(0, false);
         input.focus();
       });
     }
 
+    /* Navigazione tastiera: arrowDown/Up tra i risultati, Enter per selezionare, Escape per chiudere */
     input.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') {
+      var items = _getFocusableItems();
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        _setFocused(Math.min(_focusedIdx + 1, items.length - 1));
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        _setFocused(Math.max(_focusedIdx - 1, 0));
+      } else if (e.key === 'Enter') {
+        if (_focusedIdx >= 0 && items[_focusedIdx]) {
+          e.preventDefault();
+          _selectItem(items[_focusedIdx]);
+        }
+      } else if (e.key === 'Escape') {
         resultsBox.classList.remove('is-open');
+        _updateSearchCount(0, false);
+        input.blur();
+      }
+    });
+
+    /* Escape globale: chiude anche il pannello regione aperto */
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      if (regionState && regionState.expandedRegion) {
+        regionState.expandedRegion = null;
+        renderRegionsGrid();
       }
     });
   }

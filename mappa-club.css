@@ -315,14 +315,80 @@ body.is-view-mappa .portfolio-header {
   border: 1px solid var(--line) !important;
   border-radius: 14px;
   overflow: hidden;
-  display: none;
-  max-height: 280px;
+  /* Smooth open/close via opacity + scale instead of display:none toggle */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px) scaleY(0.97);
+  transform-origin: top center;
+  transition: opacity 0.18s ease, transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  max-height: 320px;
   overflow-y: auto;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  /* Custom thin scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(29, 79, 214, 0.35) transparent;
+}
+
+.es-map-search__results::-webkit-scrollbar {
+  width: 4px;
+}
+.es-map-search__results::-webkit-scrollbar-track {
+  background: transparent;
+}
+.es-map-search__results::-webkit-scrollbar-thumb {
+  background: rgba(29, 79, 214, 0.35);
+  border-radius: 4px;
 }
 
 .es-map-search__results.is-open {
-  display: block;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scaleY(1);
+}
+
+/* Fade-bottom mask — indica che ci sono altri risultati sotto */
+.es-map-search__results-wrap {
+  position: relative;
+}
+.es-map-search__results-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, var(--panel));
+  border-radius: 0 0 14px 14px;
+  pointer-events: none;
+  /* Hidden by default, shown only when scrollable */
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.es-map-search__results-wrap.has-overflow::after {
+  opacity: 1;
+}
+
+/* Count pill inside the search bar */
+.es-map-search__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: rgba(29, 79, 214, 0.15);
+  color: var(--blue, #1d4fd6);
+  font-size: 10px;
+  font-weight: 700;
+  font-family: var(--es-font);
+  flex-shrink: 0;
+  margin-right: 6px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.es-map-search__count.is-visible {
+  opacity: 1;
 }
 
 .es-map-search__result {
@@ -334,6 +400,7 @@ body.is-view-mappa .portfolio-header {
   cursor: pointer;
   border-bottom: 1px solid var(--line) !important;
   transition: background 0.15s ease;
+  outline: none;
 }
 
 .es-map-search__result:last-child {
@@ -360,6 +427,12 @@ body.is-view-mappa .portfolio-header {
   padding: 14px;
   font-size: 12px;
   color: var(--text-dim) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .es-map-search__results {
+    transition: none;
+  }
 }
 
 /* ---- Contenitore Mappa ---- */
@@ -941,13 +1014,59 @@ body.is-view-mappa .portfolio-header {
   background: var(--panel) !important;
 }
 
+.es-region-teams__list-wrap {
+  position: relative;
+}
+
+/* Fade-bottom mask per la lista chip squadre */
+.es-region-teams__list-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: linear-gradient(to bottom, transparent, var(--panel));
+  border-radius: 0 0 8px 8px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.es-region-teams__list-wrap.has-overflow::after {
+  opacity: 1;
+}
+
 .es-region-teams__list {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  max-height: 420px;
+  max-height: 320px;
   overflow-y: auto;
   padding-right: 4px;
+  padding-bottom: 4px;
+  /* Custom thin scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(29, 79, 214, 0.35) transparent;
+}
+
+.es-region-teams__list::-webkit-scrollbar {
+  width: 4px;
+}
+.es-region-teams__list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.es-region-teams__list::-webkit-scrollbar-thumb {
+  background: rgba(29, 79, 214, 0.35);
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .es-region-teams {
+    animation: none;
+  }
+  .es-region-teams__list-wrap::after {
+    transition: none;
+  }
 }
 
 .es-region-team-chip {
