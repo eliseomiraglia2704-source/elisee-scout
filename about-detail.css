@@ -93,11 +93,10 @@ html:has(#about-detail-overlay.is-active) body {
   height: 100dvh !important;
   z-index: 100000 !important;
   background: rgba(5, 8, 16, 0.96) !important;
-  backdrop-filter: blur(24px) !important;
   -webkit-backdrop-filter: blur(24px) !important;
+  backdrop-filter: blur(24px) !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
-  -webkit-overflow-scrolling: touch !important;
   overscroll-behavior: contain !important;
   opacity: 0;
   pointer-events: none;

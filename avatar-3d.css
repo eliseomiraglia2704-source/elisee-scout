@@ -11,8 +11,8 @@
   height: 100dvh;
   z-index: 2147483640 !important;
   background: rgba(3, 6, 12, 0.98);
-  backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -160,6 +160,7 @@ body.es-a3d-open .es-msb-cta-btn {
   transform: translateX(-50%);
   background: rgba(10, 15, 24, 0.94);
   border: 1px solid rgba(56, 189, 248, 0.28);
+  -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   padding: 6px 14px;
   border-radius: 999px;
@@ -543,6 +544,7 @@ body.es-a3d-open .es-msb-cta-btn {
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.22s ease;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -598,6 +600,7 @@ body.es-a3d-open .es-msb-cta-btn {
   font-size: 0.82rem;
   color: #cbd5e1;
   line-height: 1.45;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -779,6 +782,7 @@ body.es-a3d-open .es-msb-cta-btn {
   padding: 16px 24px;
   border-radius: 14px;
   border: 1px solid rgba(56, 189, 248, 0.3);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
@@ -882,6 +886,7 @@ body.es-a3d-open .es-msb-cta-btn {
   align-items: center;
   gap: 8px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   z-index: 10;
 }
@@ -904,6 +909,7 @@ body.es-a3d-open .es-msb-cta-btn {
   align-items: center;
   gap: 12px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(245, 158, 11, 0.15);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   z-index: 30;
   pointer-events: none;
@@ -1167,6 +1173,7 @@ body.es-a3d-open .es-msb-cta-btn {
   align-items: center;
   gap: 8px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   z-index: 35;
   pointer-events: none;

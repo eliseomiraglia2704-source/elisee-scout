@@ -203,6 +203,7 @@
   align-items: center;
   justify-content: center;
   transition: color 0.15s ease;
+  -webkit-user-select: none;
   user-select: none;
 }
 .es-season-nav:hover {
@@ -1050,7 +1051,6 @@
     justify-content: flex-start !important;
     gap: 0.4rem !important;
     overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
     padding: 0.45rem 0.75rem !important;
     border-right: none !important;
     border-bottom: 1px solid var(--es-border) !important;

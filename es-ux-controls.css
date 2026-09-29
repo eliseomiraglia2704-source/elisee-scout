@@ -55,7 +55,6 @@ html[data-theme="mimetico-chiaro"] {
   box-sizing: border-box;
   max-width: 100%;
   overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 html[data-theme="mimetico-chiaro"] .es-segmented {

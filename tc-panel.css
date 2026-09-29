@@ -537,8 +537,8 @@ body:has(#view-tc-panel:not([style*="display: none"])) .es-pd-rail {
 
 .es-tc-field select {
   cursor: pointer;
-  appearance: none;
   -webkit-appearance: none;
+  appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a93a3'/%3E%3C/svg%3E") !important;
   background-repeat: no-repeat !important;
   background-position: right 12px center !important;
@@ -1107,8 +1107,8 @@ body:has(#view-tc-panel:not([style*="display: none"])) .es-pd-rail {
   position: fixed;
   inset: 0;
   background: rgba(5, 8, 14, 0.84);
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   z-index: 10000;
   display: flex;
   align-items: center;

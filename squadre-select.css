@@ -105,6 +105,7 @@
   align-items: center;
   gap: 0.45rem;
   cursor: pointer;
+  -webkit-user-select: none;
   user-select: none;
 }
 .es-sq-gender input {
@@ -267,6 +268,7 @@
   display: block;
   object-fit: contain;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.45));
+  -webkit-user-select: none;
   user-select: none;
   pointer-events: auto;
 }
@@ -341,6 +343,7 @@
   object-fit: contain;
   display: block;
   filter: drop-shadow(0 6px 16px rgba(0,0,0,0.35));
+  -webkit-user-select: none;
   user-select: none;
   pointer-events: none;
   position: relative;
@@ -359,6 +362,7 @@
   letter-spacing: 0.06em;
   border-radius: 50%;
   background: transparent;
+  -webkit-user-select: none;
   user-select: none;
   pointer-events: none;
   padding: 10px;
@@ -468,8 +472,8 @@
   align-items: center;
   min-height: 0;
   touch-action: pan-y;
-  user-select: none;
   -webkit-user-select: none;
+  user-select: none;
 }
 .es-sq-panel-label {
   font-size: 0.72rem;
@@ -776,8 +780,8 @@
   background: transparent !important;
   box-shadow: none !important;
   outline: none !important;
-  appearance: none;
   -webkit-appearance: none;
+  appearance: none;
   cursor: pointer;
   z-index: 1;
   overflow: visible !important;
@@ -821,6 +825,7 @@
   object-fit: contain;
   display: block;
   pointer-events: none;
+  -webkit-user-select: none;
   user-select: none;
   filter: brightness(0.55) saturate(0.75);
   opacity: 0.5;
@@ -884,6 +889,7 @@
   display: block;
   position: relative;
   z-index: 2;
+  -webkit-user-select: none;
   user-select: none;
   pointer-events: none;
   will-change: opacity, transform;
@@ -1215,7 +1221,7 @@
   }
 
   .es-sq-main {
-    min-height: auto;
+    min-height: 0;
     padding: 1.35rem 1rem 1.25rem;
   }
 
@@ -1241,7 +1247,7 @@
 
   .es-sq-panel {
     padding: 1rem;
-    min-height: auto;
+    min-height: 0;
   }
 
   .es-sq-kit-stage {
@@ -1646,8 +1652,8 @@ button.es-sq-league-pill {
   cursor: pointer;
   font: inherit;
   color: inherit;
-  appearance: none;
   -webkit-appearance: none;
+  appearance: none;
   transition: background 0.18s, border-color 0.18s, box-shadow 0.18s, transform 0.12s;
 }
 button.es-sq-league-pill:hover {
@@ -1695,8 +1701,8 @@ button.es-sq-league-pill:active {
   position: absolute;
   inset: 0;
   background: rgba(2, 6, 23, 0.72);
-  backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   cursor: pointer;
 }
 .es-sq-picker-panel {
@@ -1777,7 +1783,6 @@ button.es-sq-league-pill:active {
   overscroll-behavior: contain;
   padding: 0.4rem 0.7rem 0.9rem;
   display: block !important; /* evita stacking strano da flex globale */
-  -webkit-overflow-scrolling: touch;
 }
 /* Riga singola pulita: logo | nome | n° | check — niente sovrapposizioni */
 .es-sq-picker-item {
@@ -1968,6 +1973,7 @@ button.es-sq-league-pill:active {
   position: relative;
   z-index: 2;
   filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.55));
+  -webkit-user-select: none;
   user-select: none;
   pointer-events: none;
 }
@@ -1987,6 +1993,7 @@ button.es-sq-league-pill:active {
   font-weight: 900;
   font-size: clamp(1.8rem, 5vw, 2.6rem);
   letter-spacing: 0.06em;
+  -webkit-user-select: none;
   user-select: none;
   pointer-events: none;
 }
@@ -2038,8 +2045,8 @@ body.es-sq-loading { overflow: hidden; }
   inset: 0;
   z-index: 999999;
   background: rgba(5, 10, 20, 0.85);
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
   justify-content: center;

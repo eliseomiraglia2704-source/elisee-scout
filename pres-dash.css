@@ -192,8 +192,8 @@
   position: sticky;
   top: 78px;
   background: rgba(4, 8, 16, 0.94);
-  backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   z-index: 100;
 }
 .es-pres-nav-btn {
@@ -568,8 +568,8 @@
   inset: 0;
   z-index: 99999999;
   background: rgba(3, 7, 18, 0.85);
-  backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;

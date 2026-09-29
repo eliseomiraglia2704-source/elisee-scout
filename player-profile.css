@@ -189,8 +189,8 @@ body.layout-portfolio .es-pp textarea:focus,
   font-size: 0.95rem;
   padding: 0.78rem 0.9rem;
   outline: none;
-  appearance: none;
   -webkit-appearance: none;
+  appearance: none;
 }
 .es-pp-field select,
 .es-pp-table select {
@@ -569,7 +569,6 @@ body.layout-portfolio .es-sp select:disabled {
   overflow-x: auto !important;
   overflow-y: hidden !important;
   flex-wrap: nowrap !important;
-  -webkit-overflow-scrolling: touch !important;
   scrollbar-width: none !important;
   width: 100% !important;
   max-width: 100% !important;

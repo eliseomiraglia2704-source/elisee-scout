@@ -394,8 +394,8 @@ button.es-mg-hub-menubar {
   gap: 0.55rem !important;
   color: #e2e8f0 !important;
   font-size: 0.92rem !important;
-  appearance: none !important;
   -webkit-appearance: none !important;
+  appearance: none !important;
   background: transparent !important;
   background-color: transparent !important;
   background-image: none !important;
@@ -526,8 +526,8 @@ button.es-mg-hub-menubar:focus {
   --accent: #2fd6d1;
   --accent-soft: rgba(47, 214, 209, 0.16);
   --accent-light: #8ff0ec;
-  appearance: none;
   -webkit-appearance: none;
+  appearance: none;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -540,8 +540,8 @@ button.es-mg-hub-menubar:focus {
   border: 1.5px solid var(--accent);
   border-radius: 16px;
   background: rgba(10, 14, 20, 0.55);
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   color: #f2f5f8;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.03), 0 20px 40px rgba(0, 0, 0, 0.35);
   transition: transform 0.18s ease, box-shadow 0.18s ease;
@@ -839,8 +839,8 @@ button.es-mg-hub-menubar:focus {
 }
 .es-mg-hub-auth-in,
 .es-mg-hub-auth-up {
-  appearance: none;
   -webkit-appearance: none;
+  appearance: none;
   min-width: 118px;
   padding: 0.46rem 1.2rem;
   border-radius: 999px;
@@ -867,8 +867,8 @@ button.es-mg-hub-menubar:focus {
     0 10px 20px rgba(0, 0, 0, 0.38);
 }
 .es-mg-hub-play {
-  appearance: none;
   -webkit-appearance: none;
+  appearance: none;
   display: block;
   width: 100%;
   max-width: none;
@@ -2425,6 +2425,7 @@ button.es-mg-hub-menubar:focus {
   flex-direction: column;
   align-items: center;
   margin: 0 0 0.3rem;
+  -webkit-user-select: none;
   user-select: none;
 }
 .es-mg-kit-photo {
@@ -2441,6 +2442,7 @@ button.es-mg-hub-menubar:focus {
   object-position: center center;
   display: block;
   pointer-events: none;
+  -webkit-user-select: none;
   user-select: none;
   background: transparent;
 }
@@ -2548,6 +2550,7 @@ button.es-mg-hub-menubar:focus {
 }
 .es-mg-field-num input[type="number"] {
   -moz-appearance: textfield;
+  -webkit-appearance: textfield;
   appearance: textfield;
 }
 .es-mg-foot-wrap {
@@ -4213,6 +4216,7 @@ button.es-mg-hub-menubar:focus {
   transform: translate(-50%, -50%);
   opacity: 0.08;
   pointer-events: none;
+  -webkit-user-select: none;
   user-select: none;
   z-index: 0;
   filter: grayscale(0.1);
@@ -4345,7 +4349,6 @@ button.es-mg-hub-menubar:focus {
   .es-mg-identity {
     overflow-x: hidden;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
     padding: 0.65rem 0.7rem 0.4rem;
     max-width: 100%;
     width: 100%;
@@ -4498,7 +4501,6 @@ button.es-mg-hub-menubar:focus {
     max-height: 46%;
     overflow-x: hidden;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
   }
   .es-mg-player-card-top {
     grid-template-columns: auto minmax(0, 1fr);
@@ -4917,7 +4919,6 @@ button.es-mg-hub-menubar:focus {
   .es-mg-hub {
     justify-content: flex-start !important;
     overflow: auto !important;
-    -webkit-overflow-scrolling: touch;
     padding: 72px 0.85rem 1.4rem !important;
   }
 

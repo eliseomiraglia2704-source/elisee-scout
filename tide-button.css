@@ -17,6 +17,7 @@
   padding: 0;
   box-shadow: 0 4px 14px rgba(29, 107, 255, 0.28);
   transition: transform 0.18s cubic-bezier(0.34, 1.2, 0.4, 1), box-shadow 0.25s ease, background 0.25s ease;
+  -webkit-user-select: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -171,6 +172,7 @@
   align-items: flex-start;
   text-align: left;
   gap: 2px;
+  -webkit-user-select: none;
   user-select: none;
 }
 

@@ -201,8 +201,8 @@ a {
 
 .glass-card {
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   border: none !important;
   border-radius: var(--radius-md);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -279,8 +279,8 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   overflow: hidden;
   border: 1.5px solid rgba(255, 255, 255, 0.15);
   touch-action: none;
-  user-select: none;
   -webkit-user-select: none;
+  user-select: none;
 }
 
 .canvas-wrapper.is-drawing,
@@ -379,6 +379,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 .custom-dropdown,
 .custom-dropdown.pf-select {
   position: relative;
+  -webkit-user-select: none;
   user-select: none;
   width: 100%;
   z-index: 1;
@@ -585,8 +586,8 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 /* Native selects (modals / admin) — same dark look when openable */
 body.layout-portfolio select.pf-input,
 body.layout-portfolio select {
-  appearance: none;
   -webkit-appearance: none;
+  appearance: none;
   background-color: rgba(0, 0, 0, 0.4) !important;
   background-image:
     linear-gradient(45deg, transparent 50%, #64748b 50%),
@@ -774,8 +775,8 @@ button > *,
   padding: 0 24px;
   margin: 0;
   background-color: rgba(10, 15, 30, 0.92);
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   border-radius: 0;
@@ -785,8 +786,8 @@ button > *,
 .main-header.is-scrolled,
 .portfolio-header.is-scrolled {
   background: #050810;
-  backdrop-filter: none;
   -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   border-bottom: none;
   box-shadow: none;
 }
@@ -807,7 +808,7 @@ body.layout-portfolio #view-pillars {
    CHI SIAMO — split layout (text left | portrait right) like portfolio About
    ========================================================================== */
 .about-split-page {
-  min-height: auto;
+  min-height: 0;
   background: #050608;
   display: flex;
   flex-direction: column;
@@ -819,7 +820,7 @@ body.layout-portfolio #view-pillars {
 
 .about-split-inner {
   width: 100%;
-  min-height: auto;
+  min-height: 0;
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.95fr);
   align-items: start;
@@ -1220,6 +1221,7 @@ body.layout-portfolio #view-pillars {
   font-size: 0.82rem;
   font-weight: 500;
   cursor: pointer;
+  -webkit-user-select: none;
   user-select: none;
   transition: border-color 0.2s, color 0.2s, background 0.2s;
 }
@@ -1564,6 +1566,7 @@ body.layout-portfolio #view-pillars {
 
 select.pf-input {
   cursor: pointer;
+  -webkit-appearance: none;
   appearance: none;
   background-image: linear-gradient(45deg, transparent 50%, #64748b 50%), linear-gradient(135deg, #64748b 50%, transparent 50%);
   background-position: calc(100% - 16px) 55%, calc(100% - 11px) 55%;
@@ -1913,6 +1916,7 @@ select.pf-input {
   position: absolute;
   inset: 0;
   background: rgba(2, 6, 12, 0.82);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
@@ -2186,7 +2190,7 @@ select.pf-input {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: auto;
+  min-height: 0;
   justify-content: flex-start;
 }
 
@@ -2761,6 +2765,7 @@ select.pf-input {
   font-size: 0.72rem;
   font-weight: 800;
   color: #7dd3fc;
+  -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
 }
 .cv-video-telemetry-tag {
@@ -2774,6 +2779,7 @@ select.pf-input {
   font-size: 0.72rem;
   font-weight: 800;
   color: #4ade80;
+  -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
 }
 .cv-video-footer {
@@ -3182,6 +3188,7 @@ body.focus-hub {
   top: 0;
   z-index: 20;
   background: rgba(5, 6, 8, 0.92);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 
@@ -3394,6 +3401,7 @@ body.focus-hub {
   padding: 0.7rem 0.9rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   cursor: default;
+  -webkit-user-select: none;
   user-select: none;
   pointer-events: none; /* non cliccabile */
 }
@@ -4137,8 +4145,8 @@ header.main-header::-webkit-scrollbar {
   font-family: inherit !important;
   text-align: left !important;
   cursor: pointer !important;
-  appearance: none !important;
   -webkit-appearance: none !important;
+  appearance: none !important;
   transition: background 0.15s ease, color 0.15s ease;
 }
 
@@ -5030,6 +5038,7 @@ html:not([data-theme="mimetico-chiaro"]) .hero-typography-left::before {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.88);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   z-index: 9999;
   display: none;
@@ -5122,7 +5131,6 @@ html:not([data-theme="mimetico-chiaro"]) .hero-typography-left::before {
 .table-responsive {
   width: 100% !important;
   overflow-x: auto !important;
-  -webkit-overflow-scrolling: touch;
   margin-bottom: 1.5rem;
 }
 
@@ -5457,7 +5465,6 @@ html:not([data-theme="mimetico-chiaro"]) .hero-typography-left::before {
     align-items: center;
     justify-content: flex-start;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     white-space: nowrap;
     padding: 0.2rem 0 0.15rem;
@@ -5490,7 +5497,7 @@ html:not([data-theme="mimetico-chiaro"]) .hero-typography-left::before {
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
-  min-height: auto !important;
+  min-height: 0 !important;
   font-size: 0.84rem !important;
   line-height: 1.2 !important;
 }
@@ -5509,8 +5516,8 @@ html:not([data-theme="mimetico-chiaro"]) .hero-typography-left::before {
   width: 100vw !important;
   height: 100vh !important;
   background: rgba(5, 8, 15, 0.96) !important;
-  backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
+  backdrop-filter: blur(20px) !important;
   z-index: 999999 !important;
   align-items: center;
   justify-content: center;
@@ -5529,7 +5536,6 @@ html:not([data-theme="mimetico-chiaro"]) .hero-typography-left::before {
   z-index: 9999999 !important;
   overflow-y: scroll !important;
   overflow-x: hidden !important;
-  -webkit-overflow-scrolling: touch !important;
   padding: 0 !important;
   margin: 0 !important;
 }
@@ -5557,6 +5563,7 @@ html:not([data-theme="mimetico-chiaro"]) .hero-typography-left::before {
   font-weight: 500;
   color: var(--text-muted, #94a3b8);
   cursor: pointer;
+  -webkit-user-select: none;
   user-select: none;
   padding: 0.55rem 1rem;
   background: rgba(14, 17, 24, 0.85);
@@ -5587,6 +5594,7 @@ input[type="checkbox"],
   pointer-events: none !important;
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
+  -webkit-appearance: none !important;
   appearance: none !important;
 }
 
@@ -5695,6 +5703,7 @@ input[type="checkbox"],
   padding: 2.75rem 3rem !important;
   margin-top: 1.5rem !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
   backdrop-filter: blur(16px) !important;
 }
 
@@ -5714,6 +5723,7 @@ input[type="checkbox"],
   padding: 2.25rem 2.5rem !important;
   margin-top: 0.5rem !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
   backdrop-filter: blur(16px) !important;
 }
 
@@ -5759,6 +5769,7 @@ body.layout-portfolio .filter-card {
   border: 1px solid rgba(255, 255, 255, 0.07) !important;
   box-shadow: none !important;
   border-radius: 12px !important;
+  -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
 }
 
@@ -5867,6 +5878,7 @@ body.layout-portfolio #cookie-banner {
   border-radius: 16px;
   margin-top: 1.5rem;
   margin-bottom: 2rem;
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 
@@ -6569,6 +6581,7 @@ body.layout-portfolio .resume-section-title {
   border-radius: 18px;
   padding: 1.5rem 1.1rem;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(2, 132, 199, 0.12);
+  -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
   position: sticky;
   top: 90px;
@@ -6688,6 +6701,7 @@ body.layout-portfolio .resume-section-title {
   border-radius: 16px;
   padding: 1.75rem 1.6rem;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
+  -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
@@ -6797,6 +6811,7 @@ body.layout-portfolio .resume-section-title {
   border: 1px solid rgba(56, 189, 248, 0.22);
   border-radius: 16px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
+  -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
 }
 
@@ -6980,6 +6995,7 @@ html {
   object-position: center center;
   z-index: 0;
   pointer-events: none;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -7007,7 +7023,7 @@ html {
   padding: 24px 1.5rem 2rem 1.5rem !important;
   display: flex;
   align-items: flex-start;
-  min-height: auto;
+  min-height: 0;
 }
 
 /* 6. Blocco tipografico sinistro */
@@ -7071,6 +7087,7 @@ html {
   background: rgba(255, 255, 255, 0.08);
   color: #ffffff;
   border: 1.5px solid rgba(255, 255, 255, 0.35);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
@@ -7222,6 +7239,7 @@ html {
   inset: 0;
   z-index: 999999;
   background: rgba(3, 7, 18, 0.88);
+  -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
   display: none;
   align-items: center;
@@ -7263,6 +7281,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
+  -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
 }
 
@@ -7879,8 +7898,8 @@ html {
   background: rgba(15, 23, 42, 0.75) !important;
   border: 1px solid rgba(56, 189, 248, 0.25) !important;
   border-radius: 14px !important;
-  backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
+  backdrop-filter: blur(12px) !important;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.05) !important;
   padding: 1.5rem !important;
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
@@ -8145,6 +8164,7 @@ body.layout-portfolio main {
   min-width: 280px;
   max-width: 420px;
   background: rgba(15, 23, 42, 0.94);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(56, 189, 248, 0.3);
   border-radius: 12px;
@@ -8629,6 +8649,7 @@ body.layout-portfolio main {
   min-width: 280px;
   max-width: 420px;
   background: rgba(15, 23, 42, 0.94);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(56, 189, 248, 0.3);
   border-radius: 12px;
@@ -8707,7 +8728,6 @@ html.ar-screen-open {
   max-height: 100dvh !important;
   overflow-x: hidden !important;
   overflow-y: scroll !important;
-  -webkit-overflow-scrolling: touch !important;
   overscroll-behavior: contain !important;
   pointer-events: auto !important;
   visibility: visible !important;
@@ -9028,6 +9048,7 @@ html.ar-screen-open {
   background: linear-gradient(160deg, rgba(6, 14, 28, 0.94), rgba(8, 22, 42, 0.9));
   border: 1px solid rgba(56, 189, 248, 0.42);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.04) inset, 0 0 40px rgba(14, 165, 233, 0.18);
+  -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
 }
 .es-ar-seal-ring {
@@ -9271,7 +9292,7 @@ main {
 .hero-portfolio-stage,
 .hero-portfolio-inner,
 .hero-typography-left {
-  min-height: auto !important;
+  min-height: 0 !important;
   height: auto !important;
   justify-content: flex-start !important;
   padding-top: 24px !important;
@@ -9326,11 +9347,11 @@ main {
   overflow: visible !important;
   max-height: none !important;
   height: auto !important;
-  min-height: auto !important;
+  min-height: 0 !important;
 }
 /* Account: non centrare verticalmente in un box 100vh che taglia */
 #account-portal .pf-page-inner {
-  min-height: auto !important;
+  min-height: 0 !important;
   justify-content: flex-start !important;
 }
 /* Titoli non devono finire sotto la navbar */
@@ -9346,12 +9367,12 @@ main {
   display: flex !important;
   flex-direction: column !important;
   overflow: visible !important;
-  min-height: auto !important;
+  min-height: 0 !important;
   height: auto !important;
 }
 #view-about .about-dossier-wrap {
   overflow: visible !important;
-  min-height: auto !important;
+  min-height: 0 !important;
   height: auto !important;
 }
 /* Resume page non deve clippare */
@@ -9605,7 +9626,6 @@ input[type="submit"],
 .es-feed-scroll,
 .es-chat-messages,
 .es-wall-ticker {
-  -webkit-overflow-scrolling: touch;
 }
 
 /* Navbar mobile rifinita */
@@ -9695,8 +9715,8 @@ input[type="submit"],
 /* Pannello Filtri Unificato per Bacheca */
 .bacheca-filter-panel {
   background: rgba(15, 23, 42, 0.72);
-  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   padding: 1.25rem 1.4rem;
@@ -9816,8 +9836,8 @@ input[type="submit"],
 
 .bacheca-people-search-panel {
   background: rgba(15, 23, 42, 0.72);
-  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   padding: 1.25rem 1.4rem;
@@ -10075,7 +10095,6 @@ body:has(#view-tc-panel:not([style*="display: none"])) .es-pd-rail {
     min-height: 48px !important;
     flex-direction: row !important;
     overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
     padding: 0.45rem 0.75rem !important;
     border-right: none !important;
     border-bottom: 1px solid rgba(56, 189, 248, 0.15) !important;
@@ -10172,8 +10191,8 @@ body[data-active-view="home"] #es-otp-bottom-banner {
   border: 1px solid rgba(56, 189, 248, 0.28) !important;
   border-radius: 10px !important;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75), 0 0 20px rgba(56, 189, 248, 0.12) !important;
-  backdrop-filter: blur(18px) !important;
   -webkit-backdrop-filter: blur(18px) !important;
+  backdrop-filter: blur(18px) !important;
   padding: 0.35rem !important;
   display: none !important;
   flex-direction: column !important;
@@ -10325,8 +10344,8 @@ header small,
   padding: 0.85rem 1.5rem !important;
   border-radius: 9999px !important;
   border: 1px solid rgba(56, 189, 248, 0.38) !important;
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   cursor: pointer;
   text-decoration: none;
   transition: all 0.2s ease;
@@ -10377,8 +10396,8 @@ header small,
   border-radius: 20px;
   padding: 1.25rem;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 35px rgba(56, 189, 248, 0.15);
-  backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
@@ -10483,6 +10502,7 @@ header small,
   flex-direction: column;
   align-items: center;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }
 
@@ -10517,6 +10537,7 @@ header small,
   display: flex;
   align-items: center;
   gap: 0.45rem;
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
 }
@@ -11415,8 +11436,8 @@ header.portfolio-header,
   border: 0 !important;
   border-bottom: none !important;
   box-shadow: none !important;
-  backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
 }
 
 body.is-internal-view header.public-header.public-navbar.main-header.portfolio-header,
@@ -11425,8 +11446,8 @@ body.is-internal-view header.main-header,
 body.is-internal-view .portfolio-header {
   background: transparent !important;
   background-color: transparent !important;
-  backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   border: 0 !important;
   box-shadow: none !important;
 }
@@ -11450,6 +11471,7 @@ main {
 /* Se dopo lo scroll vuoi di nuovo uno sfondo, solo allora: */
 header.public-header.is-scrolled {
   background: transparent !important;
+  -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
   border-bottom: none !important;
   box-shadow: none !important;
@@ -11590,8 +11612,8 @@ html[data-theme="mimetico-chiaro"] header.public-header {
 
 html[data-theme="mimetico-chiaro"] body:not(.is-internal-view) header.public-header:not(.is-scrolled) {
   background: rgba(255, 255, 255, 0.8) !important;
-  backdrop-filter: blur(16px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
 }
@@ -11847,4 +11869,4 @@ html[data-theme="mimetico-chiaro"] .glow-card--red::before {
 }
 
 
-
+

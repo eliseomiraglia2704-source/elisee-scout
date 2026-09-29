@@ -5,6 +5,7 @@
   inset: 0;
   z-index: 99997;
   background: rgba(5, 6, 8, 0.78);
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   align-items: center;
   justify-content: center;
@@ -155,6 +156,7 @@
   font-weight: 600;
   color: inherit;
   background: rgb(255 255 255 / 10%);
+  -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
   cursor: pointer;
   transition: 0.3s;

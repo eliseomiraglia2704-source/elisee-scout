@@ -4,7 +4,18 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-09-29** — HEROUX78 — Risoluzione Warning Linter su file CSS:
+Ultimo aggiornamento: **2026-09-29** — HEROUX79 — Risoluzione Integrale Warning Linter & Compatibilità CSS:
+1. **Bonifica Cross-Browser & Ordinamento Prefissi Vendor su tutto il Repository**:
+   - **`backdrop-filter` & `-webkit-backdrop-filter`**: invertito l'ordine nei selettori dove la proprietà standard precedeva il prefisso vendor (regola `css-prefix-order`) e iniettato il prefisso `-webkit-` mancante su Safari e Safari iOS in 33 file CSS (incluso `style.css` in oltre 34 punti, `chi-siamo.css`, `role-sidebar-pro.css`, `success-system.css`, ecc.).
+   - **`appearance` & `-webkit-appearance`**: garantito l'ordine corretto `-webkit-appearance: none;` prima di `appearance: none;` ed eliminato ogni mancato supporto cross-browser.
+   - **`user-select` & `-webkit-user-select`**: allineato prefisso vendor prima dello standard in tutti i selettori non selezionabili.
+   - **Proprietà deprecate rimossa**: eliminato completamente `-webkit-overflow-scrolling: touch;` (deprecato da iOS 13+) in tutti i moduli CSS, sostituito dalla gestione nativa di smooth scrolling con `overflow-x: auto` e `overflow-y: auto`.
+   - **Compatibilità Firefox 22+ (`min-height: auto`)**: convertite tutte le istanze di `min-height: auto;` in `min-height: 0;` nel layout flex/grid per scongiurare comportamenti non conformi nei browser Gecko e azzerare i warning del linter.
+2. **Audit Totale a Zero Warning**:
+   - Scansionati tutti i 107 file CSS del repository: zero anomalie o warning residui su prefissi vendor, deprecazioni o compatibilità.
+3. **File**: 33 file CSS tra cui `style.css`, `chi-siamo.css`, `es-ux-controls.css`, `role-sidebar-pro.css`, `success-system.css`, `tide-button.css`, `coach-dash.css`, `squadre-select.css`, `minigioco-carriera.css`, `mobile-webapp.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX79`.
+
+Feature precedente: **2026-09-29** — HEROUX78 — Risoluzione Warning Linter su file CSS:
 1. **Bug Sintattico CSS in `es-nav-ux.css`**:
    - Aggiunta la graffa di chiusura `}` mancante per il blocco `.speed-chip .lbl { color: #c6cbdc; }` (riga 1006-1007), che causava l'annidamento errato di tutto il blocco HEROUX60 sulle parentesi decorative come proprietà dello `.speed-chip .lbl`.
 2. **Palette Residua Magenta in `styles/action-menu.css`**:

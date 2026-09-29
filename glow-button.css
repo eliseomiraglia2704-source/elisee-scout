@@ -97,6 +97,7 @@
   line-height: 1.2;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
   user-select: none;
   text-decoration: none;
   box-sizing: border-box;

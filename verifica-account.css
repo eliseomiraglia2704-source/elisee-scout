@@ -276,8 +276,8 @@ body:has(#es-otp-bottom-banner) #elisee-cookie-settings-btn {
   position: fixed;
   inset: 0;
   background: rgba(3, 7, 18, 0.88);
-  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   z-index: 2147483647 !important;
   display: flex;
   align-items: center;
