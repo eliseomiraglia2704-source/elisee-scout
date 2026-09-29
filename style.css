@@ -9619,15 +9619,6 @@ input[type="submit"],
   }
 }
 
-/* Fluidità di scroll touch per container scrollabili */
-.es-scroll-touch,
-.table-responsive,
-.es-pd-main,
-.es-feed-scroll,
-.es-chat-messages,
-.es-wall-ticker {
-}
-
 /* Navbar mobile rifinita */
 @media screen and (max-width: 860px) {
   .navbar-container {
@@ -11843,6 +11834,7 @@ html[data-theme="mimetico-chiaro"] .glow-card--gold::before {
 }
 html[data-theme="mimetico-chiaro"] .glow-card--red::before {
   background: radial-gradient(circle, rgba(220, 38, 38, 0.22), transparent 70%);
+}
 /* ============================================================
    HEROUX60: Parentesi Decorative Sottili Hero & Sezioni
    ============================================================ */

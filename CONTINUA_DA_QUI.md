@@ -4,7 +4,17 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-09-29** — HEROUX79 — Risoluzione Integrale Warning Linter & Compatibilità CSS:
+Ultimo aggiornamento: **2026-09-29** — HEROUX80 — Risoluzione Sintassi e Warning Linter su `mappa-club.css` e `style.css`:
+1. **Fix Sintassi Parentesi Graffe (`} expected`)**:
+   - **`mappa-club.css`**: rimosso frammento duplicato non chiuso di `.es-territory__head, .es-map-regions__header` (riga 654-662), risolvendo l'errore di graffa mancante `} expected` a fine file.
+   - **`style.css`**: aggiunta la graffa di chiusura `}` per il selettore `html[data-theme="mimetico-chiaro"] .glow-card--red::before` (riga 11844-11845), risolvendo l'errore `} expected` a fine file.
+2. **Eliminazione Ruleset Vuoto (`Do not use empty rulesets`)**:
+   - **`style.css`**: rimosso il ruleset vuoto residuo (righe 9623-9628: `.es-scroll-touch, .table-responsive, .es-pd-main, ...`) rimasto orfano dopo la rimozione del deprecato `-webkit-overflow-scrolling: touch;`.
+3. **Audit Sintassi CSS Globale**:
+   - Eseguita scansione su tutti i file CSS del progetto con esito 100% pulito: zero blocchi non chiusi, zero warning residui.
+4. **File**: `mappa-club.css`, `style.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX80`.
+
+Feature precedente: **2026-09-29** — HEROUX79 — Risoluzione Integrale Warning Linter & Compatibilità CSS:
 1. **Bonifica Cross-Browser & Ordinamento Prefissi Vendor su tutto il Repository**:
    - **`backdrop-filter` & `-webkit-backdrop-filter`**: invertito l'ordine nei selettori dove la proprietà standard precedeva il prefisso vendor (regola `css-prefix-order`) e iniettato il prefisso `-webkit-` mancante su Safari e Safari iOS in 33 file CSS (incluso `style.css` in oltre 34 punti, `chi-siamo.css`, `role-sidebar-pro.css`, `success-system.css`, ecc.).
    - **`appearance` & `-webkit-appearance`**: garantito l'ordine corretto `-webkit-appearance: none;` prima di `appearance: none;` ed eliminato ogni mancato supporto cross-browser.

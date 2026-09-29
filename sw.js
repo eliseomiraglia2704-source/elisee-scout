@@ -1,7 +1,7 @@
 /* ELISEE SCOUT — Cache Wipe & Self-Unregister Service Worker
    Assicura che nessun asset obsoleto rimanga memorizzato nella cache del browser.
 */
-const CACHE = 'elisee-scout-v20260929-heroux79';
+const CACHE = 'elisee-scout-v20260929-heroux80';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();

@@ -660,15 +660,6 @@ body.is-view-mappa .portfolio-header {
   flex-wrap: wrap;
   margin-bottom: 24px;
   padding-bottom: 20px;
-.es-territory__head,
-.es-map-regions__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-bottom: 24px;
-  padding-bottom: 20px;
   border-bottom: 1px solid var(--line) !important;
 }
 
