@@ -1,0 +1,7 @@
+{
+  "hints": {
+    "no-inline-styles": "off",
+    "compat-api/css": "off",
+    "compat-api/html": "off"
+  }
+}

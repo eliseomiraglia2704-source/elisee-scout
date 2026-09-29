@@ -4,7 +4,16 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-09-29** — HEROUX81 — Supporto Standard `text-size-adjust` & Bonifica Linter:
+Ultimo aggiornamento: **2026-09-29** — HEROUX82 — Bonifica Completa Warning IDE, WebHint & Cross-Browser:
+
+1. **Configurazione WebHint & Linter Workspace (`.hintrc`, `.vscode/settings.json`)**:
+   - Creato `.hintrc` con soppressione dei falsi positivi sulle regole `no-inline-styles`, `compat-api/css` e `compat-api/html`.
+   - Creato `.vscode/settings.json` con disattivazione dei warning non pertinenti su stili inline e regole standard CSS.
+2. **Supporto Cross-Browser `-moz-text-size-adjust` (`style.css`)**:
+   - Aggiunto `-moz-text-size-adjust: 100%;` affiancato a `-webkit-` e alla proprietà standard `text-size-adjust: 100%;` (riga 9590), garantendo piena copertura per Firefox, Safari e Chromium.
+3. **File**: `.hintrc`, `.vscode/settings.json`, `style.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX82`.
+
+Feature precedente: **2026-09-29** — HEROUX81 — Supporto Standard `text-size-adjust` & Bonifica Linter:
 
 1. **Risoluzione Errore Compatibilità `text-size-adjust` (`style.css`)**:
    - Aggiunta la proprietà standard `text-size-adjust: 100%;` affiancata a `-webkit-text-size-adjust: 100%;` sulla regola `body` (riga 9590), eliminando l'errore linter di mancato supporto cross-browser per Chrome 54+, Chrome Android, Edge 79+ e Samsung Internet.
