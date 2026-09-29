@@ -4,7 +4,17 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-09-29** — HEROUX76 — Scheda Giocatore Pubblica Condivisibile & Deep-Linking:
+Ultimo aggiornamento: **2026-09-29** — HEROUX77 — Risoluzione Errori e Warning Linter su index.html:
+1. **Posizionamento `meta charset` nel `<head>`**:
+   - Spostato `<meta charset="UTF-8">` come primissimo nodo figlio di `<head>`, rispettando le specifiche HTML e prevenendo il parsing ritardato dell'encoding da parte dei browser.
+2. **Supporto Cross-Browser `-webkit-backdrop-filter` & Ordinamento Regole**:
+   - Risolti gli errori di compatibilità per Safari / Safari iOS su `header.public-header.is-scrolled`, `.hero-buttons-row .btn`, modale cookie, modale iscrizione, governance action modal, visualizzatore documenti GDPR a tutto schermo e `candidateModal`.
+   - Allineato il corretto ordine CSS: prefisso vendor `-webkit-backdrop-filter` sempre prima della proprietà standard `backdrop-filter`.
+3. **Compatibilità Scrollbar Cross-Browser**:
+   - Aggiunto `-ms-overflow-style: none !important;` accanto a `scrollbar-width: none !important;` per i menu di navigazione orizzontale in aggiunta al selettore `::-webkit-scrollbar`.
+4. **File**: `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX77`.
+
+Feature precedente: **2026-09-29** — HEROUX76 — Scheda Giocatore Pubblica Condivisibile & Deep-Linking:
 1. **Scheda Giocatore Pubblica Condivisibile (`public-profile.css`, `public-profile.js`)**:
    - Deep-linking & Hash Routing: supporto URL diretti `#profilo?id=<id>` e `#player?id=<id>` con apertura automatica e gestione trasparente dell'history browser.
    - Header dinamico: avatar/iniziali, nome, ruolo primario/FM, status svincolato o club, piede dominante, nazionalità e città/regione.

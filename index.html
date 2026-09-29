@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="it" data-theme="vault-neon" data-lang="it">
 <head>
+  <meta charset="UTF-8">
   <script>
     (function () {
-      var BUILD_VERSION = '20260929_HEROUX76';
+      var BUILD_VERSION = '20260929_HEROUX77';
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
         if (savedTheme) {
@@ -35,7 +36,6 @@
       } catch (e) {}
     })();
   </script>
-  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <!-- BUILD_STAMP_SQUADRE_FC26 -->
   <title>Elisee Scout</title>
@@ -187,8 +187,8 @@
       align-items: center;
       justify-content: center;
       background: rgba(4, 10, 20, 0.88);
-      backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
     }
     #elisee-auth-loading.is-on {
       display: flex;
@@ -307,8 +307,8 @@
       border: 0 !important;
       border-bottom: none !important;
       box-shadow: none !important;
-      backdrop-filter: none !important;
       -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
     }
 
     header.public-header .brand-logo,
@@ -360,8 +360,8 @@
     body.is-internal-view .portfolio-header {
       background: transparent !important;
       background-color: transparent !important;
-      backdrop-filter: none !important;
       -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
       border: 0 !important;
       box-shadow: none !important;
     }
@@ -410,6 +410,7 @@
 
     header.public-header.is-scrolled {
       background: transparent !important;
+      -webkit-backdrop-filter: none !important;
       backdrop-filter: none !important;
       border-bottom: none !important;
       box-shadow: none !important;
@@ -485,6 +486,7 @@
       overflow: visible !important;
       flex-wrap: nowrap !important;
       white-space: nowrap !important;
+      -ms-overflow-style: none !important;
       scrollbar-width: none !important;
     }
     .nav-menu::-webkit-scrollbar,
@@ -579,6 +581,7 @@
 
     html:not([data-theme="mimetico-chiaro"]) .hero-buttons-row .btn {
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
+      -webkit-backdrop-filter: blur(6px) !important;
       backdrop-filter: blur(6px) !important;
     }
     
@@ -1635,7 +1638,7 @@
   <!-- ============================================================ -->
   <!-- COOKIE CONSENT BANNER -->
   <!-- ============================================================ -->
-  <div id="cookie-banner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:99999; background:rgba(5,8,16,0.97); border-top:1.5px solid rgba(56,189,248,0.4); padding:1rem 2rem; backdrop-filter:blur(18px);">
+  <div id="cookie-banner" style="display:none; position:fixed; bottom:0; left:0; right:0; z-index:99999; background:rgba(5,8,16,0.97); border-top:1.5px solid rgba(56,189,248,0.4); padding:1rem 2rem; -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px);">
     <div style="max-width:1400px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
       <div style="flex:1; min-width:260px;">
         <p style="color:#e2e8f0; font-size:0.88rem; margin:0; line-height:1.55;">
@@ -1783,7 +1786,7 @@
   <!-- ============================================================ -->
   <!-- MODAL: ISCRIZIONE ELISEE SCOUT -->
   <!-- ============================================================ -->
-  <div id="modal-registrazione" style="display:none; position:fixed; inset:0; z-index:99998; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px); overflow-y:auto; padding:2rem 1rem;" onclick="if(event.target===this) closeRegistrazioneModal()">
+  <div id="modal-registrazione" style="display:none; position:fixed; inset:0; z-index:99998; background:rgba(0,0,0,0.75); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); overflow-y:auto; padding:2rem 1rem;" onclick="if(event.target===this) closeRegistrazioneModal()">
     <div style="max-width:520px; margin:2rem auto; background:linear-gradient(160deg, #070d1c 0%, #0a1328 100%); border:1.5px solid rgba(56,189,248,0.5); border-radius:20px; box-shadow:0 30px 80px rgba(0,0,0,0.7), 0 0 60px rgba(2,132,199,0.2); padding:0; overflow:hidden; animation: slideUpModal 0.35s ease;">
       
       <!-- Header modale -->
@@ -5571,7 +5574,7 @@
   </div>
 
   <div class="modal-overlay" id="governance-action-modal" style="display: none;">
-    <div class="modal-card" style="max-width: 520px; text-align: center; padding: 2.5rem 2rem; background: rgba(10, 15, 25, 0.95); backdrop-filter: blur(25px); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 16px; box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);">
+    <div class="modal-card" style="max-width: 520px; text-align: center; padding: 2.5rem 2rem; background: rgba(10, 15, 25, 0.95); -webkit-backdrop-filter: blur(25px); backdrop-filter: blur(25px); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 16px; box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);">
       <button class="modal-close" onclick="closeGovernanceActionModal()">&times;</button>
       <div id="gov-modal-icon-container" style="width: 70px; height: 70px; border-radius: 50%; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; color: var(--accent-primary); font-size: 2rem;">
         <i data-lucide="shield-check" id="gov-modal-icon"></i>
@@ -5586,7 +5589,7 @@
   </div>
 
   <!-- SCHERMATA INTEGRALE ISPEZIONE DOCUMENTO EX ART. 16/18.4 GDPR (SOLO LETTURA SCHERMO) -->
-  <div class="modal-overlay" id="fullscreen-document-viewer" style="display: none; z-index: 9999999; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; overflow-y: auto !important; background: rgba(5, 8, 15, 0.98); backdrop-filter: blur(20px);">
+  <div class="modal-overlay" id="fullscreen-document-viewer" style="display: none; z-index: 9999999; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; overflow-y: auto !important; background: rgba(5, 8, 15, 0.98); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);">
     <div style="width: 100%; min-height: 100vh; display: flex; flex-direction: column; background: #04060a; position: relative;">
       
       <!-- TOOLBAR SUPERIORE SCHERMATA (FIXED STICKY) -->
@@ -6732,7 +6735,7 @@
 
       candidateModal.classList.add('active');
       candidateModal.classList.add('open');
-      candidateModal.style.cssText = 'display:flex !important; position:fixed !important; top:0 !important; left:0 !important; width:100vw !important; height:100vh !important; z-index:9999999 !important; background:rgba(5, 8, 15, 0.96) !important; backdrop-filter:blur(25px) !important; align-items:center !important; justify-content:center !important; opacity:1 !important; visibility:visible !important;';
+      candidateModal.style.cssText = 'display:flex !important; position:fixed !important; top:0 !important; left:0 !important; width:100vw !important; height:100vh !important; z-index:9999999 !important; background:rgba(5, 8, 15, 0.96) !important; -webkit-backdrop-filter:blur(25px) !important; backdrop-filter:blur(25px) !important; align-items:center !important; justify-content:center !important; opacity:1 !important; visibility:visible !important;';
       if (window.lucide) lucide.createIcons();
     };
 
