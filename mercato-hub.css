@@ -230,13 +230,61 @@ body.layout-portfolio .es-mk-toolbar input {
   margin-bottom: 0.9rem;
 }
 .es-mk-picker[hidden] { display: none !important; }
+/* UX Kanban Fase 5: Picker Secret List — fade-mask, scrollbar, count pill */
+
+/* Wrapper per fade-bottom mask sopra la lista picker */
+.es-mk-pick-wrap {
+  position: relative;
+  margin-top: 0.55rem;
+}
+.es-mk-pick-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  background: linear-gradient(to bottom, transparent, rgba(12, 18, 32, 0.97));
+  border-radius: 0 0 8px 8px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.es-mk-pick-wrap.has-overflow::after { opacity: 1; }
+
+/* Count pill aggiunto vicino alla label del picker */
+.es-mk-pick-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: rgba(56, 189, 248, 0.15);
+  color: #7dd3fc;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
 .es-mk-pick-list {
   max-height: 240px;
-  overflow: auto;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  margin-top: 0.55rem;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56, 189, 248, 0.3) transparent;
+}
+.es-mk-pick-list::-webkit-scrollbar { width: 4px; }
+.es-mk-pick-list::-webkit-scrollbar-track { background: transparent; }
+.es-mk-pick-list::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.3);
+  border-radius: 4px;
 }
 .es-mk-pick {
   display: flex;
@@ -254,6 +302,10 @@ body.layout-portfolio .es-mk-toolbar input {
 }
 .es-mk-pick strong { color: #fff; display: block; font-size: 0.88rem; }
 .es-mk-pick span { color: #94a3b8; font-size: 0.75rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .es-mk-pick-wrap::after { transition: none; }
+}
 
 .es-mk-feed { display: flex; flex-direction: column; gap: 1.15rem; }
 .es-mk-ticker {

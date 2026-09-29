@@ -5026,8 +5026,14 @@
               <button type="button" class="es-mk-btn" id="es-mk-add">+ Aggiungi target</button>
             </div>
             <div class="es-mk-picker" id="es-mk-picker" hidden>
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+                <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:rgba(148,163,184,.8);">Profili disponibili</span>
+                <span class="es-mk-pick-count" id="es-mk-pick-count" aria-live="polite" aria-atomic="true">0</span>
+              </div>
               <input type="search" id="es-mk-pick-q" placeholder="Nome, ruolo, città…">
-              <div class="es-mk-pick-list" id="es-mk-pick-list"></div>
+              <div class="es-mk-pick-wrap" id="es-mk-pick-wrap">
+                <div class="es-mk-pick-list" id="es-mk-pick-list"></div>
+              </div>
             </div>
             <div class="es-mk-cols" id="es-mk-cols"></div>
           </div>

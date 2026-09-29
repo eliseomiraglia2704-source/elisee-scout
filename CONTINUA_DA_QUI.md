@@ -4,14 +4,16 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-09-29** — HEROUX86 — UX Kanban Fase 4: Lista Schede Tecniche (toolbar sticky, count pill, collasso, fade-mask, Escape):
+Ultimo aggiornamento: **2026-09-29** — HEROUX87 — UX Kanban Fase 5: Picker Secret List + Tabella Atleti TC Panel (scrollbar thin, fade-mask, count pill, thead sticky):
 
-1. **Fase 4 — Lista Schede Tecniche** (`schede-tecniche.css`, `schede-tecniche.js`, `index.html`):
-   - **`schede-tecniche.css`**: aggiunto `.es-st-list-col` (flex column), `.es-st-hbar` (toolbar sticky `position:sticky`, backdrop-blur, `z-index:8`), `.es-st-count` (pill turchese), `.es-st-toggle` (pulsante chevron rotate 180° quando collassato), `.es-st-list-wrap::after` (fade-bottom mask), scrollbar 4px custom (`scrollbar-width: thin`, `::-webkit-scrollbar`), `.es-st-list.is-collapsed` (max-height:0, overflow:hidden), `.es-st-list-wrap.is-collapsed::after` (opacity:0), `max-height` ridotto da 72vh a 520px, `prefers-reduced-motion`, mobile ≤680px (max-height:320px).
-   - **`schede-tecniche.js`**: aggiunta `_updateSheetsBar(job)` — aggiorna pill contatore (rispetta filtro stato attivo), overflow detection + scroll listener, binding click toggle e Escape globale idempotente (via `_sheetsBarBound`). Chiamata alla fine di ogni `render()`.
-   - **`index.html`**: sostituito `<div class="es-st-list">` con struttura `es-st-list-col > es-st-hbar (h4 + pill#es-st-count + btn#btn-toggle-sheets) + es-st-list-wrap > es-st-list`. Bump CSS a HEROUX86.
-   - **Fasi 1-3**: già completate (Wall Trattative, Lista Bacheca, Ricerca Mappa).
-2. **File**: `schede-tecniche.css`, `schede-tecniche.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX86`.
+1. **Fase 5 — Picker Secret List + Tabella Atleti** (`mercato-hub.css`, `mercato-hub.js`, `tc-panel.css`, `index.html`):
+   - **`mercato-hub.css`**: `.es-mk-pick-wrap::after` (fade-bottom mask, `opacity` condizionale `has-overflow`), `.es-mk-pick-count` (pill turchese), `.es-mk-pick-list` scrollbar thin 4px, `overflow-y:auto`, `prefers-reduced-motion`.
+   - **`mercato-hub.js`**: `_updatePickerBar(count)` — aggiorna pill, overflow detection post-render via `requestAnimationFrame` (scrollHeight corretto), scroll listener; chiamata in `paintPicker()`.
+   - **`tc-panel.css`**: `.es-tc-table-wrap` — `max-height:520px`, `overflow-y:auto`, scrollbar thin 4px, fade-bottom via `box-shadow: inset 0 -40px 24px -24px`, `thead th sticky` (freeze intestazione durante scroll). Mobile ≤680px: max-height 360px.
+   - **`index.html`**: picker `es-mk-pick-wrap` wrappato, pill `#es-mk-pick-count` (aria-live), cache bust CSS mercato-hub a HEROUX87.
+   - **Fasi 1-4**: già completate.
+2. **File**: `mercato-hub.css`, `mercato-hub.js`, `tc-panel.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX87`.
+
 
 
 

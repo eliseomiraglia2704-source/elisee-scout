@@ -330,6 +330,22 @@
     cols.innerHTML = html;
   }
 
+  function _updatePickerBar(count) {
+    var pill = document.getElementById('es-mk-pick-count');
+    if (pill) pill.textContent = count;
+    /* rinvia al prossimo frame per avere scrollHeight aggiornato dopo innerHTML */
+    requestAnimationFrame(function () {
+      var box = document.getElementById('es-mk-pick-list');
+      var wrap = document.getElementById('es-mk-pick-wrap');
+      if (!box || !wrap) return;
+      var ov = box.scrollHeight > box.clientHeight + 4;
+      wrap.classList.toggle('has-overflow', ov);
+      box.addEventListener('scroll', function () {
+        wrap.classList.toggle('has-overflow', box.scrollHeight > box.clientHeight + 4);
+      }, { passive: true, once: false });
+    });
+  }
+
   function paintPicker(q) {
     var box = document.getElementById('es-mk-pick-list');
     if (!box) return;
@@ -341,13 +357,16 @@
     }).slice(0, 18);
     if (!rows.length) {
       box.innerHTML = '<p class="es-mk-empty-col">Nessun profilo da aggiungere.</p>';
+      _updatePickerBar(0);
       return;
     }
     box.innerHTML = rows.map(function (p) {
       return '<button type="button" class="es-mk-pick" data-add-id="' + esc(p.id) + '" data-add-name="' + esc(p.name) + '" data-add-role="' + esc(p.role || '') + '" data-add-city="' + esc(p.city || '') + '">' +
         '<span><strong>' + esc(p.name) + '</strong><span>' + esc((p.role || '') + (p.city ? ' · ' + p.city : '')) + '</span></span></button>';
     }).join('');
+    _updatePickerBar(rows.length);
   }
+
 
   function dealHtml(d, newest) {
     var kit = kitUrl(d.to);
