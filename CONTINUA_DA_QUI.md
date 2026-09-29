@@ -4,7 +4,16 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-09-29** — HEROUX74 — Animazione Logout fluida & chiusura sessione (UI-05):
+Ultimo aggiornamento: **2026-09-29** — HEROUX75 — Configurazione & Sblocco Segreti Vercel Production:
+1. **Configurazione Automatica Variabili d'Ambiente su Vercel (`vercel env add`)**:
+   - `ADMIN_SECRET`: configurata per il login master amministrativo (`Iemmello.9`).
+   - `TOKEN_SIGNING_KEY`: generata chiave crittografica sicura 256-bit ed iniettata su Vercel Production per la firma HMAC-SHA256 dei token admin (`lib/admin-token-verify.js` e `api/auth-admin.js`).
+   - `OTP_SECRET`: generata chiave 256-bit per la firma e verifica crittografica dei codici OTP email (`api/auth-otp.js`).
+   - `ELISEE_AUTH_SECRET`: generata chiave 256-bit per la firma dei token utente e sessione OAuth/Password (`lib/auth-oauth.js`).
+   - Risolto lo stato di fail-closed: tutte le API di autenticazione e sicurezza sono ora pienamente operative anche sul serverless di Vercel.
+2. **File**: `.env` (locale protetto gitignore), `version.json`, `sw.js`, `index.html`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX75`.
+
+Feature precedente: **2026-09-29** — HEROUX74 — Animazione Logout fluida & chiusura sessione (UI-05):
 1. **Transizione Fluida & Zero Layout Shift (`.es-logout-fade-out`)**:
    - Animazione di dissolvenza a 300ms con micro-traslazione e blur controllato sul trigger o contenitore utente nella navbar, senza salti visivi né layout shift.
    - Pieno supporto alle preferenze di accessibilità (`prefers-reduced-motion: reduce`) con esecuzione istantanea (1ms) e zero trasformazioni.
