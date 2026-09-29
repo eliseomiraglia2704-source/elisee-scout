@@ -470,9 +470,8 @@ module.exports = async function handler(req, res) {
   const pathParam = url.searchParams.get('path');
 
   if (pathParam === 'search') {
-    if (req.method !== 'GET') return send(res, 405, { ok: false, error: 'method' });
-    const searchRes = await searchGlobal(url.searchParams);
-    return send(res, 200, searchRes);
+    const searchGateway = require('../lib/search-gateway');
+    return searchGateway(req, res);
   }
 
   if (pathParam === 'bacheca') {

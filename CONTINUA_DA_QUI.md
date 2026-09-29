@@ -6,7 +6,7 @@ Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
 Ultimo aggiornamento: **2026-09-29** — HEROUX88 — Search API Gateway Unificato (10 Use Case) & Regole di Rete 1-4:
 
-1. **Search API Gateway Dedicato (`api/search.js`)**:
+1. **Search API Gateway Dedicato (`lib/search-gateway.js` delegato da `api/manager.js?path=search`)**:
    - **Use Case 1 (Rate Limiting)**: sliding window in-memory (100 req/min guest, 300 req/min auth) con header `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset` e blocco preventivo 429 Too Many Requests con `Retry-After: 60`.
    - **Use Case 2 (Authentication & Tier Resolution)**: Bearer token o `X-Admin-Token` verificato con `lib/admin-token-verify.js` (HMAC-SHA256); routing guest sicuro per ricerche pubbliche; iniezione header `X-User-Role`.
    - **Use Case 3 (Validation & Input Sanitization)**: whitelist schemi parametri (`q`, `type`, `limit`, `offset`), max length 120, strip caratteri di controllo ASCII/Unicode e injection tags, 400 Bad Request se non conforme.
@@ -23,9 +23,9 @@ Ultimo aggiornamento: **2026-09-29** — HEROUX88 — Search API Gateway Unifica
    - Integrazione su `#es-nav-search-input` con visualizzazione dinamica dei risultati in live toast.
 3. **Regola 1 DNS (`index.html`) & Configurazione Vercel (`vercel.json`)**:
    - Aggiunti `<link rel="preconnect" href="https://uautnlmnpxgbajtucuko.supabase.co" crossorigin>` e `<link rel="dns-prefetch" href="https://nominatim.openstreetmap.org">` nell'head.
-   - Rimosso rewrite legacy `/api/search -> /api/manager?path=search` in `vercel.json`, instradando direttamente al serverless API Gateway `api/search.js`.
+   - Rispettato il limite di 12 serverless functions su piano Hobby incapsulando il gateway in `lib/search-gateway.js` con routing trasparente `/api/search -> /api/manager?path=search`.
    - Allineato il server locale Python `elisee_up.py` per supportare autocomplete e formato gateway.
-4. **File**: `api/search.js`, `search-client.js`, `nav-search-anim.js`, `index.html`, `vercel.json`, `elisee_up.py`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX88`.
+4. **File**: `lib/search-gateway.js`, `api/manager.js`, `search-client.js`, `nav-search-anim.js`, `index.html`, `vercel.json`, `elisee_up.py`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX88`.
 
 Feature precedente: **2026-09-29** — HEROUX87 — UX Kanban Fase 5: Picker Secret List + Tabella Atleti TC Panel (scrollbar thin, fade-mask, count pill, thead sticky):
 
