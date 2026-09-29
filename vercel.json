@@ -59,10 +59,7 @@
       "source": "/api/auth/verify-docs",
       "destination": "/api/auth/me?path=verify-docs"
     },
-    {
-      "source": "/api/search",
-      "destination": "/api/manager?path=search"
-    },
+
     {
       "source": "/api/bacheca",
       "destination": "/api/manager?path=bacheca"

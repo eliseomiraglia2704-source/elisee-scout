@@ -4,7 +4,30 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-09-29** — HEROUX87 — UX Kanban Fase 5: Picker Secret List + Tabella Atleti TC Panel (scrollbar thin, fade-mask, count pill, thead sticky):
+Ultimo aggiornamento: **2026-09-29** — HEROUX88 — Search API Gateway Unificato (10 Use Case) & Regole di Rete 1-4:
+
+1. **Search API Gateway Dedicato (`api/search.js`)**:
+   - **Use Case 1 (Rate Limiting)**: sliding window in-memory (100 req/min guest, 300 req/min auth) con header `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset` e blocco preventivo 429 Too Many Requests con `Retry-After: 60`.
+   - **Use Case 2 (Authentication & Tier Resolution)**: Bearer token o `X-Admin-Token` verificato con `lib/admin-token-verify.js` (HMAC-SHA256); routing guest sicuro per ricerche pubbliche; iniezione header `X-User-Role`.
+   - **Use Case 3 (Validation & Input Sanitization)**: whitelist schemi parametri (`q`, `type`, `limit`, `offset`), max length 120, strip caratteri di controllo ASCII/Unicode e injection tags, 400 Bad Request se non conforme.
+   - **Use Case 4 (Caching & Edge Optimization)**: cache in-memory LRU con TTL differenziato (60s clubs/autocomplete, 30s annunci), hash SHA-1 ETag, supporto nativo `If-None-Match` con 304 Not Modified istantaneo, header `X-Cache: HIT | MISS`.
+   - **Use Case 5 (Request Transformation & Enrichment)**: normalizzazione automatica query (lowercase, whitespace collapse), generazione univoca `X-Request-Id`, annotazione client IP, user tier e timestamp.
+   - **Use Case 6 (Response Transformation & Projection — Regola 3 Pacchetti)**: proiezione selettiva dei soli campi necessari alla UI, stripping totale di dati sensibili (password, email, recapiti telefonici, note interne), envelope standard `{ ok, data, meta, counts }`.
+   - **Use Case 7 (Circuit Breaking & Fallback)**: circuit breaker (CLOSED/OPEN/HALF-OPEN), fail-safe con timeout 1500ms; in caso di guasto o sovraccarico degradazione aggraziata con fallback da archivio locale e header `X-Fallback: true`.
+   - **Use Case 8 (Logging, Tracing & Metrics)**: log strutturato JSON ad ogni transazione con latenza in millisecondi; endpoint diagnostico real-time (`/api/search?diag=metrics`).
+   - **Use Case 9 (Security Headers & TLS Enforcement — Regola 2 Porte)**: enforcement HTTPS obbligatorio in produzione (403 su HTTP plaintext), `Strict-Transport-Security`, `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`, CORS controllato.
+   - **Use Case 10 (Routing & Protocol Mediation)**: dispacciamento a catalogo squadre (`clubs`), bacheca opportunità (`annunci`), atleti scouting (`players`), autocomplete unificato multi-dominio per navbar (`autocomplete`/`suggest`).
+2. **Client SDK Ricerche (`search-client.js`) & Navbar Integration (`nav-search-anim.js`)**:
+   - Modulo client `window.EliseeSearch` con debounce automatico (200ms) e `AbortController` nativo per annullare ricerche obsolete in volo e prevenire race conditions fuori ordine.
+   - Micro-cache client-side (30s TTL) per azzerare chiamate di rete ridondanti su backspace/ri-digitazione.
+   - Integrazione su `#es-nav-search-input` con visualizzazione dinamica dei risultati in live toast.
+3. **Regola 1 DNS (`index.html`) & Configurazione Vercel (`vercel.json`)**:
+   - Aggiunti `<link rel="preconnect" href="https://uautnlmnpxgbajtucuko.supabase.co" crossorigin>` e `<link rel="dns-prefetch" href="https://nominatim.openstreetmap.org">` nell'head.
+   - Rimosso rewrite legacy `/api/search -> /api/manager?path=search` in `vercel.json`, instradando direttamente al serverless API Gateway `api/search.js`.
+   - Allineato il server locale Python `elisee_up.py` per supportare autocomplete e formato gateway.
+4. **File**: `api/search.js`, `search-client.js`, `nav-search-anim.js`, `index.html`, `vercel.json`, `elisee_up.py`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX88`.
+
+Feature precedente: **2026-09-29** — HEROUX87 — UX Kanban Fase 5: Picker Secret List + Tabella Atleti TC Panel (scrollbar thin, fade-mask, count pill, thead sticky):
 
 1. **Fase 5 — Picker Secret List + Tabella Atleti** (`mercato-hub.css`, `mercato-hub.js`, `tc-panel.css`, `index.html`):
    - **`mercato-hub.css`**: `.es-mk-pick-wrap::after` (fade-bottom mask, `opacity` condizionale `has-overflow`), `.es-mk-pick-count` (pill turchese), `.es-mk-pick-list` scrollbar thin 4px, `overflow-y:auto`, `prefers-reduced-motion`.

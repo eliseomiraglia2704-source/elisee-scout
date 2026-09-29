@@ -192,8 +192,24 @@
       input.addEventListener('input', function () {
         var q = (input.value || '').trim();
         if (phEl) phEl.classList.toggle('is-on', !q);
-        if (q.length >= 2) setToast(q);
-        else wrap.classList.remove('is-toast');
+        if (q.length >= 2) {
+          setToast(q);
+          if (window.EliseeSearch && typeof window.EliseeSearch.query === 'function') {
+            window.EliseeSearch.query(q, { type: 'autocomplete', limit: 5 }).then(function (res) {
+              if (!res || !res.ok) return;
+              var total = res.meta ? res.meta.total : (res.data && res.data.suggestions ? res.data.suggestions.length : 0);
+              if (toast && wrap.classList.contains('is-toast')) {
+                var safe = String(q || '').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+                toast.innerHTML = 'Ricerca · <strong>"' + safe + '"</strong> <span style="opacity:0.75;font-size:11px;margin-left:4px;">(' + total + ' risultati)</span>';
+              }
+            }).catch(function () {});
+          }
+        } else {
+          wrap.classList.remove('is-toast');
+          if (window.EliseeSearch && typeof window.EliseeSearch.cancel === 'function') {
+            window.EliseeSearch.cancel();
+          }
+        }
         setBtnLabel();
       });
       input.addEventListener('focus', function () { wrap.classList.add('is-border'); });

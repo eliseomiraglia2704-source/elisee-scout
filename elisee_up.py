@@ -1207,13 +1207,52 @@ class Handler(SimpleHTTPRequestHandler):
                 except Exception:
                     pass
 
+            if stype in ("autocomplete", "suggest"):
+                suggestions = []
+                for c in results["clubs"][:5]:
+                    suggestions.append({
+                        "id": f"club_{c['id']}",
+                        "label": c["name"],
+                        "sublabel": " · ".join(filter(None, [c.get("city"), c.get("category")])),
+                        "type": "club",
+                        "icon": "shield"
+                    })
+                for p in results["players"][:5]:
+                    suggestions.append({
+                        "id": f"player_{p['id']}",
+                        "label": f"{p.get('nome') or ''} {p.get('cognome') or ''}".strip(),
+                        "sublabel": " · ".join(filter(None, [p.get("ruolo"), p.get("team")])),
+                        "type": "player",
+                        "icon": "user"
+                    })
+                for a in results["annunci"][:4]:
+                    suggestions.append({
+                        "id": f"annuncio_{a.get('id')}",
+                        "label": a.get("titolo") or a.get("title") or "Annuncio",
+                        "sublabel": a.get("zona_citta") or a.get("categoria") or "",
+                        "type": "annuncio",
+                        "icon": "briefcase"
+                    })
+                self._json(200, {
+                    "ok": True,
+                    "data": {"suggestions": suggestions[:limit]},
+                    "meta": {"q": q, "type": stype, "total": len(suggestions), "limit": limit, "circuit": "CLOSED", "fallback": False}
+                })
+                return True
+
             counts = {
                 "annunci": len(results["annunci"]),
                 "clubs": len(results["clubs"]),
                 "players": len(results["players"]),
                 "total": len(results["annunci"]) + len(results["clubs"]) + len(results["players"])
             }
-            self._json(200, {"ok": True, "q": q, "type": stype, "results": results, "counts": counts})
+            self._json(200, {
+                "ok": True,
+                "data": results,
+                "results": results,
+                "counts": counts,
+                "meta": {"q": q, "type": stype, "total": counts["total"], "limit": limit, "circuit": "CLOSED", "fallback": False}
+            })
             return True
 
         if sub == "bacheca":
