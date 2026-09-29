@@ -30,14 +30,21 @@
 
   /* 2. Struttura globale mobile: scorrimento naturale fluido & scrollbar pulite */
   html {
-    scrollbar-gutter: auto !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
   }
 
-  html,
-  body {
-    scrollbar-width: none !important;
+  @supports (scrollbar-gutter: auto) {
+    html {
+      scrollbar-gutter: auto !important;
+    }
+  }
+
+  @supports (scrollbar-width: none) {
+    html,
+    body {
+      scrollbar-width: none !important;
+    }
   }
 
   html::-webkit-scrollbar,
@@ -571,12 +578,25 @@
     flex-wrap: nowrap !important;
     overflow-x: auto !important;
     overflow-y: hidden !important;
-    scrollbar-width: none !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
     gap: 0.65rem !important;
     padding: 0.35rem 0.25rem 0.6rem !important;
     border-bottom: 1px solid rgba(56, 189, 248, 0.2) !important;
+  }
+
+  @supports (scrollbar-width: none) {
+    .es-user-tabs,
+    .es-pd-nav,
+    .es-dash-tabs,
+    .es-obs-nav,
+    .es-ds-tabs,
+    .es-mk-tabs,
+    .es-tc-tabs,
+    .es-sp-tabs,
+    .es-role-tabs {
+      scrollbar-width: none !important;
+    }
   }
 
   .es-user-tabs::-webkit-scrollbar,

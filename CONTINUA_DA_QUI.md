@@ -4,7 +4,15 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-09-29** — HEROUX82 — Bonifica Completa Warning IDE, WebHint & Cross-Browser:
+Ultimo aggiornamento: **2026-09-29** — HEROUX83 — Bonifica `scrollbar-width` & `scrollbar-gutter` con `@supports` Cross-Browser:
+
+1. **Wrap `@supports` per proprietà non universali (`mobile-webapp.css`, `role-sidebar-pro.css`)**:
+   - `scrollbar-gutter: auto` e `scrollbar-width: none` avvolti in blocchi `@supports (scrollbar-width: none)` e `@supports (scrollbar-gutter: auto)` per garantire compatibilità con browser che non supportano tali proprietà (Safari < 15.4, alcuni Chromium vecchi).
+   - Rimossa la dichiarazione `scrollbar-width: none` sulle tab di navigazione orizzontale (`.es-user-tabs` ecc.) dal blocco principale, spostata nel relativo `@supports`.
+   - Stesse correzioni applicate a tutte le sidebar (`.es-modern-sidebar`, `.es-pro-sidebar`, `.es-obs-sidebar`, ecc.) e alla navigazione `nav` di `.es-sb-hover` in `role-sidebar-pro.css`.
+2. **File**: `mobile-webapp.css`, `role-sidebar-pro.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX83`.
+
+Feature precedente: **2026-09-29** — HEROUX82 — Bonifica Completa Warning IDE, WebHint & Cross-Browser:
 
 1. **Configurazione WebHint & Linter Workspace (`.hintrc`, `.vscode/settings.json`)**:
    - Creato `.hintrc` con soppressione dei falsi positivi sulle regole `no-inline-styles`, `compat-api/css` e `compat-api/html`.
