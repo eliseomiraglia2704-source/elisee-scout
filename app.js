@@ -10082,35 +10082,21 @@ document.addEventListener('click', function (e) {
 });
 
 window.logoutUser = function() {
-  localStorage.removeItem('elisee_user_auth');
-  localStorage.removeItem('elisee_user_data');
-  localStorage.removeItem('elisee_active_user');
-  localStorage.removeItem('elisee_admin_auth');
-  localStorage.removeItem('elisee_privacy_auth');
-
-  closeUserDropdown();
-  updateNavbarUserUI();
-
-  // Toast di disconnessione
-  const toast = document.createElement('div');
-  toast.style.cssText = `
-    position: fixed; bottom: 2rem; right: 2rem; z-index: 999999;
-    background: linear-gradient(135deg, #1e293b, #0f172a);
-    border: 1.5px solid rgba(56,189,248,0.4);
-    border-radius: 14px; padding: 1rem 1.5rem;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-    display: flex; align-items: center; gap: 0.85rem;
-    animation: slideUpModal 0.35s ease; max-width: 320px;
-  `;
-  toast.innerHTML = `
-    <span style="font-size:1.5rem;">👋</span>
-    <div>
-      <p style="color:#e2e8f0; font-weight:800; font-size:0.88rem; margin:0 0 0.15rem;">Disconnesso</p>
-      <p style="color:#94a3b8; font-size:0.78rem; margin:0;">Sessione chiusa con successo.</p>
-    </div>
-  `;
-  document.body.appendChild(toast);
-  setTimeout(() => { if (toast.parentElement) toast.remove(); }, 3500);
+  if (typeof window.logoutWithAnimation === 'function') {
+    window.logoutWithAnimation({ role: 'user' });
+    return;
+  }
+  var keys = [
+    'elisee_user_auth',
+    'elisee_user_data',
+    'elisee_active_user',
+    'elisee_auth_token',
+    'elisee_admin_auth',
+    'elisee_privacy_auth'
+  ];
+  keys.forEach(function(k) { try { localStorage.removeItem(k); } catch(_) {} });
+  if (typeof closeUserDropdown === 'function') closeUserDropdown();
+  if (typeof updateNavbarUserUI === 'function') updateNavbarUserUI();
 };
 
 // Chiudi dropdown cliccando fuori
@@ -12418,8 +12404,13 @@ window.downloadGaranteReportGDPR = function() {
 })();
 
 window.performAdminLogout = function() {
+  if (typeof window.logoutWithAnimation === 'function') {
+    window.logoutWithAnimation({ role: 'admin', redirectView: 'home' });
+    return;
+  }
   localStorage.removeItem('elisee_admin_auth');
-  hideOverlayModal('elisee-logout-confirm-modal');
+  localStorage.removeItem('elisee_admin_session_token');
+  if (typeof hideOverlayModal === 'function') hideOverlayModal('elisee-logout-confirm-modal');
   if (typeof showToast === 'function') showToast('Uscita effettuata. Sessione admin terminata.', 'info');
   if (window.switchView) window.switchView('home', '#hero');
 };

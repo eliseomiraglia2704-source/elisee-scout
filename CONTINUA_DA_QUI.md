@@ -4,7 +4,20 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-09-29** — SECFIX2 — Security Remediation Blocchi 1 e 2:
+Ultimo aggiornamento: **2026-09-29** — HEROUX74 — Animazione Logout fluida & chiusura sessione (UI-05):
+1. **Transizione Fluida & Zero Layout Shift (`.es-logout-fade-out`)**:
+   - Animazione di dissolvenza a 300ms con micro-traslazione e blur controllato sul trigger o contenitore utente nella navbar, senza salti visivi né layout shift.
+   - Pieno supporto alle preferenze di accessibilità (`prefers-reduced-motion: reduce`) con esecuzione istantanea (1ms) e zero trasformazioni.
+2. **Toast Notifica Ultra-Premium (`.es-logout-toast`)**:
+   - Disegnato integralmente in CSS senza stili inline: gradiente slate/dark neon (#0f172a / #0a0f19), bordo ciano luminescente con backdrop-filter blur 14px, adattamento Light Mode con contrasto scuro nitido e chiusura manuale o con dismiss automatico a 4s.
+3. **Ripulitura Sicura e Rigorosa dello Stato Client**:
+   - `window.logoutWithAnimation({ role, notify, redirectView })`: cancellazione integrale di tutte le 10 chiavi di autenticazione e autorizzazione (`elisee_user_auth`, `elisee_active_user`, `elisee_user_data`, `elisee_auth_token`, `elisee_admin_auth`, `elisee_privacy_auth`, `elisee_admin_session_token`, `elisee_site_role_confirmed`, `elisee_auth_return`, `elisee_last_activity`, `elisee_creator_role_override`).
+   - Reindirizzamento morbido alla Home in caso di logout da viste o dashboard riservate.
+   - Integrazione unificata con `window.logoutUser()`, `window.performAdminLogout()` e Action Menu (`action-menu-handler.js` su `data-action="reset"` e `danger`).
+   - Sincronizzazione multilingua con `i18n.js` (saluto personalizzato con nome utente in IT ed EN).
+4. **File**: `micro-interactions.css`, `micro-interactions.js`, `app.js`, `action-menu-handler.js`, `js/action-menu-handler.js`, `i18n.js`, `docs/BACKLOG-UI.md`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX74`.
+
+Feature precedente: **2026-09-29** — SECFIX2 — Security Remediation Blocchi 1 e 2:
 1. **Blocco 1 (Autenticazione & Segreti)**:
    - Sostituito bypass admin `X-Elisee-Admin: admin123` con verifica firma HMAC-SHA256 (`lib/admin-token-verify.js` e `api/manager.js`).
    - Separati gli hash password PBKDF2 per Manuel, Alessandro ed Eliseo con `mustResetPassword: true` e rimossa password master condivisa da `api/auth/me.js`.

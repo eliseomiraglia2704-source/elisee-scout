@@ -125,9 +125,11 @@ window.EliseeActionMenu = {
     if (!row) return;
     var action = row.getAttribute('data-action') || row.textContent.trim();
 
-    if (row.classList.contains('danger')) {
-      if (window.EliseeSuccessSystem) {
-        EliseeSuccessSystem.showToast('Sessione resettata con successo (reversibile)', 2500);
+    if (row.classList.contains('danger') || action === 'reset' || action === 'logout') {
+      if (typeof window.logoutWithAnimation === 'function') {
+        window.logoutWithAnimation({ role: 'all' });
+      } else if (window.EliseeSuccessSystem) {
+        EliseeSuccessSystem.showToast('Sessione resettata con successo', 2500);
       }
     } else {
       if (window.EliseeSuccessSystem) {
