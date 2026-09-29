@@ -4,7 +4,14 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-09-29** — HEROUX80 — Risoluzione Sintassi e Warning Linter su `mappa-club.css` e `style.css`:
+Ultimo aggiornamento: **2026-09-29** — HEROUX81 — Supporto Standard `text-size-adjust` & Bonifica Linter:
+
+1. **Risoluzione Errore Compatibilità `text-size-adjust` (`style.css`)**:
+   - Aggiunta la proprietà standard `text-size-adjust: 100%;` affiancata a `-webkit-text-size-adjust: 100%;` sulla regola `body` (riga 9590), eliminando l'errore linter di mancato supporto cross-browser per Chrome 54+, Chrome Android, Edge 79+ e Samsung Internet.
+2. **File**: `style.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX81`.
+
+Feature precedente: **2026-09-29** — HEROUX80 — Risoluzione Sintassi e Warning Linter su `mappa-club.css` e `style.css`:
+
 1. **Fix Sintassi Parentesi Graffe (`} expected`)**:
    - **`mappa-club.css`**: rimosso frammento duplicato non chiuso di `.es-territory__head, .es-map-regions__header` (riga 654-662), risolvendo l'errore di graffa mancante `} expected` a fine file.
    - **`style.css`**: aggiunta la graffa di chiusura `}` per il selettore `html[data-theme="mimetico-chiaro"] .glow-card--red::before` (riga 11844-11845), risolvendo l'errore `} expected` a fine file.

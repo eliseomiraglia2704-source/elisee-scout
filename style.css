@@ -9588,6 +9588,7 @@ body {
   padding-left: var(--safe-left);
   padding-right: var(--safe-right);
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   touch-action: manipulation;
 }
 
