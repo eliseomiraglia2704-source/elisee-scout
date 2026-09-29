@@ -4,7 +4,17 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-09-29** — HEROUX83 — Bonifica `scrollbar-width` & `scrollbar-gutter` con `@supports` Cross-Browser:
+Ultimo aggiornamento: **2026-09-29** — HEROUX84 — UX Kanban Regola 4: Lista Annunci Bacheca con scroll interno e toolbar sticky:
+
+1. **Fase 2 — Regola 4 (Lista Annunci Bacheca)**:
+   - **`bacheca-board.css`**: aggiunti stili `.es-listings__hbar` (toolbar sticky con `position: sticky`, z-index 8, background tema-aware), `.es-listings__count` (pill contatore annunci), `.es-listings__toggle` (pulsante chevron collasso, rotate 180° quando collassato), `.es-listings__grid.is-capped` (`max-height: 540px; overflow-y: auto`, fade-bottom mask), `.es-listings__grid.is-collapsed` (`max-height: 0; overflow: hidden`), scrollbar sottile custom, overrides tema chiaro, mobile ≤600px (`max-height: 380px`), `prefers-reduced-motion`.
+   - **`index.html`**: sostituita `<h2>` standalone con `.es-listings__hbar` contenente h2 (`data-i18n="bacheca.opportunities"`), pill `#es-listings-count` e pulsante `#btn-toggle-listings` (`aria-expanded`, `aria-controls`, `aria-label`).
+   - **`app.js`**: aggiunta funzione `_updateListingsBar()` (chiamata alla fine di ogni `filterAndRenderJobs`): aggiorna pill contatore, toggling `is-capped` oltre soglia 7, toggling `is-collapsed` + attributi `aria-expanded`/`aria-label`, binding click/Escape idempotente. Costanti `LISTINGS_WIP = 7` e `_listingsCollapsed` (stato sessione solo, non localStorage).
+   - **`i18n.js`**: chiave `bacheca.opportunities` aggiunta a IT e EN.
+   - **Fase 1 (Wall Trattative)**: già completata nella sessione precedente (`mercato-hub.css`, `mercato-hub.js`: tutte e 5 le regole incluse DnD Pointer Events, WIP badge, swimlane, collasso colonne, tastiera).
+2. **File**: `bacheca-board.css`, `index.html`, `app.js`, `i18n.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX84`.
+
+Feature precedente: **2026-09-29** — HEROUX83 — Bonifica `scrollbar-width` & `scrollbar-gutter` con `@supports` Cross-Browser:
 
 1. **Wrap `@supports` per proprietà non universali (`mobile-webapp.css`, `role-sidebar-pro.css`)**:
    - `scrollbar-gutter: auto` e `scrollbar-width: none` avvolti in blocchi `@supports (scrollbar-width: none)` e `@supports (scrollbar-gutter: auto)` per garantire compatibilità con browser che non supportano tali proprietà (Safari < 15.4, alcuni Chromium vecchi).

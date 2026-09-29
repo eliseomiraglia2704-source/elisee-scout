@@ -204,11 +204,13 @@
     var now = Date.now();
     function ago(h) { return new Date(now - h * 3600000).toISOString(); }
     return [
-      { id: 'w-seed-1', player: 'Marco Rossi', role: 'Centravanti', from: 'Svincolato', to: 'Audace Cerignola', at: ago(2), seed: true },
-      { id: 'w-seed-2', player: 'Sara Esposito', role: 'Ala', from: 'Svincolato', to: 'SSC Bari', at: ago(6), seed: true },
-      { id: 'w-seed-3', player: 'Kevin Di Bari', role: 'Trequartista', from: 'Svincolato', to: 'Calcio Foggia 1920', at: ago(14), seed: true },
-      { id: 'w-seed-4', player: 'Francesco Greco', role: 'Centravanti', from: 'Svincolato', to: 'Catania FC', at: ago(28), seed: true },
-      { id: 'w-seed-5', player: 'Noemi Longo', role: 'Ala', from: 'Svincolato', to: 'US Lecce', at: ago(40), seed: true }
+      { id: 'w-seed-1', player: 'Marco Rossi', role: 'Centravanti', from: 'Svincolato', to: 'Audace Cerignola', at: ago(2), stage: 'chiusa', fee: 'Gratuito', category: 'Serie C', seed: true },
+      { id: 'w-seed-2', player: 'Sara Esposito', role: 'Ala', from: 'Svincolato', to: 'SSC Bari', at: ago(6), stage: 'offerta', fee: 'In definizione', category: 'Serie B', seed: true },
+      { id: 'w-seed-3', player: 'Kevin Di Bari', role: 'Trequartista', from: 'Svincolato', to: 'Calcio Foggia 1920', at: ago(14), stage: 'trattativa', fee: 'Prestito', category: 'Serie C', seed: true },
+      { id: 'w-seed-4', player: 'Francesco Greco', role: 'Centravanti', from: 'Svincolato', to: 'Catania FC', at: ago(28), stage: 'candidatura', fee: 'Svincolato', category: 'Serie C', seed: true },
+      { id: 'w-seed-5', player: 'Noemi Longo', role: 'Ala', from: 'Svincolato', to: 'US Lecce', at: ago(40), stage: 'chiusa', fee: 'Definitivo', category: 'Serie A', seed: true },
+      { id: 'w-seed-6', player: 'Lorenzo Bianchi', role: 'Centrocampista', from: 'Svincolato', to: 'US San Severo', at: ago(1), stage: 'trattativa', fee: 'Svincolato', category: 'Eccellenza', seed: true },
+      { id: 'w-seed-7', player: 'Davide Russo', role: 'Portiere', from: 'Svincolato', to: 'Manfredonia Calcio', at: ago(3), stage: 'candidatura', fee: 'Under 2005', category: 'Serie D', seed: true }
     ];
   }
   function peoplePool() {
@@ -381,6 +383,404 @@
     return p.length > 1 ? p[p.length - 1] : (p[0] || 'PLAYER');
   }
 
+  /* ==========================================================================
+     BOARD KANBAN PIPELINE TRATTATIVE (.es-board)
+     Regole UX: Drag solleva, Placeholder ad altezza card, WIP limit, Collasso, Swimlane
+     ========================================================================== */
+  var PIPELINE_STAGES = [
+    { id: 'candidatura', label: 'Candidatura ricevuta', maxWip: 6 },
+    { id: 'trattativa', label: 'In trattativa', maxWip: 4 },
+    { id: 'offerta', label: 'Offerta inviata', maxWip: 4 },
+    { id: 'chiusa', label: 'Ufficializzata', maxWip: 15 }
+  ];
+
+  var boardMode = 'standard'; // 'standard' | 'swimlane'
+  var collapsedCols = {};
+  var collapsedSwimlanes = {};
+
+  function renderBoardCard(d) {
+    var feeBadge = d.fee ? '<span class="es-mk-prio p2">' + esc(d.fee) + '</span>' : '';
+    return '<article class="es-board-card" data-deal-id="' + esc(d.id) + '" data-stage="' + esc(d.stage || 'chiusa') + '" tabindex="0" role="button" aria-roledescription="Card trattativa Kanban">' +
+      '<div class="es-board-card-header">' +
+        '<div>' +
+          '<h4 class="es-board-card-name">' + esc(d.player) + '</h4>' +
+          '<p class="es-board-card-role">' + esc(d.role || 'Calciatore') + (d.category ? ' · ' + esc(d.category) : '') + '</p>' +
+        '</div>' +
+        feeBadge +
+      '</div>' +
+      '<div class="es-board-card-path">' +
+        '<span>' + esc(d.from || 'Svincolato') + '</span> <em>→</em> <strong>' + esc(d.to) + '</strong>' +
+      '</div>' +
+      '<div class="es-board-card-footer">' +
+        '<span>' + esc(fmtWhen(d.at)) + '</span>' +
+        '<button type="button" class="es-board-card-btn-move" data-move-id="' + esc(d.id) + '" aria-label="Sposta stato trattativa">Sposta…</button>' +
+      '</div>' +
+    '</article>';
+  }
+
+  function renderBoard(rows) {
+    var html = '<div class="es-board" id="es-board-pipeline">';
+    
+    // Toolbar con switcher modalità (Standard vs Swimlane)
+    html += '<div class="es-board-toolbar">' +
+      '<h3 class="es-board-title">' +
+        '<span>📋</span> Board Trattative di Mercato' +
+      '</h3>' +
+      '<div class="es-board-modes">' +
+        '<span style="font-size:0.75rem; color:#94a3b8; margin-right:0.3rem;">Vista:</span>' +
+        '<button type="button" class="es-board-mode-btn' + (boardMode === 'standard' ? ' is-active' : '') + '" data-board-mode="standard">Colonne di Stato</button>' +
+        '<button type="button" class="es-board-mode-btn' + (boardMode === 'swimlane' ? ' is-active' : '') + '" data-board-mode="swimlane">Swimlane (Ruoli)</button>' +
+      '</div>' +
+    '</div>';
+
+    if (boardMode === 'standard') {
+      html += '<div class="es-board-cols">';
+      PIPELINE_STAGES.forEach(function (st) {
+        var itemsInStage = rows.filter(function (d) { return (d.stage || 'chiusa') === st.id; });
+        var count = itemsInStage.length;
+        var isOverLimit = count >= st.maxWip;
+        var isColCollapsed = !!collapsedCols[st.id];
+
+        html += '<section class="es-board-col' + (isColCollapsed ? ' is-collapsed' : '') + '" data-stage="' + st.id + '">' +
+          '<header class="es-board-col-header">' +
+            '<div class="es-board-col-title-wrap">' +
+              '<h4 class="es-board-col-title">' + st.label + '</h4>' +
+              '<span class="es-board-wip' + (isOverLimit ? ' is-warning' : '') + '" aria-live="polite" title="Elementi attivi / Limite consigliato">' + count + ' / ' + st.maxWip + '</span>' +
+            '</div>' +
+            '<button type="button" class="es-board-col-toggle" data-toggle-col="' + st.id + '" aria-expanded="' + (!isColCollapsed) + '" aria-label="' + (isColCollapsed ? 'Espandi colonna ' + st.label : 'Collassa colonna ' + st.label) + '">' +
+              (isColCollapsed ? '▶' : '▼') +
+            '</button>' +
+          '</header>' +
+          '<div class="es-board-col-body">' +
+            (!itemsInStage.length ? '<p class="es-mk-empty-col" style="margin:auto 0; text-align:center;">Nessuna trattativa</p>' : '') +
+            itemsInStage.map(renderBoardCard).join('') +
+          '</div>' +
+        '</section>';
+      });
+      html += '</div>';
+    } else {
+      // Modalità Swimlane per Linea Ruolo (Regola 5)
+      LINES.forEach(function (ln) {
+        var itemsInLine = rows.filter(function (d) { return lineOf(d.role) === ln.id; });
+        var isLaneCollapsed = !!collapsedSwimlanes[ln.id];
+
+        html += '<div class="es-board-swimlane' + (isLaneCollapsed ? ' is-collapsed' : '') + '" data-swimlane="' + ln.id + '">' +
+          '<div class="es-board-swimlane-header" data-toggle-swimlane="' + ln.id + '" role="button" tabindex="0">' +
+            '<h4 class="es-board-swimlane-title"><span>🛡️</span> ' + ln.label + ' (' + itemsInLine.length + ')</h4>' +
+            '<button type="button" class="es-board-col-toggle" aria-expanded="' + (!isLaneCollapsed) + '">' +
+              (isLaneCollapsed ? '▶' : '▼') +
+            '</button>' +
+          '</div>' +
+          '<div class="es-board-cols">';
+        PIPELINE_STAGES.forEach(function (st) {
+          var itemsInStage = itemsInLine.filter(function (d) { return (d.stage || 'chiusa') === st.id; });
+          var count = itemsInStage.length;
+          var isOverLimit = count >= st.maxWip;
+          var isColCollapsed = !!collapsedCols[st.id];
+
+          html += '<section class="es-board-col' + (isColCollapsed ? ' is-collapsed' : '') + '" data-stage="' + st.id + '" data-swimlane-line="' + ln.id + '">' +
+            '<header class="es-board-col-header">' +
+              '<div class="es-board-col-title-wrap">' +
+                '<h5 class="es-board-col-title" style="font-size:0.78rem;">' + st.label + '</h5>' +
+                '<span class="es-board-wip' + (isOverLimit ? ' is-warning' : '') + '">' + count + ' / ' + st.maxWip + '</span>' +
+              '</div>' +
+              '<button type="button" class="es-board-col-toggle" data-toggle-col="' + st.id + '" aria-expanded="' + (!isColCollapsed) + '">' +
+                (isColCollapsed ? '▶' : '▼') +
+              '</button>' +
+            '</header>' +
+            '<div class="es-board-col-body">' +
+              (!itemsInStage.length ? '<p class="es-mk-empty-col" style="margin:auto 0; text-align:center;">—</p>' : '') +
+              itemsInStage.map(renderBoardCard).join('') +
+            '</div>' +
+          '</section>';
+        });
+        html += '</div></div>';
+      });
+    }
+
+    html += '</div>';
+    return html;
+  }
+
+  function moveDealStage(id, nextStage) {
+    var rows = wallItems();
+    var found = null;
+    rows.forEach(function (d) {
+      if (d.id === id) {
+        d.stage = nextStage;
+        if (nextStage === 'chiusa' && !d.at) {
+          d.at = new Date().toISOString();
+        }
+        found = d;
+      }
+    });
+    if (found) {
+      saveWall(rows);
+      var stObj = PIPELINE_STAGES.filter(function (s) { return s.id === nextStage; })[0];
+      var stageLabel = stObj ? stObj.label : nextStage;
+      toast('Trattativa ' + found.player + ' spostata in «' + stageLabel + '»', 'success');
+      renderWall();
+    }
+  }
+
+  function promptMoveStage(dealId) {
+    var rows = wallItems();
+    var deal = rows.filter(function (d) { return d.id === dealId; })[0];
+    if (!deal) return;
+    var currentStage = deal.stage || 'chiusa';
+
+    var options = PIPELINE_STAGES.filter(function (s) { return s.id !== currentStage; });
+    var msg = 'Sposta ' + deal.player + ' in quale fase?\n' +
+      options.map(function (s, i) { return (i + 1) + '. ' + s.label; }).join('\n');
+    
+    var choice = prompt(msg, '1');
+    if (choice) {
+      var idx = parseInt(choice, 10) - 1;
+      if (options[idx]) {
+        moveDealStage(dealId, options[idx].id);
+      }
+    }
+  }
+
+  function handleBoardKeydown(e) {
+    var card = e.target.closest('.es-board-card');
+    if (!card) return;
+    var dealId = card.getAttribute('data-deal-id');
+    var curStage = card.getAttribute('data-stage');
+    if (!dealId || !curStage) return;
+
+    var stageIdx = -1;
+    PIPELINE_STAGES.forEach(function (s, idx) {
+      if (s.id === curStage) stageIdx = idx;
+    });
+
+    if (e.key === 'Enter' || e.key === ' ') {
+      if (card.classList.contains('is-keyboard-moving')) {
+        card.classList.remove('is-keyboard-moving');
+        toast('Posizione confermata per ' + (card.querySelector('.es-board-card-name')?.textContent || 'trattativa'), 'info');
+      } else {
+        e.preventDefault();
+        card.classList.add('is-keyboard-moving');
+        toast('Modalità spostamento attiva: usa Frecce Sinistra/Destra per cambiare stato, Invio per confermare', 'info');
+      }
+    } else if (card.classList.contains('is-keyboard-moving')) {
+      if (e.key === 'ArrowRight' && stageIdx < PIPELINE_STAGES.length - 1) {
+        e.preventDefault();
+        var nextStage = PIPELINE_STAGES[stageIdx + 1].id;
+        moveDealStage(dealId, nextStage);
+        setTimeout(function () {
+          var newCard = document.querySelector('.es-board-card[data-deal-id="' + dealId + '"]');
+          if (newCard) {
+            newCard.classList.add('is-keyboard-moving');
+            newCard.focus();
+          }
+        }, 60);
+      } else if (e.key === 'ArrowLeft' && stageIdx > 0) {
+        e.preventDefault();
+        var prevStage = PIPELINE_STAGES[stageIdx - 1].id;
+        moveDealStage(dealId, prevStage);
+        setTimeout(function () {
+          var newCard = document.querySelector('.es-board-card[data-deal-id="' + dealId + '"]');
+          if (newCard) {
+            newCard.classList.add('is-keyboard-moving');
+            newCard.focus();
+          }
+        }, 60);
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        card.classList.remove('is-keyboard-moving');
+        toast('Spostamento annullato', 'info');
+      }
+    }
+  }
+
+  function bindBoardDnD(boardEl) {
+    var activeCard = null;
+    var ghostEl = null;
+    var placeholderEl = null;
+    var startX = 0, startY = 0;
+    var offsetX = 0, offsetY = 0;
+    var isDragging = false;
+    var targetCol = null;
+    var targetStage = null;
+    var dealId = null;
+
+    function onPointerDown(e) {
+      if (e.button !== 0) return;
+      if (e.target.closest('button, a, input, select, textarea')) return;
+      var card = e.target.closest('.es-board-card');
+      if (!card) return;
+
+      dealId = card.getAttribute('data-deal-id');
+      if (!dealId) return;
+
+      activeCard = card;
+      startX = e.clientX;
+      startY = e.clientY;
+      var rect = card.getBoundingClientRect();
+      offsetX = e.clientX - rect.left;
+      offsetY = e.clientY - rect.top;
+      isDragging = false;
+
+      document.addEventListener('pointermove', onPointerMove);
+      document.addEventListener('pointerup', onPointerUp);
+      document.addEventListener('pointercancel', onPointerCancel);
+    }
+
+    function onPointerMove(e) {
+      if (!activeCard) return;
+      var dx = Math.abs(e.clientX - startX);
+      var dy = Math.abs(e.clientY - startY);
+
+      if (!isDragging && (dx > 5 || dy > 5)) {
+        isDragging = true;
+        var rect = activeCard.getBoundingClientRect();
+        var cardHeight = activeCard.offsetHeight;
+        var cardWidth = activeCard.offsetWidth;
+
+        // 1. Ghost sollevato con scale ~1.03 e ombra profonda (Regola 1)
+        ghostEl = activeCard.cloneNode(true);
+        ghostEl.className = 'es-board-card es-board-drag-ghost';
+        ghostEl.style.width = cardWidth + 'px';
+        ghostEl.style.left = (e.clientX - offsetX) + 'px';
+        ghostEl.style.top = (e.clientY - offsetY) + 'px';
+        document.body.appendChild(ghostEl);
+
+        // 2. Placeholder con la STESSA altezza della card reale (Regola 2)
+        placeholderEl = document.createElement('div');
+        placeholderEl.className = 'es-board-placeholder';
+        placeholderEl.style.height = cardHeight + 'px';
+        activeCard.parentNode.insertBefore(placeholderEl, activeCard);
+
+        activeCard.classList.add('is-dragging');
+        document.body.style.userSelect = 'none';
+        document.body.style.cursor = 'grabbing';
+      }
+
+      if (isDragging && ghostEl) {
+        ghostEl.style.left = (e.clientX - offsetX) + 'px';
+        ghostEl.style.top = (e.clientY - offsetY) + 'px';
+
+        ghostEl.style.display = 'none';
+        var under = document.elementFromPoint(e.clientX, e.clientY);
+        ghostEl.style.display = '';
+
+        var col = under ? under.closest('.es-board-col') : null;
+        document.querySelectorAll('.es-board-col').forEach(function (c) {
+          c.classList.remove('is-drop-target');
+        });
+
+        if (col && !col.classList.contains('is-collapsed')) {
+          col.classList.add('is-drop-target');
+          targetCol = col;
+          targetStage = col.getAttribute('data-stage');
+          var body = col.querySelector('.es-board-col-body');
+          if (body && placeholderEl) {
+            var afterCard = getDragAfterCard(body, e.clientY);
+            if (afterCard == null) {
+              body.appendChild(placeholderEl);
+            } else {
+              body.insertBefore(placeholderEl, afterCard);
+            }
+          }
+        }
+      }
+    }
+
+    function getDragAfterCard(container, y) {
+      var cards = Array.from(container.querySelectorAll('.es-board-card:not(.is-dragging)'));
+      return cards.reduce(function (closest, child) {
+        var box = child.getBoundingClientRect();
+        var offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+          return { offset: offset, element: child };
+        } else {
+          return closest;
+        }
+      }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+
+    function cleanup() {
+      if (ghostEl && ghostEl.parentNode) ghostEl.parentNode.removeChild(ghostEl);
+      if (placeholderEl && placeholderEl.parentNode) placeholderEl.parentNode.removeChild(placeholderEl);
+      if (activeCard) activeCard.classList.remove('is-dragging');
+      document.querySelectorAll('.es-board-col').forEach(function (c) {
+        c.classList.remove('is-drop-target');
+      });
+      document.body.style.userSelect = '';
+      document.body.style.cursor = '';
+      document.removeEventListener('pointermove', onPointerMove);
+      document.removeEventListener('pointerup', onPointerUp);
+      document.removeEventListener('pointercancel', onPointerCancel);
+      activeCard = null;
+      ghostEl = null;
+      placeholderEl = null;
+      isDragging = false;
+    }
+
+    function onPointerUp() {
+      if (!activeCard) return;
+      if (isDragging && targetStage && dealId) {
+        moveDealStage(dealId, targetStage);
+      }
+      cleanup();
+    }
+
+    function onPointerCancel() {
+      cleanup();
+    }
+
+    boardEl.addEventListener('pointerdown', onPointerDown);
+  }
+
+  function bindBoardEvents(root) {
+    if (!root) return;
+    var board = root.querySelector('#es-board-pipeline');
+    if (!board) return;
+
+    board.addEventListener('click', function (e) {
+      var toggleBtn = e.target.closest('[data-toggle-col]');
+      if (toggleBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        var stId = toggleBtn.getAttribute('data-toggle-col');
+        collapsedCols[stId] = !collapsedCols[stId];
+        renderWall();
+        return;
+      }
+
+      var swimToggle = e.target.closest('[data-toggle-swimlane]');
+      if (swimToggle) {
+        e.preventDefault();
+        e.stopPropagation();
+        var swId = swimToggle.getAttribute('data-toggle-swimlane');
+        collapsedSwimlanes[swId] = !collapsedSwimlanes[swId];
+        renderWall();
+        return;
+      }
+
+      var modeBtn = e.target.closest('[data-board-mode]');
+      if (modeBtn) {
+        e.preventDefault();
+        boardMode = modeBtn.getAttribute('data-board-mode');
+        renderWall();
+        return;
+      }
+
+      var moveBtn = e.target.closest('[data-move-id]');
+      if (moveBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        var dId = moveBtn.getAttribute('data-move-id');
+        promptMoveStage(dId);
+        return;
+      }
+    });
+
+    board.addEventListener('keydown', handleBoardKeydown);
+    bindBoardDnD(board);
+  }
+
   function renderWall() {
     var root = document.getElementById('es-mk-wall');
     if (!root) return;
@@ -388,30 +788,47 @@
     var ticker = rows.slice(0, 8).map(function (d) {
       return 'TRASFERITO  ·  ' + d.player + ' → ' + d.to;
     }).join('     ★     ');
-    var html = '<p class="es-mk-live"><i></i> Feed in tempo reale · tab notizie di mercato</p>';
+    
+    // Iniezione Board Kanban (.es-board)
+    var boardHtml = renderBoard(rows);
+    var html = boardHtml;
+
+    html += '<p class="es-mk-live" style="margin-top:1.5rem;"><i></i> Feed in tempo reale · Notizie e accordi ufficializzati</p>';
     if (ticker) html += '<div class="es-mk-ticker" aria-hidden="true"><span>' + esc(ticker + '     ★     ' + ticker) + '</span></div>';
     html += '<div class="es-mk-toolbar">' +
       (canOfficialize()
-        ? '<button type="button" class="es-mk-btn" id="es-mk-official-open">Ufficializza accordo</button>'
-        : '<p class="es-mk-empty-col" style="margin:0">Consultazione: solo DS e Presidente possono ufficializzare gli acquisti sul Wall.</p>') +
+        ? '<button type="button" class="es-mk-btn" id="es-mk-official-open">+ Nuova Trattativa / Ufficializza</button>'
+        : '<p class="es-mk-empty-col" style="margin:0">Consultazione: solo DS e Presidente possono pubblicare accordi sul Wall.</p>') +
       '</div>';
     html += '<form class="es-mk-form" id="es-mk-official-form" hidden>' +
       '<label>Calciatore<input name="player" required placeholder="Nome e cognome"></label>' +
       '<label>Ruolo<input name="role" placeholder="Centravanti, Ala…"></label>' +
+      '<label>Fase trattativa<select name="stage">' +
+        '<option value="candidatura">Candidatura ricevuta</option>' +
+        '<option value="trattativa">In trattativa</option>' +
+        '<option value="offerta">Offerta inviata</option>' +
+        '<option value="chiusa" selected>Ufficializzata / Chiusa</option>' +
+      '</select></label>' +
       '<label>Da (club o Svincolato)<input name="from" value="Svincolato"></label>' +
       '<label>Nuovo club<input name="to" required placeholder="Società di destinazione" list="es-mk-clubs"></label>' +
+      '<label>Formula / Note<input name="fee" placeholder="Gratuito, Prestito, ecc."></label>' +
       '<datalist id="es-mk-clubs"></datalist>' +
-      '<div class="span2"><button type="submit" class="es-mk-btn">Pubblica sul Wall</button></div>' +
+      '<div class="span2"><button type="submit" class="es-mk-btn">Salva nella Board</button></div>' +
       '</form>';
-    if (!rows.length) html += '<p class="es-mk-empty-col">Nessuna trattativa chiusa per ora.</p>';
-    html += '<div class="es-mk-feed">' + rows.map(function (d, i) { return dealHtml(d, i === 0); }).join('') + '</div>';
+
+    var closedDeals = rows.filter(function (d) { return (d.stage || 'chiusa') === 'chiusa'; });
+    if (!closedDeals.length) html += '<p class="es-mk-empty-col">Nessuna trattativa chiusa per ora.</p>';
+    html += '<div class="es-mk-feed">' + closedDeals.map(function (d, i) { return dealHtml(d, i === 0); }).join('') + '</div>';
     root.innerHTML = html;
+
     var dl = document.getElementById('es-mk-clubs');
     if (dl) {
       dl.innerHTML = clubCache.slice(0, 80).map(function (c) {
         return '<option value="' + esc(c.name) + '">';
       }).join('');
     }
+
+    bindBoardEvents(root);
   }
 
   function officialize(payload) {

@@ -154,6 +154,7 @@
       'resume.tl4r': 'Ricerca · Market fit',
       'resume.tl4p': 'Analisi del gap dilettanti/giovanili vs professionismo: WhatsApp e Facebook come “mercato” da digitalizzare.',
       'bacheca.title': 'Bacheca reclutamento',
+      'bacheca.opportunities': 'Opportunità selezionate',
       'logout.title': 'Disconnesso',
       'logout.message': 'Sessione chiusa con successo.',
       'logout.admin': 'Sessione admin terminata.'
@@ -162,6 +163,7 @@
       'logout.title': 'Logged out',
       'logout.message': 'Session closed successfully.',
       'logout.admin': 'Admin session terminated.',
+      'bacheca.opportunities': 'Selected Listings',
       'nav.home': 'Home',
       'nav.about': 'About',
       'nav.resume': 'Resume',

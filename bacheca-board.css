@@ -677,3 +677,141 @@ html[data-theme="mimetico-chiaro"] .bacheca-tabs,
     padding-top: 1.25rem !important;
   }
 }
+
+/* ─── Regola 4 — Scroll interno con toolbar sticky ─────────────────── */
+
+/* Header barra: h2 + contatore + chevron */
+#bacheca-annunci .es-listings__hbar {
+  position: sticky;
+  top: calc(var(--nav-h, 64px) + 4px);
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0 8px;
+  background: var(--bg-primary, #050608);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  margin-bottom: 12px;
+}
+
+#bacheca-annunci .es-listings__hbar h2 {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-main, #fff);
+}
+
+#bacheca-annunci .es-listings__count {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted, #94a3b8);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2px 10px;
+  white-space: nowrap;
+}
+
+/* Pulsante collapse/expand */
+#bacheca-annunci .es-listings__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  color: var(--text-muted, #94a3b8);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 160ms, color 160ms, transform 200ms;
+}
+#bacheca-annunci .es-listings__toggle:hover {
+  background: rgba(56, 189, 248, 0.1);
+  color: var(--accent-primary, #38bdf8);
+}
+#bacheca-annunci .es-listings__toggle:focus-visible {
+  outline: 2px solid var(--accent-primary, #38bdf8);
+  outline-offset: 2px;
+}
+/* Ruota il chevron quando è collassato */
+#bacheca-annunci .es-listings__toggle.is-collapsed {
+  transform: rotate(180deg);
+}
+
+/* Il grid con scroll interno (attivato solo quando > WIP_THRESHOLD card) */
+#bacheca-annunci .es-listings__grid.is-capped {
+  max-height: 540px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-behavior: smooth;
+  /* Fade bottom per segnalare contenuto nascosto */
+  -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+}
+
+/* Collasso: nessuna altezza, nessun overflow */
+#bacheca-annunci .es-listings__grid.is-collapsed {
+  max-height: 0;
+  overflow: hidden;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+/* Transizione fluida collasso/espansione (salvo reduced-motion) */
+#bacheca-annunci .es-listings__grid {
+  transition: max-height 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Scrollbar sottile e coerente col tema */
+#bacheca-annunci .es-listings__grid.is-capped::-webkit-scrollbar {
+  width: 4px;
+}
+#bacheca-annunci .es-listings__grid.is-capped::-webkit-scrollbar-track {
+  background: transparent;
+}
+#bacheca-annunci .es-listings__grid.is-capped::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+#bacheca-annunci .es-listings__grid.is-capped::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.4);
+}
+
+/* Tema chiaro */
+html[data-theme="mimetico-chiaro"] #bacheca-annunci .es-listings__hbar,
+[data-theme="mimetico-chiaro"] #bacheca-annunci .es-listings__hbar {
+  background: var(--bg-primary, #f1f5f9);
+  border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+html[data-theme="mimetico-chiaro"] #bacheca-annunci .es-listings__count,
+[data-theme="mimetico-chiaro"] #bacheca-annunci .es-listings__count {
+  background: rgba(15, 23, 42, 0.05);
+  border-color: rgba(15, 23, 42, 0.1);
+  color: #64748b;
+}
+html[data-theme="mimetico-chiaro"] #bacheca-annunci .es-listings__toggle,
+[data-theme="mimetico-chiaro"] #bacheca-annunci .es-listings__toggle {
+  border-color: rgba(15, 23, 42, 0.15);
+  color: #64748b;
+}
+
+/* Mobile: altezza ridotta */
+@media (max-width: 600px) {
+  #bacheca-annunci .es-listings__grid.is-capped {
+    max-height: 380px;
+  }
+}
+
+/* Reduced motion: niente transizioni */
+@media (prefers-reduced-motion: reduce) {
+  #bacheca-annunci .es-listings__grid {
+    transition: none;
+  }
+  #bacheca-annunci .es-listings__toggle {
+    transition: none;
+  }
+}
+

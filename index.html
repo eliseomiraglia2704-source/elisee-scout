@@ -3419,7 +3419,22 @@
 
               <div class="es-main">
                 <div class="es-listings">
-                  <h2>Opportunità selezionate</h2>
+                  <!-- Toolbar sticky Regola 4 -->
+                  <div class="es-listings__hbar" id="es-listings-hbar">
+                    <h2 data-i18n="bacheca.opportunities">Opportunità selezionate</h2>
+                    <span class="es-listings__count" id="es-listings-count" aria-live="polite">–</span>
+                    <button
+                      type="button"
+                      class="es-listings__toggle"
+                      id="btn-toggle-listings"
+                      aria-expanded="true"
+                      aria-controls="jobs-container"
+                      aria-label="Comprimi lista annunci"
+                      title="Comprimi / Espandi lista"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+                    </button>
+                  </div>
                   <div class="es-listings__grid" id="jobs-container">
                     <article class="es-card">
                       <div>

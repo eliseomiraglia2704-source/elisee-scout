@@ -9593,7 +9593,7 @@ body {
   touch-action: manipulation;
 }
 
-/* Touch targets ottimali e prevenzione ritardo */
+/* Touch targets ottimali con eliseo e prevenzione ritardo */
 button,
 a,
 input[type="button"],
