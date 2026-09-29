@@ -22,6 +22,7 @@
   isolation: isolate;
   transition: background .4s ease, transform .15s ease, box-shadow .4s ease;
   box-shadow: 0 8px 20px rgba(14, 24, 48, .18);
+  -webkit-user-select: none;
   user-select: none;
   text-decoration: none;
   box-sizing: border-box;

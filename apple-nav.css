@@ -60,8 +60,8 @@
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
-    backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
     overflow: visible !important;
   }
 
@@ -310,8 +310,8 @@ html[data-theme="mimetico-chiaro"] .navbar.portfolio-navbar,
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
-  backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
 }
 
 html[data-theme="mimetico-chiaro"] .portfolio-navbar .logo-text-large {

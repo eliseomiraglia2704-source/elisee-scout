@@ -132,6 +132,7 @@ html:not([data-theme="mimetico-chiaro"]) .dz-card {
   cursor: pointer;
   text-align: center;
   transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  -webkit-user-select: none;
   user-select: none;
   position: relative;
 }

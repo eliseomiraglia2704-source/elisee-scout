@@ -4,7 +4,15 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-09-29** — HEROUX77 — Risoluzione Errori e Warning Linter su index.html:
+Ultimo aggiornamento: **2026-09-29** — HEROUX78 — Risoluzione Warning Linter su file CSS:
+1. **Bug Sintattico CSS in `es-nav-ux.css`**:
+   - Aggiunta la graffa di chiusura `}` mancante per il blocco `.speed-chip .lbl { color: #c6cbdc; }` (riga 1006-1007), che causava l'annidamento errato di tutto il blocco HEROUX60 sulle parentesi decorative come proprietà dello `.speed-chip .lbl`.
+2. **Palette Residua Magenta in `styles/action-menu.css`**:
+   - Corretti i colori `rgba(255, 0, 255, ...)` (magenta/fucsia) nel selettore `.am_plate` rimasti dalla versione pre-HEROUX50, sostituiti con la palette ufficiale del design system: `rgba(14, 24, 48, 0.06)` light e `rgba(56, 189, 248, ...)` teal in dark mode.
+   - Aggiunto il blocco `html:not([data-theme="mimetico-chiaro"]) .am_plate` per l'allineamento corretto con la versione radice `action-menu.css`.
+3. **File**: `es-nav-ux.css`, `styles/action-menu.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX78`.
+
+Feature precedente: **2026-09-29** — HEROUX77 — Risoluzione Errori e Warning Linter su index.html:
 1. **Posizionamento `meta charset` nel `<head>`**:
    - Spostato `<meta charset="UTF-8">` come primissimo nodo figlio di `<head>`, rispettando le specifiche HTML e prevenendo il parsing ritardato dell'encoding da parte dei browser.
 2. **Supporto Cross-Browser `-webkit-backdrop-filter` & Ordinamento Regole**:

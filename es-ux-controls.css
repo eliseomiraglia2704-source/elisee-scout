@@ -50,6 +50,7 @@ html[data-theme="mimetico-chiaro"] {
   border-radius: var(--es-ctrl-radius);
   padding: 3px;
   gap: 3px;
+  -webkit-user-select: none;
   user-select: none;
   box-sizing: border-box;
   max-width: 100%;
@@ -142,6 +143,7 @@ html[data-theme="mimetico-chiaro"] .es-segmented__btn.is-selected {
   outline: none;
   box-sizing: border-box;
   transition: border-color 150ms ease, box-shadow 150ms ease;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -191,8 +193,8 @@ html[data-theme="mimetico-chiaro"] .es-segmented__btn.is-selected {
   border: 1px solid var(--es-ctrl-border);
   border-radius: var(--es-ctrl-radius);
   box-shadow: var(--es-ctrl-shadow);
-  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   color: var(--es-ctrl-text);
   box-sizing: border-box;
   display: flex;
@@ -311,6 +313,7 @@ html[data-theme="mimetico-chiaro"] .es-combobox__search-input {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  -webkit-user-select: none;
   user-select: none;
   transition: background 80ms ease, color 80ms ease;
 }

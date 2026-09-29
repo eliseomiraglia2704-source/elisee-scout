@@ -51,6 +51,7 @@ html[data-theme="vault-neon"] {
   line-height: 1;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.15s ease, box-shadow 0.25s ease, opacity 0.2s ease;
+  -webkit-user-select: none;
   user-select: none;
   text-decoration: none;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);

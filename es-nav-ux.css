@@ -68,8 +68,8 @@ header.public-header .nav-right {
 body:not(.is-internal-view) header.public-header:not(.is-scrolled) {
   background: transparent !important;
   background-color: transparent !important;
-  backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   border-bottom: 1px solid transparent !important;
   box-shadow: none !important;
 }
@@ -80,8 +80,8 @@ body:not(.is-internal-view) header.public-header.is-scrolled,
 body.is-internal-view header.public-header {
   background: transparent !important;
   background-color: transparent !important;
-  backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   border-bottom: none !important;
   box-shadow: none !important;
 }
@@ -90,8 +90,8 @@ html[data-theme="mimetico-chiaro"] body:not(.is-internal-view) header.public-hea
 html[data-theme="mimetico-chiaro"] body.is-internal-view header.public-header {
   background: transparent !important;
   background-color: transparent !important;
-  backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   border-bottom: none !important;
   box-shadow: none !important;
 }
@@ -107,6 +107,7 @@ header.public-header .site-brand {
   color: #ffffff !important;
   font-size: 1.05rem;
   transition: transform var(--t-fast) var(--ease-framer);
+  -webkit-user-select: none;
   user-select: none;
 }
 header.public-header .site-brand span {
@@ -165,6 +166,7 @@ header.public-header .main-nav a {
   transition: color 200ms var(--ease-framer), transform 200ms var(--ease-framer) !important;
   white-space: nowrap !important;
   z-index: 2;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -238,8 +240,8 @@ header.public-header .es-nav-dropdown-menu {
   visibility: hidden !important;
   pointer-events: none !important;
   background: rgba(14, 18, 28, 0.92) !important;
-  backdrop-filter: blur(24px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 245, 212, 0.15) !important;
   border-radius: 16px !important;
@@ -350,6 +352,7 @@ header.public-header .lang {
   color: var(--text-dim) !important;
   border-radius: 999px;
   transition: all 200ms var(--ease-framer) !important;
+  -webkit-user-select: none;
   user-select: none;
   font-size: 0.8rem;
   font-weight: 600;
@@ -564,8 +567,8 @@ html[data-theme="mimetico-chiaro"] body.layout-portfolio.is-internal-view header
 html[data-theme="mimetico-chiaro"] body.is-view-mappa header.public-header {
   background: transparent !important;
   background-color: transparent !important;
-  backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   border: 0 !important;
   box-shadow: none !important;
 }
@@ -984,8 +987,8 @@ html[data-theme="mimetico-chiaro"] .es-hamburger-bar {
   align-items: center;
   gap: 8px;
   background: rgba(14,24,48,.65);
-  backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
   border: 1px solid rgba(255,255,255,.14);
   border-radius: 10px;
   padding: 10px 12px;
@@ -1002,6 +1005,8 @@ html[data-theme="mimetico-chiaro"] .es-hamburger-bar {
 }
 .speed-chip .lbl {
   color: #c6cbdc;
+}
+
 /* ============================================================
    HEROUX60: Parentesi Decorative Sottili Hero & Sezioni
    ============================================================ */
