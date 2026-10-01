@@ -1,6 +1,13 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-01** — FIX21 — Le schermate pubbliche seguono la lingua scelta:
+Ultimo aggiornamento: **2026-10-01** — FIX22 — La capsula della navbar segue il testo tradotto:
+
+1. **Capsula**: «Quiénes somos» non esce più dal pill scorrevole. La larghezza non è fissa: si misura sulla voce vera (`a.nav-link`) e si ricalcola al cambio lingua, al ridimensionamento e quando arrivano i font. Stesso ricalcolo sulle barre interne dei ruoli.
+2. **Voci lunghe**: Chi siamo, Bacheca, Mappa e Accedi non hanno più una larghezza bloccata. Padding flessibile, testo su una riga. Sotto i 1000px il menu desktop lascia il posto all’hamburger, prima di finire sopra la ricerca. Sotto i 768px resta solo la barra del telefono.
+3. **Telefono**: Inicio, Tablón, Prensa, Mapa e Perfil restano su una riga, senza tagliarsi.
+4. **File**: `es-nav-ux.css`, `es-nav-ux.js`, `es-role-nav.js`, `mobile-webapp.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX22`. Non tocca data di nascita, età o consenso genitoriale.
+
+Feature precedente: **2026-10-01** — FIX21 — Le schermate pubbliche seguono la lingua scelta:
 
 1. **Chi siamo**: i due paragrafi sotto la missione (principio guida, GPS, consenso genitoriale) e il blocco «Cosa facciamo / Perché puoi fidarti» erano testo fisso in italiano. Ora passano a IT, EN, ES e FR. Gli accenti teal e corallo restano. La card mappa non parla più di «oltre 2.900 club»: dice i club iscritti, collocati dalla città.
 2. **Altre aree**: home, navbar, mappa, footer, cookie, messaggi, album, scopri, mercato, schede, account, testata Ambassador, curriculum (titolo), tema. Anche la finestra Accedi/Iscriviti, la scelta del ruolo, la barra bassa del telefono e il titolo del passaggio tra sezioni.

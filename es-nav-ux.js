@@ -31,9 +31,11 @@
     if (!link || !navEl) return { x: 0, w: 0 };
     var nRect = navEl.getBoundingClientRect();
     var lRect = link.getBoundingClientRect();
+    var w = lRect.width;
+    if (link.scrollWidth > w) w = link.scrollWidth;
     return {
       x: lRect.left - nRect.left,
-      w: lRect.width
+      w: w
     };
   }
 
@@ -562,6 +564,28 @@
         syncActiveLink(ev.detail.view, false);
       }
     });
+
+    // La capsula segue l'etichetta dopo il cambio lingua e dopo il caricamento dei font.
+    function remeasurePill() {
+      moveIndicatorTo(hoveredLink || activeLink, true);
+    }
+    document.addEventListener('elisee:lang-changed', function () {
+      remeasurePill();
+      requestAnimationFrame(function () {
+        requestAnimationFrame(remeasurePill);
+      });
+      setTimeout(remeasurePill, 60);
+    });
+    if (document.fonts && document.fonts.ready && typeof document.fonts.ready.then === 'function') {
+      document.fonts.ready.then(remeasurePill);
+    }
+    if (window.ResizeObserver && navEl) {
+      var pillWatch = new ResizeObserver(function () {
+        remeasurePill();
+      });
+      pillWatch.observe(navEl);
+      links.forEach(function (link) { pillWatch.observe(link); });
+    }
 
     window.__esNavUX = {
       ready: true,

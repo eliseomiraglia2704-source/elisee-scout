@@ -46,7 +46,7 @@
     var lRect = link.getBoundingClientRect();
     return {
       x: lRect.left - nRect.left + nav.scrollLeft - nav.clientLeft,
-      w: lRect.width
+      w: Math.max(lRect.width, link.scrollWidth || 0)
     };
   }
 
@@ -231,6 +231,7 @@
     scheduleScan();
   });
   document.addEventListener('elisee:view-changed', scheduleScan);
+  document.addEventListener('elisee:lang-changed', scheduleScan);
   document.addEventListener('elisee:role-changed', scheduleScan);
   window.addEventListener('hashchange', scheduleScan);
 

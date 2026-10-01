@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <script>
     (function () {
-      var BUILD_VERSION = '20261001_FIX21';
+      var BUILD_VERSION = '20261001_FIX22';
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
         if (savedTheme) {
@@ -81,7 +81,7 @@
   <link rel="stylesheet" href="page-bubbles.css?v=20260925_BUBBLE1">
   <link rel="stylesheet" href="parallax.css?v=20260925_HEROUX41">
   <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX41">
-  <link rel="stylesheet" href="es-nav-ux.css?v=20261001_FIX8">
+  <link rel="stylesheet" href="es-nav-ux.css?v=20261001_FIX22">
   <link rel="stylesheet" href="badge-system.css?v=20260925_HEROUX41">
   <link rel="stylesheet" href="micro-interactions.css?v=20260929_HEROUX74">
   <link rel="stylesheet" href="radius-system.css?v=20260925_HEROUX41">
@@ -348,13 +348,21 @@
       justify-content: flex-end !important;
     }
 
-    @media (max-width: 820px) {
+    @media (min-width: 769px) and (max-width: 820px) {
       header.public-header.public-navbar.main-header.portfolio-header,
       header.public-header,
       .public-header {
         display: flex !important;
         justify-content: space-between !important;
         padding: 0 20px !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header.public-header.public-navbar.main-header.portfolio-header,
+      header.public-header,
+      .public-header {
+        display: none !important;
       }
     }
 
@@ -748,7 +756,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
   <link rel="stylesheet" href="mappa-club.css?v=20261001_FIX16">
-  <link rel="stylesheet" href="mobile-webapp.css?v=20260925_HEROUX21">
+  <link rel="stylesheet" href="mobile-webapp.css?v=20261001_FIX22">
   <link rel="stylesheet" href="landing-unify.css?v=20261001_FIX14">
   <link rel="stylesheet" href="island-carousel.css?v=20260928_HEROUX67">
   <link rel="stylesheet" href="parallax-cards.css?v=20260928_HEROUX68">
@@ -2490,7 +2498,7 @@
         <a href="#login" class="glow-btn glow-btn--nav btn-login accedi" data-i18n="nav.login" onclick="if(window.openAccessoModal){window.openAccessoModal('email');} return false;">Accedi</a>
       </div>
       
-      <!-- Hamburger Menu Animato (<820px) -->
+      <!-- Hamburger Menu Animato (<1000px) -->
       <button type="button" class="es-nav-hamburger nav-toggle" id="es-nav-hamburger" data-i18n-aria="nav.menu" aria-label="Menu" aria-expanded="false">
         <span class="es-hamburger-bar"></span>
         <span class="es-hamburger-bar"></span>
@@ -7527,8 +7535,8 @@
 
   <script src="badge-handler.js?v=20260925_HEROUX41"></script>
   <script src="mobile-webapp.js?v=20261001_FIX21"></script>
-  <script src="es-nav-ux.js?v=20260926_HEROUX49"></script>
-  <script src="es-role-nav.js?v=20261001_FIX9"></script>
+  <script src="es-nav-ux.js?v=20261001_FIX22"></script>
+  <script src="es-role-nav.js?v=20261001_FIX22"></script>
   <script src="micro-interactions.js?v=20260929_HEROUX74"></script>
   <script src="radius-handler.js?v=20260925_HEROUX41" defer></script>
   <script src="dynamic-sync.js?v=20260925_HEROUX41" defer></script>
