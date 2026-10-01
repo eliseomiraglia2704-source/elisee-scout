@@ -6774,6 +6774,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.filterAndRenderJobs = function filterAndRenderJobs() {
     const jobsContainer = document.getElementById('jobs-container');
+    try {
     if (!jobsContainer) return;
 
     const roleVal = getCustomDropdownValue('dropdown-role');
@@ -6914,85 +6915,80 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (window.lucide) try { lucide.createIcons(); } catch (_) {}
-
-    // Regola 4 — aggiorna barra sticky (contatore + collasso)
-    _updateListingsBar();
+    } catch (err) {
+      console.error('filterAndRenderJobs', err);
+    } finally {
+      _updateListingsBar();
+    }
   }
 
   // ── Regola 4: toolbar sticky lista annunci ──────────────────────────────
   // Soglia oltre la quale si attiva lo scroll interno (≈ 7 card visibili)
   var LISTINGS_WIP = 7;
-  // Stato collasso persistente nella sessione (non localStorage: non è un dato)
-  var _listingsCollapsed = false;
+  if (typeof window._eliseeListingsCollapsed !== 'boolean') window._eliseeListingsCollapsed = false;
+
+  function _listingsLabel(key, fallback) {
+    try {
+      if (window.EliseeI18n && typeof window.EliseeI18n.t === 'function') {
+        var value = window.EliseeI18n.t(key);
+        if (value && value !== key) return value;
+      }
+    } catch (_) {}
+    return fallback;
+  }
 
   function _updateListingsBar() {
     var grid = document.getElementById('jobs-container');
     var countEl = document.getElementById('es-listings-count');
     var toggleBtn = document.getElementById('btn-toggle-listings');
-    if (!grid) return;
 
-    // Conta le card reali (esclude .es-empty)
-    var cards = grid.querySelectorAll('.es-card');
-    var n = cards.length;
+    var n = grid ? grid.querySelectorAll('.es-card').length : 0;
 
-    // Aggiorna pill contatore
     if (countEl) {
-      var lang = (document.documentElement.lang || 'it').toLowerCase();
-      countEl.textContent = n + ' ' + (lang.startsWith('en') ? (n === 1 ? 'listing' : 'listings') : (n === 1 ? 'annuncio' : 'annunci'));
+      var word = n === 1
+        ? _listingsLabel('bacheca.count.one', 'annuncio')
+        : _listingsLabel('bacheca.count.many', 'annunci');
+      countEl.textContent = n + ' ' + word;
     }
 
-    // Attiva/disattiva scroll interno
-    if (n > LISTINGS_WIP) {
-      grid.classList.add('is-capped');
-    } else {
-      grid.classList.remove('is-capped');
+    if (grid) {
+      if (n > LISTINGS_WIP) grid.classList.add('is-capped');
+      else grid.classList.remove('is-capped');
+      if (window._eliseeListingsCollapsed) grid.classList.add('is-collapsed');
+      else grid.classList.remove('is-collapsed');
     }
 
-    // Applica stato collasso corrente
-    if (_listingsCollapsed) {
-      grid.classList.add('is-collapsed');
-    } else {
-      grid.classList.remove('is-collapsed');
-    }
-
-    // Aggiorna attributi a11y del pulsante
     if (toggleBtn) {
-      var lang2 = (document.documentElement.lang || 'it').toLowerCase();
-      toggleBtn.setAttribute('aria-expanded', _listingsCollapsed ? 'false' : 'true');
-      toggleBtn.setAttribute(
-        'aria-label',
-        _listingsCollapsed
-          ? (lang2.startsWith('en') ? 'Expand listings' : 'Espandi lista annunci')
-          : (lang2.startsWith('en') ? 'Collapse listings' : 'Comprimi lista annunci')
-      );
-      if (_listingsCollapsed) {
-        toggleBtn.classList.add('is-collapsed');
-      } else {
-        toggleBtn.classList.remove('is-collapsed');
-      }
+      var label = window._eliseeListingsCollapsed
+        ? _listingsLabel('bacheca.expand', 'Espandi lista annunci')
+        : _listingsLabel('bacheca.collapse', 'Comprimi lista annunci');
+      toggleBtn.setAttribute('aria-expanded', window._eliseeListingsCollapsed ? 'false' : 'true');
+      toggleBtn.setAttribute('aria-label', label);
+      toggleBtn.setAttribute('title', label);
+      if (window._eliseeListingsCollapsed) toggleBtn.classList.add('is-collapsed');
+      else toggleBtn.classList.remove('is-collapsed');
 
-      // Collega il click una sola volta (idempotente)
       if (!toggleBtn._esListingsBound) {
         toggleBtn._esListingsBound = true;
         toggleBtn.addEventListener('click', function () {
-          _listingsCollapsed = !_listingsCollapsed;
+          window._eliseeListingsCollapsed = !window._eliseeListingsCollapsed;
           _updateListingsBar();
-          // Se si espande, scorri verso il grid
-          if (!_listingsCollapsed) {
-            var hbar = document.getElementById('es-listings-hbar');
-            if (hbar) hbar.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
         });
-        // Tastiera: Escape → espandi
         toggleBtn.addEventListener('keydown', function (e) {
-          if (e.key === 'Escape' && _listingsCollapsed) {
-            _listingsCollapsed = false;
+          if (e.key === 'Escape' && window._eliseeListingsCollapsed) {
+            e.preventDefault();
+            window._eliseeListingsCollapsed = false;
             _updateListingsBar();
           }
         });
       }
     }
   }
+
+  document.addEventListener('elisee:lang-changed', function () {
+    _updateListingsBar();
+  });
+  _updateListingsBar();
 
   function setDropdownAll(dropdownId, textId, fallback) {
     var dd = document.getElementById(dropdownId);

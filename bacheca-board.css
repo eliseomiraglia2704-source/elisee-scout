@@ -688,8 +688,8 @@ html[data-theme="mimetico-chiaro"] .bacheca-tabs,
   display: flex;
   align-items: center;
   gap: 12px;
-  min-height: 48px;
-  padding: 6px 10px 6px 18px;
+  min-height: 52px;
+  padding: 4px 6px 4px 18px;
   margin: 0 0 16px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -717,6 +717,8 @@ html[data-theme="mimetico-chiaro"] .bacheca-tabs,
   border-radius: 0;
   padding: 0;
   white-space: nowrap;
+  cursor: default;
+  pointer-events: none;
 }
 
 /* Pulsante collapse/expand, stesso gesto delle icone in navbar */
@@ -724,8 +726,8 @@ html[data-theme="mimetico-chiaro"] .bacheca-tabs,
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   background: transparent;
@@ -733,7 +735,7 @@ html[data-theme="mimetico-chiaro"] .bacheca-tabs,
   cursor: pointer;
   flex-shrink: 0;
   padding: 0;
-  transition: background 200ms ease, color 200ms ease, border-color 200ms ease, transform 200ms ease;
+  transition: background 150ms ease, color 150ms ease, border-color 150ms ease, transform 150ms ease;
 }
 #bacheca-annunci .es-listings__toggle:hover {
   background: rgba(255, 255, 255, 0.08);
@@ -741,8 +743,11 @@ html[data-theme="mimetico-chiaro"] .bacheca-tabs,
   color: #fff;
 }
 #bacheca-annunci .es-listings__toggle:focus-visible {
-  outline: 2px solid var(--accent-primary, #38bdf8);
+  outline: 2px solid var(--es-ctrl-accent, #2fe0c8);
   outline-offset: 2px;
+}
+#bacheca-annunci .es-listings__toggle:focus:not(:focus-visible) {
+  outline: none;
 }
 /* Ruota il chevron quando è collassato */
 #bacheca-annunci .es-listings__toggle.is-collapsed {
@@ -760,17 +765,9 @@ html[data-theme="mimetico-chiaro"] .bacheca-tabs,
   mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
 }
 
-/* Collasso: nessuna altezza, nessun overflow */
+/* Collasso: la lista esce dal flusso, il pulsante resta in barra */
 #bacheca-annunci .es-listings__grid.is-collapsed {
-  max-height: 0;
-  overflow: hidden;
-  -webkit-mask-image: none;
-  mask-image: none;
-}
-
-/* Transizione fluida collasso/espansione (salvo reduced-motion) */
-#bacheca-annunci .es-listings__grid {
-  transition: max-height 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  display: none;
 }
 
 /* Scrollbar sottile e coerente col tema */

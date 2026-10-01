@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <script>
     (function () {
-      var BUILD_VERSION = '20261001_FIX6';
+      var BUILD_VERSION = '20261001_FIX7';
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
         if (savedTheme) {
@@ -56,7 +56,7 @@
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260928_HEROUX65">
-  <link rel="stylesheet" href="bacheca-board.css?v=20261001_FIX5">
+  <link rel="stylesheet" href="bacheca-board.css?v=20261001_FIX7">
   <link rel="stylesheet" href="control-center.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="flusso-contatti.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="cc-analytics.css?v=20260925_PALETTE1">
@@ -3375,7 +3375,7 @@
                   <!-- Toolbar sticky Regola 4 -->
                   <div class="es-listings__hbar" id="es-listings-hbar">
                     <h2 data-i18n="bacheca.opportunities">Opportunità selezionate</h2>
-                    <span class="es-listings__count" id="es-listings-count" aria-live="polite">–</span>
+                    <span class="es-listings__count" id="es-listings-count" aria-live="polite"></span>
                     <button
                       type="button"
                       class="es-listings__toggle"
@@ -3422,6 +3422,53 @@
                       <button type="button" id="btn-reset-filtri">Reimposta filtri</button>
                     </div>
                   </div>
+                  <script>
+                    (function () {
+                      function label(key, fallback) {
+                        try {
+                          if (window.EliseeI18n && typeof window.EliseeI18n.t === 'function') {
+                            var value = window.EliseeI18n.t(key);
+                            if (value && value !== key) return value;
+                          }
+                        } catch (e) {}
+                        return fallback;
+                      }
+                      function paint() {
+                        var grid = document.getElementById('jobs-container');
+                        var countEl = document.getElementById('es-listings-count');
+                        var btn = document.getElementById('btn-toggle-listings');
+                        if (!grid || !btn) return;
+                        var n = grid.querySelectorAll('.es-card').length;
+                        if (countEl) {
+                          var word = n === 1 ? label('bacheca.count.one', 'annuncio') : label('bacheca.count.many', 'annunci');
+                          countEl.textContent = n + ' ' + word;
+                        }
+                        var collapsed = !!window._eliseeListingsCollapsed;
+                        grid.classList.toggle('is-collapsed', collapsed);
+                        btn.classList.toggle('is-collapsed', collapsed);
+                        btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+                        var text = collapsed ? label('bacheca.expand', 'Espandi lista annunci') : label('bacheca.collapse', 'Comprimi lista annunci');
+                        btn.setAttribute('aria-label', text);
+                        btn.setAttribute('title', text);
+                        if (!btn._esListingsBound) {
+                          btn._esListingsBound = true;
+                          btn.addEventListener('click', function () {
+                            window._eliseeListingsCollapsed = !window._eliseeListingsCollapsed;
+                            paint();
+                          });
+                          btn.addEventListener('keydown', function (e) {
+                            if (e.key === 'Escape' && window._eliseeListingsCollapsed) {
+                              e.preventDefault();
+                              window._eliseeListingsCollapsed = false;
+                              paint();
+                            }
+                          });
+                        }
+                      }
+                      document.addEventListener('elisee:lang-changed', paint);
+                      paint();
+                    })();
+                  </script>
                   <div class="es-cta-strip">
                     <p>Non hai trovato il ruolo giusto?</p>
                     <button type="button" class="es-btn es-btn--secondary" id="btn-pubblica-richiesta" data-bacheca-action="pubblica">Nuovo annuncio</button>
@@ -6747,7 +6794,7 @@
   </script>
   <script src="cookie-profiling.js?v=20260925_HEROUX1"></script>
   <script src="ai-gdpr-monitor.js?v=20260806_NOCORS"></script>
-  <script src="i18n.js?v=20261001_FIX4"></script>
+  <script src="i18n.js?v=20261001_FIX7"></script>
   <script src="island-carousel.js?v=20260928_HEROUX67"></script>
   <script src="parallax-cards.js?v=20260928_HEROUX68"></script>
   <script src="agents-runtime.js?v=20260806_NOCORS"></script>
@@ -6828,7 +6875,7 @@
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="elisee-staff.js?v=20260911_ADMIN2"></script>
   <script src="app-admin-panels.js?v=20260918_CCDROPDOWN1"></script>
-  <script src="app.js?v=20260925_HEROUX20"></script>
+  <script src="app.js?v=20261001_FIX7"></script>
   <script src="page-bubbles.js?v=20260925_BUBBLE1"></script>
   <script src="parallax.js?v=20260925_PARALLAX1"></script>
   <script src="search-client.js?v=20260929_HEROUX88"></script>

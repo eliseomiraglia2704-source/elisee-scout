@@ -4,7 +4,13 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-10-01** — FIX6 — Menu suggerimenti leggibile e scrollbar coerente:
+Ultimo aggiornamento: **2026-10-01** — FIX7 — Barra opportunità: conteggio vero e freccia che comprime la lista:
+
+1. **Conteggio**: il trattino «–» non è più un falso pulsante. Mostra subito quanti annunci sono in lista (`2 annunci`, e le altre lingue).
+2. **Freccia**: il click è collegato nel markup della barra, senza aspettare il resto di `app.js`. Comprime e riapre gli annunci. Esc riapre. Tasto da 44px, focus teal.
+3. **File**: `index.html`, `app.js`, `bacheca-board.css`, `i18n.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX7`.
+
+Feature precedente: **2026-10-01** — FIX6 — Menu suggerimenti leggibile e scrollbar coerente:
 
 1. **Menu ricerca**: sfondo pieno `#0d1626`, niente vetro. Le voci non si mescolano più con filtri e annunci dietro.
 2. **Scrollbar**: sottile, pista dello stesso colore del menu, cursore teal arrotondato. In tema chiaro pista bianca e cursore teal scuro.

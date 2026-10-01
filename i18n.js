@@ -160,6 +160,10 @@
       'search.suggest.word': 'Parola',
       'search.suggest.list': 'Suggerimenti di ricerca',
       'bacheca.opportunities': 'Opportunità selezionate',
+      'bacheca.count.one': 'annuncio',
+      'bacheca.count.many': 'annunci',
+      'bacheca.collapse': 'Comprimi lista annunci',
+      'bacheca.expand': 'Espandi lista annunci',
       'logout.title': 'Disconnesso',
       'logout.message': 'Sessione chiusa con successo.',
       'logout.admin': 'Sessione admin terminata.'
@@ -169,6 +173,10 @@
       'logout.message': 'Session closed successfully.',
       'logout.admin': 'Admin session terminated.',
       'bacheca.opportunities': 'Selected Listings',
+      'bacheca.count.one': 'listing',
+      'bacheca.count.many': 'listings',
+      'bacheca.collapse': 'Collapse listings',
+      'bacheca.expand': 'Expand listings',
       'nav.home': 'Home',
       'nav.about': 'About',
       'nav.resume': 'Resume',
@@ -429,6 +437,10 @@
       'search.suggest.club': 'Club',
       'search.suggest.word': 'Palabra',
       'search.suggest.list': 'Sugerencias de búsqueda',
+      'bacheca.count.one': 'anuncio',
+      'bacheca.count.many': 'anuncios',
+      'bacheca.collapse': 'Contraer lista de anuncios',
+      'bacheca.expand': 'Expandir lista de anuncios',
     },
     fr: {
       'nav.home': 'Accueil',
@@ -545,6 +557,10 @@
       'search.suggest.club': 'Club',
       'search.suggest.word': 'Mot',
       'search.suggest.list': 'Suggestions de recherche',
+      'bacheca.count.one': 'annonce',
+      'bacheca.count.many': 'annonces',
+      'bacheca.collapse': 'Réduire la liste des annonces',
+      'bacheca.expand': 'Développer la liste des annonces',
     }
   };
 
