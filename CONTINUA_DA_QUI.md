@@ -4,7 +4,14 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-10-01** — FIX7 — Barra opportunità: conteggio vero e freccia che comprime la lista:
+Ultimo aggiornamento: **2026-10-01** — FIX8 — Selettore lingua dell’header funzionante:
+
+1. **Pulsante IT**: non era un controllo, solo la scritta `IT ▾`. Ora è un bottone che apre Italiano, English, Español e Français.
+2. **Effetto**: la scelta cambia i testi già tradotti (navbar, hero, bacheca) e resta salvata. Esc, clic fuori e frecce da tastiera chiudono o spostano la selezione. Il menu è opaco, sopra la barra.
+3. **Telefono**: lo stesso controllo sta nella barra in alto, perché sotto i 768px l’header desktop è nascosto.
+4. **File**: `index.html`, `i18n.js`, `es-nav-ux.css`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX8`.
+
+Feature precedente: **2026-10-01** — FIX7 — Barra opportunità: conteggio vero e freccia che comprime la lista:
 
 1. **Conteggio**: il trattino «–» non è più un falso pulsante. Mostra subito quanti annunci sono in lista (`2 annunci`, e le altre lingue).
 2. **Freccia**: il click è collegato nel markup della barra, senza aspettare il resto di `app.js`. Comprime e riapre gli annunci. Esc riapre. Tasto da 44px, focus teal.

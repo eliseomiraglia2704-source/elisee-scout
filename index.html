@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <script>
     (function () {
-      var BUILD_VERSION = '20261001_FIX7';
+      var BUILD_VERSION = '20261001_FIX8';
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
         if (savedTheme) {
@@ -79,7 +79,7 @@
   <link rel="stylesheet" href="page-bubbles.css?v=20260925_BUBBLE1">
   <link rel="stylesheet" href="parallax.css?v=20260925_HEROUX41">
   <link rel="stylesheet" href="role-sidebar-pro.css?v=20260925_HEROUX41">
-  <link rel="stylesheet" href="es-nav-ux.css?v=20260928_HEROUX65">
+  <link rel="stylesheet" href="es-nav-ux.css?v=20261001_FIX8">
   <link rel="stylesheet" href="badge-system.css?v=20260925_HEROUX41">
   <link rel="stylesheet" href="micro-interactions.css?v=20260929_HEROUX74">
   <link rel="stylesheet" href="radius-system.css?v=20260925_HEROUX41">
@@ -1595,7 +1595,7 @@
           if (!t || !t.closest) return;
           // Non interferire con form, dropdown, filtri, azioni locali
           if (t.closest(
-            'input, textarea, select, option, label, .modal-card, .custom-dropdown, .dropdown-trigger, .dropdown-options-menu, .dropdown-option, .pf-toolbar, .pf-filters, .pf-chips, .pf-header-actions, #bacheca-network, #stampa-portal, #view-stampa, .es-press, .es-ap-root.is-open, .es-int-root.is-open, #es-mg-root.is-open, .wr-backdrop.is-open, #amb-ai-modal.is-open, #modal-registrazione, #modal-accesso-unificato, #modal-pubblica-annuncio'
+            'input, textarea, select, option, label, .modal-card, .custom-dropdown, .dropdown-trigger, .dropdown-options-menu, .dropdown-option, .pf-toolbar, .pf-filters, .pf-chips, .pf-header-actions, #bacheca-network, #stampa-portal, #view-stampa, .es-press, .es-ap-root.is-open, .es-int-root.is-open, #es-mg-root.is-open, .wr-backdrop.is-open, #amb-ai-modal.is-open, #modal-registrazione, #modal-accesso-unificato, #modal-pubblica-annuncio, .es-lang'
           )) return;
           var el = t.closest(
             'a.nav-link, a[data-view], button[data-view], .btn-nav-accedi, .btn-nav-iscriviti, #btn-nav-accedi, #btn-enter-user-portal, #btn-enter-admin-portal, .hero-buttons-row a, .hero-buttons-row button, .brand-logo, footer a[href^="#"], a[href^="#"]'
@@ -2256,6 +2256,19 @@
           <span id="es-m-user-name">Account</span>
         </button>
 
+        <div class="nav-lang es-lang" id="es-lang-mobile">
+          <button type="button" class="es-lang__btn lang" id="es-lang-mobile-btn" data-lang-trigger aria-haspopup="listbox" aria-expanded="false" aria-controls="es-lang-mobile-menu" title="Seleziona lingua">
+            <span data-lang-current>IT</span>
+            <svg class="nav-lang-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="nav-lang-menu" id="es-lang-mobile-menu" data-lang-menu role="listbox" aria-label="Lingue" hidden>
+            <button type="button" class="nav-lang-item" role="option" data-lang="it" aria-selected="true"><span class="nav-lang-name">Italiano</span><svg class="nav-lang-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button>
+            <button type="button" class="nav-lang-item" role="option" data-lang="en" aria-selected="false"><span class="nav-lang-name">English</span><svg class="nav-lang-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button>
+            <button type="button" class="nav-lang-item" role="option" data-lang="es" aria-selected="false"><span class="nav-lang-name">Español</span><svg class="nav-lang-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button>
+            <button type="button" class="nav-lang-item" role="option" data-lang="fr" aria-selected="false"><span class="nav-lang-name">Français</span><svg class="nav-lang-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button>
+          </div>
+        </div>
+
         <!-- Bottone Accedi (se non loggato) -->
         <button type="button" class="btn-nav-accedi" id="es-m-login-btn" style="padding:0.25rem 0.6rem;font-size:0.75rem;height:32px;min-height:32px;">
           Accedi
@@ -2400,12 +2413,12 @@
     <!-- Navigazione Soltanto Pubblica -->
     <nav class="main-nav nav-menu nav-links" id="navLinks">
       <span class="nav-indicator" id="navIndicator" aria-hidden="true"></span>
-      <a href="#about" class="nav-link active" data-view="about" onclick="if(window.switchView){ window.switchView('about'); } return false;">Chi siamo</a>
-      <a href="#bacheca-annunci" class="nav-link" data-view="bacheca" onclick="if(window.switchView){ window.switchView('bacheca'); } return false;">Bacheca</a>
-      <a href="#mappa-portal" class="nav-link" data-view="mappa" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){window.switchView('mappa','#mappa-portal');} return false;">Mappa</a>
+      <a href="#about" class="nav-link active" data-view="about" data-i18n="nav.about" onclick="if(window.switchView){ window.switchView('about'); } return false;">Chi siamo</a>
+      <a href="#bacheca-annunci" class="nav-link" data-view="bacheca" data-i18n="nav.portfolio" onclick="if(window.switchView){ window.switchView('bacheca'); } return false;">Bacheca</a>
+      <a href="#mappa-portal" class="nav-link" data-view="mappa" data-i18n="nav.map" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){window.switchView('mappa','#mappa-portal');} return false;">Mappa</a>
       <div class="es-nav-dropdown" id="menu-nav-dropdown-more">
         <button type="button" class="nav-link es-nav-dropdown-btn" aria-haspopup="true" aria-expanded="false" title="Altre sezioni">
-          <span>Altro</span>
+          <span data-i18n="nav.more">Altro</span>
           <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="es-nav-dropdown-menu">
@@ -2443,7 +2456,18 @@
           </span>
         </span>
       </button>
-      <span class="lang" id="lang-switcher-simple" title="Seleziona lingua">IT ▾</span>
+      <div class="nav-lang es-lang" id="lang-switcher">
+        <button type="button" class="es-lang__btn lang" id="lang-switcher-btn" data-lang-trigger aria-haspopup="listbox" aria-expanded="false" aria-controls="lang-switcher-menu" title="Seleziona lingua">
+          <span id="lang-current-label" data-lang-current>IT</span>
+          <svg class="nav-lang-chevron" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="nav-lang-menu" id="lang-switcher-menu" data-lang-menu role="listbox" aria-label="Lingue" hidden>
+          <button type="button" class="nav-lang-item" role="option" data-lang="it" aria-selected="true"><span class="nav-lang-name">Italiano</span><svg class="nav-lang-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button>
+          <button type="button" class="nav-lang-item" role="option" data-lang="en" aria-selected="false"><span class="nav-lang-name">English</span><svg class="nav-lang-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button>
+          <button type="button" class="nav-lang-item" role="option" data-lang="es" aria-selected="false"><span class="nav-lang-name">Español</span><svg class="nav-lang-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button>
+          <button type="button" class="nav-lang-item" role="option" data-lang="fr" aria-selected="false"><span class="nav-lang-name">Français</span><svg class="nav-lang-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></button>
+        </div>
+      </div>
       <div class="glow-wrap glow-wrap--nav">
         <a href="#login" class="glow-btn glow-btn--nav btn-login accedi" onclick="if(window.openAccessoModal){window.openAccessoModal('email');} return false;">Accedi</a>
       </div>
@@ -6794,7 +6818,7 @@
   </script>
   <script src="cookie-profiling.js?v=20260925_HEROUX1"></script>
   <script src="ai-gdpr-monitor.js?v=20260806_NOCORS"></script>
-  <script src="i18n.js?v=20261001_FIX7"></script>
+  <script src="i18n.js?v=20261001_FIX8"></script>
   <script src="island-carousel.js?v=20260928_HEROUX67"></script>
   <script src="parallax-cards.js?v=20260928_HEROUX68"></script>
   <script src="agents-runtime.js?v=20260806_NOCORS"></script>
