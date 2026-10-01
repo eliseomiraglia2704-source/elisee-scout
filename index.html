@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <script>
     (function () {
-      var BUILD_VERSION = '20261001_FIX3';
+      var BUILD_VERSION = '20261001_FIX4';
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
         if (savedTheme) {
@@ -94,7 +94,7 @@
   <link rel="stylesheet" href="bacheca.css?v=20260925_HEROUX41">
   <link rel="stylesheet" href="tide-button.css?v=20260926_HEROUX52">
   <link rel="stylesheet" href="glow-button.css?v=20260926_HEROUX53">
-  <link rel="stylesheet" href="scry-search.css?v=20260926_HEROUX54">
+  <link rel="stylesheet" href="scry-search.css?v=20261001_FIX4">
   <link rel="stylesheet" href="pub-button.css?v=20260927_HEROUX59">
   <link rel="stylesheet" href="file-dropzone.css?v=20260927_HEROUX61">
   <link rel="stylesheet" href="es-ux-controls.css?v=20260928_HEROUX73">
@@ -3341,9 +3341,15 @@
                       placeholder="Cerca annunci, club o calciatori..." 
                       autocomplete="off"
                       spellcheck="false"
+                      role="combobox"
+                      aria-autocomplete="list"
+                      aria-expanded="false"
+                      aria-controls="es-search-suggest"
+                      aria-haspopup="listbox"
                     />
                     <button type="button" id="clear-search-btn" aria-label="Cancella">✕</button>
                   </div>
+                  <div id="es-search-suggest" class="es-search-suggest" role="listbox" hidden></div>
                 </div>
 
                 <div class="bacheca-filter-row-secondary">
@@ -6754,7 +6760,7 @@
   </script>
   <script src="cookie-profiling.js?v=20260925_HEROUX1"></script>
   <script src="ai-gdpr-monitor.js?v=20260806_NOCORS"></script>
-  <script src="i18n.js?v=20260928_HEROUX68"></script>
+  <script src="i18n.js?v=20261001_FIX4"></script>
   <script src="island-carousel.js?v=20260928_HEROUX67"></script>
   <script src="parallax-cards.js?v=20260928_HEROUX68"></script>
   <script src="agents-runtime.js?v=20260806_NOCORS"></script>
@@ -7421,7 +7427,7 @@
   <script src="glow-cards-handler.js?v=20260926_HEROUX43" defer></script>
   <script src="publish-btn.js?v=20260926_HEROUX45" defer></script>
   <script src="tide-button.js?v=20260926_HEROUX52" defer></script>
-  <script src="scry-search.js?v=20260926_HEROUX54" defer></script>
+  <script src="scry-search.js?v=20261001_FIX4" defer></script>
   <script src="pub-button.js?v=20260927_HEROUX59" defer></script>
   <script src="file-dropzone.js?v=20260927_HEROUX61" defer></script>
   <script src="realistic-switch.js?v=20260928_HEROUX72" defer></script>

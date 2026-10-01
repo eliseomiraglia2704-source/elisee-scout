@@ -4,7 +4,13 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-10-01** — FIX3 — Rimossa la card atleta da «Digitalizziamo il calciomercato»:
+Ultimo aggiornamento: **2026-10-01** — FIX4 — Suggerimenti di ricerca in Bacheca annunci:
+
+1. **`#main-search-input`**: mentre si scrive (da 2 lettere) si apre un menu con città (comuni italiani), ruoli, categorie e club. Esempio: `fog` propone Foggia e le altre città che iniziano così, più le parole della bacheca.
+2. Freccia su/giù, Invio per scegliere, Esc chiude il menu. Il clic inserisce la città o la parola e filtra gli annunci.
+3. **File**: `index.html`, `scry-search.js`, `scry-search.css`, `i18n.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX4`.
+
+Feature precedente: **2026-10-01** — FIX3 — Rimossa la card atleta da «Digitalizziamo il calciomercato»:
 
 1. **`#home-about`**: tolta la card bianca a destra (Profilo verificato, foto, 92 ATT, 33.8 km/h, Marco Rossi). Restano titolo, testo, pulsanti e badge.
 2. La colonna di testo non lascia più il buco della seconda colonna: larghezza massima 46rem.

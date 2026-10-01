@@ -154,6 +154,11 @@
       'resume.tl4r': 'Ricerca · Market fit',
       'resume.tl4p': 'Analisi del gap dilettanti/giovanili vs professionismo: WhatsApp e Facebook come “mercato” da digitalizzare.',
       'bacheca.title': 'Bacheca reclutamento',
+      'search.suggest.city': 'Città',
+      'search.suggest.role': 'Ruolo',
+      'search.suggest.club': 'Club',
+      'search.suggest.word': 'Parola',
+      'search.suggest.list': 'Suggerimenti di ricerca',
       'bacheca.opportunities': 'Opportunità selezionate',
       'logout.title': 'Disconnesso',
       'logout.message': 'Sessione chiusa con successo.',
@@ -302,7 +307,12 @@
       'resume.tl4t': 'Football marketplace concept',
       'resume.tl4r': 'Research · Market fit',
       'resume.tl4p': 'Gap analysis amateur/youth vs pro: WhatsApp and Facebook as the “market” to digitize.',
-      'bacheca.title': 'Recruitment board'
+      'bacheca.title': 'Recruitment board',
+      'search.suggest.city': 'City',
+      'search.suggest.role': 'Role',
+      'search.suggest.club': 'Club',
+      'search.suggest.word': 'Word',
+      'search.suggest.list': 'Search suggestions',
     },
     es: {
       'profili.eyebrow': 'Para quién es',
@@ -413,7 +423,12 @@
       'resume.tl4t': 'Concepto marketplace de fútbol',
       'resume.tl4r': 'Investigación · Market fit',
       'resume.tl4p': 'Análisis del gap amateur/juvenil vs pro: WhatsApp y Facebook como “mercado” a digitalizar.',
-      'bacheca.title': 'Tablón de reclutamiento'
+      'bacheca.title': 'Tablón de reclutamiento',
+      'search.suggest.city': 'Ciudad',
+      'search.suggest.role': 'Rol',
+      'search.suggest.club': 'Club',
+      'search.suggest.word': 'Palabra',
+      'search.suggest.list': 'Sugerencias de búsqueda',
     },
     fr: {
       'nav.home': 'Accueil',
@@ -524,7 +539,12 @@
       'profili.c3.wordTop': 'SCOUT',
       'profili.c3.wordBottom': 'NÉGOCIATIONS',
       'profili.c3.cta': 'Découvrir profils',
-      'bacheca.title': 'Tableau de recrutement'
+      'bacheca.title': 'Tableau de recrutement',
+      'search.suggest.city': 'Ville',
+      'search.suggest.role': 'Rôle',
+      'search.suggest.club': 'Club',
+      'search.suggest.word': 'Mot',
+      'search.suggest.list': 'Suggestions de recherche',
     }
   };
 
