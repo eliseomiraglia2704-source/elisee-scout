@@ -1,11 +1,17 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-01** — FIX19 — Analisi del movimento sulle clip e sulle ricerche:
+Ultimo aggiornamento: **2026-10-01** — FIX20 — Km/h del pallone e metri palla al piede sulle clip caricate:
 
-1. **Clip**: in bacheca, «Analizza una clip» legge un video mp4, webm o mov sul dispositivo, fotogramma per fotogramma, per i primi 8 secondi. Restano movimento (% di pixel cambiati), zona nel fotogramma, picco e traccia. Il file non parte dal browser e non va in un archivio account.
-2. **Ricerca**: Invio, un suggerimento o una candidatura aprono lo stesso riquadro e tengono solo le clip di questo account che combaciano con le parole. I filtri Movimento alto, Zona centrale e Picco iniziale lavorano su quelle misure.
-3. **Limite onesto**: non c’è un modello YOLO, non si calcolano km/h e non si riconoscono volti o nomi. Nessuna funzione serverless nuova.
-4. **File**: `vision-track.js`, `vision-track.css`, `index.html`, `i18n.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX19`.
+1. **Misure**: «Analizza una clip» stima la velocità del pallone in km/h e i metri del giocatore palla al piede. Il pallone è il movimento piccolo, il giocatore quello ampio. La scala è la larghezza inquadrata, in metri (predefinita 40, da 8 a 110). Il tratto palla al piede conta solo mentre il pallone resta entro un metro e mezzo dal corpo.
+2. **Se non si distinguono**: la riga dice che il pallone o il tratto non è distinto. Non compare uno 0 km/h finto. Cambiare la larghezza ricalcola i numeri senza rileggere il video.
+3. **Limite onesto**: il video resta sul dispositivo, primi 8 secondi. Non c’è un modello YOLO e non si leggono volti o nomi. Nessuna funzione serverless nuova.
+4. **File**: `vision-track.js`, `vision-track.css`, `index.html`, `i18n.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX20`.
+
+Feature precedente: **2026-10-01** — FIX19 — Analisi del movimento sulle clip e sulle ricerche:
+
+1. **Clip**: in bacheca, «Analizza una clip» legge un video mp4, webm o mov sul dispositivo, per i primi 8 secondi. Restano movimento, zona, picco e traccia. FIX20 aggiunge km/h e metri sulla stessa lettura.
+2. **Ricerca**: Invio, un suggerimento o una candidatura aprono lo stesso riquadro e tengono solo le clip di questo account che combaciano con le parole.
+3. **File**: `vision-track.js`, `vision-track.css`, `index.html`, `i18n.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX19`.
 
 Feature precedente: **2026-10-01** — FIX18 — Autorizzazione notifiche, un account alla volta:
 

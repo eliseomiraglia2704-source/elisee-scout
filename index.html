@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <script>
     (function () {
-      var BUILD_VERSION = '20261001_FIX19';
+      var BUILD_VERSION = '20261001_FIX20';
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
         if (savedTheme) {
@@ -58,7 +58,7 @@
   <link rel="stylesheet" href="chi-siamo.css?v=20260928_HEROUX65">
   <link rel="stylesheet" href="bacheca-board.css?v=20261001_FIX17">
   <link rel="stylesheet" href="notify-consent.css?v=20261001_FIX18">
-  <link rel="stylesheet" href="vision-track.css?v=20261001_FIX19">
+  <link rel="stylesheet" href="vision-track.css?v=20261001_FIX20">
   <link rel="stylesheet" href="control-center.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="flusso-contatti.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="cc-analytics.css?v=20260925_PALETTE1">
@@ -3423,6 +3423,10 @@
                   </div>
                   <p class="es-vision__lead" id="es-vision-lead"></p>
                   <p class="es-vision__status" id="es-vision-status"></p>
+                  <label class="es-vision__scale" for="es-vision-scale">
+                    <span id="es-vision-scale-label"></span>
+                    <input type="number" id="es-vision-scale" min="8" max="110" step="1" value="40" inputmode="numeric">
+                  </label>
                   <div class="es-vision__filters" id="es-vision-filters" role="group">
                     <button type="button" class="es-vision__filter" data-vision-filter="alto" aria-pressed="false"></button>
                     <button type="button" class="es-vision__filter" data-vision-filter="centro" aria-pressed="false"></button>
@@ -6873,7 +6877,7 @@
   </script>
   <script src="cookie-profiling.js?v=20260925_HEROUX1"></script>
   <script src="ai-gdpr-monitor.js?v=20260806_NOCORS"></script>
-  <script src="i18n.js?v=20261001_FIX19"></script>
+  <script src="i18n.js?v=20261001_FIX20"></script>
   <script src="island-carousel.js?v=20260928_HEROUX67"></script>
   <script src="parallax-cards.js?v=20260928_HEROUX68"></script>
   <script src="agents-runtime.js?v=20260806_NOCORS"></script>
@@ -7544,7 +7548,7 @@
   <script src="scry-search.js?v=20261001_FIX17" defer></script>
   <script src="scout-automation.js?v=20261001_FIX17" defer></script>
   <script src="notify-consent.js?v=20261001_FIX18" defer></script>
-  <script src="vision-track.js?v=20261001_FIX19" defer></script>
+  <script src="vision-track.js?v=20261001_FIX20" defer></script>
   <script src="pub-button.js?v=20261001_FIX13" defer></script>
   <script src="file-dropzone.js?v=20260927_HEROUX61" defer></script>
   <script src="realistic-switch.js?v=20260928_HEROUX72" defer></script>
