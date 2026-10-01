@@ -36,7 +36,14 @@
         if (!label.getAttribute('data-original-text')) {
           label.setAttribute('data-original-text', originalText);
         }
-        label.textContent = 'Annuncio pubblicato';
+        var published = 'Annuncio pubblicato';
+        try {
+          if (window.EliseeI18n && typeof window.EliseeI18n.t === 'function') {
+            var publishedText = window.EliseeI18n.t('bacheca.published');
+            if (publishedText && publishedText !== 'bacheca.published') published = publishedText;
+          }
+        } catch (e) {}
+        label.textContent = published;
       }
 
       await wait(2200);

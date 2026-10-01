@@ -128,14 +128,88 @@
     'trining': 'ALLENAMENTO'
   };
 
+  var KIT_I18N = {
+    'home': 'sq.kit.home',
+    'away': 'sq.kit.away',
+    'third': 'sq.kit.third',
+    'fourth': 'sq.kit.fourth',
+    'fifth': 'sq.kit.fifth',
+    'goalkeeper': 'sq.kit.gkHome',
+    'goalkeeper-home': 'sq.kit.gkHome',
+    'gk': 'sq.kit.gkHome',
+    'goalkeeper-away': 'sq.kit.gkAway',
+    'gk-away': 'sq.kit.gkAway',
+    'goalkeeper-third': 'sq.kit.gkThird',
+    'gk-third': 'sq.kit.gkThird',
+    'training': 'sq.kit.training',
+    'training-1': 'sq.kit.training',
+    'trining': 'sq.kit.training'
+  };
+
+  function tr(key, fallback) {
+    try {
+      if (window.EliseeI18n && typeof window.EliseeI18n.t === 'function') {
+        var value = window.EliseeI18n.t(key);
+        if (value && value !== key) return value;
+      }
+    } catch (e) {}
+    return fallback;
+  }
+
+  function kitKeyNorm(key) {
+    return String(key || '').toLowerCase().trim().replace(/[\s_]+/g, '-').replace(/-+/g, '-');
+  }
+
   function getKitLabel(key, fallbackLabel) {
+    var k = kitKeyNorm(key);
+    if (KIT_I18N[k]) return tr(KIT_I18N[k], fallbackLabel || KIT_LABELS[k] || 'IN CASA');
     if (fallbackLabel) return fallbackLabel;
-    if (!key) return 'IN CASA';
-    var k = String(key).toLowerCase().trim().replace(/[\s_]+/g, '-');
+    if (!k) return tr('sq.kit.home', 'IN CASA');
     if (KIT_LABELS[k]) return KIT_LABELS[k];
     var cleaned = k.replace(/[-_]+/g, ' ').toUpperCase();
     cleaned = cleaned.replace('GOALKEEPER', 'PORTIERE').replace('GK', 'PORTIERE');
     return cleaned;
+  }
+
+  function displayKitLabel(slotOrKey) {
+    if (slotOrKey && typeof slotOrKey === 'object') {
+      return getKitLabel(slotOrKey.key, KIT_I18N[kitKeyNorm(slotOrKey.key)] ? '' : slotOrKey.label);
+    }
+    return getKitLabel(slotOrKey, '');
+  }
+
+  function countryLabel(value) {
+    var raw = String(value || '').trim();
+    if (!raw || /^itali[aey]$/i.test(raw)) return tr('sq.country.italy', 'Italia');
+    return raw;
+  }
+
+  function applyI18nWithin(root) {
+    if (!root || !root.querySelectorAll) return;
+    root.querySelectorAll('[data-i18n]').forEach(function (el) {
+      if (el.querySelector('input, textarea, select')) return;
+      var key = el.getAttribute('data-i18n');
+      if (key) el.textContent = tr(key, el.textContent);
+    });
+    root.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n-placeholder');
+      if (key) el.setAttribute('placeholder', tr(key, el.getAttribute('placeholder') || ''));
+    });
+    root.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n-aria');
+      if (key) el.setAttribute('aria-label', tr(key, el.getAttribute('aria-label') || ''));
+    });
+  }
+
+  function numberLocale() {
+    var lang = 'it';
+    try {
+      if (window.EliseeI18n && typeof window.EliseeI18n.getLang === 'function') lang = window.EliseeI18n.getLang() || 'it';
+    } catch (e) {}
+    if (lang === 'en') return 'en-GB';
+    if (lang === 'es') return 'es-ES';
+    if (lang === 'fr') return 'fr-FR';
+    return 'it-IT';
   }
 
   var PRELOAD_CACHE = {};
@@ -308,8 +382,8 @@
         var span = document.createElement('span');
         span.className = 'es-sq-dot' + (slotObj.key === state.kit ? ' on' : '');
         span.setAttribute('data-kit', slotObj.key);
-        span.setAttribute('aria-label', slotObj.label || getKitLabel(slotObj.key));
-        span.setAttribute('title', slotObj.label || getKitLabel(slotObj.key));
+        span.setAttribute('aria-label', displayKitLabel(slotObj));
+        span.setAttribute('title', displayKitLabel(slotObj));
         span.style.cursor = 'pointer';
         span.addEventListener('click', function (e) {
           e.preventDefault();
@@ -674,8 +748,10 @@
     var played = team && team.played != null ? Number(team.played) : 0;
     if (isNaN(pts)) pts = 0;
     if (isNaN(played)) played = 0;
+    var ptsWord = tr('sq.pts', 'pt');
+    var gamesWord = tr('sq.games', 'gare');
     if (played <= 0) {
-      return '<div class="es-sq-pos-meta">0 pt · 0 gare</div>';
+      return '<div class="es-sq-pos-meta">0 ' + ptsWord + ' · 0 ' + gamesWord + '</div>';
     }
     var pos = team.pos != null ? team.pos : '—';
     return (
@@ -683,13 +759,13 @@
       '<span class="es-sq-pos-num">' +
       pos +
       '°</span>' +
-      '<span class="es-sq-pos-label">in classifica</span>' +
+      '<span class="es-sq-pos-label">' + tr('sq.rank', 'in classifica') + '</span>' +
       '</div>' +
       '<div class="es-sq-pos-meta">' +
       pts +
-      ' pt · ' +
+      ' ' + ptsWord + ' · ' +
       played +
-      ' gare</div>'
+      ' ' + gamesWord + '</div>'
     );
   }
 
@@ -720,7 +796,7 @@
     var targetSrc = logoUrl(slot.url);
     btn.style.setProperty('--kit-src', 'url("' + String(targetSrc).replace(/"/g, '') + '")');
     img.dataset.currentSrc = targetSrc;
-    img.alt = ((team && team.name) || '') + ' ' + (slot.label || getKitLabel(slot.key));
+    img.alt = ((team && team.name) || '') + ' ' + displayKitLabel(slot);
     img.onerror = function () {
       if (this.dataset.currentSrc !== targetSrc) return;
       btn.hidden = true;
@@ -732,7 +808,7 @@
     img.src = targetSrc;
     btn.hidden = false;
     btn.setAttribute('data-kit', slot.key);
-    btn.setAttribute('title', slot.label || getKitLabel(slot.key));
+    btn.setAttribute('title', displayKitLabel(slot));
   }
 
   function updateKitGhosts(team, slots) {
@@ -829,7 +905,7 @@
     if (!slot) slot = slots[0] || { key: 'home', label: 'IN CASA', url: '' };
 
     var title = $('es-sq-kit-title');
-    if (title) title.textContent = slot.label || getKitLabel(slot.key);
+    if (title) title.textContent = displayKitLabel(slot);
 
     var img = $('es-sq-kit-img');
     var vector = $('es-sq-kit-vector');
@@ -842,7 +918,7 @@
       img.hidden = false;
       img.classList.remove('is-hidden');
       img.decoding = 'async';
-      img.alt = (team && team.name ? team.name : '') + ' ' + (slot.label || getKitLabel(slot.key));
+      img.alt = (team && team.name ? team.name : '') + ' ' + displayKitLabel(slot);
 
       img.onerror = function () {
         if (this.dataset.currentSrc !== targetSrc) return;
@@ -1095,7 +1171,7 @@
     var nameEl = $('es-sq-team-name');
     if (!team) {
       if (nameEl) {
-        nameEl.textContent = CATALOG_LOADING || !TEAMS.length ? 'CARICAMENTO\u2026' : 'NESSUNA SQUADRA';
+        nameEl.textContent = CATALOG_LOADING || !TEAMS.length ? tr('sq.loading', 'Caricamento…') : tr('sq.empty', 'Nessuna squadra');
       }
       var leagueEmpty = $('es-sq-league');
       if (leagueEmpty) leagueEmpty.textContent = currentLeague() || '\u2014';
@@ -1129,7 +1205,7 @@
       leagueEl.setAttribute('title', league);
     }
     updateLeagueLogo(league);
-    if (countryEl) countryEl.textContent = team.country || 'ITALIA';
+    if (countryEl) countryEl.textContent = countryLabel(team.country || 'Italia');
     if (cityEl) {
       cityEl.textContent = team.city || '—';
       if (isFoggiaCity(team)) {
@@ -1139,15 +1215,17 @@
       }
     }
     if (stadiumEl) {
-      stadiumEl.textContent = team.stadium || 'Stadio non disponibile';
+      var stadiumMissing = tr('sq.stadiumMissing', 'Stadio non disponibile');
+      stadiumEl.textContent = team.stadium || stadiumMissing;
       stadiumEl.setAttribute('title', team.stadium || '');
     }
     if (capacityEl) {
+      var capPrefix = tr('sq.capacity', 'Capienza:');
       var cap = team.capacity;
       if (cap != null && cap !== '' && !isNaN(Number(cap)) && Number(cap) > 0) {
-        capacityEl.textContent = 'Capienza: ' + Number(cap).toLocaleString('it-IT');
+        capacityEl.textContent = capPrefix + ' ' + Number(cap).toLocaleString(numberLocale());
       } else {
-        capacityEl.textContent = 'Capienza: —';
+        capacityEl.textContent = capPrefix + ' —';
       }
     }
     updateStadiumPhoto(team);
@@ -1374,7 +1452,7 @@
     }
     if (!count) {
       html =
-        '<div class="es-sq-picker-empty">Nessuna categoria trovata. Prova un altro termine.</div>';
+        '<div class="es-sq-picker-empty">' + tr('sq.pickerEmpty', 'Nessuna categoria trovata. Prova un altro termine.') + '</div>';
     }
     listEl.innerHTML = html;
     setPickerCursor(getPickerCursorIndex(), false);
@@ -2090,6 +2168,8 @@
     if (existing) {
       existing.hidden = false;
       existing.style.display = 'flex';
+      applyI18nWithin(existing);
+      if (typeof existing._esUpdatePreview === 'function') existing._esUpdatePreview();
       var firstInput = existing.querySelector('input[name="team-name"]');
       if (firstInput) firstInput.focus();
       return;
@@ -2103,22 +2183,22 @@
       '  <div class="es-sq-modal-head">',
       '    <div>',
       '      <h3 id="es-sq-modal-title" style="margin:0;font-size:1.25rem;font-weight:800;color:#f8fafc;display:flex;align-items:center;gap:8px;">',
-      '        <span style="color:var(--es-accent,#00d285);">🛡️</span> Registra Club Ufficiale',
+      '        <span data-i18n="sq.reg.title">Registra Club Ufficiale</span>',
       '      </h3>',
-      '      <p style="margin:4px 0 0;font-size:0.82rem;color:#94a3b8;">Aggiungi la tua squadra con Badge Vettoriale esclusivo 100% originale</p>',
+      '      <p data-i18n="sq.reg.lead" style="margin:4px 0 0;font-size:0.82rem;color:#94a3b8;">Aggiungi la tua squadra con badge vettoriale esclusivo, originale al 100%.</p>',
       '    </div>',
-      '    <button type="button" class="es-sq-modal-close" id="es-sq-reg-close" aria-label="Chiudi">&times;</button>',
+      '    <button type="button" class="es-sq-modal-close" id="es-sq-reg-close" data-i18n-aria="sq.close" aria-label="Chiudi">&times;</button>',
       '  </div>',
       '  <form id="es-sq-reg-form" class="es-sq-reg-form">',
       '    <div class="es-sq-reg-grid">',
       '      <div class="es-sq-reg-fields">',
       '        <div class="es-sq-reg-field">',
-      '          <label for="es-sq-reg-name">Nome Squadra *</label>',
-      '          <input type="text" id="es-sq-reg-name" name="team-name" placeholder="Es. Foggia City" required maxlength="40" />',
+      '          <label for="es-sq-reg-name" data-i18n="sq.reg.name">Nome squadra *</label>',
+      '          <input type="text" id="es-sq-reg-name" name="team-name" data-i18n-placeholder="sq.reg.namePh" placeholder="Es. Foggia City" required maxlength="40" />',
       '        </div>',
       '        <div class="es-sq-reg-row-2">',
       '          <div class="es-sq-reg-field">',
-      '            <label for="es-sq-reg-league">Campionato / Categoria</label>',
+      '            <label for="es-sq-reg-league" data-i18n="sq.reg.league">Campionato / Categoria</label>',
       '            <select id="es-sq-reg-league" name="team-league">',
       '              <option value="AMATORIALE" selected>AMATORIALE</option>',
       '              <option value="DILETTANTI">DILETTANTI</option>',
@@ -2134,30 +2214,30 @@
       '            </select>',
       '          </div>',
       '          <div class="es-sq-reg-field">',
-      '            <label for="es-sq-reg-city">Città</label>',
-      '            <input type="text" id="es-sq-reg-city" name="team-city" placeholder="Es. Foggia" maxlength="35" />',
+      '            <label for="es-sq-reg-city" data-i18n="sq.reg.city">Città</label>',
+      '            <input type="text" id="es-sq-reg-city" name="team-city" data-i18n-placeholder="sq.reg.cityPh" placeholder="Es. Foggia" maxlength="35" />',
       '          </div>',
       '        </div>',
       '        <div class="es-sq-reg-row-2">',
       '          <div class="es-sq-reg-field">',
-      '            <label for="es-sq-reg-abbr">Sigla Stemma (3 lettere)</label>',
-      '            <input type="text" id="es-sq-reg-abbr" name="team-abbr" placeholder="Es. FGC" maxlength="4" style="text-transform:uppercase;" />',
+      '            <label for="es-sq-reg-abbr" data-i18n="sq.reg.abbr">Sigla stemma (3 lettere)</label>',
+      '            <input type="text" id="es-sq-reg-abbr" name="team-abbr" data-i18n-placeholder="sq.reg.abbrPh" placeholder="Es. FGC" maxlength="4" style="text-transform:uppercase;" />',
       '          </div>',
       '          <div class="es-sq-reg-field">',
-      '            <label for="es-sq-reg-year">Anno Fondazione</label>',
+      '            <label for="es-sq-reg-year" data-i18n="sq.reg.year">Anno fondazione</label>',
       '            <input type="number" id="es-sq-reg-year" name="team-year" placeholder="2024" min="1880" max="2030" value="2024" />',
       '          </div>',
       '        </div>',
       '        <div class="es-sq-reg-row-2">',
       '          <div class="es-sq-reg-field">',
-      '            <label>Colore Primario</label>',
+      '            <label data-i18n="sq.reg.color1">Colore primario</label>',
       '            <div class="es-sq-color-wrap">',
       '              <input type="color" id="es-sq-reg-color-p" value="#dc2626" />',
       '              <input type="text" id="es-sq-reg-hex-p" value="#dc2626" maxlength="7" />',
       '            </div>',
       '          </div>',
       '          <div class="es-sq-reg-field">',
-      '            <label>Colore Secondario</label>',
+      '            <label data-i18n="sq.reg.color2">Colore secondario</label>',
       '            <div class="es-sq-color-wrap">',
       '              <input type="color" id="es-sq-reg-color-s" value="#0f172a" />',
       '              <input type="text" id="es-sq-reg-hex-s" value="#0f172a" maxlength="7" />',
@@ -2165,35 +2245,36 @@
       '          </div>',
       '        </div>',
       '        <div class="es-sq-reg-field">',
-      '          <label>Genere</label>',
+      '          <label data-i18n="sq.reg.gender">Genere</label>',
       '          <div class="es-sq-reg-gender-opts">',
-      '            <label><input type="radio" name="team-gender" value="m" checked /> Maschile</label>',
-      '            <label><input type="radio" name="team-gender" value="f" /> Femminile</label>',
+      '            <label><input type="radio" name="team-gender" value="m" checked /> <span data-i18n="sq.reg.male">Maschile</span></label>',
+      '            <label><input type="radio" name="team-gender" value="f" /> <span data-i18n="sq.reg.female">Femminile</span></label>',
       '          </div>',
       '        </div>',
       '      </div>',
       '      <div class="es-sq-reg-preview-box">',
-      '        <div class="es-sq-reg-preview-title">Anteprima Stemma Ufficiale</div>',
+      '        <div class="es-sq-reg-preview-title" data-i18n="sq.reg.preview">Anteprima stemma ufficiale</div>',
       '        <div class="es-sq-reg-preview-badge" id="es-sq-reg-badge-slot"></div>',
       '        <div class="es-sq-reg-preview-name" id="es-sq-reg-preview-name">FOGGIA CITY</div>',
       '        <div class="es-sq-reg-preview-sub" id="es-sq-reg-preview-sub">AMATORIALE · FOGGIA</div>',
-      '        <div class="es-sq-reg-preview-tag">✓ 100% ORIGINALE & CERTIFICATO</div>',
+      '        <div class="es-sq-reg-preview-tag" data-i18n="sq.reg.tag">100% originale e certificato</div>',
       '      </div>',
       '    </div>',
       '    <div class="es-sq-modal-foot">',
-      '      <button type="button" class="btn btn-outline-pill" id="es-sq-reg-cancel">Annulla</button>',
-      '      <button type="submit" class="btn btn-primary" id="es-sq-reg-submit" style="background:linear-gradient(135deg,var(--es-accent,#00d285),#00a86b);border:none;color:#050d1a;font-weight:700;padding:8px 20px;border-radius:20px;cursor:pointer;">✓ Conferma e Salva Club</button>',
+      '      <button type="button" class="btn btn-outline-pill" id="es-sq-reg-cancel" data-i18n="sq.reg.cancel">Annulla</button>',
+      '      <button type="submit" class="btn btn-primary" id="es-sq-reg-submit" data-i18n="sq.reg.submit" style="background:linear-gradient(135deg,var(--es-accent,#00d285),#00a86b);border:none;color:#050d1a;font-weight:700;padding:8px 20px;border-radius:20px;cursor:pointer;">Conferma e salva club</button>',
       '    </div>',
       '  </form>',
       '</div>'
     ].join('\n');
 
     document.body.appendChild(modal);
+    applyI18nWithin(modal);
 
     function updateLivePreview() {
-      var nameVal = (modal.querySelector('#es-sq-reg-name').value || 'NUOVO CLUB').trim();
+      var nameVal = (modal.querySelector('#es-sq-reg-name').value || '').trim() || tr('sq.reg.previewFallback', 'Nuovo club');
       var leagueVal = (modal.querySelector('#es-sq-reg-league').value || 'AMATORIALE').trim();
-      var cityVal = (modal.querySelector('#es-sq-reg-city').value || 'ITALIA').trim();
+      var cityVal = (modal.querySelector('#es-sq-reg-city').value || '').trim() || tr('sq.country.italy', 'Italia');
       var abbrVal = (modal.querySelector('#es-sq-reg-abbr').value || '').trim();
       var colorP = modal.querySelector('#es-sq-reg-color-p').value;
       var colorS = modal.querySelector('#es-sq-reg-color-s').value;
@@ -2227,6 +2308,7 @@
     colS.addEventListener('input', function () { hexS.value = colS.value; updateLivePreview(); });
     hexS.addEventListener('input', function () { if (/^#[0-9a-f]{6}$/i.test(hexS.value)) { colS.value = hexS.value; updateLivePreview(); } });
 
+    modal._esUpdatePreview = updateLivePreview;
     modal.querySelectorAll('input, select').forEach(function (inp) {
       inp.addEventListener('input', updateLivePreview);
     });
@@ -2398,6 +2480,12 @@
       return CATALOG_READY;
     }
   };
+
+  document.addEventListener('elisee:lang-changed', function () {
+    try { render(); } catch (e) {}
+    var modal = $('es-sq-register-modal');
+    if (modal && typeof modal._esUpdatePreview === 'function') modal._esUpdatePreview();
+  });
 
   function boot() {
     var fromHash = parseTeamFromHash();

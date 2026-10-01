@@ -5390,6 +5390,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.hydrateCurriculumView = hydrateCurriculumView;
 
+  function esPeopleText(key, fallback) {
+    try {
+      if (window.EliseeI18n && typeof window.EliseeI18n.t === 'function') {
+        var value = window.EliseeI18n.t(key);
+        if (value && value !== key) return value;
+      }
+    } catch (e) {}
+    return fallback;
+  }
+
   function renderPeopleCards() {
     const container = document.getElementById('people-cards-container');
     if (!container) return;
@@ -5434,16 +5444,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const countLabel = document.getElementById('people-count-label');
     if (countLabel) {
-      countLabel.textContent = `Profili e società della community (${filtered.length})`;
+      countLabel.textContent = esPeopleText('bacheca.peopleCount', 'Profili e società della community') + ' (' + filtered.length + ')';
     }
 
     if (filtered.length === 0) {
       container.innerHTML = `
         <div class="pf-job-card" style="grid-column:1/-1; grid-template-columns:1fr; text-align:center; padding:2.5rem 1.5rem;">
           <div>
-            <h4 style="margin-bottom:0.5rem;">Nessun profilo con questi filtri</h4>
-            <p class="pf-job-desc" style="max-width:none;margin-bottom:1rem;">Modifica o azzera i parametri di ricerca per visualizzare altri profili.</p>
-            <button type="button" class="btn btn-outline-pill pf-mini" onclick="resetPeopleFilters()">Azzera filtri</button>
+            <h4 style="margin-bottom:0.5rem;">${esPeopleText('bacheca.peopleEmptyTitle', 'Nessun profilo con questi filtri')}</h4>
+            <p class="pf-job-desc" style="max-width:none;margin-bottom:1rem;">${esPeopleText('bacheca.peopleEmptyText', 'Modifica o azzera i parametri di ricerca per visualizzare altri profili.')}</p>
+            <button type="button" class="btn btn-outline-pill pf-mini" onclick="resetPeopleFilters()">${esPeopleText('bacheca.clearFilters', 'Azzera filtri')}</button>
           </div>
         </div>
       `;
@@ -5481,6 +5491,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   window.renderPeopleCards = renderPeopleCards;
+  if (!window.__eliseePeopleLang) {
+    window.__eliseePeopleLang = true;
+    document.addEventListener('elisee:lang-changed', function () {
+      if (typeof window.renderPeopleCards === 'function') window.renderPeopleCards();
+    });
+  }
 
   // switchView già su window sopra la definizione; riallinea riferimento
   window.switchView = switchView;
@@ -6863,9 +6879,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     var emptyHtml = ''
       + '<div class="es-empty is-active" id="es-empty">'
-      + '<h3>Nessun annuncio corrisponde ai filtri</h3>'
-      + '<p>Amplia il raggio di ricerca o rimuovi qualche filtro per vedere più opportunità.</p>'
-      + '<button type="button" id="btn-reset-filtri">Reimposta filtri</button>'
+      + '<h3 data-i18n="bacheca.emptyTitle">' + _listingsLabel('bacheca.emptyTitle', 'Nessun annuncio corrisponde ai filtri') + '</h3>'
+      + '<p data-i18n="bacheca.emptyText">' + _listingsLabel('bacheca.emptyText', 'Amplia la zona di ricerca o rimuovi qualche filtro per vedere più opportunità.') + '</p>'
+      + '<button type="button" id="btn-reset-filtri" data-i18n="bacheca.reset">' + _listingsLabel('bacheca.reset', 'Reimposta filtri') + '</button>'
       + '</div>';
 
     try {
@@ -6877,14 +6893,14 @@ document.addEventListener('DOMContentLoaded', () => {
           var esc = function (s) { return String(s || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'"); };
           var safeTitle = esc(job.title);
           var tags = [];
-          if (job.under) tags.push('Fuoriquota Under');
-          if (job.housing) tags.push('Vitto e alloggio');
-          if (job.svincolato) tags.push('Svincolato');
+          if (job.under) tags.push(_listingsLabel('bacheca.chip.under', 'Fuoriquota Under'));
+          if (job.housing) tags.push(_listingsLabel('bacheca.chip.housing', 'Vitto e alloggio'));
+          if (job.svincolato) tags.push(_listingsLabel('bacheca.chip.free', 'Svincolato'));
           var tagHtml = tags.map(function (t) { return '<span>' + t + '</span>'; }).join('');
-          var cta = 'Candidati';
+          var cta = _listingsLabel('bacheca.apply', 'Candidati');
           try {
-            if (window.isSpectatorRole && window.getActiveSiteRole && window.isSpectatorRole(window.getActiveSiteRole())) cta = 'Solo lettura';
-            else if (window.EliseeDsHub && window.EliseeDsHub.isDs && window.EliseeDsHub.isDs()) cta = 'Riservato ai calciatori';
+            if (window.isSpectatorRole && window.getActiveSiteRole && window.isSpectatorRole(window.getActiveSiteRole())) cta = _listingsLabel('bacheca.readOnly', 'Solo lettura');
+            else if (window.EliseeDsHub && window.EliseeDsHub.isDs && window.EliseeDsHub.isDs()) cta = _listingsLabel('bacheca.playersOnly', 'Riservato ai calciatori');
           } catch (_) {}
           var hx = function (s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
           var badge = (window.EliseeBacheca && typeof window.EliseeBacheca.badgeHtml === 'function')
@@ -6904,7 +6920,7 @@ document.addEventListener('DOMContentLoaded', () => {
             + '<span>' + (job.quando || job.matchScore || '') + '</span>'
             + '<div class="es-card__actions">'
             + '<button type="button" class="btn btn-outline-pill pf-job-cta" onclick="openCandidateModal(\'' + safeTitle + '\')">' + cta + '</button>'
-            + '<button type="button" class="btn btn-outline-pill pf-job-cta" onclick="if(window.openSchedeTecniche)window.openSchedeTecniche({id:\'' + esc(jid) + '\',title:\'' + safeTitle + '\',club:\'' + esc(job.club) + '\',role:\'' + esc(job.role) + '\',location:\'' + esc(job.location) + '\'})">Schede tecniche</button>'
+            + '<button type="button" class="btn btn-outline-pill pf-job-cta" onclick="if(window.openSchedeTecniche)window.openSchedeTecniche({id:\'' + esc(jid) + '\',title:\'' + safeTitle + '\',club:\'' + esc(job.club) + '\',role:\'' + esc(job.role) + '\',location:\'' + esc(job.location) + '\'})">' + _listingsLabel('bacheca.sheets', 'Schede tecniche') + '</button>'
             + '</div></div></article>';
         }).join('');
         jobsContainer.innerHTML = html;
@@ -6987,6 +7003,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.addEventListener('elisee:lang-changed', function () {
     _updateListingsBar();
+    if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs();
   });
   _updateListingsBar();
 

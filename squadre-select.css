@@ -87,6 +87,14 @@
   flex-shrink: 0;
   margin-left: auto;
 }
+.es-sq-topbar-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.es-sq-topbar-actions .btn {
+  min-height: 44px;
+}
 
 /* Toggle maschili / femminili — centrato */
 .es-sq-gender {
@@ -1300,6 +1308,17 @@
     width: 100%;
     max-width: 280px;
     text-align: center;
+  }
+
+  .es-sq-topbar-actions {
+    width: 100%;
+    max-width: 280px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .es-sq-topbar-actions .btn {
+    width: 100%;
   }
 
   .es-sq-gender {

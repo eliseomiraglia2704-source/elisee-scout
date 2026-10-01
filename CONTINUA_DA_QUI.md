@@ -4,7 +4,13 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-10-01** — FIX12 — Il codice di ritorno avvia sempre la sessione:
+Ultimo aggiornamento: **2026-10-01** — FIX13 — La lingua cambia anche fuori dalla navbar:
+
+1. **Pagine pubbliche**: Selezione squadra, bacheca (testi, schede, filtri, persone) e mappa seguono Italiano, English, Español e Français. I testi scritti dal codice si aggiornano allo stesso cambio, non solo i nodi `data-i18n`.
+2. **Ancora in italiano**: i pannelli interni dei ruoli e i testi scritti dagli utenti (annunci, nomi di club).
+3. **File**: `i18n.js`, `index.html`, `squadre-select.js`, `squadre-select.css`, `bacheca-annunci.js`, `app.js`, `pub-button.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX13`.
+
+Feature precedente: **2026-10-01** — FIX12 — Il codice di ritorno avvia sempre la sessione:
 
 1. **Boot**: se l’indirizzo ha `code` o un errore OAuth, la home chiama il completamento appena la pagina è pronta, anche se l’altro ascoltatore è già passato.
 2. **File**: `index.html`, `app.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX12`.

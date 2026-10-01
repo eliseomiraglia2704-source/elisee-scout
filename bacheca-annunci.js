@@ -213,18 +213,41 @@
     ];
   }
 
+  var CAT_I18N = {
+    cerco_squadra: 'bacheca.cat.team',
+    cerco_giocatore: 'bacheca.cat.player',
+    cerco_allenatore: 'bacheca.cat.coach',
+    cerco_arbitro: 'bacheca.cat.ref',
+    cerco_amichevole: 'bacheca.cat.friendly',
+    cerco_sponsor: 'bacheca.cat.sponsor',
+    calciomercato: 'bacheca.cat.market'
+  };
+  function bt(key, fallback) {
+    try {
+      if (window.EliseeI18n && typeof window.EliseeI18n.t === 'function') {
+        var value = window.EliseeI18n.t(key);
+        if (value && value !== key) return value;
+      }
+    } catch (e) {}
+    return fallback;
+  }
+  function catLabel(cat) {
+    var key = CAT_I18N[cat];
+    if (key) return bt(key, LABEL[cat] || cat);
+    return LABEL[cat] || cat;
+  }
   function badgeHtml(cat) {
     cat = infer({ categoria: cat });
-    return '<span class="es-cat-badge" data-cat="' + esc(cat) + '">' + svg(cat, 14) + '<span>' + esc(LABEL[cat] || cat) + '</span></span>';
+    return '<span class="es-cat-badge" data-cat="' + esc(cat) + '">' + svg(cat, 14) + '<span>' + esc(catLabel(cat)) + '</span></span>';
   }
 
   function populateDropdown() {
     var menu = document.querySelector('#dropdown-category .dropdown-options-menu');
     if (!menu || menu.dataset.annCats === '1') return;
     menu.dataset.annCats = '1';
-    var html = '<div class="dropdown-option selected" data-value="all">Tutte le categorie</div>';
+    var html = '<div class="dropdown-option selected" data-value="all">' + bt('bacheca.allCategories', 'Tutte le categorie') + '</div>';
     CATS.forEach(function (c) {
-      html += '<div class="dropdown-option" data-value="' + c + '">' + svg(c, 14) + '<span>' + LABEL[c] + '</span></div>';
+      html += '<div class="dropdown-option" data-value="' + c + '">' + svg(c, 14) + '<span>' + catLabel(c) + '</span></div>';
     });
     menu.innerHTML = html;
     menu.querySelectorAll('.dropdown-option').forEach(function (option) {
@@ -234,7 +257,7 @@
         menu.querySelectorAll('.dropdown-option').forEach(function (o) { o.classList.remove('selected'); });
         option.classList.add('selected');
         var span = document.getElementById('category-selected-text');
-        if (span) span.textContent = option.getAttribute('data-value') === 'all' ? 'Tutte le categorie' : (LABEL[option.getAttribute('data-value')] || option.textContent.trim());
+        if (span) span.textContent = option.getAttribute('data-value') === 'all' ? bt('bacheca.allCategories', 'Tutte le categorie') : (catLabel(option.getAttribute('data-value')) || option.textContent.trim());
         var dd = document.getElementById('dropdown-category');
         if (dd) dd.classList.remove('open');
         writeCatParam(option.getAttribute('data-value'));
@@ -274,7 +297,7 @@
     if (opt) {
       opt.classList.add('selected');
       var span = document.getElementById('category-selected-text');
-      if (span) span.textContent = LABEL[cat];
+      if (span) span.textContent = catLabel(cat);
     }
   }
 
@@ -681,9 +704,9 @@
     var modal = document.getElementById('modal-pubblica-annuncio');
     if (!modal) { toast('Modulo annuncio non trovato.', 'error'); return; }
     var kicker = modal.querySelector('.portfolio-kicker');
-    if (kicker) kicker.textContent = 'Bacheca annunci';
+    if (kicker) kicker.textContent = bt('bacheca.tab.annunci', 'Bacheca annunci');
     var h3 = document.getElementById('pubblica-annuncio-title');
-    if (h3) h3.textContent = 'Nuovo annuncio';
+    if (h3) h3.textContent = bt('bacheca.newAd', 'Nuovo annuncio');
     paintWizard();
     modal.classList.add('is-open', 'open', 'active');
     modal.style.setProperty('display', 'flex', 'important');
@@ -708,14 +731,24 @@
   function patchCtas() {
     var pub = document.getElementById('btn-bacheca-pubblica');
     if (pub && !pub.classList.contains('pub-btn')) {
-      pub.textContent = 'Nuovo annuncio';
-      pub.setAttribute('title', 'Pubblica un nuovo annuncio');
+      pub.textContent = bt('bacheca.newAd', 'Nuovo annuncio');
+      pub.setAttribute('title', bt('bacheca.publishTitle', 'Pubblica un nuovo annuncio'));
     }
     var req = document.getElementById('btn-pubblica-richiesta');
-    if (req) req.textContent = 'Nuovo annuncio';
+    if (req && !req.getAttribute('data-i18n')) req.textContent = bt('bacheca.newAd', 'Nuovo annuncio');
     var lead = document.querySelector('#bacheca-annunci .pf-lead');
-    if (lead) lead.textContent = 'Sette categorie di annuncio, filtrabili per ruolo, zona e raggio. Pubblica in due passi.';
+    if (lead && !lead.getAttribute('data-i18n')) {
+      lead.textContent = bt('bacheca.lead', 'Sette categorie di annuncio, filtrabili per ruolo e zona. Pubblica in due passi.');
+    }
   }
+
+  document.addEventListener('elisee:lang-changed', function () {
+    var menu = document.querySelector('#dropdown-category .dropdown-options-menu');
+    if (menu) delete menu.dataset.annCats;
+    populateDropdown();
+    patchCtas();
+    if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs();
+  });
 
   var booted = false;
   function boot() {

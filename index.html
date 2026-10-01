@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <script>
     (function () {
-      var BUILD_VERSION = '20261001_FIX12';
+      var BUILD_VERSION = '20261001_FIX13';
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
         if (savedTheme) {
@@ -703,7 +703,7 @@
   <link rel="stylesheet" href="elisee-world/elisee-world.css?v=20260906_EWGBA1">
   <link rel="stylesheet" href="minigioco-carriera.css?v=20260913_HUBPOLISH2">
   <link rel="stylesheet" href="autopilot.css?v=20260827_FIX3">
-  <link rel="stylesheet" href="squadre-select.css?v=20260915_FGCFONT1">
+  <link rel="stylesheet" href="squadre-select.css?v=20261001_FIX13">
   <link rel="stylesheet" href="formazione-squadra.css?v=20260830_ECCB1">
   <link rel="stylesheet" href="verifica-account.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="manager.css?v=20260914_CANDMGR1">
@@ -3316,10 +3316,10 @@
             <header class="pf-header pf-header-bacheca">
               <div class="pf-header-text">
                 <h1 class="pf-title" data-i18n="bacheca.title">Bacheca reclutamento</h1>
-                <p class="pf-lead">Sette categorie di annuncio, filtrabili per ruolo, zona e raggio. Pubblica in due passi.</p>
+                <p class="pf-lead" data-i18n="bacheca.lead">Sette categorie di annuncio, filtrabili per ruolo e zona. Pubblica in due passi.</p>
               </div>
               <div class="pf-header-actions es-board__actions">
-                <button class="pub-btn" id="btn-bacheca-pubblica" data-bacheca-action="pubblica" data-state="idle" type="button" title="Pubblica un nuovo annuncio">
+                <button class="pub-btn" id="btn-bacheca-pubblica" data-bacheca-action="pubblica" data-state="idle" type="button" data-i18n-title="bacheca.publishTitle" title="Pubblica un nuovo annuncio">
                   <span class="icon">
                     <svg class="ic-doc" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M9.5 13h5M9.5 16.5h5"/></svg>
                     <svg class="ic-check" viewBox="0 0 24 24" stroke-width="2.6"><path d="M5 13l4.5 4.5L19 8"/></svg>
@@ -3327,29 +3327,29 @@
                       <svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/></svg>
                     </span>
                   </span>
-                  <span class="label" id="pubLabel">Pubblica annuncio</span>
+                  <span class="label" id="pubLabel" data-i18n="bacheca.publish">Pubblica annuncio</span>
                 </button>
-                <button type="button" class="es-btn es-btn--primary" id="btn-bacheca-crea-profilo" data-bacheca-action="crea-profilo" title="Crea il tuo profilo">Crea profilo</button>
+                <button type="button" class="es-btn es-btn--primary" id="btn-bacheca-crea-profilo" data-bacheca-action="crea-profilo" data-i18n="bacheca.createProfile" data-i18n-title="bacheca.createProfileTitle" title="Crea il tuo profilo">Crea profilo</button>
               </div>
             </header>
 
             <!-- Navigazione Tab Bacheca con indicatore di stato attivo azzurro -->
-            <nav class="bacheca-nav-tabs" role="tablist" aria-label="Sezioni Bacheca">
+            <nav class="bacheca-nav-tabs" role="tablist" data-i18n-aria="bacheca.tabs" aria-label="Sezioni Bacheca">
               <button type="button" class="bacheca-tab-btn is-active" id="tab-btn-annunci" role="tab" aria-selected="true" aria-controls="bacheca-tab-annunci" onclick="switchBachecaTab('annunci')">
                 <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
-                <span>Bacheca annunci</span>
+                <span data-i18n="bacheca.tab.annunci">Bacheca annunci</span>
               </button>
               <button type="button" class="bacheca-tab-btn" id="tab-btn-persone" role="tab" aria-selected="false" aria-controls="bacheca-tab-persone" onclick="switchBachecaTab('persone')">
                 <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                <span>Persone &amp; squadre</span>
+                <span data-i18n="bacheca.tab.people">Persone e squadre</span>
               </button>
               <button type="button" class="bacheca-tab-btn" id="tab-btn-wall" role="tab" aria-selected="false" onclick="switchBachecaTab('wall')">
                 <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-                <span>Wall trattative</span>
+                <span data-i18n="bacheca.tab.wall">Wall trattative</span>
               </button>
               <button type="button" class="bacheca-tab-btn" id="tab-btn-squadre" role="tab" aria-selected="false" onclick="switchBachecaTab('squadre')">
                 <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>
-                <span>Squadre</span>
+                <span data-i18n="bacheca.tab.teams">Squadre</span>
               </button>
             </nav>
 
@@ -3366,6 +3366,7 @@
                     <input 
                       type="text" 
                       id="main-search-input" 
+                      data-i18n-placeholder="bacheca.search"
                       placeholder="Cerca annunci, club o calciatori..." 
                       autocomplete="off"
                       spellcheck="false"
@@ -3375,7 +3376,7 @@
                       aria-controls="es-search-suggest"
                       aria-haspopup="listbox"
                     />
-                    <button type="button" id="clear-search-btn" aria-label="Cancella">✕</button>
+                    <button type="button" id="clear-search-btn" data-i18n-aria="bacheca.clear" aria-label="Cancella">✕</button>
                   </div>
                   <div id="es-search-suggest" class="es-search-suggest" role="listbox" hidden></div>
                 </div>
@@ -3384,15 +3385,15 @@
                   <div class="pf-chips">
                     <label class="pf-chip">
                       <input type="checkbox" id="filter-under">
-                      <span>Fuoriquota Under</span>
+                      <span data-i18n="bacheca.chip.under">Fuoriquota Under</span>
                     </label>
                     <label class="pf-chip">
                       <input type="checkbox" id="filter-housing">
-                      <span>Vitto e alloggio</span>
+                      <span data-i18n="bacheca.chip.housing">Vitto e alloggio</span>
                     </label>
                     <label class="pf-chip">
                       <input type="checkbox" id="filter-svincolato">
-                      <span>Svincolato</span>
+                      <span data-i18n="bacheca.chip.free">Svincolato</span>
                     </label>
                   </div>
                 </div>
@@ -3445,9 +3446,9 @@
                       </div>
                     </article>
                     <div class="es-empty" id="es-empty" hidden>
-                      <h3>Nessun annuncio corrisponde ai filtri</h3>
-                      <p>Amplia il raggio di ricerca o rimuovi qualche filtro per vedere più opportunità.</p>
-                      <button type="button" id="btn-reset-filtri">Reimposta filtri</button>
+                      <h3 data-i18n="bacheca.emptyTitle">Nessun annuncio corrisponde ai filtri</h3>
+                      <p data-i18n="bacheca.emptyText">Amplia la zona di ricerca o rimuovi qualche filtro per vedere più opportunità.</p>
+                      <button type="button" id="btn-reset-filtri" data-i18n="bacheca.reset">Reimposta filtri</button>
                     </div>
                   </div>
                   <script>
@@ -3498,25 +3499,25 @@
                     })();
                   </script>
                   <div class="es-cta-strip">
-                    <p>Non hai trovato il ruolo giusto?</p>
-                    <button type="button" class="es-btn es-btn--secondary" id="btn-pubblica-richiesta" data-bacheca-action="pubblica">Nuovo annuncio</button>
+                    <p data-i18n="bacheca.cta">Non hai trovato il ruolo giusto?</p>
+                    <button type="button" class="es-btn es-btn--secondary" id="btn-pubblica-richiesta" data-bacheca-action="pubblica" data-i18n="bacheca.newAd">Nuovo annuncio</button>
                   </div>
                 </div>
 
                 <aside class="es-sidebar">
                   <div class="es-sidebar__item">
-                    <h3>In evidenza</h3>
-                    <p class="es-sidebar__caption">Profili e società con maggiore attività sul network nelle ultime 24 ore.</p>
+                    <h3 data-i18n="bacheca.featured">In evidenza</h3>
+                    <p class="es-sidebar__caption" data-i18n="bacheca.featuredCaption">Profili e società con maggiore attività sul network nelle ultime 24 ore.</p>
                     <ul class="es-rank-list" id="in-evidenza-list"></ul>
-                    <p class="es-sidebar__empty" id="in-evidenza-empty">Ancora nessuna attività registrata nelle ultime 24 ore.</p>
+                    <p class="es-sidebar__empty" id="in-evidenza-empty" data-i18n="bacheca.featuredEmpty">Ancora nessuna attività registrata nelle ultime 24 ore.</p>
                     <div id="trending-search-list-bacheca" hidden></div>
                   </div>
                   <div class="es-sidebar__item">
-                    <h3>Community score</h3>
-                    <p class="es-sidebar__caption">Classifica formazione e cultura calcistica (quiz piattaforma).</p>
+                    <h3 data-i18n="bacheca.score">Community score</h3>
+                    <p class="es-sidebar__caption" data-i18n="bacheca.scoreCaption">Classifica formazione e cultura calcistica (quiz piattaforma).</p>
                     <ol class="es-rank-list" id="community-score-list"></ol>
-                    <p class="es-sidebar__empty" id="community-score-empty">Nessun punteggio ancora registrato: fai il quiz per essere il primo in classifica.</p>
-                    <button type="button" class="es-btn es-btn--secondary es-sidebar__cta" id="btn-fai-quiz">Fai il quiz</button>
+                    <p class="es-sidebar__empty" id="community-score-empty" data-i18n="bacheca.scoreEmpty">Nessun punteggio ancora registrato: fai il quiz per essere il primo in classifica.</p>
+                    <button type="button" class="es-btn es-btn--secondary es-sidebar__cta" id="btn-fai-quiz" data-i18n="bacheca.quiz">Fai il quiz</button>
                     <div id="leaderboard-rows-bacheca" hidden></div>
                   </div>
                 </aside>
@@ -3530,71 +3531,71 @@
             <div id="bacheca-tab-persone" class="bacheca-tab-pane" role="tabpanel" style="display: none;">
 
               <div class="bacheca-people-header">
-                <div class="bacheca-people-types" role="radiogroup" aria-label="Filtra tipo profilo">
-                  <button type="button" class="bacheca-type-btn is-active" data-type="all" onclick="filterPeopleByType('all')">Tutti i profili</button>
-                  <button type="button" class="bacheca-type-btn" data-type="calciatore" onclick="filterPeopleByType('calciatore')">Calciatori</button>
-                  <button type="button" class="bacheca-type-btn" data-type="squadra" onclick="filterPeopleByType('squadra')">Società</button>
-                  <button type="button" class="bacheca-type-btn" data-type="scout" onclick="filterPeopleByType('scout')">Scout &amp; DS</button>
-                  <button type="button" class="bacheca-type-btn" data-type="staff" onclick="filterPeopleByType('staff')">Staff tecnico</button>
+                <div class="bacheca-people-types" role="radiogroup" data-i18n-aria="bacheca.peopleFilter" aria-label="Filtra tipo profilo">
+                  <button type="button" class="bacheca-type-btn is-active" data-type="all" data-i18n="bacheca.people.all" onclick="filterPeopleByType('all')">Tutti i profili</button>
+                  <button type="button" class="bacheca-type-btn" data-type="calciatore" data-i18n="bacheca.people.players" onclick="filterPeopleByType('calciatore')">Calciatori</button>
+                  <button type="button" class="bacheca-type-btn" data-type="squadra" data-i18n="bacheca.people.clubs" onclick="filterPeopleByType('squadra')">Società</button>
+                  <button type="button" class="bacheca-type-btn" data-type="scout" data-i18n="bacheca.people.scout" onclick="filterPeopleByType('scout')">Scout e DS</button>
+                  <button type="button" class="bacheca-type-btn" data-type="staff" data-i18n="bacheca.people.staff" onclick="filterPeopleByType('staff')">Staff tecnico</button>
                 </div>
               </div>
 
               <div class="bacheca-people-search-panel" id="persone-portal">
                 <div class="bacheca-search-input-wrap">
                   <i data-lucide="search" class="bacheca-search-ico"></i>
-                  <input type="text" id="search-people-query" class="bacheca-search-input" placeholder="Cerca per nome, cognome, club, ruolo o categoria (es. Rossi, Serie D, Lucera)..." oninput="if(window.filterPeopleCards)filterPeopleCards();" onkeyup="if(event.key==='Enter')filterPeopleCards()">
+                  <input type="text" id="search-people-query" class="bacheca-search-input" data-i18n-placeholder="bacheca.peopleSearch" placeholder="Cerca per nome, cognome, club, ruolo o categoria (es. Rossi, Serie D, Lucera)..." oninput="if(window.filterPeopleCards)filterPeopleCards();" onkeyup="if(event.key==='Enter')filterPeopleCards()">
                   <input type="hidden" id="search-people-name" value="">
                   <input type="hidden" id="search-people-surname" value="">
                 </div>
 
                 <div class="bacheca-people-extra-filters">
                   <div class="filter-group pf-filter-group" style="min-width: 170px;">
-                    <label>Ruolo</label>
+                    <label data-i18n="bacheca.role">Ruolo</label>
                     <div class="custom-dropdown pf-select" id="search-people-role">
                       <div class="dropdown-trigger" role="button" tabindex="0" aria-haspopup="listbox">
-                        <span id="search-people-role-text">Tutti i ruoli</span>
+                        <span id="search-people-role-text" data-i18n="bacheca.allRoles">Tutti i ruoli</span>
                         <i data-lucide="chevron-down" class="arrow-icon"></i>
                       </div>
                       <div class="dropdown-options-menu" role="listbox">
-                        <div class="dropdown-option selected" data-value="all">Tutti i ruoli</div>
-                        <div class="dropdown-option" data-value="Attaccante">Attaccante</div>
-                        <div class="dropdown-option" data-value="Centrocampista">Centrocampista</div>
-                        <div class="dropdown-option" data-value="Difensore">Difensore</div>
-                        <div class="dropdown-option" data-value="Portiere">Portiere</div>
-                        <div class="dropdown-option" data-value="Match Analyst">Match Analyst</div>
-                        <div class="dropdown-option" data-value="Preparatore">Preparatore</div>
-                        <div class="dropdown-option" data-value="Scout">Scout / Procuratore</div>
-                        <div class="dropdown-option" data-value="Direttore">Direttore Sportivo</div>
-                        <div class="dropdown-option" data-value="Squadra">Squadra / Società</div>
+                        <div class="dropdown-option selected" data-value="all" data-i18n="bacheca.allRoles">Tutti i ruoli</div>
+                        <div class="dropdown-option" data-value="Attaccante" data-i18n="bacheca.role.fwd">Attaccante</div>
+                        <div class="dropdown-option" data-value="Centrocampista" data-i18n="bacheca.role.mid">Centrocampista</div>
+                        <div class="dropdown-option" data-value="Difensore" data-i18n="bacheca.role.def">Difensore</div>
+                        <div class="dropdown-option" data-value="Portiere" data-i18n="bacheca.role.gk">Portiere</div>
+                        <div class="dropdown-option" data-value="Match Analyst" data-i18n="bacheca.role.analyst">Match Analyst</div>
+                        <div class="dropdown-option" data-value="Preparatore" data-i18n="bacheca.role.coach">Preparatore</div>
+                        <div class="dropdown-option" data-value="Scout" data-i18n="bacheca.role.scout">Scout / Procuratore</div>
+                        <div class="dropdown-option" data-value="Direttore" data-i18n="bacheca.role.ds">Direttore Sportivo</div>
+                        <div class="dropdown-option" data-value="Squadra" data-i18n="bacheca.role.club">Squadra / Società</div>
                       </div>
                     </div>
                   </div>
 
                   <div class="filter-group pf-filter-group" style="min-width: 170px;">
-                    <label>Categoria</label>
+                    <label data-i18n="bacheca.category">Categoria</label>
                     <div class="custom-dropdown pf-select" id="search-people-category">
                       <div class="dropdown-trigger" role="button" tabindex="0" aria-haspopup="listbox">
-                        <span id="search-people-category-text">Tutte le categorie</span>
+                        <span id="search-people-category-text" data-i18n="bacheca.allCategories">Tutte le categorie</span>
                         <i data-lucide="chevron-down" class="arrow-icon"></i>
                       </div>
                       <div class="dropdown-options-menu" role="listbox">
-                        <div class="dropdown-option selected" data-value="all">Tutte le categorie</div>
+                        <div class="dropdown-option selected" data-value="all" data-i18n="bacheca.allCategories">Tutte le categorie</div>
                         <div class="dropdown-option" data-value="Serie D">Serie D</div>
                         <div class="dropdown-option" data-value="Eccellenza">Eccellenza</div>
                         <div class="dropdown-option" data-value="Promozione">Promozione</div>
                         <div class="dropdown-option" data-value="Prima Categoria">Prima Categoria</div>
                         <div class="dropdown-option" data-value="Under 19">Under 19</div>
-                        <div class="dropdown-option" data-value="Svincolato">Svincolato Art. 107</div>
+                        <div class="dropdown-option" data-value="Svincolato" data-i18n="bacheca.cat.free">Svincolato Art. 107</div>
                       </div>
                     </div>
                   </div>
 
-                  <button type="button" class="btn btn-outline-pill pf-mini" onclick="resetPeopleFilters()" style="margin-bottom: 2px;">Azzera filtri</button>
+                  <button type="button" class="btn btn-outline-pill pf-mini" data-i18n="bacheca.clearFilters" onclick="resetPeopleFilters()" style="margin-bottom: 2px;">Azzera filtri</button>
                 </div>
               </div>
 
               <div class="pf-section-label">
-                <span id="people-count-label">Profili e società della community</span>
+                <span id="people-count-label" data-i18n="bacheca.peopleCount">Profili e società della community</span>
                 <span class="pf-section-line" aria-hidden="true"></span>
               </div>
               <div id="people-cards-container" class="pf-people-grid"></div>
@@ -3613,22 +3614,22 @@
       <section id="squadre-portal" class="pf-page">
         <div class="container pf-page-inner">
           <div class="es-sq-topbar">
-            <h1>Seleziona squadra</h1>
-            <div class="es-sq-topbar-actions" style="display:flex;gap:10px;align-items:center;">
+            <h1 data-i18n="sq.title">Seleziona squadra</h1>
+            <div class="es-sq-topbar-actions">
               <button type="button" class="btn btn-outline-pill es-sq-btn-register" id="es-sq-open-register" style="border-color:var(--es-accent,#00d285);color:var(--es-accent,#00d285);font-weight:700;display:inline-flex;align-items:center;gap:6px;">
-                <span>➕</span> Registra Club
+                <span aria-hidden="true">+</span> <span data-i18n="sq.register">Registra Club</span>
               </button>
-              <button type="button" class="btn btn-outline-pill es-sq-back" onclick="if(window.switchView){window.switchView('bacheca','#bacheca-annunci');}">Torna alla Bacheca</button>
+              <button type="button" class="btn btn-outline-pill es-sq-back" data-i18n="sq.back" onclick="if(window.switchView){window.switchView('bacheca','#bacheca-annunci');}">Torna alla Bacheca</button>
             </div>
           </div>
           <div id="squadre-content">
-            <div class="es-sq-gender" role="radiogroup" aria-label="Tipo squadre">
-              <label><input type="radio" name="es-sq-gender" value="m" checked> Squadre maschili</label>
-              <label><input type="radio" name="es-sq-gender" value="f"> Sq. femminili</label>
+            <div class="es-sq-gender" role="radiogroup" data-i18n-aria="sq.gender" aria-label="Tipo squadre">
+              <label><input type="radio" name="es-sq-gender" value="m" checked> <span data-i18n="sq.men">Squadre maschili</span></label>
+              <label><input type="radio" name="es-sq-gender" value="f"> <span data-i18n="sq.women">Sq. femminili</span></label>
             </div>
-            <div class="es-sq-country" id="es-sq-country">ITALIA</div>
+            <div class="es-sq-country" id="es-sq-country" data-i18n="sq.country.italy">ITALIA</div>
             <div class="es-sq-stage">
-              <div class="es-sq-main" id="es-sq-main" tabindex="0" role="region" aria-label="Sezione squadra">
+              <div class="es-sq-main" id="es-sq-main" tabindex="0" role="region" data-i18n-aria="sq.section" aria-label="Sezione squadra">
                 <div class="es-sq-gold-ring" id="es-sq-gold-ring" aria-hidden="true">
                   <svg id="es-sq-gold-svg" viewBox="0 0 400 420" preserveAspectRatio="none">
                     <rect id="es-sq-gold-rect" class="es-sq-gold-draw" x="3" y="3" width="394" height="414" rx="18" ry="18" pathLength="100"></rect>
@@ -3640,12 +3641,14 @@
                        class="es-sq-verify-badge is-verified"
                        src="immagini/verifica/badge-verificato.svg"
                        alt="Club Registrato Ufficiale"
+                       data-i18n-alt="sq.verifiedAlt"
                        width="28"
                        height="28"
+                       data-i18n-title="sq.verifiedTitle"
                        title="Verificato — la squadra fa parte del progetto ELISEE SCOUT" />
                 </div>
                 <div class="es-sq-crest-row">
-                  <button type="button" class="es-sq-nav-btn" id="es-sq-prev" aria-label="Squadra precedente">
+                  <button type="button" class="es-sq-nav-btn" id="es-sq-prev" data-i18n-aria="sq.prevTeam" aria-label="Squadra precedente">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
                   </button>
                   <div class="es-sq-crest" id="es-sq-crest">
@@ -3654,25 +3657,25 @@
                     <span id="es-sq-crest-abbr" hidden>FGC</span>
                     <span id="es-sq-crest-year" hidden>2024</span>
                   </div>
-                  <button type="button" class="es-sq-nav-btn" id="es-sq-next" aria-label="Squadra successiva">
+                  <button type="button" class="es-sq-nav-btn" id="es-sq-next" data-i18n-aria="sq.nextTeam" aria-label="Squadra successiva">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
                   </button>
                 </div>
-                <div class="es-sq-standings" id="es-sq-stars" aria-label="Stato classifica">
+                <div class="es-sq-standings" id="es-sq-stars" data-i18n-aria="sq.standings" aria-label="Stato classifica">
                   <div class="es-sq-pos-meta">0 pt · 0 gare</div>
                 </div>
                 <div class="es-sq-counter" id="es-sq-counter" aria-live="polite"></div>
-                <div class="es-sq-league-block" role="group" aria-label="Categoria campionato">
+                <div class="es-sq-league-block" role="group" data-i18n-aria="sq.leagueGroup" aria-label="Categoria campionato">
                   <div class="es-sq-league-row">
-                    <button type="button" class="es-sq-nav-btn es-sq-league-btn" id="es-sq-league-prev" aria-label="Categoria precedente" title="Categoria precedente">
+                    <button type="button" class="es-sq-nav-btn es-sq-league-btn" id="es-sq-league-prev" data-i18n-aria="sq.leaguePrev" data-i18n-title="sq.leaguePrev" aria-label="Categoria precedente" title="Categoria precedente">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
                     </button>
-                    <button type="button" class="es-sq-league-pill" id="es-sq-league-pill" aria-haspopup="dialog" aria-controls="es-sq-league-picker" title="Apri elenco categorie">
+                    <button type="button" class="es-sq-league-pill" id="es-sq-league-pill" aria-haspopup="dialog" aria-controls="es-sq-league-picker" data-i18n-title="sq.leagueOpen" title="Apri elenco categorie">
                       <img id="es-sq-league-logo" class="es-sq-league-logo" src="immagini/squadre-loghi/amatoriale.png" alt="AMATORIALE logo" width="28" height="28" referrerpolicy="no-referrer" />
                       <span class="es-sq-league" id="es-sq-league" title="AMATORIALE">AMATORIALE</span>
                       <svg class="es-sq-league-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
                     </button>
-                    <button type="button" class="es-sq-nav-btn es-sq-league-btn" id="es-sq-league-next" aria-label="Categoria successiva" title="Categoria successiva">
+                    <button type="button" class="es-sq-nav-btn es-sq-league-btn" id="es-sq-league-next" data-i18n-aria="sq.leagueNext" data-i18n-title="sq.leagueNext" aria-label="Categoria successiva" title="Categoria successiva">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
                     </button>
                   </div>
@@ -3682,21 +3685,21 @@
                   <div class="es-sq-picker-backdrop" id="es-sq-picker-backdrop" tabindex="-1"></div>
                   <div class="es-sq-picker-panel" role="dialog" aria-modal="true" aria-labelledby="es-sq-picker-title">
                     <header class="es-sq-picker-head">
-                      <h3 id="es-sq-picker-title">Scegli categoria</h3>
-                      <button type="button" class="es-sq-picker-close" id="es-sq-picker-close" aria-label="Chiudi">&times;</button>
+                      <h3 id="es-sq-picker-title" data-i18n="sq.pickerTitle">Scegli categoria</h3>
+                      <button type="button" class="es-sq-picker-close" id="es-sq-picker-close" data-i18n-aria="sq.close" aria-label="Chiudi">&times;</button>
                     </header>
-                    <input type="search" class="es-sq-picker-search" id="es-sq-league-search" placeholder="Cerca categoria, squadra o città" autocomplete="off" />
-                    <div class="es-sq-picker-list" id="es-sq-league-list" role="listbox" aria-label="Elenco categorie"></div>
+                    <input type="search" class="es-sq-picker-search" id="es-sq-league-search" data-i18n-placeholder="sq.pickerSearch" placeholder="Cerca categoria, squadra o città" autocomplete="off" />
+                    <div class="es-sq-picker-list" id="es-sq-league-list" role="listbox" data-i18n-aria="sq.pickerList" aria-label="Elenco categorie"></div>
                   </div>
                 </div>
               </div>
               <div class="es-sq-side">
-                <div class="es-sq-panel es-sq-kit-panel" id="es-sq-kit-panel" tabindex="0" role="region" aria-label="Sezione divise">
-                  <div class="es-sq-panel-label">Divisa</div>
-                  <div class="es-sq-panel-title" id="es-sq-kit-title">IN CASA</div>
+                <div class="es-sq-panel es-sq-kit-panel" id="es-sq-kit-panel" tabindex="0" role="region" data-i18n-aria="sq.kitSection" aria-label="Sezione divise">
+                  <div class="es-sq-panel-label" data-i18n="sq.kit">Divisa</div>
+                  <div class="es-sq-panel-title" id="es-sq-kit-title" data-i18n="sq.kit.home">IN CASA</div>
                   <div class="es-sq-kit-stage" id="es-sq-kit-stage">
                     <span class="es-sq-kit-floor" aria-hidden="true"></span>
-                    <button type="button" class="es-sq-kit-ghost es-sq-kit-ghost--prev" id="es-sq-kit-ghost-prev" aria-label="Divisa precedente" hidden>
+                    <button type="button" class="es-sq-kit-ghost es-sq-kit-ghost--prev" id="es-sq-kit-ghost-prev" data-i18n-aria="sq.kit.prev" aria-label="Divisa precedente" hidden>
                       <img id="es-sq-kit-prev-img" class="es-sq-kit-ghost-img" alt="" />
                       <span class="es-sq-kit-ghost-shine" aria-hidden="true"></span>
                     </button>
@@ -3713,25 +3716,25 @@
                         <div class="es-sq-kit-collar"></div>
                       </div>
                     </div>
-                    <button type="button" class="es-sq-kit-ghost es-sq-kit-ghost--next" id="es-sq-kit-ghost-next" aria-label="Divisa successiva" hidden>
+                    <button type="button" class="es-sq-kit-ghost es-sq-kit-ghost--next" id="es-sq-kit-ghost-next" data-i18n-aria="sq.kit.next" aria-label="Divisa successiva" hidden>
                       <img id="es-sq-kit-next-img" class="es-sq-kit-ghost-img" alt="" />
                       <span class="es-sq-kit-ghost-shine" aria-hidden="true"></span>
                     </button>
                   </div>
                   <div class="es-sq-kit-groups" id="es-sq-kit-groups" hidden></div>
                   <div class="es-sq-kit-dots" style="display:none;">
-                    <button type="button" id="es-sq-kit-prev" aria-label="Divisa precedente">&lsaquo;</button>
+                    <button type="button" id="es-sq-kit-prev" data-i18n-aria="sq.kit.prev" aria-label="Divisa precedente">&lsaquo;</button>
                     <span class="es-sq-dot on"></span>
-                    <button type="button" id="es-sq-kit-next" aria-label="Divisa successiva">&rsaquo;</button>
+                    <button type="button" id="es-sq-kit-next" data-i18n-aria="sq.kit.next" aria-label="Divisa successiva">&rsaquo;</button>
                   </div>
                 </div>
                 <div class="es-sq-panel es-sq-city-panel has-stadium-photo" id="es-sq-city-panel">
                   <div class="es-sq-city-bg" id="es-sq-city-bg" aria-hidden="true" style="background-image: url('immagini/stadi/city-foggia.jpg');"></div>
                   <div class="es-sq-city-overlay" aria-hidden="true"></div>
                   <div class="es-sq-city-content">
-                    <div class="es-sq-panel-label">Città · Stadio</div>
+                    <div class="es-sq-panel-label" data-i18n="sq.cityStadium">Città · Stadio</div>
                     <div class="es-sq-city-name is-foggia-city" id="es-sq-city">FOGGIA</div>
-                    <div class="es-sq-stadium-name" id="es-sq-stadium">Stadio non disponibile</div>
+                    <div class="es-sq-stadium-name" id="es-sq-stadium" data-i18n="sq.stadiumMissing">Stadio non disponibile</div>
                     <div class="es-sq-stadium-cap" id="es-sq-capacity">Capienza: —</div>
                     <svg class="es-sq-stadium-ico" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                       <path d="M8 40 L32 18 L56 40"/><path d="M14 40 V52 H50 V40"/><path d="M24 52 V44 H40 V52"/>
@@ -3741,13 +3744,13 @@
               </div>
             </div>
             <div class="es-sq-actions">
-              <button type="button" class="btn btn-outline-pill es-sq-select-btn" id="es-sq-select">Seleziona squadra</button>
-              <button type="button" class="btn btn-outline-pill" id="es-sq-mgr-btn">Diventa Elisee Manager</button>
-              <button type="button" class="btn btn-outline-pill pf-btn-solid" id="es-sq-tc-btn">Pannello Elisee Manager</button>
-              <button type="button" class="btn btn-outline-pill" onclick="if(window.openTransferWall){window.openTransferWall();}">Wall trattative</button>
-              <button type="button" class="btn btn-outline-pill" id="es-sq-back-bacheca" onclick="if(window.switchView){window.switchView('bacheca','#bacheca-annunci');}">Torna alla Bacheca</button>
+              <button type="button" class="btn btn-outline-pill es-sq-select-btn" id="es-sq-select" data-i18n="sq.select">Seleziona squadra</button>
+              <button type="button" class="btn btn-outline-pill" id="es-sq-mgr-btn" data-i18n="sq.manager">Diventa Elisee Manager</button>
+              <button type="button" class="btn btn-outline-pill pf-btn-solid" id="es-sq-tc-btn" data-i18n="sq.panel">Pannello Elisee Manager</button>
+              <button type="button" class="btn btn-outline-pill" data-i18n="sq.wall" onclick="if(window.openTransferWall){window.openTransferWall();}">Wall trattative</button>
+              <button type="button" class="btn btn-outline-pill" id="es-sq-back-bacheca" data-i18n="sq.back" onclick="if(window.switchView){window.switchView('bacheca','#bacheca-annunci');}">Torna alla Bacheca</button>
             </div>
-            <p class="es-sq-meta">← → squadre · frecce Categoria a schermo (o Ctrl+↑/↓) · ↑ ↓ scroll pagina · stile <strong>EA Sports FC</strong></p>
+            <p class="es-sq-meta" data-i18n="sq.meta">← → squadre · frecce Categoria a schermo (o Ctrl+↑/↓) · ↑ ↓ scroll pagina · stile EA Sports FC</p>
           </div>
         </div>
       </section>
@@ -4822,16 +4825,16 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
                 <path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/>
               </svg>
-              <span><strong id="es-map-count">0</strong> club ufficiali (dalla Serie A all'Eccellenza) sono visibili sulla mappa.</span>
-              <span class="es-map-badge-update">· Dati verificati a Settembre 2026</span>
+              <span><strong id="es-map-count">0</strong> <span data-i18n="map.clubs">club ufficiali (dalla Serie A all'Eccellenza) sono visibili sulla mappa.</span></span>
+              <span class="es-map-badge-update">· <span data-i18n="map.updated">Dati verificati a settembre 2026</span></span>
             </div>
             <button type="button" id="es-map-geobtn" class="es-map-cta mappa-cta" onclick="if(window.openClubGeoModal){ window.openClubGeoModal(); } else if(window.EliseeClubMap && window.EliseeClubMap.openGeoModal){ window.EliseeClubMap.openGeoModal(); } else if(window.EliseeClubMap){ window.EliseeClubMap.setGeo(); } return false;">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                 <path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/>
               </svg>
-              Sei un club? Imposta la geolocalizzazione
+              <span data-i18n="map.geo">Sei un club? Imposta la geolocalizzazione</span>
             </button>
-            <a href="#mappa-portal" id="es-map-geolink" style="display:none;">Sei un club? Imposta la geolocalizzazione</a>
+            <a href="#mappa-portal" id="es-map-geolink" style="display:none;"><span data-i18n="map.geo">Sei un club? Imposta la geolocalizzazione</span></a>
           </div>
 
           <div class="es-map-frame es-map-wrap">
@@ -4843,15 +4846,15 @@
                     <circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                   </svg>
                 </span>
-                <input type="text" id="club-search" placeholder="Cerca un club per nome o comune" autocomplete="off" />
+                <input type="text" id="club-search" data-i18n-placeholder="map.search" placeholder="Cerca un club per nome o comune" autocomplete="off" />
                 <span class="es-map-search__count" id="es-map-search-count" aria-live="polite" aria-atomic="true"></span>
-                <button class="es-map-search__clear" id="club-search-clear" type="button">✕</button>
+                <button class="es-map-search__clear" id="club-search-clear" type="button" data-i18n-aria="map.clear" aria-label="Cancella">✕</button>
               </div>
               <div class="es-map-search__results" id="club-search-results"></div>
             </div>
 
-            <div id="es-map-canvas" role="application" aria-label="Mappa dei club"></div>
-            <button type="button" class="es-map-fs map-zoom-btn" title="Schermo intero" onclick="if(window.EliseeClubMap) window.EliseeClubMap.toggleFull();">⤢</button>
+            <div id="es-map-canvas" role="application" data-i18n-aria="map.canvas" aria-label="Mappa dei club"></div>
+            <button type="button" class="es-map-fs map-zoom-btn" data-i18n-title="map.fullscreen" data-i18n-aria="map.fullscreen" title="Schermo intero" aria-label="Schermo intero" onclick="if(window.EliseeClubMap) window.EliseeClubMap.toggleFull();">⤢</button>
           </div>
 
           <div class="es-map-attribution-footer">
@@ -6822,7 +6825,7 @@
   </script>
   <script src="cookie-profiling.js?v=20260925_HEROUX1"></script>
   <script src="ai-gdpr-monitor.js?v=20260806_NOCORS"></script>
-  <script src="i18n.js?v=20261001_FIX8"></script>
+  <script src="i18n.js?v=20261001_FIX13"></script>
   <script src="island-carousel.js?v=20260928_HEROUX67"></script>
   <script src="parallax-cards.js?v=20260928_HEROUX68"></script>
   <script src="agents-runtime.js?v=20260806_NOCORS"></script>
@@ -6892,7 +6895,7 @@
     })();
   </script>
   <script src="badge-engine.js?v=20260914_ONLYAMAT1"></script>
-  <script src="squadre-select.js?v=20260917_FGCLIC1"></script>
+  <script src="squadre-select.js?v=20261001_FIX13"></script>
   <script src="formazione-squadra.js?v=20260914_ONLYAMAT1"></script>
   <script src="manager-runtime.js?v=20260918_CCSPACE1"></script>
   <script src="tc-panel.js?v=20260915_TCSERIF1"></script>
@@ -6903,7 +6906,7 @@
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="elisee-staff.js?v=20260911_ADMIN2"></script>
   <script src="app-admin-panels.js?v=20260918_CCDROPDOWN1"></script>
-  <script src="app.js?v=20261001_FIX12"></script>
+  <script src="app.js?v=20261001_FIX13"></script>
   <script src="page-bubbles.js?v=20260925_BUBBLE1"></script>
   <script src="parallax.js?v=20260925_PARALLAX1"></script>
   <script src="search-client.js?v=20260929_HEROUX88"></script>
@@ -6922,7 +6925,7 @@
   <script src="avatar-3d.js?v=20260924_KITBUG1"></script>
   <script src="role-sidebar-pro.js?v=20260928_HEROUX71"></script>
   <script src="app-boot-extras.js?v=20260918_APPSPLIT1"></script>
-  <script src="bacheca-annunci.js?v=20260918_OTPSYNC1"></script>
+  <script src="bacheca-annunci.js?v=20261001_FIX13"></script>
   <script src="player-profile.js?v=20260917_BUGFIX1"></script>
   <script src="public-rating-system.js?v=20260904_SEASONDROP1"></script>
   <script src="schede-tecniche.js?v=20260918_SCOUTSRC1"></script>
@@ -7491,7 +7494,7 @@
   <script src="publish-btn.js?v=20260926_HEROUX45" defer></script>
   <script src="tide-button.js?v=20260926_HEROUX52" defer></script>
   <script src="scry-search.js?v=20261001_FIX4" defer></script>
-  <script src="pub-button.js?v=20260927_HEROUX59" defer></script>
+  <script src="pub-button.js?v=20261001_FIX13" defer></script>
   <script src="file-dropzone.js?v=20260927_HEROUX61" defer></script>
   <script src="realistic-switch.js?v=20260928_HEROUX72" defer></script>
   <script src="es-ux-controls.js?v=20260928_HEROUX73" defer></script>
