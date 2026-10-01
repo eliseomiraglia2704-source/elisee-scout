@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-01** — FIX17 — Automazione di scouting in bacheca:
+Ultimo aggiornamento: **2026-10-01** — FIX18 — Autorizzazione notifiche, un account alla volta:
+
+1. **Domanda**: a ogni visitatore, e di nuovo a ogni account che entra, il sito chiede una volta sola se vuole gli avvisi su candidature e messaggi. Consenti e Non ora restano salvati su questo browser (`elisee_notify_consent_v1`), separati per account. Il permesso del browser parte solo dopo Consenti.
+2. **Niente consenso implicito**: la preferenza push del profilo non è più accesa da sola. Il salvataggio dello staff non trasforma il consenso e-mail in notifiche push.
+3. **File**: `notify-consent.js`, `notify-consent.css`, `index.html`, `i18n.js`, `app.js`, `player-profile.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX18`. Non tocca data di nascita, età o consenso genitoriale.
+
+Feature precedente: **2026-10-01** — FIX17 — Automazione di scouting in bacheca:
 
 1. **Ricerca**: Invio (o un suggerimento) sulla bacheca legge ruolo, età, piede, passaporto e zona. Il report in vetro elenca gli annunci in linea, con affinità e motivo. Se non c’è nessuno, la ricerca resta salvata come avviso. Se il registro non risponde, la bacheca resta usabile.
 2. **Candidatura**: all’invio di una candidatura su un annuncio parte lo stesso report, solo con ruolo e titolo. Non parte nessuna e-mail: i contatti restano sul sito.

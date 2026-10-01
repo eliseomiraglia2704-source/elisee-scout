@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     badgeSelfieUrl: '',
     trustScore: 0,
     preferenzeNotifiche: {
-      push: true,
+      push: false,
       email: true,
       marketing: false
     },
@@ -372,7 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <h5 style="color:#38bdf8; margin:0 0 0.5rem; font-size:0.9rem;">Preferenze Notifiche (Privacy by Design)</h5>
             <div style="display:flex; flex-direction:column; gap:0.4rem; font-size:0.83rem;">
               <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                <input type="checkbox" id="pref-push" ${user.preferenzeNotifiche?.push !== false ? 'checked' : ''}> Notifiche Push (Essenziali per Candidature e Messaggi)
+                <input type="checkbox" id="pref-push" ${user.preferenzeNotifiche?.push === true ? 'checked' : ''}> Notifiche Push (Essenziali per Candidature e Messaggi)
               </label>
               <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
                 <input type="checkbox" id="pref-email" ${user.preferenzeNotifiche?.email !== false ? 'checked' : ''}> Notifiche Email (Avvisi e Comunicazioni di Servizio)

@@ -324,8 +324,8 @@
       interest: p.interest || { country: 'Italia', region: '', province: '', comune: '', city: '' },
       social: p.social || { instagram: '', facebook: '', tiktok: '', x: '' },
       notify: {
-        opportunities: notify.opportunities !== false,
-        messages: notify.messages !== false,
+        opportunities: notify.opportunities === true,
+        messages: notify.messages === true,
         email: notify.email != null ? !!notify.email : prefs.email !== false,
         marketing: notify.marketing != null ? !!notify.marketing : !!prefs.marketing
       }
@@ -835,8 +835,7 @@
     user.sport = p.sport;
     user.siteRoleFamily = 'Staff';
     user.preferenzeNotifiche = Object.assign({}, user.preferenzeNotifiche || {}, {
-      email: p.notify.email,
-      push: p.notify.email
+      email: p.notify.email
     });
     if (photo) user.fotoUrl = photo;
     var complete = !!(p.fullName && p.birthYear && p.nationality && p.sport && p.fieldRole);

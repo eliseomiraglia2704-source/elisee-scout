@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <script>
     (function () {
-      var BUILD_VERSION = '20261001_FIX17';
+      var BUILD_VERSION = '20261001_FIX18';
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
         if (savedTheme) {
@@ -57,6 +57,7 @@
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260928_HEROUX65">
   <link rel="stylesheet" href="bacheca-board.css?v=20261001_FIX17">
+  <link rel="stylesheet" href="notify-consent.css?v=20261001_FIX18">
   <link rel="stylesheet" href="control-center.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="flusso-contatti.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="cc-analytics.css?v=20260925_PALETTE1">
@@ -1641,6 +1642,18 @@
       console.info('[ELISEE] nav-core online — click navigation ready');
     })();
   </script>
+
+  <div id="es-notify" class="es-notify" hidden aria-hidden="true">
+    <div class="es-notify__panel" id="es-notify-panel" role="dialog" aria-modal="true" aria-labelledby="es-notify-title" tabindex="-1">
+      <h2 class="es-notify__title" id="es-notify-title"></h2>
+      <p class="es-notify__lead" id="es-notify-lead"></p>
+      <div class="es-notify__actions">
+        <button type="button" class="es-notify__accept" id="es-notify-accept"></button>
+        <button type="button" class="es-notify__later" id="es-notify-later"></button>
+      </div>
+      <p class="es-notify__note" id="es-notify-note"></p>
+    </div>
+  </div>
 
   <!-- ============================================================ -->
   <!-- COOKIE CONSENT BANNER -->
@@ -6839,7 +6852,7 @@
   </script>
   <script src="cookie-profiling.js?v=20260925_HEROUX1"></script>
   <script src="ai-gdpr-monitor.js?v=20260806_NOCORS"></script>
-  <script src="i18n.js?v=20261001_FIX17"></script>
+  <script src="i18n.js?v=20261001_FIX18"></script>
   <script src="island-carousel.js?v=20260928_HEROUX67"></script>
   <script src="parallax-cards.js?v=20260928_HEROUX68"></script>
   <script src="agents-runtime.js?v=20260806_NOCORS"></script>
@@ -6920,7 +6933,7 @@
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="elisee-staff.js?v=20260911_ADMIN2"></script>
   <script src="app-admin-panels.js?v=20260918_CCDROPDOWN1"></script>
-  <script src="app.js?v=20261001_FIX17"></script>
+  <script src="app.js?v=20261001_FIX18"></script>
   <script src="page-bubbles.js?v=20260925_BUBBLE1"></script>
   <script src="parallax.js?v=20260925_PARALLAX1"></script>
   <script src="search-client.js?v=20260929_HEROUX88"></script>
@@ -6940,7 +6953,7 @@
   <script src="role-sidebar-pro.js?v=20260928_HEROUX71"></script>
   <script src="app-boot-extras.js?v=20260918_APPSPLIT1"></script>
   <script src="bacheca-annunci.js?v=20261001_FIX13"></script>
-  <script src="player-profile.js?v=20260917_BUGFIX1"></script>
+  <script src="player-profile.js?v=20261001_FIX18"></script>
   <script src="public-rating-system.js?v=20260904_SEASONDROP1"></script>
   <script src="schede-tecniche.js?v=20260918_SCOUTSRC1"></script>
   <script src="persist-sync.js?v=20260918_OTPSYNC1"></script>
@@ -7509,6 +7522,7 @@
   <script src="tide-button.js?v=20260926_HEROUX52" defer></script>
   <script src="scry-search.js?v=20261001_FIX17" defer></script>
   <script src="scout-automation.js?v=20261001_FIX17" defer></script>
+  <script src="notify-consent.js?v=20261001_FIX18" defer></script>
   <script src="pub-button.js?v=20261001_FIX13" defer></script>
   <script src="file-dropzone.js?v=20260927_HEROUX61" defer></script>
   <script src="realistic-switch.js?v=20260928_HEROUX72" defer></script>

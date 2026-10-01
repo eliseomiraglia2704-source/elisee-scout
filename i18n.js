@@ -744,6 +744,13 @@
       'scout.why.svincolato': 'Svincolato',
       'scout.why.eta': 'Età',
       'scout.why.testo': 'Testo',
+      'notify.title': 'Notifiche del sito',
+      'notify.lead': 'Ogni account sceglie da solo se ricevere gli avvisi su candidature e messaggi. La risposta resta su questo browser.',
+      'notify.accept': 'Consenti',
+      'notify.later': 'Non ora',
+      'notify.close': 'Chiudi',
+      'notify.note': 'Nessun avviso parte finché non scegli Consenti. Se consenti, il browser chiede un secondo permesso. Questa scelta non invia e-mail.',
+      'notify.blocked': 'Hai autorizzato il sito, ma il browser ha le notifiche bloccate. Puoi abilitarle dalle impostazioni del browser.',
       'map.clear': 'Cancella'
     },
     en: {
@@ -910,6 +917,13 @@
       'scout.why.svincolato': 'Free agent',
       'scout.why.eta': 'Age',
       'scout.why.testo': 'Text',
+      'notify.title': 'Site notifications',
+      'notify.lead': 'Each account chooses whether to receive alerts about applications and messages. The answer stays in this browser.',
+      'notify.accept': 'Allow',
+      'notify.later': 'Not now',
+      'notify.close': 'Close',
+      'notify.note': 'No alert is sent until you choose Allow. If you allow, the browser asks for a second permission. This choice does not send email.',
+      'notify.blocked': 'You allowed the site, but the browser is blocking notifications. You can enable them in the browser settings.',
       'map.clear': 'Clear'
     },
     es: {
@@ -1076,6 +1090,13 @@
       'scout.why.svincolato': 'Libre',
       'scout.why.eta': 'Edad',
       'scout.why.testo': 'Texto',
+      'notify.title': 'Notificaciones del sitio',
+      'notify.lead': 'Cada cuenta elige si quiere recibir avisos sobre candidaturas y mensajes. La respuesta queda en este navegador.',
+      'notify.accept': 'Permitir',
+      'notify.later': 'Ahora no',
+      'notify.close': 'Cerrar',
+      'notify.note': 'No sale ningún aviso hasta que eliges Permitir. Si permites, el navegador pide un segundo permiso. Esta elección no envía correos.',
+      'notify.blocked': 'Autorizaste el sitio, pero el navegador tiene las notificaciones bloqueadas. Puedes activarlas en los ajustes del navegador.',
       'map.clear': 'Borrar'
     },
     fr: {
@@ -1242,6 +1263,13 @@
       'scout.why.svincolato': 'Libre',
       'scout.why.eta': 'Âge',
       'scout.why.testo': 'Texte',
+      'notify.title': 'Notifications du site',
+      'notify.lead': 'Chaque compte choisit s’il reçoit les alertes sur les candidatures et les messages. La réponse reste dans ce navigateur.',
+      'notify.accept': 'Autoriser',
+      'notify.later': 'Plus tard',
+      'notify.close': 'Fermer',
+      'notify.note': 'Aucune alerte ne part tant que vous ne choisissez pas Autoriser. Le navigateur demande alors une seconde permission. Ce choix n’envoie pas d’e-mail.',
+      'notify.blocked': 'Vous avez autorisé le site, mais le navigateur bloque les notifications. Vous pouvez les activer dans les réglages du navigateur.',
       'map.clear': 'Effacer'
     }
   };
