@@ -1,6 +1,11 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-01** — FIX22 — La capsula della navbar segue il testo tradotto:
+Ultimo aggiornamento: **2026-10-01** — FIX23 — Tolto il trattino sotto la citazione di Chi siamo:
+
+1. **Firma**: sotto «La nostra forza è la fiducia…» resta solo «Elisee Scout», senza il trattino davanti. Vale per italiano, inglese, spagnolo e francese.
+2. **File**: `index.html`, `i18n.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX23`. Non tocca data di nascita, età o consenso genitoriale.
+
+Feature precedente: **2026-10-01** — FIX22 — La capsula della navbar segue il testo tradotto:
 
 1. **Capsula**: «Quiénes somos» non esce più dal pill scorrevole. La larghezza non è fissa: si misura sulla voce vera (`a.nav-link`) e si ricalcola al cambio lingua, al ridimensionamento e quando arrivano i font. Stesso ricalcolo sulle barre interne dei ruoli.
 2. **Voci lunghe**: Chi siamo, Bacheca, Mappa e Accedi non hanno più una larghezza bloccata. Padding flessibile, testo su una riga. Sotto i 1000px il menu desktop lascia il posto all’hamburger, prima di finire sopra la ricerca. Sotto i 768px resta solo la barra del telefono.
