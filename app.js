@@ -9447,6 +9447,10 @@ window.consumeEliseeOAuthReturn = function () {
   });
 };
 
+setTimeout(function () {
+  try { window.consumeEliseeOAuthReturn(); } catch (_) {}
+}, 0);
+
 window.completeAccessoGooglePassword = function () {
   const a = ((document.getElementById('accesso-setpw-a') || {}).value || '');
   const b = ((document.getElementById('accesso-setpw-b') || {}).value || '');

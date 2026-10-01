@@ -4,7 +4,12 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-10-01** — FIX11 — Il ritorno da Google completa la sessione:
+Ultimo aggiornamento: **2026-10-01** — FIX12 — Il codice di ritorno avvia sempre la sessione:
+
+1. **Boot**: se l’indirizzo ha `code` o un errore OAuth, la home chiama il completamento appena la pagina è pronta, anche se l’altro ascoltatore è già passato.
+2. **File**: `index.html`, `app.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX12`.
+
+Feature precedente: **2026-10-01** — FIX11 — Il ritorno da Google completa la sessione:
 
 1. **Callback**: dopo Google il sito riceve `?code=`. Uno script in testa lo mandava su `/auth/callback`, che non esiste, e l’accesso moriva. Ora il codice resta sulla home e `/api/auth/oauth/finish` crea la sessione.
 2. **File**: `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX11`.

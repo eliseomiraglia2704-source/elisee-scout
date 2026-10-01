@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <script>
     (function () {
-      var BUILD_VERSION = '20261001_FIX11';
+      var BUILD_VERSION = '20261001_FIX12';
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
         if (savedTheme) {
@@ -851,6 +851,14 @@
       window.eliseeReadAuthParams = readAuthParams;
       try {
         var p = readAuthParams();
+        if (p.code || p.err) {
+          function finishOAuthBoot() {
+            if (window.consumeEliseeOAuthReturn) window.consumeEliseeOAuthReturn();
+          }
+          if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', finishOAuthBoot);
+          else finishOAuthBoot();
+          window.addEventListener('load', finishOAuthBoot);
+        }
         var token = p.token;
         if (!token) return;
         try {
@@ -6895,7 +6903,7 @@
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="elisee-staff.js?v=20260911_ADMIN2"></script>
   <script src="app-admin-panels.js?v=20260918_CCDROPDOWN1"></script>
-  <script src="app.js?v=20261001_FIX10"></script>
+  <script src="app.js?v=20261001_FIX12"></script>
   <script src="page-bubbles.js?v=20260925_BUBBLE1"></script>
   <script src="parallax.js?v=20260925_PARALLAX1"></script>
   <script src="search-client.js?v=20260929_HEROUX88"></script>
