@@ -420,32 +420,7 @@ async function searchGlobal(params) {
     } catch (_) {}
   }
 
-  if ((type === 'all' || type === 'calciatori' || type === 'players') && q) {
-    try {
-      const usersPath = path.join(process.cwd(), 'data', 'auth', 'users.json');
-      if (fs.existsSync(usersPath)) {
-        const usersData = JSON.parse(fs.readFileSync(usersPath, 'utf8'));
-        const users = Array.isArray(usersData) ? usersData : (usersData.users || []);
-        results.players = users
-          .filter((u) => {
-            if (!u) return false;
-            const fullName = [u.nome, u.cognome].filter(Boolean).join(' ').toLowerCase();
-            const role = String(u.ruolo || '').toLowerCase();
-            const team = String(u.team || u.squadra || '').toLowerCase();
-            return fullName.includes(q) || role.includes(q) || team.includes(q);
-          })
-          .slice(0, limit)
-          .map((u) => ({
-            id: u.id,
-            nome: u.nome,
-            cognome: u.cognome,
-            ruolo: u.ruolo,
-            team: u.team || u.squadra || 'Svincolato',
-            categoria: u.categoria || ''
-          }));
-      }
-    } catch (_) {}
-  }
+  // I giocatori non si cercano nell'anagrafica account (email, hash, data di nascita).
 
   return {
     ok: true,

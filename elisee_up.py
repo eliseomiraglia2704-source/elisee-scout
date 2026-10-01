@@ -1141,7 +1141,7 @@ class Handler(SimpleHTTPRequestHandler):
 
             results = {"annunci": [], "clubs": [], "players": []}
 
-            if stype in ("all", "annunci"):
+            if stype in ("all", "annunci", "autocomplete", "suggest"):
                 ann_list = load_annunci()
                 if q:
                     words = q.split()
@@ -1161,7 +1161,7 @@ class Handler(SimpleHTTPRequestHandler):
                 else:
                     results["annunci"] = ann_list[:limit]
 
-            if stype in ("all", "clubs") and q:
+            if stype in ("all", "clubs", "autocomplete", "suggest") and q:
                 try:
                     cat_path = ROOT / "data" / "squadre" / "catalog.json"
                     if cat_path.exists():
@@ -1183,29 +1183,7 @@ class Handler(SimpleHTTPRequestHandler):
                 except Exception:
                     pass
 
-            if stype in ("all", "calciatori", "players") and q:
-                try:
-                    users_path = ROOT / "data" / "auth" / "users.json"
-                    if users_path.exists():
-                        users_data = json.loads(users_path.read_text(encoding="utf-8"))
-                        users = users_data if isinstance(users_data, list) else (users_data.get("users") or [])
-                        matched_u = []
-                        for u in users:
-                            full_name = f"{u.get('nome') or ''} {u.get('cognome') or ''}".strip().lower()
-                            role = str(u.get("ruolo") or "").lower()
-                            team = str(u.get("team") or u.get("squadra") or "").lower()
-                            if q in full_name or q in role or q in team:
-                                matched_u.append({
-                                    "id": u.get("id"),
-                                    "nome": u.get("nome"),
-                                    "cognome": u.get("cognome"),
-                                    "ruolo": u.get("ruolo"),
-                                    "team": u.get("team") or u.get("squadra") or "Svincolato",
-                                    "categoria": u.get("categoria") or "",
-                                })
-                        results["players"] = matched_u[:limit]
-                except Exception:
-                    pass
+            # Nessuna lettura di data/auth/users.json: anagrafica account, non catalogo pubblico.
 
             if stype in ("autocomplete", "suggest"):
                 suggestions = []

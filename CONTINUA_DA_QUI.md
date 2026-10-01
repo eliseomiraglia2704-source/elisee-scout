@@ -4,7 +4,15 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-09-29** — HEROUX88 — Search API Gateway Unificato (10 Use Case) & Regole di Rete 1-4:
+Ultimo aggiornamento: **2026-10-01** — FIX1 — Link privacy, form duplicati, badge e ricerca account:
+
+1. **Informativa Ambassador**: il consenso puntava a `privacy.html` (404). Ora apre `privacy-policy.html`.
+2. **Candidature**: il form Pro riusava `offriamo`, `richiediamo` e `matching-result`, quindi leggeva e scriveva il form sopra. Id distinti `offriamo-pro`, `richiediamo-pro`, `matching-result-pro`. Il secondo `live-badge` (demo nascosta) è `live-badge-demo`.
+3. **Badge messaggi**: rimosso il ticker che ogni 800 ms incrementava `badge-mobile-msgs` in localStorage.
+4. **Ricerca pubblica**: `/api/search` e il server locale non leggono più `data/auth/users.json` (email, hash, data di nascita). In locale l’autocomplete ora include anche club e annunci, non solo un elenco vuoto.
+5. **File**: `index.html`, `candidature-handler.js`, `candidature-pro-handler.js`, `js/candidature-handler.js`, `js/candidature-pro-handler.js`, `lib/search-gateway.js`, `api/manager.js`, `elisee_up.py`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX1`.
+
+Feature precedente: **2026-09-29** — HEROUX88 — Search API Gateway Unificato (10 Use Case) & Regole di Rete 1-4:
 
 1. **Search API Gateway Dedicato (`lib/search-gateway.js` delegato da `api/manager.js?path=search`)**:
    - **Use Case 1 (Rate Limiting)**: sliding window in-memory (100 req/min guest, 300 req/min auth) con header `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset` e blocco preventivo 429 Too Many Requests con `Retry-After: 60`.

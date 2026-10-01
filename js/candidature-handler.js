@@ -59,16 +59,3 @@ window.EliseeCandidature = {
 window.submitOffriamo = function () { window.EliseeCandidature.submitOffriamo(); };
 window.submitRichiediamo = function () { window.EliseeCandidature.submitRichiediamo(); };
 window.clearMatch = function () { window.EliseeCandidature.clearMatch(); };
-
-// Live badge increment ticker (800ms)
-if (!window.__candidatureTicker) {
-  window.__candidatureTicker = setInterval(function () {
-    var badge = document.getElementById('live-badge');
-    if (!badge) return;
-    var count = (parseInt(badge.textContent, 10) || 0) + 1;
-    badge.textContent = count;
-    if (window.EliseeDynamicSync && typeof window.EliseeDynamicSync.setBadge === 'function') {
-      window.EliseeDynamicSync.setBadge('badge-mobile-msgs', count);
-    }
-  }, 800);
-}

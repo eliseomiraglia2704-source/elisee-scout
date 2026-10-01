@@ -6,7 +6,7 @@ window.EliseeCandidaturePro = {
       ? `🔥 MATCH ALTO! Score: ${score}/10<br><span style="color:#00f5d4; font-weight:700;">Perfetto match per ruolo DS/Scout & Wall Transfer</span>`
       : `⚡ Match consigliato: ${score}/10<br><span style="color:#ff2d55; font-weight:700;">Contingenza consigliata per scouting attivo</span>`;
 
-    const resultBox = document.getElementById('matching-result');
+    const resultBox = document.getElementById('matching-result-pro');
     if (resultBox) {
       resultBox.classList.add('is-visible');
       resultBox.innerHTML = `
@@ -19,8 +19,8 @@ window.EliseeCandidaturePro = {
   },
   submitOffriamo: (e) => {
     if (e && window.createRipple) window.createRipple(e.clientX, e.clientY);
-    const off = document.getElementById('offriamo')?.value || '';
-    const req = document.getElementById('richiediamo')?.value || 'Non specificato';
+    const off = document.getElementById('offriamo-pro')?.value || '';
+    const req = document.getElementById('richiediamo-pro')?.value || 'Non specificato';
     EliseeCandidaturePro.match(off, req);
     if (window.EliseeSuccessSystem && typeof window.EliseeSuccessSystem.showToast === 'function') {
       window.EliseeSuccessSystem.showToast('Offerta inviata • Matching IA in corso', 2200);
@@ -28,23 +28,21 @@ window.EliseeCandidaturePro = {
   },
   submitRichiediamo: (e) => {
     if (e && window.createRipple) window.createRipple(e.clientX, e.clientY);
-    const off = document.getElementById('offriamo')?.value || 'Non specificato';
-    const req = document.getElementById('richiediamo')?.value || '';
+    const off = document.getElementById('offriamo-pro')?.value || 'Non specificato';
+    const req = document.getElementById('richiediamo-pro')?.value || '';
     EliseeCandidaturePro.match(off, req);
     if (window.EliseeSuccessSystem && typeof window.EliseeSuccessSystem.showToast === 'function') {
       window.EliseeSuccessSystem.showToast('Richiesta inviata • Matching IA in corso', 2200);
     }
   },
   clearMatch: () => {
-    const resultBox = document.getElementById('matching-result');
+    const resultBox = document.getElementById('matching-result-pro');
     if (resultBox) {
       resultBox.innerHTML = '';
       resultBox.classList.remove('is-visible');
     }
   }
 };
-
-window.clearMatch = () => EliseeCandidaturePro.clearMatch();
 
 // Auto-init
 if (document.readyState === 'loading') {
