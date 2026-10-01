@@ -1,6 +1,13 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-01** — FIX18 — Autorizzazione notifiche, un account alla volta:
+Ultimo aggiornamento: **2026-10-01** — FIX19 — Analisi del movimento sulle clip e sulle ricerche:
+
+1. **Clip**: in bacheca, «Analizza una clip» legge un video mp4, webm o mov sul dispositivo, fotogramma per fotogramma, per i primi 8 secondi. Restano movimento (% di pixel cambiati), zona nel fotogramma, picco e traccia. Il file non parte dal browser e non va in un archivio account.
+2. **Ricerca**: Invio, un suggerimento o una candidatura aprono lo stesso riquadro e tengono solo le clip di questo account che combaciano con le parole. I filtri Movimento alto, Zona centrale e Picco iniziale lavorano su quelle misure.
+3. **Limite onesto**: non c’è un modello YOLO, non si calcolano km/h e non si riconoscono volti o nomi. Nessuna funzione serverless nuova.
+4. **File**: `vision-track.js`, `vision-track.css`, `index.html`, `i18n.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX19`.
+
+Feature precedente: **2026-10-01** — FIX18 — Autorizzazione notifiche, un account alla volta:
 
 1. **Domanda**: a ogni visitatore, e di nuovo a ogni account che entra, il sito chiede una volta sola se vuole gli avvisi su candidature e messaggi. Consenti e Non ora restano salvati su questo browser (`elisee_notify_consent_v1`), separati per account. Il permesso del browser parte solo dopo Consenti.
 2. **Niente consenso implicito**: la preferenza push del profilo non è più accesa da sola. Il salvataggio dello staff non trasforma il consenso e-mail in notifiche push.

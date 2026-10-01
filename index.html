@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <script>
     (function () {
-      var BUILD_VERSION = '20261001_FIX18';
+      var BUILD_VERSION = '20261001_FIX19';
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
         if (savedTheme) {
@@ -58,6 +58,7 @@
   <link rel="stylesheet" href="chi-siamo.css?v=20260928_HEROUX65">
   <link rel="stylesheet" href="bacheca-board.css?v=20261001_FIX17">
   <link rel="stylesheet" href="notify-consent.css?v=20261001_FIX18">
+  <link rel="stylesheet" href="vision-track.css?v=20261001_FIX19">
   <link rel="stylesheet" href="control-center.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="flusso-contatti.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="cc-analytics.css?v=20260925_PALETTE1">
@@ -3409,8 +3410,28 @@
                       <span data-i18n="bacheca.chip.free">Svincolato</span>
                     </label>
                   </div>
+                  <button type="button" class="es-vision-launch" id="es-vision-launch" data-i18n="vision.pick">Analizza una clip</button>
+                  <input type="file" id="es-vision-file" class="es-vision-file" accept="video/mp4,video/webm,video/quicktime,.mp4,.webm,.mov" tabindex="-1" aria-hidden="true">
                 </div>
               </div>
+
+              <section id="es-vision" class="es-vision" hidden aria-live="polite">
+                <div class="es-vision__panel" id="es-vision-panel" role="region" aria-labelledby="es-vision-title" tabindex="-1">
+                  <div class="es-vision__head">
+                    <h2 class="es-vision__title" id="es-vision-title"></h2>
+                    <button type="button" class="es-vision__close" id="es-vision-close">Chiudi</button>
+                  </div>
+                  <p class="es-vision__lead" id="es-vision-lead"></p>
+                  <p class="es-vision__status" id="es-vision-status"></p>
+                  <div class="es-vision__filters" id="es-vision-filters" role="group">
+                    <button type="button" class="es-vision__filter" data-vision-filter="alto" aria-pressed="false"></button>
+                    <button type="button" class="es-vision__filter" data-vision-filter="centro" aria-pressed="false"></button>
+                    <button type="button" class="es-vision__filter" data-vision-filter="early" aria-pressed="false"></button>
+                  </div>
+                  <ol class="es-vision__list" id="es-vision-list"></ol>
+                  <p class="es-vision__note" id="es-vision-note"></p>
+                </div>
+              </section>
 
               <section id="es-scout-auto" class="es-scout" hidden aria-live="polite">
                 <div class="es-scout__panel" id="es-scout-report" role="region" aria-labelledby="es-scout-title">
@@ -6852,7 +6873,7 @@
   </script>
   <script src="cookie-profiling.js?v=20260925_HEROUX1"></script>
   <script src="ai-gdpr-monitor.js?v=20260806_NOCORS"></script>
-  <script src="i18n.js?v=20261001_FIX18"></script>
+  <script src="i18n.js?v=20261001_FIX19"></script>
   <script src="island-carousel.js?v=20260928_HEROUX67"></script>
   <script src="parallax-cards.js?v=20260928_HEROUX68"></script>
   <script src="agents-runtime.js?v=20260806_NOCORS"></script>
@@ -7523,6 +7544,7 @@
   <script src="scry-search.js?v=20261001_FIX17" defer></script>
   <script src="scout-automation.js?v=20261001_FIX17" defer></script>
   <script src="notify-consent.js?v=20261001_FIX18" defer></script>
+  <script src="vision-track.js?v=20261001_FIX19" defer></script>
   <script src="pub-button.js?v=20261001_FIX13" defer></script>
   <script src="file-dropzone.js?v=20260927_HEROUX61" defer></script>
   <script src="realistic-switch.js?v=20260928_HEROUX72" defer></script>
