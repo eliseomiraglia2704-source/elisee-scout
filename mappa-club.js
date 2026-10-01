@@ -30,6 +30,15 @@
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
   }
+  function tr(key, fallback) {
+    try {
+      if (window.EliseeI18n && typeof window.EliseeI18n.t === 'function') {
+        var value = window.EliseeI18n.t(key);
+        if (value && value !== key) return value;
+      }
+    } catch (_) {}
+    return fallback;
+  }
   function meKey() {
     try {
       var u = JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {};
@@ -187,19 +196,25 @@
       var overrides = getGeoOverrides();
       base.forEach(function (c) {
         if (!c) return;
+        var pinned = false;
         if (c.id && overrides[c.id]) {
           var o = overrides[c.id];
-          if (typeof o.lat === 'number') c.lat = o.lat;
-          if (typeof o.lng === 'number') c.lng = o.lng;
+          if (typeof o.lat === 'number' && typeof o.lng === 'number') {
+            c.lat = o.lat;
+            c.lng = o.lng;
+            pinned = true;
+          }
           if (o.stadium) c.stadium = o.stadium;
           if (o.city) c.city = o.city;
           if (o.region) c.region = o.region;
         }
         var hit = c.city ? matchComune(idx, c.city) : null;
         if (hit) {
-          c.lat = hit.lat;
-          c.lng = hit.lng;
           c.region = hit.region;
+          if (!pinned) {
+            c.lat = hit.lat;
+            c.lng = hit.lng;
+          }
         } else {
           c.region = knownRegion(c.region) || '';
         }
@@ -297,6 +312,9 @@
     var existing = document.getElementById('es-club-geo-modal');
     if (existing) existing.remove();
 
+    var pinSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.2"/></svg>';
+    var closeSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+
     loadClubs(function (allClubs) {
       var u = getStoredUser();
       var defName = prefillClub ? (prefillClub.name || '') : (u.clubName || u.squadra || '');
@@ -304,215 +322,388 @@
       var defStadium = prefillClub ? (prefillClub.stadium || '') : (u.stadio || '');
       var defLat = prefillClub && prefillClub.lat ? prefillClub.lat : (u.clubGeo && u.clubGeo.lat ? u.clubGeo.lat : '');
       var defLng = prefillClub && prefillClub.lng ? prefillClub.lng : (u.clubGeo && u.clubGeo.lng ? u.clubGeo.lng : '');
+      var pinned = false;
 
       var modal = document.createElement('div');
       modal.id = 'es-club-geo-modal';
       modal.className = 'es-geo-modal-backdrop';
       modal.innerHTML =
-        '<div class="es-geo-modal-sheet" role="dialog" aria-modal="true">' +
+        '<div class="es-geo-modal-sheet" role="dialog" aria-modal="true" aria-labelledby="es-geo-title">' +
           '<div class="es-geo-modal-header">' +
-            '<div style="display:flex; align-items:center; gap:0.6rem;">' +
-              '<span style="font-size:1.4rem;">📍</span>' +
+            '<div class="es-geo-modal-intro">' +
+              '<span class="es-geo-pin" aria-hidden="true">' + pinSvg + '</span>' +
               '<div>' +
-                '<h3 style="margin:0; color:#38bdf8; font-size:1.05rem; font-weight:800;">Geolocalizzazione Club &amp; Sede</h3>' +
-                '<p style="margin:0.15rem 0 0; color:#94a3b8; font-size:0.78rem;">Posiziona o perfeziona lo stadio, la sede e le coordinate del Club sulla mappa.</p>' +
+                '<h3 id="es-geo-title" data-i18n="geo.title">' + esc(tr('geo.title', 'Geolocalizzazione club e sede')) + '</h3>' +
+                '<p data-i18n="geo.lead">' + esc(tr('geo.lead', 'Posiziona o perfeziona lo stadio, la sede e le coordinate del club sulla mappa.')) + '</p>' +
               '</div>' +
             '</div>' +
-            '<button type="button" class="es-geo-close-btn" id="btn-close-geo-modal">&times;</button>' +
+            '<button type="button" class="es-geo-close-btn" id="btn-close-geo-modal" data-i18n-aria="geo.close" aria-label="' + esc(tr('geo.close', 'Chiudi')) + '">' + closeSvg + '</button>' +
           '</div>' +
-
-          '<form id="form-club-geo" style="margin-top:1rem; display:flex; flex-direction:column; gap:0.85rem;">' +
-            '<div>' +
-              '<label style="display:block; color:#cbd5e1; font-size:0.8rem; font-weight:700; margin-bottom:0.35rem;">Seleziona o Cerca Squadra nel Database *</label>' +
-              '<input type="text" id="geo-club-search" list="geo-club-list" required placeholder="Digita il nome del club (es. Foggia, Nardò, Taranto...)" value="' + esc(defName) + '" style="width:100%; box-sizing:border-box; background:rgba(15,23,42,0.85); border:1.5px solid rgba(56,189,248,0.4); border-radius:10px; padding:0.65rem 0.85rem; color:#fff; font-size:0.88rem; font-family:inherit;">' +
-              '<datalist id="geo-club-list"></datalist>' +
+          '<form id="form-club-geo" class="es-geo-form">' +
+            '<div class="es-geo-field">' +
+              '<label for="geo-club-search" data-i18n="geo.club">' + esc(tr('geo.club', 'Seleziona o cerca la squadra')) + '</label>' +
+              '<input type="text" id="geo-club-search" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="geo-club-suggest" aria-autocomplete="list" required data-i18n-placeholder="geo.clubPh" placeholder="' + esc(tr('geo.clubPh', 'Digita il nome del club, ad esempio Foggia')) + '" value="' + esc(defName) + '">' +
+              '<div id="geo-club-suggest" class="es-geo-suggest" role="listbox" hidden></div>' +
             '</div>' +
-
-            '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">' +
-              '<div>' +
-                '<label style="display:block; color:#cbd5e1; font-size:0.8rem; font-weight:700; margin-bottom:0.35rem;">Città natale del club *</label>' +
-                '<input type="text" id="geo-club-city" list="geo-city-list" required placeholder="Es. Foggia (FG)" value="' + esc(defCity) + '" style="width:100%; box-sizing:border-box; background:rgba(15,23,42,0.85); border:1px solid rgba(255,255,255,0.15); border-radius:10px; padding:0.6rem 0.8rem; color:#fff; font-size:0.85rem; font-family:inherit;">' +
-                '<datalist id="geo-city-list"></datalist>' +
+            '<div class="es-geo-grid">' +
+              '<div class="es-geo-field">' +
+                '<label for="geo-club-city" data-i18n="geo.city">' + esc(tr('geo.city', 'Città natale del club')) + '</label>' +
+                '<input type="text" id="geo-club-city" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="geo-city-suggest" aria-autocomplete="list" required data-i18n-placeholder="geo.cityPh" placeholder="' + esc(tr('geo.cityPh', 'Es. Foggia (FG)')) + '" value="' + esc(defCity) + '">' +
+                '<div id="geo-city-suggest" class="es-geo-suggest" role="listbox" hidden></div>' +
               '</div>' +
-              '<div>' +
-                '<label style="display:block; color:#cbd5e1; font-size:0.8rem; font-weight:700; margin-bottom:0.35rem;">Stadio / Centro Sportivo</label>' +
-                '<input type="text" id="geo-club-stadium" placeholder="Es. Stadio Comunale" value="' + esc(defStadium) + '" style="width:100%; box-sizing:border-box; background:rgba(15,23,42,0.85); border:1px solid rgba(255,255,255,0.15); border-radius:10px; padding:0.6rem 0.8rem; color:#fff; font-size:0.85rem; font-family:inherit;">' +
+              '<div class="es-geo-field">' +
+                '<label for="geo-club-stadium" data-i18n="geo.stadium">' + esc(tr('geo.stadium', 'Stadio o centro sportivo')) + '</label>' +
+                '<input type="text" id="geo-club-stadium" autocomplete="off" data-i18n-placeholder="geo.stadiumPh" placeholder="' + esc(tr('geo.stadiumPh', 'Es. Stadio Comunale')) + '" value="' + esc(defStadium) + '">' +
               '</div>' +
             '</div>' +
-
-            '<div style="background:rgba(2,132,199,0.08); border:1px solid rgba(56,189,248,0.25); border-radius:10px; padding:0.8rem; margin:0.2rem 0;">' +
-              '<div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.5rem;">' +
-                '<span style="color:#7dd3fc; font-size:0.8rem; font-weight:700;">Coordinate Geografiche (WGS84)</span>' +
-                '<button type="button" id="btn-detect-gps" style="background:rgba(56,189,248,0.2); border:1px solid #38bdf8; color:#38bdf8; border-radius:8px; padding:0.3rem 0.65rem; font-size:0.75rem; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:0.3rem;">' +
-                  '<span>📍</span> Rileva con GPS' +
+            '<div class="es-geo-coords">' +
+              '<div class="es-geo-coords__head">' +
+                '<span data-i18n="geo.coords">' + esc(tr('geo.coords', 'Coordinate geografiche (WGS84)')) + '</span>' +
+                '<button type="button" id="btn-detect-gps" class="es-geo-gps">' +
+                  pinSvg +
+                  '<span class="es-geo-gps__label" data-i18n="geo.gps">' + esc(tr('geo.gps', 'Rileva con GPS')) + '</span>' +
                 '</button>' +
               '</div>' +
-              '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">' +
-                '<div>' +
-                  '<label style="display:block; color:#94a3b8; font-size:0.75rem; margin-bottom:0.25rem;">Latitudine *</label>' +
-                  '<input type="number" step="any" id="geo-club-lat" required placeholder="Es. 40.4764" value="' + esc(defLat) + '" style="width:100%; box-sizing:border-box; background:rgba(15,23,42,0.9); border:1px solid rgba(56,189,248,0.3); border-radius:8px; padding:0.55rem 0.75rem; color:#38bdf8; font-weight:700; font-size:0.85rem; font-family:inherit;">' +
+              '<div class="es-geo-grid">' +
+                '<div class="es-geo-field">' +
+                  '<label for="geo-club-lat" data-i18n="geo.lat">' + esc(tr('geo.lat', 'Latitudine')) + '</label>' +
+                  '<input type="number" step="any" inputmode="decimal" id="geo-club-lat" data-i18n-placeholder="geo.latPh" placeholder="' + esc(tr('geo.latPh', 'Es. 40.4764')) + '" value="' + esc(defLat) + '">' +
                 '</div>' +
-                '<div>' +
-                  '<label style="display:block; color:#94a3b8; font-size:0.75rem; margin-bottom:0.25rem;">Longitudine *</label>' +
-                  '<input type="number" step="any" id="geo-club-lng" required placeholder="Es. 17.2341" value="' + esc(defLng) + '" style="width:100%; box-sizing:border-box; background:rgba(15,23,42,0.9); border:1px solid rgba(56,189,248,0.3); border-radius:8px; padding:0.55rem 0.75rem; color:#38bdf8; font-weight:700; font-size:0.85rem; font-family:inherit;">' +
+                '<div class="es-geo-field">' +
+                  '<label for="geo-club-lng" data-i18n="geo.lng">' + esc(tr('geo.lng', 'Longitudine')) + '</label>' +
+                  '<input type="number" step="any" inputmode="decimal" id="geo-club-lng" data-i18n-placeholder="geo.lngPh" placeholder="' + esc(tr('geo.lngPh', 'Es. 17.2341')) + '" value="' + esc(defLng) + '">' +
                 '</div>' +
               '</div>' +
             '</div>' +
-
-            '<div style="display:flex; align-items:center; justify-content:flex-end; gap:0.6rem; margin-top:0.4rem;">' +
-              '<button type="button" class="btn btn-outline-pill" id="btn-cancel-geo">Annulla</button>' +
-              '<button type="submit" class="btn btn-outline-pill pf-btn-solid" style="background:#0284c7; color:#fff; border-color:#38bdf8; font-weight:800;">Salva e Posiziona sulla Mappa</button>' +
+            '<p id="geo-modal-msg" class="es-geo-msg" role="status" hidden></p>' +
+            '<div class="es-geo-actions">' +
+              '<button type="button" class="es-geo-btn es-geo-btn--ghost" id="btn-cancel-geo" data-i18n="geo.cancel">' + esc(tr('geo.cancel', 'Annulla')) + '</button>' +
+              '<button type="submit" class="es-geo-btn es-geo-btn--save" data-i18n="geo.save">' + esc(tr('geo.save', 'Salva e posiziona sulla mappa')) + '</button>' +
             '</div>' +
-            '<p id="geo-modal-msg" style="display:none; margin:0.3rem 0 0; font-size:0.8rem; font-weight:600; text-align:center;"></p>' +
           '</form>' +
         '</div>';
 
       document.body.appendChild(modal);
 
-      // Popola datalist con le squadre del catalogo
-      var datalist = document.getElementById('geo-club-list');
-      if (datalist && allClubs) {
-        allClubs.slice(0, 1200).forEach(function (c) {
-          var opt = document.createElement('option');
-          opt.value = c.name + (c.city ? ' (' + c.city + ')' : '');
-          opt.dataset.id = c.id;
-          opt.dataset.lat = c.lat;
-          opt.dataset.lng = c.lng;
-          opt.dataset.city = c.city || '';
-          opt.dataset.stadium = c.stadium || '';
-          datalist.appendChild(opt);
-        });
-      }
-
-      fillCityDatalist(document.getElementById('geo-city-list'));
-
-      var cityInput = document.getElementById('geo-club-city');
-      if (cityInput) {
-        var placeFromCity = function () {
-          lookupComune(cityInput.value).then(function (hit) {
-            if (!hit) return;
-            var latEl = document.getElementById('geo-club-lat');
-            var lngEl = document.getElementById('geo-club-lng');
-            if (latEl) latEl.value = hit.lat;
-            if (lngEl) lngEl.value = hit.lng;
-            cityInput.dataset.region = hit.region;
-          });
-        };
-        cityInput.addEventListener('change', placeFromCity);
-        cityInput.addEventListener('input', placeFromCity);
-      }
-
       var searchInput = document.getElementById('geo-club-search');
-      if (searchInput) {
-        searchInput.addEventListener('change', function () {
-          var val = this.value.trim().toLowerCase();
-          var found = allClubs.find(function (c) {
-            return c.name.toLowerCase() === val || (c.name + ' (' + (c.city || '') + ')').toLowerCase() === val;
+      var cityInput = document.getElementById('geo-club-city');
+      var stadiumInput = document.getElementById('geo-club-stadium');
+      var latInput = document.getElementById('geo-club-lat');
+      var lngInput = document.getElementById('geo-club-lng');
+      var clubList = document.getElementById('geo-club-suggest');
+      var cityList = document.getElementById('geo-city-suggest');
+
+      function showMsg(text, isError) {
+        var el = document.getElementById('geo-modal-msg');
+        if (!el) return;
+        el.hidden = !text;
+        el.textContent = text || '';
+        el.classList.toggle('is-error', !!isError);
+      }
+
+      function setCoords(lat, lng, lock) {
+        if (!latInput || !lngInput) return;
+        var la = Number(lat);
+        var ln = Number(lng);
+        if (!isFinite(la) || !isFinite(ln)) return;
+        latInput.value = la.toFixed(5);
+        lngInput.value = ln.toFixed(5);
+        if (lock) pinned = true;
+      }
+
+      function readCoords() {
+        var la = parseFloat(latInput && latInput.value);
+        var ln = parseFloat(lngInput && lngInput.value);
+        if (!isFinite(la) || !isFinite(ln)) return null;
+        if (la < -90 || la > 90 || ln < -180 || ln > 180) return null;
+        return { lat: la, lng: ln };
+      }
+
+      function applyCityHit(hit, movePin) {
+        if (!hit || !cityInput) return;
+        cityInput.value = hit.name + ' (' + hit.prov + ')';
+        cityInput.dataset.region = hit.region || '';
+        cityInput.dataset.cityOk = '1';
+        if (movePin) {
+          pinned = false;
+          setCoords(hit.lat, hit.lng, false);
+        }
+      }
+
+      function bindSuggest(input, listEl, provider) {
+        var active = -1;
+        function close() {
+          listEl.hidden = true;
+          listEl.innerHTML = '';
+          active = -1;
+          input.setAttribute('aria-expanded', 'false');
+        }
+        function paint(items) {
+          listEl.innerHTML = '';
+          active = -1;
+          if (!items.length) {
+            close();
+            return;
+          }
+          items.forEach(function (item) {
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'es-geo-suggest__item';
+            btn.setAttribute('role', 'option');
+            btn.innerHTML = '<span class="es-geo-suggest__label">' + esc(item.label) + '</span>' +
+              (item.meta ? '<span class="es-geo-suggest__meta">' + esc(item.meta) + '</span>' : '');
+            btn.addEventListener('mousedown', function (ev) { ev.preventDefault(); });
+            btn.addEventListener('click', function () {
+              provider.onPick(item);
+              close();
+            });
+            listEl.appendChild(btn);
           });
-          if (found) {
-            if (found.city) document.getElementById('geo-club-city').value = found.city;
-            if (found.stadium) document.getElementById('geo-club-stadium').value = found.stadium;
-            if (found.lat) document.getElementById('geo-club-lat').value = found.lat;
-            if (found.lng) document.getElementById('geo-club-lng').value = found.lng;
+          listEl.hidden = false;
+          input.setAttribute('aria-expanded', 'true');
+        }
+        function move(delta) {
+          var buttons = listEl.querySelectorAll('.es-geo-suggest__item');
+          if (!buttons.length) return;
+          active = (active + delta + buttons.length) % buttons.length;
+          Array.prototype.forEach.call(buttons, function (btn, i) {
+            btn.classList.toggle('is-active', i === active);
+          });
+          if (buttons[active].scrollIntoView) buttons[active].scrollIntoView({ block: 'nearest' });
+        }
+        input.addEventListener('input', function () {
+          if (provider.onType) provider.onType();
+          var q = input.value.trim();
+          if (q.length < 2) {
+            close();
+            return;
+          }
+          paint(provider.filter(q).slice(0, 8));
+        });
+        input.addEventListener('keydown', function (ev) {
+          if (listEl.hidden) return;
+          if (ev.key === 'ArrowDown') {
+            ev.preventDefault();
+            move(1);
+          } else if (ev.key === 'ArrowUp') {
+            ev.preventDefault();
+            move(-1);
+          } else if (ev.key === 'Enter' && active >= 0) {
+            var buttons = listEl.querySelectorAll('.es-geo-suggest__item');
+            if (buttons[active]) {
+              ev.preventDefault();
+              buttons[active].click();
+            }
+          } else if (ev.key === 'Escape') {
+            ev.preventDefault();
+            ev.stopPropagation();
+            close();
           }
         });
+        input.addEventListener('blur', function () {
+          setTimeout(function () {
+            if (document.activeElement && listEl.contains(document.activeElement)) return;
+            close();
+          }, 140);
+        });
+        return { close: close };
       }
 
-      // GPS detect button
+      function filterClubs(q) {
+        var n = normPlace(q);
+        if (n.length < 2) return [];
+        var starts = [];
+        var contains = [];
+        for (var i = 0; i < allClubs.length; i++) {
+          var club = allClubs[i];
+          var name = normPlace(club.name);
+          var city = normPlace(club.city);
+          var item = { label: club.name, meta: club.city || club.league || '', club: club };
+          if (name.indexOf(n) === 0) starts.push(item);
+          else if (name.indexOf(n) !== -1 || (city && city.indexOf(n) !== -1)) contains.push(item);
+          if (starts.length >= 8) break;
+        }
+        return starts.concat(contains);
+      }
+
+      function filterCities(q) {
+        if (!comuniIndex || !comuniIndex.rows) return [];
+        var n = normPlace(q);
+        if (n.length < 2) return [];
+        var starts = [];
+        var contains = [];
+        var rows = comuniIndex.rows;
+        for (var i = 0; i < rows.length; i++) {
+          var name = normPlace(rows[i][0]);
+          var item = {
+            label: rows[i][0] + ' (' + rows[i][1] + ')',
+            meta: rows[i][4] || '',
+            hit: { name: rows[i][0], prov: rows[i][1], lat: rows[i][2], lng: rows[i][3], region: rows[i][4] }
+          };
+          if (name.indexOf(n) === 0) starts.push(item);
+          else if (starts.length < 8 && name.indexOf(n) !== -1) contains.push(item);
+          if (starts.length >= 8) break;
+        }
+        return starts.concat(contains);
+      }
+
+      bindSuggest(searchInput, clubList, {
+        filter: filterClubs,
+        onType: function () { delete searchInput.dataset.clubId; },
+        onPick: function (item) {
+          var club = item.club;
+          var hasPin = typeof club.lat === 'number' && typeof club.lng === 'number';
+          searchInput.value = club.name;
+          searchInput.dataset.clubId = club.id || '';
+          if (stadiumInput && club.stadium) stadiumInput.value = club.stadium;
+          if (hasPin) setCoords(club.lat, club.lng, true);
+          if (club.city) {
+            lookupComune(club.city).then(function (hit) {
+              if (!document.body.contains(modal)) return;
+              if (hit) applyCityHit(hit, !hasPin);
+              else if (cityInput) cityInput.value = club.city;
+            });
+          }
+          showMsg('');
+        }
+      });
+
+      bindSuggest(cityInput, cityList, {
+        filter: filterCities,
+        onType: function () { delete cityInput.dataset.cityOk; },
+        onPick: function (item) {
+          applyCityHit(item.hit, true);
+          showMsg('');
+        }
+      });
+
+      cityInput.addEventListener('change', function () {
+        lookupComune(cityInput.value).then(function (hit) {
+          if (!hit || !document.body.contains(modal)) return;
+          applyCityHit(hit, !pinned);
+        });
+      });
+
+      latInput.addEventListener('input', function () { pinned = true; });
+      lngInput.addEventListener('input', function () { pinned = true; });
+
       var btnGps = document.getElementById('btn-detect-gps');
+      var gpsLabel = btnGps ? btnGps.querySelector('.es-geo-gps__label') : null;
       if (btnGps) {
         btnGps.addEventListener('click', function () {
           if (!navigator.geolocation) {
-            alert('Geolocalizzazione non supportata dal tuo browser.');
+            showMsg(tr('geo.noGps', 'Questo browser non rileva la posizione.'), true);
             return;
           }
-          btnGps.textContent = '⏳ Rilevamento in corso...';
+          btnGps.disabled = true;
+          if (gpsLabel) gpsLabel.textContent = tr('geo.gpsBusy', 'Rilevamento in corso');
           navigator.geolocation.getCurrentPosition(function (pos) {
-            document.getElementById('geo-club-lat').value = pos.coords.latitude.toFixed(5);
-            document.getElementById('geo-club-lng').value = pos.coords.longitude.toFixed(5);
-            btnGps.innerHTML = '<span>✅</span> Posizione Rilevata';
-            setTimeout(function () { btnGps.innerHTML = '<span>📍</span> Rileva con GPS'; }, 3000);
-          }, function (err) {
-            btnGps.innerHTML = '<span>📍</span> Rileva con GPS';
-            alert('Impossibile rilevare la posizione: autorizzazione negata o segnale GPS debole.');
-          }, { enableHighAccuracy: true, timeout: 10000 });
+            if (!document.body.contains(modal)) return;
+            setCoords(pos.coords.latitude, pos.coords.longitude, true);
+            btnGps.disabled = false;
+            if (gpsLabel) gpsLabel.textContent = tr('geo.gpsOk', 'Posizione rilevata');
+            showMsg('');
+            setTimeout(function () {
+              if (gpsLabel && document.body.contains(modal)) gpsLabel.textContent = tr('geo.gps', 'Rileva con GPS');
+            }, 2200);
+          }, function () {
+            btnGps.disabled = false;
+            if (gpsLabel) gpsLabel.textContent = tr('geo.gps', 'Rileva con GPS');
+            showMsg(tr('geo.gpsFail', 'Posizione non disponibile. Controlla il permesso del browser oppure inserisci le coordinate.'), true);
+          }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
         });
       }
 
       function closeModal() {
         modal.classList.remove('is-open');
+        document.removeEventListener('keydown', onKey);
         setTimeout(function () { if (modal.parentElement) modal.remove(); }, 200);
       }
 
-      document.getElementById('btn-close-geo-modal').onclick = closeModal;
-      document.getElementById('btn-cancel-geo').onclick = closeModal;
-      modal.onclick = function (e) { if (e.target === modal) closeModal(); };
-
-      // Submit
-      var form = document.getElementById('form-club-geo');
-      if (form) {
-        form.onsubmit = function (e) {
-          e.preventDefault();
-          var rawClub = document.getElementById('geo-club-search').value.trim();
-          var city = document.getElementById('geo-club-city').value.trim();
-          var stadium = document.getElementById('geo-club-stadium').value.trim();
-
-          lookupComune(city).then(function (hit) {
-            var lat = hit ? hit.lat : parseFloat(document.getElementById('geo-club-lat').value);
-            var lng = hit ? hit.lng : parseFloat(document.getElementById('geo-club-lng').value);
-            if (!hit || typeof lat !== 'number' || typeof lng !== 'number' || isNaN(lat) || isNaN(lng)) {
-              alert('Scegli la città natale del club da un comune italiano, così viene collocato sulla mappa.');
-              return;
-            }
-
-            var found = allClubs.find(function (c) {
-              return c.name.toLowerCase() === rawClub.toLowerCase() ||
-                     (c.name && rawClub.toLowerCase() === (c.name + (c.city ? ' (' + c.city + ')' : '')).toLowerCase());
-            });
-
-            var clubId = found ? found.id : ('club-' + (rawClub.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || Date.now()));
-            var clubName = found ? found.name : rawClub;
-
-            var geoData = {
-              id: clubId,
-              name: clubName,
-              city: city,
-              stadium: stadium,
-              lat: lat,
-              lng: lng,
-              region: hit.region,
-              league: found && found.league ? found.league : 'AMATORIALE',
-              country: 'ITALIA',
-              verified: true,
-              eliseeVerified: true,
-              updatedAt: new Date().toISOString()
-            };
-
-            saveGeoOverride(clubId, geoData);
-            upsertLocalRegistered(geoData);
-            invalidateClubs();
-
-            closeModal();
-
-            if (window.showToast) {
-              window.showToast(clubName + ' collocato a ' + hit.name + ' (' + hit.region + ').', 'success');
-            }
-
-            window.EliseeClubMap.refresh();
-            setTimeout(function () {
-              if (window.EliseeClubMap.map) {
-                window.EliseeClubMap.map.flyTo([lat, lng], 12, { duration: 1.2 });
-              }
-            }, 300);
-          });
-        };
+      function onKey(ev) {
+        if (ev.key !== 'Escape' || !modal.classList.contains('is-open')) return;
+        closeModal();
       }
 
+      document.getElementById('btn-close-geo-modal').addEventListener('click', closeModal);
+      document.getElementById('btn-cancel-geo').addEventListener('click', closeModal);
+      modal.addEventListener('click', function (ev) { if (ev.target === modal) closeModal(); });
+      document.addEventListener('keydown', onKey);
+
+      var form = document.getElementById('form-club-geo');
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        var rawClub = searchInput.value.trim();
+        var city = cityInput.value.trim();
+        var stadium = stadiumInput.value.trim();
+        if (!rawClub) {
+          showMsg(tr('geo.needClub', 'Indica il nome del club.'), true);
+          searchInput.focus();
+          return;
+        }
+        lookupComune(city).then(function (hit) {
+          if (!document.body.contains(modal)) return;
+          if (!hit) {
+            showMsg(tr('geo.needCity', 'Scegli la città natale dall’elenco dei comuni, così il club entra nella regione giusta.'), true);
+            cityInput.focus();
+            return;
+          }
+          var typed = readCoords();
+          var lat = typed ? typed.lat : hit.lat;
+          var lng = typed ? typed.lng : hit.lng;
+          if (!isFinite(lat) || !isFinite(lng)) {
+            showMsg(tr('geo.needCoords', 'Servono latitudine e longitudine valide, oppure la città natale.'), true);
+            return;
+          }
+          applyCityHit(hit, false);
+
+          var found = null;
+          var wantedId = searchInput.dataset.clubId || '';
+          var wantedName = normPlace(rawClub);
+          for (var i = 0; i < allClubs.length; i++) {
+            if (wantedId && String(allClubs[i].id) === wantedId) { found = allClubs[i]; break; }
+            if (normPlace(allClubs[i].name) === wantedName) found = allClubs[i];
+          }
+
+          var clubId = found ? found.id : ('club-' + (rawClub.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || Date.now()));
+          var clubName = found ? found.name : rawClub;
+          var geoData = {
+            id: clubId,
+            name: clubName,
+            city: hit.name + ' (' + hit.prov + ')',
+            stadium: stadium,
+            lat: lat,
+            lng: lng,
+            region: hit.region,
+            league: found && found.league ? found.league : 'AMATORIALE',
+            country: 'ITALIA',
+            verified: true,
+            eliseeVerified: true,
+            updatedAt: new Date().toISOString()
+          };
+
+          saveGeoOverride(clubId, geoData);
+          upsertLocalRegistered(geoData);
+          invalidateClubs();
+          closeModal();
+
+          if (window.showToast) {
+            window.showToast(clubName + tr('geo.placed', ' collocato a ') + hit.name + ' (' + hit.region + ').', 'success');
+          }
+          if (window.EliseeClubMap && window.EliseeClubMap.refresh) window.EliseeClubMap.refresh();
+          setTimeout(function () {
+            if (window.EliseeClubMap && window.EliseeClubMap.map) {
+              window.EliseeClubMap.map.flyTo([lat, lng], 12, { duration: 1.2 });
+            }
+          }, 350);
+        });
+      });
+
+      if (searchInput) searchInput.focus();
       requestAnimationFrame(function () { modal.classList.add('is-open'); });
     });
   }
 
-  // =====================================================================
   // MAP ENGINE
   // =====================================================================
   var REGION_CENTERS = {

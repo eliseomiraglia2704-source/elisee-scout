@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-01** — FIX25 — I paragrafi pubblici seguono la lingua anche se il browser tiene una pagina vecchia:
+Ultimo aggiornamento: **2026-10-01** — FIX26 — Finestra «Geolocalizzazione club e sede» allineata al vetro della mappa:
+
+1. **Aspetto**: stesso vetro della navbar (bordo chiaro, blur, titolo teal), campi opachi leggibili, elenchi suggeriti opachi. Niente emoji. Pulsanti e voci alte almeno 44px, focus teal.
+2. **Azioni**: la ricerca del club e la città aprono un elenco cliccabile. Scegliere una voce compila città, stadio e coordinate. «Rileva con GPS» scrive latitudine e longitudine. Annulla, chiudi e il clic fuori chiudono. Salva tiene le coordinate scelte (non le sostituisce col centro del comune) e sposta la mappa. La finestra sta sopra la card delle notifiche, così i pulsanti restano cliccabili.
+3. **File**: `mappa-club.js`, `mappa-club.css`, `i18n.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX26`. Non tocca data di nascita, età o consenso genitoriale.
+
+Feature precedente: **2026-10-01** — FIX25 — I paragrafi pubblici seguono la lingua anche se il browser tiene una pagina vecchia:
 
 1. **Perché restavano in italiano**: Chi siamo in spagnolo mostrava ancora «Colleghiamo…» e «Ogni profilo è verificato…», con «Accedi» e il menu dei tre puntini. Quella pagina era una copia precedente: il controllo della versione, al primo giro, la considerava già aggiornata e non la ricaricava.
 2. **Ora**: se il numero nel documento e quello di `version.json` non coincidono, la pagina si ricarica una volta, dopo aver staccato il service worker e svuotato la cache. In più, con inglese, spagnolo o francese, un paragrafo ancora uguale all’italiano di partenza viene riscritto. Vale anche per Accedi. Il cambio sezione non riapre l’accesso.
