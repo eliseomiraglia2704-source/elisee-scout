@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-01** — FIX26 — Finestra «Geolocalizzazione club e sede» allineata al vetro della mappa:
+Ultimo aggiornamento: **2026-10-02** — FIX27 — La ricerca club sulla mappa ha un solo bordo e il testo ci sta:
+
+1. **Bordo destro**: la capsula era disegnata due volte, sul contenitore e sulla barra. Il contenitore tagliava la curva destra e anche l’elenco dei risultati. Ora il bordo sta solo sulla barra.
+2. **Testo**: «Cerca un club per nome o comune» non viene più tagliato. Il contatore invisibile non occupa più spazio finché non c’è una ricerca.
+3. **File**: `mappa-club.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261002_FIX27`. Non tocca data di nascita, età o consenso genitoriale.
+
+Feature precedente: **2026-10-01** — FIX26 — Finestra «Geolocalizzazione club e sede» allineata al vetro della mappa:
 
 1. **Aspetto**: stesso vetro della navbar (bordo chiaro, blur, titolo teal), campi opachi leggibili, elenchi suggeriti opachi. Niente emoji. Pulsanti e voci alte almeno 44px, focus teal.
 2. **Azioni**: la ricerca del club e la città aprono un elenco cliccabile. Scegliere una voce compila città, stadio e coordinate. «Rileva con GPS» scrive latitudine e longitudine. Annulla, chiudi e il clic fuori chiudono. Salva tiene le coordinate scelte (non le sostituisce col centro del comune) e sposta la mappa. La finestra sta sopra la card delle notifiche, così i pulsanti restano cliccabili.

@@ -294,14 +294,14 @@ html[data-theme="mimetico-chiaro"] .es-map-info .es-map-badge-update {
   top: 16px;
   left: 16px;
   z-index: 500;
-  width: 300px;
+  width: min(440px, calc(100% - 32px));
   max-width: calc(100% - 32px);
 }
 
-.map-search-box,
 .es-map-search__bar {
   display: flex;
-  align-items: stretch;
+  align-items: center;
+  min-height: 44px;
   background: var(--panel) !important;
   border: 1px solid var(--line) !important;
   border-radius: 999px;
@@ -310,7 +310,6 @@ html[data-theme="mimetico-chiaro"] .es-map-info .es-map-badge-update {
   transition: border-color .2s ease, box-shadow .2s ease !important;
 }
 
-.map-search-box:focus-within,
 .es-map-search__bar:focus-within {
   border-color: var(--blue) !important;
   box-shadow: 0 0 0 3px rgba(29, 79, 214, .15) !important;
@@ -331,7 +330,7 @@ html[data-theme="mimetico-chiaro"] .es-map-info .es-map-badge-update {
   border: none !important;
   border-radius: 0 !important;
   box-shadow: none !important;
-  padding: 12px 8px 12px 4px !important;
+  padding: 12px 16px 12px 4px !important;
   color: var(--text) !important;
   font-family: var(--es-font) !important;
   font-size: 13.5px !important;
@@ -355,8 +354,12 @@ html[data-theme="mimetico-chiaro"] .es-map-info .es-map-badge-update {
   cursor: pointer;
   font-size: 14px;
   line-height: 1;
-  padding: 0 14px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
   display: none;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
   transition: color 0.15s ease;
 }
@@ -366,7 +369,7 @@ html[data-theme="mimetico-chiaro"] .es-map-info .es-map-badge-update {
 }
 
 .es-map-search__clear.is-visible {
-  display: block;
+  display: inline-flex;
 }
 
 .es-map-search__results {
@@ -434,7 +437,7 @@ html[data-theme="mimetico-chiaro"] .es-map-info .es-map-badge-update {
 
 /* Count pill inside the search bar */
 .es-map-search__count {
-  display: inline-flex;
+  display: none;
   align-items: center;
   justify-content: center;
   min-width: 20px;
@@ -447,12 +450,10 @@ html[data-theme="mimetico-chiaro"] .es-map-info .es-map-badge-update {
   font-weight: 700;
   font-family: var(--es-font);
   flex-shrink: 0;
-  margin-right: 6px;
-  opacity: 0;
-  transition: opacity 0.2s ease;
+  margin-right: 4px;
 }
 .es-map-search__count.is-visible {
-  opacity: 1;
+  display: inline-flex;
 }
 
 .es-map-search__result {
