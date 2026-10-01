@@ -4,7 +4,13 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-10-01** — FIX5 — Bacheca: tolto il raggio, barra opportunità come la navbar:
+Ultimo aggiornamento: **2026-10-01** — FIX6 — Menu suggerimenti leggibile e scrollbar coerente:
+
+1. **Menu ricerca**: sfondo pieno `#0d1626`, niente vetro. Le voci non si mescolano più con filtri e annunci dietro.
+2. **Scrollbar**: sottile, pista dello stesso colore del menu, cursore teal arrotondato. In tema chiaro pista bianca e cursore teal scuro.
+3. **File**: `scry-search.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX6`.
+
+Feature precedente: **2026-10-01** — FIX5 — Bacheca: tolto il raggio, barra opportunità come la navbar:
 
 1. **Rimosso** il controllo `Raggio` (Tutti, Città, Provincia, Regione, Italia) sopra gli annunci. Restano i chip Fuoriquota, Vitto e alloggio, Svincolato.
 2. **`Opportunità selezionate`**: niente più fascia nera. È una pillola traslucida, bordo sottile e icone tonde, come la navbar.
