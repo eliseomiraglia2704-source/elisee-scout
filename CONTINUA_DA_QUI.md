@@ -1,6 +1,14 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-01** — FIX20 — Km/h del pallone e metri palla al piede sulle clip caricate:
+Ultimo aggiornamento: **2026-10-01** — FIX21 — Le schermate pubbliche seguono la lingua scelta:
+
+1. **Chi siamo**: i due paragrafi sotto la missione (principio guida, GPS, consenso genitoriale) e il blocco «Cosa facciamo / Perché puoi fidarti» erano testo fisso in italiano. Ora passano a IT, EN, ES e FR. Gli accenti teal e corallo restano. La card mappa non parla più di «oltre 2.900 club»: dice i club iscritti, collocati dalla città.
+2. **Altre aree**: home, navbar, mappa, footer, cookie, messaggi, album, scopri, mercato, schede, account, testata Ambassador, curriculum (titolo), tema. Anche la finestra Accedi/Iscriviti, la scelta del ruolo, la barra bassa del telefono e il titolo del passaggio tra sezioni.
+3. **Cambio lingua**: aggiornare il mercato non riapre più la finestra di accesso se l’utente sta solo cambiando lingua.
+4. **Resta in italiano di proposito**: i numeri «1.386 Pillar / 3127 Agenti IA», i dati personali del CV dimostrativo, i campi del modulo Ambassador, l’area admin, i blocchi dimostrativi Northwind/Halcyon, i messaggi di errore dell’accesso e i testi scritti dagli utenti.
+5. **File**: `index.html`, `i18n.js`, `app.js`, `chi-segui.js`, `scopri-profili.js`, `mercato-hub.js`, `schede-tecniche.js`, `player-card.js`, `realistic-switch.js`, `verifica-account.js`, `mobile-webapp.js`, `elisee-loader.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX21`. Non tocca il campo data di nascita, il calcolo dell’età né il flusso di consenso genitoriale.
+
+Feature precedente: **2026-10-01** — FIX20 — Km/h del pallone e metri palla al piede sulle clip caricate:
 
 1. **Misure**: «Analizza una clip» stima la velocità del pallone in km/h e i metri del giocatore palla al piede. Il pallone è il movimento piccolo, il giocatore quello ampio. La scala è la larghezza inquadrata, in metri (predefinita 40, da 8 a 110). Il tratto palla al piede conta solo mentre il pallone resta entro un metro e mezzo dal corpo.
 2. **Se non si distinguono**: la riga dice che il pallone o il tratto non è distinto. Non compare uno 0 km/h finto. Cambiare la larghezza ricalcola i numeri senza rileggere il video.

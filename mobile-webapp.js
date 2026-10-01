@@ -50,7 +50,14 @@
     var drawerAuthBtn = document.getElementById('es-m-drawer-auth-btn');
 
     var isAuth = !!(u && (u.id || u.username || u.email));
-    var name = isAuth ? (((u.nome || '') + ' ' + (u.cognome || '')).trim() || u.username || 'Account') : 'Accedi';
+    function trm(key, fb) {
+      if (window.EliseeI18n && typeof window.EliseeI18n.t === 'function') {
+        var v = window.EliseeI18n.t(key);
+        if (v && v !== key) return v;
+      }
+      return fb;
+    }
+    var name = isAuth ? (((u.nome || '') + ' ' + (u.cognome || '')).trim() || u.username || 'Account') : trm('nav.login', 'Accedi');
 
     if (nameEl) nameEl.textContent = name;
 
@@ -61,7 +68,10 @@
       loginBtn.style.display = isAuth ? 'none' : 'inline-flex';
     }
     if (drawerAuthBtn) {
-      drawerAuthBtn.textContent = isAuth ? 'Profilo & Logout' : 'Accedi / Iscriviti';
+      var lab = isAuth ? trm('m.logout', 'Profilo e esci') : trm('m.auth', 'Accedi / Iscriviti');
+      var sp = drawerAuthBtn.querySelector('[data-i18n]');
+      if (sp) sp.textContent = lab;
+      else drawerAuthBtn.textContent = lab;
     }
   }
 
@@ -302,6 +312,7 @@
     bindEvents();
     syncActiveTab();
     syncUserState();
+    document.addEventListener('elisee:lang-changed', syncUserState);
     setTimeout(function () {
       syncActiveTab();
       syncUserState();

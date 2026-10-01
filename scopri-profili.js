@@ -1,5 +1,12 @@
 /* Scopri profili — follow Ente / Club / Player / Staff + ricerca avanzata */
 (function () {
+  function tr(key, fallback) {
+    if (window.EliseeI18n && typeof window.EliseeI18n.t === 'function') {
+      var v = window.EliseeI18n.t(key);
+      if (v && v !== key) return v;
+    }
+    return fallback;
+  }
   var REGIONS = ['Abruzzo', 'Basilicata', 'Calabria', 'Campania', 'Emilia-Romagna', 'Friuli-Venezia Giulia', 'Lazio', 'Liguria', 'Lombardia', 'Marche', 'Molise', 'Piemonte', 'Puglia', 'Sardegna', 'Sicilia', 'Toscana', 'Trentino-Alto Adige', 'Umbria', "Valle d'Aosta", 'Veneto'];
   var CATEGORIES = [
     'Serie A',
@@ -329,7 +336,7 @@
     if (roleSel) {
       var roles = uniqueRoles(kind);
       var cur = window.EliseeScopri.role || '';
-      roleSel.innerHTML = '<option value="">Tutti i ruoli</option>' + roles.map(function (r) {
+      roleSel.innerHTML = '<option value="">' + esc(tr('scopri.allRoles', 'Tutti i ruoli')) + '</option>' + roles.map(function (r) {
         return '<option value="' + esc(r) + '">' + esc(r) + '</option>';
       }).join('');
       roleSel.value = cur;
@@ -338,7 +345,7 @@
     if (groupSel) {
       var groups = ['Serie A', 'Serie B', 'Serie C', 'Serie D', 'Eccellenza', 'Promozione', 'Prima Categoria', 'Seconda Categoria', 'Terza Categoria', 'Giovanili', 'Femminile'];
       var gcur = window.EliseeScopri.group || '';
-      groupSel.innerHTML = '<option value="">Tutte le categorie</option>' + groups.map(function (g) {
+      groupSel.innerHTML = '<option value="">' + esc(tr('scopri.allCategories', 'Tutte le categorie')) + '</option>' + groups.map(function (g) {
         return '<option value="' + esc(g) + '">' + esc(g) + '</option>';
       }).join('');
       groupSel.value = gcur;
@@ -363,12 +370,12 @@
     }
 
     var btn = p.isMe
-      ? '<div class="es-sc-actions"><button type="button" class="es-sc-msg" disabled style="opacity:0.6;">Sei tu</button></div>'
+      ? '<div class="es-sc-actions"><button type="button" class="es-sc-msg" disabled style="opacity:0.6;">' + esc(tr('scopri.you', 'Sei tu')) + '</button></div>'
       : '<div class="es-sc-actions">' +
-          '<button type="button" class="es-sc-follow' + (on ? ' is-on' : '') + '" data-follow="' + esc(p.id) + '">' + (on ? '✓ Segui già' : '+ Segui') + '</button>' +
-          '<button type="button" class="es-sc-msg" data-msg="' + esc(p.id) + '" data-msg-name="' + esc(p.name) + '" data-msg-kind="' + esc(p.kind) + '">Messaggia</button>' +
-          (p.kind === 'player' ? '<button type="button" class="es-sc-secret" data-secret="' + esc(p.id) + '" data-secret-name="' + esc(p.name) + '" data-secret-role="' + esc(p.role || '') + '" data-secret-city="' + esc(p.city || '') + '">Secret List</button>' : '') +
-          '<button type="button" class="es-cs-their" data-see-follow="' + esc(p.id) + '" data-see-name="' + esc(p.name) + '">Chi segue</button>' +
+          '<button type="button" class="es-sc-follow' + (on ? ' is-on' : '') + '" data-follow="' + esc(p.id) + '">' + esc(on ? tr('scopri.followingOn', 'Già seguito') : tr('scopri.follow', 'Segui')) + '</button>' +
+          '<button type="button" class="es-sc-msg" data-msg="' + esc(p.id) + '" data-msg-name="' + esc(p.name) + '" data-msg-kind="' + esc(p.kind) + '">' + esc(tr('scopri.message', 'Messaggia')) + '</button>' +
+          (p.kind === 'player' ? '<button type="button" class="es-sc-secret" data-secret="' + esc(p.id) + '" data-secret-name="' + esc(p.name) + '" data-secret-role="' + esc(p.role || '') + '" data-secret-city="' + esc(p.city || '') + '">' + esc(tr('scopri.secret', 'Lista riservata')) + '</button>' : '') +
+          '<button type="button" class="es-cs-their" data-see-follow="' + esc(p.id) + '" data-see-name="' + esc(p.name) + '">' + esc(tr('scopri.their', 'Chi segue')) + '</button>' +
         '</div>';
 
     return '<article class="es-sc-card' + (org ? ' is-org' : '') + '" data-id="' + esc(p.id) + '">' +
@@ -411,12 +418,12 @@
         b.classList.toggle('is-on', b.getAttribute('data-kind') === kindNow);
       });
       if (!rows.length) {
-        root.innerHTML = '<p class="es-sc-empty">Nessun profilo con questi filtri.</p>';
+        root.innerHTML = '<p class="es-sc-empty">' + esc(tr('scopri.empty', 'Nessun profilo con questi filtri.')) + '</p>';
         return;
       }
       var slice = rows.slice(0, this.shown);
       var more = rows.length > slice.length
-        ? '<button type="button" class="es-sc-more" id="es-sc-more">Mostra altri (' + (rows.length - slice.length) + ')</button>'
+        ? '<button type="button" class="es-sc-more" id="es-sc-more">' + esc(tr('scopri.more', 'Mostra altri')) + ' (' + (rows.length - slice.length) + ')</button>'
         : '';
       root.innerHTML = slice.map(function (p) { return cardHtml(p, followed); }).join('') + more;
     },
@@ -424,7 +431,7 @@
       if (!id) return;
       if (!isLogged()) {
         if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
-        else if (typeof window.showToast === 'function') window.showToast('Accedi per seguire i profili.', 'error');
+        else if (typeof window.showToast === 'function') window.showToast(tr('scopri.followNeed', 'Accedi per seguire i profili.'), 'error');
         return;
       }
       var person = catalog().filter(function (p) { return p.id === id; })[0];
@@ -444,7 +451,7 @@
       }
       var name = person ? person.name : 'profilo';
       if (typeof window.showToast === 'function') {
-        window.showToast(was ? ('Non segui più ' + name + '.') : ('Ora segui ' + name + '.'), 'success');
+        window.showToast(was ? (tr('scopri.unfollow', 'Non segui più') + ' ' + name + '.') : (tr('scopri.nowFollow', 'Ora segui') + ' ' + name + '.'), 'success');
       }
       if (!was && window.EliseeUserNotifs && typeof window.EliseeUserNotifs.push === 'function') {
         window.EliseeUserNotifs.push({
@@ -525,13 +532,13 @@
       var geo = document.getElementById('es-sc-geo');
       var cat = document.getElementById('es-sc-category') || document.getElementById('es-sc-sport');
       if (geo) {
-        geo.innerHTML = '<option value="">Tutta Italia</option>' + REGIONS.map(function (r) {
+        geo.innerHTML = '<option value="">' + esc(tr('scopri.allItaly', 'Tutta Italia')) + '</option>' + REGIONS.map(function (r) {
           return '<option value="' + esc(r) + '">' + esc(r) + '</option>';
         }).join('');
         geo.addEventListener('change', function () { self.region = geo.value; self.shown = PAGE; self.render(); });
       }
       if (cat) {
-        cat.innerHTML = '<option value="">Tutte le categorie</option>' +
+        cat.innerHTML = '<option value="">' + esc(tr('scopri.allCategories', 'Tutte le categorie')) + '</option>' +
           CATEGORIES.map(function (c) { return '<option value="' + esc(c) + '">' + esc(c) + '</option>'; }).join('');
         cat.addEventListener('change', function () {
           self.category = cat.value;
@@ -598,6 +605,9 @@
       if (d && (d.view === 'scopri' || (d.hash && String(d.hash).indexOf('scopri') >= 0))) {
         loadClubs(function () { window.EliseeScopri.render(); });
       }
+    });
+    document.addEventListener('elisee:lang-changed', function () {
+      if (window.EliseeScopri && window.EliseeScopri.render) window.EliseeScopri.render();
     });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);

@@ -534,8 +534,13 @@
     var title = document.getElementById('es-st-title');
     var lead = document.getElementById('es-st-lead');
     if (title) title.textContent = job.title;
+    var sheetCount = (job.sheets || []).length;
+    var sheetTail = (window.EliseeI18n && window.EliseeI18n.t)
+      ? window.EliseeI18n.t('st.leadTail')
+      : 'schede in piattaforma, nessuna e-mail inviata.';
+    if (sheetTail === 'st.leadTail') sheetTail = 'schede in piattaforma, nessuna e-mail inviata.';
     if (lead) lead.textContent = (job.club ? job.club + ' · ' : '') + (job.role || '') + (job.location ? ' · ' + job.location : '') +
-      ' — ' + (job.sheets || []).length + ' schede in piattaforma, nessuna e-mail inviata.';
+      ' — ' + sheetCount + ' ' + sheetTail;
     var list = document.getElementById('es-st-list');
     var detail = document.getElementById('es-st-detail');
     if (list) list.innerHTML = renderList(job);
@@ -1028,6 +1033,7 @@
       var d = e && e.detail;
       if (d && (d.view === 'schede' || String(d.hash || '').indexOf('schede') >= 0)) render();
     });
+    document.addEventListener('elisee:lang-changed', function () { render(); });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();

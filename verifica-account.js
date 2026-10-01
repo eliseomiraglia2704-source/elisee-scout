@@ -526,21 +526,32 @@
         prevHint(value);
         var hint = document.getElementById('scegli-ruolo-hint');
         if (!hint) return;
+        function esHint(key, fb) {
+          if (window.EliseeI18n && typeof window.EliseeI18n.t === 'function') {
+            var v = window.EliseeI18n.t(key);
+            if (v && v !== key) return v;
+          }
+          return fb;
+        }
         if (window.isSpectatorRole && window.isSpectatorRole(value)) {
           hint.hidden = false;
           hint.style.display = 'block';
-          hint.textContent = 'Il Tifoso naviga e interagisce. Non deve allegare il documento di identità e non può inviare candidature.';
+          hint.textContent = esHint('role.hintFan', 'Il Tifoso naviga e interagisce. Non deve allegare il documento di identità e non può inviare candidature.');
         } else if (String(value || '').toLowerCase() === 'giornalista') {
           hint.hidden = false;
           hint.style.display = 'block';
-          hint.textContent = 'Il Giornalista ha 30 giorni per i documenti anti-fake. Solo con badge Stampa / Giornalista Verificato può inviare articoli, sondaggi e video in pubblicazione.';
+          hint.textContent = esHint('role.hintPress', 'Il Giornalista ha 30 giorni per i documenti anti-fake. Solo con badge Stampa / Giornalista Verificato può inviare articoli, sondaggi e video in pubblicazione.');
         } else if (value) {
           hint.hidden = false;
           hint.style.display = 'block';
-          hint.textContent = 'Dopo la registrazione hai 30 giorni per allegare tutti i documenti di verifica (anti-fake). Se non li carichi, dopo avvisi continui l’account viene chiuso automaticamente.';
+          hint.textContent = esHint('role.hintDocs', 'Dopo la registrazione hai 30 giorni per allegare tutti i documenti di verifica (anti-fake). Se non li carichi, dopo avvisi continui l’account viene chiuso automaticamente.');
         }
       };
       window.onSiteRoleSelectChange.__esVerify = true;
+      document.addEventListener('elisee:lang-changed', function () {
+        var sel = document.getElementById('scegli-ruolo-select');
+        if (sel && sel.value) window.onSiteRoleSelectChange(sel.value);
+      });
     }
   }
 

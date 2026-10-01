@@ -1437,12 +1437,19 @@
       var emptyS = document.getElementById('es-cs-empty-sub');
       var mine = window.EliseeChiSegui.isMe;
       var kind = window.EliseeChiSegui.kind;
+      function tr(key, fallback) {
+        if (window.EliseeI18n && typeof window.EliseeI18n.t === 'function') {
+          var v = window.EliseeI18n.t(key);
+          if (v && v !== key) return v;
+        }
+        return fallback;
+      }
       if (title) {
-        if (mine) title.textContent = kind === 'player' ? 'Il tuo Album' : 'Album';
-        else title.textContent = 'Album di ' + (window.EliseeChiSegui.ownerName || 'questo profilo');
+        if (mine) title.textContent = kind === 'player' ? tr('album.yours', 'Il tuo album') : tr('album.title', 'Album');
+        else title.textContent = tr('album.titleOf', 'Album di') + ' ' + (window.EliseeChiSegui.ownerName || tr('album.thisProfile', 'questo profilo'));
       }
       if (emptyS && mine && kind === 'player') {
-        emptyS.textContent = 'Quando aggiungi una Card da Scopri profili, comparirà qui, in un unico posto e organizzata per categoria.';
+        emptyS.textContent = tr('album.emptyPlayer', 'Quando aggiungi una card da Scopri profili, comparirà qui, in un unico posto e organizzata per categoria.');
       }
     };
     var origMine = window.EliseeChiSegui.openMine;

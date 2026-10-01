@@ -22,6 +22,29 @@
     return String(s == null ? '' : s)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
+  function tr(key, fallback) {
+    if (window.EliseeI18n && typeof window.EliseeI18n.t === 'function') {
+      var v = window.EliseeI18n.t(key);
+      if (v && v !== key) return v;
+    }
+    return fallback;
+  }
+  function lineLabel(id, fallback) {
+    return tr('mk.line.' + String(id || '').toLowerCase(), fallback);
+  }
+  function prioLabel(id, fallback) {
+    return tr('mk.prio.' + String(id || ''), fallback);
+  }
+  function statusLabel(value) {
+    var map = {
+      'Svincolato': 'mk.st.free',
+      'In scadenza': 'mk.st.expiring',
+      'Tesserato': 'mk.st.signed',
+      'In trattativa': 'mk.st.talks'
+    };
+    var key = map[value];
+    return key ? tr(key, value) : value;
+  }
   function userObj() {
     try { return JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {}; } catch (_) { return {}; }
   }
@@ -296,19 +319,19 @@
     var html = '';
     LINES.forEach(function (ln) {
       var col = items.filter(function (it) { return lineOf(it.role) === ln.id; });
-      html += '<section class="es-mk-col"><h3>' + ln.label + ' <b>' + col.length + '</b></h3>';
-      if (!col.length) html += '<p class="es-mk-empty-col">Nessun target.</p>';
+      html += '<section class="es-mk-col"><h3>' + esc(lineLabel(ln.id, ln.label)) + ' <b>' + col.length + '</b></h3>';
+      if (!col.length) html += '<p class="es-mk-empty-col">' + esc(tr('mk.noTarget', 'Nessun target.')) + '</p>';
       col.forEach(function (it) {
         var pr = PRIOS.filter(function (p) { return p.id === it.priority; })[0];
         html += '<article class="es-mk-card is-p' + esc(it.priority) + '" data-id="' + esc(it.id) + '">' +
           '<div class="es-mk-card-top"><div><h4>' + esc(it.name) + '</h4>' +
           '<p>' + esc(it.role) + (it.city ? ' · ' + esc(it.city) : '') + '</p></div>' +
-          '<span class="es-mk-prio p' + esc(it.priority) + '">' + esc(pr ? pr.label : 'Watch') + '</span></div>' +
-          '<span class="es-mk-status">' + esc(it.status) + '</span>' +
-          '<textarea class="es-mk-note" data-note="' + esc(it.id) + '" placeholder="Note private (solo tu)">' + esc(it.notes) + '</textarea>' +
+          '<span class="es-mk-prio p' + esc(it.priority) + '">' + esc(pr ? prioLabel(pr.id, pr.label) : tr('mk.prio.3', 'Watch')) + '</span></div>' +
+          '<span class="es-mk-status">' + esc(statusLabel(it.status)) + '</span>' +
+          '<textarea class="es-mk-note" data-note="' + esc(it.id) + '" placeholder="' + esc(tr('mk.note', 'Note private (solo tu)')) + '">' + esc(it.notes) + '</textarea>' +
           '<div class="es-mk-card-actions">' +
-          '<button type="button" data-prio="' + esc(it.id) + '">Priorità</button>' +
-          '<button type="button" data-status="' + esc(it.id) + '">Status</button>' +
+          '<button type="button" data-prio="' + esc(it.id) + '">' + esc(tr('mk.priority', 'Priorità')) + '</button>' +
+          '<button type="button" data-status="' + esc(it.id) + '">' + esc(tr('mk.status', 'Stato')) + '</button>' +
           (isScout() && scoutUnderContract()
             ? '<button type="button" data-fwd-ds="' + esc(it.id) + '">Inoltra al DS</button>'
             : '') +
@@ -876,9 +899,9 @@
     render();
   }
 
-  function setTab(next) {
+  function setTab(next, silent) {
     tab = next === 'wall' ? 'wall' : 'secret';
-    if (tab === 'secret' && !isLogged()) {
+    if (!silent && tab === 'secret' && !isLogged()) {
       needLogin('#mercato-hub');
     }
     var sec = document.getElementById('es-mk-secret');
@@ -892,14 +915,14 @@
     var title = document.getElementById('es-mk-title');
     var lead = document.getElementById('es-mk-lead');
     if (tab === 'wall') {
-      if (kicker) kicker.textContent = 'Calciomercato';
-      if (title) title.textContent = 'Wall delle trattative chiuse';
-      if (lead) lead.textContent = 'Come il tab notizie di FIFA: quando società e atleta svincolato chiudono, la card con la nuova maglia e la scritta TRASFERITO va in feed.';
+      if (kicker) kicker.textContent = tr('mk.wallKicker', 'Calciomercato');
+      if (title) title.textContent = tr('mk.wallTitle', 'Wall delle trattative chiuse');
+      if (lead) lead.textContent = tr('mk.wallLead', 'Quando società e atleta svincolato chiudono, la trattativa compare nel feed con la nuova maglia.');
       renderWall();
     } else {
-      if (kicker) kicker.textContent = 'Hub Mercato';
-      if (title) title.textContent = 'Secret List';
-      if (lead) lead.textContent = 'Lista riservata stile Football Manager: organizza i target per ruolo e priorità. Inserimento stealth, senza allertare atleta, procuratore o club concorrenti.';
+      if (kicker) kicker.textContent = tr('mk.kicker', 'Hub Mercato');
+      if (title) title.textContent = tr('mk.title', 'Lista riservata');
+      if (lead) lead.textContent = tr('mk.lead', 'Lista riservata: organizza i target per ruolo e priorità. L’inserimento resta visibile solo a te.');
       renderSecret();
     }
   }
@@ -1156,21 +1179,21 @@
     var blob = roleBlob(u);
     if (kickerEl) {
       if (/presidente|vice presidente|direttore generale|amministratore/.test(blob)) {
-        kickerEl.textContent = 'Area Scouting Presidenza · Secret List';
+        kickerEl.textContent = tr('mk.staffPresident', 'Area scouting presidenza');
       } else if (/direttore sportivo/.test(blob)) {
-        kickerEl.textContent = 'Esclusiva Direzione Sportiva · Secret List';
+        kickerEl.textContent = tr('mk.staffDs', 'Esclusiva direzione sportiva');
       } else if (/scout|osservatore/.test(blob)) {
-        kickerEl.textContent = 'Esclusiva Scouting · Secret List';
+        kickerEl.textContent = tr('mk.staffScout', 'Esclusiva scouting');
       } else {
-        kickerEl.textContent = 'Secret List Riservata';
+        kickerEl.textContent = tr('mk.staffReserved', 'Lista riservata');
       }
     }
     if (descEl) {
-      descEl.textContent = 'Monitora i calciatori di tuo interesse in totale riservatezza: i profili target restano visibili solo a te.';
+      descEl.textContent = tr('mk.staffDesc', 'Monitora i calciatori di tuo interesse in totale riservatezza: i profili target restano visibili solo a te.');
     }
     if (nEl) {
       var n = myList().length;
-      nEl.textContent = n === 0 ? 'Nessun calciatore monitorato al momento.' : (n + (n === 1 ? ' calciatore monitorato' : ' calciatori monitorati'));
+      nEl.textContent = n === 0 ? tr('mk.staffNone', 'Nessun calciatore monitorato al momento.') : (n + ' ' + (n === 1 ? tr('mk.staffOne', 'calciatore monitorato') : tr('mk.staffMany', 'calciatori monitorati')));
     }
     if (tabBtn) tabBtn.hidden = !ok;
   }
@@ -1191,6 +1214,10 @@
     bind();
     loadClubs();
     paintStaffCard();
+    document.addEventListener('elisee:lang-changed', function () {
+      setTab(tab, true);
+      paintStaffCard();
+    });
     document.addEventListener('elisee:view-changed', function (e) {
       var d = e && e.detail;
       var h = String((d && d.hash) || '');

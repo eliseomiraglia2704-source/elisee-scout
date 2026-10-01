@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <script>
     (function () {
-      var BUILD_VERSION = '20261001_FIX20';
+      var BUILD_VERSION = '20261001_FIX21';
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
         if (savedTheme) {
@@ -1663,13 +1663,13 @@
     <div style="max-width:1400px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
       <div style="flex:1; min-width:260px;">
         <p style="color:#e2e8f0; font-size:0.88rem; margin:0; line-height:1.55;">
-          🍪 <strong style="color:#38bdf8;">ELISEE SCOUT</strong> utilizza cookie tecnici, analitici e di profilazione per migliorare la tua esperienza e personalizzare i contenuti. Leggi l’<a href="cookie-policy.html" style="color:#38bdf8; text-decoration:underline;">informativa estesa sui cookie</a> e l’<a href="privacy-policy.html" style="color:#38bdf8; text-decoration:underline;">informativa sul trattamento dei dati personali</a> (artt. 12 e 13 GDPR).
+          <strong style="color:#38bdf8;">ELISEE SCOUT</strong><span data-i18n="cookie.before"> utilizza cookie tecnici, analitici e di profilazione per migliorare la tua esperienza e personalizzare i contenuti. Leggi l’</span><a href="cookie-policy.html" style="color:#38bdf8; text-decoration:underline;" data-i18n="cookie.linkCookies">informativa estesa sui cookie</a><span data-i18n="cookie.mid"> e l’</span><a href="privacy-policy.html" style="color:#38bdf8; text-decoration:underline;" data-i18n="cookie.linkPrivacy">informativa sul trattamento dei dati personali</a><span data-i18n="cookie.after"> (artt. 12 e 13 GDPR).</span>
         </p>
       </div>
       <div style="display:flex; gap:0.65rem; flex-wrap:wrap;">
-        <button onclick="acceptCookiesOnly()" style="padding:0.6rem 1.2rem; border-radius:20px; background:transparent; color:#94a3b8; border:1px solid rgba(148,163,184,0.4); font-size:0.82rem; cursor:pointer; font-weight:600; white-space:nowrap;">Solo tecnici</button>
-        <button type="button" onclick="if(window.EliseeCookies && EliseeCookies.showPreferencesPanel){EliseeCookies.showPreferencesPanel();}else if(typeof acceptCookiesPartial==='function'){acceptCookiesPartial();}" style="padding:0.6rem 1.2rem; border-radius:20px; background:rgba(2,132,199,0.2); color:#38bdf8; border:1px solid rgba(56,189,248,0.45); font-size:0.82rem; cursor:pointer; font-weight:700; white-space:nowrap;">Gestisci preferenze</button>
-        <button onclick="acceptCookiesAll()" style="padding:0.6rem 1.4rem; border-radius:20px; background:linear-gradient(90deg,#0284c7,#38bdf8); color:#ffffff; border:none; font-size:0.82rem; cursor:pointer; font-weight:800; white-space:nowrap;">✓ Accetta tutti</button>
+        <button onclick="acceptCookiesOnly()" data-i18n="cookie.tech" style="padding:0.6rem 1.2rem; border-radius:20px; background:transparent; color:#94a3b8; border:1px solid rgba(148,163,184,0.4); font-size:0.82rem; cursor:pointer; font-weight:600; white-space:nowrap;">Solo tecnici</button>
+        <button type="button" data-i18n="cookie.manage" onclick="if(window.EliseeCookies && EliseeCookies.showPreferencesPanel){EliseeCookies.showPreferencesPanel();}else if(typeof acceptCookiesPartial==='function'){acceptCookiesPartial();}" style="padding:0.6rem 1.2rem; border-radius:20px; background:rgba(2,132,199,0.2); color:#38bdf8; border:1px solid rgba(56,189,248,0.45); font-size:0.82rem; cursor:pointer; font-weight:700; white-space:nowrap;">Gestisci preferenze</button>
+        <button onclick="acceptCookiesAll()" data-i18n="cookie.accept" style="padding:0.6rem 1.4rem; border-radius:20px; background:linear-gradient(90deg,#0284c7,#38bdf8); color:#ffffff; border:none; font-size:0.82rem; cursor:pointer; font-weight:800; white-space:nowrap;">Accetta tutti</button>
       </div>
     </div>
   </div>
@@ -1942,50 +1942,50 @@
   <div id="modal-scegli-ruolo" class="es-role-pick" style="display:none;">
     <div class="es-role-pick-sheet" role="dialog" aria-labelledby="es-role-pick-title">
       <h1 class="es-role-pick-brand">Elisee <span>Scout</span></h1>
-      <h2 id="es-role-pick-title">Scegli come vuoi usare Elisee Scout</h2>
-      <p class="es-role-pick-sub">Ogni ruolo offre un'esperienza diversa. Ente, Squadra, Giocatore, Staff e Giornalista hanno 30 giorni per allegare i documenti di verifica.</p>
+      <h2 id="es-role-pick-title" data-i18n="role.title">Scegli come vuoi usare Elisee Scout</h2>
+      <p class="es-role-pick-sub" data-i18n="role.sub">Ogni ruolo offre un'esperienza diversa. Ente, Squadra, Giocatore, Staff e Giornalista hanno 30 giorni per allegare i documenti di verifica.</p>
       <input type="hidden" id="scegli-ruolo-select" value="">
-      <div class="es-role-pick-list" id="es-role-pick-list" role="listbox" aria-label="Ruolo sul sito">
+      <div class="es-role-pick-list" id="es-role-pick-list" role="listbox" data-i18n-aria="role.list" aria-label="Ruolo sul sito">
         <button type="button" class="es-role-card" data-role="Ente" role="option">
           <span class="es-role-ico" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
           </span>
-          <span class="es-role-txt"><small>Sono un</small><strong>ENTE</strong></span>
+          <span class="es-role-txt"><small data-i18n="role.iam">Sono un</small><strong data-i18n="role.ente">ENTE</strong></span>
         </button>
         <button type="button" class="es-role-card" data-role="Squadra" role="option">
           <span class="es-role-ico" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><rect x="4" y="7" width="16" height="14" rx="2"/><path d="M4 12h16"/></svg>
           </span>
-          <span class="es-role-txt"><small>Sono una</small><strong>SQUADRA</strong></span>
+          <span class="es-role-txt"><small data-i18n="role.iama">Sono una</small><strong data-i18n="role.club">SQUADRA</strong></span>
         </button>
         <button type="button" class="es-role-card" data-role="Giocatore" role="option">
           <span class="es-role-ico" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 19.5c1.2-3.2 3.6-4.8 6.5-4.8s5.3 1.6 6.5 4.8"/></svg>
           </span>
-          <span class="es-role-txt"><small>Sono un</small><strong>GIOCATORE</strong></span>
+          <span class="es-role-txt"><small data-i18n="role.iam">Sono un</small><strong data-i18n="role.player">GIOCATORE</strong></span>
         </button>
         <button type="button" class="es-role-card" data-role="Staff" role="option">
           <span class="es-role-ico" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="2.6"/><circle cx="16" cy="9" r="2.2"/><path d="M4.5 18.5c.9-2.6 2.7-4 5-4s4.1 1.4 5 4M13.5 18.2c.5-1.6 1.6-2.6 3.2-2.6 1.5 0 2.5.8 3.1 2.2"/></svg>
           </span>
-          <span class="es-role-txt"><small>Sono un Membro</small><strong>STAFF</strong></span>
+          <span class="es-role-txt"><small data-i18n="role.member">Sono un Membro</small><strong data-i18n="role.staff">STAFF</strong></span>
         </button>
         <button type="button" class="es-role-card" data-role="Tifoso" role="option">
           <span class="es-role-ico" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8.5" cy="8" r="2.5"/><circle cx="15.5" cy="8" r="2.5"/><path d="M3.8 18.5c.9-2.7 2.7-4.1 4.7-4.1s3.8 1.4 4.7 4.1M11 18.5c.9-2.7 2.7-4.1 4.5-4.1s3.6 1.4 4.5 4.1"/></svg>
           </span>
-          <span class="es-role-txt"><small>Sono un</small><strong>TIFOSO</strong></span>
+          <span class="es-role-txt"><small data-i18n="role.iam">Sono un</small><strong data-i18n="role.fan">TIFOSO</strong></span>
         </button>
         <button type="button" class="es-role-card" data-role="Giornalista" role="option">
           <span class="es-role-ico" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h12v14H4z"/><path d="M16 8h4v11h-4"/><path d="M7 9h6M7 12h6M7 15h4"/></svg>
           </span>
-          <span class="es-role-txt"><small>Sono un</small><strong>GIORNALISTA</strong></span>
+          <span class="es-role-txt"><small data-i18n="role.iam">Sono un</small><strong data-i18n="role.press">GIORNALISTA</strong></span>
         </button>
       </div>
-      <p id="scegli-ruolo-hint" class="es-role-hint" hidden>Il Tifoso naviga e interagisce. Non deve allegare il documento di identità e non può inviare candidature.</p>
-      <p id="scegli-ruolo-err" class="es-role-err" hidden>Seleziona un ruolo per continuare.</p>
-      <button type="button" class="es-role-continue" id="es-role-continue" onclick="window.confirmSiteRole && window.confirmSiteRole();">Continua</button>
+      <p id="scegli-ruolo-hint" class="es-role-hint" data-i18n="role.hintFan" hidden>Il Tifoso naviga e interagisce. Non deve allegare il documento di identità e non può inviare candidature.</p>
+      <p id="scegli-ruolo-err" class="es-role-err" data-i18n="role.err" hidden>Seleziona un ruolo per continuare.</p>
+      <button type="button" class="es-role-continue" id="es-role-continue" data-i18n="auth.continue" onclick="window.confirmSiteRole && window.confirmSiteRole();">Continua</button>
     </div>
   </div>
 
@@ -1993,31 +1993,31 @@
     <div class="es-auth-load-card">
       <img src="immagini/logo/logo-site.png?v=20260925_150256" alt="ELISEE SCOUT">
       <div class="es-auth-load-spin" aria-hidden="true"></div>
-      <p class="es-auth-load-title">Registrazione completata</p>
-      <p class="es-auth-load-sub" id="elisee-auth-loading-sub">Preparazione del profilo…</p>
+      <p class="es-auth-load-title" data-i18n="auth.done">Registrazione completata</p>
+      <p class="es-auth-load-sub" id="elisee-auth-loading-sub" data-i18n="auth.preparing">Preparazione del profilo…</p>
     </div>
   </div>
 
     <!-- MODAL ACCESSO / ISCRIZIONE — card scorrevole -->
   <div id="modal-accesso-unificato" class="es-login-modal" onclick="if(event.target===this) closeAccessoModal()">
     <div class="es-login-stage">
-      <button type="button" class="es-login-x" onclick="closeAccessoModal()" aria-label="Chiudi">&times;</button>
+      <button type="button" class="es-login-x" onclick="closeAccessoModal()" data-i18n-aria="auth.close" aria-label="Chiudi">&times;</button>
       <div class="es-login-card" id="es-login-card" role="dialog" aria-modal="true" aria-labelledby="es-login-title">
         <div class="es-login-bg" aria-hidden="true"></div>
 
         <section class="es-login-hero login">
-          <h2>Ciao</h2>
-          <p>Inizia il tuo percorso su Elisee Scout.</p>
-          <button type="button" class="es-login-switch" onclick="window.setAccessoPanel('register')">Iscriviti</button>
+          <h2 data-i18n="auth.hello">Ciao</h2>
+          <p data-i18n="auth.helloLead">Inizia il tuo percorso su Elisee Scout.</p>
+          <button type="button" class="es-login-switch" data-i18n="auth.signup" onclick="window.setAccessoPanel('register')">Iscriviti</button>
         </section>
         <section class="es-login-hero register">
-          <h2>Bentornato</h2>
-          <p>Accedi per riprendere da dove eri rimasto.</p>
-          <button type="button" class="es-login-switch" onclick="window.setAccessoPanel('login')">Accedi</button>
+          <h2 data-i18n="auth.welcome">Bentornato</h2>
+          <p data-i18n="auth.welcomeLead">Accedi per riprendere da dove eri rimasto.</p>
+          <button type="button" class="es-login-switch" data-i18n="nav.login" onclick="window.setAccessoPanel('login')">Accedi</button>
         </section>
 
         <form class="es-login-form login" id="accesso-form-block" action="#" onsubmit="submitAccessoForm(); return false;" autocomplete="on">
-          <h2 id="es-login-title">Accedi</h2>
+          <h2 id="es-login-title" data-i18n="nav.login">Accedi</h2>
           <p id="accesso-modal-subtitle" hidden>Area personale ELISEE SCOUT</p>
           <div id="accesso-provider-badge" hidden>
             <span id="accesso-provider-icon"></span>
@@ -2025,7 +2025,7 @@
           </div>
 
           <div id="accesso-spid-block" style="display:none;">
-            <p>Seleziona il tuo Identity Provider SPID:</p>
+            <p data-i18n="auth.spidPick">Seleziona il tuo Identity Provider SPID:</p>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.45rem;">
               <button type="button" class="es-social" style="width:100%; height:48px;" onclick="selectSpidProvider('Poste ID','#0047BB')">Poste</button>
               <button type="button" class="es-social" style="width:100%; height:48px;" onclick="selectSpidProvider('Intesi Group','#0066CC')">Intesi</button>
@@ -2037,14 +2037,14 @@
           </div>
 
           <div id="accesso-method-email">
-            <label class="es-login-lbl" for="accesso-email">Email</label>
-            <input type="email" id="accesso-email" autocomplete="email" placeholder="nome@email.it" oninput="validateAccessoEmail()" onblur="validateAccessoEmail()">
-            <p id="err-email" class="es-login-err" style="display:none;">Inserisci un indirizzo email valido.</p>
+            <label class="es-login-lbl" for="accesso-email" data-i18n="auth.email">Email</label>
+            <input type="email" id="accesso-email" autocomplete="email" data-i18n-placeholder="auth.emailPh" placeholder="nome@email.it" oninput="validateAccessoEmail()" onblur="validateAccessoEmail()">
+            <p id="err-email" class="es-login-err" style="display:none;" data-i18n="auth.emailInvalid">Inserisci un indirizzo email valido.</p>
 
             <div class="es-pwbox">
               <input type="password" id="accesso-password" autocomplete="current-password" placeholder=" " spellcheck="false" oninput="validateAccessoPassword()" onblur="validateAccessoPassword()">
-              <label for="accesso-password">Password</label>
-              <button type="button" class="es-login-eye" onclick="toggleAccessoPasswordVisibility('accesso-password')" aria-label="Mostra password">
+              <label for="accesso-password" data-i18n="auth.password">Password</label>
+              <button type="button" class="es-login-eye" onclick="toggleAccessoPasswordVisibility('accesso-password')" data-i18n-aria="auth.showPw" aria-label="Mostra password">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3l18 18"/><path d="M10.6 10.6A2 2 0 0 0 12 14a2 2 0 0 0 1.4-.6"/><path d="M9.9 5.1A10.8 10.8 0 0 1 12 5c5 0 9.3 3.1 11 7-0.6 1.4-1.6 2.7-2.8 3.8"/><path d="M6.1 6.1C4.2 7.3 2.7 9 2 12c1.7 3.9 6 7 10 7 1.5 0 2.9-.3 4.2-.9"/></svg>
               </button>
               <div class="es-pwbars" aria-hidden="true"><div></div></div>
@@ -2057,8 +2057,8 @@
             </div>
 
             <div class="es-login-row">
-              <label class="es-login-check"><input type="checkbox" id="accesso-remember"> Ricordami</label>
-              <button type="button" class="es-login-link" onclick="window.forgotAccessoPassword && window.forgotAccessoPassword()">Password dimenticata?</button>
+              <label class="es-login-check"><input type="checkbox" id="accesso-remember"> <span data-i18n="auth.remember">Ricordami</span></label>
+              <button type="button" class="es-login-link" data-i18n="auth.forgot" onclick="window.forgotAccessoPassword && window.forgotAccessoPassword()">Password dimenticata?</button>
             </div>
 
             <div id="accesso-error-general" class="es-login-alert">
@@ -2066,54 +2066,54 @@
             </div>
 
             <div class="glow-wrap glow-wrap--full" style="margin-top:14px;">
-              <button type="submit" id="accesso-submit-btn" class="glow-btn glow-btn--full es-login-submit">Accedi</button>
+              <button type="submit" id="accesso-submit-btn" class="glow-btn glow-btn--full es-login-submit" data-i18n="nav.login">Accedi</button>
             </div>
           </div>
 
           <div id="accesso-method-whatsapp" style="display:none;">
             <div id="accesso-wa-phone-step">
-              <p class="es-login-or" style="margin-top:0;">Codice su WhatsApp</p>
-              <label class="es-login-lbl" for="accesso-wa-phone">Numero</label>
+              <p class="es-login-or" style="margin-top:0;" data-i18n="auth.waCode">Codice su WhatsApp</p>
+              <label class="es-login-lbl" for="accesso-wa-phone" data-i18n="auth.number">Numero</label>
               <input type="tel" id="accesso-wa-phone" placeholder="+39 347 1234567">
-              <button type="button" class="es-login-submit" style="margin-top:10px; background:#25D366;" onclick="window.submitWhatsAppOtp && window.submitWhatsAppOtp();">Invia codice</button>
+              <button type="button" class="es-login-submit" style="margin-top:10px; background:#25D366;" data-i18n="auth.sendCode" onclick="window.submitWhatsAppOtp && window.submitWhatsAppOtp();">Invia codice</button>
             </div>
             <div id="accesso-wa-code-step" style="display:none;">
               <input type="hidden" id="accesso-wa-code" value="">
             </div>
-            <button type="button" class="es-login-link" style="margin-top:8px;" onclick="window.showAccessoMethod && window.showAccessoMethod('email');">Torna all'email</button>
+            <button type="button" class="es-login-link" style="margin-top:8px;" data-i18n="auth.backEmail" onclick="window.showAccessoMethod && window.showAccessoMethod('email');">Torna all'email</button>
           </div>
 
           <div id="accesso-method-passkey" style="display:none;">
-            <p class="es-login-or">Verifica della Passkey in corso…</p>
-            <button type="button" class="es-login-link" onclick="window.showAccessoMethod && window.showAccessoMethod('email');">Annulla</button>
+            <p class="es-login-or" data-i18n="auth.passkey">Verifica della Passkey in corso…</p>
+            <button type="button" class="es-login-link" data-i18n="auth.cancel" onclick="window.showAccessoMethod && window.showAccessoMethod('email');">Annulla</button>
           </div>
 
           <div id="accesso-method-qr" style="display:none;">
-            <p class="es-login-or">Inquadra il QR con il telefono</p>
-            <img id="accesso-qr-img" alt="QR login" width="160" height="160" style="display:none; margin:0 auto; border-radius:12px;">
-            <button type="button" class="es-login-link" onclick="window.showAccessoMethod && window.showAccessoMethod('email');">Usa email su questo computer</button>
+            <p class="es-login-or" data-i18n="auth.qr">Inquadra il QR con il telefono</p>
+            <img id="accesso-qr-img" data-i18n-alt="auth.qrAlt" alt="QR di accesso" width="160" height="160" style="display:none; margin:0 auto; border-radius:12px;">
+            <button type="button" class="es-login-link" data-i18n="auth.qrEmail" onclick="window.showAccessoMethod && window.showAccessoMethod('email');">Usa email su questo computer</button>
           </div>
 
           <div id="accesso-method-setpw" style="display:none;">
-            <p id="accesso-setpw-hello" class="es-login-or" style="text-align:left;">Imposta una password nuova. Almeno 8 caratteri, una maiuscola, un numero e un carattere speciale.</p>
+            <p id="accesso-setpw-hello" class="es-login-or" style="text-align:left;" data-i18n="auth.setpw">Imposta una password nuova. Almeno 8 caratteri, una maiuscola, un numero e un carattere speciale.</p>
             <div class="es-pwbox">
               <input type="password" id="accesso-setpw-a" minlength="8" autocomplete="new-password" placeholder=" " spellcheck="false" required oninput="window.paintPasswordPolicy && window.paintPasswordPolicy('setpw-reqs', this.value)">
-              <label for="accesso-setpw-a">Nuova password</label>
+              <label for="accesso-setpw-a" data-i18n="auth.newPw">Nuova password</label>
               <div class="es-pwbars" aria-hidden="true"><div></div></div>
               <p class="es-pwstrength"></p>
             </div>
-            <input type="password" id="accesso-setpw-b" minlength="8" autocomplete="new-password" placeholder="Ripeti la password" style="margin-top:8px;">
+            <input type="password" id="accesso-setpw-b" minlength="8" autocomplete="new-password" data-i18n-placeholder="auth.repeatPh" placeholder="Ripeti la password" style="margin-top:8px;">
             <div id="setpw-reqs" class="es-pw-reqs" style="margin:8px 0;">
-              <span data-pw="len">Minimo 8 caratteri</span>
-              <span data-pw="upper">Una lettera maiuscola</span>
-              <span data-pw="num">Un numero</span>
-              <span data-pw="special">Un carattere speciale</span>
+              <span data-pw="len" data-i18n="auth.pwLen">Minimo 8 caratteri</span>
+              <span data-pw="upper" data-i18n="auth.pwUpper">Una lettera maiuscola</span>
+              <span data-pw="num" data-i18n="auth.pwNum">Un numero</span>
+              <span data-pw="special" data-i18n="auth.pwSpecial">Un carattere speciale</span>
             </div>
             <p id="setpw-error" class="es-login-err" style="display:none;"></p>
-            <button type="button" class="es-login-submit" onclick="window.completeAccessoGooglePassword && window.completeAccessoGooglePassword();">Salva password ed entra</button>
+            <button type="button" class="es-login-submit" data-i18n="auth.saveEnter" onclick="window.completeAccessoGooglePassword && window.completeAccessoGooglePassword();">Salva password ed entra</button>
           </div>
 
-          <p class="es-login-or">Oppure accedi con</p>
+          <p class="es-login-or" data-i18n="auth.or">Oppure accedi con</p>
           <div class="es-login-socials">
             <button type="button" class="es-social" aria-label="Facebook" onclick="window.startEliseeProviderOAuth && window.startEliseeProviderOAuth('facebook')">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2"><path d="M15.1 8.5h-2V7.1c0-.5.3-.6.6-.6h1.4V4.1L12.7 4c-2.3 0-2.8 1.7-2.8 2.8v1.7H8v2.6h1.9V20h2.6v-8.9h2.1l.5-2.6z"/></svg>
@@ -2125,21 +2125,21 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="#f8fafc"><path d="M16.7 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.2-2.8.9-3.5.9s-1.8-.8-3-.8c-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.3 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7 2-.1 2.9-2.3c.7-1 1.2-2 1.5-3.1-3.9-1.5-3.8-5.7-3.8-5.3zM14.5 6.1c.6-.8 1.1-1.9.9-3-1 .1-2.1.6-2.8 1.4-.6.7-1.2 1.8-1 2.9 1.1.1 2.2-.5 2.9-1.3z"/></svg>
             </button>
           </div>
-          <p class="es-login-mobile-switch">Non hai un account? <button type="button" onclick="window.setAccessoPanel('register')">Iscriviti</button></p>
+          <p class="es-login-mobile-switch"><span data-i18n="auth.noAccount">Non hai un account?</span> <button type="button" data-i18n="auth.signup" onclick="window.setAccessoPanel('register')">Iscriviti</button></p>
         </form>
 
         <form class="es-login-form register" action="#" onsubmit="return window.submitSlideRegistrazione(event);" autocomplete="on">
-          <h2>Iscriviti</h2>
-          <label class="es-login-lbl" for="es-slide-nome">Nome</label>
-          <input type="text" id="es-slide-nome" autocomplete="name" placeholder="Nome Cognome">
-          <label class="es-login-lbl" for="es-slide-email">Email</label>
-          <input type="email" id="es-slide-email" autocomplete="email" placeholder="nome@email.it">
-          <label class="es-login-lbl" for="es-slide-dob">Data di nascita</label>
+          <h2 data-i18n="auth.signup">Iscriviti</h2>
+          <label class="es-login-lbl" for="es-slide-nome" data-i18n="auth.name">Nome</label>
+          <input type="text" id="es-slide-nome" autocomplete="name" data-i18n-placeholder="auth.namePh" placeholder="Nome Cognome">
+          <label class="es-login-lbl" for="es-slide-email" data-i18n="auth.email">Email</label>
+          <input type="email" id="es-slide-email" autocomplete="email" data-i18n-placeholder="auth.emailPh" placeholder="nome@email.it">
+          <label class="es-login-lbl" for="es-slide-dob" data-i18n="auth.dob">Data di nascita</label>
           <input type="date" id="es-slide-dob" autocomplete="bday">
           <div class="es-pwbox">
             <input type="password" id="es-slide-password" autocomplete="new-password" placeholder=" " spellcheck="false" required>
-            <label for="es-slide-password">Password</label>
-            <button type="button" class="es-login-eye" onclick="toggleAccessoPasswordVisibility('es-slide-password')" aria-label="Mostra password">
+            <label for="es-slide-password" data-i18n="auth.password">Password</label>
+            <button type="button" class="es-login-eye" onclick="toggleAccessoPasswordVisibility('es-slide-password')" data-i18n-aria="auth.showPw" aria-label="Mostra password">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3l18 18"/><path d="M10.6 10.6A2 2 0 0 0 12 14a2 2 0 0 0 1.4-.6"/><path d="M9.9 5.1A10.8 10.8 0 0 1 12 5c5 0 9.3 3.1 11 7-0.6 1.4-1.6 2.7-2.8 3.8"/><path d="M6.1 6.1C4.2 7.3 2.7 9 2 12c1.7 3.9 6 7 10 7 1.5 0 2.9-.3 4.2-.9"/></svg>
             </button>
             <div class="es-pwbars" aria-hidden="true"><div></div></div>
@@ -2147,13 +2147,13 @@
           </div>
           <label class="es-login-consent">
             <input type="checkbox" id="es-slide-tos">
-            <span>Accetto i <a href="privacy-policy.html" target="_blank" rel="noopener">Termini</a> e l'<a href="privacy-policy.html" target="_blank" rel="noopener">informativa privacy</a>.</span>
+            <span><span data-i18n="auth.tosBefore">Accetto i </span><a href="privacy-policy.html" target="_blank" rel="noopener" data-i18n="auth.tosTerms">Termini</a><span data-i18n="auth.tosMid"> e l’</span><a href="privacy-policy.html" target="_blank" rel="noopener" data-i18n="auth.tosPrivacy">informativa privacy</a><span data-i18n="auth.tosEnd">.</span></span>
           </label>
           <p id="es-login-reg-error" class="es-login-err" hidden></p>
           <div class="glow-wrap glow-wrap--full" style="margin-top:14px;">
-            <button type="submit" class="glow-btn glow-btn--full es-login-submit">Iscriviti</button>
+            <button type="submit" class="glow-btn glow-btn--full es-login-submit" data-i18n="auth.signup">Iscriviti</button>
           </div>
-          <p class="es-login-or">Oppure accedi con</p>
+          <p class="es-login-or" data-i18n="auth.or">Oppure accedi con</p>
           <div class="es-login-socials">
             <button type="button" class="es-social" aria-label="Facebook" onclick="window.startEliseeProviderOAuth && window.startEliseeProviderOAuth('facebook')">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2"><path d="M15.1 8.5h-2V7.1c0-.5.3-.6.6-.6h1.4V4.1L12.7 4c-2.3 0-2.8 1.7-2.8 2.8v1.7H8v2.6h1.9V20h2.6v-8.9h2.1l.5-2.6z"/></svg>
@@ -2165,15 +2165,15 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="#f8fafc"><path d="M16.7 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.2-2.8.9-3.5.9s-1.8-.8-3-.8c-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.3 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7 2-.1 2.9-2.3c.7-1 1.2-2 1.5-3.1-3.9-1.5-3.8-5.7-3.8-5.3zM14.5 6.1c.6-.8 1.1-1.9.9-3-1 .1-2.1.6-2.8 1.4-.6.7-1.2 1.8-1 2.9 1.1.1 2.2-.5 2.9-1.3z"/></svg>
             </button>
           </div>
-          <p class="es-login-mobile-switch">Hai già un account? <button type="button" onclick="window.setAccessoPanel('login')">Accedi</button></p>
+          <p class="es-login-mobile-switch"><span data-i18n="auth.haveAccount">Hai già un account?</span> <button type="button" data-i18n="nav.login" onclick="window.setAccessoPanel('login')">Accedi</button></p>
         </form>
 
         <div class="es-otp" id="es-otp" hidden>
           <div class="es-otp-phone">
             <span class="es-otp-notch" aria-hidden="true"></span>
             <div class="es-otp-head">
-              <h2>Verifica il numero</h2>
-              <p class="es-otp-sub">Inserisci il codice a 4 cifre inviato a <strong id="es-otp-dest">+39 ••• ••••</strong>.</p>
+              <h2 data-i18n="auth.otpTitle">Verifica il numero</h2>
+              <p class="es-otp-sub"><span data-i18n="auth.otpLead">Inserisci il codice a 4 cifre inviato a </span><strong id="es-otp-dest">+39 ••• ••••</strong><span data-i18n="auth.otpEnd">.</span></p>
             </div>
             <div class="es-otp-stage" id="es-otp-stage">
               <svg class="es-otp-ring" viewBox="0 0 240 240" aria-hidden="true">
@@ -2181,28 +2181,28 @@
               </svg>
               <span class="es-otp-hub" aria-hidden="true"></span>
               <div class="es-otp-slots">
-                <label class="es-otp-slot"><input maxlength="1" inputmode="numeric" autocomplete="one-time-code" aria-label="Cifra 1"></label>
-                <label class="es-otp-slot"><input maxlength="1" inputmode="numeric" aria-label="Cifra 2"></label>
-                <label class="es-otp-slot"><input maxlength="1" inputmode="numeric" aria-label="Cifra 3"></label>
-                <label class="es-otp-slot"><input maxlength="1" inputmode="numeric" aria-label="Cifra 4"></label>
+                <label class="es-otp-slot"><input maxlength="1" inputmode="numeric" autocomplete="one-time-code" data-i18n-aria="auth.d1" aria-label="Cifra 1"></label>
+                <label class="es-otp-slot"><input maxlength="1" inputmode="numeric" data-i18n-aria="auth.d2" aria-label="Cifra 2"></label>
+                <label class="es-otp-slot"><input maxlength="1" inputmode="numeric" data-i18n-aria="auth.d3" aria-label="Cifra 3"></label>
+                <label class="es-otp-slot"><input maxlength="1" inputmode="numeric" data-i18n-aria="auth.d4" aria-label="Cifra 4"></label>
               </div>
             </div>
-            <p class="es-otp-resend" id="es-otp-resend" hidden>Non hai ricevuto il codice? <button type="button" id="es-otp-resend-btn">Reinvia</button> <span id="es-otp-count"></span></p>
+            <p class="es-otp-resend" id="es-otp-resend" hidden><span data-i18n="auth.otpMiss">Non hai ricevuto il codice?</span> <button type="button" id="es-otp-resend-btn" data-i18n="auth.resend">Reinvia</button> <span id="es-otp-count"></span></p>
             <div class="es-otp-toast" id="es-otp-toast">
               <span class="es-otp-bubble" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8h12M6 12h8"/><rect x="4" y="5" width="16" height="12" rx="3"/><path d="M8 17l-2 3 4-3"/></svg>
               </span>
               <span class="es-otp-toast-txt">
-                <small>MESSAGGIO · OTP</small>
-                <strong id="es-otp-toast-msg">Il codice è nel messaggio WhatsApp.</strong>
+                <small data-i18n="auth.otpKicker">MESSAGGIO · OTP</small>
+                <strong id="es-otp-toast-msg" data-i18n="auth.otpToast">Il codice è nel messaggio WhatsApp.</strong>
               </span>
-              <button type="button" class="es-otp-fill" id="es-otp-fill">Compila</button>
+              <button type="button" class="es-otp-fill" id="es-otp-fill" data-i18n="auth.fill">Compila</button>
             </div>
-            <p class="es-otp-hint" id="es-otp-hint">Scrivilo, incollalo, oppure fai compilare dal messaggio.</p>
-            <button type="button" class="es-otp-back" id="es-otp-back">Torna all'email</button>
+            <p class="es-otp-hint" id="es-otp-hint" data-i18n="auth.otpHint">Scrivilo, incollalo, oppure fai compilare dal messaggio.</p>
+            <button type="button" class="es-otp-back" id="es-otp-back" data-i18n="auth.backEmail">Torna all'email</button>
             <div class="es-otp-done" id="es-otp-done">
-              <h2>Numero verificato</h2>
-              <p class="es-otp-sub">Il numero è stato verificato.</p>
+              <h2 data-i18n="auth.otpDone">Numero verificato</h2>
+              <p class="es-otp-sub" data-i18n="auth.otpDoneSub">Il numero è stato verificato.</p>
               <div class="es-otp-seal" aria-hidden="true">
                 <span class="es-otp-seal-ring"></span>
                 <span class="es-otp-seal-ring es-otp-seal-ring--2"></span>
@@ -2216,8 +2216,8 @@
                   <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 9.2 17 19 7"/></svg>
                 </span>
               </div>
-              <p class="es-otp-secure"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Verificato e al sicuro</p>
-              <button type="button" class="es-otp-continue" id="es-otp-continue">Continua</button>
+              <p class="es-otp-secure" data-i18n="auth.otpSafe"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Verificato e al sicuro</p>
+              <button type="button" class="es-otp-continue" id="es-otp-continue" data-i18n="auth.continue">Continua</button>
             </div>
           </div>
         </div>
@@ -2246,7 +2246,7 @@
 
       <div class="es-m-top-actions">
         <!-- Messaggi -->
-        <button type="button" class="es-m-btn-icon badge-container count-badge" id="es-m-btn-msgs" title="Messaggi" aria-label="Messaggi">
+        <button type="button" class="es-m-btn-icon badge-container count-badge" id="es-m-btn-msgs" data-i18n-title="m.messages" data-i18n-aria="m.messages" title="Messaggi" aria-label="Messaggi">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <rect x="3" y="5" width="18" height="14" rx="2"/>
             <path d="M3 7l9 7 9-7"/>
@@ -2256,7 +2256,7 @@
         </button>
 
         <!-- Notifiche -->
-        <button type="button" class="es-m-btn-icon badge-container count-badge" id="es-m-btn-notifs" title="Notifiche" aria-label="Notifiche">
+        <button type="button" class="es-m-btn-icon badge-container count-badge" id="es-m-btn-notifs" data-i18n-title="m.notifs" data-i18n-aria="m.notifs" title="Notifiche" aria-label="Notifiche">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9"/>
             <path d="M10 20a2 2 0 0 0 4 0"/>
@@ -2288,12 +2288,12 @@
         </div>
 
         <!-- Bottone Accedi (se non loggato) -->
-        <button type="button" class="btn-nav-accedi" id="es-m-login-btn" style="padding:0.25rem 0.6rem;font-size:0.75rem;height:32px;min-height:32px;">
+        <button type="button" class="btn-nav-accedi" id="es-m-login-btn" data-i18n="nav.login" style="padding:0.25rem 0.6rem;font-size:0.75rem;height:32px;min-height:32px;">
           Accedi
         </button>
 
         <!-- Hamburger Menu Drawer -->
-        <button type="button" class="es-m-btn-hamburger" id="es-m-btn-hamburger" title="Menu" aria-label="Apri menu">
+        <button type="button" class="es-m-btn-hamburger" id="es-m-btn-hamburger" data-i18n-title="nav.menu" data-i18n-aria="m.menu" title="Menu" aria-label="Apri menu">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="3" y1="6" x2="21" y2="6"/>
             <line x1="3" y1="12" x2="21" y2="12"/>
@@ -2306,52 +2306,52 @@
     <!-- 2. Bottom Navigation Bar Fissa (Thumb-friendly) -->
     <nav class="es-m-bottombar" aria-label="Navigazione principale mobile">
       <!-- 1. Home -->
-      <button type="button" class="es-m-tab-item is-active" data-view="home" data-target="#hero" title="Home">
+      <button type="button" class="es-m-tab-item is-active" data-view="home" data-target="#hero" data-i18n-title="footer.home" title="Home">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
           <polyline points="9 22 9 12 15 12 15 22"/>
         </svg>
-        <span>Home</span>
+        <span data-i18n="footer.home">Home</span>
       </button>
 
       <!-- 2. Bacheca -->
-      <button type="button" class="es-m-tab-item" data-view="bacheca" data-target="#bacheca-annunci" title="Bacheca">
+      <button type="button" class="es-m-tab-item" data-view="bacheca" data-target="#bacheca-annunci" data-i18n-title="nav.portfolio" title="Bacheca">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
           <line x1="8" y1="21" x2="16" y2="21"/>
           <line x1="12" y1="17" x2="12" y2="21"/>
         </svg>
-        <span>Bacheca</span>
+        <span data-i18n="nav.portfolio">Bacheca</span>
       </button>
 
       <!-- 3. Stampa -->
-      <button type="button" class="es-m-tab-item" data-view="stampa" data-target="#stampa-portal" title="Stampa">
+      <button type="button" class="es-m-tab-item" data-view="stampa" data-target="#stampa-portal" data-i18n-title="nav.press" title="Stampa">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
           <path d="M18 14h-8"/>
           <path d="M15 18h-5"/>
           <path d="M10 6h8v4h-8V6Z"/>
         </svg>
-        <span>Stampa</span>
+        <span data-i18n="nav.press">Stampa</span>
       </button>
 
       <!-- 4. Mappa -->
-      <button type="button" class="es-m-tab-item" data-view="mappa" data-target="#mappa-portal" title="Mappa">
+      <button type="button" class="es-m-tab-item" data-view="mappa" data-target="#mappa-portal" data-i18n-title="nav.map" title="Mappa">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
           <line x1="8" y1="2" x2="8" y2="18"/>
           <line x1="16" y1="6" x2="16" y2="22"/>
         </svg>
-        <span>Mappa</span>
+        <span data-i18n="nav.map">Mappa</span>
       </button>
 
       <!-- 5. Profilo / Ruolo -->
-      <button type="button" class="es-m-tab-item" data-view="user-dossier" data-target="#user-dossier-portal" title="Ruolo & Profilo">
+      <button type="button" class="es-m-tab-item" data-view="user-dossier" data-target="#user-dossier-portal" data-i18n-title="m.profile" title="Profilo">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
           <circle cx="12" cy="7" r="4"/>
         </svg>
-        <span>Profilo</span>
+        <span data-i18n="m.profile">Profilo</span>
       </button>
     </nav>
 
@@ -2369,51 +2369,51 @@
         <div class="es-m-drawer-nav">
           <a href="#about" class="es-m-drawer-link" data-view="about" data-target="#about">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-            <span>Chi siamo</span>
+            <span data-i18n="nav.about">Chi siamo</span>
           </a>
 
           <a href="#minigioco-carriera" class="es-m-drawer-link" data-view="minigioco" data-target="#minigioco-carriera">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4m-2-2v4m9-3h.01m2 2h.01"/></svg>
-            <span>Minigiochi</span>
+            <span data-i18n="nav.minigame">Minigiochi</span>
           </a>
 
           <a href="#seguo-portal" class="es-m-drawer-link" data-view="seguo" data-target="#seguo-portal">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <span>Album &amp; Chi Segui</span>
+            <span data-i18n="m.album">Album e Chi Segui</span>
           </a>
 
           <a href="#ambassador-portal" class="es-m-drawer-link" data-view="ambassador" data-target="#ambassador-portal">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <span>Ambassador Club</span>
+            <span data-i18n="nav.ambassador">Ambassador</span>
           </a>
 
           <div class="es-m-drawer-sep"></div>
 
           <a href="#user-dossier-portal" class="es-m-drawer-link" data-view="user-dossier" data-target="#user-dossier-portal">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <span>Dashboard Ruolo</span>
+            <span data-i18n="m.dash">Dashboard ruolo</span>
           </a>
 
           <a href="#scopri-portal" class="es-m-drawer-link" data-view="scopri" data-target="#scopri-portal">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <span>Scopri Profili</span>
+            <span data-i18n="scopri.title">Scopri profili</span>
           </a>
 
           <a href="#mercato-hub" class="es-m-drawer-link" data-view="mercato" data-target="#mercato-hub">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            <span>Hub Mercato B2B</span>
+            <span data-i18n="m.market">Hub Mercato</span>
           </a>
 
           <a href="javascript:void(0);" class="es-m-drawer-link" onclick="if(window.EliseeCookies&&EliseeCookies.openPreferences){EliseeCookies.openPreferences();}else if(window.openPrivacyPolicy){window.openPrivacyPolicy();}else{location.href='privacy-policy.html';}">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
-            <span>Privacy &amp; Preferenze Cookie</span>
+            <span data-i18n="m.privacy">Privacy e cookie</span>
           </a>
         </div>
 
         <div class="es-m-drawer-footer">
           <div class="glow-wrap glow-wrap--full">
             <button type="button" class="glow-btn glow-btn--full" id="es-m-drawer-auth-btn" onclick="if(window.openAccessoModal){window.openAccessoModal('email');}">
-              Accedi / Iscriviti
+              <span data-i18n="m.auth">Accedi / Iscriviti</span>
             </button>
           </div>
         </div>
@@ -2442,19 +2442,19 @@
         <div class="es-nav-dropdown-menu">
           <a href="#stampa-portal" class="es-nav-dropdown-item" onclick="if(window.switchView){window.switchView('stampa','#stampa-portal');} return false;">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>
-            <span class="es-nav-item-title">Stampa</span>
+            <span class="es-nav-item-title" data-i18n="nav.press">Stampa</span>
           </a>
           <a href="#album-figurine" class="es-nav-dropdown-item" onclick="if(window.switchView){window.switchView('album','#album-figurine');} return false;">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <span class="es-nav-item-title">Album</span>
+            <span class="es-nav-item-title" data-i18n="nav.album">Album</span>
           </a>
           <a href="#ambassador" class="es-nav-dropdown-item" onclick="if(window.switchView){window.switchView('ambassador','#ambassador');} return false;">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
-            <span class="es-nav-item-title">Ambassador</span>
+            <span class="es-nav-item-title" data-i18n="nav.ambassador">Ambassador</span>
           </a>
           <a href="#minigiochi" class="es-nav-dropdown-item" onclick="if(window.EliseeWorld && window.EliseeWorld.open){window.EliseeWorld.open();}else if(window.switchView){window.switchView('minigiochi','#minigiochi');} return false;">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4m-2-2v4m10-2h.01m-3-2h.01"/></svg>
-            <span class="es-nav-item-title">Minigiochi</span>
+            <span class="es-nav-item-title" data-i18n="nav.minigame">Minigiochi</span>
           </a>
         </div>
       </div>
@@ -2462,7 +2462,7 @@
 
     <!-- Azioni Destra -->
     <div class="header-actions nav-actions nav-right">
-      <button type="button" class="nav-search-trigger" id="es-nav-quick-search" onclick="if(window.openScrySearch){window.openScrySearch();}else if(window.switchView){window.switchView('bacheca','#bacheca-annunci');}" title="Cerca su Elisee Scout" aria-label="Cerca">
+      <button type="button" class="nav-search-trigger" id="es-nav-quick-search" onclick="if(window.openScrySearch){window.openScrySearch();}else if(window.switchView){window.switchView('bacheca','#bacheca-annunci');}" data-i18n-title="nav.search" data-i18n-aria="nav.search" title="Cerca su Elisee Scout" aria-label="Cerca su Elisee Scout">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
       </button>
       <button type="button" class="realistic-switch" id="es-nav-theme" role="switch" aria-checked="false" aria-label="Passa al tema chiaro" title="Passa al tema chiaro">
@@ -2487,11 +2487,11 @@
         </div>
       </div>
       <div class="glow-wrap glow-wrap--nav">
-        <a href="#login" class="glow-btn glow-btn--nav btn-login accedi" onclick="if(window.openAccessoModal){window.openAccessoModal('email');} return false;">Accedi</a>
+        <a href="#login" class="glow-btn glow-btn--nav btn-login accedi" data-i18n="nav.login" onclick="if(window.openAccessoModal){window.openAccessoModal('email');} return false;">Accedi</a>
       </div>
       
       <!-- Hamburger Menu Animato (<820px) -->
-      <button type="button" class="es-nav-hamburger nav-toggle" id="es-nav-hamburger" aria-label="Menu" aria-expanded="false">
+      <button type="button" class="es-nav-hamburger nav-toggle" id="es-nav-hamburger" data-i18n-aria="nav.menu" aria-label="Menu" aria-expanded="false">
         <span class="es-hamburger-bar"></span>
         <span class="es-hamburger-bar"></span>
         <span class="es-hamburger-bar"></span>
@@ -2536,12 +2536,12 @@
             <h2 class="island-title" data-i18n="funzioni.title">La piattaforma, in cinque esempi</h2>
             <p class="island-sub" data-i18n="funzioni.sub">Cifre dimostrative, non statistiche reali.</p>
           </div>
-          <div class="island-carousel" id="island-carousel" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Funzioni della piattaforma, esempi">
-            <button type="button" class="island-arrow island-arrow--prev" aria-label="Slide precedente" disabled>
+          <div class="island-carousel" id="island-carousel" tabindex="0" role="region" aria-roledescription="carousel" data-i18n-aria="funzioni.carousel" aria-label="Funzioni della piattaforma, esempi">
+            <button type="button" class="island-arrow island-arrow--prev" data-i18n-aria="funzioni.prev" aria-label="Slide precedente" disabled>
               <span aria-hidden="true">‹</span>
             </button>
             <div class="island-track" id="island-track"></div>
-            <button type="button" class="island-arrow island-arrow--next" aria-label="Slide successiva">
+            <button type="button" class="island-arrow island-arrow--next" data-i18n-aria="funzioni.next" aria-label="Slide successiva">
               <span aria-hidden="true">›</span>
             </button>
           </div>
@@ -2740,12 +2740,12 @@
                 <div class="glow-wrap es-cta-glow-wrap">
                   <button type="button" class="glow-btn es-cta-btn-primary" onclick="if(window.openAuthModal){ window.openAuthModal('register'); } else if(window.switchView){ window.switchView('bacheca'); }">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    <span>Registrati come calciatore o società</span>
+                    <span data-i18n="home.ctaRegister">Registrati come calciatore o società</span>
                   </button>
                 </div>
                 <a href="#bacheca-annunci" class="btn btn-secondary es-cta-btn-secondary" onclick="if(window.switchView){ window.switchView('bacheca'); } return false;">
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                  <span>Esplora la piattaforma</span>
+                  <span data-i18n="home.ctaExplore">Esplora la piattaforma</span>
                 </a>
               </div>
 
@@ -2753,15 +2753,15 @@
               <div class="es-hero-trust-badges">
                 <span class="es-trust-badge">
                   <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
-                  Dossier Verificati FIGC/LND
+                  <span data-i18n="home.badgeDossier">Dossier verificati FIGC/LND</span>
                 </span>
                 <span class="es-trust-badge">
                   <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                  Telemetria GPS & Highlights
+                  <span data-i18n="home.badgeGps">Telemetria GPS e highlights</span>
                 </span>
                 <span class="es-trust-badge">
                   <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                  100% GDPR Privacy
+                  <span data-i18n="home.badgeGdpr">Privacy GDPR</span>
                 </span>
               </div>
             </div>
@@ -2791,34 +2791,34 @@
         <!-- GLOW CARDS SHOWCASE: 3 PILASTRI DEL NETWORK -->
         <section id="home-pillars-glow" class="portfolio-section" style="padding: 4.5rem 0;">
           <div class="container text-center">
-            <p class="portfolio-kicker">ECOSISTEMA VERIFICATO</p>
-            <h2 class="portfolio-heading">I 3 PILASTRI DEL NETWORK</h2>
-            <p class="portfolio-text portfolio-text-center" style="margin-bottom: 2rem;">
-              Dossier atleti con telemetria GPS, gestione club per Serie D ed Eccellenza, e radar scouting avanzato per DS e agenti.
+            <p class="portfolio-kicker" data-i18n="home.glowKicker">Ecosistema verificato</p>
+            <h2 class="portfolio-heading" data-i18n="home.glowTitle">I tre ruoli del network</h2>
+            <p class="portfolio-text portfolio-text-center" data-i18n="home.glowLead" style="margin-bottom: 2rem;">
+              Dossier atleti con telemetria GPS, gestione club per Serie D ed Eccellenza, e radar di scouting per direttori sportivi e agenti.
             </p>
             <div class="glow-container">
               <div class="glow-card glow-card--blue" onclick="if(window.openAuthModal){ window.openAuthModal('register'); } else if(window.switchView){ window.switchView('bacheca'); }">
                 <div class="glow-card-content">
-                  <div class="glow-badge glow-badge--blue">ATLETA</div>
-                  <h3 class="glow-title">Calciatori</h3>
-                  <p class="glow-desc">Dossier sportivo certificato, telemetria GPS, video highlights e visibilità diretta a società e scout.</p>
-                  <span class="glow-cta">Esplora profilo &rarr;</span>
+                  <div class="glow-badge glow-badge--blue" data-i18n="home.glow1Badge">Atleta</div>
+                  <h3 class="glow-title" data-i18n="home.glow1Title">Calciatori</h3>
+                  <p class="glow-desc" data-i18n="home.glow1Text">Dossier sportivo certificato, telemetria GPS, video highlights e visibilità diretta a società e scout.</p>
+                  <span class="glow-cta" data-i18n="home.glow1Cta">Esplora profilo →</span>
                 </div>
               </div>
               <div class="glow-card glow-card--gold" onclick="if(window.openAuthModal){ window.openAuthModal('register'); } else if(window.switchView){ window.switchView('bacheca'); }">
                 <div class="glow-card-content">
-                  <div class="glow-badge glow-badge--gold">SOCIETÀ</div>
-                  <h3 class="glow-title">Club &amp; Squadre</h3>
-                  <p class="glow-desc">Pubblicazione annunci ingaggi, formazioni, matching IA automatico e bacheca di recruitment.</p>
-                  <span class="glow-cta">Iscrivi club &rarr;</span>
+                  <div class="glow-badge glow-badge--gold" data-i18n="home.glow2Badge">Società</div>
+                  <h3 class="glow-title" data-i18n="home.glow2Title">Club e squadre</h3>
+                  <p class="glow-desc" data-i18n="home.glow2Text">Pubblicazione di annunci, formazioni e bacheca di recruitment.</p>
+                  <span class="glow-cta" data-i18n="home.glow2Cta">Iscrivi club →</span>
                 </div>
               </div>
               <div class="glow-card glow-card--red" onclick="if(window.openAuthModal){ window.openAuthModal('login'); } else if(window.switchView){ window.switchView('bacheca'); }">
                 <div class="glow-card-content">
-                  <div class="glow-badge glow-badge--red">AREA TECNICA</div>
-                  <h3 class="glow-title">Scout &amp; Agenti</h3>
-                  <p class="glow-desc">Secret List stealth, radar IA 3vs3, notifiche trattative e monitoraggio talenti su base regionale.</p>
-                  <span class="glow-cta">Accedi scouting &rarr;</span>
+                  <div class="glow-badge glow-badge--red" data-i18n="home.glow3Badge">Area tecnica</div>
+                  <h3 class="glow-title" data-i18n="home.glow3Title">Scout e agenti</h3>
+                  <p class="glow-desc" data-i18n="home.glow3Text">Lista riservata, avvisi sulle trattative e monitoraggio dei talenti per regione.</p>
+                  <span class="glow-cta" data-i18n="home.glow3Cta">Apri lo scouting →</span>
                 </div>
               </div>
             </div>
@@ -2843,13 +2843,13 @@
               </article>
               <article class="portfolio-card" onclick="if(window.openTransferWall){ window.openTransferWall(); } else if(window.switchView){ window.switchView('mercato','#wall-trasferimenti'); }">
                 <span class="portfolio-card-icon"><i data-lucide="newspaper"></i></span>
-                <h3>Wall mercato</h3>
-                <p>Trattative chiuse in tempo reale: card FIFA, nuova maglia e scritta TRASFERITO.</p>
+                <h3 data-i18n="home.cardWall">Wall mercato</h3>
+                <p data-i18n="home.cardWallDesc">Trattative chiuse in tempo reale, con la nuova maglia e la conferma del trasferimento.</p>
               </article>
               <article class="portfolio-card" onclick="if(window.openStampaFeed){ window.openStampaFeed(); } else if(window.switchView){ window.switchView('stampa','#stampa-portal'); }">
                 <span class="portfolio-card-icon"><i data-lucide="pen-line"></i></span>
-                <h3>Stampa locale</h3>
-                <p>Articoli, sondaggi e video del territorio, dopo approvazione dello staff.</p>
+                <h3 data-i18n="home.cardPress">Stampa locale</h3>
+                <p data-i18n="home.cardPressDesc">Articoli, sondaggi e video del territorio, dopo approvazione dello staff.</p>
               </article>
               <article class="portfolio-card" onclick="if(window.switchView){ window.switchView('pillars'); }">
                 <span class="portfolio-card-icon"><i data-lucide="activity"></i></span>
@@ -2877,17 +2877,17 @@
               <div class="welcome-auth-stack" style="margin-top:1.5rem;">
                 <button type="button" class="auth-btn auth-btn-google" onclick="openGoogleModal()">
                   <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.29v3.15C3.26 21.3 7.31 24 12 24z"/><path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.29C.47 8.21 0 10.05 0 12s.47 3.79 1.29 5.42l3.99-3.15z"/><path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.31 0 3.26 2.7 1.29 6.58l3.99 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/></svg>
-                  Continua con Google
+                  <span data-i18n="home.google">Continua con Google</span>
                 </button>
                 <button type="button" class="auth-btn auth-btn-apple" onclick="openAppleModal()">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                  Continua con Apple
+                  <span data-i18n="home.apple">Continua con Apple</span>
                 </button>
                 <button type="button" class="auth-btn auth-btn-spid" onclick="openSpidModal()">
-                  <i data-lucide="shield-check"></i> Continua con SPID
+                  <i data-lucide="shield-check"></i> <span data-i18n="home.spid">Continua con SPID</span>
                 </button>
-                <button type="button" class="auth-btn auth-btn-email" data-i18n="home.emailBtn" onclick="openAccessoModal('email')">
-                  <i data-lucide="mail"></i> Accedi con email
+                <button type="button" class="auth-btn auth-btn-email" onclick="openAccessoModal('email')">
+                  <i data-lucide="mail"></i> <span data-i18n="home.emailBtn">Accedi con email</span>
                 </button>
               </div>
             </div>
@@ -2930,10 +2930,10 @@
                     Elisee Scout digitalizza il reclutamento calcistico dilettantistico, giovanile e degli svincolati in Italia, collegando calciatori, società, scout e staff tecnico con dossier verificati, dati GPS e video highlights, in piena conformità GDPR.
                   </p>
                   <p class="cs-mission-p">
-                    Colleghiamo il sistema calcistico italiano — dalla Serie D alla Terza Categoria — con un <span class="cs-accent-teal">unico principio guida</span>: <span class="cs-accent-coral">zero fake account</span>, <span class="cs-accent-coral">opportunità reali</span>, <span class="cs-accent-coral">nessun rischio</span> per chi si affida alla piattaforma.
+                    <span data-i18n="about.m1.pre">Colleghiamo il sistema calcistico italiano — dalla Serie D alla Terza Categoria — con un </span><span class="cs-accent-teal" data-i18n="about.m1.guide">unico principio guida</span><span data-i18n="about.m1.mid">: </span><span class="cs-accent-coral" data-i18n="about.m1.zero">zero fake account</span><span data-i18n="about.m1.sep">, </span><span class="cs-accent-coral" data-i18n="about.m1.real">opportunità reali</span><span data-i18n="about.m1.sep">, </span><span class="cs-accent-coral" data-i18n="about.m1.risk">nessun rischio</span><span data-i18n="about.m1.post"> per chi si affida alla piattaforma.</span>
                   </p>
                   <p class="cs-mission-p">
-                    Ogni profilo è verificato tramite documento d'identità, ogni dato sportivo è tracciato con <span class="cs-accent-teal">GPS</span>, e ogni trattamento — a partire dagli atleti minorenni — segue gli articoli 13 e 30 del GDPR con <span class="cs-accent-coral">consenso genitoriale obbligatorio</span>.
+                    <span data-i18n="about.m2.pre">Ogni profilo è verificato tramite documento d'identità, ogni dato sportivo è tracciato con </span><span class="cs-accent-teal" data-i18n="about.m2.gps">GPS</span><span data-i18n="about.m2.mid">, e ogni trattamento — a partire dagli atleti minorenni — segue gli articoli 13 e 30 del GDPR con </span><span class="cs-accent-coral" data-i18n="about.m2.consent">consenso genitoriale obbligatorio</span><span data-i18n="about.m2.end">.</span>
                   </p>
                 </div>
                 <aside class="cs-hero-meta">
@@ -2951,46 +2951,46 @@
 
             <section class="es-about" aria-labelledby="es-about-title">
               <div class="es-about__head">
-                <h2 id="es-about-title">Cosa facciamo, concretamente</h2>
-                <p>Elisee Scout mette in contatto calciatori, società, scout e staff tecnico su tutto il territorio italiano, dal dilettantismo agli svincolati, con strumenti pensati per essere usati oggi — non annunciati per domani.</p>
+                <h2 id="es-about-title" data-i18n="about.doTitle">Cosa facciamo, concretamente</h2>
+                <p data-i18n="about.doLead">Elisee Scout mette in contatto calciatori, società, scout e staff tecnico su tutto il territorio italiano, dal dilettantismo agli svincolati, con strumenti pensati per essere usati oggi — non annunciati per domani.</p>
               </div>
 
               <div class="es-features">
                 <a class="es-features__item" href="#bacheca-annunci" onclick="if(window.switchView){ window.switchView('bacheca','#bacheca-annunci'); } return false;">
-                  <h3>Bacheca annunci &amp; provini</h3>
-                  <p>Reclutamento diretto di giocatori e staff tecnico da parte dei club, senza intermediari.</p>
+                  <h3 data-i18n="about.feat1Title">Bacheca annunci &amp; provini</h3>
+                  <p data-i18n="about.feat1Text">Reclutamento diretto di giocatori e staff tecnico da parte dei club, senza intermediari.</p>
                 </a>
                 <a class="es-features__item" href="#mappa-portal" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){ window.switchView('mappa','#mappa-portal'); } return false;">
-                  <h3>Mappa di oltre 2.900 club</h3>
-                  <p>Dalla Serie D alla Terza Categoria, geolocalizzati e consultabili in tutta Italia.</p>
+                  <h3 data-i18n="about.feat2Title">Mappa dei club iscritti</h3>
+                  <p data-i18n="about.feat2Text">I club registrati su Elisee Scout, dalla Serie D alla Terza Categoria, posizionati in base alla città del club.</p>
                 </a>
                 <div class="es-features__item">
-                  <h3>Dossier atleta verificato</h3>
-                  <p>Dati GPS, video highlights e documenti controllati, così ogni profilo è quello che dichiara di essere.</p>
+                  <h3 data-i18n="about.feat3Title">Dossier atleta verificato</h3>
+                  <p data-i18n="about.feat3Text">Dati GPS, video highlights e documenti controllati, così ogni profilo è quello che dichiara di essere.</p>
                 </div>
               </div>
 
               <div class="es-trust">
                 <div class="es-trust__head">
-                  <h2>Perché puoi fidarti</h2>
-                  <span>Le regole che seguiamo, non solo quelle che dichiariamo</span>
+                  <h2 data-i18n="about.trustTitle">Perché puoi fidarti</h2>
+                  <span data-i18n="about.trustLead">Le regole che seguiamo, non solo quelle che dichiariamo</span>
                 </div>
                 <div class="es-trust__grid">
                   <div class="es-trust__item">
-                    <strong>Conformità GDPR</strong>
-                    <p>Trattamento dei dati sportivi e sanitari a norma (Art. 13/30), con crittografia end-to-end.</p>
+                    <strong data-i18n="about.trust1Title">Conformità GDPR</strong>
+                    <p data-i18n="about.trust1Text">Trattamento dei dati sportivi e sanitari a norma (Art. 13/30), con crittografia end-to-end.</p>
                   </div>
                   <div class="es-trust__item">
-                    <strong>Tutela dei minori</strong>
-                    <p>Consenso genitoriale obbligatorio per ogni atleta sotto i 18 anni, senza eccezioni.</p>
+                    <strong data-i18n="about.trust2Title">Tutela dei minori</strong>
+                    <p data-i18n="about.trust2Text">Consenso genitoriale obbligatorio per ogni atleta sotto i 18 anni, senza eccezioni.</p>
                   </div>
                   <div class="es-trust__item">
-                    <strong>Zero fake account</strong>
-                    <p>Ogni profilo passa una verifica documentale prima di comparire in bacheca o in mappa.</p>
+                    <strong data-i18n="about.trust3Title">Zero fake account</strong>
+                    <p data-i18n="about.trust3Text">Ogni profilo passa una verifica documentale prima di comparire in bacheca o in mappa.</p>
                   </div>
                   <div class="es-trust__item">
-                    <strong>Opportunità reali</strong>
-                    <p>Nessun annuncio a pagamento per apparire: la visibilità si guadagna con un profilo verificato.</p>
+                    <strong data-i18n="about.trust4Title">Opportunità reali</strong>
+                    <p data-i18n="about.trust4Text">Nessun annuncio a pagamento per apparire: la visibilità si guadagna con un profilo verificato.</p>
                   </div>
                 </div>
               </div>
@@ -3030,12 +3030,12 @@
           <div class="container resume-page-inner pf-page-inner">
             <header class="pf-header resume-page-head">
               <div class="pf-header-text">
-                <p class="portfolio-kicker">Curriculum Sportivo</p>
-                <h1 class="pf-title resume-page-title" id="cv-page-title">Profilo &amp; Passaporto Atletico</h1>
+                <p class="portfolio-kicker" data-i18n="cv.kicker">Curriculum sportivo</p>
+                <h1 class="pf-title resume-page-title" id="cv-page-title" data-i18n="cv.title">Profilo e passaporto atletico</h1>
               </div>
               <div class="pf-header-actions">
-                <button type="button" class="btn btn-outline-pill" onclick="if(window.switchView){ window.switchView('bacheca'); }">Bacheca</button>
-                <button type="button" class="btn btn-outline-pill pf-btn-solid" onclick="if(window.openDossierModal){ window.openDossierModal(); } else if(window.switchView){ window.switchView('account'); }">Modifica Profilo</button>
+                <button type="button" class="btn btn-outline-pill" data-i18n="nav.portfolio" onclick="if(window.switchView){ window.switchView('bacheca'); }">Bacheca</button>
+                <button type="button" class="btn btn-outline-pill pf-btn-solid" data-i18n="cv.edit" onclick="if(window.openDossierModal){ window.openDossierModal(); } else if(window.switchView){ window.switchView('account'); }">Modifica profilo</button>
               </div>
             </header>
 
@@ -3419,7 +3419,7 @@
                 <div class="es-vision__panel" id="es-vision-panel" role="region" aria-labelledby="es-vision-title" tabindex="-1">
                   <div class="es-vision__head">
                     <h2 class="es-vision__title" id="es-vision-title"></h2>
-                    <button type="button" class="es-vision__close" id="es-vision-close">Chiudi</button>
+                    <button type="button" class="es-vision__close" id="es-vision-close" data-i18n="vision.close">Chiudi</button>
                   </div>
                   <p class="es-vision__lead" id="es-vision-lead"></p>
                   <p class="es-vision__status" id="es-vision-status"></p>
@@ -3818,7 +3818,7 @@
               <div id="es-tc-league"></div>
             </div>
             <div class="es-tc-actions">
-              <button type="button" class="es-tc-btn-back" onclick="if(window.switchView) window.switchView('squadre','#squadre-portal');">← Torna alle Squadre</button>
+              <button type="button" class="es-tc-btn-back" data-i18n="tc.back" onclick="if(window.switchView) window.switchView('squadre','#squadre-portal');">← Torna alle squadre</button>
             </div>
           </header>
           <nav class="es-tc-tabs" id="es-tc-tabs" aria-label="Sezioni pannello"></nav>
@@ -3832,7 +3832,7 @@
         <div class="pf-page-bg" aria-hidden="true"></div>
         <div class="pf-page-shade" aria-hidden="true"></div>
         <div class="container pf-page-inner" style="max-width:720px;">
-          <p class="es-tc-kicker">Iscrizione online</p>
+          <p class="es-tc-kicker" data-i18n="iscr.kicker">Iscrizione online</p>
           <h1 id="es-iscr-team">Modulo di iscrizione</h1>
           <p class="es-tc-muted" id="es-iscr-sub">Al posto del modulo cartaceo: anagrafica completa del tesserato.</p>
           <form class="es-tc-card" id="es-iscr-form" style="margin-top:1.1rem;"></form>
@@ -3856,7 +3856,7 @@
     <div id="view-formazione" style="display:none;">
       <section id="formazione-portal" class="es-xi">
         <div class="es-xi-top">
-          <button type="button" class="es-xi-back" onclick="if(window.switchView) window.switchView('squadre','#squadre-portal');">← Squadre</button>
+          <button type="button" class="es-xi-back" data-i18n="xi.back" onclick="if(window.switchView) window.switchView('squadre','#squadre-portal');">← Squadre</button>
           <div class="es-xi-team">
             <img id="es-xi-logo" alt="" hidden>
             <div>
@@ -3907,18 +3907,18 @@
             <header class="pf-header">
               <div class="pf-header-text">
                 <p class="portfolio-kicker" data-i18n="nav.ambassador">Ambassador</p>
-                <h1 class="pf-title">Programma e contratto</h1>
-                <p class="pf-lead">Collaborazione ufficiale 6 mesi con account premium e badge riconosciuto sulla piattaforma.</p>
+                <h1 class="pf-title" data-i18n="amb.title">Programma e contratto</h1>
+                <p class="pf-lead" data-i18n="amb.lead">Collaborazione ufficiale di 6 mesi con account premium e badge riconosciuto sulla piattaforma.</p>
               </div>
               <div class="pf-header-actions">
-                <button type="button" class="btn btn-outline-pill" onclick="if(window.switchView){ window.switchView('about'); }">Chi siamo</button>
+                <button type="button" class="btn btn-outline-pill" data-i18n="nav.about" onclick="if(window.switchView){ window.switchView('about'); }">Chi siamo</button>
               </div>
             </header>
 
             <div class="pf-layout pf-layout-equal">
               <div class="pf-aside-card pf-form-panel">
-                <h3 class="pf-aside-title">Adesione</h3>
-                <p class="pf-aside-text">Compila i dati e firma digitalmente. Il contratto viene generato in anteprima a destra.</p>
+                <h3 class="pf-aside-title" data-i18n="amb.joinTitle">Adesione</h3>
+                <p class="pf-aside-text" data-i18n="amb.joinText">Compila i dati e firma digitalmente. Il contratto viene generato in anteprima a destra.</p>
                 <form id="form-ambassador" class="pf-form es-amb-form">
                   <div class="form-group">
                     <label for="amb-name">Nome e cognome <span class="req" style="color: #3b7dff;">*</span></label>
@@ -3979,8 +3979,8 @@
               </div>
 
               <div class="pf-aside-card pf-form-panel">
-                <h3 class="pf-aside-title">Anteprima contratto</h3>
-                <p class="pf-aside-text">Documento legale 6 mesi — sbloccato solo se l’agente IA conferma l’idoneità.</p>
+                <h3 class="pf-aside-title" data-i18n="amb.previewTitle">Anteprima contratto</h3>
+                <p class="pf-aside-text" data-i18n="amb.previewText">Documento di 6 mesi. Si sblocca solo se la verifica di idoneità è positiva.</p>
                 <div class="contract-scrollable-body pf-contract es-preview" id="contract-render-target" style="min-height: 460px; display: flex; align-items: center; justify-content: center; padding: 32px; background: #10141d; border: 1px solid #1e2430; border-radius: 12px;">
                   <div class="es-preview__empty" style="text-align: center; max-width: 280px; margin: 0 auto;">
                     <svg class="es-preview__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="44" height="44" style="margin: 0 auto 16px; color: #8a93a3; display: block;">
@@ -3989,7 +3989,7 @@
                       <line x1="8" y1="13" x2="16" y2="13"/>
                       <line x1="8" y1="17" x2="13" y2="17"/>
                     </svg>
-                    <p style="font-size: 13px; color: #8a93a3; line-height: 1.6; margin: 0;">Completa il modulo: l’agente IA valuterà l’idoneità prima di generare il contratto.</p>
+                    <p data-i18n="amb.previewEmpty" style="font-size: 13px; color: #8a93a3; line-height: 1.6; margin: 0;">Completa il modulo: la verifica di idoneità avviene prima di generare il contratto.</p>
                   </div>
                 </div>
               </div>
@@ -4008,7 +4008,7 @@
           <div class="amb-ai-badge"><i data-lucide="bot"></i></div>
           <div>
             <p class="amb-ai-kicker">ELISEE SCOUT  /  Agente IA</p>
-            <h2 id="amb-ai-title">Verifica idoneità Ambassador</h2>
+            <h2 id="amb-ai-title" data-i18n="amb.aiTitle">Verifica idoneità Ambassador</h2>
           </div>
         </div>
         <div id="amb-ai-body" class="amb-ai-body">
@@ -4035,9 +4035,9 @@
 
           <header class="pf-header">
             <div class="pf-header-text">
-              <p class="portfolio-kicker">Account</p>
-              <h1 class="pf-title">Area riservata</h1>
-              <p class="pf-lead">Scegli il portale: utente (dossier e candidature) oppure amministrazione e privacy.</p>
+              <p class="portfolio-kicker" data-i18n="account.kicker">Account</p>
+              <h1 class="pf-title" data-i18n="account.title">Area riservata</h1>
+              <p class="pf-lead" data-i18n="account.lead">Scegli il portale: utente (dossier e candidature) oppure amministrazione e privacy.</p>
             </div>
           </header>
           <!-- Season Wrapped Banner in Area Riservata / Account -->
@@ -4045,16 +4045,16 @@
             <div class="sw-banner-content">
               <div class="sw-banner-icon">🏆</div>
               <div class="sw-banner-texts">
-                <h4>La tua Season Wrapped 2025/26 è pronta! <span class="sw-banner-tag">Nuovo</span></h4>
-                <p>Scopri il tuo recap stagionale con numeri, superlativi, Card OVR stile FIFA e Curva di Crescita.</p>
+                <h4><span data-i18n="account.wrappedTitle">Il recap stagionale 2025/26 è pronto</span> <span class="sw-banner-tag" data-i18n="account.wrappedNew">Nuovo</span></h4>
+                <p data-i18n="account.wrappedText">Numeri della stagione, card del profilo e curva di crescita, in un unico riepilogo.</p>
               </div>
             </div>
             <div class="sw-banner-actions">
               <button type="button" class="sw-btn-countdown" onclick="window.SeasonWrapped.openCountdown()">
-                Countdown
+                <span data-i18n="account.countdown">Countdown</span>
               </button>
               <button type="button" class="sw-btn-launch" onclick="window.SeasonWrapped.open()">
-                Guarda la Story
+                <span data-i18n="account.story">Guarda il riepilogo</span>
               </button>
             </div>
           </div>
@@ -4062,26 +4062,26 @@
           <div class="pf-account-grid">
             <article class="pf-account-card">
               <div class="pf-account-icon"><i data-lucide="user"></i></div>
-              <h3>Area utente</h3>
-              <p>Calciatori, club, staff, scout e genitori. Passaporto digitale, highlights, GPS e candidature.</p>
+              <h3 data-i18n="account.userTitle">Area utente</h3>
+              <p data-i18n="account.userText">Calciatori, club, staff, scout e genitori. Passaporto digitale, highlights, GPS e candidature.</p>
               <button type="button" class="btn btn-outline-pill pf-btn-solid" id="btn-enter-user-portal" data-view="user-dossier" onclick="event.preventDefault();event.stopPropagation();if(window.switchView){window.switchView('user-dossier','#user-dossier-portal');}return false;">
-                Accedi all'area utente
+                <span data-i18n="account.userCta">Accedi all’area utente</span>
               </button>
             </article>
             <article class="pf-account-card">
               <div class="pf-account-icon"><i data-lucide="badge-check"></i></div>
-              <h3>Elisee Manager</h3>
-              <p>Candidati come Elisee Manager: 1 mese di prova con pubblicazione quotidiana e verifica Admin per entrare nel Gruppo WhatsApp VIP Club.</p>
+              <h3 data-i18n="account.mgrTitle">Elisee Manager</h3>
+              <p data-i18n="account.mgrText">Candidati come Elisee Manager: un mese di prova con pubblicazione quotidiana e verifica dello staff.</p>
               <button type="button" class="btn btn-outline-pill" onclick="if(window.switchView){window.switchView('squadre','#squadre-portal');} setTimeout(function(){ if(window.EliseeManager) window.EliseeManager.open(); }, 400);">
-                Diventa Elisee Manager
+                <span data-i18n="account.mgrCta">Diventa Elisee Manager</span>
               </button>
             </article>
             <article class="pf-account-card">
               <div class="pf-account-icon"><i data-lucide="lock"></i></div>
-              <h3>Admin / Responsabile Privacy</h3>
-              <p>Ingresso protetto per proprietario piattaforma e Responsabile Privacy (GDPR Art. 30). Autenticazione richiesta.</p>
+              <h3 data-i18n="account.adminTitle">Admin / Responsabile Privacy</h3>
+              <p data-i18n="account.adminText">Ingresso protetto per il proprietario della piattaforma e il Responsabile Privacy (GDPR Art. 30). Autenticazione richiesta.</p>
               <button type="button" class="btn btn-outline-pill" id="btn-enter-admin-portal" data-view="admin" onclick="event.preventDefault();event.stopPropagation();if(window.switchView){window.switchView('admin','#admin-portal');}return false;">
-                Accedi all'area admin
+                <span data-i18n="account.adminCta">Accedi all’area admin</span>
               </button>
             </article>
           </div>
@@ -4916,18 +4916,18 @@
           <div class="es-territory es-map-regions" id="es-map-regions">
             <div class="es-territory__head">
               <div>
-                <p class="es-territory__eyebrow">Panoramica territoriale</p>
-                <h2>Regioni con più club &amp; cluster attivi</h2>
+                <p class="es-territory__eyebrow" data-i18n="map.regionsEyebrow">Panoramica territoriale</p>
+                <h2 data-i18n="map.regionsTitle">Regioni con club iscritti</h2>
                 <p data-i18n="map.regionsLead">Qui compaiono solo i club registrati su Elisee Scout. La città natale li colloca sulla mappa e nella regione corrispondente.</p>
               </div>
               <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
-                <button type="button" class="es-map-reset-btn" id="es-map-reset-btn" onclick="if(window.EliseeClubMap) window.EliseeClubMap.resetView();" title="Ripristina la vista su tutta Italia">
+                <button type="button" class="es-map-reset-btn" id="es-map-reset-btn" onclick="if(window.EliseeClubMap) window.EliseeClubMap.resetView();" data-i18n-title="map.resetItaly" title="Torna a tutta Italia">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-                  Torna a tutta Italia
+                  <span data-i18n="map.resetItaly">Torna a tutta Italia</span>
                 </button>
                 <div class="es-territory__stat">
                   <strong id="es-map-regions-count">20</strong>
-                  <span>Regioni coperte</span>
+                  <span data-i18n="map.regionsCovered">Regioni coperte</span>
                 </div>
               </div>
             </div>
@@ -4947,33 +4947,33 @@
         <div class="container pf-page-inner">
           <header class="pf-header">
             <div class="pf-header-text">
-              <p class="portfolio-kicker">Messaggi</p>
-              <h1 class="pf-title">Conversazioni B2B</h1>
-              <p class="pf-lead">Scrivi a club, staff, giocatori e società. I thread restano tra voi, distinti dalle notifiche di sistema.</p>
+              <p class="portfolio-kicker" data-i18n="msg.kicker">Messaggi</p>
+              <h1 class="pf-title" data-i18n="msg.title">Conversazioni</h1>
+              <p class="pf-lead" data-i18n="msg.lead">Scrivi a club, staff, giocatori e società. I thread restano tra voi, distinti dalle notifiche di sistema.</p>
             </div>
             <div class="pf-header-actions">
-              <button type="button" class="btn btn-outline-pill" onclick="if(window.openScopriProfili){window.openScopriProfili();}else if(window.switchView){window.switchView('scopri','#scopri-portal');}">Scopri profili</button>
+              <button type="button" class="btn btn-outline-pill" data-i18n="msg.discover" onclick="if(window.openScopriProfili){window.openScopriProfili();}else if(window.switchView){window.switchView('scopri','#scopri-portal');}">Scopri profili</button>
             </div>
           </header>
           <div class="es-msg-shell" id="es-msg-shell">
             <aside id="es-msg-inbox" class="es-msg-inbox">
-              <p class="es-msg-col-label">Thread</p>
-              <p class="es-msg-empty" id="es-msg-empty">Nessuna conversazione. Apri un profilo da Scopri o dalla Bacheca e tocca Messaggia.</p>
+              <p class="es-msg-col-label" data-i18n="msg.threads">Thread</p>
+              <p class="es-msg-empty" id="es-msg-empty" data-i18n="msg.empty">Nessuna conversazione. Apri un profilo da Scopri o dalla Bacheca e tocca Messaggia.</p>
               <ul class="es-msg-list" id="es-msg-list" hidden></ul>
             </aside>
             <div id="es-msg-thread" class="es-msg-thread">
               <div class="es-msg-idle" id="es-msg-idle">
-                <p>Seleziona un thread a sinistra, oppure avvia un contatto da Scopri.</p>
+                <p data-i18n="msg.idle">Seleziona un thread a sinistra, oppure avvia un contatto da Scopri.</p>
               </div>
               <div class="es-msg-chat" id="es-msg-chat" hidden>
                 <div class="es-msg-head">
-                  <button type="button" class="es-msg-back" id="es-msg-back" aria-label="Torna ai thread">‹</button>
-                  <h2 id="es-msg-peer">Conversazione</h2>
+                  <button type="button" class="es-msg-back" id="es-msg-back" data-i18n-aria="msg.back" aria-label="Torna ai thread">‹</button>
+                  <h2 id="es-msg-peer" data-i18n="msg.peer">Conversazione</h2>
                 </div>
                 <div class="es-msg-bubbles" id="es-msg-bubbles"></div>
                 <form class="es-msg-compose" id="es-msg-form">
-                  <input type="text" id="es-msg-input" placeholder="Scrivi un messaggio…" autocomplete="off" maxlength="2000">
-                  <button type="submit">Invia</button>
+                  <input type="text" id="es-msg-input" data-i18n-placeholder="msg.placeholder" placeholder="Scrivi un messaggio…" autocomplete="off" maxlength="2000">
+                  <button type="submit" data-i18n="msg.send">Invia</button>
                 </form>
               </div>
             </div>
@@ -4987,15 +4987,15 @@
         <div class="es-album__container">
 
           <div class="es-album__header">
-            <h1 id="es-cs-title">Album</h1>
-            <p id="es-cs-subtitle">Chi hai in rete: enti, club, giocatori e staff che segui o hai salvato su Elisee Scout.</p>
+            <h1 id="es-cs-title" data-i18n="album.title">Album</h1>
+            <p id="es-cs-subtitle" data-i18n="album.lead">Chi hai in rete: enti, club, giocatori e staff che segui o hai salvato su Elisee Scout.</p>
           </div>
 
-          <nav class="es-tabs" id="es-cs-chips" role="tablist" aria-label="Tipo seguito">
-            <button type="button" class="is-active" data-cat="ente" data-kind="ente">Ente</button>
-            <button type="button" data-cat="club" data-kind="club">Club</button>
-            <button type="button" data-cat="player" data-kind="player">Player</button>
-            <button type="button" data-cat="staff" data-kind="staff">Staff</button>
+          <nav class="es-tabs" id="es-cs-chips" role="tablist" data-i18n-aria="album.tabs" aria-label="Tipo seguito">
+            <button type="button" class="is-active" data-cat="ente" data-kind="ente" data-i18n="album.ente">Ente</button>
+            <button type="button" data-cat="club" data-kind="club" data-i18n="album.club">Club</button>
+            <button type="button" data-cat="player" data-kind="player" data-i18n="album.player">Giocatore</button>
+            <button type="button" data-cat="staff" data-kind="staff" data-i18n="album.staff">Staff</button>
           </nav>
 
           <div class="es-profiles" id="profiles-grid"></div>
@@ -5007,29 +5007,29 @@
               <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
               <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
             </svg>
-            <h3 id="es-cs-empty-title">Nessun profilo salvato in questa categoria</h3>
-            <p id="es-cs-empty-sub">Quando segui un ente, un club, un giocatore o uno staff, comparirà qui, in un unico posto e organizzato per categoria.</p>
+            <h3 id="es-cs-empty-title" data-i18n="album.emptyTitle">Nessun profilo salvato in questa categoria</h3>
+            <p id="es-cs-empty-sub" data-i18n="album.emptySub">Quando segui un ente, un club, un giocatore o uno staff, comparirà qui, in un unico posto e organizzato per categoria.</p>
             <div class="es-empty__actions">
-              <a class="es-btn--primary" href="#bacheca-annunci" id="es-empty-bacheca-btn">Scopri club e profili in Bacheca</a>
-              <a class="es-btn--secondary" href="#mappa-portal" id="es-empty-mappa-btn">Esplora club vicino a te</a>
+              <a class="es-btn--primary" href="#bacheca-annunci" id="es-empty-bacheca-btn" data-i18n="album.toBoard">Scopri club e profili in Bacheca</a>
+              <a class="es-btn--secondary" href="#mappa-portal" id="es-empty-mappa-btn" data-i18n="album.toMap">Esplora i club sulla mappa</a>
             </div>
           </div>
 
           <div class="es-how-it-works" id="es-album-how">
             <div class="es-how-it-works__item">
               <span>1</span>
-              <h4>Trova</h4>
-              <p>Cerca enti, club, giocatori e staff da Bacheca o dalla Mappa club.</p>
+              <h4 data-i18n="album.step1t">Trova</h4>
+              <p data-i18n="album.step1p">Cerca enti, club, giocatori e staff da Bacheca o dalla Mappa club.</p>
             </div>
             <div class="es-how-it-works__item">
               <span>2</span>
-              <h4>Segui</h4>
-              <p>Salva i profili che ti interessano per ritrovarli rapidamente in un unico posto.</p>
+              <h4 data-i18n="album.step2t">Segui</h4>
+              <p data-i18n="album.step2p">Salva i profili che ti interessano per ritrovarli rapidamente in un unico posto.</p>
             </div>
             <div class="es-how-it-works__item">
               <span>3</span>
-              <h4>Organizza</h4>
-              <p>Il tuo Album li raggruppa per categoria (Ente, Club, Player, Staff), pronti quando ti servono.</p>
+              <h4 data-i18n="album.step3t">Organizza</h4>
+              <p data-i18n="album.step3p">L’album li raggruppa per categoria, pronti quando ti servono.</p>
             </div>
           </div>
 
@@ -5039,42 +5039,42 @@
 
     <div id="view-scopri" style="display:none;">
       <section id="scopri-portal" class="es-sc">
-        <h1 class="es-sc-title">Scopri profili</h1>
-        <div class="es-sc-chips" role="tablist" aria-label="Tipo profilo">
-          <button type="button" class="es-sc-chip" data-kind="ente">ENTE</button>
-          <button type="button" class="es-sc-chip" data-kind="club">Club</button>
-          <button type="button" class="es-sc-chip" data-kind="player">Player</button>
-          <button type="button" class="es-sc-chip is-on" data-kind="staff">Staff</button>
+        <h1 class="es-sc-title" data-i18n="scopri.title">Scopri profili</h1>
+        <div class="es-sc-chips" role="tablist" data-i18n-aria="scopri.tabs" aria-label="Tipo profilo">
+          <button type="button" class="es-sc-chip" data-kind="ente" data-i18n="album.ente">Ente</button>
+          <button type="button" class="es-sc-chip" data-kind="club" data-i18n="album.club">Club</button>
+          <button type="button" class="es-sc-chip" data-kind="player" data-i18n="album.player">Giocatore</button>
+          <button type="button" class="es-sc-chip is-on" data-kind="staff" data-i18n="album.staff">Staff</button>
         </div>
         <label class="es-sc-search">
           <span class="es-sc-search-ico" aria-hidden="true">⌕</span>
-          <input type="search" id="es-sc-q" placeholder="Cerca nome, città, società, ruolo…" autocomplete="off">
+          <input type="search" id="es-sc-q" data-i18n-placeholder="scopri.search" placeholder="Cerca nome, città, società, ruolo…" autocomplete="off">
         </label>
         <div class="es-sc-filters">
-          <label>Ambito geografico
+          <label><span data-i18n="scopri.geo">Ambito geografico</span>
             <select id="es-sc-geo"></select>
           </label>
-          <label>Categoria
+          <label><span data-i18n="scopri.category">Categoria</span>
             <select id="es-sc-category"></select>
           </label>
         </div>
         <div class="es-sc-advbar">
-          <button type="button" class="es-sc-adv-toggle" id="es-sc-adv-toggle">Ricerca avanzata</button>
-          <button type="button" class="es-sc-reset" id="es-sc-reset">Azzera filtri</button>
+          <button type="button" class="es-sc-adv-toggle" id="es-sc-adv-toggle" data-i18n="scopri.advanced">Ricerca avanzata</button>
+          <button type="button" class="es-sc-reset" id="es-sc-reset" data-i18n="scopri.reset">Azzera filtri</button>
         </div>
         <div class="es-sc-adv" id="es-sc-adv" hidden>
-          <label>Ruolo
+          <label><span data-i18n="scopri.role">Ruolo</span>
             <select id="es-sc-role"></select>
           </label>
-          <label>Città
-            <input type="text" id="es-sc-city" placeholder="Es. Roma, Foggia" autocomplete="off">
+          <label><span data-i18n="scopri.city">Città</span>
+            <input type="text" id="es-sc-city" data-i18n-placeholder="scopri.cityPh" placeholder="Es. Roma, Foggia" autocomplete="off">
           </label>
           <label class="es-sc-check">
-            <input type="checkbox" id="es-sc-following"> Solo chi seguo
+            <input type="checkbox" id="es-sc-following"> <span data-i18n="scopri.following">Solo chi seguo</span>
           </label>
         </div>
-        <div class="es-sc-count"><i></i> <span><b id="es-sc-count-n">0</b> profili</span> con i filtri selezionati
-          <button type="button" class="es-sc-maplink" onclick="if(window.openClubMap) window.openClubMap();">Vedi sulla mappa</button>
+        <div class="es-sc-count"><i></i> <span><b id="es-sc-count-n">0</b> <span data-i18n="scopri.count">profili</span></span> <span data-i18n="scopri.filtered">con i filtri selezionati</span>
+          <button type="button" class="es-sc-maplink" data-i18n="scopri.map" onclick="if(window.openClubMap) window.openClubMap();">Vedi sulla mappa</button>
         </div>
         <div id="es-sc-list" class="es-sc-list"></div>
       </section>
@@ -5082,31 +5082,31 @@
 
     <div id="view-mercato" style="display:none;">
       <section id="mercato-hub" class="es-mk pf-page">
-        <p class="es-mk-kicker" id="es-mk-kicker">Hub Mercato</p>
-        <h1 class="es-mk-title" id="es-mk-title">Secret List</h1>
-        <p class="es-mk-lead" id="es-mk-lead">Lista riservata stile Football Manager: organizza i target per ruolo e priorità. Inserimento stealth, senza allertare atleta, procuratore o club concorrenti.</p>
-        <div class="es-mk-tabs" role="tablist" aria-label="Hub Mercato">
-          <button type="button" class="es-mk-tab is-on" data-mk="secret">Secret List</button>
-          <button type="button" class="es-mk-tab" data-mk="wall">Wall trattative</button>
+        <p class="es-mk-kicker" id="es-mk-kicker" data-i18n="mk.kicker">Hub Mercato</p>
+        <h1 class="es-mk-title" id="es-mk-title" data-i18n="mk.title">Lista riservata</h1>
+        <p class="es-mk-lead" id="es-mk-lead" data-i18n="mk.lead">Lista riservata: organizza i target per ruolo e priorità. L’inserimento resta visibile solo a te.</p>
+        <div class="es-mk-tabs" role="tablist" data-i18n-aria="mk.tabs" aria-label="Hub Mercato">
+          <button type="button" class="es-mk-tab is-on" data-mk="secret" data-i18n="mk.tabSecret">Lista riservata</button>
+          <button type="button" class="es-mk-tab" data-mk="wall" data-i18n="mk.tabWall">Wall trattative</button>
           <button type="button" class="btn btn-outline-pill es-mk-back-bacheca" data-action="back-bacheca" style="margin-left:auto; background:transparent; border-color:rgba(56,189,248,0.3); color:#38bdf8;" onclick="event.stopPropagation(); if(window.switchView) window.switchView('bacheca','#bacheca-annunci');">← Torna alla Bacheca</button>
         </div>
         <div id="es-mk-secret">
-          <p class="es-mk-stealth" id="es-mk-stealth-banner">Modalità stealth · visibile solo a te · zero notifiche esterne</p>
+          <p class="es-mk-stealth" id="es-mk-stealth-banner" data-i18n="mk.stealth">Modalità riservata · visibile solo a te · zero notifiche esterne</p>
           <div class="es-mk-lock" id="es-mk-lock" hidden>
-            <h2>Area riservata DS / Scout</h2>
-            <p>La Secret List è un Hub Mercato stealth per Direttori Sportivi e Scout. Cambia ruolo in Staff (Direttore sportivo o Scout) oppure accedi come società.</p>
+            <h2 data-i18n="mk.lockTitle">Area riservata a direttori sportivi e scout</h2>
+            <p data-i18n="mk.lockText">La lista riservata è per direttori sportivi e scout. Cambia ruolo in Staff oppure accedi come società.</p>
           </div>
           <div id="es-mk-secret-ok">
             <div class="es-mk-toolbar">
-              <input type="search" id="es-mk-q" placeholder="Cerca target…" autocomplete="off">
-              <input type="search" id="es-mk-geo" placeholder="Città / Provincia / Regione" autocomplete="off">
+              <input type="search" id="es-mk-q" data-i18n-placeholder="mk.search" placeholder="Cerca target…" autocomplete="off">
+              <input type="search" id="es-mk-geo" data-i18n-placeholder="mk.geo" placeholder="Città / Provincia / Regione" autocomplete="off">
               <select id="es-mk-prio">
-                <option value="">Tutte le priorità</option>
-                <option value="1">Priorità alta</option>
-                <option value="2">Monitoraggio</option>
-                <option value="3">Watch</option>
+                <option value="" data-i18n="mk.prioAll">Tutte le priorità</option>
+                <option value="1" data-i18n="mk.prioHigh">Priorità alta</option>
+                <option value="2" data-i18n="mk.prioMid">Monitoraggio</option>
+                <option value="3" data-i18n="mk.prioLow">Osservazione</option>
               </select>
-              <button type="button" class="es-mk-btn" id="es-mk-add">+ Aggiungi target</button>
+              <button type="button" class="es-mk-btn" id="es-mk-add" data-i18n="mk.add">Aggiungi target</button>
             </div>
             <div class="es-mk-picker" id="es-mk-picker" hidden>
               <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
@@ -5155,29 +5155,29 @@
 
     <div id="view-schede" style="display:none;">
       <section id="schede-portal" class="es-st">
-        <p class="es-st-kicker">Candidatura pubblicata</p>
+        <p class="es-st-kicker" data-i18n="st.kicker">Candidatura pubblicata</p>
         <h1 class="es-st-title" id="es-st-title">Schede tecniche</h1>
         <p class="es-st-lead" id="es-st-lead">L’IA ha selezionato i profili più compatibili e ha generato una scheda tecnica per ciascuno. Resta nella candidatura: il club valuta e confronta qui, senza la casella di posta.</p>
-        <p class="es-st-note">Raccolte nella candidatura · consultazione, confronto e gestione centralizzata</p>
+        <p class="es-st-note" data-i18n="st.note">Raccolte nella candidatura · consultazione, confronto e gestione centralizzata</p>
         <div class="es-st-toolbar">
-          <button type="button" class="es-st-ghost" onclick="if(window.switchView) window.switchView('bacheca','#bacheca-annunci');">← Bacheca</button>
+          <button type="button" class="es-st-ghost" data-i18n="st.back" onclick="if(window.switchView) window.switchView('bacheca','#bacheca-annunci');">← Bacheca</button>
           <select id="es-st-sort">
-            <option value="match">Ordina per compatibilità</option>
-            <option value="name">Ordina per nome</option>
+            <option value="match" data-i18n="st.sortMatch">Ordina per compatibilità</option>
+            <option value="name" data-i18n="st.sortName">Ordina per nome</option>
           </select>
           <select id="es-st-filter">
-            <option value="">Tutti gli stati</option>
-            <option value="nuova">Nuova</option>
-            <option value="in valutazione">In valutazione</option>
-            <option value="shortlist">Shortlist</option>
-            <option value="scartata">Scartata</option>
+            <option value="" data-i18n="st.filterAll">Tutti gli stati</option>
+            <option value="nuova" data-i18n="st.filterNew">Nuova</option>
+            <option value="in valutazione" data-i18n="st.filterReview">In valutazione</option>
+            <option value="shortlist" data-i18n="st.filterShort">Shortlist</option>
+            <option value="scartata" data-i18n="st.filterOut">Scartata</option>
           </select>
         </div>
         <div class="es-st-split">
           <div class="es-st-list-col">
             <!-- UX Kanban Fase 4: toolbar sticky con count pill e toggle collasso -->
             <div class="es-st-hbar">
-              <h4>Candidature <span class="es-st-count" id="es-st-count" aria-live="polite" aria-atomic="true">0</span></h4>
+              <h4><span data-i18n="st.list">Candidature</span> <span class="es-st-count" id="es-st-count" aria-live="polite" aria-atomic="true">0</span></h4>
               <button type="button" class="es-st-toggle" id="btn-toggle-sheets"
                 aria-expanded="true" aria-controls="es-st-list" aria-label="Comprimi lista schede">
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -5542,42 +5542,42 @@
           </div>
         </div>
         <div>
-          <h4 class="pf-footer-heading">Macroaree</h4>
+          <h4 class="pf-footer-heading" data-i18n="footer.areas">Macroaree</h4>
           <ul class="pf-footer-links">
-            <li><a href="#hero" onclick="switchView('home'); return false;">Home</a></li>
-            <li><a href="#about" onclick="switchView('about'); return false;">Chi siamo</a></li>
-            <li><a href="#bacheca-annunci" onclick="switchView('bacheca'); return false;">Bacheca</a></li>
-            <li><a href="#stampa-portal" onclick="if(window.openStampaFeed){window.openStampaFeed();}else if(window.switchView){window.switchView('stampa','#stampa-portal');} return false;">Stampa</a></li>
-            <li><a href="#mappa-portal" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){window.switchView('mappa','#mappa-portal');} return false;">Mappa</a></li>
-            <li><a href="#seguo-portal" onclick="if(window.openChiSegui){window.openChiSegui();}else if(window.switchView){window.switchView('seguo','#seguo-portal');} return false;">Album</a></li>
-            <li><a href="#ambassador-portal" onclick="switchView('ambassador'); return false;">Ambassador</a></li>
-            <li><a href="#minigioco-carriera" onclick="switchView('minigioco'); return false;">Minigiochi</a></li>
-            <li><a href="#admin-portal" onclick="if(window.switchView){window.switchView('admin','#admin-portal');} return false;">Control Center</a></li>
+            <li><a href="#hero" data-i18n="footer.home" onclick="switchView('home'); return false;">Home</a></li>
+            <li><a href="#about" data-i18n="nav.about" onclick="switchView('about'); return false;">Chi siamo</a></li>
+            <li><a href="#bacheca-annunci" data-i18n="nav.portfolio" onclick="switchView('bacheca'); return false;">Bacheca</a></li>
+            <li><a href="#stampa-portal" data-i18n="nav.press" onclick="if(window.openStampaFeed){window.openStampaFeed();}else if(window.switchView){window.switchView('stampa','#stampa-portal');} return false;">Stampa</a></li>
+            <li><a href="#mappa-portal" data-i18n="nav.map" onclick="if(window.openClubMap){window.openClubMap();}else if(window.switchView){window.switchView('mappa','#mappa-portal');} return false;">Mappa</a></li>
+            <li><a href="#seguo-portal" data-i18n="nav.album" onclick="if(window.openChiSegui){window.openChiSegui();}else if(window.switchView){window.switchView('seguo','#seguo-portal');} return false;">Album</a></li>
+            <li><a href="#ambassador-portal" data-i18n="nav.ambassador" onclick="switchView('ambassador'); return false;">Ambassador</a></li>
+            <li><a href="#minigioco-carriera" data-i18n="nav.minigame" onclick="switchView('minigioco'); return false;">Minigiochi</a></li>
+            <li><a href="#admin-portal" data-i18n="footer.center" onclick="if(window.switchView){window.switchView('admin','#admin-portal');} return false;">Control Center</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="pf-footer-heading">Funzionalità</h4>
+          <h4 class="pf-footer-heading" data-i18n="footer.features">Funzionalità</h4>
           <ul class="pf-footer-links">
-            <li><a href="#dashboard-skills" onclick="switchView('pillars'); return false;">Curriculum sportivo</a></li>
-            <li><a href="#schede-tecniche" onclick="if(window.openSchedeTecniche){window.openSchedeTecniche({id:'attaccante-centrale-stagione-2026-27',title:'Attaccante centrale — stagione 2026/27',club:'ASD Virtus Foggia',role:'Attaccante',location:'Foggia'});} return false;">Schede tecniche IA</a></li>
-            <li><a href="#scopri-portal" onclick="if(window.openScopriProfili){window.openScopriProfili('staff');}else{switchView('scopri','#scopri-portal');} return false;">Scopri profili</a></li>
-            <li><a href="#wall-trasferimenti" onclick="if(window.openTransferWall){window.openTransferWall();}else{switchView('mercato','#wall-trasferimenti');} return false;">Wall mercato</a></li>
-            <li><a href="#bacheca-annunci" onclick="switchView('bacheca','#bacheca-network'); return false;">Persone &amp; Squadre</a></li>
+            <li><a href="#dashboard-skills" data-i18n="footer.cv" onclick="switchView('pillars'); return false;">Curriculum sportivo</a></li>
+            <li><a href="#schede-tecniche" data-i18n="footer.sheets" onclick="if(window.openSchedeTecniche){window.openSchedeTecniche({id:'attaccante-centrale-stagione-2026-27',title:'Attaccante centrale — stagione 2026/27',club:'ASD Virtus Foggia',role:'Attaccante',location:'Foggia'});} return false;">Schede tecniche</a></li>
+            <li><a href="#scopri-portal" data-i18n="scopri.title" onclick="if(window.openScopriProfili){window.openScopriProfili('staff');}else{switchView('scopri','#scopri-portal');} return false;">Scopri profili</a></li>
+            <li><a href="#wall-trasferimenti" data-i18n="home.cardWall" onclick="if(window.openTransferWall){window.openTransferWall();}else{switchView('mercato','#wall-trasferimenti');} return false;">Wall mercato</a></li>
+            <li><a href="#bacheca-annunci" data-i18n="footer.people" onclick="switchView('bacheca','#bacheca-network'); return false;">Persone e squadre</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="pf-footer-heading">Contatti</h4>
+          <h4 class="pf-footer-heading" data-i18n="footer.contact">Contatti</h4>
           <ul class="pf-footer-links">
-            <li>Foggia, Italia</li>
+            <li data-i18n="about.metaSeatVal">Foggia, Italia</li>
             <li><a href="mailto:areaeliseescout@gmail.com">areaeliseescout@gmail.com</a></li>
-            <li>Compliance GDPR Art. 30</li>
-            <li>Tutela minori e trust</li>
+            <li data-i18n="footer.gdpr">Conformità GDPR Art. 30</li>
+            <li data-i18n="footer.minors">Tutela dei minori</li>
           </ul>
         </div>
       </div>
       <div class="pf-footer-bottom">
         <span class="pf-footer-bottom-left">
-          <a href="#hero" class="pf-footer-back-top" title="Torna all'inizio della homepage" aria-label="Torna all'header della homepage"
+          <a href="#hero" class="pf-footer-back-top" data-i18n-title="footer.back" data-i18n-aria="footer.back" title="Torna all'inizio" aria-label="Torna all'inizio"
              onclick="if(window.switchView){window.switchView('home','#hero');} window.scrollTo({top:0,behavior:'smooth'}); return false;">
             <i data-lucide="arrow-up-circle"></i>
           </a>
@@ -5585,9 +5585,9 @@
         </span>
         <span>
           <a href="#admin-portal" onclick="if(window.switchView){window.switchView('admin','#admin-portal');} return false;">Control Center</a>
-          <a href="privacy-policy.html">Informativa privacy</a>
-          <a href="cookie-policy.html">Informativa cookie</a>
-          <a href="javascript:void(0);" id="footer-cookie-prefs" onclick="event.preventDefault();if(window.EliseeCookies && EliseeCookies.openPreferences){EliseeCookies.openPreferences();}else{alert('Modulo cookie non caricato. Ricarica la pagina (Ctrl+F5).');}return false;">Preferenze cookie</a>
+          <a href="privacy-policy.html" data-i18n="footer.privacy">Informativa privacy</a>
+          <a href="cookie-policy.html" data-i18n="footer.cookies">Informativa cookie</a>
+          <a href="javascript:void(0);" id="footer-cookie-prefs" data-i18n="footer.cookiePrefs" onclick="event.preventDefault();if(window.EliseeCookies && EliseeCookies.openPreferences){EliseeCookies.openPreferences();}else{alert('Modulo cookie non caricato. Ricarica la pagina (Ctrl+F5).');}return false;">Preferenze cookie</a>
           <a href="javascript:void(0);" onclick="openBadgeInfoModal('figc')">Legal</a>
         </span>
       </div>
@@ -6877,7 +6877,7 @@
   </script>
   <script src="cookie-profiling.js?v=20260925_HEROUX1"></script>
   <script src="ai-gdpr-monitor.js?v=20260806_NOCORS"></script>
-  <script src="i18n.js?v=20261001_FIX20"></script>
+  <script src="i18n.js?v=20261001_FIX21"></script>
   <script src="island-carousel.js?v=20260928_HEROUX67"></script>
   <script src="parallax-cards.js?v=20260928_HEROUX68"></script>
   <script src="agents-runtime.js?v=20260806_NOCORS"></script>
@@ -6885,7 +6885,7 @@
   <script src="club-storia.js?v=20260903_TIERPROMO1"></script>
   <script src="campionati-agents.js?v=20260806_STABLE"></script>
   <script src="war-room-runtime.js?v=20260906_WARROOM1"></script>
-  <script src="player-card.js?v=20260915_FGCAMATLOGO1"></script>
+  <script src="player-card.js?v=20261001_FIX21"></script>
   <script src="minigioco-carriera.js?v=20260913_HUBPOLISH1"></script>
   <!-- ELISEE WORLD — Motore RPG Calcistico 2D (Architettura Completa) -->
   <script src="elisee-world/src/core/state-machine.js?v=20260906_EWGBA1"></script>
@@ -6958,7 +6958,7 @@
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="elisee-staff.js?v=20260911_ADMIN2"></script>
   <script src="app-admin-panels.js?v=20260918_CCDROPDOWN1"></script>
-  <script src="app.js?v=20261001_FIX18"></script>
+  <script src="app.js?v=20261001_FIX21"></script>
   <script src="page-bubbles.js?v=20260925_BUBBLE1"></script>
   <script src="parallax.js?v=20260925_PARALLAX1"></script>
   <script src="search-client.js?v=20260929_HEROUX88"></script>
@@ -6968,7 +6968,7 @@
   <script src="pw-live.js?v=20260925_PWLIVE1"></script>
   <script src="trash-btn.js?v=20260925_TRASH1"></script>
   <script src="sortable-table.js?v=20260924_FINISH1"></script>
-  <script src="elisee-loader.js?v=20260918_LOADER1"></script>
+  <script src="elisee-loader.js?v=20261001_FIX21"></script>
   <!-- Three.js WebGL, OrbitControls, GLTFLoader & DecalGeometry Runtime per Avatar 3D Hyper3D / GLB -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
@@ -6980,7 +6980,7 @@
   <script src="bacheca-annunci.js?v=20261001_FIX13"></script>
   <script src="player-profile.js?v=20261001_FIX18"></script>
   <script src="public-rating-system.js?v=20260904_SEASONDROP1"></script>
-  <script src="schede-tecniche.js?v=20260918_SCOUTSRC1"></script>
+  <script src="schede-tecniche.js?v=20261001_FIX21"></script>
   <script src="persist-sync.js?v=20260918_OTPSYNC1"></script>
   <script src="club-role-ops.js?v=20260917_CLUBOPS1"></script>
   <script src="dash-real.js?v=20260917_FGCLIC1"></script>
@@ -7008,18 +7008,18 @@
   <script src="bt-dash.js?v=20260917_ALLPRO1"></script>
   <script src="tifoso-dash.js?v=20260917_ALLPRO1"></script>
   <script src="giorn-dash.js?v=20260917_FGCLIC1"></script>
-  <script src="scopri-profili.js?v=20260827_CARDORDER1"></script>
+  <script src="scopri-profili.js?v=20261001_FIX21"></script>
   <script src="messaggi.js?v=20260820_MSG1"></script>
-  <script src="mercato-hub.js?v=20260903_MA3"></script>
+  <script src="mercato-hub.js?v=20261001_FIX21"></script>
 
   <script src="mappa-club.js?v=20261001_FIX16"></script>
-  <script src="chi-segui.js?v=20260913_ALBUM5"></script>
+  <script src="chi-segui.js?v=20261001_FIX21"></script>
   <script src="card-atelier.js?v=20260918_CLUBCARD1"></script>
   <script src="control-center.js?v=20260925_ANALYTICS1"></script>
   <script src="flusso-contatti.js?v=20260925_FLUSSO1"></script>
   <script src="cc-analytics.js?v=20260925_ANALYTICS1"></script>
   <script src="ds-hub.js?v=20260917_BUGFIX1"></script>
-  <script src="verifica-account.js?v=20260925_HEROUX1"></script>
+  <script src="verifica-account.js?v=20261001_FIX21"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="season-wrapped.js?v=20260925_WCF1"></script>
   <script src="creator-role-switcher.js?v=20260918_ADMINPIN1"></script>
@@ -7526,7 +7526,7 @@
   </div>
 
   <script src="badge-handler.js?v=20260925_HEROUX41"></script>
-  <script src="mobile-webapp.js?v=20260925_HEROUX41"></script>
+  <script src="mobile-webapp.js?v=20261001_FIX21"></script>
   <script src="es-nav-ux.js?v=20260926_HEROUX49"></script>
   <script src="es-role-nav.js?v=20261001_FIX9"></script>
   <script src="micro-interactions.js?v=20260929_HEROUX74"></script>
@@ -7551,7 +7551,7 @@
   <script src="vision-track.js?v=20261001_FIX20" defer></script>
   <script src="pub-button.js?v=20261001_FIX13" defer></script>
   <script src="file-dropzone.js?v=20260927_HEROUX61" defer></script>
-  <script src="realistic-switch.js?v=20260928_HEROUX72" defer></script>
+  <script src="realistic-switch.js?v=20261001_FIX21" defer></script>
   <script src="es-ux-controls.js?v=20260928_HEROUX73" defer></script>
   <script src="public-profile.js?v=20260929_HEROUX76" defer></script>
 </body>

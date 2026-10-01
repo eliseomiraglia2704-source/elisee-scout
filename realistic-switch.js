@@ -19,8 +19,13 @@
     return false;
   }
 
-  function getLang() {
-    return (document.documentElement.lang || 'it').toLowerCase().startsWith('en') ? 'en' : 'it';
+  function labelFor(isLight) {
+    var key = isLight ? 'theme.toDark' : 'theme.toLight';
+    if (window.EliseeI18n && typeof window.EliseeI18n.t === 'function') {
+      var v = window.EliseeI18n.t(key);
+      if (v && v !== key) return v;
+    }
+    return isLight ? 'Passa al tema scuro' : 'Passa al tema chiaro';
   }
 
   function ensureSwitchMarkup(btn) {
@@ -37,10 +42,7 @@
     btn.classList.toggle('is-on', isLight);
     btn.classList.toggle('is-active', isLight);
 
-    const lang = getLang();
-    const label = isLight
-      ? (lang === 'en' ? 'Switch to dark theme' : 'Passa al tema scuro')
-      : (lang === 'en' ? 'Switch to light theme' : 'Passa al tema chiaro');
+    const label = labelFor(isLight);
 
     btn.setAttribute('aria-label', label);
     btn.setAttribute('title', label);
@@ -108,6 +110,7 @@
 
     // Ascolto cambio lingua se presente evento personalizzato o reload i18n
     window.addEventListener('languageChanged', syncAllSwitches);
+    document.addEventListener('elisee:lang-changed', syncAllSwitches);
   }
 
   window.initRealisticSwitch = initRealisticSwitch;

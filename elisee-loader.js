@@ -177,19 +177,45 @@
     'scopri': 'Scopri Profili & Community'
   };
 
+  var AREA_I18N = {
+    home: 'load.home',
+    about: 'load.about',
+    bacheca: 'load.bacheca',
+    stampa: 'load.press',
+    mappa: 'load.map',
+    seguo: 'load.album',
+    ambassador: 'load.ambassador',
+    minigioco: 'load.game',
+    admin: 'footer.center',
+    account: 'load.account',
+    'user-dossier': 'load.dossier',
+    tc: 'load.area',
+    mercato: 'load.market',
+    schede: 'load.sheets',
+    scopri: 'load.scopri'
+  };
+
+  function trLoad(key, fb) {
+    if (window.EliseeI18n && typeof window.EliseeI18n.t === 'function') {
+      var v = window.EliseeI18n.t(key);
+      if (v && v !== key) return v;
+    }
+    return fb;
+  }
+
   function getAreaTitle(viewType, hash) {
     var key = (viewType || '').toLowerCase();
-    if (AREA_LABELS[key]) return AREA_LABELS[key];
+    if (AREA_LABELS[key]) return trLoad(AREA_I18N[key] || 'load.area', AREA_LABELS[key]);
     if (hash) {
       var h = hash.replace(/^#/, '').toLowerCase();
       if (AREA_LABELS[h]) return AREA_LABELS[h];
-      if (h.includes('admin')) return 'Control Center';
-      if (h.includes('mercato')) return 'Hub Mercato B2B';
-      if (h.includes('schede')) return 'Schede Tecniche Scouting';
-      if (h.includes('dossier')) return 'Dossier Analitico';
-      if (h.includes('tc')) return 'Elisee Manager';
+      if (h.includes('admin')) return trLoad('footer.center', 'Control Center');
+      if (h.includes('mercato')) return trLoad('load.market', 'Hub Mercato');
+      if (h.includes('schede')) return trLoad('load.sheets', 'Schede tecniche');
+      if (h.includes('dossier')) return trLoad('load.dossier', 'Dossier ruolo');
+      if (h.includes('tc')) return trLoad('load.area', 'Elisee Scout');
     }
-    return 'Area Elisee Scout';
+    return trLoad('load.area', 'Elisee Scout');
   }
 
   // Intercetta switchView per fornire transizioni fluide tra macroaree

@@ -1,5 +1,12 @@
 /* Chi segui — i tuoi seguiti e quelli degli altri utenti */
 (function () {
+  function tr(key, fallback) {
+    if (window.EliseeI18n && typeof window.EliseeI18n.t === 'function') {
+      var v = window.EliseeI18n.t(key);
+      if (v && v !== key) return v;
+    }
+    return fallback;
+  }
   function esc(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
@@ -80,11 +87,11 @@
       var mine = !this.ownerId || this.ownerId === meKey();
       this.isMe = mine;
       
-      if (title) title.textContent = mine ? 'Album' : ('Album di ' + (this.ownerName || 'questo profilo'));
+      if (title) title.textContent = mine ? tr('album.title', 'Album') : (tr('album.titleOf', 'Album di') + ' ' + (this.ownerName || tr('album.thisProfile', 'questo profilo')));
       if (subtitle) {
         subtitle.textContent = mine
-          ? 'Chi hai in rete: enti, club, giocatori e staff che segui o hai salvato su Elisee Scout.'
-          : ('I collegamenti e i profili seguiti da ' + (this.ownerName || 'questo utente') + ' su Elisee Scout.');
+          ? tr('album.lead', 'Chi hai in rete: enti, club, giocatori e staff che segui o hai salvato su Elisee Scout.')
+          : (tr('album.leadOtherBefore', 'I collegamenti e i profili seguiti da ') + (this.ownerName || tr('album.thisUser', 'questo utente')) + tr('album.leadOtherAfter', ' su Elisee Scout.'));
       }
 
       var currentKind = this.kind || 'ente';
@@ -112,7 +119,7 @@
             '<div class="es-profile-card__avatar">' + ini + '</div>' +
             '<p class="es-profile-card__name">' + nome + '</p>' +
             '<p class="es-profile-card__meta">' + meta + '</p>' +
-            '<button type="button" class="es-profile-card__btn" data-see-dossier="' + pid + '" data-see-name="' + nome + '">Visualizza profilo</button>' +
+            '<button type="button" class="es-profile-card__btn" data-see-dossier="' + pid + '" data-see-name="' + nome + '">' + esc(tr('album.view', 'Visualizza profilo')) + '</button>' +
           '</div>'
         );
       }
@@ -126,11 +133,11 @@
           empty.classList.add('is-active');
           empty.style.display = 'block';
         }
-        if (emptyT) emptyT.textContent = 'Nessun profilo salvato in questa categoria';
+        if (emptyT) emptyT.textContent = tr('album.emptyTitle', 'Nessun profilo salvato in questa categoria');
         if (emptyS) {
           emptyS.textContent = mine
-            ? 'Quando segui un ente, un club, un giocatore o uno staff, comparirà qui, in un unico posto e organizzato per categoria.'
-            : 'Questo profilo non ha ancora collegamenti in questa categoria dell\'Album.';
+            ? tr('album.emptySub', 'Quando segui un ente, un club, un giocatore o uno staff, comparirà qui, in un unico posto e organizzato per categoria.')
+            : tr('album.emptyOther', 'Questo profilo non ha ancora collegamenti in questa categoria dell’album.');
         }
         if (list) {
           list.hidden = true;
@@ -250,6 +257,9 @@
       if (d && (d.view === 'seguo' || (d.hash && String(d.hash).indexOf('seguo') >= 0))) {
         window.EliseeChiSegui.render();
       }
+    });
+    document.addEventListener('elisee:lang-changed', function () {
+      window.EliseeChiSegui.render();
     });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);

@@ -7651,6 +7651,14 @@ function displayNameFromUser(user) {
   return '';
 }
 
+function esTr(key, fallback) {
+  if (window.EliseeI18n && typeof window.EliseeI18n.t === 'function') {
+    var value = window.EliseeI18n.t(key);
+    if (value && value !== key) return value;
+  }
+  return fallback;
+}
+
 window.showAuthLoadingScreen = function (label) {
   let el = document.getElementById('elisee-auth-loading');
   if (!el) {
@@ -7662,7 +7670,7 @@ window.showAuthLoadingScreen = function (label) {
     '<div style="text-align:center;padding:2rem;">' +
     '<img src="immagini/logo/logo-site.png?v=20260925_150256" alt="ELISEE SCOUT" style="width:64px;height:64px;object-fit:contain;display:block;margin:0 auto 1rem;">' +
     '<div style="width:42px;height:42px;margin:0 auto 1rem;border-radius:50%;border:3px solid rgba(56,189,248,0.2);border-top-color:#38bdf8;animation:esAuthSpin 0.7s linear infinite;"></div>' +
-    '<p style="color:#fff;font-family:Outfit,sans-serif;font-weight:800;letter-spacing:0.04em;font-size:1.05rem;margin:0 0 0.35rem;">Registrazione completata</p>' +
+    '<p data-i18n="auth.done" style="color:#fff;font-family:Outfit,sans-serif;font-weight:800;letter-spacing:0.04em;font-size:1.05rem;margin:0 0 0.35rem;">' + esTr('auth.done', 'Registrazione completata') + '</p>' +
     '<p id="elisee-auth-loading-sub" style="color:#94a3b8;font-size:0.84rem;margin:0;"></p>' +
     '</div>';
   if (!document.getElementById('es-auth-spin-kf')) {
@@ -7672,7 +7680,7 @@ window.showAuthLoadingScreen = function (label) {
     document.head.appendChild(s);
   }
   const sub = document.getElementById('elisee-auth-loading-sub');
-  if (sub) sub.textContent = label || 'Preparazione del profilo…';
+  if (sub) sub.textContent = label || esTr('auth.preparing', 'Preparazione del profilo…');
   el.classList.add('is-on');
   el.style.cssText =
     'display:flex !important;align-items:center !important;justify-content:center !important;' +
@@ -8118,7 +8126,7 @@ window.showPasswordResetBanner = function (user) {
     if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
     if (typeof window.showAccessoMethod === 'function') window.showAccessoMethod('setpw');
     var hello = document.getElementById('accesso-setpw-hello');
-    if (hello) hello.textContent = 'Scegli una password nuova: almeno 8 caratteri, una maiuscola, un numero e un carattere speciale.';
+    if (hello) hello.textContent = esTr('auth.setpw', 'Imposta una password nuova. Almeno 8 caratteri, una maiuscola, un numero e un carattere speciale.');
   });
   if (x) x.addEventListener('click', function () {
     b.remove();
@@ -8130,7 +8138,7 @@ window.revealRegisteredUser = function (user, after) {
   const name = displayNameFromUser(user) || 'Account';
   if (typeof window.closeRegistrazioneModal === 'function') window.closeRegistrazioneModal();
   if (typeof window.closeAccessoModal === 'function') window.closeAccessoModal();
-  window.showAuthLoadingScreen('Profilo di ' + name + ' in arrivo…');
+  window.showAuthLoadingScreen(esTr('auth.profileIn', 'Profilo di {name} in arrivo…').replace('{name}', name));
   setTimeout(function () {
     window.paintLoggedInUser(user);
     window.hideAuthLoadingScreen();
@@ -8872,7 +8880,12 @@ function resetAccessoForm() {
     if (el) el.style.display = 'none';
   });
   const btn = document.getElementById('accesso-submit-btn');
-  if (btn) { btn.disabled = false; btn.innerHTML = 'Accedi'; btn.style.opacity = '1'; }
+  if (btn) {
+    btn.disabled = false;
+    btn.textContent = esTr('nav.login', 'Accedi');
+    btn.setAttribute('data-i18n', 'nav.login');
+    btn.style.opacity = '1';
+  }
   if (typeof window.showAccessoMethod === 'function') window.showAccessoMethod('email');
 }
 
@@ -9268,8 +9281,15 @@ window.toggleAccessoPasswordVisibility = function(id) {
   var show = inp.type === 'password';
   inp.type = show ? 'text' : 'password';
   var btn = inp.parentNode && inp.parentNode.querySelector('.es-login-eye');
-  if (btn) btn.setAttribute('aria-label', show ? 'Nascondi password' : 'Mostra password');
+  if (btn) btn.setAttribute('aria-label', esTr(show ? 'auth.hidePw' : 'auth.showPw', show ? 'Nascondi password' : 'Mostra password'));
 };
+document.addEventListener('elisee:lang-changed', function () {
+  document.querySelectorAll('.es-login-eye').forEach(function (btn) {
+    var inp = btn.parentNode && btn.parentNode.querySelector('input');
+    var shown = !!(inp && inp.type === 'text');
+    btn.setAttribute('aria-label', esTr(shown ? 'auth.hidePw' : 'auth.showPw', shown ? 'Nascondi password' : 'Mostra password'));
+  });
+});
 
 function _accessoMethodEls() {
   return {
@@ -9379,7 +9399,7 @@ window.consumeEliseeOAuthReturn = function () {
   }
   window.__ELISEE_OAUTH_CONSUMED = !!(token || oauthCode || err);
   if (oauthCode && !token && !err) {
-    if (window.showAuthLoadingScreen) window.showAuthLoadingScreen('Accesso in corso…');
+    if (window.showAuthLoadingScreen) window.showAuthLoadingScreen(esTr('auth.entering', 'Accesso in corso…'));
     fetch('/api/auth/oauth/finish', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -9850,7 +9870,7 @@ window.submitAccessoForm = function() {
   const btn = document.getElementById('accesso-submit-btn');
   if (btn) {
     btn.disabled = true;
-    btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:0.5rem;"><span style="width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top:2px solid #fff;border-radius:50%;animation:spin 0.7s linear infinite;display:inline-block;"></span> Verifica in corso...</span>';
+    btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:0.5rem;"><span style="width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top:2px solid #fff;border-radius:50%;animation:spin 0.7s linear infinite;display:inline-block;"></span> ' + esTr('auth.checking', 'Verifica in corso...') + '</span>';
     btn.style.opacity = '0.8';
   }
   if (!document.getElementById('spin-kf')) {
@@ -9866,7 +9886,8 @@ window.submitAccessoForm = function() {
   }).catch(function (err) {
     if (btn) {
       btn.disabled = false;
-      btn.innerHTML = 'Accedi';
+      btn.textContent = esTr('nav.login', 'Accedi');
+      btn.setAttribute('data-i18n', 'nav.login');
       btn.style.opacity = '1';
     }
     if (errBox && errMsg) {
