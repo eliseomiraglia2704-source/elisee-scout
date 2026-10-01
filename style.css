@@ -10265,7 +10265,7 @@ header small,
 /* 3. Hero Section Spacing, Contrasto e Layout a 2 Colonne */
 .es-hero-about-split {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-columns: minmax(0, 46rem);
   gap: 3.5rem;
   align-items: center;
   padding-top: 1.5rem;

@@ -4,7 +4,13 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-10-01** — FIX2 — Rimosso il pannello Analytical Engine dalla sezione «Entra nella community»:
+Ultimo aggiornamento: **2026-10-01** — FIX3 — Rimossa la card atleta da «Digitalizziamo il calciomercato»:
+
+1. **`#home-about`**: tolta la card bianca a destra (Profilo verificato, foto, 92 ATT, 33.8 km/h, Marco Rossi). Restano titolo, testo, pulsanti e badge.
+2. La colonna di testo non lascia più il buco della seconda colonna: larghezza massima 46rem.
+3. **File**: `index.html`, `style.css`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX3`.
+
+Feature precedente: **2026-10-01** — FIX2 — Rimosso il pannello Analytical Engine dalla sezione «Entra nella community»:
 
 1. **`#welcome-access`**: tolta l’immagine `scout-workspace.svg` (radar, INDEX ATLETA, DOSSIER SCOUT OK) evidenziata accanto ai pulsanti Google, Apple, SPID ed email.
 2. La colonna di accesso resta a sinistra, larghezza massima 36rem, senza il riquadro vuoto a destra.
