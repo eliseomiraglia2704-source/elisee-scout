@@ -1,4 +1,14 @@
-const { startGoogleOAuth } = require('../../../lib/auth-oauth');
+const { startProviderOAuth } = require('../../../lib/auth-oauth');
+
+function providerFrom(req) {
+  if (req.query && req.query.provider) return String(req.query.provider).toLowerCase();
+  try {
+    const u = new URL(req.url || '/', 'https://elisee-scout.vercel.app');
+    return String(u.searchParams.get('provider') || 'google').toLowerCase();
+  } catch (e) {
+    return 'google';
+  }
+}
 
 module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') {
@@ -12,5 +22,5 @@ module.exports = async function handler(req, res) {
     res.end(JSON.stringify({ ok: false, error: 'method' }));
     return;
   }
-  return startGoogleOAuth(req, res);
+  return startProviderOAuth(req, res, providerFrom(req));
 };

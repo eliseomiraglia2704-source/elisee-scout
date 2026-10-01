@@ -9331,7 +9331,7 @@ window.startEliseeProviderOAuth = function (provider) {
   var name = String(provider || '').toLowerCase();
   if (name !== 'google' && name !== 'facebook' && name !== 'apple') return;
   if (window.rememberAuthReturn) window.rememberAuthReturn();
-  window.location.assign('/api/auth/oauth/' + name);
+  window.location.assign('/api/auth/oauth/google?provider=' + encodeURIComponent(name));
 };
 
 window.startEliseeGoogleOAuth = function () {
