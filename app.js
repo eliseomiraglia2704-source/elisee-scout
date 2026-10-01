@@ -8753,7 +8753,25 @@ window.forgotAccessoPassword = function () {
   if (typeof window.showAccessoMethod === 'function') window.showAccessoMethod('whatsapp');
 };
 
+window.eliseeOAuthErrorText = function (err) {
+  var code = String(err || '');
+  try { code = decodeURIComponent(code); } catch (_) {}
+  if (code === 'facebook_non_attivo') {
+    return 'Facebook non è attivo sul servizio di accesso. Usa Google oppure email e password.';
+  }
+  if (code === 'apple_non_attivo') {
+    return 'Apple non è attivo sul servizio di accesso. Usa Google oppure email e password.';
+  }
+  if (!code || code === 'oauth_finish') return 'Accesso non completato. Riprova.';
+  return 'Accesso non completato. Riprova da Accedi.';
+};
+
 window.eliseeSocialSoon = function (name) {
+  var key = String(name || '').toLowerCase();
+  if (key === 'facebook' || key === 'apple' || key === 'google') {
+    if (window.startEliseeProviderOAuth) window.startEliseeProviderOAuth(key);
+    return;
+  }
   var text = name + ' non è ancora collegato. Usa Google oppure email e password.';
   var card = document.getElementById('es-login-card');
   var onRegister = card && card.classList.contains('is-register');
@@ -8863,7 +8881,8 @@ window.openGoogleModal = function() {
 };
 window.closeGoogleModal = window.closeAccessoModal;
 window.openAppleModal = function() {
-  openAccessoModal('apple', '<img src="immagini/08-auth-apple/apple-logo.svg?v=20260925_150256" style="width:22px; height:22px; vertical-align:middle; filter:drop-shadow(0 3px 6px rgba(0,0,0,0.5)) drop-shadow(0 0 8px rgba(255,255,255,0.4));">', 'Apple ID');
+  if (window.startEliseeProviderOAuth) window.startEliseeProviderOAuth('apple');
+  else openAccessoModal('email');
 };
 window.closeAppleModal = window.closeAccessoModal;
 
@@ -9096,42 +9115,15 @@ function googleLoginUnavailable() {
 
 window.mountGoogleSignInButton = function mountGoogleSignInButton() {
   var host = document.getElementById('accesso-google-gis');
-  fetch('/api/auth/config', { credentials: 'same-origin' })
-    .then(function (r) { return r.json(); })
-    .then(function (cfg) {
-      var clientId = resolveGoogleClientId(cfg);
-      if (!clientId) {
-        if (host) host.style.display = 'none';
-        setGoogleLoginAvailable(false);
-        return;
-      }
-      setGoogleLoginAvailable(true);
-      if (host) host.style.display = 'flex';
-      return loadGoogleGis().then(function () {
-        google.accounts.id.initialize({
-          client_id: clientId,
-          callback: handleGoogleCredential,
-          auto_select: false,
-          ux_mode: 'popup'
-        });
-        if (host) {
-          host.innerHTML = '';
-          google.accounts.id.renderButton(host, {
-            theme: 'filled_black',
-            size: 'large',
-            text: 'continue_with',
-            shape: 'pill',
-            width: 180
-          });
-        }
-      });
-    })
-    .catch(function () {
-      if (host) host.style.display = 'none';
-      setGoogleLoginAvailable(false);
-    });
+  if (host) {
+    host.innerHTML = '';
+    host.style.display = 'none';
+  }
+  setGoogleLoginAvailable(true);
 };
-window.runRealGoogleAuth = window.mountGoogleSignInButton;
+window.runRealGoogleAuth = function () {
+  if (window.startEliseeGoogleOAuth) window.startEliseeGoogleOAuth();
+};
 
 window.registerWithGoogle = function () {
   if (window.startEliseeGoogleOAuth) window.startEliseeGoogleOAuth();
@@ -9194,10 +9186,7 @@ window.completeGoogleSimpleRegister = function () {
   });
 };
 window.registerWithApple = function () {
-  setRegSocialStatus(
-    'Apple Sign In reale richiede un Service ID Apple Developer. Usa email e password oppure Google.',
-    true
-  );
+  if (window.startEliseeProviderOAuth) window.startEliseeProviderOAuth('apple');
 };
 window.openSpidModal = function() {
   openAccessoModal('spid', '<img src="immagini/09-auth-spid-logo/spid-logo.svg?v=20260925_150256" style="height:22px; width:auto; vertical-align:middle; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6)) drop-shadow(0 0 10px rgba(0,102,204,0.7));">', 'SPID');
@@ -9338,18 +9327,15 @@ window.eliseeReadAuthParams = window.eliseeReadAuthParams || function () {
   };
 };
 
-window.startEliseeGoogleOAuth = function () {
+window.startEliseeProviderOAuth = function (provider) {
+  var name = String(provider || '').toLowerCase();
+  if (name !== 'google' && name !== 'facebook' && name !== 'apple') return;
   if (window.rememberAuthReturn) window.rememberAuthReturn();
-  if (typeof window.openAccessoModal === 'function') {
-    try { window.openAccessoModal('email'); } catch (_) {}
-  }
-  if (typeof window.runRealGoogleAuth === 'function') {
-    window.runRealGoogleAuth();
-    return;
-  }
-  if (typeof runRealGoogleAuth === 'function') {
-    runRealGoogleAuth();
-  }
+  window.location.assign('/api/auth/oauth/' + name);
+};
+
+window.startEliseeGoogleOAuth = function () {
+  window.startEliseeProviderOAuth('google');
 };
 
 (function bootGoogleGisFromQuery() {
@@ -9376,7 +9362,7 @@ window.consumeEliseeOAuthReturn = function () {
   }
   window.__ELISEE_OAUTH_CONSUMED = !!(token || oauthCode || err);
   if (oauthCode && !token && !err) {
-    if (window.showAuthLoadingScreen) window.showAuthLoadingScreen('Accesso Google in corso…');
+    if (window.showAuthLoadingScreen) window.showAuthLoadingScreen('Accesso in corso…');
     fetch('/api/auth/oauth/finish', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -9408,7 +9394,7 @@ window.consumeEliseeOAuthReturn = function () {
         const box = document.getElementById('accesso-error-general');
         const msg = document.getElementById('accesso-error-msg');
         if (box && msg) {
-          msg.textContent = 'Accesso Google non completato. Riprova da Accedi → Google.';
+          msg.textContent = window.eliseeOAuthErrorText ? window.eliseeOAuthErrorText((e && e.message) || '') : 'Accesso non completato. Riprova.';
           box.style.display = 'block';
         }
       });
@@ -9435,7 +9421,7 @@ window.consumeEliseeOAuthReturn = function () {
       const box = document.getElementById('accesso-error-general');
       const msg = document.getElementById('accesso-error-msg');
       if (box && msg) {
-        msg.textContent = 'Accesso Google non riuscito: ' + decodeURIComponent(err);
+        msg.textContent = window.eliseeOAuthErrorText ? window.eliseeOAuthErrorText(err) : 'Accesso non completato. Riprova.';
         box.style.display = 'block';
       }
     }

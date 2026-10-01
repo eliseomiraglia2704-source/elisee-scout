@@ -4,7 +4,13 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-10-01** — FIX9 — Navigazione dei ruoli allineata all’header:
+Ultimo aggiornamento: **2026-10-01** — FIX10 — Accesso Google, Facebook e Apple:
+
+1. **Google**: il pulsante non apriva l’account Google. Montava un bottone invisibile sopra l’icona e il click non partiva. Ora Accedi, Iscriviti e «Continua con Google» vanno su `/api/auth/oauth/google`, che reindirizza al login Google già attivo su Supabase (PKCE). Al ritorno il codice diventa la sessione ELISEE.
+2. **Facebook e Apple**: non sono più il messaggio finto «non è ancora collegato». Usano lo stesso avvio (`/api/auth/oauth/facebook` e `/api/auth/oauth/apple`). Sul progetto Supabase quei due provider risultano spenti, quindi il sito torna all’accesso con un avviso vero, senza simulare un login.
+3. **File**: `lib/auth-oauth.js`, `api/auth/oauth/facebook.js`, `api/auth/oauth/apple.js`, `app.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX10`.
+
+Feature precedente: **2026-10-01** — FIX9 — Navigazione dei ruoli allineata all’header:
 
 1. **Barre interne**: ogni dashboard (23 ruoli) usa la stessa barra a pillola della navbar pubblica. La voce attiva ha una pillola ciano che scorre, il passaggio del mouse la solleva di 1px, il click la riduce appena.
 2. **Altro**: nel mister e nel vice il menu secondario si apre con la stessa molla, resta opaco e non viene tagliato dalla barra. Esc lo chiude.
