@@ -64,6 +64,10 @@
       "destination": "/api/manager?path=search"
     },
     {
+      "source": "/api/scout",
+      "destination": "/api/manager?path=scout"
+    },
+    {
       "source": "/api/bacheca",
       "destination": "/api/manager?path=bacheca"
     },

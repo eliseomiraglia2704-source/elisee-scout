@@ -296,6 +296,9 @@
       searchInput.value = item.value;
       closeSuggest();
       filterOpportunities(item.value);
+      document.dispatchEvent(new CustomEvent('elisee:scout-search', {
+        detail: { source: 'bacheca', q: item.value }
+      }));
     }
 
     function refreshSuggest(raw) {
@@ -372,6 +375,9 @@
         const val = searchInput.value.trim();
         closeSuggest();
         filterOpportunities(val);
+        document.dispatchEvent(new CustomEvent('elisee:scout-search', {
+          detail: { source: 'bacheca', q: val }
+        }));
         if (wrapper && val) {
           wrapper.classList.add('submitted');
           clearTimeout(pulseTimer);

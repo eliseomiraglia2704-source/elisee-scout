@@ -436,6 +436,188 @@ async function searchGlobal(params) {
   };
 }
 
+function scoutClip(v, max) {
+  return String(v == null ? '' : v).replace(/[\u0000-\u001f<>]/g, '').trim().slice(0, max || 80);
+}
+
+function scoutValidate(body) {
+  const q = body && typeof body === 'object' ? body : {};
+  const out = {
+    q: scoutClip(q.q, 120),
+    ruolo: scoutClip(q.ruolo, 40).toLowerCase(),
+    zona: scoutClip(q.zona, 80),
+    piede: scoutClip(q.piede, 20).toLowerCase(),
+    passaporto: scoutClip(q.passaporto, 40),
+    tratti: scoutClip(q.tratti, 120),
+    source: scoutClip(q.source, 24) || 'bacheca',
+    under: q.under === true,
+    housing: q.housing === true,
+    svincolato: q.svincolato === true,
+    etaMin: null,
+    etaMax: null
+  };
+  if (out.piede && ['destro', 'sinistro', 'ambidestro'].indexOf(out.piede) < 0) out.piede = '';
+  ['etaMin', 'etaMax'].forEach(function (key) {
+    if (q[key] == null || q[key] === '') return;
+    const n = Number(q[key]);
+    if (!Number.isInteger(n) || n < 14 || n > 45) out._bad = out._bad || key;
+    else out[key] = n;
+  });
+  if (out.etaMin != null && out.etaMax != null && out.etaMin > out.etaMax) out._bad = 'eta';
+  const hasSignal = out.q.length >= 2 || out.ruolo || out.zona || out.piede || out.passaporto || out.tratti || out.etaMin != null || out.etaMax != null || out.under || out.housing || out.svincolato;
+  if (!hasSignal) out._bad = out._bad || 'vuoto';
+  return out;
+}
+
+function scoutPublic(item) {
+  return {
+    id: scoutClip(item.id, 80),
+    title: scoutClip(item.titolo || item.title || item.ruolo || 'Annuncio', 160),
+    role: scoutClip(item.ruolo || item.ruolo_campo || item.ruolo_cercato || item.role || '', 80),
+    zone: scoutClip(item.zona_citta || item.zona || item.location || '', 80),
+    category: scoutClip(item.categoria || item.category || '', 40),
+    club: scoutClip(item.societa || item.club || '', 120)
+  };
+}
+
+function scoutScore(item, q) {
+  if (!item || (item.stato && item.stato !== 'attivo')) return null;
+  const roleBlob = [item.ruolo, item.ruolo_campo, item.ruolo_cercato, item.role, item.titolo, item.title].filter(Boolean).join(' ').toLowerCase();
+  const text = [
+    item.titolo, item.title, item.descrizione, item.desc, item.zona_citta, item.zona, item.location,
+    item.categoria, item.category, item.disponibilita, item.condizioni, item.societa, item.club
+  ].filter(Boolean).join(' ').toLowerCase();
+  let score = 0;
+  const reasons = [];
+  if (q.ruolo) {
+    if (roleBlob.indexOf(q.ruolo) < 0 && text.indexOf(q.ruolo) < 0) return null;
+    score += 40;
+    reasons.push('ruolo');
+  }
+  if (q.zona) {
+    if (text.indexOf(q.zona.toLowerCase()) < 0) return null;
+    score += 16;
+    reasons.push('zona');
+  }
+  if (q.piede) {
+    var statedOther = q.piede === 'destro' ? 'sinistro' : (q.piede === 'sinistro' ? 'destro' : '');
+    if (text.indexOf(q.piede) >= 0) {
+      score += 12;
+      reasons.push('piede');
+    } else if (statedOther && text.indexOf(statedOther) >= 0) {
+      return null;
+    } else if (q.piede === 'ambidestro' && text.indexOf('ambidestro') < 0 && (text.indexOf('destro') >= 0 || text.indexOf('sinistro') >= 0)) {
+      return null;
+    }
+  }
+  if (q.passaporto && text.indexOf(q.passaporto.toLowerCase()) >= 0) {
+    score += 10;
+    reasons.push('passaporto');
+  }
+  if (q.tratti) {
+    q.tratti.toLowerCase().split(/[^a-z0-9àèéìòù]+/i).filter(function (w) { return w.length > 2; }).forEach(function (w) {
+      if (text.indexOf(w) >= 0) { score += 8; reasons.push('tratto'); }
+    });
+  }
+  if (q.under) {
+    if (!item.under && !(Number(item.eta) > 0 && Number(item.eta) <= 20)) return null;
+    score += 8;
+    reasons.push('under');
+  }
+  if (q.housing && (item.housing || (item.benefit && /vitto|alloggio/i.test(item.benefit)))) {
+    score += 6;
+    reasons.push('alloggio');
+  }
+  if (q.svincolato && (item.svincolato || item.disponibilita === 'svincolato' || item.tipo_operazione === 'svincolo')) {
+    score += 6;
+    reasons.push('svincolato');
+  }
+  if (q.etaMin != null || q.etaMax != null) {
+    const lo = q.etaMin == null ? 14 : q.etaMin;
+    const hi = q.etaMax == null ? 45 : q.etaMax;
+    const eta = Number(item.eta);
+    if (Number.isFinite(eta) && eta > 0) {
+      if (eta < lo || eta > hi) return null;
+      score += 18;
+      reasons.push('eta');
+    }
+  }
+  if (q.q) {
+    const words = q.q.toLowerCase().split(/\s+/).filter(function (w) { return w.length > 1; });
+    let hit = 0;
+    words.forEach(function (w) { if (text.indexOf(w) >= 0 || roleBlob.indexOf(w) >= 0) hit += 1; });
+    if (words.length && hit === 0) return null;
+    score += hit * 14;
+    if (hit) reasons.push('testo');
+  }
+  if (score < 12) return null;
+  const row = scoutPublic(item);
+  row.score = Math.min(98, score);
+  row.reasons = reasons.filter(function (r, i) { return reasons.indexOf(r) === i; });
+  return row;
+}
+
+async function scoutRun(body) {
+  const query = scoutValidate(body || {});
+  if (query._bad) {
+    return { statusCode: 400, body: { ok: false, error: 'validazione', field: query._bad, steps: ['trigger', 'validate'] } };
+  }
+  let items = [];
+  let fallback = false;
+  try {
+    items = await bachecaLoad();
+  } catch (e) {
+    fallback = true;
+    items = [];
+  }
+  let profiles = [];
+  try {
+    profiles = (items || []).map(function (item) { return scoutScore(item, query); }).filter(Boolean);
+    profiles.sort(function (a, b) { return b.score - a.score; });
+    profiles = profiles.slice(0, 5);
+  } catch (e) {
+    fallback = true;
+    profiles = [];
+  }
+  const clientMatches = Math.max(0, Math.min(50, parseInt(body && body.clientMatches, 10) || 0));
+  let alert = null;
+  if (!profiles.length && !clientMatches && !fallback) {
+    try {
+      const doc = await kvDocLoad('scout-alerts', { items: [] });
+      const itemsAlert = Array.isArray(doc.items) ? doc.items : [];
+      alert = {
+        id: 'al-' + Date.now().toString(36),
+        createdAt: new Date().toISOString(),
+        status: 'aperto',
+        source: query.source,
+        ruolo: query.ruolo,
+        zona: query.zona,
+        q: query.q.slice(0, 80)
+      };
+      itemsAlert.unshift(alert);
+      doc.items = itemsAlert.slice(0, 80);
+      doc.updatedAt = alert.createdAt;
+      await kvDocSave('scout-alerts', doc);
+    } catch (e) {
+      fallback = true;
+    }
+  }
+  const status = profiles.length || clientMatches ? 'match' : (fallback ? 'fallback' : 'alert');
+  return {
+    statusCode: 200,
+    body: {
+      ok: true,
+      status: status,
+      fallback: fallback,
+      steps: ['trigger', 'validate', 'query', 'decision', 'report', 'deliver'],
+      query: { ruolo: query.ruolo, zona: query.zona, piede: query.piede, etaMin: query.etaMin, etaMax: query.etaMax },
+      profiles: profiles,
+      alert: alert,
+      delivery: 'piattaforma'
+    }
+  };
+}
+
 module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') {
     send(res, 204, {});
@@ -443,6 +625,22 @@ module.exports = async function handler(req, res) {
   }
   const url = new URL(req.url, 'http://localhost');
   const pathParam = url.searchParams.get('path');
+
+  if (pathParam === 'scout') {
+    if (req.method === 'GET') {
+      try {
+        const doc = await kvDocLoad('scout-alerts', { items: [] });
+        const n = Array.isArray(doc.items) ? doc.items.length : 0;
+        return send(res, 200, { ok: true, alerts: n });
+      } catch (e) {
+        return send(res, 200, { ok: true, alerts: 0, fallback: true });
+      }
+    }
+    if (req.method !== 'POST') return send(res, 405, { ok: false, error: 'method' });
+    const body = await readBody(req);
+    const out = await scoutRun(body);
+    return send(res, out.statusCode, out.body);
+  }
 
   if (pathParam === 'search') {
     const searchGateway = require('../lib/search-gateway');

@@ -1,10 +1,17 @@
 # Elisee Scout — continua da qui
 
+Ultimo aggiornamento: **2026-10-01** — FIX17 — Automazione di scouting in bacheca:
+
+1. **Ricerca**: Invio (o un suggerimento) sulla bacheca legge ruolo, età, piede, passaporto e zona. Il report in vetro elenca gli annunci in linea, con affinità e motivo. Se non c’è nessuno, la ricerca resta salvata come avviso. Se il registro non risponde, la bacheca resta usabile.
+2. **Candidatura**: all’invio di una candidatura su un annuncio parte lo stesso report, solo con ruolo e titolo. Non parte nessuna e-mail: i contatti restano sul sito.
+3. **Server**: `POST /api/scout` è una rewrite su `/api/manager?path=scout`. Nessuna funzione serverless nuova. Non legge gli account. Gli avvisi stanno in `scout-alerts` (niente email, telefono o data di nascita).
+4. **File**: `api/manager.js`, `vercel.json`, `scout-automation.js`, `scry-search.js`, `app.js`, `index.html`, `bacheca-board.css`, `i18n.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX17`.
+
 File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-10-01** — FIX16 — Regioni in vetro, come la navbar:
+Feature precedente: **2026-10-01** — FIX16 — Regioni in vetro, come la navbar:
 
 1. **Card regione**: non sono più pannelli pieni. Stessa pillola della navbar (fondo traslucido, blur, bordo sottile, angoli completamente tondi). La regione aperta ha il bagliore teal della voce attiva. Il pannello squadre e «Torna a tutta Italia» usano lo stesso vetro.
 2. **Pannello**: il riquadro delle squadre chiudeva un `div` in meno e assorbiva le card successive. Ora resta una riga sola e la griglia sotto continua a 5 colonne.

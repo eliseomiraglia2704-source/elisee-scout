@@ -12093,6 +12093,11 @@ window.submitJobApplication = function (title) {
     }
   } catch (_) {}
   if (typeof window.closeModal === 'function') window.closeModal();
+  try {
+    document.dispatchEvent(new CustomEvent('elisee:scout-search', {
+      detail: { source: 'candidatura', q: String(title || '').slice(0, 120) }
+    }));
+  } catch (_) {}
   if (typeof window.showToast === 'function') window.showToast('Candidatura inviata. La scheda tecnica è nella candidatura, non in e-mail.', 'success');
 };
 
