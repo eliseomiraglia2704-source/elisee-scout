@@ -13,6 +13,21 @@
   var checkTimer = null;
   var APPLIED_KEY = '__elisee_live_ver';
   var AT_KEY = '__elisee_live_at';
+  var HEAL_KEY = '__elisee_heal_pair';
+
+  function embeddedBuild() {
+    try {
+      if (window.__ELISEE_BUILD) return String(window.__ELISEE_BUILD);
+    } catch (_) {}
+    var scripts = document.scripts || [];
+    for (var i = 0; i < scripts.length; i++) {
+      var source = scripts[i].text || scripts[i].textContent || '';
+      if (source.indexOf('BUILD_VERSION') === -1) continue;
+      var match = source.match(/BUILD_VERSION\s*=\s*['"]([^'"]+)['"]/);
+      if (match) return match[1];
+    }
+    return '';
+  }
 
   function restoreScrollAndState() {
     try {
@@ -83,7 +98,7 @@
     }
 
     wipeCaches().then(once, once);
-    setTimeout(once, 350);
+    setTimeout(once, 1500);
   }
 
   function onNewVersion(v) {
@@ -100,6 +115,20 @@
         var data = JSON.parse(text);
         var v = String(data.v || data.version || data.time || data.updatedAt || '');
         if (!v) return;
+        var embedded = embeddedBuild();
+        if (embedded && embedded !== v) {
+          var pair = embedded + '>' + v;
+          var seen = '';
+          try { seen = sessionStorage.getItem(HEAL_KEY) || ''; } catch (_) {}
+          if (seen !== pair) {
+            try { sessionStorage.setItem(HEAL_KEY, pair); } catch (_) {}
+            currentVersion = v;
+            onNewVersion(v);
+            return;
+          }
+        } else if (embedded && embedded === v) {
+          try { sessionStorage.removeItem(HEAL_KEY); } catch (_) {}
+        }
         if (currentVersion === null) {
           currentVersion = v;
           try { sessionStorage.setItem(APPLIED_KEY, v); } catch (_) {}
@@ -139,6 +168,9 @@
     if (checkTimer) clearInterval(checkTimer);
     checkTimer = setInterval(checkLiveVersion, pollInterval);
 
+    window.addEventListener('pageshow', function (e) {
+      if (e && e.persisted) checkLiveVersion();
+    });
     window.addEventListener('focus', checkLiveVersion);
     document.addEventListener('visibilitychange', function () {
       if (!document.hidden) checkLiveVersion();

@@ -2848,33 +2848,136 @@
     return (DICT[L] && DICT[L][key]) || (DICT.it && DICT.it[key]) || key;
   }
 
-  function applyLanguage(lang) {
+  var applyingLang = false;
+  var healTimerA = 0;
+  var healTimerB = 0;
+
+  function dictValue(lang, key) {
+    var bag = DICT[lang];
+    if (!bag || bag[key] == null) return '';
+    return String(bag[key]);
+  }
+
+  function translateElement(el, lang) {
+    if (!el || !el.getAttribute) return;
+    try {
+      var key = el.getAttribute('data-i18n');
+      if (!key) return;
+      if (el.querySelector && el.querySelector('input, textarea, select')) return;
+      var text = t(key, lang);
+      if (typeof text !== 'string') text = text == null ? '' : String(text);
+      if (text.indexOf('\n') !== -1) {
+        el.innerHTML = text.split('\n').join('<br>');
+        return;
+      }
+      var icon = el.querySelector && el.querySelector('i[data-lucide], svg');
+      if (icon && el.childNodes.length > 1) {
+        var icons = Array.from(el.querySelectorAll('i[data-lucide], svg')).map(function (n) { return n.outerHTML; }).join('');
+        el.innerHTML = icons + ' ' + text;
+      } else {
+        el.textContent = text;
+      }
+    } catch (_) {}
+  }
+
+  function normText(value) {
+    return String(value || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function paintIfItalian(el, lang, needle, pieces) {
+    var raw = normText(el.textContent);
+    if (raw.indexOf(needle) !== 0) return;
+    var parts = [];
+    for (var i = 0; i < pieces.length; i++) {
+      var piece = dictValue(lang, pieces[i]);
+      if (!piece) return;
+      parts.push(piece);
+    }
+    var spans = el.querySelectorAll('[data-i18n]');
+    if (spans.length) {
+      Array.prototype.forEach.call(spans, function (span) { translateElement(span, lang); });
+      if (normText(el.textContent).indexOf(needle) !== 0) return;
+    }
+    el.textContent = parts.join('');
+  }
+
+  function healStuckItalian(lang) {
+    if (!lang || lang === 'it' || !document.querySelectorAll) return;
+    var blocks = document.querySelectorAll('#view-about p, #view-about blockquote, #view-home p, header p, footer p');
+    Array.prototype.forEach.call(blocks, function (el) {
+      try {
+        paintIfItalian(el, lang, 'Colleghiamo il sistema calcistico', ['about.m1.pre', 'about.m1.guide', 'about.m1.mid', 'about.m1.zero', 'about.m1.sep', 'about.m1.real', 'about.m1.sep', 'about.m1.risk', 'about.m1.post']);
+        paintIfItalian(el, lang, 'Connettiamo il sistema calcistico', ['about.m1.pre', 'about.m1.guide', 'about.m1.mid', 'about.m1.zero', 'about.m1.sep', 'about.m1.real', 'about.m1.sep', 'about.m1.risk', 'about.m1.post']);
+        paintIfItalian(el, lang, 'Ogni profilo è verificato tramite documento', ['about.m2.pre', 'about.m2.gps', 'about.m2.mid', 'about.m2.consent', 'about.m2.end']);
+      } catch (_) {}
+    });
+
+    var loginWords = { Accedi: 1, 'Log in': 1, Acceder: 1, Connexion: 1 };
+    Array.prototype.forEach.call(document.querySelectorAll('.btn-login, #es-m-login-btn, #btn-nav-accedi, #accesso-submit-btn'), function (btn) {
+      try {
+        if (btn.querySelector && btn.querySelector('input, textarea, select, svg, i')) return;
+        var cur = normText(btn.textContent);
+        if (!loginWords[cur]) return;
+        var next = dictValue(lang, 'nav.login');
+        if (!next || next === cur) return;
+        btn.textContent = next;
+        if (!btn.getAttribute('data-i18n')) btn.setAttribute('data-i18n', 'nav.login');
+      } catch (_) {}
+    });
+
+    if (!healStuckItalian._map) {
+      var map = Object.create(null);
+      var catalog = DICT.it || {};
+      Object.keys(catalog).forEach(function (key) {
+        var sample = normText(catalog[key]);
+        if (sample.length < 48) return;
+        if (!map[sample]) map[sample] = key;
+      });
+      healStuckItalian._map = map;
+    }
+    var roots = document.querySelectorAll('header.public-header, #es-mobile-app-shell, #view-home, #view-about, footer, #cookie-banner, #es-notify');
+    Array.prototype.forEach.call(roots, function (root) {
+      Array.prototype.forEach.call(root.querySelectorAll('p, h1, h2, h3, li, blockquote, figcaption'), function (el) {
+        try {
+          if (el.hasAttribute('data-i18n')) return;
+          if (el.querySelector('[data-i18n], input, textarea, select')) return;
+          if (el.children && el.children.length) return;
+          var raw = normText(el.textContent);
+          var key = healStuckItalian._map[raw];
+          if (!key) return;
+          var next = dictValue(lang, key);
+          if (!next || next === raw) return;
+          el.textContent = next;
+        } catch (_) {}
+      });
+    });
+  }
+
+  function scheduleHeal() {
+    if (healTimerA) clearTimeout(healTimerA);
+    if (healTimerB) clearTimeout(healTimerB);
+    function later() {
+      var lang = getLang();
+      if (!lang || lang === 'it' || applyingLang) return;
+      applyingLang = true;
+      try { healStuckItalian(lang); } catch (_) {}
+      applyingLang = false;
+    }
+    healTimerA = setTimeout(later, 600);
+    healTimerB = setTimeout(later, 1800);
+  }
+
+  function applyLanguage(lang, silent) {
+    if (applyingLang) return;
     if (!SUPPORTED.includes(lang)) lang = 'it';
+    applyingLang = true;
+    try {
     localStorage.setItem(STORAGE_KEY, lang);
     document.documentElement.lang = lang;
     document.documentElement.setAttribute('data-lang', lang);
 
     document.querySelectorAll('[data-i18n]').forEach((el) => {
-      const key = el.getAttribute('data-i18n');
-      if (!key) return;
-      if (el.querySelector('input, textarea, select')) return;
-      let text = t(key, lang);
-      if (text.indexOf('\n') !== -1) {
-        el.innerHTML = text.split('\n').join('<br>');
-      } else {
-        // Preserve leading icon if present
-        const icon = el.querySelector('i[data-lucide], svg');
-        if (icon && el.childNodes.length > 1) {
-          el.childNodes.forEach((n) => {
-            if (n.nodeType === Node.TEXT_NODE) n.textContent = '';
-          });
-          // Keep icons, set text after
-          const icons = Array.from(el.querySelectorAll('i[data-lucide], svg')).map((n) => n.outerHTML).join('');
-          el.innerHTML = icons + ' ' + text;
-        } else {
-          el.textContent = text;
-        }
-      }
+      translateElement(el, lang);
     });
 
     document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
@@ -2916,19 +3019,25 @@
     });
 
     closeLangMenu();
-
-    document.dispatchEvent(
-      new CustomEvent('elisee:lang-changed', { detail: { lang } })
-    );
-    if (window.EliseeAICluster && window.EliseeAICluster.logEvent) {
-      window.EliseeAICluster.logEvent(
-        'comms',
-        `Lingua interfaccia impostata su ${String(lang).toUpperCase()}`,
-        { source: 'i18n' }
-      );
+    try { healStuckItalian(lang); } catch (_) {}
+    } finally {
+      applyingLang = false;
     }
+    scheduleHeal();
 
-    if (window.lucide) lucide.createIcons();
+    if (!silent) {
+      document.dispatchEvent(
+        new CustomEvent('elisee:lang-changed', { detail: { lang } })
+      );
+      if (window.EliseeAICluster && window.EliseeAICluster.logEvent) {
+        window.EliseeAICluster.logEvent(
+          'comms',
+          `Lingua interfaccia impostata su ${String(lang).toUpperCase()}`,
+          { source: 'i18n' }
+        );
+      }
+      if (window.lucide) lucide.createIcons();
+    }
   }
 
   function langParts(root) {
@@ -3059,6 +3168,44 @@
   function bootI18n() {
     initLangSwitcher();
     applyLanguage(getLang());
+    if (!window.__eliseeI18nWatch) {
+      window.__eliseeI18nWatch = true;
+      document.addEventListener('elisee:view-changed', function () {
+        applyLanguage(getLang(), true);
+      });
+      if (window.MutationObserver && document.documentElement) {
+        var queued = false;
+        var observer = new MutationObserver(function (records) {
+          if (applyingLang || queued) return;
+          var found = false;
+          for (var i = 0; i < records.length && !found; i++) {
+            var added = records[i].addedNodes;
+            for (var j = 0; j < added.length; j++) {
+              var node = added[j];
+              if (!node || node.nodeType !== 1) continue;
+              if ((node.matches && node.matches('[data-i18n]')) || (node.querySelector && node.querySelector('[data-i18n]'))) {
+                found = true;
+                break;
+              }
+            }
+          }
+          if (!found) return;
+          queued = true;
+          requestAnimationFrame(function () {
+            queued = false;
+            var lang = getLang();
+            if (applyingLang) return;
+            applyingLang = true;
+            try {
+              document.querySelectorAll('[data-i18n]').forEach(function (el) { translateElement(el, lang); });
+              healStuckItalian(lang);
+            } catch (_) {}
+            applyingLang = false;
+          });
+        });
+        observer.observe(document.documentElement, { childList: true, subtree: true });
+      }
+    }
   }
 
   if (document.readyState === 'loading') {

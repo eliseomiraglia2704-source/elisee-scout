@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-01** — FIX24 — Tolto il menu fisso in basso a sinistra:
+Ultimo aggiornamento: **2026-10-01** — FIX25 — I paragrafi pubblici seguono la lingua anche se il browser tiene una pagina vecchia:
+
+1. **Perché restavano in italiano**: Chi siamo in spagnolo mostrava ancora «Colleghiamo…» e «Ogni profilo è verificato…», con «Accedi» e il menu dei tre puntini. Quella pagina era una copia precedente: il controllo della versione, al primo giro, la considerava già aggiornata e non la ricaricava.
+2. **Ora**: se il numero nel documento e quello di `version.json` non coincidono, la pagina si ricarica una volta, dopo aver staccato il service worker e svuotato la cache. In più, con inglese, spagnolo o francese, un paragrafo ancora uguale all’italiano di partenza viene riscritto. Vale anche per Accedi. Il cambio sezione non riapre l’accesso.
+3. **File**: `index.html`, `i18n.js`, `live-reload.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX25`. Non tocca data di nascita, età o consenso genitoriale.
+
+Feature precedente: **2026-10-01** — FIX24 — Tolto il menu fisso in basso a sinistra:
 
 1. **Menu dimostrativo**: i tre puntini (Profilo Scout, Schede Tecniche IA, Secret List Stealth, Reset Sessione) stavano su ogni pagina pubblica. Le prime tre voci non aprivano nulla, mostravano solo un avviso. Reset Sessione chiudeva l’accesso.
 2. **Dove stanno le funzioni vere**: schede tecniche e Secret List sono già nell’area dell’osservatore/scout e del direttore sportivo, e compaiono dopo l’accesso di quel ruolo. Il profilo sta nell’area dell’account.

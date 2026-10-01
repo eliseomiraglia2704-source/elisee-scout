@@ -4,13 +4,30 @@
   <meta charset="UTF-8">
   <script>
     (function () {
-      var BUILD_VERSION = '20261001_FIX24';
+      var BUILD_VERSION = '20261001_FIX25';
+      window.__ELISEE_BUILD = BUILD_VERSION;
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
         if (savedTheme) {
           document.documentElement.setAttribute('data-theme', savedTheme);
         }
       } catch (e) {}
+      function dropWorkers() {
+        try {
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function (regs) {
+              (regs || []).forEach(function (r) { try { r.unregister(); } catch (e) {} });
+            });
+          }
+        } catch (e) {}
+        try {
+          if (window.caches && caches.keys) {
+            caches.keys().then(function (keys) {
+              (keys || []).forEach(function (k) { try { caches.delete(k); } catch (e) {} });
+            });
+          }
+        } catch (e) {}
+      }
       try {
         if (localStorage.getItem('__elisee_last_build') !== BUILD_VERSION) {
           localStorage.setItem('__elisee_last_build', BUILD_VERSION);
@@ -22,17 +39,26 @@
               }
             }
           } catch (e) {}
-          if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(function (regs) {
-              regs.forEach(function (r) { try { r.unregister(); } catch (e) {} });
-            });
-          }
-          if (window.caches && caches.keys) {
-            caches.keys().then(function (keys) {
-              keys.forEach(function (k) { try { caches.delete(k); } catch (e) {} });
-            });
-          }
         }
+      } catch (e) {}
+      dropWorkers();
+      try {
+        fetch('/version.json?_t=' + Date.now(), { cache: 'no-store', headers: { 'Cache-Control': 'no-cache', Pragma: 'no-cache' } })
+          .then(function (r) { return r && r.ok ? r.json() : null; })
+          .then(function (data) {
+            var remote = data && (data.version || data.v);
+            if (!remote || String(remote) === BUILD_VERSION) return;
+            var pair = BUILD_VERSION + '>' + remote;
+            try {
+              if (sessionStorage.getItem('__elisee_heal_pair') === pair) return;
+              sessionStorage.setItem('__elisee_heal_pair', pair);
+            } catch (e) { return; }
+            dropWorkers();
+            var params = new URLSearchParams(location.search || '');
+            params.set('_es', Date.now().toString(36));
+            location.replace(location.pathname + '?' + params.toString() + (location.hash || ''));
+          })
+          .catch(function () {});
       } catch (e) {}
     })();
   </script>
@@ -1085,8 +1111,8 @@
       }
       // Pulisci SOLO cache SW vecchia una volta (non ogni secondo)
       try {
-        if (!sessionStorage.getItem('elisee_sw_purged_v10_fix3')) {
-          sessionStorage.setItem('elisee_sw_purged_v10_fix3', '1');
+        if (!sessionStorage.getItem('elisee_sw_purged_fix25')) {
+          sessionStorage.setItem('elisee_sw_purged_fix25', '1');
           if (navigator.serviceWorker) {
             navigator.serviceWorker.getRegistrations().then(function (regs) {
               regs.forEach(function (r) { try { r.unregister(); } catch (e) {} });
@@ -6885,7 +6911,7 @@
   </script>
   <script src="cookie-profiling.js?v=20260925_HEROUX1"></script>
   <script src="ai-gdpr-monitor.js?v=20260806_NOCORS"></script>
-  <script src="i18n.js?v=20261001_FIX23"></script>
+  <script src="i18n.js?v=20261001_FIX25"></script>
   <script src="island-carousel.js?v=20260928_HEROUX67"></script>
   <script src="parallax-cards.js?v=20260928_HEROUX68"></script>
   <script src="agents-runtime.js?v=20260806_NOCORS"></script>
@@ -6925,7 +6951,7 @@
   <script src="elisee-world/elisee-world.js?v=20260906_EWGBA1"></script>
   <script src="autopilot-runtime.js?v=20260827_FIX3"></script>
   <script src="about-detail.js?v=20260910_SCROLL1"></script>
-  <script src="live-reload.js?v=20260925_HEROUX1"></script>
+  <script src="live-reload.js?v=20261001_FIX25"></script>
   <script>
     /* Emergency unlock: body scroll + overlay fantasma */
     (function(){
