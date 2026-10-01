@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <script>
     (function () {
-      var BUILD_VERSION = '20261001_FIX4';
+      var BUILD_VERSION = '20261001_FIX5';
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
         if (savedTheme) {
@@ -56,7 +56,7 @@
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260928_HEROUX65">
-  <link rel="stylesheet" href="bacheca-board.css?v=20260928_HEROUX66">
+  <link rel="stylesheet" href="bacheca-board.css?v=20261001_FIX5">
   <link rel="stylesheet" href="control-center.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="flusso-contatti.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="cc-analytics.css?v=20260925_PALETTE1">
@@ -3353,19 +3353,6 @@
                 </div>
 
                 <div class="bacheca-filter-row-secondary">
-                  <!-- Segmented Control Raggio Geografico -->
-                  <div class="bacheca-segmented-wrap">
-                    <span class="bacheca-seg-label">Raggio:</span>
-                    <div class="bacheca-segmented-control" id="bacheca-geo-segmented" role="radiogroup" aria-label="Raggio geografico">
-                      <button type="button" class="bacheca-seg-btn is-active" data-geo="0" title="Tutte le zone d'Italia">Tutti</button>
-                      <button type="button" class="bacheca-seg-btn" data-geo="1" title="Club della tua città">Città</button>
-                      <button type="button" class="bacheca-seg-btn" data-geo="2" title="Spostamenti quotidiani">Provincia</button>
-                      <button type="button" class="bacheca-seg-btn" data-geo="3" title="Categorie superiori">Regione</button>
-                      <button type="button" class="bacheca-seg-btn" data-geo="4" title="Esperienze fuori sede">Italia</button>
-                    </div>
-                  </div>
-
-                  <!-- Chips Opzioni -->
                   <div class="pf-chips">
                     <label class="pf-chip">
                       <input type="checkbox" id="filter-under">

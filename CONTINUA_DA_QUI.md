@@ -4,7 +4,13 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-10-01** — FIX4 — Suggerimenti di ricerca in Bacheca annunci:
+Ultimo aggiornamento: **2026-10-01** — FIX5 — Bacheca: tolto il raggio, barra opportunità come la navbar:
+
+1. **Rimosso** il controllo `Raggio` (Tutti, Città, Provincia, Regione, Italia) sopra gli annunci. Restano i chip Fuoriquota, Vitto e alloggio, Svincolato.
+2. **`Opportunità selezionate`**: niente più fascia nera. È una pillola traslucida, bordo sottile e icone tonde, come la navbar.
+3. **File**: `index.html`, `bacheca-board.css`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX5`.
+
+Feature precedente: **2026-10-01** — FIX4 — Suggerimenti di ricerca in Bacheca annunci:
 
 1. **`#main-search-input`**: mentre si scrive (da 2 lettere) si apre un menu con città (comuni italiani), ruoli, categorie e club. Esempio: `fog` propone Foggia e le altre città che iniziano così, più le parole della bacheca.
 2. Freccia su/giù, Invio per scegliere, Esc chiude il menu. Il clic inserisce la città o la parola e filtra gli annunci.
