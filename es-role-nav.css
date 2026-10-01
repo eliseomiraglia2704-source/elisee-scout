@@ -1,0 +1,331 @@
+/* Navigazione interna dei ruoli: stessa topologia della navbar pubblica.
+   !important solo per battere coach-dash.css, che forza sfondo e bordo delle schede. */
+
+nav.es-pro-nav-tabs,
+nav.es-at-nav-tabs,
+nav.es-cos-nav-tabs,
+nav.es-obs-nav-tabs,
+nav.es-med-nav-tabs,
+nav.es-ma-nav-tabs,
+nav.es-gk-nav-tabs {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 2px !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scrollbar-width: none !important;
+  min-height: 52px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 0 16px !important;
+  padding: 4px !important;
+  box-sizing: border-box !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  box-shadow: none !important;
+}
+
+nav.es-pro-nav-tabs::-webkit-scrollbar,
+nav.es-at-nav-tabs::-webkit-scrollbar,
+nav.es-cos-nav-tabs::-webkit-scrollbar,
+nav.es-obs-nav-tabs::-webkit-scrollbar,
+nav.es-med-nav-tabs::-webkit-scrollbar,
+nav.es-ma-nav-tabs::-webkit-scrollbar,
+nav.es-gk-nav-tabs::-webkit-scrollbar {
+  display: none !important;
+  height: 0 !important;
+}
+
+nav.es-pro-nav-tabs > button,
+nav.es-at-nav-tabs > button,
+nav.es-cos-nav-tabs > button,
+nav.es-obs-nav-tabs > button,
+nav.es-med-nav-tabs > button,
+nav.es-ma-nav-tabs > button,
+nav.es-gk-nav-tabs > button,
+nav.es-cos-nav-tabs > .es-cos-tab-dropdown-wrap > button {
+  position: relative !important;
+  z-index: 2 !important;
+  isolation: auto !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-height: 44px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 14px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: rgba(248, 250, 252, 0.72) !important;
+  font-size: 0.84rem !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.01em !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  flex: 0 0 auto !important;
+  text-decoration: none !important;
+  transition: color 200ms cubic-bezier(0.16, 1, 0.3, 1), transform 200ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+nav.es-pro-nav-tabs > button svg,
+nav.es-at-nav-tabs > button svg,
+nav.es-cos-nav-tabs > button svg,
+nav.es-obs-nav-tabs > button svg,
+nav.es-med-nav-tabs > button svg,
+nav.es-ma-nav-tabs > button svg,
+nav.es-gk-nav-tabs > button svg,
+nav.es-cos-nav-tabs > .es-cos-tab-dropdown-wrap > button svg {
+  width: 14px !important;
+  height: 14px !important;
+  flex-shrink: 0 !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  nav.es-pro-nav-tabs > button:hover,
+  nav.es-at-nav-tabs > button:hover,
+  nav.es-cos-nav-tabs > button:hover,
+  nav.es-obs-nav-tabs > button:hover,
+  nav.es-med-nav-tabs > button:hover,
+  nav.es-ma-nav-tabs > button:hover,
+  nav.es-gk-nav-tabs > button:hover,
+  nav.es-cos-nav-tabs > .es-cos-tab-dropdown-wrap > button:hover {
+    color: #ffffff !important;
+    background: transparent !important;
+    border-color: transparent !important;
+    transform: translateY(-1px) !important;
+  }
+}
+
+nav.es-pro-nav-tabs > button:active,
+nav.es-at-nav-tabs > button:active,
+nav.es-cos-nav-tabs > button:active,
+nav.es-obs-nav-tabs > button:active,
+nav.es-med-nav-tabs > button:active,
+nav.es-ma-nav-tabs > button:active,
+nav.es-gk-nav-tabs > button:active,
+nav.es-cos-nav-tabs > .es-cos-tab-dropdown-wrap > button:active {
+  transform: scale(0.95) !important;
+}
+
+nav.es-pro-nav-tabs > button.is-active,
+nav.es-pro-nav-tabs > button.active,
+nav.es-at-nav-tabs > button.is-active,
+nav.es-at-nav-tabs > button.active,
+nav.es-cos-nav-tabs > button.is-active,
+nav.es-cos-nav-tabs > button.active,
+nav.es-obs-nav-tabs > button.is-active,
+nav.es-obs-nav-tabs > button.active,
+nav.es-med-nav-tabs > button.is-active,
+nav.es-med-nav-tabs > button.active,
+nav.es-ma-nav-tabs > button.is-active,
+nav.es-ma-nav-tabs > button.active,
+nav.es-gk-nav-tabs > button.is-active,
+nav.es-gk-nav-tabs > button.active,
+nav.es-cos-nav-tabs > .es-cos-tab-dropdown-wrap > button.is-active {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+nav.es-role-nav > button:focus-visible,
+nav.es-role-nav .es-cos-tab-dropdown-wrap > button:focus-visible,
+nav.es-role-nav .es-cos-tab-more-menu button:focus-visible {
+  outline: 2px solid #2fe0c8 !important;
+  outline-offset: 2px !important;
+}
+
+nav.es-role-nav > button:focus:not(:focus-visible),
+nav.es-role-nav .es-cos-tab-dropdown-wrap > button:focus:not(:focus-visible),
+nav.es-role-nav .es-cos-tab-more-menu button:focus:not(:focus-visible) {
+  outline: none !important;
+}
+
+.es-role-nav__indicator {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 36px;
+  width: var(--ind-w, 0px);
+  transform: translate3d(var(--ind-x, 0px), -50%, 0);
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(0, 245, 212, 0.16), rgba(56, 189, 248, 0.1));
+  border: 1px solid rgba(0, 245, 212, 0.35);
+  box-shadow: 0 0 16px rgba(0, 245, 212, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+  opacity: var(--ind-o, 0);
+  z-index: 1;
+  will-change: transform, width, opacity;
+  box-sizing: border-box;
+}
+
+nav.es-role-nav .es-cos-tab-dropdown-wrap {
+  position: relative !important;
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+}
+
+nav.es-role-nav .es-cos-tab-more-menu {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  position: fixed !important;
+  top: var(--es-role-more-top, 0px) !important;
+  left: var(--es-role-more-left, 0px) !important;
+  right: auto !important;
+  min-width: 200px !important;
+  margin: 0 !important;
+  padding: 8px !important;
+  border-radius: 16px !important;
+  background: #0d1626 !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5) !important;
+  z-index: 10060 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transform: translateY(8px) scale(0.96) !important;
+  transition: transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 180ms ease, visibility 180ms !important;
+}
+
+nav.es-role-nav .es-cos-tab-more-menu.is-open {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: translateY(0) scale(1) !important;
+}
+
+nav.es-role-nav .es-cos-tab-more-menu button {
+  width: 100% !important;
+  min-height: 44px !important;
+  justify-content: flex-start !important;
+  padding: 0 12px !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  font-size: 0.84rem !important;
+  font-weight: 500 !important;
+  transform: none !important;
+  transition: background 150ms ease, color 150ms ease, transform 150ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  nav.es-role-nav .es-cos-tab-more-menu button:hover {
+    background: rgba(0, 245, 212, 0.12) !important;
+    color: #ffffff !important;
+    transform: translateX(4px) !important;
+  }
+}
+
+nav.es-role-nav .es-cos-tab-more-menu button.is-active {
+  background: rgba(0, 245, 212, 0.16) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+html[data-theme="mimetico-chiaro"] nav.es-pro-nav-tabs,
+html[data-theme="mimetico-chiaro"] nav.es-at-nav-tabs,
+html[data-theme="mimetico-chiaro"] nav.es-cos-nav-tabs,
+html[data-theme="mimetico-chiaro"] nav.es-obs-nav-tabs,
+html[data-theme="mimetico-chiaro"] nav.es-med-nav-tabs,
+html[data-theme="mimetico-chiaro"] nav.es-ma-nav-tabs,
+html[data-theme="mimetico-chiaro"] nav.es-gk-nav-tabs {
+  background: rgba(255, 255, 255, 0.86) !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+html[data-theme="mimetico-chiaro"] nav.es-pro-nav-tabs > button,
+html[data-theme="mimetico-chiaro"] nav.es-at-nav-tabs > button,
+html[data-theme="mimetico-chiaro"] nav.es-cos-nav-tabs > button,
+html[data-theme="mimetico-chiaro"] nav.es-obs-nav-tabs > button,
+html[data-theme="mimetico-chiaro"] nav.es-med-nav-tabs > button,
+html[data-theme="mimetico-chiaro"] nav.es-ma-nav-tabs > button,
+html[data-theme="mimetico-chiaro"] nav.es-gk-nav-tabs > button,
+html[data-theme="mimetico-chiaro"] nav.es-cos-nav-tabs > .es-cos-tab-dropdown-wrap > button {
+  color: #475569 !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="mimetico-chiaro"] nav.es-pro-nav-tabs > button:hover,
+  html[data-theme="mimetico-chiaro"] nav.es-at-nav-tabs > button:hover,
+  html[data-theme="mimetico-chiaro"] nav.es-cos-nav-tabs > button:hover,
+  html[data-theme="mimetico-chiaro"] nav.es-obs-nav-tabs > button:hover,
+  html[data-theme="mimetico-chiaro"] nav.es-med-nav-tabs > button:hover,
+  html[data-theme="mimetico-chiaro"] nav.es-ma-nav-tabs > button:hover,
+  html[data-theme="mimetico-chiaro"] nav.es-gk-nav-tabs > button:hover,
+  html[data-theme="mimetico-chiaro"] nav.es-cos-nav-tabs > .es-cos-tab-dropdown-wrap > button:hover {
+    color: #0f172a !important;
+  }
+}
+
+html[data-theme="mimetico-chiaro"] nav.es-pro-nav-tabs > button.is-active,
+html[data-theme="mimetico-chiaro"] nav.es-at-nav-tabs > button.is-active,
+html[data-theme="mimetico-chiaro"] nav.es-cos-nav-tabs > button.is-active,
+html[data-theme="mimetico-chiaro"] nav.es-obs-nav-tabs > button.is-active,
+html[data-theme="mimetico-chiaro"] nav.es-med-nav-tabs > button.is-active,
+html[data-theme="mimetico-chiaro"] nav.es-ma-nav-tabs > button.is-active,
+html[data-theme="mimetico-chiaro"] nav.es-gk-nav-tabs > button.is-active,
+html[data-theme="mimetico-chiaro"] nav.es-cos-nav-tabs > .es-cos-tab-dropdown-wrap > button.is-active {
+  color: #0f172a !important;
+}
+
+html[data-theme="mimetico-chiaro"] .es-role-nav__indicator {
+  background: rgba(2, 132, 199, 0.1);
+  border-color: rgba(2, 132, 199, 0.28);
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
+}
+
+html[data-theme="mimetico-chiaro"] nav.es-role-nav .es-cos-tab-more-menu {
+  background: #ffffff !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12) !important;
+}
+
+html[data-theme="mimetico-chiaro"] nav.es-role-nav .es-cos-tab-more-menu button {
+  color: #334155 !important;
+}
+
+html[data-theme="mimetico-chiaro"] nav.es-role-nav .es-cos-tab-more-menu button.is-active,
+html[data-theme="mimetico-chiaro"] nav.es-role-nav .es-cos-tab-more-menu button:hover {
+  color: #0f766e !important;
+  background: rgba(15, 118, 110, 0.08) !important;
+}
+
+@media (max-width: 768px) {
+  nav.es-pro-nav-tabs,
+  nav.es-at-nav-tabs,
+  nav.es-cos-nav-tabs,
+  nav.es-obs-nav-tabs,
+  nav.es-med-nav-tabs,
+  nav.es-ma-nav-tabs,
+  nav.es-gk-nav-tabs {
+    border-radius: 18px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  nav.es-pro-nav-tabs > button,
+  nav.es-at-nav-tabs > button,
+  nav.es-cos-nav-tabs > button,
+  nav.es-obs-nav-tabs > button,
+  nav.es-med-nav-tabs > button,
+  nav.es-ma-nav-tabs > button,
+  nav.es-gk-nav-tabs > button,
+  nav.es-cos-nav-tabs > .es-cos-tab-dropdown-wrap > button,
+  nav.es-role-nav .es-cos-tab-more-menu,
+  nav.es-role-nav .es-cos-tab-more-menu button,
+  .es-role-nav__indicator {
+    transition: none !important;
+    animation: none !important;
+  }
+}

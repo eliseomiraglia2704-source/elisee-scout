@@ -4,7 +4,14 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-10-01** — FIX8 — Selettore lingua dell’header funzionante:
+Ultimo aggiornamento: **2026-10-01** — FIX9 — Navigazione dei ruoli allineata all’header:
+
+1. **Barre interne**: ogni dashboard (23 ruoli) usa la stessa barra a pillola della navbar pubblica. La voce attiva ha una pillola ciano che scorre, il passaggio del mouse la solleva di 1px, il click la riduce appena.
+2. **Altro**: nel mister e nel vice il menu secondario si apre con la stessa molla, resta opaco e non viene tagliato dalla barra. Esc lo chiude.
+3. **Tema**: scuro e chiaro. Su telefono la barra scorre in orizzontale, i tasti restano alti 44px.
+4. **File**: `es-role-nav.css`, `es-role-nav.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX9`.
+
+Feature precedente: **2026-10-01** — FIX8 — Selettore lingua dell’header funzionante:
 
 1. **Pulsante IT**: non era un controllo, solo la scritta `IT ▾`. Ora è un bottone che apre Italiano, English, Español e Français.
 2. **Effetto**: la scelta cambia i testi già tradotti (navbar, hero, bacheca) e resta salvata. Esc, clic fuori e frecce da tastiera chiudono o spostano la selezione. Il menu è opaco, sopra la barra.
