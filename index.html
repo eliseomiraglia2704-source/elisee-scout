@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <script>
     (function () {
-      var BUILD_VERSION = '20261001_FIX23';
+      var BUILD_VERSION = '20261001_FIX24';
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
         if (savedTheme) {
@@ -7495,43 +7495,6 @@
       if (lb) lb.textContent = badges['badge-mobile-msgs'] || 0;
     }, 800);
   </script>
-
-  <!-- ACTION MENU – HEROUX28 -->
-  <div id="action-menu-dock" style="position:fixed; bottom:24px; left:24px; z-index:999990;">
-    <div id="action-menu" class="action-menu">
-      <button id="am-trigger" class="am_trigger" aria-haspopup="menu" aria-expanded="false" aria-controls="menu" title="Menu Azioni Rapide">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/>
-        </svg>
-      </button>
-
-      <div id="menu" class="am_menu" role="menu">
-        <div class="am_sheet" aria-hidden="true"></div>
-        <div class="am_plate">
-          <div class="am_glow"></div>
-        </div>
-        <div class="am_list">
-          <button type="button" class="am_item" data-action="profile">
-            <span class="am_icon">👤</span>
-            <span>Profilo Scout</span>
-          </button>
-          <button type="button" class="am_item" data-action="sheets">
-            <span class="am_icon">⚡</span>
-            <span>Schede Tecniche IA</span>
-          </button>
-          <button type="button" class="am_item" data-action="secret-list">
-            <span class="am_icon">🔒</span>
-            <span>Secret List Stealth</span>
-          </button>
-          <div class="am_divider"></div>
-          <button type="button" class="am_item danger" data-action="reset">
-            <span class="am_icon">🗑️</span>
-            <span>Reset Sessione</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <script src="badge-handler.js?v=20260925_HEROUX41"></script>
   <script src="mobile-webapp.js?v=20261001_FIX21"></script>

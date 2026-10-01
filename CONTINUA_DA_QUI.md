@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-01** — FIX23 — Tolto il trattino sotto la citazione di Chi siamo:
+Ultimo aggiornamento: **2026-10-01** — FIX24 — Tolto il menu fisso in basso a sinistra:
+
+1. **Menu dimostrativo**: i tre puntini (Profilo Scout, Schede Tecniche IA, Secret List Stealth, Reset Sessione) stavano su ogni pagina pubblica. Le prime tre voci non aprivano nulla, mostravano solo un avviso. Reset Sessione chiudeva l’accesso.
+2. **Dove stanno le funzioni vere**: schede tecniche e Secret List sono già nell’area dell’osservatore/scout e del direttore sportivo, e compaiono dopo l’accesso di quel ruolo. Il profilo sta nell’area dell’account.
+3. **File**: `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX24`. Non tocca data di nascita, età o consenso genitoriale.
+
+Feature precedente: **2026-10-01** — FIX23 — Tolto il trattino sotto la citazione di Chi siamo:
 
 1. **Firma**: sotto «La nostra forza è la fiducia…» resta solo «Elisee Scout», senza il trattino davanti. Vale per italiano, inglese, spagnolo e francese.
 2. **File**: `index.html`, `i18n.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX23`. Non tocca data di nascita, età o consenso genitoriale.
