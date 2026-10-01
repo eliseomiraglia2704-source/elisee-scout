@@ -193,8 +193,7 @@ html body #bacheca-annunci .bacheca-filter-panel,
 html body #bacheca-annunci .es-card,
 html body #bacheca-annunci .es-cta-strip,
 html body .about-dossier .cs-hero-meta,
-html body .es-map-banner p,
-html body .es-map-search__bar {
+html body .es-map-banner p {
   background: var(--card-bg) !important;
   background-color: var(--card-bg) !important;
   border: 1px solid var(--card-border) !important;

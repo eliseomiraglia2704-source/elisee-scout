@@ -1,6 +1,11 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-02** — FIX27 — La ricerca club sulla mappa ha un solo bordo e il testo ci sta:
+Ultimo aggiornamento: **2026-10-02** — FIX28 — La ricerca club sulla mappa è un campo pieno, leggibile sopra le tessere:
+
+1. **Visibilità**: la barra usava uno sfondo bianco al 4% e il testo chiaro spariva sulla mappa. Ora il campo è opaco, con bordo chiaro, testo e segnaposto ad alto contrasto. Il tema chiaro resta bianco con testo scuro.
+2. **File**: `mappa-club.css`, `landing-unify.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261002_FIX28`. Non tocca data di nascita, età o consenso genitoriale.
+
+Feature precedente: **2026-10-02** — FIX27 — La ricerca club sulla mappa ha un solo bordo e il testo ci sta:
 
 1. **Bordo destro**: la capsula era disegnata due volte, sul contenitore e sulla barra. Il contenitore tagliava la curva destra e anche l’elenco dei risultati. Ora il bordo sta solo sulla barra.
 2. **Testo**: «Cerca un club per nome o comune» non viene più tagliato. Il contatore invisibile non occupa più spazio finché non c’è una ricerca.
