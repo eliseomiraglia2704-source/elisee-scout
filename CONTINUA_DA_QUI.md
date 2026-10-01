@@ -4,7 +4,12 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-10-01** — FIX10 — Accesso Google, Facebook e Apple:
+Ultimo aggiornamento: **2026-10-01** — FIX11 — Il ritorno da Google completa la sessione:
+
+1. **Callback**: dopo Google il sito riceve `?code=`. Uno script in testa lo mandava su `/auth/callback`, che non esiste, e l’accesso moriva. Ora il codice resta sulla home e `/api/auth/oauth/finish` crea la sessione.
+2. **File**: `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX11`.
+
+Feature precedente: **2026-10-01** — FIX10 — Accesso Google, Facebook e Apple:
 
 1. **Google**: il pulsante non apriva l’account Google. Montava un bottone invisibile sopra l’icona e il click non partiva. Ora Accedi, Iscriviti e «Continua con Google» vanno su `/api/auth/oauth/google`, che reindirizza al login Google già attivo su Supabase (PKCE). Al ritorno il codice diventa la sessione ELISEE.
 2. **Facebook e Apple**: non sono più il messaggio finto «non è ancora collegato». Usano lo stesso avvio (`/api/auth/oauth/google?provider=facebook|apple`), senza file API nuovi: il piano Hobby ne consente 12. Sul progetto Supabase quei due provider risultano spenti, quindi il sito torna all’accesso con un avviso vero, senza simulare un login.

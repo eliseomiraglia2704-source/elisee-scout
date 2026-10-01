@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <script>
     (function () {
-      var BUILD_VERSION = '20261001_FIX10';
+      var BUILD_VERSION = '20261001_FIX11';
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
         if (savedTheme) {
@@ -851,10 +851,6 @@
       window.eliseeReadAuthParams = readAuthParams;
       try {
         var p = readAuthParams();
-        if (p.code && !p.token) {
-          location.replace('/auth/callback?code=' + encodeURIComponent(p.code) + (p.state ? '&es_state=' + encodeURIComponent(p.state) : ''));
-          return;
-        }
         var token = p.token;
         if (!token) return;
         try {
