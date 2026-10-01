@@ -4,7 +4,13 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-10-01** — FIX1 — Link privacy, form duplicati, badge e ricerca account:
+Ultimo aggiornamento: **2026-10-01** — FIX2 — Rimosso il pannello Analytical Engine dalla sezione «Entra nella community»:
+
+1. **`#welcome-access`**: tolta l’immagine `scout-workspace.svg` (radar, INDEX ATLETA, DOSSIER SCOUT OK) evidenziata accanto ai pulsanti Google, Apple, SPID ed email.
+2. La colonna di accesso resta a sinistra, larghezza massima 36rem, senza il riquadro vuoto a destra.
+3. **File**: `index.html`, `style.css`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX2`.
+
+Feature precedente: **2026-10-01** — FIX1 — Link privacy, form duplicati, badge e ricerca account:
 
 1. **Informativa Ambassador**: il consenso puntava a `privacy.html` (404). Ora apre `privacy-policy.html`.
 2. **Candidature**: il form Pro riusava `offriamo`, `richiediamo` e `matching-result`, quindi leggeva e scriveva il form sopra. Id distinti `offriamo-pro`, `richiediamo-pro`, `matching-result-pro`. Il secondo `live-badge` (demo nascosta) è `live-badge-demo`.

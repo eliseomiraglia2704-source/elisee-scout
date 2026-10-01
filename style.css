@@ -7123,6 +7123,10 @@ html {
   align-items: center;
 }
 
+#welcome-access .portfolio-split {
+  grid-template-columns: minmax(0, 36rem);
+}
+
 @media (max-width: 768px) {
   .portfolio-split {
     grid-template-columns: 1fr;
