@@ -2214,8 +2214,9 @@
       '            </select>',
       '          </div>',
       '          <div class="es-sq-reg-field">',
-      '            <label for="es-sq-reg-city" data-i18n="sq.reg.city">Città</label>',
-      '            <input type="text" id="es-sq-reg-city" name="team-city" data-i18n-placeholder="sq.reg.cityPh" placeholder="Es. Foggia" maxlength="35" />',
+      '            <label for="es-sq-reg-city" data-i18n="sq.reg.city">Città natale del club</label>',
+      '            <input type="text" id="es-sq-reg-city" name="team-city" list="es-sq-reg-cities" data-i18n-placeholder="sq.reg.cityPh" placeholder="Es. Foggia (FG)" maxlength="48" autocomplete="off" />',
+      '            <datalist id="es-sq-reg-cities"></datalist>',
       '          </div>',
       '        </div>',
       '        <div class="es-sq-reg-row-2">',
@@ -2270,6 +2271,9 @@
 
     document.body.appendChild(modal);
     applyI18nWithin(modal);
+    if (window.EliseeComuniGeo && window.EliseeComuniGeo.fillCityDatalist) {
+      window.EliseeComuniGeo.fillCityDatalist(modal.querySelector('#es-sq-reg-cities'));
+    }
 
     function updateLivePreview() {
       var nameVal = (modal.querySelector('#es-sq-reg-name').value || '').trim() || tr('sq.reg.previewFallback', 'Nuovo club');
@@ -2353,7 +2357,19 @@
         away: { body: colorS, sleeve: colorP }
       };
 
-      // Salva in localStorage
+      var placePromise = (city && window.EliseeComuniGeo && window.EliseeComuniGeo.lookup)
+        ? window.EliseeComuniGeo.lookup(city)
+        : Promise.resolve(null);
+      placePromise.then(function (hit) {
+        if (hit) {
+          newTeam.lat = hit.lat;
+          newTeam.lng = hit.lng;
+          newTeam.region = hit.region;
+          newTeam.city = (hit.name + ' (' + hit.prov + ')').toUpperCase();
+        } else if (city && typeof window.showToast === 'function') {
+          window.showToast('Comune non riconosciuto: scegli la città natale dall\'elenco per collocare il club sulla mappa.', 'info');
+        }
+
       var saved = [];
       try { saved = JSON.parse(localStorage.getItem('elisee_registered_teams_v1') || '[]'); } catch(_) {}
       if (!Array.isArray(saved)) saved = [];
@@ -2388,6 +2404,8 @@
       setTimeout(function () {
         selectTeamById(newTeam.id);
       }, 50);
+      try { document.dispatchEvent(new CustomEvent('elisee:club-registered', { detail: { id: newTeam.id } })); } catch (_) {}
+      });
     });
 
     updateLivePreview();

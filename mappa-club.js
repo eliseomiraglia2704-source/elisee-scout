@@ -2,10 +2,13 @@
 (function () {
   'use strict';
 
-  var CLUBS_URL = 'data/squadre/scopri-clubs.json?v=20260912_SERIEA_TO_ECC_CLEAN';
+  var REGISTERED_URL = 'data/squadre/verified-teams.json?v=20261001_FIX15';
+  var COMUNI_URL = 'data/geo/comuni-coord.json?v=20261001_FIX15';
   var MAX_PINS = 3500;
   var clubs = null;
   var activeFilter = 'all';
+  var comuniIndex = null;
+  var comuniLoad = null;
 
   function isSerieAToEccellenza(c) {
     if (!c) return false;
@@ -66,31 +69,174 @@
     return ((p[0] || 'C').charAt(0) + (p[1] || p[0] || 'L').charAt(0)).toUpperCase();
   }
 
-  function loadClubs(done) {
-    if (clubs) { done(clubs); return; }
-    fetch(CLUBS_URL)
+  function normPlace(s) {
+    return String(s || '').trim().toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, ' ').trim();
+  }
+
+  function loadComuniIndex() {
+    if (comuniIndex) return Promise.resolve(comuniIndex);
+    if (comuniLoad) return comuniLoad;
+    comuniLoad = fetch(COMUNI_URL, { cache: 'no-store' })
       .then(function (r) { return r.json(); })
-      .then(function (j) {
-        var base = (j.clubs || []).filter(function (c) {
-          return typeof c.lat === 'number' && typeof c.lng === 'number' && isSerieAToEccellenza(c);
+      .then(function (rows) {
+        var byName = {};
+        var byProv = {};
+        (rows || []).forEach(function (row) {
+          var hit = { name: row[0], prov: row[1], lat: row[2], lng: row[3], region: row[4] };
+          var key = normPlace(hit.name);
+          if (!byName[key]) byName[key] = [];
+          byName[key].push(hit);
+          byProv[key + '|' + String(hit.prov || '').toLowerCase()] = hit;
         });
-        var overrides = getGeoOverrides();
-        base.forEach(function (c) {
-          if (c && c.id && overrides[c.id]) {
-            c.lat = overrides[c.id].lat;
-            c.lng = overrides[c.id].lng;
-            if (overrides[c.id].stadium) c.stadium = overrides[c.id].stadium;
-            if (overrides[c.id].city) c.city = overrides[c.id].city;
-          }
-        });
-        clubs = base;
-        window.__eliseeScopriClubs = clubs;
-        done(clubs);
+        comuniIndex = { byName: byName, byProv: byProv, rows: rows || [] };
+        return comuniIndex;
       })
       .catch(function () {
-        clubs = [];
-        done(clubs);
+        comuniIndex = { byName: {}, byProv: {}, rows: [] };
+        return comuniIndex;
       });
+    return comuniLoad;
+  }
+
+  function matchComune(idx, query) {
+    var raw = String(query || '').trim();
+    if (!raw || !idx) return null;
+    var prov = '';
+    var namePart = raw;
+    var tagged = raw.match(/^(.*)\(([A-Za-z]{2})\)\s*$/);
+    if (tagged) {
+      namePart = tagged[1].trim();
+      prov = tagged[2].toLowerCase();
+    }
+    var key = normPlace(namePart);
+    if (prov && idx.byProv[key + '|' + prov]) return idx.byProv[key + '|' + prov];
+    var list = idx.byName[key] || [];
+    if (list.length === 1) return list[0];
+    return null;
+  }
+
+  function lookupComune(query) {
+    return loadComuniIndex().then(function (idx) { return matchComune(idx, query); });
+  }
+
+  function knownRegion(name) {
+    if (!name || typeof REGION_CENTERS === 'undefined') return '';
+    var keys = Object.keys(REGION_CENTERS);
+    var q = String(name).trim().toLowerCase();
+    for (var i = 0; i < keys.length; i++) {
+      if (keys[i].toLowerCase() === q) return keys[i];
+    }
+    return '';
+  }
+
+  function readLocalRegistered() {
+    try {
+      var loc = JSON.parse(localStorage.getItem('elisee_registered_teams_v1') || '[]');
+      return Array.isArray(loc) ? loc.filter(function (t) { return t && t.id && t.id !== 'barletta'; }) : [];
+    } catch (_) { return []; }
+  }
+
+  function writeLocalRegistered(list) {
+    try { localStorage.setItem('elisee_registered_teams_v1', JSON.stringify(list)); } catch (_) {}
+  }
+
+  function upsertLocalRegistered(team) {
+    if (!team || !team.id) return;
+    var list = readLocalRegistered();
+    var idx = -1;
+    var want = normPlace(team.name);
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].id === team.id || (want && normPlace(list[i].name) === want)) idx = i;
+    }
+    if (idx >= 0) list[idx] = Object.assign({}, list[idx], team);
+    else list.push(team);
+    writeLocalRegistered(list);
+  }
+
+  function invalidateClubs() { clubs = null; }
+
+  function loadClubs(done) {
+    if (clubs) { done(clubs); return; }
+    Promise.all([
+      fetch(REGISTERED_URL, { cache: 'no-store' }).then(function (r) { return r.json(); }).catch(function () { return { registeredTeams: [] }; }),
+      loadComuniIndex()
+    ]).then(function (pair) {
+      var data = pair[0];
+      var idx = pair[1];
+      var base = (data && Array.isArray(data.registeredTeams)) ? data.registeredTeams.slice() : [];
+      var seen = {};
+      base.forEach(function (t) { if (t && t.id) seen[String(t.id).toLowerCase()] = true; });
+      readLocalRegistered().forEach(function (t) {
+        var id = String(t.id).toLowerCase();
+        if (!seen[id]) {
+          seen[id] = true;
+          base.push(t);
+          return;
+        }
+        for (var i = 0; i < base.length; i++) {
+          if (String(base[i].id).toLowerCase() !== id) continue;
+          if (typeof t.lat === 'number') base[i].lat = t.lat;
+          if (typeof t.lng === 'number') base[i].lng = t.lng;
+          if (t.region) base[i].region = t.region;
+          if (t.city) base[i].city = t.city;
+          if (t.stadium) base[i].stadium = t.stadium;
+        }
+      });
+      var overrides = getGeoOverrides();
+      base.forEach(function (c) {
+        if (!c) return;
+        if (c.id && overrides[c.id]) {
+          var o = overrides[c.id];
+          if (typeof o.lat === 'number') c.lat = o.lat;
+          if (typeof o.lng === 'number') c.lng = o.lng;
+          if (o.stadium) c.stadium = o.stadium;
+          if (o.city) c.city = o.city;
+          if (o.region) c.region = o.region;
+        }
+        var hit = c.city ? matchComune(idx, c.city) : null;
+        if (hit) {
+          c.lat = hit.lat;
+          c.lng = hit.lng;
+          c.region = hit.region;
+        } else {
+          c.region = knownRegion(c.region) || '';
+        }
+      });
+      clubs = base.filter(function (c) { return c && c.id && c.name; });
+      done(clubs);
+    }).catch(function () {
+      clubs = [];
+      done(clubs);
+    });
+  }
+
+  function fillCityDatalist(listEl) {
+    return loadComuniIndex().then(function (idx) {
+      if (!listEl || listEl.childNodes.length) return idx;
+      var frag = document.createDocumentFragment();
+      idx.rows.forEach(function (row) {
+        var opt = document.createElement('option');
+        opt.value = row[0] + ' (' + row[1] + ')';
+        frag.appendChild(opt);
+      });
+      listEl.appendChild(frag);
+      return idx;
+    });
+  }
+
+  window.EliseeComuniGeo = {
+    lookup: lookupComune,
+    fillCityDatalist: fillCityDatalist
+  };
+
+  function syncClubsSentence(n) {
+    var label = document.querySelector('[data-i18n="map.clubs"]');
+    if (!label || !window.EliseeI18n || typeof window.EliseeI18n.t !== 'function') return;
+    var key = n === 1 ? 'map.clubsOne' : 'map.clubs';
+    var text = window.EliseeI18n.t(key);
+    if (text && text !== key) label.textContent = text;
   }
 
   function logoBust(u) {
@@ -132,7 +278,7 @@
         logoImg +
         '<div style="text-align:left;">' +
           '<strong style="display:block; font-size:0.92rem; color:#0f172a; line-height:1.2;">' + esc(c.name) + '</strong>' +
-          '<span style="font-size:0.75rem; color:#3b7dff; font-weight:700;">' + esc(c.league || c.group || 'Club Ufficiale') + '</span>' +
+          '<span style="font-size:0.75rem; color:#3b7dff; font-weight:700;">' + esc(c.league || c.group || 'Club registrato') + '</span>' +
         '</div>' +
       '</div>' +
       '<span>' + esc(c.city || 'Italia') + (c.region ? ' (' + esc(c.region) + ')' : '') + '</span>' +
@@ -184,8 +330,9 @@
 
             '<div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">' +
               '<div>' +
-                '<label style="display:block; color:#cbd5e1; font-size:0.8rem; font-weight:700; margin-bottom:0.35rem;">Città / Comune *</label>' +
-                '<input type="text" id="geo-club-city" required placeholder="Es. Taranto, Foggia" value="' + esc(defCity) + '" style="width:100%; box-sizing:border-box; background:rgba(15,23,42,0.85); border:1px solid rgba(255,255,255,0.15); border-radius:10px; padding:0.6rem 0.8rem; color:#fff; font-size:0.85rem; font-family:inherit;">' +
+                '<label style="display:block; color:#cbd5e1; font-size:0.8rem; font-weight:700; margin-bottom:0.35rem;">Città natale del club *</label>' +
+                '<input type="text" id="geo-club-city" list="geo-city-list" required placeholder="Es. Foggia (FG)" value="' + esc(defCity) + '" style="width:100%; box-sizing:border-box; background:rgba(15,23,42,0.85); border:1px solid rgba(255,255,255,0.15); border-radius:10px; padding:0.6rem 0.8rem; color:#fff; font-size:0.85rem; font-family:inherit;">' +
+                '<datalist id="geo-city-list"></datalist>' +
               '</div>' +
               '<div>' +
                 '<label style="display:block; color:#cbd5e1; font-size:0.8rem; font-weight:700; margin-bottom:0.35rem;">Stadio / Centro Sportivo</label>' +
@@ -235,6 +382,24 @@
           opt.dataset.stadium = c.stadium || '';
           datalist.appendChild(opt);
         });
+      }
+
+      fillCityDatalist(document.getElementById('geo-city-list'));
+
+      var cityInput = document.getElementById('geo-club-city');
+      if (cityInput) {
+        var placeFromCity = function () {
+          lookupComune(cityInput.value).then(function (hit) {
+            if (!hit) return;
+            var latEl = document.getElementById('geo-club-lat');
+            var lngEl = document.getElementById('geo-club-lng');
+            if (latEl) latEl.value = hit.lat;
+            if (lngEl) lngEl.value = hit.lng;
+            cityInput.dataset.region = hit.region;
+          });
+        };
+        cityInput.addEventListener('change', placeFromCity);
+        cityInput.addEventListener('input', placeFromCity);
       }
 
       var searchInput = document.getElementById('geo-club-search');
@@ -291,55 +456,55 @@
           var rawClub = document.getElementById('geo-club-search').value.trim();
           var city = document.getElementById('geo-club-city').value.trim();
           var stadium = document.getElementById('geo-club-stadium').value.trim();
-          var lat = parseFloat(document.getElementById('geo-club-lat').value);
-          var lng = parseFloat(document.getElementById('geo-club-lng').value);
 
-          if (isNaN(lat) || isNaN(lng)) {
-            alert('Inserisci coordinate geografiche valide.');
-            return;
-          }
-
-          var found = allClubs.find(function (c) {
-            return c.name.toLowerCase() === rawClub.toLowerCase() ||
-                   rawClub.toLowerCase().indexOf(c.name.toLowerCase()) >= 0;
-          });
-
-          var clubId = found ? found.id : ('club-custom-' + Date.now());
-          var clubName = found ? found.name : rawClub;
-
-          var geoData = {
-            id: clubId,
-            name: clubName,
-            city: city,
-            stadium: stadium,
-            lat: lat,
-            lng: lng,
-            updatedAt: new Date().toISOString()
-          };
-
-          saveGeoOverride(clubId, geoData);
-
-          if (found) {
-            found.lat = lat;
-            found.lng = lng;
-            found.city = city;
-            if (stadium) found.stadium = stadium;
-          } else {
-            allClubs.unshift(geoData);
-          }
-
-          closeModal();
-
-          if (window.showToast) {
-            window.showToast('📍 Geolocalizzazione per ' + clubName + ' salvata con successo!', 'success');
-          }
-
-          window.EliseeClubMap.refresh();
-          setTimeout(function () {
-            if (window.EliseeClubMap.map) {
-              window.EliseeClubMap.map.flyTo([lat, lng], 13, { duration: 1.2 });
+          lookupComune(city).then(function (hit) {
+            var lat = hit ? hit.lat : parseFloat(document.getElementById('geo-club-lat').value);
+            var lng = hit ? hit.lng : parseFloat(document.getElementById('geo-club-lng').value);
+            if (!hit || typeof lat !== 'number' || typeof lng !== 'number' || isNaN(lat) || isNaN(lng)) {
+              alert('Scegli la città natale del club da un comune italiano, così viene collocato sulla mappa.');
+              return;
             }
-          }, 300);
+
+            var found = allClubs.find(function (c) {
+              return c.name.toLowerCase() === rawClub.toLowerCase() ||
+                     (c.name && rawClub.toLowerCase() === (c.name + (c.city ? ' (' + c.city + ')' : '')).toLowerCase());
+            });
+
+            var clubId = found ? found.id : ('club-' + (rawClub.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || Date.now()));
+            var clubName = found ? found.name : rawClub;
+
+            var geoData = {
+              id: clubId,
+              name: clubName,
+              city: city,
+              stadium: stadium,
+              lat: lat,
+              lng: lng,
+              region: hit.region,
+              league: found && found.league ? found.league : 'AMATORIALE',
+              country: 'ITALIA',
+              verified: true,
+              eliseeVerified: true,
+              updatedAt: new Date().toISOString()
+            };
+
+            saveGeoOverride(clubId, geoData);
+            upsertLocalRegistered(geoData);
+            invalidateClubs();
+
+            closeModal();
+
+            if (window.showToast) {
+              window.showToast(clubName + ' collocato a ' + hit.name + ' (' + hit.region + ').', 'success');
+            }
+
+            window.EliseeClubMap.refresh();
+            setTimeout(function () {
+              if (window.EliseeClubMap.map) {
+                window.EliseeClubMap.map.flyTo([lat, lng], 12, { duration: 1.2 });
+              }
+            }, 300);
+          });
         };
       }
 
@@ -383,7 +548,7 @@
     if (!source || !source.length) return [];
     var target = (regione || '').trim().toLowerCase();
     var list = source.filter(function (c) {
-      return (c.region || '').trim().toLowerCase() === target && isSerieAToEccellenza(c);
+      return (c.region || '').trim().toLowerCase() === target && typeof c.lat === 'number' && typeof c.lng === 'number';
     });
 
     list.sort(function (a, b) {
@@ -423,7 +588,7 @@
             '<button type="button" class="es-region-show-more-btn" data-show-all="' + esc(regione) + '">' +
               'Mostra tutte le ' + squadre.length + ' squadre' +
             '</button>' +
-            '<p class="es-region-teams__note" style="margin-top:0;">Visualizzate le prime ' + maxInitial + ' squadre ufficiali (dalla Serie A all\'Eccellenza) in ordine alfabetico.</p>' +
+            '<p class="es-region-teams__note" style="margin-top:0;">Prime ' + maxInitial + ' squadre registrate, in ordine alfabetico.</p>' +
           '</div>';
         } else {
           listHtml += '<div style="margin-top:14px;">' +
@@ -434,13 +599,13 @@
         }
       }
     } else {
-      listHtml = '<p class="es-region-teams__note">Nessuna società censita per questa regione nel catalogo attuale.</p>';
+      listHtml = '<p class="es-region-teams__note">Nessun club registrato in questa regione.</p>';
     }
 
     return (
       '<div class="es-region-teams" role="region" aria-label="Squadre in ' + esc(regione) + '">' +
         '<div class="es-region-teams__head">' +
-          '<h3>Squadre in ' + esc(regione) + ' <span>(' + count + ' club — Serie A / Eccellenza)</span></h3>' +
+          '<h3>Squadre in ' + esc(regione) + ' <span>(' + count + (count === 1 ? ' club registrato' : ' club registrati') + ')</span></h3>' +
           '<button type="button" class="es-region-teams__close" data-close="' + esc(regione) + '" aria-label="Chiudi pannello squadre">✕</button>' +
         '</div>' +
         listHtml +
@@ -481,6 +646,10 @@
       html += card + (isOpen ? teamsPanelHTML(reg, num) : '');
     });
     host.innerHTML = html;
+    var covered = 0;
+    keys.forEach(function (k) { if ((counts[k] || 0) > 0) covered++; });
+    var covEl = document.getElementById('es-map-regions-count');
+    if (covEl) covEl.textContent = String(covered);
 
     host.onclick = function (e) {
       var closeBtn = e.target.closest('[data-close]');
@@ -841,7 +1010,7 @@
         var overrides = getGeoOverrides();
 
         var filtered = rows.filter(function (c) {
-          if (typeof c.lat !== 'number' || typeof c.lng !== 'number') return false;
+          if (typeof c.lat !== 'number' || typeof c.lng !== 'number' || !knownRegion(c.region)) return false;
           if (activeFilter === 'all') return true;
           var grp = (c.group || c.league || '').toLowerCase();
           return grp.indexOf(activeFilter.toLowerCase()) >= 0;
@@ -868,27 +1037,29 @@
         }
 
         var geo = myClubGeo();
-        if (geo && geo.lat) {
+        var alreadyPinned = geo && rows.some(function (c) {
+          return (geo.id && c.id === geo.id) || (typeof geo.lat === 'number' && c.lat === geo.lat && c.lng === geo.lng);
+        });
+        if (geo && geo.lat && !alreadyPinned) {
           var you = L.circleMarker([geo.lat, geo.lng], {
             radius: 12, color: '#1e2430', fillColor: '#3b7dff', fillOpacity: 0.95, weight: 3
           }).bindPopup('<div style="text-align:center;"><strong>' + esc(geo.name || 'Il tuo club') + '</strong><br><span style="font-size:0.8rem; color:#3b7dff;">Sede geolocalizzata ufficialmente</span></div>');
           self.cluster.addLayer(you);
         }
 
+        var placed = filtered;
         var nEl = document.getElementById('es-map-count');
         if (nEl) {
-          try {
-            nEl.textContent = rows.length.toLocaleString('it-IT');
-          } catch (_) {
-            nEl.textContent = String(rows.length);
-          }
+          try { nEl.textContent = placed.length.toLocaleString('it-IT'); }
+          catch (_) { nEl.textContent = String(placed.length); }
         }
+        syncClubsSentence(placed.length);
 
-        // Calcola e renderizza classifica regionale
         var regionCounts = {};
-        rows.forEach(function (c) {
-          var reg = c.region || 'Altra Regione';
-          regionCounts[reg] = (regionCounts[reg] || 0) + 1;
+        Object.keys(REGION_CENTERS).forEach(function (k) { regionCounts[k] = 0; });
+        placed.forEach(function (c) {
+          var reg = knownRegion(c.region);
+          if (reg) regionCounts[reg] += 1;
         });
         renderRegionsGrid(regionCounts);
 
@@ -985,6 +1156,17 @@
   window.openClubGeoModal = function (c) { window.EliseeClubMap.openGeoModal(c); };
 
   function boot() {
+    document.addEventListener('elisee:lang-changed', function () {
+      var nEl = document.getElementById('es-map-count');
+      if (!nEl) return;
+      var n = parseInt(String(nEl.textContent).replace(/[^\d]/g, ''), 10);
+      if (isNaN(n)) return;
+      syncClubsSentence(n);
+    });
+    document.addEventListener('elisee:club-registered', function () {
+      invalidateClubs();
+      if (window.EliseeClubMap && window.EliseeClubMap.refresh) window.EliseeClubMap.refresh();
+    });
     document.addEventListener('elisee:view-changed', function (e) {
       var d = e && e.detail;
       if (d && (d.view === 'mappa' || (d.hash && String(d.hash).indexOf('mappa') >= 0))) {

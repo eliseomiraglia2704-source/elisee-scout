@@ -4,7 +4,14 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-10-01** — FIX14 — Mappa: conteggio come la navbar, geolocalizzazione come Accedi:
+Ultimo aggiornamento: **2026-10-01** — FIX15 — Mappa: solo club registrati, collocati dalla città natale:
+
+1. **Mappa e regioni**: non compaiono più i 729 club del catalogo. Restano le squadre registrate (`verified-teams.json` e `elisee_registered_teams_v1`). Foggia City è in Puglia.
+2. **Città natale**: in Registra club e in «Imposta la geolocalizzazione», il comune scelto (es. `Foggia (FG)`, `Milano (MI)`) mette il pin sulle coordinate del comune e alza il conteggio della regione giusta.
+3. **Chi le vede**: tutti vedono `verified-teams.json` (oggi Foggia City in Puglia). Un club registrato in questo browser compare subito anche sulla mappa, tramite `elisee_registered_teams_v1`. Non è stato aggiunto un endpoint: le funzioni serverless sono già 12.
+4. **File**: `mappa-club.js`, `squadre-select.js`, `i18n.js`, `index.html`, `data/squadre/verified-teams.json`, `data/geo/comuni-coord.json`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX15`.
+
+Feature precedente: **2026-10-01** — FIX14 — Mappa: conteggio come la navbar, geolocalizzazione come Accedi:
 
 1. **Conteggio club**: la riga «729 club ufficiali…» non è più una card piena. È la stessa pillola della navbar (bordo sottile, fondo traslucido, angoli completamente tondi).
 2. **Geolocalizzazione**: «Sei un club? Imposta la geolocalizzazione» usa l’anello luminoso di Accedi (faccia scura, bordo magenta/ciano), non il blu pieno. Il click apre ancora il modulo. Il numero in `#es-map-count` non cambia.
