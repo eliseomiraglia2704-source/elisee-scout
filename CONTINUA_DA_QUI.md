@@ -4,7 +4,13 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-10-01** — FIX15 — Mappa: solo club registrati, collocati dalla città natale:
+Ultimo aggiornamento: **2026-10-01** — FIX16 — Regioni in vetro, come la navbar:
+
+1. **Card regione**: non sono più pannelli pieni. Stessa pillola della navbar (fondo traslucido, blur, bordo sottile, angoli completamente tondi). La regione aperta ha il bagliore teal della voce attiva. Il pannello squadre e «Torna a tutta Italia» usano lo stesso vetro.
+2. **Pannello**: il riquadro delle squadre chiudeva un `div` in meno e assorbiva le card successive. Ora resta una riga sola e la griglia sotto continua a 5 colonne.
+3. **File**: `mappa-club.css`, `mappa-club.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX16`. I dati restano quelli di FIX15: solo club registrati.
+
+Feature precedente: **2026-10-01** — FIX15 — Mappa: solo club registrati, collocati dalla città natale:
 
 1. **Mappa e regioni**: non compaiono più i 729 club del catalogo. Restano le squadre registrate (`verified-teams.json` e `elisee_registered_teams_v1`). Foggia City è in Puglia.
 2. **Città natale**: in Registra club e in «Imposta la geolocalizzazione», il comune scelto (es. `Foggia (FG)`, `Milano (MI)`) mette il pin sulle coordinate del comune e alza il conteggio della regione giusta.

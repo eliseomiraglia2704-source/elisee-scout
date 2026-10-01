@@ -830,28 +830,54 @@ html[data-theme="mimetico-chiaro"] .es-map-info .es-map-badge-update {
   line-height: 1.4;
 }
 
-/* Bottone Ripristina "Torna a tutta Italia" */
+/* Bottone Ripristina: stessa pillola vetro della navbar. */
 .es-map-reset-btn {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  background: var(--panel) !important;
-  border: 1px solid var(--line) !important;
-  border-radius: 8px;
-  color: var(--text-dim) !important;
+  min-height: 44px;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 999px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+  color: rgba(255, 255, 255, 0.78) !important;
   font-size: 12px;
   font-weight: 600;
-  padding: 8px 14px;
+  padding: 10px 16px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
   font-family: var(--es-font);
   line-height: 1;
 }
 
 .es-map-reset-btn:hover {
-  color: var(--text) !important;
-  border-color: var(--blue) !important;
-  background: var(--panel) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.es-map-reset-btn:focus-visible {
+  outline: 2px solid #2fe0c8;
+  outline-offset: 2px;
+}
+
+.es-map-reset-btn:focus:not(:focus-visible) {
+  outline: none;
+}
+
+html[data-theme="mimetico-chiaro"] .es-map-reset-btn {
+  background: rgba(255, 255, 255, 0.62) !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  color: #334155 !important;
+}
+
+html[data-theme="mimetico-chiaro"] .es-map-reset-btn:hover {
+  color: #0f172a !important;
+  border-color: rgba(15, 23, 42, 0.16) !important;
+  background: rgba(255, 255, 255, 0.86) !important;
 }
 
 .es-map-reset-btn svg {
@@ -921,38 +947,76 @@ html[data-theme="mimetico-chiaro"] .es-map-info .es-map-badge-update {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
-  background: var(--panel) !important;
-  border: 1px solid var(--line) !important;
-  border-radius: 12px !important;
-  padding: 16px !important;
+  min-height: 64px;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 999px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+  padding: 14px 26px !important;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   text-align: left;
-  box-shadow: none;
   text-decoration: none;
   color: inherit;
   font-family: var(--es-font);
-  outline: none;
-  transition: transform .25s cubic-bezier(.34, 1.2, .4, 1), box-shadow .25s ease, border-color .2s ease !important;
+  transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1), background 150ms ease, border-color 150ms ease, box-shadow 150ms ease !important;
 }
 
 .region-card:hover,
 .es-region-card:hover,
-.es-map-reg-card:hover,
+.es-map-reg-card:hover {
+  transform: translateY(-1px) !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+}
+
 .region-card:focus-visible,
-.es-region-card:focus-visible {
-  transform: translateY(-3px) !important;
-  border-color: var(--blue) !important;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, .12) !important;
+.es-region-card:focus-visible,
+.es-map-reg-card:focus-visible {
+  outline: 2px solid #2fe0c8;
+  outline-offset: 2px;
+}
+
+.region-card:focus:not(:focus-visible),
+.es-region-card:focus:not(:focus-visible),
+.es-map-reg-card:focus:not(:focus-visible) {
+  outline: none;
 }
 
 .region-card.is-selected,
 .es-region-card.is-selected {
-  border-color: var(--blue) !important;
-  background: rgba(29, 79, 214, 0.08) !important;
-  box-shadow: 0 0 0 1px var(--blue), 0 4px 16px rgba(29, 79, 214, 0.2) !important;
+  border-color: rgba(0, 245, 212, 0.35) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 0 16px rgba(0, 245, 212, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+html[data-theme="mimetico-chiaro"] .region-card,
+html[data-theme="mimetico-chiaro"] .es-region-card,
+html[data-theme="mimetico-chiaro"] .es-map-reg-card {
+  background: rgba(255, 255, 255, 0.62) !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  color: #0f172a;
+}
+
+html[data-theme="mimetico-chiaro"] .region-card:hover,
+html[data-theme="mimetico-chiaro"] .es-region-card:hover,
+html[data-theme="mimetico-chiaro"] .es-map-reg-card:hover {
+  background: rgba(255, 255, 255, 0.86) !important;
+  border-color: rgba(15, 23, 42, 0.14) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+html[data-theme="mimetico-chiaro"] .region-card.is-selected,
+html[data-theme="mimetico-chiaro"] .es-region-card.is-selected {
+  background: rgba(2, 132, 199, 0.08) !important;
+  border-color: rgba(2, 132, 199, 0.28) !important;
+  box-shadow: 0 2px 10px rgba(2, 132, 199, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
 }
 
 .es-region-card__header {
@@ -978,8 +1042,8 @@ html[data-theme="mimetico-chiaro"] .es-map-info .es-map-badge-update {
 .es-region-card__count,
 .es-map-reg-card__count {
   font-size: 13px;
-  color: var(--blue) !important;
-  font-weight: 700;
+  color: #ffffff !important;
+  font-weight: 600;
   margin: 0;
   background: transparent;
   border: none;
@@ -987,6 +1051,11 @@ html[data-theme="mimetico-chiaro"] .es-map-info .es-map-badge-update {
   border-radius: 0;
   white-space: nowrap;
   flex-shrink: 0;
+}
+
+html[data-theme="mimetico-chiaro"] .es-region-card__count,
+html[data-theme="mimetico-chiaro"] .es-map-reg-card__count {
+  color: #0f172a !important;
 }
 
 .es-region-card__count span,
@@ -1001,25 +1070,30 @@ html[data-theme="mimetico-chiaro"] .es-map-info .es-map-badge-update {
 .region-card .bar-track,
 .es-region-card__bar-track {
   width: 100%;
-  height: 4px;
-  background: var(--track) !important;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.12) !important;
   border-radius: 999px !important;
   overflow: hidden !important;
-  margin-top: 4px;
+  margin-top: 8px;
+}
+
+html[data-theme="mimetico-chiaro"] .region-card .bar-track,
+html[data-theme="mimetico-chiaro"] .es-region-card__bar-track {
+  background: rgba(15, 23, 42, 0.08) !important;
 }
 
 .region-card .bar-fill,
 .es-region-card__bar {
   height: 100%;
-  background: var(--blue) !important;
+  background: linear-gradient(90deg, #2fe0c8, #38bdf8) !important;
   border-radius: 999px !important;
   transition: width .6s ease !important;
 }
 
 .region-card.is-selected .bar-fill,
 .es-region-card.is-selected .es-region-card__bar {
-  background: var(--blue) !important;
-  box-shadow: 0 0 6px rgba(29, 79, 214, 0.6);
+  background: linear-gradient(90deg, #2fe0c8, #38bdf8) !important;
+  box-shadow: 0 0 8px rgba(47, 224, 200, 0.45);
 }
 
 /* ---- Pannello squadre della regione cliccata: spans tutta la riga
@@ -1027,12 +1101,20 @@ html[data-theme="mimetico-chiaro"] .es-map-info .es-map-badge-update {
    intera subito sotto la card cliccata, non come un popup isolato. ---- */
 .es-region-teams {
   grid-column: 1 / -1;
-  background: var(--panel) !important;
-  border: 1px solid var(--blue) !important;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 28px;
   padding: 18px 22px 20px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
   animation: es-region-teams-fade 0.2s ease-out;
+}
+
+html[data-theme="mimetico-chiaro"] .es-region-teams {
+  background: rgba(255, 255, 255, 0.62) !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 @keyframes es-region-teams-fade {
@@ -1062,20 +1144,43 @@ html[data-theme="mimetico-chiaro"] .es-map-info .es-map-badge-update {
 }
 
 .es-region-teams__close {
-  background: none;
-  border: none;
-  color: var(--text-dim) !important;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.72) !important;
   cursor: pointer;
   font-size: 16px;
   line-height: 1;
-  padding: 4px 8px;
-  border-radius: 6px;
-  transition: color 0.15s ease, background 0.15s ease;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 999px;
+  transition: color 150ms ease, background 150ms ease, border-color 150ms ease;
 }
 
 .es-region-teams__close:hover {
-  color: var(--text) !important;
-  background: var(--panel) !important;
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.es-region-teams__close:focus-visible {
+  outline: 2px solid #2fe0c8;
+  outline-offset: 2px;
+}
+
+.es-region-teams__close:focus:not(:focus-visible) {
+  outline: none;
+}
+
+html[data-theme="mimetico-chiaro"] .es-region-teams__close {
+  background: rgba(255, 255, 255, 0.62);
+  border-color: rgba(15, 23, 42, 0.08);
+  color: #334155 !important;
+}
+
+html[data-theme="mimetico-chiaro"] .es-region-teams__close:hover {
+  color: #0f172a !important;
+  background: rgba(255, 255, 255, 0.9) !important;
 }
 
 .es-region-teams__list-wrap {
@@ -1090,7 +1195,7 @@ html[data-theme="mimetico-chiaro"] .es-map-info .es-map-badge-update {
   left: 0;
   right: 0;
   height: 48px;
-  background: linear-gradient(to bottom, transparent, var(--panel));
+  background: linear-gradient(to bottom, transparent, rgba(6, 11, 19, 0.55));
   border-radius: 0 0 8px 8px;
   pointer-events: none;
   opacity: 0;
@@ -1124,9 +1229,18 @@ html[data-theme="mimetico-chiaro"] .es-map-info .es-map-badge-update {
   border-radius: 4px;
 }
 
+html[data-theme="mimetico-chiaro"] .es-region-teams__list-wrap::after {
+  background: linear-gradient(to bottom, transparent, rgba(248, 250, 252, 0.88));
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .es-region-teams {
+  .es-region-teams,
+  .es-region-card,
+  .es-map-reg-card,
+  .region-card {
     animation: none;
+    transition: none;
+    transform: none;
   }
   .es-region-teams__list-wrap::after {
     transition: none;
@@ -1137,26 +1251,48 @@ html[data-theme="mimetico-chiaro"] .es-map-info .es-map-badge-update {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 6px 14px 6px 8px;
+  min-height: 44px;
+  padding: 6px 16px 6px 8px;
   border-radius: 999px;
-  background: var(--panel) !important;
-  color: var(--text) !important;
-  border: 1px solid var(--line) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: rgba(255, 255, 255, 0.88) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   cursor: pointer;
   font-family: var(--es-font);
   font-size: 13.5px;
   font-weight: 600;
   line-height: 1.2;
-  transition: all 0.15s ease;
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
   text-align: left;
 }
 
 .es-region-team-chip:hover {
-  border-color: var(--blue) !important;
-  background: rgba(29, 79, 214, 0.08) !important;
-  color: var(--blue) !important;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  border-color: rgba(255, 255, 255, 0.28) !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+}
+
+.es-region-team-chip:focus-visible {
+  outline: 2px solid #2fe0c8;
+  outline-offset: 2px;
+}
+
+.es-region-team-chip:focus:not(:focus-visible) {
+  outline: none;
+}
+
+html[data-theme="mimetico-chiaro"] .es-region-team-chip {
+  background: rgba(255, 255, 255, 0.72) !important;
+  color: #0f172a !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+html[data-theme="mimetico-chiaro"] .es-region-team-chip:hover {
+  background: #ffffff !important;
+  border-color: rgba(15, 23, 42, 0.16) !important;
+  color: #0f172a !important;
 }
 
 .es-region-team-logo {

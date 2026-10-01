@@ -580,7 +580,7 @@
             '<span class="es-region-team-name">' + esc(c.name) + '</span>' +
           '</button>';
         }).join('') +
-      '</div>';
+      '</div></div>';
 
       if (squadre.length > maxInitial) {
         if (!showAll) {
