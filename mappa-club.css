@@ -133,6 +133,7 @@ body.is-view-mappa .portfolio-header {
 .es-map-banner {
   display: grid;
   grid-template-columns: 1fr auto;
+  align-items: center;
   gap: 16px;
   margin-bottom: 16px;
   background: transparent;
@@ -143,26 +144,52 @@ body.is-view-mappa .portfolio-header {
   backdrop-filter: none;
 }
 
-.es-map-info,
-.mappa-counter-bar,
+/* Stessa pillola della navbar pubblica (landing-unify .main-nav). */
+.es-map-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+  padding: 8px 16px;
+  font-size: 14px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 500;
+  line-height: 1.35;
+  flex-wrap: wrap;
+}
+
 .es-map-banner p {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: var(--panel) !important;
-  border: 1px solid var(--line) !important;
+  background: var(--panel);
+  border: 1px solid var(--line);
   border-radius: 10px;
   padding: 16px 18px;
   font-size: 14px;
   margin: 0;
-  color: var(--text) !important;
+  color: var(--text);
   font-weight: 400;
   line-height: 1.4;
   flex-wrap: wrap;
 }
 
+html[data-theme="mimetico-chiaro"] .es-map-info {
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  color: #334155;
+}
+
 .es-map-badge-update {
-  color: var(--text-dim) !important;
+  color: rgba(255, 255, 255, 0.55) !important;
   font-size: 12.5px;
   font-weight: 400;
   margin-left: 2px;
@@ -170,53 +197,90 @@ body.is-view-mappa .portfolio-header {
 
 .es-map-info svg,
 .es-map-banner p svg {
-  color: var(--blue) !important;
+  color: rgba(255, 255, 255, 0.72);
   flex-shrink: 0;
+}
+
+html[data-theme="mimetico-chiaro"] .es-map-info svg {
+  color: #334155;
 }
 
 .es-map-info strong,
 .es-map-banner p strong {
-  color: var(--blue) !important;
-  font-weight: 700;
+  color: #ffffff;
+  font-weight: 600;
 }
 
-/* ---- CTA "Sei un club? Imposta la geolocalizzazione" ---- */
+html[data-theme="mimetico-chiaro"] .es-map-info strong {
+  color: #0f172a;
+}
+
+html[data-theme="mimetico-chiaro"] .es-map-info .es-map-badge-update {
+  color: #64748b !important;
+}
+
+/* ---- CTA "Sei un club?": stessa faccia scura di Accedi. L'anello è .glow-wrap. ---- */
+#mappa-portal .es-map-geo-wrap {
+  justify-self: start;
+  align-self: center;
+  width: max-content;
+  max-width: 100%;
+  margin-left: 0;
+}
+
 .mappa-cta,
 .es-map-cta,
 .es-map-geobtn,
 #es-map-geobtn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  background: var(--blue) !important;
+  width: auto;
+  min-height: 44px;
+  height: auto !important;
+  background: #0d1017 !important;
   color: #ffffff !important;
   border: none !important;
   border-radius: 999px !important;
-  padding: 16px 20px;
+  padding: 10px 18px !important;
   font-family: var(--es-font);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
   cursor: pointer;
   text-decoration: none !important;
   white-space: nowrap;
-  box-shadow: 0 4px 14px rgba(29, 79, 214, 0.22);
-  transition: transform .22s cubic-bezier(.34, 1.4, .4, 1), box-shadow .22s ease !important;
   line-height: 1.2;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 6px 14px rgba(0, 0, 0, 0.5),
+    0 2px 0 rgba(0, 0, 0, 0.4) !important;
 }
 
 .mappa-cta:hover,
 .es-map-cta:hover,
 .es-map-geobtn:hover,
 #es-map-geobtn:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, .18) !important;
+  transform: none !important;
+  filter: brightness(1.1);
   color: #ffffff !important;
 }
 
 .es-map-cta:active,
 .es-map-geobtn:active,
 #es-map-geobtn:active {
-  transform: translateY(0) !important;
+  transform: translateY(2px) scale(0.99) !important;
+}
+
+#es-map-geobtn:focus-visible {
+  outline: 2px solid #2fe0c8;
+  outline-offset: 3px;
+}
+
+#es-map-geobtn:focus:not(:focus-visible) {
+  outline: none;
 }
 
 .es-map-cta svg,
@@ -1146,6 +1210,14 @@ body.is-view-mappa .portfolio-header {
   .es-map-banner {
     grid-template-columns: 1fr;
   }
+  #mappa-portal .es-map-geo-wrap {
+    justify-self: stretch;
+    width: 100%;
+  }
+  #mappa-portal #es-map-geobtn {
+    width: 100%;
+    white-space: normal;
+  }
   .es-region-grid,
   .es-map-regions__grid {
     grid-template-columns: repeat(3, 1fr);
@@ -1236,4 +1308,14 @@ body.is-view-mappa .portfolio-header {
 
 .es-geo-close-btn:hover {
   color: #ffffff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #mappa-portal .es-map-geo-wrap,
+  #mappa-portal .es-map-geo-wrap::before,
+  #mappa-portal .es-map-geo-wrap::after,
+  #mappa-portal #es-map-geobtn {
+    animation: none !important;
+    transition: none !important;
+  }
 }

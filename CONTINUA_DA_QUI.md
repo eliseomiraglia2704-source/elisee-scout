@@ -4,7 +4,13 @@ File di passaggio tra sessioni / account Grok.
 **Aprilo per primo** se stai riprendendo il progetto.
 Backlog task paralleli (Git Worktree): consulta **`docs/BACKLOG-UI.md`**.
 
-Ultimo aggiornamento: **2026-10-01** — FIX13 — La lingua cambia anche fuori dalla navbar:
+Ultimo aggiornamento: **2026-10-01** — FIX14 — Mappa: conteggio come la navbar, geolocalizzazione come Accedi:
+
+1. **Conteggio club**: la riga «729 club ufficiali…» non è più una card piena. È la stessa pillola della navbar (bordo sottile, fondo traslucido, angoli completamente tondi).
+2. **Geolocalizzazione**: «Sei un club? Imposta la geolocalizzazione» usa l’anello luminoso di Accedi (faccia scura, bordo magenta/ciano), non il blu pieno. Il click apre ancora il modulo. Il numero in `#es-map-count` non cambia.
+3. **File**: `index.html`, `mappa-club.css`, `landing-unify.css`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261001_FIX14`.
+
+Feature precedente: **2026-10-01** — FIX13 — La lingua cambia anche fuori dalla navbar:
 
 1. **Pagine pubbliche**: Selezione squadra, bacheca (testi, schede, filtri, persone) e mappa seguono Italiano, English, Español e Français. I testi scritti dal codice si aggiornano allo stesso cambio, non solo i nodi `data-i18n`.
 2. **Ancora in italiano**: i pannelli interni dei ruoli e i testi scritti dagli utenti (annunci, nomi di club).

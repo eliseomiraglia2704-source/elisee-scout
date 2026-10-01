@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <script>
     (function () {
-      var BUILD_VERSION = '20261001_FIX13';
+      var BUILD_VERSION = '20261001_FIX14';
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
         if (savedTheme) {
@@ -745,9 +745,9 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
-  <link rel="stylesheet" href="mappa-club.css?v=20260929_HEROUX85">
+  <link rel="stylesheet" href="mappa-club.css?v=20261001_FIX14">
   <link rel="stylesheet" href="mobile-webapp.css?v=20260925_HEROUX21">
-  <link rel="stylesheet" href="landing-unify.css?v=20260928_HEROUX66">
+  <link rel="stylesheet" href="landing-unify.css?v=20261001_FIX14">
   <link rel="stylesheet" href="island-carousel.css?v=20260928_HEROUX67">
   <link rel="stylesheet" href="parallax-cards.css?v=20260928_HEROUX68">
   <link rel="stylesheet" href="es-role-nav.css?v=20261001_FIX9">
@@ -4828,12 +4828,14 @@
               <span><strong id="es-map-count">0</strong> <span data-i18n="map.clubs">club ufficiali (dalla Serie A all'Eccellenza) sono visibili sulla mappa.</span></span>
               <span class="es-map-badge-update">· <span data-i18n="map.updated">Dati verificati a settembre 2026</span></span>
             </div>
-            <button type="button" id="es-map-geobtn" class="es-map-cta mappa-cta" onclick="if(window.openClubGeoModal){ window.openClubGeoModal(); } else if(window.EliseeClubMap && window.EliseeClubMap.openGeoModal){ window.EliseeClubMap.openGeoModal(); } else if(window.EliseeClubMap){ window.EliseeClubMap.setGeo(); } return false;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                <path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-              </svg>
-              <span data-i18n="map.geo">Sei un club? Imposta la geolocalizzazione</span>
-            </button>
+            <div class="glow-wrap glow-wrap--nav es-map-geo-wrap">
+              <button type="button" id="es-map-geobtn" class="es-map-cta mappa-cta glow-btn glow-btn--nav" onclick="if(window.openClubGeoModal){ window.openClubGeoModal(); } else if(window.EliseeClubMap && window.EliseeClubMap.openGeoModal){ window.EliseeClubMap.openGeoModal(); } else if(window.EliseeClubMap){ window.EliseeClubMap.setGeo(); } return false;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                </svg>
+                <span data-i18n="map.geo">Sei un club? Imposta la geolocalizzazione</span>
+              </button>
+            </div>
             <a href="#mappa-portal" id="es-map-geolink" style="display:none;"><span data-i18n="map.geo">Sei un club? Imposta la geolocalizzazione</span></a>
           </div>
 
