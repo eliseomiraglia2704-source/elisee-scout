@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-02** — FIX28 — La ricerca club sulla mappa è un campo pieno, leggibile sopra le tessere:
+Ultimo aggiornamento: **2026-10-02** — FIX29 — Header di perimetro attivi su ogni risposta:
+
+1. **Attivo sul sito**: `Strict-Transport-Security`, `Referrer-Policy`, `Permissions-Policy` (geolocalizzazione solo dal sito, serve al GPS del club), `X-Permitted-Cross-Domain-Policies`. Restano `nosniff` e `X-Frame-Options`.
+2. **Non attivabile qui**: comandi Linux e Windows, SQL/Pandas/Power BI, BGP, intelligence IP, `dig`, blocco Tor, viste e DAX. Questo repository non ha quel server né quel database. Non è stata aggiunta una pagina che li simula.
+3. **File**: `vercel.json`, `CONTINUA_DA_QUI.md`. Non tocca data di nascita, età o consenso genitoriale.
+
+Feature precedente: **2026-10-02** — FIX28 — La ricerca club sulla mappa è un campo pieno, leggibile sopra le tessere:
 
 1. **Visibilità**: la barra usava uno sfondo bianco al 4% e il testo chiaro spariva sulla mappa. Ora il campo è opaco, con bordo chiaro, testo e segnaposto ad alto contrasto. Il tema chiaro resta bianco con testo scuro.
 2. **File**: `mappa-club.css`, `landing-unify.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261002_FIX28`. Non tocca data di nascita, età o consenso genitoriale.
