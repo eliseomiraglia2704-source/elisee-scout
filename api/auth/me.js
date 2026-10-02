@@ -275,7 +275,9 @@ module.exports = async function handler(req, res) {
       const session = verifyToken(tok);
       const b = req.method === 'POST' ? bodyOf(req) : {};
       const qEmail = (req.query && req.query.email) || '';
-      const email = String((session && session.email) || b.email || qEmail || '').trim().toLowerCase();
+      const email = session
+        ? String(session.email || '').trim().toLowerCase()
+        : String(b.email || qEmail || '').trim().toLowerCase();
       if (!email) return json(res, 401, { ok: false, error: 'non_autenticato' });
       if (req.method === 'GET') {
         const rec = await getDocsRecord(email);
@@ -332,6 +334,6 @@ module.exports = async function handler(req, res) {
     if (!user) return json(res, 401, { ok: false, error: 'non_autenticato' });
     return json(res, 200, { ok: true, user: publicUser(user) });
   } catch (err) {
-    return json(res, 500, { ok: false, error: 'errore_server', message: (err && err.message) || 'Errore interno del server' });
+    return json(res, 500, { ok: false, error: 'errore_server' });
   }
 };

@@ -1,6 +1,13 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-02** — FIX30 — Content-Security-Policy attiva su ogni risposta:
+Ultimo aggiornamento: **2026-10-02** — FIX31 — Login, ricerca e bacheca non costruiscono file o risposte dal testo grezzo:
+
+1. **Ricerca**: un Bearer lungo a caso non conta più come utente registrato. Resta valido solo il token admin firmato. Il limite per gli ospiti non cambia. Il testo di ricerca era già tagliato a 120 caratteri.
+2. **Documenti account**: se il token di sessione è valido, la scheda documenti usa solo l’email di quella sessione. Senza token il flusso attuale resta, così la chiusura anti-fake continua a sincronizzarsi. Un errore 500 non rimanda più il messaggio interno. Data di nascita, età, consenso genitoriale e regole dei 30 giorni non sono stati toccati.
+3. **Bacheca e archivi**: la query restituita è tagliata, senza caratteri di controllo né tag. I file di scout, club, allenatore, card, coda GDPR e candidature ambassador accettano solo quei sei nomi.
+4. **File**: `lib/search-gateway.js`, `api/auth/me.js`, `api/manager.js`, `CONTINUA_DA_QUI.md`. Nessuna funzione serverless nuova. Cache resta `v20261002_FIX28` perché HTML, CSS e JS del browser non cambiano.
+
+Feature precedente: **2026-10-02** — FIX30 — Content-Security-Policy attiva su ogni risposta:
 
 1. **Cosa lascia passare**: script e fogli del sito, unpkg, cdnjs, jsDelivr, font Google, tessere OpenStreetMap, Nominatim, Supabase, login Google, video YouTube/Vimeo e l’avatar Ready Player Me. Immagini e media da `https`, `data` e `blob`.
 2. **Cosa chiude**: oggetti plugin, base URI esterne, frame del sito da altri domini, script da origini non elencate.

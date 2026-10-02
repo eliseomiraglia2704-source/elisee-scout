@@ -175,12 +175,23 @@ async function schedeSave(map) {
   } catch (e) {}
 }
 
+const KV_DOC_NAMES = {
+  'scout-alerts': true,
+  'coach-rosa': true,
+  'club-master': true,
+  'card-atelier': true,
+  'gdpr-queue': true,
+  'ambassador-apps': true
+};
 function kvFile(name) {
+  if (!Object.prototype.hasOwnProperty.call(KV_DOC_NAMES, name)) return null;
   return process.env.VERCEL
     ? '/tmp/elisee-' + name + '.json'
     : path.join(process.cwd(), 'data', 'club', name + '.json');
 }
 async function kvDocLoad(name, fallback) {
+  const file = kvFile(name);
+  if (!file) return fallback;
   const kv = await getKv();
   if (kv) {
     try {
@@ -189,18 +200,20 @@ async function kvDocLoad(name, fallback) {
     } catch (e) {}
   }
   try {
-    return JSON.parse(fs.readFileSync(kvFile(name), 'utf8'));
+    return JSON.parse(fs.readFileSync(file, 'utf8'));
   } catch (e) {}
   return fallback;
 }
 async function kvDocSave(name, data) {
+  const file = kvFile(name);
+  if (!file) return;
   const kv = await getKv();
   if (kv) {
     try { await kv.set('elisee:' + name, data); } catch (e) {}
   }
   try {
-    fs.mkdirSync(path.dirname(kvFile(name)), { recursive: true });
-    fs.writeFileSync(kvFile(name), JSON.stringify(data));
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    fs.writeFileSync(file, JSON.stringify(data));
   } catch (e) {}
 }
 function stripHeavyPng(map) {
@@ -220,6 +233,14 @@ function stripHeavyPng(map) {
 }
 function bachecaStr(v, max) {
   return String(v == null ? '' : v).trim().slice(0, max || 240);
+}
+function bachecaQuery(raw) {
+  return String(raw == null ? '' : raw)
+    .slice(0, 120)
+    .replace(/[\x00-\x1f\x7f]/g, '')
+    .replace(/<[^>]*>/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 function bachecaValidate(b) {
   const errors = [];
@@ -308,7 +329,7 @@ function computeRelevanceScore(item, q) {
 }
 
 function bachecaSearch(items, params) {
-  const q = String(params.get('q') || '').trim().toLowerCase();
+  const q = bachecaQuery(params.get('q')).toLowerCase();
   const cat = String(params.get('categoria') || params.get('cat') || '').trim();
   const role = String(params.get('ruolo') || params.get('role') || '').trim().toLowerCase();
   const loc = String(params.get('location') || params.get('zona') || params.get('citta') || '').trim().toLowerCase();
@@ -653,7 +674,7 @@ module.exports = async function handler(req, res) {
       const resData = bachecaSearch(all, url.searchParams);
       return send(res, 200, {
         ok: true,
-        query: url.searchParams.get('q') || '',
+        query: bachecaQuery(url.searchParams.get('q')),
         total: resData.total,
         items: resData.items,
         limit: resData.limit,
