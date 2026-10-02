@@ -1,6 +1,13 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-02** — FIX29 — Header di perimetro attivi su ogni risposta:
+Ultimo aggiornamento: **2026-10-02** — FIX30 — Content-Security-Policy attiva su ogni risposta:
+
+1. **Cosa lascia passare**: script e fogli del sito, unpkg, cdnjs, jsDelivr, font Google, tessere OpenStreetMap, Nominatim, Supabase, login Google, video YouTube/Vimeo e l’avatar Ready Player Me. Immagini e media da `https`, `data` e `blob`.
+2. **Cosa chiude**: oggetti plugin, base URI esterne, frame del sito da altri domini, script da origini non elencate.
+3. **Prova locale**: 18 tessere mappa caricate, Nominatim risponde 200, finestra GPS apribile, login visibile, zero violazioni CSP. Il GPS resta consentito dalla Permissions-Policy.
+4. **File**: `vercel.json`, `CONTINUA_DA_QUI.md`. Non tocca data di nascita, età o consenso genitoriale.
+
+Feature precedente: **2026-10-02** — FIX29 — Header di perimetro attivi su ogni risposta:
 
 1. **Attivo sul sito**: `Strict-Transport-Security`, `Referrer-Policy`, `Permissions-Policy` (geolocalizzazione solo dal sito, serve al GPS del club), `X-Permitted-Cross-Domain-Policies`. Restano `nosniff` e `X-Frame-Options`.
 2. **Non attivabile qui**: comandi Linux e Windows, SQL/Pandas/Power BI, BGP, intelligence IP, `dig`, blocco Tor, viste e DAX. Questo repository non ha quel server né quel database. Non è stata aggiunta una pagina che li simula.
