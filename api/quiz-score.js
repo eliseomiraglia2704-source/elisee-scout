@@ -59,7 +59,7 @@ export default async function handler(req, res) {
       await kv.zadd(KEY, { score: Math.round(punti), member: nome });
       return res.status(200).json({ ok: true, nome: nome, punti: Math.round(punti) });
     } catch (e) {
-      return res.status(200).json({ ok: false, kv: false, error: String(e && e.message || e) });
+      return res.status(200).json({ ok: false, kv: false });
     }
   }
 

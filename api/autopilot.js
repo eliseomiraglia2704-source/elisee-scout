@@ -60,6 +60,43 @@ function sendJson(res, code, body) {
   res.end(JSON.stringify(body));
 }
 
+const AUTOPILOT_ROUTES = {
+  '': '/api/autopilot',
+  'status': '/api/autopilot/status',
+  'health': '/api/autopilot/health',
+  'log': '/api/autopilot/log',
+  'config': '/api/autopilot/config',
+  'start': '/api/autopilot/start',
+  'stop': '/api/autopilot/stop',
+  'force-cycle': '/api/autopilot/force-cycle',
+  'log/clear': '/api/autopilot/log/clear',
+  'bridge': '/api/autopilot/bridge'
+};
+const AUTOPILOT_FLEETS = {
+  discovery: true,
+  evaluation: true,
+  compliance: true,
+  bridge: true,
+  platformCluster: true,
+  campionatiAgents: true,
+  campionatiSupervisors: true,
+  gdprSupervisors: true,
+  warRoomWatch: true,
+  opsJobs: true,
+  integrazioniKpi: true
+};
+
+function autopilotPathFromQuery(raw) {
+  const p = String(raw || '').replace(/^\/+/, '').split('?')[0].split('#')[0];
+  if (p.indexOf('..') >= 0 || p.indexOf('\\') >= 0) return null;
+  if (Object.prototype.hasOwnProperty.call(AUTOPILOT_ROUTES, p)) return AUTOPILOT_ROUTES[p];
+  if (p.indexOf('fleet/') === 0) {
+    const fid = p.slice('fleet/'.length).split('/')[0];
+    if (Object.prototype.hasOwnProperty.call(AUTOPILOT_FLEETS, fid)) return '/api/autopilot/fleet/' + fid;
+  }
+  return null;
+}
+
 function readBody(req) {
   return new Promise((resolve) => {
     let raw = '';
@@ -84,10 +121,11 @@ module.exports = async function handler(req, res) {
 
   const url = new URL(req.url, `https://${req.headers.host || 'localhost'}`);
   let pathname = url.pathname;
-  // Handle rewrite subpath if present (?path=status o /api/autopilot/status)
   const qPath = url.searchParams.get('path');
   if (qPath) {
-    pathname = '/api/autopilot/' + qPath.replace(/^\//, '');
+    const mapped = autopilotPathFromQuery(qPath);
+    if (!mapped) return sendJson(res, 404, { ok: false, error: 'percorso' });
+    pathname = mapped;
   }
 
   const method = req.method.toUpperCase();
@@ -103,7 +141,9 @@ module.exports = async function handler(req, res) {
   }
 
   if (pathname === '/api/autopilot/log') {
-    const limit = parseInt(url.searchParams.get('limit') || '80', 10);
+    let limit = parseInt(url.searchParams.get('limit') || '80', 10);
+    if (!Number.isFinite(limit) || limit < 1) limit = 80;
+    if (limit > 200) limit = 200;
     const logs = Array.isArray(st.log) ? st.log.slice(-limit) : [];
     return sendJson(res, 200, { ok: true, log: logs });
   }
@@ -113,7 +153,17 @@ module.exports = async function handler(req, res) {
       return sendJson(res, 200, { ok: true, cfg: st.cfg || {} });
     }
     const body = await readBody(req);
-    st.cfg = Object.assign({}, st.cfg, body);
+    const next = {};
+    if (body && body.interval_sec != null) {
+      const n = parseInt(body.interval_sec, 10);
+      if (Number.isFinite(n)) next.interval_sec = Math.min(3600, Math.max(10, n));
+    }
+    if (body && typeof body.auto_bridge === 'boolean') next.auto_bridge = body.auto_bridge;
+    if (body && body.log_limit != null) {
+      const n = parseInt(body.log_limit, 10);
+      if (Number.isFinite(n)) next.log_limit = Math.min(200, Math.max(1, n));
+    }
+    st.cfg = Object.assign({}, st.cfg, next);
     saveState(st);
     return sendJson(res, 200, { ok: true, status: st });
   }
@@ -152,7 +202,10 @@ module.exports = async function handler(req, res) {
   }
 
   if (pathname.startsWith('/api/autopilot/fleet/')) {
-    const fid = pathname.replace('/api/autopilot/fleet/', '').split('/')[0];
+    const fid = pathname.slice('/api/autopilot/fleet/'.length).split('/')[0];
+    if (!Object.prototype.hasOwnProperty.call(AUTOPILOT_FLEETS, fid)) {
+      return sendJson(res, 404, { ok: false, error: 'flotta' });
+    }
     const body = await readBody(req);
     const enabled = body.enabled !== undefined ? Boolean(body.enabled) : Boolean(body.on !== false);
     if (!st.fleets) st.fleets = {};
@@ -166,11 +219,11 @@ module.exports = async function handler(req, res) {
   if (pathname === '/api/autopilot/bridge') {
     const body = await readBody(req);
     st.last_bridge = nowIso();
-    if (body.events) st.bridge_events_count = (body.events || []).length;
+    const events = body && Array.isArray(body.events) ? body.events.length : 0;
+    if (events) st.bridge_events_count = Math.min(events, 5000);
     saveState(st);
-    return sendJson(res, 200, { ok: true, received: Object.keys(body) });
+    return sendJson(res, 200, { ok: true, events: Math.min(events, 5000) });
   }
 
-  // Fallback per rotte status
-  return sendJson(res, 200, { ok: true, status: st });
+  return sendJson(res, 404, { ok: false, error: 'percorso' });
 };

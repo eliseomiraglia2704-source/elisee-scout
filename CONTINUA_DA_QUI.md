@@ -1,6 +1,14 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-02** — FIX31 — Login, ricerca e bacheca non costruiscono file o risposte dal testo grezzo:
+Ultimo aggiornamento: **2026-10-02** — FIX32 — Anche Wrapped, quiz, attività, admin e AutoPilot ignorano il testo grezzo:
+
+1. **Wrapped**: stagione, canale, slide e nome utente tornano tagliati, senza caratteri di controllo né tag. Una stagione non valida resta `2025-26`. Un errore non rimanda più il messaggio interno.
+2. **Quiz e attività**: se il salvataggio fallisce, la risposta dice solo che lo store non è disponibile. Non include il testo dell’errore.
+3. **Admin**: il token si legge dall’intestazione, non più dall’indirizzo. Il sito già lo manda così.
+4. **AutoPilot**: il percorso deve essere uno di quelli previsti. Una flotta esiste solo se è nell’elenco (scoperta, valutazione, conformità, bridge e le sette flotte del pannello). La configurazione accetta solo intervallo, bridge automatico e limite log. Il bridge risponde con il numero di eventi, non con le chiavi inviate.
+5. **File**: `api/wrapped.js`, `api/quiz-score.js`, `api/activity.js`, `api/auth-admin.js`, `api/autopilot.js`, `CONTINUA_DA_QUI.md`. Nessuna funzione serverless nuova. Cache resta `v20261002_FIX28`. Non tocca data di nascita, età o consenso genitoriale.
+
+Feature precedente: **2026-10-02** — FIX31 — Login, ricerca e bacheca non costruiscono file o risposte dal testo grezzo:
 
 1. **Ricerca**: un Bearer lungo a caso non conta più come utente registrato. Resta valido solo il token admin firmato. Il limite per gli ospiti non cambia. Il testo di ricerca era già tagliato a 120 caratteri.
 2. **Documenti account**: se il token di sessione è valido, la scheda documenti usa solo l’email di quella sessione. Senza token il flusso attuale resta, così la chiusura anti-fake continua a sincronizzarsi. Un errore 500 non rimanda più il messaggio interno. Data di nascita, età, consenso genitoriale e regole dei 30 giorni non sono stati toccati.

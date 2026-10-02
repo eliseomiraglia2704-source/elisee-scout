@@ -70,7 +70,7 @@ export default async function handler(req, res) {
       await kv.zremrangebyscore(KEY, 0, Date.now() - DAY_MS);
       return res.status(200).json({ ok: true });
     } catch (e) {
-      return res.status(200).json({ ok: false, kv: false, error: String(e && e.message || e) });
+      return res.status(200).json({ ok: false, kv: false });
     }
   }
 

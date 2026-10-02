@@ -194,9 +194,9 @@ module.exports = async function handler(req, res) {
   // --- AZIONE: VERIFICA TOKEN ESISTENTE ---
   if (req.method === 'GET') {
     const authHeader = req.headers['authorization'] || '';
-    const token = authHeader.startsWith('Bearer ') 
-      ? authHeader.slice(7) 
-      : (req.headers['x-admin-token'] || req.query.token || '');
+    const token = authHeader.startsWith('Bearer ')
+      ? authHeader.slice(7)
+      : (req.headers['x-admin-token'] || '');
 
     const validPayload = verifySignedToken(token);
     if (validPayload) {

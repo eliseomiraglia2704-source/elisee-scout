@@ -10,6 +10,20 @@
  * ============================================================================
  */
 
+function cleanText(raw, max) {
+  return String(raw == null ? '' : raw)
+    .slice(0, max)
+    .replace(/[\x00-\x1f\x7f]/g, '')
+    .replace(/<[^>]*>/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function cleanSeason(raw) {
+  const s = cleanText(raw, 16);
+  return /^\d{4}[-/]\d{2}$/.test(s) ? s : '2025-26';
+}
+
 export default async function handler(req, res) {
   // CORS Headers
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -22,7 +36,7 @@ export default async function handler(req, res) {
 
   const { searchParams } = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
   const action = searchParams.get('action') || (req.body && req.body.action) || 'countdown';
-  const season = searchParams.get('season') || '2025-26';
+  const season = cleanSeason(searchParams.get('season'));
 
   try {
     if (action === 'countdown') {
@@ -44,14 +58,14 @@ export default async function handler(req, res) {
     }
 
     if (action === 'share' && req.method === 'POST') {
-      const { channel, slide_id, user_handle } = req.body || {};
+      const body = req.body || {};
       return res.status(200).json({
         ok: true,
         message: 'Evento di condivisione tracciato per growth attribution',
         tracking: {
-          channel: channel || 'instagram_stories',
-          slide_id: slide_id || 'finale',
-          user_handle: user_handle || '@anonymous',
+          channel: cleanText(body.channel, 40) || 'instagram_stories',
+          slide_id: cleanText(body.slide_id, 40) || 'finale',
+          user_handle: cleanText(body.user_handle, 40) || '@anonymous',
           timestamp: new Date().toISOString()
         }
       });
@@ -92,6 +106,6 @@ export default async function handler(req, res) {
 
     return res.status(400).json({ ok: false, error: 'Azione non supportata' });
   } catch (err) {
-    return res.status(500).json({ ok: false, error: err.message || 'Errore interno Season Wrapped' });
+    return res.status(500).json({ ok: false, error: 'errore_server' });
   }
 }
