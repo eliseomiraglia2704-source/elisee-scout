@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-04** — FIX38 — La ricerca in alto vede gli annunci della bacheca:
+Ultimo aggiornamento: **2026-10-04** — FIX39 — Per pubblicare in bacheca serve l’accesso:
+
+1. **Cosa era rotto**: `POST /api/bacheca` accettava chiunque, anche senza sessione.
+2. **Ora**: il POST richiede Bearer valido. L’autore è l’email della sessione, non un campo del form. Senza token il sito chiede Accedi. La lettura GET resta pubblica.
+3. **File**: `api/manager.js`, `bacheca-annunci.js`, `app-boot-extras.js`, `elisee_up.py`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261004_FIX39`. Non tocca data di nascita, età o consenso genitoriale.
+
+Feature precedente: **2026-10-04** — FIX38 — La ricerca in alto vede gli annunci della bacheca:
 
 1. **Cosa era rotto**: `/api/bacheca` legge lo store live (KV / file runtime). `/api/search` leggeva solo `data/bacheca/annunci.json` del repo, vuoto. Un annuncio pubblicato compariva in bacheca e spariva dalla ricerca globale.
 2. **Ora**: autocomplete e tipo `annunci` usano lo stesso store della bacheca. I club restano sul catalogo. Nessun campo contatto in più nella risposta.

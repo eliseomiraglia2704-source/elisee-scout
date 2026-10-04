@@ -134,17 +134,12 @@
   };
 
   window.openPubblicaAnnuncioModal = function () {
-    var logged = false;
-    try { logged = localStorage.getItem('elisee_user_auth') === 'true' || localStorage.getItem('elisee_creator_mode') === 'true'; } catch (_) {}
-    if (!logged) {
-      if (typeof window.showToast === 'function') window.showToast('Accedi con un profilo Club per pubblicare.', 'error');
+    var tok = '';
+    try { tok = localStorage.getItem('elisee_auth_token') || ''; } catch (_) {}
+    if (!tok) {
+      if (typeof window.showToast === 'function') window.showToast('Accedi per pubblicare un annuncio.', 'error');
       if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
-      else alert('Accedi con un profilo Club per pubblicare una candidatura.');
-      return;
-    }
-    if (!window.canPublishCandidatura()) {
-      if (typeof window.showToast === 'function') window.showToast('Pubblica candidatura è riservata ai profili Club.', 'error');
-      else alert('Pubblica candidatura è riservata ai profili Club.');
+      else alert('Accedi per pubblicare un annuncio.');
       return;
     }
     var modal = document.getElementById('modal-pubblica-annuncio');
@@ -216,6 +211,34 @@
       createdAt: new Date().toISOString()
     };
     payload.desc = [payload.incarico, payload.compenso, payload.durata].filter(Boolean).join(' · ');
+    var tok = '';
+    try { tok = localStorage.getItem('elisee_auth_token') || ''; } catch (_) {}
+    if (!tok) {
+      if (typeof window.showToast === 'function') window.showToast('Accedi per pubblicare un annuncio.', 'error');
+      if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
+      return;
+    }
+    var apiBody = {
+      categoria: 'cerco_giocatore',
+      titolo: title,
+      descrizione: payload.desc || payload.competenze || title,
+      zona_citta: zona || 'Italia',
+      societa: societa,
+      ruolo_cercato: ruolo,
+      categoria_club: societa
+    };
+    fetch('/api/bacheca', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + tok },
+      body: JSON.stringify(apiBody)
+    }).then(function (r) {
+      if (r.status === 401) {
+        if (typeof window.showToast === 'function') window.showToast('Accedi per pubblicare un annuncio.', 'error');
+        if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
+        return null;
+      }
+      return r.json().catch(function () { return {}; });
+    }).catch(function () { return {}; });
     try {
       var list = JSON.parse(localStorage.getItem('elisee_user_jobs') || '[]');
       list.unshift(payload);

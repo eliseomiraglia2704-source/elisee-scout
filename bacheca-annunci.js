@@ -52,10 +52,14 @@
   }
   function isLogged() {
     try {
+      if (localStorage.getItem('elisee_auth_token')) return true;
       return localStorage.getItem('elisee_user_auth') === 'true' ||
         localStorage.getItem('elisee_creator_mode') === 'true' ||
         localStorage.getItem('elisee_admin_auth') === 'true';
     } catch (_) { return false; }
+  }
+  function authToken() {
+    try { return localStorage.getItem('elisee_auth_token') || ''; } catch (_) { return ''; }
   }
   function authorId() {
     try {
@@ -645,26 +649,55 @@
 
   function executeSubmission(payload) {
     return new Promise(function (resolve) {
-      persistLocal(payload);
+      var tok = authToken();
+      if (!tok) {
+        toast('Accedi per pubblicare un annuncio.', 'error');
+        if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
+        resolve();
+        return;
+      }
+      var denied = false;
+      var synced = false;
       fetch('/api/bacheca', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + tok
+        },
         body: JSON.stringify(payload)
       }).then(function (r) {
+        if (r.status === 401) {
+          denied = true;
+          toast('Accedi per pubblicare un annuncio.', 'error');
+          if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
+          return {};
+        }
         if (!r.ok) {
           toast('Salvato in locale. Sincronizzazione server in attesa.', 'warning');
+          persistLocal(payload);
           return {};
         }
         return r.json().catch(function () { return {}; });
       }).then(function (j) {
+        if (denied) return;
         if (j && j.ok === false && j.fields && j.fields.length) {
           toast('Il server ha rifiutato alcuni campi: ' + j.fields.join(', '), 'error');
-        } else if (j && j.ok) {
+          return;
+        }
+        if (j && j.ok) {
+          synced = true;
+          persistLocal(payload);
           toast('Annuncio sincronizzato sul cloud.', 'success');
         }
       }).catch(function () {
+        if (denied) return;
+        persistLocal(payload);
         toast('Salvato in locale (offline). Verrà sincronizzato non appena torna la linea.', 'warning');
       }).finally(function () {
+        if (denied) {
+          resolve();
+          return;
+        }
         if (window.EliseeSchede && window.EliseeSchede.ensureJob) {
           try {
             window.EliseeSchede.ensureJob({
@@ -685,7 +718,7 @@
           applyCatParam();
           if (typeof window.filterAndRenderJobs === 'function') window.filterAndRenderJobs();
           if (typeof window.trackEliseeActivity === 'function') window.trackEliseeActivity('candidatura', { nome: payload.societa || payload.titolo });
-          toast('Annuncio pubblicato in «' + LABEL[payload.categoria] + '».', 'success');
+          if (synced) toast('Annuncio pubblicato in «' + LABEL[payload.categoria] + '».', 'success');
           var jobs = document.getElementById('jobs-container');
           if (jobs) jobs.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 1200);

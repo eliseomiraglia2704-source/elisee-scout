@@ -6,6 +6,13 @@
 const fs = require('fs');
 const path = require('path');
 const { isAdmin } = require('../lib/admin-token-verify');
+const { verifyToken } = require('../lib/auth-oauth');
+
+function sessionUser(req) {
+  const h = String((req.headers && (req.headers.authorization || req.headers.Authorization)) || '');
+  const tok = h.toLowerCase().startsWith('bearer ') ? h.slice(7).trim() : '';
+  return verifyToken(tok);
+}
 
 const FILE = process.env.ELISEE_MANAGER_FILE
   || (process.env.VERCEL ? '/tmp/elisee-manager.json' : path.join(process.cwd(), 'data', 'manager', 'state.json'));
@@ -683,10 +690,15 @@ module.exports = async function handler(req, res) {
       });
     }
     if (req.method !== 'POST') return send(res, 405, { ok: false, error: 'method' });
+    const session = sessionUser(req);
+    if (!session || !session.email) {
+      return send(res, 401, { ok: false, error: 'login_richiesto' });
+    }
     const body = await readBody(req);
     const errors = bachecaValidate(body);
     if (errors.length) return send(res, 400, { ok: false, error: 'validazione', fields: errors });
     const item = bachecaItem(body);
+    item.autore_id = String(session.email || session.id || '').slice(0, 80);
     const items = await bachecaLoad();
     const next = items.filter((x) => x && x.id !== item.id);
     next.unshift(item);

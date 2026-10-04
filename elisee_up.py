@@ -1311,6 +1311,15 @@ class Handler(SimpleHTTPRequestHandler):
                 return True
 
             if method == "POST":
+                user = None
+                try:
+                    from workers.auth_store import get_user_by_token
+                    user = get_user_by_token(self._bearer())
+                except Exception:
+                    user = None
+                if not user:
+                    self._json(401, {"ok": False, "error": "login_richiesto"})
+                    return True
                 body = self._read_json_body()
                 cat = str(body.get("categoria") or "").strip()
                 titolo = str(body.get("titolo") or body.get("title") or "").strip()
@@ -1334,7 +1343,7 @@ class Handler(SimpleHTTPRequestHandler):
                     "data_creazione": now_iso,
                     "data_scadenza": str(body.get("data_scadenza") or "").strip(),
                     "stato": "attivo",
-                    "autore_id": str(body.get("autore_id") or "").strip(),
+                    "autore_id": str(user.get("email") or user.get("id") or "").strip(),
                     "ruolo_campo": str(body.get("ruolo_campo") or "").strip(),
                     "ruolo_cercato": str(body.get("ruolo_cercato") or "").strip(),
                     "ruolo": str(body.get("ruolo") or body.get("ruolo_cercato") or body.get("ruolo_campo") or "").strip(),
