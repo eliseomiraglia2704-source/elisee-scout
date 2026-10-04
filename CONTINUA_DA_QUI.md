@@ -1,7 +1,12 @@
-# Elisee Scout — continua da qui
+﻿# Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-04** — FIX41 — Home pubblica senza pillar né conteggio agenti IA:
+Ultimo aggiornamento: **2026-10-04** — FIX42 — Pannello admin manager: 401 risolto (header corretto):
 
+1. **Cosa era rotto**: il client mandava `X-Elisee-Admin: admin123` in chiaro. Il server Vercel (`lib/admin-token-verify.js`) accetta solo `X-Admin-Token` (token HMAC-SHA256 firmato) o `Authorization: Bearer`. L'header in chiaro veniva ignorato → `isAdmin()` ritornava false → **401 admin_richiesto**.
+2. **Ora**: `manager-runtime.js` legge il token firmato da `localStorage['elisee_admin_session_token']` (salvato al login da `app.js`) e lo manda come `X-Admin-Token`. Se non c'è (server locale Python che accetta ancora il vecchio header), ricade su `X-Elisee-Admin: admin123`.
+3. **File**: `manager-runtime.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261004_FIX42`. Non tocca data di nascita, età o consenso genitoriale.
+
+Feature precedente: **2026-10-04** — FIX41 — Home pubblica senza pillar né conteggio agenti IA:
 1. **Cosa era rotto**: in home c’era «1.386 Pillar / 3127 Agenti IA». Le regole di prodotto lo vietano sulle pagine pubbliche.
 2. **Ora**: curriculum in home parla di dossier verificati, anti-fake, GDPR e Italia. Meta description allineata. Nessun numero interno di cluster.
 3. **File**: `index.html`, `i18n.js`, `about-detail.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261004_FIX41`. Non tocca data di nascita, età o consenso genitoriale.

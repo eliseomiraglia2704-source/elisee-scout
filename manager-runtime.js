@@ -69,7 +69,19 @@
     var h = { 'Content-Type': 'application/json' };
     var tok = token();
     if (tok) h.Authorization = 'Bearer ' + tok;
-    if (admin) h['X-Elisee-Admin'] = 'admin123';
+    if (admin) {
+      // Preferisce il token HMAC firmato (richiesto da Vercel); fallback al
+      // header in chiaro per il server locale Python che lo accetta ancora.
+      var adminTok = '';
+      try {
+        adminTok = localStorage.getItem('elisee_admin_session_token') || '';
+      } catch (e) {}
+      if (adminTok) {
+        h['X-Admin-Token'] = adminTok;
+      } else {
+        h['X-Elisee-Admin'] = 'admin123';
+      }
+    }
     return h;
   }
   function currentTeam() {
