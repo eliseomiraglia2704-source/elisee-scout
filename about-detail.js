@@ -32,11 +32,11 @@
       category: 'Roadmap · 2026',
       accent: 'azzurro',
       title: 'Elisee Scout: Piattaforma live',
-      lead: 'Ecosistema operativo completo con 1.386 pillar strategici, architettura anti-fake nativa, verifica biometrica e documentale, dossier atleta con GPS e bacheca annunci federata.',
+      lead: 'Ecosistema operativo con architettura anti-fake, verifica documentale, dossier atleta con GPS e bacheca annunci federata.',
       stats: [
-        { label: 'Pillar di Rete', val: '1.386' },
-        { label: 'Garanzia Anti-Fake', val: '100%' },
-        { label: 'Agenti & Algoritmi', val: '715' },
+        { label: 'Dossier', val: 'Verificati' },
+        { label: 'Garanzia Anti-Fake', val: 'Attiva' },
+        { label: 'Privacy', val: 'GDPR' },
         { label: 'Stato Rilascio', val: 'Live 2026' }
       ],
       progress: [

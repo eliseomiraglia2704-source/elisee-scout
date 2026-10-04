@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-04** — FIX40 — Iscriviti: i link puntano alle informative giuste:
+Ultimo aggiornamento: **2026-10-04** — FIX41 — Home pubblica senza pillar né conteggio agenti IA:
+
+1. **Cosa era rotto**: in home c’era «1.386 Pillar / 3127 Agenti IA». Le regole di prodotto lo vietano sulle pagine pubbliche.
+2. **Ora**: curriculum in home parla di dossier verificati, anti-fake, GDPR e Italia. Meta description allineata. Nessun numero interno di cluster.
+3. **File**: `index.html`, `i18n.js`, `about-detail.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261004_FIX41`. Non tocca data di nascita, età o consenso genitoriale.
+
+Feature precedente: **2026-10-04** — FIX40 — Iscriviti: i link puntano alle informative giuste:
 
 1. **Cosa era rotto**: «Termini di Servizio» apriva la privacy, «Condizioni d’uso» apriva i cookie. Non esiste una pagina termini: i documenti reali sono informativa privacy e informativa cookie.
 2. **Ora**: Iscriviti e il form nascosto dicono «informativa privacy» e «informativa cookie», ciascuno sul file giusto. I checkbox restano gli stessi (`#es-slide-tos`, `#reg-tos`, `#reg-privacy`).
