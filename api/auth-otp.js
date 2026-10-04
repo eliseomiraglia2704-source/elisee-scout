@@ -14,8 +14,8 @@ const OTP_STORE_FILE = process.env.VERCEL
   : path.join(process.cwd(), 'data', 'auth', 'otp-store.json');
 
 const memoryStore = {};
-const SUPABASE_URL = (process.env.SUPABASE_URL || '').replace(/\/$/, '');
-const SUPABASE_KEY = (process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_KEY || '').trim();
+const SUPABASE_URL = (process.env.SUPABASE_URL || 'https://uautnlmnpxgbajtucuko.supabase.co').replace(/\/$/, '');
+const SUPABASE_KEY = (process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_KEY || 'sb_publishable_1e-KMVmQHAf9GduUTMKn8Q_9ibW1BK_').trim();
 
 function getStore() {
   try {
@@ -245,7 +245,7 @@ function mailBodies(code, meta) {
 
 async function sendResend(email, bodies) {
   const key = (process.env.RESEND_API_KEY || '').trim();
-  if (!key) return false;
+  if (!key) return { ok: false, kind: 'send_fail' };
   try {
     const payload = {
       from: (process.env.RESEND_FROM || 'Elisee Scout <verifica@barberiagarofalo.it>').trim(),
@@ -266,15 +266,18 @@ async function sendResend(email, bodies) {
       },
       body: JSON.stringify(payload)
     });
-    if (r && r.ok) return true;
-    try {
-      const errBody = await r.text();
-      console.error('otp resend fail', r.status, errBody.slice(0, 240));
-    } catch (_) {}
-    return false;
+    if (r && r.ok) return { ok: true, kind: 'ok' };
+    let errBody = '';
+    try { errBody = await r.text(); } catch (_) {}
+    console.error('otp resend fail', r && r.status, String(errBody).slice(0, 240));
+    const low = String(errBody || '').toLowerCase();
+    if (r && r.status === 422 && (low.indexOf('invalid `to`') >= 0 || low.indexOf('testing email') >= 0 || low.indexOf('example.com') >= 0)) {
+      return { ok: false, kind: 'invalid_to' };
+    }
+    return { ok: false, kind: 'send_fail' };
   } catch (e) {
     console.error('otp resend err', e && e.message);
-    return false;
+    return { ok: false, kind: 'send_fail' };
   }
 }
 
@@ -288,7 +291,7 @@ async function sendSupabaseOtp(email) {
         Authorization: 'Bearer ' + SUPABASE_KEY,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ email: email, create_user: true })
+      body: JSON.stringify({ email: email, create_user: false })
     });
     return !!(r && r.ok);
   } catch (_) {
@@ -386,7 +389,16 @@ module.exports = async function handler(req, res) {
       tz: body.tz || ''
     });
     let via = '';
-    if (await sendResend(email, bodies)) via = 'local';
+    const mailed = await sendResend(email, bodies);
+    if (mailed && mailed.ok) via = 'local';
+    if (!via && mailed && mailed.kind === 'invalid_to') {
+      return sendJson(res, 400, {
+        success: false,
+        error: 'Usa un indirizzo email reale. Il codice arriva solo via posta elettronica.',
+        email: email
+      });
+    }
+    if (!via && await sendSupabaseOtp(email)) via = 'supabase';
     if (!via) {
       return sendJson(res, 503, {
         success: false,
@@ -400,13 +412,13 @@ module.exports = async function handler(req, res) {
       expiresAt: now + 600000,
       attempts: 0,
       via: via,
-      codeHash: hashOtp(email, rawCode),
+      codeHash: via === 'local' ? hashOtp(email, rawCode) : '',
       sendCount: prevSendCount + 1,
       sendWindowStart: prevWindowStart
     };
     store[email] = rec;
     saveStore(store);
-    const ticket = signOtpTicket(email, rec.codeHash, rec.expiresAt);
+    const ticket = rec.codeHash ? signOtpTicket(email, rec.codeHash, rec.expiresAt) : '';
     await redisCall('/set/' + encodeURIComponent('elisee:otp:' + email) + '/' + encodeURIComponent(JSON.stringify(rec)) + '/ex/600');
     return sendJson(res, 200, {
       success: true,

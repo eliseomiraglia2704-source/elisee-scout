@@ -1,6 +1,13 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-04** — FIX35 — Altro → Album apre l’album, non la home:
+Ultimo aggiornamento: **2026-10-04** — FIX36 — Codice email: indirizzi finti non sembrano più un guasto del server:
+
+1. **Cosa succedeva**: `test@example.com` riceveva 503 «Invio email non riuscito». Resend rifiuta i domini di prova. Sulle caselle vere l’invio partiva già (200).
+2. **Ora**: un indirizzo rifiutato torna 400 «Usa un indirizzo email reale». Se Resend è giù, parte il fallback su Supabase (senza creare un utente nuovo). Il codice resta solo in email, non nella risposta HTTP.
+3. **Non toccato**: `verifica-account.js`, data di nascita, età, consenso genitoriale, chiusura a 30 giorni.
+4. **File**: `api/auth-otp.js`, `CONTINUA_DA_QUI.md`. Cache resta `v20261004_FIX35`.
+
+Feature precedente: **2026-10-04** — FIX35 — Altro → Album apre l’album, non la home:
 
 1. **Cosa era rotto**: la voce Album del menu Altro chiamava `switchView('album', '#album-figurine')`. Quella vista e quell’ancora non esistono, quindi si vedeva la home. Il footer e il menu telefono andavano già su `#seguo-portal`.
 2. **Ora**: Altro → Album usa lo stesso percorso del footer (`openChiSegui` / `#seguo-portal`). `album` e `#album-figurine` restano alias e aprono l’album.
