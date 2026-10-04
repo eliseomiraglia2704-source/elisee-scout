@@ -8861,7 +8861,7 @@ window.submitSlideRegistrazione = function (e) {
   if (!cognome) return fail('Scrivi anche il cognome, nello stesso campo.');
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail('Inserisci un indirizzo email valido.');
   if (!dob) return fail('Inserisci la data di nascita.');
-  if (!tos || !tos.checked) return fail('Accetta i Termini e l\'informativa privacy.');
+  if (!tos || !tos.checked) return fail('Accetta l\'informativa privacy e l\'informativa cookie.');
   var policy = window.checkPasswordPolicy ? window.checkPasswordPolicy(pass) : { ok: pass.length >= 8 };
   if (!policy.ok) return fail(policy.message || 'Password non valida.');
   var missingReg = ['reg-nome', 'reg-cognome', 'reg-email', 'reg-dob', 'reg-password', 'reg-password2'].some(function (id) {

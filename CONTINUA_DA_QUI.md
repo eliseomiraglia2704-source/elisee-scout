@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-04** — FIX39 — Per pubblicare in bacheca serve l’accesso:
+Ultimo aggiornamento: **2026-10-04** — FIX40 — Iscriviti: i link puntano alle informative giuste:
+
+1. **Cosa era rotto**: «Termini di Servizio» apriva la privacy, «Condizioni d’uso» apriva i cookie. Non esiste una pagina termini: i documenti reali sono informativa privacy e informativa cookie.
+2. **Ora**: Iscriviti e il form nascosto dicono «informativa privacy» e «informativa cookie», ciascuno sul file giusto. I checkbox restano gli stessi (`#es-slide-tos`, `#reg-tos`, `#reg-privacy`).
+3. **File**: `index.html`, `i18n.js`, `app.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261004_FIX40`. Non tocca data di nascita, età o consenso genitoriale.
+
+Feature precedente: **2026-10-04** — FIX39 — Per pubblicare in bacheca serve l’accesso:
 
 1. **Cosa era rotto**: `POST /api/bacheca` accettava chiunque, anche senza sessione.
 2. **Ora**: il POST richiede Bearer valido. L’autore è l’email della sessione, non un campo del form. Senza token il sito chiede Accedi. La lettura GET resta pubblica.
