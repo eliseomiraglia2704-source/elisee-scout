@@ -7,6 +7,7 @@ Ultimo aggiornamento: **2026-10-04** — FIX42 — Pannello admin manager: 401 r
 3. **File**: `manager-runtime.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261004_FIX42`. Non tocca data di nascita, età o consenso genitoriale.
 
 Feature precedente: **2026-10-04** — FIX41 — Home pubblica senza pillar né conteggio agenti IA:
+
 1. **Cosa era rotto**: in home c’era «1.386 Pillar / 3127 Agenti IA». Le regole di prodotto lo vietano sulle pagine pubbliche.
 2. **Ora**: curriculum in home parla di dossier verificati, anti-fake, GDPR e Italia. Meta description allineata. Nessun numero interno di cluster.
 3. **File**: `index.html`, `i18n.js`, `about-detail.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261004_FIX41`. Non tocca data di nascita, età o consenso genitoriale.
@@ -300,9 +301,6 @@ Feature precedente: **2026-09-29** — HEROUX87 — UX Kanban Fase 5: Picker Sec
    - **Fasi 1-4**: già completate.
 2. **File**: `mercato-hub.css`, `mercato-hub.js`, `tc-panel.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX87`.
 
-
-
-
 Feature precedente: **2026-09-29** — HEROUX83 — Bonifica `scrollbar-width` & `scrollbar-gutter` con `@supports` Cross-Browser:
 
 1. **Wrap `@supports` per proprietà non universali (`mobile-webapp.css`, `role-sidebar-pro.css`)**:
@@ -338,6 +336,7 @@ Feature precedente: **2026-09-29** — HEROUX80 — Risoluzione Sintassi e Warni
 4. **File**: `mappa-club.css`, `style.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX80`.
 
 Feature precedente: **2026-09-29** — HEROUX79 — Risoluzione Integrale Warning Linter & Compatibilità CSS:
+
 1. **Bonifica Cross-Browser & Ordinamento Prefissi Vendor su tutto il Repository**:
    - **`backdrop-filter` & `-webkit-backdrop-filter`**: invertito l'ordine nei selettori dove la proprietà standard precedeva il prefisso vendor (regola `css-prefix-order`) e iniettato il prefisso `-webkit-` mancante su Safari e Safari iOS in 33 file CSS (incluso `style.css` in oltre 34 punti, `chi-siamo.css`, `role-sidebar-pro.css`, `success-system.css`, ecc.).
    - **`appearance` & `-webkit-appearance`**: garantito l'ordine corretto `-webkit-appearance: none;` prima di `appearance: none;` ed eliminato ogni mancato supporto cross-browser.
@@ -349,6 +348,7 @@ Feature precedente: **2026-09-29** — HEROUX79 — Risoluzione Integrale Warnin
 3. **File**: 33 file CSS tra cui `style.css`, `chi-siamo.css`, `es-ux-controls.css`, `role-sidebar-pro.css`, `success-system.css`, `tide-button.css`, `coach-dash.css`, `squadre-select.css`, `minigioco-carriera.css`, `mobile-webapp.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX79`.
 
 Feature precedente: **2026-09-29** — HEROUX78 — Risoluzione Warning Linter su file CSS:
+
 1. **Bug Sintattico CSS in `es-nav-ux.css`**:
    - Aggiunta la graffa di chiusura `}` mancante per il blocco `.speed-chip .lbl { color: #c6cbdc; }` (riga 1006-1007), che causava l'annidamento errato di tutto il blocco HEROUX60 sulle parentesi decorative come proprietà dello `.speed-chip .lbl`.
 2. **Palette Residua Magenta in `styles/action-menu.css`**:
@@ -357,6 +357,7 @@ Feature precedente: **2026-09-29** — HEROUX78 — Risoluzione Warning Linter s
 3. **File**: `es-nav-ux.css`, `styles/action-menu.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX78`.
 
 Feature precedente: **2026-09-29** — HEROUX77 — Risoluzione Errori e Warning Linter su index.html:
+
 1. **Posizionamento `meta charset` nel `<head>`**:
    - Spostato `<meta charset="UTF-8">` come primissimo nodo figlio di `<head>`, rispettando le specifiche HTML e prevenendo il parsing ritardato dell'encoding da parte dei browser.
 2. **Supporto Cross-Browser `-webkit-backdrop-filter` & Ordinamento Regole**:
@@ -367,6 +368,7 @@ Feature precedente: **2026-09-29** — HEROUX77 — Risoluzione Errori e Warning
 4. **File**: `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX77`.
 
 Feature precedente: **2026-09-29** — HEROUX76 — Scheda Giocatore Pubblica Condivisibile & Deep-Linking:
+
 1. **Scheda Giocatore Pubblica Condivisibile (`public-profile.css`, `public-profile.js`)**:
    - Deep-linking & Hash Routing: supporto URL diretti `#profilo?id=<id>` e `#player?id=<id>` con apertura automatica e gestione trasparente dell'history browser.
    - Header dinamico: avatar/iniziali, nome, ruolo primario/FM, status svincolato o club, piede dominante, nazionalità e città/regione.
@@ -380,6 +382,7 @@ Feature precedente: **2026-09-29** — HEROUX76 — Scheda Giocatore Pubblica Co
 3. **File**: `public-profile.css`, `public-profile.js`, `scopri-profili.css`, `player-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX76`.
 
 Feature precedente: **2026-09-29** — HEROUX75 — Configurazione & Sblocco Segreti Vercel Production:
+
 1. **Configurazione Automatica Variabili d'Ambiente su Vercel (`vercel env add`)**:
    - `ADMIN_SECRET`: configurata per il login master amministrativo (`Iemmello.9`).
    - `TOKEN_SIGNING_KEY`: generata chiave crittografica sicura 256-bit ed iniettata su Vercel Production per la firma HMAC-SHA256 dei token admin (`lib/admin-token-verify.js` e `api/auth-admin.js`).
@@ -389,6 +392,7 @@ Feature precedente: **2026-09-29** — HEROUX75 — Configurazione & Sblocco Seg
 2. **File**: `.env` (locale protetto gitignore), `version.json`, `sw.js`, `index.html`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX75`.
 
 Feature precedente: **2026-09-29** — HEROUX74 — Animazione Logout fluida & chiusura sessione (UI-05):
+
 1. **Transizione Fluida & Zero Layout Shift (`.es-logout-fade-out`)**:
    - Animazione di dissolvenza a 300ms con micro-traslazione e blur controllato sul trigger o contenitore utente nella navbar, senza salti visivi né layout shift.
    - Pieno supporto alle preferenze di accessibilità (`prefers-reduced-motion: reduce`) con esecuzione istantanea (1ms) e zero trasformazioni.
@@ -402,6 +406,7 @@ Feature precedente: **2026-09-29** — HEROUX74 — Animazione Logout fluida & c
 4. **File**: `micro-interactions.css`, `micro-interactions.js`, `app.js`, `action-menu-handler.js`, `js/action-menu-handler.js`, `i18n.js`, `docs/BACKLOG-UI.md`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260929_HEROUX74`.
 
 Feature precedente: **2026-09-29** — SECFIX2 — Security Remediation Blocchi 1 e 2:
+
 1. **Blocco 1 (Autenticazione & Segreti)**:
    - Sostituito bypass admin `X-Elisee-Admin: admin123` con verifica firma HMAC-SHA256 (`lib/admin-token-verify.js` e `api/manager.js`).
    - Separati gli hash password PBKDF2 per Manuel, Alessandro ed Eliseo con `mustResetPassword: true` e rimossa password master condivisa da `api/auth/me.js`.
@@ -413,6 +418,7 @@ Feature precedente: **2026-09-29** — SECFIX2 — Security Remediation Blocchi 
 3. **File**: `lib/admin-token-verify.js`, `api/manager.js`, `api/auth-admin.js`, `api/auth-otp.js`, `lib/auth-oauth.js`, `api/auth/me.js`, `version.json`, `sw.js`, `.gitignore`, `CONTINUA_DA_QUI.md`. Cache `v20260929_SECFIX2`.
 
 Feature precedente: **2026-09-28** — HEROUX73 — Implementazione delle 6 Regole UX per ricerche, date e selezioni su tutta la piattaforma:
+
 1. **Audit completo & Classificazione Controlli**:
    - Censiti tutti i controlli nativi ed emulati (Bacheca, Ricerca Navbar, Mappa Club, Filtri, Form pubblica annuncio, Date di nascita registrazione/slide, Piede, Campionati, ecc.).
 2. **Regola 1 (Type to filter, >10 opzioni)**:
@@ -430,6 +436,7 @@ Feature precedente: **2026-09-28** — HEROUX73 — Implementazione delle 6 Rego
 8. **File**: `es-ux-controls.css`, `es-ux-controls.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX73`.
 
 Feature precedente: **2026-09-28** — HEROUX72 — Rimozione riquadro esterno e blindatura totale movimento Realistic Switch:
+
 1. **Risoluzione Bug 1 (Riquadro attorno al pulsante)**:
    - Identificati e rimossi tutti i vecchi selettori responsabili (`header.public-header .theme-toggle`, `.theme-toggle:hover`, `.theme-toggle:active` in `es-nav-ux.css`, e `.theme-toggle` in `style.css` e `apple-nav.css`).
    - Rimosso `theme-toggle` dalla classe di `#es-nav-theme` in `index.html` (ora ha esclusivamente `class="realistic-switch"`).
@@ -445,17 +452,20 @@ Feature precedente: **2026-09-28** — HEROUX72 — Rimozione riquadro esterno e
 3. **File**: `es-nav-ux.css`, `style.css`, `apple-nav.css`, `realistic-switch.css`, `realistic-switch.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX72`.
 
 Feature precedente: **2026-09-28** — HEROUX71 — Fix sovrascrittura Realistic Switch da role-sidebar-pro e forzatura cache-bust globale:
+
 1. **Risoluzione sovrascrittura Realistic Switch**: eliminata del tutto l'assegnazione `btn.textContent = light ? '☀️' : '🌙'` da `role-sidebar-pro.js` che distruggeva il markup interno del pulsante skeuomorfico ripristinando la luna gialla.
 2. **Auto-ripristino difensivo (`realistic-switch.js`)**: implementata la funzione `ensureSwitchMarkup()` che controlla e ricrea istantaneamente i nodi 3D `.rs-key`, `.rs-slot`, `.rs-thumb`, `.rs-led` qualora un elemento terzo provi a modificare il testo o i figli del pulsante.
 3. **Cache-bust globale**: aggiornato `BUILD_VERSION = '20260928_HEROUX71'` nello script inline all'avvio di `index.html` per forzare l'unregistration immediata dei vecchi Service Worker e azzerare le cache obsolete nel browser dell'utente, aggiornati i timestamp in `index.html`, `version.json` e `sw.js`.
 4. **File**: `role-sidebar-pro.js`, `realistic-switch.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX71`.
 
 Feature precedente: **2026-09-28** — HEROUX70 — Rimozione emoji dalle card I 3 Pilastri del Network:
+
 1. **Rimozione emoji**: rimosse le emoji ⚡ (fulmine su Calciatori), 🛡️ (scudo su Club & Squadre) e 🎯 (bersaglio su Scout & Agenti) dalla sezione `#home-pillars-glow` ("I 3 PILASTRI DEL NETWORK") in `index.html`.
 2. **Layout e tipografia puliti**: i badge `ATLETA`, `SOCIETÀ` e `AREA TECNICA` distano ora con precisione dai titoli delle card mantenendo un look minimale, pulito e professionale.
 3. **File**: `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX70`.
 
 Feature precedente: **2026-09-28** — HEROUX69 — Realistic Switch Skeuomorfico per il tema (luna/sole):
+
 1. **Sostituzione Toggle Tema skeuomorfico**: il vecchio bottone luna/sole 🌙/☀️ (`#es-nav-theme`) è ora un componente riutilizzabile `.realistic-switch` 3D tattile a 3 layer (solo CSS, nessuna immagine o asset esterno):
    - `.rs-key`: squircle rilievo 3D con border-radius 32%, gradiente verticale (#3a3a42 → #2a2a31 in Dark, teal #2fe0c8 → #14b8a6 → #0d9488 in Light), bordo sottile e doppie ombre interne ed esterne.
    - `.rs-slot`: incavo interno pill verticale (34% larghezza × 52% altezza) con inset shadow pronunciata.
@@ -466,6 +476,7 @@ Feature precedente: **2026-09-28** — HEROUX69 — Realistic Switch Skeuomorfic
 5. **File**: `realistic-switch.css`, `realistic-switch.js`, `role-sidebar-pro.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX69`.
 
 Feature precedente: **2026-09-28** — HEROUX68 — Componente Parallax Card 3D dopo #funzioni:
+
 1. Nuova sezione `#profili` posizionata tra `#funzioni` e `#home-about`, `background: transparent`, scroll-margin-top e padding coerenti. Nessun link aggiunto in navbar. Sfondo globale e sezioni esistenti invariati.
 2. Intestazione nello stesso stile delle altre sezioni: eyebrow teal «Per chi è», titolo «Una piattaforma, tre ruoli», sottotitolo di una riga. Supporto i18n completo (IT, EN, ES, FR).
 3. 3 card affiancate (Giocatori, Società, Scout & staff) a 1366px (gap 2rem, 300x400px, border-radius 20px), responsive a 2 colonne su tablet (768px) e 1 colonna impilata su mobile (≤600px).
@@ -476,11 +487,13 @@ Feature precedente: **2026-09-28** — HEROUX68 — Componente Parallax Card 3D 
 8. File: `parallax-cards.css`, `parallax-cards.js`, `index.html`, `i18n.js`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX68`.
 
 Feature precedente: **2026-09-28** — HEROUX67 — Carosello isole sulla home, dopo la hero:
+
 1. Sezione `#funzioni` subito dopo `#hero`. Navbar, sfondo, Chi siamo, Bacheca, Mappa e footer non toccati.
 2. Cinque card demo (verifica, GPS, bacheca, trattative, GDPR minori) con badge Esempio. Dati solo nell'array `SLIDES` di `island-carousel.js`. Testi IT/EN in `i18n.js`.
 3. Scroll-snap, frecce, puntini, IntersectionObserver, autoplay 5s che si ferma dopo un gesto. File: `island-carousel.css`, `island-carousel.js`, `index.html`, `i18n.js`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX67`.
 
 Feature precedente: **2026-09-28** — HEROUX66 — Sfondo continuo fino al footer:
+
 1. Il gradiente non è più sul body con `background-attachment`. Sta su `body.layout-portfolio::before` (`position: fixed; inset: 0; z-index: -1`). html ha solo `--bg-base`.
 2. Tab Bacheca (`.bacheca-nav-tabs`) trasparenti: resta la linea e la tab attiva teal.
 3. Footer trasparente, separato da `border-top: 1px rgba(255,255,255,0.06)`.
@@ -488,6 +501,7 @@ Feature precedente: **2026-09-28** — HEROUX66 — Sfondo continuo fino al foot
 5. File: `landing-unify.css`, `bacheca-board.css`, `style.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX66`.
 
 Feature precedente: **2026-09-28** — HEROUX65 — Navbar e sfondo uguali su Home, Chi siamo, Bacheca e Mappa:
+
 1. **Una sola barra** (`landing-unify.css`, `es-nav-ux.css`, `style.css`, `index.html`):
    - Tolto lo sfondo opaco delle viste interne (`body.is-internal-view` / `is-view-mappa` / `.is-scrolled`): la barra resta trasparente, senza bordo e senza fascia.
    - La pillola Chi siamo / Bacheca / Mappa ha gli stessi vetro, blur e raggio ovunque. Cambia solo il link attivo.
@@ -498,6 +512,7 @@ Feature precedente: **2026-09-28** — HEROUX65 — Navbar e sfondo uguali su Ho
 4. **File**: `landing-unify.css`, `index.html`, `es-nav-ux.css`, `style.css`, `chi-siamo.css`, `bacheca-board.css`, `mappa-club.css`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX65`.
 
 Feature precedente: **2026-09-28** — HEROUX64 — Chi Siamo: spazio vuoto sopra il titolo e paragrafi sovrapposti:
+
 1. **Un solo distacco dalla navbar** (`chi-siamo.css`, `index.html`):
    - Azzerato il padding-top impilato su `#view-about`, `#about` e `.about-dossier-wrap` (prima circa 88px × 3, più altri 88px sull'hero).
    - Padding-top unico su `.cs-hero`: 120px desktop, 96px sotto i 900px. Niente min-height a schermo intero e niente animazione reveal.
@@ -509,6 +524,7 @@ Feature precedente: **2026-09-28** — HEROUX64 — Chi Siamo: spazio vuoto sopr
 3. **File**: `index.html`, `chi-siamo.css`, `i18n.js`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX64`.
 
 Feature precedente: **2026-09-28** — HEROUX63 — Chi Siamo: Distanziamento Verticale Fluido & Separazione Fisica Anti-Overlap tra Hero e Mission:
+
 1. **Distanziamento Garantito e Separazione Anti-Overlap (`chi-siamo.css`, `index.html`)**:
    - Risolto il contatto/sovrapposizione tra il paragrafo descrittivo della hero (`.cs-lede`) e la sezione missione (`.cs-mission`):
      - Assegnato a `.about-dossier .cs-hero` un `padding-bottom: 48px !important;` e `margin-bottom: 32px !important;`.
@@ -518,6 +534,7 @@ Feature precedente: **2026-09-28** — HEROUX63 — Chi Siamo: Distanziamento Ve
 2. **File**: `index.html`, `chi-siamo.css`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260928_HEROUX63`.
 
 Feature precedente: **2026-09-27** — HEROUX62 — Chi Siamo / La Nostra Missione: Risoluzione Taglio Navbar Fissa e Rimozione Fascia Scura:
+
 1. **Scostamento Assoluto dalla Navbar Fissa (`chi-siamo.css`, `index.html`, `style.css`)**:
    - Assegnate le classi semantiche `.mission-hero .chi-siamo-intro` all'header `.cs-hero` dell'area Chi siamo.
    - Applicato `position: static !important; padding-top: 88px !important;` (pari all'altezza reale della navbar a 64px + 24px di respiro confortevole) per garantire che il kicker "Chi siamo", il titolo principale "LA NOSTRA MISSIONE" e la card info Sede/Contatti/Ambito non vengano mai clippati o coperti dalla barra fissa.
@@ -529,6 +546,7 @@ Feature precedente: **2026-09-27** — HEROUX62 — Chi Siamo / La Nostra Missio
 3. **File**: `index.html`, `chi-siamo.css`, `style.css`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260927_HEROUX62`.
 
 Feature precedente: **2026-09-27** — HEROUX61 — Componente Drag & Drop dz-card con Contatore Anti-Flicker, Progress Bar & Verifica Documenti:
+
 1. **Componente Drag & Drop `dz-card` (`file-dropzone.css`, `file-dropzone.js`)**:
    - Creato modulo dedicato `EliseeDropzone` con contatore anti-flicker (`dragCounter` incrementale su `dragenter` e decrementale su `dragleave`), prevenendo qualsiasi instabilità visiva o perdita di stato quando il cursore passa sopra elementi figli del dropzone.
    - Supporto file multipli, formati configurabili (`.pdf,.jpg,.jpeg,.png`) e limite configurabile.
@@ -542,6 +560,7 @@ Feature precedente: **2026-09-27** — HEROUX61 — Componente Drag & Drop dz-ca
 3. **File**: `file-dropzone.css`, `file-dropzone.js`, `app.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260927_HEROUX61`.
 
 Feature precedente: **2026-09-27** — HEROUX60 — Centratura Assoluta Navbar a 3 Colonne Grid e Supporto Parentesi Decorative Sottili:
+
 1. **Centratura Geometrica Assoluta della Navbar (`index.html`, `style.css`, `es-nav-ux.css`, `apple-nav.css`)**:
    - Sostituito il layout flex asimmetrico (`justify-content: space-between`) con **CSS Grid a 3 colonne** simmetriche: `grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 40px;`.
    - Allineamento delle tre aree:
@@ -559,6 +578,7 @@ Feature precedente: **2026-09-27** — HEROUX60 — Centratura Assoluta Navbar a
 3. **File**: `index.html`, `style.css`, `es-nav-ux.css`, `apple-nav.css`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260927_HEROUX60`.
 
 Feature precedente: **2026-09-27** — HEROUX59 — Pulsante Animato "Pubblica annuncio" con Volo Documento, Wipe Text & Check Verde:
+
 1. **Componente Animato Publish Button (`pub-button.css`, `pub-button.js`)**:
    - Bottone `.pub-btn` con `isolation: isolate`, transizione fluida e ombra morbida `box-shadow: 0 8px 20px rgba(14,24,48,.18)`.
    - Struttura icone SVG sovrapposte (`.icon` con `.ic-doc`, `.ic-check`, `.trail`).
@@ -578,6 +598,7 @@ Feature precedente: **2026-09-27** — HEROUX59 — Pulsante Animato "Pubblica a
 3. **File**: `pub-button.css`, `pub-button.js`, `index.html`, `bacheca-annunci.js`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260927_HEROUX59`.
 
 Feature precedente: **2026-09-27** — HEROUX58 — Backend Completo per Barra di Ricerca Unica & Bacheca Annunci:
+
 1. **Motore di Ricerca Full-Text & Ranking Server-Side (`api/manager.js`, `elisee_up.py`)**:
    - Creato motore di ricerca e ranking pesato `bachecaSearch`: ricerca multi-termine su titolo, ruolo, club, città, categoria, descrizione, benefit e condizioni.
    - Punteggi di pertinenza: exact match titolo/club (+100), prefisso (+60), parziale (+40), ruolo (+30), città (+25), descrizione (+15). Ordinamento secondario cronologico decrescente.
@@ -595,6 +616,7 @@ Feature precedente: **2026-09-27** — HEROUX58 — Backend Completo per Barra d
 5. **File**: `api/manager.js`, `elisee_up.py`, `vercel.json`, `scry-search.js`, `bacheca-annunci.js`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260927_HEROUX58`.
 
 Feature precedente: **2026-09-26** — HEROUX57 — Integrazione Design System Glassmorphic su Barra di Ricerca Unica Bacheca:
+
 1. **Applicazione Variabili CSS Native del Progetto (`scry-search.css`)**:
    - Definite le variabili native `:root` (`--glass`, `--ink`, `--ink-2`, `--ink-3`, `--hover`, `--radius`, `--spring`).
    - Contenitore `.search-bar-container`: `width: 100%`, `max-width: 600px`, `margin: 0 auto 20px auto`.
@@ -605,6 +627,7 @@ Feature precedente: **2026-09-26** — HEROUX57 — Integrazione Design System G
 2. **File**: `scry-search.css`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX57`.
 
 Feature precedente: **2026-09-26** — HEROUX56 — Correzione Stile Dark Theme Barra di Ricerca Unica Bacheca (#main-search-input):
+
 1. **Adeguamento Nativo Dark Theme (`scry-search.css`)**:
    - Risolto il contrasto chiaro/grigio visibile su sfondi scuri dell'applicazione.
    - Sfondo wrapper `.search-input-wrapper`: `#0b0e14` (palette filtri scuri nativi) con bordo `1px solid #1e293b` e raggio curvatura `20px`.
@@ -614,6 +637,7 @@ Feature precedente: **2026-09-26** — HEROUX56 — Correzione Stile Dark Theme 
 2. **File**: `scry-search.css`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX56`.
 
 Feature precedente: **2026-09-26** — HEROUX55 — Sostituzione Tre Filtri Dropdown con Barra di Ricerca Unica Integrata:
+
 1. **Sostituzione Griglia Dropdown con Barra di Ricerca Unica**:
    - Rimossa la griglia `.bacheca-filter-row-primary` con i tre filtri a discesa (Ruolo, Categoria, Zona specifica).
    - Inserita al suo posto la barra di ricerca unificata `.search-bar-container` con `#main-search-input` ("Cerca annunci, club o calciatori...") e pulsante di svuotamento rapido `#clear-search-btn` (`✕`).
@@ -628,6 +652,7 @@ Feature precedente: **2026-09-26** — HEROUX55 — Sostituzione Tre Filtri Drop
 4. **File**: `scry-search.css`, `scry-search.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX55`.
 
 Feature precedente: **2026-09-26** — HEROUX54 — Search Bar Animata 3D Flip (SCRY) con Conferma Visiva & Filtro Real-Time:
+
 1. **Componente 3D Flip Search Bar (`scry-search.css`, `scry-search.js`)**:
    - Apertura con prospettiva 3D dinamica (`perspective: 900px`, `transform: rotateX(-90deg)` → `rotateX(0deg)` con timing `cubic-bezier(.55,.08,.4,.95)`).
    - Bottone circolare `.scry__btn` che scivola da centro (`left: calc(50% - 28px)`) all'estremità destra (`left: calc(100% - 56px)`) con morphing icona da lente (`.ic-search`) a chiusura (`.ic-close`).
@@ -647,6 +672,7 @@ Feature precedente: **2026-09-26** — HEROUX54 — Search Bar Animata 3D Flip (
 4. **File**: `scry-search.css`, `scry-search.js`, `app.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX54`.
 
 Feature precedente: **2026-09-26** — HEROUX53 — Pulsante Glow Animato Conic Gradient con Punti Luce Rotanti & Alone 3D:
+
 1. **Componente Glow Button (`glow-button.css`)**:
    - Proprietà animata nativa `@property --angle` (`syntax: '<angle>'`, rotazione 0deg → 360deg a 3.5s infinita).
    - Wrapper `.glow-wrap` con anello di padding (2px) e doppio gradiente conico `conic-gradient`:
@@ -665,6 +691,7 @@ Feature precedente: **2026-09-26** — HEROUX53 — Pulsante Glow Animato Conic 
 3. **File**: `glow-button.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX53`.
 
 Feature precedente: **2026-09-26** — HEROUX52 — TIDE Download Button con Progresso Reale, Anello SVG e Gestione Esiti:
+
 1. **Componente TIDE Download Button (@code_and_chill inspired, `tide-button.css`, `tide-button.js`)**:
    - Bottone circolare animato `.tide-btn` (58px, border-radius 50%, hover `translateY(-2px)`, active `scale(.97)`).
    - Anello circolare SVG `.tide-ring` con circonferenza esatta `302` (`r="48"`), `.track` traslucida e `.arc` progressiva sincronizzata alla percentuale live numerica `.ic-pct`.
@@ -682,6 +709,7 @@ Feature precedente: **2026-09-26** — HEROUX52 — TIDE Download Button con Pro
 4. **File**: `tide-button.css`, `tide-button.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX52`.
 
 Feature precedente: **2026-09-26** — HEROUX51 — Unificazione Tema Sezione Mappa & Micro-Interazioni Responsive:
+
 1. **Unificazione Token Tema Globale (#mappa-portal, vista mappa e panoramica territoriale)**:
    - Sostituiti tutti i colori scuri fissi / hardcoded in `mappa-club.css` con il sistema standard di variabili di tema: `--bg`, `--panel`, `--text`, `--text-dim`, `--line`, `--blue`, `--track`.
    - Supporto completo e reattivo per:
@@ -703,6 +731,7 @@ Feature precedente: **2026-09-26** — HEROUX51 — Unificazione Tema Sezione Ma
 4. **File**: `mappa-club.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX51`.
 
 Feature precedente: **2026-09-26** — HEROUX50 — Fix Layout Bacheca (Header Static, Tabs Sticky) e Ristilizzazione Action Menu:
+
 1. **Fix Header Intro Bacheca (Sbloccato da Fixed)**:
    - Rimosso l'aggancio fixed accidentale causato dal selettore non qualificato `header,` in `apple-nav.css` (ora limitato a `header.public-header`).
    - `.pf-header-bacheca` e `.bacheca-intro` impostati esplicitamente a `position: static !important; height: auto !important;`: ora scorrono normalmente con la pagina, eliminando il blocco fisso a schermo e l'enorme spazio vuoto.
@@ -717,6 +746,7 @@ Feature precedente: **2026-09-26** — HEROUX50 — Fix Layout Bacheca (Header S
 5. **File**: `apple-nav.css`, `bacheca-board.css`, `action-menu.css`, `styles/action-menu.css`, `trash-btn.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX50`.
 
 Feature precedente: **2026-09-26** — HEROUX49 — Implementazione Specifica Esatta Prompt (Nav, Bottoni e Card Calciatore):
+
 1. **Navigazione & Indicatore Animato Scorrevole**:
    - Inclusa la struttura esatta con `.nav-links`, `.nav-indicator`, e selettori per classi attive / hover con easing `cubic-bezier(.34,1.1,.4,1)`.
    - Pulsante `Accedi` / `.accedi` con colore navy scuro `--navy: #0e1830`, testo `#fff`, border-radius 999px e hover morbido senza blu elettrico.
@@ -733,6 +763,7 @@ Feature precedente: **2026-09-26** — HEROUX49 — Implementazione Specifica Es
 4. **File**: `index.html`, `es-nav-ux.css`, `es-nav-ux.js`, `style.css`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX49`.
 
 Feature precedente: **2026-09-26** — HEROUX48 — Micro-Interazioni Cubic-Bezier, Indicatore Scorrevole e Nav Responsive:
+
 1. **Nav con Indicatore Animato (Sliding Pill con Easing Morbido)**:
    - Pillola di sfondo `.nav-indicator` che scivola sotto la voce attiva/hoverata su `.main-nav` (`a.nav-link`, `.es-nav-dropdown-btn`).
    - Movimento orizzontale fluido con curva `cubic-bezier(0.16, 1, 0.3, 1)` a 280ms su GPU (`translate3d`), con pillola satinata coordinata sia in Dark Mode (glow ciano/azzurro) che in Light Mode (azzurro tenue satinato `#0284c7`).
@@ -749,6 +780,7 @@ Feature precedente: **2026-09-26** — HEROUX48 — Micro-Interazioni Cubic-Bezi
 5. **File**: `index.html`, `es-nav-ux.css`, `es-nav-ux.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX48`.
 
 Feature precedente: **2026-09-26** — HEROUX47 — Fix Macchia Scura / Vignetta Glow su Hero in Light Mode:
+
 1. **Rimosso Glow e Vignetta Scura in Light Mode**:
    - Individuato il responsabile esatto della fascia grigio-scura sfumata che appariva nella Schermata Iniziale (#hero) in modalità giorno: il pseudo-elemento `.hero-typography-left::before`, configurato con `radial-gradient(ellipse at center left, rgba(0, 0, 0, 0.7)...)` e `filter: blur(12px / 20px)`.
    - Vincolato tale glow unicamente a Dark Mode (`html:not([data-theme="mimetico-chiaro"]) .hero-typography-left::before`).
@@ -757,6 +789,7 @@ Feature precedente: **2026-09-26** — HEROUX47 — Fix Macchia Scura / Vignetta
 2. **File**: `index.html`, `style.css`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX47`.
 
 Feature precedente: **2026-09-26** — HEROUX46 — Riorganizzazione Sezione Chi Siamo / About (#about):
+
 1. **Eliminazione Sovrapposizione e Duplicazione Blocco Chi Siamo**:
    - Rimosso il vecchio contenitore duplicato `.chi-siamo-container` che causava l'accavallamento dei titoli centrali ("CHI SIAMO" / "La nostra missione") sopra l'header istituzionale.
 2. **Hero Istituzionale a Due Colonne Pulita**:
@@ -769,6 +802,7 @@ Feature precedente: **2026-09-26** — HEROUX46 — Riorganizzazione Sezione Chi
 4. **File**: `index.html`, `chi-siamo.css`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX46`.
 
 Feature precedente: **2026-09-26** — HEROUX45 — Universal Nimbus Publish Button Component (Idle -> Loading -> Done):
+
 1. **Pulsante di Pubblicazione Nimbus con Micro-Animazione SVG**:
    - Creato modulo CSS dedicato [publish-btn.css](publish-btn.css) con animazione fluida trifase:
      - **Idle**: icona nuvola e freccia vettoriale pronta all'invio.
@@ -783,6 +817,7 @@ Feature precedente: **2026-09-26** — HEROUX45 — Universal Nimbus Publish But
 2. **File**: `publish-btn.css`, `publish-btn.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX45`.
 
 Feature precedente: **2026-09-26** — HEROUX44 — Fix Schermata Iniziale (#hero) in Modalità Giorno / Light Mode:
+
 1. **Risolto Sfondo Scuro Hardcoded su #hero e .es-plx**:
    - Rimosso il selettore `html, body, #hero { background: #07131c !important; }` incondizionato che prevaleva su tutto l'hero.
    - Limitato lo sfondo nero-blu esclusivamente a `html:not([data-theme="mimetico-chiaro"])`.
@@ -794,6 +829,7 @@ Feature precedente: **2026-09-26** — HEROUX44 — Fix Schermata Iniziale (#her
 2. **File**: `style.css`, `index.html`, `role-sidebar-pro.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX44`.
 
 Feature precedente: **2026-09-26** — HEROUX43 — Glow Cards Spotlight Cursor-Tracking (3 Pilastri Network):
+
 1. **Interactive Glow Cards Showcase (Spotlight Mouse Tracking)**:
    - Integrato il pattern interattivo Spotlight Glow con tracciamento real-time del cursore su coordinate CSS dinamiche (`--x`, `--y`).
    - 3 card esclusive dedicate ai pilastri di Elisee Scout:
@@ -805,6 +841,7 @@ Feature precedente: **2026-09-26** — HEROUX43 — Glow Cards Spotlight Cursor-
 2. **File**: `index.html`, `style.css`, `glow-cards-handler.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX43`.
 
 Feature precedente: **2026-09-26** — HEROUX42 — Full Homepage & Public Pages Light Mode Suite:
+
 1. **Light Mode Globale per Tutta la Homepage e Sezioni Pubbliche**:
    - Risolto il disallineamento cromatico dove solo l'header recepiva il tema chiaro mentre il resto della homepage (#home-resume, #home-portfolio, #welcome-access, footer) rimaneva con sfondi scuri.
    - Sfondi calibrati alternati (`#ffffff` e `#f8fafc`) con bordi delicati `border-top: 1px solid rgba(15, 23, 42, 0.08)`.
@@ -816,6 +853,7 @@ Feature precedente: **2026-09-26** — HEROUX42 — Full Homepage & Public Pages
 2. **File**: `style.css`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260926_HEROUX42`.
 
 Feature precedente: **2026-09-26** — HEROUX41 — Suite Consolidata & Modern Navigation UI (Framer Motion Feel):
+
 1. **Modern Navigation UI (Framer Motion Feel in Vanilla CSS/JS)**:
    - Header ultra-moderno con glassmorphism `backdrop-filter: blur(20px) saturate(180%)`, bordo sottile luminescente e shadow multilivello.
    - **Gliding Magnetic Indicator** (`.nav-indicator`): Scorrimento GPU elastico su rAF con fisica lerp (`speed = 0.24`), gradiente ciano-azzurro neon, glow sottile a 16px e tracking istantaneo di hover e click.
@@ -830,6 +868,7 @@ Feature precedente: **2026-09-26** — HEROUX41 — Suite Consolidata & Modern N
 3. **File**: `es-nav-ux.css`, `es-nav-ux.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX41`.
 
 Feature precedente: **2026-09-26** — HEROUX40 — Traguardo Milestone Piattaforma Pro Consolidata (Zero Latency + Full Suite Live):
+
 1. **Milestone Piattaforma Pro Consolidata**:
    - Tutte le funzionalità strategiche integrate, blindate e operative a zero-latenza (<40ms):
      - **Action Menu Pro**: Zero-latency glide, navigazione da tastiera e feedback immediato.
@@ -841,6 +880,7 @@ Feature precedente: **2026-09-26** — HEROUX40 — Traguardo Milestone Piattafo
 2. **File**: `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX40`.
 
 Feature precedente: **2026-09-26** — HEROUX39 — Market Hub Pro Avanzato (Evoluzione Nativa HTML5 + Secret List Sync):
+
 1. **Market Hub Pro Avanzato Engine (`styles/market-hub-pro.css`, `market-hub-pro.css`, `js/market-hub-pro-handler.js`, `market-hub-pro-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Drag & Drop nativo HTML5 ultra-fluido: spostamento di elementi verso la `Secret List Stealth` con highlight dinamico e drop target immediato.
@@ -852,6 +892,7 @@ Feature precedente: **2026-09-26** — HEROUX39 — Market Hub Pro Avanzato (Evo
 2. **File**: `styles/market-hub-pro.css`, `market-hub-pro.css`, `js/market-hub-pro-handler.js`, `market-hub-pro-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX39`.
 
 Feature precedente: **2026-09-26** — HEROUX38 — Market Hub Pro Avanzato (Drag & Drop + Notifiche Stealth + Timeline + Export):
+
 1. **Market Hub Pro Avanzato Engine (`styles/market-hub-pro.css`, `market-hub-pro.css`, `js/market-hub-pro-handler.js`, `market-hub-pro-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Drag & Drop reattivo: trascinamento istantaneo di qualsiasi club dalla lista generale alla `Secret List Stealth`.
@@ -864,6 +905,7 @@ Feature precedente: **2026-09-26** — HEROUX38 — Market Hub Pro Avanzato (Dra
 2. **File**: `styles/market-hub-pro.css`, `market-hub-pro.css`, `js/market-hub-pro-handler.js`, `market-hub-pro-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX38`.
 
 Feature precedente: **2026-09-26** — HEROUX37 — Candidature Club Pro (Form a Due Blocchi + Auto-Match IA Full):
+
 1. **Candidature Club Pro Engine (`styles/candidature-pro.css`, `candidature-pro.css`, `js/candidature-pro-handler.js`, `candidature-pro-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Form a due blocchi ("Cosa offriamo" e "Cosa richiediamo") con textarea stilizzate in dark neon e focus ciano (`#00f5d4`).
@@ -875,6 +917,7 @@ Feature precedente: **2026-09-26** — HEROUX37 — Candidature Club Pro (Form a
 2. **File**: `styles/candidature-pro.css`, `candidature-pro.css`, `js/candidature-pro-handler.js`, `candidature-pro-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX37`.
 
 Feature precedente: **2026-09-26** — HEROUX36 — Schede Tecniche IA Pro (Canvas Grafico + Radar Live + API Mock):
+
 1. **Schede Tecniche IA Pro Engine (`styles/radar-pro.css`, `radar-pro.css`, `js/radar-pro-handler.js`, `radar-pro-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Sezione `#schede-tecniche-pro` con griglia radar ad alta risoluzione in stile dark neon.
@@ -886,6 +929,7 @@ Feature precedente: **2026-09-26** — HEROUX36 — Schede Tecniche IA Pro (Canv
 2. **File**: `styles/radar-pro.css`, `radar-pro.css`, `js/radar-pro-handler.js`, `radar-pro-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX36`.
 
 Feature precedente: **2026-09-26** — HEROUX35 — Bacheca Annunci & Chi Siamo Full Synergy (Zero-Latency + Menu ⋯ + Micro-interazioni):
+
 1. **Bacheca & Chi Siamo Synergy Engine (`styles/bacheca.css`, `bacheca.css`, `js/bacheca-handler.js`, `bacheca-handler.js`, `styles/chi-siamo.css`, `chi-siamo.css`, `js/chi-siamo-handler.js`, `chi-siamo-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Bacheca Annunci moderna con header branding `ELISEE SCOUT` in ciano `#00f5d4`, bottoni "Nuovo annuncio" e "Crea profilo" con ripple e toast istantaneo.
@@ -896,6 +940,7 @@ Feature precedente: **2026-09-26** — HEROUX35 — Bacheca Annunci & Chi Siamo 
 2. **File**: `styles/bacheca.css`, `bacheca.css`, `js/bacheca-handler.js`, `bacheca-handler.js`, `styles/chi-siamo.css`, `chi-siamo.css`, `js/chi-siamo-handler.js`, `chi-siamo-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX35`.
 
 Feature precedente: **2026-09-26** — HEROUX34 — Chi Siamo (Zero-Latency + Micro-interazioni Neon):
+
 1. **Chi Siamo Engine (`styles/chi-siamo.css`, `chi-siamo.css`, `js/chi-siamo-handler.js`, `chi-siamo-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Layout minimale e pulito in dark mode (`#0a0a0a`), tipografia ad alta leggibilità, headline neon ciano `#00f5d4` in maiuscolo spaziato.
@@ -906,6 +951,7 @@ Feature precedente: **2026-09-26** — HEROUX34 — Chi Siamo (Zero-Latency + Mi
 2. **File**: `styles/chi-siamo.css`, `chi-siamo.css`, `js/chi-siamo-handler.js`, `chi-siamo-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX34`.
 
 Feature precedente: **2026-09-26** — HEROUX33 — Bacheca Opportunità Zero-Latency (Filtri Reattivi + Card Selezionate + Menu ⋯):
+
 1. **Bacheca Engine (`bacheca.css`, `bacheca-handler.js`, `styles/bacheca.css`, `js/bacheca-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Dashboard annunci con filtri a cascata (Ruoli: DS, Scout, Analyst / Categorie: Wall Transfer, Annuncio, Squadre / Zone: Città, Provincia, Regione, Italia).
@@ -917,6 +963,7 @@ Feature precedente: **2026-09-26** — HEROUX33 — Bacheca Opportunità Zero-La
 2. **File**: `bacheca.css`, `bacheca-handler.js`, `styles/bacheca.css`, `js/bacheca-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX33`.
 
 Feature precedente: **2026-09-26** — HEROUX32 — Market Hub Pro (Secret List Stealth + Wall Trasferimenti FIFA Style):
+
 1. **Market Hub Pro Engine (`market-hub-pro.css`, `market-hub-pro-handler.js`, `styles/market-hub-pro.css`, `js/market-hub-pro-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Drag-and-drop completo da elenco trasferimenti a Secret List con classe `.stealth` e badge live.
@@ -930,6 +977,7 @@ Feature precedente: **2026-09-26** — HEROUX32 — Market Hub Pro (Secret List 
 2. **File**: `market-hub-pro.css`, `market-hub-pro-handler.js`, `styles/market-hub-pro.css`, `js/market-hub-pro-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX32`.
 
 Feature precedente: **2026-09-26** — HEROUX31 — Candidature Club (Form Doppio + Matching IA):
+
 1. **Candidature Club Engine (`candidature.css`, `candidature-handler.js`, `styles/candidature.css`, `js/candidature-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Form doppio blocco reattivo a 2 colonne: "❇️ Cosa offriamo" e "❇️ Cosa richiediamo" con textarea stilizzate in dark mode e glow ciano al focus.
@@ -941,6 +989,7 @@ Feature precedente: **2026-09-26** — HEROUX31 — Candidature Club (Form Doppi
 2. **File**: `candidature.css`, `candidature-handler.js`, `styles/candidature.css`, `js/candidature-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX31`.
 
 Feature precedente: **2026-09-26** — HEROUX30 — Schede Tecniche IA (Radar 3vs3 + Score Predittivo 1-10):
+
 1. **Radar 3vs3 IA Engine (`radar.css`, `radar-handler.js`, `styles/radar.css`, `js/radar-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Confronto radar 3vs3 con card interattive hover (scale + glow ciano `#00f5d4`).
@@ -951,6 +1000,7 @@ Feature precedente: **2026-09-26** — HEROUX30 — Schede Tecniche IA (Radar 3v
 2. **File**: `radar.css`, `radar-handler.js`, `styles/radar.css`, `js/radar-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX30`.
 
 Feature precedente: **2026-09-26** — HEROUX29 — Market Hub Stealth & FIFA Wall Style Architecture:
+
 1. **Market Hub Stealth Engine (`market-hub.css`, `market-hub-handler.js`, `styles/market-hub.css`, `js/market-hub-handler.js`)**:
    - Implementazione zero-latenza (<40ms):
      - Secret List stealth con bordo ciano `#00f5d4` e sfondo speculare.
@@ -963,6 +1013,7 @@ Feature precedente: **2026-09-26** — HEROUX29 — Market Hub Stealth & FIFA Wa
 2. **File**: `market-hub.css`, `market-hub-handler.js`, `styles/market-hub.css`, `js/market-hub-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX29`.
 
 Feature precedente: **2026-09-26** — HEROUX28 — Action Menu Zero-Latency & Success System Connected Architecture:
+
 1. **Action Menu Zero-Latency Engine (`action-menu.css`, `action-menu-handler.js`, `styles/action-menu.css`, `js/action-menu-handler.js`)**:
    - Implementate le regole matematiche del video (HEROUX28):
      - Trigger pulsante con glow (#ff00ff / ciano) e drop-shadow preciso.
@@ -981,6 +1032,7 @@ Feature precedente: **2026-09-26** — HEROUX28 — Action Menu Zero-Latency & S
 3. **File**: `action-menu.css`, `action-menu-handler.js`, `styles/action-menu.css`, `js/action-menu-handler.js`, `success-handler.js`, `js/success-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX28`.
 
 Feature precedente: **2026-09-26** — HEROUX27 — Success is a System Architecture:
+
 1. **Success is a System Engine (`success-system.css`, `success-handler.js`, `styles/success-system.css`, `js/success-handler.js`)**:
    - Implementate le 8 regole matematiche del video:
      - 3 Done Screens + "one keeps the user" (`nextSteps`).
@@ -996,6 +1048,7 @@ Feature precedente: **2026-09-26** — HEROUX27 — Success is a System Architec
 2. **File**: `success-system.css`, `success-handler.js`, `styles/success-system.css`, `js/success-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX27`.
 
 Feature precedente: **2026-09-26** — HEROUX26 — Dynamic Live Reactive Badges & Mathematical Radius Store:
+
 1. **Dynamic Sync Controller Zero-Latency (`dynamic-sync.js`, `js/dynamic-sync.js`)**:
    - Creato store reattivo bidirezionale per `localStorage['elisee_user_badges']` e `localStorage['elisee_user_radius']`.
    - `syncAllBadges()` applica i contatori in tempo reale tramite `window.updateBadge` con zero latenza.
@@ -1006,6 +1059,7 @@ Feature precedente: **2026-09-26** — HEROUX26 — Dynamic Live Reactive Badges
 2. **File**: `dynamic-sync.js`, `js/dynamic-sync.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX26`.
 
 Feature precedente: **2026-09-26** — HEROUX25 — Radius System Zero-Latency Architecture:
+
 1. **Sistema Matematico Radius Completo (`radius-system.css`, `radius-handler.js`, `styles/radius-system.css`, `js/radius-handler.js`)**:
    - Implementate le regole matematiche dei raggi d'angolo:
      - Nested corners (`calc(var(--outer) - var(--inner))`).
@@ -1018,6 +1072,7 @@ Feature precedente: **2026-09-26** — HEROUX25 — Radius System Zero-Latency A
 2. **File**: `radius-system.css`, `radius-handler.js`, `styles/radius-system.css`, `js/radius-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX25`.
 
 Feature precedente: **2026-09-26** — HEROUX24 — Zero-Latency Navigation Controller on All Internal Views:
+
 1. **Navigazione Sincrona Zero-Latenza su Tutte le Viste (`es-nav-ux.js`, `es-nav-ux.css`)**:
    - Rimosso ogni timeout artificiale e delay di uscita: `wrapSwitchView()` esegue `orig.apply(this, arguments)` sincrono a t=0ms per tutte le viste (Bacheca, Stampa, Mappa, About, TC Panel, Iscrizioni, Mercato Hub, Schede Tecniche, Squadre).
    - Scroll reset immediato `window.scrollTo(0, 0)` e sblocco overflow (`document.body.style.overflow = ''`) al cambio vista.
@@ -1027,6 +1082,7 @@ Feature precedente: **2026-09-26** — HEROUX24 — Zero-Latency Navigation Cont
 2. **File**: `es-nav-ux.js`, `es-nav-ux.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX24`.
 
 Feature precedente: **2026-09-26** — HEROUX23 — Micro-Interactions Ultra-Premium & Neon Luminescent Ripple:
+
 1. **Micro-Interactions Desktop & Universali (`micro-interactions.css`, `micro-interactions.js`)**:
    - Creato controller ultra-performante per micro-interazioni aptico-visive a 60/120 fps.
    - Ripple luminescente al neon ciano Elisee (`.es-ripple` con gradiente radiale ciano) calcolato al `pointerdown` con `requestAnimationFrame` e rimosso a 240ms senza reflow.
@@ -1035,6 +1091,7 @@ Feature precedente: **2026-09-26** — HEROUX23 — Micro-Interactions Ultra-Pre
 2. **File**: `micro-interactions.css`, `micro-interactions.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX23`.
 
 Feature precedente: **2026-09-26** — HEROUX22 — Zero-Latency Badge UI System & Topbar Integration:
+
 1. **Badge System Zero-Latency (`badge-system.css`, `badge-handler.js`)**:
    - Creato modulo CSS/JS autonomo per la gestione zero-latenza di badge conteggio e status (`updateBadge(id, count)`, `clearBadge(id)`, `pinToCorner(selector, anchored)`).
    - Cap automatico `99+` con classe `.capped` e transizione neon/locked a 40ms.
@@ -1043,6 +1100,7 @@ Feature precedente: **2026-09-26** — HEROUX22 — Zero-Latency Badge UI System
 2. **File**: `badge-system.css`, `badge-handler.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX22`.
 
 Feature precedente: **2026-09-26** — HEROUX21 — Mobile Web App Optimization & Drawer Zero-Latency Swipe:
+
 1. **Zero-Latency Mobile Navigation & Reset (`mobile-webapp.js`)**:
    - `navigateTo(viewKey, hash)` allineato alla logica HEROUX20: click su Home / Brand / Hero esegue immediato `location.hash = '#hero'`, chiude il drawer, azzera classi interne, resetta `is-scrolled`, nasconde `#view-mappa` e fa `window.scrollTo(0, 0)` secco.
    - Click handler in capture phase su tutti i brand mobile (`.es-m-brand`).
@@ -1054,6 +1112,7 @@ Feature precedente: **2026-09-26** — HEROUX21 — Mobile Web App Optimization 
 4. **File**: `mobile-webapp.js`, `mobile-webapp.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX21`.
 
 Feature precedente: **2026-09-26** — HEROUX20 — Hash #hero Sincrono Diretto, Drop is-scrolled, Reset Header Trasparente e Rimozione Selettore :has Mappa:
+
 1. **Rimozione Selettore :has in `mappa-club.css`**:
    - Eliminato `body:has(#view-mappa:not([style*="none"])) header...`: il selettore teneva l'header a `background: rgba(5,6,8,0.72)` anche a classi già rimosse finché `#view-mappa` restava nel DOM.
 2. **Forzatura Hash e Trasparenza Sincrona nel Capture Handler (`es-nav-ux.js`)**:
@@ -1063,6 +1122,7 @@ Feature precedente: **2026-09-26** — HEROUX20 — Hash #hero Sincrono Diretto,
 3. **File**: `mappa-club.css`, `es-nav-ux.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX20`.
 
 Feature precedente: **2026-09-26** — HEROUX19 — Reset Sincrono Totale Logo Brand con rAF di Rinforzo e Pulizia SwitchView:
+
 1. **Reset Sincrono Totale Logo Brand (`es-nav-ux.js`)**:
    - Handler capture phase con rimozione sincrona immediata di `is-internal-view`, `is-view-mappa`, `is-view-stampa` e classe `.is-on` dall'indicatore, seguito da `syncActiveLink('home', true)` e `switchView('home', '#hero')`.
    - `requestAnimationFrame` di rinforzo che riafferma lo stato pulito su eventuali ritardi del task loop.
@@ -1072,12 +1132,14 @@ Feature precedente: **2026-09-26** — HEROUX19 — Reset Sincrono Totale Logo B
 3. **File**: `es-nav-ux.js`, `index.html`, `app.js`, `sw.js`, `version.json`. Cache `v20260925_HEROUX19`.
 
 Feature precedente: **2026-09-25** — HEROUX18 — Click Logo Istantaneo al Primo Colpo (Capture Phase & StopPropagation):
+
 1. **Click Logo / Brand in Capture Phase (`es-nav-ux.js`)**:
    - Registrato il click listener su `.site-brand, a[href="#hero"], a[href="#view-home"]` in Capture Phase (`useCapture: true`) con `preventDefault()` e `stopPropagation()`.
    - Risolto il caso di potenziale corsa/inghiottimento da `#mappa-portal`: ora il primo singolo click sul brand resetta all'istante l'hash a `#hero`, rimuove le classi `is-internal-view`, `is-view-mappa` e `is-view-stampa`, spegne la pillola Lerp GPU e riporta l'header allo stato 100% trasparente senza ritardi.
 2. **File**: `es-nav-ux.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX18`.
 
 Feature precedente: **2026-09-25** — HEROUX17 — Allineamento Glass Header Mappa e Click Logo Resiliente a Doppia Pressione:
+
 1. **Allineamento Token Glass Header Mappa (`mappa-club.css`, `es-nav-ux.css`)**:
    - Sostituito l'override opaco `background: rgba(11, 14, 20, 0.96) !important;` su `body.is-view-mappa` con il token unificato `background: rgba(5, 6, 8, 0.72) !important; backdrop-filter: blur(14px) !important;` per perfetta coerenza con *Chi siamo* e *Bacheca*.
 2. **Click Logo / Brand Resiliente (`es-nav-ux.js`, `index.html`)**:
@@ -1086,6 +1148,7 @@ Feature precedente: **2026-09-25** — HEROUX17 — Allineamento Glass Header Ma
 3. **File**: `mappa-club.css`, `es-nav-ux.css`, `es-nav-ux.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX17`.
 
 Feature precedente: **2026-09-25** — HEROUX16 — Soppressione Barra Personalizzazione Coprente e Adattamento Mobile Responsive:
+
 1. **Soppressione Barra Personalizzazione Coprente (`cookie-profiling.js`, `es-nav-ux.css`)**:
    - Disabilitata la visualizzazione fissa in cima di `#elisee-personalization-bar` (`top: 0; z-index: 99990`) che copriva la navbar pubblica.
    - Azzerata completamente l'iniezione invasiva di `document.body.style.paddingTop = '28px'`.
@@ -1095,6 +1158,7 @@ Feature precedente: **2026-09-25** — HEROUX16 — Soppressione Barra Personali
 3. **File**: `cookie-profiling.js`, `es-nav-ux.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX16`.
 
 Feature precedente: **2026-09-25** — HEROUX15 — Fix Viste Interne: Glass Header Specificity, Follower Lerp Attivo e Padding-Top Titoli:
+
 1. **Glass Header su Viste Interne (`is-internal-view`)**:
    - Eliminato il residuo globale di `background: transparent !important` che vinceva sulle pagine interne in `index.html` e `style.css`.
    - Aggiunto selettore iper-specifico `html body.is-internal-view header.public-header...` con `rgba(5, 6, 8, 0.72) !important` e `backdrop-filter: blur(14px) !important`.
@@ -1107,6 +1171,7 @@ Feature precedente: **2026-09-25** — HEROUX15 — Fix Viste Interne: Glass Hea
 4. **File**: `es-nav-ux.css`, `es-nav-ux.js`, `index.html`, `style.css`, `sw.js`, `version.json`. Cache `v20260925_HEROUX15`.
 
 Feature precedente: **2026-09-25** — HEROUX14 — Porting Navigation UI & View Transitions Ultra-Avanzate (Zero Dipendenze):
+
 1. **Pill Indicator Fluido e Micro-Interazioni (`es-nav-ux.css`, `es-nav-ux.js`)**:
    - Indicator fluido (`.nav-indicator`) calcolato in rAF con fisica lerp a ~0.18, che scorre via GPU `transform: translate3d(...)` e `width`, senza layout shift e senza mai toccare `left`.
    - Hover follow abilitato esclusivamente per periferiche con puntatore fine (`@media (hover: hover) and (pointer: fine)`).
@@ -1120,6 +1185,7 @@ Feature precedente: **2026-09-25** — HEROUX14 — Porting Navigation UI & View
 3. **File**: `es-nav-ux.css`, `es-nav-ux.js`, `index.html`, `style.css`, `sw.js`, `version.json`. Cache `v20260925_HEROUX14`.
 
 Feature precedente: **2026-09-25** — HEROUX13 — Allineamento Glow Hero dal Top Viewport ed Eliminazione Fascia Scura:
+
 1. **Glow Hero dal Top Viewport (`.es-plx`)**:
    - Sostituita la precedente regola parallax (`background-size: 100% 160%`) che spingeva il glow in basso lasciando una lastra scura sotto la navbar.
    - Forzato `background-size: 100% 100% !important; background-position: 50% 0 !important;` con radial-gradient ellittico che parte da `-10%` in alto (`radial-gradient(ellipse 80% 55% at 50% -10%, rgba(56, 189, 248, 0.38) 0%, rgba(14, 58, 77, 0.22) 42%, transparent 70%)`) e linear-gradient coordinato (`180deg, #07131c 0%, #0a3040 42%, #050608 100%`).
@@ -1127,6 +1193,7 @@ Feature precedente: **2026-09-25** — HEROUX13 — Allineamento Glow Hero dal T
 2. **File**: `parallax.css`, `index.html`, `style.css`, `sw.js`, `version.json`. Cache `v20260925_HEROUX13`.
 
 Feature precedente: **2026-09-25** — HEROUX12 — Fix Linea Navbar: Trasparenza Pura Header, Azzeramento Background Sovrapposti e Hero Padding:
+
 1. **Fix Linea Navbar e Trasparenza Totale**:
    - Rimosse tutte le regole in conflitto con sfondi solidi o bordi scuri (`#0b111e`, `#0d131d`, `border-bottom: 1px solid rgba(255,255,255,.1)`) da `apple-nav.css`, `style.css` e dal blocco critico in `index.html`.
    - Inserito in fondo a tutti i fogli di stile e in `<head>` il blocco prioritario definitivo:
@@ -1138,6 +1205,7 @@ Feature precedente: **2026-09-25** — HEROUX12 — Fix Linea Navbar: Trasparenz
 2. **File**: `index.html`, `style.css`, `apple-nav.css`, `sw.js`, `version.json`. Cache `v20260925_HEROUX12`.
 
 Feature precedente: **2026-09-25** — HEROUX11 — Rimozione Definitiva Sidebar Fluttuante e Bottoni Fixed su Landing Page Pubblica:
+
 1. **Risoluzione Bug Rilevamento Vista Pubblica (`role-sidebar-pro.js`)**:
    - Individuato e risolto il bug logico per cui un utente autenticato con ruolo (o admin) manteneva attive le classi di ruolo su `<body>` e la funzione `isPublicView()` ritornava `false` anche se l'utente si trovava sulla Home Page (`#hero`), mostrando la sidebar laterale fissa a sinistra.
    - Corretta `isPublicView()`: ritorna sempre `true` sulle pagine pubbliche (`#hero`, `#home`, `#about`, `#bacheca`, ecc.), aggiunge `is-public-landing` a `document.body` e attiva la soppressione totale.
@@ -1147,6 +1215,7 @@ Feature precedente: **2026-09-25** — HEROUX11 — Rimozione Definitiva Sidebar
 3. **File**: `role-sidebar-pro.js`, `role-sidebar-pro.css`, `style.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX11`.
 
 Feature precedente: **2026-09-25** — HEROUX10 — Reset d'Emergenza Globale Header, Componente PublicHeader & Eliminazione Disallineamento Hero:
+
 1. **Reset d'Emergenza Globale Navbar**:
    - Inserite le 3 regole nel CSS globale (`style.css` e blocco critico in `index.html`):
      - `header, .navbar, nav, .public-header, .public-navbar { box-sizing: border-box !important; max-height: 64px !important; height: 64px !important; min-height: 64px !important; overflow: hidden !important; }`
@@ -1162,6 +1231,7 @@ Feature precedente: **2026-09-25** — HEROUX10 — Reset d'Emergenza Globale He
 4. **File**: `index.html`, `style.css`, `apple-nav.css`, `sw.js`, `version.json`. Cache `v20260925_HEROUX10`.
 
 Feature precedente: **2026-09-25** — HEROUX8 — Rimozione Fascia Scura Sotto Navbar & Riassegnazione Padding Sezione Hero:
+
 1. **Rettifica Altezza & Padding Header (64px rigorosi)**:
    - Applicate le correzioni fornite: `header, .public-navbar { width: 100%; height: 64px !important; min-height: 64px !important; max-height: 64px !important; padding: 0 32px !important; margin: 0 !important; display: flex !important; align-items: center !important; justify-content: space-between !important; background-color: #0b111e !important; position: fixed !important; top: 0 !important; left: 0 !important; z-index: 1000 !important; box-sizing: border-box !important; }`.
 2. **Eliminazione Vuoto/Fascia Scura Hero**:
@@ -1170,6 +1240,7 @@ Feature precedente: **2026-09-25** — HEROUX8 — Rimozione Fascia Scura Sotto 
 3. **File**: `index.html`, `style.css`, `apple-nav.css`, `sw.js`, `version.json`. Cache `v20260925_HEROUX8`.
 
 Feature precedente: **2026-09-25** — HEROUX7 — Adozione Struttura Pulita Navbar Pubblica e Isolamento Aree Riservate:
+
 1. **Header Pubblico a 3 Blocchi Essenziali (.public-navbar)**:
    - Sostituito l'intero header dell'homepage pubblica con la specifica fornita da Eliseo:
      - Sinistra: `.nav-logo` con scritta nitida `ELISEE SCOUT`.
@@ -1185,6 +1256,7 @@ Feature precedente: **2026-09-25** — HEROUX7 — Adozione Struttura Pulita Nav
 4. **File**: `index.html`, `style.css`, `apple-nav.css`, `sw.js`, `version.json`. Cache `v20260925_HEROUX7`.
 
 Feature precedente: **2026-09-25** — HEROUX6 — Ripristino e Blindatura Struttura Navbar (Codice di Emergenza, Eliminazione Sottotitoli, Dropdown Risorse e No-Wrap):
+
 1. **Applicazione Codice di Emergenza Layout Navbar**:
    - Sostituito il vecchio `display: grid; grid-template-columns: auto minmax(0, 1fr) auto;` in `style.css` con il layout flexbox raccomandato: `.navbar, .portfolio-navbar { display: flex !important; align-items: center !important; justify-content: space-between !important; height: 64px !important; padding: 0 24px !important; flex-wrap: nowrap !important; white-space: nowrap !important; }`.
    - Implementato `.nav-links` su `nav#nav-menu` con `display: flex !important; align-items: center !important; gap: 16px !important; white-space: nowrap !important; flex-wrap: nowrap !important;`.
@@ -1197,6 +1269,7 @@ Feature precedente: **2026-09-25** — HEROUX6 — Ripristino e Blindatura Strut
 4. **File**: `index.html`, `style.css`, `apple-nav.css`, `sw.js`, `version.json`. Cache `v20260925_HEROUX6`.
 
 Feature precedente: **2026-09-25** — HEROUX5 — Trasformazione Header in Navbar Classica Full-Width (Eliminazione Floating Pill e Banda Scura):
+
 1. **Trasformazione Header in Navbar Classica Full-Width**:
    - Eliminato il layout a "pillola fluttuante" che causava altezze incontrollate e una spessa banda vuota scura sotto i link.
    - L'header (`header.main-header`, `.portfolio-header`) è ora una barra full-width aderente in cima allo schermo (`position: fixed; top: 0; left: 0; width: 100%; height: 64px; max-height: 64px; border-radius: 0; padding: 0 24px;`), con sfondo coerente semitrasparente (`rgba(10, 15, 30, 0.92)` in Dark, `rgba(255, 255, 255, 0.96)` in Light), `backdrop-filter: blur(12px)` e sottile `border-bottom: 1px solid rgba(255, 255, 255, 0.08)`.
@@ -1208,6 +1281,7 @@ Feature precedente: **2026-09-25** — HEROUX5 — Trasformazione Header in Navb
 4. **File**: `index.html`, `style.css`, `apple-nav.css`, `sw.js`, `version.json`. Cache `v20260925_HEROUX5`.
 
 Feature precedente: **2026-09-25** — HEROUX4 — Risoluzione Header Wrapping, Overflow Clip e Compattazione Dropdown Menu:
+
 1. **Compattazione Dropdown Menu e Rimozione Testi Verbosi nell'Header**:
    - Rimosse tutte le descrizioni estese multilinea ("Collezione e profili seguiti", "Programma talent & testimonial", "Carriera RPG e quiz tattici", "Notizie, interviste e comunicati") dalla barra di navigazione orizzontale, convertite in attributi `title` (tooltip nativi informativi) e mantenendo esclusivamente i titoli sintetici compatti (`📰 Stampa`, `🎴 Album`, `🤝 Ambassador`, `🎮 Minigiochi`).
    - Forzato `display: none !important;` in `style.css` su `.es-nav-item-desc` e `.es-nav-item-text small` per prevenire qualsiasi riespansione orizzontale/verticale.
@@ -1222,6 +1296,7 @@ Feature precedente: **2026-09-25** — HEROUX4 — Risoluzione Header Wrapping, 
 5. **File**: `index.html`, `style.css`, `apple-nav.css`, `sw.js`, `version.json`. Cache `v20260925_HEROUX4`.
 
 Feature precedente: **2026-09-25** — HEROUX3 — Separazione Rigida Viste Pubbliche vs Dashboard Riservate (Rimozione Sidebar dalla Landing Page):
+
 1. **Rimozione Sidebar dalle Pagine Pubbliche (Home, Chi siamo, Bacheca, Mappa)**:
    - Eliminata la sidebar fluttuante a sinistra (`.es-sb-hover`, `.es-pro-sidebar`, `.es-modern-sidebar`, `[class*="-sidebar"]`) dalla landing page pubblica (`#hero`, `#home-about`, `#view-home`, ecc.) che copriva direttamente le lettere del titolo "ELISEE SCOUT" e duplicava le funzioni della Navbar.
    - Creata in `role-sidebar-pro.js` la funzione `isPublicView()` che rileva istantaneamente se l'utente naviga su una pagina pubblica o istituzionale, disattivando e nascondendo qualsiasi sidebar.
@@ -1232,6 +1307,7 @@ Feature precedente: **2026-09-25** — HEROUX3 — Separazione Rigida Viste Pubb
 4. **File**: `role-sidebar-pro.js`, `role-sidebar-pro.css`, `style.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX3`.
 
 Feature precedente: **2026-09-25** — HEROUX2 — Armonizzazione Light Mode (Header, Card Giocatore, Contrasto Testo e Coerenza Visiva):
+
 1. **Adattamento Header / Navbar in Light Mode**:
    - La pillola fluttuante desktop (`.portfolio-navbar`, `apple-nav.css`) ora adotta sfondo chiaro traslucido `rgba(255, 255, 255, 0.94)`, bordo delicato `rgba(0,0,0,0.08)` e ombra morbida `0 12px 35px rgba(15, 23, 42, 0.08)`, eliminando l'effetto "sticker scuro" sulla pagina bianca.
    - Tutti i link (`.nav-link`), il menu dropdown "Altro", le icone e i pulsanti (`#btn-user-profile`, lingua, cerca, mail, notifiche) assumono contrasto scuro nitido (`#0f172a` / `#334155`) con hover ciano `#0284c7`.
@@ -1245,6 +1321,7 @@ Feature precedente: **2026-09-25** — HEROUX2 — Armonizzazione Light Mode (He
 5. **File**: `apple-nav.css`, `style.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_HEROUX2`. Commit `0d27963d`.
 
 Feature precedente: **2026-09-25** — HEROUX1 — Ottimizzazione Hero, Rimozione Overlay e Floating Shield, Navbar Dropdown Altro e Card Giocatore Realistica:
+
 1. **Rimozione Overlay OTP e Floating Shield**:
    - Rimosso l'overlay dock di verifica email (`#es-otp-bottom-banner`) dalla schermata iniziale e dalla vista Home per evitare sovrapposizioni visive (`paintOtpBanner` in `verifica-account.js`).
    - Rimosso il pulsante fisso fluttuante con lo scudo di sicurezza a sinistra (`cookie-profiling.js`, `style.css`) che copriva i testi della hero.
@@ -1260,103 +1337,122 @@ Feature precedente: **2026-09-25** — HEROUX1 — Ottimizzazione Hero, Rimozion
 6. **File**: `index.html`, `style.css`, `verifica-account.js`, `cookie-profiling.js`, `app.js`, `sw.js`, `version.json`, `immagini/03-calciatore-ritratto/player-card-showcase.jpg`. Cache `v20260925_HEROUX1`. Commit `074e8f15`.
 
 Feature precedente: **2026-09-25** — NAVUSER1 — Rimozione email, ruolo e avatar residui dal menu utente in navbar:
+
 1. Rimossi dal corpo del menu a tendina account (`#user-dropdown-menu`) i campi email (`#user-dropdown-email-link`) e ruolo (`#user-dropdown-role`) che si sovrapponevano alle voci di navigazione.
 2. Rimosso dal trigger di apertura (`#btn-user-profile`) il badge con l'iniziale spuria "E", mantenendo solo icona utente, nome account ("Eliseo Miraglia") e chevron.
 3. Impostato `display: none !important` in `style.css` sui campi testuali eliminati per prevenire riapparizioni dinamiche.
 4. **File**: `index.html`, `style.css`, `sw.js`, `version.json`, `focus.html`. Cache `v20260925_NAVUSER1`. Commit `9ede8d27`.
 
 Feature precedente: **2026-09-25** — HEROCLEAN1 — Rimozione card grafica ritratto atleta dalla sezione Chi siamo in Home:
+
 1. Rimossa la card `.portfolio-visual` contenente l'SVG del ritratto atleta con reticolo/HUD e badge "PROFILO VERIFICATO" dalla sezione `#home-about`.
 2. Adattato il contenitore per un layout pulito, elegante e leggibile del blocco testuale e dei pulsanti d'azione.
 3. **File**: `index.html`, `sw.js`, `version.json`, `focus.html`. Cache `v20260925_HEROCLEAN1`. Commit `01fc4aae`.
 
 Feature precedente: **2026-09-25** — SYNC1 — Ottimizzazione script immagini, sincronizzazione cache-bust e audit di integrità JS:
+
 1. Ottimizzazione di `immagini/aggiorna-immagini.ps1`: scansione mirata dei soli file JS di radice ed `elisee-world`, evitando traversata bloccante di `node_modules`.
 2. Sincronizzazione automatica e cache-bust completo di tutti i percorsi immagini e script in `index.html`, `style.css`, `app.js`, `focus.html`.
 3. Validazione sintattica con `node --check` al 100% su tutti i moduli JS del sito e di `elisee-world/` (tutti superati).
 4. **File**: `immagini/aggiorna-immagini.ps1`, `index.html`, `style.css`, `app.js`, `focus.html`, `sw.js`, `version.json`. Cache `v20260925_SYNC1`. Commit `ecef4bd1`.
 
 Feature precedente: **2026-09-25** — PARALLAX1 — Sfondo che scorre più piano del testo:
+
 1. In home e in Chi siamo il fondo ciano si muove meno del contenuto mentre scorri.
 2. Stessi conti del video, senza libreria esterna. Con «riduci movimento» lo sfondo sta fermo.
 3. **File**: `parallax.js`, `parallax.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_PARALLAX1`. Commit `51695a85`.
 
 Feature precedente: **2026-09-25** — BUBBLE1 — Transizione a bolle fra le sezioni:
+
 1. Cliccando una voce del menu, una bolla ciano sale e copre la pagina. Subito dopo una bolla del colore del sito scopre la sezione nuova.
 2. Non parte al primo caricamento. Se sei già su quella sezione, non si ripete. Con «riduci movimento» il cambio è immediato.
 3. **File**: `page-bubbles.js`, `page-bubbles.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_BUBBLE1`. Commit `f83b3d1a`.
 
 Feature precedente: **2026-09-25** — RCARD1 — Schede profilo in bacheca come la card del video:
+
 1. Foto grande, nome, ruolo, riga su squadra e stato, etichette, **Apri profilo** e cuore per seguire.
 2. Bottone ciano, card scura. Il cuore pieno vuol dire che lo segui già.
 3. **File**: `react-card.css`, `app.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_RCARD1`. Commit `f3ce1197`.
 
 Feature precedente: **2026-09-25** — TRASH1 — Bottone Elimina animato, in basso a sinistra:
+
 1. Al click il coperchio del cestino si alza e la carta cade. Dopo 2,5 secondi torna com'era.
 2. Non cancella account né dati. Colori del sito, non il rosa del video.
 3. **File**: `trash-btn.css`, `trash-btn.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_TRASH1`. Commit `a4e54442`.
 
 Feature precedente: **2026-09-25** — BG1 — Sfondo con gradiente lento:
+
 1. Tra gli sfondi del video ho scelto il gradiente animato. Sul sito è nero e ciano, non viola.
 2. Si muove piano dietro la home. Le card restano piene. Di giorno il gradiente è chiaro. Con «riduci movimento» sta fermo.
 3. **File**: `site-bg.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_BG1`. Commit `e537e94e`.
 
 Feature precedente: **2026-09-25** — PWLIVE1 — Controllo password mentre si scrive:
+
 1. Nel login, in Iscriviti e in «nuova password» l'etichetta sale nel campo e sotto compare la barra.
 2. Debole (rosso, un terzo), media (ciano chiaro, due terzi), forte (ciano pieno). Conta minuscola, maiuscola, numero, simbolo e 16 caratteri.
 3. **File**: `pw-live.js`, `pw-live.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_PWLIVE1`. Commit `965de718`.
 
 Feature precedente: **2026-09-25** — WCF1 — Season Wrapped a carosello coverflow:
+
 1. Le schede della stagione stanno una accanto all'altra. Quella al centro è a colori, con titolo e **Apri**. Quelle ai lati sono inclinate e in grigio.
 2. Si trascina con il mouse. I pallini in basso seguono la scheda. Colori del sito, ciano.
 3. **File**: `season-wrapped.js`, `season-wrapped.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_WCF1`. Commit `72c9b212`.
 
 Feature precedente: **2026-09-25** — THEME1 — Switch giorno/notte nella navbar:
+
 1. Al posto del sole c'è la capsula: di notte luna e stelle, manopola a destra. Di giorno cielo ciano, sole e nuvole, manopola a sinistra.
 2. Cambia il tema del sito (`mimetico-chiaro` / scuro) e lo ricorda.
 3. **File**: `theme-switch.css`, `role-sidebar-pro.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_THEME1`. Commit `f5aa7c0d`.
 
 Feature precedente: **2026-09-25** — SHARE1 — Bottone Condividi in basso a destra:
+
 1. Si apre a ventaglio: WhatsApp, LinkedIn, Email, X e copia link. La × lo richiude.
 2. Copia link scrive l'indirizzo della pagina e mostra «Link copiato». Gli altri canali aprono la condivisione.
 3. Colori del sito: disco scuro, icone ciano.
 4. **File**: `share-btn.css`, `share-btn.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_SHARE1`. Commit `dd55b727`.
 
 Feature precedente: **2026-09-25** — PALETTE1 — Le modifiche recenti usano la palette del sito (scuro, ciano `#38bdf8`):
+
 1. Login di nuovo scuro, campi neri, bottone e link ciano. Lo scorrimento Accedi / Iscriviti resta.
 2. Ricerca, tabelle, vetro del Control Center, flusso contatti, dashboard analitica, verifica email e spunta OTP: via viola, verde acqua e rosa. Resta il rosso solo sull'errore.
 3. **File**: `login-slide.css`, `nav-search-anim.css`, `apple-nav.css`, `sortable-table.css`, `control-center.css`, `cc-analytics.css`, `flusso-contatti.css`, `verifica-account.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_PALETTE1`. Commit `7da30925`.
 
 Feature precedente: **2026-09-25** — ANALYTICS1 — Dashboard Admin e Privacy come il pannello analitico:
+
 1. Stessa struttura: colonna a sinistra (viste, anno, metrica, area, canale, ruolo), numeri in alto con confronto sull'anno scorso, barre mensili, tre gruppi, tabella e classifica a destra.
 2. Colori Elisee: ciano su scuro. Admin mostra profili, verifiche, reclami e job. Privacy mostra consensi, reclami Art. 30, accessi e audit.
 3. Panoramica e Governance passano da una scheda all'altra. I filtri cambiano i numeri.
 4. **File**: `cc-analytics.js`, `cc-analytics.css`, `control-center.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_ANALYTICS1`. Commit `02cdba9e`.
 
 Feature precedente: **2026-09-25** — FLUSSO1 — Simulazione flusso contatti nel Control Center:
+
 1. Scheda **Flusso contatti**, accanto a Responsabile Privacy. La vedono Admin e Responsabile Privacy.
 2. 50 profili al mese. Il ciclo è lento: backlog e «senza movimento» crescono fino al mese 24. Chiusure del mese restano a 0, ritmo atteso 1.
 3. Colonne: Nuovi, Tentativo di contatto, Follow-up, Visita / provino, Trattativa, Chiusura. Nomi fittizi, non sono utenti veri. **Avvia** fa scorrere i mesi.
 4. **File**: `flusso-contatti.js`, `flusso-contatti.css`, `control-center.js`, `control-center.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_FLUSSO1`. Commit `b3ccd06d`.
 
 Feature precedente: **2026-09-25** — BTNANIM1 — Lettere dei bottoni come nel video delle 09:35:
+
 1. Passando il mouse, le lettere si muovono una dopo l'altra. Se il cursore entra da destra, partono da destra.
 2. **Accedi** e il bottone nero del login saltano. **Iscriviti** scorre via sfocato. I tasti sulla foto del login si sfumano.
 3. **File**: `btn-label-anim.js`, `btn-label-anim.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_BTNANIM1`. Commit `249320fb`.
 
 Feature precedente: **2026-09-25** — NAVPILL1 — Navbar a pillola come nel video delle 09:32:
+
 1. Barra di vetro scuro, centrata, non più a tutta larghezza. Logo, le voci, ricerca, tema, lingua e Accedi stanno nella stessa capsula.
 2. La lente apre il campo dentro la barra, con la scritta ESC. Il sole cambia tema chiaro/scuro. La sottolineatura compare sulla voce sotto il mouse.
 3. Sul telefono resta il menu di prima.
 4. **File**: `apple-nav.css`, `index.html`, `role-sidebar-pro.js`, `sw.js`, `version.json`. Cache `v20260925_NAVPILL1`. Commit `7bd6ee90`.
 
 Feature precedente: **2026-09-25** — LOGINV4 — Login come nel video delle 09:27 (card bianca che scorre):
+
 1. Card bianca 660×560, bordo bianco, ombra morbida. A sinistra Accedi (campi chiari, bottone nero, Facebook / Google / Apple). A destra la foto con «Ciao» e **Iscriviti**.
 2. Iscriviti fa scorrere la foto a sinistra («Bentornato» / **Accedi**) e il modulo a destra. Stessi tempi del video: 0,65 s.
 3. Il codice OTP del numero resta il pannello scuro sopra la card.
 4. **File**: `login-slide.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_LOGINV4`. Commit `f57683bf`.
 
 Feature precedente: **2026-09-25** — OTPV3 — Verifica numero (login WhatsApp) come nel video delle 09:25:
+
 1. Quattro caselle in riga. A 4 cifre ruotano sul cerchio tratteggiato (origine sul centro, non un percorso interpolato).
 2. Se il codice è quello del messaggio, le caselle si chiudono al centro: «Numero verificato», spunta verde, **Continua**.
 3. Si apre da Accedi → numero WhatsApp. Non è la riga email in basso nel dossier.
@@ -1365,17 +1461,20 @@ Feature precedente: **2026-09-25** — OTPV3 — Verifica numero (login WhatsApp
 Feature precedente: **2026-09-25** — Dipendenza `motion` installata (`^13.4.3` in `package.json`). Non è ancora usata nelle pagine.
 
 Feature precedente: **2026-09-25** — CALM1 — Verifica email ridotta a una riga, senza card sopra il dossier:
+
 1. Via la card con notch, toast, icona e scritta EMAIL · OTP. Restano email, sei caselle e un tasto.
 2. Il dossier non viene più spinto in alto di mezzo schermo.
 3. **File**: `verifica-account.js`, `verifica-account.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260925_CALM1`. Commit `d5b59a96`.
 
 Feature precedente: **2026-09-25** — MAILOTP1 — La verifica email in basso nel dossier non è più la fascia vecchia:
+
 1. Quella fascia («Verifica email», Invia codice, Verifica, sei quadretti tagliati a destra) era un OTP diverso da quello del login. FINISH1 aveva toccato solo il login.
 2. Ora è una card scura, come il pannello del login: sei caselle arrotondate, anello tratteggiato sulla cifra attiva, messaggio EMAIL · OTP e tasto bianco **Invia codice**.
 3. Le caselle si accendono dopo l’invio. A 6 cifre parte la verifica da sola. Verde se è giusto, rosso se no. Reinvia dopo 30 secondi. Il codice resta solo nella mail, non a schermo.
 4. **File**: `verifica-account.js`, `verifica-account.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260924_MAILOTP1`. Commit `12ec2c79`.
 
 Feature precedente: **2026-09-24** — FINISH1 — Pubblicato il lavoro rimasto solo in locale (ricerca, vetro, tabelle, OTP):
+
 1. **Ricerca in navbar**: il tasto lente apre il campo con il flip 3D, bordo che si disegna e frasi che si scrivono da sole. Invio porta il testo nella bacheca (profili). Il toast dice «Ricerca», non il nome del video di riferimento.
 2. **Control Center e numeri in home**: pannelli e schede KPI in vetro scuro, si alzano al passaggio del mouse.
 3. **Tabelle ordinabili**: nelle tabelle admin, operazioni, dossier e atelier il click sul titolo di colonna ordina (numero, data o testo) e mostra la freccia.
@@ -1384,6 +1483,7 @@ Feature precedente: **2026-09-24** — FINISH1 — Pubblicato il lavoro rimasto 
 6. **File**: `index.html`, `nav-search-anim.css`, `nav-search-anim.js`, `control-center.css`, `sortable-table.css`, `sortable-table.js`, `login-slide.css`, `app.js`, `sw.js`, `version.json`. Cache `v20260924_FINISH1`. Commit `4f798c27`.
 
 Feature precedente: **2026-09-24** — HOVERSIDE1 — Sidebar che si apre al passaggio del mouse, e login sulla palette del sito:
+
 1. **Sidebar delle aree ruolo** (atleta, staff, osservatore e le altre): a riposo è una colonna stretta con icona, avatar e azioni in colonna. Al passaggio del mouse si allarga, compaiono nome, ruolo, campo Cerca e le etichette. La voce attiva ha la pillola ciano. In basso tema, impostazioni, nuova operazione ed esci si mettono in fila. Sul telefono resta il pannello che entra da sinistra.
 2. **Colori del sito**, non quelli del video di riferimento: vetro scuro, testo bianco, accento `#38bdf8`. Il tasto tema passa al preset chiaro già presente (`mimetico-chiaro`). Cerca filtra le voci.
 3. **Login Accedi / Iscriviti**: stessa card scorrevole, ma sfondo scuro, campi neri, bottone e link ciano. Niente più card bianca e bottone nero.
@@ -1391,24 +1491,28 @@ Feature precedente: **2026-09-24** — HOVERSIDE1 — Sidebar che si apre al pas
 5. Il menu in vetro GLASSMENU1 (commit `c1c3c23e`) era rimasto solo in locale: il push di quella sera non ha raggiunto GitHub e online c’era ancora `LOGINOTP1`. Questo giro lo pubblica insieme.
 
 Feature precedente: **2026-09-24** — GLASSMENU1 — Menu a tendina in vetro con pagine che scorrono:
+
 1. Il menu dell’account (in alto a destra, da loggato) è il pulsante col nome e il chevron. Si apre in vetro smerigliato. Il chevron ruota.
 2. Voci: Impostazioni, Account, Squadra, Esci. Impostazioni, Account e Squadra scorrono di lato (Notifiche, Area riservata, Annuncio, Album…). La freccia indietro torna alla prima pagina. Per lo staff c’è anche Strumenti.
 3. Il menu della lingua usa lo stesso vetro.
 4. **File**: `index.html`, `glass-menu.css`, `app.js`, `sw.js`, `version.json`. Cache `v20260924_GLASSMENU1`. Commit `c1c3c23e`.
 
 Feature precedente: **2026-09-24** — LOGINOTP1 — Codice OTP come nel video (4 caselle, messaggio, orbita):
+
 1. Dopo il numero WhatsApp si apre il pannello scuro **Verifica il numero**. Quattro caselle, la prima con l’anello tratteggiato.
 2. Si scrive, si incolla, oppure **Compila** legge il codice dagli appunti. A 4 cifre le caselle ruotano e si chiudono a croce sul cerchio tratteggiato.
 3. Il messaggio in basso mostra il codice (come nel video) e **Compila** lo scrive nelle caselle. Se coincide, i bordi diventano verdi; se no, rossi. «Reinvia tra 30s» compare dopo l’orbita. Non fa entrare: WhatsApp vero non è ancora collegato.
 4. **File**: `index.html`, `login-slide.css`, `app.js`, `sw.js`, `version.json`. Cache `v20260924_LOGINOTP1`. Commit `64dd4800`.
 
 Feature precedente: **2026-09-24** — LOGINSLIDE1 — Nuova interfaccia Accedi / Iscriviti a card scorrevole:
+
 1. **Card bianca 660×560** come nel video: a sinistra il form, a destra il pannello scuro con la foto. Il tasto Iscriviti fa scorrere il pannello a sinistra e porta il form di iscrizione.
 2. **Accedi**: email, password con occhio, Ricordami, Password dimenticata (WhatsApp), bottone nero, Facebook / Google / Apple. Google usa l’accesso già collegato. Facebook e Apple dicono che non sono ancora attivi.
 3. **Iscriviti** (anche dal tasto in navbar) usa la stessa card: nome, email, data di nascita, password, consenso privacy, poi la registrazione vera e la scelta del ruolo.
 4. **File**: `index.html`, `login-slide.css`, `app.js`, `immagini/login-hero.jpg`, `sw.js`, `version.json`. Cache `v20260924_LOGINSLIDE1`. Commit `bde07862`.
 
 Feature precedente: **2026-09-24** — KITBUG1 — Avatar 3D: maglia 2D vera sul busto, niente foglio UV, taglio e altezza petto di nuovo attivi, niente falso «INDOSSATA»:
+
 1. **Foto maglia, non foglio UV**. `home-uv.png` e `INTER-HOME-27.png` non vengono più avvolti sul torso (collage). Si usa sempre la foto 2D (`home.png`). Vale anche per un kit già salvato nel browser.
 2. **Texture solo sulla maglia** (`athlete_torso`, `Wolf3D_Outfit_Top`, nomi espliciti jersey/shirt). Testa, capelli, colletto, pelle e arti non ricevono la mappa. Maniche, spalle e strisce prendono il colore della maglia; pantaloncini e calzettoni il colore secondario. Materiali multi-materiale non fanno più crashare il click.
 3. **Se nessuna mesh maglia c’è, il badge non dice INDOSSATA.** Il messaggio di errore resta nel pannello. Prima il successo veniva mostrato anche a vuoto.
@@ -1418,18 +1522,21 @@ Feature precedente: **2026-09-24** — KITBUG1 — Avatar 3D: maglia 2D vera sul
 7. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260924_KITBUG1`. Commit `ef19b677`. Deploy `6ZZb6pUWS6JAWyjEqkwbQLsT6nGg` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **2026-09-22** — KITBLEED1 — Avatar 3D: Risoluzione invasione texture su viso/capelli e isolamento chirurgico mesh outfit:
+
 1. **Corrispondenza esatta (===)**: sostituito qualsiasi matching permissivo con verifica rigorosa su `child.name === 'athlete_torso'` (per il Calciatore 3D Ufficiale) e `child.name === 'Wolf3D_Outfit_Top'` (per modelli GLB Ready Player Me). Nessun fallback cieco su altre mesh.
 2. **Protezione totale viso, testa, capelli e colletto**: rimosso esplicitamente qualsiasi assegnazione di `material.map` su `athlete_collar` (che toccava mento e mandibola) e sulle parti anatomiche. Testa, capelli, occhi, orecchie, collo e colletto restano totalmente inalterati con i loro materiali nativi.
 3. **Cache-bust dedicato sull'asset della texture**: aggiunto parametro `?tcb=<timestamp>` all'URL della texture per forzare l'immediata invalidazione della cache da parte di browser e CDN.
 4. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260922_KITBLEED1`. Commit `a3d48972`. Il deploy di questo passo non era stato confermato; lo copre KITBUG1.
 
 Feature precedente: **2026-09-22** — INSPECT1 — Avatar 3D: Fase 1 ispezione obbligatoria del modello reale (prevenzione invasione texture su viso e capelli):
+
 1. **Esposizione globale `window.avatarModel`**: collegato tramite getter dinamico a `state.activeModel` in modo che qualsiasi script da console (es. `avatarModel.traverse(...)`) acceda direttamente al modello 3D attivo senza `ReferenceError`.
 2. **Auto-logging diagnostico Fase 1**: creata `logModelInspectionFase1(model)` che stampa in console l'elenco esatto di ogni singola mesh con nome, tipo (singolo o multi-material) e nomi dei materiali associati al momento del caricamento (sia per modelli GLB che per il Calciatore 3D Ufficiale).
 3. **Helper console `window.inspectAvatarModel()`**: invocabile in qualunque momento da DevTools per ispezionare istantaneamente il modello aperto.
 4. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260922_INSPECT1`. Commit `8f768f2d`. Deploy `dpl_61ZT9i4XpEs4rFfRFjB1WcEduK8w` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **2026-09-21** — MESHKIT2 — Fix collegamento click UI → mesh 3D (kit non si applicava nonostante il badge "INDOSSATA"):
+
 1. **Root cause**: la guard `gen !== self._fitGen` in `fit()` scalzava silenziosamente la callback del TextureLoader quando una seconda `fit()` veniva chiamata durante il caricamento async — o quando il callback scattava dopo un re-render del modello.
 2. **Fix guard**: al click utente esplicito si azzera `_fitGen` a 0 prima della chiamata; la guard non blocca più le callback con `gen === 0`. Rimane solo contro le chiamate davvero stale (gen vecchio > 0).
 3. **Fix closure**: la `fit()` ora cattura il `model` nella variabile `capturedModel` prima di qualsiasi operazione async; il callback usa `state.activeModel || capturedModel` invece di solo `state.activeModel` (che poteva essere null nel frattempo).
@@ -1439,6 +1546,7 @@ Feature precedente: **2026-09-21** — MESHKIT2 — Fix collegamento click UI �
 7. **File**: `avatar-3d.js`, `sw.js`, `version.json`. Cache `v20260921_MESHKIT2`. Commit `174d2ff3`. Deploy `dpl_FeFKLhkZN47oAndiVRbxV6jbyrYY` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **2026-09-21** — MESHKIT1 — Fix definitivo Avatar 3D: texture kit applicata direttamente sulla mesh GLB reale:
+
 1. **Eliminazione geometrie fittizie**: rimosso completamente il cilindro fittizio (`CylinderGeometry`, `__elisee_fitted_jersey`) che galleggiava davanti al busto. Rimossa anche la procedura `generateJerseyTexture` con Canvas.
 2. **Applicazione diretta via `THREE.TextureLoader`**: `EliseeJerseyAIAgent.fit` ora carica la texture con `loader.load(kitUrl)`, imposta `flipY = false` e `colorSpace = SRGBColorSpace`, poi la applica come `child.material.map = kitTexture` sulle mesh reali del GLB.
 3. **Riconoscimento mesh outfit**: traverse con `console.log` di tutti i nomi (debug visibile in console), matching su `/top|shirt|jersey|outfit.*top/i` (Ready Player Me: `Wolf3D_Outfit_Top`). Fallback su `/torso|cloth|upper|body|avatar|mesh/i` escludendo testa/arti.
@@ -1447,38 +1555,45 @@ Feature precedente: **2026-09-21** — MESHKIT1 — Fix definitivo Avatar 3D: te
 6. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_MESHKIT1`. Commit `35a54101`. Deploy `dpl_F3tZ1nAKb8btnybLgMWdjcRuXkBU` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **2026-09-21** — JERSEYFIX1 — Fix preliminare maglia 2D:
+
 1. `loadImageSafe`: rimosso `crossOrigin='anonymous'` per URL relative/same-origin.
 2. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_JERSEYFIX1`. Commit `3abcd4b1`. Deploy `dpl_46343psFjMfhHGbP2DwHcz86CBHd`.
 
 Feature precedente: **2026-09-21** — KITWRAP1 — Kit 2D sul 3D: stop minestrone UV:
+
 1. **Causa**: il foglio UV FIFA (`INTER-HOME-27.png`) veniva avvolto intero su cilindri/sfere (torso, pettorali, maniche, calzettoni) con UV sbagliati.
 2. **Fix**: si usa sempre la foto 2D della maglia (`home.png`), ritagliata dal nero; sul torso UV rimappati col petto al centro. Pettorali/maniche/calzettoni: solo colore club, niente mappa UV. Testa/capelli/pelle mai tinte.
 3. Click kit applica `path` 2D, non lo sheet UV. Inter 24/25 Home punta a `home.png`.
 4. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_KITWRAP1`. Commit `5555b2b3`. Deploy `D7Wut8GpDYBnKkwFayFohxpK1ZMF` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **2026-09-21** — NAVSCROLL1 — Badge ciano sotto Album: era la scrollbar overlay della nav + blur header:
+
 1. `.nav-menu` ora `overflow: hidden` (niente più thumb ciano Windows/Chrome sotto Album).
 2. Header senza `backdrop-filter` / bordo: sparisce la fascia nera sotto la navbar.
 3. **File**: `style.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_NAVSCROLL1`. Commit `88fc7060`. Deploy `5oLk2siov4u3cyTQUmVeQzT1XxKG` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **2026-09-21** — FACESCAN1 — Scan Face sul modello 3D Elisee (niente Hyper3D / abbonamenti):
+
 1. **Sì, si può fare senza pagare generatori 3D**: il volto va sul calciatore 3D già in Elisee Scout (`athlete_head`), non serve GLB a pagamento.
 2. **Nuova modalità Scan Face**: fotocamera con ovale guida (stile scan viso), rilevamento volto se il browser lo supporta, tasto Scatta. Il JPEG viene mappato subito sulla texture UV della testa 3D.
 3. **Tempi**: niente attesa finta di ricostruzione mesh; da scan/foto si entra nello stage 3D. Dallo stage: «Scansiona il volto» aggiorna la testa live senza ricaricare la scena.
 4. **File**: `avatar-3d.js`, `avatar-3d.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_FACESCAN1`. Commit `adbf5f90`. Deploy `4Kcyjz8Wmq1rGTpUiDrmMVhVWJP7` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **2026-09-21** — A3DCLEAN1 — Pulizia sidebar Avatar 3D (pallini macOS, box Admin QA, pulsante +):
+
 1. **Pallini macOS + logo circolare** in cima al pannello destro: la sidebar ruoli (`[class*="-sidebar"]`) innestava dots/avatar nella modale. Esclusa `.es-a3d-sidebar-controls` da `scanAndUpgrade`.
 2. **Box ADMIN QA: TEST SQUADRE 3D** rimosso dalla sidebar Avatar 3D.
 3. **Pulsante + ciano**: era il CTA collassato «Nuova Operazione» iniettato nella stessa sidebar. Nascosto/rimosso in modale.
 4. **File**: `avatar-3d.js`, `avatar-3d.css`, `role-sidebar-pro.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_A3DCLEAN1`. Commit `575e3d83`. Deploy `BDz1MVF6jbqyJBqpc3g8ppPJEHWe` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **2026-09-21** — HOMEBAR1 — Rimossa fascia nera sotto navbar e badge ciano spuri in Home:
+
 1. **Fascia nera inutilizzata sotto la navbar**: header bloccato a 72px, niente extra padding/ombra/bordo. Hero attaccato alla navbar.
 2. **Badge ciano al centro (sotto Album)**: nascosta la scrollbar orizzontale della nav (thumb ciano) e il banner anti-fake vuoto (`#es-verify-banner` visibile solo con contenuto reale e `body.es-verify-on`).
 3. **File**: `style.css`, `verifica-account.css`, `verifica-account.js`, `creator-role-switcher.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_HOMEBAR1`. Commit `f51f3bed`. Deploy `79W4B6HE83rj8stXX83cvdNtbeXQ` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **2026-09-21** — BUGFIX1 — Audit e correzioni Avatar 3D + banner anti-fake (`BUGFIX1`):
+
 1. **Avatar 3D — bug visivi e di vestizione**:
    - `restoreOriginalBaseMaterials` non forza più il colore bianco su tutte le mesh: viso, collo, pelle e capelli restano integri al cambio kit o al toggle «ORIGINALE».
    - `fit()` non entra più in retry infinito se il modello manca: usa `state.activeModel`, massimo 20 tentativi.
@@ -1495,6 +1610,7 @@ Feature precedente: **2026-09-21** — BUGFIX1 — Audit e correzioni Avatar 3D 
 4. **File**: `avatar-3d.js`, `verifica-account.js`, `verifica-account.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260921_BUGFIX1`. Commit `a70774fb`. Deploy `HgriMFrDfxdSsgAXWxQgGMUDSJHT` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **2026-09-20** — KITFIX — Kit 3D applicato direttamente sulle mesh del GLB (eliminati cilindri galleggianti), banner anti-fake nascosto per Admin Executive (`KITFIX`):
+
 1. **Fix Kit 3D su modello GLB importato**:
    - Eliminati completamente i `CylinderGeometry` (`torsoMesh`, `sleeveL`, `sleeveR`) che fluttuavano attorno al modello come fusti rigidi.
    - Nuovo branch B in `EliseeJerseyAIAgent.fit`: traversa tutte le mesh reali del GLB importato, filtra per Y (esclude testa/capelli/viso via regex `head|hair|face|eye|...` e soglia `headThreshY = bbox.min.y + totalH * 0.78`), e applica `material.map = tex; material.needsUpdate = true` direttamente sui materiali originali.
@@ -1520,6 +1636,7 @@ Feature precedente: **2026-09-20** — KITFIX — Kit 3D applicato direttamente 
 2. **File**: `avatar-3d.js`, `avatar-3d.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260920_A3DSTEP3`. Commit `193b6a9a`. Deploy `dpl_2GBWCoHiL6hdMK5o4M5qdNhVbRsq` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **Avatar 3D: PASSAGGIO 2 — Corrispondenza Kit 2D Ufficiale & Rimozione Totale Elisee Scout dalla Maglia (`A3DSTEP2`):
+
 1. **Risolta la Mancata Corrispondenza Maglia 2D ↔ Modello 3D**:
    - **Eliminazione Radicale di "ELISEE SCOUT" e "ELISEE F.C."**: rimosse le scritte hardcoded che sovrascrivevano la divisa del club scelto.
    - **Generatore Dinamico Basato su Kit 2D Reale (`EliseeJerseyAIAgent.generateJerseyTexture`)**:
@@ -1534,6 +1651,7 @@ Feature precedente: **Avatar 3D: PASSAGGIO 2 — Corrispondenza Kit 2D Ufficiale
 2. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260920_A3DSTEP2`. Commit `ee1511b6`. Deploy `dpl_voxWAP1bt87pCUzH1n95Ne67Ua8v` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **Avatar 3D: PASSAGGIO 1 — Calciatore 3D Solido Ufficiale Predefinito (`A3DSTEP1`):
+
 1. **Calciatore 3D Solido & Completo Sempre Presente sullo Stage**:
    - Risolto il blocco per cui, in assenza di un file `.glb` caricato, veniva mostrato solo un ologramma filigranato vuoto che impediva la corretta visualizzazione e vestizione della divisa.
    - Creato `buildDefaultAthlete(avatar, group)`: un modello di atleta 3D solido e proporzionato con anatomia calcistica rifinita:
@@ -1549,10 +1667,12 @@ Feature precedente: **Avatar 3D: PASSAGGIO 1 — Calciatore 3D Solido Ufficiale 
 2. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260920_A3DSTEP1`. Commit `e723dc66`. Deploy `dpl_Eg12w3wzbmCmNonRoJaqPHHFQavj` live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **Avatar 3D: Fix Retry Loop + Feedback UI ologramma (`A3DJERSEYAI2`):
+
 1. **Fix loop infinito `applyKitTextureToActiveModel`**: aggiunto limite massimo di 20 retry (4 secondi). Se il modello GLB non è disponibile (scena con solo ologramma wireframe), l'agente mostra un messaggio chiaro: `⚠️ Carica un modello .GLB da Hyper3D per indossare la maglia 3D`.
 2. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260919_A3DJERSEYAI2`. Commit `fd31bae7`. Deploy live su `https://elisee-scout.vercel.app`.
 
 Feature precedente: **Avatar 3D: Agente IA Vestizione Maglia 3D & Sostituzione Maglia Elisee Scout (`A3DJERSEYAI1`):
+
 1. **Creazione Agente IA Dedicato (`EliseeJerseyAIAgent` in `avatar-3d.js`)**:
    - Risolto alla radice il problema dell'oscuramento/distorsione texture: le mesh originali del modello 3D (viso, capelli, pelle, arti) mantengono intatta la loro texture fotorealistica con backup clone del materiale originale (`__originalMaterial`).
    - L'Agente IA effettua la **scansione volumetrica del busto** calcolando bounding box, centro petto Y, altezza torso e raggi anatomici.
@@ -1563,15 +1683,18 @@ Feature precedente: **Avatar 3D: Agente IA Vestizione Maglia 3D & Sostituzione M
 2. **File**: `avatar-3d.js`, `avatar-3d.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260919_A3DJERSEYAI1`. Commit `5a62ef30`. Deploy `dpl_A8S9yCiDxQvxetjyjx3FaufjtJ7K`.
 
 Feature precedente: **Avatar 3D: Fix Testa Coperta - Filtraggio Zona Y + Nome Mesh (`A3DFIXKIT4`):
+
 1. **Bug critico: texture applicata anche al volto/capelli (`avatar-3d.js`)**:
    - Fix temporaneo con filtraggio coordinate Y e nomi mesh prima dell'introduzione dell'Agente IA completo.
 2. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260919_A3DFIXKIT4`. Commit `8eb1e4c4`. Deploy `dpl_G2maSCtveGvZTJ7hK9s4mTxmr1Uv`.
 
 Feature precedente: **Avatar 3D: Supporto Universale Mesh GLB (`A3DFIXKIT2`)**:
+
 1. **`applyKitTextureToActiveModel`**: algoritmo dinamico per mesh generiche Hyper3D.
 2. **File**: `avatar-3d.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260919_A3DFIXKIT2`.
 
 Feature precedente: **Avatar 3D: Correzione Corrispondenza Maglie 2D/3D & Separazione Club (`A3DFIXMATCH1`):
+
 1. **Separazione Netta e Pulita dei Club (Zero Sovrapposizioni)**:
    - Risolto il disallineamento: rimosso il kit speciale dell'Inter dalla cartella del **Foggia City**, posizionandolo correttamente nella cartella ufficiale `immagini/kits-2d/inter/INTER-HOME-27.png`.
    - Il **Foggia City** ora mostra ed indossa esclusivamente la propria divisa ufficiale Givova Edil Milanese.
@@ -1582,6 +1705,7 @@ Feature precedente: **Avatar 3D: Correzione Corrispondenza Maglie 2D/3D & Separa
 3. **File**: `avatar-3d.js`, `avatar-3d.css`, `index.html`, `sw.js`, `version.json`, `immagini/kits-2d/foggia-city/home-uv.png`, `immagini/kits-2d/inter/INTER-HOME-27.png`. Cache `v20260919_A3DFIXMATCH1`.
 
 Feature precedente: **Avatar 3D: Selettore Admin QA per Test Live Squadre 3D & Ricerca Catalogo 2.890 Club (`A3DADMIN1`):
+
 1. **Pannello Admin QA: Test Live Squadre 3D Integrato**:
    - Creato box gold/dark dedicato `ADMIN QA: TEST SQUADRE 3D` nella sidebar dell'Avatar 3D.
    - **Ricerca Istantanea su 2.890 Club**: campo di testo predittivo in tempo reale con select dropdown organizzato per campionato e categoria.
@@ -1593,6 +1717,7 @@ Feature precedente: **Avatar 3D: Selettore Admin QA per Test Live Squadre 3D & R
 3. **File**: `avatar-3d.js`, `avatar-3d.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_A3DADMIN1`.
 
 Feature precedente: **Avatar 3D: Collegamento Kit 2D Squadra Ufficiale & Nuova Interfaccia EA Sports FC (`A3DKIT1`):
+
 1. **Collegamento Automatico Kit 2D Squadra (`immagini/kits-2d/<squadra>/`)**:
    - Collegamento diretto dell'Avatar 3D alla cartella ufficiale del club (es. `foggia-city` con `INTER-HOME-27.png` e `home.png`).
    - Mappatura texture UV ad altissima risoluzione (2048x2048) in Three.js con filtro anisotropico, che avvolge maglia, maniche, sponsor e scudetto senza sfocature.
@@ -1605,6 +1730,7 @@ Feature precedente: **Avatar 3D: Collegamento Kit 2D Squadra Ufficiale & Nuova I
 4. **File**: `avatar-3d.js`, `avatar-3d.css`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_A3DKIT1`.
 
 Feature precedente: **Avatar 3D STEP 1: Attivazione GLTF/GLB Loader, Storage IndexedDB & Rimozione Primitive Geometriche (`A3DSTEP1`):
+
 1. **Attivazione Motore Three.js GLTF/GLB ad Alta Definizione**:
    - Caricatore standard universale `THREE.GLTFLoader` integrato e pronto a renderizzare modelli 3D realistici esportati da **Hyper3D (Rodin Gen-2)** o scansioni fotogrammetriche.
    - Normalizzazione automatica: calcolo Bounding Box del file `.glb`, scala proporzionale ad altezza atletica (~1.80m), posizionamento perfetto sui piedi sopra il piedistallo specchiato a $Y = 0.08$.
@@ -1623,6 +1749,7 @@ Feature precedente: **Avatar 3D STEP 1: Attivazione GLTF/GLB Loader, Storage Ind
 6. **File**: `avatar-3d.js`, `avatar-3d.css`, `index.html`, `sw.js`, `version.json`, `immagini/avatar3d/`. Cache `v20260918_A3DSTEP1`.
 
 Feature precedente: **Avatar 3D Professionale: Integrazione Foto Reale Atleta, Rimozione Marchi Terzi & Fix Layout (`A3DPRO1`):
+
 1. **Risoluzione Problemi Legali, Naming & Brand (`avatar-3d.js`, `avatar-3d.css`, `index.html`)**:
    - **Rimozione Totale Nomi Terzi**: Eliminato qualsiasi riferimento o badge a *"EA FC 26"*, *"EA Sports"* e *"FC26"*. Sostituito il badge con il nuovo selettore proprietario luxury ciano `<span class="es-a3d-badge-pro">PRO 3D</span>`.
    - **Naming Professionale Capigliature & Tatuaggi**: Eliminato il termine slang/meme "Mogger". Rinominate tutte le acconciature con denominazioni chiare e sobrie da piattaforma scouting d'élite: *Biondo Corto*, *Castano Sfumato*, *Biondo Platino*, *Nero Corvino*. Rinominate le sezioni in *Tatuaggio Geometrico Collo* e *Illuminazione Scena* (*Neon Élite*, *Tramonto Gara*, *Studio HQ*).
@@ -1640,6 +1767,7 @@ Feature precedente: **Avatar 3D Professionale: Integrazione Foto Reale Atleta, R
 Feature precedente: **Avatar 3D Ultra-Realistico EA FC 26 Pro Clubs («Mogger Athlete Model») (`A3DEAFC1`):
 
 Feature precedente: **Sblocco Consenso Biometrico Avatar 3D & Custom Checkbox Luxury (`A3DCHK1`):
+
 1. **Risoluzione Root Cause Blocco Consenso (`avatar-3d.css`, `avatar-3d.js`, `index.html`)**:
    - **Causa Radice**: In `style.css` la regola globale `input[type="checkbox"]` era impostata su `display:none !important; visibility:hidden !important; pointer-events:none !important;`. La checkbox del consenso biometrico era quindi invisibile e non cliccabile, lasciando il pulsante "Conferma Consenso e Procedi" disabilitato a vita.
    - **Custom Checkbox Box & Tick SVG**: Introdotto un container interattivo luxury `.es-a3d-consent-checkbox-row` con box personalizzato `.es-a3d-custom-chk` e icona di spunta `✓` ciano neon ad animazione elastica, indipendente dallo stato dei controlli HTML nativi.
@@ -1661,34 +1789,40 @@ Feature precedente: **Spostamento Control Center nel Menù a Tendina Admin/Priva
 Feature precedente: **Ripristino Footer Homepage, Link Control Center Macroaree & Ottimizzazione Responsività (`CCFOOTER1`):
 
 Feature precedente: **Sblocco Master Secret Admin, fix parser body Vercel & simulatore (`ADMINPIN2`):
+
 1. **Risoluzione Root Cause `req.body`**: Nelle Serverless Functions di Vercel (`@vercel/node`), `req.body` è già parsato e lo stream `req.on('data')` è già concluso. `readBody` in `api/auth-admin.js` e `api/auth-otp.js` attendeva lo stream vuoto tornando `{}`, causando l'errore "Username staff non riconosciuto" e blocco del login. Aggiunto controllo prioritario su `req.body`.
 2. **Backend `api/auth-admin.js`**: Default automatico di `username` a `'admin'` se omesso con PIN presente; tolleranza totale su maiuscole/minuscole e varianti (`Iemmello.9`, `Iemmello9`, `iemmello.9`, `iemmello9`) con hash PBKDF2 dedicati.
 3. **Frontend `creator-role-switcher.js`**: Inoltro esplicito di `{ pin: pinVal, username: 'admin' }`.
 4. **File**: `api/auth-admin.js`, `api/auth-otp.js`, `creator-role-switcher.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_ADMINPIN2`.
 
 Feature precedente: **Blindatura OTP multi-istanza & monitoraggio sync tempo reale (`OTPSYNC1`):
+
 1. **Blindatura OTP (`api/auth-otp.js`)**: persistenza su Vercel KV (`elisee:otp:<email>`, TTL 600s) + rilascio e verifica di un ticket crittografico firmato stateless (`signOtpTicket` / `verifyOtpTicket` HMAC SHA-256). L'OTP non fallisce più quando le richieste `send` e `verify` cadono su istanze Vercel differenti o con storage effimero.
 2. **Frontend OTP (`verifica-account.js`)**: archiviazione `ticket` in `sessionStorage` e invio contestuale al submit delle 6 cifre con pulizia a verifica avvenuta.
 3. **Trasparenza & Sync Status (`persist-sync.js`, `bacheca-annunci.js`)**: tracciamento dello stato di connessione (`syncState`), ascolto eventi `online`/`offline`, notifica trasparente per gli utenti (feedback salvataggio locale vs cloud) ed eliminazione delle "Due Verità" silenziose.
 4. **File**: `api/auth-otp.js`, `verifica-account.js`, `persist-sync.js`, `bacheca-annunci.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_OTPSYNC1`.
 
 Feature precedente: **Connessione server `verify-docs` & anti-fake sync (`VERIFYDOCS1`):
+
 1. **Rewrite Vercel**: `/api/auth/verify-docs` reindirizzato via rewrite su `/api/auth/me?path=verify-docs` in `vercel.json` (evita il 404 e rispetta il limite rigido di 12 serverless functions del piano Hobby).
 2. **Backend `api/auth/me.js`**: gestione completa di `start`, `docs` e `close` su Vercel KV / `/tmp` e locale. Aggiunto supporto a `req.query.email` per le richieste GET/POST senza Bearer token.
 3. **Frontend `verifica-account.js`**: invio dell'email utente in tutti i payload POST (`start`, `docs`, `close`); aggiunta sincronizzazione automatica bidirezionale `syncWithServer(u)` al ripristino della sessione / login.
 4. **File**: `vercel.json`, `api/auth/me.js`, `verifica-account.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_VERIFYDOCS1`.
 
 Feature precedente: **Provenienza dati scheda tecnica (`SCOUTSRC1`):
+
 1. Se il nominativo è in rosa allenatore/club: anagrafica, presenze, carico, ACWR da lì. Non si spaccia per GPS hardware.
 2. Altrimenti GPS/carriera restano stima IA, con banner «Sintesi IA» su scheda, PDF e Word. Niente più dicitura «tracciamento hardware».
 3. File: `schede-tecniche.js/css`. Cache `v20260918_SCOUTSRC1`.
 
 Feature precedente: **Reclami GDPR e Ambassador sul server (`GDPRAMB1`):
+
 1. **Reclami Art.30** e **richieste rettifica Art.16**: GET/POST `/api/manager?path=gdpr` (KV). Niente più seed demo se la coda è vuota.
 2. **Pratiche Ambassador**: `/api/manager?path=ambassador`. Firme grandi su Storage, in KV restano URL.
 3. Pull all’avvio e all’apertura tab Privacy. Push a ogni salvataggio. Cache `v20260918_GDPRAMB1`.
 
 Feature precedente: **Control Center spazi e ordine (`CCSPACE1`):
+
 1. Padding laterale 24px (prima era 0 sul `pf-page-inner` admin).
 2. Tab senza doppio riquadro ciano; header con bordo sottile e Esci allineato.
 3. Griglie stats/azioni/moduli `auto-fit` (niente 5 colonne schiacciate).
@@ -1696,29 +1830,34 @@ Feature precedente: **Control Center spazi e ordine (`CCSPACE1`):
 5. Cache `v20260918_CCSPACE1`.
 
 Feature precedente: **Spezzato `app.js` (`APPSPLIT1`):
+
 1. **`app-admin-panels.js`**: `renderAdminPanel` / `renderPrivacyPanel` / griglia opzioni (~2000 righe).
 2. **`app-boot-extras.js`**: unlock UI, wire Bacheca, pipeline extra (dopo la chiusura del `DOMContentLoaded` principale).
 3. **`app.js`**: resta il core (nav, login, filtri, sessioni). Helper admin esposti su `window.getActiveUser` ecc.
 4. Cache `v20260918_APPSPLIT1`.
 
 Feature precedente: **Rosa/club e Card sul database (`CLUBCARD1`):
+
 1. **Club Presidenza** (`elisee_pres_club_master_v3`, rosa inclusa): GET/POST `/api/manager?path=club` keyed per società. Pull all’apertura dashboard, push al salvataggio.
 2. **Rosa/formazione Allenatore-Vice** (`elisee_coach_data`): stesso schema su `path=coach`.
 3. **Card Elisee**: inbox, pubblicate e stats su `path=card`. I PNG grandi vanno su Supabase Storage (`staff-allegati/cards/…`); in KV restano URL/metadati (limite size).
 4. **Niente 13ª funzione**: rewrite in `vercel.json`. File: `persist-sync.js`, `api/manager.js`, `pres-dash.js`, `coach-dash.js`, `vice-dash.js`, `card-atelier.js`. Cache `v20260918_CLUBCARD1`.
 
 Feature precedente: **Auth admin + persistenza Bacheca/schede (`PERSIST1`):
+
 1. **Control Center**: campi login vuoti (niente `admin`/`admin123` in HTML). Password verificata con hash PBKDF2, username in allowlist. Token firmato obbligatorio al rientro (GET `/api/auth-admin`), non basta il flag `localStorage`.
 2. **Bacheca e schede**: GET/POST su `/api/bacheca` e `/api/schede` (rewrite su `manager`, niente 13ª funzione). Persistenza Vercel KV se presente, file in locale. Il client unisce remoto + `localStorage`.
 3. **File**: `api/auth-admin.js`, `api/manager.js`, `app.js`, `index.html`, `bacheca-annunci.js`, `schede-tecniche.js`, `vercel.json`. Cache `v20260917_PERSIST1`.
 
 Feature precedente: **Control Center dashboard operativa (`CCDASH1`):
+
 1. **Home Admin**: stat card (job IA, Admin, Privacy, sync, alert), azioni rapide (Autopilot primario, GDPR, Sync, War Room, Auto-Fix), grid 5 moduli, grafici job 24h + donut categorie + % operativa, Governance & Trust, identità sessione.
 2. **Tab**: restano le 5 sezioni. Mission Control Autopilot non è più l’unico contenuto della home: sta nel modulo Autopilot. Privacy ha `#governance-panel-target` (prima mancava, il pannello GDPR non montava).
 3. **Dati**: cluster `EliseeAICluster`, reclami localStorage, step audit, presenza admin/privacy, pending Card Elisee. Nessun dato mock permanente.
 4. **File**: `control-center.js/css`, `index.html`, `card-atelier.js`, `manager-runtime.js`, `sw.js`. Cache `v20260917_CCDASH1`.
 
 Feature precedente: **Bacheca 7 categorie (`BACHECA7`):
+
 1. **Categorie**: `cerco_squadra`, `cerco_giocatore`, `cerco_allenatore`, `cerco_arbitro`, `cerco_amichevole`, `cerco_sponsor`, `calciomercato`. Dropdown Categoria con icone SVG, filtro in AND con Ruolo / Zona / Raggio. Query param `?cat=`.
 2. **Nuovo annuncio**: CTA unica al posto di «Pubblica candidatura». Step 1 card categoria, step 2 campi comuni + specifici. Validazione client + `POST /api/bacheca` (rewrite su `/api/manager?path=bacheca`, niente 13ª serverless Hobby). Persistenza `elisee_user_jobs` + file `data/bacheca/annunci.json` (`/tmp` su Vercel).
 3. **Card**: badge icona+label da `categoria` del record (bordo sottile, non pillola satura).
@@ -1726,6 +1865,7 @@ Feature precedente: **Bacheca 7 categorie (`BACHECA7`):
 5. **File**: `bacheca-annunci.js`, `api/bacheca.js`, `app.js`, `index.html`, `bacheca-board.css`, `sw.js`, `version.json`. Cache `v20260917_BACHECA7`.
 
 Feature precedente: **Bugfix ruoli, DS e crest (`BUGFIX1`):
+
 1. **Cambio ruolo**: `#es-fisio { display:block !important }` batteva l’attributo `hidden` (specificità ID). Le dashboard si sovrapponevano. Unmount ora forza `display:none !important` e CSS `[hidden]` sulle shell.
 2. **Fisio**: host JS è `#es-fisio`, CSS/unmount cercavano ancora `#es-fd`. Inclusi entrambi.
 3. **Classi body residue** (`is-gk-mode`, `is-at-mode`, `is-player-mode`, `is-pres-mode`, …): al cambio ruolo restavano attive e nascondevano footer/tab. Pulizia su tutti i mode.
@@ -1735,6 +1875,7 @@ Feature precedente: **Bugfix ruoli, DS e crest (`BUGFIX1`):
 7. **File**: `player-profile.js`, `dash-luxury.css`, `fisio-dash.css`, `ds-dash.js`, `ds-hub.js`, `pres-dash.js`, `schede-tecniche.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260917_BUGFIX1`.
 
 Feature precedente: **Logo Foggia City con licenza, mai Calcio Foggia 1920 (`FGCLIC1`):
+
 1. **Problema**: Foggia City usava lo stemma satanello di Calcio Foggia 1920 (`foggia.png` / id `1000345699`). Licenza d’uso solo per Foggia City.
 2. **Fix**:
    - Crest di tutte le dashboard staff/atleta/presidente: `immagini/squadre-loghi/foggia-city.png`.
@@ -1744,6 +1885,7 @@ Feature precedente: **Logo Foggia City con licenza, mai Calcio Foggia 1920 (`FGC
 3. **File**: dashboards, `dash-real.js`, `pres-dash.js`, `squadre-select.js`, `app.js`, `index.html`, `sw.js`. Cache `v20260917_FGCLIC1`.
 
 Feature precedente: **Scheda tecnica scouting allineata al PDF ufficiale (`SCOUTPDF1`):
+
 1. **Correzione**: il PDF precedente era il manuale profili club. Il documento corretto è `Scheda_Tecnica_Scouting.pdf` (Dossier analitico & scheda tecnica scouting, export DS).
 2. **Layout a 5 sezioni**:
    - 1 Header & anagrafica (nome, nascita/età, nazionalità/domicilio, status contrattuale, club/categoria, antropometria, Match Index IA)
@@ -1755,6 +1897,7 @@ Feature precedente: **Scheda tecnica scouting allineata al PDF ufficiale (`SCOUT
 4. **File**: `schede-tecniche.js`, `schede-tecniche.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260917_SCOUTPDF1`.
 
 Feature precedente: **Funzioni dedicate Manuale Profili Club (`CLUBOPS1`):
+
 1. **Richiesta**: aggiornare le 7 aree del PDF `manuale_profili_club_260916_153944.pdf` (Team Manager, Settore Giovanile, Segretario Generale, Magazziniere, Biglietteria/SLO, Ufficio Stampa, Marketing).
 2. **Intervento** (`club-role-ops.js` + nav in `dash-real.js`):
    - **Team Manager**: Hub comunicazioni broadcast/push con conferme; checklist matchday; calcolatore itinerari/km/tempi; prenotazioni strutture **Coming soon / Beta** + lista d’attesa; KPI squadra; scheda anagrafica tesserato.
@@ -1768,6 +1911,7 @@ Feature precedente: **Funzioni dedicate Manuale Profili Club (`CLUBOPS1`):
 3. **File**: `club-role-ops.js`, `dash-real.js`, `dash-luxury.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260917_CLUBOPS1`.
 
 Feature precedente: **Scheda tecnica IA da DS e Scout (`SCHEDAIA1`):
+
 1. **Richiesta**: la scheda tecnica (manuale `manuale_profili_club_260916_153944.pdf`) deve essere generata dall’IA con i dati, non solo sui pochi profili demo in Bacheca, e richiedibile da Direttore Sportivo e Area Scout.
 2. **Intervento**:
    - Generatore `EliseeSchede.generateFor` su qualsiasi tesserato (pool, Secret List, Scopri profili, dossier scout, o nome digitato).
@@ -1777,6 +1921,7 @@ Feature precedente: **Scheda tecnica IA da DS e Scout (`SCHEDAIA1`):
 3. **File**: `schede-tecniche.js`, `schede-tecniche.css`, `dash-real.js`, `ds-dash.js`, `obs-dash.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260917_SCHEDAIA1`.
 
 Feature precedente: **Allineamento criteri password login / reimposta (`PWPOLICY1`):
+
 1. **Bug**: Accedi mostrava i 4 requisiti (8 caratteri, maiuscola, numero, speciale) mentre Reimposta password accettava solo 8 caratteri e **non salvava** l'hash sul server. Chi cambiava password senza maiuscola poi non riusciva ad entrare (hash originale invariato + UI di login fuorviante).
 2. **Fix**:
    - Login: niente checklist di forza. Basta email + password; il server confronta l'hash.
@@ -1787,6 +1932,7 @@ Feature precedente: **Allineamento criteri password login / reimposta (`PWPOLICY
 4. **Nota accesso**: la password cambiata senza maiuscola non era stata salvata. Per entrare ora usare la password originale `Iemmello.9`, poi reimpostarla rispettando i 4 criteri.
 
 Feature precedente: **Menu account navbar editoriale (`ACCTMENU1`):
+
 1. **Richiesta**: il tendina utente (chip ciano, icone neon, bordo HUD, Outfit 900) era troppo da videogioco rispetto all'Area Stampa.
 2. **Intervento**:
    - Pannello `#user-dropdown-menu` allineato alla palette Stampa (`#0b0e14`, bordo `#1e2430`, raggio 8px, hairline, niente glow ciano).
@@ -1796,6 +1942,7 @@ Feature precedente: **Menu account navbar editoriale (`ACCTMENU1`):
 3. **File**: `index.html`, `style.css`, `app.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260917_ACCTMENU1`.
 
 Feature precedente: **Allineamento PRO di tutte le dashboard restanti (`ALLPRO1`):
+
 1. **Sblocco griglia 56px** in `dash-luxury.css`: le shell PRO (`es-pro-shell`, `es-gk-shell`, `es-med-shell`, `es-obs-shell`, `es-ma-shell`, `es-at-shell`, `es-cos-shell`) e gli id `#es-gk` `#es-md` `#es-fisio` `#es-nu` `#es-mad` `#es-od` `#es-atd` `#es-dsd` `#es-tmd` `#es-yg` `#es-dg` `#es-ag` `#es-mk` `#es-pr` `#es-eq` `#es-sg` `#es-bt` `#es-td` `#es-pd` `#es-gd` `#es-prd` sono `display:block` (niente colonna nera da 56px). CSS condiviso `.es-pro-*` (sidebar 240px, header 2 livelli, tab bar).
 2. **Preparatore Portieri** (`gk-dash.js` / `gk-dash.css`): shell PRO già pronta, ora sbloccata dalla griglia 56px. Tab: Dashboard, Stanza dei Portieri, Schede, Reattività, Badge, Radar, Canale Mister.
 3. **Preparatore Atletico** (`at-dash.js` / `at-dash.css`): rail 56px rimossa. Sidebar 240px, header 2 livelli, tab Dashboard / GPS / Schede / Test / Badge / Radar / Canale Mister.
@@ -1805,6 +1952,7 @@ Feature precedente: **Allineamento PRO di tutte le dashboard restanti (`ALLPRO1`
 7. **File**: `dash-luxury.css`, `dash-real.js`, `gk-dash.js`, `gk-dash.css`, `at-dash.js`, `at-dash.css`, `med-dash.css`, `fisio-dash.css`, `nu-dash.css`, `player-profile.css`, `player-dash.js/css`, `giorn-dash.js/css`, `pres-dash.js/css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260917_ALLPRO1`.
 
 Feature precedente: **Conversione PRO Area Preparatore Atletico (`ATPRO1`):
+
 1. **Allineamento dashboard Preparatore Atletico a Preparatore Portieri**:
    - Sidebar fissa 240px (brand ELISEE SCOUT / Area Preparatore Atletico, 8 voci, badge Foggia City sticky).
    - Header a 2 livelli: identità UEFA/FIGC + CTA «Registra Carico GPS +»; Prossima Gara con countdown giorni/ore/min e Focus «ACWR & Prevenzione Infortuni».
@@ -1814,6 +1962,7 @@ Feature precedente: **Conversione PRO Area Preparatore Atletico (`ATPRO1`):
 2. **File aggiornati**: `at-dash.js`, `at-dash.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260917_ATPRO1`.
 
 Feature precedente: **Refactoring PRO `med-dash.js`, `fisio-dash.js`, `nu-dash.js` (`MEDFISNUDASH_PRO`):
+
 1. **Refactoring Completo Aree Medico Sociale, Fisioterapista e Nutrizionista — PRO Shell**:
    - **Richiesta Utente**: le dashboard di Medico Sociale, Fisioterapista e Nutrizionista non erano ordinate come l'Area Allenatore e Vice Allenatore.
    - **Interventi Applicati** (identici su tutti e 3 i file):
@@ -1827,6 +1976,7 @@ Feature precedente: **Refactoring PRO `med-dash.js`, `fisio-dash.js`, `nu-dash.j
 3. **Commit**: `7911a446` — push su `main` — deploy Vercel in corso.
 
 Feature precedente: **Riprogettazione Area Match Analyst & Video Analyst con Architettura Ordinata Speculare a Coach & Vice (`MAPRO1`):**
+
 1. **Allineamento & Ordinamento Completo Dashboard Match Analyst & Video Analyst (`ma-dash.css`, `ma-dash.js`, `index.html`)**:
    - **Richiesta Utente**: l'Area Match Analyst non era ordinata come l'Area Allenatore e Vice Allenatore. Tutte le opzioni e le funzioni andavano riordinate nel miglior modo possibile.
    - **Interventi Applicati**:
@@ -1846,6 +1996,7 @@ Feature precedente: **Riprogettazione Area Match Analyst & Video Analyst con Arc
 2. **File aggiornati**: `ma-dash.css`, `ma-dash.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_MAPRO1`.
 
 Feature precedente: **Riprogettazione Area Osservatore & Scout con Architettura Ordinata Speculare a Coach & Vice (`SCOUTPRO1`):**
+
 1. **Allineamento & Ordinamento Completo Dashboard Osservatore & Talent Scout (`obs-dash.css`, `obs-dash.js`, `index.html`)**:
    - **Richiesta Utente**: l'Area Osservatore & Scout non era ordinata come l'Area Allenatore e Vice Allenatore. Tutte le opzioni e le funzioni andavano riordinate nel miglior modo possibile.
    - **Interventi Applicati**:
@@ -1865,6 +2016,7 @@ Feature precedente: **Riprogettazione Area Osservatore & Scout con Architettura 
 2. **File aggiornati**: `obs-dash.css`, `obs-dash.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_SCOUTPRO1`.
 
 Feature precedente: **Risoluzione Widescreen & Anti-Taglio ActionsGrid per Tutte le Dashboard Staff (`GKALLFIX1`):**
+
 1. **Perfezionamento Preparatore Portieri & Standardizzazione Universale ActionsGrid (`gk-dash.css`, `at-dash.css`, `fisio-dash.css`, `med-dash.css`, `nu-dash.css`, `index.html`)**:
    - **Diagnosi del bug visivo riscontrato negli screenshot del Preparatore Portieri**:
      - Nello Screenshot 3, la sezione "GK Suite v3.0" presentava 6 card operative tagliate verticalmente con icone troncate e testo illeggibile a causa del selettore rigido a 3 colonne.
@@ -1875,6 +2027,7 @@ Feature precedente: **Risoluzione Widescreen & Anti-Taglio ActionsGrid per Tutte
 2. **File aggiornati**: `gk-dash.css`, `at-dash.css`, `fisio-dash.css`, `med-dash.css`, `nu-dash.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_GKALLFIX1`.
 
 Feature precedente: **Risoluzione Widescreen, Anti-Taglio Card & De-duplicazione Match Analyst (`MAFIX1`):**
+
 1. **Perfezionamento Dashboard Match Analyst & Video Analyst (`ma-dash.css`, `ma-dash.js`, `index.html`)**:
    - **Diagnosi del bug visivo riscontrato negli screenshot**:
      - Analogamente all'osservatore, la griglia a 3 colonne di "Tactical Suite v3.0" si comprimeva tagliando verticalmente le card e le icone.
@@ -1885,6 +2038,7 @@ Feature precedente: **Risoluzione Widescreen, Anti-Taglio Card & De-duplicazione
 2. **File aggiornati**: `ma-dash.css`, `ma-dash.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_MAFIX1`.
 
 Feature precedente: **Risoluzione Widescreen & Eliminazione Tagli Dashboard Osservatore & Scout (`OBSFIX1`):**
+
 1. **Risoluzione Compressione Widescreen & Tagli Card (`player-profile.css`, `obs-dash.css`, `obs-dash.js`)**:
    - **Diagnosi del bug visivo riscontrato negli screenshot**:
      - `player-profile.css` applicava a riga 384 un selettore restrittivo `#user-dossier-view-group.is-staff-area:not(.is-coach-dash) .pf-page-inner { max-width: 560px; }`. Questo causava lo schiacciamento dell'intera dashboard in una colonnina stretta di 560px con il restante 60% dello schermo nero e vuoto.
@@ -1898,6 +2052,7 @@ Feature precedente: **Risoluzione Widescreen & Eliminazione Tagli Dashboard Osse
 2. **File aggiornati**: `player-profile.css`, `obs-dash.css`, `obs-dash.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_OBSFIX1`.
 
 Feature precedente: **Riprogettazione Completa & Ordinata Nutrizionista & Composizione Corporea (`NUTRILUX1`):**
+
 1. **Ridisegno Integrale Dashboard Nutrizionista (`nu-dash.js`, `nu-dash.css`, `index.html`)**:
    - **Diagnosi**: Layout collassato da regole CSS asimmetriche a 3 colonne frastagliate con `grid-template-columns: 280px minmax(0, 1fr) 240px` che comprimevano il profilo e sparpagliavano blocchi scollegati senza un vero motore di pianificazione nutrizionale sportiva, esami BIA o timing carboidrati.
    - **Nuova Architettura Ordinata & Luxury**:
@@ -1916,6 +2071,7 @@ Feature precedente: **Riprogettazione Completa & Ordinata Nutrizionista & Compos
 2. **File aggiornati**: `nu-dash.js`, `nu-dash.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_NUTRILUX1`.
 
 Feature precedente: **Riprogettazione Completa & Ordinata Fisioterapista & Riabilitazione (`FISIOLUX1`):**
+
 1. **Ridisegno Integrale Dashboard Fisioterapista (`fisio-dash.js`, `fisio-dash.css`, `index.html`)**:
    - **Diagnosi**: `fisio-dash.css` conteneva soltanto 16 righe grezze e la pagina caricava un vecchio template a 3 colonne spoglio senza strumenti per la gestione delle terapie manuali, tecarterapia, kinesiotaping, monitoraggio scala VAS del dolore e coordinamento con il Medico Sociale.
    - **Nuova Architettura Ordinata & Luxury**:
@@ -1934,6 +2090,7 @@ Feature precedente: **Riprogettazione Completa & Ordinata Fisioterapista & Riabi
 2. **File aggiornati**: `fisio-dash.js`, `fisio-dash.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_FISIOLUX1`.
 
 Feature precedente: **Riprogettazione Completa & Ordinata Medico Sociale & Staff Sanitario (`MEDLUX1`):**
+
 1. **Ridisegno Integrale Dashboard Medico Sociale (`med-dash.js`, `med-dash.css`, `index.html`)**:
    - **Diagnosi**: `med-dash.css` conteneva soltanto 16 righe grezze e la logica usava un template a 3 colonne generico senza strumenti clinici operativi, senza controllo scadenze idoneità agonistica, senza prescrizioni per fisioterapia e senza return-to-play.
    - **Nuova Architettura Ordinata & Luxury**:
@@ -1952,6 +2109,7 @@ Feature precedente: **Riprogettazione Completa & Ordinata Medico Sociale & Staff
 2. **File aggiornati**: `med-dash.js`, `med-dash.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_MEDLUX1`.
 
 Feature precedente: **Riprogettazione Completa Match Analyst, Preparatore Portieri & Preparatore Atletico (`STAFFLUX1`):**
+
 1. **Ridisegno Integrale Dashboard Match Analyst (`ma-dash.js`, `ma-dash.css`, `index.html`)**:
    - **Diagnosi**: Layout spezzato da `fillExtra` che appendeva blocchi disordinati sotto la shell generica a 3 colonne, duplicando il profilo e disperdendo 15 bottoni in sotto-griglie frammentate.
    - **Nuova Architettura Ordinata & Luxury**:
@@ -1980,6 +2138,7 @@ Feature precedente: **Riprogettazione Completa Match Analyst, Preparatore Portie
 4. **File aggiornati**: `ma-dash.js`, `ma-dash.css`, `gk-dash.js`, `gk-dash.css`, `at-dash.js`, `at-dash.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_STAFFLUX1`.
 
 Feature precedente: **Riprogettazione Completa & Armonica Area Osservatore / Scout (`OBSLUX1`):**
+
 1. **Ridisegno Integrale Dashboard Osservatore & Talent Scout (`obs-dash.js`, `obs-dash.css`, `index.html`)**:
    - **Diagnosi**: La pagina dell'Osservatore soffriva di una stratificazione frammentata (shell a 3 colonne generica sovrapposta a un blocco `.es-obs-extra` appeso in fondo che duplicava credenziali, bottoni e sezioni, creando disordine visivo).
    - **Nuova Architettura Ordinata & Armonica**:
@@ -1998,6 +2157,7 @@ Feature precedente: **Riprogettazione Completa & Armonica Area Osservatore / Sco
 2. **File aggiornati**: `obs-dash.js`, `obs-dash.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_OBSLUX1`.
 
 Feature precedente: **Risoluzione Schermata Nera Area Vice Allenatore (`VICEFIX1`):**
+
 1. **Fix Definitivo Schermata Nera Area Vice Allenatore & Allenatore Capo (`dash-luxury.css`, `vice-dash.js`, `coach-dash.js`, `vice-dash.css`, `coach-dash.css`)**:
    - **Diagnosi**: Nel foglio di stile `dash-luxury.css` le regole universali del layout a due colonne (56px 1fr per le dashboard a dock/rail) includevano erroneamente `#es-cd` e `#es-vd`, confinando la shell completa `.es-cos-shell` in soli 56px di larghezza e lasciando il restante 1fr come cella vuota a sfondo `#050608` (il rettangolo nero che copriva l'intera schermata).
    - **Risoluzione CSS**:
@@ -2009,6 +2169,7 @@ Feature precedente: **Risoluzione Schermata Nera Area Vice Allenatore (`VICEFIX1
 2. **File aggiornati**: `dash-luxury.css`, `vice-dash.js`, `coach-dash.js`, `vice-dash.css`, `coach-dash.css`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_VICEFIX1`.
 
 Feature precedente: **Refactoring Universale Dashboard di Ruolo, ActionsGrid a Card & Avatar Safe (`ROLEDASHUP1`):**
+
 1. **Refactoring Universale Tutte le Dashboard di Ruolo (`dash-real.js`, `role-actions-runtime.js`, `dash-luxury.css`, `index.html`)**:
    - **Header Profilo & Avatar Safe**:
      - Risolto definitivamente il bug del riquadro nero vuoto alto 350px: avatar circolare compatto (56px) con bordo ciano soft, ombra e fallback infallibile alle iniziali su gradiente indaco profondo (`.es-pd-ph`).
@@ -2025,6 +2186,7 @@ Feature precedente: **Refactoring Universale Dashboard di Ruolo, ActionsGrid a C
 2. **File aggiornati**: `dash-real.js`, `role-actions-runtime.js`, `dash-luxury.css`, `obs-dash.js`, `ma-dash.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `20260917_ROLEDASHUP1`.
 
 Feature precedente: **Allineamento Speculare Area Vice Allenatore & Zero Dati Fittizi (`VICEMIRROR1`):**
+
 1. **Area Vice Allenatore Gemella all'Area Allenatore (`vice-dash.js`, `vice-dash.css`)**:
    - Resa l'interfaccia, la shell con sidebar a sinistra e tutte le funzioni del Vice Allenatore identiche all'Area Allenatore:
      - Sidebar con le 11 macroaree (Dashboard, Rosa, Formazione, Tattica, Allenamenti, Calendario, Analisi Avversario, GPS / Carichi, Report Staff, Comunicazioni, Impostazioni Tecniche).
@@ -2043,6 +2205,7 @@ Feature precedente: **Integrazione Logo Ufficiale Foggia City 1000345699.png & R
 Feature precedente: **Creazione e Memorizzazione Cartella Archivio Loghi (`ARCHIVIOLOGHI1`):**
 
 Feature precedente: **Integrazione Logo Ufficiale Circolare Patentino UEFA B (`UEFAB1`):**
+
 1. **Logo Ufficiale Circolare UEFA B**:
    - Scaricato e integrato il logo ufficiale UEFA (`immagini/logo/uefa-b.png`) ad alta risoluzione.
    - Trasparenza alpha impeccabile sul cerchio esterno tramite maschera antialiasing (eliminato il falso pattern a quadretti).
@@ -2051,6 +2214,7 @@ Feature precedente: **Integrazione Logo Ufficiale Circolare Patentino UEFA B (`U
 2. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `immagini/logo/uefa-b.png`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_UEFAB1`.
 
 Feature precedente: **Risoluzione Scroll Tab Secondari & Menu "Altro ▾" a Scomparsa (`TABFIX1`):**
+
 1. **Dimensioni Compatte Calibrate**:
    - Padding orizzontale ridotto a 11px (`padding: 6px 11px`).
    - Font-size snella e nitida a 12.5px (`font-size: 12.5px`).
@@ -2068,6 +2232,7 @@ Feature precedente: **Risoluzione Scroll Tab Secondari & Menu "Altro ▾" a Scom
 4. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_TABFIX1`.
 
 Feature precedente: **Ridisegno Completo Macroarea "Analisi Avversario" & Dossier Scout Professionale (`DOSSIERLUX1`):**
+
 1. **Addio alla "dashboard da videogame tattico" & Nuova Gerarchia Visiva**:
    - Eliminati tutti i titoli a semaforo pieno (verde/rosso/giallo/blu) in favore di una tipografia neutra scura (`#e2e8f0` e `#cbd5e1`), con piccole icone monocromatiche distintive (scudo, alert circolare, stella, bandierina corner).
    - Colori semantici preservati esclusivamente come bordo sinistro sottile di 2.5px sulle card di sezione (`.is-forza`, `.is-deboli`, `.is-chiave`, `.is-piazzati`).
@@ -2094,6 +2259,7 @@ Feature precedente: **Ridisegno Completo Macroarea "Analisi Avversario" & Dossie
 6. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_DOSSIERLUX1`.
 
 Feature precedente: **Ridisegno Completo Macroarea Calendario Tecnico Luxury (`CALENDARLUX1`):**
+
 1. **Header Sezione Professionale**:
    - Rimosso completamente il testo tecnico di debug `(Tabelle: partite, allenamenti)`.
    - Titolo pulito *"Calendario Tecnico Staff & Partite"* con sottotitolo descrittivo *"Pianificazione timeline gare ufficiali, sedute di allenamento e impegni operativi dello staff"*.
@@ -2121,6 +2287,7 @@ Feature precedente: **Ridisegno Completo Macroarea Calendario Tecnico Luxury (`C
 6. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_CALENDARLUX1`.
 
 Feature precedente: **Refine Tattica & Formazione: Header 3 Colonne, Selettore Modulo Luxury, Toolbar Uniformata & Spaziatura Campo (`TACTICREFINE1`):**
+
 1. **Zona 1 (Widget Header: Partita + Countdown + Seduta Odierna)**:
    - Risolto il disallineamento e rimosso il bordo stray sopra "MANCANO" con container a 3 colonne coerente (`1.25fr 1fr 1.25fr`) e `overflow: hidden; position: relative;` sul genitore.
    - Badge "Seduta odierna" desaturato in stile "stato" luxury (`rgba(16, 185, 129, 0.04)`, bordo sottile `1px solid rgba(16, 185, 129, 0.24)` e puntino verde pieno `7px #10b981` con glow discreto).
@@ -2137,6 +2304,7 @@ Feature precedente: **Refine Tattica & Formazione: Header 3 Colonne, Selettore M
 5. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_TACTICREFINE1`.
 
 Feature precedente: **Lavagna Tattica: Pulsante "Importa Schema" (Schemi Preimpostati UEFA Pro & JSON) e "Salva Schema" Riposizionato (`IMPORTSCHEMA1`):**
+
 2. **Libreria Schemi Tattici Preimpostati (Mister & Vice Allenatore)**:
    - Modale dedicato interattivo (`840px`) con 6 schemi professionali completi codificati secondo i principi moderni (UEFA Pro):
      - *Costruzione dal Basso 4-3-3* (Scuola Guardiola-De Zerbi): 3+1 profondo, centrali larghi, mediano abbassato e terzini alti.
@@ -2155,6 +2323,7 @@ Feature precedente: **Lavagna Tattica: Pulsante "Importa Schema" (Schemi Preimpo
 5. **File aggiornati**: `coach-dash.js`, `vice-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_IMPORTSCHEMA1`.
 
 Feature precedente: **Lavagna Tattica Digitale: Icone SVG Lucide 16px & Strumenti Tattici End-to-End (`TACTICLUCIDE1`):**
+
 1. **Sostituzione Integrale Emoji con Icone SVG Lucide**:
    - Rimosse tutte le emoji unicode nei pulsanti della sezione Tattica e sostituite con icone SVG standard Lucide 16x16px (stroke-width 2, coerenti con la sidebar e l'UI del club):
      - `Muovi`: Lucide `Move`
@@ -2180,6 +2349,7 @@ Feature precedente: **Lavagna Tattica Digitale: Icone SVG Lucide 16px & Strument
 3. **File aggiornati**: `coach-dash.js`, `coach-dash.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_TACTICLUCIDE1`.
 
 Feature precedente: **Redesign Editoriale/Luxury Story 9:16 Instagram (`STORYLUX1`):**
+
 1. **Design Piatto & Tipografia Protagonista (Addio Stile Videogioco)**:
    - Sostituiti i cerchi giocatore con bordo ciano fluorescente e glow con un design pulito ed elegante: cerchio con bordo sottile 1px (`rgba(255,255,255,0.45)`), sfondo verde scuro opaco profondo (`#071a0e`), numero maglia in font `Inter` a peso bilanciato (600) e cognome maiuscolo con letter-spacing senza etichette o box pesanti.
    - Linee del campo regolamentari desaturate e discrete (`opacity: 0.2`, stroke sottile 1px) per conferire profondità naturale e tridimensionalità sobria.
@@ -2196,6 +2366,7 @@ Feature precedente: **Redesign Editoriale/Luxury Story 9:16 Instagram (`STORYLUX
 5. **File aggiornati**: `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_STORYLUX1`.
 
 Feature precedente: **Fix Layout Formazione 2 Colonne, Campo Proporzionato 3/4 & Panchina Fissa 320px (`LINEUPLAYOUT2`):**
+
 1. **Grid a Due Colonne Rigoroso**:
    - Risolto il bug di overflow e sovrapposizione in cui il campo da gioco sovrastava e tagliava a destra il pannello della Panchina (`...HINA)`, "...cca In Campo →").
    - Contenitore principale `.formazione-layout` impostato con `display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 20px; align-items: start; width: 100%;`.
@@ -2211,6 +2382,7 @@ Feature precedente: **Fix Layout Formazione 2 Colonne, Campo Proporzionato 3/4 &
 4. **File aggiornati**: `coach-dash.js`, `coach-dash.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_LINEUPLAYOUT2`.
 
 Feature precedente: **Lavagna Tattica Digitale Interattiva, Fix Tab Bar Orizzontale & Refactoring Analisi Avversario (`TACTICBOARD1`):**
+
 1. **Lavagna Tattica Digitale Interattiva Indipendente**:
    - Superata la rigidità del 4-3-3: la sezione Tattica opera ora come ambiente di studio tattico autonomo, con proprio selettore dropdown indipendente a 7 moduli (`4-3-3`, `4-4-2`, `4-2-3-1`, `3-5-2`, `3-4-3`, `5-3-2`, `4-1-4-1`) riusando le coordinate percentuali di `MODULI_TATTICI`.
    - Introdotto il pulsante *"Sincronizza da XI Ufficiale"* per clonare istantaneamente modulo e titolari della Formazione Ufficiale confermata sulla lavagna ogni volta che lo si desidera.
@@ -2231,6 +2403,7 @@ Feature precedente: **Lavagna Tattica Digitale Interattiva, Fix Tab Bar Orizzont
 5. **File aggiornati**: `coach-dash.js`, `coach-dash.css`, `elisee-supabase.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_TACTICBOARD1`.
 
 Feature precedente: **Lineup Builder Tattico Dinamico & Ruoli Flessibili (`LINEUPBUILDER1`):**
+
    - Superato il vecchio testo statico del 4-3-3: implementato un selettore interattivo con etichetta ("Modulo:"), chevron SVG, bordo blu `#3b82f6` e dropdown con 7 moduli tattici completi: `4-3-3` (Offensivo con Ali), `4-4-2` (Classico Lineare), `4-2-3-1` (Doppio Mediano & Trequarti), `3-5-2` (Ampiezza Quinti & Doppio Attacco), `3-4-3` (Tridente & Linea Mediana a 4), `5-3-2` (Difesa a 5 & Contropiede Rapido), `4-1-4-1` (Vertice Basso & Linea di Trequarti).
    - Al cambio modulo, le coordinate percentuali e i ruoli di tutti gli 11 slot si ridispongono istantaneamente sul campo da calcio.
 2. **Libreria Ruoli Estesa a 20 Posizioni con Sigle Ufficiali**:
@@ -2253,6 +2426,7 @@ Feature precedente: **Lineup Builder Tattico Dinamico & Ruoli Flessibili (`LINEU
 Feature precedente: **Bottoni Secondari & Modali Annulla ad Alto Contrasto B2B (`CANCELBTN1`):**
 
 Feature precedente: **Form Tesseramento Nuovo Calciatore con Anagrafica Completa (`ROSTERFIELDS1`)**:
+
 1. **Pulsante "+ Aggiungi Calciatore" nel Blu Primario di Brand**:
    - Definite le regole `.es-btn-cos-primary` agganciate rigorosamente alle variabili del design system `var(--cos-blue)` (`#3B82F6`), testo bianco `#FFFFFF`, raggio `var(--cos-radius-sm, 5px)` ed effetto hover coordinato `#2563EB` (identico al pulsante *"Area Vice Allenatore &rarr;"*).
 2. **Filtri Pillola Roster Coerenti con la Secondary Tab Bar**:
@@ -2263,6 +2437,7 @@ Feature precedente: **Form Tesseramento Nuovo Calciatore con Anagrafica Completa
 3. **File aggiornati**: `coach-dash.css`, `vice-dash.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_ROSATOKEN1`.
 
 Feature precedente: **Risoluzione Bug Icona Gigante & Stato Vuoto Rosa Unificato (`ROSAEMPTY1`)**:
+
 1. **Causa del Bug Identificata e Risolta alla Radice**:
    - L'icona enorme visibile in cima alla sezione Rosa non era uno spinner di loading bloccato né un doppio blocco renderizzato per errore: era l'icona `<svg viewBox="0 0 24 24">` del titolo *"Organico Rosa Prima Squadra"* in `.es-cos-panel-head` priva degli attributi `width` e `height`.
    - In assenza di vincoli dimensionali nel CSS, il browser scalava il viewBox a tutta la larghezza disponibile del contenitore (~800-1100px), trasformando il tratto `stroke-width="2"` in un arco bianco spesso ~66px e spingendo il bottone `+ Aggiungi Calciatore` in posizione galleggiante.
@@ -2275,6 +2450,7 @@ Feature precedente: **Risoluzione Bug Icona Gigante & Stato Vuoto Rosa Unificato
 3. **File aggiornati**: `coach-dash.js`, `vice-dash.js`, `coach-dash.css`, `vice-dash.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_ROSAEMPTY1`.
 
 Feature precedente: **Rimozione Radicale Footer Pubblico (`NOFOOTER1`)**:
+
 1. **Esclusione Footer Pubblico nelle Route Riservate dello Staff Tecnico**:
    - Assegnato ID esplicito `#site-public-footer` a `<footer class="site-footer pf-footer">` in `index.html`.
    - Implementata in `app.js` la funzione globale `window.updatePublicFooterVisibility(viewType, targetHash)`: rileva se l'utente si trova nell'Area Riservata dello Staff Tecnico (stato `is-coach-mode`, `is-vice-mode`, o montaggio del dossier con dashboard attiva) e disattiva/smonta completamente il footer dal rendering visivo e dall'albero accessibile con `display: none !important`, attributo `hidden`, `pointer-events: none` e classe `is-hidden-staff`.
@@ -2284,6 +2460,7 @@ Feature precedente: **Rimozione Radicale Footer Pubblico (`NOFOOTER1`)**:
 2. **File aggiornati**: `index.html`, `app.js`, `coach-dash.js`, `vice-dash.js`, `player-profile.js`, `coach-dash.css`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_NOFOOTER1`.
 
 Feature precedente: **Dati Reali Supabase + Cloud Storage (`COACHSUPA1`)**:
+
 1. **Rimozione Integrale Dati Mock & Query Reali al Database Supabase**:
    - Creato il client universale `elisee-supabase.js` (`window.EliseeSupabase`) con connessione REST PostgREST e supporto tabelle: `club`, `staff`, `rosa`, `partite`, `allenamenti`, `presenze_allenamento`, `report`, `eventi_log`, `impegni_staff`, `file_allegati`.
    - **Prossima Gara & Calendario Gare**: collegate alla tabella `partite` con filtro data futura / stato prossima e ordine cronologico reale; se non ci sono gare a database, visualizza lo stato esplicito "Nessuna gara in programma", senza inventare avversari o date.
@@ -2298,7 +2475,9 @@ Feature precedente: **Dati Reali Supabase + Cloud Storage (`COACHSUPA1`)**:
    - Modal dedicato di caricamento con progress feedback, selezione permessi di visibilità (`staff_tecnico`, `tutti`, `medico`), salvataggio metadati in `file_allegati` e link diretti per apertura e download.
    - Integrazione speculare nell'Area Vice Allenatore (`vice-dash.js`): consultazione rosa reale, gestione sedute, monitoraggio GPS live e upload diretto di schede workstation.
 3. **File aggiornati**: `elisee-supabase.js`, `coach-dash.js`, `vice-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `20260916_COACHSUPA1`.
+
 Feature precedente: **Respiro e Spazio Superiore tra Header e Sidebar (`COACHPRO7`)**:
+
 1. **Sidebar Estesa Verticalmente fino in Fondo (Linea Gialla Coperta al 100%)**:
    - Impostata la sidebar `.es-cos-sidebar` come `position: fixed; top: var(--header-h); left: 0; bottom: 0; width: 240px; height: calc(100vh - var(--header-h)); height: calc(100dvh - var(--header-h));`.
    - Lo sfondo scuro `#0A0E18` e la linea divisoria verticale destra `1px solid var(--cos-line)` ora scendono fluidamente e ininterrottamente fino al fondo del viewport (taskbar).
@@ -2307,7 +2486,9 @@ Feature precedente: **Respiro e Spazio Superiore tra Header e Sidebar (`COACHPRO
    - Su `.es-cos-shell`: impostato `padding-left: calc(240px + var(--space-3))` per distanziare perfettamente il contenuto centrale dalla sidebar fissa.
    - Rimosso l'override mobile static obsoleto a 850px, preservando il drawer off-canvas su mobile/tablet (<= 1024px).
 3. **File aggiornati**: `coach-dash.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHPRO6`.
+
 Feature precedente: **Risoluzione Radicale Conflitti CSS Layout & Sidebar Spazio Vuoto (`COACHPRO5`)**:
+
 1. **Causa Reale del Gap ~150px Risolta alla Radice (Zero Patch Sovrapposte)**:
    - Individuata la regola in conflitto primario in `style.css` (riga 9004): `#user-dossier-portal .pf-page-inner` imponeva `padding-top: 7.25rem !important` (116px). Poiché conteneva un ID, vinceva per specificità su qualsiasi classe e si sommava ai 72px di `.es-cos-shell`, producendo 188px totali di fascia vuota.
    - Modificato `style.css` escludendo direttamente la dashboard: `.container.pf-page-inner:not(.is-coach-inner), .pf-page-inner:not(.is-coach-inner), #user-dossier-portal:not(.is-coach-dash) .pf-page-inner`.
@@ -2319,7 +2500,9 @@ Feature precedente: **Risoluzione Radicale Conflitti CSS Layout & Sidebar Spazio
    - Inserito `padding-bottom: 56px` di sicurezza per garantire che anche a risoluzioni bassissime l'ultima voce ("Impostazioni Tecniche") e la penultima ("Comunicazioni") non tocchino mai il fondo.
    - `max-height: calc(100vh - var(--header-h))` e `max-height: calc(100dvh - var(--header-h))` con `overflow-y: auto` e `overscroll-behavior: contain`.
 3. **File aggiornati**: `style.css`, `player-profile.css`, `player-profile.js`, `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHPRO5`.
+
 Feature precedente: **Risoluzione 4 Difetti Layout Area Staff Tecnico (`COACHPRO4`)**:
+
 1. **Fascia Vuota ~90px Risolta (Unico Compenso Navbar)**:
    - Eliminato il doppio compenso per la navbar fissa: impostato un unico `padding-top: var(--header-h, 72px)` sul wrapper principale (`.layout, .es-cos-shell`).
    - Azzerati rigorosamente `padding-top: 0 !important; margin-top: 0 !important;` su tutti gli antenati e contenitori intermedi (`body.is-coach-mode`, `html`, `#user-dossier-view-group`, `#user-dossier-portal`, `.pf-page`, `.pf-page-inner`, `#es-staff-profile`, `#es-cd`, `.content, .es-cos-main`).
@@ -2333,7 +2516,9 @@ Feature precedente: **Risoluzione 4 Difetti Layout Area Staff Tecnico (`COACHPRO
 4. **Contenitore Centrale a Larghezza Piena**:
    - Rimosso il tetto `max-width: var(--content-max)` su layout e area centrale; impostato `max-width: none !important; width: 100%;` con `padding-inline: var(--space-3);` per sfruttare al 100% lo spazio disponibile nel viewport.
 5. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHPRO4`.
+
 Feature precedente: **Sidebar Sticky Impeccabile & Ritmo Verticale Compatto Token-based (`COACHPRO3`)**:
+
 1. **Sidebar Sticky Garantita allo Scroll**:
    - Impostato layout principale `.es-cos-shell` come `display: grid; grid-template-columns: 240px minmax(0, 1fr); align-items: start; gap: var(--space-3); padding-top: var(--header-h);`.
    - Sidebar `.es-cos-sidebar` configurata con `position: sticky; top: var(--header-h, 70px); height: calc(100vh - var(--header-h)); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;`.
@@ -2344,7 +2529,9 @@ Feature precedente: **Sidebar Sticky Impeccabile & Ritmo Verticale Compatto Toke
    - Applicati su header profilo (`padding: var(--space-3); gap: var(--space-2);`), barra tab (`margin-block: var(--space-1) var(--space-2); gap: var(--space-1);`), griglia KPI (`gap: var(--space-2); padding: var(--space-2);`) e card KPI (`padding: var(--space-2); gap: var(--space-1);`).
    - Line-height compatti (`1.25` su label, `1.1` su valori), azzerati margini di primo/ultimo figlio dentro `.card` ed `.es-cos-card`, e sostituiti i margini sparsi con `gap` su tutti i container e grid.
 3. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHPRO3`.
+
 Feature precedente: **Restyling UX/UI & Layout Dark Slate Dashboard Allenatore (`COACHSLATE1`)**:
+
 1. **Eliminazione Radicale Doppia Navigazione & Topbar Compatta**:
    - Quando la dashboard dell'allenatore è attiva, viene iniettata la classe `is-coach-mode` sul `<body>`, sopprimendo integralmente la navbar del sito pubblico (`#nav-menu.portfolio-nav`, "Chi siamo", "Minigiochi", etc.) e recuperando oltre 70px di prezioso spazio verticale.
    - L'header visualizza esclusivamente il logo, il selettore lingua, le notifiche e il profilo utente.
@@ -2374,7 +2561,9 @@ Feature precedente: **Restyling UX/UI & Layout Dark Slate Dashboard Allenatore (
      - *Prossimi Impegni Staff*: elenco cronologico compatto.
      - *Registro Attività*: log collassabile ad alto contrasto.
 6. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `vice-dash.css`, `player-profile.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHSLATE1`.
+
 Feature precedente: **Piattaforma Gestionale SaaS B2B Staff Tecnico Calcistico (`COACHSAAS1`)**:
+
 1. **Abolizione Totale dello Stile Gaming & Videogioco**:
    - Eliminati avatar giganti da console, corone dorate fittizie, bagliori, glow e bordi fluorescenti.
    - Adottato il design system pulito e piatto ispirato ai software SaaS B2B di riferimento (*Notion, Linear, Stripe Dashboard, HubSpot* e suite di performance management calcistico): palette sobria (`#050B14`, `#07111D`, `#0A1624`, `#17344A`), tipografia standard sans-serif (`Inter`), bordi sottili e spaziatura ariosa (padding 20-24px, gap 20-24px).
@@ -2403,7 +2592,9 @@ Feature precedente: **Piattaforma Gestionale SaaS B2B Staff Tecnico Calcistico (
    - `vice-dash.css` e workstation a 8 tab allineate alla stessa sobrietà gestionale B2B senza glow o card da gaming.
    - Tutte le sezioni rimangono operative e interattive (ricerca rosa, filtri, lineup builder dinamico, modale tesseramento, modale seduta, chat interna).
 7. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `vice-dash.css`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHSAAS1`.
+
 Feature precedente: **Fix Montaggio Automatico Dashboard Allenatore Capo (`COACHFIX1`)**:
+
 1. **Risoluzione Bug Montaggio `#es-cd`**:
    - In `coach-dash.js`, `renderHub` richiedeva l'esistenza statica di `#es-cd` nel DOM (`var mount = document.getElementById('es-cd'); if (!mount) return;`), ma come per tutte le altre dashboard di ruolo l'elemento va iniettato dinamicamente dentro `#es-staff-profile`.
    - Aggiornato `renderHub` implementando la creazione automatica di `<div id="es-cd" class="es-pd">` come primo figlio di `#es-staff-profile`, l'impostazione esplicita di `mount.hidden = false`, `mount.removeAttribute('hidden')`, `mount.style.display = 'block'` e l'aggiunta della classe host `es-cd-on` a `#es-staff-profile`.
@@ -2413,8 +2604,10 @@ Feature precedente: **Fix Montaggio Automatico Dashboard Allenatore Capo (`COACH
    - Aggiunti listener diretti per gli eventi custom `elisee:view-changed` ed `elisee:role-changed` per una reattività immediata anche senza ricaricamento pagina.
    - Integrata chiamata preventiva a `window.unmountAllRoleDashboards('es-cd')` per evitare conflitti con altre schede di ruolo.
 3. **File aggiornati**: `coach-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHFIX1`.
+
 Feature precedente: **Foggia City Squadra di Riferimento per Allenatore & Vice (`FGCCOACH1`)**:
 Feature precedente: **Area Allenatore & Vice Allenatore: Technical Staff Operating System & Zero-Fake Palmarès (`COACHOS1`)**:
+
 1. **Politica Zero-Fake & Bacheca Trofei Onesta**:
    - Eliminati tutti i titoli fittizi europei ("Vincitore UEFA Europa League", "Qualificazione Champions League", ecc.) da `coach-dash.js` e `vice-dash.js`.
    - La bacheca parte vuota per default con empty-state professionale ed elegante.
@@ -2437,6 +2630,7 @@ Feature precedente: **Area Allenatore & Vice Allenatore: Technical Staff Operati
    - Partite (Calendario gare e convocazioni ufficiali).
    - Lavagna Tattica (Lavagna interattiva per schemi con pedine e pallone).
 5. **File aggiornati**: `coach-dash.css`, `coach-dash.js`, `vice-dash.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `COACHOS1`.
+
 Feature precedente: **Logo Ufficiale Competizione Amatoriale (`FGCAMATLOGO1`)**:
 Feature precedente: **Immagine Sfondo Card Città per Foggia City (`FGCCITY1`)**:
 Feature precedente: **Font Futuristico Nevera per la Città di Foggia (`FGCFONT1`)**:
@@ -2446,6 +2640,7 @@ Feature precedente: **Font Futuristico Nevera per Foggia City (`NEVERA1`)**:
 Feature precedente: **Font Serif Playfair Display & Dati Reali Pannello Elisee Manager (`TCSERIF1`)**:
 Feature precedente: **Conversione Dark Theme Completa Pannello Elisee Manager (`TCDARK1`)**:
 Feature precedente: **Redesign Ultra-Professionale Candidatura Elisee Manager (`CANDMGR1`)**:
+
 1. **Struttura Enterprise & Form Diviso in 4 Sezioni**:
    - Superata la griglia piatta generica: form riorganizzato in 4 sezioni numerate con intestazione, progressivo `01-04` e linea divisoria:
      - `01 Dati di contatto`: Nome e cognome, Email account, Telefono con hint per Circolo Manager/WhatsApp VIP, Ruolo nel club.
@@ -2460,14 +2655,18 @@ Feature precedente: **Redesign Ultra-Professionale Candidatura Elisee Manager (`
    - **Timeline Verticale in 3 Fasi**: stile roadmap Bacheca con pallini e linea continua di collegamento (*Mese di prova*, *Verifica editoriale*, *Circolo Manager*).
    - **Callout Nota Editoriale**: box con bordo d'accento sinistro per la citazione «È solo un mese, ma un mese di costanza.» / «Non chiediamo perfezione: chiediamo continuità.».
 4. **File aggiornati**: `manager.css`, `manager-runtime.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `CANDMGR1`.
+
 Feature precedente: **Fix Stemma Ufficiale Foggia City in Seleziona Squadre (`FOGGIACITY2`)**:
+
 1. **Risoluzione visualizzazione stemma circolare in `#squadre-portal`**:
    - Disattivato il flag `USE_NEUTRAL_BADGES = false;` in `squadre-select.js` che forzava l'uso dello scudo geometrico neutro ("FGC" con stella) coprendo l'immagine originale.
    - Perfezionata la funzione `showLogo(url, team)` per caricare direttamente `immagini/squadre-loghi/foggia-city.png` per Foggia City, rendendo visibile l'elemento `<img>` (`style.display = 'block'; style.visibility = 'visible'`) e nascondendo in modo perentorio il fallback `.es-sq-crest-fallback` (`fb.hidden = true; fb.style.display = 'none'`).
    - In `render()` e nel restore dello stato da `localStorage`, garantito il percorso stemma circolare ufficiale.
    - Invalidazione cache loghi `LOGO_V = '20260914_FGC2'` e `CATALOG_URL` / `VERIFIED_URL`.
 2. **File aggiornati**: `squadre-select.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `FOGGIACITY2`.
+
 Feature precedente: **Integrazione Logo Ufficiale Foggia City (`FOGGIACITY1`)**:
+
 1. **Asset Grafico Ufficiale Foggia City**:
    - Ricevuto e integrato il logo circolare ufficiale nerazzurro di **Foggia City**: scudo con righe verticali blu reale e nere, profilo della cattedrale di Foggia con corona, sagoma del diavolo con pallone, dicitura "FOGGIA CITY", "20 26" e sigla "FC".
    - Salvato in `immagini/squadre-loghi/foggia-city.png` (e copia alias `1000345699.png`).
@@ -2481,7 +2680,9 @@ Feature precedente: **Integrazione Logo Ufficiale Foggia City (`FOGGIACITY1`)**:
    - In `squadre-select.js` aggiornato `TEAMS_FALLBACK` con il percorso logo, i colori societari e le date corrispondenti.
 3. **Integrazione Header Elisée Manager**:
    - In `tc-panel.js` (`#tc-portal`) l'header principale di Elisée Manager mostra lo stemma ufficiale tondo accanto al titolo del club (Foggia City).
+
 Feature precedente: **Elisée Manager: Redesign Soci / Verbali — Club Governance & Corporate Administration Workspace (`GOVMGR1`)**:
+
 1. **Trasformazione in Corporate Governance Workspace**:
    - Superato l'effetto amatoriale a «due grandi form affiancati della stessa altezza» con campi sempre aperti ed enormi aree vuote.
    - Creata una struttura a 3 macro-sezioni funzionali indipendenti ispirata ai gestionali societari enterprise di alto livello (*Company Profile / Organization Settings*, *Registro Soci Ufficiale*, *Verbali Assembleari*).
@@ -2504,7 +2705,9 @@ Feature precedente: **Elisée Manager: Redesign Soci / Verbali — Club Governan
    - Superato il form sempre aperto: ora la redazione avviene tramite una modale executive di redazione atto (`Data assemblea`, `Ordine del giorno - ODG`, `Delibere adottate`) con formattazione notarile automatica dei presenti e della sede.
    - Tabella dei verbali generati con *Data assemblea*, *Oggetto / ODG*, badge `● Atto Ufficiale Approvato`, data di redazione e azioni rapide: `Visualizza` (apre il testo integrale del verbale in una modale pergamena), `Scarica` (.txt ufficiale) e `Archivia`.
 6. **File aggiornati**: `tc-panel.css`, `tc-panel.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `GOVMGR1`.
+
 Feature precedente: **Elisée Manager: Redesign Profilo Atleta / Storico — Athlete Intelligence & Performance Center (`ATHMGR1`)**:
+
 1. **Trasformazione in Athlete Intelligence Workspace**:
    - Superata la semplice card informativa con messaggio vuoto ("Nessun atleta in anagrafica").
    - Trasformata in un vero *Athlete Intelligence & Performance Center* che connette la gestione amministrativa del club (tesseramento, presenze, rate, certificati) con lo scouting, le performance e lo storico continuo dell'atleta.
@@ -2528,7 +2731,9 @@ Feature precedente: **Elisée Manager: Redesign Profilo Atleta / Storico — Ath
 4. **Sezione Istituzionale: Scouting Intelligence & Continuous Athlete Record**:
    - Sezione a tutta larghezza con badge «Tecnologia Proprietaria Elisée Scout» che descrive il ponte tecnologico: collegamento automatico al dossier scouting quando l'email dell'atleta coincide con quella registrata su Elisée Scout, con i tre pilastri (Anagrafica & Compliance, Continuità di Campo, Dossier & Scouting Hub).
 5. **File aggiornati**: `tc-panel.css`, `tc-panel.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `ATHMGR1`.
+
 Feature precedente: **Elisée Manager: Redesign Documenti e Scadenze — Sports Document Management & Compliance Center (`DOCMGR1`)**:
+
 1. **Trasformazione in Document Management & Compliance Center**:
    - Superata l'interfaccia a card tecniche con bottoni isolati e form di upload sempre aperto.
    - Design luxury enterprise con archivio documentale ricercabile, scadenziario automatico di conformità e modelli federali a libreria.
@@ -2551,7 +2756,9 @@ Feature precedente: **Elisée Manager: Redesign Documenti e Scadenze — Sports 
    - *Upload Documento*: drawer/modale elegante aperta da `Carica documento`, con tesserato associato, tipo documento, data scadenza e drag&drop zone per file PDF/immagini.
    - *Scadenziario & Compliance*: sezione istituzionale a tutta larghezza con tabella di monitoraggio continuo per certificati medici, rinnovi e quote societarie, con giorni rimanenti calcolati in tempo reale, badge di conformità e pulsante *Notifica sollecito*.
 5. **File aggiornati**: `tc-panel.css`, `tc-panel.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `DOCMGR1`.
+
 Feature precedente: **Candidatura Elisee Manager — Restyling Luxury Editoriale Club Esclusivo (`LUXMGR1`)**:
+
 1. **Addio taglio da videogame**:
    - Eliminati box neon celesti, trofei, badge dorati vistosi ed emoji stile WhatsApp VIP.
    - Nuovo registro luxury: palette nero-inchiostro con sottotono verde (`#0B0F0D`), accento oro tenue (`#C6A15B`), testi avorio (`#EDE8DA`), salvia (`#8FA096`) per label e bordi hairline traslucidi.
@@ -2560,14 +2767,18 @@ Feature precedente: **Candidatura Elisee Manager — Restyling Luxury Editoriale
    - **Colonna sinistra (`identity`)**: stemma minimale/monogramma circolare con finitura dorata, citazione in corsivo («È solo un mese, ma un mese di costanza.» / Non chiediamo perfezione — chiediamo continuità.), nome squadra e categoria/territorio come stat pulite.
    - **Colonna destra (`content`)**: percorso in tre passaggi numerati in numeri romani (I. Mese di prova, II. Verifica editoriale, III. Circolo Manager), form con campi a sottolineatura minimali, casella di dichiarazione elegante e pulsante d'azione oro satinato.
 3. **File aggiornati**: `manager.css`, `manager-runtime.js`, `index.html`, `version.json`, `sw.js`, `CONTINUA_DA_QUI.md`. Cache `LUXMGR1`.
+
 Feature precedente: **Rimozione Categoria "ECCELLENZA" da Seleziona Squadra (`ONLYAMAT1`)**:
+
 1. **Rimozione categoria Eccellenza e club Barletta**:
    - Rimossa la categoria "ECCELLENZA" e il club Barletta da `data/squadre/verified-teams.json` e dal fallback in `squadre-select.js`.
    - In Seleziona Squadra e nel picker "SCEGLI CATEGORIA" compare ora unicamente la categoria **AMATORIALE** con **Foggia City** (e qualunque altro club che si registri via modulo).
 2. **Purga residui di cache**:
    - In `loadVerifiedList()` rimossa la persistenza di "barletta" da `localStorage['elisee_registered_teams_v1']` e `elisee_verified_teams_v1`, impedendo che vecchie sessioni browser ripropongano la categoria.
 3. **File aggiornati**: `data/squadre/verified-teams.json`, `squadre-select.js`, `index.html`, `version.json`, `sw.js`. Cache `ONLYAMAT1`.
+
 Feature precedente: **Correzione Categoria Foggia City in "AMATORIALE" (`FGCAMAT1`)**:
+
 1. **Assegnazione corretta della categoria**:
    - Foggia City è una squadra amatoriale: rimossa qualsiasi classificazione da "Dilettanti" o "Eccellenza".
    - Impostata la categoria ufficiale **"AMATORIALE"** in `data/squadre/verified-teams.json` e nel fallback in `squadre-select.js`.
@@ -2576,7 +2787,9 @@ Feature precedente: **Correzione Categoria Foggia City in "AMATORIALE" (`FGCAMAT
    - Nella modale interattiva "➕ Registra Club", "AMATORIALE" è ora la prima opzione predefinita nel menu a tendina delle categorie.
    - Aggiunta pulizia automatica di vecchie voci di localStorage in `loadVerifiedList()` per evitare che una versione precedente in cache sovrascriva la categoria.
 3. **File aggiornati**: `data/squadre/verified-teams.json`, `squadre-select.js`, `index.html`, `version.json`, `sw.js`. Cache `FGCAMAT1`.
+
 Feature precedente: **Seleziona Squadra: Solo Club Registrati Ufficiali con Foggia City & Modulo Registrazione Club (`ONLYREG1`)**:
+
 1. **Rimozione sfilza 1500 squadre non registrate**:
    - In "Seleziona Squadra" (`squadre-select.js`), rimossa completamente la sfilza massiva dei 1500 club estratti/non registrati.
    - Vengono mostrate **esclusivamente** le squadre registrate ufficialmente nel progetto ELISEE SCOUT (di partenza **Foggia City** e **Barletta**) e le squadre che si registrano tramite la piattaforma.
@@ -2584,7 +2797,9 @@ Feature precedente: **Seleziona Squadra: Solo Club Registrati Ufficiali con Fogg
    - Ogni squadra registrata dispone del proprio scudetto vettoriale geometrico originale basato sui colori sociali del club (es. Foggia City: rosso `#dc2626` e scuro `#0f172a`, sigla "FGC"; Barletta: rosso e bianco, sigla "BAR") con stella, finiture luxury e riflessi 3D.
 3. **Pulsante & Modale Interattiva "➕ Registra Club"**:
    - Pulsante nella topbar di Seleziona Squadra con anteprima live dello stemma in tempo reale e salvataggio su `localStorage['elisee_registered_teams_v1']`.
+
 Feature precedente: **Modalità "Zero Rischi" IP-Safe con Motore di Badge Vettoriali Geometrici Neutri (`badge-engine.js`)**:
+
 1. **Piena conformità legale e tutela proprietà industriale**:
    - Zero rischi di contraffazione, imitazione servile o concorrenza parassitaria rispetto ai marchi ufficiali dei club.
    - I club vengono visualizzati di default con stemmi e scudetti vettoriali SVG 100% originali e geometrici (stile heraldic shield / luxury medal), basati sui colori sociali ufficiali (`primary` e `secondary`) e sulla sigla/abbreviazione a 3 lettere calcolata con algoritmo intelligente (es. "ATA", "BAR", "NAP", "MIL", "INT", "JUV").
@@ -2597,45 +2812,64 @@ Feature precedente: **Modalità "Zero Rischi" IP-Safe con Motore di Badge Vettor
 4. **Integrazione Formazione & Tattica (`formazione-squadra.js`)**:
    - Testata della formazione `#es-xi-logo` aggiornata per caricare in automatico l'SVG Data-URI del badge neutro della squadra selezionata.
 5. **File creati e aggiornati**: `badge-engine.js` (nuovo), `squadre-select.js`, `squadre-select.css`, `formazione-squadra.js`, `index.html`, `version.json`, `sw.js`. Cache `NEUTRALBADGE1`.
+
 Feature precedente: **Ancoraggio fisso viewport per la barra di navigazione laterale verticale (`es-pd-rail`) durante lo scroll (cache `FIXEDRAIL1`)**:
+
 1. **Identificazione del componente**: `<aside class="es-pd-rail">` in `player-dash.js`, `dash-real.js` e `giorn-dash.js`.
 2. **Posizionamento `position: fixed`**: Ancorato a viewport con `top: 86px`, `height: calc(100vh - 86px)`, `z-index: 50`.
 3. **Offset del contenuto principale**: `padding-left: 56px !important` su `.es-pd` e `#es-pd`. Media query mobile touch preservata.
+
 Feature precedente: **Ripristino pulito e fedele loghi squadre e competizioni in Seleziona Squadre (cache `CLEAN1`)**:
+
 1. **Ripristino Architettura Diretta & Fedeltà Asset Progetto**:
    - Rimosso `seenInLeague` e prefetch asincrono con race condition. Loghi collegati direttamente a `immagini/squadre-loghi/`.
    - Gestione anti-glitch con fallback colori e iniziali durante il caricamento.
 2. **Deduplicazione Barletta preservata nel catalogo**:
    - In `data/squadre/catalog.json` rimossa la sola riga duplicata `barletta-cb0b`, lasciando l'unica squadra ufficiale `barletta`.
+
 Feature precedente: **Pannello "Azioni possibili" a Griglia Orizzontale 3 Colonne a Schede (PLAYERDOSSIER4)**:
+
 1. **Risoluzione spazio vuoto a destra**: Trasformato `.es-link-list` in griglia orizzontale a 3 colonne a schede.
 2. **Posizionamento a piena larghezza**: Subito sotto la griglia dossier a 3 colonne.
 3. **Adattamento responsive automatico**: 3 col desktop, 2 col tablet, 1 col smartphone.
+
 Feature precedente: **Riorganizzazione Tematica dei Pannelli del Dossier Player (PLAYERDOSSIER3)**:
+
 1. **Colonna 1 — Identità & Azioni (Account & Chi sei)**: *Indice Atleta & Parametri*, *Il Mio Profilo & Obiettivi*.
 2. **Colonna 2 — Prestazioni (Il calcio giocato sul campo)**: *Radar Prestazioni a 12 Assi*, *Registro Match & Voti PGB*, *Crescita Storica*.
 3. **Colonna 3 — Fiducia & Mercato (Affidabilità & Interesse)**: *Certificazione & Compliance*, *Interesse Scouting & Percorso*.
 4. **Blocchi orizzontali**: *Azioni possibili* (3 col), *Richieste di contatto* (con accettazione interattiva), *Interesse dalla rete* (5 card conteggio).
+
 Feature precedente: **Area Player Dossier / Selettore Stagione Unificato & Nuovi Blocchi B2B**:
+
 1. Selettore stagione unificato (‹ Stagione 2026/27 · Attuale ›) senza duplicazioni.
 2. Blocco "Richieste di contatto" con Accetta/Rifiuta e badge in attesa.
 3. Blocco "Interesse dalla rete" a 5 categorie (Allenatori, DS, Club, Procuratori, Osservatori giovanili).
+
 Feature precedente: **Allineamento Grafico & Strutturale Area Riservata Player ("Report Tecnico & Profilo Atleta")**:
+
 1. Design System & Palette Istituzionale B2B (`#3b7dff`, `#0b0e14`, `#10141d`).
 2. Badge di stato unificati a 3 livelli: `.es-badge--active`, `.es-badge--verified`, `.es-badge--pending`.
 3. Griglia a 3 colonne: Indice Atleta, Radar 12 assi, Certificazione & Compliance.
+
 Feature precedente: **Credenziali Password Account & Responsabile Privacy**:
+
 1. Memorizzata e impostata come standard per gli account e per l'account del Responsabile Privacy (`manueltucci2002@gmail.com`) e master secret admin la password: `Iemmello.9` (esattamente con il punto).
 2. Aggiornato hash PBKDF2 in `api/auth/me.js` (`21612aefb415ec0957dfd54095eed7fadbeaec288eeca7bf8380989c12919145`).
 3. Aggiornato secret predefinito e comparazioni in `api/auth-admin.js` e `elisee_up.py` per accettare `Iemmello.9` e relative forme normalizzate.
 4. Regola fissa registrata in `AGENTS.md`.
+
 Feature precedente: **Minigiochi / crop trofeo (HUBPOLISH2)**:
+
 1. L'immagine è verticale; `cover` + `center` ritagliava il basso (campo + coppa). Lo scroll non la mostra: lo sfondo è `position:absolute` sull'hub.
 2. Posizione `center 76%`. Hover card (sollevamento + bagliore) è ancora su career/Elisee World, non sulla card locked. File: `minigioco-carriera.css`.
+
 Feature precedente: **Mappa Club / Tutte e Sole le Squadre dalla Serie A all'Eccellenza** (cache `ATOECC2`):
+
 1. **Catalogo Reale Serie A - Eccellenza (`data/squadre/scopri-clubs.json`)**: Rigenerato il catalogo escludendo Promozione, 1ª/2ª/3ª Categoria, U19 e duplicati, mantenendo le 729 società uniche ufficiali dalla Serie A all'Eccellenza con geolocalizzazione esatta e loghi.
 2. **Filtro Mappa & Tabelle (`mappa-club.js`)**: Aggiunto `isSerieAToEccellenza(c)` su caricamento pin, cluster, ricerca e pannelli regionali; i conteggi riflettono esattamente le squadre di vertice (es. Puglia: 34 società autentiche senza duplicati, Lombardia: 92, Campania: 59).
 3. **Dicitura & Trasparenza (`index.html`, `mappa-club.js`)**: Contatore e intestazioni aggiornate con la dicitura chiara "(dalla Serie A all'Eccellenza)".
+
 Feature precedente: **Mappa Club / Loghi Trasparenti, Dimensioni Incrementate & Ordine Alfabetico**: Cache `LOGOSIZE1`.
 Sito pubblico: **https://elisee-scout.vercel.app**
 Repo: **https://github.com/eliseomiraglia2704-source/elisee-scout** (`main`)
@@ -2931,11 +3165,13 @@ File:
 ### Giornalista / Content Creator (sito, non app)
 
 Ruolo famiglia **Giornalista** in `modal-scegli-ruolo`. Non è Ufficio Stampa del club (`pr-dash.js`).
+
 - Badge ciano **Stampa / Giornalista Verificato** solo con `badgeVerificaStato=approved`.
 - Articoli con tag scheda giocatore/club, funnel geo Città → Provincia → Regione → Nazionale.
 - Sondaggi e hub video (pre/post, acquisti, rubrica settimanale).
 - Invio in coda «In attesa di approvazione»; staff/admin approva o rifiuta con checklist + note.
 - Feed pubblico `#stampa-portal` (nav **Stampa**).
+
 File: `giorn-dash.js` / `giorn-dash.css`.
 
 ### Logo competizione Eccellenza 2026 (LND)
@@ -2971,21 +3207,25 @@ Wiring: `leagueLogoPath` in `squadre-select.js`, `getLeagueLogoImg` in `minigioc
 ### Profilo Calciatore (PDF 2026-08-27)
 
 Da `presentazione_profilo_calciatore_*.pdf`. Sito, non app nativa.
+
 - **Card collezionabile** in cima alla dashboard calciatore (`player-card.js` / `.css`): foto, età, ruolo, piede, status tesserato/svincolato, badge attitudine. Tap → vista tattica (heatmap, ruoli FM, stats, Video Hub).
 - **Album** al posto di Segui per i profili Player. Nav «Album». Storage invariato: `elisee_social_following`.
 - **Heatmap fine gara**: auto da ruolo+modulo (4-3-3, 4-2-3-1, …) o tocco zone. `elisee_player_heatmap`.
 - **GPS MVP smartphone**: Inizia/Termina allenamento, km, vmax, sprint, acc, grafico, percorso, storico Allenamento→Settimana→Mese→Stagione. `elisee_gps_sessions`. Fase 2 hardware non implementata.
 - **Candidatura smart**: imbuto Città/Provincia/Regione/Italia sulla Bacheca; **Candidati Ora** invia dossier Card (non email). `elisee_job_applications` + `elisee_smart_applications`.
+
 File: `player-card.js` / `player-card.css`. Cache `CARD1`.
 
 ### Profilo Direttore Sportivo (PDF 2026-08-27)
 
 Da `profilo_direttore_sportivo_*.pdf`. Sito, non app nativa.
+
 - Hub B2B in cima alla dashboard DS (`ds-hub.js` / `.css`): anagrafica, ruolo ufficiale, club oppure «In cerca di progetto / Consulente indipendente», badge FIGC/Scout/Dirigente, geo operativa.
 - Strumenti: pubblica posizione aperta, candidature in entrata, database scouting, Album, Secret List stealth, Wall trattative, messaggi, AI Advisor.
 - Secret List: priorità **Obiettivo A / Obiettivo B / Svincolato d’emergenza**. Nessuna notifica all’atleta.
 - Limiti: il DS non si candida agli annunci calciatori e non ha heatmap/GPS propri.
 - AI Scouting Advisor: brief testuale → Match Index % (anagrafica, status, heatmap/ruoli, GPS). Azioni: Secret List, Contatta, Album, Scarta.
+
 File: `ds-hub.js` / `ds-hub.css`. Cache `DS1`.
 
 localStorage:
@@ -3268,7 +3508,6 @@ Privacy: punti 4.6 + 6.l/m per Secret List e Wall.
   - `club-storia.js`: aggiunte funzioni `stayWeight` e `selfCheck` mancanti (bloccavano caricamento JS).
   - Loghi HD Eccellenza Piemonte (Chieri, Fossano, Cuneo 1905 Olmo, CSF Carmagnola, Pro Dronero, Pro Villafranca, Monregale, Moretta, Gaviese, Vanchiglia, Spartak San Damiano, Ovadese, San Domenico Savio Asti) e Puglia (Atletico Acquaviva, Atletico Racale, Brilla Campi, Cosmano Sport Foggia, Nuova Spinazzola, Soccer Trani, Unione Calcio Bisceglie).
   - Cache `GENDERSVG1`.
-
 
 - **2026-08-31** — Aggiornato Logo Ufficiale Albese (Inizio Girone B):
   - Scaricato e integrato in RGBA (1094x1500px) il logo dell'Albese da Tuttocampo in `immagini/squadre-loghi/ecc-albese.png`, `albese.png`, `albese-calcio.png` e `alba.png`. Allineati colori sociali ufficiali (bianco-azzurro / bluceleste) nel catalogo. Cache `ALBESE1`.

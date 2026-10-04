@@ -5,11 +5,15 @@ Registro delle funzionalità e dei task di interfaccia/design da sviluppare in r
 ---
 
 ## Istruzioni Worktree
+
 Per avviare un task:
+
 ```powershell
 .\scripts\worktree-open.ps1 -BranchName "feature/<nome-task>"
 ```
+
 A task concluso, verificato e mergiato:
+
 ```powershell
 .\scripts\worktree-close.ps1 -BranchName "feature/<nome-task>"
 ```
@@ -31,6 +35,7 @@ A task concluso, verificato e mergiato:
 ---
 
 ## Vincoli Non Negoziabili per Tutti i Task
+
 1. Un solo header / navbar in tutto il documento.
 2. Sfondo globale unico (`body.layout-portfolio::before`), sezioni sempre trasparenti.
 3. Nessun stile inline, nessun `!important`.
