@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-04** — FIX36 — Codice email: indirizzi finti non sembrano più un guasto del server:
+Ultimo aggiornamento: **2026-10-04** — FIX37 — Apple, Facebook e SPID non fingono più un accesso:
+
+1. **Cosa era rotto**: i pulsanti c’erano, l’accesso no. Apple e Facebook su Supabase sono spenti (servono app Apple/Meta e l’accensione in dashboard). SPID apriva il form email con il logo SPID, senza identità digitale.
+2. **Ora**: il testo dice «Google o email». Un tap su Apple, Facebook o SPID apre Accedi e spiega che quel canale non è collegato. Google resta il redirect vero. Quando un provider verrà acceso su Supabase, lo stesso tap parte da solo.
+3. **File**: `lib/auth-oauth.js`, `api/auth/config.js`, `app.js`, `i18n.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261004_FIX37`. Non tocca data di nascita, età o consenso genitoriale.
+
+Feature precedente: **2026-10-04** — FIX36 — Codice email: indirizzi finti non sembrano più un guasto del server:
 
 1. **Cosa succedeva**: `test@example.com` riceveva 503 «Invio email non riuscito». Resend rifiuta i domini di prova. Sulle caselle vere l’invio partiva già (200).
 2. **Ora**: un indirizzo rifiutato torna 400 «Usa un indirizzo email reale». Se Resend è giù, parte il fallback su Supabase (senza creare un utente nuovo). Il codice resta solo in email, non nella risposta HTTP.

@@ -1,4 +1,4 @@
-const { publicConfig } = require('../../lib/auth-oauth');
+const { publicConfig, providerEnabled } = require('../../lib/auth-oauth');
 
 module.exports = async function handler(req, res) {
   res.setHeader('Content-Type', 'application/json');
@@ -8,6 +8,11 @@ module.exports = async function handler(req, res) {
     res.end();
     return;
   }
+  const cfg = publicConfig();
+  try {
+    cfg.facebookEnabled = await providerEnabled('facebook');
+    cfg.appleEnabled = await providerEnabled('apple');
+  } catch (_) {}
   res.statusCode = 200;
-  res.end(JSON.stringify(publicConfig()));
+  res.end(JSON.stringify(cfg));
 };

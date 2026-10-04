@@ -8797,10 +8797,19 @@ window.eliseeOAuthErrorText = function (err) {
   var code = String(err || '');
   try { code = decodeURIComponent(code); } catch (_) {}
   if (code === 'facebook_non_attivo') {
-    return 'Facebook non è attivo sul servizio di accesso. Usa Google oppure email e password.';
+    return typeof esTr === 'function'
+      ? esTr('auth.facebookOff', 'Facebook non è attivo sul servizio di accesso. Usa Google oppure email e password.')
+      : 'Facebook non è attivo sul servizio di accesso. Usa Google oppure email e password.';
   }
   if (code === 'apple_non_attivo') {
-    return 'Apple non è attivo sul servizio di accesso. Usa Google oppure email e password.';
+    return typeof esTr === 'function'
+      ? esTr('auth.appleOff', 'Apple non è attivo sul servizio di accesso. Usa Google oppure email e password.')
+      : 'Apple non è attivo sul servizio di accesso. Usa Google oppure email e password.';
+  }
+  if (code === 'spid_non_attivo') {
+    return typeof esTr === 'function'
+      ? esTr('auth.spidOff', 'SPID non è ancora collegato. Usa Google oppure email e password.')
+      : 'SPID non è ancora collegato. Usa Google oppure email e password.';
   }
   if (!code || code === 'oauth_finish') return 'Accesso non completato. Riprova.';
   return 'Accesso non completato. Riprova da Accedi.';
@@ -8808,11 +8817,10 @@ window.eliseeOAuthErrorText = function (err) {
 
 window.eliseeSocialSoon = function (name) {
   var key = String(name || '').toLowerCase();
-  if (key === 'facebook' || key === 'apple' || key === 'google') {
-    if (window.startEliseeProviderOAuth) window.startEliseeProviderOAuth(key);
-    return;
+  var text = window.eliseeOAuthErrorText(key + '_non_attivo');
+  if (key !== 'facebook' && key !== 'apple' && key !== 'spid') {
+    text = name + ' non è ancora collegato. Usa Google oppure email e password.';
   }
-  var text = name + ' non è ancora collegato. Usa Google oppure email e password.';
   var card = document.getElementById('es-login-card');
   var onRegister = card && card.classList.contains('is-register');
   if (onRegister) {
@@ -8905,18 +8913,9 @@ function resetAccessoForm() {
 }
 
 // Apri da SPID provider selection → torna al form email+password
-window.selectSpidProvider = function(name, color) {
-  _accessoProvider = 'spid_' + name;
-  const spidBlock = document.getElementById('accesso-spid-block');
-  const labelEl = document.getElementById('accesso-provider-label');
-  const iconEl = document.getElementById('accesso-provider-icon');
-  const badge = document.getElementById('accesso-provider-badge');
-  if (spidBlock) spidBlock.style.display = 'none';
-  if (typeof window.showAccessoMethod === 'function') window.showAccessoMethod('email');
-  if (labelEl) labelEl.textContent = '· SPID via ' + name;
-  if (iconEl) iconEl.innerHTML = '<img src="immagini/09-auth-spid-logo/spid-logo.svg?v=20260925_150256" style="height:22px; width:auto; vertical-align:middle; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6)) drop-shadow(0 0 10px rgba(0,102,204,0.7));">';
-  if (badge) badge.style.display = 'flex';
-  setTimeout(() => { const em = document.getElementById('accesso-email'); if (em) em.focus(); }, 100);
+window.selectSpidProvider = function() {
+  if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
+  if (window.eliseeSocialSoon) window.eliseeSocialSoon('spid');
 };
 
 // ==== ALIAS — bottoni hero aprono modal unificato con loghi ufficiali SVG e ombra ====
@@ -8927,7 +8926,10 @@ window.openGoogleModal = function() {
 window.closeGoogleModal = window.closeAccessoModal;
 window.openAppleModal = function() {
   if (window.startEliseeProviderOAuth) window.startEliseeProviderOAuth('apple');
-  else openAccessoModal('email');
+  else {
+    openAccessoModal('email');
+    if (window.eliseeSocialSoon) window.eliseeSocialSoon('apple');
+  }
 };
 window.closeAppleModal = window.closeAccessoModal;
 
@@ -9234,7 +9236,8 @@ window.registerWithApple = function () {
   if (window.startEliseeProviderOAuth) window.startEliseeProviderOAuth('apple');
 };
 window.openSpidModal = function() {
-  openAccessoModal('spid', '<img src="immagini/09-auth-spid-logo/spid-logo.svg?v=20260925_150256" style="height:22px; width:auto; vertical-align:middle; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6)) drop-shadow(0 0 10px rgba(0,102,204,0.7));">', 'SPID');
+  if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
+  if (window.eliseeSocialSoon) window.eliseeSocialSoon('spid');
 };
 window.closeSpidModal = window.closeAccessoModal;
 
@@ -9379,9 +9382,28 @@ window.eliseeReadAuthParams = window.eliseeReadAuthParams || function () {
   };
 };
 
+window.EliseeAuthProviders = { google: true, facebook: false, apple: false };
+(function loadEliseeAuthProviders() {
+  fetch('/api/auth/config', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (cfg) {
+    if (!cfg || typeof cfg !== 'object') return;
+    window.EliseeAuthProviders = {
+      google: cfg.googleEnabled !== false,
+      facebook: !!cfg.facebookEnabled,
+      apple: !!cfg.appleEnabled
+    };
+  }).catch(function () {});
+})();
+
 window.startEliseeProviderOAuth = function (provider) {
   var name = String(provider || '').toLowerCase();
   if (name !== 'google' && name !== 'facebook' && name !== 'apple') return;
+  var flags = window.EliseeAuthProviders || {};
+  var enabled = name === 'google' ? flags.google !== false : !!flags[name];
+  if (!enabled) {
+    if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
+    if (window.eliseeSocialSoon) window.eliseeSocialSoon(name);
+    return;
+  }
   if (window.rememberAuthReturn) window.rememberAuthReturn();
   window.location.assign('/api/auth/oauth/google?provider=' + encodeURIComponent(name));
 };
