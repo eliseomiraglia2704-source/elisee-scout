@@ -279,7 +279,7 @@ def register_email(payload: dict) -> tuple[int, dict]:
     if len(password) < 8:
         return 400, {"ok": False, "error": "password_corta"}
     if not ruolo:
-        return 400, {"ok": False, "error": "ruolo_obbligatorio"}
+        ruolo = "Calciatore"
     if _find_by_email(email):
         return 409, {"ok": False, "error": "email_gia_registrata"}
 

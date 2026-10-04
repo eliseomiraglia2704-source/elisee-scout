@@ -68,6 +68,10 @@
       "destination": "/api/quiz-score?path=top"
     },
     {
+      "source": "/api/auth/register",
+      "destination": "/api/auth/me?path=register"
+    },
+    {
       "source": "/api/auth/login",
       "destination": "/api/auth/me?path=login"
     },

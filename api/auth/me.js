@@ -1,5 +1,6 @@
 /**
  * GET  /api/auth/me
+ * POST /api/auth/register      (rewrite → me?path=register)
  * POST /api/auth/login         (rewrite → me?path=login)
  * POST /api/auth/set-password  (rewrite → me?path=set-password)
  * GET/POST /api/auth/verify-docs (rewrite → me?path=verify-docs)
@@ -25,8 +26,14 @@ const OVERRIDE_FILE = process.env.VERCEL
 const DOCS_FILE = process.env.VERCEL
   ? '/tmp/elisee-verify-docs.json'
   : path.join(process.cwd(), 'data', 'auth', 'verify-docs.json');
+const USERS_FILE = process.env.VERCEL
+  ? '/tmp/elisee-registered-users.json'
+  : path.join(process.cwd(), 'data', 'auth', 'registered-users.json');
 const memoryOverrides = {};
 const memoryDocs = {};
+const memoryUsers = {};
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const DOB_RE = /^\d{4}-\d{2}-\d{2}$/;
 
 const STAFF = {
   'manueltucci2002@gmail.com': {
@@ -161,10 +168,86 @@ function pathOf(req) {
   const q = (req.query && req.query.path) || '';
   const url = String(req.url || '');
   if (q) return String(q);
+  if (/\/register(?:\?|$)/.test(url)) return 'register';
   if (/\/login(?:\?|$)/.test(url)) return 'login';
   if (/set-password/.test(url)) return 'set-password';
   if (/verify-docs/.test(url)) return 'verify-docs';
   return 'me';
+}
+
+function userKey(email) {
+  return 'elisee:reguser:' + String(email || '').trim().toLowerCase();
+}
+
+function loadUsersFile() {
+  try {
+    return JSON.parse(fs.readFileSync(USERS_FILE, 'utf8')) || {};
+  } catch (_) {
+    return {};
+  }
+}
+
+function saveUsersFile(map) {
+  try {
+    fs.mkdirSync(path.dirname(USERS_FILE), { recursive: true });
+    fs.writeFileSync(USERS_FILE, JSON.stringify(map, null, 2));
+  } catch (_) {}
+}
+
+function publicConsents(src) {
+  const c = src && typeof src === 'object' ? src : {};
+  return {
+    tos: !!c.tos,
+    privacy: !!c.privacy,
+    cookie: !!c.cookie,
+    newsletter: !!c.newsletter,
+    art22HumanReview: !!c.art22HumanReview
+  };
+}
+
+function publicRegisteredUser(rec, extra) {
+  const user = publicUser(rec);
+  user.dob = rec && rec.dob ? rec.dob : (user.dob || '');
+  user.consents = publicConsents(rec && rec.consents);
+  user.siteRoleConfirmed = !!(rec && rec.siteRoleConfirmed);
+  user.registratoIl = (rec && rec.createdAt) || '';
+  if (extra) Object.assign(user, extra);
+  return user;
+}
+
+async function getUserRecord(email) {
+  const em = String(email || '').trim().toLowerCase();
+  if (!em) return null;
+  if (memoryUsers[em]) return memoryUsers[em];
+  const fileMap = loadUsersFile();
+  if (fileMap[em]) {
+    memoryUsers[em] = fileMap[em];
+    return fileMap[em];
+  }
+  const remote = await redisCall('/get/' + encodeURIComponent(userKey(em)));
+  if (remote) {
+    try {
+      const parsed = typeof remote === 'string' ? JSON.parse(remote) : remote;
+      if (parsed && typeof parsed === 'object') {
+        memoryUsers[em] = parsed;
+        return parsed;
+      }
+    } catch (_) {}
+  }
+  return null;
+}
+
+async function setUserRecord(email, rec) {
+  const em = String(email || '').trim().toLowerCase();
+  if (!em || !rec) return rec;
+  rec.email = em;
+  rec.updatedAt = new Date().toISOString();
+  memoryUsers[em] = rec;
+  const fileMap = loadUsersFile();
+  fileMap[em] = rec;
+  saveUsersFile(fileMap);
+  await redisCall('/set/' + encodeURIComponent(userKey(em)) + '/' + encodeURIComponent(JSON.stringify(rec)));
+  return rec;
 }
 
 function docsKey(email) {
@@ -249,23 +332,80 @@ module.exports = async function handler(req, res) {
     }
     const pathName = pathOf(req);
 
+    if (pathName === 'register' && req.method !== 'POST') {
+      return json(res, 405, { ok: false, error: 'method' });
+    }
+
+    if (req.method === 'POST' && pathName === 'register') {
+      const b = bodyOf(req);
+      const nome = String(b.nome || '').trim();
+      const cognome = String(b.cognome || '').trim();
+      const email = String(b.email || '').trim().toLowerCase();
+      const password = String(b.password || '');
+      const dob = String(b.dob || '').trim();
+      const ruolo = String(b.ruolo || b.role || '').trim() || 'Calciatore';
+      if (!nome || !cognome) return json(res, 400, { ok: false, error: 'nome_cognome_obbligatori' });
+      if (!EMAIL_RE.test(email)) return json(res, 400, { ok: false, error: 'email_non_valida' });
+      if (!dob || !DOB_RE.test(dob)) return json(res, 400, { ok: false, error: 'dob_non_valida' });
+      const policy = checkPasswordPolicy(password);
+      if (!policy.ok) {
+        return json(res, 400, { ok: false, error: password.length < 8 ? 'password_corta' : 'password_non_conforme', message: policy.message });
+      }
+      if (staffOf(email) || await getUserRecord(email)) {
+        return json(res, 409, { ok: false, error: 'email_gia_registrata' });
+      }
+      const rec = {
+        id: 'u_' + crypto.randomBytes(8).toString('hex'),
+        email: email,
+        nome: nome,
+        cognome: cognome,
+        ruolo: ruolo.slice(0, 80),
+        dob: dob,
+        provider: 'email',
+        passwordHash: hashPassword(password),
+        consents: publicConsents(b.consents),
+        createdAt: new Date().toISOString(),
+        siteRoleConfirmed: false,
+        skipDocVerify: false,
+        verifiedByAdmin: false,
+        badgeVerificaStato: 'none',
+        staffRole: '',
+        mustResetPassword: false
+      };
+      await setUserRecord(email, rec);
+      const user = publicRegisteredUser(rec);
+      return json(res, 200, { ok: true, token: signToken(rec), user: user });
+    }
+
     if (req.method === 'POST' && pathName === 'login') {
       const b = bodyOf(req);
       const email = String(b.email || '').trim().toLowerCase();
       const password = String(b.password || '');
-      const rec = staffOf(email);
-      if (!rec || !password) return json(res, 401, { ok: false, error: 'credenziali_non_valide' });
+      if (!email || !password) return json(res, 401, { ok: false, error: 'credenziali_non_valide' });
       const computedHash = hashPassword(password);
       const saved = await getOverrideHash(email);
       const okSaved = saved && hashesEqual(computedHash, saved);
-      const okDefault = hashesEqual(computedHash, rec.passwordHash);
-      // LEGACY_HASH rimosso: non accettare più la password condivisa precedente
-      if (!okSaved && !okDefault) {
+      const staff = staffOf(email);
+      if (staff) {
+        const okDefault = hashesEqual(computedHash, staff.passwordHash);
+        if (!okSaved && !okDefault) {
+          return json(res, 401, { ok: false, error: 'credenziali_non_valide' });
+        }
+        const mustReset = okSaved ? false : !!staff.mustResetPassword;
+        const user = decorateUser(staff, { mustResetPassword: mustReset });
+        return json(res, 200, { ok: true, token: signToken(staff), user: user, mustResetPassword: mustReset });
+      }
+      const rec = await getUserRecord(email);
+      if (!rec) return json(res, 401, { ok: false, error: 'credenziali_non_valide' });
+      const okStored = rec.passwordHash && hashesEqual(computedHash, rec.passwordHash);
+      if (!okSaved && !okStored) {
         return json(res, 401, { ok: false, error: 'credenziali_non_valide' });
       }
-      const mustReset = okSaved ? false : !!rec.mustResetPassword;
-      const user = decorateUser(rec, { mustResetPassword: mustReset });
-      return json(res, 200, { ok: true, token: signToken(rec), user: user, mustResetPassword: mustReset });
+      if (rec.accountClosed) {
+        return json(res, 403, { ok: false, error: 'account_chiuso', reason: rec.accountClosedReason || 'docs_timeout' });
+      }
+      const user = publicRegisteredUser(rec, { mustResetPassword: false });
+      return json(res, 200, { ok: true, token: signToken(rec), user: user });
     }
 
     if (pathName === 'verify-docs') {
@@ -321,18 +461,55 @@ module.exports = async function handler(req, res) {
         return json(res, 400, { ok: false, error: 'password_non_conforme', message: policy.message });
       }
       const email = String(session.email || '').trim().toLowerCase();
-      await setOverrideHash(email, hashPassword(password));
+      const nextHash = hashPassword(password);
+      await setOverrideHash(email, nextHash);
       session.mustResetPassword = false;
-      const rec = staffOf(email) || session;
-      const user = decorateUser(rec, { mustResetPassword: false, email: email });
-      return json(res, 200, { ok: true, user: user, token: signToken(session) });
+      const staff = staffOf(email);
+      if (staff) {
+        const user = decorateUser(staff, { mustResetPassword: false, email: email });
+        return json(res, 200, { ok: true, user: user, token: signToken(session) });
+      }
+      const prev = (await getUserRecord(email)) || {};
+      const rec = await setUserRecord(email, {
+        id: prev.id || session.id || ('u_' + crypto.randomBytes(8).toString('hex')),
+        email: email,
+        nome: prev.nome || session.nome || '',
+        cognome: prev.cognome || session.cognome || '',
+        ruolo: prev.ruolo || session.ruolo || 'Calciatore',
+        dob: prev.dob || session.dob || '',
+        provider: prev.provider || session.provider || 'email',
+        passwordHash: nextHash,
+        consents: publicConsents(prev.consents),
+        createdAt: prev.createdAt || new Date().toISOString(),
+        siteRoleConfirmed: !!prev.siteRoleConfirmed,
+        skipDocVerify: false,
+        verifiedByAdmin: false,
+        badgeVerificaStato: prev.badgeVerificaStato || 'none',
+        staffRole: prev.staffRole || '',
+        mustResetPassword: false
+      });
+      const user = publicRegisteredUser(rec, { mustResetPassword: false });
+      return json(res, 200, { ok: true, user: user, token: signToken(rec) });
     }
 
     const h = String(req.headers.authorization || '');
     const token = h.toLowerCase().startsWith('bearer ') ? h.slice(7).trim() : '';
-    const user = verifyToken(token);
-    if (!user) return json(res, 401, { ok: false, error: 'non_autenticato' });
-    return json(res, 200, { ok: true, user: publicUser(user) });
+    const session = verifyToken(token);
+    if (!session) return json(res, 401, { ok: false, error: 'non_autenticato' });
+    const stored = await getUserRecord(session.email);
+    if (stored) {
+      if (stored.accountClosed) {
+        return json(res, 403, { ok: false, error: 'account_chiuso', user: publicRegisteredUser(stored) });
+      }
+      return json(res, 200, { ok: true, user: publicRegisteredUser(stored, {
+        nome: stored.nome || session.nome,
+        cognome: stored.cognome || session.cognome,
+        ruolo: stored.ruolo || session.ruolo
+      }) });
+    }
+    const staff = staffOf(session.email);
+    if (staff) return json(res, 200, { ok: true, user: decorateUser(staff) });
+    return json(res, 200, { ok: true, user: publicUser(session) });
   } catch (err) {
     return json(res, 500, { ok: false, error: 'errore_server' });
   }

@@ -8496,6 +8496,7 @@ window.submitRegistrazione = function (e) {
         password_corta: 'La password deve avere almeno 8 caratteri.',
         password_non_conforme: 'La password deve avere 8+ caratteri, una maiuscola, un numero e un carattere speciale.',
         email_non_valida: 'Indirizzo email non valido.',
+        dob_non_valida: 'Inserisci la data di nascita.',
         ruolo_obbligatorio: 'Seleziona un ruolo.',
         nome_cognome_obbligatori: 'Inserisci nome e cognome.'
       };

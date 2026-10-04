@@ -25,6 +25,9 @@ data/auth/sessions.json
 data/auth/oauth_states.json
 data/auth/smtp.json
 data/auth/otp-store.json
+data/auth/registered-users.json
+data/auth/password-overrides.json
+data/auth/verify-docs.json
 
 # Manager inbox (candidature e proposte)
 data/manager/state.json

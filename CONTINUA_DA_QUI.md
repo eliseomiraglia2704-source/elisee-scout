@@ -1,6 +1,13 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-02** — FIX32 — Anche Wrapped, quiz, attività, admin e AutoPilot ignorano il testo grezzo:
+Ultimo aggiornamento: **2026-10-04** — FIX33 — Iscrizione e login email funzionano anche online:
+
+1. **Cosa era rotto**: Iscriviti chiamava `POST /api/auth/register`, che su Vercel non esisteva (404). Accedi con email accettava solo i tre account staff. Il ruolo nel form resta vuoto (si sceglie dopo), e in locale Python rifiutava la registrazione per `ruolo_obbligatorio`.
+2. **Ora**: `/api/auth/register` è una rewrite su `/api/auth/me?path=register` (niente 13ª function). La registrazione salva nome, cognome, email, data di nascita in ISO `YYYY-MM-DD`, consensi booleani e hash della password. Il login email verifica anche questi account. Staff invariato. Gli iscritti non saltano la verifica documenti (`skipDocVerify` resta spento).
+3. **Non toccato**: calcolo età, `isMinor`, consenso genitoriale, flusso 30 giorni, form `#reg-dob` / `#es-slide-dob`.
+4. **File**: `api/auth/me.js`, `lib/auth-oauth.js`, `vercel.json`, `workers/auth_store.py`, `app.js`, `index.html`, `sw.js`, `version.json`, `.gitignore`, `CONTINUA_DA_QUI.md`. Cache `v20261004_FIX33`.
+
+Feature precedente: **2026-10-02** — FIX32 — Anche Wrapped, quiz, attività, admin e AutoPilot ignorano il testo grezzo:
 
 1. **Wrapped**: stagione, canale, slide e nome utente tornano tagliati, senza caratteri di controllo né tag. Una stagione non valida resta `2025-26`. Un errore non rimanda più il messaggio interno.
 2. **Quiz e attività**: se il salvataggio fallisce, la risposta dice solo che lo store non è disponibile. Non include il testo dell’errore.
