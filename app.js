@@ -8764,6 +8764,20 @@ window.openAccessoModal = function openAccessoModal(provider, iconHtml, label) {
   }
 }
 
+window.openAuthModal = function (mode) {
+  var m = String(mode || '').toLowerCase();
+  var register = m === 'register' || m === 'signup' || m === 'iscriviti' || m === 'registrati';
+  if (register) {
+    if (typeof window.openRegistrazioneModal === 'function') {
+      window.openRegistrazioneModal();
+      return;
+    }
+    if (typeof window.openAccessoModal === 'function') window.openAccessoModal('register');
+    return;
+  }
+  if (typeof window.openAccessoModal === 'function') window.openAccessoModal('email');
+};
+
 window.setAccessoPanel = function (mode) {
   var card = document.getElementById('es-login-card');
   if (card) card.classList.toggle('is-register', mode === 'register');

@@ -23,6 +23,12 @@
         card.style.removeProperty('--x');
         card.style.removeProperty('--y');
       });
+
+      card.addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        e.preventDefault();
+        card.click();
+      });
     });
   }
 

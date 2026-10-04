@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <script>
     (function () {
-      var BUILD_VERSION = '20261004_FIX33';
+      var BUILD_VERSION = '20261004_FIX34';
       window.__ELISEE_BUILD = BUILD_VERSION;
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
@@ -2772,7 +2772,7 @@
               <!-- Call to Action Chiari e Accattivanti -->
               <div class="es-hero-cta-group">
                 <div class="glow-wrap es-cta-glow-wrap">
-                  <button type="button" class="glow-btn es-cta-btn-primary" onclick="if(window.openAuthModal){ window.openAuthModal('register'); } else if(window.switchView){ window.switchView('bacheca'); }">
+                  <button type="button" class="glow-btn es-cta-btn-primary" onclick="if(window.openAuthModal){ window.openAuthModal('register'); } else if(window.openRegistrazioneModal){ window.openRegistrazioneModal(); } else if(window.openAccessoModal){ window.openAccessoModal('register'); }">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                     <span data-i18n="home.ctaRegister">Registrati come calciatore o società</span>
                   </button>
@@ -2831,7 +2831,7 @@
               Dossier atleti con telemetria GPS, gestione club per Serie D ed Eccellenza, e radar di scouting per direttori sportivi e agenti.
             </p>
             <div class="glow-container">
-              <div class="glow-card glow-card--blue" onclick="if(window.openAuthModal){ window.openAuthModal('register'); } else if(window.switchView){ window.switchView('bacheca'); }">
+              <div class="glow-card glow-card--blue" role="button" tabindex="0" onclick="if(window.openAuthModal){ window.openAuthModal('register'); } else if(window.openRegistrazioneModal){ window.openRegistrazioneModal(); } else if(window.openAccessoModal){ window.openAccessoModal('register'); }">
                 <div class="glow-card-content">
                   <div class="glow-badge glow-badge--blue" data-i18n="home.glow1Badge">Atleta</div>
                   <h3 class="glow-title" data-i18n="home.glow1Title">Calciatori</h3>
@@ -2839,7 +2839,7 @@
                   <span class="glow-cta" data-i18n="home.glow1Cta">Esplora profilo →</span>
                 </div>
               </div>
-              <div class="glow-card glow-card--gold" onclick="if(window.openAuthModal){ window.openAuthModal('register'); } else if(window.switchView){ window.switchView('bacheca'); }">
+              <div class="glow-card glow-card--gold" role="button" tabindex="0" onclick="if(window.openAuthModal){ window.openAuthModal('register'); } else if(window.openRegistrazioneModal){ window.openRegistrazioneModal(); } else if(window.openAccessoModal){ window.openAccessoModal('register'); }">
                 <div class="glow-card-content">
                   <div class="glow-badge glow-badge--gold" data-i18n="home.glow2Badge">Società</div>
                   <h3 class="glow-title" data-i18n="home.glow2Title">Club e squadre</h3>
@@ -2847,7 +2847,7 @@
                   <span class="glow-cta" data-i18n="home.glow2Cta">Iscrivi club →</span>
                 </div>
               </div>
-              <div class="glow-card glow-card--red" onclick="if(window.openAuthModal){ window.openAuthModal('login'); } else if(window.switchView){ window.switchView('bacheca'); }">
+              <div class="glow-card glow-card--red" role="button" tabindex="0" onclick="if(window.openAuthModal){ window.openAuthModal('login'); } else if(window.openAccessoModal){ window.openAccessoModal('email'); }">
                 <div class="glow-card-content">
                   <div class="glow-badge glow-badge--red" data-i18n="home.glow3Badge">Area tecnica</div>
                   <h3 class="glow-title" data-i18n="home.glow3Title">Scout e agenti</h3>
@@ -6992,7 +6992,7 @@
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="elisee-staff.js?v=20260911_ADMIN2"></script>
   <script src="app-admin-panels.js?v=20260918_CCDROPDOWN1"></script>
-  <script src="app.js?v=20261004_FIX33"></script>
+  <script src="app.js?v=20261004_FIX34"></script>
   <script src="page-bubbles.js?v=20260925_BUBBLE1"></script>
   <script src="parallax.js?v=20260925_PARALLAX1"></script>
   <script src="search-client.js?v=20260929_HEROUX88"></script>
@@ -7539,7 +7539,7 @@
   <script src="chi-siamo-handler.js?v=20260925_HEROUX41" defer></script>
   <script src="radar-pro-handler.js?v=20260925_HEROUX41" defer></script>
   <script src="candidature-pro-handler.js?v=20261001_FIX1" defer></script>
-  <script src="glow-cards-handler.js?v=20260926_HEROUX43" defer></script>
+  <script src="glow-cards-handler.js?v=20261004_FIX34" defer></script>
   <script src="publish-btn.js?v=20260926_HEROUX45" defer></script>
   <script src="tide-button.js?v=20260926_HEROUX52" defer></script>
   <script src="scry-search.js?v=20261001_FIX17" defer></script>

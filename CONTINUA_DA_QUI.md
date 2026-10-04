@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-04** — FIX33 — Iscrizione e login email funzionano anche online:
+Ultimo aggiornamento: **2026-10-04** — FIX34 — I pulsanti «Registrati» aprono l’iscrizione, non la bacheca:
+
+1. **Cosa era rotto**: Chi siamo e le tre card del network chiamavano `openAuthModal`, che non esisteva, e cadevano su `switchView('bacheca')`.
+2. **Ora**: `openAuthModal('register')` apre il form Iscriviti, `openAuthModal('login')` apre Accedi. Se manca quella funzione restano `openRegistrazioneModal` / `openAccessoModal`. Le card Atleta e Società iscrivono, Scout apre Accedi. Invio e spazio sulle card fanno lo stesso click.
+3. **File**: `app.js`, `index.html`, `glow-cards-handler.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261004_FIX34`. Non tocca data di nascita, età o consenso genitoriale.
+
+Feature precedente: **2026-10-04** — FIX33 — Iscrizione e login email funzionano anche online:
 
 1. **Cosa era rotto**: Iscriviti chiamava `POST /api/auth/register`, che su Vercel non esisteva (404). Accedi con email accettava solo i tre account staff. Il ruolo nel form resta vuoto (si sceglie dopo), e in locale Python rifiutava la registrazione per `ruolo_obbligatorio`.
 2. **Ora**: `/api/auth/register` è una rewrite su `/api/auth/me?path=register` (niente 13ª function). La registrazione salva nome, cognome, email, data di nascita in ISO `YYYY-MM-DD`, consensi booleani e hash della password. Il login email verifica anche questi account. Staff invariato. Gli iscritti non saltano la verifica documenti (`skipDocVerify` resta spento).
