@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-04** — FIX34 — I pulsanti «Registrati» aprono l’iscrizione, non la bacheca:
+Ultimo aggiornamento: **2026-10-04** — FIX35 — Altro → Album apre l’album, non la home:
+
+1. **Cosa era rotto**: la voce Album del menu Altro chiamava `switchView('album', '#album-figurine')`. Quella vista e quell’ancora non esistono, quindi si vedeva la home. Il footer e il menu telefono andavano già su `#seguo-portal`.
+2. **Ora**: Altro → Album usa lo stesso percorso del footer (`openChiSegui` / `#seguo-portal`). `album` e `#album-figurine` restano alias e aprono l’album.
+3. **File**: `index.html`, `app.js`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20261004_FIX35`. Non tocca data di nascita, età o consenso genitoriale.
+
+Feature precedente: **2026-10-04** — FIX34 — I pulsanti «Registrati» aprono l’iscrizione, non la bacheca:
 
 1. **Cosa era rotto**: Chi siamo e le tre card del network chiamavano `openAuthModal`, che non esisteva, e cadevano su `switchView('bacheca')`.
 2. **Ora**: `openAuthModal('register')` apre il form Iscriviti, `openAuthModal('login')` apre Accedi. Se manca quella funzione restano `openRegistrazioneModal` / `openAccessoModal`. Le card Atleta e Società iscrivono, Scout apre Accedi. Invio e spazio sulle card fanno lo stesso click.

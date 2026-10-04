@@ -4958,11 +4958,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } catch (_) {}
 
-      if (viewType === 'seguo' || targetHash === '#seguo-portal') {
+      if (viewType === 'seguo' || viewType === 'album' || targetHash === '#seguo-portal' || targetHash === '#album-figurine') {
         showEl('view-seguo');
         const sl = document.querySelector('.nav-link[data-view="seguo"]');
         if (sl) sl.classList.add('active');
-        if (!targetHash) setHashSafe('#seguo-portal', opts);
+        if (!targetHash || targetHash === '#album-figurine') setHashSafe('#seguo-portal', opts);
         setTimeout(function () { try { if (window.EliseeChiSegui) window.EliseeChiSegui.render(); } catch (e) {} }, 40);
       } else if (viewType === 'stampa' || targetHash === '#stampa-portal') {
         showEl('view-stampa');
@@ -5860,7 +5860,7 @@ document.addEventListener('DOMContentLoaded', () => {
       switchView('pillars', '#dashboard-skills', noHist);
     } else if (hash === '#bacheca-annunci') {
       switchView('bacheca', '#bacheca-annunci', noHist);
-    } else if (hash === '#seguo-portal') {
+    } else if (hash === '#seguo-portal' || hash === '#album-figurine') {
       switchView('seguo', '#seguo-portal', noHist);
     } else if (hash === '#stampa-portal') {
       switchView('stampa', '#stampa-portal', noHist);

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <script>
     (function () {
-      var BUILD_VERSION = '20261004_FIX34';
+      var BUILD_VERSION = '20261004_FIX35';
       window.__ELISEE_BUILD = BUILD_VERSION;
       try {
         var savedTheme = localStorage.getItem('elisee_ui_theme');
@@ -1192,7 +1192,7 @@
         if (view === 'messaggi') return '#messaggi-portal';
         if (view === 'mappa') return '#mappa-portal';
         if (view === 'stampa') return '#stampa-portal';
-        if (view === 'seguo') return '#seguo-portal';
+        if (view === 'seguo' || view === 'album') return '#seguo-portal';
         if (view === 'formazione') return '#formazione-portal';
         if (view === 'tc') return '#tc-portal';
         if (view === 'mercato') return '#mercato-hub';
@@ -1218,7 +1218,7 @@
         if (h.indexOf('messaggi') >= 0) return 'messaggi';
         if (h.indexOf('mappa') >= 0) return 'mappa';
         if (h.indexOf('stampa') >= 0) return 'stampa';
-        if (h.indexOf('seguo') >= 0) return 'seguo';
+        if (h.indexOf('seguo') >= 0 || h.indexOf('album') >= 0) return 'seguo';
         if (h.indexOf('formazione') >= 0) return 'formazione';
         if (h.indexOf('iscrizione') >= 0) return 'iscrizione';
         if (h.indexOf('tc-portal') >= 0) return 'tc';
@@ -1406,7 +1406,7 @@
             setActiveNav('mappa');
             hash = '#mappa-portal';
             setTimeout(function () { try { if (window.EliseeClubMap) window.EliseeClubMap.refresh(); } catch (e) {} }, 80);
-          } else if (view === 'seguo') {
+          } else if (view === 'seguo' || view === 'album') {
             show('view-seguo');
             setActiveNav('seguo');
             hash = '#seguo-portal';
@@ -2478,7 +2478,7 @@
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>
             <span class="es-nav-item-title" data-i18n="nav.press">Stampa</span>
           </a>
-          <a href="#album-figurine" class="es-nav-dropdown-item" onclick="if(window.switchView){window.switchView('album','#album-figurine');} return false;">
+          <a href="#seguo-portal" class="es-nav-dropdown-item" onclick="if(window.openChiSegui){window.openChiSegui();}else if(window.switchView){window.switchView('seguo','#seguo-portal');} return false;">
             <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
             <span class="es-nav-item-title" data-i18n="nav.album">Album</span>
           </a>
@@ -6992,7 +6992,7 @@
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="elisee-staff.js?v=20260911_ADMIN2"></script>
   <script src="app-admin-panels.js?v=20260918_CCDROPDOWN1"></script>
-  <script src="app.js?v=20261004_FIX34"></script>
+  <script src="app.js?v=20261004_FIX35"></script>
   <script src="page-bubbles.js?v=20260925_BUBBLE1"></script>
   <script src="parallax.js?v=20260925_PARALLAX1"></script>
   <script src="search-client.js?v=20260929_HEROUX88"></script>
