@@ -1,4 +1,4 @@
-﻿# Elisee Scout — continua da qui
+# Elisee Scout — continua da qui
 
 Ultimo aggiornamento: **2026-10-04** — FIX42 — Pannello admin manager: 401 risolto (header corretto):
 
@@ -2406,6 +2406,7 @@ Feature precedente: **Lineup Builder Tattico Dinamico & Ruoli Flessibili (`LINEU
 
    - Superato il vecchio testo statico del 4-3-3: implementato un selettore interattivo con etichetta ("Modulo:"), chevron SVG, bordo blu `#3b82f6` e dropdown con 7 moduli tattici completi: `4-3-3` (Offensivo con Ali), `4-4-2` (Classico Lineare), `4-2-3-1` (Doppio Mediano & Trequarti), `3-5-2` (Ampiezza Quinti & Doppio Attacco), `3-4-3` (Tridente & Linea Mediana a 4), `5-3-2` (Difesa a 5 & Contropiede Rapido), `4-1-4-1` (Vertice Basso & Linea di Trequarti).
    - Al cambio modulo, le coordinate percentuali e i ruoli di tutti gli 11 slot si ridispongono istantaneamente sul campo da calcio.
+
 2. **Libreria Ruoli Estesa a 20 Posizioni con Sigle Ufficiali**:
    - Censite tutte le 20 specializzazioni di ruolo con sigle coerenti e codifica a 4 reparti cromatici (POR, DIF, CEN, ATT): Libero (`LIB`), Braccetto Dx/Sx (`BCD`, `BCS`), Regista (`REG`), Trequartista (`TRQ`), Seconda Punta (`SP`), Esterno Basso Dx/Sx (`EBD`, `EBS`), Esterno Alto Dx/Sx (`EAD`, `EAS`), Falso Nueve (`FN`), oltre a Portiere (`POR`), Difensore Centrale (`DC`), Terzino Dx/Sx (`TD`, `TS`), Mediano (`MED`), Mezzala (`CC`), Ala Dx/Sx (`AD`, `AS`), Centravanti (`ATT`).
 3. **Campo da Calcio Centrato con Linee Regolamentari Vettoriali SVG**:
