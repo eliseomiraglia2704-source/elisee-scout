@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-04** — FIX37 — Apple, Facebook e SPID non fingono più un accesso:
+Ultimo aggiornamento: **2026-10-04** — FIX38 — La ricerca in alto vede gli annunci della bacheca:
+
+1. **Cosa era rotto**: `/api/bacheca` legge lo store live (KV / file runtime). `/api/search` leggeva solo `data/bacheca/annunci.json` del repo, vuoto. Un annuncio pubblicato compariva in bacheca e spariva dalla ricerca globale.
+2. **Ora**: autocomplete e tipo `annunci` usano lo stesso store della bacheca. I club restano sul catalogo. Nessun campo contatto in più nella risposta.
+3. **File**: `lib/search-gateway.js`, `CONTINUA_DA_QUI.md`. Cache resta `v20261004_FIX37`. Non tocca data di nascita, età o consenso genitoriale.
+
+Feature precedente: **2026-10-04** — FIX37 — Apple, Facebook e SPID non fingono più un accesso:
 
 1. **Cosa era rotto**: i pulsanti c’erano, l’accesso no. Apple e Facebook su Supabase sono spenti (servono app Apple/Meta e l’accensione in dashboard). SPID apriva il form email con il logo SPID, senza identità digitale.
 2. **Ora**: il testo dice «Google o email». Un tap su Apple, Facebook o SPID apre Accedi e spiega che quel canale non è collegato. Google resta il redirect vero. Quando un provider verrà acceso su Supabase, lo stesso tap parte da solo.
