@@ -449,6 +449,8 @@
   var offlineUntil = 0;
   var OFFLINE_COOLDOWN_MS = 45000;
   var lastLocalJson = null;
+  var lastLocalAt = 0;
+  var localInFlight = null;
 
   function markOffline() {
     offlineUntil = Date.now() + OFFLINE_COOLDOWN_MS;
@@ -465,14 +467,27 @@
       if (lastLocalJson) return Promise.resolve({ ok: true, json: lastLocalJson, via: 'memory-cache' });
       return Promise.resolve({ ok: false, via: 'cache', reason: 'server-offline' });
     }
-    var localUrl = 'data/campionati/latest.json?t=' + Date.now();
-    return fetch(localUrl, { method: 'GET', credentials: 'same-origin', cache: 'no-store' })
-      .then(function (r) {
-        if (!r.ok) throw new Error('no local');
-        return r.json();
-      })
+    // Tutti gli agenti condividono la stessa copia per 60 s: prima ogni agente
+    // scaricava il file da solo (circa 20 richieste in pochi secondi).
+    if (lastLocalJson && Date.now() - lastLocalAt < 60000) {
+      return Promise.resolve({ ok: true, json: lastLocalJson, via: 'memory-cache' });
+    }
+    if (!localInFlight) {
+      var localUrl = 'data/campionati/latest.json?t=' + Math.floor(Date.now() / 60000);
+      localInFlight = fetch(localUrl, { method: 'GET', credentials: 'same-origin' })
+        .then(function (r) {
+          if (!r.ok) throw new Error('no local');
+          return r.json();
+        })
+        .then(function (json) {
+          lastLocalJson = json;
+          lastLocalAt = Date.now();
+          return json;
+        })
+        .then(function (json) { localInFlight = null; return json; }, function (err) { localInFlight = null; throw err; });
+    }
+    return localInFlight
       .then(function (json) {
-        lastLocalJson = json;
         offlineUntil = 0;
         return { ok: true, json: json, via: 'local-json' };
       })

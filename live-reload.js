@@ -7,7 +7,7 @@
   'use strict';
 
   var isLocal = location.hostname === '127.0.0.1' || location.hostname === 'localhost' || location.port === '8080';
-  var pollInterval = isLocal ? 1000 : 2000;
+  var pollInterval = isLocal ? 1000 : 15000;
   var currentVersion = null;
   var isReloading = false;
   var checkTimer = null;

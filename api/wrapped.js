@@ -44,7 +44,6 @@ export default async function handler(req, res) {
         ok: true,
         season: season,
         release_date: '2026-06-15T20:00:00Z',
-        subscribers_count: 8230,
         days_remaining: Math.max(0, Math.floor((new Date('2026-06-15T20:00:00Z').getTime() - Date.now()) / 86400000))
       });
     }
@@ -52,8 +51,7 @@ export default async function handler(req, res) {
     if (action === 'optin' && req.method === 'POST') {
       return res.status(200).json({
         ok: true,
-        message: 'Iscrizione al promemoria registrata con successo',
-        subscribers_count: 8231
+        message: 'Iscrizione al promemoria registrata con successo'
       });
     }
 

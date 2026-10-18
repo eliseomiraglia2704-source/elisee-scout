@@ -1099,8 +1099,9 @@
         var ready = window.EliseeAICluster || window.EliseeCampionatiAgents;
         if (ready || tries > 25) {
           start();
-          // ensure backend running too
-          backendStart().catch(function () {});
+          if (window.EliseeAdmin && window.EliseeAdmin.isAdmin()) {
+            backendStart().catch(function () {});
+          }
           return;
         }
         setTimeout(waitStart, 300);

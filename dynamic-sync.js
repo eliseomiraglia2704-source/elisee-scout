@@ -8,12 +8,21 @@
   var STORAGE_RADIUS_KEY = 'elisee_user_radius';
 
   // Stato iniziale di default
+  // Nessun conteggio finto: i badge partono da zero e si vedono solo da loggati.
   var defaultBadges = {
-    'badge-mobile-msgs': 3,
-    'badge-mobile-notifs': 1,
-    'badge-inbox': 3,
-    'badge-market': 2
+    'badge-mobile-msgs': 0,
+    'badge-mobile-notifs': 0,
+    'badge-inbox': 0,
+    'badge-market': 0
   };
+
+  function isLoggedIn() {
+    try {
+      return localStorage.getItem('elisee_user_auth') === 'true' || !!localStorage.getItem('elisee_auth_token');
+    } catch (_) {
+      return false;
+    }
+  }
 
   var defaultRadius = {
     card: 12,
@@ -27,6 +36,7 @@
 
   // Lettura sicura da localStorage
   function loadStoredBadges() {
+    if (!isLoggedIn()) return Object.assign({}, defaultBadges);
     try {
       var raw = localStorage.getItem(STORAGE_BADGES_KEY);
       if (raw) return JSON.parse(raw);
@@ -62,8 +72,9 @@
     var t0 = (window.performance && window.performance.now) ? performance.now() : 0;
 
     if (window.updateBadge) {
+      var logged = isLoggedIn();
       Object.keys(currentBadges).forEach(function (key) {
-        var count = currentBadges[key];
+        var count = logged ? currentBadges[key] : 0;
         window.updateBadge(key, count);
       });
     }
@@ -121,7 +132,7 @@
     currentBadges[key] = parseInt(count, 10) || 0;
     saveStoredBadges(currentBadges);
     if (window.updateBadge) {
-      window.updateBadge(key, currentBadges[key]);
+      window.updateBadge(key, isLoggedIn() ? currentBadges[key] : 0);
     }
   }
 

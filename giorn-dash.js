@@ -691,8 +691,8 @@
       categoryLabel: 'Mercato',
       title: 'Serie D & Eccellenza: i fuoriquota più richiesti e le strategie di mercato',
       excerpt: 'Riflettori puntati sui migliori prospetti under classe 2005, 2006 e 2007. I Direttori Sportivi monitorano costantemente il rendimento atletico e i report di scouting per i trasferimenti stagionali.',
-      source: 'Sky Sport Calcio',
-      sourceUrl: 'https://sport.sky.it/calcio',
+      source: 'Redazione Elisee Scout · Esempio',
+      sourceUrl: '',
       date: '07 Set 2026',
       tag: { kind: 'club', id: 'cl-foggia', name: 'Calcio Foggia 1920' }
     },
@@ -702,8 +702,8 @@
       categoryLabel: 'Riforma dello Sport',
       title: 'Lavoro Sportivo nei Dilettanti: vademecum operativo su contratti, tutele e compensi',
       excerpt: 'Pubblicate le circolari applicative per atleti, istruttori e collaboratori gestionali: tutte le disposizioni su premi di preparazione, svincoli e semplificazioni telematiche.',
-      source: 'FIGC / LND Ufficiale',
-      sourceUrl: 'https://www.lnd.it',
+      source: 'Redazione Elisee Scout · Esempio',
+      sourceUrl: '',
       date: '06 Set 2026',
       tag: null
     },
@@ -713,8 +713,8 @@
       categoryLabel: 'Settore Giovanile',
       title: 'Juniores e Under 17: la crescita dei vivai italiani e l\'impatto dei dati GPS',
       excerpt: 'L\'analisi dei campionati giovanili evidenzia un incremento dell\'intensità di gioco e un utilizzo capillare della match analysis per la prevenzione e la crescita tecnica dei talenti.',
-      source: 'Notiziario del Calcio',
-      sourceUrl: 'https://www.notiziariocalcio.com',
+      source: 'Redazione Elisee Scout · Esempio',
+      sourceUrl: '',
       date: '05 Set 2026',
       tag: null
     },
@@ -724,8 +724,8 @@
       categoryLabel: 'Club',
       title: 'Modelli di Gestione Sostenibile: digitalizzazione e strutture nei campionati regionali',
       excerpt: 'Focus sulle società virtuose che investono nell\'innovazione e nella valorizzazione del territorio per garantire continuità sportiva ed equilibrio economico.',
-      source: 'Calcio e Finanza',
-      sourceUrl: 'https://www.calcioefinanza.it',
+      source: 'Redazione Elisee Scout · Esempio',
+      sourceUrl: '',
       date: '04 Set 2026',
       tag: { kind: 'club', id: 'cl-serie-d', name: 'Lega Nazionale Dilettanti' }
     },
@@ -735,8 +735,8 @@
       categoryLabel: 'Competizioni',
       title: 'Coppa Italia e Campionati Nazionali: regolamenti, date chiave e format promozioni',
       excerpt: 'Definito il quadro della fase a eliminazione diretta e i criteri di accesso agli spareggi promozione tra le prime classificate dei massimi tornei dilettantistici.',
-      source: 'La Gazzetta dello Sport',
-      sourceUrl: 'https://www.gazzetta.it/Calcio',
+      source: 'Redazione Elisee Scout · Esempio',
+      sourceUrl: '',
       date: '03 Set 2026',
       tag: null
     },
@@ -746,8 +746,8 @@
       categoryLabel: 'Mercato',
       title: 'Trattative e Secret List: come gli scout professionisti scovano talenti nei dilettanti',
       excerpt: 'Il passaggio dal calcio regionale ai campionati professionistici: interviste ai responsabili scouting sull\'impiego di dossier digitali e video analitici.',
-      source: 'TuttoCampo.it',
-      sourceUrl: 'https://www.tuttocampo.it',
+      source: 'Redazione Elisee Scout · Esempio',
+      sourceUrl: '',
       date: '02 Set 2026',
       tag: null
     }
@@ -758,7 +758,7 @@
       id: 'com-04',
       date: '05 SET 2026',
       title: 'Comunicato Ufficiale N. 04/2026 — Rilascio Elisee Scout v3.0 e Rete Anti-Fake',
-      text: 'Presentazione ufficiale della release di produzione della piattaforma: integrati 3.130 agenti IA, dossier verificati con verifica dell\'identità a doppio fattore e conformità GDPR Art. 22.',
+      text: 'Presentazione ufficiale della release di produzione della piattaforma: dossier verificati con verifica dell\'identità a doppio fattore e conformità GDPR Art. 22.',
       docTitle: 'Scarica PDF (240 KB)'
     },
     {
@@ -805,7 +805,7 @@
       id: 'mk-3',
       icon: '📄',
       title: 'Executive One-Pager & Factsheet',
-      desc: 'Presentazione corporate in formato PDF: metriche di piattaforma, 3.130 agenti IA, copertura dei campionati e standard di sicurezza.',
+      desc: 'Presentazione corporate in formato PDF: metriche di piattaforma, copertura dei campionati e standard di sicurezza.',
       meta: 'PDF · 1.2 MB',
       file: '#'
     },
@@ -842,7 +842,7 @@
         '<p>' + esc(it.excerpt) + '</p>' +
         '<div class="es-article__footer">' +
           '<span class="es-article__source">' + esc(it.source) + tagHtml + '</span>' +
-          '<a class="es-article__link" href="' + esc(it.sourceUrl || '#') + '" target="_blank" rel="noopener noreferrer">Leggi tutto →</a>' +
+          (it.sourceUrl ? '<a class="es-article__link" href="' + esc(it.sourceUrl) + '" target="_blank" rel="noopener noreferrer">Leggi tutto →</a>' : '') +
         '</div>' +
       '</article>';
     }).join('');
@@ -929,7 +929,7 @@
           renderRassegnaCards(filteredRassegna) +
         '</div>' +
         '<p class="es-copyright-note">' +
-          '<strong>Nota sul copyright editoriale.</strong> La rassegna stampa aggrega estratti brevi a scopo informativo nel rispetto dei diritti editoriali, rimandando con link diretto alla fonte originale.' +
+          '<strong>Contenuti di esempio.</strong> Gli articoli qui sotto sono esempi scritti dalla redazione di Elisee Scout per mostrare la sezione. Non sono notizie reali.' +
         '</p>' +
       '</div>';
     } else {

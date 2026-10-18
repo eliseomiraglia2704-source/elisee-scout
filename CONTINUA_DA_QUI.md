@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-18** — SEC3 — Control Center in ordine:
+Ultimo aggiornamento: **2026-10-18** — SEC4 — Contenuti onesti e meno richieste:
+
+1. **Cosa era rotto**: badge "99+ messaggi" e "1 notifica" finti anche per chi non è loggato; Area Stampa con articoli inventati attribuiti a Sky Sport, Gazzetta, FIGC/LND, TuttoCampo e altri, con link ai loro siti; comunicati con "3.130 agenti IA"; contatore "8.230 iscritti" fisso; classifiche scaricate circa 20 volte in pochi secondi; ogni visitatore avviava l'AutoPilot; version.json controllato ogni 2 s.
+2. **Ora**: badge a zero e nascosti ai visitatori (`dynamic-sync.js`); articoli firmati "Redazione Elisee Scout · Esempio", senza link esterni, con nota "Contenuti di esempio" (`giorn-dash.js`, `area-stampa-comunicazione.html`); tolto il conteggio agenti; tolto il contatore iscritti (`index.html`, `api/wrapped.js`); classifiche in una sola richiesta condivisa ogni 60 s (`campionati-agents.js`); AutoPilot avviato solo da admin (`autopilot-runtime.js`); controllo versione ogni 15 s (`live-reload.js`).
+3. **Aperto**: manca un database (KV/Upstash) su Vercel: utenti, password, verifiche, bacheca e candidature finiscono in /tmp e si perdono. Le tabelle Supabase usate dalla gestione squadra non esistono.
+
+Feature precedente: **2026-10-18** — SEC3 — Control Center in ordine:
 
 1. **Cosa era rotto**: la regola globale `header { position: fixed }` (in `style.css` e nello stile inline di `index.html`) fissava in alto ogni `<header>`, non solo la navbar: il titolo del Control Center e di Area riservata finiva sotto la barra. Il pannello analitico non aveva la classe `es-an`, quindi niente colonna laterale. I numeri del pannello sono finti ma non erano etichettati.
 2. **Ora**: la regola vale solo per `header.public-header`. I due contenitori hanno `class="es-an es-an-mount"`. Etichetta «Esempio: cifre dimostrative, non dati reali» nel pannello (`cc.demo` in `i18n.js`).
