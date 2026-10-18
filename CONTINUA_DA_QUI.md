@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-18** — SEC2 — Pulsante «Autenticati» dell'area riservata di nuovo funzionante:
+Ultimo aggiornamento: **2026-10-18** — SEC3 — Control Center in ordine:
+
+1. **Cosa era rotto**: la regola globale `header { position: fixed }` (in `style.css` e nello stile inline di `index.html`) fissava in alto ogni `<header>`, non solo la navbar: il titolo del Control Center e di Area riservata finiva sotto la barra. Il pannello analitico non aveva la classe `es-an`, quindi niente colonna laterale. I numeri del pannello sono finti ma non erano etichettati.
+2. **Ora**: la regola vale solo per `header.public-header`. I due contenitori hanno `class="es-an es-an-mount"`. Etichetta «Esempio: cifre dimostrative, non dati reali» nel pannello (`cc.demo` in `i18n.js`).
+3. **File**: `style.css`, `index.html`, `cc-analytics.js`, `cc-analytics.css`, `i18n.js`, `sw.js`, `version.json`. Cache `v20261018_SEC3`.
+
+Feature precedente: **2026-10-18** — SEC2 — Pulsante «Autenticati» dell'area riservata di nuovo funzionante:
 
 1. **Cosa era rotto** (almeno dal 2026-10-01): in `app.js` il gestore di `#form-admin-login` sta dentro `window.openEditUserModal`, che non si chiude dove dovrebbe (riga ~241 → ~7392). Il pulsante non faceva niente.
 2. **Ora**: nuovo `admin-login.js` (caricato dopo `app.js`) collega il modulo: login, campo 2FA quando serve, errori leggibili. La parentesi in `app.js` resta da sistemare con un piano a parte.

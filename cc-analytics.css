@@ -26,6 +26,15 @@
 }
 .es-an-brand { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #bae6fd; margin: 0; }
 .es-an-side h2 { margin: 2px 0 0; font-size: 1.25rem; color: #fff; line-height: 1.15; }
+.es-an-demo {
+  margin: 0;
+  padding: 6px 8px;
+  border: 1px solid rgba(250, 204, 21, 0.35);
+  border-radius: 8px;
+  color: #fde68a;
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
 .es-an-side h2 span { display: block; font-size: 0.78rem; font-weight: 500; color: #bae6fd; margin-top: 4px; }
 .es-an-tabs { display: flex; flex-direction: column; gap: 6px; }
 .es-an-tabs button, .es-an-years button {

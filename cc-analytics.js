@@ -62,6 +62,16 @@
     var n = el ? parseInt(String(el.textContent).replace(/[^\d]/g, ''), 10) : 0;
     return isNaN(n) ? 0 : n;
   }
+  function demoLabel() {
+    try {
+      if (window.EliseeI18n && typeof window.EliseeI18n.t === 'function') {
+        var v = window.EliseeI18n.t('cc.demo');
+        if (v && v !== 'cc.demo') return v;
+      }
+    } catch (_) {}
+    return 'Esempio: cifre dimostrative, non dati reali.';
+  }
+
   function scaleOf(root) {
     var s = 1;
     ['area', 'canale', 'ruolo'].forEach(function (k) {
@@ -153,6 +163,7 @@
       '<aside class="es-an-side">' +
         '<p class="es-an-brand">Elisee Scout</p>' +
         '<h2>' + esc(view.title) + '<span>' + esc(view.sub) + '</span></h2>' +
+        '<p class="es-an-demo" data-i18n="cc.demo">' + esc(demoLabel()) + '</p>' +
         '<div class="es-an-tabs">' +
           '<button type="button" data-jump="admin" class="' + (which === 'admin' ? 'is-on' : '') + '">Panoramica</button>' +
           '<button type="button" data-jump="privacy" class="' + (which === 'privacy' ? 'is-on' : '') + '">Governance</button>' +

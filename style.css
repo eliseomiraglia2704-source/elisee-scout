@@ -9275,8 +9275,9 @@ main {
   min-height: 0 !important;
   padding-top: 0 !important; /* padding sulle view/inner, non su main */
 }
-/* Header fisso full-width classico ed essenziale */
-header,
+/* Header fisso full-width classico ed essenziale: solo la navbar del sito,
+   non le intestazioni <header> interne alle pagine. */
+header.public-header,
 .public-navbar,
 .portfolio-header,
 .main-header {
@@ -11272,7 +11273,7 @@ body:has(#view-home:not([hidden])) #es-share,
    RESET GLOBALE HEADER & NAVBAR (Punto 1: Reset d'Emergenza nel CSS Globale)
    ========================================================================== */
 /* 1. Blocca l'Header principale */
-header, .navbar, nav, .public-header, .public-navbar {
+header.public-header, .navbar, nav, .public-header, .public-navbar {
   box-sizing: border-box !important;
   max-height: 64px !important;
   height: 64px !important;
@@ -11281,11 +11282,11 @@ header, .navbar, nav, .public-header, .public-navbar {
 }
 
 /* 2. Disattiva il wrap per tutti i contenitori di navigazione */
-header *, .navbar *, .public-header * {
+header.public-header *, .navbar *, .public-header * {
   box-sizing: border-box;
 }
 
-.nav-container, .nav-menu, .main-nav, header nav, .public-header nav {
+.nav-container, .nav-menu, .main-nav, header.public-header nav, .public-header nav {
   display: flex !important;
   align-items: center !important;
   flex-wrap: nowrap !important; /* VIETA di andare a capo */
