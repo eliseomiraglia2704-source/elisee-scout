@@ -1741,6 +1741,17 @@ select.pf-input {
   display: none;
 }
 
+.es-admin-login-error {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: 8px;
+  background: rgba(239, 68, 68, 0.12);
+  color: #f87171;
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
 .pf-form label {
   display: block;
   font-size: 0.72rem;

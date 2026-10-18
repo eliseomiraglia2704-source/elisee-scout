@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-18** — SEC1 — Messa in sicurezza accesso staff:
+Ultimo aggiornamento: **2026-10-18** — SEC2 — Pulsante «Autenticati» dell'area riservata di nuovo funzionante:
+
+1. **Cosa era rotto** (almeno dal 2026-10-01): in `app.js` il gestore di `#form-admin-login` sta dentro `window.openEditUserModal`, che non si chiude dove dovrebbe (riga ~241 → ~7392). Il pulsante non faceva niente.
+2. **Ora**: nuovo `admin-login.js` (caricato dopo `app.js`) collega il modulo: login, campo 2FA quando serve, errori leggibili. La parentesi in `app.js` resta da sistemare con un piano a parte.
+3. **File**: `admin-login.js` (nuovo), `index.html`, `style.css`, `i18n.js`, `sw.js`, `version.json`, `CLAUDE.md`. Cache `v20261018_SEC2`.
+
+Feature precedente: **2026-10-18** — SEC1 — Messa in sicurezza accesso staff:
 
 1. **Cosa era rotto**: password admin in chiaro in `AGENTS.md` (repository pubblico) e come default in `elisee_up.py`; hash password nel codice di `api/auth-admin.js` e `api/auth/me.js`; area admin apribile dal browser con `localStorage elisee_admin_auth=true` o con un'email staff falsa; 2FA finto (accettava qualsiasi codice); `admin123` ancora accettato in locale; comandi AutoPilot aperti a tutti; `CREDENZIALI_TEMPORANEE.txt` pubblicato su Vercel.
 2. **Ora**: segreti solo in variabili d'ambiente (`TOKEN_SIGNING_KEY`, `ADMIN_SECRET`, `PRIVACY_SECRET`, `STAFF_USERS`, `ADMIN_TOTP_SECRET`, `PRIVACY_TOTP_SECRET`, `STAFF_DEFAULT_HASHES`). Nuovo `elisee-admin-guard.js` (`window.EliseeAdmin`): permessi staff solo da token verificato dal server. 2FA TOTP vero (`node scripts/totp-setup.js`). AutoPilot: start/stop/config/clear/fleet solo admin. `.vercelignore` esclude segreti, note e script.
