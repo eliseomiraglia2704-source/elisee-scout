@@ -125,8 +125,8 @@
 
   window.canPublishCandidatura = function () {
     try {
-      if (localStorage.getItem('elisee_admin_auth') === 'true') return true;
-      if (localStorage.getItem('elisee_creator_mode') === 'true') return true;
+      if (!!(window.EliseeAdmin && window.EliseeAdmin.isAdmin())) return true;
+      if ((!!(window.EliseeAdmin && window.EliseeAdmin.isAdmin()) && localStorage.getItem('elisee_creator_mode') === 'true')) return true;
       var u = JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {};
       var blob = [u.siteRoleFamily, u.ruolo, u.role, u.staffRole, u.ruoloDettagliato, u.category].filter(Boolean).join(' ').toLowerCase();
       return /squadra|club|societ|ente|direttore|presidente|giovanile|segretario|dirigente|tc|staff/.test(blob);

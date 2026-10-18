@@ -22,7 +22,7 @@
     if (typeof window.showToast === 'function') window.showToast(msg, kind || 'success');
   }
   function isAdmin() {
-    try { return localStorage.getItem('elisee_admin_auth') === 'true'; } catch (_) { return false; }
+    try { return !!(window.EliseeAdmin && window.EliseeAdmin.isAdmin()); } catch (_) { return false; }
   }
   function userObj() {
     try { return JSON.parse(localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data') || '{}') || {}; } catch (_) { return {}; }

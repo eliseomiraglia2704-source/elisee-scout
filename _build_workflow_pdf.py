@@ -313,7 +313,7 @@ story.append(Paragraph("M. Admin &amp; Garante Privacy", styles["H1Doc"]))
 story.append(hr())
 story.append(Paragraph("Login admin", styles["H2Doc"]))
 story.extend(bullets([
-    "form-admin-login: admin-user, admin-pass, admin-remember (default demo admin/admin123)",
+    "form-admin-login: admin-user, admin-pass, admin-remember",
     "admin-login-guard vs admin-authenticated-dashboard",
     "btn-admin-logout; sessione elisee_admin_auth + activity 2 mesi",
 ]))

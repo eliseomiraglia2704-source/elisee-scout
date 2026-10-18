@@ -4,6 +4,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const { isAdmin } = require('../lib/admin-token-verify');
 
 const STATE_FILE = process.env.VERCEL ? '/tmp/elisee-autopilot-state.json' : path.join(process.cwd(), 'data', 'autopilot', 'state.json');
 
@@ -55,7 +56,7 @@ function sendJson(res, code, body) {
   res.statusCode = code;
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Elisee-Admin');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Admin-Token');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.end(JSON.stringify(body));
 }
@@ -130,6 +131,16 @@ module.exports = async function handler(req, res) {
 
   const method = req.method.toUpperCase();
   const st = loadState();
+
+  // Comandi che cambiano lo stato: solo admin con token firmato.
+  const ADMIN_ROUTES = ['/api/autopilot/start', '/api/autopilot/stop', '/api/autopilot/force-cycle', '/api/autopilot/log/clear'];
+  const needsAdmin =
+    ADMIN_ROUTES.indexOf(pathname) >= 0 ||
+    pathname.startsWith('/api/autopilot/fleet/') ||
+    (pathname === '/api/autopilot/config' && method !== 'GET');
+  if (needsAdmin && !isAdmin(req)) {
+    return sendJson(res, 401, { ok: false, error: 'admin_richiesto' });
+  }
 
   // Rotte API Autopilot
   if (pathname === '/api/autopilot' || pathname === '/api/autopilot/status') {

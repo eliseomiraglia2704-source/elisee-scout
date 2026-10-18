@@ -257,3 +257,33 @@
 .es-creator-toast svg {
   color: #38bdf8;
 }
+
+/* Campo 2FA nel modale di sblocco admin */
+.es-creator-totp {
+  margin-bottom: 1rem;
+}
+.es-creator-totp[hidden] {
+  display: none;
+}
+.es-creator-totp-label {
+  display: block;
+  font-size: 0.75rem;
+  color: #cbd5e1;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+.es-creator-totp-input {
+  width: 100%;
+  background: #080e1e;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 4px;
+  color: #fff;
+  padding: 0.6rem 0.75rem;
+  font-size: 1rem;
+  letter-spacing: 0.25em;
+  text-align: center;
+}
+.es-creator-totp-input:focus-visible {
+  outline: 2px solid var(--es-ctrl-accent, #2fe0c8);
+  outline-offset: 1px;
+}

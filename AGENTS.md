@@ -31,8 +31,8 @@ Se il push dà 403 (account Git `sfondiitaliani23-svg`), pubblica comunque su Ve
 - Kit 2D: ogni squadra inserita o sincronizzata deve avere `immagini/kits-2d/<nome-squadra>/` (solo nome, niente campionato). Usare `_kit_folders.ensure_kit_folders(teams)` dopo il salvataggio del catalogo, oppure `_sync_catalog_kits.py` (lo fa da solo).
 - Non inventare il prossimo task: chiedi o aspetta.
 - Commenti nel codice: solo vincoli non ovvi, niente diario di implementazione.
-- Admin Manager: header `X-Elisee-Admin: admin123`.
-- Credenziali Account & Responsabile Privacy: la password per gli account e per l'account del Responsabile Privacy (`manueltucci2002@gmail.com`) e master secret admin è: `Iemmello.9` (esattamente con il punto).
+- Admin: solo token firmato da `/api/auth-admin`. Nel codice usare `window.EliseeAdmin.isAdmin()` / `isPrivacy()` / `isStaff()` (`elisee-admin-guard.js`). Mai leggere `localStorage['elisee_admin_auth']` per dare permessi.
+- Credenziali staff: MAI nel repository (è pubblico). Vivono solo nelle variabili d'ambiente Vercel e nel `.env` locale: `TOKEN_SIGNING_KEY`, `ADMIN_SECRET`, `PRIVACY_SECRET`, `STAFF_USERS`, `ADMIN_TOTP_SECRET`, `PRIVACY_TOTP_SECRET`. Chiave 2FA: `node scripts/totp-setup.js`.
 - Store manager Vercel = `/tmp` (effimero). Locale = `data/manager/state.json`. Il client ha fallback localStorage per le formazioni.
 - Anti-fake: dopo il ruolo (non Tifoso) l’utente ha 30 giorni per allegare documento + selfie. Avvisi continui, poi chiusura automatica (`verifica-account.js`).
 - Pannello TC Manager (`tc-panel.js`): iscrizioni con link, quote, comunicazioni per ruolo, calendario/presenze, documenti/scadenze, profilo atleta, soci/verbali. Modulo pubblico `#iscrizione-portal?team=ID`.

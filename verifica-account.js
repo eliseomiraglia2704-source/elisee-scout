@@ -35,7 +35,7 @@
     if (em === 'eliseomiraglia2704@gmail.com') return true;
     if (window.EliseeStaff && window.EliseeStaff.isStaffEmail(em)) return true;
     try {
-      if (localStorage.getItem('elisee_admin_auth') === 'true' &&
+      if (!!(window.EliseeAdmin && window.EliseeAdmin.isAdmin()) &&
           window.EliseeStaff && window.EliseeStaff.isStaffEmail(em)) return true;
     } catch (_) {}
     var blob = [u.ruolo, u.role, u.staffRole, u.ruoloDettagliato, u.siteRole, u.siteRoleFamily]

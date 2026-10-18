@@ -679,6 +679,8 @@
       init.headers['Content-Type'] = 'application/json';
       init.body = JSON.stringify(opts.body);
     }
+    var adminTok = window.EliseeAdmin ? window.EliseeAdmin.token() : '';
+    if (adminTok) init.headers['X-Admin-Token'] = adminTok;
     return fetch(API_BASE + path, init).then(function (r) {
       backendOfflineUntil = 0;
       return r.json().then(function (j) {
@@ -802,7 +804,7 @@
 
   function isAdminSession() {
     try {
-      return localStorage.getItem('elisee_admin_auth') === 'true';
+      return !!(window.EliseeAdmin && window.EliseeAdmin.isAdmin());
     } catch (e) {
       return false;
     }

@@ -64,7 +64,7 @@
   }
   function canUseSecretList(u) {
     u = u || userObj();
-    if (localStorage.getItem('elisee_admin_auth') === 'true') return true;
+    if (!!(window.EliseeAdmin && window.EliseeAdmin.isAdmin())) return true;
     var blob = roleBlob(u);
     if (/direttore sportivo|scout|osservatore|dirigente/.test(blob)) return true;
     if (/\bsquadra\b|\bclub\b|societ/.test(blob)) return true;
@@ -98,7 +98,7 @@
   }
   function canOfficialize(u) {
     u = u || userObj();
-    if (localStorage.getItem('elisee_admin_auth') === 'true') return true;
+    if (!!(window.EliseeAdmin && window.EliseeAdmin.isAdmin())) return true;
     if (isScout(u) && !isDsRole(u)) return false;
     if (isMa(u) && !isDsRole(u)) return false;
     return /direttore sportivo|presidente/.test(roleBlob(u));

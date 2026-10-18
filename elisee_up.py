@@ -58,6 +58,94 @@ def _load_dotenv() -> None:
 _load_dotenv()
 
 
+# --- Accesso staff (stessa logica di api/auth-admin.js). Nessun segreto nel codice:
+# ADMIN_SECRET, PRIVACY_SECRET, STAFF_USERS, TOKEN_SIGNING_KEY, ADMIN_TOTP_SECRET,
+# PRIVACY_TOTP_SECRET vanno nel file .env locale (escluso da git e da Vercel).
+_STAFF_RUNTIME_KEY = os.urandom(32).hex()
+_STAFF_TOTP_USED: dict = {}
+
+
+def _staff_signing_key() -> str:
+    return (os.environ.get("TOKEN_SIGNING_KEY") or "").strip() or _STAFF_RUNTIME_KEY
+
+
+def _staff_role_of(username: str):
+    u = (username or "").strip().lower()
+    raw = (os.environ.get("STAFF_USERS") or "").strip()
+    mapping = {"admin": "admin", "privacy": "privacy"}
+    if raw:
+        try:
+            parsed = json.loads(raw)
+            mapping = {str(k).strip().lower(): v for k, v in parsed.items() if v in ("admin", "privacy")}
+        except Exception:
+            log("STAFF_USERS non è un JSON valido")
+    if u in mapping:
+        return mapping[u]
+    return "admin" if u == "admin" else None
+
+
+def _staff_secret(role: str) -> str:
+    if role == "privacy":
+        return (os.environ.get("PRIVACY_SECRET") or os.environ.get("ADMIN_SECRET") or "").strip()
+    return (os.environ.get("ADMIN_SECRET") or "").strip()
+
+
+def _staff_totp_secret(role: str) -> str:
+    name = "PRIVACY_TOTP_SECRET" if role == "privacy" else "ADMIN_TOTP_SECRET"
+    return (os.environ.get(name) or "").strip()
+
+
+def _staff_totp_ok(secret: str, code: str, role: str) -> bool:
+    import struct
+    code = "".join((code or "").split())
+    if len(code) != 6 or not code.isdigit():
+        return False
+    clean = "".join(ch for ch in secret.upper() if ch in "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567")
+    try:
+        key = base64.b32decode(clean + "=" * (-len(clean) % 8))
+    except Exception:
+        return False
+    now = int(time.time() // 30)
+    for step in (now - 1, now, now + 1):
+        h = hmac.new(key, struct.pack(">Q", step), hashlib.sha1).digest()
+        off = h[-1] & 0x0F
+        val = (struct.unpack(">I", h[off:off + 4])[0] & 0x7FFFFFFF) % 1000000
+        if hmac.compare_digest(f"{val:06d}", code):
+            if _STAFF_TOTP_USED.get(role, -1) >= step:
+                return False
+            _STAFF_TOTP_USED[role] = step
+            return True
+    return False
+
+
+def _staff_make_token(role: str) -> tuple[str, int]:
+    now_ts = int(time.time() * 1000)
+    exp_ts = now_ts + 7200000
+    payload = {"sub": "staff", "role": role, "iat": now_ts, "exp": exp_ts}
+    p_b64 = base64.urlsafe_b64encode(json.dumps(payload).encode()).decode().rstrip("=")
+    sig = hmac.new(_staff_signing_key().encode(), p_b64.encode(), hashlib.sha256).hexdigest()
+    return f"{p_b64}.{sig}", exp_ts
+
+
+def _staff_verify_token(token: str):
+    token = (token or "").strip()
+    if token.count(".") != 1:
+        return None
+    p_b64, sig = token.split(".", 1)
+    exp_sig = hmac.new(_staff_signing_key().encode(), p_b64.encode(), hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(sig, exp_sig):
+        return None
+    try:
+        p = json.loads(base64.urlsafe_b64decode(p_b64 + "=" * (-len(p_b64) % 4)).decode())
+    except Exception:
+        return None
+    if int(time.time() * 1000) > int(p.get("exp", 0)):
+        return None
+    if p.get("role") not in ("admin", "privacy"):
+        return None
+    return p
+
+
 def _otp_secret() -> str:
     return os.environ.get("OTP_SECRET", "elisee-scout-otp-secret-salt-2026")
 
@@ -950,54 +1038,48 @@ class Handler(SimpleHTTPRequestHandler):
                 return True
 
             if path in ("/api/auth-admin", "/api/auth/admin") or path.startswith("/api/auth-admin"):
-                admin_secret = os.environ.get("ADMIN_SECRET", "Iemmello.9")
-                signing_key = os.environ.get("TOKEN_SIGNING_KEY", "elisee-scout-admin-token-key-2026")
-                
                 if method in ("GET", "HEAD"):
                     auth_h = self.headers.get("Authorization") or ""
-                    token = auth_h.replace("Bearer ", "").strip() if auth_h.startswith("Bearer ") else (self.headers.get("X-Admin-Token") or qs.get("token", [""])[0])
-                    if not token or "." not in token:
-                        self._json(401, {"success": False, "authenticated": False, "error": "Token assente"})
+                    token = auth_h[7:].strip() if auth_h.startswith("Bearer ") else (self.headers.get("X-Admin-Token") or "")
+                    p = _staff_verify_token(token)
+                    if not p:
+                        self._json(401, {"success": False, "authenticated": False, "error": "Sessione non valida o scaduta."})
                         return True
-                    p_b64, sig = token.split(".", 1)
-                    exp_sig = hmac.new(signing_key.encode(), p_b64.encode(), hashlib.sha256).hexdigest()
-                    if sig != exp_sig:
-                        self._json(401, {"success": False, "authenticated": False, "error": "Firma token non valida"})
-                        return True
-                    try:
-                        p = json.loads(base64.b64decode(p_b64 + "==").decode())
-                        if int(time.time() * 1000) > p.get("exp", 0):
-                            self._json(401, {"success": False, "authenticated": False, "error": "Token scaduto"})
-                            return True
-                        self._json(200, {"success": True, "authenticated": True, "role": p.get("role")})
-                        return True
-                    except Exception:
-                        self._json(401, {"success": False, "authenticated": False, "error": "Token malformato"})
-                        return True
+                    self._json(200, {
+                        "success": True, "authenticated": True, "role": p.get("role"),
+                        "expiresAt": p.get("exp"), "totpEnabled": bool(_staff_totp_secret(p.get("role"))),
+                    })
+                    return True
 
                 if method == "POST":
                     body = self._read_json_body()
                     pin = str(body.get("pin") or body.get("password") or "").strip()
-                    pin_norm = pin.lower()
-                    sec_norm = admin_secret.strip().lower()
-                    is_ok = (
-                        pin == admin_secret or
-                        pin_norm == sec_norm or
-                        pin_norm == "iemmello.9" or
-                        pin_norm == "iemmello9" or
-                        pin_norm == "admin123"
-                    )
-                    if not pin or not is_ok:
-                        self._json(403, {"success": False, "error": "Master Secret Admin non corretto"})
+                    username = str(body.get("username") or body.get("email") or "admin").strip().lower()
+                    totp = str(body.get("totp") or body.get("otp") or "").strip()
+                    if not pin:
+                        self._json(400, {"success": False, "error": "Password non inserita."})
                         return True
-                    
-                    now_ts = int(time.time() * 1000)
-                    exp_ts = now_ts + 7200000 # 2 ore
-                    payload_obj = {"sub": "admin", "role": "admin", "iat": now_ts, "exp": exp_ts}
-                    p_b64 = base64.urlsafe_b64encode(json.dumps(payload_obj).encode()).decode().rstrip("=")
-                    sig = hmac.new(signing_key.encode(), p_b64.encode(), hashlib.sha256).hexdigest()
-                    token = f"{p_b64}.{sig}"
-                    self._json(200, {"success": True, "authenticated": True, "token": token, "expiresAt": exp_ts})
+                    role = _staff_role_of(username)
+                    expected = _staff_secret(role) if role else ""
+                    if role and not expected:
+                        self._json(503, {"success": False, "error": "Accesso staff non configurato: aggiungi ADMIN_SECRET nel file .env."})
+                        return True
+                    if not role or not hmac.compare_digest(pin.encode(), expected.encode()):
+                        self._json(403, {"success": False, "error": "Credenziali non corrette."})
+                        return True
+                    totp_secret = _staff_totp_secret(role)
+                    if totp_secret:
+                        if not totp:
+                            self._json(401, {"success": False, "needTotp": True, "error": "Inserisci il codice 2FA dell'app Authenticator."})
+                            return True
+                        if not _staff_totp_ok(totp_secret, totp, role):
+                            self._json(403, {"success": False, "needTotp": True, "error": "Codice 2FA non valido."})
+                            return True
+                    token, exp_ts = _staff_make_token(role)
+                    self._json(200, {
+                        "success": True, "authenticated": True, "role": role,
+                        "token": token, "expiresAt": exp_ts, "totpEnabled": bool(totp_secret),
+                    })
                     return True
 
             self._json(404, {"ok": False, "error": "unknown_auth_endpoint", "path": path})
@@ -1018,11 +1100,12 @@ class Handler(SimpleHTTPRequestHandler):
             return None
 
     def _is_admin_req(self) -> bool:
-        key = (self.headers.get("X-Elisee-Admin") or self.headers.get("x-elisee-admin") or "").strip()
-        if key in ("admin123", "1", "true", "admin"):
-            return True
-        # stesso modello dell'area admin attuale
-        return False
+        auth_h = self.headers.get("Authorization") or ""
+        token = (self.headers.get("X-Admin-Token") or "").strip()
+        if not token and auth_h.startswith("Bearer "):
+            token = auth_h[7:].strip()
+        p = _staff_verify_token(token)
+        return bool(p and p.get("role") == "admin")
 
     def _manager_api(self, path: str, method: str) -> bool:
         try:
@@ -1036,7 +1119,7 @@ class Handler(SimpleHTTPRequestHandler):
         if method == "OPTIONS":
             self.send_response(204)
             self.send_header("Access-Control-Allow-Origin", "*")
-            self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Elisee-Admin")
+            self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Admin-Token")
             self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
             self.end_headers()
             return True
@@ -1098,7 +1181,7 @@ class Handler(SimpleHTTPRequestHandler):
         if method == "OPTIONS":
             self.send_response(204)
             self.send_header("Access-Control-Allow-Origin", "*")
-            self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Elisee-Admin")
+            self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Admin-Token")
             self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
             self.end_headers()
             return True

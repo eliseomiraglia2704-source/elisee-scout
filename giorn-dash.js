@@ -76,10 +76,9 @@
     u = u || userObj();
     if (window.isStaffSiteRole && window.isStaffSiteRole(u)) return true;
     try {
-      if (localStorage.getItem('elisee_admin_auth') === 'true') return true;
+      if (!!(window.EliseeAdmin && window.EliseeAdmin.isAdmin())) return true;
     } catch (_) {}
-    var em = emailOf(u);
-    return em.indexOf('eliseomiraglia2704') >= 0;
+    return false;
   }
   function giornName(u) {
     return [u.nome, u.cognome].filter(Boolean).join(' ').trim() || u.username || 'Giornalista';

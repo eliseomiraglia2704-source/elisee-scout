@@ -316,8 +316,8 @@
   function isStaffViewer() {
     try {
       return (
-        localStorage.getItem('elisee_admin_auth') === 'true' ||
-        localStorage.getItem('elisee_privacy_auth') === 'true'
+        !!(window.EliseeAdmin && window.EliseeAdmin.isAdmin()) ||
+        !!(window.EliseeAdmin && window.EliseeAdmin.isPrivacy())
       );
     } catch (_) {
       return false;

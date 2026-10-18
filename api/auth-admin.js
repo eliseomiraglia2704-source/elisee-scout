@@ -1,12 +1,17 @@
 /**
  * ELISEE SCOUT — Vercel Serverless Function: Admin Authentication & Token Gate
- * Endpoint: POST /api/auth-admin | GET /api/auth-admin?verify=1
- * 
- * Protezione reale del Simulatore Ruoli Creatore e delle funzioni Admin:
- * - Master Secret su variabile d'ambiente (process.env.ADMIN_SECRET)
- * - Rate limiting per IP (max 5 tentativi falliti in 15 minuti)
- * - Rilascio di token crittografico firmato HMAC-SHA256 con scadenza 2 ore
- * - Nessun dato sensibile esposto al client
+ * Endpoint: POST /api/auth-admin | GET /api/auth-admin (verifica token)
+ *
+ * Nessun segreto nel codice. Variabili d'ambiente (Vercel → Settings → Environment Variables):
+ *   TOKEN_SIGNING_KEY    obbligatoria. Chiave HMAC dei token di sessione.
+ *   ADMIN_SECRET         obbligatoria. Password del ruolo admin.
+ *   PRIVACY_SECRET       facoltativa. Password del Responsabile Privacy (se assente: ADMIN_SECRET).
+ *   STAFF_USERS          facoltativa. JSON { "email o username": "admin" | "privacy" }.
+ *                        Senza questa variabile sono accettati solo gli username "admin" e "privacy".
+ *   ADMIN_TOTP_SECRET    facoltativa. Chiave base32 del 2FA admin. Se presente il codice è obbligatorio.
+ *   PRIVACY_TOTP_SECRET  facoltativa. Chiave base32 del 2FA privacy. Se presente il codice è obbligatorio.
+ *
+ * Generare una chiave 2FA: node scripts/totp-setup.js
  */
 
 const fs = require('fs');
@@ -17,62 +22,112 @@ const RATE_LIMIT_FILE = process.env.VERCEL
   ? '/tmp/elisee-admin-ratelimit.json'
   : path.join(process.cwd(), 'data', 'auth', 'admin-ratelimit.json');
 
-const memoryRateLimit = {};
+const MAX_ATTEMPTS = 5;
+const BLOCK_MS = 15 * 60 * 1000;
+const TOKEN_TTL_MS = 2 * 60 * 60 * 1000;
 
-const PW_SALT = 'elisee-staff-v1';
-const PW_ITER = 120000;
-const STAFF_PW_HASH = '21612aefb415ec0957dfd54095eed7fadbeaec288eeca7bf8380989c12919145';
-const LEGACY_PW_HASH = 'de134c138f54a18fb10cd0f5fda4699a81326bb1b6a5d47aeadb26bce167270b';
-const LOWER_DOT_HASH = 'd582c533c9b7c39b288e4a2410f0569334b4d822099491457769735308f3a9cd';
-const LOWER_NODOT_HASH = 'd07e08b28b57c6cf3f0210175fb7e4ce2c50a9d7715196c0d91bf393cc765177';
-const STAFF_ROLES = {
-  admin: 'admin',
-  eliseo: 'admin',
-  'eliseomiraglia2704@gmail.com': 'admin',
-  alessandro: 'admin',
-  'alessandromancini469@gmail.com': 'admin',
-  privacy: 'privacy',
-  garante: 'privacy',
-  manuel: 'privacy',
-  'manueltucci2002@gmail.com': 'privacy'
-};
+const memoryRateLimit = {};
+const usedTotpSteps = {};
 
 function getSigningKey() {
   const key = process.env.TOKEN_SIGNING_KEY;
   if (!key) {
-    // Fail-closed: nessun token admin può essere emesso o verificato senza questa chiave.
-    // Impostare TOKEN_SIGNING_KEY come variabile d'ambiente su Vercel.
-    throw new Error('[AUTH-ADMIN] TOKEN_SIGNING_KEY non configurata. Impostare la variabile d ambiente su Vercel.');
+    throw new Error('[AUTH-ADMIN] TOKEN_SIGNING_KEY non configurata.');
   }
   return key;
 }
 
-function hashPassword(plain) {
-  return crypto.pbkdf2Sync(String(plain), PW_SALT, PW_ITER, 32, 'sha256').toString('hex');
+function env(name) {
+  return String(process.env[name] || '').trim();
 }
 
-function hashesEqual(a, b) {
-  const aa = Buffer.from(String(a || ''), 'utf8');
-  const bb = Buffer.from(String(b || ''), 'utf8');
-  if (aa.length !== bb.length) return false;
-  return crypto.timingSafeEqual(aa, bb);
+function secretForRole(role) {
+  if (role === 'privacy') return env('PRIVACY_SECRET') || env('ADMIN_SECRET');
+  return env('ADMIN_SECRET');
 }
 
-function passwordOk(plain) {
-  const computed = hashPassword(plain);
-  if (
-    hashesEqual(computed, STAFF_PW_HASH) || 
-    hashesEqual(computed, LEGACY_PW_HASH) ||
-    hashesEqual(computed, LOWER_DOT_HASH) ||
-    hashesEqual(computed, LOWER_NODOT_HASH)
-  ) return true;
-  const envSecret = String(process.env.ADMIN_SECRET || '').trim();
-  if (envSecret && hashesEqual(computed, hashPassword(envSecret))) return true;
-  return false;
+function totpSecretForRole(role) {
+  return role === 'privacy' ? env('PRIVACY_TOTP_SECRET') : env('ADMIN_TOTP_SECRET');
+}
+
+function staffUsers() {
+  const raw = env('STAFF_USERS');
+  if (raw) {
+    try {
+      const parsed = JSON.parse(raw);
+      const out = {};
+      Object.keys(parsed || {}).forEach((k) => {
+        const r = parsed[k];
+        if (r === 'admin' || r === 'privacy') out[String(k).trim().toLowerCase()] = r;
+      });
+      return out;
+    } catch (_) {
+      console.error('[AUTH-ADMIN] STAFF_USERS non è un JSON valido.');
+    }
+  }
+  return { admin: 'admin', privacy: 'privacy' };
 }
 
 function roleOfUsername(username) {
-  return STAFF_ROLES[String(username || '').trim().toLowerCase()] || null;
+  const u = String(username || '').trim().toLowerCase();
+  const map = staffUsers();
+  if (map[u]) return map[u];
+  // Lo strumento Simulatore Ruoli invia sempre "admin".
+  if (u === 'admin') return 'admin';
+  return null;
+}
+
+/** Confronto a tempo costante tra stringhe di lunghezza qualsiasi. */
+function safeEqual(a, b) {
+  const k = crypto.randomBytes(32);
+  const ha = crypto.createHmac('sha256', k).update(String(a)).digest();
+  const hb = crypto.createHmac('sha256', k).update(String(b)).digest();
+  return crypto.timingSafeEqual(ha, hb);
+}
+
+function base32Decode(input) {
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+  const clean = String(input || '').toUpperCase().replace(/[^A-Z2-7]/g, '');
+  let bits = 0;
+  let value = 0;
+  const out = [];
+  for (let i = 0; i < clean.length; i++) {
+    value = (value << 5) | alphabet.indexOf(clean[i]);
+    bits += 5;
+    if (bits >= 8) {
+      out.push((value >>> (bits - 8)) & 255);
+      bits -= 8;
+    }
+  }
+  return Buffer.from(out);
+}
+
+function totpAt(secretBuf, step) {
+  const msg = Buffer.alloc(8);
+  msg.writeUInt32BE(Math.floor(step / 0x100000000), 0);
+  msg.writeUInt32BE(step >>> 0, 4);
+  const h = crypto.createHmac('sha1', secretBuf).update(msg).digest();
+  const off = h[h.length - 1] & 0xf;
+  const bin = ((h[off] & 0x7f) << 24) | (h[off + 1] << 16) | (h[off + 2] << 8) | h[off + 3];
+  return String(bin % 1000000).padStart(6, '0');
+}
+
+/** RFC 6238 (SHA-1, 30 s, 6 cifre), tolleranza ±1 passo, un codice vale una volta sola. */
+function totpOk(secret, code, role) {
+  const c = String(code || '').replace(/\s+/g, '');
+  if (!/^\d{6}$/.test(c)) return false;
+  const key = base32Decode(secret);
+  if (!key.length) return false;
+  const now = Math.floor(Date.now() / 30000);
+  for (let d = -1; d <= 1; d++) {
+    const step = now + d;
+    if (safeEqual(totpAt(key, step), c)) {
+      if (usedTotpSteps[role] && usedTotpSteps[role] >= step) return false;
+      usedTotpSteps[role] = step;
+      return true;
+    }
+  }
+  return false;
 }
 
 function getRateLimits() {
@@ -95,9 +150,9 @@ function saveRateLimits(data) {
 
 function getClientIp(req) {
   return String(
-    req.headers['x-forwarded-for'] || 
-    req.headers['x-real-ip'] || 
-    req.connection?.remoteAddress || 
+    req.headers['x-forwarded-for'] ||
+    req.headers['x-real-ip'] ||
+    (req.connection && req.connection.remoteAddress) ||
     '127.0.0.1'
   ).split(',')[0].trim();
 }
@@ -105,6 +160,7 @@ function getClientIp(req) {
 function sendJson(res, statusCode, data) {
   res.statusCode = statusCode;
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.setHeader('Cache-Control', 'no-store');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Admin-Token');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -120,9 +176,9 @@ function readBody(req) {
   }
   return new Promise((resolve) => {
     let raw = '';
-    req.on('data', (c) => { 
-      raw += c; 
-      if (raw.length > 5e4) req.destroy(); 
+    req.on('data', (c) => {
+      raw += c;
+      if (raw.length > 5e4) req.destroy();
     });
     req.on('end', () => {
       try { resolve(JSON.parse(raw || '{}')); } catch (e) { resolve({}); }
@@ -130,49 +186,44 @@ function readBody(req) {
   });
 }
 
-function generateSignedToken(role, durationMs) {
-  const expiresAt = Date.now() + (durationMs || 7200000); // 2 ore
-  const payload = {
-    sub: 'admin',
-    role: role || 'admin',
-    iat: Date.now(),
-    exp: expiresAt
-  };
+function generateSignedToken(role) {
+  const expiresAt = Date.now() + TOKEN_TTL_MS;
+  const payload = { sub: 'staff', role: role, iat: Date.now(), exp: expiresAt };
   const payloadB64 = Buffer.from(JSON.stringify(payload)).toString('base64url');
   const signature = crypto.createHmac('sha256', getSigningKey()).update(payloadB64).digest('base64url');
-  return {
-    token: `${payloadB64}.${signature}`,
-    expiresAt: expiresAt
-  };
+  return { token: `${payloadB64}.${signature}`, expiresAt: expiresAt };
 }
 
 function verifySignedToken(tokenString) {
   if (!tokenString || typeof tokenString !== 'string') return null;
   const parts = tokenString.split('.');
   if (parts.length !== 2) return null;
-
   const [payloadB64, signature] = parts;
   const expectedSig = crypto.createHmac('sha256', getSigningKey()).update(payloadB64).digest('base64url');
-  
   try {
     const sigBuf = Buffer.from(String(signature));
     const expBuf = Buffer.from(String(expectedSig));
-    if (sigBuf.length !== expBuf.length || !crypto.timingSafeEqual(sigBuf, expBuf)) {
-      return null;
-    }
+    if (sigBuf.length !== expBuf.length || !crypto.timingSafeEqual(sigBuf, expBuf)) return null;
   } catch (_) {
     return null;
   }
-
   try {
     const payload = JSON.parse(Buffer.from(payloadB64, 'base64url').toString('utf8'));
-    if (Date.now() > payload.exp) {
-      return null; // Token scaduto
-    }
+    if (!payload || !payload.exp || Date.now() > payload.exp) return null;
+    if (payload.role !== 'admin' && payload.role !== 'privacy') return null;
     return payload;
   } catch (_) {
     return null;
   }
+}
+
+function registerFailure(rateData, ip, now) {
+  const rec = rateData[ip] || { attempts: 0, blockedUntil: 0 };
+  rec.attempts = (rec.attempts || 0) + 1;
+  if (rec.attempts >= MAX_ATTEMPTS) rec.blockedUntil = now + BLOCK_MS;
+  rateData[ip] = rec;
+  saveRateLimits(rateData);
+  return Math.max(0, MAX_ATTEMPTS - rec.attempts);
 }
 
 module.exports = async function handler(req, res) {
@@ -180,101 +231,102 @@ module.exports = async function handler(req, res) {
     return sendJson(res, 200, { ok: true });
   }
 
+  if (!env('TOKEN_SIGNING_KEY')) {
+    return sendJson(res, 503, { success: false, error: 'Accesso staff non configurato sul server.' });
+  }
+
   const now = Date.now();
   const ip = getClientIp(req);
   const rateData = getRateLimits();
-
-  // Pulizia record scaduti (> 15 minuti)
   Object.keys(rateData).forEach((k) => {
-    if (rateData[k].blockedUntil && rateData[k].blockedUntil < now) {
-      delete rateData[k];
-    }
+    if (rateData[k].blockedUntil && rateData[k].blockedUntil < now) delete rateData[k];
   });
 
-  // --- AZIONE: VERIFICA TOKEN ESISTENTE ---
   if (req.method === 'GET') {
-    const authHeader = req.headers['authorization'] || '';
+    const authHeader = String(req.headers['authorization'] || '');
     const token = authHeader.startsWith('Bearer ')
-      ? authHeader.slice(7)
-      : (req.headers['x-admin-token'] || '');
-
-    const validPayload = verifySignedToken(token);
-    if (validPayload) {
+      ? authHeader.slice(7).trim()
+      : String(req.headers['x-admin-token'] || '').trim();
+    const payload = verifySignedToken(token);
+    if (payload) {
       return sendJson(res, 200, {
         success: true,
         authenticated: true,
-        role: validPayload.role,
-        expiresAt: validPayload.exp
+        role: payload.role,
+        expiresAt: payload.exp,
+        totpEnabled: !!totpSecretForRole(payload.role)
       });
     }
-    return sendJson(res, 401, {
-      success: false,
-      authenticated: false,
-      error: 'Token di sessione non valido o scaduto'
-    });
+    return sendJson(res, 401, { success: false, authenticated: false, error: 'Sessione non valida o scaduta.' });
   }
 
-  // --- AZIONE: LOGIN / VERIFICA MASTER PIN ---
   if (req.method === 'POST') {
     const ipRecord = rateData[ip] || { attempts: 0, blockedUntil: 0 };
-
     if (ipRecord.blockedUntil && ipRecord.blockedUntil > now) {
       const waitSeconds = Math.ceil((ipRecord.blockedUntil - now) / 1000);
-      return sendJson(res, 429, {
-        success: false,
-        error: `Troppi tentativi falliti. Riprova tra ${waitSeconds} secondi.`
-      });
+      return sendJson(res, 429, { success: false, error: `Troppi tentativi falliti. Riprova tra ${waitSeconds} secondi.` });
     }
 
     const body = await readBody(req);
-    const providedPin = String(body.pin || body.password || '').trim();
-    let username = String(body.username || body.email || '').trim().toLowerCase();
-    if (!username && providedPin) {
-      username = 'admin';
+    const password = String(body.pin || body.password || '').trim();
+    const username = String(body.username || body.email || 'admin').trim().toLowerCase();
+    const totp = String(body.totp || body.otp || '').trim();
+
+    if (!password) {
+      return sendJson(res, 400, { success: false, error: 'Password non inserita.' });
     }
+
     const role = roleOfUsername(username);
+    const expected = role ? secretForRole(role) : '';
 
-    if (!username || !role) {
-      return sendJson(res, 400, { success: false, error: 'Username staff non riconosciuto.' });
+    if (role && !expected) {
+      return sendJson(res, 503, { success: false, error: 'Accesso staff non configurato sul server.' });
     }
 
-    if (!providedPin) {
-      return sendJson(res, 400, { success: false, error: 'Password di amministrazione non fornita' });
-    }
-
-    const isMatch = passwordOk(providedPin);
-
-    if (!isMatch) {
-      ipRecord.attempts = (ipRecord.attempts || 0) + 1;
-      if (ipRecord.attempts >= 5) {
-        ipRecord.blockedUntil = now + 900000; // Blocco per 15 minuti
-      }
-      rateData[ip] = ipRecord;
-      saveRateLimits(rateData);
-
-      const remaining = Math.max(0, 5 - ipRecord.attempts);
+    // Stesso messaggio per utente sconosciuto e password errata: non rivela chi è staff.
+    if (!role || !safeEqual(password, expected)) {
+      const remaining = registerFailure(rateData, ip, now);
       return sendJson(res, 403, {
         success: false,
-        error: remaining > 0 
-          ? `Credenziali di amministrazione non corrette. Tentativi rimasti: ${remaining}` 
-          : 'Accesso temporaneamente bloccato per 15 minuti a causa di troppi tentativi falliti.'
+        error: remaining > 0
+          ? `Credenziali non corrette. Tentativi rimasti: ${remaining}`
+          : 'Accesso bloccato per 15 minuti: troppi tentativi falliti.'
       });
     }
 
-    // Successo: reset tentativi falliti e rilascio token firmato
+    const totpSecret = totpSecretForRole(role);
+    if (totpSecret) {
+      if (!totp) {
+        return sendJson(res, 401, { success: false, needTotp: true, error: 'Inserisci il codice 2FA dell\'app Authenticator.' });
+      }
+      if (!totpOk(totpSecret, totp, role)) {
+        const remaining = registerFailure(rateData, ip, now);
+        return sendJson(res, 403, {
+          success: false,
+          needTotp: true,
+          error: remaining > 0
+            ? `Codice 2FA non valido. Tentativi rimasti: ${remaining}`
+            : 'Accesso bloccato per 15 minuti: troppi tentativi falliti.'
+        });
+      }
+    }
+
     delete rateData[ip];
     saveRateLimits(rateData);
 
-    const tokenData = generateSignedToken(role, 7200000); // 2 ore
+    const tokenData = generateSignedToken(role);
     return sendJson(res, 200, {
       success: true,
       authenticated: true,
       role: role,
       token: tokenData.token,
       expiresAt: tokenData.expiresAt,
-      message: role === 'privacy' ? 'Autenticazione Responsabile Privacy completata' : 'Autenticazione Creatore / Admin completata con successo'
+      totpEnabled: !!totpSecret,
+      message: role === 'privacy' ? 'Accesso Responsabile Privacy completato.' : 'Accesso Admin completato.'
     });
   }
 
   return sendJson(res, 405, { success: false, error: 'Metodo non consentito' });
 };
+
+module.exports._test = { totpAt, base32Decode, totpOk, verifySignedToken, roleOfUsername };

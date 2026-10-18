@@ -106,7 +106,7 @@
     } catch (_) { return false; }
   }
   function canManage() {
-    if (localStorage.getItem('elisee_admin_auth') === 'true') return true;
+    if (!!(window.EliseeAdmin && window.EliseeAdmin.isAdmin())) return true;
     var u = userObj();
     var blob = [u.siteRoleFamily, u.ruolo, u.role, u.staffRole, u.ruoloDettagliato].filter(Boolean).join(' ').toLowerCase();
     return /squadra|club|societ|direttore|scout|osservatore|staff/.test(blob);

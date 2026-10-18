@@ -22,7 +22,7 @@
     catch (e) { return null; }
   }
   function isAdmin() {
-    try { return localStorage.getItem('elisee_admin_auth') === 'true'; } catch (e) { return false; }
+    try { return !!(window.EliseeAdmin && window.EliseeAdmin.isAdmin()); } catch (e) { return false; }
   }
   function localLineups() {
     try { return JSON.parse(localStorage.getItem('elisee_lineup_proposals') || '[]') || []; } catch (e) { return []; }
@@ -70,17 +70,8 @@
     var tok = token();
     if (tok) h.Authorization = 'Bearer ' + tok;
     if (admin) {
-      // Preferisce il token HMAC firmato (richiesto da Vercel); fallback al
-      // header in chiaro per il server locale Python che lo accetta ancora.
-      var adminTok = '';
-      try {
-        adminTok = localStorage.getItem('elisee_admin_session_token') || '';
-      } catch (e) {}
-      if (adminTok) {
-        h['X-Admin-Token'] = adminTok;
-      } else {
-        h['X-Elisee-Admin'] = 'admin123';
-      }
+      var adminTok = window.EliseeAdmin ? window.EliseeAdmin.token() : '';
+      if (adminTok) h['X-Admin-Token'] = adminTok;
     }
     return h;
   }

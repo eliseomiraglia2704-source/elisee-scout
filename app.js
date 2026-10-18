@@ -38,39 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   window.verifyEliseeAdminSession = function (cb) {
-    var tok = '';
-    try {
-      tok = sessionStorage.getItem('elisee_admin_session_token') || localStorage.getItem('elisee_admin_session_token') || '';
-    } catch (_) {}
-    if (!tok) {
-      try {
-        localStorage.removeItem('elisee_admin_auth');
-        localStorage.removeItem('elisee_privacy_auth');
-      } catch (_) {}
+    if (!window.EliseeAdmin) {
       if (cb) cb(false);
       return;
     }
-    fetch('/api/auth-admin', { headers: { Authorization: 'Bearer ' + tok } })
-      .then(function (r) { return r.json(); })
-      .then(function (d) {
-        if (d && d.authenticated) {
-          if (d.role === 'privacy') {
-            localStorage.setItem('elisee_privacy_auth', 'true');
-            localStorage.removeItem('elisee_admin_auth');
-          } else {
-            localStorage.setItem('elisee_admin_auth', 'true');
-            localStorage.removeItem('elisee_privacy_auth');
-          }
-          if (cb) cb(true, d);
-        } else {
-          localStorage.removeItem('elisee_admin_auth');
-          localStorage.removeItem('elisee_privacy_auth');
-          localStorage.removeItem('elisee_admin_session_token');
-          try { sessionStorage.removeItem('elisee_admin_session_token'); } catch (_) {}
-          if (cb) cb(false);
-        }
-      })
-      .catch(function () { if (cb) cb(false); });
+    window.EliseeAdmin.verify(function (ok, d) {
+      if (cb) cb(!!ok, d);
+    });
   };
 
   const navLinks = document.querySelectorAll('.nav-link, .btn-nav-highlight, [data-view="account"], a[href="#account-portal"]');
@@ -665,97 +639,36 @@ document.addEventListener('DOMContentLoaded', () => {
     `);
   };
 
+  // Stato reale del 2FA: lo decide il server (variabile ADMIN_TOTP_SECRET / PRIVACY_TOTP_SECRET).
   window.open2FASetupModal = function() {
     const modalCandidateBody = document.getElementById('modal-candidate-body');
     const candidateModal = document.getElementById('candidate-modal');
     if (!modalCandidateBody || !candidateModal) return;
-
-    const secretKey = "ELISEE-AUTH-2FA-" + Math.random().toString(36).substring(2, 8).toUpperCase();
-
-    modalCandidateBody.innerHTML = `
-      <div style="text-align:left; padding:1.25rem 0.5rem;">
-        <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:0.75rem;">
-          <div style="width:44px; height:44px; border-radius:50%; background:rgba(56,189,248,0.15); border:1px solid rgba(56,189,248,0.4); display:flex; align-items:center; justify-content:center; color:#38bdf8;">
-            <i data-lucide="key" style="width:24px; height:24px;"></i>
-          </div>
-          <div>
-            <h4 style="color:#fff; font-size:1.2rem; font-weight:bold; margin:0;">CONFIGURAZIONE AUTENTICAZIONE 2FA</h4>
-            <p class="text-muted" style="font-size:0.8rem; margin:0.1rem 0 0 0;">Protezione avanzata a due fattori per l'account Admin</p>
-          </div>
+    const tr = function (key) {
+      return (window.EliseeI18n && typeof window.EliseeI18n.t === 'function') ? window.EliseeI18n.t(key) : key;
+    };
+    const render = function (statusKey) {
+      modalCandidateBody.innerHTML = `
+        <div class="es-2fa-status">
+          <h4 class="pf-title" data-i18n="admin.2fa.title">${tr('admin.2fa.title')}</h4>
+          <p class="pf-lead" data-i18n="${statusKey}">${tr(statusKey)}</p>
+          <p class="text-muted" data-i18n="admin.2fa.howto">${tr('admin.2fa.howto')}</p>
+          <button type="button" class="btn btn-sm btn-secondary" onclick="closeModal()">OK</button>
         </div>
-
-        <div style="background:#0f172a; border:1px solid rgba(56,189,248,0.25); border-radius:10px; padding:1.25rem; margin-bottom:1.25rem;">
-          <div style="font-size:0.8rem; color:#94a3b8; margin-bottom:0.5rem;">CHIAVE DI SICUREZZA SEGRETA 2FA:</div>
-          <div style="font-size:1.1rem; font-weight:bold; color:#38bdf8; font-family:monospace; background:rgba(0,0,0,0.4); padding:0.6rem 1rem; border-radius:6px; letter-spacing:0.1em; text-align:center; margin-bottom:1rem;">
-            ${secretKey}
-          </div>
-          <div style="font-size:0.8rem; color:#cbd5e1; line-height:1.5;">
-            Inserisci il codice di verifica a 6 cifre dalla tua app Authenticator (Google/Microsoft Authenticator) oppure digita <strong>123456</strong> per il test immediato:
-          </div>
-        </div>
-
-        <div style="margin-bottom:1.5rem;">
-          <label style="display:block; font-size:0.8rem; font-weight:bold; color:#fff; margin-bottom:0.4rem;">Codice OTP 6 Cifre:</label>
-          <input type="text" id="input-2fa-otp" class="form-control" value="123456" placeholder="Es. 123456" maxlength="6" style="background:#1e293b; border:1px solid #38bdf8; color:#fff; font-size:1.2rem; text-align:center; letter-spacing:0.25em; font-weight:bold;" />
-          <div style="font-size:0.75rem; color:#38bdf8; margin-top:0.35rem; font-style:italic;">✓ Codice di prova 123456 precompilato per l'attivazione immediata</div>
-        </div>
-
-        <div style="display:flex; gap:0.75rem; justify-content:flex-end;">
-          <button class="btn btn-sm btn-secondary" onclick="closeModal()" style="padding:0.6rem 1.25rem;">Annulla</button>
-          <button class="btn btn-sm btn-primary" onclick="confirm2FAEnable('${secretKey}')" style="padding:0.6rem 1.5rem; font-weight:bold; background:#0284c7;">Attiva 2FA Ora</button>
-        </div>
-      </div>
-    `;
-    candidateModal.classList.add('active');
-    if (window.lucide) lucide.createIcons();
-  };
-
-  window.confirm2FAEnable = function(secretKey) {
-    const otpInput = document.getElementById('input-2fa-otp');
-    const val = otpInput ? otpInput.value.trim() : '';
-    if (!val || val.length < 6) {
-      alert('Inserisci un codice OTP valido a 6 cifre per attivare la 2FA.');
+      `;
+      candidateModal.classList.add('active');
+    };
+    if (!window.EliseeAdmin) {
+      render('admin.2fa.unknown');
       return;
     }
-    const user = getActiveUser();
-    user.tfaEnabled = true;
-    user.tfaSecret = secretKey;
-    saveActiveUser(user);
-
-    let logs = JSON.parse(localStorage.getItem('elisee_admin_executed_logs') || '[]');
-    logs.unshift({ option: "Attiva Autenticazione 2FA", timestamp: new Date().toLocaleString('it-IT') + ' UTC', status: "2FA_ATTIVATO_OK" });
-    localStorage.setItem('elisee_admin_executed_logs', JSON.stringify(logs));
-
-    showOptionResultScreen("Attiva Autenticazione 2FA", "SICUREZZA & 2FA", `
-      <div style="background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.3); padding:1.25rem; border-radius:10px; margin-bottom:1.5rem; text-align:left; color:#22c55e;">
-        <div style="font-size:1rem; font-weight:bold; margin-bottom:0.35rem;">✓ AUTENTICAZIONE A DUE FATTORI (2FA) ATTIVATA CON SUCCESSO</div>
-        <div style="font-size:0.85rem; color:#e2e8f0; line-height:1.5;">
-          L'autenticazione 2FA è stata configurata ed abilitata in via definitiva sul profilo dell'amministratore.
-        </div>
-      </div>
-      <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.85rem; margin-bottom:1.5rem; background:rgba(15,23,42,0.6); border-radius:8px; overflow:hidden;">
-        <thead>
-          <tr style="background:rgba(34,197,94,0.15); color:#22c55e; border-bottom:1px solid rgba(34,197,94,0.2);">
-            <th style="padding:0.75rem 1rem;">Parametro 2FA</th>
-            <th style="padding:0.75rem 1rem;">Stato / Valore Confirmativo</th>
-          </tr>
-        </thead>
-        <tbody style="color:#e2e8f0;">
-          <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
-            <td style="padding:0.75rem 1rem; font-weight:bold;">Account Amministratore</td>
-            <td style="padding:0.75rem 1rem; color:#38bdf8; font-weight:bold;">Eliseo Miraglia (Amministratore Executive)</td>
-          </tr>
-          <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
-            <td style="padding:0.75rem 1rem; font-weight:bold;">Stato 2FA Autenticatore</td>
-            <td style="padding:0.75rem 1rem; color:#22c55e; font-weight:bold;">ATTIVATO E SALVATO ✓</td>
-          </tr>
-          <tr>
-            <td style="padding:0.75rem 1rem; font-weight:bold;">Chiave di Sicurezza Registrata</td>
-            <td style="padding:0.75rem 1rem; color:#cbd5e1; font-family:monospace;">${secretKey}</td>
-          </tr>
-        </tbody>
-      </table>
-    `);
+    window.EliseeAdmin.verify(function (ok, data) {
+      if (!ok || !data) {
+        render('admin.2fa.unknown');
+        return;
+      }
+      render(data.totpEnabled ? 'admin.2fa.on' : 'admin.2fa.off');
+    });
   };
 
   window.openIPAuditModal = function() {
@@ -3872,7 +3785,7 @@ document.addEventListener('DOMContentLoaded', () => {
     platformComplaints = platformComplaints.map(c => c.id === complaintId ? { ...c, stato: 'risolto' } : c);
     persistPrivacyQueues();
     alert('Reclamo contrassegnato come RISOLTO ed archiviato nel registro di audit.');
-    const isPrivacyAuth = localStorage.getItem('elisee_privacy_auth') === 'true';
+    const isPrivacyAuth = !!(window.EliseeAdmin && window.EliseeAdmin.isPrivacy());
     if (isPrivacyAuth) renderPrivacyPanel(); else renderAdminPanel();
   };
 
@@ -3934,7 +3847,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   function updateGovernanceStatusBadges() {
-    const isPrivacyAuth = localStorage.getItem('elisee_privacy_auth') === 'true';
+    const isPrivacyAuth = !!(window.EliseeAdmin && window.EliseeAdmin.isPrivacy());
     const garanteBadge = document.getElementById('garante-status-badge');
     if (garanteBadge) {
       if (isPrivacyAuth) {
@@ -6063,7 +5976,7 @@ document.addEventListener('DOMContentLoaded', () => {
         authDashboard.classList.add('es-cc');
         if (window.EliseeCC) {
           if (typeof window.EliseeCC.bind === 'function') window.EliseeCC.bind();
-          var isPrv = localStorage.getItem('elisee_privacy_auth') === 'true';
+          var isPrv = !!(window.EliseeAdmin && window.EliseeAdmin.isPrivacy());
           var currentTab = isPrv ? 'privacy' : (localStorage.getItem('elisee_active_dashboard_tab') || 'admin');
           if (typeof window.EliseeCC.showPane === 'function') window.EliseeCC.showPane(currentTab);
           if (typeof window.EliseeCC.refresh === 'function') window.EliseeCC.refresh();
@@ -6134,6 +6047,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const userVal = (document.getElementById('admin-user')?.value || '').trim().toLowerCase();
       const passVal = (document.getElementById('admin-pass')?.value || '').trim();
+      const totpVal = (document.getElementById('admin-totp')?.value || '').replace(/\s+/g, '');
       const remember = document.getElementById('admin-remember')?.checked;
       const errorContainer = document.getElementById('admin-login-error-container');
 
@@ -6159,8 +6073,14 @@ document.addEventListener('DOMContentLoaded', () => {
       fetch('/api/auth-admin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pin: passVal, username: userVal })
+        body: JSON.stringify({ pin: passVal, username: userVal, totp: totpVal })
       }).then(function (res) { return res.json(); }).then(function (data) {
+        if (data && data.needTotp) {
+          const totpGroup = document.getElementById('admin-totp-group');
+          if (totpGroup) totpGroup.hidden = false;
+          const totpInput = document.getElementById('admin-totp');
+          if (totpInput) totpInput.focus();
+        }
         if (!data || !data.success || !data.token) {
           if (errorContainer) {
             errorContainer.style.display = 'block';
@@ -6177,17 +6097,9 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           return;
         }
-        try {
-          sessionStorage.setItem('elisee_admin_session_token', data.token);
-          localStorage.setItem('elisee_admin_session_token', data.token);
-        } catch (_) {}
-        if ((data.role === 'privacy') || userVal.includes('privacy') || userVal.includes('garante') || userVal.includes('manueltucci')) {
-          localStorage.setItem('elisee_privacy_auth', 'true');
-          localStorage.removeItem('elisee_admin_auth');
-        } else {
-          localStorage.setItem('elisee_admin_auth', 'true');
-          localStorage.removeItem('elisee_privacy_auth');
-        }
+        if (!window.EliseeAdmin || !window.EliseeAdmin.setSession(data.token, data.role)) return;
+        const totpField = document.getElementById('admin-totp');
+        if (totpField) totpField.value = '';
         if (remember) {
           updateActivity();
         }
@@ -6203,7 +6115,7 @@ document.addEventListener('DOMContentLoaded', () => {
           aDash.classList.add('es-cc');
           if (window.EliseeCC) {
             if (typeof window.EliseeCC.bind === 'function') window.EliseeCC.bind();
-            var isPrv = localStorage.getItem('elisee_privacy_auth') === 'true';
+            var isPrv = !!(window.EliseeAdmin && window.EliseeAdmin.isPrivacy());
             var initTab = isPrv ? 'privacy' : (localStorage.getItem('elisee_active_dashboard_tab') || 'admin');
             if (typeof window.EliseeCC.showPane === 'function') window.EliseeCC.showPane(initTab);
             if (typeof window.EliseeCC.refresh === 'function') window.EliseeCC.refresh();
@@ -9975,8 +9887,8 @@ window.updateNavbarUserUI = function() {
   const loggedOutActions = document.getElementById('nav-logged-out-actions');
   const loggedInActions  = document.getElementById('nav-logged-in-actions');
 
-  const isAdminAuth = localStorage.getItem('elisee_admin_auth') === 'true';
-  const isPrivacyAuth = localStorage.getItem('elisee_privacy_auth') === 'true';
+  const isAdminAuth = !!(window.EliseeAdmin && window.EliseeAdmin.isAdmin());
+  const isPrivacyAuth = !!(window.EliseeAdmin && window.EliseeAdmin.isPrivacy());
   const isUserAuth = localStorage.getItem('elisee_user_auth') === 'true';
   const activeUserRaw = localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data');
 
@@ -10098,7 +10010,8 @@ window.updateNavbarUserUI = function() {
 
     const adminSection = document.getElementById('user-dropdown-admin-section');
     if (adminSection) {
-      const isUserAdmin = isAdminAuth || isPrivacyAuth || !!userData.isCreator || userData.role === 'admin' || userData.siteRole === 'admin' || (window.EliseeStaff && window.EliseeStaff.isStaffEmail(userData.email));
+      // Mostra solo la scorciatoia all'area riservata: l'accesso vero richiede il login staff.
+      const isUserAdmin = isAdminAuth || isPrivacyAuth || (window.EliseeStaff && window.EliseeStaff.isStaffEmail(userData.email));
       if (isUserAdmin) adminSection.removeAttribute('hidden');
       else adminSection.setAttribute('hidden', '');
     }
@@ -10234,6 +10147,7 @@ window.logoutUser = function() {
     'elisee_privacy_auth'
   ];
   keys.forEach(function(k) { try { localStorage.removeItem(k); } catch(_) {} });
+  if (window.EliseeAdmin) window.EliseeAdmin.clear();
   if (typeof closeUserDropdown === 'function') closeUserDropdown();
   if (typeof updateNavbarUserUI === 'function') updateNavbarUserUI();
 };
@@ -11800,7 +11714,7 @@ window.getStoredProfilePhoto = function (profilo, user) {
   if (!photo) {
     var email = String((user && user.email) || (profilo && profilo.email) || localStorage.getItem('elisee_user_email') || '').toLowerCase();
     var name = String((user && (user.nome || user.name)) || (profilo && (profilo.nome || profilo.name)) || localStorage.getItem('elisee_user_name') || '').toLowerCase();
-    var isAdmin = localStorage.getItem('elisee_admin_auth') === 'true' || (user && user.isCreator);
+    var isAdmin = !!(window.EliseeAdmin && window.EliseeAdmin.isAdmin());
     if (isAdmin || email.includes('eliseomiraglia') || name.includes('eliseo') || name.includes('miraglia')) {
       photo = 'immagini/02-chi-siamo-ritratto/about-portrait.jpg?v=20260925_150256';
     }

@@ -271,6 +271,16 @@
     }
   ];
 
+  function tr(key, fallback) {
+    try {
+      if (window.EliseeI18n && typeof window.EliseeI18n.t === 'function') {
+        var v = window.EliseeI18n.t(key);
+        if (v && v !== key) return v;
+      }
+    } catch (_) {}
+    return fallback;
+  }
+
   function getStoredUser() {
     try {
       return JSON.parse(localStorage.getItem('elisee_active_user') || localStorage.getItem('elisee_user_data') || '{}') || {};
@@ -279,37 +289,8 @@
     }
   }
 
-  // Validazione del token crittografico firmato salvato in sessionStorage
-  function getAdminSessionToken() {
-    return sessionStorage.getItem('elisee_admin_session_token') || localStorage.getItem('elisee_admin_session_token') || '';
-  }
-
-  function isTokenValid(token) {
-    if (!token || typeof token !== 'string') return false;
-    var parts = token.split('.');
-    if (parts.length !== 2) return false;
-    try {
-      var b64 = parts[0].replace(/-/g, '+').replace(/_/g, '/');
-      while (b64.length % 4 !== 0) b64 += '=';
-      var jsonStr = atob(b64);
-      var payload = JSON.parse(jsonStr);
-      if (!payload || !payload.exp || Date.now() > payload.exp) {
-        return false;
-      }
-      return payload.role === 'admin' || payload.sub === 'admin';
-    } catch (_) {
-      try {
-        var payload2 = JSON.parse(decodeURIComponent(escape(atob(b64))));
-        return !!(payload2 && payload2.exp && Date.now() <= payload2.exp && (payload2.role === 'admin' || payload2.sub === 'admin'));
-      } catch (e2) {
-        return false;
-      }
-    }
-  }
-
   function isCreatorAdmin() {
-    var token = getAdminSessionToken();
-    return isTokenValid(token);
+    return !!(window.EliseeAdmin && window.EliseeAdmin.isAdmin());
   }
 
   function openAdminAuthModal(onSuccess) {
@@ -340,6 +321,10 @@
                 '</button>' +
               '</div>' +
             '</div>' +
+            '<div class="es-creator-totp" id="admin-auth-totp-wrap" hidden>' +
+              '<label class="es-creator-totp-label" for="inp-admin-auth-totp">' + tr('admin.totp.label', 'Codice 2FA') + '</label>' +
+              '<input type="text" class="es-creator-totp-input" id="inp-admin-auth-totp" inputmode="numeric" autocomplete="one-time-code" maxlength="7" placeholder="' + tr('admin.totp.placeholder', '6 cifre dall\'app Authenticator') + '">' +
+            '</div>' +
             '<div id="admin-auth-error-msg" style="display:none; color:#ef4444; font-size:0.8rem; font-weight:600; margin-bottom:0.85rem; line-height:1.4;"></div>' +
             '<div style="display:flex; justify-content:flex-end; gap:0.75rem;">' +
               '<button type="button" class="es-pres-btn-secondary" id="btn-cancel-admin-auth" style="padding:0.45rem 0.85rem; font-size:0.8rem;">Annulla</button>' +
@@ -352,6 +337,8 @@
     document.body.appendChild(modal);
 
     var inp = modal.querySelector('#inp-admin-auth-pin');
+    var totpWrap = modal.querySelector('#admin-auth-totp-wrap');
+    var totpInp = modal.querySelector('#inp-admin-auth-totp');
     var form = modal.querySelector('#form-admin-auth-pin');
     var errMsg = modal.querySelector('#admin-auth-error-msg');
     var btnSubmit = modal.querySelector('#btn-submit-admin-auth');
@@ -394,7 +381,7 @@
         fetch('/api/auth-admin', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ pin: pinVal, username: 'admin' })
+          body: JSON.stringify({ pin: pinVal, username: 'admin', totp: totpInp ? totpInp.value.replace(/\s+/g, '') : '' })
         })
         .then(function (res) { return res.json(); })
         .then(function (data) {
@@ -402,9 +389,10 @@
             btnSubmit.disabled = false;
             btnSubmit.textContent = 'Sblocca Strumenti';
           }
-          if (data.success && data.token) {
-            sessionStorage.setItem('elisee_admin_session_token', data.token);
-            localStorage.setItem('elisee_admin_session_token', data.token);
+          if (data.needTotp && totpWrap) {
+            totpWrap.hidden = false;
+          }
+          if (data.success && data.token && window.EliseeAdmin && window.EliseeAdmin.setSession(data.token, data.role)) {
             closeAuth();
             if (window.showToast) window.showToast('Autenticazione Admin riuscita', 'success');
             if (typeof onSuccess === 'function') onSuccess();
@@ -413,9 +401,8 @@
               errMsg.textContent = data.error || 'Credenziali di amministrazione non valide';
               errMsg.style.display = 'block';
             }
-            if (inp) {
-              inp.focus();
-            }
+            if (data.needTotp && totpInp) totpInp.focus();
+            else if (inp) inp.focus();
           }
         })
         .catch(function () {

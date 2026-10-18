@@ -40,19 +40,10 @@
       if (r === 'admin') return 'Admin Executive';
       return '';
     },
+    // L'email serve solo per etichette e scorciatoie: i permessi staff
+    // arrivano esclusivamente dal token del server (window.EliseeAdmin).
     applyFlagsFromEmail: function (email) {
-      var role = api.roleForEmail(email);
-      try {
-        if (typeof localStorage === 'undefined') return role;
-        if (role === 'privacy') {
-          localStorage.setItem('elisee_privacy_auth', 'true');
-          localStorage.removeItem('elisee_admin_auth');
-        } else if (role === 'admin') {
-          localStorage.setItem('elisee_admin_auth', 'true');
-          localStorage.removeItem('elisee_privacy_auth');
-        }
-      } catch (_) {}
-      return role;
+      return api.roleForEmail(email);
     }
   };
   root.EliseeStaff = api;

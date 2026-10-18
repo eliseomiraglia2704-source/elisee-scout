@@ -1,7 +1,7 @@
 /* ELISEE SCOUT — Cache Wipe & Self-Unregister Service Worker
    Assicura che nessun asset obsoleto rimanga memorizzato nella cache del browser.
 */
-const CACHE = 'elisee-scout-v20261004-fix42';
+const CACHE = 'elisee-scout-v20261018-sec1';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -20,10 +20,10 @@ self.addEventListener('activate', (event) => {
           try {
             client.postMessage({
               type: 'FORCE_RELOAD',
-              version: '20261004_FIX42',
-              updatedAt: '2026-10-04T20:00:00Z',
-              ts: '20261004_200000',
-              bust: 'v20261004_FIX42'
+              version: '20261018_SEC1',
+              updatedAt: '2026-10-18T10:00:00Z',
+              ts: '20261018_100000',
+              bust: 'v20261018_SEC1'
             });
           } catch (e) {}
           try {

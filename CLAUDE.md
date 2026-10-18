@@ -35,9 +35,10 @@
 
 - **Regole Vincolanti**: Zero fake account, verifica documenti d'identità in 30 giorni (`verifica-account.js`), tutela minori con consenso genitoriale (art. 13 e 30 GDPR).
 - **Modifiche Sensibili**: Qualsiasi modifica a data di nascita, età (`isMinor()`), consensi, profili o campi anagrafici è classificata come **sensibile** e richiede un piano approvato prima di toccare il codice. Il formato ISO `YYYY-MM-DD` va sempre preservato nei cambi di valore.
+- **Accesso staff (dal 2026-10-18)**: solo token firmato da `/api/auth-admin`, 2FA TOTP opzionale lato server. Nel client usare `window.EliseeAdmin.isAdmin()` / `isPrivacy()` / `isStaff()` (`elisee-admin-guard.js`). Mai leggere `localStorage['elisee_admin_auth']` per dare permessi. Nessun segreto nel repository (è pubblico): solo variabili d'ambiente.
 - **Problemi Noti (Intoccabili senza piano approvato)**:
-  - OTP lato client con codici di fallback.
-  - Controlli admin basati su `localStorage` / header `X-Elisee-Admin: admin123`.
+  - Login WhatsApp/telefono: è una demo (codice generato nel browser), non dà accesso.
+  - Permessi dei ruoli non-staff (DS, Club, Scout) letti dal profilo in `localStorage`: vanno spostati lato server.
 
 ---
 

@@ -1737,6 +1737,10 @@ select.pf-input {
   margin-bottom: 0.95rem;
 }
 
+.pf-form .form-group[hidden] {
+  display: none;
+}
+
 .pf-form label {
   display: block;
   font-size: 0.72rem;

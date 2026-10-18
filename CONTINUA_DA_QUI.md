@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-04** — FIX42 — Pannello admin manager: 401 risolto (header corretto):
+Ultimo aggiornamento: **2026-10-18** — SEC1 — Messa in sicurezza accesso staff:
+
+1. **Cosa era rotto**: password admin in chiaro in `AGENTS.md` (repository pubblico) e come default in `elisee_up.py`; hash password nel codice di `api/auth-admin.js` e `api/auth/me.js`; area admin apribile dal browser con `localStorage elisee_admin_auth=true` o con un'email staff falsa; 2FA finto (accettava qualsiasi codice); `admin123` ancora accettato in locale; comandi AutoPilot aperti a tutti; `CREDENZIALI_TEMPORANEE.txt` pubblicato su Vercel.
+2. **Ora**: segreti solo in variabili d'ambiente (`TOKEN_SIGNING_KEY`, `ADMIN_SECRET`, `PRIVACY_SECRET`, `STAFF_USERS`, `ADMIN_TOTP_SECRET`, `PRIVACY_TOTP_SECRET`, `STAFF_DEFAULT_HASHES`). Nuovo `elisee-admin-guard.js` (`window.EliseeAdmin`): permessi staff solo da token verificato dal server. 2FA TOTP vero (`node scripts/totp-setup.js`). AutoPilot: start/stop/config/clear/fleet solo admin. `.vercelignore` esclude segreti, note e script.
+3. **File**: `elisee-admin-guard.js` (nuovo), `scripts/totp-setup.js` (nuovo), `scripts/staff-hash.js` (nuovo), `api/auth-admin.js`, `api/auth/me.js`, `api/autopilot.js`, `lib/search-gateway.js`, `elisee_up.py`, `app.js`, `index.html`, `elisee-staff.js`, `creator-role-switcher.js/.css`, `manager-runtime.js`, `autopilot-runtime.js`, `agents-runtime.js`, `app-boot-extras.js`, `bacheca-annunci.js`, `card-atelier.js`, `control-center.js`, `giorn-dash.js`, `mercato-hub.js`, `minigioco-carriera.js`, `schede-tecniche.js`, `verifica-account.js`, `i18n.js`, `style.css`, `AGENTS.md`, `CLAUDE.md`, `.vercelignore`, `sw.js`, `version.json`. Cache `v20261018_SEC1`. Non tocca data di nascita, età o consenso genitoriale.
+
+Feature precedente: **2026-10-04** — FIX42 — Pannello admin manager: 401 risolto (header corretto):
 
 1. **Cosa era rotto**: il client mandava `X-Elisee-Admin: admin123` in chiaro. Il server Vercel (`lib/admin-token-verify.js`) accetta solo `X-Admin-Token` (token HMAC-SHA256 firmato) o `Authorization: Bearer`. L'header in chiaro veniva ignorato → `isAdmin()` ritornava false → **401 admin_richiesto**.
 2. **Ora**: `manager-runtime.js` legge il token firmato da `localStorage['elisee_admin_session_token']` (salvato al login da `app.js`) e lo manda come `X-Admin-Token`. Se non c'è (server locale Python che accetta ancora il vecchio header), ricade su `X-Elisee-Admin: admin123`.
@@ -384,7 +390,7 @@ Feature precedente: **2026-09-29** — HEROUX76 — Scheda Giocatore Pubblica Co
 Feature precedente: **2026-09-29** — HEROUX75 — Configurazione & Sblocco Segreti Vercel Production:
 
 1. **Configurazione Automatica Variabili d'Ambiente su Vercel (`vercel env add`)**:
-   - `ADMIN_SECRET`: configurata per il login master amministrativo (`Iemmello.9`).
+   - `ADMIN_SECRET`: configurata per il login master amministrativo (valore solo su Vercel, mai nel repository).
    - `TOKEN_SIGNING_KEY`: generata chiave crittografica sicura 256-bit ed iniettata su Vercel Production per la firma HMAC-SHA256 dei token admin (`lib/admin-token-verify.js` e `api/auth-admin.js`).
    - `OTP_SECRET`: generata chiave 256-bit per la firma e verifica crittografica dei codici OTP email (`api/auth-otp.js`).
    - `ELISEE_AUTH_SECRET`: generata chiave 256-bit per la firma dei token utente e sessione OAuth/Password (`lib/auth-oauth.js`).
@@ -1791,7 +1797,7 @@ Feature precedente: **Ripristino Footer Homepage, Link Control Center Macroaree 
 Feature precedente: **Sblocco Master Secret Admin, fix parser body Vercel & simulatore (`ADMINPIN2`):
 
 1. **Risoluzione Root Cause `req.body`**: Nelle Serverless Functions di Vercel (`@vercel/node`), `req.body` è già parsato e lo stream `req.on('data')` è già concluso. `readBody` in `api/auth-admin.js` e `api/auth-otp.js` attendeva lo stream vuoto tornando `{}`, causando l'errore "Username staff non riconosciuto" e blocco del login. Aggiunto controllo prioritario su `req.body`.
-2. **Backend `api/auth-admin.js`**: Default automatico di `username` a `'admin'` se omesso con PIN presente; tolleranza totale su maiuscole/minuscole e varianti (`Iemmello.9`, `Iemmello9`, `iemmello.9`, `iemmello9`) con hash PBKDF2 dedicati.
+2. **Backend `api/auth-admin.js`**: Default automatico di `username` a `'admin'` se omesso con PIN presente; tolleranza totale su maiuscole/minuscole e varianti (varianti rimosse il 2026-10-18) con hash PBKDF2 dedicati.
 3. **Frontend `creator-role-switcher.js`**: Inoltro esplicito di `{ pin: pinVal, username: 'admin' }`.
 4. **File**: `api/auth-admin.js`, `api/auth-otp.js`, `creator-role-switcher.js`, `index.html`, `sw.js`, `version.json`. Cache `v20260918_ADMINPIN2`.
 
@@ -1929,7 +1935,7 @@ Feature precedente: **Allineamento criteri password login / reimposta (`PWPOLICY
    - `POST /api/auth/set-password` valida la policy e persiste l'hash (file locale `data/auth/password-overrides.json`, `/tmp` su Vercel, Redis se presente).
    - Account `eliseomiraglia2704@gmail.com` incluso nel login staff.
 3. **File**: `lib/password-policy.js`, `api/auth/me.js`, `app.js`, `index.html`, `sw.js`, `version.json`, `CONTINUA_DA_QUI.md`. Cache `v20260917_PWPOLICY1`.
-4. **Nota accesso**: la password cambiata senza maiuscola non era stata salvata. Per entrare ora usare la password originale `Iemmello.9`, poi reimpostarla rispettando i 4 criteri.
+4. **Nota accesso**: la password cambiata senza maiuscola non era stata salvata. Per entrare ora usare la password originale (rimossa dal repository), poi reimpostarla rispettando i 4 criteri.
 
 Feature precedente: **Menu account navbar editoriale (`ACCTMENU1`):
 
@@ -2855,9 +2861,9 @@ Feature precedente: **Allineamento Grafico & Strutturale Area Riservata Player (
 
 Feature precedente: **Credenziali Password Account & Responsabile Privacy**:
 
-1. Memorizzata e impostata come standard per gli account e per l'account del Responsabile Privacy (`manueltucci2002@gmail.com`) e master secret admin la password: `Iemmello.9` (esattamente con il punto).
+1. Memorizzata e impostata come standard per gli account e per l'account del Responsabile Privacy (`manueltucci2002@gmail.com`) e master secret admin una password unica (rimossa dal repository il 2026-10-18: ora vive solo nelle variabili d'ambiente).
 2. Aggiornato hash PBKDF2 in `api/auth/me.js` (`21612aefb415ec0957dfd54095eed7fadbeaec288eeca7bf8380989c12919145`).
-3. Aggiornato secret predefinito e comparazioni in `api/auth-admin.js` e `elisee_up.py` per accettare `Iemmello.9` e relative forme normalizzate.
+3. Aggiornato secret predefinito e comparazioni in `api/auth-admin.js` e `elisee_up.py` per accettare la password e relative forme normalizzate (superato il 2026-10-18).
 4. Regola fissa registrata in `AGENTS.md`.
 
 Feature precedente: **Minigiochi / crop trofeo (HUBPOLISH2)**:
@@ -2916,7 +2922,7 @@ Catalogo squadre: `data/squadre/catalog.json` (~2901 team). Kit in `team.kits[]`
 Club slim per mappa/scopri: `data/squadre/scopri-clubs.json`.
 
 Auth: localStorage + `/api/auth/*`, PBKDF2. Ruoli in registrazione: **ENTE, SQUADRA, GIOCATORE, STAFF, TIFOSO, GIORNALISTA**.
-Admin sito: header `X-Elisee-Admin: admin123` (stesso valore usato dal client admin).
+Admin sito: token firmato da `/api/auth-admin` (header `Authorization: Bearer` o `X-Admin-Token`). Nessun header in chiaro.
 
 ---
 

@@ -13,3 +13,24 @@ data/autopilot/
 _tmp_nation_kits/
 *.pdf
 workers/
+
+# Segreti e credenziali — mai online
+.env
+.env.*
+CREDENZIALI_TEMPORANEE.txt
+
+# Note interne, script locali e file di lavoro (solo root)
+/*.md
+/*.txt
+/*.py
+/*.bat
+/*.ps1
+/*.lnk
+/_*.js
+/_*.json
+.claude/
+.grok/
+.vscode/
+_ecc_logo_debug/
+_ew_ref_frames/
+_tc_probe/

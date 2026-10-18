@@ -54,8 +54,8 @@
     try {
       if (localStorage.getItem('elisee_auth_token')) return true;
       return localStorage.getItem('elisee_user_auth') === 'true' ||
-        localStorage.getItem('elisee_creator_mode') === 'true' ||
-        localStorage.getItem('elisee_admin_auth') === 'true';
+        (!!(window.EliseeAdmin && window.EliseeAdmin.isAdmin()) && localStorage.getItem('elisee_creator_mode') === 'true') ||
+        !!(window.EliseeAdmin && window.EliseeAdmin.isAdmin());
     } catch (_) { return false; }
   }
   function authToken() {

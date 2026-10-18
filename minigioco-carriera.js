@@ -470,8 +470,8 @@
     };
     try {
       info.userAuth = localStorage.getItem('elisee_user_auth') === 'true';
-      info.adminAuth = localStorage.getItem('elisee_admin_auth') === 'true';
-      info.privacyAuth = localStorage.getItem('elisee_privacy_auth') === 'true';
+      info.adminAuth = !!(window.EliseeAdmin && window.EliseeAdmin.isAdmin());
+      info.privacyAuth = !!(window.EliseeAdmin && window.EliseeAdmin.isPrivacy());
       var raw =
         localStorage.getItem('elisee_active_user') ||
         localStorage.getItem('elisee_user_data') ||

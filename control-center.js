@@ -179,8 +179,8 @@
 
     var adminOn = false, privacyOn = false;
     try {
-      adminOn = localStorage.getItem('elisee_admin_auth') === 'true';
-      privacyOn = localStorage.getItem('elisee_privacy_auth') === 'true';
+      adminOn = !!(window.EliseeAdmin && window.EliseeAdmin.isAdmin());
+      privacyOn = !!(window.EliseeAdmin && window.EliseeAdmin.isPrivacy());
     } catch (_) {}
     setText('es-cc-stat-admin', adminOn ? 'Online' : 'Offline');
     var ab = $('es-cc-stat-admin-badge');
