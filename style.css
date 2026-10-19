@@ -11956,3 +11956,41 @@ html[data-theme="mimetico-chiaro"] .glow-card--red::before {
 .es-reset [hidden] {
   display: none;
 }
+
+/* Curriculum con i dati reali del profilo (curriculum-view.js) */
+.cv-guest {
+  max-width: 640px;
+  margin: 2rem 0;
+  padding: 1.75rem;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+}
+.cv-guest-title {
+  margin: 0 0 0.6rem;
+  font-size: 1.35rem;
+}
+.cv-guest-text,
+.cv-text,
+.cv-note {
+  margin: 0 0 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary, #94a3b8);
+}
+.cv-text.is-empty {
+  font-style: italic;
+  opacity: 0.75;
+}
+.cv-note {
+  margin: 0;
+  font-size: 0.85rem;
+}
+.cv-real-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.cv-guest[hidden],
+.cv-owner[hidden],
+.cv-hero-role-pill[hidden],
+.cv-hero-sub[hidden] {
+  display: none;
+}

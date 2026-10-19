@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — CV1 — Curriculum: tolte le «Verifiche del Profilo Atleta»:
+Ultimo aggiornamento: **2026-10-19** — CV2 — Curriculum con i dati veri dell'utente:
+
+1. **Cosa era rotto**: la pagina Curriculum (`#dashboard-skills`) era un profilo fisso «Eliseo Miraglia, US Foggia 1920, Serie D» con presenze, gol, GPS, percentuali di competenze, lingue, carriera e video «certificati» inventati. Anche il PDF «Scarica CV» scriveva «Conforme FIGC / FIFA», «Verificato FIGC / LND» e una velocità GPS finta.
+2. **Ora**: `curriculum-view.js` (nuovo) compila la pagina con i dati del profilo (`elisee_active_user` + `playerProfile`: nome, ruolo, squadra, anno di nascita, piede, altezza/peso, nazionalità, presentazione, zona, stagioni). I campi vuoti dicono «Non ancora inserito». Visitatore: invito a creare il profilo o accedere. «Modifica profilo»/«Completa il profilo» aprono l'area profilo. Il PDF (`tide-button.js`) contiene solo questi dati, senza certificazioni; senza accesso chiede di entrare. Testi IT/EN `cv.*`, stile `.cv-guest`, `.cv-text`, `.cv-note` in `style.css`.
+3. **File**: `index.html`, `curriculum-view.js` (nuovo), `tide-button.js`, `i18n.js`, `style.css`, `sw.js`, `version.json`. Cache `v20261019_CV2`.
+
+Feature precedente: **2026-10-19** — CV1 — Curriculum: tolte le «Verifiche del Profilo Atleta»:
 
 1. **Perché**: 6 pulsanti (Identità, Video Cert., GPS Valido, Med. Sport, Tutela, FIGC Reg.) mostravano conferme che il sito non fa (GPS «K-Sport / Catapult», «Status federale FIGC registrato», certificato medico).
 2. **Aperto**: la pagina Curriculum (`#dashboard-skills`) è tutta un profilo fisso «Eliseo Miraglia» con numeri inventati (presenze, gol, GPS, carriera, video «certificati»). Da decidere: etichetta «Esempio» o profilo reale dell'utente.

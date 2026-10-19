@@ -80,7 +80,7 @@
   <link rel="preconnect" href="https://uautnlmnpxgbajtucuko.supabase.co" crossorigin>
   <link rel="dns-prefetch" href="https://nominatim.openstreetmap.org">
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=Oswald:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261019_PW1">
+  <link rel="stylesheet" href="style.css?v=20261019_CV2">
   <link rel="stylesheet" href="player-card.css?v=20260914_PLAYERDOSSIER1">
   <link rel="stylesheet" href="about-detail.css?v=20260910_SCROLL1">
   <link rel="stylesheet" href="chi-siamo.css?v=20260928_HEROUX65">
@@ -3062,255 +3062,73 @@
               </div>
               <div class="pf-header-actions">
                 <button type="button" class="btn btn-outline-pill" data-i18n="nav.portfolio" onclick="if(window.switchView){ window.switchView('bacheca'); }">Bacheca</button>
-                <button type="button" class="btn btn-outline-pill pf-btn-solid" data-i18n="cv.edit" onclick="if(window.openDossierModal){ window.openDossierModal(); } else if(window.switchView){ window.switchView('account'); }">Modifica profilo</button>
+                <button type="button" class="btn btn-outline-pill pf-btn-solid" data-i18n="cv.edit" data-cv-action="edit">Modifica profilo</button>
               </div>
             </header>
 
-            <!-- ========== HEADER IDENTITA' REALE DEL CALCIATORE / UTENTE ========== -->
-            <div class="cv-hero-card" id="cv-user-card">
-              <div class="cv-hero-avatar-wrap">
-                <div class="cv-hero-avatar" id="cv-avatar">EM</div>
-                <div class="cv-hero-badge-verified" title="Identità Verificata Anti-Fake">✓</div>
-              </div>
-              <div class="cv-hero-details">
-                <div class="cv-hero-name-row">
-                  <h2 class="cv-hero-name" id="cv-name">Eliseo Miraglia</h2>
-                  <span class="cv-hero-role-pill" id="cv-role-badge">Attaccante / Ala Sinistra</span>
-                </div>
-                <div class="cv-hero-sub">
-                  <span id="cv-club">🏟️ US Foggia 1920</span>
-                  <span>·</span>
-                  <span id="cv-category" style="color:#38bdf8; font-weight:700;">🏆 Serie D (Girone H)</span>
-                </div>
-                <div class="cv-hero-chips">
-                  <span class="cv-hero-chip" id="cv-chip-birth">🎂 Nato nel 2004 (22 anni)</span>
-                  <span class="cv-hero-chip" id="cv-chip-foot">👟 Piede Destro</span>
-                  <span class="cv-hero-chip" id="cv-chip-physical">📏 183 cm · 75 kg</span>
-                  <span class="cv-hero-chip" id="cv-chip-nat">🇮🇹 Italia</span>
-                  <span class="cv-hero-chip" id="cv-chip-status" style="border-color:rgba(34,197,94,0.4); color:#4ade80;">🟢 Tesserato / Disponibile</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- ========== STATISTICHE DI CAMPO & PERFORMANCE STAGIONALE ========== -->
-            <div class="cv-stats-grid">
-              <div class="cv-stat-card">
-                <div class="cv-stat-value" id="cv-stat-presenze">28</div>
-                <div class="cv-stat-label">Presenze Stagione</div>
-              </div>
-              <div class="cv-stat-card">
-                <div class="cv-stat-value" id="cv-stat-minuti">2.340'</div>
-                <div class="cv-stat-label">Minuti Giocati</div>
-              </div>
-              <div class="cv-stat-card">
-                <div class="cv-stat-value" id="cv-stat-gol">14 Gol · 9 Ast</div>
-                <div class="cv-stat-label">Gol &amp; Assist</div>
-              </div>
-              <div class="cv-stat-card">
-                <div class="cv-stat-value" id="cv-stat-vmax">33.8 km/h</div>
-                <div class="cv-stat-label">Vmax GPS Registrata</div>
-              </div>
-              <div class="cv-stat-card">
-                <div class="cv-stat-value" id="cv-stat-pass">86%</div>
-                <div class="cv-stat-label">Precisione Passaggi</div>
-              </div>
-              <div class="cv-stat-card">
-                <div class="cv-stat-value" id="cv-stat-duelli">72%</div>
-                <div class="cv-stat-label">Duelli Vinti</div>
-              </div>
-            </div>
-
-            <div class="resume-grid">
-
-              <!-- ========== COLONNA SINISTRA: SKILL ATLETICHE & LINGUE ========== -->
-              <div class="resume-col resume-col-left">
-
-                <h3 class="resume-section-title">Competenze Tecniche &amp; Fisiche</h3>
-                <ul class="resume-skill-list" id="cv-skill-list">
-                  <li class="resume-skill-row">
-                    <span class="resume-skill-icon" title="Dribbling">DR</span>
-                    <div class="resume-skill-body">
-                      <div class="resume-skill-top"><span>Dribbling &amp; 1vs1 Offensivo</span><span>94%</span></div>
-                      <div class="resume-bar"><span class="resume-bar-fill" style="width:94%"></span></div>
-                    </div>
-                  </li>
-                  <li class="resume-skill-row">
-                    <span class="resume-skill-icon" title="Finalizzazione">TI</span>
-                    <div class="resume-skill-body">
-                      <div class="resume-skill-top"><span>Tiro &amp; Finalizzazione</span><span>91%</span></div>
-                      <div class="resume-bar"><span class="resume-bar-fill" style="width:91%"></span></div>
-                    </div>
-                  </li>
-                  <li class="resume-skill-row">
-                    <span class="resume-skill-icon" title="Visione">VG</span>
-                    <div class="resume-skill-body">
-                      <div class="resume-skill-top"><span>Visione di Gioco &amp; Assist</span><span>88%</span></div>
-                      <div class="resume-bar"><span class="resume-bar-fill" style="width:88%"></span></div>
-                    </div>
-                  </li>
-                  <li class="resume-skill-row">
-                    <span class="resume-skill-icon" title="Sprint GPS">SP</span>
-                    <div class="resume-skill-body">
-                      <div class="resume-skill-top"><span>Accelerazione &amp; Sprint GPS</span><span>95%</span></div>
-                      <div class="resume-bar"><span class="resume-bar-fill" style="width:95%"></span></div>
-                    </div>
-                  </li>
-                  <li class="resume-skill-row">
-                    <span class="resume-skill-icon" title="Resistenza">RE</span>
-                    <div class="resume-skill-body">
-                      <div class="resume-skill-top"><span>Resistenza &amp; Minutaggio</span><span>90%</span></div>
-                      <div class="resume-bar"><span class="resume-bar-fill" style="width:90%"></span></div>
-                    </div>
-                  </li>
-                  <li class="resume-skill-row">
-                    <span class="resume-skill-icon" title="Tattica">TA</span>
-                    <div class="resume-skill-body">
-                      <div class="resume-skill-top"><span>Senso Tattico &amp; Pressione</span><span>86%</span></div>
-                      <div class="resume-bar"><span class="resume-bar-fill" style="width:86%"></span></div>
-                    </div>
-                  </li>
-                </ul>
-
-                <h3 class="resume-section-title">Lingue Parlate</h3>
-                <ul class="resume-skill-list">
-                  <li class="resume-skill-row resume-skill-plain">
-                    <div class="resume-skill-body">
-                      <div class="resume-skill-top"><span>Italiano (Madrelingua)</span><span>100%</span></div>
-                      <div class="resume-bar"><span class="resume-bar-fill" style="width:100%"></span></div>
-                    </div>
-                  </li>
-                  <li class="resume-skill-row resume-skill-plain">
-                    <div class="resume-skill-body">
-                      <div class="resume-skill-top"><span>English (Scouting &amp; B2B)</span><span>85%</span></div>
-                      <div class="resume-bar"><span class="resume-bar-fill" style="width:85%"></span></div>
-                    </div>
-                  </li>
-                  <li class="resume-skill-row resume-skill-plain">
-                    <div class="resume-skill-body">
-                      <div class="resume-skill-top"><span>Spagnolo (Mercato)</span><span>70%</span></div>
-                      <div class="resume-bar"><span class="resume-bar-fill" style="width:70%"></span></div>
-                    </div>
-                  </li>
-                </ul>
-
-              </div>
-
-              <!-- ========== COLONNA CENTRALE: PERCORSO CARRIERA / TIMELINE SQUADRE ========== -->
-              <div class="resume-col resume-col-center">
-
-                <h3 class="resume-section-title">Percorso Carriera &amp; Stagioni</h3>
-                <div class="resume-timeline" id="cv-timeline">
-
-                  <article class="resume-tl-item">
-                    <div class="resume-tl-date">
-                      <span class="resume-tl-badge resume-tl-now">ATTUALE</span>
-                      <span class="resume-tl-year">2025/26</span>
-                    </div>
-                    <div class="resume-tl-body">
-                      <h4>US Foggia 1920</h4>
-                      <p class="resume-tl-role">Serie D · Girone H (Prima Squadra)</p>
-                      <p>28 Presenze, 14 Gol, 9 Assist. Titolare inamovibile con costanza di rendimento, Vmax 33.8 km/h.</p>
-                    </div>
-                  </article>
-
-                  <article class="resume-tl-item">
-                    <div class="resume-tl-date">
-                      <span class="resume-tl-year">2024/25</span>
-                    </div>
-                    <div class="resume-tl-body">
-                      <h4>Audace Cerignola / Eccellenza</h4>
-                      <p class="resume-tl-role">Eccellenza Regionale</p>
-                      <p>24 Presenze, 11 Gol. Raggiungimento dei playoff e minutaggio Under al vertice della categoria.</p>
-                    </div>
-                  </article>
-
-                  <article class="resume-tl-item">
-                    <div class="resume-tl-date">
-                      <span class="resume-tl-year">2023/24</span>
-                    </div>
-                    <div class="resume-tl-body">
-                      <h4>Settore Giovanile Nazionale Under 19</h4>
-                      <p class="resume-tl-role">Campionato Nazionale Juniores</p>
-                      <p>26 Presenze, 16 Gol. Capitano e Capocannoniere del girone, convocazioni in Rappresentativa Regionale.</p>
-                    </div>
-                  </article>
-
-                  <article class="resume-tl-item">
-                    <div class="resume-tl-date">
-                      <span class="resume-tl-year">2022/23</span>
-                    </div>
-                    <div class="resume-tl-body">
-                      <h4>Academy Allievi Regionali Élite</h4>
-                      <p class="resume-tl-role">Allievi Élite U17</p>
-                      <p>Formazione tecnica, monitoraggio atletico continuo con GPS e match analysis video.</p>
-                    </div>
-                  </article>
-
-                </div>
-
-              </div>
-
-              <!-- ========== COLONNA DESTRA: VIDEO HIGHLIGHTS, BADGE VERIFICA, CATEGORIA ========== -->
-              <div class="resume-col resume-col-right">
-
-                <h3 class="resume-section-title">Video Highlights Certificati</h3>
-                <div class="cv-video-card">
-                  <div class="cv-video-screen" onclick="if(window.showToast){ window.showToast('▶️ Riproduzione Highlights Ufficiali (Match Footage)', 'info'); }">
-                    <img src="immagini/04-workspace-scout/scout-workspace.svg?v=20260925_150256" alt="Video Highlights Match Footage">
-                    <div class="cv-video-overlay-tag">OFFICIAL 30s</div>
-                    <div class="cv-video-play-btn">▶</div>
-                    <div class="cv-video-telemetry-tag">⚡ GPS 33.8 km/h</div>
-                  </div>
-                  <div class="cv-video-footer">
-                    <p class="cv-video-title">Top Giocate, Gol &amp; 1vs1 Stagione 2025/26</p>
-                    <span class="cv-video-dur">0:30 min</span>
-                  </div>
-                </div>
-
-                <h3 class="resume-section-title">Categoria &amp; Status</h3>
-                <div class="focus-chips" role="list">
-                  <span class="focus-chip" style="border-color:#38bdf8; color:#38bdf8; background:rgba(56,189,248,0.12); font-weight:700;">Categoria: Serie D</span>
-                  <span class="focus-chip">Ruolo: Attaccante</span>
-                  <span class="focus-chip">Piede: Destro</span>
-                  <span class="focus-chip">Contratto: Trasferibile</span>
-                </div>
-
-              </div>
-            </div>
-
-            <!-- ========== BARRA CTA FINALE DI CHIUSURA PROFILO ========== -->
-            <div class="cv-actions-bar">
-              <div style="color:#94a3b8; font-size:0.85rem;">
-                <strong style="color:#fff;">Profilo Sportivo Ufficiale</strong> · Conforme alle linee guida di recruitment Elisee Scout
-              </div>
+            <!-- Curriculum: solo i dati che l'utente ha inserito nel suo profilo (curriculum-view.js). -->
+            <div class="cv-guest" id="cv-guest" hidden>
+              <h2 class="cv-guest-title" data-i18n="cv.guestTitle">Il tuo curriculum sportivo</h2>
+              <p class="cv-guest-text" data-i18n="cv.guestText">Registrati come calciatore: il curriculum si compila da solo con i dati del tuo profilo.</p>
               <div class="cv-actions-group">
-                <button type="button" class="btn btn-outline-pill" onclick="if(window.openB2BMessage){ window.openB2BMessage('user-contact', 'Eliseo Miraglia', 'player'); } else if(window.switchView){ window.switchView('messaggi'); }">
-                  💬 Contatta questo profilo
-                </button>
-                <button type="button" class="btn btn-outline-pill" onclick="if(window.showToast){ window.showToast('⭐ Profilo aggiunto alle tue schede di monitoraggio!', 'success'); }">
-                  ⭐ Aggiungi a Secret List
-                </button>
-                <div class="tide-download-wrap" title="Scarica CV / Dossier PDF">
-                  <button type="button" class="tide-btn" data-state="idle" data-action="cv-dossier" aria-label="Scarica CV / Dossier PDF">
-                    <svg class="tide-ring" viewBox="0 0 100 100">
-                      <circle class="track" cx="50" cy="50" r="48"/>
-                      <circle class="arc" cx="50" cy="50" r="48"/>
-                    </svg>
-                    <div class="tide-icon">
-                      <svg class="ic-arrow" viewBox="0 0 24 24"><path d="M12 3v14"/><path d="M6 12l6 6 6-6"/></svg>
-                      <svg class="ic-check" viewBox="0 0 24 24"><path d="M5 13l4.5 4.5L19 8"/></svg>
-                      <svg class="ic-x" viewBox="0 0 24 24"><path d="M7 7l10 10"/><path d="M17 7L7 17"/></svg>
+                <button type="button" class="btn btn-outline-pill pf-btn-solid" data-cv-action="register" data-i18n="cv.register">Crea il profilo</button>
+                <button type="button" class="btn btn-outline-pill" data-cv-action="login" data-i18n="nav.login">Accedi</button>
+              </div>
+            </div>
+
+            <div class="cv-owner" id="cv-owner" hidden>
+              <div class="cv-hero-card" id="cv-user-card">
+                <div class="cv-hero-avatar-wrap">
+                  <div class="cv-hero-avatar" id="cv-avatar"></div>
+                </div>
+                <div class="cv-hero-details">
+                  <div class="cv-hero-name-row">
+                    <h2 class="cv-hero-name" id="cv-name"></h2>
+                    <span class="cv-hero-role-pill" id="cv-role-badge" hidden></span>
+                  </div>
+                  <div class="cv-hero-sub" id="cv-sub" hidden></div>
+                  <div class="cv-hero-chips" id="cv-chips"></div>
+                </div>
+              </div>
+
+              <div class="resume-grid cv-real-grid">
+                <div class="resume-col resume-col-left">
+                  <h3 class="resume-section-title" data-i18n="cv.about">Presentazione</h3>
+                  <p class="cv-text" id="cv-bio"></p>
+                  <h3 class="resume-section-title" data-i18n="cv.zone">Zona di interesse</h3>
+                  <p class="cv-text" id="cv-zone"></p>
+                </div>
+                <div class="resume-col resume-col-center">
+                  <h3 class="resume-section-title" data-i18n="cv.career">Percorso e stagioni</h3>
+                  <div class="resume-timeline" id="cv-timeline"></div>
+                </div>
+              </div>
+
+              <div class="cv-actions-bar">
+                <p class="cv-note" data-i18n="cv.note">Dati inseriti da te nel profilo. Statistiche, GPS e video compaiono solo quando li carica il club.</p>
+                <div class="cv-actions-group">
+                  <button type="button" class="btn btn-outline-pill" data-cv-action="edit" data-i18n="cv.complete">Completa il profilo</button>
+                  <div class="tide-download-wrap" title="Scarica CV PDF">
+                    <button type="button" class="tide-btn" data-state="idle" data-action="cv-dossier" aria-label="Scarica CV PDF">
+                      <svg class="tide-ring" viewBox="0 0 100 100">
+                        <circle class="track" cx="50" cy="50" r="48"/>
+                        <circle class="arc" cx="50" cy="50" r="48"/>
+                      </svg>
+                      <div class="tide-icon">
+                        <svg class="ic-arrow" viewBox="0 0 24 24"><path d="M12 3v14"/><path d="M6 12l6 6 6-6"/></svg>
+                        <svg class="ic-check" viewBox="0 0 24 24"><path d="M5 13l4.5 4.5L19 8"/></svg>
+                        <svg class="ic-x" viewBox="0 0 24 24"><path d="M7 7l10 10"/><path d="M17 7L7 17"/></svg>
+                      </div>
+                      <div class="ic-pct">0%</div>
+                    </button>
+                    <div class="tide-download-info">
+                      <span class="tide-download-title" data-i18n="cv.download">Scarica CV PDF</span>
+                      <span class="tide-download-sub" data-i18n="cv.downloadSub">Con i dati del tuo profilo</span>
                     </div>
-                    <div class="ic-pct">0%</div>
-                  </button>
-                  <div class="tide-download-info">
-                    <span class="tide-download-title">Scarica CV / Dossier PDF</span>
-                    <span class="tide-download-sub">Passaporto Atletico Ufficiale</span>
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
         </section>
       </div>
@@ -6880,7 +6698,7 @@
   </script>
   <script src="cookie-profiling.js?v=20260925_HEROUX1"></script>
   <script src="ai-gdpr-monitor.js?v=20260806_NOCORS"></script>
-  <script src="i18n.js?v=20261019_HOME1"></script>
+  <script src="i18n.js?v=20261019_CV2"></script>
   <script src="island-carousel.js?v=20260928_HEROUX67"></script>
   <script src="parallax-cards.js?v=20260928_HEROUX68"></script>
   <script src="agents-runtime.js?v=20261018_SEC1"></script>
@@ -6966,6 +6784,7 @@
   <script src="app.js?v=20261019_PW1"></script>
   <script src="admin-login.js?v=20261019_PERF2"></script>
   <script src="password-reset.js?v=20261019_PW1"></script>
+  <script src="curriculum-view.js?v=20261019_CV2"></script>
   <script src="page-bubbles.js?v=20260925_BUBBLE1"></script>
   <script src="parallax.js?v=20260925_PARALLAX1"></script>
   <script src="search-client.js?v=20260929_HEROUX88"></script>
@@ -7515,7 +7334,7 @@
   <script src="candidature-pro-handler.js?v=20261001_FIX1" defer></script>
   <script src="glow-cards-handler.js?v=20261004_FIX34" defer></script>
   <script src="publish-btn.js?v=20260926_HEROUX45" defer></script>
-  <script src="tide-button.js?v=20260926_HEROUX52" defer></script>
+  <script src="tide-button.js?v=20261019_CV2" defer></script>
   <script src="scry-search.js?v=20261001_FIX17" defer></script>
   <script src="scout-automation.js?v=20261001_FIX17" defer></script>
   <script src="notify-consent.js?v=20261001_FIX18" defer></script>
