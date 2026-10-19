@@ -1,6 +1,14 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — DI1 — Dashboard Allenatore e Vice in 4 lingue (fase 1) e via i dati finti:
+Ultimo aggiornamento: **2026-10-19** — DI2 — Dashboard, avvisi, barra anti-fake e banner cookie in 4 lingue (fase 2):
+
+1. **Dashboard**: aggiunti a `window.EliseeDashI18n` (in fondo a `i18n.js`) i testi di formazione, lavagna tattica, analisi avversario, GPS/carichi e messaggi, più ruoli e sigle (POR, DC, TD…). La voce `it` semplifica i testi tecnici (es. «Lineup Builder Ufficiale · XI Titolare» → «Formazione · 11 titolari», niente «Supabase»/«Bucket»).
+2. **Avvisi**: `dash-i18n.js` traduce anche `alert`, `confirm` e `showToast` quando il messaggio è nel dizionario (testo esatto o modello con regex, es. «è già programmato l'evento… alla stessa ora», «Eliminare dal calendario…»). `showToast` è intercettata anche se viene ridefinita dopo.
+3. **Barra «Verifica anti-fake»** (`verifica-account.js`): titoli, testi, giorni e pulsante usano le chiavi `verify.*` (IT/EN/ES/FR) e si aggiornano al cambio lingua.
+4. **Banner cookie** (`cookie-profiling.js`): banner principale e pannello preferenze usano le chiavi `cookie.*` (IT/EN/ES/FR) con la funzione `ctr()`; al cambio lingua il banner si ridisegna senza cambiare visibilità.
+5. **File**: `i18n.js`, `dash-i18n.js`, `verifica-account.js`, `cookie-profiling.js`, `index.html`, `sw.js`, `version.json`. Cache `v20261019_DI2`.
+
+Feature precedente: **2026-10-19** — DI1 — Dashboard Allenatore e Vice in 4 lingue (fase 1) e via i dati finti:
 
 1. **Traduzione**: i testi sono scritti in italiano dentro `coach-dash.js`/`vice-dash.js`. Invece di riscrivere i file, `dash-i18n.js` (nuovo, script di ruolo) sostituisce i testi mostrati nella dashboard e nelle sue finestre usando `window.EliseeDashI18n` in fondo a `i18n.js` (chiave = testo italiano; EN/ES/FR; la voce `it` corregge testi tecnici come «Tabella: allenamenti», «Supabase», «Bucket»). Coperti: menu, dashboard, calendario e modulo evento, rosa, allenamenti, report e modulo report, impostazioni. Fase 2: formazione, tattica, analisi avversario, GPS, comunicazioni, avvisi (alert).
 2. **Dati finti tolti** (entrambi i file): rosa di esempio di 21 persone inventate con codice fiscale, email e data di nascita (`getDefaultRoster` ora vuota); squadra di ripiego «Foggia City»; nome «Elisee Miraglia»; matricola «FIGC-88210», scadenza «30/06/2027», patentino «UEFA B» e logo UEFA mostrati a tutti. Ora si vedono solo i dati inseriti dall'utente.

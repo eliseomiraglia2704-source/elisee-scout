@@ -5,6 +5,19 @@
   var CLOSED_KEY = 'elisee_closed_accounts';
 
   function now() { return Date.now(); }
+  // Testo nella lingua scelta (i18n.js, chiavi verify.*); {d} e {u} = giorni e unità.
+  function vt(key, fallback, vars) {
+    var s = fallback;
+    try {
+      if (window.EliseeI18n && typeof window.EliseeI18n.t === 'function') {
+        var v = window.EliseeI18n.t(key);
+        if (v && v !== key) s = v;
+      }
+    } catch (_) {}
+    Object.keys(vars || {}).forEach(function (k) { s = s.split('{' + k + '}').join(vars[k]); });
+    return s;
+  }
+  function dayUnit(d) { return d === 1 ? vt('verify.day', 'giorno') : vt('verify.days', 'giorni'); }
   function iso(t) { return new Date(t).toISOString(); }
   function user() {
     try { return JSON.parse(localStorage.getItem('elisee_active_user') || '{}') || {}; } catch (_) { return {}; }
@@ -104,22 +117,22 @@
 
   function warnCopy(u) {
     var d = daysLeft(u);
-    var ruolo = (u && (u.siteRoleFamily || u.ruolo || u.role)) || 'ruolo';
+    var vars = { d: d, u: dayUnit(d) };
     if (d <= 0) {
       return {
-        title: 'Account in chiusura',
-        body: 'Non hai allegato i documenti di verifica entro 30 giorni. L’account viene chiuso in automatico.'
+        title: vt('verify.closedTitle', 'Account in chiusura'),
+        body: vt('verify.closedBody', 'Non hai allegato i documenti di verifica entro 30 giorni. L’account viene chiuso in automatico.')
       };
     }
     if (d <= 3) {
       return {
-        title: 'Ultimi ' + d + ' giorni per i documenti',
-        body: 'Hai ancora ' + d + (d === 1 ? ' giorno' : ' giorni') + ' per allegare documento d’identità e selfie anti-fake. Senza questi file l’account ' + ruolo + ' verrà chiuso.'
+        title: vt('verify.urgentTitle', 'Ultimi {d} {u} per i documenti', vars),
+        body: vt('verify.urgentBody', 'Hai ancora {d} {u} per allegare documento d’identità e selfie anti-fake. Senza questi file l’account verrà chiuso.', vars)
       };
     }
     return {
-      title: 'Verifica anti-fake: ' + d + ' giorni rimanenti',
-      body: 'Hai 30 giorni dalla scelta del ruolo per allegare tutti i documenti e dimostrare che non è un account fake. Poi, dopo avvisi continui, l’account si chiude da solo.'
+      title: vt('verify.title', 'Verifica anti-fake: mancano {d} {u}', vars),
+      body: vt('verify.body', 'Hai 30 giorni dalla scelta del ruolo per allegare tutti i documenti e dimostrare che non è un account fake. Poi, dopo avvisi continui, l’account si chiude da solo.')
     };
   }
 
@@ -170,10 +183,16 @@
       '<div class="es-verify-inner">' +
         '<strong>' + copy.title + '</strong>' +
         '<span>' + copy.body + '</span>' +
-        '<button type="button" class="es-verify-go" id="es-verify-go">Allega documenti</button>' +
+        '<button type="button" class="es-verify-go" id="es-verify-go">' + vt('verify.go', 'Allega documenti') + '</button>' +
       '</div>';
     paintCard(u);
   }
+
+  document.addEventListener('elisee:lang-changed', function () {
+    var u = user();
+    if (document.getElementById('es-verify-banner') && !document.getElementById('es-verify-banner').hidden) paintBanner(u);
+    paintCard(u);
+  });
 
   function paintCard(u) {
     var card = document.getElementById('es-verify-card');
@@ -186,17 +205,17 @@
     card.hidden = false;
     if (!txt) return;
     if (docsOk(u)) {
-      txt.textContent = 'Documenti ricevuti. L’account non verrà chiuso per mancanza file mentre la verifica è in corso.';
+      txt.textContent = vt('verify.cardDone', 'Documenti ricevuti. L’account non verrà chiuso per mancanza file mentre la verifica è in corso.');
       return;
     }
     if (!hasRole(u)) {
-      txt.textContent = 'Dopo la registrazione con un ruolo specifico hai un mese per allegare documento d’identità e selfie. Se dopo avvisi continui i file non arrivano, l’account viene chiuso automaticamente.';
+      txt.textContent = vt('verify.cardNoRole', 'Dopo la registrazione con un ruolo specifico hai un mese per allegare documento d’identità e selfie. Se dopo avvisi continui i file non arrivano, l’account viene chiuso automaticamente.');
       return;
     }
     var d = daysLeft(startClock(u, { fromNow: !u.verifyDocsDeadline }));
     txt.textContent = d <= 0
-      ? 'Termine scaduto: senza documenti l’account viene chiuso automaticamente.'
-      : ('Hai ancora ' + d + (d === 1 ? ' giorno' : ' giorni') + ' per allegare documento d’identità e selfie anti-fake. Senza file, dopo avvisi continui, l’account si chiude da solo.');
+      ? vt('verify.cardExpired', 'Termine scaduto: senza documenti l’account viene chiuso automaticamente.')
+      : vt('verify.cardLeft', 'Hai ancora {d} {u} per allegare documento d’identità e selfie anti-fake. Senza file, dopo avvisi continui, l’account si chiude da solo.', { d: d, u: dayUnit(d) });
   }
 
   function closeAccount(u) {

@@ -114,5 +114,37 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
   else start();
 
+  // Avvisi, conferme e notifiche: stessa traduzione dei testi della dashboard.
+  function msg(text) {
+    if (typeof text !== 'string' || !text.trim()) return text;
+    var t = translate(text.trim(), lang());
+    return t == null ? text : t;
+  }
+  function wrapFn(fn) {
+    if (typeof fn !== 'function' || fn.__esDashI18n) return fn;
+    var wrapped = function (m) {
+      var args = Array.prototype.slice.call(arguments);
+      args[0] = msg(m);
+      return fn.apply(this, args);
+    };
+    wrapped.__esDashI18n = true;
+    return wrapped;
+  }
+  // showToast può essere definita dopo questo file: la proprietà traduce anche le versioni successive.
+  function wrap(name) {
+    var cur = wrapFn(window[name]);
+    try {
+      Object.defineProperty(window, name, {
+        configurable: true,
+        get: function () { return cur; },
+        set: function (v) { cur = wrapFn(v); }
+      });
+    } catch (_) {
+      window[name] = cur;
+    }
+  }
+  ['alert', 'confirm', 'showToast'].forEach(wrap);
+  window.EliseeDashI18nMsg = msg;
+
   window.EliseeDashI18nApply = schedule;
 })();
