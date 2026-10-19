@@ -1,6 +1,13 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — RD1 — 11 dashboard di ruolo senza dati inventati:
+Ultimo aggiornamento: **2026-10-19** — RD2 — Dashboard Fisioterapista, Medico sociale e Nutrizionista senza dati inventati:
+
+1. **Cosa c'era**: pazienti con nomi di calciatori (Peralta, Odjer, Embalo) con infortuni, terapie e misure inventate; iscrizioni AIFI/Albo finte («AIFI-FT-7731», «Albo TSRM PSTRP FG #4421»); «Foggia City» per tutti; numeri fissi (94% recupero, 82% profilo); radar a percentuali fisse; pulsanti che dicevano «inviato allo staff» senza inviare niente.
+2. **Ora**: le tre dashboard usano la struttura comune nuova `role-dash-honest.js`. Mostrano solo nome, ruolo, squadra, qualifica e iscrizione all'albo inserite dall'utente, con completamento profilo calcolato. Le sezioni con dati sanitari dei tesserati (trattamenti, visite, infortuni, idoneità, ritorno in campo, piani nutrizionali, composizione corporea…) sono «In arrivo»: non si salvano nel browser (GDPR art. 9, spesso minori) e si attiveranno con l'archivio squadra protetto. «Tecniche» del fisioterapista resta come guida generale. «Modifica profilo» apre la modifica del profilo.
+3. **Bug corretto**: `player-profile.js` cerca `window.EliseeFisioDash`, `EliseeMedDash`, `EliseeNuDash`, che non esistevano: a volte la dashboard spariva dietro il modulo del profilo. Ora i tre file li esportano (restano anche i vecchi nomi `elisee_*Hub`).
+4. **File**: `role-dash-honest.js` (nuovo), `fisio-dash.js`, `med-dash.js`, `nu-dash.js`, `dash-luxury.css` (classi `es-rdh-*`), `index.html`, `sw.js`, `version.json`. Cache `v20261019_RD2`.
+
+Feature precedente: **2026-10-19** — RD1 — 11 dashboard di ruolo senza dati inventati:
 
 1. **Quali**: Procuratore, Biglietteria, Direttore generale, Direttore sportivo, Magazziniere, Marketing, Ufficio stampa, Segretario, Tifoso, Team manager, Settore giovanile. Usano la struttura comune `dash-real.js` e i pannelli `club-role-ops.js`.
 2. **Tolti**: tessere e abilitazioni finte (es. «FIGC-DS-4412 · Scad. 30/06/2027»), squadra e logo «Foggia City» per tutti, prossimi impegni e numeri fissi (24 tesserati, 94% puntualità, 1.842 ingressi…), completamento profilo fisso 85%, badge «Accreditato», sponsor, articoli, accrediti, inventario, budget e scadenze di esempio. Tolti anche i nomi e i voti scolastici inventati di ragazzi del vivaio.

@@ -1444,3 +1444,23 @@ body.es-tifoso-on #user-dossier-view-group {
 .es-ops-dl { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 18px; margin: 0; flex: 1; min-width: 240px; }
 .es-ops-dl dt { color: #8a93a3; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; }
 .es-ops-dl dd { margin: 2px 0 0; color: #eef1f6; font-size: 0.86rem; }
+
+/* Dashboard di ruolo oneste (role-dash-honest.js) */
+.es-rdh-sub { display: block; font-size: 0.75rem; color: #94a3b8; margin-top: 2px; }
+.es-rdh-lead { color: #94a3b8; font-size: 0.82rem; line-height: 1.55; margin: 0 0 10px; }
+.es-rdh-note { color: #64748b; font-size: 0.75rem; line-height: 1.5; margin: 0 0 10px; }
+.es-rdh-empty {
+  border: 1px dashed rgba(148, 163, 184, 0.25); border-radius: 8px;
+  padding: 1.25rem 1rem; text-align: center; color: #64748b; font-size: 0.8rem;
+}
+.es-rdh-progress { margin: 10px 0 12px; }
+.es-rdh-progress-row { display: flex; justify-content: space-between; font-size: 0.72rem; color: #94a3b8; font-weight: 700; margin-bottom: 4px; }
+.es-rdh-progress-row b { color: #38bdf8; }
+.es-rdh-bar { width: 100%; height: 6px; appearance: none; border: 0; border-radius: 3px; overflow: hidden; background: rgba(15, 23, 42, 0.8); }
+.es-rdh-bar::-webkit-progress-bar { background: rgba(15, 23, 42, 0.8); }
+.es-rdh-bar::-webkit-progress-value { background: linear-gradient(90deg, #0284c7, #38bdf8); }
+.es-rdh-bar::-moz-progress-bar { background: linear-gradient(90deg, #0284c7, #38bdf8); }
+.es-rdh-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
+.es-rdh-list li { border: 1px solid rgba(56, 189, 248, 0.14); border-radius: 8px; padding: 10px 12px; }
+.es-rdh-list b { display: block; color: #f8fafc; font-size: 0.85rem; margin-bottom: 3px; }
+.es-rdh-list span { color: #94a3b8; font-size: 0.75rem; line-height: 1.45; }
