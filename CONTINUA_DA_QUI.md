@@ -1,6 +1,20 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — PERF2 — Script delle aree riservate solo a chi ha fatto l'accesso:
+Ultimo aggiornamento: **2026-10-19** — SEC5 — I dati condivisi li protegge il server:
+
+1. **Cosa era rotto**: in `/api/manager` i percorsi `gdpr`, `ambassador`, `schede`, `club`, `coach`, `card` non chiedevano nessun accesso. Chiunque poteva leggere tutto (reclami, pratiche Ambassador con codice fiscale e firma, candidature con telefono, rose) e sovrascrivere tutto. In più ogni visitatore scaricava le code GDPR e Ambassador nel suo browser. Le liste online erano ancora vuote: nessun dato è uscito.
+2. **Ora** (`lib/data-access.js`): staff = token admin/privacy firmato; utente = token di sessione, email presa dal token e mai dal form.
+   - GDPR e Ambassador: chiunque invia una pratica nuova; ognuno vede e modifica solo le sue; lo staff vede e gestisce tutto. Nessun non-staff può cancellare.
+   - Schede tecniche: l'autore dell'annuncio in bacheca vede le candidature; il candidato vede solo la sua scheda e non può cambiarne lo stato; gli altri non vedono nulla.
+   - Club e rosa allenatore: serve l'accesso; il primo che salva ne è titolare; entrano anche i membri della squadra (`/api/squadra`). Niente elenco completo, se non allo staff.
+   - Card Elisee: le card pubblicate restano pubbliche; le richieste solo allo staff e al diretto interessato.
+   - Manager: `view=me`, candidature e formazioni usano l'email del token.
+   - `lib/admin-token-verify.js` legge prima `X-Admin-Token` (prima falliva se c'era anche il token utente).
+   - Le firme Ambassador non vengono più caricate su uno spazio file pubblico.
+3. **File**: `api/manager.js`, `lib/data-access.js` (nuovo), `lib/admin-token-verify.js`, `lib/squadra-store.js`, `persist-sync.js`, `schede-tecniche.js`, `formazione-squadra.js`, `index.html`, `sw.js`, `version.json`. Cache `v20261019_SEC5`.
+4. **Aperto**: il server locale `elisee_up.py` non applica ancora queste regole. Le schede tecniche mostrano ancora profili di esempio generati ("IA") con nomi e telefoni inventati: vanno tolti o etichettati "Esempio".
+
+Feature precedente: **2026-10-19** — PERF2 — Script delle aree riservate solo a chi ha fatto l'accesso:
 
 1. **Cosa era rotto**: ogni visitatore scaricava circa 1,7 MB di script delle dashboard di ruolo e del Control Center, che non poteva usare.
 2. **Ora**: `role-scripts.js` (nel `<head>`) decide all'apertura: con login o sessione staff gli script vengono scritti nello stesso punto e ordine di prima (`EliseeRoleScripts.write([...])` in `index.html`); al visitatore no. Login senza ricaricare: `EliseeRoleScripts.ensure()` li carica in ordine (parte da solo quando si salva il login; `admin-login.js` aspetta prima di aprire il Control Center).

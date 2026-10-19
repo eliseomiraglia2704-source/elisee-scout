@@ -5,13 +5,20 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { isAdmin } = require('../lib/admin-token-verify');
+const { isAdmin, verifyAdminToken } = require('../lib/admin-token-verify');
+const access = require('../lib/data-access');
 const { verifyToken } = require('../lib/auth-oauth');
 
 function sessionUser(req) {
   const h = String((req.headers && (req.headers.authorization || req.headers.Authorization)) || '');
   const tok = h.toLowerCase().startsWith('bearer ') ? h.slice(7).trim() : '';
   return verifyToken(tok);
+}
+
+// Chi fa la richiesta: email dal token di sessione, staff dal token admin/privacy firmato.
+function whoOf(req) {
+  const s = sessionUser(req);
+  return { email: s && s.email ? String(s.email).trim().toLowerCase() : '', staff: !!verifyAdminToken(req) };
 }
 
 const FILE = process.env.ELISEE_MANAGER_FILE
@@ -725,83 +732,116 @@ module.exports = async function handler(req, res) {
     return send(res, 200, { ok: true, item: item });
   }
   if (url.searchParams.get('path') === 'schede') {
+    const who = whoOf(req);
+    res.setHeader('Cache-Control', 'no-store');
+    const owners = {};
+    try {
+      (await bachecaLoad()).forEach(function (it) { if (it && it.id && it.autore_id) owners[String(it.id)] = it.autore_id; });
+    } catch (e) {}
     if (req.method === 'GET') {
-      return send(res, 200, { ok: true, jobs: await schedeLoad() });
+      return send(res, 200, { ok: true, jobs: access.schedeView(await schedeLoad(), who, owners) });
     }
     if (req.method !== 'POST') return send(res, 405, { ok: false, error: 'method' });
+    if (!who.email && !who.staff) return send(res, 401, { ok: false, error: 'login_richiesto' });
     const body = await readBody(req);
-    const current = await schedeLoad();
-    if (body && body.jobs && typeof body.jobs === 'object') {
-      await schedeSave(body.jobs);
-      return send(res, 200, { ok: true, jobs: body.jobs });
-    }
-    if (body && body.job && body.job.id) {
-      current[body.job.id] = body.job;
-      await schedeSave(current);
-      return send(res, 200, { ok: true, job: body.job });
-    }
-    return send(res, 400, { ok: false, error: 'payload' });
+    const incoming = body && body.jobs && typeof body.jobs === 'object' ? body.jobs
+      : (body && body.job && body.job.id ? { [body.job.id]: body.job } : null);
+    if (!incoming) return send(res, 400, { ok: false, error: 'payload' });
+    const next = access.schedeMerge(await schedeLoad(), incoming, who, owners);
+    await schedeSave(next);
+    return send(res, 200, { ok: true, jobs: access.schedeView(next, who, owners) });
   }
   if (url.searchParams.get('path') === 'club' || url.searchParams.get('path') === 'coach') {
     const kind = url.searchParams.get('path') === 'coach' ? 'coach-rosa' : 'club-master';
+    const who = whoOf(req);
+    res.setHeader('Cache-Control', 'no-store');
     const map = await kvDocLoad(kind, {});
-    const key = String(url.searchParams.get('key') || (req.method === 'POST' ? '' : '') || '').slice(0, 160);
+    const key = String(url.searchParams.get('key') || '').slice(0, 160);
+    async function membriOf(k) {
+      try {
+        const squadra = require('../lib/squadra-store');
+        const doc = await squadra.loadDoc(squadra.slugOf(k));
+        return doc ? [doc.owner].concat(doc.membri || []) : [];
+      } catch (e) { return []; }
+    }
     if (req.method === 'GET') {
-      const k = key;
-      if (k) {
-        const row = map[k] || null;
-        return send(res, 200, { ok: true, key: k, data: row && row.data ? row.data : null, updatedAt: row && row.updatedAt });
+      if (!key) {
+        if (!who.staff) return send(res, 403, { ok: false, error: 'chiave_richiesta' });
+        return send(res, 200, { ok: true, map: map });
       }
-      return send(res, 200, { ok: true, map: map });
+      if (!who.email && !who.staff) return send(res, 401, { ok: false, error: 'login_richiesto' });
+      const row = map[key] || null;
+      if (row && !access.clubCanAccess(row, who, await membriOf(key))) return send(res, 403, { ok: false, error: 'non_membro' });
+      return send(res, 200, { ok: true, key: key, data: row && row.data ? row.data : null, updatedAt: row && row.updatedAt });
     }
     if (req.method !== 'POST') return send(res, 405, { ok: false, error: 'method' });
+    if (!who.email && !who.staff) return send(res, 401, { ok: false, error: 'login_richiesto' });
     const body = await readBody(req);
     const k = String(body.key || key || '').trim().slice(0, 160);
     if (!k || !body.data || typeof body.data !== 'object') return send(res, 400, { ok: false, error: 'payload' });
-    map[k] = { updatedAt: new Date().toISOString(), data: body.data };
+    const prev = map[k] || null;
+    if (prev && !access.clubCanAccess(prev, who, await membriOf(k))) return send(res, 403, { ok: false, error: 'non_membro' });
+    map[k] = { updatedAt: new Date().toISOString(), owner: (prev && prev.owner) || who.email || '', data: body.data };
     await kvDocSave(kind, map);
     return send(res, 200, { ok: true, key: k, updatedAt: map[k].updatedAt });
   }
   if (url.searchParams.get('path') === 'card') {
+    const who = whoOf(req);
+    res.setHeader('Cache-Control', 'no-store');
     const doc = await kvDocLoad('card-atelier', { inbox: {}, published: {}, stats: {} });
     if (req.method === 'GET') {
-      return send(res, 200, { ok: true, inbox: doc.inbox || {}, published: doc.published || {}, stats: doc.stats || {} });
+      return send(res, 200, Object.assign({ ok: true }, access.cardView(doc, who)));
     }
     if (req.method !== 'POST') return send(res, 405, { ok: false, error: 'method' });
+    if (!who.email && !who.staff) return send(res, 401, { ok: false, error: 'login_richiesto' });
     const body = await readBody(req);
-    if (body.inbox && typeof body.inbox === 'object') doc.inbox = Object.assign({}, doc.inbox || {}, stripHeavyPng(body.inbox));
-    if (body.published && typeof body.published === 'object') doc.published = Object.assign({}, doc.published || {}, stripHeavyPng(body.published));
-    if (body.stats && typeof body.stats === 'object') doc.stats = Object.assign({}, doc.stats || {}, body.stats);
-    doc.updatedAt = new Date().toISOString();
-    await kvDocSave('card-atelier', doc);
-    return send(res, 200, { ok: true, updatedAt: doc.updatedAt });
+    const light = {
+      inbox: body.inbox && typeof body.inbox === 'object' ? stripHeavyPng(body.inbox) : null,
+      published: body.published && typeof body.published === 'object' ? stripHeavyPng(body.published) : null,
+      stats: body.stats && typeof body.stats === 'object' ? body.stats : null
+    };
+    const next = access.cardMerge(doc, light, who);
+    next.updatedAt = new Date().toISOString();
+    await kvDocSave('card-atelier', next);
+    return send(res, 200, { ok: true, updatedAt: next.updatedAt });
   }
   if (url.searchParams.get('path') === 'gdpr' || url.searchParams.get('path') === 'ambassador') {
     const name = url.searchParams.get('path') === 'gdpr' ? 'gdpr-queue' : 'ambassador-apps';
+    const who = whoOf(req);
+    res.setHeader('Cache-Control', 'no-store');
     const doc = await kvDocLoad(name, { items: [], requests: [] });
     if (req.method === 'GET') {
       return send(res, 200, {
         ok: true,
-        items: Array.isArray(doc.items) ? doc.items : [],
-        requests: Array.isArray(doc.requests) ? doc.requests : [],
+        items: access.queueView(doc.items, who),
+        requests: access.queueView(doc.requests, who),
         updatedAt: doc.updatedAt || ''
       });
     }
     if (req.method !== 'POST') return send(res, 405, { ok: false, error: 'method' });
     const body = await readBody(req);
-    if (Array.isArray(body.items)) {
-      doc.items = body.items.slice(0, 400).map(function (it) {
-        const o = Object.assign({}, it || {});
-        if (typeof o.signatureDataUrl === 'string' && o.signatureDataUrl.indexOf('data:') === 0 && o.signatureDataUrl.length > 48000) {
-          o.signatureDataUrl = o.signatureUrl || '';
-        }
-        if (typeof o.contractHtml === 'string' && o.contractHtml.length > 24000) {
-          o.contractHtml = o.contractHtml.slice(0, 24000);
-        }
-        return o;
-      });
+    function lighten(it) {
+      const o = Object.assign({}, it || {});
+      if (typeof o.signatureDataUrl === 'string' && o.signatureDataUrl.indexOf('data:') === 0 && o.signatureDataUrl.length > 48000) {
+        o.signatureDataUrl = o.signatureUrl || '';
+      }
+      if (typeof o.contractHtml === 'string' && o.contractHtml.length > 24000) {
+        o.contractHtml = o.contractHtml.slice(0, 24000);
+      }
+      return o;
     }
-    if (Array.isArray(body.requests)) doc.requests = body.requests.slice(0, 400);
+    if (who.staff) {
+      // Lo staff gestisce la coda intera; il titolare di ogni riga resta quello salvato.
+      const ownerOf = {};
+      (doc.items || []).concat(doc.requests || []).forEach(function (r) { if (r && r.id != null) ownerOf[String(r.id)] = r._owner; });
+      const keepOwner = function (r) { const o = lighten(r); if (o.id != null && ownerOf[String(o.id)] !== undefined) o._owner = ownerOf[String(o.id)]; return o; };
+      if (Array.isArray(body.items)) doc.items = body.items.slice(0, 400).map(keepOwner);
+      if (Array.isArray(body.requests)) doc.requests = body.requests.slice(0, 400).map(keepOwner);
+    } else {
+      // Chiunque può inviare una nuova pratica; modifica solo le proprie (serve l'accesso).
+      if (Array.isArray(body.items)) doc.items = access.queueMerge(doc.items, body.items.map(lighten), who);
+      if (Array.isArray(body.requests)) doc.requests = access.queueMerge(doc.requests, body.requests.map(lighten), who);
+    }
     doc.updatedAt = new Date().toISOString();
     await kvDocSave(name, doc);
     return send(res, 200, { ok: true, updatedAt: doc.updatedAt });
@@ -828,7 +868,7 @@ module.exports = async function handler(req, res) {
       const official = (st.officialLineups || {})[teamId] || null;
       return send(res, 200, { ok: true, official: official });
     }
-    const email = String(url.searchParams.get('email') || '').toLowerCase();
+    const email = whoOf(req).email;
     const mine = (row) => email && String(row.email || '').toLowerCase() === email;
     return send(res, 200, {
       ok: true,
@@ -841,7 +881,9 @@ module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return send(res, 405, { ok: false, error: 'method' });
   const body = await readBody(req);
   const action = String(body.action || '');
-  const email = String(body.email || '').trim().toLowerCase();
+  const actor = whoOf(req);
+  if (action !== 'decide' && !actor.email) return send(res, 401, { ok: false, error: 'login_richiesto' });
+  const email = actor.email;
   const name = String(body.name || '').trim();
   if (action === 'apply') {
     if (!body.teamId || !body.teamName) return send(res, 400, { ok: false, error: 'squadra_mancante' });
@@ -891,7 +933,6 @@ module.exports = async function handler(req, res) {
   }
   if (action === 'propose-lineup') {
     if (!body.teamId || !body.module) return send(res, 400, { ok: false, error: 'squadra_o_modulo_mancante' });
-    if (!email && !name) return send(res, 400, { ok: false, error: 'nome_email_obbligatori' });
     const pendingDup = (st.lineups || []).some((r) =>
       r.status === 'pending' &&
       r.teamId === body.teamId &&

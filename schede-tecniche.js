@@ -120,16 +120,30 @@
     try {
       clearTimeout(saveTimer);
       saveTimer = setTimeout(function () {
+        if (!isLogged()) return;
         fetch('/api/schede', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: apiHeaders(true),
           body: JSON.stringify({ jobs: map })
         }).catch(function () {});
       }, 400);
     } catch (_) {}
   }
+  // Token di sessione e token staff: il server decide chi può leggere e scrivere.
+  function apiHeaders(json) {
+    var h = json ? { 'Content-Type': 'application/json' } : {};
+    try {
+      var t = localStorage.getItem('elisee_auth_token');
+      if (t) h.Authorization = 'Bearer ' + t;
+    } catch (_) {}
+    try {
+      var a = window.EliseeAdmin && window.EliseeAdmin.token ? window.EliseeAdmin.token() : '';
+      if (a) h['X-Admin-Token'] = a;
+    } catch (_) {}
+    return h;
+  }
   function pullRemote() {
-    fetch('/api/schede')
+    fetch('/api/schede', { headers: apiHeaders(false), cache: 'no-store' })
       .then(function (r) { return r.json(); })
       .then(function (j) {
         if (!j || !j.ok || !j.jobs || typeof j.jobs !== 'object') return;

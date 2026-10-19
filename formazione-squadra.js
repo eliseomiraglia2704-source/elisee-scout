@@ -270,9 +270,11 @@
       var self = this;
       var btn = document.getElementById('es-xi-suggest-btn');
       if (btn) { btn.disabled = true; btn.textContent = 'Invio…'; }
+      var hdr = { 'Content-Type': 'application/json' };
+      try { var tk = localStorage.getItem('elisee_auth_token'); if (tk) hdr.Authorization = 'Bearer ' + tk; } catch (_) {}
       fetch('/api/manager', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: hdr,
         body: JSON.stringify(payload)
       }).then(function (r) { return r.json(); }).then(function (res) {
         if (res && res.ok && res.lineup) {

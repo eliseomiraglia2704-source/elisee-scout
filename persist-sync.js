@@ -51,6 +51,19 @@
     } catch (_) {}
   }
 
+  // Token di sessione e token staff: il server decide chi può leggere e scrivere.
+  function apiHeaders(json) {
+    var h = json ? { 'Content-Type': 'application/json' } : {};
+    try {
+      var t = localStorage.getItem('elisee_auth_token');
+      if (t) h.Authorization = 'Bearer ' + t;
+    } catch (_) {}
+    try {
+      var a = window.EliseeAdmin && window.EliseeAdmin.token ? window.EliseeAdmin.token() : '';
+      if (a) h['X-Admin-Token'] = a;
+    } catch (_) {}
+    return h;
+  }
   function apiPath(kind, key) {
     var q = '/api/manager?path=' + encodeURIComponent(kind);
     if (key) q += '&key=' + encodeURIComponent(key);
@@ -59,7 +72,7 @@
   function pushDoc(kind, payload) {
     return fetch(apiPath(kind), {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: apiHeaders(true),
       body: JSON.stringify(payload)
     }).then(function (r) {
       if (!r.ok) {
@@ -74,7 +87,7 @@
     });
   }
   function pullDoc(kind, key) {
-    return fetch(apiPath(kind, key))
+    return fetch(apiPath(kind, key), { headers: apiHeaders(false), cache: 'no-store' })
       .then(function (r) {
         if (r.ok) syncState.lastPullAt = new Date().toISOString();
         return r.json();
@@ -342,21 +355,8 @@
       try {
         if (!items) items = JSON.parse(localStorage.getItem('elisee_ambassador_applications') || '[]') || [];
       } catch (_) { items = []; }
-      var jobs = [];
-      items.forEach(function (row) {
-        if (row && row.signatureDataUrl && String(row.signatureDataUrl).indexOf('data:') === 0) {
-          jobs.push(uploadPng(row.id || row.cf || 'amb', 'firma', row.signatureDataUrl).then(function (url) {
-            if (url && url.indexOf('http') === 0) {
-              row.signatureUrl = url;
-              row.signatureDataUrl = url;
-            }
-          }));
-        }
-      });
-      Promise.all(jobs).then(function () {
-        try { localStorage.setItem('elisee_ambassador_applications', JSON.stringify(items)); } catch (_) {}
-        pushDoc('ambassador', { items: lightenAmbassador(items) });
-      });
+      // La firma resta dentro la pratica: non va su uno spazio file pubblico.
+      pushDoc('ambassador', { items: lightenAmbassador(items) });
     }, 700);
   }
 
