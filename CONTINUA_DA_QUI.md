@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — RD4 — Dashboard Calciatore, Giornalista e Presidente senza dati inventati:
+Ultimo aggiornamento: **2026-10-19** — RD5 — La barra «Verifica anti-fake» non copre più le pagine:
+
+1. **Cosa succedeva**: la barra è fissa sotto la navbar e copriva l'inizio delle dashboard. Su telefono era peggio: lo script mobile in `index.html` le metteva `height:0` quando era nascosta e il valore restava anche dopo, quindi il testo usciva senza sfondo sopra i contenuti.
+2. **Ora**: computer: `verifica-account.js` misura la barra e mette `--es-verify-h` sul body; `verifica-account.css` aggiunge quello spazio in alto (nelle aree interne fino al bordo inferiore della barra). Telefono: in `mobile-webapp.css` la barra sta nel flusso della pagina (spinge giù il contenuto) e mostra solo titolo e pulsante. Quando la barra appare viene tolto l'`height:0` messo dallo script mobile.
+3. **File**: `verifica-account.js`, `verifica-account.css`, `mobile-webapp.css`, `index.html`, `sw.js`, `version.json`. Cache `v20261019_RD5`.
+
+Feature precedente: **2026-10-19** — RD4 — Dashboard Calciatore, Giornalista e Presidente senza dati inventati:
 
 1. **Calciatore** (`player-dash.js`): tolti i dati stagionali precaricati (gare «vs Notaresco…», voti, 92% di compatibilità), il grafico di crescita fisso, «Foggia City» e il logo per tutti, «Mario Rossi», ruolo «Attaccante» di ripiego, badge «Validato» fisso e il link «IA Career Projection» che non calcolava niente. «Esporta i miei dati (GDPR)» ora scarica davvero un file JSON con i dati del profilo (senza token o password). «Richiedi intervento umano (art. 22)» apre una email a areaeliseescout@gmail.com, il contatto dell'informativa privacy, invece di dire «presa in carico dal DPO».
 2. **Giornalista** (`giorn-dash.js`): tolti i 3 contenuti «pubblicati» di esempio (con autore Eliseo Miraglia, email inventate e un sondaggio con voti finti); quelli già salvati nei browser vengono cancellati al primo caricamento. Tolti i 10 calciatori inventati suggeriti nei tag. La rassegna resta solo con voci etichettate «Esempio», senza il tag del Calcio Foggia 1920.

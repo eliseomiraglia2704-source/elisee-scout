@@ -170,6 +170,7 @@
       el.style.display = 'none';
       document.body.classList.remove('es-verify-on');
       paintCard(u);
+      syncBannerSpace();
       return;
     }
     startClock(u, { fromNow: true });
@@ -178,6 +179,9 @@
     document.body.classList.add('es-verify-on');
     el.hidden = false;
     el.style.display = '';
+    // Lo script mobile in index.html mette height:0 alla barra nascosta: va tolto quando la mostriamo.
+    el.style.removeProperty('height');
+    el.style.removeProperty('display');
     el.className = 'es-verify-banner' + (d <= 3 ? ' is-urgent' : '');
     el.innerHTML =
       '<div class="es-verify-inner">' +
@@ -186,7 +190,27 @@
         '<button type="button" class="es-verify-go" id="es-verify-go">' + vt('verify.go', 'Allega documenti') + '</button>' +
       '</div>';
     paintCard(u);
+    syncBannerSpace();
   }
+
+  // Spazio riservato alla barra in alto, così non copre l'inizio della pagina.
+  var bannerRO = null;
+  function syncBannerSpace() {
+    var el = document.getElementById('es-verify-banner');
+    var on = !!(el && !el.hidden && document.body.classList.contains('es-verify-on'));
+    var r = on ? el.getBoundingClientRect() : null;
+    // Nelle aree interne il contenuto parte sotto la navbar trasparente: serve tutta l'altezza fino al bordo della barra.
+    var h = r ? Math.ceil(document.body.classList.contains('is-internal-view') ? r.bottom : r.height) : 0;
+    if (on && getComputedStyle(el).position !== 'fixed') h = 0;
+    document.body.style.setProperty('--es-verify-h', h + 'px');
+    if (on && !bannerRO && window.ResizeObserver) {
+      bannerRO = new ResizeObserver(syncBannerSpace);
+      bannerRO.observe(el);
+    }
+  }
+  document.addEventListener('elisee:view-changed', function () { setTimeout(syncBannerSpace, 60); });
+  window.addEventListener('hashchange', function () { setTimeout(syncBannerSpace, 60); });
+  window.addEventListener('resize', function () { setTimeout(syncBannerSpace, 60); });
 
   document.addEventListener('elisee:lang-changed', function () {
     var u = user();

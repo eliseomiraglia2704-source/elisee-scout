@@ -415,3 +415,9 @@ body:has(#es-otp-bottom-banner) #elisee-cookie-settings-btn {
   color: #7dd3fc;
 }
 
+/* La pagina scende dell'altezza della barra (valore calcolato in verifica-account.js). */
+body.es-verify-on { padding-top: calc(var(--safe-top, 0px) + var(--es-verify-h, 0px)); }
+@media (max-width: 600px) {
+  .es-verify-inner { font-size: 0.8rem; padding: 0.55rem 0.85rem; }
+  .es-verify-inner span { display: none; }
+}

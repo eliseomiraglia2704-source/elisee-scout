@@ -221,8 +221,10 @@
     height: 0 !important;
   }
 
+  /* Su telefono la barra anti-fake sta nel flusso della pagina: spinge giù il contenuto invece di coprirlo. */
   .es-verify-banner:not([hidden]) {
-    top: calc(52px + env(safe-area-inset-top, 0px)) !important;
+    position: relative !important;
+    top: auto !important;
   }
 
   .es-m-brand {
