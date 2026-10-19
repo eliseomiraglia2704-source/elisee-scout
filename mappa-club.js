@@ -1114,7 +1114,24 @@
     ready: false,
     ensure: function () {
       var el = document.getElementById('es-map-canvas');
-      if (!el || typeof L === 'undefined') return;
+      if (!el) return;
+      if (typeof L === 'undefined') {
+        // Leaflet si carica solo quando si apre la mappa.
+        if (window.EliseeLibs && !this._libLoading) {
+          var self = this;
+          this._libLoading = true;
+          window.EliseeLibs.load('leaflet').then(function () {
+            self._libLoading = false;
+            var sc = document.querySelector('.es-map-search');
+            if (sc && L.DomEvent) {
+              L.DomEvent.disableClickPropagation(sc);
+              L.DomEvent.disableScrollPropagation(sc);
+            }
+            self.ensure();
+          }, function () { self._libLoading = false; });
+        }
+        return;
+      }
       if (this.map) {
         setTimeout(function () { window.EliseeClubMap.map.invalidateSize(); }, 60);
         return;

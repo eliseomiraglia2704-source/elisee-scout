@@ -1,6 +1,14 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — FILE1 — Allegati veri nelle dashboard Allenatore e Vice:
+Ultimo aggiornamento: **2026-10-19** — SPEED1 — Pagina più leggera all'apertura:
+
+1. **Librerie esterne non più caricate subito** (bloccavano la pagina per tutti, circa 1,5 MB): React e ReactDOM (non usati da nessun file, tolti), Three.js e i suoi 3 moduli (`avatar-3d.js` li carica già da solo quando serve), Leaflet + MarkerCluster (ora `mappa-club.js` li carica quando si apre la mappa), jsPDF (ora `tide-button.js` lo carica al primo PDF), Swiper (ora `season-wrapped.js` lo carica quando si apre il riepilogo stagione). Il caricatore è `EliseeLibs.load(nome)` in `role-scripts.js`.
+2. **Fogli di stile delle 24 dashboard di ruolo** (circa 300 KB): `EliseeRoleScripts.writeStyles([...])` in `index.html`. Chi ha già fatto l'accesso li riceve nello stesso punto e ordine di prima; il visitatore non li scarica; al login senza ricaricare `ensure()` li aggiunge prima degli script.
+3. **Minigioco carriera** (circa 400 KB tra stile e script): `EliseeLibs.lazyMinigioco(css, js)` crea un `EliseeMinigioco` provvisorio; al primo «Minigiochi» carica i file e apre il gioco.
+4. **Provato** (copia locale, librerie servite da npm): mappa, riepilogo stagione, PDF del CV, minigioco, login senza ricaricare, dashboard Allenatore e home su telefono; nessun errore. La cache lunga dei file con `?v=` era già attiva in `vercel.json`.
+5. **File**: `role-scripts.js`, `index.html`, `mappa-club.js`, `season-wrapped.js`, `tide-button.js`, `sw.js`, `version.json`. Cache `v20261019_SPEED1`.
+
+Feature precedente: **2026-10-19** — FILE1 — Allegati veri nelle dashboard Allenatore e Vice:
 
 1. **Prima**: il pulsante «Carica file» faceva salire una barra finta (numeri casuali) e poi dava errore; i testi parlavano di «bucket Supabase staff-allegati» che non esiste.
 2. **Ora**: i file vanno nell'archivio della squadra su Upstash, tramite `/api/squadra` (`lib/squadra-store.js`, collezione `file_allegati`). Solo i membri della squadra li vedono e li scaricano. Il file viaggia a pezzi da circa 700 KB (ogni richiesta al server è al massimo 1 MB); i pezzi stanno in chiavi `elisee:sqfile:<squadra>:<id>:<n>`, l'elenco in `file_allegati`. Limite 4 MB, tipi ammessi: PDF, immagini, CSV, JSON, TXT, GPX/FIT/TCX, documenti Office. Per i video: un link.

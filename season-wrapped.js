@@ -1132,7 +1132,12 @@
   function mountCoverflow() {
     var modal = document.getElementById('elisee-wrapped-modal');
     var wrap = document.getElementById('es-wcf-wrap');
-    if (!modal || !wrap || typeof Swiper !== 'function') return;
+    if (!modal || !wrap) return;
+    if (typeof Swiper !== 'function') {
+      // Swiper si carica solo quando si apre il riepilogo stagione.
+      if (window.EliseeLibs) window.EliseeLibs.load('swiper').then(mountCoverflow, function () {});
+      return;
+    }
     if (_wrappedState.swiper) {
       try { _wrappedState.swiper.destroy(true, true); } catch (e) {}
       _wrappedState.swiper = null;

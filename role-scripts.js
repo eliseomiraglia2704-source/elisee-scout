@@ -29,6 +29,7 @@
 
   var active = hasSession();
   var registered = [];
+  var registeredStyles = [];
   var loaded = active;
   var pending = null;
 
@@ -38,6 +39,25 @@
     for (var i = 0; i < list.length; i++) {
       document.write('<script src="' + list[i] + '"><\/script>');
     }
+  }
+
+  // Fogli di stile delle dashboard: stesso principio degli script.
+  function writeStyles(list) {
+    list.forEach(function (href) { registeredStyles.push(href); });
+    if (!active) return;
+    for (var i = 0; i < list.length; i++) {
+      document.write('<link rel="stylesheet" href="' + list[i] + '">');
+    }
+  }
+
+  function loadStyle(href) {
+    return new Promise(function (resolve) {
+      var l = document.createElement('link');
+      l.rel = 'stylesheet';
+      l.href = href;
+      l.onload = l.onerror = function () { resolve(); };
+      document.head.appendChild(l);
+    });
   }
 
   // Dopo il caricamento della pagina, gli script aggiunti tardi registrano
@@ -75,9 +95,12 @@
     if (loaded) return Promise.resolve(true);
     if (pending) return pending;
     installLateLoadShim();
-    pending = registered.reduce(function (p, src) {
-      return p.then(function () { return loadOne(src); });
-    }, Promise.resolve()).then(function () {
+    pending = Promise.all(registeredStyles.map(loadStyle)).then(function () {
+      return registered.reduce(function (p, src) {
+        return p.then(function () { return loadOne(src); });
+      }, Promise.resolve());
+    });
+    pending = pending.then(function () {
       loaded = true;
       active = true;
       try { document.dispatchEvent(new CustomEvent('elisee:role-scripts-ready')); } catch (_) {}
@@ -105,7 +128,71 @@
 
   window.EliseeRoleScripts = {
     write: write,
+    writeStyles: writeStyles,
     ensure: ensure,
     isLoaded: function () { return loaded; }
   };
+})();
+
+/**
+ * Librerie esterne pesanti caricate solo quando servono (mappa, PDF, carosello).
+ * EliseeLibs.load('leaflet' | 'jspdf' | 'swiper') → Promise.
+ */
+(function () {
+  'use strict';
+  var LIBS = {
+    leaflet: ['https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', 'https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js'],
+    jspdf: ['https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'],
+    swiper: ['https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js']
+  };
+  var pending = {};
+  function addScript(src) {
+    return new Promise(function (resolve, reject) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.async = false;
+      s.onload = function () { resolve(); };
+      s.onerror = function () { reject(new Error('Caricamento non riuscito: ' + src)); };
+      document.head.appendChild(s);
+    });
+  }
+  function load(name) {
+    if (pending[name]) return pending[name];
+    var urls = LIBS[name] || [];
+    pending[name] = urls.reduce(function (p, u) { return p.then(function () { return addScript(u); }); }, Promise.resolve())
+      .catch(function (e) { delete pending[name]; throw e; });
+    return pending[name];
+  }
+  // Minigioco carriera (circa 400 KB): stile e script solo quando si apre.
+  function addStyle(href) {
+    return new Promise(function (resolve) {
+      var l = document.createElement('link');
+      l.rel = 'stylesheet';
+      l.href = href;
+      l.onload = l.onerror = function () { resolve(); };
+      document.head.appendChild(l);
+    });
+  }
+  function lazyMinigioco(cssHref, jsSrc) {
+    var loading = null;
+    function ensureMg() {
+      if (!loading) {
+        loading = addStyle(cssHref).then(function () { return addScript(jsSrc); })
+          .catch(function (e) { loading = null; throw e; });
+      }
+      return loading;
+    }
+    function open() {
+      var args = arguments;
+      ensureMg().then(function () {
+        var real = window.EliseeMinigioco;
+        if (real && !real.__stub && typeof real.open === 'function') real.open.apply(real, args);
+      }, function () {
+        if (typeof window.showToast === 'function') window.showToast('Minigioco non disponibile, riprova.', 'error');
+      });
+    }
+    window.EliseeMinigioco = { __stub: true, open: open, openHub: open, openCareer: open, close: function () {} };
+    window.openMinigiocoCarriera = open;
+  }
+  window.EliseeLibs = { load: load, lazyMinigioco: lazyMinigioco };
 })();

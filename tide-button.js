@@ -66,6 +66,14 @@
 
     const action = target || btn.dataset.action || btn.dataset.file || '';
 
+    // jsPDF si carica solo al primo download di un PDF generato dal sito.
+    if (/^(cv-dossier|dossier|cv|market-report|secret-list)$/.test(action) && !(window.jspdf && window.jspdf.jsPDF) && window.EliseeLibs && !btn.__esPdfTried) {
+      btn.__esPdfTried = true;
+      var again = function () { btn.dataset.state = 'idle'; runDownload(btn, target); };
+      window.EliseeLibs.load('jspdf').then(again, again);
+      return;
+    }
+
     // =========================================================================
     // CASO 1: URL di file reale (scaricamento con evento di progresso reale)
     // =========================================================================
