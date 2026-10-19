@@ -1,6 +1,14 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — DI2 — Dashboard, avvisi, barra anti-fake e banner cookie in 4 lingue (fase 2):
+Ultimo aggiornamento: **2026-10-19** — RD1 — 11 dashboard di ruolo senza dati inventati:
+
+1. **Quali**: Procuratore, Biglietteria, Direttore generale, Direttore sportivo, Magazziniere, Marketing, Ufficio stampa, Segretario, Tifoso, Team manager, Settore giovanile. Usano la struttura comune `dash-real.js` e i pannelli `club-role-ops.js`.
+2. **Tolti**: tessere e abilitazioni finte (es. «FIGC-DS-4412 · Scad. 30/06/2027»), squadra e logo «Foggia City» per tutti, prossimi impegni e numeri fissi (24 tesserati, 94% puntualità, 1.842 ingressi…), completamento profilo fisso 85%, badge «Accreditato», sponsor, articoli, accrediti, inventario, budget e scadenze di esempio. Tolti anche i nomi e i voti scolastici inventati di ragazzi del vivaio.
+3. **Ora**: si vedono solo i dati dell'utente. Abilitazione e tessera arrivano dal profilo, altrimenti «Abilitazione non inserita». Il completamento profilo è calcolato. Comunicazioni, checklist, scadenze, pratiche, richieste materiali, budget, inventario, note, accrediti, rassegna, calendario e sponsor partono vuoti e si riempiono con quello che inserisce l'utente (salvato su questo dispositivo, e il sito lo dice). Le funzioni non ancora attive (varchi stadio, ticketing, store, loyalty, archivio firmato, manutenzioni, audit) sono segnate «Coming soon / Beta». Il settore giovanile non salva più dati di minori nel browser: arriva con l'archivio squadra protetto. Il calcolatore trasferte non inventa più i chilometri. Badge DS: «Profilo verificato», non «DS Abilitato FIGC». Tolto il codice morto con i radar a percentuali fisse.
+4. **Aperto**: queste dashboard sono ancora solo in italiano.
+5. **File**: `dash-real.js`, `club-role-ops.js`, `ds-hub.js`, `dash-luxury.css`, 11 file `*-dash.js`, `index.html`, `sw.js`, `version.json`. Cache `v20261019_RD1`.
+
+Feature precedente: **2026-10-19** — DI2 — Dashboard, avvisi, barra anti-fake e banner cookie in 4 lingue (fase 2):
 
 1. **Dashboard**: aggiunti a `window.EliseeDashI18n` (in fondo a `i18n.js`) i testi di formazione, lavagna tattica, analisi avversario, GPS/carichi e messaggi, più ruoli e sigle (POR, DC, TD…). La voce `it` semplifica i testi tecnici (es. «Lineup Builder Ufficiale · XI Titolare» → «Formazione · 11 titolari», niente «Supabase»/«Bucket»).
 2. **Avvisi**: `dash-i18n.js` traduce anche `alert`, `confirm` e `showToast` quando il messaggio è nel dizionario (testo esatto o modello con regex, es. «è già programmato l'evento… alla stessa ora», «Eliminare dal calendario…»). `showToast` è intercettata anche se viene ridefinita dopo.

@@ -1303,6 +1303,13 @@ body.es-tifoso-on #user-dossier-view-group {
 }
 .es-pro-club-info strong { display: block; font-size: 0.88rem; font-weight: 700; color: #f8fafc; }
 .es-pro-club-info span { font-size: 0.72rem; color: #94a3b8; }
+.es-pro-sidebar-club-card .es-pro-crest-ico,
+.es-pro-club-info .es-pro-crest-ico {
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid rgba(56, 189, 248, 0.3); color: #38bdf8;
+}
+.es-pro-club-info .es-pro-crest-ico { width: 40px; height: 40px; }
 .es-pro-btn-quick-jump {
   background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
   border: 1px solid rgba(56, 189, 248, 0.4);
@@ -1400,6 +1407,7 @@ body.es-tifoso-on #user-dossier-view-group {
 }
 
 .es-ops-lead { color: #8a93a3; font-size: 0.84rem; line-height: 1.5; margin: 0 0 12px; }
+.es-ops-empty { color: #64748b; font-size: 0.8rem; margin: 10px 0 0; }
 .es-ops-btn {
   display: inline-flex; align-items: center; gap: 6px;
   background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);

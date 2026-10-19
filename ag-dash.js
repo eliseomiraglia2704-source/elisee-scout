@@ -1,12 +1,5 @@
 /* Dashboard Procuratore — Agente FIFA */
 (function () {
-  var AXES = [
-    'Trattative Concluse', 'Rete Contatti Club', 'Gestione Immagine Assistiti', 'Conoscenza Mercato',
-    'Rapporti con DS', 'Negoziazione Contratti', 'Copertura Internazionale', 'Soddisfazione Assistiti'
-  ];
-  var V2025 = [88, 90, 94, 85, 87, 93, 94, 97];
-  var V2023 = [74, 76, 80, 70, 73, 79, 80, 82];
-
   function esc(s) {
     return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
@@ -30,80 +23,6 @@
       if (window.getStoredProfilePhoto) return window.getStoredProfilePhoto(null, u) || u.fotoUrl || '';
     } catch (_) {}
     return u.fotoUrl || '';
-  }
-  function polar(cx, cy, r, i, n, val) {
-    var a = (-Math.PI / 2) + (i * 2 * Math.PI / n);
-    var rr = r * (val / 100);
-    return [cx + Math.cos(a) * rr, cy + Math.sin(a) * rr];
-  }
-  function poly(cx, cy, r, vals) {
-    return vals.map(function (v, i) {
-      var p = polar(cx, cy, r, i, vals.length, v);
-      return p[0].toFixed(1) + ',' + p[1].toFixed(1);
-    }).join(' ');
-  }
-  function wedge(cx, cy, r, start, end, color) {
-    var n = 24;
-    var pts = [[cx, cy]];
-    for (var i = 0; i <= n; i++) {
-      var t = start + (end - start) * (i / n);
-      pts.push([cx + Math.cos(t) * r, cy + Math.sin(t) * r]);
-    }
-    return '<path d="M' + pts.map(function (p) { return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' L') + ' Z" fill="' + color + '" />';
-  }
-  function radarSvg() {
-    var cx = 220, cy = 210, r = 150, n = AXES.length;
-    var html = '<svg viewBox="0 0 440 430" role="img" aria-label="Analisi attività procuratoriale">';
-    html += wedge(cx, cy, r, -Math.PI / 2, 0, 'rgba(74,222,128,0.16)');
-    html += wedge(cx, cy, r, 0, Math.PI / 2, 'rgba(248,113,113,0.18)');
-    html += wedge(cx, cy, r, Math.PI / 2, Math.PI, 'rgba(250,204,21,0.16)');
-    html += wedge(cx, cy, r, Math.PI, Math.PI * 1.5, 'rgba(56,189,248,0.16)');
-    for (var ring = 1; ring <= 5; ring++) {
-      html += '<polygon points="' + poly(cx, cy, r, AXES.map(function () { return ring * 20; })) +
-        '" fill="none" stroke="rgba(148,163,184,0.22)" stroke-width="1"/>';
-    }
-    for (var i = 0; i < n; i++) {
-      var e = polar(cx, cy, r, i, n, 100);
-      html += '<line x1="' + cx + '" y1="' + cy + '" x2="' + e[0].toFixed(1) + '" y2="' + e[1].toFixed(1) +
-        '" stroke="rgba(148,163,184,0.2)"/>';
-      var lab = polar(cx, cy, r + 26, i, n, 100);
-      html += '<text x="' + lab[0].toFixed(1) + '" y="' + lab[1].toFixed(1) +
-        '" text-anchor="middle" dominant-baseline="middle" fill="#94a3b8" font-size="9">' +
-        esc(AXES[i]) + ' ' + V2025[i] + '%</text>';
-    }
-    html += '<polygon points="' + poly(cx, cy, r, V2023) + '" fill="rgba(148,163,184,0.12)" stroke="#64748b" stroke-width="1.5"/>';
-    html += '<polygon points="' + poly(cx, cy, r, V2025) + '" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="2"/>';
-    html += '</svg>';
-    return html;
-  }
-  function spark(values, color) {
-    var w = 120, h = 36, max = Math.max.apply(null, values), min = Math.min.apply(null, values);
-    var pts = values.map(function (v, i) {
-      var x = (i / (values.length - 1)) * w;
-      var y = h - ((v - min) / (max - min || 1)) * (h - 4) - 2;
-      return x.toFixed(1) + ',' + y.toFixed(1);
-    }).join(' ');
-    return '<svg viewBox="0 0 ' + w + ' ' + h + '" width="100%" height="36"><polyline fill="none" stroke="' +
-      color + '" stroke-width="2" points="' + pts + '"/></svg>';
-  }
-  function trendSvg() {
-    var series = {
-      '2023': [58, 64, 68, 72, 76, 80],
-      '2024': [70, 74, 78, 82, 86, 90],
-      '2025': [78, 82, 86, 90, 94, 97]
-    };
-    var cols = { '2023': '#38bdf8', '2024': '#4ade80', '2025': '#facc15' };
-    var w = 240, h = 90;
-    var html = '<svg viewBox="0 0 ' + w + ' ' + h + '" width="100%" height="90">';
-    Object.keys(series).forEach(function (k) {
-      var vals = series[k];
-      var pts = vals.map(function (v, i) {
-        return ((i / 5) * (w - 8) + 4).toFixed(1) + ',' + (h - 8 - (v / 100) * (h - 16)).toFixed(1);
-      }).join(' ');
-      html += '<polyline fill="none" stroke="' + cols[k] + '" stroke-width="2" points="' + pts + '"/>';
-    });
-    html += '</svg>';
-    return html;
   }
   function ico(d) {
     return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">' + d + '</svg>';

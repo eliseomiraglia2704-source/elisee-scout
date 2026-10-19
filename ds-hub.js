@@ -64,9 +64,9 @@
     var approved = String(u.badgeVerificaStato || '') === 'approved';
     var docs = !!(u.docsAttachedAt || u.badgeDocumentUrl);
     return [
-      { id: 'figc', label: 'DS Abilitato FIGC', on: approved },
-      { id: 'scout', label: 'Scout Qualificato', on: approved || docs },
-      { id: 'dir', label: 'Dirigente Ufficiale', on: approved }
+      { id: 'figc', label: 'Profilo verificato', on: approved },
+      { id: 'scout', label: 'Documenti caricati', on: approved || docs },
+      { id: 'dir', label: 'Ruolo confermato', on: approved }
     ];
   }
   function hash(s) {

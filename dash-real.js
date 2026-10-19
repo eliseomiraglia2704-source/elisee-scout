@@ -24,17 +24,16 @@
   var ROLE_PRO = {
     ds: {
       area: 'Area Direzione Sportiva', staff: 'Direzione Sportiva Ufficiale', clubSub: 'Prima Squadra · Calciomercato',
-      licence: 'Dirigente Sportivo FIGC / ADISE', tessera: 'FIGC-DS-4412 · Scad. 30/06/2027',
       cta: { label: 'Secret List Stealth →', act: 'secret' },
-      next: { label: 'Prossima Finestra Mercato', title: 'Sessione Autunnale 2026/27', sub: '01/10/2026 · Chiusura 02/02/2027' },
-      kpi: { label: 'Stato Rosa', items: [['24', 'Tesserati'], ['3', 'In scadenza'], ['1', 'Trattativa']] },
-      focus: { label: 'Focus Mercato di Giornata', title: 'Rinnovi Under 23 & Svincolati', sub: 'Priorità fascia offensiva' },
+      next: { label: 'Prossima Finestra Mercato' },
+      kpi: { label: 'Stato Rosa', items: [['—', 'Tesserati'], ['—', 'In scadenza'], ['—', 'Trattativa']] },
+      focus: { label: 'Focus Mercato di Giornata', title: 'Rinnovi e svincolati', sub: 'Mercato, contratti e obiettivi' },
       nav: [
         { id: 'dashboard', label: 'Dashboard', ico: 'grid' },
         { id: 'secret', label: 'Secret List Stealth', ico: 'lock', act: 'secret' },
         { id: 'trattative', label: 'Trattative & Contratti', ico: 'brief' },
         { id: 'scouting', label: 'Scouting & Target', ico: 'radar' },
-        { id: 'schede', label: 'Schede tecniche IA', ico: 'file' },
+        { id: 'schede', label: 'Schede tecniche', ico: 'file' },
         { id: 'wall', label: 'Wall Trasferimenti', ico: 'file', act: 'wall' },
         { id: 'radar', label: 'Radar & Competenze', ico: 'radar' },
         { id: 'canale', label: 'Canale Staff', ico: 'users' },
@@ -43,10 +42,9 @@
     },
     tm: {
       area: 'Area Team Manager', staff: 'Staff Organizzativo Ufficiale', clubSub: 'Prima Squadra · Logistica',
-      licence: 'Team Manager Qualificato LND', tessera: 'LND-TM-2281 · Scad. 30/06/2027',
-      cta: { label: 'Nuovo broadcast', act: 'broadcast' },
-      next: { label: 'Prossima Trasferta', title: 'Trasferta ufficiale di campionato', sub: '22/09/2026 · Raduno 14:00' },
-      kpi: { label: 'Stato Logistica', items: [['94%', 'Puntualità'], ['22', 'Conferme'], ['2', 'Checklist']] },
+      cta: { label: 'Comunicazioni →', act: 'broadcast' },
+      next: { label: 'Prossima Trasferta' },
+      kpi: { label: 'Stato Logistica', items: [['—', 'Puntualità'], ['—', 'Conferme'], ['—', 'Checklist']] },
       focus: { label: 'Focus di Giornata', title: 'Broadcast e checklist matchday', sub: 'Conferme di lettura in tempo reale' },
       nav: [
         { id: 'dashboard', label: 'Dashboard', ico: 'grid' },
@@ -61,10 +59,9 @@
     },
     yg: {
       area: 'Area Settore Giovanile', staff: 'Settore Giovanile Ufficiale', clubSub: 'Vivaio · Tutela Minori',
-      licence: 'Responsabile Settore Giovanile FIGC', tessera: 'FIGC-SGS-1194 · Scad. 30/06/2027',
-      cta: { label: 'Nuovo talento', act: 'talent' },
-      next: { label: 'Prossimo Impegno Vivaio', title: 'Torneo Under 17 regionale', sub: '21/09/2026 · Ore 10:30' },
-      kpi: { label: 'Stato Vivaio', items: [['6', 'Categorie'], ['84', 'Tesserati'], ['12', 'Promozioni']] },
+      cta: { label: 'Settore giovanile →', act: 'talent' },
+      next: { label: 'Prossimo Impegno Vivaio' },
+      kpi: { label: 'Stato Vivaio', items: [['—', 'Categorie'], ['—', 'Tesserati'], ['—', 'Promozioni']] },
       focus: { label: 'Focus Formativo', title: 'Academy Talent Tracker', sub: 'Fisica, tattica, scolastica' },
       nav: [
         { id: 'dashboard', label: 'Dashboard', ico: 'grid' },
@@ -77,11 +74,10 @@
     },
     dg: {
       area: 'Area Direzione Generale', staff: 'Direzione Generale Ufficiale', clubSub: 'Governance · Budget',
-      licence: 'Direttore Generale', tessera: 'DG-CLUB-3301 · Delega di firma attiva',
-      cta: { label: 'Nuova Delibera +', act: 'edit' },
-      next: { label: 'Prossimo CDA', title: 'Consiglio di amministrazione', sub: '24/09/2026 · Ore 18:00' },
-      kpi: { label: 'Stato Gestionale', items: [['OK', 'Budget'], ['2', 'Scostamenti'], ['0', 'Criticità']] },
-      focus: { label: 'Focus Direzionale', title: 'Controllo di gestione Q1', sub: 'Allineamento DS e Presidente' },
+      cta: { label: 'Modifica profilo', act: 'edit' },
+      next: { label: 'Prossimo CDA' },
+      kpi: { label: 'Stato Gestionale', items: [['—', 'Budget'], ['—', 'Scostamenti'], ['—', 'Criticità']] },
+      focus: { label: 'Focus Direzionale', title: 'Controllo di gestione', sub: 'Budget e scostamenti' },
       nav: [
         { id: 'dashboard', label: 'Dashboard', ico: 'grid' },
         { id: 'budget', label: 'Budget & Risorse', ico: 'brief' },
@@ -93,12 +89,11 @@
       ]
     },
     ag: {
-      area: 'Area Procuratore', staff: 'Agente FIFA Accreditato', clubSub: 'Portfolio · Mandati',
-      licence: 'Agente FIFA / Registro CONI', tessera: 'FIFA-AG-7720 · Crediti formativi ok',
-      cta: { label: 'Nuovo Assistito +', act: 'edit' },
-      next: { label: 'Prossima Trattativa', title: 'Finestra contrattuale autunnale', sub: '01/10/2026 · Mandati in scadenza' },
-      kpi: { label: 'Portfolio', items: [['8', 'Assistiti'], ['3', 'In trattativa'], ['2', 'Rinnovi']] },
-      focus: { label: 'Focus Mandati', title: 'Rinnovi e club esteri', sub: 'Priorità Primavera / Lega Pro' },
+      area: 'Area Procuratore', staff: 'Procuratore', clubSub: 'Portfolio · Mandati',
+      cta: { label: 'Modifica profilo', act: 'edit' },
+      next: { label: 'Prossima Trattativa' },
+      kpi: { label: 'Portfolio', items: [['—', 'Assistiti'], ['—', 'In trattativa'], ['—', 'Rinnovi']] },
+      focus: { label: 'Focus Mandati', title: 'Mandati e rinnovi', sub: 'Assistiti, club e scadenze' },
       nav: [
         { id: 'dashboard', label: 'Dashboard', ico: 'grid' },
         { id: 'portfolio', label: 'Portfolio Assistiti', ico: 'users' },
@@ -111,11 +106,10 @@
     },
     mk: {
       area: 'Area Marketing', staff: 'Marketing & Commerciale Ufficiale', clubSub: 'Sponsor · Merchandising',
-      licence: 'Responsabile Marketing / Commerciale', tessera: 'MK-CLUB-5510',
-      cta: { label: 'Nuovo lead', act: 'crm' },
-      next: { label: 'Prossimo Evento Commerciale', title: 'Hospitality gara casalinga', sub: '22/09/2026 · Tribuna d\'onore' },
-      kpi: { label: 'Revenue B2B', items: [['12', 'Sponsor'], ['3', 'In trattativa'], ['14', 'Vendite oggi']] },
-      focus: { label: 'Focus Commerciale', title: 'CRM e store', sub: 'Rinnovi + merchandising live' },
+      cta: { label: 'Sponsor →', act: 'crm' },
+      next: { label: 'Prossimo Evento Commerciale' },
+      kpi: { label: 'Revenue B2B', items: [['—', 'Sponsor'], ['—', 'In trattativa'], ['—', 'Vendite oggi']] },
+      focus: { label: 'Focus Commerciale', title: 'CRM e store', sub: 'Sponsor e store' },
       nav: [
         { id: 'dashboard', label: 'Dashboard', ico: 'grid' },
         { id: 'crm', label: 'CRM commerciale', ico: 'star' },
@@ -127,10 +121,9 @@
     },
     pr: {
       area: 'Area Ufficio Stampa', staff: 'Comunicazione Ufficiale', clubSub: 'Media · Comunicati',
-      licence: 'Responsabile Comunicazione / OdG', tessera: 'OdG-USSI · Accrediti Lega ok',
       cta: { label: 'Nuovo accredito', act: 'accrediti' },
-      next: { label: 'Prossima Conferenza', title: 'Conferenza pre-gara', sub: '21/09/2026 · Ore 13:00' },
-      kpi: { label: 'Stato Media', items: [['4', 'Comunicati'], ['1', 'Bozza'], ['12', 'Accrediti']] },
+      next: { label: 'Prossima Conferenza' },
+      kpi: { label: 'Stato Media', items: [['—', 'Comunicati'], ['—', 'Bozza'], ['—', 'Accrediti']] },
       focus: { label: 'Focus Comunicazione', title: 'Accrediti e rassegna', sub: 'Tono istituzionale, fonti verificate' },
       nav: [
         { id: 'dashboard', label: 'Dashboard', ico: 'grid' },
@@ -143,10 +136,9 @@
     },
     eq: {
       area: 'Area Magazzino', staff: 'Equipment Manager Ufficiale', clubSub: 'Kit gara · Inventario',
-      licence: 'Magazziniere / Equipment Manager', tessera: 'EQ-CLUB-0902',
       cta: { label: 'Nuova richiesta', act: 'richieste' },
-      next: { label: 'Prossima Gara — Kit', title: 'Mute ufficiali prima squadra', sub: '22/09/2026 · Consegna 10:00' },
-      kpi: { label: 'Scorte', items: [['OK', 'Kit gara'], ['2', 'Riordini'], ['€12.940', 'Residuo']] },
+      next: { label: 'Prossima Gara — Kit' },
+      kpi: { label: 'Scorte', items: [['—', 'Kit gara'], ['—', 'Riordini'], ['—', 'Residuo']] },
       focus: { label: 'Focus Magazzino', title: 'Richieste e budget', sub: 'Decurtazione automatica spese' },
       nav: [
         { id: 'dashboard', label: 'Dashboard', ico: 'grid' },
@@ -160,11 +152,10 @@
       ]
     },
     sg: {
-      area: 'Area Segreteria Generale', staff: 'Segreteria Sportiva Ufficiale', clubSub: 'Tesseramenti · Pratiche FIGC',
-      licence: 'Segretario Generale / Club Manager', tessera: 'FIGC-SEG-6644 · Albo Segretari',
+      area: 'Area Segreteria Generale', staff: 'Segreteria Sportiva Ufficiale', clubSub: 'Tesseramenti · Pratiche federali',
       cta: { label: 'Nuova scadenza', act: 'scadenze' },
-      next: { label: 'Prossima Scadenza Federale', title: 'Tesseramenti LND online', sub: '30/09/2026 · Ore 18:00' },
-      kpi: { label: 'Pratiche', items: [['18', 'Attive'], ['2', 'Istruttoria'], ['3', 'Alert']] },
+      next: { label: 'Prossima Scadenza Federale' },
+      kpi: { label: 'Pratiche', items: [['—', 'Attive'], ['—', 'Istruttoria'], ['—', 'Alert']] },
       focus: { label: 'Focus Segreteria', title: 'Alert scadenze', sub: 'Visite, svincoli, rinnovi, squalifiche' },
       nav: [
         { id: 'dashboard', label: 'Dashboard', ico: 'grid' },
@@ -177,10 +168,9 @@
     },
     bt: {
       area: 'Area Biglietteria', staff: 'Biglietteria & SLO Ufficiale', clubSub: 'Ticketing · Tifoseria',
-      licence: 'Responsabile Biglietteria / SLO', tessera: 'GOS / Questura · Protocollo attivo',
-      cta: { label: 'Emetti titolo QR', act: 'ticketing' },
-      next: { label: 'Prossima Gara — Botteghino', title: 'Vendita nominale campionato', sub: 'Apertura 18/09/2026' },
-      kpi: { label: 'Affluenza', items: [['68%', 'Riempimento'], ['1.842', 'Ingressi'], ['4 min', 'Coda sud']] },
+      cta: { label: 'Biglietteria →', act: 'ticketing' },
+      next: { label: 'Prossima Gara — Botteghino' },
+      kpi: { label: 'Affluenza', items: [['—', 'Riempimento'], ['—', 'Ingressi'], ['—', 'Coda sud']] },
       focus: { label: 'Focus Ticketing', title: 'Varchi e SLO Hub', sub: 'Controllo accessi GOS' },
       nav: [
         { id: 'dashboard', label: 'Dashboard', ico: 'grid' },
@@ -193,10 +183,9 @@
     },
     tf: {
       area: 'Area Tifoso', staff: 'Community Elisee Scout', clubSub: 'Squadra del cuore',
-      licence: 'Tessera Digitale del Tifoso', tessera: 'Community ufficiale · Badge fedeltà',
-      cta: { label: 'Registra Presenza +', act: 'edit' },
-      next: { label: 'Prossima Gara da Vivere', title: 'Match della tua squadra', sub: '22/09/2026 · Stadio' },
-      kpi: { label: 'Fedeltà', items: [['8', 'Presenze'], ['3', 'Trasferte'], ['12', 'Badge']] },
+      cta: { label: 'Modifica profilo', act: 'edit' },
+      next: { label: 'Prossima Gara da Vivere' },
+      kpi: { label: 'Fedeltà', items: [['—', 'Presenze'], ['—', 'Trasferte'], ['—', 'Badge']] },
       focus: { label: 'Focus Passione', title: 'Stadio, merchandising, community', sub: 'Collezione sticker e cori' },
       nav: [
         { id: 'dashboard', label: 'Dashboard', ico: 'grid' },
@@ -232,7 +221,6 @@
   }
   function clubOf(u) {
     var c = val((u && (u.squadra || u.club || u.squadraCuore)) || '');
-    if (!c || /atalanta|carlentini/i.test(c)) return 'Foggia City';
     return c;
   }
   function empty(msg) {
@@ -289,12 +277,16 @@
     var club = clubOf(user);
     var bio = val((user.staffProfile && user.staffProfile.bio) || user.bio);
     var primaryAction = getPrimaryActionForRole(roleLabel, attr);
+    var checks = [user.nome, user.cognome, club, bio, ph, user.email,
+      (user.docsAttachedAt || user.badgeDocumentUrl || user.badgeSelfieUrl)];
+    var pct = Math.round(100 * checks.filter(function (x) { return !!val(x); }).length / checks.length);
+    var verified = String(user.badgeVerificaStato || '') === 'approved';
 
     return '<section class="es-pd-card es-pd-indice" style="padding:1.25rem;">' +
       '<div class="es-pd-card-header" style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; padding-bottom:0.75rem; border-bottom:1px solid rgba(148,163,184,0.12);">' +
         '<div style="display:flex; align-items:center; gap:8px;">' +
           '<h2 style="font-size:0.95rem; font-weight:800; color:#f3f8fc; margin:0; letter-spacing:0.02em;">Profilo Ufficiale</h2>' +
-          '<span class="es-pd-source-badge es-pd-source-user" style="font-size:0.68rem; font-weight:700; padding:2px 8px; border-radius:6px; background:rgba(56,189,248,0.1); color:#38bdf8; border:1px solid rgba(56,189,248,0.25);">Accreditato</span>' +
+          '<span class="es-pd-source-badge es-pd-source-user" style="font-size:0.68rem; font-weight:700; padding:2px 8px; border-radius:6px; background:rgba(56,189,248,0.1); color:#38bdf8; border:1px solid rgba(56,189,248,0.25);">' + (verified ? 'Verificato' : 'Profilo') + '</span>' +
         '</div>' +
         '<button type="button" class="es-btn-cos-primary" data-' + esc(attr || 'pd') + '="' + esc(primaryAction.act) + '" style="display:inline-flex; align-items:center; gap:6px; font-size:0.75rem; font-weight:700; padding:0.4rem 0.85rem; border-radius:6px; background:#0284c7; color:#fff; border:none; cursor:pointer; box-shadow:0 2px 8px rgba(2,132,199,0.3);">' +
           primaryAction.icon + '<span>' + esc(primaryAction.label) + '</span>' +
@@ -313,13 +305,13 @@
       '<div class="es-pd-onboarding-box" style="background:#040912; border:1px solid rgba(56,189,248,0.18); border-radius:8px; padding:0.85rem 1rem; margin-bottom:0.75rem;">' +
         '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">' +
           '<span style="font-size:0.75rem; font-weight:700; color:#94a3b8; text-transform:uppercase; letter-spacing:0.04em;">Completamento Anagrafica &amp; Ruolo</span>' +
-          '<span style="font-size:0.8rem; font-weight:900; color:#38bdf8;">85%</span>' +
+          '<span style="font-size:0.8rem; font-weight:900; color:#38bdf8;">' + pct + '%</span>' +
         '</div>' +
         '<div style="height:6px; background:rgba(15,23,42,0.8); border-radius:3px; overflow:hidden; border:1px solid rgba(148,163,184,0.14);">' +
-          '<div style="width:85%; height:100%; background:linear-gradient(90deg, #0284c7 0%, #38bdf8 100%); border-radius:3px;"></div>' +
+          '<div style="width:' + pct + '%; height:100%; background:linear-gradient(90deg, #0284c7 0%, #38bdf8 100%); border-radius:3px;"></div>' +
         '</div>' +
         '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; font-size:0.72rem;">' +
-          '<span style="color:#64748b;">Dati di tesseramento e abilitazione attivi</span>' +
+          '<span style="color:#64748b;">' + (pct >= 100 ? 'Profilo completo' : 'Completa i dati mancanti') + '</span>' +
           '<button type="button" class="es-pd-edit" data-' + esc(attr || 'pd') + '="edit" style="background:none; border:none; color:#38bdf8; font-weight:800; cursor:pointer; padding:0; display:inline-flex; align-items:center; gap:3px;">' +
             '<span>Modifica Anagrafica</span> &rarr;' +
           '</button>' +
@@ -444,7 +436,17 @@
       return '<div><strong>' + it[0] + '</strong><span>' + it[1] + '</span></div>';
     }).join('');
 
-    var logo = 'immagini/squadre-loghi/foggia-city.png?v=20260917_FGCLIC1';
+    var logo = val(user.clubLogo || user.squadraLogo || user.logoSquadra || '');
+    var clubName = club || 'Squadra non inserita';
+    var crest = function (cls) {
+      return logo
+        ? '<img' + (cls ? ' class="' + cls + '"' : '') + ' src="' + esc(logo) + '" alt="' + esc(clubName) + '">'
+        : '<span class="es-pro-crest-ico' + (cls ? ' ' + cls : '') + '"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">' + ICO.shield + '</svg></span>';
+    };
+    var licenceText = [
+      val((user.staffProfile && (user.staffProfile.licence || user.staffProfile.patentino)) || user.patentino || user.licenza || user.abilitazione),
+      val(user.matricola || user.tessera || user.nTessera)
+    ].filter(Boolean).join(' · ') || 'Abilitazione non inserita';
 
     return '<div class="es-pro-shell">' +
       '<aside class="es-pro-sidebar">' +
@@ -453,8 +455,8 @@
           cfg.nav.map(function (n) { return renderSideBtn(n, attr, n.id === 'dashboard'); }).join('') +
         '</nav>' +
         '<div class="es-pro-sidebar-badge"><div class="es-pro-sidebar-club-card">' +
-          '<img src="' + logo + '" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'immagini/squadre-loghi/foggia-city.png\';">' +
-          '<div><strong>' + esc(club) + '</strong><span>' + esc(cfg.staff) + '</span></div>' +
+          crest('') +
+          '<div><strong>' + esc(clubName) + '</strong><span>' + esc(cfg.staff) + '</span></div>' +
         '</div></div>' +
       '</aside>' +
       '<main class="es-pro-main">' +
@@ -464,18 +466,18 @@
             '<div class="es-pro-header-identity">' +
               '<div class="es-pro-header-block">' +
                 '<div class="es-pro-licence-badge"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' + ICO.shield + '</svg></div>' +
-                '<div class="es-pro-doc-info"><strong>' + esc(name) + '</strong><span class="role">' + esc(roleLabel) + '</span><p class="sub">' + esc(cfg.licence) + ' · ' + esc(cfg.tessera) + '</p></div>' +
+                '<div class="es-pro-doc-info"><strong>' + esc(name) + '</strong><span class="role">' + esc(roleLabel) + '</span><p class="sub">' + esc(licenceText) + '</p></div>' +
               '</div>' +
               '<div class="es-pro-header-sep"></div>' +
               '<div class="es-pro-header-block es-pro-club-info">' +
-                '<img class="crest" src="' + logo + '" alt="' + esc(club) + '" onerror="this.onerror=null;this.src=\'immagini/squadre-loghi/foggia-city.png\';">' +
-                '<div><strong>' + esc(club) + '</strong><span>' + esc(cfg.clubSub) + '</span></div>' +
+                crest('crest') +
+                '<div><strong>' + esc(clubName) + '</strong><span>' + esc(cfg.clubSub) + '</span></div>' +
               '</div>' +
             '</div>' +
             '<button type="button" class="es-pro-btn-quick-jump" data-pro-nav="' + esc(cfg.cta.act) + '" data-' + attr + '="' + esc(cfg.cta.act) + '">' + esc(cfg.cta.label) + '</button>' +
           '</div>' +
           '<div class="es-pro-header-match-row">' +
-            '<div class="es-pro-target-box"><p class="label">' + esc(cfg.next.label) + '</p><strong>' + esc(cfg.next.title) + '</strong><span>' + esc(cfg.next.sub) + '</span></div>' +
+            '<div class="es-pro-target-box"><p class="label">' + esc(cfg.next.label) + '</p><strong>Nessun impegno in programma</strong><span>Si aggiorna con il calendario del club</span></div>' +
             '<div class="es-pro-target-box"><p class="label">' + esc(cfg.kpi.label) + '</p><div class="es-pro-countdown-nums">' + kpiHtml + '</div></div>' +
             '<div class="es-pro-target-box"><p class="label">' + esc(cfg.focus.label) + '</p><strong style="color:#38bdf8;">' + esc(cfg.focus.title) + '</strong><span>' + esc(cfg.focus.sub) + '</span></div>' +
           '</div>' +
