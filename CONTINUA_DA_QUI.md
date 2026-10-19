@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — HOME1 — Home: niente più «verificati FIGC/LND»:
+Ultimo aggiornamento: **2026-10-19** — CV1 — Curriculum: tolte le «Verifiche del Profilo Atleta»:
+
+1. **Perché**: 6 pulsanti (Identità, Video Cert., GPS Valido, Med. Sport, Tutela, FIGC Reg.) mostravano conferme che il sito non fa (GPS «K-Sport / Catapult», «Status federale FIGC registrato», certificato medico).
+2. **Aperto**: la pagina Curriculum (`#dashboard-skills`) è tutta un profilo fisso «Eliseo Miraglia» con numeri inventati (presenze, gol, GPS, carriera, video «certificati»). Da decidere: etichetta «Esempio» o profilo reale dell'utente.
+3. **File**: `index.html`, `sw.js`, `version.json`. Cache `v20261019_CV1`.
+
+Feature precedente: **2026-10-19** — HOME1 — Home: niente più «verificati FIGC/LND»:
 
 1. **Perché**: la home diceva «Dossier verificati FIGC/LND» e mostrava «FIGC» tra i numeri del curriculum, mentre la pagina Legal dice che la piattaforma non è affiliata né collegata a FIGC/LND.
 2. **Ora**: «Dossier verificati» (IT/EN/ES/FR, `home.badgeDossier`) e «Verifica» al posto di «FIGC» (`home.statDossierKicker`).
