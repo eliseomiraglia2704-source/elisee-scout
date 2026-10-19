@@ -1,6 +1,16 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-20** — CK1 — Banner dei cookie senza stili scritti nel codice:
+Ultimo aggiornamento: **2026-10-20** — RA1 — Azioni rapide di ruolo riscritte (`role-actions-runtime.js`):
+
+1. Tolti tutti i dati inventati (incassi, nomi di calciatori, idoneità mediche, consensi «confermati» senza fare nulla, discorsi «generati dall'IA», QR da servizio esterno). Ogni azione ora: apre una sezione vera (schede, pubblica candidatura, Secret List, wall, pannello club), oppure apre un modulo semplice salvato solo sul dispositivo (chiave `elisee_role_notes:<email>`), oppure apre un'e-mail al supporto, oppure dice «In arrivo».
+2. Medico, fisioterapista e nutrizionista: solo «In arrivo», perché i dati sanitari non vanno salvati nel browser.
+3. Stili spostati in `role-actions.css` (nuovo, caricato dopo l'accesso). Niente stili nel codice, niente emoji, niente `!important`. Prima le finestre non avevano stile e non si vedevano.
+4. Traduzioni EN/ES/FR aggiunte in `dash-i18n-data.js`; la finestra (`#es-ra-modal`) è tra le radici tradotte da `dash-i18n.js`.
+5. Cancellati dal browser i vecchi dati di esempio: `elisee_medical_clearances_log`, `elisee_club_selection_events`, `elisee_roles_actions_log`.
+
+Da sistemare dopo: il link «Schede tecniche» nel footer di index.html crea un annuncio di esempio («ASD Virtus Foggia»).
+
+Precedente: CK1 — Banner dei cookie senza stili scritti nel codice:
 
 1. `cookie-profiling.js` non scrive più stili dentro il banner, il pannello preferenze e la finestra informativa: usa le classi `es-ck-*` definite in fondo a `style.css`. Il banner si apre e si chiude con la classe `is-open`. Tolta l'emoji del biscotto.
 2. `style.css`: tolta la regola con `!important` su `#cookie-banner`. Aspetto invariato (verificato a 1366 e 390 px).
