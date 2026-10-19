@@ -1,6 +1,12 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — CV2 — Curriculum con i dati veri dell'utente:
+Ultimo aggiornamento: **2026-10-19** — I18N1 — Traduzioni spagnolo e francese dei testi nuovi:
+
+1. **Ora**: aggiunte in `i18n.js` le versioni ES e FR di tutti i testi creati il 2026-10-19: `sqm.*` (staff squadra), `reset.*` (recupero password), `legal.*`, `auth.loginNeeded`, `auth.forgot.msg`, `cv.*` (curriculum). Controllato che ogni chiave risponda in IT/EN/ES/FR.
+2. **Aperto**: le dashboard Allenatore e Vice (`coach-dash.js`, `vice-dash.js`) sono ancora scritte solo in italiano dentro il codice.
+3. **File**: `i18n.js`, `index.html`, `sw.js`, `version.json`. Cache `v20261019_I18N1`.
+
+Feature precedente: **2026-10-19** — CV2 — Curriculum con i dati veri dell'utente:
 
 1. **Cosa era rotto**: la pagina Curriculum (`#dashboard-skills`) era un profilo fisso «Eliseo Miraglia, US Foggia 1920, Serie D» con presenze, gol, GPS, percentuali di competenze, lingue, carriera e video «certificati» inventati. Anche il PDF «Scarica CV» scriveva «Conforme FIGC / FIFA», «Verificato FIGC / LND» e una velocità GPS finta.
 2. **Ora**: `curriculum-view.js` (nuovo) compila la pagina con i dati del profilo (`elisee_active_user` + `playerProfile`: nome, ruolo, squadra, anno di nascita, piede, altezza/peso, nazionalità, presentazione, zona, stagioni). I campi vuoti dicono «Non ancora inserito». Visitatore: invito a creare il profilo o accedere. «Modifica profilo»/«Completa il profilo» aprono l'area profilo. Il PDF (`tide-button.js`) contiene solo questi dati, senza certificazioni; senza accesso chiede di entrare. Testi IT/EN `cv.*`, stile `.cv-guest`, `.cv-text`, `.cv-note` in `style.css`.
