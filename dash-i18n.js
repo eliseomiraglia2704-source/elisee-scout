@@ -19,7 +19,9 @@
 
   function dict() {
     if (compiled) return compiled;
-    var d = window.EliseeDashI18n || { exact: {}, patterns: [] };
+    // Il dizionario arriva da dash-i18n-data.js: finché manca non si memorizza nulla.
+    if (!window.EliseeDashI18n) return { exact: {}, patterns: [] };
+    var d = window.EliseeDashI18n;
     compiled = {
       exact: d.exact || {},
       patterns: (d.patterns || []).map(function (p) { return { re: new RegExp(p.re), map: p }; })

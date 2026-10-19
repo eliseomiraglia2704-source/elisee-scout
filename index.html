@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <script src="elisee-admin-guard.js?v=20261018_SEC1"></script>
-  <script src="role-scripts.js?v=20261019_SPEED1"></script>
+  <script src="role-scripts.js?v=20261020_PERF3"></script>
   <script>
     (function () {
       var BUILD_VERSION = '20261004_FIX41';
@@ -92,7 +92,6 @@
   <link rel="stylesheet" href="cc-analytics.css?v=20261018_SEC3">
   <link rel="stylesheet" href="sortable-table.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="elisee-loader.css?v=20260918_LOADER1">
-  <link rel="stylesheet" href="avatar-3d.css?v=20260921_FACESCAN1">
   <link rel="stylesheet" href="login-slide.css?v=20260925_PALETTE1">
   <link rel="stylesheet" href="glass-menu.css?v=20260924_GLASSMENU1">
   <link rel="stylesheet" href="nav-search-anim.css?v=20260925_PALETTE1">
@@ -735,7 +734,8 @@
     }
   </style>
   
-  <script src="https://unpkg.com/lucide@0.460.0"></script>
+  <!-- Icone: caricate senza bloccare la pagina; le icone si disegnano appena la libreria è pronta. -->
+  <script src="https://unpkg.com/lucide@0.460.0" defer onload="if(window.lucide&&lucide.createIcons){lucide.createIcons();}"></script>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <link rel="stylesheet" href="elisee-world/elisee-world.css?v=20260906_EWGBA1">
   <link rel="stylesheet" href="autopilot.css?v=20260827_FIX3">
@@ -772,18 +772,15 @@
     'nu-dash.css?v=20260917_ALLPRO1',
     'eq-dash.css?v=20260827_LUX1',
     'sg-dash.css?v=20260827_LUX1',
-    'bt-dash.css?v=20260827_LUX1'
+    'bt-dash.css?v=20260827_LUX1',
+    'avatar-3d.css?v=20260921_FACESCAN1',
+    'creator-role-switcher.css?v=20261018_SEC1'
   ]);</script>
   <link rel="stylesheet" href="scopri-profili.css?v=20260913_ALBUM5">
   <link rel="stylesheet" href="messaggi.css?v=20260820_DARK1">
   <link rel="stylesheet" href="mercato-hub.css?v=20260830_ECCB1">
   <link rel="stylesheet" href="schede-tecniche.css?v=20260929_HEROUX86">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <link rel="stylesheet" href="season-wrapped.css?v=20260925_WCF1">
-  <link rel="stylesheet" href="creator-role-switcher.css?v=20261018_SEC1">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
   <link rel="stylesheet" href="mappa-club.css?v=20261002_FIX28">
   <link rel="stylesheet" href="mobile-webapp.css?v=20261019_RD5">
   <link rel="stylesheet" href="landing-unify.css?v=20261002_FIX28">
@@ -6698,13 +6695,13 @@
   </script>
   <script src="cookie-profiling.js?v=20261019_DI2"></script>
   <script src="ai-gdpr-monitor.js?v=20260806_NOCORS"></script>
-  <script src="i18n.js?v=20261019_FILE1"></script>
+  <script src="i18n.js?v=20261020_PERF3"></script>
   <script src="island-carousel.js?v=20260928_HEROUX67"></script>
   <script src="parallax-cards.js?v=20260928_HEROUX68"></script>
   <script src="agents-runtime.js?v=20261018_SEC1"></script>
   <script src="piramide-italia.js?v=20260831_GENDERSVG1"></script>
   <script src="club-storia.js?v=20260903_TIERPROMO1"></script>
-  <script src="campionati-agents.js?v=20261018_SEC4"></script>
+  <script src="campionati-agents.js?v=20261020_PERF3"></script>
   <script src="war-room-runtime.js?v=20260906_WARROOM1"></script>
   <script src="player-card.js?v=20261001_FIX21"></script>
   <script>EliseeLibs.lazyMinigioco('minigioco-carriera.css?v=20260913_HUBPOLISH2', 'minigioco-carriera.js?v=20261018_SEC1');</script>
@@ -6790,7 +6787,6 @@
   <script src="trash-btn.js?v=20260925_TRASH1"></script>
   <script src="sortable-table.js?v=20260924_FINISH1"></script>
   <script src="elisee-loader.js?v=20261001_FIX21"></script>
-  <script src="avatar-3d.js?v=20260924_KITBUG1"></script>
   <script src="role-sidebar-pro.js?v=20260928_HEROUX71"></script>
   <script src="app-boot-extras.js?v=20261018_SEC1"></script>
   <script src="bacheca-annunci.js?v=20261018_SEC1"></script>
@@ -6802,13 +6798,15 @@
   <script src="dash-real.js?v=20261019_RD1"></script>
   <script>EliseeRoleScripts.write([
     'player-dash.js?v=20261019_RD4',
+    'avatar-3d.js?v=20260924_KITBUG1',
     'elisee-supabase.js?v=20261019_FILE1',
     'squadra-membri.js?v=20261019_SQ2',
     'coach-dash.js?v=20261019_FILE1',
     'ds-dash.js?v=20261019_RD1',
     'pres-dash.js?v=20261019_RD4',
     'vice-dash.js?v=20261019_FILE1',
-    'dash-i18n.js?v=20261019_RD6',
+    'dash-i18n-data.js?v=20261020_PERF3',
+    'dash-i18n.js?v=20261020_PERF3',
     'role-dash-honest.js?v=20261019_RD3',
     'fisio-dash.js?v=20261019_RD2',
     'ma-dash.js?v=20261019_RD3',
@@ -6844,9 +6842,9 @@
   <script src="ds-hub.js?v=20261019_RD1"></script>
   <script src="verifica-account.js?v=20261019_RD5"></script>
   <script src="season-wrapped.js?v=20261019_SPEED1"></script>
-  <script src="creator-role-switcher.js?v=20261018_SEC1"></script>
   <script>EliseeRoleScripts.write([
-    'role-actions-runtime.js?v=20260917_ROLEDASHUP1'
+    'role-actions-runtime.js?v=20260917_ROLEDASHUP1',
+    'creator-role-switcher.js?v=20261018_SEC1'
   ]);</script>
   <script>
     /* FORCED INLINE HOT-PATCH: Overrides PDF export, specific report HTML & modal close functions instantly at runtime */

@@ -1,6 +1,16 @@
 # Elisee Scout — continua da qui
 
-Ultimo aggiornamento: **2026-10-19** — SPEED1 — Pagina più leggera all'apertura:
+Ultimo aggiornamento: **2026-10-20** — PERF3 — Pagina ancora più leggera per chi non ha fatto l'accesso:
+
+1. **Dizionario delle dashboard** (circa 215 KB) tolto da `i18n.js` e messo in `dash-i18n-data.js` (JSON compatto), caricato solo dopo l'accesso subito prima di `dash-i18n.js`. `i18n.js` passa da 440 a 195 KB. Per aggiungere traduzioni delle dashboard ora si modifica `dash-i18n-data.js`. `dash-i18n.js` non memorizza il dizionario finché non è arrivato.
+2. **Avatar 3D e Simulatore ruoli** (`avatar-3d.js`/`.css`, `creator-role-switcher.js`/`.css`): ora fra gli script e gli stili di ruolo; servono solo nelle dashboard e all'admin.
+3. **Stili di Leaflet, MarkerCluster e Swiper** non sono più nell'`<head>` (bloccavano la prima visualizzazione, da due siti esterni): `EliseeLibs.load()` li aggiunge insieme agli script quando si apre la mappa o il riepilogo stagione.
+4. **Icone Lucide**: lo script esterno ora ha `defer` e disegna le icone appena caricato, invece di bloccare la pagina.
+5. **Agenti campionati** (`campionati-agents.js`): non partono più per ogni visitatore (un ciclo ogni 10 secondi senza niente da mostrare). Partono solo nella pagina pubblica dei campionati o per lo staff, anche dopo un accesso senza ricaricare.
+6. **Misura** (copia locale, rete rallentata): JavaScript per il visitatore da 2,75 MB a 2,3 MB e 4 fogli di stile in meno; dal sito vero in più non si scaricano subito i file esterni di Leaflet e Swiper.
+7. **File**: `i18n.js`, `dash-i18n-data.js` (nuovo), `dash-i18n.js`, `role-scripts.js`, `campionati-agents.js`, `index.html`, `sw.js`, `version.json`. Cache `v20261020_PERF3`.
+
+Feature precedente: **2026-10-19** — SPEED1 — Pagina più leggera all'apertura:
 
 1. **Librerie esterne non più caricate subito** (bloccavano la pagina per tutti, circa 1,5 MB): React e ReactDOM (non usati da nessun file, tolti), Three.js e i suoi 3 moduli (`avatar-3d.js` li carica già da solo quando serve), Leaflet + MarkerCluster (ora `mappa-club.js` li carica quando si apre la mappa), jsPDF (ora `tide-button.js` lo carica al primo PDF), Swiper (ora `season-wrapped.js` lo carica quando si apre il riepilogo stagione). Il caricatore è `EliseeLibs.load(nome)` in `role-scripts.js`.
 2. **Fogli di stile delle 24 dashboard di ruolo** (circa 300 KB): `EliseeRoleScripts.writeStyles([...])` in `index.html`. Chi ha già fatto l'accesso li riceve nello stesso punto e ordine di prima; il visitatore non li scarica; al login senza ricaricare `ensure()` li aggiunge prima degli script.

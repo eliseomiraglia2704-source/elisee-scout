@@ -931,11 +931,19 @@
 
   window.EliseeCampionatiAgents = api;
 
+  // Gli agenti girano solo dove servono: pagina pubblica dei campionati o staff/admin.
+  // Prima partivano per ogni visitatore (un ciclo ogni 10 s senza niente da mostrare).
+  function isStaffUser() {
+    try { return !!(window.EliseeAdmin && window.EliseeAdmin.isStaff && window.EliseeAdmin.isStaff()); } catch (_) { return false; }
+  }
   function boot() {
     buildFleet();
     load();
-    start();
+    if (document.getElementById('campionati-agents-public') || isStaffUser()) start();
   }
+  document.addEventListener('elisee:role-scripts-ready', function () {
+    if (!running && isStaffUser()) start();
+  });
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);

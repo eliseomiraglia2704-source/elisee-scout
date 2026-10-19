@@ -145,6 +145,11 @@
     jspdf: ['https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'],
     swiper: ['https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js']
   };
+  // Stili delle librerie: prima erano nell'<head> e bloccavano la prima visualizzazione.
+  var LIB_CSS = {
+    leaflet: ['https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', 'https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css', 'https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css'],
+    swiper: ['https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css']
+  };
   var pending = {};
   function addScript(src) {
     return new Promise(function (resolve, reject) {
@@ -159,7 +164,8 @@
   function load(name) {
     if (pending[name]) return pending[name];
     var urls = LIBS[name] || [];
-    pending[name] = urls.reduce(function (p, u) { return p.then(function () { return addScript(u); }); }, Promise.resolve())
+    var css = (LIB_CSS[name] || []).map(addStyle);
+    pending[name] = Promise.all(css).then(function () {}).then(function () { return urls.reduce(function (p, u) { return p.then(function () { return addScript(u); }); }, Promise.resolve()); })
       .catch(function (e) { delete pending[name]; throw e; });
     return pending[name];
   }
